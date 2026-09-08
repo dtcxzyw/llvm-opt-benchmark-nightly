@@ -204,10 +204,10 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.n = shl i32 %2, 16
   %i.o = ashr i32 %i.n, 31
-  %5 = add nsw i32 %i.o, 8
   %i.p = icmp eq i32 %.015, 4
   %i.q = select i1 %i.p, i32 2, i32 0
-  %i.r = add nuw nsw i32 %5, %i.q
+  %reass.sub = add nsw i32 %i.o, 8
+  %i.r = add nuw nsw i32 %reass.sub, %i.q
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.f, %bb.j, %bb.i, %bb.h, %bb.e, %bb.b

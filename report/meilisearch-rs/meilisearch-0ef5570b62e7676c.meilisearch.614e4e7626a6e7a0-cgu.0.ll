@@ -205,35 +205,27 @@ bb.a:
   %.sink.sroa.gep1424 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %.sink.sroa.gep1425 = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %.sink.sroa.gep1426 = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  br i1 %or.cond, label %22, label %bb.b
+  br i1 %or.cond, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 102
   %i.bl = load i8, ptr %i.bk, align 2, !range !52, !noundef !45
   %i.bm = trunc nuw i8 %i.bl to i1
-  br i1 %i.bm, label %bb.c, label %22, !prof !47
+  br i1 %i.bm, label %bb.c, label %bb.d, !prof !47
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZN4core9panicking5panic17ha264d2bb233f2b69E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @1826, i64 noundef 33, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1827) #43
   unreachable
 
-22:                                               ; preds = %bb.a, %bb.b
+bb.d:                                             ; preds = %bb.a, %bb.b
   %.sroa.0.0 = phi i1 [ %6, %bb.b ], [ false, %bb.a ] ; 10 uses
-  %23 = trunc i64 %4 to i32                       ; 3 uses
-  %24 = icmp ugt i64 %4, 3221225471
-  br i1 %24, label %25, label %bb.d
-
-25:                                               ; preds = %22
-  %26 = and i32 %23, 1073741823
-  %27 = shl i32 %23, 1
-  %28 = ashr exact i32 %27, 1
-  %29 = and i32 %28, -1073741824
-  %30 = or disjoint i32 %29, %26
-  %31 = xor i32 %30, -2147483648
-  br label %bb.d
-
-bb.d:                                             ; preds = %22, %25
-  %.sroa.012.0 = phi i32 [ %31, %25 ], [ %23, %22 ] ; 7 uses
+  %22 = trunc i64 %4 to i32                       ; 3 uses
+  %23 = icmp ugt i64 %4, 3221225471
+  %24 = and i32 %22, 1073741823
+  %25 = and i32 %22, 1073741824
+  %reass.sub = sub nsw i32 %24, %25
+  %26 = xor i32 %reass.sub, -2147483648
+  %.sroa.012.0 = select i1 %23, i32 %26, i32 %22  ; 7 uses
   %i.bn = zext nneg i8 %7 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.bd, ptr noundef nonnull align 8 dereferenceable(112) %8, i64 112, i1 false)
@@ -636,7 +628,14 @@ bb.bx:                                            ; preds = %bb.cq, %bb.bz, %bb.
   %i.lb = load i64, ptr %i.fp, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 2 uses
   %i.lc = trunc i64 %i.lb to i32                  ; 3 uses
   %i.ld = icmp ugt i64 %i.lb, 3221225471
-  br i1 %i.ld, label %11, label %8
+  %8 = and i32 %i.lc, 1073741823
+  %9 = and i32 %i.lc, 1073741824
+  %reass.sub.i = sub nsw i32 %8, %9
+  %10 = xor i32 %reass.sub.i, -2147483648
+  %.sroa.023.0.i = select i1 %i.ld, i32 %10, i32 %i.lc ; 17 uses
+  %11 = load i32, ptr %i.ai, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 2 uses
+  %12 = icmp eq i32 %11, 1
+  br i1 %12, label %bb.cr, label %thread-pre-split23.i
 
 thread-pre-split.thread.i:                        ; preds = %bb.bv, %bb.bu, %bb.bt, %bb.bn, %thread-pre-split.i
   %.sroa.011.0192.i = phi i64 [ %.sroa.011.0.i25, %thread-pre-split.i ], [ %.sroa.011.1.i, %bb.bn ], [ %.sroa.011.1.i, %bb.bv ], [ %.sroa.011.1.i, %bb.bu ], [ %.sroa.011.1.i, %bb.bt ] ; 2 uses
@@ -782,22 +781,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co
   %i.nd = sub i64 %i.nc, %i.na
   br label %bb.bx
 
-8:                                                ; preds = %11, %bb.bx
-  %.sroa.023.0.i = phi i32 [ %17, %11 ], [ %i.lc, %bb.bx ] ; 17 uses
-  %9 = load i32, ptr %i.ai, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 2 uses
-  %10 = icmp eq i32 %9, 1
-  br i1 %10, label %bb.cr, label %thread-pre-split23.i
-
-11:                                               ; preds = %bb.bx
-  %12 = and i32 %i.lc, 1073741823
-  %13 = shl i32 %i.lc, 1
-  %14 = ashr exact i32 %13, 1
-  %15 = and i32 %14, -1073741824
-  %16 = or disjoint i32 %15, %12
-  %17 = xor i32 %16, -2147483648
-  br label %8
-
-bb.cr:                                            ; preds = %8
+bb.cr:                                            ; preds = %bb.bx
   %.val153.i = load i64, ptr %i.gq, align 8, !alias.scope !38727, !noalias !38728, !noundef !45
   %i.ne = icmp eq i64 %.val153.i, 0
   br i1 %i.ne, label %bb.cs, label %thread-pre-split23.thread.i
@@ -822,8 +806,8 @@ bb.ct:                                            ; preds = %bb.cs
   call void @mi_free(ptr noundef nonnull %.val154.i) #38, !noalias !38728
   br label %"_ZN4core3ptr65drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$u32$GT$$GT$17h9b85be35385d1483E.exit.i31"
 
-thread-pre-split23.i:                             ; preds = %"_ZN4core3ptr64drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$u8$GT$$GT$17h593fe8489026020eE.exit.i", %8
-  %i.ni = phi i32 [ %9, %8 ], [ %.pr24.pre.i, %"_ZN4core3ptr64drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$u8$GT$$GT$17h593fe8489026020eE.exit.i" ] ; 2 uses
+thread-pre-split23.i:                             ; preds = %"_ZN4core3ptr64drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$u8$GT$$GT$17h593fe8489026020eE.exit.i", %bb.bx
+  %i.ni = phi i32 [ %11, %bb.bx ], [ %.pr24.pre.i, %"_ZN4core3ptr64drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$u8$GT$$GT$17h593fe8489026020eE.exit.i" ] ; 2 uses
   %switch.i26 = icmp ult i32 %i.ni, 2
   br i1 %switch.i26, label %thread-pre-split23.thread.i, label %bb.cv
 
@@ -1040,7 +1024,7 @@ bb.dn:                                            ; preds = %"_ZN4core3ptr91drop
   %.val129.i = load i64, ptr %i.gk, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 4 uses
   %i.px = load i64, ptr %i.gl, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 4 uses
   %i.py = icmp ugt i64 %i.px, %.val129.i
-  br i1 %i.py, label %21, label %bb.dt, !prof !47
+  br i1 %i.py, label %bb.ie, label %bb.dt, !prof !47
 
 bb.do:                                            ; preds = %._crit_edge.thread.i.i.i.i, %._crit_edge.i.i.i.i
   %i.pz = icmp samesign ult i64 %i.pg, 576460752303423488
@@ -1443,7 +1427,7 @@ bb.fn:                                            ; preds = %_ZN6brotli3enc6enco
   %i.uu = icmp ugt i32 %.sroa.0.021.i, 6
   %i.uv = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i.i.i = and i1 %i.uu, %i.uv
-  br i1 %or.cond.i.i.i, label %bb.fo, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i.i.i, label %bb.fo, label %bb.id
 
 bb.fo:                                            ; preds = %bb.fn
   %i.uw = add nsw i64 %i.qn, -3                   ; 2 uses
@@ -1615,7 +1599,7 @@ bb.ga:                                            ; preds = %"_ZN127_$LT$brotli.
   %i.ww = getelementptr inbounds nuw [4 x i8], ptr %.val.i.i, i64 %i.wu
   %i.wx = trunc nuw i64 %i.wg to i32
   store i32 %i.wx, ptr %i.ww, align 4, !noalias !38819
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.gb:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %.val2.i.i = load ptr, ptr %i.hg, align 8, !alias.scope !38792, !noalias !38793 ; 4 uses
@@ -1624,7 +1608,7 @@ bb.gb:                                            ; preds = %_ZN6brotli3enc6enco
   %i.wy = icmp ugt i32 %.sroa.0.021.i, 6
   %i.wz = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i8.i.i = and i1 %i.wy, %i.wz
-  br i1 %or.cond.i8.i.i, label %bb.gc, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i8.i.i, label %bb.gc, label %bb.id
 
 bb.gc:                                            ; preds = %bb.gb
   %i.xa = add nsw i64 %i.qn, -3                   ; 3 uses
@@ -1805,7 +1789,7 @@ bb.go:                                            ; preds = %"_ZN127_$LT$brotli.
   %i.zj = trunc nuw i64 %i.yq to i32
   %i.zk = getelementptr inbounds nuw [4 x i8], ptr %.val2.i.i, i64 %i.zh
   store i32 %i.zj, ptr %i.zk, align 4, !noalias !38844
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.gp:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %.val4.i.i = load ptr, ptr %i.hg, align 8, !alias.scope !38792, !noalias !38793 ; 4 uses
@@ -1814,7 +1798,7 @@ bb.gp:                                            ; preds = %_ZN6brotli3enc6enco
   %i.zl = icmp ugt i32 %.sroa.0.021.i, 6
   %i.zm = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i15.i.i = and i1 %i.zl, %i.zm
-  br i1 %or.cond.i15.i.i, label %bb.gq, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i15.i.i, label %bb.gq, label %bb.id
 
 bb.gq:                                            ; preds = %bb.gp
   %i.zn = add nsw i64 %i.qn, -3                   ; 3 uses
@@ -1995,7 +1979,7 @@ bb.hc:                                            ; preds = %"_ZN127_$LT$brotli.
   %i.abw = trunc nuw i64 %i.abd to i32
   %i.abx = getelementptr inbounds nuw [4 x i8], ptr %.val4.i.i, i64 %i.abu
   store i32 %i.abw, ptr %i.abx, align 4, !noalias !38869
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.hd:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %.val6.i.i = load ptr, ptr %i.hg, align 8, !alias.scope !38792, !noalias !38793 ; 4 uses
@@ -2004,7 +1988,7 @@ bb.hd:                                            ; preds = %_ZN6brotli3enc6enco
   %i.aby = icmp ugt i32 %.sroa.0.021.i, 6
   %i.abz = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i22.i.i = and i1 %i.aby, %i.abz
-  br i1 %or.cond.i22.i.i, label %bb.he, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i22.i.i, label %bb.he, label %bb.id
 
 bb.he:                                            ; preds = %bb.hd
   %i.aca = add nsw i64 %i.qn, -3                  ; 3 uses
@@ -2185,13 +2169,13 @@ bb.hq:                                            ; preds = %"_ZN128_$LT$brotli.
   %i.aej = trunc nuw i64 %i.adq to i32
   %i.aek = getelementptr inbounds nuw [4 x i8], ptr %.val6.i.i, i64 %i.aeh
   store i32 %i.aej, ptr %i.aek, align 4, !noalias !38894
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.hr:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %i.ael = icmp ugt i32 %.sroa.0.021.i, 2
   %i.aem = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i29.i.i = and i1 %i.ael, %i.aem
-  br i1 %or.cond.i29.i.i, label %bb.hs, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i29.i.i, label %bb.hs, label %bb.id
 
 bb.hs:                                            ; preds = %bb.hr
   %i.aen = add nsw i64 %i.qn, -3
@@ -2200,13 +2184,13 @@ bb.hs:                                            ; preds = %bb.hr
   call fastcc void @"_ZN137_$LT$brotli..enc..backward_references..AdvHasher$LT$Specialization$C$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hf6592f478bdd1690E"(ptr noalias noundef nonnull align 8 dereferenceable(104) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.aeo), !noalias !38728
   %i.aep = add nsw i64 %i.qn, -1
   call fastcc void @"_ZN137_$LT$brotli..enc..backward_references..AdvHasher$LT$Specialization$C$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hf6592f478bdd1690E"(ptr noalias noundef nonnull align 8 dereferenceable(104) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.aep), !noalias !38728
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.ht:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %i.aeq = icmp ugt i32 %.sroa.0.021.i, 2
   %i.aer = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i30.i.i = and i1 %i.aeq, %i.aer
-  br i1 %or.cond.i30.i.i, label %bb.hu, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i30.i.i, label %bb.hu, label %bb.id
 
 bb.hu:                                            ; preds = %bb.ht
   %i.aes = add nsw i64 %i.qn, -3
@@ -2215,13 +2199,13 @@ bb.hu:                                            ; preds = %bb.ht
   call fastcc void @"_ZN137_$LT$brotli..enc..backward_references..AdvHasher$LT$Specialization$C$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17h7d9ce1d43ae38d9fE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(88) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.aet), !noalias !38728
   %i.aeu = add nsw i64 %i.qn, -1
   call fastcc void @"_ZN137_$LT$brotli..enc..backward_references..AdvHasher$LT$Specialization$C$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17h7d9ce1d43ae38d9fE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(88) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.aeu), !noalias !38728
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.hv:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %i.aev = icmp ugt i32 %.sroa.0.021.i, 2
   %i.aew = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i31.i.i = and i1 %i.aev, %i.aew
-  br i1 %or.cond.i31.i.i, label %bb.hw, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i31.i.i, label %bb.hw, label %bb.id
 
 bb.hw:                                            ; preds = %bb.hv
   %i.aex = add nsw i64 %i.qn, -3
@@ -2230,13 +2214,13 @@ bb.hw:                                            ; preds = %bb.hv
   call fastcc void @"_ZN137_$LT$brotli..enc..backward_references..AdvHasher$LT$Specialization$C$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hed7b662d138796abE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(88) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.aey), !noalias !38728
   %i.aez = add nsw i64 %i.qn, -1
   call fastcc void @"_ZN137_$LT$brotli..enc..backward_references..AdvHasher$LT$Specialization$C$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hed7b662d138796abE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(88) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.aez), !noalias !38728
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.hx:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %i.afa = icmp ugt i32 %.sroa.0.021.i, 6
   %i.afb = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i32.i.i = and i1 %i.afa, %i.afb
-  br i1 %or.cond.i32.i.i, label %bb.hy, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i32.i.i, label %bb.hy, label %bb.id
 
 bb.hy:                                            ; preds = %bb.hx
   %i.afc = add nsw i64 %i.qn, -3
@@ -2245,13 +2229,13 @@ bb.hy:                                            ; preds = %bb.hx
   call fastcc void @"_ZN137_$LT$brotli..enc..backward_references..AdvHasher$LT$Specialization$C$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hc6ac719cc82f1cb5E"(ptr noalias noundef nonnull readonly align 8 dereferenceable(112) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.afd), !noalias !38728
   %i.afe = add nsw i64 %i.qn, -1
   call fastcc void @"_ZN137_$LT$brotli..enc..backward_references..AdvHasher$LT$Specialization$C$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hc6ac719cc82f1cb5E"(ptr noalias noundef nonnull readonly align 8 dereferenceable(112) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.afe), !noalias !38728
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.hz:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %i.aff = icmp ugt i32 %.sroa.0.021.i, 2
   %i.afg = icmp ugt i32 %.sroa.023.0.i, 2
   %or.cond.i33.i.i = and i1 %i.aff, %i.afg
-  br i1 %or.cond.i33.i.i, label %bb.ia, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i33.i.i, label %bb.ia, label %bb.id
 
 bb.ia:                                            ; preds = %bb.hz
   %i.afh = add nsw i64 %i.qn, -3
@@ -2260,7 +2244,7 @@ bb.ia:                                            ; preds = %bb.hz
   call fastcc void @"_ZN113_$LT$brotli..enc..backward_references..H9$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17h6804a41f46fdae5fE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(88) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.afi), !noalias !38728
   %i.afj = add nsw i64 %i.qn, -1
   call fastcc void @"_ZN113_$LT$brotli..enc..backward_references..H9$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17h6804a41f46fdae5fE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(88) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.afj), !noalias !38728
-  br label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br label %bb.id
 
 bb.ib:                                            ; preds = %_ZN6brotli3enc6encode12hasher_setup17h394ea38a5e69b412E.exit.i
   %i.afk = load i64, ptr %i.hh, align 8, !alias.scope !38792, !noalias !38793, !noundef !45
@@ -2268,7 +2252,7 @@ bb.ib:                                            ; preds = %_ZN6brotli3enc6enco
   %i.afl = icmp ugt i32 %.sroa.0.021.i, 2
   %i.afm = icmp ugt i32 %.sroa.023.0.i, 127
   %or.cond.i34.i.i = select i1 %i.afl, i1 %i.afm, i1 false
-  br i1 %or.cond.i34.i.i, label %.lr.ph.i.i.i, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %or.cond.i34.i.i, label %.lr.ph.i.i.i, label %bb.id
 
 .lr.ph.i.i.i:                                     ; preds = %bb.ib
   %i.afn = add nsw i64 %i.qn, -128                ; 2 uses
@@ -2288,38 +2272,28 @@ bb.ic:                                            ; preds = %bb.ic, %.lr.ph.i.i.
   %i.aft = call fastcc noundef i64 @_ZN6brotli3enc19backward_references19hash_to_binary_tree22StoreAndFindMatchesH1017h1a8db7e0f3094503E(ptr noalias noundef nonnull readonly align 8 dereferenceable(104) %i.hg, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.qk, i64 noundef %i.qj, i64 noundef %.sroa.01.05.i.i.i, i64 noundef range(i64 0, 4294967296) %i.ql, i64 noundef %i.afk, i64 noundef 128, i64 noundef %i.afs, ptr noalias noundef align 8 dereferenceable(8) %i.a, ptr noalias noundef nonnull align 8 inttoptr (i64 8 to ptr), i64 noundef 0), !noalias !38728 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !38903
   %i.afu = icmp samesign ult i64 %i.afq, %.sroa.0.0.i.i.i.i
-  br i1 %i.afu, label %bb.ic, label %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
+  br i1 %i.afu, label %bb.ic, label %bb.id
 
-"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i": ; preds = %bb.ic, %bb.ib, %bb.ia, %bb.hz, %bb.hy, %bb.hx, %bb.hw, %bb.hv, %bb.hu, %bb.ht, %bb.hs, %bb.hr, %"_ZN118_$LT$brotli..enc..backward_references..BasicHasher$LT$T$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hb43b78ff21f41fbdE.exit13.i.i.i", %bb.hd, %"_ZN118_$LT$brotli..enc..backward_references..BasicHasher$LT$T$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17h51ce669fdbdd8ef7E.exit13.i.i.i", %bb.gp, %"_ZN118_$LT$brotli..enc..backward_references..BasicHasher$LT$T$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hcbcbdfc39e04f6aaE.exit13.i.i.i", %bb.gb, %"_ZN118_$LT$brotli..enc..backward_references..BasicHasher$LT$T$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17h028119853d0aedb2E.exit13.i.i.i", %bb.fn
+bb.id:                                            ; preds = %bb.ic, %bb.ib, %bb.ia, %bb.hz, %bb.hy, %bb.hx, %bb.hw, %bb.hv, %bb.hu, %bb.ht, %bb.hs, %bb.hr, %"_ZN118_$LT$brotli..enc..backward_references..BasicHasher$LT$T$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hb43b78ff21f41fbdE.exit13.i.i.i", %bb.hd, %"_ZN118_$LT$brotli..enc..backward_references..BasicHasher$LT$T$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17h51ce669fdbdd8ef7E.exit13.i.i.i", %bb.gp, %"_ZN118_$LT$brotli..enc..backward_references..BasicHasher$LT$T$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17hcbcbdfc39e04f6aaE.exit13.i.i.i", %bb.gb, %"_ZN118_$LT$brotli..enc..backward_references..BasicHasher$LT$T$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$5Store17h028119853d0aedb2E.exit13.i.i.i", %bb.fn
   %.val164.i = load ptr, ptr %i.ft, align 8, !alias.scope !38727, !noalias !38728, !nonnull !45, !align !55, !noundef !45
   %.val165.i = load i64, ptr %i.gk, align 8, !alias.scope !38727, !noalias !38728, !noundef !45
-  %18 = load i64, ptr %i.fx, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 3 uses
-  %19 = trunc i64 %18 to i32                      ; 3 uses
-  %20 = icmp ugt i64 %18, 3221225471
-  br i1 %20, label %bb.ie, label %bb.id
-
-21:                                               ; preds = %bb.dn
-  call void @_ZN4core5slice5index16slice_index_fail17hfe436548ecebea33E(i64 noundef %i.px, i64 noundef %.val129.i, i64 noundef %.val129.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1853) #43, !noalias !38728
-  unreachable
-
-bb.id:                                            ; preds = %bb.ie, %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
-  %.sroa.025.0.i = phi i32 [ %28, %bb.ie ], [ %19, %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i" ]
-  %22 = zext i32 %.sroa.025.0.i to i64
+  %13 = load i64, ptr %i.fx, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 5 uses
+  %14 = icmp ugt i64 %13, 3221225471
+  %15 = and i64 %13, 1073741823
+  %16 = and i64 %13, 1073741824
+  %reass.sub = sub nsw i64 %15, %16
+  %17 = add nsw i64 %reass.sub, 2147483648
+  %.sroa.025.0.i = select i1 %14, i64 %17, i64 %13
   %i.afv = load i64, ptr %i.fo, align 8, !alias.scope !38727, !noalias !38728, !noundef !45
-  %i.afw = sub i64 %i.afv, %18
-  %i.afx = call noundef i8 @_ZN6brotli3enc6encode17ChooseContextMode17h6a63f239b9ccfc8aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(112) %i.gd, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val164.i, i64 noundef %.val165.i, i64 noundef %22, i64 noundef %i.ql, i64 noundef %i.afw), !noalias !38728
+  %i.afw = sub i64 %i.afv, %13
+  %i.afx = call noundef i8 @_ZN6brotli3enc6encode17ChooseContextMode17h6a63f239b9ccfc8aE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(112) %i.gd, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val164.i, i64 noundef %.val165.i, i64 noundef %.sroa.025.0.i, i64 noundef %i.ql, i64 noundef %i.afw), !noalias !38728
   %i.afy = load i64, ptr %i.gt, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 2 uses
   %i.afz = icmp eq i64 %i.afy, 0
   br i1 %i.afz, label %"_ZN6brotli3enc6encode37BrotliEncoderStateStruct$LT$Alloc$GT$19extend_last_command17h098e8c64304e41a4E.exit.i", label %bb.if
 
-bb.ie:                                            ; preds = %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$21StitchToPreviousBlock17hca03a08fefb7b981E.exit.i"
-  %23 = and i32 %19, 1073741823
-  %24 = shl i32 %19, 1
-  %25 = ashr exact i32 %24, 1
-  %26 = and i32 %25, -1073741824
-  %27 = or disjoint i32 %26, %23
-  %28 = xor i32 %27, -2147483648
-  br label %bb.id
+bb.ie:                                            ; preds = %bb.dn
+  call void @_ZN4core5slice5index16slice_index_fail17hfe436548ecebea33E(i64 noundef %i.px, i64 noundef %.val129.i, i64 noundef %.val129.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1853) #43, !noalias !38728
+  unreachable
 
 bb.if:                                            ; preds = %bb.id
   %i.aga = load i64, ptr %i.hk, align 8, !alias.scope !38727, !noalias !38728, !noundef !45
@@ -2722,51 +2696,35 @@ bb.kb:                                            ; preds = %bb.jz
   %i.aoh = load i64, ptr %i.fo, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 6 uses
   store i64 %i.aoh, ptr %i.fx, align 8, !alias.scope !38727, !noalias !38728
   %i.aoi = load i64, ptr %i.fp, align 8, !alias.scope !38908, !noalias !38728, !noundef !45 ; 2 uses
-  %i.aoj = trunc i64 %i.aoi to i32                ; 3 uses
-  %i.aok = icmp ugt i64 %i.aoi, 3221225471
-  br i1 %i.aok, label %32, label %29
-
-29:                                               ; preds = %32, %bb.kb
-  %.sroa.0.0.i204.i = phi i32 [ %38, %32 ], [ %i.aoj, %bb.kb ]
-  %30 = trunc i64 %i.aoh to i32                   ; 5 uses
-  %31 = icmp ugt i64 %i.aoh, 3221225471
-  br i1 %31, label %39, label %"_ZN6brotli3enc6encode37BrotliEncoderStateStruct$LT$Alloc$GT$25update_last_processed_pos17hd00d3837a5c8f5ecE.exit206.i"
-
-32:                                               ; preds = %bb.kb
-  %33 = and i32 %i.aoj, 1073741823
-  %34 = shl i32 %i.aoj, 1
-  %35 = ashr exact i32 %34, 1
-  %36 = and i32 %35, -1073741824
-  %37 = or disjoint i32 %36, %33
-  %38 = xor i32 %37, -2147483648
-  br label %29
-
-39:                                               ; preds = %29
-  %40 = and i32 %30, 1073741823
-  %41 = shl i32 %30, 1
-  %42 = ashr exact i32 %41, 1
-  %43 = and i32 %42, -1073741824
-  %44 = or disjoint i32 %43, %40
-  %45 = xor i32 %44, -2147483648
-  br label %"_ZN6brotli3enc6encode37BrotliEncoderStateStruct$LT$Alloc$GT$25update_last_processed_pos17hd00d3837a5c8f5ecE.exit206.i"
-
-"_ZN6brotli3enc6encode37BrotliEncoderStateStruct$LT$Alloc$GT$25update_last_processed_pos17hd00d3837a5c8f5ecE.exit206.i": ; preds = %39, %29
-  %.sroa.02.0.i205.i = phi i32 [ %45, %39 ], [ %30, %29 ]
+  %18 = trunc i64 %i.aoi to i32                   ; 3 uses
+  %19 = icmp ugt i64 %i.aoi, 3221225471
+  %20 = and i32 %18, 1073741823
+  %21 = and i32 %18, 1073741824
+  %reass.sub.i204.i = sub nsw i32 %20, %21
+  %22 = xor i32 %reass.sub.i204.i, -2147483648
+  %.sroa.0.0.i205.i = select i1 %19, i32 %22, i32 %18
+  %i.aoj = trunc i64 %i.aoh to i32                ; 5 uses
+  %i.aok = icmp ugt i64 %i.aoh, 3221225471
+  %23 = and i32 %i.aoj, 1073741823
+  %24 = and i32 %i.aoj, 1073741824
+  %reass.sub5.i206.i = sub nsw i32 %23, %24
+  %25 = xor i32 %reass.sub5.i206.i, -2147483648
+  %.sroa.02.0.i207.i = select i1 %i.aok, i32 %25, i32 %i.aoj
   store i64 %i.aoh, ptr %i.fp, align 8, !alias.scope !38908, !noalias !38728
-  %46 = icmp ult i32 %.sroa.02.0.i205.i, %.sroa.0.0.i204.i
-  br i1 %46, label %bb.ke, label %bb.kd
+  %26 = icmp ult i32 %.sroa.02.0.i207.i, %.sroa.0.0.i205.i
+  br i1 %26, label %bb.ke, label %bb.kd
 
 bb.kc:                                            ; preds = %bb.jz
   call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.anv, i64 noundef %.val163.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1846) #43, !noalias !38728
   unreachable
 
-bb.kd:                                            ; preds = %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$15GetHasherCommon17h5e70ffc03ff4e5feE.exit.i", %bb.ke, %"_ZN6brotli3enc6encode37BrotliEncoderStateStruct$LT$Alloc$GT$25update_last_processed_pos17hd00d3837a5c8f5ecE.exit206.i"
+bb.kd:                                            ; preds = %"_ZN122_$LT$brotli..enc..backward_references..UnionHasher$LT$Alloc$GT$$u20$as$u20$brotli..enc..backward_references..AnyHasher$GT$15GetHasherCommon17h5e70ffc03ff4e5feE.exit.i", %bb.ke, %bb.kb
   %.val159.i = load i64, ptr %i.gk, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 4 uses
   %i.aol = load i64, ptr %i.gl, align 8, !alias.scope !38727, !noalias !38728, !noundef !45 ; 4 uses
   %i.aom = icmp ugt i64 %i.aol, %.val159.i
   br i1 %i.aom, label %bb.ki, label %bb.kh, !prof !47
 
-bb.ke:                                            ; preds = %"_ZN6brotli3enc6encode37BrotliEncoderStateStruct$LT$Alloc$GT$25update_last_processed_pos17hd00d3837a5c8f5ecE.exit206.i"
+bb.ke:                                            ; preds = %bb.kb
   %i.aon = load i64, ptr %0, align 8, !range !111, !alias.scope !38727, !noalias !38728, !noundef !45
   switch i64 %i.aon, label %default.unreachable [
     i64 0, label %bb.kd
@@ -2807,7 +2765,7 @@ bb.ki:                                            ; preds = %bb.kd
   unreachable
 
 bb.kj:                                            ; preds = %bb.kh
-  %i.aos = add i32 %30, -1
+  %i.aos = add i32 %i.aoj, -1
   %i.aot = and i32 %i.aos, %i.it
   %i.aou = zext i32 %i.aot to i64                 ; 3 uses
   %i.aov = icmp ugt i64 %i.aoq, %i.aou
@@ -2825,7 +2783,7 @@ bb.kl:                                            ; preds = %bb.kj
   unreachable
 
 bb.km:                                            ; preds = %bb.kk
-  %i.aoy = add i32 %30, -2
+  %i.aoy = add i32 %i.aoj, -2
   %i.aoz = and i32 %i.aoy, %i.it
   %i.apa = zext i32 %i.aoz to i64                 ; 3 uses
   %i.apb = icmp ugt i64 %i.aoq, %i.apa
@@ -3220,43 +3178,28 @@ bb.n:                                             ; preds = %bb.a, %.loopexit
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal fastcc noundef zeroext i1 @"_ZN6brotli3enc6encode37BrotliEncoderStateStruct$LT$Alloc$GT$25update_last_processed_pos17hd00d3837a5c8f5ecE"(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(5584) %0) unnamed_addr #12 {
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
-  %3 = load i64, ptr %2, align 8, !noundef !45    ; 2 uses
-  %4 = trunc i64 %3 to i32                        ; 3 uses
-  %5 = icmp ugt i64 %3, 3221225471
-  br i1 %5, label %11, label %6
-
-6:                                                ; preds = %11, %1
-  %.sroa.0.0 = phi i32 [ %17, %11 ], [ %4, %1 ]
+bb.a:
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
+  %2 = load i64, ptr %1, align 8, !noundef !45    ; 2 uses
+  %3 = trunc i64 %2 to i32                        ; 3 uses
+  %4 = icmp ugt i64 %2, 3221225471
+  %5 = and i32 %3, 1073741823
+  %i.a = and i32 %3, 1073741824
+  %reass.sub = sub nsw i32 %5, %i.a
+  %6 = xor i32 %reass.sub, -2147483648
+  %.sroa.0.0 = select i1 %4, i32 %6, i32 %3
   %7 = getelementptr inbounds nuw i8, ptr %0, i64 368
   %8 = load i64, ptr %7, align 8, !noundef !45    ; 3 uses
   %9 = trunc i64 %8 to i32                        ; 3 uses
   %10 = icmp ugt i64 %8, 3221225471
-  br i1 %10, label %bb.a, label %18
-
-11:                                               ; preds = %1
-  %12 = and i32 %4, 1073741823
-  %13 = shl i32 %4, 1
-  %14 = ashr exact i32 %13, 1
-  %15 = and i32 %14, -1073741824
-  %16 = or disjoint i32 %15, %12
-  %17 = xor i32 %16, -2147483648
-  br label %6
-
-18:                                               ; preds = %bb.a, %6
-  %.sroa.02.0 = phi i32 [ %i.c, %bb.a ], [ %9, %6 ]
-  store i64 %8, ptr %2, align 8
-  %19 = icmp ult i32 %.sroa.02.0, %.sroa.0.0
-  ret i1 %19
-
-bb.a:                                             ; preds = %6
-  %i.a = and i32 %9, 1073741823
-  %20 = shl i32 %9, 1
-  %21 = ashr exact i32 %20, 1
-  %i.b = and i32 %21, -1073741824
-  %22 = or disjoint i32 %i.b, %i.a
-  %i.c = xor i32 %22, -2147483648
-  br label %18
+  %11 = and i32 %9, 1073741823
+  %i.b = and i32 %9, 1073741824
+  %reass.sub5 = sub nsw i32 %11, %i.b
+  %i.c = xor i32 %reass.sub5, -2147483648
+  %.sroa.02.0 = select i1 %10, i32 %i.c, i32 %9
+  store i64 %8, ptr %1, align 8
+  %12 = icmp ult i32 %.sroa.02.0, %.sroa.0.0
+  ret i1 %12
 }
 
 ; Function Attrs: nonlazybind uwtable

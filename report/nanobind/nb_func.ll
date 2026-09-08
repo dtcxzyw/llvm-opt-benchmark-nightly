@@ -205,10 +205,10 @@ bb.dc:                                            ; preds = %bb.db
 .preheader:                                       ; preds = %bb.dc
   %i.kd = load i16, ptr %i.gc, align 4
   %i.ke = zext i16 %i.kd to i32
-  %4 = shl i32 %i.g, 26
-  %5 = ashr i32 %4, 31
-  %6 = add nsw i32 %5, %i.ke                      ; 4 uses
-  %.not346441 = icmp ugt i32 %6, 1
+  %4 = lshr i32 %i.g, 5
+  %.lobit344 = and i32 %4, 1
+  %5 = sub nsw i32 %i.ke, %.lobit344              ; 4 uses
+  %.not346441 = icmp ugt i32 %5, 1
   br i1 %.not346441, label %.lr.ph443, label %.critedge354
 
 .lr.ph443:                                        ; preds = %.preheader
@@ -222,7 +222,7 @@ bb.dc:                                            ; preds = %bb.db
   %i.kg = zext i16 %i.kf to i32
   %i.kh = icmp ne i16 %i.kf, 1
   %i.ki = add nuw nsw i32 %i.kg, 1
-  %exitcond458.not = icmp ne i32 %i.ki, %6
+  %exitcond458.not = icmp ne i32 %i.ki, %5
   %brmerge500 = select i1 %i.kh, i1 true, i1 %exitcond458.not
   br i1 %brmerge500, label %.loopexit, label %.critedge354
 
@@ -231,7 +231,7 @@ bb.dc:                                            ; preds = %bb.db
 
 .lr.ph443.split.split.us:                         ; preds = %.lr.ph443.split
   %i.kj = load ptr, ptr %i.gm, align 8
-  %wide.trip.count456 = zext i32 %6 to i64
+  %wide.trip.count456 = zext i32 %5 to i64
   br label %bb.dd
 
 bb.dd:                                            ; preds = %bb.de, %.lr.ph443.split.split.us
@@ -250,7 +250,7 @@ bb.de:                                            ; preds = %bb.dd
 .lr.ph443.split.split:                            ; preds = %.lr.ph443.split
   %i.kn = load i16, ptr %i.gf, align 2
   %i.ko = zext i16 %i.kn to i64
-  %wide.trip.count = zext i32 %6 to i64
+  %wide.trip.count = zext i32 %5 to i64
   br label %bb.dg
 
 bb.df:                                            ; preds = %bb.dc

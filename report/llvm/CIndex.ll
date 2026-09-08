@@ -205,10 +205,10 @@ _ZNSt6vectorIPKcSaIS1_EE9push_backEOS1_.exit125.i.i: ; preds = %_ZNSt6vectorIPKc
   %i.id = load i32, ptr %i.ic, align 4, !tbaa !2782
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #38
   store ptr null, ptr %8, align 8, !tbaa !2784
-  %22 = shl i32 %i.s, 23
-  %23 = ashr i32 %22, 31
-  %24 = add nsw i32 %23, 2
-  %i.ie = select i1 %.not.i.i, i32 0, i32 %24
+  %22 = lshr i32 %i.s, 8
+  %.lobit.i.i = and i32 %22, 1
+  %23 = sub nuw nsw i32 2, %.lobit.i.i
+  %i.ie = select i1 %.not.i.i, i32 0, i32 %23
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #38
   %i.if = ptrtoint ptr %i.hx to i64
   %i.ig = ptrtoint ptr %i.hy to i64

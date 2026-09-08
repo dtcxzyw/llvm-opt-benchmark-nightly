@@ -205,11 +205,11 @@ bb.ae:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call fastcc void @get_localsplus_counts(i64 %.val80, ptr noundef nonnull %i.ap, ptr noundef %i.a, ptr noundef null, ptr noundef null)
   %i.ch = load i32, ptr %i.a, align 4, !tbaa !18
-  %1 = add i32 %i.i, %i.c
   %i.ci = shl i32 %i.o, 29
   %i.cj = ashr i32 %i.ci, 31
   %i.ck = shl i32 %i.o, 28
   %i.cl = ashr i32 %i.ck, 31
+  %1 = add i32 %i.i, %i.c
   %i.cm = sub i32 %i.cj, %1
   %i.cn = add i32 %i.cm, %i.cl
   %i.co = add i32 %i.cn, %i.ch

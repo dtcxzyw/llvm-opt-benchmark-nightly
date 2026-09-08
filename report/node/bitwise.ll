@@ -204,6 +204,7 @@ bb.a:
   %i.au = zext i64 %.0.copyload.i.i18 to i128
   %i.av = zext nneg i64 %.14454 to i128
   %i.aw = sub nsw i128 %i.au, %i.av               ; 2 uses
+  %6 = lshr i128 %i.aw, 64
   %i.ax = trunc i128 %i.aw to i64
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv69
   store i64 %i.ax, ptr %i.ay, align 4
@@ -211,9 +212,8 @@ bb.a:
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next70
   %.0.copyload.i.i18.1 = load i64, ptr %i.az, align 1
   %i.ba = zext i64 %.0.copyload.i.i18.1 to i128
-  %6 = shl i128 %i.aw, 63
-  %7 = ashr i128 %6, 127
-  %8 = add nsw i128 %7, %i.ba                     ; 2 uses
+  %7 = and i128 %6, 1
+  %8 = sub nsw i128 %i.ba, %7                     ; 2 uses
   %i.bb = lshr i128 %8, 64
   %i.bc = trunc nuw i128 %i.bb to i64
   %i.bd = and i64 %i.bc, 1
@@ -249,6 +249,7 @@ bb.a:
   %i.bp = zext i64 %.0.copyload.i.i19 to i128
   %i.bq = zext nneg i64 %.14658 to i128
   %i.br = sub nsw i128 %i.bp, %i.bq               ; 2 uses
+  %9 = lshr i128 %i.br, 64
   %i.bs = trunc i128 %i.br to i64
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv74
   store i64 %i.bs, ptr %i.bt, align 4
@@ -256,9 +257,8 @@ bb.a:
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next75
   %.0.copyload.i.i19.1 = load i64, ptr %i.bu, align 1
   %i.bv = zext i64 %.0.copyload.i.i19.1 to i128
-  %9 = shl i128 %i.br, 63
-  %10 = ashr i128 %9, 127
-  %11 = add nsw i128 %10, %i.bv                   ; 2 uses
+  %10 = and i128 %9, 1
+  %11 = sub nsw i128 %i.bv, %10                   ; 2 uses
   %i.bw = lshr i128 %11, 64
   %i.bx = trunc nuw i128 %i.bw to i64
   %i.by = and i64 %i.bx, 1
@@ -404,6 +404,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ab = zext i64 %.0.copyload.i.i13 to i128
   %i.ac = zext nneg i64 %.02830 to i128
   %i.ad = sub nsw i128 %i.ab, %i.ac               ; 2 uses
+  %6 = lshr i128 %i.ad, 64
   %i.ae = trunc i128 %i.ad to i64
   %i.af = xor i64 %i.ae, -1
   %i.ag = and i64 %.0.copyload.i.i, %i.af
@@ -415,9 +416,8 @@ middle.block:                                     ; preds = %vector.body
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next
   %.0.copyload.i.i13.1 = load i64, ptr %i.aj, align 1
   %i.ak = zext i64 %.0.copyload.i.i13.1 to i128
-  %6 = shl i128 %i.ad, 63
-  %7 = ashr i128 %6, 127
-  %8 = add nsw i128 %7, %i.ak                     ; 2 uses
+  %7 = and i128 %6, 1
+  %8 = sub nsw i128 %i.ak, %7                     ; 2 uses
   %i.al = lshr i128 %8, 64
   %i.am = trunc nuw i128 %i.al to i64
   %i.an = and i64 %i.am, 1                        ; 2 uses
@@ -820,6 +820,7 @@ bb.a:
   %i.ac = zext i64 %.0.copyload.i.i to i128
   %i.ad = zext nneg i64 %.03134 to i128
   %i.ae = sub nsw i128 %i.ac, %i.ad               ; 2 uses
+  %6 = lshr i128 %i.ae, 64
   %i.af = trunc i128 %i.ae to i64
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   %.0.copyload.i.i13 = load i64, ptr %i.ag, align 1
@@ -831,9 +832,8 @@ bb.a:
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next
   %.0.copyload.i.i.1 = load i64, ptr %i.ak, align 1
   %i.al = zext i64 %.0.copyload.i.i.1 to i128
-  %6 = shl i128 %i.ae, 63
-  %7 = ashr i128 %6, 127
-  %8 = add nsw i128 %7, %i.al                     ; 2 uses
+  %7 = and i128 %6, 1
+  %8 = sub nsw i128 %i.al, %7                     ; 2 uses
   %i.am = lshr i128 %8, 64
   %i.an = trunc nuw i128 %i.am to i64
   %i.ao = and i64 %i.an, 1                        ; 3 uses
@@ -874,6 +874,7 @@ bb.a:
   %i.bd = zext i64 %.0.copyload.i.i14 to i128
   %i.be = zext nneg i64 %.13237 to i128
   %i.bf = sub nsw i128 %i.bd, %i.be               ; 2 uses
+  %9 = lshr i128 %i.bf, 64
   %i.bg = trunc i128 %i.bf to i64
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv46
   store i64 %i.bg, ptr %i.bh, align 4
@@ -881,9 +882,8 @@ bb.a:
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next47
   %.0.copyload.i.i14.1 = load i64, ptr %i.bi, align 1
   %i.bj = zext i64 %.0.copyload.i.i14.1 to i128
-  %9 = shl i128 %i.bf, 63
-  %10 = ashr i128 %9, 127
-  %11 = add nsw i128 %10, %i.bj                   ; 2 uses
+  %10 = and i128 %9, 1
+  %11 = sub nsw i128 %i.bj, %10                   ; 2 uses
   %i.bk = lshr i128 %11, 64
   %i.bl = trunc nuw i128 %i.bk to i64
   %i.bm = and i64 %i.bl, 1
@@ -1268,6 +1268,7 @@ bb.a:
   %i.au = zext i64 %.0.copyload.i.i18 to i128
   %i.av = zext nneg i64 %.14252 to i128
   %i.aw = sub nsw i128 %i.au, %i.av               ; 2 uses
+  %6 = lshr i128 %i.aw, 64
   %i.ax = trunc i128 %i.aw to i64
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv67
   store i64 %i.ax, ptr %i.ay, align 4
@@ -1275,9 +1276,8 @@ bb.a:
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next68
   %.0.copyload.i.i18.1 = load i64, ptr %i.az, align 1
   %i.ba = zext i64 %.0.copyload.i.i18.1 to i128
-  %6 = shl i128 %i.aw, 63
-  %7 = ashr i128 %6, 127
-  %8 = add nsw i128 %7, %i.ba                     ; 2 uses
+  %7 = and i128 %6, 1
+  %8 = sub nsw i128 %i.ba, %7                     ; 2 uses
   %i.bb = lshr i128 %8, 64
   %i.bc = trunc nuw i128 %i.bb to i64
   %i.bd = and i64 %i.bc, 1
@@ -1313,6 +1313,7 @@ bb.a:
   %i.bp = zext i64 %.0.copyload.i.i19 to i128
   %i.bq = zext nneg i64 %.14456 to i128
   %i.br = sub nsw i128 %i.bp, %i.bq               ; 2 uses
+  %9 = lshr i128 %i.br, 64
   %i.bs = trunc i128 %i.br to i64
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv72
   store i64 %i.bs, ptr %i.bt, align 4
@@ -1320,9 +1321,8 @@ bb.a:
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next73
   %.0.copyload.i.i19.1 = load i64, ptr %i.bu, align 1
   %i.bv = zext i64 %.0.copyload.i.i19.1 to i128
-  %9 = shl i128 %i.br, 63
-  %10 = ashr i128 %9, 127
-  %11 = add nsw i128 %10, %i.bv                   ; 2 uses
+  %10 = and i128 %9, 1
+  %11 = sub nsw i128 %i.bv, %10                   ; 2 uses
   %i.bw = lshr i128 %11, 64
   %i.bx = trunc nuw i128 %i.bw to i64
   %i.by = and i64 %i.bx, 1
@@ -1456,6 +1456,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ag = zext i64 %.0.copyload.i.i17 to i128
   %i.ah = zext nneg i64 %.04145 to i128
   %i.ai = sub nsw i128 %i.ag, %i.ah               ; 2 uses
+  %6 = lshr i128 %i.ai, 64
   %i.aj = trunc i128 %i.ai to i64
   %i.ak = xor i64 %.0.copyload.i.i, %i.aj
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv
@@ -1466,9 +1467,8 @@ middle.block:                                     ; preds = %vector.body
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next
   %.0.copyload.i.i17.1 = load i64, ptr %i.an, align 1
   %i.ao = zext i64 %.0.copyload.i.i17.1 to i128
-  %6 = shl i128 %i.ai, 63
-  %7 = ashr i128 %6, 127
-  %8 = add nsw i128 %7, %i.ao                     ; 2 uses
+  %7 = and i128 %6, 1
+  %8 = sub nsw i128 %i.ao, %7                     ; 2 uses
   %i.ap = lshr i128 %8, 64
   %i.aq = trunc nuw i128 %i.ap to i64
   %i.ar = and i64 %i.aq, 1                        ; 3 uses
@@ -1566,6 +1566,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ca = zext i64 %.0.copyload.i.i19 to i128
   %i.cb = zext nneg i64 %.14251 to i128
   %i.cc = sub nsw i128 %i.ca, %i.cb               ; 2 uses
+  %9 = lshr i128 %i.cc, 64
   %i.cd = trunc i128 %i.cc to i64
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv67
   store i64 %i.cd, ptr %i.ce, align 4
@@ -1573,9 +1574,8 @@ middle.block:                                     ; preds = %vector.body
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next68
   %.0.copyload.i.i19.1 = load i64, ptr %i.cf, align 1
   %i.cg = zext i64 %.0.copyload.i.i19.1 to i128
-  %9 = shl i128 %i.cc, 63
-  %10 = ashr i128 %9, 127
-  %11 = add nsw i128 %10, %i.cg                   ; 2 uses
+  %10 = and i128 %9, 1
+  %11 = sub nsw i128 %i.cg, %10                   ; 2 uses
   %i.ch = lshr i128 %11, 64
   %i.ci = trunc nuw i128 %i.ch to i64
   %i.cj = and i64 %i.ci, 1

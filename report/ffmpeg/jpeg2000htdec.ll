@@ -205,34 +205,34 @@ jpeg2000_bitbuf_get_bits_lsb.exit203.cont:        ; preds = %jpeg2000_bitbuf_get
   %i.tf = getelementptr inbounds nuw i8, ptr %i.eg, i64 %i.te
   %i.tg = load i8, ptr %i.tf, align 1, !tbaa !13
   %i.th = zext i8 %i.tg to i32
-  %i.ti = mul nuw nsw i32 %i.ss, %i.th
-  %11 = shl i32 %i.st, 30
-  %12 = ashr i32 %11, 31
-  %13 = add nsw i32 %12, %i.ti                    ; 5 uses
+  %i.ti = mul nuw nsw i32 %i.ss, %i.th            ; 2 uses
+  %11 = lshr i32 %i.st, 1
+  %12 = and i32 %11, 1                            ; 2 uses
+  %13 = sub nsw i32 %i.ti, %12                    ; 4 uses
   %i.tj = or disjoint i64 %i.ii, 1                ; 3 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %i.eg, i64 %i.tj
   %i.tl = load i8, ptr %i.tk, align 1, !tbaa !13
   %i.tm = zext i8 %i.tl to i32
-  %i.tn = mul nuw nsw i32 %i.sr, %i.tm
-  %14 = shl i32 %i.su, 30
-  %15 = ashr i32 %14, 31
-  %16 = add nsw i32 %15, %i.tn                    ; 5 uses
+  %i.tn = mul nuw nsw i32 %i.sr, %i.tm            ; 2 uses
+  %14 = lshr i32 %i.su, 1
+  %15 = and i32 %14, 1                            ; 2 uses
+  %16 = sub nsw i32 %i.tn, %15                    ; 4 uses
   %i.to = or disjoint i64 %i.gc, 2                ; 3 uses
   %i.tp = getelementptr inbounds nuw i8, ptr %i.eg, i64 %i.to
   %i.tq = load i8, ptr %i.tp, align 1, !tbaa !13
   %i.tr = zext i8 %i.tq to i32
-  %i.ts = mul nuw nsw i32 %i.ss, %i.tr
-  %17 = shl i32 %i.st, 29
-  %18 = ashr i32 %17, 31
-  %19 = add nsw i32 %18, %i.ts                    ; 5 uses
+  %i.ts = mul nuw nsw i32 %i.ss, %i.tr            ; 2 uses
+  %17 = lshr i32 %i.st, 2
+  %18 = and i32 %17, 1                            ; 2 uses
+  %19 = sub nsw i32 %i.ts, %18                    ; 4 uses
   %i.tt = or disjoint i64 %i.ii, 2                ; 3 uses
   %i.tu = getelementptr inbounds nuw i8, ptr %i.eg, i64 %i.tt
   %i.tv = load i8, ptr %i.tu, align 1, !tbaa !13
   %i.tw = zext i8 %i.tv to i32
-  %i.tx = mul nuw nsw i32 %i.sr, %i.tw
-  %20 = shl i32 %i.su, 29
-  %21 = ashr i32 %20, 31
-  %22 = add nsw i32 %21, %i.tx                    ; 5 uses
+  %i.tx = mul nuw nsw i32 %i.sr, %i.tw            ; 2 uses
+  %20 = lshr i32 %i.su, 2
+  %21 = and i32 %20, 1                            ; 2 uses
+  %22 = sub nsw i32 %i.tx, %21                    ; 4 uses
   %i.ty = or disjoint i64 %i.gc, 3                ; 3 uses
   %i.tz = getelementptr inbounds nuw i8, ptr %i.eg, i64 %i.ty
   %i.ua = load i8, ptr %i.tz, align 1, !tbaa !13
@@ -406,7 +406,7 @@ jpeg2000_decode_mag_sgn.exit260.1:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.15.1 = phi i64 [ %i.xj, %jpeg2000_bitbuf_get_bits_lsb_forward.exit267.1 ], [ %.sroa.84339.15, %bb.bo ] ; 3 uses
   %.sroa.52.15.1 = phi i8 [ %i.xk, %jpeg2000_bitbuf_get_bits_lsb_forward.exit267.1 ], [ %.sroa.52.15, %bb.bo ] ; 5 uses
   %.0.i259.1 = phi i32 [ %i.xn, %jpeg2000_bitbuf_get_bits_lsb_forward.exit267.1 ], [ 0, %bb.bo ] ; 3 uses
-  %.not.i218.1 = icmp eq i32 %13, 0
+  %.not.i218.1 = icmp eq i32 %i.ti, %12
   br i1 %.not.i218.1, label %bb.bs, label %ff_clz_c.exit.i222.1
 
 ff_clz_c.exit.i222.1:                             ; preds = %jpeg2000_decode_mag_sgn.exit260.1
@@ -496,7 +496,7 @@ jpeg2000_decode_mag_sgn.exit260.2:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.15.2 = phi i64 [ %i.zd, %jpeg2000_bitbuf_get_bits_lsb_forward.exit267.2 ], [ %.sroa.84339.15.1, %bb.bs ] ; 3 uses
   %.sroa.52.15.2 = phi i8 [ %i.ze, %jpeg2000_bitbuf_get_bits_lsb_forward.exit267.2 ], [ %.sroa.52.15.1, %bb.bs ] ; 5 uses
   %.0.i259.2 = phi i32 [ %i.zh, %jpeg2000_bitbuf_get_bits_lsb_forward.exit267.2 ], [ 0, %bb.bs ] ; 3 uses
-  %.not.i218.2 = icmp eq i32 %19, 0
+  %.not.i218.2 = icmp eq i32 %i.ts, %18
   br i1 %.not.i218.2, label %bb.bw, label %ff_clz_c.exit.i222.2
 
 ff_clz_c.exit.i222.2:                             ; preds = %jpeg2000_decode_mag_sgn.exit260.2
@@ -765,7 +765,7 @@ jpeg2000_decode_mag_sgn.exit262.1:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.16.1 = phi i64 [ %i.aek, %jpeg2000_bitbuf_get_bits_lsb_forward.exit.1 ], [ %.sroa.84339.16, %bb.cd ] ; 3 uses
   %.sroa.52.16.1 = phi i8 [ %i.ael, %jpeg2000_bitbuf_get_bits_lsb_forward.exit.1 ], [ %.sroa.52.16, %bb.cd ] ; 5 uses
   %.0.i261.1 = phi i32 [ %i.aeo, %jpeg2000_bitbuf_get_bits_lsb_forward.exit.1 ], [ 0, %bb.cd ] ; 3 uses
-  %.not.i216.1 = icmp eq i32 %16, 0
+  %.not.i216.1 = icmp eq i32 %i.tn, %15
   br i1 %.not.i216.1, label %bb.ch, label %ff_clz_c.exit.i.1
 
 ff_clz_c.exit.i.1:                                ; preds = %jpeg2000_decode_mag_sgn.exit262.1
@@ -855,7 +855,7 @@ jpeg2000_decode_mag_sgn.exit262.2:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.16.2 = phi i64 [ %i.age, %jpeg2000_bitbuf_get_bits_lsb_forward.exit.2 ], [ %.sroa.84339.16.1, %bb.ch ] ; 3 uses
   %.sroa.52.16.2 = phi i8 [ %i.agf, %jpeg2000_bitbuf_get_bits_lsb_forward.exit.2 ], [ %.sroa.52.16.1, %bb.ch ] ; 5 uses
   %.0.i261.2 = phi i32 [ %i.agi, %jpeg2000_bitbuf_get_bits_lsb_forward.exit.2 ], [ 0, %bb.ch ] ; 3 uses
-  %.not.i216.2 = icmp eq i32 %22, 0
+  %.not.i216.2 = icmp eq i32 %i.tx, %21
   br i1 %.not.i216.2, label %bb.cl, label %ff_clz_c.exit.i.2
 
 ff_clz_c.exit.i.2:                                ; preds = %jpeg2000_decode_mag_sgn.exit262.2
@@ -1132,20 +1132,20 @@ bb.cx:                                            ; preds = %jpeg2000_bitbuf_get
   %i.alm = and i32 %i.ali, 1                      ; 2 uses
   %i.aln = sub nsw i32 %i.all, %i.alm             ; 4 uses
   %i.alo = zext nneg i8 %i.aiy to i32
-  %i.alp = mul nuw nsw i32 %i.alg, %i.alo
-  %23 = shl i32 %i.ali, 30
-  %24 = ashr i32 %23, 31
-  %25 = add i32 %24, %i.alp                       ; 5 uses
+  %i.alp = mul nuw nsw i32 %i.alg, %i.alo         ; 2 uses
+  %23 = lshr i32 %i.ali, 1
+  %24 = and i32 %23, 1                            ; 2 uses
+  %25 = sub nsw i32 %i.alp, %24                   ; 4 uses
   %i.alq = zext nneg i8 %i.ajc to i32
-  %i.alr = mul nuw nsw i32 %i.alg, %i.alq
-  %26 = shl i32 %i.ali, 29
-  %27 = ashr i32 %26, 31
-  %28 = add i32 %27, %i.alr                       ; 5 uses
+  %i.alr = mul nuw nsw i32 %i.alg, %i.alq         ; 2 uses
+  %26 = lshr i32 %i.ali, 2
+  %27 = and i32 %26, 1                            ; 2 uses
+  %28 = sub nsw i32 %i.alr, %27                   ; 4 uses
   %i.als = zext nneg i8 %i.ajg to i32
-  %i.alt = mul nuw nsw i32 %i.alg, %i.als
-  %29 = shl i32 %i.ali, 28
-  %30 = ashr i32 %29, 31
-  %31 = add i32 %30, %i.alt                       ; 5 uses
+  %i.alt = mul nuw nsw i32 %i.alg, %i.als         ; 2 uses
+  %29 = lshr i32 %i.ali, 3
+  %30 = and i32 %29, 1                            ; 2 uses
+  %31 = sub nsw i32 %i.alt, %30                   ; 4 uses
   %i.alu = zext i8 %i.bn to i32                   ; 5 uses
   %i.alv = load i8, ptr %i.d, align 2, !tbaa !13
   %i.alw = zext i8 %i.alv to i32                  ; 4 uses
@@ -1309,7 +1309,7 @@ jpeg2000_decode_mag_sgn.exit.1:                   ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.11.1 = phi i64 [ %i.aov, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.1 ], [ %.sroa.84339.11, %bb.db ] ; 3 uses
   %.sroa.52.11.1 = phi i8 [ %i.aow, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.1 ], [ %.sroa.52.11, %bb.db ] ; 5 uses
   %.0.i252.1 = phi i32 [ %i.aoz, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.1 ], [ 0, %bb.db ] ; 3 uses
-  %.not.i246.1 = icmp eq i32 %25, 0
+  %.not.i246.1 = icmp eq i32 %i.alp, %24
   br i1 %.not.i246.1, label %bb.df, label %ff_clz_c.exit.i250.1
 
 ff_clz_c.exit.i250.1:                             ; preds = %jpeg2000_decode_mag_sgn.exit.1
@@ -1399,7 +1399,7 @@ jpeg2000_decode_mag_sgn.exit.2:                   ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.11.2 = phi i64 [ %i.aqp, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.2 ], [ %.sroa.84339.11.1, %bb.df ] ; 3 uses
   %.sroa.52.11.2 = phi i8 [ %i.aqq, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.2 ], [ %.sroa.52.11.1, %bb.df ] ; 5 uses
   %.0.i252.2 = phi i32 [ %i.aqt, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.2 ], [ 0, %bb.df ] ; 3 uses
-  %.not.i246.2 = icmp eq i32 %28, 0
+  %.not.i246.2 = icmp eq i32 %i.alr, %27
   br i1 %.not.i246.2, label %bb.dj, label %ff_clz_c.exit.i250.2
 
 ff_clz_c.exit.i250.2:                             ; preds = %jpeg2000_decode_mag_sgn.exit.2
@@ -1489,7 +1489,7 @@ jpeg2000_decode_mag_sgn.exit.3:                   ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.11.3 = phi i64 [ %i.asj, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.3 ], [ %.sroa.84339.11.2, %bb.dj ]
   %.sroa.52.11.3 = phi i8 [ %i.ask, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.3 ], [ %.sroa.52.11.2, %bb.dj ]
   %.0.i252.3 = phi i32 [ %i.asn, %jpeg2000_bitbuf_get_bits_lsb_forward.exit279.3 ], [ 0, %bb.dj ] ; 3 uses
-  %.not.i246.3 = icmp eq i32 %31, 0
+  %.not.i246.3 = icmp eq i32 %i.alt, %30
   br i1 %.not.i246.3, label %recover_mag_sgn.exit251, label %ff_clz_c.exit.i250.3
 
 ff_clz_c.exit.i250.3:                             ; preds = %jpeg2000_decode_mag_sgn.exit.3
@@ -1892,40 +1892,40 @@ bb.ep:                                            ; preds = %switch.lookup1333, 
   %i.bgw = sub nsw i32 %i.bgu, %i.bgv             ; 4 uses
   %i.bgx = load i8, ptr %i.avz, align 1, !tbaa !13
   %i.bgy = zext i8 %i.bgx to i32
-  %i.bgz = mul nuw nsw i32 %i.bge, %i.bgy
-  %32 = shl i32 %i.bgk, 30
-  %33 = ashr i32 %32, 31
-  %34 = add nsw i32 %33, %i.bgz                   ; 5 uses
+  %i.bgz = mul nuw nsw i32 %i.bge, %i.bgy         ; 2 uses
+  %32 = lshr i32 %i.bgk, 1
+  %33 = and i32 %32, 1                            ; 2 uses
+  %34 = sub nsw i32 %i.bgz, %33                   ; 4 uses
   %i.bha = load i8, ptr %i.ayk, align 1, !tbaa !13
   %i.bhb = zext i8 %i.bha to i32
-  %i.bhc = mul nuw nsw i32 %i.bgg, %i.bhb
-  %35 = shl i32 %i.bgm, 30
-  %36 = ashr i32 %35, 31
-  %37 = add nsw i32 %36, %i.bhc                   ; 5 uses
+  %i.bhc = mul nuw nsw i32 %i.bgg, %i.bhb         ; 2 uses
+  %35 = lshr i32 %i.bgm, 1
+  %36 = and i32 %35, 1                            ; 2 uses
+  %37 = sub nsw i32 %i.bhc, %36                   ; 4 uses
   %i.bhd = load i8, ptr %i.awd, align 1, !tbaa !13
   %i.bhe = zext i8 %i.bhd to i32
-  %i.bhf = mul nuw nsw i32 %i.bge, %i.bhe
-  %38 = shl i32 %i.bgk, 29
-  %39 = ashr i32 %38, 31
-  %40 = add nsw i32 %39, %i.bhf                   ; 5 uses
+  %i.bhf = mul nuw nsw i32 %i.bge, %i.bhe         ; 2 uses
+  %38 = lshr i32 %i.bgk, 2
+  %39 = and i32 %38, 1                            ; 2 uses
+  %40 = sub nsw i32 %i.bhf, %39                   ; 4 uses
   %i.bhg = load i8, ptr %i.ayo, align 1, !tbaa !13
   %i.bhh = zext i8 %i.bhg to i32
-  %i.bhi = mul nuw nsw i32 %i.bgg, %i.bhh
-  %41 = shl i32 %i.bgm, 29
-  %42 = ashr i32 %41, 31
-  %43 = add nsw i32 %42, %i.bhi                   ; 5 uses
+  %i.bhi = mul nuw nsw i32 %i.bgg, %i.bhh         ; 2 uses
+  %41 = lshr i32 %i.bgm, 2
+  %42 = and i32 %41, 1                            ; 2 uses
+  %43 = sub nsw i32 %i.bhi, %42                   ; 4 uses
   %i.bhj = load i8, ptr %i.awh, align 1, !tbaa !13
   %i.bhk = zext i8 %i.bhj to i32
-  %i.bhl = mul nuw nsw i32 %i.bge, %i.bhk
-  %44 = shl i32 %i.bgk, 28
-  %45 = ashr i32 %44, 31
-  %46 = add nsw i32 %45, %i.bhl                   ; 5 uses
+  %i.bhl = mul nuw nsw i32 %i.bge, %i.bhk         ; 2 uses
+  %44 = lshr i32 %i.bgk, 3
+  %45 = and i32 %44, 1                            ; 2 uses
+  %46 = sub nsw i32 %i.bhl, %45                   ; 4 uses
   %i.bhm = load i8, ptr %i.ays, align 1, !tbaa !13
   %i.bhn = zext i8 %i.bhm to i32
-  %i.bho = mul nuw nsw i32 %i.bgg, %i.bhn
-  %47 = shl i32 %i.bgm, 28
-  %48 = ashr i32 %47, 31
-  %49 = add nsw i32 %48, %i.bho                   ; 5 uses
+  %i.bho = mul nuw nsw i32 %i.bgg, %i.bhn         ; 2 uses
+  %47 = lshr i32 %i.bgm, 3
+  %48 = and i32 %47, 1                            ; 2 uses
+  %49 = sub nsw i32 %i.bho, %48                   ; 4 uses
   %i.bhp = load ptr, ptr %i.g, align 8, !tbaa !37 ; 8 uses
   %i.bhq = load i8, ptr %i.d, align 2, !tbaa !13
   %i.bhr = zext i8 %i.bhq to i32                  ; 4 uses
@@ -2087,7 +2087,7 @@ jpeg2000_decode_mag_sgn.exit256.1:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.13.1 = phi i64 [ %i.bko, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.1 ], [ %.sroa.84339.13, %bb.et ] ; 3 uses
   %.sroa.52.13.1 = phi i8 [ %i.bkp, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.1 ], [ %.sroa.52.13, %bb.et ] ; 5 uses
   %.0.i255.1 = phi i32 [ %i.bks, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.1 ], [ 0, %bb.et ] ; 3 uses
-  %.not.i232.1 = icmp eq i32 %34, 0
+  %.not.i232.1 = icmp eq i32 %i.bgz, %33
   br i1 %.not.i232.1, label %bb.ex, label %ff_clz_c.exit.i236.1
 
 ff_clz_c.exit.i236.1:                             ; preds = %jpeg2000_decode_mag_sgn.exit256.1
@@ -2177,7 +2177,7 @@ jpeg2000_decode_mag_sgn.exit256.2:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.13.2 = phi i64 [ %i.bmi, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.2 ], [ %.sroa.84339.13.1, %bb.ex ] ; 3 uses
   %.sroa.52.13.2 = phi i8 [ %i.bmj, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.2 ], [ %.sroa.52.13.1, %bb.ex ] ; 5 uses
   %.0.i255.2 = phi i32 [ %i.bmm, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.2 ], [ 0, %bb.ex ] ; 3 uses
-  %.not.i232.2 = icmp eq i32 %40, 0
+  %.not.i232.2 = icmp eq i32 %i.bhf, %39
   br i1 %.not.i232.2, label %bb.fb, label %ff_clz_c.exit.i236.2
 
 ff_clz_c.exit.i236.2:                             ; preds = %jpeg2000_decode_mag_sgn.exit256.2
@@ -2267,7 +2267,7 @@ jpeg2000_decode_mag_sgn.exit256.3:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.13.3 = phi i64 [ %i.boc, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.3 ], [ %.sroa.84339.13.2, %bb.fb ] ; 3 uses
   %.sroa.52.13.3 = phi i8 [ %i.bod, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.3 ], [ %.sroa.52.13.2, %bb.fb ] ; 5 uses
   %.0.i255.3 = phi i32 [ %i.bog, %jpeg2000_bitbuf_get_bits_lsb_forward.exit273.3 ], [ 0, %bb.fb ] ; 3 uses
-  %.not.i232.3 = icmp eq i32 %46, 0
+  %.not.i232.3 = icmp eq i32 %i.bhl, %45
   br i1 %.not.i232.3, label %recover_mag_sgn.exit237, label %ff_clz_c.exit.i236.3
 
 ff_clz_c.exit.i236.3:                             ; preds = %jpeg2000_decode_mag_sgn.exit256.3
@@ -2451,7 +2451,7 @@ jpeg2000_decode_mag_sgn.exit258.1:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.14.1 = phi i64 [ %i.bru, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.1 ], [ %.sroa.84339.14, %bb.fi ] ; 3 uses
   %.sroa.52.14.1 = phi i8 [ %i.brv, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.1 ], [ %.sroa.52.14, %bb.fi ] ; 5 uses
   %.0.i257.1 = phi i32 [ %i.bry, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.1 ], [ 0, %bb.fi ] ; 3 uses
-  %.not.i225.1 = icmp eq i32 %37, 0
+  %.not.i225.1 = icmp eq i32 %i.bhc, %36
   br i1 %.not.i225.1, label %bb.fm, label %ff_clz_c.exit.i229.1
 
 ff_clz_c.exit.i229.1:                             ; preds = %jpeg2000_decode_mag_sgn.exit258.1
@@ -2542,7 +2542,7 @@ jpeg2000_decode_mag_sgn.exit258.2:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.14.2 = phi i64 [ %i.btp, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.2 ], [ %.sroa.84339.14.1, %bb.fm ] ; 3 uses
   %.sroa.52.14.2 = phi i8 [ %i.btq, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.2 ], [ %.sroa.52.14.1, %bb.fm ] ; 5 uses
   %.0.i257.2 = phi i32 [ %i.btt, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.2 ], [ 0, %bb.fm ] ; 3 uses
-  %.not.i225.2 = icmp eq i32 %43, 0
+  %.not.i225.2 = icmp eq i32 %i.bhi, %42
   br i1 %.not.i225.2, label %bb.fq, label %ff_clz_c.exit.i229.2
 
 ff_clz_c.exit.i229.2:                             ; preds = %jpeg2000_decode_mag_sgn.exit258.2
@@ -2633,7 +2633,7 @@ jpeg2000_decode_mag_sgn.exit258.3:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.14.3 = phi i64 [ %i.bvk, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.3 ], [ %.sroa.84339.14.2, %bb.fq ] ; 2 uses
   %.sroa.52.14.3 = phi i8 [ %i.bvl, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.3 ], [ %.sroa.52.14.2, %bb.fq ] ; 2 uses
   %.0.i257.3 = phi i32 [ %i.bvo, %jpeg2000_bitbuf_get_bits_lsb_forward.exit270.3 ], [ 0, %bb.fq ] ; 3 uses
-  %.not.i225.3 = icmp eq i32 %49, 0
+  %.not.i225.3 = icmp eq i32 %i.bho, %48
   br i1 %.not.i225.3, label %recover_mag_sgn.exit230, label %ff_clz_c.exit.i229.3
 
 ff_clz_c.exit.i229.3:                             ; preds = %jpeg2000_decode_mag_sgn.exit258.3
@@ -2903,22 +2903,22 @@ bb.gg:                                            ; preds = %switch.lookup1337, 
   %i.cbu = sub nsw i32 %i.cbs, %i.cbt             ; 4 uses
   %i.cbv = load i8, ptr %i.byj, align 1, !tbaa !13
   %i.cbw = zext i8 %i.cbv to i32
-  %i.cbx = mul nsw i32 %i.cbm, %i.cbw
-  %50 = shl i32 %i.cbp, 30
-  %51 = ashr i32 %50, 31
-  %52 = add i32 %51, %i.cbx                       ; 5 uses
+  %i.cbx = mul nsw i32 %i.cbm, %i.cbw             ; 2 uses
+  %50 = lshr i32 %i.cbp, 1
+  %51 = and i32 %50, 1                            ; 2 uses
+  %52 = sub nsw i32 %i.cbx, %51                   ; 4 uses
   %i.cby = load i8, ptr %i.byn, align 1, !tbaa !13
   %i.cbz = zext i8 %i.cby to i32
-  %i.cca = mul nsw i32 %i.cbm, %i.cbz
-  %53 = shl i32 %i.cbp, 29
-  %54 = ashr i32 %53, 31
-  %55 = add i32 %54, %i.cca                       ; 5 uses
+  %i.cca = mul nsw i32 %i.cbm, %i.cbz             ; 2 uses
+  %53 = lshr i32 %i.cbp, 2
+  %54 = and i32 %53, 1                            ; 2 uses
+  %55 = sub nsw i32 %i.cca, %54                   ; 4 uses
   %i.ccb = load i8, ptr %i.byr, align 1, !tbaa !13
   %i.ccc = zext i8 %i.ccb to i32
-  %i.ccd = mul nsw i32 %i.cbm, %i.ccc
-  %56 = shl i32 %i.cbp, 28
-  %57 = ashr i32 %56, 31
-  %58 = add i32 %57, %i.ccd                       ; 5 uses
+  %i.ccd = mul nsw i32 %i.cbm, %i.ccc             ; 2 uses
+  %56 = lshr i32 %i.cbp, 3
+  %57 = and i32 %56, 1                            ; 2 uses
+  %58 = sub nsw i32 %i.ccd, %57                   ; 4 uses
   %i.cce = load ptr, ptr %i.g, align 8, !tbaa !37 ; 4 uses
   %i.ccf = load i8, ptr %i.d, align 2, !tbaa !13
   %i.ccg = zext i8 %i.ccf to i32                  ; 4 uses
@@ -3080,7 +3080,7 @@ jpeg2000_decode_mag_sgn.exit254.1:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.12.1 = phi i64 [ %i.cfd, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.1 ], [ %.sroa.84339.12, %bb.gk ] ; 3 uses
   %.sroa.52.12.1 = phi i8 [ %i.cfe, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.1 ], [ %.sroa.52.12, %bb.gk ] ; 5 uses
   %.0.i253.1 = phi i32 [ %i.cfh, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.1 ], [ 0, %bb.gk ] ; 3 uses
-  %.not.i239.1 = icmp eq i32 %52, 0
+  %.not.i239.1 = icmp eq i32 %i.cbx, %51
   br i1 %.not.i239.1, label %bb.go, label %ff_clz_c.exit.i243.1
 
 ff_clz_c.exit.i243.1:                             ; preds = %jpeg2000_decode_mag_sgn.exit254.1
@@ -3170,7 +3170,7 @@ jpeg2000_decode_mag_sgn.exit254.2:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.12.2 = phi i64 [ %i.cgx, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.2 ], [ %.sroa.84339.12.1, %bb.go ] ; 3 uses
   %.sroa.52.12.2 = phi i8 [ %i.cgy, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.2 ], [ %.sroa.52.12.1, %bb.go ] ; 5 uses
   %.0.i253.2 = phi i32 [ %i.chb, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.2 ], [ 0, %bb.go ] ; 3 uses
-  %.not.i239.2 = icmp eq i32 %55, 0
+  %.not.i239.2 = icmp eq i32 %i.cca, %54
   br i1 %.not.i239.2, label %bb.gs, label %ff_clz_c.exit.i243.2
 
 ff_clz_c.exit.i243.2:                             ; preds = %jpeg2000_decode_mag_sgn.exit254.2
@@ -3260,7 +3260,7 @@ jpeg2000_decode_mag_sgn.exit254.3:                ; preds = %jpeg2000_bitbuf_get
   %.sroa.84339.12.3 = phi i64 [ %i.cir, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.3 ], [ %.sroa.84339.12.2, %bb.gs ]
   %.sroa.52.12.3 = phi i8 [ %i.cis, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.3 ], [ %.sroa.52.12.2, %bb.gs ]
   %.0.i253.3 = phi i32 [ %i.civ, %jpeg2000_bitbuf_get_bits_lsb_forward.exit276.3 ], [ 0, %bb.gs ] ; 3 uses
-  %.not.i239.3 = icmp eq i32 %58, 0
+  %.not.i239.3 = icmp eq i32 %i.ccd, %57
   br i1 %.not.i239.3, label %recover_mag_sgn.exit244, label %ff_clz_c.exit.i243.3
 
 ff_clz_c.exit.i243.3:                             ; preds = %jpeg2000_decode_mag_sgn.exit254.3
