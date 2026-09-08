@@ -204,11 +204,11 @@ bb.an:                                            ; preds = %bb.am
   %i.ef = or disjoint i32 %i.ed, %i.ee
   store i32 %i.ef, ptr %i.cj, align 8
   %i.eg = load i32, ptr %i.b, align 8             ; 3 uses
-  %i.eh = lshr i32 %i.eg, 17
-  %4 = and i32 %i.eh, 8191
-  %5 = shl i32 %i.eg, 15
-  %6 = ashr i32 %5, 31
-  %7 = add nsw i32 %6, %4
+  %i.eh = lshr i32 %i.eg, 16
+  %4 = lshr i32 %i.eg, 17
+  %5 = and i32 %4, 8191
+  %6 = and i32 %i.eh, 1
+  %7 = sub nsw i32 %5, %6
   %i.ei = shl nsw i32 %7, 16
   %i.ej = and i32 %i.ei, 1073676288
   %i.ek = and i32 %i.eg, -1073676289
@@ -216,11 +216,11 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ap
 
 bb.ao:                                            ; preds = %bb.am
-  %i.em = lshr i32 %i.do, 17
-  %8 = and i32 %i.em, 8191
-  %9 = shl i32 %i.do, 15
-  %10 = ashr i32 %9, 31
-  %11 = add nsw i32 %10, %8
+  %i.em = lshr i32 %i.do, 16
+  %8 = lshr i32 %i.do, 17
+  %9 = and i32 %8, 8191
+  %10 = and i32 %i.em, 1
+  %11 = sub nsw i32 %9, %10
   %i.en = shl nsw i32 %11, 16
   %i.eo = and i32 %i.en, 1073676288
   %i.ep = and i32 %i.dc, -1073676289

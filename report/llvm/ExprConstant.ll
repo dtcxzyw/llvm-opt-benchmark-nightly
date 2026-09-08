@@ -205,10 +205,10 @@ bb.n:                                             ; preds = %_ZN4llvm9BitVector1
   %.06239 = phi ptr [ %i.dc, %_ZN4llvm14SmallBitVector9referenceaSEb.exit ], [ %i.bz, %.lr.ph.preheader ] ; 2 uses
   %i.cc = load i32, ptr %.06239, align 4, !tbaa !508 ; 2 uses
   %i.cd = and i32 %i.cc, 1073741823
-  %8 = add nsw i32 %i.cd, -1
-  %9 = shl i32 %i.cc, 1
-  %10 = ashr i32 %9, 31
-  %i.ce = add nsw i32 %8, %10                     ; 3 uses
+  %8 = lshr i32 %i.cc, 30
+  %9 = and i32 %8, 1
+  %10 = xor i32 %9, -1
+  %i.ce = add nsw i32 %i.cd, %10                  ; 3 uses
   %i.cf = zext i32 %i.ce to i64                   ; 2 uses
   %.not69 = icmp ugt i64 %1, %i.cf
   br i1 %.not69, label %bb.o, label %_ZN4llvm14SmallBitVector9referenceaSEb.exit

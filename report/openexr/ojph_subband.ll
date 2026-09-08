@@ -69,12 +69,12 @@ _ZNK4ojph5local9param_cod21get_log_precinct_sizeEj.exit: ; preds = %bb.c, %bb.d
   %.sroa.5.0.extract.shift = lshr i64 %.sroa.0.0.insert.insert.i, 32
   %.sroa.5.0.extract.trunc = trunc nuw nsw i64 %.sroa.5.0.extract.shift to i32
   %i.ae = and i32 %4, 1
-  %6 = shl i32 %4, 30
-  %7 = ashr i32 %6, 31
+  %6 = lshr i32 %4, 1
+  %.lobit = and i32 %6, 1
   %i.af = sub i32 %.sroa.0.0.extract.trunc, %i.ae
   %i.ag = tail call i32 @llvm.umin.i32(i32 %i.af, i32 %.sroa.027.0.extract.trunc) ; 3 uses
-  %8 = add nsw i32 %7, %.sroa.5.0.extract.trunc
-  %i.ah = tail call i32 @llvm.umin.i32(i32 %8, i32 %.sroa.529.0.extract.trunc) ; 3 uses
+  %7 = sub nsw i32 %.sroa.5.0.extract.trunc, %.lobit
+  %i.ah = tail call i32 @llvm.umin.i32(i32 %7, i32 %.sroa.529.0.extract.trunc) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   %i.ai = shl nuw i32 1, %i.ag                    ; 2 uses
   %i.aj = shl nuw i32 1, %i.ah                    ; 2 uses

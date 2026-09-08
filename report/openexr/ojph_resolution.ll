@@ -205,13 +205,13 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.mu = load i32, ptr %i.hz, align 8, !tbaa !138
   %i.mv = sub i32 %i.mu, %i.mt                    ; 2 uses
   store i32 %i.mv, ptr %i.hz, align 8, !tbaa !138
-  %13 = shl i32 %i.ms, 30
-  %14 = ashr i32 %13, 31
+  %13 = lshr i32 %i.ms, 1
+  %.lobit = and i32 %13, 1
   %i.mw = load i32, ptr %i.kd, align 4, !tbaa !139
-  %15 = add i32 %i.mw, %14                        ; 2 uses
-  store i32 %15, ptr %i.kd, align 4, !tbaa !139
+  %14 = sub i32 %i.mw, %.lobit                    ; 2 uses
+  store i32 %14, ptr %i.kd, align 4, !tbaa !139
   %i.mx = call i32 @llvm.usub.sat.i32(i32 %i.mv, i32 %.sroa.0.0.extract.trunc)
-  %i.my = call i32 @llvm.usub.sat.i32(i32 %15, i32 %.sroa.5.0.extract.trunc)
+  %i.my = call i32 @llvm.usub.sat.i32(i32 %14, i32 %.sroa.5.0.extract.trunc)
   %i.mz = call i32 @llvm.umax.i32(i32 %i.mx, i32 %i.my) ; 3 uses
   %i.na = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.nb = shl i32 %i.mz, 1                        ; 2 uses

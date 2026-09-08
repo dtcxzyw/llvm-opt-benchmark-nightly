@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.n = lshr i32 %1, 5
-  %2 = shl i32 %1, 27
-  %3 = ashr i32 %2, 31
-  %4 = add nsw i32 %3, 2
+  %2 = lshr i32 %1, 4
+  %3 = and i32 %2, 1
+  %4 = sub nuw nsw i32 2, %3
   %i.o = trunc i32 %i.n to i8
   %i.p = and i8 %i.o, 63
   %.lhs.trunc = add nuw nsw i8 %i.p, 2
