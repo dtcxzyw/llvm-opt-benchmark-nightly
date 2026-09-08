@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZZN5boost6cobalt8a
   br i1 %i.cj, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  store i1 false, ptr %index.addr252, align 8
+  store i8 0, ptr %index.addr252, align 8
   %i.ck = tail call noundef zeroext i1 @_ZN5boost6cobalt2opIJNS_6system10error_codeEmEE14awaitable_base13await_suspendINS0_6detail19composition_promiseIJS3_mEEEEEbNSt7__n486116coroutine_handleIT_EE(ptr noundef nonnull align 8 dereferenceable(72) %.reload.addr247, ptr nonnull %i.g) #25
   br i1 %i.ck, label %AfterCoroEnd, label %bb.i
 
@@ -506,7 +506,7 @@ AfterCoroSave170:                                 ; preds = %bb.r, %bb.q
   store ptr %i.fs, ptr %i.fr, align 8, !tbaa !64, !alias.scope !156
   store ptr null, ptr %i.g, align 16
   %index.addr253 = getelementptr inbounds nuw i8, ptr %i.e, i64 392
-  store i1 true, ptr %index.addr253, align 8
+  store i8 1, ptr %index.addr253, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   br i1 %i.fl, label %bb.u, label %bb.t
 
@@ -909,7 +909,7 @@ bb.g:                                             ; preds = %_ZZN5boost6cobalt8a
   br i1 %i.cj, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  store i1 false, ptr %index.addr257, align 8
+  store i8 0, ptr %index.addr257, align 8
   %i.ck = tail call noundef zeroext i1 @_ZN5boost6cobalt2opIJNS_6system10error_codeEmEE14awaitable_base13await_suspendINS0_6detail19composition_promiseIJS3_mEEEEEbNSt7__n486116coroutine_handleIT_EE(ptr noundef nonnull align 8 dereferenceable(72) %.reload.addr252, ptr nonnull %i.g) #25
   br i1 %i.ck, label %AfterCoroEnd, label %bb.i
 
@@ -1214,7 +1214,7 @@ AfterCoroSave172:                                 ; preds = %bb.r, %bb.q
   store ptr %i.fv, ptr %i.fu, align 8, !tbaa !64, !alias.scope !173
   store ptr null, ptr %i.g, align 16
   %index.addr258 = getelementptr inbounds nuw i8, ptr %i.e, i64 392
-  store i1 true, ptr %index.addr258, align 8
+  store i8 1, ptr %index.addr258, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   br i1 %i.fo, label %bb.u, label %bb.t
 
@@ -1617,7 +1617,7 @@ bb.d:                                             ; preds = %_ZZN5boost6cobalt8a
   br i1 %.not.i.i31, label %.lr.ph71, label %_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i
 
 bb.e:                                             ; preds = %bb.d
-  store i1 false, ptr %index.addr252, align 8
+  store i8 0, ptr %index.addr252, align 8
   %i.ah = tail call noundef zeroext i1 @_ZN5boost6cobalt2opIJNS_6system10error_codeEmEE14awaitable_base13await_suspendINS0_6detail19composition_promiseIJS3_mEEEEEbNSt7__n486116coroutine_handleIT_EE(ptr noundef nonnull align 8 dereferenceable(72) %.reload.addr247, ptr nonnull %0) #25
   br i1 %i.ah, label %CoroEnd, label %.backedge
 
@@ -1905,7 +1905,7 @@ AfterCoroSave170:                                 ; preds = %bb.m, %bb.l
   %i.dr = load ptr, ptr %i.dj, align 8, !tbaa !61, !noalias !245, !nonnull !62, !align !63
   store ptr %i.dr, ptr %i.dq, align 8, !tbaa !64, !alias.scope !245
   store ptr null, ptr %0, align 8
-  store i1 true, ptr %index.addr252, align 8
+  store i8 1, ptr %index.addr252, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   br i1 %i.di, label %bb.p, label %bb.o
@@ -2010,7 +2010,7 @@ CoroEnd:                                          ; preds = %bb.e
 
 bb.z:                                             ; preds = %bb.y
   store ptr null, ptr %0, align 8
-  store i1 true, ptr %index.addr252, align 8
+  store i8 1, ptr %index.addr252, align 8
   resume { ptr, i32 } %i.ew
 
 bb.aa:                                            ; preds = %bb.y
@@ -2025,8 +2025,9 @@ bb.aa:                                            ; preds = %bb.y
 define internal void @_ZN5boost6cobalt2io8read_all8initiateENS0_18completion_handlerIJNS_6system10error_codeEmEEE.destroy(ptr noundef nonnull align 8 dereferenceable(368) %0) #8 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %AfterCoroSuspend172, label %AfterCoroSuspend, !prof !139
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %AfterCoroSuspend, label %AfterCoroSuspend172, !prof !139
 
 AfterCoroSuspend:                                 ; preds = %resume.entry
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
@@ -2385,7 +2386,7 @@ bb.d:                                             ; preds = %_ZZN5boost6cobalt8a
   br i1 %.not.i.i32, label %.lr.ph71, label %_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i
 
 bb.e:                                             ; preds = %bb.d
-  store i1 false, ptr %index.addr257, align 8
+  store i8 0, ptr %index.addr257, align 8
   %i.ak = tail call noundef zeroext i1 @_ZN5boost6cobalt2opIJNS_6system10error_codeEmEE14awaitable_base13await_suspendINS0_6detail19composition_promiseIJS3_mEEEEEbNSt7__n486116coroutine_handleIT_EE(ptr noundef nonnull align 8 dereferenceable(72) %.reload.addr252, ptr nonnull %0) #25
   br i1 %i.ak, label %CoroEnd, label %.backedge
 
@@ -2673,7 +2674,7 @@ AfterCoroSave172:                                 ; preds = %bb.m, %bb.l
   %i.du = load ptr, ptr %i.dm, align 8, !tbaa !61, !noalias !263, !nonnull !62, !align !63
   store ptr %i.du, ptr %i.dt, align 8, !tbaa !64, !alias.scope !263
   store ptr null, ptr %0, align 8
-  store i1 true, ptr %index.addr257, align 8
+  store i8 1, ptr %index.addr257, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
   %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   br i1 %i.dl, label %bb.p, label %bb.o
@@ -2778,7 +2779,7 @@ CoroEnd:                                          ; preds = %bb.e
 
 bb.z:                                             ; preds = %bb.y
   store ptr null, ptr %0, align 8
-  store i1 true, ptr %index.addr257, align 8
+  store i8 1, ptr %index.addr257, align 8
   resume { ptr, i32 } %i.ez
 
 bb.aa:                                            ; preds = %bb.y
@@ -2793,8 +2794,9 @@ bb.aa:                                            ; preds = %bb.y
 define internal void @_ZN5boost6cobalt2io11read_all_at8initiateENS0_18completion_handlerIJNS_6system10error_codeEmEEE.destroy(ptr noundef nonnull align 8 dereferenceable(368) %0) #8 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %AfterCoroSuspend174, label %AfterCoroSuspend, !prof !139
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %AfterCoroSuspend, label %AfterCoroSuspend174, !prof !139
 
 AfterCoroSuspend:                                 ; preds = %resume.entry
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
@@ -3184,7 +3186,7 @@ attributes #30 = { builtin allocsize(0) }
 !136 = !{!133, !22, i64 24}
 !137 = !{!133, !22, i64 16}
 !138 = !{i64 0, i64 16, !16, i64 16, i64 8, !67}
-!139 = !{!"branch_weights", i32 1667220039, i32 -215494040}
+!139 = !{!"branch_weights", i32 -215494040, i32 1667220039}
 !140 = distinct !{null, null}
 !141 = distinct !{!141, !"_ZN5boost4asio21buffer_sequence_beginINS_6cobalt2io23mutable_buffer_sequenceEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPS7_PKNS0_14mutable_bufferEEE5valueEiE4typeENS9_IXntsr14is_convertibleISA_PKNS0_12const_bufferEEE5valueEiE4typeENS9_IXntsr14is_convertibleIS6_SB_EE5valueEiE4typeENS9_IXntsr14is_convertibleIS6_SG_EE5valueEiE4typeE"}
 !142 = distinct !{!142, !141, !"_ZN5boost4asio21buffer_sequence_beginINS_6cobalt2io23mutable_buffer_sequenceEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPS7_PKNS0_14mutable_bufferEEE5valueEiE4typeENS9_IXntsr14is_convertibleISA_PKNS0_12const_bufferEEE5valueEiE4typeENS9_IXntsr14is_convertibleIS6_SB_EE5valueEiE4typeENS9_IXntsr14is_convertibleIS6_SG_EE5valueEiE4typeE: argument 0"}
