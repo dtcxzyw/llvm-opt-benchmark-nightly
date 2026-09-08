@@ -205,13 +205,13 @@ bb.fw:                                            ; preds = %intel_write_sha_tex
 
 .lr.ph389.preheader.i.i:                          ; preds = %bb.fw, %intel_write_sha_text.exit.i.i
   %i.ss = add nuw nsw i32 %.0200394.i.i, 1        ; 3 uses
-  %wide.trip.count.i.i = zext nneg i32 %i.ss to i64 ; 2 uses
+  %wide.trip.count.i.i = zext i32 %i.ss to i64    ; 2 uses
   %xtraiter255 = and i64 %wide.trip.count.i.i, 1
   %i.st = icmp eq i32 %.0200394.i.i, 0
   br i1 %i.st, label %.lr.ph389.i.i.epil.preheader, label %.lr.ph389.preheader.i.i.new
 
 .lr.ph389.preheader.i.i.new:                      ; preds = %.lr.ph389.preheader.i.i
-  %unroll_iter259 = and i64 %wide.trip.count.i.i, 2147483646
+  %unroll_iter259 = and i64 %wide.trip.count.i.i, 4294967294
   br label %.lr.ph389.i.i
 
 .lr.ph389.i.i:                                    ; preds = %.lr.ph389.i.i, %.lr.ph389.preheader.i.i.new

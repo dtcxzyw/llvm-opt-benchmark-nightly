@@ -204,17 +204,17 @@ _ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.i
 
 .noexc38:                                         ; preds = %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i
   %i.al = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #30 ; 4 uses
+  %2 = getelementptr i8, ptr %i.al, i64 %i.aj
   store i8 0, ptr %i.al, align 1, !tbaa !55
-  %2 = getelementptr inbounds nuw i8, ptr %i.al, i64 1
-  %i.am = getelementptr i8, ptr %i.al, i64 %i.aj
+  %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 1
   %i.an = add nsw i64 %i.aj, -1
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %2, i8 0, i64 %i.an, i1 false)
-  %i.ao = ptrtoint ptr %i.am to i64
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.am, i8 0, i64 %i.an, i1 false)
+  %i.ao = ptrtoint ptr %2 to i64
   br label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit
 
 _ZNSt6vectorIcSaIcEEC2EmRKS0_.exit:               ; preds = %.noexc38, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i
+  %.sroa.17.0 = phi i64 [ %i.ao, %.noexc38 ], [ 0, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
   %.sroa.050.0 = phi ptr [ %i.al, %.noexc38 ], [ null, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i ] ; 11 uses
-  %.0.i.i.i.i.i = phi i64 [ %i.ao, %.noexc38 ], [ 0, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !49 ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
@@ -259,7 +259,7 @@ _ZNSt6vectorIN5video24COpenGL3MaterialRenderer12SUniformInfoESaIS2_EE5clearEv.ex
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 13 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.bf = ptrtoint ptr %.sroa.050.0 to i64
-  %i.bg = sub i64 %.0.i.i.i.i.i, %i.bf
+  %i.bg = sub i64 %.sroa.17.0, %i.bf
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -271,7 +271,7 @@ _ZNSt6vectorIN5video24COpenGL3MaterialRenderer12SUniformInfoESaIS2_EE5clearEv.ex
 
 bb.j:                                             ; preds = %._crit_edge75
   %i.bk = ptrtoint ptr %.sroa.050.0 to i64
-  %i.bl = sub i64 %.0.i.i.i.i.i, %i.bk
+  %i.bl = sub i64 %.sroa.17.0, %i.bk
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.050.0, i64 noundef %i.bl) #28
   br label %.thread64
 
@@ -470,7 +470,7 @@ bb.x:                                             ; preds = %_ZN5video24COpenGL3
 
 bb.y:                                             ; preds = %bb.x
   %i.dn = ptrtoint ptr %.sroa.050.0 to i64
-  %i.do = sub i64 %.0.i.i.i.i.i, %i.dn
+  %i.do = sub i64 %.sroa.17.0, %i.dn
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.050.0, i64 noundef %i.do) #28
   br label %_ZNSt6vectorIcSaIcEED2Ev.exit49
 

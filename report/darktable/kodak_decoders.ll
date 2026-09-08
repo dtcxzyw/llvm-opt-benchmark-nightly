@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
   %i.f = zext i16 %i.e to i64
   %i.g = mul nuw nsw i64 %i.f, 3                  ; 3 uses
   %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #14 ; 4 uses
-  store i8 0, ptr %i.h, align 1, !tbaa !81
   %1 = getelementptr i8, ptr %i.h, i64 %i.g
+  store i8 0, ptr %i.h, align 1, !tbaa !81
   %i.i = add nsw i64 %i.g, -1
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 1
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.j, i8 0, i64 %i.i, i1 false)

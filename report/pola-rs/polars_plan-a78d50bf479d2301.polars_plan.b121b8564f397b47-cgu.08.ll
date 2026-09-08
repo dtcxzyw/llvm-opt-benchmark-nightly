@@ -205,8 +205,8 @@ _RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw
   br label %.lr.ph.i.i.i, !dbg !165684
 
 .lr.ph.i.i.i:                                     ; preds = %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.i.i, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.thread.i.i
-  %i.ud = phi ptr [ %i.ta, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.i.i ], [ %.pre66.i.i, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.thread.i.i ] ; 3 uses
-  %i.ue = phi i64 [ %.fr.i.i.i, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.i.i ], [ %.pre.i.i, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.thread.i.i ] ; 6 uses
+  %i.ud = phi ptr [ %.pre66.i.i, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.thread.i.i ], [ %i.ta, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.i.i ] ; 3 uses
+  %i.ue = phi i64 [ %.pre.i.i, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.thread.i.i ], [ %.fr.i.i.i, %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit21.i.i ] ; 6 uses
   %i.uf = load i32, ptr %.sroa.5.0..sroa_idx232, align 4, !range !3491, !alias.scope !165179, !noalias !165164, !noundef !2277 ; 2 uses
   br i1 %i.qx, label %.lr.ph.split.i.i.i, label %_RNvMs4_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans2ir11tree_formatNtB5_6Canvas9draw_line.exit23.i.i
 

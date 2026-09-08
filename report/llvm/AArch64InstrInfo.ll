@@ -205,6 +205,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_.exit, label %.lr.ph.i.i, !llvm.loop !2261
 
 _ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_.exit: ; preds = %.lr.ph.i.i
+  %.pre94 = load i64, ptr %i.ad, align 8          ; 3 uses
+  %.pre = load i32, ptr %i.x, align 8, !tbaa !255 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #32
   %i.ag = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
@@ -213,10 +215,8 @@ _ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_
   store i32 0, ptr %i.ah, align 8, !tbaa !255
   %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   store i32 16, ptr %i.ai, align 4, !tbaa !256
-  %8 = load i32, ptr %i.x, align 8, !tbaa !255    ; 2 uses
-  %.not.i.i6379 = icmp eq i32 %8, 0
-  %9 = load i64, ptr %i.ad, align 8               ; 3 uses
-  %i.aj = icmp eq i64 %9, 0
+  %.not.i.i6379 = icmp eq i32 %.pre, 0
+  %i.aj = icmp eq i64 %.pre94, 0
   %i.ak = select i1 %.not.i.i6379, i1 %i.aj, i1 false
   %i.al = icmp eq ptr %i.v, null
   %or.cond.not80 = or i1 %i.al, %i.ak
@@ -361,14 +361,14 @@ _ZN4llvm23SmallVectorTemplateBaseIPKNS_12MachineInstrELb1EE9push_backES3_.exit..
   br label %.critedge.loopexit, !llvm.loop !2262
 
 .critedge.loopexit:                               ; preds = %bb.e, %bb.d, %.lr.ph, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_12MachineInstrELb1EE9push_backES3_.exit..critedge.loopexit.loopexit_crit_edge, %..critedge.loopexit_crit_edge
-  %.pre94.a = phi i64 [ %.pre94.pre, %..critedge.loopexit_crit_edge ], [ %9, %.lr.ph ], [ %i.ck, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_12MachineInstrELb1EE9push_backES3_.exit..critedge.loopexit.loopexit_crit_edge ], [ %i.ck, %bb.d ], [ %.pre94.pre95, %bb.e ]
+  %.pre94.a = phi i64 [ %.pre94.pre, %..critedge.loopexit_crit_edge ], [ %.pre94, %.lr.ph ], [ %i.ck, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_12MachineInstrELb1EE9push_backES3_.exit..critedge.loopexit.loopexit_crit_edge ], [ %i.ck, %bb.d ], [ %.pre94.pre95, %bb.e ]
   %.058.lcssa.ph = phi ptr [ %.05881119, %..critedge.loopexit_crit_edge ], [ %i.v, %.lr.ph ], [ %i.ci, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_12MachineInstrELb1EE9push_backES3_.exit..critedge.loopexit.loopexit_crit_edge ], [ %i.ci, %bb.d ], [ %.05881119, %bb.e ]
   %.pre.a = load i32, ptr %i.x, align 8, !tbaa !255
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %_ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_.exit
-  %i.co = phi i64 [ %9, %_ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_.exit ], [ %.pre94.a, %.critedge.loopexit ]
-  %i.cp = phi i32 [ %8, %_ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_.exit ], [ %.pre.a, %.critedge.loopexit ]
+  %i.co = phi i64 [ %.pre94, %_ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_.exit ], [ %.pre94.a, %.critedge.loopexit ]
+  %i.cp = phi i32 [ %.pre, %_ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_.exit ], [ %.pre.a, %.critedge.loopexit ]
   %.058.lcssa = phi ptr [ %i.v, %_ZN4llvm8SmallSetIjLj16ESt4lessIjEEC2INS_6detail15SafeIntIteratorIjLb0EEEEET_S8_.exit ], [ %.058.lcssa.ph, %.critedge.loopexit ] ; 2 uses
   %.not.i.i66 = icmp eq i32 %i.cp, 0
   %i.cq = icmp eq i64 %i.co, 0

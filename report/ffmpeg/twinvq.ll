@@ -205,17 +205,16 @@ get_cos.exit.us136.epil.preheader:                ; preds = %.preheader.loopexit
 
 .preheader..lr.ph.preheader.i120_crit_edge:       ; preds = %.preheader
   %.pre = sext i32 %i.de to i64
-  %.pre158 = uitofp nneg i32 %5 to float
   %.pre160.a = add nsw i32 %5, -1
-  %.pre162 = zext nneg i32 %.pre160.a to i64
+  %.pre160 = uitofp nneg i32 %5 to float
   br label %.lr.ph.preheader.i120
 
 .lr.ph139:                                        ; preds = %.preheader
   %i.df = zext nneg i32 %5 to i64                 ; 3 uses
   %i.dg = sub nsw i64 0, %i.df                    ; 2 uses
-  %7 = uitofp nneg i32 %5 to float                ; 2 uses
-  %8 = add nsw i32 %5, -1
-  %wide.trip.count.i = zext i32 %8 to i64         ; 3 uses
+  %7 = add nsw i32 %5, -1                         ; 2 uses
+  %8 = uitofp nneg i32 %5 to float                ; 2 uses
+  %wide.trip.count.i = zext i32 %7 to i64         ; 2 uses
   %i.dh = lshr i32 %5, 1                          ; 4 uses
   %.not.i90 = icmp eq i32 %6, 0
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 194
@@ -292,7 +291,7 @@ bb.d:                                             ; preds = %.lr.ph139, %interpo
   %i.ew = getelementptr inbounds [4 x i8], ptr %i.eq, i64 %i.dg
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 4 ; 5 uses
   %i.ey = fsub nsz float %i.er, %i.en
-  %i.ez = fdiv nsz float %i.ey, %7                ; 5 uses
+  %i.ez = fdiv nsz float %i.ey, %8                ; 5 uses
   br i1 %i.dq, label %.lr.ph.i87.epil.preheader, label %.lr.ph.i87
 
 .lr.ph.i87:                                       ; preds = %.lr.ph.preheader.i86, %.lr.ph.i87
@@ -531,9 +530,9 @@ interpolate.exit.loopexit183.unr-lcssa:           ; preds = %.lr.ph.i87
   br label %.lr.ph.i87.epil
 
 .lr.ph.i87.epil:                                  ; preds = %.lr.ph.i87.epil, %.lr.ph.i87.epil.preheader
-  %indvars.iv.i88.epil = phi i64 [ %indvars.iv.i88.epil.init, %.lr.ph.i87.epil.preheader ], [ %indvars.iv.next.i89.epil, %.lr.ph.i87.epil ] ; 2 uses
-  %.01011.i.epil = phi float [ %.01011.i.epil.init, %.lr.ph.i87.epil.preheader ], [ %i.je, %.lr.ph.i87.epil ]
-  %epil.iter = phi i64 [ 0, %.lr.ph.i87.epil.preheader ], [ %epil.iter.next, %.lr.ph.i87.epil ]
+  %indvars.iv.i88.epil = phi i64 [ %indvars.iv.next.i89.epil, %.lr.ph.i87.epil ], [ %indvars.iv.i88.epil.init, %.lr.ph.i87.epil.preheader ] ; 2 uses
+  %.01011.i.epil = phi float [ %i.je, %.lr.ph.i87.epil ], [ %.01011.i.epil.init, %.lr.ph.i87.epil.preheader ]
+  %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.i87.epil ], [ 0, %.lr.ph.i87.epil.preheader ]
   %i.je = fadd nsz float %i.ez, %.01011.i.epil    ; 2 uses
   %i.jf = getelementptr inbounds nuw [4 x i8], ptr %i.ex, i64 %indvars.iv.i88.epil
   store float %i.je, ptr %i.jf, align 4, !tbaa !47
@@ -547,8 +546,8 @@ interpolate.exit:                                 ; preds = %interpolate.exit.lo
   br i1 %.not, label %.lr.ph.preheader.i120, label %bb.d, !llvm.loop !153
 
 .lr.ph.preheader.i120:                            ; preds = %interpolate.exit, %.preheader..lr.ph.preheader.i120_crit_edge
-  %wide.trip.count.i121.pre-phi = phi i64 [ %.pre162, %.preheader..lr.ph.preheader.i120_crit_edge ], [ %wide.trip.count.i, %interpolate.exit ] ; 3 uses
-  %.pre-phi159 = phi float [ %.pre158, %.preheader..lr.ph.preheader.i120_crit_edge ], [ %7, %interpolate.exit ]
+  %.pre-phi161 = phi float [ %.pre160, %.preheader..lr.ph.preheader.i120_crit_edge ], [ %8, %interpolate.exit ]
+  %.pre-phi159 = phi i32 [ %.pre160.a, %.preheader..lr.ph.preheader.i120_crit_edge ], [ %7, %interpolate.exit ] ; 2 uses
   %.pre-phi = phi i64 [ %.pre, %.preheader..lr.ph.preheader.i120_crit_edge ], [ %i.dn, %interpolate.exit ]
   %i.jg = zext nneg i32 %4 to i64
   %i.jh = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.jg
@@ -563,14 +562,15 @@ interpolate.exit:                                 ; preds = %interpolate.exit.lo
   %i.jq = getelementptr inbounds [4 x i8], ptr %2, i64 %.pre-phi
   %i.jr = load float, ptr %i.jq, align 4, !tbaa !47 ; 3 uses
   %i.js = fsub nsz float %i.jp, %i.jr
-  %i.jt = fdiv nsz float %i.js, %.pre-phi159      ; 5 uses
-  %9 = add nsw i64 %wide.trip.count.i121.pre-phi, -1
-  %xtraiter214 = and i64 %wide.trip.count.i121.pre-phi, 3 ; 3 uses
-  %i.ju = icmp ult i64 %9, 3
+  %i.jt = fdiv nsz float %i.js, %.pre-phi161      ; 5 uses
+  %wide.trip.count.i121 = zext nneg i32 %.pre-phi159 to i64 ; 2 uses
+  %xtraiter214 = and i64 %wide.trip.count.i121, 3 ; 3 uses
+  %9 = add nsw i32 %.pre-phi159, -1
+  %i.ju = icmp ult i32 %9, 3
   br i1 %i.ju, label %.lr.ph.i122.epil.preheader, label %.lr.ph.preheader.i120.new
 
 .lr.ph.preheader.i120.new:                        ; preds = %.lr.ph.preheader.i120
-  %unroll_iter218 = and i64 %wide.trip.count.i121.pre-phi, 4294967292
+  %unroll_iter218 = and i64 %wide.trip.count.i121, 2147483644
   br label %.lr.ph.i122
 
 .lr.ph.i122:                                      ; preds = %.lr.ph.i122, %.lr.ph.preheader.i120.new
@@ -593,7 +593,7 @@ interpolate.exit:                                 ; preds = %interpolate.exit.lo
   %i.kf = getelementptr inbounds nuw i8, ptr %i.ke, i64 12
   store float %i.kd, ptr %i.kf, align 4, !tbaa !47
   %indvars.iv.next.i125.3 = add nuw nsw i64 %indvars.iv.i123, 4 ; 2 uses
-  %niter219.next.3 = add nuw nsw i64 %niter219, 4 ; 2 uses
+  %niter219.next.3 = add i64 %niter219, 4         ; 2 uses
   %niter219.ncmp.3 = icmp eq i64 %niter219.next.3, %unroll_iter218
   br i1 %niter219.ncmp.3, label %interpolate.exit127.unr-lcssa, label %.lr.ph.i122, !llvm.loop !150
 
