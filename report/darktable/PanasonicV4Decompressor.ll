@@ -161,23 +161,24 @@ bb.i:                                             ; preds = %bb.h
   %i.ag = zext nneg i32 %i.v to i64
   %i.ah = zext nneg i32 %i.y to i64
   %i.ai = mul nuw nsw i64 %i.ah, %i.ag            ; 2 uses
-  %5 = udiv i64 %i.ai, 14                         ; 2 uses
-  %6 = shl nuw nsw i64 %5, 4                      ; 3 uses
-  %7 = icmp samesign ugt i64 %i.ai, 13
-  tail call void @llvm.assume(i1 %7)
+  %5 = urem i64 %i.ai, 14
+  %6 = icmp eq i64 %5, 0
+  tail call void @llvm.assume(i1 %6)
+  %7 = udiv exact i64 %i.ai, 14                   ; 2 uses
+  %8 = shl nuw nsw i64 %7, 4                      ; 3 uses
   %i.aj = icmp eq i32 %4, 0
   br i1 %i.aj, label %_ZN8rawspeed7roundUpEmm.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ak = and i64 %5, 1023
+  %i.ak = and i64 %7, 1023
   %i.al = icmp eq i64 %i.ak, 0
-  %i.am = add nuw nsw i64 %6, 16384
+  %i.am = add nuw nsw i64 %8, 16384
   %.0.i.i = and i64 %i.am, 9223372036854759424
-  %spec.select = select i1 %i.al, i64 %6, i64 %.0.i.i
+  %spec.select = select i1 %i.al, i64 %8, i64 %.0.i.i
   br label %_ZN8rawspeed7roundUpEmm.exit
 
 _ZN8rawspeed7roundUpEmm.exit:                     ; preds = %bb.j, %bb.i
-  %i.an = phi i64 [ %6, %bb.i ], [ %spec.select, %bb.j ] ; 4 uses
+  %i.an = phi i64 [ %8, %bb.i ], [ %spec.select, %bb.j ] ; 4 uses
   %i.ao = icmp samesign ugt i64 %i.an, 4294967295
   br i1 %i.ao, label %bb.k, label %bb.n
 
@@ -580,12 +581,18 @@ bb.f:                                             ; preds = %.lr.ph27
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph27
-  %.019 = phi i32 [ %i.aa, %bb.f ], [ 0, %.lr.ph27 ] ; 2 uses
+  %.019 = phi i32 [ %i.aa, %bb.f ], [ 0, %.lr.ph27 ] ; 3 uses
   %i.ab = load ptr, ptr %0, align 8, !tbaa !18
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 40
   %i.ad = icmp eq i32 %i.x, %.02025
   %spec.select = select i1 %i.ad, ptr %i.o, ptr %i.ac
-  %.0 = load i32, ptr %spec.select, align 8, !tbaa !124 ; 2 uses
+  %.0 = load i32, ptr %spec.select, align 8, !tbaa !124 ; 3 uses
+  %4 = srem i32 %.019, 14
+  %5 = icmp eq i32 %4, 0
+  call void @llvm.assume(i1 %5)
+  %6 = srem i32 %.0, 14
+  %7 = icmp eq i32 %6, 0
+  call void @llvm.assume(i1 %7)
   %i.ae = icmp slt i32 %.019, %.0
   br i1 %i.ae, label %.lr.ph, label %._crit_edge
 

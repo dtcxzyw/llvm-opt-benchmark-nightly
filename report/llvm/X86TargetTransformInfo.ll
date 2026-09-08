@@ -205,8 +205,8 @@ bb.z:                                             ; preds = %_ZNK4llvm16BasicTTI
   br label %_ZN4llvm15InstructionCostpLERKS0_.exit
 
 _ZN4llvm15InstructionCostpLERKS0_.exit:           ; preds = %bb.z, %_ZNK4llvm16BasicTTIImplBaseINS_10X86TTIImplEE23getTypeLegalizationCostEPNS_4TypeE.exit
-  %.sroa.0245.0 = phi i64 [ 0, %_ZNK4llvm16BasicTTIImplBaseINS_10X86TTIImplEE23getTypeLegalizationCostEPNS_4TypeE.exit ], [ %.fca.0.extract93, %bb.z ] ; 3 uses
-  %.sroa.18.0 = phi i32 [ 0, %_ZNK4llvm16BasicTTIImplBaseINS_10X86TTIImplEE23getTypeLegalizationCostEPNS_4TypeE.exit ], [ %spec.select, %bb.z ] ; 3 uses
+  %.sroa.0245.0 = phi i64 [ 0, %_ZNK4llvm16BasicTTIImplBaseINS_10X86TTIImplEE23getTypeLegalizationCostEPNS_4TypeE.exit ], [ %.fca.0.extract93, %bb.z ] ; 6 uses
+  %.sroa.18.0 = phi i32 [ 0, %_ZNK4llvm16BasicTTIImplBaseINS_10X86TTIImplEE23getTypeLegalizationCostEPNS_4TypeE.exit ], [ %spec.select, %bb.z ] ; 6 uses
   %i.bv = add i16 %.sroa.025.0.lcssa38.sink.i.fr, -19
   %spec.select.i198 = icmp ult i16 %i.bv, 197
   %or.cond316 = and i1 %i.bo, %spec.select.i198
@@ -236,7 +236,7 @@ _ZN4llvmmlERKNS_15InstructionCostES2_.exit:       ; preds = %_ZN4llvm15Instructi
 
 bb.aa:                                            ; preds = %_ZN4llvm15InstructionCostpLERKS0_.exit
   %i.cg = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !191 ; 3 uses
+  %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !191 ; 4 uses
   %i.ci = load ptr, ptr %i.ao, align 8, !tbaa !195, !nonnull !174, !align !193
   %i.cj = call { i64, i8 } @_ZNK4llvm10DataLayout17getTypeSizeInBitsEPNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(912) %i.ci, ptr noundef %i.ch) ; 2 uses
   %.fca.1.extract69 = extractvalue { i64, i8 } %i.cj, 1
@@ -249,9 +249,9 @@ bb.ab:                                            ; preds = %bb.aa
 
 _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.aa
   %.fca.0.extract68 = extractvalue { i64, i8 } %i.cj, 0
-  %i.cl = trunc i64 %.fca.0.extract68 to i32      ; 5 uses
+  %i.cl = trunc i64 %.fca.0.extract68 to i32      ; 9 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.cn = load i32, ptr %i.cm, align 8, !tbaa !186 ; 3 uses
+  %i.cn = load i32, ptr %i.cm, align 8, !tbaa !186 ; 4 uses
   %i.co = zext nneg i16 %.sroa.025.0.lcssa38.sink.i.fr to i64 ; 2 uses
   %i.cp = getelementptr [16 x i8], ptr @_ZZNK4llvm3MVT13getSizeInBitsEvE9SizeTable, i64 %i.co ; 2 uses
   %.sroa.2.0..sroa_idx.i = getelementptr i8, ptr %i.cp, i64 -8
@@ -265,7 +265,7 @@ bb.ac:                                            ; preds = %_ZNK4llvm8TypeSizec
 
 _ZNK4llvm8TypeSizecvmEv.exit214:                  ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
   %i.cr = urem i32 128, %i.cl
-  %i.cs = udiv i32 128, %i.cl                     ; 3 uses
+  %i.cs = udiv exact i32 128, %i.cl               ; 4 uses
   %.not180 = icmp eq i32 %i.cr, 0
   br i1 %.not180, label %bb.ae, label %bb.ad
 
@@ -278,17 +278,17 @@ bb.ad:                                            ; preds = %_ZNK4llvm8TypeSizec
 bb.ae:                                            ; preds = %_ZNK4llvm8TypeSizecvmEv.exit214
   %i.cu = getelementptr i8, ptr %i.cp, i64 -16
   %.sroa.0.0.copyload.i211 = load i64, ptr %i.cu, align 16 ; 2 uses
-  %i.cv = call noundef ptr @_ZN4llvm15FixedVectorType3getEPNS_4TypeEj(ptr noundef %i.ch, i32 noundef %i.cs) #23
-  %i.cw = icmp slt i32 %i.cn, 1
-  br i1 %i.cw, label %.critedge185, label %.lr.ph464
-
-.lr.ph464:                                        ; preds = %bb.ae
   %12 = icmp ne i64 %.sroa.0.0.copyload.i211, 0
   %13 = zext i1 %12 to i64                        ; 2 uses
   %14 = sub i64 %.sroa.0.0.copyload.i211, %13
   %15 = lshr i64 %14, 3
   %16 = add nuw nsw i64 %15, %13
-  %17 = trunc i64 %16 to i32
+  %17 = trunc i64 %16 to i32                      ; 3 uses
+  %i.cv = call noundef ptr @_ZN4llvm15FixedVectorType3getEPNS_4TypeEj(ptr noundef %i.ch, i32 noundef %i.cs) #23 ; 2 uses
+  %i.cw = icmp slt i32 %i.cn, 1
+  br i1 %i.cw, label %.critedge185, label %.lr.ph464
+
+.lr.ph464:                                        ; preds = %bb.ae
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.cy = add i32 %.sroa.0269.0.extract.trunc, -1
   %spec.select.i217 = icmp ult i32 %i.cy, 2
@@ -298,25 +298,78 @@ bb.ae:                                            ; preds = %_ZNK4llvm8TypeSizec
   %i.da = getelementptr [2 x i8], ptr @_ZZNK4llvm3MVT23getVectorMinNumElementsEvE10NElemTable, i64 %i.co
   %i.db = getelementptr i8, ptr %i.da, i64 -2
   %i.dc = select i1 %i.a, i32 4, i32 5
+  %18 = add nsw i32 %i.cs, -1
   %i.dd = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
   %i.de = xor i1 %i.a, true
-  br label %bb.af
+  br i1 %or.cond320, label %.lr.ph464.split.us.split, label %bb.af
+
+.lr.ph464.split.us.split:                         ; preds = %.lr.ph464
+  %19 = zext nneg i8 %3 to i64
+  %20 = shl nuw i64 1, %19
+  %21 = shl nsw i32 %17, 3                        ; 2 uses
+  %22 = srem i32 %21, %i.cl
+  %.not181.us502 = icmp eq i32 %22, 0
+  br i1 %.not181.us502, label %.lr.ph504, label %bb.ag
+
+.lr.ph504:                                        ; preds = %.lr.ph464.split.us.split, %._crit_edge.split.us.us
+  %23 = phi i32 [ %42, %._crit_edge.split.us.us ], [ %21, %.lr.ph464.split.us.split ] ; 3 uses
+  %.0166461.us503 = phi i32 [ %41, %._crit_edge.split.us.us ], [ %17, %.lr.ph464.split.us.split ] ; 4 uses
+  %24 = sdiv exact i32 %23, %i.cl                 ; 4 uses
+  %25 = icmp sgt i32 %24, %i.cs
+  br i1 %25, label %26, label %28
+
+26:                                               ; preds = %.lr.ph504
+  %27 = call noundef ptr @_ZN4llvm15FixedVectorType3getEPNS_4TypeEj(ptr noundef %i.ch, i32 noundef %24) #23
+  br label %28
+
+28:                                               ; preds = %26, %.lr.ph504
+  %29 = phi ptr [ %27, %26 ], [ %i.cv, %.lr.ph504 ]
+  %30 = icmp eq i32 %23, %i.cl
+  br i1 %30, label %.lr.ph.us, label %31
+
+31:                                               ; preds = %28
+  %32 = load ptr, ptr %2, align 8, !tbaa !192, !nonnull !174, !align !193
+  %33 = call noundef ptr @_ZN4llvm11IntegerType3getERNS_11LLVMContextEj(ptr noundef nonnull align 8 dereferenceable(8) %32, i32 noundef %23) #23
+  %34 = getelementptr inbounds nuw i8, ptr %29, i64 32
+  %35 = load i32, ptr %34, align 8, !tbaa !186
+  %36 = udiv i32 %35, %24
+  %37 = call noundef ptr @_ZN4llvm15FixedVectorType3getEPNS_4TypeEj(ptr noundef %33, i32 noundef %36) #23 ; 0 uses
+  br label %.lr.ph.us
+
+.lr.ph.us:                                        ; preds = %28, %31
+  %38 = sext i32 %.0166461.us503 to i64
+  %39 = icmp slt i32 %i.cn, %24
+  %40 = icmp ult i64 %20, %38
+  %or.cond568 = select i1 %39, i1 %40, i1 false
+  br i1 %or.cond568, label %._crit_edge.split.us.us, label %.split470.us
+
+._crit_edge.split.us.us:                          ; preds = %.lr.ph.us
+  %41 = sdiv i32 %.0166461.us503, 2               ; 2 uses
+  %42 = shl nsw i32 %41, 3                        ; 2 uses
+  %43 = srem i32 %42, %i.cl
+  %.not181.us = icmp eq i32 %43, 0
+  br i1 %.not181.us, label %.lr.ph504, label %bb.ag
+
+.split470.us:                                     ; preds = %.lr.ph.us
+  %44 = icmp eq i32 %.0166461.us503, 32
+  br i1 %44, label %bb.al, label %.lr.ph.split.us
 
 bb.af:                                            ; preds = %.lr.ph464, %._crit_edge
-  %.sroa.0160.0462 = phi i8 [ %3, %.lr.ph464 ], [ %.sroa.0160.1.lcssa, %._crit_edge ] ; 7 uses
-  %.0166461 = phi i32 [ %17, %.lr.ph464 ], [ %i.gf, %._crit_edge ] ; 7 uses
-  %.0167460 = phi i32 [ 0, %.lr.ph464 ], [ %.1168.lcssa, %._crit_edge ] ; 4 uses
-  %.sroa.18.1459 = phi i32 [ %.sroa.18.0, %.lr.ph464 ], [ %.sroa.18.2.lcssa, %._crit_edge ] ; 7 uses
-  %.sroa.0245.1458 = phi i64 [ %.sroa.0245.0, %.lr.ph464 ], [ %.sroa.0245.2.lcssa, %._crit_edge ] ; 7 uses
-  %.0457 = phi i32 [ %i.cn, %.lr.ph464 ], [ %.1302.lcssa, %._crit_edge ] ; 6 uses
-  %i.df = shl nsw i32 %.0166461, 3                ; 2 uses
+  %.sroa.0160.0462 = phi i8 [ %.sroa.0160.1.lcssa, %._crit_edge ], [ %3, %.lr.ph464 ] ; 5 uses
+  %.0166461 = phi i32 [ %i.gf, %._crit_edge ], [ %17, %.lr.ph464 ] ; 7 uses
+  %.0167460 = phi i32 [ %.1168.lcssa, %._crit_edge ], [ 0, %.lr.ph464 ] ; 3 uses
+  %.sroa.18.1459 = phi i32 [ %.sroa.18.2.lcssa, %._crit_edge ], [ %.sroa.18.0, %.lr.ph464 ] ; 3 uses
+  %.sroa.0245.1458 = phi i64 [ %.sroa.0245.2.lcssa, %._crit_edge ], [ %.sroa.0245.0, %.lr.ph464 ] ; 3 uses
+  %.0457 = phi i32 [ %.1302.lcssa, %._crit_edge ], [ %i.cn, %.lr.ph464 ] ; 4 uses
+  %i.df = shl nsw i32 %.0166461, 3                ; 4 uses
   %i.dg = srem i32 %i.df, %i.cl
-  %i.dh = sdiv i32 %i.df, %i.cl                   ; 11 uses
+  %i.dh = sdiv exact i32 %i.df, %i.cl             ; 8 uses
   %.not181 = icmp eq i32 %i.dg, 0
   br i1 %.not181, label %bb.ah, label %bb.ag
 
-bb.ag:                                            ; preds = %bb.af
-  %i.di = call { i64, i32 } @_ZNK4llvm16BasicTTIImplBaseINS_10X86TTIImplEE15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENS6_16OperandValueInfoEPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %1, ptr noundef nonnull %2, i8 %.sroa.0160.0462, i32 noundef %4, i32 noundef 0, i64 %.fr, ptr noundef %7) ; 2 uses
+bb.ag:                                            ; preds = %bb.af, %._crit_edge.split.us.us, %.lr.ph464.split.us.split
+  %.us-phi468 = phi i8 [ %3, %.lr.ph464.split.us.split ], [ %3, %._crit_edge.split.us.us ], [ %.sroa.0160.0462, %bb.af ]
+  %i.di = call { i64, i32 } @_ZNK4llvm16BasicTTIImplBaseINS_10X86TTIImplEE15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENS6_16OperandValueInfoEPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %1, ptr noundef nonnull %2, i8 %.us-phi468, i32 noundef %4, i32 noundef 0, i64 %.fr, ptr noundef %7) ; 2 uses
   %.fca.0.extract34 = extractvalue { i64, i32 } %i.di, 0
   %.fca.1.extract35 = extractvalue { i64, i32 } %i.di, 1
   br label %.critedge185
@@ -331,13 +384,12 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ai
   %i.dl = phi ptr [ %i.dk, %bb.ai ], [ %i.cv, %bb.ah ] ; 4 uses
-  %i.dm = icmp eq i32 %i.dh, 1
+  %i.dm = icmp eq i32 %i.df, %i.cl
   br i1 %i.dm, label %.lr.ph, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   %i.dn = load ptr, ptr %2, align 8, !tbaa !192, !nonnull !174, !align !193
-  %18 = mul nsw i32 %i.dh, %i.cl
-  %i.do = call noundef ptr @_ZN4llvm11IntegerType3getERNS_11LLVMContextEj(ptr noundef nonnull align 8 dereferenceable(8) %i.dn, i32 noundef %18) #23
+  %i.do = call noundef ptr @_ZN4llvm11IntegerType3getERNS_11LLVMContextEj(ptr noundef nonnull align 8 dereferenceable(8) %i.dn, i32 noundef %i.df) #23
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dl, i64 32
   %i.dq = load i32, ptr %i.dp, align 8, !tbaa !186
   %i.dr = udiv i32 %i.dq, %i.dh
@@ -347,53 +399,38 @@ bb.ak:                                            ; preds = %bb.aj
 .lr.ph:                                           ; preds = %bb.ak, %bb.aj
   %i.dt = phi ptr [ %i.ds, %bb.ak ], [ %i.dl, %bb.aj ] ; 2 uses
   %cond = icmp eq i32 %.0166461, 1                ; 2 uses
-  %i.du = sext i32 %.0166461 to i64               ; 4 uses
-  %i.dv = icmp eq i32 %.0166461, 32               ; 2 uses
-  %i.dw = icmp slt i32 %.0166461, 4               ; 2 uses
+  %i.du = sext i32 %.0166461 to i64               ; 3 uses
+  %i.dv = icmp eq i32 %.0166461, 32
+  %i.dw = icmp slt i32 %.0166461, 4
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dl, i64 32
   %i.dy = icmp sgt i32 %.0166461, 4
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dt, i64 32
-  br i1 %or.cond320, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %spec.select.i.i218, label %.lr.ph.split.split.us, label %.lr.ph.split.split
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  %i.ea = icmp slt i32 %.0457, %i.dh
-  br i1 %i.ea, label %19, label %23
+.lr.ph.split.us:                                  ; preds = %.split470.us
+  %i.ea = icmp slt i32 %.0166461.us503, 4
+  br i1 %i.ea, label %.thread307.us, label %.thread308.us
 
-19:                                               ; preds = %.lr.ph.split.us
-  %20 = zext nneg i8 %.sroa.0160.0462 to i64
-  %21 = shl nuw i64 1, %20
-  %22 = icmp ult i64 %21, %i.du
-  br i1 %22, label %._crit_edge, label %23
-
-23:                                               ; preds = %19, %.lr.ph.split.us
-  br i1 %i.dv, label %bb.al, label %24
-
-24:                                               ; preds = %23
-  br i1 %i.dw, label %.thread307.us, label %.thread308.us
-
-.thread307.us:                                    ; preds = %24
-  %.0.i1.i215.us = call i64 @llvm.sadd.sat.i64(i64 %.sroa.0245.1458, i64 8)
+.thread307.us:                                    ; preds = %.lr.ph.split.us
+  %.0.i1.i215.us = call i64 @llvm.sadd.sat.i64(i64 %.sroa.0245.0, i64 8)
   br label %.critedge185
 
-bb.al:                                            ; preds = %23
+bb.al:                                            ; preds = %.split470.us
   %i.eb = load ptr, ptr %i.cx, align 8, !tbaa !24
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 529
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !649, !range !173, !noundef !174
   %i.ee = trunc nuw i8 %i.ed to i1
   br i1 %i.ee, label %bb.am, label %.thread308.us
 
-.thread308.us:                                    ; preds = %bb.al, %24
-  %.0.i1.i216.us = call i64 @llvm.sadd.sat.i64(i64 %.sroa.0245.1458, i64 4)
+.thread308.us:                                    ; preds = %bb.al, %.lr.ph.split.us
+  %.0.i1.i216.us = call i64 @llvm.sadd.sat.i64(i64 %.sroa.0245.0, i64 4)
   br label %.critedge185
 
 bb.am:                                            ; preds = %bb.al
-  %.0.i1.i.us = call i64 @llvm.sadd.sat.i64(i64 %.sroa.0245.1458, i64 8)
+  %.0.i1.i.us = call i64 @llvm.sadd.sat.i64(i64 %.sroa.0245.0, i64 8)
   br label %.critedge185
 
-.lr.ph.split:                                     ; preds = %.lr.ph
-  br i1 %spec.select.i.i218, label %.lr.ph.split.split.us, label %.lr.ph.split.split
-
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split
+.lr.ph.split.split.us:                            ; preds = %.lr.ph
   %i.ef = icmp slt i32 %.0457, %i.dh
   br i1 %i.ef, label %bb.an, label %.split.us
 
@@ -413,12 +450,12 @@ bb.ap:                                            ; preds = %bb.an
   call void @_ZN4llvm24reportFatalInternalErrorEPKc(ptr noundef nonnull @.str.1) #22
   unreachable
 
-.lr.ph.split.split:                               ; preds = %.lr.ph.split, %.thread309
-  %.sroa.0160.1369 = phi i8 [ %i.gd, %.thread309 ], [ %.sroa.0160.0462, %.lr.ph.split ] ; 4 uses
-  %.1168366 = phi i32 [ %i.fu, %.thread309 ], [ %.0167460, %.lr.ph.split ] ; 4 uses
-  %.sroa.18.2363 = phi i32 [ %.sroa.18.4, %.thread309 ], [ %.sroa.18.1459, %.lr.ph.split ] ; 5 uses
-  %.sroa.0245.2362 = phi i64 [ %.sroa.0245.5, %.thread309 ], [ %.sroa.0245.1458, %.lr.ph.split ] ; 5 uses
-  %.1302359 = phi i32 [ %i.fv, %.thread309 ], [ %.0457, %.lr.ph.split ] ; 5 uses
+.lr.ph.split.split:                               ; preds = %.lr.ph, %.thread309
+  %.sroa.0160.1369 = phi i8 [ %i.gd, %.thread309 ], [ %.sroa.0160.0462, %.lr.ph ] ; 4 uses
+  %.1168366 = phi i32 [ %i.fu, %.thread309 ], [ %.0167460, %.lr.ph ] ; 4 uses
+  %.sroa.18.2363 = phi i32 [ %.sroa.18.4, %.thread309 ], [ %.sroa.18.1459, %.lr.ph ] ; 5 uses
+  %.sroa.0245.2362 = phi i64 [ %.sroa.0245.5, %.thread309 ], [ %.sroa.0245.1458, %.lr.ph ] ; 5 uses
+  %.1302359 = phi i32 [ %i.fv, %.thread309 ], [ %.0457, %.lr.ph ] ; 5 uses
   %i.ej = icmp slt i32 %.1302359, %i.dh
   br i1 %i.ej, label %bb.aq, label %bb.at
 
@@ -491,8 +528,8 @@ bb.ay:                                            ; preds = %_ZN4llvm15Instructi
   br i1 %or.cond8, label %.thread309, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %25 = urem i32 %i.er, %i.cs
-  %i.fa = sdiv i32 %25, %i.dh                     ; 3 uses
+  %45 = and i32 %i.er, %18
+  %i.fa = sdiv i32 %45, %i.dh                     ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #23
   %i.fb = load i32, ptr %i.dz, align 8, !tbaa !186 ; 2 uses
   %i.fc = add nsw i32 %i.fa, 1                    ; 2 uses
@@ -578,19 +615,19 @@ _ZN4llvm5APIntD2Ev.exit:                          ; preds = %_ZN4llvm5APInt10get
   %i.ge = icmp sgt i32 %i.fv, 0
   br i1 %i.ge, label %.lr.ph.split.split, label %.critedge185, !llvm.loop !646
 
-._crit_edge:                                      ; preds = %bb.ar, %bb.as, %19, %bb.ap, %bb.ao
-  %.1302.lcssa = phi i32 [ %.0457, %bb.ao ], [ %.0457, %19 ], [ %.0457, %bb.ap ], [ %.1302359, %bb.as ], [ %.1302359, %bb.ar ] ; 2 uses
-  %.sroa.0245.2.lcssa = phi i64 [ %.sroa.0245.1458, %bb.ao ], [ %.sroa.0245.1458, %19 ], [ %.sroa.0245.1458, %bb.ap ], [ %.sroa.0245.2362, %bb.as ], [ %.sroa.0245.2362, %bb.ar ] ; 2 uses
-  %.sroa.18.2.lcssa = phi i32 [ %.sroa.18.1459, %bb.ao ], [ %.sroa.18.1459, %19 ], [ %.sroa.18.1459, %bb.ap ], [ %.sroa.18.2363, %bb.as ], [ %.sroa.18.2363, %bb.ar ] ; 2 uses
-  %.1168.lcssa = phi i32 [ %.0167460, %bb.ao ], [ %.0167460, %19 ], [ %.0167460, %bb.ap ], [ %.1168366, %bb.as ], [ %.1168366, %bb.ar ]
-  %.sroa.0160.1.lcssa = phi i8 [ %.sroa.0160.0462, %bb.ao ], [ %.sroa.0160.0462, %19 ], [ %.sroa.0160.0462, %bb.ap ], [ %.sroa.0160.1369, %bb.as ], [ %.sroa.0160.1369, %bb.ar ]
+._crit_edge:                                      ; preds = %bb.ar, %bb.as, %bb.ap, %bb.ao
+  %.1302.lcssa = phi i32 [ %.0457, %bb.ap ], [ %.0457, %bb.ao ], [ %.1302359, %bb.as ], [ %.1302359, %bb.ar ] ; 2 uses
+  %.sroa.0245.2.lcssa = phi i64 [ %.sroa.0245.1458, %bb.ap ], [ %.sroa.0245.1458, %bb.ao ], [ %.sroa.0245.2362, %bb.as ], [ %.sroa.0245.2362, %bb.ar ] ; 2 uses
+  %.sroa.18.2.lcssa = phi i32 [ %.sroa.18.1459, %bb.ap ], [ %.sroa.18.1459, %bb.ao ], [ %.sroa.18.2363, %bb.as ], [ %.sroa.18.2363, %bb.ar ] ; 2 uses
+  %.1168.lcssa = phi i32 [ %.0167460, %bb.ap ], [ %.0167460, %bb.ao ], [ %.1168366, %bb.as ], [ %.1168366, %bb.ar ]
+  %.sroa.0160.1.lcssa = phi i8 [ %.sroa.0160.0462, %bb.ap ], [ %.sroa.0160.0462, %bb.ao ], [ %.sroa.0160.1369, %bb.as ], [ %.sroa.0160.1369, %bb.ar ]
   %i.gf = sdiv i32 %.0166461, 2
   %i.gg = icmp slt i32 %.1302.lcssa, 1
   br i1 %i.gg, label %.critedge185, label %bb.af, !llvm.loop !647
 
 .critedge185:                                     ; preds = %._crit_edge, %.thread309, %bb.ae, %.thread307.us, %.thread308.us, %bb.am, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit, %bb.ag, %bb.ad, %"_ZN4llvm6all_ofINS_14iterator_rangeIPKNS_3UseEEEZNKS_10X86TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENSA_16OperandValueInfoEPKNS_11InstructionEE3$_0EEbOT_T0_.exit", %bb.q, %_ZN4llvm16dyn_cast_or_nullINS_9StoreInstEKNS_11InstructionEEEDaPT0_.exit.thread, %bb.b
   %.sroa.0293.4 = phi i64 [ %.fca.0.extract118, %bb.b ], [ %.fca.0.extract104, %bb.q ], [ 8, %"_ZN4llvm6all_ofINS_14iterator_rangeIPKNS_3UseEEEZNKS_10X86TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENSA_16OperandValueInfoEPKNS_11InstructionEE3$_0EEbOT_T0_.exit" ], [ 4, %_ZN4llvm16dyn_cast_or_nullINS_9StoreInstEKNS_11InstructionEEEDaPT0_.exit.thread ], [ %.0.i.i208, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit ], [ %.0.i1.i216.us, %.thread308.us ], [ %.fca.0.extract57, %bb.ad ], [ %.fca.0.extract34, %bb.ag ], [ %.0.i1.i.us, %bb.am ], [ %.0.i1.i215.us, %.thread307.us ], [ %.sroa.0245.0, %bb.ae ], [ %.sroa.0245.5, %.thread309 ], [ %.sroa.0245.2.lcssa, %._crit_edge ]
-  %.sroa.10.4 = phi i32 [ %.fca.1.extract119, %bb.b ], [ %.fca.1.extract105, %bb.q ], [ 0, %"_ZN4llvm6all_ofINS_14iterator_rangeIPKNS_3UseEEEZNKS_10X86TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENSA_16OperandValueInfoEPKNS_11InstructionEE3$_0EEbOT_T0_.exit" ], [ 0, %_ZN4llvm16dyn_cast_or_nullINS_9StoreInstEKNS_11InstructionEEEDaPT0_.exit.thread ], [ %spec.select.i207, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit ], [ %.sroa.18.1459, %.thread308.us ], [ %.fca.1.extract58, %bb.ad ], [ %.fca.1.extract35, %bb.ag ], [ %.sroa.18.1459, %bb.am ], [ %.sroa.18.1459, %.thread307.us ], [ %.sroa.18.0, %bb.ae ], [ %.sroa.18.4, %.thread309 ], [ %.sroa.18.2.lcssa, %._crit_edge ]
+  %.sroa.10.4 = phi i32 [ %.fca.1.extract119, %bb.b ], [ %.fca.1.extract105, %bb.q ], [ 0, %"_ZN4llvm6all_ofINS_14iterator_rangeIPKNS_3UseEEEZNKS_10X86TTIImpl15getMemoryOpCostEjPNS_4TypeENS_5AlignEjNS_19TargetTransformInfo14TargetCostKindENSA_16OperandValueInfoEPKNS_11InstructionEE3$_0EEbOT_T0_.exit" ], [ 0, %_ZN4llvm16dyn_cast_or_nullINS_9StoreInstEKNS_11InstructionEEEDaPT0_.exit.thread ], [ %spec.select.i207, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit ], [ %.sroa.18.0, %.thread308.us ], [ %.fca.1.extract58, %bb.ad ], [ %.fca.1.extract35, %bb.ag ], [ %.sroa.18.0, %bb.am ], [ %.sroa.18.0, %.thread307.us ], [ %.sroa.18.0, %bb.ae ], [ %.sroa.18.4, %.thread309 ], [ %.sroa.18.2.lcssa, %._crit_edge ]
   %.fca.0.insert = insertvalue { i64, i32 } poison, i64 %.sroa.0293.4, 0
   %.fca.1.insert = insertvalue { i64, i32 } %.fca.0.insert, i32 %.sroa.10.4, 1
   ret { i64, i32 } %.fca.1.insert

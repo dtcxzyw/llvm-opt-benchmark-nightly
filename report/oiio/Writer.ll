@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.preheader.i
   %.03034.us.i = phi i32 [ %i.dm, %.preheader.split.us.i.preheader ], [ %i.ed, %bb.p ] ; 2 uses
   %i.dn = trunc nuw nsw i64 %indvars.iv106 to i32 ; 2 uses
   %i.do = urem i32 %i.dn, 3                       ; 2 uses
-  %i.dp = udiv i32 %i.dn, 3
+  %i.dp = udiv exact i32 %i.dn, 3
   %i.dq = icmp eq i32 %i.do, 0
   br i1 %i.dq, label %bb.o, label %bb.p
 
@@ -238,7 +238,7 @@ bb.p:                                             ; preds = %bb.o, %.preheader.s
   %.03034.i = phi i32 [ %i.dl, %.preheader.split.i.preheader ], [ %i.et, %bb.r ] ; 2 uses
   %i.ee = trunc nuw nsw i64 %indvars.iv103 to i32 ; 2 uses
   %i.ef = urem i32 %i.ee, 3                       ; 2 uses
-  %i.eg = udiv i32 %i.ee, 3
+  %i.eg = udiv exact i32 %i.ee, 3
   %i.eh = icmp eq i32 %i.ef, 0
   br i1 %i.eh, label %bb.q, label %bb.r
 
@@ -535,7 +535,7 @@ bb.j:                                             ; preds = %.preheader.i
   %.03034.us.i = phi i32 [ %i.bs, %.preheader.split.us.i.preheader ], [ %i.cj, %bb.l ] ; 2 uses
   %i.bt = trunc nuw nsw i64 %indvars.iv96 to i32  ; 2 uses
   %i.bu = urem i32 %i.bt, 3                       ; 2 uses
-  %i.bv = udiv i32 %i.bt, 3
+  %i.bv = udiv exact i32 %i.bt, 3
   %i.bw = icmp eq i32 %i.bu, 0
   br i1 %i.bw, label %bb.k, label %bb.l
 
@@ -568,7 +568,7 @@ bb.l:                                             ; preds = %bb.k, %.preheader.s
   %.03034.i = phi i32 [ %i.br, %.preheader.split.i.preheader ], [ %i.cz, %bb.n ] ; 2 uses
   %i.ck = trunc nuw nsw i64 %indvars.iv93 to i32  ; 2 uses
   %i.cl = urem i32 %i.ck, 3                       ; 2 uses
-  %i.cm = udiv i32 %i.ck, 3
+  %i.cm = udiv exact i32 %i.ck, 3
   %i.cn = icmp eq i32 %i.cl, 0
   br i1 %i.cn, label %bb.m, label %bb.n
 
@@ -971,7 +971,7 @@ bb.c:                                             ; preds = %.preheader
   %.03034.us = phi i32 [ %i.ag, %bb.e ], [ %i.j, %bb.c ] ; 2 uses
   %.03133.us = phi i32 [ %i.ah, %bb.e ], [ 1, %bb.c ] ; 4 uses
   %i.l = urem i32 %.03133.us, 3                   ; 2 uses
-  %i.m = udiv i32 %.03133.us, 3
+  %i.m = udiv exact i32 %.03133.us, 3
   %i.n = icmp eq i32 %i.l, 0
   br i1 %i.n, label %bb.d, label %bb.e
 
@@ -1010,7 +1010,7 @@ bb.e:                                             ; preds = %bb.d, %.preheader.s
   %.03034 = phi i32 [ %i.bd, %bb.g ], [ %i.g, %bb.b ] ; 2 uses
   %.03133 = phi i32 [ %i.be, %bb.g ], [ 1, %bb.b ] ; 4 uses
   %i.aj = urem i32 %.03133, 3                     ; 2 uses
-  %i.ak = udiv i32 %.03133, 3
+  %i.ak = udiv exact i32 %.03133, 3
   %i.al = icmp eq i32 %i.aj, 0
   br i1 %i.al, label %bb.f, label %bb.g
 

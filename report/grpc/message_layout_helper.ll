@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = urem i64 %3, %2                          ; 2 uses
-  %i.c = udiv i64 %3, %2                          ; 3 uses
+  %i.c = udiv exact i64 %3, %2                    ; 3 uses
   %i.d = icmp eq i64 %i.b, 0
   br i1 %i.d, label %bb.e, label %bb.f, !prof !72
 
@@ -381,7 +381,7 @@ bb.j:                                             ; preds = %.lr.ph75, %_ZN6goog
   %i.bk = ashr exact i64 %i.bj, 5
   %i.bl = icmp ult i64 %.03874, %i.bk
   %i.bm = icmp ult i64 %.03874, %i.bg
-  %or.cond72 = and i1 %i.bm, %i.bl
+  %or.cond72 = and i1 %i.bl, %i.bm
   br i1 %or.cond72, label %.lr.ph, label %.critedge
 
 .critedge:                                        ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroup6AppendERKS3_.exit, %bb.j
@@ -520,7 +520,7 @@ _ZN6google8protobuf8compiler3cpp10FieldGroup6AppendERKS3_.exit: ; preds = %._ZN6
   %i.dy = ashr exact i64 %i.dx, 5
   %i.dz = icmp ult i64 %i.du, %i.dy
   %i.ea = icmp ult i64 %i.du, %i.bg
-  %or.cond = and i1 %i.ea, %i.dz
+  %or.cond = and i1 %i.dz, %i.ea
   br i1 %or.cond, label %.lr.ph, label %.critedge, !llvm.loop !125
 
 bb.r:                                             ; preds = %bb.q

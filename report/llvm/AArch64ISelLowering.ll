@@ -205,7 +205,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.qd = sext i32 %i.qa to i64
   %i.qe = sub nsw i64 %i.qd, %i.pz                ; 3 uses
   %i.qf = urem i64 %i.qe, %i.ni
-  %i.qg = udiv i64 %i.qe, %i.ni
+  %i.qg = udiv exact i64 %i.qe, %i.ni
   %.not70.i = icmp eq i64 %i.qf, 0
   br i1 %.not70.i, label %.preheader.i, label %.loopexit.i655
 
@@ -608,7 +608,7 @@ _ZNK4llvm7SDValue24getScalarValueSizeInBitsEv.exit28.i: ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #35
   %i.bo = trunc i64 %.pn.i.i.i26.i to i32         ; 2 uses
   %i.bp = urem i32 %i.ar, %i.bo
-  %i.bq = udiv i32 %i.ar, %i.bo
+  %i.bq = udiv exact i32 %i.ar, %i.bo
   %.not13.i = icmp eq i32 %i.bp, 0
   br i1 %.not13.i, label %bb.l, label %thread-pre-split
 
@@ -1011,7 +1011,7 @@ _ZNK4llvm3EVT21getVectorElementCountEv.exit:      ; preds = %bb.l, %bb.m
 _ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit: ; preds = %_ZNK4llvm3EVT21getVectorElementCountEv.exit
   %.sroa.0422.0.extract.trunc = trunc i64 %.sroa.0.0.in.i to i32 ; 2 uses
   %i.cb = urem i32 %.sroa.0422.0.extract.trunc, %i.bs
-  %i.cc = udiv i32 %.sroa.0422.0.extract.trunc, %i.bs ; 4 uses
+  %i.cc = udiv exact i32 %.sroa.0422.0.extract.trunc, %i.bs ; 4 uses
   %i.cd = icmp eq i32 %i.cb, 0
   br i1 %i.cd, label %bb.n, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread
 
@@ -1414,10 +1414,10 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.i: ; preds = %bb.
   %.0.i.i.i.i = load i64, ptr %spec.select.i.i.i.i, align 8, !tbaa !334
   %i.m = trunc i64 %.0.i.i.i.i to i32             ; 2 uses
   %i.n = urem i32 %i.m, %2
-  %i.o = udiv i32 %i.m, %2
+  %i.o = udiv exact i32 %i.m, %2
   %.not.i.i = icmp eq i32 %i.n, 0
   %i.p = icmp ult i32 %i.o, 32
-  %or.cond = and i1 %.not.i.i, %i.p
+  %or.cond = select i1 %.not.i.i, i1 %i.p, i1 false
   br i1 %or.cond, label %bb.c, label %_ZL30isValidImmForSVEVecImmAddrModeN4llvm7SDValueEj.exit.thread
 
 _ZL30isValidImmForSVEVecImmAddrModeN4llvm7SDValueEj.exit.thread: ; preds = %bb.a, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.i
@@ -1820,10 +1820,10 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.i: ; preds = %_ZN
   %.0.i.i.i.i = load i64, ptr %spec.select.i.i.i.i182, align 8, !tbaa !334
   %i.dg = trunc i64 %.0.i.i.i.i to i32            ; 2 uses
   %i.dh = urem i32 %i.dg, %i.cw
-  %i.di = udiv i32 %i.dg, %i.cw
+  %i.di = udiv exact i32 %i.dg, %i.cw
   %.not.i.i183 = icmp eq i32 %i.dh, 0
   %i.dj = icmp ult i32 %i.di, 32
-  %or.cond = and i1 %.not.i.i183, %i.dj
+  %or.cond = select i1 %.not.i.i183, i1 %i.dj, i1 false
   br i1 %or.cond, label %bb.y, label %_ZL30isValidImmForSVEVecImmAddrModeN4llvm7SDValueEj.exit.thread
 
 _ZL30isValidImmForSVEVecImmAddrModeN4llvm7SDValueEj.exit.thread: ; preds = %_ZNK4llvm3EVT19getScalarSizeInBitsEv.exit181, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.i
@@ -2226,10 +2226,10 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.i: ; preds = %_ZN
   %.0.i.i.i.i = load i64, ptr %spec.select.i.i.i.i162, align 8, !tbaa !334
   %i.da = trunc i64 %.0.i.i.i.i to i32            ; 2 uses
   %i.db = urem i32 %i.da, %i.cq
-  %i.dc = udiv i32 %i.da, %i.cq
+  %i.dc = udiv exact i32 %i.da, %i.cq
   %.not.i.i163 = icmp eq i32 %i.db, 0
   %i.dd = icmp ult i32 %i.dc, 32
-  %or.cond325 = and i1 %.not.i.i163, %i.dd
+  %or.cond325 = select i1 %.not.i.i163, i1 %i.dd, i1 false
   br i1 %or.cond325, label %bb.w, label %_ZL30isValidImmForSVEVecImmAddrModeN4llvm7SDValueEj.exit.thread
 
 _ZL30isValidImmForSVEVecImmAddrModeN4llvm7SDValueEj.exit.thread: ; preds = %_ZNK4llvm3EVT19getScalarSizeInBitsEv.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.i

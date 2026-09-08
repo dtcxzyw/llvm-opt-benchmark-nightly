@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.aw = srem i32 %.1.i.i.1, 6
-  %i.ax = sdiv i32 %.1.i.i.1, 6
+  %i.ax = sdiv exact i32 %.1.i.i.1, 6
   %i.ay = icmp eq i32 %i.aw, 0
   br i1 %i.ay, label %.thread58.i, label %bb.u
 
@@ -219,7 +219,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.bc = srem i32 %.1.i.i.1, 14
-  %i.bd = sdiv i32 %.1.i.i.1, 14
+  %i.bd = sdiv exact i32 %.1.i.i.1, 14
   %i.be = icmp eq i32 %i.bc, 0
   br i1 %i.be, label %.thread58.i, label %.thread.i.i
 
@@ -622,7 +622,7 @@ bb.bg:                                            ; preds = %bb.be
   br i1 %i.kc, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.kd = udiv i32 %.sroa.10.384.i.i, 6
+  %i.kd = udiv exact i32 %.sroa.10.384.i.i, 6
   br label %skl_wrpll_get_multipliers.exit.i.thread148.i
 
 bb.bi:                                            ; preds = %bb.bg
@@ -631,7 +631,7 @@ bb.bi:                                            ; preds = %bb.bg
   br i1 %i.kf, label %bb.bj, label %skl_wrpll_get_multipliers.exit.i.thread176.i
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.kg = udiv i32 %.sroa.10.384.i.i, 14
+  %i.kg = udiv exact i32 %.sroa.10.384.i.i, 14
   br label %skl_wrpll_get_multipliers.exit.i.thread163.i
 
 .thread.thread.i.i:                               ; preds = %.thread.i.i

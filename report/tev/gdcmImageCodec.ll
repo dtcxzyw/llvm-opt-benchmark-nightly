@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
   %i.l = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.j, i64 noundef %i.h) ; 0 uses
   %i.m = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE5seekgExNS_8ios_base7seekdirE(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef 0, i32 noundef 0) ; 0 uses
   %i.n = urem i64 %i.h, 3
-  %i.o = udiv i64 %i.h, 3                         ; 5 uses
+  %i.o = udiv exact i64 %i.h, 3                   ; 5 uses
   %i.p = icmp eq i64 %i.n, 0
   br i1 %i.p, label %bb.i, label %bb.f
 
@@ -225,15 +225,14 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.e
   %i.s = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.i) #28 ; 4 uses
-  %.not = icmp ult i64 %i.h, 3
+  %.not = icmp eq i64 %i.h, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.i
   %i.t = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.o ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.o ; 2 uses
   %xtraiter = and i64 %i.o, 1
-  %.off = add i64 %i.h, -3
-  %3 = icmp ult i64 %.off, 3
+  %3 = icmp eq i64 %i.h, 3
   br i1 %3, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader

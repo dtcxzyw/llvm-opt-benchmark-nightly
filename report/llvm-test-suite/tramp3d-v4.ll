@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %bb.b, %_ZNSt6vector
   %i.ab = phi ptr [ %i.i, %bb.b ], [ %i.aa, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 2 uses
   %i.ac = phi ptr [ %i.l, %bb.b ], [ %i.z, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 2 uses
   %i.ad = phi ptr [ %i.k, %bb.b ], [ %i.w, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ] ; 2 uses
-  %i.ae = sdiv i32 %.121, %storemerge24           ; 3 uses
+  %i.ae = sdiv exact i32 %.121, %storemerge24     ; 3 uses
   %i.af = srem i32 %i.ae, %storemerge24
   %i.ag = icmp eq i32 %i.af, 0
   br i1 %i.ag, label %.lr.ph, label %._crit_edge, !llvm.loop !3125

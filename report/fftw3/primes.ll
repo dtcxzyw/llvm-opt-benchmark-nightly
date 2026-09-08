@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %.17 = phi i64 [ %i.e, %.lr.ph ], [ %.069, %.preheader ]
-  %i.e = sdiv i64 %.17, %i.b                      ; 3 uses
+  %i.e = sdiv exact i64 %.17, %i.b                ; 3 uses
   %i.f = srem i64 %i.e, %i.b
   %i.g = icmp eq i64 %i.f, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge, !llvm.loop !2
@@ -291,7 +291,7 @@ bb.g:                                             ; preds = %bb.c
 
 bb.h:                                             ; preds = %bb.g
   %i.n = urem i64 %1, %i.l
-  %i.o = udiv i64 %1, %i.l                        ; 3 uses
+  %i.o = udiv exact i64 %1, %i.l                  ; 3 uses
   %i.p = icmp eq i64 %i.n, 0
   br i1 %i.p, label %.preheader.i.i, label %fftw_first_divisor.exit
 
@@ -345,9 +345,9 @@ define dso_local range(i32 0, 2) i32 @fftw_factors_into_small_primes(i64 noundef
   br i1 %i.b, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
-  %.17.i = phi i64 [ %1, %.lr.ph.i ], [ %0, %.preheader.i ]
-  %1 = sdiv i64 %.17.i, 2                         ; 3 uses
-  %i.c = and i64 %1, 1
+  %.17.i = phi i64 [ %1, %.lr.ph.i ], [ %0, %.preheader.i ] ; 2 uses
+  %1 = ashr exact i64 %.17.i, 1                   ; 2 uses
+  %i.c = and i64 %.17.i, 2
   %i.d = icmp eq i64 %i.c, 0
   br i1 %i.d, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !2
 
@@ -359,7 +359,7 @@ define dso_local range(i32 0, 2) i32 @fftw_factors_into_small_primes(i64 noundef
 
 .lr.ph.i.1:                                       ; preds = %._crit_edge.i, %.lr.ph.i.1
   %.17.i.1 = phi i64 [ %i.g, %.lr.ph.i.1 ], [ %.1.lcssa.i, %._crit_edge.i ]
-  %i.g = sdiv i64 %.17.i.1, 3                     ; 3 uses
+  %i.g = sdiv exact i64 %.17.i.1, 3               ; 3 uses
   %i.h = srem i64 %i.g, 3
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %.lr.ph.i.1, label %._crit_edge.i.1, !llvm.loop !2
@@ -372,7 +372,7 @@ define dso_local range(i32 0, 2) i32 @fftw_factors_into_small_primes(i64 noundef
 
 .lr.ph.i.2:                                       ; preds = %._crit_edge.i.1, %.lr.ph.i.2
   %.17.i.2 = phi i64 [ %i.l, %.lr.ph.i.2 ], [ %.1.lcssa.i.1, %._crit_edge.i.1 ]
-  %i.l = sdiv i64 %.17.i.2, 5                     ; 3 uses
+  %i.l = sdiv exact i64 %.17.i.2, 5               ; 3 uses
   %i.m = srem i64 %i.l, 5
   %i.n = icmp eq i64 %i.m, 0
   br i1 %i.n, label %.lr.ph.i.2, label %._crit_edge.i.2, !llvm.loop !2

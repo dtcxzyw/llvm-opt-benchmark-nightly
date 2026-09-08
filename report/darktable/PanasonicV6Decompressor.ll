@@ -202,8 +202,11 @@ bb.a:
   %4 = alloca %"struct.std::array.57", align 8    ; 6 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !18     ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !112  ; 3 uses
-  %i.d = sdiv i32 %i.c, 14                        ; 3 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !112  ; 4 uses
+  %5 = srem i32 %i.c, 14
+  %6 = icmp eq i32 %5, 0
+  tail call void @llvm.assume(i1 %6)
+  %i.d = sdiv exact i32 %i.c, 14                  ; 3 uses
   %i.e = shl nsw i32 %i.d, 4                      ; 3 uses
   %i.f = mul nsw i32 %i.e, %1                     ; 2 uses
   %i.g = zext i32 %i.f to i64                     ; 2 uses
@@ -233,7 +236,7 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.g
   %i.s = icmp sgt i32 %i.c, -14
   tail call void @llvm.assume(i1 %i.s)
-  %i.t = icmp sgt i32 %i.c, 13
+  %i.t = icmp sgt i32 %i.c, 0
   br i1 %i.t, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
@@ -260,6 +263,7 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   %i.am = zext nneg i32 %i.al to i64
   %i.an = getelementptr inbounds nuw [2 x i8], ptr %i.v, i64 %i.am
   %i.ao = zext nneg i32 %i.aa to i64
+  tail call void @llvm.assume(i1 %i.ak)
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZNK8rawspeed23PanasonicV6Decompressor15decompressBlockIL_ZNS0_14TwelveBitBlockEEEEvRNS_10ByteStreamEii.exit, %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
@@ -308,7 +312,6 @@ _ZN8rawspeed12_GLOBAL__N_121pana_cs6_page_decoderILi12EEC2ENS_10ByteStreamE.exit
   store i64 0, ptr %3, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   store i64 0, ptr %4, align 8
-  tail call void @llvm.assume(i1 %i.ak)
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN8rawspeed12_GLOBAL__N_121pana_cs6_page_decoderILi12EEC2ENS_10ByteStreamE.exit, %bb.o
@@ -438,8 +441,11 @@ bb.a:
   %4 = alloca %"struct.std::array.57", align 8    ; 6 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !18     ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !112  ; 3 uses
-  %i.d = sdiv i32 %i.c, 11                        ; 3 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !112  ; 4 uses
+  %5 = srem i32 %i.c, 11
+  %6 = icmp eq i32 %5, 0
+  tail call void @llvm.assume(i1 %6)
+  %i.d = sdiv exact i32 %i.c, 11                  ; 3 uses
   %i.e = shl nsw i32 %i.d, 4                      ; 3 uses
   %i.f = mul nsw i32 %i.e, %1                     ; 2 uses
   %i.g = zext i32 %i.f to i64                     ; 2 uses
@@ -469,7 +475,7 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.g
   %i.s = icmp sgt i32 %i.c, -11
   tail call void @llvm.assume(i1 %i.s)
-  %i.t = icmp sgt i32 %i.c, 10
+  %i.t = icmp sgt i32 %i.c, 0
   br i1 %i.t, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
@@ -497,6 +503,7 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   %i.an = zext nneg i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw [2 x i8], ptr %i.v, i64 %i.an
   %i.ap = zext nneg i32 %i.aa to i64
+  tail call void @llvm.assume(i1 %i.al)
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZNK8rawspeed23PanasonicV6Decompressor15decompressBlockIL_ZNS0_16FourteenBitBlockEEEEvRNS_10ByteStreamEii.exit, %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
@@ -573,7 +580,6 @@ _ZN8rawspeed12_GLOBAL__N_121pana_cs6_page_decoderILi14EEC2ENS_10ByteStreamE.exit
   store i64 0, ptr %3, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   store i64 0, ptr %4, align 8
-  tail call void @llvm.assume(i1 %i.al)
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN8rawspeed12_GLOBAL__N_121pana_cs6_page_decoderILi14EEC2ENS_10ByteStreamE.exit, %_ZNK8rawspeed10Array2DRefItEclEii.exit.i

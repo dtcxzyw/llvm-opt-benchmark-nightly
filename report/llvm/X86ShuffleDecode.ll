@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = urem i32 %i.c, %1
-  %i.f = udiv i32 %i.c, %1
+  %i.f = udiv exact i32 %i.c, %1
   %.not35 = icmp eq i32 %i.e, 0
   br i1 %.not35, label %bb.c, label %.loopexit
 
@@ -377,7 +377,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = urem i32 %i.c, %1
-  %i.f = udiv i32 %i.c, %1                        ; 2 uses
+  %i.f = udiv exact i32 %i.c, %1                  ; 2 uses
   %.not44 = icmp eq i32 %i.e, 0
   br i1 %.not44, label %bb.c, label %.loopexit
 
@@ -428,7 +428,7 @@ _ZN4llvm15SmallVectorImplIiE6appendEmi.exit:      ; preds = %_ZN4llvm23SmallVect
 
 bb.f:                                             ; preds = %bb.c
   %i.y = udiv i32 %spec.store.select, %1          ; 2 uses
-  %.not4556 = icmp ugt i32 %1, %i.c
+  %.not4556 = icmp eq i32 %i.c, 0
   br i1 %.not4556, label %.preheader55, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.f

@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 32
-  %i.p = load i32, ptr %i.o, align 8, !tbaa !194  ; 36 uses
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !194  ; 37 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
   %i.q = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   store i32 %i.p, ptr %i.q, align 8, !tbaa !29, !alias.scope !565
@@ -608,7 +608,7 @@ _ZNK4llvm4User10getOperandEj.exit518:             ; preds = %bb.hn, %bb.ho
 
 bb.hp:                                            ; preds = %_ZNK4llvm4User10getOperandEj.exit518
   %i.ael = getelementptr inbounds nuw i8, ptr %i.aeh, i64 32
-  %i.aem = load i32, ptr %i.ael, align 8, !tbaa !194 ; 11 uses
+  %i.aem = load i32, ptr %i.ael, align 8, !tbaa !194 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #23
   %i.aen = getelementptr inbounds nuw i8, ptr %37, i64 8 ; 5 uses
   store i32 %i.aem, ptr %i.aen, align 8, !tbaa !29
@@ -664,7 +664,7 @@ bb.hv:                                            ; preds = %_ZN4llvm5APIntD2Ev.
   br i1 %i.aez, label %bb.hw, label %bb.ib
 
 bb.hw:                                            ; preds = %bb.hv
-  %i.afa = udiv i32 %i.p, %i.aem                  ; 2 uses
+  %i.afa = udiv exact i32 %i.p, %i.aem            ; 2 uses
   %.not404670 = icmp eq i32 %i.p, 0
   br i1 %.not404670, label %.loopexit661, label %.lr.ph672
 
@@ -720,11 +720,11 @@ _ZN4llvm5APInt6setBitEj.exit525:                  ; preds = %bb.ia, %bb.hz, %bb.
 
 bb.ib:                                            ; preds = %bb.hv
   %i.agb = urem i32 %i.aem, %i.p
-  %54 = udiv i32 %i.aem, %i.p                     ; 2 uses
   %i.agc = icmp eq i32 %i.agb, 0
   br i1 %i.agc, label %bb.ic, label %.loopexit659
 
 bb.ic:                                            ; preds = %bb.ib
+  %54 = udiv exact i32 %i.aem, %i.p               ; 2 uses
   %i.agd = load i32, ptr %i.af, align 8, !tbaa !29
   %i.age = icmp ult i32 %i.agd, 65
   %i.agf = load i32, ptr %i.aen, align 8
@@ -877,6 +877,9 @@ _ZN4llvm5APInt6setBitEj.exit531:                  ; preds = %bb.iq, %bb.ip, %bb.
   br i1 %.not406, label %.loopexit659, label %bb.in, !llvm.loop !561
 
 .lr.ph675:                                        ; preds = %bb.im
+  %55 = urem i32 %i.aem, %i.p
+  %56 = icmp eq i32 %55, 0
+  call void @llvm.assume(i1 %56)
   %i.aiq = getelementptr inbounds nuw i8, ptr %41, i64 8
   %i.air = getelementptr inbounds nuw i8, ptr %40, i64 8
   br label %bb.ir

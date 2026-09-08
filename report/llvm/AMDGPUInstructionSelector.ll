@@ -204,18 +204,18 @@ define dso_local noundef zeroext i1 @_ZNK4llvm25AMDGPUInstructionSelector16isDSO
 bb.a:
   %i.a = zext i32 %4 to i64                       ; 4 uses
   %i.b = srem i64 %2, %i.a
-  %i.c = sdiv i64 %2, %i.a
+  %i.c = sdiv exact i64 %2, %i.a
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %i.d = srem i64 %3, %i.a
-  %i.e = sdiv i64 %3, %i.a
+  %i.e = sdiv exact i64 %3, %i.a
   %.not10 = icmp eq i64 %i.d, 0
   %i.f = icmp ult i64 %i.c, 256
-  %or.cond = and i1 %.not10, %i.f
+  %or.cond = select i1 %.not10, i1 %i.f, i1 false
   %i.g = icmp ult i64 %i.e, 256
-  %or.cond11 = and i1 %or.cond, %i.g
+  %or.cond11 = select i1 %or.cond, i1 %i.g, i1 false
   br i1 %or.cond11, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -455,16 +455,16 @@ bb.f:                                             ; preds = %_ZNK4llvm25AMDGPUIn
   %i.af = zext i32 %2 to i64                      ; 5 uses
   %i.ag = add nsw i64 %.sroa.625.0, %i.af         ; 2 uses
   %i.ah = srem i64 %.sroa.625.0, %i.af
-  %i.ai = sdiv i64 %.sroa.625.0, %i.af            ; 2 uses
+  %i.ai = sdiv exact i64 %.sroa.625.0, %i.af      ; 2 uses
   %.not.i16 = icmp eq i64 %i.ah, 0
   br i1 %.not.i16, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
   %i.aj = srem i64 %i.ag, %i.af
-  %i.ak = sdiv i64 %i.ag, %i.af
+  %i.ak = sdiv exact i64 %i.ag, %i.af
   %.not10.i = icmp eq i64 %i.aj, 0
   %i.al = icmp ult i64 %i.ai, 256
-  %or.cond = and i1 %.not10.i, %i.al
+  %or.cond = select i1 %.not10.i, i1 %i.al, i1 false
   %i.am = icmp ult i64 %i.ak, 256
   %or.cond41 = select i1 %or.cond, i1 %i.am, i1 false
   br i1 %or.cond41, label %bb.h, label %.critedge

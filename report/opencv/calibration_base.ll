@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.f
   %i.am = and i32 %i.al, 127
   %i.an = add nuw nsw i32 %i.am, 1
   %i.ao = trunc i64 %i.aj to i32
-  %i.ap = mul i32 %i.an, %i.ao                    ; 3 uses
+  %i.ap = mul i32 %i.an, %i.ao                    ; 4 uses
   %i.aq = srem i32 %i.ap, 3
-  %i.ar = sdiv i32 %i.ap, 3                       ; 13 uses
+  %i.ar = sdiv exact i32 %i.ap, 3                 ; 12 uses
   %.not = icmp eq i32 %i.aq, 0
   br i1 %.not, label %bb.q, label %bb.h
 
@@ -379,7 +379,7 @@ bb.ad:                                            ; preds = %bb.x, %._crit_edge1
   %i.ce = phi i32 [ %i.ar, %._crit_edge1407 ], [ %i.br, %bb.x ]
   %i.cf = icmp eq i32 %i.bm, 3
   %i.cg = icmp eq i32 %i.ce, %i.ar
-  %or.cond874 = and i1 %i.cf, %i.cg
+  %or.cond874 = select i1 %i.cf, i1 %i.cg, i1 false
   br i1 %or.cond874, label %bb.ae, label %.thread
 
 bb.ae:                                            ; preds = %bb.ad
@@ -782,8 +782,7 @@ bb.gb:                                            ; preds = %bb.ga
 bb.gc:                                            ; preds = %bb.gb
   call void @llvm.lifetime.start.p0(ptr nonnull %79) #20
   %i.ny = shl nsw i32 %i.ar, 1
-  %87 = mul nsw i32 %i.ar, 3
-  invoke void @_ZN2cv3Mat5zerosEiii(ptr dead_on_unwind nonnull writable sret(%"class.cv::MatExpr") align 8 %79, i32 noundef %i.ny, i32 noundef %87, i32 noundef 6)
+  invoke void @_ZN2cv3Mat5zerosEiii(ptr dead_on_unwind nonnull writable sret(%"class.cv::MatExpr") align 8 %79, i32 noundef %i.ny, i32 noundef %i.ap, i32 noundef 6)
           to label %bb.gd unwind label %bb.gf
 
 bb.gd:                                            ; preds = %bb.gc
@@ -1070,7 +1069,7 @@ bb.hh:                                            ; preds = %bb.hg
   %i.ra = load ptr, ptr %i.qz, align 8, !tbaa !29
   %i.rb = getelementptr inbounds nuw i8, ptr %23, i64 24
   %i.rc = load ptr, ptr %i.rb, align 8, !tbaa !29
-  %i.rd = icmp sgt i32 %i.ap, 2
+  %i.rd = icmp sgt i32 %i.ap, 0
   br i1 %i.rd, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.hh

@@ -205,20 +205,20 @@ bb.h:                                             ; preds = %bb.f
 
 _ZNK4llvm3EVT21getVectorElementCountEv.exit:      ; preds = %bb.g, %bb.h
   %.sroa.0.0.in.i = phi i64 [ %.sroa.0.0.insert.insert.i.i.i, %bb.g ], [ %i.z, %bb.h ]
-  %i.aa = shl i32 %4, 2                           ; 3 uses
+  %i.aa = shl i32 %4, 2                           ; 4 uses
   %.not.i38 = icmp eq i32 %i.aa, 0
   br i1 %.not.i38, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit
 
 _ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit: ; preds = %_ZNK4llvm3EVT21getVectorElementCountEv.exit
-  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0.in.i to i32 ; 3 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0.in.i to i32 ; 4 uses
   %i.ab = urem i32 %.sroa.0.0.extract.trunc, %i.aa
-  %i.ac = udiv i32 %.sroa.0.0.extract.trunc, %i.aa ; 2 uses
+  %i.ac = udiv exact i32 %.sroa.0.0.extract.trunc, %i.aa
   %i.ad = icmp eq i32 %i.ab, 0
   br i1 %i.ad, label %bb.i, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread
 
 bb.i:                                             ; preds = %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit
   store i32 %i.ac, ptr %8, align 4, !tbaa !152
-  %i.ae = icmp eq i32 %i.ac, 1
+  %i.ae = icmp eq i32 %i.aa, %.sroa.0.0.extract.trunc
   br i1 %i.ae, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i

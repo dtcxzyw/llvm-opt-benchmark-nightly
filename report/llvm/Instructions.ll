@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %"_ZNK4llvm8ArrayRef
   %sext77 = shl i64 %i.as, 30
   %i.aw = ashr i64 %sext77, 32                    ; 2 uses
   %i.ax = urem i64 %1, %i.aw
-  %i.ay = udiv i64 %1, %i.aw
+  %i.ay = udiv exact i64 %1, %i.aw
   %.not = icmp eq i64 %i.ax, 0
   br i1 %.not, label %bb.u, label %.loopexit
 
@@ -247,7 +247,7 @@ bb.x:                                             ; preds = %bb.w, %.lr.ph
   %sext = shl nuw i64 %.sroa.043.093, 32
   %i.bh = ashr exact i64 %sext, 32                ; 2 uses
   %i.bi = urem i64 %1, %i.bh
-  %i.bj = udiv i64 %1, %i.bh
+  %i.bj = udiv exact i64 %1, %i.bh
   %.not39 = icmp eq i64 %i.bi, 0
   br i1 %.not39, label %bb.y, label %.thread70
 
@@ -436,7 +436,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = zext i32 %i.n to i64                     ; 2 uses
   %i.p = sext i32 %i.l to i64                     ; 2 uses
   %i.q = urem i64 %i.o, %i.p
-  %i.r = udiv i64 %i.o, %i.p
+  %i.r = udiv exact i64 %i.o, %i.p
   %.not = icmp eq i64 %i.q, 0
   br i1 %.not, label %bb.c, label %bb.d
 
@@ -839,12 +839,12 @@ define dso_local noundef zeroext i1 @_ZN4llvm17ShuffleVectorInst16isInterleaveMa
 bb.a:
   %i.a = trunc i64 %1 to i32                      ; 3 uses
   %i.b = urem i32 %i.a, %2
-  %i.c = udiv i32 %i.a, %2                        ; 5 uses
+  %i.c = udiv exact i32 %i.a, %2                  ; 5 uses
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
-  %.not.i.i = icmp ule i32 %2, %i.a
+  %.not.i.i = icmp ne i32 %i.a, 0
   %i.d = tail call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %i.c)
   %i.e = icmp samesign ult i32 %i.d, 2
   %or.cond109 = select i1 %.not.i.i, i1 %i.e, i1 false

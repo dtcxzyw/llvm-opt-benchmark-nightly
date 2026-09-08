@@ -205,7 +205,7 @@ _ZN13checked_int64ILb1EEdVERKS0_.exit.i.1:        ; preds = %_ZN6vectorI13checke
   store i64 3, ptr %i.cf, align 8, !tbaa !89
   %i.cg = add i32 %i.cc, 1
   store i32 %i.cg, ptr %i.cd, align 4, !tbaa !129
-  %i.ch = sdiv i64 %.sroa.066.1100.1236, 3        ; 3 uses
+  %i.ch = sdiv exact i64 %.sroa.066.1100.1236, 3  ; 3 uses
   %i.ci = srem i64 %i.ch, 3
   %i.cj = icmp eq i64 %i.ci, 0
   br i1 %i.cj, label %.lr.ph237, label %_ZN13checked_int64ILb1EErMERKS0_.exit.i.2.preheader
@@ -283,7 +283,7 @@ _ZN13checked_int64ILb1EEdVERKS0_.exit.i.2:        ; preds = %_ZN6vectorI13checke
   store i64 5, ptr %i.dk, align 8, !tbaa !89
   %i.dl = add i32 %i.dh, 1
   store i32 %i.dl, ptr %i.di, align 4, !tbaa !129
-  %i.dm = sdiv i64 %.sroa.066.1100.2240, 5        ; 3 uses
+  %i.dm = sdiv exact i64 %.sroa.066.1100.2240, 5  ; 3 uses
   %i.dn = srem i64 %i.dm, 5
   %i.do = icmp eq i64 %i.dn, 0
   br i1 %i.do, label %.lr.ph241, label %_Z3modILb1EE13checked_int64IXT_EERKS1_S3_.exit.2.thread

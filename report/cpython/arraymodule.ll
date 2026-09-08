@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.k
   %i.bb = getelementptr [16 x i8], ptr @mformat_descriptors, i64 %i.ba ; 2 uses
   %i.bc = load i64, ptr %i.bb, align 16, !tbaa !89 ; 4 uses
   %i.bd = urem i64 %.val171, %i.bc
-  %i.be = udiv i64 %.val171, %i.bc                ; 3 uses
+  %i.be = udiv exact i64 %.val171, %i.bc          ; 3 uses
   %.not142 = icmp eq i64 %i.bd, 0
   br i1 %.not142, label %bb.u, label %bb.t
 
@@ -608,10 +608,10 @@ bb.d:                                             ; preds = %bb.b
   %i.g = getelementptr i8, ptr %i.f, i64 4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !62
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !69   ; 2 uses
-  %i.k = sext i32 %i.h to i64                     ; 5 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !69   ; 3 uses
+  %i.k = sext i32 %i.h to i64                     ; 4 uses
   %i.l = srem i64 %i.j, %i.k
-  %i.m = sdiv i64 %i.j, %i.k                      ; 4 uses
+  %i.m = sdiv exact i64 %i.j, %i.k                ; 3 uses
   %.not32.i.i = icmp eq i64 %i.l, 0
   br i1 %.not32.i.i, label %bb.f, label %bb.e
 
@@ -658,8 +658,7 @@ bb.l:                                             ; preds = %bb.j
   %i.aa = mul i64 %.val.i.i, %i.k
   %i.ab = getelementptr i8, ptr %i.z, i64 %i.aa
   %i.ac = load ptr, ptr %2, align 8, !tbaa !70
-  %3 = mul i64 %i.m, %i.k
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ab, ptr align 1 %i.ac, i64 %3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ab, ptr align 1 %i.ac, i64 %i.j, i1 false)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.f

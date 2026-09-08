@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %bb.b
   %.03847.i = phi i32 [ %.1.i, %bb.f ], [ %i.v, %bb.c ] ; 2 uses
   %i.w = trunc nuw nsw i64 %indvars.iv.i to i32   ; 2 uses
   %i.x = srem i32 %i.w, %i.s
-  %i.y = sdiv i32 %i.w, %i.s
+  %i.y = sdiv exact i32 %i.w, %i.s
   %i.z = icmp eq i32 %i.x, 0
   br i1 %i.z, label %bb.d, label %bb.e
 
@@ -609,7 +609,7 @@ bb.o:                                             ; preds = %bb.n, %._crit_edge9
   %i.cn = call i32 @sqlite3_reset(ptr noundef %i.cm) #45 ; 0 uses
   %i.co = add nuw nsw i32 %.1.1, 1                ; 3 uses
   %i.cp = urem i32 %i.co, 10000
-  %i.cq = udiv i32 %i.co, 10000
+  %i.cq = udiv exact i32 %i.co, 10000
   %i.cr = icmp eq i32 %i.cp, 0
   br i1 %i.cr, label %bb.p, label %.preheader81.1.backedge
 
@@ -735,7 +735,7 @@ bb.z:                                             ; preds = %._crit_edge93, %._c
   %i.ep = call i32 @sqlite3_reset(ptr noundef %i.eo) #45 ; 0 uses
   %i.eq = add nuw nsw i32 %.1, 1                  ; 3 uses
   %i.er = urem i32 %i.eq, 10000
-  %i.es = udiv i32 %i.eq, 10000
+  %i.es = udiv exact i32 %i.eq, 10000
   %i.et = icmp eq i32 %i.er, 0
   br i1 %i.et, label %bb.aa, label %.backedge
 

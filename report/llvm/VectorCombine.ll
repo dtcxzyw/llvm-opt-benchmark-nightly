@@ -205,7 +205,7 @@ _ZNK4llvm10DataLayout26getValueOrABITypeAlignmentENS_10MaybeAlignEPNS_4TypeE.exi
 
 _ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE20hasKnownScalarFactorERKS3_.exit: ; preds = %_ZNK4llvm10DataLayout26getValueOrABITypeAlignmentENS_10MaybeAlignEPNS_4TypeE.exit
   %i.bo = urem i32 %i.bi, %i.bb
-  %i.bp = udiv i32 %i.bi, %i.bb
+  %i.bp = udiv exact i32 %i.bi, %i.bb
   %i.bq = icmp eq i32 %i.bo, 0
   br i1 %i.bq, label %bb.n, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE20hasKnownScalarFactorERKS3_.exit.thread
 
@@ -608,12 +608,12 @@ _ZN4llvm11SmallVectorISt4pairIPNS_5ValueEiELj3EED2Ev.exit564: ; preds = %_ZN4llv
   br label %_ZNK4llvm11Instruction11isIntDivRemEv.exit.thread, !llvm.loop !821
 
 bb.fm:                                            ; preds = %bb.fh
-  %i.aib = icmp ugt i32 %i.ahh, %i.ahj            ; 2 uses
+  %i.aib = icmp ugt i32 %i.ahh, %i.ahj
   br i1 %i.aib, label %bb.fn, label %bb.gb
 
 bb.fn:                                            ; preds = %bb.fm
   %i.aic = urem i32 %i.ahh, %i.ahj
-  %i.aid = udiv i32 %i.ahh, %i.ahj                ; 7 uses
+  %i.aid = udiv exact i32 %i.ahh, %i.ahj          ; 7 uses
   %i.aie = icmp eq i32 %i.aic, 0
   br i1 %i.aie, label %bb.fo, label %bb.gb
 
@@ -660,7 +660,7 @@ bb.fr:                                            ; preds = %bb.fq
 
 bb.fs:                                            ; preds = %bb.fp
   %i.aiu = urem i32 %.sroa.6663.0.copyload, %i.aid
-  %i.aiv = udiv i32 %.sroa.6663.0.copyload, %i.aid
+  %i.aiv = udiv exact i32 %.sroa.6663.0.copyload, %i.aid
   %.not230 = icmp eq i32 %i.aiu, 0
   br i1 %.not230, label %.preheader, label %.thread753
 
@@ -774,7 +774,7 @@ bb.gb:                                            ; preds = %bb.fn, %bb.fm
 
 bb.gc:                                            ; preds = %bb.gb
   %i.akc = urem i32 %i.ahj, %i.ahh
-  %i.akd = udiv i32 %i.ahj, %i.ahh                ; 3 uses
+  %i.akd = udiv exact i32 %i.ahj, %i.ahh          ; 3 uses
   %i.ake = icmp eq i32 %i.akc, 0
   br i1 %i.ake, label %bb.gd, label %.thread755
 
@@ -866,14 +866,11 @@ bb.gl:                                            ; preds = %bb.gj
 _ZNK4llvm4User10getOperandEj.exit575:             ; preds = %bb.gk, %bb.gl
   %i.alg = phi ptr [ %i.alb, %bb.gk ], [ %i.alf, %bb.gl ]
   %i.alh = load ptr, ptr %i.alg, align 8, !tbaa !185 ; 3 uses
-  br i1 %i.aib, label %.loopexit, label %.lr.ph856
-
-.lr.ph856:                                        ; preds = %_ZNK4llvm4User10getOperandEj.exit575
   %67 = mul i32 %.sroa.4649.0.copyload, %i.akd
   br label %bb.gm
 
-bb.gm:                                            ; preds = %.lr.ph856, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPNS_5ValueEiELb1EE9push_backES4_.exit
-  %.0179855 = phi i32 [ 0, %.lr.ph856 ], [ %i.ami, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPNS_5ValueEiELb1EE9push_backES4_.exit ] ; 2 uses
+bb.gm:                                            ; preds = %_ZNK4llvm4User10getOperandEj.exit575, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPNS_5ValueEiELb1EE9push_backES4_.exit
+  %.0179855 = phi i32 [ 0, %_ZNK4llvm4User10getOperandEj.exit575 ], [ %i.ami, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPNS_5ValueEiELb1EE9push_backES4_.exit ] ; 2 uses
   %i.ali = add i32 %.0179855, %67                 ; 2 uses
   %i.alj = load i8, ptr %i.alh, align 8, !tbaa !180
   %.not34.i576 = icmp eq i8 %i.alj, 95
@@ -942,7 +939,7 @@ _ZN4llvm23SmallVectorTemplateBaseISt4pairIPNS_5ValueEiELb1EE9push_backES4_.exit:
   %i.amj = icmp ult i32 %i.ami, %i.akd
   br i1 %i.amj, label %bb.gm, label %.loopexit, !llvm.loop !863
 
-.loopexit:                                        ; preds = %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPNS_5ValueEiELb1EE9push_backES4_.exit, %_ZNK4llvm4User10getOperandEj.exit575, %bb.gi
+.loopexit:                                        ; preds = %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPNS_5ValueEiELb1EE9push_backES4_.exit, %bb.gi
   %i.amk = getelementptr inbounds nuw i8, ptr %.0180858, i64 16 ; 2 uses
   %.not227 = icmp eq ptr %i.amk, %i.aki
   br i1 %.not227, label %._crit_edge861, label %bb.gh
@@ -1205,7 +1202,7 @@ bb.hn:                                            ; preds = %"_ZZN12_GLOBAL__N_1
 
 bb.ho:                                            ; preds = %.thread755
   %i.aqm = urem i32 %i.aqb, %.fr.i
-  %i.aqn = udiv i32 %i.aqb, %.fr.i                ; 2 uses
+  %i.aqn = udiv exact i32 %i.aqb, %.fr.i          ; 2 uses
   %.not.i606 = icmp eq i32 %i.aqm, 0
   br i1 %.not.i606, label %bb.hp, label %_ZL12isFreeConcatN4llvm8ArrayRefISt4pairIPNS_5ValueEiEEENS_19TargetTransformInfo14TargetCostKindERKS6_.exit.thread
 
@@ -1608,7 +1605,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %.critedge
   %i.ch = urem i32 %i.az, %i.ay
-  %i.ci = udiv i32 %i.az, %i.ay
+  %i.ci = udiv exact i32 %i.az, %i.ay
   %.not106 = icmp eq i32 %i.ch, 0
   br i1 %.not106, label %bb.q, label %_ZNK4llvm15InstructionCostgtERKS0_.exit.thread
 
@@ -1618,7 +1615,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.critedge
   %i.cj = urem i32 %i.ay, %i.az
-  %i.ck = udiv i32 %i.ay, %i.az
+  %i.ck = udiv exact i32 %i.ay, %i.az
   %.not105 = icmp eq i32 %i.cj, 0
   br i1 %.not105, label %bb.s, label %_ZNK4llvm15InstructionCostgtERKS0_.exit.thread
 

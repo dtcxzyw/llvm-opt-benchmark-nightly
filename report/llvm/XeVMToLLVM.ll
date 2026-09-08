@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
   %i.cb = call { ptr, i64 } @_ZNK4mlir10VectorType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %10) #23 ; 2 uses
   %i.cc = extractvalue { ptr, i64 } %i.cb, 0
   %i.cd = extractvalue { ptr, i64 } %i.cb, 1
-  %i.ce = call noundef i64 @_ZN4mlir10ShapedType14getNumElementsEN4llvm8ArrayRefIlEE(ptr %i.cc, i64 %i.cd) #23 ; 4 uses
+  %i.ce = call noundef i64 @_ZN4mlir10ShapedType14getNumElementsEN4llvm8ArrayRefIlEE(ptr %i.cc, i64 %i.cd) #23 ; 5 uses
   store i64 %i.ce, ptr %i.b, align 8, !tbaa !61
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   %i.cf = getelementptr inbounds i8, ptr %i.ao, i64 -8
@@ -220,25 +220,25 @@ bb.k:                                             ; preds = %bb.j
   %i.cl = call { ptr, i64 } @_ZNK4mlir10VectorType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %11) #23 ; 2 uses
   %i.cm = extractvalue { ptr, i64 } %i.cl, 0
   %i.cn = extractvalue { ptr, i64 } %i.cl, 1
-  %i.co = call noundef i64 @_ZN4mlir10ShapedType14getNumElementsEN4llvm8ArrayRefIlEE(ptr %i.cm, i64 %i.cn) #23 ; 3 uses
+  %i.co = call noundef i64 @_ZN4mlir10ShapedType14getNumElementsEN4llvm8ArrayRefIlEE(ptr %i.cm, i64 %i.cn) #23 ; 4 uses
   %i.cp = icmp sgt i64 %i.ce, %i.co
   br i1 %i.cp, label %.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.cq = srem i64 %i.co, %i.ce
-  %i.cr = sdiv i64 %i.co, %i.ce                   ; 4 uses
+  %i.cr = sdiv exact i64 %i.co, %i.ce             ; 3 uses
   %.not108 = icmp eq i64 %i.cq, 0
   br i1 %.not108, label %bb.m, label %.thread
 
 bb.m:                                             ; preds = %bb.l
-  %.not109 = icmp eq i64 %i.cr, 1
+  %.not109 = icmp eq i64 %i.co, %i.ce
   br i1 %.not109, label %bb.s, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.cs = load i32, ptr %i.ae, align 4, !tbaa !115
   %i.ct = sext i32 %i.cs to i64                   ; 2 uses
   %i.cu = srem i64 %i.ct, %i.cr
-  %i.cv = sdiv i64 %i.ct, %i.cr
+  %i.cv = sdiv exact i64 %i.ct, %i.cr
   %.not110 = icmp eq i64 %i.cu, 0
   br i1 %.not110, label %bb.o, label %.thread
 

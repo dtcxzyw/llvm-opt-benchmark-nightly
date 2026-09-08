@@ -205,12 +205,12 @@ _ZN4entt14basic_registryINS_6entityESaIS1_EE6createEv.exit: ; preds = %bb.e
 
 .loopexit54:                                      ; preds = %.noexc18, %.noexc17
   %i.aq = urem i64 %storemerge57, 50000
-  %10 = udiv i64 %storemerge57, 50000
   %.not = icmp eq i64 %i.aq, 0
   br i1 %.not, label %bb.f, label %_ZNSolsEPFRSoS_E.exit
 
 bb.f:                                             ; preds = %.loopexit54
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %10
+  %10 = udiv exact i64 %storemerge57, 12500
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 %10
   store i32 %i.x, ptr %11, align 4, !tbaa !216
   br label %_ZNSolsEPFRSoS_E.exit
 
@@ -613,12 +613,12 @@ _ZN4entt14basic_registryINS_6entityESaIS1_EE6createEv.exit: ; preds = %bb.e
 
 .loopexit54:                                      ; preds = %.noexc18, %.noexc17
   %i.aq = urem i64 %storemerge56, 50000
-  %6 = udiv i64 %storemerge56, 50000
   %.not = icmp eq i64 %i.aq, 0
   br i1 %.not, label %bb.f, label %_ZNSolsEPFRSoS_E.exit
 
 bb.f:                                             ; preds = %.loopexit54
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %6
+  %6 = udiv exact i64 %storemerge56, 12500
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
   store i32 %i.x, ptr %7, align 4, !tbaa !216
   br label %_ZNSolsEPFRSoS_E.exit
 

@@ -205,6 +205,7 @@ bb.n:                                             ; preds = %_ZN4mold10ExactArra
   %i.ef = phi ptr [ %.pre10.i, %_ZN4mold10ExactArrayINS_6ElfRelINS_6X86_64EEEED2Ev.exit.i ], [ %i.dy, %bb.l ]
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
   %i.eh = load i64, ptr %i.eg, align 8, !tbaa !910
+  %7 = mul nuw nsw i64 %i.eh, 24
   br label %_ZNK4mold12InputSectionINS_6X86_64EE8get_relsERNS_7ContextIS1_EE.exit
 
 bb.o:                                             ; preds = %bb.k
@@ -232,7 +233,6 @@ bb.p:                                             ; preds = %bb.o
 
 _ZN4mold9InputFileINS_6X86_64EE10get_stringERNS_7ContextIS1_EERKNS_7ElfShdrIS1_EE.exit.i: ; preds = %bb.o
   %i.eu = urem i64 %.0.copyload.i10.i.i, 24
-  %7 = udiv i64 %.0.copyload.i10.i.i, 24
   %.not.i66 = icmp eq i64 %i.eu, 0
   br i1 %.not.i66, label %_ZN4mold9InputFileINS_6X86_64EE8get_dataINS_6ElfRelIS1_EEEESt4spanIT_Lm18446744073709551615EERNS_7ContextIS1_EERKNS_7ElfShdrIS1_EE.exit, label %bb.q
 
@@ -252,10 +252,9 @@ _ZN4mold9InputFileINS_6X86_64EE8get_dataINS_6ElfRelIS1_EEEESt4spanIT_Lm184467440
 
 _ZNK4mold12InputSectionINS_6X86_64EE8get_relsERNS_7ContextIS1_EE.exit: ; preds = %bb.n, %_ZN4mold9InputFileINS_6X86_64EE8get_dataINS_6ElfRelIS1_EEEESt4spanIT_Lm18446744073709551615EERNS_7ContextIS1_EERKNS_7ElfShdrIS1_EE.exit
   %.sroa.0.0.i = phi ptr [ %i.ez, %_ZN4mold9InputFileINS_6X86_64EE8get_dataINS_6ElfRelIS1_EEEESt4spanIT_Lm18446744073709551615EERNS_7ContextIS1_EERKNS_7ElfShdrIS1_EE.exit ], [ %i.ef, %bb.n ] ; 2 uses
-  %.sroa.4.0.i = phi i64 [ %7, %_ZN4mold9InputFileINS_6X86_64EE8get_dataINS_6ElfRelIS1_EEEESt4spanIT_Lm18446744073709551615EERNS_7ContextIS1_EERKNS_7ElfShdrIS1_EE.exit ], [ %i.eh, %bb.n ] ; 2 uses
-  %.idx = mul nuw nsw i64 %.sroa.4.0.i, 24
-  %i.fa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 %.idx
-  %i.fb = icmp eq i64 %.sroa.4.0.i, 0
+  %.sroa.4.0.i = phi i64 [ %.0.copyload.i10.i.i, %_ZN4mold9InputFileINS_6X86_64EE8get_dataINS_6ElfRelIS1_EEEESt4spanIT_Lm18446744073709551615EERNS_7ContextIS1_EERKNS_7ElfShdrIS1_EE.exit ], [ %7, %bb.n ] ; 2 uses
+  %i.fa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 %.sroa.4.0.i
+  %i.fb = icmp samesign eq i64 %.sroa.4.0.i, 0
   br i1 %i.fb, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.critedge, %bb.j, %_ZNK4mold12InputSectionINS_6X86_64EE8get_relsERNS_7ContextIS1_EE.exit
@@ -658,7 +657,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN4mold9InputFileINS_6X86_64EE10get_stringERNS_7ContextIS1_EERKNS_7ElfShdrIS1_EE.exit: ; preds = %bb.a
   %i.l = urem i64 %.0.copyload.i10.i, 24
-  %i.m = udiv i64 %.0.copyload.i10.i, 24
+  %i.m = udiv exact i64 %.0.copyload.i10.i, 24
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.d, label %bb.c
 

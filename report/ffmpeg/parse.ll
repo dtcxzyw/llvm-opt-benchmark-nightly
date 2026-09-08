@@ -204,10 +204,10 @@ bb.bd:                                            ; preds = %bb.ax
   %i.im = sub i64 %i.ii, %i.il
   %i.in = trunc i64 %i.im to i32                  ; 2 uses
   %i.io = srem i32 %i.in, %i.dw
-  %i.ip = sdiv i32 %i.in, %i.dw                   ; 2 uses
+  %i.ip = sdiv exact i32 %i.in, %i.dw             ; 2 uses
   %.not241 = icmp ne i32 %i.io, 0
   %i.iq = icmp sgt i32 %i.ip, 1275
-  %or.cond473 = or i1 %.not241, %i.iq
+  %or.cond473 = select i1 %.not241, i1 true, i1 %i.iq
   br i1 %or.cond473, label %.thread, label %._crit_edge396
 
 ._crit_edge396:                                   ; preds = %bb.bd

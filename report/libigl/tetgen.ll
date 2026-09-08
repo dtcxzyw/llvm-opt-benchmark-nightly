@@ -205,7 +205,7 @@ bb.av:                                            ; preds = %_ZL9SwapBytesPcii.e
   %i.sj = trunc i64 %i.si to i32                  ; 7 uses
   %i.sk = icmp ne i32 %i.sj, 0
   %i.sl = srem i32 %i.sj, 3
-  %i.sm = sdiv i32 %i.sj, 3                       ; 3 uses
+  %i.sm = sdiv exact i32 %i.sj, 3                 ; 5 uses
   %.not108 = icmp eq i32 %i.sl, 0
   %or.cond109 = and i1 %i.sk, %.not108
   br i1 %or.cond109, label %bb.ax, label %bb.aw
@@ -225,8 +225,8 @@ bb.ax:                                            ; preds = %.loopexit136
   %i.sr = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.sq) #41 ; 2 uses
   %i.ss = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.sr, ptr %i.ss, align 8, !tbaa !46
-  %i.st = icmp sgt i32 %i.sj, 0
-  br i1 %i.st, label %.lr.ph153, label %._crit_edge
+  %i.st = icmp sgt i32 %i.sj, 0                   ; 2 uses
+  br i1 %i.st, label %.lr.ph153, label %._crit_edge158.critedge
 
 .lr.ph153:                                        ; preds = %bb.ax
   %i.su = getelementptr inbounds nuw i8, ptr %i.al, i64 24
@@ -266,19 +266,18 @@ bb.ay:                                            ; preds = %.lr.ph153, %bb.ay
   %exitcond179.not = icmp eq i64 %indvars.iv.next176, %wide.trip.count178
   br i1 %exitcond179.not, label %._crit_edge, label %bb.ay, !llvm.loop !484
 
-._crit_edge:                                      ; preds = %bb.ay, %bb.ax
+._crit_edge:                                      ; preds = %bb.ay
   %i.ts = getelementptr inbounds nuw i8, ptr %0, i64 160
   store i32 %i.sm, ptr %i.ts, align 8, !tbaa !83
   %i.tt = sext i32 %i.sm to i64
-  %i.tu = icmp slt i32 %i.sj, -2
+  %i.tu = icmp slt i32 %i.sj, 0
   %i.tv = shl nsw i64 %i.tt, 5
   %i.tw = select i1 %i.tu, i64 -1, i64 %i.tv
   %i.tx = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.tw) #41
   %i.ty = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   store ptr %i.tx, ptr %i.ty, align 8, !tbaa !84
   store i32 1, ptr %0, align 8, !tbaa !56
-  %2 = icmp sgt i32 %i.sj, 2
-  br i1 %2, label %.lr.ph157.preheader, label %._crit_edge158
+  br i1 %i.st, label %.lr.ph157.preheader, label %._crit_edge158
 
 .lr.ph157.preheader:                              ; preds = %._crit_edge
   %wide.trip.count183 = zext nneg i32 %i.sm to i64
@@ -315,7 +314,20 @@ bb.ay:                                            ; preds = %.lr.ph153, %bb.ay
   %exitcond184.not = icmp eq i64 %indvars.iv.next181, %wide.trip.count183
   br i1 %exitcond184.not, label %._crit_edge158, label %.lr.ph157, !llvm.loop !485
 
-._crit_edge158:                                   ; preds = %.lr.ph157, %._crit_edge
+._crit_edge158.critedge:                          ; preds = %bb.ax
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 160
+  store i32 %i.sm, ptr %2, align 8, !tbaa !83
+  %3 = sext i32 %i.sm to i64
+  %4 = icmp slt i32 %i.sj, 0
+  %5 = shl nsw i64 %3, 5
+  %6 = select i1 %4, i64 -1, i64 %5
+  %7 = call noalias noundef nonnull ptr @_Znam(i64 noundef %6) #41
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 144
+  store ptr %7, ptr %8, align 8, !tbaa !84
+  store i32 1, ptr %0, align 8, !tbaa !56
+  br label %._crit_edge158
+
+._crit_edge158:                                   ; preds = %.lr.ph157, %._crit_edge158.critedge, %._crit_edge
   call void @_ZN10tetgenmesh9arraypoolD1Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %i.al) #40
   call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef 48) #42
   br label %bb.az

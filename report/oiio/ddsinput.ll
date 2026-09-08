@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.n = load i32, ptr %i.m, align 4, !tbaa !135  ; 2 uses
   %i.o = srem i32 %4, %i.n
-  %i.p = sdiv i32 %4, %i.n
+  %i.p = sdiv exact i32 %4, %i.n
   %.not22 = icmp eq i32 %i.o, 0
   br i1 %.not22, label %bb.g, label %bb.q
 
@@ -608,7 +608,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t, %bb.p, %bb.q
   %i.go = add nsw i32 %i.cs, 1
   %i.gp = urem i64 %i.fm, 100000000
-  %i.gq = udiv i64 %i.fm, 100000000
+  %i.gq = udiv exact i64 %i.fm, 100000000
   %i.gr = icmp eq i64 %i.gp, 0
   br i1 %i.gr, label %bb.v, label %.preheader
 

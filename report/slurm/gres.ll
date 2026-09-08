@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.at = urem i64 %i.ar, %i.as
-  %i.au = udiv i64 %i.ar, %i.as
+  %i.au = udiv exact i64 %i.ar, %i.as
   %.not211.i = icmp eq i64 %i.at, 0
   br i1 %.not211.i, label %bb.t, label %bb.s
 
@@ -219,7 +219,7 @@ bb.t:                                             ; preds = %bb.r
   %i.bb = load i32, ptr %i.ba, align 4            ; 3 uses
   %.not212.i = icmp ne i32 %i.bb, -2
   %i.bc = icmp ugt i32 %i.bb, %i.ay
-  %or.cond243.i = and i1 %.not212.i, %i.bc
+  %or.cond243.i = select i1 %.not212.i, i1 %i.bc, i1 false
   %.phi.trans.insert259.i = getelementptr inbounds nuw i8, ptr %i.d, i64 64
   %.pre260.i = load ptr, ptr %.phi.trans.insert259.i, align 8 ; 2 uses
   %.pre261.i = load i32, ptr %.pre260.i, align 4  ; 2 uses
@@ -251,7 +251,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.bj = urem i64 %.pr.i, %i.bi
-  %i.bk = udiv i64 %.pr.i, %i.bi                  ; 2 uses
+  %i.bk = udiv exact i64 %.pr.i, %i.bi            ; 2 uses
   %.not215.i = icmp eq i64 %i.bj, 0
   br i1 %.not215.i, label %bb.z, label %bb.y
 
@@ -326,7 +326,7 @@ bb.ag:                                            ; preds = %.critedge.i
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cl = urem i64 %i.ck, %i.cj
-  %i.cm = udiv i64 %i.ck, %i.cj
+  %i.cm = udiv exact i64 %i.ck, %i.cj
   %.not225.i = icmp eq i64 %i.cl, 0
   br i1 %.not225.i, label %bb.aj, label %bb.ai
 
@@ -414,7 +414,7 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   %i.ds = urem i64 %i.dq, %i.dr
-  %i.dt = udiv i64 %i.dq, %i.dr                   ; 2 uses
+  %i.dt = udiv exact i64 %i.dq, %i.dr             ; 2 uses
   %.not229.i = icmp eq i64 %i.ds, 0
   br i1 %.not229.i, label %bb.ay, label %bb.ax
 
@@ -462,7 +462,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd
   %i.ei = urem i64 %i.eg, %i.eh
-  %i.ej = udiv i64 %i.eg, %i.eh                   ; 2 uses
+  %i.ej = udiv exact i64 %i.eg, %i.eh             ; 2 uses
   %.not233.i = icmp eq i64 %i.ei, 0
   br i1 %.not233.i, label %bb.bg, label %bb.bf
 

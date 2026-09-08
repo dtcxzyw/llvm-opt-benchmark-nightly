@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.e
   %i.az = shl nuw i32 1, %i.ay
   %i.ba = sext i32 %i.az to i64                   ; 2 uses
   %i.bb = urem i64 %i.t, %i.ba
-  %i.bc = udiv i64 %i.t, %i.ba
+  %i.bc = udiv exact i64 %i.t, %i.ba
   %i.bd = icmp eq i64 %i.bb, 0
   br i1 %i.bd, label %bb.d, label %.loopexit324
 
@@ -213,7 +213,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bf = shl nuw i32 1, %i.be
   %i.bg = sext i32 %i.bf to i64                   ; 2 uses
   %i.bh = urem i64 %i.w, %i.bg
-  %i.bi = udiv i64 %i.w, %i.bg
+  %i.bi = udiv exact i64 %i.w, %i.bg
   %i.bj = icmp eq i64 %i.bh, 0
   br i1 %i.bj, label %bb.e, label %.loopexit324
 
@@ -561,7 +561,7 @@ bb.r:                                             ; preds = %.critedge75.i, %.lr
   %i.ht = shl nuw i32 1, %i.hs
   %i.hu = sext i32 %i.ht to i64                   ; 2 uses
   %i.hv = srem i64 %i.gd, %i.hu
-  %i.hw = sdiv i64 %i.gd, %i.hu
+  %i.hw = sdiv exact i64 %i.gd, %i.hu
   %i.hx = icmp eq i64 %i.hv, 0
   br i1 %i.hx, label %bb.s, label %bb.t
 
@@ -572,7 +572,7 @@ bb.s:                                             ; preds = %bb.r
   %i.hz = shl nuw i32 1, %i.hy
   %i.ia = sext i32 %i.hz to i64                   ; 2 uses
   %i.ib = srem i64 %i.ge, %i.ia
-  %i.ic = sdiv i64 %i.ge, %i.ia
+  %i.ic = sdiv exact i64 %i.ge, %i.ia
   %i.id = icmp eq i64 %i.ib, 0
   br i1 %i.id, label %.critedge75.i, label %bb.t
 

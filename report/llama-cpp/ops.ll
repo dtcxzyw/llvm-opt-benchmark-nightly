@@ -205,7 +205,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.ba
   %i.xl = srem i64 %i.we, %i.vc
-  %i.xm = sdiv i64 %i.we, %i.vc
+  %i.xm = sdiv exact i64 %i.we, %i.vc
   %i.xn = icmp eq i64 %i.xl, 0
   br i1 %i.xn, label %bb.be, label %bb.bd
 
@@ -215,7 +215,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bc
   %i.xo = srem i64 %i.wg, %i.ve
-  %i.xp = sdiv i64 %i.wg, %i.ve
+  %i.xp = sdiv exact i64 %i.wg, %i.ve
   %i.xq = icmp eq i64 %i.xo, 0
   br i1 %i.xq, label %bb.bg, label %bb.bf
 
@@ -618,13 +618,13 @@ bb.j:                                             ; preds = %bb.n, %.preheader.u
   %.reass194.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us = mul i64 %.0158192.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us, %factor.op.mul193
   %i.cs = add i64 %i.co, %.reass194.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us ; 2 uses
   %i.ct = srem i64 %i.cs, %i.bq
-  %i.cu = sdiv i64 %i.cs, %i.bq                   ; 3 uses
+  %i.cu = sdiv exact i64 %i.cs, %i.bq             ; 3 uses
   %.not.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us = icmp eq i64 %i.ct, 0
   br i1 %.not.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
   %i.cv = srem i64 %i.cq, %i.bt
-  %i.cw = sdiv i64 %i.cq, %i.bt                   ; 3 uses
+  %i.cw = sdiv exact i64 %i.cq, %i.bt             ; 3 uses
   %.not176.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us = icmp ne i64 %i.cv, 0
   %i.cx = icmp slt i64 %i.cu, 0
   %or.cond389 = select i1 %.not176.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us, i1 true, i1 %i.cx
@@ -633,10 +633,10 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.cy = icmp slt i64 %i.cu, %i.k
   %i.cz = icmp sgt i64 %i.cw, -1
-  %or.cond.not182.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us = and i1 %i.cy, %i.cz
   %.not177.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us = icmp slt i64 %i.cw, %i.bd
-  %or.cond178.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.a = and i1 %or.cond.not182.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us, %.not177.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us
-  br i1 %or.cond178.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.a, label %bb.m, label %bb.n
+  %or.cond178.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.a = and i1 %i.cz, %.not177.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us
+  %or.cond178.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us = select i1 %i.cy, i1 %or.cond178.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.a, i1 false
+  br i1 %or.cond178.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.da = load ptr, ptr %i.bu, align 8, !tbaa !37
@@ -744,7 +744,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k,
   %.reass194.us214.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us = mul i64 %.0158192.us212.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us, %factor.op.mul193
   %i.ee = add i64 %i.ec, %.reass194.us214.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us ; 2 uses
   %i.ef = srem i64 %i.ee, %i.bq
-  %i.eg = sdiv i64 %i.ee, %i.bq                   ; 3 uses
+  %i.eg = sdiv exact i64 %i.ee, %i.bq             ; 3 uses
   %.not.us215.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us = icmp eq i64 %i.ef, 0
   br i1 %.not.us215.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us, label %bb.o, label %bb.q
 
@@ -772,7 +772,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %.preh
   %.reass194.us214.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.1 = mul i64 %i.es, %factor.op.mul193
   %i.et = add i64 %i.ec, %.reass194.us214.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.1 ; 2 uses
   %i.eu = srem i64 %i.et, %i.bq
-  %i.ev = sdiv i64 %i.et, %i.bq                   ; 3 uses
+  %i.ev = sdiv exact i64 %i.et, %i.bq             ; 3 uses
   %.not.us215.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.1 = icmp eq i64 %i.eu, 0
   br i1 %.not.us215.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.1, label %bb.r, label %bb.t
 
@@ -811,7 +811,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   %.reass194.us214.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.epil = mul i64 %.0158192.us212.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.epil.init, %factor.op.mul193
   %i.fi = add i64 %i.ec, %.reass194.us214.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.epil ; 2 uses
   %i.fj = srem i64 %i.fi, %i.bq
-  %i.fk = sdiv i64 %i.fi, %i.bq                   ; 3 uses
+  %i.fk = sdiv exact i64 %i.fi, %i.bq             ; 3 uses
   %.not.us215.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.epil = icmp eq i64 %i.fj, 0
   br i1 %.not.us215.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.epil, label %bb.u, label %._crit_edge.split.split.us217.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us.us
 
@@ -1214,7 +1214,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.bm = srem i64 %i.v, %i.x
-  %i.bn = sdiv i64 %i.v, %i.x
+  %i.bn = sdiv exact i64 %i.v, %i.x
   %i.bo = icmp eq i64 %i.bm, 0
   br i1 %i.bo, label %bb.v, label %bb.u
 
@@ -1400,7 +1400,7 @@ bb.y:                                             ; preds = %.loopexit.i, %.lr.p
   br i1 %i.cx, label %.lr.ph.i, label %.loopexit4.i
 
 .lr.ph.i:                                         ; preds = %.preheader5.i
-  %i.fu = sdiv i64 %i.v, %i.x
+  %i.fu = sdiv exact i64 %i.v, %i.x
   br i1 %i.cy, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
 .lr.ph.i.split.us:                                ; preds = %.lr.ph.i, %._crit_edge11.i.us

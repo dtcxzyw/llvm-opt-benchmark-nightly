@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   %i.n = load i32, ptr %i.m, align 8, !tbaa !85   ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
-  %i.p = load i32, ptr %i.o, align 8, !tbaa !85   ; 3 uses
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !85   ; 2 uses
   %i.q = urem i32 %i.n, %i.p
-  %i.r = udiv i32 %i.n, %i.p                      ; 4 uses
+  %i.r = udiv exact i32 %i.n, %i.p                ; 4 uses
   %.not58 = icmp eq i32 %i.q, 0
   br i1 %.not58, label %bb.d, label %bb.ac
 
@@ -337,7 +337,7 @@ _ZN12_GLOBAL__N_110VectorInfo7computeEPN4llvm5ValueERS0_RKNS1_10DataLayoutE.exit
   br i1 %.not, label %._crit_edge91, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader87
-  %.not92 = icmp ugt i32 %i.p, %i.n
+  %.not92 = icmp eq i32 %i.n, 0
   %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 3 uses
