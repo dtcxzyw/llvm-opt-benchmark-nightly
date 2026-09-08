@@ -202,7 +202,7 @@ define void @_ZN5folly4coro12ServerSocket6acceptEv(ptr dead_on_unwind nofree wri
   store i32 2, ptr %i.d, align 8, !tbaa !995
   store ptr %i.a, ptr %0, align 8, !tbaa !996, !alias.scope !2087
   %index.addr213 = getelementptr inbounds nuw i8, ptr %i.a, i64 344
-  store i3 0, ptr %index.addr213, align 8
+  store i8 0, ptr %index.addr213, align 8
   ret void
 }
 
@@ -605,13 +605,13 @@ resume.entry:
   %.reload.addr206 = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 3 uses
   %.reload.addr212 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 7 uses
-  %index = load i3, ptr %index.addr, align 8
-  switch i3 %index, label %unreachable [
-    i3 0, label %AfterCoroSuspend
-    i3 1, label %_ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS5_EEEES8_E15await_transformENS0_15co_safe_point_tE.exit.thread
-    i3 2, label %AfterCoroSuspend108
-    i3 3, label %CoroEnd
-    i3 -4, label %CoroEnd
+  %index = load i8, ptr %index.addr, align 8
+  switch i8 %index, label %unreachable [
+    i8 0, label %AfterCoroSuspend
+    i8 1, label %_ZN5folly4coro6detail19TaskPromiseCrtpBaseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS5_EEEES8_E15await_transformENS0_15co_safe_point_tE.exit.thread
+    i8 2, label %AfterCoroSuspend108
+    i8 3, label %CoroEnd
+    i8 4, label %CoroEnd
   ], !prof !2312
 
 AfterCoroSuspend:                                 ; preds = %resume.entry
@@ -704,7 +704,7 @@ _ZN5folly4coro12ServerSocket6acceptEv.__await_suspend_wrapper__await.exit: ; pre
   store i64 %i.n, ptr %i.w, align 8, !alias.scope !2316
   store i32 1, ptr %i.m, align 16, !tbaa !995
   store i16 0, ptr %.reload.addr200, align 16
-  store i3 1, ptr %index.addr, align 8
+  store i8 1, ptr %index.addr, align 8
   %i.x = call ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter21await_suspend_promiseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS7_EEEEEENSt7__n486116coroutine_handleIvEERT_(ptr noundef nonnull align 1 dereferenceable(2) %.reload.addr200, ptr noundef nonnull align 8 dereferenceable(96) %.reload.addr212) #25 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8
   musttail call void %i.y(ptr nonnull %i.x)
@@ -860,7 +860,7 @@ bb.p:                                             ; preds = %bb.o
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail12ViaCoroutineILb0EE12promise_typeE, i64 16), ptr %.reload.addr14.i.i.i.i, align 8, !tbaa !70, !noalias !2340
   store ptr %i.bq, ptr %.reload.addr202, align 16, !tbaa !996, !alias.scope !2341
   %index.addr15.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bq, i64 96
-  store i1 false, ptr %index.addr15.i.i.i.i, align 8, !noalias !2340
+  store i8 0, ptr %index.addr15.i.i.i.i, align 8, !noalias !2340
   store i64 %i.bs, ptr %i.bt, align 8, !tbaa !1043, !noalias !2340
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 280
   store ptr %.reload.addr203, ptr %i.bw, align 8, !tbaa !2321, !alias.scope !2342
@@ -871,7 +871,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bz, label %AfterCoroSuspend108, label %AfterCoroSave106
 
 AfterCoroSave106:                                 ; preds = %.from.141
-  store i3 2, ptr %index.addr, align 8
+  store i8 2, ptr %index.addr, align 8
   %i.ca = call noundef zeroext i1 @_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE13await_suspendINS0_6detail11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS9_EEEEEEbNSt7__n486116coroutine_handleIT_EE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr202, ptr nonnull %0) #25
   br i1 %i.ca, label %CoroEnd, label %AfterCoroSuspend108
 
@@ -978,7 +978,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %_ZNKS
   store i64 %i.db, ptr %i.da, align 8, !alias.scope !2348
   store i64 0, ptr %.reload.addr205, align 16, !noalias !2348
   store i32 1, ptr %i.cr, align 16, !tbaa !995
-  store i3 3, ptr %index.addr, align 8
+  store i8 3, ptr %index.addr, align 8
   %i.dc = call noundef ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter21await_suspend_promiseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS7_EEEEEENSt7__n486116coroutine_handleIvEERT_(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr202, ptr noundef nonnull align 8 dereferenceable(96) %.reload.addr212) #25 ; 2 uses
   %i.dd = load ptr, ptr %i.dc, align 8
   musttail call void %i.dd(ptr nonnull %i.dc)
@@ -1039,7 +1039,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %_ZN
   store i64 %i.ds, ptr %i.dr, align 8, !alias.scope !2350
   store i64 0, ptr %.reload.addr206, align 8, !noalias !2350
   store i32 1, ptr %i.di, align 16, !tbaa !995
-  store i3 -4, ptr %index.addr, align 8
+  store i8 4, ptr %index.addr, align 8
   %i.dt = call noundef ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter21await_suspend_promiseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS7_EEEEEENSt7__n486116coroutine_handleIvEERT_(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr210, ptr noundef nonnull align 8 dereferenceable(96) %.reload.addr212) #25 ; 2 uses
   %i.du = load ptr, ptr %i.dt, align 8
   musttail call void %i.du(ptr nonnull %i.dt)
@@ -1295,7 +1295,7 @@ bb.be:                                            ; preds = %.from.175, %.from.1
 bb.bf:                                            ; preds = %bb.be, %_ZN12_GLOBAL__N_114AcceptCallbackD2Ev.exit
   %.reload.addr211 = getelementptr inbounds nuw i8, ptr %0, i64 346
   store ptr null, ptr %0, align 16
-  store i3 -3, ptr %index.addr, align 8
+  store i8 5, ptr %index.addr, align 8
   %i.gp = call noundef ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter21await_suspend_promiseINS1_11TaskPromiseISt10unique_ptrINS0_9TransportESt14default_deleteIS7_EEEEEENSt7__n486116coroutine_handleIvEERT_(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr211, ptr noundef nonnull align 8 dereferenceable(96) %.reload.addr212) #25 ; 2 uses
   %i.gq = load ptr, ptr %i.gp, align 8
   musttail call void %i.gq(ptr nonnull %i.gp)
@@ -1308,7 +1308,7 @@ bb.bg:                                            ; preds = %bb.be
   %i.gr = landingpad { ptr, i32 }
           cleanup
   store ptr null, ptr %0, align 16
-  store i3 -3, ptr %index.addr, align 8
+  store i8 5, ptr %index.addr, align 8
   resume { ptr, i32 } %i.gr
 
 unreachable:                                      ; preds = %resume.entry
@@ -1323,14 +1323,14 @@ resume.entry:
   %.reload.addr203 = getelementptr inbounds nuw i8, ptr %0, i64 304
   %.reload.addr204 = getelementptr inbounds nuw i8, ptr %0, i64 312
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 344
-  %index = load i3, ptr %index.addr, align 8
-  switch i3 %index, label %unreachable [
-    i3 0, label %AfterCoroSuspend
-    i3 1, label %AfterCoroSuspend
-    i3 2, label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit
-    i3 3, label %AfterCoroSuspend112
-    i3 -4, label %AfterCoroSuspend116
-    i3 -3, label %AfterCoroSuspend
+  %index = load i8, ptr %index.addr, align 8
+  switch i8 %index, label %unreachable [
+    i8 0, label %AfterCoroSuspend
+    i8 1, label %AfterCoroSuspend
+    i8 2, label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit
+    i8 3, label %AfterCoroSuspend112
+    i8 4, label %AfterCoroSuspend116
+    i8 5, label %AfterCoroSuspend
   ], !prof !2375
 
 _ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS0_5BatonEE12await_resumeEv.exit: ; preds = %resume.entry

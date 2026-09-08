@@ -205,7 +205,7 @@ define void @_ZN5folly6fibers13SemaphoreBase14co_wait_commonEl(ptr dead_on_unwin
   store i8 1, ptr %i.d, align 8, !tbaa !44
   store ptr %i.a, ptr %0, align 8, !tbaa !45, !alias.scope !156
   %index.addr153 = getelementptr inbounds nuw i8, ptr %i.a, i64 312
-  store i2 0, ptr %index.addr153, align 8
+  store i8 0, ptr %index.addr153, align 8
   ret void
 }
 
@@ -608,11 +608,11 @@ resume.entry:
   %.reload.addr149 = getelementptr inbounds nuw i8, ptr %0, i64 313 ; 3 uses
   %.reload.addr152 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 5 uses
-  %index = load i2, ptr %index.addr, align 8
-  switch i2 %index, label %unreachable [
-    i2 0, label %.from.101
-    i2 1, label %AfterCoroSuspend86
-    i2 -2, label %CoroEnd
+  %index = load i8, ptr %index.addr, align 8
+  switch i8 %index, label %unreachable [
+    i8 0, label %.from.101
+    i8 1, label %AfterCoroSuspend86
+    i8 2, label %CoroEnd
   ], !prof !486
 
 .from.101:                                        ; preds = %resume.entry
@@ -768,7 +768,7 @@ _ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS_6fibers5BatonEED2Ev.exit38.fro
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail12ViaCoroutineILb0EE12promise_typeE, i64 16), ptr %.reload.addr14.i.i.i.i, align 8, !tbaa !83, !noalias !496
   store ptr %i.aq, ptr %.reload.addr144, align 16, !tbaa !45, !alias.scope !497
   %index.addr15.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.aq, i64 96
-  store i1 false, ptr %index.addr15.i.i.i.i, align 8, !noalias !496
+  store i8 0, ptr %index.addr15.i.i.i.i, align 8, !noalias !496
   store i64 %i.as, ptr %i.at, align 8, !tbaa !79, !noalias !496
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 264
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5folly6fibers6detail20BatonAwaitableWaiterE, i64 16), ptr %i.aw, align 8, !tbaa !83, !alias.scope !498
@@ -781,7 +781,7 @@ _ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS_6fibers5BatonEED2Ev.exit38.fro
   br i1 %i.ba, label %AfterCoroSuspend86, label %AfterCoroSave84
 
 AfterCoroSave84:                                  ; preds = %.from.105
-  store i2 1, ptr %index.addr, align 8
+  store i8 1, ptr %index.addr, align 8
   invoke void @_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE13await_suspendINS0_6detail11TaskPromiseIvEEEEvNSt7__n486116coroutine_handleIT_EE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr144, ptr nonnull %0)
           to label %CoroEnd unwind label %bb.k
 
@@ -902,7 +902,7 @@ bb.x:                                             ; preds = %.from.116, %bb.v, %
   store i64 %i.ce, ptr %i.cf, align 8, !alias.scope !504
   store i64 0, ptr %.reload.addr145, align 16, !noalias !504
   store i8 0, ptr %i.by, align 16, !tbaa !44
-  store i2 -2, ptr %index.addr, align 8
+  store i8 2, ptr %index.addr, align 8
   %i.cg = call noundef ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter21await_suspend_promiseINS1_11TaskPromiseIvEEEENSt7__n486116coroutine_handleIvEERT_(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr150, ptr noundef nonnull align 8 dereferenceable(96) %.reload.addr152) #5 ; 2 uses
   %i.ch = load ptr, ptr %i.cg, align 8
   musttail call void %i.ch(ptr nonnull %i.cg)
@@ -953,7 +953,7 @@ bb.ac:                                            ; preds = %.from.121, %.from.1
 .thread66:                                        ; preds = %bb.y, %_ZN5folly17exception_wrapperD2Ev.exit.i.i, %bb.ac, %.thread65, %_ZN5folly17exception_wrapperD2Ev.exit.i.i44
   %.reload.addr151 = getelementptr inbounds nuw i8, ptr %0, i64 315
   store ptr null, ptr %0, align 16
-  store i2 -1, ptr %index.addr, align 8
+  store i8 3, ptr %index.addr, align 8
   %i.cp = call noundef ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter21await_suspend_promiseINS1_11TaskPromiseIvEEEENSt7__n486116coroutine_handleIvEERT_(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr151, ptr noundef nonnull align 8 dereferenceable(96) %.reload.addr152) #5 ; 2 uses
   %i.cq = load ptr, ptr %i.cp, align 8
   musttail call void %i.cq(ptr nonnull %i.cp)
@@ -998,7 +998,7 @@ bb.af:                                            ; preds = %bb.ac
   %i.da = landingpad { ptr, i32 }
           cleanup
   store ptr null, ptr %0, align 16
-  store i2 -1, ptr %index.addr, align 8
+  store i8 3, ptr %index.addr, align 8
   resume { ptr, i32 } %i.da
 
 unreachable:                                      ; preds = %resume.entry
@@ -1011,12 +1011,12 @@ resume.entry:
   %.reload.addr142 = getelementptr inbounds nuw i8, ptr %0, i64 112
   %.reload.addr145 = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %index = load i2, ptr %index.addr, align 8
-  switch i2 %index, label %unreachable [
-    i2 0, label %AfterCoroSuspend
-    i2 1, label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE12await_resumeEv.exit
-    i2 -2, label %AfterCoroSuspend90
-    i2 -1, label %AfterCoroSuspend
+  %index = load i8, ptr %index.addr, align 8
+  switch i8 %index, label %unreachable [
+    i8 0, label %AfterCoroSuspend
+    i8 1, label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE12await_resumeEv.exit
+    i8 2, label %AfterCoroSuspend90
+    i8 3, label %AfterCoroSuspend
   ], !prof !508
 
 _ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE12await_resumeEv.exit: ; preds = %resume.entry
