@@ -204,7 +204,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable5drift13logical_mergeNtNtNtCs6
   br i1 %i.cl, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cm = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cm = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cn = lshr i64 %.sroa.018.0, 1
   %i.co = add nuw i64 %i.cn, %.sroa.09.0
   br label %bb.f
@@ -508,7 +508,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable5drift13logical_mergeTNtNtCsex
   br i1 %i.cs, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.ct = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ct = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cu = lshr i64 %.sroa.018.0, 1
   %i.cv = add nuw i64 %i.cu, %.sroa.09.0
   br label %bb.f
@@ -812,7 +812,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable5drift13logical_mergeTNtNtCsex
   br i1 %i.cs, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.ct = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ct = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cu = lshr i64 %.sroa.018.0, 1
   %i.cv = add nuw i64 %i.cu, %.sroa.09.0
   br label %bb.f
@@ -1124,7 +1124,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable5drift13logical_mergeTjINtNtCs
   br i1 %i.cs, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.ct = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ct = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cu = lshr i64 %.sroa.018.0, 1
   %i.cv = add nuw i64 %i.cu, %.sroa.09.0
   br label %bb.f
@@ -1436,7 +1436,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable5drift13logical_mergeTjINtNtCs
   br i1 %i.cs, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.ct = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ct = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cu = lshr i64 %.sroa.018.0, 1
   %i.cv = add nuw i64 %i.cu, %.sroa.09.0
   br label %bb.f

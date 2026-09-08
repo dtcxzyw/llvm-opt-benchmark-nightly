@@ -205,7 +205,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hf92472532ce5bdc1E.exit: ; pred
   br i1 %i.do, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.dp = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dp = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dq = lshr i64 %.sroa.018.0, 1
   %i.dr = add i64 %i.dq, %.sroa.09.0
   br label %bb.f
@@ -608,7 +608,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h36d450aaee3ee036E.exit: ; pred
   br i1 %i.em, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.en = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.en = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.eo = lshr i64 %.sroa.018.0, 1
   %i.ep = add i64 %i.eo, %.sroa.09.0
   br label %bb.f
@@ -992,7 +992,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h603a345bd7fe0819E.exit: ; pred
   br i1 %i.dp, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.dq = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dq = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dr = lshr i64 %.sroa.018.0, 1
   %i.ds = add i64 %i.dr, %.sroa.09.0
   br label %bb.f
@@ -1395,7 +1395,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hc31b228df767bf27E.exit: ; pred
   br i1 %i.dp, label %bb.u, label %._crit_edge
 
 bb.ah:                                            ; preds = %._crit_edge
-  %i.dq = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dq = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dr = lshr i64 %.sroa.018.0, 1
   %i.ds = add i64 %i.dr, %.sroa.09.0
   br label %bb.f
@@ -1798,7 +1798,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h3d8bc9ae2438aa54E.exit: ; pred
   br i1 %i.fi, label %bb.y, label %._crit_edge
 
 bb.ap:                                            ; preds = %._crit_edge
-  %i.fj = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fj = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fk = lshr i64 %.sroa.018.0, 1
   %i.fl = add i64 %i.fk, %.sroa.09.0
   br label %bb.f
@@ -2201,7 +2201,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h39ee4b8a9ece5a1eE.exit: ; pred
   br i1 %i.em, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.en = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.en = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.eo = lshr i64 %.sroa.018.0, 1
   %i.ep = add i64 %i.eo, %.sroa.09.0
   br label %bb.f
@@ -2565,7 +2565,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h04ae1342915b3a23E.exit: ; pred
   br i1 %i.do, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.dp = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dp = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dq = lshr i64 %.sroa.018.0, 1
   %i.dr = add i64 %i.dq, %.sroa.09.0
   br label %bb.f
@@ -2922,7 +2922,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h6233f7fb51d7cfb0E.exit: ; pred
   br i1 %i.dh, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.di = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.di = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dj = lshr i64 %.sroa.018.0, 1
   %i.dk = add i64 %i.dj, %.sroa.09.0
   br label %bb.f
@@ -3325,7 +3325,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h4970c9375a2dc0caE.exit: ; pred
   br i1 %i.ef, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.eg = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eg = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.eh = lshr i64 %.sroa.018.0, 1
   %i.ei = add i64 %i.eh, %.sroa.09.0
   br label %bb.f
@@ -3728,7 +3728,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h7be8ea839089572dE.exit: ; pred
   br i1 %i.en, label %bb.q, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.eo = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eo = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ep = lshr i64 %.sroa.018.0, 1
   %i.eq = add i64 %i.ep, %.sroa.09.0
   br label %bb.f

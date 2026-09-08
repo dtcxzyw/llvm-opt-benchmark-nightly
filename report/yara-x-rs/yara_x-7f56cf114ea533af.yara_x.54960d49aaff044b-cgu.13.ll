@@ -205,14 +205,14 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit102.i: ; preds = %bb.c
-  %i.q = getelementptr i8, ptr %i.g, i64 %.sroa.5.0119.i ; 6 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sroa.5.0119.i ; 6 uses
   %.sroa.048.0.copyload.i = load i32, ptr %i.q, align 1, !noalias !4854
   %i.r = icmp eq i32 %.sroa.048.0.copyload.i, 101010256
   br i1 %i.r, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj2_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit100.i, label %bb.f
 
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj2_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit100.i: ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit102.i
-  %i.s = add nsw i64 %.sroa.5.0119.i, 22
-  %i.t = getelementptr i8, ptr %i.q, i64 20
+  %i.s = add nuw nsw i64 %.sroa.5.0119.i, 22
+  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 20
   %.sroa.049.0.copyload.i = load i16, ptr %i.t, align 1, !noalias !4854
   %i.u = zext i16 %.sroa.049.0.copyload.i to i64
   %i.v = add nuw nsw i64 %i.s, %i.u
@@ -222,13 +222,13 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj2_NtNtB4_5array17TryFromSliceEr
 bb.e:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultAhj2_NtNtB4_5array17TryFromSliceErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit100.i
   %i.x = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.p
   %.sroa.050.0.copyload.i = load i16, ptr %i.x, align 1, !noalias !4854
-  %i.y = getelementptr i8, ptr %i.q, i64 6
+  %i.y = getelementptr inbounds nuw i8, ptr %i.q, i64 6
   %.sroa.051.0.copyload.i = load i16, ptr %i.y, align 1, !noalias !4854
-  %i.z = getelementptr i8, ptr %i.q, i64 10
+  %i.z = getelementptr inbounds nuw i8, ptr %i.q, i64 10
   %.sroa.052.0.copyload.i = load i16, ptr %i.z, align 1, !noalias !4854 ; 2 uses
-  %i.aa = getelementptr i8, ptr %i.q, i64 12
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.q, i64 12
   %.sroa.053.0.copyload.i = load i32, ptr %i.aa, align 1, !noalias !4854 ; 2 uses
-  %i.ab = getelementptr i8, ptr %i.q, i64 16
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %.sroa.054.0.copyload.i = load i32, ptr %i.ab, align 1, !noalias !4854 ; 2 uses
   %i.ac = add i64 %.sroa.5.0119.i, %i.k           ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !4854

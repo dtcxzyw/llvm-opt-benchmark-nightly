@@ -205,7 +205,7 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIaiEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIaiEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.at, %bb.as
-  %i.hz = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.hz = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.ia = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151.i
   store i32 %i.hu, ptr %i.ia, align 4, !tbaa !119
   %i.ib = icmp eq i64 %i.hz, 2048
@@ -283,7 +283,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIaiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIaiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.ba, %bb.az
-  %i.iy = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.iy = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.iz = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.it, ptr %i.iz, align 4, !tbaa !119
   %i.ja = icmp eq i64 %i.iy, 2048
@@ -686,7 +686,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIaiEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIaiEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.av, %bb.au
-  %i.jb = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.jb = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.jc = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151.i
   store i32 %i.iw, ptr %i.jc, align 4, !tbaa !119
   %i.jd = icmp eq i64 %i.jb, 2048
@@ -764,7 +764,7 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIaiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIaiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bc, %bb.bb
-  %i.ka = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.ka = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.kb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.jv, ptr %i.kb, align 4, !tbaa !119
   %i.kc = icmp eq i64 %i.ka, 2048
@@ -1167,7 +1167,7 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIsiEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIsiEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.at, %bb.as
-  %i.ia = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.ia = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.ib = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151.i
   store i32 %i.hv, ptr %i.ib, align 4, !tbaa !119
   %i.ic = icmp eq i64 %i.ia, 2048
@@ -1245,7 +1245,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIsiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIsiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.ba, %bb.az
-  %i.iz = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.iz = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.ja = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.iu, ptr %i.ja, align 4, !tbaa !119
   %i.jb = icmp eq i64 %i.iz, 2048
@@ -1648,7 +1648,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIsiEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIsiEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.av, %bb.au
-  %i.jc = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.jc = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.jd = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151.i
   store i32 %i.ix, ptr %i.jd, align 4, !tbaa !119
   %i.je = icmp eq i64 %i.jc, 2048
@@ -1726,7 +1726,7 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIsiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIsiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bc, %bb.bb
-  %i.kb = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.kb = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.kc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.jw, ptr %i.kc, align 4, !tbaa !119
   %i.kd = icmp eq i64 %i.kb, 2048
@@ -2129,7 +2129,7 @@ bb.bd:                                            ; preds = %bb.bc
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIiiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIiiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.bd, %bb.bc
-  %i.jf = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.jf = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.jg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.ja, ptr %i.jg, align 4, !tbaa !119
   %i.jh = icmp eq i64 %i.jf, 2048
@@ -2532,7 +2532,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIiiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIiiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bf, %bb.be
-  %i.kh = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.kh = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.ki = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.kc, ptr %i.ki, align 4, !tbaa !119
   %i.kj = icmp eq i64 %i.kh, 2048
@@ -2935,7 +2935,7 @@ bb.bd:                                            ; preds = %bb.bc
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.bd, %bb.bc
-  %i.kc = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.kc = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.kd = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01721.i
   store i64 %i.jx, ptr %i.kd, align 8, !tbaa !301
   %i.ke = icmp eq i64 %i.kc, 2048
@@ -3338,7 +3338,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bf, %bb.be
-  %i.le = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.le = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.lf = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01721.i
   store i64 %i.kz, ptr %i.lf, align 8, !tbaa !301
   %i.lg = icmp eq i64 %i.le, 2048
@@ -3741,7 +3741,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.gt, i64 %.02.i
   %.sroa.0.0.copyload.i = load i64, ptr %i.gw, align 8, !tbaa !301
   %i.gx = lshr i64 %.sroa.0.0.copyload.i, 24
-  %i.gy = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.gy = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.gz = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0151.i
   store i64 %i.gx, ptr %i.gz, align 8, !tbaa !301
   %i.ha = icmp eq i64 %i.gy, 2048
@@ -3796,7 +3796,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i: ; preds = %_Z
   %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.gt, i64 %.03.i
   %.sroa.0.0.copyload.i124 = load i64, ptr %i.ho, align 8, !tbaa !301
   %i.hp = lshr i64 %.sroa.0.0.copyload.i124, 24
-  %i.hq = add nsw i64 %.0172.i, 1                 ; 2 uses
+  %i.hq = add nuw nsw i64 %.0172.i, 1             ; 2 uses
   %i.hr = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0172.i
   store i64 %i.hp, ptr %i.hr, align 8, !tbaa !301
   %i.hs = icmp eq i64 %i.hq, 2048
@@ -4199,7 +4199,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.hy = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %.02.i
   %.sroa.0.0.copyload.i = load i64, ptr %i.hy, align 8, !tbaa !301
   %i.hz = lshr i64 %.sroa.0.0.copyload.i, 24
-  %i.ia = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.ia = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.ib = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0151.i
   store i64 %i.hz, ptr %i.ib, align 8, !tbaa !301
   %i.ic = icmp eq i64 %i.ia, 2048
@@ -4254,7 +4254,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i: ; preds = %_Z
   %i.iq = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %.03.i
   %.sroa.0.0.copyload.i144 = load i64, ptr %i.iq, align 8, !tbaa !301
   %i.ir = lshr i64 %.sroa.0.0.copyload.i144, 24
-  %i.is = add nsw i64 %.0172.i, 1                 ; 2 uses
+  %i.is = add nuw nsw i64 %.0172.i, 1             ; 2 uses
   %i.it = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0172.i
   store i64 %i.ir, ptr %i.it, align 8, !tbaa !301
   %i.iu = icmp eq i64 %i.is, 2048
@@ -4657,7 +4657,7 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.at, %bb.as
-  %i.ip = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.ip = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.iq = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0151.i
   store i64 %i.ik, ptr %i.iq, align 8, !tbaa !301
   %i.ir = icmp eq i64 %i.ip, 2048
@@ -4734,7 +4734,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.ba, %bb.az
-  %i.jn = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.jn = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.jo = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01721.i
   store i64 %i.ji, ptr %i.jo, align 8, !tbaa !301
   %i.jp = icmp eq i64 %i.jn, 2048
@@ -5137,7 +5137,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.av, %bb.au
-  %i.jr = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.jr = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.js = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0151.i
   store i64 %i.jm, ptr %i.js, align 8, !tbaa !301
   %i.jt = icmp eq i64 %i.jr, 2048
@@ -5214,7 +5214,7 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bc, %bb.bb
-  %i.kp = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.kp = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.kq = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01721.i
   store i64 %i.kk, ptr %i.kq, align 8, !tbaa !301
   %i.kr = icmp eq i64 %i.kp, 2048
@@ -5617,7 +5617,7 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.at, %bb.as
-  %i.iv = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.iv = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.iw = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0151.i
   store i64 %i.iq, ptr %i.iw, align 8, !tbaa !301
   %i.ix = icmp eq i64 %i.iv, 2048
@@ -5695,7 +5695,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.ba, %bb.az
-  %i.ju = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.ju = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.jv = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01721.i
   store i64 %i.jp, ptr %i.jv, align 8, !tbaa !301
   %i.jw = icmp eq i64 %i.ju, 2048
@@ -6098,7 +6098,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.av, %bb.au
-  %i.jx = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.jx = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.jy = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0151.i
   store i64 %i.js, ptr %i.jy, align 8, !tbaa !301
   %i.jz = icmp eq i64 %i.jx, 2048
@@ -6176,7 +6176,7 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIllEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bc, %bb.bb
-  %i.kw = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.kw = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.kx = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01721.i
   store i64 %i.kr, ptr %i.kx, align 8, !tbaa !301
   %i.ky = icmp eq i64 %i.kw, 2048
@@ -6579,7 +6579,7 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIhiEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIhiEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.at, %bb.as
-  %i.hy = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.hy = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.hz = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151.i
   store i32 %i.ht, ptr %i.hz, align 4, !tbaa !119
   %i.ia = icmp eq i64 %i.hy, 2048
@@ -6657,7 +6657,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIhiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIhiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.ba, %bb.az
-  %i.ix = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.ix = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.is, ptr %i.iy, align 4, !tbaa !119
   %i.iz = icmp eq i64 %i.ix, 2048
@@ -7060,7 +7060,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIhiEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIhiEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.av, %bb.au
-  %i.ja = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.ja = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.jb = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151.i
   store i32 %i.iv, ptr %i.jb, align 4, !tbaa !119
   %i.jc = icmp eq i64 %i.ja, 2048
@@ -7138,7 +7138,7 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIhiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIhiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bc, %bb.bb
-  %i.jz = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.jz = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.ka = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.ju, ptr %i.ka, align 4, !tbaa !119
   %i.kb = icmp eq i64 %i.jz, 2048
@@ -7541,7 +7541,7 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsItiEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsItiEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.at, %bb.as
-  %i.hy = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.hy = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.hz = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151.i
   store i32 %i.ht, ptr %i.hz, align 4, !tbaa !119
   %i.ia = icmp eq i64 %i.hy, 2048
@@ -7619,7 +7619,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsItiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsItiEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.ba, %bb.az
-  %i.ix = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.ix = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.is, ptr %i.iy, align 4, !tbaa !119
   %i.iz = icmp eq i64 %i.ix, 2048
@@ -8022,7 +8022,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsItiEEvPNS_22ColumnWriterStatisticsET0_.exit.i
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsItiEEvPNS_22ColumnWriterStatisticsET0_.exit.i: ; preds = %bb.av, %bb.au
-  %i.ja = add nsw i64 %.0151.i, 1                 ; 2 uses
+  %i.ja = add nuw nsw i64 %.0151.i, 1             ; 2 uses
   %i.jb = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151.i
   store i32 %i.iv, ptr %i.jb, align 4, !tbaa !119
   %i.jc = icmp eq i64 %i.ja, 2048
@@ -8100,7 +8100,7 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsItiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsItiEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bc, %bb.bb
-  %i.jz = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.jz = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.ka = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.ju, ptr %i.ka, align 4, !tbaa !119
   %i.kb = icmp eq i64 %i.jz, 2048
@@ -8503,7 +8503,7 @@ bb.bd:                                            ; preds = %bb.bc
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIjjEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIjjEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.bd, %bb.bc
-  %i.jf = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.jf = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.jg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.ja, ptr %i.jg, align 4, !tbaa !119
   %i.jh = icmp eq i64 %i.jf, 2048
@@ -8906,7 +8906,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsIjjEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsIjjEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bf, %bb.be
-  %i.kh = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.kh = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.ki = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.01721.i
   store i32 %i.kc, ptr %i.ki, align 4, !tbaa !119
   %i.kj = icmp eq i64 %i.kh, 2048
@@ -9309,7 +9309,7 @@ bb.bd:                                            ; preds = %bb.bc
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsImmEEvPNS_22ColumnWriterStatisticsET0_.exit.i124
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsImmEEvPNS_22ColumnWriterStatisticsET0_.exit.i124: ; preds = %bb.bd, %bb.bc
-  %i.kc = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.kc = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.kd = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01721.i
   store i64 %i.jx, ptr %i.kd, align 8, !tbaa !301
   %i.ke = icmp eq i64 %i.kc, 2048
@@ -9712,7 +9712,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ZN6duckdb19ParquetCastOperator11HandleStatsImmEEvPNS_22ColumnWriterStatisticsET0_.exit.i144
 
 _ZN6duckdb19ParquetCastOperator11HandleStatsImmEEvPNS_22ColumnWriterStatisticsET0_.exit.i144: ; preds = %bb.bf, %bb.be
-  %i.le = add nsw i64 %.01721.i, 1                ; 2 uses
+  %i.le = add nuw nsw i64 %.01721.i, 1            ; 2 uses
   %i.lf = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.01721.i
   store i64 %i.kz, ptr %i.lf, align 8, !tbaa !301
   %i.lg = icmp eq i64 %i.le, 2048
@@ -10115,7 +10115,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN6duckdb21FloatingPointOperator11HandleStatsINS_14float_na_equalEfEEvPNS_22ColumnWriterStatisticsET0_.exit: ; preds = %bb.c, %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.r = add nsw i64 %.0151, 1                    ; 2 uses
+  %i.r = add nuw nsw i64 %.0151, 1                ; 2 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0151
   store float %.sroa.0.0.copyload, ptr %i.s, align 4, !tbaa !944
   %i.t = icmp eq i64 %i.r, 2048
@@ -10213,7 +10213,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN6duckdb21FloatingPointOperator11HandleStatsINS_14float_na_equalEfEEvPNS_22ColumnWriterStatisticsET0_.exit: ; preds = %bb.c, %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.y = add nsw i64 %.01721, 1                   ; 2 uses
+  %i.y = add nuw nsw i64 %.01721, 1               ; 2 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.01721
   store float %.sroa.0.0.copyload, ptr %i.z, align 4, !tbaa !944
   %i.aa = icmp eq i64 %i.y, 2048
@@ -10616,7 +10616,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN6duckdb21FloatingPointOperator11HandleStatsINS_15double_na_equalEdEEvPNS_22ColumnWriterStatisticsET0_.exit: ; preds = %bb.c, %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.r = add nsw i64 %.0151, 1                    ; 2 uses
+  %i.r = add nuw nsw i64 %.0151, 1                ; 2 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0151
   store double %.sroa.0.0.copyload, ptr %i.s, align 8, !tbaa !748
   %i.t = icmp eq i64 %i.r, 2048
@@ -10714,7 +10714,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN6duckdb21FloatingPointOperator11HandleStatsINS_15double_na_equalEdEEvPNS_22ColumnWriterStatisticsET0_.exit: ; preds = %bb.c, %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.y = add nsw i64 %.01721, 1                   ; 2 uses
+  %i.y = add nuw nsw i64 %.01721, 1               ; 2 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.01721
   store double %.sroa.0.0.copyload, ptr %i.z, align 8, !tbaa !748
   %i.aa = icmp eq i64 %i.y, 2048

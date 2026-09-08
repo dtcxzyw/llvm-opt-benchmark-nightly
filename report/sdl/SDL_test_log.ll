@@ -172,7 +172,7 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %.05263 ; 2 uses
   store i8 92, ptr %i.f, align 1
-  %i.g = add nsw i64 %.05263, 2
+  %i.g = add nuw nsw i64 %.05263, 2
   %i.h = getelementptr i8, ptr %i.f, i64 1
   store i8 48, ptr %i.h, align 1
   br label %bb.x
@@ -185,7 +185,7 @@ bb.e:                                             ; preds = %.lr.ph
 bb.f:                                             ; preds = %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 %.05263 ; 2 uses
   store i8 92, ptr %i.k, align 1
-  %i.l = add nsw i64 %.05263, 2
+  %i.l = add nuw nsw i64 %.05263, 2
   %i.m = getelementptr i8, ptr %i.k, i64 1
   store i8 34, ptr %i.m, align 1
   br label %bb.x
@@ -198,7 +198,7 @@ bb.g:                                             ; preds = %.lr.ph
 bb.h:                                             ; preds = %bb.g
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 %.05263 ; 2 uses
   store i8 92, ptr %i.p, align 1
-  %i.q = add nsw i64 %.05263, 2
+  %i.q = add nuw nsw i64 %.05263, 2
   %i.r = getelementptr i8, ptr %i.p, i64 1
   store i8 110, ptr %i.r, align 1
   br label %bb.x
@@ -211,7 +211,7 @@ bb.i:                                             ; preds = %.lr.ph
 bb.j:                                             ; preds = %bb.i
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 %.05263 ; 2 uses
   store i8 92, ptr %i.u, align 1
-  %i.v = add nsw i64 %.05263, 2
+  %i.v = add nuw nsw i64 %.05263, 2
   %i.w = getelementptr i8, ptr %i.u, i64 1
   store i8 114, ptr %i.w, align 1
   br label %bb.x
@@ -224,7 +224,7 @@ bb.k:                                             ; preds = %.lr.ph
 bb.l:                                             ; preds = %bb.k
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 %.05263 ; 2 uses
   store i8 92, ptr %i.z, align 1
-  %i.aa = add nsw i64 %.05263, 2
+  %i.aa = add nuw nsw i64 %.05263, 2
   %i.ab = getelementptr i8, ptr %i.z, i64 1
   store i8 116, ptr %i.ab, align 1
   br label %bb.x
@@ -237,7 +237,7 @@ bb.m:                                             ; preds = %.lr.ph
 bb.n:                                             ; preds = %bb.m
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 %.05263 ; 2 uses
   store i8 92, ptr %i.ae, align 1
-  %i.af = add nsw i64 %.05263, 2
+  %i.af = add nuw nsw i64 %.05263, 2
   %i.ag = getelementptr i8, ptr %i.ae, i64 1
   store i8 102, ptr %i.ag, align 1
   br label %bb.x
@@ -250,7 +250,7 @@ bb.o:                                             ; preds = %.lr.ph
 bb.p:                                             ; preds = %bb.o
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 %.05263 ; 2 uses
   store i8 92, ptr %i.aj, align 1
-  %i.ak = add nsw i64 %.05263, 2
+  %i.ak = add nuw nsw i64 %.05263, 2
   %i.al = getelementptr i8, ptr %i.aj, i64 1
   store i8 98, ptr %i.al, align 1
   br label %bb.x
@@ -263,7 +263,7 @@ bb.q:                                             ; preds = %.lr.ph
 bb.r:                                             ; preds = %bb.q
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 %.05263 ; 2 uses
   store i8 92, ptr %i.ao, align 1
-  %i.ap = add nsw i64 %.05263, 2
+  %i.ap = add nuw nsw i64 %.05263, 2
   %i.aq = getelementptr i8, ptr %i.ao, i64 1
   store i8 92, ptr %i.aq, align 1
   br label %bb.x
@@ -306,7 +306,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bh = or disjoint i8 %i.bf, 48
   %i.bi = add nuw nsw i8 %i.bf, 87
   %.0.i57 = select i1 %i.bg, i8 %i.bh, i8 %i.bi
-  %i.bj = add nsw i64 %.05263, 4
+  %i.bj = add nuw nsw i64 %.05263, 4
   %i.bk = getelementptr i8, ptr %i.ay, i64 3
   store i8 %.0.i57, ptr %i.bk, align 1
   br label %bb.x

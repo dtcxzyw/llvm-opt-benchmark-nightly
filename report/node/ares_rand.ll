@@ -120,12 +120,12 @@ bb.f:                                             ; preds = %bb.d, %bb.c
 bb.g:                                             ; preds = %bb.g, %bb.f
   %i.aj = call i32 @rand() #8
   %i.ak = trunc i32 %i.aj to i8
-  %i.al = load i64, ptr %i.a, align 8, !tbaa !25  ; 2 uses
+  %i.al = load i64, ptr %i.a, align 8, !tbaa !25  ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.al
   store i8 %i.ak, ptr %i.am, align 1, !tbaa !18
-  %i.an = add nsw i64 %i.al, 1                    ; 2 uses
+  %i.an = add nuw nsw i64 %i.al, 1
   store i64 %i.an, ptr %i.a, align 8, !tbaa !25
-  %i.ao = icmp ult i64 %i.an, 32
+  %i.ao = icmp ult i64 %i.al, 31
   br i1 %i.ao, label %bb.g, label %ares_rc4_generate_key.exit.i, !llvm.loop !20
 
 ares_rc4_generate_key.exit.i:                     ; preds = %bb.g

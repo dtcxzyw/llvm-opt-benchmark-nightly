@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.hm = zext i32 %i.hj to i64
   %i.hn = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.hm
   tail call void @llvm.prefetch.p0(ptr %i.hn, i32 0, i32 3, i32 1)
-  %i.ho = add nsw i64 %.0249.i32, 1
+  %i.ho = add nuw nsw i64 %.0249.i32, 1
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hj, ptr %i.hp, align 4, !tbaa !45
   %i.hq = add nsw i32 %.0262.i31, -1
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %bb.i
   %i.hu = zext i32 %i.hr to i64
   %i.hv = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.hu
   tail call void @llvm.prefetch.p0(ptr %i.hv, i32 0, i32 3, i32 1)
-  %i.hw = add nsw i64 %.0249.i32, 1
+  %i.hw = add nuw nsw i64 %.0249.i32, 1
   %i.hx = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hr, ptr %i.hx, align 4, !tbaa !45
   %i.hy = add nsw i32 %.0262.i31, -1
@@ -1011,7 +1011,7 @@ bb.k:                                             ; preds = %bb.j
   %i.hn = zext i32 %i.hk to i64
   %i.ho = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.hn
   tail call void @llvm.prefetch.p0(ptr %i.ho, i32 0, i32 3, i32 1)
-  %i.hp = add nsw i64 %.0249.i32, 1
+  %i.hp = add nuw nsw i64 %.0249.i32, 1
   %i.hq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hk, ptr %i.hq, align 4, !tbaa !45
   %i.hr = add nsw i32 %.0262.i31, -1
@@ -1414,7 +1414,7 @@ bb.j:                                             ; preds = %bb.i
   %i.hn = zext i32 %i.hk to i64
   %i.ho = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.hn
   tail call void @llvm.prefetch.p0(ptr %i.ho, i32 0, i32 3, i32 1)
-  %i.hp = add nsw i64 %.0249.i32, 1
+  %i.hp = add nuw nsw i64 %.0249.i32, 1
   %i.hq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hk, ptr %i.hq, align 4, !tbaa !45
   %i.hr = add nsw i32 %.0262.i31, -1
@@ -1817,7 +1817,7 @@ bb.j:                                             ; preds = %bb.i
   %i.hv = zext i32 %i.hs to i64
   %i.hw = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.hv
   tail call void @llvm.prefetch.p0(ptr %i.hw, i32 0, i32 3, i32 1)
-  %i.hx = add nsw i64 %.0249.i32, 1
+  %i.hx = add nuw nsw i64 %.0249.i32, 1
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hs, ptr %i.hy, align 4, !tbaa !45
   %i.hz = add nsw i32 %.0262.i31, -1
@@ -2220,7 +2220,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ho = zext i32 %i.hl to i64
   %i.hp = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ho
   tail call void @llvm.prefetch.p0(ptr %i.hp, i32 0, i32 3, i32 1)
-  %i.hq = add nsw i64 %.0249.i32, 1
+  %i.hq = add nuw nsw i64 %.0249.i32, 1
   %i.hr = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hl, ptr %i.hr, align 4, !tbaa !45
   %i.hs = add nsw i32 %.0262.i31, -1
@@ -2623,7 +2623,7 @@ bb.j:                                             ; preds = %bb.i
   %i.hn = zext i32 %i.hk to i64
   %i.ho = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.hn
   tail call void @llvm.prefetch.p0(ptr %i.ho, i32 0, i32 3, i32 1)
-  %i.hp = add nsw i64 %.0249.i32, 1
+  %i.hp = add nuw nsw i64 %.0249.i32, 1
   %i.hq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hk, ptr %i.hq, align 4, !tbaa !45
   %i.hr = add nsw i32 %.0262.i31, -1
@@ -3026,7 +3026,7 @@ bb.j:                                             ; preds = %bb.i
   %i.hv = zext i32 %i.hs to i64
   %i.hw = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.hv
   tail call void @llvm.prefetch.p0(ptr %i.hw, i32 0, i32 3, i32 1)
-  %i.hx = add nsw i64 %.0249.i32, 1
+  %i.hx = add nuw nsw i64 %.0249.i32, 1
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hs, ptr %i.hy, align 4, !tbaa !45
   %i.hz = add nsw i32 %.0262.i31, -1
@@ -3429,7 +3429,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ho = zext i32 %i.hl to i64
   %i.hp = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ho
   tail call void @llvm.prefetch.p0(ptr %i.hp, i32 0, i32 3, i32 1)
-  %i.hq = add nsw i64 %.0249.i32, 1
+  %i.hq = add nuw nsw i64 %.0249.i32, 1
   %i.hr = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i32
   store i32 %i.hl, ptr %i.hr, align 4, !tbaa !45
   %i.hs = add nsw i32 %.0262.i31, -1
@@ -3832,7 +3832,7 @@ bb.j:                                             ; preds = %bb.i
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.hu = getelementptr inbounds nuw i8, ptr %., i64 %i.ht
   tail call void @llvm.prefetch.p0(ptr %i.hu, i32 0, i32 3, i32 1)
-  %i.hv = add nsw i64 %.0249.i34, 1
+  %i.hv = add nuw nsw i64 %.0249.i34, 1
   %i.hw = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hq, ptr %i.hw, align 4, !tbaa !45
   %i.hx = add nsw i32 %.0262.i33, -1
@@ -4235,7 +4235,7 @@ bb.j:                                             ; preds = %bb.i
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.ic = getelementptr inbounds nuw i8, ptr %., i64 %i.ib
   tail call void @llvm.prefetch.p0(ptr %i.ic, i32 0, i32 3, i32 1)
-  %i.id = add nsw i64 %.0249.i34, 1
+  %i.id = add nuw nsw i64 %.0249.i34, 1
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hy, ptr %i.ie, align 4, !tbaa !45
   %i.if = add nsw i32 %.0262.i33, -1
@@ -4638,7 +4638,7 @@ bb.k:                                             ; preds = %bb.j
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.hv = getelementptr inbounds nuw i8, ptr %., i64 %i.hu
   tail call void @llvm.prefetch.p0(ptr %i.hv, i32 0, i32 3, i32 1)
-  %i.hw = add nsw i64 %.0249.i34, 1
+  %i.hw = add nuw nsw i64 %.0249.i34, 1
   %i.hx = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hr, ptr %i.hx, align 4, !tbaa !45
   %i.hy = add nsw i32 %.0262.i33, -1
@@ -5041,7 +5041,7 @@ bb.j:                                             ; preds = %bb.i
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.hv = getelementptr inbounds nuw i8, ptr %., i64 %i.hu
   tail call void @llvm.prefetch.p0(ptr %i.hv, i32 0, i32 3, i32 1)
-  %i.hw = add nsw i64 %.0249.i34, 1
+  %i.hw = add nuw nsw i64 %.0249.i34, 1
   %i.hx = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hr, ptr %i.hx, align 4, !tbaa !45
   %i.hy = add nsw i32 %.0262.i33, -1
@@ -5444,7 +5444,7 @@ bb.j:                                             ; preds = %bb.i
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.id = getelementptr inbounds nuw i8, ptr %., i64 %i.ic
   tail call void @llvm.prefetch.p0(ptr %i.id, i32 0, i32 3, i32 1)
-  %i.ie = add nsw i64 %.0249.i34, 1
+  %i.ie = add nuw nsw i64 %.0249.i34, 1
   %i.if = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hz, ptr %i.if, align 4, !tbaa !45
   %i.ig = add nsw i32 %.0262.i33, -1
@@ -5847,7 +5847,7 @@ bb.k:                                             ; preds = %bb.j
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.hw = getelementptr inbounds nuw i8, ptr %., i64 %i.hv
   tail call void @llvm.prefetch.p0(ptr %i.hw, i32 0, i32 3, i32 1)
-  %i.hx = add nsw i64 %.0249.i34, 1
+  %i.hx = add nuw nsw i64 %.0249.i34, 1
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hs, ptr %i.hy, align 4, !tbaa !45
   %i.hz = add nsw i32 %.0262.i33, -1
@@ -6250,7 +6250,7 @@ bb.j:                                             ; preds = %bb.i
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.hv = getelementptr inbounds nuw i8, ptr %., i64 %i.hu
   tail call void @llvm.prefetch.p0(ptr %i.hv, i32 0, i32 3, i32 1)
-  %i.hw = add nsw i64 %.0249.i34, 1
+  %i.hw = add nuw nsw i64 %.0249.i34, 1
   %i.hx = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hr, ptr %i.hx, align 4, !tbaa !45
   %i.hy = add nsw i32 %.0262.i33, -1
@@ -6653,7 +6653,7 @@ bb.j:                                             ; preds = %bb.i
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.id = getelementptr inbounds nuw i8, ptr %., i64 %i.ic
   tail call void @llvm.prefetch.p0(ptr %i.id, i32 0, i32 3, i32 1)
-  %i.ie = add nsw i64 %.0249.i34, 1
+  %i.ie = add nuw nsw i64 %.0249.i34, 1
   %i.if = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hz, ptr %i.if, align 4, !tbaa !45
   %i.ig = add nsw i32 %.0262.i33, -1
@@ -7056,7 +7056,7 @@ bb.k:                                             ; preds = %bb.j
   %. = select i1 %.not276.i, ptr %i.m, ptr %i.k
   %i.hw = getelementptr inbounds nuw i8, ptr %., i64 %i.hv
   tail call void @llvm.prefetch.p0(ptr %i.hw, i32 0, i32 3, i32 1)
-  %i.hx = add nsw i64 %.0249.i34, 1
+  %i.hx = add nuw nsw i64 %.0249.i34, 1
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i34
   store i32 %i.hs, ptr %i.hy, align 4, !tbaa !45
   %i.hz = add nsw i32 %.0262.i33, -1
@@ -7459,7 +7459,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ih = zext i32 %i.ie to i64
   %i.ii = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ih
   tail call void @llvm.prefetch.p0(ptr %i.ii, i32 0, i32 3, i32 1)
-  %i.ij = add nsw i64 %.0249.i60, 1
+  %i.ij = add nuw nsw i64 %.0249.i60, 1
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.ie, ptr %i.ik, align 4, !tbaa !45
   %i.il = add nsw i32 %.0262.i59, -1
@@ -7685,7 +7685,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ly = zext i32 %i.lv to i64
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ky, i64 %i.ly
   tail call void @llvm.prefetch.p0(ptr %i.lz, i32 0, i32 3, i32 1)
-  %i.ma = add nsw i64 %.0240.i77, 1
+  %i.ma = add nuw nsw i64 %.0240.i77, 1
   %i.mb = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.lv, ptr %i.mb, align 4, !tbaa !45
   %i.mc = add nsw i32 %.3265.i76, -1
@@ -8088,7 +8088,7 @@ bb.j:                                             ; preds = %bb.i
   %i.iq = zext i32 %i.in to i64
   %i.ir = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.iq
   tail call void @llvm.prefetch.p0(ptr %i.ir, i32 0, i32 3, i32 1)
-  %i.is = add nsw i64 %.0249.i60, 1
+  %i.is = add nuw nsw i64 %.0249.i60, 1
   %i.it = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.in, ptr %i.it, align 4, !tbaa !45
   %i.iu = add nsw i32 %.0262.i59, -1
@@ -8316,7 +8316,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.mj = zext i32 %i.mg to i64
   %i.mk = getelementptr inbounds nuw i8, ptr %i.lh, i64 %i.mj
   tail call void @llvm.prefetch.p0(ptr %i.mk, i32 0, i32 3, i32 1)
-  %i.ml = add nsw i64 %.0240.i77, 1
+  %i.ml = add nuw nsw i64 %.0240.i77, 1
   %i.mm = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.mg, ptr %i.mm, align 4, !tbaa !45
   %i.mn = add nsw i32 %.3265.i76, -1
@@ -8719,7 +8719,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ik = zext i32 %i.ih to i64
   %i.il = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ik
   tail call void @llvm.prefetch.p0(ptr %i.il, i32 0, i32 3, i32 1)
-  %i.im = add nsw i64 %.0249.i60, 1
+  %i.im = add nuw nsw i64 %.0249.i60, 1
   %i.in = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.ih, ptr %i.in, align 4, !tbaa !45
   %i.io = add nsw i32 %.0262.i59, -1
@@ -8963,7 +8963,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.mw = zext i32 %i.mt to i64
   %i.mx = getelementptr inbounds nuw i8, ptr %i.lb, i64 %i.mw
   tail call void @llvm.prefetch.p0(ptr %i.mx, i32 0, i32 3, i32 1)
-  %i.my = add nsw i64 %.0240.i77, 1
+  %i.my = add nuw nsw i64 %.0240.i77, 1
   %i.mz = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.mt, ptr %i.mz, align 4, !tbaa !45
   %i.na = add nsw i32 %.3265.i76, -1
@@ -9366,7 +9366,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ii = zext i32 %i.if to i64
   %i.ij = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ii
   tail call void @llvm.prefetch.p0(ptr %i.ij, i32 0, i32 3, i32 1)
-  %i.ik = add nsw i64 %.0249.i60, 1
+  %i.ik = add nuw nsw i64 %.0249.i60, 1
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.if, ptr %i.il, align 4, !tbaa !45
   %i.im = add nsw i32 %.0262.i59, -1
@@ -9592,7 +9592,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.lz = zext i32 %i.lw to i64
   %i.ma = getelementptr inbounds nuw i8, ptr %i.kz, i64 %i.lz
   tail call void @llvm.prefetch.p0(ptr %i.ma, i32 0, i32 3, i32 1)
-  %i.mb = add nsw i64 %.0240.i77, 1
+  %i.mb = add nuw nsw i64 %.0240.i77, 1
   %i.mc = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.lw, ptr %i.mc, align 4, !tbaa !45
   %i.md = add nsw i32 %.3265.i76, -1
@@ -9995,7 +9995,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ir = zext i32 %i.io to i64
   %i.is = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ir
   tail call void @llvm.prefetch.p0(ptr %i.is, i32 0, i32 3, i32 1)
-  %i.it = add nsw i64 %.0249.i60, 1
+  %i.it = add nuw nsw i64 %.0249.i60, 1
   %i.iu = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.io, ptr %i.iu, align 4, !tbaa !45
   %i.iv = add nsw i32 %.0262.i59, -1
@@ -10223,7 +10223,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.mk = zext i32 %i.mh to i64
   %i.ml = getelementptr inbounds nuw i8, ptr %i.li, i64 %i.mk
   tail call void @llvm.prefetch.p0(ptr %i.ml, i32 0, i32 3, i32 1)
-  %i.mm = add nsw i64 %.0240.i77, 1
+  %i.mm = add nuw nsw i64 %.0240.i77, 1
   %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.mh, ptr %i.mn, align 4, !tbaa !45
   %i.mo = add nsw i32 %.3265.i76, -1
@@ -10626,7 +10626,7 @@ bb.k:                                             ; preds = %bb.j
   %i.il = zext i32 %i.ii to i64
   %i.im = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.il
   tail call void @llvm.prefetch.p0(ptr %i.im, i32 0, i32 3, i32 1)
-  %i.in = add nsw i64 %.0249.i60, 1
+  %i.in = add nuw nsw i64 %.0249.i60, 1
   %i.io = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.ii, ptr %i.io, align 4, !tbaa !45
   %i.ip = add nsw i32 %.0262.i59, -1
@@ -10870,7 +10870,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.mx = zext i32 %i.mu to i64
   %i.my = getelementptr inbounds nuw i8, ptr %i.lc, i64 %i.mx
   tail call void @llvm.prefetch.p0(ptr %i.my, i32 0, i32 3, i32 1)
-  %i.mz = add nsw i64 %.0240.i77, 1
+  %i.mz = add nuw nsw i64 %.0240.i77, 1
   %i.na = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.mu, ptr %i.na, align 4, !tbaa !45
   %i.nb = add nsw i32 %.3265.i76, -1
@@ -11273,7 +11273,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ii = zext i32 %i.if to i64
   %i.ij = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ii
   tail call void @llvm.prefetch.p0(ptr %i.ij, i32 0, i32 3, i32 1)
-  %i.ik = add nsw i64 %.0249.i60, 1
+  %i.ik = add nuw nsw i64 %.0249.i60, 1
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.if, ptr %i.il, align 4, !tbaa !45
   %i.im = add nsw i32 %.0262.i59, -1
@@ -11499,7 +11499,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.lz = zext i32 %i.lw to i64
   %i.ma = getelementptr inbounds nuw i8, ptr %i.kz, i64 %i.lz
   tail call void @llvm.prefetch.p0(ptr %i.ma, i32 0, i32 3, i32 1)
-  %i.mb = add nsw i64 %.0240.i77, 1
+  %i.mb = add nuw nsw i64 %.0240.i77, 1
   %i.mc = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.lw, ptr %i.mc, align 4, !tbaa !45
   %i.md = add nsw i32 %.3265.i76, -1
@@ -11902,7 +11902,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ir = zext i32 %i.io to i64
   %i.is = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.ir
   tail call void @llvm.prefetch.p0(ptr %i.is, i32 0, i32 3, i32 1)
-  %i.it = add nsw i64 %.0249.i60, 1
+  %i.it = add nuw nsw i64 %.0249.i60, 1
   %i.iu = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.io, ptr %i.iu, align 4, !tbaa !45
   %i.iv = add nsw i32 %.0262.i59, -1
@@ -12130,7 +12130,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.mk = zext i32 %i.mh to i64
   %i.ml = getelementptr inbounds nuw i8, ptr %i.li, i64 %i.mk
   tail call void @llvm.prefetch.p0(ptr %i.ml, i32 0, i32 3, i32 1)
-  %i.mm = add nsw i64 %.0240.i77, 1
+  %i.mm = add nuw nsw i64 %.0240.i77, 1
   %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.mh, ptr %i.mn, align 4, !tbaa !45
   %i.mo = add nsw i32 %.3265.i76, -1
@@ -12533,7 +12533,7 @@ bb.k:                                             ; preds = %bb.j
   %i.il = zext i32 %i.ii to i64
   %i.im = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.il
   tail call void @llvm.prefetch.p0(ptr %i.im, i32 0, i32 3, i32 1)
-  %i.in = add nsw i64 %.0249.i60, 1
+  %i.in = add nuw nsw i64 %.0249.i60, 1
   %i.io = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i60
   store i32 %i.ii, ptr %i.io, align 4, !tbaa !45
   %i.ip = add nsw i32 %.0262.i59, -1
@@ -12777,7 +12777,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.mx = zext i32 %i.mu to i64
   %i.my = getelementptr inbounds nuw i8, ptr %i.lc, i64 %i.mx
   tail call void @llvm.prefetch.p0(ptr %i.my, i32 0, i32 3, i32 1)
-  %i.mz = add nsw i64 %.0240.i77, 1
+  %i.mz = add nuw nsw i64 %.0240.i77, 1
   %i.na = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.0240.i77
   store i32 %i.mu, ptr %i.na, align 4, !tbaa !45
   %i.nb = add nsw i32 %.3265.i76, -1
@@ -13180,7 +13180,7 @@ bb.j:                                             ; preds = %bb.i
   %i.if = zext i32 %i.ic to i64
   %i.ig = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.if
   tail call void @llvm.prefetch.p0(ptr %i.ig, i32 0, i32 3, i32 1)
-  %i.ih = add nsw i64 %.0249.i67, 1
+  %i.ih = add nuw nsw i64 %.0249.i67, 1
   %i.ii = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.ic, ptr %i.ii, align 4, !tbaa !45
   %i.ij = add nsw i32 %.0262.i66, -1
@@ -13583,7 +13583,7 @@ bb.j:                                             ; preds = %bb.i
   %i.in = zext i32 %i.ik to i64
   %i.io = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.in
   tail call void @llvm.prefetch.p0(ptr %i.io, i32 0, i32 3, i32 1)
-  %i.ip = add nsw i64 %.0249.i67, 1
+  %i.ip = add nuw nsw i64 %.0249.i67, 1
   %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.ik, ptr %i.iq, align 4, !tbaa !45
   %i.ir = add nsw i32 %.0262.i66, -1
@@ -13986,7 +13986,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ig = zext i32 %i.id to i64
   %i.ih = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ig
   tail call void @llvm.prefetch.p0(ptr %i.ih, i32 0, i32 3, i32 1)
-  %i.ii = add nsw i64 %.0249.i67, 1
+  %i.ii = add nuw nsw i64 %.0249.i67, 1
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.id, ptr %i.ij, align 4, !tbaa !45
   %i.ik = add nsw i32 %.0262.i66, -1
@@ -14389,7 +14389,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ig = zext i32 %i.id to i64
   %i.ih = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ig
   tail call void @llvm.prefetch.p0(ptr %i.ih, i32 0, i32 3, i32 1)
-  %i.ii = add nsw i64 %.0249.i67, 1
+  %i.ii = add nuw nsw i64 %.0249.i67, 1
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.id, ptr %i.ij, align 4, !tbaa !45
   %i.ik = add nsw i32 %.0262.i66, -1
@@ -14792,7 +14792,7 @@ bb.j:                                             ; preds = %bb.i
   %i.io = zext i32 %i.il to i64
   %i.ip = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.io
   tail call void @llvm.prefetch.p0(ptr %i.ip, i32 0, i32 3, i32 1)
-  %i.iq = add nsw i64 %.0249.i67, 1
+  %i.iq = add nuw nsw i64 %.0249.i67, 1
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.il, ptr %i.ir, align 4, !tbaa !45
   %i.is = add nsw i32 %.0262.i66, -1
@@ -15195,7 +15195,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ih = zext i32 %i.ie to i64
   %i.ii = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ih
   tail call void @llvm.prefetch.p0(ptr %i.ii, i32 0, i32 3, i32 1)
-  %i.ij = add nsw i64 %.0249.i67, 1
+  %i.ij = add nuw nsw i64 %.0249.i67, 1
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.ie, ptr %i.ik, align 4, !tbaa !45
   %i.il = add nsw i32 %.0262.i66, -1
@@ -15598,7 +15598,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ig = zext i32 %i.id to i64
   %i.ih = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ig
   tail call void @llvm.prefetch.p0(ptr %i.ih, i32 0, i32 3, i32 1)
-  %i.ii = add nsw i64 %.0249.i67, 1
+  %i.ii = add nuw nsw i64 %.0249.i67, 1
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.id, ptr %i.ij, align 4, !tbaa !45
   %i.ik = add nsw i32 %.0262.i66, -1
@@ -16001,7 +16001,7 @@ bb.j:                                             ; preds = %bb.i
   %i.io = zext i32 %i.il to i64
   %i.ip = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.io
   tail call void @llvm.prefetch.p0(ptr %i.ip, i32 0, i32 3, i32 1)
-  %i.iq = add nsw i64 %.0249.i67, 1
+  %i.iq = add nuw nsw i64 %.0249.i67, 1
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.il, ptr %i.ir, align 4, !tbaa !45
   %i.is = add nsw i32 %.0262.i66, -1
@@ -16404,7 +16404,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ih = zext i32 %i.ie to i64
   %i.ii = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ih
   tail call void @llvm.prefetch.p0(ptr %i.ii, i32 0, i32 3, i32 1)
-  %i.ij = add nsw i64 %.0249.i67, 1
+  %i.ij = add nuw nsw i64 %.0249.i67, 1
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.0249.i67
   store i32 %i.ie, ptr %i.ik, align 4, !tbaa !45
   %i.il = add nsw i32 %.0262.i66, -1

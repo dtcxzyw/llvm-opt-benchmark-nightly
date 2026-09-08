@@ -205,7 +205,7 @@ bb.gk:                                            ; preds = %_ZN5Eigen6MatrixIN4
   %i.aem = load i32, ptr %i.ael, align 4, !tbaa !50 ; 2 uses
   %i.aen = sext i32 %i.aem to i64                 ; 3 uses
   %i.aeo = load ptr, ptr %40, align 8, !tbaa !48  ; 2 uses
-  %i.aep = getelementptr inbounds nuw [4 x i8], ptr %i.aeo, i64 %storemerge2061654
+  %i.aep = getelementptr inbounds [4 x i8], ptr %i.aeo, i64 %storemerge2061654
   %i.aeq = load i32, ptr %i.aep, align 4, !tbaa !50
   %.not219 = icmp eq i32 %i.aem, %i.aeq
   br i1 %.not219, label %_ZNSt6vectorImSaImEE9push_backERKm.exit455, label %bb.gl
@@ -608,7 +608,7 @@ bb.gk:                                            ; preds = %_ZN5Eigen6MatrixIN4
   %i.adv = load i32, ptr %i.adu, align 4, !tbaa !50 ; 2 uses
   %i.adw = sext i32 %i.adv to i64                 ; 3 uses
   %i.adx = load ptr, ptr %40, align 8, !tbaa !48  ; 2 uses
-  %i.ady = getelementptr inbounds nuw [4 x i8], ptr %i.adx, i64 %storemerge2061655
+  %i.ady = getelementptr inbounds [4 x i8], ptr %i.adx, i64 %storemerge2061655
   %i.adz = load i32, ptr %i.ady, align 4, !tbaa !50
   %.not219 = icmp eq i32 %i.adv, %i.adz
   br i1 %.not219, label %_ZNSt6vectorImSaImEE9push_backERKm.exit458, label %bb.gl
