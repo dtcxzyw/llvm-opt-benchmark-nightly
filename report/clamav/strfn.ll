@@ -1,7 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/clamav/original/strfn?download=true
 inline.NumInlined: 6
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_Z4itoalPcm:bb.a
   store i8 45, ptr %i.l, align 1, !tbaa !11
   br label %bb.e
@@ -203,10 +201,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 define void @_Z7fmtitoalPwm(i64 noundef %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2) local_unnamed_addr #10 {
 .lr.ph.a:
   %i.a = alloca [50 x i32], align 16              ; 5 uses
-  %i.b = alloca [30 x i32], align 16              ; 14 uses
+  %i.b = alloca [30 x i32], align 16              ; 9 uses
   %i.c = tail call ptr @localeconv() #15
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !37
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !38
   %i.f = load i8, ptr %i.e, align 1, !tbaa !11    ; 2 uses
   %i.g = icmp eq i8 %i.f, 0
   %narrow = select i1 %i.g, i8 32, i8 %i.f
@@ -215,7 +213,11 @@ define void @_Z7fmtitoalPwm(i64 noundef %0, ptr nofree noundef writeonly capture
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.h = icmp slt i64 %0, 0
   %.lobit.neg.i = ashr i64 %0, 63
-  %i.i = add nsw i64 %.lobit.neg.i, 29            ; 2 uses
+  %i.i = add nsw i64 %.lobit.neg.i, 29            ; 4 uses
+  %exitcond.not.i24 = icmp eq i64 %i.i, 0
+  br i1 %exitcond.not.i24, label %._crit_edge29, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.a
   %spec.select.i = tail call i64 @llvm.abs.i64(i64 %0, i1 true)
   br label %bb.b
 
@@ -223,9 +225,9 @@ bb.a:                                             ; preds = %bb.b
   %exitcond.not.i = icmp eq i64 %i.j, %i.i
   br i1 %exitcond.not.i, label %._crit_edge29, label %bb.b, !llvm.loop !2
 
-bb.b:                                             ; preds = %.lr.ph.a, %bb.a
-  %.020.i26 = phi i64 [ 0, %.lr.ph.a ], [ %i.j, %bb.a ] ; 2 uses
-  %.122.i25 = phi i64 [ %spec.select.i, %.lr.ph.a ], [ %i.l, %bb.a ] ; 3 uses
+bb.b:                                             ; preds = %.lr.ph, %bb.a
+  %.020.i26 = phi i64 [ 0, %.lr.ph ], [ %i.j, %bb.a ] ; 2 uses
+  %.122.i25 = phi i64 [ %spec.select.i, %.lr.ph ], [ %i.l, %bb.a ] ; 3 uses
   %i.j = add nuw nsw i64 %.020.i26, 1             ; 3 uses
   %i.k = urem i64 %.122.i25, 10
   %i.l = udiv i64 %.122.i25, 10
@@ -239,8 +241,8 @@ bb.b:                                             ; preds = %.lr.ph.a, %bb.a
 ._crit_edge28:                                    ; preds = %bb.b
   br label %._crit_edge29, !llvm.loop !2
 
-._crit_edge29:                                    ; preds = %bb.a, %._crit_edge28
-  %.1.i = phi i64 [ %i.j, %._crit_edge28 ], [ %i.i, %bb.a ] ; 3 uses
+._crit_edge29:                                    ; preds = %bb.a, %._crit_edge28, %.lr.ph.a
+  %.1.i = phi i64 [ %i.i, %.lr.ph.a ], [ %i.j, %._crit_edge28 ], [ %i.i, %bb.a ] ; 3 uses
   br i1 %i.h, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge29
@@ -255,52 +257,33 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge2
   br i1 %.not29.i, label %_Z4itoalPwm.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %i.r = getelementptr [4 x i8], ptr %i.a, i64 %.2.i ; 7 uses
+  %i.r = getelementptr [4 x i8], ptr %i.a, i64 %.2.i ; 2 uses
   %min.iters.check = icmp ult i64 %.2.i, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %.2.i, -8                      ; 4 uses
-  %3 = getelementptr i8, ptr %i.r, i64 -16
-  %4 = getelementptr i8, ptr %i.r, i64 -32
-  %wide.load = load <4 x i32>, ptr %3, align 4, !tbaa !14
-  %wide.load31 = load <4 x i32>, ptr %4, align 4, !tbaa !14
-  %reverse = shufflevector <4 x i32> %wide.load, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %reverse32 = shufflevector <4 x i32> %wide.load31, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store <4 x i32> %reverse, ptr %i.b, align 16, !tbaa !14
-  store <4 x i32> %reverse32, ptr %5, align 16, !tbaa !14
-  %6 = icmp eq i64 %n.vec, 8
-  br i1 %6, label %middle.block, label %vector.body.1
+  %n.vec = and i64 %.2.i, -8                      ; 3 uses
+  br label %vector.body.1
 
-vector.body.1:                                    ; preds = %vector.ph
-  %i.s = getelementptr i8, ptr %i.r, i64 -48
-  %i.t = getelementptr i8, ptr %i.r, i64 -64
+vector.body.1:                                    ; preds = %vector.body.1, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body.1 ] ; 3 uses
+  %3 = xor i64 %index, -1
+  %4 = getelementptr [4 x i8], ptr %i.r, i64 %3   ; 2 uses
+  %i.s = getelementptr i8, ptr %4, i64 -12
+  %i.t = getelementptr i8, ptr %4, i64 -28
   %wide.load.1 = load <4 x i32>, ptr %i.s, align 4, !tbaa !14
   %wide.load31.1 = load <4 x i32>, ptr %i.t, align 4, !tbaa !14
   %reverse.1 = shufflevector <4 x i32> %wide.load.1, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %reverse32.1 = shufflevector <4 x i32> %wide.load31.1, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  store <4 x i32> %reverse.1, ptr %7, align 16, !tbaa !14
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %index ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %5, i64 16
+  store <4 x i32> %reverse.1, ptr %5, align 16, !tbaa !14
   store <4 x i32> %reverse32.1, ptr %i.u, align 16, !tbaa !14
-  %i.v = icmp eq i64 %n.vec, 16
-  br i1 %i.v, label %middle.block, label %vector.body.2
+  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %i.v = icmp eq i64 %index.next, %n.vec
+  br i1 %i.v, label %middle.block, label %vector.body.1, !llvm.loop !32
 
-vector.body.2:                                    ; preds = %vector.body.1
-  %8 = getelementptr i8, ptr %i.r, i64 -80
-  %9 = getelementptr i8, ptr %i.r, i64 -96
-  %wide.load.2 = load <4 x i32>, ptr %8, align 4, !tbaa !14
-  %wide.load31.2 = load <4 x i32>, ptr %9, align 4, !tbaa !14
-  %reverse.2 = shufflevector <4 x i32> %wide.load.2, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %reverse32.2 = shufflevector <4 x i32> %wide.load31.2, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  store <4 x i32> %reverse.2, ptr %10, align 16, !tbaa !14
-  store <4 x i32> %reverse32.2, ptr %11, align 16, !tbaa !14
-  br label %middle.block
-
-middle.block:                                     ; preds = %vector.body.2, %vector.body.1, %vector.ph
+middle.block:                                     ; preds = %vector.body.1
   %cmp.n = icmp eq i64 %.2.i, %n.vec
   br i1 %cmp.n, label %_Z4itoalPwm.exit, label %scalar.ph.preheader
 
@@ -317,7 +300,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i32 %i.y, ptr %i.z, align 4, !tbaa !14
   %i.aa = add nuw nsw i64 %.028.i, 1              ; 2 uses
   %exitcond30.not.i = icmp eq i64 %i.aa, %.2.i
-  br i1 %exitcond30.not.i, label %_Z4itoalPwm.exit, label %scalar.ph, !llvm.loop !32
+  br i1 %exitcond30.not.i, label %_Z4itoalPwm.exit, label %scalar.ph, !llvm.loop !33
 
 _Z4itoalPwm.exit:                                 ; preds = %scalar.ph, %middle.block, %bb.d
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.2.i
@@ -373,7 +356,7 @@ bb.g:                                             ; preds = %bb.f, %.peel.next
   %i.be = zext i32 %i.bd to i64
   %i.bf = icmp ugt i64 %2, %i.be
   %i.bg = and i1 %i.bc, %i.bf
-  br i1 %i.bg, label %.peel.next, label %._crit_edge.loopexit.loopexit, !llvm.loop !33
+  br i1 %i.bg, label %.peel.next, label %._crit_edge.loopexit.loopexit, !llvm.loop !34
 
 ._crit_edge.loopexit.loopexit:                    ; preds = %bb.g
   %i.bh = zext i32 %i.ax to i64
@@ -393,7 +376,7 @@ declare ptr @localeconv() local_unnamed_addr #11
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull ptr @_Z7GetWidePKc(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = load i32, ptr @_ZZ7GetWidePKcE6StrNum, align 4, !tbaa !39
+  %i.a = load i32, ptr @_ZZ7GetWidePKcE6StrNum, align 4, !tbaa !40
   %i.b = add i32 %i.a, 1                          ; 2 uses
   %i.c = icmp ugt i32 %i.b, 3
   %spec.store.select = select i1 %i.c, i32 0, i32 %i.b ; 2 uses
@@ -456,11 +439,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %.crit
   %i.h = getelementptr inbounds nuw i8, ptr %.233.us.us, i64 4 ; 3 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !14   ; 2 uses
   %.not.us.us = icmp eq i32 %i.i, 0
-  br i1 %.not.us.us, label %.critedge, label %.lr.ph.split.us.split.us, !llvm.loop !40
+  br i1 %.not.us.us, label %.critedge, label %.lr.ph.split.us.split.us, !llvm.loop !41
 
 bb.f:                                             ; preds = %bb.b, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %.031, i64 4
-  br label %bb.b, !llvm.loop !41
+  br label %bb.b, !llvm.loop !42
 
 .lr.ph.split.split:                               ; preds = %.lr.ph, %bb.n
   %i.k = phi i32 [ %i.x, %bb.n ], [ %i.a, %.lr.ph ] ; 3 uses
@@ -517,7 +500,7 @@ bb.n:                                             ; preds = %bb.i, %bb.j, %bb.l,
   %i.w = getelementptr inbounds nuw i8, ptr %.233, i64 4 ; 3 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !14   ; 2 uses
   %.not = icmp eq i32 %i.x, 0
-  br i1 %.not, label %.critedge, label %.lr.ph.split.split, !llvm.loop !40
+  br i1 %.not, label %.critedge, label %.lr.ph.split.split, !llvm.loop !41
 
 .critedge:                                        ; preds = %bb.n, %bb.g, %bb.g, %bb.e, %bb.c, %bb.c
   %.132.lcssa = phi ptr [ %.13247.us.us, %bb.c ], [ %i.h, %bb.e ], [ %.13247.us.us, %bb.c ], [ %.13247, %bb.g ], [ %.13247, %bb.g ], [ %i.w, %bb.n ] ; 2 uses
@@ -594,14 +577,15 @@ attributes #15 = { nounwind }
 !29 = !{!"branch_weights", i32 8, i32 24}
 !30 = distinct !{!30, !12, !15, !16}
 !31 = distinct !{!31, !12, !16, !15}
-!32 = distinct !{!32, !12, !16, !15}
-!33 = distinct !{!33, !12, !38}
-!34 = !{!"any pointer", !7, i64 0}
-!35 = !{!"p1 omnipotent char", !34, i64 0}
-!36 = !{!"_ZTS5lconv", !35, i64 0, !35, i64 8, !35, i64 16, !35, i64 24, !35, i64 32, !35, i64 40, !35, i64 48, !35, i64 56, !35, i64 64, !35, i64 72, !7, i64 80, !7, i64 81, !7, i64 82, !7, i64 83, !7, i64 84, !7, i64 85, !7, i64 86, !7, i64 87, !7, i64 88, !7, i64 89, !7, i64 90, !7, i64 91, !7, i64 92, !7, i64 93}
-!37 = !{!36, !35, i64 8}
-!38 = !{!"llvm.loop.peeled.count", i32 1}
-!39 = !{!8, !8, i64 0}
-!40 = distinct !{!40, !12}
+!32 = distinct !{!32, !12, !15, !16}
+!33 = distinct !{!33, !12, !16, !15}
+!34 = distinct !{!34, !12, !39}
+!35 = !{!"any pointer", !7, i64 0}
+!36 = !{!"p1 omnipotent char", !35, i64 0}
+!37 = !{!"_ZTS5lconv", !36, i64 0, !36, i64 8, !36, i64 16, !36, i64 24, !36, i64 32, !36, i64 40, !36, i64 48, !36, i64 56, !36, i64 64, !36, i64 72, !7, i64 80, !7, i64 81, !7, i64 82, !7, i64 83, !7, i64 84, !7, i64 85, !7, i64 86, !7, i64 87, !7, i64 88, !7, i64 89, !7, i64 90, !7, i64 91, !7, i64 92, !7, i64 93}
+!38 = !{!37, !36, i64 8}
+!39 = !{!"llvm.loop.peeled.count", i32 1}
+!40 = !{!8, !8, i64 0}
 !41 = distinct !{!41, !12}
+!42 = distinct !{!42, !12}
 end_hunk_0

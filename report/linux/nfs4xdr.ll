@@ -205,7 +205,7 @@ declare dso_local void @xdr_write_pages(ptr noundef, ptr noundef, i32 noundef, i
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc void @encode_getattr(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(address_is_null) %2, i64 noundef range(i64 2, 4) %3, ptr nofree noundef captures(none) %4) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = alloca [4 x i32], align 16               ; 13 uses
+  %i.a = alloca [4 x i32], align 16               ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = tail call ptr @xdr_reserve_space(ptr noundef %0, i64 noundef 4) #11 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.b, null
@@ -235,28 +235,26 @@ encode_op_hdr.exit:                               ; preds = %xdr_stream_encode_u
   br i1 %.not, label %mask_bitmap4.exit, label %.preheader
 
 .preheader:                                       ; preds = %encode_op_hdr.exit
-  %i.i = add nsw i64 %3, -1                       ; 3 uses
+  %i.i = add nsw i64 %3, -1                       ; 4 uses
   %i.j = getelementptr [4 x i8], ptr %1, i64 %i.i
   %i.k = load i32, ptr %i.j, align 4
   %i.l = icmp eq i32 %i.k, 0
-  br i1 %i.l, label %.preheader.1, label %bb.c
+  br i1 %i.l, label %.lr.ph.i.prol.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
   %i.m = getelementptr [4 x i8], ptr %2, i64 %i.i
   %i.n = load i32, ptr %i.m, align 4
   %i.o = icmp eq i32 %i.n, 0
-  br i1 %i.o, label %.preheader.1, label %.lr.ph.i.preheader
+  br i1 %i.o, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %7, %bb.d, %bb.c
-  %.01719.i.lcssa = phi i64 [ %3, %bb.c ], [ %i.i, %bb.d ], [ %i.w, %7 ] ; 7 uses
-  %5 = add nsw i64 %.01719.i.lcssa, -1
-  %lcmp.mod.not = icmp eq i64 %.01719.i.lcssa, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+.lr.ph.i.preheader:                               ; preds = %bb.c, %bb.d, %.lr.ph.i
+  %.01719.i.lcssa = phi i64 [ %3, %bb.c ], [ %i.i, %bb.d ], [ %i.w, %.lr.ph.i ] ; 3 uses
+  br label %.lr.ph.i.prol
 
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
+.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
   %.021.i.prol = phi i64 [ %i.p, %.lr.ph.i.prol ], [ %.01719.i.lcssa, %.lr.ph.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
-  %i.p = add nsw i64 %.021.i.prol, -1             ; 5 uses
+  %i.p = add nsw i64 %.021.i.prol, -1             ; 4 uses
   %i.q = getelementptr [4 x i8], ptr %1, i64 %i.p
   %i.r = load i32, ptr %i.q, align 4
   %i.s = getelementptr [4 x i8], ptr %2, i64 %i.p
@@ -266,14 +264,13 @@ bb.c:                                             ; preds = %.preheader
   store i32 %i.u, ptr %i.v, align 4
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %.01719.i.lcssa
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !251
+  br i1 %prol.iter.cmp.not, label %mask_bitmap4.exit, label %.lr.ph.i.prol, !llvm.loop !251
 
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
-  %.021.i.unr = phi i64 [ %.01719.i.lcssa, %.lr.ph.i.preheader ], [ %i.p, %.lr.ph.i.prol ]
-  %6 = icmp ult i64 %5, 3
-  br i1 %6, label %mask_bitmap4.exit, label %.lr.ph.i
+.lr.ph.i.prol.loopexit:                           ; preds = %bb.c, %.preheader
+  %.not.i = icmp eq i64 %i.i, 0
+  br i1 %.not.i, label %.critedge.i, label %.preheader.1
 
-.preheader.1:                                     ; preds = %.preheader, %bb.c
+.preheader.1:                                     ; preds = %.lr.ph.i.prol.loopexit
   %i.w = add nsw i64 %3, -2                       ; 4 uses
   %i.x = getelementptr [4 x i8], ptr %1, i64 %i.w
   %i.y = load i32, ptr %i.x, align 4
@@ -295,54 +292,17 @@ bb.d:                                             ; preds = %.preheader.1
   %i.ae = getelementptr [4 x i8], ptr %1, i64 %i.ad
   %i.af = load i32, ptr %i.ae, align 4
   %i.ag = icmp eq i32 %i.af, 0
-  br i1 %i.ag, label %.critedge.i, label %7
+  br i1 %i.ag, label %.critedge.i, label %.lr.ph.i
 
-7:                                                ; preds = %.preheader.2
-  %8 = getelementptr [4 x i8], ptr %2, i64 %i.ad
-  %9 = load i32, ptr %8, align 4
-  %10 = icmp eq i32 %9, 0
-  br i1 %10, label %.critedge.i, label %.lr.ph.i.preheader
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %.021.i = phi i64 [ %32, %.lr.ph.i ], [ %.021.i.unr, %.lr.ph.i.prol.loopexit ] ; 4 uses
-  %11 = add nsw i64 %.021.i, -1                   ; 3 uses
-  %12 = getelementptr [4 x i8], ptr %1, i64 %11
-  %13 = load i32, ptr %12, align 4
-  %14 = getelementptr [4 x i8], ptr %2, i64 %11
-  %15 = load i32, ptr %14, align 4
-  %16 = and i32 %15, %13
-  %17 = getelementptr [4 x i8], ptr %i.a, i64 %11
-  store i32 %16, ptr %17, align 4
-  %18 = add nsw i64 %.021.i, -2                   ; 3 uses
-  %19 = getelementptr [4 x i8], ptr %1, i64 %18
-  %20 = load i32, ptr %19, align 4
-  %21 = getelementptr [4 x i8], ptr %2, i64 %18
-  %22 = load i32, ptr %21, align 4
-  %23 = and i32 %22, %20
-  %24 = getelementptr [4 x i8], ptr %i.a, i64 %18
-  store i32 %23, ptr %24, align 4
-  %25 = add nsw i64 %.021.i, -3                   ; 3 uses
-  %26 = getelementptr [4 x i8], ptr %1, i64 %25
-  %27 = load i32, ptr %26, align 4
-  %28 = getelementptr [4 x i8], ptr %2, i64 %25
-  %29 = load i32, ptr %28, align 4
-  %30 = and i32 %29, %27
-  %31 = getelementptr [4 x i8], ptr %i.a, i64 %25
-  store i32 %30, ptr %31, align 4
-  %32 = add nsw i64 %.021.i, -4                   ; 5 uses
-  %33 = getelementptr [4 x i8], ptr %1, i64 %32
-  %34 = load i32, ptr %33, align 4
-  %i.ah = getelementptr [4 x i8], ptr %2, i64 %32
+.lr.ph.i:                                         ; preds = %.preheader.2
+  %i.ah = getelementptr [4 x i8], ptr %2, i64 %i.ad
   %i.ai = load i32, ptr %i.ah, align 4
-  %35 = and i32 %i.ai, %34
-  %36 = getelementptr [4 x i8], ptr %i.a, i64 %32
-  store i32 %35, ptr %36, align 4
-  %.not18.i.3 = icmp eq i64 %32, 0
-  br i1 %.not18.i.3, label %mask_bitmap4.exit, label %.lr.ph.i, !llvm.loop !252
+  %.not18.i.3 = icmp eq i32 %i.ai, 0
+  br i1 %.not18.i.3, label %.critedge.i, label %.lr.ph.i.preheader
 
-mask_bitmap4.exit:                                ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %encode_op_hdr.exit
-  %.1 = phi i64 [ %3, %encode_op_hdr.exit ], [ %.01719.i.lcssa, %.lr.ph.i ], [ %.01719.i.lcssa, %.lr.ph.i.prol.loopexit ]
-  %.0 = phi ptr [ %1, %encode_op_hdr.exit ], [ %i.a, %.lr.ph.i ], [ %i.a, %.lr.ph.i.prol.loopexit ] ; 3 uses
+mask_bitmap4.exit:                                ; preds = %.lr.ph.i.prol, %encode_op_hdr.exit
+  %.1 = phi i64 [ %3, %encode_op_hdr.exit ], [ %.01719.i.lcssa, %.lr.ph.i.prol ]
+  %.0 = phi ptr [ %1, %encode_op_hdr.exit ], [ %i.a, %.lr.ph.i.prol ] ; 3 uses
   br label %.lr.ph.i16
 
 .lr.ph.i16:                                       ; preds = %mask_bitmap4.exit, %bb.e
@@ -356,12 +316,12 @@ mask_bitmap4.exit:                                ; preds = %.lr.ph.i.prol.loope
 bb.e:                                             ; preds = %.lr.ph.i16
   %i.an = add nsw i64 %.01420.i, -1               ; 2 uses
   %.not.i17 = icmp eq i64 %i.an, 0
-  br i1 %.not.i17, label %.critedge.i, label %.lr.ph.i16, !llvm.loop !253
+  br i1 %.not.i17, label %.critedge.i, label %.lr.ph.i16, !llvm.loop !252
 
-.critedge.i:                                      ; preds = %.critedge2.i.1, %7, %.preheader.2, %bb.e, %.lr.ph.i16
-  %.021 = phi ptr [ %.0, %bb.e ], [ %.0, %.lr.ph.i16 ], [ %i.a, %.preheader.2 ], [ %i.a, %7 ], [ %i.a, %.critedge2.i.1 ] ; 2 uses
-  %.014.lcssa.i = phi i64 [ 0, %bb.e ], [ %.01420.i, %.lr.ph.i16 ], [ 0, %.preheader.2 ], [ 0, %7 ], [ 0, %.critedge2.i.1 ] ; 6 uses
-  %.not.lcssa.i = phi i1 [ %i.am, %bb.e ], [ %i.am, %.lr.ph.i16 ], [ true, %.preheader.2 ], [ true, %7 ], [ true, %.critedge2.i.1 ]
+.critedge.i:                                      ; preds = %.lr.ph.i.prol.loopexit, %.critedge2.i.1, %.lr.ph.i, %.preheader.2, %bb.e, %.lr.ph.i16
+  %.021 = phi ptr [ %.0, %bb.e ], [ %.0, %.lr.ph.i16 ], [ %i.a, %.preheader.2 ], [ %i.a, %.lr.ph.i ], [ %i.a, %.critedge2.i.1 ], [ %i.a, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %.014.lcssa.i = phi i64 [ 0, %bb.e ], [ %.01420.i, %.lr.ph.i16 ], [ 0, %.preheader.2 ], [ 0, %.lr.ph.i ], [ 0, %.critedge2.i.1 ], [ 0, %.lr.ph.i.prol.loopexit ] ; 6 uses
+  %.not.lcssa.i = phi i1 [ %i.am, %bb.e ], [ %i.am, %.lr.ph.i16 ], [ true, %.preheader.2 ], [ true, %.lr.ph.i ], [ true, %.critedge2.i.1 ], [ true, %.lr.ph.i.prol.loopexit ]
   %i.ao = shl nuw nsw i64 %.014.lcssa.i, 2
   %i.ap = add nuw nsw i64 %i.ao, 4
   %i.aq = tail call ptr @xdr_reserve_space(ptr noundef %0, i64 noundef %i.ap) #11 ; 4 uses
@@ -393,7 +353,7 @@ bb.f:                                             ; preds = %.critedge.i
   %i.ax = add i64 %.01319.i.i.prol, -1            ; 2 uses
   %prol.iter39.next = add i64 %prol.iter39, 1     ; 2 uses
   %prol.iter39.cmp.not = icmp eq i64 %prol.iter39.next, %xtraiter37
-  br i1 %prol.iter39.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !254
+  br i1 %prol.iter39.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !253
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
   %.pn20.i.i.unr = phi ptr [ %i.aq, %.lr.ph.i.i.preheader ], [ %.0.i.i.prol, %.lr.ph.i.i.prol ]
@@ -525,7 +485,7 @@ bb.h:                                             ; preds = %bb.g
   %i.w = add nsw i64 %.132.i.i.i.prol, -1         ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !255
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !254
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.preheader.i
   %.01533.i.i.i.unr = phi ptr [ %i.o, %.lr.ph.i.i.preheader.i ], [ %i.u, %.lr.ph.i.i.i.prol ]
@@ -578,7 +538,7 @@ select.unfold:                                    ; preds = %bb.i, %xdr_stream_d
 bb.j:                                             ; preds = %select.unfold
   %i.ar = load i32, ptr %i.aq, align 4
   %i.as = tail call i32 @xdr_stream_pos(ptr noundef %0) #11
-  %i.at = call fastcc i32 @decode_getfattr_attrs(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %1, ptr noundef null, ptr noundef %2, ptr noundef %3) #12, !srcloc !256 ; 2 uses
+  %i.at = call fastcc i32 @decode_getfattr_attrs(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %1, ptr noundef null, ptr noundef %2, ptr noundef %3) #12, !srcloc !255 ; 2 uses
   %i.au = icmp slt i32 %i.at, 0
   br i1 %i.au, label %decode_op_hdr.exit.thread, label %bb.k
 
@@ -764,7 +724,7 @@ bb.m:                                             ; preds = %reserve_space.exit.
   %i.az = getelementptr i8, ptr %1, i64 144
   %i.ba = load ptr, ptr %i.ab, align 8            ; 2 uses
   %i.bb = getelementptr i8, ptr %i.ba, i64 304
-  tail call fastcc void @encode_attrs(ptr noundef %0, ptr noundef %i.aw, ptr noundef %i.ay, ptr noundef %i.az, ptr noundef %i.ba, ptr noundef %i.bb) #12, !srcloc !257
+  tail call fastcc void @encode_attrs(ptr noundef %0, ptr noundef %i.aw, ptr noundef %i.ay, ptr noundef %i.az, ptr noundef %i.ba, ptr noundef %i.bb) #12, !srcloc !256
   br label %encode_opentype.exit
 
 bb.n:                                             ; preds = %reserve_space.exit.i.i
@@ -776,7 +736,7 @@ bb.n:                                             ; preds = %reserve_space.exit.
   %i.bg = getelementptr i8, ptr %1, i64 144
   %i.bh = load ptr, ptr %i.ab, align 8            ; 2 uses
   %i.bi = getelementptr i8, ptr %i.bh, i64 304
-  tail call fastcc void @encode_attrs(ptr noundef %0, ptr noundef %i.bd, ptr noundef %i.bf, ptr noundef %i.bg, ptr noundef %i.bh, ptr noundef %i.bi) #12, !srcloc !258
+  tail call fastcc void @encode_attrs(ptr noundef %0, ptr noundef %i.bd, ptr noundef %i.bf, ptr noundef %i.bg, ptr noundef %i.bh, ptr noundef %i.bi) #12, !srcloc !257
   br label %encode_opentype.exit
 
 bb.o:                                             ; preds = %reserve_space.exit.i.i
@@ -821,7 +781,7 @@ encode_nfs4_verifier.exit31.i.i:                  ; preds = %xdr_stream_encode_o
   %i.bt = getelementptr i8, ptr %1, i64 144
   %i.bu = load ptr, ptr %i.ab, align 8            ; 2 uses
   %i.bv = getelementptr i8, ptr %i.bu, i64 328
-  tail call fastcc void @encode_attrs(ptr noundef %0, ptr noundef %i.bq, ptr noundef %i.bs, ptr noundef %i.bt, ptr noundef %i.bu, ptr noundef %i.bv) #12, !srcloc !259
+  tail call fastcc void @encode_attrs(ptr noundef %0, ptr noundef %i.bq, ptr noundef %i.bs, ptr noundef %i.bt, ptr noundef %i.bu, ptr noundef %i.bv) #12, !srcloc !258
   br label %encode_opentype.exit
 
 encode_opentype.exit:                             ; preds = %bb.j, %reserve_space.exit.i.i, %bb.m, %bb.n, %xdr_stream_encode_opaque_fixed.exit.i.i.i.i, %xdr_stream_encode_opaque_fixed.exit.thread.i.i.i.i, %encode_nfs4_verifier.exit31.i.i
@@ -904,8 +864,8 @@ reserve_space.exit.i.i26:                         ; preds = %reserve_space.exit.
   ]
 
 bb.w:                                             ; preds = %reserve_space.exit.i.i26
-  tail call void asm sideeffect "1761: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1761b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1761) #10, !srcloc !260
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.72, ptr nonnull @.str.73, i32 1490, i32 0, i64 16) #10, !srcloc !261
+  tail call void asm sideeffect "1761: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1761b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1761) #10, !srcloc !259
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.72, ptr nonnull @.str.73, i32 1490, i32 0, i64 16) #10, !srcloc !260
   unreachable
 
 encode_claim_previous.exit:                       ; preds = %reserve_space.exit.i.i26, %reserve_space.exit.i.i26, %reserve_space.exit.i.i26, %reserve_space.exit.i.i26, %reserve_space.exit.i.i26
@@ -1007,8 +967,8 @@ xdr_stream_encode_opaque_fixed.exit.thread.i.i.i39: ; preds = %reserve_space.exi
   br label %encode_claim_null.exit
 
 bb.ae:                                            ; preds = %encode_opentype.exit
-  tail call void asm sideeffect "1762: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1762b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1762) #10, !srcloc !262
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.72, ptr nonnull @.str.73, i32 1561, i32 0, i64 16) #10, !srcloc !263
+  tail call void asm sideeffect "1762: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1762b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1762) #10, !srcloc !261
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.72, ptr nonnull @.str.73, i32 1561, i32 0, i64 16) #10, !srcloc !262
   unreachable
 
 encode_claim_null.exit:                           ; preds = %xdr_stream_encode_opaque_fixed.exit.thread.i.i.i39, %xdr_stream_encode_opaque_fixed.exit.i.i.i37, %bb.z, %xdr_stream_encode_opaque.exit.i.i31, %bb.s, %xdr_stream_encode_opaque.exit.i.i, %encode_claim_fh.exit, %encode_claim_previous.exit
@@ -1381,7 +1341,7 @@ bb.ab:                                            ; preds = %.critedge.i
   %i.co = add i64 %.01319.i.i.prol, -1            ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %.014.lcssa.i
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !264
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !263
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
   %.pn20.i.i.unr = phi ptr [ %i.ch, %.lr.ph.i.i.preheader ], [ %.0.i.i.prol, %.lr.ph.i.i.prol ]
@@ -1745,7 +1705,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %wide.trip.count
-  br i1 %epil.iter.cmp.not, label %.preheader, label %bb.l, !llvm.loop !265
+  br i1 %epil.iter.cmp.not, label %.preheader, label %bb.l, !llvm.loop !264
 
 .preheader:                                       ; preds = %bb.l
   %.not79 = icmp ugt i32 %i.ae, 2
@@ -2148,7 +2108,7 @@ bb.h:                                             ; preds = %bb.g
   %i.v = add nsw i64 %.132.i.i.i.prol, -1         ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !266
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !265
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.preheader.i
   %.01533.i.i.i.unr = phi ptr [ %i.n, %.lr.ph.i.i.preheader.i ], [ %i.t, %.lr.ph.i.i.i.prol ]
@@ -2234,13 +2194,13 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.k
   %i.be = getelementptr i8, ptr %1, i64 40
-  %i.bf = call fastcc i32 @decode_attr_maxfilesize(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.be) #12, !srcloc !267 ; 2 uses
+  %i.bf = call fastcc i32 @decode_attr_maxfilesize(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.be) #12, !srcloc !266 ; 2 uses
   %.not53 = icmp eq i32 %i.bf, 0
   br i1 %.not53, label %bb.o, label %decode_attr_length.exit
 
 bb.o:                                             ; preds = %bb.n
   %i.bg = getelementptr i8, ptr %1, i64 8         ; 2 uses
-  %i.bh = call fastcc i32 @decode_attr_maxread(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bg) #12, !srcloc !268 ; 2 uses
+  %i.bh = call fastcc i32 @decode_attr_maxread(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bg) #12, !srcloc !267 ; 2 uses
   %.not54 = icmp eq i32 %i.bh, 0
   br i1 %.not54, label %bb.p, label %decode_attr_length.exit
 
@@ -2251,7 +2211,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bk = getelementptr i8, ptr %1, i64 12
   store i32 %i.bi, ptr %i.bk, align 4
   %i.bl = getelementptr i8, ptr %1, i64 20        ; 2 uses
-  %i.bm = call fastcc i32 @decode_attr_maxwrite(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bl) #12, !srcloc !269 ; 2 uses
+  %i.bm = call fastcc i32 @decode_attr_maxwrite(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bl) #12, !srcloc !268 ; 2 uses
   %.not55 = icmp eq i32 %i.bm, 0
   br i1 %.not55, label %bb.q, label %decode_attr_length.exit
 
@@ -2265,12 +2225,12 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bq = getelementptr i8, ptr %1, i64 48
-  %i.br = call fastcc i32 @decode_attr_time_delta(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bq) #12, !srcloc !270 ; 2 uses
+  %i.br = call fastcc i32 @decode_attr_time_delta(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bq) #12, !srcloc !269 ; 2 uses
   %.not57 = icmp eq i32 %i.br, 0
   br i1 %.not57, label %bb.s, label %decode_attr_length.exit
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = call fastcc i32 @decode_attr_pnfstype(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %1) #12, !srcloc !271 ; 2 uses
+  %i.bs = call fastcc i32 @decode_attr_pnfstype(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %1) #12, !srcloc !270 ; 2 uses
   %.not58 = icmp eq i32 %i.bs, 0
   br i1 %.not58, label %bb.t, label %decode_attr_length.exit
 
@@ -2282,25 +2242,25 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.bv = getelementptr i8, ptr %1, i64 104
-  %i.bw = call fastcc i32 @decode_attr_layout_blksize(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bv) #12, !srcloc !272 ; 2 uses
+  %i.bw = call fastcc i32 @decode_attr_layout_blksize(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bv) #12, !srcloc !271 ; 2 uses
   %.not60 = icmp eq i32 %i.bw, 0
   br i1 %.not60, label %bb.v, label %decode_attr_length.exit
 
 bb.v:                                             ; preds = %bb.u
   %i.bx = getelementptr i8, ptr %1, i64 108
-  %i.by = call fastcc i32 @decode_attr_clone_blksize(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bx) #12, !srcloc !273 ; 2 uses
+  %i.by = call fastcc i32 @decode_attr_clone_blksize(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bx) #12, !srcloc !272 ; 2 uses
   %.not61 = icmp eq i32 %i.by, 0
   br i1 %.not61, label %bb.w, label %decode_attr_length.exit
 
 bb.w:                                             ; preds = %bb.v
   %i.bz = getelementptr i8, ptr %1, i64 112
-  %i.ca = call fastcc i32 @decode_attr_change_attr_type(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bz) #12, !srcloc !274 ; 2 uses
+  %i.ca = call fastcc i32 @decode_attr_change_attr_type(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.bz) #12, !srcloc !273 ; 2 uses
   %.not62 = icmp eq i32 %i.ca, 0
   br i1 %.not62, label %bb.x, label %decode_attr_length.exit
 
 bb.x:                                             ; preds = %bb.w
   %i.cb = getelementptr i8, ptr %1, i64 116
-  %i.cc = call fastcc i32 @decode_attr_xattrsupport(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.cb) #12, !srcloc !275 ; 2 uses
+  %i.cc = call fastcc i32 @decode_attr_xattrsupport(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.cb) #12, !srcloc !274 ; 2 uses
   %.not63 = icmp eq i32 %i.cc, 0
   br i1 %.not63, label %bb.y, label %decode_attr_length.exit
 
@@ -2559,7 +2519,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i.new
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %decode_pnfs_layout_types.exit.loopexit.unr-lcssa, label %bb.h, !llvm.loop !276
+  br i1 %niter.ncmp.3, label %decode_pnfs_layout_types.exit.loopexit.unr-lcssa, label %bb.h, !llvm.loop !275
 
 decode_pnfs_layout_types.exit.loopexit.unr-lcssa: ; preds = %bb.h
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -2584,7 +2544,7 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %decode_pnfs_layout_types.exit, label %bb.i, !llvm.loop !277
+  br i1 %epil.iter.cmp.not, label %decode_pnfs_layout_types.exit, label %bb.i, !llvm.loop !276
 
 decode_pnfs_layout_types.exit:                    ; preds = %decode_pnfs_layout_types.exit.loopexit.unr-lcssa, %bb.i, %bb.c, %bb.d, %bb.e, %bb.g
   %.0.i = phi i32 [ -5, %bb.e ], [ -5, %bb.c ], [ 0, %bb.d ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %decode_pnfs_layout_types.exit.loopexit.unr-lcssa ]
@@ -2987,7 +2947,7 @@ bb.g:                                             ; preds = %bb.f
   %i.r = add nsw i64 %.132.i.i.i.prol, -1         ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !278
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !277
 
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.preheader.i
   %.01533.i.i.i.unr = phi ptr [ %i.i, %.lr.ph.i.i.preheader.i ], [ %i.p, %.lr.ph.i.i.i.prol ]
@@ -3372,7 +3332,7 @@ bb.i:                                             ; preds = %decode_secinfo_gss.
   store i32 %i.ae, ptr %i.ac, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond43.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond43.not, label %decode_secinfo_gss.exit.thread, label %.lr.ph, !llvm.loop !279
+  br i1 %exitcond43.not, label %decode_secinfo_gss.exit.thread, label %.lr.ph, !llvm.loop !278
 
 decode_secinfo_gss.exit.thread:                   ; preds = %bb.c, %bb.i, %.lr.ph, %bb.e, %bb.f, %bb.g, %bb.h, %bb.b, %bb.a
   %.022 = phi i32 [ -5, %bb.a ], [ 0, %bb.b ], [ 0, %.lr.ph ], [ -5, %bb.e ], [ -22, %bb.f ], [ -5, %bb.g ], [ 0, %bb.i ], [ -5, %bb.c ], [ -5, %bb.h ]
@@ -3761,31 +3721,30 @@ attributes #14 = { cold noredzone nounwind "no-builtin-wcslen" }
 !250 = !{i64 2162650057}
 !251 = distinct !{!251, !13}
 !252 = distinct !{!252, !14}
-!253 = distinct !{!253, !14}
+!253 = distinct !{!253, !13}
 !254 = distinct !{!254, !13}
-!255 = distinct !{!255, !13}
-!256 = !{i64 141405}
-!257 = !{i64 49854}
-!258 = !{i64 50035}
-!259 = !{i64 50401}
-!260 = !{i64 2165914755, i64 2165914625}
-!261 = !{i64 2165915286, i64 2165915762, i64 2165915795, i64 2165915830, i64 2165915846, i64 2165916687, i64 2165916745, i64 2165916794, i64 2165916604, i64 2165915905, i64 2165915937}
-!262 = !{i64 2165919304, i64 2165919174}
-!263 = !{i64 2165919835, i64 2165920311, i64 2165920344, i64 2165920379, i64 2165920395, i64 2165921236, i64 2165921294, i64 2165921343, i64 2165921153, i64 2165920454, i64 2165920486}
+!255 = !{i64 141405}
+!256 = !{i64 49854}
+!257 = !{i64 50035}
+!258 = !{i64 50401}
+!259 = !{i64 2165914755, i64 2165914625}
+!260 = !{i64 2165915286, i64 2165915762, i64 2165915795, i64 2165915830, i64 2165915846, i64 2165916687, i64 2165916745, i64 2165916794, i64 2165916604, i64 2165915905, i64 2165915937}
+!261 = !{i64 2165919304, i64 2165919174}
+!262 = !{i64 2165919835, i64 2165920311, i64 2165920344, i64 2165920379, i64 2165920395, i64 2165921236, i64 2165921294, i64 2165921343, i64 2165921153, i64 2165920454, i64 2165920486}
+!263 = distinct !{!263, !13}
 !264 = distinct !{!264, !13}
 !265 = distinct !{!265, !13}
-!266 = distinct !{!266, !13}
-!267 = !{i64 145345}
-!268 = !{i64 145444}
-!269 = !{i64 145583}
-!270 = !{i64 145763}
-!271 = !{i64 145867}
-!272 = !{i64 146018}
-!273 = !{i64 146118}
-!274 = !{i64 146224}
-!275 = !{i64 146347}
-!276 = distinct !{!276, !14}
+!266 = !{i64 145345}
+!267 = !{i64 145444}
+!268 = !{i64 145583}
+!269 = !{i64 145763}
+!270 = !{i64 145867}
+!271 = !{i64 146018}
+!272 = !{i64 146118}
+!273 = !{i64 146224}
+!274 = !{i64 146347}
+!275 = distinct !{!275, !14}
+!276 = distinct !{!276, !13}
 !277 = distinct !{!277, !13}
-!278 = distinct !{!278, !13}
-!279 = distinct !{!279, !14}
+!278 = distinct !{!278, !14}
 end_hunk_2
