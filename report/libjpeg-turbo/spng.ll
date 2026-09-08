@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap
   %i.ht = urem i32 %.sroa.4.0.copyload.i, 3
-  %i.hu = udiv i32 %.sroa.4.0.copyload.i, 3       ; 5 uses
+  %i.hu = udiv exact i32 %.sroa.4.0.copyload.i, 3 ; 5 uses
   %.not786.i = icmp eq i32 %i.ht, 0
   br i1 %.not786.i, label %bb.ar, label %read_non_idat_chunks.exit.thread
 
@@ -228,18 +228,17 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.ib, label %read_non_idat_chunks.exit.thread, label %check_plte.exit.i
 
 check_plte.exit.i:                                ; preds = %bb.at, %bb.as
-  %3 = zext nneg i32 %i.hu to i64                 ; 2 uses
-  %.not1292.i = icmp ult i32 %.sroa.4.0.copyload.i, 3
+  %.not1292.i = icmp eq i32 %.sroa.4.0.copyload.i, 0
   br i1 %.not1292.i, label %._crit_edge1010.i, label %.lr.ph1009.i.preheader
 
 .lr.ph1009.i.preheader:                           ; preds = %check_plte.exit.i
-  %xtraiter473 = and i64 %3, 1
-  %.sroa.4.0.copyload.i.off = add i32 %.sroa.4.0.copyload.i, -3
-  %4 = icmp ult i32 %.sroa.4.0.copyload.i.off, 3
-  br i1 %4, label %.lr.ph1009.i.epil.preheader, label %.lr.ph1009.i.preheader.new
+  %umax.i = zext nneg i32 %i.hu to i64            ; 2 uses
+  %xtraiter473 = and i64 %umax.i, 1
+  %3 = icmp eq i32 %.sroa.4.0.copyload.i, 3
+  br i1 %3, label %.lr.ph1009.i.epil.preheader, label %.lr.ph1009.i.preheader.new
 
 .lr.ph1009.i.preheader.new:                       ; preds = %.lr.ph1009.i.preheader
-  %unroll_iter = and i64 %3, 510
+  %unroll_iter = and i64 %umax.i, 510
   br label %.lr.ph1009.i
 
 .lr.ph1009.i:                                     ; preds = %.lr.ph1009.i, %.lr.ph1009.i.preheader.new
@@ -642,13 +641,13 @@ bb.ha:                                            ; preds = %._crit_edge.i
 
 bb.hb:                                            ; preds = %bb.ha
   %i.aoo = urem i32 %i.aon, 10
-  %i.aop = udiv i32 %i.aon, 10
+  %i.aop = udiv exact i32 %i.aon, 10
   %.not770.i = icmp eq i32 %i.aoo, 0
   br i1 %.not770.i, label %bb.hd, label %read_non_idat_chunks.exit.thread
 
 bb.hc:                                            ; preds = %bb.ha
   %i.aoq = urem i32 %i.aon, 6
-  %i.aor = udiv i32 %i.aon, 6
+  %i.aor = udiv exact i32 %i.aon, 6
   %.not769.i = icmp eq i32 %i.aoq, 0
   br i1 %.not769.i, label %bb.hd, label %read_non_idat_chunks.exit.thread
 

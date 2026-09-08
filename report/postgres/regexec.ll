@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.w = getelementptr inbounds [4 x i8], ptr %i.v, i64 %i.s
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.y = load i64, ptr %i.x, align 8              ; 2 uses
-  %i.z = sub i64 %i.y, %i.s                       ; 5 uses
+  %i.z = sub i64 %i.y, %i.s                       ; 4 uses
   %i.aa = icmp eq i64 %i.y, %i.s
   br i1 %i.aa, label %bb.g, label %bb.h
 
@@ -226,9 +226,9 @@ bb.j:                                             ; preds = %bb.h
   %i.ae = ptrtoint ptr %3 to i64
   %i.af = ptrtoint ptr %2 to i64
   %i.ag = sub i64 %i.ae, %i.af
-  %i.ah = ashr exact i64 %i.ag, 2                 ; 3 uses
+  %i.ah = ashr exact i64 %i.ag, 2                 ; 2 uses
   %i.ai = urem i64 %i.ah, %i.z
-  %i.aj = udiv i64 %i.ah, %i.z                    ; 3 uses
+  %i.aj = udiv exact i64 %i.ah, %i.z              ; 3 uses
   %.not.i = icmp ne i64 %i.ai, 0
   %i.ak = sext i16 %i.l to i64
   %i.al = icmp ult i64 %i.aj, %i.ak
@@ -244,10 +244,9 @@ bb.k:                                             ; preds = %bb.j
 
 .preheader.i:                                     ; preds = %bb.k
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.not4751.i = icmp ugt i64 %i.z, %i.ah
-  br i1 %.not4751.i, label %cbrdissect.exit, label %.lr.ph.i
+  br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.preheader.i
   %.in.i = phi i64 [ %i.au, %.lr.ph.i ], [ %i.aj, %.preheader.i ]
   %.052.i = phi ptr [ %i.av, %.lr.ph.i ], [ %2, %.preheader.i ] ; 2 uses
   %i.aq = load ptr, ptr %i.ap, align 8
@@ -261,8 +260,8 @@ bb.k:                                             ; preds = %bb.j
   %or.cond269 = select i1 %.not48.not.i.not, i1 true, i1 %.not47.i
   br i1 %or.cond269, label %cbrdissect.exit, label %.lr.ph.i, !llvm.loop !28
 
-cbrdissect.exit:                                  ; preds = %.lr.ph.i, %bb.e, %bb.g, %bb.i, %bb.j, %bb.k, %.preheader.i
-  %.041.shrunk.i = phi i1 [ true, %bb.j ], [ true, %bb.e ], [ true, %bb.k ], [ %i.ad, %bb.i ], [ %or.cond50.i, %bb.g ], [ false, %.preheader.i ], [ %.not48.not.i.not, %.lr.ph.i ]
+cbrdissect.exit:                                  ; preds = %.lr.ph.i, %bb.e, %bb.g, %bb.i, %bb.j, %bb.k
+  %.041.shrunk.i = phi i1 [ true, %bb.j ], [ true, %bb.e ], [ true, %bb.k ], [ %i.ad, %bb.i ], [ %or.cond50.i, %bb.g ], [ %.not48.not.i.not, %.lr.ph.i ]
   %.041.i = zext i1 %.041.shrunk.i to i32
   br label %crevcondissect.exit
 

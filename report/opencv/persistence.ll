@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.h, %bb.j
   %i.v = load ptr, ptr %1, align 8, !tbaa !37
   %i.w = tail call noundef i32 @_ZN2cv2fs14calcStructSizeEPKci(ptr noundef %i.v, i32 noundef 0) ; 2 uses
-  %i.x = sext i32 %i.w to i64                     ; 5 uses
+  %i.x = sext i32 %i.w to i64                     ; 3 uses
   %.not = icmp eq i32 %i.w, 0
   br i1 %.not, label %bb.l, label %bb.q
 
@@ -249,7 +249,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106: ; preds = %bb
 
 bb.q:                                             ; preds = %bb.k
   %i.af = urem i64 %3, %i.x
-  %i.ag = udiv i64 %3, %i.x                       ; 2 uses
+  %i.ag = udiv exact i64 %3, %i.x                 ; 2 uses
   %i.ah = icmp eq i64 %i.af, 0
   br i1 %i.ah, label %bb.w, label %bb.r
 
@@ -300,7 +300,7 @@ bb.w:                                             ; preds = %bb.q
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.b, i8 0, i64 256, i1 false)
   %i.as = load ptr, ptr %1, align 8, !tbaa !37
   %i.at = call noundef i32 @_ZN2cv2fs12decodeFormatEPKcPii(ptr noundef %i.as, ptr noundef nonnull %i.a, i32 noundef 128) ; 3 uses
-  %.not94 = icmp ult i64 %3, %i.x
+  %.not94 = icmp eq i64 %3, 0
   br i1 %.not94, label %.loopexit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -360,15 +360,13 @@ bb.ad:                                            ; preds = %bb.x
   br label %.preheader.preheader
 
 bb.ae:                                            ; preds = %bb.ad
-  %.not98197 = icmp uge i64 %3, %i.x
   %i.bi = icmp sgt i32 %i.at, 0
   %i.bj = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %i.bk = getelementptr inbounds nuw i8, ptr %i.b, i64 23
   %i.bl = getelementptr inbounds nuw i8, ptr %i.b, i64 22
-  %or.cond = and i1 %.not98197, %i.bi
-  br i1 %or.cond, label %.preheader.preheader, label %.loopexit
+  br i1 %i.bi, label %.preheader.preheader, label %.loopexit
 
-.preheader.preheader:                             ; preds = %bb.ae, %.preheader.lr.ph.thread
+.preheader.preheader:                             ; preds = %.preheader.lr.ph.thread, %bb.ae
   %i.bm = phi ptr [ %i.bh, %.preheader.lr.ph.thread ], [ %i.bl, %bb.ae ] ; 2 uses
   %i.bn = phi ptr [ %i.bg, %.preheader.lr.ph.thread ], [ %i.bk, %bb.ae ] ; 17 uses
   %i.bo = phi ptr [ %i.bf, %.preheader.lr.ph.thread ], [ %i.bj, %bb.ae ] ; 4 uses
@@ -771,9 +769,9 @@ bb.c:                                             ; preds = %bb.b
   %i.i = call noundef i32 @_ZN2cv2fs12decodeFormatEPKcPii(ptr noundef %i.h, ptr noundef nonnull %i.a, i32 noundef 128) ; 2 uses
   %i.j = load ptr, ptr %1, align 8, !tbaa !37
   %i.k = call noundef i32 @_ZN2cv2fs14calcStructSizeEPKci(ptr noundef %i.j, i32 noundef 0)
-  %i.l = sext i32 %i.k to i64                     ; 4 uses
+  %i.l = sext i32 %i.k to i64                     ; 3 uses
   %i.m = urem i64 %3, %i.l
-  %i.n = udiv i64 %3, %i.l
+  %i.n = udiv exact i64 %3, %i.l
   %i.o = icmp eq i64 %i.m, 0
   br i1 %i.o, label %bb.i, label %bb.d
 
@@ -816,7 +814,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.h,
   br label %bb.cu
 
 bb.i:                                             ; preds = %bb.c
-  %.not98247 = icmp ult i64 %3, %i.l
+  %.not98247 = icmp eq i64 %3, 0
   br i1 %.not98247, label %._crit_edge250.split, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.i

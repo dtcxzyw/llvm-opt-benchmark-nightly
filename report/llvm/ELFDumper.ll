@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.a
   %.0.copyload.i.i.i66 = load i32, ptr %i.bg, align 1 ; 5 uses
   %i.bh = zext i32 %.0.copyload.i.i.i66 to i64    ; 3 uses
   %i.bi = urem i32 %.0.copyload.i.i.i66, 12
-  %i.bj = udiv i32 %.0.copyload.i.i.i66, 12
+  %i.bj = udiv exact i32 %.0.copyload.i.i.i66, 12
   %.not23 = icmp eq i32 %i.bi, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -608,10 +608,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i64, ptr %i.i, align 8, !tbaa !272  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !763
-  %.fr = freeze i64 %i.l                          ; 5 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !763  ; 5 uses
   %i.m = sub i64 %i.j, %i.g
-  %i.n = icmp ugt i64 %.fr, %i.m
+  %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %_ZN4llvmplERKNS_5TwineES2_.exit109, label %bb.c
 
 _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
@@ -639,7 +638,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
   store i8 2, ptr %i.v, align 8, !tbaa !352, !alias.scope !5930
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 33
   store i8 3, ptr %i.w, align 1, !tbaa !353, !alias.scope !5930
-  %i.x = inttoptr i64 %.fr to ptr
+  %i.x = inttoptr i64 %i.l to ptr
   store ptr %8, ptr %7, align 8, !alias.scope !5931
   %i.y = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.x, ptr %i.y, align 8, !alias.scope !5931
@@ -696,13 +695,13 @@ bb.c:                                             ; preds = %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !810
   %i.ar = icmp eq i64 %i.aq, 12
-  %i.as = urem i64 %.fr, 12
+  %i.as = urem i64 %i.l, 12
   %i.at = icmp eq i64 %i.as, 0
   %or.cond = and i1 %i.at, %i.ar
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.au = sdiv exact i64 %.fr, 12
+  %i.au = sdiv exact i64 %i.l, 12
   br label %bb.m
 
 bb.e:                                             ; preds = %bb.c
@@ -780,7 +779,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %_ZN4llvmplERKNS_5TwineES2_.exit154
 
 _ZN4llvmplERKNS_5TwineES2_.exit154:               ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.bx = phi i64 [ %.fr, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %i.bx = phi i64 [ %i.l, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #31
@@ -1183,7 +1182,7 @@ bb.f:                                             ; preds = %bb.a
   %i.bj = tail call noundef i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i66) ; 5 uses
   %i.bk = zext i32 %i.bj to i64                   ; 3 uses
   %i.bl = urem i32 %i.bj, 12
-  %i.bm = udiv i32 %i.bj, 12
+  %i.bm = udiv exact i32 %i.bj, 12
   %.not23 = icmp eq i32 %i.bl, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -1586,10 +1585,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i64, ptr %i.i, align 8, !tbaa !272  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !763
-  %.fr = freeze i64 %i.l                          ; 5 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !763  ; 5 uses
   %i.m = sub i64 %i.j, %i.g
-  %i.n = icmp ugt i64 %.fr, %i.m
+  %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %_ZN4llvmplERKNS_5TwineES2_.exit109, label %bb.c
 
 _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
@@ -1617,7 +1615,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
   store i8 2, ptr %i.v, align 8, !tbaa !352, !alias.scope !13232
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 33
   store i8 3, ptr %i.w, align 1, !tbaa !353, !alias.scope !13232
-  %i.x = inttoptr i64 %.fr to ptr
+  %i.x = inttoptr i64 %i.l to ptr
   store ptr %8, ptr %7, align 8, !alias.scope !13233
   %i.y = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.x, ptr %i.y, align 8, !alias.scope !13233
@@ -1674,13 +1672,13 @@ bb.c:                                             ; preds = %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !810
   %i.ar = icmp eq i64 %i.aq, 12
-  %i.as = urem i64 %.fr, 12
+  %i.as = urem i64 %i.l, 12
   %i.at = icmp eq i64 %i.as, 0
   %or.cond = and i1 %i.at, %i.ar
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.au = sdiv exact i64 %.fr, 12
+  %i.au = sdiv exact i64 %i.l, 12
   br label %bb.m
 
 bb.e:                                             ; preds = %bb.c
@@ -1758,7 +1756,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %_ZN4llvmplERKNS_5TwineES2_.exit154
 
 _ZN4llvmplERKNS_5TwineES2_.exit154:               ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.bx = phi i64 [ %.fr, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %i.bx = phi i64 [ %i.l, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #31
@@ -2161,7 +2159,7 @@ bb.f:                                             ; preds = %bb.a
   %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.0.copyload.i.i.i66 = load i64, ptr %i.bg, align 1 ; 7 uses
   %i.bh = urem i64 %.0.copyload.i.i.i66, 24
-  %i.bi = udiv i64 %.0.copyload.i.i.i66, 24
+  %i.bi = udiv exact i64 %.0.copyload.i.i.i66, 24
   %.not23 = icmp eq i64 %i.bh, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -2564,7 +2562,7 @@ bb.f:                                             ; preds = %bb.a
   %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.0.copyload.i.i.i66 = load i64, ptr %i.bg, align 1 ; 7 uses
   %i.bh = urem i64 %.0.copyload.i.i.i66, 24
-  %i.bi = udiv i64 %.0.copyload.i.i.i66, 24
+  %i.bi = udiv exact i64 %.0.copyload.i.i.i66, 24
   %.not23 = icmp eq i64 %i.bh, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -2967,10 +2965,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i64, ptr %i.i, align 8, !tbaa !272  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !763
-  %.fr = freeze i64 %i.l                          ; 5 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !763  ; 5 uses
   %i.m = sub i64 %i.j, %i.g
-  %i.n = icmp ugt i64 %.fr, %i.m
+  %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %_ZN4llvmplERKNS_5TwineES2_.exit109, label %bb.c
 
 _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
@@ -2998,7 +2995,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
   store i8 2, ptr %i.v, align 8, !tbaa !352, !alias.scope !19705
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 33
   store i8 3, ptr %i.w, align 1, !tbaa !353, !alias.scope !19705
-  %i.x = inttoptr i64 %.fr to ptr
+  %i.x = inttoptr i64 %i.l to ptr
   store ptr %8, ptr %7, align 8, !alias.scope !19706
   %i.y = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.x, ptr %i.y, align 8, !alias.scope !19706
@@ -3055,13 +3052,13 @@ bb.c:                                             ; preds = %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !810
   %i.ar = icmp eq i64 %i.aq, 24
-  %i.as = urem i64 %.fr, 24
+  %i.as = urem i64 %i.l, 24
   %i.at = icmp eq i64 %i.as, 0
   %or.cond = and i1 %i.at, %i.ar
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.au = sdiv exact i64 %.fr, 24
+  %i.au = sdiv exact i64 %i.l, 24
   br label %bb.m
 
 bb.e:                                             ; preds = %bb.c
@@ -3139,7 +3136,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %_ZN4llvmplERKNS_5TwineES2_.exit154
 
 _ZN4llvmplERKNS_5TwineES2_.exit154:               ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.bx = phi i64 [ %.fr, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %i.bx = phi i64 [ %i.l, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #31
@@ -3542,10 +3539,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i64, ptr %i.i, align 8, !tbaa !272  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !763
-  %.fr = freeze i64 %i.l                          ; 5 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !763  ; 5 uses
   %i.m = sub i64 %i.j, %i.g
-  %i.n = icmp ugt i64 %.fr, %i.m
+  %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %_ZN4llvmplERKNS_5TwineES2_.exit109, label %bb.c
 
 _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
@@ -3573,7 +3569,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
   store i8 2, ptr %i.v, align 8, !tbaa !352, !alias.scope !19988
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 33
   store i8 3, ptr %i.w, align 1, !tbaa !353, !alias.scope !19988
-  %i.x = inttoptr i64 %.fr to ptr
+  %i.x = inttoptr i64 %i.l to ptr
   store ptr %8, ptr %7, align 8, !alias.scope !19989
   %i.y = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.x, ptr %i.y, align 8, !alias.scope !19989
@@ -3630,13 +3626,13 @@ bb.c:                                             ; preds = %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !810
   %i.ar = icmp eq i64 %i.aq, 24
-  %i.as = urem i64 %.fr, 24
+  %i.as = urem i64 %i.l, 24
   %i.at = icmp eq i64 %i.as, 0
   %or.cond = and i1 %i.at, %i.ar
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.au = sdiv exact i64 %.fr, 24
+  %i.au = sdiv exact i64 %i.l, 24
   br label %bb.m
 
 bb.e:                                             ; preds = %bb.c
@@ -3714,7 +3710,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %_ZN4llvmplERKNS_5TwineES2_.exit154
 
 _ZN4llvmplERKNS_5TwineES2_.exit154:               ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.bx = phi i64 [ %.fr, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %i.bx = phi i64 [ %i.l, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #31
@@ -4117,7 +4113,7 @@ bb.f:                                             ; preds = %bb.a
   %.0.copyload.i.i.i66 = load i64, ptr %i.bi, align 1
   %i.bj = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i.i.i66) ; 7 uses
   %i.bk = urem i64 %i.bj, 24
-  %i.bl = udiv i64 %i.bj, 24
+  %i.bl = udiv exact i64 %i.bj, 24
   %.not23 = icmp eq i64 %i.bk, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -4520,7 +4516,7 @@ bb.f:                                             ; preds = %bb.a
   %.0.copyload.i.i.i66 = load i64, ptr %i.bi, align 1
   %i.bj = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i.i.i66) ; 7 uses
   %i.bk = urem i64 %i.bj, 24
-  %i.bl = udiv i64 %i.bj, 24
+  %i.bl = udiv exact i64 %i.bj, 24
   %.not23 = icmp eq i64 %i.bk, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -4923,10 +4919,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i64, ptr %i.i, align 8, !tbaa !272  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !763
-  %.fr = freeze i64 %i.l                          ; 5 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !763  ; 5 uses
   %i.m = sub i64 %i.j, %i.g
-  %i.n = icmp ugt i64 %.fr, %i.m
+  %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %_ZN4llvmplERKNS_5TwineES2_.exit109, label %bb.c
 
 _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
@@ -4954,7 +4949,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
   store i8 2, ptr %i.v, align 8, !tbaa !352, !alias.scope !26552
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 33
   store i8 3, ptr %i.w, align 1, !tbaa !353, !alias.scope !26552
-  %i.x = inttoptr i64 %.fr to ptr
+  %i.x = inttoptr i64 %i.l to ptr
   store ptr %8, ptr %7, align 8, !alias.scope !26553
   %i.y = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.x, ptr %i.y, align 8, !alias.scope !26553
@@ -5011,13 +5006,13 @@ bb.c:                                             ; preds = %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !810
   %i.ar = icmp eq i64 %i.aq, 24
-  %i.as = urem i64 %.fr, 24
+  %i.as = urem i64 %i.l, 24
   %i.at = icmp eq i64 %i.as, 0
   %or.cond = and i1 %i.at, %i.ar
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.au = sdiv exact i64 %.fr, 24
+  %i.au = sdiv exact i64 %i.l, 24
   br label %bb.m
 
 bb.e:                                             ; preds = %bb.c
@@ -5095,7 +5090,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %_ZN4llvmplERKNS_5TwineES2_.exit154
 
 _ZN4llvmplERKNS_5TwineES2_.exit154:               ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.bx = phi i64 [ %.fr, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %i.bx = phi i64 [ %i.l, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #31
@@ -5498,10 +5493,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i64, ptr %i.i, align 8, !tbaa !272  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !763
-  %.fr = freeze i64 %i.l                          ; 5 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !763  ; 5 uses
   %i.m = sub i64 %i.j, %i.g
-  %i.n = icmp ugt i64 %.fr, %i.m
+  %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %_ZN4llvmplERKNS_5TwineES2_.exit109, label %bb.c
 
 _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
@@ -5529,7 +5523,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit109:               ; preds = %bb.b
   store i8 2, ptr %i.v, align 8, !tbaa !352, !alias.scope !26835
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 33
   store i8 3, ptr %i.w, align 1, !tbaa !353, !alias.scope !26835
-  %i.x = inttoptr i64 %.fr to ptr
+  %i.x = inttoptr i64 %i.l to ptr
   store ptr %8, ptr %7, align 8, !alias.scope !26836
   %i.y = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.x, ptr %i.y, align 8, !alias.scope !26836
@@ -5586,13 +5580,13 @@ bb.c:                                             ; preds = %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !810
   %i.ar = icmp eq i64 %i.aq, 24
-  %i.as = urem i64 %.fr, 24
+  %i.as = urem i64 %i.l, 24
   %i.at = icmp eq i64 %i.as, 0
   %or.cond = and i1 %i.at, %i.ar
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.au = sdiv exact i64 %.fr, 24
+  %i.au = sdiv exact i64 %i.l, 24
   br label %bb.m
 
 bb.e:                                             ; preds = %bb.c
@@ -5670,7 +5664,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %_ZN4llvmplERKNS_5TwineES2_.exit154
 
 _ZN4llvmplERKNS_5TwineES2_.exit154:               ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.bx = phi i64 [ %.fr, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %i.bx = phi i64 [ %i.l, %bb.e ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #31

@@ -204,7 +204,6 @@ $_ZTVN4gdcm14ParseExceptionE = comdat any
 @.str.16 = private unnamed_addr constant [54 x i8] c"An invalid logic behavior occurrediimage_len % 2 == 0\00", align 1
 @.str.17 = private unnamed_addr constant [66 x i8] c"An invalid logic behavior occurredimage_len % MaxNumSegments == 0\00", align 1
 @.str.18 = private unnamed_addr constant [60 x i8] c"An invalid logic behavior occurredptr < ptr_img + image_len\00", align 1
-@.str.19 = private unnamed_addr constant [105 x i8] c"An invalid logic behavior occurred(MaxNumSegments-1) * input_seg_length + partition == (size_t)image_len\00", align 1
 @.str.21 = private unnamed_addr constant [59 x i8] c"An invalid logic behavior occurredpartition % dims[1] == 0\00", align 1
 @.str.22 = private unnamed_addr constant [42 x i8] c"An invalid logic behavior occurredllength\00", align 1
 @.str.23 = private unnamed_addr constant [62 x i8] c"An invalid logic behavior occurreddata.str().size() == length\00", align 1
@@ -607,7 +606,7 @@ bb.t:                                             ; preds = %bb.ac, %bb.aa, %bb.
 bb.u:                                             ; preds = %.thread413, %bb.s
   %.1229425 = phi i32 [ %i.bg, %bb.s ], [ %.1229426, %.thread413 ] ; 5 uses
   %.0230422 = phi ptr [ null, %bb.s ], [ %.0230423, %.thread413 ] ; 6 uses
-  %.1232421 = phi i64 [ %i.ac, %bb.s ], [ %.1232420, %.thread413 ] ; 15 uses
+  %.1232421 = phi i64 [ %i.ac, %bb.s ], [ %.1232420, %.thread413 ] ; 14 uses
   %.1234418 = phi ptr [ %spec.select.i, %bb.s ], [ %.1234419, %.thread413 ]
   %.0224 = phi ptr [ null, %bb.s ], [ %i.bi, %.thread413 ] ; 25 uses
   %i.bk = invoke noundef nonnull align 4 dereferenceable(4) ptr @_ZNK4gdcm10ImageCodec28GetPhotometricInterpretationEv(ptr noundef nonnull align 8 dereferenceable(65) %0)
@@ -730,7 +729,7 @@ bb.au:                                            ; preds = %.invoke, %bb.ay, %b
   br label %.body
 
 bb.av:                                            ; preds = %bb.at, %bb.as
-  %.1222 = phi i32 [ %i.cn, %bb.at ], [ %.0221, %bb.as ] ; 4 uses
+  %.1222 = phi i32 [ %i.cn, %bb.at ], [ %.0221, %bb.as ] ; 3 uses
   %i.cp = icmp eq i32 %.1229425, 16               ; 2 uses
   %i.cq = icmp eq i32 %.1229425, 32               ; 2 uses
   switch i32 %.1229425, label %bb.aw [
@@ -803,8 +802,7 @@ bb.bc:                                            ; preds = %bb.az
   %i.di = and i64 %.1232421, 1
   %.not295 = icmp eq i64 %i.di, 0
   %i.dj = trunc i64 %.1232421 to i32
-  %i.dk = zext nneg i32 %.1222 to i64             ; 5 uses
-  %13 = add nsw i32 %.1222, -1
+  %i.dk = zext nneg i32 %.1222 to i64             ; 4 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %6, i64 128 ; 5 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 6 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 7 uses
@@ -860,7 +858,6 @@ bb.bc:                                            ; preds = %bb.az
   %i.fl = getelementptr inbounds nuw i8, ptr %9, i64 88 ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %9, i64 104
   %i.fn = getelementptr inbounds nuw i8, ptr %9, i64 128
-  %14 = zext nneg i32 %13 to i64
   br label %bb.be
 
 bb.bd:                                            ; preds = %.noexc395, %_ZNK4gdcm12SmartPointerINS_19SequenceOfFragmentsEEdeEv.exit
@@ -1263,7 +1260,7 @@ bb.ch:                                            ; preds = %bb.cf
 .thread428.thread440:                             ; preds = %._crit_edge, %._crit_edge584.us, %.lr.ph587.split, %bb.bt, %bb.cc, %bb.bi, %.thread428
   %.1219 = phi ptr [ %i.fq, %.thread428 ], [ %.0224, %bb.cc ], [ %.0223, %bb.bi ], [ %.0224, %.lr.ph587.split ], [ %.0224, %bb.bt ], [ %.0224, %._crit_edge584.us ], [ %.0224, %._crit_edge ]
   %i.ans = urem i64 %.1232421, %i.dk
-  %i.ant = udiv i64 %.1232421, %i.dk              ; 4 uses
+  %i.ant = udiv exact i64 %.1232421, %i.dk        ; 3 uses
   %i.anu = icmp eq i64 %i.ans, 0
   br i1 %i.anu, label %bb.ck, label %bb.ci
 
@@ -1281,21 +1278,23 @@ bb.cj:                                            ; preds = %bb.ci
 bb.ck:                                            ; preds = %.thread428.thread440
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
-  %15 = mul i64 %i.ant, %i.dk
-  %16 = icmp eq i64 %15, %.1232421
   br label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck, %bb.ey
-  %indvars.iv617 = phi i64 [ 0, %bb.ck ], [ %indvars.iv.next618, %bb.ey ] ; 5 uses
+  %indvars.iv617 = phi i64 [ 0, %bb.ck ], [ %indvars.iv.next618, %bb.ey ] ; 4 uses
   %i.anx = mul i64 %i.ant, %indvars.iv617         ; 2 uses
   %i.any = getelementptr inbounds nuw i8, ptr %.1219, i64 %i.anx
   %i.anz = icmp samesign ult i64 %i.anx, %.1232421
-  br i1 %i.anz, label %19, label %bb.cm
+  br i1 %i.anz, label %bb.cp, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
   %i.aoa = call ptr @__cxa_allocate_exception(i64 40) #25 ; 3 uses
   invoke void @_ZN4gdcm9ExceptionC2EPKcS2_jS2_(ptr noundef nonnull align 8 dereferenceable(40) %i.aoa, ptr noundef nonnull @.str.18, ptr noundef nonnull @.str.1, i32 noundef 562, ptr noundef nonnull @.str.2)
-          to label %.invoke670 unwind label %bb.cn
+          to label %13 unwind label %bb.cn
+
+13:                                               ; preds = %bb.cm
+  invoke void @__cxa_throw(ptr nonnull %i.aoa, ptr nonnull @_ZTIN4gdcm9ExceptionE, ptr nonnull @_ZN4gdcm9ExceptionD2Ev) #27
+          to label %bb.hi unwind label %bb.co
 
 bb.cn:                                            ; preds = %bb.cm
   %i.aob = landingpad { ptr, i32 }
@@ -1303,36 +1302,12 @@ bb.cn:                                            ; preds = %bb.cm
   call void @__cxa_free_exception(ptr nonnull %i.aoa) #25
   br label %bb.gr
 
-17:                                               ; preds = %.invoke670
-  %18 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.gr
-
-19:                                               ; preds = %bb.cl
-  %20 = icmp ne i64 %indvars.iv617, %14
-  %or.cond336 = select i1 %20, i1 true, i1 %16
-  br i1 %or.cond336, label %bb.cp, label %21
-
-21:                                               ; preds = %19
-  %22 = call ptr @__cxa_allocate_exception(i64 40) #25 ; 3 uses
-  invoke void @_ZN4gdcm9ExceptionC2EPKcS2_jS2_(ptr noundef nonnull align 8 dereferenceable(40) %22, ptr noundef nonnull @.str.19, ptr noundef nonnull @.str.1, i32 noundef 566, ptr noundef nonnull @.str.2)
-          to label %.invoke670 unwind label %bb.co
-
-.invoke670:                                       ; preds = %bb.cm, %21
-  %23 = phi ptr [ %22, %21 ], [ %i.aoa, %bb.cm ]
-  invoke void @__cxa_throw(ptr nonnull %23, ptr nonnull @_ZTIN4gdcm9ExceptionE, ptr nonnull @_ZN4gdcm9ExceptionD2Ev) #27
-          to label %.cont671 unwind label %17
-
-.cont671:                                         ; preds = %.invoke670
-  unreachable
-
-bb.co:                                            ; preds = %21
+bb.co:                                            ; preds = %13
   %i.aoc = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_free_exception(ptr nonnull %22) #25
   br label %bb.gr
 
-bb.cp:                                            ; preds = %19
+bb.cp:                                            ; preds = %bb.cl
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   store ptr getelementptr inbounds nuw inrange(-24, 16) (i8, ptr @_ZTVNSt3__118basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEE, i64 104), ptr %i.dl, align 8, !tbaa !12
   store ptr getelementptr inbounds nuw inrange(-24, 16) (i8, ptr @_ZTVNSt3__118basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEE, i64 64), ptr %i.dm, align 8, !tbaa !12
@@ -1735,8 +1710,8 @@ bb.gq:                                            ; preds = %bb.gp, %bb.fs
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   br label %bb.gr
 
-bb.gr:                                            ; preds = %bb.cn, %17, %bb.co, %.body343, %bb.gq
-  %.merged332 = phi { ptr, i32 } [ %.pn313.pn.pn.pn, %bb.gq ], [ %.pn318.pn.pn, %.body343 ], [ %18, %17 ], [ %i.aob, %bb.cn ], [ %i.aoc, %bb.co ]
+bb.gr:                                            ; preds = %bb.cn, %bb.co, %.body343, %bb.gq
+  %.merged332 = phi { ptr, i32 } [ %.pn313.pn.pn.pn, %bb.gq ], [ %.pn318.pn.pn, %.body343 ], [ %i.aoc, %bb.co ], [ %i.aob, %bb.cn ]
   %i.ayb = load i8, ptr %5, align 8
   %i.ayc = trunc i8 %i.ayb to i1
   br i1 %i.ayc, label %bb.gs, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit389
@@ -1891,7 +1866,7 @@ _ZN4gdcm12SmartPointerINS_19SequenceOfFragmentsEED2Ev.exit: ; preds = %bb.hb, %b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   resume { ptr, i32 } %.merged325
 
-bb.hi:                                            ; preds = %bb.fr, %bb.dy, %bb.di, %bb.cw, %bb.cf, %bb.bw, %bb.a
+bb.hi:                                            ; preds = %bb.fr, %bb.dy, %bb.di, %bb.cw, %13, %bb.cf, %bb.bw, %bb.a
   unreachable
 }
 
@@ -2294,7 +2269,7 @@ define dso_local noundef zeroext i1 @_ZN4gdcm8RLECodec13GetHeaderInfoERNSt3__113
   br i1 %.not.i.i, label %bb.a, label %.thread
 
 bb.a:                                             ; preds = %.noexc
-  %i.e = load i32, ptr %i.a, align 16, !tbaa !59  ; 5 uses
+  %i.e = load i32, ptr %i.a, align 16, !tbaa !59  ; 4 uses
   %i.f = icmp ult i32 %i.e, 16
   br i1 %i.f, label %bb.b, label %.thread
 
@@ -2327,7 +2302,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   %.lhs.trunc25 = trunc nuw nsw i32 %i.e to i8    ; 2 uses
   %i.l = urem i8 %.lhs.trunc25, 3
-  %i.m = udiv i8 %.lhs.trunc25, 3
+  %i.m = udiv exact i8 %.lhs.trunc25, 3
   %i.n = icmp eq i8 %i.l, 0
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
@@ -2345,11 +2320,10 @@ bb.e:                                             ; preds = %bb.d
   store i32 1, ptr %i.r, align 4, !tbaa !64
   store i16 3, ptr %i.p, align 4, !tbaa !281
   %.zext = zext nneg i8 %i.m to i32
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %cond = icmp ult i32 %i.e, 3
-  br i1 %cond, label %_ZN4gdcm11PixelFormat16SetBitsAllocatedEt.exit, label %bb.f
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 28
+  br label %bb.f
 
-bb.f:                                             ; preds = %.thread28, %bb.e
+bb.f:                                             ; preds = %bb.e, %.thread28
   %i.t = phi ptr [ %i.p, %.thread28 ], [ %i.s, %bb.e ]
   %.031 = phi i32 [ %i.e, %.thread28 ], [ %.zext, %bb.e ]
   %.0.tr = trunc nuw nsw i32 %.031 to i16
@@ -2359,11 +2333,11 @@ bb.f:                                             ; preds = %.thread28, %bb.e
   %i.w = add nsw i16 %i.u, -1
   br label %_ZN4gdcm11PixelFormat16SetBitsAllocatedEt.exit
 
-_ZN4gdcm11PixelFormat16SetBitsAllocatedEt.exit:   ; preds = %bb.e, %.thread32, %bb.f
-  %3 = phi ptr [ %i.t, %bb.f ], [ %i.j, %.thread32 ], [ %i.s, %bb.e ]
-  %.sink = phi i16 [ %i.u, %bb.f ], [ 0, %.thread32 ], [ 0, %bb.e ]
-  %.sink7.i = phi i64 [ 6, %bb.f ], [ 8, %.thread32 ], [ 8, %bb.e ]
-  %.sink.i = phi i16 [ %i.w, %bb.f ], [ 0, %.thread32 ], [ 0, %bb.e ]
+_ZN4gdcm11PixelFormat16SetBitsAllocatedEt.exit:   ; preds = %.thread32, %bb.f
+  %3 = phi ptr [ %i.t, %bb.f ], [ %i.j, %.thread32 ]
+  %.sink = phi i16 [ %i.u, %bb.f ], [ 0, %.thread32 ]
+  %.sink7.i = phi i64 [ 6, %bb.f ], [ 8, %.thread32 ]
+  %.sink.i = phi i16 [ %i.w, %bb.f ], [ 0, %.thread32 ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 30
   store i16 %.sink, ptr %i.x, align 2, !tbaa !60
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 %.sink7.i

@@ -205,7 +205,7 @@ bb.a:
   %i.k = alloca [34 x i8], align 16               ; 22 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.m = load i32, ptr %i.l, align 8, !tbaa !71
-  %i.n = tail call ptr @FLAC__metadata_object_new(i32 noundef %i.m) #32 ; 45 uses
+  %i.n = tail call ptr @FLAC__metadata_object_new(i32 noundef %i.m) #32 ; 44 uses
   %.not = icmp eq ptr %i.n, null
   br i1 %.not, label %bb.cl, label %bb.b
 
@@ -401,39 +401,34 @@ bb.j:                                             ; preds = %bb.b
   %i.eh = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #32
   %i.ei = urem i32 %i.s, 18
-  %i.ej = udiv i32 %i.s, 18                       ; 3 uses
+  %i.ej = udiv exact i32 %i.s, 18                 ; 2 uses
   %.not.i34.i.i = icmp eq i32 %i.ei, 0
   br i1 %.not.i34.i.i, label %bb.k, label %read_metadata_block_data_seektable_cb_.exit.i.i
 
 bb.k:                                             ; preds = %bb.j
   store i32 %i.ej, ptr %i.eh, align 8, !tbaa !92
-  %1 = icmp ult i32 %i.s, 18
+  %1 = icmp eq i32 %i.s, 0
   br i1 %1, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.ek = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   store ptr null, ptr %i.ek, align 8, !tbaa !93
-  br label %bb.n
+  br label %read_metadata_block_data_seektable_cb_.exit.i.i
 
 bb.m:                                             ; preds = %bb.k
   %i.el = zext nneg i32 %i.ej to i64
   %i.em = tail call ptr @safe_malloc_mul_2op_p(i64 noundef %i.el, i64 noundef 24) #32 ; 2 uses
-  %i.en = getelementptr inbounds nuw i8, ptr %i.n, i64 24
+  %i.en = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 2 uses
   store ptr %i.em, ptr %i.en, align 8, !tbaa !93
   %i.eo = icmp eq ptr %i.em, null
-  br i1 %i.eo, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %._crit_edge.i.i.i
+  br i1 %i.eo, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %bb.n
 
-._crit_edge.i.i.i:                                ; preds = %bb.m
+bb.n:                                             ; preds = %bb.m
   %.pre.i.i.i = load i32, ptr %i.eh, align 8, !tbaa !92
-  br label %bb.n
-
-bb.n:                                             ; preds = %._crit_edge.i.i.i, %bb.l
-  %2 = phi i32 [ %.pre.i.i.i, %._crit_edge.i.i.i ], [ %i.ej, %bb.l ]
-  %.not37.i.i.i = icmp eq i32 %2, 0
+  %.not37.i.i.i = icmp eq i32 %.pre.i.i.i, 0
   br i1 %.not37.i.i.i, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n
-  %3 = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.ep = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.eq = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.er = getelementptr inbounds nuw i8, ptr %i.j, i64 17
@@ -490,7 +485,7 @@ bb.o:                                             ; preds = %.lr.ph.i.preheader.
   %i.gi = zext i8 %i.gh to i64
   %i.gj = or disjoint i64 %i.gf, %i.gi
   %i.gk = or disjoint i64 %i.gj, %i.gg
-  %i.gl = load ptr, ptr %3, align 8, !tbaa !93
+  %i.gl = load ptr, ptr %i.en, align 8, !tbaa !93
   %i.gm = getelementptr inbounds nuw [24 x i8], ptr %i.gl, i64 %indvars.iv.i.i.i ; 3 uses
   store i64 %i.gk, ptr %i.gm, align 8, !tbaa !95
   %i.gn = load i8, ptr %i.ep, align 8, !tbaa !52
@@ -539,8 +534,8 @@ bb.o:                                             ; preds = %.lr.ph.i.preheader.
   %i.ib = icmp samesign ult i64 %indvars.iv.next.i.i.i, %i.ia
   br i1 %i.ib, label %bb.o, label %read_metadata_block_data_seektable_cb_.exit.i.i, !llvm.loop !0
 
-read_metadata_block_data_seektable_cb_.exit.i.i:  ; preds = %.lr.ph.i.preheader.i35.i.i, %bb.o, %bb.n, %bb.m, %bb.j
-  %.018.i.i.i = phi i32 [ 5, %bb.j ], [ 11, %bb.m ], [ 0, %bb.n ], [ 0, %.lr.ph.i.preheader.i35.i.i ], [ 6, %bb.o ]
+read_metadata_block_data_seektable_cb_.exit.i.i:  ; preds = %.lr.ph.i.preheader.i35.i.i, %bb.o, %bb.n, %bb.m, %bb.l, %bb.j
+  %.018.i.i.i = phi i32 [ 5, %bb.j ], [ 11, %bb.m ], [ 0, %bb.n ], [ 0, %bb.l ], [ 0, %.lr.ph.i.preheader.i35.i.i ], [ 6, %bb.o ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #32
   br label %read_metadata_block_data_.exit
 
@@ -943,7 +938,7 @@ bb.af:                                            ; preds = %bb.ac
   %i.ic = zext i8 %i.ib to i32
   %i.id = or disjoint i32 %i.ia, %i.ic            ; 18 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #32
-  %i.ie = call ptr @FLAC__metadata_object_new(i32 noundef %i.ht) #32 ; 43 uses
+  %i.ie = call ptr @FLAC__metadata_object_new(i32 noundef %i.ht) #32 ; 42 uses
   store ptr %i.ie, ptr %i.hn, align 8, !tbaa !138
   %i.if = icmp eq ptr %i.ie, null
   br i1 %i.if, label %node_delete_.exit61.i, label %bb.ag
@@ -1116,43 +1111,35 @@ bb.ao:                                            ; preds = %bb.ag
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ie, i64 16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #32
   %i.ma = urem i32 %i.id, 18
-  %i.mb = udiv i32 %i.id, 18                      ; 3 uses
+  %i.mb = udiv exact i32 %i.id, 18                ; 2 uses
   %.not.i34.i.i = icmp eq i32 %i.ma, 0
   br i1 %.not.i34.i.i, label %bb.ap, label %read_metadata_block_data_seektable_cb_.exit.i.i
 
 bb.ap:                                            ; preds = %bb.ao
   store i32 %i.mb, ptr %i.lz, align 8, !tbaa !92
-  %3 = icmp samesign ult i32 %i.id, 18
+  %3 = icmp eq i32 %i.id, 0
   br i1 %3, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
   %i.mc = getelementptr inbounds nuw i8, ptr %i.ie, i64 24
   store ptr null, ptr %i.mc, align 8, !tbaa !93
-  br label %bb.as
+  br label %read_metadata_block_data_seektable_cb_.exit.i.i
 
 bb.ar:                                            ; preds = %bb.ap
   %i.md = zext nneg i32 %i.mb to i64
   %i.me = call ptr @safe_malloc_mul_2op_p(i64 noundef %i.md, i64 noundef 24) #32 ; 2 uses
-  %i.mf = getelementptr inbounds nuw i8, ptr %i.ie, i64 24
+  %i.mf = getelementptr inbounds nuw i8, ptr %i.ie, i64 24 ; 2 uses
   store ptr %i.me, ptr %i.mf, align 8, !tbaa !93
   %i.mg = icmp eq ptr %i.me, null
-  br i1 %i.mg, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %._crit_edge.i.i.i
+  br i1 %i.mg, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %bb.as
 
-._crit_edge.i.i.i:                                ; preds = %bb.ar
+bb.as:                                            ; preds = %bb.ar
   %.pre.i.i.i = load i32, ptr %i.lz, align 8, !tbaa !92
-  br label %bb.as
+  %.not37.i.i.i = icmp eq i32 %.pre.i.i.i, 0
+  br i1 %.not37.i.i.i, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %bb.at
 
-bb.as:                                            ; preds = %._crit_edge.i.i.i, %bb.aq
-  %4 = phi i32 [ %.pre.i.i.i, %._crit_edge.i.i.i ], [ %i.mb, %bb.aq ]
-  %.not37.i.i.i = icmp eq i32 %4, 0
-  br i1 %.not37.i.i.i, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %.lr.ph.i.i63.i
-
-.lr.ph.i.i63.i:                                   ; preds = %bb.as
-  %5 = getelementptr inbounds nuw i8, ptr %i.ie, i64 24
-  br label %bb.at
-
-bb.at:                                            ; preds = %.lr.ph.i.preheader.i35.i.i, %.lr.ph.i.i63.i
-  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i63.i ], [ %indvars.iv.next.i.i.i, %.lr.ph.i.preheader.i35.i.i ] ; 2 uses
+bb.at:                                            ; preds = %bb.as, %.lr.ph.i.preheader.i35.i.i
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.lr.ph.i.preheader.i35.i.i ], [ 0, %bb.as ] ; 2 uses
   %i.mh = call i64 @fread(ptr noundef nonnull %i.j, i64 noundef 1, i64 noundef 18, ptr noundef nonnull %i.z) #32, !inline_history !16
   %.not20.i.i.i = icmp eq i64 %i.mh, 18
   br i1 %.not20.i.i.i, label %.lr.ph.i.preheader.i35.i.i, label %read_metadata_block_data_seektable_cb_.exit.i.i
@@ -1188,7 +1175,7 @@ bb.at:                                            ; preds = %.lr.ph.i.preheader.
   %i.nj = zext i8 %i.ni to i64
   %i.nk = or disjoint i64 %i.ng, %i.nj
   %i.nl = or disjoint i64 %i.nk, %i.nh
-  %i.nm = load ptr, ptr %5, align 8, !tbaa !93
+  %i.nm = load ptr, ptr %i.mf, align 8, !tbaa !93
   %i.nn = getelementptr inbounds nuw [24 x i8], ptr %i.nm, i64 %indvars.iv.i.i.i ; 3 uses
   store i64 %i.nl, ptr %i.nn, align 8, !tbaa !95
   %i.no = load i8, ptr %i.fc, align 8, !tbaa !52
@@ -1237,8 +1224,8 @@ bb.at:                                            ; preds = %.lr.ph.i.preheader.
   %i.pc = icmp samesign ult i64 %indvars.iv.next.i.i.i, %i.pb
   br i1 %i.pc, label %bb.at, label %read_metadata_block_data_seektable_cb_.exit.i.i, !llvm.loop !0
 
-read_metadata_block_data_seektable_cb_.exit.i.i:  ; preds = %.lr.ph.i.preheader.i35.i.i, %bb.at, %bb.as, %bb.ar, %bb.ao
-  %.018.i.i.i = phi i32 [ 5, %bb.ao ], [ 11, %bb.ar ], [ 0, %bb.as ], [ 0, %.lr.ph.i.preheader.i35.i.i ], [ 6, %bb.at ]
+read_metadata_block_data_seektable_cb_.exit.i.i:  ; preds = %.lr.ph.i.preheader.i35.i.i, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ao
+  %.018.i.i.i = phi i32 [ 5, %bb.ao ], [ 11, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.aq ], [ 0, %.lr.ph.i.preheader.i35.i.i ], [ 6, %bb.at ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #32
   br label %read_metadata_block_data_cb_.exit.i
 
@@ -1641,7 +1628,7 @@ bb.af:                                            ; preds = %bb.ac
   %i.hu = zext i8 %i.ht to i32
   %i.hv = or disjoint i32 %i.hs, %i.hu            ; 14 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #32
-  %i.hw = call ptr @FLAC__metadata_object_new(i32 noundef %i.hl) #32 ; 42 uses
+  %i.hw = call ptr @FLAC__metadata_object_new(i32 noundef %i.hl) #32 ; 41 uses
   store ptr %i.hw, ptr %i.hf, align 8, !tbaa !138
   %i.hx = icmp eq ptr %i.hw, null
   br i1 %i.hx, label %node_delete_.exit61.i, label %bb.ag
@@ -1814,43 +1801,35 @@ bb.ao:                                            ; preds = %bb.ag
   %i.lr = getelementptr inbounds nuw i8, ptr %i.hw, i64 16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #32
   %i.ls = urem i32 %i.hv, 18
-  %i.lt = udiv i32 %i.hv, 18                      ; 3 uses
+  %i.lt = udiv exact i32 %i.hv, 18                ; 2 uses
   %.not.i34.i.i = icmp eq i32 %i.ls, 0
   br i1 %.not.i34.i.i, label %bb.ap, label %read_metadata_block_data_seektable_cb_.exit.i.i
 
 bb.ap:                                            ; preds = %bb.ao
   store i32 %i.lt, ptr %i.lr, align 8, !tbaa !92
-  %4 = icmp samesign ult i32 %i.hv, 18
+  %4 = icmp eq i32 %i.hv, 0
   br i1 %4, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
   %i.lu = getelementptr inbounds nuw i8, ptr %i.hw, i64 24
   store ptr null, ptr %i.lu, align 8, !tbaa !93
-  br label %bb.as
+  br label %read_metadata_block_data_seektable_cb_.exit.i.i
 
 bb.ar:                                            ; preds = %bb.ap
   %i.lv = zext nneg i32 %i.lt to i64
   %i.lw = call ptr @safe_malloc_mul_2op_p(i64 noundef %i.lv, i64 noundef 24) #32 ; 2 uses
-  %i.lx = getelementptr inbounds nuw i8, ptr %i.hw, i64 24
+  %i.lx = getelementptr inbounds nuw i8, ptr %i.hw, i64 24 ; 2 uses
   store ptr %i.lw, ptr %i.lx, align 8, !tbaa !93
   %i.ly = icmp eq ptr %i.lw, null
-  br i1 %i.ly, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %._crit_edge.i.i.i
+  br i1 %i.ly, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %bb.as
 
-._crit_edge.i.i.i:                                ; preds = %bb.ar
+bb.as:                                            ; preds = %bb.ar
   %.pre.i.i.i = load i32, ptr %i.lr, align 8, !tbaa !92
-  br label %bb.as
+  %.not37.i.i.i = icmp eq i32 %.pre.i.i.i, 0
+  br i1 %.not37.i.i.i, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %bb.at
 
-bb.as:                                            ; preds = %._crit_edge.i.i.i, %bb.aq
-  %5 = phi i32 [ %.pre.i.i.i, %._crit_edge.i.i.i ], [ %i.lt, %bb.aq ]
-  %.not37.i.i.i = icmp eq i32 %5, 0
-  br i1 %.not37.i.i.i, label %read_metadata_block_data_seektable_cb_.exit.i.i, label %.lr.ph.i.i63.i
-
-.lr.ph.i.i63.i:                                   ; preds = %bb.as
-  %6 = getelementptr inbounds nuw i8, ptr %i.hw, i64 24
-  br label %bb.at
-
-bb.at:                                            ; preds = %.lr.ph.i.preheader.i35.i.i, %.lr.ph.i.i63.i
-  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i63.i ], [ %indvars.iv.next.i.i.i, %.lr.ph.i.preheader.i35.i.i ] ; 2 uses
+bb.at:                                            ; preds = %bb.as, %.lr.ph.i.preheader.i35.i.i
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.lr.ph.i.preheader.i35.i.i ], [ 0, %bb.as ] ; 2 uses
   %i.lz = call i64 %i.t(ptr noundef nonnull %i.g, i64 noundef 1, i64 noundef 18, ptr noundef %1) #32, !inline_history !16
   %.not20.i.i.i = icmp eq i64 %i.lz, 18
   br i1 %.not20.i.i.i, label %.lr.ph.i.preheader.i35.i.i, label %read_metadata_block_data_seektable_cb_.exit.i.i
@@ -1886,7 +1865,7 @@ bb.at:                                            ; preds = %.lr.ph.i.preheader.
   %i.nb = zext i8 %i.na to i64
   %i.nc = or disjoint i64 %i.my, %i.nb
   %i.nd = or disjoint i64 %i.nc, %i.mz
-  %i.ne = load ptr, ptr %6, align 8, !tbaa !93
+  %i.ne = load ptr, ptr %i.lx, align 8, !tbaa !93
   %i.nf = getelementptr inbounds nuw [24 x i8], ptr %i.ne, i64 %indvars.iv.i.i.i ; 3 uses
   store i64 %i.nd, ptr %i.nf, align 8, !tbaa !95
   %i.ng = load i8, ptr %i.fe, align 8, !tbaa !52
@@ -1935,8 +1914,8 @@ bb.at:                                            ; preds = %.lr.ph.i.preheader.
   %i.ou = icmp samesign ult i64 %indvars.iv.next.i.i.i, %i.ot
   br i1 %i.ou, label %bb.at, label %read_metadata_block_data_seektable_cb_.exit.i.i, !llvm.loop !0
 
-read_metadata_block_data_seektable_cb_.exit.i.i:  ; preds = %.lr.ph.i.preheader.i35.i.i, %bb.at, %bb.as, %bb.ar, %bb.ao
-  %.018.i.i.i = phi i32 [ 5, %bb.ao ], [ 11, %bb.ar ], [ 0, %bb.as ], [ 0, %.lr.ph.i.preheader.i35.i.i ], [ 6, %bb.at ]
+read_metadata_block_data_seektable_cb_.exit.i.i:  ; preds = %.lr.ph.i.preheader.i35.i.i, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ao
+  %.018.i.i.i = phi i32 [ 5, %bb.ao ], [ 11, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.aq ], [ 0, %.lr.ph.i.preheader.i35.i.i ], [ 6, %bb.at ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #32
   br label %read_metadata_block_data_cb_.exit.i
 

@@ -205,7 +205,7 @@ _ZN3fmt3v126detail9dragonbox16floor_log10_pow2Ei.exit: ; preds = %bb.q, %bb.r
   %i.cx = zext i64 %i.cv to i128
   %i.cy = mul nuw nsw i128 %i.cx, 2361183241434822607
   %sum.shift.i = lshr i128 %i.cy, 71              ; 2 uses
-  %i.cz = trunc nuw nsw i128 %sum.shift.i to i64  ; 8 uses
+  %i.cz = trunc nuw nsw i128 %sum.shift.i to i64  ; 7 uses
   %.neg = mul i64 %i.cz, 4294966296
   %i.da = add i64 %.neg, %i.cv
   %i.db = trunc i64 %i.da to i32                  ; 5 uses
@@ -270,38 +270,15 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.x
   %i.dt = urem i64 %i.cz, 100000000
-  %i.du = udiv i64 %i.cz, 100000000
+  %i.du = udiv exact i64 %i.cz, 100000000
   %i.dv = icmp eq i64 %i.dt, 0
-  br i1 %i.dv, label %2, label %.preheader194
+  br i1 %i.dv, label %.preheader.preheader, label %.preheader194
 
-2:                                                ; preds = %bb.ab
-  %.not.i.i60 = icmp samesign ult i64 %i.cz, 100000000
-  br i1 %.not.i.i60, label %3, label %.preheader.preheader
-
-.preheader.preheader:                             ; preds = %2
+.preheader.preheader:                             ; preds = %bb.ab
   %i.dw = trunc nuw nsw i64 %i.du to i32
   br label %.preheader.a
 
-3:                                                ; preds = %2
-  %4 = call ptr @__cxa_allocate_exception(i64 16) #30 ; 4 uses
-  invoke void @_ZNSt11logic_errorC2EPKc(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull @.str.5)
-          to label %5 unwind label %6
-
-5:                                                ; preds = %3
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTV17assertion_failure, i64 16), ptr %4, align 8, !tbaa !45
-  invoke void @__cxa_throw(ptr nonnull %4, ptr nonnull @_ZTI17assertion_failure, ptr nonnull @_ZNSt11logic_errorD2Ev) #32
-          to label %.noexc107 unwind label %8
-
-.noexc107:                                        ; preds = %5
-  unreachable
-
-6:                                                ; preds = %3
-  %7 = landingpad { ptr, i32 }
-          catch ptr null
-  call void @__cxa_free_exception(ptr nonnull %4) #30
-  br label %.body108
-
-.preheader.a:                                     ; preds = %.preheader.preheader, %.preheader.a
+.preheader.a:                                     ; preds = %.preheader.a, %.preheader.preheader
   %.0151 = phi i32 [ %i.dy, %.preheader.a ], [ %i.dw, %.preheader.preheader ] ; 3 uses
   %.012.i.i61 = phi i32 [ %i.ea, %.preheader.a ], [ 8, %.preheader.preheader ] ; 2 uses
   %i.dx = mul i32 %.0151, -1030792151             ; 2 uses
@@ -319,17 +296,6 @@ _ZN3fmt3v126detail9dragonbox21remove_trailing_zerosERji.exit.i65: ; preds = %.pr
   %spec.select189 = or disjoint i32 %.012.i.i61, %i.ed
   %i.ee = zext nneg i32 %spec.select188 to i64
   br label %_ZN3fmt3v126detail9dragonbox21remove_trailing_zerosERm.exit67
-
-8:                                                ; preds = %5
-  %9 = landingpad { ptr, i32 }
-          catch ptr null
-  br label %.body108
-
-.body108:                                         ; preds = %6, %8
-  %eh.lpad-body109 = phi { ptr, i32 } [ %9, %8 ], [ %7, %6 ]
-  %10 = extractvalue { ptr, i32 } %eh.lpad-body109, 0
-  call void @__clang_call_terminate(ptr %10) #33
-  unreachable
 
 .preheader194:                                    ; preds = %bb.ab, %.preheader194
   %.sroa.0.4 = phi i64 [ %i.eg, %.preheader194 ], [ %i.cz, %bb.ab ] ; 5 uses

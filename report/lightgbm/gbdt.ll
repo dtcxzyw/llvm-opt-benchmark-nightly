@@ -204,10 +204,10 @@ bb.c:                                             ; preds = %_ZNSt6vectorIdN8Lig
   %i.w = load i32, ptr %i.i, align 8, !tbaa !305
   %i.x = sext i32 %i.w to i64                     ; 2 uses
   %i.y = srem i64 %i.v, %i.x
-  %i.z = sdiv i64 %i.v, %i.x
+  %i.z = sdiv exact i64 %i.v, %i.x
   %.not10 = icmp eq i64 %i.y, 0
   %.not11 = icmp eq i64 %i.z, %i.k
-  %or.cond = and i1 %.not10, %.not11
+  %or.cond = select i1 %.not10, i1 %.not11, i1 false
   br i1 %or.cond, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -610,9 +610,9 @@ bb.a:
   %i.b = icmp eq i32 %1, 0
   br i1 %i.b, label %common.ret40, label %.lr.ph35
 
-common.ret40:                                     ; preds = %.lr.ph.preheader, %tailrecurse.backedge, %bb.e, %tailrecurse._crit_edge
-  %common.ret40.op = phi double [ %i.o, %bb.e ], [ %i.e, %tailrecurse._crit_edge ], [ 1.000000e+00, %tailrecurse.backedge ], [ 1.000000e+00, %.lr.ph.preheader ]
-  ret double %common.ret40.op
+common.ret40:                                     ; preds = %.lr.ph.preheader, %bb.e, %tailrecurse._crit_edge
+  %common.ret36.op = phi double [ %i.o, %bb.e ], [ %i.e, %tailrecurse._crit_edge ], [ 1.000000e+00, %.lr.ph.preheader ]
+  ret double %common.ret36.op
 
 tailrecurse._crit_edge:                           ; preds = %bb.a
   %i.c = sub nsw i32 0, %1
@@ -633,14 +633,13 @@ bb.b:                                             ; preds = %.lr.ph35
 
 tailrecurse.backedge:                             ; preds = %bb.b, %bb.d
   %.tr22.pn = phi double [ %.tr2234, %bb.b ], [ %i.l, %bb.d ]
-  %.tr17.be = phi i32 [ %i.h, %bb.b ], [ %i.j, %bb.d ] ; 2 uses
+  %.tr17.be = phi i32 [ %i.h, %bb.b ], [ %i.j, %bb.d ]
   %.tr.be = fmul double %.tr2234, %.tr22.pn
-  %2 = icmp eq i32 %.tr17.be, 0
-  br i1 %2, label %common.ret40, label %.lr.ph35
+  br label %.lr.ph35
 
 bb.c:                                             ; preds = %.lr.ph35
   %i.i = urem i32 %.tr172333, 3
-  %i.j = udiv i32 %.tr172333, 3
+  %i.j = udiv exact i32 %.tr172333, 3
   %i.k = icmp eq i32 %i.i, 0
   br i1 %i.k, label %bb.d, label %bb.e
 
