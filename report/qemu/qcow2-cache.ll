@@ -175,7 +175,7 @@ bb.g:                                             ; preds = %.critedge2
   %i.bd = mul nsw i64 %i.bc, %i.bb
   %i.be = getelementptr inbounds nuw i8, ptr %.val26, i64 %i.bd ; 2 uses
   %i.bf = tail call i32 @getpagesize() #11
-  %i.bg = sext i32 %i.bf to i64                   ; 3 uses
+  %i.bg = sext i32 %i.bf to i64                   ; 4 uses
   %i.bh = zext nneg i32 %.0.lcssa.ph to i64
   %i.bi = mul nsw i64 %i.bc, %i.bh                ; 2 uses
   %i.bj = ptrtoint ptr %i.be to i64               ; 2 uses
@@ -187,14 +187,14 @@ bb.g:                                             ; preds = %.critedge2
   %i.bo = sub i64 %i.bl, %i.bn                    ; 3 uses
   %i.bp = sub i64 %i.bi, %i.bo
   %.fr.i = freeze i64 %i.bp                       ; 3 uses
-  %1 = urem i64 %.fr.i, %i.bg                     ; 2 uses
   %i.bq = icmp ugt i64 %i.bi, %i.bo
-  %2 = icmp ne i64 %.fr.i, %1
-  %or.cond.i = and i1 %i.bq, %2
+  %1 = icmp uge i64 %.fr.i, %i.bg
+  %or.cond.i = and i1 %i.bq, %1
   br i1 %or.cond.i, label %bb.h, label %qcow2_cache_table_release.exit
 
 bb.h:                                             ; preds = %bb.g
-  %i.br = sub nuw i64 %.fr.i, %1
+  %2 = urem i64 %.fr.i, %i.bg
+  %i.br = sub nuw i64 %.fr.i, %2
   %i.bs = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bo
   %i.bt = tail call i32 @madvise(ptr noundef %i.bs, i64 noundef %i.br, i32 noundef 4) #12 ; 0 uses
   %.pre = load i32, ptr %i.a, align 8
@@ -597,7 +597,7 @@ bb.c:                                             ; preds = %.lr.ph
   %.val19 = load ptr, ptr %i.r, align 8           ; 2 uses
   %i.s = sext i32 %.val to i64
   %i.t = tail call i32 @getpagesize() #11
-  %i.u = sext i32 %i.t to i64                     ; 3 uses
+  %i.u = sext i32 %i.t to i64                     ; 4 uses
   %i.v = mul nsw i64 %.pre-phi, %i.s              ; 2 uses
   %i.w = ptrtoint ptr %.val19 to i64              ; 2 uses
   %i.x = add i64 %i.u, %i.w
@@ -608,14 +608,14 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ab = sub i64 %i.y, %i.aa                     ; 3 uses
   %i.ac = sub i64 %i.v, %i.ab
   %.fr.i = freeze i64 %i.ac                       ; 3 uses
-  %2 = urem i64 %.fr.i, %i.u                      ; 2 uses
   %i.ad = icmp ugt i64 %i.v, %i.ab
-  %3 = icmp ne i64 %.fr.i, %2
-  %or.cond.i = and i1 %i.ad, %3
+  %2 = icmp uge i64 %.fr.i, %i.u
+  %or.cond.i = and i1 %i.ad, %2
   br i1 %or.cond.i, label %bb.d, label %qcow2_cache_table_release.exit
 
 bb.d:                                             ; preds = %._crit_edge
-  %i.ae = sub nuw i64 %.fr.i, %2
+  %3 = urem i64 %.fr.i, %i.u
+  %i.ae = sub nuw i64 %.fr.i, %3
   %i.af = getelementptr inbounds nuw i8, ptr %.val19, i64 %i.ab
   %i.ag = tail call i32 @madvise(ptr noundef %i.af, i64 noundef %i.ae, i32 noundef 4) #12 ; 0 uses
   br label %qcow2_cache_table_release.exit
@@ -1018,7 +1018,7 @@ bb.e:                                             ; preds = %qcow2_cache_get_tab
   %i.ad = mul nsw i64 %i.r, %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.ad ; 2 uses
   %i.af = tail call i32 @getpagesize() #11
-  %i.ag = sext i32 %i.af to i64                   ; 3 uses
+  %i.ag = sext i32 %i.af to i64                   ; 4 uses
   %i.ah = ptrtoint ptr %i.ae to i64               ; 2 uses
   %i.ai = add i64 %i.ah, %i.ag
   %.fr20.i = freeze i64 %i.ai
@@ -1028,14 +1028,14 @@ bb.e:                                             ; preds = %qcow2_cache_get_tab
   %i.am = sub i64 %i.aj, %i.al                    ; 3 uses
   %i.an = sub i64 %i.ac, %i.am
   %.fr.i = freeze i64 %i.an                       ; 3 uses
-  %2 = urem i64 %.fr.i, %i.ag                     ; 2 uses
   %i.ao = icmp ult i64 %i.am, %i.ac
-  %3 = icmp ne i64 %.fr.i, %2
-  %or.cond.i = and i1 %i.ao, %3
+  %2 = icmp uge i64 %.fr.i, %i.ag
+  %or.cond.i = and i1 %i.ao, %2
   br i1 %or.cond.i, label %bb.f, label %qcow2_cache_table_release.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.ap = sub nuw i64 %.fr.i, %2
+  %3 = urem i64 %.fr.i, %i.ag
+  %i.ap = sub nuw i64 %.fr.i, %3
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.am
   %i.ar = tail call i32 @madvise(ptr noundef %i.aq, i64 noundef %i.ap, i32 noundef 4) #12 ; 0 uses
   br label %qcow2_cache_table_release.exit
