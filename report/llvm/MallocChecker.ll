@@ -204,10 +204,10 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit.i.i: ; p
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !2467, !noalias !2465
   %i.gb = load i32, ptr %i.ga, align 4, !noalias !2465 ; 2 uses
   %i.gc = and i32 %i.gb, 1073741823
-  %31 = add nsw i32 %i.gc, -1
-  %32 = shl i32 %i.gb, 1
-  %33 = ashr i32 %32, 31
-  %i.gd = add nsw i32 %31, %33
+  %31 = lshr i32 %i.gb, 30
+  %32 = and i32 %31, 1
+  %33 = xor i32 %32, -1
+  %i.gd = add nsw i32 %i.gc, %33
   %i.ge = load ptr, ptr %1, align 8, !tbaa !106, !noalias !2465
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 96
   %i.gg = load ptr, ptr %i.gf, align 8, !noalias !2465
@@ -332,10 +332,9 @@ _ZN12_GLOBAL__N_116AllocationFamilyC2ENS_20AllocationFamilyKindESt8optionalIN4ll
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25, !noalias !2469
   call void @_ZN5clang4ento18ProgramStateRetainEPKNS0_12ProgramStateE(ptr noundef nonnull %.sroa.055.0.i) #25, !noalias !2469
   %i.hs = load i32, ptr %.046.i.i, align 4, !noalias !2469 ; 2 uses
-  %i.ht = and i32 %i.hs, 1073741823
-  %34 = shl i32 %i.hs, 1
-  %35 = ashr i32 %34, 31
-  %36 = add nsw i32 %35, %i.ht                    ; 2 uses
+  %i.ht = and i32 %i.hs, 1073741823               ; 2 uses
+  %34 = lshr i32 %i.hs, 30
+  %35 = and i32 %34, 1                            ; 2 uses
   %i.hu = call noundef i32 @_ZNK5clang13OwnershipAttr10getOwnKindEv(ptr noundef nonnull align 8 dereferenceable(64) %i.fe), !noalias !2469
   call void @llvm.experimental.noalias.scope.decl(metadata !2470)
   call void @llvm.lifetime.start.p0(ptr nonnull %7), !noalias !2469
@@ -349,6 +348,7 @@ _ZN12_GLOBAL__N_116AllocationFamilyC2ENS_20AllocationFamilyKindESt8optionalIN4ll
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 72
   %i.hx = load ptr, ptr %i.hw, align 8, !noalias !2471
   %i.hy = call noundef i32 %i.hx(ptr noundef nonnull align 8 dereferenceable(72) %1) #25, !noalias !2471, !inline_history !2464
+  %36 = sub nsw i32 %i.ht, %35
   %i.hz = icmp ult i32 %i.hy, %36
   br i1 %i.hz, label %bb.be, label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit.i.i.i
 
@@ -358,7 +358,8 @@ bb.be:                                            ; preds = %.lr.ph.i.preheader.
 
 _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEC2ERKS5_.exit.i.i.i: ; preds = %.lr.ph.i.preheader.i
   %i.ia = icmp eq i32 %i.hu, 0
-  %i.ib = add nsw i32 %36, -1
+  %37 = xor i32 %35, -1
+  %i.ib = add nsw i32 %i.ht, %37
   %i.ic = load ptr, ptr %1, align 8, !tbaa !106, !noalias !2471
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 96
   %i.ie = load ptr, ptr %i.id, align 8, !noalias !2471
