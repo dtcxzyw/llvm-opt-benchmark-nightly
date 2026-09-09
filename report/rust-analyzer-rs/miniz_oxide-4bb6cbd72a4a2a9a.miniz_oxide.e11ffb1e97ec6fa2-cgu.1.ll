@@ -204,33 +204,33 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.eq = shl nuw nsw i64 %index, 1
   %i.er = getelementptr inbounds nuw i8, ptr %i.ep, i64 %i.eq ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 16
-  store <8 x i16> splat (i16 798), ptr %i.er, align 8, !alias.scope !731
-  store <8 x i16> splat (i16 798), ptr %i.es, align 8, !alias.scope !731
+  store <8 x i16> splat (i16 798), ptr %i.er, align 8, !alias.scope !732
+  store <8 x i16> splat (i16 798), ptr %i.es, align 8, !alias.scope !732
   %index.next = shl nuw i64 %index, 1
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 %index.next ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 32
   %i.ev = getelementptr inbounds nuw i8, ptr %i.et, i64 48
-  store <8 x i16> splat (i16 798), ptr %i.eu, align 8, !alias.scope !731
-  store <8 x i16> splat (i16 798), ptr %i.ev, align 8, !alias.scope !731
+  store <8 x i16> splat (i16 798), ptr %i.eu, align 8, !alias.scope !732
+  store <8 x i16> splat (i16 798), ptr %i.ev, align 8, !alias.scope !732
   %index.next.1 = shl nuw i64 %index, 1
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ep, i64 %index.next.1 ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 64
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ew, i64 80
-  store <8 x i16> splat (i16 798), ptr %i.ex, align 8, !alias.scope !731
-  store <8 x i16> splat (i16 798), ptr %i.ey, align 8, !alias.scope !731
+  store <8 x i16> splat (i16 798), ptr %i.ex, align 8, !alias.scope !732
+  store <8 x i16> splat (i16 798), ptr %i.ey, align 8, !alias.scope !732
   %index.next.2 = shl nuw i64 %index, 1
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ep, i64 %index.next.2 ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 96
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ez, i64 112
-  store <8 x i16> splat (i16 798), ptr %i.fa, align 8, !alias.scope !731
-  store <8 x i16> splat (i16 798), ptr %i.fb, align 8, !alias.scope !731
+  store <8 x i16> splat (i16 798), ptr %i.fa, align 8, !alias.scope !732
+  store <8 x i16> splat (i16 798), ptr %i.fb, align 8, !alias.scope !732
   %index.next.3 = add nuw nsw i64 %index, 64      ; 2 uses
   %i.fc = icmp eq i64 %index.next.3, 1024
   br i1 %i.fc, label %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit, label %vector.body, !llvm.loop !724
 
 _RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit: ; preds = %vector.body
   %i.fd = getelementptr inbounds nuw i8, ptr %i.ep, i64 2048
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1152) %i.fd, i8 0, i64 1152, i1 false), !alias.scope !734
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1152) %i.fd, i8 0, i64 1152, i1 false), !alias.scope !735
   br label %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit83
 
 vector.ph171:                                     ; preds = %bb.b
@@ -238,134 +238,134 @@ vector.ph171:                                     ; preds = %bb.b
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(32) %i.c, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.b, i8 0, i64 68, i1 false)
-  store <8 x i16> splat (i16 798), ptr %i.p, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.q, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.r, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.s, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.t, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.u, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.v, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.w, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.x, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.y, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.z, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.aa, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ab, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ac, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ad, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ae, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.af, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ag, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ah, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ai, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.aj, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ak, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.al, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.am, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.an, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ao, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ap, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.aq, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ar, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.as, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.at, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.au, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.av, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.aw, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ax, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ay, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.az, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ba, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bb, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bc, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bd, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.be, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bf, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bg, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bh, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bi, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bj, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bk, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bl, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bm, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bn, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bo, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bp, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bq, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.br, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bs, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bt, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bu, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bv, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bw, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bx, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.by, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.bz, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ca, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cb, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cc, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cd, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ce, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cf, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cg, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ch, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ci, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cj, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ck, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cl, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cm, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cn, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.co, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cp, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cq, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cr, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cs, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ct, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cu, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cv, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cw, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cx, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cy, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.cz, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.da, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.db, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dc, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dd, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.de, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.df, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dg, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dh, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.di, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dj, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dk, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dl, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dm, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dn, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.do, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dp, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dq, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dr, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ds, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dt, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.du, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dv, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dw, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dx, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dy, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.dz, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ea, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.eb, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ec, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ed, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ee, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ef, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.eg, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.eh, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ei, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ej, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.ek, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.el, align 8, !alias.scope !735
-  store <8 x i16> splat (i16 798), ptr %i.em, align 8, !alias.scope !735
+  store <8 x i16> splat (i16 798), ptr %i.p, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.q, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.r, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.s, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.t, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.u, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.v, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.w, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.x, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.y, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.z, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.aa, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ab, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ac, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ad, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ae, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.af, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ag, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ah, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ai, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.aj, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ak, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.al, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.am, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.an, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ao, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ap, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.aq, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ar, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.as, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.at, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.au, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.av, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.aw, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ax, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ay, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.az, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ba, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bb, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bc, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bd, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.be, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bf, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bg, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bh, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bi, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bj, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bk, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bl, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bm, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bn, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bo, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bp, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bq, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.br, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bs, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bt, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bu, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bv, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bw, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bx, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.by, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.bz, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ca, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cb, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cc, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cd, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ce, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cf, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cg, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ch, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ci, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cj, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ck, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cl, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cm, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cn, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.co, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cp, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cq, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cr, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cs, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ct, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cu, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cv, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cw, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cx, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cy, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.cz, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.da, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.db, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dc, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dd, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.de, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.df, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dg, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dh, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.di, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dj, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dk, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dl, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dm, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dn, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.do, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dp, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dq, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dr, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ds, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dt, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.du, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dv, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dw, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dx, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dy, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.dz, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ea, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.eb, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ec, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ed, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ee, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ef, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.eg, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.eh, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ei, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ej, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.ek, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.el, align 8, !alias.scope !736
+  store <8 x i16> splat (i16 798), ptr %i.em, align 8, !alias.scope !736
   br label %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit83
 
 _RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit83: ; preds = %vector.ph171, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit
@@ -421,17 +421,17 @@ bb.f:                                             ; preds = %bb.k, %._crit_edge
   br i1 %.not, label %bb.g, label %bb.i, !prof !9
 
 bb.g:                                             ; preds = %bb.f
-  %i.ft = load i64, ptr %i.m, align 8, !alias.scope !736, !noundef !4 ; 4 uses
-  %i.fu = load i64, ptr %i.n, align 8, !alias.scope !736, !noundef !4
+  %i.ft = load i64, ptr %i.m, align 8, !alias.scope !737, !noundef !4 ; 4 uses
+  %i.fu = load i64, ptr %i.n, align 8, !alias.scope !737, !noundef !4
   %i.fv = icmp ult i64 %i.ft, %i.fu
   br i1 %i.fv, label %bb.h, label %_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E4nextCsjkkKzr5dxZe_11miniz_oxide.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.fw = add nuw i64 %i.ft, 1
-  store i64 %i.fw, ptr %i.m, align 8, !alias.scope !736
-  %.val.i = load ptr, ptr %i.a, align 8, !alias.scope !736, !nonnull !4, !noundef !4
+  store i64 %i.fw, ptr %i.m, align 8, !alias.scope !737
+  %.val.i = load ptr, ptr %i.a, align 8, !alias.scope !737, !nonnull !4, !noundef !4
   %i.fx = getelementptr inbounds nuw [2 x i8], ptr %.val.i, i64 %i.ft
-  %.val1.i = load ptr, ptr %i.o, align 8, !alias.scope !736, !nonnull !4, !noundef !4
+  %.val1.i = load ptr, ptr %i.o, align 8, !alias.scope !737, !nonnull !4, !noundef !4
   %i.fy = getelementptr inbounds nuw [4 x i8], ptr %.val1.i, i64 %i.ft
   br label %_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E4nextCsjkkKzr5dxZe_11miniz_oxide.exit
 
@@ -654,7 +654,7 @@ bb.ac:                                            ; preds = %.lr.ph107, %bb.ac
   store i16 %i.hr, ptr %i.iw, align 2
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.hv ; 2 uses
   %i.ix = icmp samesign ult i64 %indvars.iv.next, 1024
-  br i1 %i.ix, label %bb.ac, label %.loopexit
+  br i1 %i.ix, label %bb.ac, label %.loopexit, !llvm.loop !731
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -1057,17 +1057,18 @@ begin_hunk_1_@llvm.umin.i32
 !721 = !{!716}
 !722 = distinct !{!722, !"_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill"}
 !723 = distinct !{!723, !722, !"_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill: argument 0"}
-!724 = distinct !{!724, !732, !733}
+!724 = distinct !{!724, !733, !734}
 !725 = distinct !{!725, !"_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill"}
 !726 = distinct !{!726, !725, !"_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill: argument 0"}
 !727 = distinct !{!727, !"_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill"}
 !728 = distinct !{!728, !727, !"_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill: argument 0"}
 !729 = distinct !{!729, !"_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E4nextCsjkkKzr5dxZe_11miniz_oxide"}
 !730 = distinct !{!730, !729, !"_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E4nextCsjkkKzr5dxZe_11miniz_oxide: argument 0"}
-!731 = !{!723}
-!732 = !{!"llvm.loop.isvectorized", i32 1}
-!733 = !{!"llvm.loop.unroll.runtime.disable"}
-!734 = !{!726}
-!735 = !{!728}
-!736 = !{!730}
+!731 = distinct !{!731, !733}
+!732 = !{!723}
+!733 = !{!"llvm.loop.isvectorized", i32 1}
+!734 = !{!"llvm.loop.unroll.runtime.disable"}
+!735 = !{!726}
+!736 = !{!728}
+!737 = !{!730}
 end_hunk_1
