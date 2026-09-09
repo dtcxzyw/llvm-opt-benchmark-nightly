@@ -202,9 +202,10 @@ bb.at:                                            ; preds = %bb.aq, %bb.ap
 
 bb.au:                                            ; preds = %bb.at, %bb.j
   %i.bd = load i64, ptr %i.g, align 8, !range !32, !alias.scope !7473, !noalias !7476, !noundef !7 ; 3 uses
-  %i.be = add i64 %i.bd, 9223372036854775784
-  %2 = icmp ult i64 %i.be, -5
-  br i1 %2, label %bb.av, label %bb.be
+  %i.be = add i64 %i.bd, 9223372036854775789
+  %2 = call i64 @llvm.umin.i64(i64 %i.be, i64 5)
+  %3 = icmp eq i64 %2, 5
+  br i1 %3, label %bb.av, label %bb.be
 
 bb.av:                                            ; preds = %bb.au
   %i.bf = icmp ne i64 %i.bd, -9223372036854775795
@@ -607,7 +608,7 @@ bb.a:
   %i.f = icmp ne i64 %i.e, 4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = add nsw i64 %i.e, -2
-  %.inv2 = icmp samesign ult i64 %i.e, 2
+  %.inv2 = icmp samesign ult i64 %i.e, 2          ; 2 uses
   %i.h = select i1 %.inv2, i64 2, i64 %i.g
   %i.i = icmp eq i64 %i.d, %i.h
   br i1 %i.i, label %bb.b, label %bb.c
@@ -615,17 +616,20 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   switch i64 %i.d, label %bb.d [
     i64 1, label %bb.e
-    i64 2, label %bb.f
+    i64 2, label %2
     i64 3, label %bb.k
     i64 0, label %bb.c
   ]
 
-bb.c:                                             ; preds = %bb.h, %bb.f, %bb.b, %bb.a, %bb.i, %bb.j, %bb.k, %bb.e
-  %.sroa.0.0 = phi i1 [ %i.n, %bb.e ], [ false, %bb.a ], [ %i.aa, %bb.j ], [ false, %bb.f ], [ %i.w, %bb.i ], [ true, %bb.b ], [ %i.af, %bb.k ], [ false, %bb.h ]
+bb.c:                                             ; preds = %bb.h, %bb.f, %bb.b, %2, %bb.a, %bb.i, %bb.j, %bb.k, %bb.e
+  %.sroa.0.0 = phi i1 [ %i.n, %bb.e ], [ false, %bb.a ], [ %i.aa, %bb.j ], [ false, %bb.f ], [ %i.w, %bb.i ], [ true, %bb.b ], [ %i.af, %bb.k ], [ false, %bb.h ], [ true, %2 ]
   ret i1 %.sroa.0.0
 
 bb.d:                                             ; preds = %bb.b
   unreachable
+
+2:                                                ; preds = %bb.b
+  br i1 %.inv2, label %bb.f, label %bb.c
 
 bb.e:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -635,7 +639,7 @@ bb.e:                                             ; preds = %bb.b
   %i.n = tail call fastcc noundef zeroext i1 @_RNvXsj_NtNtCsaNmiEuYuYZf_9sqlparser3ast9data_typeNtB5_8DataTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.k, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.m)
   br label %bb.c
 
-bb.f:                                             ; preds = %bb.b
+bb.f:                                             ; preds = %2
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.p = load ptr, ptr %i.o, align 8, !nonnull !7, !noundef !7
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16
