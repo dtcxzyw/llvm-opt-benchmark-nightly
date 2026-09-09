@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.preheader, %.crite
   br i1 %i.aq, label %bb.f, label %.critedge.i, !prof !667
 
 .critedge.i:                                      ; preds = %bb.d
-  %i.ar = add nsw i32 %.sroa.012.0, -1
+  %i.ar = add nuw nsw i32 %.sroa.012.0, 65535
   %i.as = and i32 %i.ar, %.sroa.012.0             ; 2 uses
   %i.at = and i32 %i.as, 16382
   %.not36 = icmp eq i32 %i.at, 0
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %.preheader, %.crite
   br i1 %i.at, label %bb.f, label %.critedge.i, !prof !667
 
 .critedge.i:                                      ; preds = %bb.d
-  %i.au = add nsw i32 %.sroa.010.0, -1
+  %i.au = add nuw nsw i32 %.sroa.010.0, 65535
   %i.av = and i32 %i.au, %.sroa.010.0             ; 2 uses
   %i.aw = and i32 %i.av, 4094
   %.not42 = icmp eq i32 %i.aw, 0
@@ -734,7 +734,7 @@ bb.f:                                             ; preds = %.preheader, %.crite
   br i1 %i.bc, label %_ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyImSt10unique_ptrIvPFvPvEEvvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSC_8PrefetchE.exit, label %.critedge.i, !prof !667
 
 .critedge.i:                                      ; preds = %bb.f
-  %i.bd = add nsw i32 %.sroa.024.0, -1
+  %i.bd = add nuw nsw i32 %.sroa.024.0, 65535
   %i.be = and i32 %i.bd, %.sroa.024.0             ; 2 uses
   %i.bf = and i32 %i.be, 4094
   %.not46 = icmp eq i32 %i.bf, 0

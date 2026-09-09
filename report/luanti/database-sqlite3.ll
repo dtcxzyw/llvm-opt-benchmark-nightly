@@ -202,12 +202,12 @@ bb.g:                                             ; preds = %.noexc47
   %i.bu = icmp eq i8 %char0, 0
   br i1 %i.bu, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.backedge
 
-_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.backedge: ; preds = %.thread, %bb.g, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
+_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.backedge: ; preds = %.thread, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.g
   br label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, !llvm.loop !264
 
 bb.h:                                             ; preds = %bb.g
   %i.bv = icmp eq i64 %i.br, 0
-  br i1 %i.bv, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
+  br i1 %i.bv, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, !llvm.loop !264
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.h
   %bcmp.i = call i32 @bcmp(ptr nonnull %i.bq, ptr nonnull %2, i64 %i.br)
@@ -275,7 +275,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53: ; preds = %bb.
           cleanup
   br label %bb.o
 
-_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread: ; preds = %.thread, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.h, %bb.e
+_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread: ; preds = %.thread, %bb.h, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.e
   %i.ck = load ptr, ptr %i.d, align 8, !tbaa !71
   %i.cl = invoke i32 @sqlite3_finalize(ptr noundef %i.ck)
           to label %bb.n unwind label %.loopexit.split-lp ; 0 uses

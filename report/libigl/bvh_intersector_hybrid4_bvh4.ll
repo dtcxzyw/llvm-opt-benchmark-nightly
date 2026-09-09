@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.092 = phi i64 [ %i.o, %bb.e ], [ %i.by, %bb.f ] ; 3 uses
   %i.bw = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.092) #10, !srcloc !71
-  %i.bx = add nsw i64 %.092, -1
+  %i.bx = add nuw nsw i64 %.092, 15
   %i.by = and i64 %i.bx, %.092                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_28TriangleMIntersectorKMoellerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_27MoellerTrumboreIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bw, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -607,7 +607,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.092 = phi i64 [ %i.o, %bb.e ], [ %i.by, %bb.f ] ; 3 uses
   %i.bw = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.092) #10, !srcloc !71
-  %i.bx = add nsw i64 %.092, -1
+  %i.bx = add nuw nsw i64 %.092, 15
   %i.by = and i64 %i.bx, %.092                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_28TriangleMIntersectorKMoellerILi4ELi4ELb0EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_27MoellerTrumboreIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bw, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -1010,7 +1010,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.092 = phi i64 [ %i.o, %bb.e ], [ %i.by, %bb.f ] ; 3 uses
   %i.bw = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.092) #10, !srcloc !71
-  %i.bx = add nsw i64 %.092, -1
+  %i.bx = add nuw nsw i64 %.092, 15
   %i.by = and i64 %i.bx, %.092                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_29TriangleMiIntersectorKMoellerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_27MoellerTrumboreIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bw, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -1413,7 +1413,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.082 = phi i64 [ %i.o, %bb.e ], [ %i.bm, %bb.f ] ; 3 uses
   %i.bk = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.082) #10, !srcloc !71
-  %i.bl = add nsw i64 %.082, -1
+  %i.bl = add nuw nsw i64 %.082, 15
   %i.bm = and i64 %i.bl, %.082                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb1ENS0_19ArrayIntersectorK_1ILi4ENS0_30TriangleMvIntersectorKPlueckerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_20PlueckerIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bk, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -1816,7 +1816,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.082 = phi i64 [ %i.o, %bb.e ], [ %i.bm, %bb.f ] ; 3 uses
   %i.bk = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.082) #10, !srcloc !71
-  %i.bl = add nsw i64 %.082, -1
+  %i.bl = add nuw nsw i64 %.082, 15
   %i.bm = and i64 %i.bl, %.082                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb1ENS0_19ArrayIntersectorK_1ILi4ENS0_30TriangleMiIntersectorKPlueckerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_20PlueckerIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bk, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -2219,7 +2219,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.084 = phi i64 [ %i.i, %bb.c ], [ %i.bs, %bb.d ] ; 3 uses
   %i.bq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.084) #10, !srcloc !71
-  %i.br = add nsw i64 %.084, -1
+  %i.br = add nuw nsw i64 %.084, 15
   %i.bs = and i64 %i.br, %.084                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_31TriangleMvMBIntersectorKMoellerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_27MoellerTrumboreIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bq, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -2622,7 +2622,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.084 = phi i64 [ %i.i, %bb.c ], [ %i.bs, %bb.d ] ; 3 uses
   %i.bq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.084) #10, !srcloc !71
-  %i.br = add nsw i64 %.084, -1
+  %i.br = add nuw nsw i64 %.084, 15
   %i.bs = and i64 %i.br, %.084                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_31TriangleMiMBIntersectorKMoellerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_27MoellerTrumboreIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bq, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -3025,7 +3025,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.074 = phi i64 [ %i.i, %bb.c ], [ %i.bg, %bb.d ] ; 3 uses
   %i.be = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.074) #10, !srcloc !71
-  %i.bf = add nsw i64 %.074, -1
+  %i.bf = add nuw nsw i64 %.074, 15
   %i.bg = and i64 %i.bf, %.074                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb1ENS0_19ArrayIntersectorK_1ILi4ENS0_32TriangleMvMBIntersectorKPlueckerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_20PlueckerIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.be, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -3428,7 +3428,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.074 = phi i64 [ %i.i, %bb.c ], [ %i.bg, %bb.d ] ; 3 uses
   %i.be = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.074) #10, !srcloc !71
-  %i.bf = add nsw i64 %.074, -1
+  %i.bf = add nuw nsw i64 %.074, 15
   %i.bg = and i64 %i.bf, %.074                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb1ENS0_19ArrayIntersectorK_1ILi4ENS0_32TriangleMiMBIntersectorKPlueckerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_20PlueckerIntersectorKILi4ELi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.be, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -3831,7 +3831,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.092 = phi i64 [ %i.o, %bb.e ], [ %i.by, %bb.f ] ; 3 uses
   %i.bw = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.092) #10, !srcloc !71
-  %i.bx = add nsw i64 %.092, -1
+  %i.bx = add nuw nsw i64 %.092, 15
   %i.by = and i64 %i.bx, %.092                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_25QuadMvIntersectorKMoellerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_32QuadMIntersectorKMoellerTrumboreILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bw, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -4234,7 +4234,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.092 = phi i64 [ %i.o, %bb.e ], [ %i.by, %bb.f ] ; 3 uses
   %i.bw = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.092) #10, !srcloc !71
-  %i.bx = add nsw i64 %.092, -1
+  %i.bx = add nuw nsw i64 %.092, 15
   %i.by = and i64 %i.bx, %.092                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_25QuadMvIntersectorKMoellerILi4ELi4ELb0EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_32QuadMIntersectorKMoellerTrumboreILi4ELi4ELb0EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bw, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -4637,7 +4637,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.092 = phi i64 [ %i.o, %bb.e ], [ %i.by, %bb.f ] ; 3 uses
   %i.bw = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.092) #10, !srcloc !71
-  %i.bx = add nsw i64 %.092, -1
+  %i.bx = add nuw nsw i64 %.092, 15
   %i.by = and i64 %i.bx, %.092                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_25QuadMiIntersectorKMoellerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_32QuadMIntersectorKMoellerTrumboreILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bw, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -5040,7 +5040,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.082 = phi i64 [ %i.o, %bb.e ], [ %i.bm, %bb.f ] ; 3 uses
   %i.bk = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.082) #10, !srcloc !71
-  %i.bl = add nsw i64 %.082, -1
+  %i.bl = add nuw nsw i64 %.082, 15
   %i.bm = and i64 %i.bl, %.082                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb1ENS0_19ArrayIntersectorK_1ILi4ENS0_26QuadMvIntersectorKPlueckerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_25QuadMIntersectorKPlueckerILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bk, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -5443,7 +5443,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.082 = phi i64 [ %i.o, %bb.e ], [ %i.bm, %bb.f ] ; 3 uses
   %i.bk = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.082) #10, !srcloc !71
-  %i.bl = add nsw i64 %.082, -1
+  %i.bl = add nuw nsw i64 %.082, 15
   %i.bm = and i64 %i.bl, %.082                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb1ENS0_19ArrayIntersectorK_1ILi4ENS0_26QuadMiIntersectorKPlueckerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_25QuadMIntersectorKPlueckerILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bk, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -5846,7 +5846,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.084 = phi i64 [ %i.i, %bb.c ], [ %i.bs, %bb.d ] ; 3 uses
   %i.bq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.084) #10, !srcloc !71
-  %i.br = add nsw i64 %.084, -1
+  %i.br = add nuw nsw i64 %.084, 15
   %i.bs = and i64 %i.br, %.084                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb0ENS0_19ArrayIntersectorK_1ILi4ENS0_27QuadMiMBIntersectorKMoellerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_32QuadMIntersectorKMoellerTrumboreILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bq, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -6249,7 +6249,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.074 = phi i64 [ %i.i, %bb.c ], [ %i.bg, %bb.d ] ; 3 uses
   %i.be = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.074) #10, !srcloc !71
-  %i.bf = add nsw i64 %.074, -1
+  %i.bf = add nuw nsw i64 %.074, 15
   %i.bg = and i64 %i.bf, %.074                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb1ENS0_19ArrayIntersectorK_1ILi4ENS0_28QuadMiMBIntersectorKPlueckerILi4ELi4ELb1EEEEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_25QuadMIntersectorKPlueckerILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.be, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -6652,7 +6652,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.0198 = phi i64 [ %i.h, %bb.c ], [ %i.ad, %bb.d ] ; 3 uses
   %i.ab = tail call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0198) #10, !srcloc !71 ; 5 uses
-  %i.ac = add nsw i64 %.0198, -1
+  %i.ac = add nuw nsw i64 %.0198, 15
   %i.ad = and i64 %i.ac, %.0198                   ; 2 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.ab
   %i.af = load float, ptr %i.ae, align 4
@@ -6826,7 +6826,7 @@ _ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4Ra
 bb.e:                                             ; preds = %_ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4RayKILi4EEE.exit, %bb.e
   %.0197199 = phi i64 [ %i.h, %_ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4RayKILi4EEE.exit ], [ %i.fp, %bb.e ] ; 3 uses
   %i.fn = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0197199) #10, !srcloc !71
-  %i.fo = add nsw i64 %.0197199, -1
+  %i.fo = add nuw nsw i64 %.0197199, 15
   %i.fp = and i64 %i.fo, %.0197199                ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi257ELb0ENS0_24VirtualCurveIntersectorKILi4EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_21CurvePrecalculationsKILi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.fn, ptr noundef nonnull align 16 dereferenceable(208) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -6894,7 +6894,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.0594634 = phi i64 [ %i.m, %bb.c ], [ %i.ah, %bb.d ] ; 3 uses
   %i.af = tail call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0594634) #10, !srcloc !71 ; 5 uses
-  %i.ag = add nsw i64 %.0594634, -1
+  %i.ag = add nuw nsw i64 %.0594634, 15
   %i.ah = and i64 %i.ag, %.0594634                ; 2 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.af
   %i.aj = load float, ptr %i.ai, align 4
@@ -7297,7 +7297,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.lr.ph655, %bb.w
   %.0593653 = phi i64 [ %i.vh, %.lr.ph655 ], [ %i.vn, %bb.w ] ; 3 uses
   %i.vl = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0593653) #10, !srcloc !71 ; 2 uses
-  %i.vm = add nsw i64 %.0593653, -1
+  %i.vm = add nuw nsw i64 %.0593653, 15
   %i.vn = and i64 %i.vm, %.0593653                ; 2 uses
   %i.vo = load ptr, ptr %i.vk, align 8
   %i.vp = call noundef zeroext i1 %i.vo(ptr noundef nonnull align 16 dereferenceable(208) %4, ptr noundef nonnull align 16 dereferenceable(192) %2, i64 noundef %i.vl, ptr noundef %3, ptr noundef nonnull %i.vc), !inline_history !36
@@ -7417,7 +7417,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.0198 = phi i64 [ %i.h, %bb.c ], [ %i.ad, %bb.d ] ; 3 uses
   %i.ab = tail call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0198) #10, !srcloc !71 ; 5 uses
-  %i.ac = add nsw i64 %.0198, -1
+  %i.ac = add nuw nsw i64 %.0198, 15
   %i.ad = and i64 %i.ac, %.0198                   ; 2 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.ab
   %i.af = load float, ptr %i.ae, align 4
@@ -7591,7 +7591,7 @@ _ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4Ra
 bb.e:                                             ; preds = %_ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4RayKILi4EEE.exit, %bb.e
   %.0197199 = phi i64 [ %i.h, %_ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4RayKILi4EEE.exit ], [ %i.fp, %bb.e ] ; 3 uses
   %i.fn = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0197199) #10, !srcloc !71
-  %i.fo = add nsw i64 %.0197199, -1
+  %i.fo = add nuw nsw i64 %.0197199, 15
   %i.fp = and i64 %i.fo, %.0197199                ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16781328ELb0ENS0_24VirtualCurveIntersectorKILi4EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_21CurvePrecalculationsKILi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.fn, ptr noundef nonnull align 16 dereferenceable(208) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -7659,7 +7659,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.0682722 = phi i64 [ %i.m, %bb.c ], [ %i.ah, %bb.d ] ; 3 uses
   %i.af = tail call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0682722) #10, !srcloc !71 ; 5 uses
-  %i.ag = add nsw i64 %.0682722, -1
+  %i.ag = add nuw nsw i64 %.0682722, 15
   %i.ah = and i64 %i.ag, %.0682722                ; 2 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.af
   %i.aj = load float, ptr %i.ai, align 4
@@ -8062,7 +8062,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.lr.ph, %bb.w
   %.0681734 = phi i64 [ %i.su, %.lr.ph ], [ %i.ta, %bb.w ] ; 3 uses
   %i.sy = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0681734) #10, !srcloc !71 ; 2 uses
-  %i.sz = add nsw i64 %.0681734, -1
+  %i.sz = add nuw nsw i64 %.0681734, 15
   %i.ta = and i64 %i.sz, %.0681734                ; 2 uses
   %i.tb = load ptr, ptr %i.sx, align 8
   %i.tc = call noundef zeroext i1 %i.tb(ptr noundef nonnull align 16 dereferenceable(208) %4, ptr noundef nonnull align 16 dereferenceable(192) %2, i64 noundef %i.sy, ptr noundef %3, ptr noundef nonnull %i.sp), !inline_history !36
@@ -8182,7 +8182,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.0186 = phi i64 [ %i.h, %bb.c ], [ %i.ad, %bb.d ] ; 3 uses
   %i.ab = tail call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0186) #10, !srcloc !71 ; 5 uses
-  %i.ac = add nsw i64 %.0186, -1
+  %i.ac = add nuw nsw i64 %.0186, 15
   %i.ad = and i64 %i.ac, %.0186                   ; 2 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.ab
   %i.af = load float, ptr %i.ae, align 4
@@ -8344,7 +8344,7 @@ _ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4Ra
 bb.e:                                             ; preds = %_ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4RayKILi4EEE.exit, %bb.e
   %.0185187 = phi i64 [ %i.h, %_ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4RayKILi4EEE.exit ], [ %i.fd, %bb.e ] ; 3 uses
   %i.fb = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0185187) #10, !srcloc !71
-  %i.fc = add nsw i64 %.0185187, -1
+  %i.fc = add nuw nsw i64 %.0185187, 15
   %i.fd = and i64 %i.fc, %.0185187                ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi257ELb1ENS0_24VirtualCurveIntersectorKILi4EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_21CurvePrecalculationsKILi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.fb, ptr noundef nonnull align 16 dereferenceable(208) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -8412,7 +8412,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.0592632 = phi i64 [ %i.m, %bb.c ], [ %i.ah, %bb.d ] ; 3 uses
   %i.af = tail call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0592632) #10, !srcloc !71 ; 5 uses
-  %i.ag = add nsw i64 %.0592632, -1
+  %i.ag = add nuw nsw i64 %.0592632, 15
   %i.ah = and i64 %i.ag, %.0592632                ; 2 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.af
   %i.aj = load float, ptr %i.ai, align 4
@@ -8815,7 +8815,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.lr.ph653, %bb.w
   %.0591651 = phi i64 [ %i.vf, %.lr.ph653 ], [ %i.vl, %bb.w ] ; 3 uses
   %i.vj = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0591651) #10, !srcloc !71 ; 2 uses
-  %i.vk = add nsw i64 %.0591651, -1
+  %i.vk = add nuw nsw i64 %.0591651, 15
   %i.vl = and i64 %i.vk, %.0591651                ; 2 uses
   %i.vm = load ptr, ptr %i.vi, align 8, !noalias !3247
   %i.vn = call noundef zeroext i1 %i.vm(ptr noundef nonnull align 16 dereferenceable(208) %4, ptr noundef nonnull align 16 dereferenceable(192) %2, i64 noundef %i.vj, ptr noundef %3, ptr noundef nonnull %i.va), !noalias !3247, !inline_history !38
@@ -8935,7 +8935,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.0186 = phi i64 [ %i.h, %bb.c ], [ %i.ad, %bb.d ] ; 3 uses
   %i.ab = tail call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0186) #10, !srcloc !71 ; 5 uses
-  %i.ac = add nsw i64 %.0186, -1
+  %i.ac = add nuw nsw i64 %.0186, 15
   %i.ad = and i64 %i.ac, %.0186                   ; 2 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.ab
   %i.af = load float, ptr %i.ae, align 4
@@ -9097,7 +9097,7 @@ _ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4Ra
 bb.e:                                             ; preds = %_ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4RayKILi4EEE.exit, %bb.e
   %.0185187 = phi i64 [ %i.h, %_ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4RayKILi4EEE.exit ], [ %i.fd, %bb.e ] ; 3 uses
   %i.fb = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0185187) #10, !srcloc !71
-  %i.fc = add nsw i64 %.0185187, -1
+  %i.fc = add nuw nsw i64 %.0185187, 15
   %i.fd = and i64 %i.fc, %.0185187                ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16781328ELb1ENS0_24VirtualCurveIntersectorKILi4EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_21CurvePrecalculationsKILi4EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.fb, ptr noundef nonnull align 16 dereferenceable(208) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -9165,7 +9165,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.0680720 = phi i64 [ %i.m, %bb.c ], [ %i.ah, %bb.d ] ; 3 uses
   %i.af = tail call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0680720) #10, !srcloc !71 ; 5 uses
-  %i.ag = add nsw i64 %.0680720, -1
+  %i.ag = add nuw nsw i64 %.0680720, 15
   %i.ah = and i64 %i.ag, %.0680720                ; 2 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.af
   %i.aj = load float, ptr %i.ai, align 4
@@ -9568,7 +9568,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.lr.ph, %bb.w
   %.0679732 = phi i64 [ %i.sm, %.lr.ph ], [ %i.ss, %bb.w ] ; 3 uses
   %i.sq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0679732) #10, !srcloc !71 ; 2 uses
-  %i.sr = add nsw i64 %.0679732, -1
+  %i.sr = add nuw nsw i64 %.0679732, 15
   %i.ss = and i64 %i.sr, %.0679732                ; 2 uses
   %i.st = load ptr, ptr %i.sp, align 8, !noalias !3324
   %i.su = call noundef zeroext i1 %i.st(ptr noundef nonnull align 16 dereferenceable(208) %4, ptr noundef nonnull align 16 dereferenceable(192) %2, i64 noundef %i.sq, ptr noundef %3, ptr noundef nonnull %i.sh), !noalias !3324, !inline_history !38
@@ -9752,7 +9752,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.082 = phi i64 [ %i.o, %bb.e ], [ %i.bm, %bb.f ] ; 3 uses
   %i.bk = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.082) #10, !srcloc !71
-  %i.bl = add nsw i64 %.082, -1
+  %i.bl = add nuw nsw i64 %.082, 15
   %i.bm = and i64 %i.bl, %.082                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb1ENS0_24SubdivPatch1IntersectorKILi4EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_28SubdivPatch1PrecalculationsKILi4ENS0_19GridSOAIntersectorKILi4EE15PrecalculationsEEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bk, ptr noundef nonnull align 8 dereferenceable(9) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -10155,7 +10155,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.084 = phi i64 [ %i.i, %bb.c ], [ %i.bs, %bb.d ] ; 3 uses
   %i.bq = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.084) #10, !srcloc !71
-  %i.br = add nsw i64 %.084, -1
+  %i.br = add nuw nsw i64 %.084, 15
   %i.bs = and i64 %i.br, %.084                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb0ENS0_26SubdivPatch1MBIntersectorKILi4EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_28SubdivPatch1PrecalculationsKILi4ENS0_19GridSOAIntersectorKILi4EE15PrecalculationsEEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bq, ptr noundef nonnull align 8 dereferenceable(9) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -10558,7 +10558,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.092 = phi i64 [ %i.o, %bb.e ], [ %i.by, %bb.f ] ; 3 uses
   %i.bw = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.092) #10, !srcloc !71
-  %i.bx = add nsw i64 %.092, -1
+  %i.bx = add nuw nsw i64 %.092, 15
   %i.by = and i64 %i.bx, %.092                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb0ENS0_26SubGridIntersectorKMoellerILi4ELi4ELb1EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_39SubGridQuadMIntersectorKMoellerTrumboreILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb0EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bw, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -10961,7 +10961,7 @@ bb.z:                                             ; preds = %.preheader1027, %bb
   %.0970 = phi i64 [ %i.ok, %bb.bh ], [ %i.nv, %.preheader1027 ] ; 3 uses
   %i.oh = phi <4 x i32> [ %i.anz, %bb.bh ], [ %i.nn, %.preheader1027 ] ; 4 uses
   %i.oi = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0970) #10, !srcloc !71 ; 7 uses
-  %i.oj = add nsw i64 %.0970, -1
+  %i.oj = add nuw nsw i64 %.0970, 15
   %i.ok = and i64 %i.oj, %.0970                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9, !noalias !4352
   call void @llvm.experimental.noalias.scope.decl(metadata !4353)
@@ -11364,7 +11364,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.074 = phi i64 [ %i.i, %bb.c ], [ %i.bg, %bb.d ] ; 3 uses
   %i.be = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.074) #10, !srcloc !71
-  %i.bf = add nsw i64 %.074, -1
+  %i.bf = add nuw nsw i64 %.074, 15
   %i.bg = and i64 %i.bf, %.074                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb1ENS0_29SubGridMBIntersectorKPlueckerILi4ELi4ELb1EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_32SubGridQuadMIntersectorKPlueckerILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.be, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef %3)
@@ -11767,7 +11767,7 @@ bb.t:                                             ; preds = %.preheader1542, %bb
   %i.kr = phi <4 x i32> [ %i.ava, %bb.aw ], [ %i.ja, %.preheader1542 ] ; 5 uses
   %.01477 = phi i64 [ %i.ku, %bb.aw ], [ %i.jt, %.preheader1542 ] ; 3 uses
   %i.ks = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01477) #10, !srcloc !71 ; 13 uses
-  %i.kt = add nsw i64 %.01477, -1
+  %i.kt = add nuw nsw i64 %.01477, 15
   %i.ku = and i64 %i.kt, %.01477                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #9, !noalias !4728
   call void @llvm.experimental.noalias.scope.decl(metadata !4729), !noalias !4730
@@ -12042,7 +12042,7 @@ _ZN6embree4sse229SubGridMBIntersectorKPlueckerILi4ELi4ELb1EE8occludedERNS0_32Sub
 _ZN6embree4sse229SubGridMBIntersectorKPlueckerILi4ELi4ELb1EE8occludedERNS0_32SubGridQuadMIntersectorKPlueckerILi4ELi4ELb1EEERNS_4RayKILi4EEEmPNS_15RayQueryContextERKNS_7SubGridE.exit: ; preds = %_ZN6embree4sse229SubGridMBIntersectorKPlueckerILi4ELi4ELb1EE8occludedERNS0_32SubGridQuadMIntersectorKPlueckerILi4ELi4ELb1EEERNS_4RayKILi4EEEmPNS_15RayQueryContextERKNS_7SubGridE.exit.lr.ph, %bb.av
   %.014781572 = phi i64 [ %i.rw, %_ZN6embree4sse229SubGridMBIntersectorKPlueckerILi4ELi4ELb1EE8occludedERNS0_32SubGridQuadMIntersectorKPlueckerILi4ELi4ELb1EEERNS_4RayKILi4EEEmPNS_15RayQueryContextERKNS_7SubGridE.exit.lr.ph ], [ %i.su, %bb.av ] ; 3 uses
   %i.ss = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.014781572) #10, !srcloc !71 ; 17 uses
-  %i.st = add nsw i64 %.014781572, -1
+  %i.st = add nuw nsw i64 %.014781572, 15
   %i.su = and i64 %i.st, %.014781572              ; 2 uses
   %i.sv = load ptr, ptr %3, align 8, !noalias !4778
   %i.sw = getelementptr inbounds nuw i8, ptr %i.sv, i64 488 ; 2 uses
@@ -12445,7 +12445,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.082 = phi i64 [ %i.o, %bb.e ], [ %i.bm, %bb.f ] ; 3 uses
   %i.bk = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.082) #10, !srcloc !71
-  %i.bl = add nsw i64 %.082, -1
+  %i.bl = add nuw nsw i64 %.082, 15
   %i.bm = and i64 %i.bl, %.082                    ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.b, align 16
   call void @_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi1ELb1ENS0_27SubGridIntersectorKPlueckerILi4ELi4ELb1EEELb1EE10intersect1EPNS_5Accel12IntersectorsEPKNS_4BVHNILi4EEENS_10NodeRefPtrILi4EEEmRNS0_32SubGridQuadMIntersectorKPlueckerILi4ELi4ELb1EEERNS_7RayHitKILi4EEERKNS0_8TravRayKILi4ELb1EEEPNS_15RayQueryContextE(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 %.sroa.0.0.copyload, i64 noundef %i.bk, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 16 dereferenceable(336) %2, ptr noundef nonnull align 16 dereferenceable(224) %5, ptr noundef nonnull %3)
@@ -12848,7 +12848,7 @@ bb.z:                                             ; preds = %.preheader1404, %bb
   %i.oc = phi <4 x i32> [ %i.arz, %bb.ba ], [ %i.ni, %.preheader1404 ] ; 4 uses
   %.01341 = phi i64 [ %i.of, %bb.ba ], [ %i.nq, %.preheader1404 ] ; 3 uses
   %i.od = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01341) #10, !srcloc !71 ; 7 uses
-  %i.oe = add nsw i64 %.01341, -1
+  %i.oe = add nuw nsw i64 %.01341, 15
   %i.of = and i64 %i.oe, %.01341                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9, !noalias !5002
   call void @llvm.experimental.noalias.scope.decl(metadata !5003)
@@ -13251,7 +13251,7 @@ bb.e:                                             ; preds = %.preheader848, %bb.
   %.362 = phi ptr [ %.6, %bb.j ], [ %.261855, %.preheader848 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader848 ] ; 3 uses
   %i.it = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0819) #10, !srcloc !71 ; 8 uses
-  %i.iu = add nsw i64 %.0819, -1
+  %i.iu = add nuw nsw i64 %.0819, 15
   %i.iv = and i64 %i.iu, %.0819                   ; 2 uses
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.it
   %i.ix = load float, ptr %i.iw, align 4, !noalias !5220
@@ -13654,7 +13654,7 @@ bb.f:                                             ; preds = %.preheader763, %bb.
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242772, %.preheader763 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader763 ] ; 2 uses
   %i.iv = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0732) #10, !srcloc !71 ; 7 uses
-  %i.iw = add nsw i64 %.0732, -1
+  %i.iw = add nuw nsw i64 %.0732, 15
   %i.ix = and i64 %i.iw, %.0732                   ; 2 uses
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.hi, i64 %i.iv
   %i.iz = load float, ptr %i.iy, align 4, !noalias !5521
@@ -14057,7 +14057,7 @@ bb.e:                                             ; preds = %.preheader, %bb.j
   %.362 = phi ptr [ %.6, %bb.j ], [ %.261779, %.preheader ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader ] ; 3 uses
   %i.ih = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0754) #10, !srcloc !71 ; 8 uses
-  %i.ii = add nsw i64 %.0754, -1
+  %i.ii = add nuw nsw i64 %.0754, 15
   %i.ij = and i64 %i.ii, %.0754                   ; 2 uses
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.ih
   %i.il = load float, ptr %i.ik, align 4, !noalias !5662
@@ -14460,7 +14460,7 @@ bb.f:                                             ; preds = %.preheader, %bb.j
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242702, %.preheader ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader ] ; 2 uses
   %i.ii = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0671) #10, !srcloc !71 ; 7 uses
-  %i.ij = add nsw i64 %.0671, -1
+  %i.ij = add nuw nsw i64 %.0671, 15
   %i.ik = and i64 %i.ij, %.0671                   ; 2 uses
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.gv, i64 %i.ii
   %i.im = load float, ptr %i.il, align 4, !noalias !5848
@@ -14863,7 +14863,7 @@ bb.e:                                             ; preds = %.preheader866, %bb.
   %.362 = phi ptr [ %.6, %bb.j ], [ %.261873, %.preheader866 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader866 ] ; 3 uses
   %i.it = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0837) #10, !srcloc !71 ; 8 uses
-  %i.iu = add nsw i64 %.0837, -1
+  %i.iu = add nuw nsw i64 %.0837, 15
   %i.iv = and i64 %i.iu, %.0837                   ; 2 uses
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.it
   %i.ix = load float, ptr %i.iw, align 4, !noalias !6018
@@ -15266,7 +15266,7 @@ bb.f:                                             ; preds = %.preheader781, %bb.
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242790, %.preheader781 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader781 ] ; 2 uses
   %i.iv = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0750) #10, !srcloc !71 ; 7 uses
-  %i.iw = add nsw i64 %.0750, -1
+  %i.iw = add nuw nsw i64 %.0750, 15
   %i.ix = and i64 %i.iw, %.0750                   ; 2 uses
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.hi, i64 %i.iv
   %i.iz = load float, ptr %i.iy, align 4, !noalias !6337
@@ -15669,7 +15669,7 @@ bb.e:                                             ; preds = %.preheader1039, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611046, %.preheader1039 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1039 ] ; 3 uses
   %i.ig = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01008) #10, !srcloc !71 ; 8 uses
-  %i.ih = add nsw i64 %.01008, -1
+  %i.ih = add nuw nsw i64 %.01008, 15
   %i.ii = and i64 %i.ih, %.01008                  ; 2 uses
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.gr, i64 %i.ig
   %i.ik = load float, ptr %i.ij, align 4, !noalias !6505
@@ -16072,7 +16072,7 @@ bb.f:                                             ; preds = %.preheader955, %bb.
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242964, %.preheader955 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader955 ] ; 2 uses
   %i.ii = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0921) #10, !srcloc !71 ; 7 uses
-  %i.ij = add nsw i64 %.0921, -1
+  %i.ij = add nuw nsw i64 %.0921, 15
   %i.ik = and i64 %i.ij, %.0921                   ; 2 uses
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.ii
   %i.im = load float, ptr %i.il, align 4, !noalias !6800
@@ -16475,7 +16475,7 @@ bb.e:                                             ; preds = %.preheader1039, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611046, %.preheader1039 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1039 ] ; 3 uses
   %i.ig = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01008) #10, !srcloc !71 ; 8 uses
-  %i.ih = add nsw i64 %.01008, -1
+  %i.ih = add nuw nsw i64 %.01008, 15
   %i.ii = and i64 %i.ih, %.01008                  ; 2 uses
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.gr, i64 %i.ig
   %i.ik = load float, ptr %i.ij, align 4, !noalias !6949
@@ -16878,7 +16878,7 @@ bb.f:                                             ; preds = %.preheader955, %bb.
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242964, %.preheader955 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader955 ] ; 2 uses
   %i.ii = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0921) #10, !srcloc !71 ; 7 uses
-  %i.ij = add nsw i64 %.0921, -1
+  %i.ij = add nuw nsw i64 %.0921, 15
   %i.ik = and i64 %i.ij, %.0921                   ; 2 uses
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.ii
   %i.im = load float, ptr %i.il, align 4, !noalias !7247
@@ -17281,7 +17281,7 @@ bb.e:                                             ; preds = %.preheader1260, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611267, %.preheader1260 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1260 ] ; 3 uses
   %i.jh = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01212) #10, !srcloc !71 ; 8 uses
-  %i.ji = add nsw i64 %.01212, -1
+  %i.ji = add nuw nsw i64 %.01212, 15
   %i.jj = and i64 %i.ji, %.01212                  ; 2 uses
   %i.jk = getelementptr inbounds nuw [4 x i8], ptr %i.hu, i64 %i.jh
   %i.jl = load float, ptr %i.jk, align 4, !noalias !8313
@@ -17684,7 +17684,7 @@ bb.f:                                             ; preds = %.preheader1085, %bb
   %.343 = phi ptr [ %.5, %bb.j ], [ %.2421094, %.preheader1085 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader1085 ] ; 2 uses
   %i.jj = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01038) #10, !srcloc !71 ; 7 uses
-  %i.jk = add nsw i64 %.01038, -1
+  %i.jk = add nuw nsw i64 %.01038, 15
   %i.jl = and i64 %i.jk, %.01038                  ; 2 uses
   %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.hw, i64 %i.jj
   %i.jn = load float, ptr %i.jm, align 4, !noalias !8855
@@ -18087,7 +18087,7 @@ bb.e:                                             ; preds = %.preheader, %bb.j
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611099, %.preheader ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader ] ; 3 uses
   %i.ik = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01068) #10, !srcloc !71 ; 8 uses
-  %i.il = add nsw i64 %.01068, -1
+  %i.il = add nuw nsw i64 %.01068, 15
   %i.im = and i64 %i.il, %.01068                  ; 2 uses
   %i.in = getelementptr inbounds nuw [4 x i8], ptr %i.gx, i64 %i.ik
   %i.io = load float, ptr %i.in, align 4, !noalias !9054
@@ -18490,7 +18490,7 @@ bb.f:                                             ; preds = %.preheader, %bb.j
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242913, %.preheader ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader ] ; 2 uses
   %i.ih = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0876) #10, !srcloc !71 ; 7 uses
-  %i.ii = add nsw i64 %.0876, -1
+  %i.ii = add nuw nsw i64 %.0876, 15
   %i.ij = and i64 %i.ii, %.0876                   ; 2 uses
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.ih
   %i.il = load float, ptr %i.ik, align 4, !noalias !9331
@@ -18893,7 +18893,7 @@ bb.e:                                             ; preds = %.preheader1244, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611251, %.preheader1244 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1244 ] ; 3 uses
   %i.jh = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01196) #10, !srcloc !71 ; 8 uses
-  %i.ji = add nsw i64 %.01196, -1
+  %i.ji = add nuw nsw i64 %.01196, 15
   %i.jj = and i64 %i.ji, %.01196                  ; 2 uses
   %i.jk = getelementptr inbounds nuw [4 x i8], ptr %i.hu, i64 %i.jh
   %i.jl = load float, ptr %i.jk, align 4, !noalias !9604
@@ -19296,7 +19296,7 @@ bb.f:                                             ; preds = %.preheader1069, %bb
   %.343 = phi ptr [ %.5, %bb.j ], [ %.2421078, %.preheader1069 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader1069 ] ; 2 uses
   %i.jj = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01022) #10, !srcloc !71 ; 7 uses
-  %i.jk = add nsw i64 %.01022, -1
+  %i.jk = add nuw nsw i64 %.01022, 15
   %i.jl = and i64 %i.jk, %.01022                  ; 2 uses
   %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.hw, i64 %i.jj
   %i.jn = load float, ptr %i.jm, align 4, !noalias !10124
@@ -19699,7 +19699,7 @@ bb.e:                                             ; preds = %.preheader1615, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611622, %.preheader1615 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1615 ] ; 3 uses
   %i.iv = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01561) #10, !srcloc !71 ; 8 uses
-  %i.iw = add nsw i64 %.01561, -1
+  %i.iw = add nuw nsw i64 %.01561, 15
   %i.ix = and i64 %i.iw, %.01561                  ; 2 uses
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.iv
   %i.iz = load float, ptr %i.iy, align 4, !noalias !10391
@@ -20102,7 +20102,7 @@ bb.f:                                             ; preds = %.preheader1439, %bb
   %.343 = phi ptr [ %.5, %bb.j ], [ %.2421448, %.preheader1439 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader1439 ] ; 2 uses
   %i.ix = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01386) #10, !srcloc !71 ; 7 uses
-  %i.iy = add nsw i64 %.01386, -1
+  %i.iy = add nuw nsw i64 %.01386, 15
   %i.iz = and i64 %i.iy, %.01386                  ; 2 uses
   %i.ja = getelementptr inbounds nuw [4 x i8], ptr %i.hi, i64 %i.ix
   %i.jb = load float, ptr %i.ja, align 4, !noalias !10903
@@ -20505,7 +20505,7 @@ bb.e:                                             ; preds = %.preheader1599, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611606, %.preheader1599 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1599 ] ; 3 uses
   %i.iv = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01545) #10, !srcloc !71 ; 8 uses
-  %i.iw = add nsw i64 %.01545, -1
+  %i.iw = add nuw nsw i64 %.01545, 15
   %i.ix = and i64 %i.iw, %.01545                  ; 2 uses
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.iv
   %i.iz = load float, ptr %i.iy, align 4, !noalias !11145
@@ -20908,7 +20908,7 @@ bb.f:                                             ; preds = %.preheader1423, %bb
   %.343 = phi ptr [ %.5, %bb.j ], [ %.2421432, %.preheader1423 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader1423 ] ; 2 uses
   %i.ix = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01370) #10, !srcloc !71 ; 7 uses
-  %i.iy = add nsw i64 %.01370, -1
+  %i.iy = add nuw nsw i64 %.01370, 15
   %i.iz = and i64 %i.iy, %.01370                  ; 2 uses
   %i.ja = getelementptr inbounds nuw [4 x i8], ptr %i.hi, i64 %i.ix
   %i.jb = load float, ptr %i.ja, align 4, !noalias !11613
@@ -21311,7 +21311,7 @@ bb.e:                                             ; preds = %.preheader1750, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611758, %.preheader1750 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1750 ] ; 3 uses
   %i.ir = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01688) #10, !srcloc !71 ; 8 uses
-  %i.is = add nsw i64 %.01688, -1
+  %i.is = add nuw nsw i64 %.01688, 15
   %i.it = and i64 %i.is, %.01688                  ; 2 uses
   %i.iu = getelementptr inbounds nuw [4 x i8], ptr %i.hc, i64 %i.ir
   %i.iv = load float, ptr %i.iu, align 4, !noalias !12891
@@ -21714,7 +21714,7 @@ bb.f:                                             ; preds = %.preheader1575, %bb
   %.343 = phi ptr [ %.5, %bb.j ], [ %.2421585, %.preheader1575 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader1575 ] ; 2 uses
   %i.iu = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01510) #10, !srcloc !71 ; 7 uses
-  %i.iv = add nsw i64 %.01510, -1
+  %i.iv = add nuw nsw i64 %.01510, 15
   %i.iw = and i64 %i.iv, %.01510                  ; 2 uses
   %i.ix = getelementptr inbounds nuw [4 x i8], ptr %i.hf, i64 %i.iu
   %i.iy = load float, ptr %i.ix, align 4, !noalias !13386
@@ -22117,7 +22117,7 @@ bb.e:                                             ; preds = %.preheader, %bb.j
   %.362 = phi ptr [ %.6, %bb.j ], [ %.261514, %.preheader ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader ] ; 3 uses
   %i.ih = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0495) #10, !srcloc !71 ; 8 uses
-  %i.ii = add nsw i64 %.0495, -1
+  %i.ii = add nuw nsw i64 %.0495, 15
   %i.ij = and i64 %i.ii, %.0495                   ; 2 uses
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.ih
   %i.il = load float, ptr %i.ik, align 4, !noalias !13867
@@ -22520,7 +22520,7 @@ bb.f:                                             ; preds = %.preheader, %bb.j
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242514, %.preheader ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader ] ; 2 uses
   %i.it = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0488) #10, !srcloc !71 ; 7 uses
-  %i.iu = add nsw i64 %.0488, -1
+  %i.iu = add nuw nsw i64 %.0488, 15
   %i.iv = and i64 %i.iu, %.0488                   ; 2 uses
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.it
   %i.ix = load float, ptr %i.iw, align 4, !noalias !13913
@@ -22923,7 +22923,7 @@ bb.e:                                             ; preds = %.preheader, %bb.j
   %.362 = phi ptr [ %.6, %bb.j ], [ %.261496, %.preheader ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader ] ; 3 uses
   %i.hv = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0478) #10, !srcloc !71 ; 8 uses
-  %i.hw = add nsw i64 %.0478, -1
+  %i.hw = add nuw nsw i64 %.0478, 15
   %i.hx = and i64 %i.hw, %.0478                   ; 2 uses
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.gi, i64 %i.hv
   %i.hz = load float, ptr %i.hy, align 4, !noalias !13953
@@ -23326,7 +23326,7 @@ bb.f:                                             ; preds = %.preheader, %bb.j
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242495, %.preheader ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader ] ; 2 uses
   %i.ig = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0470) #10, !srcloc !71 ; 7 uses
-  %i.ih = add nsw i64 %.0470, -1
+  %i.ih = add nuw nsw i64 %.0470, 15
   %i.ii = and i64 %i.ih, %.0470                   ; 2 uses
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.ig
   %i.ik = load float, ptr %i.ij, align 4, !noalias !13995
@@ -23729,7 +23729,7 @@ bb.e:                                             ; preds = %.preheader, %bb.j
   %.362 = phi ptr [ %.6, %bb.j ], [ %.261496, %.preheader ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader ] ; 3 uses
   %i.hv = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0478) #10, !srcloc !71 ; 8 uses
-  %i.hw = add nsw i64 %.0478, -1
+  %i.hw = add nuw nsw i64 %.0478, 15
   %i.hx = and i64 %i.hw, %.0478                   ; 2 uses
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.gi, i64 %i.hv
   %i.hz = load float, ptr %i.hy, align 4, !noalias !14035
@@ -24132,7 +24132,7 @@ bb.f:                                             ; preds = %.preheader, %bb.j
   %.343 = phi ptr [ %.5, %bb.j ], [ %.242495, %.preheader ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader ] ; 2 uses
   %i.ig = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.0470) #10, !srcloc !71 ; 7 uses
-  %i.ih = add nsw i64 %.0470, -1
+  %i.ih = add nuw nsw i64 %.0470, 15
   %i.ii = and i64 %i.ih, %.0470                   ; 2 uses
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.ig
   %i.ik = load float, ptr %i.ij, align 4, !noalias !14077
@@ -24535,7 +24535,7 @@ bb.e:                                             ; preds = %.preheader1416, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611423, %.preheader1416 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1416 ] ; 3 uses
   %i.jt = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01367) #10, !srcloc !71 ; 8 uses
-  %i.ju = add nsw i64 %.01367, -1
+  %i.ju = add nuw nsw i64 %.01367, 15
   %i.jv = and i64 %i.ju, %.01367                  ; 2 uses
   %i.jw = getelementptr inbounds nuw [4 x i8], ptr %i.ig, i64 %i.jt
   %i.jx = load float, ptr %i.jw, align 4, !noalias !14397
@@ -24751,7 +24751,7 @@ bb.u:                                             ; preds = %._crit_edge
 bb.v:                                             ; preds = %.lr.ph1430, %bb.bf
   %.013681428 = phi i64 [ %i.nm, %.lr.ph1430 ], [ %i.oa, %bb.bf ] ; 3 uses
   %i.ny = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.013681428) #10, !srcloc !71 ; 7 uses
-  %i.nz = add nsw i64 %.013681428, -1
+  %i.nz = add nuw nsw i64 %.013681428, 15
   %i.oa = and i64 %i.nz, %.013681428              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9, !noalias !14400
   call void @llvm.experimental.noalias.scope.decl(metadata !14401)
@@ -25154,7 +25154,7 @@ _ZN6embree4sse220BVHNNodeIntersector1ILi4ELi1ELb0EE9intersectERKNS_10NodeRefPtrI
 bb.k:                                             ; preds = %.lr.ph1184, %bb.at
   %.011361182 = phi i64 [ %i.nl, %.lr.ph1184 ], [ %i.np, %bb.at ] ; 3 uses
   %i.nn = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.011361182) #10, !srcloc !71 ; 2 uses
-  %i.no = add nsw i64 %.011361182, -1
+  %i.no = add nuw nsw i64 %.011361182, 15
   %i.np = and i64 %i.no, %.011361182              ; 2 uses
   %i.nq = getelementptr inbounds nuw [4 x i8], ptr %17, i64 %i.nn
   %i.nr = load float, ptr %i.nq, align 4
@@ -25557,7 +25557,7 @@ bb.f:                                             ; preds = %.preheader1242, %bb
   %.343 = phi ptr [ %.5, %bb.j ], [ %.2421254, %.preheader1242 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader1242 ] ; 2 uses
   %i.jv = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01194) #10, !srcloc !71 ; 7 uses
-  %i.jw = add nsw i64 %.01194, -1
+  %i.jw = add nuw nsw i64 %.01194, 15
   %i.jx = and i64 %i.jw, %.01194                  ; 2 uses
   %i.jy = getelementptr inbounds nuw [4 x i8], ptr %i.ii, i64 %i.jv
   %i.jz = load float, ptr %i.jy, align 4, !noalias !15016
@@ -25695,7 +25695,7 @@ bb.l:                                             ; preds = %.preheader1241, %bb
   %.01195 = phi i64 [ %i.nf, %bb.at ], [ %i.mq, %.preheader1241 ] ; 3 uses
   %i.nc = phi <4 x i32> [ %i.amu, %bb.at ], [ %i.mi, %.preheader1241 ] ; 4 uses
   %i.nd = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01195) #10, !srcloc !71 ; 7 uses
-  %i.ne = add nsw i64 %.01195, -1
+  %i.ne = add nuw nsw i64 %.01195, 15
   %i.nf = and i64 %i.ne, %.01195                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9, !noalias !15019
   call void @llvm.experimental.noalias.scope.decl(metadata !15020)
@@ -26098,7 +26098,7 @@ begin_hunk_59_@_ZN6embree4sse222BVHNIntersectorKHybridILi4ELi4ELi16777232ELb1ENS
 bb.m:                                             ; preds = %.lr.ph1702, %bb.ax
   %.016471700 = phi i64 [ %i.sn, %.lr.ph1702 ], [ %i.sr, %bb.ax ] ; 3 uses
   %i.sp = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.016471700) #10, !srcloc !71 ; 2 uses
-  %i.sq = add nsw i64 %.016471700, -1
+  %i.sq = add nuw nsw i64 %.016471700, 15
   %i.sr = and i64 %i.sq, %.016471700              ; 2 uses
   %i.ss = getelementptr inbounds nuw [4 x i8], ptr %20, i64 %i.sp
   %i.st = load float, ptr %i.ss, align 4
@@ -26501,7 +26501,7 @@ bb.e:                                             ; preds = %.preheader1784, %bb
   %.362 = phi ptr [ %.6, %bb.j ], [ %.2611791, %.preheader1784 ] ; 6 uses
   %.0 = phi i64 [ %.3, %bb.j ], [ 0, %.preheader1784 ] ; 3 uses
   %i.jg = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01727) #10, !srcloc !71 ; 8 uses
-  %i.jh = add nsw i64 %.01727, -1
+  %i.jh = add nuw nsw i64 %.01727, 15
   %i.ji = and i64 %i.jh, %.01727                  ; 2 uses
   %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.hr, i64 %i.jg
   %i.jk = load float, ptr %i.jj, align 4, !noalias !15778
@@ -26719,7 +26719,7 @@ bb.u:                                             ; preds = %._crit_edge
 bb.v:                                             ; preds = %.lr.ph1798, %bb.av
   %.017281796 = phi i64 [ %i.nb, %.lr.ph1798 ], [ %i.np, %bb.av ] ; 3 uses
   %i.nn = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.017281796) #10, !srcloc !71 ; 7 uses
-  %i.no = add nsw i64 %.017281796, -1
+  %i.no = add nuw nsw i64 %.017281796, 15
   %i.np = and i64 %i.no, %.017281796              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9, !noalias !15781
   call void @llvm.experimental.noalias.scope.decl(metadata !15782)
@@ -27122,7 +27122,7 @@ _ZN6embree4sse220BVHNNodeIntersector1ILi4ELi1ELb1EE9intersectERKNS_10NodeRefPtrI
 bb.k:                                             ; preds = %.lr.ph1496, %bb.av
   %.014471494 = phi i64 [ %i.nr, %.lr.ph1496 ], [ %i.nv, %bb.av ] ; 3 uses
   %i.nt = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.014471494) #10, !srcloc !71 ; 2 uses
-  %i.nu = add nsw i64 %.014471494, -1
+  %i.nu = add nuw nsw i64 %.014471494, 15
   %i.nv = and i64 %i.nu, %.014471494              ; 2 uses
   %i.nw = getelementptr inbounds nuw [4 x i8], ptr %18, i64 %i.nt
   %i.nx = load float, ptr %i.nw, align 4
@@ -27525,7 +27525,7 @@ bb.f:                                             ; preds = %.preheader1617, %bb
   %.343 = phi ptr [ %.5, %bb.j ], [ %.2421627, %.preheader1617 ] ; 5 uses
   %.1 = phi i64 [ %.2, %bb.j ], [ 0, %.preheader1617 ] ; 2 uses
   %i.ji = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01562) #10, !srcloc !71 ; 7 uses
-  %i.jj = add nsw i64 %.01562, -1
+  %i.jj = add nuw nsw i64 %.01562, 15
   %i.jk = and i64 %i.jj, %.01562                  ; 2 uses
   %i.jl = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %i.ji
   %i.jm = load float, ptr %i.jl, align 4, !noalias !16355
@@ -27665,7 +27665,7 @@ bb.l:                                             ; preds = %.preheader1616, %bb
   %.01563 = phi i64 [ %i.mu, %bb.am ], [ %i.mf, %.preheader1616 ] ; 3 uses
   %i.mr = phi <4 x i32> [ %i.aqo, %bb.am ], [ %i.lx, %.preheader1616 ] ; 4 uses
   %i.ms = call noundef i64 asm "bsf $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 %.01563) #10, !srcloc !71 ; 7 uses
-  %i.mt = add nsw i64 %.01563, -1
+  %i.mt = add nuw nsw i64 %.01563, 15
   %i.mu = and i64 %i.mt, %.01563                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9, !noalias !16358
   call void @llvm.experimental.noalias.scope.decl(metadata !16359)

@@ -202,7 +202,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit52: ; 
   br i1 %.not, label %.thread168.loopexit, label %bb.b
 
 .thread168.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit52
-  %i.bp = zext i32 %i.bn to i64
+  %i.bp = zext nneg i32 %i.bn to i64
   %i.bq = or disjoint i64 %i.bp, 4294967296
   br label %.thread168
 
@@ -605,7 +605,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit151: ;
   br i1 %.not, label %.thread487.loopexit, label %bb.b
 
 .thread487.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit151
-  %i.et = zext i32 %i.er to i64
+  %i.et = zext nneg i32 %i.er to i64
   %i.eu = or disjoint i64 %i.et, 4294967296
   br label %.thread487
 
@@ -1008,7 +1008,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit160: ;
   br i1 %.not, label %.thread526.loopexit, label %bb.b
 
 .thread526.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit160
-  %i.fm = zext i32 %i.fk to i64
+  %i.fm = zext nneg i32 %i.fk to i64
   %i.fn = or disjoint i64 %i.fm, 4294967296
   br label %.thread526
 
@@ -1411,7 +1411,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit79: ; 
   br i1 %.not, label %.thread254.loopexit, label %bb.b
 
 .thread254.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit79
-  %i.ch = zext i32 %i.cf to i64
+  %i.ch = zext nneg i32 %i.cf to i64
   %i.ci = or disjoint i64 %i.ch, 4294967296
   br label %.thread254
 
@@ -1814,7 +1814,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit133: ;
   br i1 %.not, label %.thread429.loopexit, label %bb.b
 
 .thread429.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit133
-  %i.eh = zext i32 %i.ef to i64
+  %i.eh = zext nneg i32 %i.ef to i64
   %i.ei = or disjoint i64 %i.eh, 4294967296
   br label %.thread429
 
@@ -2170,7 +2170,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit25.thr
   br label %.loopexit
 
 .loopexit.loopexit:                               ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit25
-  %i.as = zext i32 %i.aq to i64
+  %i.as = zext nneg i32 %i.aq to i64
   %i.at = or disjoint i64 %i.as, 4294967296
   br label %.loopexit
 
@@ -2573,7 +2573,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit52: ; 
   br i1 %.not, label %.thread168.loopexit, label %bb.b
 
 .thread168.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit52
-  %i.bs = zext i32 %i.bq to i64
+  %i.bs = zext nneg i32 %i.bq to i64
   %i.bt = or disjoint i64 %i.bs, 4294967296
   br label %.thread168
 
@@ -2976,7 +2976,7 @@ _ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit70: ; 
   br i1 %.not, label %.thread225.loopexit, label %bb.b
 
 .thread225.loopexit:                              ; preds = %_ZN4llvm12StringSwitchISt8optionalIjES2_E4CaseENS_13StringLiteralES2_.exit70
-  %i.cg = zext i32 %i.ce to i64
+  %i.cg = zext nneg i32 %i.ce to i64
   %i.ch = or disjoint i64 %i.cg, 4294967296
   br label %.thread225
 

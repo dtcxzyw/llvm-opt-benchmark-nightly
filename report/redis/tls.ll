@@ -204,8 +204,8 @@ parseProtocolsConfig.exit.thread82.sink.split:    ; preds = %bb.v, %.preheader.i
   call void @sdsfreesplitres(ptr noundef nonnull %i.ac, i32 noundef %i.ad) #16
   br label %parseProtocolsConfig.exit.thread82
 
-parseProtocolsConfig.exit.thread82:               ; preds = %parseProtocolsConfig.exit.thread82.sink.split, %bb.m
-  %.122.i84 = phi i32 [ 12, %bb.m ], [ %.122.i84.ph, %parseProtocolsConfig.exit.thread82.sink.split ] ; 2 uses
+parseProtocolsConfig.exit.thread82:               ; preds = %bb.m, %parseProtocolsConfig.exit.thread82.sink.split
+  %.122.i84 = phi i32 [ %.122.i84.ph, %parseProtocolsConfig.exit.thread82.sink.split ], [ 12, %bb.m ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.aq = call fastcc ptr @createSSLContext(ptr noundef nonnull %0, i32 noundef %.122.i84, i32 noundef 0) ; 12 uses
   %.not70 = icmp eq ptr %i.aq, null
@@ -377,7 +377,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au, %bb.
   call void @SSL_CTX_free(ptr noundef nonnull %i.aq) #16
   br label %.thread95
 
-.thread95:                                        ; preds = %parseProtocolsConfig.exit.thread86, %parseProtocolsConfig.exit.thread, %bb.d, %bb.c, %bb.g, %bb.f, %bb.l, %bb.k, %parseProtocolsConfig.exit.thread82, %.thread, %bb.a, %bb.aw
+.thread95:                                        ; preds = %parseProtocolsConfig.exit.thread, %bb.d, %bb.c, %bb.g, %bb.f, %bb.l, %bb.k, %parseProtocolsConfig.exit.thread82, %parseProtocolsConfig.exit.thread86, %.thread, %bb.a, %bb.aw
   %.0 = phi i32 [ 0, %bb.aw ], [ 0, %bb.a ], [ -1, %.thread ], [ -1, %parseProtocolsConfig.exit.thread86 ], [ -1, %parseProtocolsConfig.exit.thread82 ], [ -1, %bb.k ], [ -1, %bb.l ], [ -1, %bb.f ], [ -1, %bb.g ], [ -1, %bb.c ], [ -1, %bb.d ], [ -1, %parseProtocolsConfig.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   ret i32 %.0
