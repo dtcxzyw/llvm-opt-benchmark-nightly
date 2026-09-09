@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %.lr.ph227
   br i1 %i.bg, label %._crit_edge228.thread, label %bb.x
 
 ._crit_edge228.thread:                            ; preds = %bb.m, %bb.l, %._crit_edge228
-  %i.bh = add nsw i64 %.0235, 1                   ; 2 uses
+  %i.bh = add nuw nsw i64 %.0235, 1               ; 2 uses
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %.0235
   store i64 %i.bb, ptr %i.bi, align 8, !tbaa !50
   br i1 %4, label %bb.n, label %.thread196
@@ -320,10 +320,8 @@ _ZN8DecGraph10TruthTableD2Ev.exit:                ; preds = %_ZNSt6vectorIN8DecG
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZN8DecGraph10TruthTableD2Ev.exit, %._crit_edge228
-  %.1 = phi i64 [ %i.bh, %_ZN8DecGraph10TruthTableD2Ev.exit ], [ %.0235, %._crit_edge228 ] ; 4 uses
-  %9 = icmp ne i64 %.1, 0
-  %or.cond = select i1 %4, i1 %9, i1 false
-  br i1 %or.cond, label %.lr.ph233, label %.thread196
+  %.1 = phi i64 [ %i.bh, %_ZN8DecGraph10TruthTableD2Ev.exit ], [ %.0235, %._crit_edge228 ] ; 3 uses
+  br i1 %4, label %.lr.ph233, label %.thread196
 
 .lr.ph233:                                        ; preds = %bb.x
   %sext203 = shl i64 %.0127234, 32
@@ -366,14 +364,12 @@ _ZN8DecGraph10TruthTable3setEib.exit:             ; preds = %bb.aa, %bb.z, %bb.y
   br i1 %exitcond255.not, label %.thread196, label %bb.y, !llvm.loop !254
 
 .thread196:                                       ; preds = %_ZN8DecGraph10TruthTable3setEib.exit, %._crit_edge228.thread, %bb.x
-  %.1198 = phi i64 [ %.1, %bb.x ], [ %i.bh, %._crit_edge228.thread ], [ %.1, %_ZN8DecGraph10TruthTable3setEib.exit ] ; 5 uses
+  %.1198 = phi i64 [ %.1, %bb.x ], [ %i.bh, %._crit_edge228.thread ], [ %.1, %_ZN8DecGraph10TruthTable3setEib.exit ] ; 4 uses
   %exitcond256.not = icmp eq i64 %i.ay, %i.m
   br i1 %exitcond256.not, label %bb.ab, label %bb.l, !llvm.loop !255
 
 bb.ab:                                            ; preds = %.thread196
-  %10 = icmp ne i64 %.1198, 0
-  %or.cond238 = select i1 %4, i1 %10, i1 false
-  br i1 %or.cond238, label %.lr.ph237, label %_ZNSt6vectorImSaImEED2Ev.exit
+  br i1 %4, label %.lr.ph237, label %_ZNSt6vectorImSaImEED2Ev.exit
 
 .lr.ph237:                                        ; preds = %bb.ab
   %i.dq = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 3 uses
@@ -573,7 +569,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.gs, label %._crit_edge.thread, label %bb.bd
 
 ._crit_edge.thread:                               ; preds = %bb.as, %bb.ao, %._crit_edge
-  %i.gt = add nsw i64 %.2217, 1                   ; 2 uses
+  %i.gt = add nuw nsw i64 %.2217, 1               ; 2 uses
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %.2217
   store i64 %.1128215, ptr %i.gu, align 8, !tbaa !50
   br i1 %4, label %bb.at, label %.thread199
@@ -688,10 +684,8 @@ _ZN8DecGraph10TruthTableD2Ev.exit171:             ; preds = %_ZNSt6vectorIN8DecG
   br label %bb.bd
 
 bb.bd:                                            ; preds = %_ZN8DecGraph10TruthTableD2Ev.exit171, %._crit_edge
-  %.3 = phi i64 [ %i.gt, %_ZN8DecGraph10TruthTableD2Ev.exit171 ], [ %.2217, %._crit_edge ] ; 4 uses
-  %11 = icmp ne i64 %.3, 0
-  %or.cond239 = select i1 %4, i1 %11, i1 false
-  br i1 %or.cond239, label %.lr.ph214, label %.thread199
+  %.3 = phi i64 [ %i.gt, %_ZN8DecGraph10TruthTableD2Ev.exit171 ], [ %.2217, %._crit_edge ] ; 3 uses
+  br i1 %4, label %.lr.ph214, label %.thread199
 
 .lr.ph214:                                        ; preds = %bb.bd
   %sext202 = shl i64 %.1128215, 32
@@ -753,15 +747,13 @@ _ZN8DecGraph10TruthTable3setEib.exit172:          ; preds = %bb.bi, %.thread326,
   br i1 %exitcond249.not, label %.thread199, label %bb.be, !llvm.loop !260
 
 .thread199:                                       ; preds = %_ZN8DecGraph10TruthTable3setEib.exit172, %._crit_edge.thread, %bb.bd
-  %.3201 = phi i64 [ %.3, %bb.bd ], [ %i.gt, %._crit_edge.thread ], [ %.3, %_ZN8DecGraph10TruthTable3setEib.exit172 ] ; 5 uses
+  %.3201 = phi i64 [ %.3, %bb.bd ], [ %i.gt, %._crit_edge.thread ], [ %.3, %_ZN8DecGraph10TruthTable3setEib.exit172 ] ; 4 uses
   %i.jj = add nuw i64 %.1128215, 1                ; 2 uses
   %exitcond250.not = icmp eq i64 %i.jj, %i.m
   br i1 %exitcond250.not, label %bb.bj, label %bb.ao, !llvm.loop !261
 
 bb.bj:                                            ; preds = %.thread199
-  %12 = icmp ne i64 %.3201, 0
-  %or.cond240 = select i1 %4, i1 %12, i1 false
-  br i1 %or.cond240, label %.lr.ph224, label %_ZNSt6vectorImSaImEED2Ev.exit
+  br i1 %4, label %.lr.ph224, label %_ZNSt6vectorImSaImEED2Ev.exit
 
 .lr.ph224:                                        ; preds = %bb.bj
   %i.jk = shl nuw i64 1, %i.k

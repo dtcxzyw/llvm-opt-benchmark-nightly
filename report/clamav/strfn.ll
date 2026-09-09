@@ -201,32 +201,32 @@ bb.c:                                             ; preds = %.lr.ph35, %bb.b
   br label %._crit_edge36, !llvm.loop !25
 
 ._crit_edge36:                                    ; preds = %bb.b, %._crit_edge37, %bb.a
-  %.1 = phi i64 [ %i.d, %bb.a ], [ %i.e, %._crit_edge37 ], [ %i.d, %bb.b ] ; 3 uses
+  %.1 = phi i64 [ %i.d, %bb.a ], [ %i.e, %._crit_edge37 ], [ %i.d, %bb.b ] ; 4 uses
   br i1 %i.b, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge36
-  %i.k = add nsw i64 %.1, 1
+  %i.k = add nuw nsw i64 %.1, 1
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %.1
   store i8 45, ptr %i.l, align 1, !tbaa !11
-  br label %bb.e
+  br label %iter.check
 
-bb.e:                                             ; preds = %bb.d, %._crit_edge36
-  %.2 = phi i64 [ %i.k, %bb.d ], [ %.1, %._crit_edge36 ] ; 11 uses
-  %.not29 = icmp eq i64 %.2, 0
+bb.e:                                             ; preds = %._crit_edge36
+  %.not29 = icmp eq i64 %.1, 0
   br i1 %.not29, label %._crit_edge, label %iter.check
 
-iter.check:                                       ; preds = %bb.e
-  %i.m = getelementptr i8, ptr %i.a, i64 %.2      ; 3 uses
-  %min.iters.check = icmp ult i64 %.2, 8
+iter.check:                                       ; preds = %bb.d, %bb.e
+  %.233 = phi i64 [ %i.k, %bb.d ], [ %.1, %bb.e ] ; 12 uses
+  %i.m = getelementptr i8, ptr %i.a, i64 %.233    ; 3 uses
+  %min.iters.check = icmp ult i64 %.233, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check39 = icmp ult i64 %.2, 32
+  %min.iters.check39 = icmp ult i64 %.233, 32
   br i1 %min.iters.check39, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.n = and i64 %.2, 24
-  %n.vec = and i64 %.2, -32                       ; 4 uses
+  %i.n = and i64 %.233, 24
+  %n.vec = and i64 %.233, -32                     ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -248,7 +248,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !26
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %.2, %n.vec
+  %cmp.n = icmp eq i64 %.233, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -257,7 +257,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec42 = and i64 %.2, -8                      ; 3 uses
+  %n.vec42 = and i64 %.233, -8                    ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -274,7 +274,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.z, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !27
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n47 = icmp eq i64 %.2, %n.vec42
+  %cmp.n47 = icmp eq i64 %.233, %n.vec42
   br i1 %cmp.n47, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -282,7 +282,8 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph
 
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.e
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 %.2
+  %.234 = phi i64 [ 0, %bb.e ], [ %.233, %middle.block ], [ %.233, %vec.epilog.middle.block ], [ %.233, %vec.epilog.scalar.ph ]
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 %.234
   store i8 0, ptr %i.aa, align 1, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   ret void
@@ -295,7 +296,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 %.028
   store i8 %i.ad, ptr %i.ae, align 1, !tbaa !11
   %i.af = add nuw i64 %.028, 1                    ; 2 uses
-  %exitcond30.not = icmp eq i64 %i.af, %.2
+  %exitcond30.not = icmp eq i64 %i.af, %.233
   br i1 %exitcond30.not, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !28
 }
 
@@ -336,27 +337,27 @@ bb.c:                                             ; preds = %.lr.ph35, %bb.b
   br label %._crit_edge36, !llvm.loop !2
 
 ._crit_edge36:                                    ; preds = %bb.b, %._crit_edge37, %bb.a
-  %.1 = phi i64 [ %i.d, %bb.a ], [ %i.e, %._crit_edge37 ], [ %i.d, %bb.b ] ; 3 uses
+  %.1 = phi i64 [ %i.d, %bb.a ], [ %i.e, %._crit_edge37 ], [ %i.d, %bb.b ] ; 4 uses
   br i1 %i.b, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge36
-  %i.k = add nsw i64 %.1, 1
+  %i.k = add nuw nsw i64 %.1, 1
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.1
   store i32 45, ptr %i.l, align 4, !tbaa !14
-  br label %bb.e
+  br label %.lr.ph
 
-bb.e:                                             ; preds = %bb.d, %._crit_edge36
-  %.2 = phi i64 [ %i.k, %bb.d ], [ %.1, %._crit_edge36 ] ; 7 uses
-  %.not29 = icmp eq i64 %.2, 0
+bb.e:                                             ; preds = %._crit_edge36
+  %.not29 = icmp eq i64 %.1, 0
   br i1 %.not29, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.e
-  %i.m = getelementptr [4 x i8], ptr %i.a, i64 %.2 ; 2 uses
-  %min.iters.check = icmp ult i64 %.2, 8
+.lr.ph:                                           ; preds = %bb.d, %bb.e
+  %.233 = phi i64 [ %i.k, %bb.d ], [ %.1, %bb.e ] ; 7 uses
+  %i.m = getelementptr [4 x i8], ptr %i.a, i64 %.233 ; 2 uses
+  %min.iters.check = icmp ult i64 %.233, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %.2, -8                        ; 3 uses
+  %n.vec = and i64 %.233, -8                      ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -378,7 +379,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !30
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %.2, %n.vec
+  %cmp.n = icmp eq i64 %.233, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
@@ -386,7 +387,8 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   br label %scalar.ph
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %bb.e
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.2
+  %.234 = phi i64 [ 0, %bb.e ], [ %.233, %middle.block ], [ %.233, %scalar.ph ]
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.234
   store i32 0, ptr %i.u, align 4, !tbaa !14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   ret void
@@ -399,7 +401,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.028
   store i32 %i.x, ptr %i.y, align 4, !tbaa !14
   %i.z = add nuw i64 %.028, 1                     ; 2 uses
-  %exitcond30.not = icmp eq i64 %i.z, %.2
+  %exitcond30.not = icmp eq i64 %i.z, %.233
   br i1 %exitcond30.not, label %._crit_edge, label %scalar.ph, !llvm.loop !31
 }
 
@@ -449,26 +451,22 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 
 ._crit_edge29:                                    ; preds = %bb.b, %._crit_edge28, %bb.a
   %.1.i = phi i64 [ %i.i, %bb.a ], [ %i.j, %._crit_edge28 ], [ %i.i, %bb.b ] ; 3 uses
-  br i1 %i.h, label %bb.d, label %3
+  br i1 %i.h, label %bb.d, label %.lr.ph.i
 
 bb.d:                                             ; preds = %._crit_edge29
-  %i.p = add nsw i64 %.1.i, 1
+  %i.p = add nuw nsw i64 %.1.i, 1
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.1.i
   store i32 45, ptr %i.q, align 4, !tbaa !14
-  br label %3
+  br label %.lr.ph.i
 
-3:                                                ; preds = %bb.d, %._crit_edge29
-  %.2.i = phi i64 [ %i.p, %bb.d ], [ %.1.i, %._crit_edge29 ] ; 7 uses
-  %.not29.i = icmp eq i64 %.2.i, 0
-  br i1 %.not29.i, label %_Z4itoalPwm.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %3
-  %i.r = getelementptr [4 x i8], ptr %i.a, i64 %.2.i ; 2 uses
-  %min.iters.check = icmp ult i64 %.2.i, 8
+.lr.ph.i:                                         ; preds = %._crit_edge29, %bb.d
+  %.233.i = phi i64 [ %i.p, %bb.d ], [ %.1.i, %._crit_edge29 ] ; 6 uses
+  %i.r = getelementptr [4 x i8], ptr %i.a, i64 %.233.i ; 2 uses
+  %min.iters.check = icmp ult i64 %.233.i, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %.2.i, -8                      ; 3 uses
+  %n.vec = and i64 %.233.i, -8                    ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -490,7 +488,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !32
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %.2.i, %n.vec
+  %cmp.n = icmp eq i64 %.233.i, %n.vec
   br i1 %cmp.n, label %_Z4itoalPwm.exit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
@@ -505,11 +503,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.028.i
   store i32 %i.ab, ptr %i.ac, align 4, !tbaa !14
   %i.ad = add nuw nsw i64 %.028.i, 1              ; 2 uses
-  %exitcond30.not.i = icmp eq i64 %i.ad, %.2.i
+  %exitcond30.not.i = icmp eq i64 %i.ad, %.233.i
   br i1 %exitcond30.not.i, label %_Z4itoalPwm.exit, label %scalar.ph, !llvm.loop !33
 
-_Z4itoalPwm.exit:                                 ; preds = %scalar.ph, %middle.block, %3
-  %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.2.i
+_Z4itoalPwm.exit:                                 ; preds = %scalar.ph, %middle.block
+  %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.233.i
   store i32 0, ptr %i.ae, align 4, !tbaa !14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   %i.af = load i32, ptr %i.b, align 16, !tbaa !14 ; 2 uses
