@@ -164,12 +164,12 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %bb.g
   br label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit35
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit35: ; preds = %bb.e, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
-  %i.u = add i64 %i.h, -1
-  %.sroa.speculated.i32 = tail call i64 @llvm.umin.i64(i64 %i.c, i64 %i.u) ; 3 uses
+  %i.u = add i64 %i.h, -1                         ; 2 uses
+  %.sroa.speculated.i32 = tail call i64 @llvm.umin.i64(i64 %i.c, i64 %i.u) ; 2 uses
   store i64 %.sroa.speculated.i32, ptr %2, align 8, !tbaa !13
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %i.d, ptr %.sroa.48.0..sroa_idx, align 8, !tbaa !15
-  %.not87 = icmp eq i64 %.sroa.speculated.i32, 0
+  %.not87 = icmp eq i64 %i.u, 0
   br i1 %.not87, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit39.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i37
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i37:     ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit35

@@ -204,15 +204,15 @@ bb.g:                                             ; preds = %bb.f
   tail call void asm sideeffect "203: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 203b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 203) #19, !srcloc !15
   br label %copy_from_sockptr_offset.exit.thread37
 
-copy_from_sockptr_offset.exit.thread:             ; preds = %bb.e
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.l, ptr noundef align 1 %i.m, i64 range(i64 1, 4294967256) %i.j, i1 false)
-  br label %bb.h
-
 copy_from_sockptr_offset.exit:                    ; preds = %bb.f
   %i.o = tail call i64 @_copy_from_user(ptr noundef nonnull %i.l, ptr noundef %i.m, i64 noundef range(i64 1, 4294967256) %i.j) #17
   %i.p = and i64 %i.o, 4294967295
   %i.q = icmp eq i64 %i.p, 0
   br i1 %i.q, label %bb.h, label %copy_from_sockptr_offset.exit.thread37
+
+copy_from_sockptr_offset.exit.thread:             ; preds = %bb.e
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.l, ptr noundef align 1 %i.m, i64 range(i64 1, 4294967256) %i.j, i1 false)
+  br label %bb.h
 
 copy_from_sockptr_offset.exit.thread37:           ; preds = %bb.g, %copy_from_sockptr_offset.exit
   tail call void @vfree(ptr noundef nonnull %i.l) #17

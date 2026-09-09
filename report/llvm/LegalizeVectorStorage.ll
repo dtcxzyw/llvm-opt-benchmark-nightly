@@ -204,11 +204,11 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 bb.w:                                             ; preds = %bb.u
   %i.ed = call { ptr, i64 } @_ZNK4mlir10MemRefType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %12) #21 ; 2 uses
   %i.ee = extractvalue { ptr, i64 } %i.ed, 0
-  %i.ef = extractvalue { ptr, i64 } %i.ed, 1      ; 2 uses
+  %i.ef = extractvalue { ptr, i64 } %i.ed, 1      ; 3 uses
   %i.eg = add nsw i64 %i.dm, -1                   ; 10 uses
   %.sroa.0.0.copyload.pn.idx.i = call i64 @llvm.usub.sat.i64(i64 %i.ef, i64 %i.eg)
   %.sroa.0.0.copyload.pn.i = getelementptr inbounds nuw [8 x i8], ptr %i.ee, i64 %.sroa.0.0.copyload.pn.idx.i
-  %.pn2.i = call i64 @llvm.umin.i64(i64 %i.eg, i64 %i.ef) ; 3 uses
+  %.pn2.i = call i64 @llvm.umin.i64(i64 %i.eg, i64 %i.ef) ; 2 uses
   %i.eh = call { ptr, i64 } @_ZNK4mlir10VectorType8getShapeEv(ptr noundef nonnull align 8 dereferenceable(8) %11) #21 ; 2 uses
   %i.ei = extractvalue { ptr, i64 } %i.eh, 0
   %i.ej = extractvalue { ptr, i64 } %i.eh, 1      ; 2 uses
@@ -220,7 +220,7 @@ bb.w:                                             ; preds = %bb.u
   br i1 %.not.i.i.i, label %bb.x, label %_ZN4llvm5equalINS_8ArrayRefIlEES2_EEbOT_OT0_.exit.thread144
 
 bb.x:                                             ; preds = %bb.w
-  %.not.not.i.i.i.i.i.i.i = icmp eq i64 %.pn2.i, 0
+  %.not.not.i.i.i.i.i.i.i = icmp eq i64 %i.ef, 0
   br i1 %.not.not.i.i.i.i.i.i.i, label %_ZN4llvm5equalINS_8ArrayRefIlEES2_EEbOT_OT0_.exit.thread, label %_ZN4llvm5equalINS_8ArrayRefIlEES2_EEbOT_OT0_.exit
 
 _ZN4llvm5equalINS_8ArrayRefIlEES2_EEbOT_OT0_.exit: ; preds = %bb.x

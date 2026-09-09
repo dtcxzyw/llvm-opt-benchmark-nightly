@@ -204,7 +204,7 @@ bb.am:                                            ; preds = %vtd_get_iova_pgtbl_
   br label %vtd_get_iova_level.exit.i
 
 vtd_get_iova_level.exit.i:                        ; preds = %bb.am, %bb.al, %bb.ak
-  %.0.i64.i = phi i32 [ %i.ei, %bb.ak ], [ %i.en, %bb.al ], [ %i.er, %bb.am ] ; 3 uses
+  %.0.i64.i = phi i32 [ %i.ei, %bb.ak ], [ %i.en, %bb.al ], [ %i.er, %bb.am ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #17
   %i.es = load i8, ptr %i.dr, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #17
@@ -256,11 +256,10 @@ vtd_iova_level_offset.exit.lr.ph.i:               ; preds = %vtd_iova_fs_check_c
   %notmask.i.i = shl nsw i64 -1, %i.fl
   %i.fm = and i64 %notmask.i.i, 9223372036854771712
   %i.fn = xor i64 %i.fm, 9223372036854771712
-  %.first_iter = icmp samesign ult i32 %.0.i64.i, 5
   br label %vtd_iova_level_offset.exit.i
 
 vtd_iova_level_offset.exit.i:                     ; preds = %bb.bc, %vtd_iova_level_offset.exit.lr.ph.i
-  %.2229 = phi i32 [ %.0.i64.i, %vtd_iova_level_offset.exit.lr.ph.i ], [ %i.hm, %bb.bc ] ; 14 uses
+  %.2229 = phi i32 [ %.0.i64.i, %vtd_iova_level_offset.exit.lr.ph.i ], [ %i.hm, %bb.bc ] ; 15 uses
   %.1220 = phi i8 [ 1, %vtd_iova_level_offset.exit.lr.ph.i ], [ %i.gy, %bb.bc ]
   %.05993.i = phi i64 [ %.0.i.i, %vtd_iova_level_offset.exit.lr.ph.i ], [ %i.hl, %bb.bc ]
   %i.fo = mul nuw nsw i32 %.2229, 9
@@ -348,7 +347,8 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %or.cond94.i, label %vtd_is_recoverable_fault.exit.thread, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  br i1 %.first_iter, label %vtd_fspte_nonzero_rsvd.exit.i, label %bb.az
+  %20 = icmp ult i32 %.2229, 5
+  br i1 %20, label %vtd_fspte_nonzero_rsvd.exit.i, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   call void @__assert_fail(ptr noundef nonnull @.str.256, ptr noundef nonnull @.str.1, i32 noundef 1928, ptr noundef nonnull @__PRETTY_FUNCTION__.vtd_fspte_nonzero_rsvd) #19

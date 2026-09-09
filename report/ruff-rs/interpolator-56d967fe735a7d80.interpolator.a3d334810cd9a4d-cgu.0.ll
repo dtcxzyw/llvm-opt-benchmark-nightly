@@ -202,7 +202,7 @@ _RNvXs2_NtNtCs4NRVxsYgnAr_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5ra
   br label %bb.ab
 
 .thread:                                          ; preds = %bb.t, %bb.u, %bb.y, %bb.z
-  %.sroa.13.072 = phi i64 [ %i.cv, %bb.z ], [ %i.by, %bb.u ], [ %i.cm, %bb.y ], [ %i.bp, %bb.t ]
+  %.sroa.13.072 = phi i64 [ %i.by, %bb.u ], [ %i.cv, %bb.z ], [ %i.cm, %bb.y ], [ %i.bp, %bb.t ]
   br i1 %.not.i.i.i2, label %bb.aa, label %.split.i.i.i.i
 
 .split.i.i.i.i:                                   ; preds = %.thread
