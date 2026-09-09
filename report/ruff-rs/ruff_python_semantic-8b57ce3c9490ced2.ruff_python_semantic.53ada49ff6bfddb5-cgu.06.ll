@@ -204,25 +204,16 @@ bb.a:
   %.val1 = load i8, ptr %1, align 1, !range !8, !noundef !4 ; 4 uses
   %i.a = icmp ne i8 %.val, 6
   tail call void @llvm.assume(i1 %i.a)
-  %2 = add nsw i8 %.val, -4
-  %i.b = icmp samesign ugt i8 %.val, 3
-  %narrow.i = select i1 %i.b, i8 %2, i8 2         ; 2 uses
+  %i.b = icmp samesign ugt i8 %.val, 3            ; 2 uses
   %i.c = icmp ne i8 %.val1, 6
   tail call void @llvm.assume(i1 %i.c)
-  %3 = add nsw i8 %.val1, -4
-  %4 = icmp samesign ugt i8 %.val1, 3
-  %narrow1.i = select i1 %4, i8 %3, i8 2
-  %i.d = icmp eq i8 %narrow.i, %narrow1.i
-  br i1 %i.d, label %5, label %_RNvXsc_NtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inferenceNtB5_10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
-
-5:                                                ; preds = %bb.a
-  %6 = icmp ne i8 %narrow.i, 2
-  %7 = icmp eq i8 %.val, %.val1
-  %spec.select.i = or i1 %7, %6
-  br label %_RNvXsc_NtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inferenceNtB5_10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
-
-_RNvXsc_NtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inferenceNtB5_10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.a, %5
-  %.sroa.0.0.i = phi i1 [ %spec.select.i, %5 ], [ false, %bb.a ]
+  %2 = icmp samesign ugt i8 %.val1, 3
+  %3 = select i1 %i.b, i8 %.val, i8 6
+  %narrow1.i = select i1 %2, i8 %.val1, i8 6
+  %4 = icmp eq i8 %3, %narrow1.i
+  %i.d = icmp eq i8 %.val, %.val1
+  %spec.select.i = or i1 %i.b, %i.d
+  %.sroa.0.0.i = and i1 %spec.select.i, %4
   ret i1 %.sroa.0.0.i
 }
 

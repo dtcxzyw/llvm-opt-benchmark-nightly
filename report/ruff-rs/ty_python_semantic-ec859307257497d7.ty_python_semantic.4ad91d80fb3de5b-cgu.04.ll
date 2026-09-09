@@ -205,26 +205,21 @@ bb.e:                                             ; preds = %bb.d
   %i.t = load i8, ptr %i.s, align 4, !range !18, !alias.scope !26517, !noalias !26518, !noundef !12 ; 4 uses
   %i.u = icmp ne i8 %i.t, 4
   tail call void @llvm.assume(i1 %i.u)
-  %2 = add nsw i8 %i.t, -2
-  %.inv.i = icmp samesign ult i8 %i.t, 2
-  %narrow.i = select i1 %.inv.i, i8 2, i8 %2      ; 2 uses
+  %.inv.i = icmp samesign ugt i8 %i.t, 1          ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.w = load i8, ptr %i.v, align 4, !range !18, !alias.scope !26518, !noalias !26517, !noundef !12 ; 4 uses
   %i.x = icmp ne i8 %i.w, 4
   tail call void @llvm.assume(i1 %i.x)
-  %3 = add nsw i8 %i.w, -2
   %.inv2.i = icmp samesign ult i8 %i.w, 2
-  %narrow1.i = select i1 %.inv2.i, i8 2, i8 %3
-  %i.y = icmp eq i8 %narrow.i, %narrow1.i
-  br i1 %i.y, label %4, label %_RNvXsI_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10signaturesNtB5_20SignatureRelationKeyNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
+  %2 = select i1 %.inv.i, i8 %i.t, i8 4
+  %narrow1.i = select i1 %.inv2.i, i8 4, i8 %i.w
+  %3 = icmp eq i8 %2, %narrow1.i
+  %i.y = icmp eq i8 %i.t, %i.w
+  %or.cond.i = or i1 %.inv.i, %i.y
+  %or.cond3.i = and i1 %or.cond.i, %3
+  br i1 %or.cond3.i, label %bb.f, label %_RNvXsI_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10signaturesNtB5_20SignatureRelationKeyNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-4:                                                ; preds = %bb.e
-  %5 = icmp ne i8 %narrow.i, 2
-  %6 = icmp eq i8 %i.t, %i.w
-  %or.cond.i = or i1 %5, %6
-  br i1 %or.cond.i, label %bb.f, label %_RNvXsI_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10signaturesNtB5_20SignatureRelationKeyNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
-
-bb.f:                                             ; preds = %4
+bb.f:                                             ; preds = %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 17
   %i.aa = load i8, ptr %i.z, align 1, !range !17, !alias.scope !26517, !noalias !26518, !noundef !12
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 17
@@ -232,8 +227,8 @@ bb.f:                                             ; preds = %4
   %i.ad = icmp eq i8 %i.aa, %i.ac
   br label %_RNvXsI_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10signaturesNtB5_20SignatureRelationKeyNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-_RNvXsI_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10signaturesNtB5_20SignatureRelationKeyNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %4, %bb.f
-  %.sroa.0.0.i = phi i1 [ %i.ad, %bb.f ], [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.a ], [ false, %4 ], [ false, %bb.d ], [ false, %bb.b ]
+_RNvXsI_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10signaturesNtB5_20SignatureRelationKeyNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f
+  %.sroa.0.0.i = phi i1 [ %i.ad, %bb.f ], [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.d ]
   ret i1 %.sroa.0.0.i
 }
 
@@ -636,20 +631,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29413)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29414)
-  %2 = add nsw i32 %i.a, -37
-  %i.d = icmp sgt i32 %i.a, 36
-  %narrow.i.i = select i1 %i.d, i32 %2, i32 2     ; 2 uses
-  %3 = add nsw i32 %i.b, -37
-  %4 = icmp sgt i32 %i.b, 36
-  %narrow1.i.i = select i1 %4, i32 %3, i32 2
-  %5 = icmp eq i32 %narrow.i.i, %narrow1.i.i
-  br i1 %5, label %6, label %_RNvXsf_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB7_3cmp9PartialEq2eqBQ_.exit
+  %2 = icmp slt i32 %i.a, 37                      ; 3 uses
+  %i.d = icmp sgt i32 %i.b, 36
+  %3 = icmp eq i32 %i.a, %i.b
+  %not..i = xor i1 %2, true
+  %4 = and i1 %3, %not..i
+  %5 = select i1 %i.d, i1 %4, i1 %2               ; 2 uses
+  %brmerge.not.i = and i1 %2, %5
+  br i1 %brmerge.not.i, label %bb.c, label %_RNvXsf_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB7_3cmp9PartialEq2eqBQ_.exit
 
-6:                                                ; preds = %bb.b
-  %7 = icmp eq i32 %narrow.i.i, 2
-  br i1 %7, label %bb.c, label %_RNvXsf_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB7_3cmp9PartialEq2eqBQ_.exit
-
-bb.c:                                             ; preds = %6
+bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29415)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29416)
   %i.e = icmp eq i32 %i.a, -1                     ; 2 uses
@@ -678,8 +669,8 @@ bb.f:                                             ; preds = %bb.d
   %i.p = tail call fastcc noundef zeroext i1 @_RNvXs2Q_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4TypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq(ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %0, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %1)
   br label %_RNvXsf_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB7_3cmp9PartialEq2eqBQ_.exit
 
-_RNvXsf_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB7_3cmp9PartialEq2eqBQ_.exit: ; preds = %bb.a, %bb.b, %6, %bb.c, %bb.e, %bb.f
-  %.sroa.0.0.shrunk.i = phi i1 [ %.mux.i, %bb.a ], [ false, %bb.c ], [ true, %6 ], [ false, %bb.b ], [ %.sroa.0.0.i.i.i.i, %bb.e ], [ %i.p, %bb.f ]
+_RNvXsf_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB7_3cmp9PartialEq2eqBQ_.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.e, %bb.f
+  %.sroa.0.0.shrunk.i = phi i1 [ %.mux.i, %bb.a ], [ %i.p, %bb.f ], [ false, %bb.c ], [ %5, %bb.b ], [ %.sroa.0.0.i.i.i.i, %bb.e ]
   ret i1 %.sroa.0.0.shrunk.i
 }
 

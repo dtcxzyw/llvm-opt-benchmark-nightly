@@ -204,14 +204,10 @@ bb.bo:                                            ; preds = %.lr.ph141.i
   br i1 %.not103.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit, label %.lr.ph141.i
 
 bb.bp:                                            ; preds = %bb.bi, %bb.bj, %thread-pre-split.i
-  %.sroa.26.0.i = phi i64 [ %i.jo, %bb.bj ], [ %i.jh, %thread-pre-split.i ], [ %i.jh, %bb.bi ] ; 4 uses
+  %.sroa.26.0.i = phi i64 [ %i.jo, %bb.bj ], [ %i.jh, %thread-pre-split.i ], [ %i.jh, %bb.bi ] ; 3 uses
   %.sroa.0.0.i63 = phi ptr [ %i.jn, %bb.bj ], [ %i.jk, %thread-pre-split.i ], [ %i.jk, %bb.bi ] ; 2 uses
   %i.ko = icmp samesign ult i64 %.sroa.26.0.i, 16
-  br i1 %i.ko, label %.preheader.i, label %.preheader111.i
-
-.preheader.i:                                     ; preds = %bb.bp
-  %.not105146.i = icmp eq i64 %.sroa.26.0.i, 0
-  br i1 %.not105146.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit, label %.lr.ph150.i
+  br i1 %i.ko, label %.lr.ph150.i, label %.preheader111.i
 
 .preheader111.i:                                  ; preds = %bb.bp, %bb.bs
   %.sroa.0.3145.i = phi ptr [ %i.kp, %bb.bs ], [ %.sroa.0.0.i63, %bb.bp ] ; 2 uses
@@ -242,10 +238,10 @@ bb.bs:                                            ; preds = %bb.br
   %.not104.i = icmp eq i64 %i.kq, 0
   br i1 %.not104.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit, label %.preheader111.i
 
-.lr.ph150.i:                                      ; preds = %.preheader.i, %bb.bt
-  %.sroa.0.4149.i = phi ptr [ %i.li, %bb.bt ], [ %.sroa.0.0.i63, %.preheader.i ] ; 2 uses
-  %.sroa.26.4148.i = phi i64 [ %i.lh, %bb.bt ], [ %.sroa.26.0.i, %.preheader.i ]
-  %.sroa.084.4147.i = phi i64 [ %i.lk, %bb.bt ], [ 0, %.preheader.i ]
+.lr.ph150.i:                                      ; preds = %bb.bp, %bb.bt
+  %.sroa.0.4149.i = phi ptr [ %i.li, %bb.bt ], [ %.sroa.0.0.i63, %bb.bp ] ; 2 uses
+  %.sroa.26.4148.i = phi i64 [ %i.lh, %bb.bt ], [ %.sroa.26.0.i, %bb.bp ]
+  %.sroa.084.4147.i = phi i64 [ %i.lk, %bb.bt ], [ 0, %bb.bp ]
   %i.lc = load i8, ptr %.sroa.0.4149.i, align 1, !alias.scope !284, !noalias !285, !noundef !4
   %i.ld = zext i8 %i.lc to i32
   %i.le = add nsw i32 %i.ld, -48                  ; 2 uses
@@ -269,8 +265,8 @@ bb.bt:                                            ; preds = %.lr.ph150.i
   %i.lm = trunc nuw i8 %i.ll to i1
   br i1 %i.lm, label %bb.bw, label %bb.bx
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit: ; preds = %bb.bn, %bb.bo, %bb.bs, %bb.bt, %.preheader.i
-  %.sroa.15319.0 = phi i64 [ %i.lb, %bb.bs ], [ %i.kn, %bb.bo ], [ %i.lk, %bb.bt ], [ 0, %.preheader.i ], [ %i.ke, %bb.bn ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit: ; preds = %bb.bn, %bb.bo, %bb.bs, %bb.bt
+  %.sroa.15319.0 = phi i64 [ %i.lb, %bb.bs ], [ %i.kn, %bb.bo ], [ %i.lk, %bb.bt ], [ %i.ke, %bb.bn ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECshytdrR3ujnR_10uu_pathchk(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ah, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 5, i64 noundef %.sroa.15319.0) #18
   br label %bb.bu
 
@@ -401,14 +397,10 @@ bb.cg:                                            ; preds = %.lr.ph141.i78
   br i1 %.not103.i82, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit100, label %.lr.ph141.i78
 
 bb.ch:                                            ; preds = %bb.ca, %bb.cb, %thread-pre-split.i98
-  %.sroa.26.0.i83 = phi i64 [ %i.lz, %bb.cb ], [ %i.lq, %thread-pre-split.i98 ], [ %i.lq, %bb.ca ] ; 4 uses
+  %.sroa.26.0.i83 = phi i64 [ %i.lz, %bb.cb ], [ %i.lq, %thread-pre-split.i98 ], [ %i.lq, %bb.ca ] ; 3 uses
   %.sroa.0.0.i84 = phi ptr [ %i.ly, %bb.cb ], [ %i.lt, %thread-pre-split.i98 ], [ %i.lt, %bb.ca ] ; 2 uses
   %i.mz = icmp samesign ult i64 %.sroa.26.0.i83, 16
-  br i1 %i.mz, label %.preheader.i91, label %.preheader111.i85
-
-.preheader.i91:                                   ; preds = %bb.ch
-  %.not105146.i92 = icmp eq i64 %.sroa.26.0.i83, 0
-  br i1 %.not105146.i92, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit100, label %.lr.ph150.i93
+  br i1 %i.mz, label %.lr.ph150.i93, label %.preheader111.i85
 
 .preheader111.i85:                                ; preds = %bb.ch, %bb.ck
   %.sroa.0.3145.i86 = phi ptr [ %i.na, %bb.ck ], [ %.sroa.0.0.i84, %bb.ch ] ; 2 uses
@@ -439,10 +431,10 @@ bb.ck:                                            ; preds = %bb.cj
   %.not104.i90 = icmp eq i64 %i.nb, 0
   br i1 %.not104.i90, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit100, label %.preheader111.i85
 
-.lr.ph150.i93:                                    ; preds = %.preheader.i91, %bb.cl
-  %.sroa.0.4149.i94 = phi ptr [ %i.nt, %bb.cl ], [ %.sroa.0.0.i84, %.preheader.i91 ] ; 2 uses
-  %.sroa.26.4148.i95 = phi i64 [ %i.ns, %bb.cl ], [ %.sroa.26.0.i83, %.preheader.i91 ]
-  %.sroa.084.4147.i96 = phi i64 [ %i.nv, %bb.cl ], [ 0, %.preheader.i91 ]
+.lr.ph150.i93:                                    ; preds = %bb.ch, %bb.cl
+  %.sroa.0.4149.i94 = phi ptr [ %i.nt, %bb.cl ], [ %.sroa.0.0.i84, %bb.ch ] ; 2 uses
+  %.sroa.26.4148.i95 = phi i64 [ %i.ns, %bb.cl ], [ %.sroa.26.0.i83, %bb.ch ]
+  %.sroa.084.4147.i96 = phi i64 [ %i.nv, %bb.cl ], [ 0, %bb.ch ]
   %i.nn = load i8, ptr %.sroa.0.4149.i94, align 1, !alias.scope !287, !noalias !288, !noundef !4
   %i.no = zext i8 %i.nn to i32
   %i.np = add nsw i32 %i.no, -48                  ; 2 uses
@@ -466,8 +458,8 @@ bb.cl:                                            ; preds = %.lr.ph150.i93
   %i.nx = trunc nuw i8 %i.nw to i1
   br i1 %i.nx, label %bb.db, label %bb.dc
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit100: ; preds = %bb.cf, %bb.cg, %bb.ck, %bb.cl, %.preheader.i91
-  %.sroa.15326.0 = phi i64 [ %i.nm, %bb.ck ], [ %i.my, %bb.cg ], [ %i.nv, %bb.cl ], [ 0, %.preheader.i91 ], [ %i.mp, %bb.cf ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit100: ; preds = %bb.cf, %bb.cg, %bb.ck, %bb.cl
+  %.sroa.15326.0 = phi i64 [ %i.nm, %bb.ck ], [ %i.my, %bb.cg ], [ %i.nv, %bb.cl ], [ %i.mp, %bb.cf ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECshytdrR3ujnR_10uu_pathchk(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ah, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 6, i64 noundef %.sroa.15326.0) #18
   br label %bb.cm
 
@@ -870,14 +862,10 @@ bb.ds:                                            ; preds = %.lr.ph141.i171
   br i1 %.not103.i175, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit193, label %.lr.ph141.i171
 
 bb.dt:                                            ; preds = %bb.dm, %bb.dn, %thread-pre-split.i191
-  %.sroa.26.0.i176 = phi i64 [ %i.rc, %bb.dn ], [ %i.bd, %thread-pre-split.i191 ], [ %i.bd, %bb.dm ] ; 4 uses
+  %.sroa.26.0.i176 = phi i64 [ %i.rc, %bb.dn ], [ %i.bd, %thread-pre-split.i191 ], [ %i.bd, %bb.dm ] ; 3 uses
   %.sroa.0.0.i177 = phi ptr [ %i.rb, %bb.dn ], [ %i.bg, %thread-pre-split.i191 ], [ %i.bg, %bb.dm ] ; 2 uses
   %i.sc = icmp samesign ult i64 %.sroa.26.0.i176, 16
-  br i1 %i.sc, label %.preheader.i184, label %.preheader111.i178
-
-.preheader.i184:                                  ; preds = %bb.dt
-  %.not105146.i185 = icmp eq i64 %.sroa.26.0.i176, 0
-  br i1 %.not105146.i185, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit193, label %.lr.ph150.i186
+  br i1 %i.sc, label %.lr.ph150.i186, label %.preheader111.i178
 
 .preheader111.i178:                               ; preds = %bb.dt, %bb.dw
   %.sroa.0.3145.i179 = phi ptr [ %i.sd, %bb.dw ], [ %.sroa.0.0.i177, %bb.dt ] ; 2 uses
@@ -908,10 +896,10 @@ bb.dw:                                            ; preds = %bb.dv
   %.not104.i183 = icmp eq i64 %i.se, 0
   br i1 %.not104.i183, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit193, label %.preheader111.i178
 
-.lr.ph150.i186:                                   ; preds = %.preheader.i184, %bb.dx
-  %.sroa.0.4149.i187 = phi ptr [ %i.sw, %bb.dx ], [ %.sroa.0.0.i177, %.preheader.i184 ] ; 2 uses
-  %.sroa.26.4148.i188 = phi i64 [ %i.sv, %bb.dx ], [ %.sroa.26.0.i176, %.preheader.i184 ]
-  %.sroa.084.4147.i189 = phi i64 [ %i.sy, %bb.dx ], [ 0, %.preheader.i184 ]
+.lr.ph150.i186:                                   ; preds = %bb.dt, %bb.dx
+  %.sroa.0.4149.i187 = phi ptr [ %i.sw, %bb.dx ], [ %.sroa.0.0.i177, %bb.dt ] ; 2 uses
+  %.sroa.26.4148.i188 = phi i64 [ %i.sv, %bb.dx ], [ %.sroa.26.0.i176, %bb.dt ]
+  %.sroa.084.4147.i189 = phi i64 [ %i.sy, %bb.dx ], [ 0, %bb.dt ]
   %i.sq = load i8, ptr %.sroa.0.4149.i187, align 1, !alias.scope !299, !noalias !300, !noundef !4
   %i.sr = zext i8 %i.sq to i32
   %i.ss = add nsw i32 %i.sr, -48                  ; 2 uses
@@ -935,8 +923,8 @@ bb.dx:                                            ; preds = %.lr.ph150.i186
   %i.ta = trunc nuw i8 %i.sz to i1
   br i1 %i.ta, label %bb.ea, label %bb.eb
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit193: ; preds = %bb.dr, %bb.ds, %bb.dw, %bb.dx, %.preheader.i184
-  %.sroa.15296.0 = phi i64 [ %i.sp, %bb.dw ], [ %i.sb, %bb.ds ], [ %i.sy, %bb.dx ], [ 0, %.preheader.i184 ], [ %i.rs, %bb.dr ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit193: ; preds = %bb.dr, %bb.ds, %bb.dw, %bb.dx
+  %.sroa.15296.0 = phi i64 [ %i.sp, %bb.dw ], [ %i.sb, %bb.ds ], [ %i.sy, %bb.dx ], [ %i.rs, %bb.dr ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECshytdrR3ujnR_10uu_pathchk(ptr noalias nofree noundef align 8 dereferenceable(24) %i.av, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 5, i64 noundef %.sroa.15296.0) #18
   br label %bb.dy
 
@@ -1067,14 +1055,10 @@ bb.ek:                                            ; preds = %.lr.ph141.i208
   br i1 %.not103.i212, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit230, label %.lr.ph141.i208
 
 bb.el:                                            ; preds = %bb.ee, %bb.ef, %thread-pre-split.i228
-  %.sroa.26.0.i213 = phi i64 [ %i.tn, %bb.ef ], [ %i.te, %thread-pre-split.i228 ], [ %i.te, %bb.ee ] ; 4 uses
+  %.sroa.26.0.i213 = phi i64 [ %i.tn, %bb.ef ], [ %i.te, %thread-pre-split.i228 ], [ %i.te, %bb.ee ] ; 3 uses
   %.sroa.0.0.i214 = phi ptr [ %i.tm, %bb.ef ], [ %i.th, %thread-pre-split.i228 ], [ %i.th, %bb.ee ] ; 2 uses
   %i.un = icmp samesign ult i64 %.sroa.26.0.i213, 16
-  br i1 %i.un, label %.preheader.i221, label %.preheader111.i215
-
-.preheader.i221:                                  ; preds = %bb.el
-  %.not105146.i222 = icmp eq i64 %.sroa.26.0.i213, 0
-  br i1 %.not105146.i222, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit230, label %.lr.ph150.i223
+  br i1 %i.un, label %.lr.ph150.i223, label %.preheader111.i215
 
 .preheader111.i215:                               ; preds = %bb.el, %bb.eo
   %.sroa.0.3145.i216 = phi ptr [ %i.uo, %bb.eo ], [ %.sroa.0.0.i214, %bb.el ] ; 2 uses
@@ -1105,10 +1089,10 @@ bb.eo:                                            ; preds = %bb.en
   %.not104.i220 = icmp eq i64 %i.up, 0
   br i1 %.not104.i220, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit230, label %.preheader111.i215
 
-.lr.ph150.i223:                                   ; preds = %.preheader.i221, %bb.ep
-  %.sroa.0.4149.i224 = phi ptr [ %i.vh, %bb.ep ], [ %.sroa.0.0.i214, %.preheader.i221 ] ; 2 uses
-  %.sroa.26.4148.i225 = phi i64 [ %i.vg, %bb.ep ], [ %.sroa.26.0.i213, %.preheader.i221 ]
-  %.sroa.084.4147.i226 = phi i64 [ %i.vj, %bb.ep ], [ 0, %.preheader.i221 ]
+.lr.ph150.i223:                                   ; preds = %bb.el, %bb.ep
+  %.sroa.0.4149.i224 = phi ptr [ %i.vh, %bb.ep ], [ %.sroa.0.0.i214, %bb.el ] ; 2 uses
+  %.sroa.26.4148.i225 = phi i64 [ %i.vg, %bb.ep ], [ %.sroa.26.0.i213, %bb.el ]
+  %.sroa.084.4147.i226 = phi i64 [ %i.vj, %bb.ep ], [ 0, %bb.el ]
   %i.vb = load i8, ptr %.sroa.0.4149.i224, align 1, !alias.scope !302, !noalias !303, !noundef !4
   %i.vc = zext i8 %i.vb to i32
   %i.vd = add nsw i32 %i.vc, -48                  ; 2 uses
@@ -1132,8 +1116,8 @@ bb.ep:                                            ; preds = %.lr.ph150.i223
   %i.vl = trunc nuw i8 %i.vk to i1
   br i1 %i.vl, label %bb.eq, label %bb.er
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit230: ; preds = %bb.ej, %bb.ek, %bb.eo, %bb.ep, %.preheader.i221
-  %.sroa.15303.0 = phi i64 [ %i.va, %bb.eo ], [ %i.um, %bb.ek ], [ %i.vj, %bb.ep ], [ 0, %.preheader.i221 ], [ %i.ud, %bb.ej ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit230: ; preds = %bb.ej, %bb.ek, %bb.eo, %bb.ep
+  %.sroa.15303.0 = phi i64 [ %i.va, %bb.eo ], [ %i.um, %bb.ek ], [ %i.vj, %bb.ep ], [ %i.ud, %bb.ej ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECshytdrR3ujnR_10uu_pathchk(ptr noalias nofree noundef align 8 dereferenceable(24) %i.av, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 6, i64 noundef %.sroa.15303.0) #18
   br label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i232
 
@@ -1536,14 +1520,10 @@ bb.y:                                             ; preds = %.lr.ph141.i
   br i1 %.not103.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit, label %.lr.ph141.i
 
 bb.z:                                             ; preds = %bb.s, %bb.t, %thread-pre-split.i
-  %.sroa.26.0.i = phi i64 [ %i.cq, %bb.t ], [ %i.cj, %thread-pre-split.i ], [ %i.cj, %bb.s ] ; 4 uses
+  %.sroa.26.0.i = phi i64 [ %i.cq, %bb.t ], [ %i.cj, %thread-pre-split.i ], [ %i.cj, %bb.s ] ; 3 uses
   %.sroa.0.0.i = phi ptr [ %i.cp, %bb.t ], [ %i.cm, %thread-pre-split.i ], [ %i.cm, %bb.s ] ; 2 uses
   %i.dq = icmp samesign ult i64 %.sroa.26.0.i, 16
-  br i1 %i.dq, label %.preheader.i, label %.preheader111.i
-
-.preheader.i:                                     ; preds = %bb.z
-  %.not105146.i = icmp eq i64 %.sroa.26.0.i, 0
-  br i1 %.not105146.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit, label %.lr.ph150.i
+  br i1 %i.dq, label %.lr.ph150.i, label %.preheader111.i
 
 .preheader111.i:                                  ; preds = %bb.z, %bb.ac
   %.sroa.0.3145.i = phi ptr [ %i.dr, %bb.ac ], [ %.sroa.0.0.i, %bb.z ] ; 2 uses
@@ -1574,10 +1554,10 @@ bb.ac:                                            ; preds = %bb.ab
   %.not104.i = icmp eq i64 %i.ds, 0
   br i1 %.not104.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit, label %.preheader111.i
 
-.lr.ph150.i:                                      ; preds = %.preheader.i, %bb.ad
-  %.sroa.0.4149.i = phi ptr [ %i.ek, %bb.ad ], [ %.sroa.0.0.i, %.preheader.i ] ; 2 uses
-  %.sroa.26.4148.i = phi i64 [ %i.ej, %bb.ad ], [ %.sroa.26.0.i, %.preheader.i ]
-  %.sroa.084.4147.i = phi i64 [ %i.em, %bb.ad ], [ 0, %.preheader.i ]
+.lr.ph150.i:                                      ; preds = %bb.z, %bb.ad
+  %.sroa.0.4149.i = phi ptr [ %i.ek, %bb.ad ], [ %.sroa.0.0.i, %bb.z ] ; 2 uses
+  %.sroa.26.4148.i = phi i64 [ %i.ej, %bb.ad ], [ %.sroa.26.0.i, %bb.z ]
+  %.sroa.084.4147.i = phi i64 [ %i.em, %bb.ad ], [ 0, %bb.z ]
   %i.ee = load i8, ptr %.sroa.0.4149.i, align 1, !alias.scope !411, !noalias !412, !noundef !4
   %i.ef = zext i8 %i.ee to i32
   %i.eg = add nsw i32 %i.ef, -48                  ; 2 uses
@@ -1601,8 +1581,8 @@ bb.ad:                                            ; preds = %.lr.ph150.i
   %i.eo = trunc nuw i8 %i.en to i1
   br i1 %i.eo, label %bb.ag, label %bb.ah
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit: ; preds = %bb.x, %bb.y, %bb.ac, %bb.ad, %.preheader.i
-  %.sroa.15333.0 = phi i64 [ %i.ed, %bb.ac ], [ %i.dp, %bb.y ], [ %i.em, %bb.ad ], [ 0, %.preheader.i ], [ %i.dg, %bb.x ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit: ; preds = %bb.x, %bb.y, %bb.ac, %bb.ad
+  %.sroa.15333.0 = phi i64 [ %i.ed, %bb.ac ], [ %i.dp, %bb.y ], [ %i.em, %bb.ad ], [ %i.dg, %bb.x ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECshytdrR3ujnR_10uu_pathchk(ptr noalias nofree noundef align 8 dereferenceable(24) %i.y, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 5, i64 noundef %.sroa.15333.0) #18
   br label %bb.ae
 
@@ -1733,14 +1713,10 @@ bb.aq:                                            ; preds = %.lr.ph141.i87
   br i1 %.not103.i91, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit109, label %.lr.ph141.i87
 
 bb.ar:                                            ; preds = %bb.ak, %bb.al, %thread-pre-split.i107
-  %.sroa.26.0.i92 = phi i64 [ %i.fb, %bb.al ], [ %i.es, %thread-pre-split.i107 ], [ %i.es, %bb.ak ] ; 4 uses
+  %.sroa.26.0.i92 = phi i64 [ %i.fb, %bb.al ], [ %i.es, %thread-pre-split.i107 ], [ %i.es, %bb.ak ] ; 3 uses
   %.sroa.0.0.i93 = phi ptr [ %i.fa, %bb.al ], [ %i.ev, %thread-pre-split.i107 ], [ %i.ev, %bb.ak ] ; 2 uses
   %i.gb = icmp samesign ult i64 %.sroa.26.0.i92, 16
-  br i1 %i.gb, label %.preheader.i100, label %.preheader111.i94
-
-.preheader.i100:                                  ; preds = %bb.ar
-  %.not105146.i101 = icmp eq i64 %.sroa.26.0.i92, 0
-  br i1 %.not105146.i101, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit109, label %.lr.ph150.i102
+  br i1 %i.gb, label %.lr.ph150.i102, label %.preheader111.i94
 
 .preheader111.i94:                                ; preds = %bb.ar, %bb.au
   %.sroa.0.3145.i95 = phi ptr [ %i.gc, %bb.au ], [ %.sroa.0.0.i93, %bb.ar ] ; 2 uses
@@ -1771,10 +1747,10 @@ bb.au:                                            ; preds = %bb.at
   %.not104.i99 = icmp eq i64 %i.gd, 0
   br i1 %.not104.i99, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit109, label %.preheader111.i94
 
-.lr.ph150.i102:                                   ; preds = %.preheader.i100, %bb.av
-  %.sroa.0.4149.i103 = phi ptr [ %i.gv, %bb.av ], [ %.sroa.0.0.i93, %.preheader.i100 ] ; 2 uses
-  %.sroa.26.4148.i104 = phi i64 [ %i.gu, %bb.av ], [ %.sroa.26.0.i92, %.preheader.i100 ]
-  %.sroa.084.4147.i105 = phi i64 [ %i.gx, %bb.av ], [ 0, %.preheader.i100 ]
+.lr.ph150.i102:                                   ; preds = %bb.ar, %bb.av
+  %.sroa.0.4149.i103 = phi ptr [ %i.gv, %bb.av ], [ %.sroa.0.0.i93, %bb.ar ] ; 2 uses
+  %.sroa.26.4148.i104 = phi i64 [ %i.gu, %bb.av ], [ %.sroa.26.0.i92, %bb.ar ]
+  %.sroa.084.4147.i105 = phi i64 [ %i.gx, %bb.av ], [ 0, %bb.ar ]
   %i.gp = load i8, ptr %.sroa.0.4149.i103, align 1, !alias.scope !414, !noalias !415, !noundef !4
   %i.gq = zext i8 %i.gp to i32
   %i.gr = add nsw i32 %i.gq, -48                  ; 2 uses
@@ -1798,8 +1774,8 @@ bb.av:                                            ; preds = %.lr.ph150.i102
   %i.gz = trunc nuw i8 %i.gy to i1
   br i1 %i.gz, label %bb.bl, label %bb.bm
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit109: ; preds = %bb.ap, %bb.aq, %bb.au, %bb.av, %.preheader.i100
-  %.sroa.15340.0 = phi i64 [ %i.go, %bb.au ], [ %i.ga, %bb.aq ], [ %i.gx, %bb.av ], [ 0, %.preheader.i100 ], [ %i.fr, %bb.ap ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit109: ; preds = %bb.ap, %bb.aq, %bb.au, %bb.av
+  %.sroa.15340.0 = phi i64 [ %i.go, %bb.au ], [ %i.ga, %bb.aq ], [ %i.gx, %bb.av ], [ %i.fr, %bb.ap ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECshytdrR3ujnR_10uu_pathchk(ptr noalias nofree noundef align 8 dereferenceable(24) %i.y, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 6, i64 noundef %.sroa.15340.0) #18
   br label %bb.aw
 
@@ -2202,14 +2178,10 @@ bb.cb:                                            ; preds = %.lr.ph141.i174
   br i1 %.not103.i178, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit196, label %.lr.ph141.i174
 
 bb.cc:                                            ; preds = %bb.bv, %bb.bw, %thread-pre-split.i194
-  %.sroa.26.0.i179 = phi i64 [ %i.kd, %bb.bw ], [ %i.av, %thread-pre-split.i194 ], [ %i.av, %bb.bv ] ; 4 uses
+  %.sroa.26.0.i179 = phi i64 [ %i.kd, %bb.bw ], [ %i.av, %thread-pre-split.i194 ], [ %i.av, %bb.bv ] ; 3 uses
   %.sroa.0.0.i180 = phi ptr [ %i.kc, %bb.bw ], [ %i.ay, %thread-pre-split.i194 ], [ %i.ay, %bb.bv ] ; 2 uses
   %i.ld = icmp samesign ult i64 %.sroa.26.0.i179, 16
-  br i1 %i.ld, label %.preheader.i187, label %.preheader111.i181
-
-.preheader.i187:                                  ; preds = %bb.cc
-  %.not105146.i188 = icmp eq i64 %.sroa.26.0.i179, 0
-  br i1 %.not105146.i188, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit196, label %.lr.ph150.i189
+  br i1 %i.ld, label %.lr.ph150.i189, label %.preheader111.i181
 
 .preheader111.i181:                               ; preds = %bb.cc, %bb.cf
   %.sroa.0.3145.i182 = phi ptr [ %i.le, %bb.cf ], [ %.sroa.0.0.i180, %bb.cc ] ; 2 uses
@@ -2240,10 +2212,10 @@ bb.cf:                                            ; preds = %bb.ce
   %.not104.i186 = icmp eq i64 %i.lf, 0
   br i1 %.not104.i186, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit196, label %.preheader111.i181
 
-.lr.ph150.i189:                                   ; preds = %.preheader.i187, %bb.cg
-  %.sroa.0.4149.i190 = phi ptr [ %i.lx, %bb.cg ], [ %.sroa.0.0.i180, %.preheader.i187 ] ; 2 uses
-  %.sroa.26.4148.i191 = phi i64 [ %i.lw, %bb.cg ], [ %.sroa.26.0.i179, %.preheader.i187 ]
-  %.sroa.084.4147.i192 = phi i64 [ %i.lz, %bb.cg ], [ 0, %.preheader.i187 ]
+.lr.ph150.i189:                                   ; preds = %bb.cc, %bb.cg
+  %.sroa.0.4149.i190 = phi ptr [ %i.lx, %bb.cg ], [ %.sroa.0.0.i180, %bb.cc ] ; 2 uses
+  %.sroa.26.4148.i191 = phi i64 [ %i.lw, %bb.cg ], [ %.sroa.26.0.i179, %bb.cc ]
+  %.sroa.084.4147.i192 = phi i64 [ %i.lz, %bb.cg ], [ 0, %bb.cc ]
   %i.lr = load i8, ptr %.sroa.0.4149.i190, align 1, !alias.scope !426, !noalias !427, !noundef !4
   %i.ls = zext i8 %i.lr to i32
   %i.lt = add nsw i32 %i.ls, -48                  ; 2 uses
@@ -2267,8 +2239,8 @@ bb.cg:                                            ; preds = %.lr.ph150.i189
   %i.mb = trunc nuw i8 %i.ma to i1
   br i1 %i.mb, label %bb.cj, label %bb.ck
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit196: ; preds = %bb.ca, %bb.cb, %bb.cf, %bb.cg, %.preheader.i187
-  %.sroa.15300.0 = phi i64 [ %i.lq, %bb.cf ], [ %i.lc, %bb.cb ], [ %i.lz, %bb.cg ], [ 0, %.preheader.i187 ], [ %i.kt, %bb.ca ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit196: ; preds = %bb.ca, %bb.cb, %bb.cf, %bb.cg
+  %.sroa.15300.0 = phi i64 [ %i.lq, %bb.cf ], [ %i.lc, %bb.cb ], [ %i.lz, %bb.cg ], [ %i.kt, %bb.ca ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECshytdrR3ujnR_10uu_pathchk(ptr noalias nofree noundef align 8 dereferenceable(24) %i.an, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 5, i64 noundef %.sroa.15300.0) #18
   br label %bb.ch
 
@@ -2399,14 +2371,10 @@ bb.ct:                                            ; preds = %.lr.ph141.i211
   br i1 %.not103.i215, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit233, label %.lr.ph141.i211
 
 bb.cu:                                            ; preds = %bb.cn, %bb.co, %thread-pre-split.i231
-  %.sroa.26.0.i216 = phi i64 [ %i.mo, %bb.co ], [ %i.mf, %thread-pre-split.i231 ], [ %i.mf, %bb.cn ] ; 4 uses
+  %.sroa.26.0.i216 = phi i64 [ %i.mo, %bb.co ], [ %i.mf, %thread-pre-split.i231 ], [ %i.mf, %bb.cn ] ; 3 uses
   %.sroa.0.0.i217 = phi ptr [ %i.mn, %bb.co ], [ %i.mi, %thread-pre-split.i231 ], [ %i.mi, %bb.cn ] ; 2 uses
   %i.no = icmp samesign ult i64 %.sroa.26.0.i216, 16
-  br i1 %i.no, label %.preheader.i224, label %.preheader111.i218
-
-.preheader.i224:                                  ; preds = %bb.cu
-  %.not105146.i225 = icmp eq i64 %.sroa.26.0.i216, 0
-  br i1 %.not105146.i225, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit233, label %.lr.ph150.i226
+  br i1 %i.no, label %.lr.ph150.i226, label %.preheader111.i218
 
 .preheader111.i218:                               ; preds = %bb.cu, %bb.cx
   %.sroa.0.3145.i219 = phi ptr [ %i.np, %bb.cx ], [ %.sroa.0.0.i217, %bb.cu ] ; 2 uses
@@ -2437,10 +2405,10 @@ bb.cx:                                            ; preds = %bb.cw
   %.not104.i223 = icmp eq i64 %i.nq, 0
   br i1 %.not104.i223, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit233, label %.preheader111.i218
 
-.lr.ph150.i226:                                   ; preds = %.preheader.i224, %bb.cy
-  %.sroa.0.4149.i227 = phi ptr [ %i.oi, %bb.cy ], [ %.sroa.0.0.i217, %.preheader.i224 ] ; 2 uses
-  %.sroa.26.4148.i228 = phi i64 [ %i.oh, %bb.cy ], [ %.sroa.26.0.i216, %.preheader.i224 ]
-  %.sroa.084.4147.i229 = phi i64 [ %i.ok, %bb.cy ], [ 0, %.preheader.i224 ]
+.lr.ph150.i226:                                   ; preds = %bb.cu, %bb.cy
+  %.sroa.0.4149.i227 = phi ptr [ %i.oi, %bb.cy ], [ %.sroa.0.0.i217, %bb.cu ] ; 2 uses
+  %.sroa.26.4148.i228 = phi i64 [ %i.oh, %bb.cy ], [ %.sroa.26.0.i216, %bb.cu ]
+  %.sroa.084.4147.i229 = phi i64 [ %i.ok, %bb.cy ], [ 0, %bb.cu ]
   %i.oc = load i8, ptr %.sroa.0.4149.i227, align 1, !alias.scope !429, !noalias !430, !noundef !4
   %i.od = zext i8 %i.oc to i32
   %i.oe = add nsw i32 %i.od, -48                  ; 2 uses
@@ -2464,8 +2432,8 @@ bb.cy:                                            ; preds = %.lr.ph150.i226
   %i.om = trunc nuw i8 %i.ol to i1
   br i1 %i.om, label %bb.do, label %bb.dp
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit233: ; preds = %bb.cs, %bb.ct, %bb.cx, %bb.cy, %.preheader.i224
-  %.sroa.15307.0 = phi i64 [ %i.ob, %bb.cx ], [ %i.nn, %bb.ct ], [ %i.ok, %bb.cy ], [ 0, %.preheader.i224 ], [ %i.ne, %bb.cs ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit233: ; preds = %bb.cs, %bb.ct, %bb.cx, %bb.cy
+  %.sroa.15307.0 = phi i64 [ %i.ob, %bb.cx ], [ %i.nn, %bb.ct ], [ %i.ok, %bb.cy ], [ %i.ne, %bb.cs ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECshytdrR3ujnR_10uu_pathchk(ptr noalias nofree noundef align 8 dereferenceable(24) %i.an, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 6, i64 noundef %.sroa.15307.0) #18
   br label %bb.cz
 

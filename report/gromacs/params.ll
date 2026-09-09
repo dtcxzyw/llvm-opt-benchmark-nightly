@@ -205,14 +205,14 @@ bb.hc:                                            ; preds = %bb.hb
   br i1 %i.xt, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %.thread15.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.hc
-  %136 = add i64 %.val162, -2                     ; 3 uses
   %i.xu = load ptr, ptr %.084, align 8, !tbaa !25 ; 3 uses
   %i.xv = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.xu) #27 ; 3 uses
-  %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.xv, i64 %136) ; 2 uses
-  %i.xw = icmp eq i64 %.sroa.speculated.i.i, 0
-  br i1 %i.xw, label %137, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
+  %i.xw = icmp eq i64 %i.xv, 0
+  br i1 %i.xw, label %.thread15.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
+  %136 = add i64 %.val162, -2                     ; 2 uses
+  %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.xv, i64 %136)
   %i.xx = getelementptr inbounds nuw i8, ptr %.val, i64 2
   %bcmp.i = call i32 @bcmp(ptr nonnull readonly %i.xx, ptr nonnull %i.xu, i64 %.sroa.speculated.i.i)
   %.not.i.i206 = icmp eq i32 %bcmp.i, 0
@@ -220,11 +220,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %_ZNKSt7__cxx1112bas
   %or.cond.i = and i1 %i.xy, %.not.i.i206
   br i1 %or.cond.i, label %bb.hd, label %.thread15.i
 
-137:                                              ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
-  %.old.i = icmp eq i64 %136, %i.xv
-  br i1 %.old.i, label %bb.hd, label %.thread15.i
-
-bb.hd:                                            ; preds = %137, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
+bb.hd:                                            ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
   br i1 %i.xc, label %_ZL17parse_values_boolRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_4listIN3gmx20SelectionParserValueESaIS9_EEEP18gmx_ana_selparam_tPv.exit, label %bb.he
 
 bb.he:                                            ; preds = %bb.hd
@@ -307,7 +303,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43.i: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %89) #27
   br label %.body
 
-.thread15.i:                                      ; preds = %137, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.hc, %bb.hb, %bb.ha
+.thread15.i:                                      ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, %bb.hc, %bb.hb, %bb.ha
   br i1 %i.xc, label %_ZL17parse_values_boolRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_4listIN3gmx20SelectionParserValueESaIS9_EEEP18gmx_ana_selparam_tPv.exit, label %bb.hl
 
 bb.hl:                                            ; preds = %.thread15.i

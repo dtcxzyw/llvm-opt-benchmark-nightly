@@ -205,9 +205,9 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !277
   %i.e = sub i32 %i.b, %i.d                       ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %.sroa.054.0.copyload = load ptr, ptr %i.f, align 8, !tbaa !150 ; 8 uses
+  %.sroa.054.0.copyload = load ptr, ptr %i.f, align 8, !tbaa !150 ; 7 uses
   %.sroa.255.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %.sroa.255.0.copyload = load i64, ptr %.sroa.255.0..sroa_idx, align 8, !tbaa !151 ; 7 uses
+  %.sroa.255.0.copyload = load i64, ptr %.sroa.255.0..sroa_idx, align 8, !tbaa !151 ; 6 uses
   %i.g = icmp ult i64 %.sroa.255.0.copyload, 5
   br i1 %i.g, label %_ZN5clang6formatL21getRawStringDelimiterEN4llvm9StringRefE.exit, label %_ZNK4llvm9StringRef11starts_withES0_.exit.i
 
@@ -240,19 +240,13 @@ _ZNK4llvm9StringRef13find_first_ofEcm.exit.i:     ; preds = %_ZNSt11char_traitsI
 
 bb.b:                                             ; preds = %_ZNK4llvm9StringRef13find_first_ofEcm.exit.i
   %i.t = add i64 %i.r, -2
+  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.054.0.copyload, i64 2
   %28 = add i64 %.sroa.255.0.copyload, -2
-  %.sroa.speculated.i6.i = tail call i64 @llvm.umin.i64(i64 %28, i64 %i.t) ; 2 uses
-  %29 = sub nuw i64 %.sroa.255.0.copyload, %.sroa.speculated.i6.i
-  %30 = getelementptr i8, ptr %.sroa.054.0.copyload, i64 %29
-  %i.u = getelementptr i8, ptr %30, i64 -2
-  %31 = load i8, ptr %i.u, align 1, !tbaa !46, !noalias !496
-  %.not.i = icmp eq i8 %31, 41
-  %32 = getelementptr inbounds nuw i8, ptr %.sroa.054.0.copyload, i64 2
-  %spec.select219 = select i1 %.not.i, ptr %32, ptr undef
+  %.sroa.speculated.i6.i = tail call i64 @llvm.umin.i64(i64 %28, i64 %i.t)
   br label %_ZN5clang6formatL21getRawStringDelimiterEN4llvm9StringRefE.exit
 
 _ZN5clang6formatL21getRawStringDelimiterEN4llvm9StringRefE.exit: ; preds = %bb.b, %bb.a, %_ZNK4llvm9StringRef11starts_withES0_.exit.i, %_ZNK4llvm9StringRef9ends_withES0_.exit.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i, %_ZNK4llvm9StringRef13find_first_ofEcm.exit.i
-  %.sroa.0185.0 = phi ptr [ undef, %bb.a ], [ undef, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ], [ undef, %_ZNK4llvm9StringRef13find_first_ofEcm.exit.i ], [ undef, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ undef, %_ZNK4llvm9StringRef9ends_withES0_.exit.i ], [ %spec.select219, %bb.b ] ; 4 uses
+  %.sroa.0185.0 = phi ptr [ undef, %bb.a ], [ undef, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ], [ undef, %_ZNK4llvm9StringRef13find_first_ofEcm.exit.i ], [ undef, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ undef, %_ZNK4llvm9StringRef9ends_withES0_.exit.i ], [ %i.u, %bb.b ] ; 4 uses
   %.sroa.4186.0 = phi i64 [ undef, %bb.a ], [ undef, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ], [ undef, %_ZNK4llvm9StringRef13find_first_ofEcm.exit.i ], [ undef, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ undef, %_ZNK4llvm9StringRef9ends_withES0_.exit.i ], [ %.sroa.speculated.i6.i, %bb.b ] ; 12 uses
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 527
   %i.w = load i8, ptr %i.v, align 1, !tbaa !147
@@ -655,10 +649,10 @@ _ZNK4llvm9StringRef13find_first_ofEcm.exit.i:     ; preds = %_ZNSt11char_traitsI
   br i1 %i.q, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK4llvm9StringRef13find_first_ofEcm.exit.i
-  %i.r = add i64 %i.p, -2
+  %i.r = add i64 %i.p, -2                         ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.03.0.copyload, i64 2 ; 3 uses
   %i.t = add i64 %.sroa.24.0.copyload, -2
-  %.sroa.speculated.i6.i = tail call i64 @llvm.umin.i64(i64 %i.t, i64 %i.r) ; 5 uses
+  %.sroa.speculated.i6.i = tail call i64 @llvm.umin.i64(i64 %i.t, i64 %i.r) ; 4 uses
   %i.u = sub nuw i64 %.sroa.24.0.copyload, %.sroa.speculated.i6.i
   %i.v = getelementptr i8, ptr %.sroa.03.0.copyload, i64 %i.u ; 2 uses
   %i.w = getelementptr i8, ptr %i.v, i64 -2
@@ -667,7 +661,7 @@ bb.c:                                             ; preds = %_ZNK4llvm9StringRef
   br i1 %.not.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.y = icmp eq i64 %.sroa.speculated.i6.i, 0    ; 2 uses
+  %i.y = icmp eq i64 %i.r, 0                      ; 2 uses
   br i1 %i.y, label %_ZN5clang6formatL21getRawStringDelimiterEN4llvm9StringRefE.exit, label %_ZNK4llvm9StringRef11starts_withES0_.exit15.i
 
 _ZNK4llvm9StringRef11starts_withES0_.exit15.i:    ; preds = %bb.d

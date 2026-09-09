@@ -205,13 +205,12 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27395)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27396)
   %i.j = add nsw i32 %i.e, -37
-  %2 = icmp sgt i32 %i.e, 36
-  %narrow.i.i.i.i = select i1 %2, i32 %i.j, i32 2 ; 2 uses
+  %2 = icmp slt i32 %i.e, 37                      ; 2 uses
+  %narrow.i.i.i.i = select i1 %2, i32 2, i32 %i.j
   %i.k = zext nneg i32 %narrow.i.i.i.i to i64
   %i.l = add i64 %i.i, %i.k
   %i.m = mul i64 %i.l, -1065810590584100411       ; 2 uses
-  %3 = icmp eq i32 %narrow.i.i.i.i, 2
-  br i1 %3, label %bb.c, label %_RINvXsS_NtCs4NRVxsYgnAr_4core6optionINtB6_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB8_4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEBR_.exit.i.i
+  br i1 %2, label %bb.c, label %_RINvXsS_NtCs4NRVxsYgnAr_4core6optionINtB6_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB8_4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEBR_.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27397)
@@ -614,15 +613,14 @@ bb.f:                                             ; preds = %_RINvXs3_NtNtCs4NRV
   store i64 %i.cx, ptr %i.a, align 8, !alias.scope !27814, !noalias !27812
   call void @_RINvXs1r_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB7_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldENtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEB1X_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.ci, ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a)
   %i.cy = add nsw i32 %i.ck, -37
-  %2 = icmp samesign ugt i32 %i.ck, 36
-  %narrow.i.i.i = select i1 %2, i32 %i.cy, i32 2  ; 2 uses
+  %2 = icmp samesign ult i32 %i.ck, 37            ; 2 uses
+  %narrow.i.i.i = select i1 %2, i32 2, i32 %i.cy
   %i.cz = zext nneg i32 %narrow.i.i.i to i64
   %i.da = load i64, ptr %i.a, align 8, !alias.scope !27815, !noalias !27812, !noundef !6
   %i.db = add i64 %i.da, %i.cz
   %i.dc = mul i64 %i.db, -1065810590584100411     ; 2 uses
   store i64 %i.dc, ptr %i.a, align 8, !alias.scope !27815, !noalias !27812
-  %3 = icmp eq i32 %narrow.i.i.i, 2
-  br i1 %3, label %bb.g, label %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsRINtNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class10typed_dicts_1__9StructKeyRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtBK_22DynamicTypedDictAnchorNtNtBO_12special_form15TypedDictModuleENtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEBQ_.exit
+  br i1 %2, label %bb.g, label %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsRINtNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class10typed_dicts_1__9StructKeyRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtBK_22DynamicTypedDictAnchorNtNtBO_12special_form15TypedDictModuleENtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEBQ_.exit
 
 .sink.split.i.i.i:                                ; preds = %bb.g, %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherECsoTR8nlGN3X_18ty_python_semantic.exit.i.i
   %.sink3.i.i.i = phi ptr [ %i.a, %bb.g ], [ %i.ci, %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ]
@@ -836,15 +834,14 @@ bb.f:                                             ; preds = %_RINvXs3_NtNtCs4NRV
   store i64 %i.co, ptr %i.a, align 8, !alias.scope !27863, !noalias !27861
   call void @_RINvXs1r_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB7_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldENtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEB1X_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.bz, ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a)
   %i.cp = add nsw i32 %i.cb, -37
-  %2 = icmp samesign ugt i32 %i.cb, 36
-  %narrow.i.i.i = select i1 %2, i32 %i.cp, i32 2  ; 2 uses
+  %2 = icmp samesign ult i32 %i.cb, 37            ; 2 uses
+  %narrow.i.i.i = select i1 %2, i32 2, i32 %i.cp
   %i.cq = zext nneg i32 %narrow.i.i.i to i64
   %i.cr = load i64, ptr %i.a, align 8, !alias.scope !27864, !noalias !27861, !noundef !6
   %i.cs = add i64 %i.cr, %i.cq
   %i.ct = mul i64 %i.cs, -1065810590584100411     ; 2 uses
   store i64 %i.ct, ptr %i.a, align 8, !alias.scope !27864, !noalias !27861
-  %3 = icmp eq i32 %narrow.i.i.i, 2
-  br i1 %3, label %bb.g, label %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsRINtNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class10typed_dicts_1__9StructKeyReNtBK_22DynamicTypedDictAnchorNtNtBO_12special_form15TypedDictModuleENtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEBQ_.exit
+  br i1 %2, label %bb.g, label %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsRINtNvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class10typed_dicts_1__9StructKeyReNtBK_22DynamicTypedDictAnchorNtNtBO_12special_form15TypedDictModuleENtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEBQ_.exit
 
 .sink.split.i.i.i:                                ; preds = %bb.g, %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsReNtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherECsoTR8nlGN3X_18ty_python_semantic.exit.i.i
   %.sink3.i.i.i = phi ptr [ %i.a, %bb.g ], [ %i.bz, %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsReNtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ]
@@ -1247,16 +1244,15 @@ bb.a:
   %i.i = icmp ne i8 %i.h, 4
   tail call void @llvm.assume(i1 %i.i)
   %i.j = add nsw i8 %i.h, -2
-  %.inv.i.i = icmp samesign ult i8 %i.h, 2
-  %narrow.i.i = select i1 %.inv.i.i, i8 2, i8 %i.j ; 2 uses
+  %.inv.i.i = icmp samesign ult i8 %i.h, 2        ; 2 uses
+  %narrow.i.i = select i1 %.inv.i.i, i8 2, i8 %i.j
   %i.k = zext nneg i8 %narrow.i.i to i64
   %i.l = add i64 %i.f, %i.k
   %i.m = mul i64 %i.l, -1065810590584100411       ; 2 uses
-  %2 = icmp eq i8 %narrow.i.i, 2
   %i.n = zext nneg i8 %i.h to i64
   %i.o = add i64 %i.m, %i.n
   %i.p = mul i64 %i.o, -1065810590584100411
-  %storemerge.i.i = select i1 %2, i64 %i.p, i64 %i.m
+  %storemerge.i.i = select i1 %.inv.i.i, i64 %i.p, i64 %i.m
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 17
   %i.r = load i8, ptr %i.q, align 1, !range !32, !alias.scope !28393, !noalias !28394, !noundef !6
   %i.s = zext nneg i8 %i.r to i64
@@ -1659,15 +1655,14 @@ bb.f:                                             ; preds = %_RINvXsP_NtCskLngH8
   store i64 %i.cx, ptr %i.a, align 8, !alias.scope !29571, !noalias !29569
   call void @_RINvXs1r_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB7_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldENtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEB1X_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %1, ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a)
   %i.cy = add nsw i32 %i.ck, -37
-  %2 = icmp samesign ugt i32 %i.ck, 36
-  %narrow.i.i.i = select i1 %2, i32 %i.cy, i32 2  ; 2 uses
+  %2 = icmp samesign ult i32 %i.ck, 37            ; 2 uses
+  %narrow.i.i.i = select i1 %2, i32 2, i32 %i.cy
   %i.cz = zext nneg i32 %narrow.i.i.i to i64
   %i.da = load i64, ptr %i.a, align 8, !alias.scope !29572, !noalias !29569, !noundef !6
   %i.db = add i64 %i.da, %i.cz
   %i.dc = mul i64 %i.db, -1065810590584100411     ; 2 uses
   store i64 %i.dc, ptr %i.a, align 8, !alias.scope !29572, !noalias !29569
-  %3 = icmp eq i32 %narrow.i.i.i, 2
-  br i1 %3, label %bb.g, label %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsRTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class10typed_dict22DynamicTypedDictAnchorNtNtB1v_12special_form15TypedDictModuleENtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEB1x_.exit
+  br i1 %2, label %bb.g, label %_RINvXs3_NtNtCs4NRVxsYgnAr_4core4hash5implsRTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class10typed_dict22DynamicTypedDictAnchorNtNtB1v_12special_form15TypedDictModuleENtB8_4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEB1x_.exit
 
 .sink.split.i.i.i:                                ; preds = %bb.g, %_RINvXsP_NtCskLngH8kgpZI_15ruff_python_ast4nameNtB6_4NameNtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherECsoTR8nlGN3X_18ty_python_semantic.exit.i.i
   %.sink3.i.i.i = phi ptr [ %i.a, %bb.g ], [ %1, %_RINvXsP_NtCskLngH8kgpZI_15ruff_python_ast4nameNtB6_4NameNtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ]
@@ -2070,17 +2065,16 @@ bb.a:
   %i.e = icmp ne i8 %.val.i.i, 4
   tail call void @llvm.assume(i1 %i.e)
   %i.f = add nsw i8 %.val.i.i, -2
-  %.inv.i.i.i = icmp samesign ult i8 %.val.i.i, 2
-  %narrow.i.i.i = select i1 %.inv.i.i.i, i8 2, i8 %i.f ; 2 uses
+  %.inv.i.i.i = icmp samesign ult i8 %.val.i.i, 2 ; 2 uses
+  %narrow.i.i.i = select i1 %.inv.i.i.i, i8 2, i8 %i.f
   %i.g = zext nneg i8 %narrow.i.i.i to i64
   %i.h = load i64, ptr %i.a, align 8, !alias.scope !29810, !noalias !29807, !noundef !6
   %i.i = add i64 %i.h, %i.g
   %i.j = mul i64 %i.i, -1065810590584100411       ; 2 uses
-  %2 = icmp eq i8 %narrow.i.i.i, 2
   %i.k = zext nneg i8 %.val.i.i to i64
   %i.l = add i64 %i.j, %i.k
   %i.m = mul i64 %i.l, -1065810590584100411
-  %storemerge.i.i.i = select i1 %2, i64 %i.m, i64 %i.j
+  %storemerge.i.i.i = select i1 %.inv.i.i.i, i64 %i.m, i64 %i.j
   %.val1.i.i = load i8, ptr %i.d, align 1, !range !32, !alias.scope !29807, !noalias !29809, !noundef !6
   %i.n = zext nneg i8 %.val1.i.i to i64
   %i.o = add i64 %storemerge.i.i.i, %i.n
@@ -2483,13 +2477,12 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30308)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30309)
   %i.k = add nsw i32 %i.f, -37
-  %2 = icmp sgt i32 %i.f, 36
-  %narrow.i.i.i.i = select i1 %2, i32 %i.k, i32 2 ; 2 uses
+  %2 = icmp slt i32 %i.f, 37                      ; 2 uses
+  %narrow.i.i.i.i = select i1 %2, i32 2, i32 %i.k
   %i.l = zext nneg i32 %narrow.i.i.i.i to i64
   %i.m = add i64 %i.j, %i.l
   %i.n = mul i64 %i.m, -1065810590584100411       ; 2 uses
-  %3 = icmp eq i32 %narrow.i.i.i.i, 2
-  br i1 %3, label %bb.c, label %_RINvXsS_NtCs4NRVxsYgnAr_4core6optionINtB6_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB8_4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEBR_.exit.i.i
+  br i1 %2, label %bb.c, label %_RINvXsS_NtCs4NRVxsYgnAr_4core6optionINtB6_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar35TypeVarBoundOrConstraintsEvaluationENtNtB8_4hash4Hash4hashNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEBR_.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30310)

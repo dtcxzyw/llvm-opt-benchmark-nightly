@@ -204,32 +204,24 @@ bb.d:                                             ; preds = %bb.c
   %i.h = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #18 ; 4 uses
   %i.i = add i32 %.val30, -2
   %or.cond.i.i = icmp ult i32 %i.i, 7
-  %spec.store.select.i.i = select i1 %or.cond.i.i, i32 8, i32 %i.g ; 3 uses
+  %spec.store.select.i.i = select i1 %or.cond.i.i, i32 8, i32 %i.g ; 2 uses
   store i32 %spec.store.select.i.i, ptr %i.h, align 8, !tbaa !99
-  %.not.i.i = icmp eq i32 %spec.store.select.i.i, 0
-  br i1 %.not.i.i, label %Vec_VecAlloc.exit.i, label %2
+  %2 = sext i32 %spec.store.select.i.i to i64
+  %3 = shl nsw i64 %2, 3
+  %4 = tail call noalias ptr @malloc(i64 noundef %3) #18 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  store ptr %4, ptr %5, align 8, !tbaa !35
+  %6 = icmp sgt i32 %.val30, 1
+  br i1 %6, label %.lr.ph.preheader.i, label %Vec_VecStart.exit
 
-2:                                                ; preds = %bb.d
-  %3 = sext i32 %spec.store.select.i.i to i64
-  %4 = shl nsw i64 %3, 3
-  %5 = tail call noalias ptr @malloc(i64 noundef %4) #18
-  br label %Vec_VecAlloc.exit.i
-
-Vec_VecAlloc.exit.i:                              ; preds = %2, %bb.d
-  %6 = phi ptr [ %5, %2 ], [ null, %bb.d ]        ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  store ptr %6, ptr %7, align 8, !tbaa !35
-  %8 = icmp sgt i32 %.val30, 1
-  br i1 %8, label %.lr.ph.preheader.i, label %Vec_VecStart.exit
-
-.lr.ph.preheader.i:                               ; preds = %Vec_VecAlloc.exit.i
+.lr.ph.preheader.i:                               ; preds = %bb.d
   %wide.trip.count.i = zext nneg i32 %i.g to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
   %calloc.i = tail call dereferenceable_or_null(16) ptr @calloc(i64 1, i64 16)
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv.i
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.i
   store ptr %calloc.i, ptr %i.j, align 8, !tbaa !36
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
@@ -270,9 +262,9 @@ Vec_VecAlloc.exit.i34:                            ; preds = %bb.f, %bb.e
   %exitcond.not.i41 = icmp eq i64 %indvars.iv.next.i40, %wide.trip.count.i36
   br i1 %exitcond.not.i41, label %Vec_VecStart.exit, label %.lr.ph.i37, !llvm.loop !96
 
-Vec_VecStart.exit:                                ; preds = %.lr.ph.i37, %.lr.ph.i, %Vec_VecAlloc.exit.i34, %Vec_VecAlloc.exit.i
-  %.sink67 = phi ptr [ %i.h, %Vec_VecAlloc.exit.i ], [ %i.k, %Vec_VecAlloc.exit.i34 ], [ %i.h, %.lr.ph.i ], [ %i.k, %.lr.ph.i37 ] ; 7 uses
-  %.val30.sink = phi i32 [ %i.g, %Vec_VecAlloc.exit.i ], [ %.val30, %Vec_VecAlloc.exit.i34 ], [ %i.g, %.lr.ph.i ], [ %.val30, %.lr.ph.i37 ] ; 3 uses
+Vec_VecStart.exit:                                ; preds = %.lr.ph.i37, %.lr.ph.i, %Vec_VecAlloc.exit.i34, %bb.d
+  %.sink67 = phi ptr [ %i.h, %bb.d ], [ %i.k, %Vec_VecAlloc.exit.i34 ], [ %i.h, %.lr.ph.i ], [ %i.k, %.lr.ph.i37 ] ; 7 uses
+  %.val30.sink = phi i32 [ %i.g, %bb.d ], [ %.val30, %Vec_VecAlloc.exit.i34 ], [ %i.g, %.lr.ph.i ], [ %.val30, %.lr.ph.i37 ] ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.sink67, i64 4
   store i32 %.val30.sink, ptr %i.t, align 4, !tbaa !41
   %i.u = getelementptr i8, ptr %.sink67, i64 4    ; 2 uses

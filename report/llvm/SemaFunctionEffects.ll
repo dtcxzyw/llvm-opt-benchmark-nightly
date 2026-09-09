@@ -204,7 +204,7 @@ _ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i:          ; preds = %_ZNKSt6bitsetILm4EE
   %.sroa.47.019.ph = phi i64 [ 2, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2.i ], [ 0, %_ZNK12_GLOBAL__N_112CallableInfo12isVerifiableEv.exit.thread ], [ 1, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1.i ], [ 3, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i ]
   br label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2, %.lr.ph, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit, %bb.h, %bb.i, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i
+._crit_edge:                                      ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2, %.lr.ph, %bb.h, %bb.i, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !768 ; 4 uses
   %i.bu = and i64 %i.bt, 1
@@ -230,7 +230,7 @@ _ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i35:        ; preds = %_ZNKSt6bitsetILm4EE
   %.sroa.4.021.ph = phi i64 [ 2, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2.i33 ], [ 0, %._crit_edge ], [ 1, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1.i31 ], [ 3, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i35 ]
   br label %.lr.ph22
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit
+.lr.ph:                                           ; preds = %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit, %.lr.ph.preheader
   %.sroa.47.019 = phi i64 [ %.sroa.47.1.lcssa, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit ], [ %.sroa.47.019.ph, %.lr.ph.preheader ] ; 8 uses
   %i.by = trunc nuw nsw i64 %.sroa.47.019 to i8
   call fastcc void @_ZZN12_GLOBAL__N_18Analyzer10followCallERKNS_12CallableInfoERNS_23PendingFunctionAnalysisES3_N5clang14SourceLocationEbNS_13ViolationSiteEENKUlNS6_14FunctionEffectEbE_clES9_b(ptr noundef nonnull align 8 dereferenceable(56) %8, i8 %i.by, i1 noundef zeroext false)
@@ -268,18 +268,17 @@ _ZNKSt6bitsetILm4EE4testEm.exit.i.i.2:            ; preds = %bb.i
   br i1 %.not.i.i43.2, label %._crit_edge, label %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit
 
 _ZN5clang21FunctionEffectKindSet8iteratorppEv.exit: ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i
-  %.sroa.47.1.lcssa = phi i64 [ %i.cb, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i ], [ %i.ce, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1 ], [ %i.ch, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2 ] ; 2 uses
-  %.not15 = icmp eq i64 %.sroa.47.1.lcssa, 4
-  br i1 %.not15, label %._crit_edge, label %.lr.ph
+  %.sroa.47.1.lcssa = phi i64 [ %i.cb, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i ], [ %i.ce, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1 ], [ %i.ch, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2 ]
+  br label %.lr.ph
 
-._crit_edge23:                                    ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2, %.lr.ph22, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52, %bb.j, %bb.k, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i35
+._crit_edge23:                                    ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2, %.lr.ph22, %bb.j, %bb.k, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i35
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   ret void
 
-.lr.ph22:                                         ; preds = %.lr.ph22.preheader, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52
+.lr.ph22:                                         ; preds = %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52, %.lr.ph22.preheader
   %.sroa.4.021 = phi i64 [ %.sroa.4.1.lcssa, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52 ], [ %.sroa.4.021.ph, %.lr.ph22.preheader ] ; 8 uses
   %i.ck = trunc nuw nsw i64 %.sroa.4.021 to i8
   call fastcc void @_ZZN12_GLOBAL__N_18Analyzer10followCallERKNS_12CallableInfoERNS_23PendingFunctionAnalysisES3_N5clang14SourceLocationEbNS_13ViolationSiteEENKUlNS6_14FunctionEffectEbE_clES9_b(ptr noundef nonnull align 8 dereferenceable(56) %8, i8 %i.ck, i1 noundef zeroext true)
@@ -317,9 +316,8 @@ _ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2:          ; preds = %bb.k
   br i1 %.not.i.i50.2, label %._crit_edge23, label %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52
 
 _ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52: ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.1, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i48
-  %.sroa.4.1.lcssa = phi i64 [ %i.cn, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i48 ], [ %i.cq, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.1 ], [ %i.ct, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2 ] ; 2 uses
-  %.not16 = icmp eq i64 %.sroa.4.1.lcssa, 4
-  br i1 %.not16, label %._crit_edge23, label %.lr.ph22
+  %.sroa.4.1.lcssa = phi i64 [ %i.cn, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i48 ], [ %i.cq, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.1 ], [ %i.ct, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2 ]
+  br label %.lr.ph22
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -722,7 +720,7 @@ bb.a:
   %4 = alloca %"struct.(anonymous namespace)::Violation", align 8 ; 9 uses
   %5 = alloca %"struct.(anonymous namespace)::Violation", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !930  ; 10 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !930  ; 9 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !768  ; 7 uses
   %i.d = and i64 %i.c, 1
   %.not.i.i.i = icmp eq i64 %i.d, 0
@@ -747,7 +745,7 @@ _ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i:          ; preds = %_ZNKSt6bitsetILm4EE
   %.sroa.411.018.ph = phi i64 [ 2, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2.i ], [ 0, %bb.a ], [ 1, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1.i ], [ 3, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i ]
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit
+.lr.ph:                                           ; preds = %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit, %.lr.ph.preheader
   %.sroa.411.018 = phi i64 [ %.sroa.411.1.lcssa, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit ], [ %.sroa.411.018.ph, %.lr.ph.preheader ] ; 10 uses
   %i.h = icmp ult i64 %.sroa.411.018, 4
   tail call void @llvm.assume(i1 %i.h)
@@ -835,12 +833,11 @@ _ZNKSt6bitsetILm4EE4testEm.exit.i.i.2:            ; preds = %bb.f
   br i1 %.not.i.i.2, label %.loopexit, label %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit
 
 _ZN5clang21FunctionEffectKindSet8iteratorppEv.exit: ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i
-  %.sroa.411.1.lcssa = phi i64 [ %i.z, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i ], [ %i.ac, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1 ], [ %i.af, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2 ] ; 2 uses
-  %.not14 = icmp eq i64 %.sroa.411.1.lcssa, 4
-  br i1 %.not14, label %.loopexit, label %.lr.ph
+  %.sroa.411.1.lcssa = phi i64 [ %i.z, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i ], [ %i.ac, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.1 ], [ %i.af, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2 ]
+  br label %.lr.ph
 
-.loopexit:                                        ; preds = %.critedge, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2, %bb.e, %bb.f, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i, %_ZN12_GLOBAL__N_18Analyzer22FunctionBodyASTVisitor12addViolationEbN5clang14FunctionEffectENS_11ViolationIDENS2_14SourceLocationEPKNS2_4DeclE.exit
-  %6 = phi ptr [ %i.b, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i ], [ %.pre, %_ZN12_GLOBAL__N_18Analyzer22FunctionBodyASTVisitor12addViolationEbN5clang14FunctionEffectENS_11ViolationIDENS2_14SourceLocationEPKNS2_4DeclE.exit ], [ %i.b, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2 ], [ %i.b, %bb.f ], [ %i.b, %bb.e ], [ %i.b, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit ], [ %i.b, %.critedge ]
+.loopexit:                                        ; preds = %.critedge, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2, %bb.e, %bb.f, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i, %_ZN12_GLOBAL__N_18Analyzer22FunctionBodyASTVisitor12addViolationEbN5clang14FunctionEffectENS_11ViolationIDENS2_14SourceLocationEPKNS2_4DeclE.exit
+  %6 = phi ptr [ %i.b, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i ], [ %.pre, %_ZN12_GLOBAL__N_18Analyzer22FunctionBodyASTVisitor12addViolationEbN5clang14FunctionEffectENS_11ViolationIDENS2_14SourceLocationEPKNS2_4DeclE.exit ], [ %i.b, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.2 ], [ %i.b, %bb.f ], [ %i.b, %bb.e ], [ %i.b, %.critedge ]
   %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !768 ; 4 uses
   %i.ak = and i64 %i.aj, 1
@@ -872,10 +869,10 @@ _ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i36:        ; preds = %_ZNKSt6bitsetILm4EE
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 24
   br label %switch.lookup
 
-._crit_edge:                                      ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2, %bb.h, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52, %bb.i, %bb.j, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i36
+._crit_edge:                                      ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2, %bb.h, %bb.i, %bb.j, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i.3.i36
   ret void
 
-switch.lookup:                                    ; preds = %.lr.ph21, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52
+switch.lookup:                                    ; preds = %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52, %.lr.ph21
   %.sroa.4.020 = phi i64 [ %.sroa.2.1.i29.ph, %.lr.ph21 ], [ %.sroa.4.1.lcssa, %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52 ] ; 9 uses
   %switch.gep57 = getelementptr inbounds i8, ptr @switch.table._ZN12_GLOBAL__N_18Analyzer22FunctionBodyASTVisitor25diagnoseLanguageConstructEN5clang14FunctionEffect7FlagBitENS_11ViolationIDENS2_14SourceLocationEPKNS2_4DeclE.138, i64 %.sroa.4.020
   %switch.load58 = load i8, ptr %switch.gep57, align 1
@@ -935,9 +932,8 @@ _ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2:          ; preds = %bb.j
   br i1 %.not.i.i50.2, label %._crit_edge, label %_ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52
 
 _ZN5clang21FunctionEffectKindSet8iteratorppEv.exit52: ; preds = %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.1, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i48
-  %.sroa.4.1.lcssa = phi i64 [ %i.az, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i48 ], [ %i.bc, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.1 ], [ %i.bf, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2 ] ; 2 uses
-  %.not15 = icmp eq i64 %.sroa.4.1.lcssa, 4
-  br i1 %.not15, label %._crit_edge, label %switch.lookup
+  %.sroa.4.1.lcssa = phi i64 [ %i.az, %_ZNKSt6bitsetILm4EE4testEm.exit.lr.ph.i.i48 ], [ %i.bc, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.1 ], [ %i.bf, %_ZNKSt6bitsetILm4EE4testEm.exit.i.i49.2 ]
+  br label %switch.lookup
 }
 
 declare noundef i32 @_ZNK5clang7VarDecl16needsDestructionERKNS_10ASTContextE(ptr noundef nonnull align 8 dereferenceable(100), ptr noundef nonnull align 8 dereferenceable(23904)) local_unnamed_addr #2

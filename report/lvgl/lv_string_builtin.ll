@@ -204,15 +204,11 @@ bb.j:                                             ; preds = %bb.i
   br label %.loopexit232
 
 .loopexit232:                                     ; preds = %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.c
-  %.4219 = phi i64 [ %2, %bb.c ], [ %i.fm, %bb.d ], [ %i.fq, %bb.e ], [ %i.fu, %bb.f ], [ %i.fy, %bb.g ], [ %i.gc, %bb.h ], [ %i.gg, %bb.i ], [ %i.gk, %bb.j ] ; 4 uses
+  %.4219 = phi i64 [ %2, %bb.c ], [ %i.fm, %bb.d ], [ %i.fq, %bb.e ], [ %i.fu, %bb.f ], [ %i.fy, %bb.g ], [ %i.gc, %bb.h ], [ %i.gg, %bb.i ], [ %i.gk, %bb.j ] ; 3 uses
   %.4213 = phi ptr [ %0, %bb.c ], [ %i.fk, %bb.d ], [ %i.fo, %bb.e ], [ %i.fs, %bb.f ], [ %i.fw, %bb.g ], [ %i.ga, %bb.h ], [ %i.ge, %bb.i ], [ %i.gi, %bb.j ] ; 2 uses
   %.4 = phi ptr [ %1, %bb.c ], [ %i.fl, %bb.d ], [ %i.fp, %bb.e ], [ %i.ft, %bb.f ], [ %i.fx, %bb.g ], [ %i.gb, %bb.h ], [ %i.gf, %bb.i ], [ %i.gj, %bb.j ] ; 2 uses
   %i.gl = icmp ugt i64 %.4219, 32
-  br i1 %i.gl, label %.lr.ph253, label %.preheader230
-
-.preheader230:                                    ; preds = %.loopexit232
-  %.not227257 = icmp eq i64 %.4219, 0
-  br i1 %.not227257, label %.loopexit, label %.lr.ph261.preheader
+  br i1 %i.gl, label %.lr.ph253, label %.lr.ph261.preheader
 
 .lr.ph253:                                        ; preds = %.loopexit232, %.lr.ph253
   %.0252 = phi ptr [ %i.hj, %.lr.ph253 ], [ %.4, %.loopexit232 ] ; 9 uses
@@ -254,10 +250,10 @@ bb.j:                                             ; preds = %bb.i
   %i.hl = icmp ugt i64 %i.hk, 32
   br i1 %i.hl, label %.lr.ph253, label %.lr.ph261.preheader, !llvm.loop !19
 
-.lr.ph261.preheader:                              ; preds = %.lr.ph253, %.preheader230
-  %.5260.ph = phi ptr [ %.4, %.preheader230 ], [ %i.hj, %.lr.ph253 ] ; 2 uses
-  %.5214259.ph = phi ptr [ %.4213, %.preheader230 ], [ %i.hi, %.lr.ph253 ] ; 2 uses
-  %.6258.ph = phi i64 [ %.4219, %.preheader230 ], [ %i.hk, %.lr.ph253 ] ; 4 uses
+.lr.ph261.preheader:                              ; preds = %.lr.ph253, %.loopexit232
+  %.5260.ph = phi ptr [ %.4, %.loopexit232 ], [ %i.hj, %.lr.ph253 ] ; 2 uses
+  %.5214259.ph = phi ptr [ %.4213, %.loopexit232 ], [ %i.hi, %.lr.ph253 ] ; 2 uses
+  %.6258.ph = phi i64 [ %.4219, %.loopexit232 ], [ %i.hk, %.lr.ph253 ] ; 4 uses
   %i.hm = add nsw i64 %.6258.ph, -1
   %xtraiter317 = and i64 %.6258.ph, 7             ; 2 uses
   %lcmp.mod318.not = icmp eq i64 %xtraiter317, 0
@@ -324,7 +320,7 @@ bb.j:                                             ; preds = %bb.i
   %.not227.7 = icmp eq i64 %i.iq, 0
   br i1 %.not227.7, label %.loopexit, label %.lr.ph261, !llvm.loop !21
 
-.loopexit:                                        ; preds = %.lr.ph245.prol.loopexit, %.lr.ph245, %.lr.ph261.prol.loopexit, %.lr.ph261, %.lr.ph266.prol.loopexit, %.lr.ph266, %.preheader230, %.preheader
+.loopexit:                                        ; preds = %.lr.ph245.prol.loopexit, %.lr.ph245, %.lr.ph261.prol.loopexit, %.lr.ph261, %.lr.ph266.prol.loopexit, %.lr.ph266, %.preheader
   ret ptr %0
 }
 

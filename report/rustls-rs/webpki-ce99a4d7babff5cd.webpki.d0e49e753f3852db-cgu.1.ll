@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.b
   %i.c = add nsw i8 %3, -2
-  %.inv52 = icmp samesign ult i8 %3, 2
-  %narrow = select i1 %.inv52, i8 2, i8 %i.c      ; 3 uses
+  %.inv52 = icmp samesign ult i8 %3, 2            ; 2 uses
+  %narrow = select i1 %.inv52, i8 2, i8 %i.c
   switch i8 %narrow, label %bb.f [
     i8 0, label %bb.g
     i8 1, label %bb.h
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 bb.g:                                             ; preds = %_RNvXsw_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResulthNtNtCs2XfPe3Xe4Zx_9untrusted6reader10EndOfInputENtNtB7_3cmp9PartialEq2eqCshVVPy9isBpn_6webpki.exit, %_RNvMs_NtCs2XfPe3Xe4Zx_9untrusted6readerNtB4_6Reader10read_bytes.exit60, %bb.i, %bb.e
-  %.sroa.19.0 = phi i64 [ 0, %bb.e ], [ %i.l, %_RNvMs_NtCs2XfPe3Xe4Zx_9untrusted6readerNtB4_6Reader10read_bytes.exit60 ], [ 0, %bb.i ], [ %i.o, %_RNvXsw_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResulthNtNtCs2XfPe3Xe4Zx_9untrusted6reader10EndOfInputENtNtB7_3cmp9PartialEq2eqCshVVPy9isBpn_6webpki.exit ] ; 6 uses
+  %.sroa.19.0 = phi i64 [ 0, %bb.e ], [ %i.l, %_RNvMs_NtCs2XfPe3Xe4Zx_9untrusted6readerNtB4_6Reader10read_bytes.exit60 ], [ 0, %bb.i ], [ %i.o, %_RNvXsw_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResulthNtNtCs2XfPe3Xe4Zx_9untrusted6reader10EndOfInputENtNtB7_3cmp9PartialEq2eqCshVVPy9isBpn_6webpki.exit ] ; 5 uses
   %i.d = icmp ult i64 %.sroa.19.0, %2
   br i1 %i.d, label %bb.p, label %.loopexit
 
@@ -275,25 +275,20 @@ _RNvXsw_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResulthNtNtCs2XfPe3Xe4Zx_9untrusted6r
 bb.p:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.19.0
   %i.t = load i8, ptr %i.s, align 1, !noundef !5
-  %i.u = icmp eq i8 %i.t, 42
-  br i1 %i.u, label %6, label %.loopexit
+  %6 = icmp ne i8 %i.t, 42
+  %i.u = icmp eq i8 %3, 0
+  %or.cond54 = or i1 %i.u, %6
+  br i1 %or.cond54, label %.loopexit, label %_RNvMs_NtCs2XfPe3Xe4Zx_9untrusted6readerNtB4_6Reader10read_bytes.exit65.preheader
 
-.loopexit:                                        ; preds = %bb.q, %6, %bb.g, %bb.p
-  %.sroa.19.2 = phi i64 [ %.sroa.19.0, %6 ], [ %.sroa.19.0, %bb.g ], [ %.sroa.19.0, %bb.p ], [ %i.x, %bb.q ] ; 4 uses
-  %.sroa.030.0 = phi i64 [ 0, %6 ], [ 0, %bb.g ], [ 0, %bb.p ], [ %i.z, %bb.q ] ; 2 uses
+.loopexit:                                        ; preds = %bb.q, %bb.g, %bb.p
+  %.sroa.19.2 = phi i64 [ %.sroa.19.0, %bb.p ], [ %.sroa.19.0, %bb.g ], [ %i.x, %bb.q ] ; 4 uses
+  %.sroa.030.0 = phi i64 [ 0, %bb.p ], [ 0, %bb.g ], [ %i.z, %bb.q ] ; 2 uses
   %i.v = add i64 %.sroa.030.0, %2                 ; 2 uses
   %i.w = sub i64 %i.v, %.sroa.19.2                ; 2 uses
   %umax = tail call i64 @llvm.umax.i64(i64 %.sroa.19.2, i64 %2)
   br label %bb.r
 
-6:                                                ; preds = %bb.p
-  %7 = icmp eq i8 %narrow, 2
-  %8 = and i8 %3, 1
-  %.not = icmp eq i8 %8, 0
-  %or.cond53 = and i1 %.not, %7
-  br i1 %or.cond53, label %.loopexit, label %_RNvMs_NtCs2XfPe3Xe4Zx_9untrusted6readerNtB4_6Reader10read_bytes.exit65.preheader
-
-_RNvMs_NtCs2XfPe3Xe4Zx_9untrusted6readerNtB4_6Reader10read_bytes.exit65.preheader: ; preds = %6
+_RNvMs_NtCs2XfPe3Xe4Zx_9untrusted6readerNtB4_6Reader10read_bytes.exit65.preheader: ; preds = %bb.p
   %i.x = add nuw i64 %.sroa.19.0, 1
   %.not104 = icmp eq i64 %5, 0
   br i1 %.not104, label %_RNvMs_NtCs2XfPe3Xe4Zx_9untrusted6readerNtB4_6Reader10read_bytes.exit65._crit_edge, label %.lr.ph
@@ -365,8 +360,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.as, label %bb.ac, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %9 = icmp eq i8 %narrow, 2
-  br i1 %9, label %.critedge, label %bb.z
+  br i1 %.inv52, label %.critedge, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 %i.w

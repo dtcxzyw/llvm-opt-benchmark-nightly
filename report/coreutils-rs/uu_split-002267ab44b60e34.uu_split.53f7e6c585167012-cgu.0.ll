@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3551)
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !alias.scope !3552, !noundef !8 ; 2 uses
-  %i.o = add i64 %i.n, 1                          ; 3 uses
+  %i.o = add i64 %i.n, 1                          ; 2 uses
   %i.p = icmp eq i64 %i.n, -1
   br i1 %i.p, label %bb.g, label %bb.e, !prof !9
 
@@ -214,30 +214,29 @@ bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.s = load i8, ptr %i.r, align 8, !alias.scope !3552, !noundef !8 ; 2 uses
   %i.t = load i64, ptr %i.q, align 8, !alias.scope !3552, !noundef !8 ; 2 uses
-  %i.u = zext i8 %i.s to i64                      ; 2 uses
+  %i.u = zext i8 %i.s to i64                      ; 3 uses
   %i.v = icmp eq i8 %i.s, 0
   %.not.i.i = icmp eq i64 %i.t, 0                 ; 2 uses
   br i1 %i.v, label %.split.us.i.i, label %.split.i.i.preheader
 
 .split.i.i.preheader:                             ; preds = %bb.e
-  br i1 %.not.i.i, label %.split16.us.i.i, label %.lr.ph
+  br i1 %.not.i.i, label %bb.g, label %.lr.ph
 
 .split.us.i.i:                                    ; preds = %bb.e
   br i1 %.not.i.i, label %bb.g, label %.split18.us.i.i
 
 .split.i.i:                                       ; preds = %.lr.ph
-  %i.w = udiv i64 %.sroa.06.0.i.i30, %i.u         ; 2 uses
+  %i.w = udiv i64 %.sroa.06.0.i.i30, %i.u
   %i.x = add i64 %.sroa.09.0.i.i29, 1             ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.x, %i.t
   br i1 %exitcond.not.i.i, label %.split16.us.i.i, label %.lr.ph
 
-.split16.us.i.i:                                  ; preds = %.split.i.i, %.split.i.i.preheader
-  %.sroa.06.0.i.i.lcssa = phi i64 [ %i.o, %.split.i.i.preheader ], [ %i.w, %.split.i.i ]
-  %2 = icmp eq i64 %.sroa.06.0.i.i.lcssa, 0
+.split16.us.i.i:                                  ; preds = %.split.i.i
+  %2 = icmp ult i64 %.sroa.06.0.i.i30, %i.u
   br i1 %2, label %.loopexit.i.i, label %bb.g
 
 .lr.ph:                                           ; preds = %.split.i.i.preheader, %.split.i.i
-  %.sroa.06.0.i.i30 = phi i64 [ %i.w, %.split.i.i ], [ %i.o, %.split.i.i.preheader ] ; 2 uses
+  %.sroa.06.0.i.i30 = phi i64 [ %i.w, %.split.i.i ], [ %i.o, %.split.i.i.preheader ] ; 3 uses
   %.sroa.09.0.i.i29 = phi i64 [ %i.x, %.split.i.i ], [ 0, %.split.i.i.preheader ]
   %i.y = icmp ult i64 %.sroa.06.0.i.i30, %i.u
   br i1 %i.y, label %.loopexit.i.i, label %.split.i.i
@@ -254,7 +253,7 @@ bb.f:                                             ; preds = %bb.a
   store i8 0, ptr %i.e, align 8
   br label %_RNvMs0_NtCs7cXCwYFNYaI_8uu_split6numberNtB5_6Number9increment.exit
 
-bb.g:                                             ; preds = %bb.d, %.split16.us.i.i, %.split.us.i.i
+bb.g:                                             ; preds = %.split.i.i.preheader, %bb.d, %.split16.us.i.i, %.split.us.i.i
   store i64 -1, ptr %0, align 8
   br label %bb.j
 
@@ -657,14 +656,10 @@ bb.bb:                                            ; preds = %.lr.ph141.i121
   br i1 %.not103.i125, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit143, label %.lr.ph141.i121
 
 bb.bc:                                            ; preds = %bb.av, %bb.aw, %thread-pre-split.i141
-  %.sroa.26.0.i126 = phi i64 [ %i.fx, %bb.aw ], [ %i.ev, %thread-pre-split.i141 ], [ %i.ev, %bb.av ] ; 4 uses
+  %.sroa.26.0.i126 = phi i64 [ %i.fx, %bb.aw ], [ %i.ev, %thread-pre-split.i141 ], [ %i.ev, %bb.av ] ; 3 uses
   %.sroa.0.0.i127 = phi ptr [ %i.fw, %bb.aw ], [ %i.ex, %thread-pre-split.i141 ], [ %i.ex, %bb.av ] ; 2 uses
   %i.gx = icmp samesign ult i64 %.sroa.26.0.i126, 16
-  br i1 %i.gx, label %.preheader.i134, label %.preheader111.i128
-
-.preheader.i134:                                  ; preds = %bb.bc
-  %.not105146.i135 = icmp eq i64 %.sroa.26.0.i126, 0
-  br i1 %.not105146.i135, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit143, label %.lr.ph150.i136
+  br i1 %i.gx, label %.lr.ph150.i136, label %.preheader111.i128
 
 .preheader111.i128:                               ; preds = %bb.bc, %bb.bf
   %.sroa.0.3145.i129 = phi ptr [ %i.gy, %bb.bf ], [ %.sroa.0.0.i127, %bb.bc ] ; 2 uses
@@ -695,10 +690,10 @@ bb.bf:                                            ; preds = %bb.be
   %.not104.i133 = icmp eq i64 %i.gz, 0
   br i1 %.not104.i133, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit143, label %.preheader111.i128
 
-.lr.ph150.i136:                                   ; preds = %.preheader.i134, %bb.bg
-  %.sroa.0.4149.i137 = phi ptr [ %i.hr, %bb.bg ], [ %.sroa.0.0.i127, %.preheader.i134 ] ; 2 uses
-  %.sroa.26.4148.i138 = phi i64 [ %i.hq, %bb.bg ], [ %.sroa.26.0.i126, %.preheader.i134 ]
-  %.sroa.084.4147.i139 = phi i64 [ %i.ht, %bb.bg ], [ 0, %.preheader.i134 ]
+.lr.ph150.i136:                                   ; preds = %bb.bc, %bb.bg
+  %.sroa.0.4149.i137 = phi ptr [ %i.hr, %bb.bg ], [ %.sroa.0.0.i127, %bb.bc ] ; 2 uses
+  %.sroa.26.4148.i138 = phi i64 [ %i.hq, %bb.bg ], [ %.sroa.26.0.i126, %bb.bc ]
+  %.sroa.084.4147.i139 = phi i64 [ %i.ht, %bb.bg ], [ 0, %bb.bc ]
   %i.hl = load i8, ptr %.sroa.0.4149.i137, align 1, !alias.scope !3990, !noalias !3991, !noundef !8
   %i.hm = zext i8 %i.hl to i32
   %i.hn = add nsw i32 %i.hm, -48                  ; 2 uses
@@ -722,8 +717,8 @@ bb.bg:                                            ; preds = %.lr.ph150.i136
   %i.hv = trunc nuw i8 %i.hu to i1
   br i1 %i.hv, label %bb.bj, label %bb.bk
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit143: ; preds = %bb.ba, %bb.bb, %bb.bf, %bb.bg, %.preheader.i134
-  %.sroa.15181.0 = phi i64 [ %i.hk, %bb.bf ], [ %i.gw, %bb.bb ], [ %i.ht, %bb.bg ], [ 0, %.preheader.i134 ], [ %i.gn, %bb.ba ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit143: ; preds = %bb.ba, %bb.bb, %bb.bf, %bb.bg
+  %.sroa.15181.0 = phi i64 [ %i.hk, %bb.bf ], [ %i.gw, %bb.bb ], [ %i.ht, %bb.bg ], [ %i.gn, %bb.ba ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECs7cXCwYFNYaI_8uu_split(ptr noalias nofree noundef align 8 dereferenceable(24) %i.k, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @163, i64 noundef 6, i64 noundef %.sroa.15181.0) #26
   br label %bb.bh
 

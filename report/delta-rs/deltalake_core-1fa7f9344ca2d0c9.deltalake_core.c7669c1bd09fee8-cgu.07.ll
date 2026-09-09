@@ -205,8 +205,8 @@ bb.a:
   %i.f = icmp ne i64 %i.e, 4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = add nsw i64 %i.e, -2
-  %.inv4 = icmp samesign ult i64 %i.e, 2
-  %i.h = select i1 %.inv4, i64 2, i64 %i.g        ; 4 uses
+  %.inv4 = icmp samesign ult i64 %i.e, 2          ; 2 uses
+  %i.h = select i1 %.inv4, i64 2, i64 %i.g        ; 3 uses
   switch i64 %i.d, label %bb.b [
     i64 1, label %bb.c
     i64 2, label %bb.d
@@ -222,8 +222,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.g, label %bb.f
 
 bb.d:                                             ; preds = %bb.a
-  %2 = icmp eq i64 %i.h, 2
-  br i1 %2, label %bb.i, label %bb.f
+  br i1 %.inv4, label %bb.i, label %bb.f
 
 bb.e:                                             ; preds = %bb.a
   %i.j = icmp eq i64 %i.h, 3

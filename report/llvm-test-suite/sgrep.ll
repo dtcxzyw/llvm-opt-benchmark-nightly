@@ -204,7 +204,7 @@ bb.a:
   %i.b = trunc i64 %i.a to i8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) @SHIFT_2, i8 %i.b, i64 4096, i1 false), !tbaa !21
   %i.c = trunc i64 %i.a to i32                    ; 4 uses
-  %i.d = add i32 %i.c, -1                         ; 9 uses
+  %i.d = add i32 %i.c, -1                         ; 8 uses
   %i.e = icmp sgt i32 %i.c, 1
   br i1 %i.e, label %.lr.ph, label %._crit_edge44.sink.split
 
@@ -440,23 +440,15 @@ bb.d:                                             ; preds = %._crit_edge, %bb.e
 bb.e:                                             ; preds = %bb.d
   %i.cf = add nsw i32 %.241, -1
   %.not52 = icmp eq i32 %.241, 0
-  br i1 %.not52, label %._crit_edge44, label %bb.d, !llvm.loop !11
+  br i1 %.not52, label %bb.f, label %bb.d, !llvm.loop !11
 
 ._crit_edge44.sink.split:                         ; preds = %bb.a, %.thread
-  %.sink = phi i32 [ %i.ce, %.thread ], [ %i.d, %bb.a ] ; 2 uses
-  store i32 %.sink, ptr @shift_1, align 4, !tbaa !20
-  br label %._crit_edge44
-
-._crit_edge44:                                    ; preds = %bb.e, %._crit_edge44.sink.split
-  %1 = phi i32 [ %.sink, %._crit_edge44.sink.split ], [ %i.d, %bb.e ]
-  %2 = icmp eq i32 %1, 0
-  br i1 %2, label %3, label %bb.f
-
-3:                                                ; preds = %._crit_edge44
-  store i32 1, ptr @shift_1, align 4, !tbaa !20
+  %.sink = phi i32 [ %i.ce, %.thread ], [ %i.d, %bb.a ]
+  %spec.store.select = tail call i32 @llvm.umax.i32(i32 %.sink, i32 1)
+  store i32 %spec.store.select, ptr @shift_1, align 4
   br label %bb.f
 
-bb.f:                                             ; preds = %3, %._crit_edge44
+bb.f:                                             ; preds = %bb.e, %._crit_edge44.sink.split
   store i8 0, ptr @SHIFT_2, align 16, !tbaa !21
   ret void
 }
@@ -859,7 +851,7 @@ bb.i:                                             ; preds = %bb.h
   %i.q = trunc i64 %i.p to i8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) @SHIFT_2, i8 %i.q, i64 4096, i1 false), !tbaa !21
   %i.r = trunc i64 %i.p to i32                    ; 4 uses
-  %i.s = add i32 %i.r, -1                         ; 8 uses
+  %i.s = add i32 %i.r, -1                         ; 7 uses
   %i.t = icmp sgt i32 %i.r, 1
   br i1 %i.t, label %.lr.ph.i, label %._crit_edge44.sink.split.i
 
@@ -1094,23 +1086,15 @@ bb.l:                                             ; preds = %bb.m, %._crit_edge.
 bb.m:                                             ; preds = %bb.l
   %i.ct = add nsw i32 %.241.i, -1
   %.not52.i = icmp eq i32 %.241.i, 0
-  br i1 %.not52.i, label %._crit_edge44.i, label %bb.l, !llvm.loop !11
+  br i1 %.not52.i, label %m_preprocess.exit, label %bb.l, !llvm.loop !11
 
-._crit_edge44.sink.split.i:                       ; preds = %.thread.i, %bb.i
-  %.sink.i = phi i32 [ %i.cs, %.thread.i ], [ %i.s, %bb.i ] ; 2 uses
-  store i32 %.sink.i, ptr @shift_1, align 4, !tbaa !20
-  br label %._crit_edge44.i
-
-._crit_edge44.i:                                  ; preds = %bb.m, %._crit_edge44.sink.split.i
-  %4 = phi i32 [ %.sink.i, %._crit_edge44.sink.split.i ], [ %i.s, %bb.m ]
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %6, label %m_preprocess.exit
-
-6:                                                ; preds = %._crit_edge44.i
-  store i32 1, ptr @shift_1, align 4, !tbaa !20
+._crit_edge44.sink.split.i:                       ; preds = %bb.i, %.thread.i
+  %.sink.i = phi i32 [ %i.cs, %.thread.i ], [ %i.s, %bb.i ]
+  %spec.store.select98 = tail call i32 @llvm.umax.i32(i32 %.sink.i, i32 1)
+  store i32 %spec.store.select98, ptr @shift_1, align 4
   br label %m_preprocess.exit
 
-m_preprocess.exit:                                ; preds = %._crit_edge44.i, %6
+m_preprocess.exit:                                ; preds = %bb.m, %._crit_edge44.sink.split.i
   store i8 0, ptr @SHIFT_2, align 16, !tbaa !21
   br label %prep_bm.exit
 
@@ -1216,7 +1200,7 @@ bb.r:                                             ; preds = %bb.q, %.lr.ph.i82.1
   br label %.lr.ph34.i
 
 .lr.ph34.i:                                       ; preds = %bb.s, %.lr.ph34.preheader.i
-  %.232.i = phi i32 [ %i.ex, %bb.s ], [ %i.eo, %.lr.ph34.preheader.i ] ; 4 uses
+  %.232.i = phi i32 [ %i.ex, %bb.s ], [ %i.eo, %.lr.ph34.preheader.i ] ; 5 uses
   %i.ep = zext nneg i32 %.232.i to i64
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 %i.ep
   %i.er = load i8, ptr %i.eq, align 1, !tbaa !21
@@ -1227,26 +1211,22 @@ bb.r:                                             ; preds = %bb.q, %.lr.ph.i82.1
   br i1 %i.ev, label %.thread.i86, label %bb.s
 
 .thread.i86:                                      ; preds = %.lr.ph34.i
-  %i.ew = sub nsw i32 %i.cv, %.232.i              ; 2 uses
+  %i.ew = sub nsw i32 %i.cv, %.232.i
   store i32 %i.ew, ptr @shift_1, align 4, !tbaa !20
-  br label %._crit_edge35.i
+  %4 = icmp eq i32 %i.cv, %.232.i
+  br i1 %4, label %.sink.split.i, label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph34.i
   %i.ex = add nsw i32 %.232.i, -1
   %.not45.i = icmp eq i32 %.232.i, 0
-  br i1 %.not45.i, label %._crit_edge35.i, label %.lr.ph34.i, !llvm.loop !7
+  br i1 %.not45.i, label %bb.t, label %.lr.ph34.i, !llvm.loop !7
 
-._crit_edge35.i:                                  ; preds = %bb.s, %.thread.i86
-  %7 = phi i32 [ %i.ew, %.thread.i86 ], [ %i.cv, %bb.s ]
-  %8 = icmp eq i32 %7, 0
-  br i1 %8, label %.sink.split.i, label %bb.t
-
-.sink.split.i:                                    ; preds = %._crit_edge.i85, %._crit_edge35.i, %bb.n
-  %.sink.i80 = phi i32 [ %i.cv, %bb.n ], [ 1, %._crit_edge35.i ], [ 1, %._crit_edge.i85 ]
+.sink.split.i:                                    ; preds = %._crit_edge.i85, %.thread.i86, %bb.n
+  %.sink.i80 = phi i32 [ %i.cv, %bb.n ], [ 1, %.thread.i86 ], [ 1, %._crit_edge.i85 ]
   store i32 %.sink.i80, ptr @shift_1, align 4, !tbaa !20
   br label %bb.t
 
-bb.t:                                             ; preds = %.sink.split.i, %._crit_edge35.i
+bb.t:                                             ; preds = %bb.s, %.sink.split.i, %.thread.i86
   %i.ey = load i32, ptr @NOUPPER, align 4, !tbaa !20
   %.not.i81 = icmp eq i32 %i.ey, 0
   br i1 %.not.i81, label %prep_bm.exit, label %.preheader.preheader.i

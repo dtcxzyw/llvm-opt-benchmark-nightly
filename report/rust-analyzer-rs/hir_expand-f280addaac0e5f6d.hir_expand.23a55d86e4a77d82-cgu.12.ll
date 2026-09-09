@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
     i8 10, label %bb.z
   ]
 
-_RNvXs1C_Cs4dcH4YgJDq_2ttNtB6_7LiteralNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %.lr.ph, %.lr.ph33, %_RNvYNtNtCsqiF3OZxLbD_3mbe6parser21ConcatMetaVarExprElemNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neCs33K2ylI4knu_10hir_expand.exit.i, %.lr.ph.i, %bb.ax, %bb.bd, %bb.ba, %bb.az, %bb.bb, %bb.ay, %bb.bc, %bb.bg, %bb.bf, %bb.bh, %bb.be, %bb.bi, %bb.bk, %bb.bn, %bb.bm, %bb.bo, %bb.bl, %bb.bj, %bb.bp, %bb.bq, %.split.i, %.split55.i, %.split56.i, %.split57.i, %bb.bw, %7, %bb.k, %bb.i, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %_RNvXNtNtCshzWfHUSfYae_4core5slice3cmpSNtNtCsqiF3OZxLbD_3mbe6parser2OpNtNtB6_3cmp9PartialEq2eqCs33K2ylI4knu_10hir_expand.exit17, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.bx, %_RNvXNtNtCshzWfHUSfYae_4core5slice3cmpSNtNtCsqiF3OZxLbD_3mbe6parser2OpNtNtB6_3cmp9PartialEq2eqCs33K2ylI4knu_10hir_expand.exit, %bb.bs, %bb.bu, %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsqiF3OZxLbD_3mbe6parser21ConcatMetaVarExprElemINtB5_14SlicePartialEqBC_E17equal_same_lengthCs33K2ylI4knu_10hir_expand.exit, %bb.bt, %bb.h, %bb.g, %bb.aq, %bb.as, %bb.ap, %bb.ar, %bb.d, %bb.al, %bb.an, %bb.ak, %bb.am, %bb.ao, %bb.aj, %bb.ah, %bb.ai, %bb.c, %bb.a, %bb.by, %bb.bv, %bb.au, %bb.at, %bb.y, %bb.f, %bb.e
-  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ %i.gq, %bb.at ], [ false, %bb.d ], [ false, %bb.al ], [ %i.r, %bb.e ], [ %i.w, %bb.f ], [ %i.gv, %bb.au ], [ false, %bb.aq ], [ %i.mo, %bb.bv ], [ false, %bb.k ], [ false, %bb.g ], [ %.mux, %bb.bw ], [ %i.nc, %bb.by ], [ false, %bb.cc ], [ false, %_RNvYNtNtCsqiF3OZxLbD_3mbe6parser21ConcatMetaVarExprElemNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neCs33K2ylI4knu_10hir_expand.exit.i ], [ false, %bb.bs ], [ false, %7 ], [ true, %bb.bx ], [ false, %.lr.ph33 ], [ %i.dc, %bb.y ], [ true, %bb.u ], [ %i.fr, %bb.ao ], [ false, %bb.c ], [ false, %bb.aj ], [ false, %bb.ah ], [ false, %bb.ai ], [ false, %bb.am ], [ false, %bb.ak ], [ false, %bb.an ], [ false, %bb.ar ], [ false, %bb.ap ], [ false, %bb.as ], [ false, %bb.h ], [ false, %bb.bt ], [ false, %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsqiF3OZxLbD_3mbe6parser21ConcatMetaVarExprElemINtB5_14SlicePartialEqBC_E17equal_same_lengthCs33K2ylI4knu_10hir_expand.exit ], [ false, %bb.bu ], [ false, %_RNvXNtNtCshzWfHUSfYae_4core5slice3cmpSNtNtCsqiF3OZxLbD_3mbe6parser2OpNtNtB6_3cmp9PartialEq2eqCs33K2ylI4knu_10hir_expand.exit ], [ false, %bb.n ], [ false, %bb.q ], [ false, %bb.p ], [ false, %bb.r ], [ false, %bb.o ], [ false, %bb.m ], [ false, %bb.s ], [ false, %bb.t ], [ %i.cx, %bb.x ], [ %i.cv, %bb.v ], [ %i.cw, %bb.w ], [ %i.el, %bb.af ], [ false, %bb.ac ], [ false, %bb.ab ], [ false, %bb.ad ], [ false, %bb.aa ], [ false, %bb.ae ], [ false, %bb.z ], [ %i.pf, %bb.ci ], [ false, %bb.cf ], [ false, %bb.ce ], [ false, %bb.cg ], [ false, %bb.cd ], [ false, %bb.ca ], [ false, %bb.bz ], [ false, %bb.cb ], [ false, %_RNvXNtNtCshzWfHUSfYae_4core5slice3cmpSNtNtCsqiF3OZxLbD_3mbe6parser2OpNtNtB6_3cmp9PartialEq2eqCs33K2ylI4knu_10hir_expand.exit17 ], [ false, %bb.ch ], [ false, %bb.i ], [ false, %.split57.i ], [ false, %.split56.i ], [ false, %.split55.i ], [ false, %.split.i ], [ false, %bb.bq ], [ false, %bb.bp ], [ false, %bb.bj ], [ false, %bb.bl ], [ false, %bb.bo ], [ false, %bb.bm ], [ false, %bb.bn ], [ false, %bb.bk ], [ false, %bb.bi ], [ false, %bb.be ], [ false, %bb.bh ], [ false, %bb.bf ], [ false, %bb.bg ], [ false, %bb.bc ], [ false, %bb.ay ], [ false, %bb.bb ], [ false, %bb.az ], [ false, %bb.ba ], [ false, %bb.bd ], [ false, %bb.ax ], [ false, %.lr.ph.i ], [ false, %.lr.ph ]
+_RNvXs1C_Cs4dcH4YgJDq_2ttNtB6_7LiteralNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %.lr.ph, %.lr.ph33, %_RNvYNtNtCsqiF3OZxLbD_3mbe6parser21ConcatMetaVarExprElemNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neCs33K2ylI4knu_10hir_expand.exit.i, %.lr.ph.i, %bb.ax, %bb.bd, %bb.ba, %bb.az, %bb.bb, %bb.ay, %bb.bc, %bb.bg, %bb.bf, %bb.bh, %bb.be, %bb.bi, %bb.bk, %bb.bn, %bb.bm, %bb.bo, %bb.bl, %bb.bj, %bb.bp, %bb.bq, %.split.i, %.split55.i, %.split56.i, %.split57.i, %bb.bw, %bb.k, %bb.i, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %_RNvXNtNtCshzWfHUSfYae_4core5slice3cmpSNtNtCsqiF3OZxLbD_3mbe6parser2OpNtNtB6_3cmp9PartialEq2eqCs33K2ylI4knu_10hir_expand.exit17, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.bx, %_RNvXNtNtCshzWfHUSfYae_4core5slice3cmpSNtNtCsqiF3OZxLbD_3mbe6parser2OpNtNtB6_3cmp9PartialEq2eqCs33K2ylI4knu_10hir_expand.exit, %bb.bs, %bb.bu, %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsqiF3OZxLbD_3mbe6parser21ConcatMetaVarExprElemINtB5_14SlicePartialEqBC_E17equal_same_lengthCs33K2ylI4knu_10hir_expand.exit, %bb.bt, %bb.h, %bb.g, %bb.aq, %bb.as, %bb.ap, %bb.ar, %bb.d, %bb.al, %bb.an, %bb.ak, %bb.am, %bb.ao, %bb.aj, %bb.ah, %bb.ai, %bb.c, %bb.a, %bb.by, %bb.bv, %bb.au, %bb.at, %bb.y, %bb.f, %bb.e
+  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ %i.gq, %bb.at ], [ false, %bb.d ], [ false, %bb.al ], [ %i.r, %bb.e ], [ %i.w, %bb.f ], [ %i.gv, %bb.au ], [ false, %bb.aq ], [ %i.mo, %bb.bv ], [ false, %bb.i ], [ false, %bb.g ], [ %.mux, %bb.bw ], [ %i.nc, %bb.by ], [ false, %bb.cc ], [ false, %_RNvYNtNtCsqiF3OZxLbD_3mbe6parser21ConcatMetaVarExprElemNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neCs33K2ylI4knu_10hir_expand.exit.i ], [ false, %bb.bs ], [ false, %bb.k ], [ true, %bb.bx ], [ false, %.lr.ph33 ], [ %i.dc, %bb.y ], [ true, %bb.u ], [ %i.fr, %bb.ao ], [ false, %bb.c ], [ false, %bb.aj ], [ false, %bb.ah ], [ false, %bb.ai ], [ false, %bb.am ], [ false, %bb.ak ], [ false, %bb.an ], [ false, %bb.ar ], [ false, %bb.ap ], [ false, %bb.as ], [ false, %bb.h ], [ false, %bb.bt ], [ false, %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsqiF3OZxLbD_3mbe6parser21ConcatMetaVarExprElemINtB5_14SlicePartialEqBC_E17equal_same_lengthCs33K2ylI4knu_10hir_expand.exit ], [ false, %bb.bu ], [ false, %_RNvXNtNtCshzWfHUSfYae_4core5slice3cmpSNtNtCsqiF3OZxLbD_3mbe6parser2OpNtNtB6_3cmp9PartialEq2eqCs33K2ylI4knu_10hir_expand.exit ], [ false, %bb.n ], [ false, %bb.q ], [ false, %bb.p ], [ false, %bb.r ], [ false, %bb.o ], [ false, %bb.m ], [ false, %bb.s ], [ false, %bb.t ], [ %i.cx, %bb.x ], [ %i.cv, %bb.v ], [ %i.cw, %bb.w ], [ %i.el, %bb.af ], [ false, %bb.ac ], [ false, %bb.ab ], [ false, %bb.ad ], [ false, %bb.aa ], [ false, %bb.ae ], [ false, %bb.z ], [ %i.pf, %bb.ci ], [ false, %bb.cf ], [ false, %bb.ce ], [ false, %bb.cg ], [ false, %bb.cd ], [ false, %bb.ca ], [ false, %bb.bz ], [ false, %bb.cb ], [ false, %_RNvXNtNtCshzWfHUSfYae_4core5slice3cmpSNtNtCsqiF3OZxLbD_3mbe6parser2OpNtNtB6_3cmp9PartialEq2eqCs33K2ylI4knu_10hir_expand.exit17 ], [ false, %bb.ch ], [ false, %.split57.i ], [ false, %.split56.i ], [ false, %.split55.i ], [ false, %.split.i ], [ false, %bb.bq ], [ false, %bb.bp ], [ false, %bb.bj ], [ false, %bb.bl ], [ false, %bb.bo ], [ false, %bb.bm ], [ false, %bb.bn ], [ false, %bb.bk ], [ false, %bb.bi ], [ false, %bb.be ], [ false, %bb.bh ], [ false, %bb.bf ], [ false, %bb.bg ], [ false, %bb.bc ], [ false, %bb.ay ], [ false, %bb.bb ], [ false, %bb.az ], [ false, %bb.ba ], [ false, %bb.bd ], [ false, %bb.ax ], [ false, %.lr.ph.i ], [ false, %.lr.ph ]
   ret i1 %.sroa.0.0
 
 default.unreachable48:                            ; preds = %bb.aw, %bb.b
@@ -492,25 +492,20 @@ bb.ai:                                            ; preds = %bb.ag
 bb.aj:                                            ; preds = %bb.ah
   %i.er = icmp ne i8 %i.en, 11
   tail call void @llvm.assume(i1 %i.er)
-  %2 = add nsw i8 %i.en, -2
-  %i.es = icmp samesign ugt i8 %i.en, 1
-  %narrow = select i1 %i.es, i8 %2, i8 9          ; 2 uses
+  %2 = icmp samesign ult i8 %i.en, 2              ; 2 uses
   %3 = icmp ne i8 %i.ep, 11
   tail call void @llvm.assume(i1 %3)
-  %4 = add nsw i8 %i.ep, -2
-  %5 = icmp samesign ugt i8 %i.ep, 1
-  %narrow10 = select i1 %5, i8 %4, i8 9
-  %6 = icmp eq i8 %narrow, %narrow10
-  br i1 %6, label %7, label %_RNvXs1C_Cs4dcH4YgJDq_2ttNtB6_7LiteralNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
+  %i.es = icmp samesign ugt i8 %i.ep, 1
+  %narrow = select i1 %2, i8 11, i8 %i.en
+  %4 = select i1 %i.es, i8 %i.ep, i8 11
+  %5 = icmp ne i8 %narrow, %4
+  %6 = xor i8 %i.ep, %i.en
+  %7 = trunc i8 %6 to i1
+  %or.cond.not = and i1 %2, %7
+  %or.cond = or i1 %5, %or.cond.not
+  br i1 %or.cond, label %_RNvXs1C_Cs4dcH4YgJDq_2ttNtB6_7LiteralNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit, label %bb.ak
 
-7:                                                ; preds = %bb.aj
-  %8 = icmp eq i8 %narrow, 9
-  %9 = xor i8 %i.ep, %i.en
-  %10 = trunc i8 %9 to i1
-  %or.cond.not = and i1 %8, %10
-  br i1 %or.cond.not, label %_RNvXs1C_Cs4dcH4YgJDq_2ttNtB6_7LiteralNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit, label %bb.ak
-
-bb.ak:                                            ; preds = %7, %bb.ai
+bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.eu = load i32, ptr %i.et, align 4, !noundef !7
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 4

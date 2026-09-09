@@ -205,20 +205,20 @@ thread-pre-split.i320:                            ; preds = %bb.ee
   %.144 = select i1 %i.sn, ptr @116, ptr @91
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(4) %i.so, ptr noundef nonnull align 1 dereferenceable(4) %.144, i64 %.143, i1 false)
   %.pr.i321 = load i8, ptr %i.so, align 1, !alias.scope !3382, !noalias !3383
-  switch i8 %.pr.i321, label %.lr.ph150.i315.preheader.a [
-    i8 43, label %bb.eg
+  switch i8 %.pr.i321, label %bb.eg [
+    i8 43, label %.lr.ph150.i315.preheader.a
     i8 45, label %bb.eh
   ]
 
-.lr.ph150.i315.preheader.a:                       ; preds = %bb.eg, %thread-pre-split.i320
-  %.sroa.0.4149.i316.ph = phi ptr [ %i.so, %thread-pre-split.i320 ], [ %6, %bb.eg ]
-  %.sroa.26.4148.i317.ph = phi i64 [ %.143, %thread-pre-split.i320 ], [ %7, %bb.eg ]
-  br label %.lr.ph150.i315
-
-bb.eg:                                            ; preds = %thread-pre-split.i320
+.lr.ph150.i315.preheader.a:                       ; preds = %thread-pre-split.i320
   %6 = getelementptr inbounds nuw i8, ptr %i.so, i64 1
   %7 = add nsw i64 %.143, -1
-  br label %.lr.ph150.i315.preheader.a
+  br label %bb.eg
+
+bb.eg:                                            ; preds = %thread-pre-split.i320, %.lr.ph150.i315.preheader.a
+  %.sroa.0.4149.i316.ph = phi ptr [ %i.so, %thread-pre-split.i320 ], [ %6, %.lr.ph150.i315.preheader.a ]
+  %.sroa.26.4148.i317.ph = phi i64 [ %.143, %thread-pre-split.i320 ], [ %7, %.lr.ph150.i315.preheader.a ]
+  br label %.lr.ph150.i315
 
 bb.eh:                                            ; preds = %thread-pre-split.i320
   %i.sq = add nsw i64 %.143, -1
@@ -243,10 +243,10 @@ bb.ei:                                            ; preds = %.lr.ph141.i300
   %.not103.i304 = icmp eq i64 %i.sw, 0
   br i1 %.not103.i304, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit322, label %.lr.ph141.i300
 
-.lr.ph150.i315:                                   ; preds = %.lr.ph150.i315.preheader.a, %bb.ej
-  %.sroa.0.4149.i316 = phi ptr [ %i.tf, %bb.ej ], [ %.sroa.0.4149.i316.ph, %.lr.ph150.i315.preheader.a ] ; 2 uses
-  %.sroa.26.4148.i317 = phi i64 [ %i.te, %bb.ej ], [ %.sroa.26.4148.i317.ph, %.lr.ph150.i315.preheader.a ]
-  %.sroa.084.4147.i318 = phi i64 [ %i.th, %bb.ej ], [ 0, %.lr.ph150.i315.preheader.a ]
+.lr.ph150.i315:                                   ; preds = %bb.eg, %bb.ej
+  %.sroa.0.4149.i316 = phi ptr [ %i.tf, %bb.ej ], [ %.sroa.0.4149.i316.ph, %bb.eg ] ; 2 uses
+  %.sroa.26.4148.i317 = phi i64 [ %i.te, %bb.ej ], [ %.sroa.26.4148.i317.ph, %bb.eg ]
+  %.sroa.084.4147.i318 = phi i64 [ %i.th, %bb.ej ], [ 0, %bb.eg ]
   %i.sz = load i8, ptr %.sroa.0.4149.i316, align 1, !alias.scope !3382, !noalias !3383, !noundef !7
   %i.ta = zext i8 %i.sz to i32
   %i.tb = add nsw i32 %i.ta, -48                  ; 2 uses
@@ -649,14 +649,10 @@ bb.ag:                                            ; preds = %.lr.ph141.i40
   br i1 %.not103.i44, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit62, label %.lr.ph141.i40
 
 bb.ah:                                            ; preds = %bb.aa, %bb.ab, %thread-pre-split.i60
-  %.sroa.26.0.i45 = phi i64 [ %i.ce, %bb.ab ], [ %i.bw, %thread-pre-split.i60 ], [ %i.bw, %bb.aa ] ; 4 uses
+  %.sroa.26.0.i45 = phi i64 [ %i.ce, %bb.ab ], [ %i.bw, %thread-pre-split.i60 ], [ %i.bw, %bb.aa ] ; 3 uses
   %.sroa.0.0.i46 = phi ptr [ %i.cd, %bb.ab ], [ %i.by, %thread-pre-split.i60 ], [ %i.by, %bb.aa ] ; 2 uses
   %i.de = icmp samesign ult i64 %.sroa.26.0.i45, 16
-  br i1 %i.de, label %.preheader.i53, label %.preheader111.i47
-
-.preheader.i53:                                   ; preds = %bb.ah
-  %.not105146.i54 = icmp eq i64 %.sroa.26.0.i45, 0
-  br i1 %.not105146.i54, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit62, label %.lr.ph150.i55
+  br i1 %i.de, label %.lr.ph150.i55, label %.preheader111.i47
 
 .preheader111.i47:                                ; preds = %bb.ah, %bb.ak
   %.sroa.0.3145.i48 = phi ptr [ %i.df, %bb.ak ], [ %.sroa.0.0.i46, %bb.ah ] ; 2 uses
@@ -687,10 +683,10 @@ bb.ak:                                            ; preds = %bb.aj
   %.not104.i52 = icmp eq i64 %i.dg, 0
   br i1 %.not104.i52, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit62, label %.preheader111.i47
 
-.lr.ph150.i55:                                    ; preds = %.preheader.i53, %bb.al
-  %.sroa.0.4149.i56 = phi ptr [ %i.dy, %bb.al ], [ %.sroa.0.0.i46, %.preheader.i53 ] ; 2 uses
-  %.sroa.26.4148.i57 = phi i64 [ %i.dx, %bb.al ], [ %.sroa.26.0.i45, %.preheader.i53 ]
-  %.sroa.084.4147.i58 = phi i64 [ %i.ea, %bb.al ], [ 0, %.preheader.i53 ]
+.lr.ph150.i55:                                    ; preds = %bb.ah, %bb.al
+  %.sroa.0.4149.i56 = phi ptr [ %i.dy, %bb.al ], [ %.sroa.0.0.i46, %bb.ah ] ; 2 uses
+  %.sroa.26.4148.i57 = phi i64 [ %i.dx, %bb.al ], [ %.sroa.26.0.i45, %bb.ah ]
+  %.sroa.084.4147.i58 = phi i64 [ %i.ea, %bb.al ], [ 0, %bb.ah ]
   %i.ds = load i8, ptr %.sroa.0.4149.i56, align 1, !alias.scope !6634, !noalias !6635, !noundef !7
   %i.dt = zext i8 %i.ds to i32
   %i.du = add nsw i32 %i.dt, -48                  ; 2 uses
@@ -714,8 +710,8 @@ bb.al:                                            ; preds = %.lr.ph150.i55
   %i.ec = trunc nuw i8 %i.eb to i1
   br i1 %i.ec, label %bb.ao, label %bb.ap
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit62: ; preds = %bb.af, %bb.ag, %bb.ak, %bb.al, %.preheader.i53
-  %.sroa.1583.0 = phi i64 [ %i.dr, %bb.ak ], [ %i.dd, %bb.ag ], [ %i.ea, %bb.al ], [ 0, %.preheader.i53 ], [ %i.cu, %bb.af ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit62: ; preds = %bb.af, %bb.ag, %bb.ak, %bb.al
+  %.sroa.1583.0 = phi i64 [ %i.dr, %bb.ak ], [ %i.dd, %bb.ag ], [ %i.ea, %bb.al ], [ %i.cu, %bb.af ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECsgn1j6LDYpaP_5uu_cp(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @237, i64 noundef 4, i64 noundef %.sroa.1583.0) #39
   br label %bb.am
 

@@ -205,41 +205,40 @@ bb.bw:                                            ; preds = %bb.bv
     i8 45, label %.thread427
   ]
 
-.lr.ph.i.i.i169.preheader:                        ; preds = %bb.ca, %bb.by, %bb.bw
-  %.sroa.01.162.i.i.i.ph = phi ptr [ %i.ix, %bb.by ], [ %.val.i, %bb.ca ], [ %.val.i, %bb.bw ]
-  %.sroa.16.161.i.i.i.ph = phi i64 [ %i.iy, %bb.by ], [ %.val3.i, %bb.ca ], [ 1, %bb.bw ]
+.lr.ph.i.i.i169.preheader:                        ; preds = %bb.bz, %bb.by, %bb.bw
+  %.sroa.01.162.i.i.i.ph = phi ptr [ %i.ix, %bb.by ], [ %.val.i, %bb.bz ], [ %.val.i, %bb.bw ]
+  %.sroa.16.161.i.i.i.ph = phi i64 [ %i.iy, %bb.by ], [ %.val3.i, %bb.bz ], [ 1, %bb.bw ]
   br label %.lr.ph.i.i.i169
 
 bb.bx:                                            ; preds = %bb.bv
   %cond.i.i.i = icmp eq i8 %i.iw, 43
-  br i1 %cond.i.i.i, label %bb.by, label %bb.ca
+  br i1 %cond.i.i.i, label %bb.by, label %bb.bz
 
 bb.by:                                            ; preds = %bb.bx
   %i.ix = getelementptr inbounds nuw i8, ptr %.val.i, i64 1 ; 2 uses
   %i.iy = add i64 %.val3.i, -1                    ; 2 uses
   %i.iz = icmp ult i64 %.val3.i, 18
-  br i1 %i.iz, label %.lr.ph.i.i.i169.preheader, label %.preheader53.i.i.i
+  br i1 %i.iz, label %.lr.ph.i.i.i169.preheader, label %bb.ca
 
-.preheader53.i.i.i:                               ; preds = %bb.ca, %bb.by
-  %.sroa.16.0.ph.i.i.i = phi i64 [ %.val3.i, %bb.ca ], [ %i.iy, %bb.by ] ; 2 uses
-  %.sroa.01.0.ph.i.i.i = phi ptr [ %.val.i, %bb.ca ], [ %i.ix, %bb.by ]
-  %.not.i.not.i.i553 = icmp eq i64 %.sroa.16.0.ph.i.i.i, 0
-  br i1 %.not.i.not.i.i553, label %.thread427, label %.lr.ph
-
-bb.bz:                                            ; preds = %bb.cb
+.preheader53.i.i.i:                               ; preds = %bb.cb
   %2 = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i556, i64 1
   %3 = add i64 %.sroa.16.0.i.i.i555, -1           ; 2 uses
-  %.not.i.not.i.i = icmp eq i64 %3, 0
-  br i1 %.not.i.not.i.i, label %.thread427, label %.lr.ph
+  %.not.i.not.i.i553 = icmp eq i64 %3, 0
+  br i1 %.not.i.not.i.i553, label %.thread427, label %.lr.ph
 
-bb.ca:                                            ; preds = %bb.bx
+bb.bz:                                            ; preds = %bb.bx
   %4 = icmp ult i64 %.val3.i, 17
-  br i1 %4, label %.lr.ph.i.i.i169.preheader, label %.preheader53.i.i.i
+  br i1 %4, label %.lr.ph.i.i.i169.preheader, label %bb.ca
 
-.lr.ph:                                           ; preds = %.preheader53.i.i.i, %bb.bz
-  %.sroa.01.0.i.i.i556 = phi ptr [ %2, %bb.bz ], [ %.sroa.01.0.ph.i.i.i, %.preheader53.i.i.i ] ; 2 uses
-  %.sroa.16.0.i.i.i555 = phi i64 [ %3, %bb.bz ], [ %.sroa.16.0.ph.i.i.i, %.preheader53.i.i.i ]
-  %.sroa.017.0.i.i.i554 = phi i64 [ %i.ji, %bb.bz ], [ 0, %.preheader53.i.i.i ]
+bb.ca:                                            ; preds = %bb.by, %bb.bz
+  %.sroa.01.0.i.i.i556.ph = phi ptr [ %i.ix, %bb.by ], [ %.val.i, %bb.bz ]
+  %.sroa.16.0.i.i.i555.ph = phi i64 [ %i.iy, %bb.by ], [ %.val3.i, %bb.bz ]
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.ca, %.preheader53.i.i.i
+  %.sroa.01.0.i.i.i556 = phi ptr [ %2, %.preheader53.i.i.i ], [ %.sroa.01.0.i.i.i556.ph, %bb.ca ] ; 2 uses
+  %.sroa.16.0.i.i.i555 = phi i64 [ %3, %.preheader53.i.i.i ], [ %.sroa.16.0.i.i.i555.ph, %bb.ca ]
+  %.sroa.017.0.i.i.i554 = phi i64 [ %i.ji, %.preheader53.i.i.i ], [ 0, %bb.ca ]
   %i.ja = load i8, ptr %.sroa.01.0.i.i.i556, align 1, !alias.scope !33810, !noalias !33811, !noundef !24
   %i.jb = zext i8 %i.ja to i32
   %i.jc = add nsw i32 %i.jb, -48                  ; 2 uses
@@ -254,7 +253,7 @@ bb.cb:                                            ; preds = %.lr.ph
   %i.ji = add i64 %i.jf, %i.jh                    ; 3 uses
   %.not50.i.i.i = icmp ult i64 %i.ji, %i.jf
   %or.cond.i.i = select i1 %i.jg, i1 true, i1 %.not50.i.i.i
-  br i1 %or.cond.i.i, label %.thread427, label %bb.bz
+  br i1 %or.cond.i.i, label %.thread427, label %.preheader53.i.i.i
 
 .lr.ph.i.i.i169:                                  ; preds = %.lr.ph.i.i.i169.preheader, %bb.cc
   %.sroa.01.162.i.i.i = phi ptr [ %i.jp, %bb.cc ], [ %.sroa.01.162.i.i.i.ph, %.lr.ph.i.i.i169.preheader ] ; 2 uses
@@ -275,9 +274,9 @@ bb.cc:                                            ; preds = %.lr.ph.i.i.i169
   %.not51.i.i.i = icmp eq i64 %i.jo, 0
   br i1 %.not51.i.i.i, label %.thread427, label %.lr.ph.i.i.i169
 
-.thread427:                                       ; preds = %.lr.ph.i.i.i, %bb.bz, %.lr.ph, %bb.cb, %bb.cc, %.lr.ph.i.i.i169, %.preheader53.i.i.i, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit.thread", %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit", %bb.bt, %bb.bw, %bb.bw
-  %.sroa.03.0.i = phi i64 [ 0, %bb.bt ], [ 0, %bb.bw ], [ 1, %bb.bz ], [ 0, %bb.bw ], [ 0, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit" ], [ 1, %.preheader53.i.i.i ], [ 0, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit.thread" ], [ 1, %bb.cc ], [ 0, %.lr.ph.i.i.i169 ], [ 0, %.lr.ph ], [ 0, %bb.cb ], [ 0, %.lr.ph.i.i.i ]
-  %.sroa.34.0.i = phi i64 [ undef, %bb.bt ], [ undef, %bb.bw ], [ %i.ji, %bb.bz ], [ undef, %bb.bw ], [ undef, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit" ], [ 0, %.preheader53.i.i.i ], [ undef, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit.thread" ], [ %i.jr, %bb.cc ], [ undef, %.lr.ph.i.i.i169 ], [ undef, %.lr.ph ], [ undef, %bb.cb ], [ undef, %.lr.ph.i.i.i ]
+.thread427:                                       ; preds = %.lr.ph.i.i.i, %.preheader53.i.i.i, %.lr.ph, %bb.cb, %bb.cc, %.lr.ph.i.i.i169, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit.thread", %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit", %bb.bt, %bb.bw, %bb.bw
+  %.sroa.03.0.i = phi i64 [ 0, %bb.bt ], [ 0, %bb.bw ], [ 1, %bb.cc ], [ 0, %bb.bw ], [ 0, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit" ], [ 1, %.preheader53.i.i.i ], [ 0, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit.thread" ], [ 0, %.lr.ph.i.i.i169 ], [ 0, %.lr.ph ], [ 0, %bb.cb ], [ 0, %.lr.ph.i.i.i ]
+  %.sroa.34.0.i = phi i64 [ undef, %bb.bt ], [ undef, %bb.bw ], [ %i.jr, %bb.cc ], [ undef, %bb.bw ], [ undef, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit" ], [ %i.ji, %.preheader53.i.i.i ], [ undef, %"_ZN4http6header3map18HeaderMap$LT$T$GT$3get17h1828a5dce7112c54E.exit.thread" ], [ undef, %.lr.ph.i.i.i169 ], [ undef, %.lr.ph ], [ undef, %bb.cb ], [ undef, %.lr.ph.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6342)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ce)
   invoke void @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..clone..Clone$GT$5clone17h123bb51dd192bfa5E"(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.ce, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1178)

@@ -205,11 +205,10 @@ bb.av:                                            ; preds = %bb.au
   %i.cw = icmp ult i64 %.val3.i.i.i, 10
   br i1 %i.cw, label %.lr.ph.i.i.i46.i.i.preheader, label %.preheader75.i.i.i.i.i
 
-.preheader75.i.i.i.i.i:                           ; preds = %bb.ax, %bb.av
-  %.sroa.16.0.ph.i.i.i.i.i = phi i64 [ %.val3.i.i.i, %bb.ax ], [ %i.cv, %bb.av ] ; 2 uses
-  %.sroa.0.0.ph.i.i.i.i.i = phi ptr [ %.val.i.i.i, %bb.ax ], [ %i.cu, %bb.av ]
-  %.not69.i.i.i.i.i47 = icmp eq i64 %.sroa.16.0.ph.i.i.i.i.i, 0
-  br i1 %.not69.i.i.i.i.i47, label %.loopexit.i.i.i.i.i, label %.lr.ph
+.preheader75.i.i.i.i.i:                           ; preds = %bb.av, %bb.ax
+  %.sroa.0.0.ph.i.i.i.i.i = phi ptr [ %i.cu, %bb.av ], [ %.val.i.i.i, %bb.ax ]
+  %.sroa.16.0.i.i.i.i.i49.ph = phi i64 [ %i.cv, %bb.av ], [ %.val3.i.i.i, %bb.ax ]
+  br label %.lr.ph
 
 bb.aw:                                            ; preds = %bb.ba
   %.not69.i.i.i.i.i = icmp eq i64 %i.db, 0
@@ -219,15 +218,15 @@ bb.ax:                                            ; preds = %bb.au
   %i.cx = icmp ult i64 %.val3.i.i.i, 9
   br i1 %i.cx, label %.lr.ph.i.i.i46.i.i.preheader, label %.preheader75.i.i.i.i.i
 
-.loopexit.i.i.i.i.i:                              ; preds = %bb.aw, %bb.bb, %.preheader75.i.i.i.i.i
-  %.sroa.054.2.i.i.i.i.i = phi i32 [ %i.dt, %bb.bb ], [ 0, %.preheader75.i.i.i.i.i ], [ %i.dl, %bb.aw ]
+.loopexit.i.i.i.i.i:                              ; preds = %bb.aw, %bb.bb
+  %.sroa.054.2.i.i.i.i.i = phi i32 [ %i.dt, %bb.bb ], [ %i.dl, %bb.aw ]
   %i.cy = zext i32 %.sroa.054.2.i.i.i.i.i to i64
   %i.cz = shl nuw i64 %i.cy, 32
   br label %"_ZN4anki4sync11http_client10io_monitor9IoMonitor25zstd_request_with_timeout28_$u7b$$u7b$closure$u7d$$u7d$28_$u7b$$u7b$closure$u7d$$u7d$28_$u7b$$u7b$closure$u7d$$u7d$17h83d7ec895c25bf23E.exit.i.i.i"
 
 .lr.ph:                                           ; preds = %.preheader75.i.i.i.i.i, %bb.aw
   %.sroa.0.0.i.i.i.i.i50 = phi ptr [ %i.da, %bb.aw ], [ %.sroa.0.0.ph.i.i.i.i.i, %.preheader75.i.i.i.i.i ] ; 2 uses
-  %.sroa.16.0.i.i.i.i.i49 = phi i64 [ %i.db, %bb.aw ], [ %.sroa.16.0.ph.i.i.i.i.i, %.preheader75.i.i.i.i.i ]
+  %.sroa.16.0.i.i.i.i.i49 = phi i64 [ %i.db, %bb.aw ], [ %.sroa.16.0.i.i.i.i.i49.ph, %.preheader75.i.i.i.i.i ]
   %.sroa.054.0.i.i.i.i.i48 = phi i32 [ %i.dl, %bb.aw ], [ 0, %.preheader75.i.i.i.i.i ]
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i50, i64 1
   %i.db = add i64 %.sroa.16.0.i.i.i.i.i49, -1     ; 2 uses

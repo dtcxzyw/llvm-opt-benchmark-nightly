@@ -205,39 +205,37 @@ switch.lookup:                                    ; preds = %_RNCNvMsy_NtNtNtCs8
   %switch.downshift = lshr i48 3315714883843, %switch.shiftamt
   %switch.masked = trunc i48 %switch.downshift to i8
   %i.cr = add nsw i8 %.sroa.0.0.i34, -5
-  %i.cs = icmp samesign ugt i8 %.sroa.0.0.i34, 4
+  %i.cs = icmp samesign ugt i8 %.sroa.0.0.i34, 4  ; 2 uses
   %narrow123 = select i1 %i.cs, i8 %i.cr, i8 1
   br label %bb.ag
 
 bb.af:                                            ; preds = %_RNCNvMsy_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB7_15TableDefinition14update_columns0Bd_.exit, %bb.ae
   %.sroa.0.0.i35 = phi i8 [ 7, %_RNCNvMsy_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB7_15TableDefinition14update_columns0Bd_.exit ], [ 5, %bb.ae ] ; 2 uses
   %i.ct = add nsw i8 %.sroa.0.0.i34, -5
-  %i.cu = icmp samesign ugt i8 %.sroa.0.0.i34, 4
+  %i.cu = icmp samesign ugt i8 %.sroa.0.0.i34, 4  ; 2 uses
   %narrow = select i1 %i.cu, i8 %i.ct, i8 1
   %i.cv = add nsw i8 %.sroa.0.0.i35, -5
   br label %bb.ag
 
 bb.ag:                                            ; preds = %switch.lookup, %bb.af
-  %narrow126 = phi i8 [ %narrow, %bb.af ], [ %narrow123, %switch.lookup ] ; 2 uses
+  %narrow126 = phi i8 [ %narrow, %bb.af ], [ %narrow123, %switch.lookup ]
+  %3 = phi i1 [ %i.cu, %bb.af ], [ %i.cs, %switch.lookup ]
   %.sroa.0.0.i35125 = phi i8 [ %.sroa.0.0.i35, %bb.af ], [ %switch.masked, %switch.lookup ]
   %i.cw = phi i8 [ %i.cv, %bb.af ], [ 1, %switch.lookup ]
-  %i.cx = icmp eq i8 %narrow126, %i.cw
-  br i1 %i.cx, label %3, label %bb.ah
+  %4 = icmp eq i8 %narrow126, %i.cw
+  %i.cx = icmp eq i8 %.sroa.0.0.i34, %.sroa.0.0.i35125
+  %or.cond = or i1 %3, %i.cx
+  %or.cond127 = select i1 %4, i1 %or.cond, i1 false
+  br i1 %or.cond127, label %bb.ai, label %bb.ah
 
-bb.ah:                                            ; preds = %3, %bb.ag
+bb.ah:                                            ; preds = %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   %i.cy = load i64, ptr %1, align 8, !range !24, !noundef !11
   %.not23 = icmp eq i64 %i.cy, -1
   br i1 %.not23, label %bb.aj, label %bb.ak
 
-3:                                                ; preds = %bb.ag
-  %4 = icmp ne i8 %narrow126, 1
-  %.not22 = icmp eq i8 %.sroa.0.0.i34, %.sroa.0.0.i35125
-  %or.cond = or i1 %4, %.not22
-  br i1 %or.cond, label %bb.ai, label %bb.ah
-
-bb.ai:                                            ; preds = %3
+bb.ai:                                            ; preds = %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   br label %bb.ad
 
