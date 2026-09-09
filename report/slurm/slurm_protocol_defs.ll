@@ -202,10 +202,10 @@ bb.r:                                             ; preds = %bb.n
   br i1 %i.ae, label %.split, label %bb.s
 
 .split:                                           ; preds = %bb.r
-  %i.af = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %0, i1 true)
-  %switch.tableidx = add nsw i32 %i.af, -4        ; 3 uses
+  %i.af = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %0, i1 true) ; 2 uses
+  %switch.tableidx = add nsw i32 %i.af, -4        ; 2 uses
   %i.ag = icmp ult i32 %switch.tableidx, 23
-  %switch.shifted = lshr i32 5891341, %switch.tableidx
+  %switch.shifted = lshr i32 94261456, %i.af
   %switch.lobit = trunc i32 %switch.shifted to i1
   %or.cond = select i1 %i.ag, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %switch.lookup, label %bb.s
