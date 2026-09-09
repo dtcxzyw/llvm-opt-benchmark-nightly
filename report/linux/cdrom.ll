@@ -204,10 +204,10 @@ bb.ag:                                            ; preds = %bb.af
   %i.cn = load i32, ptr %i.cm, align 8
   %i.co = getelementptr i8, ptr %1, i64 40
   %i.cp = load i32, ptr %i.co, align 8
-  %2 = xor i32 %i.cp, -1
+  %2 = trunc i32 %i.cp to i1
   %i.cq = and i32 %i.cn, 1
-  %3 = and i32 %i.cq, %2
-  %.not82 = icmp eq i32 %3, 0
+  %.not8287 = icmp eq i32 %i.cq, 0
+  %.not82 = select i1 %2, i1 true, i1 %.not8287
   br i1 %.not82, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
@@ -610,10 +610,10 @@ bb.e:                                             ; preds = %bb.d
   %i.s = load i32, ptr %i.r, align 8
   %i.t = getelementptr i8, ptr %0, i64 40
   %i.u = load i32, ptr %i.t, align 8
-  %10 = xor i32 %i.u, -1
+  %10 = trunc i32 %i.u to i1
   %i.v = and i32 %i.s, 1
-  %11 = and i32 %i.v, %10
-  %.not39.i = icmp eq i32 %11, 0
+  %.not3955.i = icmp eq i32 %i.v, 0
+  %.not39.i = select i1 %10, i1 true, i1 %.not3955.i
   br i1 %.not39.i, label %bb.x, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1016,10 +1016,10 @@ bb.q:                                             ; preds = %bb.a
   %i.bl = load i32, ptr %i.bk, align 8
   %i.bm = getelementptr i8, ptr %0, i64 40
   %i.bn = load i32, ptr %i.bm, align 8
-  %14 = xor i32 %i.bn, -1
+  %14 = trunc i32 %i.bn to i1
   %i.bo = and i32 %i.bl, 1
-  %15 = and i32 %i.bo, %14
-  %.not.i62 = icmp eq i32 %15, 0
+  %.not4.i = icmp eq i32 %i.bo, 0
+  %.not.i62 = select i1 %14, i1 true, i1 %.not4.i
   br i1 %.not.i62, label %cdrom_ioctl_eject.exit, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -1422,10 +1422,10 @@ bb.d:                                             ; preds = %bb.c
   %i.j = load i32, ptr %i.i, align 8
   %i.k = getelementptr i8, ptr %0, i64 40
   %i.l = load i32, ptr %i.k, align 8
-  %4 = xor i32 %i.l, -1
+  %4 = trunc i32 %i.l to i1
   %i.m = and i32 %i.j, 1
-  %5 = and i32 %i.m, %4
-  %.not22 = icmp eq i32 %5, 0
+  %.not2235 = icmp eq i32 %i.m, 0
+  %.not22 = select i1 %4, i1 true, i1 %.not2235
   br i1 %.not22, label %bb.q, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -1695,9 +1695,9 @@ bb.k:                                             ; preds = %.loopexit468
   %i.bb = load i32, ptr %i.ba, align 8
   %i.bc = getelementptr i8, ptr %.pn6.us39.i, i64 32
   %i.bd = load i32, ptr %i.bc, align 8
-  %5 = xor i32 %i.bd, -1
+  %5 = trunc i32 %i.bd to i1
   %i.be = and i32 %i.bb, 1
-  %6 = and i32 %i.be, %5
+  %6 = select i1 %5, i32 0, i32 %i.be
   %i.bf = tail call i32 (ptr, i64, ptr, ...) @scnprintf(ptr noundef %i.aw, i64 noundef %i.ay, ptr noundef nonnull @.str.55, i32 noundef %6) #19 ; 2 uses
   %.not40.us42.i = icmp eq i32 %i.bf, 0
   br i1 %.not40.us42.i, label %cdrom_print_info.exit, label %bb.l
@@ -2100,11 +2100,11 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr i8, ptr %i.y, i64 104
   %i.aa = load i32, ptr %i.z, align 8
   %i.ab = getelementptr i8, ptr %.pn28.us.i, i64 32
-  %i.ac = load i32, ptr %i.ab, align 8
-  %5 = xor i32 %i.ac, -1                          ; 3 uses
+  %i.ac = load i32, ptr %i.ab, align 8            ; 3 uses
+  %5 = trunc i32 %i.ac to i1
   %i.ad = and i32 %i.aa, 1
-  %6 = and i32 %i.ad, %5
-  %.not20.us.i = icmp eq i32 %6, 0
+  %.not20.us52.i = icmp eq i32 %i.ad, 0
+  %.not20.us.i = select i1 %5, i1 true, i1 %.not20.us52.i
   br i1 %.not20.us.i, label %.thread.us.i, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.split.us.i
@@ -2128,8 +2128,9 @@ bb.e:                                             ; preds = %.thread.us.i
   %i.ak = load ptr, ptr %.029.us.i, align 8
   %i.al = getelementptr i8, ptr %i.ak, i64 104
   %i.am = load i32, ptr %i.al, align 8
-  %i.an = and i32 %5, 2
-  %i.ao = and i32 %i.an, %i.am
+  %i.an = and i32 %i.ac, 2
+  %6 = xor i32 %i.an, 2
+  %i.ao = and i32 %6, %i.am
   %.not21.us.i = icmp eq i32 %i.ao, 0
   br i1 %.not21.us.i, label %.thread23.us.i, label %bb.f
 
@@ -2153,8 +2154,9 @@ bb.h:                                             ; preds = %.thread23.us.i
   %i.av = load ptr, ptr %.029.us.i, align 8
   %i.aw = getelementptr i8, ptr %i.av, i64 104
   %i.ax = load i32, ptr %i.aw, align 8
-  %i.ay = and i32 %5, 4
-  %i.az = and i32 %i.ay, %i.ax
+  %i.ay = and i32 %i.ac, 4
+  %7 = xor i32 %i.ay, 4
+  %i.az = and i32 %7, %i.ax
   %.not22.us.i = icmp eq i32 %i.az, 0
   %.phi.trans.insert = getelementptr i8, ptr %.pn28.us.i, i64 44
   %.pre = load i32, ptr %.phi.trans.insert, align 4 ; 2 uses
