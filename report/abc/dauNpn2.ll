@@ -132,23 +132,18 @@ tailrecurse:                                      ; preds = %bb.j, %bb.a
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %tailrecurse, %.lr.ph
-  %.064 = phi i32 [ %i.d, %.lr.ph ], [ 0, %tailrecurse ] ; 2 uses
+  %.064 = phi i32 [ %i.d, %.lr.ph ], [ 0, %tailrecurse ]
   %.03563 = phi ptr [ %i.c, %.lr.ph ], [ %.tr, %tailrecurse ]
   %i.c = getelementptr inbounds nuw i8, ptr %.03563, i64 1 ; 3 uses
-  %i.d = xor i32 %.064, 1
+  %i.d = xor i32 %.064, 1                         ; 2 uses
   %i.e = load i8, ptr %i.c, align 1, !tbaa !12    ; 2 uses
   %i.f = icmp eq i8 %i.e, 126
-  br i1 %i.f, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !91
+  br i1 %i.f, label %.lr.ph, label %._crit_edge, !llvm.loop !91
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %2 = icmp ne i32 %.064, 1
-  %3 = sext i1 %2 to i64
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %tailrecurse
-  %.035.lcssa = phi ptr [ %.tr, %tailrecurse ], [ %i.c, %._crit_edge.loopexit ] ; 4 uses
-  %.0.lcssa = phi i64 [ 0, %tailrecurse ], [ %3, %._crit_edge.loopexit ] ; 3 uses
-  %.lcssa = phi i8 [ %i.a, %tailrecurse ], [ %i.e, %._crit_edge.loopexit ] ; 4 uses
+._crit_edge:                                      ; preds = %.lr.ph, %tailrecurse
+  %.035.lcssa = phi ptr [ %.tr, %tailrecurse ], [ %i.c, %.lr.ph ] ; 4 uses
+  %.0.lcssa = phi i32 [ 0, %tailrecurse ], [ %i.d, %.lr.ph ] ; 3 uses
+  %.lcssa = phi i8 [ %i.a, %tailrecurse ], [ %i.e, %.lr.ph ] ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.035.lcssa, i64 1 ; 2 uses
   %i.h = icmp eq ptr %i.g, %.tr54
   br i1 %i.h, label %bb.b, label %bb.d
@@ -159,11 +154,13 @@ bb.b:                                             ; preds = %._crit_edge
   br i1 %or.cond, label %bb.c, label %bb.y
 
 bb.c:                                             ; preds = %bb.b
+  %.not = icmp ne i32 %.0.lcssa, 0
   %i.j = zext nneg i8 %.lcssa to i64
   %i.k = getelementptr [8 x i8], ptr @s_Truths6, i64 %i.j
   %i.l = getelementptr i8, ptr %i.k, i64 -776
   %i.m = load i64, ptr %i.l, align 8, !tbaa !15
-  %spec.select = xor i64 %i.m, %.0.lcssa
+  %2 = sext i1 %.not to i64
+  %spec.select = xor i64 %i.m, %2
   br label %bb.y
 
 bb.d:                                             ; preds = %._crit_edge
@@ -214,7 +211,9 @@ Dau_ParseFormulaEndToken.exit:                    ; preds = %.preheader, %bb.h
 
 bb.j:                                             ; preds = %Dau_ParseFormulaEndToken.exit
   %i.v = getelementptr inbounds i8, ptr %.tr54, i64 -1
-  %i.w = xor i64 %accumulator.tr, %.0.lcssa
+  %sext40 = sub nsw i32 0, %.0.lcssa
+  %3 = sext i32 %sext40 to i64
+  %i.w = xor i64 %accumulator.tr, %3
   br label %tailrecurse
 
 bb.k:                                             ; preds = %.preheader104, %bb.p
@@ -254,7 +253,9 @@ bb.p:                                             ; preds = %bb.n, %bb.k
 Dau_ParseFormulaEndToken.exit47:                  ; preds = %bb.k, %bb.o
   %.011.i46 = phi ptr [ %i.ab, %bb.o ], [ null, %bb.k ] ; 3 uses
   %i.ad = tail call i64 @Dau_ParseFormula_rec(ptr noundef nonnull %.035.lcssa, ptr noundef %.011.i46)
-  %i.ae = xor i64 %i.ad, %.0.lcssa                ; 2 uses
+  %sext = sub nsw i32 0, %.0.lcssa
+  %4 = sext i32 %sext to i64
+  %i.ae = xor i64 %i.ad, %4                       ; 2 uses
   %i.af = load i8, ptr %.011.i46, align 1, !tbaa !12
   %i.ag = getelementptr inbounds nuw i8, ptr %.011.i46, i64 1 ; 2 uses
   br label %bb.q
