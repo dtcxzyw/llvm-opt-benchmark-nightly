@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %ZS_bitpackEncodeEdg
 bb.f:                                             ; preds = %bb.e
   %.rhs.trunc.i = trunc i32 %4 to i8              ; 2 uses
   %i.hq = udiv i8 56, %.rhs.trunc.i
-  %.zext.i = zext nneg i8 %i.hq to i64            ; 4 uses
-  %i.hr = urem i64 %3, %.zext.i                   ; 2 uses
+  %.zext.i = zext nneg i8 %i.hq to i64            ; 5 uses
+  %i.hr = urem i64 %3, %.zext.i
   %i.hs = sub nuw i64 %3, %i.hr
-  %.not123.i = icmp eq i64 %3, %i.hr
+  %.not123.i = icmp ult i64 %3, %.zext.i
   br i1 %.not123.i, label %.preheader.i21, label %.preheader93.lr.ph.i
 
 .preheader93.lr.ph.i:                             ; preds = %bb.f
@@ -611,10 +611,10 @@ ZS_BitDStreamFF_reload.exit.i:                    ; preds = %bb.k, %bb.j, %bb.i
 bb.l:                                             ; preds = %ZS_BitDStreamFF_reload.exit.i
   %.rhs.trunc.i = trunc i32 %4 to i8              ; 2 uses
   %i.if = udiv i8 57, %.rhs.trunc.i
-  %.zext.i = zext nneg i8 %i.if to i64            ; 3 uses
-  %i.ig = urem i64 %1, %.zext.i                   ; 2 uses
+  %.zext.i = zext nneg i8 %i.if to i64            ; 4 uses
+  %i.ig = urem i64 %1, %.zext.i
   %i.ih = sub nuw i64 %1, %i.ig
-  %.not121.i = icmp eq i64 %1, %i.ig
+  %.not121.i = icmp ult i64 %1, %.zext.i
   br i1 %.not121.i, label %.preheader.i21, label %.preheader94.lr.ph.i
 
 .preheader94.lr.ph.i:                             ; preds = %bb.l

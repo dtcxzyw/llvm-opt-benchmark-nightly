@@ -191,7 +191,7 @@ bb.a:
   %i.h = and i64 %i.g, 4294967295
   %.not = icmp eq i64 %i.h, 4294967295
   %i.i = ashr i64 %i.g, 32
-  %i.j = select i1 %.not, i64 1, i64 %i.i         ; 3 uses
+  %i.j = select i1 %.not, i64 1, i64 %i.i         ; 4 uses
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.j)
   %i.l = icmp eq i64 %i.k, 1
   %i.m = and i64 %i.j, 15
@@ -214,10 +214,10 @@ bb.b:                                             ; preds = %bb.a
   %i.t = ashr i64 %i.r, 32
   %i.u = select i1 %.not73, i64 16777216, i64 %i.t ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %i.v = urem i64 %i.u, %i.j                      ; 2 uses
+  %i.v = urem i64 %i.u, %i.j
   %i.w = sub nuw nsw i64 %i.u, %i.v               ; 2 uses
   store i64 %i.w, ptr %i.a, align 8, !tbaa !19
-  %.not74 = icmp eq i64 %i.u, %i.v
+  %.not74 = icmp ult i64 %i.u, %i.j
   br i1 %.not74, label %bb.c, label %bb.d, !prof !22
 
 bb.c:                                             ; preds = %.critedge

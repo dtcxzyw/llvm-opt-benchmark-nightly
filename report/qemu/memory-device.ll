@@ -202,11 +202,11 @@ bb.r:                                             ; preds = %range_overlaps_rang
 
 range_upb.exit:                                   ; preds = %bb.r
   %i.bj = add i64 %.fr52, %2                      ; 3 uses
-  %5 = urem i64 %i.bj, %2                         ; 2 uses
-  %.not53 = icmp eq i64 %i.bj, %5
+  %.not53 = icmp ult i64 %i.bj, %2
   br i1 %.not53, label %range_is_empty.exit.i136, label %bb.s
 
 bb.s:                                             ; preds = %range_upb.exit
+  %5 = urem i64 %i.bj, %2
   %i.bk = sub nuw i64 %i.bj, %5                   ; 4 uses
   %reass.sub.i121 = sub nuw i64 %.sroa.13.1227, %.sroa.0152.1228 ; 2 uses
   %i.bl = add i64 %reass.sub.i121, 1              ; 2 uses
