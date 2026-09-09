@@ -204,15 +204,11 @@ bb.p:                                             ; preds = %.lr.ph144, %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.mc = load ptr, ptr %i.l, align 8, !tbaa !15
   %i.md = load i64, ptr %i.mc, align 8, !tbaa !17
-  %4 = trunc i64 %i.md to i32
-  %5 = and i32 %4, 1
   %i.me = load i32, ptr %i.km, align 8, !tbaa !14
-  %6 = add nsw i32 %i.me, -1
-  %7 = lshr i32 %6, 31
-  %8 = xor i32 %7, -1
-  %9 = and i32 %5, %8
-  %10 = zext nneg i32 %9 to i64
-  tail call void @BN_consttime_swap(i64 noundef %10, ptr noundef nonnull %i.l, ptr noundef %i.k, i32 noundef %i.ko) #4
+  %4 = and i64 %i.md, 1
+  %.inv = icmp sgt i32 %i.me, 0
+  %5 = select i1 %.inv, i64 %4, i64 0
+  tail call void @BN_consttime_swap(i64 noundef %5, ptr noundef nonnull %i.l, ptr noundef %i.k, i32 noundef %i.ko) #4
   %i.mf = tail call i32 @BN_rshift1(ptr noundef nonnull %i.l, ptr noundef nonnull %i.l) #4
   %.not128 = icmp eq i32 %i.mf, 0
   br i1 %.not128, label %.loopexit, label %bb.o
