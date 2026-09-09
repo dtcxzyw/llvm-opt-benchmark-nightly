@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.e, %.critedge
 
 bb.f:                                             ; preds = %bb.e
   %i.aj = trunc nuw nsw i64 %i.af to i32          ; 3 uses
-  %i.ak = add nsw i64 %.039, 1                    ; 3 uses
+  %i.ak = add nuw nsw i64 %.039, 1                ; 3 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.039
   store i32 %i.aj, ptr %i.al, align 4, !tbaa !10
   %i.am = load i64, ptr %.040.ph, align 8, !tbaa !45
@@ -264,7 +264,7 @@ bb.k:                                             ; preds = %_ZNKSt7__cxx1112bas
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_moveEPcPKcm.exit.i.i.i: ; preds = %bb.k, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i
   %i.bc = phi ptr [ %i.aw, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i ], [ %.pre.i51, %bb.k ]
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.aq
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bd, i8 48, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bd, i8 48, i64 %i.ar, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc.exit
 
 bb.l:                                             ; preds = %bb.h

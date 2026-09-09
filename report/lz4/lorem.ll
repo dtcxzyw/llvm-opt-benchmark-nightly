@@ -204,12 +204,12 @@ vector.ph168:                                     ; preds = %.lr.ph.i
   %i.ch = add i64 %.0194.i, %n.vec                ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.cd, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.ci = getelementptr [4 x i8], ptr @g_distrib, i64 %.0194.i
+  %i.ci = getelementptr inbounds nuw [4 x i8], ptr @g_distrib, i64 %.0194.i
   br label %vector.body169
 
 vector.body169:                                   ; preds = %vector.body169, %vector.ph168
   %index170 = phi i64 [ 0, %vector.ph168 ], [ %index.next171, %vector.body169 ] ; 2 uses
-  %i.cj = getelementptr [4 x i8], ptr %i.ci, i64 %index170 ; 2 uses
+  %i.cj = getelementptr inbounds nuw [4 x i8], ptr %i.ci, i64 %index170 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.cj, align 4, !tbaa !21
   store <4 x i32> %broadcast.splat, ptr %i.ck, align 4, !tbaa !21
@@ -227,7 +227,7 @@ scalar.ph167.preheader:                           ; preds = %.lr.ph.i, %middle.b
 
 scalar.ph167:                                     ; preds = %scalar.ph167.preheader, %scalar.ph167
   %.11.i = phi i64 [ %i.cm, %scalar.ph167 ], [ %.11.i.ph, %scalar.ph167.preheader ] ; 2 uses
-  %i.cm = add nsw i64 %.11.i, 1                   ; 3 uses
+  %i.cm = add nuw nsw i64 %.11.i, 1               ; 3 uses
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr @g_distrib, i64 %.11.i
   store i32 %i.cd, ptr %i.cn, align 4, !tbaa !21
   %lftr.wideiv = trunc i64 %i.cm to i32

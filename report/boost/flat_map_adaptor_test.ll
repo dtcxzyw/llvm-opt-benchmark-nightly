@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds i8, ptr %i.ac, i64 -8 ; 2 uses
   %i.ak = load <2 x i32>, ptr %i.aj, align 8, !tbaa !338, !noalias !8263
   store <2 x i32> %i.ak, ptr %i.ac, align 8, !tbaa !338, !noalias !8263
-  %i.al = add nsw i64 %i.m, 1
+  %i.al = add nuw nsw i64 %i.m, 1
   store i64 %i.al, ptr %i.i, align 8, !tbaa !444, !noalias !8263
   %i.am = add nsw i64 %i.ai, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.am, 0
@@ -289,7 +289,7 @@ bb.j:                                             ; preds = %bb.h
   %i.bn = getelementptr inbounds i8, ptr %i.bg, i64 -8 ; 2 uses
   %i.bo = load <2 x i32>, ptr %i.bn, align 8, !tbaa !338, !noalias !8267
   store <2 x i32> %i.bo, ptr %i.bg, align 8, !tbaa !338, !noalias !8267
-  %i.bp = add nsw i64 %i.as, 1
+  %i.bp = add nuw nsw i64 %i.as, 1
   store i64 %i.bp, ptr %i.j, align 8, !tbaa !444, !noalias !8267
   %i.bq = add nsw i64 %i.bm, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i.i112 = icmp eq i64 %i.bq, 0
@@ -401,7 +401,7 @@ vector.ph:                                        ; preds = %_ZN5boost9container
   %i.ct = select i1 %i.cs, i64 4, i64 %i.cr
   %n.vec = sub nsw i64 %i.cq, %i.ct               ; 3 uses
   %i.cu = add i64 %i.cc, %n.vec
-  %i.cv = add nsw i64 %i.cc, 1
+  %i.cv = add nuw nsw i64 %i.cc, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -409,7 +409,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cw = phi i64 [ %i.cv, %vector.ph ], [ %i.de, %vector.body ] ; 2 uses
   %vec.ind569 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next572, %vector.body ] ; 5 uses
   %step.add570 = add <2 x i32> %vec.ind569, splat (i32 2)
-  %i.cx = add i64 %i.cc, %index                   ; 2 uses
+  %i.cx = add nuw i64 %i.cc, %index               ; 2 uses
   %i.cy = sub nsw <2 x i32> zeroinitializer, %vec.ind569
   %i.cz = sub <2 x i32> splat (i32 -2), %vec.ind569
   %i.da = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.cx
@@ -419,9 +419,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %interleaved.vec, ptr %i.da, align 8, !tbaa !338
   %interleaved.vec571 = shufflevector <2 x i32> %step.add570, <2 x i32> %i.cz, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x i32> %interleaved.vec571, ptr %i.dc, align 8, !tbaa !338
-  %i.dd = add nsw i64 %i.cw, 3
+  %i.dd = add nuw nsw i64 %i.cw, 3
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.de = add nsw i64 %i.cw, 4
+  %i.de = add nuw nsw i64 %i.cw, 4
   %vec.ind.next572 = add <2 x i32> %vec.ind569, splat (i32 4)
   %i.df = icmp eq i64 %index.next, %n.vec
   br i1 %i.df, label %scalar.ph.preheader.loopexit, label %vector.body, !llvm.loop !8128
@@ -477,7 +477,7 @@ bb.x:                                             ; preds = %scalar.ph
   store i32 %i.dr, ptr %i.dt, align 8, !tbaa !338
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 4
   store i32 %i.ds, ptr %i.du, align 4, !tbaa !338
-  %i.dv = add nsw i64 %i.dq, 1                    ; 3 uses
+  %i.dv = add nuw nsw i64 %i.dq, 1                ; 3 uses
   store i64 %i.dv, ptr %i.cd, align 8, !tbaa !444
   %i.dw = add nuw nsw i64 %.047429, 1             ; 2 uses
   %.not71 = icmp eq i64 %i.dw, 100
@@ -646,7 +646,7 @@ bb.ai:                                            ; preds = %bb.ag
   %i.fs = getelementptr inbounds i8, ptr %i.fl, i64 -8 ; 2 uses
   %i.ft = load <2 x i32>, ptr %i.fs, align 8, !tbaa !338, !noalias !8272
   store <2 x i32> %i.ft, ptr %i.fl, align 8, !tbaa !338, !noalias !8272
-  %i.fu = add nsw i64 %i.ev, 1
+  %i.fu = add nuw nsw i64 %i.ev, 1
   store i64 %i.fu, ptr %i.er, align 8, !tbaa !444, !noalias !8272
   %i.fv = add nsw i64 %i.fr, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i.i153 = icmp eq i64 %i.fv, 0
@@ -730,7 +730,7 @@ bb.am:                                            ; preds = %bb.ak
   %i.gw = getelementptr inbounds i8, ptr %i.gp, i64 -8 ; 2 uses
   %i.gx = load <2 x i32>, ptr %i.gw, align 8, !tbaa !338, !noalias !8276
   store <2 x i32> %i.gx, ptr %i.gp, align 8, !tbaa !338, !noalias !8276
-  %i.gy = add nsw i64 %i.gb, 1
+  %i.gy = add nuw nsw i64 %i.gb, 1
   store i64 %i.gy, ptr %i.es, align 8, !tbaa !444, !noalias !8276
   %i.gz = add nsw i64 %i.gv, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i.i171 = icmp eq i64 %i.gz, 0
@@ -984,7 +984,7 @@ bb.bf:                                            ; preds = %_ZN5boost9container
   %i.jq = getelementptr inbounds i8, ptr %i.jj, i64 -8 ; 2 uses
   %i.jr = load <2 x i32>, ptr %i.jq, align 8, !tbaa !338, !noalias !8280
   store <2 x i32> %i.jr, ptr %i.jj, align 8, !tbaa !338, !noalias !8280
-  %i.js = add nsw i64 %i.ix, 1
+  %i.js = add nuw nsw i64 %i.ix, 1
   store i64 %i.js, ptr %i.iq, align 8, !tbaa !444, !noalias !8280
   %i.jt = add nsw i64 %i.jp, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i213 = icmp eq i64 %i.jt, 0
@@ -1057,7 +1057,7 @@ bb.bi:                                            ; preds = %_ZN5boost9container
   %i.kq = getelementptr inbounds i8, ptr %i.kj, i64 -8 ; 2 uses
   %i.kr = load <2 x i32>, ptr %i.kq, align 8, !tbaa !338, !noalias !8283
   store <2 x i32> %i.kr, ptr %i.kj, align 8, !tbaa !338, !noalias !8283
-  %i.ks = add nsw i64 %i.jz, 1
+  %i.ks = add nuw nsw i64 %i.jz, 1
   store i64 %i.ks, ptr %i.ir, align 8, !tbaa !444, !noalias !8283
   %i.kt = add nsw i64 %i.kp, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i226 = icmp eq i64 %i.kt, 0
@@ -1130,7 +1130,7 @@ bb.bl:                                            ; preds = %_ZN5boost9container
   %i.lq = getelementptr inbounds i8, ptr %i.lj, i64 -8 ; 2 uses
   %i.lr = load <2 x i32>, ptr %i.lq, align 8, !tbaa !338, !noalias !8286
   store <2 x i32> %i.lr, ptr %i.lj, align 8, !tbaa !338, !noalias !8286
-  %i.ls = add nsw i64 %i.kz, 1
+  %i.ls = add nuw nsw i64 %i.kz, 1
   store i64 %i.ls, ptr %i.iq, align 8, !tbaa !444, !noalias !8286
   %i.lt = add nsw i64 %i.lp, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i241 = icmp eq i64 %i.lt, 0
@@ -1203,7 +1203,7 @@ bb.bo:                                            ; preds = %_ZN5boost9container
   %i.mq = getelementptr inbounds i8, ptr %i.mj, i64 -8 ; 2 uses
   %i.mr = load <2 x i32>, ptr %i.mq, align 8, !tbaa !338, !noalias !8289
   store <2 x i32> %i.mr, ptr %i.mj, align 8, !tbaa !338, !noalias !8289
-  %i.ms = add nsw i64 %i.lz, 1
+  %i.ms = add nuw nsw i64 %i.lz, 1
   store i64 %i.ms, ptr %i.ir, align 8, !tbaa !444, !noalias !8289
   %i.mt = add nsw i64 %i.mp, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i256 = icmp eq i64 %i.mt, 0
@@ -1606,7 +1606,7 @@ bb.l:                                             ; preds = %bb.j
   %i.aw = getelementptr inbounds i8, ptr %i.ao, i64 -8 ; 2 uses
   %i.ax = load <2 x i32>, ptr %i.aw, align 4, !tbaa !338, !noalias !9112
   store <2 x i32> %i.ax, ptr %i.ao, align 4, !tbaa !338, !noalias !9112
-  %i.ay = add nsw i64 %i.y, 1
+  %i.ay = add nuw nsw i64 %i.y, 1
   store i64 %i.ay, ptr %i.b, align 8, !tbaa !444, !noalias !9112
   %i.az = add nsw i64 %i.av, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.az, 0
@@ -1748,7 +1748,7 @@ bb.s:                                             ; preds = %_ZN5boost9container
   %i.cr = getelementptr inbounds i8, ptr %i.cj, i64 -8 ; 2 uses
   %i.cs = load <2 x i32>, ptr %i.cr, align 4, !tbaa !338, !noalias !9115
   store <2 x i32> %i.cs, ptr %i.cj, align 4, !tbaa !338, !noalias !9115
-  %i.ct = add nsw i64 %i.by, 1
+  %i.ct = add nuw nsw i64 %i.by, 1
   store i64 %i.ct, ptr %i.i, align 8, !tbaa !444, !noalias !9115
   %i.cu = add nsw i64 %i.cq, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i94 = icmp eq i64 %i.cu, 0
@@ -2033,7 +2033,7 @@ bb.am:                                            ; preds = %bb.ak
   %i.fx = getelementptr inbounds i8, ptr %i.fp, i64 -8 ; 2 uses
   %i.fy = load <2 x i32>, ptr %i.fx, align 4, !tbaa !338, !noalias !9119
   store <2 x i32> %i.fy, ptr %i.fp, align 4, !tbaa !338, !noalias !9119
-  %i.fz = add nsw i64 %i.ez, 1
+  %i.fz = add nuw nsw i64 %i.ez, 1
   store i64 %i.fz, ptr %i.b, align 8, !tbaa !444, !noalias !9119
   %i.ga = add nsw i64 %i.fw, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i.i133 = icmp eq i64 %i.ga, 0
@@ -2175,7 +2175,7 @@ bb.at:                                            ; preds = %_ZN5boost9container
   %i.hs = getelementptr inbounds i8, ptr %i.hk, i64 -8 ; 2 uses
   %i.ht = load <2 x i32>, ptr %i.hs, align 4, !tbaa !338, !noalias !9122
   store <2 x i32> %i.ht, ptr %i.hk, align 4, !tbaa !338, !noalias !9122
-  %i.hu = add nsw i64 %i.gz, 1
+  %i.hu = add nuw nsw i64 %i.gz, 1
   store i64 %i.hu, ptr %i.i, align 8, !tbaa !444, !noalias !9122
   %i.hv = add nsw i64 %i.hr, -1                   ; 2 uses
   %.not.i.i.i.i.i.i.i173 = icmp eq i64 %i.hv, 0
@@ -2440,7 +2440,7 @@ bb.bj:                                            ; preds = %bb.bh
   %i.ku = getelementptr inbounds i8, ptr %i.km, i64 -8 ; 2 uses
   %i.kv = load <2 x i32>, ptr %i.ku, align 4, !tbaa !338, !noalias !9126
   store <2 x i32> %i.kv, ptr %i.km, align 4, !tbaa !338, !noalias !9126
-  %i.kw = add nsw i64 %i.jw, 1
+  %i.kw = add nuw nsw i64 %i.jw, 1
   store i64 %i.kw, ptr %i.b, align 8, !tbaa !444, !noalias !9126
   %i.kx = add nsw i64 %i.kt, -1                   ; 2 uses
   %.not.i.i.i.i.i.i331 = icmp eq i64 %i.kx, 0
@@ -2582,7 +2582,7 @@ bb.br:                                            ; preds = %_ZN5boost9container
   %i.mp = getelementptr inbounds i8, ptr %i.mh, i64 -8 ; 2 uses
   %i.mq = load <2 x i32>, ptr %i.mp, align 4, !tbaa !338, !noalias !9129
   store <2 x i32> %i.mq, ptr %i.mh, align 4, !tbaa !338, !noalias !9129
-  %i.mr = add nsw i64 %i.lw, 1
+  %i.mr = add nuw nsw i64 %i.lw, 1
   store i64 %i.mr, ptr %i.i, align 8, !tbaa !444, !noalias !9129
   %i.ms = add nsw i64 %i.mo, -1                   ; 2 uses
   %.not.i.i.i.i.i.i255 = icmp eq i64 %i.ms, 0
@@ -2985,7 +2985,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ct = getelementptr inbounds i8, ptr %i.cm, i64 -8 ; 2 uses
   %i.cu = load <2 x i32>, ptr %i.ct, align 8, !tbaa !338, !noalias !9463
   store <2 x i32> %i.cu, ptr %i.cm, align 8, !tbaa !338, !noalias !9463
-  %i.cv = add nsw i64 %i.br, 1
+  %i.cv = add nuw nsw i64 %i.br, 1
   store i64 %i.cv, ptr %i.e, align 8, !tbaa !444, !noalias !9463
   %i.cw = add nsw i64 %i.cs, -1                   ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.cw, 0
@@ -3179,7 +3179,7 @@ bb.x:                                             ; preds = %bb.v
   %i.fd = getelementptr inbounds i8, ptr %i.ew, i64 -8 ; 2 uses
   %i.fe = load <2 x i32>, ptr %i.fd, align 8, !tbaa !338, !noalias !9467
   store <2 x i32> %i.fe, ptr %i.ew, align 8, !tbaa !338, !noalias !9467
-  %i.ff = add nsw i64 %i.eb, 1
+  %i.ff = add nuw nsw i64 %i.eb, 1
   store i64 %i.ff, ptr %i.e, align 8, !tbaa !444, !noalias !9467
   %i.fg = add nsw i64 %i.fc, -1                   ; 2 uses
   %.not.i.i.i.i.i177 = icmp eq i64 %i.fg, 0
@@ -3582,7 +3582,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ct = getelementptr inbounds i8, ptr %i.cm, i64 -8 ; 2 uses
   %i.cu = load <2 x i32>, ptr %i.ct, align 8, !tbaa !338, !noalias !9523
   store <2 x i32> %i.cu, ptr %i.cm, align 8, !tbaa !338, !noalias !9523
-  %i.cv = add nsw i64 %i.br, 1
+  %i.cv = add nuw nsw i64 %i.br, 1
   store i64 %i.cv, ptr %i.e, align 8, !tbaa !444, !noalias !9523
   %i.cw = add nsw i64 %i.cs, -1                   ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.cw, 0
@@ -3776,7 +3776,7 @@ bb.x:                                             ; preds = %bb.v
   %i.fd = getelementptr inbounds i8, ptr %i.ew, i64 -8 ; 2 uses
   %i.fe = load <2 x i32>, ptr %i.fd, align 8, !tbaa !338, !noalias !9527
   store <2 x i32> %i.fe, ptr %i.ew, align 8, !tbaa !338, !noalias !9527
-  %i.ff = add nsw i64 %i.eb, 1
+  %i.ff = add nuw nsw i64 %i.eb, 1
   store i64 %i.ff, ptr %i.e, align 8, !tbaa !444, !noalias !9527
   %i.fg = add nsw i64 %i.fc, -1                   ; 2 uses
   %.not.i.i.i.i.i177 = icmp eq i64 %i.fg, 0

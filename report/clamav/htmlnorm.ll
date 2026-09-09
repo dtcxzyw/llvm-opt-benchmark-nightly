@@ -204,7 +204,7 @@ bb.ih:                                            ; preds = %bb.ig
 
 bb.ii:                                            ; preds = %bb.ih
   %i.yq = load i64, ptr %9, align 8, !tbaa !29    ; 2 uses
-  %i.yr = add nsw i64 %i.yq, 1                    ; 3 uses
+  %i.yr = add nuw nsw i64 %i.yq, 1                ; 3 uses
   store i64 %i.yr, ptr %9, align 8, !tbaa !29
   %i.ys = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.yq
   store i8 0, ptr %i.ys, align 1, !tbaa !19
@@ -217,7 +217,7 @@ bb.ij:                                            ; preds = %bb.ii
   br label %html_tag_contents_done.exit
 
 bb.ik:                                            ; preds = %bb.ii
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.yt, ptr nonnull align 8 %i.ap, i64 %i.yr, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.yt, ptr noundef nonnull align 8 dereferenceable(1) %i.ap, i64 %i.yr, i1 false)
   %i.yu = load ptr, ptr %i.am, align 8, !tbaa !16
   %i.yv = sext i32 %.111492374 to i64
   %i.yw = getelementptr [8 x i8], ptr %i.yu, i64 %i.yv
@@ -620,7 +620,7 @@ html_output_flush.exit.i1743:                     ; preds = %html_output_str.exi
 
 html_output_c.exit1744:                           ; preds = %html_output_str.exit1741, %html_output_flush.exit.i1743
   %i.ayw = phi i64 [ 0, %html_output_flush.exit.i1743 ], [ %i.ays, %html_output_str.exit1741 ] ; 2 uses
-  %i.ayx = add nsw i64 %i.ayw, 1
+  %i.ayx = add nuw nsw i64 %i.ayw, 1
   store i64 %i.ayx, ptr %i.axz, align 8, !tbaa !32
   %i.ayy = getelementptr inbounds nuw i8, ptr %i.aya, i64 %i.ayw
   store i8 10, ptr %i.ayy, align 1, !tbaa !19
@@ -665,7 +665,7 @@ html_output_flush.exit.i1752:                     ; preds = %thread-pre-split
 
 bb.qz:                                            ; preds = %html_output_flush.exit.i1752, %thread-pre-split
   %i.azm = phi i64 [ 0, %html_output_flush.exit.i1752 ], [ %i.azi, %thread-pre-split ] ; 2 uses
-  %i.azn = add nsw i64 %i.azm, 1
+  %i.azn = add nuw nsw i64 %i.azm, 1
   store i64 %i.azn, ptr %i.axz, align 8, !tbaa !32
   %i.azo = getelementptr inbounds nuw i8, ptr %i.aya, i64 %i.azm
   store i8 10, ptr %i.azo, align 1, !tbaa !19
@@ -1068,7 +1068,7 @@ bb.ty:                                            ; preds = %bb.tx, %.thread1910
 bb.tz:                                            ; preds = %bb.ty
   %i.bio = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %i.bip = load i64, ptr %9, align 8, !tbaa !29   ; 2 uses
-  %i.biq = add nsw i64 %i.bip, 1                  ; 3 uses
+  %i.biq = add nuw nsw i64 %i.bip, 1              ; 3 uses
   store i64 %i.biq, ptr %9, align 8, !tbaa !29
   %i.bir = getelementptr inbounds nuw i8, ptr %i.bio, i64 %i.bip
   store i8 0, ptr %i.bir, align 1, !tbaa !19
@@ -1081,7 +1081,7 @@ bb.ua:                                            ; preds = %bb.tz
   br label %html_tag_contents_done.exit1824
 
 bb.ub:                                            ; preds = %bb.tz
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bis, ptr nonnull align 8 %i.bio, i64 %i.biq, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bis, ptr noundef nonnull align 8 dereferenceable(1) %i.bio, i64 %i.biq, i1 false)
   %i.bit = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.biu = load ptr, ptr %i.bit, align 8, !tbaa !16
   %i.biv = sext i32 %.811561924 to i64

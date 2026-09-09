@@ -203,8 +203,8 @@ bb.a:
   %i.ey = xor i64 %i.ex, %i.cu
   %i.ez = xor i64 %i.ey, %i.dt
   %i.fa = xor i64 %i.ez, %i.ds                    ; 2 uses
-  %i.fb = add nsw i64 %.1204, 32                  ; 2 uses
-  %i.fc = add i64 %.1204, 104
+  %i.fb = add nuw nsw i64 %.1204, 32              ; 2 uses
+  %i.fc = add nuw i64 %.1204, 104
   %i.fd = icmp ult i64 %i.fc, %2
   br i1 %i.fd, label %.lr.ph206, label %._crit_edge207, !llvm.loop !20
 

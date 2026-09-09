@@ -158,12 +158,12 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bf = and i64 %i.aq, 12
   %n.vec = and i64 %i.aq, -16                     ; 4 uses
   %i.bg = add i64 %i.ax, %n.vec
-  %invariant.op = add i64 %i.ax, 1
+  %invariant.op = add nuw i64 %i.ax, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %.reass = add i64 %index, %invariant.op         ; 2 uses
+  %.reass = add nuw i64 %index, %invariant.op     ; 2 uses
   %i.bh = getelementptr inbounds [8 x i8], ptr %.0331415.us, i64 %.reass ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 32
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 64
@@ -196,12 +196,12 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec539 = and i64 %i.aq, -4                   ; 3 uses
   %i.bq = add i64 %i.ax, %n.vec539
-  %invariant.op689 = add i64 %i.ax, 1
+  %invariant.op689 = add nuw i64 %i.ax, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index540 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next542, %vec.epilog.vector.body ] ; 2 uses
-  %.reass690 = add i64 %index540, %invariant.op689 ; 2 uses
+  %.reass690 = add nuw i64 %index540, %invariant.op689 ; 2 uses
   %i.br = getelementptr inbounds [8 x i8], ptr %.0331415.us, i64 %.reass690
   %wide.load541 = load <4 x double>, ptr %i.br, align 8, !tbaa !39, !alias.scope !40
   %i.bs = getelementptr inbounds [8 x i8], ptr %.1356412.us, i64 %.reass690
@@ -220,7 +220,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %.lr.ph.us
   %.0335.in411.us = phi i64 [ %.0335.us, %.lr.ph.us ], [ %.0335.in411.us.ph, %.lr.ph.us.preheader ] ; 2 uses
-  %.0335.us = add nsw i64 %.0335.in411.us, 1      ; 3 uses
+  %.0335.us = add nuw nsw i64 %.0335.in411.us, 1  ; 3 uses
   %i.bu = mul nsw i64 %.0335.us, %3
   %i.bv = getelementptr inbounds [8 x i8], ptr %.0331415.us, i64 %i.bu
   %i.bw = load double, ptr %i.bv, align 8, !tbaa !39
@@ -415,12 +415,12 @@ vector.ph562:                                     ; preds = %vector.main.loop.it
   %i.fk = and i64 %i.ev, 12
   %n.vec563 = and i64 %i.ev, -16                  ; 4 uses
   %i.fl = add i64 %i.fc, %n.vec563
-  %invariant.op691 = add i64 %i.fc, 1
+  %invariant.op691 = add nuw i64 %i.fc, 1
   br label %vector.body564
 
 vector.body564:                                   ; preds = %vector.body564, %vector.ph562
   %index565 = phi i64 [ 0, %vector.ph562 ], [ %index.next570, %vector.body564 ] ; 2 uses
-  %.reass692 = add i64 %index565, %invariant.op691 ; 2 uses
+  %.reass692 = add nuw i64 %index565, %invariant.op691 ; 2 uses
   %i.fm = getelementptr inbounds [8 x i8], ptr %.1332448, i64 %.reass692 ; 4 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 32
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fm, i64 64
@@ -453,12 +453,12 @@ vec.epilog.ph578:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val573 = phi i64 [ %n.vec563, %vec.epilog.iter.check576 ], [ 0, %vector.main.loop.iter.check560 ]
   %n.vec579 = and i64 %i.ev, -4                   ; 3 uses
   %i.fv = add i64 %i.fc, %n.vec579
-  %invariant.op693 = add i64 %i.fc, 1
+  %invariant.op693 = add nuw i64 %i.fc, 1
   br label %vec.epilog.vector.body580
 
 vec.epilog.vector.body580:                        ; preds = %vec.epilog.vector.body580, %vec.epilog.ph578
   %index581 = phi i64 [ %vec.epilog.resume.val573, %vec.epilog.ph578 ], [ %index.next583, %vec.epilog.vector.body580 ] ; 2 uses
-  %.reass694 = add i64 %index581, %invariant.op693 ; 2 uses
+  %.reass694 = add nuw i64 %index581, %invariant.op693 ; 2 uses
   %i.fw = getelementptr inbounds [8 x i8], ptr %.1332448, i64 %.reass694
   %wide.load582 = load <4 x double>, ptr %i.fw, align 8, !tbaa !39, !alias.scope !46
   %i.fx = getelementptr inbounds [8 x i8], ptr %.2357445, i64 %.reass694
@@ -477,7 +477,7 @@ vec.epilog.middle.block584:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.1336.in444 = phi i64 [ %.1336, %.lr.ph ], [ %.1336.in444.ph, %.lr.ph.preheader ] ; 2 uses
-  %.1336 = add nsw i64 %.1336.in444, 1            ; 3 uses
+  %.1336 = add nuw nsw i64 %.1336.in444, 1        ; 3 uses
   %i.fz = mul nsw i64 %.1336, %3
   %i.ga = getelementptr inbounds [8 x i8], ptr %.1332448, i64 %i.fz
   %i.gb = load double, ptr %i.ga, align 8, !tbaa !39
@@ -625,12 +625,12 @@ vector.ph604:                                     ; preds = %vector.main.loop.it
   %i.ik = and i64 %i.hv, 12
   %n.vec605 = and i64 %i.hv, -16                  ; 4 uses
   %i.il = add i64 %i.ic, %n.vec605
-  %invariant.op695 = add i64 %i.ic, 1
+  %invariant.op695 = add nuw i64 %i.ic, 1
   br label %vector.body606
 
 vector.body606:                                   ; preds = %vector.body606, %vector.ph604
   %index607 = phi i64 [ 0, %vector.ph604 ], [ %index.next612, %vector.body606 ] ; 2 uses
-  %.reass696 = add i64 %index607, %invariant.op695 ; 2 uses
+  %.reass696 = add nuw i64 %index607, %invariant.op695 ; 2 uses
   %i.im = getelementptr inbounds [8 x i8], ptr %.2333463, i64 %.reass696 ; 4 uses
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 32
   %i.io = getelementptr inbounds nuw i8, ptr %i.im, i64 64
@@ -663,12 +663,12 @@ vec.epilog.ph620:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val615 = phi i64 [ %n.vec605, %vec.epilog.iter.check618 ], [ 0, %vector.main.loop.iter.check602 ]
   %n.vec621 = and i64 %i.hv, -4                   ; 3 uses
   %i.iv = add i64 %i.ic, %n.vec621
-  %invariant.op697 = add i64 %i.ic, 1
+  %invariant.op697 = add nuw i64 %i.ic, 1
   br label %vec.epilog.vector.body622
 
 vec.epilog.vector.body622:                        ; preds = %vec.epilog.vector.body622, %vec.epilog.ph620
   %index623 = phi i64 [ %vec.epilog.resume.val615, %vec.epilog.ph620 ], [ %index.next625, %vec.epilog.vector.body622 ] ; 2 uses
-  %.reass698 = add i64 %index623, %invariant.op697 ; 2 uses
+  %.reass698 = add nuw i64 %index623, %invariant.op697 ; 2 uses
   %i.iw = getelementptr inbounds [8 x i8], ptr %.2333463, i64 %.reass698
   %wide.load624 = load <4 x double>, ptr %i.iw, align 8, !tbaa !39, !alias.scope !48
   %i.ix = getelementptr inbounds [8 x i8], ptr %.4359460, i64 %.reass698
@@ -687,7 +687,7 @@ vec.epilog.middle.block626:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph459:                                        ; preds = %.lr.ph459.preheader, %.lr.ph459
   %.2337.in457 = phi i64 [ %.2337, %.lr.ph459 ], [ %.2337.in457.ph, %.lr.ph459.preheader ] ; 2 uses
-  %.2337 = add nsw i64 %.2337.in457, 1            ; 3 uses
+  %.2337 = add nuw nsw i64 %.2337.in457, 1        ; 3 uses
   %i.iz = mul nsw i64 %.2337, %3
   %i.ja = getelementptr inbounds [8 x i8], ptr %.2333463, i64 %i.iz
   %i.jb = load double, ptr %i.ja, align 8, !tbaa !39
@@ -813,12 +813,12 @@ vector.ph646:                                     ; preds = %vector.main.loop.it
   %i.kw = and i64 %i.kh, 12
   %n.vec647 = and i64 %i.kh, -16                  ; 4 uses
   %i.kx = add i64 %i.ko, %n.vec647
-  %invariant.op699 = add i64 %i.ko, 1
+  %invariant.op699 = add nuw i64 %i.ko, 1
   br label %vector.body648
 
 vector.body648:                                   ; preds = %vector.body648, %vector.ph646
   %index649 = phi i64 [ 0, %vector.ph646 ], [ %index.next654, %vector.body648 ] ; 2 uses
-  %.reass700 = add i64 %index649, %invariant.op699 ; 2 uses
+  %.reass700 = add nuw i64 %index649, %invariant.op699 ; 2 uses
   %i.ky = getelementptr inbounds [8 x i8], ptr %.3334477, i64 %.reass700 ; 4 uses
   %i.kz = getelementptr inbounds nuw i8, ptr %i.ky, i64 32
   %i.la = getelementptr inbounds nuw i8, ptr %i.ky, i64 64
@@ -851,12 +851,12 @@ vec.epilog.ph662:                                 ; preds = %vector.main.loop.it
   %vec.epilog.resume.val657 = phi i64 [ %n.vec647, %vec.epilog.iter.check660 ], [ 0, %vector.main.loop.iter.check644 ]
   %n.vec663 = and i64 %i.kh, -4                   ; 3 uses
   %i.lh = add i64 %i.ko, %n.vec663
-  %invariant.op701 = add i64 %i.ko, 1
+  %invariant.op701 = add nuw i64 %i.ko, 1
   br label %vec.epilog.vector.body664
 
 vec.epilog.vector.body664:                        ; preds = %vec.epilog.vector.body664, %vec.epilog.ph662
   %index665 = phi i64 [ %vec.epilog.resume.val657, %vec.epilog.ph662 ], [ %index.next667, %vec.epilog.vector.body664 ] ; 2 uses
-  %.reass702 = add i64 %index665, %invariant.op701 ; 2 uses
+  %.reass702 = add nuw i64 %index665, %invariant.op701 ; 2 uses
   %i.li = getelementptr inbounds [8 x i8], ptr %.3334477, i64 %.reass702
   %wide.load666 = load <4 x double>, ptr %i.li, align 8, !tbaa !39, !alias.scope !50
   %i.lj = getelementptr inbounds [8 x i8], ptr %.6474, i64 %.reass702
@@ -875,7 +875,7 @@ vec.epilog.middle.block668:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph473:                                        ; preds = %.lr.ph473.preheader, %.lr.ph473
   %.3338.in471 = phi i64 [ %.3338, %.lr.ph473 ], [ %.3338.in471.ph, %.lr.ph473.preheader ] ; 2 uses
-  %.3338 = add nsw i64 %.3338.in471, 1            ; 3 uses
+  %.3338 = add nuw nsw i64 %.3338.in471, 1        ; 3 uses
   %i.ll = mul nsw i64 %.3338, %3
   %i.lm = getelementptr inbounds [8 x i8], ptr %.3334477, i64 %i.ll
   %i.ln = load double, ptr %i.lm, align 8, !tbaa !39

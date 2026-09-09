@@ -202,7 +202,7 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph32:                                         ; preds = %.lr.ph32.preheader, %bb.u
   %indvars.iv46 = phi i64 [ 12, %.lr.ph32.preheader ], [ %indvars.iv.next47, %bb.u ] ; 2 uses
   %.031 = phi i64 [ 0, %.lr.ph32.preheader ], [ %.1, %bb.u ] ; 2 uses
-  %.011430 = phi i64 [ 0, %.lr.ph32.preheader ], [ %.1115, %bb.u ] ; 2 uses
+  %.011430 = phi i64 [ 0, %.lr.ph32.preheader ], [ %.1115, %bb.u ] ; 3 uses
   %i.dm = phi i64 [ %i.bm, %.lr.ph32.preheader ], [ %i.dy, %bb.u ]
   %.sroa.9.327 = phi i32 [ %i.bs, %.lr.ph32.preheader ], [ %i.ee, %bb.u ]
   %.sroa.16.326 = phi i32 [ %i.bz, %.lr.ph32.preheader ], [ %i.el, %bb.u ] ; 3 uses
@@ -236,8 +236,8 @@ bb.r:                                             ; preds = %bb.q
   %i.ek = trunc i64 %i.ej to i32
   %i.el = xor i32 %i.ek, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
-  %i.em = add nsw i64 %.011430, 1                 ; 5 uses
-  %i.en = icmp ugt i64 %i.em, 8191
+  %i.em = add nuw nsw i64 %.011430, 1             ; 4 uses
+  %i.en = icmp ugt i64 %.011430, 8190
   br i1 %i.en, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %.lr.ph32

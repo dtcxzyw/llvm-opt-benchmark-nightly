@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ar, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
-  %i.as = add i64 %i.ap, 7
+  %i.as = add nuw i64 %i.ap, 7
   %i.at = lshr i64 %i.as, 3
   %i.au = add i64 %i.at, %i.ap
   %i.av = icmp ugt i64 %.sroa.speculated, %i.au

@@ -205,11 +205,11 @@ _ZN5clang9api_notes12_GLOBAL__N_116emitVersionTupleERN4llvm11raw_ostreamERKNS2_1
   br i1 %.not.i20.i.i.i.i.i, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %_ZN5clang9api_notes12_GLOBAL__N_116emitVersionTupleERN4llvm11raw_ostreamERKNS2_12VersionTupleE.exit.i.i
-  %12 = shl i8 %i.jf, 4
-  %13 = ashr i8 %12, 7
-  %14 = add nsw i8 %13, 2
+  %12 = lshr i8 %i.jf, 3
+  %.lobit.i21.i.i.i.i.i = and i8 %12, 1
+  %13 = sub nuw nsw i8 2, %.lobit.i21.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
-  store i8 %14, ptr %i.x, align 1, !tbaa !142
+  store i8 %13, ptr %i.x, align 1, !tbaa !142
   %i.jh = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %11, ptr noundef nonnull %i.x, i64 noundef 1) #17 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   br label %bb.x
@@ -228,11 +228,11 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br i1 %.not.i23.i.i.i.i.i, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %15 = shl i8 %i.jj, 2
-  %16 = ashr i8 %15, 7
-  %17 = add nsw i8 %16, 2
+  %14 = lshr i8 %i.jj, 5
+  %.lobit.i24.i.i.i.i.i = and i8 %14, 1
+  %15 = sub nuw nsw i8 2, %.lobit.i24.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
-  store i8 %17, ptr %i.v, align 1, !tbaa !142
+  store i8 %15, ptr %i.v, align 1, !tbaa !142
   %i.jl = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %11, ptr noundef nonnull %i.v, i64 noundef 1) #17 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
   br label %bb.aa

@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %bb.c
   %i.x = lshr i8 %i.w, 6
   %i.y = and i8 %i.x, 1
   %i.z = trunc i16 %i.v to i8
-  %4 = shl i8 %i.z, 1
-  %5 = ashr i8 %4, 7
-  %6 = add nsw i8 %5, %i.y
+  %4 = lshr i8 %i.z, 6
+  %5 = and i8 %4, 1
+  %6 = sub nsw i8 %i.y, %5
   switch i8 %6, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit
     i8 0, label %bb.g
@@ -271,9 +271,9 @@ bb.i:                                             ; preds = %_RNCINvMNtCs1xwejQu
   %i.aw = lshr i8 %i.av, 6
   %i.ax = and i8 %i.aw, 1
   %i.ay = trunc i16 %i.au to i8
-  %7 = shl i8 %i.ay, 1
-  %8 = ashr i8 %7, 7
-  %9 = add nsw i8 %8, %i.ax
+  %7 = lshr i8 %i.ay, 6
+  %8 = and i8 %7, 1
+  %9 = sub nsw i8 %i.ax, %8
   switch i8 %9, label %default.unreachable [
     i8 -1, label %._RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit15_crit_edge
     i8 0, label %bb.k
@@ -343,9 +343,9 @@ bb.n:                                             ; preds = %bb.m
   %i.bv = lshr i8 %i.bu, 6
   %i.bw = and i8 %i.bv, 1
   %i.bx = trunc i16 %i.bt to i8
-  %10 = shl i8 %i.bx, 1
-  %11 = ashr i8 %10, 7
-  %12 = add nsw i8 %11, %i.bw
+  %10 = lshr i8 %i.bx, 6
+  %11 = and i8 %10, 1
+  %12 = sub nsw i8 %i.bw, %11
   switch i8 %12, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit19
     i8 0, label %bb.q
@@ -748,9 +748,9 @@ bb.b:                                             ; preds = %bb.a
   %i.m = lshr i8 %i.l, 6
   %i.n = and i8 %i.m, 1
   %i.o = trunc i16 %i.k to i8
-  %2 = shl i8 %i.o, 1
-  %3 = ashr i8 %2, 7
-  %4 = add nsw i8 %3, %i.n
+  %2 = lshr i8 %i.o, 6
+  %3 = and i8 %2, 1
+  %4 = sub nsw i8 %i.n, %3
   switch i8 %4, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread6
     i8 0, label %bb.c
@@ -831,9 +831,9 @@ bb.e:                                             ; preds = %.lr.ph.split.us
   %i.at = getelementptr inbounds i8, ptr %.sroa.0.012.us, i64 -8
   %i.au = load i16, ptr %i.at, align 8, !alias.scope !485, !noalias !484, !noundef !11
   %i.av = trunc i16 %i.au to i8
-  %5 = shl i8 %i.av, 1
-  %6 = ashr i8 %5, 7
-  %7 = add nsw i8 %6, %i.aj
+  %5 = lshr i8 %i.av, 6
+  %6 = and i8 %5, 1
+  %7 = sub nsw i8 %i.aj, %6
   switch i8 %7, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit12.backedge.us
     i8 0, label %._RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit12.thread_crit_edge13.split.us
@@ -868,9 +868,9 @@ bb.f:                                             ; preds = %.lr.ph.split
   %i.bb = getelementptr inbounds i8, ptr %.sroa.0.012, i64 -8
   %i.bc = load i16, ptr %i.bb, align 8, !alias.scope !485, !noalias !484, !noundef !11
   %i.bd = trunc i16 %i.bc to i8
-  %8 = shl i8 %i.bd, 1
-  %9 = ashr i8 %8, 7
-  %10 = add nsw i8 %9, %i.aj
+  %8 = lshr i8 %i.bd, 6
+  %9 = and i8 %8, 1
+  %10 = sub nsw i8 %i.aj, %9
   switch i8 %10, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit12.backedge
     i8 0, label %bb.g
@@ -1273,9 +1273,9 @@ bb.b:                                             ; preds = %bb.a
   %i.l = lshr i8 %i.k, 6
   %i.m = and i8 %i.l, 1
   %i.n = trunc i16 %i.j to i8
-  %2 = shl i8 %i.n, 1
-  %3 = ashr i8 %2, 7
-  %4 = add nsw i8 %3, %i.m
+  %2 = lshr i8 %i.n, 6
+  %3 = and i8 %2, 1
+  %4 = sub nsw i8 %i.m, %3
   switch i8 %4, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit
     i8 0, label %bb.e
@@ -1341,9 +1341,9 @@ bb.g:                                             ; preds = %_RNCINvMNtCs1xwejQu
   %i.an = lshr i8 %i.am, 6
   %i.ao = and i8 %i.an, 1
   %i.ap = trunc i16 %i.al to i8
-  %5 = shl i8 %i.ap, 1
-  %6 = ashr i8 %5, 7
-  %7 = add nsw i8 %6, %i.ao
+  %5 = lshr i8 %i.ap, 6
+  %6 = and i8 %5, 1
+  %7 = sub nsw i8 %i.ao, %6
   switch i8 %7, label %default.unreachable [
     i8 -1, label %.split12.thread
     i8 0, label %bb.h
@@ -1436,9 +1436,9 @@ bb.k:                                             ; preds = %.split12
   %i.co = lshr i8 %i.cn, 6
   %i.cp = and i8 %i.co, 1
   %i.cq = trunc i16 %i.cm to i8
-  %8 = shl i8 %i.cq, 1
-  %9 = ashr i8 %8, 7
-  %10 = add nsw i8 %9, %i.cp
+  %8 = lshr i8 %i.cq, 6
+  %9 = and i8 %8, 1
+  %10 = sub nsw i8 %i.cp, %9
   switch i8 %10, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit8
     i8 0, label %bb.n
@@ -1499,9 +1499,9 @@ bb.p:                                             ; preds = %_RNCINvMNtCs1xwejQu
   %i.do = lshr i8 %i.dn, 6
   %i.dp = and i8 %i.do, 1
   %i.dq = trunc i16 %i.dm to i8
-  %11 = shl i8 %i.dq, 1
-  %12 = ashr i8 %11, 7
-  %13 = add nsw i8 %12, %i.dp
+  %11 = lshr i8 %i.dq, 6
+  %12 = and i8 %11, 1
+  %13 = sub nsw i8 %i.dp, %12
   switch i8 %13, label %default.unreachable [
     i8 -1, label %.split39.thread
     i8 0, label %bb.q
@@ -1586,9 +1586,9 @@ bb.u:                                             ; preds = %bb.t
   %i.fe = lshr i8 %i.fd, 6
   %i.ff = and i8 %i.fe, 1
   %i.fg = trunc i16 %i.fc to i8
-  %14 = shl i8 %i.fg, 1
-  %15 = ashr i8 %14, 7
-  %16 = add nsw i8 %15, %i.ff
+  %14 = lshr i8 %i.fg, 6
+  %15 = and i8 %14, 1
+  %16 = sub nsw i8 %i.ff, %15
   switch i8 %16, label %default.unreachable [
     i8 -1, label %.split57.thread
     i8 0, label %bb.v
@@ -1991,7 +1991,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeINtNtCs1x
   br i1 %i.pc, label %bb.at, label %._crit_edge
 
 bb.bw:                                            ; preds = %._crit_edge
-  %i.pd = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.pd = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.pe = lshr i64 %.sroa.018.0, 1
   %i.pf = add nuw i64 %i.pe, %.sroa.09.0
   br label %bb.f
@@ -2394,7 +2394,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeINtNtCs1x
   br i1 %i.eq, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.er = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.er = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.es = lshr i64 %.sroa.018.0, 1
   %i.et = add nuw i64 %i.es, %.sroa.09.0
   br label %bb.f
@@ -2797,7 +2797,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeINtNtCs1x
   br i1 %i.ga, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.gb = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gb = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gc = lshr i64 %.sroa.018.0, 1
   %i.gd = add nuw i64 %i.gc, %.sroa.09.0
   br label %bb.f
@@ -2910,9 +2910,9 @@ bb.l:                                             ; preds = %bb.k
   %i.ab = lshr i8 %i.aa, 6
   %i.ac = and i8 %i.ab, 1
   %i.ad = trunc i16 %i.z to i8
-  %6 = shl i8 %i.ad, 1
-  %7 = ashr i8 %6, 7
-  %8 = add nsw i8 %7, %i.ac
+  %6 = lshr i8 %i.ad, 6
+  %7 = and i8 %6, 1
+  %8 = sub nsw i8 %i.ac, %7
   switch i8 %8, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit49.preheader
     i8 0, label %bb.m
@@ -2986,9 +2986,9 @@ bb.o:                                             ; preds = %.lr.ph
   %i.bf = lshr i8 %i.be, 6
   %i.bg = and i8 %i.bf, 1
   %i.bh = trunc i16 %i.bd to i8
-  %9 = shl i8 %i.bh, 1
-  %10 = ashr i8 %9, 7
-  %11 = add nsw i8 %10, %i.bg
+  %9 = lshr i8 %i.bh, 6
+  %10 = and i8 %9, 1
+  %11 = sub nsw i8 %i.bg, %10
   switch i8 %11, label %default.unreachable [
     i8 -1, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB12_7sort_byNCNvB14_19sort_and_prioritizes_0E0EB16_.exit.i
     i8 0, label %bb.p
@@ -3056,9 +3056,9 @@ bb.r:                                             ; preds = %.lr.ph102
   %i.ck = lshr i8 %i.cj, 6
   %i.cl = and i8 %i.ck, 1
   %i.cm = trunc i16 %i.ci to i8
-  %12 = shl i8 %i.cm, 1
-  %13 = ashr i8 %12, 7
-  %14 = add nsw i8 %13, %i.cl
+  %12 = lshr i8 %i.cm, 6
+  %13 = and i8 %12, 1
+  %14 = sub nsw i8 %i.cl, %13
   switch i8 %14, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread58
     i8 0, label %bb.s
@@ -3282,9 +3282,9 @@ bb.ai:                                            ; preds = %.preheader.i
   %i.ft = lshr i8 %i.fs, 6
   %i.fu = and i8 %i.ft, 1
   %i.fv = trunc i16 %i.fr to i8
-  %15 = shl i8 %i.fv, 1
-  %16 = ashr i8 %15, 7
-  %17 = add nsw i8 %16, %i.fu
+  %15 = lshr i8 %i.fv, 6
+  %16 = and i8 %15, 1
+  %17 = sub nsw i8 %i.fu, %16
   switch i8 %17, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread4.i.i
     i8 0, label %bb.aj
@@ -3367,9 +3367,9 @@ bb.al:                                            ; preds = %.lr.ph.i.i
   %i.hb = lshr i8 %i.ha, 6
   %i.hc = and i8 %i.hb, 1
   %i.hd = trunc i16 %i.gz to i8
-  %18 = shl i8 %i.hd, 1
-  %19 = ashr i8 %18, 7
-  %20 = add nsw i8 %19, %i.hc
+  %18 = lshr i8 %i.hd, 6
+  %19 = and i8 %18, 1
+  %20 = sub nsw i8 %i.hc, %19
   switch i8 %20, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread4.i23.i
     i8 0, label %bb.am
@@ -3469,7 +3469,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCs8fr
   br i1 %i.if, label %bb.z, label %._crit_edge
 
 bb.ap:                                            ; preds = %._crit_edge
-  %i.ig = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ig = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ih = lshr i64 %.sroa.018.0, 1
   %i.ii = add nuw i64 %i.ih, %.sroa.09.0
   br label %bb.f
@@ -3872,7 +3872,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCs8fr
   br i1 %i.ea, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.eb = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eb = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ec = lshr i64 %.sroa.018.0, 1
   %i.ed = add nuw i64 %i.ec, %.sroa.09.0
   br label %bb.f
@@ -4275,7 +4275,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCs8fr
   br i1 %i.gm, label %bb.w, label %._crit_edge
 
 bb.al:                                            ; preds = %._crit_edge
-  %i.gn = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gn = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.go = lshr i64 %.sroa.018.0, 1
   %i.gp = add nuw i64 %i.go, %.sroa.09.0
   br label %bb.f
@@ -4678,7 +4678,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCslLG
   br i1 %i.ea, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.eb = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eb = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ec = lshr i64 %.sroa.018.0, 1
   %i.ed = add nuw i64 %i.ec, %.sroa.09.0
   br label %bb.f
@@ -5081,7 +5081,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtCslLG
   br i1 %i.dy, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.dz = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dz = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ea = lshr i64 %.sroa.018.0, 1
   %i.eb = add nuw i64 %i.ea, %.sroa.09.0
   br label %bb.f
@@ -5478,7 +5478,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtNtCs8
   br i1 %i.el, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.em = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.em = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.en = lshr i64 %.sroa.018.0, 1
   %i.eo = add nuw i64 %i.en, %.sroa.09.0
   br label %bb.f
@@ -5881,7 +5881,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeTRNtNtCs8
   br i1 %i.eq, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.er = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.er = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.es = lshr i64 %.sroa.018.0, 1
   %i.et = add nuw i64 %i.es, %.sroa.09.0
   br label %bb.f
@@ -6284,7 +6284,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeTRNtNtCsl
   br i1 %i.en, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.eo = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eo = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ep = lshr i64 %.sroa.018.0, 1
   %i.eq = add nuw i64 %i.ep, %.sroa.09.0
   br label %bb.f
@@ -6676,7 +6676,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeiNCINvMNt
   br i1 %i.dr, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.ds = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ds = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dt = lshr i64 %.sroa.018.0, 1
   %i.du = add nuw i64 %i.dt, %.sroa.09.0
   br label %bb.f
@@ -7079,9 +7079,9 @@ bb.i:                                             ; preds = %.lr.ph.i.i
   %i.ar = lshr i8 %i.aq, 6
   %i.as = and i8 %i.ar, 1
   %i.at = trunc i16 %i.ap to i8
-  %7 = shl i8 %i.at, 1
-  %8 = ashr i8 %7, 7
-  %9 = add nsw i8 %8, %i.as
+  %7 = lshr i8 %i.at, 6
+  %8 = and i8 %7, 1
+  %9 = sub nsw i8 %i.as, %8
   switch i8 %9, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread7.i.i
     i8 0, label %bb.j
@@ -7159,9 +7159,9 @@ bb.l:                                             ; preds = %_RNCINvMNtCs1xwejQu
   %i.by = lshr i8 %i.bx, 6
   %i.bz = and i8 %i.by, 1
   %i.ca = trunc i16 %i.bw to i8
-  %10 = shl i8 %i.ca, 1
-  %11 = ashr i8 %10, 7
-  %12 = add nsw i8 %11, %i.bz
+  %10 = lshr i8 %i.ca, 6
+  %11 = and i8 %10, 1
+  %12 = sub nsw i8 %i.bz, %11
   switch i8 %12, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit25.thread16.i.i
     i8 0, label %bb.m
@@ -7311,9 +7311,9 @@ bb.u:                                             ; preds = %bb.t
   %i.dt = lshr i8 %i.ds, 6
   %i.du = and i8 %i.dt, 1
   %i.dv = trunc i16 %i.dr to i8
-  %13 = shl i8 %i.dv, 1
-  %14 = ashr i8 %13, 7
-  %15 = add nsw i8 %14, %i.du
+  %13 = lshr i8 %i.dv, 6
+  %14 = and i8 %13, 1
+  %15 = sub nsw i8 %i.du, %14
   switch i8 %15, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.i
     i8 0, label %bb.x
@@ -7370,9 +7370,9 @@ bb.z:                                             ; preds = %_RNCINvMNtCs1xwejQu
   %i.ep = lshr i8 %i.eo, 6
   %i.eq = and i8 %i.ep, 1
   %i.er = trunc i16 %i.en to i8
-  %16 = shl i8 %i.er, 1
-  %17 = ashr i8 %16, 7
-  %18 = add nsw i8 %17, %i.eq
+  %16 = lshr i8 %i.er, 6
+  %17 = and i8 %16, 1
+  %18 = sub nsw i8 %i.eq, %17
   switch i8 %18, label %default.unreachable [
     i8 -1, label %._RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit6_crit_edge.i
     i8 0, label %bb.ab
@@ -7435,9 +7435,9 @@ bb.ae:                                            ; preds = %bb.ad
   %i.fl = lshr i8 %i.fk, 6
   %i.fm = and i8 %i.fl, 1
   %i.fn = trunc i16 %i.fj to i8
-  %19 = shl i8 %i.fn, 1
-  %20 = ashr i8 %19, 7
-  %21 = add nsw i8 %20, %i.fm
+  %19 = lshr i8 %i.fn, 6
+  %20 = and i8 %19, 1
+  %21 = sub nsw i8 %i.fm, %20
   switch i8 %21, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit10.i
     i8 0, label %bb.ah
@@ -7516,9 +7516,9 @@ bb.al:                                            ; preds = %bb.ak
   %i.go = lshr i8 %i.gn, 6
   %i.gp = and i8 %i.go, 1
   %i.gq = trunc i16 %i.gm to i8
-  %22 = shl i8 %i.gq, 1
-  %23 = ashr i8 %22, 7
-  %24 = add nsw i8 %23, %i.gp
+  %22 = lshr i8 %i.gq, 6
+  %23 = and i8 %22, 1
+  %24 = sub nsw i8 %i.gp, %23
   switch i8 %24, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread62
     i8 0, label %bb.am
@@ -7607,9 +7607,9 @@ bb.ar:                                            ; preds = %.lr.ph.i42
   %i.hs = lshr i8 %i.hr, 6
   %i.ht = and i8 %i.hs, 1
   %i.hu = trunc i16 %i.hq to i8
-  %25 = shl i8 %i.hu, 1
-  %26 = ashr i8 %25, 7
-  %27 = add nsw i8 %26, %i.ht
+  %25 = lshr i8 %i.hu, 6
+  %26 = and i8 %25, 1
+  %27 = sub nsw i8 %i.ht, %26
   switch i8 %27, label %default.unreachable [
     i8 -1, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSNtNtCs8frGy5WneL6_4fish8complete10Completion7sort_byNCNvBA_19sort_and_prioritizes_0E0BC_.exit.thread12.i
     i8 0, label %bb.as
@@ -7801,9 +7801,9 @@ bb.be:                                            ; preds = %.lr.ph.i57
   %i.kc = lshr i8 %i.kb, 6
   %i.kd = and i8 %i.kc, 1
   %i.ke = trunc i16 %i.ka to i8
-  %28 = shl i8 %i.ke, 1
-  %29 = ashr i8 %28, 7
-  %30 = add nsw i8 %29, %i.kd
+  %28 = lshr i8 %i.ke, 6
+  %29 = and i8 %28, 1
+  %30 = sub nsw i8 %i.kd, %29
   switch i8 %30, label %default.unreachable [
     i8 -1, label %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortNtNtCs8frGy5WneL6_4fish8complete10CompletionNCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvB19_19sort_and_prioritizes_0E0E0B1b_.exit.thread31.i
     i8 0, label %bb.bf

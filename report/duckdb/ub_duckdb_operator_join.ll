@@ -205,7 +205,7 @@ _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTy
 bb.g:                                             ; preds = %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEixERKm.exit30.i.i
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i.i
   store i8 1, ptr %i.ce, align 1, !tbaa !138
-  %i.cf = add nsw i64 %.1.i.i, 1                  ; 2 uses
+  %i.cf = add nuw nsw i64 %.1.i.i, 1              ; 2 uses
   %.not.i.i = icmp ult i64 %i.cf, %i.ay
   br i1 %.not.i.i, label %bb.d, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2327
 
@@ -305,7 +305,7 @@ _ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE2EEES4_.exit.i.us.us.i.i: ; preds =
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE2EEEEEbRKT_S6_b.exit.thread.us.us.i.i: ; preds = %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE2EEES4_.exit.i.us.us.i.i, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEixERKm.exit30.us.us.i.i
   %i.dz = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.us.us.i.i
   store i8 1, ptr %i.dz, align 1, !tbaa !138
-  %i.ea = add nsw i64 %.1.us.us.i.i, 1            ; 2 uses
+  %i.ea = add nuw nsw i64 %.1.us.us.i.i, 1        ; 2 uses
   %.not.us.us.i.i = icmp ult i64 %i.ea, %i.cn
   br i1 %.not.us.us.i.i, label %bb.i, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2328
 
@@ -386,7 +386,7 @@ _ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE2EEES4_.exit.i.i.i: ; preds = %_ZNK
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE2EEEEEbRKT_S6_b.exit.thread.i.i: ; preds = %.split.i.i, %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE2EEES4_.exit.i.i.i, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEixERKm.exit30.i.i
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i50.i
   store i8 1, ptr %i.fa, align 1, !tbaa !138
-  %i.fb = add nsw i64 %.1.i50.i, 1                ; 2 uses
+  %i.fb = add nuw nsw i64 %.1.i50.i, 1            ; 2 uses
   %.not.i54.i = icmp ult i64 %i.fb, %i.cn
   br i1 %.not.i54.i, label %bb.l, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2328
 
@@ -504,7 +504,7 @@ _ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE3EEES4_.exit.i.us.us.i.i: ; preds =
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE3EEEEEbRKT_S6_b.exit.thread.us.us.i.i: ; preds = %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE3EEES4_.exit.i.us.us.i.i, %bb.t, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEixERKm.exit30.us.us.i.i
   %i.ha = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.us.us.i63.i
   store i8 1, ptr %i.ha, align 1, !tbaa !138
-  %i.hb = add nsw i64 %.1.us.us.i63.i, 1          ; 2 uses
+  %i.hb = add nuw nsw i64 %.1.us.us.i63.i, 1      ; 2 uses
   %.not.us.us.i68.i = icmp ult i64 %i.hb, %i.fj
   br i1 %.not.us.us.i68.i, label %bb.p, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2330
 
@@ -617,7 +617,7 @@ bb.ac:                                            ; preds = %bb.ab
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE3EEEEEbRKT_S6_b.exit.thread.i.i: ; preds = %.split.i60.i, %bb.ac, %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE3EEES4_.exit.i.i.i, %bb.z, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEixERKm.exit30.i.i
   %i.in = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i56.i
   store i8 1, ptr %i.in, align 1, !tbaa !138
-  %i.io = add nsw i64 %.1.i56.i, 1                ; 2 uses
+  %i.io = add nuw nsw i64 %.1.i56.i, 1            ; 2 uses
   %.not.i59.i = icmp ult i64 %i.io, %i.fj
   br i1 %.not.i59.i, label %bb.v, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2330
 
@@ -791,7 +791,7 @@ _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE4EEEEEbRKT_S6_b.exit.i
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE4EEEEEbRKT_S6_b.exit.thread.i.i: ; preds = %_ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE4EEEEEbRKT_S6_b.exit.i.i, %.split.i75.i, %bb.as, %bb.aq, %bb.al, %bb.aj, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEixERKm.exit30.i.i
   %i.lj = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i70.i
   store i8 1, ptr %i.lj, align 1, !tbaa !138
-  %i.lk = add nsw i64 %.1.i70.i, 1                ; 2 uses
+  %i.lk = add nuw nsw i64 %.1.i70.i, 1            ; 2 uses
   %.not.i74.i = icmp ult i64 %i.lk, %i.iw
   br i1 %.not.i74.i, label %bb.af, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2332
 
@@ -977,7 +977,7 @@ _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE5EEEEEbRKT_S6_b.exit.i
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE5EEEEEbRKT_S6_b.exit.thread.i.i: ; preds = %_ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE5EEEEEbRKT_S6_b.exit.i.i, %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE5EEES4_.exit15.i.i.i, %.split52.i.i, %.split.i87.i, %bb.ba
   %i.oo = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i83.i
   store i8 1, ptr %i.oo, align 1, !tbaa !138
-  %i.op = add nsw i64 %.1.i83.i, 1                ; 2 uses
+  %i.op = add nuw nsw i64 %.1.i83.i, 1            ; 2 uses
   %.not.i88.i = icmp ult i64 %i.op, %i.ls
   br i1 %.not.i88.i, label %bb.av, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2334
 
@@ -1078,7 +1078,7 @@ _ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTy
 bb.bk:                                            ; preds = %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEixERKm.exit30.i.i
   %i.qd = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i95.i
   store i8 1, ptr %i.qd, align 1, !tbaa !138
-  %i.qe = add nsw i64 %.1.i95.i, 1                ; 2 uses
+  %i.qe = add nuw nsw i64 %.1.i95.i, 1            ; 2 uses
   %.not.i104.i = icmp ult i64 %i.qe, %i.ox
   br i1 %.not.i104.i, label %bb.bh, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2337
 
@@ -1178,7 +1178,7 @@ _ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE7EEES4_.exit.i.us.us.i.i: ; preds =
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE7EEEEEbRKT_S6_b.exit.thread.us.us.i.i: ; preds = %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE7EEES4_.exit.i.us.us.i.i, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEixERKm.exit30.us.us.i.i
   %i.ry = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.us.us.i123.i
   store i8 1, ptr %i.ry, align 1, !tbaa !138
-  %i.rz = add nsw i64 %.1.us.us.i123.i, 1         ; 2 uses
+  %i.rz = add nuw nsw i64 %.1.us.us.i123.i, 1     ; 2 uses
   %.not.us.us.i130.i = icmp ult i64 %i.rz, %i.qm
   br i1 %.not.us.us.i130.i, label %bb.bm, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2338
 
@@ -1259,7 +1259,7 @@ _ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE7EEES4_.exit.i.i.i: ; preds = %_ZNK
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE7EEEEEbRKT_S6_b.exit.thread.i.i: ; preds = %.split.i115.i, %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE7EEES4_.exit.i.i.i, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEixERKm.exit30.i.i
   %i.sz = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i110.i
   store i8 1, ptr %i.sz, align 1, !tbaa !138
-  %i.ta = add nsw i64 %.1.i110.i, 1               ; 2 uses
+  %i.ta = add nuw nsw i64 %.1.i110.i, 1           ; 2 uses
   %.not.i119.i = icmp ult i64 %i.ta, %i.qm
   br i1 %.not.i119.i, label %bb.bp, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2338
 
@@ -1377,7 +1377,7 @@ _ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE8EEES4_.exit.i.us.us.i.i: ; preds =
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE8EEEEEbRKT_S6_b.exit.thread.us.us.i.i: ; preds = %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE8EEES4_.exit.i.us.us.i.i, %bb.bx, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEixERKm.exit30.us.us.i.i
   %i.uz = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.us.us.i152.i
   store i8 1, ptr %i.uz, align 1, !tbaa !138
-  %i.va = add nsw i64 %.1.us.us.i152.i, 1         ; 2 uses
+  %i.va = add nuw nsw i64 %.1.us.us.i152.i, 1     ; 2 uses
   %.not.us.us.i159.i = icmp ult i64 %i.va, %i.ti
   br i1 %.not.us.us.i159.i, label %bb.bt, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2340
 
@@ -1490,7 +1490,7 @@ bb.cg:                                            ; preds = %bb.cf
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE8EEEEEbRKT_S6_b.exit.thread.i.i: ; preds = %.split.i141.i, %bb.cg, %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE8EEES4_.exit.i.i.i, %bb.cd, %_ZNK6duckdb16block_iterator_tINS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEixERKm.exit30.i.i
   %i.wm = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i136.i
   store i8 1, ptr %i.wm, align 1, !tbaa !138
-  %i.wn = add nsw i64 %.1.i136.i, 1               ; 2 uses
+  %i.wn = add nuw nsw i64 %.1.i136.i, 1           ; 2 uses
   %.not.i140.i = icmp ult i64 %i.wn, %i.ti
   br i1 %.not.i140.i, label %bb.bz, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2340
 
@@ -1656,7 +1656,7 @@ _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE9EEEEEbRKT_S6_b.exit.i
 _ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE9EEEEEbRKT_S6_b.exit.thread.i.i: ; preds = %_ZN6duckdb15MergeJoinBeforeINS_7SortKeyILNS_11SortKeyTypeE9EEEEEbRKT_S6_b.exit.i.i, %_ZN6duckdbltERKNS_7SortKeyILNS_11SortKeyTypeE9EEES4_.exit15.i.i.i, %.split.i179.i, %.thread.i.i.i, %bb.cn
   %i.zb = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.1.i164.i
   store i8 1, ptr %i.zb, align 1, !tbaa !138
-  %i.zc = add nsw i64 %.1.i164.i, 1               ; 2 uses
+  %i.zc = add nuw nsw i64 %.1.i164.i, 1           ; 2 uses
   %.not.i168.i = icmp ult i64 %i.zc, %i.wv
   br i1 %.not.i168.i, label %bb.cj, label %_ZN6duckdbL21MergeJoinSimpleBlocksERNS_23PiecewiseMergeJoinStateERNS_20MergeJoinGlobalStateEPbNS_14ExpressionTypeE.exit, !llvm.loop !2342
 

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.k, align 8, !tbaa !223
-  %i.l = shl i64 %i.f, 1
+  %i.l = shl nuw i64 %i.f, 1
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.l) #23
   br label %bb.f
 
