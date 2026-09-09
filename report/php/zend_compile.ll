@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.d
   ]
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %2 = and i32 %.02244.us, 7168
-  %.not19.i.us = icmp eq i32 %2, 0
+  %.not19.i.us = icmp samesign ult i32 %.02244.us, 1024
   %.not20.i.us = icmp samesign ult i32 %i.i, 1024
   %or.cond.i.us = or i1 %.not19.i.us, %.not20.i.us
   br i1 %or.cond.i.us, label %zend_add_member_modifier.exit.thread35.us, label %zend_add_member_modifier.exit.thread
@@ -257,8 +256,7 @@ bb.j:                                             ; preds = %bb.i
   ]
 
 bb.k:                                             ; preds = %bb.j
-  %3 = and i32 %.02244, 7168
-  %.not19.i = icmp eq i32 %3, 0
+  %.not19.i = icmp samesign ult i32 %.02244, 1024
   %.not20.i = icmp samesign ult i32 %i.x, 1024
   %or.cond.i = or i1 %.not19.i, %.not20.i
   br i1 %or.cond.i, label %zend_add_member_modifier.exit.thread35, label %zend_add_member_modifier.exit.thread

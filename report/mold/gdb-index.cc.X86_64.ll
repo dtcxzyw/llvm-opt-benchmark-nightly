@@ -205,7 +205,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.d
   %i.z = and i32 %.0.i21, 255                     ; 2 uses
   %i.aa = shl i32 %i.y, %i.z
   %i.ab = zext i32 %i.aa to i64
-  %i.ac = or i64 %.06.i20, %i.ab                  ; 2 uses
+  %i.ac = or i64 %.06.i20, %i.ab                  ; 3 uses
   %i.ad = add nuw nsw i32 %i.z, 7
   %.not.i22 = icmp sgt i8 %i.w, -1
   br i1 %.not.i22, label %_ZN4mold9read_ulebEPPh.exit23, label %.loopexit.backedge
@@ -217,8 +217,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.d
   br label %.loopexit, !llvm.loop !28
 
 _ZN4mold9read_ulebEPPh.exit23:                    ; preds = %.loopexit
-  %6 = and i64 %i.ac, 4294967295                  ; 2 uses
-  %i.ae = icmp eq i64 %6, 0
+  %i.ae = icmp eq i64 %i.ac, 0
   br i1 %i.ae, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN4mold9read_ulebEPPh.exit23
@@ -230,7 +229,7 @@ bb.e:                                             ; preds = %_ZN4mold9read_ulebE
   unreachable
 
 bb.f:                                             ; preds = %_ZN4mold9read_ulebEPPh.exit23
-  %i.ah = icmp eq i64 %6, %i.n
+  %i.ah = icmp eq i64 %i.ac, %i.n
   br i1 %i.ah, label %bb.g, label %.preheader57
 
 bb.g:                                             ; preds = %bb.f
@@ -633,7 +632,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.g
   %i.ao = and i32 %.0.i25, 255                    ; 2 uses
   %i.ap = shl i32 %i.an, %i.ao
   %i.aq = zext i32 %i.ap to i64
-  %i.ar = or i64 %.06.i24, %i.aq                  ; 2 uses
+  %i.ar = or i64 %.06.i24, %i.aq                  ; 3 uses
   %i.as = add nuw nsw i32 %i.ao, 7
   %.not.i26 = icmp sgt i8 %i.al, -1
   br i1 %.not.i26, label %_ZN4mold9read_ulebEPPh.exit27, label %.loopexit.backedge
@@ -645,8 +644,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.g
   br label %.loopexit, !llvm.loop !28
 
 _ZN4mold9read_ulebEPPh.exit27:                    ; preds = %.loopexit
-  %7 = and i64 %i.ar, 4294967295                  ; 2 uses
-  %i.at = icmp eq i64 %7, 0
+  %i.at = icmp eq i64 %i.ar, 0
   br i1 %i.at, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZN4mold9read_ulebEPPh.exit27
@@ -658,7 +656,7 @@ bb.h:                                             ; preds = %_ZN4mold9read_ulebE
   unreachable
 
 bb.i:                                             ; preds = %_ZN4mold9read_ulebEPPh.exit27
-  %i.aw = icmp eq i64 %7, %i.ac
+  %i.aw = icmp eq i64 %i.ar, %i.ac
   br i1 %i.aw, label %bb.j, label %.preheader61
 
 bb.j:                                             ; preds = %bb.i
@@ -847,7 +845,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.d
   %i.y = and i32 %.0.i21, 255                     ; 2 uses
   %i.z = shl i32 %i.x, %i.y
   %i.aa = zext i32 %i.z to i64
-  %i.ab = or i64 %.06.i20, %i.aa                  ; 2 uses
+  %i.ab = or i64 %.06.i20, %i.aa                  ; 3 uses
   %i.ac = add nuw nsw i32 %i.y, 7
   %.not.i22 = icmp sgt i8 %i.v, -1
   br i1 %.not.i22, label %_ZN4mold9read_ulebEPPh.exit23, label %.loopexit.backedge
@@ -859,8 +857,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.d
   br label %.loopexit, !llvm.loop !28
 
 _ZN4mold9read_ulebEPPh.exit23:                    ; preds = %.loopexit
-  %6 = and i64 %i.ab, 4294967295                  ; 2 uses
-  %i.ad = icmp eq i64 %6, 0
+  %i.ad = icmp eq i64 %i.ab, 0
   br i1 %i.ad, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN4mold9read_ulebEPPh.exit23
@@ -872,7 +869,7 @@ bb.e:                                             ; preds = %_ZN4mold9read_ulebE
   unreachable
 
 bb.f:                                             ; preds = %_ZN4mold9read_ulebEPPh.exit23
-  %i.ag = icmp eq i64 %6, %i.n
+  %i.ag = icmp eq i64 %i.ab, %i.n
   br i1 %i.ag, label %bb.g, label %.preheader57
 
 bb.g:                                             ; preds = %bb.f
@@ -1236,7 +1233,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.g
   %i.an = and i32 %.0.i25, 255                    ; 2 uses
   %i.ao = shl i32 %i.am, %i.an
   %i.ap = zext i32 %i.ao to i64
-  %i.aq = or i64 %.06.i24, %i.ap                  ; 2 uses
+  %i.aq = or i64 %.06.i24, %i.ap                  ; 3 uses
   %i.ar = add nuw nsw i32 %i.an, 7
   %.not.i26 = icmp sgt i8 %i.ak, -1
   br i1 %.not.i26, label %_ZN4mold9read_ulebEPPh.exit27, label %.loopexit.backedge
@@ -1248,8 +1245,7 @@ _ZN4mold9read_ulebEPPh.exit:                      ; preds = %bb.g
   br label %.loopexit, !llvm.loop !28
 
 _ZN4mold9read_ulebEPPh.exit27:                    ; preds = %.loopexit
-  %7 = and i64 %i.aq, 4294967295                  ; 2 uses
-  %i.as = icmp eq i64 %7, 0
+  %i.as = icmp eq i64 %i.aq, 0
   br i1 %i.as, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZN4mold9read_ulebEPPh.exit27
@@ -1261,7 +1257,7 @@ bb.h:                                             ; preds = %_ZN4mold9read_ulebE
   unreachable
 
 bb.i:                                             ; preds = %_ZN4mold9read_ulebEPPh.exit27
-  %i.av = icmp eq i64 %7, %i.ac
+  %i.av = icmp eq i64 %i.aq, %i.ac
   br i1 %i.av, label %bb.j, label %.preheader61
 
 bb.j:                                             ; preds = %bb.i

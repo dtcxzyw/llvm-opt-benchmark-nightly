@@ -204,7 +204,7 @@ backup4xU.exit.us.preheader:                      ; preds = %.lr.ph
   %i.bo = getelementptr inbounds nuw [36 x i8], ptr %i.bn, i64 %i.at
   %i.bp = zext nneg i32 %i.bj to i64
   %i.bq = getelementptr inbounds nuw [9 x i8], ptr %i.bo, i64 %i.bp ; 2 uses
-  %.sroa.gep134 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %.sroa.gep134 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.bq, ptr %.sroa.gep134, align 8, !tbaa !68
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !58
   %i.bs = icmp ne i8 %i.br, 0                     ; 2 uses
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.b, %backup4xU.ex
 
 backup4xU.exit.us:                                ; preds = %bb.c, %bb.e
   %.0112.us = phi ptr [ %i.cm, %bb.e ], [ %i.bt, %bb.c ] ; 2 uses
-  %.089111.us = phi i32 [ %7, %bb.e ], [ 1, %bb.c ] ; 3 uses
+  %.089111.us = phi i32 [ %7, %bb.e ], [ 1, %bb.c ] ; 2 uses
   %.090110.us = phi i32 [ %i.bv, %bb.e ], [ %i.u, %bb.c ] ; 2 uses
   %.091.in109.us = phi i1 [ %i.ci, %bb.e ], [ %i.bs, %bb.c ]
   %i.bv = add nsw i32 %.090110.us, %i.u           ; 5 uses
@@ -238,32 +238,31 @@ backup4xU.exit.us:                                ; preds = %bb.c, %bb.e
   %i.ce = getelementptr inbounds nuw [36 x i8], ptr %i.cd, i64 %i.at
   %i.cf = zext nneg i32 %i.by to i64
   %i.cg = getelementptr inbounds nuw [9 x i8], ptr %i.ce, i64 %i.cf ; 2 uses
-  %.not99.us = icmp eq i32 %.089111.us, 0         ; 2 uses
-  %.sroa.sel.idx.us.sroa.sel = select i1 %.not99.us, ptr %.sroa.gep134, ptr %i.b
-  store ptr %i.cg, ptr %.sroa.sel.idx.us.sroa.sel, align 8, !tbaa !68
+  %7 = xor i32 %.089111.us, 1                     ; 3 uses
+  %8 = zext nneg i32 %7 to i64                    ; 2 uses
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %8
+  store ptr %i.cg, ptr %9, align 8, !tbaa !68
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !58
   %i.ci = icmp ne i8 %i.ch, 0                     ; 2 uses
   br i1 %.091.in109.us, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %backup4xU.exit.us
-  %.sroa.sel106.idx.us.sroa.sel.idx.sroa.sel.idx = select i1 %.not99.us, i64 1088, i64 0
-  %.sroa.sel106.idx.us.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.sel106.idx.us.sroa.sel.idx.sroa.sel.idx
+  %10 = getelementptr inbounds nuw [1088 x i8], ptr %i.a, i64 %8
   %i.cj = zext nneg i32 %.089111.us to i64
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.cj
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !68
-  call fastcc void @lr_stripe(ptr noundef nonnull %0, ptr noundef nonnull %.0112.us, ptr noundef %.sroa.sel106.idx.us.sroa.sel.idx.sroa.sel, i32 noundef %.090110.us, i32 noundef %2, i32 noundef %6, i32 noundef %i.u, i32 noundef %5, ptr noundef %i.cl, i32 noundef %i.be)
+  call fastcc void @lr_stripe(ptr noundef nonnull %0, ptr noundef nonnull %.0112.us, ptr noundef %10, i32 noundef %.090110.us, i32 noundef %2, i32 noundef %6, i32 noundef %i.u, i32 noundef %5, ptr noundef %i.cl, i32 noundef %i.be)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %backup4xU.exit.us
   %i.cm = getelementptr inbounds [2 x i8], ptr %.0112.us, i64 %i.bc ; 2 uses
-  %7 = xor i32 %.089111.us, 1                     ; 2 uses
   %i.cn = add nsw i32 %i.w, %i.bv
   %.not97.us = icmp sgt i32 %i.cn, %3
   br i1 %.not97.us, label %._crit_edge, label %backup4xU.exit.us, !llvm.loop !62
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.g
   %.0112 = phi ptr [ %i.en, %bb.g ], [ %1, %.lr.ph.split.preheader ] ; 3 uses
-  %.089111 = phi i32 [ %8, %bb.g ], [ 0, %.lr.ph.split.preheader ] ; 4 uses
+  %.089111 = phi i32 [ %11, %bb.g ], [ 0, %.lr.ph.split.preheader ] ; 3 uses
   %.090110 = phi i32 [ %i.co, %bb.g ], [ 0, %.lr.ph.split.preheader ] ; 2 uses
   %.091.in109 = phi i1 [ %i.db, %bb.g ], [ %i.ay, %.lr.ph.split.preheader ]
   %.093108 = phi i32 [ %i.be, %bb.g ], [ %i.ac, %.lr.ph.split.preheader ]
@@ -279,10 +278,10 @@ bb.e:                                             ; preds = %bb.d, %backup4xU.ex
   %i.cx = getelementptr inbounds nuw [36 x i8], ptr %i.cw, i64 %i.at
   %i.cy = zext nneg i32 %i.cr to i64
   %i.cz = getelementptr inbounds nuw [9 x i8], ptr %i.cx, i64 %i.cy ; 2 uses
-  %.not99 = icmp eq i32 %.089111, 0               ; 2 uses
-  %.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = select i1 %.not99, i64 8, i64 0
-  %.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx
-  store ptr %i.cz, ptr %.sroa.sel.idx.sroa.sel.idx.sroa.sel, align 8, !tbaa !68
+  %11 = xor i32 %.089111, 1                       ; 3 uses
+  %12 = zext nneg i32 %11 to i64                  ; 2 uses
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %12
+  store ptr %i.cz, ptr %13, align 8, !tbaa !68
   %i.da = load i8, ptr %i.cz, align 1, !tbaa !58
   %i.db = icmp ne i8 %i.da, 0                     ; 3 uses
   br i1 %i.db, label %.lr.ph.i, label %backup4xU.exit
@@ -359,17 +358,15 @@ backup4xU.exit:                                   ; preds = %.prol.loopexit, %.l
   br i1 %.091.in109, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %backup4xU.exit
-  %.sroa.sel106.idx.sroa.sel.idx.sroa.sel.idx = select i1 %.not99, i64 1088, i64 0
-  %.sroa.sel106.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.sel106.idx.sroa.sel.idx.sroa.sel.idx
+  %14 = getelementptr inbounds nuw [1088 x i8], ptr %i.a, i64 %12
   %i.ek = zext nneg i32 %.089111 to i64
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ek
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !68
-  call fastcc void @lr_stripe(ptr noundef nonnull %0, ptr noundef %.0112, ptr noundef %.sroa.sel106.idx.sroa.sel.idx.sroa.sel, i32 noundef %.090110, i32 noundef %2, i32 noundef %6, i32 noundef %i.u, i32 noundef %5, ptr noundef %i.em, i32 noundef %.093108)
+  call fastcc void @lr_stripe(ptr noundef nonnull %0, ptr noundef %.0112, ptr noundef %14, i32 noundef %.090110, i32 noundef %2, i32 noundef %6, i32 noundef %i.u, i32 noundef %5, ptr noundef %i.em, i32 noundef %.093108)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %backup4xU.exit
   %i.en = getelementptr inbounds [2 x i8], ptr %.0112, i64 %i.bc ; 2 uses
-  %8 = xor i32 %.089111, 1                        ; 2 uses
   %i.eo = add nsw i32 %i.w, %i.co
   %.not97 = icmp sgt i32 %i.eo, %3
   br i1 %.not97, label %._crit_edge, label %.lr.ph.split
@@ -378,20 +375,20 @@ bb.g:                                             ; preds = %bb.f, %backup4xU.ex
   %.093.lcssa = phi i32 [ %i.ac, %bb.a ], [ %i.be, %bb.c ], [ %i.be, %bb.g ], [ %i.be, %bb.e ]
   %.091.in.lcssa = phi i1 [ %i.ay, %bb.a ], [ %i.bs, %bb.c ], [ %i.db, %bb.g ], [ %i.ci, %bb.e ]
   %.090.lcssa = phi i32 [ 0, %bb.a ], [ %i.u, %bb.c ], [ %i.co, %bb.g ], [ %i.bv, %bb.e ] ; 2 uses
-  %.089.lcssa = phi i32 [ 0, %bb.a ], [ 1, %bb.c ], [ %8, %bb.g ], [ %7, %bb.e ] ; 2 uses
+  %.089.lcssa = phi i32 [ 0, %bb.a ], [ 1, %bb.c ], [ %11, %bb.g ], [ %7, %bb.e ] ; 2 uses
   %.0.lcssa = phi ptr [ %1, %bb.a ], [ %i.bt, %bb.c ], [ %i.en, %bb.g ], [ %i.cm, %bb.e ]
   br i1 %.091.in.lcssa, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %._crit_edge
-  %i.ep = and i32 %.093.lcssa, -3
+  %i.ep = and i32 %.093.lcssa, 5
   %i.eq = sub nsw i32 %3, %.090.lcssa
-  %.not98 = icmp eq i32 %.089.lcssa, 0
-  %.sroa.sel103.idx.sroa.sel.idx.sroa.sel.idx = select i1 %.not98, i64 1088, i64 0
-  %.sroa.sel103.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.sel103.idx.sroa.sel.idx.sroa.sel.idx
+  %15 = xor i32 %.089.lcssa, 1
+  %16 = zext nneg i32 %15 to i64
+  %17 = getelementptr inbounds nuw [1088 x i8], ptr %i.a, i64 %16
   %i.er = zext nneg i32 %.089.lcssa to i64
   %i.es = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.er
   %i.et = load ptr, ptr %i.es, align 8, !tbaa !68
-  call fastcc void @lr_stripe(ptr noundef nonnull %0, ptr noundef %.0.lcssa, ptr noundef %.sroa.sel103.idx.sroa.sel.idx.sroa.sel, i32 noundef %.090.lcssa, i32 noundef %2, i32 noundef %6, i32 noundef %i.eq, i32 noundef %5, ptr noundef %i.et, i32 noundef %i.ep)
+  call fastcc void @lr_stripe(ptr noundef nonnull %0, ptr noundef %.0.lcssa, ptr noundef %17, i32 noundef %.090.lcssa, i32 noundef %2, i32 noundef %6, i32 noundef %i.eq, i32 noundef %5, ptr noundef %i.et, i32 noundef %i.ep)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %._crit_edge

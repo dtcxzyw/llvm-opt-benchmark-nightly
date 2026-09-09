@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.v = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.040.0, i1 true)
-  %i.w = add nsw i32 %.sroa.040.0, -1
+  %i.w = add nuw nsw i32 %.sroa.040.0, 16383
   %i.x = and i32 %i.w, %.sroa.040.0
   %i.y = zext nneg i32 %i.v to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)
@@ -608,7 +608,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i:           ; preds = %bb.g, %bb.f, %bb.d
   %i.bh = sext i32 %i.bg to i64
   %i.bi = getelementptr inbounds [8 x i8], ptr %i.as, i64 %i.aw
   store i64 %i.bh, ptr %i.bi, align 8, !tbaa !191
-  %i.bj = add nsw i64 %.033.i, -1
+  %i.bj = add nuw i64 %.033.i, 9223372036854775807
   %i.bk = and i64 %i.bj, %.033.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bk, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CardinalityFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_5ArrayINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEEEEEEJSJ_EEEE7iterateIJNS3_12VectorReaderISJ_EEEEEvRNSM_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISW_EEvRKNS0_17SelectivityVectorESV_EUlSV_E_EEvS10_SV_T0_EUlSV_E_EEvPKmiibSV_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !9713
@@ -1011,7 +1011,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i52.us:      ; preds = %_ZN8facebook5velox6
   %i.nh = sext i32 %i.ng to i64
   %i.ni = getelementptr inbounds [8 x i8], ptr %i.nb, i64 %i.ne
   store i64 %i.nh, ptr %i.ni, align 8, !tbaa !191
-  %i.nj = add nsw i64 %.033.i51.us, -1
+  %i.nj = add nuw i64 %.033.i51.us, 9223372036854775807
   %i.nk = and i64 %i.nj, %.033.i51.us             ; 2 uses
   %.not10.i54.us = icmp eq i64 %i.nk, 0
   br i1 %.not10.i54.us, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CardinalityFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_5ArrayINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEEEEEEJSJ_EEEE7iterateIJNS3_12VectorReaderISJ_EEEEEvRNSM_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISW_EEvRKNS0_17SelectivityVectorESV_EUlSV_E_EEvS10_SV_T0_EUlSV_E_EEvPKmiibSV_ENKUlimE_clEim.exit, label %_ZN8facebook5velox6StatusD2Ev.exit24.i52.us, !llvm.loop !9713
@@ -1037,7 +1037,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i52.us68:    ; preds = %_ZN8facebook5velox6
   %i.nu = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.033.i51.us67, i1 true)
   %gep99 = getelementptr [8 x i8], ptr %invariant.gep98, i64 %i.nu
   store i64 %i.ns, ptr %gep99, align 8, !tbaa !191
-  %i.nv = add nsw i64 %.033.i51.us67, -1
+  %i.nv = add nuw i64 %.033.i51.us67, 9223372036854775807
   %i.nw = and i64 %i.nv, %.033.i51.us67           ; 2 uses
   %.not10.i54.us70 = icmp eq i64 %i.nw, 0
   br i1 %.not10.i54.us70, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CardinalityFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_5ArrayINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEEEEEEJSJ_EEEE7iterateIJNS3_12VectorReaderISJ_EEEEEvRNSM_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISW_EEvRKNS0_17SelectivityVectorESV_EUlSV_E_EEvS10_SV_T0_EUlSV_E_EEvPKmiibSV_ENKUlimE_clEim.exit, label %_ZN8facebook5velox6StatusD2Ev.exit24.i52.us68, !llvm.loop !9713
@@ -1060,7 +1060,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i52:         ; preds = %_ZN8facebook5velox6
   %i.oh = sext i32 %i.og to i64
   %i.oi = getelementptr inbounds [8 x i8], ptr %i.nb, i64 %i.oa
   store i64 %i.oh, ptr %i.oi, align 8, !tbaa !191
-  %i.oj = add nsw i64 %.033.i51, -1
+  %i.oj = add nuw i64 %.033.i51, 9223372036854775807
   %i.ok = and i64 %i.oj, %.033.i51                ; 2 uses
   %.not10.i54 = icmp eq i64 %i.ok, 0
   br i1 %.not10.i54, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CardinalityFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_5ArrayINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEEEEEEEJSJ_EEEE7iterateIJNS3_12VectorReaderISJ_EEEEEvRNSM_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISW_EEvRKNS0_17SelectivityVectorESV_EUlSV_E_EEvS10_SV_T0_EUlSV_E_EEvPKmiibSV_ENKUlimE_clEim.exit, label %_ZN8facebook5velox6StatusD2Ev.exit24.i52, !llvm.loop !9713
@@ -1463,7 +1463,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i:           ; preds = %bb.g, %bb.f, %bb.d
   %i.bg = sext i32 %i.bf to i64
   %i.bh = getelementptr inbounds [8 x i8], ptr %i.ar, i64 %i.av
   store i64 %i.bg, ptr %i.bh, align 8, !tbaa !191
-  %i.bi = add nsw i64 %.033.i, -1
+  %i.bi = add nuw i64 %.033.i, 9223372036854775807
   %i.bj = and i64 %i.bi, %.033.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bj, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CardinalityFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_3MapINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEENSF_INSG_ILm2EEELb0ELb0EEEEEEEEJSL_EEEE7iterateIJNS3_12VectorReaderISL_EEEEEvRNSO_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISY_EEvRKNS0_17SelectivityVectorESX_EUlSX_E_EEvS12_SX_T0_EUlSX_E_EEvPKmiibSX_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !9910
@@ -1866,7 +1866,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i52.us:      ; preds = %_ZN8facebook5velox6
   %i.nc = sext i32 %i.nb to i64
   %i.nd = getelementptr inbounds [8 x i8], ptr %i.mw, i64 %i.mz
   store i64 %i.nc, ptr %i.nd, align 8, !tbaa !191
-  %i.ne = add nsw i64 %.033.i51.us, -1
+  %i.ne = add nuw i64 %.033.i51.us, 9223372036854775807
   %i.nf = and i64 %i.ne, %.033.i51.us             ; 2 uses
   %.not10.i54.us = icmp eq i64 %i.nf, 0
   br i1 %.not10.i54.us, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CardinalityFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_3MapINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEENSF_INSG_ILm2EEELb0ELb0EEEEEEEEJSL_EEEE7iterateIJNS3_12VectorReaderISL_EEEEEvRNSO_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISY_EEvRKNS0_17SelectivityVectorESX_EUlSX_E_EEvS12_SX_T0_EUlSX_E_EEvPKmiibSX_ENKUlimE_clEim.exit, label %_ZN8facebook5velox6StatusD2Ev.exit24.i52.us, !llvm.loop !9910
@@ -1892,7 +1892,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i52.us68:    ; preds = %_ZN8facebook5velox6
   %i.np = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.033.i51.us67, i1 true)
   %gep99 = getelementptr [8 x i8], ptr %invariant.gep98, i64 %i.np
   store i64 %i.nn, ptr %gep99, align 8, !tbaa !191
-  %i.nq = add nsw i64 %.033.i51.us67, -1
+  %i.nq = add nuw i64 %.033.i51.us67, 9223372036854775807
   %i.nr = and i64 %i.nq, %.033.i51.us67           ; 2 uses
   %.not10.i54.us70 = icmp eq i64 %i.nr, 0
   br i1 %.not10.i54.us70, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CardinalityFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_3MapINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEENSF_INSG_ILm2EEELb0ELb0EEEEEEEEJSL_EEEE7iterateIJNS3_12VectorReaderISL_EEEEEvRNSO_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISY_EEvRKNS0_17SelectivityVectorESX_EUlSX_E_EEvS12_SX_T0_EUlSX_E_EEvPKmiibSX_ENKUlimE_clEim.exit, label %_ZN8facebook5velox6StatusD2Ev.exit24.i52.us68, !llvm.loop !9910
@@ -1915,7 +1915,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i52:         ; preds = %_ZN8facebook5velox6
   %i.oc = sext i32 %i.ob to i64
   %i.od = getelementptr inbounds [8 x i8], ptr %i.mw, i64 %i.nv
   store i64 %i.oc, ptr %i.od, align 8, !tbaa !191
-  %i.oe = add nsw i64 %.033.i51, -1
+  %i.oe = add nuw i64 %.033.i51, 9223372036854775807
   %i.of = and i64 %i.oe, %.033.i51                ; 2 uses
   %.not10.i54 = icmp eq i64 %i.of, 0
   br i1 %.not10.i54, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions19CardinalityFunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_3MapINS0_7GenericINS0_12TypeVariableILm1EEELb0ELb0EEENSF_INSG_ILm2EEELb0ELb0EEEEEEEEJSL_EEEE7iterateIJNS3_12VectorReaderISL_EEEEEvRNSO_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISY_EEvRKNS0_17SelectivityVectorESX_EUlSX_E_EEvS12_SX_T0_EUlSX_E_EEvPKmiibSX_ENKUlimE_clEim.exit, label %_ZN8facebook5velox6StatusD2Ev.exit24.i52, !llvm.loop !9910

@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 .noexc28:                                         ; preds = %.critedge.i
   %i.ba = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.043.0, i1 true)
-  %i.bb = add nsw i32 %.sroa.043.0, -1
+  %i.bb = add nuw nsw i32 %.sroa.043.0, 4095
   %i.bc = and i32 %i.bb, %.sroa.043.0
   %i.bd = zext nneg i32 %i.ba to i64
   tail call void @llvm.assume(i1 %i.ax)
@@ -387,7 +387,7 @@ _ZNSt10lock_guardISt12shared_mutexEC2ERS0_.exit:  ; preds = %bb.a
 
 .noexc24:                                         ; preds = %.critedge.i
   %i.aq = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.074.0, i1 true)
-  %i.ar = add nsw i32 %.sroa.074.0, -1
+  %i.ar = add nuw nsw i32 %.sroa.074.0, 4095
   %i.as = and i32 %i.ar, %.sroa.074.0
   %i.at = zext nneg i32 %i.aq to i64
   tail call void @llvm.assume(i1 %i.an)
@@ -448,7 +448,7 @@ bb.e:                                             ; preds = %.noexc29
 
 .noexc57:                                         ; preds = %.critedge.i43
   %i.bw = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.086.0, i1 true)
-  %i.bx = add nsw i32 %.sroa.086.0, -1
+  %i.bx = add nuw nsw i32 %.sroa.086.0, 4095
   %i.by = and i32 %i.bx, %.sroa.086.0
   %i.bz = zext nneg i32 %i.bw to i64              ; 3 uses
   tail call void @llvm.assume(i1 %i.bt)
@@ -851,7 +851,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i
 
 .noexc34:                                         ; preds = %.critedge.i
   %i.cf = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.057.0, i1 true)
-  %i.cg = add nsw i32 %.sroa.057.0, -1
+  %i.cg = add nuw nsw i32 %.sroa.057.0, 4095
   %i.ch = and i32 %i.cg, %.sroa.057.0
   %i.ci = zext nneg i32 %i.cf to i64              ; 3 uses
   call void @llvm.assume(i1 %i.cc)
@@ -1254,7 +1254,7 @@ bb.k:                                             ; preds = %bb.i
 
 .noexc106:                                        ; preds = %.critedge.i91
   %i.bn = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.0275.0, i1 true)
-  %i.bo = add nsw i32 %.sroa.0275.0, -1
+  %i.bo = add nuw nsw i32 %.sroa.0275.0, 16383
   %i.bp = and i32 %i.bo, %.sroa.0275.0
   %i.bq = zext nneg i32 %i.bn to i64
   call void @llvm.assume(i1 %i.bl)
@@ -1383,7 +1383,7 @@ bb.o:                                             ; preds = %bb.m
 
 .noexc68:                                         ; preds = %.critedge.i
   %i.em = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.0260.0, i1 true)
-  %i.en = add nsw i32 %.sroa.0260.0, -1
+  %i.en = add nuw nsw i32 %.sroa.0260.0, 4095
   %i.eo = and i32 %i.en, %.sroa.0260.0
   %i.ep = zext nneg i32 %i.em to i64              ; 3 uses
   call void @llvm.assume(i1 %i.ej)
@@ -1786,7 +1786,7 @@ bb.av:                                            ; preds = %.lr.ph399, %bb.aq
 
 .noexc128:                                        ; preds = %.critedge.i111
   %i.ls = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.0279.0, i1 true)
-  %i.lt = add nsw i32 %.sroa.0279.0, -1
+  %i.lt = add nuw nsw i32 %.sroa.0279.0, 16383
   %i.lu = and i32 %i.lt, %.sroa.0279.0
   %i.lv = zext nneg i32 %i.ls to i64
   call void @llvm.assume(i1 %i.lq)
@@ -2189,7 +2189,7 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
 
 .noexc28:                                         ; preds = %.critedge.i
   %i.ac = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.051.0, i1 true)
-  %i.ad = add nsw i32 %.sroa.051.0, -1
+  %i.ad = add nuw nsw i32 %.sroa.051.0, 4095
   %i.ae = and i32 %i.ad, %.sroa.051.0
   %i.af = zext nneg i32 %i.ac to i64
   tail call void @llvm.assume(i1 %i.z)
@@ -2592,7 +2592,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 bb.f:                                             ; preds = %.critedge.i
   %i.az = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.024.0, i1 true)
-  %i.ba = add nsw i32 %.sroa.024.0, -1
+  %i.ba = add nuw nsw i32 %.sroa.024.0, 4095
   %i.bb = and i32 %i.ba, %.sroa.024.0
   %i.bc = zext nneg i32 %i.az to i64              ; 2 uses
   call void @llvm.assume(i1 %i.ax)
@@ -2995,7 +2995,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.x = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.y = add nsw i32 %.sroa.042.0, -1
+  %i.y = add nuw nsw i32 %.sroa.042.0, 4095
   %i.z = and i32 %i.y, %.sroa.042.0
   %i.aa = zext nneg i32 %i.x to i64               ; 3 uses
   tail call void @llvm.assume(i1 %i.u)
@@ -3398,7 +3398,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.v = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.040.0, i1 true)
-  %i.w = add nsw i32 %.sroa.040.0, -1
+  %i.w = add nuw nsw i32 %.sroa.040.0, 16383
   %i.x = and i32 %i.w, %.sroa.040.0
   %i.y = zext nneg i32 %i.v to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)

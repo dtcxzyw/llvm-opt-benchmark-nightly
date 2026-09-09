@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %.unr-lcssa, %.preheader.epil.preheader
   %.lcssa177 = phi i32 [ %i.bf, %.unr-lcssa ], [ %i.ao, %.preheader.epil.preheader ]
-  %i.at = tail call i32 @llvm.smin.i32(i32 %.lcssa177, i32 %i.ac)
+  %i.at = tail call i32 @llvm.umin.i32(i32 %.lcssa177, i32 %i.ac)
   %i.au = trunc nuw i32 %i.at to i16
   br label %bb.i
 
@@ -606,6 +606,9 @@ declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #10

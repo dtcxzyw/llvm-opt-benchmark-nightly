@@ -202,11 +202,11 @@ bb.f:                                             ; preds = %._crit_edge
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = or i32 %i.k, 536870912
+  %i.m = or disjoint i32 %i.k, 536870912
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = or i32 %i.k, 1073741824
+  %i.n = or disjoint i32 %i.k, 1073741824
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge.thread, %bb.h, %bb.g, %._crit_edge, %bb.f, %bb.c, %bb.b

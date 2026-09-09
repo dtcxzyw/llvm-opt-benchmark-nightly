@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.h, %.lr.ph.i52
 bb.g:                                             ; preds = %bb.f
   %i.t = zext nneg i32 %i.s to i64
   %i.u = shl nuw nsw i64 1, %i.t                  ; 2 uses
-  %i.v = icmp ult i64 %.01830.i, %i.u
+  %i.v = icmp samesign ult i64 %.01830.i, %i.u
   br i1 %i.v, label %bb.h, label %has_channel_names.exit.thread66
 
 bb.h:                                             ; preds = %bb.g
@@ -222,7 +222,7 @@ masked_description.exit:                          ; preds = %bb.h
   %i.z = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.y)
   %i.aa = lshr i64 %i.w, 32
   %i.ab = trunc nuw nsw i64 %i.aa to i32
-  %i.ac = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.ab)
+  %i.ac = tail call range(i32 0, 32) i32 @llvm.ctpop.i32(i32 %i.ab)
   %i.ad = add nuw nsw i32 %i.ac, %i.z
   store i32 %i.ad, ptr %i.x, align 4, !tbaa !30
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -563,7 +563,7 @@ bb.n:                                             ; preds = %bb.p, %.lr.ph.i34
 bb.o:                                             ; preds = %bb.n
   %i.bl = zext nneg i32 %i.bk to i64
   %i.bm = shl nuw nsw i64 1, %i.bl                ; 2 uses
-  %i.bn = icmp ult i64 %.01830.i, %i.bm
+  %i.bn = icmp samesign ult i64 %.01830.i, %i.bm
   br i1 %i.bn, label %bb.p, label %has_channel_names.exit
 
 bb.p:                                             ; preds = %bb.o
@@ -578,7 +578,7 @@ masked_description.exit:                          ; preds = %bb.p
   %i.bq = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bp)
   %i.br = lshr i64 %i.bo, 32
   %i.bs = trunc nuw nsw i64 %i.br to i32
-  %i.bt = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bs)
+  %i.bt = tail call range(i32 0, 32) i32 @llvm.ctpop.i32(i32 %i.bs)
   %i.bu = add nuw nsw i32 %i.bt, %i.bq
   %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.bu, ptr %i.bv, align 4, !tbaa !30
@@ -981,7 +981,7 @@ has_channel_names.exit.i:                         ; preds = %bb.f, %has_channel_
 bb.h:                                             ; preds = %.lr.ph.i24.i
   %i.am = zext nneg i32 %i.al to i64
   %i.an = shl nuw nsw i64 1, %i.am                ; 2 uses
-  %i.ao = icmp ult i64 %.01830.i.i, %i.an
+  %i.ao = icmp samesign ult i64 %.01830.i.i, %i.an
   br i1 %i.ao, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
@@ -1067,7 +1067,7 @@ bb.o:                                             ; preds = %bb.q, %.lr.ph.i39.i
 bb.p:                                             ; preds = %bb.o
   %i.bo = zext nneg i32 %i.bn to i64
   %i.bp = shl nuw nsw i64 1, %i.bo                ; 2 uses
-  %i.bq = icmp ult i64 %.01830.i42.i, %i.bp
+  %i.bq = icmp samesign ult i64 %.01830.i42.i, %i.bp
   br i1 %i.bq, label %bb.q, label %canonical_order.exit
 
 bb.q:                                             ; preds = %bb.p
@@ -1158,7 +1158,7 @@ bb.x:                                             ; preds = %bb.z, %.lr.ph.i104
 bb.y:                                             ; preds = %bb.x
   %i.ci = zext nneg i32 %i.ch to i64
   %i.cj = shl nuw nsw i64 1, %i.ci                ; 2 uses
-  %i.ck = icmp ult i64 %.01830.i, %i.cj
+  %i.ck = icmp samesign ult i64 %.01830.i, %i.cj
   br i1 %i.ck, label %bb.z, label %av_channel_layout_check.exit.thread
 
 bb.z:                                             ; preds = %bb.y
@@ -1193,7 +1193,7 @@ av_channel_layout_from_mask.exit:                 ; preds = %bb.aa, %has_channel
   %i.cs = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.cr)
   %i.ct = lshr i64 %i.cl, 32
   %i.cu = trunc nuw nsw i64 %i.ct to i32
-  %i.cv = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.cu)
+  %i.cv = tail call range(i32 0, 32) i32 @llvm.ctpop.i32(i32 %i.cu)
   %i.cw = add nuw nsw i32 %i.cv, %i.cs
   store i32 %i.cw, ptr %i.b, align 4, !tbaa !30
   store i64 %i.cl, ptr %i.ce, align 8, !tbaa !24
@@ -1461,7 +1461,7 @@ bb.as:                                            ; preds = %bb.au, %.lr.ph.i141
 bb.at:                                            ; preds = %bb.as
   %i.fq = zext nneg i32 %i.fp to i64
   %i.fr = shl nuw nsw i64 1, %i.fq                ; 2 uses
-  %i.fs = icmp ult i64 %.01830.i144, %i.fr
+  %i.fs = icmp samesign ult i64 %.01830.i144, %i.fr
   br i1 %i.fs, label %bb.au, label %av_channel_layout_check.exit.thread
 
 bb.au:                                            ; preds = %bb.at

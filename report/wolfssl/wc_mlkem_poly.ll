@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i, %middle.block
   %.lcssa = phi i32 [ %i.m, %middle.block ], [ %i.t, %.lr.ph.i ]
-  %3 = icmp sgt i32 %.lcssa, 0
+  %3 = icmp ne i32 %.lcssa, 0
   %i.u = sext i1 %3 to i32
   br label %mlkem_cmp_c.exit
 

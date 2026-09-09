@@ -205,8 +205,7 @@ middle.block:                                     ; preds = %vector.body
 
 .loopexit:                                        ; preds = %.preheader, %middle.block
   %.lcssa = phi i32 [ %i.x, %middle.block ], [ %i.ah, %.preheader ]
-  %.not15 = icmp eq i32 %.lcssa, 0
-  %3 = zext i1 %.not15 to i32
+  %3 = xor i32 %.lcssa, 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %.loopexit

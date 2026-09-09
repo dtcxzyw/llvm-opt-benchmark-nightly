@@ -205,7 +205,7 @@ bb.a:
   br label %.outer
 
 .outer:                                           ; preds = %bb.h, %bb.a
-  %.089.ph = phi i32 [ %i.x, %bb.h ], [ 0, %bb.a ] ; 3 uses
+  %.089.ph = phi i32 [ %i.x, %bb.h ], [ 0, %bb.a ] ; 4 uses
   %.087.ph = phi i32 [ %.087.ph184, %bb.h ], [ 0, %bb.a ]
   br label %.outer183
 
@@ -475,8 +475,8 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.aq, %.thread
   %.sroa.0153.0 = phi ptr [ %i.ay, %.thread ], [ %i.bb, %bb.aq ] ; 4 uses
   %.sroa.6154.0 = phi ptr [ %i.ap, %.thread ], [ %i.bo, %bb.aq ] ; 2 uses
-  %.not111 = icmp eq i32 %.089.ph, 0              ; 2 uses
-  %4 = zext i1 %.not111 to i32
+  %.not111 = icmp eq i32 %.089.ph, 0
+  %4 = xor i32 %.089.ph, 1
   %i.bq = load i32, ptr %i.b, align 8, !tbaa !319
   %i.br = call ptr @Gia_ManMiterInverse(ptr noundef nonnull %.sroa.0153.0, ptr noundef nonnull %.sroa.6154.0, i32 noundef %4, i32 noundef %i.bq) #37 ; 5 uses
   %.not112 = icmp eq ptr %i.br, null

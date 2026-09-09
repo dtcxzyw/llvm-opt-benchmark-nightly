@@ -204,7 +204,7 @@ bb.a:
   %.03.i42.i40 = phi i32 [ %i.at, %.lr.ph.i40.i ], [ %i.ao, %.lr.ph.i40.preheader.i ] ; 2 uses
   %.5.i39 = phi i64 [ %i.ar, %.lr.ph.i40.i ], [ %.15496.i, %.lr.ph.i40.preheader.i ]
   %i.ar = add i64 %.5.i39, -1                     ; 3 uses
-  %i.as = add nsw i32 %.03.i42.i40, -1
+  %i.as = add nuw nsw i32 %.03.i42.i40, 65535
   %i.at = and i32 %i.as, %.03.i42.i40             ; 3 uses
   %.not.i43.i = icmp eq i32 %i.at, 0
   br i1 %.not.i43.i, label %"_ZZN6google8protobuf8internal8TcParser11FieldNumberEPKNS1_16TcParseTableBaseEPKNS3_10FieldEntryEENK3$_0clEji.exit45.thread.i", label %.lr.ph.i40.i, !llvm.loop !1
@@ -607,7 +607,7 @@ bb.c:                                             ; preds = %bb.b
   %.03.i42139 = phi i32 [ %i.al, %.lr.ph.i40 ], [ %i.ag, %.lr.ph.i40.preheader ] ; 2 uses
   %.5138 = phi i64 [ %i.aj, %.lr.ph.i40 ], [ %.15496, %.lr.ph.i40.preheader ]
   %i.aj = add i64 %.5138, -1                      ; 3 uses
-  %i.ak = add nsw i32 %.03.i42139, -1
+  %i.ak = add nuw nsw i32 %.03.i42139, 65535
   %i.al = and i32 %i.ak, %.03.i42139              ; 3 uses
   %.not.i43 = icmp eq i32 %i.al, 0
   br i1 %.not.i43, label %"_ZZN6google8protobuf8internal8TcParser11FieldNumberEPKNS1_16TcParseTableBaseEPKNS3_10FieldEntryEENK3$_0clEji.exit45.thread", label %.lr.ph.i40, !llvm.loop !1

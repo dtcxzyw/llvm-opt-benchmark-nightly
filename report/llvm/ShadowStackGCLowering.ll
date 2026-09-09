@@ -204,7 +204,6 @@ bb.al:                                            ; preds = %._crit_edge
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %._crit_edge
-  %34 = trunc i64 %.sroa.2.0.copyload.i to i16
   %i.py = getelementptr inbounds i8, ptr %.fca.0.extract1.i.i, i64 -24
   %i.pz = load i8, ptr %i.py, align 8, !tbaa !295
   %i.qa = icmp eq i8 %i.pz, 64
@@ -221,12 +220,13 @@ bb.am:                                            ; preds = %bb.al, %._crit_edge
 
 ._crit_edge173:                                   ; preds = %.lr.ph172, %bb.am
   %.sroa.0139.0.lcssa169 = phi ptr [ %.fca.0.extract1.i.i, %bb.am ], [ %i.qc, %.lr.ph172 ] ; 4 uses
-  %.sroa.11.0.lcssa = phi i16 [ %34, %bb.am ], [ 0, %.lr.ph172 ]
+  %.sroa.11.0.lcssa = phi i64 [ %.sroa.2.0.copyload.i, %bb.am ], [ 0, %.lr.ph172 ]
   %i.qg = getelementptr inbounds nuw i8, ptr %.sroa.0139.0.lcssa169, i64 16
   %i.qh = load ptr, ptr %i.qg, align 8, !tbaa !325 ; 3 uses
   store ptr %i.qh, ptr %i.lp, align 8, !tbaa !335
   store ptr %.sroa.0139.0.lcssa169, ptr %i.lq, align 8
-  store i16 %.sroa.11.0.lcssa, ptr %.sroa.45.0..sroa_idx.i.i, align 8
+  %.sroa.45.0.extract.trunc.i = trunc i64 %.sroa.11.0.lcssa to i16
+  store i16 %.sroa.45.0.extract.trunc.i, ptr %.sroa.45.0..sroa_idx.i.i, align 8
   %i.qi = getelementptr inbounds nuw i8, ptr %i.qh, i64 48
   %.not.i106 = icmp eq ptr %.sroa.0139.0.lcssa169, %i.qi
   br i1 %.not.i106, label %_ZN4llvm13IRBuilderBase14SetInsertPointEPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES1_EELb0ELb0EEE.exit, label %bb.an

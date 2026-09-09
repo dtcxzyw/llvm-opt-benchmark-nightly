@@ -204,7 +204,7 @@ expand_right_edge.exit:                           ; preds = %expand_right_edge.e
   %i.bt = add nuw nsw i16 %i.bp, 1
   %i.bu = add nuw nsw i16 %i.bt, %i.bs
   %i.bv = lshr i16 %i.bu, 1
-  %i.bw = trunc i16 %i.bv to i8
+  %i.bw = trunc nuw i16 %i.bv to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %.02228, i64 2 ; 2 uses
   store i8 %i.bw, ptr %i.bm, align 1, !tbaa !31
   %i.by = getelementptr inbounds nuw i8, ptr %.02327, i64 4 ; 2 uses
@@ -607,7 +607,7 @@ expand_right_edge.exit:                           ; preds = %expand_right_edge.e
   %i.bs = add nuw nsw i16 %i.br, %i.bm
   %i.bt = add nuw nsw i16 %i.bs, %i.bp
   %i.bu = lshr i16 %i.bt, 2
-  %i.bv = trunc i16 %i.bu to i8
+  %i.bv = trunc nuw i16 %i.bu to i8
   %i.bw = getelementptr inbounds nuw i8, ptr %.02837, i64 1
   store i8 %i.bv, ptr %.02837, align 1, !tbaa !31
   %i.bx = getelementptr inbounds nuw i8, ptr %.03035, i64 2
@@ -627,7 +627,7 @@ expand_right_edge.exit:                           ; preds = %expand_right_edge.e
   %i.cl = add nuw nsw i16 %i.ck, %i.cf
   %i.cm = add nuw nsw i16 %i.cl, %i.ci
   %i.cn = lshr i16 %i.cm, 2
-  %i.co = trunc i16 %i.cn to i8
+  %i.co = trunc nuw i16 %i.cn to i8
   %i.cp = getelementptr inbounds nuw i8, ptr %.02837, i64 2 ; 2 uses
   store i8 %i.co, ptr %i.bw, align 1, !tbaa !31
   %i.cq = getelementptr inbounds nuw i8, ptr %.03035, i64 4 ; 2 uses
@@ -659,7 +659,7 @@ expand_right_edge.exit:                           ; preds = %expand_right_edge.e
   %i.de = add nuw nsw i16 %i.dd, %i.cy
   %i.df = add nuw nsw i16 %i.de, %i.db
   %i.dg = lshr i16 %i.df, 2
-  %i.dh = trunc i16 %i.dg to i8
+  %i.dh = trunc nuw i16 %i.dg to i8
   store i8 %i.dh, ptr %.02837.epil.init, align 1, !tbaa !31
   br label %._crit_edge
 

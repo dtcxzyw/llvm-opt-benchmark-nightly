@@ -204,15 +204,14 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
-  %.lcssa175 = phi i16 [ %i.at, %._crit_edge.unr-lcssa ], [ %i.u, %.epil.preheader ] ; 3 uses
+  %.lcssa175 = phi i16 [ %i.at, %._crit_edge.unr-lcssa ], [ %i.u, %.epil.preheader ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !95   ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !148  ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 48
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !291 ; 4 uses
-  %12 = and i16 %.lcssa175, 2
-  %.not104 = icmp eq i16 %12, 0
+  %.not104 = icmp samesign ult i16 %.lcssa175, 2
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 32 ; 2 uses
   br i1 %.not104, label %.lr.ph159, label %bb.c
@@ -303,7 +302,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d
   %i.bw = phi ptr [ %i.aa, %bb.c ], [ %i.g, %.preheader.thread ], [ %i.aa, %bb.g ] ; 2 uses
   %i.bx = phi ptr [ %i.y, %bb.c ], [ %i.e, %.preheader.thread ], [ %i.y, %bb.g ] ; 7 uses
   %i.by = phi ptr [ %i.w, %bb.c ], [ %i.c, %.preheader.thread ], [ %i.w, %bb.g ] ; 4 uses
-  %.0.lcssa170 = phi i16 [ %.lcssa175, %bb.c ], [ 0, %.preheader.thread ], [ %.lcssa175, %bb.g ] ; 2 uses
+  %.0.lcssa170 = phi i16 [ %.lcssa175, %bb.c ], [ 0, %.preheader.thread ], [ 1, %bb.g ] ; 2 uses
   %.1140 = phi i64 [ %i.bb, %bb.c ], [ 0, %.preheader.thread ], [ %.sroa.speculated, %bb.g ] ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 2 uses
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !187 ; 2 uses

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
 
 bb.d:                                             ; preds = %.critedge.i
   %i.v = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.040.0, i1 true)
-  %i.w = add nsw i32 %.sroa.040.0, -1
+  %i.w = add nuw nsw i32 %.sroa.040.0, 16383
   %i.x = and i32 %i.w, %.sroa.040.0
   %i.y = zext nneg i32 %i.v to i64                ; 3 uses
   tail call void @llvm.assume(i1 %i.t)
@@ -608,7 +608,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !7804
   %gep.i = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.am
   store i32 %.09.i.lcssa.i, ptr %gep.i, align 4, !tbaa !79
-  %i.bu = add nsw i64 %.035.i, -1
+  %i.bu = add nuw i64 %.035.i, 9223372036854775807
   %i.bv = and i64 %i.bu, %.035.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bv, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_20ConstantVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %_ZN8facebook5velox9functions15Fnv1_32FunctionINS0_4exec10VectorExecEE4callERiRKNS0_10StringViewE.exit.i, !llvm.loop !7796
@@ -892,7 +892,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i76:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !7806
   %gep.i78 = getelementptr [4 x i8], ptr %invariant.gep.i63, i64 %i.fo
   store i32 %.09.i.lcssa.i77, ptr %gep.i78, align 4, !tbaa !79
-  %i.gw = add nsw i64 %.035.i65, -1
+  %i.gw = add nuw i64 %.035.i65, 9223372036854775807
   %i.gx = and i64 %i.gw, %.035.i65                ; 2 uses
   %.not10.i79 = icmp eq i64 %i.gx, 0
   br i1 %.not10.i79, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_20ConstantVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %_ZN8facebook5velox9functions15Fnv1_32FunctionINS0_4exec10VectorExecEE4callERiRKNS0_10StringViewE.exit.i64, !llvm.loop !7796
@@ -1295,7 +1295,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !7845
   %i.bx = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.ao
   store i32 %.09.i.i.lcssa.i, ptr %i.bx, align 4, !tbaa !79
-  %i.by = add nsw i64 %.031.i, -1
+  %i.by = add nuw i64 %.031.i, 9223372036854775807
   %i.bz = and i64 %i.by, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bz, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_16FlatVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %.noexc12.i, !llvm.loop !7833
@@ -1583,7 +1583,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i73:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !7849
   %i.hh = getelementptr inbounds [4 x i8], ptr %i.fw, i64 %i.fy
   store i32 %.09.i.i.lcssa.i74, ptr %i.hh, align 4, !tbaa !79
-  %i.hi = add nsw i64 %.031.i61, -1
+  %i.hi = add nuw i64 %.031.i61, 9223372036854775807
   %i.hj = and i64 %i.hi, %.031.i61                ; 2 uses
   %.not10.i75 = icmp eq i64 %i.hj, 0
   br i1 %.not10.i75, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_16FlatVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %.noexc12.i60, !llvm.loop !7833
@@ -1986,7 +1986,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !7892
   %i.co = getelementptr inbounds [4 x i8], ptr %i.at, i64 %i.ax
   store i32 %.09.i.i.lcssa.i, ptr %i.co, align 4, !tbaa !79
-  %i.cp = add nsw i64 %.032.i, -1
+  %i.cp = add nuw i64 %.032.i, 9223372036854775807
   %i.cq = and i64 %i.cp, %.032.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.cq, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_12VectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !7880
@@ -2334,7 +2334,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i75:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !7896
   %i.jg = getelementptr inbounds [4 x i8], ptr %i.hl, i64 %i.hp
   store i32 %.09.i.i.lcssa.i76, ptr %i.jg, align 4, !tbaa !79
-  %i.jh = add nsw i64 %.032.i61, -1
+  %i.jh = add nuw i64 %.032.i61, 9223372036854775807
   %i.ji = and i64 %i.jh, %.032.i61                ; 2 uses
   %.not10.i77 = icmp eq i64 %i.ji, 0
   br i1 %.not10.i77, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_12VectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !7880
@@ -2737,7 +2737,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !7992
   %gep.i = getelementptr [8 x i8], ptr %invariant.gep.i, i64 %i.am
   store i64 %.09.i.lcssa.i, ptr %gep.i, align 8, !tbaa !138
-  %i.bu = add nsw i64 %.035.i, -1
+  %i.bu = add nuw i64 %.035.i, 9223372036854775807
   %i.bv = and i64 %i.bu, %.035.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bv, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_20ConstantVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %_ZN8facebook5velox9functions15Fnv1_64FunctionINS0_4exec10VectorExecEE4callERlRKNS0_10StringViewE.exit.i, !llvm.loop !7984
@@ -3021,7 +3021,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i76:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !7994
   %gep.i78 = getelementptr [8 x i8], ptr %invariant.gep.i63, i64 %i.fo
   store i64 %.09.i.lcssa.i77, ptr %gep.i78, align 8, !tbaa !138
-  %i.gw = add nsw i64 %.035.i65, -1
+  %i.gw = add nuw i64 %.035.i65, 9223372036854775807
   %i.gx = and i64 %i.gw, %.035.i65                ; 2 uses
   %.not10.i79 = icmp eq i64 %i.gx, 0
   br i1 %.not10.i79, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_20ConstantVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %_ZN8facebook5velox9functions15Fnv1_64FunctionINS0_4exec10VectorExecEE4callERlRKNS0_10StringViewE.exit.i64, !llvm.loop !7984
@@ -3424,7 +3424,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !8033
   %i.bx = getelementptr inbounds [8 x i8], ptr %i.am, i64 %i.ao
   store i64 %.09.i.i.lcssa.i, ptr %i.bx, align 8, !tbaa !138
-  %i.by = add nsw i64 %.031.i, -1
+  %i.by = add nuw i64 %.031.i, 9223372036854775807
   %i.bz = and i64 %i.by, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bz, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_16FlatVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %.noexc12.i, !llvm.loop !8021
@@ -3712,7 +3712,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i73:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !8037
   %i.hh = getelementptr inbounds [8 x i8], ptr %i.fw, i64 %i.fy
   store i64 %.09.i.i.lcssa.i74, ptr %i.hh, align 8, !tbaa !138
-  %i.hi = add nsw i64 %.031.i61, -1
+  %i.hi = add nuw i64 %.031.i61, 9223372036854775807
   %i.hj = and i64 %i.hi, %.031.i61                ; 2 uses
   %.not10.i75 = icmp eq i64 %i.hj, 0
   br i1 %.not10.i75, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_16FlatVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %.noexc12.i60, !llvm.loop !8021
@@ -4115,7 +4115,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !8080
   %i.co = getelementptr inbounds [8 x i8], ptr %i.at, i64 %i.ax
   store i64 %.09.i.i.lcssa.i, ptr %i.co, align 8, !tbaa !138
-  %i.cp = add nsw i64 %.032.i, -1
+  %i.cp = add nuw i64 %.032.i, 9223372036854775807
   %i.cq = and i64 %i.cp, %.032.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.cq, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_12VectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !8068
@@ -4463,7 +4463,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i75:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !8084
   %i.jg = getelementptr inbounds [8 x i8], ptr %i.hl, i64 %i.hp
   store i64 %.09.i.i.lcssa.i76, ptr %i.jg, align 8, !tbaa !138
-  %i.jh = add nsw i64 %.032.i61, -1
+  %i.jh = add nuw i64 %.032.i61, 9223372036854775807
   %i.ji = and i64 %i.jh, %.032.i61                ; 2 uses
   %.not10.i77 = icmp eq i64 %i.ji, 0
   br i1 %.not10.i77, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions15Fnv1_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_12VectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !8068
@@ -4866,7 +4866,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !8180
   %gep.i = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.am
   store i32 %.09.i.lcssa.i, ptr %gep.i, align 4, !tbaa !79
-  %i.bu = add nsw i64 %.035.i, -1
+  %i.bu = add nuw i64 %.035.i, 9223372036854775807
   %i.bv = and i64 %i.bu, %.035.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bv, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_20ConstantVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %_ZN8facebook5velox9functions16Fnv1a_32FunctionINS0_4exec10VectorExecEE4callERiRKNS0_10StringViewE.exit.i, !llvm.loop !8172
@@ -5150,7 +5150,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i76:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !8182
   %gep.i78 = getelementptr [4 x i8], ptr %invariant.gep.i63, i64 %i.fo
   store i32 %.09.i.lcssa.i77, ptr %gep.i78, align 4, !tbaa !79
-  %i.gw = add nsw i64 %.035.i65, -1
+  %i.gw = add nuw i64 %.035.i65, 9223372036854775807
   %i.gx = and i64 %i.gw, %.035.i65                ; 2 uses
   %.not10.i79 = icmp eq i64 %i.gx, 0
   br i1 %.not10.i79, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_20ConstantVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %_ZN8facebook5velox9functions16Fnv1a_32FunctionINS0_4exec10VectorExecEE4callERiRKNS0_10StringViewE.exit.i64, !llvm.loop !8172
@@ -5553,7 +5553,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !8221
   %i.bx = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.ao
   store i32 %.09.i.i.lcssa.i, ptr %i.bx, align 4, !tbaa !79
-  %i.by = add nsw i64 %.031.i, -1
+  %i.by = add nuw i64 %.031.i, 9223372036854775807
   %i.bz = and i64 %i.by, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bz, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_16FlatVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %.noexc12.i, !llvm.loop !8209
@@ -5841,7 +5841,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i73:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !8225
   %i.hh = getelementptr inbounds [4 x i8], ptr %i.fw, i64 %i.fy
   store i32 %.09.i.i.lcssa.i74, ptr %i.hh, align 4, !tbaa !79
-  %i.hi = add nsw i64 %.031.i61, -1
+  %i.hi = add nuw i64 %.031.i61, 9223372036854775807
   %i.hj = and i64 %i.hi, %.031.i61                ; 2 uses
   %.not10.i75 = icmp eq i64 %i.hj, 0
   br i1 %.not10.i75, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_16FlatVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %.noexc12.i60, !llvm.loop !8209
@@ -6244,7 +6244,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !8268
   %i.co = getelementptr inbounds [4 x i8], ptr %i.at, i64 %i.ax
   store i32 %.09.i.i.lcssa.i, ptr %i.co, align 4, !tbaa !79
-  %i.cp = add nsw i64 %.032.i, -1
+  %i.cp = add nuw i64 %.032.i, 9223372036854775807
   %i.cq = and i64 %i.cp, %.032.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.cq, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_12VectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !8256
@@ -6592,7 +6592,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i75:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !8272
   %i.jg = getelementptr inbounds [4 x i8], ptr %i.hl, i64 %i.hp
   store i32 %.09.i.i.lcssa.i76, ptr %i.jg, align 4, !tbaa !79
-  %i.jh = add nsw i64 %.032.i61, -1
+  %i.jh = add nuw i64 %.032.i61, 9223372036854775807
   %i.ji = and i64 %i.jh, %.032.i61                ; 2 uses
   %.not10.i77 = icmp eq i64 %i.ji, 0
   br i1 %.not10.i77, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_32FunctionINS3_10VectorExecEEESB_iNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_12VectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !8256
@@ -6995,7 +6995,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !8368
   %gep.i = getelementptr [8 x i8], ptr %invariant.gep.i, i64 %i.am
   store i64 %.09.i.lcssa.i, ptr %gep.i, align 8, !tbaa !138
-  %i.bu = add nsw i64 %.035.i, -1
+  %i.bu = add nuw i64 %.035.i, 9223372036854775807
   %i.bv = and i64 %i.bu, %.035.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bv, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_20ConstantVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %_ZN8facebook5velox9functions16Fnv1a_64FunctionINS0_4exec10VectorExecEE4callERlRKNS0_10StringViewE.exit.i, !llvm.loop !8360
@@ -7279,7 +7279,7 @@ _ZN8facebook5velox6StatusD2Ev.exit24.i76:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !8370
   %gep.i78 = getelementptr [8 x i8], ptr %invariant.gep.i63, i64 %i.fo
   store i64 %.09.i.lcssa.i77, ptr %gep.i78, align 8, !tbaa !138
-  %i.gw = add nsw i64 %.035.i65, -1
+  %i.gw = add nuw i64 %.035.i65, 9223372036854775807
   %i.gx = and i64 %i.gw, %.035.i65                ; 2 uses
   %.not10.i79 = icmp eq i64 %i.gx, 0
   br i1 %.not10.i79, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_20ConstantVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %_ZN8facebook5velox9functions16Fnv1a_64FunctionINS0_4exec10VectorExecEE4callERlRKNS0_10StringViewE.exit.i64, !llvm.loop !8360
@@ -7682,7 +7682,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !8409
   %i.bx = getelementptr inbounds [8 x i8], ptr %i.am, i64 %i.ao
   store i64 %.09.i.i.lcssa.i, ptr %i.bx, align 8, !tbaa !138
-  %i.by = add nsw i64 %.031.i, -1
+  %i.by = add nuw i64 %.031.i, 9223372036854775807
   %i.bz = and i64 %i.by, %.031.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bz, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_16FlatVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %.noexc12.i, !llvm.loop !8397
@@ -7970,7 +7970,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20.i73:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !8413
   %i.hh = getelementptr inbounds [8 x i8], ptr %i.fw, i64 %i.fy
   store i64 %.09.i.i.lcssa.i74, ptr %i.hh, align 8, !tbaa !138
-  %i.hi = add nsw i64 %.031.i61, -1
+  %i.hi = add nuw i64 %.031.i61, 9223372036854775807
   %i.hj = and i64 %i.hi, %.031.i61                ; 2 uses
   %.not10.i75 = icmp eq i64 %i.hj, 0
   br i1 %.not10.i75, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_16FlatVectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %.noexc12.i60, !llvm.loop !8397
@@ -8373,7 +8373,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i:           ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !8456
   %i.co = getelementptr inbounds [8 x i8], ptr %i.at, i64 %i.ax
   store i64 %.09.i.i.lcssa.i, ptr %i.co, align 8, !tbaa !138
-  %i.cp = add nsw i64 %.032.i, -1
+  %i.cp = add nuw i64 %.032.i, 9223372036854775807
   %i.cq = and i64 %i.cp, %.032.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.cq, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_12VectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !8444
@@ -8721,7 +8721,7 @@ _ZN8facebook5velox6StatusD2Ev.exit21.i75:         ; preds = %_ZN8facebook5velox6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !8460
   %i.jg = getelementptr inbounds [8 x i8], ptr %i.hl, i64 %i.hp
   store i64 %.09.i.i.lcssa.i76, ptr %i.jg, align 8, !tbaa !138
-  %i.jh = add nsw i64 %.032.i61, -1
+  %i.jh = add nuw i64 %.032.i61, 9223372036854775807
   %i.ji = and i64 %i.jh, %.032.i61                ; 2 uses
   %.not10.i77 = icmp eq i64 %i.ji, 0
   br i1 %.not10.i77, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS3_21SimpleFunctionAdapterINS0_4core9UDFHolderINS0_9functions16Fnv1a_64FunctionINS3_10VectorExecEEESB_lNS0_15ConstantCheckerIJNS0_9VarbinaryEEEEJSE_EEEE7iterateIJNS3_12VectorReaderISE_EEEEEvRNSH_12ApplyContextEDpRT_EUlT_E1_ZNS4_22applyToSelectedNoThrowISR_EEvRKNS0_17SelectivityVectorESQ_EUlSQ_E_EEvSV_SQ_T0_EUlSQ_E_EEvPKmiibSQ_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !8444
