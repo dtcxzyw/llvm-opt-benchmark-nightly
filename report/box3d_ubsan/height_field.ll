@@ -204,7 +204,7 @@ bb.bk:                                            ; preds = %bb.bj
   %i.oj = fmul float %i.nz, %i.og
   br label %bb.bl
 
-bb.bl:                                            ; preds = %bb.bj, %bb.bk
+bb.bl:                                            ; preds = %bb.bk, %bb.bj
   %.sroa.07.0.i.i1097.us = phi <2 x float> [ %.sroa.07.4.vec.insert.i.i1107.us, %bb.bk ], [ zeroinitializer, %bb.bj ] ; 6 uses
   %.sroa.5.0.i.i1098.us = phi float [ %i.oj, %bb.bk ], [ 0.000000e+00, %bb.bj ] ; 6 uses
   %.sroa.03.0.vec.extract.i.i1100.us = extractelement <2 x float> %.sroa.07.0.i.i1097.us, i64 0 ; 2 uses
