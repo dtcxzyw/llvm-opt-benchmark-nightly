@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @meshopt_encodeFilterExp(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, i64 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) local_unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [64 x i32], align 16              ; 19 uses
+  %i.a = alloca [64 x i32], align 16              ; 15 uses
   %i.b = lshr i64 %2, 2                           ; 25 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %.not = icmp eq i64 %i.b, 0                     ; 5 uses
@@ -330,8 +330,8 @@ scalar.ph155:                                     ; preds = %scalar.ph155.prehea
   %min.iters.check209 = icmp ult i64 %2, 32
   %n.vec211 = and i64 %i.b, 4611686018427387896   ; 3 uses
   %cmp.n218 = icmp eq i64 %i.b, %n.vec211
-  %min.iters.check183 = icmp ult i64 %2, 32
-  %n.vec185 = and i64 %i.b, 4611686018427387896   ; 3 uses
+  %min.iters.check183 = icmp ult i64 %2, 16
+  %n.vec185 = and i64 %i.b, 4611686018427387900   ; 3 uses
   %cmp.n206 = icmp eq i64 %i.b, %n.vec185
   %min.iters.check169 = icmp ult i64 %2, 16
   %n.vec171 = and i64 %i.b, 4611686018427387900   ; 3 uses
@@ -526,92 +526,25 @@ middle.block217:                                  ; preds = %vector.body212
   br i1 %min.iters.check183, label %.lr.ph109.preheader261, label %vector.body186
 
 vector.body186:                                   ; preds = %.lr.ph109.preheader, %pred.store.continue203
-  %index187 = phi i64 [ %index.next204, %pred.store.continue203 ], [ 0, %.lr.ph109.preheader ] ; 10 uses
-  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %index187 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.db, i64 16
-  %wide.load188 = load <4 x float>, ptr %i.db, align 4, !tbaa !12 ; 5 uses
-  %wide.load189 = load <4 x float>, ptr %6, align 4, !tbaa !12 ; 5 uses
-  %7 = fcmp une <4 x float> %wide.load188, zeroinitializer ; 4 uses
+  %index187 = phi i64 [ %index.next204, %pred.store.continue203 ], [ 0, %.lr.ph109.preheader ] ; 6 uses
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %index187
+  %wide.load189 = load <4 x float>, ptr %i.db, align 4, !tbaa !12 ; 5 uses
   %i.dc = fcmp une <4 x float> %wide.load189, zeroinitializer ; 4 uses
-  %i.dd = extractelement <4 x i1> %7, i64 0
-  br i1 %i.dd, label %pred.store.if, label %pred.store.continue
+  %i.dd = extractelement <4 x i1> %i.dc, i64 0
+  br i1 %i.dd, label %pred.store.if196, label %pred.store.continue197
 
-pred.store.if:                                    ; preds = %vector.body186
-  %bc = bitcast <4 x float> %wide.load188 to <4 x i32>
-  %8 = extractelement <4 x i32> %bc, i64 0
-  %9 = lshr i32 %8, 23
-  %10 = and i32 %9, 255
-  %11 = tail call i32 @llvm.umax.i32(i32 %10, i32 26)
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index187
-  %13 = add nsw i32 %11, -126
-  store i32 %13, ptr %12, align 16, !tbaa !41
-  br label %pred.store.continue
-
-pred.store.continue:                              ; preds = %pred.store.if, %vector.body186
-  %14 = extractelement <4 x i1> %7, i64 1
-  br i1 %14, label %pred.store.if190, label %pred.store.continue191
-
-pred.store.if190:                                 ; preds = %pred.store.continue
-  %bc249 = bitcast <4 x float> %wide.load188 to <4 x i32>
-  %15 = extractelement <4 x i32> %bc249, i64 1
-  %16 = lshr i32 %15, 23
-  %17 = and i32 %16, 255
-  %18 = tail call i32 @llvm.umax.i32(i32 %17, i32 26)
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index187
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 4
-  %21 = add nsw i32 %18, -126
-  store i32 %21, ptr %20, align 4, !tbaa !41
-  br label %pred.store.continue191
-
-pred.store.continue191:                           ; preds = %pred.store.if190, %pred.store.continue
-  %22 = extractelement <4 x i1> %7, i64 2
-  br i1 %22, label %pred.store.if192, label %pred.store.continue193
-
-pred.store.if192:                                 ; preds = %pred.store.continue191
-  %bc250 = bitcast <4 x float> %wide.load188 to <4 x i32>
-  %23 = extractelement <4 x i32> %bc250, i64 2
-  %24 = lshr i32 %23, 23
-  %25 = and i32 %24, 255
-  %26 = tail call i32 @llvm.umax.i32(i32 %25, i32 26)
-  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index187
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 8
-  %29 = add nsw i32 %26, -126
-  store i32 %29, ptr %28, align 8, !tbaa !41
-  br label %pred.store.continue193
-
-pred.store.continue193:                           ; preds = %pred.store.if192, %pred.store.continue191
-  %30 = extractelement <4 x i1> %7, i64 3
-  br i1 %30, label %pred.store.if194, label %pred.store.continue195
-
-pred.store.if194:                                 ; preds = %pred.store.continue193
-  %bc251 = bitcast <4 x float> %wide.load188 to <4 x i32>
-  %31 = extractelement <4 x i32> %bc251, i64 3
-  %32 = lshr i32 %31, 23
-  %33 = and i32 %32, 255
-  %34 = tail call i32 @llvm.umax.i32(i32 %33, i32 26)
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index187
-  %36 = getelementptr inbounds nuw i8, ptr %35, i64 12
-  %37 = add nsw i32 %34, -126
-  store i32 %37, ptr %36, align 4, !tbaa !41
-  br label %pred.store.continue195
-
-pred.store.continue195:                           ; preds = %pred.store.if194, %pred.store.continue193
-  %38 = extractelement <4 x i1> %i.dc, i64 0
-  br i1 %38, label %pred.store.if196, label %pred.store.continue197
-
-pred.store.if196:                                 ; preds = %pred.store.continue195
+pred.store.if196:                                 ; preds = %vector.body186
   %bc252 = bitcast <4 x float> %wide.load189 to <4 x i32>
   %i.de = extractelement <4 x i32> %bc252, i64 0
   %i.df = lshr i32 %i.de, 23
   %i.dg = and i32 %i.df, 255
   %i.dh = tail call i32 @llvm.umax.i32(i32 %i.dg, i32 26)
   %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index187
-  %39 = getelementptr inbounds nuw i8, ptr %i.di, i64 16
   %i.dj = add nsw i32 %i.dh, -126
-  store i32 %i.dj, ptr %39, align 16, !tbaa !41
+  store i32 %i.dj, ptr %i.di, align 16, !tbaa !41
   br label %pred.store.continue197
 
-pred.store.continue197:                           ; preds = %pred.store.if196, %pred.store.continue195
+pred.store.continue197:                           ; preds = %pred.store.if196, %vector.body186
   %i.dk = extractelement <4 x i1> %i.dc, i64 1
   br i1 %i.dk, label %pred.store.if198, label %pred.store.continue199
 
@@ -622,7 +555,7 @@ pred.store.if198:                                 ; preds = %pred.store.continue
   %i.dn = and i32 %i.dm, 255
   %i.do = tail call i32 @llvm.umax.i32(i32 %i.dn, i32 26)
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index187
-  %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 20
+  %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 4
   %i.dr = add nsw i32 %i.do, -126
   store i32 %i.dr, ptr %i.dq, align 4, !tbaa !41
   br label %pred.store.continue199
@@ -638,7 +571,7 @@ pred.store.if200:                                 ; preds = %pred.store.continue
   %i.dv = and i32 %i.du, 255
   %i.dw = tail call i32 @llvm.umax.i32(i32 %i.dv, i32 26)
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index187
-  %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 24
+  %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
   %i.dz = add nsw i32 %i.dw, -126
   store i32 %i.dz, ptr %i.dy, align 8, !tbaa !41
   br label %pred.store.continue201
@@ -654,13 +587,13 @@ pred.store.if202:                                 ; preds = %pred.store.continue
   %i.ed = and i32 %i.ec, 255
   %i.ee = tail call i32 @llvm.umax.i32(i32 %i.ed, i32 26)
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index187
-  %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 28
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 12
   %i.eh = add nsw i32 %i.ee, -126
   store i32 %i.eh, ptr %i.eg, align 4, !tbaa !41
   br label %pred.store.continue203
 
 pred.store.continue203:                           ; preds = %pred.store.if202, %pred.store.continue201
-  %index.next204 = add nuw i64 %index187, 8       ; 2 uses
+  %index.next204 = add nuw i64 %index187, 4       ; 2 uses
   %i.ei = icmp eq i64 %index.next204, %n.vec185
   br i1 %i.ei, label %middle.block205, label %vector.body186, !llvm.loop !36
 

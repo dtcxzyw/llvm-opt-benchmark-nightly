@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %.lr.ph, %_ZN5Eigen5
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #28
   call void @_ZN3igl9polar_svdIN5Eigen6MatrixIdLi3ELi3ELi0ELi3ELi3EEES3_S3_S3_NS2_IdLi3ELi1ELi0ELi3ELi1EEES3_EEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EERNSA_IT1_EERNSA_IT2_EERNSA_IT3_EERNSA_IT4_EE(ptr noundef nonnull align 1 dereferenceable(1) %27, ptr noundef nonnull align 8 dereferenceable(72) %28, ptr noundef nonnull align 8 dereferenceable(72) %29, ptr noundef nonnull align 8 dereferenceable(72) %30, ptr noundef nonnull align 8 dereferenceable(24) %32, ptr noundef nonnull align 8 dereferenceable(72) %31)
   %i.oa = load double, ptr %32, align 8, !tbaa !40 ; 24 uses
-  %i.ob = load <2 x double>, ptr %i.kb, align 8, !tbaa !40 ; 15 uses
+  %i.ob = load <2 x double>, ptr %i.kb, align 8, !tbaa !40 ; 16 uses
   %i.oc = extractelement <2 x double> %i.ob, i64 1 ; 20 uses
-  %i.od = extractelement <2 x double> %i.ob, i64 0 ; 15 uses
+  %i.od = extractelement <2 x double> %i.ob, i64 0 ; 14 uses
   switch i32 %1, label %bb.t [
     i32 0, label %bb.n
     i32 1, label %bb.o
@@ -356,16 +356,17 @@ bb.r:                                             ; preds = %bb.m
   %i.sx = insertelement <2 x double> %i.sw, double %i.sh, i64 1
   %i.sy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.sx, <2 x double> splat (double -2.000000e+00), <2 x double> %i.sv)
   %i.sz = fmul <2 x double> %i.sq, %i.sy
-  %i.ta = fdiv double %i.so, f0x3FF6A09E667F3BCD  ; 7 uses
+  %i.ta = fdiv double %i.so, f0x3FF6A09E667F3BCD  ; 5 uses
   %i.tb = fmul double %i.sa, 9.000000e+00         ; 2 uses
   %i.tc = insertelement <2 x double> poison, double %i.tb, i64 0
   %i.td = shufflevector <2 x double> %i.tc, <2 x double> poison, <2 x i32> zeroinitializer
   %i.te = fdiv <2 x double> %i.sz, %i.td
-  %34 = fsub double %i.od, %i.ta
-  %35 = fsub double %i.oa, %i.ta
-  %i.tf = insertelement <2 x double> poison, double %35, i64 0
-  %36 = insertelement <2 x double> %i.tf, double %34, i64 1
-  %i.tg = fmul <2 x double> %36, splat (double 2.000000e+00)
+  %34 = shufflevector <2 x double> %i.ob, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %35 = insertelement <2 x double> %34, double %i.oa, i64 0
+  %i.tf = insertelement <2 x double> poison, double %i.ta, i64 0
+  %36 = shufflevector <2 x double> %i.tf, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
+  %37 = fsub <2 x double> %35, %36
+  %i.tg = fmul <2 x double> %37, splat (double 2.000000e+00)
   %i.th = fdiv <2 x double> %i.te, %i.tg          ; 2 uses
   %i.ti = extractelement <2 x double> %i.th, i64 0
   %i.tj = call double @sqrt(double noundef %i.ti) #28
@@ -386,21 +387,19 @@ bb.r:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #28
   %i.tv = load <2 x double>, ptr %30, align 16, !tbaa !47
-  %37 = insertelement <2 x double> poison, double %i.ta, i64 0
-  %38 = shufflevector <2 x double> %37, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
-  %i.tw = fmul <2 x double> %i.tv, %38
+  %i.tw = fmul <2 x double> %i.tv, %36
   store <2 x double> %i.tw, ptr %15, align 16, !tbaa !47
   %i.tx = load double, ptr %i.ke, align 16, !tbaa !40
   %i.ty = fmul double %i.ta, %i.tx
   store double %i.ty, ptr %i.lk, align 16, !tbaa !40
   %i.tz = load <2 x double>, ptr %i.kg, align 8, !tbaa !47
-  %i.ua = fmul <2 x double> %i.tz, %38
+  %i.ua = fmul <2 x double> %i.tz, %36
   store <2 x double> %i.ua, ptr %i.ll, align 8, !tbaa !47
   %i.ub = load double, ptr %i.ki, align 8, !tbaa !40
   %i.uc = fmul double %i.ta, %i.ub
   store double %i.uc, ptr %i.lm, align 8, !tbaa !40
   %i.ud = load <2 x double>, ptr %i.kk, align 16, !tbaa !47
-  %i.ue = fmul <2 x double> %i.ud, %38
+  %i.ue = fmul <2 x double> %i.ud, %36
   store <2 x double> %i.ue, ptr %i.ln, align 16, !tbaa !47
   %i.uf = load double, ptr %i.km, align 16, !tbaa !40
   %i.ug = fmul double %i.ta, %i.uf

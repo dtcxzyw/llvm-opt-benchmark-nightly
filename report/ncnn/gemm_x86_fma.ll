@@ -205,10 +205,9 @@ bb.ea:                                            ; preds = %bb.dy
   %i.ash = mul i64 %i.k, %i.asg                   ; 2 uses
   %i.asi = mul nsw i32 %i.b, %5
   %i.asj = sext i32 %i.asi to i64                 ; 2 uses
-  %11 = insertelement <2 x i32> poison, i32 %2, i64 0
-  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer
-  %13 = add <2 x i32> %12, <i32 0, i32 -1>
-  %14 = icmp ult <2 x i32> %13, <i32 1, i32 2>    ; 4 uses
+  %11 = icmp eq i32 %2, 0                         ; 5 uses
+  %12 = add i32 %2, -1
+  %or.cond21 = icmp ult i32 %12, 2                ; 4 uses
   %i.ask = sext i32 %3 to i64                     ; 4 uses
   %i.asl = icmp sgt i32 %6, 7
   %i.asm = insertelement <4 x float> poison, float %8, i64 0
@@ -237,12 +236,12 @@ bb.ea:                                            ; preds = %bb.dy
   %invariant.op2175 = add nsw i64 %i.asv, -1
   %i.asx = insertelement <2 x float> poison, float %8, i64 0
   %i.asy = shufflevector <2 x float> %i.asx, <2 x float> poison, <2 x i32> zeroinitializer ; 5 uses
-  %15 = extractelement <2 x i1> %14, i64 0        ; 4 uses
-  %16 = extractelement <2 x i1> %14, i64 1        ; 3 uses
-  %17 = insertelement <2 x float> poison, float %7, i64 0
-  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %19 = shufflevector <2 x i1> %14, <2 x i1> poison, <2 x i32> zeroinitializer
-  %20 = shufflevector <2 x i1> %14, <2 x i1> poison, <2 x i32> <i32 1, i32 1>
+  %13 = insertelement <2 x float> poison, float %7, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %15 = insertelement <2 x i1> poison, i1 %11, i64 0
+  %16 = shufflevector <2 x i1> %15, <2 x i1> poison, <2 x i32> zeroinitializer
+  %17 = insertelement <2 x i1> poison, i1 %or.cond21, i64 0
+  %18 = shufflevector <2 x i1> %17, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.asz = insertelement <2 x float> poison, float %7, i64 0
   %i.ata = shufflevector <2 x float> %i.asz, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.it
@@ -645,7 +644,7 @@ bb.iw:                                            ; preds = %bb.iv, %bb.iu
   br i1 %.not2937, label %.thread1633, label %bb.ix
 
 bb.ix:                                            ; preds = %bb.iw
-  br i1 %15, label %.thread1617, label %bb.iy
+  br i1 %11, label %.thread1617, label %bb.iy
 
 .thread1617:                                      ; preds = %bb.ix
   %i.bxm = load float, ptr %.401941, align 4, !tbaa !68
@@ -656,7 +655,7 @@ bb.ix:                                            ; preds = %bb.iw
   br label %.thread1633
 
 bb.iy:                                            ; preds = %bb.ix
-  br i1 %16, label %bb.iz, label %bb.ja
+  br i1 %or.cond21, label %bb.iz, label %bb.ja
 
 bb.iz:                                            ; preds = %bb.iy
   %i.bxr = load ptr, ptr %0, align 8, !tbaa !24
@@ -734,7 +733,7 @@ bb.jc:                                            ; preds = %bb.ja
   br i1 %.not2945, label %.thread1652, label %bb.jd
 
 bb.jd:                                            ; preds = %.lr.ph1898
-  br i1 %15, label %.thread1639, label %bb.je
+  br i1 %11, label %.thread1639, label %bb.je
 
 .thread1639:                                      ; preds = %bb.jd
   %i.byx = fadd fast <4 x float> %.312111891, %i.byr
@@ -744,7 +743,7 @@ bb.jd:                                            ; preds = %.lr.ph1898
   br label %.thread1652
 
 bb.je:                                            ; preds = %bb.jd
-  br i1 %16, label %bb.jf, label %bb.jg
+  br i1 %or.cond21, label %bb.jf, label %bb.jg
 
 bb.jf:                                            ; preds = %bb.je
   %i.bzb = fadd fast <4 x float> %.312111891, %i.byr
@@ -1052,7 +1051,7 @@ bb.kc:                                            ; preds = %bb.ka, %bb.kb, %bb.
   br i1 %.not2942, label %.thread1669, label %bb.kd
 
 bb.kd:                                            ; preds = %.lr.ph1913
-  br i1 %15, label %.thread1660, label %bb.ke
+  br i1 %11, label %.thread1660, label %bb.ke
 
 .thread1660:                                      ; preds = %bb.kd
   %i.cdn = fadd fast <4 x float> %.612141906, %i.cdk
@@ -1060,7 +1059,7 @@ bb.kd:                                            ; preds = %.lr.ph1913
   br label %.thread1669
 
 bb.ke:                                            ; preds = %bb.kd
-  br i1 %16, label %bb.kf, label %bb.kg
+  br i1 %or.cond21, label %bb.kf, label %bb.kg
 
 bb.kf:                                            ; preds = %bb.ke
   %i.cdp = fadd fast <4 x float> %.612141906, %i.cdk
@@ -1231,7 +1230,7 @@ bb.kv:                                            ; preds = %bb.kt, %bb.ku, %bb.
   br i1 %.not2939, label %.thread1688, label %bb.kw
 
 bb.kw:                                            ; preds = %.lr.ph1924
-  br i1 %15, label %.thread1675, label %bb.kx
+  br i1 %11, label %.thread1675, label %bb.kx
 
 .thread1675:                                      ; preds = %bb.kw
   %i.cft = fadd fast <2 x float> %i.cfp, %i.cdc
@@ -1275,8 +1274,8 @@ bb.lb:                                            ; preds = %bb.kz
   %.52 = phi ptr [ %i.cgj, %bb.lb ], [ %.501923, %bb.kz ], [ null, %.lr.ph1924 ], [ %i.cge, %bb.la ], [ %.501923, %.thread1675 ], [ %.501923, %bb.ky ] ; 2 uses
   %i.cgk = phi <2 x float> [ %i.cgi, %bb.lb ], [ %i.cfr, %bb.kz ], [ %i.cfr, %.lr.ph1924 ], [ %i.cgd, %bb.la ], [ %i.cfu, %.thread1675 ], [ %i.cfw, %bb.ky ]
   %i.cgl = phi <2 x float> [ %i.cgh, %bb.lb ], [ %i.cfp, %bb.kz ], [ %i.cfp, %.lr.ph1924 ], [ %i.cfz, %bb.la ], [ %i.cft, %.thread1675 ], [ %i.cfv, %bb.ky ]
-  %i.cgm = fmul fast <2 x float> %i.cgl, %18      ; 4 uses
-  %i.cgn = fmul fast <2 x float> %i.cgk, %18      ; 5 uses
+  %i.cgm = fmul fast <2 x float> %i.cgl, %14      ; 4 uses
+  %i.cgn = fmul fast <2 x float> %i.cgk, %14      ; 5 uses
   br i1 %i.ass, label %bb.lc, label %bb.lf
 
 bb.lc:                                            ; preds = %.thread1688
@@ -1359,9 +1358,9 @@ bb.li:                                            ; preds = %bb.lg, %bb.lh, %bb.
 
 bb.lj:                                            ; preds = %.lr.ph1935
   %i.chv = fadd fast <2 x float> %i.cht, %i.cfo
-  %i.chw = select <2 x i1> %19, <2 x float> %i.chv, <2 x float> %i.cht ; 3 uses
+  %i.chw = select <2 x i1> %16, <2 x float> %i.chv, <2 x float> %i.cht ; 3 uses
   %i.chx = fadd fast <2 x float> %i.chw, %i.byg
-  %i.chy = select <2 x i1> %20, <2 x float> %i.chx, <2 x float> %i.chw
+  %i.chy = select <2 x i1> %18, <2 x float> %i.chx, <2 x float> %i.chw
   switch i32 %2, label %bb.ll [
     i32 3, label %.thread1694
     i32 4, label %bb.lk

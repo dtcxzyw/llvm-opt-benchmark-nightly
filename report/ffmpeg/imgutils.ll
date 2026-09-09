@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [4 x i64], align 16               ; 5 uses
   %i.b = alloca [4 x i64], align 16               ; 8 uses
   %6 = alloca %struct.ImgUtils, align 8           ; 6 uses
-  %i.c = alloca [4 x i64], align 16               ; 7 uses
+  %i.c = alloca [4 x i64], align 16               ; 5 uses
   %i.d = alloca [4 x i64], align 16               ; 7 uses
   %i.e = tail call ptr @av_pix_fmt_desc_get(i32 noundef %4) #12 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
@@ -255,38 +255,23 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.x, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.d
-  %7 = add i32 %5, -1                             ; 4 uses
-  %i.y = sub i32 0, %5                            ; 4 uses
-  %8 = load i32, ptr %1, align 4, !tbaa !13
-  %9 = add i32 %7, %8
-  %10 = and i32 %9, %i.y                          ; 2 uses
-  store i32 %10, ptr %1, align 4, !tbaa !13
-  %11 = sext i32 %10 to i64
-  store i64 %11, ptr %i.c, align 16, !tbaa !20
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %13 = load i32, ptr %12, align 4, !tbaa !13
-  %i.z = add i32 %7, %13
-  %14 = and i32 %i.z, %i.y                        ; 2 uses
-  store i32 %14, ptr %12, align 4, !tbaa !13
-  %15 = sext i32 %14 to i64
-  %16 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store i64 %15, ptr %16, align 8, !tbaa !20
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %18 = load i32, ptr %17, align 4, !tbaa !13
-  %19 = add i32 %7, %18
-  %20 = and i32 %19, %i.y                         ; 2 uses
-  store i32 %20, ptr %17, align 4, !tbaa !13
-  %21 = sext i32 %20 to i64
-  %22 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store i64 %21, ptr %22, align 16, !tbaa !20
-  %23 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %24 = load i32, ptr %23, align 4, !tbaa !13
-  %25 = add i32 %7, %24
-  %26 = and i32 %25, %i.y                         ; 2 uses
-  store i32 %26, ptr %23, align 4, !tbaa !13
-  %27 = sext i32 %26 to i64
-  %28 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  store i64 %27, ptr %28, align 8, !tbaa !20
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.y = sub i32 0, %5
+  %i.z = add i32 %5, -1
+  %8 = load <4 x i32>, ptr %1, align 4, !tbaa !13
+  %9 = insertelement <4 x i32> poison, i32 %i.z, i64 0
+  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
+  %11 = add <4 x i32> %10, %8
+  %12 = insertelement <4 x i32> poison, i32 %i.y, i64 0
+  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> zeroinitializer
+  %14 = and <4 x i32> %11, %13                    ; 3 uses
+  %15 = shufflevector <4 x i32> %14, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %16 = sext <2 x i32> %15 to <2 x i64>
+  store <2 x i64> %16, ptr %i.c, align 16, !tbaa !20
+  store <4 x i32> %14, ptr %1, align 4, !tbaa !13
+  %17 = shufflevector <4 x i32> %14, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
+  %18 = sext <2 x i32> %17 to <2 x i64>
+  store <2 x i64> %18, ptr %7, align 16, !tbaa !20
   %i.aa = call i32 @av_image_fill_plane_sizes(ptr noundef nonnull %i.d, i32 noundef %4, i32 noundef %3, ptr noundef nonnull %i.c) ; 2 uses
   %i.ab = icmp slt i32 %i.aa, 0
   br i1 %i.ab, label %.loopexit, label %bb.e
@@ -689,14 +674,15 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.q, label %bb.i, label %.preheader
 
 .preheader:                                       ; preds = %bb.c
-  %8 = insertelement <2 x i32> <i32 poison, i32 0>, i32 %6, i64 0
-  %9 = insertelement <2 x i32> <i32 1, i32 poison>, i32 %6, i64 1
-  %10 = sub <2 x i32> %8, %9                      ; 2 uses
-  %11 = load <4 x i32>, ptr %1, align 4, !tbaa !13
-  %i.r = shufflevector <2 x i32> %10, <2 x i32> poison, <4 x i32> zeroinitializer
-  %i.s = add <4 x i32> %i.r, %11
-  %12 = shufflevector <2 x i32> %10, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.t = and <4 x i32> %i.s, %12
+  %8 = sub i32 0, %6
+  %9 = add i32 %6, -1
+  %10 = load <4 x i32>, ptr %1, align 4, !tbaa !13
+  %11 = insertelement <4 x i32> poison, i32 %9, i64 0
+  %i.r = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.s = add <4 x i32> %i.r, %10
+  %12 = insertelement <4 x i32> poison, i32 %8, i64 0
+  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.t = and <4 x i32> %i.s, %13
   store <4 x i32> %i.t, ptr %1, align 4, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
@@ -835,14 +821,15 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.s, label %.loopexit, label %.preheader34
 
 .preheader34:                                     ; preds = %bb.d
-  %5 = insertelement <2 x i32> <i32 poison, i32 0>, i32 %3, i64 0
-  %6 = insertelement <2 x i32> <i32 1, i32 poison>, i32 %3, i64 1
-  %7 = sub <2 x i32> %5, %6                       ; 2 uses
-  %8 = load <4 x i32>, ptr %i.a, align 16, !tbaa !13
-  %i.t = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> zeroinitializer
-  %i.u = add <4 x i32> %i.t, %8
-  %9 = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.v = and <4 x i32> %i.u, %9
+  %5 = sub i32 0, %3
+  %6 = add i32 %3, -1
+  %7 = load <4 x i32>, ptr %i.a, align 16, !tbaa !13
+  %8 = insertelement <4 x i32> poison, i32 %6, i64 0
+  %i.t = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.u = add <4 x i32> %i.t, %7
+  %9 = insertelement <4 x i32> poison, i32 %5, i64 0
+  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.v = and <4 x i32> %i.u, %10
   %i.w = sext <4 x i32> %i.v to <4 x i64>
   store <4 x i64> %i.w, ptr %i.b, align 16, !tbaa !20
   %i.x = call i32 @av_image_fill_plane_sizes(ptr noundef nonnull %i.c, i32 noundef %0, i32 noundef %2, ptr noundef nonnull %i.b) ; 2 uses

@@ -205,7 +205,7 @@ bb.a:
   %i.e = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i, float %.sroa.0.0.vec.extract.i, float %i.d)
   %i.f = call noundef float @llvm.fmuladd.f32(float %.sroa.227.0.copyload, float %.sroa.227.0.copyload, float %i.e)
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.f)
-  %i.g = fdiv float 1.000000e+00, %sqrt.i.i       ; 2 uses
+  %i.g = fdiv float 1.000000e+00, %sqrt.i.i       ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 52
   %i.i = load float, ptr %i.h, align 4, !tbaa !19
   %.sroa.020.0.copyload = load <2 x float>, ptr %2, align 4 ; 4 uses
@@ -217,24 +217,21 @@ bb.a:
   %i.k = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i, float %.sroa.0.0.vec.extract.i35, float %i.j)
   %i.l = call noundef float @llvm.fmuladd.f32(float %.sroa.227.0.copyload, float %.sroa.221.0.copyload, float %i.k)
   %i.m = fmul float %i.g, %i.l
-  %5 = insertelement <2 x float> poison, float %i.i, i64 0
-  %6 = insertelement <2 x float> %5, float %i.m, i64 1
-  %i.n = insertelement <2 x float> poison, float %i.g, i64 0
+  %5 = fmul float %i.g, %i.m                      ; 2 uses
+  %6 = fmul float %i.i, %i.g                      ; 2 uses
+  %i.n = insertelement <2 x float> poison, float %5, i64 0
   %i.o = shufflevector <2 x float> %i.n, <2 x float> poison, <2 x i32> zeroinitializer
-  %7 = fmul <2 x float> %6, %i.o                  ; 4 uses
-  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.p = fmul <2 x float> %8, %.sroa.026.0.copyload
-  %9 = extractelement <2 x float> %7, i64 1
-  %i.q = fmul float %.sroa.227.0.copyload, %9
+  %i.p = fmul <2 x float> %i.o, %.sroa.026.0.copyload
+  %i.q = fmul float %.sroa.227.0.copyload, %5
   %i.r = fsub <2 x float> %.sroa.020.0.copyload, %i.p
   %i.s = fsub float %.sroa.221.0.copyload, %i.q
-  %10 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
-  %11 = fmul <2 x float> %10, %i.r                ; 2 uses
-  %12 = extractelement <2 x float> %7, i64 0
-  %i.t = fmul float %12, %i.s                     ; 2 uses
-  %i.u = fsub <2 x float> %.sroa.020.0.copyload, %11
+  %7 = insertelement <2 x float> poison, float %6, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = fmul <2 x float> %8, %i.r                  ; 2 uses
+  %i.t = fmul float %6, %i.s                      ; 2 uses
+  %i.u = fsub <2 x float> %.sroa.020.0.copyload, %9
   %i.v = fsub float %.sroa.221.0.copyload, %i.t
-  store <2 x float> %11, ptr %0, align 4
+  store <2 x float> %9, ptr %0, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %i.t, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !23
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 12

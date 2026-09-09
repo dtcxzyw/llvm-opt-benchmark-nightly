@@ -204,22 +204,21 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.mc = fmul nsz <4 x double> %i.jo, %i.mb
   %i.md = shufflevector <2 x double> %i.ma, <2 x double> poison, <4 x i32> zeroinitializer
   %i.me = tail call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.jr, <4 x double> %i.md, <4 x double> %i.mc) ; 3 uses
-  %4 = insertelement <2 x float> poison, float %i.ls, i64 0
-  %5 = insertelement <2 x float> %4, float %i.lu, i64 1
-  %6 = fpext <2 x float> %5 to <2 x double>       ; 4 uses
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %4 = fpext nsz float %i.lu to double            ; 3 uses
+  %5 = fpext nsz float %i.ls to double            ; 3 uses
+  %6 = insertelement <2 x double> poison, double %4, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.mf = fmul nsz <2 x double> %i.js, %7
-  %8 = extractelement <2 x double> %6, i64 1      ; 2 uses
-  %9 = fmul nsz double %i.cz, %8
-  %i.mg = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = fmul nsz double %i.cz, %4
+  %9 = insertelement <2 x double> poison, double %5, i64 0
+  %i.mg = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
   %i.mh = shufflevector <4 x double> %i.me, <4 x double> poison, <2 x i32> <i32 0, i32 1>
   %i.mi = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jt, <2 x double> %i.mg, <2 x double> %i.mh)
   %i.mj = fadd nsz <2 x double> %i.mi, %i.mf
   %i.mk = fptrunc <2 x double> %i.mj to <2 x float> ; 2 uses
-  %10 = extractelement <4 x double> %i.me, i64 2
-  %i.ml = extractelement <2 x double> %6, i64 0   ; 2 uses
-  %i.mm = tail call nsz double @llvm.fmuladd.f64(double %i.cy, double %i.ml, double %10)
-  %i.mn = fadd nsz double %i.mm, %9
+  %i.ml = extractelement <4 x double> %i.me, i64 2
+  %i.mm = tail call nsz double @llvm.fmuladd.f64(double %i.cy, double %5, double %i.ml)
+  %i.mn = fadd nsz double %i.mm, %8
   %i.mo = fptrunc nsz double %i.mn to float
   %i.mp = extractelement <2 x float> %i.mk, i64 0
   store float %i.mp, ptr %i.lv, align 4, !tbaa !83
@@ -227,8 +226,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store float %i.mq, ptr %i.lw, align 4, !tbaa !83
   store float %i.mo, ptr %i.lx, align 4, !tbaa !83
   %i.mr = extractelement <4 x double> %i.me, i64 3
-  %i.ms = tail call nsz double @llvm.fmuladd.f64(double %i.de, double %i.ml, double %i.mr)
-  %i.mt = tail call nsz double @llvm.fmuladd.f64(double %i.df, double %8, double %i.ms)
+  %i.ms = tail call nsz double @llvm.fmuladd.f64(double %i.de, double %5, double %i.mr)
+  %i.mt = tail call nsz double @llvm.fmuladd.f64(double %i.df, double %4, double %i.ms)
   %i.mu = fptrunc nsz double %i.mt to float
   %i.mv = getelementptr inbounds nuw [4 x i8], ptr %.0137.i11, i64 %indvars.iv
   store float %i.mu, ptr %i.mv, align 4, !tbaa !83

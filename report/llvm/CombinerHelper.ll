@@ -205,97 +205,47 @@ bb.k:                                             ; preds = %_ZN4llvm11SmallVect
   %i.cp = load ptr, ptr %i.a, align 8, !tbaa !247
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 68
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !206 ; 2 uses
-  %i.cs = load ptr, ptr %6, align 8, !tbaa !55    ; 9 uses
+  %i.cs = load ptr, ptr %6, align 8, !tbaa !55    ; 5 uses
   %i.ct = zext i32 %i.co to i64                   ; 3 uses
   %.not.i = icmp eq i32 %i.co, 0
   br i1 %.not.i, label %_ZL11commuteMaskN4llvm15MutableArrayRefIiEEj.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.k
   %i.cu = sub nsw i32 0, %i.bd                    ; 2 uses
-  %min.iters.check = icmp ult i32 %i.co, 8
+  %min.iters.check = icmp ult i32 %i.co, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader84, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %i.ct, 4294967288              ; 3 uses
+  %n.vec = and i64 %i.ct, 4294967292              ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.cu, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert67 = insertelement <4 x i32> poison, i32 %i.bd, i64 0
-  %broadcast.splat68 = shufflevector <4 x i32> %broadcast.splatinsert67, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
+  %broadcast.splat68 = shufflevector <4 x i32> %broadcast.splatinsert67, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %pred.store.continue83, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue83 ] ; 9 uses
-  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.cv, i64 16
-  %wide.load = load <4 x i32>, ptr %i.cv, align 4, !tbaa !217 ; 3 uses
-  %wide.load69 = load <4 x i32>, ptr %8, align 4, !tbaa !217 ; 3 uses
-  %9 = icmp sgt <4 x i32> %wide.load, splat (i32 -1) ; 4 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue83 ] ; 5 uses
+  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index ; 2 uses
+  %wide.load69 = load <4 x i32>, ptr %i.cv, align 4, !tbaa !217 ; 3 uses
   %i.cw = icmp sgt <4 x i32> %wide.load69, splat (i32 -1) ; 4 uses
-  %10 = icmp slt <4 x i32> %wide.load, %broadcast.splat68
   %i.cx = icmp slt <4 x i32> %wide.load69, %broadcast.splat68
-  %11 = select <4 x i1> %10, <4 x i32> %broadcast.splat68, <4 x i32> %broadcast.splat
   %i.cy = select <4 x i1> %i.cx, <4 x i32> %broadcast.splat68, <4 x i32> %broadcast.splat
-  %12 = add <4 x i32> %11, %wide.load             ; 4 uses
   %i.cz = add <4 x i32> %i.cy, %wide.load69       ; 4 uses
-  %i.da = extractelement <4 x i1> %9, i64 0
-  br i1 %i.da, label %pred.store.if, label %pred.store.continue
+  %i.da = extractelement <4 x i1> %i.cw, i64 0
+  br i1 %i.da, label %pred.store.if76, label %pred.store.continue77
 
-pred.store.if:                                    ; preds = %vector.body
-  %13 = extractelement <4 x i32> %12, i64 0
-  store i32 %13, ptr %i.cv, align 4, !tbaa !217
-  br label %pred.store.continue
-
-pred.store.continue:                              ; preds = %pred.store.if, %vector.body
-  %14 = extractelement <4 x i1> %9, i64 1
-  br i1 %14, label %pred.store.if70, label %pred.store.continue71
-
-pred.store.if70:                                  ; preds = %pred.store.continue
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 4
-  %17 = extractelement <4 x i32> %12, i64 1
-  store i32 %17, ptr %16, align 4, !tbaa !217
-  br label %pred.store.continue71
-
-pred.store.continue71:                            ; preds = %pred.store.if70, %pred.store.continue
-  %18 = extractelement <4 x i1> %9, i64 2
-  br i1 %18, label %pred.store.if72, label %pred.store.continue73
-
-pred.store.if72:                                  ; preds = %pred.store.continue71
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 8
-  %21 = extractelement <4 x i32> %12, i64 2
-  store i32 %21, ptr %20, align 4, !tbaa !217
-  br label %pred.store.continue73
-
-pred.store.continue73:                            ; preds = %pred.store.if72, %pred.store.continue71
-  %22 = extractelement <4 x i1> %9, i64 3
-  br i1 %22, label %pred.store.if74, label %pred.store.continue75
-
-pred.store.if74:                                  ; preds = %pred.store.continue73
-  %23 = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index
-  %24 = getelementptr inbounds nuw i8, ptr %23, i64 12
-  %25 = extractelement <4 x i32> %12, i64 3
-  store i32 %25, ptr %24, align 4, !tbaa !217
-  br label %pred.store.continue75
-
-pred.store.continue75:                            ; preds = %pred.store.if74, %pred.store.continue73
-  %26 = extractelement <4 x i1> %i.cw, i64 0
-  br i1 %26, label %pred.store.if76, label %pred.store.continue77
-
-pred.store.if76:                                  ; preds = %pred.store.continue75
-  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 16
+pred.store.if76:                                  ; preds = %vector.body
   %i.db = extractelement <4 x i32> %i.cz, i64 0
-  store i32 %i.db, ptr %28, align 4, !tbaa !217
+  store i32 %i.db, ptr %i.cv, align 4, !tbaa !217
   br label %pred.store.continue77
 
-pred.store.continue77:                            ; preds = %pred.store.if76, %pred.store.continue75
+pred.store.continue77:                            ; preds = %pred.store.if76, %vector.body
   %i.dc = extractelement <4 x i1> %i.cw, i64 1
   br i1 %i.dc, label %pred.store.if78, label %pred.store.continue79
 
 pred.store.if78:                                  ; preds = %pred.store.continue77
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index
-  %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 20
+  %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 4
   %i.df = extractelement <4 x i32> %i.cz, i64 1
   store i32 %i.df, ptr %i.de, align 4, !tbaa !217
   br label %pred.store.continue79
@@ -306,7 +256,7 @@ pred.store.continue79:                            ; preds = %pred.store.if78, %p
 
 pred.store.if80:                                  ; preds = %pred.store.continue79
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index
-  %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 24
+  %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 8
   %i.dj = extractelement <4 x i32> %i.cz, i64 2
   store i32 %i.dj, ptr %i.di, align 4, !tbaa !217
   br label %pred.store.continue81
@@ -317,13 +267,13 @@ pred.store.continue81:                            ; preds = %pred.store.if80, %p
 
 pred.store.if82:                                  ; preds = %pred.store.continue81
   %i.dl = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %index
-  %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 28
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 12
   %i.dn = extractelement <4 x i32> %i.cz, i64 3
   store i32 %i.dn, ptr %i.dm, align 4, !tbaa !217
   br label %pred.store.continue83
 
 pred.store.continue83:                            ; preds = %pred.store.if82, %pred.store.continue81
-  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.do = icmp eq i64 %index.next, %n.vec
   br i1 %i.do, label %middle.block, label %vector.body, !llvm.loop !1295
 

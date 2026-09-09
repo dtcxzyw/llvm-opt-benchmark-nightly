@@ -205,8 +205,6 @@ bb.s:                                             ; preds = %bb.r
   %i.gi = getelementptr inbounds nuw i8, ptr %i.fz, i64 8
   %i.gj = load double, ptr %i.gi, align 8, !tbaa !23
   %i.gk = fcmp oeq double %i.gh, %i.gj
-  %3 = insertelement <2 x double> poison, double %i.gd, i64 0
-  %4 = insertelement <2 x double> %3, double %i.gh, i64 1
   br i1 %i.gk, label %select.unfold, label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
@@ -221,20 +219,21 @@ bb.u:                                             ; preds = %bb.t
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gc, i64 8
   %i.gr = load double, ptr %i.gq, align 8, !tbaa !23
   %i.gs = fcmp oeq double %i.gp, %i.gr
-  %5 = insertelement <2 x double> poison, double %i.gl, i64 0
-  %6 = insertelement <2 x double> %5, double %i.gp, i64 1
   br i1 %i.gs, label %select.unfold, label %.sink.split
 
 select.unfold:                                    ; preds = %bb.u, %bb.s
-  %7 = phi <2 x double> [ %4, %bb.s ], [ %6, %bb.u ] ; 2 uses
+  %3 = phi double [ %i.gh, %bb.s ], [ %i.gp, %bb.u ]
+  %4 = phi double [ %i.gd, %bb.s ], [ %i.gl, %bb.u ]
   %i.gt = load <2 x double>, ptr %.0206, align 8, !tbaa !23 ; 2 uses
   %i.gu = load <2 x double>, ptr %.0205, align 8, !tbaa !23 ; 2 uses
   %i.gv = shufflevector <2 x double> %i.gt, <2 x double> %i.gu, <2 x i32> <i32 0, i32 2>
-  %i.gw = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x double> poison, double %4, i64 0
+  %i.gw = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gx = fsub <2 x double> %i.gv, %i.gw          ; 2 uses
   %i.gy = shufflevector <2 x double> %i.gt, <2 x double> %i.gu, <2 x i32> <i32 1, i32 3>
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.gz = fsub <2 x double> %i.gy, %8             ; 2 uses
+  %6 = insertelement <2 x double> poison, double %3, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.gz = fsub <2 x double> %i.gy, %7             ; 2 uses
   %i.ha = fmul <2 x double> %i.gz, %i.gz
   %i.hb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gx, <2 x double> %i.gx, <2 x double> %i.ha) ; 2 uses
   %i.hc = extractelement <2 x double> %i.hb, i64 1 ; 2 uses

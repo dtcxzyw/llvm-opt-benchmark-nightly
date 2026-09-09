@@ -204,7 +204,7 @@ bb.a:
   %wide.masked.gather = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep, <4 x i1> %i.b, <4 x double> poison), !tbaa !84 ; 2 uses
   %i.c = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather, %wide.masked.gather
   %i.d = select reassoc nsz arcp contract afn <4 x i1> %i.b, <4 x double> %i.c, <4 x double> zeroinitializer
-  %i.e = tail call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double 0.000000e+00, <4 x double> %i.d) ; 2 uses
+  %i.e = tail call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double 0.000000e+00, <4 x double> %i.d)
   %trip.count.minus.1296 = add nsw i64 %wide.trip.count, -1
   %broadcast.splatinsert297 = insertelement <4 x i64> poison, i64 %trip.count.minus.1296, i64 0
   %broadcast.splat298 = shufflevector <4 x i64> %broadcast.splatinsert297, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -237,7 +237,7 @@ bb.a:
   %wide.masked.gather340 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep337, <4 x i1> %i.n, <4 x double> poison), !tbaa !84
   %i.o = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather340, %wide.masked.gather339
   %i.p = select reassoc nsz arcp contract afn <4 x i1> %i.n, <4 x double> %i.o, <4 x double> zeroinitializer
-  %i.q = tail call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double 0.000000e+00, <4 x double> %i.p) ; 2 uses
+  %i.q = tail call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double 0.000000e+00, <4 x double> %i.p)
   %trip.count.minus.1347 = add nsw i64 %wide.trip.count, -1
   %broadcast.splatinsert348 = insertelement <4 x i64> poison, i64 %trip.count.minus.1347, i64 0
   %broadcast.splat349 = shufflevector <4 x i64> %broadcast.splatinsert348, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -293,8 +293,6 @@ bb.a:
   %i.ai = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather425, %wide.masked.gather425
   %i.aj = select reassoc nsz arcp contract afn <4 x i1> %i.ah, <4 x double> %i.ai, <4 x double> zeroinitializer
   %i.ak = tail call reassoc nsz arcp contract afn double @llvm.vector.reduce.fadd.v4f64(double 0.000000e+00, <4 x double> %i.aj)
-  %4 = insertelement <2 x double> poison, double %i.q, i64 0
-  %5 = insertelement <2 x double> %4, double %i.e, i64 1
   br label %.preheader71
 
 .preheader71:                                     ; preds = %.preheader74.us.preheader, %bb.a
@@ -303,27 +301,26 @@ bb.a:
   %.sroa.184.0 = phi nsz double [ 0.000000e+00, %bb.a ], [ %i.ac, %.preheader74.us.preheader ] ; 4 uses
   %.sroa.126.0 = phi nsz double [ 0.000000e+00, %bb.a ], [ %i.y, %.preheader74.us.preheader ]
   %.sroa.109.0 = phi nsz double [ 0.000000e+00, %bb.a ], [ %i.u, %.preheader74.us.preheader ]
-  %.sroa.93.0 = phi nsz double [ 0.000000e+00, %bb.a ], [ %i.q, %.preheader74.us.preheader ] ; 3 uses
+  %.sroa.93.0 = phi nsz double [ 0.000000e+00, %bb.a ], [ %i.q, %.preheader74.us.preheader ] ; 4 uses
   %.sroa.35.0 = phi nsz double [ 0.000000e+00, %bb.a ], [ %i.m, %.preheader74.us.preheader ]
   %.sroa.19.0 = phi nsz double [ 0.000000e+00, %bb.a ], [ %i.i, %.preheader74.us.preheader ]
   %.sroa.0.0 = phi nsz double [ 0.000000e+00, %bb.a ], [ %i.e, %.preheader74.us.preheader ] ; 2 uses
-  %6 = phi <2 x double> [ zeroinitializer, %bb.a ], [ %5, %.preheader74.us.preheader ] ; 2 uses
   %i.al = tail call reassoc nsz arcp contract afn double @llvm.fabs.f64(double %.sroa.0.0)
   %i.am = fcmp reassoc nsz arcp contract afn ogt double %i.al, f0x3EE4F8B580000000 ; 2 uses
   %i.an = insertelement <2 x double> <double poison, double 0.000000e+00>, double %.sroa.35.0, i64 0 ; 2 uses
   %i.ao = insertelement <2 x double> <double 1.000000e+00, double poison>, double %.sroa.19.0, i64 1 ; 2 uses
   %i.ap = insertelement <2 x double> poison, double %.sroa.0.0, i64 0
-  %i.aq = shufflevector <2 x double> %i.ap, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.aq = shufflevector <2 x double> %i.ap, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ar = fdiv reassoc nsz arcp contract afn <2 x double> %i.ao, %i.aq
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.as = fdiv reassoc nsz arcp contract afn <2 x double> %i.an, %7
+  %i.as = fdiv reassoc nsz arcp contract afn <2 x double> %i.an, %i.aq
   %i.at = select i1 %i.am, <2 x double> %i.as, <2 x double> %i.an ; 3 uses
   %i.au = select i1 %i.am, <2 x double> %i.ar, <2 x double> %i.ao ; 2 uses
   %i.av = extractelement <2 x double> %i.au, i64 1 ; 6 uses
   %i.aw = extractelement <2 x double> %i.at, i64 1 ; 4 uses
   %i.ax = fmul reassoc nsz arcp contract afn double %i.av, %.sroa.93.0
   %i.ay = fsub reassoc nsz arcp contract afn double %.sroa.109.0, %i.ax ; 4 uses
-  %i.az = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x double> poison, double %.sroa.93.0, i64 0
+  %i.az = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ba = fmul reassoc nsz arcp contract afn <2 x double> %i.at, %i.az
   %i.bb = fneg reassoc nsz arcp contract afn double %.sroa.93.0
   %i.bc = extractelement <2 x double> %i.au, i64 0 ; 3 uses

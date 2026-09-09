@@ -202,8 +202,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
-  %i.d = call noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef %0, i32 noundef 1, ptr noundef nonnull %i.a) ; 2 uses
-  %i.e = call noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef %0, i32 noundef 2, ptr noundef nonnull %i.b) ; 2 uses
+  %i.d = call noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef %0, i32 noundef 1, ptr noundef nonnull %i.a)
+  %i.e = call noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef %0, i32 noundef 2, ptr noundef nonnull %i.b)
   %i.f = call noundef double @_Z13lua_tonumberxP9lua_StateiPi(ptr noundef %0, i32 noundef 3, ptr noundef nonnull %i.c) ; 2 uses
   %i.g = load i32, ptr %i.a, align 4, !tbaa !23
   %.not = icmp eq i32 %i.g, 0
@@ -244,35 +244,30 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.f, %bb.g
   %i.n = load i8, ptr @_ZN5FFlag21FixMathNoisePrecisionE, align 8, !tbaa !28, !range !31, !noundef !32
   %i.o = trunc nuw i8 %i.n to i1
+  %1 = insertelement <2 x double> poison, double %i.d, i64 0
+  %2 = insertelement <2 x double> %1, double %i.e, i64 1 ; 2 uses
   br i1 %i.o, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %1 = frem double %i.d, 2.560000e+02
-  %2 = frem double %i.e, 2.560000e+02
+  %3 = frem <2 x double> %2, splat (double 2.560000e+02)
   %i.p = frem double %i.f, 2.560000e+02
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.017 = phi double [ %2, %bb.j ], [ %i.e, %bb.i ]
   %.016 = phi double [ %i.p, %bb.j ], [ %i.f, %bb.i ]
-  %.0 = phi double [ %1, %bb.j ], [ %i.d, %bb.i ]
-  %3 = insertelement <2 x double> poison, double %.0, i64 0
-  %4 = insertelement <2 x double> %3, double %.017, i64 1
-  %i.q = fptrunc <2 x double> %4 to <2 x float>   ; 3 uses
+  %4 = phi <2 x double> [ %3, %bb.j ], [ %2, %bb.i ]
+  %i.q = fptrunc <2 x double> %4 to <2 x float>   ; 2 uses
   %i.r = fptrunc double %.016 to float            ; 2 uses
-  %5 = extractelement <2 x float> %i.q, i64 1
-  %i.s = call float @llvm.floor.f32(float %5)     ; 2 uses
-  %i.t = extractelement <2 x float> %i.q, i64 0
-  %6 = call float @llvm.floor.f32(float %i.t)     ; 2 uses
-  %7 = call float @llvm.floor.f32(float %i.r)     ; 2 uses
-  %i.u = fptosi float %6 to i32
+  %5 = call <2 x float> @llvm.floor.v2f32(<2 x float> %i.q) ; 3 uses
+  %i.s = call float @llvm.floor.f32(float %i.r)   ; 2 uses
+  %i.t = extractelement <2 x float> %5, i64 0
+  %i.u = fptosi float %i.t to i32
   %i.v = and i32 %i.u, 255
-  %8 = fptosi float %i.s to i32
-  %i.w = fptosi float %7 to i32
-  %9 = insertelement <2 x float> poison, float %6, i64 0
-  %10 = insertelement <2 x float> %9, float %i.s, i64 1
-  %i.x = fsub <2 x float> %i.q, %10               ; 8 uses
-  %i.y = fsub float %i.r, %7                      ; 6 uses
+  %6 = extractelement <2 x float> %5, i64 1
+  %i.w = fptosi float %6 to i32
+  %7 = fptosi float %i.s to i32
+  %i.x = fsub <2 x float> %i.q, %5                ; 8 uses
+  %i.y = fsub float %i.r, %i.s                    ; 6 uses
   %i.z = fmul <2 x float> %i.x, %i.x
   %i.aa = fmul <2 x float> %i.x, %i.z
   %i.ab = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.x, <2 x float> splat (float 6.000000e+00), <2 x float> splat (float -1.500000e+01))
@@ -286,12 +281,12 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.aj = zext nneg i32 %i.v to i64
   %i.ak = getelementptr inbounds nuw i8, ptr @_ZL11kPerlinHash, i64 %i.aj ; 2 uses
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !33
-  %.tr.i = trunc i32 %8 to i8                     ; 2 uses
+  %.tr.i = trunc i32 %i.w to i8                   ; 2 uses
   %.narrow.i = add i8 %i.al, %.tr.i
   %i.am = zext i8 %.narrow.i to i64
   %i.an = getelementptr inbounds nuw i8, ptr @_ZL11kPerlinHash, i64 %i.am ; 2 uses
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !33
-  %.tr83.i = trunc i32 %i.w to i8                 ; 4 uses
+  %.tr83.i = trunc i32 %7 to i8                   ; 4 uses
   %.narrow84.i = add i8 %i.ao, %.tr83.i
   %i.ap = zext i8 %.narrow84.i to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 1
@@ -654,6 +649,9 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshr.i32(i32, i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.floor.v2f32(<2 x float>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4

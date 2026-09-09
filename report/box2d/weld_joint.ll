@@ -202,35 +202,35 @@ bb.a:
 define hidden void @b2PrepareWeldJoint(ptr nofree noundef captures(none) initializes((48, 64), (144, 196)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !101
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !100
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !102
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !101
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !103  ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !102  ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 1920
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !104  ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !103  ; 2 uses
   %i.i = sext i32 %i.b to i64
   %i.j = getelementptr inbounds [104 x i8], ptr %i.h, i64 %i.i ; 2 uses
   %i.k = sext i32 %i.d to i64
   %i.l = getelementptr inbounds [104 x i8], ptr %i.h, i64 %i.k ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 1960
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !105  ; 2 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !104  ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %i.p = load i32, ptr %i.o, align 8, !tbaa !107  ; 2 uses
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !106  ; 2 uses
   %i.q = sext i32 %i.p to i64
   %i.r = getelementptr inbounds [88 x i8], ptr %i.n, i64 %i.q
   %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %i.t = load i32, ptr %i.s, align 8, !tbaa !107  ; 2 uses
+  %i.t = load i32, ptr %i.s, align 8, !tbaa !106  ; 2 uses
   %i.u = sext i32 %i.t to i64
   %i.v = getelementptr inbounds [88 x i8], ptr %i.n, i64 %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 12
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !108  ; 2 uses
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !107  ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.l, i64 12
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !108  ; 2 uses
-  %i.aa = load ptr, ptr %i.r, align 8, !tbaa !118
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !107  ; 2 uses
+  %i.aa = load ptr, ptr %i.r, align 8, !tbaa !117
   %i.ab = sext i32 %i.x to i64
   %i.ac = getelementptr inbounds [96 x i8], ptr %i.aa, i64 %i.ab ; 5 uses
-  %i.ad = load ptr, ptr %i.v, align 8, !tbaa !118
+  %i.ad = load ptr, ptr %i.v, align 8, !tbaa !117
   %i.ae = sext i32 %i.z to i64
   %i.af = getelementptr inbounds [96 x i8], ptr %i.ad, i64 %i.ae ; 5 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 60
@@ -239,9 +239,9 @@ bb.a:
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 64
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.al = load <2 x float>, ptr %i.ag, align 4, !tbaa !87
-  %i.am = load float, ptr %i.ah, align 4, !tbaa !120
+  %i.am = load float, ptr %i.ah, align 4, !tbaa !119
   %i.an = load <2 x float>, ptr %i.ai, align 4, !tbaa !87
-  %i.ao = load float, ptr %i.aj, align 4, !tbaa !120
+  %i.ao = load float, ptr %i.aj, align 4, !tbaa !119
   %i.ap = shufflevector <2 x float> %i.al, <2 x float> %i.an, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x float> %i.ap, ptr %i.ak, align 4, !tbaa !87
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 92
@@ -333,14 +333,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 72
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.do, ptr noundef nonnull align 4 dereferenceable(12) %i.dp, i64 12, i1 false), !tbaa.struct !121
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.do, ptr noundef nonnull align 4 dereferenceable(12) %i.dp, i64 12, i1 false), !tbaa.struct !120
   br label %bb.c
 
 b2MakeSoft.exit:                                  ; preds = %bb.a
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.dr = load float, ptr %i.dq, align 4, !tbaa !122
+  %i.dr = load float, ptr %i.dq, align 4, !tbaa !121
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.dt = load float, ptr %i.ds, align 8, !tbaa !123
+  %i.dt = load float, ptr %i.ds, align 8, !tbaa !122
   %i.du = fmul float %i.dm, f0x40C90FDB           ; 2 uses
   %i.dv = fmul float %i.dr, 2.000000e+00
   %i.dw = fmul float %i.du, %i.dt                 ; 2 uses
@@ -366,14 +366,14 @@ bb.c:                                             ; preds = %b2MakeSoft.exit, %b
 
 bb.d:                                             ; preds = %bb.c
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 72
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.eg, ptr noundef nonnull align 4 dereferenceable(12) %i.eh, i64 12, i1 false), !tbaa.struct !121
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.eg, ptr noundef nonnull align 4 dereferenceable(12) %i.eh, i64 12, i1 false), !tbaa.struct !120
   br label %bb.e
 
 b2MakeSoft.exit125:                               ; preds = %bb.c
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.ej = load float, ptr %i.ei, align 4, !tbaa !124
+  %i.ej = load float, ptr %i.ei, align 4, !tbaa !123
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.el = load float, ptr %i.ek, align 8, !tbaa !123
+  %i.el = load float, ptr %i.ek, align 8, !tbaa !122
   %i.em = fmul float %i.ee, f0x40C90FDB           ; 2 uses
   %i.en = fmul float %i.ej, 2.000000e+00
   %i.eo = fmul float %i.em, %i.el                 ; 2 uses
@@ -392,7 +392,7 @@ b2MakeSoft.exit125:                               ; preds = %bb.c
 
 bb.e:                                             ; preds = %b2MakeSoft.exit125, %bb.d
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 188
-  %i.ew = load i8, ptr %i.ev, align 4, !tbaa !125, !range !126, !noundef !127
+  %i.ew = load i8, ptr %i.ev, align 4, !tbaa !124, !range !125, !noundef !126
   %i.ex = icmp eq i8 %i.ew, 0
   br i1 %i.ex, label %bb.f, label %bb.g
 
@@ -412,9 +412,9 @@ define hidden void @b2WarmStartWeldJoint(ptr nofree noundef readonly captures(no
 bb.a:
   %2 = alloca %struct.b2BodyState, align 4        ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.b = load float, ptr %i.a, align 4, !tbaa !95
+  %i.b = load float, ptr %i.a, align 4, !tbaa !127
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.d = load float, ptr %i.c, align 4, !tbaa !96
+  %i.d = load float, ptr %i.c, align 4, !tbaa !95
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.f = load float, ptr %i.e, align 4, !tbaa !128
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 60
@@ -428,7 +428,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !97
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !96
   %i.n = sext i32 %i.j to i64
   %i.o = getelementptr inbounds [32 x i8], ptr %i.m, i64 %i.n
   br label %bb.c
@@ -442,7 +442,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !97
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !96
   %i.v = sext i32 %i.r to i64
   %i.w = getelementptr inbounds [32 x i8], ptr %i.u, i64 %i.v
   br label %bb.e
@@ -462,7 +462,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.ai = fadd <2 x float> %i.ae, %i.ag
   %i.aj = shufflevector <2 x float> %i.ai, <2 x float> %i.ah, <2 x i32> <i32 0, i32 3>
   %i.ak = getelementptr inbounds nuw i8, ptr %i.p, i64 12
-  %i.al = load i32, ptr %i.ak, align 4, !tbaa !99
+  %i.al = load i32, ptr %i.ak, align 4, !tbaa !98
   %i.am = and i32 %i.al, 512
   %.not = icmp eq i32 %i.am, 0
   br i1 %.not, label %bb.g, label %bb.f
@@ -498,14 +498,14 @@ bb.f:                                             ; preds = %bb.e
   %i.bl = fadd float %i.bk, %i.bi
   %i.bm = fmul float %i.f, %i.bl
   %i.bn = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 2 uses
-  %i.bo = load float, ptr %i.bn, align 4, !tbaa !100
+  %i.bo = load float, ptr %i.bn, align 4, !tbaa !99
   %i.bp = fsub float %i.bo, %i.bm
-  store float %i.bp, ptr %i.bn, align 4, !tbaa !100
+  store float %i.bp, ptr %i.bn, align 4, !tbaa !99
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bq = getelementptr inbounds nuw i8, ptr %i.x, i64 12
-  %i.br = load i32, ptr %i.bq, align 4, !tbaa !99
+  %i.br = load i32, ptr %i.bq, align 4, !tbaa !98
   %i.bs = and i32 %i.br, 512
   %.not37 = icmp eq i32 %i.bs, 0
   br i1 %.not37, label %bb.i, label %bb.h
@@ -529,9 +529,9 @@ bb.h:                                             ; preds = %bb.g
   %i.cf = fadd float %i.ce, %i.cc
   %i.cg = fmul float %i.h, %i.cf
   %i.ch = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 2 uses
-  %i.ci = load float, ptr %i.ch, align 4, !tbaa !100
+  %i.ci = load float, ptr %i.ch, align 4, !tbaa !99
   %i.cj = fadd float %i.ci, %i.cg
-  store float %i.cj, ptr %i.ch, align 4, !tbaa !100
+  store float %i.cj, ptr %i.ch, align 4, !tbaa !99
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -546,8 +546,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %4 = load float, ptr %i.b, align 4, !tbaa !96   ; 2 uses
-  %i.d = load float, ptr %i.a, align 4, !tbaa !95 ; 3 uses
+  %4 = load <2 x float>, ptr %i.a, align 4, !tbaa !87 ; 2 uses
+  %i.d = load float, ptr %i.b, align 4, !tbaa !95 ; 2 uses
   %i.e = load <2 x float>, ptr %i.c, align 4, !tbaa !87 ; 5 uses
   %i.f = shufflevector <2 x float> %i.e, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
@@ -560,7 +560,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !97
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !96
   %i.m = sext i32 %i.i to i64
   %i.n = getelementptr inbounds [32 x i8], ptr %i.l, i64 %i.m
   br label %bb.c
@@ -574,7 +574,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !97
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !96
   %i.u = sext i32 %i.q to i64
   %i.v = getelementptr inbounds [32 x i8], ptr %i.t, i64 %i.u ; 2 uses
   %.sroa.072.0.copyload.pre = load <2 x float>, ptr %i.v, align 4
@@ -585,9 +585,9 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.w = phi ptr [ %i.v, %bb.d ], [ %3, %bb.c ]   ; 5 uses
   %.sroa.080.0.copyload = load <2 x float>, ptr %i.o, align 4 ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
-  %i.y = load float, ptr %i.x, align 4, !tbaa !100 ; 2 uses
+  %i.y = load float, ptr %i.x, align 4, !tbaa !99 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 8 ; 2 uses
-  %i.aa = load float, ptr %i.z, align 4, !tbaa !100 ; 2 uses
+  %i.aa = load float, ptr %i.z, align 4, !tbaa !99 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 160
@@ -666,7 +666,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ch = extractelement <2 x float> %i.e, i64 1  ; 2 uses
   %i.ci = fmul float %i.ch, %i.bz
   %i.cj = fsub float %i.y, %i.cg                  ; 2 uses
-  %i.ck = fadd float %i.aa, %i.ci                 ; 3 uses
+  %i.ck = fadd float %i.aa, %i.ci                 ; 2 uses
   %i.cl = shufflevector <2 x float> %i.cb, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.cm = shufflevector <2 x float> %i.cc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cn = fmul <2 x float> %i.cl, %i.cm           ; 2 uses
@@ -682,7 +682,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.cx = fmul <2 x float> %i.cv, %i.cw           ; 2 uses
   %i.cy = fadd <2 x float> %i.cu, %i.cx           ; 3 uses
   %i.cz = fsub <2 x float> %i.cu, %i.cx           ; 3 uses
-  %i.da = shufflevector <2 x float> %i.cz, <2 x float> %i.cy, <2 x i32> <i32 0, i32 3> ; 3 uses
+  %i.da = shufflevector <2 x float> %i.cz, <2 x float> %i.cy, <2 x i32> <i32 0, i32 3> ; 4 uses
   br i1 %2, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -714,18 +714,17 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.sroa.030.0 = phi <2 x float> [ %i.dq, %bb.j ], [ zeroinitializer, %bb.i ]
   %i.dt = phi <2 x float> [ %i.ds, %bb.j ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.i ] ; 2 uses
-  %5 = extractelement <2 x float> %i.cz, i64 0    ; 2 uses
-  %6 = fmul float %i.ck, %5
-  %.sroa.01.0.vec.extract.i205 = extractelement <2 x float> %.sroa.072.0.copyload, i64 0
-  %7 = extractelement <2 x float> %i.cy, i64 1    ; 2 uses
-  %8 = fmul float %i.ck, %7
-  %.sroa.01.4.vec.extract.i208 = extractelement <2 x float> %.sroa.072.0.copyload, i64 1
+  %5 = insertelement <2 x float> poison, float %i.ck, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = shufflevector <2 x float> %i.da, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %8 = fmul <2 x float> %6, %7                    ; 2 uses
   %i.du = insertelement <2 x float> poison, float %i.cj, i64 0
   %i.dv = shufflevector <2 x float> %i.du, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dw = fmul <2 x float> %i.dv, %i.cs           ; 2 uses
   %i.dx = fmul <2 x float> %i.cs, %i.cs
   %i.dy = shufflevector <2 x float> %i.dx, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.dz = fmul <2 x float> %i.da, %i.da
+  %9 = extractelement <2 x float> %i.cz, i64 0
   %i.ea = shufflevector <2 x float> %i.cy, <2 x float> %i.cq, <2 x i32> <i32 1, i32 3>
   %i.eb = fneg <2 x float> %i.cs
   %i.ec = shufflevector <2 x float> %i.cz, <2 x float> %i.eb, <2 x i32> <i32 0, i32 2>
@@ -734,17 +733,17 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ef = extractelement <2 x float> %i.dt, i64 0
   %i.eg = fneg float %i.ef
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses
-  %9 = fsub float %.sroa.01.0.vec.extract.i205, %8
-  %10 = fadd float %.sroa.01.4.vec.extract.i208, %6
+  %10 = fadd <2 x float> %.sroa.072.0.copyload, %8
+  %11 = fsub <2 x float> %.sroa.072.0.copyload, %8
+  %12 = shufflevector <2 x float> %11, <2 x float> %10, <2 x i32> <i32 0, i32 3>
   %i.ei = fadd <2 x float> %.sroa.080.0.copyload, %i.dw
   %i.ej = fsub <2 x float> %.sroa.080.0.copyload, %i.dw
   %i.ek = shufflevector <2 x float> %i.ej, <2 x float> %i.ei, <2 x i32> <i32 0, i32 3>
-  %11 = insertelement <2 x float> poison, float %9, i64 0
-  %12 = insertelement <2 x float> %11, float %10, i64 1
-  %i.el = fsub <2 x float> %12, %i.ek
+  %13 = fsub <2 x float> %12, %i.ek
   %shift264 = shufflevector <2 x float> %i.ee, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop265 = fsub <2 x float> %shift264, %i.ee ; 3 uses
-  %i.em = fadd float %i.d, %4
+  %i.el = fsub <2 x float> %shift264, %i.ee       ; 3 uses
+  %14 = extractelement <2 x float> %4, i64 0      ; 2 uses
+  %i.em = fadd float %14, %i.d
   %i.en = shufflevector <2 x float> %i.e, <2 x float> poison, <2 x i32> zeroinitializer
   %i.eo = fmul <2 x float> %i.en, %i.dy
   %i.ep = insertelement <2 x float> poison, float %i.em, i64 0
@@ -753,17 +752,17 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.es = shufflevector <2 x float> %i.e, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.et = fmul <2 x float> %i.es, %i.dz
   %i.eu = fadd <2 x float> %i.er, %i.et           ; 3 uses
-  %i.ev = fadd <2 x float> %i.el, %.sroa.030.0    ; 2 uses
+  %i.ev = fadd <2 x float> %13, %.sroa.030.0      ; 2 uses
   %shift267 = shufflevector <2 x float> %i.eu, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop268 = fmul <2 x float> %shift267, %i.eu
-  %foldExtExtBinop270 = fmul <2 x float> %foldExtExtBinop265, %foldExtExtBinop265
+  %foldExtExtBinop270 = fmul <2 x float> %i.el, %i.el
   %foldExtExtBinop272 = fsub <2 x float> %foldExtExtBinop268, %foldExtExtBinop270
   %i.ew = extractelement <2 x float> %foldExtExtBinop272, i64 0 ; 3 uses
   %i.ex = fcmp une float %i.ew, 0.000000e+00
   %i.ey = fdiv float 1.000000e+00, %i.ew
   %.0.i = select i1 %i.ex, float %i.ey, float %i.ew
   %i.ez = fmul <2 x float> %i.eu, %i.ev
-  %i.fa = shufflevector <2 x float> %foldExtExtBinop265, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.fa = shufflevector <2 x float> %i.el, <2 x float> poison, <2 x i32> zeroinitializer
   %i.fb = shufflevector <2 x float> %i.ev, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.fc = fmul <2 x float> %i.fa, %i.fb
   %i.fd = fsub <2 x float> %i.ez, %i.fc
@@ -776,55 +775,54 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.fk = load <2 x float>, ptr %i.eh, align 4, !tbaa !87 ; 2 uses
   %i.fl = shufflevector <2 x float> %i.dt, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.fm = fmul <2 x float> %i.fl, %i.fk
-  %i.fn = fsub <2 x float> %i.fj, %i.fm           ; 5 uses
-  %13 = extractelement <2 x float> %i.fn, i64 0   ; 2 uses
+  %i.fn = fsub <2 x float> %i.fj, %i.fm           ; 6 uses
   %i.fo = extractelement <2 x float> %i.fn, i64 1 ; 2 uses
   %i.fp = fadd <2 x float> %i.fk, %i.fn
   store <2 x float> %i.fp, ptr %i.eh, align 4
-  %i.fq = insertelement <2 x float> poison, float %4, i64 0
+  %i.fq = insertelement <2 x float> poison, float %i.d, i64 0
   %i.fr = shufflevector <2 x float> %i.fq, <2 x float> poison, <2 x i32> zeroinitializer
   %i.fs = fmul <2 x float> %i.fr, %i.fn
   %i.ft = fadd <2 x float> %.sroa.072.0.copyload, %i.fs
-  %i.fu = fmul float %5, %i.fo
-  %14 = fmul float %7, %13
-  %i.fv = fsub float %i.fu, %14
+  %i.fu = fmul float %9, %i.fo
+  %shift274 = shufflevector <2 x float> %i.cy, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop275 = fmul <2 x float> %shift274, %i.fn
+  %15 = extractelement <2 x float> %foldExtExtBinop275, i64 0
+  %i.fv = fsub float %i.fu, %15
   %i.fw = fmul float %i.ch, %i.fv
   %i.fx = fadd float %i.ck, %i.fw
   %i.fy = getelementptr inbounds nuw i8, ptr %i.o, i64 12
-  %i.fz = load i32, ptr %i.fy, align 4, !tbaa !99
+  %i.fz = load i32, ptr %i.fy, align 4, !tbaa !98
   %i.ga = and i32 %i.fz, 512
   %.not = icmp eq i32 %i.ga, 0
   br i1 %.not, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %.sroa.01.4.vec.extract.i218 = extractelement <2 x float> %.sroa.080.0.copyload, i64 1
-  %.sroa.01.0.vec.extract.i215 = extractelement <2 x float> %.sroa.080.0.copyload, i64 0
   %i.gb = fmul <2 x float> %i.cs, %i.fn           ; 2 uses
   %shift274.a = shufflevector <2 x float> %i.gb, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop275.a = fsub <2 x float> %shift274.a, %i.gb
   %i.gc = extractelement <2 x float> %foldExtExtBinop275.a, i64 0
-  %15 = fmul float %i.d, %13
-  %16 = fsub float %.sroa.01.0.vec.extract.i215, %15
-  %.sroa.03.0.vec.insert.i = insertelement <2 x float> poison, float %16, i64 0
-  %i.gd = fmul float %i.d, %i.fo
+  %foldExtExtBinop280 = fmul <2 x float> %4, %i.fn
+  %foldExtExtBinop282 = fsub <2 x float> %.sroa.080.0.copyload, %foldExtExtBinop280
+  %i.gd = fmul float %14, %i.fo
   %i.ge = fsub float %.sroa.01.4.vec.extract.i218, %i.gd
-  %.sroa.03.4.vec.insert.i = insertelement <2 x float> %.sroa.03.0.vec.insert.i, float %i.ge, i64 1
+  %.sroa.03.4.vec.insert.i = insertelement <2 x float> %foldExtExtBinop282, float %i.ge, i64 1
   %i.gf = fmul float %i.cf, %i.gc
   %i.gg = fsub float %i.cj, %i.gf
   store <2 x float> %.sroa.03.4.vec.insert.i, ptr %i.o, align 4
-  store float %i.gg, ptr %i.x, align 4, !tbaa !100
+  store float %i.gg, ptr %i.x, align 4, !tbaa !99
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.gh = getelementptr inbounds nuw i8, ptr %i.w, i64 12
-  %i.gi = load i32, ptr %i.gh, align 4, !tbaa !99
+  %i.gi = load i32, ptr %i.gh, align 4, !tbaa !98
   %i.gj = and i32 %i.gi, 512
   %.not153 = icmp eq i32 %i.gj, 0
   br i1 %.not153, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   store <2 x float> %i.ft, ptr %i.w, align 4
-  store float %i.fx, ptr %i.z, align 4, !tbaa !100
+  store float %i.fx, ptr %i.z, align 4, !tbaa !99
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -1006,39 +1004,39 @@ attributes #8 = { nounwind }
 !92 = !{!88, !56, i64 0}
 !93 = !{!88, !56, i64 8}
 !94 = !{!88, !56, i64 48}
-!95 = !{!74, !56, i64 48}
-!96 = !{!74, !56, i64 52}
-!97 = !{!86, !77, i64 72}
-!98 = !{!"b2BodyState", !57, i64 0, !56, i64 8, !5, i64 12, !57, i64 16, !71, i64 24}
-!99 = !{!98, !5, i64 12}
-!100 = !{!98, !56, i64 8}
-!101 = !{!74, !5, i64 4}
-!102 = !{!74, !5, i64 8}
-!103 = !{!86, !75, i64 56}
-!104 = !{!64, !23, i64 1920}
-!105 = !{!64, !25, i64 1960}
-!106 = !{!"b2Body", !8, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !5, i64 28, !5, i64 32, !5, i64 36, !5, i64 40, !5, i64 44, !5, i64 48, !56, i64 52, !56, i64 56, !56, i64 60, !56, i64 64, !56, i64 68, !5, i64 72, !5, i64 76, !5, i64 80, !5, i64 84, !58, i64 88, !4, i64 90}
-!107 = !{!106, !5, i64 8}
-!108 = !{!106, !5, i64 12}
-!109 = !{!"b2DynamicArray_b2BodySim", !78, i64 0, !5, i64 8, !5, i64 12}
-!110 = !{!"b2DynamicArray_b2BodyState", !77, i64 0, !5, i64 8, !5, i64 12}
-!111 = !{!"p1 _ZTS10b2JointSim", !8, i64 0}
-!112 = !{!"b2DynamicArray_b2JointSim", !111, i64 0, !5, i64 8, !5, i64 12}
-!113 = !{!"p1 _ZTS12b2ContactSim", !8, i64 0}
-!114 = !{!"b2DynamicArray_b2ContactSim", !113, i64 0, !5, i64 8, !5, i64 12}
-!115 = !{!"p1 _ZTS11b2IslandSim", !8, i64 0}
-!116 = !{!"b2DynamicArray_b2IslandSim", !115, i64 0, !5, i64 8, !5, i64 12}
-!117 = !{!"b2SolverSet", !109, i64 0, !110, i64 16, !112, i64 32, !114, i64 48, !116, i64 64, !5, i64 80}
-!118 = !{!117, !78, i64 0}
-!119 = !{!"b2BodySim", !72, i64 0, !57, i64 16, !71, i64 24, !57, i64 32, !57, i64 40, !57, i64 48, !56, i64 56, !56, i64 60, !56, i64 64, !56, i64 68, !56, i64 72, !56, i64 76, !56, i64 80, !56, i64 84, !5, i64 88, !5, i64 92}
-!120 = !{!119, !56, i64 64}
-!121 = !{i64 0, i64 4, !87, i64 4, i64 4, !87, i64 8, i64 4, !87}
-!122 = !{!88, !56, i64 4}
-!123 = !{!86, !56, i64 8}
-!124 = !{!88, !56, i64 12}
-!125 = !{!86, !63, i64 188}
-!126 = !{i8 0, i8 2}
-!127 = !{}
+!95 = !{!74, !56, i64 52}
+!96 = !{!86, !77, i64 72}
+!97 = !{!"b2BodyState", !57, i64 0, !56, i64 8, !5, i64 12, !57, i64 16, !71, i64 24}
+!98 = !{!97, !5, i64 12}
+!99 = !{!97, !56, i64 8}
+!100 = !{!74, !5, i64 4}
+!101 = !{!74, !5, i64 8}
+!102 = !{!86, !75, i64 56}
+!103 = !{!64, !23, i64 1920}
+!104 = !{!64, !25, i64 1960}
+!105 = !{!"b2Body", !8, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !5, i64 28, !5, i64 32, !5, i64 36, !5, i64 40, !5, i64 44, !5, i64 48, !56, i64 52, !56, i64 56, !56, i64 60, !56, i64 64, !56, i64 68, !5, i64 72, !5, i64 76, !5, i64 80, !5, i64 84, !58, i64 88, !4, i64 90}
+!106 = !{!105, !5, i64 8}
+!107 = !{!105, !5, i64 12}
+!108 = !{!"b2DynamicArray_b2BodySim", !78, i64 0, !5, i64 8, !5, i64 12}
+!109 = !{!"b2DynamicArray_b2BodyState", !77, i64 0, !5, i64 8, !5, i64 12}
+!110 = !{!"p1 _ZTS10b2JointSim", !8, i64 0}
+!111 = !{!"b2DynamicArray_b2JointSim", !110, i64 0, !5, i64 8, !5, i64 12}
+!112 = !{!"p1 _ZTS12b2ContactSim", !8, i64 0}
+!113 = !{!"b2DynamicArray_b2ContactSim", !112, i64 0, !5, i64 8, !5, i64 12}
+!114 = !{!"p1 _ZTS11b2IslandSim", !8, i64 0}
+!115 = !{!"b2DynamicArray_b2IslandSim", !114, i64 0, !5, i64 8, !5, i64 12}
+!116 = !{!"b2SolverSet", !108, i64 0, !109, i64 16, !111, i64 32, !113, i64 48, !115, i64 64, !5, i64 80}
+!117 = !{!116, !78, i64 0}
+!118 = !{!"b2BodySim", !72, i64 0, !57, i64 16, !71, i64 24, !57, i64 32, !57, i64 40, !57, i64 48, !56, i64 56, !56, i64 60, !56, i64 64, !56, i64 68, !56, i64 72, !56, i64 76, !56, i64 80, !56, i64 84, !5, i64 88, !5, i64 92}
+!119 = !{!118, !56, i64 64}
+!120 = !{i64 0, i64 4, !87, i64 4, i64 4, !87, i64 8, i64 4, !87}
+!121 = !{!88, !56, i64 4}
+!122 = !{!86, !56, i64 8}
+!123 = !{!88, !56, i64 12}
+!124 = !{!86, !63, i64 188}
+!125 = !{i8 0, i8 2}
+!126 = !{}
+!127 = !{!74, !56, i64 48}
 !128 = !{!74, !56, i64 56}
 !129 = !{!74, !56, i64 60}
 !130 = !{!88, !56, i64 28}

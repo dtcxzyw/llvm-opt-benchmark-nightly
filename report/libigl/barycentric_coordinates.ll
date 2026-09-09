@@ -83,7 +83,7 @@ define weak_odr dso_local void @_ZN3igl23barycentric_coordinatesIN5Eigen6MatrixI
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load float, ptr %i.a, align 4, !tbaa !10
-  %i.d = load float, ptr %i.b, align 4, !tbaa !10
+  %i.d = load float, ptr %i.b, align 4, !tbaa !10 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.f = load float, ptr %i.e, align 4, !tbaa !10
   %i.g = load ptr, ptr %0, align 8, !tbaa !47     ; 2 uses
@@ -96,7 +96,7 @@ define weak_odr dso_local void @_ZN3igl23barycentric_coordinatesIN5Eigen6MatrixI
   %i.n = load <2 x float>, ptr %3, align 4, !tbaa !10 ; 4 uses
   %i.o = insertelement <2 x float> poison, float %i.f, i64 0
   %i.p = insertelement <2 x float> %i.o, float %i.c, i64 1
-  %i.q = insertelement <2 x float> poison, float %i.d, i64 0 ; 2 uses
+  %i.q = insertelement <2 x float> poison, float %i.d, i64 0
   %i.r = shufflevector <2 x float> %i.q, <2 x float> poison, <2 x i32> zeroinitializer
   %i.s = fsub <2 x float> %i.p, %i.r              ; 5 uses
   %i.t = shufflevector <2 x float> %i.n, <2 x float> %i.k, <2 x i32> <i32 0, i32 2>
@@ -132,11 +132,10 @@ define weak_odr dso_local void @_ZN3igl23barycentric_coordinatesIN5Eigen6MatrixI
   %shift391 = shufflevector <2 x float> %i.ao, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop392 = fmul <2 x float> %shift391, %i.ao
   %foldExtExtBinop394 = fmul <2 x float> %foldExtExtBinop389, %foldExtExtBinop389
-  %5 = insertelement <2 x float> poison, float %i.i, i64 0
-  %6 = shufflevector <2 x float> %5, <2 x float> %foldExtExtBinop392, <2 x i32> <i32 0, i32 2>
-  %7 = shufflevector <2 x float> %i.q, <2 x float> %foldExtExtBinop394, <2 x i32> <i32 0, i32 2>
-  %8 = fsub <2 x float> %6, %7                    ; 2 uses
-  %i.ap = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %foldExtExtBinop396 = fsub <2 x float> %foldExtExtBinop392, %foldExtExtBinop394
+  %5 = fsub float %i.i, %i.d
+  %6 = insertelement <2 x float> poison, float %5, i64 0
+  %i.ap = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aq = shufflevector <2 x float> %i.s, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.ar = fmul <2 x float> %i.ap, %i.aq
   %i.as = fadd <2 x float> %i.ak, %i.ar           ; 2 uses
@@ -145,8 +144,8 @@ define weak_odr dso_local void @_ZN3igl23barycentric_coordinatesIN5Eigen6MatrixI
   %i.av = shufflevector <2 x float> %i.as, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.aw = fmul <2 x float> %i.au, %i.av
   %i.ax = fsub <2 x float> %i.at, %i.aw
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.ay = fdiv <2 x float> %i.ax, %9              ; 3 uses
+  %7 = shufflevector <2 x float> %foldExtExtBinop396, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ay = fdiv <2 x float> %i.ax, %7              ; 3 uses
   store <2 x float> %i.ay, ptr %i.j, align 4, !tbaa !10
   %shift396 = shufflevector <2 x float> %i.ay, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop397 = fadd <2 x float> %i.ay, %shift396
@@ -207,22 +206,22 @@ define weak_odr dso_local void @_ZN3igl23barycentric_coordinatesIN5Eigen6MatrixI
   %i.ag = shufflevector <2 x double> %i.u, <2 x double> %i.t, <2 x i32> <i32 0, i32 2>
   %i.ah = shufflevector <2 x double> %i.u, <2 x double> %i.t, <2 x i32> <i32 1, i32 3>
   %i.ai = fadd <2 x double> %i.ag, %i.ah
-  %foldExtExtBinop368 = fmul <2 x double> %foldExtExtBinop363, %foldExtExtBinop363
-  %5 = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.aj = fmul <2 x double> %i.af, %5
-  %6 = insertelement <2 x double> %i.aj, double %i.p, i64 1
-  %7 = insertelement <2 x double> %foldExtExtBinop368, double %i.f, i64 1
-  %8 = fsub <2 x double> %6, %7                   ; 2 uses
-  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %shift365 = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop366 = fmul <2 x double> %i.af, %shift365
+  %i.aj = fmul <2 x double> %foldExtExtBinop363, %foldExtExtBinop363
+  %foldExtExtBinop370 = fsub <2 x double> %foldExtExtBinop366, %i.aj
+  %5 = fsub double %i.p, %i.f
+  %6 = insertelement <2 x double> poison, double %5, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ak = shufflevector <2 x double> %i.aa, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.al = fmul <2 x double> %9, %i.ak
+  %i.al = fmul <2 x double> %7, %i.ak
   %i.am = fadd <2 x double> %i.ai, %i.al          ; 2 uses
   %i.an = fmul <2 x double> %i.af, %i.am
   %i.ao = shufflevector <2 x double> %foldExtExtBinop363, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ap = shufflevector <2 x double> %i.am, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.aq = fmul <2 x double> %i.ao, %i.ap
   %i.ar = fsub <2 x double> %i.an, %i.aq
-  %i.as = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.as = shufflevector <2 x double> %foldExtExtBinop370, <2 x double> poison, <2 x i32> zeroinitializer
   %i.at = fdiv <2 x double> %i.ar, %i.as          ; 3 uses
   %i.au = shufflevector <2 x double> %i.at, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   store <2 x double> %i.au, ptr %i.v, align 8, !tbaa !15

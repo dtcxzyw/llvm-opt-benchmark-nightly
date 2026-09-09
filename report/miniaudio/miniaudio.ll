@@ -205,7 +205,7 @@ ma_dr_flac__seek_forward_by_pcm_frames.exit:      ; preds = %ma_dr_flac__read_an
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 53 ; 6 uses
   %i.x = load i8, ptr %i.w, align 1, !tbaa !728   ; 2 uses
   %i.y = zext i8 %i.x to i32                      ; 2 uses
-  %i.z = sub nsw i32 32, %i.y                     ; 17 uses
+  %i.z = sub nsw i32 32, %i.y                     ; 18 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 90
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -219,8 +219,6 @@ ma_dr_flac__seek_forward_by_pcm_frames.exit:      ; preds = %ma_dr_flac__read_an
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %3 = insertelement <2 x i32> poison, i32 %i.z, i64 0
-  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert520 = insertelement <4 x i32> poison, i32 %i.af, i64 0 ; 2 uses
   %i.am = shufflevector <4 x i32> %broadcast.splatinsert520, <4 x i32> poison, <16 x i32> zeroinitializer
   %i.an = shufflevector <4 x i32> %broadcast.splatinsert520, <4 x i32> poison, <16 x i32> zeroinitializer
@@ -298,8 +296,6 @@ bb.k:                                             ; preds = %bb.j
 ._crit_edge280:                                   ; preds = %bb.k
   %.pre281 = load i8, ptr %i.ag, align 1, !tbaa !734
   %.pre283 = load i8, ptr %i.ah, align 1, !tbaa !734
-  %5 = insertelement <2 x i8> poison, i8 %.pre281, i64 0
-  %6 = insertelement <2 x i8> %5, i8 %.pre283, i64 1
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.k
@@ -307,8 +303,6 @@ bb.l:                                             ; preds = %bb.k
   %i.bo = icmp ult i8 %i.bn, 25
   %.pre282 = load i8, ptr %i.ag, align 1, !tbaa !734 ; 2 uses
   %.pre284 = load i8, ptr %i.ah, align 1, !tbaa !734 ; 2 uses
-  %7 = insertelement <2 x i8> poison, i8 %.pre282, i64 0
-  %8 = insertelement <2 x i8> %7, i8 %.pre284, i64 1
   br i1 %i.bo, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -416,16 +410,21 @@ middle.block388:                                  ; preds = %vector.body382
   br i1 %i.dp, label %.lr.ph196, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, !llvm.loop !2302
 
 bb.n:                                             ; preds = %._crit_edge280, %bb.l
-  %9 = phi <2 x i8> [ %6, %._crit_edge280 ], [ %8, %bb.l ]
+  %3 = phi i8 [ %.pre283, %._crit_edge280 ], [ %.pre284, %bb.l ]
+  %4 = phi i8 [ %.pre281, %._crit_edge280 ], [ %.pre282, %bb.l ]
   %i.dq = lshr i64 %spec.select, 2                ; 2 uses
-  %10 = zext <2 x i8> %9 to <2 x i32>
-  %11 = add nsw <2 x i32> %4, %10                 ; 6 uses
+  %5 = zext i8 %4 to i32
+  %6 = add nsw i32 %i.z, %5                       ; 3 uses
+  %7 = zext i8 %3 to i32
+  %8 = add nsw i32 %i.z, %7                       ; 3 uses
   %.not234 = icmp eq i64 %i.dq, 0
   br i1 %.not234, label %._crit_edge186, label %.lr.ph185.preheader
 
 .lr.ph185.preheader:                              ; preds = %bb.n
-  %i.dr = shufflevector <2 x i32> %11, <2 x i32> poison, <4 x i32> zeroinitializer
-  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %9 = insertelement <4 x i32> poison, i32 %6, i64 0
+  %i.dr = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
+  %10 = insertelement <4 x i32> poison, i32 %8, i64 0
+  %11 = shufflevector <4 x i32> %10, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %.lr.ph185
 
 .lr.ph185:                                        ; preds = %.lr.ph185.preheader, %.lr.ph185
@@ -438,7 +437,7 @@ bb.n:                                             ; preds = %._crit_edge280, %bb
   %i.dw = load <4 x i32>, ptr %i.dt, align 4, !tbaa !118
   %i.dx = shl <4 x i32> %i.dw, %i.dr              ; 2 uses
   %i.dy = load <4 x i32>, ptr %i.du, align 4, !tbaa !118
-  %i.dz = shl <4 x i32> %i.dy, %12
+  %i.dz = shl <4 x i32> %i.dy, %11
   %i.ea = sub <4 x i32> %i.dx, %i.dz
   %i.eb = shufflevector <4 x i32> %i.dx, <4 x i32> %i.ea, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ec = lshr <8 x i32> %i.eb, splat (i32 16)
@@ -465,8 +464,10 @@ vector.ph393:                                     ; preds = %.lr.ph189.preheader
   %i.ek = and i64 %i.ei, 3                        ; 2 uses
   %n.vec394 = sub nuw nsw i64 %i.ej, %i.ek        ; 2 uses
   %i.el = add nsw i64 %i.eg, %n.vec394
-  %broadcast.splat396 = shufflevector <2 x i32> %11, <2 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splat398 = shufflevector <2 x i32> %11, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %broadcast.splatinsert395 = insertelement <4 x i32> poison, i32 %6, i64 0
+  %broadcast.splat396 = shufflevector <4 x i32> %broadcast.splatinsert395, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert397 = insertelement <4 x i32> poison, i32 %8, i64 0
+  %broadcast.splat398 = shufflevector <4 x i32> %broadcast.splatinsert397, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body399
 
 vector.body399:                                   ; preds = %vector.body399, %vector.ph393
@@ -495,18 +496,16 @@ middle.block405:                                  ; preds = %vector.body399
 
 .lr.ph189.preheader542:                           ; preds = %.lr.ph189.preheader, %middle.block405
   %.1.i95187.ph = phi i64 [ %i.eg, %.lr.ph189.preheader ], [ %i.el, %middle.block405 ]
-  %13 = extractelement <2 x i32> %11, i64 0
-  %14 = extractelement <2 x i32> %11, i64 1
   br label %.lr.ph189
 
 .lr.ph189:                                        ; preds = %.lr.ph189.preheader542, %.lr.ph189
   %.1.i95187 = phi i64 [ %i.fk, %.lr.ph189 ], [ %.1.i95187.ph, %.lr.ph189.preheader542 ] ; 4 uses
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.1.i95187
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !118
-  %i.ez = shl i32 %i.ey, %13                      ; 2 uses
+  %i.ez = shl i32 %i.ey, %6                       ; 2 uses
   %i.fa = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %.1.i95187
   %i.fb = load i32, ptr %i.fa, align 4, !tbaa !118
-  %i.fc = shl i32 %i.fb, %14
+  %i.fc = shl i32 %i.fb, %8
   %i.fd = sub i32 %i.ez, %i.fc
   %i.fe = lshr i32 %i.ez, 16
   %i.ff = lshr i32 %i.fd, 16

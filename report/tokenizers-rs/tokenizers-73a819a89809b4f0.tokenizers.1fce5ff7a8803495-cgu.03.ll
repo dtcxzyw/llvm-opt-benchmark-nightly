@@ -205,7 +205,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer
-  %.sroa.0.0.ph143 = phi ptr [ %0, %.lr.ph.lr.ph ], [ %i.no, %.outer ] ; 23 uses
+  %.sroa.0.0.ph143 = phi ptr [ %0, %.lr.ph.lr.ph ], [ %i.no, %.outer ] ; 24 uses
   %.sroa.16.0.ph142 = phi i64 [ %1, %.lr.ph.lr.ph ], [ %i.mz, %.outer ] ; 2 uses
   %.sroa.025.0.ph141 = phi i32 [ %4, %.lr.ph.lr.ph ], [ %i.hj, %.outer ] ; 2 uses
   %.sroa.028.0.ph140 = phi ptr [ %5, %.lr.ph.lr.ph ], [ null, %.outer ] ; 3 uses
@@ -608,24 +608,24 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort31small_sort_general
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %.sroa.0.0.i.sink.i = phi ptr [ %i.ho, %bb.o ], [ %.sroa.0.0.ph143, %bb.p ], [ %..i.i, %bb.q ]
   %i.ic = ptrtoint ptr %.sroa.0.0.i.sink.i to i64
-  %i.id = sub nuw i64 %i.ic, %i.e                 ; 2 uses
+  %i.id = sub nuw i64 %i.ic, %i.e                 ; 3 uses
   %.sroa.0.0.i39 = lshr exact i64 %i.id, 3        ; 3 uses
   %i.ie = icmp samesign ult i64 %.sroa.0.0.i39, %.sroa.16.0136314
   call void @llvm.assume(i1 %i.ie)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.if = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph143, i64 %i.id ; 5 uses
-  %7 = load i32, ptr %i.if, align 4               ; 13 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.if, i64 4
-  %9 = load i32, ptr %8, align 4                  ; 7 uses
-  store i32 %7, ptr %i.a, align 4
+  %i.if = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph143, i64 %i.id
+  %7 = load <2 x i32>, ptr %i.if, align 4         ; 4 uses
+  %8 = extractelement <2 x i32> %7, i64 0         ; 5 uses
+  store i32 %8, ptr %i.a, align 4
+  %9 = extractelement <2 x i32> %7, i64 1         ; 3 uses
   store i32 %9, ptr %i.c, align 4
   br i1 %.not, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %.sroa.028.0.val = load i32, ptr %.sroa.028.0.ph140, align 4, !noundef !3 ; 2 uses
   %.sroa.028.0.val37 = load i32, ptr %i.f, align 4, !range !6, !noundef !3
-  %i.ig = icmp eq i32 %7, %.sroa.028.0.val
-  %i.ih = icmp ult i32 %7, %.sroa.028.0.val
+  %i.ig = icmp eq i32 %8, %.sroa.028.0.val
+  %i.ih = icmp ult i32 %8, %.sroa.028.0.val
   %i.ii = icmp samesign ult i32 %9, %.sroa.028.0.val37
   %.sroa.0.0.i.i.i = select i1 %i.ig, i1 %i.ii, i1 %i.ih
   br i1 %.sroa.0.0.i.i.i, label %bb.t, label %.thread
@@ -638,6 +638,8 @@ bb.t:                                             ; preds = %bb.r, %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.ij = getelementptr [8 x i8], ptr %2, i64 %.sroa.16.0136314 ; 3 uses
+  %10 = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %11 = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.t
@@ -655,74 +657,57 @@ bb.w:                                             ; preds = %bb.x, %bb.u
   br i1 %i.im, label %.lr.ph.i42, label %._crit_edge.i
 
 .lr.ph.i42:                                       ; preds = %bb.w, %.lr.ph.i42
-  %.sroa.9.131.i = phi ptr [ %i.iz, %.lr.ph.i42 ], [ %.sroa.9.0.i, %bb.w ] ; 10 uses
+  %.sroa.9.131.i = phi ptr [ %i.iz, %.lr.ph.i42 ], [ %.sroa.9.0.i, %bb.w ] ; 6 uses
   %.sroa.27.130.i = phi i64 [ %i.iy, %.lr.ph.i42 ], [ %.sroa.27.0.i, %bb.w ] ; 2 uses
-  %.sroa.43.129.i = phi ptr [ %35, %.lr.ph.i42 ], [ %.sroa.43.0.i, %bb.w ] ; 4 uses
-  %.val30.i = load i32, ptr %.sroa.9.131.i, align 4, !alias.scope !1334, !noalias !1335, !noundef !3 ; 2 uses
-  %i.in = getelementptr i8, ptr %.sroa.9.131.i, i64 4
-  %.val31.i = load i32, ptr %i.in, align 4, !range !6, !alias.scope !1334, !noalias !1335, !noundef !3
-  %10 = icmp eq i32 %7, %.val30.i
-  %11 = icmp ult i32 %7, %.val30.i
-  %12 = icmp samesign ult i32 %9, %.val31.i
-  %.sroa.0.0.i.i.i.i43 = select i1 %10, i1 %12, i1 %11 ; 2 uses
-  %i.io = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -8
-  %.sroa.01.0.i.i = select i1 %.sroa.0.0.i.i.i.i43, ptr %2, ptr %i.io
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i.i, i64 %.sroa.27.130.i
-  %i.ip = load i64, ptr %.sroa.9.131.i, align 4, !alias.scope !1334, !noalias !1336
-  store i64 %i.ip, ptr %13, align 4, !alias.scope !1335, !noalias !1337
-  %14 = zext i1 %.sroa.0.0.i.i.i.i43 to i64
-  %15 = add i64 %.sroa.27.130.i, %14              ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 8 ; 2 uses
-  %.val26.i = load i32, ptr %16, align 4, !alias.scope !1334, !noalias !1335, !noundef !3 ; 2 uses
-  %17 = getelementptr i8, ptr %.sroa.9.131.i, i64 12
-  %.val27.i = load i32, ptr %17, align 4, !range !6, !alias.scope !1334, !noalias !1335, !noundef !3
-  %18 = icmp eq i32 %7, %.val26.i
-  %19 = icmp ult i32 %7, %.val26.i
-  %20 = icmp samesign ult i32 %9, %.val27.i
-  %.sroa.0.0.i.i.i34.i = select i1 %18, i1 %20, i1 %19 ; 2 uses
-  %21 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -16
-  %.sroa.01.0.i35.i.a = select i1 %.sroa.0.0.i.i.i34.i, ptr %2, ptr %21
-  %i.iq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i35.i.a, i64 %15
-  %22 = load i64, ptr %16, align 4, !alias.scope !1334, !noalias !1338
-  store i64 %22, ptr %i.iq, align 4, !alias.scope !1335, !noalias !1339
-  %i.ir = zext i1 %.sroa.0.0.i.i.i34.i to i64
-  %i.is = add i64 %15, %i.ir                      ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 16 ; 2 uses
-  %.val22.i = load i32, ptr %23, align 4, !alias.scope !1334, !noalias !1335, !noundef !3 ; 2 uses
-  %24 = getelementptr i8, ptr %.sroa.9.131.i, i64 20
-  %.val23.i = load i32, ptr %24, align 4, !range !6, !alias.scope !1334, !noalias !1335, !noundef !3
-  %25 = icmp eq i32 %7, %.val22.i
-  %26 = icmp ult i32 %7, %.val22.i
-  %27 = icmp samesign ult i32 %9, %.val23.i
-  %.sroa.0.0.i.i.i36.i = select i1 %25, i1 %27, i1 %26 ; 2 uses
-  %28 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -24
-  %.sroa.01.0.i37.i.a = select i1 %.sroa.0.0.i.i.i36.i, ptr %2, ptr %28
+  %.sroa.43.129.i = phi ptr [ %18, %.lr.ph.i42 ], [ %.sroa.43.0.i, %bb.w ] ; 4 uses
+  %i.in = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -8
+  %12 = load i64, ptr %.sroa.9.131.i, align 4, !alias.scope !1334, !noalias !1336
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 8
+  %14 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -16
+  %15 = load i64, ptr %13, align 4, !alias.scope !1334, !noalias !1337
+  %i.io = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 16
+  %16 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -24
+  %i.ip = load i64, ptr %i.io, align 4, !alias.scope !1334, !noalias !1338
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 24
+  %18 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -32 ; 3 uses
+  %19 = load i64, ptr %17, align 4, !alias.scope !1334, !noalias !1339
+  %20 = load <8 x i32>, ptr %.sroa.9.131.i, align 4, !alias.scope !1334, !noalias !1335 ; 2 uses
+  %21 = shufflevector <8 x i32> %20, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6> ; 2 uses
+  %22 = icmp eq <4 x i32> %10, %21
+  %23 = icmp ult <4 x i32> %10, %21
+  %24 = shufflevector <8 x i32> %20, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %25 = icmp samesign ult <4 x i32> %11, %24
+  %26 = select <4 x i1> %22, <4 x i1> %25, <4 x i1> %23 ; 4 uses
+  %27 = extractelement <4 x i1> %26, i64 0        ; 2 uses
+  %.sroa.01.0.i35.i.a = select i1 %27, ptr %2, ptr %i.in
+  %i.iq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i35.i.a, i64 %.sroa.27.130.i
+  store i64 %12, ptr %i.iq, align 4, !alias.scope !1335, !noalias !1340
+  %i.ir = zext i1 %27 to i64
+  %i.is = add i64 %.sroa.27.130.i, %i.ir          ; 2 uses
+  %28 = extractelement <4 x i1> %26, i64 1        ; 2 uses
+  %.sroa.01.0.i37.i.a = select i1 %28, ptr %2, ptr %14
   %i.it = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i37.i.a, i64 %i.is
-  %29 = load i64, ptr %23, align 4, !alias.scope !1334, !noalias !1340
-  store i64 %29, ptr %i.it, align 4, !alias.scope !1335, !noalias !1341
-  %i.iu = zext i1 %.sroa.0.0.i.i.i36.i to i64
+  store i64 %15, ptr %i.it, align 4, !alias.scope !1335, !noalias !1341
+  %i.iu = zext i1 %28 to i64
   %i.iv = add i64 %i.is, %i.iu                    ; 2 uses
-  %30 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 24 ; 2 uses
-  %.val18.i = load i32, ptr %30, align 4, !alias.scope !1334, !noalias !1335, !noundef !3 ; 2 uses
-  %31 = getelementptr i8, ptr %.sroa.9.131.i, i64 28
-  %.val19.i = load i32, ptr %31, align 4, !range !6, !alias.scope !1334, !noalias !1335, !noundef !3
-  %32 = icmp eq i32 %7, %.val18.i
-  %33 = icmp ult i32 %7, %.val18.i
-  %34 = icmp samesign ult i32 %9, %.val19.i
-  %.sroa.0.0.i.i.i38.i = select i1 %32, i1 %34, i1 %33 ; 2 uses
-  %35 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -32 ; 3 uses
-  %.sroa.01.0.i39.i = select i1 %.sroa.0.0.i.i.i38.i, ptr %2, ptr %35
-  %i.iw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i39.i, i64 %i.iv
-  %36 = load i64, ptr %30, align 4, !alias.scope !1334, !noalias !1342
-  store i64 %36, ptr %i.iw, align 4, !alias.scope !1335, !noalias !1343
-  %i.ix = zext i1 %.sroa.0.0.i.i.i38.i to i64
-  %i.iy = add i64 %i.iv, %i.ix                    ; 2 uses
+  %29 = extractelement <4 x i1> %26, i64 2        ; 2 uses
+  %.sroa.01.0.i37.i = select i1 %29, ptr %2, ptr %16
+  %30 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i37.i, i64 %i.iv
+  store i64 %i.ip, ptr %30, align 4, !alias.scope !1335, !noalias !1342
+  %31 = zext i1 %29 to i64
+  %32 = add i64 %i.iv, %31                        ; 2 uses
+  %33 = extractelement <4 x i1> %26, i64 3        ; 2 uses
+  %.sroa.01.0.i39.i = select i1 %33, ptr %2, ptr %18
+  %i.iw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i39.i, i64 %32
+  store i64 %19, ptr %i.iw, align 4, !alias.scope !1335, !noalias !1343
+  %i.ix = zext i1 %33 to i64
+  %i.iy = add i64 %32, %i.ix                      ; 2 uses
   %i.iz = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 32 ; 3 uses
   %i.ja = icmp ult ptr %i.iz, %i.il
   br i1 %i.ja, label %.lr.ph.i42, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i42, %bb.w
-  %.sroa.43.1.lcssa.i = phi ptr [ %.sroa.43.0.i, %bb.w ], [ %35, %.lr.ph.i42 ] ; 2 uses
+  %.sroa.43.1.lcssa.i = phi ptr [ %.sroa.43.0.i, %bb.w ], [ %18, %.lr.ph.i42 ] ; 2 uses
   %.sroa.27.1.lcssa.i = phi i64 [ %.sroa.27.0.i, %bb.w ], [ %i.iy, %.lr.ph.i42 ] ; 2 uses
   %.sroa.9.1.lcssa.i = phi ptr [ %.sroa.9.0.i, %bb.w ], [ %i.iz, %.lr.ph.i42 ] ; 3 uses
   %i.jb = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph143, i64 %.sroa.0.0.i40 ; 2 uses
@@ -743,8 +728,8 @@ bb.w:                                             ; preds = %bb.x, %bb.u
   %.val.i = load i32, ptr %.sroa.9.236.i, align 4, !alias.scope !1334, !noalias !1335, !noundef !3 ; 2 uses
   %i.je = getelementptr i8, ptr %.sroa.9.236.i, i64 4
   %.val15.i = load i32, ptr %i.je, align 4, !range !6, !alias.scope !1334, !noalias !1335, !noundef !3
-  %i.jf = icmp eq i32 %7, %.val.i
-  %i.jg = icmp ult i32 %7, %.val.i
+  %i.jf = icmp eq i32 %8, %.val.i
+  %i.jg = icmp ult i32 %8, %.val.i
   %i.jh = icmp samesign ult i32 %9, %.val15.i
   %.sroa.0.0.i.i.i40.i = select i1 %i.jf, i1 %i.jh, i1 %i.jg ; 2 uses
   %i.ji = getelementptr inbounds i8, ptr %.sroa.43.234.i, i64 -8 ; 3 uses
@@ -840,7 +825,8 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSTmcE12split_at_mutCs2JiOgHzbbc7_10tokenizers.ex
   br i1 %i.kk, label %.outer._crit_edge, label %bb.b
 
 .thread:                                          ; preds = %bb.s, %.loopexit
-  %i.kl = getelementptr inbounds nuw i8, ptr %i.if, i64 4 ; 2 uses
+  %34 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph143, i64 %i.id ; 3 uses
+  %i.kl = getelementptr inbounds nuw i8, ptr %34, i64 4 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1352)
   call void @llvm.experimental.noalias.scope.decl(metadata !1353)
   %.not96 = icmp samesign ult i64 %3, %.sroa.16.0136314
@@ -865,7 +851,7 @@ bb.ad:                                            ; preds = %bb.af, %bb.ab
   br i1 %i.kp, label %.lr.ph.i72, label %._crit_edge.i51
 
 .lr.ph.i72:                                       ; preds = %bb.ad
-  %.val32.i73 = load i32, ptr %i.if, align 4, !alias.scope !1352, !noalias !1353, !noundef !3 ; 8 uses
+  %.val32.i73 = load i32, ptr %34, align 4, !alias.scope !1352, !noalias !1353, !noundef !3 ; 8 uses
   %.val33.i79 = load i32, ptr %i.kl, align 4, !range !6, !alias.scope !1352, !noalias !1353, !noundef !3 ; 4 uses
   br label %bb.ae
 
@@ -945,7 +931,7 @@ bb.ae:                                            ; preds = %bb.ae, %.lr.ph.i72
   br i1 %i.mg, label %.lr.ph38.i63.preheader, label %._crit_edge39.i55
 
 .lr.ph38.i63.preheader:                           ; preds = %._crit_edge.i51
-  %.val16.i69 = load i32, ptr %i.if, align 4, !alias.scope !1352, !noalias !1353, !noundef !3 ; 2 uses
+  %.val16.i69 = load i32, ptr %34, align 4, !alias.scope !1352, !noalias !1353, !noundef !3 ; 2 uses
   %.val17.i70 = load i32, ptr %i.kl, align 4, !range !6, !alias.scope !1352, !noalias !1353, !noundef !3
   br label %.lr.ph38.i63
 
@@ -1348,12 +1334,12 @@ begin_hunk_2_@llvm.memset.p0.i64
 !1334 = !{!1286}
 !1335 = !{!1287}
 !1336 = !{!1289, !1287}
-!1337 = !{!1289, !1286}
-!1338 = !{!1291, !1287}
-!1339 = !{!1291, !1286}
-!1340 = !{!1293, !1287}
-!1341 = !{!1293, !1286}
-!1342 = !{!1295, !1287}
+!1337 = !{!1291, !1287}
+!1338 = !{!1293, !1287}
+!1339 = !{!1295, !1287}
+!1340 = !{!1289, !1286}
+!1341 = !{!1291, !1286}
+!1342 = !{!1293, !1286}
 !1343 = !{!1295, !1286}
 !1344 = !{!1297, !1287}
 !1345 = !{!1297, !1286}

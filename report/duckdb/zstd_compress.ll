@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.ag, ptr %.sroa.1.0..sroa_idx, align 8, !tbaa !220
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.af
   store ptr %i.ah, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !217
-  %i.ai = add i32 %i.ae, 2                        ; 2 uses
-  %5 = insertelement <2 x i32> poison, i32 %i.ae, i64 0 ; 5 uses
+  %i.ai = add i32 %i.ae, 2                        ; 3 uses
   %i.aj = icmp ult i32 %i.ad, %i.ai
   %i.ak = sub i32 %i.ad, %i.ae
   %storemerge.i = select i1 %i.aj, i32 2, i32 %i.ak
@@ -264,15 +263,10 @@ bb.d:                                             ; preds = %_ZN11duckdb_zstdL23
   br i1 %i.bo, label %.preheader.i.i.preheader, label %_ZN11duckdb_zstdL24ZSTD_reduceTable_btlazy2EPjjj.exit.i
 
 .preheader.i.i.preheader:                         ; preds = %bb.d
-  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <4 x i32> zeroinitializer
-  %7 = add <4 x i32> %6, splat (i32 2)
-  %8 = shufflevector <2 x i32> %5, <2 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
-  %9 = shufflevector <2 x i32> %5, <2 x i32> poison, <4 x i32> zeroinitializer
-  %10 = add <4 x i32> %9, splat (i32 2)
-  %i.bp = shufflevector <2 x i32> %5, <2 x i32> poison, <4 x i32> zeroinitializer
-  %11 = add <4 x i32> %i.bp, splat (i32 2)
-  %i.bq = shufflevector <2 x i32> %5, <2 x i32> poison, <4 x i32> zeroinitializer
-  %12 = add <4 x i32> %i.bq, splat (i32 2)
+  %5 = insertelement <4 x i32> poison, i32 %i.ai, i64 0
+  %i.bp = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
+  %6 = insertelement <4 x i32> poison, i32 %i.ae, i64 0
+  %i.bq = shufflevector <4 x i32> %6, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
@@ -281,32 +275,32 @@ bb.d:                                             ; preds = %_ZN11duckdb_zstdL23
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %indvars.iv.i.i ; 5 uses
   %i.bs = load <4 x i32>, ptr %i.br, align 4, !tbaa !17 ; 3 uses
   %i.bt = icmp eq <4 x i32> %i.bs, splat (i32 1)
-  %i.bu = icmp ult <4 x i32> %i.bs, %7
-  %i.bv = sub <4 x i32> %i.bs, %8
+  %i.bu = icmp ult <4 x i32> %i.bs, %i.bp
+  %i.bv = sub <4 x i32> %i.bs, %i.bq
   %i.bw = select <4 x i1> %i.bu, <4 x i32> zeroinitializer, <4 x i32> %i.bv
   %i.bx = select <4 x i1> %i.bt, <4 x i32> splat (i32 1), <4 x i32> %i.bw
   store <4 x i32> %i.bx, ptr %i.br, align 4, !tbaa !17
   %i.by = getelementptr inbounds nuw i8, ptr %i.br, i64 16 ; 2 uses
   %i.bz = load <4 x i32>, ptr %i.by, align 4, !tbaa !17 ; 3 uses
   %i.ca = icmp eq <4 x i32> %i.bz, splat (i32 1)
-  %i.cb = icmp ult <4 x i32> %i.bz, %10
-  %i.cc = sub <4 x i32> %i.bz, %8
+  %i.cb = icmp ult <4 x i32> %i.bz, %i.bp
+  %i.cc = sub <4 x i32> %i.bz, %i.bq
   %i.cd = select <4 x i1> %i.cb, <4 x i32> zeroinitializer, <4 x i32> %i.cc
   %i.ce = select <4 x i1> %i.ca, <4 x i32> splat (i32 1), <4 x i32> %i.cd
   store <4 x i32> %i.ce, ptr %i.by, align 4, !tbaa !17
   %i.cf = getelementptr inbounds nuw i8, ptr %i.br, i64 32 ; 2 uses
   %i.cg = load <4 x i32>, ptr %i.cf, align 4, !tbaa !17 ; 3 uses
   %i.ch = icmp eq <4 x i32> %i.cg, splat (i32 1)
-  %i.ci = icmp ult <4 x i32> %i.cg, %11
-  %i.cj = sub <4 x i32> %i.cg, %8
+  %i.ci = icmp ult <4 x i32> %i.cg, %i.bp
+  %i.cj = sub <4 x i32> %i.cg, %i.bq
   %i.ck = select <4 x i1> %i.ci, <4 x i32> zeroinitializer, <4 x i32> %i.cj
   %i.cl = select <4 x i1> %i.ch, <4 x i32> splat (i32 1), <4 x i32> %i.ck
   store <4 x i32> %i.cl, ptr %i.cf, align 4, !tbaa !17
   %i.cm = getelementptr inbounds nuw i8, ptr %i.br, i64 48 ; 2 uses
   %i.cn = load <4 x i32>, ptr %i.cm, align 4, !tbaa !17 ; 3 uses
   %i.co = icmp eq <4 x i32> %i.cn, splat (i32 1)
-  %i.cp = icmp ult <4 x i32> %i.cn, %12
-  %i.cq = sub <4 x i32> %i.cn, %8
+  %i.cp = icmp ult <4 x i32> %i.cn, %i.bp
+  %i.cq = sub <4 x i32> %i.cn, %i.bq
   %i.cr = select <4 x i1> %i.cp, <4 x i32> zeroinitializer, <4 x i32> %i.cq
   %i.cs = select <4 x i1> %i.co, <4 x i32> splat (i32 1), <4 x i32> %i.cr
   store <4 x i32> %i.cs, ptr %i.cm, align 4, !tbaa !17
