@@ -204,14 +204,10 @@ bb.b:                                             ; preds = %.loopexit92.i, %.lr
   %i.n = getelementptr i8, ptr %i.k, i64 184
   %i.o = load ptr, ptr %i.n, align 8              ; 3 uses
   %i.p = getelementptr i8, ptr %i.o, i64 660
-  %i.q = load i16, ptr %i.p, align 4              ; 2 uses
-  %1 = lshr i16 %i.q, 9
-  %2 = and i16 %1, 1
-  %3 = lshr i16 %i.q, 7
-  %4 = xor i16 %3, -1
-  %i.r = and i16 %2, %4
-  %.not74.i = icmp eq i16 %i.r, 0
-  br i1 %.not74.i, label %bb.d, label %bb.c, !prof !22
+  %i.q = load i16, ptr %i.p, align 4
+  %i.r = and i16 %i.q, 640
+  %.not74.i = icmp eq i16 %i.r, 512
+  br i1 %.not74.i, label %bb.c, label %bb.d, !prof !19
 
 bb.c:                                             ; preds = %bb.b
   %i.s = tail call zeroext i1 @i915_gem_clflush_object(ptr noundef %i.o, i32 noundef 0) #14
