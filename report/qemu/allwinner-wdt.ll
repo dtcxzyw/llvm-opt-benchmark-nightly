@@ -202,10 +202,10 @@ bb.j:                                             ; preds = %trace_allwinner_wdt
   %i.v = load i32, ptr %i.u, align 8
   %i.w = trunc i64 %2 to i32                      ; 2 uses
   store i32 %i.w, ptr %i.u, align 8
-  %4 = xor i32 %i.v, -1
+  %4 = trunc i32 %i.v to i1
   %i.x = and i32 %i.w, 1
-  %5 = and i32 %i.x, %4
-  %.not29 = icmp eq i32 %5, 0
+  %.not2934 = icmp eq i32 %i.x, 0
+  %.not29 = or i1 %.not2934, %4
   br i1 %.not29, label %bb.p, label %bb.k
 
 bb.k:                                             ; preds = %bb.j

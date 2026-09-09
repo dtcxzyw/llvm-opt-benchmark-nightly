@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ct = select i1 %.not533, i1 %.0220541, i1 false
   %i.cu = trunc i64 %indvars.iv to i1
   %i.cv = xor i1 %i.cu, true
-  %32 = and i1 %.0542, %i.cv
+  %32 = select i1 %i.cv, i1 %.0542, i1 false
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n

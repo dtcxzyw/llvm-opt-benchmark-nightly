@@ -202,10 +202,10 @@ bb.i:                                             ; preds = %trace_tmp105_write.
   %i.w = load i8, ptr %i.v, align 1               ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 177 ; 2 uses
   %i.y = load i8, ptr %i.x, align 1
-  %2 = xor i8 %i.y, -1
+  %2 = trunc i8 %i.y to i1
   %i.z = and i8 %i.w, 1
-  %3 = and i8 %i.z, %2
-  %.not.i = icmp eq i8 %3, 0
+  %.not30.i = icmp eq i8 %i.z, 0
+  %.not.i = select i1 %2, i1 true, i1 %.not30.i
   br i1 %.not.i, label %trace_tmp105_write_shutdown.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
