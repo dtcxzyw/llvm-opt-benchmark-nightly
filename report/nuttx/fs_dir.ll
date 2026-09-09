@@ -202,10 +202,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 28
   %i.u = load i16, ptr %i.t, align 4
-  %i.v = and i16 %i.u, 15
-  %switch.tableidx = add nsw i16 %i.v, -1         ; 3 uses
+  %i.v = and i16 %i.u, 15                         ; 2 uses
+  %switch.tableidx = add nsw i16 %i.v, -1         ; 2 uses
   %i.w = icmp ult i16 %switch.tableidx, 10
-  %switch.shifted = lshr i16 639, %switch.tableidx
+  %switch.shifted = lshr i16 1278, %i.v
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond26 = select i1 %i.w, i1 %switch.lobit, i1 false
   br i1 %or.cond26, label %switch.lookup, label %bb.f
