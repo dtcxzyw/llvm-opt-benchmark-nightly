@@ -205,7 +205,7 @@ bb.a:
   %15 = alloca %"class.openvdb::v13_0::tree::ValueAccessorImpl.2062", align 8 ; 26 uses
   %i.h = alloca float, align 4                    ; 5 uses
   %16 = alloca %"class.openvdb::v13_0::math::Coord", align 8 ; 16 uses
-  %17 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 16 uses
+  %17 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 15 uses
   %18 = alloca %"struct.openvdb::v13_0::tree::LeafNode<float, 3>::ValueIter", align 8 ; 6 uses
   %19 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 8 uses
   %20 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 8 uses
@@ -482,8 +482,8 @@ _ZNSt10unique_ptrIA_bSt14default_deleteIS0_EE5resetIPbvEEvT_.exit: ; preds = %_Z
 .lr.ph387:                                        ; preds = %_ZNSt10unique_ptrIA_bSt14default_deleteIS0_EE5resetIPbvEEvT_.exit
   %i.bv = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %18, i64 16
-  %i.bx = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %i.by = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 4 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 3 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 6 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.cb = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
@@ -886,19 +886,22 @@ bb.be:                                            ; preds = %.noexc197
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23, !noalias !11458
   %i.jc = load double, ptr %i.cc, align 16, !tbaa !595, !noalias !11459
   %i.jd = load double, ptr %i.cd, align 16, !tbaa !595, !alias.scope !11458, !noalias !11460
-  %21 = load <3 x double>, ptr %17, align 16, !noalias !11458 ; 3 uses
+  %21 = load <2 x double>, ptr %i.bx, align 8
+  %22 = load <2 x double>, ptr %17, align 16
+  %.sroa.917.0.copyload.i = load double, ptr %i.by, align 16, !noalias !11458
   %i.je = load <2 x double>, ptr %9, align 16, !tbaa !595, !noalias !11459 ; 2 uses
   %i.jf = load <2 x double>, ptr %19, align 16, !tbaa !595, !alias.scope !11458, !noalias !11460 ; 2 uses
-  %i.jg = shufflevector <3 x double> %21, <3 x double> poison, <2 x i32> zeroinitializer
+  %i.jg = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jh = shufflevector <2 x double> %i.je, <2 x double> %i.jf, <2 x i32> <i32 0, i32 2>
   %i.ji = fsub <2 x double> %i.jg, %i.jh          ; 2 uses
-  %22 = shufflevector <3 x double> %21, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %23 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jj = shufflevector <2 x double> %i.je, <2 x double> %i.jf, <2 x i32> <i32 1, i32 3>
-  %i.jk = fsub <2 x double> %22, %i.jj            ; 2 uses
-  %23 = shufflevector <3 x double> %21, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.jk = fsub <2 x double> %23, %i.jj            ; 2 uses
+  %24 = insertelement <2 x double> poison, double %.sroa.917.0.copyload.i, i64 0
+  %25 = shufflevector <2 x double> %24, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jl = insertelement <2 x double> poison, double %i.jc, i64 0
   %i.jm = insertelement <2 x double> %i.jl, double %i.jd, i64 1
-  %i.jn = fsub <2 x double> %23, %i.jm            ; 2 uses
+  %i.jn = fsub <2 x double> %25, %i.jm            ; 2 uses
   %i.jo = fmul <2 x double> %i.jk, %i.jk
   %i.jp = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ji, <2 x double> %i.ji, <2 x double> %i.jo)
   %i.jq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jn, <2 x double> %i.jn, <2 x double> %i.jp) ; 2 uses
@@ -1301,28 +1304,30 @@ bb.cd:                                            ; preds = %.noexc216
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23, !noalias !11463
   %i.tz = load double, ptr %i.cl, align 16, !tbaa !595, !noalias !11464
   %i.ua = load double, ptr %i.cm, align 16, !tbaa !595, !alias.scope !11463, !noalias !11465
-  %24 = load <3 x double>, ptr %17, align 16, !noalias !11463 ; 5 uses
-  %.sroa.013.0.copyload.i211.a = load double, ptr %17, align 16, !noalias !11463 ; 2 uses
+  %.sroa.615.0.copyload.i213 = load double, ptr %i.bx, align 8, !noalias !11463 ; 3 uses
+  %.sroa.013.0.copyload.i211 = load double, ptr %17, align 16, !noalias !11463 ; 3 uses
+  %.sroa.013.0.copyload.i211.a = load double, ptr %i.by, align 16, !noalias !11463 ; 3 uses
   %i.ub = load <2 x double>, ptr %4, align 16, !tbaa !595, !noalias !11464 ; 2 uses
   %i.uc = load <2 x double>, ptr %20, align 16, !tbaa !595, !alias.scope !11463, !noalias !11465 ; 2 uses
-  %i.ud = shufflevector <3 x double> %24, <3 x double> poison, <2 x i32> zeroinitializer
+  %26 = insertelement <2 x double> poison, double %.sroa.013.0.copyload.i211, i64 0
+  %i.ud = shufflevector <2 x double> %26, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ue = shufflevector <2 x double> %i.ub, <2 x double> %i.uc, <2 x i32> <i32 0, i32 2>
   %i.uf = fsub <2 x double> %i.ud, %i.ue          ; 2 uses
-  %25 = shufflevector <3 x double> %24, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %27 = insertelement <2 x double> poison, double %.sroa.615.0.copyload.i213, i64 0
+  %28 = shufflevector <2 x double> %27, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ug = shufflevector <2 x double> %i.ub, <2 x double> %i.uc, <2 x i32> <i32 1, i32 3>
-  %i.uh = fsub <2 x double> %25, %i.ug            ; 2 uses
-  %26 = shufflevector <3 x double> %24, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.uh = fsub <2 x double> %28, %i.ug            ; 2 uses
+  %29 = insertelement <2 x double> poison, double %.sroa.013.0.copyload.i211.a, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ui = insertelement <2 x double> poison, double %i.tz, i64 0
   %i.uj = insertelement <2 x double> %i.ui, double %i.ua, i64 1
-  %i.uk = fsub <2 x double> %26, %i.uj            ; 2 uses
+  %i.uk = fsub <2 x double> %30, %i.uj            ; 2 uses
   %i.ul = fmul <2 x double> %i.uh, %i.uh
   %i.um = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.uf, <2 x double> %i.uf, <2 x double> %i.ul)
   %i.un = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.uk, <2 x double> %i.uk, <2 x double> %i.um) ; 2 uses
   %i.uo = extractelement <2 x double> %i.un, i64 0
   %i.up = extractelement <2 x double> %i.un, i64 1
   %i.uq = fcmp olt double %i.uo, %i.up
-  %27 = extractelement <3 x double> %24, i64 1    ; 2 uses
-  %28 = extractelement <3 x double> %24, i64 2    ; 2 uses
   br i1 %i.uq, label %bb.ce, label %_ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222
 
 bb.ce:                                            ; preds = %.noexc217
@@ -1330,9 +1335,9 @@ bb.ce:                                            ; preds = %.noexc217
   br label %_ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222
 
 _ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222: ; preds = %.noexc216._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222_crit_edge, %.noexc217, %bb.ce
-  %.sroa.9.0.copyload241 = phi double [ %.sroa.9.0.copyload241.pre, %.noexc216._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222_crit_edge ], [ %28, %.noexc217 ], [ %28, %bb.ce ]
-  %.sroa.7.0.copyload239 = phi double [ %.sroa.7.0.copyload239.pre, %.noexc216._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222_crit_edge ], [ %27, %.noexc217 ], [ %27, %bb.ce ]
-  %.sroa.0.0.copyload237 = phi double [ %.sroa.0.0.copyload237.pre, %.noexc216._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222_crit_edge ], [ %.sroa.013.0.copyload.i211.a, %.noexc217 ], [ %.sroa.013.0.copyload.i211.a, %bb.ce ]
+  %.sroa.9.0.copyload241 = phi double [ %.sroa.9.0.copyload241.pre, %.noexc216._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222_crit_edge ], [ %.sroa.013.0.copyload.i211.a, %.noexc217 ], [ %.sroa.013.0.copyload.i211.a, %bb.ce ]
+  %.sroa.7.0.copyload239 = phi double [ %.sroa.7.0.copyload239.pre, %.noexc216._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222_crit_edge ], [ %.sroa.615.0.copyload.i213, %.noexc217 ], [ %.sroa.615.0.copyload.i213, %bb.ce ]
+  %.sroa.0.0.copyload237 = phi double [ %.sroa.0.0.copyload237.pre, %.noexc216._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit222_crit_edge ], [ %.sroa.013.0.copyload.i211, %.noexc217 ], [ %.sroa.013.0.copyload.i211, %bb.ce ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23, !noalias !11463
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23, !noalias !11463
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23, !noalias !11463
@@ -1735,7 +1740,7 @@ bb.a:
   %15 = alloca %"class.openvdb::v13_0::tree::ValueAccessorImpl.2062", align 8 ; 26 uses
   %i.h = alloca double, align 8                   ; 5 uses
   %16 = alloca %"class.openvdb::v13_0::math::Coord", align 8 ; 16 uses
-  %17 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 16 uses
+  %17 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 15 uses
   %18 = alloca %"struct.openvdb::v13_0::tree::LeafNode<double, 3>::ValueIter", align 8 ; 6 uses
   %19 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 8 uses
   %20 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 8 uses
@@ -2012,8 +2017,8 @@ _ZNSt10unique_ptrIA_bSt14default_deleteIS0_EE5resetIPbvEEvT_.exit: ; preds = %_Z
 .lr.ph385:                                        ; preds = %_ZNSt10unique_ptrIA_bSt14default_deleteIS0_EE5resetIPbvEEvT_.exit
   %i.bv = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %18, i64 16
-  %i.bx = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %i.by = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 4 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 3 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 6 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.cb = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
@@ -2416,19 +2421,22 @@ bb.be:                                            ; preds = %.noexc195
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23, !noalias !11601
   %i.jc = load double, ptr %i.cc, align 16, !tbaa !595, !noalias !11602
   %i.jd = load double, ptr %i.cd, align 16, !tbaa !595, !alias.scope !11601, !noalias !11603
-  %21 = load <3 x double>, ptr %17, align 16, !noalias !11601 ; 3 uses
+  %21 = load <2 x double>, ptr %i.bx, align 8
+  %22 = load <2 x double>, ptr %17, align 16
+  %.sroa.917.0.copyload.i = load double, ptr %i.by, align 16, !noalias !11601
   %i.je = load <2 x double>, ptr %9, align 16, !tbaa !595, !noalias !11602 ; 2 uses
   %i.jf = load <2 x double>, ptr %19, align 16, !tbaa !595, !alias.scope !11601, !noalias !11603 ; 2 uses
-  %i.jg = shufflevector <3 x double> %21, <3 x double> poison, <2 x i32> zeroinitializer
+  %i.jg = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jh = shufflevector <2 x double> %i.je, <2 x double> %i.jf, <2 x i32> <i32 0, i32 2>
   %i.ji = fsub <2 x double> %i.jg, %i.jh          ; 2 uses
-  %22 = shufflevector <3 x double> %21, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %23 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jj = shufflevector <2 x double> %i.je, <2 x double> %i.jf, <2 x i32> <i32 1, i32 3>
-  %i.jk = fsub <2 x double> %22, %i.jj            ; 2 uses
-  %23 = shufflevector <3 x double> %21, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.jk = fsub <2 x double> %23, %i.jj            ; 2 uses
+  %24 = insertelement <2 x double> poison, double %.sroa.917.0.copyload.i, i64 0
+  %25 = shufflevector <2 x double> %24, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jl = insertelement <2 x double> poison, double %i.jc, i64 0
   %i.jm = insertelement <2 x double> %i.jl, double %i.jd, i64 1
-  %i.jn = fsub <2 x double> %23, %i.jm            ; 2 uses
+  %i.jn = fsub <2 x double> %25, %i.jm            ; 2 uses
   %i.jo = fmul <2 x double> %i.jk, %i.jk
   %i.jp = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ji, <2 x double> %i.ji, <2 x double> %i.jo)
   %i.jq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jn, <2 x double> %i.jn, <2 x double> %i.jp) ; 2 uses
@@ -2831,28 +2839,30 @@ bb.cd:                                            ; preds = %.noexc214
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23, !noalias !11606
   %i.tz = load double, ptr %i.cl, align 16, !tbaa !595, !noalias !11607
   %i.ua = load double, ptr %i.cm, align 16, !tbaa !595, !alias.scope !11606, !noalias !11608
-  %24 = load <3 x double>, ptr %17, align 16, !noalias !11606 ; 5 uses
-  %.sroa.013.0.copyload.i209.a = load double, ptr %17, align 16, !noalias !11606 ; 2 uses
+  %.sroa.615.0.copyload.i211 = load double, ptr %i.bx, align 8, !noalias !11606 ; 3 uses
+  %.sroa.013.0.copyload.i209 = load double, ptr %17, align 16, !noalias !11606 ; 3 uses
+  %.sroa.013.0.copyload.i209.a = load double, ptr %i.by, align 16, !noalias !11606 ; 3 uses
   %i.ub = load <2 x double>, ptr %4, align 16, !tbaa !595, !noalias !11607 ; 2 uses
   %i.uc = load <2 x double>, ptr %20, align 16, !tbaa !595, !alias.scope !11606, !noalias !11608 ; 2 uses
-  %i.ud = shufflevector <3 x double> %24, <3 x double> poison, <2 x i32> zeroinitializer
+  %26 = insertelement <2 x double> poison, double %.sroa.013.0.copyload.i209, i64 0
+  %i.ud = shufflevector <2 x double> %26, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ue = shufflevector <2 x double> %i.ub, <2 x double> %i.uc, <2 x i32> <i32 0, i32 2>
   %i.uf = fsub <2 x double> %i.ud, %i.ue          ; 2 uses
-  %25 = shufflevector <3 x double> %24, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %27 = insertelement <2 x double> poison, double %.sroa.615.0.copyload.i211, i64 0
+  %28 = shufflevector <2 x double> %27, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ug = shufflevector <2 x double> %i.ub, <2 x double> %i.uc, <2 x i32> <i32 1, i32 3>
-  %i.uh = fsub <2 x double> %25, %i.ug            ; 2 uses
-  %26 = shufflevector <3 x double> %24, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.uh = fsub <2 x double> %28, %i.ug            ; 2 uses
+  %29 = insertelement <2 x double> poison, double %.sroa.013.0.copyload.i209.a, i64 0
+  %30 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ui = insertelement <2 x double> poison, double %i.tz, i64 0
   %i.uj = insertelement <2 x double> %i.ui, double %i.ua, i64 1
-  %i.uk = fsub <2 x double> %26, %i.uj            ; 2 uses
+  %i.uk = fsub <2 x double> %30, %i.uj            ; 2 uses
   %i.ul = fmul <2 x double> %i.uh, %i.uh
   %i.um = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.uf, <2 x double> %i.uf, <2 x double> %i.ul)
   %i.un = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.uk, <2 x double> %i.uk, <2 x double> %i.um) ; 2 uses
   %i.uo = extractelement <2 x double> %i.un, i64 0
   %i.up = extractelement <2 x double> %i.un, i64 1
   %i.uq = fcmp olt double %i.uo, %i.up
-  %27 = extractelement <3 x double> %24, i64 1    ; 2 uses
-  %28 = extractelement <3 x double> %24, i64 2    ; 2 uses
   br i1 %i.uq, label %bb.ce, label %_ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220
 
 bb.ce:                                            ; preds = %.noexc215
@@ -2860,9 +2870,9 @@ bb.ce:                                            ; preds = %.noexc215
   br label %_ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220
 
 _ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220: ; preds = %.noexc214._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220_crit_edge, %.noexc215, %bb.ce
-  %.sroa.9.0.copyload239 = phi double [ %.sroa.9.0.copyload239.pre, %.noexc214._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220_crit_edge ], [ %28, %.noexc215 ], [ %28, %bb.ce ]
-  %.sroa.7.0.copyload237 = phi double [ %.sroa.7.0.copyload237.pre, %.noexc214._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220_crit_edge ], [ %27, %.noexc215 ], [ %27, %bb.ce ]
-  %.sroa.0.0.copyload235 = phi double [ %.sroa.0.0.copyload235.pre, %.noexc214._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220_crit_edge ], [ %.sroa.013.0.copyload.i209.a, %.noexc215 ], [ %.sroa.013.0.copyload.i209.a, %bb.ce ]
+  %.sroa.9.0.copyload239 = phi double [ %.sroa.9.0.copyload239.pre, %.noexc214._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220_crit_edge ], [ %.sroa.013.0.copyload.i209.a, %.noexc215 ], [ %.sroa.013.0.copyload.i209.a, %bb.ce ]
+  %.sroa.7.0.copyload237 = phi double [ %.sroa.7.0.copyload237.pre, %.noexc214._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220_crit_edge ], [ %.sroa.615.0.copyload.i211, %.noexc215 ], [ %.sroa.615.0.copyload.i211, %bb.ce ]
+  %.sroa.0.0.copyload235 = phi double [ %.sroa.0.0.copyload235.pre, %.noexc214._ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit220_crit_edge ], [ %.sroa.013.0.copyload.i209, %.noexc215 ], [ %.sroa.013.0.copyload.i209, %bb.ce ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23, !noalias !11606
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23, !noalias !11606
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23, !noalias !11606

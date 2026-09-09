@@ -204,14 +204,14 @@ scalar.ph619:                                     ; preds = %scalar.ph619.prehea
   br i1 %.not307, label %.thread.loopexit405, label %scalar.ph619, !llvm.loop !903
 
 bb.g:                                             ; preds = %bb.b
-  %6 = load <3 x float>, ptr %i.h, align 4, !tbaa !240 ; 8 uses
-  %i.fr = load float, ptr %i.h, align 4, !tbaa !240
-  %7 = fcmp oeq float %i.fr, -2.000000e+00
-  %8 = extractelement <3 x float> %6, i64 1
-  %9 = fcmp oeq float %8, 0.000000e+00
-  %or.cond = select i1 %7, i1 %9, i1 false
-  %10 = extractelement <3 x float> %6, i64 2
-  %i.fs = fcmp oeq float %10, 1.000000e+00
+  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %i.fr = load float, ptr %6, align 4, !tbaa !240 ; 3 uses
+  %7 = load <2 x float>, ptr %i.h, align 4, !tbaa !240 ; 5 uses
+  %8 = fcmp oeq <2 x float> %7, <float -2.000000e+00, float 0.000000e+00> ; 2 uses
+  %9 = extractelement <2 x i1> %8, i64 0
+  %10 = extractelement <2 x i1> %8, i64 1
+  %or.cond = select i1 %9, i1 %10, i1 false
+  %i.fs = fcmp oeq float %i.fr, 1.000000e+00
   %or.cond3 = select i1 %or.cond, i1 %i.fs, i1 false
   %.not306329 = icmp slt i32 %i.n, 2              ; 2 uses
   br i1 %or.cond3, label %.preheader321, label %.preheader323
@@ -241,9 +241,10 @@ bb.g:                                             ; preds = %bb.b
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %i.hp, %vector.body ]
   %.4290326.ph = phi ptr [ %i.m, %vector.memcheck ], [ %i.m, %.lr.ph ], [ %i.hr, %vector.body ]
-  %i.gi = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.gj = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> zeroinitializer
-  %11 = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.gi = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.gj = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = insertelement <2 x float> poison, float %i.fr, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
   br label %scalar.ph
 
 vector.memcheck:                                  ; preds = %.lr.ph
@@ -320,9 +321,10 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.hp = shl nsw i64 %n.vec, 1
   %i.hq = shl nsw i64 %n.vec, 3
   %i.hr = getelementptr i8, ptr %i.m, i64 %i.hq
-  %broadcast.splat = shufflevector <3 x float> %6, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %broadcast.splat537 = shufflevector <3 x float> %6, <3 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splat539 = shufflevector <3 x float> %6, <3 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2> ; 2 uses
+  %broadcast.splat = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
+  %broadcast.splat537 = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert538 = insertelement <4 x float> poison, float %i.fr, i64 0
+  %broadcast.splat539 = shufflevector <4 x float> %broadcast.splatinsert538, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -520,7 +522,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.li = insertelement <2 x float> poison, float %i.kt, i64 0
   %i.lj = insertelement <2 x float> %i.li, float %i.ky, i64 1
   %i.lk = fadd <2 x float> %i.lj, %i.lh
-  %i.ll = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.lk, <2 x float> %11, <2 x float> %i.lg)
+  %i.ll = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.lk, <2 x float> %12, <2 x float> %i.lg)
   store <2 x float> %i.ll, ptr %i.kz, align 4, !tbaa !240
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.lm = getelementptr inbounds nuw i8, ptr %.4290326, i64 8 ; 2 uses

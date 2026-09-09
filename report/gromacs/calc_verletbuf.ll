@@ -205,14 +205,18 @@ _ZL15get_atom_sigma2fRK33AtomNonbondedAndKineticPropertiesPfS2_.exit89: ; preds 
   %i.dc = add nsw i32 %i.cz, %i.db
   %i.dd = sext i32 %i.dc to i64
   %i.de = load ptr, ptr %i.g, align 8, !tbaa !232
-  %i.df = getelementptr inbounds nuw [48 x i8], ptr %i.de, i64 %i.dd
+  %i.df = getelementptr inbounds nuw [48 x i8], ptr %i.de, i64 %i.dd ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.df, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #26
-  %14 = load <2 x float>, ptr %i.df, align 4, !tbaa !18 ; 2 uses
+  %15 = load float, ptr %14, align 4, !tbaa !18
+  %16 = load float, ptr %i.df, align 4, !tbaa !18
   %i.dg = load <4 x float>, ptr %4, align 4, !tbaa !28
   %i.dh = load <4 x float>, ptr %5, align 4, !tbaa !28
-  %15 = shufflevector <2 x float> %14, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.di = fmul <4 x float> %15, %i.dh
-  %i.dj = shufflevector <2 x float> %14, <2 x float> poison, <4 x i32> zeroinitializer
+  %17 = insertelement <4 x float> poison, float %15, i64 0
+  %18 = shufflevector <4 x float> %17, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.di = fmul <4 x float> %18, %i.dh
+  %19 = insertelement <4 x float> poison, float %16, i64 0
+  %i.dj = shufflevector <4 x float> %19, <4 x float> poison, <4 x i32> zeroinitializer
   %i.dk = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dj, <4 x float> %i.dg, <4 x float> %i.di)
   store <4 x float> %i.dk, ptr %12, align 16, !tbaa !28
   %i.dl = load i16, ptr %i.p, align 4, !tbaa !27

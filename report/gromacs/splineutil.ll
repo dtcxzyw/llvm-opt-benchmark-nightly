@@ -204,22 +204,27 @@ bb.h:                                             ; preds = %bb.a
   store ptr %i.m, ptr %i.p, align 8, !tbaa !71
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.r = getelementptr i8, ptr %1, i64 16
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = fmul double %3, 1.200000e+01
   %i.t = fmul double %3, %i.s                     ; 3 uses
   %i.u = load <2 x double>, ptr %i.q, align 8, !tbaa !13 ; 3 uses
   %i.v = extractelement <2 x double> %i.u, i64 0
   %i.w = fmul double %i.v, -5.600000e+01
-  %i.x = load double, ptr %i.r, align 8, !tbaa !13
-  %7 = load <3 x double>, ptr %1, align 8, !tbaa !13 ; 4 uses
+  %8 = load double, ptr %i.r, align 8, !tbaa !13  ; 3 uses
+  %i.x = load double, ptr %7, align 8, !tbaa !13
+  %9 = load double, ptr %1, align 8, !tbaa !13
   %i.y = fneg <2 x double> %i.u
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.aa = insertelement <2 x double> %i.z, double %i.w, i64 1
   %i.ab = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.u, <2 x double> <double 4.000000e+00, double 1.100000e+01>, <2 x double> %i.aa)
-  %8 = shufflevector <3 x double> %7, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.ac = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> <double 6.000000e+00, double 1.140000e+02>, <2 x double> %i.ab)
-  %9 = shufflevector <3 x double> %7, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.ad = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> <double -2.000000e+01, double -1.040000e+02>, <2 x double> %i.ac)
-  %i.ae = shufflevector <3 x double> %7, <3 x double> poison, <2 x i32> zeroinitializer
+  %10 = insertelement <2 x double> poison, double %8, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ac = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> <double 6.000000e+00, double 1.140000e+02>, <2 x double> %i.ab)
+  %12 = insertelement <2 x double> poison, double %i.x, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ad = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> <double -2.000000e+01, double -1.040000e+02>, <2 x double> %i.ac)
+  %14 = insertelement <2 x double> poison, double %9, i64 0
+  %i.ae = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
   %i.af = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ae, <2 x double> <double 1.100000e+01, double 3.500000e+01>, <2 x double> %i.ad)
   %i.ag = insertelement <2 x double> poison, double %i.t, i64 0
   %i.ah = shufflevector <2 x double> %i.ag, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -241,12 +246,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.ao = or disjoint i64 %n.vec, 2
   %broadcast.splatinsert = insertelement <4 x double> poison, double %i.t, i64 0
   %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer
-  %10 = shufflevector <3 x double> %7, <3 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 2>
+  %vector.recur.init = insertelement <4 x double> poison, double %8, i64 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vector.recur = phi <4 x double> [ %10, %vector.ph ], [ %wide.load96, %vector.body ]
+  %vector.recur = phi <4 x double> [ %vector.recur.init, %vector.ph ], [ %wide.load96, %vector.body ]
   %i.ap = or disjoint i64 %index, 2               ; 2 uses
   %i.aq = getelementptr [8 x i8], ptr %1, i64 %i.ap ; 3 uses
   %i.ar = getelementptr i8, ptr %i.aq, i64 16
@@ -277,7 +282,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader99
 
 .lr.ph.preheader99:                               ; preds = %.lr.ph.preheader, %middle.block
-  %.ph = phi double [ %i.x, %.lr.ph.preheader ], [ %vector.recur.extract, %middle.block ]
+  %.ph = phi double [ %8, %.lr.ph.preheader ], [ %vector.recur.extract, %middle.block ]
   %.092.ph = phi i64 [ 2, %.lr.ph.preheader ], [ %i.ao, %middle.block ]
   br label %.lr.ph
 

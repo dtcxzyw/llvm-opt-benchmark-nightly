@@ -205,12 +205,11 @@ bb.a:
   %i.s = sub nsw i32 %i.e, %2
   %i.t = icmp sgt i32 %2, 0
   %i.u = load i16, ptr @weight1, align 2
-  %8 = load i16, ptr @weight2, align 2
-  %i.v = load i16, ptr @offsetBi, align 2
-  %9 = insertelement <3 x i16> poison, i16 %i.u, i64 0
-  %10 = insertelement <3 x i16> %9, i16 %8, i64 1
-  %11 = insertelement <3 x i16> %10, i16 %i.v, i64 2
-  %12 = sext <3 x i16> %11 to <3 x i32>           ; 3 uses
+  %8 = sext i16 %i.u to i32
+  %i.v = load i16, ptr @weight2, align 2
+  %9 = sext i16 %i.v to i32
+  %10 = load i16, ptr @offsetBi, align 2
+  %11 = sext i16 %10 to i32
   %i.w = sext i32 %i.s to i64                     ; 2 uses
   br i1 %i.t, label %.preheader109.lr.ph.split.us, label %.preheader109.lr.ph.split
 
@@ -218,13 +217,16 @@ bb.a:
   %i.x = load ptr, ptr @img, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 15520
   %i.z = load i32, ptr %i.y, align 8, !tbaa !41
-  %i.aa = shufflevector <3 x i32> %12, <3 x i32> poison, <4 x i32> zeroinitializer
+  %12 = insertelement <4 x i32> poison, i32 %8, i64 0
+  %i.aa = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ab = insertelement <4 x i32> poison, i32 %i.d, i64 0
   %i.ac = shufflevector <4 x i32> %i.ab, <4 x i32> poison, <4 x i32> zeroinitializer
-  %13 = shufflevector <3 x i32> %12, <3 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %13 = insertelement <4 x i32> poison, i32 %9, i64 0
+  %14 = shufflevector <4 x i32> %13, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ad = insertelement <4 x i32> poison, i32 %i.b, i64 0
   %i.ae = shufflevector <4 x i32> %i.ad, <4 x i32> poison, <4 x i32> zeroinitializer
-  %14 = shufflevector <3 x i32> %12, <3 x i32> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %15 = insertelement <4 x i32> poison, i32 %11, i64 0
+  %16 = shufflevector <4 x i32> %15, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.af = insertelement <4 x i32> poison, i32 %i.z, i64 0
   %i.ag = shufflevector <4 x i32> %i.af, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %.preheader109.us
@@ -251,11 +253,11 @@ bb.b:                                             ; preds = %.preheader109.us, %
   %i.ap = mul nsw <4 x i32> %i.aa, %i.ao
   %i.aq = load <4 x i16>, ptr %i.ai, align 2, !tbaa !38
   %i.ar = zext <4 x i16> %i.aq to <4 x i32>
-  %i.as = mul nsw <4 x i32> %13, %i.ar
+  %i.as = mul nsw <4 x i32> %14, %i.ar
   %i.at = add <4 x i32> %i.ap, %i.ac
   %i.au = add <4 x i32> %i.at, %i.as
   %i.av = ashr <4 x i32> %i.au, %i.ae
-  %i.aw = add nsw <4 x i32> %i.av, %14
+  %i.aw = add nsw <4 x i32> %i.av, %16
   %i.ax = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.aw, <4 x i32> zeroinitializer)
   %i.ay = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.ax, <4 x i32> %i.ag)
   %i.az = load <4 x i16>, ptr %i.aj, align 2, !tbaa !38

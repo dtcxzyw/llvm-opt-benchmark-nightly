@@ -200,8 +200,11 @@ begin_hunk_0_@hc2cbdft_20:bb.a
   %i.nb = fsub double %i.mx, %i.mz                ; 2 uses
   %i.nc = fadd double %i.mu, %i.ms                ; 2 uses
   %i.nd = fsub double %i.mv, %i.mt                ; 2 uses
-  %9 = fsub double %i.nc, %i.na
-  %10 = fsub double %i.nd, %i.nb
+  %9 = insertelement <2 x double> poison, double %i.nd, i64 0
+  %10 = insertelement <2 x double> %9, double %i.nc, i64 1
+  %11 = insertelement <2 x double> poison, double %i.nb, i64 0
+  %12 = insertelement <2 x double> %11, double %i.na, i64 1
+  %13 = fsub <2 x double> %10, %12                ; 2 uses
   %i.ne = fadd double %i.nd, %i.nb                ; 2 uses
   %i.nf = fadd double %i.na, %i.nc                ; 2 uses
   %i.ng = fsub double %i.ne, %i.nf
@@ -216,10 +219,8 @@ begin_hunk_0_@hc2cbdft_20:bb.a
   %i.np = fadd double %i.nn, %i.no                ; 2 uses
   %i.nq = fadd double %i.nl, %i.nm                ; 2 uses
   %i.nr = fadd double %i.nq, %i.np                ; 2 uses
-  %11 = insertelement <2 x double> poison, double %9, i64 0
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ns = fmul <2 x double> %12, <double f0x3FE2CF2304755A5E, double f0xBFEE6F0E134454FF>
-  %13 = insertelement <2 x double> poison, double %10, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.ns = fmul <2 x double> %14, <double f0x3FE2CF2304755A5E, double f0xBFEE6F0E134454FF>
   %i.nt = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
   %i.nu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nt, <2 x double> <double f0x3FEE6F0E134454FF, double f0x3FE2CF2304755A5E>, <2 x double> %i.ns) ; 3 uses
   %i.nv = fadd double %i.fd, %i.nr                ; 2 uses

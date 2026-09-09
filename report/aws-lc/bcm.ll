@@ -205,7 +205,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 0, %i.e
   %i.g = and i64 %i.f, 16
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.g ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.g ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #46
   %i.i = ptrtoint ptr %i.b to i64
   %i.j = sub i64 0, %i.i
@@ -234,20 +234,28 @@ bb.a:
   %i.ac = getelementptr inbounds nuw i8, ptr %i.l, i64 64 ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 7 uses
   call void @ecp_nistz256_neg(ptr noundef nonnull %i.ac, ptr noundef nonnull %i.ad) #46
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 72
-  %i.af = getelementptr inbounds nuw i8, ptr %i.l, i64 80
+  %3 = getelementptr inbounds nuw i8, ptr %i.l, i64 72
+  %4 = load <2 x i64>, ptr %i.ac, align 16, !tbaa !80
+  %5 = load <2 x i64>, ptr %i.ad, align 16, !tbaa !80
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 80 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.h, i64 48 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.l, i64 88
-  %i.ah = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.aa, i64 0
-  %i.ai = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.aa, i64 1
-  %3 = sub nsw <2 x i64> %i.ah, %i.ai             ; 2 uses
-  %4 = load <4 x i64>, ptr %i.ac, align 16, !tbaa !80
-  %5 = shufflevector <2 x i64> %3, <2 x i64> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %6 = and <4 x i64> %4, %5
-  %7 = load <4 x i64>, ptr %i.ad, align 16, !tbaa !80
-  %8 = shufflevector <2 x i64> %3, <2 x i64> poison, <4 x i32> zeroinitializer
-  %9 = and <4 x i64> %8, %7
-  %10 = xor <4 x i64> %9, %6
-  store <4 x i64> %10, ptr %i.ad, align 16, !tbaa !80
+  %6 = sub nsw i64 0, %i.aa
+  %7 = add nsw i64 %i.aa, -1
+  %i.ah = insertelement <2 x i64> poison, i64 %6, i64 0
+  %8 = shufflevector <2 x i64> %i.ah, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %9 = and <2 x i64> %4, %8
+  %i.ai = insertelement <2 x i64> poison, i64 %7, i64 0
+  %10 = shufflevector <2 x i64> %i.ai, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %11 = and <2 x i64> %10, %5
+  %12 = xor <2 x i64> %11, %9
+  store <2 x i64> %12, ptr %i.ad, align 16, !tbaa !80
+  %13 = load <2 x i64>, ptr %i.ae, align 16, !tbaa !80
+  %14 = and <2 x i64> %13, %8
+  %15 = load <2 x i64>, ptr %i.af, align 16, !tbaa !80
+  %16 = and <2 x i64> %15, %10
+  %17 = xor <2 x i64> %16, %14
+  store <2 x i64> %17, ptr %i.af, align 16, !tbaa !80
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.l, ptr noundef nonnull readonly align 16 dereferenceable(32) %i.h, i64 32, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.l, i64 32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.aj, ptr noundef nonnull readonly align 16 dereferenceable(32) %i.ad, i64 32, i1 false)
@@ -256,14 +264,15 @@ bb.a:
   %i.al = zext i1 %i.ak to i64
   store i64 %i.al, ptr %i.ac, align 16, !tbaa !80
   %i.am = select i1 %i.ak, i64 -4294967296, i64 0
-  store i64 %i.am, ptr %i.ae, align 8, !tbaa !80
-  store i64 %.neg, ptr %i.af, align 16, !tbaa !80
+  store i64 %i.am, ptr %3, align 8, !tbaa !80
+  store i64 %.neg, ptr %i.ae, align 16, !tbaa !80
   %i.an = select i1 %i.ak, i64 4294967294, i64 0
   store i64 %i.an, ptr %i.ag, align 8, !tbaa !80
   %i.ao = ptrtoint ptr %i.d to i64
   %i.ap = sub i64 0, %i.ao
   %i.aq = and i64 %i.ap, 16
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.aq ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.aq ; 3 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %18, i64 16
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
@@ -303,18 +312,25 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.bo = trunc nuw nsw i64 %i.bl to i32
   call void @ecp_nistz256_select_w7(ptr noundef nonnull %i.h, ptr noundef nonnull %i.bn, i32 noundef %i.bo) #46
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #46
-  call void @ecp_nistz256_neg(ptr noundef nonnull %i.ar, ptr noundef nonnull %i.ad) #46
-  %i.bp = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.bm, i64 0
-  %i.bq = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.bm, i64 1
-  %11 = sub nsw <2 x i64> %i.bp, %i.bq            ; 2 uses
-  %12 = load <4 x i64>, ptr %i.ar, align 16, !tbaa !80
-  %13 = shufflevector <2 x i64> %11, <2 x i64> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %14 = and <4 x i64> %12, %13
-  %15 = load <4 x i64>, ptr %i.ad, align 16, !tbaa !80
-  %16 = shufflevector <2 x i64> %11, <2 x i64> poison, <4 x i32> zeroinitializer
-  %17 = and <4 x i64> %16, %15
-  %18 = xor <4 x i64> %17, %14
-  store <4 x i64> %18, ptr %i.ad, align 16, !tbaa !80
+  call void @ecp_nistz256_neg(ptr noundef nonnull %18, ptr noundef nonnull %i.ad) #46
+  %19 = load <2 x i64>, ptr %18, align 16, !tbaa !80
+  %20 = load <2 x i64>, ptr %i.ad, align 16, !tbaa !80
+  %21 = sub nsw i64 0, %i.bm
+  %22 = add nsw i64 %i.bm, -1
+  %i.bp = insertelement <2 x i64> poison, i64 %21, i64 0
+  %23 = shufflevector <2 x i64> %i.bp, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %24 = and <2 x i64> %19, %23
+  %i.bq = insertelement <2 x i64> poison, i64 %22, i64 0
+  %25 = shufflevector <2 x i64> %i.bq, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %26 = and <2 x i64> %25, %20
+  %27 = xor <2 x i64> %26, %24
+  store <2 x i64> %27, ptr %i.ad, align 16, !tbaa !80
+  %28 = load <2 x i64>, ptr %i.ar, align 16, !tbaa !80
+  %29 = and <2 x i64> %28, %23
+  %30 = load <2 x i64>, ptr %i.af, align 16, !tbaa !80
+  %31 = and <2 x i64> %30, %25
+  %32 = xor <2 x i64> %31, %29
+  store <2 x i64> %32, ptr %i.af, align 16, !tbaa !80
   call void @ecp_nistz256_point_add_affine(ptr noundef nonnull %i.l, ptr noundef nonnull %i.l, ptr noundef nonnull %i.h) #46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #46
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -327,7 +343,7 @@ define internal void @ecp_nistz256_points_mul_public(ptr nofree readnone capture
 bb.a:
   %i.a = alloca [1600 x i8], align 16             ; 4 uses
   %i.b = alloca [33 x i8], align 16               ; 7 uses
-  %i.c = alloca [4 x i64], align 16               ; 6 uses
+  %i.c = alloca [4 x i64], align 16               ; 7 uses
   %i.d = alloca [128 x i8], align 16              ; 4 uses
   %i.e = alloca [128 x i8], align 16              ; 4 uses
   %i.f = alloca [33 x i8], align 16               ; 6 uses
@@ -448,7 +464,7 @@ bb.g:                                             ; preds = %bb.m
   %i.bo = ptrtoint ptr %i.d to i64
   %i.bp = sub i64 0, %i.bo
   %i.bq = and i64 %i.bp, 16
-  %i.br = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.bq ; 5 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.bq ; 6 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.b, i64 31
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !76
   %i.bu = lshr i8 %i.bt, 6
@@ -456,7 +472,9 @@ bb.g:                                             ; preds = %bb.m
   %i.bw = lshr i32 %i.bv, 1
   %i.bx = sub nuw nsw i32 %i.bv, %i.bw
   call void @ecp_nistz256_select_w5(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.at, i32 noundef %i.bx) #46
-  %i.by = getelementptr inbounds nuw i8, ptr %i.br, i64 32 ; 6 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.br, i64 32 ; 6 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %i.br, i64 48 ; 4 uses
   call void @ecp_nistz256_point_double(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap) #46
   call void @ecp_nistz256_point_double(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap) #46
   call void @ecp_nistz256_point_double(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap) #46
@@ -486,18 +504,25 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.cq = and i64 %i.ci, 1                        ; 2 uses
   %i.cr = trunc nuw nsw i64 %i.cp to i32
   call void @ecp_nistz256_select_w5(ptr noundef nonnull %i.br, ptr noundef nonnull %i.at, i32 noundef %i.cr) #46
-  call void @ecp_nistz256_neg(ptr noundef nonnull %i.c, ptr noundef nonnull %i.by) #46
-  %i.cs = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.cq, i64 0
-  %i.ct = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.cq, i64 1
-  %5 = sub nsw <2 x i64> %i.cs, %i.ct             ; 2 uses
-  %6 = load <4 x i64>, ptr %i.c, align 16, !tbaa !80
-  %7 = shufflevector <2 x i64> %5, <2 x i64> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %8 = and <4 x i64> %6, %7
-  %9 = load <4 x i64>, ptr %i.by, align 16, !tbaa !80
-  %10 = shufflevector <2 x i64> %5, <2 x i64> poison, <4 x i32> zeroinitializer
-  %11 = and <4 x i64> %10, %9
-  %12 = xor <4 x i64> %11, %8
-  store <4 x i64> %12, ptr %i.by, align 16, !tbaa !80
+  call void @ecp_nistz256_neg(ptr noundef nonnull %i.c, ptr noundef nonnull %5) #46
+  %7 = load <2 x i64>, ptr %i.c, align 16, !tbaa !80
+  %8 = load <2 x i64>, ptr %5, align 16, !tbaa !80
+  %9 = sub nsw i64 0, %i.cq
+  %10 = add nsw i64 %i.cq, -1
+  %i.cs = insertelement <2 x i64> poison, i64 %9, i64 0
+  %11 = shufflevector <2 x i64> %i.cs, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %12 = and <2 x i64> %7, %11
+  %i.ct = insertelement <2 x i64> poison, i64 %10, i64 0
+  %13 = shufflevector <2 x i64> %i.ct, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %14 = and <2 x i64> %13, %8
+  %15 = xor <2 x i64> %14, %12
+  store <2 x i64> %15, ptr %5, align 16, !tbaa !80
+  %16 = load <2 x i64>, ptr %6, align 16, !tbaa !80
+  %17 = and <2 x i64> %16, %11
+  %18 = load <2 x i64>, ptr %i.by, align 16, !tbaa !80
+  %19 = and <2 x i64> %18, %13
+  %20 = xor <2 x i64> %19, %17
+  store <2 x i64> %20, ptr %i.by, align 16, !tbaa !80
   call void @ecp_nistz256_point_add(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.br) #46
   %i.cu = add nsw i64 %.01.i, -5
   call void @ecp_nistz256_point_double(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap) #46
@@ -525,18 +550,25 @@ ecp_nistz256_windowed_mul.exit:                   ; preds = %bb.h
   %i.dj = and i64 %i.db, 1                        ; 2 uses
   %i.dk = trunc nuw nsw i64 %i.di to i32
   call void @ecp_nistz256_select_w5(ptr noundef nonnull %i.br, ptr noundef nonnull %i.at, i32 noundef %i.dk) #46
-  call void @ecp_nistz256_neg(ptr noundef nonnull %i.c, ptr noundef nonnull %i.by) #46
-  %i.dl = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.dj, i64 0
-  %i.dm = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.dj, i64 1
-  %13 = sub nsw <2 x i64> %i.dl, %i.dm            ; 2 uses
-  %14 = load <4 x i64>, ptr %i.c, align 16, !tbaa !80
-  %15 = shufflevector <2 x i64> %13, <2 x i64> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %16 = and <4 x i64> %14, %15
-  %17 = load <4 x i64>, ptr %i.by, align 16, !tbaa !80
-  %18 = shufflevector <2 x i64> %13, <2 x i64> poison, <4 x i32> zeroinitializer
-  %19 = and <4 x i64> %18, %17
-  %20 = xor <4 x i64> %19, %16
-  store <4 x i64> %20, ptr %i.by, align 16, !tbaa !80
+  call void @ecp_nistz256_neg(ptr noundef nonnull %i.c, ptr noundef nonnull %5) #46
+  %21 = load <2 x i64>, ptr %i.c, align 16, !tbaa !80
+  %22 = load <2 x i64>, ptr %5, align 16, !tbaa !80
+  %23 = sub nsw i64 0, %i.dj
+  %24 = add nsw i64 %i.dj, -1
+  %i.dl = insertelement <2 x i64> poison, i64 %23, i64 0
+  %25 = shufflevector <2 x i64> %i.dl, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %26 = and <2 x i64> %21, %25
+  %i.dm = insertelement <2 x i64> poison, i64 %24, i64 0
+  %27 = shufflevector <2 x i64> %i.dm, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %28 = and <2 x i64> %27, %22
+  %29 = xor <2 x i64> %28, %26
+  store <2 x i64> %29, ptr %5, align 16, !tbaa !80
+  %30 = load <2 x i64>, ptr %6, align 16, !tbaa !80
+  %31 = and <2 x i64> %30, %25
+  %32 = load <2 x i64>, ptr %i.by, align 16, !tbaa !80
+  %33 = and <2 x i64> %32, %27
+  %34 = xor <2 x i64> %33, %31
+  store <2 x i64> %34, ptr %i.by, align 16, !tbaa !80
   call void @ecp_nistz256_point_add(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.br) #46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #46

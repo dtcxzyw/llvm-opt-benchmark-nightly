@@ -69,7 +69,7 @@ check_retval.exit:                                ; preds = %bb.a
   br label %bb.n
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !30
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !31
   %i.i = call ptr @N_VNew_Serial(i64 noundef 200, ptr noundef %i.h) #9 ; 7 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %check_retval.exit36, label %bb.c
@@ -308,9 +308,9 @@ check_retval.exit38:                              ; preds = %.preheader.i
   store <2 x double> <double f0x41168D57EB160BA0, double f0x425581E3AC6E122E>, ptr %i.eg, align 8, !tbaa !18
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ca, i64 1568
   store <4 x double> <double f0x4111A3E9C4ED1378, double f0x4250D2B5DC91A7E5, double 2.500000e+05, double 2.500000e+11>, ptr %i.eh, align 8, !tbaa !18
-  %i.ei = load ptr, ptr %i.a, align 8, !tbaa !30
+  %i.ei = load ptr, ptr %i.a, align 8, !tbaa !31
   %i.ej = call ptr @CVodeCreate(i32 noundef 2, ptr noundef %i.ei) #9 ; 11 uses
-  store ptr %i.ej, ptr %i.c, align 8, !tbaa !31
+  store ptr %i.ej, ptr %i.c, align 8, !tbaa !32
   %i.ek = icmp eq ptr %i.ej, null
   br i1 %i.ek, label %check_retval.exit43, label %bb.d
 
@@ -350,7 +350,7 @@ check_retval.exit49:                              ; preds = %bb.f
   br label %bb.n
 
 bb.g:                                             ; preds = %bb.f
-  %i.ez = load ptr, ptr %i.a, align 8, !tbaa !30
+  %i.ez = load ptr, ptr %i.a, align 8, !tbaa !31
   %i.fa = call ptr @SUNLinSol_SPGMR(ptr noundef nonnull %i.i, i32 noundef 1, i32 noundef 0, ptr noundef %i.ez) #9 ; 3 uses
   %i.fb = icmp eq ptr %i.fa, null
   br i1 %i.fb, label %check_retval.exit51, label %bb.h
@@ -479,7 +479,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 2432
   %i.v = load double, ptr %i.u, align 8, !tbaa !24 ; 6 uses
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 2440
-  %i.x = load double, ptr %i.w, align 8, !tbaa !33 ; 6 uses
+  %i.x = load double, ptr %i.w, align 8, !tbaa !25 ; 6 uses
   %i.y = insertelement <2 x double> poison, double %i.t, i64 0
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = insertelement <2 x double> poison, double %.0122, i64 0
@@ -667,7 +667,7 @@ bb.d:                                             ; preds = %.peel.next, %bb.d
   store double %i.ge, ptr %gep143, align 8, !tbaa !18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 9
-  br i1 %exitcond.not, label %.loopexit.peel.begin, label %bb.d, !llvm.loop !32
+  br i1 %exitcond.not, label %.loopexit.peel.begin, label %bb.d, !llvm.loop !33
 
 .loopexit.peel.begin:                             ; preds = %bb.d
   %i.gf = add nuw nsw i64 %i.ap, 18               ; 2 uses
@@ -784,11 +784,15 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 2448
   %i.o = load double, ptr %i.n, align 8, !tbaa !23
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 2432
-  %7 = load <2 x double>, ptr %i.p, align 8, !tbaa !18 ; 2 uses
-  %i.q = insertelement <2 x double> poison, double %i.o, i64 0
-  %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> zeroinitializer
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 3 uses
-  %i.s = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 2440
+  %8 = load double, ptr %i.p, align 8, !tbaa !24
+  %9 = load double, ptr %7, align 8, !tbaa !25
+  %10 = insertelement <2 x double> poison, double %i.o, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.q = insertelement <2 x double> poison, double %9, i64 0
+  %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %12 = insertelement <2 x double> poison, double %8, i64 0
+  %i.s = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.t = insertelement <2 x double> poison, double %.sink, i64 0
   %i.u = shufflevector <2 x double> %i.t, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   br label %.peel.next
@@ -806,7 +810,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ad = tail call double @exp(double noundef %i.ac) #9
   %i.ae = insertelement <2 x double> poison, double %i.ab, i64 0
   %i.af = insertelement <2 x double> %i.ae, double %i.ad, i64 1
-  %i.ag = fmul <2 x double> %i.r, %i.af           ; 4 uses
+  %i.ag = fmul <2 x double> %11, %i.af            ; 4 uses
   %i.ah = icmp eq i64 %indvars.iv134, 0
   %i.ai = select i1 %i.ah, i64 1, i64 4294967295
   %i.aj = icmp eq i64 %indvars.iv134, 9
@@ -875,7 +879,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.cq = fadd <2 x double> %i.co, %i.cp
   %i.cr = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.s, <2 x double> %i.cq, <2 x double> %i.cm)
   %i.cs = fsub <2 x double> %i.co, %i.co
-  %i.ct = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %i.cs, <2 x double> %i.cr)
+  %i.ct = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.r, <2 x double> %i.cs, <2 x double> %i.cr)
   store <2 x double> %i.ct, ptr %i.bm, align 8, !tbaa !18
   %invariant.gep = getelementptr [8 x i8], ptr %i.b, i64 %i.ar ; 2 uses
   %invariant.gep142 = getelementptr [8 x i8], ptr %i.b, i64 %i.aq ; 2 uses
@@ -943,7 +947,7 @@ bb.d:                                             ; preds = %.peel.next, %bb.d
   %i.ex = fadd <2 x double> %i.dz, %i.ew
   %i.ey = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.s, <2 x double> %i.ex, <2 x double> %i.et)
   %i.ez = fsub <2 x double> %i.ev, %i.dz
-  %i.fa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %i.ez, <2 x double> %i.ey)
+  %i.fa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.r, <2 x double> %i.ez, <2 x double> %i.ey)
   store <2 x double> %i.fa, ptr %i.du, align 8, !tbaa !18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 9
@@ -1000,7 +1004,7 @@ bb.d:                                             ; preds = %.peel.next, %bb.d
   %i.gt = fadd <2 x double> %i.fv, %i.gs
   %i.gu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.s, <2 x double> %i.gt, <2 x double> %i.gp)
   %i.gv = fsub <2 x double> %i.gr, %i.fv
-  %i.gw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %i.gv, <2 x double> %i.gu)
+  %i.gw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.r, <2 x double> %i.gv, <2 x double> %i.gu)
   store <2 x double> %i.gw, ptr %i.fq, align 8, !tbaa !18
   %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 1 ; 2 uses
   %exitcond137.not = icmp eq i64 %indvars.iv.next135, 10
@@ -1355,7 +1359,7 @@ bb.c:                                             ; preds = %bb.b, %bb.c
 
 .loopexit94:                                      ; preds = %.preheader95, %bb.c
   %storemerge = phi i32 [ 1, %bb.c ], [ 0, %.preheader95 ]
-  store i32 %storemerge, ptr %4, align 4, !tbaa !26
+  store i32 %storemerge, ptr %4, align 4, !tbaa !27
   %i.hb = fneg double %5                          ; 10 uses
   br label %.preheader93
 
@@ -1649,8 +1653,8 @@ bb.d:                                             ; preds = %check_retval.exit19
   br label %check_retval.exit21
 
 check_retval.exit21:                              ; preds = %check_retval.exit19, %bb.d
-  %i.q = load i64, ptr %i.a, align 8, !tbaa !28
-  %i.r = load i32, ptr %i.b, align 4, !tbaa !26
+  %i.q = load i64, ptr %i.a, align 8, !tbaa !29
+  %i.r = load i32, ptr %i.b, align 4, !tbaa !27
   %i.s = load double, ptr %i.c, align 8, !tbaa !18
   %i.t = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16, double noundef %2, i64 noundef %i.q, i32 noundef %i.r, double noundef %i.s) ; 0 uses
   %i.u = load double, ptr %i.d, align 8, !tbaa !18
@@ -1836,28 +1840,28 @@ bb.n:                                             ; preds = %check_retval.exit34
 
 check_retval.exit36:                              ; preds = %check_retval.exit34, %bb.n
   %puts = call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
-  %i.bp = load i64, ptr %i.a, align 8, !tbaa !28
-  %i.bq = load i64, ptr %i.b, align 8, !tbaa !28
+  %i.bp = load i64, ptr %i.a, align 8, !tbaa !29
+  %i.bq = load i64, ptr %i.b, align 8, !tbaa !29
   %i.br = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.32, i64 noundef %i.bp, i64 noundef %i.bq) ; 0 uses
-  %i.bs = load i64, ptr %i.c, align 8, !tbaa !28
-  %i.bt = load i64, ptr %i.d, align 8, !tbaa !28
+  %i.bs = load i64, ptr %i.c, align 8, !tbaa !29
+  %i.bt = load i64, ptr %i.d, align 8, !tbaa !29
   %i.bu = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.33, i64 noundef %i.bs, i64 noundef %i.bt) ; 0 uses
-  %i.bv = load i64, ptr %i.e, align 8, !tbaa !28
+  %i.bv = load i64, ptr %i.e, align 8, !tbaa !29
   %i.bw = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.34, i64 noundef %i.bv) ; 0 uses
-  %i.bx = load i64, ptr %i.f, align 8, !tbaa !28
-  %i.by = load i64, ptr %i.o, align 8, !tbaa !28
+  %i.bx = load i64, ptr %i.f, align 8, !tbaa !29
+  %i.by = load i64, ptr %i.o, align 8, !tbaa !29
   %i.bz = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.35, i64 noundef %i.bx, i64 noundef %i.by) ; 0 uses
-  %i.ca = load i64, ptr %i.h, align 8, !tbaa !28
-  %i.cb = load i64, ptr %i.k, align 8, !tbaa !28
+  %i.ca = load i64, ptr %i.h, align 8, !tbaa !29
+  %i.cb = load i64, ptr %i.k, align 8, !tbaa !29
   %i.cc = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.36, i64 noundef %i.ca, i64 noundef %i.cb) ; 0 uses
-  %i.cd = load i64, ptr %i.g, align 8, !tbaa !28
-  %i.ce = load i64, ptr %i.j, align 8, !tbaa !28
+  %i.cd = load i64, ptr %i.g, align 8, !tbaa !29
+  %i.ce = load i64, ptr %i.j, align 8, !tbaa !29
   %i.cf = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.37, i64 noundef %i.cd, i64 noundef %i.ce) ; 0 uses
-  %i.cg = load i64, ptr %i.l, align 8, !tbaa !28
-  %i.ch = load i64, ptr %i.m, align 8, !tbaa !28
+  %i.cg = load i64, ptr %i.l, align 8, !tbaa !29
+  %i.ch = load i64, ptr %i.m, align 8, !tbaa !29
   %i.ci = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.38, i64 noundef %i.cg, i64 noundef %i.ch) ; 0 uses
-  %i.cj = load i64, ptr %i.i, align 8, !tbaa !28
-  %i.ck = load i64, ptr %i.n, align 8, !tbaa !28
+  %i.cj = load i64, ptr %i.i, align 8, !tbaa !29
+  %i.ck = load i64, ptr %i.n, align 8, !tbaa !29
   %i.cl = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.39, i64 noundef %i.cj, i64 noundef %i.ck) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #9
@@ -2114,16 +2118,16 @@ attributes #11 = { nounwind allocsize(0) }
 !22 = !{!19, !17, i64 2424}
 !23 = !{!19, !17, i64 2448}
 !24 = !{!19, !17, i64 2432}
-!25 = !{!"llvm.loop.peeled.count", i32 2}
-!26 = !{!6, !6, i64 0}
-!27 = !{!"long", !5, i64 0}
-!28 = !{!27, !27, i64 0}
-!29 = !{!"p1 _ZTS11SUNContext_", !9, i64 0}
-!30 = !{!29, !29, i64 0}
-!31 = !{!9, !9, i64 0}
-!32 = distinct !{!32, !25}
-!33 = !{!19, !17, i64 2440}
-!34 = distinct !{!34, !25}
+!25 = !{!19, !17, i64 2440}
+!26 = !{!"llvm.loop.peeled.count", i32 2}
+!27 = !{!6, !6, i64 0}
+!28 = !{!"long", !5, i64 0}
+!29 = !{!28, !28, i64 0}
+!30 = !{!"p1 _ZTS11SUNContext_", !9, i64 0}
+!31 = !{!30, !30, i64 0}
+!32 = !{!9, !9, i64 0}
+!33 = distinct !{!33, !26}
+!34 = distinct !{!34, !26}
 !35 = !{!"p1 double", !9, i64 0}
 !36 = !{!35, !35, i64 0}
 end_hunk_0

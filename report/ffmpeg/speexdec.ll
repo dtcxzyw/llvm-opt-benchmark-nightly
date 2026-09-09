@@ -205,19 +205,20 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = tail call nsz float @llvm.fmuladd.f32(float %3, float 4.000000e-01, float 7.000000e-02) ; 2 uses
   %i.af = fadd nsz float %i.ae, -7.000000e-02
   %i.ag = tail call nsz float @llvm.fmuladd.f32(float %i.af, float 1.720000e+00, float 5.000000e-01)
-  %4 = insertelement <2 x float> poison, float %i.ag, i64 0
-  %5 = insertelement <2 x float> %4, float %i.ae, i64 1
   br label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a, %bb.b
-  %6 = phi <2 x float> [ %5, %bb.b ], [ zeroinitializer, %bb.a ] ; 2 uses
+  %.095 = phi nsz float [ %i.ae, %bb.b ], [ 0.000000e+00, %bb.a ]
+  %.094 = phi nsz float [ %i.ag, %bb.b ], [ 0.000000e+00, %bb.a ]
   %i.ah = fneg nsz <2 x float> %i.ab
-  %i.ai = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x float> poison, float %.094, i64 0
+  %i.ai = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aj = fmul nsz <2 x float> %i.ai, %i.ah
   %i.ak = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aj, <2 x float> %i.ab, <2 x float> splat (float 1.000000e+00))
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %i.al = tail call nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.ak, <2 x float> %7)
-  %i.am = fdiv nsz <2 x float> %7, %i.al
+  %5 = insertelement <2 x float> poison, float %.095, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.al = tail call nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.ak, <2 x float> %6)
+  %i.am = fdiv nsz <2 x float> %6, %i.al
   %i.an = insertelement <2 x i1> poison, i1 %i.d, i64 0
   %i.ao = shufflevector <2 x i1> %i.an, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.ap = select <2 x i1> %i.ao, <2 x float> <float 3.000000e-01, float f0x3F333333>, <2 x float> splat (float 6.000000e-01)

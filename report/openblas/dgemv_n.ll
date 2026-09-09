@@ -14,7 +14,7 @@ bb.a:
   %i.b = alloca [8 x double], align 16            ; 8 uses
   store double %3, ptr %i.a, align 8, !tbaa !9
   %i.c = shl i64 %5, 2                            ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %i.d = icmp slt i64 %0, 1
   %i.e = icmp slt i64 %1, 1
   %or.cond355 = or i1 %i.d, %i.e
@@ -395,7 +395,7 @@ bb.p:                                             ; preds = %bb.o
   %.4326.lcssa = phi ptr [ %.0346.lcssa, %.preheader393 ], [ %i.hd, %.preheader.loopexit ] ; 2 uses
   %.4.lcssa = phi ptr [ %6, %.preheader393 ], [ %i.he, %.preheader.loopexit ] ; 2 uses
   %.0299.lcssa = phi double [ 0.000000e+00, %.preheader393 ], [ %i.hc, %.preheader.loopexit ] ; 3 uses
-  %i.fz = phi <2 x double> [ zeroinitializer, %.preheader393 ], [ %i.gz, %.preheader.loopexit ] ; 2 uses
+  %i.fz = phi <2 x double> [ zeroinitializer, %.preheader393 ], [ %36, %.preheader.loopexit ] ; 2 uses
   %i.ga = icmp slt i64 %.3336.lcssa, %1
   %i.gb = extractelement <2 x double> %i.fz, i64 0 ; 3 uses
   %i.gc = extractelement <2 x double> %i.fz, i64 1 ; 3 uses
@@ -446,42 +446,52 @@ bb.p:                                             ; preds = %bb.o
 
 .lr.ph497:                                        ; preds = %.preheader393, %.lr.ph497
   %.0299496 = phi double [ %i.hc, %.lr.ph497 ], [ 0.000000e+00, %.preheader393 ]
-  %.4493 = phi ptr [ %i.he, %.lr.ph497 ], [ %6, %.preheader393 ] ; 2 uses
-  %.4326492 = phi ptr [ %i.hd, %.lr.ph497 ], [ %.0346.lcssa, %.preheader393 ] ; 7 uses
+  %.4493 = phi ptr [ %i.he, %.lr.ph497 ], [ %6, %.preheader393 ] ; 5 uses
+  %.4326492 = phi ptr [ %i.hd, %.lr.ph497 ], [ %.0346.lcssa, %.preheader393 ] ; 9 uses
   %.3336491 = phi i64 [ %i.hf, %.lr.ph497 ], [ 0, %.preheader393 ]
-  %i.gs = phi <2 x double> [ %i.gz, %.lr.ph497 ], [ zeroinitializer, %.preheader393 ]
-  %i.gt = getelementptr inbounds nuw i8, ptr %.4326492, i64 24
+  %i.gs = phi <2 x double> [ %36, %.lr.ph497 ], [ zeroinitializer, %.preheader393 ]
+  %11 = getelementptr inbounds nuw i8, ptr %.4326492, i64 24
+  %i.gt = getelementptr inbounds nuw i8, ptr %.4493, i64 8
   %i.gu = getelementptr inbounds nuw i8, ptr %.4326492, i64 16
-  %i.gv = getelementptr inbounds nuw i8, ptr %.4326492, i64 48
-  %i.gw = getelementptr inbounds nuw i8, ptr %.4326492, i64 72
-  %11 = load <2 x double>, ptr %.4326492, align 8, !tbaa !9
-  %12 = load <2 x double>, ptr %i.gt, align 8, !tbaa !9
-  %13 = load <4 x double>, ptr %.4493, align 8, !tbaa !9 ; 6 uses
-  %14 = shufflevector <4 x double> %13, <4 x double> poison, <2 x i32> <i32 1, i32 1>
-  %15 = fmul <2 x double> %14, %12
-  %16 = shufflevector <4 x double> %13, <4 x double> poison, <2 x i32> zeroinitializer
-  %17 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> %16, <2 x double> %15)
-  %18 = fadd <2 x double> %i.gs, %17
-  %19 = load <2 x double>, ptr %i.gv, align 8, !tbaa !9
-  %20 = load <2 x double>, ptr %i.gw, align 8, !tbaa !9
-  %21 = shufflevector <4 x double> %13, <4 x double> poison, <2 x i32> <i32 3, i32 3>
-  %i.gx = fmul <2 x double> %21, %20
-  %22 = shufflevector <4 x double> %13, <4 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.gy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %19, <2 x double> %22, <2 x double> %i.gx)
-  %i.gz = fadd <2 x double> %18, %i.gy            ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.4326492, i64 64
-  %24 = call <4 x double> @llvm.masked.load.v4f64.p0(ptr nonnull align 8 %i.gu, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x double> poison), !tbaa !9 ; 2 uses
-  %25 = call <4 x double> @llvm.masked.load.v4f64.p0(ptr nonnull align 8 %23, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x double> poison), !tbaa !9 ; 2 uses
-  %26 = shufflevector <4 x double> %13, <4 x double> poison, <2 x i32> <i32 1, i32 3>
-  %27 = shufflevector <4 x double> %24, <4 x double> %25, <2 x i32> <i32 3, i32 7>
-  %i.ha = fmul <2 x double> %26, %27
-  %28 = shufflevector <4 x double> %24, <4 x double> %25, <2 x i32> <i32 0, i32 4>
-  %29 = shufflevector <4 x double> %13, <4 x double> poison, <2 x i32> <i32 0, i32 2>
-  %i.hb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %28, <2 x double> %29, <2 x double> %i.ha) ; 2 uses
-  %30 = extractelement <2 x double> %i.hb, i64 0
-  %31 = fadd double %.0299496, %30
-  %32 = extractelement <2 x double> %i.hb, i64 1
-  %i.hc = fadd double %31, %32                    ; 2 uses
+  %12 = load double, ptr %i.gu, align 8, !tbaa !9
+  %i.gv = getelementptr inbounds nuw i8, ptr %.4326492, i64 40
+  %13 = load double, ptr %i.gv, align 8, !tbaa !9
+  %i.gw = getelementptr inbounds nuw i8, ptr %.4326492, i64 48
+  %14 = getelementptr inbounds nuw i8, ptr %.4493, i64 16
+  %15 = getelementptr inbounds nuw i8, ptr %.4326492, i64 72
+  %16 = getelementptr inbounds nuw i8, ptr %.4493, i64 24
+  %17 = load <2 x double>, ptr %.4326492, align 8, !tbaa !9
+  %18 = load <2 x double>, ptr %11, align 8, !tbaa !9
+  %19 = load double, ptr %16, align 8, !tbaa !9   ; 2 uses
+  %20 = load double, ptr %14, align 8, !tbaa !9   ; 2 uses
+  %21 = load double, ptr %i.gt, align 8, !tbaa !9 ; 2 uses
+  %22 = load double, ptr %.4493, align 8, !tbaa !9 ; 2 uses
+  %23 = insertelement <2 x double> poison, double %21, i64 0
+  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.gx = fmul <2 x double> %24, %18
+  %25 = insertelement <2 x double> poison, double %22, i64 0
+  %26 = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.gy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %26, <2 x double> %i.gx)
+  %i.gz = fadd <2 x double> %i.gs, %i.gy
+  %27 = fmul double %21, %13
+  %28 = call double @llvm.fmuladd.f64(double %12, double %22, double %27)
+  %29 = fadd double %.0299496, %28
+  %30 = load <2 x double>, ptr %i.gw, align 8, !tbaa !9
+  %31 = load <2 x double>, ptr %15, align 8, !tbaa !9
+  %32 = insertelement <2 x double> poison, double %19, i64 0
+  %33 = shufflevector <2 x double> %32, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ha = fmul <2 x double> %33, %31
+  %34 = insertelement <2 x double> poison, double %20, i64 0
+  %35 = shufflevector <2 x double> %34, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.hb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %30, <2 x double> %35, <2 x double> %i.ha)
+  %36 = fadd <2 x double> %i.gz, %i.hb            ; 2 uses
+  %37 = getelementptr inbounds nuw i8, ptr %.4326492, i64 64
+  %38 = load double, ptr %37, align 8, !tbaa !9
+  %39 = getelementptr inbounds nuw i8, ptr %.4326492, i64 88
+  %40 = load double, ptr %39, align 8, !tbaa !9
+  %41 = fmul double %19, %40
+  %42 = call double @llvm.fmuladd.f64(double %38, double %20, double %41)
+  %i.hc = fadd double %29, %42                    ; 2 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %.4326492, i64 96 ; 2 uses
   %i.he = getelementptr inbounds nuw i8, ptr %.4493, i64 32 ; 2 uses
   %i.hf = add nuw nsw i64 %.3336491, 4            ; 2 uses
@@ -884,7 +894,7 @@ begin_hunk_1_@dgemv_n:bb.a
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.o, %.loopexit, %.loopexit397, %.loopexit402, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   ret i32 0
 }
 
@@ -897,7 +907,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: noinline nounwind uwtable
 define internal fastcc void @dgemv_kernel_4x1(i64 noundef range(i64 -3, 2049) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef nonnull %4) unnamed_addr #3 {
 bb.a:
-  %i.a = tail call { i64, i64 } asm sideeffect "movsd          ($2), %xmm12            \0A\09mulsd          ($5), %xmm12            \0A\09shufpd $$0,  %xmm12, %xmm12            \0A\091:                             \0A\09movups       ($4,$0,8), %xmm8          \0A\09movups     16($4,$0,8), %xmm9          \0A\09movups       ($3,$0,8), %xmm4          \0A\09movups     16($3,$0,8), %xmm5          \0A\09mulpd          %xmm12, %xmm8          \0A\09mulpd          %xmm12, %xmm9          \0A\09addpd          %xmm8 , %xmm4          \0A\09addpd          %xmm9 , %xmm5          \0A\09movups  %xmm4 ,    ($3,$0,8)           \0A\09movups  %xmm5 ,  16($3,$0,8)           \0A\09addq           $$4 , $0                  \0A\09subq           $$4 , $1                  \0A\09jnz            1b               \0A\09", "=r,=r,r,r,r,r,0,1,~{cc},~{xmm4},~{xmm5},~{xmm6},~{xmm7},~{xmm8},~{xmm9},~{xmm10},~{xmm11},~{xmm12},~{xmm13},~{xmm14},~{xmm15},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %2, ptr %3, ptr %1, ptr nonnull %4, i64 0, i64 %0) #8, !srcloc !35 ; 0 uses
+  %i.a = tail call { i64, i64 } asm sideeffect "movsd          ($2), %xmm12            \0A\09mulsd          ($5), %xmm12            \0A\09shufpd $$0,  %xmm12, %xmm12            \0A\091:                             \0A\09movups       ($4,$0,8), %xmm8          \0A\09movups     16($4,$0,8), %xmm9          \0A\09movups       ($3,$0,8), %xmm4          \0A\09movups     16($3,$0,8), %xmm5          \0A\09mulpd          %xmm12, %xmm8          \0A\09mulpd          %xmm12, %xmm9          \0A\09addpd          %xmm8 , %xmm4          \0A\09addpd          %xmm9 , %xmm5          \0A\09movups  %xmm4 ,    ($3,$0,8)           \0A\09movups  %xmm5 ,  16($3,$0,8)           \0A\09addq           $$4 , $0                  \0A\09subq           $$4 , $1                  \0A\09jnz            1b               \0A\09", "=r,=r,r,r,r,r,0,1,~{cc},~{xmm4},~{xmm5},~{xmm6},~{xmm7},~{xmm8},~{xmm9},~{xmm10},~{xmm11},~{xmm12},~{xmm13},~{xmm14},~{xmm15},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %2, ptr %3, ptr %1, ptr nonnull %4, i64 0, i64 %0) #7, !srcloc !35 ; 0 uses
   ret void
 }
 
@@ -1016,11 +1026,8 @@ declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <4 x double> @llvm.masked.load.v4f64.p0(ptr captures(none), <4 x i1>, <4 x double>) #6
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #7
+declare void @llvm.assume(i1 noundef) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="512" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1028,9 +1035,8 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 attributes #3 = { noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #4 = { nofree noinline norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #8 = { nounwind }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

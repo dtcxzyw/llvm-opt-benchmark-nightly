@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc noundef range(i32 0, 2) i32 @_ZN7lodepngL17convertToXYZ_chrmEPfjjPK11LodePNGInfojPKNS_10LodePNGICCES0_(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef range(i32 0, 2) %4, ptr nofree noundef nonnull readonly captures(none) %5, ptr nofree noundef writeonly captures(none) %6) unnamed_addr #10 {
 bb.a:
-  %i.a = alloca [9 x float], align 16             ; 10 uses
+  %i.a = alloca [9 x float], align 16             ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   %i.b = zext i32 %1 to i64
   %i.c = zext i32 %2 to i64
@@ -230,20 +230,17 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.old.not, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %9 = load float, ptr %8, align 8, !tbaa !58
-  %10 = load float, ptr %7, align 4, !tbaa !58
-  %i.i = load <4 x float>, ptr %i.a, align 16, !tbaa !58
+  %i.i = load <4 x float>, ptr %i.a, align 16, !tbaa !58 ; 3 uses
   %i.j = shufflevector <4 x float> %i.i, <4 x float> poison, <2 x i32> <i32 0, i32 3>
   %i.k = fpext <2 x float> %i.j to <2 x double>   ; 3 uses
   %i.l = load <2 x float>, ptr %i.h, align 16, !tbaa !58 ; 2 uses
-  %11 = shufflevector <2 x float> %i.l, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %12 = insertelement <2 x float> %11, float %10, i64 0
-  %i.m = fpext <2 x float> %12 to <2 x double>    ; 3 uses
-  %13 = insertelement <2 x float> %i.l, float %9, i64 0
-  %i.n = fpext <2 x float> %13 to <2 x double>    ; 3 uses
+  %7 = shufflevector <4 x float> %i.i, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %8 = shufflevector <2 x float> %i.l, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %9 = shufflevector <4 x float> %i.i, <4 x float> %8, <2 x i32> <i32 1, i32 4>
+  %i.m = fpext <2 x float> %9 to <2 x double>     ; 3 uses
+  %10 = shufflevector <2 x float> %7, <2 x float> %i.l, <2 x i32> <i32 0, i32 3>
+  %i.n = fpext <2 x float> %10 to <2 x double>    ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.p = load float, ptr %i.o, align 8, !tbaa !58
   %i.q = fpext float %i.p to double               ; 2 uses
@@ -646,7 +643,7 @@ define internal fastcc noundef range(i32 0, 2) i32 @_ZN7lodepngL19convertFromXYZ
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = alloca [9 x float], align 16             ; 17 uses
+  %i.c = alloca [9 x float], align 16             ; 15 uses
   %i.d = alloca [3 x float], align 4              ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #28
@@ -835,20 +832,17 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not51, label %.loopexit, label %.lr.ph50
 
 .lr.ph50:                                         ; preds = %bb.g
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %10 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.dy = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %11 = load float, ptr %10, align 8, !tbaa !58
-  %12 = load float, ptr %9, align 4, !tbaa !58
-  %i.dz = load <4 x float>, ptr %i.c, align 16, !tbaa !58
+  %i.dz = load <4 x float>, ptr %i.c, align 16, !tbaa !58 ; 3 uses
   %i.ea = shufflevector <4 x float> %i.dz, <4 x float> poison, <2 x i32> <i32 0, i32 3>
   %i.eb = fpext <2 x float> %i.ea to <2 x double> ; 2 uses
   %i.ec = load <2 x float>, ptr %i.dy, align 16, !tbaa !58 ; 2 uses
-  %13 = shufflevector <2 x float> %i.ec, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %14 = insertelement <2 x float> %13, float %12, i64 0
-  %i.ed = fpext <2 x float> %14 to <2 x double>   ; 2 uses
-  %15 = insertelement <2 x float> %i.ec, float %11, i64 0
-  %i.ee = fpext <2 x float> %15 to <2 x double>   ; 2 uses
+  %9 = shufflevector <4 x float> %i.dz, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %10 = shufflevector <2 x float> %i.ec, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %11 = shufflevector <4 x float> %i.dz, <4 x float> %10, <2 x i32> <i32 1, i32 4>
+  %i.ed = fpext <2 x float> %11 to <2 x double>   ; 2 uses
+  %12 = shufflevector <2 x float> %9, <2 x float> %i.ec, <2 x i32> <i32 0, i32 3>
+  %i.ee = fpext <2 x float> %12 to <2 x double>   ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.eg = load float, ptr %i.ef, align 8, !tbaa !58
   %i.eh = fpext float %i.eg to double             ; 2 uses
@@ -1251,7 +1245,7 @@ define internal fastcc noundef range(i32 0, 2) i32 @_ZN7lodepngL7getChrmEPfS0_jP
 bb.a:
   %i.a = alloca [9 x float], align 16             ; 9 uses
   %i.b = alloca [9 x float], align 16             ; 11 uses
-  %i.c = alloca [9 x float], align 16             ; 10 uses
+  %i.c = alloca [9 x float], align 16             ; 11 uses
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.g, label %bb.b
 
@@ -1348,45 +1342,53 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit.i
 
 bb.d:                                             ; preds = %bb.c
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 76
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.cf = getelementptr inbounds nuw i8, ptr %3, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %i.c, ptr noundef nonnull readonly align 8 dereferenceable(36) %i.cf, i64 36, i1 false), !tbaa !58
   %i.cg = call fastcc noundef i32 @_ZN7lodepngL9invMatrixEPf(ptr noundef %i.c) ; 0 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 72
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.ci = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.cj = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.ck = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.cl = getelementptr inbounds nuw i8, ptr %i.c, i64 28
-  %5 = load float, ptr %i.c, align 16, !tbaa !58
-  %6 = load <5 x float>, ptr %i.cj, align 8, !tbaa !58 ; 2 uses
-  %7 = load float, ptr %i.ck, align 8, !tbaa !58
-  %8 = shufflevector <5 x float> %6, <5 x float> poison, <2 x i32> <i32 poison, i32 1>
-  %9 = insertelement <2 x float> %8, float %5, i64 0
+  %8 = load <4 x float>, ptr %i.c, align 16, !tbaa !58
+  %9 = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> <i32 0, i32 3>
+  %10 = load <4 x float>, ptr %i.cj, align 8, !tbaa !58
+  %11 = load float, ptr %i.ck, align 8, !tbaa !58
   %i.cm = fpext <2 x float> %9 to <2 x double>    ; 2 uses
   %i.cn = load <4 x float>, ptr %i.ci, align 4, !tbaa !58
   %i.co = shufflevector <4 x float> %i.cn, <4 x float> poison, <2 x i32> <i32 0, i32 3>
-  %i.cp = shufflevector <5 x float> %6, <5 x float> poison, <2 x i32> <i32 0, i32 3>
+  %i.cp = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> <i32 0, i32 3>
   %i.cq = fpext <2 x float> %i.cp to <2 x double> ; 2 uses
   %i.cr = fpext <2 x float> %i.co to <2 x double> ; 2 uses
-  %i.cs = fpext float %7 to double                ; 2 uses
+  %i.cs = fpext float %11 to double               ; 2 uses
   %i.ct = load <2 x float>, ptr %i.cl, align 4, !tbaa !58
-  %i.cu = fpext <2 x float> %i.ct to <2 x double> ; 3 uses
-  %10 = load <3 x float>, ptr %i.ch, align 8, !tbaa !58
-  %11 = fpext <3 x float> %10 to <3 x double>     ; 6 uses
-  %12 = shufflevector <3 x double> %11, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %13 = fmul <2 x double> %12, %i.cr
-  %14 = extractelement <3 x double> %11, i64 1
+  %12 = load float, ptr %6, align 16, !tbaa !58
+  %13 = insertelement <2 x float> %i.ct, float %12, i64 1
+  %i.cu = fpext <2 x float> %13 to <2 x double>   ; 3 uses
+  %14 = load float, ptr %5, align 4, !tbaa !58
+  %15 = load float, ptr %i.ch, align 8, !tbaa !58
+  %16 = load float, ptr %7, align 8, !tbaa !58
+  %17 = fpext float %14 to double                 ; 2 uses
+  %18 = fpext float %15 to double                 ; 2 uses
+  %19 = fpext float %16 to double                 ; 2 uses
+  %20 = insertelement <2 x double> poison, double %17, i64 0
+  %21 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> zeroinitializer
+  %22 = fmul <2 x double> %21, %i.cr
   %i.cv = extractelement <2 x double> %i.cu, i64 0
-  %i.cw = fmul double %14, %i.cv
-  %15 = shufflevector <3 x double> %11, <3 x double> poison, <2 x i32> zeroinitializer
-  %16 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %15, <2 x double> %i.cm, <2 x double> %13)
-  %17 = extractelement <3 x double> %11, i64 0
-  %i.cx = tail call double @llvm.fmuladd.f64(double %17, double %i.cs, double %i.cw)
-  %18 = shufflevector <3 x double> %11, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %19 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %18, <2 x double> %i.cq, <2 x double> %16)
-  %20 = extractelement <3 x double> %11, i64 2
+  %i.cw = fmul double %i.cv, %17
+  %23 = insertelement <2 x double> poison, double %18, i64 0
+  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %25 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %24, <2 x double> %i.cm, <2 x double> %22)
+  %i.cx = tail call double @llvm.fmuladd.f64(double %18, double %i.cs, double %i.cw)
+  %26 = insertelement <2 x double> poison, double %19, i64 0
+  %27 = shufflevector <2 x double> %26, <2 x double> poison, <2 x i32> zeroinitializer
+  %28 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %27, <2 x double> %i.cq, <2 x double> %25)
   %i.cy = extractelement <2 x double> %i.cu, i64 1
-  %i.cz = tail call double @llvm.fmuladd.f64(double %20, double %i.cy, double %i.cx)
-  %i.da = fptrunc <2 x double> %19 to <2 x float>
+  %i.cz = tail call double @llvm.fmuladd.f64(double %19, double %i.cy, double %i.cx)
+  %i.da = fptrunc <2 x double> %28 to <2 x float>
   %i.db = fptrunc double %i.cz to float
   br label %.loopexit.i
 

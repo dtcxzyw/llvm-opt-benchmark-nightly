@@ -204,9 +204,8 @@ _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i: ; preds = 
 
 bb.c:                                             ; preds = %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
   %i.s = phi i32 [ 31, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.aw, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
-  %.sroa.038.049.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.an, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ]
-  %.sroa.7.048.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.ao, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ]
-  %2 = phi <2 x double> [ zeroinitializer, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %5, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
+  %.sroa.038.049.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.an, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
+  %.sroa.7.048.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.ao, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
   %i.t = load ptr, ptr %i.k, align 8, !tbaa !47   ; 2 uses
   %i.u = load i32, ptr %i.r, align 8, !tbaa !46
   %i.v = shl i32 %i.u, 1
@@ -220,8 +219,10 @@ bb.c:                                             ; preds = %_ZL19complex_horner
   br i1 %i.z, label %.lr.ph.i.i.preheader, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.c
+  %2 = insertelement <2 x double> poison, double %.sroa.7.048.i, i64 0
   %i.aa = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
-  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %3 = insertelement <2 x double> poison, double %.sroa.038.049.i, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
@@ -232,7 +233,7 @@ bb.c:                                             ; preds = %_ZL19complex_horner
   %i.ac = fneg <2 x double> %i.ab
   %i.ad = shufflevector <2 x double> %i.ac, <2 x double> %i.ab, <2 x i32> <i32 1, i32 2>
   %i.ae = fmul <2 x double> %i.aa, %i.ad
-  %i.af = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %i.ab, <2 x double> %i.ae)
+  %i.af = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %i.ab, <2 x double> %i.ae)
   %i.ag = load <2 x double>, ptr %.ptr.i, align 8, !tbaa !59
   %i.ah = fadd <2 x double> %i.af, %i.ag          ; 2 uses
   %i.ai = icmp sgt i64 %.02425.i.idx.i, 32
@@ -255,8 +256,6 @@ _ZL19complex_horner_evaljPKd5PJ_UVj.exit.i:       ; preds = %.lr.ph.i.i, %bb.c
   %i.aw = add nsw i32 %i.s, -1
   %i.ax = icmp eq i32 %i.s, 0
   %.not35.i = select i1 %i.ax, i1 true, i1 %i.av
-  %4 = insertelement <2 x double> poison, double %i.ao, i64 0
-  %5 = insertelement <2 x double> %4, double %i.an, i64 1 ; 3 uses
   br i1 %.not35.i, label %bb.d, label %bb.c, !llvm.loop !72
 
 bb.d:                                             ; preds = %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i
@@ -267,12 +266,14 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZL30complex_iterative_inverse_implP8PJconstsPKN12_GLOBAL__N_16hornerE5PJ_UV.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.az = fneg <2 x double> %5
+  %5 = insertelement <2 x double> poison, double %i.ao, i64 0
+  %6 = insertelement <2 x double> %5, double %i.an, i64 1 ; 2 uses
+  %i.az = fneg <2 x double> %6
   %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !53
   %i.bc = load <2 x i32>, ptr %i.b, align 8, !tbaa !60
   %i.bd = icmp eq <2 x i32> %i.bc, zeroinitializer
-  %i.be = select <2 x i1> %i.bd, <2 x double> %5, <2 x double> %i.az
+  %i.be = select <2 x i1> %i.bd, <2 x double> %6, <2 x double> %i.az
   %i.bf = load <2 x double>, ptr %i.bb, align 8, !tbaa !59
   %i.bg = fadd <2 x double> %i.be, %i.bf
   br label %_ZL30complex_iterative_inverse_implP8PJconstsPKN12_GLOBAL__N_16hornerE5PJ_UV.exit

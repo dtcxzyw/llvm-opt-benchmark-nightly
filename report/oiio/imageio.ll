@@ -205,10 +205,8 @@ middle.block184:                                  ; preds = %vector.body179
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN11OpenImageIO4v3_112convert_typeIfiEEvPKT_PT0_mS5_S5_(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #2 {
 bb.a:
-  %5 = insertelement <2 x i32> poison, i32 %4, i64 0
-  %6 = insertelement <2 x i32> %5, i32 %3, i64 1
-  %7 = sitofp <2 x i32> %6 to <2 x double>        ; 8 uses
-  %8 = extractelement <2 x double> %7, i64 0      ; 3 uses
+  %5 = sitofp i32 %3 to double                    ; 5 uses
+  %6 = sitofp i32 %4 to double                    ; 6 uses
   %i.a = icmp ugt i64 %2, 15
   br i1 %i.a, label %.lr.ph.preheader, label %.preheader
 
@@ -226,8 +224,10 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.g = getelementptr i8, ptr %1, i64 %i.e       ; 2 uses
   %i.h = shl i64 %n.vec, 4
   %i.i = sub i64 %2, %i.h                         ; 2 uses
-  %broadcast.splat = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 48 uses
-  %broadcast.splat161 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 32 uses
+  %broadcast.splatinsert = insertelement <2 x double> poison, double %6, i64 0
+  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 48 uses
+  %broadcast.splatinsert160 = insertelement <2 x double> poison, double %5, i64 0
+  %broadcast.splat161 = shufflevector <2 x double> %broadcast.splatinsert160, <2 x double> poison, <2 x i32> zeroinitializer ; 32 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -550,8 +550,10 @@ middle.block:                                     ; preds = %vector.body
   %.0145.ph = phi ptr [ %0, %.lr.ph.preheader ], [ %i.f, %middle.block ]
   %.091144.ph = phi ptr [ %1, %.lr.ph.preheader ], [ %i.g, %middle.block ]
   %.093143.ph = phi i64 [ %2, %.lr.ph.preheader ], [ %i.i, %middle.block ]
-  %i.kk = shufflevector <2 x double> %7, <2 x double> poison, <4 x i32> zeroinitializer ; 12 uses
-  %9 = shufflevector <2 x double> %7, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 8 uses
+  %7 = insertelement <4 x double> poison, double %6, i64 0
+  %i.kk = shufflevector <4 x double> %7, <4 x double> poison, <4 x i32> zeroinitializer ; 12 uses
+  %8 = insertelement <4 x double> poison, double %5, i64 0
+  %9 = shufflevector <4 x double> %8, <4 x double> poison, <4 x i32> zeroinitializer ; 8 uses
   br label %.lr.ph
 
 .preheader:                                       ; preds = %.lr.ph, %middle.block, %bb.a
@@ -571,8 +573,10 @@ vector.ph169:                                     ; preds = %.lr.ph152.preheader
   %i.km = getelementptr i8, ptr %.0.lcssa, i64 %i.kl
   %i.kn = getelementptr i8, ptr %.091.lcssa, i64 %i.kl
   %i.ko = and i64 %.093.lcssa, 3
-  %broadcast.splat172 = shufflevector <2 x double> %7, <2 x double> poison, <4 x i32> zeroinitializer ; 3 uses
-  %broadcast.splat174 = shufflevector <2 x double> %7, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
+  %broadcast.splatinsert171 = insertelement <4 x double> poison, double %6, i64 0
+  %broadcast.splat172 = shufflevector <4 x double> %broadcast.splatinsert171, <4 x double> poison, <4 x i32> zeroinitializer ; 3 uses
+  %broadcast.splatinsert173 = insertelement <4 x double> poison, double %5, i64 0
+  %broadcast.splat174 = shufflevector <4 x double> %broadcast.splatinsert173, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body175
 
 vector.body175:                                   ; preds = %vector.body175, %vector.ph169
@@ -604,7 +608,6 @@ middle.block180:                                  ; preds = %vector.body175
   %.1151.ph = phi ptr [ %.0.lcssa, %.lr.ph152.preheader ], [ %i.km, %middle.block180 ]
   %.192150.ph = phi ptr [ %.091.lcssa, %.lr.ph152.preheader ], [ %i.kn, %middle.block180 ]
   %.194149.ph = phi i64 [ %.093.lcssa, %.lr.ph152.preheader ], [ %i.ko, %middle.block180 ]
-  %10 = extractelement <2 x double> %7, i64 1     ; 2 uses
   br label %.lr.ph152
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader186, %.lr.ph
@@ -679,14 +682,14 @@ middle.block180:                                  ; preds = %vector.body175
   %i.ne = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.nf = load float, ptr %.1151, align 4, !tbaa !94
   %i.ng = fpext float %i.nf to double
-  %i.nh = fmul double %8, %i.ng                   ; 2 uses
+  %i.nh = fmul double %6, %i.ng                   ; 2 uses
   %i.ni = fcmp olt double %i.nh, 0.000000e+00
   %i.nj = select i1 %i.ni, double -5.000000e-01, double 5.000000e-01
   %i.nk = fadd double %i.nh, %i.nj                ; 2 uses
-  %.inv.i140 = fcmp oge double %i.nk, %10
-  %.0.i.i141 = select i1 %.inv.i140, double %i.nk, double %10 ; 2 uses
-  %i.nl = fcmp ogt double %.0.i.i141, %8
-  %.1.i.i142 = select i1 %i.nl, double %8, double %.0.i.i141
+  %.inv.i140 = fcmp oge double %i.nk, %5
+  %.0.i.i141 = select i1 %.inv.i140, double %i.nk, double %5 ; 2 uses
+  %i.nl = fcmp ogt double %.0.i.i141, %6
+  %.1.i.i142 = select i1 %i.nl, double %6, double %.0.i.i141
   %i.nm = fptosi double %.1.i.i142 to i32
   %i.nn = getelementptr inbounds nuw i8, ptr %.192150, i64 4
   store i32 %i.nm, ptr %.192150, align 4, !tbaa !51
@@ -988,17 +991,16 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN11OpenImageIO4v3_112convert_typeIfmEEvPKT_PT0_mS5_S5_(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #2 {
 bb.a:
-  %5 = insertelement <2 x i64> poison, i64 %4, i64 0
-  %6 = insertelement <2 x i64> %5, i64 %3, i64 1
-  %7 = uitofp <2 x i64> %6 to <2 x double>        ; 4 uses
-  %8 = extractelement <2 x double> %7, i64 1      ; 2 uses
-  %9 = extractelement <2 x double> %7, i64 0      ; 3 uses
+  %5 = uitofp i64 %3 to double                    ; 3 uses
+  %6 = uitofp i64 %4 to double                    ; 4 uses
   %i.a = icmp ugt i64 %2, 15
   br i1 %i.a, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %7 = insertelement <2 x double> poison, double %6, i64 0
   %i.b = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 24 uses
-  %10 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 16 uses
+  %8 = insertelement <2 x double> poison, double %5, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 16 uses
   br label %.lr.ph
 
 .preheader:                                       ; preds = %.lr.ph, %bb.a
@@ -1020,8 +1022,8 @@ bb.a:
   %i.h = fcmp olt <2 x double> %i.g, zeroinitializer
   %i.i = select <2 x i1> %i.h, <2 x double> splat (double -5.000000e-01), <2 x double> splat (double 5.000000e-01)
   %i.j = fadd <2 x double> %i.g, %i.i             ; 2 uses
-  %i.k = fcmp oge <2 x double> %i.j, %10
-  %i.l = select <2 x i1> %i.k, <2 x double> %i.j, <2 x double> %10 ; 2 uses
+  %i.k = fcmp oge <2 x double> %i.j, %9
+  %i.l = select <2 x i1> %i.k, <2 x double> %i.j, <2 x double> %9 ; 2 uses
   %i.m = fcmp ogt <2 x double> %i.l, %i.b
   %i.n = select <2 x i1> %i.m, <2 x double> %i.b, <2 x double> %i.l
   %i.o = fptoui <2 x double> %i.n to <2 x i64>
@@ -1034,8 +1036,8 @@ bb.a:
   %i.u = fcmp olt <2 x double> %i.t, zeroinitializer
   %i.v = select <2 x i1> %i.u, <2 x double> splat (double -5.000000e-01), <2 x double> splat (double 5.000000e-01)
   %i.w = fadd <2 x double> %i.t, %i.v             ; 2 uses
-  %i.x = fcmp oge <2 x double> %i.w, %10
-  %i.y = select <2 x i1> %i.x, <2 x double> %i.w, <2 x double> %10 ; 2 uses
+  %i.x = fcmp oge <2 x double> %i.w, %9
+  %i.y = select <2 x i1> %i.x, <2 x double> %i.w, <2 x double> %9 ; 2 uses
   %i.z = fcmp ogt <2 x double> %i.y, %i.b
   %i.aa = select <2 x i1> %i.z, <2 x double> %i.b, <2 x double> %i.y
   %i.ab = fptoui <2 x double> %i.aa to <2 x i64>
@@ -1048,8 +1050,8 @@ bb.a:
   %i.ah = fcmp olt <2 x double> %i.ag, zeroinitializer
   %i.ai = select <2 x i1> %i.ah, <2 x double> splat (double -5.000000e-01), <2 x double> splat (double 5.000000e-01)
   %i.aj = fadd <2 x double> %i.ag, %i.ai          ; 2 uses
-  %i.ak = fcmp oge <2 x double> %i.aj, %10
-  %i.al = select <2 x i1> %i.ak, <2 x double> %i.aj, <2 x double> %10 ; 2 uses
+  %i.ak = fcmp oge <2 x double> %i.aj, %9
+  %i.al = select <2 x i1> %i.ak, <2 x double> %i.aj, <2 x double> %9 ; 2 uses
   %i.am = fcmp ogt <2 x double> %i.al, %i.b
   %i.an = select <2 x i1> %i.am, <2 x double> %i.b, <2 x double> %i.al
   %i.ao = fptoui <2 x double> %i.an to <2 x i64>
@@ -1062,8 +1064,8 @@ bb.a:
   %i.au = fcmp olt <2 x double> %i.at, zeroinitializer
   %i.av = select <2 x i1> %i.au, <2 x double> splat (double -5.000000e-01), <2 x double> splat (double 5.000000e-01)
   %i.aw = fadd <2 x double> %i.at, %i.av          ; 2 uses
-  %i.ax = fcmp oge <2 x double> %i.aw, %10
-  %i.ay = select <2 x i1> %i.ax, <2 x double> %i.aw, <2 x double> %10 ; 2 uses
+  %i.ax = fcmp oge <2 x double> %i.aw, %9
+  %i.ay = select <2 x i1> %i.ax, <2 x double> %i.aw, <2 x double> %9 ; 2 uses
   %i.az = fcmp ogt <2 x double> %i.ay, %i.b
   %i.ba = select <2 x i1> %i.az, <2 x double> %i.b, <2 x double> %i.ay
   %i.bb = fptoui <2 x double> %i.ba to <2 x i64>
@@ -1076,8 +1078,8 @@ bb.a:
   %i.bh = fcmp olt <2 x double> %i.bg, zeroinitializer
   %i.bi = select <2 x i1> %i.bh, <2 x double> splat (double -5.000000e-01), <2 x double> splat (double 5.000000e-01)
   %i.bj = fadd <2 x double> %i.bg, %i.bi          ; 2 uses
-  %i.bk = fcmp oge <2 x double> %i.bj, %10
-  %i.bl = select <2 x i1> %i.bk, <2 x double> %i.bj, <2 x double> %10 ; 2 uses
+  %i.bk = fcmp oge <2 x double> %i.bj, %9
+  %i.bl = select <2 x i1> %i.bk, <2 x double> %i.bj, <2 x double> %9 ; 2 uses
   %i.bm = fcmp ogt <2 x double> %i.bl, %i.b
   %i.bn = select <2 x i1> %i.bm, <2 x double> %i.b, <2 x double> %i.bl
   %i.bo = fptoui <2 x double> %i.bn to <2 x i64>
@@ -1090,8 +1092,8 @@ bb.a:
   %i.bu = fcmp olt <2 x double> %i.bt, zeroinitializer
   %i.bv = select <2 x i1> %i.bu, <2 x double> splat (double -5.000000e-01), <2 x double> splat (double 5.000000e-01)
   %i.bw = fadd <2 x double> %i.bt, %i.bv          ; 2 uses
-  %i.bx = fcmp oge <2 x double> %i.bw, %10
-  %i.by = select <2 x i1> %i.bx, <2 x double> %i.bw, <2 x double> %10 ; 2 uses
+  %i.bx = fcmp oge <2 x double> %i.bw, %9
+  %i.by = select <2 x i1> %i.bx, <2 x double> %i.bw, <2 x double> %9 ; 2 uses
   %i.bz = fcmp ogt <2 x double> %i.by, %i.b
   %i.ca = select <2 x i1> %i.bz, <2 x double> %i.b, <2 x double> %i.by
   %i.cb = fptoui <2 x double> %i.ca to <2 x i64>
@@ -1104,8 +1106,8 @@ bb.a:
   %i.ch = fcmp olt <2 x double> %i.cg, zeroinitializer
   %i.ci = select <2 x i1> %i.ch, <2 x double> splat (double -5.000000e-01), <2 x double> splat (double 5.000000e-01)
   %i.cj = fadd <2 x double> %i.cg, %i.ci          ; 2 uses
-  %i.ck = fcmp oge <2 x double> %i.cj, %10
-  %i.cl = select <2 x i1> %i.ck, <2 x double> %i.cj, <2 x double> %10 ; 2 uses
+  %i.ck = fcmp oge <2 x double> %i.cj, %9
+  %i.cl = select <2 x i1> %i.ck, <2 x double> %i.cj, <2 x double> %9 ; 2 uses
   %i.cm = fcmp ogt <2 x double> %i.cl, %i.b
   %i.cn = select <2 x i1> %i.cm, <2 x double> %i.b, <2 x double> %i.cl
   %i.co = fptoui <2 x double> %i.cn to <2 x i64>
@@ -1118,8 +1120,8 @@ bb.a:
   %i.cu = fcmp olt <2 x double> %i.ct, zeroinitializer
   %i.cv = select <2 x i1> %i.cu, <2 x double> splat (double -5.000000e-01), <2 x double> splat (double 5.000000e-01)
   %i.cw = fadd <2 x double> %i.ct, %i.cv          ; 2 uses
-  %i.cx = fcmp oge <2 x double> %i.cw, %10
-  %i.cy = select <2 x i1> %i.cx, <2 x double> %i.cw, <2 x double> %10 ; 2 uses
+  %i.cx = fcmp oge <2 x double> %i.cw, %9
+  %i.cy = select <2 x i1> %i.cx, <2 x double> %i.cw, <2 x double> %9 ; 2 uses
   %i.cz = fcmp ogt <2 x double> %i.cy, %i.b
   %i.da = select <2 x i1> %i.cz, <2 x double> %i.b, <2 x double> %i.cy
   %i.db = fptoui <2 x double> %i.da to <2 x i64>
@@ -1136,14 +1138,14 @@ bb.a:
   %i.df = getelementptr inbounds nuw i8, ptr %.1151, i64 4
   %i.dg = load float, ptr %.1151, align 4, !tbaa !94
   %i.dh = fpext float %i.dg to double
-  %i.di = fmul double %9, %i.dh                   ; 2 uses
+  %i.di = fmul double %6, %i.dh                   ; 2 uses
   %i.dj = fcmp olt double %i.di, 0.000000e+00
   %i.dk = select i1 %i.dj, double -5.000000e-01, double 5.000000e-01
   %i.dl = fadd double %i.di, %i.dk                ; 2 uses
-  %.inv.i140 = fcmp oge double %i.dl, %8
-  %.0.i.i141 = select i1 %.inv.i140, double %i.dl, double %8 ; 2 uses
-  %i.dm = fcmp ogt double %.0.i.i141, %9
-  %.1.i.i142 = select i1 %i.dm, double %9, double %.0.i.i141
+  %.inv.i140 = fcmp oge double %i.dl, %5
+  %.0.i.i141 = select i1 %.inv.i140, double %i.dl, double %5 ; 2 uses
+  %i.dm = fcmp ogt double %.0.i.i141, %6
+  %.1.i.i142 = select i1 %i.dm, double %6, double %.0.i.i141
   %i.dn = fptoui double %.1.i.i142 to i64
   %i.do = getelementptr inbounds nuw i8, ptr %.192150, i64 8
   store i64 %i.dn, ptr %.192150, align 8, !tbaa !83

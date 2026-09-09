@@ -202,6 +202,7 @@ bb.a:
 define internal void @_ZL10forward_3d6PJ_LPZP8PJconsts(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.PJ_XYZ) align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef readonly byval(%struct.PJ_LPZ) align 8 captures(none) %1, ptr nofree noundef readonly captures(none) %2) #2 {
 bb.a:
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 32
@@ -213,28 +214,30 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   %i.j = load double, ptr %i.i, align 8, !tbaa !70
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 96
-  %i.l = load double, ptr %i.k, align 8, !tbaa !71
-  %3 = load <3 x double>, ptr %1, align 8, !tbaa !46 ; 5 uses
-  %.sroa.7.0.copyload.a = load double, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !46
+  %3 = load double, ptr %i.k, align 8, !tbaa !71
+  %i.l = load double, ptr %1, align 8, !tbaa !46  ; 2 uses
+  %.sroa.7.0.copyload = load double, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !46 ; 2 uses
+  %.sroa.7.0.copyload.a = load double, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !46 ; 2 uses
   %i.m = load <2 x double>, ptr %i.b, align 8, !tbaa !46
   %i.n = load <4 x double>, ptr %i.c, align 8, !tbaa !46 ; 3 uses
   %i.o = shufflevector <4 x double> %i.n, <4 x double> poison, <2 x i32> <i32 0, i32 3>
-  %i.p = shufflevector <3 x double> %3, <3 x double> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x double> poison, double %i.l, i64 0
+  %i.p = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   %i.q = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.o, <2 x double> %i.p, <2 x double> %i.m)
   %i.r = load <2 x double>, ptr %i.d, align 8, !tbaa !46
   %i.s = shufflevector <2 x double> %i.r, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.t = shufflevector <4 x double> %i.n, <4 x double> %i.s, <2 x i32> <i32 1, i32 4>
-  %4 = shufflevector <3 x double> %3, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.u = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %4, <2 x double> %i.q)
+  %5 = insertelement <2 x double> poison, double %.sroa.7.0.copyload, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.u = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %6, <2 x double> %i.q)
   %i.v = shufflevector <4 x double> %i.n, <4 x double> %i.s, <2 x i32> <i32 2, i32 5>
-  %5 = shufflevector <3 x double> %3, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.v, <2 x double> %5, <2 x double> %i.u)
-  %7 = extractelement <3 x double> %3, i64 0
-  %i.w = tail call double @llvm.fmuladd.f64(double %i.h, double %7, double %i.f)
-  %i.x = tail call double @llvm.fmuladd.f64(double %i.j, double %.sroa.7.0.copyload.a, double %i.w)
-  %8 = extractelement <3 x double> %3, i64 2
-  %i.y = tail call double @llvm.fmuladd.f64(double %i.l, double %8, double %i.x)
-  store <2 x double> %6, ptr %0, align 8, !tbaa !46
+  %7 = insertelement <2 x double> poison, double %.sroa.7.0.copyload.a, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.v, <2 x double> %8, <2 x double> %i.u)
+  %i.w = tail call double @llvm.fmuladd.f64(double %i.h, double %i.l, double %i.f)
+  %i.x = tail call double @llvm.fmuladd.f64(double %i.j, double %.sroa.7.0.copyload, double %i.w)
+  %i.y = tail call double @llvm.fmuladd.f64(double %3, double %.sroa.7.0.copyload.a, double %i.x)
+  store <2 x double> %9, ptr %0, align 8, !tbaa !46
   %.sroa.9.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %0, i64 16
   store double %i.y, ptr %.sroa.9.0..sroa_idx4, align 8, !tbaa !46
   ret void
@@ -312,25 +315,29 @@ bb.a:
 define internal { double, double } @_ZL10reverse_2d5PJ_XYP8PJconsts(double %0, double %1, ptr nofree noundef readonly captures(none) %2) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 112
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 4 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 112
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  %3 = load <3 x double>, ptr %i.b, align 8, !tbaa !46
-  %4 = insertelement <3 x double> <double poison, double poison, double 0.000000e+00>, double %0, i64 0
-  %5 = insertelement <3 x double> %4, double %1, i64 1
-  %6 = fsub <3 x double> %5, %3                   ; 3 uses
-  %i.e = load <4 x double>, ptr %i.c, align 8, !tbaa !46 ; 3 uses
+  %4 = load double, ptr %i.c, align 8, !tbaa !60
+  %5 = load <2 x double>, ptr %i.b, align 8, !tbaa !46
+  %6 = insertelement <2 x double> poison, double %0, i64 0
+  %7 = insertelement <2 x double> %6, double %1, i64 1
+  %8 = fsub <2 x double> %7, %5                   ; 2 uses
+  %9 = fsub double 0.000000e+00, %4
+  %i.e = load <4 x double>, ptr %3, align 8, !tbaa !46 ; 3 uses
   %i.f = load <2 x double>, ptr %i.d, align 8, !tbaa !46
-  %i.g = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.g = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.h = shufflevector <2 x double> %i.f, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.i = shufflevector <4 x double> %i.e, <4 x double> %i.h, <2 x i32> <i32 1, i32 4>
   %i.j = fmul <2 x double> %i.g, %i.i
   %i.k = shufflevector <4 x double> %i.e, <4 x double> poison, <2 x i32> <i32 0, i32 3>
-  %i.l = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> zeroinitializer
+  %i.l = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.m = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.k, <2 x double> %i.l, <2 x double> %i.j)
   %i.n = shufflevector <4 x double> %i.e, <4 x double> %i.h, <2 x i32> <i32 2, i32 5>
-  %7 = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.o = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.n, <2 x double> %7, <2 x double> %i.m) ; 2 uses
+  %10 = insertelement <2 x double> poison, double %9, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.o = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.n, <2 x double> %11, <2 x double> %i.m) ; 2 uses
   %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x double> %i.o, i64 0
   %i.p = insertvalue { double, double } poison, double %vec2struct.slot.sroa.0.0.vec.extract, 0
   %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x double> %i.o, i64 1

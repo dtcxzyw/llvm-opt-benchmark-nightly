@@ -205,7 +205,7 @@ declare float @cbrtf(float noundef) local_unnamed_addr #22
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @dt_ioppr_rgb_matrix_to_lab(ptr nofree noundef nonnull readonly captures(none) %0, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 16)) %1, ptr nofree noundef nonnull readonly captures(none) %2, ptr nofree noundef nonnull readonly captures(none) %3, ptr nofree noundef nonnull readonly captures(none) %4, i32 noundef %5, i32 noundef %6) unnamed_addr #23 {
 bb.a:
-  %i.a = alloca [4 x float], align 16             ; 4 uses
+  %i.a = alloca [4 x float], align 16             ; 6 uses
   %.not.i = icmp eq i32 %6, 0
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -213,36 +213,49 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   call fastcc void @dt_ioppr_apply_trc(ptr noundef nonnull readonly %0, ptr noundef %i.a, ptr noundef nonnull readonly %3, ptr noundef nonnull readonly %4, i32 noundef %5)
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %7 = load <3 x float>, ptr %i.a, align 16, !tbaa !12 ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %9 = load float, ptr %8, align 8, !tbaa !12
+  %10 = load <4 x float>, ptr %i.a, align 16
+  %11 = load float, ptr %7, align 4, !tbaa !12
   %i.d = load <4 x float>, ptr %2, align 4, !tbaa !12
-  %i.e = shufflevector <3 x float> %7, <3 x float> poison, <4 x i32> zeroinitializer
+  %i.e = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> zeroinitializer
   %i.f = fmul reassoc nsz arcp contract afn <4 x float> %i.d, %i.e
   %i.g = load <4 x float>, ptr %i.b, align 4, !tbaa !12
-  %8 = shufflevector <3 x float> %7, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.h = fmul reassoc nsz arcp contract afn <4 x float> %i.g, %8
+  %12 = insertelement <4 x float> poison, float %11, i64 0
+  %13 = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.h = fmul reassoc nsz arcp contract afn <4 x float> %i.g, %13
   %i.i = fadd reassoc nsz arcp contract afn <4 x float> %i.h, %i.f
   %i.j = load <4 x float>, ptr %i.c, align 4, !tbaa !12
-  %9 = shufflevector <3 x float> %7, <3 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
-  %i.k = fmul reassoc nsz arcp contract afn <4 x float> %i.j, %9
+  %14 = insertelement <4 x float> poison, float %9, i64 0
+  %15 = shufflevector <4 x float> %14, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.k = fmul reassoc nsz arcp contract afn <4 x float> %i.j, %15
   %i.l = fadd reassoc nsz arcp contract afn <4 x float> %i.i, %i.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #27
   br label %dt_ioppr_rgb_matrix_to_xyz.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %10 = load <3 x float>, ptr %0, align 4, !tbaa !12 ; 3 uses
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %18 = load float, ptr %17, align 4, !tbaa !12
+  %19 = load float, ptr %0, align 4, !tbaa !12
+  %20 = load float, ptr %16, align 4, !tbaa !12
   %i.o = load <4 x float>, ptr %2, align 4, !tbaa !12
-  %i.p = shufflevector <3 x float> %10, <3 x float> poison, <4 x i32> zeroinitializer
+  %21 = insertelement <4 x float> poison, float %19, i64 0
+  %i.p = shufflevector <4 x float> %21, <4 x float> poison, <4 x i32> zeroinitializer
   %i.q = fmul reassoc nsz arcp contract afn <4 x float> %i.o, %i.p
   %i.r = load <4 x float>, ptr %i.m, align 4, !tbaa !12
-  %11 = shufflevector <3 x float> %10, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.s = fmul reassoc nsz arcp contract afn <4 x float> %i.r, %11
+  %22 = insertelement <4 x float> poison, float %20, i64 0
+  %23 = shufflevector <4 x float> %22, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.s = fmul reassoc nsz arcp contract afn <4 x float> %i.r, %23
   %i.t = fadd reassoc nsz arcp contract afn <4 x float> %i.s, %i.q
   %i.u = load <4 x float>, ptr %i.n, align 4, !tbaa !12
-  %12 = shufflevector <3 x float> %10, <3 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
-  %i.v = fmul reassoc nsz arcp contract afn <4 x float> %i.u, %12
+  %24 = insertelement <4 x float> poison, float %18, i64 0
+  %25 = shufflevector <4 x float> %24, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.v = fmul reassoc nsz arcp contract afn <4 x float> %i.u, %25
   %i.w = fadd reassoc nsz arcp contract afn <4 x float> %i.t, %i.v
   br label %dt_ioppr_rgb_matrix_to_xyz.exit
 

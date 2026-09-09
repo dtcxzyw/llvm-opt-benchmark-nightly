@@ -204,7 +204,7 @@ define internal range(i32 0, 2) i32 @ecp_nistz256_points_mul(ptr noundef %0, ptr
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca [33 x i8], align 16               ; 7 uses
-  %7 = alloca %union.anon, align 32               ; 7 uses
+  %7 = alloca %union.anon, align 32               ; 9 uses
   %8 = alloca %union.anon, align 32               ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(33) %i.b, i8 0, i64 33, i1 false)
@@ -408,8 +408,10 @@ bb.s:                                             ; preds = %bb.q, %bb.o
   store i64 %i.cf, ptr %i.bp, align 16, !tbaa !21
   %i.ci = select i1 %i.ce, i64 4294967294, i64 0
   store i64 %i.ci, ptr %i.bq, align 8, !tbaa !21
-  %i.cj = getelementptr inbounds nuw i8, ptr %7, i64 64 ; 2 uses
-  %i.ck = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %7, i64 64 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 3 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %7, i64 80
+  %i.ck = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 2 uses
   br label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge, %bb.t
@@ -437,19 +439,26 @@ bb.t:                                             ; preds = %._crit_edge, %bb.t
   %i.de = and i32 %i.cw, 1
   %i.df = getelementptr inbounds nuw [4096 x i8], ptr %.3.ph, i64 %indvars.iv226
   call void @ecp_nistz256_gather_w7(ptr noundef nonnull %7, ptr noundef nonnull %i.df, i32 noundef %i.dd) #7
-  call void @ecp_nistz256_neg(ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ck) #7
+  call void @ecp_nistz256_neg(ptr noundef nonnull %9, ptr noundef nonnull %10) #7
   %i.dg = zext nneg i32 %i.de to i64              ; 2 uses
-  %i.dh = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.dg, i64 0
-  %i.di = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.dg, i64 1
-  %9 = sub nsw <2 x i64> %i.dh, %i.di             ; 2 uses
-  %10 = load <4 x i64>, ptr %i.cj, align 32, !tbaa !29
-  %11 = shufflevector <2 x i64> %9, <2 x i64> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %12 = and <4 x i64> %10, %11
-  %13 = load <4 x i64>, ptr %i.ck, align 32, !tbaa !29
-  %14 = shufflevector <2 x i64> %9, <2 x i64> poison, <4 x i32> zeroinitializer
-  %15 = and <4 x i64> %14, %13
-  %16 = xor <4 x i64> %15, %12
-  store <4 x i64> %16, ptr %i.ck, align 32, !tbaa !29
+  %11 = load <2 x i64>, ptr %9, align 32, !tbaa !29
+  %12 = load <2 x i64>, ptr %10, align 32, !tbaa !29
+  %13 = sub nsw i64 0, %i.dg
+  %14 = add nsw i64 %i.dg, -1
+  %i.dh = insertelement <2 x i64> poison, i64 %13, i64 0
+  %15 = shufflevector <2 x i64> %i.dh, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %16 = and <2 x i64> %11, %15
+  %i.di = insertelement <2 x i64> poison, i64 %14, i64 0
+  %17 = shufflevector <2 x i64> %i.di, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %18 = and <2 x i64> %17, %12
+  %19 = xor <2 x i64> %18, %16
+  store <2 x i64> %19, ptr %10, align 32, !tbaa !29
+  %20 = load <2 x i64>, ptr %i.cj, align 16, !tbaa !29
+  %21 = and <2 x i64> %20, %15
+  %22 = load <2 x i64>, ptr %i.ck, align 16, !tbaa !29
+  %23 = and <2 x i64> %22, %17
+  %24 = xor <2 x i64> %23, %21
+  store <2 x i64> %24, ptr %i.ck, align 16, !tbaa !29
   call void @ecp_nistz256_point_add_affine(ptr noundef nonnull %8, ptr noundef nonnull %8, ptr noundef nonnull %7) #7
   %indvars.iv.next227 = add nuw nsw i64 %indvars.iv226, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next227, 37
@@ -514,7 +523,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.dz, label %ecp_nistz256_windowed_mul.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ea = getelementptr inbounds nuw [1536 x i8], ptr %i.du, i64 %.0142208256 ; 23 uses
+  %i.ea = getelementptr inbounds nuw [1536 x i8], ptr %i.du, i64 %.0142208256 ; 25 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ec = getelementptr inbounds nuw i8, ptr %i.ea, i64 32 ; 7 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ea, i64 64
@@ -669,6 +678,8 @@ bb.am:                                            ; preds = %bb.al
   call void @ecp_nistz256_gather_w5(ptr noundef nonnull %i.ea, ptr noundef nonnull %i.du, i32 noundef %i.gh) #7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(96) %i.dq, ptr noundef nonnull align 8 dereferenceable(96) %i.ea, i64 96, i1 false)
   %i.gi = getelementptr inbounds nuw i8, ptr %i.ea, i64 128 ; 4 uses
+  %25 = getelementptr inbounds nuw i8, ptr %i.ea, i64 144 ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %i.ea, i64 48 ; 4 uses
   br label %bb.an
 
 bb.an:                                            ; preds = %._crit_edge256.i, %bb.am
@@ -707,17 +718,24 @@ bb.ao:                                            ; preds = %bb.ao, %.lr.ph255.i
   call void @ecp_nistz256_gather_w5(ptr noundef nonnull %i.ea, ptr noundef nonnull %i.he, i32 noundef %i.hc) #7
   call void @ecp_nistz256_neg(ptr noundef nonnull %i.gi, ptr noundef nonnull %i.ec) #7
   %i.hf = zext nneg i32 %i.hd to i64              ; 2 uses
-  %i.hg = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.hf, i64 0
-  %i.hh = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.hf, i64 1
-  %17 = sub nsw <2 x i64> %i.hg, %i.hh            ; 2 uses
-  %18 = load <4 x i64>, ptr %i.gi, align 8, !tbaa !29
-  %19 = shufflevector <2 x i64> %17, <2 x i64> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %20 = and <4 x i64> %18, %19
-  %21 = load <4 x i64>, ptr %i.ec, align 8, !tbaa !29
-  %22 = shufflevector <2 x i64> %17, <2 x i64> poison, <4 x i32> zeroinitializer
-  %23 = and <4 x i64> %22, %21
-  %24 = xor <4 x i64> %23, %20
-  store <4 x i64> %24, ptr %i.ec, align 8, !tbaa !29
+  %27 = load <2 x i64>, ptr %i.gi, align 8, !tbaa !29
+  %28 = load <2 x i64>, ptr %i.ec, align 8, !tbaa !29
+  %29 = sub nsw i64 0, %i.hf
+  %30 = add nsw i64 %i.hf, -1
+  %i.hg = insertelement <2 x i64> poison, i64 %29, i64 0
+  %31 = shufflevector <2 x i64> %i.hg, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %32 = and <2 x i64> %27, %31
+  %i.hh = insertelement <2 x i64> poison, i64 %30, i64 0
+  %33 = shufflevector <2 x i64> %i.hh, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %34 = and <2 x i64> %33, %28
+  %35 = xor <2 x i64> %34, %32
+  store <2 x i64> %35, ptr %i.ec, align 8, !tbaa !29
+  %36 = load <2 x i64>, ptr %25, align 8, !tbaa !29
+  %37 = and <2 x i64> %36, %31
+  %38 = load <2 x i64>, ptr %26, align 8, !tbaa !29
+  %39 = and <2 x i64> %38, %33
+  %40 = xor <2 x i64> %39, %37
+  store <2 x i64> %40, ptr %26, align 8, !tbaa !29
   call void @ecp_nistz256_point_add(ptr noundef nonnull %i.dq, ptr noundef nonnull %i.dq, ptr noundef nonnull %i.ea) #7
   %i.hi = add i64 %.1253.i, 1                     ; 2 uses
   %exitcond264.not.i = icmp eq i64 %i.hi, %.0142208256
@@ -754,17 +772,24 @@ bb.ao:                                            ; preds = %bb.ao, %.lr.ph255.i
   call void @ecp_nistz256_gather_w5(ptr noundef nonnull %i.ea, ptr noundef nonnull %i.ia, i32 noundef %i.hy) #7
   call void @ecp_nistz256_neg(ptr noundef nonnull %i.gi, ptr noundef nonnull %i.ec) #7
   %i.ib = zext nneg i32 %i.hz to i64              ; 2 uses
-  %i.ic = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.ib, i64 0
-  %i.id = insertelement <2 x i64> <i64 1, i64 poison>, i64 %i.ib, i64 1
-  %25 = sub nsw <2 x i64> %i.ic, %i.id            ; 2 uses
-  %26 = load <4 x i64>, ptr %i.gi, align 8, !tbaa !29
-  %27 = shufflevector <2 x i64> %25, <2 x i64> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %28 = and <4 x i64> %26, %27
-  %29 = load <4 x i64>, ptr %i.ec, align 8, !tbaa !29
-  %30 = shufflevector <2 x i64> %25, <2 x i64> poison, <4 x i32> zeroinitializer
-  %31 = and <4 x i64> %30, %29
-  %32 = xor <4 x i64> %31, %28
-  store <4 x i64> %32, ptr %i.ec, align 8, !tbaa !29
+  %41 = load <2 x i64>, ptr %i.gi, align 8, !tbaa !29
+  %42 = load <2 x i64>, ptr %i.ec, align 8, !tbaa !29
+  %43 = sub nsw i64 0, %i.ib
+  %44 = add nsw i64 %i.ib, -1
+  %i.ic = insertelement <2 x i64> poison, i64 %43, i64 0
+  %45 = shufflevector <2 x i64> %i.ic, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %46 = and <2 x i64> %41, %45
+  %i.id = insertelement <2 x i64> poison, i64 %44, i64 0
+  %47 = shufflevector <2 x i64> %i.id, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %48 = and <2 x i64> %47, %42
+  %49 = xor <2 x i64> %48, %46
+  store <2 x i64> %49, ptr %i.ec, align 8, !tbaa !29
+  %50 = load <2 x i64>, ptr %25, align 8, !tbaa !29
+  %51 = and <2 x i64> %50, %45
+  %52 = load <2 x i64>, ptr %26, align 8, !tbaa !29
+  %53 = and <2 x i64> %52, %47
+  %54 = xor <2 x i64> %53, %51
+  store <2 x i64> %54, ptr %26, align 8, !tbaa !29
   call void @ecp_nistz256_point_add(ptr noundef nonnull %i.dq, ptr noundef nonnull %i.dq, ptr noundef nonnull %i.ea) #7
   %i.ie = add nuw i64 %.2258.i, 1                 ; 2 uses
   %exitcond265.not.i = icmp eq i64 %i.ie, %.0142208256

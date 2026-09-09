@@ -205,7 +205,7 @@ bb.bl:                                            ; preds = %.lr.ph833
   br i1 %exitcond.not.i.i.i.i.1, label %.lr.ph827, label %.lr.ph87.i.i.i.i, !llvm.loop !504
 
 bb.bm:                                            ; preds = %.lr.ph833
-  %i.ol = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.jp ; 5 uses
+  %i.ol = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.jp ; 7 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !637)
   call void @llvm.experimental.noalias.scope.decl(metadata !638)
   call void @llvm.experimental.noalias.scope.decl(metadata !639)
@@ -214,9 +214,13 @@ bb.bm:                                            ; preds = %.lr.ph833
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %bb.bm
   %i.om = getelementptr inbounds nuw i8, ptr %i.ol, i64 8
+  %14 = getelementptr inbounds nuw i8, ptr %i.ol, i64 12
+  %15 = getelementptr inbounds nuw i8, ptr %i.ol, i64 16
   %i.on = load <2 x float>, ptr %i.ol, align 4, !tbaa !163, !alias.scope !637, !noalias !640 ; 2 uses
   %i.oo = shufflevector <2 x float> %i.on, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %14 = load <3 x float>, ptr %i.om, align 4, !tbaa !163, !alias.scope !637, !noalias !640 ; 3 uses
+  %16 = load float, ptr %15, align 4, !tbaa !163, !alias.scope !637, !noalias !640
+  %17 = load float, ptr %14, align 4, !tbaa !163, !alias.scope !637, !noalias !640
+  %18 = load float, ptr %i.om, align 4, !tbaa !163, !alias.scope !637, !noalias !640
   %i.op = getelementptr inbounds nuw i8, ptr %i.ol, i64 20
   %i.oq = load float, ptr %i.op, align 4, !tbaa !163, !alias.scope !637, !noalias !640
   %i.or = getelementptr inbounds nuw i8, ptr %i.ol, i64 24
@@ -234,9 +238,12 @@ bb.bm:                                            ; preds = %.lr.ph833
   %i.pd = insertelement <4 x float> poison, float %i.oq, i64 0
   %i.pe = shufflevector <4 x float> %i.pd, <4 x float> poison, <4 x i32> zeroinitializer
   %i.pf = shufflevector <2 x float> %i.on, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  %i.pg = shufflevector <3 x float> %14, <3 x float> poison, <4 x i32> zeroinitializer
-  %15 = shufflevector <3 x float> %14, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %16 = shufflevector <3 x float> %14, <3 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %19 = insertelement <4 x float> poison, float %18, i64 0
+  %20 = shufflevector <4 x float> %19, <4 x float> poison, <4 x i32> zeroinitializer
+  %21 = insertelement <4 x float> poison, float %17, i64 0
+  %i.pg = shufflevector <4 x float> %21, <4 x float> poison, <4 x i32> zeroinitializer
+  %22 = insertelement <4 x float> poison, float %16, i64 0
+  %23 = shufflevector <4 x float> %22, <4 x float> poison, <4 x i32> zeroinitializer
   br label %.lr.ph.i.i.i.i.i
 
 .preheader.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i, %bb.bm
@@ -298,18 +305,18 @@ bb.bm:                                            ; preds = %.lr.ph833
   %i.rc = shufflevector <4 x float> %i.qp, <4 x float> %i.qq, <4 x i32> <i32 2, i32 6, i32 poison, i32 poison>
   %i.rd = shufflevector <4 x float> %i.rc, <4 x float> %i.qr, <4 x i32> <i32 0, i32 1, i32 6, i32 poison>
   %i.re = shufflevector <4 x float> %i.rd, <4 x float> %i.qs, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
-  %i.rf = fmul fast <4 x float> %i.re, %i.pg
+  %i.rf = fmul fast <4 x float> %i.re, %20
   %i.rg = fadd fast <4 x float> %i.rb, %i.rf
   %i.rh = shufflevector <4 x float> %i.qp, <4 x float> %i.qq, <4 x i32> <i32 3, i32 7, i32 poison, i32 poison>
   %i.ri = shufflevector <4 x float> %i.rh, <4 x float> %i.qr, <4 x i32> <i32 0, i32 1, i32 7, i32 poison>
   %i.rj = shufflevector <4 x float> %i.ri, <4 x float> %i.qs, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %i.rk = fmul fast <4 x float> %i.rj, %15
+  %i.rk = fmul fast <4 x float> %i.rj, %i.pg
   %i.rl = fadd fast <4 x float> %i.rg, %i.rk
   %i.rm = insertelement <4 x float> poison, float %i.qi, i64 0
   %i.rn = insertelement <4 x float> %i.rm, float %i.qk, i64 1
   %i.ro = insertelement <4 x float> %i.rn, float %i.qm, i64 2
   %i.rp = insertelement <4 x float> %i.ro, float %i.qo, i64 3
-  %i.rq = fmul fast <4 x float> %i.rp, %16
+  %i.rq = fmul fast <4 x float> %i.rp, %23
   %i.rr = fadd fast <4 x float> %i.rl, %i.rq
   %i.rs = getelementptr inbounds nuw i8, ptr %i.po, i64 20
   %i.rt = load float, ptr %i.rs, align 4, !tbaa !163, !alias.scope !638, !noalias !642

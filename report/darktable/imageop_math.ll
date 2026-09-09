@@ -205,7 +205,7 @@ bb.a:
   %i.ba = and i32 %i.az, -2                       ; 2 uses
   %i.bb = sitofp reassoc nsz arcp contract afn i32 %i.ba to float
   %i.bc = fsub reassoc nsz arcp contract afn float %i.ay, %i.bb
-  %i.bd = fmul reassoc nsz arcp contract afn float %i.bc, 5.000000e-01 ; 14 uses
+  %i.bd = fmul reassoc nsz arcp contract afn float %i.bc, 5.000000e-01 ; 16 uses
   %. = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.ba) ; 3 uses
   %i.be = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.bd ; 9 uses
   %i.bf = or disjoint i32 %., %.0428              ; 4 uses
@@ -282,8 +282,6 @@ bb.a:
   %i.df = add i64 %smax1314, %i.de                ; 3 uses
   %i.dg = lshr i64 %i.df, 1
   %i.dh = add nuw i64 %i.dg, 1                    ; 5 uses
-  %7 = insertelement <2 x float> poison, float %i.bd, i64 0
-  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %invariant.op = add <4 x i32> <i32 0, i32 1, i32 0, i32 1>, %i.bm
   %min.iters.check1315 = icmp ugt i64 %i.df, 5
   %or.cond1412 = and i1 %min.iters.check1315, %ident.check1312.not
@@ -336,6 +334,8 @@ bb.a:
   %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer ; 16 uses
   %broadcast.splatinsert806 = insertelement <4 x float> poison, float %i.bd, i64 0
   %broadcast.splat807 = shufflevector <4 x float> %broadcast.splatinsert806, <4 x float> poison, <4 x i32> zeroinitializer ; 4 uses
+  %7 = insertelement <2 x float> poison, float %i.bd, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.b
 
 ._crit_edge502:                                   ; preds = %bb.h
@@ -738,27 +738,28 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.yp = phi float [ %i.um, %._crit_edge489 ], [ %i.yl, %vec.epilog.middle.block ], [ %i.xo, %middle.block ], [ %i.zx, %.lr.ph494 ]
   %i.yq = phi float [ %i.ul, %._crit_edge489 ], [ %i.ym, %vec.epilog.middle.block ], [ %i.xp, %middle.block ], [ %i.zt, %.lr.ph494 ]
   %i.yr = phi float [ %i.uk, %._crit_edge489 ], [ %i.yn, %vec.epilog.middle.block ], [ %i.xq, %middle.block ], [ %i.zr, %.lr.ph494 ]
-  %9 = insertelement <2 x float> poison, float %i.ee, i64 0
-  %10 = insertelement <2 x float> %9, float %i.ed, i64 1
-  %11 = fmul reassoc nsz arcp contract afn <2 x float> %10, %8 ; 2 uses
-  %12 = add nsw <4 x i32> %i.pu, %i.by
+  %9 = fmul reassoc nsz arcp contract afn float %i.ee, %i.bd
+  %10 = add nsw <4 x i32> %i.pu, %i.by
+  %11 = fmul reassoc nsz arcp contract afn float %i.ed, %i.bd
   %i.ys = shufflevector <4 x i32> %i.ei, <4 x i32> %i.ek, <4 x i32> <i32 0, i32 5, i32 0, i32 5>
   %i.yt = add nsw <4 x i32> %i.ys, %i.by
   %i.yu = sext <4 x i32> %i.yt to <4 x i64>
   %i.yv = getelementptr inbounds [4 x i8], ptr %1, <4 x i64> %i.yu
   %i.yw = tail call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %i.yv, <4 x i1> splat (i1 true), <4 x float> poison), !tbaa !17
-  %i.yx = shufflevector <2 x float> %11, <2 x float> poison, <4 x i32> zeroinitializer
+  %12 = insertelement <4 x float> poison, float %9, i64 0
+  %i.yx = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> zeroinitializer
   %i.yy = fmul reassoc nsz arcp contract afn <4 x float> %i.yx, %i.yw
   %i.yz = insertelement <4 x float> poison, float %i.yr, i64 0
   %i.za = insertelement <4 x float> %i.yz, float %i.yq, i64 1
   %i.zb = insertelement <4 x float> %i.za, float %i.yp, i64 2
   %i.zc = insertelement <4 x float> %i.zb, float %i.yo, i64 3
   %i.zd = fadd reassoc nsz arcp contract afn <4 x float> %i.zc, %i.yy
-  %i.ze = sext <4 x i32> %12 to <4 x i64>
+  %i.ze = sext <4 x i32> %10 to <4 x i64>
   %i.zf = getelementptr inbounds [4 x i8], ptr %1, <4 x i64> %i.ze
   %i.zg = tail call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %i.zf, <4 x i1> splat (i1 true), <4 x float> poison), !tbaa !17
-  %13 = shufflevector <2 x float> %11, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.zh = fmul reassoc nsz arcp contract afn <4 x float> %13, %i.zg
+  %13 = insertelement <4 x float> poison, float %11, i64 0
+  %14 = shufflevector <4 x float> %13, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.zh = fmul reassoc nsz arcp contract afn <4 x float> %14, %i.zg
   %i.zi = fadd reassoc nsz arcp contract afn <4 x float> %i.zd, %i.zh
   store <4 x float> %i.zi, ptr %i.a, align 16, !tbaa !17
   br label %bb.f
