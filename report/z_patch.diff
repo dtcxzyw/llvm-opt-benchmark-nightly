@@ -1,0 +1,187 @@
+diff --git a/llvm/lib/Analysis/InstructionSimplify.cpp b/llvm/lib/Analysis/InstructionSimplify.cpp
+index 89425a7e19154..cc0267da10c75 100644
+--- a/llvm/lib/Analysis/InstructionSimplify.cpp
++++ b/llvm/lib/Analysis/InstructionSimplify.cpp
+@@ -26,6 +26,7 @@
+ #include "llvm/Analysis/CaptureTracking.h"
+ #include "llvm/Analysis/CmpInstAnalysis.h"
+ #include "llvm/Analysis/ConstantFolding.h"
++#include "llvm/Analysis/DomConditionCache.h"
+ #include "llvm/Analysis/FloatingPointPredicateUtils.h"
+ #include "llvm/Analysis/InstSimplifyFolder.h"
+ #include "llvm/Analysis/Loads.h"
+@@ -3122,7 +3123,8 @@ static Value *simplifyICmpWithZero(CmpPredicate Pred, Value *LHS, Value *RHS,
+ }
+ 
+ static Value *simplifyICmpWithConstant(CmpPredicate Pred, Value *LHS,
+-                                       Value *RHS, const SimplifyQuery &Q) {
++                                       Value *RHS, const SimplifyQuery &Q,
++                                       unsigned MaxRecurse) {
+   Type *ITy = getCompareTy(RHS); // The return type.
+ 
+   Value *X;
+@@ -3168,6 +3170,22 @@ static Value *simplifyICmpWithConstant(CmpPredicate Pred, Value *LHS,
+   if (Pred == ICmpInst::ICMP_UGE && C->isOne() && isKnownNonZero(LHS, Q))
+     return ConstantInt::getTrue(ITy);
+ 
++  // (X + C2) == C --> X == (C - C2)
++  // (X + C2) != C --> X != (C - C2)
++  // Only worth the recursive simplification attempt if there are
++  // assumptions or dominating conditions on X that it could fold against;
++  // otherwise the rewritten compare won't simplify either.
++  Value *AddOp;
++  Constant *C2;
++  if (MaxRecurse && ICmpInst::isEquality(Pred) &&
++      match(LHS, m_Add(m_Value(AddOp), m_Constant(C2))) &&
++      ((Q.AC && !Q.AC->assumptionsFor(AddOp).empty()) ||
++       (Q.DC && !Q.DC->conditionsFor(AddOp).empty()))) {
++    Constant *NewRHS = ConstantExpr::getSub(cast<Constant>(RHS), C2);
++    if (Value *V = simplifyICmpInst(Pred, AddOp, NewRHS, Q, MaxRecurse - 1))
++      return V;
++  }
++
+   return nullptr;
+ }
+ 
+@@ -3919,7 +3937,7 @@ static Value *simplifyICmpInst(CmpPredicate Pred, Value *LHS, Value *RHS,
+   if (Value *V = simplifyICmpWithZero(Pred, LHS, RHS, Q))
+     return V;
+ 
+-  if (Value *V = simplifyICmpWithConstant(Pred, LHS, RHS, Q))
++  if (Value *V = simplifyICmpWithConstant(Pred, LHS, RHS, Q, MaxRecurse))
+     return V;
+ 
+   // If both operands have range metadata, use the metadata
+diff --git a/llvm/test/Transforms/InstCombine/icmp-add.ll b/llvm/test/Transforms/InstCombine/icmp-add.ll
+index 1b66a50c26e59..f81e12c8a5de3 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-add.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-add.ll
+@@ -3602,3 +3602,84 @@ entry:
+   %result = select i1 %eq, i1 %v1_lt_v3, i1 %less_than
+   ret i1 %result
+ }
++
++; Test where the new icmp after the rewrite (%n - 1) == 0 --> %n == 1 allows
++; folding the icmp.
++define i1 @multiuse_add_eq_implied_false(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_eq_implied_false(
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[N:%.*]], 10
++; CHECK-NEXT:    br i1 [[C]], label [[IF:%.*]], label [[EXIT:%.*]]
++; CHECK:       if:
++; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    ret i1 false
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++  %c = icmp ugt i64 %n, 10
++  br i1 %c, label %if, label %exit
++
++if:
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp eq i64 %add, 0
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++define i1 @multiuse_add_eq_implied_true(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_eq_implied_true(
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[N:%.*]], 7
++; CHECK-NEXT:    br i1 [[C]], label [[IF:%.*]], label [[EXIT:%.*]]
++; CHECK:       if:
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[N]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++  %c = icmp eq i64 %n, 7
++  br i1 %c, label %if, label %exit
++
++if:
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp eq i64 %add, 6
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++define i1 @multiuse_add_ne_implied_by_assume(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_ne_implied_by_assume(
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[N:%.*]], 10
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    ret i1 true
++;
++  %c = icmp ugt i64 %n, 10
++  call void @llvm.assume(i1 %c)
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp ne i64 %add, 0
++  ret i1 %cmp
++}
++
++; Test with add with multiple uses and the new compare does not
++; simplify.
++define i1 @multiuse_add_eq_not_implied(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_eq_not_implied(
++; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[N:%.*]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i64 [[ADD]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp eq i64 %add, 0
++  ret i1 %cmp
++}
+diff --git a/llvm/test/Transforms/InstSimplify/assume_icmp.ll b/llvm/test/Transforms/InstSimplify/assume_icmp.ll
+index 9ac3f468ab604..8d68f3ce05352 100644
+--- a/llvm/test/Transforms/InstSimplify/assume_icmp.ll
++++ b/llvm/test/Transforms/InstSimplify/assume_icmp.ll
+@@ -84,6 +84,39 @@ define void @basic_uge(i32 %x, i32 %y) {
+   ret void
+ }
+ 
++; (X + C2) == C is rewritten as X == (C - C2) and folds away using the
++; assumption on X, even though the add has another use.
++define i1 @multiuse_add_ne_implied_by_assume(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_ne_implied_by_assume(
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[N:%.*]], 10
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    ret i1 true
++;
++  %c = icmp ugt i64 %n, 10
++  call void @llvm.assume(i1 %c)
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp ne i64 %add, 0
++  ret i1 %cmp
++}
++
++; Same as above, but there is no assumption on %n, so the rewritten compare
++; does not fold and the multi-use add is left alone.
++define i1 @multiuse_add_eq_not_implied(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_eq_not_implied(
++; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[N:%.*]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i64 [[ADD]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp eq i64 %add, 0
++  ret i1 %cmp
++}
++
+ ; This does not simplify in InstSimplify, because AssumptionCache tracker
+ ; does not track values through "and". The "and" assume will be broken
+ ; down into two separate assume calls by InstCombine.
