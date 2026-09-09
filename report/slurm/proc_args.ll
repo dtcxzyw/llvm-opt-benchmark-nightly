@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.ax, %bb.a
   %.0226 = phi i32 [ 0, %bb.a ], [ %.1227, %bb.ax ]
-  %.0224 = phi i64 [ 0, %bb.a ], [ %i.ch, %bb.ax ] ; 4 uses
+  %.0224 = phi i64 [ 0, %bb.a ], [ %i.ch, %bb.ax ] ; 3 uses
   %.0222 = phi ptr [ %i.b, %bb.a ], [ %spec.select, %bb.ax ] ; 4 uses
   %i.d = load i8, ptr %.0222, align 1
   switch i8 %i.d, label %bb.e [
@@ -496,10 +496,8 @@ bb.ax:                                            ; preds = %bb.av, %bb.au, %bb.
   br label %bb.b, !llvm.loop !26
 
 bb.ay:                                            ; preds = %bb.b
-  %3 = icmp ne ptr %2, null
-  %4 = icmp ne i64 %.0224, -1
-  %or.cond15 = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond15, label %.sink.split, label %bb.az
+  %.not = icmp eq ptr %2, null
+  br i1 %.not, label %bb.az, label %.sink.split
 
 .sink.split:                                      ; preds = %bb.ay
   %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses

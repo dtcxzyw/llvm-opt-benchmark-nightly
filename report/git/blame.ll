@@ -205,16 +205,14 @@ bb.b:                                             ; preds = %.split.us.i
   %i.i = load i32, ptr %i.h, align 8, !tbaa !54
   %i.j = getelementptr inbounds nuw i8, ptr %.124.us.i, i64 8
   %i.k = load i32, ptr %i.j, align 8, !tbaa !54
-  %1 = icmp sle i32 %i.i, %i.k                    ; 3 uses
-  %2 = zext i1 %1 to i32
-  %spec.select.i.us.i = select i1 %1, ptr %.124.us.i, ptr %i.g
-  %spec.select35.i.us.i = select i1 %1, ptr %i.g, ptr %.124.us.i ; 2 uses
+  %.not2 = icmp sgt i32 %i.i, %i.k                ; 2 uses
+  %spec.select.i.us.i = select i1 %.not2, ptr %i.g, ptr %.124.us.i
+  %spec.select35.i.us.i = select i1 %.not2, ptr %.124.us.i, ptr %i.g ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
   %.133.i.us.i = phi ptr [ %spec.select.i.us.i, %bb.b ], [ %.2.val.i.us.i, %bb.f ] ; 4 uses
   %.1.i.us.i = phi ptr [ %spec.select35.i.us.i, %bb.b ], [ %.133.i.us.i, %bb.f ]
-  %.018.i.us.i = phi i32 [ %2, %bb.b ], [ %5, %bb.f ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.133.i.us.i, i64 8
   br label %bb.d
 
@@ -229,13 +227,10 @@ bb.e:                                             ; preds = %bb.d
   %i.n = load i32, ptr %i.m, align 8, !tbaa !54
   %i.o = load i32, ptr %i.l, align 8, !tbaa !54
   %i.p = icmp sgt i32 %i.n, %i.o
-  %3 = select i1 %i.p, i32 1, i32 -1
-  %4 = icmp slt i32 %3, %.018.i.us.i
-  br i1 %4, label %bb.d, label %bb.f, !llvm.loop !0
+  br i1 %i.p, label %bb.f, label %bb.d, !llvm.loop !0
 
 bb.f:                                             ; preds = %bb.e
   store ptr %.133.i.us.i, ptr %.2.i.us.i, align 8, !tbaa !53
-  %5 = xor i32 %.018.i.us.i, 1
   br label %bb.c
 
 sort_blame_entries__merge.exit.us.i:              ; preds = %bb.d
@@ -262,16 +257,14 @@ bb.h:                                             ; preds = %bb.g, %sort_blame_e
   %i.u = load i32, ptr %i.t, align 8, !tbaa !54
   %i.v = getelementptr inbounds nuw i8, ptr %.12439.i, i64 8
   %i.w = load i32, ptr %i.v, align 8, !tbaa !54
-  %6 = icmp sle i32 %i.u, %i.w                    ; 3 uses
-  %7 = zext i1 %6 to i32
-  %spec.select.i.i = select i1 %6, ptr %.12439.i, ptr %i.s
-  %spec.select35.i.i = select i1 %6, ptr %i.s, ptr %.12439.i ; 3 uses
+  %.not = icmp sgt i32 %i.u, %i.w                 ; 2 uses
+  %spec.select.i.i = select i1 %.not, ptr %i.s, ptr %.12439.i
+  %spec.select35.i.i = select i1 %.not, ptr %.12439.i, ptr %i.s ; 3 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.l, %.lr.ph.i
   %.133.i.i = phi ptr [ %spec.select.i.i, %.lr.ph.i ], [ %.2.val.i.i, %bb.l ] ; 4 uses
   %.1.i.i = phi ptr [ %spec.select35.i.i, %.lr.ph.i ], [ %.133.i.i, %bb.l ]
-  %.018.i.i = phi i32 [ %7, %.lr.ph.i ], [ %10, %bb.l ] ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.133.i.i, i64 8
   br label %bb.j
 
@@ -286,13 +279,10 @@ bb.k:                                             ; preds = %bb.j
   %i.z = load i32, ptr %i.y, align 8, !tbaa !54
   %i.aa = load i32, ptr %i.x, align 8, !tbaa !54
   %i.ab = icmp sgt i32 %i.z, %i.aa
-  %8 = select i1 %i.ab, i32 1, i32 -1
-  %9 = icmp slt i32 %8, %.018.i.i
-  br i1 %9, label %bb.j, label %bb.l, !llvm.loop !0
+  br i1 %i.ab, label %bb.l, label %bb.j, !llvm.loop !0
 
 bb.l:                                             ; preds = %bb.k
   store ptr %.133.i.i, ptr %.2.i.i, align 8, !tbaa !53
-  %10 = xor i32 %.018.i.i, 1
   br label %bb.i
 
 sort_blame_entries__merge.exit.i:                 ; preds = %bb.j

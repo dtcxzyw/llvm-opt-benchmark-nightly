@@ -202,7 +202,7 @@ bb.bm:                                            ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %bb.bf, %bb.bf
   %i.fz = icmp eq i8 %i.ef, 104
-  %2 = select i1 %i.fz, i32 0, i32 4
+  %2 = select i1 %i.fz, i8 0, i8 4
   %i.ga = add nsw i32 %.4370693, 1                ; 4 uses
   %i.gb = sext i32 %.4370693 to i64
   %i.gc = getelementptr inbounds [16 x i8], ptr %.0, i64 %i.gb ; 3 uses
@@ -246,7 +246,7 @@ bb.br:                                            ; preds = %bb.bq, %zval_get_tm
   %.4377687 = phi i32 [ %.5378, %bb.bz ], [ %i.gj, %bb.br ] ; 3 uses
   %.0394686 = phi ptr [ %i.gs, %bb.bz ], [ %i.gi, %bb.br ] ; 2 uses
   %.0395685 = phi i32 [ %.1396, %bb.bz ], [ 1, %bb.br ]
-  %.0397684 = phi i32 [ %6, %bb.bz ], [ %2, %bb.br ] ; 2 uses
+  %.0397684 = phi i8 [ %4, %bb.bz ], [ %2, %bb.br ] ; 2 uses
   %i.gr = add nsw i32 %.in, -1
   %i.gs = getelementptr inbounds nuw i8, ptr %.0394686, i64 1
   %i.gt = load i8, ptr %.0394686, align 1, !tbaa !12 ; 6 uses
@@ -300,13 +300,11 @@ bb.bz:                                            ; preds = %._crit_edge795, %bb
   %i.hd = phi i8 [ %.pre797, %._crit_edge795 ], [ 0, %bb.by ]
   %.1396 = phi i32 [ 1, %._crit_edge795 ], [ 0, %bb.by ]
   %.5378 = phi i32 [ %.4377687, %._crit_edge795 ], [ %i.ha, %bb.by ] ; 2 uses
-  %3 = zext nneg i8 %.0393 to i32
-  %4 = shl nuw nsw i32 %3, %.0397684
+  %3 = shl i8 %.0393, %.0397684
   %i.he = getelementptr inbounds i8, ptr %i.ed, i64 %.pre-phi
-  %5 = trunc i32 %4 to i8
-  %i.hf = or i8 %i.hd, %5
+  %i.hf = or i8 %i.hd, %3
   store i8 %i.hf, ptr %i.he, align 1, !tbaa !12
-  %6 = xor i32 %.0397684, 4
+  %4 = xor i8 %.0397684, 4
   %i.hg = icmp samesign ugt i32 %.in, 1
   br i1 %i.hg, label %.lr.ph689, label %._crit_edge690.loopexit, !llvm.loop !27
 
@@ -709,8 +707,8 @@ bb.aq:                                            ; preds = %.lr.ph600, %bb.aq
   %.0393596 = phi i32 [ %i.cq, %.lr.ph600 ], [ %i.gy, %bb.aq ] ; 2 uses
   %i.gq = getelementptr i8, ptr %i.go, i64 %.0389598
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !12
-  %3 = sext i8 %i.gr to i32
-  %4 = ashr i32 %3, %.0393596
+  %3 = zext i8 %i.gr to i32
+  %4 = lshr i32 %3, %.0393596
   %i.gs = and i32 %4, 15                          ; 2 uses
   %i.gt = icmp samesign ult i32 %i.gs, 10
   %i.gu = trunc nuw nsw i32 %i.gs to i8           ; 2 uses

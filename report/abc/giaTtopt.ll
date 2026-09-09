@@ -205,16 +205,14 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.m ] ; 3 uses
-  %.03440.i = phi i1 [ true, %.lr.ph.i ], [ %2, %bb.m ]
   %gep.i = getelementptr [8 x i8], ptr %invariant.gep.i, i64 %indvars.iv.i
   %i.cm = load i64, ptr %gep.i, align 8, !tbaa !82
   %gep49.i = getelementptr [8 x i8], ptr %invariant.gep48.i, i64 %indvars.iv.i
   %i.cn = load i64, ptr %gep49.i, align 8, !tbaa !82
-  %i.co = icmp eq i64 %i.cm, %i.cn
-  %2 = and i1 %.03440.i, %i.co                    ; 3 uses
+  %i.co = icmp eq i64 %i.cm, %i.cn                ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.cp = icmp slt i64 %indvars.iv.next.i, %i.cl
-  %or.cond.i = select i1 %i.cp, i1 %2, i1 false
+  %or.cond.i = select i1 %i.cp, i1 %i.co, i1 false
   br i1 %or.cond.i, label %bb.m, label %_ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread, !llvm.loop !205
 
 .split:                                           ; preds = %bb.k
@@ -246,9 +244,9 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   br i1 %.not.i, label %_ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread.thread, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 _ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread:      ; preds = %bb.m
-  br i1 %2, label %_ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread.thread, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
+  br i1 %i.co, label %_ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread.thread, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
-_ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread.thread: ; preds = %bb.l, %.split, %_ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread
+_ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread.thread: ; preds = %.split, %bb.l, %_ZN5Ttopt10TruthTable4IsEqEiiib.exit.thread
   %i.do = load ptr, ptr %i.o, align 8, !tbaa !99
   %i.dp = getelementptr inbounds nuw [24 x i8], ptr %i.do, i64 %i.i ; 4 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 8 ; 3 uses

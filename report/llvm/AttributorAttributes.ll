@@ -205,13 +205,12 @@ bb.z:                                             ; preds = %bb.y, %.lr.ph216.i
   %i.cu = call noundef zeroext i1 @_ZN4llvm8ICmpInst7compareERKNS_5APIntES3_NS_7CmpInst9PredicateE(ptr noundef nonnull align 8 dereferenceable(12) %43, ptr noundef nonnull align 8 dereferenceable(12) %.086214.i, i32 noundef %i.ct) #39, !inline_history !3391 ; 2 uses
   %i.cv = zext i1 %i.cu to i8
   %i.cw = or i8 %.088212.i, %i.cv                 ; 3 uses
-  %46 = icmp eq i8 %i.cw, 0
   %i.cx = xor i1 %i.cu, true
   %i.cy = zext i1 %i.cx to i8
   %i.cz = or i8 %.087213.i, %i.cy                 ; 3 uses
-  %47 = icmp eq i8 %i.cz, 0
-  %.not122.i = or i1 %46, %47
-  br i1 %.not122.i, label %bb.y, label %_ZNK4llvm20PotentialValuesStateINS_5APIntEEeqERKS2_.exit.sink.split.i
+  %46 = and i8 %i.cw, %i.cz
+  %.not118.i = icmp eq i8 %46, 0
+  br i1 %.not118.i, label %bb.y, label %_ZNK4llvm20PotentialValuesStateINS_5APIntEEeqERKS2_.exit.sink.split.i
 
 bb.aa:                                            ; preds = %bb.w
   %i.da = load ptr, ptr %i.ah, align 8, !tbaa !132 ; 3 uses
@@ -244,13 +243,12 @@ bb.ad:                                            ; preds = %bb.ac, %.lr.ph208.i
   %i.di = call noundef zeroext i1 @_ZN4llvm8ICmpInst7compareERKNS_5APIntES3_NS_7CmpInst9PredicateE(ptr noundef nonnull align 8 dereferenceable(12) %.085206.i, ptr noundef nonnull align 8 dereferenceable(12) %43, i32 noundef %i.dh) #39, !inline_history !3391 ; 2 uses
   %i.dj = zext i1 %i.di to i8
   %i.dk = or i8 %.290204.i, %i.dj                 ; 3 uses
-  %48 = icmp eq i8 %i.dk, 0
   %i.dl = xor i1 %i.di, true
   %i.dm = zext i1 %i.dl to i8
   %i.dn = or i8 %.2205.i, %i.dm                   ; 3 uses
-  %49 = icmp eq i8 %i.dn, 0
-  %.not118.i = or i1 %48, %49
-  br i1 %.not118.i, label %bb.ac, label %_ZNK4llvm20PotentialValuesStateINS_5APIntEEeqERKS2_.exit.sink.split.i
+  %47 = and i8 %i.dk, %i.dn
+  %.not116.i = icmp eq i8 %47, 0
+  br i1 %.not116.i, label %bb.ac, label %_ZNK4llvm20PotentialValuesStateINS_5APIntEEeqERKS2_.exit.sink.split.i
 
 bb.ae:                                            ; preds = %bb.aa
   br i1 %.not115203.i, label %.thread.i, label %.lr.ph200.i

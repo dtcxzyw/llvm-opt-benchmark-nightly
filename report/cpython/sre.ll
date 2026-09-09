@@ -205,8 +205,7 @@ bb.r:                                             ; preds = %bb.q
 
 .split13.us:                                      ; preds = %.split.split, %.split.us
   %.us-phi14 = phi i32 [ %.052.us.ph, %.split.us ], [ %.052.ph, %.split.split ]
-  %.not74 = icmp eq i32 %.us-phi14, 0
-  %2 = zext i1 %.not74 to i32
+  %2 = xor i32 %.us-phi14, 1
   br label %.thread
 
 bb.s:                                             ; preds = %.split.split
@@ -609,8 +608,7 @@ bb.r:                                             ; preds = %bb.q
 
 .split13.us:                                      ; preds = %.split.split, %.split.us
   %.us-phi14 = phi i32 [ %.052.us.ph, %.split.us ], [ %.052.ph, %.split.split ]
-  %.not74 = icmp eq i32 %.us-phi14, 0
-  %2 = zext i1 %.not74 to i32
+  %2 = xor i32 %.us-phi14, 1
   br label %.thread
 
 bb.s:                                             ; preds = %.split.split
@@ -1013,8 +1011,7 @@ bb.r:                                             ; preds = %bb.q
 
 .split13.us:                                      ; preds = %.split.split, %.split.us
   %.us-phi14 = phi i32 [ %.052.us.ph, %.split.us ], [ %.052.ph, %.split.split ]
-  %.not74 = icmp eq i32 %.us-phi14, 0
-  %2 = zext i1 %.not74 to i32
+  %2 = xor i32 %.us-phi14, 1
   br label %.thread
 
 bb.s:                                             ; preds = %.split.split
