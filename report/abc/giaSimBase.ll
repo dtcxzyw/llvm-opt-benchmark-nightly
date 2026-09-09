@@ -205,7 +205,7 @@ bb.a:
   %i.i = shl nuw i64 1, %i.h                      ; 7 uses
   %i.j = sext i32 %3 to i64                       ; 3 uses
   %wide.trip.count = zext nneg i32 %.val to i64   ; 7 uses
-  %min.iters.check = icmp ugt i32 %.val, 9
+  %min.iters.check = icmp ugt i32 %.val, 17
   %ident.check.not = icmp eq i32 %3, 1
   %or.cond = and i1 %min.iters.check, %ident.check.not
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %Abc_Clock.exit88, %
   %i.es = zext nneg i32 %i.er to i64              ; 5 uses
   %i.et = shl nuw i64 1, %i.es                    ; 7 uses
   %wide.trip.count.i91 = zext nneg i32 %.val.i89 to i64 ; 7 uses
-  %min.iters.check = icmp ugt i32 %.val.i89, 5
+  %min.iters.check = icmp ugt i32 %.val.i89, 9
   %or.cond = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 

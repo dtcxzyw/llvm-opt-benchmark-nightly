@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %_ZN7xgboost7RegTree
   br i1 %.not.i.i, label %_ZNK7xgboost9predictor13DataToFeatVecINS0_11AdapterViewINS_4data12DenseAdapterENS_12NoOpAccessorEEEE4FillEmPNS_7RegTree4FVecE.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
-  %min.iters.check = icmp ult i64 %i.aq, 8
+  %min.iters.check = icmp ult i64 %i.aq, 14
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader52, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
