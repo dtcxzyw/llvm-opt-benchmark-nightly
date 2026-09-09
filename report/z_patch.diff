@@ -1,0 +1,121 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index e33c6c3fdd116..64efc297dd334 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1152,6 +1152,8 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   if (ICmpInst::isRelational(ContinuePred)) {
+     if (A != Backedge)
+       return;
++    assert((ICmpInst::isLT(ContinuePred) || ICmpInst::isLE(ContinuePred)) &&
++           "continuing requires the induction to stay below the bound");
+ 
+     // The latch condition ensures ContinuePred holds in the header on each
+     // iteration other than the first. Together with a precondition on the start
+@@ -1159,6 +1161,18 @@ void State::addInfoForInductions(BasicBlock &BB) {
+     WorkList.push_back(FactOrCheck::getConditionFact(
+         DTN, ContinuePred, PN, B, ConditionTy(ContinuePred, StartValue, B)));
+ 
++    // For a non-negative backedge value, 0 s<= PN s< B implies B is
++    // non-negative as well, so the same bound holds in the unsigned system.
++    // Its precondition is the unsigned StartValue u< B, which can be
++    // discharged from a `B != 0` guard when starting at 0, unlike the signed
++    // 0 s< B above.
++    if (ICmpInst::isSigned(ContinuePred) &&
++        isKnownNonNegative(Backedge, BB.getDataLayout())) {
++      CmpInst::Predicate UPred = ICmpInst::getUnsignedPredicate(ContinuePred);
++      WorkList.push_back(FactOrCheck::getConditionFact(
++          DTN, UPred, PN, B, ConditionTy(UPred, StartValue, B)));
++    }
++
+     // A relational latch steps past B rather than landing on it, so none of the
+     // reasoning below applies.
+     return;
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll b/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
+index 803679831b988..1a1729a6425f4 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
+@@ -712,3 +712,84 @@ loop.exit:
+   call void @use(i1 %c)
+   ret void
+ }
++
++; The signed latch condition also bounds the non-negative IV in the unsigned
++; system, where the precondition follows from the `n != 0` guard.
++define void @signed_latch_unsigned_fact(i64 %n, i1 %header.ec) {
++; CHECK-LABEL: define void @signed_latch_unsigned_fact(
++; CHECK-SAME: i64 [[N:%.*]], i1 [[HEADER_EC:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ne i64 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ne i64 %n, 0
++  call void @llvm.assume(i1 %pre)
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %c = icmp ult i64 %iv, %n
++  call void @use(i1 %c)
++  br i1 %header.ec, label %exit, label %loop.latch
++
++loop.latch:
++  %iv.next = add nsw i64 %iv, 2
++  %ec = icmp slt i64 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
++
++; Same, but the step may wrap: the IV reaches SMIN with iv.next s< n still
++; holding, and SMIN u< n does not hold.
++define void @neg_wrapping_step_no_unsigned_fact(i64 %n, i1 %header.ec) {
++; CHECK-LABEL: define void @neg_wrapping_step_no_unsigned_fact(
++; CHECK-SAME: i64 [[N:%.*]], i1 [[HEADER_EC:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ne i64 [[N]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[C:%.*]] = icmp ult i64 [[IV]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[C]])
++; CHECK-NEXT:    br i1 [[HEADER_EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 2
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ne i64 %n, 0
++  call void @llvm.assume(i1 %pre)
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %c = icmp ult i64 %iv, %n
++  call void @use(i1 %c)
++  br i1 %header.ec, label %exit, label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, 2
++  %ec = icmp slt i64 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
