@@ -108,7 +108,7 @@ rtp_handler_iterate.exit:                         ; preds = %bb.d, %bb.c, %bb.b
   %i.h = getelementptr inbounds nuw [8 x i8], ptr @rtp_dynamic_protocol_handler_list, i64 %i.g
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !15   ; 2 uses
   %.not.i = icmp eq ptr %.111, inttoptr (i64 53 to ptr)
-  %i.j = add nsw i64 %i.g, 1
+  %i.j = add nuw nsw i64 %i.g, 1
   %i.k = inttoptr i64 %i.j to ptr
   br i1 %.not.i, label %bb.e, label %bb.b, !llvm.loop !76
 
@@ -168,10 +168,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.p, label %bb.f, label %rtp_handler_iterate.exit.1
 
 rtp_handler_iterate.exit.1:                       ; preds = %bb.e, %bb.d
-  %i.q = getelementptr [8 x i8], ptr @rtp_dynamic_protocol_handler_list, i64 %i.h
-  %i.r = getelementptr i8, ptr %i.q, i64 8
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr @rtp_dynamic_protocol_handler_list, i64 %i.h
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !15
-  %i.t = add nsw i64 %i.h, 2
+  %i.t = add nuw nsw i64 %i.h, 2
   %i.u = inttoptr i64 %i.t to ptr
   br label %bb.b
 

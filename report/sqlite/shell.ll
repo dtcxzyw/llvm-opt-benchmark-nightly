@@ -206,10 +206,10 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.dk, label %bb.aq, label %bb.at
 
 bb.aq:                                            ; preds = %bb.ap
-  %2 = shl i32 %.5137, 29
-  %3 = ashr i32 %2, 31
-  %4 = add nsw i32 %3, 2
-  %i.dl = uitofp nneg i32 %4 to double
+  %2 = lshr i32 %.5137, 2
+  %.lobit = and i32 %2, 1
+  %3 = sub nuw nsw i32 2, %.lobit
+  %i.dl = uitofp nneg i32 %3 to double
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 64
   store double %i.dl, ptr %i.dm, align 8, !tbaa !502
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 72

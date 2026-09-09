@@ -205,10 +205,10 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %.sroa.0.0.copyload.i = load i32, ptr %i.d, align 8, !tbaa !42 ; 2 uses
   %i.e = and i32 %.sroa.0.0.copyload.i, 1073741823
-  %6 = add nsw i32 %i.e, -1
-  %7 = shl i32 %.sroa.0.0.copyload.i, 1
-  %8 = ashr i32 %7, 31
-  %i.f = add nsw i32 %6, %8                       ; 2 uses
+  %6 = lshr i32 %.sroa.0.0.copyload.i, 30
+  %7 = and i32 %6, 1
+  %8 = xor i32 %7, -1
+  %i.f = add nsw i32 %i.e, %8                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.g = tail call i64 @_ZNK5clang10ASTContext11getSizeTypeEv(ptr noundef nonnull align 8 dereferenceable(23904) %2) #30
   %i.h = and i64 %i.g, -16
@@ -276,10 +276,10 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i8 0, ptr %i.ak, align 4, !tbaa !156
   %i.al = and i32 %.sroa.0.0.copyload.i12, 1073741823
-  %9 = add nsw i32 %i.al, -1
-  %10 = shl i32 %.sroa.0.0.copyload.i12, 1
-  %11 = ashr i32 %10, 31
-  %i.am = add nsw i32 %9, %11
+  %9 = lshr i32 %.sroa.0.0.copyload.i12, 30
+  %10 = and i32 %9, 1
+  %11 = xor i32 %10, -1
+  %i.am = add nsw i32 %i.al, %11
   %i.an = load i32, ptr %1, align 8
   %i.ao = lshr i32 %i.an, 19
   %i.ap = and i32 %i.ao, 1

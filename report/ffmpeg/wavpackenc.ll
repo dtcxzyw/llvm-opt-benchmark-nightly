@@ -205,10 +205,10 @@ bb.bv:                                            ; preds = %bb.bu
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bu
   %i.uy = phi i32 [ %i.ux, %bb.bv ], [ %.pre1768, %bb.bu ] ; 2 uses
-  %5 = shl i32 %i.uy, 29
-  %6 = ashr i32 %5, 31
-  %7 = add i32 %i.uw, 2
-  %i.uz = add i32 %7, %6                          ; 2 uses
+  %5 = lshr i32 %i.uy, 2
+  %.lobit = and i32 %5, 1
+  %reass.sub = sub i32 %i.uw, %.lobit
+  %i.uz = add i32 %reass.sub, 2                   ; 2 uses
   store i32 %i.uz, ptr %i.uv, align 4, !tbaa !51
   %i.va = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.vb = load ptr, ptr %i.va, align 8, !tbaa !38

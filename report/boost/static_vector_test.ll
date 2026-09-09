@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.l
   store i32 %i.k, ptr %i.m, align 4, !tbaa !41
-  %i.n = add nsw i64 %i.l, 1
+  %i.n = add nuw nsw i64 %i.l, 1
   store i64 %i.n, ptr %i.b, align 8, !tbaa !95
   %i.o = load i64, ptr %i.e, align 8, !tbaa !109  ; 4 uses
   %i.p = load i64, ptr %i.f, align 8, !tbaa !110
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.j
   store i32 %i.i, ptr %i.k, align 4, !tbaa !41
-  %i.l = add nsw i64 %i.j, 1
+  %i.l = add nuw nsw i64 %i.j, 1
   store i64 %i.l, ptr %i.a, align 8, !tbaa !120
   %i.m = load i64, ptr %i.d, align 8, !tbaa !124  ; 4 uses
   %i.n = load i64, ptr %i.e, align 8, !tbaa !125
@@ -1011,7 +1011,7 @@ bb.f:                                             ; preds = %bb.d
   store i32 0, ptr %i.at, align 4, !tbaa !80
   %i.au = add i64 %i.ao, 2
   store i64 %i.au, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
-  %i.av = add nsw i64 %i.ar, 1
+  %i.av = add nuw nsw i64 %i.ar, 1
   store i64 %i.av, ptr %i.a, align 8, !tbaa !102
   %i.aw = load i64, ptr %i.e, align 8, !tbaa !132 ; 4 uses
   %i.ax = load i64, ptr %i.f, align 8, !tbaa !133
@@ -1414,7 +1414,7 @@ bb.f:                                             ; preds = %bb.d
   store i32 %i.m, ptr %i.p, align 4, !tbaa !82
   %i.q = add i32 %i.l, 2
   store i32 %i.q, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
-  %i.r = add nsw i64 %i.o, 1
+  %i.r = add nuw nsw i64 %i.o, 1
   store i64 %i.r, ptr %i.a, align 8, !tbaa !141
   %i.s = load i64, ptr %i.d, align 8, !tbaa !145  ; 4 uses
   %i.t = load i64, ptr %i.e, align 8, !tbaa !146
@@ -1817,7 +1817,7 @@ bb.f:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.t
   store i32 %i.r, ptr %i.u, align 4, !tbaa !82
   %i.v = add i32 %i.q, 2
-  %i.w = add nsw i64 %i.t, 1
+  %i.w = add nuw nsw i64 %i.t, 1
   store i64 %i.w, ptr %i.a, align 8, !tbaa !141
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   store i32 %i.r, ptr %3, align 4, !tbaa !82
@@ -2220,7 +2220,7 @@ bb.c:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.h
   store i32 0, ptr %i.i, align 4, !tbaa !82
   %i.j = add i32 %.pre, 2
-  %i.k = add nsw i64 %i.h, 1
+  %i.k = add nuw nsw i64 %i.h, 1
   store i64 %i.k, ptr %i.a, align 8, !tbaa !141
   store i32 %i.j, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.l = load i64, ptr %i.b, align 8, !tbaa !141  ; 3 uses
@@ -2238,7 +2238,7 @@ bb.e:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.l
   store i32 100, ptr %i.m, align 4, !tbaa !82
   %i.n = add i32 %.pre, 3
-  %i.o = add nsw i64 %i.l, 1
+  %i.o = add nuw nsw i64 %i.l, 1
   store i64 %i.o, ptr %i.b, align 8, !tbaa !141
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   store i32 100, ptr %6, align 4, !tbaa !82
@@ -2301,7 +2301,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ah
   store i32 1, ptr %i.ai, align 4, !tbaa !82
   %i.aj = add i32 %i.ab, 2
-  %i.ak = add nsw i64 %i.ah, 1
+  %i.ak = add nuw nsw i64 %i.ah, 1
   store i64 %i.ak, ptr %i.a, align 8, !tbaa !141
   store i32 %i.aj, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.al = load i64, ptr %i.b, align 8, !tbaa !141 ; 3 uses
@@ -2312,7 +2312,7 @@ bb.j:                                             ; preds = %bb.i
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.al
   store i32 101, ptr %i.am, align 4, !tbaa !82
   %i.an = add i32 %i.ab, 3
-  %i.ao = add nsw i64 %i.al, 1
+  %i.ao = add nuw nsw i64 %i.al, 1
   store i64 %i.ao, ptr %i.b, align 8, !tbaa !141
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   store i32 101, ptr %6, align 4, !tbaa !82
@@ -2375,7 +2375,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bh
   store i32 2, ptr %i.bi, align 4, !tbaa !82
   %i.bj = add i32 %i.bb, 2
-  %i.bk = add nsw i64 %i.bh, 1
+  %i.bk = add nuw nsw i64 %i.bh, 1
   store i64 %i.bk, ptr %i.a, align 8, !tbaa !141
   store i32 %i.bj, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.bl = load i64, ptr %i.b, align 8, !tbaa !141 ; 3 uses
@@ -2386,7 +2386,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bl
   store i32 102, ptr %i.bm, align 4, !tbaa !82
   %i.bn = add i32 %i.bb, 3
-  %i.bo = add nsw i64 %i.bl, 1
+  %i.bo = add nuw nsw i64 %i.bl, 1
   store i64 %i.bo, ptr %i.b, align 8, !tbaa !141
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   store i32 102, ptr %6, align 4, !tbaa !82
@@ -2449,7 +2449,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ch
   store i32 3, ptr %i.ci, align 4, !tbaa !82
   %i.cj = add i32 %i.cb, 2
-  %i.ck = add nsw i64 %i.ch, 1
+  %i.ck = add nuw nsw i64 %i.ch, 1
   store i64 %i.ck, ptr %i.a, align 8, !tbaa !141
   store i32 %i.cj, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.cl = load i64, ptr %i.b, align 8, !tbaa !141 ; 3 uses
@@ -2460,7 +2460,7 @@ bb.t:                                             ; preds = %bb.s
   %i.cm = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.cl
   store i32 103, ptr %i.cm, align 4, !tbaa !82
   %i.cn = add i32 %i.cb, 3
-  %i.co = add nsw i64 %i.cl, 1
+  %i.co = add nuw nsw i64 %i.cl, 1
   store i64 %i.co, ptr %i.b, align 8, !tbaa !141
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   store i32 103, ptr %6, align 4, !tbaa !82
@@ -2523,7 +2523,7 @@ bb.x:                                             ; preds = %bb.w
   %i.di = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dh
   store i32 4, ptr %i.di, align 4, !tbaa !82
   %i.dj = add i32 %i.db, 2
-  %i.dk = add nsw i64 %i.dh, 1
+  %i.dk = add nuw nsw i64 %i.dh, 1
   store i64 %i.dk, ptr %i.a, align 8, !tbaa !141
   store i32 %i.dj, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.dl = load i64, ptr %i.b, align 8, !tbaa !141 ; 3 uses
@@ -2534,7 +2534,7 @@ bb.y:                                             ; preds = %bb.x
   %i.dm = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.dl
   store i32 104, ptr %i.dm, align 4, !tbaa !82
   %i.dn = add i32 %i.db, 3
-  %i.do = add nsw i64 %i.dl, 1
+  %i.do = add nuw nsw i64 %i.dl, 1
   store i64 %i.do, ptr %i.b, align 8, !tbaa !141
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   store i32 104, ptr %6, align 4, !tbaa !82
@@ -2937,7 +2937,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.s
   store i32 0, ptr %i.t, align 4, !tbaa !41
-  %i.u = add nsw i64 %i.s, 1
+  %i.u = add nuw nsw i64 %i.s, 1
   store i64 %i.u, ptr %i.b, align 8, !tbaa !835
   invoke void @_ZN5boost6detail17throw_failed_implEPKcS2_S2_iS2_(ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 427, ptr noundef nonnull @__PRETTY_FUNCTION__._Z18test_capacity_0_ndIiEvv)
           to label %bb.t unwind label %bb.q
@@ -3340,7 +3340,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.s
   store i32 0, ptr %i.t, align 4, !tbaa !41
-  %i.u = add nsw i64 %i.s, 1
+  %i.u = add nuw nsw i64 %i.s, 1
   store i64 %i.u, ptr %i.b, align 8, !tbaa !895
   invoke void @_ZN5boost6detail17throw_failed_implEPKcS2_S2_iS2_(ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 427, ptr noundef nonnull @__PRETTY_FUNCTION__._Z18test_capacity_0_ndI8value_ndEvv)
           to label %bb.t unwind label %bb.q
@@ -3743,7 +3743,7 @@ bb.t:                                             ; preds = %bb.r
   store i32 0, ptr %i.ae, align 8, !tbaa !79
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
   store i32 0, ptr %i.af, align 4, !tbaa !80
-  %i.ag = add nsw i64 %i.ad, 1
+  %i.ag = add nuw nsw i64 %i.ad, 1
   store i64 %i.ag, ptr %i.d, align 8, !tbaa !961
   store i64 %i.ac, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   invoke void @_ZN5boost6detail17throw_failed_implEPKcS2_S2_iS2_(ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 427, ptr noundef nonnull @__PRETTY_FUNCTION__._Z18test_capacity_0_ndI14counting_valueEvv)
@@ -4146,7 +4146,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ad
   store i32 0, ptr %i.ae, align 4, !tbaa !82
-  %i.af = add nsw i64 %i.ad, 1
+  %i.af = add nuw nsw i64 %i.ad, 1
   store i64 %i.af, ptr %i.d, align 8, !tbaa !1036
   store i32 %i.ac, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   invoke void @_ZN5boost6detail17throw_failed_implEPKcS2_S2_iS2_(ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 427, ptr noundef nonnull @__PRETTY_FUNCTION__._Z18test_capacity_0_ndIN5boost9container4test24movable_and_copyable_intEEvv)
@@ -4549,7 +4549,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.h
   store i32 0, ptr %i.i, align 4, !tbaa !41
-  %i.j = add nsw i64 %i.h, 1
+  %i.j = add nuw nsw i64 %i.h, 1
   store i64 %i.j, ptr %i.b, align 8, !tbaa !157
   invoke void @_ZN5boost6detail17throw_failed_implEPKcS2_S2_iS2_(ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 445, ptr noundef nonnull @__PRETTY_FUNCTION__._Z18test_exceptions_ndIiLm10EEvv)
           to label %bb.m unwind label %bb.j
@@ -4952,7 +4952,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.h
   store i32 0, ptr %i.i, align 4, !tbaa !41
-  %i.j = add nsw i64 %i.h, 1
+  %i.j = add nuw nsw i64 %i.h, 1
   store i64 %i.j, ptr %i.b, align 8, !tbaa !163
   invoke void @_ZN5boost6detail17throw_failed_implEPKcS2_S2_iS2_(ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 445, ptr noundef nonnull @__PRETTY_FUNCTION__._Z18test_exceptions_ndI8value_ndLm10EEvv)
           to label %bb.m unwind label %bb.j
@@ -5355,7 +5355,7 @@ bb.g:                                             ; preds = %bb.e
   store i32 0, ptr %i.o, align 8, !tbaa !79
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 4
   store i32 0, ptr %i.p, align 4, !tbaa !80
-  %i.q = add nsw i64 %i.n, 1
+  %i.q = add nuw nsw i64 %i.n, 1
   store i64 %i.q, ptr %i.c, align 8, !tbaa !1224
   store i64 %i.m, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   invoke void @_ZN5boost6detail17throw_failed_implEPKcS2_S2_iS2_(ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 445, ptr noundef nonnull @__PRETTY_FUNCTION__._Z18test_exceptions_ndI14counting_valueLm10EEvv)
@@ -5758,7 +5758,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.n
   store i32 0, ptr %i.o, align 4, !tbaa !82
-  %i.p = add nsw i64 %i.n, 1
+  %i.p = add nuw nsw i64 %i.n, 1
   store i64 %i.p, ptr %i.c, align 8, !tbaa !1308
   store i32 %i.m, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   invoke void @_ZN5boost6detail17throw_failed_implEPKcS2_S2_iS2_(ptr noundef nonnull @.str.92, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 445, ptr noundef nonnull @__PRETTY_FUNCTION__._Z18test_exceptions_ndIN5boost9container4test24movable_and_copyable_intELm10EEvv)
@@ -6161,7 +6161,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_
   %.pre.i.i.i.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
   %i.cl = add i32 %.pre.i.i.i.i.i, 5              ; 2 uses
   store i32 %i.cl, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !41
-  %i.cm = add nsw i64 %i.ci, 1
+  %i.cm = add nuw nsw i64 %i.ci, 1
   br label %.lr.ph.i.i97
 
 bb.b:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit81

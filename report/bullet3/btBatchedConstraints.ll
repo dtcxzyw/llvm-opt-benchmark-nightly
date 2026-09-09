@@ -205,9 +205,9 @@ bb.p:                                             ; preds = %.loopexit.i
 
 _Z7btClampIiEvRT_RKS0_S3_.exit.i:                 ; preds = %bb.p, %.loopexit.i
   %.sroa.087.0.i = phi i32 [ %spec.select.i, %bb.p ], [ 0, %.loopexit.i ]
-  %4 = shl i32 %.2.i, 30
-  %5 = ashr i32 %4, 31
-  %6 = add i32 %5, %.sroa.590.0.i                 ; 2 uses
+  %4 = lshr i32 %.2.i, 1
+  %5 = and i32 %4, 1
+  %6 = sub nsw i32 %.sroa.590.0.i, %5             ; 2 uses
   %i.bo = icmp slt i32 %6, -1
   br i1 %i.bo, label %_Z7btClampIiEvRT_RKS0_S3_.exit.1.i, label %bb.q
 
@@ -219,9 +219,9 @@ bb.q:                                             ; preds = %_Z7btClampIiEvRT_RK
 
 _Z7btClampIiEvRT_RKS0_S3_.exit.1.i:               ; preds = %bb.q, %_Z7btClampIiEvRT_RKS0_S3_.exit.i
   %.sroa.588.0.i = phi i32 [ %spec.select98.i, %bb.q ], [ 0, %_Z7btClampIiEvRT_RKS0_S3_.exit.i ]
-  %7 = shl i32 %.2.i, 29
-  %8 = ashr i32 %7, 31
-  %9 = add i32 %8, %.sroa.791.0.i                 ; 2 uses
+  %7 = lshr i32 %.2.i, 2
+  %8 = and i32 %7, 1
+  %9 = sub nsw i32 %.sroa.791.0.i, %8             ; 2 uses
   %i.br = icmp slt i32 %9, -1
   br i1 %i.br, label %_Z7btClampIiEvRT_RKS0_S3_.exit.2.i, label %bb.r
 

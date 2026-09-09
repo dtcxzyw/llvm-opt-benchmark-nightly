@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %.loopexit.i.i.i.i.i
 .loopexit.i.i.i.i.i.i.i:                          ; preds = %.preheader.i.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i.i, %bb.b
   %i.s = shl i64 %i.n, 1                          ; 2 uses
   store i64 %i.s, ptr %i.m, align 8, !alias.scope !129870, !noalias !129871
-  %i.t = add nsw i64 %i.o, 1                      ; 2 uses
+  %i.t = add nuw nsw i64 %i.o, 1                  ; 2 uses
   store i64 %i.t, ptr %i.k, align 8, !alias.scope !129870, !noalias !129871
   br label %bb.b
 
@@ -353,7 +353,7 @@ bb.i:                                             ; preds = %.loopexit.i.i.i.i.i
 .loopexit.i.i.i.i.i.i.i.i.i:                      ; preds = %.preheader.i.i.i.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i.i.i.i, %bb.i
   %i.be = shl i64 %i.az, 1                        ; 2 uses
   store i64 %i.be, ptr %i.at, align 8, !alias.scope !129892, !noalias !129893
-  %i.bf = add nsw i64 %i.ba, 1                    ; 2 uses
+  %i.bf = add nuw nsw i64 %i.ba, 1                ; 2 uses
   store i64 %i.bf, ptr %i.ar, align 8, !alias.scope !129892, !noalias !129893
   br label %bb.i
 
@@ -756,7 +756,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h2581a42bf687aa20E.exit: ; pred
   br i1 %i.dt, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.du = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.du = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dv = lshr i64 %.sroa.023.0, 1
   %i.dw = add i64 %i.dv, %.sroa.09.0
   br label %bb.f
@@ -1159,7 +1159,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17he2969a5fb0dc84b9E.exit: ; pred
   br i1 %i.er, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.es = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.es = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.et = lshr i64 %.sroa.023.0, 1
   %i.eu = add i64 %i.et, %.sroa.09.0
   br label %bb.f
@@ -1562,7 +1562,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h8624157b559b4a6cE.exit: ; pred
   br i1 %i.er, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.es = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.es = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.et = lshr i64 %.sroa.023.0, 1
   %i.eu = add i64 %i.et, %.sroa.09.0
   br label %bb.f
@@ -1965,7 +1965,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17he895db243cf8ba68E.exit: ; pred
   br i1 %i.ev, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.ew = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ew = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ex = lshr i64 %.sroa.023.0, 1
   %i.ey = add i64 %i.ex, %.sroa.09.0
   br label %bb.f
@@ -2328,7 +2328,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hd90915895b7275d0E.exit: ; pred
   br i1 %i.dk, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.dl = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dl = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dm = lshr i64 %.sroa.023.0, 1
   %i.dn = add i64 %i.dm, %.sroa.09.0
   br label %bb.f
@@ -2731,7 +2731,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h4038566dddffab75E.exit: ; pred
   br i1 %i.er, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.es = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.es = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.et = lshr i64 %.sroa.023.0, 1
   %i.eu = add i64 %i.et, %.sroa.09.0
   br label %bb.f
@@ -3134,7 +3134,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h95e16a68daaf539fE.exit: ; pred
   br i1 %i.fj, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.fk = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fk = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fl = lshr i64 %.sroa.023.0, 1
   %i.fm = add i64 %i.fl, %.sroa.09.0
   br label %bb.f
@@ -3537,7 +3537,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h5aa99c0e1c733915E.exit: ; pred
   br i1 %i.go, label %bb.p, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.gp = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gp = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gq = lshr i64 %.sroa.023.0, 1
   %i.gr = add i64 %i.gq, %.sroa.09.0
   br label %bb.f
@@ -3940,7 +3940,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hcb3bb229a79db933E.exit: ; pred
   br i1 %i.fh, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.fi = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fi = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fj = lshr i64 %.sroa.023.0, 1
   %i.fk = add i64 %i.fj, %.sroa.09.0
   br label %bb.f
@@ -4303,7 +4303,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h71cbccb58db624aeE.exit: ; pred
   br i1 %i.dk, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.dl = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dl = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dm = lshr i64 %.sroa.023.0, 1
   %i.dn = add i64 %i.dm, %.sroa.09.0
   br label %bb.f
@@ -4706,7 +4706,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hde5331cf98c4d12cE.exit: ; pred
   br i1 %i.go, label %bb.p, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.gp = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gp = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gq = lshr i64 %.sroa.023.0, 1
   %i.gr = add i64 %i.gq, %.sroa.09.0
   br label %bb.f
@@ -5109,7 +5109,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h79f33b69771b9286E.exit: ; pred
   br i1 %i.fh, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.fi = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fi = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fj = lshr i64 %.sroa.023.0, 1
   %i.fk = add i64 %i.fj, %.sroa.09.0
   br label %bb.f
@@ -5512,7 +5512,7 @@ bb.ag:                                            ; preds = %.loopexit.i.i.i, %.
 .loopexit.i.i.i:                                  ; preds = %.preheader.i.i.i, %.preheader.preheader.i.i.i, %bb.ag
   %i.fd = shl i64 %.promoted.i.i.i350, 1          ; 2 uses
   store i64 %i.fd, ptr %.sroa.6347.0..sroa_idx, align 8, !alias.scope !153679, !noalias !153680
-  %i.fe = add nsw i64 %i.ez, 1                    ; 2 uses
+  %i.fe = add nuw nsw i64 %i.ez, 1                ; 2 uses
   store i64 %i.fe, ptr %i.dm, align 8, !alias.scope !153679, !noalias !153680
   br label %bb.ag
 
@@ -5915,7 +5915,7 @@ bb.fm:                                            ; preds = %.preheader.split.i.
   br i1 %i.px, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit24.i.i.i.i.i", label %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i"
 
 "_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i": ; preds = %.preheader.split.i.i.i.i.i.i.i.i.i.i.i, %.preheader.split.i.i.i.i.i.i.i.i.i.i, %.preheader.split.i.i.i.i.i.i.i.i.i.i.1, %.preheader.split.i.i.i.i.i.i.i.i.i.i.i.1, %bb.fm, %.preheader.split.i.i.i.i.i.i.i.i.i.i.2
-  %i.py = add nsw i64 %i.pb, 1                    ; 3 uses
+  %i.py = add nuw nsw i64 %i.pb, 1                ; 3 uses
   store i64 %i.py, ptr %i.nn, align 8, !noalias !153840
   %exitcond.not.i.i.i.i = icmp eq i64 %i.py, %i.oi
   br i1 %exitcond.not.i.i.i.i, label %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$20should_unpack_parent17h475ef73029043ed3E.exit.thread.i.i.i.i.i", label %bb.fl
@@ -6318,7 +6318,7 @@ _ZN7tracing4span4Span8do_enter17h936e449ccced4d74E.exit969: ; preds = %.noexc968
 .loopexit.i.i:                                    ; preds = %.preheader.i.i, %.preheader.preheader.i.i, %.preheader1.i.i
   %i.aas = shl i64 %i.aan, 1                      ; 2 uses
   store i64 %i.aas, ptr %.sroa.6391.0..sroa_idx, align 8, !alias.scope !160573, !noalias !160574
-  %i.aat = add nsw i64 %i.aao, 1                  ; 2 uses
+  %i.aat = add nuw nsw i64 %i.aao, 1              ; 2 uses
   store i64 %i.aat, ptr %.sroa.5390.0..sroa_idx, align 8, !alias.scope !160573, !noalias !160574
   br label %.preheader1.i.i
 
@@ -6721,7 +6721,7 @@ bb.adx:                                           ; preds = %bb.adw
 
 .loopexit.i.i1241:                                ; preds = %.preheader.i.i1238, %.preheader.preheader.i.i1236, %.preheader1.i.i1231
   %i.cca = shl i64 %.sroa.101327.1, 1
-  %i.ccb = add nsw i64 %.sroa.71326.1, 1
+  %i.ccb = add nuw nsw i64 %.sroa.71326.1, 1
   br label %.preheader1.i.i1231
 
 .preheader.i.i1238:                               ; preds = %.lr.ph2140
@@ -7124,7 +7124,7 @@ _ZN7tracing4span4Span8do_enter17h936e449ccced4d74E.exit969: ; preds = %.noexc968
 .loopexit.i.i:                                    ; preds = %.preheader.i.i, %.preheader.preheader.i.i, %.preheader1.i.i
   %i.aat = shl i64 %i.aao, 1                      ; 2 uses
   store i64 %i.aat, ptr %.sroa.6391.0..sroa_idx, align 8, !alias.scope !161504, !noalias !161505
-  %i.aau = add nsw i64 %i.aap, 1                  ; 2 uses
+  %i.aau = add nuw nsw i64 %i.aap, 1              ; 2 uses
   store i64 %i.aau, ptr %.sroa.5390.0..sroa_idx, align 8, !alias.scope !161504, !noalias !161505
   br label %.preheader1.i.i
 
@@ -7527,7 +7527,7 @@ bb.adx:                                           ; preds = %bb.adw
 
 .loopexit.i.i1241:                                ; preds = %.preheader.i.i1238, %.preheader.preheader.i.i1236, %.preheader1.i.i1231
   %i.ccb = shl i64 %.sroa.101327.1, 1
-  %i.ccc = add nsw i64 %.sroa.71326.1, 1
+  %i.ccc = add nuw nsw i64 %.sroa.71326.1, 1
   br label %.preheader1.i.i1231
 
 .preheader.i.i1238:                               ; preds = %.lr.ph2140
@@ -7930,7 +7930,7 @@ _ZN7tracing4span4Span8do_enter17h936e449ccced4d74E.exit969: ; preds = %.noexc968
 .loopexit.i.i:                                    ; preds = %.preheader.i.i, %.preheader.preheader.i.i, %.preheader1.i.i
   %i.aas = shl i64 %i.aan, 1                      ; 2 uses
   store i64 %i.aas, ptr %.sroa.6391.0..sroa_idx, align 8, !alias.scope !162441, !noalias !162442
-  %i.aat = add nsw i64 %i.aao, 1                  ; 2 uses
+  %i.aat = add nuw nsw i64 %i.aao, 1              ; 2 uses
   store i64 %i.aat, ptr %.sroa.5390.0..sroa_idx, align 8, !alias.scope !162441, !noalias !162442
   br label %.preheader1.i.i
 
@@ -8333,7 +8333,7 @@ bb.adx:                                           ; preds = %bb.adw
 
 .loopexit.i.i1241:                                ; preds = %.preheader.i.i1238, %.preheader.preheader.i.i1236, %.preheader1.i.i1231
   %i.cca = shl i64 %.sroa.101327.1, 1
-  %i.ccb = add nsw i64 %.sroa.71326.1, 1
+  %i.ccb = add nuw nsw i64 %.sroa.71326.1, 1
   br label %.preheader1.i.i1231
 
 .preheader.i.i1238:                               ; preds = %.lr.ph2140

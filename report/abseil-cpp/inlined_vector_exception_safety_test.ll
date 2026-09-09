@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %_ZN7testing19except
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN7testing13ThrowingValueILNS3_8TypeSpecE0EEEEED2Ev.exit: ; preds = %bb.v, %_ZN7testing19exceptions_internal13TrackedObjectD2Ev.exit.i._crit_edge
   store ptr %i.r, ptr %i.c, align 8, !tbaa !60
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !60
-  %i.bh = shl i64 %i.l, 1
+  %i.bh = shl nuw i64 %i.l, 1
   %i.bi = or disjoint i64 %i.bh, 1
   store i64 %i.bi, ptr %0, align 8, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %_ZN7testing19except
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN7testing13ThrowingValueILNS3_8TypeSpecE2EEEEED2Ev.exit: ; preds = %bb.g, %_ZN7testing19exceptions_internal13TrackedObjectD2Ev.exit.i._crit_edge
   store ptr %i.r, ptr %i.c, align 8, !tbaa !60
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !60
-  %i.an = shl i64 %i.l, 1
+  %i.an = shl nuw i64 %i.l, 1
   %i.ao = or disjoint i64 %i.an, 1
   store i64 %i.ao, ptr %0, align 8, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
@@ -1011,7 +1011,7 @@ bb.u:                                             ; preds = %_ZN7testing19except
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN7testing13ThrowingValueILNS3_8TypeSpecE0EEEEED2Ev.exit: ; preds = %bb.u, %_ZN7testing19exceptions_internal13TrackedObjectD2Ev.exit.i._crit_edge
   store ptr %i.r, ptr %i.c, align 8, !tbaa !60
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !60
-  %i.bg = shl i64 %i.l, 1
+  %i.bg = shl nuw i64 %i.l, 1
   %i.bh = or disjoint i64 %i.bg, 1
   store i64 %i.bh, ptr %0, align 8, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
@@ -1414,7 +1414,7 @@ bb.v:                                             ; preds = %_ZN7testing19except
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN7testing13ThrowingValueILNS3_8TypeSpecE0EEEEED2Ev.exit: ; preds = %bb.v, %_ZN7testing19exceptions_internal13TrackedObjectD2Ev.exit.i._crit_edge
   store ptr %i.r, ptr %i.c, align 8, !tbaa !60
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !60
-  %i.bh = shl i64 %i.l, 1
+  %i.bh = shl nuw i64 %i.l, 1
   %i.bi = or disjoint i64 %i.bh, 1
   store i64 %i.bi, ptr %0, align 8, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
@@ -1817,7 +1817,7 @@ bb.v:                                             ; preds = %_ZN7testing19except
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN7testing13ThrowingValueILNS3_8TypeSpecE0EEEEED2Ev.exit: ; preds = %bb.v, %_ZN7testing19exceptions_internal13TrackedObjectD2Ev.exit.i._crit_edge
   store ptr %i.r, ptr %i.c, align 8, !tbaa !60
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !60
-  %i.bh = shl i64 %i.l, 1
+  %i.bh = shl nuw i64 %i.l, 1
   %i.bi = or disjoint i64 %i.bh, 1
   store i64 %i.bi, ptr %0, align 8, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
@@ -2220,7 +2220,7 @@ bb.k:                                             ; preds = %_ZN7testing19except
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN7testing13ThrowingValueILNS3_8TypeSpecE2EEEEED2Ev.exit: ; preds = %bb.k, %_ZN7testing19exceptions_internal13TrackedObjectD2Ev.exit.i._crit_edge
   store ptr %i.r, ptr %i.c, align 8, !tbaa !60
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !60
-  %i.at = shl i64 %i.l, 1
+  %i.at = shl nuw i64 %i.l, 1
   %i.au = or disjoint i64 %i.at, 1
   store i64 %i.au, ptr %0, align 8, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
@@ -2623,7 +2623,7 @@ bb.l:                                             ; preds = %_ZN7testing19except
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN7testing13ThrowingValueILNS3_8TypeSpecE2EEEEED2Ev.exit: ; preds = %bb.l, %_ZN7testing19exceptions_internal13TrackedObjectD2Ev.exit.i._crit_edge
   store ptr %i.r, ptr %i.c, align 8, !tbaa !60
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !60
-  %i.au = shl i64 %i.l, 1
+  %i.au = shl nuw i64 %i.l, 1
   %i.av = or disjoint i64 %i.au, 1
   store i64 %i.av, ptr %0, align 8, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
@@ -3026,7 +3026,7 @@ bb.l:                                             ; preds = %_ZN7testing19except
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN7testing13ThrowingValueILNS3_8TypeSpecE2EEEEED2Ev.exit: ; preds = %bb.l, %_ZN7testing19exceptions_internal13TrackedObjectD2Ev.exit.i._crit_edge
   store ptr %i.r, ptr %i.c, align 8, !tbaa !60
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !60
-  %i.au = shl i64 %i.l, 1
+  %i.au = shl nuw i64 %i.l, 1
   %i.av = or disjoint i64 %i.au, 1
   store i64 %i.av, ptr %0, align 8, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27

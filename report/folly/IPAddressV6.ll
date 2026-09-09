@@ -205,24 +205,24 @@ bb.l:                                             ; preds = %_ZN5folly5splitIcNS
 bb.m:                                             ; preds = %bb.l, %bb.p
   %.086 = phi i64 [ 1, %bb.l ], [ %i.bd, %bb.p ]  ; 2 uses
   %.01685 = phi i32 [ 0, %bb.l ], [ %.1, %bb.p ]
-  %.01784 = phi i64 [ 0, %bb.l ], [ %.118, %bb.p ] ; 3 uses
+  %.01784 = phi i64 [ 0, %bb.l ], [ %.118, %bb.p ] ; 4 uses
   %i.as = sub nuw i64 %i.ah, %.086
   %i.at = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %i.as
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !60
   %i.av = load i8, ptr %i.au, align 1, !tbaa !28
   %i.aw = getelementptr inbounds nuw i8, ptr %8, i64 %.01784
   store i8 %i.av, ptr %i.aw, align 1, !tbaa !28
-  %i.ax = add nsw i64 %.01784, 1                  ; 4 uses
+  %i.ax = add nuw nsw i64 %.01784, 1              ; 3 uses
   %i.ay = add nsw i32 %.01685, 1                  ; 2 uses
   %i.az = icmp eq i32 %i.ay, 4
   br i1 %i.az, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
-  %i.ba = icmp ult i64 %i.ax, 39
+  %i.ba = icmp ult i64 %.01784, 38
   br i1 %i.ba, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.bb = add nsw i64 %.01784, 2
+  %i.bb = add nuw nsw i64 %.01784, 2
   %i.bc = getelementptr inbounds nuw i8, ptr %8, i64 %i.ax
   store i8 58, ptr %i.bc, align 1, !tbaa !28
   br label %bb.p

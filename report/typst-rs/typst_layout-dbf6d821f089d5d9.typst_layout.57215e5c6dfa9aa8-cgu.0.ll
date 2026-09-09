@@ -205,7 +205,7 @@ bb.ki:                                            ; preds = %select.unfold31.i.i
   br i1 %.not.i37.i53.i, label %.lr.ph.i.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs8_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.i.preheader.i
-  %i.apm = add nsw i64 %.ph, 1                    ; 2 uses
+  %i.apm = add nuw nsw i64 %.ph, 1                ; 2 uses
   %exitcond.not.i.i.i1026 = icmp eq i64 %i.apm, %i.apb
   br i1 %exitcond.not.i.i.i1026, label %.loopexit.i.loopexit.i, label %.lr.ph.i.i.i31
 
@@ -220,7 +220,7 @@ bb.ki:                                            ; preds = %select.unfold31.i.i
   br i1 %.not.i37.i.i, label %.lr.ph.i, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs8_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.i.i31
-  %i.app = add nsw i64 %i.apn, 1                  ; 2 uses
+  %i.app = add nuw nsw i64 %i.apn, 1              ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.app, %i.apb
   br i1 %exitcond.not.i.i.i, label %.loopexit.i.loopexit.i, label %.lr.ph.i.i.i31
 
@@ -623,7 +623,7 @@ bb.cx:                                            ; preds = %select.unfold40.i.i
   br i1 %.not.i37.i79.i, label %.lr.ph.i68.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputsa_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i
 
 .lr.ph.i68.preheader:                             ; preds = %.lr.ph.i.i.i65
-  %i.to = add nsw i64 %.ph, 1                     ; 2 uses
+  %i.to = add nuw nsw i64 %.ph, 1                 ; 2 uses
   %exitcond.not.i.i.i79 = icmp eq i64 %i.to, %i.te
   br i1 %exitcond.not.i.i.i79, label %.loopexit51.i.i, label %.lr.ph80
 
@@ -638,7 +638,7 @@ bb.cx:                                            ; preds = %select.unfold40.i.i
   br i1 %.not.i37.i.i, label %.lr.ph.i68, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputsa_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i
 
 .lr.ph.i68:                                       ; preds = %.lr.ph80
-  %i.tr = add nsw i64 %i.tp, 1                    ; 2 uses
+  %i.tr = add nuw nsw i64 %i.tp, 1                ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.tr, %i.te
   br i1 %exitcond.not.i.i.i, label %.loopexit51.i.i, label %.lr.ph80
 
@@ -1041,7 +1041,7 @@ bb.oz:                                            ; preds = %select.unfold31.i.i
   br i1 %.not.i37.i54.i, label %.lr.ph.i77.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs7_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i
 
 .lr.ph.i77.preheader:                             ; preds = %.lr.ph.i.i.preheader.i
-  %i.azd = add nsw i64 %.ph, 1                    ; 2 uses
+  %i.azd = add nuw nsw i64 %.ph, 1                ; 2 uses
   %exitcond.not.i.i.i160 = icmp eq i64 %i.azd, %i.ays
   br i1 %exitcond.not.i.i.i160, label %.loopexit.i.loopexit.i, label %.lr.ph.i.i.i78
 
@@ -1056,7 +1056,7 @@ bb.oz:                                            ; preds = %select.unfold31.i.i
   br i1 %.not.i37.i.i, label %.lr.ph.i77, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs7_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i
 
 .lr.ph.i77:                                       ; preds = %.lr.ph.i.i.i78
-  %i.azg = add nsw i64 %i.aze, 1                  ; 2 uses
+  %i.azg = add nuw nsw i64 %i.aze, 1              ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.azg, %i.ays
   br i1 %exitcond.not.i.i.i, label %.loopexit.i.loopexit.i, label %.lr.ph.i.i.i78
 
@@ -1459,7 +1459,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeNtNtNtCsd
   br i1 %i.ea, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.eb = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eb = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ec = lshr i64 %.sroa.018.0, 1
   %i.ed = add nuw i64 %i.ec, %.sroa.09.0
   br label %bb.f
@@ -1862,7 +1862,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeTNtNtNtCs
   br i1 %i.dy, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.dz = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dz = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ea = lshr i64 %.sroa.018.0, 1
   %i.eb = add nuw i64 %i.ea, %.sroa.09.0
   br label %bb.f
@@ -2265,7 +2265,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeTNtNtNtCs
   br i1 %i.gu, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.gv = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gv = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gw = lshr i64 %.sroa.018.0, 1
   %i.gx = add nuw i64 %i.gw, %.sroa.09.0
   br label %bb.f
@@ -2668,7 +2668,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable5drift13logical_mergeTRNtNtNtC
   br i1 %i.jt, label %bb.r, label %._crit_edge
 
 bb.av:                                            ; preds = %._crit_edge
-  %i.ju = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ju = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.jv = lshr i64 %.sroa.018.0, 1
   %i.jw = add nuw i64 %i.jv, %.sroa.09.0
   br label %bb.f
@@ -3071,7 +3071,7 @@ bb.cf:                                            ; preds = %select.unfold47.i.i
   br i1 %.not.i37.i51.i.i.i, label %.lr.ph.i57.i.i.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs4_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluuuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
 
 .lr.ph.i57.i.i.preheader:                         ; preds = %.lr.ph.i.i.preheader.i.i.i
-  %i.qq = add nsw i64 %.ph, 1                     ; 2 uses
+  %i.qq = add nuw nsw i64 %.ph, 1                 ; 2 uses
   %exitcond.not.i.i.i.i.i922 = icmp eq i64 %i.qq, %i.qi
   br i1 %exitcond.not.i.i.i.i.i922, label %.loopexit.i.loopexit.i.i.i, label %.lr.ph.i.i.i58.i.i
 
@@ -3087,7 +3087,7 @@ bb.cf:                                            ; preds = %select.unfold47.i.i
   br i1 %.not.i37.i.i.i.i, label %.lr.ph.i57.i.i, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs4_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluuuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
 
 .lr.ph.i57.i.i:                                   ; preds = %.lr.ph.i.i.i58.i.i
-  %i.qt = add nsw i64 %i.qr, 1                    ; 2 uses
+  %i.qt = add nuw nsw i64 %i.qr, 1                ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.qt, %i.qi
   br i1 %exitcond.not.i.i.i.i.i, label %.loopexit.i.loopexit.i.i.i, label %.lr.ph.i.i.i58.i.i
 
@@ -3490,7 +3490,7 @@ bb.dz:                                            ; preds = %select.unfold47.i.i
   br i1 %.not.i37.i51.i.i, label %.lr.ph.i65.i.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs4_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluuuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i
 
 .lr.ph.i65.i.preheader:                           ; preds = %.lr.ph.i.i.preheader.i.i
-  %i.ut = add nsw i64 %.ph, 1                     ; 2 uses
+  %i.ut = add nuw nsw i64 %.ph, 1                 ; 2 uses
   %exitcond.not.i.i.i.i222 = icmp eq i64 %i.ut, %i.ul
   br i1 %exitcond.not.i.i.i.i222, label %.loopexit.i.loopexit.i.i, label %.lr.ph.i.i.i66.i
 
@@ -3506,7 +3506,7 @@ bb.dz:                                            ; preds = %select.unfold47.i.i
   br i1 %.not.i37.i.i.i, label %.lr.ph.i65.i, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs4_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluuuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i
 
 .lr.ph.i65.i:                                     ; preds = %.lr.ph.i.i.i66.i
-  %i.uw = add nsw i64 %i.uu, 1                    ; 2 uses
+  %i.uw = add nuw nsw i64 %i.uu, 1                ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.uw, %i.ul
   br i1 %exitcond.not.i.i.i.i, label %.loopexit.i.loopexit.i.i, label %.lr.ph.i.i.i66.i
 
@@ -3909,7 +3909,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4Q1BBFz20BJ
   %.lcssa570 = phi ptr [ %i.ams, %bb.kl ], [ %i.aoc, %._crit_edge.loopexit ]
   %.lcssa562 = phi i1 [ %i.amt, %bb.kl ], [ %i.anh, %._crit_edge.loopexit ]
   %.lcssa546 = phi i64 [ %i.amw, %bb.kl ], [ %i.aoj, %._crit_edge.loopexit ]
-  %i.aok = add nsw i64 %.promoted91.i611.i.lcssa, 1 ; 3 uses
+  %i.aok = add nuw nsw i64 %.promoted91.i611.i.lcssa, 1 ; 3 uses
   store i64 %i.aok, ptr %i.jy, align 8, !alias.scope !26205, !noalias !26206
   %i.aol = getelementptr inbounds nuw [16 x i8], ptr %.sink183.i.i.sroa.gep.i, i64 %.promoted91.i611.i.lcssa
   %.sroa.6.0.ph.i.i.i = load double, ptr %i.aol, align 8, !alias.scope !26204, !noalias !26203, !noundef !41
@@ -4312,7 +4312,7 @@ bb.ij:                                            ; preds = %select.unfold31.i.i
   br i1 %.not.i37.i53.i.i, label %.lr.ph.i80.i.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs8_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i
 
 .lr.ph.i80.i.preheader:                           ; preds = %.lr.ph.i.i.preheader.i.i
-  %i.afz = add nsw i64 %.ph, 1                    ; 2 uses
+  %i.afz = add nuw nsw i64 %.ph, 1                ; 2 uses
   %exitcond.not.i.i.i.i457 = icmp eq i64 %i.afz, %i.afo
   br i1 %exitcond.not.i.i.i.i457, label %.loopexit.i.loopexit.i.i, label %.lr.ph.i.i.i81.i
 
@@ -4327,7 +4327,7 @@ bb.ij:                                            ; preds = %select.unfold31.i.i
   br i1 %.not.i37.i.i.i, label %.lr.ph.i80.i, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs8_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i
 
 .lr.ph.i80.i:                                     ; preds = %.lr.ph.i.i.i81.i
-  %i.agc = add nsw i64 %i.aga, 1                  ; 2 uses
+  %i.agc = add nuw nsw i64 %i.aga, 1              ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.agc, %i.afo
   br i1 %exitcond.not.i.i.i.i, label %.loopexit.i.loopexit.i.i, label %.lr.ph.i.i.i81.i
 
@@ -4730,7 +4730,7 @@ bb.r:                                             ; preds = %.lr.ph617
   br label %bb.t
 
 bb.s:                                             ; preds = %_RNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB4_12GridLayouter21layout_row_with_state.exit.i
-  %i.ea = add nsw i64 %.sroa.010.021.i, 1         ; 2 uses
+  %i.ea = add nuw nsw i64 %.sroa.010.021.i, 1     ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ea, %i.ds
   br i1 %exitcond.not.i, label %._RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtCs7tN9tvpkfrg_12typst_layout4grid8layouter3RowENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvMs_BS_NtBS_12GridLayouter13finish_regions_0EBW_.exit_crit_edge.loopexit, label %bb.t
 
@@ -5133,7 +5133,7 @@ bb.ti:                                            ; preds = %bb.th
   br label %bb.tk
 
 bb.tj:                                            ; preds = %_RNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB4_12GridLayouter21layout_row_with_state.exit.i185
-  %i.buo = add nsw i64 %.sroa.010.021.i, 1        ; 2 uses
+  %i.buo = add nuw nsw i64 %.sroa.010.021.i, 1    ; 2 uses
   %exitcond.not.i186 = icmp eq i64 %i.buo, %i.px
   br i1 %exitcond.not.i186, label %.loopexit261, label %bb.tk
 
@@ -5536,7 +5536,7 @@ bb.et:                                            ; preds = %select.unfold40.i.i
   br i1 %.not.i37.i79.i, label %.lr.ph.i.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputsa_1__9MultiCalluNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1z_13introspection12introspector1__12___ComemoCallNtNvNtB1z_6engine1__12___ComemoCallNtNvB3m_s_1__12___ComemoCallNtNvB3m_s0_1__12___ComemoCallNtNvNtB2r_7locator1__12___ComemoCalluuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.i.i
-  %i.alh = add nsw i64 %.ph, 1                    ; 2 uses
+  %i.alh = add nuw nsw i64 %.ph, 1                ; 2 uses
   %exitcond.not.i.i.i3685 = icmp eq i64 %i.alh, %i.akx
   br i1 %exitcond.not.i.i.i3685, label %.loopexit51.i.i, label %.lr.ph3686
 
@@ -5551,7 +5551,7 @@ bb.et:                                            ; preds = %select.unfold40.i.i
   br i1 %.not.i37.i.i, label %.lr.ph.i, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputsa_1__9MultiCalluNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1z_13introspection12introspector1__12___ComemoCallNtNvNtB1z_6engine1__12___ComemoCallNtNvB3m_s_1__12___ComemoCallNtNvB3m_s0_1__12___ComemoCallNtNvNtB2r_7locator1__12___ComemoCalluuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph3686
-  %i.alk = add nsw i64 %i.ali, 1                  ; 2 uses
+  %i.alk = add nuw nsw i64 %i.ali, 1              ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.alk, %i.akx
   br i1 %exitcond.not.i.i.i, label %.loopexit51.i.i, label %.lr.ph3686
 
@@ -5954,7 +5954,7 @@ _RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCsdaEETE4Dqm
 
 bb.au:                                            ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCsdaEETE4DqmE_13typst_library6layout5point5PointNtNtB11_5frame9FrameItemEENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
   %.sroa.7.0..sroa_idx3.i58.i.i.i = getelementptr inbounds nuw i8, ptr %i.fn, i64 24
-  %i.fp = add i64 %.sroa.01.09.i5471.i.i.i, 1     ; 2 uses
+  %i.fp = add nuw i64 %.sroa.01.09.i5471.i.i.i, 1 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.55.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(168) %.sroa.55.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(168) %.sroa.7.0..sroa_idx3.i58.i.i.i, i64 168, i1 false), !noalias !34441
   %i.fq = load ptr, ptr %i.dq, align 8, !noalias !34441, !nonnull !41, !noundef !41
@@ -6357,7 +6357,7 @@ bb.au:                                            ; preds = %select.unfold40.i.i
   br i1 %.not.i37.i79.i.i.i, label %.lr.ph.i57.i.i.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs6_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
 
 .lr.ph.i57.i.i.preheader:                         ; preds = %.lr.ph.i.i.i53.i.i
-  %i.jg = add nsw i64 %.ph, 1                     ; 2 uses
+  %i.jg = add nuw nsw i64 %.ph, 1                 ; 2 uses
   %exitcond.not.i.i.i.i.i350 = icmp eq i64 %i.jg, %i.iw
   br i1 %exitcond.not.i.i.i.i.i350, label %.loopexit51.i.i.i.i, label %.lr.ph
 
@@ -6372,7 +6372,7 @@ bb.au:                                            ; preds = %select.unfold40.i.i
   br i1 %.not.i37.i.i.i.i, label %.lr.ph.i57.i.i, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs6_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
 
 .lr.ph.i57.i.i:                                   ; preds = %.lr.ph
-  %i.jj = add nsw i64 %i.jh, 1                    ; 2 uses
+  %i.jj = add nuw nsw i64 %i.jh, 1                ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.jj, %i.iw
   br i1 %exitcond.not.i.i.i.i.i, label %.loopexit51.i.i.i.i, label %.lr.ph
 
@@ -6775,7 +6775,7 @@ bb.ba:                                            ; preds = %select.unfold31.i.i
   br i1 %.not.i37.i53.i.i.i, label %.lr.ph.i59.i.i.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs7_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
 
 .lr.ph.i59.i.i.preheader:                         ; preds = %.lr.ph.i.i.preheader.i.i.i
-  %i.jd = add nsw i64 %.ph, 1                     ; 2 uses
+  %i.jd = add nuw nsw i64 %.ph, 1                 ; 2 uses
   %exitcond.not.i.i.i.i.i194 = icmp eq i64 %i.jd, %i.is
   br i1 %exitcond.not.i.i.i.i.i194, label %.loopexit.i.loopexit.i.i.i, label %.lr.ph.i.i.i60.i.i
 
@@ -6790,7 +6790,7 @@ bb.ba:                                            ; preds = %select.unfold31.i.i
   br i1 %.not.i37.i.i.i.i, label %.lr.ph.i59.i.i, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs7_1__9MultiCallNtNvCsdaEETE4DqmE_13typst_library1__12___ComemoCalluNtNvNtNtB1y_13introspection12introspector1__12___ComemoCallNtNvNtB1y_6engine1__12___ComemoCallNtNvB3l_s_1__12___ComemoCallNtNvB3l_s0_1__12___ComemoCalluNtNvNtB2q_7locator1__12___ComemoCalluEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
 
 .lr.ph.i59.i.i:                                   ; preds = %.lr.ph.i.i.i60.i.i
-  %i.jg = add nsw i64 %i.je, 1                    ; 2 uses
+  %i.jg = add nuw nsw i64 %i.je, 1                ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.jg, %i.is
   br i1 %exitcond.not.i.i.i.i.i, label %.loopexit.i.loopexit.i.i.i, label %.lr.ph.i.i.i60.i.i
 
@@ -7193,7 +7193,7 @@ bb.ay:                                            ; preds = %_RNvMs_NtCsloFShupy
   br i1 %.not.i37.i56.i.i, label %.lr.ph.i53.i.preheader, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs3_1__9MultiCalluuuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i
 
 .lr.ph.i53.i.preheader:                           ; preds = %.lr.ph.i.i.preheader.i.i
-  %i.qb = add nsw i64 %.ph, 1                     ; 2 uses
+  %i.qb = add nuw nsw i64 %.ph, 1                 ; 2 uses
   %exitcond.not.i.i.i.i301 = icmp eq i64 %i.qb, %i.pk
   br i1 %exitcond.not.i.i.i.i301, label %.loopexit54.i.i.i, label %.lr.ph.i.i.i54.i
 
@@ -7208,7 +7208,7 @@ bb.ay:                                            ; preds = %_RNvMs_NtCsloFShupy
   br i1 %.not.i37.i.i.i, label %.lr.ph.i53.i, label %_RNvMs2_NtCsloFShupyl5J_6comemo10constraintINtB5_12CallSequenceINtNvNtB7_5inputs3_1__9MultiCalluuuuuEE4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i
 
 .lr.ph.i53.i:                                     ; preds = %.lr.ph.i.i.i54.i
-  %i.qh = add nsw i64 %i.qc, 1                    ; 2 uses
+  %i.qh = add nuw nsw i64 %i.qc, 1                ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.qh, %i.pk
   br i1 %exitcond.not.i.i.i.i, label %.loopexit54.i.i.i, label %.lr.ph.i.i.i54.i
 

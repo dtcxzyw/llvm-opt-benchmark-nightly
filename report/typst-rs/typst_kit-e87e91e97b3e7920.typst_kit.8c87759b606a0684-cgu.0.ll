@@ -206,7 +206,7 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.assume(i1 %i.ao)
   store i64 %..i.i.i, ptr %1, align 8, !alias.scope !2809
   %.pre.i = sub nsw i64 %..i.i.i, %.lcssa113      ; 2 uses
-  %i.ap = icmp samesign ugt i64 %.pre.i, 31
+  %i.ap = icmp ugt i64 %.pre.i, 31
   call void @llvm.assume(i1 %i.ap)
   %i.aq = icmp sgt i64 %.lcssa113, -1
   call void @llvm.assume(i1 %i.aq)

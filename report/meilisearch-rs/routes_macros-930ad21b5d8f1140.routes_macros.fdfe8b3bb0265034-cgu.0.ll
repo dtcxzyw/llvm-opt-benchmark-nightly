@@ -202,7 +202,7 @@ bb.ne:                                            ; preds = %bb.na
   br label %bb.nf
 
 .body.i121:                                       ; preds = %bb.rm, %bb.ri, %.thread156.i.i, %bb.qd, %.body.i118.i.i, %.body109.i.i, %.loopexit.split-lp.i, %.loopexit.loopexit.split-lp.i, %.loopexit.loopexit.i
-  %.pn.i122 = phi { ptr, i32 } [ %i.abe, %bb.ri ], [ %.pn.i50.i, %bb.rm ], [ %i.zq, %.body.i118.i.i ], [ %lpad.loopexit.split-lp69.i, %.loopexit.split-lp.i ], [ %.pn67.i.i, %.body109.i.i ], [ %eh.lpad-body149.i.i, %.thread156.i.i ], [ %i.zq, %bb.qd ], [ %lpad.loopexit366.i, %.loopexit.loopexit.i ], [ %lpad.loopexit.split-lp367.i, %.loopexit.loopexit.split-lp.i ]
+  %.pn.i122 = phi { ptr, i32 } [ %i.abe, %bb.ri ], [ %.pn.i50.i, %bb.rm ], [ %i.zq, %.body.i118.i.i ], [ %i.zq, %bb.qd ], [ %.pn67.i.i, %.body109.i.i ], [ %eh.lpad-body149.i.i, %.thread156.i.i ], [ %lpad.loopexit.split-lp69.i, %.loopexit.split-lp.i ], [ %lpad.loopexit366.i, %.loopexit.loopexit.i ], [ %lpad.loopexit.split-lp367.i, %.loopexit.loopexit.split-lp.i ]
   call fastcc void @"_ZN4core3ptr71drop_in_place$LT$syn..punctuated..IterMut$LT$syn..data..Variant$GT$$GT$17h106f095192fc49f7E"(ptr nonnull %i.ub, ptr nonnull @253) #30, !noalias !2880
   br label %bb.nc
 

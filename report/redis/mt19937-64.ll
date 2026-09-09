@@ -80,7 +80,7 @@ init_genrand64.exit:                              ; preds = %bb.b
 bb.d:                                             ; preds = %init_genrand64.exit, %bb.f
   %.033 = phi i64 [ %i.k, %init_genrand64.exit ], [ %i.ab, %bb.f ]
   %.02432 = phi i64 [ 0, %init_genrand64.exit ], [ %spec.store.select, %bb.f ] ; 3 uses
-  %.02531 = phi i64 [ 1, %init_genrand64.exit ], [ %.126, %bb.f ] ; 2 uses
+  %.02531 = phi i64 [ 1, %init_genrand64.exit ], [ %.126, %bb.f ] ; 3 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr @mt, i64 %.02531 ; 3 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !14
   %i.n = getelementptr i8, ptr %i.l, i64 -8
@@ -94,9 +94,9 @@ bb.d:                                             ; preds = %init_genrand64.exit
   %i.v = add i64 %i.u, %.02432
   %i.w = add i64 %i.v, %i.s
   store i64 %i.w, ptr %i.l, align 8, !tbaa !14
-  %i.x = add nsw i64 %.02531, 1                   ; 2 uses
+  %i.x = add nuw nsw i64 %.02531, 1
   %i.y = add i64 %.02432, 1                       ; 2 uses
-  %i.z = icmp ugt i64 %i.x, 311
+  %i.z = icmp ugt i64 %.02531, 310
   br i1 %i.z, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
@@ -114,7 +114,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .preheader:                                       ; preds = %bb.f, %bb.h
   %.135 = phi i64 [ %i.ao, %bb.h ], [ 311, %bb.f ]
-  %.234 = phi i64 [ %.3, %bb.h ], [ %.126, %bb.f ] ; 3 uses
+  %.234 = phi i64 [ %.3, %bb.h ], [ %.126, %bb.f ] ; 4 uses
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr @mt, i64 %.234 ; 3 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !14
   %i.ae = getelementptr i8, ptr %i.ac, i64 -8
@@ -125,8 +125,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.aj = xor i64 %i.ai, %i.ad
   %i.ak = sub i64 %i.aj, %.234
   store i64 %i.ak, ptr %i.ac, align 8, !tbaa !14
-  %i.al = add nsw i64 %.234, 1                    ; 2 uses
-  %i.am = icmp ugt i64 %i.al, 311
+  %i.al = add nuw nsw i64 %.234, 1
+  %i.am = icmp ugt i64 %.234, 310
   br i1 %i.am, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %.preheader

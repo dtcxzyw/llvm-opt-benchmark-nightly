@@ -205,7 +205,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h2b07e48f075a658eE.exit: ; pred
   br i1 %i.gn, label %bb.w, label %._crit_edge
 
 bb.aj:                                            ; preds = %._crit_edge
-  %i.go = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.go = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gp = lshr i64 %.sroa.023.0, 1
   %i.gq = add i64 %i.gp, %.sroa.09.0
   br label %bb.f
@@ -608,7 +608,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h624761cde564dc7dE.exit: ; pred
   br i1 %i.dx, label %bb.q, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dy = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dy = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dz = lshr i64 %.sroa.023.0, 1
   %i.ea = add i64 %i.dz, %.sroa.09.0
   br label %bb.f
@@ -1011,7 +1011,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h6d315b6256dc07ccE.exit: ; pred
   br i1 %i.gn, label %bb.w, label %._crit_edge
 
 bb.aj:                                            ; preds = %._crit_edge
-  %i.go = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.go = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gp = lshr i64 %.sroa.023.0, 1
   %i.gq = add i64 %i.gp, %.sroa.09.0
   br label %bb.f
@@ -1414,7 +1414,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h6ed4a92cdc98f275E.exit: ; pred
   br i1 %i.gn, label %bb.w, label %._crit_edge
 
 bb.aj:                                            ; preds = %._crit_edge
-  %i.go = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.go = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gp = lshr i64 %.sroa.023.0, 1
   %i.gq = add i64 %i.gp, %.sroa.09.0
   br label %bb.f
@@ -1817,7 +1817,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h0bf1ddbfeb3284e9E.exit: ; pred
   br i1 %i.hl, label %bb.ac, label %._crit_edge
 
 bb.au:                                            ; preds = %._crit_edge
-  %i.hm = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.hm = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.hn = lshr i64 %.sroa.023.0, 1
   %i.ho = add i64 %i.hn, %.sroa.09.0
   br label %bb.f
@@ -2220,7 +2220,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17ha72dc684b003e57dE.exit: ; pred
   br i1 %i.gn, label %bb.w, label %._crit_edge
 
 bb.aj:                                            ; preds = %._crit_edge
-  %i.go = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.go = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gp = lshr i64 %.sroa.023.0, 1
   %i.gq = add i64 %i.gp, %.sroa.09.0
   br label %bb.f
@@ -2623,7 +2623,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h53d98804f8998187E.exit: ; pred
   br i1 %i.gn, label %bb.w, label %._crit_edge
 
 bb.aj:                                            ; preds = %._crit_edge
-  %i.go = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.go = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gp = lshr i64 %.sroa.023.0, 1
   %i.gq = add i64 %i.gp, %.sroa.09.0
   br label %bb.f
@@ -3026,7 +3026,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hf0b83a334460eb1fE.exit: ; pred
   br i1 %i.gk, label %bb.u, label %._crit_edge
 
 bb.ah:                                            ; preds = %._crit_edge
-  %i.gl = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gl = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gm = lshr i64 %.sroa.023.0, 1
   %i.gn = add i64 %i.gm, %.sroa.09.0
   br label %bb.f
@@ -3429,7 +3429,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h43baf4ac08c942dbE.exit: ; pred
   br i1 %i.dx, label %bb.q, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dy = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dy = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dz = lshr i64 %.sroa.023.0, 1
   %i.ea = add i64 %i.dz, %.sroa.09.0
   br label %bb.f
@@ -3832,7 +3832,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17ha6c8fc007b9588e0E.exit: ; pred
   br i1 %i.dx, label %bb.q, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dy = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dy = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dz = lshr i64 %.sroa.023.0, 1
   %i.ea = add i64 %i.dz, %.sroa.09.0
   br label %bb.f
@@ -4235,7 +4235,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h41ab9c2df6aa0c63E.exit: ; pred
   br i1 %i.gn, label %bb.w, label %._crit_edge
 
 bb.aj:                                            ; preds = %._crit_edge
-  %i.go = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.go = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gp = lshr i64 %.sroa.023.0, 1
   %i.gq = add i64 %i.gp, %.sroa.09.0
   br label %bb.f
@@ -4638,7 +4638,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h91ac16d081fe2dd8E.exit: ; pred
   br i1 %i.gs, label %bb.w, label %._crit_edge
 
 bb.aj:                                            ; preds = %._crit_edge
-  %i.gt = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gt = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gu = lshr i64 %.sroa.023.0, 1
   %i.gv = add i64 %i.gu, %.sroa.09.0
   br label %bb.f
@@ -5041,7 +5041,7 @@ bb.pr:                                            ; preds = %"_ZN4core3ptr89drop
           to label %.critedge417 unwind label %bb.kh
 
 .thread1062:                                      ; preds = %.thread1249.thread2360, %.thread1189.thread2356, %bb.lb, %.thread1086.loopexit, %.thread1086.loopexit.split-lp, %.thread1241.thread, %.thread1181.thread, %bb.ln, %.thread1102.thread, %bb.kw, %bb.np, %bb.pf
-  %.pn397.ph.pn = phi { ptr, i32 } [ %lpad.loopexit1361, %.thread1086.loopexit ], [ %i.awv, %.thread1189.thread2356 ], [ %.pn3811227, %.thread1241.thread ], [ %i.azl, %.thread1249.thread2360 ], [ %.pn3851167, %.thread1181.thread ], [ %i.asf, %bb.ln ], [ %i.axh, %bb.np ], [ %.pn3951092, %.thread1102.thread ], [ %lpad.loopexit.split-lp1362, %.thread1086.loopexit.split-lp ], [ %i.azx, %bb.pf ], [ %i.apf, %bb.kw ], [ %i.aot, %bb.lb ] ; 2 uses
+  %.pn397.ph.pn = phi { ptr, i32 } [ %i.apf, %bb.kw ], [ %i.awv, %.thread1189.thread2356 ], [ %.pn3811227, %.thread1241.thread ], [ %i.azl, %.thread1249.thread2360 ], [ %.pn3851167, %.thread1181.thread ], [ %i.asf, %bb.ln ], [ %i.azx, %bb.pf ], [ %.pn3951092, %.thread1102.thread ], [ %lpad.loopexit.split-lp1362, %.thread1086.loopexit.split-lp ], [ %lpad.loopexit1361, %.thread1086.loopexit ], [ %i.axh, %bb.np ], [ %i.aot, %bb.lb ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !41247)
   call void @llvm.experimental.noalias.scope.decl(metadata !41248)
   call void @llvm.experimental.noalias.scope.decl(metadata !41249)

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.preheader
   br label %.lr.ph106
 
 .lr.ph106:                                        ; preds = %.lr.ph106.preheader, %bb.e
-  %.0.i104 = phi i64 [ %i.dh, %bb.e ], [ %.015.i110, %.lr.ph106.preheader ] ; 3 uses
+  %.0.i104 = phi i64 [ %.015.i110, %.lr.ph106.preheader ], [ %i.dh, %bb.e ] ; 3 uses
   %i.dc = getelementptr [8 x i8], ptr %i.cz, i64 %.0.i104 ; 2 uses
   %i.dd = getelementptr i8, ptr %i.dc, i64 -8     ; 2 uses
   %i.de = load i32, ptr %i.dd, align 8, !alias.scope !266
@@ -219,8 +219,8 @@ bb.e:                                             ; preds = %.lr.ph106
   %.not.i = icmp eq i64 %i.dh, 0
   br i1 %.not.i, label %.critedge.i, label %.lr.ph106, !llvm.loop !263
 
-.critedge.i:                                      ; preds = %bb.e, %.lr.ph106
-  %.0.i.lcssa.ph = phi i64 [ 0, %bb.e ], [ %.0.i104, %.lr.ph106 ]
+.critedge.i:                                      ; preds = %.lr.ph106, %bb.e
+  %.0.i.lcssa.ph = phi i64 [ %.0.i104, %.lr.ph106 ], [ 0, %bb.e ]
   %i.di = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %.0.i.lcssa.ph
   store i64 %i.db, ptr %i.di, align 8, !alias.scope !266
   %i.dj = add nuw nsw i64 %.015.i110, 1           ; 2 uses

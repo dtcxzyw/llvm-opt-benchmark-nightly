@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %_ZN4absl12lts_20260
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEED2Ev.exit.i: ; preds = %bb.z, %_ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsISaIiENS1_20IteratorValueAdapterIS3_St13move_iteratorIPiEEEEEvRNS0_13type_identityIT_E4typeENSt16allocator_traitsISA_E7pointerERT0_NSF_9size_typeE.exit.i
   store ptr %i.gr, ptr %i.z, align 8, !tbaa !198
   store i64 %.sroa.speculated.i.i, ptr %i.y, align 8, !tbaa !198
-  %i.jq = shl i64 %i.gm, 1
+  %i.jq = shl nuw i64 %i.gm, 1
   %i.jr = or disjoint i64 %i.jq, 1
   br label %bb.af
 
@@ -608,7 +608,7 @@ bb.de:                                            ; preds = %_ZN4absl12lts_20260
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEED2Ev.exit.i900: ; preds = %bb.de, %_ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsISaIiENS1_20IteratorValueAdapterIS3_St13move_iteratorIPiEEEEEvRNS0_13type_identityIT_E4typeENSt16allocator_traitsISA_E7pointerERT0_NSF_9size_typeE.exit.i899
   store ptr %i.tx, ptr %i.ah, align 8, !tbaa !198
   store i64 %.sroa.speculated.i.i890, ptr %i.ag, align 8, !tbaa !198
-  %i.wx = shl i64 %i.tr, 1
+  %i.wx = shl nuw i64 %i.tr, 1
   %i.wy = or disjoint i64 %i.wx, 1
   br label %bb.dk
 
@@ -1011,7 +1011,7 @@ bb.fz:                                            ; preds = %_ZN4absl12lts_20260
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEED2Ev.exit.i944: ; preds = %bb.fz, %_ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsISaIiENS1_20IteratorValueAdapterIS3_St13move_iteratorIPiEEEEEvRNS0_13type_identityIT_E4typeENSt16allocator_traitsISA_E7pointerERT0_NSF_9size_typeE.exit.i943
   store ptr %i.afr, ptr %i.ar, align 8, !tbaa !198
   store i64 %.sroa.speculated.i.i932, ptr %i.aq, align 8, !tbaa !198
-  %i.aiq = shl i64 %i.afl, 1
+  %i.aiq = shl nuw i64 %i.afl, 1
   %i.air = or disjoint i64 %i.aiq, 1
   br label %bb.gf
 
@@ -1414,7 +1414,7 @@ bb.mi:                                            ; preds = %_ZN4absl12lts_20260
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEED2Ev.exit.i1037: ; preds = %bb.mi, %_ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsISaIiENS1_20IteratorValueAdapterIS3_St13move_iteratorIPiEEEEEvRNS0_13type_identityIT_E4typeENSt16allocator_traitsISA_E7pointerERT0_NSF_9size_typeE.exit.i1036
   store ptr %i.bez, ptr %i.bj, align 8, !tbaa !198
   store i64 %.sroa.speculated.i.i1022, ptr %i.bi, align 8, !tbaa !198
-  %i.bhd = shl i64 %i.beu, 1
+  %i.bhd = shl nuw i64 %i.beu, 1
   %i.bhe = or disjoint i64 %i.bhd, 1
   br label %.noexc652
 
@@ -1817,7 +1817,7 @@ bb.pv:                                            ; preds = %_ZN4absl12lts_20260
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEED2Ev.exit.i1116: ; preds = %bb.pv, %_ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsISaIiENS1_20IteratorValueAdapterIS3_St13move_iteratorIPiEEEEEvRNS0_13type_identityIT_E4typeENSt16allocator_traitsISA_E7pointerERT0_NSF_9size_typeE.exit.i1115
   store ptr %i.bsk, ptr %i.cq, align 8, !tbaa !198
   store i64 %.sroa.speculated.i.i1102, ptr %i.cp, align 8, !tbaa !198
-  %i.bvk = shl i64 %i.bse, 1
+  %i.bvk = shl nuw i64 %i.bse, 1
   %i.bvl = or disjoint i64 %i.bvk, 1
   br label %bb.qb
 
@@ -2220,7 +2220,7 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20260
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEED2Ev.exit: ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsISaIiENS1_20IteratorValueAdapterIS3_St13move_iteratorIPiEEEEEvRNS0_13type_identityIT_E4typeENSt16allocator_traitsISA_E7pointerERT0_NSF_9size_typeE.exit, %bb.d
   store ptr %i.r, ptr %i.c, align 8, !tbaa !198
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !198
-  %i.dt = shl i64 %i.l, 1
+  %i.dt = shl nuw i64 %i.l, 1
   %i.du = or disjoint i64 %i.dt, 1
   br label %bb.j
 
@@ -2623,7 +2623,7 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20260
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaISt4pairIiiEEED2Ev.exit: ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsISaISt4pairIiiEENS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvRNS0_13type_identityIT_E4typeENSt16allocator_traitsISC_E7pointerERT0_NSH_9size_typeE.exit, %bb.d
   store ptr %i.r, ptr %i.c, align 8, !tbaa !198
   store i64 %.sroa.speculated.i, ptr %i.e, align 8, !tbaa !198
-  %i.do = shl i64 %i.l, 1
+  %i.do = shl nuw i64 %i.l, 1
   %i.dp = or disjoint i64 %i.do, 1
   br label %bb.f
 
@@ -3026,7 +3026,7 @@ bb.ch:                                            ; preds = %_ZN4absl12lts_20260
 _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN12_GLOBAL__N_110RefCountedEEED2Ev.exit.i.i.i: ; preds = %bb.ch, %_ZN4absl12lts_2026052623inlined_vector_internal14DestroyAdapterISaIN12_GLOBAL__N_110RefCountedEELb0EE15DestroyElementsERS5_PS4_m.exit.i.i.i
   store ptr %i.gg, ptr %i.l, align 8, !tbaa !198
   store i64 %.sroa.speculated.i.i.i.i, ptr %i.k, align 8, !tbaa !198
-  %i.ln = shl i64 %i.gb, 1
+  %i.ln = shl nuw i64 %i.gb, 1
   %i.lo = or disjoint i64 %i.ln, 1
   br label %bb.de
 
@@ -3429,7 +3429,7 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
 bb.h:                                             ; preds = %bb.g, %_ZN4absl12lts_2026052623inlined_vector_internal14DestroyAdapterISaIN12_GLOBAL__N_124NotTriviallyDestructibleEELb0EE15DestroyElementsERS5_PS4_m.exit.i
   store ptr %i.q, ptr %i.e, align 8, !tbaa !198
   store i64 %.sroa.speculated.i.i, ptr %i.f, align 8, !tbaa !198
-  %i.y = shl i64 %i.l, 1
+  %i.y = shl nuw i64 %i.l, 1
   %i.z = or disjoint i64 %i.y, 1
   store i64 %i.z, ptr %0, align 8, !tbaa !197
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #36
@@ -3832,7 +3832,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20260
 bb.i:                                             ; preds = %bb.h, %_ZN4absl12lts_2026052623inlined_vector_internal14DestroyAdapterISaIN12_GLOBAL__N_124NotTriviallyDestructibleEELb0EE15DestroyElementsERS5_PS4_m.exit.i
   store ptr %i.r, ptr %i.e, align 8, !tbaa !198
   store i64 %.sroa.speculated.i.i, ptr %i.f, align 8, !tbaa !198
-  %i.z = shl i64 %i.l, 1
+  %i.z = shl nuw i64 %i.l, 1
   %i.aa = or disjoint i64 %i.z, 1
   store i64 %i.aa, ptr %0, align 8, !tbaa !197
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #36
