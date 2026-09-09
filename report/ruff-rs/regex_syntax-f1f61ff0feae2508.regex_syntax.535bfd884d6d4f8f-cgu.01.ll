@@ -202,7 +202,7 @@ bb.a:
   %i.f = icmp ne i64 %i.e, 4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = add nsw i64 %i.e, -2
-  %.inv6.i = icmp samesign ult i64 %i.e, 2
+  %.inv6.i = icmp samesign ult i64 %i.e, 2        ; 2 uses
   %i.h = select i1 %.inv6.i, i64 2, i64 %i.g
   %i.i = icmp eq i64 %i.d, %i.h
   br i1 %i.i, label %bb.b, label %_RNvXs1U_NtCs79ICTHwG85D_12regex_syntax3hirNtB6_11PropertiesINtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
@@ -210,7 +210,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   switch i64 %i.d, label %bb.c [
     i64 1, label %bb.d
-    i64 2, label %bb.e
+    i64 2, label %2
     i64 3, label %_RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
     i64 4, label %bb.m
     i64 5, label %bb.r
@@ -221,6 +221,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   unreachable
+
+2:                                                ; preds = %bb.b
+  br i1 %.inv6.i, label %bb.e, label %_RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread11
 
 bb.d:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -239,7 +242,7 @@ bb.d:                                             ; preds = %bb.b
   %i.s = icmp eq i32 %bcmp.i, 0
   br i1 %i.s, label %_RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread11, label %_RNvXs1U_NtCs79ICTHwG85D_12regex_syntax3hirNtB6_11PropertiesINtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %2
   tail call void @llvm.experimental.noalias.scope.decl(metadata !427)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !428)
   %i.t = icmp eq i64 %i.a, %i.e
@@ -472,7 +475,7 @@ _RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3c
   %i.dy = icmp eq i32 %i.dv, %i.dx
   br i1 %i.dy, label %_RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread11, label %_RNvXs1U_NtCs79ICTHwG85D_12regex_syntax3hirNtB6_11PropertiesINtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-_RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread11: ; preds = %bb.ab, %bb.y, %bb.j, %bb.l, %bb.aa, %bb.x, %bb.i, %bb.k, %bb.b, %.split15, %.split14, %.split13, %_RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
+_RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread11: ; preds = %bb.ab, %bb.y, %bb.j, %bb.l, %bb.aa, %bb.x, %2, %bb.i, %bb.k, %bb.b, %.split15, %.split14, %.split13, %_RNvXsK_NtCs79ICTHwG85D_12regex_syntax3hirNtB5_7HirKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ea = load ptr, ptr %i.dz, align 8, !nonnull !6, !noundef !6 ; 15 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 40

@@ -203,9 +203,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = extractvalue { i64, ptr } %i.h, 1        ; 8 uses
   switch i64 %i.i, label %default.unreachable.i [
     i64 -1, label %bb.e
-    i64 0, label %9
-    i64 1, label %bb.d
-    i64 2, label %_RNvMsL_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_16ColumnDefinition11column_type.exit
+    i64 0, label %bb.s
+    i64 1, label %7
+    i64 2, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.a
@@ -221,8 +221,14 @@ bb.c:                                             ; preds = %bb.a
 default.unreachable.i:                            ; preds = %bb.b
   unreachable
 
+7:                                                ; preds = %bb.b
+  br label %bb.s
+
 bb.d:                                             ; preds = %bb.b
-  br label %9
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
+  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 40
+  %9 = load i8, ptr %8, align 8, !range !43, !noundef !4
+  br label %bb.s
 
 bb.e:                                             ; preds = %bb.b
   %i.p = icmp ne i8 %6, 6
@@ -314,29 +320,21 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.ap
 
-_RNvMsL_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_16ColumnDefinition11column_type.exit: ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
-  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 40
-  %8 = load i8, ptr %7, align 8, !range !43, !noundef !4
-  br label %bb.s
-
-9:                                                ; preds = %bb.b, %bb.d
-  %.sroa.0.0.i.ph = phi i8 [ 7, %bb.b ], [ 5, %bb.d ] ; 2 uses
-  %10 = add nsw i8 %.sroa.0.0.i.ph, -5
-  br label %bb.s
-
-bb.s:                                             ; preds = %_RNvMsL_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_16ColumnDefinition11column_type.exit, %9
-  %.sroa.0.0.i64 = phi i8 [ %.sroa.0.0.i.ph, %9 ], [ %8, %_RNvMsL_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_16ColumnDefinition11column_type.exit ]
-  %11 = phi i8 [ %10, %9 ], [ 1, %_RNvMsL_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_16ColumnDefinition11column_type.exit ] ; 2 uses
+bb.s:                                             ; preds = %bb.b, %bb.d, %7
+  %.sroa.0.0.i = phi i8 [ %9, %bb.d ], [ 5, %7 ], [ 7, %bb.b ] ; 3 uses
+  %10 = icmp samesign ugt i8 %.sroa.0.0.i, 4      ; 2 uses
   %i.ah = icmp ne i8 %6, 6
   tail call void @llvm.assume(i1 %i.ah)
-  %12 = add nsw i8 %6, -5
-  %13 = icmp samesign ugt i8 %6, 4
-  %narrow32 = select i1 %13, i8 %12, i8 1
-  %i.ai = icmp eq i8 %11, %narrow32
-  br i1 %i.ai, label %14, label %bb.t
+  %11 = icmp samesign ugt i8 %6, 4
+  %12 = select i1 %10, i8 %.sroa.0.0.i, i8 6
+  %narrow32 = select i1 %11, i8 %6, i8 6
+  %13 = icmp eq i8 %12, %narrow32
+  %i.ai = icmp eq i8 %.sroa.0.0.i, %6
+  %or.cond36 = or i1 %10, %i.ai
+  %or.cond = and i1 %or.cond36, %13
+  br i1 %or.cond, label %bb.aa, label %bb.t
 
-bb.t:                                             ; preds = %14, %bb.s
+bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store i64 %i.i, ptr %i.f, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 7 uses
@@ -377,13 +375,7 @@ bb.z:                                             ; preds = %bb.w
   tail call void @llvm.trap()
   unreachable
 
-14:                                               ; preds = %bb.s
-  %15 = icmp ne i8 %11, 1
-  %16 = icmp eq i8 %.sroa.0.0.i64, %6
-  %or.cond36 = or i1 %16, %15
-  br i1 %or.cond36, label %bb.aa, label %bb.t
-
-bb.aa:                                            ; preds = %14
+bb.aa:                                            ; preds = %bb.s
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.i, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16

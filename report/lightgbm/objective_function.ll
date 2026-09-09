@@ -204,7 +204,7 @@ bb.bb:                                            ; preds = %.loopexit567
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.ns = shl nuw nsw i64 %i.ni, 3                ; 4 uses
   %i.nt = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ns) #34
-          to label %.lr.ph487.preheader unwind label %bb.bd ; 12 uses
+          to label %.lr.ph487.preheader unwind label %bb.bd ; 13 uses
 
 .lr.ph487.preheader:                              ; preds = %bb.bb
   %i.nu = getelementptr i8, ptr %i.nt, i64 8
@@ -272,7 +272,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.pc = getelementptr inbounds nuw i8, ptr %i.oz, i64 8
   %i.pd = xor i64 %i.oy, -1
   %i.pe = add nsw i64 %.016.i.i, %i.pd
-  %.sroa.011.1.i.i = select i1 %i.pb, ptr %.sroa.011.015.i.i, ptr %i.pc ; 2 uses
+  %.sroa.011.1.i.i = select i1 %i.pb, ptr %.sroa.011.015.i.i, ptr %i.pc ; 3 uses
   %.1.i.i = select i1 %i.pb, i64 %i.oy, i64 %i.pe ; 2 uses
   %i.pf = icmp sgt i64 %.1.i.i, 0
   br i1 %i.pf, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit, !llvm.loop !5
@@ -325,10 +325,10 @@ _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_
   %i.qe = ptrtoint ptr %.sroa.011.1.i.i to i64
   %i.qf = sub i64 %i.qe, %i.ox
   %i.qg = ashr exact i64 %i.qf, 3                 ; 2 uses
-  %.sroa.speculated403 = call i64 @llvm.umin.i64(i64 %i.qg, i64 %i.ot) ; 5 uses
-  %i.qh = icmp eq i64 %.sroa.speculated403, 0
+  %.sroa.speculated403 = call i64 @llvm.umin.i64(i64 %i.qg, i64 %i.ot) ; 4 uses
+  %i.qh = icmp eq ptr %.sroa.011.1.i.i, %i.nt
   %i.qi = icmp uge i64 %i.qg, %i.ot
-  %or.cond = or i1 %i.qi, %i.qh
+  %or.cond = or i1 %i.qh, %i.qi
   br i1 %or.cond, label %bb.be, label %bb.bi
 
 bb.be:                                            ; preds = %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit
@@ -588,7 +588,7 @@ bb.ca:                                            ; preds = %.loopexit568
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.tf = shl nuw nsw i64 %i.sv, 3                ; 4 uses
   %i.tg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.tf) #34
-          to label %.lr.ph.preheader unwind label %bb.cc ; 12 uses
+          to label %.lr.ph.preheader unwind label %bb.cc ; 13 uses
 
 .lr.ph.preheader:                                 ; preds = %bb.ca
   %i.th = getelementptr i8, ptr %i.tg, i64 8
@@ -663,7 +663,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.uw = getelementptr inbounds nuw i8, ptr %i.ut, i64 8
   %i.ux = xor i64 %i.us, -1
   %i.uy = add nsw i64 %.016.i.i329, %i.ux
-  %.sroa.011.1.i.i333 = select i1 %i.uv, ptr %.sroa.011.015.i.i330, ptr %i.uw ; 2 uses
+  %.sroa.011.1.i.i333 = select i1 %i.uv, ptr %.sroa.011.015.i.i330, ptr %i.uw ; 3 uses
   %.1.i.i334 = select i1 %i.uv, i64 %i.us, i64 %i.uy ; 2 uses
   %i.uz = icmp sgt i64 %.1.i.i334, 0
   br i1 %i.uz, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i328, label %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit335, !llvm.loop !5
@@ -722,10 +722,10 @@ _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_
   %i.we = ptrtoint ptr %.sroa.011.1.i.i333 to i64
   %i.wf = sub i64 %i.we, %i.ur
   %i.wg = ashr exact i64 %i.wf, 3                 ; 2 uses
-  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.wg, i64 %i.un) ; 5 uses
-  %i.wh = icmp eq i64 %.sroa.speculated, 0
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.wg, i64 %i.un) ; 4 uses
+  %i.wh = icmp eq ptr %.sroa.011.1.i.i333, %i.tg
   %i.wi = icmp uge i64 %i.wg, %i.un
-  %or.cond191 = or i1 %i.wi, %i.wh
+  %or.cond191 = or i1 %i.wh, %i.wi
   br i1 %or.cond191, label %bb.cd, label %bb.ch
 
 bb.cd:                                            ; preds = %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit335
@@ -1128,7 +1128,7 @@ bb.bb:                                            ; preds = %.loopexit567
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.oa = shl nuw nsw i64 %i.nq, 3                ; 4 uses
   %i.ob = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.oa) #34
-          to label %.lr.ph487.preheader unwind label %bb.bd ; 12 uses
+          to label %.lr.ph487.preheader unwind label %bb.bd ; 13 uses
 
 .lr.ph487.preheader:                              ; preds = %bb.bb
   %i.oc = getelementptr i8, ptr %i.ob, i64 8
@@ -1199,7 +1199,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.pn = getelementptr inbounds nuw i8, ptr %i.pk, i64 8
   %i.po = xor i64 %i.pj, -1
   %i.pp = add nsw i64 %.016.i.i, %i.po
-  %.sroa.011.1.i.i = select i1 %i.pm, ptr %.sroa.011.015.i.i, ptr %i.pn ; 2 uses
+  %.sroa.011.1.i.i = select i1 %i.pm, ptr %.sroa.011.015.i.i, ptr %i.pn ; 3 uses
   %.1.i.i = select i1 %i.pm, i64 %i.pj, i64 %i.pp ; 2 uses
   %i.pq = icmp sgt i64 %.1.i.i, 0
   br i1 %i.pq, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit, !llvm.loop !5
@@ -1252,10 +1252,10 @@ _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_
   %i.qp = ptrtoint ptr %.sroa.011.1.i.i to i64
   %i.qq = sub i64 %i.qp, %i.pi
   %i.qr = ashr exact i64 %i.qq, 3                 ; 2 uses
-  %.sroa.speculated403 = call i64 @llvm.umin.i64(i64 %i.qr, i64 %i.pb) ; 5 uses
-  %i.qs = icmp eq i64 %.sroa.speculated403, 0
+  %.sroa.speculated403 = call i64 @llvm.umin.i64(i64 %i.qr, i64 %i.pb) ; 4 uses
+  %i.qs = icmp eq ptr %.sroa.011.1.i.i, %i.ob
   %i.qt = icmp uge i64 %i.qr, %i.pb
-  %or.cond = or i1 %i.qt, %i.qs
+  %or.cond = or i1 %i.qs, %i.qt
   br i1 %or.cond, label %bb.be, label %bb.bi
 
 bb.be:                                            ; preds = %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit
@@ -1515,7 +1515,7 @@ bb.ca:                                            ; preds = %.loopexit568
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.tq = shl nuw nsw i64 %i.tg, 3                ; 4 uses
   %i.tr = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.tq) #34
-          to label %.lr.ph.preheader unwind label %bb.cc ; 12 uses
+          to label %.lr.ph.preheader unwind label %bb.cc ; 13 uses
 
 .lr.ph.preheader:                                 ; preds = %bb.ca
   %i.ts = getelementptr i8, ptr %i.tr, i64 8
@@ -1593,7 +1593,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.vk = getelementptr inbounds nuw i8, ptr %i.vh, i64 8
   %i.vl = xor i64 %i.vg, -1
   %i.vm = add nsw i64 %.016.i.i329, %i.vl
-  %.sroa.011.1.i.i333 = select i1 %i.vj, ptr %.sroa.011.015.i.i330, ptr %i.vk ; 2 uses
+  %.sroa.011.1.i.i333 = select i1 %i.vj, ptr %.sroa.011.015.i.i330, ptr %i.vk ; 3 uses
   %.1.i.i334 = select i1 %i.vj, i64 %i.vg, i64 %i.vm ; 2 uses
   %i.vn = icmp sgt i64 %.1.i.i334, 0
   br i1 %i.vn, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i328, label %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit335, !llvm.loop !5
@@ -1652,10 +1652,10 @@ _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_
   %i.ws = ptrtoint ptr %.sroa.011.1.i.i333 to i64
   %i.wt = sub i64 %i.ws, %i.vf
   %i.wu = ashr exact i64 %i.wt, 3                 ; 2 uses
-  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.wu, i64 %i.uy) ; 5 uses
-  %i.wv = icmp eq i64 %.sroa.speculated, 0
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.wu, i64 %i.uy) ; 4 uses
+  %i.wv = icmp eq ptr %.sroa.011.1.i.i333, %i.tr
   %i.ww = icmp uge i64 %i.wu, %i.uy
-  %or.cond191 = or i1 %i.ww, %i.wv
+  %or.cond191 = or i1 %i.wv, %i.ww
   br i1 %or.cond191, label %bb.cd, label %bb.ch
 
 bb.cd:                                            ; preds = %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit335
@@ -2058,7 +2058,7 @@ bb.f:                                             ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.am = shl nuw nsw i64 %i.ac, 3                ; 4 uses
   %i.an = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.am) #34
-          to label %.lr.ph274.preheader unwind label %bb.h ; 12 uses
+          to label %.lr.ph274.preheader unwind label %bb.h ; 13 uses
 
 .lr.ph274.preheader:                              ; preds = %bb.f
   %i.ao = getelementptr i8, ptr %i.an, i64 8
@@ -2127,7 +2127,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.by = xor i64 %i.bt, -1
   %i.bz = add nsw i64 %.016.i.i, %i.by
-  %.sroa.011.1.i.i = select i1 %i.bw, ptr %.sroa.011.015.i.i, ptr %i.bx ; 2 uses
+  %.sroa.011.1.i.i = select i1 %i.bw, ptr %.sroa.011.015.i.i, ptr %i.bx ; 3 uses
   %.1.i.i = select i1 %i.bw, i64 %i.bt, i64 %i.bz ; 2 uses
   %i.ca = icmp sgt i64 %.1.i.i, 0
   br i1 %i.ca, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit, !llvm.loop !5
@@ -2180,10 +2180,10 @@ _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_
   %i.cz = ptrtoint ptr %.sroa.011.1.i.i to i64
   %i.da = sub i64 %i.cz, %i.bs
   %i.db = ashr exact i64 %i.da, 3                 ; 2 uses
-  %.sroa.speculated208 = call i64 @llvm.umin.i64(i64 %i.db, i64 %i.bo) ; 5 uses
-  %i.dc = icmp eq i64 %.sroa.speculated208, 0
+  %.sroa.speculated208 = call i64 @llvm.umin.i64(i64 %i.db, i64 %i.bo) ; 4 uses
+  %i.dc = icmp eq ptr %.sroa.011.1.i.i, %i.an
   %i.dd = icmp uge i64 %i.db, %i.bo
-  %or.cond = or i1 %i.dd, %i.dc
+  %or.cond = or i1 %i.dc, %i.dd
   br i1 %or.cond, label %bb.i, label %bb.m
 
 bb.i:                                             ; preds = %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit
@@ -2443,7 +2443,7 @@ bb.ae:                                            ; preds = %.loopexit311
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.ga = shl nuw nsw i64 %i.fq, 3                ; 4 uses
   %i.gb = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ga) #34
-          to label %.lr.ph.preheader unwind label %bb.ag ; 12 uses
+          to label %.lr.ph.preheader unwind label %bb.ag ; 13 uses
 
 .lr.ph.preheader:                                 ; preds = %bb.ae
   %i.gc = getelementptr i8, ptr %i.gb, i64 8
@@ -2519,7 +2519,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hp, i64 8
   %i.ht = xor i64 %i.ho, -1
   %i.hu = add nsw i64 %.016.i.i134, %i.ht
-  %.sroa.011.1.i.i138 = select i1 %i.hr, ptr %.sroa.011.015.i.i135, ptr %i.hs ; 2 uses
+  %.sroa.011.1.i.i138 = select i1 %i.hr, ptr %.sroa.011.015.i.i135, ptr %i.hs ; 3 uses
   %.1.i.i139 = select i1 %i.hr, i64 %i.ho, i64 %i.hu ; 2 uses
   %i.hv = icmp sgt i64 %.1.i.i139, 0
   br i1 %i.hv, label %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEElEvRT_T0_St26random_access_iterator_tag.exit.i.i133, label %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit140, !llvm.loop !5
@@ -2578,10 +2578,10 @@ _ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_
   %i.ja = ptrtoint ptr %.sroa.011.1.i.i138 to i64
   %i.jb = sub i64 %i.ja, %i.hn
   %i.jc = ashr exact i64 %i.jb, 3                 ; 2 uses
-  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.jc, i64 %i.hj) ; 5 uses
-  %i.jd = icmp eq i64 %.sroa.speculated, 0
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.jc, i64 %i.hj) ; 4 uses
+  %i.jd = icmp eq ptr %.sroa.011.1.i.i138, %i.gb
   %i.je = icmp uge i64 %i.jc, %i.hj
-  %or.cond91 = or i1 %i.je, %i.jd
+  %or.cond91 = or i1 %i.jd, %i.je
   br i1 %or.cond91, label %bb.ah, label %bb.al
 
 bb.ah:                                            ; preds = %_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdET_S7_S7_RKT0_.exit140

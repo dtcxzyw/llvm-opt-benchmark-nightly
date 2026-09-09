@@ -205,8 +205,8 @@ bb.cc:                                            ; preds = %bb.cm
   %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.mp, 0
   br i1 %.not.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph937
 
-.loopexit.i.i.i.i.i.i.i.i:                        ; preds = %.preheader108.i.i.i.i.i.i.i.i, %bb.ce, %bb.cf, %bb.cg, %bb.ch, %bb.ci, %bb.cj, %bb.ck, %bb.cc, %bb.cn, %.preheader102.i.i.i.i.i.i.i.i
-  %.sroa.033.3.i.i.i.i.i.i.i.i = phi i32 [ %i.ox, %bb.ck ], [ %i.pp, %bb.cn ], [ %i.mn, %bb.cc ], [ 0, %.preheader102.i.i.i.i.i.i.i.i ], [ %i.nh, %bb.ce ], [ %i.no, %bb.cf ], [ %i.nv, %bb.cg ], [ %i.oc, %bb.ch ], [ %i.oj, %bb.ci ], [ %i.oq, %bb.cj ], [ %i.mq, %.preheader108.i.i.i.i.i.i.i.i ]
+.loopexit.i.i.i.i.i.i.i.i:                        ; preds = %.preheader108.i.i.i.i.i.i.i.i, %bb.ce, %bb.cf, %bb.cg, %bb.ch, %bb.ci, %bb.cj, %bb.ck, %bb.cc, %bb.cn
+  %.sroa.033.3.i.i.i.i.i.i.i.i = phi i32 [ %i.ox, %bb.ck ], [ %i.pp, %bb.cn ], [ %i.mn, %bb.cc ], [ %i.nh, %bb.ce ], [ %i.no, %bb.cf ], [ %i.nv, %bb.cg ], [ %i.oc, %bb.ch ], [ %i.oj, %bb.ci ], [ %i.oq, %bb.cj ], [ %i.mq, %.preheader108.i.i.i.i.i.i.i.i ]
   %i.mr = zext i32 %.sroa.033.3.i.i.i.i.i.i.i.i to i64
   %i.ms = shl nuw i64 %i.mr, 32
   br label %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i.i
@@ -347,11 +347,10 @@ bb.cl:                                            ; preds = %bb.bz, %thread-pre-
   %.sroa.27.1127.i.i.i.i.i.i.i.i.ph = phi i64 [ %.sroa.4.1.i.i.i.i.i, %bb.cl ], [ %i.mg, %bb.ca ]
   br label %.lr.ph129.i.i.i.i.i.i.i.i
 
-.preheader102.i.i.i.i.i.i.i.i:                    ; preds = %bb.cl, %bb.ca
-  %.sroa.27.0.ph.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.4.1.i.i.i.i.i, %bb.cl ], [ %i.mg, %bb.ca ] ; 2 uses
+.preheader102.i.i.i.i.i.i.i.i:                    ; preds = %bb.ca, %bb.cl
+  %.sroa.27.0.ph.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.4.1.i.i.i.i.i, %bb.cl ], [ %i.mg, %bb.ca ]
   %.sroa.03.0.ph.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.0.1.i.i.i.i.i, %bb.cl ], [ %i.mf, %bb.ca ]
-  %.not92.i.i.i.i.i.i.i.i938 = icmp eq i64 %.sroa.27.0.ph.i.i.i.i.i.i.i.i, 0
-  br i1 %.not92.i.i.i.i.i.i.i.i938, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph942
+  br label %.lr.ph942
 
 .lr.ph942:                                        ; preds = %.preheader102.i.i.i.i.i.i.i.i, %bb.cc
   %.sroa.03.0.i.i.i.i.i.i.i.i941 = phi ptr [ %i.ml, %bb.cc ], [ %.sroa.03.0.ph.i.i.i.i.i.i.i.i, %.preheader102.i.i.i.i.i.i.i.i ] ; 2 uses

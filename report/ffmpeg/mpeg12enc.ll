@@ -204,7 +204,7 @@ bb.ne:                                            ; preds = %bb.nc
 put_bits.exit271:                                 ; preds = %bb.nd, %bb.ne, %put_bits32.exit
   %.sink419 = phi i32 [ -8, %put_bits32.exit ], [ 24, %bb.ne ], [ 24, %bb.nd ]
   %.026.i.i269 = phi i32 [ 1345537027, %put_bits32.exit ], [ 3, %bb.ne ], [ 3, %bb.nd ] ; 3 uses
-  %i.bqr = add nsw i32 %.0.i.i.i.i266, %.sink419  ; 5 uses
+  %i.bqr = add nsw i32 %.0.i.i.i.i266, %.sink419  ; 4 uses
   store i32 %.026.i.i269, ptr %i.a, align 16, !tbaa !52
   store i32 %i.bqr, ptr %i.b, align 4, !tbaa !51
   %i.bqs = icmp sgt i32 %i.bqr, 1
@@ -226,10 +226,7 @@ bb.ng:                                            ; preds = %put_bits.exit271
 
 bb.nh:                                            ; preds = %bb.ng
   %i.brb = shl nuw i32 %.026.i.i269, %i.bqr
-  %1 = icmp eq i32 %i.bqr, 1
-  %2 = zext i1 %1 to i32
-  %3 = or i32 %i.brb, %2
-  %i.brc = tail call i32 @llvm.bswap.i32(i32 %3)
+  %i.brc = tail call i32 @llvm.bswap.i32(i32 %i.brb)
   store i32 %i.brc, ptr %i.bqw, align 1, !tbaa !9
   %i.brd = load ptr, ptr %i.aod, align 16, !tbaa !54
   %i.bre = getelementptr inbounds nuw i8, ptr %i.brd, i64 4

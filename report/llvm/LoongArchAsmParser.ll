@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.f
   %switch.selectcmp.i = icmp eq i8 %i.r, 49
   %switch.select.i = select i1 %switch.selectcmp.i, i32 32, i32 0
   %switch.selectcmp42.i = icmp eq i8 %i.r, 48
-  br i1 %switch.selectcmp42.i, label %.sink.split, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
+  br i1 %switch.selectcmp42.i, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 bb.j:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -236,7 +236,7 @@ bb.m:                                             ; preds = %bb.j
   %switch.selectcmp44.i = icmp eq i8 %i.ab, 49
   %switch.select45.i = select i1 %switch.selectcmp44.i, i32 76, i32 0
   %switch.selectcmp46.i = icmp eq i8 %i.ab, 48
-  br i1 %switch.selectcmp46.i, label %.sink.split, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
+  br i1 %switch.selectcmp46.i, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 bb.n:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -338,7 +338,7 @@ bb.aa:                                            ; preds = %bb.x
   %switch.selectcmp48.i = icmp eq i8 %i.bo, 49
   %switch.select49.i = select i1 %switch.selectcmp48.i, i32 112, i32 0
   %switch.selectcmp50.i = icmp eq i8 %i.bo, 48
-  br i1 %switch.selectcmp50.i, label %.sink.split, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
+  br i1 %switch.selectcmp50.i, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 bb.ab:                                            ; preds = %bb.r
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -375,7 +375,7 @@ bb.af:                                            ; preds = %bb.ac
   %switch.selectcmp52.i = icmp eq i8 %i.ca, 49
   %switch.select53.i = select i1 %switch.selectcmp52.i, i32 144, i32 0
   %switch.selectcmp54.i = icmp eq i8 %i.ca, 48
-  br i1 %switch.selectcmp54.i, label %.sink.split, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
+  br i1 %switch.selectcmp54.i, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21, label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
 
 bb.ag:                                            ; preds = %bb.a
   %i.cb = load i32, ptr %1, align 1
@@ -393,67 +393,73 @@ bb.ah:                                            ; preds = %bb.ag
 
 switch.lookup.i:                                  ; preds = %bb.c
   %narrow125.i = add nsw i8 %i.c, -47
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup57.i:                                ; preds = %bb.d
   %narrow124.i = add nsw i8 %i.f, -3
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup61.i:                                ; preds = %bb.g
   %narrow123.i = add nsw i8 %i.l, -37
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup65.i:                                ; preds = %bb.h
   %narrow122.i = add nsw i8 %i.o, -27
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup69.i:                                ; preds = %bb.k
   %narrow121.i = add nuw nsw i8 %i.v, 7
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup73.i:                                ; preds = %bb.l
   %narrow120.i = add nuw nsw i8 %i.y, 17
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup77.i:                                ; preds = %bb.o
   %narrow119.i = add nuw nsw i8 %i.af, 33
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup81.i:                                ; preds = %bb.q
   %narrow118.i = add nuw nsw i8 %i.ak, 65
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup85.i:                                ; preds = %bb.t
   %narrow117.i = add nsw i8 %i.as, -15
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup89.i:                                ; preds = %bb.v
   %narrow116.i = add nuw nsw i8 %i.ba, 29
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup93.i:                                ; preds = %bb.y
   %narrow115.i = add nuw nsw i8 %i.bi, 43
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup97.i:                                ; preds = %bb.z
   %narrow114.i = add nuw nsw i8 %i.bl, 53
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup101.i:                               ; preds = %bb.ad
   %narrow113.i = add nuw i8 %i.bu, 75
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup105.i:                               ; preds = %bb.ae
   %narrow112.i = add nuw i8 %i.bx, 85
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 switch.lookup109.i:                               ; preds = %bb.ah
   %narrow.i = add nsw i8 %i.cf, -7
-  br label %.sink.split
+  br label %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21
 
 _ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread: ; preds = %bb.ah, %bb.ae, %bb.ad, %bb.z, %bb.y, %bb.v, %bb.t, %bb.q, %bb.o, %bb.l, %bb.k, %bb.h, %bb.g, %bb.d, %bb.c, %bb.ag, %bb.r, %bb.s, %bb.u, %bb.w, %bb.x, %bb.ab, %bb.ac, %bb.e, %bb.f, %bb.j, %bb.n, %bb.p, %bb.b, %bb.a
   store i32 0, ptr %0, align 4, !tbaa !30
   br label %bb.ai
+
+_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21: ; preds = %switch.lookup85.i, %switch.lookup81.i, %switch.lookup105.i, %switch.lookup73.i, %switch.lookup89.i, %switch.lookup93.i, %switch.lookup97.i, %switch.lookup65.i, %switch.lookup.i, %switch.lookup109.i, %switch.lookup61.i, %switch.lookup101.i, %switch.lookup69.i, %switch.lookup57.i, %switch.lookup77.i, %bb.af, %bb.aa, %bb.i, %bb.m
+  %.sroa.041.0.i.ph.shrunk = phi i8 [ -113, %bb.af ], [ %narrow117.i, %switch.lookup85.i ], [ 31, %bb.i ], [ 111, %bb.aa ], [ %narrow119.i, %switch.lookup77.i ], [ %narrow124.i, %switch.lookup57.i ], [ %narrow121.i, %switch.lookup69.i ], [ %narrow113.i, %switch.lookup101.i ], [ %narrow123.i, %switch.lookup61.i ], [ %narrow.i, %switch.lookup109.i ], [ %narrow125.i, %switch.lookup.i ], [ %narrow122.i, %switch.lookup65.i ], [ %narrow114.i, %switch.lookup97.i ], [ %narrow115.i, %switch.lookup93.i ], [ %narrow116.i, %switch.lookup89.i ], [ %narrow120.i, %switch.lookup73.i ], [ %narrow112.i, %switch.lookup105.i ], [ %narrow118.i, %switch.lookup81.i ], [ 75, %bb.m ]
+  %.sroa.041.0.i.ph = zext i8 %.sroa.041.0.i.ph.shrunk to i32
+  store i32 %.sroa.041.0.i.ph, ptr %0, align 4, !tbaa !30
+  br label %bb.az
 
 _ZL17MatchRegisterNameN4llvm9StringRefE.exit:     ; preds = %bb.m, %bb.i, %bb.aa, %bb.af
   %.sroa.041.0.i = phi i32 [ %switch.select49.i, %bb.aa ], [ %switch.select.i, %bb.i ], [ %switch.select53.i, %bb.af ], [ %switch.select45.i, %bb.m ] ; 2 uses
@@ -617,15 +623,15 @@ switch.lookup24:                                  ; preds = %bb.ao
   %switch.load26 = load i8, ptr %switch.gep25, align 1
   br label %.sink.split
 
-.sink.split:                                      ; preds = %switch.lookup24, %switch.lookup, %switch.lookup34.i, %switch.lookup30.i, %switch.lookup26.i, %switch.lookup22.i, %switch.lookup.i15, %bb.ay, %bb.ax, %bb.am, %bb.al, %bb.m, %bb.i, %bb.aa, %bb.af, %switch.lookup77.i, %switch.lookup57.i, %switch.lookup69.i, %switch.lookup101.i, %switch.lookup61.i, %switch.lookup109.i, %switch.lookup.i, %switch.lookup65.i, %switch.lookup97.i, %switch.lookup93.i, %switch.lookup89.i, %switch.lookup73.i, %switch.lookup105.i, %switch.lookup81.i, %switch.lookup85.i
-  %.sroa.041.0.i.ph.shrunk.sink = phi i8 [ 75, %bb.m ], [ -113, %bb.af ], [ %narrow117.i, %switch.lookup85.i ], [ 31, %bb.i ], [ 111, %bb.aa ], [ %narrow119.i, %switch.lookup77.i ], [ %narrow124.i, %switch.lookup57.i ], [ %narrow121.i, %switch.lookup69.i ], [ %narrow113.i, %switch.lookup101.i ], [ %narrow123.i, %switch.lookup61.i ], [ %narrow.i, %switch.lookup109.i ], [ %narrow125.i, %switch.lookup.i ], [ %narrow122.i, %switch.lookup65.i ], [ %narrow114.i, %switch.lookup97.i ], [ %narrow115.i, %switch.lookup93.i ], [ %narrow116.i, %switch.lookup89.i ], [ %narrow120.i, %switch.lookup73.i ], [ %narrow112.i, %switch.lookup105.i ], [ %narrow118.i, %switch.lookup81.i ], [ 0, %bb.ay ], [ %narrow.i13, %switch.lookup34.i ], [ 45, %bb.ax ], [ %switch.load, %switch.lookup ], [ 46, %bb.am ], [ %switch.load26, %switch.lookup24 ], [ %narrow38.i, %switch.lookup26.i ], [ %narrow39.i, %switch.lookup22.i ], [ %narrow37.i, %switch.lookup30.i ], [ %narrow40.i, %switch.lookup.i15 ], [ 67, %bb.al ] ; 2 uses
-  %.sroa.041.0.i.ph.a = zext i8 %.sroa.041.0.i.ph.shrunk.sink to i32
+.sink.split:                                      ; preds = %switch.lookup24, %switch.lookup, %bb.al, %bb.am, %bb.ax, %bb.ay, %switch.lookup.i15, %switch.lookup22.i, %switch.lookup26.i, %switch.lookup30.i, %switch.lookup34.i
+  %.sroa.020.0.shrunk.i = phi i8 [ 0, %bb.ay ], [ %narrow.i13, %switch.lookup34.i ], [ 45, %bb.ax ], [ %switch.load, %switch.lookup ], [ 46, %bb.am ], [ %switch.load26, %switch.lookup24 ], [ %narrow38.i, %switch.lookup26.i ], [ %narrow39.i, %switch.lookup22.i ], [ %narrow37.i, %switch.lookup30.i ], [ %narrow40.i, %switch.lookup.i15 ], [ 67, %bb.al ] ; 2 uses
+  %.sroa.041.0.i.ph.a = zext nneg i8 %.sroa.020.0.shrunk.i to i32
   store i32 %.sroa.041.0.i.ph.a, ptr %0, align 4, !tbaa !30
-  %i.eg = icmp eq i8 %.sroa.041.0.i.ph.shrunk.sink, 0
+  %i.eg = icmp eq i8 %.sroa.020.0.shrunk.i, 0
   br label %bb.az
 
-bb.az:                                            ; preds = %.sink.split, %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
-  %3 = phi i1 [ false, %_ZL17MatchRegisterNameN4llvm9StringRefE.exit ], [ %i.eg, %.sink.split ]
+bb.az:                                            ; preds = %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21, %.sink.split, %_ZL17MatchRegisterNameN4llvm9StringRefE.exit
+  %3 = phi i1 [ false, %_ZL17MatchRegisterNameN4llvm9StringRefE.exit.thread21 ], [ %i.eg, %.sink.split ], [ false, %_ZL17MatchRegisterNameN4llvm9StringRefE.exit ]
   ret i1 %3
 }
 

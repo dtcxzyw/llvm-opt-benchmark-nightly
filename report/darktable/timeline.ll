@@ -202,54 +202,38 @@ bb.fi:                                            ; preds = %bb.fh
 bb.fj:                                            ; preds = %bb.fi
   %i.tg = getelementptr inbounds nuw i8, ptr %i.c, i64 176
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %10, ptr noundef nonnull align 8 dereferenceable(28) %i.tg, i64 28, i1 false), !tbaa.struct !77
-  br label %12
+  br label %bb.fl
 
 bb.fk:                                            ; preds = %bb.fi
   call fastcc void @_time_get_from_pos(ptr dead_on_unwind noalias writable align 4 %10, i32 noundef %i.tc, ptr noundef nonnull %i.c)
-  br label %12
+  br label %bb.fl
 
-12:                                               ; preds = %bb.fk, %bb.fj
-  %13 = load i32, ptr %10, align 8, !tbaa !80
-  %.not.i183 = icmp eq i32 %13, 0
-  br i1 %.not.i183, label %bb.fl, label %_time_compare.exit.thread
-
-bb.fl:                                            ; preds = %12
-  %14 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %i.th = load i32, ptr %14, align 4, !tbaa !81   ; 2 uses
-  %.not11.i.a = icmp eq i32 %i.th, 1
-  br i1 %.not11.i.a, label %bb.fm, label %15
-
-15:                                               ; preds = %bb.fl
-  %16 = add nsw i32 %i.th, -1
-  br label %_time_compare.exit
+bb.fl:                                            ; preds = %bb.fk, %bb.fj
+  %i.th = load i32, ptr %10, align 8, !tbaa !80
+  %.not11.i.a = icmp eq i32 %i.th, 0
+  br i1 %.not11.i.a, label %bb.fm, label %_time_compare.exit.thread
 
 bb.fm:                                            ; preds = %bb.fl
+  %12 = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %13 = load i32, ptr %12, align 4, !tbaa !81
+  %.not11.i = icmp eq i32 %13, 1
   %i.ti = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.tj = load i32, ptr %i.ti, align 8, !tbaa !82 ; 2 uses
+  %i.tj = load i32, ptr %i.ti, align 8
   %.not12.i = icmp eq i32 %i.tj, 1
-  br i1 %.not12.i, label %bb.fn, label %17
-
-17:                                               ; preds = %bb.fm
-  %18 = add nsw i32 %i.tj, -1
-  br label %_time_compare.exit
+  %or.cond188 = select i1 %.not11.i, i1 %.not12.i, i1 false
+  br i1 %or.cond188, label %bb.fn, label %_time_compare.exit.thread
 
 bb.fn:                                            ; preds = %bb.fm
-  %i.tk = getelementptr inbounds nuw i8, ptr %10, i64 12
-  %i.tl = load i32, ptr %i.tk, align 4, !tbaa !83
+  %14 = getelementptr inbounds nuw i8, ptr %10, i64 12
+  %15 = load i32, ptr %14, align 4, !tbaa !83
+  %.not13.i = icmp eq i32 %15, 0
+  %i.tk = getelementptr inbounds nuw i8, ptr %10, i64 16
+  %i.tl = load i32, ptr %i.tk, align 8
   %.not13.i.a = icmp eq i32 %i.tl, 0
-  br i1 %.not13.i.a, label %19, label %_time_compare.exit.thread
+  %or.cond191 = select i1 %.not13.i, i1 %.not13.i.a, i1 false
+  br i1 %or.cond191, label %bb.fo, label %_time_compare.exit.thread
 
-19:                                               ; preds = %bb.fn
-  %20 = getelementptr inbounds nuw i8, ptr %10, i64 16
-  %21 = load i32, ptr %20, align 8, !tbaa !84
-  br label %_time_compare.exit
-
-_time_compare.exit:                               ; preds = %15, %17, %19
-  %.0.i184 = phi i32 [ %21, %19 ], [ %16, %15 ], [ %18, %17 ]
-  %.not182 = icmp eq i32 %.0.i184, 0
-  br i1 %.not182, label %bb.fo, label %_time_compare.exit.thread
-
-_time_compare.exit.thread:                        ; preds = %bb.fn, %12, %_time_compare.exit
+_time_compare.exit.thread:                        ; preds = %bb.fm, %bb.fn, %bb.fl
   call void @dt_gui_gtk_set_source_rgb(ptr noundef %1, i32 noundef 24) #15
   %i.tm = load i32, ptr %i.tb, align 8, !tbaa !123
   %i.tn = sitofp reassoc nsz arcp contract afn i32 %i.tm to double
@@ -293,7 +277,7 @@ _time_compare.exit.thread:                        ; preds = %bb.fn, %12, %_time_
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
   br label %bb.fo
 
-bb.fo:                                            ; preds = %_time_compare.exit.thread, %_time_compare.exit
+bb.fo:                                            ; preds = %bb.fn, %_time_compare.exit.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #15
   br label %bb.fp
 
@@ -307,10 +291,10 @@ define internal noundef i32 @_lib_timeline_button_press_callback(ptr nofree read
 bb.a:
   %3 = alloca %struct.dt_datetime_t, align 4      ; 4 uses
   %4 = alloca %struct.dt_datetime_t, align 4      ; 4 uses
-  %5 = alloca %struct.dt_datetime_t, align 8      ; 10 uses
+  %5 = alloca %struct.dt_datetime_t, align 16     ; 6 uses
   %i.a = alloca [200 x i8], align 16              ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 288
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !18   ; 20 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !18   ; 18 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 52
   %i.e = load i32, ptr %i.d, align 4, !tbaa !159
   switch i32 %i.e, label %bb.m [
@@ -359,7 +343,7 @@ bb.e:                                             ; preds = %bb.c
   %or.cond48 = fcmp reassoc nsz arcp contract afn olt double %i.x, 2.000000e+00
   %i.y = fptosi double %i.i to i32                ; 4 uses
   store i32 %i.y, ptr %i.o, align 4, !tbaa !114
-  br i1 %or.cond48, label %bb.f, label %6
+  br i1 %or.cond48, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 176
@@ -371,72 +355,31 @@ bb.f:                                             ; preds = %bb.e
   store i32 1, ptr %i.aa, align 4, !tbaa !129
   br label %bb.h
 
-6:                                                ; preds = %bb.e
+bb.g:                                             ; preds = %bb.e
   store i32 %i.y, ptr %i.j, align 8, !tbaa !113
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   call fastcc void @_time_get_from_pos(ptr dead_on_unwind noalias writable align 4 %5, i32 noundef %i.y, ptr noundef nonnull %i.c)
-  %7 = load i32, ptr %5, align 8, !tbaa !80
-  %.not.i = icmp eq i32 %7, 0
-  br i1 %.not.i, label %8, label %_time_compare.exit.thread
-
-8:                                                ; preds = %6
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %10 = load i32, ptr %9, align 4, !tbaa !81      ; 2 uses
-  %.not11.i = icmp eq i32 %10, 1
-  br i1 %.not11.i, label %13, label %11
-
-11:                                               ; preds = %8
-  %12 = add nsw i32 %10, -1
-  br label %_time_compare.exit
-
-13:                                               ; preds = %8
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %15 = load i32, ptr %14, align 8, !tbaa !82     ; 2 uses
-  %.not12.i = icmp eq i32 %15, 1
-  br i1 %.not12.i, label %18, label %16
-
-16:                                               ; preds = %13
-  %17 = add nsw i32 %15, -1
-  br label %_time_compare.exit
-
-18:                                               ; preds = %13
-  %19 = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %20 = load i32, ptr %19, align 4, !tbaa !83
-  %.not13.i = icmp eq i32 %20, 0
-  br i1 %.not13.i, label %21, label %_time_compare.exit.thread
-
-21:                                               ; preds = %18
-  %22 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %23 = load i32, ptr %22, align 8, !tbaa !84
-  br label %_time_compare.exit
-
-_time_compare.exit:                               ; preds = %11, %16, %21
-  %.0.i = phi i32 [ %23, %21 ], [ %12, %11 ], [ %17, %16 ]
-  %24 = icmp eq i32 %.0.i, 0
-  br i1 %24, label %bb.g, label %_time_compare.exit.thread
-
-bb.g:                                             ; preds = %_time_compare.exit
+  %6 = load <4 x i32>, ptr %5, align 16
+  %.fr = freeze <4 x i32> %6
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %8 = load i32, ptr %7, align 16
+  %9 = icmp eq i32 %8, 0
+  %10 = icmp ne <4 x i32> %.fr, <i32 0, i32 1, i32 1, i32 0>
+  %11 = bitcast <4 x i1> %10 to i4
+  %12 = icmp eq i4 %11, 0
+  %op.rdx = select i1 %12, i1 %9, i1 false
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 148
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 176
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 28 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.ac, ptr noundef nonnull align 4 dereferenceable(28) %i.ad, i64 28, i1 false), !tbaa.struct !77
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.ab, ptr noundef nonnull align 4 dereferenceable(28) %i.ad, i64 28, i1 false)
-  br label %27
-
-_time_compare.exit.thread:                        ; preds = %18, %6, %_time_compare.exit
-  %25 = getelementptr inbounds nuw i8, ptr %i.c, i64 148
-  %26 = getelementptr inbounds nuw i8, ptr %i.c, i64 176
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %26, ptr noundef nonnull align 8 dereferenceable(28) %5, i64 28, i1 false), !tbaa.struct !77
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %25, ptr noundef nonnull align 8 dereferenceable(28) %5, i64 28, i1 false)
-  br label %27
-
-27:                                               ; preds = %_time_compare.exit.thread, %bb.g
-  %28 = getelementptr inbounds nuw i8, ptr %i.c, i64 212
-  store i32 0, ptr %28, align 4, !tbaa !129
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 28
+  %.sink59 = select i1 %op.rdx, ptr %i.ad, ptr %5 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.ac, ptr noundef nonnull align 4 dereferenceable(28) %.sink59, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.ab, ptr noundef nonnull align 4 dereferenceable(28) %.sink59, i64 28, i1 false)
+  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 212
+  store i32 0, ptr %13, align 4, !tbaa !129
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %27, %bb.d
+bb.h:                                             ; preds = %bb.f, %bb.g, %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %i.c, i64 208
   store i32 1, ptr %i.ae, align 8, !tbaa !121
   %i.af = getelementptr inbounds nuw i8, ptr %i.c, i64 204
@@ -479,9 +422,9 @@ bb.m:                                             ; preds = %bb.i, %bb.l, %bb.a,
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @_lib_timeline_button_release_callback(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) #1 {
 bb.a:
-  %3 = alloca %struct.dt_datetime_t, align 8      ; 9 uses
+  %3 = alloca %struct.dt_datetime_t, align 16     ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 288
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 14 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 208 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !121
   %.not = icmp eq i32 %i.d, 0
@@ -495,55 +438,25 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.g, ptr %i.h, align 4, !tbaa !114
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   call fastcc void @_time_get_from_pos(ptr dead_on_unwind noalias writable align 4 %3, i32 noundef %i.g, ptr noundef nonnull %i.b)
-  %i.i = load i32, ptr %3, align 8, !tbaa !80
-  %.not.i = icmp eq i32 %i.i, 0
-  br i1 %.not.i, label %4, label %_time_compare.exit.thread
+  %4 = load <4 x i32>, ptr %3, align 16
+  %.fr = freeze <4 x i32> %4
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.i = load i32, ptr %5, align 16
+  %6 = icmp eq i32 %i.i, 0
+  %7 = icmp ne <4 x i32> %.fr, <i32 0, i32 1, i32 1, i32 0>
+  %8 = bitcast <4 x i1> %7 to i4
+  %.not.i = icmp eq i4 %8, 0
+  %op.rdx = select i1 %.not.i, i1 %6, i1 false
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 176 ; 3 uses
+  br i1 %op.rdx, label %bb.c, label %_time_compare.exit.thread
 
-4:                                                ; preds = %bb.b
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %6 = load i32, ptr %5, align 4, !tbaa !81       ; 2 uses
-  %.not11.i = icmp eq i32 %6, 1
-  br i1 %.not11.i, label %9, label %7
-
-7:                                                ; preds = %4
-  %8 = add nsw i32 %6, -1
-  br label %_time_compare.exit
-
-9:                                                ; preds = %4
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %11 = load i32, ptr %10, align 8, !tbaa !82     ; 2 uses
-  %.not12.i = icmp eq i32 %11, 1
-  br i1 %.not12.i, label %14, label %12
-
-12:                                               ; preds = %9
-  %13 = add nsw i32 %11, -1
-  br label %_time_compare.exit
-
-14:                                               ; preds = %9
-  %15 = getelementptr inbounds nuw i8, ptr %3, i64 12
-  %16 = load i32, ptr %15, align 4, !tbaa !83
-  %.not13.i = icmp eq i32 %16, 0
-  br i1 %.not13.i, label %17, label %_time_compare.exit.thread
-
-17:                                               ; preds = %14
-  %18 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %19 = load i32, ptr %18, align 8, !tbaa !84
-  br label %_time_compare.exit
-
-_time_compare.exit:                               ; preds = %7, %12, %17
-  %.0.i = phi i32 [ %19, %17 ], [ %8, %7 ], [ %13, %12 ]
-  %20 = icmp eq i32 %.0.i, 0
-  br i1 %20, label %bb.c, label %_time_compare.exit.thread
-
-bb.c:                                             ; preds = %_time_compare.exit
-  %21 = getelementptr inbounds nuw i8, ptr %i.b, i64 176
+bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %21, ptr noundef nonnull align 4 dereferenceable(28) %i.j, i64 28, i1 false), !tbaa.struct !77
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %9, ptr noundef nonnull align 4 dereferenceable(28) %i.j, i64 28, i1 false), !tbaa.struct !77
   br label %bb.i
 
-_time_compare.exit.thread:                        ; preds = %14, %bb.b, %_time_compare.exit
-  %22 = getelementptr inbounds nuw i8, ptr %i.b, i64 176 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %22, ptr noundef nonnull align 8 dereferenceable(28) %3, i64 28, i1 false), !tbaa.struct !77
+_time_compare.exit.thread:                        ; preds = %bb.b
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %9, ptr noundef nonnull align 16 dereferenceable(28) %3, i64 28, i1 false), !tbaa.struct !77
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 128
   %i.l = load i32, ptr %i.k, align 8, !tbaa !73   ; 3 uses
   %i.m = icmp ult i32 %i.l, 5
@@ -576,7 +489,7 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.t = load i32, ptr %22, align 8, !tbaa !134   ; 3 uses
+  %i.t = load i32, ptr %9, align 8, !tbaa !134    ; 3 uses
   %i.u = and i32 %i.t, 3
   %i.v = icmp eq i32 %i.u, 0
   %i.w = srem i32 %i.t, 100
@@ -977,7 +890,7 @@ declare ptr @dt_action_register(ptr noundef, ptr noundef, ptr noundef, i32 nound
 ; Function Attrs: nounwind uwtable
 define internal void @_selection_start(ptr nofree noundef readonly captures(none) %0) #1 {
 bb.a:
-  %1 = alloca %struct.dt_datetime_t, align 8      ; 8 uses
+  %1 = alloca %struct.dt_datetime_t, align 16     ; 5 uses
   %2 = alloca %struct.dt_datetime_t, align 4      ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.a = load i32, ptr %0, align 8, !tbaa !137
@@ -995,64 +908,34 @@ bb.a:
 dt_action_lib.exit:                               ; preds = %.lr.ph.i, %bb.a
   %.06.i.lcssa = phi ptr [ %0, %bb.a ], [ %i.c, %.lr.ph.i ]
   %i.e = getelementptr inbounds nuw i8, ptr %.06.i.lcssa, i64 288
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !18   ; 13 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !18   ; 12 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 144
   %i.h = load i32, ptr %i.g, align 8, !tbaa !123  ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 136
   store i32 %i.h, ptr %i.i, align 8, !tbaa !113
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
   call fastcc void @_time_get_from_pos(ptr dead_on_unwind noalias writable align 4 %1, i32 noundef %i.h, ptr noundef %i.f)
-  %i.j = load i32, ptr %1, align 8, !tbaa !80
-  %.not.i17 = icmp eq i32 %i.j, 0
-  br i1 %.not.i17, label %3, label %_time_compare.exit.thread
+  %3 = load <4 x i32>, ptr %1, align 16
+  %.fr = freeze <4 x i32> %3
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.j = load i32, ptr %4, align 16
+  %5 = icmp eq i32 %i.j, 0
+  %6 = icmp ne <4 x i32> %.fr, <i32 0, i32 1, i32 1, i32 0>
+  %7 = bitcast <4 x i1> %6 to i4
+  %.not.i17 = icmp eq i4 %7, 0
+  %op.rdx = select i1 %.not.i17, i1 %5, i1 false
+  %8 = getelementptr inbounds nuw i8, ptr %i.f, i64 148 ; 2 uses
+  br i1 %op.rdx, label %bb.b, label %_time_compare.exit.thread
 
-3:                                                ; preds = %dt_action_lib.exit
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %5 = load i32, ptr %4, align 4, !tbaa !81       ; 2 uses
-  %.not11.i = icmp eq i32 %5, 1
-  br i1 %.not11.i, label %8, label %6
-
-6:                                                ; preds = %3
-  %7 = add nsw i32 %5, -1
-  br label %_time_compare.exit
-
-8:                                                ; preds = %3
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %10 = load i32, ptr %9, align 8, !tbaa !82      ; 2 uses
-  %.not12.i = icmp eq i32 %10, 1
-  br i1 %.not12.i, label %13, label %11
-
-11:                                               ; preds = %8
-  %12 = add nsw i32 %10, -1
-  br label %_time_compare.exit
-
-13:                                               ; preds = %8
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %15 = load i32, ptr %14, align 4, !tbaa !83
-  %.not13.i = icmp eq i32 %15, 0
-  br i1 %.not13.i, label %16, label %_time_compare.exit.thread
-
-16:                                               ; preds = %13
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %18 = load i32, ptr %17, align 8, !tbaa !84
-  br label %_time_compare.exit
-
-_time_compare.exit:                               ; preds = %6, %11, %16
-  %.0.i = phi i32 [ %18, %16 ], [ %7, %6 ], [ %12, %11 ]
-  %19 = icmp eq i32 %.0.i, 0
-  br i1 %19, label %bb.b, label %_time_compare.exit.thread
-
-bb.b:                                             ; preds = %_time_compare.exit
-  %20 = getelementptr inbounds nuw i8, ptr %i.f, i64 148
+bb.b:                                             ; preds = %dt_action_lib.exit
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %20, ptr noundef nonnull align 4 dereferenceable(28) %i.k, i64 28, i1 false), !tbaa.struct !77
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %8, ptr noundef nonnull align 4 dereferenceable(28) %i.k, i64 28, i1 false), !tbaa.struct !77
   br label %bb.c
 
-_time_compare.exit.thread:                        ; preds = %13, %dt_action_lib.exit, %_time_compare.exit
-  %21 = getelementptr inbounds nuw i8, ptr %i.f, i64 148
+_time_compare.exit.thread:                        ; preds = %dt_action_lib.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   call fastcc void @_time_get_from_pos(ptr dead_on_unwind noalias writable align 4 %2, i32 noundef %i.h, ptr noundef nonnull %i.f)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %21, ptr noundef nonnull align 4 dereferenceable(28) %2, i64 28, i1 false), !tbaa.struct !77
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %8, ptr noundef nonnull align 4 dereferenceable(28) %2, i64 28, i1 false), !tbaa.struct !77
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   br label %bb.c
 
@@ -1076,7 +959,7 @@ bb.c:                                             ; preds = %_time_compare.exit.
 ; Function Attrs: nounwind uwtable
 define internal void @_selection_stop(ptr nofree noundef readonly captures(none) %0) #1 {
 bb.a:
-  %1 = alloca %struct.dt_datetime_t, align 8      ; 9 uses
+  %1 = alloca %struct.dt_datetime_t, align 16     ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.a = load i32, ptr %0, align 8, !tbaa !137
   %.not4.i23 = icmp eq i32 %i.a, 3
@@ -1093,62 +976,32 @@ bb.a:
 dt_action_lib.exit:                               ; preds = %.lr.ph.i, %bb.a
   %.06.i.lcssa = phi ptr [ %0, %bb.a ], [ %i.c, %.lr.ph.i ]
   %i.e = getelementptr inbounds nuw i8, ptr %.06.i.lcssa, i64 288
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !18   ; 14 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !18   ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 144
   %i.h = load i32, ptr %i.g, align 8, !tbaa !123  ; 2 uses
   call fastcc void @_time_get_from_pos(ptr dead_on_unwind noalias writable align 4 %1, i32 noundef %i.h, ptr noundef %i.f)
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 140
   store i32 %i.h, ptr %i.i, align 4, !tbaa !114
-  %i.j = load i32, ptr %1, align 8, !tbaa !80
-  %.not.i19 = icmp eq i32 %i.j, 0
-  br i1 %.not.i19, label %2, label %_time_compare.exit.thread
+  %2 = load <4 x i32>, ptr %1, align 16
+  %.fr = freeze <4 x i32> %2
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.j = load i32, ptr %3, align 16
+  %4 = icmp eq i32 %i.j, 0
+  %5 = icmp ne <4 x i32> %.fr, <i32 0, i32 1, i32 1, i32 0>
+  %6 = bitcast <4 x i1> %5 to i4
+  %.not.i19 = icmp eq i4 %6, 0
+  %op.rdx = select i1 %.not.i19, i1 %4, i1 false
+  %7 = getelementptr inbounds nuw i8, ptr %i.f, i64 176 ; 3 uses
+  br i1 %op.rdx, label %bb.b, label %_time_compare.exit.thread
 
-2:                                                ; preds = %dt_action_lib.exit
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %4 = load i32, ptr %3, align 4, !tbaa !81       ; 2 uses
-  %.not11.i = icmp eq i32 %4, 1
-  br i1 %.not11.i, label %7, label %5
-
-5:                                                ; preds = %2
-  %6 = add nsw i32 %4, -1
-  br label %_time_compare.exit
-
-7:                                                ; preds = %2
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %9 = load i32, ptr %8, align 8, !tbaa !82       ; 2 uses
-  %.not12.i = icmp eq i32 %9, 1
-  br i1 %.not12.i, label %12, label %10
-
-10:                                               ; preds = %7
-  %11 = add nsw i32 %9, -1
-  br label %_time_compare.exit
-
-12:                                               ; preds = %7
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %14 = load i32, ptr %13, align 4, !tbaa !83
-  %.not13.i = icmp eq i32 %14, 0
-  br i1 %.not13.i, label %15, label %_time_compare.exit.thread
-
-15:                                               ; preds = %12
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %17 = load i32, ptr %16, align 8, !tbaa !84
-  br label %_time_compare.exit
-
-_time_compare.exit:                               ; preds = %5, %10, %15
-  %.0.i = phi i32 [ %17, %15 ], [ %6, %5 ], [ %11, %10 ]
-  %18 = icmp eq i32 %.0.i, 0
-  br i1 %18, label %bb.b, label %_time_compare.exit.thread
-
-bb.b:                                             ; preds = %_time_compare.exit
-  %19 = getelementptr inbounds nuw i8, ptr %i.f, i64 176
+bb.b:                                             ; preds = %dt_action_lib.exit
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %19, ptr noundef nonnull align 4 dereferenceable(28) %i.k, i64 28, i1 false), !tbaa.struct !77
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %7, ptr noundef nonnull align 4 dereferenceable(28) %i.k, i64 28, i1 false), !tbaa.struct !77
   br label %bb.h
 
-_time_compare.exit.thread:                        ; preds = %12, %dt_action_lib.exit, %_time_compare.exit
-  %20 = getelementptr inbounds nuw i8, ptr %i.f, i64 176 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %20, ptr noundef nonnull align 8 dereferenceable(28) %1, i64 28, i1 false), !tbaa.struct !77
+_time_compare.exit.thread:                        ; preds = %dt_action_lib.exit
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %7, ptr noundef nonnull align 16 dereferenceable(28) %1, i64 28, i1 false), !tbaa.struct !77
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 128
   %i.m = load i32, ptr %i.l, align 8, !tbaa !73   ; 3 uses
   %i.n = icmp ult i32 %i.m, 6
@@ -1181,7 +1034,7 @@ bb.e:                                             ; preds = %bb.d
   ]
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = load i32, ptr %20, align 8, !tbaa !134   ; 3 uses
+  %i.u = load i32, ptr %7, align 8, !tbaa !134    ; 3 uses
   %i.v = and i32 %i.u, 3
   %i.w = icmp eq i32 %i.v, 0
   %i.x = srem i32 %i.u, 100

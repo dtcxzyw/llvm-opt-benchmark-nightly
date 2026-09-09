@@ -205,11 +205,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph95
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3494, %i.h, !dbg !81558
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph95, !dbg !81558
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph95, !dbg !81558
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph95
-  %i.e = icmp eq i64 %i.b, %1, !dbg !81559
-  br label %.split31, !dbg !81556
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph95, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph95 ], [ %1, %.lr.ph35 ], !dbg !81554
+  %i.e = icmp eq i64 %.lcssa38, %1, !dbg !81559
+  br label %.split31, !dbg !81559
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !81555
@@ -219,15 +220,15 @@ bb.a:
   br i1 %i.g, label %.split31, label %.lr.ph95.preheader, !dbg !81556
 
 .lr.ph95.preheader:                               ; preds = %.lr.ph.us
-  %i.h = add nsw i64 %1, -2
+  %i.h = add nsw i64 %1, -2, !dbg !81558
   br label %.lr.ph95, !dbg !81556
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i8, ptr %0, align 1, !dbg !81556, !alias.scope !5791, !noalias !5790
   br label %.lr.ph, !dbg !81556
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.e, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81560
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.e, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81560
   ret i1 %.us-phi, !dbg !81560
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -506,11 +507,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph95
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3494, %i.h, !dbg !81605
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph95, !dbg !81605
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph95, !dbg !81605
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph95
-  %i.e = icmp eq i64 %i.b, %1, !dbg !81606
-  br label %.split31, !dbg !81603
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph95, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph95 ], [ %1, %.lr.ph35 ], !dbg !81601
+  %i.e = icmp eq i64 %.lcssa38, %1, !dbg !81606
+  br label %.split31, !dbg !81606
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !81602
@@ -520,15 +522,15 @@ bb.a:
   br i1 %i.g, label %.split31, label %.lr.ph95.preheader, !dbg !81603
 
 .lr.ph95.preheader:                               ; preds = %.lr.ph.us
-  %i.h = add nsw i64 %1, -2
+  %i.h = add nsw i64 %1, -2, !dbg !81605
   br label %.lr.ph95, !dbg !81603
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i8, ptr %0, align 1, !dbg !81603, !alias.scope !5790, !noalias !5791
   br label %.lr.ph, !dbg !81603
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.e, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81607
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.e, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81607
   ret i1 %.us-phi, !dbg !81607
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -810,11 +812,12 @@ bb.a:
 
 .lr.ph36:                                         ; preds = %.lr.ph94
   %exitcond45.not = icmp eq i64 %.sroa.02.123.us3593, %i.k, !dbg !81661
-  br i1 %exitcond45.not, label %.split31, label %.lr.ph94, !dbg !81661
+  br i1 %exitcond45.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph94, !dbg !81661
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph94
-  %i.g = icmp eq i64 %i.b, %1, !dbg !81662
-  br label %.split31, !dbg !81657
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph94, %.lr.ph36
+  %.lcssa39 = phi i64 [ %i.b, %.lr.ph94 ], [ %1, %.lr.ph36 ], !dbg !81654
+  %i.g = icmp eq i64 %.lcssa39, %1, !dbg !81662
+  br label %.split31, !dbg !81662
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !81655
@@ -826,15 +829,15 @@ bb.a:
   br i1 %.not2.i.i.i.i.us34, label %.split31, label %.lr.ph94.preheader, !dbg !81657
 
 .lr.ph94.preheader:                               ; preds = %.lr.ph.us
-  %i.k = add nsw i64 %1, -2
+  %i.k = add nsw i64 %1, -2, !dbg !81661
   br label %.lr.ph94, !dbg !81657
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load double, ptr %0, align 8, !dbg !81657, !alias.scope !5793, !noalias !5792
   br label %.lr.ph, !dbg !81657
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph36, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph36 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81663
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81663
   ret i1 %.us-phi, !dbg !81663
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -1116,11 +1119,12 @@ bb.a:
 
 .lr.ph36:                                         ; preds = %.lr.ph94
   %exitcond45.not = icmp eq i64 %.sroa.02.123.us3593, %i.k, !dbg !81714
-  br i1 %exitcond45.not, label %.split31, label %.lr.ph94, !dbg !81714
+  br i1 %exitcond45.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph94, !dbg !81714
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph94
-  %i.g = icmp eq i64 %i.b, %1, !dbg !81715
-  br label %.split31, !dbg !81710
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph94, %.lr.ph36
+  %.lcssa39 = phi i64 [ %i.b, %.lr.ph94 ], [ %1, %.lr.ph36 ], !dbg !81707
+  %i.g = icmp eq i64 %.lcssa39, %1, !dbg !81715
+  br label %.split31, !dbg !81715
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !81708
@@ -1132,15 +1136,15 @@ bb.a:
   br i1 %.not2.i.i.i.us34, label %.split31, label %.lr.ph94.preheader, !dbg !81710
 
 .lr.ph94.preheader:                               ; preds = %.lr.ph.us
-  %i.k = add nsw i64 %1, -2
+  %i.k = add nsw i64 %1, -2, !dbg !81714
   br label %.lr.ph94, !dbg !81710
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load double, ptr %0, align 8, !dbg !81710, !alias.scope !5792, !noalias !5793
   br label %.lr.ph, !dbg !81710
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph36, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph36 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81716
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81716
   ret i1 %.us-phi, !dbg !81716
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -1422,11 +1426,12 @@ bb.a:
 
 .lr.ph36:                                         ; preds = %.lr.ph94
   %exitcond45.not = icmp eq i64 %.sroa.02.123.us3593, %i.k, !dbg !81768
-  br i1 %exitcond45.not, label %.split31, label %.lr.ph94, !dbg !81768
+  br i1 %exitcond45.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph94, !dbg !81768
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph94
-  %i.g = icmp eq i64 %i.b, %1, !dbg !81769
-  br label %.split31, !dbg !81764
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph94, %.lr.ph36
+  %.lcssa39 = phi i64 [ %i.b, %.lr.ph94 ], [ %1, %.lr.ph36 ], !dbg !81761
+  %i.g = icmp eq i64 %.lcssa39, %1, !dbg !81769
+  br label %.split31, !dbg !81769
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !81762
@@ -1438,15 +1443,15 @@ bb.a:
   br i1 %.not2.i.i.i.i.us34, label %.split31, label %.lr.ph94.preheader, !dbg !81764
 
 .lr.ph94.preheader:                               ; preds = %.lr.ph.us
-  %i.k = add nsw i64 %1, -2
+  %i.k = add nsw i64 %1, -2, !dbg !81768
   br label %.lr.ph94, !dbg !81764
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load float, ptr %0, align 4, !dbg !81764, !alias.scope !5795, !noalias !5794
   br label %.lr.ph, !dbg !81764
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph36, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph36 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81770
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81770
   ret i1 %.us-phi, !dbg !81770
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -1728,11 +1733,12 @@ bb.a:
 
 .lr.ph36:                                         ; preds = %.lr.ph94
   %exitcond45.not = icmp eq i64 %.sroa.02.123.us3593, %i.k, !dbg !81821
-  br i1 %exitcond45.not, label %.split31, label %.lr.ph94, !dbg !81821
+  br i1 %exitcond45.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph94, !dbg !81821
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph94
-  %i.g = icmp eq i64 %i.b, %1, !dbg !81822
-  br label %.split31, !dbg !81817
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph94, %.lr.ph36
+  %.lcssa39 = phi i64 [ %i.b, %.lr.ph94 ], [ %1, %.lr.ph36 ], !dbg !81814
+  %i.g = icmp eq i64 %.lcssa39, %1, !dbg !81822
+  br label %.split31, !dbg !81822
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !81815
@@ -1744,15 +1750,15 @@ bb.a:
   br i1 %.not2.i.i.i.us34, label %.split31, label %.lr.ph94.preheader, !dbg !81817
 
 .lr.ph94.preheader:                               ; preds = %.lr.ph.us
-  %i.k = add nsw i64 %1, -2
+  %i.k = add nsw i64 %1, -2, !dbg !81821
   br label %.lr.ph94, !dbg !81817
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load float, ptr %0, align 4, !dbg !81817, !alias.scope !5794, !noalias !5795
   br label %.lr.ph, !dbg !81817
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph36, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph36 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81823
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81823
   ret i1 %.us-phi, !dbg !81823
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -2031,11 +2037,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph95
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3494, %i.h, !dbg !81866
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph95, !dbg !81866
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph95, !dbg !81866
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph95
-  %i.e = icmp eq i64 %i.b, %1, !dbg !81867
-  br label %.split31, !dbg !81864
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph95, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph95 ], [ %1, %.lr.ph35 ], !dbg !81862
+  %i.e = icmp eq i64 %.lcssa38, %1, !dbg !81867
+  br label %.split31, !dbg !81867
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !81863
@@ -2045,15 +2052,15 @@ bb.a:
   br i1 %i.g, label %.split31, label %.lr.ph95.preheader, !dbg !81864
 
 .lr.ph95.preheader:                               ; preds = %.lr.ph.us
-  %i.h = add nsw i64 %1, -2
+  %i.h = add nsw i64 %1, -2, !dbg !81866
   br label %.lr.ph95, !dbg !81864
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i8, ptr %0, align 1, !dbg !81864, !alias.scope !5797, !noalias !5796
   br label %.lr.ph, !dbg !81864
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.e, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81868
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.e, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81868
   ret i1 %.us-phi, !dbg !81868
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -2332,11 +2339,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph95
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3494, %i.h, !dbg !81913
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph95, !dbg !81913
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph95, !dbg !81913
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph95
-  %i.e = icmp eq i64 %i.b, %1, !dbg !81914
-  br label %.split31, !dbg !81911
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph95, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph95 ], [ %1, %.lr.ph35 ], !dbg !81909
+  %i.e = icmp eq i64 %.lcssa38, %1, !dbg !81914
+  br label %.split31, !dbg !81914
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !81910
@@ -2346,15 +2354,15 @@ bb.a:
   br i1 %i.g, label %.split31, label %.lr.ph95.preheader, !dbg !81911
 
 .lr.ph95.preheader:                               ; preds = %.lr.ph.us
-  %i.h = add nsw i64 %1, -2
+  %i.h = add nsw i64 %1, -2, !dbg !81913
   br label %.lr.ph95, !dbg !81911
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i8, ptr %0, align 1, !dbg !81911, !alias.scope !5796, !noalias !5797
   br label %.lr.ph, !dbg !81911
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.e, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81915
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.e, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81915
   ret i1 %.us-phi, !dbg !81915
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -2634,11 +2642,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !81960
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !81960
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !81960
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !81961
-  br label %.split31, !dbg !81958
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !81955
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !81961
+  br label %.split31, !dbg !81961
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !81956
@@ -2648,15 +2657,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !81958
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !81960
   br label %.lr.ph93, !dbg !81958
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i32, ptr %0, align 4, !dbg !81958, !alias.scope !5799, !noalias !5798
   br label %.lr.ph, !dbg !81958
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !81962
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !81962
   ret i1 %.us-phi, !dbg !81962
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -2926,11 +2935,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82005
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82005
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82005
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82006
-  br label %.split31, !dbg !82003
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82000
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82006
+  br label %.split31, !dbg !82006
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !82001
@@ -2940,15 +2950,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82003
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82005
   br label %.lr.ph93, !dbg !82003
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i32, ptr %0, align 4, !dbg !82003, !alias.scope !5798, !noalias !5799
   br label %.lr.ph, !dbg !82003
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82007
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82007
   ret i1 %.us-phi, !dbg !82007
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -3351,11 +3361,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82142
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82142
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82142
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82143
-  br label %.split31, !dbg !82140
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82137
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82143
+  br label %.split31, !dbg !82143
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !82138
@@ -3365,15 +3376,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82140
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82142
   br label %.lr.ph93, !dbg !82140
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i32, ptr %0, align 4, !dbg !82140, !alias.scope !5801, !noalias !5800
   br label %.lr.ph, !dbg !82140
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82144
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82144
   ret i1 %.us-phi, !dbg !82144
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -3776,11 +3787,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82274
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82274
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82274
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82275
-  br label %.split31, !dbg !82272
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82269
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82275
+  br label %.split31, !dbg !82275
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !82270
@@ -3790,15 +3802,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82272
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82274
   br label %.lr.ph93, !dbg !82272
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i32, ptr %0, align 4, !dbg !82272, !alias.scope !5800, !noalias !5801
   br label %.lr.ph, !dbg !82272
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82276
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82276
   ret i1 %.us-phi, !dbg !82276
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -4069,11 +4081,12 @@ bb.a:
 
 .lr.ph33:                                         ; preds = %.lr.ph91
   %exitcond42.not = icmp eq i64 %.sroa.02.121.us3290, %i.j, !dbg !82320
-  br i1 %exitcond42.not, label %.split29, label %.lr.ph91, !dbg !82320
+  br i1 %exitcond42.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph91, !dbg !82320
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph91
-  %i.g = icmp eq i64 %i.c, %1, !dbg !82321
-  br label %.split29, !dbg !82318
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph91, %.lr.ph33
+  %.lcssa36 = phi i64 [ %i.c, %.lr.ph91 ], [ %1, %.lr.ph33 ], !dbg !82315
+  %i.g = icmp eq i64 %.lcssa36, %1, !dbg !82321
+  br label %.split29, !dbg !82321
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !82316
@@ -4083,15 +4096,15 @@ bb.a:
   br i1 %i.i, label %.split29, label %.lr.ph91.preheader, !dbg !82318
 
 .lr.ph91.preheader:                               ; preds = %.lr.ph.us
-  %i.j = add nsw i64 %1, -2
+  %i.j = add nsw i64 %1, -2, !dbg !82320
   br label %.lr.ph91, !dbg !82318
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val17.pre = load i128, ptr %0, align 16, !dbg !82318, !alias.scope !5803, !noalias !5802
   br label %.lr.ph, !dbg !82318
 
-.split29:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph33, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph33 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82322
+.split29:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82322
   ret i1 %.us-phi, !dbg !82322
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -4377,11 +4390,12 @@ bb.a:
 
 .lr.ph33:                                         ; preds = %.lr.ph91
   %exitcond42.not = icmp eq i64 %.sroa.02.121.us3290, %i.j, !dbg !82370
-  br i1 %exitcond42.not, label %.split29, label %.lr.ph91, !dbg !82370
+  br i1 %exitcond42.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph91, !dbg !82370
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph91
-  %i.g = icmp eq i64 %i.c, %1, !dbg !82371
-  br label %.split29, !dbg !82368
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph91, %.lr.ph33
+  %.lcssa36 = phi i64 [ %i.c, %.lr.ph91 ], [ %1, %.lr.ph33 ], !dbg !82365
+  %i.g = icmp eq i64 %.lcssa36, %1, !dbg !82371
+  br label %.split29, !dbg !82371
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !82366
@@ -4391,15 +4405,15 @@ bb.a:
   br i1 %i.i, label %.split29, label %.lr.ph91.preheader, !dbg !82368
 
 .lr.ph91.preheader:                               ; preds = %.lr.ph.us
-  %i.j = add nsw i64 %1, -2
+  %i.j = add nsw i64 %1, -2, !dbg !82370
   br label %.lr.ph91, !dbg !82368
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val17.pre = load i128, ptr %0, align 16, !dbg !82368, !alias.scope !5802, !noalias !5803
   br label %.lr.ph, !dbg !82368
 
-.split29:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph33, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph33 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82372
+.split29:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82372
   ret i1 %.us-phi, !dbg !82372
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -4685,11 +4699,12 @@ bb.a:
 
 .lr.ph33:                                         ; preds = %.lr.ph91
   %exitcond42.not = icmp eq i64 %.sroa.02.121.us3290, %i.j, !dbg !82420
-  br i1 %exitcond42.not, label %.split29, label %.lr.ph91, !dbg !82420
+  br i1 %exitcond42.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph91, !dbg !82420
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph91
-  %i.g = icmp eq i64 %i.c, %1, !dbg !82421
-  br label %.split29, !dbg !82418
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph91, %.lr.ph33
+  %.lcssa36 = phi i64 [ %i.c, %.lr.ph91 ], [ %1, %.lr.ph33 ], !dbg !82415
+  %i.g = icmp eq i64 %.lcssa36, %1, !dbg !82421
+  br label %.split29, !dbg !82421
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !82416
@@ -4699,15 +4714,15 @@ bb.a:
   br i1 %i.i, label %.split29, label %.lr.ph91.preheader, !dbg !82418
 
 .lr.ph91.preheader:                               ; preds = %.lr.ph.us
-  %i.j = add nsw i64 %1, -2
+  %i.j = add nsw i64 %1, -2, !dbg !82420
   br label %.lr.ph91, !dbg !82418
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val17.pre = load i128, ptr %0, align 16, !dbg !82418, !alias.scope !5805, !noalias !5804
   br label %.lr.ph, !dbg !82418
 
-.split29:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph33, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph33 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82422
+.split29:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82422
   ret i1 %.us-phi, !dbg !82422
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -4993,11 +5008,12 @@ bb.a:
 
 .lr.ph33:                                         ; preds = %.lr.ph91
   %exitcond42.not = icmp eq i64 %.sroa.02.121.us3290, %i.j, !dbg !82470
-  br i1 %exitcond42.not, label %.split29, label %.lr.ph91, !dbg !82470
+  br i1 %exitcond42.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph91, !dbg !82470
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph91
-  %i.g = icmp eq i64 %i.c, %1, !dbg !82471
-  br label %.split29, !dbg !82468
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph91, %.lr.ph33
+  %.lcssa36 = phi i64 [ %i.c, %.lr.ph91 ], [ %1, %.lr.ph33 ], !dbg !82465
+  %i.g = icmp eq i64 %.lcssa36, %1, !dbg !82471
+  br label %.split29, !dbg !82471
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !82466
@@ -5007,15 +5023,15 @@ bb.a:
   br i1 %i.i, label %.split29, label %.lr.ph91.preheader, !dbg !82468
 
 .lr.ph91.preheader:                               ; preds = %.lr.ph.us
-  %i.j = add nsw i64 %1, -2
+  %i.j = add nsw i64 %1, -2, !dbg !82470
   br label %.lr.ph91, !dbg !82468
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val17.pre = load i128, ptr %0, align 16, !dbg !82468, !alias.scope !5804, !noalias !5805
   br label %.lr.ph, !dbg !82468
 
-.split29:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph33, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph33 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82472
+.split29:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.g, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82472
   ret i1 %.us-phi, !dbg !82472
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -5300,11 +5316,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82519
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82519
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82519
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82520
-  br label %.split31, !dbg !82517
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82514
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82520
+  br label %.split31, !dbg !82520
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2, !dbg !82515
@@ -5314,15 +5331,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82517
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82519
   br label %.lr.ph93, !dbg !82517
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i16, ptr %0, align 2, !dbg !82517, !alias.scope !5807, !noalias !5806
   br label %.lr.ph, !dbg !82517
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82521
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82521
   ret i1 %.us-phi, !dbg !82521
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -5592,11 +5609,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82564
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82564
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82564
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82565
-  br label %.split31, !dbg !82562
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82559
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82565
+  br label %.split31, !dbg !82565
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2, !dbg !82560
@@ -5606,15 +5624,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82562
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82564
   br label %.lr.ph93, !dbg !82562
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i16, ptr %0, align 2, !dbg !82562, !alias.scope !5806, !noalias !5807
   br label %.lr.ph, !dbg !82562
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82566
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82566
   ret i1 %.us-phi, !dbg !82566
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -5884,11 +5902,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82609
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82609
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82609
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82610
-  br label %.split31, !dbg !82607
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82604
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82610
+  br label %.split31, !dbg !82610
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2, !dbg !82605
@@ -5898,15 +5917,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82607
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82609
   br label %.lr.ph93, !dbg !82607
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i16, ptr %0, align 2, !dbg !82607, !alias.scope !5809, !noalias !5808
   br label %.lr.ph, !dbg !82607
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82611
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82611
   ret i1 %.us-phi, !dbg !82611
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -6176,11 +6195,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82654
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82654
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82654
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82655
-  br label %.split31, !dbg !82652
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82649
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82655
+  br label %.split31, !dbg !82655
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2, !dbg !82650
@@ -6190,15 +6210,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82652
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82654
   br label %.lr.ph93, !dbg !82652
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i16, ptr %0, align 2, !dbg !82652, !alias.scope !5808, !noalias !5809
   br label %.lr.ph, !dbg !82652
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82656
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82656
   ret i1 %.us-phi, !dbg !82656
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -6468,11 +6488,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82699
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82699
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82699
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82700
-  br label %.split31, !dbg !82697
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82694
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82700
+  br label %.split31, !dbg !82700
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !82695
@@ -6482,15 +6503,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82697
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82699
   br label %.lr.ph93, !dbg !82697
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i64, ptr %0, align 8, !dbg !82697, !alias.scope !5811, !noalias !5810
   br label %.lr.ph, !dbg !82697
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82701
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82701
   ret i1 %.us-phi, !dbg !82701
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -6760,11 +6781,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82744
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82744
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82744
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82745
-  br label %.split31, !dbg !82742
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82739
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82745
+  br label %.split31, !dbg !82745
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !82740
@@ -6774,15 +6796,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82742
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82744
   br label %.lr.ph93, !dbg !82742
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i64, ptr %0, align 8, !dbg !82742, !alias.scope !5810, !noalias !5811
   br label %.lr.ph, !dbg !82742
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82746
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82746
   ret i1 %.us-phi, !dbg !82746
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -7052,11 +7074,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82789
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82789
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82789
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82790
-  br label %.split31, !dbg !82787
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82784
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82790
+  br label %.split31, !dbg !82790
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !82785
@@ -7066,15 +7089,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82787
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82789
   br label %.lr.ph93, !dbg !82787
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i64, ptr %0, align 8, !dbg !82787, !alias.scope !5813, !noalias !5812
   br label %.lr.ph, !dbg !82787
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82791
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82791
   ret i1 %.us-phi, !dbg !82791
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -7344,11 +7367,12 @@ bb.a:
 
 .lr.ph35:                                         ; preds = %.lr.ph93
   %exitcond44.not = icmp eq i64 %.sroa.02.123.us3492, %i.i, !dbg !82834
-  br i1 %exitcond44.not, label %.split31, label %.lr.ph93, !dbg !82834
+  br i1 %exitcond44.not, label %.._crit_edge.us.loopexit_crit_edge, label %.lr.ph93, !dbg !82834
 
-.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93
-  %i.f = icmp eq i64 %i.b, %1, !dbg !82835
-  br label %.split31, !dbg !82832
+.._crit_edge.us.loopexit_crit_edge:               ; preds = %.lr.ph93, %.lr.ph35
+  %.lcssa38 = phi i64 [ %i.b, %.lr.ph93 ], [ %1, %.lr.ph35 ], !dbg !82829
+  %i.f = icmp eq i64 %.lcssa38, %1, !dbg !82835
+  br label %.split31, !dbg !82835
 
 .lr.ph.us:                                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !82830
@@ -7358,15 +7382,15 @@ bb.a:
   br i1 %i.h, label %.split31, label %.lr.ph93.preheader, !dbg !82832
 
 .lr.ph93.preheader:                               ; preds = %.lr.ph.us
-  %i.i = add nsw i64 %1, -2
+  %i.i = add nsw i64 %1, -2, !dbg !82834
   br label %.lr.ph93, !dbg !82832
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.val19.pre = load i64, ptr %0, align 8, !dbg !82832, !alias.scope !5812, !noalias !5813
   br label %.lr.ph, !dbg !82832
 
-.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %.lr.ph35, %.._crit_edge.us.loopexit_crit_edge, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us
-  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ true, %bb.q ], [ true, %._crit_edge ], [ true, %.lr.ph35 ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.g ], [ false, %bb.y ], [ true, %bb.l ], [ true, %bb.v ], [ false, %bb.z ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %bb.b ], !dbg !82836
+.split31:                                         ; preds = %bb.b, %bb.g, %bb.l, %bb.q, %bb.v, %bb.y, %bb.z, %._crit_edge, %._crit_edge.1, %._crit_edge.2, %._crit_edge.3, %._crit_edge.4, %.lr.ph.us, %.._crit_edge.us.loopexit_crit_edge
+  %.us-phi = phi i1 [ false, %.lr.ph.us ], [ %i.f, %.._crit_edge.us.loopexit_crit_edge ], [ true, %._crit_edge ], [ true, %bb.g ], [ true, %._crit_edge.1 ], [ true, %._crit_edge.4 ], [ true, %._crit_edge.2 ], [ true, %._crit_edge.3 ], [ true, %bb.l ], [ false, %bb.y ], [ true, %bb.q ], [ true, %bb.v ], [ false, %bb.z ], [ true, %bb.b ], !dbg !82836
   ret i1 %.us-phi, !dbg !82836
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b

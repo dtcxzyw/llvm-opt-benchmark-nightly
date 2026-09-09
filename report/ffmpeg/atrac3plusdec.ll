@@ -204,7 +204,7 @@ vector.body:                                      ; preds = %.loopexit2.i
   br i1 %exitcond69.not.i, label %decode_residual_spectrum.exit, label %bb.p, !llvm.loop !71
 
 decode_residual_spectrum.exit:                    ; preds = %.loopexit.i, %.preheader10.preheader.i, %bb.o
-  %wide.trip.count.i78.pre-phi = phi i64 [ %wide.trip.count54.i, %bb.o ], [ %.pre, %.preheader10.preheader.i ], [ %wide.trip.count54.i, %.loopexit.i ] ; 13 uses
+  %wide.trip.count.i78.pre-phi = phi i64 [ %wide.trip.count54.i, %bb.o ], [ %.pre, %.preheader10.preheader.i ], [ %wide.trip.count54.i, %.loopexit.i ] ; 9 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.la = load ptr, ptr %i.w, align 8, !tbaa !38
   %i.lb = getelementptr inbounds nuw [36848 x i8], ptr %i.la, i64 %indvars.iv107 ; 28 uses
@@ -351,89 +351,85 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   tail call void @ff_atrac3p_ipqf(ptr noundef %i.oh, ptr noundef %i.oi, ptr noundef nonnull %i.oj, ptr noundef nonnull %i.na, ptr noundef nonnull %i.ok) #6
   %indvars.iv.next16.i = add nuw nsw i64 %indvars.iv15.i, 1 ; 2 uses
   %exitcond.not.i83 = icmp eq i64 %indvars.iv.next16.i, %wide.trip.count.i78.pre-phi
-  br i1 %exitcond.not.i83, label %.preheader.i84, label %.preheader1.i79, !llvm.loop !74
+  br i1 %exitcond.not.i83, label %.preheader.i84.1.a, label %.preheader1.i79, !llvm.loop !74
 
-.preheader.i84:                                   ; preds = %.loopexit.i82
-  %4 = getelementptr inbounds nuw i8, ptr %i.lb, i64 4616 ; 2 uses
-  %5 = load <2 x ptr>, ptr %4, align 8, !tbaa !107
-  %6 = shufflevector <2 x ptr> %5, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %6, ptr %4, align 8, !tbaa !107
-  %7 = getelementptr inbounds nuw i8, ptr %i.lb, i64 6552 ; 2 uses
-  %8 = load <2 x ptr>, ptr %7, align 8, !tbaa !108
-  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %9, ptr %7, align 8, !tbaa !108
-  %10 = getelementptr inbounds nuw i8, ptr %i.lb, i64 7856 ; 2 uses
-  %11 = load <2 x ptr>, ptr %10, align 8, !tbaa !109
-  %12 = shufflevector <2 x ptr> %11, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %12, ptr %10, align 8, !tbaa !109
-  %exitcond22.not.i = icmp eq i64 %wide.trip.count.i78.pre-phi, 1
-  br i1 %exitcond22.not.i, label %reconstruct_frame.exit, label %.preheader.i84.1.a
-
-.preheader.i84.1.a:                               ; preds = %.preheader.i84
-  %i.ol = getelementptr inbounds nuw i8, ptr %i.lb, i64 12416 ; 2 uses
+.preheader.i84.1.a:                               ; preds = %.loopexit.i82
+  %i.ol = getelementptr inbounds nuw i8, ptr %i.lb, i64 4616 ; 2 uses
   %i.om = load <2 x ptr>, ptr %i.ol, align 8, !tbaa !107
   %i.on = shufflevector <2 x ptr> %i.om, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.on, ptr %i.ol, align 8, !tbaa !107
-  %i.oo = getelementptr inbounds nuw i8, ptr %i.lb, i64 14352 ; 2 uses
+  %i.oo = getelementptr inbounds nuw i8, ptr %i.lb, i64 6552 ; 2 uses
   %i.op = load <2 x ptr>, ptr %i.oo, align 8, !tbaa !108
   %i.oq = shufflevector <2 x ptr> %i.op, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.oq, ptr %i.oo, align 8, !tbaa !108
-  %i.or = getelementptr inbounds nuw i8, ptr %i.lb, i64 15656 ; 2 uses
+  %i.or = getelementptr inbounds nuw i8, ptr %i.lb, i64 7856 ; 2 uses
   %i.os = load <2 x ptr>, ptr %i.or, align 8, !tbaa !109
   %i.ot = shufflevector <2 x ptr> %i.os, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.ot, ptr %i.or, align 8, !tbaa !109
-  %exitcond22.not.i.1.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 2
+  %exitcond22.not.i.1.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 1
   br i1 %exitcond22.not.i.1.a, label %reconstruct_frame.exit, label %.preheader.i84.2.a
 
 .preheader.i84.2.a:                               ; preds = %.preheader.i84.1.a
-  %i.ou = getelementptr inbounds nuw i8, ptr %i.lb, i64 20216 ; 2 uses
+  %i.ou = getelementptr inbounds nuw i8, ptr %i.lb, i64 12416 ; 2 uses
   %i.ov = load <2 x ptr>, ptr %i.ou, align 8, !tbaa !107
   %i.ow = shufflevector <2 x ptr> %i.ov, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.ow, ptr %i.ou, align 8, !tbaa !107
-  %i.ox = getelementptr inbounds nuw i8, ptr %i.lb, i64 22152 ; 2 uses
+  %i.ox = getelementptr inbounds nuw i8, ptr %i.lb, i64 14352 ; 2 uses
   %i.oy = load <2 x ptr>, ptr %i.ox, align 8, !tbaa !108
   %i.oz = shufflevector <2 x ptr> %i.oy, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.oz, ptr %i.ox, align 8, !tbaa !108
-  %i.pa = getelementptr inbounds nuw i8, ptr %i.lb, i64 23456 ; 2 uses
+  %i.pa = getelementptr inbounds nuw i8, ptr %i.lb, i64 15656 ; 2 uses
   %i.pb = load <2 x ptr>, ptr %i.pa, align 8, !tbaa !109
   %i.pc = shufflevector <2 x ptr> %i.pb, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.pc, ptr %i.pa, align 8, !tbaa !109
-  %exitcond22.not.i.2.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 3
+  %exitcond22.not.i.2.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 2
   br i1 %exitcond22.not.i.2.a, label %reconstruct_frame.exit, label %.preheader.i84.3.a
 
 .preheader.i84.3.a:                               ; preds = %.preheader.i84.2.a
-  %i.pd = getelementptr inbounds nuw i8, ptr %i.lb, i64 28016 ; 2 uses
+  %i.pd = getelementptr inbounds nuw i8, ptr %i.lb, i64 20216 ; 2 uses
   %i.pe = load <2 x ptr>, ptr %i.pd, align 8, !tbaa !107
   %i.pf = shufflevector <2 x ptr> %i.pe, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.pf, ptr %i.pd, align 8, !tbaa !107
-  %i.pg = getelementptr inbounds nuw i8, ptr %i.lb, i64 29952 ; 2 uses
+  %i.pg = getelementptr inbounds nuw i8, ptr %i.lb, i64 22152 ; 2 uses
   %i.ph = load <2 x ptr>, ptr %i.pg, align 8, !tbaa !108
   %i.pi = shufflevector <2 x ptr> %i.ph, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.pi, ptr %i.pg, align 8, !tbaa !108
-  %i.pj = getelementptr inbounds nuw i8, ptr %i.lb, i64 31256 ; 2 uses
+  %i.pj = getelementptr inbounds nuw i8, ptr %i.lb, i64 23456 ; 2 uses
   %i.pk = load <2 x ptr>, ptr %i.pj, align 8, !tbaa !109
   %i.pl = shufflevector <2 x ptr> %i.pk, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.pl, ptr %i.pj, align 8, !tbaa !109
-  %exitcond22.not.i.3.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 4
+  %exitcond22.not.i.3.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 3
   br i1 %exitcond22.not.i.3.a, label %reconstruct_frame.exit, label %.preheader.i84.4.a
 
 .preheader.i84.4.a:                               ; preds = %.preheader.i84.3.a
-  %i.pm = getelementptr inbounds nuw i8, ptr %i.lb, i64 35816 ; 2 uses
+  %i.pm = getelementptr inbounds nuw i8, ptr %i.lb, i64 28016 ; 2 uses
   %i.pn = load <2 x ptr>, ptr %i.pm, align 8, !tbaa !107
   %i.po = shufflevector <2 x ptr> %i.pn, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.po, ptr %i.pm, align 8, !tbaa !107
-  %i.pp = getelementptr inbounds nuw i8, ptr %i.lb, i64 37752 ; 2 uses
+  %i.pp = getelementptr inbounds nuw i8, ptr %i.lb, i64 29952 ; 2 uses
   %i.pq = load <2 x ptr>, ptr %i.pp, align 8, !tbaa !108
   %i.pr = shufflevector <2 x ptr> %i.pq, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.pr, ptr %i.pp, align 8, !tbaa !108
-  %i.ps = getelementptr inbounds nuw i8, ptr %i.lb, i64 39056 ; 2 uses
+  %i.ps = getelementptr inbounds nuw i8, ptr %i.lb, i64 31256 ; 2 uses
   %i.pt = load <2 x ptr>, ptr %i.ps, align 8, !tbaa !109
   %i.pu = shufflevector <2 x ptr> %i.pt, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.pu, ptr %i.ps, align 8, !tbaa !109
-  %exitcond22.not.i.4 = icmp eq i64 %wide.trip.count.i78.pre-phi, 5
+  %exitcond22.not.i.4 = icmp eq i64 %wide.trip.count.i78.pre-phi, 4
   br i1 %exitcond22.not.i.4, label %reconstruct_frame.exit, label %.preheader.i84.5
 
 .preheader.i84.5:                                 ; preds = %.preheader.i84.4.a
+  %4 = getelementptr inbounds nuw i8, ptr %i.lb, i64 35816 ; 2 uses
+  %5 = load <2 x ptr>, ptr %4, align 8, !tbaa !107
+  %6 = shufflevector <2 x ptr> %5, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %6, ptr %4, align 8, !tbaa !107
+  %7 = getelementptr inbounds nuw i8, ptr %i.lb, i64 37752 ; 2 uses
+  %8 = load <2 x ptr>, ptr %7, align 8, !tbaa !108
+  %9 = shufflevector <2 x ptr> %8, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %9, ptr %7, align 8, !tbaa !108
+  %10 = getelementptr inbounds nuw i8, ptr %i.lb, i64 39056 ; 2 uses
+  %11 = load <2 x ptr>, ptr %10, align 8, !tbaa !109
+  %12 = shufflevector <2 x ptr> %11, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %12, ptr %10, align 8, !tbaa !109
   %i.pv = getelementptr inbounds nuw i8, ptr %i.lb, i64 43616 ; 2 uses
   %i.pw = load <2 x ptr>, ptr %i.pv, align 8, !tbaa !107
   %i.px = shufflevector <2 x ptr> %i.pw, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
@@ -443,28 +439,24 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.qa = shufflevector <2 x ptr> %i.pz, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.qa, ptr %i.py, align 8, !tbaa !108
   %i.qb = getelementptr inbounds nuw i8, ptr %i.lb, i64 46856 ; 2 uses
-  %i.qc = load <2 x ptr>, ptr %i.qb, align 8, !tbaa !109
+  %13 = load <2 x ptr>, ptr %i.qb, align 8, !tbaa !109
+  %14 = shufflevector <2 x ptr> %13, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %14, ptr %i.qb, align 8, !tbaa !109
+  %15 = getelementptr inbounds nuw i8, ptr %i.lb, i64 51416 ; 2 uses
+  %16 = load <2 x ptr>, ptr %15, align 8, !tbaa !107
+  %17 = shufflevector <2 x ptr> %16, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %17, ptr %15, align 8, !tbaa !107
+  %18 = getelementptr inbounds nuw i8, ptr %i.lb, i64 53352 ; 2 uses
+  %i.qc = load <2 x ptr>, ptr %18, align 8, !tbaa !108
   %i.qd = shufflevector <2 x ptr> %i.qc, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %i.qd, ptr %i.qb, align 8, !tbaa !109
-  %exitcond22.not.i.5 = icmp eq i64 %wide.trip.count.i78.pre-phi, 6
-  br i1 %exitcond22.not.i.5, label %reconstruct_frame.exit, label %.preheader.i84.6
-
-.preheader.i84.6:                                 ; preds = %.preheader.i84.5
-  %13 = getelementptr inbounds nuw i8, ptr %i.lb, i64 51416 ; 2 uses
-  %14 = load <2 x ptr>, ptr %13, align 8, !tbaa !107
-  %15 = shufflevector <2 x ptr> %14, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %15, ptr %13, align 8, !tbaa !107
-  %16 = getelementptr inbounds nuw i8, ptr %i.lb, i64 53352 ; 2 uses
-  %17 = load <2 x ptr>, ptr %16, align 8, !tbaa !108
-  %18 = shufflevector <2 x ptr> %17, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x ptr> %18, ptr %16, align 8, !tbaa !108
+  store <2 x ptr> %i.qd, ptr %18, align 8, !tbaa !108
   %19 = getelementptr inbounds nuw i8, ptr %i.lb, i64 54656 ; 2 uses
   %20 = load <2 x ptr>, ptr %19, align 8, !tbaa !109
   %21 = shufflevector <2 x ptr> %20, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %21, ptr %19, align 8, !tbaa !109
   br label %reconstruct_frame.exit
 
-reconstruct_frame.exit:                           ; preds = %.preheader.i84.6, %.preheader.i84.5, %.preheader.i84.4.a, %.preheader.i84.3.a, %.preheader.i84.2.a, %.preheader.i84.1.a, %.preheader.i84
+reconstruct_frame.exit:                           ; preds = %.preheader.i84.5, %.preheader.i84.4.a, %.preheader.i84.3.a, %.preheader.i84.2.a, %.preheader.i84.1.a
   %i.qe = load <2 x ptr>, ptr %i.lf, align 8, !tbaa !110
   %i.qf = shufflevector <2 x ptr> %i.qe, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
   store <2 x ptr> %i.qf, ptr %i.lf, align 8, !tbaa !110
@@ -477,57 +469,53 @@ reconstruct_frame.exit:                           ; preds = %.preheader.i84.6, %
   %i.qm = load ptr, ptr %i.ql, align 8, !tbaa !112
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.qm, ptr noundef nonnull align 16 dereferenceable(8192) %i.ah, i64 8192, i1 false)
   %exitcond.not = icmp eq i64 %wide.trip.count.i78.pre-phi, 1
-  br i1 %exitcond.not, label %bb.ab, label %22
+  br i1 %exitcond.not, label %bb.ab, label %bb.x
 
-22:                                               ; preds = %reconstruct_frame.exit
-  %23 = load ptr, ptr %i.ai, align 16, !tbaa !56
-  %24 = getelementptr inbounds nuw i8, ptr %23, i64 1
-  %25 = getelementptr inbounds nuw i8, ptr %24, i64 %i.qg
-  %26 = load i8, ptr %25, align 1, !tbaa !54
-  %27 = zext i8 %26 to i64
-  %28 = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %27
-  %29 = load ptr, ptr %28, align 8, !tbaa !112
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %29, ptr noundef nonnull align 16 dereferenceable(8192) %i.aj, i64 8192, i1 false)
-  %exitcond.not.1 = icmp eq i64 %wide.trip.count.i78.pre-phi, 2
-  br i1 %exitcond.not.1, label %bb.ab, label %bb.x
-
-bb.x:                                             ; preds = %22
+bb.x:                                             ; preds = %reconstruct_frame.exit
   %i.qn = load ptr, ptr %i.ai, align 16, !tbaa !56
-  %i.qo = getelementptr inbounds nuw i8, ptr %i.qn, i64 2
+  %i.qo = getelementptr inbounds nuw i8, ptr %i.qn, i64 1
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qo, i64 %i.qg
   %i.qq = load i8, ptr %i.qp, align 1, !tbaa !54
   %i.qr = zext i8 %i.qq to i64
   %i.qs = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.qr
   %i.qt = load ptr, ptr %i.qs, align 8, !tbaa !112
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.qt, ptr noundef nonnull align 16 dereferenceable(8192) %i.ak, i64 8192, i1 false)
-  %exitcond.not.2.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 3
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.qt, ptr noundef nonnull align 16 dereferenceable(8192) %i.aj, i64 8192, i1 false)
+  %exitcond.not.2.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 2
   br i1 %exitcond.not.2.a, label %bb.ab, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.qu = load ptr, ptr %i.ai, align 16, !tbaa !56
-  %i.qv = getelementptr inbounds nuw i8, ptr %i.qu, i64 3
+  %i.qv = getelementptr inbounds nuw i8, ptr %i.qu, i64 2
   %i.qw = getelementptr inbounds nuw i8, ptr %i.qv, i64 %i.qg
   %i.qx = load i8, ptr %i.qw, align 1, !tbaa !54
   %i.qy = zext i8 %i.qx to i64
   %i.qz = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.qy
   %i.ra = load ptr, ptr %i.qz, align 8, !tbaa !112
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.ra, ptr noundef nonnull align 16 dereferenceable(8192) %i.al, i64 8192, i1 false)
-  %exitcond.not.3.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 4
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.ra, ptr noundef nonnull align 16 dereferenceable(8192) %i.ak, i64 8192, i1 false)
+  %exitcond.not.3.a = icmp eq i64 %wide.trip.count.i78.pre-phi, 3
   br i1 %exitcond.not.3.a, label %bb.ab, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.rb = load ptr, ptr %i.ai, align 16, !tbaa !56
-  %i.rc = getelementptr inbounds nuw i8, ptr %i.rb, i64 4
+  %i.rc = getelementptr inbounds nuw i8, ptr %i.rb, i64 3
   %i.rd = getelementptr inbounds nuw i8, ptr %i.rc, i64 %i.qg
   %i.re = load i8, ptr %i.rd, align 1, !tbaa !54
   %i.rf = zext i8 %i.re to i64
   %i.rg = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.rf
   %i.rh = load ptr, ptr %i.rg, align 8, !tbaa !112
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.rh, ptr noundef nonnull align 16 dereferenceable(8192) %i.am, i64 8192, i1 false)
-  %exitcond.not.4 = icmp eq i64 %wide.trip.count.i78.pre-phi, 5
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.rh, ptr noundef nonnull align 16 dereferenceable(8192) %i.al, i64 8192, i1 false)
+  %exitcond.not.4 = icmp eq i64 %wide.trip.count.i78.pre-phi, 4
   br i1 %exitcond.not.4, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
+  %22 = load ptr, ptr %i.ai, align 16, !tbaa !56
+  %23 = getelementptr inbounds nuw i8, ptr %22, i64 4
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 %i.qg
+  %25 = load i8, ptr %24, align 1, !tbaa !54
+  %26 = zext i8 %25 to i64
+  %27 = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %26
+  %28 = load ptr, ptr %27, align 8, !tbaa !112
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %28, ptr noundef nonnull align 16 dereferenceable(8192) %i.am, i64 8192, i1 false)
   %i.ri = load ptr, ptr %i.ai, align 16, !tbaa !56
   %i.rj = getelementptr inbounds nuw i8, ptr %i.ri, i64 5
   %i.rk = getelementptr inbounds nuw i8, ptr %i.rj, i64 %i.qg
@@ -536,21 +524,17 @@ bb.aa:                                            ; preds = %bb.z
   %i.rn = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.rm
   %i.ro = load ptr, ptr %i.rn, align 8, !tbaa !112
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.ro, ptr noundef nonnull align 16 dereferenceable(8192) %i.an, i64 8192, i1 false)
-  %exitcond.not.5 = icmp eq i64 %wide.trip.count.i78.pre-phi, 6
-  br i1 %exitcond.not.5, label %bb.ab, label %30
-
-30:                                               ; preds = %bb.aa
-  %31 = load ptr, ptr %i.ai, align 16, !tbaa !56
-  %32 = getelementptr inbounds nuw i8, ptr %31, i64 6
-  %33 = getelementptr inbounds nuw i8, ptr %32, i64 %i.qg
-  %34 = load i8, ptr %33, align 1, !tbaa !54
-  %35 = zext i8 %34 to i64
-  %36 = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %35
-  %37 = load ptr, ptr %36, align 8, !tbaa !112
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %37, ptr noundef nonnull align 16 dereferenceable(8192) %i.ao, i64 8192, i1 false)
+  %29 = load ptr, ptr %i.ai, align 16, !tbaa !56
+  %30 = getelementptr inbounds nuw i8, ptr %29, i64 6
+  %31 = getelementptr inbounds nuw i8, ptr %30, i64 %i.qg
+  %32 = load i8, ptr %31, align 1, !tbaa !54
+  %33 = zext i8 %32 to i64
+  %34 = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %33
+  %35 = load ptr, ptr %34, align 8, !tbaa !112
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %35, ptr noundef nonnull align 16 dereferenceable(8192) %i.ao, i64 8192, i1 false)
   br label %bb.ab
 
-bb.ab:                                            ; preds = %30, %bb.aa, %bb.z, %bb.y, %bb.x, %22, %reconstruct_frame.exit
+bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y, %bb.x, %reconstruct_frame.exit
   %indvars.iv.next108 = add nuw nsw i64 %indvars.iv107, 1
   %i.rp = add nuw nsw i32 %i.bi, %.099
   %.val = load i32, ptr %i.s, align 8, !tbaa !88  ; 2 uses

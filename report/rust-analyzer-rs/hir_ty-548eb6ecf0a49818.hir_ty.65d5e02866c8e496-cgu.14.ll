@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %_RNvYNtNtCs8K4cjrcx
   %i.k = icmp ne i8 %.val2.i.i, 4
   tail call void @llvm.assume(i1 %i.k)
   %i.l = add nsw i8 %.val2.i.i, -2
-  %.inv4.i.i.i = icmp samesign ult i8 %.val2.i.i, 2
+  %.inv4.i.i.i = icmp samesign ult i8 %.val2.i.i, 2 ; 2 uses
   %narrow3.i.i.i = select i1 %.inv4.i.i.i, i8 2, i8 %i.l
   %i.m = icmp eq i8 %narrow.i.i.i, %narrow3.i.i.i
   br i1 %i.m, label %bb.c, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %_RNvYNtNtCs8K4cjrcx
 bb.c:                                             ; preds = %.lr.ph
   switch i8 %narrow.i.i.i, label %bb.d [
     i8 1, label %bb.e
-    i8 2, label %bb.g
+    i8 2, label %3
     i8 3, label %bb.m
     i8 0, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit
   ]
@@ -222,26 +222,25 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c
   unreachable
 
+3:                                                ; preds = %bb.c
+  br i1 %.inv4.i.i.i, label %bb.g, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit
+
 bb.e:                                             ; preds = %bb.c
-  %.not.i.i.i = icmp eq i8 %.val1.i.i, 2
+  %.not.i.i.i = icmp eq i8 %.val1.i.i, 2          ; 2 uses
   %i.n = icmp eq i8 %.val3.i.i, 2                 ; 2 uses
-  br i1 %.not.i.i.i, label %4, label %3
+  %brmerge6.i.i.i = select i1 %.not.i.i.i, i1 true, i1 %i.n
+  %.mux.i.i.i = select i1 %.not.i.i.i, i1 %i.n, i1 false
+  br i1 %brmerge6.i.i.i, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit, label %bb.f
 
-3:                                                ; preds = %bb.e
-  br i1 %i.n, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread, label %bb.f
-
-4:                                                ; preds = %bb.e
-  %5 = zext i1 %i.n to i8
-  br label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit
-
-bb.f:                                             ; preds = %3
+bb.f:                                             ; preds = %bb.e
   %i.o = xor i8 %.val3.i.i, %.val1.i.i
-  %6 = xor i8 %i.o, 1
+  %4 = trunc i8 %i.o to i1
+  %5 = xor i1 %4, true
   br label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit
 
-bb.g:                                             ; preds = %bb.c
+bb.g:                                             ; preds = %3
   %i.p = icmp eq i8 %.val.i.i, %.val2.i.i
-  br i1 %i.p, label %bb.h, label %_RNvXs1y_NtCs8K4cjrcxBsw_6hir_ty5inferNtB6_10AutoBorrowNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i
+  br i1 %i.p, label %bb.h, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.q = trunc nuw i8 %.val.i.i to i1
@@ -249,63 +248,53 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.r = icmp eq i8 %.val1.i.i, %.val3.i.i
-  br label %_RNvXs1y_NtCs8K4cjrcxBsw_6hir_ty5inferNtB6_10AutoBorrowNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i
+  br label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit
 
 bb.j:                                             ; preds = %bb.h
   %i.s = icmp eq i8 %.val1.i.i, 2                 ; 2 uses
   %i.t = icmp eq i8 %.val3.i.i, 2                 ; 2 uses
   %i.u = xor i1 %i.s, %i.t
-  br i1 %i.u, label %_RNvXs1y_NtCs8K4cjrcxBsw_6hir_ty5inferNtB6_10AutoBorrowNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i, label %bb.k
+  br i1 %i.u, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %or.cond.i.i.i.i = or i1 %i.s, %i.t
-  br i1 %or.cond.i.i.i.i, label %_RNvXs1y_NtCs8K4cjrcxBsw_6hir_ty5inferNtB6_10AutoBorrowNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i, label %bb.l
+  br i1 %or.cond.i.i.i.i, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.v = xor i8 %.val3.i.i, %.val1.i.i
   %i.w = trunc i8 %i.v to i1
   %i.x = xor i1 %i.w, true
-  br label %_RNvXs1y_NtCs8K4cjrcxBsw_6hir_ty5inferNtB6_10AutoBorrowNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i
-
-_RNvXs1y_NtCs8K4cjrcxBsw_6hir_ty5inferNtB6_10AutoBorrowNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i: ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.g
-  %.sroa.0.0.i.i.i.i = phi i1 [ %i.r, %bb.i ], [ false, %bb.j ], [ %i.x, %bb.l ], [ false, %bb.g ], [ true, %bb.k ]
-  %7 = zext i1 %.sroa.0.0.i.i.i.i to i8
   br label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit
 
 bb.m:                                             ; preds = %bb.c
   %i.y = icmp ne i8 %.val1.i.i, 4
   tail call void @llvm.assume(i1 %i.y)
-  %8 = add nsw i8 %.val1.i.i, -2
-  %.inv6.i.i.i = icmp samesign ult i8 %.val1.i.i, 2
-  %narrow5.i.i.i = select i1 %.inv6.i.i.i, i8 2, i8 %8 ; 2 uses
-  %9 = icmp ne i8 %.val3.i.i, 4
-  tail call void @llvm.assume(i1 %9)
-  %10 = add nsw i8 %.val3.i.i, -2
+  %.inv6.i.i.i = icmp samesign ugt i8 %.val1.i.i, 1 ; 2 uses
+  %6 = icmp ne i8 %.val3.i.i, 4
+  tail call void @llvm.assume(i1 %6)
   %.inv8.i.i.i = icmp samesign ult i8 %.val3.i.i, 2
-  %narrow7.i.i.i = select i1 %.inv8.i.i.i, i8 2, i8 %10
-  %11 = icmp eq i8 %narrow5.i.i.i, %narrow7.i.i.i
-  br i1 %11, label %12, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
+  %7 = select i1 %.inv6.i.i.i, i8 %.val1.i.i, i8 4
+  %8 = select i1 %.inv8.i.i.i, i8 4, i8 %.val3.i.i
+  %9 = icmp ne i8 %7, %8                          ; 2 uses
+  %brmerge.i.i.i = or i1 %.inv6.i.i.i, %9
+  %not..i.i.i = xor i1 %9, true
+  br i1 %brmerge.i.i.i, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit, label %bb.n
 
-12:                                               ; preds = %bb.m
-  %13 = icmp eq i8 %narrow5.i.i.i, 2
-  br i1 %13, label %bb.n, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit
-
-bb.n:                                             ; preds = %12
-  %14 = xor i8 %.val3.i.i, %.val1.i.i
-  %15 = xor i8 %14, 1
+bb.n:                                             ; preds = %bb.m
+  %10 = and i8 %.val3.i.i, 1
+  %11 = icmp eq i8 %.val1.i.i, %10
   br label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit
 
-_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit: ; preds = %bb.c, %4, %bb.f, %_RNvXs1y_NtCs8K4cjrcxBsw_6hir_ty5inferNtB6_10AutoBorrowNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i, %12, %bb.n
-  %.sroa.0.0.i.i.i = phi i8 [ %6, %bb.f ], [ 1, %bb.c ], [ %5, %4 ], [ 1, %12 ], [ %7, %_RNvXs1y_NtCs8K4cjrcxBsw_6hir_ty5inferNtB6_10AutoBorrowNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i ], [ %15, %bb.n ]
-  %16 = trunc i8 %.sroa.0.0.i.i.i to i1
+_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit: ; preds = %bb.c, %3, %bb.e, %bb.f, %bb.i, %bb.k, %bb.l, %bb.m, %bb.n
+  %.sroa.0.0.i.i.i = phi i1 [ %5, %bb.f ], [ true, %bb.c ], [ %i.x, %bb.l ], [ true, %3 ], [ %i.r, %bb.i ], [ %11, %bb.n ], [ %not..i.i.i, %bb.m ], [ %.mux.i.i.i, %bb.e ], [ true, %bb.k ]
   %i.z = load ptr, ptr %i.c, align 8, !alias.scope !9886, !noalias !9887, !nonnull !9
   %i.aa = load ptr, ptr %i.d, align 8, !alias.scope !9887, !noalias !9886, !nonnull !9
   %i.ab = icmp eq ptr %i.z, %i.aa
-  %.sroa.0.0.i.i.not = select i1 %16, i1 %i.ab, i1 false
+  %.sroa.0.0.i.i.not = select i1 %.sroa.0.0.i.i.i, i1 %i.ab, i1 false
   br i1 %.sroa.0.0.i.i.not, label %bb.b, label %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
 
-_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread: ; preds = %bb.b, %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit, %.lr.ph, %bb.m, %3, %bb.a
-  %.lcssa = phi i1 [ true, %bb.a ], [ false, %3 ], [ false, %bb.m ], [ false, %.lr.ph ], [ false, %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit ], [ true, %bb.b ]
+_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread: ; preds = %bb.b, %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit, %.lr.ph, %bb.g, %bb.j, %bb.a
+  %.lcssa = phi i1 [ true, %bb.a ], [ false, %bb.j ], [ false, %bb.g ], [ false, %.lr.ph ], [ false, %_RNvYNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit ], [ true, %bb.b ]
   ret i1 %.lcssa
 }
 

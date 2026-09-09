@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
   %i.q = icmp ne i64 %.sroa.023.0.copyload, 4
   tail call void @llvm.assume(i1 %i.q)
   %i.r = add i64 %.sroa.023.0.copyload, -2
-  %.inv = icmp ult i64 %.sroa.023.0.copyload, 2
-  %i.s = select i1 %.inv, i64 2, i64 %i.r         ; 2 uses
+  %.inv = icmp ult i64 %.sroa.023.0.copyload, 2   ; 2 uses
+  %i.s = select i1 %.inv, i64 2, i64 %i.r
   switch i64 %i.s, label %bb.e [
     i64 0, label %bb.i
     i64 4, label %bb.i
@@ -274,16 +274,12 @@ _RNvXsf_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7controlNtB5
   store i64 %.sroa.0.0.i, ptr %1, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %.sroa.5.0.i, ptr %i.ac, align 8
-  %2 = icmp eq i64 %i.s, 2
-  br i1 %2, label %3, label %bb.i
-
-3:                                                ; preds = %_RNvXsf_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7controlNtB5_12ControlFrameNtB5_16ControlFrameBase8fuel_pos.exit
-  %4 = icmp eq i64 %.sroa.525.0.copyload, 0
-  %5 = zext i1 %4 to i8
   br label %bb.i
 
-bb.i:                                             ; preds = %_RNvXsf_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7controlNtB5_12ControlFrameNtB5_16ControlFrameBase8fuel_pos.exit, %bb.c, %bb.c, %3
-  %.sroa.012.0 = phi i8 [ %5, %3 ], [ 0, %bb.c ], [ 0, %bb.c ], [ 0, %_RNvXsf_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7controlNtB5_12ControlFrameNtB5_16ControlFrameBase8fuel_pos.exit ]
+bb.i:                                             ; preds = %bb.c, %bb.c, %_RNvXsf_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7controlNtB5_12ControlFrameNtB5_16ControlFrameBase8fuel_pos.exit
+  %2 = icmp eq i64 %.sroa.525.0.copyload, 0
+  %narrow = select i1 %.inv, i1 %2, i1 false
+  %.sroa.012.0 = zext i1 %narrow to i8
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 88
   store i8 %.sroa.012.0, ptr %i.ad, align 8
   store <2 x i64> %i.o, ptr %0, align 8

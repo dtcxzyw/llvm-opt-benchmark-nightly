@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %thread-pre-split
   %i.g = icmp samesign ult i64 %2, 17
   br i1 %i.g, label %.lr.ph140, label %.lr.ph
 
-.loopexit:                                        ; preds = %bb.j, %bb.m, %bb.s, %bb.v, %.preheader
-  %.sroa.084.1 = phi i64 [ %i.ai, %bb.m ], [ %i.bl, %bb.v ], [ %i.ba, %bb.s ], [ 0, %.preheader ], [ %i.x, %bb.j ]
+.loopexit:                                        ; preds = %bb.j, %bb.m, %bb.s, %bb.v
+  %.sroa.084.1 = phi i64 [ %i.ai, %bb.m ], [ %i.bl, %bb.v ], [ %i.ba, %bb.s ], [ %i.x, %bb.j ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.084.1, ptr %i.h, align 8
   br label %bb.b
@@ -284,14 +284,10 @@ bb.n:                                             ; preds = %.lr.ph140
   br label %bb.b
 
 bb.o:                                             ; preds = %bb.c, %bb.e, %thread-pre-split
-  %.sroa.26.0 = phi i64 [ %i.d, %bb.e ], [ %2, %thread-pre-split ], [ %2, %bb.c ] ; 4 uses
+  %.sroa.26.0 = phi i64 [ %i.d, %bb.e ], [ %2, %thread-pre-split ], [ %2, %bb.c ] ; 3 uses
   %.sroa.0.0 = phi ptr [ %i.c, %bb.e ], [ %1, %thread-pre-split ], [ %1, %bb.c ] ; 2 uses
   %i.ak = icmp samesign ult i64 %.sroa.26.0, 16
-  br i1 %i.ak, label %.preheader, label %.preheader110
-
-.preheader:                                       ; preds = %bb.o
-  %.not104145 = icmp eq i64 %.sroa.26.0, 0
-  br i1 %.not104145, label %.loopexit, label %.lr.ph149
+  br i1 %i.ak, label %.lr.ph149, label %.preheader110
 
 .preheader110:                                    ; preds = %bb.o, %bb.s
   %.sroa.0.3144 = phi ptr [ %i.al, %bb.s ], [ %.sroa.0.0, %bb.o ] ; 2 uses
@@ -342,10 +338,10 @@ bb.u:                                             ; preds = %bb.q
   store i8 2, ptr %i.bc, align 1
   br label %bb.b
 
-.lr.ph149:                                        ; preds = %.preheader, %bb.v
-  %.sroa.0.4148 = phi ptr [ %i.bj, %bb.v ], [ %.sroa.0.0, %.preheader ] ; 2 uses
-  %.sroa.26.4147 = phi i64 [ %i.bi, %bb.v ], [ %.sroa.26.0, %.preheader ]
-  %.sroa.084.4146 = phi i64 [ %i.bl, %bb.v ], [ 0, %.preheader ]
+.lr.ph149:                                        ; preds = %bb.o, %bb.v
+  %.sroa.0.4148 = phi ptr [ %i.bj, %bb.v ], [ %.sroa.0.0, %bb.o ] ; 2 uses
+  %.sroa.26.4147 = phi i64 [ %i.bi, %bb.v ], [ %.sroa.26.0, %bb.o ]
+  %.sroa.084.4146 = phi i64 [ %i.bl, %bb.v ], [ 0, %bb.o ]
   %i.bd = load i8, ptr %.sroa.0.4148, align 1, !noundef !4
   %i.be = zext i8 %i.bd to i32
   %i.bf = add nsw i32 %i.be, -48                  ; 2 uses

@@ -204,9 +204,10 @@ bb.t:                                             ; preds = %bb.p, %bb.o
 
 bb.u:                                             ; preds = %bb.t, %bb.e
   %i.ac = load i64, ptr %i.d, align 8, !range !85, !alias.scope !6422, !noalias !6425, !noundef !20 ; 3 uses
-  %i.ad = add i64 %i.ac, 9223372036854775784
-  %2 = icmp ult i64 %i.ad, -5
-  br i1 %2, label %bb.v, label %bb.ae
+  %i.ad = add i64 %i.ac, 9223372036854775789
+  %2 = call i64 @llvm.umin.i64(i64 %i.ad, i64 5)
+  %3 = icmp eq i64 %2, 5
+  br i1 %3, label %bb.v, label %bb.ae
 
 bb.v:                                             ; preds = %bb.u
   %i.ae = icmp ne i64 %i.ac, -9223372036854775795

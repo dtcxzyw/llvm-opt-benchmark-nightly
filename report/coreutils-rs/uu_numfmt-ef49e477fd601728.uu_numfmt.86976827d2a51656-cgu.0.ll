@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/coreutils-rs/original/uu_numfmt-ef49e477fd601728.uu_numfmt.86976827d2a51656-cgu.0?download=true
 inline.NumInlined: 1038
 inline.NumDeleted: 517
-loop-unroll.NumCompletelyUnrolled: 16
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumCompletelyUnrolled: 15
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_RNvNtCsbyqtxyC5WYI_9uu_numfmt6format13format_string:bb.a
   store ptr %i.p, ptr %i.o, align 8, !noalias !2061
   %.sroa.414.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -204,8 +204,8 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay, %.th
   %i.mf = getelementptr inbounds nuw i8, ptr %i.m, i64 72 ; 2 uses
   store i64 9, ptr %i.mf, align 8, !noalias !2081
   %i.mg = add nsw i8 %.val126, -2
-  %.inv.i.i = icmp samesign ult i8 %.val126, 2
-  %narrow.i.i = select i1 %.inv.i.i, i8 2, i8 %i.mg ; 2 uses
+  %.inv.i.i = icmp samesign ult i8 %.val126, 2    ; 2 uses
+  %narrow.i.i = select i1 %.inv.i.i, i8 2, i8 %i.mg
   %.sroa.05.0.sroa.gep84.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 80
   switch i8 %narrow.i.i, label %bb.bb [
     i8 0, label %bb.bc
@@ -530,9 +530,8 @@ _RNvNtCsbyqtxyC5WYI_9uu_numfmt6format9div_round.exit.i.i: ; preds = %bb.dg, %bb.
   br i1 %i.ok, label %bb.dm, label %bb.dl
 
 bb.cz:                                            ; preds = %bb.cc
-  %6 = icmp eq i8 %narrow.i.i, 2
   %..i.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.021.0, i64 3)
-  %.sroa.015.0.i.i = select i1 %6, i64 %..i.i.i, i64 %.sroa.021.0
+  %.sroa.015.0.i.i = select i1 %.inv.i.i, i64 %..i.i.i, i64 %.sroa.021.0
   %i.ol = load double, ptr %.sroa.05.0.sroa.phi96.i.i, align 8, !noalias !2081, !noundef !4
   %i.om = fdiv double %i.lv, %i.ol                ; 2 uses
   %i.on = uitofp i64 %.sroa.015.0.i.i to double
@@ -935,7 +934,7 @@ bb.a:
   %i.ej = alloca [24 x i8], align 8               ; 9 uses
   %i.ek = alloca [48 x i8], align 16              ; 24 uses
   %i.el = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.em = load i8, ptr %i.el, align 8, !range !22, !noundef !4 ; 18 uses
+  %i.em = load i8, ptr %i.el, align 8, !range !22, !noundef !4 ; 17 uses
   %i.en = getelementptr inbounds nuw i8, ptr %4, i64 120
   %i.eo = load ptr, ptr %i.en, align 8, !nonnull !4, !noundef !4 ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %4, i64 128
@@ -967,7 +966,7 @@ _RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCsbyqtxyC5WYI_9uu_numfmt.exit.i: ; p
 _RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpNtNtCsbyqtxyC5WYI_9uu_numfmt5units4UnitNtB5_13SliceContains14slice_containsBG_.exit.i: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCsbyqtxyC5WYI_9uu_numfmt.exit.i
   %i.fc = icmp ne i8 %i.em, 4
   tail call void @llvm.assume(i1 %i.fc)
-  %i.fd = add i8 %i.em, -1
+  %i.fd = add nsw i8 %i.em, -1
   %i.fe = icmp ult i8 %i.fd, 2
   br i1 %i.fe, label %bb.r, label %bb.c
 
@@ -1370,12 +1369,11 @@ bb.cw:                                            ; preds = %bb.cu
   br i1 %.not33.i.i.i, label %_RNvNtCsbyqtxyC5WYI_9uu_numfmt6format29find_valid_number_with_suffix.exit.i.i, label %_RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpNtNtCsbyqtxyC5WYI_9uu_numfmt5units4UnitNtB5_13SliceContains14slice_containsBG_.exit.i.i.i
 
 _RNvXsf_NtNtCs6JMX4GRUq9U_4core5slice3cmpNtNtCsbyqtxyC5WYI_9uu_numfmt5units4UnitNtB5_13SliceContains14slice_containsBG_.exit.i.i.i: ; preds = %bb.cw
+  %.not34.i.i.i = icmp eq i8 %i.em, 5             ; 2 uses
   %i.rs = icmp ne i8 %i.em, 4
   call void @llvm.assume(i1 %i.rs)
-  %5 = icmp eq i8 %i.em, 2
-  %6 = icmp eq i8 %i.em, 1
-  %or.cond.i.i.i.i.i.lcssa = select i1 %5, i1 true, i1 %6
-  %.not34.i.i.i = icmp eq i8 %i.em, 5             ; 2 uses
+  %.0.val.off.i.i.i.i = add nsw i8 %i.em, -1
+  %switch.i.i.i.i = icmp ult i8 %.0.val.off.i.i.i.i, 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !2389
   %i.rt = getelementptr inbounds nuw i8, ptr %1, i64 %2
   store ptr %1, ptr %i.aw, align 8, !noalias !2389
@@ -1562,7 +1560,7 @@ bb.di:                                            ; preds = %bb.df
 
 bb.dj:                                            ; preds = %bb.di
   %i.vb = icmp eq i32 %.sink118.i.i.i, 105
-  %brmerge.not.i.i.i = and i1 %or.cond.i.i.i.i.i.lcssa, %i.vb
+  %brmerge.not.i.i.i = and i1 %switch.i.i.i.i, %i.vb
   br i1 %brmerge.not.i.i.i, label %bb.dl, label %bb.dk
 
 bb.dk:                                            ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsbyqtxyC5WYI_9uu_numfmt5units9RawSuffixNtNtCs7tKScEop1B6_5alloc6string6StringEEB11_.exit.i.i.i, %bb.dj

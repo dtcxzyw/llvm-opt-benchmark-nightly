@@ -204,24 +204,19 @@ bb.c:                                             ; preds = %bb.b
   %.val1.i = load i8, ptr %i.f, align 4, !range !76, !alias.scope !18143, !noalias !18142, !noundef !32 ; 4 uses
   %i.g = icmp ne i8 %.val.i, 4
   tail call void @llvm.assume(i1 %i.g)
-  %2 = add nsw i8 %.val.i, -2
-  %.inv.i.i = icmp samesign ult i8 %.val.i, 2
-  %narrow.i.i = select i1 %.inv.i.i, i8 2, i8 %2  ; 2 uses
-  %3 = icmp ne i8 %.val1.i, 4
-  tail call void @llvm.assume(i1 %3)
-  %4 = add nsw i8 %.val1.i, -2
+  %.inv.i.i = icmp samesign ugt i8 %.val.i, 1     ; 2 uses
+  %2 = icmp ne i8 %.val1.i, 4
+  tail call void @llvm.assume(i1 %2)
   %.inv2.i.i = icmp samesign ult i8 %.val1.i, 2
-  %narrow1.i.i = select i1 %.inv2.i.i, i8 2, i8 %4
-  %5 = icmp eq i8 %narrow.i.i, %narrow1.i.i
-  br i1 %5, label %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i, label %_RNvXss_NtCs4NRVxsYgnAr_4core5tupleTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeBx_NtNtBz_8relation12TypeRelationNtB1o_17TypeVarEvaluationENtNtB7_3cmp9PartialEq2eqBB_.exit
+  %3 = select i1 %.inv.i.i, i8 %.val.i, i8 4
+  %4 = select i1 %.inv2.i.i, i8 4, i8 %.val1.i
+  %5 = icmp eq i8 %3, %4
+  %6 = icmp eq i8 %.val.i, %.val1.i
+  %spec.select.i.i = or i1 %.inv.i.i, %6
+  %.sroa.0.0.i.i = and i1 %spec.select.i.i, %5
+  br i1 %.sroa.0.0.i.i, label %bb.d, label %_RNvXss_NtCs4NRVxsYgnAr_4core5tupleTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeBx_NtNtBz_8relation12TypeRelationNtB1o_17TypeVarEvaluationENtNtB7_3cmp9PartialEq2eqBB_.exit
 
-_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i: ; preds = %bb.c
-  %6 = icmp ne i8 %narrow.i.i, 2
-  %7 = icmp eq i8 %.val.i, %.val1.i
-  %spec.select.i.i = or i1 %7, %6
-  br i1 %spec.select.i.i, label %bb.d, label %_RNvXss_NtCs4NRVxsYgnAr_4core5tupleTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeBx_NtNtBz_8relation12TypeRelationNtB1o_17TypeVarEvaluationENtNtB7_3cmp9PartialEq2eqBB_.exit
-
-bb.d:                                             ; preds = %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i
+bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 33
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 33
   %.val2.i = load i8, ptr %i.h, align 1, !range !36, !alias.scope !18142, !noalias !18143, !noundef !32
@@ -229,8 +224,8 @@ bb.d:                                             ; preds = %_RNvXsb_NtNtCsoTR8n
   %i.j = icmp eq i8 %.val2.i, %.val3.i
   br label %_RNvXss_NtCs4NRVxsYgnAr_4core5tupleTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeBx_NtNtBz_8relation12TypeRelationNtB1o_17TypeVarEvaluationENtNtB7_3cmp9PartialEq2eqBB_.exit
 
-_RNvXss_NtCs4NRVxsYgnAr_4core5tupleTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeBx_NtNtBz_8relation12TypeRelationNtB1o_17TypeVarEvaluationENtNtB7_3cmp9PartialEq2eqBB_.exit: ; preds = %bb.a, %bb.b, %bb.c, %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i, %bb.d
-  %.sroa.0.0.i = phi i1 [ %i.j, %bb.d ], [ false, %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i ], [ false, %bb.b ], [ false, %bb.a ], [ false, %bb.c ]
+_RNvXss_NtCs4NRVxsYgnAr_4core5tupleTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeBx_NtNtBz_8relation12TypeRelationNtB1o_17TypeVarEvaluationENtNtB7_3cmp9PartialEq2eqBB_.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d
+  %.sroa.0.0.i = phi i1 [ %i.j, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ]
   ret i1 %.sroa.0.0.i
 }
 
@@ -633,24 +628,19 @@ bb.c:                                             ; preds = %bb.b
   %.val1 = load i8, ptr %i.j, align 4, !range !76, !noundef !32 ; 4 uses
   %i.k = icmp ne i8 %.val, 4
   call void @llvm.assume(i1 %i.k)
-  %4 = add nsw i8 %.val, -2
-  %.inv.i = icmp samesign ult i8 %.val, 2
-  %narrow.i = select i1 %.inv.i, i8 2, i8 %4      ; 2 uses
-  %5 = icmp ne i8 %.val1, 4
-  call void @llvm.assume(i1 %5)
-  %6 = add nsw i8 %.val1, -2
+  %.inv.i = icmp samesign ugt i8 %.val, 1         ; 2 uses
+  %4 = icmp ne i8 %.val1, 4
+  call void @llvm.assume(i1 %4)
   %.inv2.i = icmp samesign ult i8 %.val1, 2
-  %narrow1.i = select i1 %.inv2.i, i8 2, i8 %6
-  %7 = icmp eq i8 %narrow.i, %narrow1.i
-  br i1 %7, label %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit, label %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread
+  %5 = select i1 %.inv.i, i8 %.val, i8 4
+  %6 = select i1 %.inv2.i, i8 4, i8 %.val1
+  %7 = icmp eq i8 %5, %6
+  %8 = icmp eq i8 %.val, %.val1
+  %spec.select.i = or i1 %.inv.i, %8
+  %.sroa.0.0.i = and i1 %spec.select.i, %7
+  br i1 %.sroa.0.0.i, label %bb.d, label %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread
 
-_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.c
-  %8 = icmp ne i8 %narrow.i, 2
-  %9 = icmp eq i8 %.val, %.val1
-  %spec.select.i = or i1 %9, %8
-  br i1 %spec.select.i, label %bb.d, label %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread
-
-bb.d:                                             ; preds = %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
+bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 33
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 33
   %.val2 = load i8, ptr %i.l, align 1, !range !36, !noundef !32
@@ -658,8 +648,8 @@ bb.d:                                             ; preds = %_RNvXsb_NtNtCsoTR8n
   %i.n = icmp eq i8 %.val2, %.val3
   br label %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread
 
-_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.b, %bb.a, %bb.c, %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit, %bb.d
-  %.sroa.0.0 = phi i1 [ %i.n, %bb.d ], [ false, %_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.b ]
+_RNvXsb_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB5_12TypeRelationNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.b, %bb.a, %bb.c, %bb.d
+  %.sroa.0.0 = phi i1 [ %i.n, %bb.d ], [ false, %bb.c ], [ false, %bb.a ], [ false, %bb.b ]
   ret i1 %.sroa.0.0
 }
 

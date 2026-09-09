@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %.lr.ph300
   br i1 %i.fb, label %.lr.ph300, label %.critedge2, !llvm.loop !1782
 
 .critedge2:                                       ; preds = %.lr.ph300, %bb.ae, %bb.ac, %js_mp_neg.exit142
-  %.0115.lcssa = phi i32 [ %i.a, %js_mp_neg.exit142 ], [ %i.a, %bb.ac ], [ %.0115299, %.lr.ph300 ], [ 1, %bb.ae ] ; 23 uses
+  %.0115.lcssa = phi i32 [ %i.a, %js_mp_neg.exit142 ], [ %i.a, %bb.ac ], [ %.0115299, %.lr.ph300 ], [ 1, %bb.ae ] ; 22 uses
   %i.fc = icmp slt i32 %.0116.lcssa, %.0115.lcssa
   br i1 %i.fc, label %bb.af, label %bb.bd
 
@@ -608,7 +608,6 @@ js_mp_sub.exit.i:                                 ; preds = %.lr.ph.i104.i.epil.
   %.not101.i = icmp eq i32 %.092.i, 0
   %i.qw = zext i32 %.092.i to i64
   %i.qx = zext i32 %i.mv to i64                   ; 2 uses
-  %.not.i107.i = icmp eq i32 %.0115.lcssa, 0
   %wide.trip.count.i109.i = zext i32 %.0115.lcssa to i64 ; 4 uses
   %i.qy = zext nneg i32 %.091138.i to i64
   %xtraiter427 = and i64 %wide.trip.count.i109.i, 1
@@ -678,18 +677,15 @@ bb.cg:                                            ; preds = %bb.ce
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cf, %bb.cd
-  %.1.i = phi i32 [ %i.sm, %bb.cg ], [ %i.sc, %bb.cf ], [ -1, %bb.cd ] ; 4 uses
+  %.1.i = phi i32 [ %i.sm, %bb.cg ], [ %i.sc, %bb.cf ], [ -1, %bb.cd ] ; 3 uses
   %i.sn = getelementptr inbounds nuw [4 x i8], ptr %i.mr, i64 %indvars.iv.i165 ; 6 uses
-  br i1 %.not.i107.i, label %js_mp_sub_mul1.exit.thread.i, label %.lr.ph.i108.i
-
-.lr.ph.i108.i:                                    ; preds = %bb.ch
   %4 = zext i32 %.1.i to i64                      ; 3 uses
   br label %bb.ci
 
-bb.ci:                                            ; preds = %bb.ci, %.lr.ph.i108.i
-  %indvars.iv.i110.i = phi i64 [ 0, %.lr.ph.i108.i ], [ %indvars.iv.next.i111.i.1, %bb.ci ] ; 4 uses
-  %.017.i.i = phi i32 [ 0, %.lr.ph.i108.i ], [ %i.to, %bb.ci ]
-  %niter433 = phi i64 [ 0, %.lr.ph.i108.i ], [ %niter433.next.1, %bb.ci ]
+bb.ci:                                            ; preds = %bb.ci, %bb.ch
+  %indvars.iv.i110.i = phi i64 [ 0, %bb.ch ], [ %indvars.iv.next.i111.i.1, %bb.ci ] ; 4 uses
+  %.017.i.i = phi i32 [ 0, %bb.ch ], [ %i.to, %bb.ci ]
+  %niter433 = phi i64 [ 0, %bb.ch ], [ %niter433.next.1, %bb.ci ]
   %i.so = getelementptr inbounds nuw [4 x i8], ptr %i.sn, i64 %indvars.iv.i110.i ; 2 uses
   %i.sp = load i32, ptr %i.so, align 4, !tbaa !191
   %i.sq = zext i32 %i.sp to i64
@@ -824,8 +820,8 @@ bb.cj:                                            ; preds = %js_mp_add.exit.i
 .lr.ph.preheader.i115.i.backedge:                 ; preds = %bb.cj, %js_mp_add.exit.i
   br label %.lr.ph.preheader.i115.i
 
-js_mp_sub_mul1.exit.thread.i:                     ; preds = %bb.cj, %js_mp_sub_mul1.exit.i, %bb.ch
-  %.3.i = phi i32 [ %.1.i, %bb.ch ], [ %.1.i, %js_mp_sub_mul1.exit.i ], [ %i.vj, %bb.cj ]
+js_mp_sub_mul1.exit.thread.i:                     ; preds = %bb.cj, %js_mp_sub_mul1.exit.i
+  %.3.i = phi i32 [ %.1.i, %js_mp_sub_mul1.exit.i ], [ %i.vj, %bb.cj ]
   %i.vn = getelementptr inbounds nuw [4 x i8], ptr %i.mq, i64 %indvars.iv.i165
   store i32 %.3.i, ptr %i.vn, align 4, !tbaa !191
   %indvars.iv.next.i166 = add nsw i64 %indvars.iv.i165, -1

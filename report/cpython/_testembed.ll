@@ -204,12 +204,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %.not = icmp eq i32 %i.a, 3
   %i.e = add nsw i32 %i.a, -2
-  %i.f = select i1 %.not, i32 4, i32 %i.e         ; 3 uses
+  %i.f = select i1 %.not, i32 4, i32 %i.e         ; 2 uses
   %wide.trip.count = zext nneg i32 %i.f to i64
-  %exitcond.not19 = icmp eq i32 %i.f, 0
-  br i1 %exitcond.not19, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.c
   %0 = load ptr, ptr @main_argv, align 8, !tbaa !16
   %1 = getelementptr i8, ptr %0, i64 16
   %2 = load ptr, ptr %1, align 8, !tbaa !18
@@ -219,9 +215,9 @@ bb.d:                                             ; preds = %bb.g
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !55
 
-bb.e:                                             ; preds = %.lr.ph, %bb.d
-  %.01121 = phi ptr [ %2, %.lr.ph ], [ %.112, %bb.d ]
-  %indvars.iv20 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %.01121 = phi ptr [ %2, %bb.c ], [ %.112, %bb.d ]
+  %indvars.iv20 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   %i.g = load ptr, ptr @stderr, align 8, !tbaa !22
   %indvars.iv.next = add nuw nsw i64 %indvars.iv20, 1 ; 4 uses
   %i.h = trunc nuw i64 %indvars.iv.next to i32
@@ -250,8 +246,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 ._crit_edge22:                                    ; preds = %bb.g
   br label %._crit_edge, !llvm.loop !55
 
-._crit_edge:                                      ; preds = %bb.d, %._crit_edge22, %bb.c
-  %indvars.iv.lcssa = phi i64 [ 0, %bb.c ], [ %indvars.iv20, %._crit_edge22 ], [ %indvars.iv.next, %bb.d ]
+._crit_edge:                                      ; preds = %bb.d, %._crit_edge22
+  %indvars.iv.lcssa = phi i64 [ %indvars.iv20, %._crit_edge22 ], [ %indvars.iv.next, %bb.d ]
   %i.s = zext nneg i32 %i.f to i64
   %.not17 = icmp samesign ult i64 %indvars.iv.lcssa, %i.s
   %spec.select = zext i1 %.not17 to i32

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai)
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %i.ar = invoke noundef ptr @_RNvMs1_NtCs844E4pPEVZX_17influxdb3_catalog10repositoryINtB5_10RepositoryNtCsbFlE7Gjht9i_12influxdb3_id8ColumnIdNtNtNtNtB7_7catalog8versions2v116ColumnDefinitionE11get_by_nameB7_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(728) %i.aq, ptr noalias noundef nonnull readonly captures(address, read_provenance) %4, i64 noundef %5)
-          to label %_RINvMsq_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v1NtB6_15TableDefinition17column_definitionReEBc_.exit unwind label %bb.e ; 11 uses
+          to label %_RINvMsq_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v1NtB6_15TableDefinition17column_definitionReEBc_.exit unwind label %bb.e ; 10 uses
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
@@ -238,30 +238,7 @@ bb.e:                                             ; preds = %bb.b
 _RINvMsq_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v1NtB6_15TableDefinition17column_definitionReEBc_.exit: ; preds = %bb.b
   store ptr %i.ar, ptr %i.ai, align 8
   %.not90 = icmp eq ptr %i.ar, null               ; 2 uses
-  br i1 %.not90, label %bb.g, label %7
-
-7:                                                ; preds = %_RINvMsq_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v1NtB6_15TableDefinition17column_definitionReEBc_.exit
-  switch i8 %6, label %default.unreachable [
-    i8 0, label %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread
-    i8 1, label %8
-    i8 2, label %8
-    i8 3, label %9
-    i8 4, label %8
-    i8 5, label %bb.cb
-    i8 6, label %10
-  ]
-
-default.unreachable:                              ; preds = %7
-  unreachable
-
-8:                                                ; preds = %7, %7, %7
-  br label %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread
-
-9:                                                ; preds = %7
-  br label %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread
-
-10:                                               ; preds = %7
-  br label %bb.cb
+  br i1 %.not90, label %bb.g, label %bb.cb
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit151: ; preds = %bb.bh, %bb.v, %bb.bw, %bb.bx, %.thread187, %bb.f
   %.pn102 = phi { ptr, i32 } [ %i.bd, %bb.f ], [ %.pn94186, %.thread187 ], [ %.pn99.ph, %bb.bx ], [ %.pn99.ph, %bb.bw ], [ %lpad.thr_comm.split-lp, %bb.v ], [ %i.kl, %bb.bh ] ; 3 uses
@@ -664,39 +641,28 @@ bb.bz:                                            ; preds = %bb.by
 bb.ca:                                            ; preds = %bb.cl, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v115TableDefinitionEEB1g_.exit139, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v115TableDefinitionEEB1g_.exit117
   ret void
 
-_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread: ; preds = %8, %9, %7
-  %.sroa.0.0.i.ph = phi i8 [ 3, %7 ], [ %6, %8 ], [ 0, %9 ]
-  %11 = getelementptr inbounds nuw i8, ptr %i.ar, i64 34 ; 2 uses
-  %12 = load i8, ptr %11, align 2, !range !53, !noundef !6 ; 4 uses
-  %13 = icmp ne i8 %12, 6
-  tail call void @llvm.assume(i1 %13)
-  %14 = add nsw i8 %12, -5
-  %15 = icmp samesign ugt i8 %12, 4
-  %narrow227 = select i1 %15, i8 %14, i8 1
-  br label %19
-
-bb.cb:                                            ; preds = %7, %10
-  %.sroa.0.0.i = phi i8 [ 5, %10 ], [ 7, %7 ]     ; 2 uses
+bb.cb:                                            ; preds = %_RINvMsq_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v1NtB6_15TableDefinition17column_definitionReEBc_.exit
+  %7 = shl nuw nsw i8 %6, 3
+  %switch.shiftamt = zext nneg i8 %7 to i56
+  %switch.downshift = lshr i56 1415097335809542, %switch.shiftamt
+  %switch.masked = trunc i56 %switch.downshift to i8
+  %8 = shl nuw nsw i8 %6, 3
+  %switch.shiftamt230 = zext nneg i8 %8 to i56
+  %switch.downshift231 = lshr i56 1415088644948227, %switch.shiftamt230
+  %switch.masked232 = trunc i56 %switch.downshift231 to i8
   %i.lj = getelementptr inbounds nuw i8, ptr %i.ar, i64 34 ; 2 uses
   %i.lk = load i8, ptr %i.lj, align 2, !range !53, !noundef !6 ; 4 uses
   %i.ll = icmp ne i8 %i.lk, 6
   tail call void @llvm.assume(i1 %i.ll)
-  %16 = add nsw i8 %i.lk, -5
-  %17 = icmp samesign ugt i8 %i.lk, 4
-  %narrow = select i1 %17, i8 %16, i8 1
-  %18 = add nsw i8 %.sroa.0.0.i, -5
-  br label %19
+  %9 = icmp samesign ugt i8 %i.lk, 4              ; 2 uses
+  %10 = select i1 %9, i8 %i.lk, i8 6
+  %11 = icmp eq i8 %10, %switch.masked
+  %12 = icmp eq i8 %i.lk, %switch.masked232
+  %or.cond105 = or i1 %9, %12
+  %or.cond214 = and i1 %or.cond105, %11
+  br i1 %or.cond214, label %bb.cd, label %bb.cc
 
-19:                                               ; preds = %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread, %bb.cb
-  %narrow229 = phi i8 [ %narrow, %bb.cb ], [ %narrow227, %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread ] ; 2 uses
-  %20 = phi i8 [ %i.lk, %bb.cb ], [ %12, %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread ]
-  %21 = phi ptr [ %i.lj, %bb.cb ], [ %11, %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread ]
-  %.sroa.0.0.i228 = phi i8 [ %.sroa.0.0.i, %bb.cb ], [ %.sroa.0.0.i.ph, %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread ]
-  %22 = phi i8 [ %18, %bb.cb ], [ 1, %_RNvXs9_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtCsjGL2vCcvtUM_6schema16InfluxColumnTypeINtNtCs4NRVxsYgnAr_4core7convert4FromNtB5_13FieldDataTypeE4from.exit.thread ]
-  %23 = icmp eq i8 %narrow229, %22
-  br i1 %23, label %24, label %bb.cc
-
-bb.cc:                                            ; preds = %24, %19
+bb.cc:                                            ; preds = %bb.cb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
   store ptr %i.ar, ptr %i.ag, align 8
   %i.lm = getelementptr inbounds nuw i8, ptr %i.ar, i64 16 ; 2 uses
@@ -705,13 +671,7 @@ bb.cc:                                            ; preds = %24, %19
   %i.lp = icmp slt i64 %i.lo, 0
   br i1 %i.lp, label %bb.cf, label %switch.lookup232
 
-24:                                               ; preds = %19
-  %25 = icmp ne i8 %narrow229, 1
-  %26 = icmp eq i8 %20, %.sroa.0.0.i228
-  %or.cond105 = or i1 %26, %25
-  br i1 %or.cond105, label %bb.cd, label %bb.cc
-
-bb.cd:                                            ; preds = %24
+bb.cd:                                            ; preds = %bb.cb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)
   store ptr %i.ar, ptr %i.ah, align 8
   %i.lq = getelementptr inbounds nuw i8, ptr %i.ar, i64 32
@@ -732,7 +692,7 @@ switch.lookup232:                                 ; preds = %bb.cc
   %i.lv = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
   %i.lw = load ptr, ptr %i.lm, align 8, !nonnull !6, !noundef !6
   %i.lx = load i64, ptr %i.lv, align 8, !noundef !6
-  %i.ly = load i8, ptr %21, align 2, !range !53, !noundef !6
+  %i.ly = load i8, ptr %i.lj, align 2, !range !53, !noundef !6
   %i.lz = shl nuw nsw i8 %6, 3
   %switch.shiftamt234 = zext nneg i8 %i.lz to i56
   %switch.downshift235 = lshr i56 1415088644948227, %switch.shiftamt234
@@ -1135,7 +1095,7 @@ bb.r:                                             ; preds = %bb.n, %switch.looku
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %bb.s
 
-bb.s:                                             ; preds = %4, %bb.r
+bb.s:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v116ColumnDefinitionEEB1g_.exit, %bb.r
   %i.bi = icmp eq ptr %i.ae, %i.y
   br i1 %i.bi, label %._crit_edge, label %bb.e
 
@@ -1150,26 +1110,21 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtN
   %switch.masked84 = trunc i56 %switch.downshift83 to i8 ; 2 uses
   %i.bm = icmp ne i8 %i.am, 6
   call void @llvm.assume(i1 %i.bm)
-  %2 = add nsw i8 %i.am, -5
-  %i.bn = icmp samesign ugt i8 %i.am, 4
-  %narrow = select i1 %i.bn, i8 %2, i8 1          ; 2 uses
-  %3 = add nsw i8 %switch.masked84, -5
-  %narrow90 = select i1 %switch.masked80, i8 %3, i8 1
-  %i.bo = icmp eq i8 %narrow90, %narrow
-  br i1 %i.bo, label %4, label %bb.t
+  %i.bn = icmp samesign ugt i8 %i.am, 4           ; 2 uses
+  %narrow = select i1 %switch.masked80, i8 %switch.masked84, i8 6
+  %2 = select i1 %i.bn, i8 %i.am, i8 6
+  %3 = icmp eq i8 %narrow, %2
+  %i.bo = icmp eq i8 %i.am, %switch.masked84
+  %or.cond = or i1 %i.bn, %i.bo
+  %or.cond33 = and i1 %or.cond, %3
+  br i1 %or.cond33, label %bb.s, label %bb.t
 
-bb.t:                                             ; preds = %4, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v116ColumnDefinitionEEB1g_.exit
+bb.t:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v116ColumnDefinitionEEB1g_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.bp = load i64, ptr %1, align 8, !range !12, !noundef !6
   %.not24 = icmp eq i64 %i.bp, -1
   br i1 %.not24, label %bb.u, label %bb.v
-
-4:                                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v116ColumnDefinitionEEB1g_.exit
-  %5 = icmp ne i8 %narrow, 1
-  %.not23 = icmp eq i8 %i.am, %switch.masked84
-  %or.cond = or i1 %5, %.not23
-  br i1 %or.cond, label %bb.s, label %bb.t
 
 bb.u:                                             ; preds = %bb.t
   %i.bq = load ptr, ptr %i.aa, align 8, !nonnull !6, !align !17, !noundef !6
