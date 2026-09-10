@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %_ZNSt11unique_lockI
   br i1 %.not.i.i.i48.us.us, label %.noexc44.thread, label %.critedge.i.us.us, !prof !106
 
 .critedge.i.us.us:                                ; preds = %.noexc43.us.us
-  %i.be = add nsw i32 %.sroa.067.0.us.us, -1
+  %i.be = add nuw nsw i32 %.sroa.067.0.us.us, 65535
   %i.bf = and i32 %i.be, %.sroa.067.0.us.us       ; 2 uses
   %i.bg = and i32 %i.bf, 4094
   %.not118.us.us = icmp eq i32 %i.bg, 0
@@ -247,7 +247,7 @@ bb.p:                                             ; preds = %.loopexit.split.us.
   %i.bv = icmp ne i32 %.sroa.067.0, 0
   call void @llvm.assume(i1 %i.bv)
   %i.bw = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.067.0, i1 true)
-  %i.bx = add nsw i32 %.sroa.067.0, -1
+  %i.bx = add nuw nsw i32 %.sroa.067.0, 65535
   %i.by = and i32 %i.bx, %.sroa.067.0             ; 2 uses
   %i.bz = shl nuw nsw i32 %i.bw, 2
   %i.ca = zext nneg i32 %i.bz to i64
@@ -650,7 +650,7 @@ bb.o:                                             ; preds = %_ZNSt11unique_lockI
   br i1 %.not.i.i.i48.us.us, label %.noexc44.thread, label %.critedge.i.us.us, !prof !106
 
 .critedge.i.us.us:                                ; preds = %.noexc43.us.us
-  %i.be = add nsw i32 %.sroa.067.0.us.us, -1
+  %i.be = add nuw nsw i32 %.sroa.067.0.us.us, 65535
   %i.bf = and i32 %i.be, %.sroa.067.0.us.us       ; 2 uses
   %i.bg = and i32 %i.bf, 4094
   %.not118.us.us = icmp eq i32 %i.bg, 0
@@ -692,7 +692,7 @@ bb.p:                                             ; preds = %.loopexit.split.us.
   %i.bv = icmp ne i32 %.sroa.067.0, 0
   call void @llvm.assume(i1 %i.bv)
   %i.bw = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.067.0, i1 true)
-  %i.bx = add nsw i32 %.sroa.067.0, -1
+  %i.bx = add nuw nsw i32 %.sroa.067.0, 65535
   %i.by = and i32 %i.bx, %.sroa.067.0             ; 2 uses
   %i.bz = shl nuw nsw i32 %i.bw, 2
   %i.ca = zext nneg i32 %i.bz to i64
@@ -1095,7 +1095,7 @@ bb.c:                                             ; preds = %bb.b, %bb.d
   br i1 %.not.i.i.i.us, label %_ZNK5folly3f146detail21VectorContainerPolicyINS_5RangeIPKcEEPNS_17FunctionScheduler10RepeatFuncENS_4HashEvvSt17integral_constantIbLb1EEE14keyMatchesItemIS6_EEbRKT_RKj.exit.thread, label %.critedge.i.us, !prof !106
 
 .critedge.i.us:                                   ; preds = %.preheader.split.us
-  %i.aw = add nsw i32 %.sroa.010.0.us, -1
+  %i.aw = add nuw nsw i32 %.sroa.010.0.us, 65535
   %i.ax = and i32 %i.aw, %.sroa.010.0.us          ; 2 uses
   %i.ay = and i32 %i.ax, 4094
   %.not45.us = icmp eq i32 %i.ay, 0
@@ -1106,7 +1106,7 @@ bb.c:                                             ; preds = %bb.b, %bb.d
   %i.az = icmp ne i32 %.sroa.010.0, 0
   call void @llvm.assume(i1 %i.az)
   %i.ba = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.010.0, i1 true)
-  %i.bb = add nsw i32 %.sroa.010.0, -1
+  %i.bb = add nuw nsw i32 %.sroa.010.0, 65535
   %i.bc = and i32 %i.bb, %.sroa.010.0             ; 2 uses
   %i.bd = zext nneg i32 %i.ba to i64              ; 2 uses
   %i.be = shl nuw nsw i64 %i.bd, 2                ; 2 uses
@@ -1245,7 +1245,7 @@ bb.d:                                             ; preds = %.preheader, %.crite
   br i1 %i.at, label %_ZNK5folly3f146detail8F14TableINS1_21VectorContainerPolicyINS_5RangeIPKcEEPNS_17FunctionScheduler10RepeatFuncENS_4HashEvvSt17integral_constantIbLb1EEEEE8findImplINS1_26VectorContainerIndexSearchEEENS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmERKT_NSF_8PrefetchE.exit, label %.critedge.i, !prof !101
 
 .critedge.i:                                      ; preds = %bb.d
-  %i.au = add nsw i32 %.sroa.024.0, -1
+  %i.au = add nuw nsw i32 %.sroa.024.0, 65535
   %i.av = and i32 %i.au, %.sroa.024.0             ; 2 uses
   %i.aw = and i32 %i.av, 4094
   %.not46 = icmp eq i32 %i.aw, 0
@@ -1495,7 +1495,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i27.us.us, label %.noexc23.thread, label %.critedge.i.us.us, !prof !106
 
 .critedge.i.us.us:                                ; preds = %.noexc22.us.us
-  %i.az = add nsw i32 %.sroa.039.0.us.us, -1
+  %i.az = add nuw nsw i32 %.sroa.039.0.us.us, 65535
   %i.ba = and i32 %i.az, %.sroa.039.0.us.us       ; 2 uses
   %i.bb = and i32 %i.ba, 4094
   %.not80.us.us = icmp eq i32 %i.bb, 0
@@ -1537,7 +1537,7 @@ bb.g:                                             ; preds = %.loopexit.split.us.
   %i.bq = icmp ne i32 %.sroa.039.0, 0
   call void @llvm.assume(i1 %i.bq)
   %i.br = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.039.0, i1 true)
-  %i.bs = add nsw i32 %.sroa.039.0, -1
+  %i.bs = add nuw nsw i32 %.sroa.039.0, 65535
   %i.bt = and i32 %i.bs, %.sroa.039.0             ; 2 uses
   %i.bu = shl nuw nsw i32 %i.br, 2
   %i.bv = zext nneg i32 %i.bu to i64
@@ -1867,7 +1867,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i30.us.us, label %.noexc25.thread, label %.critedge.i.us.us, !prof !106
 
 .critedge.i.us.us:                                ; preds = %.noexc24.us.us
-  %i.bc = add nsw i32 %.sroa.042.0.us.us, -1
+  %i.bc = add nuw nsw i32 %.sroa.042.0.us.us, 65535
   %i.bd = and i32 %i.bc, %.sroa.042.0.us.us       ; 2 uses
   %i.be = and i32 %i.bd, 4094
   %.not83.us.us = icmp eq i32 %i.be, 0
@@ -1909,7 +1909,7 @@ bb.g:                                             ; preds = %.loopexit84.split.u
   %i.bt = icmp ne i32 %.sroa.042.0, 0
   call void @llvm.assume(i1 %i.bt)
   %i.bu = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.042.0, i1 true)
-  %i.bv = add nsw i32 %.sroa.042.0, -1
+  %i.bv = add nuw nsw i32 %.sroa.042.0, 65535
   %i.bw = and i32 %i.bv, %.sroa.042.0             ; 2 uses
   %i.bx = shl nuw nsw i32 %i.bu, 2
   %i.by = zext nneg i32 %i.bx to i64
@@ -2312,7 +2312,7 @@ bb.g:                                             ; preds = %_ZN5follyeqINSt7__c
   br i1 %.not.i.i.i30.us.us, label %.noexc26.thread, label %.critedge.i.us.us, !prof !106
 
 .critedge.i.us.us:                                ; preds = %.noexc25.us.us
-  %i.bt = add nsw i32 %.sroa.050.0.us.us, -1
+  %i.bt = add nuw nsw i32 %.sroa.050.0.us.us, 65535
   %i.bu = and i32 %i.bt, %.sroa.050.0.us.us       ; 2 uses
   %i.bv = and i32 %i.bu, 4094
   %.not95.us.us = icmp eq i32 %i.bv, 0
@@ -2354,7 +2354,7 @@ bb.h:                                             ; preds = %.loopexit.split.us.
   %i.ck = icmp ne i32 %.sroa.050.0, 0
   call void @llvm.assume(i1 %i.ck)
   %i.cl = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.050.0, i1 true)
-  %i.cm = add nsw i32 %.sroa.050.0, -1
+  %i.cm = add nuw nsw i32 %.sroa.050.0, 65535
   %i.cn = and i32 %i.cm, %.sroa.050.0             ; 2 uses
   %i.co = shl nuw nsw i32 %i.cl, 2
   %i.cp = zext nneg i32 %i.co to i64
@@ -2757,7 +2757,7 @@ bb.c:                                             ; preds = %.critedge.i.us.us, 
   br i1 %.not.i.i.i.us.us, label %_ZNK5folly3f146detail21VectorContainerPolicyINS_5RangeIPKcEEPNS_17FunctionScheduler10RepeatFuncENS_4HashEvvSt17integral_constantIbLb1EEE14keyMatchesItemIS6_EEbRKT_RKj.exit.thread, label %.critedge.i.us.us, !prof !106
 
 .critedge.i.us.us:                                ; preds = %bb.c
-  %i.ao = add nsw i32 %.sroa.043.0.us.us, -1
+  %i.ao = add nuw nsw i32 %.sroa.043.0.us.us, 65535
   %i.ap = and i32 %i.ao, %.sroa.043.0.us.us       ; 2 uses
   %i.aq = and i32 %i.ap, 4094
   %.not74.us.us = icmp eq i32 %i.aq, 0
@@ -2798,7 +2798,7 @@ bb.e:                                             ; preds = %.preheader, %.crite
   %i.be = icmp ne i32 %.sroa.043.0, 0
   tail call void @llvm.assume(i1 %i.be)
   %i.bf = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.043.0, i1 true)
-  %i.bg = add nsw i32 %.sroa.043.0, -1
+  %i.bg = add nuw nsw i32 %.sroa.043.0, 65535
   %i.bh = and i32 %i.bg, %.sroa.043.0             ; 2 uses
   %i.bi = zext nneg i32 %i.bf to i64              ; 2 uses
   %i.bj = shl nuw nsw i64 %i.bi, 2

@@ -205,7 +205,7 @@ _ZNK2OT11HBUINT32VAR8get_sizeEv.exit367:          ; preds = %bb.dg, %bb.dh, %bb.
 .thread550:                                       ; preds = %_ZNK2OT11HBUINT32VAR8get_sizeEv.exit367, %bb.df
   %.0.i366547554 = phi i64 [ 1, %bb.df ], [ %.0.i366, %_ZNK2OT11HBUINT32VAR8get_sizeEv.exit367 ]
   %i.yh = getelementptr inbounds nuw i8, ptr %.22629, i64 %.0.i366547554 ; 2 uses
-  %i.yi = add i32 %.0281628, -2
+  %i.yi = add i32 %.0281628, -32768
   %i.yj = and i32 %i.yi, %.0281628                ; 2 uses
   %.not321 = icmp eq i32 %i.yj, 0
   br i1 %.not321, label %._crit_edge, label %.lr.ph630, !llvm.loop !2103

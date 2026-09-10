@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 144
   %i.bw = load ptr, ptr %i.bv, align 8
   tail call void %i.bw(ptr noundef nonnull align 8 dereferenceable(94) %0, i32 noundef %i.bt, i1 noundef zeroext true), !inline_history !505
-  %i.bx = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.bx = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.by = and i64 %i.bx, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.by, 0
   br i1 %.not10.i.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9RowVector4copyEPKNS0_10BaseVectorERKS1_PKiE3$_0EEvT_.exit", label %.preheader.i.i.i.i.i, !llvm.loop !506
@@ -337,7 +337,7 @@ bb.s:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 144
   %i.eg = load ptr, ptr %i.ef, align 8
   tail call void %i.eg(ptr noundef nonnull align 8 dereferenceable(94) %0, i32 noundef %i.ed, i1 noundef zeroext true), !inline_history !505
-  %i.eh = add nsw i64 %.011.i47.i.i.i.i, -1
+  %i.eh = add nuw i64 %.011.i47.i.i.i.i, 9223372036854775807
   %i.ei = and i64 %i.eh, %.011.i47.i.i.i.i        ; 2 uses
   %.not10.i49.i.i.i.i = icmp eq i64 %i.ei, 0
   br i1 %.not10.i49.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9RowVector4copyEPKNS0_10BaseVectorERKS1_PKiE3$_0EEvT_.exit", label %.preheader.i46.i.i.i.i, !llvm.loop !506
@@ -699,7 +699,7 @@ bb.bc:                                            ; preds = %bb.bb
   br label %"_ZZN8facebook5velox9RowVector4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_1clIiEEDaT_.exit.i.i.i.i.i"
 
 "_ZZN8facebook5velox9RowVector4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_1clIiEEDaT_.exit.i.i.i.i.i": ; preds = %bb.bc, %bb.bb
-  %i.kc = add nsw i64 %.011.i.i.i.i.i91, -1
+  %i.kc = add nuw i64 %.011.i.i.i.i.i91, 9223372036854775807
   %i.kd = and i64 %i.kc, %.011.i.i.i.i.i91        ; 2 uses
   %.not10.i.i.i.i.i92 = icmp eq i64 %i.kd, 0
   br i1 %.not10.i.i.i.i.i92, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9RowVector4copyEPKNS0_10BaseVectorERKS1_PKiE3$_1EEvT_.exit", label %bb.az, !llvm.loop !515
@@ -988,7 +988,7 @@ bb.bv:                                            ; preds = %bb.bu
   br label %"_ZZN8facebook5velox9RowVector4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_1clIiEEDaT_.exit.i54.i.i.i.i"
 
 "_ZZN8facebook5velox9RowVector4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_1clIiEEDaT_.exit.i54.i.i.i.i": ; preds = %bb.bv, %bb.bu
-  %i.pu = add nsw i64 %.011.i51.i.i.i.i, -1
+  %i.pu = add nuw i64 %.011.i51.i.i.i.i, 9223372036854775807
   %i.pv = and i64 %i.pu, %.011.i51.i.i.i.i        ; 2 uses
   %.not10.i55.i.i.i.i = icmp eq i64 %i.pv, 0
   br i1 %.not10.i55.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9RowVector4copyEPKNS0_10BaseVectorERKS1_PKiE3$_1EEvT_.exit", label %bb.bs, !llvm.loop !515
@@ -1391,7 +1391,7 @@ bb.dp:                                            ; preds = %bb.do
   br label %"_ZZN8facebook5velox9RowVector4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_2clIiEEDaT_.exit.i.i.i.i.i"
 
 "_ZZN8facebook5velox9RowVector4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_2clIiEEDaT_.exit.i.i.i.i.i": ; preds = %bb.dp, %bb.do
-  %i.xw = add nsw i64 %.011.i.i.i.i.i160, -1
+  %i.xw = add nuw i64 %.011.i.i.i.i.i160, 9223372036854775807
   %i.xx = and i64 %i.xw, %.011.i.i.i.i.i160       ; 2 uses
   %.not10.i.i.i.i.i163 = icmp eq i64 %i.xx, 0
   br i1 %.not10.i.i.i.i.i163, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9RowVector4copyEPKNS0_10BaseVectorERKS1_PKiE3$_2EEvT_.exit", label %bb.dm, !llvm.loop !526
@@ -1680,7 +1680,7 @@ bb.ei:                                            ; preds = %bb.eh
   br label %"_ZZN8facebook5velox9RowVector4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_2clIiEEDaT_.exit.i54.i.i.i.i"
 
 "_ZZN8facebook5velox9RowVector4copyEPKNS0_10BaseVectorERKNS0_17SelectivityVectorEPKiENK3$_2clIiEEDaT_.exit.i54.i.i.i.i": ; preds = %bb.ei, %bb.eh
-  %i.ado = add nsw i64 %.011.i51.i.i.i.i140, -1
+  %i.ado = add nuw i64 %.011.i51.i.i.i.i140, 9223372036854775807
   %i.adp = and i64 %i.ado, %.011.i51.i.i.i.i140   ; 2 uses
   %.not10.i55.i.i.i.i143 = icmp eq i64 %i.adp, 0
   br i1 %.not10.i55.i.i.i.i143, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9RowVector4copyEPKNS0_10BaseVectorERKS1_PKiE3$_2EEvT_.exit", label %bb.ef, !llvm.loop !526
@@ -2039,7 +2039,7 @@ bb.fa:                                            ; preds = %bb.fa, %.preheader.
   %i.ajf = load i32, ptr %i.aje, align 4, !tbaa !122
   %i.ajg = getelementptr inbounds [4 x i8], ptr %i.afj, i64 %i.aja
   store i32 %i.ajf, ptr %i.ajg, align 4, !tbaa !122
-  %i.ajh = add nsw i64 %.011.i.i.i.i.i232, -1
+  %i.ajh = add nuw i64 %.011.i.i.i.i.i232, 9223372036854775807
   %i.aji = and i64 %i.ajh, %.011.i.i.i.i.i232     ; 2 uses
   %.not10.i.i.i.i.i233 = icmp eq i64 %i.aji, 0
   br i1 %.not10.i.i.i.i.i233, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9RowVector4copyEPKNS0_10BaseVectorERKS1_PKiE3$_3EEvT_.exit", label %bb.fa, !llvm.loop !532
@@ -2185,7 +2185,7 @@ bb.fi:                                            ; preds = %bb.fi, %.preheader.
   %i.ama = load i32, ptr %i.alz, align 4, !tbaa !122
   %i.amb = getelementptr inbounds [4 x i8], ptr %i.afj, i64 %i.alv
   store i32 %i.ama, ptr %i.amb, align 4, !tbaa !122
-  %i.amc = add nsw i64 %.011.i45.i.i.i.i, -1
+  %i.amc = add nuw i64 %.011.i45.i.i.i.i, 9223372036854775807
   %i.amd = and i64 %i.amc, %.011.i45.i.i.i.i      ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.amd, 0
   br i1 %.not10.i46.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_9RowVector4copyEPKNS0_10BaseVectorERKS1_PKiE3$_3EEvT_.exit", label %bb.fi, !llvm.loop !532
@@ -2588,7 +2588,7 @@ bb.i:                                             ; preds = %bb.i, %.preheader.i
   store i32 0, ptr %i.aq, align 4, !tbaa !122
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.ap
   store i32 0, ptr %i.ar, align 4, !tbaa !122
-  %i.as = add nsw i64 %.012.i53.i.i.i, -1
+  %i.as = add nuw i64 %.012.i53.i.i.i, 9223372036854775807
   %i.at = and i64 %i.as, %.012.i53.i.i.i          ; 2 uses
   %.not10.i54.i.i.i = icmp eq i64 %i.at, 0
   br i1 %.not10.i54.i.i.i, label %"_ZN8facebook5velox4bits15forEachUnsetBitIZNS0_15ArrayVectorBase19ensureNullRowsEmptyEvE3$_0EEvPKmiiT_.exit", label %bb.i, !llvm.loop !683
@@ -2991,7 +2991,7 @@ bb.cm:                                            ; preds = %bb.cp, %bb.cl
 
 bb.cn:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.us = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.07.0.i.i.i.i.i, i1 true)
-  %i.ut = add nsw i32 %.sroa.07.0.i.i.i.i.i, -1
+  %i.ut = add nuw nsw i32 %.sroa.07.0.i.i.i.i.i, 16383
   %i.uu = and i32 %i.ut, %.sroa.07.0.i.i.i.i.i
   %i.uv = zext nneg i32 %i.us to i64
   call void @llvm.assume(i1 %i.uq)
@@ -3394,7 +3394,7 @@ bb.cm:                                            ; preds = %bb.cp, %bb.cl
 
 bb.cn:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.un = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.07.0.i.i.i.i.i, i1 true)
-  %i.uo = add nsw i32 %.sroa.07.0.i.i.i.i.i, -1
+  %i.uo = add nuw nsw i32 %.sroa.07.0.i.i.i.i.i, 16383
   %i.up = and i32 %i.uo, %.sroa.07.0.i.i.i.i.i
   %i.uq = zext nneg i32 %i.un to i64
   call void @llvm.assume(i1 %i.ul)
@@ -3797,7 +3797,7 @@ bb.cm:                                            ; preds = %bb.cp, %bb.cl
 
 bb.cn:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.un = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.07.0.i.i.i.i.i, i1 true)
-  %i.uo = add nsw i32 %.sroa.07.0.i.i.i.i.i, -1
+  %i.uo = add nuw nsw i32 %.sroa.07.0.i.i.i.i.i, 16383
   %i.up = and i32 %i.uo, %.sroa.07.0.i.i.i.i.i
   %i.uq = zext nneg i32 %i.un to i64
   call void @llvm.assume(i1 %i.ul)
@@ -4200,7 +4200,7 @@ bb.cm:                                            ; preds = %bb.cp, %bb.cl
 
 bb.cn:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.un = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.07.0.i.i.i.i.i, i1 true)
-  %i.uo = add nsw i32 %.sroa.07.0.i.i.i.i.i, -1
+  %i.uo = add nuw nsw i32 %.sroa.07.0.i.i.i.i.i, 16383
   %i.up = and i32 %i.uo, %.sroa.07.0.i.i.i.i.i
   %i.uq = zext nneg i32 %i.un to i64
   call void @llvm.assume(i1 %i.ul)
@@ -4603,7 +4603,7 @@ bb.cm:                                            ; preds = %bb.cp, %bb.cl
 
 bb.cn:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.uh = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.07.0.i.i.i.i.i, i1 true)
-  %i.ui = add nsw i32 %.sroa.07.0.i.i.i.i.i, -1
+  %i.ui = add nuw nsw i32 %.sroa.07.0.i.i.i.i.i, 16383
   %i.uj = and i32 %i.ui, %.sroa.07.0.i.i.i.i.i
   %i.uk = zext nneg i32 %i.uh to i64
   call void @llvm.assume(i1 %i.uf)
@@ -5006,7 +5006,7 @@ bb.cj:                                            ; preds = %bb.cm, %bb.ci
 
 bb.ck:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.tn = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.09.0.i.i.i.i.i, i1 true)
-  %i.to = add nsw i32 %.sroa.09.0.i.i.i.i.i, -1
+  %i.to = add nuw nsw i32 %.sroa.09.0.i.i.i.i.i, 4095
   %i.tp = and i32 %i.to, %.sroa.09.0.i.i.i.i.i
   %i.tq = zext nneg i32 %i.tn to i64
   call void @llvm.assume(i1 %i.tk)
@@ -5409,7 +5409,7 @@ bb.co:                                            ; preds = %bb.cr, %bb.cn
 
 bb.cp:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.us = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.07.0.i.i.i.i.i, i1 true)
-  %i.ut = add nsw i32 %.sroa.07.0.i.i.i.i.i, -1
+  %i.ut = add nuw nsw i32 %.sroa.07.0.i.i.i.i.i, 16383
   %i.uu = and i32 %i.ut, %.sroa.07.0.i.i.i.i.i
   %i.uv = zext nneg i32 %i.us to i64
   call void @llvm.assume(i1 %i.uq)
@@ -5812,7 +5812,7 @@ bb.co:                                            ; preds = %bb.cr, %bb.cn
 
 bb.cp:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.un = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.07.0.i.i.i.i.i, i1 true)
-  %i.uo = add nsw i32 %.sroa.07.0.i.i.i.i.i, -1
+  %i.uo = add nuw nsw i32 %.sroa.07.0.i.i.i.i.i, 16383
   %i.up = and i32 %i.uo, %.sroa.07.0.i.i.i.i.i
   %i.uq = zext nneg i32 %i.un to i64
   call void @llvm.assume(i1 %i.ul)
@@ -6215,7 +6215,7 @@ bb.cj:                                            ; preds = %bb.cm, %bb.ci
 
 bb.ck:                                            ; preds = %.critedge.i.i.i.i.i.i
   %i.tu = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.09.0.i.i.i.i.i, i1 true)
-  %i.tv = add nsw i32 %.sroa.09.0.i.i.i.i.i, -1
+  %i.tv = add nuw nsw i32 %.sroa.09.0.i.i.i.i.i, 4095
   %i.tw = and i32 %i.tv, %.sroa.09.0.i.i.i.i.i
   %i.tx = zext nneg i32 %i.tu to i64
   call void @llvm.assume(i1 %i.tr)
@@ -6618,7 +6618,7 @@ bb.f:                                             ; preds = %.critedge.i.backedg
   br i1 %.not.i.i.i.us.us.us.us.i.i.i.i, label %_ZN5folly3f146detail11F14BasicMapINS1_21VectorContainerPolicyIN8facebook5velox10StringViewENS5_12_GLOBAL__N_112UpdateSourceEvvvSt17integral_constantIbLb1EEEEEixEOS6_.exit, label %.critedge.i.backedge.us.us.us.us.i.i.i.i, !prof !2128
 
 .critedge.i.backedge.us.us.us.us.i.i.i.i:         ; preds = %bb.f
-  %i.bh = add nsw i32 %.sroa.09.047.us.us.us.us.i.i.i.i, -1
+  %i.bh = add nuw nsw i32 %.sroa.09.047.us.us.us.us.i.i.i.i, 4095
   %i.bi = and i32 %i.bh, %.sroa.09.047.us.us.us.us.i.i.i.i ; 2 uses
   %.not38.us.us.us.us.i.i.i.i = icmp eq i32 %i.bi, 0
   br i1 %.not38.us.us.us.us.i.i.i.i, label %.critedge.i._crit_edge.split.us.split.us.us.us.i.i.i.i, label %bb.f, !llvm.loop !2123
@@ -6656,7 +6656,7 @@ bb.g:                                             ; preds = %.critedge.i._crit_e
 bb.h:                                             ; preds = %.critedge.i.backedge.us.us70.i.i.i.i, %.lr.ph.us.i.i.i.i
   %.sroa.09.047.us.us67.i.i.i.i = phi i32 [ %i.bt, %.lr.ph.us.i.i.i.i ], [ %i.by, %.critedge.i.backedge.us.us70.i.i.i.i ] ; 3 uses
   %i.bw = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.09.047.us.us67.i.i.i.i, i1 true)
-  %i.bx = add nsw i32 %.sroa.09.047.us.us67.i.i.i.i, -1
+  %i.bx = add nuw nsw i32 %.sroa.09.047.us.us67.i.i.i.i, 4095
   %i.by = and i32 %i.bx, %.sroa.09.047.us.us67.i.i.i.i ; 2 uses
   %i.bz = zext nneg i32 %i.bw to i64
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %i.bz
@@ -6710,7 +6710,7 @@ bb.i:                                             ; preds = %.critedge.i._crit_e
 bb.j:                                             ; preds = %.critedge.i.backedge.i.i.i.i, %.lr.ph.i.i.i.i
   %.sroa.09.047.i.i.i.i = phi i32 [ %i.cr, %.lr.ph.i.i.i.i ], [ %i.cw, %.critedge.i.backedge.i.i.i.i ] ; 3 uses
   %i.cu = call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.09.047.i.i.i.i, i1 true)
-  %i.cv = add nsw i32 %.sroa.09.047.i.i.i.i, -1
+  %i.cv = add nuw nsw i32 %.sroa.09.047.i.i.i.i, 4095
   %i.cw = and i32 %i.cv, %.sroa.09.047.i.i.i.i    ; 2 uses
   %i.cx = zext nneg i32 %i.cu to i64
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %i.cx
@@ -7113,7 +7113,7 @@ bb.f:                                             ; preds = %bb.i, %bb.e
 
 bb.g:                                             ; preds = %.critedge.i.i.i.i.i
   %i.ar = tail call noundef range(i32 0, 32) i32 @llvm.cttz.i32(i32 %.sroa.09.0.i.i.i.i, i1 true)
-  %i.as = add nsw i32 %.sroa.09.0.i.i.i.i, -1
+  %i.as = add nuw nsw i32 %.sroa.09.0.i.i.i.i, 4095
   %i.at = and i32 %i.as, %.sroa.09.0.i.i.i.i
   %i.au = zext nneg i32 %i.ar to i64              ; 2 uses
   tail call void @llvm.assume(i1 %i.ap)

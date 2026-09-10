@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %_ZN3lld3elflsIN4llv
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc noundef range(i32 0, 8) i32 @_ZL11getPicFlagsRN3lld3elf3CtxEN4llvm8ArrayRefIN12_GLOBAL__N_19FileFlagsEEE(ptr noundef nonnull align 8 dereferenceable(3472) %0, ptr nofree readonly captures(address) %1, i64 %2) unnamed_addr #0 {
+define internal fastcc noundef range(i32 0, 7) i32 @_ZL11getPicFlagsRN3lld3elf3CtxEN4llvm8ArrayRefIN12_GLOBAL__N_19FileFlagsEEE(ptr noundef nonnull align 8 dereferenceable(3472) %0, ptr nofree readonly captures(address) %1, i64 %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %"struct.lld::elf::ELFSyncStream", align 8 ; 5 uses
   %4 = alloca %"struct.lld::elf::ELFSyncStream", align 8 ; 5 uses
@@ -348,9 +348,9 @@ bb.i:                                             ; preds = %.lr.ph.split, %.thr
 
 ._crit_edge64:                                    ; preds = %.lr.ph63.prol.loopexit, %.lr.ph63, %bb.a
   %.029.lcssa = phi i32 [ %i.e, %bb.a ], [ %.lcssa.unr, %.lr.ph63.prol.loopexit ], [ %i.ca, %.lr.ph63 ] ; 2 uses
-  %5 = shl nuw nsw i32 %.029.lcssa, 1
-  %6 = and i32 %5, 4
-  %spec.select = or i32 %6, %.029.lcssa
+  %5 = and i32 %.029.lcssa, 2
+  %.not34 = icmp eq i32 %5, 0
+  %spec.select = select i1 %.not34, i32 %.029.lcssa, i32 6
   ret i32 %spec.select
 
 .lr.ph63:                                         ; preds = %.lr.ph63.prol.loopexit, %.lr.ph63

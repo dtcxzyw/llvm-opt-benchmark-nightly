@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.preheader162
   br i1 %.not138, label %.thread152, label %.preheader162, !llvm.loop !298
 
 .thread152:                                       ; preds = %bb.e
-  %i.r = or i32 %i.n, %i.o
+  %i.r = or disjoint i32 %i.n, %i.o
   br label %common.ret226
 
 bb.f:                                             ; preds = %tailrecurse

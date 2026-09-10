@@ -204,17 +204,16 @@ bb.q:                                             ; preds = %bb.p
 bytestream2_peek_be16.exit:                       ; preds = %bb.p, %bb.q
   %.0.i80 = phi i1 [ %i.da, %bb.q ], [ true, %bb.p ]
   %or.cond = select i1 %.not73.lcssa, i1 %.0.i80, i1 false
-  %.not75 = icmp eq i32 %.063166, 0
-  %narrow = select i1 %or.cond, i1 %.not75, i1 false ; 2 uses
-  %2 = zext i1 %narrow to i32
+  %2 = xor i32 %.063166, 1
+  %3 = select i1 %or.cond, i32 %2, i32 0          ; 2 uses
   %i.db = load ptr, ptr %i.bm, align 8, !tbaa !25
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 24
   %i.dd = load i32, ptr %i.dc, align 8, !tbaa !21
-  %3 = select i1 %narrow, i32 %i.dd, i32 0        ; 3 uses
-  %i.de = or i32 %.063166, %2
+  %4 = mul nuw nsw i32 %3, %i.dd                  ; 3 uses
+  %i.de = or i32 %3, %.063166
   %i.df = zext i32 %.0.i.lcssa to i64             ; 2 uses
   %i.dg = add nuw nsw i64 %i.df, 4
-  %i.dh = sext i32 %3 to i64                      ; 4 uses
+  %i.dh = sext i32 %4 to i64                      ; 4 uses
   %i.di = add nsw i64 %i.dg, %i.dh
   %i.dj = icmp ugt i64 %i.di, 2147483647
   br i1 %i.dj, label %.thread137, label %bb.r
@@ -222,13 +221,13 @@ bytestream2_peek_be16.exit:                       ; preds = %bb.p, %bb.q
 bb.r:                                             ; preds = %bytestream2_peek_be16.exit
   %i.dk = load i32, ptr %i.bn, align 8, !tbaa !44 ; 2 uses
   %i.dl = add i32 %.0.i.lcssa, 4
-  %i.dm = add i32 %i.dl, %3
+  %i.dm = add i32 %i.dl, %4
   %i.dn = call i32 @av_grow_packet(ptr noundef %1, i32 noundef %i.dm) #7 ; 2 uses
   %i.do = icmp slt i32 %i.dn, 0
   br i1 %i.do, label %.thread137, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %.not76 = icmp eq i32 %3, 0
+  %.not76 = icmp eq i32 %4, 0
   br i1 %.not76, label %._crit_edge174, label %bb.t
 
 ._crit_edge174:                                   ; preds = %bb.s

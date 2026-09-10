@@ -204,8 +204,7 @@ bb.i:                                             ; preds = %bb.c
   br i1 %.not805, label %bb.k, label %.loopexit947
 
 bb.j:                                             ; preds = %bb.c
-  %4 = and i32 %.0790, 64
-  %.not809 = icmp eq i32 %4, 0
+  %.not809 = icmp samesign ult i32 %.0790, 64
   br i1 %.not809, label %bb.k, label %.loopexit947
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
@@ -216,7 +215,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
   br i1 %.not810, label %.loopexit948.loopexit, label %bb.c
 
 .loopexit948.loopexit:                            ; preds = %bb.k
-  %i.cf = trunc i32 %i.cd to i8
+  %i.cf = trunc nuw nsw i32 %i.cd to i8
   br label %.loopexit948
 
 .loopexit948:                                     ; preds = %.loopexit948.loopexit, %bb.a

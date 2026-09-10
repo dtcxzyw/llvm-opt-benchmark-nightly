@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %._crit_edge.i
   %i.da = trunc nuw nsw i64 %.2.lcssa.i to i32
   %i.db = or i32 %i.da, 16777216
   %i.dc = trunc nuw nsw i64 %.192.lcssa.i to i32
-  %i.dd = and i32 %i.dc, 1572863
+  %i.dd = and i32 %i.dc, 1572859
   %i.de = xor i32 %i.dd, -1572728
   %i.df = getelementptr i8, ptr %i.cp, i64 4
   store i32 %i.db, ptr %i.df, align 4
@@ -607,7 +607,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h
   %i.bq = shl i32 %.0117, 21
   %i.br = add i32 %i.bq, -2097152
   %i.bs = shl nuw nsw i32 %.0132, 19
-  %i.bt = or i32 %i.bs, %i.br
+  %i.bt = or disjoint i32 %i.br, %i.bs
   %i.bu = or disjoint i32 %i.bt, %i.s
   %i.bv = trunc i64 %.1139 to i32
   %i.bw = getelementptr i8, ptr %.1, i64 4
@@ -714,7 +714,7 @@ bb.t:                                             ; preds = %bb.s
   %i.dk = trunc nuw nsw i64 %i.bz to i32          ; 2 uses
   %i.dl = shl nuw nsw i32 %i.ca, 19
   %i.dm = or disjoint i32 %i.dl, %i.s
-  %i.dn = or i32 %i.dm, -2097152
+  %i.dn = or disjoint i32 %i.dm, -2097152
   %i.do = trunc i64 %i.cc to i32
   %i.dp = getelementptr i8, ptr %i.cz, i64 4
   store i32 %i.dk, ptr %i.dp, align 4

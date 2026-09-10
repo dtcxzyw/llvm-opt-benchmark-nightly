@@ -185,42 +185,43 @@ ZL_gcdImpl.exit.i.i:                              ; preds = %ZL_gcdImpl.exit.i.i
 
 bb.j:                                             ; preds = %ZL_gcdImpl.exit.i.i
   %.rhs.trunc.i.i.i.i = trunc nuw i32 %i.ap to i8
-  %i.ar = udiv i8 -1, %.rhs.trunc.i.i.i.i
-  %.zext.i.i.i.i = zext i8 %i.ar to i32           ; 2 uses
+  %i.ar = udiv i8 -1, %.rhs.trunc.i.i.i.i         ; 2 uses
+  %.zext.i.i.i.i = zext i8 %i.ar to i32
   %i.as = mul nuw nsw i32 %i.ap, %.zext.i.i.i.i
-  %i.at = sub nsw i32 0, %i.as
+  %i.at = sub nsw i32 0, %i.as                    ; 2 uses
   %i.au = and i32 %i.at, 255                      ; 2 uses
   %.not42.i.i.i.i = icmp eq i32 %i.au, 0
   br i1 %.not42.i.i.i.i, label %ZL_getMultiplicativeInverse8.exit.i.i.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.j, %.lr.ph.i.i.i.i
-  %.0.in47.i.i.i.i = phi i32 [ %8, %.lr.ph.i.i.i.i ], [ %.zext.i.i.i.i, %bb.j ] ; 4 uses
-  %.03546.i.i.i.i = phi i32 [ %.0.in47.i.i.i.i, %.lr.ph.i.i.i.i ], [ 1, %bb.j ]
-  %.03645.i.i.i.i = phi i32 [ %9, %.lr.ph.i.i.i.i ], [ 1, %bb.j ] ; 2 uses
-  %.037.in44.i.i.i.i = phi i32 [ %.03843.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.ap, %bb.j ] ; 2 uses
-  %.03843.i.i.i.i = phi i32 [ %6, %.lr.ph.i.i.i.i ], [ %i.au, %bb.j ] ; 3 uses
+  %.0.in47.i.i.i.i = phi i32 [ %.038.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.au, %bb.j ] ; 2 uses
+  %.0.in50.i.i.i.i = phi i8 [ %7, %.lr.ph.i.i.i.i ], [ %i.ar, %bb.j ] ; 4 uses
+  %.03549.i.i.i.i = phi i8 [ %.0.in50.i.i.i.i, %.lr.ph.i.i.i.i ], [ 1, %bb.j ]
+  %.03645.i.i.i.i = phi i32 [ %8, %.lr.ph.i.i.i.i ], [ 1, %bb.j ] ; 2 uses
+  %.037.in44.i.i.i.i = phi i32 [ %.0.in47.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.ap, %bb.j ] ; 2 uses
+  %.03843.i.i.i.i = phi i32 [ %i.ax, %.lr.ph.i.i.i.i ], [ %i.at, %bb.j ]
   %.lhs.trunc.i.i.i.i = trunc nuw i32 %.037.in44.i.i.i.i to i8
-  %.rhs.trunc54.i.i.i.i = trunc nuw i32 %.03843.i.i.i.i to i8
-  %i.av = udiv i8 %.lhs.trunc.i.i.i.i, %.rhs.trunc54.i.i.i.i
-  %.zext55.i.i.i.i = zext i8 %i.av to i32         ; 2 uses
-  %i.aw = mul nuw nsw i32 %.03843.i.i.i.i, %.zext55.i.i.i.i
-  %i.ax = sub nsw i32 %.037.in44.i.i.i.i, %i.aw
-  %6 = and i32 %i.ax, 255                         ; 2 uses
-  %7 = mul i32 %.0.in47.i.i.i.i, %.zext55.i.i.i.i
-  %8 = add i32 %7, %.03546.i.i.i.i
-  %9 = xor i32 %.03645.i.i.i.i, 1
-  %.not.i.i.i.i = icmp eq i32 %6, 0
+  %.rhs.trunc54.i.i.i.i = trunc i32 %.03843.i.i.i.i to i8
+  %i.av = udiv i8 %.lhs.trunc.i.i.i.i, %.rhs.trunc54.i.i.i.i ; 2 uses
+  %.zext55.i.i.i.i = zext i8 %i.av to i32
+  %i.aw = mul nuw nsw i32 %.0.in47.i.i.i.i, %.zext55.i.i.i.i
+  %i.ax = sub nsw i32 %.037.in44.i.i.i.i, %i.aw   ; 2 uses
+  %6 = mul i8 %i.av, %.0.in50.i.i.i.i
+  %7 = add i8 %6, %.03549.i.i.i.i
+  %8 = xor i32 %.03645.i.i.i.i, 1
+  %.038.i.i.i.i = and i32 %i.ax, 255              ; 2 uses
+  %.not.i.i.i.i = icmp eq i32 %.038.i.i.i.i, 0
   br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !22
 
 ._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i
-  %i.ay = icmp eq i32 %.03645.i.i.i.i, 1
-  %10 = sub i32 0, %.0.in47.i.i.i.i
-  %spec.select.i.i.i.i = select i1 %i.ay, i32 %10, i32 %.0.in47.i.i.i.i
-  %11 = and i32 %spec.select.i.i.i.i, 255
+  %i.ay = icmp eq i32 %.03645.i.i.i.i, 0
+  %9 = sub i8 0, %.0.in50.i.i.i.i
+  %spec.select.i.i.i.i = select i1 %i.ay, i8 %.0.in50.i.i.i.i, i8 %9
+  %10 = zext i8 %spec.select.i.i.i.i to i32
   br label %ZL_getMultiplicativeInverse8.exit.i.i.i
 
 ZL_getMultiplicativeInverse8.exit.i.i.i:          ; preds = %._crit_edge.i.i.i.i, %bb.j, %ZL_gcdImpl.exit.i.i
-  %.1.i.i.i.i = phi i32 [ 1, %ZL_gcdImpl.exit.i.i ], [ 1, %bb.j ], [ %11, %._crit_edge.i.i.i.i ]
+  %.1.i.i.i.i = phi i32 [ 1, %ZL_gcdImpl.exit.i.i ], [ 1, %bb.j ], [ %10, %._crit_edge.i.i.i.i ]
   %.not2326.not.i.i.i = icmp eq i64 %i.aj, 0
   br i1 %.not2326.not.i.i.i, label %ZL_firstIndexNotDivisibleBy8.exit.i.i, label %.lr.ph.i.i.i
 
@@ -354,9 +355,9 @@ bb.p:                                             ; preds = %ZL_gcdImpl.exit158.
   br i1 %.not.i.i134.i.i, label %._crit_edge.i.i135.i.i, label %.lr.ph.i.i133.i.i, !llvm.loop !26
 
 ._crit_edge.i.i135.i.i:                           ; preds = %.lr.ph.i.i133.i.i
-  %i.da = icmp eq i32 %.03644.i.i.i.i, 1
+  %i.da = icmp eq i32 %.03644.i.i.i.i, 0
   %i.db = sub i32 0, %.046.i.i.i.i
-  %spec.select.i.i136.i.i = select i1 %i.da, i32 %i.db, i32 %.046.i.i.i.i
+  %spec.select.i.i136.i.i = select i1 %i.da, i32 %.046.i.i.i.i, i32 %i.db
   br label %ZL_getMultiplicativeInverse32.exit.i.i.i
 
 ZL_getMultiplicativeInverse32.exit.i.i.i:         ; preds = %._crit_edge.i.i135.i.i, %bb.p, %ZL_gcdImpl.exit158.i.i
@@ -494,9 +495,9 @@ bb.v:                                             ; preds = %ZL_gcdImpl.exit190.
   br i1 %.not.i.i167.i.i, label %._crit_edge.i.i168.i.i, label %.lr.ph.i.i161.i.i, !llvm.loop !26
 
 ._crit_edge.i.i168.i.i:                           ; preds = %.lr.ph.i.i161.i.i
-  %i.fd = icmp eq i32 %.03644.i.i164.i.i, 1
+  %i.fd = icmp eq i32 %.03644.i.i164.i.i, 0
   %i.fe = sub i32 0, %.046.i.i162.i.i
-  %spec.select.i.i169.i.i = select i1 %i.fd, i32 %i.fe, i32 %.046.i.i162.i.i
+  %spec.select.i.i169.i.i = select i1 %i.fd, i32 %.046.i.i162.i.i, i32 %i.fe
   br label %ZL_getMultiplicativeInverse32.exit.i170.i.i
 
 ZL_getMultiplicativeInverse32.exit.i170.i.i:      ; preds = %._crit_edge.i.i168.i.i, %bb.v, %ZL_gcdImpl.exit190.i.i
@@ -624,9 +625,9 @@ bb.ab:                                            ; preds = %.preheader.i
   br i1 %.not.i.i199.i.i, label %._crit_edge.i.i200.i.i, label %.lr.ph.i.i193.i.i, !llvm.loop !31
 
 ._crit_edge.i.i200.i.i:                           ; preds = %.lr.ph.i.i193.i.i
-  %i.gz = icmp eq i64 %.03644.i.i196.i.i, 1
+  %i.gz = icmp eq i64 %.03644.i.i196.i.i, 0
   %i.ha = sub i64 0, %.046.i.i194.i.i
-  %spec.select.i.i201.i.i = select i1 %i.gz, i64 %i.ha, i64 %.046.i.i194.i.i
+  %spec.select.i.i201.i.i = select i1 %i.gz, i64 %.046.i.i194.i.i, i64 %i.ha
   br label %ZL_getMultiplicativeInverse64.exit.i.i.i
 
 ZL_getMultiplicativeInverse64.exit.i.i.i:         ; preds = %._crit_edge.i.i200.i.i, %bb.ab, %.preheader.i
@@ -742,42 +743,43 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %bb.aj
   %.rhs.trunc.i.i.i = trunc nuw i32 %i.in to i8
-  %i.ip = udiv i8 -1, %.rhs.trunc.i.i.i
-  %.zext.i.i.i = zext i8 %i.ip to i32             ; 2 uses
+  %i.ip = udiv i8 -1, %.rhs.trunc.i.i.i           ; 2 uses
+  %.zext.i.i.i = zext i8 %i.ip to i32
   %i.iq = mul nuw nsw i32 %i.in, %.zext.i.i.i
-  %i.ir = sub nsw i32 0, %i.iq
+  %i.ir = sub nsw i32 0, %i.iq                    ; 2 uses
   %i.is = and i32 %i.ir, 255                      ; 2 uses
   %.not42.i.i.i = icmp eq i32 %i.is, 0
   br i1 %.not42.i.i.i, label %ZL_getMultiplicativeInverse8.exit.i.i, label %.lr.ph.i.i92.i
 
 .lr.ph.i.i92.i:                                   ; preds = %bb.ak, %.lr.ph.i.i92.i
-  %.0.in47.i.i.i = phi i32 [ %14, %.lr.ph.i.i92.i ], [ %.zext.i.i.i, %bb.ak ] ; 4 uses
-  %.03546.i.i.i = phi i32 [ %.0.in47.i.i.i, %.lr.ph.i.i92.i ], [ 1, %bb.ak ]
-  %.03645.i.i.i = phi i32 [ %15, %.lr.ph.i.i92.i ], [ 1, %bb.ak ] ; 2 uses
-  %.037.in44.i.i.i = phi i32 [ %.03843.i.i.i, %.lr.ph.i.i92.i ], [ %i.in, %bb.ak ] ; 2 uses
-  %.03843.i.i.i = phi i32 [ %12, %.lr.ph.i.i92.i ], [ %i.is, %bb.ak ] ; 3 uses
+  %.0.in47.i.i.i = phi i32 [ %.038.i.i.i, %.lr.ph.i.i92.i ], [ %i.is, %bb.ak ] ; 2 uses
+  %.0.in50.i.i.i = phi i8 [ %12, %.lr.ph.i.i92.i ], [ %i.ip, %bb.ak ] ; 4 uses
+  %.03549.i.i.i = phi i8 [ %.0.in50.i.i.i, %.lr.ph.i.i92.i ], [ 1, %bb.ak ]
+  %.03645.i.i.i = phi i32 [ %13, %.lr.ph.i.i92.i ], [ 1, %bb.ak ] ; 2 uses
+  %.037.in44.i.i.i = phi i32 [ %.0.in47.i.i.i, %.lr.ph.i.i92.i ], [ %i.in, %bb.ak ] ; 2 uses
+  %.03843.i.i.i = phi i32 [ %i.iv, %.lr.ph.i.i92.i ], [ %i.ir, %bb.ak ]
   %.lhs.trunc.i.i.i = trunc nuw i32 %.037.in44.i.i.i to i8
-  %.rhs.trunc54.i.i.i = trunc nuw i32 %.03843.i.i.i to i8
-  %i.it = udiv i8 %.lhs.trunc.i.i.i, %.rhs.trunc54.i.i.i
-  %.zext55.i.i.i = zext i8 %i.it to i32           ; 2 uses
-  %i.iu = mul nuw nsw i32 %.03843.i.i.i, %.zext55.i.i.i
-  %i.iv = sub nsw i32 %.037.in44.i.i.i, %i.iu
-  %12 = and i32 %i.iv, 255                        ; 2 uses
-  %13 = mul i32 %.0.in47.i.i.i, %.zext55.i.i.i
-  %14 = add i32 %13, %.03546.i.i.i
-  %15 = xor i32 %.03645.i.i.i, 1
-  %.not.i.i93.i = icmp eq i32 %12, 0
+  %.rhs.trunc54.i.i.i = trunc i32 %.03843.i.i.i to i8
+  %i.it = udiv i8 %.lhs.trunc.i.i.i, %.rhs.trunc54.i.i.i ; 2 uses
+  %.zext55.i.i.i = zext i8 %i.it to i32
+  %i.iu = mul nuw nsw i32 %.0.in47.i.i.i, %.zext55.i.i.i
+  %i.iv = sub nsw i32 %.037.in44.i.i.i, %i.iu     ; 2 uses
+  %11 = mul i8 %i.it, %.0.in50.i.i.i
+  %12 = add i8 %11, %.03549.i.i.i
+  %13 = xor i32 %.03645.i.i.i, 1
+  %.038.i.i.i = and i32 %i.iv, 255                ; 2 uses
+  %.not.i.i93.i = icmp eq i32 %.038.i.i.i, 0
   br i1 %.not.i.i93.i, label %._crit_edge.i.i94.i, label %.lr.ph.i.i92.i, !llvm.loop !22
 
 ._crit_edge.i.i94.i:                              ; preds = %.lr.ph.i.i92.i
-  %i.iw = icmp eq i32 %.03645.i.i.i, 1
-  %16 = sub i32 0, %.0.in47.i.i.i
-  %spec.select.i.i95.i = select i1 %i.iw, i32 %16, i32 %.0.in47.i.i.i
-  %17 = and i32 %spec.select.i.i95.i, 255
+  %i.iw = icmp eq i32 %.03645.i.i.i, 0
+  %14 = sub i8 0, %.0.in50.i.i.i
+  %spec.select.i.i96.i = select i1 %i.iw, i8 %.0.in50.i.i.i, i8 %14
+  %15 = zext i8 %spec.select.i.i96.i to i32
   br label %ZL_getMultiplicativeInverse8.exit.i.i
 
 ZL_getMultiplicativeInverse8.exit.i.i:            ; preds = %._crit_edge.i.i94.i, %bb.ak, %bb.aj
-  %.1.i.i.i = phi i32 [ 1, %bb.aj ], [ 1, %bb.ak ], [ %17, %._crit_edge.i.i94.i ]
+  %.1.i.i.i = phi i32 [ 1, %bb.aj ], [ 1, %bb.ak ], [ %15, %._crit_edge.i.i94.i ]
   %.not2326.not.i.i = icmp eq i64 %i.f, 0
   br i1 %.not2326.not.i.i, label %ZL_firstIndexNotDivisibleBy8.exit.i, label %.lr.ph.i.i
 
@@ -860,9 +862,9 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not.i.i99.i, label %._crit_edge.i.i100.i, label %.lr.ph.i.i98.i, !llvm.loop !26
 
 ._crit_edge.i.i100.i:                             ; preds = %.lr.ph.i.i98.i
-  %i.kc = icmp eq i32 %.03644.i.i.i, 1
+  %i.kc = icmp eq i32 %.03644.i.i.i, 0
   %i.kd = sub i32 0, %.046.i.i.i
-  %spec.select.i.i101.i = select i1 %i.kc, i32 %i.kd, i32 %.046.i.i.i
+  %spec.select.i.i101.i = select i1 %i.kc, i32 %.046.i.i.i, i32 %i.kd
   br label %ZL_getMultiplicativeInverse32.exit.i.i
 
 ZL_getMultiplicativeInverse32.exit.i.i:           ; preds = %._crit_edge.i.i100.i, %bb.aq, %bb.ap
@@ -946,9 +948,9 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %.not.i.i118.i, label %._crit_edge.i.i119.i, label %.lr.ph.i.i112.i, !llvm.loop !26
 
 ._crit_edge.i.i119.i:                             ; preds = %.lr.ph.i.i112.i
-  %i.lg = icmp eq i32 %.03644.i.i115.i, 1
+  %i.lg = icmp eq i32 %.03644.i.i115.i, 0
   %i.lh = sub i32 0, %.046.i.i113.i
-  %spec.select.i.i120.i = select i1 %i.lg, i32 %i.lh, i32 %.046.i.i113.i
+  %spec.select.i.i120.i = select i1 %i.lg, i32 %.046.i.i113.i, i32 %i.lh
   br label %ZL_getMultiplicativeInverse32.exit.i121.i
 
 ZL_getMultiplicativeInverse32.exit.i121.i:        ; preds = %._crit_edge.i.i119.i, %bb.aw, %bb.av
@@ -1018,9 +1020,9 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %.not.i.i136.i, label %._crit_edge.i.i137.i, label %.lr.ph.i.i130.i, !llvm.loop !31
 
 ._crit_edge.i.i137.i:                             ; preds = %.lr.ph.i.i130.i
-  %i.mc = icmp eq i64 %.03644.i.i133.i, 1
+  %i.mc = icmp eq i64 %.03644.i.i133.i, 0
   %i.md = sub i64 0, %.046.i.i131.i
-  %spec.select.i.i138.i = select i1 %i.mc, i64 %i.md, i64 %.046.i.i131.i
+  %spec.select.i.i138.i = select i1 %i.mc, i64 %.046.i.i131.i, i64 %i.md
   br label %ZL_getMultiplicativeInverse64.exit.i.i
 
 ZL_getMultiplicativeInverse64.exit.i.i:           ; preds = %._crit_edge.i.i137.i, %bb.ba, %bb.az

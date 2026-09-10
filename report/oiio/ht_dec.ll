@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %bb.aw, %bb.ax, %bb.
   %i.jv = lshr i32 %.sroa.0.0, 2
   %i.jw = and i32 %i.jv, 48
   %i.jx = or disjoint i32 %i.ju, %i.jw
-  %i.jy = shl i32 %i.jx, %.014921868
+  %i.jy = shl nuw nsw i32 %i.jx, %.014921868
   %i.jz = load i32, ptr %.014291869, align 4, !tbaa !9
   %i.ka = or i32 %i.jz, %i.jy                     ; 2 uses
   store i32 %i.ka, ptr %.014291869, align 4, !tbaa !9
@@ -261,8 +261,8 @@ bb.bd:                                            ; preds = %bb.bc, %bb.ay
   %i.ld = shl nuw nsw i32 %.sroa.49.1, 2
   %i.le = and i32 %i.ld, 768
   %i.lf = or disjoint i32 %i.le, %i.lc
-  %13 = add nuw nsw i32 %.014921868, 4
-  %i.lg = shl i32 %i.lf, %13
+  %13 = or disjoint i32 %.014921868, 4
+  %i.lg = shl nuw nsw i32 %i.lf, %13
   %i.lh = or i32 %i.lg, %i.ka
   store i32 %i.lh, ptr %.014291869, align 4, !tbaa !9
   %i.li = lshr exact i32 %.015361863, 2

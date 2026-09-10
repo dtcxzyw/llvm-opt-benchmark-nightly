@@ -205,8 +205,7 @@ middle.block:                                     ; preds = %vector.body
 .loopexit:                                        ; preds = %.preheader.i.prol.loopexit, %.preheader.i, %middle.block
   %.lcssa5 = phi i32 [ %i.n, %middle.block ], [ %.lcssa12.unr, %.preheader.i.prol.loopexit ], [ %i.av, %.preheader.i ]
   %.lcssa = phi ptr [ %i.c, %middle.block ], [ %.lcssa11.unr, %.preheader.i.prol.loopexit ], [ %i.ax, %.preheader.i ]
-  %4 = and i32 %.lcssa5, 65280
-  %.not.i = icmp eq i32 %4, 0
+  %.not.i = icmp samesign ult i32 %.lcssa5, 256
   %i.az = ptrtoint ptr %.lcssa to i64
   %i.ba = ptrtoint ptr %3 to i64
   %i.bb = sub i64 %i.az, %i.ba
@@ -354,8 +353,7 @@ middle.block:                                     ; preds = %vector.body
 .loopexit:                                        ; preds = %.preheader.i.prol.loopexit, %.preheader.i, %middle.block
   %.lcssa5 = phi i32 [ %i.p, %middle.block ], [ %.lcssa12.unr, %.preheader.i.prol.loopexit ], [ %i.bc, %.preheader.i ]
   %.lcssa = phi ptr [ %i.c, %middle.block ], [ %.lcssa11.unr, %.preheader.i.prol.loopexit ], [ %i.be, %.preheader.i ]
-  %4 = and i32 %.lcssa5, 65280
-  %.not.i = icmp eq i32 %4, 0
+  %.not.i = icmp samesign ult i32 %.lcssa5, 256
   %i.bg = ptrtoint ptr %.lcssa to i64
   %i.bh = ptrtoint ptr %3 to i64
   %i.bi = sub i64 %i.bg, %i.bh
@@ -758,8 +756,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .loopexit:                                        ; preds = %.preheader.i.prol.loopexit, %.preheader.i, %vec.epilog.middle.block, %middle.block
   %.lcssa46 = phi i32 [ %i.bi, %vec.epilog.middle.block ], [ %i.ba, %middle.block ], [ %.lcssa70.unr, %.preheader.i.prol.loopexit ], [ %i.cs, %.preheader.i ]
   %.lcssa = phi ptr [ %i.bb, %vec.epilog.middle.block ], [ %i.af, %middle.block ], [ %.lcssa69.unr, %.preheader.i.prol.loopexit ], [ %i.cu, %.preheader.i ]
-  %4 = and i32 %.lcssa46, 65280
-  %.not.i = icmp eq i32 %4, 0
+  %.not.i = icmp samesign ult i32 %.lcssa46, 256
   br i1 %.not.i, label %_ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE0EEEmPKDsmPc.exit, label %_ZN7simdutf7haswell12_GLOBAL__N_128avx2_convert_utf16_to_latin1ILNS_10endiannessE0EEESt4pairIPKDsPcES6_mS7_.exit.thread
 
 _ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE0EEEmPKDsmPc.exit: ; preds = %.loopexit
@@ -1020,8 +1017,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .loopexit:                                        ; preds = %.preheader.i.prol.loopexit, %.preheader.i, %vec.epilog.middle.block, %middle.block
   %.lcssa46 = phi i32 [ %i.bq, %vec.epilog.middle.block ], [ %i.bh, %middle.block ], [ %.lcssa70.unr, %.preheader.i.prol.loopexit ], [ %i.df, %.preheader.i ]
   %.lcssa = phi ptr [ %i.bi, %vec.epilog.middle.block ], [ %i.ai, %middle.block ], [ %.lcssa69.unr, %.preheader.i.prol.loopexit ], [ %i.dh, %.preheader.i ]
-  %4 = and i32 %.lcssa46, 65280
-  %.not.i = icmp eq i32 %4, 0
+  %.not.i = icmp samesign ult i32 %.lcssa46, 256
   br i1 %.not.i, label %_ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE1EEEmPKDsmPc.exit, label %_ZN7simdutf7haswell12_GLOBAL__N_128avx2_convert_utf16_to_latin1ILNS_10endiannessE1EEESt4pairIPKDsPcES6_mS7_.exit.thread
 
 _ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE1EEEmPKDsmPc.exit: ; preds = %.loopexit
@@ -1424,8 +1420,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .loopexit:                                        ; preds = %.preheader.i.i.prol.loopexit, %.preheader.i.i, %vec.epilog.middle.block, %middle.block
   %.lcssa12 = phi i32 [ %i.bq, %vec.epilog.middle.block ], [ %i.bh, %middle.block ], [ %.lcssa36.unr, %.preheader.i.i.prol.loopexit ], [ %i.df, %.preheader.i.i ]
   %.lcssa = phi ptr [ %i.bi, %vec.epilog.middle.block ], [ %i.ai, %middle.block ], [ %.lcssa35.unr, %.preheader.i.i.prol.loopexit ], [ %i.dh, %.preheader.i.i ]
-  %4 = and i32 %.lcssa12, 65280
-  %.not.i.i = icmp eq i32 %4, 0
+  %.not.i.i = icmp samesign ult i32 %.lcssa12, 256
   br i1 %.not.i.i, label %_ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE1EEEmPKDsmPc.exit.i, label %_ZNK7simdutf7haswell14implementation25convert_utf16be_to_latin1EPKDsmPc.exit
 
 _ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE1EEEmPKDsmPc.exit.i: ; preds = %.loopexit
@@ -1673,8 +1668,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .loopexit:                                        ; preds = %.preheader.i.i.prol.loopexit, %.preheader.i.i, %vec.epilog.middle.block, %middle.block
   %.lcssa12 = phi i32 [ %i.bi, %vec.epilog.middle.block ], [ %i.ba, %middle.block ], [ %.lcssa36.unr, %.preheader.i.i.prol.loopexit ], [ %i.cs, %.preheader.i.i ]
   %.lcssa = phi ptr [ %i.bb, %vec.epilog.middle.block ], [ %i.af, %middle.block ], [ %.lcssa35.unr, %.preheader.i.i.prol.loopexit ], [ %i.cu, %.preheader.i.i ]
-  %4 = and i32 %.lcssa12, 65280
-  %.not.i.i = icmp eq i32 %4, 0
+  %.not.i.i = icmp samesign ult i32 %.lcssa12, 256
   br i1 %.not.i.i, label %_ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE0EEEmPKDsmPc.exit.i, label %_ZNK7simdutf7haswell14implementation25convert_utf16le_to_latin1EPKDsmPc.exit
 
 _ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE0EEEmPKDsmPc.exit.i: ; preds = %.loopexit
@@ -2077,8 +2071,7 @@ middle.block:                                     ; preds = %vector.body
 .loopexit:                                        ; preds = %.preheader.i.prol.loopexit, %.preheader.i, %middle.block
   %.lcssa46 = phi i32 [ %i.al, %middle.block ], [ %.lcssa55.unr, %.preheader.i.prol.loopexit ], [ %i.bv, %.preheader.i ]
   %.lcssa = phi ptr [ %i.aa, %middle.block ], [ %.lcssa54.unr, %.preheader.i.prol.loopexit ], [ %i.bx, %.preheader.i ]
-  %4 = and i32 %.lcssa46, 65280
-  %.not.i = icmp eq i32 %4, 0
+  %.not.i = icmp samesign ult i32 %.lcssa46, 256
   br i1 %.not.i, label %_ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE0EEEmPKDsmPc.exit, label %_ZN7simdutf8westmere12_GLOBAL__N_127sse_convert_utf16_to_latin1ILNS_10endiannessE0EEESt4pairIPKDsPcES6_mS7_.exit.thread
 
 _ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE0EEEmPKDsmPc.exit: ; preds = %.loopexit
@@ -2277,8 +2270,7 @@ middle.block:                                     ; preds = %vector.body
 .loopexit:                                        ; preds = %.preheader.i.prol.loopexit, %.preheader.i, %middle.block
   %.lcssa46 = phi i32 [ %i.ap, %middle.block ], [ %.lcssa55.unr, %.preheader.i.prol.loopexit ], [ %i.ce, %.preheader.i ]
   %.lcssa = phi ptr [ %i.ac, %middle.block ], [ %.lcssa54.unr, %.preheader.i.prol.loopexit ], [ %i.cg, %.preheader.i ]
-  %4 = and i32 %.lcssa46, 65280
-  %.not.i = icmp eq i32 %4, 0
+  %.not.i = icmp samesign ult i32 %.lcssa46, 256
   br i1 %.not.i, label %_ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE1EEEmPKDsmPc.exit, label %_ZN7simdutf8westmere12_GLOBAL__N_127sse_convert_utf16_to_latin1ILNS_10endiannessE1EEESt4pairIPKDsPcES6_mS7_.exit.thread
 
 _ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE1EEEmPKDsmPc.exit: ; preds = %.loopexit
@@ -2681,8 +2673,7 @@ middle.block:                                     ; preds = %vector.body
 .loopexit:                                        ; preds = %.preheader.i.i.prol.loopexit, %.preheader.i.i, %middle.block
   %.lcssa12 = phi i32 [ %i.ap, %middle.block ], [ %.lcssa21.unr, %.preheader.i.i.prol.loopexit ], [ %i.ce, %.preheader.i.i ]
   %.lcssa = phi ptr [ %i.ac, %middle.block ], [ %.lcssa20.unr, %.preheader.i.i.prol.loopexit ], [ %i.cg, %.preheader.i.i ]
-  %4 = and i32 %.lcssa12, 65280
-  %.not.i.i = icmp eq i32 %4, 0
+  %.not.i.i = icmp samesign ult i32 %.lcssa12, 256
   br i1 %.not.i.i, label %_ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE1EEEmPKDsmPc.exit.i, label %_ZNK7simdutf8westmere14implementation25convert_utf16be_to_latin1EPKDsmPc.exit
 
 _ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE1EEEmPKDsmPc.exit.i: ; preds = %.loopexit
@@ -2872,8 +2863,7 @@ middle.block:                                     ; preds = %vector.body
 .loopexit:                                        ; preds = %.preheader.i.i.prol.loopexit, %.preheader.i.i, %middle.block
   %.lcssa12 = phi i32 [ %i.al, %middle.block ], [ %.lcssa21.unr, %.preheader.i.i.prol.loopexit ], [ %i.bv, %.preheader.i.i ]
   %.lcssa = phi ptr [ %i.aa, %middle.block ], [ %.lcssa20.unr, %.preheader.i.i.prol.loopexit ], [ %i.bx, %.preheader.i.i ]
-  %4 = and i32 %.lcssa12, 65280
-  %.not.i.i = icmp eq i32 %4, 0
+  %.not.i.i = icmp samesign ult i32 %.lcssa12, 256
   br i1 %.not.i.i, label %_ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE0EEEmPKDsmPc.exit.i, label %_ZNK7simdutf8westmere14implementation25convert_utf16le_to_latin1EPKDsmPc.exit
 
 _ZN7simdutf6scalar12_GLOBAL__N_115utf16_to_latin17convertILNS_10endiannessE0EEEmPKDsmPc.exit.i: ; preds = %.loopexit

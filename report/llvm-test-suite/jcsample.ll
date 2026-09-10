@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
   %i.bn = add nuw nsw i16 %i.bj, 1
   %i.bo = add nuw nsw i16 %i.bn, %i.bm
   %i.bp = lshr i16 %i.bo, 1
-  %i.bq = trunc i16 %i.bp to i8
+  %i.bq = trunc nuw i16 %i.bp to i8
   %i.br = getelementptr inbounds nuw i8, ptr %.02026, i64 2
   store i8 %i.bq, ptr %i.bg, align 1, !tbaa !43
   %i.bs = getelementptr inbounds nuw i8, ptr %.02125, i64 4
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
   %i.bm = add nuw nsw i16 %i.bl, %i.bg
   %i.bn = add nuw nsw i16 %i.bm, %i.bj
   %i.bo = lshr i16 %i.bn, 2
-  %i.bp = trunc i16 %i.bo to i8
+  %i.bp = trunc nuw i16 %i.bo to i8
   %i.bq = getelementptr inbounds nuw i8, ptr %.02635, i64 1
   store i8 %i.bp, ptr %.02635, align 1, !tbaa !43
   %i.br = getelementptr inbounds nuw i8, ptr %.02833, i64 2
@@ -627,7 +627,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
   %i.cf = add nuw nsw i16 %i.ce, %i.bz
   %i.cg = add nuw nsw i16 %i.cf, %i.cc
   %i.ch = lshr i16 %i.cg, 2
-  %i.ci = trunc i16 %i.ch to i8
+  %i.ci = trunc nuw i16 %i.ch to i8
   %i.cj = getelementptr inbounds nuw i8, ptr %.02635, i64 2
   store i8 %i.ci, ptr %i.bq, align 1, !tbaa !43
   %i.ck = getelementptr inbounds nuw i8, ptr %.02833, i64 4

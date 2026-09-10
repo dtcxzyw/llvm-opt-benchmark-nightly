@@ -206,7 +206,7 @@ bb.f:                                             ; preds = %_ZNK12_GLOBAL__N_11
   %.val22.val.i = load ptr, ptr %i.r, align 8, !tbaa !254
   %.val22.val.val.i = load i32, ptr %.val22.val.i, align 8, !tbaa !258
   %i.s = icmp eq i32 %.val22.val.val.i, 18
-  br i1 %i.s, label %.sink.split, label %_ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit.preheader.i
+  br i1 %i.s, label %_ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit, label %_ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit.preheader.i
 
 _ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit.preheader.i: ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
@@ -595,11 +595,21 @@ bb.at:                                            ; preds = %bb.aq
   %.val20.val.i = load ptr, ptr %i.ds, align 8, !tbaa !254
   %.val20.val.val.i = load i32, ptr %.val20.val.i, align 8, !tbaa !258
   %i.dt = icmp eq i32 %.val20.val.val.i, 18
-  br i1 %i.dt, label %.sink.split, label %_ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit26.i
+  br i1 %i.dt, label %_ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit, label %_ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit26.i
 
 _ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit26.i: ; preds = %bb.at
   %i.du = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_115AMDGPUAsmParser9skipTokenEN4llvm8AsmToken9TokenKindENS1_9StringRefE(ptr noundef nonnull readonly align 8 dereferenceable(1017) %0, i32 noundef 26, ptr nonnull @.str.1909, i64 41)
   br i1 %i.du, label %_ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit.i, label %_ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit.thread
+
+_ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit: ; preds = %bb.at, %bb.f
+  %.3.i = phi i64 [ 0, %bb.f ], [ %i.dr, %bb.at ] ; 2 uses
+  %.val23.i = load ptr, ptr %i.b, align 8         ; 2 uses
+  %9 = load ptr, ptr %.val23.i, align 8, !tbaa !40
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 152
+  %11 = load ptr, ptr %10, align 8
+  %12 = call noundef nonnull align 8 dereferenceable(40) ptr %11(ptr noundef nonnull align 8 dereferenceable(243) %.val23.i) #30 ; 0 uses
+  store i64 %.3.i, ptr %i.a, align 8, !tbaa !101
+  br label %bb.ax
 
 bb.au:                                            ; preds = %_ZNK12_GLOBAL__N_115AMDGPUAsmParser6getLocEv.exit
   %i.dv = load ptr, ptr %.val22.i, align 8, !tbaa !40
@@ -626,18 +636,8 @@ bb.aw:                                            ; preds = %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #30
   br label %_ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit.thread
 
-.sink.split:                                      ; preds = %bb.at, %bb.f
-  %.lcssa47.sink = phi i64 [ 0, %bb.f ], [ %i.dr, %bb.at ] ; 2 uses
-  %.val21.i = load ptr, ptr %i.b, align 8         ; 2 uses
-  %9 = load ptr, ptr %.val21.i, align 8, !tbaa !40
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 152
-  %11 = load ptr, ptr %10, align 8
-  %12 = call noundef nonnull align 8 dereferenceable(40) ptr %11(ptr noundef nonnull align 8 dereferenceable(243) %.val21.i) #30 ; 0 uses
-  store i64 %.lcssa47.sink, ptr %i.a, align 8, !tbaa !101
-  br label %bb.ax
-
-bb.ax:                                            ; preds = %.sink.split, %bb.av
-  %i.ef = phi i64 [ %i.dz, %bb.av ], [ %.lcssa47.sink, %.sink.split ]
+bb.ax:                                            ; preds = %bb.av, %_ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit
+  %i.ef = phi i64 [ %i.dz, %bb.av ], [ %.3.i, %_ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
   %i.eg = call noalias noundef nonnull dereferenceable(112) ptr @_Znwm(i64 noundef 112) #31, !noalias !1429 ; 16 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 8
@@ -728,7 +728,7 @@ _ZNSt10unique_ptrIN12_GLOBAL__N_113AMDGPUOperandESt14default_deleteIS1_EED2Ev.ex
   br label %_ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit.thread
 
 _ZN12_GLOBAL__N_115AMDGPUAsmParser16parseGPRIdxMacroEv.exit.thread: ; preds = %_ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit26.i, %bb.as, %_ZN4llvm5TwineC2EPKc.exit.i, %bb.au, %_ZNSt10unique_ptrIN12_GLOBAL__N_113AMDGPUOperandESt14default_deleteIS1_EED2Ev.exit, %bb.aw
-  %.sroa.08.0 = phi i32 [ %i.ee, %bb.aw ], [ 0, %_ZNSt10unique_ptrIN12_GLOBAL__N_113AMDGPUOperandESt14default_deleteIS1_EED2Ev.exit ], [ 1, %bb.au ], [ 1, %bb.as ], [ 1, %_ZN4llvm5TwineC2EPKc.exit.i ], [ 1, %_ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit26.i ]
+  %.sroa.08.0 = phi i32 [ 1, %bb.au ], [ 0, %_ZNSt10unique_ptrIN12_GLOBAL__N_113AMDGPUOperandESt14default_deleteIS1_EED2Ev.exit ], [ %i.ee, %bb.aw ], [ 1, %bb.as ], [ 1, %_ZN4llvm5TwineC2EPKc.exit.i ], [ 1, %_ZN12_GLOBAL__N_115AMDGPUAsmParser12trySkipTokenEN4llvm8AsmToken9TokenKindE.exit26.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   ret i32 %.sroa.08.0
 }
