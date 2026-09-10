@@ -205,7 +205,7 @@ bb.a:
   %i.s = load i24, ptr %i.r, align 8
   %i.t = lshr i24 %i.s, 14
   %i.u = trunc i24 %i.t to i8
-  %i.v = and i8 %i.u, 31
+  %i.v = and i8 %i.u, 5
   %i.w = or i8 %i.v, %.01214.prol                 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.015.prol, i64 8 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -242,7 +242,7 @@ bb.a:
   %i.am = or i24 %i.ai, %i.al
   %i.an = lshr i24 %i.am, 14
   %i.ao = trunc i24 %i.an to i8
-  %i.ap = and i8 %i.ao, 31
+  %i.ap = and i8 %i.ao, 5
   %i.aq = or i8 %i.ap, %.01214                    ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.015, i64 32 ; 2 uses
   %.not.3 = icmp eq ptr %i.ar, %i.n
@@ -645,22 +645,20 @@ bb.a:
   %.not21 = icmp eq i32 %i.g, 0
   br i1 %.not21, label %._crit_edge, label %.lr.ph
 
-2:                                                ; preds = %.lr.ph
-  %3 = getelementptr inbounds nuw i8, ptr %.01223, i64 32 ; 2 uses
-  %.not = icmp eq ptr %3, %i.i
-  br i1 %.not, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.a, %2
-  %.01223 = phi ptr [ %3, %2 ], [ %i.e, %bb.a ]   ; 2 uses
-  %.02022 = phi i8 [ %i.l, %2 ], [ 0, %bb.a ]
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %.01223 = phi ptr [ %2, %.lr.ph ], [ %i.e, %bb.a ] ; 2 uses
+  %.02022 = phi i8 [ %i.l, %.lr.ph ], [ 0, %bb.a ]
   %i.j = tail call noundef zeroext i8 @_ZNK5clang16TemplateArgument13getDependenceEv(ptr noundef nonnull align 8 dereferenceable(24) %.01223) #8
   %i.k = and i8 %i.j, 3
   %i.l = or i8 %i.k, %.02022                      ; 3 uses
-  %.not13.a = icmp eq i8 %i.l, 3
-  br i1 %.not13.a, label %._crit_edge, label %2
+  %.not13 = icmp eq i8 %i.l, 3
+  %2 = getelementptr inbounds nuw i8, ptr %.01223, i64 32 ; 2 uses
+  %.not13.a = icmp eq ptr %2, %i.i
+  %or.cond = select i1 %.not13, i1 true, i1 %.not13.a
+  br i1 %or.cond, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %2, %bb.a
-  %.1 = phi i8 [ 0, %bb.a ], [ %i.l, %2 ], [ 3, %.lr.ph ]
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %.1 = phi i8 [ 0, %bb.a ], [ %i.l, %.lr.ph ]
   %i.m = select i1 %1, i8 8, i8 0
   %i.n = or disjoint i8 %.1, %i.m                 ; 2 uses
   br i1 %1, label %bb.c, label %bb.b
