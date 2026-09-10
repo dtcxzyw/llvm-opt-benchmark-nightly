@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %bb.ah, %bb.ak, %.sp
   %i.dw = load i16, ptr %i.dv, align 2, !dbg !180827, !alias.scope !180685, !noalias !180688
   store i16 %i.dw, ptr %.sroa.13.0.us.i.i, align 2, !dbg !180827, !alias.scope !180685, !noalias !180688
   store i16 %.val.i21.us.i.i.1, ptr %i.dv, align 2, !dbg !180828, !alias.scope !180685, !noalias !180688
-  %i.dx = add nuw i64 %.sroa.23.054.us.i.i, 4, !dbg !180829 ; 3 uses
+  %i.dx = add nuw nsw i64 %.sroa.23.054.us.i.i, 4, !dbg !180829 ; 3 uses
   %.sroa.13.0.us.i.i.1 = getelementptr inbounds nuw i8, ptr %.sroa.031.055.us.i.i, i64 10, !dbg !180818 ; 3 uses
   %niter.next.1 = add nuw i64 %niter, 2, !dbg !180819 ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !180819
@@ -295,7 +295,7 @@ _RNCINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort8unstable9quicksort34partition_lomu
   %i.ev = load i16, ptr %i.eu, align 2, !dbg !180827, !alias.scope !180685, !noalias !180688
   store i16 %i.ev, ptr %.sroa.13.056.us.i.i.epil.init, align 2, !dbg !180827, !alias.scope !180685, !noalias !180688
   store i16 %.val.i21.us.i.i.epil, ptr %i.eu, align 2, !dbg !180828, !alias.scope !180685, !noalias !180688
-  %i.ew = add nuw i64 %.sroa.23.054.us.i.i.epil.init, 2, !dbg !180829
+  %i.ew = add nuw nsw i64 %.sroa.23.054.us.i.i.epil.init, 2, !dbg !180829
   %.sroa.13.0.us.i.i.epil = getelementptr inbounds nuw i8, ptr %.sroa.031.055.us.i.i.epil.init, i64 6, !dbg !180818
   br label %.thread9.i.i.i.i.us.preheader.i.i, !dbg !180838
 
