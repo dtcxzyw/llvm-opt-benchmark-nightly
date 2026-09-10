@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/proj/original/horner?download=true
 inline.NumInlined: 45
 inline.NumDeleted: 19
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZL13horner_freeupP8PJconstsi:bb.a
   tail call void @free(ptr noundef %i.r) #10
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 96
@@ -204,45 +204,85 @@ _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i: ; preds = 
 
 bb.c:                                             ; preds = %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
   %i.s = phi i32 [ 31, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.ay, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
-  %.sroa.038.049.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.ap, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
-  %.sroa.7.048.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.aq, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 2 uses
-  %i.t = load ptr, ptr %i.k, align 8, !tbaa !47   ; 2 uses
+  %.sroa.038.049.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.ap, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 4 uses
+  %.sroa.7.048.i = phi double [ 0.000000e+00, %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i ], [ %i.aq, %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i ] ; 4 uses
+  %i.t = load ptr, ptr %i.k, align 8, !tbaa !47   ; 4 uses
   %i.u = load i32, ptr %i.r, align 8, !tbaa !46
   %i.v = shl i32 %i.u, 1
   %i.w = add i32 %i.v, 2                          ; 2 uses
   %i.x = zext i32 %i.w to i64
-  %.idx.i.i = shl nuw nsw i64 %i.x, 3
+  %.idx.i.i = shl nuw nsw i64 %i.x, 3             ; 3 uses
   %.add.i = add nsw i64 %.idx.i.i, -16            ; 2 uses
   %.ptr46.i = getelementptr inbounds i8, ptr %i.t, i64 %.add.i
-  %i.y = load <2 x double>, ptr %.ptr46.i, align 8, !tbaa !59 ; 2 uses
+  %i.y = load <2 x double>, ptr %.ptr46.i, align 8, !tbaa !59 ; 5 uses
   %i.z = icmp ugt i32 %i.w, 4
-  br i1 %i.z, label %.lr.ph.i.i.preheader.a, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i
+  br i1 %i.z, label %.lr.ph.i.i.preheader, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i
 
-.lr.ph.i.i.preheader.a:                           ; preds = %bb.c
+.lr.ph.i.i.preheader:                             ; preds = %bb.c
+  %2 = add nsw i64 %.idx.i.i, -48                 ; 2 uses
+  %3 = and i64 %2, 16
+  %lcmp.mod.not.not = icmp eq i64 %3, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.prol, label %.lr.ph.i.i.prol.loopexit
+
+.lr.ph.i.i.prol:                                  ; preds = %.lr.ph.i.i.preheader
+  %.02425.i.add.i.prol = add nsw i64 %.idx.i.i, -32 ; 2 uses
+  %.ptr.i.prol = getelementptr inbounds i8, ptr %i.t, i64 %.02425.i.add.i.prol
+  %4 = insertelement <2 x double> poison, double %.sroa.7.048.i, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = fneg <2 x double> %i.y
+  %7 = shufflevector <2 x double> %6, <2 x double> %i.y, <2 x i32> <i32 1, i32 2>
+  %8 = fmul <2 x double> %5, %7
+  %9 = insertelement <2 x double> poison, double %.sroa.038.049.i, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %10, <2 x double> %i.y, <2 x double> %8)
+  %12 = load <2 x double>, ptr %.ptr.i.prol, align 8, !tbaa !59
+  %13 = fadd <2 x double> %11, %12                ; 2 uses
+  br label %.lr.ph.i.i.prol.loopexit
+
+.lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
+  %.02425.i.idx.i.unr = phi i64 [ %.add.i, %.lr.ph.i.i.preheader ], [ %.02425.i.add.i.prol, %.lr.ph.i.i.prol ]
+  %.unr = phi <2 x double> [ %i.y, %.lr.ph.i.i.preheader ], [ %13, %.lr.ph.i.i.prol ]
+  %.lcssa.unr = phi <2 x double> [ poison, %.lr.ph.i.i.preheader ], [ %13, %.lr.ph.i.i.prol ]
+  %14 = icmp eq i64 %2, 0
+  br i1 %14, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i, label %.lr.ph.i.i.preheader.a
+
+.lr.ph.i.i.preheader.a:                           ; preds = %.lr.ph.i.i.prol.loopexit
+  %15 = insertelement <2 x double> poison, double %.sroa.7.048.i, i64 0
+  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
+  %17 = insertelement <2 x double> poison, double %.sroa.038.049.i, i64 0
+  %18 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = insertelement <2 x double> poison, double %.sroa.7.048.i, i64 0
   %i.ab = shufflevector <2 x double> %i.aa, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ac = insertelement <2 x double> poison, double %.sroa.038.049.i, i64 0
   %i.ad = shufflevector <2 x double> %i.ac, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader.a, %.lr.ph.i.i
-  %.02425.i.idx.i = phi i64 [ %.02425.i.add.i, %.lr.ph.i.i ], [ %.add.i, %.lr.ph.i.i.preheader.a ] ; 2 uses
-  %i.ae = phi <2 x double> [ %i.ak, %.lr.ph.i.i ], [ %i.y, %.lr.ph.i.i.preheader.a ] ; 3 uses
-  %.02425.i.add.i = add nsw i64 %.02425.i.idx.i, -16 ; 2 uses
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.a
+  %.02425.i.idx.i = phi i64 [ %.02425.i.idx.i.unr, %.lr.ph.i.i.preheader.a ], [ %.02425.i.add.i, %.lr.ph.i.i ] ; 3 uses
+  %i.ae = phi <2 x double> [ %.unr, %.lr.ph.i.i.preheader.a ], [ %i.ak, %.lr.ph.i.i ] ; 3 uses
+  %19 = getelementptr i8, ptr %i.t, i64 %.02425.i.idx.i
+  %.ptr.i = getelementptr i8, ptr %19, i64 -16
+  %20 = fneg <2 x double> %i.ae
+  %21 = shufflevector <2 x double> %20, <2 x double> %i.ae, <2 x i32> <i32 1, i32 2>
+  %22 = fmul <2 x double> %16, %21
+  %23 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %18, <2 x double> %i.ae, <2 x double> %22)
+  %24 = load <2 x double>, ptr %.ptr.i, align 8, !tbaa !59
+  %25 = fadd <2 x double> %23, %24                ; 3 uses
+  %.02425.i.add.i = add nsw i64 %.02425.i.idx.i, -32 ; 2 uses
   %.ptr.i.a = getelementptr inbounds i8, ptr %i.t, i64 %.02425.i.add.i
-  %i.af = fneg <2 x double> %i.ae
-  %i.ag = shufflevector <2 x double> %i.af, <2 x double> %i.ae, <2 x i32> <i32 1, i32 2>
+  %i.af = fneg <2 x double> %25
+  %i.ag = shufflevector <2 x double> %i.af, <2 x double> %25, <2 x i32> <i32 1, i32 2>
   %i.ah = fmul <2 x double> %i.ab, %i.ag
-  %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ad, <2 x double> %i.ae, <2 x double> %i.ah)
+  %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ad, <2 x double> %25, <2 x double> %i.ah)
   %i.aj = load <2 x double>, ptr %.ptr.i.a, align 8, !tbaa !59
   %i.ak = fadd <2 x double> %i.ai, %i.aj          ; 2 uses
-  %i.al = icmp sgt i64 %.02425.i.idx.i, 32
+  %i.al = icmp sgt i64 %.02425.i.idx.i, 48
   br i1 %i.al, label %.lr.ph.i.i, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i, !llvm.loop !0
 
-_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i:       ; preds = %.lr.ph.i.i, %bb.c
-  %2 = phi <2 x double> [ %i.y, %bb.c ], [ %i.ak, %.lr.ph.i.i ] ; 2 uses
-  %i.am = extractelement <2 x double> %2, i64 0
-  %i.an = extractelement <2 x double> %2, i64 1
+_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i:       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.c
+  %26 = phi <2 x double> [ %i.y, %bb.c ], [ %.lcssa.unr, %.lr.ph.i.i.prol.loopexit ], [ %i.ak, %.lr.ph.i.i ] ; 2 uses
+  %i.am = extractelement <2 x double> %26, i64 0
+  %i.an = extractelement <2 x double> %26, i64 1
   %i.ao = tail call noundef { double, double } @__divdc3(double noundef %i.n, double noundef %i.q, double noundef %i.am, double noundef %i.an) #10 ; 2 uses
   %i.ap = extractvalue { double, double } %i.ao, 0 ; 3 uses
   %i.aq = extractvalue { double, double } %i.ao, 1 ; 3 uses

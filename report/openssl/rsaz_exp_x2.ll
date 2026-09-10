@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 17
 inline.NumDeleted: 10
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 12
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -27,8 +27,8 @@ bb.a:
   %i.h = add nsw i32 %i.g, 255
   %i.i = sdiv i32 %i.h, 256                       ; 7 uses
   %i.j = shl nsw i32 %i.i, 2                      ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %i.k = tail call i32 @ossl_rsaz_avx512ifma_eligible() #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  %i.k = tail call i32 @ossl_rsaz_avx512ifma_eligible() #7
   switch i32 %12, label %bn_reduce_once_in_place.exit149 [
     i32 2048, label %bb.b
     i32 1536, label %bb.b
@@ -45,9 +45,9 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
   %i.r = or disjoint i32 %i.q, %i.o
   %i.s = zext nneg i32 %i.r to i64
   %i.t = getelementptr inbounds nuw [8 x i8], ptr @ossl_rsaz_amm52_x1, i64 %i.s
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !25   ; 4 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !26   ; 4 uses
   %i.v = sext i32 %i.m to i64                     ; 2 uses
-  %i.w = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.v, ptr noundef nonnull @.str, i32 noundef 248) #6 ; 11 uses
+  %i.w = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.v, ptr noundef nonnull @.str, i32 noundef 248) #7 ; 11 uses
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %bn_reduce_once_in_place.exit149, label %bb.c
 
@@ -95,14 +95,14 @@ bb.c:                                             ; preds = %bb.b
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !9
   %i.bg = or i64 %i.bf, %i.bc
   store i64 %i.bg, ptr %i.be, align 8, !tbaa !9
-  tail call void %i.u(ptr noundef nonnull %i.am, ptr noundef nonnull %i.am, ptr noundef nonnull %i.am, ptr noundef nonnull %i.ag, i64 noundef %5) #6
-  tail call void %i.u(ptr noundef nonnull %i.am, ptr noundef nonnull %i.am, ptr noundef nonnull %i.as, ptr noundef nonnull %i.ag, i64 noundef %5) #6
-  tail call void %i.u(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.aj, i64 noundef %11) #6
-  tail call void %i.u(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.as, ptr noundef nonnull %i.aj, i64 noundef %11) #6
+  tail call void %i.u(ptr noundef nonnull %i.am, ptr noundef nonnull %i.am, ptr noundef nonnull %i.am, ptr noundef nonnull %i.ag, i64 noundef %5) #7
+  tail call void %i.u(ptr noundef nonnull %i.am, ptr noundef nonnull %i.am, ptr noundef nonnull %i.as, ptr noundef nonnull %i.ag, i64 noundef %5) #7
+  tail call void %i.u(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.aj, i64 noundef %11) #7
+  tail call void %i.u(ptr noundef nonnull %i.ap, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.as, ptr noundef nonnull %i.aj, i64 noundef %11) #7
   store i64 %5, ptr %i.a, align 16, !tbaa !9
   %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %11, ptr %i.bh, align 8, !tbaa !9
-  %i.bi = tail call i32 @ossl_rsaz_avx512ifma_eligible() #6
+  %i.bi = tail call i32 @ossl_rsaz_avx512ifma_eligible() #7
   switch i32 %12, label %RSAZ_mod_exp_x2_ifma256.exit.thread [
     i32 2048, label %bb.d
     i32 1536, label %bb.d
@@ -115,9 +115,9 @@ bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c
   %i.bl = add nuw nsw i32 %i.q, %i.bk
   %i.bm = zext nneg i32 %i.bl to i64              ; 2 uses
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr @ossl_rsaz_amm52_x2, i64 %i.bm
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !25 ; 39 uses
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !26 ; 39 uses
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr @ossl_extract_multiplier_win5, i64 %i.bm
-  %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !25 ; 2 uses
+  %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !26 ; 2 uses
   switch i32 %12, label %RSAZ_mod_exp_x2_ifma256.exit.thread [
     i32 1024, label %bb.g
     i32 1536, label %bb.e
@@ -140,7 +140,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.bv = shl nuw nsw i32 %i.bu, 3
   %narrow.i = or disjoint i32 %i.bv, 64
   %i.bw = zext nneg i32 %narrow.i to i64          ; 2 uses
-  %i.bx = tail call noalias ptr @CRYPTO_zalloc(i64 noundef %i.bw, ptr noundef nonnull @.str, i32 noundef 425) #6 ; 5 uses
+  %i.bx = tail call noalias ptr @CRYPTO_zalloc(i64 noundef %i.bw, ptr noundef nonnull @.str, i32 noundef 425) #7 ; 5 uses
   %i.by = icmp eq ptr %i.bx, null
   br i1 %i.by, label %RSAZ_mod_exp_x2_ifma256.exit.thread, label %bb.h
 
@@ -157,127 +157,127 @@ bb.h:                                             ; preds = %bb.g
   %i.ch = zext nneg i32 %.0211.i to i64           ; 31 uses
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %i.ch ; 2 uses
   store i64 1, ptr %i.ci, align 8, !tbaa !9
-  call void %i.bo(ptr noundef nonnull %i.cg, ptr noundef nonnull %i.cf, ptr noundef nonnull %i.am, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cg, ptr noundef nonnull %i.cf, ptr noundef nonnull %i.am, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.cg, i64 %i.ce ; 18 uses
-  call void %i.bo(ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ab, ptr noundef nonnull %i.am, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ab, ptr noundef nonnull %i.am, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx.i = shl nuw nsw i64 %i.ch, 5
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.ck, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.ck, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx18.i = mul nuw nsw i64 %i.ch, 48
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx18.i
-  call void %i.bo(ptr noundef nonnull %i.cl, ptr noundef nonnull %i.ck, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cl, ptr noundef nonnull %i.ck, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx19.i = shl nuw nsw i64 %i.ch, 6
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx19.i ; 2 uses
   %.idx20.i = shl nuw nsw i64 %i.ce, 4
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx20.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.cm, ptr noundef nonnull %i.cn, ptr noundef nonnull %i.cn, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cm, ptr noundef nonnull %i.cn, ptr noundef nonnull %i.cn, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx21.i = mul nuw nsw i64 %i.ch, 80
   %i.co = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx21.i
-  call void %i.bo(ptr noundef nonnull %i.co, ptr noundef nonnull %i.cm, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.co, ptr noundef nonnull %i.cm, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx22.i = mul nuw nsw i64 %i.ch, 96
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx22.i ; 2 uses
   %.idx23.i = mul nuw nsw i64 %i.ce, 24
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx23.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.cp, ptr noundef nonnull %i.cq, ptr noundef nonnull %i.cq, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cp, ptr noundef nonnull %i.cq, ptr noundef nonnull %i.cq, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx24.i = mul nuw nsw i64 %i.ch, 112
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx24.i
-  call void %i.bo(ptr noundef nonnull %i.cr, ptr noundef nonnull %i.cp, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cr, ptr noundef nonnull %i.cp, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx25.i = shl nuw nsw i64 %i.ch, 7
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx25.i ; 2 uses
   %.idx26.i = shl nuw nsw i64 %i.ce, 5
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx26.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.cs, ptr noundef nonnull %i.ct, ptr noundef nonnull %i.ct, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cs, ptr noundef nonnull %i.ct, ptr noundef nonnull %i.ct, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx27.i = mul nuw nsw i64 %i.ch, 144
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx27.i
-  call void %i.bo(ptr noundef nonnull %i.cu, ptr noundef nonnull %i.cs, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cu, ptr noundef nonnull %i.cs, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx28.i = mul nuw nsw i64 %i.ch, 160
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx28.i ; 2 uses
   %.idx29.i = mul nuw nsw i64 %i.ce, 40
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx29.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.cv, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cv, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx30.i = mul nuw nsw i64 %i.ch, 176
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx30.i
-  call void %i.bo(ptr noundef nonnull %i.cx, ptr noundef nonnull %i.cv, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cx, ptr noundef nonnull %i.cv, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx31.i = mul nuw nsw i64 %i.ch, 192
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx31.i ; 2 uses
   %.idx32.i = mul nuw nsw i64 %i.ce, 48
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx32.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.cy, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.cy, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx33.i = mul nuw nsw i64 %i.ch, 208
   %i.da = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx33.i
-  call void %i.bo(ptr noundef nonnull %i.da, ptr noundef nonnull %i.cy, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.da, ptr noundef nonnull %i.cy, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx34.i = mul nuw nsw i64 %i.ch, 224
   %i.db = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx34.i ; 2 uses
   %.idx35.i = mul nuw nsw i64 %i.ce, 56
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx35.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.db, ptr noundef nonnull %i.dc, ptr noundef nonnull %i.dc, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.db, ptr noundef nonnull %i.dc, ptr noundef nonnull %i.dc, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx36.i = mul nuw nsw i64 %i.ch, 240
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx36.i
-  call void %i.bo(ptr noundef nonnull %i.dd, ptr noundef nonnull %i.db, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dd, ptr noundef nonnull %i.db, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx37.i = shl nuw nsw i64 %i.ch, 8
   %i.de = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx37.i ; 2 uses
   %.idx38.i = shl nuw nsw i64 %i.ce, 6
   %i.df = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx38.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.de, ptr noundef nonnull %i.df, ptr noundef nonnull %i.df, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.de, ptr noundef nonnull %i.df, ptr noundef nonnull %i.df, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx39.i = mul nuw nsw i64 %i.ch, 272
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx39.i
-  call void %i.bo(ptr noundef nonnull %i.dg, ptr noundef nonnull %i.de, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dg, ptr noundef nonnull %i.de, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx40.i = mul nuw nsw i64 %i.ch, 288
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx40.i ; 2 uses
   %.idx41.i = mul nuw nsw i64 %i.ce, 72
   %i.di = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx41.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.dh, ptr noundef nonnull %i.di, ptr noundef nonnull %i.di, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dh, ptr noundef nonnull %i.di, ptr noundef nonnull %i.di, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx42.i = mul nuw nsw i64 %i.ch, 304
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx42.i
-  call void %i.bo(ptr noundef nonnull %i.dj, ptr noundef nonnull %i.dh, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dj, ptr noundef nonnull %i.dh, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx43.i = mul nuw nsw i64 %i.ch, 320
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx43.i ; 2 uses
   %.idx44.i = mul nuw nsw i64 %i.ce, 80
   %i.dl = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx44.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.dk, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dk, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx45.i = mul nuw nsw i64 %i.ch, 336
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx45.i
-  call void %i.bo(ptr noundef nonnull %i.dm, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dm, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx46.i = mul nuw nsw i64 %i.ch, 352
   %i.dn = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx46.i ; 2 uses
   %.idx47.i = mul nuw nsw i64 %i.ce, 88
   %i.do = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx47.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.dn, ptr noundef nonnull %i.do, ptr noundef nonnull %i.do, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dn, ptr noundef nonnull %i.do, ptr noundef nonnull %i.do, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx48.i = mul nuw nsw i64 %i.ch, 368
   %i.dp = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx48.i
-  call void %i.bo(ptr noundef nonnull %i.dp, ptr noundef nonnull %i.dn, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dp, ptr noundef nonnull %i.dn, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx49.i = mul nuw nsw i64 %i.ch, 384
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx49.i ; 2 uses
   %.idx50.i = mul nuw nsw i64 %i.ce, 96
   %i.dr = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx50.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.dq, ptr noundef nonnull %i.dr, ptr noundef nonnull %i.dr, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dq, ptr noundef nonnull %i.dr, ptr noundef nonnull %i.dr, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx51.i = mul nuw nsw i64 %i.ch, 400
   %i.ds = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx51.i
-  call void %i.bo(ptr noundef nonnull %i.ds, ptr noundef nonnull %i.dq, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.ds, ptr noundef nonnull %i.dq, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx52.i = mul nuw nsw i64 %i.ch, 416
   %i.dt = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx52.i ; 2 uses
   %.idx53.i = mul nuw nsw i64 %i.ce, 104
   %i.du = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx53.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.dt, ptr noundef nonnull %i.du, ptr noundef nonnull %i.du, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dt, ptr noundef nonnull %i.du, ptr noundef nonnull %i.du, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx54.i = mul nuw nsw i64 %i.ch, 432
   %i.dv = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx54.i
-  call void %i.bo(ptr noundef nonnull %i.dv, ptr noundef nonnull %i.dt, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dv, ptr noundef nonnull %i.dt, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx55.i = mul nuw nsw i64 %i.ch, 448
   %i.dw = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx55.i ; 2 uses
   %.idx56.i = mul nuw nsw i64 %i.ce, 112
   %i.dx = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx56.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.dw, ptr noundef nonnull %i.dx, ptr noundef nonnull %i.dx, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dw, ptr noundef nonnull %i.dx, ptr noundef nonnull %i.dx, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx57.i = mul nuw nsw i64 %i.ch, 464
   %i.dy = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx57.i
-  call void %i.bo(ptr noundef nonnull %i.dy, ptr noundef nonnull %i.dw, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dy, ptr noundef nonnull %i.dw, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx58.i = mul nuw nsw i64 %i.ch, 480
   %i.dz = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx58.i ; 2 uses
   %.idx59.i = mul nuw nsw i64 %i.ce, 120
   %i.ea = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx59.i ; 2 uses
-  call void %i.bo(ptr noundef nonnull %i.dz, ptr noundef nonnull %i.ea, ptr noundef nonnull %i.ea, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.dz, ptr noundef nonnull %i.ea, ptr noundef nonnull %i.ea, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %.idx60.i = mul nuw nsw i64 %i.ch, 496
   %i.eb = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.idx60.i
-  call void %i.bo(ptr noundef nonnull %i.eb, ptr noundef nonnull %i.dz, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bo(ptr noundef nonnull %i.eb, ptr noundef nonnull %i.dz, ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %i.ec = shl nuw nsw i32 %.0211.i, 6
   %i.ed = zext nneg i32 %i.ec to i64
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.cg, i64 %i.ed ; 11 uses
@@ -299,7 +299,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i, label %bb.i, label %.lr.ph.preheader.i
 
 bb.i:                                             ; preds = %bb.h
-  call void @OPENSSL_die(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str, i32 noundef 478) #7
+  call void @OPENSSL_die(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str, i32 noundef 478) #8
   unreachable
 
 .lr.ph.preheader.i:                               ; preds = %bb.h
@@ -319,7 +319,7 @@ bb.i:                                             ; preds = %bb.h
   %i.fa = lshr i64 %i.ex, %i.ey
   %i.fb = trunc i64 %i.ez to i32
   %i.fc = trunc i64 %i.fa to i32
-  call void %i.bq(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cg, i32 noundef %i.fb, i32 noundef %i.fc) #6, !inline_history !12
+  call void %i.bq(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cg, i32 noundef %i.fb, i32 noundef %i.fc) #7, !inline_history !13
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.l, %.lr.ph.preheader.i
@@ -372,24 +372,24 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.gk = and i32 %i.gj, 31
   %i.gl = trunc i64 %.0.i to i32
   %i.gm = and i32 %i.gl, 31
-  call void %i.bq(ptr noundef nonnull %i.cf, ptr noundef nonnull %i.cg, i32 noundef %i.gk, i32 noundef %i.gm) #6, !inline_history !12
-  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
-  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
-  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
-  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
-  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
-  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cf, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
+  call void %i.bq(ptr noundef nonnull %i.cf, ptr noundef nonnull %i.cg, i32 noundef %i.gk, i32 noundef %i.gm) #7, !inline_history !13
+  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
+  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
+  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
+  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
+  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
+  call void %i.bo(ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cf, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
   %i.gn = icmp samesign ugt i32 %.020712.in.i, 9
-  br i1 %i.gn, label %.lr.ph.i, label %bb.m, !llvm.loop !13
+  br i1 %i.gn, label %.lr.ph.i, label %bb.m, !llvm.loop !14
 
 bb.m:                                             ; preds = %bb.l
   %i.go = shl nuw nsw i64 %i.ce, 3
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.cf, i8 0, i64 %i.go, i1 false)
   store i64 1, ptr %i.cf, align 8, !tbaa !9
   store i64 1, ptr %i.ci, align 8, !tbaa !9
-  call void %i.bo(ptr noundef nonnull %i.am, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cf, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #6, !inline_history !12
-  call void @OPENSSL_cleanse(ptr noundef nonnull %i.bx, i64 noundef %i.bw) #6
-  call void @CRYPTO_free(ptr noundef nonnull %i.bx, ptr noundef nonnull @.str, i32 noundef 569) #6
+  call void %i.bo(ptr noundef nonnull %i.am, ptr noundef nonnull %i.cd, ptr noundef nonnull %i.cf, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.a) #7, !inline_history !13
+  call void @OPENSSL_cleanse(ptr noundef nonnull %i.bx, i64 noundef %i.bw) #7
+  call void @CRYPTO_free(ptr noundef nonnull %i.bx, ptr noundef nonnull @.str, i32 noundef 569) #7
   %i.gp = add nsw i32 %12, 63
   %i.gq = ashr i32 %i.gp, 6                       ; 3 uses
   %i.gr = icmp sgt i32 %i.gq, 0                   ; 2 uses
@@ -465,7 +465,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ia = add nsw i32 %.047.i, -208               ; 2 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %.03245.i, i64 32 ; 2 uses
   %i.ic = icmp sgt i32 %.047.i, 311
-  br i1 %i.ic, label %.lr.ph48.i, label %._crit_edge.i119, !llvm.loop !14
+  br i1 %i.ic, label %.lr.ph48.i, label %._crit_edge.i119, !llvm.loop !15
 
 ._crit_edge.i119:                                 ; preds = %.lr.ph48.i.prol.loopexit, %.lr.ph48.i, %.preheader.i
   %.032.lcssa.i = phi ptr [ %i.am, %.preheader.i ], [ %.lcssa222.unr, %.lr.ph48.i.prol.loopexit ], [ %i.ib, %.lr.ph48.i ] ; 3 uses
@@ -525,7 +525,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ji = add nsw i32 %.047.i35.i.prol, -1        ; 2 uses
   %prol.iter229.next = add i32 %prol.iter229, 1   ; 2 uses
   %prol.iter229.cmp.not = icmp eq i32 %prol.iter229.next, %xtraiter227
-  br i1 %prol.iter229.cmp.not, label %.lr.ph.i33.i.prol.loopexit, label %.lr.ph.i33.i.prol, !llvm.loop !15
+  br i1 %prol.iter229.cmp.not, label %.lr.ph.i33.i.prol.loopexit, label %.lr.ph.i33.i.prol, !llvm.loop !16
 
 .lr.ph.i33.i.prol.loopexit:                       ; preds = %.lr.ph.i33.i.prol, %.lr.ph.i.i
   %.08.i34.i.unr = phi i64 [ %i.jd, %.lr.ph.i.i ], [ %i.jh, %.lr.ph.i33.i.prol ]
@@ -571,7 +571,7 @@ bb.m:                                             ; preds = %bb.l
   store i8 %i.kf, ptr %i.kd, align 1, !tbaa !11
   %i.kh = add nsw i32 %.047.i35.i, -8
   %i.ki = icmp sgt i32 %.047.i35.i, 8
-  br i1 %i.ki, label %.lr.ph.i33.i, label %from_words52.exit, !llvm.loop !16
+  br i1 %i.ki, label %.lr.ph.i33.i, label %from_words52.exit, !llvm.loop !17
 
 bb.n:                                             ; preds = %._crit_edge.i119
   %.not.i120 = icmp eq i32 %.0.lcssa.i, 0
@@ -601,7 +601,7 @@ bb.o:                                             ; preds = %bb.n
   %i.kq = add nsw i32 %.047.i40.i.prol, -1        ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter225
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i38.i.prol.loopexit, label %.lr.ph.i38.i.prol, !llvm.loop !17
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i38.i.prol.loopexit, label %.lr.ph.i38.i.prol, !llvm.loop !18
 
 .lr.ph.i38.i.prol.loopexit:                       ; preds = %.lr.ph.i38.i.prol, %.lr.ph.i38.preheader.i
   %.08.i39.i.unr = phi i64 [ %i.km, %.lr.ph.i38.preheader.i ], [ %i.kp, %.lr.ph.i38.i.prol ]
@@ -647,7 +647,7 @@ bb.o:                                             ; preds = %bb.n
   store i8 %i.ln, ptr %i.ll, align 1, !tbaa !11
   %i.lp = add nsw i32 %.047.i40.i, -8
   %i.lq = icmp sgt i32 %.047.i40.i, 8
-  br i1 %i.lq, label %.lr.ph.i38.i, label %from_words52.exit, !llvm.loop !16
+  br i1 %i.lq, label %.lr.ph.i38.i, label %from_words52.exit, !llvm.loop !17
 
 from_words52.exit:                                ; preds = %.lr.ph.i38.i.prol.loopexit, %.lr.ph.i38.i, %.lr.ph.i33.i.prol.loopexit, %.lr.ph.i33.i, %bb.n, %bb.o
   br i1 %i.gr, label %.lr.ph.preheader.i142, label %.preheader.i122
@@ -721,7 +721,7 @@ from_words52.exit:                                ; preds = %.lr.ph.i38.i.prol.l
   %i.my = add nsw i32 %.047.i139, -208            ; 2 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %.03245.i141, i64 32 ; 2 uses
   %i.na = icmp sgt i32 %.047.i139, 311
-  br i1 %i.na, label %.lr.ph48.i138, label %._crit_edge.i123, !llvm.loop !14
+  br i1 %i.na, label %.lr.ph48.i138, label %._crit_edge.i123, !llvm.loop !15
 
 ._crit_edge.i123:                                 ; preds = %.lr.ph48.i138.prol.loopexit, %.lr.ph48.i138, %.preheader.i122
   %.032.lcssa.i124 = phi ptr [ %i.ap, %.preheader.i122 ], [ %.lcssa.unr, %.lr.ph48.i138.prol.loopexit ], [ %i.mz, %.lr.ph48.i138 ] ; 3 uses
@@ -781,7 +781,7 @@ from_words52.exit:                                ; preds = %.lr.ph.i38.i.prol.l
   %i.og = add nsw i32 %.047.i35.i136.prol, -1     ; 2 uses
   %prol.iter238.next = add i32 %prol.iter238, 1   ; 2 uses
   %prol.iter238.cmp.not = icmp eq i32 %prol.iter238.next, %xtraiter236
-  br i1 %prol.iter238.cmp.not, label %.lr.ph.i33.i134.prol.loopexit, label %.lr.ph.i33.i134.prol, !llvm.loop !18
+  br i1 %prol.iter238.cmp.not, label %.lr.ph.i33.i134.prol.loopexit, label %.lr.ph.i33.i134.prol, !llvm.loop !19
 
 .lr.ph.i33.i134.prol.loopexit:                    ; preds = %.lr.ph.i33.i134.prol, %.lr.ph.i.i133
   %.08.i34.i135.unr = phi i64 [ %i.ob, %.lr.ph.i.i133 ], [ %i.of, %.lr.ph.i33.i134.prol ]
@@ -827,7 +827,7 @@ from_words52.exit:                                ; preds = %.lr.ph.i38.i.prol.l
   store i8 %i.pd, ptr %i.pb, align 1, !tbaa !11
   %i.pf = add nsw i32 %.047.i35.i136, -8
   %i.pg = icmp sgt i32 %.047.i35.i136, 8
-  br i1 %i.pg, label %.lr.ph.i33.i134, label %from_words52.exit143, !llvm.loop !16
+  br i1 %i.pg, label %.lr.ph.i33.i134, label %from_words52.exit143, !llvm.loop !17
 
 bb.p:                                             ; preds = %._crit_edge.i123
   %.not.i127 = icmp eq i32 %.0.lcssa.i126, 0
@@ -857,7 +857,7 @@ bb.q:                                             ; preds = %bb.p
   %i.po = add nsw i32 %.047.i40.i131.prol, -1     ; 2 uses
   %prol.iter235.next = add i32 %prol.iter235, 1   ; 2 uses
   %prol.iter235.cmp.not = icmp eq i32 %prol.iter235.next, %xtraiter233
-  br i1 %prol.iter235.cmp.not, label %.lr.ph.i38.i129.prol.loopexit, label %.lr.ph.i38.i129.prol, !llvm.loop !19
+  br i1 %prol.iter235.cmp.not, label %.lr.ph.i38.i129.prol.loopexit, label %.lr.ph.i38.i129.prol, !llvm.loop !20
 
 .lr.ph.i38.i129.prol.loopexit:                    ; preds = %.lr.ph.i38.i129.prol, %.lr.ph.i38.preheader.i128
   %.08.i39.i130.unr = phi i64 [ %i.pk, %.lr.ph.i38.preheader.i128 ], [ %i.pn, %.lr.ph.i38.i129.prol ]
@@ -903,16 +903,16 @@ bb.q:                                             ; preds = %bb.p
   store i8 %i.ql, ptr %i.qj, align 1, !tbaa !11
   %i.qn = add nsw i32 %.047.i40.i131, -8
   %i.qo = icmp sgt i32 %.047.i40.i131, 8
-  br i1 %i.qo, label %.lr.ph.i38.i129, label %from_words52.exit143, !llvm.loop !16
+  br i1 %i.qo, label %.lr.ph.i38.i129, label %from_words52.exit143, !llvm.loop !17
 
 from_words52.exit143:                             ; preds = %.lr.ph.i38.i129.prol.loopexit, %.lr.ph.i38.i129, %.lr.ph.i33.i134.prol.loopexit, %.lr.ph.i33.i134, %bb.p, %bb.q
   %i.qp = lshr exact i32 %12, 6                   ; 3 uses
   %i.qq = zext nneg i32 %i.qp to i64              ; 6 uses
-  %i.qr = call i64 @bn_sub_words(ptr noundef nonnull %i.w, ptr noundef %0, ptr noundef %3, i32 noundef %i.qp) #6 ; 2 uses
+  %i.qr = call i64 @bn_sub_words(ptr noundef nonnull %i.w, ptr noundef %0, ptr noundef %3, i32 noundef %i.qp) #7 ; 2 uses
   %i.qs = sub i64 0, %i.qr
-  %i.qt = call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.qs) #8, !srcloc !27 ; 2 uses
+  %i.qt = call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.qs) #9, !srcloc !27 ; 2 uses
   %i.qu = add i64 %i.qr, -1
-  %i.qv = call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.qu) #8, !srcloc !27 ; 2 uses
+  %i.qv = call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.qu) #9, !srcloc !27 ; 2 uses
   %min.iters.check = icmp ult i32 %12, 256
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -944,7 +944,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.rf, ptr %i.qx, align 8, !tbaa !9
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.rg = icmp eq i64 %index.next, %n.vec
-  br i1 %i.rg, label %middle.block, label %vector.body, !llvm.loop !20
+  br i1 %i.rg, label %middle.block, label %vector.body, !llvm.loop !21
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.qq
@@ -966,14 +966,14 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i64 %i.rn, ptr %i.rh, align 8, !tbaa !9
   %i.ro = add nuw i64 %.09.i.i, 1                 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.ro, %i.qq
-  br i1 %exitcond.not.i.i, label %.lr.ph.i.i146, label %scalar.ph, !llvm.loop !21
+  br i1 %exitcond.not.i.i, label %.lr.ph.i.i146, label %scalar.ph, !llvm.loop !22
 
 .lr.ph.i.i146:                                    ; preds = %scalar.ph, %middle.block
-  %i.rp = call i64 @bn_sub_words(ptr noundef nonnull %i.w, ptr noundef %6, ptr noundef %9, i32 noundef %i.qp) #6 ; 2 uses
+  %i.rp = call i64 @bn_sub_words(ptr noundef nonnull %i.w, ptr noundef %6, ptr noundef %9, i32 noundef %i.qp) #7 ; 2 uses
   %i.rq = sub i64 0, %i.rp
-  %i.rr = call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.rq) #8, !srcloc !27 ; 2 uses
+  %i.rr = call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.rq) #9, !srcloc !27 ; 2 uses
   %i.rs = add i64 %i.rp, -1
-  %i.rt = call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.rs) #8, !srcloc !27 ; 2 uses
+  %i.rt = call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.rs) #9, !srcloc !27 ; 2 uses
   %min.iters.check201 = icmp ult i32 %12, 256
   br i1 %min.iters.check201, label %scalar.ph200.preheader, label %vector.ph202
 
@@ -1005,7 +1005,7 @@ vector.body208:                                   ; preds = %vector.body208, %ve
   store <2 x i64> %i.sd, ptr %i.rv, align 8, !tbaa !9
   %index.next214 = add nuw i64 %index209, 4       ; 2 uses
   %i.se = icmp eq i64 %index.next214, %n.vec203
-  br i1 %i.se, label %middle.block215, label %vector.body208, !llvm.loop !22
+  br i1 %i.se, label %middle.block215, label %vector.body208, !llvm.loop !23
 
 middle.block215:                                  ; preds = %vector.body208
   %cmp.n216 = icmp eq i64 %n.vec203, %i.qq
@@ -1027,17 +1027,17 @@ scalar.ph200:                                     ; preds = %scalar.ph200.prehea
   store i64 %i.sl, ptr %i.sf, align 8, !tbaa !9
   %i.sm = add nuw i64 %.09.i.i147, 1              ; 2 uses
   %exitcond.not.i.i148 = icmp eq i64 %i.sm, %i.qq
-  br i1 %exitcond.not.i.i148, label %RSAZ_mod_exp_x2_ifma256.exit.thread, label %scalar.ph200, !llvm.loop !23
+  br i1 %exitcond.not.i.i148, label %RSAZ_mod_exp_x2_ifma256.exit.thread, label %scalar.ph200, !llvm.loop !24
 
 RSAZ_mod_exp_x2_ifma256.exit.thread:              ; preds = %scalar.ph200, %middle.block215, %bb.g, %bb.d, %bb.c
   %.0113.ph = phi i32 [ 0, %bb.g ], [ 0, %bb.d ], [ 0, %bb.c ], [ 1, %middle.block215 ], [ 1, %scalar.ph200 ]
-  call void @OPENSSL_cleanse(ptr noundef nonnull %i.w, i64 noundef %i.v) #6
-  call void @CRYPTO_free(ptr noundef nonnull %i.w, ptr noundef nonnull @.str, i32 noundef 321) #6
+  call void @OPENSSL_cleanse(ptr noundef nonnull %i.w, i64 noundef %i.v) #7
+  call void @CRYPTO_free(ptr noundef nonnull %i.w, ptr noundef nonnull @.str, i32 noundef 321) #7
   br label %bn_reduce_once_in_place.exit149
 
 bn_reduce_once_in_place.exit149:                  ; preds = %bb.b, %bb.a, %RSAZ_mod_exp_x2_ifma256.exit.thread
   %.0113156 = phi i32 [ %.0113.ph, %RSAZ_mod_exp_x2_ifma256.exit.thread ], [ 0, %bb.a ], [ 0, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.0113156
 }
 
@@ -1126,7 +1126,7 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.a
   %.036.lcssa = phi i32 [ %3, %bb.a ], [ %.lcssa74.unr, %.lr.ph.prol.loopexit ], [ %i.ac, %.lr.ph ] ; 4 uses
-  %.035.lcssa = phi ptr [ %2, %bb.a ], [ %.lcssa76.unr, %.lr.ph.prol.loopexit ], [ %i.aa, %.lr.ph ] ; 9 uses
+  %.035.lcssa = phi ptr [ %2, %bb.a ], [ %.lcssa76.unr, %.lr.ph.prol.loopexit ], [ %i.aa, %.lr.ph ] ; 17 uses
   %.033.lcssa = phi i32 [ %1, %bb.a ], [ %.lcssa75.unr, %.lr.ph.prol.loopexit ], [ %i.ab, %.lr.ph ] ; 3 uses
   %.0.lcssa = phi ptr [ %0, %bb.a ], [ %.lcssa73.unr, %.lr.ph.prol.loopexit ], [ %i.ad, %.lr.ph ] ; 6 uses
   %i.af = icmp sgt i32 %.036.lcssa, 52
@@ -1168,25 +1168,79 @@ bb.a:
   %i.bk = or disjoint i64 %.masked, %i.bj
   store i64 %i.bk, ptr %.0.lcssa, align 8, !tbaa !9
   %i.bl = add nsw i32 %.036.lcssa, -45
-  %i.bm = lshr i32 %i.bl, 3
-  %i.bn = zext nneg i32 %i.bm to i64
+  %i.bm = lshr i32 %i.bl, 3                       ; 2 uses
+  %i.bn = zext nneg i32 %i.bm to i64              ; 4 uses
+  %xtraiter82 = and i64 %i.bn, 3                  ; 3 uses
+  %4 = add nsw i32 %i.bm, -1
+  %5 = icmp ult i32 %4, 3
+  br i1 %5, label %.epil.preheader81, label %.preheader.preheader.new
+
+.preheader.preheader.new:                         ; preds = %.preheader.preheader
+  %unroll_iter87 = and i64 %i.bn, 536870908
+  br label %6
+
+6:                                                ; preds = %6, %.preheader.preheader.new
+  %indvars.iv.i37 = phi i64 [ %i.bn, %.preheader.preheader.new ], [ %indvars.iv.next.i39.3, %6 ] ; 5 uses
+  %.08.i38 = phi i64 [ 0, %.preheader.preheader.new ], [ %30, %6 ]
+  %niter88 = phi i64 [ 0, %.preheader.preheader.new ], [ %niter88.next.3, %6 ]
+  %7 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i37
+  %8 = getelementptr i8, ptr %7, i64 5
+  %9 = load i8, ptr %8, align 1, !tbaa !11
+  %10 = zext i8 %9 to i64
+  %11 = shl i64 %.08.i38, 16
+  %12 = shl nuw nsw i64 %10, 8
+  %13 = or disjoint i64 %11, %12
+  %14 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i37
+  %15 = getelementptr i8, ptr %14, i64 4
+  %16 = load i8, ptr %15, align 1, !tbaa !11
+  %17 = zext i8 %16 to i64
+  %18 = or disjoint i64 %13, %17
+  %19 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i37
+  %20 = getelementptr i8, ptr %19, i64 3
+  %21 = load i8, ptr %20, align 1, !tbaa !11
+  %22 = zext i8 %21 to i64
+  %23 = shl i64 %18, 16
+  %24 = shl nuw nsw i64 %22, 8
+  %25 = or disjoint i64 %23, %24
+  %26 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i37
+  %27 = getelementptr i8, ptr %26, i64 2
+  %28 = load i8, ptr %27, align 1, !tbaa !11
+  %29 = zext i8 %28 to i64
+  %30 = or disjoint i64 %25, %29                  ; 3 uses
+  %indvars.iv.next.i39.3 = add nsw i64 %indvars.iv.i37, -4 ; 2 uses
+  %niter88.next.3 = add i64 %niter88, 4           ; 2 uses
+  %niter88.ncmp.3.not = icmp eq i64 %niter88.next.3, %unroll_iter87
+  br i1 %niter88.ncmp.3.not, label %get_digit.exit40.unr-lcssa, label %6, !llvm.loop !31
+
+get_digit.exit40.unr-lcssa:                       ; preds = %6
+  %lcmp.mod84.not = icmp eq i64 %xtraiter82, 0
+  br i1 %lcmp.mod84.not, label %get_digit.exit40, label %.epil.preheader81
+
+.epil.preheader81:                                ; preds = %get_digit.exit40.unr-lcssa, %.preheader.preheader
+  %indvars.iv.i37.epil.init = phi i64 [ %i.bn, %.preheader.preheader ], [ %indvars.iv.next.i39.3, %get_digit.exit40.unr-lcssa ]
+  %.08.i38.epil.init = phi i64 [ 0, %.preheader.preheader ], [ %30, %get_digit.exit40.unr-lcssa ]
+  %lcmp.mod86 = icmp ne i64 %xtraiter82, 0
+  tail call void @llvm.assume(i1 %lcmp.mod86)
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %.preheader.preheader
-  %indvars.iv.i37.a = phi i64 [ %i.bn, %.preheader.preheader ], [ %indvars.iv.next.i39, %bb.b ] ; 3 uses
-  %.08.i38.a = phi i64 [ 0, %.preheader.preheader ], [ %i.bt, %bb.b ]
-  %i.bo = shl i64 %.08.i38.a, 8
-  %i.bp = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i37.a
+bb.b:                                             ; preds = %bb.b, %.epil.preheader81
+  %indvars.iv.i37.epil = phi i64 [ %indvars.iv.i37.epil.init, %.epil.preheader81 ], [ %indvars.iv.next.i39.epil, %bb.b ] ; 2 uses
+  %indvars.iv.i37.a = phi i64 [ %.08.i38.epil.init, %.epil.preheader81 ], [ %i.bt, %bb.b ]
+  %.08.i38.a = phi i64 [ 0, %.epil.preheader81 ], [ %indvars.iv.next.i39, %bb.b ]
+  %i.bo = shl i64 %indvars.iv.i37.a, 8
+  %i.bp = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i37.epil
   %i.bq = getelementptr i8, ptr %i.bp, i64 5
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !11
   %i.bs = zext i8 %i.br to i64
   %i.bt = or disjoint i64 %i.bo, %i.bs            ; 2 uses
-  %indvars.iv.next.i39 = add nsw i64 %indvars.iv.i37.a, -1
-  %4 = icmp samesign ugt i64 %indvars.iv.i37.a, 1
-  br i1 %4, label %bb.b, label %get_digit.exit40, !llvm.loop !31
+  %indvars.iv.next.i39.epil = add nsw i64 %indvars.iv.i37.epil, -1
+  %indvars.iv.next.i39 = add i64 %.08.i38.a, 1    ; 2 uses
+  %epil.iter83.cmp.not = icmp eq i64 %indvars.iv.next.i39, %xtraiter82
+  br i1 %epil.iter83.cmp.not, label %get_digit.exit40, label %bb.b, !llvm.loop !32
 
-get_digit.exit40:                                 ; preds = %bb.b
-  %i.bu = lshr i64 %i.bt, 4
+get_digit.exit40:                                 ; preds = %bb.b, %get_digit.exit40.unr-lcssa
+  %.lcssa = phi i64 [ %30, %get_digit.exit40.unr-lcssa ], [ %i.bt, %bb.b ]
+  %i.bu = lshr i64 %.lcssa, 4
   %i.bv = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8
   store i64 %i.bu, ptr %i.bv, align 8, !tbaa !9
   %i.bw = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 16
@@ -1199,25 +1253,79 @@ bb.c:                                             ; preds = %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
   %i.bz = add nuw nsw i32 %.036.lcssa, 7
-  %i.ca = lshr i32 %i.bz, 3
-  %i.cb = zext nneg i32 %i.ca to i64
+  %i.ca = lshr i32 %i.bz, 3                       ; 2 uses
+  %i.cb = zext nneg i32 %i.ca to i64              ; 4 uses
+  %xtraiter77 = and i64 %i.cb, 3                  ; 3 uses
+  %31 = add nsw i32 %i.ca, -1
+  %32 = icmp ult i32 %31, 3
+  br i1 %32, label %.epil.preheader, label %.new
+
+.new:                                             ; preds = %bb.d
+  %unroll_iter = and i64 %i.cb, 268435452
+  br label %33
+
+33:                                               ; preds = %33, %.new
+  %indvars.iv.i41 = phi i64 [ %i.cb, %.new ], [ %indvars.iv.next.i43.3, %33 ] ; 5 uses
+  %.08.i42 = phi i64 [ 0, %.new ], [ %57, %33 ]
+  %niter = phi i64 [ 0, %.new ], [ %niter.next.3, %33 ]
+  %34 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41
+  %35 = getelementptr i8, ptr %34, i64 -1
+  %36 = load i8, ptr %35, align 1, !tbaa !11
+  %37 = zext i8 %36 to i64
+  %38 = shl i64 %.08.i42, 16
+  %39 = shl nuw nsw i64 %37, 8
+  %40 = or disjoint i64 %38, %39
+  %41 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41
+  %42 = getelementptr i8, ptr %41, i64 -2
+  %43 = load i8, ptr %42, align 1, !tbaa !11
+  %44 = zext i8 %43 to i64
+  %45 = or disjoint i64 %40, %44
+  %46 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41
+  %47 = getelementptr i8, ptr %46, i64 -3
+  %48 = load i8, ptr %47, align 1, !tbaa !11
+  %49 = zext i8 %48 to i64
+  %50 = shl i64 %45, 16
+  %51 = shl nuw nsw i64 %49, 8
+  %52 = or disjoint i64 %50, %51
+  %53 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41
+  %54 = getelementptr i8, ptr %53, i64 -4
+  %55 = load i8, ptr %54, align 1, !tbaa !11
+  %56 = zext i8 %55 to i64
+  %57 = or disjoint i64 %52, %56                  ; 3 uses
+  %indvars.iv.next.i43.3 = add nsw i64 %indvars.iv.i41, -4 ; 2 uses
+  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
+  br i1 %niter.ncmp.3.not, label %get_digit.exit44.unr-lcssa, label %33, !llvm.loop !31
+
+get_digit.exit44.unr-lcssa:                       ; preds = %33
+  %lcmp.mod78.not = icmp eq i64 %xtraiter77, 0
+  br i1 %lcmp.mod78.not, label %get_digit.exit44, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %get_digit.exit44.unr-lcssa, %bb.d
+  %indvars.iv.i41.epil.init = phi i64 [ %i.cb, %bb.d ], [ %indvars.iv.next.i43.3, %get_digit.exit44.unr-lcssa ]
+  %.08.i42.epil.init = phi i64 [ 0, %bb.d ], [ %57, %get_digit.exit44.unr-lcssa ]
+  %lcmp.mod80 = icmp ne i64 %xtraiter77, 0
+  tail call void @llvm.assume(i1 %lcmp.mod80)
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.e, %bb.d
-  %indvars.iv.i41.a = phi i64 [ %i.cb, %bb.d ], [ %indvars.iv.next.i43, %bb.e ] ; 3 uses
-  %.08.i42.a = phi i64 [ 0, %bb.d ], [ %i.ch, %bb.e ]
-  %i.cc = shl i64 %.08.i42.a, 8
-  %i.cd = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41.a
+bb.e:                                             ; preds = %bb.e, %.epil.preheader
+  %indvars.iv.i41.epil = phi i64 [ %indvars.iv.i41.epil.init, %.epil.preheader ], [ %indvars.iv.next.i43.epil, %bb.e ] ; 2 uses
+  %indvars.iv.i41.a = phi i64 [ %.08.i42.epil.init, %.epil.preheader ], [ %i.ch, %bb.e ]
+  %.08.i42.a = phi i64 [ 0, %.epil.preheader ], [ %indvars.iv.next.i43, %bb.e ]
+  %i.cc = shl i64 %indvars.iv.i41.a, 8
+  %i.cd = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41.epil
   %i.ce = getelementptr i8, ptr %i.cd, i64 -1
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !11
   %i.cg = zext i8 %i.cf to i64
   %i.ch = or disjoint i64 %i.cc, %i.cg            ; 2 uses
-  %indvars.iv.next.i43 = add nsw i64 %indvars.iv.i41.a, -1
-  %5 = icmp samesign ugt i64 %indvars.iv.i41.a, 1
-  br i1 %5, label %bb.e, label %get_digit.exit44, !llvm.loop !31
+  %indvars.iv.next.i43.epil = add nsw i64 %indvars.iv.i41.epil, -1
+  %indvars.iv.next.i43 = add i64 %.08.i42.a, 1    ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %indvars.iv.next.i43, %xtraiter77
+  br i1 %epil.iter.cmp.not, label %get_digit.exit44, label %bb.e, !llvm.loop !33
 
-get_digit.exit44:                                 ; preds = %bb.e
-  store i64 %i.ch, ptr %.0.lcssa, align 8, !tbaa !9
+get_digit.exit44:                                 ; preds = %bb.e, %get_digit.exit44.unr-lcssa
+  %.lcssa72 = phi i64 [ %57, %get_digit.exit44.unr-lcssa ], [ %i.ch, %bb.e ]
+  store i64 %.lcssa72, ptr %.0.lcssa, align 8, !tbaa !9
   %i.ci = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8
   %i.cj = add nsw i32 %.033.lcssa, -1
   br label %bb.f
@@ -1284,15 +1392,19 @@ declare void @ossl_extract_multiplier_2x40_win5_avx(ptr noundef, ptr noundef, i3
 
 declare void @ossl_extract_multiplier_2x40_win5(ptr noundef, ptr noundef, i32 noundef, i32 noundef) #3
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #6
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nounwind }
-attributes #7 = { noreturn nounwind }
-attributes #8 = { nounwind memory(none) }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #7 = { nounwind }
+attributes #8 = { noreturn nounwind }
+attributes #9 = { nounwind memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -1310,24 +1422,26 @@ attributes #8 = { nounwind memory(none) }
 !9 = !{!8, !8, i64 0}
 !10 = !{!"llvm.loop.mustprogress"}
 !11 = !{!4, !4, i64 0}
-!12 = distinct !{null}
-!13 = distinct !{!13, !10}
+!12 = !{!"llvm.loop.unroll.disable"}
+!13 = distinct !{null}
 !14 = distinct !{!14, !10}
-!15 = distinct !{!15, !26}
-!16 = distinct !{!16, !10}
-!17 = distinct !{!17, !26}
-!18 = distinct !{!18, !26}
-!19 = distinct !{!19, !26}
-!20 = distinct !{!20, !10, !28, !29}
-!21 = distinct !{!21, !10, !29, !28}
-!22 = distinct !{!22, !10, !28, !29}
-!23 = distinct !{!23, !10, !29, !28}
-!24 = !{!"any pointer", !4, i64 0}
-!25 = !{!24, !24, i64 0}
-!26 = !{!"llvm.loop.unroll.disable"}
+!15 = distinct !{!15, !10}
+!16 = distinct !{!16, !12}
+!17 = distinct !{!17, !10}
+!18 = distinct !{!18, !12}
+!19 = distinct !{!19, !12}
+!20 = distinct !{!20, !12}
+!21 = distinct !{!21, !10, !28, !29}
+!22 = distinct !{!22, !10, !29, !28}
+!23 = distinct !{!23, !10, !28, !29}
+!24 = distinct !{!24, !10, !29, !28}
+!25 = !{!"any pointer", !4, i64 0}
+!26 = !{!25, !25, i64 0}
 !27 = !{i64 787271}
 !28 = !{!"llvm.loop.isvectorized", i32 1}
 !29 = !{!"llvm.loop.unroll.runtime.disable"}
 !30 = distinct !{!30, !10}
 !31 = distinct !{!31, !10}
+!32 = distinct !{!32, !12}
+!33 = distinct !{!33, !12}
 end_hunk_0
