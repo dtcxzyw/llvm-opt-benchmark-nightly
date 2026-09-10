@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %.not232 = icmp samesign ult i64 %i.o, %2
-  %i.by = tail call i64 @llvm.umin.i64(i64 %i.o, i64 %2) ; 2 uses
+  %i.by = tail call i64 @llvm.umin.i64(i64 %i.o, i64 %2)
   %i.bz = trunc i32 %i.bt to i16                  ; 2 uses
   br i1 %.not232, label %bb.r, label %bb.q
 
@@ -246,7 +246,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   store i16 %i.cn, ptr %i.bq, align 8, !tbaa !9
   store i16 %i.cr, ptr %i.bs, align 2, !tbaa !9
   %i.cs = tail call i32 @lj_opt_fold(ptr noundef nonnull %0) #8
-  %.not = icmp eq i64 %i.by, 0
+  %.not = icmp eq i64 %2, 0
   br i1 %.not, label %.loopexit271, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.s

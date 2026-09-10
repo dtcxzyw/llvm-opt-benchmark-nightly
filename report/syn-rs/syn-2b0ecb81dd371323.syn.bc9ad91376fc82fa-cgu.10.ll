@@ -204,10 +204,6 @@ bb.b:                                             ; preds = %bb.a
   %i.g = icmp eq i8 %i.f, 45                      ; 2 uses
   br i1 %i.g, label %bb.c, label %.thread214
 
-thread-pre-split:                                 ; preds = %bb.d
-  %3 = add i64 %2, -1
-  br label %.thread214
-
 bb.c:                                             ; preds = %bb.b
   %.not.i.not = icmp eq i64 %2, 1
   br i1 %.not.i.not, label %.thread225, label %bb.d
@@ -221,6 +217,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   tail call void @_RNvNtCsj6eKBz9Db1c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef 1, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #17
   unreachable
+
+thread-pre-split:                                 ; preds = %bb.d
+  %3 = add i64 %2, -1
+  br label %.thread214
 
 .thread214:                                       ; preds = %bb.b, %thread-pre-split
   %i.k = phi i8 [ %i.i, %thread-pre-split ], [ %i.f, %bb.b ] ; 2 uses
