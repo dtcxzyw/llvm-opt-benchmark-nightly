@@ -204,7 +204,7 @@ _ZN4llvm5APIntC2Ejmbb.exit.i:                     ; preds = %bb.aa, %bb.z
   br label %bb.aq
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.az
-  %17 = select i1 %.2117.i, i8 %.2120.i, i8 0
+  %17 = and i8 %.2117.i, %.2120.i
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %_ZN4llvm5APIntC2Ejmbb.exit.i
@@ -508,7 +508,7 @@ bb.ap:                                            ; preds = %"_ZSt25__unguarded_
 
 bb.aq:                                            ; preds = %bb.az, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.az ] ; 2 uses
-  %.0115173.i = phi i1 [ true, %.lr.ph.i ], [ %.2117.i, %bb.az ] ; 2 uses
+  %.0115173.i = phi i8 [ 1, %.lr.ph.i ], [ %.2117.i, %bb.az ] ; 2 uses
   %.0118172.i = phi i8 [ 0, %.lr.ph.i ], [ %.2120.i, %bb.az ] ; 3 uses
   %i.kg = load ptr, ptr %i.gm, align 8, !tbaa !327
   %i.kh = load i16, ptr %i.gn, align 2, !tbaa !328
@@ -564,12 +564,12 @@ _ZN4llvm5APInt6setBitEj.exit.i:                   ; preds = %bb.au, %bb.at
   %i.ln = zext i1 %i.lm to i8
   %i.lo = or i8 %.0118172.i, %i.ln
   %i.lp = icmp samesign ult i32 %i.ku, 2
-  %18 = select i1 %i.lp, i1 %.0115173.i, i1 false
+  %18 = select i1 %i.lp, i8 %.0115173.i, i8 0
   br label %bb.av
 
 bb.av:                                            ; preds = %_ZN4llvm5APInt6setBitEj.exit.i, %bb.ar
   %.1119.i = phi i8 [ %i.lo, %_ZN4llvm5APInt6setBitEj.exit.i ], [ %.0118172.i, %bb.ar ] ; 2 uses
-  %.1116.i = phi i1 [ %18, %_ZN4llvm5APInt6setBitEj.exit.i ], [ false, %bb.ar ] ; 2 uses
+  %.1116.i = phi i8 [ %18, %_ZN4llvm5APInt6setBitEj.exit.i ], [ 0, %bb.ar ] ; 2 uses
   %i.lq = load i16, ptr %i.kp, align 2, !tbaa !332
   %.sroa.0153.4.insert.ext.i = zext i16 %i.lq to i64
   %.sroa.0153.4.insert.shift.i = shl nuw nsw i64 %.sroa.0153.4.insert.ext.i, 32
@@ -624,7 +624,7 @@ bb.ay:                                            ; preds = %_ZN4llvm15SmallVect
 
 bb.az:                                            ; preds = %bb.ay, %_ZN4llvm15SmallVectorImplISt4pairImNS_3mca13ResourceUsageEEE12emplace_backIJS4_EEERS4_DpOT_.exit.i, %bb.aq
   %.2120.i = phi i8 [ %.0118172.i, %bb.aq ], [ %.1119.i, %bb.ay ], [ %.1119.i, %_ZN4llvm15SmallVectorImplISt4pairImNS_3mca13ResourceUsageEEE12emplace_backIJS4_EEERS4_DpOT_.exit.i ] ; 2 uses
-  %.2117.i = phi i1 [ %.0115173.i, %bb.aq ], [ %.1116.i, %bb.ay ], [ %.1116.i, %_ZN4llvm15SmallVectorImplISt4pairImNS_3mca13ResourceUsageEEE12emplace_backIJS4_EEERS4_DpOT_.exit.i ] ; 2 uses
+  %.2117.i = phi i8 [ %.0115173.i, %bb.aq ], [ %.1116.i, %bb.ay ], [ %.1116.i, %_ZN4llvm15SmallVectorImplISt4pairImNS_3mca13ResourceUsageEEE12emplace_backIJS4_EEERS4_DpOT_.exit.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %bb.aq, !llvm.loop !282

@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %.lr.ph36, %bb.am
   %i.ev = phi i32 [ %i.es, %.lr.ph36 ], [ %i.fp, %bb.am ]
-  %i.ew = phi i8 [ %i.dx, %.lr.ph36 ], [ %i.fq, %bb.am ] ; 2 uses
+  %i.ew = phi i8 [ %i.dx, %.lr.ph36 ], [ %i.fq, %bb.am ] ; 3 uses
   %i.ex = phi ptr [ %.pre69, %.lr.ph36 ], [ %i.fr, %bb.am ] ; 2 uses
   %i.ey = phi ptr [ %.pre67, %.lr.ph36 ], [ %i.fs, %bb.am ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph36 ], [ %indvars.iv.next, %bb.am ] ; 3 uses
@@ -213,17 +213,17 @@ bb.ag:                                            ; preds = %.lr.ph36, %bb.am
   %i.fa = load i64, ptr %i.ez, align 8
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ex, i64 %indvars.iv
   %i.fc = load i8, ptr %i.fb, align 1, !range !6, !noundef !7
-  %7 = trunc nuw i8 %i.fc to i1
-  %i.fd = trunc nuw i8 %i.ew to i1                ; 3 uses
-  br i1 %7, label %bb.ah, label %bb.ai
+  %i.fd = trunc nuw i8 %i.fc to i1
+  br i1 %i.fd, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %8 = select i1 %i.fd, i8 %.023434, i8 0
+  %7 = and i8 %i.ew, %.023434
   br label %bb.am
 
 bb.ai:                                            ; preds = %bb.ag
+  %8 = trunc nuw i8 %i.ew to i1                   ; 2 uses
   %i.fe = trunc nuw i8 %.023434 to i1             ; 2 uses
-  br i1 %i.fd, label %bb.aj, label %bb.ak
+  br i1 %8, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
   br i1 %i.fe, label %.thread11, label %bb.al
@@ -232,7 +232,7 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %i.fe, label %bb.al, label %.thread11
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
-  %.pre-phi = xor i1 %i.fd, true                  ; 2 uses
+  %.pre-phi = xor i1 %8, true                     ; 2 uses
   %i.ff = load ptr, ptr %i.eu, align 8
   %i.fg = getelementptr inbounds [8 x i8], ptr %i.ff, i64 %i.dv
   %i.fh = load i64, ptr %i.fg, align 8
@@ -254,7 +254,7 @@ bb.am:                                            ; preds = %bb.ah, %bb.al
   %i.fq = phi i8 [ %i.ew, %bb.ah ], [ %i.fk, %bb.al ]
   %i.fr = phi ptr [ %i.ex, %bb.ah ], [ %.pre68, %bb.al ]
   %i.fs = phi ptr [ %i.ey, %bb.ah ], [ %.pre, %bb.al ]
-  %.1 = phi i8 [ %8, %bb.ah ], [ %i.fo, %bb.al ]  ; 2 uses
+  %.1 = phi i8 [ %7, %bb.ah ], [ %i.fo, %bb.al ]  ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ft = sext i32 %i.fp to i64
   %i.fu = icmp slt i64 %indvars.iv.next, %i.ft
@@ -263,10 +263,10 @@ bb.am:                                            ; preds = %bb.ah, %bb.al
 .thread11:                                        ; preds = %bb.am, %bb.ak, %bb.aj, %bb.af
   %.0234.lcssa = phi i8 [ %i.dy, %bb.af ], [ 1, %bb.aj ], [ 0, %bb.ak ], [ %.1, %bb.am ] ; 2 uses
   %i.fv = getelementptr inbounds i8, ptr %i.r, i64 %i.dz
-  %i.fw = load i8, ptr %i.fv, align 1, !range !6, !noundef !7
-  %i.fx = trunc nuw i8 %i.fw to i1                ; 2 uses
+  %i.fw = load i8, ptr %i.fv, align 1, !range !6, !noundef !7 ; 2 uses
+  %i.fx = trunc nuw i8 %i.fw to i1
   %i.fy = select i1 %i.fx, i8 1, i8 %.0234.lcssa
-  %9 = select i1 %i.fx, i8 %.0234.lcssa, i8 0
+  %9 = and i8 %i.fw, %.0234.lcssa
   %.in248 = select i1 %4, i8 %i.fy, i8 %9
   %i.fz = icmp ne i8 %.in248, 0
   %i.ga = getelementptr inbounds i8, ptr %i.r, i64 %i.dz

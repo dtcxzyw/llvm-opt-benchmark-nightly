@@ -204,9 +204,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.n
 .loopexit:                                        ; preds = %bb.s, %bb.m, %bb.f, %.loopexit87, %.preheader90, %.preheader88, %bb.c, %bb.g
   %.659 = phi i8 [ 1, %bb.g ], [ 0, %.loopexit87 ], [ 0, %bb.c ], [ %.356, %bb.m ], [ 0, %.preheader88 ], [ 0, %.preheader90 ], [ 0, %bb.f ], [ %.558, %bb.s ]
   %.10 = phi i8 [ %.0, %bb.g ], [ %.0, %.loopexit87 ], [ 0, %bb.c ], [ %.6, %bb.m ], [ 0, %.preheader88 ], [ 0, %.preheader90 ], [ %.0, %bb.f ], [ %.9, %bb.s ]
-  %4 = trunc nuw i8 %.10 to i1
-  %5 = select i1 %4, i8 %.659, i8 0
-  store i8 %5, ptr %1, align 1
+  %4 = and i8 %.659, %.10
+  store i8 %4, ptr %1, align 1
   br label %bb.t
 
 bb.t:                                             ; preds = %.loopexit, %bb.b
@@ -609,9 +608,8 @@ bb.al:                                            ; preds = %bb.aj, %bb.ak, %bb.
 .loopexit:                                        ; preds = %bb.al, %bb.ab, %bb.r, %.preheader138, %.preheader136, %.preheader, %_ZNK16QCPDataContainerI12QCPGraphDataE7findEndEdb.exit
   %.670 = phi i8 [ 0, %_ZNK16QCPDataContainerI12QCPGraphDataE7findEndEdb.exit ], [ %.165, %bb.r ], [ %.367, %bb.ab ], [ 0, %.preheader ], [ 0, %.preheader136 ], [ 0, %.preheader138 ], [ %.569, %bb.al ]
   %.9 = phi i8 [ 0, %_ZNK16QCPDataContainerI12QCPGraphDataE7findEndEdb.exit ], [ %.2, %bb.r ], [ %.5, %bb.ab ], [ 0, %.preheader ], [ 0, %.preheader136 ], [ 0, %.preheader138 ], [ %.8, %bb.al ]
-  %12 = trunc nuw i8 %.9 to i1
-  %13 = select i1 %12, i8 %.670, i8 0
-  store i8 %13, ptr %1, align 1
+  %12 = and i8 %.670, %.9
+  store i8 %12, ptr %1, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #51
   br label %bb.am
 
@@ -1014,9 +1012,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.p
 .loopexit:                                        ; preds = %bb.u, %bb.o, %bb.i, %.preheader88, %.preheader86, %.preheader, %bb.c
   %.659 = phi i8 [ %.154, %bb.i ], [ 0, %bb.c ], [ %.356, %bb.o ], [ 0, %.preheader ], [ 0, %.preheader86 ], [ 0, %.preheader88 ], [ %.558, %bb.u ]
   %.10 = phi i8 [ %.3, %bb.i ], [ 0, %bb.c ], [ %.6, %bb.o ], [ 0, %.preheader ], [ 0, %.preheader86 ], [ 0, %.preheader88 ], [ %.9, %bb.u ]
-  %4 = trunc nuw i8 %.10 to i1
-  %5 = select i1 %4, i8 %.659, i8 0
-  store i8 %5, ptr %1, align 1
+  %4 = and i8 %.659, %.10
+  store i8 %4, ptr %1, align 1
   br label %bb.v
 
 bb.v:                                             ; preds = %.loopexit, %bb.b
@@ -1399,9 +1396,8 @@ bb.am:                                            ; preds = %bb.ak, %bb.al, %bb.
 .loopexit:                                        ; preds = %bb.am, %bb.m, %bb.ag, %bb.w, %.preheader139, %.preheader137, %.preheader, %bb.e
   %.670 = phi i8 [ 0, %bb.e ], [ %.367, %bb.ag ], [ %.569.us, %bb.m ], [ 0, %.preheader ], [ 0, %.preheader137 ], [ 0, %.preheader139 ], [ %.165, %bb.w ], [ %.569, %bb.am ]
   %.9 = phi i8 [ 0, %bb.e ], [ %.5, %bb.ag ], [ %.8.us, %bb.m ], [ 0, %.preheader ], [ 0, %.preheader137 ], [ 0, %.preheader139 ], [ %.2, %bb.w ], [ %.7, %bb.am ]
-  %10 = trunc nuw i8 %.9 to i1
-  %11 = select i1 %10, i8 %.670, i8 0
-  store i8 %11, ptr %1, align 1
+  %10 = and i8 %.670, %.9
+  store i8 %10, ptr %1, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #51
   br label %bb.an
 
@@ -1804,9 +1800,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.n
 .loopexit:                                        ; preds = %bb.s, %bb.m, %bb.f, %.loopexit87, %.preheader90, %.preheader88, %bb.c, %bb.g
   %.659 = phi i8 [ 1, %bb.g ], [ 0, %.loopexit87 ], [ 0, %bb.c ], [ %.356, %bb.m ], [ 0, %.preheader88 ], [ 0, %.preheader90 ], [ 0, %bb.f ], [ %.558, %bb.s ]
   %.10 = phi i8 [ %.0, %bb.g ], [ %.0, %.loopexit87 ], [ 0, %bb.c ], [ %.6, %bb.m ], [ 0, %.preheader88 ], [ 0, %.preheader90 ], [ %.0, %bb.f ], [ %.9, %bb.s ]
-  %4 = trunc nuw i8 %.10 to i1
-  %5 = select i1 %4, i8 %.659, i8 0
-  store i8 %5, ptr %1, align 1
+  %4 = and i8 %.659, %.10
+  store i8 %4, ptr %1, align 1
   br label %bb.t
 
 bb.t:                                             ; preds = %.loopexit, %bb.b
@@ -2209,9 +2204,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.n
 .loopexit:                                        ; preds = %bb.s, %bb.m, %bb.f, %.loopexit87, %.preheader90, %.preheader88, %bb.c, %bb.g
   %.659 = phi i8 [ 1, %bb.g ], [ 0, %.loopexit87 ], [ 0, %bb.c ], [ %.356, %bb.m ], [ 0, %.preheader88 ], [ 0, %.preheader90 ], [ 0, %bb.f ], [ %.558, %bb.s ]
   %.10 = phi i8 [ %.0, %bb.g ], [ %.0, %.loopexit87 ], [ 0, %bb.c ], [ %.6, %bb.m ], [ 0, %.preheader88 ], [ 0, %.preheader90 ], [ %.0, %bb.f ], [ %.9, %bb.s ]
-  %4 = trunc nuw i8 %.10 to i1
-  %5 = select i1 %4, i8 %.659, i8 0
-  store i8 %5, ptr %1, align 1
+  %4 = and i8 %.659, %.10
+  store i8 %4, ptr %1, align 1
   br label %bb.t
 
 bb.t:                                             ; preds = %.loopexit, %bb.b
@@ -2614,9 +2608,8 @@ bb.ay:                                            ; preds = %bb.aw, %bb.ax, %bb.
 .loopexit:                                        ; preds = %bb.ay, %bb.aj, %bb.u, %.preheader148, %.preheader146, %.preheader, %bb.f
   %.670 = phi i8 [ 0, %bb.f ], [ %.165, %bb.u ], [ %.367, %bb.aj ], [ 0, %.preheader ], [ 0, %.preheader146 ], [ 0, %.preheader148 ], [ %.569, %bb.ay ]
   %.9 = phi i8 [ 0, %bb.f ], [ %.2, %bb.u ], [ %.5, %bb.aj ], [ 0, %.preheader ], [ 0, %.preheader146 ], [ 0, %.preheader148 ], [ %.8, %bb.ay ]
-  %10 = trunc nuw i8 %.9 to i1
-  %11 = select i1 %10, i8 %.670, i8 0
-  store i8 %11, ptr %1, align 1
+  %10 = and i8 %.670, %.9
+  store i8 %10, ptr %1, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #51
   br label %bb.az
 
@@ -3019,9 +3012,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.n
 .loopexit:                                        ; preds = %bb.s, %bb.m, %bb.f, %.loopexit87, %.preheader90, %.preheader88, %bb.c, %bb.g
   %.659 = phi i8 [ 1, %bb.g ], [ 0, %.loopexit87 ], [ 0, %bb.c ], [ %.356, %bb.m ], [ 0, %.preheader88 ], [ 0, %.preheader90 ], [ 0, %bb.f ], [ %.558, %bb.s ]
   %.10 = phi i8 [ %.0, %bb.g ], [ %.0, %.loopexit87 ], [ 0, %bb.c ], [ %.6, %bb.m ], [ 0, %.preheader88 ], [ 0, %.preheader90 ], [ %.0, %bb.f ], [ %.9, %bb.s ]
-  %4 = trunc nuw i8 %.10 to i1
-  %5 = select i1 %4, i8 %.659, i8 0
-  store i8 %5, ptr %1, align 1
+  %4 = and i8 %.659, %.10
+  store i8 %4, ptr %1, align 1
   br label %bb.t
 
 bb.t:                                             ; preds = %.loopexit, %bb.b
@@ -3424,9 +3416,8 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj, %bb.
 .loopexit:                                        ; preds = %bb.ak, %bb.aa, %bb.q, %.preheader139, %.preheader137, %.preheader, %_ZNK16QCPDataContainerI16QCPFinancialDataE7findEndEdb.exit
   %.670 = phi i8 [ 0, %_ZNK16QCPDataContainerI16QCPFinancialDataE7findEndEdb.exit ], [ %.165, %bb.q ], [ %.367, %bb.aa ], [ 0, %.preheader ], [ 0, %.preheader137 ], [ 0, %.preheader139 ], [ %.569, %bb.ak ]
   %.9 = phi i8 [ 0, %_ZNK16QCPDataContainerI16QCPFinancialDataE7findEndEdb.exit ], [ %.2, %bb.q ], [ %.5, %bb.aa ], [ 0, %.preheader ], [ 0, %.preheader137 ], [ 0, %.preheader139 ], [ %.8, %bb.ak ]
-  %12 = trunc nuw i8 %.9 to i1
-  %13 = select i1 %12, i8 %.670, i8 0
-  store i8 %13, ptr %1, align 1
+  %12 = and i8 %.670, %.9
+  store i8 %12, ptr %1, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #51
   br label %bb.al
 
@@ -3829,7 +3820,7 @@ bb.y:                                             ; preds = %bb.x
 .thread:                                          ; preds = %bb.c, %bb.x, %bb.y, %bb.w
   %.672 = phi i8 [ %.571, %bb.x ], [ 1, %bb.y ], [ 1, %bb.w ], [ 0, %bb.c ]
   %.7 = phi i8 [ %.6, %bb.x ], [ 1, %bb.y ], [ 1, %bb.w ], [ 0, %bb.c ]
-  %i.dg = and i8 %.7, %.672
+  %i.dg = and i8 %.672, %.7
   store i8 %i.dg, ptr %1, align 1
   br label %bb.z
 
@@ -4200,7 +4191,7 @@ bb.ah:                                            ; preds = %bb.ag
 .thread134:                                       ; preds = %bb.h, %bb.ag, %bb.ah, %bb.af
   %.688 = phi i8 [ %.587, %bb.ag ], [ 1, %bb.ah ], [ 1, %bb.af ], [ 0, %bb.h ]
   %.7 = phi i8 [ %.6, %bb.ag ], [ 1, %bb.ah ], [ 1, %bb.af ], [ 0, %bb.h ]
-  %i.fw = and i8 %.7, %.688
+  %i.fw = and i8 %.688, %.7
   store i8 %i.fw, ptr %1, align 1
   br label %bb.ai
 

@@ -204,8 +204,8 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bo
   %i.cp = load i8, ptr %i.n, align 1, !range !12, !noundef !13
-  %5 = trunc nuw i8 %i.cp to i1
-  %6 = select i1 %5, i8 0, i8 %.0303
+  %5 = xor i8 %i.cp, -1
+  %6 = and i8 %.0303, %5
   %i.cq = zext nneg i8 %6 to i32
   call void @qemu_progress_init(i32 noundef %i.cq, float noundef 1.000000e+00) #22
   call void @qemu_progress_print(float noundef 0.000000e+00, i32 noundef 100) #22

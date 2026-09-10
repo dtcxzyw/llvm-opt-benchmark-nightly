@@ -205,9 +205,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 28
   %.sroa.0.0.copyload.i = load i32, ptr %i.n, align 4, !tbaa !198
-  %31 = trunc i32 %.sroa.0.0.copyload.i to i1
   %i.o = and i32 %6, 1
-  %spec.select345 = select i1 %31, i32 %i.o, i32 0
+  %spec.select345 = and i32 %i.o, %.sroa.0.0.copyload.i
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %bb.c

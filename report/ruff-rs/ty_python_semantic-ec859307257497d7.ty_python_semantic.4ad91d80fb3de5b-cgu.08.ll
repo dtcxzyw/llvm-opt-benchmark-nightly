@@ -205,7 +205,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph231, %.backedge
-  %.sroa.0.0229 = phi i1 [ true, %.lr.ph231 ], [ %.sroa.0.0.be, %.backedge ] ; 5 uses
+  %.sroa.0.0229 = phi i8 [ 1, %.lr.ph231 ], [ %.sroa.0.0.be, %.backedge ] ; 5 uses
   %.sroa.4.0228 = phi ptr [ %i.cc, %.lr.ph231 ], [ %i.ec, %.backedge ] ; 3 uses
   %i.ec = getelementptr inbounds i8, ptr %.sroa.4.0228, i64 -144 ; 10 uses
   %i.ed = getelementptr inbounds i8, ptr %.sroa.4.0228, i64 -72 ; 6 uses
@@ -213,8 +213,12 @@ bb.b:                                             ; preds = %.lr.ph231, %.backed
   %.not = icmp eq i32 %i.ee, -1
   br i1 %.not, label %bb.d, label %bb.c
 
-._crit_edge232:                                   ; preds = %.backedge, %bb.a
-  %.sroa.0.0.lcssa = phi i1 [ true, %bb.a ], [ %.sroa.0.0.be, %.backedge ]
+._crit_edge232.loopexit:                          ; preds = %.backedge
+  %7 = trunc nuw i8 %.sroa.0.0.be to i1
+  br label %._crit_edge232
+
+._crit_edge232:                                   ; preds = %._crit_edge232.loopexit, %bb.a
+  %.sroa.0.0.lcssa = phi i1 [ true, %bb.a ], [ %7, %._crit_edge232.loopexit ]
   ret i1 %.sroa.0.0.lcssa
 
 bb.c:                                             ; preds = %bb.b
@@ -258,6 +262,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.er = getelementptr inbounds i8, ptr %.sroa.4.0228, i64 -136
   %i.es = call fastcc noundef zeroext i1 @_RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict28validate_merged_dict_literalNCNvMs_NtNtNtB4_5infer7builder10typed_dictNtB1y_20TypeInferenceBuilder27infer_typed_dict_expression0EB6_(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1, ptr noundef nonnull align 8 %i.er, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.ao, ptr noalias noundef nonnull align 8 dereferenceable(24) %4, ptr noalias noundef nonnull align 8 dereferenceable(72) %5, ptr noalias noundef nonnull align 8 dereferenceable(8) %6), !noalias !10234, !inline_history !10141
+  %8 = zext i1 %i.es to i8
   br label %_RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict41validate_merged_unpacked_keyword_argumentNCNvMs_NtNtNtB4_5infer7builder10typed_dictNtB1L_20TypeInferenceBuilder27infer_typed_dict_expression0EB6_.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -386,6 +391,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCsh7jLiOpeRCu_8ordermap3set8OrderS
 
 bb.u:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTINtNtCsh7jLiOpeRCu_8ordermap3set8OrderSetNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameEbEECsoTR8nlGN3X_18ty_python_semantic.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !10233
+  %9 = select i1 %i.fh, i8 %i.fc, i8 0
   %i.fi = load ptr, ptr %i.af, align 8, !noalias !10233, !noundef !12 ; 3 uses
   %.not122.i = icmp ne ptr %i.fi, null            ; 3 uses
   %i.fj = load i64, ptr %i.dr, align 8, !noalias !10233
@@ -475,8 +481,6 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5e9M2GLoJMY_8indexmap3set8IndexSe
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !10233
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !10233
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !10233
-  %7 = trunc nuw i8 %i.fc to i1
-  %8 = and i1 %i.fh, %7
   br label %_RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict41validate_merged_unpacked_keyword_argumentNCNvMs_NtNtNtB4_5infer7builder10typed_dictNtB1L_20TypeInferenceBuilder27infer_typed_dict_expression0EB6_.exit
 
 bb.ae:                                            ; preds = %bb.aj, %bb.y
@@ -739,6 +743,7 @@ _RNvMs0_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dictNtB5_17TypedDictO
           to label %bb.bj unwind label %bb.bi, !noalias !10241, !inline_history !10141
 
 bb.bj:                                            ; preds = %_RNvMs0_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dictNtB5_17TypedDictOpenness5extra.exit
+  %10 = zext i1 %i.gu to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !10233
   call void @_RNvXNtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB2_8BTreeMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict20UnpackedTypedDictKeyENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropB1S_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.l), !noalias !10235
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !10233
@@ -828,9 +833,9 @@ _RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr18make_shallow_clone.exit97: ; pred
   br label %_RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict41validate_merged_unpacked_keyword_argumentNCNvMs_NtNtNtB4_5infer7builder10typed_dictNtB1L_20TypeInferenceBuilder27infer_typed_dict_expression0EB6_.exit
 
 _RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict41validate_merged_unpacked_keyword_argumentNCNvMs_NtNtNtB4_5infer7builder10typed_dictNtB1L_20TypeInferenceBuilder27infer_typed_dict_expression0EB6_.exit: ; preds = %bb.az, %bb.bb, %bb.bg, %bb.bj, %bb.j, %bb.e, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5e9M2GLoJMY_8indexmap3set8IndexSetNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameEECsoTR8nlGN3X_18ty_python_semantic.exit.i, %._crit_edge
-  %.sroa.0.1.i63 = phi i1 [ %i.es, %bb.e ], [ true, %._crit_edge ], [ %8, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5e9M2GLoJMY_8indexmap3set8IndexSetNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameEECsoTR8nlGN3X_18ty_python_semantic.exit.i ], [ true, %bb.j ], [ false, %bb.bb ], [ %i.gu, %bb.bj ], [ false, %bb.bg ], [ true, %bb.az ]
+  %.sroa.0.1.i63 = phi i8 [ %8, %bb.e ], [ 1, %._crit_edge ], [ %9, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5e9M2GLoJMY_8indexmap3set8IndexSetNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameEECsoTR8nlGN3X_18ty_python_semantic.exit.i ], [ 1, %bb.j ], [ 0, %bb.bb ], [ %10, %bb.bj ], [ 0, %bb.bg ], [ 1, %bb.az ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao)
-  %9 = select i1 %.sroa.0.1.i63, i1 %.sroa.0.0229, i1 false
+  %11 = and i8 %.sroa.0.0229, %.sroa.0.1.i63
   br label %.backedge
 
 bb.bq:                                            ; preds = %bb.c
@@ -911,7 +916,7 @@ bb.bu:                                            ; preds = %_RINvMNtCskLngH8kgp
   br i1 %i.id, label %bb.bv, label %bb.bw
 
 bb.bv:                                            ; preds = %bb.cj, %bb.bu
-  %.sroa.0.1 = phi i1 [ %.sroa.0.0229, %bb.bu ], [ %10, %bb.cj ]
+  %.sroa.0.1 = phi i8 [ %.sroa.0.0229, %bb.bu ], [ %12, %bb.cj ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, ptr noundef nonnull align 8 dereferenceable(16) %i.au, i64 16, i1 false)
   %i.ie = call { i64, i1 } @_RNvMs2_NtCs5e9M2GLoJMY_8indexmap3mapINtB5_8IndexMapNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameuE11insert_fullCsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(72) %5, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(16) %i.ap) ; 0 uses
@@ -1005,7 +1010,7 @@ bb.cb:                                            ; preds = %bb.ca
           to label %bb.cc unwind label %.thread181.loopexit
 
 bb.cc:                                            ; preds = %bb.cb
-  %10 = select i1 %i.jd, i1 %.sroa.0.0229, i1 false
+  %12 = select i1 %i.jd, i8 %.sroa.0.0229, i8 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
@@ -1058,9 +1063,9 @@ bb.cj:                                            ; preds = %bb.ci
   br label %bb.bv
 
 .backedge:                                        ; preds = %_RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict41validate_merged_unpacked_keyword_argumentNCNvMs_NtNtNtB4_5infer7builder10typed_dictNtB1L_20TypeInferenceBuilder27infer_typed_dict_expression0EB6_.exit, %bb.bv, %bb.dc
-  %.sroa.0.0.be = phi i1 [ %.sroa.0.3, %bb.dc ], [ %.sroa.0.1, %bb.bv ], [ %9, %_RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict41validate_merged_unpacked_keyword_argumentNCNvMs_NtNtNtB4_5infer7builder10typed_dictNtB1L_20TypeInferenceBuilder27infer_typed_dict_expression0EB6_.exit ] ; 2 uses
+  %.sroa.0.0.be = phi i8 [ %.sroa.0.3, %bb.dc ], [ %.sroa.0.1, %bb.bv ], [ %11, %_RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict41validate_merged_unpacked_keyword_argumentNCNvMs_NtNtNtB4_5infer7builder10typed_dictNtB1L_20TypeInferenceBuilder27infer_typed_dict_expression0EB6_.exit ] ; 2 uses
   %i.jo = icmp eq ptr %i.by, %i.ec
-  br i1 %i.jo, label %._crit_edge232, label %bb.b
+  br i1 %i.jo, label %._crit_edge232.loopexit, label %bb.b
 
 bb.ck:                                            ; preds = %bb.cg
   %i.jp = landingpad { ptr, i32 }
@@ -1233,7 +1238,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5
   br label %bb.dc
 
 bb.dc:                                            ; preds = %bb.de, %bb.dv, %bb.ea, %bb.dg, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7display11DisplayTypeEBH_.exit79, %bb.ct
-  %.sroa.0.3 = phi i1 [ %.sroa.0.4, %bb.dg ], [ false, %bb.ea ], [ false, %bb.dv ], [ false, %bb.ct ], [ false, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7display11DisplayTypeEBH_.exit79 ], [ %.sroa.0.0229, %bb.de ]
+  %.sroa.0.3 = phi i8 [ %.sroa.0.4, %bb.dg ], [ 0, %bb.ea ], [ 0, %bb.dv ], [ 0, %bb.ct ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7display11DisplayTypeEBH_.exit79 ], [ %.sroa.0.0229, %bb.de ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bu)
   br label %.backedge
 
@@ -1269,7 +1274,7 @@ bb.df:                                            ; preds = %bb.dd
   br label %bb.dg
 
 bb.dg:                                            ; preds = %.sink.split, %bb.dd
-  %.sroa.0.4 = phi i1 [ %.sroa.0.0229, %bb.dd ], [ false, %.sink.split ]
+  %.sroa.0.4 = phi i8 [ %.sroa.0.0229, %bb.dd ], [ 0, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.br)
   br label %bb.dc
 

@@ -204,10 +204,8 @@ _ZN4llvm9adl_beginIRNS_8DenseMapIm10GlobalPartNS_12DenseMapInfoImvEENS_6detail12
   %.val.val.i.i.i.i = load i8, ptr %i.jv, align 8, !tbaa !781, !range !37, !noundef !38
   %i.jw = getelementptr i8, ptr %i.ju, i64 25
   %.val.val2.i.i.i.i = load i8, ptr %i.jw, align 1
-  %31 = trunc nuw i8 %.val.val.i.i.i.i to i1
-  %i.jx = and i8 %.val.val2.i.i.i.i, 1
-  %32 = select i1 %31, i8 %i.jx, i8 0
-  %i.jy = zext nneg i8 %32 to i32
+  %i.jx = and i8 %.val.val2.i.i.i.i, %.val.val.i.i.i.i
+  %i.jy = zext nneg i8 %i.jx to i32
   %spec.select.i.i.i.i = add i32 %.04.i.i.i.i, %i.jy ; 2 uses
   %i.jz = add i64 %.pn.i.i, 32
   %i.ka = ashr exact i64 %i.jz, 5                 ; 3 uses

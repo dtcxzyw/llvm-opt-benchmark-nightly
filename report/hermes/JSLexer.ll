@@ -205,9 +205,8 @@ bb.l:                                             ; preds = %.loopexit.jt4, %.lo
   br label %.outer.jt4
 
 bb.m:                                             ; preds = %.split.us
-  %3 = trunc nuw i8 %.047.ph163 to i1
-  %4 = select i1 %3, i8 %.049.ph156, i8 0
-  %i.ck = uitofp nneg i8 %4 to double
+  %3 = and i8 %.047.ph163, %.049.ph156
+  %i.ck = uitofp nneg i8 %3 to double
   %i.cl = fadd double %.073.ph136, %i.ck
   %i.cm = fmul double %.054.ph150, %i.cl
   br label %_ZN6hermes23parseIntWithRadixDigitsILb1EN4llvh8ArrayRefIcEEZNS_17parseIntWithRadixILb1ES3_EENS_8OptValueIdEET0_iEUlhE_EEbS7_iT1_.exit

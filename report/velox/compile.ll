@@ -205,10 +205,10 @@ bb.a:
   %i.f = lshr i64 %1, 32
   %i.g = trunc nuw i64 %i.f to i32
   %i.h = trunc i64 %3 to i32                      ; 5 uses
-  %i.i = lshr i64 %2, 32                          ; 2 uses
-  %i.j = trunc i64 %i.i to i8
-  %i.k = lshr i64 %4, 32                          ; 2 uses
-  %i.l = trunc i64 %i.k to i8
+  %i.i = lshr i64 %2, 32
+  %i.j = trunc i64 %i.i to i8                     ; 2 uses
+  %i.k = lshr i64 %4, 32
+  %i.l = trunc i64 %i.k to i8                     ; 2 uses
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -337,14 +337,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 _ZN3re29PatchList5PatchEPNS_4Prog4InstES0_j.exit40: ; preds = %bb.o, %bb.k
   %.4..4..4..4..sroa_idx79 = getelementptr inbounds nuw i8, ptr %7, i64 4
   %.4..4..4..4..sroa.02.0.copyload = load i64, ptr %.4..4..4..4..sroa_idx79, align 4
-  %9 = trunc i64 %i.k to i1
-  %i.av = and i8 %i.j, 1
-  %10 = select i1 %9, i8 %i.av, i8 0
+  %i.av = and i8 %i.l, 1
+  %9 = and i8 %i.av, %i.j
   store i32 %i.h, ptr %6, align 8, !tbaa !31
   %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 4
   store i64 %.4..4..4..4..sroa.02.0.copyload, ptr %.4..4..4..sroa_idx, align 4
   %.12..12..12..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 12
-  store i8 %10, ptr %.12..12..12..sroa_idx, align 4, !tbaa !32
+  store i8 %9, ptr %.12..12..12..sroa_idx, align 4, !tbaa !32
   br label %bb.u
 
 bb.p:                                             ; preds = %bb.j
@@ -389,14 +388,13 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 _ZN3re29PatchList5PatchEPNS_4Prog4InstES0_j.exit48: ; preds = %bb.t, %bb.p
   %.4..4..4..4..sroa_idx78 = getelementptr inbounds nuw i8, ptr %8, i64 4
   %.4..4..4..4..sroa.0.0.copyload = load i64, ptr %.4..4..4..4..sroa_idx78, align 4
-  %11 = trunc i64 %i.i to i1
-  %i.bh = and i8 %i.l, 1
-  %12 = select i1 %11, i8 %i.bh, i8 0
+  %i.bh = and i8 %i.j, 1
+  %10 = and i8 %i.bh, %i.l
   store i32 %i.e, ptr %6, align 8, !tbaa !31
   %.4..4..4..sroa_idx83 = getelementptr inbounds nuw i8, ptr %6, i64 4
   store i64 %.4..4..4..4..sroa.0.0.copyload, ptr %.4..4..4..sroa_idx83, align 4
   %.12..12..12..sroa_idx84 = getelementptr inbounds nuw i8, ptr %6, i64 12
-  store i8 %12, ptr %.12..12..12..sroa_idx84, align 4, !tbaa !32
+  store i8 %10, ptr %.12..12..12..sroa_idx84, align 4, !tbaa !32
   br label %bb.u
 
 bb.u:                                             ; preds = %_ZN3re29PatchList5PatchEPNS_4Prog4InstES0_j.exit, %_ZN3re29PatchList5PatchEPNS_4Prog4InstES0_j.exit40, %_ZN3re29PatchList5PatchEPNS_4Prog4InstES0_j.exit48, %bb.b
