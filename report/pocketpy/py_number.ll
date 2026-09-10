@@ -202,26 +202,16 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = tail call i64 @py_toint(ptr noundef %1) #7 ; 2 uses
   %.not1415 = icmp eq i64 %i.b, 0
-  br i1 %.not1415, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not1415, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.c
+.lr.ph:                                           ; preds = %bb.c
   %spec.select = tail call i64 @llvm.abs.i64(i64 %i.b, i1 true)
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.017 = phi i32 [ %3, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %.116 = phi i64 [ %2, %.lr.ph ], [ %spec.select, %.lr.ph.preheader ]
-  %2 = lshr i64 %.116, 1                          ; 2 uses
-  %3 = add nuw nsw i32 %.017, 1                   ; 2 uses
-  %.not14 = icmp eq i64 %2, 0
-  br i1 %.not14, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !24
-
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %4 = zext nneg i32 %3 to i64
+  %2 = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %spec.select, i1 true)
+  %3 = sub nuw nsw i64 64, %2
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
-  %.0.lcssa = phi i64 [ 0, %bb.c ], [ %4, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %.lr.ph, %bb.c
+  %.0.lcssa = phi i64 [ 0, %bb.c ], [ %3, %.lr.ph ]
   %i.c = tail call ptr (...) @py_retval() #7
   tail call void @py_newint(ptr noundef %i.c, i64 noundef %.0.lcssa) #7
   br label %bb.d
@@ -624,6 +614,9 @@ declare void @py_newstr(ptr noundef, ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #6
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.ctlz.i64(i64, i1 immarg) #6
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -661,6 +654,4 @@ attributes #7 = { nounwind }
 !21 = !{!20, !20, i64 0}
 !22 = !{!"p1 omnipotent char", !10, i64 0}
 !23 = !{!22, !22, i64 0}
-!24 = distinct !{!24, !25}
-!25 = !{!"llvm.loop.mustprogress"}
 end_hunk_1

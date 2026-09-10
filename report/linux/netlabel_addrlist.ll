@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
   store ptr %.pn37, ptr %i.y, align 8
   %i.ab = getelementptr i8, ptr %0, i64 24
   store ptr %i.aa, ptr %i.ab, align 8
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #4, !srcloc !15
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #5, !srcloc !15
   store volatile ptr %i.y, ptr %i.aa, align 8
   store ptr %i.y, ptr %i.z, align 8
   br label %bb.i
@@ -219,7 +219,7 @@ bb.h:                                             ; preds = %bb.e, %bb.f
   store ptr %1, ptr %i.ad, align 8
   %i.ag = getelementptr i8, ptr %0, i64 24
   store ptr %i.af, ptr %i.ag, align 8
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #4, !srcloc !15
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #5, !srcloc !15
   store volatile ptr %i.ad, ptr %i.af, align 8
   store ptr %i.ad, ptr %i.ae, align 8
   br label %bb.i
@@ -349,7 +349,7 @@ bb.h:                                             ; preds = %endblock
   store ptr %.pn44, ptr %i.ap, align 8
   %i.as = getelementptr i8, ptr %0, i64 48
   store ptr %i.ar, ptr %i.as, align 8
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #4, !srcloc !15
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #5, !srcloc !15
   store volatile ptr %i.ap, ptr %i.ar, align 8
   store ptr %i.ap, ptr %i.aq, align 8
   br label %bb.j
@@ -366,7 +366,7 @@ bb.i:                                             ; preds = %bb.g, %endblock
   store ptr %1, ptr %i.au, align 8
   %i.ax = getelementptr i8, ptr %0, i64 48
   store ptr %i.aw, ptr %i.ax, align 8
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #4, !srcloc !15
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #5, !srcloc !15
   store volatile ptr %i.au, ptr %i.aw, align 8
   store ptr %i.au, ptr %i.av, align 8
   br label %bb.j
@@ -541,27 +541,24 @@ bb.a:
   br i1 %.not16, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.2, ptr noundef nonnull %2) #5
+  tail call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.2, ptr noundef nonnull %2) #6
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.3, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a) #5
+  call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.3, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a) #6
   switch i32 %4, label %.lr.ph [
     i32 -1, label %bb.d
     i32 0, label %._crit_edge
   ]
 
-.lr.ph:                                           ; preds = %bb.c, %.lr.ph
-  %.021 = phi i32 [ %6, %.lr.ph ], [ 0, %bb.c ]
-  %.01320 = phi i32 [ %5, %.lr.ph ], [ %i.b, %bb.c ]
-  %5 = shl i32 %.01320, 1                         ; 2 uses
-  %6 = add nuw nsw i32 %.021, 1                   ; 2 uses
-  %.not18 = icmp eq i32 %5, 0
-  br i1 %.not18, label %._crit_edge, label %.lr.ph, !llvm.loop !18
+.lr.ph:                                           ; preds = %bb.c
+  %5 = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.b, i1 true)
+  %6 = sub nuw nsw i32 32, %5
+  br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.c
+._crit_edge:                                      ; preds = %bb.c, %.lr.ph
   %.0.lcssa = phi i32 [ %4, %bb.c ], [ %6, %.lr.ph ]
-  call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.c, i32 noundef %.0.lcssa) #5
+  call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.c, i32 noundef %.0.lcssa) #6
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %._crit_edge
@@ -580,11 +577,11 @@ bb.a:
   br i1 %.not22, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.2, ptr noundef nonnull %2) #5
+  tail call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.2, ptr noundef nonnull %2) #6
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  tail call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.a, ptr noundef %3) #5
+  tail call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.a, ptr noundef %3) #6
   %i.b = getelementptr i8, ptr %4, i64 12
   %i.c = load i32, ptr %i.b, align 4
   %.not23 = icmp eq i32 %i.c, -1
@@ -598,31 +595,29 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = getelementptr [4 x i8], ptr %4, i64 %i.e
   %i.g = load i32, ptr %i.f, align 4              ; 2 uses
   %i.h = add i32 %.019, 32
-  switch i32 %i.g, label %.lr.ph.preheader [
+  switch i32 %i.g, label %.lr.ph [
     i32 -1, label %.preheader
     i32 0, label %._crit_edge
   ]
 
-.lr.ph.preheader:                                 ; preds = %.preheader
+.lr.ph:                                           ; preds = %.preheader
   %5 = tail call i32 @llvm.bswap.i32(i32 %i.g)
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.01827 = phi i32 [ %6, %.lr.ph ], [ %5, %.lr.ph.preheader ]
-  %.126 = phi i32 [ %i.i, %.lr.ph ], [ %.019, %.lr.ph.preheader ]
-  %6 = shl i32 %.01827, 1                         ; 2 uses
-  %i.i = add i32 %.126, 1                         ; 2 uses
-  %.not24 = icmp eq i32 %6, 0
-  br i1 %.not24, label %._crit_edge, label %.lr.ph, !llvm.loop !19
+  %6 = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %5, i1 true)
+  %reass.sub = sub i32 %.019, %6
+  %i.i = add i32 %reass.sub, 32
+  br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.preheader, %.lr.ph
   %.1.lcssa = phi i32 [ %i.i, %.lr.ph ], [ %.019, %.preheader ]
-  tail call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.a, i32 noundef %.1.lcssa) #5
+  tail call void (ptr, ptr, ...) @audit_log_format(ptr noundef %0, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.a, i32 noundef %.1.lcssa) #6
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c
   ret void
 }
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.cttz.i32(i32, i1 immarg) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #2
@@ -631,8 +626,9 @@ attributes #0 = { fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind
 attributes #1 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #3 = { noredzone null_pointer_is_valid "no-builtin-wcslen" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
-attributes #4 = { nounwind }
-attributes #5 = { noredzone nounwind "no-builtin-wcslen" }
+attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nounwind }
+attributes #6 = { noredzone nounwind "no-builtin-wcslen" }
 
 !llvm.module.flags = !{!4, !5, !6, !7, !8, !9, !10, !11, !12}
 !llvm.ident = !{!13}
@@ -655,6 +651,4 @@ attributes #5 = { noredzone nounwind "no-builtin-wcslen" }
 !15 = !{i64 2153107495}
 !16 = distinct !{!16, !14}
 !17 = distinct !{!17, !14}
-!18 = distinct !{!18, !14}
-!19 = distinct !{!19, !14}
 end_hunk_0

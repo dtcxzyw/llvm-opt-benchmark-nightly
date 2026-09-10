@@ -202,19 +202,13 @@ bb.c:                                             ; preds = %bb.a, %bb.i
   %indvars.iv = phi i64 [ -256, %bb.a ], [ %indvars.iv.next, %bb.i ] ; 6 uses
   %i.a = trunc nsw i64 %indvars.iv to i32         ; 2 uses
   %i.b = icmp eq i64 %indvars.iv, 0
-  br i1 %i.b, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %i.b, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.c
+.lr.ph:                                           ; preds = %bb.c
   %0 = tail call i32 @llvm.abs.i32(i32 %i.a, i1 true)
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.04859 = phi i32 [ %1, %.lr.ph ], [ %0, %.lr.ph.preheader ]
-  %.04958 = phi i32 [ %2, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %1 = lshr i32 %.04859, 1                        ; 2 uses
-  %2 = add nuw nsw i32 %.04958, 1                 ; 2 uses
-  %.not = icmp eq i32 %1, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !79
+  %1 = tail call range(i32 1, 33) i32 @llvm.ctlz.i32(i32 %0, i1 true)
+  %2 = sub nuw nsw i32 32, %1
+  br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.c
   %.049.lcssa = phi i32 [ 0, %bb.c ], [ %2, %.lr.ph ] ; 9 uses
@@ -291,8 +285,11 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   store i32 %.1, ptr %i.ap, align 4, !tbaa !38
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 256
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !80
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !79
 }
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.ctlz.i32(i32, i1 immarg) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #6
@@ -391,5 +388,4 @@ attributes #8 = { cold }
 !77 = !{!35, !6, i64 3728}
 !78 = !{!20, !20, i64 0}
 !79 = distinct !{!79, !37}
-!80 = distinct !{!80, !37}
 end_hunk_0

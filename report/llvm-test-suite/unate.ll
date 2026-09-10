@@ -30,7 +30,7 @@ bb.a:
   %i.f = ashr exact i64 %i.e, 3
   %i.g = add nsw i64 %i.f, -3
   %i.h = load i32, ptr getelementptr inbounds nuw (i8, ptr @cdata, i64 36), align 4, !tbaa !25
-  %i.i = tail call ptr (i64, i32, ...) @sf_new(i64 noundef %i.g, i32 noundef %i.h) #10 ; 6 uses
+  %i.i = tail call ptr (i64, i32, ...) @sf_new(i64 noundef %i.g, i32 noundef %i.h) #11 ; 6 uses
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !24
   %i.k = ptrtoint ptr %i.j to i64
   %i.l = sub i64 %i.k, %i.d
@@ -63,7 +63,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.039 = phi i32 [ 0, %.lr.ph ], [ %i.ae, %bb.b ]
   %.03638 = phi ptr [ %i.s, %.lr.ph ], [ %i.ad, %bb.b ] ; 2 uses
   %i.z = load i32, ptr %i.t, align 4, !tbaa !19
-  %i.aa = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %.03638, i32 noundef %i.z) #10 ; 0 uses
+  %i.aa = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %.03638, i32 noundef %i.z) #11 ; 0 uses
   %i.ab = load i32, ptr %i.i, align 8, !tbaa !20
   %i.ac = sext i32 %i.ab to i64
   %i.ad = getelementptr inbounds [4 x i8], ptr %.03638, i64 %i.ac
@@ -166,14 +166,14 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !13
   %i.c = load i32, ptr @cube, align 8, !tbaa !18
-  %i.d = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.b, i32 noundef %i.c) #10 ; 5 uses
+  %i.d = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.b, i32 noundef %i.c) #11 ; 5 uses
   %i.e = load i32, ptr %i.a, align 4, !tbaa !13
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   store i32 %i.e, ptr %i.f, align 4, !tbaa !13
   %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !27 ; 5 uses
   %i.h = sext i32 %i.g to i64
   %i.i = shl nsw i64 %i.h, 2
-  %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #11 ; 6 uses
+  %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #12 ; 6 uses
   %i.k = icmp sgt i32 %i.g, 0
   br i1 %i.k, label %.lr.ph, label %._crit_edge
 
@@ -474,7 +474,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph66.us.
   br i1 %.not, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %._crit_edge74
-  tail call void @free(ptr noundef nonnull %i.j) #10
+  tail call void @free(ptr noundef nonnull %i.j) #11
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %._crit_edge74
@@ -507,7 +507,7 @@ bb.a:
   %i.j = load i32, ptr %.014, align 4, !tbaa !7
   %i.k = and i32 %i.j, 65535
   store i32 %i.k, ptr %.014, align 4, !tbaa !7
-  %i.l = tail call i32 (ptr, ...) @set_ord(ptr noundef nonnull %.014) #10
+  %i.l = tail call i32 (ptr, ...) @set_ord(ptr noundef nonnull %.014) #11
   %i.m = shl i32 %i.l, 16
   %i.n = load i32, ptr %.014, align 4, !tbaa !7
   %i.o = or i32 %i.n, %i.m
@@ -520,7 +520,7 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %i.t = tail call ptr @unate_complement(ptr noundef nonnull %0)
-  %i.u = tail call ptr (ptr, ...) @sf_rev_contain(ptr noundef %i.t) #10
+  %i.u = tail call ptr (ptr, ...) @sf_rev_contain(ptr noundef %i.t) #11
   ret ptr %i.u
 }
 
@@ -539,10 +539,10 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %0) #10
+  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %0) #11
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !19
-  %i.e = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 1, i32 noundef %i.d) #10 ; 4 uses
+  %i.e = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 1, i32 noundef %i.d) #11 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !14
   %i.h = load i32, ptr %i.e, align 8, !tbaa !20
@@ -554,7 +554,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = sext i32 %i.l to i64
   %i.n = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.m
   %i.o = load i32, ptr %i.c, align 4, !tbaa !19
-  %i.p = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.n, i32 noundef %i.o) #10 ; 0 uses
+  %i.p = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.n, i32 noundef %i.o) #11 ; 0 uses
   br label %bb.z
 
 bb.c:                                             ; preds = %bb.a
@@ -562,7 +562,7 @@ bb.c:                                             ; preds = %bb.a
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !14
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.t = load i32, ptr %i.s, align 4, !tbaa !19   ; 2 uses
-  %i.u = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.t, i32 noundef %i.t) #10 ; 4 uses
+  %i.u = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.t, i32 noundef %i.t) #11 ; 4 uses
   %i.v = load i32, ptr %i.s, align 4, !tbaa !19   ; 2 uses
   %i.w = icmp sgt i32 %i.v, 0
   br i1 %i.w, label %.lr.ph, label %._crit_edge
@@ -595,7 +595,7 @@ bb.e:                                             ; preds = %bb.d
   %i.am = mul nsw i32 %i.ak, %i.aj
   %i.an = sext i32 %i.am to i64
   %i.ao = getelementptr inbounds [4 x i8], ptr %i.ai, i64 %i.an
-  %i.ap = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.ao, i32 noundef %i.z) #10
+  %i.ap = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.ao, i32 noundef %i.z) #11
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %i.ac ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !7
   %i.as = or i32 %i.ar, %i.ag
@@ -610,7 +610,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %i.av, label %bb.d, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.c
-  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %0) #10
+  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %0) #11
   br label %bb.z
 
 bb.g:                                             ; preds = %bb.a
@@ -623,9 +623,9 @@ bb.g:                                             ; preds = %bb.a
   %i.bc = add nuw nsw i32 %i.bb, 8
   %narrow = select i1 %i.ay, i32 8, i32 %i.bc
   %i.bd = zext nneg i32 %narrow to i64
-  %i.be = tail call noalias ptr @malloc(i64 noundef %i.bd) #11
+  %i.be = tail call noalias ptr @malloc(i64 noundef %i.bd) #12
   %i.bf = load i32, ptr %i.aw, align 4, !tbaa !19
-  %i.bg = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.be, i32 noundef %i.bf) #10 ; 8 uses
+  %i.bg = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.be, i32 noundef %i.bf) #11 ; 8 uses
   %i.bh = load i32, ptr %i.aw, align 4, !tbaa !19
   %i.bi = add nsw i32 %i.bh, 1                    ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
@@ -647,7 +647,7 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.bp, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph124
-  %i.bq = tail call ptr (ptr, ptr, ...) @set_copy(ptr noundef %i.bg, ptr noundef nonnull %.096120) #10 ; 0 uses
+  %i.bq = tail call ptr (ptr, ptr, ...) @set_copy(ptr noundef %i.bg, ptr noundef nonnull %.096120) #11 ; 0 uses
   %i.br = load i32, ptr %.096120, align 4, !tbaa !7
   %i.bs = lshr i32 %i.br, 16
   br label %bb.k
@@ -657,7 +657,7 @@ bb.i:                                             ; preds = %.lr.ph124
   br i1 %i.bt, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.bu = tail call ptr (ptr, ptr, ptr, ...) @set_or(ptr noundef %i.bg, ptr noundef %i.bg, ptr noundef nonnull %.096120) #10 ; 0 uses
+  %i.bu = tail call ptr (ptr, ptr, ptr, ...) @set_or(ptr noundef %i.bg, ptr noundef %i.bg, ptr noundef nonnull %.096120) #11 ; 0 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.h, %bb.j, %bb.i
@@ -684,7 +684,7 @@ bb.l:                                             ; preds = %._crit_edge125
 
 bb.m:                                             ; preds = %._crit_edge125
   %i.cb = load i32, ptr %i.aw, align 4, !tbaa !19
-  %i.cc = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %.lcssa, i32 noundef %i.cb) #10 ; 4 uses
+  %i.cc = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %.lcssa, i32 noundef %i.cb) #11 ; 4 uses
   %i.cd = load ptr, ptr %i.bj, align 8, !tbaa !14 ; 2 uses
   %i.ce = load i32, ptr %i.a, align 4, !tbaa !13
   %i.cf = load i32, ptr %0, align 8, !tbaa !20
@@ -704,7 +704,7 @@ bb.m:                                             ; preds = %._crit_edge125
 bb.n:                                             ; preds = %bb.p, %.lr.ph.i
   %.02226.i = phi ptr [ %i.cl, %.lr.ph.i ], [ %.1.i, %bb.p ] ; 9 uses
   %.02325.i = phi ptr [ %i.cd, %.lr.ph.i ], [ %i.ea, %bb.p ] ; 10 uses
-  %i.cn = tail call i32 (ptr, ptr, ...) @setp_disjoint(ptr noundef %.02325.i, ptr noundef %i.bg) #10
+  %i.cn = tail call i32 (ptr, ptr, ...) @setp_disjoint(ptr noundef %.02325.i, ptr noundef %i.bg) #11
   %.not.i = icmp eq i32 %i.cn, 0
   br i1 %.not.i, label %bb.p, label %bb.o
 
@@ -815,7 +815,7 @@ bb.p:                                             ; preds = %.loopexit177, %bb.n
 
 abs_covered_many.exit:                            ; preds = %bb.p, %bb.m
   %i.ec = tail call ptr @unate_complement(ptr noundef %i.cc) ; 5 uses
-  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %0) #10
+  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %0) #11
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 12 ; 2 uses
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !13
   %i.ef = icmp sgt i32 %i.ee, 0
@@ -829,7 +829,7 @@ abs_covered_many.exit:                            ; preds = %bb.p, %bb.m
 .lr.ph129:                                        ; preds = %.lr.ph129.preheader, %.lr.ph129
   %.2128 = phi i32 [ %i.em, %.lr.ph129 ], [ 0, %.lr.ph129.preheader ]
   %.197127 = phi ptr [ %i.el, %.lr.ph129 ], [ %i.eh, %.lr.ph129.preheader ] ; 3 uses
-  %i.ei = tail call ptr (ptr, ptr, ptr, ...) @set_or(ptr noundef %.197127, ptr noundef %.197127, ptr noundef %i.bg) #10 ; 0 uses
+  %i.ei = tail call ptr (ptr, ptr, ptr, ...) @set_or(ptr noundef %.197127, ptr noundef %.197127, ptr noundef %i.bg) #11 ; 0 uses
   %i.ej = load i32, ptr %i.ec, align 8, !tbaa !20
   %i.ek = sext i32 %i.ej to i64
   %i.el = getelementptr inbounds [4 x i8], ptr %.197127, i64 %i.ek
@@ -839,7 +839,7 @@ abs_covered_many.exit:                            ; preds = %bb.p, %bb.m
   br i1 %i.eo, label %.lr.ph129, label %.loopexit
 
 bb.q:                                             ; preds = %._crit_edge125
-  %i.ep = tail call ptr (ptr, ptr, ...) @sf_count_restricted(ptr noundef nonnull %0, ptr noundef %i.bg) #10 ; 8 uses
+  %i.ep = tail call ptr (ptr, ptr, ...) @sf_count_restricted(ptr noundef nonnull %0, ptr noundef %i.bg) #11 ; 8 uses
   %i.eq = load i32, ptr %i.aw, align 4, !tbaa !19 ; 3 uses
   %i.er = icmp sgt i32 %i.eq, 0
   br i1 %i.er, label %.lr.ph.preheader.i, label %._crit_edge.i
@@ -896,7 +896,7 @@ bb.q:                                             ; preds = %._crit_edge125
   br i1 %.not.i108, label %.thread.i, label %.thread32.i
 
 .thread32.i:                                      ; preds = %._crit_edge.i
-  tail call void @free(ptr noundef nonnull %i.ep) #10
+  tail call void @free(ptr noundef nonnull %i.ep) #11
   br label %.thread.i
 
 .unr-lcssa:                                       ; preds = %.lr.ph.i109
@@ -929,19 +929,19 @@ bb.q:                                             ; preds = %._crit_edge125
 
 .epilog-lcssa:                                    ; preds = %.lr.ph.i109.epil, %.unr-lcssa
   %spec.select.i.lcssa = phi i32 [ %spec.select.i.3, %.unr-lcssa ], [ %spec.select.i.epil, %.lr.ph.i109.epil ] ; 2 uses
-  tail call void @free(ptr noundef nonnull %i.ep) #10
+  tail call void @free(ptr noundef nonnull %i.ep) #11
   %i.fn = icmp eq i32 %spec.select.i.lcssa, -1
   br i1 %i.fn, label %.thread.i, label %abs_select_restricted.exit
 
 .thread.i:                                        ; preds = %.epilog-lcssa, %.thread32.i, %._crit_edge.i
-  tail call void (ptr, ...) @fatal(ptr noundef nonnull @.str.2) #10
+  tail call void (ptr, ...) @fatal(ptr noundef nonnull @.str.2) #11
   br label %abs_select_restricted.exit
 
 abs_select_restricted.exit:                       ; preds = %.epilog-lcssa, %.thread.i
   %.014.lcssa2830.i = phi i32 [ -1, %.thread.i ], [ %spec.select.i.lcssa, %.epilog-lcssa ] ; 6 uses
   %i.fo = load i32, ptr %i.a, align 4, !tbaa !13
   %i.fp = load i32, ptr %i.aw, align 4, !tbaa !19
-  %i.fq = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.fo, i32 noundef %i.fp) #10 ; 4 uses
+  %i.fq = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.fo, i32 noundef %i.fp) #11 ; 4 uses
   %i.fr = load ptr, ptr %i.bj, align 8, !tbaa !14 ; 2 uses
   %i.fs = load i32, ptr %i.a, align 4, !tbaa !13
   %i.ft = load i32, ptr %0, align 8, !tbaa !20    ; 2 uses
@@ -1156,7 +1156,7 @@ bb.x:                                             ; preds = %bb.v, %bb.w
 
 ._crit_edge138:                                   ; preds = %bb.x, %._crit_edge133
   %i.jo = tail call ptr @unate_complement(ptr noundef nonnull %0)
-  %i.jp = tail call ptr (ptr, ptr, ...) @sf_append(ptr noundef %i.hy, ptr noundef %i.jo) #10
+  %i.jp = tail call ptr (ptr, ptr, ...) @sf_append(ptr noundef %i.hy, ptr noundef %i.jo) #11
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph129, %abs_covered_many.exit, %._crit_edge138, %bb.l
@@ -1165,7 +1165,7 @@ bb.x:                                             ; preds = %bb.v, %bb.w
   br i1 %.not106, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %.loopexit
-  tail call void @free(ptr noundef nonnull %i.bg) #10
+  tail call void @free(ptr noundef nonnull %i.bg) #11
   br label %bb.z
 
 bb.z:                                             ; preds = %._crit_edge, %bb.y, %.loopexit, %bb.b
@@ -1185,36 +1185,24 @@ declare ptr @sf_append(...) local_unnamed_addr #2
 define dso_local ptr @exact_minimum_cover(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca [32 x %struct.anon], align 16       ; 7 uses
-  %i.a = tail call i64 (...) @util_cpu_time() #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
+  %i.a = tail call i64 (...) @util_cpu_time() #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.c = load i32, ptr %i.b, align 4, !tbaa !13   ; 2 uses
   %i.d = icmp slt i32 %i.c, 1
-  br i1 %i.d, label %2, label %.preheader
+  br i1 %i.d, label %4, label %bb.b
 
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %4 = load i32, ptr %3, align 4, !tbaa !19
-  %5 = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 1, i32 noundef %4) #10
-  br label %bb.r
-
-.preheader:                                       ; preds = %bb.a, %.preheader
-  %.093109 = phi i32 [ %7, %.preheader ], [ 0, %bb.a ]
-  %.094108 = phi i32 [ %6, %.preheader ], [ %i.c, %bb.a ]
-  %6 = lshr i32 %.094108, 1                       ; 2 uses
-  %7 = add nuw nsw i32 %.093109, 1                ; 3 uses
-  %.not = icmp eq i32 %6, 0
-  br i1 %.not, label %bb.b, label %.preheader
-
-bb.b:                                             ; preds = %.preheader
-  %i.e = tail call ptr (ptr, ...) @sf_save(ptr noundef nonnull %0) #10
-  %i.f = tail call ptr (ptr, ...) @lex_sort(ptr noundef %i.e) #10 ; 6 uses
+bb.b:                                             ; preds = %bb.a
+  %2 = tail call range(i32 1, 33) i32 @llvm.ctlz.i32(i32 %i.c, i1 true)
+  %3 = sub nuw nsw i32 32, %2                     ; 2 uses
+  %i.e = tail call ptr (ptr, ...) @sf_save(ptr noundef nonnull %0) #11
+  %i.f = tail call ptr (ptr, ...) @lex_sort(ptr noundef %i.e) #11 ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 4 ; 8 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !19
-  %i.i = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 1, i32 noundef %i.h) #10 ; 5 uses
+  %i.i = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 1, i32 noundef %i.h) #11 ; 5 uses
   store ptr %i.i, ptr %1, align 16, !tbaa !43
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %7, ptr %i.j, align 8, !tbaa !44
+  store i32 %3, ptr %i.j, align 8, !tbaa !44
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !14
   %i.m = load i32, ptr %i.i, align 8, !tbaa !20
@@ -1226,7 +1214,7 @@ bb.b:                                             ; preds = %.preheader
   %i.r = sext i32 %i.q to i64
   %i.s = getelementptr inbounds [4 x i8], ptr %i.l, i64 %i.r
   %i.t = load i32, ptr %i.g, align 4, !tbaa !19
-  %i.u = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.s, i32 noundef %i.t) #10 ; 0 uses
+  %i.u = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.s, i32 noundef %i.t) #11 ; 0 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !14   ; 3 uses
   %i.x = load i32, ptr %i.f, align 8, !tbaa !20   ; 2 uses
@@ -1243,12 +1231,18 @@ bb.b:                                             ; preds = %.preheader
   %i.ah = icmp sgt i32 %i.ae, 0
   br i1 %i.ah, label %.lr.ph119, label %._crit_edge120
 
+4:                                                ; preds = %bb.a
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %6 = load i32, ptr %5, align 4, !tbaa !19
+  %7 = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 1, i32 noundef %6) #11
+  br label %bb.r
+
 .lr.ph119:                                        ; preds = %bb.b, %.critedge
   %.1117 = phi i32 [ %.2.lcssa, %.critedge ], [ 1, %bb.b ] ; 3 uses
   %.096116 = phi ptr [ %i.fc, %.critedge ], [ %i.w, %bb.b ] ; 4 uses
-  %i.ai = tail call i32 (ptr, ...) @set_ord(ptr noundef %.096116) #10
+  %i.ai = tail call i32 (ptr, ...) @set_ord(ptr noundef %.096116) #11
   %i.aj = load i32, ptr %i.g, align 4, !tbaa !19
-  %i.ak = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.ai, i32 noundef %i.aj) #10 ; 4 uses
+  %i.ak = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.ai, i32 noundef %i.aj) #11 ; 4 uses
   %i.al = load i32, ptr %i.g, align 4, !tbaa !19  ; 2 uses
   %i.am = icmp sgt i32 %i.al, 0
   br i1 %i.am, label %.lr.ph, label %._crit_edge
@@ -1281,7 +1275,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bc = mul nsw i32 %i.ba, %i.az
   %i.bd = sext i32 %i.bc to i64
   %i.be = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %i.bd
-  %i.bf = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.be, i32 noundef %i.ap) #10
+  %i.bf = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.be, i32 noundef %i.ap) #11
   %i.bg = xor i32 %i.aw, -1
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %i.as ; 2 uses
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !7
@@ -1302,7 +1296,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   store ptr %i.ak, ptr %i.bo, align 16, !tbaa !43
   %i.bp = add nsw i32 %.1117, 1                   ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
-  store i32 %7, ptr %i.bq, align 8, !tbaa !44
+  store i32 %3, ptr %i.bq, align 8, !tbaa !44
   %i.br = icmp sgt i32 %.1117, 0
   br i1 %i.br, label %.lr.ph113, label %.critedge
 
@@ -1329,7 +1323,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ce = load ptr, ptr %i.bx, align 16, !tbaa !43 ; 6 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 4 ; 2 uses
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !19
-  %i.ch = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.cg) #10 ; 3 uses
+  %i.ch = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.cg) #11 ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cd, i64 24
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !14 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cd, i64 12 ; 2 uses
@@ -1343,7 +1337,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.cq, label %.lr.ph104.i, label %._crit_edge105.thread.i
 
 ._crit_edge105.thread.i:                          ; preds = %bb.g
-  %i.cr = tail call ptr (ptr, ...) @sf_contain(ptr noundef %i.ch) #10
+  %i.cr = tail call ptr (ptr, ...) @sf_contain(ptr noundef %i.ch) #11
   br label %unate_intersect.exit
 
 .lr.ph104.i:                                      ; preds = %bb.g
@@ -1375,7 +1369,7 @@ bb.g:                                             ; preds = %bb.f
   %.15888.us.i = phi ptr [ %.259.us.i, %.thread80.us.i ], [ %.057100.i, %.lr.ph104.split.i ] ; 6 uses
   %.16187.us.i = phi ptr [ %.363.us.i, %.thread80.us.i ], [ %.06099.i, %.lr.ph104.split.i ] ; 3 uses
   %.06486.us.i = phi ptr [ %i.dx, %.thread80.us.i ], [ %i.cy, %.lr.ph104.split.i ] ; 2 uses
-  %i.de = tail call i32 (ptr, ptr, ptr, ...) @set_andp(ptr noundef %.16187.us.i, ptr noundef %.06597.i, ptr noundef %.06486.us.i) #10
+  %i.de = tail call i32 (ptr, ptr, ptr, ...) @set_andp(ptr noundef %.16187.us.i, ptr noundef %.06597.i, ptr noundef %.06486.us.i) #11
   %.not69.us.i = icmp eq i32 %i.de, 0
   br i1 %.not69.us.i, label %.thread80.us.i, label %.thread.us.i
 
@@ -1390,18 +1384,18 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not70.us.i, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %.thread.us.i
-  %i.dk = tail call ptr (ptr, ...) @sf_contain(ptr noundef nonnull %.15888.us.i) #10 ; 2 uses
+  %i.dk = tail call ptr (ptr, ...) @sf_contain(ptr noundef nonnull %.15888.us.i) #11 ; 2 uses
   %i.dl = icmp eq ptr %.15589.us.i, null
   br i1 %i.dl, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.dm = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.15589.us.i, ptr noundef %i.dk) #10
+  %i.dm = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.15589.us.i, ptr noundef %i.dk) #11
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.dn = phi ptr [ %i.dm, %bb.i ], [ %i.dk, %bb.h ]
   %i.do = load i32, ptr %i.cf, align 4, !tbaa !19
-  %i.dp = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.do) #10 ; 2 uses
+  %i.dp = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.do) #11 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 24
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !14
   br label %.thread80.us.i
@@ -1438,12 +1432,12 @@ bb.k:                                             ; preds = %.thread.us.i
   br i1 %i.ed, label %.lr.ph104.split.i, label %._crit_edge105.i
 
 ._crit_edge105.i:                                 ; preds = %._crit_edge.split.us.i
-  %i.ee = tail call ptr (ptr, ...) @sf_contain(ptr noundef %.158.lcssa.i) #10 ; 2 uses
+  %i.ee = tail call ptr (ptr, ...) @sf_contain(ptr noundef %.158.lcssa.i) #11 ; 2 uses
   %i.ef = icmp eq ptr %.155.lcssa.i, null
   br i1 %i.ef, label %unate_intersect.exit, label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge105.i
-  %i.eg = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.155.lcssa.i, ptr noundef %i.ee) #10
+  %i.eg = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.155.lcssa.i, ptr noundef %i.ee) #11
   br label %unate_intersect.exit
 
 unate_intersect.exit:                             ; preds = %._crit_edge105.thread.i, %._crit_edge105.i, %bb.l
@@ -1463,17 +1457,17 @@ bb.m:                                             ; preds = %unate_intersect.exi
   %i.ep = load i32, ptr %i.ck, align 4, !tbaa !13
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ce, i64 12
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !13
-  %i.es = tail call i64 (...) @util_cpu_time() #10
+  %i.es = tail call i64 (...) @util_cpu_time() #11
   %i.et = sub nsw i64 %i.es, %i.a
-  %i.eu = tail call ptr @util_print_time(i64 noundef %i.et) #10
+  %i.eu = tail call ptr @util_print_time(i64 noundef %i.et) #11
   %i.ev = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, i32 noundef %i.ei, i32 noundef %i.eo, i32 noundef %i.ep, i32 noundef %i.er, ptr noundef %i.eu) ; 0 uses
   %i.ew = load ptr, ptr @stdout, align 8, !tbaa !46
   %i.ex = tail call i32 @fflush(ptr noundef %i.ew) ; 0 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %unate_intersect.exit
-  tail call void (ptr, ...) @sf_free(ptr noundef %i.ce) #10
-  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %i.cd) #10
+  tail call void (ptr, ...) @sf_free(ptr noundef %i.ce) #11
+  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %i.cd) #11
   store ptr %i.eh, ptr %i.bx, align 16, !tbaa !43
   store i32 %i.ei, ptr %i.by, align 8, !tbaa !44
   %i.ey = add nsw i32 %.2111, -1                  ; 2 uses
@@ -1502,11 +1496,11 @@ bb.n:                                             ; preds = %bb.m, %unate_inters
   %i.fk = add nuw nsw i32 %i.fj, 8
   %narrow = select i1 %i.fg, i32 8, i32 %i.fk
   %i.fl = zext nneg i32 %narrow to i64
-  %i.fm = tail call noalias ptr @malloc(i64 noundef %i.fl) #11
+  %i.fm = tail call noalias ptr @malloc(i64 noundef %i.fl) #12
   %i.fn = load i32, ptr %i.g, align 4, !tbaa !19
-  %i.fo = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.fm, i32 noundef %i.fn) #10
+  %i.fo = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.fm, i32 noundef %i.fn) #11
   %i.fp = load i32, ptr %i.g, align 4, !tbaa !19
-  %i.fq = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.fo, i32 noundef %i.fp) #10 ; 7 uses
+  %i.fq = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.fo, i32 noundef %i.fp) #11 ; 7 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fe, i64 24
   %i.fs = load ptr, ptr %i.fr, align 8, !tbaa !14 ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fe, i64 12
@@ -1615,7 +1609,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not105, label %bb.o, label %._crit_edge124.thread
 
 ._crit_edge124.thread:                            ; preds = %.loopexit, %._crit_edge124
-  tail call void @free(ptr noundef nonnull %i.fq) #10
+  tail call void @free(ptr noundef nonnull %i.fq) #11
   br label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge124.thread, %._crit_edge124
@@ -1626,16 +1620,16 @@ bb.o:                                             ; preds = %._crit_edge124.thre
 
 bb.p:                                             ; preds = %bb.o
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
-  tail call void (ptr, ...) @sf_print(ptr noundef nonnull %i.fe) #10
+  tail call void (ptr, ...) @sf_print(ptr noundef nonnull %i.fe) #11
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %i.f) #10
+  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %i.f) #11
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %2
-  %.098 = phi ptr [ %5, %2 ], [ %i.fe, %bb.q ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
+bb.r:                                             ; preds = %bb.q, %4
+  %.098 = phi ptr [ %7, %4 ], [ %i.fe, %bb.q ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
   ret ptr %.098
 }
 
@@ -1662,7 +1656,7 @@ define dso_local ptr @unate_intersect(ptr nofree noundef readonly captures(none)
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !19
-  %i.c = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.b) #10 ; 4 uses
+  %i.c = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.b) #11 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !14   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -1676,7 +1670,7 @@ bb.a:
   br i1 %i.l, label %.lr.ph104, label %._crit_edge105.thread
 
 ._crit_edge105.thread:                            ; preds = %bb.a
-  %i.m = tail call ptr (ptr, ...) @sf_contain(ptr noundef %i.c) #10
+  %i.m = tail call ptr (ptr, ...) @sf_contain(ptr noundef %i.c) #11
   br label %bb.p
 
 .lr.ph104:                                        ; preds = %bb.a
@@ -1711,12 +1705,12 @@ bb.a:
   %.15888.us110 = phi ptr [ %.259.us117, %.thread80.us115 ], [ %.057100.us, %.lr.ph104.split.us ] ; 9 uses
   %.16187.us111 = phi ptr [ %.363.us116, %.thread80.us115 ], [ %.06099.us, %.lr.ph104.split.us ] ; 5 uses
   %.06486.us112 = phi ptr [ %i.az, %.thread80.us115 ], [ %i.t, %.lr.ph104.split.us ] ; 3 uses
-  %i.z = tail call i32 (ptr, ptr, ptr, ...) @set_andp(ptr noundef %.16187.us111, ptr noundef %.06597.us, ptr noundef %.06486.us112) #10
+  %i.z = tail call i32 (ptr, ptr, ptr, ...) @set_andp(ptr noundef %.16187.us111, ptr noundef %.06597.us, ptr noundef %.06486.us112) #11
   %.not127 = icmp eq i32 %i.z, 0
   br i1 %.not127, label %.thread80.us115, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.us
-  %i.aa = tail call i32 (ptr, ...) @set_ord(ptr noundef %.16187.us111) #10 ; 3 uses
+  %i.aa = tail call i32 (ptr, ...) @set_ord(ptr noundef %.16187.us111) #11 ; 3 uses
   %i.ab = icmp sgt i32 %i.aa, %.190.us
   br i1 %i.ab, label %bb.d, label %bb.c
 
@@ -1729,7 +1723,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not.us, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %.15589.us109) #10
+  tail call void (ptr, ...) @sf_free(ptr noundef nonnull %.15589.us109) #11
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -1737,7 +1731,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !14 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.15888.us110, i64 12
   store i32 0, ptr %i.af, align 4, !tbaa !13
-  %i.ag = tail call ptr (ptr, ptr, ptr, ...) @set_and(ptr noundef %i.ae, ptr noundef %.06597.us, ptr noundef %.06486.us112) #10 ; 0 uses
+  %i.ag = tail call ptr (ptr, ptr, ptr, ...) @set_and(ptr noundef %i.ae, ptr noundef %.06597.us, ptr noundef %.06486.us112) #11 ; 0 uses
   br label %.thread.us113
 
 .thread.us113:                                    ; preds = %bb.f, %bb.c
@@ -1754,18 +1748,18 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not70.us114, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %.thread.us113
-  %i.am = tail call ptr (ptr, ...) @sf_contain(ptr noundef nonnull %.15888.us110) #10 ; 2 uses
+  %i.am = tail call ptr (ptr, ...) @sf_contain(ptr noundef nonnull %.15888.us110) #11 ; 2 uses
   %i.an = icmp eq ptr %.377.us, null
   br i1 %i.an, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ao = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.377.us, ptr noundef %i.am) #10
+  %i.ao = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.377.us, ptr noundef %i.am) #11
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ap = phi ptr [ %i.ao, %bb.h ], [ %i.am, %bb.g ]
   %i.aq = load i32, ptr %i.a, align 4, !tbaa !19
-  %i.ar = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.aq) #10 ; 2 uses
+  %i.ar = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.aq) #11 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !14
   br label %.thread80.us115
@@ -1824,7 +1818,7 @@ bb.j:                                             ; preds = %.thread.us113
   %.15888.us = phi ptr [ %.259.us, %.thread80.us ], [ %.057100, %.lr.ph104.split ] ; 6 uses
   %.16187.us = phi ptr [ %.363.us, %.thread80.us ], [ %.06099, %.lr.ph104.split ] ; 3 uses
   %.06486.us = phi ptr [ %i.ch, %.thread80.us ], [ %i.bi, %.lr.ph104.split ] ; 2 uses
-  %i.bo = tail call i32 (ptr, ptr, ptr, ...) @set_andp(ptr noundef %.16187.us, ptr noundef %.06597, ptr noundef %.06486.us) #10
+  %i.bo = tail call i32 (ptr, ptr, ptr, ...) @set_andp(ptr noundef %.16187.us, ptr noundef %.06597, ptr noundef %.06486.us) #11
   %.not69.us = icmp eq i32 %i.bo, 0
   br i1 %.not69.us, label %.thread80.us, label %.thread.us
 
@@ -1839,18 +1833,18 @@ bb.j:                                             ; preds = %.thread.us113
   br i1 %.not70.us, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %.thread.us
-  %i.bu = tail call ptr (ptr, ...) @sf_contain(ptr noundef nonnull %.15888.us) #10 ; 2 uses
+  %i.bu = tail call ptr (ptr, ...) @sf_contain(ptr noundef nonnull %.15888.us) #11 ; 2 uses
   %i.bv = icmp eq ptr %.15589.us, null
   br i1 %i.bv, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.bw = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.15589.us, ptr noundef %i.bu) #10
+  %i.bw = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.15589.us, ptr noundef %i.bu) #11
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bx = phi ptr [ %i.bw, %bb.l ], [ %i.bu, %bb.k ]
   %i.by = load i32, ptr %i.a, align 4, !tbaa !19
-  %i.bz = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.by) #10 ; 2 uses
+  %i.bz = tail call ptr (i32, i32, ...) @sf_new(i32 noundef 500, i32 noundef %i.by) #11 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !14
   br label %.thread80.us
@@ -1889,12 +1883,12 @@ bb.n:                                             ; preds = %.thread.us
 ._crit_edge105:                                   ; preds = %._crit_edge.split.us119, %._crit_edge.split.us
   %.057.lcssa = phi ptr [ %.158.lcssa, %._crit_edge.split.us ], [ %.158.lcssa.us, %._crit_edge.split.us119 ]
   %.054.lcssa = phi ptr [ %.155.lcssa, %._crit_edge.split.us ], [ %.155.lcssa.us, %._crit_edge.split.us119 ] ; 2 uses
-  %i.co = tail call ptr (ptr, ...) @sf_contain(ptr noundef %.057.lcssa) #10 ; 2 uses
+  %i.co = tail call ptr (ptr, ...) @sf_contain(ptr noundef %.057.lcssa) #11 ; 2 uses
   %i.cp = icmp eq ptr %.054.lcssa, null
   br i1 %i.cp, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge105
-  %i.cq = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.054.lcssa, ptr noundef %i.co) #10
+  %i.cq = tail call ptr (ptr, ptr, ...) @sf_union(ptr noundef nonnull %.054.lcssa, ptr noundef %i.co) #11
   br label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge105.thread, %._crit_edge105, %bb.o
@@ -1928,8 +1922,11 @@ declare i32 @llvm.smax.i32(i32, i32) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.ctlz.i32(i32, i1 immarg) #9
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #9
+declare void @llvm.assume(i1 noundef) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1940,9 +1937,10 @@ attributes #5 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buf
 attributes #6 = { nofree nounwind }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { nounwind }
-attributes #11 = { nounwind allocsize(0) }
+attributes #9 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #11 = { nounwind }
+attributes #12 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

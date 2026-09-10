@@ -65,11 +65,11 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 148
   store i32 -1, ptr %i.f, align 4, !tbaa !34
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  tail call void @ff_blockdsp_init(ptr noundef nonnull %i.g) #10
-  tail call void @ff_proresdsp_init(ptr noundef %i.b, i32 noundef 12) #10
+  tail call void @ff_blockdsp_init(ptr noundef nonnull %i.g) #11
+  tail call void @ff_proresdsp_init(ptr noundef %i.b, i32 noundef 12) #11
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 176
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  tail call void @ff_permute_scantable(ptr noundef nonnull %i.h, ptr noundef nonnull @ff_prores_interlaced_scan, ptr noundef nonnull %i.i) #10
+  tail call void @ff_permute_scantable(ptr noundef nonnull %i.h, ptr noundef nonnull @ff_prores_interlaced_scan, ptr noundef nonnull %i.i) #11
   ret i32 0
 }
 
@@ -82,7 +82,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !28   ; 21 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 168 ; 3 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !35
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.b, i8 1, i64 64, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.h = load i32, ptr %i.g, align 8, !tbaa !62
@@ -107,7 +107,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
-  tail call void (ptr, ptr, ...) @avpriv_request_sample(ptr noundef nonnull %0, ptr noundef nonnull @.str.2, i32 noundef %i.m) #10
+  tail call void (ptr, ptr, ...) @avpriv_request_sample(ptr noundef nonnull %0, ptr noundef nonnull @.str.2, i32 noundef %i.m) #11
   br label %bytestream2_get_be32.exit315.thread
 
 .sink.split:                                      ; preds = %bb.c, %bb.d
@@ -127,8 +127,8 @@ bb.f:                                             ; preds = %.sink.split, %bb.c
   br i1 %or.cond.i306, label %bytestream2_init.exit307, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i32 noundef 141) #10
-  tail call void @abort() #11
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i32 noundef 141) #11
+  tail call void @abort() #12
   unreachable
 
 bytestream2_init.exit307:                         ; preds = %bb.f
@@ -196,7 +196,7 @@ bytestream2_get_byte.exit345:                     ; preds = %bb.i
   br i1 %i.ba, label %bb.j, label %bytestream2_get_byte.exit345._crit_edge
 
 bb.j:                                             ; preds = %bytestream2_get_byte.exit345
-  tail call void (ptr, ptr, ...) @avpriv_request_sample(ptr noundef nonnull %0, ptr noundef nonnull @.str.3, i32 noundef %i.az) #10
+  tail call void (ptr, ptr, ...) @avpriv_request_sample(ptr noundef nonnull %0, ptr noundef nonnull @.str.3, i32 noundef %i.az) #11
   br label %bytestream2_get_be32.exit315.thread
 
 bytestream2_get_byte.exit345._crit_edge:          ; preds = %bytestream2_get_byte.exit345
@@ -236,8 +236,8 @@ bb.l:                                             ; preds = %bytestream2_get_be1
   br i1 %or.cond660.not, label %._crit_edge567, label %bb.m
 
 ._crit_edge567:                                   ; preds = %bb.l
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 24, ptr noundef nonnull @.str.4, i32 noundef %i.bo, i32 noundef %i.bq, i32 noundef %i.be, i32 noundef %.0.i329) #10
-  %i.br = tail call i32 @ff_set_dimensions(ptr noundef nonnull %0, i32 noundef %i.be, i32 noundef %.0.i329) #10 ; 2 uses
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 24, ptr noundef nonnull @.str.4, i32 noundef %i.bo, i32 noundef %i.bq, i32 noundef %i.be, i32 noundef %.0.i329) #11
+  %i.br = tail call i32 @ff_set_dimensions(ptr noundef nonnull %0, i32 noundef %i.be, i32 noundef %.0.i329) #11 ; 2 uses
   %i.bs = icmp slt i32 %i.br, 0
   br i1 %i.bs, label %bytestream2_get_be32.exit315.thread, label %bb.m
 
@@ -263,12 +263,12 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   store i32 145, ptr %i.bz, align 4, !tbaa !34
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store i32 145, ptr %i.a, align 4, !tbaa !36
   %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 -1, ptr %i.cd, align 4, !tbaa !36
-  %i.ce = call i32 @ff_get_format(ptr noundef nonnull %0, ptr noundef nonnull %i.a) #10 ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  %i.ce = call i32 @ff_get_format(ptr noundef nonnull %0, ptr noundef nonnull %i.a) #11 ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   %i.cf = icmp slt i32 %i.ce, 0
   br i1 %i.cf, label %bytestream2_get_be32.exit315.thread, label %bb.p
 
@@ -357,7 +357,7 @@ bytestream2_get_be16.exit328.bytestream2_get_be16.exit328.thread_crit_edge: ; pr
 
 bb.v:                                             ; preds = %bytestream2_get_be16.exit328
   %i.di = zext nneg i16 %i.dg to i32
-  call void (ptr, ptr, ...) @avpriv_request_sample(ptr noundef nonnull %0, ptr noundef nonnull @.str.5, i32 noundef %i.di) #10
+  call void (ptr, ptr, ...) @avpriv_request_sample(ptr noundef nonnull %0, ptr noundef nonnull @.str.5, i32 noundef %i.di) #11
   br label %bytestream2_get_be32.exit315.thread
 
 bytestream2_get_be16.exit328.thread:              ; preds = %bytestream2_get_be16.exit328.bytestream2_get_be16.exit328.thread_crit_edge, %bytestream2_get_byte.exit
@@ -616,7 +616,7 @@ bytestream2_get_be32.exit309.2.2:                 ; preds = %bb.aj, %bytestream2
   br i1 %i.hl, label %bytestream2_get_be32.exit, label %bb.z
 
 bb.ak:                                            ; preds = %bytestream2_get_be16.exit322
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.6, i32 noundef %i.ez) #10
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.6, i32 noundef %i.ez) #11
   br label %bytestream2_get_be32.exit315.thread
 
 bb.al:                                            ; preds = %bytestream2_get_be16.exit322
@@ -785,7 +785,7 @@ bytestream2_get_be16.exit320.7:                   ; preds = %bb.av, %bytestream2
   %i.jr = phi i32 [ %i.jp, %.thread442 ], [ %i.ez, %bytestream2_get_be16.exit320.7 ] ; 3 uses
   %i.js = getelementptr inbounds nuw i8, ptr %i.d, i64 240
   %i.jt = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  call void @ff_permute_scantable(ptr noundef nonnull %i.js, ptr noundef nonnull %i.jt, ptr noundef nonnull %i.b) #10
+  call void @ff_permute_scantable(ptr noundef nonnull %i.js, ptr noundef nonnull %i.jt, ptr noundef nonnull %i.b) #11
   %i.ju = lshr i32 %i.bt, 4                       ; 4 uses
   %i.jv = lshr i32 %i.ju, %i.jr
   %.neg = shl nsw i32 -1, %i.jr
@@ -815,7 +815,7 @@ bytestream2_get_be16.exit320.7:                   ; preds = %bb.av, %bytestream2
   %i.kr = mul nuw nsw i32 %i.kn, %i.kp            ; 2 uses
   %i.ks = getelementptr inbounds nuw i8, ptr %i.d, i64 132 ; 6 uses
   store i32 %i.kr, ptr %i.ks, align 4, !tbaa !74
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 48, ptr noundef nonnull @.str.7, i32 noundef %i.kn, i32 noundef %i.kp, i32 noundef %i.kr) #10
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 48, ptr noundef nonnull @.str.7, i32 noundef %i.kn, i32 noundef %i.kp, i32 noundef %i.kr) #11
   %i.kt = getelementptr inbounds nuw i8, ptr %i.d, i64 136 ; 2 uses
   store i32 16, ptr %i.kt, align 8, !tbaa !75
   %i.ku = getelementptr inbounds nuw i8, ptr %i.d, i64 120 ; 3 uses
@@ -823,7 +823,7 @@ bytestream2_get_be16.exit320.7:                   ; preds = %bb.av, %bytestream2
   %i.kw = load i32, ptr %i.ks, align 4, !tbaa !74
   %i.kx = sext i32 %i.kw to i64
   %i.ky = mul nsw i64 %i.kx, 40
-  call void @av_fast_mallocz(ptr noundef nonnull %i.ku, ptr noundef nonnull %i.kv, i64 noundef %i.ky) #10
+  call void @av_fast_mallocz(ptr noundef nonnull %i.ku, ptr noundef nonnull %i.kv, i64 noundef %i.ky) #11
   %i.kz = load ptr, ptr %i.ku, align 8, !tbaa !41 ; 2 uses
   %.not293 = icmp eq ptr %i.kz, null
   br i1 %.not293, label %bytestream2_get_be32.exit315.thread, label %bb.aw
@@ -910,8 +910,8 @@ bb.bb:                                            ; preds = %bytestream2_get_be1
   br i1 %.not476, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i32 noundef 141) #10
-  call void @abort() #11
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i32 noundef 141) #11
+  call void @abort() #12
   unreachable
 
 bb.bd:                                            ; preds = %bb.bb
@@ -959,7 +959,7 @@ bb.bd:                                            ; preds = %bb.bb
   br i1 %exitcond.not, label %.critedge, label %.preheader479, !llvm.loop !60
 
 .critedge:                                        ; preds = %..thread456_crit_edge, %bb.ax
-  %i.ms = call i32 @ff_thread_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #10 ; 2 uses
+  %i.ms = call i32 @ff_thread_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #11 ; 2 uses
   %i.mt = icmp slt i32 %i.ms, 0
   br i1 %i.mt, label %bytestream2_get_be32.exit315.thread, label %bb.be
 
@@ -973,7 +973,7 @@ bb.be:                                            ; preds = %.critedge
 
 bb.bf:                                            ; preds = %bb.be
   %i.mx = getelementptr inbounds nuw i8, ptr %i.d, i64 160 ; 2 uses
-  %i.my = call i32 @ff_hwaccel_frame_priv_alloc(ptr noundef nonnull %0, ptr noundef nonnull %i.mx) #10 ; 2 uses
+  %i.my = call i32 @ff_hwaccel_frame_priv_alloc(ptr noundef nonnull %0, ptr noundef nonnull %i.mx) #11 ; 2 uses
   %i.mz = icmp slt i32 %i.my, 0
   br i1 %i.mz, label %bytestream2_get_be32.exit315.thread, label %bb.bg
 
@@ -983,7 +983,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.nc = load ptr, ptr %3, align 8, !tbaa !81
   %i.nd = load ptr, ptr %i.o, align 8, !tbaa !67
   %i.ne = load i32, ptr %i.q, align 8, !tbaa !64
-  %i.nf = call i32 %i.nb(ptr noundef nonnull %0, ptr noundef %i.nc, ptr noundef %i.nd, i32 noundef %i.ne) #10 ; 2 uses
+  %i.nf = call i32 %i.nb(ptr noundef nonnull %0, ptr noundef %i.nc, ptr noundef %i.nd, i32 noundef %i.ne) #11 ; 2 uses
   %i.ng = icmp slt i32 %i.nf, 0
   br i1 %i.ng, label %bytestream2_get_be32.exit315.thread, label %.preheader477
 
@@ -1015,26 +1015,26 @@ bb.bi:                                            ; preds = %.lr.ph531, %bb.bh
   %i.ns = ptrtoint ptr %i.no to i64
   %i.nt = sub i64 %i.nr, %i.ns
   %i.nu = trunc i64 %i.nt to i32
-  %i.nv = call i32 %i.nn(ptr noundef nonnull %0, ptr noundef %i.no, i32 noundef %i.nu) #10 ; 2 uses
+  %i.nv = call i32 %i.nn(ptr noundef nonnull %0, ptr noundef %i.no, i32 noundef %i.nu) #11 ; 2 uses
   %i.nw = icmp sgt i32 %i.nv, -1
   br i1 %i.nw, label %bb.bh, label %bytestream2_get_be32.exit315.thread
 
 ._crit_edge532:                                   ; preds = %bb.bh, %.preheader477
   %i.nx = getelementptr inbounds nuw i8, ptr %i.mw, i64 56
   %i.ny = load ptr, ptr %i.nx, align 8, !tbaa !85
-  %i.nz = call i32 %i.ny(ptr noundef nonnull %0) #10 ; 2 uses
+  %i.nz = call i32 %i.ny(ptr noundef nonnull %0) #11 ; 2 uses
   %i.oa = icmp slt i32 %i.nz, 0
   br i1 %i.oa, label %bytestream2_get_be32.exit315.thread, label %bb.bj
 
 bb.bj:                                            ; preds = %._crit_edge532
-  call void @av_refstruct_unref(ptr noundef nonnull %i.mx) #10
+  call void @av_refstruct_unref(ptr noundef nonnull %i.mx) #11
   br label %bb.bl
 
 bb.bk:                                            ; preds = %bb.be
   %i.ob = getelementptr inbounds nuw i8, ptr %0, i64 680
   %i.oc = load ptr, ptr %i.ob, align 8, !tbaa !86
   %i.od = load i32, ptr %i.ks, align 4, !tbaa !74
-  %i.oe = call i32 %i.oc(ptr noundef nonnull %0, ptr noundef nonnull @decode_tiles, ptr noundef %1, ptr noundef null, i32 noundef %i.od) #10 ; 0 uses
+  %i.oe = call i32 %i.oc(ptr noundef nonnull %0, ptr noundef nonnull @decode_tiles, ptr noundef %1, ptr noundef null, i32 noundef %i.od) #11 ; 0 uses
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bj, %bb.bk
@@ -1052,7 +1052,7 @@ bb.bl:                                            ; preds = %bb.bj, %bb.bk
   store i64 %.0.i338, ptr %i.ol, align 8, !tbaa !95
   %i.om = getelementptr inbounds nuw i8, ptr %1, i64 352
   store i64 %.0.i337, ptr %i.om, align 8, !tbaa !96
-  %i.on = call ptr @av_raw_color_params_create_side_data(ptr noundef %1) #10 ; 17 uses
+  %i.on = call ptr @av_raw_color_params_create_side_data(ptr noundef %1) #11 ; 17 uses
   %.not300 = icmp eq ptr %i.on, null
   br i1 %.not300, label %bytestream2_get_be32.exit315.thread, label %.preheader
 
@@ -1065,40 +1065,40 @@ bb.bl:                                            ; preds = %bb.bj, %bb.bk
   %i.oq = getelementptr inbounds nuw i8, ptr %i.on, i64 20
   store i32 %.0.i323, ptr %i.oq, align 4, !tbaa !99
   %i.or = getelementptr inbounds nuw i8, ptr %i.on, i64 24
-  %i.os = call i64 @av_d2q(double noundef %.0.i312, i32 noundef 2147483647) #12
+  %i.os = call i64 @av_d2q(double noundef %.0.i312, i32 noundef 2147483647) #13
   store i64 %i.os, ptr %i.or, align 4
   %i.ot = getelementptr inbounds nuw i8, ptr %i.on, i64 32
-  %i.ou = call i64 @av_d2q(double noundef %.0.i310, i32 noundef 2147483647) #12
+  %i.ou = call i64 @av_d2q(double noundef %.0.i310, i32 noundef 2147483647) #13
   store i64 %i.ou, ptr %i.ot, align 4
   %i.ov = getelementptr inbounds nuw i8, ptr %i.on, i64 112
-  %i.ow = call i64 @av_d2q(double noundef %.0.i, i32 noundef 2147483647) #12
+  %i.ow = call i64 @av_d2q(double noundef %.0.i, i32 noundef 2147483647) #13
   store i64 %i.ow, ptr %i.ov, align 4
   %i.ox = getelementptr inbounds nuw i8, ptr %i.on, i64 40
-  %i.oy = call i64 @av_d2q(double noundef %.0.i308, i32 noundef 2147483647) #12
+  %i.oy = call i64 @av_d2q(double noundef %.0.i308, i32 noundef 2147483647) #13
   store i64 %i.oy, ptr %i.ox, align 4
   %i.oz = getelementptr inbounds nuw i8, ptr %i.on, i64 48
-  %i.pa = call i64 @av_d2q(double noundef %.0.i308.1, i32 noundef 2147483647) #12
+  %i.pa = call i64 @av_d2q(double noundef %.0.i308.1, i32 noundef 2147483647) #13
   store i64 %i.pa, ptr %i.oz, align 4
   %i.pb = getelementptr inbounds nuw i8, ptr %i.on, i64 56
-  %i.pc = call i64 @av_d2q(double noundef %.0.i308.2, i32 noundef 2147483647) #12
+  %i.pc = call i64 @av_d2q(double noundef %.0.i308.2, i32 noundef 2147483647) #13
   store i64 %i.pc, ptr %i.pb, align 4
   %i.pd = getelementptr inbounds nuw i8, ptr %i.on, i64 64
-  %i.pe = call i64 @av_d2q(double noundef %.0.i308.1549, i32 noundef 2147483647) #12
+  %i.pe = call i64 @av_d2q(double noundef %.0.i308.1549, i32 noundef 2147483647) #13
   store i64 %i.pe, ptr %i.pd, align 4
   %i.pf = getelementptr inbounds nuw i8, ptr %i.on, i64 72
-  %i.pg = call i64 @av_d2q(double noundef %.0.i308.1.1, i32 noundef 2147483647) #12
+  %i.pg = call i64 @av_d2q(double noundef %.0.i308.1.1, i32 noundef 2147483647) #13
   store i64 %i.pg, ptr %i.pf, align 4
   %i.ph = getelementptr inbounds nuw i8, ptr %i.on, i64 80
-  %i.pi = call i64 @av_d2q(double noundef %.0.i308.2.1, i32 noundef 2147483647) #12
+  %i.pi = call i64 @av_d2q(double noundef %.0.i308.2.1, i32 noundef 2147483647) #13
   store i64 %i.pi, ptr %i.ph, align 4
   %i.pj = getelementptr inbounds nuw i8, ptr %i.on, i64 88
-  %i.pk = call i64 @av_d2q(double noundef %.0.i308.2552, i32 noundef 2147483647) #12
+  %i.pk = call i64 @av_d2q(double noundef %.0.i308.2552, i32 noundef 2147483647) #13
   store i64 %i.pk, ptr %i.pj, align 4
   %i.pl = getelementptr inbounds nuw i8, ptr %i.on, i64 96
-  %i.pm = call i64 @av_d2q(double noundef %.0.i308.1.2, i32 noundef 2147483647) #12
+  %i.pm = call i64 @av_d2q(double noundef %.0.i308.1.2, i32 noundef 2147483647) #13
   store i64 %i.pm, ptr %i.pl, align 4
   %i.pn = getelementptr inbounds nuw i8, ptr %i.on, i64 104
-  %i.po = call i64 @av_d2q(double noundef %.0.i308.2.2, i32 noundef 2147483647) #12
+  %i.po = call i64 @av_d2q(double noundef %.0.i308.2.2, i32 noundef 2147483647) #13
   store i64 %i.po, ptr %i.pn, align 4
   store i32 1, ptr %2, align 4, !tbaa !36
   %i.pp = load i32, ptr %i.q, align 8, !tbaa !64
@@ -1106,7 +1106,7 @@ bb.bl:                                            ; preds = %bb.bj, %bb.bk
 
 bytestream2_get_be32.exit315.thread:              ; preds = %bytestream2_get_be16.exit, %bb.bi, %bb.ak, %.critedge, %bb.bl, %.preheader, %bb.aw, %.loopexit, %bb.bf, %bb.bg, %._crit_edge532, %bytestream2_get_be32.exit317, %bytestream2_get_be32.exit315, %bytestream2_get_be16.exit334, %bb.i, %bytestream2_get_be16.exit330, %._crit_edge567, %bb.v, %bb.o, %bb.j, %bb.e, %bb.b
   %.21 = phi i32 [ %i.k, %bb.b ], [ -1163346256, %bb.e ], [ -1094995529, %bytestream2_get_be32.exit315 ], [ -1094995529, %bytestream2_get_be32.exit317 ], [ -1163346256, %bb.v ], [ -1094995529, %bb.i ], [ -1094995529, %bytestream2_get_be16.exit334 ], [ %i.ce, %bb.o ], [ -1163346256, %bb.j ], [ %i.br, %._crit_edge567 ], [ -1094995529, %bytestream2_get_be16.exit330 ], [ -1094995529, %bb.ak ], [ -12, %.loopexit ], [ -1094995529, %bb.aw ], [ %i.nv, %bb.bi ], [ %i.ms, %.critedge ], [ -12, %bb.bl ], [ %i.pp, %.preheader ], [ %i.nz, %._crit_edge532 ], [ %i.nf, %bb.bg ], [ %i.my, %bb.bf ], [ -1094995529, %bytestream2_get_be16.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   ret i32 %.21
 }
 
@@ -1116,9 +1116,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 160
-  tail call void @av_refstruct_unref(ptr noundef nonnull %i.c) #10
+  tail call void @av_refstruct_unref(ptr noundef nonnull %i.c) #11
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 120
-  tail call void @av_freep(ptr noundef nonnull %i.d) #10
+  tail call void @av_freep(ptr noundef nonnull %i.d) #11
   ret i32 0
 }
 
@@ -1164,7 +1164,7 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !41
   %i.f = sext i32 %2 to i64
   %i.g = getelementptr inbounds [40 x i8], ptr %i.e, i64 %i.f ; 15 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 24 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !47
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -1389,12 +1389,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   %i.dr = load i32, ptr %i.h, align 8, !tbaa !47
   %i.ds = getelementptr inbounds nuw i8, ptr %i.g, i64 28
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !48
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.11, i32 noundef %i.dr, i32 noundef %i.dt) #10
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.11, i32 noundef %i.dr, i32 noundef %i.dt) #11
   br label %decode_tile.exit
 
 decode_tile.exit:                                 ; preds = %bb.a, %bytestream2_get_be16.exit.i, %bb.i, %bb.j
   %.2.i = phi i32 [ 0, %bb.a ], [ -1094995529, %bytestream2_get_be16.exit.i ], [ %.058.i, %bb.j ], [ 0, %bb.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 %.2.i
 }
 
@@ -1430,9 +1430,9 @@ bb.a:
   %i.p = shl nuw i32 1, %i.o                      ; 6 uses
   %i.q = add nsw i32 %i.p, -1                     ; 2 uses
   %i.r = shl i32 64, %i.o                         ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.s = getelementptr inbounds nuw i8, ptr %.32.val, i64 176 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
   %i.t = icmp samesign ugt i32 %3, 1
   %spec.select.idx = select i1 %i.t, i64 %i.c, i64 0
   %spec.select = getelementptr inbounds [2 x i8], ptr %i.m, i64 %spec.select.idx
@@ -1796,19 +1796,19 @@ bb.q:                                             ; preds = %.lr.ph38, %bb.q
   %i.ha = load ptr, ptr %i.gx, align 16, !tbaa !113
   %.idx61 = shl nuw nsw i64 %indvars.iv42, 8
   %i.hb = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx61
-  call void %i.ha(ptr noundef %i.gz, i64 noundef %i.c, ptr noundef nonnull %i.hb, ptr noundef nonnull %4, ptr noundef nonnull %i.gy) #10
+  call void %i.ha(ptr noundef %i.gz, i64 noundef %i.c, ptr noundef nonnull %i.hb, ptr noundef nonnull %4, ptr noundef nonnull %i.gy) #11
   %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 1 ; 2 uses
   %exitcond47.not = icmp eq i64 %indvars.iv.next43, %wide.trip.count46
   br i1 %exitcond47.not, label %bits_init8_be.exit.thread, label %bb.q, !llvm.loop !110
 
 bits_init8_be.exit.thread:                        ; preds = %bb.q, %._crit_edge31, %bb.a
   %.0 = phi i32 [ 0, %._crit_edge31 ], [ -1094995529, %bb.a ], [ 0, %bb.q ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 %.0
 }
 
-; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc zeroext i16 @get_value(ptr nofree noundef nonnull captures(none) %0, i16 noundef signext %1) unnamed_addr #8 {
 bb.a:
   %i.a = ashr i16 %1, 8                           ; 2 uses
@@ -1849,7 +1849,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bits_peek_be.exit
 
 bits_peek_be.exit:                                ; preds = %.bits_priv_refill_32_be.exit_crit_edge.i.i, %bb.b, %bb.c
-  %i.u = phi i32 [ %i.f, %.bits_priv_refill_32_be.exit_crit_edge.i.i ], [ %i.t, %bb.c ], [ %i.f, %bb.b ] ; 10 uses
+  %i.u = phi i32 [ %i.f, %.bits_priv_refill_32_be.exit_crit_edge.i.i ], [ %i.t, %bb.c ], [ %i.f, %bb.b ] ; 11 uses
   %i.v = phi i64 [ %.val.pre.i.i, %.bits_priv_refill_32_be.exit_crit_edge.i.i ], [ %i.r, %bb.c ], [ %.val.pre4.i.i, %bb.b ] ; 5 uses
   %i.w = lshr i64 %i.v, 32                        ; 2 uses
   %i.x = trunc nuw i64 %i.w to i32                ; 4 uses
@@ -1858,7 +1858,13 @@ bits_peek_be.exit:                                ; preds = %.bits_priv_refill_3
 
 bb.d:                                             ; preds = %bits_peek_be.exit
   %i.y = icmp slt i64 %i.v, 0
-  br i1 %i.y, label %bb.e, label %.preheader
+  br i1 %i.y, label %bb.e, label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %bb.d
+  %2 = tail call range(i32 1, 33) i32 @llvm.ctlz.i32(i32 %i.x, i1 true) ; 5 uses
+  %3 = sext i16 %i.a to i32                       ; 2 uses
+  %.not36 = icmp sgt i32 %2, %3
+  br i1 %.not36, label %bb.n, label %bb.i
 
 bb.e:                                             ; preds = %bb.d
   %i.z = zext nneg i16 %i.b to i32                ; 2 uses
@@ -1918,27 +1924,12 @@ bits_skip_be.exit:                                ; preds = %bits_priv_refill_64
   %i.at = trunc nuw nsw i32 %i.as to i16
   br label %bb.v
 
-.preheader:                                       ; preds = %bb.d, %.preheader
-  %.0.i61 = phi i32 [ %3, %.preheader ], [ 32, %bb.d ]
-  %.04.i60 = phi i32 [ %2, %.preheader ], [ %i.x, %bb.d ]
-  %2 = lshr i32 %.04.i60, 1                       ; 2 uses
-  %3 = add nsw i32 %.0.i61, -1                    ; 3 uses
-  %.not.i = icmp eq i32 %2, 0
-  br i1 %.not.i, label %ff_clz_c.exit, label %.preheader, !llvm.loop !114
-
-ff_clz_c.exit:                                    ; preds = %.preheader
-  %sext = shl i32 %3, 16                          ; 2 uses
-  %4 = ashr exact i32 %sext, 16                   ; 3 uses
-  %5 = sext i16 %i.a to i32                       ; 2 uses
-  %.not36 = icmp sgt i32 %4, %5
-  br i1 %.not36, label %bb.n, label %bb.i
-
-bb.i:                                             ; preds = %ff_clz_c.exit
+bb.i:                                             ; preds = %.preheader.preheader
   %i.au = zext nneg i16 %i.b to i32               ; 3 uses
   %i.av = add nuw nsw i32 %i.au, 1
-  %i.aw = add nsw i32 %i.av, %4                   ; 4 uses
+  %i.aw = add nuw nsw i32 %i.av, %2               ; 5 uses
   %i.ax = icmp ult i32 %i.aw, %i.u
-  br i1 %i.ax, label %bb.j, label %6
+  br i1 %i.ax, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.ay = zext nneg i32 %i.aw to i64
@@ -1947,57 +1938,38 @@ bb.j:                                             ; preds = %bb.i
   %i.ba = sub nuw i32 %i.u, %i.aw
   br label %.sink.split.i46
 
-6:                                                ; preds = %bb.i
-  %7 = sub nuw i32 %i.aw, %i.u                    ; 4 uses
+bb.k:                                             ; preds = %bb.i
+  %4 = sub nuw nsw i32 %i.aw, %i.u                ; 2 uses
   store i64 0, ptr %0, align 8, !tbaa !55
   store i32 0, ptr %i.e, align 8, !tbaa !54
-  %8 = icmp ugt i32 %7, 63
-  br i1 %8, label %bb.k, label %._crit_edge.i39
-
-._crit_edge.i39:                                  ; preds = %6
-  %.phi.trans.insert.i40 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.pre.i41 = load ptr, ptr %.phi.trans.insert.i40, align 8, !tbaa !53
-  br label %13
-
-bb.k:                                             ; preds = %6
-  %9 = lshr i32 %7, 3
-  %10 = and i32 %7, 7
-  %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !53
-  %11 = zext nneg i32 %9 to i64
-  %12 = getelementptr inbounds nuw i8, ptr %i.bc, i64 %11 ; 2 uses
-  store ptr %12, ptr %i.bb, align 8, !tbaa !53
-  br label %13
-
-13:                                               ; preds = %bb.k, %._crit_edge.i39
-  %14 = phi ptr [ %12, %bb.k ], [ %.pre.i41, %._crit_edge.i39 ] ; 3 uses
-  %.0.i42 = phi i32 [ %10, %bb.k ], [ %7, %._crit_edge.i39 ] ; 3 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %16 = load ptr, ptr %15, align 8, !tbaa !52
-  %.not.i.i43 = icmp ult ptr %14, %16
+  %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !53 ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %6 = load ptr, ptr %5, align 8, !tbaa !52
+  %.not.i.i43 = icmp ult ptr %i.bc, %6
   br i1 %.not.i.i43, label %bb.l, label %bits_priv_refill_64_be.exit.i44
 
-bb.l:                                             ; preds = %13
+bb.l:                                             ; preds = %bb.k
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.be = load i64, ptr %14, align 1, !tbaa !37
+  %i.be = load i64, ptr %i.bc, align 1, !tbaa !37
   %i.bf = tail call noundef i64 @llvm.bswap.i64(i64 %i.be) ; 2 uses
   store i64 %i.bf, ptr %0, align 8, !tbaa !55
-  %i.bg = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   store ptr %i.bg, ptr %i.bd, align 8, !tbaa !53
   store i32 64, ptr %i.e, align 8, !tbaa !54
   br label %bits_priv_refill_64_be.exit.i44
 
-bits_priv_refill_64_be.exit.i44:                  ; preds = %bb.l, %13
-  %i.bh = phi i32 [ 0, %13 ], [ 64, %bb.l ]
-  %i.bi = phi i64 [ 0, %13 ], [ %i.bf, %bb.l ]
-  %.not.i45 = icmp eq i32 %.0.i42, 0
+bits_priv_refill_64_be.exit.i44:                  ; preds = %bb.l, %bb.k
+  %i.bh = phi i32 [ 0, %bb.k ], [ 64, %bb.l ]
+  %i.bi = phi i64 [ 0, %bb.k ], [ %i.bf, %bb.l ]
+  %.not.i45 = icmp eq i32 %i.aw, %i.u
   br i1 %.not.i45, label %bits_skip_be.exit48, label %bb.m
 
 bb.m:                                             ; preds = %bits_priv_refill_64_be.exit.i44
-  %i.bj = zext nneg i32 %.0.i42 to i64
+  %i.bj = zext nneg i32 %4 to i64
   %i.bk = shl i64 %i.bi, %i.bj
   store i64 %i.bk, ptr %0, align 8, !tbaa !55
-  %i.bl = sub nsw i32 %i.bh, %.0.i42
+  %i.bl = sub nsw i32 %i.bh, %4
   br label %.sink.split.i46
 
 .sink.split.i46:                                  ; preds = %bb.m, %bb.j
@@ -2006,21 +1978,21 @@ bb.m:                                             ; preds = %bits_priv_refill_64
   br label %bits_skip_be.exit48
 
 bits_skip_be.exit48:                              ; preds = %bits_priv_refill_64_be.exit.i44, %.sink.split.i46
-  %i.bm = shl i32 %3, %i.au
-  %i.bn = add nsw i32 %4, 1
+  %i.bm = shl nuw nsw i32 %2, %i.au
+  %i.bn = add nuw nsw i32 %2, 1
   %i.bo = shl i32 %i.x, %i.bn
   %i.bp = lshr i32 %i.bo, 1
   %i.bq = xor i32 %i.au, 31
   %i.br = lshr i32 %i.bp, %i.bq
-  %i.bs = add i32 %i.br, %i.bm
+  %i.bs = add nuw nsw i32 %i.br, %i.bm
   %i.bt = trunc i32 %i.bs to i16
   br label %bb.v
 
-bb.n:                                             ; preds = %ff_clz_c.exit
-  %17 = lshr exact i32 %sext, 15
-  %18 = trunc i32 %17 to i16
+bb.n:                                             ; preds = %.preheader.preheader
+  %.tr = trunc nuw nsw i32 %2 to i16
+  %7 = shl nuw nsw i16 %.tr, 1
   %i.bu = sub nsw i16 %i.d, %i.a
-  %i.bv = add i16 %i.bu, %18                      ; 2 uses
+  %i.bv = add nsw i16 %i.bu, %7                   ; 2 uses
   %i.bw = icmp sgt i16 %i.bv, 32
   br i1 %i.bw, label %bb.v, label %bb.o
 
@@ -2098,7 +2070,7 @@ bb.u:                                             ; preds = %bits_priv_refill_64
 bits_skip_be.exit58:                              ; preds = %bits_priv_refill_64_be.exit.i54, %.sink.split.i56
   %i.cx = sub nsw i32 32, %i.bx
   %i.cy = lshr i32 %i.x, %i.cx
-  %i.cz = add nsw i32 %5, 1
+  %i.cz = add nsw i32 %3, 1
   %i.da = zext nneg i16 %i.b to i32
   %i.db = shl nsw i32 %i.cz, %i.da
   %.neg = shl nsw i32 -1, %i.by
@@ -2126,6 +2098,9 @@ declare i32 @llvm.umin.i32(i32, i32) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #9
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.ctlz.i32(i32, i1 immarg) #10
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #9
 
@@ -2140,11 +2115,12 @@ attributes #4 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "st
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #6 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { cold nofree noreturn nounwind "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nounwind }
-attributes #11 = { noreturn nounwind }
-attributes #12 = { nounwind willreturn memory(none) }
+attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nounwind }
+attributes #12 = { noreturn nounwind }
+attributes #13 = { nounwind willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
@@ -2264,5 +2240,4 @@ attributes #12 = { nounwind willreturn memory(none) }
 !111 = !{!51, !14, i64 8}
 !112 = !{!51, !6, i64 36}
 !113 = !{!33, !9, i64 80}
-!114 = distinct !{!114, !50}
 end_hunk_0

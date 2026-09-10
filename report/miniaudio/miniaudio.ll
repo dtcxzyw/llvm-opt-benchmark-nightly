@@ -205,10 +205,10 @@ ma_dr_flac__ilog2_u32.exit:                       ; preds = %bb.a
   %i.ou = zext i32 %i.ot to i64
   %.idx = shl nuw nsw i64 %i.ou, 2
   %i.ov = getelementptr inbounds nuw i8, ptr %8, i64 %.idx ; 2 uses
-  %i.ow = add nsw i32 %6, %1                      ; 2 uses
+  %i.ow = add nsw i32 %6, %1
   %reass.sub = sub nsw i32 %i.ow, %i.on
   %i.ox = add nsw i32 %reass.sub, 32
-  %i.oy = icmp ult i32 %i.ox, 33
+  %i.oy = icmp ult i32 %i.ox, 33                  ; 2 uses
   %.not1178 = icmp eq i32 %i.ot, 0                ; 2 uses
   br i1 %i.oy, label %.preheader, label %.preheader1139
 
@@ -611,24 +611,11 @@ bb.yb:                                            ; preds = %bb.xi, %bb.wu
   %i.hdn = zext nneg i32 %i.hdm to i64
   %i.hdo = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %i.hdn
   %i.hdp = load i32, ptr %i.hdo, align 4, !tbaa !118
-  br label %9
+  %9 = lshr i32 %i.hdl, 1
+  %10 = xor i32 %i.hdp, %9
+  br i1 %i.oy, label %bb.zj, label %bb.yc
 
-9:                                                ; preds = %bb.yb, %9
-  %.0.i9691168 = phi i32 [ 0, %bb.yb ], [ %10, %9 ]
-  %.04.i9681167 = phi i32 [ %4, %bb.yb ], [ %11, %9 ]
-  %10 = add nuw nsw i32 %.0.i9691168, 1           ; 2 uses
-  %11 = lshr i32 %.04.i9681167, 1                 ; 2 uses
-  %.not.i970 = icmp eq i32 %11, 0
-  br i1 %.not.i970, label %ma_dr_flac__ilog2_u32.exit971, label %9, !llvm.loop !3274
-
-ma_dr_flac__ilog2_u32.exit971:                    ; preds = %9
-  %12 = lshr i32 %i.hdl, 1
-  %13 = xor i32 %i.hdp, %12
-  %14 = add i32 %10, %i.ow
-  %15 = icmp ult i32 %14, 33
-  br i1 %15, label %bb.zj, label %bb.yc
-
-bb.yc:                                            ; preds = %ma_dr_flac__ilog2_u32.exit971
+bb.yc:                                            ; preds = %bb.yb
   switch i8 %trunc.i, label %ma_dr_flac__calculate_prediction_64.exit [
     i8 32, label %bb.yd
     i8 31, label %bb.ye
@@ -1020,7 +1007,7 @@ ma_dr_flac__calculate_prediction_64.exit:         ; preds = %bb.yc, %bb.zi
   %i.hmg = trunc i64 %i.hmf to i32
   br label %bb.aaq
 
-bb.zj:                                            ; preds = %ma_dr_flac__ilog2_u32.exit971
+bb.zj:                                            ; preds = %bb.yb
   switch i8 %trunc.i, label %ma_dr_flac__calculate_prediction_32.exit [
     i8 32, label %bb.zk
     i8 31, label %bb.zl
@@ -1349,12 +1336,12 @@ ma_dr_flac__calculate_prediction_32.exit:         ; preds = %bb.zj, %bb.aap
 
 bb.aaq:                                           ; preds = %ma_dr_flac__calculate_prediction_32.exit, %ma_dr_flac__calculate_prediction_64.exit
   %.pn = phi i32 [ %i.hsk, %ma_dr_flac__calculate_prediction_32.exit ], [ %i.hmg, %ma_dr_flac__calculate_prediction_64.exit ]
-  %storemerge = add i32 %.pn, %13
+  %storemerge = add i32 %.pn, %10
   store i32 %storemerge, ptr %.31169, align 4, !tbaa !118
   %i.hsl = add nuw i32 %.01171, 1                 ; 2 uses
   %i.hsm = getelementptr inbounds nuw i8, ptr %.31169, i64 4
   %i.hsn = icmp ult i32 %i.hsl, %2
-  br i1 %i.hsn, label %bb.wo, label %ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.exit, !llvm.loop !3275
+  br i1 %i.hsn, label %bb.wo, label %ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.exit, !llvm.loop !3274
 
 ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.exit: ; preds = %bb.fv, %bb.fu, %bb.ei, %bb.eh, %bb.cv, %bb.cu, %bb.bi, %bb.bh, %bb.bv, %bb.di, %bb.ev, %bb.gi, %bb.qu, %bb.qt, %bb.ph, %bb.pg, %bb.nu, %bb.nt, %bb.mh, %bb.mg, %bb.mu, %bb.oh, %bb.pu, %bb.rh, %bb.aaq, %bb.xf, %bb.xg, %bb.xt, %bb.ap, %bb.u, %bb.t, %bb.ah, %.loopexit1129, %bb.b
   %.0116 = phi i32 [ 0, %bb.xg ], [ 0, %bb.oh ], [ 0, %bb.rh ], [ 0, %bb.xt ], [ 0, %bb.bv ], [ 0, %bb.di ], [ 0, %bb.qu ], [ 0, %bb.pu ], [ 0, %bb.ev ], [ 0, %bb.mu ], [ 0, %bb.gi ], [ 1, %bb.b ], [ 1, %.loopexit1129 ], [ 0, %bb.u ], [ 0, %bb.ah ], [ 1, %bb.ap ], [ 0, %bb.t ], [ 0, %bb.xf ], [ 1, %bb.aaq ], [ 0, %bb.mg ], [ 0, %bb.mh ], [ 0, %bb.nt ], [ 0, %bb.nu ], [ 0, %bb.pg ], [ 0, %bb.ph ], [ 0, %bb.qt ], [ 0, %bb.bh ], [ 0, %bb.bi ], [ 0, %bb.cu ], [ 0, %bb.cv ], [ 0, %bb.eh ], [ 0, %bb.ei ], [ 0, %bb.fu ], [ 0, %bb.fv ]
@@ -1587,7 +1574,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.v
   %i.de = or disjoint i64 %i.db, %i.dd            ; 2 uses
   %i.df = add nuw nsw i32 %.045, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.df, %.023
-  br i1 %exitcond.not, label %bb.ab, label %bb.s, !llvm.loop !3276
+  br i1 %exitcond.not, label %bb.ab, label %bb.s, !llvm.loop !3275
 
 bb.ab:                                            ; preds = %bb.aa
   store i64 %i.de, ptr %1, align 8, !tbaa !164
@@ -1990,7 +1977,7 @@ bb.w:                                             ; preds = %bb.v
 ma_dr_flac__seek_subframe.exit:                   ; preds = %bb.w, %bb.l, %bb.j, %bb.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.a, !llvm.loop !3277
+  br i1 %exitcond.not, label %._crit_edge, label %bb.a, !llvm.loop !3276
 
 ._crit_edge:                                      ; preds = %ma_dr_flac__seek_subframe.exit
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
@@ -2393,7 +2380,7 @@ bb.bv:                                            ; preds = %bb.bd, %bb.ap
   store i32 %.4.i.i, ptr %i.a, align 4, !tbaa !739
   %i.ts = add nuw i32 %.09.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ts, %.022
-  br i1 %exitcond.not.i, label %ma_dr_flac__read_and_seek_residual__rice.exit, label %bb.aj, !llvm.loop !3278
+  br i1 %exitcond.not.i, label %ma_dr_flac__read_and_seek_residual__rice.exit, label %bb.aj, !llvm.loop !3277
 
 .thread:                                          ; preds = %bb.ah, %bb.z, %bb.ai
   %i.tt = phi i32 [ %.pre15.i129, %bb.ah ], [ %.pre15.i130, %bb.z ], [ %.pre15.i, %bb.ai ] ; 2 uses
@@ -2796,7 +2783,7 @@ ma_dr_flac__read_and_decode_next_flac_frame.exit: ; preds = %.thread, %bb.a
   br i1 %i.n, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %ma_dr_flac__read_and_decode_next_flac_frame.exit
-  %i.q = tail call i32 %i.o(ptr noundef %i.p, i32 noundef 2147483647, i32 noundef 0) #55, !inline_history !3279
+  %i.q = tail call i32 %i.o(ptr noundef %i.p, i32 noundef 2147483647, i32 noundef 0) #55, !inline_history !3278
   %.not22.i = icmp eq i32 %i.q, 0
   br i1 %.not22.i, label %.thread, label %.preheader.i.preheader
 
@@ -2814,7 +2801,7 @@ bb.b:                                             ; preds = %ma_dr_flac__read_an
   %.018.i64 = phi i64 [ %.018.i, %.preheader.i ], [ %.018.i63, %.preheader.i.preheader ]
   %i.t = load ptr, ptr %i.d, align 8, !tbaa !736
   %i.u = load ptr, ptr %i.e, align 8, !tbaa !737
-  %i.v = tail call i32 %i.t(ptr noundef %i.u, i32 noundef 2147483647, i32 noundef 1) #55, !inline_history !3279
+  %i.v = tail call i32 %i.t(ptr noundef %i.u, i32 noundef 2147483647, i32 noundef 1) #55, !inline_history !3278
   %.not24.i = icmp eq i32 %i.v, 0
   br i1 %.not24.i, label %.loopexit, label %.preheader.i, !llvm.loop !61
 
@@ -2823,13 +2810,13 @@ bb.b:                                             ; preds = %ma_dr_flac__read_an
   %i.w = load ptr, ptr %i.d, align 8, !tbaa !736
   %i.x = load ptr, ptr %i.e, align 8, !tbaa !737
   %i.y = trunc nuw nsw i64 %.018.i.lcssa to i32
-  %i.z = tail call i32 %i.w(ptr noundef %i.x, i32 noundef %i.y, i32 noundef 1) #55, !inline_history !3279
+  %i.z = tail call i32 %i.w(ptr noundef %i.x, i32 noundef %i.y, i32 noundef 1) #55, !inline_history !3278
   %.not23.not.i = icmp eq i32 %i.z, 0
   br i1 %.not23.not.i, label %.loopexit, label %bb.h
 
 bb.c:                                             ; preds = %ma_dr_flac__read_and_decode_next_flac_frame.exit
   %i.aa = trunc nuw nsw i64 %.028 to i32
-  %i.ab = tail call i32 %i.o(ptr noundef %i.p, i32 noundef %i.aa, i32 noundef 0) #55, !inline_history !3279
+  %i.ab = tail call i32 %i.o(ptr noundef %i.p, i32 noundef %i.aa, i32 noundef 0) #55, !inline_history !3278
   %.not.i = icmp eq i32 %i.ab, 0
   br i1 %.not.i, label %.loopexit, label %bb.h
 
@@ -3201,7 +3188,7 @@ bb.a:
   %i.hq = getelementptr inbounds nuw i8, ptr %.0103, i64 72
   %i.hr = getelementptr inbounds nuw i8, ptr %.096102, i64 36
   %exitcond.not = icmp eq i32 %i.hp, %3
-  br i1 %exitcond.not, label %bb.b, label %.preheader, !llvm.loop !3280
+  br i1 %exitcond.not, label %bb.b, label %.preheader, !llvm.loop !3279
 
 bb.b:                                             ; preds = %.preheader
   ret void
@@ -3604,7 +3591,6 @@ begin_hunk_5_@llvm.bswap.v2i64
 !3275 = distinct !{!3275, !120}
 !3276 = distinct !{!3276, !120}
 !3277 = distinct !{!3277, !120}
-!3278 = distinct !{!3278, !120}
-!3279 = !{ptr @ma_dr_flac__seek_to_byte}
-!3280 = distinct !{!3280, !120}
+!3278 = !{ptr @ma_dr_flac__seek_to_byte}
+!3279 = distinct !{!3279, !120}
 end_hunk_5

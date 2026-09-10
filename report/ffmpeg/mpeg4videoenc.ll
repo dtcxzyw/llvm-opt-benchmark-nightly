@@ -205,19 +205,13 @@ bb.b:                                             ; preds = %bb.a, %bb.f
   %indvars.iv = phi i64 [ -256, %bb.a ], [ %indvars.iv.next, %bb.f ] ; 7 uses
   %i.a = trunc nsw i64 %indvars.iv to i32         ; 2 uses
   %i.b = icmp eq i64 %indvars.iv, 0
-  br i1 %i.b, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %i.b, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.b
+.lr.ph:                                           ; preds = %bb.b
   %0 = tail call i32 @llvm.abs.i32(i32 %i.a, i1 true)
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.04453 = phi i32 [ %1, %.lr.ph ], [ %0, %.lr.ph.preheader ]
-  %.04552 = phi i32 [ %2, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %1 = lshr i32 %.04453, 1                        ; 2 uses
-  %2 = add nuw nsw i32 %.04552, 1                 ; 2 uses
-  %.not = icmp eq i32 %1, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !197
+  %1 = tail call range(i32 1, 33) i32 @llvm.ctlz.i32(i32 %0, i1 true)
+  %2 = sub nuw nsw i32 32, %1
+  br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
   %.045.lcssa = phi i32 [ 0, %bb.b ], [ %2, %.lr.ph ] ; 9 uses
@@ -299,7 +293,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c, %bb.e
   store i8 %i.az, ptr %i.ba, align 1, !tbaa !50
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 256
-  br i1 %exitcond.not, label %bb.g, label %bb.b, !llvm.loop !198
+  br i1 %exitcond.not, label %bb.g, label %bb.b, !llvm.loop !197
 
 bb.g:                                             ; preds = %bb.f
   ret void
@@ -375,7 +369,7 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   store i8 0, ptr %i.ag, align 1, !tbaa !50
   %indvars.iv.next155 = add nuw nsw i64 %indvars.iv154, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next155, 64
-  br i1 %exitcond.not, label %bb.b, label %.preheader, !llvm.loop !199
+  br i1 %exitcond.not, label %bb.b, label %.preheader, !llvm.loop !198
 
 bb.d:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
@@ -385,18 +379,18 @@ bb.e:                                             ; preds = %bb.b, %bb.j
   %indvars.iv157 = phi i64 [ 101, %bb.b ], [ %indvars.iv.next158, %bb.j ] ; 6 uses
   %.0151 = phi i32 [ 0, %bb.b ], [ %i.ak, %bb.j ]
   %.0132150 = phi i32 [ undef, %bb.b ], [ %spec.select, %bb.j ]
-  %i.ah = load ptr, ptr %i.o, align 8, !tbaa !202
+  %i.ah = load ptr, ptr %i.o, align 8, !tbaa !201
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %indvars.iv157
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !50  ; 2 uses
   %i.ak = sext i8 %i.aj to i32                    ; 4 uses
-  %i.al = load ptr, ptr %i.p, align 8, !tbaa !203
+  %i.al = load ptr, ptr %i.p, align 8, !tbaa !202
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %indvars.iv157
   %i.an = load i8, ptr %i.am, align 1, !tbaa !50  ; 2 uses
   %i.ao = sext i8 %i.an to i32                    ; 6 uses
-  %i.ap = load i32, ptr %i.q, align 4, !tbaa !204
+  %i.ap = load i32, ptr %i.q, align 4, !tbaa !203
   %i.aq = sext i32 %i.ap to i64
   %.not145 = icmp slt i64 %indvars.iv157, %i.aq   ; 2 uses
-  %i.ar = load ptr, ptr %i.r, align 8, !tbaa !205
+  %i.ar = load ptr, ptr %i.r, align 8, !tbaa !204
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %indvars.iv157 ; 2 uses
   %i.at = load i16, ptr %i.as, align 2, !tbaa !52
   %i.au = zext i16 %i.at to i32
@@ -492,7 +486,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   store i8 %i.ct, ptr %i.cz, align 1, !tbaa !50
   %indvars.iv.next158 = add nsw i64 %indvars.iv157, -1
   %.not163 = icmp eq i64 %indvars.iv157, 0
-  br i1 %.not163, label %bb.d, label %bb.e, !llvm.loop !200
+  br i1 %.not163, label %bb.d, label %bb.e, !llvm.loop !199
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
@@ -518,6 +512,9 @@ declare i8 @llvm.smin.i8(i8, i8) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #13
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.ctlz.i32(i32, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #13
@@ -760,10 +757,9 @@ attributes #17 = { nounwind willreturn memory(none) }
 !197 = distinct !{!197, !51}
 !198 = distinct !{!198, !51}
 !199 = distinct !{!199, !51}
-!200 = distinct !{!200, !51}
-!201 = !{!"RLTable", !7, i64 0, !7, i64 4, !21, i64 8, !12, i64 16, !12, i64 24, !6, i64 32, !6, i64 48, !6, i64 64, !6, i64 80}
-!202 = !{!201, !12, i64 16}
-!203 = !{!201, !12, i64 24}
-!204 = !{!201, !7, i64 4}
-!205 = !{!201, !21, i64 8}
+!200 = !{!"RLTable", !7, i64 0, !7, i64 4, !21, i64 8, !12, i64 16, !12, i64 24, !6, i64 32, !6, i64 48, !6, i64 64, !6, i64 80}
+!201 = !{!200, !12, i64 16}
+!202 = !{!200, !12, i64 24}
+!203 = !{!200, !7, i64 4}
+!204 = !{!200, !21, i64 8}
 end_hunk_0

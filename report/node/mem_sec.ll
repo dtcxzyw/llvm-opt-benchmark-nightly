@@ -90,23 +90,17 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   %i.h = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.035.i, i1 true)
   %i.i = lshr i64 %0, %i.h                        ; 2 uses
   %i.j = shl nuw nsw i64 %i.i, 1                  ; 2 uses
-  store i64 %i.j, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 72), align 8, !tbaa !37
+  store i64 %i.j, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 72), align 8, !tbaa !36
   %i.k = icmp ult i64 %i.i, 4
-  br i1 %i.k, label %bb.u, label %.preheader
+  br i1 %i.k, label %bb.u, label %bb.k
 
-.preheader:                                       ; preds = %bb.j, %.preheader
-  %.03348.i = phi i64 [ %4, %.preheader ], [ %i.j, %bb.j ]
-  %2 = phi i64 [ %3, %.preheader ], [ -1, %bb.j ]
-  %3 = add nsw i64 %2, 1                          ; 3 uses
-  %4 = lshr i64 %.03348.i, 1                      ; 2 uses
-  %.not42.i = icmp eq i64 %4, 0
-  br i1 %.not42.i, label %bb.k, label %.preheader, !llvm.loop !36
-
-bb.k:                                             ; preds = %.preheader
-  store i64 %3, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8, !tbaa !21
-  %i.l = shl i64 %3, 3
+bb.k:                                             ; preds = %bb.j
+  %2 = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.j, i1 true)
+  %3 = xor i64 %2, 63                             ; 2 uses
+  store i64 %3, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8, !tbaa !20
+  %i.l = shl nuw nsw i64 %3, 3
   %i.m = tail call noalias ptr @CRYPTO_zalloc(i64 noundef %i.l, ptr noundef nonnull @.str.1, i32 noundef 478) #9 ; 2 uses
-  store ptr %i.m, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  store ptr %i.m, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   %.not43.i = icmp eq ptr %i.m, null
   br i1 %.not43.i, label %bb.l, label %bb.m
 
@@ -115,10 +109,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.k
-  %i.n = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 72), align 8, !tbaa !37
+  %i.n = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 72), align 8, !tbaa !36
   %i.o = lshr i64 %i.n, 3
   %i.p = tail call noalias ptr @CRYPTO_zalloc(i64 noundef %i.o, ptr noundef nonnull @.str.1, i32 noundef 483) #9 ; 2 uses
-  store ptr %i.p, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  store ptr %i.p, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   %.not44.i = icmp eq ptr %i.p, null
   br i1 %.not44.i, label %bb.n, label %bb.o
 
@@ -127,10 +121,10 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 bb.o:                                             ; preds = %bb.m
-  %i.q = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 72), align 8, !tbaa !37
+  %i.q = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 72), align 8, !tbaa !36
   %i.r = lshr i64 %i.q, 3
   %i.s = tail call noalias ptr @CRYPTO_zalloc(i64 noundef %i.r, ptr noundef nonnull @.str.1, i32 noundef 488) #9 ; 2 uses
-  store ptr %i.s, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  store ptr %i.s, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   %.not45.i = icmp eq ptr %i.s, null
   br i1 %.not45.i, label %bb.p, label %bb.q
 
@@ -145,25 +139,25 @@ bb.q:                                             ; preds = %bb.o
   %i.v = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8, !tbaa !18
   %reass.add.i = shl i64 %..i, 1                  ; 2 uses
   %i.w = add i64 %reass.add.i, %i.v               ; 2 uses
-  store i64 %i.w, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 8), align 8, !tbaa !38
+  store i64 %i.w, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 8), align 8, !tbaa !37
   %i.x = tail call ptr @mmap64(ptr noundef null, i64 noundef %i.w, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #9 ; 3 uses
-  store ptr %i.x, ptr @sh, align 8, !tbaa !25
+  store ptr %i.x, ptr @sh, align 8, !tbaa !24
   %i.y = icmp eq ptr %i.x, inttoptr (i64 -1 to ptr)
   br i1 %i.y, label %._crit_edge.i, label %bb.r
 
 ._crit_edge.i:                                    ; preds = %bb.q
-  %.pre.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  %.pre.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   br label %bb.u
 
 bb.r:                                             ; preds = %bb.q
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 %..i ; 2 uses
-  store ptr %i.z, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
-  %i.aa = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  store ptr %i.z, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
+  %i.aa = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   tail call fastcc void @sh_setbit(ptr noundef nonnull %i.z, i32 noundef 0, ptr noundef %i.aa)
-  %i.ab = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
-  %i.ac = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.ab = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
+  %i.ac = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   tail call fastcc void @sh_add_to_list(ptr noundef %i.ab, ptr noundef %i.ac)
-  %i.ad = load ptr, ptr @sh, align 8, !tbaa !25
+  %i.ad = load ptr, ptr @sh, align 8, !tbaa !24
   %i.ae = tail call i32 @mprotect(ptr noundef %i.ad, i64 noundef %..i, i32 noundef 0) #9
   %i.af = icmp slt i32 %i.ae, 0
   %i.ag = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8, !tbaa !18
@@ -171,13 +165,13 @@ bb.r:                                             ; preds = %bb.q
   %i.ai = add i64 %i.ah, %i.ag
   %i.aj = sub nsw i64 0, %..i
   %i.ak = and i64 %i.ai, %i.aj
-  %i.al = load ptr, ptr @sh, align 8, !tbaa !25
+  %i.al = load ptr, ptr @sh, align 8, !tbaa !24
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ak
   %i.an = tail call i32 @mprotect(ptr noundef %i.am, i64 noundef %..i, i32 noundef 0) #9
   %i.ao = icmp slt i32 %i.an, 0
   %i.ap = select i1 %i.ao, i1 true, i1 %i.af
   %.1.i = select i1 %i.ap, i32 2, i32 1           ; 2 uses
-  %i.aq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.aq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.ar = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8, !tbaa !18
   %i.as = tail call i64 (i64, ...) @syscall(i64 noundef 325, ptr noundef %i.aq, i64 noundef %i.ar, i32 noundef 1) #9
   %i.at = icmp slt i64 %i.as, 0
@@ -185,12 +179,12 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.au = tail call ptr @__errno_location() #11
-  %i.av = load i32, ptr %i.au, align 4, !tbaa !39
+  %i.av = load i32, ptr %i.au, align 4, !tbaa !38
   %i.aw = icmp eq i32 %i.av, 38
   br i1 %i.aw, label %bb.t, label %sh_init.exit
 
 bb.t:                                             ; preds = %bb.s
-  %i.ax = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.ax = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.ay = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8, !tbaa !18
   %i.az = tail call i32 @mlock(ptr noundef %i.ax, i64 noundef %i.ay) #9
   %i.ba = icmp slt i32 %i.az, 0
@@ -200,11 +194,11 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %._crit_edge.i, %bb.j
   %i.bb = phi ptr [ %.pre.i, %._crit_edge.i ], [ null, %bb.j ]
   tail call void @CRYPTO_free(ptr noundef %i.bb, ptr noundef nonnull @.str.1, i32 noundef 595) #9
-  %i.bc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  %i.bc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   tail call void @CRYPTO_free(ptr noundef %i.bc, ptr noundef nonnull @.str.1, i32 noundef 596) #9
-  %i.bd = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %i.bd = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   tail call void @CRYPTO_free(ptr noundef %i.bd, ptr noundef nonnull @.str.1, i32 noundef 597) #9
-  %i.be = load ptr, ptr @sh, align 8, !tbaa !25   ; 2 uses
+  %i.be = load ptr, ptr @sh, align 8, !tbaa !24   ; 2 uses
   %i.bf = icmp ne ptr %i.be, inttoptr (i64 -1 to ptr)
   %i.bg = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 8), align 8 ; 2 uses
   %i.bh = icmp ne i64 %i.bg, 0
@@ -224,7 +218,7 @@ sh_init.exit.thread:                              ; preds = %bb.u, %bb.v
 
 sh_init.exit:                                     ; preds = %bb.r, %bb.s, %bb.t
   %.2.i = phi i32 [ %.1.i, %bb.r ], [ 2, %bb.s ], [ %spec.select46.i, %bb.t ]
-  %i.bk = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.bk = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.bl = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8, !tbaa !18
   %i.bm = tail call i32 @madvise(ptr noundef %i.bk, i64 noundef %i.bl, i32 noundef 16) #9
   %i.bn = icmp slt i32 %i.bm, 0
@@ -244,18 +238,18 @@ declare void @CRYPTO_THREAD_lock_free(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @CRYPTO_secure_malloc_done() local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i64, ptr @secure_mem_used, align 8, !tbaa !27
+  %i.a = load i64, ptr @secure_mem_used, align 8, !tbaa !26
   %i.b = icmp eq i64 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   tail call void @CRYPTO_free(ptr noundef %i.c, ptr noundef nonnull @.str.1, i32 noundef 595) #9
-  %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   tail call void @CRYPTO_free(ptr noundef %i.d, ptr noundef nonnull @.str.1, i32 noundef 596) #9
-  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   tail call void @CRYPTO_free(ptr noundef %i.e, ptr noundef nonnull @.str.1, i32 noundef 597) #9
-  %i.f = load ptr, ptr @sh, align 8, !tbaa !25    ; 2 uses
+  %i.f = load ptr, ptr @sh, align 8, !tbaa !24    ; 2 uses
   %i.g = icmp ne ptr %i.f, inttoptr (i64 -1 to ptr)
   %i.h = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 8), align 8 ; 2 uses
   %i.i = icmp ne i64 %i.h, 0
@@ -309,7 +303,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.e, label %sh_malloc.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8, !tbaa !21 ; 2 uses
+  %i.f = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8, !tbaa !20 ; 2 uses
   %i.g = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 48), align 8, !tbaa !19
   br label %bb.f
 
@@ -319,14 +313,14 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.055.i = add nsw i64 %.055.in.i, -1            ; 7 uses
   %i.h = icmp ult i64 %.0.i, %0
   %i.i = shl i64 %.0.i, 1
-  br i1 %i.h, label %bb.f, label %bb.g, !llvm.loop !40
+  br i1 %i.h, label %bb.f, label %bb.g, !llvm.loop !39
 
 bb.g:                                             ; preds = %bb.f
   %i.j = icmp sgt i64 %.055.in.i, 0
   br i1 %i.j, label %.lr.ph.i, label %sh_malloc.exit.thread
 
 .lr.ph.i:                                         ; preds = %bb.g
-  %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22 ; 2 uses
+  %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21 ; 2 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.i, %.lr.ph.i
@@ -341,21 +335,21 @@ bb.h:                                             ; preds = %bb.i, %.lr.ph.i
   br i1 %.not62.i64, label %.preheader.i.preheader..preheader.i._crit_edge_crit_edge, label %.lr.ph.preheader
 
 .preheader.i.preheader..preheader.i._crit_edge_crit_edge: ; preds = %.preheader.i.preheader
-  %.pre75 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  %.pre75 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   br label %.preheader.i._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader.i.preheader
-  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   br label %.lr.ph
 
 bb.i:                                             ; preds = %bb.h
   %i.n = add nsw i64 %.05497.i, -1
   %i.o = icmp sgt i64 %.05497.i, 0
-  br i1 %i.o, label %bb.h, label %sh_malloc.exit.thread, !llvm.loop !41
+  br i1 %i.o, label %bb.h, label %sh_malloc.exit.thread, !llvm.loop !40
 
 .preheader.i:                                     ; preds = %sh_find_my_buddy.exit.i
   %.not62.i = icmp eq i64 %i.bh, %.055.i
-  br i1 %.not62.i, label %.preheader.i._crit_edge.loopexit, label %.lr.ph, !llvm.loop !42
+  br i1 %.not62.i, label %.preheader.i._crit_edge.loopexit, label %.lr.ph, !llvm.loop !41
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.preheader.i
   %i.p = phi ptr [ %i.eo, %.preheader.i ], [ %.pre, %.lr.ph.preheader ]
@@ -375,7 +369,7 @@ bb.j:                                             ; preds = %.lr.ph
   unreachable
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.y = ptrtoint ptr %i.q to i64                 ; 2 uses
   %i.z = ptrtoint ptr %i.x to i64
   %i.aa = sub i64 %i.y, %i.z                      ; 2 uses
@@ -419,7 +413,7 @@ bb.o:                                             ; preds = %sh_testbit.exit.i
   unreachable
 
 bb.p:                                             ; preds = %sh_testbit.exit.i
-  %i.ar = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  %i.ar = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   tail call fastcc void @sh_clearbit(ptr noundef %i.q, i32 noundef %i.s, ptr noundef %i.ar)
   %i.as = load ptr, ptr %i.q, align 8, !tbaa !33  ; 3 uses
   %.not.i71.i = icmp eq ptr %i.as, null
@@ -436,7 +430,7 @@ bb.q:                                             ; preds = %bb.p
   store ptr %i.as, ptr %.pre.i.i, align 8, !tbaa !35
   %i.au = load ptr, ptr %i.q, align 8, !tbaa !33  ; 2 uses
   %i.av = icmp eq ptr %i.au, null
-  %.pre.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22 ; 3 uses
+  %.pre.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21 ; 3 uses
   br i1 %i.av, label %sh_remove_from_list.exit.i, label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge.i.i
@@ -450,7 +444,7 @@ bb.r:                                             ; preds = %._crit_edge.i.i
   br i1 %or.cond.i72.i, label %sh_remove_from_list.exit.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.bb = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 2 uses
+  %i.bb = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 2 uses
   %.not18.i.i = icmp uge ptr %i.ax, %i.bb
   %i.bc = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bc
@@ -475,7 +469,7 @@ bb.u:                                             ; preds = %sh_remove_from_list
 bb.v:                                             ; preds = %sh_remove_from_list.exit.i
   %i.bh = add nuw nsw i64 %.1.i65, 1              ; 10 uses
   %i.bi = trunc i64 %i.bh to i32                  ; 3 uses
-  %i.bj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %i.bj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   %i.bk = icmp sgt i32 %i.bi, -1
   %i.bl = and i64 %i.bh, 4294967295               ; 6 uses
   %i.bm = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8
@@ -488,7 +482,7 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 bb.x:                                             ; preds = %bb.v
-  %i.bo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.bo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.bp = ptrtoint ptr %i.bo to i64
   %i.bq = sub i64 %i.y, %i.bp                     ; 2 uses
   %i.br = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8, !tbaa !18
@@ -532,12 +526,12 @@ bb.ab:                                            ; preds = %sh_testbit.exit76.i
   unreachable
 
 bb.ac:                                            ; preds = %sh_testbit.exit76.i
-  %i.ci = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  %i.ci = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   tail call fastcc void @sh_setbit(ptr noundef nonnull %i.q, i32 noundef %i.bi, ptr noundef %i.ci)
-  %i.cj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  %i.cj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.cj, i64 %i.bh
   tail call fastcc void @sh_add_to_list(ptr noundef nonnull %i.ck, ptr noundef nonnull %i.q)
-  %i.cl = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  %i.cl = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %i.bh
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !28
   %i.co = icmp eq ptr %i.cn, %i.q
@@ -551,7 +545,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.cp = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8, !tbaa !18 ; 2 uses
   %i.cq = lshr i64 %i.cp, %i.bh
   %i.cr = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.cq ; 5 uses
-  %i.cs = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %i.cs = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   %i.ct = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8
   %i.cu = icmp sgt i64 %i.ct, %i.bl
   br i1 %i.cu, label %bb.ag, label %bb.af
@@ -561,7 +555,7 @@ bb.af:                                            ; preds = %bb.ae
   unreachable
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.cv = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.cv = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.cw = ptrtoint ptr %i.cr to i64               ; 2 uses
   %i.cx = ptrtoint ptr %i.cv to i64
   %i.cy = sub i64 %i.cw, %i.cx                    ; 2 uses
@@ -604,12 +598,12 @@ bb.ak:                                            ; preds = %sh_testbit.exit80.i
   unreachable
 
 bb.al:                                            ; preds = %sh_testbit.exit80.i
-  %i.do = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  %i.do = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   tail call fastcc void @sh_setbit(ptr noundef nonnull %i.cr, i32 noundef %i.bi, ptr noundef %i.do)
-  %i.dp = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  %i.dp = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   %i.dq = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %i.bh
   tail call fastcc void @sh_add_to_list(ptr noundef nonnull %i.dq, ptr noundef nonnull %i.cr)
-  %i.dr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22 ; 2 uses
+  %i.dr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21 ; 2 uses
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %i.bh
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !28 ; 2 uses
   %i.du = icmp eq ptr %i.dt, %i.cr
@@ -624,14 +618,14 @@ bb.an:                                            ; preds = %bb.al
   %i.dw = lshr i64 %i.dv, %i.bh
   %i.dx = sub nsw i64 0, %i.dw
   %i.dy = getelementptr inbounds i8, ptr %i.cr, i64 %i.dx
-  %i.dz = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 2 uses
+  %i.dz = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 2 uses
   %i.ea = ptrtoint ptr %i.dz to i64
   %i.eb = sub i64 %i.cw, %i.ea
   %i.ec = lshr i64 %i.dv, %i.bl                   ; 2 uses
   %i.ed = udiv i64 %i.eb, %i.ec
   %i.ee = add i64 %i.ed, %i.bw                    ; 2 uses
   %i.ef = xor i64 %i.ee, 1                        ; 2 uses
-  %i.eg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23 ; 2 uses
+  %i.eg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22 ; 2 uses
   %i.eh = lshr i64 %i.ee, 3                       ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 %i.eh
   %i.ej = load i8, ptr %i.ei, align 1, !tbaa !29
@@ -643,7 +637,7 @@ bb.an:                                            ; preds = %bb.al
   br i1 %.not.i81.i, label %.critedge.i, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.eo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24 ; 2 uses
+  %i.eo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23 ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 %i.eh
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !29
   %i.er = zext i8 %i.eq to i64
@@ -657,7 +651,7 @@ sh_find_my_buddy.exit.i:                          ; preds = %bb.ao
   %i.ev = mul i64 %i.eu, %i.ec
   %i.ew = getelementptr inbounds nuw i8, ptr %i.dz, i64 %i.ev
   %i.ex = icmp eq ptr %i.dy, %i.ew
-  br i1 %i.ex, label %.preheader.i, label %.critedge.i, !llvm.loop !42
+  br i1 %i.ex, label %.preheader.i, label %.critedge.i, !llvm.loop !41
 
 .critedge.i:                                      ; preds = %sh_find_my_buddy.exit.i, %bb.ao, %bb.an
   tail call void @OPENSSL_die(ptr noundef nonnull @.str.18, ptr noundef nonnull @.str.1, i32 noundef 675) #10
@@ -686,7 +680,7 @@ bb.ap:                                            ; preds = %.preheader.i._crit_
   unreachable
 
 bb.aq:                                            ; preds = %.preheader.i._crit_edge
-  %i.fg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.fg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.fh = ptrtoint ptr %i.fb to i64
   %i.fi = ptrtoint ptr %i.fg to i64
   %i.fj = sub i64 %i.fh, %i.fi                    ; 2 uses
@@ -730,7 +724,7 @@ bb.au:                                            ; preds = %sh_testbit.exit85.i
   unreachable
 
 bb.av:                                            ; preds = %sh_testbit.exit85.i
-  %i.ga = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %i.ga = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   tail call fastcc void @sh_setbit(ptr noundef %i.fb, i32 noundef %i.fc, ptr noundef %i.ga)
   %i.gb = load ptr, ptr %i.fb, align 8, !tbaa !33 ; 3 uses
   %.not.i86.i = icmp eq ptr %i.gb, null
@@ -750,20 +744,20 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.ge, label %._crit_edge.i89.sh_remove_from_list.exit94_crit_edge.i, label %bb.ax
 
 ._crit_edge.i89.sh_remove_from_list.exit94_crit_edge.i: ; preds = %._crit_edge.i89.i
-  %.pre100.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %.pre100.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %.pre102.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8
   br label %sh_remove_from_list.exit94.i
 
 bb.ax:                                            ; preds = %._crit_edge.i89.i
   %i.gf = getelementptr inbounds nuw i8, ptr %i.gd, i64 8
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !34 ; 4 uses
-  %i.gh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22 ; 2 uses
+  %i.gh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21 ; 2 uses
   %.not17.i90.i = icmp uge ptr %i.gg, %i.gh
   %i.gi = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8
   %i.gj = getelementptr inbounds [8 x i8], ptr %i.gh, i64 %i.gi
   %i.gk = icmp ult ptr %i.gg, %i.gj
   %or.cond.i91.i = select i1 %.not17.i90.i, i1 %i.gk, i1 false
-  %.pre101.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 4 uses
+  %.pre101.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 4 uses
   %.pre103.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8 ; 3 uses
   br i1 %or.cond.i91.i, label %sh_remove_from_list.exit94.i, label %bb.ay
 
@@ -799,9 +793,9 @@ bb.bb:                                            ; preds = %sh_remove_from_list
 sh_malloc.exit.thread:                            ; preds = %bb.i, %bb.g, %bb.d, %bb.bb
   %.056.i21 = phi ptr [ %i.fb, %bb.bb ], [ null, %bb.d ], [ null, %bb.g ], [ null, %bb.i ] ; 2 uses
   %i.gs = phi i64 [ %i.gr, %bb.bb ], [ 0, %bb.d ], [ 0, %bb.g ], [ 0, %bb.i ]
-  %i.gt = load i64, ptr @secure_mem_used, align 8, !tbaa !27
+  %i.gt = load i64, ptr @secure_mem_used, align 8, !tbaa !26
   %i.gu = add i64 %i.gt, %i.gs
-  store i64 %i.gu, ptr @secure_mem_used, align 8, !tbaa !27
+  store i64 %i.gu, ptr @secure_mem_used, align 8, !tbaa !26
   %i.gv = load ptr, ptr @sec_malloc_lock, align 8, !tbaa !12
   %i.gw = tail call i32 @CRYPTO_THREAD_unlock(ptr noundef %i.gv) #9 ; 0 uses
   %i.gx = icmp eq ptr %.056.i21, null
@@ -832,7 +826,7 @@ declare i32 @CRYPTO_THREAD_write_lock(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define internal fastcc i64 @sh_actual_size(ptr noundef %0) unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 3 uses
+  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 3 uses
   %.not = icmp uge ptr %0, %i.a
   %i.b = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.b
@@ -845,7 +839,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8, !tbaa !21 ; 2 uses
+  %i.e = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8, !tbaa !20 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %i.b
   %i.g = ptrtoint ptr %i.f to i64
   %i.h = ptrtoint ptr %i.a to i64                 ; 2 uses
@@ -853,7 +847,7 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 48), align 8, !tbaa !19 ; 2 uses
   %.0710.i = add nsw i64 %i.e, -1                 ; 2 uses
   %.not11.i = icmp ugt i64 %i.j, %i.i
-  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23 ; 2 uses
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22 ; 2 uses
   br i1 %.not11.i, label %sh_getlist.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
@@ -989,7 +983,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.b.i, label %CRYPTO_secure_allocated.exit, label %CRYPTO_secure_allocated.exit.thread
 
 CRYPTO_secure_allocated.exit:                     ; preds = %bb.b
-  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 2 uses
+  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 2 uses
   %i.c = icmp ult ptr %0, %i.b
   %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.d
@@ -1010,9 +1004,9 @@ bb.c:                                             ; preds = %CRYPTO_secure_alloc
 bb.d:                                             ; preds = %bb.c
   %i.i = tail call fastcc i64 @sh_actual_size(ptr noundef nonnull %0) ; 2 uses
   tail call void @OPENSSL_cleanse(ptr noundef nonnull %0, i64 noundef %i.i) #9
-  %i.j = load i64, ptr @secure_mem_used, align 8, !tbaa !27
+  %i.j = load i64, ptr @secure_mem_used, align 8, !tbaa !26
   %i.k = sub i64 %i.j, %i.i
-  store i64 %i.k, ptr @secure_mem_used, align 8, !tbaa !27
+  store i64 %i.k, ptr @secure_mem_used, align 8, !tbaa !26
   tail call fastcc void @sh_free(ptr noundef %0)
   %i.l = load ptr, ptr @sec_malloc_lock, align 8, !tbaa !12
   %i.m = tail call i32 @CRYPTO_THREAD_unlock(ptr noundef %i.l) #9 ; 0 uses
@@ -1029,7 +1023,7 @@ bb.a:
   br i1 %.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 2 uses
+  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 2 uses
   %i.b = icmp uge ptr %0, %i.a
   %i.c = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.c
@@ -1050,7 +1044,7 @@ declare void @OPENSSL_cleanse(ptr noundef, i64 noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @sh_free(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 3 uses
+  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 3 uses
   %.not = icmp uge ptr %0, %i.a
   %i.b = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.b
@@ -1063,7 +1057,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8, !tbaa !21 ; 2 uses
+  %i.e = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8, !tbaa !20 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %i.b
   %i.g = ptrtoint ptr %i.f to i64
   %i.h = ptrtoint ptr %i.a to i64                 ; 2 uses
@@ -1071,7 +1065,7 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 48), align 8, !tbaa !19 ; 2 uses
   %.0710.i = add nsw i64 %i.e, -1                 ; 2 uses
   %.not11.i = icmp ugt i64 %i.j, %i.i
-  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23 ; 2 uses
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22 ; 2 uses
   br i1 %.not11.i, label %sh_getlist.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
@@ -1162,9 +1156,9 @@ bb.m:                                             ; preds = %sh_testbit.exit
   unreachable
 
 bb.n:                                             ; preds = %sh_testbit.exit
-  %i.ar = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %i.ar = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   tail call fastcc void @sh_clearbit(ptr noundef nonnull %0, i32 noundef %i.v, ptr noundef %i.ar)
-  %i.as = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  %i.as = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %.07.lcssa.i
   tail call fastcc void @sh_add_to_list(ptr noundef %i.at, ptr noundef nonnull %0)
   br label %bb.o
@@ -1175,7 +1169,7 @@ bb.o:                                             ; preds = %bb.av, %bb.n
   %i.au = trunc i64 %.0 to i32                    ; 2 uses
   %i.av = and i64 %.0, 4294967295                 ; 5 uses
   %i.aw = shl nuw i64 1, %i.av                    ; 4 uses
-  %i.ax = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 4 uses
+  %i.ax = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 4 uses
   %i.ay = ptrtoint ptr %.043 to i64               ; 2 uses
   %i.az = ptrtoint ptr %i.ax to i64
   %i.ba = sub i64 %i.ay, %i.az                    ; 2 uses
@@ -1184,7 +1178,7 @@ bb.o:                                             ; preds = %bb.av, %bb.n
   %i.bd = udiv i64 %i.ba, %i.bc
   %i.be = add i64 %i.bd, %i.aw                    ; 5 uses
   %i.bf = xor i64 %i.be, 1                        ; 2 uses
-  %i.bg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23 ; 3 uses
+  %i.bg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22 ; 3 uses
   %i.bh = lshr i64 %i.be, 3                       ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bh
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !29
@@ -1196,7 +1190,7 @@ bb.o:                                             ; preds = %bb.av, %bb.n
   br i1 %.not.i55, label %sh_find_my_buddy.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24 ; 2 uses
+  %i.bo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 %i.bh
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !29
   %i.br = zext i8 %i.bq to i64                    ; 2 uses
@@ -1309,7 +1303,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %._crit_edge.i
   %i.dd = getelementptr inbounds nuw i8, ptr %i.db, i64 8
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !34 ; 4 uses
-  %i.df = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22 ; 2 uses
+  %i.df = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21 ; 2 uses
   %.not17.i = icmp uge ptr %i.de, %i.df
   %i.dg = getelementptr inbounds [8 x i8], ptr %i.df, i64 %.pre86
   %i.dh = icmp ult ptr %i.de, %i.dg
@@ -1317,7 +1311,7 @@ bb.ab:                                            ; preds = %._crit_edge.i
   br i1 %or.cond.i66, label %sh_remove_from_list.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.di = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 2 uses
+  %i.di = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 2 uses
   %.not18.i = icmp uge ptr %i.de, %i.di
   %i.dj = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8
   %i.dk = getelementptr inbounds nuw i8, ptr %i.di, i64 %i.dj
@@ -1330,7 +1324,7 @@ bb.ad:                                            ; preds = %bb.ac
   unreachable
 
 sh_remove_from_list.exit:                         ; preds = %._crit_edge.i, %bb.ab, %bb.ac
-  %i.dm = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %i.dm = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   %i.dn = icmp sgt i64 %.pre86, %i.av
   br i1 %i.dn, label %bb.af, label %bb.ae
 
@@ -1339,7 +1333,7 @@ bb.ae:                                            ; preds = %sh_remove_from_list
   unreachable
 
 bb.af:                                            ; preds = %sh_remove_from_list.exit
-  %i.do = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.do = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.dp = ptrtoint ptr %i.do to i64
   %i.dq = sub i64 %i.ay, %i.dp                    ; 2 uses
   %i.dr = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8, !tbaa !18
@@ -1382,7 +1376,7 @@ bb.aj:                                            ; preds = %sh_testbit.exit70
   unreachable
 
 bb.ak:                                            ; preds = %sh_testbit.exit70
-  %i.eh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  %i.eh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   tail call fastcc void @sh_clearbit(ptr noundef nonnull %i.bw, i32 noundef %i.au, ptr noundef %i.eh)
   %i.ei = load ptr, ptr %i.bw, align 8, !tbaa !33 ; 3 uses
   %.not.i71 = icmp eq ptr %i.ei, null
@@ -1405,7 +1399,7 @@ bb.al:                                            ; preds = %bb.ak
 bb.am:                                            ; preds = %._crit_edge.i74
   %i.em = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !34 ; 4 uses
-  %i.eo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22 ; 2 uses
+  %i.eo = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21 ; 2 uses
   %.not17.i75 = icmp uge ptr %i.en, %i.eo
   %i.ep = getelementptr inbounds [8 x i8], ptr %i.eo, i64 %.pre87
   %i.eq = icmp ult ptr %i.en, %i.ep
@@ -1413,7 +1407,7 @@ bb.am:                                            ; preds = %._crit_edge.i74
   br i1 %or.cond.i76, label %sh_remove_from_list.exit79, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.er = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 2 uses
+  %i.er = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 2 uses
   %.not18.i77 = icmp uge ptr %i.en, %i.er
   %i.es = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8
   %i.et = getelementptr inbounds nuw i8, ptr %i.er, i64 %i.es
@@ -1432,7 +1426,7 @@ sh_remove_from_list.exit79:                       ; preds = %._crit_edge.i74, %b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ex, i8 0, i64 16, i1 false)
   %spec.select = select i1 %i.ew, ptr %i.bw, ptr %.043 ; 5 uses
   %i.ey = trunc i64 %i.ev to i32                  ; 2 uses
-  %i.ez = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !24
+  %i.ez = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 64), align 8, !tbaa !23
   %i.fa = icmp sgt i32 %i.ey, -1
   %i.fb = and i64 %i.ev, 4294967295               ; 3 uses
   %i.fc = icmp sgt i64 %.pre87, %i.fb
@@ -1444,7 +1438,7 @@ bb.ap:                                            ; preds = %sh_remove_from_list
   unreachable
 
 bb.aq:                                            ; preds = %sh_remove_from_list.exit79
-  %i.fd = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.fd = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.fe = ptrtoint ptr %spec.select to i64
   %i.ff = ptrtoint ptr %i.fd to i64
   %i.fg = sub i64 %i.fe, %i.ff                    ; 2 uses
@@ -1489,16 +1483,16 @@ bb.au:                                            ; preds = %sh_testbit.exit83
   unreachable
 
 bb.av:                                            ; preds = %sh_testbit.exit83
-  %i.fy = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !23
+  %i.fy = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 56), align 8, !tbaa !22
   tail call fastcc void @sh_setbit(ptr noundef nonnull %spec.select, i32 noundef %i.ey, ptr noundef %i.fy)
-  %i.fz = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  %i.fz = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.fz, i64 %i.ev
   tail call fastcc void @sh_add_to_list(ptr noundef %i.ga, ptr noundef nonnull %spec.select)
-  %i.gb = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22
+  %i.gb = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21
   %i.gc = getelementptr inbounds nuw [8 x i8], ptr %i.gb, i64 %i.ev
   %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !28
   %i.ge = icmp eq ptr %i.gd, %spec.select
-  br i1 %i.ge, label %bb.o, label %bb.aw, !llvm.loop !43
+  br i1 %i.ge, label %bb.o, label %bb.aw, !llvm.loop !42
 
 bb.aw:                                            ; preds = %bb.av
   tail call void @OPENSSL_die(ptr noundef nonnull @.str.27, ptr noundef nonnull @.str.1, i32 noundef 729) #10
@@ -1519,7 +1513,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.b.i, label %CRYPTO_secure_allocated.exit, label %CRYPTO_secure_allocated.exit.thread
 
 CRYPTO_secure_allocated.exit:                     ; preds = %bb.b
-  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 2 uses
+  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 2 uses
   %i.c = icmp ult ptr %0, %i.b
   %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.d
@@ -1541,9 +1535,9 @@ bb.c:                                             ; preds = %CRYPTO_secure_alloc
 bb.d:                                             ; preds = %bb.c
   %i.i = tail call fastcc i64 @sh_actual_size(ptr noundef nonnull %0) ; 2 uses
   tail call void @OPENSSL_cleanse(ptr noundef nonnull %0, i64 noundef %i.i) #9
-  %i.j = load i64, ptr @secure_mem_used, align 8, !tbaa !27
+  %i.j = load i64, ptr @secure_mem_used, align 8, !tbaa !26
   %i.k = sub i64 %i.j, %i.i
-  store i64 %i.k, ptr @secure_mem_used, align 8, !tbaa !27
+  store i64 %i.k, ptr @secure_mem_used, align 8, !tbaa !26
   tail call fastcc void @sh_free(ptr noundef %0)
   %i.l = load ptr, ptr @sec_malloc_lock, align 8, !tbaa !12
   %i.m = tail call i32 @CRYPTO_THREAD_unlock(ptr noundef %i.l) #9 ; 0 uses
@@ -1562,7 +1556,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i64, ptr @secure_mem_used, align 8, !tbaa !27
+  %i.c = load i64, ptr @secure_mem_used, align 8, !tbaa !26
   %i.d = load ptr, ptr @sec_malloc_lock, align 8, !tbaa !12
   %i.e = tail call i32 @CRYPTO_THREAD_unlock(ptr noundef %i.d) #9 ; 0 uses
   br label %bb.c
@@ -1620,7 +1614,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.f = ptrtoint ptr %0 to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
@@ -1674,7 +1668,7 @@ bb.i:                                             ; preds = %bb.g
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @sh_add_to_list(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !22 ; 2 uses
+  %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 32), align 8, !tbaa !21 ; 2 uses
   %.not = icmp uge ptr %0, %i.a
   %i.b = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 40), align 8
   %i.c = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.b
@@ -1687,7 +1681,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26 ; 3 uses
+  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25 ; 3 uses
   %.not25 = icmp uge ptr %1, %i.e
   %i.f = load i64, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 24), align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.f ; 2 uses
@@ -1774,7 +1768,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !26
+  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @sh, i64 16), align 8, !tbaa !25
   %i.f = ptrtoint ptr %0 to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
@@ -1832,6 +1826,9 @@ declare i64 @llvm.ctpop.i64(i64) #7
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.cttz.i64(i64, i1 immarg) #8
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.ctlz.i64(i64, i1 immarg) #8
+
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1849,7 +1846,7 @@ attributes #11 = { nounwind willreturn memory(none) }
 !llvm.ident = !{!5}
 !llvm.errno.tbaa = !{!10}
 
-!0 = distinct !{!0, !20}
+!0 = distinct !{!0, !27}
 !1 = !{i32 8, !"PIC Level", i32 2}
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
@@ -1869,14 +1866,14 @@ attributes #11 = { nounwind willreturn memory(none) }
 !17 = !{!"sh_st", !13, i64 0, !14, i64 8, !13, i64 16, !14, i64 24, !16, i64 32, !14, i64 40, !14, i64 48, !13, i64 56, !13, i64 64, !14, i64 72}
 !18 = !{!17, !14, i64 24}
 !19 = !{!17, !14, i64 48}
-!20 = !{!"llvm.loop.mustprogress"}
-!21 = !{!17, !14, i64 40}
-!22 = !{!17, !16, i64 32}
-!23 = !{!17, !13, i64 56}
-!24 = !{!17, !13, i64 64}
-!25 = !{!17, !13, i64 0}
-!26 = !{!17, !13, i64 16}
-!27 = !{!14, !14, i64 0}
+!20 = !{!17, !14, i64 40}
+!21 = !{!17, !16, i64 32}
+!22 = !{!17, !13, i64 56}
+!23 = !{!17, !13, i64 64}
+!24 = !{!17, !13, i64 0}
+!25 = !{!17, !13, i64 16}
+!26 = !{!14, !14, i64 0}
+!27 = !{!"llvm.loop.mustprogress"}
 !28 = !{!13, !13, i64 0}
 !29 = !{!7, !7, i64 0}
 !30 = !{!"p1 _ZTS10sh_list_st", !11, i64 0}
@@ -1885,12 +1882,11 @@ attributes #11 = { nounwind willreturn memory(none) }
 !33 = !{!32, !30, i64 0}
 !34 = !{!32, !31, i64 8}
 !35 = !{!30, !30, i64 0}
-!36 = distinct !{!36, !20}
-!37 = !{!17, !14, i64 72}
-!38 = !{!17, !14, i64 8}
-!39 = !{!8, !8, i64 0}
-!40 = distinct !{!40, !20}
-!41 = distinct !{!41, !20}
-!42 = distinct !{!42, !20}
-!43 = distinct !{!43, !20}
+!36 = !{!17, !14, i64 72}
+!37 = !{!17, !14, i64 8}
+!38 = !{!8, !8, i64 0}
+!39 = distinct !{!39, !27}
+!40 = distinct !{!40, !27}
+!41 = distinct !{!41, !27}
+!42 = distinct !{!42, !27}
 end_hunk_0

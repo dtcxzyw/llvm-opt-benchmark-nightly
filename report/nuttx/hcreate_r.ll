@@ -26,25 +26,20 @@ bb.b:                                             ; preds = %bb.a
   %.not25 = icmp samesign ult i64 %i.b, 2
   br i1 %.not25, label %bb.c, label %.preheader27
 
-.preheader27:                                     ; preds = %bb.b, %.preheader27
-  %.029 = phi i32 [ %3, %.preheader27 ], [ 0, %bb.b ] ; 2 uses
-  %.02428 = phi i64 [ %2, %.preheader27 ], [ %spec.store.select1, %bb.b ]
-  %2 = lshr i64 %.02428, 1                        ; 2 uses
-  %3 = add nuw nsw i32 %.029, 1
-  %.not26 = icmp eq i64 %2, 0
-  br i1 %.not26, label %4, label %.preheader27, !llvm.loop !8
-
-4:                                                ; preds = %.preheader27
-  %5 = shl nuw i32 2, %.029
+.preheader27:                                     ; preds = %bb.b
+  %2 = tail call range(i64 5, 65) i64 @llvm.ctlz.i64(i64 %spec.store.select1, i1 true)
+  %3 = trunc nuw nsw i64 %2 to i32
+  %4 = sub nuw nsw i32 64, %3
+  %5 = shl nuw i32 1, %4
   %6 = sext i32 %5 to i64
   br label %bb.c
 
-bb.c:                                             ; preds = %4, %bb.b
-  %i.c = phi i64 [ %6, %4 ], [ %spec.store.select1, %bb.b ] ; 2 uses
+bb.c:                                             ; preds = %.preheader27, %bb.b
+  %i.c = phi i64 [ %6, %.preheader27 ], [ %spec.store.select1, %bb.b ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   store i64 %i.c, ptr %i.d, align 8
   %i.e = shl nsw i64 %i.c, 3
-  %i.f = tail call noalias ptr @malloc(i64 noundef %i.e) #10 ; 2 uses
+  %i.f = tail call noalias ptr @malloc(i64 noundef %i.e) #11 ; 2 uses
   store ptr %i.f, ptr %1, align 8
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.e, label %.lr.ph
@@ -57,7 +52,7 @@ bb.c:                                             ; preds = %4, %bb.b
   %i.j = add nuw i64 %.02230, 1                   ; 2 uses
   %i.k = load i64, ptr %i.d, align 8
   %i.l = icmp ult i64 %i.j, %i.k
-  br i1 %i.l, label %.lr.ph, label %._crit_edge, !llvm.loop !9
+  br i1 %i.l, label %.lr.ph, label %._crit_edge, !llvm.loop !8
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
@@ -81,10 +76,10 @@ declare dso_local noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #3
 define internal void @hfree_r(ptr nofree noundef readonly captures(none) %0) #4 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
-  tail call void @free(ptr noundef %i.a) #11
+  tail call void @free(ptr noundef %i.a) #12
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void @free(ptr noundef %i.c) #11
+  tail call void @free(ptr noundef %i.c) #12
   ret void
 }
 
@@ -121,13 +116,13 @@ bb.a:
   store ptr %i.l, ptr %i.k, align 8
   %i.m = load ptr, ptr %i.e, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  tail call void %i.m(ptr noundef nonnull %i.n) #12
-  tail call void @free(ptr noundef nonnull %i.j) #11
+  tail call void %i.m(ptr noundef nonnull %i.n) #13
+  tail call void @free(ptr noundef nonnull %i.j) #12
   %i.o = load ptr, ptr %0, align 8                ; 2 uses
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.018 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8              ; 2 uses
   %.not = icmp eq ptr %i.q, null
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !10
+  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !9
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %.pre = load i64, ptr %i.c, align 8
@@ -138,11 +133,11 @@ bb.a:
   %i.s = phi ptr [ %i.o, %._crit_edge.loopexit ], [ %i.g, %.preheader ] ; 2 uses
   %i.t = add nuw i64 %.018, 1                     ; 2 uses
   %i.u = icmp ult i64 %i.t, %i.r
-  br i1 %i.u, label %.preheader, label %._crit_edge19, !llvm.loop !11
+  br i1 %i.u, label %.preheader, label %._crit_edge19, !llvm.loop !10
 
 ._crit_edge19:                                    ; preds = %._crit_edge, %.preheader16
   %i.v = phi ptr [ %i.a, %.preheader16 ], [ %i.s, %._crit_edge ]
-  tail call void @free(ptr noundef nonnull %i.v) #11
+  tail call void @free(ptr noundef nonnull %i.v) #12
   store ptr null, ptr %0, align 8
   br label %bb.b
 
@@ -156,9 +151,9 @@ declare dso_local void @free(ptr allocptr noundef captures(none)) local_unnamed_
 ; Function Attrs: noredzone nounwind optsize uwtable
 define dso_local range(i32 0, 2) i32 @hsearch_r(ptr %0, ptr %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #5 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef %0) #11
+  %i.a = tail call i64 @strlen(ptr noundef %0) #12
   %i.b = load ptr, ptr @g_default_hash, align 8
-  %i.c = tail call i32 %i.b(ptr noundef %0, i64 noundef %i.a) #12
+  %i.c = tail call i32 %i.b(ptr noundef %0, i64 noundef %i.a) #13
   %i.d = load ptr, ptr %4, align 8
   %i.e = zext i32 %i.c to i64
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -177,9 +172,9 @@ bb.b:                                             ; preds = %bb.c, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %.041, i64 8
   %i.l = load ptr, ptr %i.k, align 8
-  %i.m = tail call i32 @strcmp(ptr noundef %i.l, ptr noundef %0) #11
+  %i.m = tail call i32 @strcmp(ptr noundef %i.l, ptr noundef %0) #12
   %i.n = icmp eq i32 %i.m, 0
-  br i1 %i.n, label %.thread, label %bb.b, !llvm.loop !12
+  br i1 %i.n, label %.thread, label %bb.b, !llvm.loop !11
 
 bb.d:                                             ; preds = %bb.b
   switch i32 %2, label %bb.k [
@@ -206,7 +201,7 @@ bb.f:                                             ; preds = %bb.e
   %.0 = phi ptr [ %i.t, %.preheader ], [ %i.q, %bb.e ] ; 2 uses
   %i.t = load ptr, ptr %.0, align 8               ; 3 uses
   %.not48 = icmp eq ptr %i.t, %.041
-  br i1 %.not48, label %bb.g, label %.preheader, !llvm.loop !13
+  br i1 %.not48, label %bb.g, label %.preheader, !llvm.loop !12
 
 bb.g:                                             ; preds = %.preheader
   %i.u = load ptr, ptr %i.t, align 8
@@ -216,8 +211,8 @@ bb.g:                                             ; preds = %.preheader
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.w = load ptr, ptr %i.v, align 8
-  tail call void %i.w(ptr noundef nonnull %i.o) #12
-  tail call void @free(ptr noundef nonnull %.041) #11
+  tail call void %i.w(ptr noundef nonnull %i.o) #13
+  tail call void @free(ptr noundef nonnull %.041) #12
   br label %bb.n
 
 bb.i:                                             ; preds = %.thread
@@ -229,7 +224,7 @@ bb.j:                                             ; preds = %bb.d
   br label %bb.n
 
 bb.k:                                             ; preds = %bb.d
-  %i.x = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #10 ; 5 uses
+  %i.x = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #11 ; 5 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %bb.l, label %bb.m
 
@@ -285,12 +280,12 @@ bb.a:
   br i1 %.not14, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  tail call void %0(ptr noundef nonnull %i.h, ptr noundef %1) #12
+  tail call void %0(ptr noundef nonnull %i.h, ptr noundef %1) #13
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %.not = icmp eq ptr %i.g, null
-  br i1 %.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !14
+  br i1 %.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !13
 
 .critedge.loopexit:                               ; preds = %bb.c
   %.pre = load i64, ptr %i.a, align 8
@@ -300,7 +295,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.j = phi i64 [ %.pre, %.critedge.loopexit ], [ %i.c, %.lr.ph18 ] ; 2 uses
   %i.k = add nuw i64 %.017, 1                     ; 2 uses
   %i.l = icmp ult i64 %i.k, %i.j
-  br i1 %i.l, label %.lr.ph18, label %._crit_edge, !llvm.loop !15
+  br i1 %i.l, label %.lr.ph18, label %._crit_edge, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %.critedge, %bb.a
   ret void
@@ -315,6 +310,9 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.ctpop.i64(i64) #9
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.ctlz.i64(i64, i1 immarg) #10
+
 attributes #0 = { alwaysinline nobuiltin noredzone nounwind optsize uwtable "no-builtin-memcpy" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { alwaysinline nobuiltin noredzone nounwind optsize uwtable "no-builtin-memset" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nofree noredzone nounwind optsize memory(write, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -325,9 +323,10 @@ attributes #6 = { mustprogress noredzone nounwind optsize willreturn allockind("
 attributes #7 = { alwaysinline nobuiltin noredzone nounwind optsize uwtable "no-builtin-strlen" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { alwaysinline nobuiltin noredzone nounwind optsize uwtable "no-builtin-strcmp" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+rdrnd,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { noredzone optsize allocsize(0) }
-attributes #11 = { noredzone optsize }
-attributes #12 = { noredzone nounwind optsize }
+attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { noredzone optsize allocsize(0) }
+attributes #12 = { noredzone optsize }
+attributes #13 = { noredzone nounwind optsize }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}
@@ -347,5 +346,4 @@ attributes #12 = { noredzone nounwind optsize }
 !12 = distinct !{!12, !7}
 !13 = distinct !{!13, !7}
 !14 = distinct !{!14, !7}
-!15 = distinct !{!15, !7}
 end_hunk_0
