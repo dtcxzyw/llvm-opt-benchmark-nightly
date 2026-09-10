@@ -206,7 +206,7 @@ vec.epilog.middle.block1030:                      ; preds = %vec.epilog.vector.b
 
 .loopexit.loopexit.i.i:                           ; preds = %.lr.ph50.i.i, %vec.epilog.middle.block1030, %middle.block1015
   %indvars.iv.next56.i.i.lcssa = phi i64 [ %i.do, %vec.epilog.middle.block1030 ], [ %i.dj, %middle.block1015 ], [ %indvars.iv.next56.i.i, %.lr.ph50.i.i ]
-  %i.du = trunc nuw i64 %indvars.iv.next56.i.i.lcssa to i32
+  %i.du = trunc nuw nsw i64 %indvars.iv.next56.i.i.lcssa to i32
   br label %.loopexit.sink.split.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %bb.k
@@ -438,7 +438,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .loopexit.loopexit.i108.i:                        ; preds = %.lr.ph50.i103.i, %vec.epilog.middle.block, %middle.block971
   %indvars.iv.next56.i107.i.lcssa = phi i64 [ %i.gl, %vec.epilog.middle.block ], [ %i.gg, %middle.block971 ], [ %indvars.iv.next56.i107.i, %.lr.ph50.i103.i ]
-  %i.gr = trunc nuw i64 %indvars.iv.next56.i107.i.lcssa to i32
+  %i.gr = trunc nuw nsw i64 %indvars.iv.next56.i107.i.lcssa to i32
   br label %.loopexit.sink.split.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i

@@ -202,7 +202,7 @@ bb.ar:                                            ; preds = %bb.ao
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.dg, i1 false), !tbaa !45
   %i.dl = add nuw nsw i32 %.1310, 1
   %.not229.not = icmp slt i32 %.1310, %i.cu
-  %indvar.next = add i32 %indvar, 1
+  %indvar.next = add nuw i32 %indvar, 1
   br i1 %.not229.not, label %.lr.ph307, label %.lr.ph352, !llvm.loop !24
 
 .lr.ph352:                                        ; preds = %.lr.ph307, %._crit_edge303

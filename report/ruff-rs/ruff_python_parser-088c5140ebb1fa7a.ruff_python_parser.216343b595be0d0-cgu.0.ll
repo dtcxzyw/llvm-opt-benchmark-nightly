@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ruff_python_parser-088c5140ebb1fa7a.ruff_python_parser.216343b595be0d0-cgu.0?download=true
 inline.NumInlined: 5180
 inline.NumDeleted: 1805
-loop-unroll.NumCompletelyUnrolled: 16
+loop-unroll.NumCompletelyUnrolled: 17
 loop-unroll.NumRuntimeUnrolled: 10
-loop-unroll.NumUnrolled: 26
+loop-unroll.NumUnrolled: 27
 begin_hunk_0_@_RINvMs_NtCsb6FLkjZuKG_18ruff_python_parser6parserNtB5_6Parser10parse_listNCNvMNtB5_10expressionBL_34parse_interpolated_string_elements0EB7_:bb.a
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #43, !noalias !627, !inline_history !321
   unreachable
@@ -205,12 +205,12 @@ bb.ga:                                            ; preds = %bb.fw
 bb.gb:                                            ; preds = %bb.fw, %bb.ga
   %.sroa.11.0.i = phi i32 [ %.val150.i, %bb.fw ], [ %i.qe, %bb.ga ] ; 3 uses
   %i.qg = and i16 %i.ia, 2                        ; 2 uses
-  %.not.i.i273.i = icmp eq i16 %i.qg, 0           ; 5 uses
+  %.not.i.i273.i = icmp eq i16 %i.qg, 0           ; 6 uses
   %.not.i2.i.i = trunc i16 %i.ia to i1            ; 6 uses
   %..i.i = select i1 %.not.i2.i.i, ptr @643, ptr @642
   %.1.i.i = select i1 %.not.i2.i.i, ptr @641, ptr @640 ; 2 uses
   %.sroa.5.0.i.i.neg = select i1 %.not.i.i273.i, i64 -1, i64 -3
-  %.sroa.5.0.i.i = select i1 %.not.i.i273.i, i64 1, i64 3 ; 11 uses
+  %.sroa.5.0.i.i = select i1 %.not.i.i273.i, i64 1, i64 3 ; 10 uses
   %.sroa.0.0.i274.i = select i1 %.not.i.i273.i, ptr %..i.i, ptr %.1.i.i ; 9 uses
   %i.qh = icmp ne i16 %i.qg, 0                    ; 2 uses
   %..i55 = select i1 %i.qh, i32 3, i32 1
@@ -426,7 +426,7 @@ bb.gp:                                            ; preds = %bb.go
 
 bb.gq:                                            ; preds = %bb.gp, %.split7.i285.i, %bb.gm
   %i.sw = sub nuw nsw i64 %i.ql, %i.qk            ; 4 uses
-  %i.sx = getelementptr inbounds nuw i8, ptr %i.sm, i64 %i.qk ; 5 uses
+  %i.sx = getelementptr inbounds nuw i8, ptr %i.sm, i64 %i.qk ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !710), !noalias !623
   call void @llvm.experimental.noalias.scope.decl(metadata !711), !noalias !623
   %i.sy = icmp samesign ult i64 %i.sw, 64
@@ -692,27 +692,31 @@ _RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i: ; 
   br i1 %i.wc, label %_RNvNtCsiVHPhtDv1FH_6memchr6memmem4find.exit.i.thread, label %bb.hk
 
 bb.hk:                                            ; preds = %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %i.sx, i64 %.sroa.5.0.i.i
-  br label %.lr.ph.i.i.i.i
+  %3 = load i8, ptr %i.sx, align 1, !alias.scope !729, !noalias !730, !noundef !15
+  %4 = zext i8 %3 to i32                          ; 2 uses
+  br i1 %.not.i.i273.i, label %.preheader.i.preheader.i.i.i, label %.lr.ph.i.i.i.i
 
-.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %bb.hk
-  %.sroa.010.02.i.i.i.i = phi ptr [ %5, %.lr.ph.i.i.i.i ], [ %i.sx, %bb.hk ] ; 2 uses
-  %.sroa.013.01.i.i.i.i = phi i32 [ %i.wf, %.lr.ph.i.i.i.i ], [ 0, %bb.hk ]
-  %i.wd = load i8, ptr %.sroa.010.02.i.i.i.i, align 1, !alias.scope !729, !noalias !730, !noundef !15
-  %i.we = shl i32 %.sroa.013.01.i.i.i.i, 1
-  %4 = zext i8 %i.wd to i32
-  %i.wf = add i32 %i.we, %4                       ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.010.02.i.i.i.i, i64 1 ; 2 uses
-  %6 = icmp ult ptr %5, %3
-  br i1 %6, label %.lr.ph.i.i.i.i, label %.preheader.i.preheader.i.i.i
+.lr.ph.i.i.i.i:                                   ; preds = %bb.hk
+  %5 = getelementptr inbounds nuw i8, ptr %i.sx, i64 1
+  %6 = load i8, ptr %5, align 1, !alias.scope !729, !noalias !730, !noundef !15
+  %7 = zext i8 %6 to i32
+  %8 = getelementptr inbounds nuw i8, ptr %i.sx, i64 2
+  %i.wd = load i8, ptr %8, align 1, !alias.scope !729, !noalias !730, !noundef !15
+  %i.we = shl nuw nsw i32 %4, 2
+  %9 = shl nuw nsw i32 %7, 1
+  %i.wf = add nuw nsw i32 %i.we, %9
+  %10 = zext i8 %i.wd to i32
+  %11 = add nuw nsw i32 %i.wf, %10
+  br label %.preheader.i.preheader.i.i.i
 
-.preheader.i.preheader.i.i.i:                     ; preds = %.lr.ph.i.i.i.i
+.preheader.i.preheader.i.i.i:                     ; preds = %.lr.ph.i.i.i.i, %bb.hk
+  %.lcssa2235 = phi i32 [ %4, %bb.hk ], [ %11, %.lr.ph.i.i.i.i ]
   %i.wg = getelementptr inbounds nuw i8, ptr %i.sm, i64 %i.ql
   %i.wh = getelementptr inbounds i8, ptr %i.wg, i64 %.sroa.5.0.i.i.neg
   br label %.preheader.i.i.i.i
 
 .preheader.i.i.i.i:                               ; preds = %bb.hn, %.preheader.i.preheader.i.i.i
-  %.sroa.013.1.i.i.i.i = phi i32 [ %i.wr, %bb.hn ], [ %i.wf, %.preheader.i.preheader.i.i.i ] ; 2 uses
+  %.sroa.013.1.i.i.i.i = phi i32 [ %i.wr, %bb.hn ], [ %.lcssa2235, %.preheader.i.preheader.i.i.i ] ; 2 uses
   %.sroa.0.0.i.i.i.i = phi ptr [ %i.ws, %bb.hn ], [ %i.sx, %.preheader.i.preheader.i.i.i ] ; 6 uses
   %i.wi = icmp eq i32 %.sroa.0.1.lcssa.i.i.i, %.sroa.013.1.i.i.i.i
   br i1 %i.wi, label %bb.hm, label %bb.hl, !prof !14
