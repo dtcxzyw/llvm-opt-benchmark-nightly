@@ -1,0 +1,26 @@
+diff --git a/llvm/lib/Analysis/CaptureTracking.cpp b/llvm/lib/Analysis/CaptureTracking.cpp
+index 9b4298c7decfe..dcfd32ea37c74 100644
+--- a/llvm/lib/Analysis/CaptureTracking.cpp
++++ b/llvm/lib/Analysis/CaptureTracking.cpp
+@@ -45,7 +45,7 @@ STATISTIC(NumNotCapturedBefore, "Number of pointers not captured before");
+ static cl::opt<unsigned>
+     DefaultMaxUsesToExplore("capture-tracking-max-uses-to-explore", cl::Hidden,
+                             cl::desc("Maximal number of uses to explore."),
+-                            cl::init(100));
++                            cl::init(150));
+ 
+ unsigned llvm::getDefaultMaxUsesToExploreForCaptureTracking() {
+   return DefaultMaxUsesToExplore;
+diff --git a/llvm/test/Transforms/LoadStoreVectorizer/batch-aa-compile-time.ll b/llvm/test/Transforms/LoadStoreVectorizer/batch-aa-compile-time.ll
+index 049c9a3f70e0f..04f194241a8b2 100644
+--- a/llvm/test/Transforms/LoadStoreVectorizer/batch-aa-compile-time.ll
++++ b/llvm/test/Transforms/LoadStoreVectorizer/batch-aa-compile-time.ll
+@@ -5,7 +5,7 @@
+ ; and caching the result leads to 2 calls to that mechanism instead of ~300,000 (run with -stats to see the difference)
+ 
+ ; This test only demonstrates the compile time issue if capture-tracking-max-uses-to-explore is set to at least 1024,
+-; because with the default value of 100, the CaptureTracking analysis is not run, NoAlias is not proven, and the vectorizer gives up early.
++; because with the default value of 150, the CaptureTracking analysis is not run, NoAlias is not proven, and the vectorizer gives up early.
+ 
+ @global_mem = external global i8, align 4
+ 
