@@ -205,11 +205,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.fh, label %.lr.ph125.preheader.i, label %._crit_edge126.i
 
 .lr.ph125.preheader.i:                            ; preds = %.noexc
-  %scevgep24 = getelementptr i8, ptr %.0.i, i64 4
   %6 = zext nneg i32 %i.fg to i64
+  %scevgep = getelementptr i8, ptr %.0.i, i64 4
   %i.fi = shl nuw nsw i64 %6, 2
   %i.fj = add nsw i64 %i.fi, -4
-  call void @llvm.memmove.p0.p0.i64(ptr align 4 %scevgep24, ptr nonnull align 4 %.0.i, i64 %i.fj, i1 false), !tbaa !105
+  call void @llvm.memmove.p0.p0.i64(ptr align 4 %scevgep, ptr nonnull align 4 %.0.i, i64 %i.fj, i1 false), !tbaa !105
   br label %._crit_edge126.i
 
 ._crit_edge126.i:                                 ; preds = %.lr.ph125.preheader.i, %.noexc
