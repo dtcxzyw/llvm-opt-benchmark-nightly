@@ -202,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i48 0, -254) i48 @_RNvYNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNtNtB4_8interval8Interval10differenceB6_(ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %1) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !14053 {
+define hidden range(i48 0, -4261413118) i48 @_RNvYNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNtNtB4_8interval8Interval10differenceB6_(ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %1) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !14053 {
 bb.a:
     #dbg_value(ptr poison, !14108, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !14056)
     #dbg_value(ptr poison, !14109, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !14056)
@@ -453,7 +453,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read, inaccessiblemem: readwrite) uwtable
-define hidden i24 @_RNvYNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNtNtB4_8interval8Interval5unionB6_(ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %1) unnamed_addr #8 personality ptr @rust_eh_personality !dbg !14201 {
+define hidden range(i24 0, -254) i24 @_RNvYNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNtNtB4_8interval8Interval5unionB6_(ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %1) unnamed_addr #8 personality ptr @rust_eh_personality !dbg !14201 {
 bb.a:
     #dbg_value(ptr %0, !14230, !DIExpression(), !14235)
     #dbg_value(ptr %1, !14231, !DIExpression(), !14235)
@@ -567,7 +567,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden i24 @_RNvYNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNtNtB4_8interval8Interval9intersectB6_(ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %1) unnamed_addr #5 personality ptr @rust_eh_personality !dbg !14270 {
+define hidden range(i24 0, -254) i24 @_RNvYNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNtNtB4_8interval8Interval9intersectB6_(ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %0, ptr noalias nofree noundef readonly captures(none) dereferenceable(2) %1) unnamed_addr #5 personality ptr @rust_eh_personality !dbg !14270 {
 bb.a:
     #dbg_value(ptr poison, !2545, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !14272)
     #dbg_value(ptr poison, !2546, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !14272)

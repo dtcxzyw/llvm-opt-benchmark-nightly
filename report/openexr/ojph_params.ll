@@ -204,7 +204,7 @@ _ZNK4ojph5local9param_cod22get_num_decompositionsEv.exit: ; preds = %tailrecurse
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden range(i64 17179869184, -9223372032559808512) i64 @_ZNK4ojph9param_cod14get_block_dimsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #3 align 2 {
+define hidden range(i64 17179869185, -9223372034707292159) i64 @_ZNK4ojph9param_cod14get_block_dimsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !45     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 13
@@ -298,7 +298,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden range(i64 4294967296, 140741783322624) i64 @_ZNK4ojph9param_cod17get_precinct_sizeEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #3 align 2 {
+define hidden range(i64 4294967297, 140739635838977) i64 @_ZNK4ojph9param_cod17get_precinct_sizeEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !45     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -612,7 +612,7 @@ _ZNK4ojph9param_cod22get_num_decompositionsEv.exit: ; preds = %tailrecurse.i.i, 
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden range(i64 17179869184, -9223372032559808512) i64 @_ZNK4ojph9param_coc14get_block_dimsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #3 align 2 {
+define hidden range(i64 17179869185, -9223372034707292159) i64 @_ZNK4ojph9param_coc14get_block_dimsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !82     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 13
@@ -680,7 +680,7 @@ _ZNK4ojph9param_cod13is_reversibleEv.exit:        ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden range(i64 4294967296, 140741783322624) i64 @_ZNK4ojph9param_coc17get_precinct_sizeEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #3 align 2 {
+define hidden range(i64 4294967297, 140739635838977) i64 @_ZNK4ojph9param_coc17get_precinct_sizeEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 noundef %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !82     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4

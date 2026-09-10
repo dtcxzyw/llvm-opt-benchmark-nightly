@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define hidden range(i32 512, -64512) i32 @_RINvXsi_NtCs6kx5fqqPdgs_8wasmi_ir6decodetNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
+define hidden range(i32 512, -65023) i32 @_RINvXsi_NtCs6kx5fqqPdgs_8wasmi_ir6decodetNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1361)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !1361, !noalias !1362, !noundef !7 ; 2 uses
@@ -218,7 +218,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define hidden range(i64 512, -4294966272) i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
+define hidden range(i64 512, -4294966783) i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1366)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !1366, !noalias !1367, !noundef !7 ; 2 uses
@@ -314,7 +314,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define hidden range(i32 512, -64512) i32 @_RINvXso_NtCs6kx5fqqPdgs_8wasmi_ir6decodesNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
+define hidden range(i32 512, -65023) i32 @_RINvXso_NtCs6kx5fqqPdgs_8wasmi_ir6decodesNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1391)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !1391, !noalias !1392, !noundef !7 ; 2 uses
@@ -328,7 +328,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define hidden range(i64 512, -4294966272) i64 @_RINvXsp_NtCs6kx5fqqPdgs_8wasmi_ir6decodelNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
+define hidden range(i64 512, -4294966783) i64 @_RINvXsp_NtCs6kx5fqqPdgs_8wasmi_ir6decodelNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1396)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !1396, !noalias !1397, !noundef !7 ; 2 uses
@@ -342,7 +342,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966272) i64 @_RINvXsp_NtCs6kx5fqqPdgs_8wasmi_ir6decodelNtB6_6Decode6decodeRShECsefoF4u9kbII_5wasmi(ptr noalias nofree noundef align 8 dereferenceable(16) %0) unnamed_addr #0 {
+define hidden range(i64 0, -4294966782) i64 @_RINvXsp_NtCs6kx5fqqPdgs_8wasmi_ir6decodelNtB6_6Decode6decodeRShECsefoF4u9kbII_5wasmi(ptr noalias nofree noundef align 8 dereferenceable(16) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -387,7 +387,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define hidden range(i64 512, -4294966272) i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
+define hidden range(i64 512, -4294966783) i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(8) %0) unnamed_addr #8 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1406)
   %i.a = load ptr, ptr %0, align 8, !alias.scope !1406, !noalias !1407, !noundef !7 ; 2 uses

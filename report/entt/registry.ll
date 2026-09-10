@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZNS3_14basic_registryIS4_S7_E4sortIiZN8Registry8listener4sortIiEEvRSE_EUlT_T0_E_NS3_8std_sortEJEEEvSL_T1_DpOT2_EUlSK_SL_E_EEEvSK_SL_SL_SO_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !254
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZNS3_14basic_registryIS4_S7_E4sortIiSt4lessIvENS3_8std_sortEJEEEvT0_T1_DpOT2_EUlT_SJ_E_EEEvSO_SJ_SJ_SK_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !254
@@ -1011,7 +1011,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZNS3_14basic_registryIS4_S7_E4sortIjSt4lessIvENS3_8std_sortEJEEEvT0_T1_DpOT2_EUlT_SJ_E_EEEvSO_SJ_SJ_SK_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !254

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h, %_ZNSt6vector
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i64 318799873, -3758096384) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643i32Ei(ptr noundef nonnull align 8 dereferenceable(268) %0, i32 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local range(i64 318799873, -3976167422) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643i32Ei(ptr noundef nonnull align 8 dereferenceable(268) %0, i32 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.not = icmp eq i32 %1, -1                      ; 2 uses
   br i1 %.not, label %.critedge, label %bb.b
@@ -483,7 +483,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIhSaIhE
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i64 335577089, -3758096384) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643i64El(ptr noundef nonnull align 8 dereferenceable(268) %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local range(i64 335577089, -3959390206) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643i64El(ptr noundef nonnull align 8 dereferenceable(268) %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.not = icmp eq i64 %1, -1                      ; 2 uses
   br i1 %.not, label %.critedge, label %bb.b
@@ -701,7 +701,7 @@ bb.t:                                             ; preds = %_ZN4Luau7CodeGen3X6
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i64 318799873, -3758096384) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643f32Ef(ptr noundef nonnull align 8 dereferenceable(268) %0, float noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local range(i64 318799873, -3976167422) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643f32Ef(ptr noundef nonnull align 8 dereferenceable(268) %0, float noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = bitcast float %1 to i32                  ; 9 uses
   %.not = icmp eq i32 %i.a, -1                    ; 2 uses
@@ -925,7 +925,7 @@ bb.u:                                             ; preds = %_ZN4Luau7CodeGen3X6
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i64 335577089, -3758096384) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643f64Ed(ptr noundef nonnull align 8 dereferenceable(268) %0, double noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local range(i64 335577089, -3959390206) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX643f64Ed(ptr noundef nonnull align 8 dereferenceable(268) %0, double noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = bitcast double %1 to i64                 ; 10 uses
   %.not = icmp eq i64 %i.a, -1                    ; 2 uses
@@ -1144,7 +1144,7 @@ bb.t:                                             ; preds = %_ZN4Luau7CodeGen3X6
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i64 352354305, -3758096384) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX645u32x4Ejjjj(ptr noundef nonnull align 8 dereferenceable(268) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local range(i64 352354305, -3942612990) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX645u32x4Ejjjj(ptr noundef nonnull align 8 dereferenceable(268) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !57   ; 2 uses
@@ -1223,7 +1223,7 @@ _ZN4Luau7CodeGen3X6418AssemblyBuilderX6412allocateDataEmm.exit: ; preds = %bb.a,
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i64 352354305, -3758096384) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX645f32x4Effff(ptr noundef nonnull align 8 dereferenceable(268) %0, float noundef %1, float noundef %2, float noundef %3, float noundef %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local range(i64 352354305, -3942612990) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX645f32x4Effff(ptr noundef nonnull align 8 dereferenceable(268) %0, float noundef %1, float noundef %2, float noundef %3, float noundef %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !57   ; 2 uses
@@ -1302,7 +1302,7 @@ _ZN4Luau7CodeGen3X6418AssemblyBuilderX6412allocateDataEmm.exit: ; preds = %bb.a,
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i64 352354305, -3758096384) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX645f64x2Edd(ptr noundef nonnull align 8 dereferenceable(268) %0, double noundef %1, double noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local range(i64 352354305, -3942612990) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX645f64x2Edd(ptr noundef nonnull align 8 dereferenceable(268) %0, double noundef %1, double noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !57   ; 2 uses
@@ -1373,7 +1373,7 @@ _ZN4Luau7CodeGen3X6418AssemblyBuilderX6412allocateDataEmm.exit: ; preds = %bb.a,
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local range(i64 268468225, -3758096384) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX645bytesEPKvmm(ptr noundef nonnull align 8 dereferenceable(268) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local range(i64 268468225, -4026499070) i64 @_ZN4Luau7CodeGen3X6418AssemblyBuilderX645bytesEPKvmm(ptr noundef nonnull align 8 dereferenceable(268) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !57   ; 2 uses

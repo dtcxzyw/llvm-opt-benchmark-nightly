@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ki = and i32 %i.kh, 255
   %i.kj = and i32 %.1134228, 255
   %i.kk = icmp samesign ugt i32 %i.ki, %i.kj
-  %i.kl = add i32 %.1134228, 65280
+  %i.kl = add nsw i32 %.1134228, 65280
   %spec.select.i169 = select i1 %i.kk, i32 %i.kl, i32 %.1134228
   %i.km = load i16, ptr %i.ke, align 2, !tbaa !24
   %i.kn = zext i16 %i.km to i32                   ; 2 uses
@@ -482,7 +482,7 @@ declare void @_ZN6icu_789UVector3217removeAllElementsEv(ptr noundef nonnull alig
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define noundef i32 @_ZNK6icu_7813CollationData17addLowScriptRangeEPhii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(140) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #6 align 2 {
+define noundef range(i32 -65280, 130816) i32 @_ZNK6icu_7813CollationData17addLowScriptRangeEPhii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(140) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !28
@@ -515,7 +515,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define noundef i32 @_ZNK6icu_7813CollationData18addHighScriptRangeEPhii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(140) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #6 align 2 {
+define noundef range(i32 -65280, 130816) i32 @_ZNK6icu_7813CollationData18addHighScriptRangeEPhii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(140) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !28

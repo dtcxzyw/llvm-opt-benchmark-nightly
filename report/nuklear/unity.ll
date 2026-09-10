@@ -205,7 +205,7 @@ nk_utf_decode.exit.thread101:                     ; preds = %.lr.ph.preheader.i,
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 16) i32 @nk_convert(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(address_is_null) %4) local_unnamed_addr #20 {
+define range(i32 0, 15) i32 @nk_convert(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(address_is_null) %4) local_unnamed_addr #20 {
 bb.a:
   %i.a = insertelement <4 x ptr> poison, ptr %0, i64 0
   %i.b = insertelement <4 x ptr> %i.a, ptr %1, i64 1
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 32) i32 @nk_edit_string(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4, ptr noundef %5) local_unnamed_addr #20 {
+define range(i32 0, 27) i32 @nk_edit_string(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4, ptr noundef %5) local_unnamed_addr #20 {
 bb.a:
   %i.a = icmp ne ptr %0, null
   %i.b = icmp ne ptr %2, null
@@ -763,7 +763,7 @@ bb.l:                                             ; preds = %.loopexit46.i.i.thr
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 32) i32 @nk_edit_buffer(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #20 {
+define range(i32 0, 27) i32 @nk_edit_buffer(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #20 {
 bb.a:
   %4 = alloca %struct.nk_rect, align 8            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #50
@@ -921,7 +921,7 @@ bb.u:                                             ; preds = %bb.s, %bb.r, %bb.t,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 1, 32) i32 @nk_do_edit(ptr nofree noundef nonnull captures(none) %0, ptr noundef nonnull %1, <2 x float> %2, <2 x float> %3, i32 noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef nonnull readonly %7, ptr noundef %8, ptr noundef %9) unnamed_addr #20 {
+define internal fastcc range(i32 1, 27) i32 @nk_do_edit(ptr nofree noundef nonnull captures(none) %0, ptr noundef nonnull %1, <2 x float> %2, <2 x float> %3, i32 noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef nonnull readonly %7, ptr noundef %8, ptr noundef %9) unnamed_addr #20 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
   %i.b = alloca i32, align 4                      ; 3 uses
@@ -1324,7 +1324,7 @@ nk_push_scissor.exit1075:                         ; preds = %bb.gs, %bb.gt
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 32) i32 @nk_edit_string_zero_terminated(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4) local_unnamed_addr #17 {
+define range(i32 0, 27) i32 @nk_edit_string_zero_terminated(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4) local_unnamed_addr #17 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #50
