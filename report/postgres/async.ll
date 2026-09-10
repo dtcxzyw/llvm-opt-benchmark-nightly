@@ -202,7 +202,7 @@ bb.a:
   %i.ai = load i32, ptr @MaxBackends, align 4
   %i.aj = sext i32 %i.ai to i64
   %i.ak = icmp slt i64 %indvars.iv.next, %i.aj
-  br i1 %i.ak, label %.lr.ph, label %._crit_edge, !llvm.loop !8
+  br i1 %i.ak, label %.lr.ph, label %._crit_edge, !llvm.loop !7
 }
 
 ; Function Attrs: nounwind uwtable
@@ -605,7 +605,7 @@ bb.aa:                                            ; preds = %.sink.split.i, %bb.
   %i.dz = getelementptr i8, ptr %i.dy, i64 80
   %.0.i = load i32, ptr %i.dz, align 8            ; 2 uses
   %.not.i60 = icmp eq i32 %.0.i, -1
-  br i1 %.not.i60, label %._crit_edge.i, label %bb.v, !llvm.loop !9
+  br i1 %.not.i60, label %._crit_edge.i, label %bb.v, !llvm.loop !8
 
 bb.ab:                                            ; preds = %._crit_edge.i
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dk, i64 72 ; 2 uses
@@ -708,7 +708,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
 bb.ai:                                            ; preds = %bb.aj
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.critedge.i, label %bb.aj, !llvm.loop !10
+  br i1 %exitcond.not.i, label %.critedge.i, label %bb.aj, !llvm.loop !9
 
 bb.aj:                                            ; preds = %bb.ai, %.lr.ph.i63
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i63 ], [ %indvars.iv.next.i, %bb.ai ] ; 2 uses
@@ -797,7 +797,7 @@ bb.ao:                                            ; preds = %.lr.ph180
   store i32 1, ptr %i.hj, align 4
   %i.hk = call ptr @hash_seq_search(ptr noundef nonnull %2) #14 ; 2 uses
   %.not.i67 = icmp eq ptr %i.hk, null
-  br i1 %.not.i67, label %PrepareTableEntriesForUnlistenAll.exit, label %.lr.ph.i66, !llvm.loop !11
+  br i1 %.not.i67, label %PrepareTableEntriesForUnlistenAll.exit, label %.lr.ph.i66, !llvm.loop !10
 
 PrepareTableEntriesForUnlistenAll.exit:           ; preds = %.lr.ph.i66, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
@@ -847,7 +847,7 @@ bb.aq:                                            ; preds = %bb.ap
   store ptr %i.ia, ptr %i.ic, align 8
   %i.id = call ptr @hash_seq_search(ptr noundef nonnull %6) #14 ; 2 uses
   %.not54 = icmp eq ptr %i.id, null
-  br i1 %.not54, label %._crit_edge, label %.lr.ph90, !llvm.loop !12
+  br i1 %.not54, label %._crit_edge, label %.lr.ph90, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %.lr.ph90, %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
@@ -1076,7 +1076,7 @@ bb.bg:                                            ; preds = %.thread.i72.thread,
   %i.lh = getelementptr i8, ptr %i.kw, i64 80
   %.0.i73 = load i32, ptr %i.lh, align 8          ; 2 uses
   %.not.i74 = icmp eq i32 %.0.i73, -1
-  br i1 %.not.i74, label %._crit_edge.i75, label %bb.bc, !llvm.loop !13
+  br i1 %.not.i74, label %._crit_edge.i75, label %bb.bc, !llvm.loop !12
 
 bb.bh:                                            ; preds = %._crit_edge.i75
   %i.li = fmul double %i.kl, 1.000000e+02
@@ -1278,7 +1278,7 @@ asyncQueueAddEntries.exit:                        ; preds = %bb.bp, %bb.bw, %bb.
   %i.oz = getelementptr inbounds nuw i8, ptr %i.oy, i64 3456
   call void @LWLockRelease(ptr noundef nonnull %i.oz) #14
   %.not55 = icmp eq ptr %.229.i, null
-  br i1 %.not55, label %.loopexit, label %bb.ax, !llvm.loop !14
+  br i1 %.not55, label %.loopexit, label %bb.ax, !llvm.loop !13
 
 .loopexit:                                        ; preds = %asyncQueueAddEntries.exit, %bb.aw, %list_head.exit, %.critedge57, %bb.a
   ret void
@@ -1477,7 +1477,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.l
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.by = sext i32 %i.bw to i64
   %i.bz = icmp slt i64 %indvars.iv.next.i, %i.by
-  br i1 %i.bz, label %bb.l, label %._crit_edge.i, !llvm.loop !15
+  br i1 %i.bz, label %bb.l, label %._crit_edge.i, !llvm.loop !14
 
 bb.q:                                             ; preds = %._crit_edge.i, %.lr.ph
   %.4.i = phi i32 [ %.2.lcssa.i, %._crit_edge.i ], [ %.164.i4, %.lr.ph ] ; 2 uses
@@ -1575,7 +1575,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x,
   %i.dl = getelementptr i8, ptr %i.dk, i64 80
   %.050.i = load i32, ptr %i.dl, align 8          ; 2 uses
   %.not57.i = icmp eq i32 %.050.i, -1
-  br i1 %.not57.i, label %._crit_edge80.i, label %bb.r, !llvm.loop !16
+  br i1 %.not57.i, label %._crit_edge80.i, label %bb.r, !llvm.loop !15
 
 .lr.ph84.i:                                       ; preds = %bb.af, %.lr.ph84.preheader.i
   %indvars.iv90.i = phi i64 [ 0, %.lr.ph84.preheader.i ], [ %indvars.iv.next91.i, %bb.af ] ; 3 uses
@@ -1610,7 +1610,7 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.ab
   %indvars.iv.next91.i = add nuw nsw i64 %indvars.iv90.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next91.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %SignalBackends.exit, label %.lr.ph84.i, !llvm.loop !17
+  br i1 %exitcond.not.i, label %SignalBackends.exit, label %.lr.ph84.i, !llvm.loop !16
 
 SignalBackends.exit:                              ; preds = %bb.af, %._crit_edge80.i, %bb.i
   %.b2 = load i1, ptr @tryAdvanceTail, align 1
@@ -1761,7 +1761,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %bb.g
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !18
+  br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !17
 
 .loopexit:                                        ; preds = %bb.r, %bb.f, %bb.j, %bb.m, %bb.n, %bb.q
   %i.aw = phi i1 [ true, %bb.q ], [ true, %bb.m ], [ true, %bb.n ], [ true, %bb.j ], [ false, %bb.f ], [ false, %bb.r ]
@@ -1812,7 +1812,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   %i.bk = call ptr @hash_seq_search(ptr noundef nonnull %1) #14 ; 2 uses
   %.not = icmp eq ptr %i.bk, null
-  br i1 %.not, label %.loopexit59, label %bb.e, !llvm.loop !19
+  br i1 %.not, label %.loopexit59, label %bb.e, !llvm.loop !18
 
 .loopexit59:                                      ; preds = %bb.w, %bb.d, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #14
@@ -1885,7 +1885,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %i.ak = load i32, ptr %i.aj, align 8            ; 2 uses
   %i.al = icmp eq i32 %i.ak, %i.aa
-  br i1 %i.al, label %bb.f, label %bb.d, !llvm.loop !20
+  br i1 %i.al, label %bb.f, label %bb.d, !llvm.loop !19
 
 bb.f:                                             ; preds = %bb.e
   %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
@@ -1990,7 +1990,7 @@ bb.d:                                             ; preds = %.sink.split, %bb.c,
   %i.y = getelementptr i8, ptr %i.r, i64 80
   %.0 = load i32, ptr %i.y, align 8               ; 2 uses
   %.not = icmp eq i32 %.0, -1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !21
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !20
 
 bb.e:                                             ; preds = %._crit_edge
   tail call void @SimpleLruTruncate(ptr noundef nonnull @NotifySlruDesc, i64 noundef %.sroa.0.0.lcssa) #14
@@ -2276,7 +2276,7 @@ bb.b:                                             ; preds = %.lr.ph
   tail call void @pfree(ptr noundef nonnull %i.c) #14
   %i.g = load ptr, ptr @pendingActions, align 8   ; 2 uses
   %.not = icmp eq ptr %i.g, null
-  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !22
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !21
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
   %i.h = load ptr, ptr @pendingNotifies, align 8  ; 2 uses
@@ -2296,7 +2296,7 @@ bb.c:                                             ; preds = %.lr.ph12
   tail call void @pfree(ptr noundef nonnull %i.i) #14
   %i.m = load ptr, ptr @pendingNotifies, align 8  ; 2 uses
   %.not7 = icmp eq ptr %i.m, null
-  br i1 %.not7, label %.critedge2, label %.lr.ph12, !llvm.loop !23
+  br i1 %.not7, label %.critedge2, label %.lr.ph12, !llvm.loop !22
 
 .critedge2:                                       ; preds = %.lr.ph12, %bb.c, %.critedge
   ret void
@@ -2321,30 +2321,18 @@ bb.a:
   br i1 %.not1, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
+  br i1 %0, label %ProcessIncomingNotify.exit.us.a, label %bb.g
+
+ProcessIncomingNotify.exit.us.a:                  ; preds = %.lr.ph, %ProcessIncomingNotify.exit.us
+  store volatile i32 0, ptr @notifyInterruptPending, align 4
   %1 = load ptr, ptr @localChannelTable, align 8  ; 2 uses
-  %2 = icmp eq ptr %1, null
-  br i1 %2, label %ProcessIncomingNotify.exit.us.a, label %.lr.ph.split
+  %.not.us.a = icmp eq ptr %1, null
+  br i1 %.not.us.a, label %ProcessIncomingNotify.exit.us, label %bb.b
 
-ProcessIncomingNotify.exit.us.a:                  ; preds = %.lr.ph, %ProcessIncomingNotify.exit.us.a
-  store volatile i32 0, ptr @notifyInterruptPending, align 4
-  %3 = load volatile i32, ptr @notifyInterruptPending, align 4
-  %.not.us.a = icmp eq i32 %3, 0
-  br i1 %.not.us.a, label %.loopexit, label %ProcessIncomingNotify.exit.us.a, !llvm.loop !24
-
-.lr.ph.splitthread-pre-split:                     ; preds = %ProcessIncomingNotify.exit
-  %.pr = load ptr, ptr @localChannelTable, align 8
-  br label %.lr.ph.split
-
-.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
-  %4 = phi ptr [ %.pr, %.lr.ph.splitthread-pre-split ], [ %1, %.lr.ph ] ; 2 uses
-  store volatile i32 0, ptr @notifyInterruptPending, align 4
-  %5 = icmp eq ptr %4, null
-  br i1 %5, label %ProcessIncomingNotify.exit, label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph.split
-  %i.c = tail call i64 @hash_get_num_entries(ptr noundef nonnull %4) #14
+bb.b:                                             ; preds = %ProcessIncomingNotify.exit.us.a
+  %i.c = tail call i64 @hash_get_num_entries(ptr noundef nonnull %1) #14
   %i.d = icmp eq i64 %i.c, 0
-  br i1 %i.d, label %ProcessIncomingNotify.exit, label %bb.c
+  br i1 %i.d, label %ProcessIncomingNotify.exit.us, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load i8, ptr @Trace_notify, align 1, !range !5, !noundef !6
@@ -2365,16 +2353,59 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   tail call void @StartTransactionCommand() #14
   tail call fastcc void @asyncQueueReadAllNotifications()
   tail call void @CommitTransactionCommand() #14
-  br i1 %0, label %bb.g, label %bb.h
+  %2 = load ptr, ptr @PqCommMethods, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %4 = load ptr, ptr %3, align 8
+  %5 = tail call i32 %4() #14, !inline_history !23 ; 0 uses
+  tail call void @set_ps_display_with_len(ptr noundef nonnull @.str.34, i64 noundef 4) #14
+  %6 = load i8, ptr @Trace_notify, align 1, !range !5, !noundef !6
+  %7 = trunc nuw i8 %6 to i1
+  br i1 %7, label %8, label %ProcessIncomingNotify.exit.us
 
-bb.g:                                             ; preds = %bb.f
-  %6 = load ptr, ptr @PqCommMethods, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.i = load ptr, ptr %7, align 8
-  %8 = tail call i32 %i.i() #14, !inline_history !25 ; 0 uses
+8:                                                ; preds = %bb.f
+  %9 = tail call zeroext i1 @errstart(i32 noundef 14, ptr noundef null) #14
+  br i1 %9, label %10, label %ProcessIncomingNotify.exit.us
+
+10:                                               ; preds = %8
+  %11 = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.35) #14 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.3, i32 noundef 3092, ptr noundef nonnull @.str.32) #14
+  br label %ProcessIncomingNotify.exit.us
+
+ProcessIncomingNotify.exit.us:                    ; preds = %10, %8, %bb.f, %bb.b, %ProcessIncomingNotify.exit.us.a
+  %12 = load volatile i32, ptr @notifyInterruptPending, align 4
+  %.not.us = icmp eq i32 %12, 0
+  br i1 %.not.us, label %.loopexit, label %ProcessIncomingNotify.exit.us.a, !llvm.loop !24
+
+bb.g:                                             ; preds = %.lr.ph, %ProcessIncomingNotify.exit
+  store volatile i32 0, ptr @notifyInterruptPending, align 4
+  %i.i = load ptr, ptr @localChannelTable, align 8 ; 2 uses
+  %13 = icmp eq ptr %i.i, null
+  br i1 %13, label %ProcessIncomingNotify.exit, label %14
+
+14:                                               ; preds = %bb.g
+  %15 = tail call i64 @hash_get_num_entries(ptr noundef nonnull %i.i) #14
+  %16 = icmp eq i64 %15, 0
+  br i1 %16, label %ProcessIncomingNotify.exit, label %17
+
+17:                                               ; preds = %14
+  %18 = load i8, ptr @Trace_notify, align 1, !range !5, !noundef !6
+  %19 = trunc nuw i8 %18 to i1
+  br i1 %19, label %20, label %bb.h
+
+20:                                               ; preds = %17
+  %21 = tail call zeroext i1 @errstart(i32 noundef 14, ptr noundef null) #14
+  br i1 %21, label %22, label %bb.h
+
+22:                                               ; preds = %20
+  %23 = tail call i32 (ptr, ...) @errmsg_internal(ptr noundef nonnull @.str.32) #14 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.3, i32 noundef 3068, ptr noundef nonnull @.str.32) #14
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f
+bb.h:                                             ; preds = %22, %20, %17
+  tail call void @set_ps_display_with_len(ptr noundef nonnull @.str.33, i64 noundef 16) #14
+  tail call void @StartTransactionCommand() #14
+  tail call fastcc void @asyncQueueReadAllNotifications()
+  tail call void @CommitTransactionCommand() #14
   tail call void @set_ps_display_with_len(ptr noundef nonnull @.str.34, i64 noundef 4) #14
   %i.j = load i8, ptr @Trace_notify, align 1, !range !5, !noundef !6
   %i.k = trunc nuw i8 %i.j to i1
@@ -2389,12 +2420,12 @@ bb.j:                                             ; preds = %bb.i
   tail call void @errfinish(ptr noundef nonnull @.str.3, i32 noundef 3092, ptr noundef nonnull @.str.32) #14
   br label %ProcessIncomingNotify.exit
 
-ProcessIncomingNotify.exit:                       ; preds = %.lr.ph.split, %bb.b, %bb.h, %bb.i, %bb.j
+ProcessIncomingNotify.exit:                       ; preds = %bb.g, %14, %bb.h, %bb.i, %bb.j
   %i.n = load volatile i32, ptr @notifyInterruptPending, align 4
   %.not = icmp eq i32 %i.n, 0
-  br i1 %.not, label %.loopexit, label %.lr.ph.splitthread-pre-split, !llvm.loop !26
+  br i1 %.not, label %.loopexit, label %bb.g, !llvm.loop !24
 
-.loopexit:                                        ; preds = %ProcessIncomingNotify.exit, %ProcessIncomingNotify.exit.us.a, %.preheader, %bb.a
+.loopexit:                                        ; preds = %ProcessIncomingNotify.exit, %ProcessIncomingNotify.exit.us, %.preheader, %bb.a
   ret void
 }
 
@@ -2531,7 +2562,7 @@ bb.j:                                             ; preds = %.sink.split, %bb.i,
   %i.bk = icmp ne i64 %spec.select.i, %.sroa.0.0.copyload
   %i.bl = icmp ne i32 %spec.select12.i, %.sroa.4.0.copyload
   %.not33 = select i1 %i.bk, i1 true, i1 %i.bl
-  br i1 %.not33, label %bb.b, label %._crit_edge, !llvm.loop !27
+  br i1 %.not33, label %bb.b, label %._crit_edge, !llvm.loop !25
 
 ._crit_edge:                                      ; preds = %bb.j
   %i.bm = icmp sgt i32 %.127, -1
@@ -2586,16 +2617,16 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   call void @pq_beginmessage(ptr noundef nonnull %3, i8 noundef signext 65) #14
   call void @enlargeStringInfo(ptr noundef nonnull %3, i32 noundef 4) #14
-  call void @llvm.experimental.noalias.scope.decl(metadata !30)
+  call void @llvm.experimental.noalias.scope.decl(metadata !28)
   %i.c = call i32 @llvm.bswap.i32(i32 %2)
-  %i.d = load ptr, ptr %3, align 8, !alias.scope !30
+  %i.d = load ptr, ptr %3, align 8, !alias.scope !28
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.f = load i32, ptr %i.e, align 8, !alias.scope !30 ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !alias.scope !28 ; 2 uses
   %i.g = sext i32 %i.f to i64
   %i.h = getelementptr inbounds i8, ptr %i.d, i64 %i.g
-  store i32 %i.c, ptr %i.h, align 1, !noalias !30
+  store i32 %i.c, ptr %i.h, align 1, !noalias !28
   %i.i = add i32 %i.f, 4
-  store i32 %i.i, ptr %i.e, align 8, !alias.scope !30
+  store i32 %i.i, ptr %i.e, align 8, !alias.scope !28
   call void @pq_sendstring(ptr noundef nonnull %3, ptr noundef %0) #14
   call void @pq_sendstring(ptr noundef nonnull %3, ptr noundef %1) #14
   call void @pq_endmessage(ptr noundef nonnull %3) #14
@@ -2750,7 +2781,7 @@ bb.g:                                             ; preds = %bb.f
   %i.k = load i32, ptr %i.j, align 8
   %i.l = load i32, ptr @MyDatabaseId, align 4
   %.not23.i = icmp eq i32 %i.k, %i.l
-  br i1 %.not23.i, label %bb.h, label %.loopexit.i, !llvm.loop !31
+  br i1 %.not23.i, label %bb.h, label %.loopexit.i, !llvm.loop !29
 
 bb.h:                                             ; preds = %.lr.ph31.i
   %i.m = load ptr, ptr @globalChannelDSA, align 8
@@ -2806,7 +2837,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.i, !llvm.loop !32
+  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.i, !llvm.loop !30
 
 .loopexit.i:                                      ; preds = %bb.n, %bb.m, %bb.l, %bb.h, %.lr.ph31.i
   %i.aj = call ptr @dshash_seq_next(ptr noundef nonnull %2) #14 ; 2 uses
@@ -2955,7 +2986,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i, %bb.h, %bb.e
   %.2.i = phi ptr [ %.045.i, %bb.h ], [ %.045.i, %bb.j ], [ %.045.i, %bb.e ], [ %.045.i, %bb.i ], [ %i.bo, %bb.k ] ; 2 uses
-  br i1 %i.av, label %.thread.i, label %bb.d, !llvm.loop !33
+  br i1 %i.av, label %.thread.i, label %bb.d, !llvm.loop !31
 
 .thread.i:                                        ; preds = %bb.l, %bb.d, %bb.g
   %.259.i = phi ptr [ %.045.i, %bb.g ], [ %.2.i, %bb.l ], [ %.045.i, %bb.d ] ; 2 uses
@@ -3009,15 +3040,15 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #14
   call void @pq_beginmessage(ptr noundef nonnull %0, i8 noundef signext 65) #14
   call void @enlargeStringInfo(ptr noundef nonnull %0, i32 noundef 4) #14
-  call void @llvm.experimental.noalias.scope.decl(metadata !38)
+  call void @llvm.experimental.noalias.scope.decl(metadata !36)
   %i.cm = call i32 @llvm.bswap.i32(i32 %i.cl)
-  %i.cn = load ptr, ptr %0, align 8, !alias.scope !38
-  %i.co = load i32, ptr %i.ab, align 8, !alias.scope !38 ; 2 uses
+  %i.cn = load ptr, ptr %0, align 8, !alias.scope !36
+  %i.co = load i32, ptr %i.ab, align 8, !alias.scope !36 ; 2 uses
   %i.cp = sext i32 %i.co to i64
   %i.cq = getelementptr inbounds i8, ptr %i.cn, i64 %i.cp
-  store i32 %i.cm, ptr %i.cq, align 1, !noalias !38
+  store i32 %i.cm, ptr %i.cq, align 1, !noalias !36
   %i.cr = add i32 %i.co, 4
-  store i32 %i.cr, ptr %i.ab, align 8, !alias.scope !38
+  store i32 %i.cr, ptr %i.ab, align 8, !alias.scope !36
   call void @pq_sendstring(ptr noundef nonnull %0, ptr noundef nonnull %i.cc) #14
   call void @pq_sendstring(ptr noundef nonnull %0, ptr noundef nonnull %i.ch) #14
   call void @pq_endmessage(ptr noundef nonnull %0) #14
@@ -3038,7 +3069,7 @@ IsListeningOn.exit.thread.i:                      ; preds = %bb.p, %bb.o, %bb.n,
   %i.cv = sext i32 %i.cu to i64
   %i.cw = getelementptr inbounds i8, ptr %.068.i, i64 %i.cv ; 2 uses
   %i.cx = icmp ult ptr %i.cw, %.259.i
-  br i1 %i.cx, label %.lr.ph.splitthread-pre-split.i, label %._crit_edge.i, !llvm.loop !36
+  br i1 %i.cx, label %.lr.ph.splitthread-pre-split.i, label %._crit_edge.i, !llvm.loop !34
 
 .split:                                           ; preds = %._crit_edge.i
   %i.cy = load i32, ptr %i.q, align 8
@@ -3052,7 +3083,7 @@ asyncQueueProcessPageEntries.exit:                ; preds = %._crit_edge.i
   br i1 %.14958.i, label %bb.q, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %asyncQueueProcessPageEntries.exit, %.split
-  br label %.backedge, !llvm.loop !37
+  br label %.backedge, !llvm.loop !35
 
 bb.q:                                             ; preds = %.split, %asyncQueueProcessPageEntries.exit
   %i.da = load ptr, ptr @MainLWLockArray, align 8
@@ -3236,7 +3267,7 @@ attributes #16 = { nounwind willreturn memory(read) }
 !4 = !{!"llvm.loop.mustprogress"}
 !5 = !{i8 0, i8 2}
 !6 = !{}
-!7 = !{!"llvm.loop.unswitch.partial.disable"}
+!7 = distinct !{!7, !4}
 !8 = distinct !{!8, !4}
 !9 = distinct !{!9, !4}
 !10 = distinct !{!10, !4}
@@ -3252,20 +3283,19 @@ attributes #16 = { nounwind willreturn memory(read) }
 !20 = distinct !{!20, !4}
 !21 = distinct !{!21, !4}
 !22 = distinct !{!22, !4}
-!23 = distinct !{!23, !4}
+!23 = distinct !{null}
 !24 = distinct !{!24, !4}
-!25 = distinct !{null}
-!26 = distinct !{!26, !4, !7}
-!27 = distinct !{!27, !4}
-!28 = distinct !{!28, !"pq_writeint32"}
-!29 = distinct !{!29, !28, !"pq_writeint32: argument 0"}
-!30 = !{!29}
+!25 = distinct !{!25, !4}
+!26 = distinct !{!26, !"pq_writeint32"}
+!27 = distinct !{!27, !26, !"pq_writeint32: argument 0"}
+!28 = !{!27}
+!29 = distinct !{!29, !4}
+!30 = distinct !{!30, !4}
 !31 = distinct !{!31, !4}
-!32 = distinct !{!32, !4}
-!33 = distinct !{!33, !4}
-!34 = distinct !{!34, !"pq_writeint32"}
-!35 = distinct !{!35, !34, !"pq_writeint32: argument 0"}
-!36 = distinct !{!36, !4, !7}
-!37 = distinct !{!37, !4}
-!38 = !{!35}
+!32 = distinct !{!32, !"pq_writeint32"}
+!33 = distinct !{!33, !32, !"pq_writeint32: argument 0"}
+!34 = distinct !{!34, !4, !37}
+!35 = distinct !{!35, !4}
+!36 = !{!33}
+!37 = !{!"llvm.loop.unswitch.partial.disable"}
 end_hunk_1

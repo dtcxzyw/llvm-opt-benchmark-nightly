@@ -204,11 +204,11 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit.i:             ; preds = %_ZSt6fill_nIPjmjET_
   br i1 %i.cj, label %._crit_edge214.i, label %.lr.ph213.i
 
 ._crit_edge214.i:                                 ; preds = %bb.ad, %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i, %.noexc18
-  %.pre246.i101 = phi ptr [ %i.bx, %.noexc18 ], [ %.pre244.i, %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i ], [ %i.fn, %bb.ad ] ; 3 uses
+  %.pre246.i101 = phi ptr [ %i.bx, %.noexc18 ], [ %.pre244.i, %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i ], [ %i.fn, %bb.ad ]
   %.sroa.16.2283.i = phi ptr [ null, %.noexc18 ], [ %i.ci, %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i ], [ %i.ci, %bb.ad ] ; 5 uses
   %.sroa.0.2282.i = phi ptr [ null, %.noexc18 ], [ %i.ce, %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i ], [ %i.ce, %bb.ad ] ; 9 uses
   %i.ck = phi ptr [ %i.bw, %.noexc18 ], [ %.pre.i, %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i ], [ %i.fn, %bb.ad ]
-  %i.cl = phi ptr [ %i.bw, %.noexc18 ], [ %.pre.i, %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i ], [ %i.fm, %bb.ad ] ; 2 uses
+  %i.cl = phi ptr [ %i.bw, %.noexc18 ], [ %.pre.i, %_ZNSt6vectorIjSaIjEE6resizeEm.exit.i ], [ %i.fm, %bb.ad ]
   %.not47.i.i = icmp sgt i16 %.sroa.11.0, %i.bd
   %i.cm = icmp sgt i16 %.sroa.740.0, %i.bc
   %or.cond = select i1 %.not47.i.i, i1 true, i1 %i.cm
@@ -223,17 +223,20 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit.i:             ; preds = %_ZSt6fill_nIPjmjET_
   %i.cs = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   %i.ct = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.cu = icmp sgt i16 %.sroa.039.0, %i.bb
-  br i1 %i.cu, label %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.i", label %.lr.ph50.split.i.i
+  br label %.lr.ph50.split.i.i
 
 .lr.ph50.split.i.i:                               ; preds = %.lr.ph50.split.i.preheader.i.split, %._crit_edge46.i.i.loopexit
   %.048.i.i = phi i16 [ %i.fj, %._crit_edge46.i.i.loopexit ], [ %.sroa.11.0, %.lr.ph50.split.i.preheader.i.split ] ; 3 uses
   %i.cv = sext i16 %.048.i.i to i32
   %.sroa.5.0.insert.ext.i.i = zext i16 %.048.i.i to i48
   %.sroa.5.0.insert.shift.i.i = shl nuw i48 %.sroa.5.0.insert.ext.i.i, 32
-  br label %.lr.ph.i.i
+  br label %4
 
-.lr.ph.i.i:                                       ; preds = %._crit_edge.i.i, %.lr.ph50.split.i.i
-  %.02443.i.i = phi i16 [ %i.fi, %._crit_edge.i.i ], [ %.sroa.740.0, %.lr.ph50.split.i.i ] ; 3 uses
+4:                                                ; preds = %._crit_edge.i.i, %.lr.ph50.split.i.i
+  %.02443.i.i = phi i16 [ %.sroa.740.0, %.lr.ph50.split.i.i ], [ %i.fi, %._crit_edge.i.i ] ; 3 uses
+  br i1 %i.cu, label %._crit_edge.i.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %4
   %i.cw = load i16, ptr %i.ad, align 4, !tbaa !318
   %i.cx = sext i16 %i.cw to i32
   %i.cy = sub nsw i32 %i.co, %i.cx
@@ -397,10 +400,10 @@ bb.ac:                                            ; preds = %_ZSt4findIN9__gnu_c
   %.not29.i.i = icmp sgt i16 %i.fh, %i.bb
   br i1 %.not29.i.i, label %._crit_edge.i.i, label %bb.t, !llvm.loop !483
 
-._crit_edge.i.i:                                  ; preds = %"_ZZN13ModApiEnvBase15findNodesInAreaIRZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateE3$_0EEiS3_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_ENKUlN4core8vector3dIsEE7MapNodeE_clESI_SJ_.exit.i.i"
+._crit_edge.i.i:                                  ; preds = %"_ZZN13ModApiEnvBase15findNodesInAreaIRZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateE3$_0EEiS3_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_ENKUlN4core8vector3dIsEE7MapNodeE_clESI_SJ_.exit.i.i", %4
   %i.fi = add i16 %.02443.i.i, 1                  ; 2 uses
   %.not28.i.i = icmp sgt i16 %i.fi, %i.bc
-  br i1 %.not28.i.i, label %._crit_edge46.i.i.loopexit, label %.lr.ph.i.i, !llvm.loop !484
+  br i1 %.not28.i.i, label %._crit_edge46.i.i.loopexit, label %4, !llvm.loop !484
 
 ._crit_edge46.i.i.loopexit:                       ; preds = %._crit_edge.i.i
   %i.fj = add i16 %.048.i.i, 1                    ; 2 uses
@@ -430,16 +433,16 @@ bb.ad:                                            ; preds = %.lr.ph213.i
   br label %_ZNSt6vectorIjSaIjEED2Ev.exit45.sink.split.i
 
 "_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83": ; preds = %._crit_edge46.i.i.loopexit
-  %.pre245.i.pre.a = load ptr, ptr %i.bn, align 8, !tbaa !253
-  %.pre246.i.pre = load ptr, ptr %3, align 8, !tbaa !251 ; 2 uses
+  %.pre245.i.pre.a = load ptr, ptr %3, align 8, !tbaa !251 ; 2 uses
+  %.pre246.i.pre = load ptr, ptr %i.bn, align 8, !tbaa !253
   br label %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.i"
 
-"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.i": ; preds = %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83", %.lr.ph50.split.i.preheader.i.split, %._crit_edge214.i
-  %.pr103 = phi ptr [ %.pre246.i101, %._crit_edge214.i ], [ %.pre246.i.pre, %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83" ], [ %.pre246.i101, %.lr.ph50.split.i.preheader.i.split ]
-  %4 = phi ptr [ %i.ck, %._crit_edge214.i ], [ %.pre246.i.pre, %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83" ], [ %.pre246.i101, %.lr.ph50.split.i.preheader.i.split ]
-  %5 = phi ptr [ %i.cl, %._crit_edge214.i ], [ %.pre245.i.pre.a, %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83" ], [ %i.cl, %.lr.ph50.split.i.preheader.i.split ]
-  %i.fu = ptrtoint ptr %5 to i64
-  %i.fv = ptrtoint ptr %4 to i64
+"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.i": ; preds = %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83", %._crit_edge214.i
+  %.pr91 = phi ptr [ %.pre245.i.pre.a, %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83" ], [ %.pre246.i101, %._crit_edge214.i ]
+  %5 = phi ptr [ %.pre245.i.pre.a, %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83" ], [ %i.ck, %._crit_edge214.i ]
+  %6 = phi ptr [ %.pre246.i.pre, %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE_EEDaSF_.exit.loopexit.i.loopexit83" ], [ %i.cl, %._crit_edge214.i ]
+  %i.fu = ptrtoint ptr %6 to i64
+  %i.fv = ptrtoint ptr %5 to i64
   %i.fw = sub i64 %i.fu, %i.fv                    ; 2 uses
   %i.fx = and i64 %i.fw, 8589934590
   %.not223.i = icmp eq i64 %i.fx, 0
@@ -575,19 +578,22 @@ bb.ao:                                            ; preds = %_ZNSt6vectorIjSaIjE
   %i.hq = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   %i.hr = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.hs = icmp sgt i16 %.sroa.039.0, %i.bb
-  br i1 %i.hs, label %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE0_EEDaSF_.exit.i", label %.lr.ph50.split.i52.i
+  br label %.lr.ph50.split.i52.i
 
 .lr.ph50.split.i52.i:                             ; preds = %.lr.ph50.split.i52.i.preheader.split, %._crit_edge46.i84.i.loopexit
-  %.0168.i = phi i32 [ %.3.i, %._crit_edge46.i84.i.loopexit ], [ 0, %.lr.ph50.split.i52.i.preheader.split ]
+  %.0168.i = phi i32 [ %.4.i, %._crit_edge46.i84.i.loopexit ], [ 0, %.lr.ph50.split.i52.i.preheader.split ]
   %.048.i53.i = phi i16 [ %i.kj, %._crit_edge46.i84.i.loopexit ], [ %.sroa.11.0, %.lr.ph50.split.i52.i.preheader.split ] ; 3 uses
   %i.ht = sext i16 %.048.i53.i to i32
   %.sroa.5.0.insert.ext.i56.i = zext i16 %.048.i53.i to i48
   %.sroa.5.0.insert.shift.i57.i = shl nuw i48 %.sroa.5.0.insert.ext.i56.i, 32
-  br label %.lr.ph.i61.i
+  br label %7
 
-.lr.ph.i61.i:                                     ; preds = %._crit_edge.i82.i, %.lr.ph50.split.i52.i
-  %.1.i = phi i32 [ %.3.i, %._crit_edge.i82.i ], [ %.0168.i, %.lr.ph50.split.i52.i ]
-  %.02443.i59.i = phi i16 [ %i.ki, %._crit_edge.i82.i ], [ %.sroa.740.0, %.lr.ph50.split.i52.i ] ; 3 uses
+7:                                                ; preds = %._crit_edge.i82.i, %.lr.ph50.split.i52.i
+  %.1.i = phi i32 [ %.0168.i, %.lr.ph50.split.i52.i ], [ %.4.i, %._crit_edge.i82.i ] ; 2 uses
+  %.02443.i58.i = phi i16 [ %.sroa.740.0, %.lr.ph50.split.i52.i ], [ %i.ki, %._crit_edge.i82.i ] ; 3 uses
+  br i1 %i.hs, label %._crit_edge.i82.i, label %.lr.ph.i61.i
+
+.lr.ph.i61.i:                                     ; preds = %7
   %i.hu = load i16, ptr %i.ad, align 4, !tbaa !318
   %i.hv = sext i16 %i.hu to i32
   %i.hw = sub nsw i32 %i.hm, %i.hv
@@ -596,7 +602,7 @@ bb.ao:                                            ; preds = %_ZNSt6vectorIjSaIjE
   %i.hz = sub nsw i32 %i.ht, %i.hy
   %i.ia = load i32, ptr %i.ho, align 4, !tbaa !322
   %i.ib = mul nsw i32 %i.hz, %i.ia
-  %i.ic = sext i16 %.02443.i59.i to i32
+  %i.ic = sext i16 %.02443.i58.i to i32
   %i.id = add i32 %i.ib, %i.ic
   %i.ie = load i16, ptr %i.hp, align 2, !tbaa !495
   %i.if = sext i16 %i.ie to i32
@@ -604,7 +610,7 @@ bb.ao:                                            ; preds = %_ZNSt6vectorIjSaIjE
   %i.ih = load i32, ptr %i.hq, align 4, !tbaa !323
   %i.ii = mul i32 %i.ig, %i.ih
   %i.ij = add nsw i32 %i.hw, %i.ii
-  %.sroa.4.0.insert.ext.i62.i = zext i16 %.02443.i59.i to i48
+  %.sroa.4.0.insert.ext.i62.i = zext i16 %.02443.i58.i to i48
   %.sroa.4.0.insert.shift.i63.i = shl nuw nsw i48 %.sroa.4.0.insert.ext.i62.i, 16
   %.sroa.4.0.insert.insert.i64.i = or disjoint i48 %.sroa.4.0.insert.shift.i63.i, %.sroa.5.0.insert.shift.i57.i
   %.pre.i65.i = load ptr, ptr %3, align 8, !tbaa !249
@@ -747,24 +753,25 @@ bb.ay:                                            ; preds = %_ZSt4findIN9__gnu_c
   br label %"_ZZN13ModApiEnvBase15findNodesInAreaIRZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateE3$_0EEiS3_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_ENKUlN4core8vector3dIsEE7MapNodeE0_clESI_SJ_.exit.i.i"
 
 "_ZZN13ModApiEnvBase15findNodesInAreaIRZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateE3$_0EEiS3_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_ENKUlN4core8vector3dIsEE7MapNodeE0_clESI_SJ_.exit.i.i": ; preds = %.noexc97.i, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKtSt6vectorItSaItEEEEtET_S8_S8_RKT0_.exit.i.i77.i, %._crit_edge.i.i.i.i.i71.i
-  %.3.i = phi i32 [ %.2.i, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKtSt6vectorItSaItEEEEtET_S8_S8_RKT0_.exit.i.i77.i ], [ %i.jv, %.noexc97.i ], [ %.2.i, %._crit_edge.i.i.i.i.i71.i ] ; 3 uses
+  %.3.i = phi i32 [ %.2.i, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKtSt6vectorItSaItEEEEtET_S8_S8_RKT0_.exit.i.i77.i ], [ %i.jv, %.noexc97.i ], [ %.2.i, %._crit_edge.i.i.i.i.i71.i ] ; 2 uses
   %i.kf = phi ptr [ %i.ik, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKtSt6vectorItSaItEEEEtET_S8_S8_RKT0_.exit.i.i77.i ], [ %i.jw, %.noexc97.i ], [ %i.ik, %._crit_edge.i.i.i.i.i71.i ]
   %i.kg = add i32 %.02640.i67.i, 1
   %i.kh = add i16 %.02541.i66.i, 1                ; 2 uses
   %.not29.i81.i = icmp sgt i16 %i.kh, %i.bb
   br i1 %.not29.i81.i, label %._crit_edge.i82.i, label %bb.ap, !llvm.loop !488
 
-._crit_edge.i82.i:                                ; preds = %"_ZZN13ModApiEnvBase15findNodesInAreaIRZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateE3$_0EEiS3_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_ENKUlN4core8vector3dIsEE7MapNodeE0_clESI_SJ_.exit.i.i"
-  %i.ki = add i16 %.02443.i59.i, 1                ; 2 uses
+._crit_edge.i82.i:                                ; preds = %"_ZZN13ModApiEnvBase15findNodesInAreaIRZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateE3$_0EEiS3_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_ENKUlN4core8vector3dIsEE7MapNodeE0_clESI_SJ_.exit.i.i", %7
+  %.4.i = phi i32 [ %.1.i, %7 ], [ %.3.i, %"_ZZN13ModApiEnvBase15findNodesInAreaIRZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateE3$_0EEiS3_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_ENKUlN4core8vector3dIsEE7MapNodeE0_clESI_SJ_.exit.i.i" ] ; 2 uses
+  %i.ki = add i16 %.02443.i58.i, 1                ; 2 uses
   %.not28.i83.i = icmp sgt i16 %i.ki, %i.bc
-  br i1 %.not28.i83.i, label %._crit_edge46.i84.i.loopexit, label %.lr.ph.i61.i, !llvm.loop !489
+  br i1 %.not28.i83.i, label %._crit_edge46.i84.i.loopexit, label %7, !llvm.loop !489
 
 ._crit_edge46.i84.i.loopexit:                     ; preds = %._crit_edge.i82.i
   %i.kj = add i16 %.048.i53.i, 1                  ; 2 uses
   %.not.i85.i = icmp sgt i16 %i.kj, %i.bd
   br i1 %.not.i85.i, label %"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE0_EEDaSF_.exit.i", label %.lr.ph50.split.i52.i, !llvm.loop !490
 
-"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE0_EEDaSF_.exit.i": ; preds = %._crit_edge46.i84.i.loopexit, %.lr.ph50.split.i52.i.preheader.split, %bb.ao
+"_ZZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateENK3$_0clIZN13ModApiEnvBase15findNodesInAreaIRS2_EEiS1_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_EUlN4core8vector3dIsEE7MapNodeE0_EEDaSF_.exit.i": ; preds = %._crit_edge46.i84.i.loopexit, %bb.ao
   %i.kk = load ptr, ptr %i.hc, align 8, !tbaa !253
   %i.kl = load ptr, ptr %3, align 8, !tbaa !251
   %i.km = ptrtoint ptr %i.kk to i64
@@ -893,7 +900,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit45.sink.split.i:     ; preds = %bb.bf, %.thread177.
   br label %.body
 
 "_ZN13ModApiEnvBase15findNodesInAreaIRZN11ModApiEnvVM20l_find_nodes_in_areaEP9lua_StateE3$_0EEiS3_PK14NodeDefManagerRKSt6vectorItSaItEEbOT_.exit": ; preds = %_ZNSt6vectorIjSaIjEED2Ev.exit.sink.split.i, %._crit_edge225.i, %._crit_edge.i
-  %i.mi = phi ptr [ %i.ks, %._crit_edge.i ], [ %.pr.pre, %_ZNSt6vectorIjSaIjEED2Ev.exit.sink.split.i ], [ %.pr103, %._crit_edge225.i ] ; 3 uses
+  %i.mi = phi ptr [ %i.ks, %._crit_edge.i ], [ %.pr.pre, %_ZNSt6vectorIjSaIjEED2Ev.exit.sink.split.i ], [ %.pr91, %._crit_edge225.i ] ; 3 uses
   %.034.i = phi i32 [ 2, %._crit_edge.i ], [ %.034.ph.i, %_ZNSt6vectorIjSaIjEED2Ev.exit.sink.split.i ], [ 1, %._crit_edge225.i ]
   %.not.i.i.i = icmp eq ptr %i.mi, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorItSaItEED2Ev.exit, label %bb.bg
@@ -1296,12 +1303,12 @@ begin_hunk_1_@llvm.smin.v2i16
 !481 = distinct !{!481, !"_ZNK9VoxelArea9intersectERKS_"}
 !482 = distinct !{!482, !481, !"_ZNK9VoxelArea9intersectERKS_: argument 0"}
 !483 = distinct !{!483, !44}
-!484 = distinct !{!484, !44, !497}
+!484 = distinct !{!484, !44}
 !485 = distinct !{!485, !44, !497}
 !486 = distinct !{!486, !44}
 !487 = distinct !{!487, !44}
 !488 = distinct !{!488, !44}
-!489 = distinct !{!489, !44, !497}
+!489 = distinct !{!489, !44}
 !490 = distinct !{!490, !44, !497}
 !491 = distinct !{!491, !44}
 !492 = !{!317, !24, i64 6}

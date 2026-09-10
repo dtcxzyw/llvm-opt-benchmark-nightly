@@ -204,8 +204,9 @@ bb.g:                                             ; preds = %psa_get_and_lock_tr
   %i.p = load i32, ptr %0, align 8, !tbaa !76
   %i.q = and i32 %i.p, -151060480
   %i.r = or disjoint i32 %i.q, 150994944          ; 2 uses
-  %5 = icmp ult i32 %i.r, 167772160
-  br i1 %5, label %bb.h, label %psa_crypto_local_input_alloc.exit.thread53
+  %5 = and i32 %i.r, -16777216
+  %or.cond.i.i = icmp eq i32 %5, 150994944
+  br i1 %or.cond.i.i, label %bb.h, label %psa_crypto_local_input_alloc.exit.thread53
 
 bb.h:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 40
