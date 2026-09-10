@@ -202,14 +202,12 @@ _ZN2v88internal10ZoneVectorINS0_6HandleINS0_6ObjectEEEE14EnsureCapacityEm.exit.i
   br i1 %i.aq, label %.lr.ph.preheader.i30, label %_ZN2v88internal10ZoneVectorINS0_6HandleINS0_6ObjectEEEE6resizeEm.exit
 
 .lr.ph.preheader.i30:                             ; preds = %_ZN2v88internal10ZoneVectorINS0_6HandleINS0_6ObjectEEEE14EnsureCapacityEm.exit.i
-  %i.ar = ptrtoaddr ptr %i.ap to i64              ; 2 uses
+  %i.ar = ptrtoaddr ptr %i.ap to i64
   %i.as = ptrtoaddr ptr %i.an to i64
   %i.at = shl nuw nsw i64 %i.ai, 3
-  %4 = add nuw i64 %i.at, %i.as
-  %i.au = add i64 %i.ar, 8
-  %umax.i = call i64 @llvm.umax.i64(i64 %4, i64 %i.au)
+  %i.au = add i64 %i.at, %i.as
   %i.av = xor i64 %i.ar, -1
-  %i.aw = add i64 %umax.i, %i.av
+  %i.aw = add i64 %i.au, %i.av
   %i.ax = and i64 %i.aw, -8
   %i.ay = add i64 %i.ax, 8
   call void @llvm.memset.p0.i64(ptr align 8 %i.ap, i8 0, i64 %i.ay, i1 false)
@@ -504,14 +502,12 @@ _ZN2v88internal10ZoneVectorINS0_6HandleINS0_6ObjectEEEE14EnsureCapacityEm.exit.i
   br i1 %i.ar, label %.lr.ph.preheader.i30, label %_ZN2v88internal10ZoneVectorINS0_6HandleINS0_6ObjectEEEE6resizeEm.exit
 
 .lr.ph.preheader.i30:                             ; preds = %_ZN2v88internal10ZoneVectorINS0_6HandleINS0_6ObjectEEEE14EnsureCapacityEm.exit.i
-  %i.as = ptrtoaddr ptr %i.aq to i64              ; 2 uses
+  %i.as = ptrtoaddr ptr %i.aq to i64
   %i.at = ptrtoaddr ptr %i.ao to i64
   %i.au = shl nuw nsw i64 %i.aj, 3
-  %4 = add nuw i64 %i.au, %i.at
-  %i.av = add i64 %i.as, 8
-  %umax.i = call i64 @llvm.umax.i64(i64 %4, i64 %i.av)
+  %i.av = add i64 %i.au, %i.at
   %i.aw = xor i64 %i.as, -1
-  %i.ax = add i64 %umax.i, %i.aw
+  %i.ax = add i64 %i.av, %i.aw
   %i.ay = and i64 %i.ax, -8
   %i.az = add i64 %i.ay, 8
   call void @llvm.memset.p0.i64(ptr align 8 %i.aq, i8 0, i64 %i.az, i1 false)

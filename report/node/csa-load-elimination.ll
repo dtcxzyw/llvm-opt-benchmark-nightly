@@ -202,14 +202,12 @@ _ZN2v88internal10ZoneVectorIPKNS0_8compiler18CsaLoadElimination13AbstractStateEE
   br i1 %i.ae, label %.lr.ph.i.preheader.i.i, label %_ZN2v88internal10ZoneVectorIPKNS0_8compiler18CsaLoadElimination13AbstractStateEE6resizeEmRKS6_.exit.i.i
 
 .lr.ph.i.preheader.i.i:                           ; preds = %_ZN2v88internal10ZoneVectorIPKNS0_8compiler18CsaLoadElimination13AbstractStateEE14EnsureCapacityEm.exit.i.i.i
-  %i.af = ptrtoaddr ptr %i.ab to i64              ; 2 uses
+  %i.af = ptrtoaddr ptr %i.ab to i64
   %i.ag = ptrtoaddr ptr %i.ac to i64
   %i.ah = shl nuw nsw i64 %i.v, 3
-  %3 = add nuw i64 %i.ah, %i.ag
-  %i.ai = add i64 %i.af, 8
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.ai)
-  %4 = xor i64 %i.af, -1
-  %i.aj = add i64 %umax.i.i, %4
+  %3 = xor i64 %i.af, -1
+  %i.ai = add i64 %i.ah, %3
+  %i.aj = add i64 %i.ai, %i.ag
   %i.ak = and i64 %i.aj, -8
   %i.al = add i64 %i.ak, 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ab, i8 0, i64 %i.al, i1 false)

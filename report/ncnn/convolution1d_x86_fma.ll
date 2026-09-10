@@ -205,6 +205,7 @@ _ZN4ncnn3MatD2Ev.exit1004.lr.ph.i:                ; preds = %.preheader1103.i
   %i.it = shl nuw nsw i64 %i.ho, 2                ; 5 uses
   %i.iu = add nuw nsw i64 %i.it, %i.ir            ; 4 uses
   %i.iv = shl nsw i64 %i.hu, 2
+  %2 = add i32 %i.n, -2
   %min.iters.check434 = icmp ult i32 %i.j, 16
   %stride.check401 = icmp slt i32 %i.ht, 0
   %n.vec436 = and i64 %wide.trip.count1706.i, 2147483640 ; 4 uses
@@ -607,6 +608,7 @@ _ZN4ncnn3MatD2Ev.exit1003.lr.ph.i:                ; preds = %.preheader1095.i
   %i.aea = shl nuw nsw i64 %i.acq, 2              ; 3 uses
   %i.aeb = add nuw nsw i64 %i.aea, %i.ady         ; 2 uses
   %i.aec = shl nsw i64 %i.adg, 2
+  %3 = add i32 %i.n, -2
   %i.aed = shl nuw nsw i64 %wide.trip.count1752.i, 5
   %i.aee = shl nuw nsw i64 %i.acu, 2              ; 3 uses
   %i.aef = shl nuw nsw i64 %wide.trip.count1752.i, 2 ; 5 uses
@@ -971,7 +973,7 @@ bb.am:                                            ; preds = %bb.am, %.preheader1
   %.1940.lcssa.i = phi ptr [ %.0939.lcssa.i, %.preheader1102.i ], [ %scevgep1697.i, %.preheader1102.thread.i ], [ %scevgep1710.i, %.preheader1098.preheader.i ], [ %i.ama, %._crit_edge1283.us.i ] ; 6 uses
   %.1937.lcssa.i = phi ptr [ %.0936.lcssa.i, %.preheader1102.i ], [ %scevgep1701.i, %.preheader1102.thread.i ], [ %scevgep1711.i, %.preheader1098.preheader.i ], [ %i.amb, %._crit_edge1283.us.i ] ; 6 uses
   %.3928.lcssa.i = phi ptr [ %.0925.lcssa.i, %.preheader1102.i ], [ %i.aft, %.preheader1102.thread.i ], [ %.0925.lcssa19011910.i, %.preheader1098.preheader.i ], [ %i.alx, %._crit_edge1283.us.i ] ; 2 uses
-  %.1922.lcssa.i = phi i32 [ %.0921.lcssa.i, %.preheader1102.i ], [ %i.ij, %.preheader1102.thread.i ], [ %i.akb, %.preheader1098.preheader.i ], [ %i.amc, %._crit_edge1283.us.i ] ; 5 uses
+  %.1922.lcssa.i = phi i32 [ %.0921.lcssa.i, %.preheader1102.i ], [ %i.ij, %.preheader1102.thread.i ], [ %i.akb, %.preheader1098.preheader.i ], [ %i.amc, %._crit_edge1283.us.i ] ; 4 uses
   %i.amf = or disjoint i32 %.1922.lcssa.i, 1
   %i.amg = icmp slt i32 %i.amf, %i.n
   br i1 %i.amg, label %.preheader1097.lr.ph.i, label %.preheader1100.i
@@ -982,10 +984,7 @@ bb.am:                                            ; preds = %bb.am, %.preheader1
 .preheader1097.us.i.preheader:                    ; preds = %.preheader1097.lr.ph.i
   %scevgep375 = getelementptr i8, ptr %.1937.lcssa.i, i64 %i.it
   %scevgep376 = getelementptr i8, ptr %.1937.lcssa.i, i64 %i.iu
-  %2 = add i32 %.1922.lcssa.i, 3
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.n, i32 %2)
-  %3 = add i32 %smax, -2
-  %i.amh = sub i32 %3, %.1922.lcssa.i
+  %i.amh = sub i32 %2, %.1922.lcssa.i
   %i.ami = lshr i32 %i.amh, 1
   %i.amj = zext nneg i32 %i.ami to i64
   %i.amk = mul i64 %i.iv, %i.amj                  ; 8 uses
@@ -1342,13 +1341,15 @@ _ZN4ncnn3MatD2Ev.exit.lr.ph.i:                    ; preds = %.preheader1087.i
   %wide.trip.count1811.i = sext i32 %i.m to i64
   %i.asg = or disjoint i32 %i.asd, 3
   %i.ash = icmp slt i32 %i.asg, %i.n
-  %wide.trip.count1786.i = zext i32 %i.j to i64   ; 26 uses
+  %wide.trip.count1786.i = zext i32 %i.j to i64   ; 27 uses
   %i.asi = shl nuw nsw i64 %wide.trip.count1786.i, 3
   %i.asj = shl nuw nsw i64 %i.aro, 2              ; 2 uses
-  %i.ask = shl nuw nsw i64 %wide.trip.count1786.i, 2 ; 6 uses
+  %i.ask = shl nuw nsw i64 %wide.trip.count1786.i, 2 ; 2 uses
   %i.asl = shl nsw i64 %i.aru, 2
+  %4 = add i32 %i.n, -2
   %i.asm = shl nuw nsw i64 %wide.trip.count1786.i, 4
   %i.asn = mul nsw i64 %i.aro, 12                 ; 2 uses
+  %5 = shl nuw nsw i64 %wide.trip.count1786.i, 2  ; 4 uses
   %i.aso = shl nsw i64 %i.ars, 2
   %i.asp = add i32 %i.n, -4
   %i.asq = shl nsw i64 %i.aro, 3                  ; 2 uses
@@ -1745,7 +1746,7 @@ scalar.ph596:                                     ; preds = %scalar.ph596.prehea
   %.1879.lcssa.i = phi ptr [ %.0878.lcssa.i, %.preheader1094.i ], [ %scevgep1744.i, %.preheader1094.thread.i ], [ %scevgep1754.i.a, %.preheader1090.preheader.i ], [ %i.bab, %._crit_edge1360.us.i ] ; 6 uses
   %.1876.lcssa.i = phi ptr [ %.0875.lcssa.i, %.preheader1094.i ], [ %scevgep1748.i, %.preheader1094.thread.i ], [ %scevgep1755.i, %.preheader1090.preheader.i ], [ %i.bac, %._crit_edge1360.us.i ] ; 6 uses
   %.2868.lcssa.i = phi ptr [ %.0866.lcssa.i, %.preheader1094.i ], [ %i.auy, %.preheader1094.thread.i ], [ %.0866.lcssa19281935.i, %.preheader1090.preheader.i ], [ %.lcssa235, %._crit_edge1360.us.i ] ; 2 uses
-  %.1863.lcssa.i = phi i32 [ %.0862.lcssa.i, %.preheader1094.i ], [ %i.adr, %.preheader1094.thread.i ], [ %i.ayc, %.preheader1090.preheader.i ], [ %i.bad, %._crit_edge1360.us.i ] ; 5 uses
+  %.1863.lcssa.i = phi i32 [ %.0862.lcssa.i, %.preheader1094.i ], [ %i.adr, %.preheader1094.thread.i ], [ %i.ayc, %.preheader1090.preheader.i ], [ %i.bad, %._crit_edge1360.us.i ] ; 4 uses
   %i.bag = or disjoint i32 %.1863.lcssa.i, 1
   %i.bah = icmp slt i32 %i.bag, %i.n
   br i1 %i.bah, label %.preheader1089.lr.ph.i, label %.preheader1092.i
@@ -1756,10 +1757,7 @@ scalar.ph596:                                     ; preds = %scalar.ph596.prehea
 .preheader1089.us.i.preheader:                    ; preds = %.preheader1089.lr.ph.i
   %scevgep486 = getelementptr i8, ptr %.1876.lcssa.i, i64 %i.aea
   %scevgep487 = getelementptr i8, ptr %.1876.lcssa.i, i64 %i.aeb
-  %4 = add i32 %.1863.lcssa.i, 3
-  %smax488 = tail call i32 @llvm.smax.i32(i32 %i.n, i32 %4)
-  %5 = add i32 %smax488, -2
-  %i.bai = sub i32 %5, %.1863.lcssa.i
+  %i.bai = sub i32 %3, %.1863.lcssa.i
   %i.baj = lshr i32 %i.bai, 1
   %i.bak = zext nneg i32 %i.baj to i64
   %i.bal = mul i64 %i.aec, %i.bak                 ; 4 uses
@@ -2162,7 +2160,7 @@ scalar.ph800:                                     ; preds = %scalar.ph800.prehea
 .preheader1082.us.i.preheader:                    ; preds = %.preheader1082.lr.ph.i
   %scevgep682.a = getelementptr i8, ptr %.0834.lcssa.i, i64 %i.asn
   %i.bhu = getelementptr i8, ptr %.0834.lcssa.i, i64 %i.asn
-  %scevgep683.a = getelementptr i8, ptr %i.bhu, i64 %i.ask
+  %scevgep683.a = getelementptr i8, ptr %i.bhu, i64 %5
   %i.bhv = sub i32 %i.asp, %.0826.lcssa.i
   %i.bhw = lshr i32 %i.bhv, 2
   %i.bhx = zext nneg i32 %i.bhw to i64
@@ -2170,13 +2168,13 @@ scalar.ph800:                                     ; preds = %scalar.ph800.prehea
   %scevgep684.a = getelementptr i8, ptr %scevgep683.a, i64 %i.bhy
   %scevgep685.a = getelementptr i8, ptr %.0834.lcssa.i, i64 %i.asq
   %i.bhz = getelementptr i8, ptr %.0834.lcssa.i, i64 %i.asq
-  %scevgep686.a = getelementptr i8, ptr %i.bhz, i64 %i.ask
+  %scevgep686.a = getelementptr i8, ptr %i.bhz, i64 %5
   %scevgep687.a = getelementptr i8, ptr %scevgep686.a, i64 %i.bhy
   %scevgep688.a = getelementptr i8, ptr %.0834.lcssa.i, i64 %i.asr
   %i.bia = getelementptr i8, ptr %.0834.lcssa.i, i64 %i.asr
-  %scevgep689.a = getelementptr i8, ptr %i.bia, i64 %i.ask
+  %scevgep689.a = getelementptr i8, ptr %i.bia, i64 %5
   %scevgep690.a = getelementptr i8, ptr %scevgep689.a, i64 %i.bhy
-  %scevgep691 = getelementptr i8, ptr %.0834.lcssa.i, i64 %i.ask
+  %scevgep691 = getelementptr i8, ptr %.0834.lcssa.i, i64 %5
   %scevgep692 = getelementptr i8, ptr %scevgep691, i64 %i.bhy
   br label %.preheader1082.us.i
 
@@ -2330,7 +2328,7 @@ scalar.ph712:                                     ; preds = %scalar.ph712.prol.l
 .preheader1085.i:                                 ; preds = %._crit_edge1426.us.i, %.preheader1082.preheader.i, %.preheader1086.thread.i, %.preheader1086.i
   %.1835.lcssa.i = phi ptr [ %.0834.lcssa.i, %.preheader1086.i ], [ %scevgep1781.i, %.preheader1086.thread.i ], [ %scevgep1788.i, %.preheader1082.preheader.i ], [ %i.bke, %._crit_edge1426.us.i ] ; 6 uses
   %.3833.lcssa.i = phi ptr [ %.0830.lcssa.i, %.preheader1086.i ], [ %i.bez, %.preheader1086.thread.i ], [ %.0830.lcssa19471953.i, %.preheader1082.preheader.i ], [ %.lcssa225, %._crit_edge1426.us.i ] ; 2 uses
-  %.1827.lcssa.i = phi i32 [ %.0826.lcssa.i, %.preheader1086.i ], [ %i.asd, %.preheader1086.thread.i ], [ %i.bih, %.preheader1082.preheader.i ], [ %i.bkf, %._crit_edge1426.us.i ] ; 5 uses
+  %.1827.lcssa.i = phi i32 [ %.0826.lcssa.i, %.preheader1086.i ], [ %i.asd, %.preheader1086.thread.i ], [ %i.bih, %.preheader1082.preheader.i ], [ %i.bkf, %._crit_edge1426.us.i ] ; 4 uses
   %i.bki = or disjoint i32 %.1827.lcssa.i, 1
   %i.bkj = icmp slt i32 %i.bki, %i.n
   br i1 %i.bkj, label %.preheader1081.lr.ph.i, label %.preheader1084.i
@@ -2342,10 +2340,7 @@ scalar.ph712:                                     ; preds = %scalar.ph712.prol.l
   %scevgep646.a = getelementptr i8, ptr %.1835.lcssa.i, i64 %i.asj
   %i.bkk = getelementptr i8, ptr %.1835.lcssa.i, i64 %i.asj
   %scevgep647.a = getelementptr i8, ptr %i.bkk, i64 %i.ask
-  %6 = add i32 %.1827.lcssa.i, 3
-  %smax648 = tail call i32 @llvm.smax.i32(i32 %i.n, i32 %6)
-  %7 = add i32 %smax648, -2
-  %i.bkl = sub i32 %7, %.1827.lcssa.i
+  %i.bkl = sub i32 %4, %.1827.lcssa.i
   %i.bkm = lshr i32 %i.bkl, 1
   %i.bkn = zext nneg i32 %i.bkm to i64
   %i.bko = mul i64 %i.asl, %i.bkn                 ; 2 uses
@@ -2748,6 +2743,7 @@ bb.j:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.ga = mul nsw i32 %i.fw, 3
   %i.gb = sext i32 %i.ga to i64
   %i.gc = and i32 %i.ev, -8                       ; 2 uses
+  %5 = add i32 %i.ev, -2
   %i.gd = add i32 %i.fu, -1                       ; 2 uses
   %i.ge = zext i32 %i.gd to i64                   ; 2 uses
   %i.gf = shl nuw nsw i64 %i.ge, 5
@@ -3150,7 +3146,7 @@ bb.m:                                             ; preds = %.loopexit1094.i
   %.7974.lcssa.i = phi <4 x float> [ %.0967.lcssa.i, %.preheader1097.i ], [ %.11978.i, %.loopexit1087.i ] ; 3 uses
   %.8954.lcssa.i = phi <4 x float> [ %.1947.lcssa.i, %.preheader1097.i ], [ %.12958.i, %.loopexit1087.i ] ; 3 uses
   %.7548.lcssa.i = phi ptr [ %.0541.lcssa.i, %.preheader1097.i ], [ %.11552.i, %.loopexit1087.i ] ; 3 uses
-  %.1538.lcssa.i = phi i32 [ %.0537.lcssa.i, %.preheader1097.i ], [ %i.uh, %.loopexit1087.i ] ; 6 uses
+  %.1538.lcssa.i = phi i32 [ %.0537.lcssa.i, %.preheader1097.i ], [ %i.uh, %.loopexit1087.i ] ; 5 uses
   %i.pt = or disjoint i32 %.1538.lcssa.i, 1
   %i.pu = icmp slt i32 %i.pt, %i.ev
   br i1 %i.pu, label %.lr.ph1209.i, label %.preheader1095.i
@@ -3170,11 +3166,10 @@ bb.m:                                             ; preds = %.loopexit1094.i
   br i1 %i.fv, label %.lr.ph1201.us.preheader.i, label %.lr.ph1209.split.preheader.i
 
 .lr.ph1209.split.preheader.i:                     ; preds = %.lr.ph1209.i
-  %i.qe = add i32 %.1538.lcssa.i, 3
-  %smax.i = call i32 @llvm.smax.i32(i32 %i.ev, i32 %i.qe)
-  %reass.sub = sub i32 %smax.i, %.1538.lcssa.i
+  %i.qe = add i32 %.1538.lcssa.i, 2
+  %reass.sub = sub i32 %5, %.1538.lcssa.i
   %i.qf = and i32 %reass.sub, -2
-  %i.qg = add i32 %.1538.lcssa.i, %i.qf
+  %i.qg = add i32 %i.qe, %i.qf
   br label %.preheader1095.i
 
 .lr.ph1201.us.preheader.i:                        ; preds = %.lr.ph1209.i
@@ -3577,6 +3572,7 @@ bb.h:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.fi = mul nsw i32 %i.fe, 3
   %i.fj = sext i32 %i.fi to i64
   %i.fk = and i32 %i.ee, -8                       ; 2 uses
+  %5 = add i32 %i.ee, -2
   %i.fl = add i32 %i.fc, -1                       ; 2 uses
   %i.fm = zext i32 %i.fl to i64                   ; 2 uses
   %i.fn = shl nuw nsw i64 %i.fm, 4
@@ -3979,7 +3975,7 @@ begin_hunk_6_@_ZNK4ncnn21Convolution1D_x86_fma13forward_bf16sERKNS_3MatERS1_RKNS
   %.71039.lcssa.i = phi <4 x float> [ %.01032.lcssa.i, %.preheader1167.i ], [ %.111043.i, %.loopexit1157.i ] ; 3 uses
   %.81024.lcssa.i = phi <4 x float> [ %.11017.lcssa.i, %.preheader1167.i ], [ %.121028.i, %.loopexit1157.i ] ; 3 uses
   %.7548.lcssa.i = phi ptr [ %.0541.lcssa.i, %.preheader1167.i ], [ %.11552.i, %.loopexit1157.i ] ; 3 uses
-  %.1538.lcssa.i = phi i32 [ %.0537.lcssa.i, %.preheader1167.i ], [ %i.abf, %.loopexit1157.i ] ; 6 uses
+  %.1538.lcssa.i = phi i32 [ %.0537.lcssa.i, %.preheader1167.i ], [ %i.abf, %.loopexit1157.i ] ; 5 uses
   %i.vo = or disjoint i32 %.1538.lcssa.i, 1
   %i.vp = icmp slt i32 %i.vo, %i.ee
   br i1 %i.vp, label %.lr.ph1279.i, label %.preheader1165.i
@@ -3999,11 +3995,10 @@ begin_hunk_6_@_ZNK4ncnn21Convolution1D_x86_fma13forward_bf16sERKNS_3MatERS1_RKNS
   br i1 %i.fd, label %.lr.ph1271.us.preheader.i, label %.lr.ph1279.split.preheader.i
 
 .lr.ph1279.split.preheader.i:                     ; preds = %.lr.ph1279.i
-  %i.vz = add i32 %.1538.lcssa.i, 3
-  %smax.i = call i32 @llvm.smax.i32(i32 %i.ee, i32 %i.vz)
-  %reass.sub = sub i32 %smax.i, %.1538.lcssa.i
+  %i.vz = add i32 %.1538.lcssa.i, 2
+  %reass.sub = sub i32 %5, %.1538.lcssa.i
   %i.wa = and i32 %reass.sub, -2
-  %i.wb = add i32 %.1538.lcssa.i, %i.wa
+  %i.wb = add i32 %i.vz, %i.wa
   br label %.preheader1165.i
 
 .lr.ph1271.us.preheader.i:                        ; preds = %.lr.ph1279.i
@@ -4406,6 +4401,7 @@ bb.b:                                             ; preds = %bb.a
   %i.at = icmp eq i32 %i.y, 4                     ; 2 uses
   %i.au = icmp eq i32 %i.y, 1                     ; 2 uses
   %i.av = and i32 %i.aa, -8
+  %15 = add i32 %i.aa, -2
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %.thread547, %.lr.ph706.split
@@ -4785,7 +4781,7 @@ bb.i:                                             ; preds = %.lr.ph593, %bb.i
   %.7511.lcssa = phi <8 x float> [ %.0504.lcssa, %.preheader558 ], [ %.11515, %.loopexit ]
   %.7499.lcssa = phi <8 x float> [ %.0492.lcssa, %.preheader558 ], [ %.11503, %.loopexit ]
   %.7.lcssa = phi ptr [ %.0205.lcssa, %.preheader558 ], [ %.11, %.loopexit ] ; 3 uses
-  %.1202.lcssa = phi i32 [ %.0201.lcssa, %.preheader558 ], [ %i.px, %.loopexit ] ; 6 uses
+  %.1202.lcssa = phi i32 [ %.0201.lcssa, %.preheader558 ], [ %i.px, %.loopexit ] ; 5 uses
   %i.kf = or disjoint i32 %.1202.lcssa, 1
   %i.kg = icmp slt i32 %i.kf, %i.aa
   br i1 %i.kg, label %.lr.ph669, label %.preheader556
@@ -4806,10 +4802,7 @@ bb.i:                                             ; preds = %.lr.ph593, %bb.i
 
 .lr.ph669.split.preheader:                        ; preds = %.lr.ph669
   %i.kq = add i32 %.1202.lcssa, 2
-  %15 = add i32 %.1202.lcssa, 3
-  %smax = call i32 @llvm.smax.i32(i32 %i.aa, i32 %15)
-  %16 = add i32 %smax, -2
-  %i.kr = sub i32 %16, %.1202.lcssa
+  %i.kr = sub i32 %15, %.1202.lcssa
   %i.ks = and i32 %i.kr, -2
   %i.kt = add i32 %i.kq, %i.ks
   br label %.preheader556
@@ -5212,6 +5205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.at = icmp eq i32 %i.y, 4                     ; 2 uses
   %i.au = icmp eq i32 %i.y, 1                     ; 2 uses
   %i.av = and i32 %i.aa, -8
+  %15 = add i32 %i.aa, -2
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %.thread625, %.lr.ph784.split
@@ -5614,7 +5608,7 @@ bb.i:                                             ; preds = %.lr.ph671, %bb.i
   %.7589.lcssa = phi <8 x float> [ %.0582.lcssa, %.preheader636 ], [ %.11593, %.loopexit ]
   %.7577.lcssa = phi <8 x float> [ %.0570.lcssa, %.preheader636 ], [ %.11581, %.loopexit ]
   %.7.lcssa = phi ptr [ %.0205.lcssa, %.preheader636 ], [ %.11, %.loopexit ] ; 3 uses
-  %.1202.lcssa = phi i32 [ %.0201.lcssa, %.preheader636 ], [ %i.xl, %.loopexit ] ; 6 uses
+  %.1202.lcssa = phi i32 [ %.0201.lcssa, %.preheader636 ], [ %i.xl, %.loopexit ] ; 5 uses
   %i.qr = or disjoint i32 %.1202.lcssa, 1
   %i.qs = icmp slt i32 %i.qr, %i.aa
   br i1 %i.qs, label %.lr.ph747, label %.preheader634
@@ -5635,10 +5629,7 @@ bb.i:                                             ; preds = %.lr.ph671, %bb.i
 
 .lr.ph747.split.preheader:                        ; preds = %.lr.ph747
   %i.rc = add i32 %.1202.lcssa, 2
-  %15 = add i32 %.1202.lcssa, 3
-  %smax = call i32 @llvm.smax.i32(i32 %i.aa, i32 %15)
-  %16 = add i32 %smax, -2
-  %i.rd = sub i32 %16, %.1202.lcssa
+  %i.rd = sub i32 %15, %.1202.lcssa
   %i.re = and i32 %i.rd, -2
   %i.rf = add i32 %i.rc, %i.re
   br label %.preheader634
@@ -6039,9 +6030,6 @@ declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.minnum.f32(float, float) #12

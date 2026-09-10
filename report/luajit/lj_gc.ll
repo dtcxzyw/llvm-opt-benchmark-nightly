@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.b, %bb.
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
   %.0.lcssa = phi ptr [ %i.f, %bb.a ], [ %i.r, %bb.d ] ; 3 uses
-  %.0.lcssa27 = ptrtoaddr ptr %.0.lcssa to i64    ; 2 uses
+  %.0.lcssa27 = ptrtoaddr ptr %.0.lcssa to i64
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 33
   %i.u = load i8, ptr %i.t, align 1, !tbaa !66
   %i.v = icmp eq i8 %i.u, 2
@@ -220,11 +220,9 @@ bb.e:                                             ; preds = %._crit_edge
 
 .lr.ph26.preheader:                               ; preds = %bb.e
   %i.ad = shl nuw nsw i64 %i.aa, 3
-  %2 = add nuw i64 %i.w, %i.ad
-  %i.ae = add i64 %.0.lcssa27, 8
-  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.ae)
+  %i.ae = add i64 %i.w, %i.ad
   %i.af = xor i64 %.0.lcssa27, -1
-  %i.ag = add i64 %umax, %i.af
+  %i.ag = add i64 %i.ae, %i.af
   %i.ah = and i64 %i.ag, -8
   %i.ai = add i64 %i.ah, 8
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.lcssa, i8 -1, i64 %i.ai, i1 false), !tbaa !28
@@ -505,9 +503,6 @@ declare i32 @llvm.umax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #6

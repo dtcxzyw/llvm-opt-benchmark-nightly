@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/traffic_tab?download=true
 inline.NumInlined: 2285
 inline.NumDeleted: 997
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN17QArrayDataPointerI8QVariantE13detachAndGrowEN10QArrayData14GrowthPositionExPPKS0_PS1_:bb.a
 bb.h:                                             ; preds = %_ZN9QtPrivate20q_relocate_overlap_nI8QVariantxEEvPT_T0_S3_.exit.i.i
   %i.aj = load ptr, ptr %3, align 8               ; 3 uses
@@ -202,7 +204,7 @@ _ZNK17QArrayDataPointerI8QVariantE11needsDetachEv.exit.thread: ; preds = %bb.b, 
   call void @_ZN17QArrayDataPointerI8QVariantE12allocateGrowERKS1_xN10QArrayData14GrowthPositionE(ptr dead_on_unwind nonnull writable sret(%struct.QArrayDataPointer.14) align 8 %4, ptr noundef align 8 dereferenceable(24) %0, i64 noundef %2, i32 noundef %1)
   %i.v = icmp sgt i64 %2, 0
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %i.x = load ptr, ptr %i.w, align 8              ; 3 uses
+  %i.x = load ptr, ptr %i.w, align 8              ; 5 uses
   %.not = icmp eq ptr %i.x, null
   %or.cond41 = select i1 %i.v, i1 %.not, i1 false
   br i1 %or.cond41, label %bb.d, label %bb.g
@@ -275,35 +277,65 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %_ZNK17QArrayDataPointerI8QVariantE11needsDetachEv.exit33
   %i.as = getelementptr i8, ptr %0, i64 8
-  %i.at = load ptr, ptr %i.as, align 8            ; 3 uses
-  %.idx = shl i64 %spec.select, 5                 ; 2 uses
+  %i.at = load ptr, ptr %i.as, align 8            ; 7 uses
+  %.idx = shl i64 %spec.select, 5                 ; 3 uses
   %i.au = getelementptr i8, ptr %i.at, i64 %.idx  ; 2 uses
   %i.av = icmp ne i64 %.idx, 0
   %i.aw = icmp ult ptr %i.at, %i.au
   %or.cond58 = select i1 %i.av, i1 %i.aw, i1 false
-  br i1 %or.cond58, label %.lr.ph.i34.a, label %_ZN9QtPrivate16QGenericArrayOpsI8QVariantE10copyAppendEPKS1_S4_.exit
+  br i1 %or.cond58, label %.lr.ph.i34, label %_ZN9QtPrivate16QGenericArrayOpsI8QVariantE10copyAppendEPKS1_S4_.exit
 
-.lr.ph.i34.a:                                     ; preds = %bb.k
-  %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %.pre.i35.a = load i64, ptr %i.ax, align 16
-  br label %bb.l
+.lr.ph.i34:                                       ; preds = %bb.k
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
+  %.pre.i35 = load i64, ptr %5, align 16          ; 2 uses
+  %6 = add i64 %.idx, -32                         ; 2 uses
+  %7 = and i64 %6, 32
+  %lcmp.mod.not.not = icmp eq i64 %7, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i34.a, label %.prol.loopexit
 
-bb.l:                                             ; preds = %bb.l, %.lr.ph.i34.a
-  %i.ay = phi i64 [ %.pre.i35.a, %.lr.ph.i34.a ], [ %i.bc, %bb.l ]
-  %.010.i36 = phi ptr [ %i.at, %.lr.ph.i34.a ], [ %i.ba, %bb.l ] ; 4 uses
-  %i.az = getelementptr [32 x i8], ptr %i.x, i64 %i.ay
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) dereferenceable_or_null(32) %i.az, ptr noundef align 8 dereferenceable(32) %.010.i36, i64 32, i1 false)
+.lr.ph.i34.a:                                     ; preds = %.lr.ph.i34
+  %8 = getelementptr [32 x i8], ptr %i.x, i64 %.pre.i35
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) dereferenceable_or_null(32) %8, ptr noundef align 8 dereferenceable(32) %i.at, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.at, i8 0, i64 24, i1 false)
+  %.sroa.4.0..sroa_idx.i.i.prol = getelementptr inbounds nuw i8, ptr %i.at, i64 24
+  store i64 2, ptr %.sroa.4.0..sroa_idx.i.i.prol, align 8
+  %i.ax = getelementptr i8, ptr %i.at, i64 32
+  %.pre.i35.a = load i64, ptr %5, align 16
+  %9 = add i64 %.pre.i35.a, 1                     ; 2 uses
+  store i64 %9, ptr %5, align 16
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.lr.ph.i34.a, %.lr.ph.i34
+  %.unr = phi i64 [ %.pre.i35, %.lr.ph.i34 ], [ %9, %.lr.ph.i34.a ]
+  %.010.i36.unr = phi ptr [ %i.at, %.lr.ph.i34 ], [ %i.ax, %.lr.ph.i34.a ]
+  %10 = icmp eq i64 %6, 0
+  br i1 %10, label %_ZN9QtPrivate16QGenericArrayOpsI8QVariantE10copyAppendEPKS1_S4_.exit, label %bb.l
+
+bb.l:                                             ; preds = %.prol.loopexit, %bb.l
+  %i.ay = phi i64 [ %i.bc, %bb.l ], [ %.unr, %.prol.loopexit ]
+  %.010.i36 = phi ptr [ %i.ba, %bb.l ], [ %.010.i36.unr, %.prol.loopexit ] ; 6 uses
+  %11 = getelementptr [32 x i8], ptr %i.x, i64 %i.ay
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) dereferenceable_or_null(32) %11, ptr noundef align 8 dereferenceable(32) %.010.i36, i64 32, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.010.i36, i8 0, i64 24, i1 false)
-  %.sroa.4.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.010.i36, i64 24
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.010.i36, i64 24
+  store i64 2, ptr %.sroa.4.0..sroa_idx.i.i, align 8
+  %12 = getelementptr i8, ptr %.010.i36, i64 32   ; 2 uses
+  %13 = load i64, ptr %5, align 16
+  %14 = add i64 %13, 1                            ; 2 uses
+  store i64 %14, ptr %5, align 16
+  %i.az = getelementptr [32 x i8], ptr %i.x, i64 %14
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) dereferenceable_or_null(32) %i.az, ptr noundef align 8 dereferenceable(32) %12, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %12, i8 0, i64 24, i1 false)
+  %.sroa.4.0..sroa_idx.i.i.a = getelementptr i8, ptr %.010.i36, i64 56
   store i64 2, ptr %.sroa.4.0..sroa_idx.i.i.a, align 8
-  %i.ba = getelementptr i8, ptr %.010.i36, i64 32 ; 2 uses
-  %i.bb = load i64, ptr %i.ax, align 16
+  %i.ba = getelementptr i8, ptr %.010.i36, i64 64 ; 2 uses
+  %i.bb = load i64, ptr %5, align 16
   %i.bc = add i64 %i.bb, 1                        ; 2 uses
-  store i64 %i.bc, ptr %i.ax, align 16
+  store i64 %i.bc, ptr %5, align 16
   %i.bd = icmp ult ptr %i.ba, %i.au
   br i1 %i.bd, label %bb.l, label %_ZN9QtPrivate16QGenericArrayOpsI8QVariantE10copyAppendEPKS1_S4_.exit, !llvm.loop !160
 
-_ZN9QtPrivate16QGenericArrayOpsI8QVariantE10copyAppendEPKS1_S4_.exit: ; preds = %bb.l, %.noexc, %bb.k, %_ZNK17QArrayDataPointerI8QVariantE11needsDetachEv.exit33.thread, %bb.g
+_ZN9QtPrivate16QGenericArrayOpsI8QVariantE10copyAppendEPKS1_S4_.exit: ; preds = %.prol.loopexit, %bb.l, %.noexc, %bb.k, %_ZNK17QArrayDataPointerI8QVariantE11needsDetachEv.exit33.thread, %bb.g
   %i.be = load ptr, ptr %0, align 8               ; 3 uses
   %i.bf = getelementptr i8, ptr %0, i64 8
   %i.bg = load ptr, ptr %i.bf, align 8            ; 2 uses

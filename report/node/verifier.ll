@@ -204,15 +204,13 @@ _ZN2v88internal10ZoneVectorIPNS0_9BitVectorEE14EnsureCapacityEm.exit.i: ; preds 
   br i1 %i.lc, label %.lr.ph.i.preheader, label %_ZN2v88internal10ZoneVectorIPNS0_9BitVectorEE6resizeEmRKS3_.exit
 
 .lr.ph.i.preheader:                               ; preds = %_ZN2v88internal10ZoneVectorIPNS0_9BitVectorEE14EnsureCapacityEm.exit.i
-  %i.ld = ptrtoaddr ptr %i.ky to i64              ; 2 uses
+  %i.ld = ptrtoaddr ptr %i.ky to i64
   %i.le = ptrtoaddr ptr %i.kz to i64
   %i.lf = add i64 %i.le, %i.g
-  %6 = sub i64 %i.lf, %i.h
-  %i.lg = add i64 %i.ld, 8
-  %umax415 = call i64 @llvm.umax.i64(i64 %6, i64 %i.lg)
-  %7 = xor i64 %i.ld, -1
-  %8 = add i64 %umax415, %7
-  %i.lh = and i64 %8, -8
+  %6 = xor i64 %i.h, -1
+  %i.lg = add i64 %i.lf, %6
+  %7 = sub i64 %i.lg, %i.ld
+  %i.lh = and i64 %7, -8
   %i.li = add i64 %i.lh, 8
   call void @llvm.memset.p0.i64(ptr align 8 %i.ky, i8 0, i64 %i.li, i1 false)
   br label %_ZN2v88internal10ZoneVectorIPNS0_9BitVectorEE6resizeEmRKS3_.exit
