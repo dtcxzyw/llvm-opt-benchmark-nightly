@@ -204,7 +204,7 @@ acpi_pci_get_bridge_handle.exit:                  ; preds = %bb.d, %bb.f, %bb.g
 
 .lr.ph:                                           ; preds = %acpi_pci_get_bridge_handle.exit
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  %i.t = getelementptr i8, ptr %0, i64 102        ; 3 uses
+  %i.t = getelementptr i8, ptr %0, i64 102        ; 2 uses
   %i.u = getelementptr i8, ptr %0, i64 108
   %i.v = getelementptr i8, ptr %0, i64 1736
   %i.w = getelementptr i8, ptr %0, i64 200        ; 3 uses
@@ -607,9 +607,7 @@ bb.ah:                                            ; preds = %.lr.ph.i.i
 
 .lr.ph34.i.i:                                     ; preds = %.preheader.i.i
   %i.hi = getelementptr i8, ptr %i.ao, i64 72
-  %5 = load i8, ptr %i.t, align 2
-  %6 = icmp eq i8 %5, 0
-  br i1 %6, label %program_hpx_type1.exit.i, label %.lr.ph34.split.i.i
+  br label %.lr.ph34.split.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader30.i.i, %bb.ah
   %.02032.i.i = phi i32 [ %i.hh, %bb.ah ], [ 2, %.preheader30.i.i ] ; 2 uses
@@ -619,8 +617,8 @@ bb.ah:                                            ; preds = %.lr.ph.i.i
   %.not23.i.i = icmp eq i32 %i.hl, 1
   br i1 %.not23.i.i, label %bb.ah, label %acpi_run_hpx.exit.thread32
 
-.lr.ph34.split.i.i:                               ; preds = %.lr.ph34.i.i, %program_hpx_type3.exit.i.i
-  %.133.i.i = phi i32 [ %i.ko, %program_hpx_type3.exit.i.i ], [ 0, %.lr.ph34.i.i ] ; 2 uses
+.lr.ph34.split.i.i:                               ; preds = %program_hpx_type3.exit.i.i, %.lr.ph34.i.i
+  %.133.i.i = phi i32 [ 0, %.lr.ph34.i.i ], [ %i.ko, %program_hpx_type3.exit.i.i ] ; 2 uses
   %i.hm = mul i32 %.133.i.i, 14
   %i.hn = sext i32 %i.hm to i64
   %i.ho = getelementptr [24 x i8], ptr %i.hi, i64 %i.hn ; 11 uses
@@ -785,13 +783,13 @@ bb.au:                                            ; preds = %bb.m
   %i.kq = call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.7, ptr noundef nonnull @__func__.acpi_run_hpx, i32 noundef %i.au) #11 ; 0 uses
   br label %acpi_run_hpx.exit.thread32
 
-program_hpx_type1.exit.i:                         ; preds = %program_hpx_type3.exit.i.i, %.lr.ph34.i.i, %.preheader.i.i, %program_hpx_type2.exit.i, %bb.v, %bb.u, %bb.q
+program_hpx_type1.exit.i:                         ; preds = %program_hpx_type3.exit.i.i, %.preheader.i.i, %program_hpx_type2.exit.i, %bb.v, %bb.u, %bb.q
   %i.kr = add nuw i32 %.029101.i, 1               ; 2 uses
   %i.ks = load i32, ptr %i.ag, align 4
   %i.kt = icmp ult i32 %i.kr, %i.ks
   br i1 %i.kt, label %bb.j, label %acpi_run_hpx.exit.loopexit, !llvm.loop !16
 
-acpi_run_hpx.exit.thread32:                       ; preds = %.preheader.2.i61.i, %.preheader.3.i62.i, %.preheader.4.i.i, %.preheader.5.i.i, %.preheader.6.i.i, %.preheader.7.i.i, %.preheader.8.i.i, %.preheader.9.i.i, %.preheader.10.i.i, %.preheader.11.i.i, %.preheader.12.i.i, %.preheader.13.i.i, %.preheader.14.i.i, %.preheader.15.i.i, %bb.x, %.preheader.preheader.i52.i, %.preheader.2.i54.i, %bb.s, %.preheader.preheader.i.i, %.preheader.2.i.i, %.preheader.3.i.i, %bb.o, %bb.ag, %bb.k, %bb.j, %bb.l, %.preheader.1.i53.i, %.preheader.1.i.i, %.preheader.1.i60.i, %.preheader.preheader.i59.i, %.lr.ph.i.i, %bb.y, %bb.i, %bb.t, %bb.au, %bb.at, %bb.p
+acpi_run_hpx.exit.thread32:                       ; preds = %.preheader.preheader.i59.i, %.preheader.2.i61.i, %.preheader.3.i62.i, %.preheader.4.i.i, %.preheader.5.i.i, %.preheader.6.i.i, %.preheader.7.i.i, %.preheader.8.i.i, %.preheader.9.i.i, %.preheader.10.i.i, %.preheader.11.i.i, %.preheader.12.i.i, %.preheader.13.i.i, %.preheader.14.i.i, %.preheader.15.i.i, %bb.x, %.preheader.preheader.i52.i, %.preheader.2.i54.i, %bb.s, %.preheader.preheader.i.i, %.preheader.2.i.i, %.preheader.3.i.i, %bb.o, %bb.k, %bb.j, %.preheader.1.i60.i, %.preheader.1.i53.i, %.preheader.1.i.i, %bb.l, %bb.ag, %.lr.ph.i.i, %bb.at, %bb.i, %bb.au, %bb.p, %bb.t, %bb.y
   %i.ku = load ptr, ptr %i.s, align 8
   call void @kfree(ptr noundef %i.ku) #10
   br label %acpi_run_hpx.exit.thread
@@ -881,7 +879,7 @@ acpi_run_hpp.exit:                                ; preds = %bb.ba
   %i.ly = trunc i64 %i.lx to i8
   %i.lz = getelementptr inbounds nuw i8, ptr %2, i64 7
   store i8 %i.ly, ptr %i.lz, align 1
-  call fastcc void @program_hpx_type0(ptr noundef %0, ptr noundef nonnull %2) #12, !srcloc !20
+  call fastcc void @program_hpx_type0(ptr noundef %0, ptr noundef nonnull %2) #12, !srcloc !19
   %.pre.i = load ptr, ptr %i.ac, align 8
   call void @kfree(ptr noundef %.pre.i) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
@@ -1047,12 +1045,12 @@ pci_dev_is_added.exit:                            ; preds = %bb.a
   br i1 %.in.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %pci_dev_is_added.exit
-  %i.e = tail call fastcc ptr @acpi_pci_find_companion(ptr noundef %i.a) #12, !srcloc !21
+  %i.e = tail call fastcc ptr @acpi_pci_find_companion(ptr noundef %i.a) #12, !srcloc !20
   %.not5 = icmp eq ptr %i.e, null
   br i1 %.not5, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call fastcc ptr @acpi_pci_find_companion(ptr noundef %i.a) #12, !srcloc !22
+  %i.f = tail call fastcc ptr @acpi_pci_find_companion(ptr noundef %i.a) #12, !srcloc !21
   %i.g = getelementptr i8, ptr %i.f, i64 16
   br label %bb.d
 
@@ -1305,7 +1303,7 @@ pci_upstream_bridge.exit.i:                       ; preds = %bb.h
   %i.t = getelementptr i8, ptr %.0.val8.i, i64 56
   %i.u = load ptr, ptr %i.t, align 8              ; 2 uses
   %.not.i = icmp eq ptr %i.u, null
-  br i1 %.not.i, label %pcie_find_root_port.exit.thread, label %.lr.ph.i, !llvm.loop !23
+  br i1 %.not.i, label %pcie_find_root_port.exit.thread, label %.lr.ph.i, !llvm.loop !22
 
 pcie_find_root_port.exit:                         ; preds = %bb.g
   %i.v = icmp eq ptr %.011.i, %0
@@ -1708,13 +1706,12 @@ attributes #12 = { noredzone "no-builtin-wcslen" }
 !12 = !{!"llvm.loop.mustprogress"}
 !13 = distinct !{!13, !12}
 !14 = distinct !{!14, !12}
-!15 = distinct !{!15, !12, !19}
+!15 = distinct !{!15, !12}
 !16 = distinct !{!16, !12}
 !17 = distinct !{!17, !12}
 !18 = !{i64 18256}
-!19 = !{!"llvm.loop.unswitch.partial.disable"}
-!20 = !{i64 19875}
-!21 = !{i64 2158245608}
-!22 = !{i64 2158245643}
-!23 = distinct !{!23, !12}
+!19 = !{i64 19875}
+!20 = !{i64 2158245608}
+!21 = !{i64 2158245643}
+!22 = distinct !{!22, !12}
 end_hunk_2

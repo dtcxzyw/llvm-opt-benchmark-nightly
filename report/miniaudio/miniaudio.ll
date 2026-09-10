@@ -205,7 +205,7 @@ bb.fz:                                            ; preds = %.thread224, %.crite
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc i32 @ma_dr_mp3_L3_read_side_info(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
+define internal fastcc range(i32 -1, -2147483648) i32 @ma_dr_mp3_L3_read_side_info(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) unnamed_addr #18 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 3 ; 2 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !119
@@ -317,48 +317,38 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.bv, label %ma_dr_mp3_bs_get_bits.exit131, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %3 = and i32 %i.x, 7                            ; 2 uses
+  %4 = add nuw nsw i32 %3, %i.bs                  ; 4 uses
+  %5 = lshr i32 255, %3
   %i.bw = ashr i32 %i.x, 3
   %i.bx = sext i32 %i.bw to i64
   %i.by = getelementptr inbounds i8, ptr %i.y, i64 %i.bx ; 3 uses
-  %i.bz = and i32 %i.x, 7                         ; 2 uses
-  %3 = add nuw nsw i32 %i.bz, %i.bs               ; 5 uses
-  %4 = load i8, ptr %i.by, align 1, !tbaa !119
-  %5 = zext i8 %4 to i32
-  %6 = lshr i32 255, %i.bz
-  %7 = and i32 %6, %5                             ; 2 uses
-  %i.ca = icmp samesign ugt i32 %3, 8
-  br i1 %i.ca, label %.lr.ph.i125, label %._crit_edge.i120
-
-.lr.ph.i125:                                      ; preds = %bb.d
+  %6 = load i8, ptr %i.by, align 1, !tbaa !119
+  %7 = zext i8 %6 to i32
+  %i.bz = and i32 %5, %7
   %.0.i130 = getelementptr inbounds nuw i8, ptr %i.by, i64 1
-  %8 = add nsw i32 %3, -8                         ; 2 uses
-  %9 = shl i32 %7, %8                             ; 2 uses
+  %8 = add nsw i32 %4, -8                         ; 2 uses
+  %9 = shl i32 %i.bz, %8                          ; 2 uses
   %10 = load i8, ptr %.0.i130, align 1, !tbaa !119
   %11 = zext i8 %10 to i32                        ; 2 uses
-  %12 = icmp samesign ugt i32 %3, 16
-  br i1 %12, label %.lr.ph.i125.1, label %._crit_edge.i120.loopexit
+  %i.ca = icmp samesign ugt i32 %4, 16
+  br i1 %i.ca, label %.lr.ph.i125.1, label %._crit_edge.i120
 
-.lr.ph.i125.1:                                    ; preds = %.lr.ph.i125
+.lr.ph.i125.1:                                    ; preds = %bb.d
   %.0.i130.1 = getelementptr inbounds nuw i8, ptr %i.by, i64 2
-  %i.cb = add nsw i32 %3, -16
+  %i.cb = add nsw i32 %4, -16
   %i.cc = shl i32 %11, %i.cb
   %i.cd = or i32 %i.cc, %9
   %i.ce = load i8, ptr %.0.i130.1, align 1, !tbaa !119
   %i.cf = zext i8 %i.ce to i32
-  br label %._crit_edge.i120.loopexit
-
-._crit_edge.i120.loopexit:                        ; preds = %.lr.ph.i125.1, %.lr.ph.i125
-  %.01825.i127.lcssa = phi i32 [ %3, %.lr.ph.i125 ], [ %8, %.lr.ph.i125.1 ]
-  %.lcssa507 = phi i32 [ %9, %.lr.ph.i125 ], [ %i.cd, %.lr.ph.i125.1 ]
-  %.lcssa506 = phi i32 [ %11, %.lr.ph.i125 ], [ %i.cf, %.lr.ph.i125.1 ]
-  %13 = sub nuw nsw i32 16, %.01825.i127.lcssa
   br label %._crit_edge.i120
 
-._crit_edge.i120:                                 ; preds = %._crit_edge.i120.loopexit, %bb.d
-  %.020.lcssa.i121 = phi i32 [ %7, %bb.d ], [ %.lcssa506, %._crit_edge.i120.loopexit ]
-  %.019.lcssa.i122 = phi i32 [ 0, %bb.d ], [ %.lcssa507, %._crit_edge.i120.loopexit ]
-  %.018.lcssa.i123 = phi i32 [ 0, %bb.d ], [ %13, %._crit_edge.i120.loopexit ]
-  %i.cg = lshr i32 %.020.lcssa.i121, %.018.lcssa.i123
+._crit_edge.i120:                                 ; preds = %.lr.ph.i125.1, %bb.d
+  %.020.lcssa.i121 = phi i32 [ %4, %bb.d ], [ %8, %.lr.ph.i125.1 ]
+  %.019.lcssa.i122 = phi i32 [ %9, %bb.d ], [ %i.cd, %.lr.ph.i125.1 ]
+  %.018.lcssa.i123 = phi i32 [ %11, %bb.d ], [ %i.cf, %.lr.ph.i125.1 ]
+  %12 = sub nuw nsw i32 16, %.020.lcssa.i121
+  %i.cg = lshr i32 %.018.lcssa.i123, %12
   %i.ch = or i32 %i.cg, %.019.lcssa.i122
   br label %ma_dr_mp3_bs_get_bits.exit131
 

@@ -202,99 +202,81 @@ bb.b:                                             ; preds = %bb.a, %bb.f
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %.03643, i64 16
   %i.i = load i64, ptr %i.h, align 8, !tbaa !22
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %i.i ; 11 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %i.i ; 8 uses
   %i.k = and i32 %.fr52, 512
   %.not38 = icmp eq i32 %i.k, 0
   br i1 %.not38, label %bb.d, label %.preheader40
 
 .preheader40:                                     ; preds = %bb.c
-  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 6 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !14
   %i.n = icmp sgt i32 %i.m, 0
-  br i1 %i.n, label %.lr.ph, label %._crit_edge
+  br i1 %i.n, label %.lr.ph, label %.lr.ph.split.a
 
 .lr.ph:                                           ; preds = %.preheader40
   %i.o = and i32 %.fr52, 1024
   %.not39 = icmp eq i32 %i.o, 0
-  %i.p = getelementptr inbounds nuw i8, ptr %.03643, i64 8
-  %1 = load i32, ptr %i.p, align 8, !tbaa !195
-  %2 = icmp eq i32 %1, 2                          ; 2 uses
-  br i1 %.not39, label %.lr.ph.split.us, label %.lr.ph.split.a
+  %i.p = getelementptr inbounds nuw i8, ptr %.03643, i64 8 ; 2 uses
+  br i1 %.not39, label %.lr.ph.split.us.split.us, label %.lr.ph.split.split.us
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  br i1 %2, label %.lr.ph.split.us.split.us, label %.lr.ph.split.us.split.preheader
-
-.lr.ph.split.us.split.us:                         ; preds = %.lr.ph.split.us, %.lr.ph.split.us.split.us
-  %indvars.iv63 = phi i64 [ %indvars.iv.next64, %.lr.ph.split.us.split.us ], [ 0, %.lr.ph.split.us ] ; 3 uses
-  %3 = load ptr, ptr %i.j, align 8, !tbaa !16
-  %4 = getelementptr inbounds nuw [72 x i8], ptr %3, i64 %indvars.iv63
-  tail call void @av_freep(ptr noundef %4) #13
+.lr.ph.split.us.split.us:                         ; preds = %.lr.ph, %.lr.ph.split.us.split.preheader
+  %indvars.iv63 = phi i64 [ %indvars.iv.next55, %.lr.ph.split.us.split.preheader ], [ 0, %.lr.ph ] ; 3 uses
   %i.q = load ptr, ptr %i.j, align 8, !tbaa !16
   %i.r = getelementptr inbounds nuw [72 x i8], ptr %i.q, i64 %indvars.iv63
-  %5 = getelementptr inbounds nuw i8, ptr %i.r, i64 64
+  tail call void @av_freep(ptr noundef %i.r) #13
+  %i.s = load i32, ptr %i.p, align 8, !tbaa !193
+  %1 = icmp eq i32 %i.s, 2
+  br i1 %1, label %2, label %.lr.ph.split.us.split.preheader
+
+2:                                                ; preds = %.lr.ph.split.us.split.us
+  %3 = load ptr, ptr %i.j, align 8, !tbaa !16
+  %4 = getelementptr inbounds nuw [72 x i8], ptr %3, i64 %indvars.iv63
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 64
   tail call void @av_freep(ptr noundef nonnull %5) #13
-  %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
-  %i.s = load i32, ptr %i.l, align 8, !tbaa !14
-  %6 = sext i32 %i.s to i64
-  %7 = icmp slt i64 %indvars.iv.next64, %6
-  br i1 %7, label %.lr.ph.split.us.split.us, label %._crit_edge, !llvm.loop !189
+  br label %.lr.ph.split.us.split.preheader
 
-.lr.ph.split.us.split.preheader:                  ; preds = %.lr.ph.split.us, %.lr.ph.split.us.split.preheader
-  %indvars.iv60 = phi i64 [ %indvars.iv.next61, %.lr.ph.split.us.split.preheader ], [ 0, %.lr.ph.split.us ] ; 2 uses
-  %8 = load ptr, ptr %i.j, align 8, !tbaa !16
-  %9 = getelementptr inbounds nuw [72 x i8], ptr %8, i64 %indvars.iv60
-  tail call void @av_freep(ptr noundef %9) #13
+.lr.ph.split.us.split.preheader:                  ; preds = %2, %.lr.ph.split.us.split.us
+  %indvars.iv.next55 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
   %.pre72 = load i32, ptr %i.l, align 8, !tbaa !14
-  %indvars.iv.next61 = add nuw nsw i64 %indvars.iv60, 1 ; 2 uses
   %i.t = sext i32 %.pre72 to i64
-  %i.u = icmp slt i64 %indvars.iv.next61, %i.t
-  br i1 %i.u, label %.lr.ph.split.us.split.preheader, label %._crit_edge, !llvm.loop !190
+  %i.u = icmp slt i64 %indvars.iv.next55, %i.t
+  br i1 %i.u, label %.lr.ph.split.us.split.us, label %.lr.ph.split.a, !llvm.loop !189
 
-.lr.ph.split.a:                                   ; preds = %.lr.ph
-  br i1 %2, label %.lr.ph.split.split.us, label %.lr.ph.split.split.preheader
-
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split.a, %.lr.ph.split.split.us
-  %indvars.iv57.a = phi i64 [ %indvars.iv.next58, %.lr.ph.split.split.us ], [ 0, %.lr.ph.split.a ] ; 4 uses
-  %10 = load ptr, ptr %i.j, align 8, !tbaa !16
-  %11 = getelementptr inbounds nuw [72 x i8], ptr %10, i64 %indvars.iv57.a
-  tail call void @av_freep(ptr noundef %11) #13
-  %i.v = load ptr, ptr %i.j, align 8, !tbaa !16
-  %i.w = getelementptr inbounds nuw [72 x i8], ptr %i.v, i64 %indvars.iv57.a
-  %12 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  tail call void @stream_specifier_uninit(ptr noundef nonnull %12) #13
-  %i.x = load ptr, ptr %i.j, align 8, !tbaa !16
-  %i.y = getelementptr inbounds nuw [72 x i8], ptr %i.x, i64 %indvars.iv57.a
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 64
-  tail call void @av_freep(ptr noundef nonnull %i.z) #13
-  %indvars.iv.next58 = add nuw nsw i64 %indvars.iv57.a, 1 ; 2 uses
-  %i.aa = load i32, ptr %i.l, align 8, !tbaa !14
-  %13 = sext i32 %i.aa to i64
-  %14 = icmp slt i64 %indvars.iv.next58, %13
-  br i1 %14, label %.lr.ph.split.split.us, label %._crit_edge, !llvm.loop !189
-
-._crit_edge:                                      ; preds = %.lr.ph.split.split.preheader, %.lr.ph.split.split.us, %.lr.ph.split.us.split.preheader, %.lr.ph.split.us.split.us, %.preheader40
+.lr.ph.split.a:                                   ; preds = %.lr.ph.split.split.preheader, %.lr.ph.split.us.split.preheader, %.preheader40
   tail call void @av_freep(ptr noundef nonnull %i.j) #13
   store i32 0, ptr %i.l, align 8, !tbaa !14
   br label %bb.f
 
-.lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split.a, %.lr.ph.split.split.preheader
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.split.split.preheader ], [ 0, %.lr.ph.split.a ] ; 3 uses
-  %15 = load ptr, ptr %i.j, align 8, !tbaa !16
-  %16 = getelementptr inbounds nuw [72 x i8], ptr %15, i64 %indvars.iv
-  tail call void @av_freep(ptr noundef %16) #13
-  %17 = load ptr, ptr %i.j, align 8, !tbaa !16
-  %18 = getelementptr inbounds nuw [72 x i8], ptr %17, i64 %indvars.iv
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 8
-  tail call void @stream_specifier_uninit(ptr noundef nonnull %19) #13
+.lr.ph.split.split.us:                            ; preds = %.lr.ph, %.lr.ph.split.split.preheader
+  %indvars.iv57.a = phi i64 [ %indvars.iv.next, %.lr.ph.split.split.preheader ], [ 0, %.lr.ph ] ; 4 uses
+  %i.v = load ptr, ptr %i.j, align 8, !tbaa !16
+  %i.w = getelementptr inbounds nuw [72 x i8], ptr %i.v, i64 %indvars.iv57.a
+  tail call void @av_freep(ptr noundef %i.w) #13
+  %i.x = load ptr, ptr %i.j, align 8, !tbaa !16
+  %i.y = getelementptr inbounds nuw [72 x i8], ptr %i.x, i64 %indvars.iv57.a
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
+  tail call void @stream_specifier_uninit(ptr noundef nonnull %i.z) #13
+  %i.aa = load i32, ptr %i.p, align 8, !tbaa !193
+  %6 = icmp eq i32 %i.aa, 2
+  br i1 %6, label %._crit_edge, label %.lr.ph.split.split.preheader
+
+._crit_edge:                                      ; preds = %.lr.ph.split.split.us
+  %7 = load ptr, ptr %i.j, align 8, !tbaa !16
+  %8 = getelementptr inbounds nuw [72 x i8], ptr %7, i64 %indvars.iv57.a
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 64
+  tail call void @av_freep(ptr noundef nonnull %9) #13
+  br label %.lr.ph.split.split.preheader
+
+.lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split.split.us, %._crit_edge
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv57.a, 1 ; 2 uses
   %.pre = load i32, ptr %i.l, align 8, !tbaa !14
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ab = sext i32 %.pre to i64
   %i.ac = icmp slt i64 %indvars.iv.next, %i.ab
-  br i1 %i.ac, label %.lr.ph.split.split.preheader, label %._crit_edge, !llvm.loop !191
+  br i1 %i.ac, label %.lr.ph.split.split.us, label %.lr.ph.split.a, !llvm.loop !189
 
 bb.d:                                             ; preds = %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %.03643, i64 8
-  %i.ae = load i32, ptr %i.ad, align 8, !tbaa !195
+  %i.ae = load i32, ptr %i.ad, align 8, !tbaa !193
   %i.af = icmp eq i32 %i.ae, 2
   br i1 %i.af, label %bb.e, label %bb.f
 
@@ -302,11 +284,11 @@ bb.e:                                             ; preds = %bb.d
   tail call void @av_freep(ptr noundef nonnull %i.j) #13
   br label %bb.f
 
-bb.f:                                             ; preds = %._crit_edge, %bb.e, %bb.d, %bb.b
+bb.f:                                             ; preds = %.lr.ph.split.a, %bb.e, %bb.d, %bb.b
   %i.ag = getelementptr inbounds nuw i8, ptr %.03643, i64 48 ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !27
   %.not = icmp eq ptr %i.ah, null
-  br i1 %.not, label %.preheader, label %bb.b, !llvm.loop !192
+  br i1 %.not, label %.preheader, label %bb.b, !llvm.loop !190
 
 ._crit_edge47:                                    ; preds = %bb.g, %.preheader
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 568
@@ -330,7 +312,7 @@ bb.g:                                             ; preds = %.lr.ph46, %bb.g
   %i.aq = load i32, ptr %i.a, align 8, !tbaa !80
   %i.ar = sext i32 %i.aq to i64
   %i.as = icmp slt i64 %indvars.iv.next67, %i.ar
-  br i1 %i.as, label %bb.g, label %._crit_edge47, !llvm.loop !193
+  br i1 %i.as, label %bb.g, label %._crit_edge47, !llvm.loop !191
 
 ._crit_edge51:                                    ; preds = %bb.h, %._crit_edge47
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 584
@@ -348,7 +330,7 @@ bb.h:                                             ; preds = %.lr.ph50, %bb.h
   %i.ax = load i32, ptr %i.aj, align 8, !tbaa !86
   %i.ay = sext i32 %i.ax to i64
   %i.az = icmp slt i64 %indvars.iv.next70, %i.ay
-  br i1 %i.az, label %bb.h, label %._crit_edge51, !llvm.loop !194
+  br i1 %i.az, label %bb.h, label %._crit_edge51, !llvm.loop !192
 }
 
 declare void @stream_specifier_uninit(ptr noundef) local_unnamed_addr #1
@@ -666,11 +648,8 @@ attributes #18 = { nounwind willreturn memory(none) }
 !187 = !{!"p1 _ZTS8HWDevice", !10, i64 0}
 !188 = !{!187, !187, i64 0}
 !189 = distinct !{!189, !23}
-!190 = distinct !{!190, !23, !196}
-!191 = distinct !{!191, !23, !196}
+!190 = distinct !{!190, !23}
+!191 = distinct !{!191, !23}
 !192 = distinct !{!192, !23}
-!193 = distinct !{!193, !23}
-!194 = distinct !{!194, !23}
-!195 = !{!26, !7, i64 8}
-!196 = !{!"llvm.loop.unswitch.partial.disable"}
+!193 = !{!26, !7, i64 8}
 end_hunk_0

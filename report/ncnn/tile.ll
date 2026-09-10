@@ -202,44 +202,43 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.x, label %.preheader, label %.noexc147.lr.ph
 
 .preheader339:                                    ; preds = %._crit_edge344
-  %i.y = icmp sgt i32 %12, 0
+  %i.y = icmp sgt i32 %11, 0
   br i1 %i.y, label %.noexc147.lr.ph, label %.noexc143
 
 .noexc147.lr.ph:                                  ; preds = %.preheader.lr.ph, %.preheader339
-  %i.z = phi i32 [ %12, %.preheader339 ], [ %i.u, %.preheader.lr.ph ]
+  %i.z = phi i32 [ %11, %.preheader339 ], [ %i.u, %.preheader.lr.ph ]
   %.pre372 = load i32, ptr %9, align 4, !tbaa !41
   br label %.noexc147
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge344
-  %i.aa = phi i32 [ %12, %._crit_edge344 ], [ %i.u, %.preheader.lr.ph ] ; 2 uses
-  %i.ab = phi i32 [ %13, %._crit_edge344 ], [ %i.w, %.preheader.lr.ph ] ; 3 uses
-  %i.ac = phi i32 [ %14, %._crit_edge344 ], [ %i.w, %.preheader.lr.ph ] ; 3 uses
+  %i.aa = phi i32 [ %11, %._crit_edge344 ], [ %i.u, %.preheader.lr.ph ]
+  %i.ab = phi i32 [ %12, %._crit_edge344 ], [ %i.w, %.preheader.lr.ph ] ; 2 uses
+  %i.ac = phi i32 [ %13, %._crit_edge344 ], [ %i.w, %.preheader.lr.ph ] ; 2 uses
   %indvars.iv361 = phi i64 [ %indvars.iv.next362, %._crit_edge344 ], [ 0, %.preheader.lr.ph ] ; 3 uses
   %i.ad = icmp sgt i32 %i.ac, 0
   br i1 %i.ad, label %.noexc141.lr.ph, label %._crit_edge344
 
 .noexc141.lr.ph:                                  ; preds = %.preheader
-  %i.ae = load i32, ptr %7, align 4, !tbaa !41    ; 2 uses
-  %11 = icmp sgt i32 %i.ae, 0
-  br i1 %11, label %.noexc141, label %._crit_edge344
+  %i.ae = load i32, ptr %7, align 4, !tbaa !41
+  br label %.noexc141
 
 ._crit_edge344.loopexit:                          ; preds = %._crit_edge
   %.pre371 = load i32, ptr %3, align 4, !tbaa !41
   br label %._crit_edge344
 
-._crit_edge344:                                   ; preds = %.noexc141.lr.ph, %._crit_edge344.loopexit, %.preheader
-  %12 = phi i32 [ %i.aa, %.preheader ], [ %.pre371, %._crit_edge344.loopexit ], [ %i.aa, %.noexc141.lr.ph ] ; 5 uses
-  %13 = phi i32 [ %i.ab, %.preheader ], [ %i.bq, %._crit_edge344.loopexit ], [ %i.ab, %.noexc141.lr.ph ]
-  %14 = phi i32 [ %i.ac, %.preheader ], [ %i.bq, %._crit_edge344.loopexit ], [ %i.ac, %.noexc141.lr.ph ]
+._crit_edge344:                                   ; preds = %._crit_edge344.loopexit, %.preheader
+  %11 = phi i32 [ %.pre371, %._crit_edge344.loopexit ], [ %i.aa, %.preheader ] ; 5 uses
+  %12 = phi i32 [ %i.bq, %._crit_edge344.loopexit ], [ %i.ab, %.preheader ]
+  %13 = phi i32 [ %i.bq, %._crit_edge344.loopexit ], [ %i.ac, %.preheader ]
   %indvars.iv.next362 = add nuw nsw i64 %indvars.iv361, 1 ; 2 uses
-  %i.af = sext i32 %12 to i64
+  %i.af = sext i32 %11 to i64
   %i.ag = icmp slt i64 %indvars.iv.next362, %i.af
   br i1 %i.ag, label %.preheader, label %.preheader339, !llvm.loop !56
 
 .noexc141:                                        ; preds = %.noexc141.lr.ph, %._crit_edge
-  %i.ah = phi i32 [ %i.bq, %._crit_edge ], [ %i.ab, %.noexc141.lr.ph ]
-  %i.ai = phi i32 [ %i.br, %._crit_edge ], [ %i.ae, %.noexc141.lr.ph ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.noexc141.lr.ph ] ; 3 uses
+  %i.ah = phi i32 [ %i.ab, %.noexc141.lr.ph ], [ %i.bq, %._crit_edge ]
+  %i.ai = phi i32 [ %i.ae, %.noexc141.lr.ph ], [ %i.br, %._crit_edge ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.noexc141.lr.ph ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
   %i.aj = load i32, ptr %i.l, align 4, !tbaa !43, !noalias !74
   %i.ak = load i32, ptr %i.m, align 8, !tbaa !44, !noalias !74
   %i.al = load ptr, ptr %5, align 8, !tbaa !19, !noalias !74
@@ -307,7 +306,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.cc, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !62
 
 .noexc143:                                        ; preds = %._crit_edge349, %.preheader340, %.preheader339
-  %i.cd = phi i32 [ %i.u, %.preheader340 ], [ %12, %.preheader339 ], [ %i.ek, %._crit_edge349 ] ; 2 uses
+  %i.cd = phi i32 [ %i.u, %.preheader340 ], [ %11, %.preheader339 ], [ %i.ek, %._crit_edge349 ] ; 2 uses
   %i.ce = load ptr, ptr %6, align 8, !tbaa !19, !noalias !76
   %i.cf = load i64, ptr %i.r, align 8, !tbaa !20, !noalias !76
   %i.cg = mul i64 %i.cf, %indvars.iv367
@@ -607,7 +606,7 @@ attributes #14 = { builtin nounwind }
 !58 = distinct !{!58, !57, !"_ZNK4ncnn3Mat7channelEi: argument 0"}
 !59 = distinct !{!59, !"_ZN4ncnn3Mat7channelEi"}
 !60 = distinct !{!60, !59, !"_ZN4ncnn3Mat7channelEi: argument 0"}
-!61 = distinct !{!61, !72, !73}
+!61 = distinct !{!61, !72}
 !62 = distinct !{!62, !72}
 !63 = distinct !{!63, !"_ZN4ncnn3Mat7channelEi"}
 !64 = distinct !{!64, !63, !"_ZN4ncnn3Mat7channelEi: argument 0"}

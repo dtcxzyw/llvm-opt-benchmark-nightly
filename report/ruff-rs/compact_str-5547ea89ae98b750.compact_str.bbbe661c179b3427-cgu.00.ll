@@ -204,18 +204,14 @@ bb.c:                                             ; preds = %bb.a
   %spec.store.select = select i1 %i.i, i64 %i.d, i64 %.sroa.0.0.i ; 2 uses
   %i.j = add i64 %spec.store.select, %i.a         ; 5 uses
   switch i8 %i.f, label %bb.d [
-    i8 -39, label %5
+    i8 -39, label %thread-pre-split
     i8 -40, label %thread-pre-split.thread.thread
   ]
 
-5:                                                ; preds = %bb.c
+thread-pre-split:                                 ; preds = %bb.c
   tail call void @_RNvMNtNtCsg7m2K3K1Fzf_11compact_str4repr10static_strNtB2_9StaticStr7set_len(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.j)
-  %.pr.pre = load i8, ptr %i.e, align 1
-  br label %thread-pre-split
-
-thread-pre-split:                                 ; preds = %5, %bb.e
-  %6 = phi i8 [ %i.n, %bb.e ], [ %.pr.pre, %5 ]   ; 2 uses
-  %i.k = icmp eq i8 %6, -39
+  %.pr.pre = load i8, ptr %i.e, align 1           ; 2 uses
+  %i.k = icmp eq i8 %.pr.pre, -39
   br i1 %i.k, label %bb.f, label %thread-pre-split.thread, !prof !82
 
 thread-pre-split.thread.thread:                   ; preds = %bb.c
@@ -228,17 +224,17 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.m = trunc nuw nsw i64 %i.j to i8
-  %i.n = or disjoint i8 %i.m, -64                 ; 2 uses
+  %i.n = or disjoint i8 %i.m, -64
   store i8 %i.n, ptr %i.e, align 1
-  br label %thread-pre-split
+  br label %thread-pre-split.thread.thread9
 
 bb.f:                                             ; preds = %thread-pre-split
   tail call void @_RNvNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB7_4Repr10as_mut_ptr17inline_static_str(ptr noalias noundef nonnull align 8 dereferenceable(24) %0)
-  %.pre = load i8, ptr %i.e, align 1, !range !3
+  %.pre = load i8, ptr %i.e, align 1
   br label %thread-pre-split.thread
 
 thread-pre-split.thread:                          ; preds = %thread-pre-split, %bb.f
-  %i.o = phi i8 [ %6, %thread-pre-split ], [ %.pre, %bb.f ]
+  %i.o = phi i8 [ %.pre, %bb.f ], [ %.pr.pre, %thread-pre-split ]
   %i.p = icmp eq i8 %i.o, -40
   br i1 %i.p, label %bb.g, label %thread-pre-split.thread.thread9
 
@@ -246,8 +242,8 @@ bb.g:                                             ; preds = %thread-pre-split.th
   %i.q = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4
   br label %thread-pre-split.thread.thread9
 
-thread-pre-split.thread.thread9:                  ; preds = %bb.d, %thread-pre-split.thread, %bb.g
-  %.sroa.03.0 = phi ptr [ %i.q, %bb.g ], [ %0, %thread-pre-split.thread ], [ %0, %bb.d ] ; 3 uses
+thread-pre-split.thread.thread9:                  ; preds = %bb.d, %bb.e, %thread-pre-split.thread, %bb.g
+  %.sroa.03.0 = phi ptr [ %i.q, %bb.g ], [ %0, %thread-pre-split.thread ], [ %0, %bb.e ], [ %0, %bb.d ] ; 3 uses
   %i.r = sub i64 %spec.store.select, %2           ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.03.0, i64 %2
   %i.t = sub i64 %i.j, %i.r
@@ -650,7 +646,7 @@ attributes #22 = { cold noreturn nounwind }
 !79 = !{!"branch_weights", i32 4000, i32 3996000}
 !80 = !{!61}
 !81 = !{!62}
-!82 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
+!82 = !{!"branch_weights", !"expected", i32 3219615, i32 2144264033}
 !83 = distinct !{!83, !"_RNvCsg7m2K3K1Fzf_11compact_str19convert_while_ascii"}
 !84 = distinct !{!84, !83, !"_RNvCsg7m2K3K1Fzf_11compact_str19convert_while_ascii: argument 1"}
 !85 = distinct !{!85, !83, !"_RNvCsg7m2K3K1Fzf_11compact_str19convert_while_ascii: argument 0"}

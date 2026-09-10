@@ -204,16 +204,14 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.019 = phi i32 [ 0, %.lr.ph ], [ %i.ab, %bb.b ] ; 2 uses
-  %i.p = call noundef i32 @_ZNK2v88internal12HandlerTable15GetRangeHandlerEi(ptr noundef nonnull align 8 dereferenceable(16) %3, i32 noundef %.019) #16 ; 3 uses
-  %i.q = shl nuw nsw i32 %i.p, 1
+  %i.p = call noundef i32 @_ZNK2v88internal12HandlerTable15GetRangeHandlerEi(ptr noundef nonnull align 8 dereferenceable(16) %3, i32 noundef %.019) #16
+  %i.q = shl nsw i32 %i.p, 1                      ; 2 uses
   %i.r = and i32 %i.q, 62
   %i.s = or disjoint i32 %i.r, 1
   %i.t = zext nneg i32 %i.s to i64
   %i.u = shl nuw i64 1, %i.t
   %i.v = load ptr, ptr %i.f, align 8
-  %4 = icmp sgt i32 %i.p, -1
-  call void @llvm.assume(i1 %4)
-  %i.w = lshr i32 %i.p, 5
+  %i.w = lshr i32 %i.q, 6
   %i.x = zext nneg i32 %i.w to i64
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.x ; 2 uses
   %i.z = load i64, ptr %i.y, align 8

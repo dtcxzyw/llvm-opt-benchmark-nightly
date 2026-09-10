@@ -205,17 +205,17 @@ bb.j:                                             ; preds = %bb.h
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
   %.val.i.i40.i = load ptr, ptr %i.cn, align 8, !alias.scope !25125, !noalias !25126, !nonnull !21, !noundef !21 ; 4 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
-  %.val1.i.i41.i = load i64, ptr %i.co, align 8, !alias.scope !25125, !noalias !25126, !noundef !21 ; 5 uses
-  %i.cp = and i64 %.val1.i.i41.i, 7               ; 6 uses
+  %.val1.i.i41.i = load i64, ptr %i.co, align 8, !alias.scope !25125, !noalias !25126, !noundef !21 ; 4 uses
+  %i.cp = and i64 %.val1.i.i41.i, 7               ; 7 uses
   %i.cq = and i64 %.val1.i.i41.i, -8              ; 5 uses
   %.not367.i = icmp eq i64 %i.cq, 0
   br i1 %.not367.i, label %._crit_edge.i154.i, label %.lr.ph.i147.i
 
 ._crit_edge.i154.i:                               ; preds = %.lr.ph.i147.i, %bb.j
-  %.sroa.32304.4.i = phi i64 [ %i.cm, %bb.j ], [ %i.dw, %.lr.ph.i147.i ] ; 3 uses
-  %.sroa.22299.4.i = phi i64 [ %i.ck, %bb.j ], [ %i.du, %.lr.ph.i147.i ] ; 5 uses
-  %.sroa.12294.4.i = phi i64 [ %i.cl, %bb.j ], [ %i.dx, %.lr.ph.i147.i ] ; 3 uses
-  %.sroa.0289.4.i = phi i64 [ %i.cj, %bb.j ], [ %i.dy, %.lr.ph.i147.i ] ; 3 uses
+  %.sroa.32304.4.i = phi i64 [ %i.cm, %bb.j ], [ %i.dw, %.lr.ph.i147.i ] ; 4 uses
+  %.sroa.22299.4.i = phi i64 [ %i.ck, %bb.j ], [ %i.du, %.lr.ph.i147.i ] ; 6 uses
+  %.sroa.12294.4.i = phi i64 [ %i.cl, %bb.j ], [ %i.dx, %.lr.ph.i147.i ] ; 4 uses
+  %.sroa.0289.4.i = phi i64 [ %i.cj, %bb.j ], [ %i.dy, %.lr.ph.i147.i ] ; 4 uses
   %i.cr = icmp samesign ugt i64 %i.cp, 3
   br i1 %i.cr, label %bb.k, label %bb.l
 
@@ -247,20 +247,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %.sroa.011.1.i14.i140.i = phi i64 [ %i.db, %bb.m ], [ %.sroa.011.0.i12.i138.i, %bb.l ] ; 2 uses
   %.sroa.0.1.i15.i141.i = phi i64 [ %i.dc, %bb.m ], [ %.sroa.0.0.i13.i139.i, %bb.l ] ; 3 uses
   %i.dd = icmp samesign ult i64 %.sroa.0.1.i15.i141.i, %i.cp
-  br i1 %i.dd, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.thread.i", label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a"
-
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.thread.i": ; preds = %bb.n
-  %5 = add nuw i64 %.sroa.0.1.i15.i141.i, %i.cq   ; 2 uses
-  %6 = icmp ult i64 %5, %.val1.i.i41.i
-  call void @llvm.assume(i1 %6), !noalias !25129
-  %7 = getelementptr inbounds nuw i8, ptr %.val.i.i40.i, i64 %5
-  %8 = load i8, ptr %7, align 1, !alias.scope !25127, !noalias !25128, !noundef !21
-  %9 = zext i8 %8 to i64
-  %10 = shl nuw nsw i64 %.sroa.0.1.i15.i141.i, 3
-  %11 = shl nuw nsw i64 %9, %10
-  %12 = or i64 %11, %.sroa.011.1.i14.i140.i
-  %13 = add i64 %.val1.i.i41.i, 1
-  br label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i
+  br i1 %i.dd, label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i"
 
 .lr.ph.i147.i:                                    ; preds = %bb.j, %.lr.ph.i147.i
   %i.de = phi i64 [ %i.dx, %.lr.ph.i147.i ], [ %i.cl, %bb.j ]
@@ -269,7 +256,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %.sroa.04.020.i152.i = phi i64 [ %i.dz, %.lr.ph.i147.i ], [ 0, %bb.j ] ; 2 uses
   %i.dh = phi i64 [ %i.dy, %.lr.ph.i147.i ], [ %i.cj, %bb.j ]
   %i.di = getelementptr inbounds nuw i8, ptr %.val.i.i40.i, i64 %.sroa.04.020.i152.i
-  %.sroa.08.0.copyload.i153.i = load i64, ptr %i.di, align 1, !alias.scope !25130, !noalias !25128 ; 2 uses
+  %.sroa.08.0.copyload.i153.i = load i64, ptr %i.di, align 1, !alias.scope !25129, !noalias !25128 ; 2 uses
   %i.dj = xor i64 %.sroa.08.0.copyload.i153.i, %i.dg ; 3 uses
   %i.dk = add i64 %i.dh, %i.df                    ; 3 uses
   %i.dl = add i64 %i.dj, %i.de                    ; 2 uses
@@ -290,17 +277,29 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.ea = icmp ult i64 %i.dz, %i.cq
   br i1 %i.ea, label %.lr.ph.i147.i, label %._crit_edge.i154.i
 
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a": ; preds = %bb.n
-  %14 = add i64 %.val1.i.i41.i, 1                 ; 2 uses
-  %15 = icmp eq i64 %i.cp, 0
-  br i1 %15, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit128.i", label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i": ; preds = %bb.n
+  %5 = icmp eq i64 %i.cp, 0
+  br i1 %5, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit128.i", label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a"
 
-_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i: ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a", %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.thread.i"
-  %16 = phi i64 [ %13, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.thread.i" ], [ %14, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ] ; 2 uses
-  %.sroa.011.2.i16.i143362.i = phi i64 [ %12, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.thread.i" ], [ %.sroa.011.1.i14.i140.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ]
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a": ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i"
+  %6 = shl nuw nsw i64 %i.cp, 3
+  %7 = shl nuw nsw i64 255, %6
+  %8 = or i64 %.sroa.011.1.i14.i140.i, %7
+  br label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit128.i"
+
+_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i: ; preds = %bb.n
+  %9 = add nuw i64 %.sroa.0.1.i15.i141.i, %i.cq   ; 2 uses
+  %10 = icmp ult i64 %9, %.val1.i.i41.i
+  call void @llvm.assume(i1 %10), !noalias !25130
+  %11 = getelementptr inbounds nuw i8, ptr %.val.i.i40.i, i64 %9
+  %12 = load i8, ptr %11, align 1, !alias.scope !25127, !noalias !25128, !noundef !21
+  %13 = zext i8 %12 to i64
+  %14 = shl nuw nsw i64 %.sroa.0.1.i15.i141.i, 3
+  %15 = shl nuw nsw i64 %13, %14
   %i.eb = shl nuw nsw i64 %i.cp, 3
   %i.ec = shl nuw i64 255, %i.eb
-  %i.ed = or i64 %.sroa.011.2.i16.i143362.i, %i.ec ; 3 uses
+  %16 = or i64 %i.ec, %15
+  %i.ed = or i64 %16, %.sroa.011.1.i14.i140.i     ; 3 uses
   %.not368.i = icmp eq i64 %i.cp, 7
   br i1 %.not368.i, label %.thread576.i, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit128.i"
 
@@ -323,15 +322,15 @@ _ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i: ; preds = %"_ZN71_$
   %i.et = xor i64 %i.en, %i.ed
   br label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit128.i"
 
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit128.i": ; preds = %.thread576.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a"
-  %17 = phi i64 [ %16, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %16, %.thread576.i ], [ %14, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ]
-  %.sroa.50314.0.i = phi i64 [ %i.ed, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ 0, %.thread576.i ], [ 255, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ]
-  %.sroa.32304.2.i = phi i64 [ %.sroa.32304.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %i.er, %.thread576.i ], [ %.sroa.32304.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ]
-  %.sroa.22299.2.i = phi i64 [ %.sroa.22299.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %i.ep, %.thread576.i ], [ %.sroa.22299.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ] ; 3 uses
-  %.sroa.12294.2.i = phi i64 [ %.sroa.12294.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %i.es, %.thread576.i ], [ %.sroa.12294.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ]
-  %.sroa.0289.2.i = phi i64 [ %.sroa.0289.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %i.et, %.thread576.i ], [ %.sroa.0289.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ]
-  %18 = shl i64 %17, 56
-  %i.eu = or i64 %18, %.sroa.50314.0.i            ; 2 uses
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit128.i": ; preds = %.thread576.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a", %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i"
+  %.sroa.50314.0.i = phi i64 [ %i.ed, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %8, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ], [ 0, %.thread576.i ], [ 255, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i" ]
+  %.sroa.32304.2.i = phi i64 [ %.sroa.32304.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %.sroa.32304.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ], [ %i.er, %.thread576.i ], [ %.sroa.32304.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i" ]
+  %.sroa.22299.2.i = phi i64 [ %.sroa.22299.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %.sroa.22299.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ], [ %i.ep, %.thread576.i ], [ %.sroa.22299.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i" ] ; 3 uses
+  %.sroa.12294.2.i = phi i64 [ %.sroa.12294.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %.sroa.12294.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ], [ %i.es, %.thread576.i ], [ %.sroa.12294.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i" ]
+  %.sroa.0289.2.i = phi i64 [ %.sroa.0289.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i105.i ], [ %.sroa.0289.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i.a" ], [ %i.et, %.thread576.i ], [ %.sroa.0289.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit157.i" ]
+  %17 = shl i64 %.val1.i.i41.i, 56
+  %18 = add i64 %17, 72057594037927936
+  %i.eu = or i64 %.sroa.50314.0.i, %18            ; 2 uses
   %i.ev = xor i64 %i.eu, %.sroa.32304.2.i         ; 3 uses
   %i.ew = add i64 %.sroa.0289.2.i, %.sroa.22299.2.i ; 3 uses
   %i.ex = add i64 %.sroa.12294.2.i, %i.ev         ; 2 uses
@@ -439,17 +438,17 @@ bb.s:                                             ; preds = %bb.r
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hp, i64 8
   %.val.i.i32.i = load ptr, ptr %i.hv, align 8, !alias.scope !25131, !noalias !25132, !nonnull !21, !noundef !21 ; 4 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hp, i64 16
-  %.val1.i.i33.i = load i64, ptr %i.hw, align 8, !alias.scope !25131, !noalias !25132, !noundef !21 ; 5 uses
-  %i.hx = and i64 %.val1.i.i33.i, 7               ; 6 uses
+  %.val1.i.i33.i = load i64, ptr %i.hw, align 8, !alias.scope !25131, !noalias !25132, !noundef !21 ; 4 uses
+  %i.hx = and i64 %.val1.i.i33.i, 7               ; 7 uses
   %i.hy = and i64 %.val1.i.i33.i, -8              ; 5 uses
   %.not370.i = icmp eq i64 %i.hy, 0
   br i1 %.not370.i, label %._crit_edge.i97.i, label %.lr.ph.i90.i
 
 ._crit_edge.i97.i:                                ; preds = %.lr.ph.i90.i, %bb.s
-  %.sroa.32.4.i = phi i64 [ %i.hu, %bb.s ], [ %i.je, %.lr.ph.i90.i ] ; 3 uses
-  %.sroa.22.4.i = phi i64 [ %i.hs, %bb.s ], [ %i.jc, %.lr.ph.i90.i ] ; 5 uses
-  %.sroa.12.4.i = phi i64 [ %i.ht, %bb.s ], [ %i.jf, %.lr.ph.i90.i ] ; 3 uses
-  %.sroa.0263.4.i = phi i64 [ %i.hr, %bb.s ], [ %i.jg, %.lr.ph.i90.i ] ; 3 uses
+  %.sroa.32.4.i = phi i64 [ %i.hu, %bb.s ], [ %i.je, %.lr.ph.i90.i ] ; 4 uses
+  %.sroa.22.4.i = phi i64 [ %i.hs, %bb.s ], [ %i.jc, %.lr.ph.i90.i ] ; 6 uses
+  %.sroa.12.4.i = phi i64 [ %i.ht, %bb.s ], [ %i.jf, %.lr.ph.i90.i ] ; 4 uses
+  %.sroa.0263.4.i = phi i64 [ %i.hr, %bb.s ], [ %i.jg, %.lr.ph.i90.i ] ; 4 uses
   %i.hz = icmp samesign ugt i64 %i.hx, 3
   br i1 %i.hz, label %bb.t, label %bb.u
 
@@ -481,20 +480,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %.sroa.011.1.i14.i83.i = phi i64 [ %i.ij, %bb.v ], [ %.sroa.011.0.i12.i81.i, %bb.u ] ; 2 uses
   %.sroa.0.1.i15.i84.i = phi i64 [ %i.ik, %bb.v ], [ %.sroa.0.0.i13.i82.i, %bb.u ] ; 3 uses
   %i.il = icmp samesign ult i64 %.sroa.0.1.i15.i84.i, %i.hx
-  br i1 %i.il, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.thread.i", label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a"
-
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.thread.i": ; preds = %bb.w
-  %19 = add nuw i64 %.sroa.0.1.i15.i84.i, %i.hy   ; 2 uses
-  %20 = icmp ult i64 %19, %.val1.i.i33.i
-  call void @llvm.assume(i1 %20), !noalias !25135
-  %21 = getelementptr inbounds nuw i8, ptr %.val.i.i32.i, i64 %19
-  %22 = load i8, ptr %21, align 1, !alias.scope !25133, !noalias !25134, !noundef !21
-  %23 = zext i8 %22 to i64
-  %24 = shl nuw nsw i64 %.sroa.0.1.i15.i84.i, 3
-  %25 = shl nuw nsw i64 %23, %24
-  %26 = or i64 %25, %.sroa.011.1.i14.i83.i
-  %27 = add i64 %.val1.i.i33.i, 1
-  br label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i
+  br i1 %i.il, label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i"
 
 .lr.ph.i90.i:                                     ; preds = %bb.s, %.lr.ph.i90.i
   %i.im = phi i64 [ %i.jf, %.lr.ph.i90.i ], [ %i.ht, %bb.s ]
@@ -503,7 +489,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %.sroa.04.020.i95.i = phi i64 [ %i.jh, %.lr.ph.i90.i ], [ 0, %bb.s ] ; 2 uses
   %i.ip = phi i64 [ %i.jg, %.lr.ph.i90.i ], [ %i.hr, %bb.s ]
   %i.iq = getelementptr inbounds nuw i8, ptr %.val.i.i32.i, i64 %.sroa.04.020.i95.i
-  %.sroa.08.0.copyload.i96.i = load i64, ptr %i.iq, align 1, !alias.scope !25136, !noalias !25134 ; 2 uses
+  %.sroa.08.0.copyload.i96.i = load i64, ptr %i.iq, align 1, !alias.scope !25135, !noalias !25134 ; 2 uses
   %i.ir = xor i64 %.sroa.08.0.copyload.i96.i, %i.io ; 3 uses
   %i.is = add i64 %i.ip, %i.in                    ; 3 uses
   %i.it = add i64 %i.ir, %i.im                    ; 2 uses
@@ -524,17 +510,29 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.ji = icmp ult i64 %i.jh, %i.hy
   br i1 %i.ji, label %.lr.ph.i90.i, label %._crit_edge.i97.i
 
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a": ; preds = %bb.w
-  %28 = add i64 %.val1.i.i33.i, 1                 ; 2 uses
-  %29 = icmp eq i64 %i.hx, 0
-  br i1 %29, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.i", label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i": ; preds = %bb.w
+  %19 = icmp eq i64 %i.hx, 0
+  br i1 %19, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.i", label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a"
 
-_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i: ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a", %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.thread.i"
-  %30 = phi i64 [ %27, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.thread.i" ], [ %28, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ] ; 2 uses
-  %.sroa.011.2.i16.i86364.i = phi i64 [ %26, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.thread.i" ], [ %.sroa.011.1.i14.i83.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ]
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a": ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i"
+  %20 = shl nuw nsw i64 %i.hx, 3
+  %21 = shl nuw nsw i64 255, %20
+  %22 = or i64 %.sroa.011.1.i14.i83.i, %21
+  br label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.i"
+
+_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i: ; preds = %bb.w
+  %23 = add nuw i64 %.sroa.0.1.i15.i84.i, %i.hy   ; 2 uses
+  %24 = icmp ult i64 %23, %.val1.i.i33.i
+  call void @llvm.assume(i1 %24), !noalias !25136
+  %25 = getelementptr inbounds nuw i8, ptr %.val.i.i32.i, i64 %23
+  %26 = load i8, ptr %25, align 1, !alias.scope !25133, !noalias !25134, !noundef !21
+  %27 = zext i8 %26 to i64
+  %28 = shl nuw nsw i64 %.sroa.0.1.i15.i84.i, 3
+  %29 = shl nuw nsw i64 %27, %28
   %i.jj = shl nuw nsw i64 %i.hx, 3
   %i.jk = shl nuw i64 255, %i.jj
-  %i.jl = or i64 %.sroa.011.2.i16.i86364.i, %i.jk ; 3 uses
+  %30 = or i64 %i.jk, %29
+  %i.jl = or i64 %30, %.sroa.011.1.i14.i83.i      ; 3 uses
   %.not371.i = icmp eq i64 %i.hx, 7
   br i1 %.not371.i, label %.thread582.i, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.i"
 
@@ -557,15 +555,15 @@ _ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i: ; preds = %"_ZN71_$LT$
   %i.kb = xor i64 %i.jv, %i.jl
   br label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.i"
 
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.i": ; preds = %.thread582.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a"
-  %31 = phi i64 [ %30, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %30, %.thread582.i ], [ %28, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ]
-  %.sroa.50.0.i = phi i64 [ %i.jl, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ 0, %.thread582.i ], [ 255, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ]
-  %.sroa.32.2.i = phi i64 [ %.sroa.32.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %i.jz, %.thread582.i ], [ %.sroa.32.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ]
-  %.sroa.22.2.i = phi i64 [ %.sroa.22.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %i.jx, %.thread582.i ], [ %.sroa.22.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ] ; 3 uses
-  %.sroa.12.2.i = phi i64 [ %.sroa.12.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %i.ka, %.thread582.i ], [ %.sroa.12.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ]
-  %.sroa.0263.2.i = phi i64 [ %.sroa.0263.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %i.kb, %.thread582.i ], [ %.sroa.0263.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ]
-  %32 = shl i64 %31, 56
-  %i.kc = or i64 %32, %.sroa.50.0.i               ; 2 uses
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.i": ; preds = %.thread582.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a", %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i"
+  %.sroa.50.0.i = phi i64 [ %i.jl, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %22, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ], [ 0, %.thread582.i ], [ 255, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i" ]
+  %.sroa.32.2.i = phi i64 [ %.sroa.32.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %.sroa.32.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ], [ %i.jz, %.thread582.i ], [ %.sroa.32.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i" ]
+  %.sroa.22.2.i = phi i64 [ %.sroa.22.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %.sroa.22.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ], [ %i.jx, %.thread582.i ], [ %.sroa.22.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i" ] ; 3 uses
+  %.sroa.12.2.i = phi i64 [ %.sroa.12.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %.sroa.12.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ], [ %i.ka, %.thread582.i ], [ %.sroa.12.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i" ]
+  %.sroa.0263.2.i = phi i64 [ %.sroa.0263.4.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.i ], [ %.sroa.0263.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i.a" ], [ %i.kb, %.thread582.i ], [ %.sroa.0263.4.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit99.i" ]
+  %31 = shl i64 %.val1.i.i33.i, 56
+  %32 = add i64 %31, 72057594037927936
+  %i.kc = or i64 %.sroa.50.0.i, %32               ; 2 uses
   %i.kd = xor i64 %i.kc, %.sroa.32.2.i            ; 3 uses
   %i.ke = add i64 %.sroa.0263.2.i, %.sroa.22.2.i  ; 3 uses
   %i.kf = add i64 %.sroa.12.2.i, %i.kd            ; 2 uses
@@ -968,8 +966,8 @@ bb.dv:                                            ; preds = %bb.du
   %i.aom = getelementptr inbounds nuw i8, ptr %i.aog, i64 8
   %.val.i.i28.us.i = load ptr, ptr %i.aom, align 8, !alias.scope !25234, !noalias !25235, !nonnull !21, !noundef !21 ; 4 uses
   %i.aon = getelementptr inbounds nuw i8, ptr %i.aog, i64 16
-  %.val1.i.i29.us.i = load i64, ptr %i.aon, align 8, !alias.scope !25234, !noalias !25235, !noundef !21 ; 5 uses
-  %i.aoo = and i64 %.val1.i.i29.us.i, 7           ; 6 uses
+  %.val1.i.i29.us.i = load i64, ptr %i.aon, align 8, !alias.scope !25234, !noalias !25235, !noundef !21 ; 4 uses
+  %i.aoo = and i64 %.val1.i.i29.us.i, 7           ; 7 uses
   %i.aop = and i64 %.val1.i.i29.us.i, -8          ; 5 uses
   %.not105.us.i = icmp eq i64 %i.aop, 0
   br i1 %.not105.us.i, label %._crit_edge.i55.us.i, label %.lr.ph.i48.us.i
@@ -1003,10 +1001,10 @@ bb.dv:                                            ; preds = %bb.du
   br i1 %i.apm, label %.lr.ph.i48.us.i, label %._crit_edge.i55.us.i
 
 ._crit_edge.i55.us.i:                             ; preds = %.lr.ph.i48.us.i, %bb.dv
-  %.sroa.32.4.us.i = phi i64 [ %i.aol, %bb.dv ], [ %i.api, %.lr.ph.i48.us.i ] ; 3 uses
-  %.sroa.22.4.us.i = phi i64 [ %i.aoj, %bb.dv ], [ %i.apg, %.lr.ph.i48.us.i ] ; 5 uses
-  %.sroa.1281.4.us.i = phi i64 [ %i.aok, %bb.dv ], [ %i.apj, %.lr.ph.i48.us.i ] ; 3 uses
-  %.sroa.076.4.us.i = phi i64 [ %i.aoi, %bb.dv ], [ %i.apk, %.lr.ph.i48.us.i ] ; 3 uses
+  %.sroa.32.4.us.i = phi i64 [ %i.aol, %bb.dv ], [ %i.api, %.lr.ph.i48.us.i ] ; 4 uses
+  %.sroa.22.4.us.i = phi i64 [ %i.aoj, %bb.dv ], [ %i.apg, %.lr.ph.i48.us.i ] ; 6 uses
+  %.sroa.1281.4.us.i = phi i64 [ %i.aok, %bb.dv ], [ %i.apj, %.lr.ph.i48.us.i ] ; 4 uses
+  %.sroa.076.4.us.i = phi i64 [ %i.aoi, %bb.dv ], [ %i.apk, %.lr.ph.i48.us.i ] ; 4 uses
   %i.apn = icmp samesign ugt i64 %i.aoo, 3
   br i1 %i.apn, label %bb.dw, label %bb.dx
 
@@ -1038,32 +1036,31 @@ bb.dz:                                            ; preds = %bb.dy, %bb.dx
   %.sroa.011.1.i14.i41.us.i = phi i64 [ %i.apx, %bb.dy ], [ %.sroa.011.0.i12.i39.us.i, %bb.dx ] ; 2 uses
   %.sroa.0.1.i15.i42.us.i = phi i64 [ %i.apy, %bb.dy ], [ %.sroa.0.0.i13.i40.us.i, %bb.dx ] ; 3 uses
   %i.apz = icmp samesign ult i64 %.sroa.0.1.i15.i42.us.i, %i.aoo
-  br i1 %i.apz, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i", label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i"
+  br i1 %i.apz, label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i"
 
 "_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i": ; preds = %bb.dz
-  %33 = add i64 %.val1.i.i29.us.i, 1              ; 2 uses
   %i.aqa = icmp eq i64 %i.aoo, 0
-  br i1 %i.aqa, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.us.i", label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i
+  br i1 %i.aqa, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.us.i", label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i"
 
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i": ; preds = %bb.dz
-  %34 = add nuw i64 %.sroa.0.1.i15.i42.us.i, %i.aop ; 2 uses
-  %35 = icmp ult i64 %34, %.val1.i.i29.us.i
-  call void @llvm.assume(i1 %35), !noalias !25239
-  %36 = getelementptr inbounds nuw i8, ptr %.val.i.i28.us.i, i64 %34
-  %37 = load i8, ptr %36, align 1, !alias.scope !25238, !noalias !25237, !noundef !21
-  %38 = zext i8 %37 to i64
-  %i.aqb = shl nuw nsw i64 %.sroa.0.1.i15.i42.us.i, 3
-  %i.aqc = shl nuw nsw i64 %38, %i.aqb
-  %i.aqd = or i64 %i.aqc, %.sroa.011.1.i14.i41.us.i
-  %39 = add i64 %.val1.i.i29.us.i, 1
-  br label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i": ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i"
+  %i.aqb = shl nuw nsw i64 %i.aoo, 3
+  %i.aqc = shl nuw nsw i64 255, %i.aqb
+  %i.aqd = or i64 %.sroa.011.1.i14.i41.us.i, %i.aqc
+  br label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.us.i"
 
-_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i: ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i", %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i"
-  %40 = phi i64 [ %39, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i" ], [ %33, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ] ; 2 uses
-  %.sroa.011.2.i16.i44104.us.i = phi i64 [ %i.aqd, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i" ], [ %.sroa.011.1.i14.i41.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
+_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i: ; preds = %bb.dz
+  %33 = add nuw i64 %.sroa.0.1.i15.i42.us.i, %i.aop ; 2 uses
+  %34 = icmp ult i64 %33, %.val1.i.i29.us.i
+  call void @llvm.assume(i1 %34), !noalias !25239
+  %35 = getelementptr inbounds nuw i8, ptr %.val.i.i28.us.i, i64 %33
+  %36 = load i8, ptr %35, align 1, !alias.scope !25238, !noalias !25237, !noundef !21
+  %37 = zext i8 %36 to i64
+  %38 = shl nuw nsw i64 %.sroa.0.1.i15.i42.us.i, 3
+  %39 = shl nuw nsw i64 %37, %38
   %i.aqe = shl nuw nsw i64 %i.aoo, 3
   %i.aqf = shl nuw i64 255, %i.aqe
-  %i.aqg = or i64 %.sroa.011.2.i16.i44104.us.i, %i.aqf ; 3 uses
+  %40 = or i64 %i.aqf, %39
+  %i.aqg = or i64 %40, %.sroa.011.1.i14.i41.us.i  ; 3 uses
   %.not106.us.i = icmp eq i64 %i.aoo, 7
   br i1 %.not106.us.i, label %.thread.i150, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.us.i"
 
@@ -1086,15 +1083,15 @@ _ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i: ; preds = %"_ZN71_$
   %i.aqw = xor i64 %i.aqq, %i.aqg
   br label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.us.i"
 
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.us.i": ; preds = %.thread.i150, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i"
-  %41 = phi i64 [ %40, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %40, %.thread.i150 ], [ %33, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
-  %.sroa.50.0.us.i = phi i64 [ %i.aqg, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ 0, %.thread.i150 ], [ 255, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
-  %.sroa.32.2.us.i = phi i64 [ %.sroa.32.4.us.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %i.aqu, %.thread.i150 ], [ %.sroa.32.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
-  %.sroa.22.2.us.i = phi i64 [ %.sroa.22.4.us.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %i.aqs, %.thread.i150 ], [ %.sroa.22.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ] ; 3 uses
-  %.sroa.1281.2.us.i = phi i64 [ %.sroa.1281.4.us.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %i.aqv, %.thread.i150 ], [ %.sroa.1281.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
-  %.sroa.076.2.us.i = phi i64 [ %.sroa.076.4.us.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %i.aqw, %.thread.i150 ], [ %.sroa.076.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
-  %42 = shl i64 %41, 56
-  %i.aqx = or i64 %42, %.sroa.50.0.us.i           ; 2 uses
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit.us.i": ; preds = %.thread.i150, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i", %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i"
+  %.sroa.50.0.us.i = phi i64 [ %i.aqg, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %i.aqd, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i" ], [ 0, %.thread.i150 ], [ 255, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
+  %.sroa.32.2.us.i = phi i64 [ %.sroa.32.4.us.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %.sroa.32.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i" ], [ %i.aqu, %.thread.i150 ], [ %.sroa.32.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
+  %.sroa.22.2.us.i = phi i64 [ %.sroa.22.4.us.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %.sroa.22.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i" ], [ %i.aqs, %.thread.i150 ], [ %.sroa.22.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ] ; 3 uses
+  %.sroa.1281.2.us.i = phi i64 [ %.sroa.1281.4.us.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %.sroa.1281.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i" ], [ %i.aqv, %.thread.i150 ], [ %.sroa.1281.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
+  %.sroa.076.2.us.i = phi i64 [ %.sroa.076.4.us.i, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i.us.i ], [ %.sroa.076.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.thread.us.i" ], [ %i.aqw, %.thread.i150 ], [ %.sroa.076.4.us.i, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17he1f327bdbe138d2aE.exit57.us.i" ]
+  %41 = shl i64 %.val1.i.i29.us.i, 56
+  %42 = add i64 %41, 72057594037927936
+  %i.aqx = or i64 %.sroa.50.0.us.i, %42           ; 2 uses
   %i.aqy = xor i64 %i.aqx, %.sroa.32.2.us.i       ; 3 uses
   %i.aqz = add i64 %.sroa.076.2.us.i, %.sroa.22.2.us.i ; 3 uses
   %i.ara = add i64 %.sroa.1281.2.us.i, %i.aqy     ; 2 uses
@@ -1497,14 +1494,14 @@ begin_hunk_2_@llvm.ctpop.i32
 !25126 = !{!24736, !24732, !24731, !24729, !24725, !24726, !24727}
 !25127 = !{!24740, !24738}
 !25128 = !{!24741, !24734, !24732, !24731, !24729, !24725, !24726, !24727}
-!25129 = !{!24734, !24732, !24731, !24729}
-!25130 = !{!24738}
+!25129 = !{!24738}
+!25130 = !{!24734, !24732, !24731, !24729}
 !25131 = !{!24743}
 !25132 = !{!24745, !24732, !24731, !24729, !24725, !24726, !24727}
 !25133 = !{!24749, !24747}
 !25134 = !{!24750, !24743, !24732, !24731, !24729, !24725, !24726, !24727}
-!25135 = !{!24743, !24732, !24731, !24729}
-!25136 = !{!24747}
+!25135 = !{!24747}
+!25136 = !{!24743, !24732, !24731, !24729}
 !25137 = !{!24752, !24725, !24726, !24727}
 !25138 = !{!24755, !24754, !24725, !24726, !24727}
 !25139 = !{!24755, !24725, !24726, !24727}

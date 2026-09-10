@@ -203,18 +203,14 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph73:                                         ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 44
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %6 = load i32, ptr %5, align 4, !tbaa !25       ; 2 uses
-  %7 = icmp sgt i32 %6, 0
-  br i1 %7, label %.lr.ph73.split.preheader, label %._crit_edge74
-
-.lr.ph73.split.preheader:                         ; preds = %.lr.ph73
-  %8 = sext i32 %i.k to i64
+  %6 = sext i32 %i.k to i64
+  %.pre = load i32, ptr %5, align 4, !tbaa !25
   br label %.lr.ph73.split
 
-.lr.ph73.split:                                   ; preds = %.lr.ph73.split.preheader, %._crit_edge
-  %i.n = phi i32 [ %i.j, %.lr.ph73.split.preheader ], [ %i.cb, %._crit_edge ]
-  %i.o = phi i32 [ %6, %.lr.ph73.split.preheader ], [ %i.cc, %._crit_edge ] ; 4 uses
-  %indvars.iv = phi i64 [ %8, %.lr.ph73.split.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 5 uses
+.lr.ph73.split:                                   ; preds = %.lr.ph73, %._crit_edge
+  %i.n = phi i32 [ %i.j, %.lr.ph73 ], [ %i.cb, %._crit_edge ]
+  %i.o = phi i32 [ %.pre, %.lr.ph73 ], [ %i.cc, %._crit_edge ] ; 4 uses
+  %indvars.iv = phi i64 [ %6, %.lr.ph73 ], [ %indvars.iv.next, %._crit_edge ] ; 5 uses
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %.lr.ph.preheader, label %._crit_edge
 
@@ -315,9 +311,9 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv.next = add nsw i64 %indvars.iv, 1
   %i.cd = sext i32 %i.cb to i64
   %.not.not = icmp slt i64 %indvars.iv, %i.cd
-  br i1 %.not.not, label %.lr.ph73.split, label %._crit_edge74, !llvm.loop !131
+  br i1 %.not.not, label %.lr.ph73.split, label %._crit_edge74
 
-._crit_edge74:                                    ; preds = %._crit_edge, %.lr.ph73, %bb.b
+._crit_edge74:                                    ; preds = %._crit_edge, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
@@ -362,18 +358,14 @@ bb.b:                                             ; preds = %bb.a
 .noexc.lr.ph:                                     ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %6 = load i32, ptr %5, align 4, !tbaa !25       ; 2 uses
-  %7 = icmp sgt i32 %6, 0
-  br i1 %7, label %.noexc.preheader, label %._crit_edge79
-
-.noexc.preheader:                                 ; preds = %.noexc.lr.ph
-  %8 = sext i32 %i.k to i64
+  %6 = sext i32 %i.k to i64
+  %.pre = load i32, ptr %5, align 4, !tbaa !25
   br label %.noexc
 
-.noexc:                                           ; preds = %.noexc.preheader, %._crit_edge
-  %i.n = phi i32 [ %i.j, %.noexc.preheader ], [ %i.ca, %._crit_edge ]
-  %i.o = phi i32 [ %6, %.noexc.preheader ], [ %i.cb, %._crit_edge ] ; 4 uses
-  %indvars.iv = phi i64 [ %8, %.noexc.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 5 uses
+.noexc:                                           ; preds = %.noexc.lr.ph, %._crit_edge
+  %i.n = phi i32 [ %i.j, %.noexc.lr.ph ], [ %i.ca, %._crit_edge ]
+  %i.o = phi i32 [ %.pre, %.noexc.lr.ph ], [ %i.cb, %._crit_edge ] ; 4 uses
+  %indvars.iv = phi i64 [ %6, %.noexc.lr.ph ], [ %indvars.iv.next, %._crit_edge ] ; 5 uses
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %.lr.ph.preheader, label %._crit_edge
 
@@ -407,10 +399,10 @@ bb.b:                                             ; preds = %bb.a
   %i.aq = mul i32 %i.ap, %i.o
   %i.ar = sext i32 %i.aq to i64
   %i.as = getelementptr inbounds i8, ptr %i.q, i64 %i.ar
-  %i.at = load ptr, ptr %3, align 8, !tbaa !20, !noalias !136
-  %i.au = load i64, ptr %i.l, align 8, !tbaa !23, !noalias !136
+  %i.at = load ptr, ptr %3, align 8, !tbaa !20, !noalias !134
+  %i.au = load i64, ptr %i.l, align 8, !tbaa !23, !noalias !134
   %i.av = mul i64 %i.au, %indvars.iv
-  %i.aw = load i64, ptr %i.m, align 8, !tbaa !16, !noalias !136
+  %i.aw = load i64, ptr %i.m, align 8, !tbaa !16, !noalias !134
   %i.ax = mul i64 %i.av, %i.aw
   %i.ay = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.ax
   br label %.lr.ph
@@ -461,7 +453,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bx = add nuw nsw i32 %.076, 1                ; 2 uses
   %i.by = load i32, ptr %5, align 4, !tbaa !25    ; 2 uses
   %i.bz = icmp slt i32 %i.bx, %i.by
-  br i1 %i.bz, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !134
+  br i1 %i.bz, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !133
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %.pre.a = load i32, ptr %i.b, align 4, !tbaa !25
@@ -473,9 +465,9 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv.next = add nsw i64 %indvars.iv, 1
   %i.cc = sext i32 %i.ca to i64
   %.not.not = icmp slt i64 %indvars.iv, %i.cc
-  br i1 %.not.not, label %.noexc, label %._crit_edge79, !llvm.loop !135
+  br i1 %.not.not, label %.noexc, label %._crit_edge79
 
-._crit_edge79:                                    ; preds = %._crit_edge, %.noexc.lr.ph, %bb.b
+._crit_edge79:                                    ; preds = %._crit_edge, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
@@ -540,10 +532,10 @@ bb.b:                                             ; preds = %bb.a
   %i.u = zext nneg i32 %i.r to i64
   %i.v = mul nsw i64 %indvars.iv, %i.u
   %i.w = getelementptr inbounds i8, ptr %i.t, i64 %i.v
-  %i.x = load ptr, ptr %3, align 8, !tbaa !20, !noalias !141
-  %i.y = load i64, ptr %i.l, align 8, !tbaa !23, !noalias !141
+  %i.x = load ptr, ptr %3, align 8, !tbaa !20, !noalias !139
+  %i.y = load i64, ptr %i.l, align 8, !tbaa !23, !noalias !139
   %i.z = mul i64 %i.y, %indvars.iv
-  %i.aa = load i64, ptr %i.m, align 8, !tbaa !16, !noalias !141
+  %i.aa = load i64, ptr %i.m, align 8, !tbaa !16, !noalias !139
   %i.ab = mul i64 %i.z, %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.ab
   br label %.lr.ph
@@ -559,7 +551,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ag = add nuw nsw i32 %.033, 1                ; 2 uses
   %i.ah = load i32, ptr %5, align 4, !tbaa !25    ; 2 uses
   %i.ai = icmp slt i32 %i.ag, %i.ah
-  br i1 %i.ai, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !139
+  br i1 %i.ai, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !137
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %.pre = load i32, ptr %i.b, align 4, !tbaa !25
@@ -571,7 +563,7 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv.next = add nsw i64 %indvars.iv, 1
   %i.al = sext i32 %i.aj to i64
   %.not.not = icmp slt i64 %indvars.iv, %i.al
-  br i1 %.not.not, label %.noexc, label %._crit_edge36, !llvm.loop !140
+  br i1 %.not.not, label %.noexc, label %._crit_edge36, !llvm.loop !138
 
 ._crit_edge36:                                    ; preds = %._crit_edge, %.noexc.lr.ph, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
@@ -743,15 +735,13 @@ attributes #12 = { builtin nounwind }
 !128 = !{!121}
 !129 = !{!"branch_weights", i32 4, i32 12}
 !130 = distinct !{!130, !40}
-!131 = distinct !{!131, !41}
-!132 = distinct !{!132, !"_ZNK4ncnn3Mat7channelEi"}
-!133 = distinct !{!133, !132, !"_ZNK4ncnn3Mat7channelEi: argument 0"}
-!134 = distinct !{!134, !40}
-!135 = distinct !{!135, !41}
-!136 = !{!133}
-!137 = distinct !{!137, !"_ZNK4ncnn3Mat7channelEi"}
-!138 = distinct !{!138, !137, !"_ZNK4ncnn3Mat7channelEi: argument 0"}
-!139 = distinct !{!139, !40}
-!140 = distinct !{!140, !41}
-!141 = !{!138}
+!131 = distinct !{!131, !"_ZNK4ncnn3Mat7channelEi"}
+!132 = distinct !{!132, !131, !"_ZNK4ncnn3Mat7channelEi: argument 0"}
+!133 = distinct !{!133, !40}
+!134 = !{!132}
+!135 = distinct !{!135, !"_ZNK4ncnn3Mat7channelEi"}
+!136 = distinct !{!136, !135, !"_ZNK4ncnn3Mat7channelEi: argument 0"}
+!137 = distinct !{!137, !40}
+!138 = distinct !{!138, !41}
+!139 = !{!136}
 end_hunk_0

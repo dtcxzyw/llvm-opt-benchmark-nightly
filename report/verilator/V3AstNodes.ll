@@ -204,15 +204,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit12: ; preds = %bb.
   resume { ptr, i32 } %i.p
 }
 
-; Function Attrs: mustprogress uwtable
-define dso_local noundef zeroext i1 @_ZN8AstClass16isCacheableChildEPK7AstNode(ptr noundef %0) local_unnamed_addr #3 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define dso_local noundef zeroext i1 @_ZN8AstClass16isCacheableChildEPK7AstNode(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %.not.i = icmp eq ptr %0, null
   br i1 %.not.i, label %_ZN7AstNode2isI8AstCFuncS_EEbPKT0_.exit, label %_ZN7AstNode2isI6AstVarS_EEbPKT0_.exit
 
 _ZN7AstNode2isI6AstVarS_EEbPKT0_.exit:            ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.a, align 8, !tbaa !62 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.a, align 8, !tbaa !62 ; 3 uses
   switch i16 %.sroa.0.0.copyload.i.i.i, label %_ZN7AstNode2isI12AstNodeFTaskS_EEbPKT0_.exit [
     i16 68, label %_ZN7AstNode2isI8AstCFuncS_EEbPKT0_.exit
     i16 63, label %_ZN7AstNode2isI8AstCFuncS_EEbPKT0_.exit
@@ -229,27 +229,9 @@ _ZN7AstNode2asI13AstConstraintS_EEPKT_PKT0_.exit: ; preds = %_ZN7AstNode2isI6Ast
 _ZN7AstNode2isI12AstNodeFTaskS_EEbPKT0_.exit:     ; preds = %_ZN7AstNode2isI6AstVarS_EEbPKT0_.exit
   %i.e = add i16 %.sroa.0.0.copyload.i.i.i, -371
   %spec.select.i.i = icmp ult i16 %i.e, 5
-  br i1 %spec.select.i.i, label %1, label %_ZN7AstNode2isI12AstNodeFTaskS_EEbPKT0_.exit.thread
+  br i1 %spec.select.i.i, label %_ZN7AstNode2asI12AstNodeFTaskS_EEPKT_PKT0_.exit, label %_ZN7AstNode2isI12AstNodeFTaskS_EEbPKT0_.exit.thread
 
-1:                                                ; preds = %_ZN7AstNode2isI12AstNodeFTaskS_EEbPKT0_.exit
-  %2 = or disjoint i16 %.sroa.0.0.copyload.i.i.i, -376
-  %spec.select.i.i20 = icmp samesign ult i16 %2, -5
-  br i1 %spec.select.i.i20, label %3, label %_ZN7AstNode2asI12AstNodeFTaskS_EEPKT_PKT0_.exit, !prof !63
-
-3:                                                ; preds = %1
-  %4 = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.1761, i32 noundef 1075) ; 0 uses
-  %5 = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error10v3errorStrB5cxx11Ev()
-  %6 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull @.str.1762)
-  %.sroa.0.0.copyload.i.i5.i21 = load i16, ptr %i.a, align 8, !tbaa !62
-  %7 = zext i16 %.sroa.0.0.copyload.i.i5.i21 to i64
-  %8 = getelementptr inbounds nuw [8 x i8], ptr @_ZZNK6VNType5asciiEvE5names, i64 %7
-  %9 = load ptr, ptr %8, align 8, !tbaa !102
-  %10 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef %9)
-  %11 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %10, ptr noundef nonnull @.str.1763)
-  tail call void @_ZNK7AstNode15v3errorEndFatalERKNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr noundef nonnull align 8 dereferenceable(112) %11) #35
-  unreachable
-
-_ZN7AstNode2asI12AstNodeFTaskS_EEPKT_PKT0_.exit:  ; preds = %1
+_ZN7AstNode2asI12AstNodeFTaskS_EEPKT_PKT0_.exit:  ; preds = %_ZN7AstNode2isI12AstNodeFTaskS_EEbPKT0_.exit
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.g = load i16, ptr %i.f, align 8
   %i.h = and i16 %i.g, 1024

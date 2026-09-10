@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.o = add nuw nsw i32 %i.n, 2
   %i.p = zext nneg i32 %i.o to i64
-  %i.q = tail call noalias ptr @g_malloc(i64 noundef %i.p) #17 ; 4 uses
+  %i.q = tail call noalias ptr @g_malloc(i64 noundef %i.p) #17 ; 3 uses
   store ptr %i.q, ptr %0, align 8
   %i.r = getelementptr i8, ptr %1, i64 2
   %i.s = load i8, ptr %i.r, align 1
@@ -231,18 +231,16 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.e
   %i.ab = add nuw nsw i32 %i.n, 1
   %i.ac = zext nneg i32 %i.ab to i64
-  %i.ad = tail call noalias ptr @g_malloc(i64 noundef %i.ac) #17 ; 2 uses
+  %i.ad = tail call noalias ptr @g_malloc(i64 noundef %i.ac) #17
   store ptr %i.ad, ptr %0, align 8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %5 = phi ptr [ %i.q, %bb.h ], [ %i.ad, %bb.i ]
   %.071 = phi i32 [ %i.z, %bb.h ], [ %i.n, %bb.i ]
-  %.069 = phi i32 [ 3, %bb.h ], [ 2, %bb.i ]      ; 2 uses
-  %.0 = phi i32 [ 1, %bb.h ], [ 0, %bb.i ]        ; 2 uses
-  %i.ae = add nsw i32 %i.b, -1                    ; 2 uses
-  %6 = icmp samesign ult i32 %.069, %i.ae
-  br i1 %6, label %.lr.ph, label %._crit_edge
+  %.069 = phi i32 [ 3, %bb.h ], [ 2, %bb.i ]
+  %.0 = phi i32 [ 1, %bb.h ], [ 0, %bb.i ]
+  %i.ae = add nsw i32 %i.b, -1
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.j, %bb.n
   %.189 = phi i32 [ %i.bh, %bb.n ], [ %.0, %bb.j ] ; 2 uses
@@ -296,17 +294,12 @@ bb.n:                                             ; preds = %bb.l
   store i8 %i.bd, ptr %i.bg, align 1
   %i.bh = add i32 %.189, 1                        ; 2 uses
   %i.bi = icmp ult i32 %i.ba, %i.ae
-  br i1 %i.bi, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !8
+  br i1 %i.bi, label %.lr.ph, label %._crit_edge, !llvm.loop !8
 
-._crit_edge.loopexit:                             ; preds = %bb.n
+._crit_edge:                                      ; preds = %bb.n
   %.pre = load ptr, ptr %0, align 8
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.j
-  %7 = phi ptr [ %5, %bb.j ], [ %.pre, %._crit_edge.loopexit ]
-  %.1.lcssa = phi i32 [ %.0, %bb.j ], [ %i.bh, %._crit_edge.loopexit ]
-  %i.bj = zext i32 %.1.lcssa to i64
-  %i.bk = getelementptr i8, ptr %7, i64 %i.bj
+  %i.bj = zext i32 %i.bh to i64
+  %i.bk = getelementptr i8, ptr %.pre, i64 %i.bj
   store i8 0, ptr %i.bk, align 1
   br label %bb.p
 
