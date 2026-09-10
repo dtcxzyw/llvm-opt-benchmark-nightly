@@ -204,17 +204,14 @@ bb.fm:                                            ; preds = %bb.ey, %bb.ez, %bb.
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZNK4pbrt3SOAINS_20MediumSampleWorkItemEEixEi(ptr dead_on_unwind noalias writable sret(%"struct.pbrt::MediumSampleWorkItem") align 8 %0, ptr noundef nonnull align 8 dereferenceable(848) %1, i32 noundef %2) local_unnamed_addr #11 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  store i64 0, ptr %i.a, align 8, !tbaa !89
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(368) %0, i8 0, i64 28, i1 false)
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %i.c, i8 0, i64 48, i1 false)
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 132
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.b, i8 0, i64 80, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(156) %i.d, i8 0, i64 156, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 288
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(60) %3, i8 0, i64 60, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !167, !noalias !400
   %i.h = sext i32 %2 to i64                       ; 71 uses

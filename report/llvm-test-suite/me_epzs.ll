@@ -204,13 +204,13 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !64
   %i.e = icmp eq i32 %i.d, 1                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 15268 ; 2 uses
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !65   ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 15268
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !65   ; 5 uses
+  %2 = shl i32 %i.g, 2                            ; 2 uses
   %i.h = icmp sgt i32 %i.g, -1
   br i1 %i.h, label %.preheader941.lr.ph, label %._crit_edge957
 
 .preheader941.lr.ph:                              ; preds = %bb.a
-  %2 = shl i32 %i.g, 2
   %i.i = load ptr, ptr @enc_picture, align 8      ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 4
@@ -404,18 +404,16 @@ bb.i:                                             ; preds = %bb.h
   store i32 256, ptr %i.cm, align 8, !tbaa !9
   %i.cn = getelementptr inbounds nuw i8, ptr %i.a, i64 1472
   store i32 256, ptr %i.cn, align 16, !tbaa !9
-  %3 = load i32, ptr %i.f, align 4, !tbaa !65     ; 4 uses
-  %.not830962 = icmp slt i32 %3, 0
+  %.not830962 = icmp slt i32 %i.g, 0
   br i1 %.not830962, label %._crit_edge964.thread, label %.preheader937.lr.ph
 
 .preheader937.lr.ph:                              ; preds = %.preheader939
-  %4 = shl nsw i32 %3, 2
   %i.co = load ptr, ptr @enc_picture, align 8     ; 3 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 8
   %i.cq = getelementptr inbounds nuw i8, ptr %i.co, i64 4
   %i.cr = getelementptr inbounds nuw i8, ptr %i.co, i64 12
   %i.cs = zext i1 %i.e to i64
-  %5 = zext nneg i32 %4 to i64
+  %3 = sext i32 %2 to i64
   br label %.preheader937
 
 .preheader937:                                    ; preds = %.preheader937.lr.ph, %._crit_edge961
@@ -474,8 +472,8 @@ bb.m:                                             ; preds = %bb.j, %bb.k, %bb.l
   %i.dw = tail call noundef i32 @llvm.smin.i32(i32 %i.dv, i32 127) ; 2 uses
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.dd, i64 %indvars.iv1056
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !69
-  %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 4 ; 2 uses
-  %i.ea = load i32, ptr %i.dz, align 4, !tbaa !149 ; 2 uses
+  %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 4
+  %i.ea = load i32, ptr %i.dz, align 4, !tbaa !149 ; 4 uses
   %.not863 = icmp eq i32 %i.dc, %i.ea
   br i1 %.not863, label %bb.o, label %bb.n
 
@@ -515,13 +513,12 @@ bb.o:                                             ; preds = %bb.m, %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.ev = load ptr, ptr %i.dn, align 8, !tbaa !69
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 4
-  %6 = load i32, ptr %i.ew, align 4, !tbaa !149   ; 2 uses
-  %i.ex = load i32, ptr %i.dz, align 4, !tbaa !149 ; 2 uses
-  %.not864 = icmp eq i32 %6, %i.ex
+  %i.ex = load i32, ptr %i.ew, align 4, !tbaa !149 ; 2 uses
+  %.not864 = icmp eq i32 %i.ex, %i.ea
   br i1 %.not864, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ey = sub nsw i32 %6, %i.ex
+  %i.ey = sub nsw i32 %i.ex, %i.ea
   %i.ez = tail call noundef i32 @llvm.smax.i32(i32 %i.ey, i32 -128)
   %i.fa = tail call noundef i32 @llvm.smin.i32(i32 %i.ez, i32 127) ; 2 uses
   %.lhs.trunc903 = trunc nsw i32 %i.fa to i8
@@ -566,11 +563,11 @@ bb.t:                                             ; preds = %bb.r, %bb.s
 
 ._crit_edge961:                                   ; preds = %bb.t, %.preheader937
   %indvars.iv.next1062 = add nuw nsw i64 %indvars.iv1061, 2
-  %.not830.not = icmp samesign ult i64 %indvars.iv1061, %5
+  %.not830.not = icmp slt i64 %indvars.iv1061, %3
   br i1 %.not830.not, label %.preheader937, label %._crit_edge964, !llvm.loop !130
 
 ._crit_edge964:                                   ; preds = %._crit_edge961
-  %.not831.not = icmp eq i32 %3, 0
+  %.not831.not = icmp eq i32 %i.g, 0
   br i1 %.not831.not, label %bb.v, label %._crit_edge964.thread
 
 ._crit_edge964.thread:                            ; preds = %.preheader939, %._crit_edge964
@@ -973,7 +970,7 @@ bb.ar:                                            ; preds = %.loopexit934, %bb.a
   %i.sk = load i32, ptr %i.sj, align 8, !tbaa !75
   %.fr = freeze i32 %i.sk                         ; 2 uses
   %.not841.not = icmp eq i32 %.fr, 0              ; 3 uses
-  %i.sl = or i32 %.fr, %3
+  %i.sl = or i32 %.fr, %i.g
   %brmerge.not = icmp eq i32 %i.sl, 0
   br i1 %brmerge.not, label %.loopexit928, label %.preheader927
 

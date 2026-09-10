@@ -205,8 +205,8 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 10 uses
   %6 = alloca %struct.bigint, align 8             ; 29 uses
   %7 = alloca %struct.bigint, align 8             ; 20 uses
-  %i.b = alloca ptr, align 8                      ; 76 uses
-  %i.c = alloca ptr, align 8                      ; 28 uses
+  %i.b = alloca ptr, align 8                      ; 69 uses
+  %i.c = alloca ptr, align 8                      ; 27 uses
   %i.d = alloca [1 x i8], align 1                 ; 12 uses
   %i.e = alloca ptr, align 8                      ; 17 uses
   store ptr %1, ptr %i.b, align 8, !tbaa !107
@@ -416,8 +416,7 @@ bb.t:                                             ; preds = %bb.s
 
 read_inf_or_nan.exit.thread:                      ; preds = %bb.h, %._crit_edge1115, %bb.r, %bb.s, %.loopexit738
   store ptr @.str.89, ptr %i.c, align 8, !tbaa !107
-  store ptr %.0903.i781, ptr %i.b, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 .split787.us:                                     ; preds = %.lr.ph.split.us.preheader.peel.newph, %.lr.ph.split.us.preheader
   %.0903.i784.us.lcssa = phi ptr [ %i.t, %.lr.ph.split.us.preheader ], [ %i.y, %.lr.ph.split.us.preheader.peel.newph ] ; 2 uses
@@ -500,8 +499,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.x
   store ptr @.str.90, ptr %i.c, align 8, !tbaa !107
-  store ptr %i.dl, ptr %i.b, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 .lr.ph796:                                        ; preds = %.preheader737, %.lr.ph796
   %.2905.i795 = phi ptr [ %i.dt, %.lr.ph796 ], [ %i.dm, %.preheader737 ]
@@ -531,8 +529,7 @@ bb.ab:                                            ; preds = %bb.v
 bb.ac:                                            ; preds = %bb.ab
   store ptr @.str.91, ptr %i.c, align 8, !tbaa !107
   %i.ea = getelementptr inbounds i8, ptr %i.di, i64 -1
-  store ptr %i.ea, ptr %i.b, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 .thread1253:                                      ; preds = %._crit_edge797, %bb.ab
   %.3906.i1256 = phi ptr [ %i.di, %bb.ab ], [ %i.dt, %._crit_edge797 ] ; 3 uses
@@ -557,8 +554,7 @@ bb.ad:                                            ; preds = %.thread1253
 
 bb.ae:                                            ; preds = %bb.ad
   store ptr @.str.92, ptr %i.c, align 8, !tbaa !107
-  store ptr %i.el, ptr %i.b, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 .preheader735:                                    ; preds = %bb.ad, %.preheader735
   %.4907.i = phi ptr [ %i.ep, %.preheader735 ], [ %i.el, %bb.ad ]
@@ -961,8 +957,7 @@ bb.fa:                                            ; preds = %bb.ez
 
 bb.fb:                                            ; preds = %bb.fa
   store ptr @.str.90, ptr %i.c, align 8, !tbaa !107
-  store ptr %i.we, ptr %i.b, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 bb.fc:                                            ; preds = %bb.ez, %bb.ey, %bb.en
   %i.wj = phi i8 [ %i.uz, %bb.en ], [ %i.wf, %bb.ez ], [ %i.ju, %bb.ey ]
@@ -1032,8 +1027,7 @@ bb.fj:                                            ; preds = %bb.fi
 
 bb.fk:                                            ; preds = %bb.fj
   store ptr @.str.90, ptr %i.c, align 8, !tbaa !107
-  store ptr %i.xf, ptr %i.b, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 bb.fl:                                            ; preds = %.preheader1575, %bb.fl
   %.26.i = phi ptr [ %i.xn, %bb.fl ], [ %i.xf, %.preheader1575 ] ; 3 uses
@@ -1092,8 +1086,7 @@ bb.fp:                                            ; preds = %bb.fo
 
 bb.fq:                                            ; preds = %bb.fp
   store ptr @.str.90, ptr %i.c, align 8, !tbaa !107
-  store ptr %.28.i, ptr %i.b, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 bb.fr:                                            ; preds = %bb.fp, %bb.fo
   %i.ye = ptrtoint ptr %.28.i to i64
@@ -1143,8 +1136,7 @@ bb.fu:                                            ; preds = %bb.fr, %.critedge.i
 
 bb.fv:                                            ; preds = %bb.fu
   store ptr @.str.92, ptr %i.c, align 8, !tbaa !107
-  store ptr %i.yt, ptr %i.b, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 .preheader732:                                    ; preds = %.lr.ph800
   %.pre1130 = add i8 %.pr612, -48                 ; 2 uses
@@ -1230,7 +1222,7 @@ bb.gb:                                            ; preds = %bb.ga
 
 bb.gc:                                            ; preds = %bb.ga
   store ptr @.str.93, ptr %i.c, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 bb.gd:                                            ; preds = %._crit_edge805
   %i.zy = sub nsw i64 0, %.0928.i.lcssa
@@ -1294,7 +1286,7 @@ bb.gk:                                            ; preds = %bb.gj
 
 bb.gl:                                            ; preds = %bb.gj
   store ptr @.str.93, ptr %i.c, align 8, !tbaa !107
-  br label %.sink.split
+  br label %read_num.exit.thread628
 
 bb.gm:                                            ; preds = %bb.gg, %bb.fs
   %storemerge.in.i = phi i64 [ %.neg981.i, %bb.fs ], [ %.1930.i, %bb.gg ] ; 3 uses
@@ -1560,7 +1552,7 @@ bb.hd:                                            ; preds = %diy_fp_to_ieee_raw.
 bb.he:                                            ; preds = %diy_fp_to_ieee_raw.exit
   %i.agd = and i32 %4, 16
   %.not701 = icmp eq i32 %i.agd, 0
-  br i1 %.not701, label %8, label %bb.hf, !prof !62
+  br i1 %.not701, label %read_num.exit, label %bb.hf, !prof !62
 
 bb.hf:                                            ; preds = %bb.he
   store i64 20, ptr %i.j, align 8, !tbaa !99
@@ -1568,10 +1560,6 @@ bb.hf:                                            ; preds = %bb.he
   %i.agf = getelementptr inbounds nuw i8, ptr %i.i, i64 72
   store i64 %i.age, ptr %i.agf, align 8, !tbaa !100
   br label %read_num.exit.thread632
-
-8:                                                ; preds = %bb.he
-  store ptr @.str.93, ptr %i.c, align 8, !tbaa !107
-  br label %read_num.exit
 
 bb.hg:                                            ; preds = %.thread616, %bb.ha, %bb.hc, %bb.hb
   %.0.i254.ph = phi i64 [ 0, %bb.hb ], [ %i.afv, %bb.hc ], [ %i.afr, %bb.ha ], [ 0, %.thread616 ] ; 7 uses
@@ -1975,7 +1963,7 @@ bb.ig:                                            ; preds = %bb.if
 bb.ih:                                            ; preds = %bb.if
   %i.bas = and i32 %4, 16
   %.not705 = icmp eq i32 %i.bas, 0
-  br i1 %.not705, label %9, label %bb.ii, !prof !62
+  br i1 %.not705, label %read_num.exit, label %bb.ii, !prof !62
 
 bb.ii:                                            ; preds = %bb.ih
   store i64 20, ptr %i.j, align 8, !tbaa !99
@@ -1983,11 +1971,6 @@ bb.ii:                                            ; preds = %bb.ih
   %i.bau = getelementptr inbounds nuw i8, ptr %i.i, i64 72
   store i64 %i.bat, ptr %i.bau, align 8, !tbaa !100
   br label %read_num.exit.thread632
-
-9:                                                ; preds = %bb.ih
-  store ptr @.str.93, ptr %i.c, align 8, !tbaa !107
-  store ptr %1, ptr %i.b, align 8, !tbaa !107
-  br label %read_num.exit
 
 bb.ij:                                            ; preds = %bb.ie
   store i64 20, ptr %i.j, align 8, !tbaa !99
@@ -2001,6 +1984,11 @@ read_num.exit.thread:                             ; preds = %bb.fx, %bb.fz, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #33
   br label %read_str_opt.exit
 
+read_num.exit.thread628:                          ; preds = %bb.fv, %bb.aa, %bb.fk, %bb.gc, %bb.fb, %read_inf_or_nan.exit.thread, %bb.fq, %bb.gl, %bb.ac, %bb.ae
+  %.sink1366 = phi ptr [ %i.yt, %bb.fv ], [ %i.dl, %bb.aa ], [ %i.xf, %bb.fk ], [ %1, %bb.gc ], [ %i.we, %bb.fb ], [ %.0903.i781, %read_inf_or_nan.exit.thread ], [ %.28.i, %bb.fq ], [ %1, %bb.gl ], [ %i.ea, %bb.ac ], [ %i.el, %bb.ae ]
+  store ptr %.sink1366, ptr %i.b, align 8, !tbaa !107
+  br label %.sink.split
+
 read_num.exit.thread632:                          ; preds = %bb.hd, %bb.hf, %bb.hh, %bb.ig, %bb.ii, %bb.ij
   store ptr %.33.i, ptr %i.b, align 8, !tbaa !107
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #33
@@ -2008,7 +1996,9 @@ read_num.exit.thread632:                          ; preds = %bb.hd, %bb.hf, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #33
   br label %read_str_opt.exit
 
-read_num.exit:                                    ; preds = %8, %9
+read_num.exit:                                    ; preds = %bb.ih, %bb.he
+  store ptr @.str.93, ptr %i.c, align 8, !tbaa !107
+  store ptr %1, ptr %i.b, align 8, !tbaa !107
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #33
   br label %.sink.split
@@ -2411,7 +2401,7 @@ read_str_opt.exit.thread:                         ; preds = %.read_str_opt.exit.
   call void %i.caa(ptr noundef %i.cab, ptr noundef nonnull %i.i) #33
   br label %bb.oc
 
-.sink.split:                                      ; preds = %bb.ae, %bb.ac, %bb.gl, %bb.fq, %read_inf_or_nan.exit.thread, %bb.fb, %bb.gc, %bb.fk, %bb.aa, %bb.fv, %read_num.exit
+.sink.split:                                      ; preds = %read_num.exit.thread628, %read_num.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #33
   br label %bb.nw
 
@@ -2814,7 +2804,7 @@ declare noundef i64 @ftell(ptr noundef captures(none)) local_unnamed_addr #17
 declare noundef i32 @fseek(ptr noundef captures(none), i64 noundef, i32 noundef) local_unnamed_addr #17
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define ptr @yyjson_read_number(ptr noundef %0, ptr nofree noundef writeonly %1, i32 noundef %2, ptr nofree noundef readnone captures(none) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #3 {
+define ptr @yyjson_read_number(ptr noundef %0, ptr nofree noundef writeonly captures(address_is_null) %1, i32 noundef %2, ptr nofree noundef readnone captures(none) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 9 uses
   %5 = alloca %struct.bigint, align 8             ; 29 uses
@@ -3217,7 +3207,7 @@ bb.h:                                             ; preds = %bb.g, %bb.a
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @yyjson_incr_read(ptr nofree noundef %0, i64 noundef %1, ptr nofree noundef writeonly %2) local_unnamed_addr #10 {
+define ptr @yyjson_incr_read(ptr nofree noundef captures(address_is_null) %0, i64 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2) local_unnamed_addr #10 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 11 uses
   %3 = alloca %struct.bigint, align 8             ; 29 uses

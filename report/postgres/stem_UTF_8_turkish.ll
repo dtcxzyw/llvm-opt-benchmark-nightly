@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %r_mark_lArI.exit.th
   %.not = icmp eq i32 %i.dd, 0
   br i1 %.not, label %bb.ai, label %.thread444
 
-.thread444:                                       ; preds = %r_mark_lArI.exit.thread, %bb.ab
+.thread444:                                       ; preds = %bb.ab, %r_mark_lArI.exit.thread
   %i.de = load i32, ptr %i.a, align 8
   store i32 %i.de, ptr %i.cg, align 4
   %i.df = tail call i32 @slice_del(ptr noundef nonnull %0) #2 ; 2 uses
@@ -250,9 +250,8 @@ bb.ai:                                            ; preds = %bb.ab
   %i.dw = load i32, ptr %i.f, align 4
   %i.dx = sub i32 %i.dw, %i.cl
   store i32 %i.dx, ptr %i.a, align 8
-  %i.dy = tail call fastcc i32 @r_stem_suffix_chain_before_ki(ptr noundef nonnull %0)
-  %.fr = freeze i32 %i.dy                         ; 3 uses
-  %i.dz = icmp eq i32 %.fr, 0
+  %i.dy = tail call fastcc i32 @r_stem_suffix_chain_before_ki(ptr noundef nonnull %0) ; 3 uses
+  %i.dz = icmp eq i32 %i.dy, 0
   br i1 %i.dz, label %.thread461, label %bb.aj
 
 .thread461:                                       ; preds = %bb.ai
@@ -261,8 +260,8 @@ bb.ai:                                            ; preds = %bb.ab
   br label %.thread516.sink.split
 
 bb.aj:                                            ; preds = %bb.ai
-  %1 = icmp sgt i32 %.fr, -1
-  br i1 %1, label %.thread516, label %.thread418
+  %1 = icmp slt i32 %i.dy, 0
+  br i1 %1, label %.thread418, label %.thread516
 
 r_mark_nUn.exit.thread:                           ; preds = %bb.w, %bb.v, %bb.u, %r_mark_DA.exit.thread, %r_mark_nUn.exit
   %i.ec = load i32, ptr %i.f, align 4
@@ -389,19 +388,19 @@ bb.aw:                                            ; preds = %r_mark_lArI.exit392
   %i.gc = sub i32 %i.gb, %i.er
   store i32 %i.gc, ptr %i.a, align 8
   %i.gd = tail call fastcc i32 @r_stem_suffix_chain_before_ki(ptr noundef nonnull %0) ; 2 uses
-  %2 = icmp sgt i32 %i.gd, 0
-  br i1 %2, label %.thread516, label %.thread418
+  %2 = icmp slt i32 %i.gd, 1
+  br i1 %2, label %.thread418, label %.thread516
 
-.thread516.sink.split:                            ; preds = %.thread461, %bb.ag, %bb.ad, %bb.s, %bb.p, %bb.k, %bb.m, %bb.ar, %bb.au
-  %.sink = phi i32 [ %i.fz, %bb.au ], [ %i.fs, %bb.ar ], [ %i.ay, %bb.m ], [ %i.ar, %bb.k ], [ %i.bi, %bb.p ], [ %i.bp, %bb.s ], [ %i.dn, %bb.ad ], [ %i.du, %bb.ag ], [ %i.eb, %.thread461 ]
+.thread516.sink.split:                            ; preds = %bb.ar, %bb.au, %bb.ag, %bb.ad, %.thread461, %bb.s, %bb.k, %bb.m, %bb.p
+  %.sink = phi i32 [ %i.bi, %bb.p ], [ %i.ay, %bb.m ], [ %i.ar, %bb.k ], [ %i.bp, %bb.s ], [ %i.eb, %.thread461 ], [ %i.dn, %bb.ad ], [ %i.du, %bb.ag ], [ %i.fz, %bb.au ], [ %i.fs, %bb.ar ]
   store i32 %.sink, ptr %i.a, align 8
   br label %.thread516
 
-.thread516:                                       ; preds = %.thread516.sink.split, %bb.l, %bb.t, %bb.ah, %bb.aj, %bb.aa, %bb.av, %bb.aw, %bb.ao
+.thread516:                                       ; preds = %.thread516.sink.split, %bb.aj, %bb.aw, %bb.l, %bb.t, %bb.ah, %bb.aa, %bb.av, %bb.ao
   br label %.thread418
 
-.thread418:                                       ; preds = %bb.aj, %bb.t, %bb.q, %bb.as, %bb.av, %bb.ao, %bb.ap, %bb.aw, %bb.ak, %bb.al, %r_mark_nUn.exit.thread, %.thread444, %bb.aa, %bb.ah, %bb.ae, %bb.l, %bb.i, %bb.n, %.thread516, %r_mark_ndA.exit, %bb.x, %bb.e, %bb.a
-  %.42 = phi i32 [ %i.d, %bb.a ], [ 1, %.thread516 ], [ 0, %bb.ak ], [ 0, %r_mark_ndA.exit ], [ %i.df, %.thread444 ], [ %i.v, %bb.e ], [ %i.ch, %bb.x ], [ %i.ba, %bb.n ], [ %i.bm, %bb.t ], [ %i.gd, %bb.aw ], [ %i.ao, %bb.l ], [ %i.ak, %bb.i ], [ %i.dp, %bb.ae ], [ %i.dr, %bb.ah ], [ %i.cv, %bb.aa ], [ 0, %r_mark_nUn.exit.thread ], [ 0, %bb.al ], [ %i.fu, %bb.as ], [ %i.fw, %bb.av ], [ %i.fc, %bb.ao ], [ %i.fk, %bb.ap ], [ %i.bk, %bb.q ], [ %.fr, %bb.aj ]
+.thread418:                                       ; preds = %bb.aw, %bb.as, %bb.av, %bb.ap, %bb.ao, %bb.ak, %bb.al, %r_mark_nUn.exit.thread, %bb.aj, %.thread516, %r_mark_ndA.exit, %bb.x, %bb.e, %bb.t, %bb.l, %bb.q, %bb.i, %bb.n, %bb.aa, %bb.ah, %bb.ae, %.thread444, %bb.a
+  %.42 = phi i32 [ %i.d, %bb.a ], [ 1, %.thread516 ], [ 0, %r_mark_ndA.exit ], [ 0, %bb.ak ], [ %i.v, %bb.e ], [ %i.dy, %bb.aj ], [ %i.cv, %bb.aa ], [ %i.ch, %bb.x ], [ %i.ao, %bb.l ], [ %i.ba, %bb.n ], [ %i.bm, %bb.t ], [ %i.bk, %bb.q ], [ %i.ak, %bb.i ], [ %i.df, %.thread444 ], [ %i.dr, %bb.ah ], [ %i.dp, %bb.ae ], [ 0, %r_mark_nUn.exit.thread ], [ 0, %bb.al ], [ %i.fc, %bb.ao ], [ %i.fu, %bb.as ], [ %i.fw, %bb.av ], [ %i.fk, %bb.ap ], [ %i.gd, %bb.aw ]
   ret i32 %.42
 }
 

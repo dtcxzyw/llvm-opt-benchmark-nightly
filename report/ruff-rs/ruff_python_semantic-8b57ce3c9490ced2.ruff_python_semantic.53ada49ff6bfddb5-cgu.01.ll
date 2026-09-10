@@ -202,6 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %i.a, ptr noundef nonnull align 8 dereferenceable(144) %i.b, i64 144, i1 false)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !470)
   %i.d = load i64, ptr %i.a, align 8, !range !5, !alias.scope !470, !noundef !4 ; 2 uses
   %i.e = trunc nuw i64 %i.d to i1                 ; 32 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses

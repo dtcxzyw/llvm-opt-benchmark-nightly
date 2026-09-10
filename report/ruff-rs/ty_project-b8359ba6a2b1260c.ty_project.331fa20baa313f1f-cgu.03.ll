@@ -202,7 +202,7 @@ bb.bz:                                            ; preds = %.body.thread
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvXs0_NtNtNtCsd1Od0hvlDsw_4toml2de12deserializer5valueNtB6_17ValueDeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_structNtNvXNvNtNtCs4o81Y09oZk1_10ty_project8metadata7optionss2_1__NtB2s_18EnvironmentOptionsNtB1i_11Deserialize11deserialize9___VisitorEB2w_(ptr dead_on_unwind noalias nofree noundef writable sret([248 x i8]) align 8 captures(address) dereferenceable(248) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(64) %1, ptr noalias noundef nonnull readonly captures(none) %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %4, i64 noundef range(i64 0, 576460752303423488) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RINvXs0_NtNtNtCsd1Od0hvlDsw_4toml2de12deserializer5valueNtB6_17ValueDeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_structNtNvXNvNtNtCs4o81Y09oZk1_10ty_project8metadata7optionss2_1__NtB2s_18EnvironmentOptionsNtB1i_11Deserialize11deserialize9___VisitorEB2w_(ptr dead_on_unwind noalias nofree noundef writable sret([248 x i8]) align 8 captures(none) dereferenceable(248) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(64) %1, ptr noalias noundef nonnull readonly captures(none) %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %4, i64 noundef range(i64 0, 576460752303423488) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.387.i = alloca [24 x i8], align 8        ; 4 uses
   %.sroa.3190.i = alloca [48 x i8], align 8       ; 4 uses
@@ -382,13 +382,9 @@ bb.l:                                             ; preds = %bb.i
 bb.m:                                             ; preds = %bb.k, %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.ci, ptr noundef nonnull align 8 dereferenceable(88) %i.bb, i64 88, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb)
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.dv, %bb.m
-  store i64 -2, ptr %0, align 8
   br label %bb.n
 
-bb.n:                                             ; preds = %.sink.split, %bb.g
+bb.n:                                             ; preds = %bb.m, %bb.g, %bb.dv
   call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCsd1Od0hvlDsw_4toml2de6parser7devalue7DeValueECs4o81Y09oZk1_10ty_project(ptr noalias noundef nonnull align 8 dereferenceable(64) %1)
   br label %bb.dw
 
@@ -791,7 +787,8 @@ bb.dv:                                            ; preds = %bb.ds, %bb.dr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.go, ptr noundef nonnull align 8 dereferenceable(88) %i.ba, i64 88, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc)
-  br label %.sink.split
+  store i64 -2, ptr %0, align 8
+  br label %bb.n
 
 bb.dw:                                            ; preds = %bb.ic, %bb.dx, %bb.n
   ret void

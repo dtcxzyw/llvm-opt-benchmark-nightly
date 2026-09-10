@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %_ZN4Luau7isSpaceEc.
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4Luau5Lexer8readNextEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.Luau::Lexeme") align 8 %0, ptr noundef nonnull align 8 dereferenceable(120) %1) local_unnamed_addr #4 align 2 {
 bb.a:
-  %2 = alloca %"struct.Luau::Position", align 8   ; 13 uses
+  %2 = alloca %"struct.Luau::Position", align 8   ; 12 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
@@ -564,22 +564,15 @@ bb.n:                                             ; preds = %bb.m
   store i32 1, ptr %i.a, align 4, !tbaa !74
   call void @_ZNSt6vectorIN4Luau5Lexer9BraceTypeESaIS2_EE9push_backEOS2_(ptr noundef nonnull align 8 dereferenceable(24) %i.dn, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
-  %.pre = load i64, ptr %2, align 8               ; 3 uses
-  %3 = trunc i64 %.pre to i32
-  %4 = lshr i64 %.pre, 32
-  %5 = trunc nuw i64 %4 to i32
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %6 = phi i32 [ %5, %bb.n ], [ %i.h, %bb.m ]
-  %7 = phi i32 [ %3, %bb.n ], [ %i.c, %bb.m ]
-  %8 = phi i64 [ %.pre, %bb.n ], [ %.sroa.0172.0.insert.insert, %bb.m ]
-  %i.ds = add i32 %6, 1
+  %i.ds = add i32 %i.h, 1
   store i32 123, ptr %0, align 8, !tbaa !19
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i64 %8, ptr %i.dt, align 4
+  store i64 %.sroa.0172.0.insert.insert, ptr %i.dt, align 4
   %.sroa.4144.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %7, ptr %.sroa.4144.0..sroa_idx, align 4, !tbaa !14
+  store i32 %i.c, ptr %.sroa.4144.0..sroa_idx, align 4, !tbaa !14
   %.sroa.5145.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %i.ds, ptr %.sroa.5145.0..sroa_idx, align 8, !tbaa !14
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 20

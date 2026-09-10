@@ -205,7 +205,7 @@ _ZN5cmsys13RegExpCompile4regcEc.exit:             ; preds = %bb.a
   store ptr %1, ptr %2, align 8, !tbaa !29
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store i32 1, ptr %i.b, align 8, !tbaa !30
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   store ptr @_ZN5cmsysL8regdummyE, ptr %i.d, align 8, !tbaa !31
   store i64 1, ptr %i.c, align 8, !tbaa !32
@@ -214,7 +214,7 @@ _ZN5cmsys13RegExpCompile4regcEc.exit:             ; preds = %bb.a
   br i1 %.not27, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZN5cmsys13RegExpCompile4regcEc.exit
-  %puts28 = call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
+  %puts28 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
   br label %bb.p
 
 bb.d:                                             ; preds = %_ZN5cmsys13RegExpCompile4regcEc.exit
@@ -223,12 +223,12 @@ bb.d:                                             ; preds = %_ZN5cmsys13RegExpCo
   store ptr null, ptr %i.f, align 8, !tbaa !21
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 512
   store ptr null, ptr %i.g, align 8, !tbaa !33
-  %i.h = load i64, ptr %i.c, align 8, !tbaa !32   ; 2 uses
+  %i.h = load i64, ptr %i.c, align 8, !tbaa !32   ; 3 uses
   %i.i = icmp sgt i64 %i.h, 65534
   br i1 %i.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %puts34 = call i32 @puts(ptr nonnull dereferenceable(1) @str.3) ; 0 uses
+  %puts34 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.3) ; 0 uses
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.d
@@ -238,16 +238,13 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.l, label %_ZN5cmsys13RegExpCompile4regcEc.exit37, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @_ZdaPv(ptr noundef nonnull %i.k) #15
-  %.pre = load i64, ptr %i.c, align 8, !tbaa !32
+  tail call void @_ZdaPv(ptr noundef nonnull %i.k) #15
   br label %_ZN5cmsys13RegExpCompile4regcEc.exit37
 
 _ZN5cmsys13RegExpCompile4regcEc.exit37:           ; preds = %bb.f, %bb.g
-  %3 = phi i64 [ %i.h, %bb.f ], [ %.pre, %bb.g ]
-  %4 = call noalias noundef nonnull ptr @_Znam(i64 noundef %3) #14 ; 3 uses
-  store ptr %4, ptr %i.j, align 8, !tbaa !16
-  %5 = load i64, ptr %i.c, align 8, !tbaa !32
-  %i.m = trunc i64 %5 to i32
+  %3 = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #14 ; 3 uses
+  store ptr %3, ptr %i.j, align 8, !tbaa !16
+  %i.m = trunc i64 %i.h to i32
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 552
   store i32 %i.m, ptr %i.n, align 8, !tbaa !17
   %i.o = load i32, ptr %i.b, align 8, !tbaa !30
@@ -255,9 +252,9 @@ _ZN5cmsys13RegExpCompile4regcEc.exit37:           ; preds = %bb.f, %bb.g
   store i32 %i.o, ptr %i.p, align 4, !tbaa !27
   store ptr %1, ptr %2, align 8, !tbaa !29
   store i32 1, ptr %i.b, align 8, !tbaa !30
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 1
   store ptr %i.q, ptr %i.d, align 8, !tbaa !31
-  store i8 -100, ptr %4, align 1, !tbaa !18
+  store i8 -100, ptr %3, align 1, !tbaa !18
   %i.r = call noundef ptr @_ZN5cmsys13RegExpCompile3regEiPi(ptr noundef nonnull align 8 dereferenceable(32) %2, i32 noundef 0, ptr noundef nonnull %i.a) ; 0 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 520 ; 2 uses
   store i8 0, ptr %i.s, align 8, !tbaa !24
@@ -265,11 +262,11 @@ _ZN5cmsys13RegExpCompile4regcEc.exit37:           ; preds = %bb.f, %bb.g
   store i8 0, ptr %i.t, align 1, !tbaa !25
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 528 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 536
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
   %i.w = load ptr, ptr %i.j, align 8, !tbaa !16   ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 1 ; 3 uses
   %i.y = icmp ne ptr %i.x, @_ZN5cmsysL8regdummyE
-  call void @llvm.assume(i1 %i.y)
+  tail call void @llvm.assume(i1 %i.y)
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 2
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !18
   %i.ab = zext i8 %i.aa to i32
@@ -279,7 +276,7 @@ _ZN5cmsys13RegExpCompile4regcEc.exit37:           ; preds = %bb.f, %bb.g
   %i.af = zext i8 %i.ae to i32
   %i.ag = or disjoint i32 %i.ac, %i.af            ; 2 uses
   %i.ah = icmp ne i32 %i.ag, 0
-  call void @llvm.assume(i1 %i.ah)
+  tail call void @llvm.assume(i1 %i.ah)
   %i.ai = load i8, ptr %i.x, align 1, !tbaa !18
   %i.aj = icmp eq i8 %i.ai, 7
   %i.ak = zext nneg i32 %i.ag to i64              ; 2 uses
@@ -324,10 +321,10 @@ bb.k:                                             ; preds = %bb.h, %bb.j, %bb.i
 
 bb.l:                                             ; preds = %.preheader
   %i.aw = getelementptr inbounds nuw i8, ptr %.02040, i64 3 ; 2 uses
-  %6 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.aw) #17 ; 2 uses
-  %.not33 = icmp ult i64 %6, %.042
+  %4 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.aw) #17 ; 2 uses
+  %.not33 = icmp ult i64 %4, %.042
   %spec.select = select i1 %.not33, ptr %.01841, ptr %i.aw
-  %spec.select35 = call i64 @llvm.umax.i64(i64 %6, i64 %.042)
+  %spec.select35 = tail call i64 @llvm.umax.i64(i64 %4, i64 %.042)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %.preheader
@@ -398,7 +395,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind uwtable
-define dso_local noundef ptr @_ZN5cmsys13RegExpCompile3regEiPi(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1, ptr nofree noundef captures(none) initializes((0, 4)) %2) local_unnamed_addr #6 align 2 {
+define dso_local noundef ptr @_ZN5cmsys13RegExpCompile3regEiPi(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0, i32 noundef %1, ptr nofree noundef captures(none) initializes((0, 4)) %2) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
@@ -801,7 +798,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree nounwind uwtable
-define dso_local noundef ptr @_ZN5cmsys13RegExpCompile9regbranchEPi(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef captures(none) initializes((0, 4)) %1) local_unnamed_addr #6 align 2 {
+define dso_local noundef ptr @_ZN5cmsys13RegExpCompile9regbranchEPi(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef captures(none) initializes((0, 4)) %1) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
@@ -1054,7 +1051,7 @@ _ZN5cmsys13RegExpCompile7regtailEPcPKc.exit:      ; preds = %_ZN5cmsysL7regnextE
 }
 
 ; Function Attrs: mustprogress nofree nounwind uwtable
-define dso_local noundef ptr @_ZN5cmsys13RegExpCompile8regpieceEPi(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #6 align 2 {
+define dso_local noundef ptr @_ZN5cmsys13RegExpCompile8regpieceEPi(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
@@ -1457,7 +1454,7 @@ bb.al:                                            ; preds = %_ZN5cmsys13RegExpCo
 }
 
 ; Function Attrs: mustprogress nofree nounwind uwtable
-define dso_local noundef ptr @_ZN5cmsys13RegExpCompile7regatomEPi(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef captures(none) initializes((0, 4)) %1) local_unnamed_addr #6 align 2 {
+define dso_local noundef ptr @_ZN5cmsys13RegExpCompile7regatomEPi(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef captures(none) initializes((0, 4)) %1) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16

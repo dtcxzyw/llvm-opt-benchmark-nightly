@@ -204,15 +204,15 @@ trie_collect_stats.exit.thread:                   ; preds = %fib_table_print.exi
   br label %bb.g
 
 bb.g:                                             ; preds = %fib_trie_get_next.exit.i, %.lr.ph57.i
-  %i.ba = phi i8 [ %i.az, %.lr.ph57.i ], [ %i.cm, %fib_trie_get_next.exit.i ]
+  %i.ba = phi i8 [ %i.az, %.lr.ph57.i ], [ %i.cm, %fib_trie_get_next.exit.i ] ; 3 uses
   %.promoted.i49 = phi i32 [ 0, %.lr.ph57.i ], [ %.promoted.i48, %fib_trie_get_next.exit.i ] ; 3 uses
-  %i.bb = phi i32 [ 0, %.lr.ph57.i ], [ %i.bu, %fib_trie_get_next.exit.i ] ; 3 uses
+  %i.bb = phi i32 [ 0, %.lr.ph57.i ], [ %i.bu, %fib_trie_get_next.exit.i ] ; 2 uses
   %i.bc = phi i32 [ 0, %.lr.ph57.i ], [ %i.bv, %fib_trie_get_next.exit.i ] ; 2 uses
   %i.bd = phi i32 [ 0, %.lr.ph57.i ], [ %i.bw, %fib_trie_get_next.exit.i ] ; 2 uses
   %i.be = phi i32 [ 0, %.lr.ph57.i ], [ %i.bx, %fib_trie_get_next.exit.i ] ; 3 uses
   %i.bf = phi i32 [ 0, %.lr.ph57.i ], [ %i.by, %fib_trie_get_next.exit.i ] ; 3 uses
-  %.056.i = phi ptr [ %i.ax, %.lr.ph57.i ], [ %i.ck, %fib_trie_get_next.exit.i ] ; 3 uses
-  %.sroa.13.055.i = phi i32 [ %.25.i.i, %.lr.ph57.i ], [ %.sroa.13.4.i, %fib_trie_get_next.exit.i ] ; 5 uses
+  %.056.i = phi ptr [ %i.ax, %.lr.ph57.i ], [ %i.ck, %fib_trie_get_next.exit.i ] ; 2 uses
+  %.sroa.13.055.i = phi i32 [ %.25.i.i, %.lr.ph57.i ], [ %.sroa.13.4.i, %fib_trie_get_next.exit.i ] ; 3 uses
   %.sroa.8.054.i = phi i64 [ 0, %.lr.ph57.i ], [ %.sroa.8.2.i, %fib_trie_get_next.exit.i ]
   %.sroa.3.053.i = phi ptr [ %..i.i, %.lr.ph57.i ], [ %.sroa.3.2.i, %fib_trie_get_next.exit.i ] ; 2 uses
   %.not38.i = icmp eq i8 %i.ba, 0
@@ -223,38 +223,29 @@ bb.h:                                             ; preds = %bb.g
   store i32 %i.bg, ptr %i.g, align 4
   %i.bh = add i32 %i.bc, %.sroa.13.055.i          ; 3 uses
   store i32 %i.bh, ptr %2, align 4
-  %3 = icmp ugt i32 %.sroa.13.055.i, %i.bb
-  br i1 %3, label %4, label %5
-
-4:                                                ; preds = %bb.h
-  store i32 %.sroa.13.055.i, ptr %i.h, align 4
-  br label %5
-
-5:                                                ; preds = %4, %bb.h
-  %6 = phi i32 [ %.sroa.13.055.i, %4 ], [ %i.bb, %bb.h ] ; 2 uses
-  %7 = getelementptr i8, ptr %.056.i, i64 8
-  %8 = load volatile ptr, ptr %7, align 8         ; 2 uses
-  %.not4050.i = icmp eq ptr %8, null
+  %spec.store.select = tail call i32 @llvm.umax.i32(i32 %.sroa.13.055.i, i32 %i.bb) ; 3 uses
+  store i32 %spec.store.select, ptr %i.h, align 4
+  %3 = getelementptr i8, ptr %.056.i, i64 8
+  %4 = load volatile ptr, ptr %3, align 8         ; 2 uses
+  %.not4050.i = icmp eq ptr %4, null
   br i1 %.not4050.i, label %.loopexit.i, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %5, %.lr.ph.i
-  %i.bi = phi i32 [ %i.bj, %.lr.ph.i ], [ %.promoted.i49, %5 ]
-  %.03451.i = phi ptr [ %i.bk, %.lr.ph.i ], [ %8, %5 ]
+.lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.i
+  %i.bi = phi i32 [ %i.bj, %.lr.ph.i ], [ %.promoted.i49, %bb.h ]
+  %.03451.i = phi ptr [ %i.bk, %.lr.ph.i ], [ %4, %bb.h ]
   %i.bj = add i32 %i.bi, 1                        ; 3 uses
   %i.bk = load volatile ptr, ptr %.03451.i, align 8 ; 2 uses
   %.not40.i = icmp eq ptr %i.bk, null
   br i1 %.not40.i, label %.loopexit.i.loopexit, label %.lr.ph.i, !llvm.loop !99
 
 bb.i:                                             ; preds = %bb.g
-  %9 = getelementptr i8, ptr %.056.i, i64 5
   %i.bl = add i32 %i.bf, 1                        ; 2 uses
   store i32 %i.bl, ptr %i.d, align 4
-  %10 = load i8, ptr %9, align 1                  ; 2 uses
-  %i.bm = icmp ult i8 %10, 32
+  %i.bm = icmp ult i8 %i.ba, 32
   br i1 %i.bm, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.bn = zext nneg i8 %10 to i64
+  %i.bn = zext nneg i8 %i.ba to i64
   %i.bo = getelementptr [4 x i8], ptr %i.e, i64 %i.bn ; 2 uses
   %i.bp = load i32, ptr %i.bo, align 4
   %i.bq = add i32 %i.bp, 1
@@ -272,13 +263,13 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   store i32 %i.bj, ptr %i.i, align 4
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %.loopexit.i.loopexit, %bb.k, %5
-  %.promoted.i48 = phi i32 [ %.promoted.i49, %5 ], [ %.promoted.i49, %bb.k ], [ %i.bj, %.loopexit.i.loopexit ] ; 3 uses
-  %i.bu = phi i32 [ %6, %5 ], [ %i.bb, %bb.k ], [ %6, %.loopexit.i.loopexit ] ; 3 uses
-  %i.bv = phi i32 [ %i.bh, %5 ], [ %i.bc, %bb.k ], [ %i.bh, %.loopexit.i.loopexit ] ; 2 uses
-  %i.bw = phi i32 [ %i.bg, %5 ], [ %i.bd, %bb.k ], [ %i.bg, %.loopexit.i.loopexit ] ; 4 uses
-  %i.bx = phi i32 [ %i.be, %5 ], [ %i.bt, %bb.k ], [ %i.be, %.loopexit.i.loopexit ] ; 3 uses
-  %i.by = phi i32 [ %i.bf, %5 ], [ %i.bl, %bb.k ], [ %i.bf, %.loopexit.i.loopexit ] ; 3 uses
+.loopexit.i:                                      ; preds = %.loopexit.i.loopexit, %bb.k, %bb.h
+  %.promoted.i48 = phi i32 [ %i.bj, %.loopexit.i.loopexit ], [ %.promoted.i49, %bb.k ], [ %.promoted.i49, %bb.h ] ; 3 uses
+  %i.bu = phi i32 [ %spec.store.select, %.loopexit.i.loopexit ], [ %i.bb, %bb.k ], [ %spec.store.select, %bb.h ] ; 3 uses
+  %i.bv = phi i32 [ %i.bh, %.loopexit.i.loopexit ], [ %i.bc, %bb.k ], [ %i.bh, %bb.h ] ; 2 uses
+  %i.bw = phi i32 [ %i.bg, %.loopexit.i.loopexit ], [ %i.bd, %bb.k ], [ %i.bg, %bb.h ] ; 4 uses
+  %i.bx = phi i32 [ %i.be, %.loopexit.i.loopexit ], [ %i.bt, %bb.k ], [ %i.be, %bb.h ] ; 3 uses
+  %i.by = phi i32 [ %i.bf, %.loopexit.i.loopexit ], [ %i.bl, %bb.k ], [ %i.bf, %bb.h ] ; 3 uses
   %i.bz = getelementptr i8, ptr %.sroa.3.053.i, i64 4
   %i.ca = load i8, ptr %i.bz, align 4
   %i.cb = icmp ult i8 %i.ca, 32
@@ -680,6 +671,9 @@ declare i8 @llvm.umin.i8(i8, i8) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #3
 
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

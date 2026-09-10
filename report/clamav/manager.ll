@@ -202,8 +202,8 @@ bb.hl:                                            ; preds = %bb.hk, %bb.hj
   %i.xl = getelementptr inbounds nuw i8, ptr %i.xk, i64 32
   %i.xm = load i32, ptr %i.xl, align 8, !tbaa !17
   %.not526 = icmp eq i32 %i.xm, 0
-  %i.xn = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
-  %i.xo = load i32, ptr %i.xn, align 4, !tbaa !54 ; 2 uses
+  %i.xn = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %i.xo = load i32, ptr %i.xn, align 4, !tbaa !54 ; 3 uses
   br i1 %.not526, label %bb.hz, label %bb.hm
 
 bb.hm:                                            ; preds = %bb.hl
@@ -228,13 +228,12 @@ bb.ho:                                            ; preds = %bb.hn
 switch.lookup:                                    ; preds = %bb.hn
   %switch.idx.cast = trunc nuw i64 %i.xu to i32
   %switch.idx.mult = shl nuw nsw i32 %switch.idx.cast, 10
-  %switch.offset = add nuw nsw i32 %switch.idx.mult, 1024
+  %switch.offset = add nuw nsw i32 %switch.idx.mult, 1536
   br label %bb.hp
 
 bb.hp:                                            ; preds = %bb.hm, %switch.lookup
-  %.sink651 = phi i32 [ %switch.offset, %switch.lookup ], [ 1024, %bb.hm ]
-  %7 = load i32, ptr %i.xn, align 4, !tbaa !54
-  %i.xx = or i32 %7, %.sink651
+  %.sink651 = phi i32 [ %switch.offset, %switch.lookup ], [ 1536, %bb.hm ]
+  %i.xx = or i32 %i.xo, %.sink651                 ; 2 uses
   store i32 %i.xx, ptr %i.xn, align 4, !tbaa !54
   %i.xy = call ptr @optget(ptr noundef %0, ptr noundef nonnull @.str.136) #22 ; 2 uses
   %i.xz = getelementptr inbounds nuw i8, ptr %i.xy, i64 36
@@ -289,8 +288,7 @@ bb.hw:                                            ; preds = %bb.hv
   ]
 
 bb.hx:                                            ; preds = %bb.hw
-  %8 = load i32, ptr %i.xn, align 4, !tbaa !54
-  %i.yt = or i32 %8, 4096
+  %i.yt = or i32 %i.xx, 4096
   br label %.sink.split652
 
 bb.hy:                                            ; preds = %bb.hw

@@ -202,7 +202,7 @@ declare i64 @H5LTyyparse() local_unnamed_addr #1
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #12
 
 ; Function Attrs: nounwind uwtable
-define range(i32 -1, 1) i32 @H5LTdtype_to_text(i64 noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
+define range(i32 -1, 1) i32 @H5LTdtype_to_text(i64 noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef captures(address_is_null) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
@@ -223,10 +223,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.e) #20
+  %4 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.e) #20
   %i.f = add i64 %4, 1
   store i64 %i.f, ptr %3, align 8, !tbaa !18
-  call void @free(ptr noundef nonnull %i.e) #19
+  tail call void @free(ptr noundef nonnull %i.e) #19
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.b
@@ -256,7 +256,7 @@ bb.h:                                             ; preds = %bb.a, %bb.c, %bb.f,
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #13
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @H5LT_dtype_to_text(i64 noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef %3, i1 noundef zeroext %4) local_unnamed_addr #0 {
+define noundef ptr @H5LT_dtype_to_text(i64 noundef %0, ptr noundef %1, i32 noundef %2, ptr nofree noundef captures(none) %3, i1 noundef zeroext %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 6 uses
   %i.b = alloca [256 x i8], align 16              ; 6 uses
@@ -279,7 +279,7 @@ bb.a:
   %i.s = alloca [256 x i8], align 16              ; 6 uses
   %i.t = alloca [256 x i8], align 16              ; 59 uses
   %i.u = alloca [32 x i64], align 16              ; 6 uses
-  %i.v = alloca i64, align 8                      ; 6 uses
+  %i.v = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t) #19
   %.not.i = icmp eq ptr %1, null
   br i1 %.not.i, label %realloc_and_append.exit.thread, label %bb.b
@@ -682,12 +682,11 @@ H5LTdtype_to_text.exit.thread:                    ; preds = %bb.kz
 
 bb.la:                                            ; preds = %bb.kz
   %i.zk = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.zj) #20, !inline_history !33
-  %i.zl = add i64 %i.zk, 1
+  %i.zl = add i64 %i.zk, 1                        ; 2 uses
   store i64 %i.zl, ptr %i.v, align 8, !tbaa !18
   call void @free(ptr noundef nonnull %i.zj) #19, !inline_history !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
-  %5 = load i64, ptr %i.v, align 8, !tbaa !18
-  %i.zm = call noalias ptr @calloc(i64 noundef %5, i64 noundef 1) #24 ; 6 uses
+  %i.zm = call noalias ptr @calloc(i64 noundef %i.zl, i64 noundef 1) #24 ; 6 uses
   %i.zn = call i32 @H5LTdtype_to_text(i64 noundef %i.yv, ptr noundef %i.zm, i32 noundef 0, ptr noundef nonnull %i.v)
   %i.zo = icmp slt i32 %i.zn, 0
   br i1 %i.zo, label %bb.lb, label %bb.lc
@@ -1026,16 +1025,16 @@ H5LTdtype_to_text.exit.thread:                    ; preds = %bb.a
   br label %bb.n
 
 bb.b:                                             ; preds = %bb.a
-  %4 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #20, !inline_history !33
+  %4 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #20, !inline_history !33
   %i.e = add i64 %4, 1                            ; 3 uses
   store i64 %i.e, ptr %i.b, align 8, !tbaa !18
-  call void @free(ptr noundef nonnull %i.d) #19, !inline_history !33
+  tail call void @free(ptr noundef nonnull %i.d) #19, !inline_history !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %bb.n, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = call noalias ptr @calloc(i64 noundef %i.e, i64 noundef 1) #24 ; 6 uses
+  %5 = tail call noalias ptr @calloc(i64 noundef %i.e, i64 noundef 1) #24 ; 6 uses
   %.not = icmp eq ptr %5, null
   br i1 %.not, label %bb.d, label %bb.k
 
@@ -1048,7 +1047,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %bb.f, label %bb.e, !prof !16
 
 bb.e:                                             ; preds = %bb.d
-  %6 = call i32 @H5open() #19                     ; 0 uses
+  %6 = tail call i32 @H5open() #19                ; 0 uses
   %.pre = load i8, ptr @H5_libinit_g, align 1, !tbaa !13, !range !14
   %.pre27 = load i8, ptr @H5_libterm_g, align 1, !range !14
   br label %bb.f
@@ -1063,7 +1062,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %i.q, label %bb.h, label %bb.g, !prof !16
 
 bb.g:                                             ; preds = %bb.f
-  %7 = call i32 @H5open() #19                     ; 0 uses
+  %7 = tail call i32 @H5open() #19                ; 0 uses
   %.pre28 = load i8, ptr @H5_libinit_g, align 1, !tbaa !13, !range !14
   %.pre29 = load i8, ptr @H5_libterm_g, align 1, !range !14
   br label %bb.h
@@ -1078,12 +1077,12 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br i1 %i.w, label %bb.j, label %bb.i, !prof !16
 
 bb.i:                                             ; preds = %bb.h
-  %8 = call i32 @H5open() #19                     ; 0 uses
+  %8 = tail call i32 @H5open() #19                ; 0 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i
   %i.x = load i64, ptr @H5E_NOSPACE_g, align 8, !tbaa !18
-  %9 = call i32 (i64, ptr, ptr, i32, i64, i64, i64, ptr, ...) @H5Epush2(i64 noundef 0, ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.append_dtype_super_text, i32 noundef 2230, i64 noundef %i.n, i64 noundef %i.t, i64 noundef %i.x, ptr noundef nonnull @.str.3) #19 ; 0 uses
+  %9 = tail call i32 (i64, ptr, ptr, i32, i64, i64, i64, ptr, ...) @H5Epush2(i64 noundef 0, ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.append_dtype_super_text, i32 noundef 2230, i64 noundef %i.n, i64 noundef %i.t, i64 noundef %i.x, ptr noundef nonnull @.str.3) #19 ; 0 uses
   br label %bb.n
 
 bb.k:                                             ; preds = %bb.c
@@ -1092,7 +1091,7 @@ bb.k:                                             ; preds = %bb.c
   br i1 %.not33.i, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  call void @free(ptr noundef nonnull %5) #19
+  tail call void @free(ptr noundef nonnull %5) #19
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
@@ -1100,8 +1099,8 @@ bb.m:                                             ; preds = %bb.k
   %i.aa = getelementptr i8, ptr %5, i64 %i.z
   %i.ab = getelementptr i8, ptr %i.aa, i64 -1
   store i8 0, ptr %i.ab, align 1, !tbaa !9
-  %10 = call fastcc ptr @realloc_and_append(i1 noundef zeroext %3, ptr noundef %2, ptr noundef nonnull %1, ptr noundef nonnull %5)
-  call void @free(ptr noundef nonnull %5) #19
+  %10 = tail call fastcc ptr @realloc_and_append(i1 noundef zeroext %3, ptr noundef %2, ptr noundef nonnull %1, ptr noundef nonnull %5)
+  tail call void @free(ptr noundef nonnull %5) #19
   br label %bb.n
 
 bb.n:                                             ; preds = %H5LTdtype_to_text.exit.thread, %bb.m, %bb.b, %bb.l, %bb.j

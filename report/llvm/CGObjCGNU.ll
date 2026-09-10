@@ -205,8 +205,7 @@ bb.a:
   %i.an = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 36 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %15, i64 24 ; 3 uses
   store ptr %i.ao, ptr %i.an, align 8, !tbaa !451
-  %i.ap = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 53 uses
-  store i32 0, ptr %i.ap, align 8, !tbaa !454
+  %i.ap = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 52 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %15, i64 20 ; 18 uses
   store i32 16, ptr %i.aq, align 4, !tbaa !452
   %i.ar = getelementptr inbounds nuw i8, ptr %15, i64 152 ; 3 uses

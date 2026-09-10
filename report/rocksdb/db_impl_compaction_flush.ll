@@ -205,11 +205,13 @@ bb.g:                                             ; preds = %bb.f
           to label %.noexc94 unwind label %bb.i
 
 .noexc94:                                         ; preds = %bb.g
-  %.pre.i.i.a = load ptr, ptr %10, align 8, !tbaa !86, !noalias !2255
+  %.pre.i.i = load ptr, ptr %10, align 8, !tbaa !86, !noalias !2255
+  %.pre.i.i.a = load ptr, ptr %i.c, align 8, !tbaa !86
   br label %bb.h
 
 bb.h:                                             ; preds = %.noexc94, %bb.f
-  %storemerge.i.a = phi ptr [ %.pre.i.i.a, %.noexc94 ], [ null, %bb.f ]
+  %storemerge.i.a = phi ptr [ %.pre.i.i.a, %.noexc94 ], [ null, %bb.f ] ; 2 uses
+  %storemerge.i = phi ptr [ %.pre.i.i, %.noexc94 ], [ null, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #34, !noalias !2255
   store i8 %i.g, ptr %11, align 8, !tbaa !694
   %i.ak = getelementptr inbounds nuw i8, ptr %11, i64 1
@@ -222,13 +224,12 @@ bb.h:                                             ; preds = %.noexc94, %bb.f
   store i8 %i.af, ptr %i.an, align 4, !tbaa !82
   %i.ao = getelementptr inbounds nuw i8, ptr %11, i64 5
   store i8 %i.ah, ptr %i.ao, align 1, !tbaa !85
-  %17 = load ptr, ptr %i.c, align 8, !tbaa !86    ; 2 uses
-  store ptr %storemerge.i.a, ptr %i.c, align 8, !tbaa !86
-  %.not.i.i.i.i.i95 = icmp eq ptr %17, null
+  store ptr %storemerge.i, ptr %i.c, align 8, !tbaa !86
+  %.not.i.i.i.i.i95 = icmp eq ptr %storemerge.i.a, null
   br i1 %.not.i.i.i.i.i95, label %bb.j, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i.i.i.i96
 
 _ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i.i.i.i96: ; preds = %bb.h
-  call void @_ZdaPv(ptr noundef nonnull %17) #33
+  call void @_ZdaPv(ptr noundef nonnull %storemerge.i.a) #33
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g

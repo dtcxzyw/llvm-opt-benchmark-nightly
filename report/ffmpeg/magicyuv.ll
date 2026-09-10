@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %xtraiter89 = and i32 %3, 1
   %lcmp.mod90.not = icmp eq i32 %xtraiter89, 0
   %indvars.iv.next.i.prol = add nsw i64 %i.ap, -1 ; 3 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next.i.prol ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next.i.prol
   %i.as = trunc i64 %indvars.iv.next.i.prol to i16
   %i.at = icmp eq i32 %3, 1
   br label %bb.c
@@ -392,7 +392,7 @@ bb.h:                                             ; preds = %.unr-lcssa
   br i1 %lcmp.mod90.not, label %.preheader.i.prol.loopexit, label %.preheader.i.prol
 
 .preheader.i.prol:                                ; preds = %bb.h
-  %i.em = load i8, ptr %i.ar, align 1, !tbaa !29
+  %i.em = load i8, ptr %i.ar, align 1, !tbaa !29  ; 2 uses
   %i.en = zext i8 %i.em to i64
   %i.eo = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.en ; 2 uses
   %i.ep = load i16, ptr %i.eo, align 2, !tbaa !63
@@ -400,8 +400,7 @@ bb.h:                                             ; preds = %.unr-lcssa
   store i16 %i.eq, ptr %i.eo, align 2, !tbaa !63
   %i.er = zext i16 %i.eq to i64
   %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %i.er ; 3 uses
-  %4 = load i8, ptr %i.ar, align 1, !tbaa !29
-  store i8 %4, ptr %i.es, align 2, !tbaa !29
+  store i8 %i.em, ptr %i.es, align 2, !tbaa !29
   %.sroa.2.0..sroa_idx.i.prol = getelementptr inbounds nuw i8, ptr %i.es, i64 1
   store i8 0, ptr %.sroa.2.0..sroa_idx.i.prol, align 1
   %.sroa.3.0..sroa_idx.i.prol = getelementptr inbounds nuw i8, ptr %i.es, i64 2
@@ -416,8 +415,8 @@ bb.h:                                             ; preds = %.unr-lcssa
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %.preheader.i ], [ %indvars.iv.i.unr, %.preheader.i.prol.loopexit ] ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
   %i.et = and i64 %indvars.iv.next.i, 4294967295
-  %i.eu = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.et ; 2 uses
-  %i.ev = load i8, ptr %i.eu, align 1, !tbaa !29
+  %i.eu = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.et
+  %i.ev = load i8, ptr %i.eu, align 1, !tbaa !29  ; 2 uses
   %i.ew = zext i8 %i.ev to i64
   %i.ex = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.ew ; 2 uses
   %i.ey = load i16, ptr %i.ex, align 2, !tbaa !63
@@ -425,17 +424,16 @@ bb.h:                                             ; preds = %.unr-lcssa
   store i16 %i.ez, ptr %i.ex, align 2, !tbaa !63
   %i.fa = zext i16 %i.ez to i64
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %i.fa ; 3 uses
-  %5 = load i8, ptr %i.eu, align 1, !tbaa !29
   %i.fc = trunc i64 %indvars.iv.next.i to i16
-  store i8 %5, ptr %i.fb, align 2, !tbaa !29
+  store i8 %i.ev, ptr %i.fb, align 2, !tbaa !29
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fb, i64 1
   store i8 0, ptr %.sroa.2.0..sroa_idx.i, align 1
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fb, i64 2
   store i16 %i.fc, ptr %.sroa.3.0..sroa_idx.i, align 2, !tbaa !63
   %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2 ; 3 uses
   %i.fd = and i64 %indvars.iv.next.i.1, 4294967295 ; 2 uses
-  %i.fe = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.fd ; 2 uses
-  %i.ff = load i8, ptr %i.fe, align 1, !tbaa !29
+  %i.fe = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.fd
+  %i.ff = load i8, ptr %i.fe, align 1, !tbaa !29  ; 2 uses
   %i.fg = zext i8 %i.ff to i64
   %i.fh = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.fg ; 2 uses
   %i.fi = load i16, ptr %i.fh, align 2, !tbaa !63
@@ -443,9 +441,8 @@ bb.h:                                             ; preds = %.unr-lcssa
   store i16 %i.fj, ptr %i.fh, align 2, !tbaa !63
   %i.fk = zext i16 %i.fj to i64
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %i.fk ; 3 uses
-  %6 = load i8, ptr %i.fe, align 1, !tbaa !29
   %i.fm = trunc i64 %indvars.iv.next.i.1 to i16
-  store i8 %6, ptr %i.fl, align 2, !tbaa !29
+  store i8 %i.ff, ptr %i.fl, align 2, !tbaa !29
   %.sroa.2.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %i.fl, i64 1
   store i8 0, ptr %.sroa.2.0..sroa_idx.i.1, align 1
   %.sroa.3.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %i.fl, i64 2

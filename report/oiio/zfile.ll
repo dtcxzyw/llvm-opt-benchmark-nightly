@@ -205,20 +205,14 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 52 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 68 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.n, i8 0, i64 16, i1 false)
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 72 ; 2 uses
-  store <2 x float> splat (float 1.000000e+00), ptr %i.o, align 4, !tbaa !89
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 76 ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 92 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.p, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %i.q, align 4, !tbaa !89
-  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 3 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 112 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %i.s, align 4, !tbaa !89
-  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 116 ; 3 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %5, i64 132 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.t, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %i.u, align 4, !tbaa !89
+  store float 1.000000e+00, ptr %i.o, align 4, !tbaa !89
+  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 72 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 76 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 92 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 112 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %5, i64 116 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %5, i64 132
   store i32 789079979, ptr %5, align 4, !tbaa !93
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.w = getelementptr inbounds nuw i8, ptr %5, i64 4
@@ -240,10 +234,10 @@ bb.c:                                             ; preds = %bb.b
   %i.af = load ptr, ptr %i.ae, align 8
   %i.ag = select i1 %i.ad, ptr %i.af, ptr %i.ae   ; 16 uses
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !89
-  store float %i.ah, ptr %14, align 4, !tbaa !89
+  store float %i.ah, ptr %i.p, align 4, !tbaa !89
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
   %i.aj = load float, ptr %i.ai, align 4, !tbaa !89
-  store float %i.aj, ptr %i.p, align 4, !tbaa !89
+  store float %i.aj, ptr %i.q, align 4, !tbaa !89
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.al = load float, ptr %i.ak, align 4, !tbaa !89
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 80
@@ -258,10 +252,10 @@ bb.c:                                             ; preds = %bb.b
   store float %i.ar, ptr %i.as, align 4, !tbaa !89
   %i.at = getelementptr inbounds nuw i8, ptr %i.ag, i64 20
   %i.au = load float, ptr %i.at, align 4, !tbaa !89
-  store float %i.au, ptr %i.q, align 4, !tbaa !89
+  store float %i.au, ptr %i.r, align 4, !tbaa !89
   %i.av = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   %i.aw = load float, ptr %i.av, align 4, !tbaa !89
-  store float %i.aw, ptr %i.r, align 4, !tbaa !89
+  store float %i.aw, ptr %i.s, align 4, !tbaa !89
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ag, i64 28
   %i.ay = load float, ptr %i.ax, align 4, !tbaa !89
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 100
@@ -276,10 +270,10 @@ bb.c:                                             ; preds = %bb.b
   store float %i.be, ptr %i.bf, align 4, !tbaa !89
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !89
-  store float %i.bh, ptr %i.s, align 4, !tbaa !89
+  store float %i.bh, ptr %i.t, align 4, !tbaa !89
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ag, i64 44
   %i.bj = load float, ptr %i.bi, align 4, !tbaa !89
-  store float %i.bj, ptr %i.t, align 4, !tbaa !89
+  store float %i.bj, ptr %i.u, align 4, !tbaa !89
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ag, i64 48
   %i.bl = load float, ptr %i.bk, align 4, !tbaa !89
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 120
@@ -297,17 +291,17 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  store float 1.000000e+00, ptr %14, align 4, !tbaa !89
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.p, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %i.q, align 4, !tbaa !89
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %i.s, align 4, !tbaa !89
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.t, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.p, align 4, !tbaa !89
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.q, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.r, align 4, !tbaa !89
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.t, align 4, !tbaa !89
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.sink = phi float [ 1.000000e+00, %bb.d ], [ %i.bu, %bb.c ]
-  store float %.sink, ptr %i.u, align 4, !tbaa !89
+  store float %.sink, ptr %14, align 4, !tbaa !89
   store ptr @.str.5, ptr %7, align 8, !tbaa !108
   %i.bv = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 13, ptr %i.bv, align 8, !tbaa !109

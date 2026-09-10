@@ -204,15 +204,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not94, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 2 uses
-  %0 = load i64, ptr %i.q, align 8, !tbaa !51
-  %1 = or i64 %0, 64
-  store i64 %1, ptr %i.q, align 8, !tbaa !51
+  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 56
+  store i64 64, ptr %i.q, align 8, !tbaa !51
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.r = tail call ptr @mpool_create() #22        ; 3 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 264 ; 9 uses
+  %i.r = tail call ptr @mpool_create() #22        ; 5 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 264 ; 7 uses
   store ptr %i.r, ptr %i.s, align 8, !tbaa !52
   %.not95 = icmp eq ptr %i.r, null
   br i1 %.not95, label %bb.m, label %bb.e
@@ -225,16 +223,14 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not96, label %bb.m, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %2 = load ptr, ptr %i.s, align 8, !tbaa !52
-  %i.v = tail call ptr @cli_dconf_init(ptr noundef %2) #22 ; 2 uses
+  %i.v = tail call ptr @cli_dconf_init(ptr noundef nonnull %i.r) #22 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 176
   store ptr %i.v, ptr %i.w, align 8, !tbaa !143
   %.not97 = icmp eq ptr %i.v, null
   br i1 %.not97, label %bb.m, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = load ptr, ptr %i.s, align 8, !tbaa !52
-  %i.x = tail call ptr @mpool_calloc(ptr noundef %3, i64 noundef 3, i64 noundef 8) #22 ; 2 uses
+  %i.x = tail call ptr @mpool_calloc(ptr noundef nonnull %i.r, i64 noundef 3, i64 noundef 8) #22 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 200
   store ptr %i.x, ptr %i.y, align 8, !tbaa !144
   %.not98 = icmp eq ptr %i.x, null
@@ -637,7 +633,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.b,
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @cl_engine_settings_copy(ptr nofree noundef readonly %0) local_unnamed_addr #2 {
+define noundef ptr @cl_engine_settings_copy(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(384) ptr @malloc(i64 noundef 384) #24 ; 34 uses
   %.not = icmp eq ptr %i.a, null
@@ -806,7 +802,7 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #10
 declare noalias ptr @strdup(ptr noundef readonly captures(none)) local_unnamed_addr #11
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 21) i32 @cl_engine_settings_apply(ptr nofree noundef initializes((20, 32), (48, 52), (56, 104), (1072, 1084), (1088, 1128)) %0, ptr nofree noundef readonly %1) local_unnamed_addr #2 {
+define range(i32 0, 21) i32 @cl_engine_settings_apply(ptr nofree noundef captures(none) initializes((20, 32), (48, 52), (56, 104), (1072, 1084), (1088, 1128)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.b = load <2 x i32>, ptr %1, align 8, !tbaa !9

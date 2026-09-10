@@ -92,7 +92,7 @@ agxbput.exit.thread:                              ; preds = %bb.a
   %.1197 = phi i1 [ false, %agxbput.exit.thread ], [ %.051, %agxbput.exit ] ; 2 uses
   %.not = icmp eq ptr %2, null
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 31 ; 20 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 20 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 15 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
   br label %bb.h
 
@@ -146,12 +146,11 @@ bb.l:                                             ; preds = %bb.k
   br label %agxbputc.exit
 
 bb.m:                                             ; preds = %bb.k
-  %i.ap = load i64, ptr %i.z, align 8, !tbaa !8
+  %i.ap = load i64, ptr %i.z, align 8, !tbaa !8   ; 2 uses
   %i.aq = load ptr, ptr %3, align 8, !tbaa !8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ap
   store i8 92, ptr %i.ar, align 1, !tbaa !8
-  %4 = load i64, ptr %i.z, align 8, !tbaa !8
-  %i.as = add i64 %4, 1
+  %i.as = add i64 %i.ap, 1
   store i64 %i.as, ptr %i.z, align 8, !tbaa !8
   br label %agxbputc.exit
 
@@ -226,12 +225,11 @@ bb.x:                                             ; preds = %bb.w
   br label %agxbputc.exit80
 
 bb.y:                                             ; preds = %bb.w
-  %i.bc = load i64, ptr %i.z, align 8, !tbaa !8
+  %i.bc = load i64, ptr %i.z, align 8, !tbaa !8   ; 2 uses
   %i.bd = load ptr, ptr %3, align 8, !tbaa !8
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.bc
   store i8 %i.au, ptr %i.be, align 1, !tbaa !8
-  %5 = load i64, ptr %i.z, align 8, !tbaa !8
-  %i.bf = add i64 %5, 1                           ; 2 uses
+  %i.bf = add i64 %i.bc, 1                        ; 2 uses
   store i64 %i.bf, ptr %i.z, align 8, !tbaa !8
   %.val.i.i81.pr = load i8, ptr %i.y, align 1, !tbaa !8
   br label %agxbputc.exit80
@@ -270,12 +268,11 @@ bb.ab:                                            ; preds = %bb.aa
   br label %agxbputc.exit91
 
 bb.ac:                                            ; preds = %bb.aa
-  %i.bq = load i64, ptr %i.z, align 8, !tbaa !8
+  %i.bq = load i64, ptr %i.z, align 8, !tbaa !8   ; 2 uses
   %i.br = load ptr, ptr %3, align 8, !tbaa !8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bq
   store i8 %i.bj, ptr %i.bs, align 1, !tbaa !8
-  %6 = load i64, ptr %i.z, align 8, !tbaa !8
-  %i.bt = add i64 %6, 1
+  %i.bt = add i64 %i.bq, 1
   store i64 %i.bt, ptr %i.z, align 8, !tbaa !8
   br label %agxbputc.exit91
 
@@ -323,12 +320,11 @@ bb.ah:                                            ; preds = %bb.ag
   br label %agxbputc.exit102
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.ce = load i64, ptr %i.z, align 8, !tbaa !8
+  %i.ce = load i64, ptr %i.z, align 8, !tbaa !8   ; 2 uses
   %i.cf = load ptr, ptr %3, align 8, !tbaa !8
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %i.ce
   store i8 92, ptr %i.cg, align 1, !tbaa !8
-  %7 = load i64, ptr %i.z, align 8, !tbaa !8
-  %i.ch = add i64 %7, 1
+  %i.ch = add i64 %i.ce, 1
   store i64 %i.ch, ptr %i.z, align 8, !tbaa !8
   br label %agxbputc.exit102
 
@@ -399,12 +395,11 @@ bb.aq:                                            ; preds = %bb.ap
   br label %agxbputc.exit116
 
 bb.ar:                                            ; preds = %bb.ap
-  %i.cv = load i64, ptr %i.z, align 8, !tbaa !8
+  %i.cv = load i64, ptr %i.z, align 8, !tbaa !8   ; 2 uses
   %i.cw = load ptr, ptr %3, align 8, !tbaa !8
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 %i.cv
   store i8 %i.cn, ptr %i.cx, align 1, !tbaa !8
-  %8 = load i64, ptr %i.z, align 8, !tbaa !8
-  %i.cy = add i64 %8, 1
+  %i.cy = add i64 %i.cv, 1
   store i64 %i.cy, ptr %i.z, align 8, !tbaa !8
   br label %agxbputc.exit116
 

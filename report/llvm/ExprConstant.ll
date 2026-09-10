@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.critedge
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aj, i64 2600
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !514, !nonnull !480, !align !481 ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 136 ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 136
   %i.au = load i64, ptr %i.at, align 8
   %i.av = and i64 %i.au, 1
   %.not14 = icmp eq i64 %i.av, 0
@@ -239,10 +239,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bl = trunc nuw i64 %i.bk to i32
   store i32 %i.bl, ptr %i.bh, align 8, !tbaa !593
   %i.bm = getelementptr inbounds nuw i8, ptr %4, i64 60
-  %8 = load i64, ptr %i.at, align 8
-  %9 = trunc i64 %8 to i8
-  %10 = and i8 %9, 1
-  store i8 %10, ptr %i.bm, align 4, !tbaa !594
+  store i8 1, ptr %i.bm, align 4, !tbaa !594
   %i.bn = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 112
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bo, i8 0, i64 16, i1 false)

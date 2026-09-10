@@ -205,12 +205,9 @@ define internal fastcc noundef i64 @_RINvNtNtNtCsiRgJJXJ4lb7_6brotli3enc19backwa
   store <4 x i32> splat (i32 268435455), ptr %i.j, align 16
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 112 ; 2 uses
   store <4 x i32> splat (i32 268435455), ptr %i.k, align 16
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 128 ; 2 uses
-  store <4 x i32> splat (i32 268435455), ptr %i.l, align 16
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 144 ; 2 uses
-  store i32 268435455, ptr %i.m, align 16
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 148 ; 2 uses
-  store i32 268435455, ptr %i.n, align 4
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 128
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 144
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 148
   %i.o = and i64 %5, %4                           ; 9 uses
   %i.p = icmp eq i32 %i.d, 11
   %. = select i1 %i.p, i64 64, i64 16

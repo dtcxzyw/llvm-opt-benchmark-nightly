@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ah, i8 -1, i64 16, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ai, i8 0, i64 56, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 -1, i64 16, i1 false)
-  %i.bv = and i8 %.sroa.0.0, -2                   ; 2 uses
+  %i.bv = and i8 %.sroa.0.0, -2                   ; 3 uses
   %i.bw = load i64, ptr %i.ak, align 8, !tbaa !41
   %i.bx = uitofp i64 %i.bw to double
   %i.by = load double, ptr getelementptr inbounds nuw (i8, ptr @settings, i64 312), align 8, !tbaa !121 ; 2 uses
@@ -228,13 +228,17 @@ bb.g:                                             ; preds = %bb.f, %.preheader.p
   %i.cg = load i64, ptr %i.am, align 8, !tbaa !24 ; 2 uses
   %.not131.i = icmp eq i64 %i.cg, 0
   %.pre.i = load i64, ptr %i.ak, align 8          ; 2 uses
-  %.pre145.i = load ptr, ptr %i.an, align 8, !tbaa !25 ; 2 uses
-  br i1 %.not131.i, label %._crit_edge.i, label %.lr.ph.i
+  %.pre145.i = load ptr, ptr %i.an, align 8, !tbaa !25 ; 3 uses
+  br i1 %.not131.i, label %._crit_edge.i.thread, label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %bb.o, %bb.g
+._crit_edge.i.thread:                             ; preds = %bb.g
   call void @free(ptr noundef %.pre145.i) #21
-  %5 = load i32, ptr %i.ao, align 8, !tbaa !213   ; 2 uses
-  %.not100.i = icmp eq i32 %5, 0                  ; 2 uses
+  br label %bb.s
+
+._crit_edge.i:                                    ; preds = %bb.o
+  %.pre = load i32, ptr %i.ao, align 8, !tbaa !213 ; 3 uses
+  call void @free(ptr noundef nonnull %.pre145.i) #21
+  %.not100.i = icmp eq i32 %.pre, 0
   br i1 %.not100.i, label %bb.s, label %bb.p
 
 .lr.ph.i:                                         ; preds = %bb.g, %bb.o
@@ -326,8 +330,10 @@ bb.r:                                             ; preds = %bb.q
   call void @extstore_evict_page(ptr noundef %0, i32 noundef %i.du, i64 noundef %i.dt) #21
   br label %bb.ay
 
-bb.s:                                             ; preds = %bb.q, %bb.p, %._crit_edge.i
-  %.sroa.0.3 = phi i8 [ %i.bv, %._crit_edge.i ], [ %i.dq, %bb.q ], [ %i.dq, %bb.p ] ; 2 uses
+bb.s:                                             ; preds = %._crit_edge.i.thread, %bb.q, %bb.p, %._crit_edge.i
+  %.not100.i128 = phi i1 [ true, %._crit_edge.i ], [ false, %bb.q ], [ false, %bb.p ], [ true, %._crit_edge.i.thread ]
+  %5 = phi i32 [ 0, %._crit_edge.i ], [ %.pre, %bb.q ], [ %.pre, %bb.p ], [ 0, %._crit_edge.i.thread ]
+  %.sroa.0.3 = phi i8 [ %i.bv, %._crit_edge.i ], [ %i.dq, %bb.q ], [ %i.dq, %bb.p ], [ %i.bv, %._crit_edge.i.thread ] ; 2 uses
   %i.dv = load i32, ptr %i.as, align 16, !tbaa !213 ; 2 uses
   %.not102.i = icmp eq i32 %i.dv, 0               ; 2 uses
   br i1 %.not102.i, label %bb.w, label %bb.t
@@ -500,7 +506,7 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as
   %i.ge = icmp uge i32 %i.gb, %i.eh
-  %or.cond113.4.not182.i = select i1 %.not100.i, i1 true, i1 %i.ge
+  %or.cond113.4.not182.i = select i1 %.not100.i128, i1 true, i1 %i.ge
   %i.gf = load i64, ptr %i.ah, align 16           ; 2 uses
   %.not104.4.i = icmp eq i64 %i.gf, -1
   %or.cond.i = select i1 %or.cond113.4.not182.i, i1 true, i1 %.not104.4.i

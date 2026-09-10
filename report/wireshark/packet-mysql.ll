@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal i32 @dissect_mysql_pdu(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 106 uses
+  %i.a = alloca i32, align 4                      ; 105 uses
   %i.b = alloca i32, align 4                      ; 10 uses
   %i.c = alloca i32, align 4                      ; 8 uses
   %i.d = alloca i64, align 8                      ; 4 uses
@@ -607,7 +607,6 @@ bb.ir:                                            ; preds = %bb.ge
   %i.aki = load ptr, ptr %i.ci, align 8
   call void @col_set_str(ptr noundef %i.aki, i32 noundef 25, ptr noundef nonnull @.str.1229)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i32 4, ptr %i.a, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   %i.akj = load i32, ptr %.0, align 8             ; 4 uses

@@ -205,7 +205,7 @@ bb.a:
   %i.ap = getelementptr inbounds [8 x i8], ptr %i.an, i64 %i.ao
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !43
   %i.ar = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %i.j
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !45 ; 30 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !45 ; 27 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.o, i64 14384
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !66 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.o, i64 15268
@@ -513,10 +513,10 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   ]
 
 bb.q:                                             ; preds = %bb.p
-  %i.ft = load i16, ptr %i.as, align 2, !tbaa !46
+  %i.ft = load i16, ptr %i.as, align 2, !tbaa !46 ; 2 uses
   %i.fu = sdiv i16 %i.ft, 4                       ; 2 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %i.as, i64 2 ; 2 uses
-  %i.fw = load i16, ptr %i.fv, align 2, !tbaa !46
+  %i.fv = getelementptr inbounds nuw i8, ptr %i.as, i64 2
+  %i.fw = load i16, ptr %i.fv, align 2, !tbaa !46 ; 2 uses
   %i.fx = sdiv i16 %i.fw, 4                       ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fq, i64 4168
@@ -562,17 +562,15 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.he = call noundef i32 @llvm.smin.i32(i32 %i.hd, i32 %i.hb)
   %i.hf = trunc i32 %i.he to i16
   store i16 %i.hf, ptr %i.fy, align 2, !tbaa !46
-  %7 = load i16, ptr %i.as, align 2, !tbaa !46
-  %8 = load i16, ptr %i.fv, align 2, !tbaa !46
   %i.hg = load i32, ptr %6, align 4, !tbaa !7
-  %i.hh = call i32 @UMHEXIntegerPelBlockMotionSearch(ptr noundef nonnull @orig_pic, i16 noundef signext %0, i32 noundef %1, i32 noundef %i.r, i32 noundef %i.u, i32 noundef %4, i16 noundef signext %7, i16 noundef signext %8, ptr noundef nonnull %i.b, ptr noundef nonnull %i.fy, i32 noundef %.pre547, i32 noundef 2147483647, i32 noundef %i.hg) #9
+  %i.hh = call i32 @UMHEXIntegerPelBlockMotionSearch(ptr noundef nonnull @orig_pic, i16 noundef signext %0, i32 noundef %1, i32 noundef %i.r, i32 noundef %i.u, i32 noundef %4, i16 noundef signext %i.ft, i16 noundef signext %i.fw, ptr noundef nonnull %i.b, ptr noundef nonnull %i.fy, i32 noundef %.pre547, i32 noundef 2147483647, i32 noundef %i.hg) #9
   br label %.loopexit
 
 bb.t:                                             ; preds = %bb.p
-  %i.hi = load i16, ptr %i.as, align 2, !tbaa !46
+  %i.hi = load i16, ptr %i.as, align 2, !tbaa !46 ; 2 uses
   %i.hj = sdiv i16 %i.hi, 4                       ; 2 uses
-  %i.hk = getelementptr inbounds nuw i8, ptr %i.as, i64 2 ; 2 uses
-  %i.hl = load i16, ptr %i.hk, align 2, !tbaa !46
+  %i.hk = getelementptr inbounds nuw i8, ptr %i.as, i64 2
+  %i.hl = load i16, ptr %i.hk, align 2, !tbaa !46 ; 2 uses
   %i.hm = sdiv i16 %i.hl, 4                       ; 2 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %i.fq, i64 4168
@@ -618,10 +616,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.it = call noundef i32 @llvm.smin.i32(i32 %i.is, i32 %i.iq)
   %i.iu = trunc i32 %i.it to i16
   store i16 %i.iu, ptr %i.hn, align 2, !tbaa !46
-  %9 = load i16, ptr %i.as, align 2, !tbaa !46
-  %10 = load i16, ptr %i.hk, align 2, !tbaa !46
   %i.iv = load i32, ptr %6, align 4, !tbaa !7
-  %i.iw = call i32 @smpUMHEXIntegerPelBlockMotionSearch(ptr noundef nonnull @orig_pic, i16 noundef signext %0, i32 noundef %1, i32 noundef %i.r, i32 noundef %i.u, i32 noundef %4, i16 noundef signext %9, i16 noundef signext %10, ptr noundef nonnull %i.b, ptr noundef nonnull %i.hn, i32 noundef %.pre546, i32 noundef 2147483647, i32 noundef %i.iv) #9 ; 10 uses
+  %i.iw = call i32 @smpUMHEXIntegerPelBlockMotionSearch(ptr noundef nonnull @orig_pic, i16 noundef signext %0, i32 noundef %1, i32 noundef %i.r, i32 noundef %i.u, i32 noundef %4, i16 noundef signext %i.hi, i16 noundef signext %i.hl, ptr noundef nonnull %i.b, ptr noundef nonnull %i.hn, i32 noundef %.pre546, i32 noundef 2147483647, i32 noundef %i.iv) #9 ; 10 uses
   %i.ix = ashr i32 %i.l, 2                        ; 3 uses
   %i.iy = icmp sgt i32 %i.ix, 0
   br i1 %i.iy, label %.preheader474.lr.ph, label %.loopexit
@@ -901,10 +897,10 @@ bb.ac:                                            ; preds = %bb.p
   br label %.loopexit
 
 bb.ad:                                            ; preds = %bb.p
-  %i.po = load i16, ptr %i.as, align 2, !tbaa !46
+  %i.po = load i16, ptr %i.as, align 2, !tbaa !46 ; 2 uses
   %i.pp = sdiv i16 %i.po, 4                       ; 2 uses
-  %i.pq = getelementptr inbounds nuw i8, ptr %i.as, i64 2 ; 2 uses
-  %i.pr = load i16, ptr %i.pq, align 2, !tbaa !46
+  %i.pq = getelementptr inbounds nuw i8, ptr %i.as, i64 2
+  %i.pr = load i16, ptr %i.pq, align 2, !tbaa !46 ; 2 uses
   %i.ps = sdiv i16 %i.pr, 4                       ; 2 uses
   %i.pt = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
   %i.pu = getelementptr inbounds nuw i8, ptr %i.fq, i64 4168
@@ -950,10 +946,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.qz = call noundef i32 @llvm.smin.i32(i32 %i.qy, i32 %i.qw)
   %i.ra = trunc i32 %i.qz to i16
   store i16 %i.ra, ptr %i.pt, align 2, !tbaa !46
-  %11 = load i16, ptr %i.as, align 2, !tbaa !46
-  %12 = load i16, ptr %i.pq, align 2, !tbaa !46
   %i.rb = load i32, ptr %6, align 4, !tbaa !7
-  %i.rc = call i32 @FullPelBlockMotionSearch(ptr noundef nonnull @orig_pic, i16 noundef signext %0, i32 noundef %1, i32 noundef %i.r, i32 noundef %i.u, i32 noundef %4, i16 noundef signext %11, i16 noundef signext %12, ptr noundef nonnull %i.b, ptr noundef nonnull %i.pt, i32 noundef %.pre548, i32 noundef 2147483647, i32 noundef %i.rb) #9
+  %i.rc = call i32 @FullPelBlockMotionSearch(ptr noundef nonnull @orig_pic, i16 noundef signext %0, i32 noundef %1, i32 noundef %i.r, i32 noundef %i.u, i32 noundef %4, i16 noundef signext %i.po, i16 noundef signext %i.pr, ptr noundef nonnull %i.b, ptr noundef nonnull %i.pt, i32 noundef %.pre548, i32 noundef 2147483647, i32 noundef %i.rb) #9
   br label %.loopexit
 
 .loopexit:                                        ; preds = %._crit_edge489.split, %._crit_edge489.split.us.us, %bb.v, %.preheader474.lr.ph, %bb.ac, %bb.af, %bb.ab, %bb.s

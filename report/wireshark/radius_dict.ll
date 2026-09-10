@@ -204,8 +204,8 @@ g_strdup_inline.exit:
   %i.j = tail call noalias ptr @g_strdup(ptr noundef %1) ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 272
   store ptr %i.j, ptr %i.k, align 8
-  %i.l = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef null, ptr noundef nonnull @.str.20, ptr noundef %i.j, ptr noundef %2) ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 280 ; 3 uses
+  %i.l = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef null, ptr noundef nonnull @.str.20, ptr noundef %i.j, ptr noundef %2) ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 280 ; 2 uses
   store ptr %i.l, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 360
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 192 ; 2 uses
@@ -231,8 +231,8 @@ g_strdup_inline.exit:
   store i32 1, ptr %i.aa, align 4
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 188
   store i32 0, ptr %i.ab, align 4
-  %i.ac = tail call ptr @g_string_new(ptr noundef nonnull @.str.21) ; 3 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 400 ; 3 uses
+  %i.ac = tail call ptr @g_string_new(ptr noundef nonnull @.str.21) ; 5 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 400 ; 2 uses
   store ptr %i.ac, ptr %i.ad, align 8
   %i.ae = tail call noalias ptr @fopen(ptr noundef %i.l, ptr noundef nonnull @.str.10) ; 3 uses
   %.not = icmp eq ptr %i.ae, null
@@ -258,13 +258,11 @@ bb.b:                                             ; preds = %g_strdup_inline.exi
 bb.c:                                             ; preds = %bb.b
   %i.al = tail call ptr @__errno_location() #30
   store i32 12, ptr %i.al, align 4
-  %5 = load ptr, ptr %i.ad, align 8               ; 2 uses
   %i.am = tail call ptr @strerror(i32 noundef 12) #28
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %5, ptr noundef nonnull @.str.22, ptr noundef %i.am)
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.ac, ptr noundef nonnull @.str.22, ptr noundef %i.am)
   %i.an = tail call i32 @fclose(ptr noundef nonnull %i.ae) ; 0 uses
-  %6 = load ptr, ptr %i.m, align 8
-  tail call void @g_free(ptr noundef %6)
-  %i.ao = tail call ptr @g_string_free_and_steal(ptr noundef %5)
+  tail call void @g_free(ptr noundef %i.l)
+  %i.ao = tail call ptr @g_string_free_and_steal(ptr noundef %i.ac)
   store ptr %i.ao, ptr %3, align 8
   br label %bb.g
 

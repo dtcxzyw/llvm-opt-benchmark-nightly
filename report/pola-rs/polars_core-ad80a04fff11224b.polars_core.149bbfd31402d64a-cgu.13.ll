@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %_RNvMs3_NtCs
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNvMs4_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtypeNtB5_8DataType12try_to_arrow(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(address) dereferenceable(72) %0, ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(48) %1, i16 noundef %2) unnamed_addr #5 personality ptr @rust_eh_personality !dbg !213513 {
+define internal fastcc void @_RNvMs4_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtypeNtB5_8DataType12try_to_arrow(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(48) %1, i16 noundef %2) unnamed_addr #5 personality ptr @rust_eh_personality !dbg !213513 {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 5 uses
@@ -224,7 +224,6 @@ bb.a:
   %i.m = alloca [24 x i8], align 8                ; 2 uses
   %i.n = alloca [32 x i8], align 8                ; 3 uses
   %i.o = alloca [72 x i8], align 8                ; 6 uses
-  %3 = alloca [32 x i8], align 8                  ; 4 uses
   %i.p = alloca [72 x i8], align 8                ; 5 uses
   %i.q = alloca [72 x i8], align 8                ; 5 uses
   %.sroa.537.sroa.0 = alloca [29 x i8], align 2   ; 4 uses
@@ -506,12 +505,9 @@ _RNvMNtCsgZ49sUHp3tW_5alloc5boxedINtB2_3BoxNtNtNtCs8774dFTUdNv_12polars_arrow9da
   br label %bb.an, !dbg !213806
 
 bb.ad:                                            ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %3), !dbg !213807
-  call void @_RNvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array6object8registry24get_object_physical_type(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %3), !dbg !213807
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !213808
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bn, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !dbg !213808
-  store i64 18, ptr %0, align 8, !dbg !213808
-  call void @llvm.lifetime.end.p0(ptr nonnull %3), !dbg !213809
+  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !213807
+  tail call void @_RNvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array6object8registry24get_object_physical_type(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.bn), !dbg !213808
+  store i64 18, ptr %0, align 8, !dbg !213807
   br label %bb.an, !dbg !213809
 
 bb.ae:                                            ; preds = %bb.a
@@ -914,8 +910,8 @@ begin_hunk_1_@llvm.umin.i8
 !213804 = !DILocation(line: 1020, column: 13, scope: !213533)
 !213805 = !DILocation(line: 1018, column: 25, scope: !213533)
 !213806 = !DILocation(line: 1020, column: 15, scope: !213513)
-!213807 = !DILocation(line: 1023, column: 29, scope: !213513)
-!213808 = !DILocation(line: 1023, column: 26, scope: !213513)
+!213807 = !DILocation(line: 1023, column: 26, scope: !213513)
+!213808 = !DILocation(line: 1023, column: 29, scope: !213513)
 !213809 = !DILocation(line: 1023, column: 55, scope: !213513)
 !213810 = !DILocation(line: 1021, column: 21, scope: !213513)
 !213811 = !DILocation(line: 1021, column: 43, scope: !213513)

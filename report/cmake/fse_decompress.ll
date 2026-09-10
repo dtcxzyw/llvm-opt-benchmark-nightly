@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %.loopexit137, %bb.r
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @FSE_decompress_wksp_bmi2(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, i32 noundef %4, ptr noundef %5, i64 noundef %6, i32 noundef %7) local_unnamed_addr #1 {
 bb.a:
-  %8 = alloca %struct.BIT_DStream_t, align 8      ; 21 uses
+  %8 = alloca %struct.BIT_DStream_t, align 8      ; 19 uses
   %9 = alloca %struct.FSE_DState_t, align 8       ; 8 uses
   %10 = alloca %struct.FSE_DState_t, align 8      ; 8 uses
   %11 = alloca %struct.BIT_DStream_t, align 8     ; 14 uses
@@ -397,13 +397,13 @@ BIT_initDStream.exit.i:                           ; preds = %bb.i
 bb.r:                                             ; preds = %BIT_initDStream.exit.i, %BIT_initDStream.exit.thread182.i
   call fastcc void @FSE_initDState(ptr noundef %9, ptr noundef %8, ptr noundef nonnull %i.c)
   call fastcc void @FSE_initDState(ptr noundef %10, ptr noundef %8, ptr noundef nonnull %i.c)
-  %i.cv = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.cv = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.cw = load i32, ptr %i.cv, align 8, !tbaa !23 ; 6 uses
   %i.cx = icmp ugt i32 %i.cw, 64
   br i1 %i.cx, label %FSE_decompress_usingDTable_generic.exit12.i, label %bb.s, !prof !24
 
 bb.s:                                             ; preds = %bb.r
-  %i.cy = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.cy = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !21 ; 8 uses
   %i.da = load ptr, ptr %i.ao, align 8, !tbaa !20 ; 4 uses
   %.not.i28.i = icmp ult ptr %i.cz, %i.da
@@ -517,9 +517,9 @@ bb.x:                                             ; preds = %bb.w
   br label %BIT_reloadDStream.exit27.i
 
 BIT_reloadDStream.exit27.i:                       ; preds = %bb.x, %bb.v
-  %.pn449.in.i = phi i32 [ %i.ep, %bb.v ], [ %.021.i23.i, %bb.x ]
-  %.promoted226.i = phi i32 [ %i.eq, %bb.v ], [ %i.fb, %bb.x ] ; 3 uses
-  %.022.i22.i = phi i1 [ true, %bb.v ], [ %i.ew, %bb.x ]
+  %.pn449.in.i = phi i32 [ %.021.i23.i, %bb.x ], [ %i.ep, %bb.v ]
+  %.promoted226.i = phi i32 [ %i.fb, %bb.x ], [ %i.eq, %bb.v ] ; 3 uses
+  %.022.i22.i = phi i1 [ %i.ew, %bb.x ], [ true, %bb.v ]
   %.pn449.i = zext i32 %.pn449.in.i to i64
   %.pn.i = sub nsw i64 0, %.pn449.i
   %.promoted237.i = getelementptr inbounds i8, ptr %i.eo, i64 %.pn.i ; 3 uses
@@ -533,17 +533,19 @@ BIT_reloadDStream.exit27.i:                       ; preds = %bb.x, %bb.v
   %i.ff = phi ptr [ %i.ed, %BIT_reloadDStream.exit34.i ], [ %i.ei, %BIT_reloadDStream.exit27.i ], [ %i.ei, %bb.w ], [ %i.ei, %bb.y ] ; 2 uses
   %i.fg = phi i64 [ %i.eb, %BIT_reloadDStream.exit34.i ], [ %i.ej, %BIT_reloadDStream.exit27.i ], [ %i.ej, %bb.w ], [ %i.ej, %bb.y ] ; 2 uses
   %i.fh = phi ptr [ %i.dg, %BIT_reloadDStream.exit34.i ], [ %i.ek, %BIT_reloadDStream.exit27.i ], [ %i.ek, %bb.w ], [ %i.ek, %bb.y ] ; 4 uses
-  %.val.i73.sink.i34 = phi i64 [ %.val66.i, %BIT_reloadDStream.exit34.i ], [ %.val.i73.sink.i, %bb.y ], [ %.val.i.i212.i37, %bb.w ], [ %.val.i73.sink.i, %BIT_reloadDStream.exit27.i ] ; 2 uses
-  %.lcssa33 = phi i64 [ %.promoted216.i, %BIT_reloadDStream.exit34.i ], [ %i.hh, %bb.y ], [ %i.en, %bb.w ], [ %i.en, %BIT_reloadDStream.exit27.i ] ; 2 uses
-  %.lcssa32 = phi i64 [ %.promoted214.i, %BIT_reloadDStream.exit34.i ], [ %i.gt, %bb.y ], [ %i.em, %bb.w ], [ %i.em, %BIT_reloadDStream.exit27.i ] ; 2 uses
-  %.037.i9.i.lcssa.a = phi ptr [ %0, %BIT_reloadDStream.exit34.i ], [ %i.hj, %bb.y ], [ %.037.i9.i38, %bb.w ], [ %.037.i9.i38, %BIT_reloadDStream.exit27.i ] ; 2 uses
-  %.promoted226403.i = phi i32 [ %i.ea, %BIT_reloadDStream.exit34.i ], [ %i.hf, %bb.y ], [ %i.el, %bb.w ], [ %.promoted226.i, %BIT_reloadDStream.exit27.i ]
-  %.promoted237401.i = phi ptr [ @BIT_reloadDStream.zeroFilled, %BIT_reloadDStream.exit34.i ], [ @BIT_reloadDStream.zeroFilled, %bb.y ], [ %i.eo, %bb.w ], [ %.promoted237.i, %BIT_reloadDStream.exit27.i ]
-  store i64 %.val.i73.sink.i34, ptr %8, align 8
-  store i64 %.lcssa32, ptr %9, align 8
-  store i64 %.lcssa33, ptr %10, align 8
+  %.val.i73.sink.i34 = phi i64 [ %.promoted216.i, %BIT_reloadDStream.exit34.i ], [ %i.hh, %bb.y ], [ %i.en, %bb.w ], [ %i.en, %BIT_reloadDStream.exit27.i ] ; 2 uses
+  %.lcssa33 = phi i64 [ %.promoted214.i, %BIT_reloadDStream.exit34.i ], [ %i.gt, %bb.y ], [ %i.em, %bb.w ], [ %i.em, %BIT_reloadDStream.exit27.i ] ; 2 uses
+  %.037.i9.i.lcssa = phi ptr [ %0, %BIT_reloadDStream.exit34.i ], [ %i.hj, %bb.y ], [ %.037.i9.i38, %bb.w ], [ %.037.i9.i38, %BIT_reloadDStream.exit27.i ] ; 2 uses
+  %14 = phi i32 [ %i.ea, %BIT_reloadDStream.exit34.i ], [ %i.hf, %bb.y ], [ %i.el, %bb.w ], [ %.promoted226.i, %BIT_reloadDStream.exit27.i ] ; 2 uses
+  %.lcssa32 = phi i64 [ %.val66.i, %BIT_reloadDStream.exit34.i ], [ %.val.i73.sink.i, %bb.y ], [ %.val.i.i212.i37, %bb.w ], [ %.val.i73.sink.i, %BIT_reloadDStream.exit27.i ] ; 2 uses
+  %.037.i9.i.lcssa.a = phi ptr [ @BIT_reloadDStream.zeroFilled, %BIT_reloadDStream.exit34.i ], [ @BIT_reloadDStream.zeroFilled, %bb.y ], [ %i.eo, %bb.w ], [ %.promoted237.i, %BIT_reloadDStream.exit27.i ] ; 2 uses
+  store ptr %.037.i9.i.lcssa.a, ptr %i.cy, align 8
+  store i32 %14, ptr %i.cv, align 8
+  store i64 %.lcssa32, ptr %8, align 8
+  store i64 %.lcssa33, ptr %9, align 8
+  store i64 %.val.i73.sink.i34, ptr %10, align 8
   %i.fi = getelementptr inbounds i8, ptr %i.aj, i64 -2 ; 3 uses
-  %i.fj = icmp ugt ptr %.037.i9.i.lcssa.a, %i.fi
+  %i.fj = icmp ugt ptr %.037.i9.i.lcssa, %i.fi
   br i1 %i.fj, label %FSE_decompress_usingDTable_generic.exit12.i, label %.lr.ph.i
 
 bb.y:                                             ; preds = %BIT_reloadDStream.exit27.i
@@ -627,12 +629,12 @@ bb.y:                                             ; preds = %BIT_reloadDStream.e
   br i1 %i.hk, label %.preheader193.i, label %.lr.ph, !prof !44, !llvm.loop !40
 
 .lr.ph.i:                                         ; preds = %.preheader193.i, %BIT_reloadDStream.exit.i
-  %i.hl = phi ptr [ %16, %BIT_reloadDStream.exit.i ], [ %.promoted237401.i, %.preheader193.i ] ; 6 uses
-  %.1.i10232.i = phi ptr [ %i.jf, %BIT_reloadDStream.exit.i ], [ %.037.i9.i.lcssa.a, %.preheader193.i ] ; 5 uses
-  %i.hm = phi i64 [ %i.ia, %BIT_reloadDStream.exit.i ], [ %.lcssa32, %.preheader193.i ]
-  %.val.i.i108.i = phi i64 [ %.val.i117224.i, %BIT_reloadDStream.exit.i ], [ %.val.i73.sink.i34, %.preheader193.i ] ; 2 uses
-  %i.hn = phi i32 [ %17, %BIT_reloadDStream.exit.i ], [ %.promoted226403.i, %.preheader193.i ] ; 2 uses
-  %i.ho = phi i64 [ %i.je, %BIT_reloadDStream.exit.i ], [ %.lcssa33, %.preheader193.i ] ; 2 uses
+  %i.hl = phi ptr [ %29, %BIT_reloadDStream.exit.i ], [ %.037.i9.i.lcssa.a, %.preheader193.i ] ; 7 uses
+  %.1.i10232.i = phi ptr [ %i.jf, %BIT_reloadDStream.exit.i ], [ %.037.i9.i.lcssa, %.preheader193.i ] ; 5 uses
+  %i.hm = phi i64 [ %i.ia, %BIT_reloadDStream.exit.i ], [ %.lcssa33, %.preheader193.i ]
+  %.val.i.i108.i = phi i64 [ %.val.i117226.i, %BIT_reloadDStream.exit.i ], [ %.lcssa32, %.preheader193.i ] ; 2 uses
+  %i.hn = phi i32 [ %30, %BIT_reloadDStream.exit.i ], [ %14, %.preheader193.i ] ; 2 uses
+  %i.ho = phi i64 [ %i.je, %BIT_reloadDStream.exit.i ], [ %.val.i73.sink.i34, %.preheader193.i ] ; 2 uses
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %i.hm ; 3 uses
   %.sroa.0.0.copyload.i95.i = load i16, ptr %i.hp, align 2, !tbaa !10
   %.sroa.4.0..sroa_idx.i96.i = getelementptr inbounds nuw i8, ptr %i.hp, i64 2
@@ -661,8 +663,12 @@ bb.z:                                             ; preds = %.lr.ph.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.id = lshr i32 %i.hy, 3
+  %15 = zext nneg i32 %i.id to i64
+  %16 = sub nsw i64 0, %15
+  %17 = getelementptr inbounds i8, ptr %i.hl, i64 %16 ; 2 uses
   %i.ie = and i32 %i.hy, 7
-  br label %.sink.split.i
+  %.val.i102.i = load i64, ptr %17, align 1, !tbaa !13
+  br label %bb.ae
 
 bb.ab:                                            ; preds = %bb.z
   %i.if = icmp eq ptr %i.hl, %i.fh
@@ -678,9 +684,13 @@ bb.ac:                                            ; preds = %bb.ab
   %i.im = sub i64 %i.il, %i.fg
   %i.in = trunc i64 %i.im to i32
   %.021.i16.i = select i1 %i.ik, i32 %i.in, i32 %i.ig ; 2 uses
+  %18 = zext i32 %.021.i16.i to i64
+  %19 = sub nsw i64 0, %18
+  %20 = getelementptr inbounds i8, ptr %i.hl, i64 %19 ; 2 uses
   %i.io = shl i32 %.021.i16.i, 3
   %i.ip = sub i32 %i.hy, %i.io
-  br label %.sink.split.i
+  %.val68.i = load i64, ptr %20, align 1, !tbaa !13
+  br label %bb.ae
 
 bb.ad:                                            ; preds = %.lr.ph.i
   %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.fe, i64 %i.ho
@@ -690,20 +700,10 @@ bb.ad:                                            ; preds = %.lr.ph.i
   store i8 %.sroa.4.0.copyload.i105.i, ptr %i.ib, align 1, !tbaa !14
   br label %bb.al
 
-.sink.split.i:                                    ; preds = %bb.ac, %bb.aa
-  %.pn451.in.i = phi i32 [ %i.id, %bb.aa ], [ %.021.i16.i, %bb.ac ]
-  %.ph446.i = phi i32 [ %i.ie, %bb.aa ], [ %i.ip, %bb.ac ]
-  %.pn451.i = zext i32 %.pn451.in.i to i64
-  %.pn450.i = sub nsw i64 0, %.pn451.i
-  %.ph.i = getelementptr inbounds i8, ptr %i.hl, i64 %.pn450.i ; 2 uses
-  %.val.i102.sink.i = load i64, ptr %.ph.i, align 1, !tbaa !13 ; 2 uses
-  store i64 %.val.i102.sink.i, ptr %8, align 8, !tbaa !22
-  br label %bb.ae
-
-bb.ae:                                            ; preds = %.sink.split.i, %bb.ab
-  %14 = phi ptr [ %i.hl, %bb.ab ], [ %.ph.i, %.sink.split.i ] ; 6 uses
-  %15 = phi i32 [ %i.hy, %bb.ab ], [ %.ph446.i, %.sink.split.i ] ; 2 uses
-  %.val.i.i123.i = phi i64 [ %.val.i.i108.i, %bb.ab ], [ %.val.i102.sink.i, %.sink.split.i ] ; 2 uses
+bb.ae:                                            ; preds = %bb.ac, %bb.ab, %bb.aa
+  %21 = phi ptr [ %i.hl, %bb.ab ], [ %17, %bb.aa ], [ %20, %bb.ac ] ; 7 uses
+  %22 = phi i32 [ %i.hy, %bb.ab ], [ %i.ie, %bb.aa ], [ %i.ip, %bb.ac ] ; 2 uses
+  %.val.i117227.i = phi i64 [ %.val.i.i108.i, %bb.ab ], [ %.val.i102.i, %bb.aa ], [ %.val68.i, %bb.ac ] ; 2 uses
   %i.is = icmp ugt ptr %i.ib, %i.fi
   br i1 %i.is, label %FSE_decompress_usingDTable_generic.exit12.i, label %bb.af
 
@@ -715,14 +715,14 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.5.0..sroa_idx.i113.i = getelementptr inbounds nuw i8, ptr %i.it, i64 3
   %.sroa.5.0.copyload.i114.i = load i8, ptr %.sroa.5.0..sroa_idx.i113.i, align 1, !tbaa !14
   %i.iu = zext i8 %.sroa.5.0.copyload.i114.i to i32 ; 2 uses
-  %i.iv = and i32 %15, 63
+  %i.iv = and i32 %22, 63
   %i.iw = zext nneg i32 %i.iv to i64
-  %i.ix = shl i64 %.val.i.i123.i, %i.iw
+  %i.ix = shl i64 %.val.i117227.i, %i.iw
   %i.iy = sub nsw i32 0, %i.iu
   %i.iz = and i32 %i.iy, 63
   %i.ja = zext nneg i32 %i.iz to i64
   %i.jb = lshr i64 %i.ix, %i.ja
-  %i.jc = add i32 %15, %i.iu                      ; 6 uses
+  %i.jc = add i32 %22, %i.iu                      ; 6 uses
   %i.jd = zext i16 %.sroa.0.0.copyload.i110.i to i64
   %i.je = add i64 %i.jb, %i.jd
   %i.jf = getelementptr inbounds nuw i8, ptr %.1.i10232.i, i64 2 ; 3 uses
@@ -731,46 +731,44 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %i.jg, label %bb.ak, label %bb.ag, !prof !24
 
 bb.ag:                                            ; preds = %bb.af
-  %.not.i13.i = icmp ult ptr %14, %i.da
+  %.not.i13.i = icmp ult ptr %21, %i.da
   br i1 %.not.i13.i, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %i.jh = lshr i32 %i.jc, 3
+  %23 = zext nneg i32 %i.jh to i64
+  %24 = sub nsw i64 0, %23
+  %25 = getelementptr inbounds i8, ptr %21, i64 %24 ; 2 uses
   %i.ji = and i32 %i.jc, 7
-  br label %BIT_reloadDStream.exit.sink.split.i
+  %.val.i117.i = load i64, ptr %25, align 1, !tbaa !13
+  br label %BIT_reloadDStream.exit.i
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.jj = icmp eq ptr %14, %i.fh
+  %i.jj = icmp eq ptr %21, %i.fh
   br i1 %i.jj, label %BIT_reloadDStream.exit.i, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.jk = lshr i32 %i.jc, 3                       ; 2 uses
   %i.jl = zext nneg i32 %i.jk to i64
   %i.jm = sub nsw i64 0, %i.jl
-  %i.jn = getelementptr inbounds i8, ptr %14, i64 %i.jm
+  %i.jn = getelementptr inbounds i8, ptr %21, i64 %i.jm
   %i.jo = icmp ult ptr %i.jn, %i.fh
-  %i.jp = ptrtoint ptr %14 to i64
+  %i.jp = ptrtoint ptr %21 to i64
   %i.jq = sub i64 %i.jp, %i.fg
   %i.jr = trunc i64 %i.jq to i32
   %.021.i.i = select i1 %i.jo, i32 %i.jr, i32 %i.jk ; 2 uses
+  %26 = zext i32 %.021.i.i to i64
+  %27 = sub nsw i64 0, %26
+  %28 = getelementptr inbounds i8, ptr %21, i64 %27 ; 2 uses
   %i.js = shl i32 %.021.i.i, 3
   %i.jt = sub i32 %i.jc, %i.js
-  br label %BIT_reloadDStream.exit.sink.split.i
-
-BIT_reloadDStream.exit.sink.split.i:              ; preds = %bb.aj, %bb.ah
-  %.pn453.in.i = phi i32 [ %i.jh, %bb.ah ], [ %.021.i.i, %bb.aj ]
-  %.ph448.i = phi i32 [ %i.ji, %bb.ah ], [ %i.jt, %bb.aj ]
-  %.pn453.i = zext i32 %.pn453.in.i to i64
-  %.pn452.i = sub nsw i64 0, %.pn453.i
-  %.ph447.i = getelementptr inbounds i8, ptr %14, i64 %.pn452.i ; 2 uses
-  %.val.i117.sink.i = load i64, ptr %.ph447.i, align 1, !tbaa !13 ; 2 uses
-  store i64 %.val.i117.sink.i, ptr %8, align 8, !tbaa !22
+  %.val69.i = load i64, ptr %28, align 1, !tbaa !13
   br label %BIT_reloadDStream.exit.i
 
-BIT_reloadDStream.exit.i:                         ; preds = %BIT_reloadDStream.exit.sink.split.i, %bb.ai
-  %16 = phi ptr [ %14, %bb.ai ], [ %.ph447.i, %BIT_reloadDStream.exit.sink.split.i ]
-  %17 = phi i32 [ %i.jc, %bb.ai ], [ %.ph448.i, %BIT_reloadDStream.exit.sink.split.i ]
-  %.val.i117224.i = phi i64 [ %.val.i.i123.i, %bb.ai ], [ %.val.i117.sink.i, %BIT_reloadDStream.exit.sink.split.i ]
+BIT_reloadDStream.exit.i:                         ; preds = %bb.aj, %bb.ai, %bb.ah
+  %29 = phi ptr [ %21, %bb.ai ], [ %25, %bb.ah ], [ %28, %bb.aj ]
+  %30 = phi i32 [ %i.jc, %bb.ai ], [ %i.ji, %bb.ah ], [ %i.jt, %bb.aj ]
+  %.val.i117226.i = phi i64 [ %.val.i117227.i, %bb.ai ], [ %.val.i117.i, %bb.ah ], [ %.val69.i, %bb.aj ]
   %i.ju = icmp ugt ptr %i.jf, %i.fi
   br i1 %i.ju, label %FSE_decompress_usingDTable_generic.exit12.i, label %.lr.ph.i
 

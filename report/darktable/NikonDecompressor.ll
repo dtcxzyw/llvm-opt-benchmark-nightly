@@ -205,7 +205,7 @@ bb.a:
   %.sroa.0.i.i.i.i = alloca i32, align 4          ; 5 uses
   %5 = alloca %"struct.std::array.108", align 1   ; 16 uses
   %6 = alloca %"struct.std::array.109", align 2   ; 8 uses
-  %7 = alloca %"class.rawspeed::(anonymous namespace)::NikonLASDecompressor", align 8 ; 27 uses
+  %7 = alloca %"class.rawspeed::(anonymous namespace)::NikonLASDecompressor", align 8 ; 26 uses
   %8 = alloca %"struct.std::array.23", align 8    ; 5 uses
   %9 = alloca %"class.rawspeed::RawImageCurveGuard", align 8 ; 7 uses
   %10 = alloca %"class.rawspeed::BitStreamerMSB", align 8 ; 18 uses
@@ -270,13 +270,13 @@ bb.f:                                             ; preds = %bb.e
   invoke void @_ZN8rawspeed17NikonDecompressor10decompressINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS3_EEEEEEvRNS_14BitStreamerMSBEii(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(40) %10, i32 noundef 0, i32 noundef %i.u)
           to label %bb.be unwind label %bb.g
 
-bb.g:                                             ; preds = %bb.d, %bb.h, %bb.f
+bb.g:                                             ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i, %.invoke.i.i, %bb.d, %bb.h, %bb.f
   %i.v = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %12, %14, %_ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressorD2Ev.exit28.i, %bb.g
-  %eh.lpad-body = phi { ptr, i32 } [ %i.v, %bb.g ], [ %i.qs, %_ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressorD2Ev.exit28.i ], [ %13, %14 ], [ %13, %12 ]
+.body:                                            ; preds = %_ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressorD2Ev.exit28.i, %bb.g
+  %eh.lpad-body = phi { ptr, i32 } [ %i.v, %bb.g ], [ %i.qs, %_ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressorD2Ev.exit28.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #25
   call void @_ZN8rawspeed18RawImageCurveGuardD2Ev(ptr noundef nonnull align 8 dead_on_return(17) dereferenceable(24) %9) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
@@ -302,11 +302,10 @@ iter.check:                                       ; preds = %bb.h
   store i8 1, ptr %7, align 8, !tbaa !279, !alias.scope !268
   %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 1
   store i8 0, ptr %i.ae, align 1, !tbaa !280, !alias.scope !268
-  %i.af = getelementptr inbounds nuw i8, ptr %7, i64 2272 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %7, i64 2272
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.af, i8 0, i64 24, i1 false), !alias.scope !268
   %i.ag = zext i32 %i.z to i64
   %i.ah = getelementptr inbounds nuw [32 x i8], ptr @_ZN8rawspeed17NikonDecompressor10nikon_treeE, i64 %i.ag ; 10 uses
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %7, i64 12
   store i32 0, ptr %i.ai, align 4, !tbaa !33, !alias.scope !268
   %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -363,7 +362,6 @@ iter.check:                                       ; preds = %bb.h
   %i.bz = getelementptr inbounds nuw i8, ptr %7, i64 52
   store i32 %i.by, ptr %i.bz, align 4, !tbaa !33, !alias.scope !268
   %i.ca = getelementptr inbounds nuw i8, ptr %7, i64 56
-  store i32 0, ptr %11, align 8, !tbaa !33, !alias.scope !268
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ah, i64 16 ; 3 uses
   %i.cc = add nuw nsw i32 %i.bn, %i.bq            ; 3 uses
   %i.cd = add nuw nsw i32 %i.cc, %i.bu            ; 4 uses
@@ -453,6 +451,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not.i.i.i, label %.lr.ph.split.i.2.i.i.i, label %vec.epilog.scalar.ph, !llvm.loop !252
 
 .lr.ph.split.i.2.i.i.i:                           ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25, !noalias !268
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25, !noalias !268
   store i8 2, ptr %5, align 1, !noalias !268
@@ -819,7 +818,7 @@ vec.epilog.scalar.ph97.preheader:                 ; preds = %iter.check96, %vec.
 .invoke.i.i:                                      ; preds = %bb.j, %bb.l, %bb.q, %.lr.ph.i.10.i.i.i, %.lr.ph.i.9.i.i.i, %.lr.ph.i.8.i.i.i, %.lr.ph.i.7.i.i.i, %.lr.ph.split.i.5.i.i.i, %.lr.ph.split.i.4.i.i.i, %.lr.ph.split.i.3.i.i.i, %.lr.ph.split.i.2.i.i.i
   %i.ih = phi ptr [ @.str.32, %bb.q ], [ @.str.29, %.lr.ph.split.i.2.i.i.i ], [ @.str.29, %.lr.ph.i.10.i.i.i ], [ @.str.29, %.lr.ph.i.9.i.i.i ], [ @.str.29, %.lr.ph.i.8.i.i.i ], [ @.str.29, %.lr.ph.i.7.i.i.i ], [ @.str.29, %.lr.ph.split.i.5.i.i.i ], [ @.str.29, %.lr.ph.split.i.4.i.i.i ], [ @.str.29, %.lr.ph.split.i.3.i.i.i ], [ @.str.31, %bb.l ], [ @.str.31, %bb.j ]
   invoke void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz(ptr noundef nonnull %i.ih, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressor23createPrefixCodeDecoderEv) #16
-          to label %.cont.i.i unwind label %12, !noalias !268
+          to label %.cont.i.i unwind label %bb.g
 
 .cont.i.i:                                        ; preds = %.invoke.i.i
   unreachable
@@ -840,7 +839,7 @@ _ZNSt5arrayIjLm256EE4fillERKj.exit.i.i.i.i:       ; preds = %vec.epilog.scalar.p
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %_ZNSt5arrayIjLm256EE4fillERKj.exit.i.i.i.i
   %i.ij = invoke noalias noundef nonnull dereferenceable(65536) ptr @_Znwm(i64 noundef 65536) #23
-          to label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i.i unwind label %12 ; 9 uses
+          to label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i.i unwind label %bb.g ; 9 uses
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i.i:     ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(65536) %i.ij, i8 0, i64 65536, i1 false)
@@ -976,22 +975,6 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
   %indvars.iv.next62.i.i.i.i.i = add nuw nsw i64 %indvars.iv61.i.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %indvars.iv.next62.i.i.i.i.i, 16384
   br i1 %exitcond.not.i.i.i.i.i, label %_ZN8rawspeed17NikonDecompressor23createPrefixCodeDecoderINS_12_GLOBAL__N_120NikonLASDecompressorEEET_j.exit.i, label %bb.r, !llvm.loop !260
-
-12:                                               ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i, %.invoke.i.i
-  %13 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %.val.i.i = load ptr, ptr %i.af, align 8, !tbaa !67, !alias.scope !268 ; 3 uses
-  %.not.i.i.i.i.i9.i.i = icmp eq ptr %.val.i.i, null
-  br i1 %.not.i.i.i.i.i9.i.i, label %.body, label %14
-
-14:                                               ; preds = %12
-  %15 = getelementptr inbounds nuw i8, ptr %7, i64 2288
-  %.val5.i.i = load ptr, ptr %15, align 8, !alias.scope !268
-  %16 = ptrtoint ptr %.val5.i.i to i64
-  %17 = ptrtoint ptr %.val.i.i to i64
-  %18 = sub i64 %16, %17
-  call void @_ZdlPvm(ptr noundef nonnull %.val.i.i, i64 noundef %18) #24
-  br label %.body
 
 _ZN8rawspeed17NikonDecompressor23createPrefixCodeDecoderINS_12_GLOBAL__N_120NikonLASDecompressorEEET_j.exit.i: ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25, !noalias !268

@@ -205,7 +205,7 @@ define hidden i32 @_ZN3jxl15DequantMatrices14EnsureComputedEP22JxlMemoryManagerS
 bb.a:
   %3 = alloca %"class.jxl::StatusOr.36", align 8  ; 7 uses
   %4 = alloca %"class.jxl::AlignedMemory", align 8 ; 5 uses
-  %i.a = alloca [52 x i64], align 16              ; 55 uses
+  %i.a = alloca [52 x i64], align 16              ; 21 uses
   %i.b = alloca i64, align 8                      ; 7 uses
   %i.c = load atomic i8, ptr @_ZGVZN3jxl15DequantMatrices7LibraryEvE15kDequantLibrary acquire, align 8
   %i.d = icmp eq i8 %i.c, 0
@@ -268,106 +268,38 @@ _ZN3jxl8StatusOrINS_13AlignedMemoryEED2Ev.exit:   ; preds = %bb.d
 .preheader91.preheader:                           ; preds = %_ZN3jxl15DequantMatrices7LibraryEv.exit, %_ZN3jxl8StatusOrINS_13AlignedMemoryEED2Ev.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
   store i64 0, ptr %i.a, align 16, !tbaa !38
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 64, ptr %5, align 8, !tbaa !38
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i64 128, ptr %6, align 16, !tbaa !38
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i64 192, ptr %i.s, align 8, !tbaa !38
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store i64 256, ptr %7, align 16, !tbaa !38
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  store i64 320, ptr %8, align 8, !tbaa !38
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store i64 384, ptr %i.t, align 16, !tbaa !38
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  store i64 448, ptr %9, align 8, !tbaa !38
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store i64 512, ptr %10, align 16, !tbaa !38
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   store i64 576, ptr %i.u, align 8, !tbaa !38
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  store i64 640, ptr %11, align 16, !tbaa !38
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 88
-  store i64 704, ptr %12, align 8, !tbaa !38
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 768, ptr %i.v, align 16, !tbaa !38
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 104
-  store i64 1024, ptr %13, align 8, !tbaa !38
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  store i64 1280, ptr %14, align 16, !tbaa !38
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   store i64 1536, ptr %i.w, align 8, !tbaa !38
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 128
-  store i64 2560, ptr %15, align 16, !tbaa !38
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  store i64 3584, ptr %16, align 8, !tbaa !38
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   store i64 4608, ptr %i.x, align 16, !tbaa !38
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 152
-  store i64 4736, ptr %17, align 8, !tbaa !38
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 160
-  store i64 4864, ptr %18, align 16, !tbaa !38
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 168
   store i64 4992, ptr %i.y, align 8, !tbaa !38
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 176
-  store i64 5248, ptr %19, align 16, !tbaa !38
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 184
-  store i64 5504, ptr %20, align 8, !tbaa !38
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 192
   store i64 5760, ptr %i.z, align 16, !tbaa !38
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 200
-  store i64 6272, ptr %21, align 8, !tbaa !38
-  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 208
-  store i64 6784, ptr %22, align 16, !tbaa !38
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 216
   store i64 7296, ptr %i.aa, align 8, !tbaa !38
-  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 224
-  store i64 7360, ptr %23, align 16, !tbaa !38
-  %24 = getelementptr inbounds nuw i8, ptr %i.a, i64 232
-  store i64 7424, ptr %24, align 8, !tbaa !38
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 240
   store i64 7488, ptr %i.ab, align 16, !tbaa !38
-  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 248
-  store i64 7552, ptr %25, align 8, !tbaa !38
-  %26 = getelementptr inbounds nuw i8, ptr %i.a, i64 256
-  store i64 7616, ptr %26, align 16, !tbaa !38
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 264
   store i64 7680, ptr %i.ac, align 8, !tbaa !38
-  %27 = getelementptr inbounds nuw i8, ptr %i.a, i64 272
-  store i64 11776, ptr %27, align 16, !tbaa !38
-  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 280
-  store i64 15872, ptr %28, align 8, !tbaa !38
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 288
   store i64 19968, ptr %i.ad, align 16, !tbaa !38
-  %29 = getelementptr inbounds nuw i8, ptr %i.a, i64 296
-  store i64 22016, ptr %29, align 8, !tbaa !38
-  %30 = getelementptr inbounds nuw i8, ptr %i.a, i64 304
-  store i64 24064, ptr %30, align 16, !tbaa !38
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 312
   store i64 26112, ptr %i.ae, align 8, !tbaa !38
-  %31 = getelementptr inbounds nuw i8, ptr %i.a, i64 320
-  store i64 42496, ptr %31, align 16, !tbaa !38
-  %32 = getelementptr inbounds nuw i8, ptr %i.a, i64 328
-  store i64 58880, ptr %32, align 8, !tbaa !38
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 336
   store i64 75264, ptr %i.af, align 16, !tbaa !38
-  %33 = getelementptr inbounds nuw i8, ptr %i.a, i64 344
-  store i64 83456, ptr %33, align 8, !tbaa !38
-  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 352
-  store i64 91648, ptr %34, align 16, !tbaa !38
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 360
   store i64 99840, ptr %i.ag, align 8, !tbaa !38
-  %35 = getelementptr inbounds nuw i8, ptr %i.a, i64 368
-  store i64 165376, ptr %35, align 16, !tbaa !38
-  %36 = getelementptr inbounds nuw i8, ptr %i.a, i64 376
-  store i64 230912, ptr %36, align 8, !tbaa !38
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 384
   store i64 296448, ptr %i.ah, align 16, !tbaa !38
-  %37 = getelementptr inbounds nuw i8, ptr %i.a, i64 392
-  store i64 329216, ptr %37, align 8, !tbaa !38
-  %38 = getelementptr inbounds nuw i8, ptr %i.a, i64 400
-  store i64 361984, ptr %38, align 16, !tbaa !38
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 408
   store i64 394752, ptr %i.ai, align 8, !tbaa !38
   %.170.6 = and i32 %2, 127

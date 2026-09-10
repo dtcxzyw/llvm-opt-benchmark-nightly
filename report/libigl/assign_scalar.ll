@@ -205,7 +205,7 @@ _ZN5boost14multiprecision8backends12eval_is_zeroILm0ELm0ELNS0_16cpp_integer_type
 
 _ZN5boost14multiprecision4signINS0_8backends15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEELNS0_26expression_template_optionE1EEEiRKNS0_6numberIT_XT0_EEE.exit.thread: ; preds = %_ZN5boost14multiprecision8backends12eval_is_zeroILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEENSt9enable_ifIXntsr18is_trivial_cpp_intINS1_15cpp_int_backendIXT_EXT0_EXT1_EXT2_ET3_EEEE5valueEbE4typeERKS9_.exit.i, %bb.a
   store i64 0, ptr %0, align 16, !tbaa !88
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 26
   %i.q = load i8, ptr %i.p, align 2, !tbaa !156, !range !64, !noundef !65
   %i.r = trunc nuw i8 %i.q to i1
@@ -232,69 +232,43 @@ bb.d:                                             ; preds = %_ZN5boost14multipre
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !74, !range !64, !noundef !65
   store i8 %i.ab, ptr %i.z, align 8, !tbaa !74
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 25 ; 4 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 25 ; 2 uses
   store i8 1, ptr %i.ac, align 1, !tbaa !75
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 26 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 26
   store i8 0, ptr %i.ad, align 2, !tbaa !156
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.af = load i64, ptr %i.ae, align 16, !tbaa !155 ; 3 uses
   %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.af, i64 288230376151711744) ; 3 uses
-  %9 = icmp ugt i64 %i.af, 2
-  br i1 %9, label %_ZNSt15__new_allocatorIyE8allocateEmPKv.exit.i, label %bb.e
+  %9 = icmp ult i64 %i.af, 3
+  br i1 %9, label %bb.e, label %_ZNSt15__new_allocatorIyE8allocateEmPKv.exit.i
 
 _ZNSt15__new_allocatorIyE8allocateEmPKv.exit.i:   ; preds = %bb.d
   %.sroa.speculated16.i = tail call i64 @llvm.umax.i64(i64 %spec.select.i, i64 8) ; 2 uses
   %i.ag = shl nuw nsw i64 %.sroa.speculated16.i, 3
-  %i.ah = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #37 ; 4 uses
-  %10 = load i8, ptr %i.ac, align 1, !tbaa !75, !range !64, !noundef !65
-  %11 = trunc nuw i8 %10 to i1                    ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %12 = load ptr, ptr %i.ai, align 8              ; 2 uses
-  %13 = select i1 %11, ptr %0, ptr %12
-  %i.aj = load i64, ptr %i.o, align 16, !tbaa !155
-  %14 = shl i64 %i.aj, 3
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ah, ptr align 8 %13, i64 %14, i1 false)
-  %15 = load i8, ptr %i.ad, align 2, !range !64
-  %16 = trunc nuw i8 %15 to i1
-  %or.cond = select i1 %11, i1 true, i1 %16
-  br i1 %or.cond, label %22, label %17
-
-17:                                               ; preds = %_ZNSt15__new_allocatorIyE8allocateEmPKv.exit.i
-  %18 = load i64, ptr %0, align 16
-  %19 = shl i64 %18, 3
-  tail call void @_ZdlPvm(ptr noundef %12, i64 noundef %19) #38
-  %.pre.pre = load i8, ptr %i.ac, align 1, !tbaa !75, !range !64
-  %20 = trunc nuw i8 %.pre.pre to i1
-  %21 = select i1 %20, ptr %0, ptr %i.ah
-  br label %23
-
-22:                                               ; preds = %_ZNSt15__new_allocatorIyE8allocateEmPKv.exit.i
+  %i.ah = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #37 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.ac, align 1, !tbaa !75
-  br label %23
-
-23:                                               ; preds = %22, %17
-  %.pre = phi ptr [ %i.ah, %22 ], [ %21, %17 ]
+  %i.aj = load i64, ptr %i.ae, align 16, !tbaa !155
   store i64 %spec.select.i, ptr %i.o, align 16, !tbaa !155
   store i64 %.sroa.speculated16.i, ptr %0, align 16, !tbaa !88
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !88
-  %.pre46 = load i64, ptr %i.ae, align 16, !tbaa !155
   br label %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit
 
 bb.e:                                             ; preds = %bb.d
   store i64 %spec.select.i, ptr %i.o, align 16, !tbaa !155
   br label %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit
 
-_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit: ; preds = %bb.e, %23
-  %24 = phi i64 [ %i.af, %bb.e ], [ %.pre46, %23 ]
-  %25 = phi ptr [ %0, %bb.e ], [ %.pre, %23 ]
+_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit: ; preds = %bb.e, %_ZNSt15__new_allocatorIyE8allocateEmPKv.exit.i
+  %10 = phi ptr [ %0, %bb.e ], [ %i.ah, %_ZNSt15__new_allocatorIyE8allocateEmPKv.exit.i ]
+  %11 = phi i64 [ %i.af, %bb.e ], [ %i.aj, %_ZNSt15__new_allocatorIyE8allocateEmPKv.exit.i ]
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 25
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !75, !range !64, !noundef !65
   %i.am = trunc nuw i8 %i.al to i1
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ao = load ptr, ptr %i.an, align 8
   %i.ap = select i1 %i.am, ptr %1, ptr %i.ao
-  %i.aq = shl i64 %24, 3
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %25, ptr align 8 %i.ap, i64 %i.aq, i1 false)
+  %i.aq = shl i64 %11, 3
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %10, ptr align 8 %i.ap, i64 %i.aq, i1 false)
   br label %_ZN5boost14multiprecision6numberINS0_8backends15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEELNS0_26expression_template_optionE1EEC2ERKS9_.exit
 
 common.resume:                                    ; preds = %bb.p, %bb.q, %bb.l, %bb.m, %bb.j, %bb.k, %bb.f, %bb.g

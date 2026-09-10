@@ -202,8 +202,7 @@ define hidden void @_RINvXNvNtCs3ZkgueCtkyH_14ruff_workspace7optionss3_1__NtB5_1
 bb.a:
   %.sroa.02.i = alloca [200 x i8], align 8        ; 3 uses
   %.sroa.4951 = alloca [27 x i8], align 1         ; 4 uses
-  %i.a = alloca [2352 x i8], align 8              ; 53 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  %i.a = alloca [2352 x i8], align 8              ; 51 uses
   call void @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_structNtNvXNvNtCs3ZkgueCtkyH_14ruff_workspace7optionss1B_1__NtB2e_15LintOptionsWireNtB14_11Deserialize11deserialize9___VisitorECslT7UmUwa3wv_9ruff_wasm(ptr noalias noundef nonnull sret([2352 x i8]) align 8 captures(address) dereferenceable(2352) %i.a, i32 noundef %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @177, i64 noundef 15, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) @178, i64 noundef 51)
   %i.b = load i64, ptr %i.a, align 8, !range !7, !noundef !4
   %i.c = icmp eq i64 %i.b, 2
@@ -378,7 +377,6 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
 

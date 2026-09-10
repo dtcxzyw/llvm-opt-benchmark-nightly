@@ -204,10 +204,10 @@ bb.a:
   %i.aa = alloca [24 x i8], align 8               ; 10 uses
   %i.ab = alloca [24 x i8], align 8               ; 7 uses
   %i.ac = alloca [24 x i8], align 8               ; 7 uses
-  %i.ad = alloca [208 x i8], align 8              ; 5 uses
+  %i.ad = alloca [208 x i8], align 8              ; 4 uses
   %i.ae = alloca [16 x i8], align 8               ; 5 uses
   %i.af = alloca [208 x i8], align 8              ; 5 uses
-  %i.ag = alloca [208 x i8], align 8              ; 40 uses
+  %i.ag = alloca [208 x i8], align 8              ; 46 uses
   %i.ah = alloca [16 x i8], align 8               ; 9 uses
   %i.ai = alloca [616 x i8], align 8              ; 7 uses
   %i.aj = alloca [616 x i8], align 8              ; 5 uses
@@ -610,7 +610,7 @@ bb.v:                                             ; preds = %.noexc28
   store i64 %i.ek, ptr %i.ba, align 8, !dbg !11128, !alias.scope !10735, !noalias !10570
   store i64 %i.el, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11128, !alias.scope !10735, !noalias !10570
   store i64 %.sroa.534.0.copyload.i.i, ptr %.sroa.546.0..sroa_idx.i, align 8, !dbg !11128, !alias.scope !10735, !noalias !10570
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11129
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11129
 
 bb.w:                                             ; preds = %.noexc28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !dbg !11127, !noalias !10766
@@ -888,7 +888,7 @@ bb.ar:                                            ; preds = %.noexc37
   store i64 %i.gm, ptr %i.ba, align 8, !dbg !11180, !alias.scope !10778, !noalias !10570
   store i64 %i.gn, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11180, !alias.scope !10778, !noalias !10570
   store i64 %.sroa.533.0.copyload.i.i, ptr %.sroa.546.0..sroa_idx.i, align 8, !dbg !11180, !alias.scope !10778, !noalias !10570
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11181
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11181
 
 bb.as:                                            ; preds = %.noexc37
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !dbg !11179, !noalias !10787
@@ -1291,7 +1291,7 @@ bb.bz:                                            ; preds = %.noexc45
   store i64 %i.ii, ptr %i.ba, align 8, !dbg !11274, !alias.scope !10842, !noalias !10570
   store i64 %i.ij, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11274, !alias.scope !10842, !noalias !10570
   store i64 %.sroa.543.0.copyload.i.i, ptr %.sroa.546.0..sroa_idx.i, align 8, !dbg !11274, !alias.scope !10842, !noalias !10570
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11275
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11275
 
 bb.ca:                                            ; preds = %.noexc45
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !dbg !11273, !noalias !10870
@@ -1321,7 +1321,7 @@ bb.cb:                                            ; preds = %.noexc46
   store i64 %i.ik, ptr %i.ba, align 8, !dbg !11282, !alias.scope !10842, !noalias !10570
   store i64 %i.il, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11282, !alias.scope !10842, !noalias !10570
   store i64 %.sroa.552.0.copyload.i.i, ptr %.sroa.546.0..sroa_idx.i, align 8, !dbg !11282, !alias.scope !10842, !noalias !10570
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11283
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11283
 
 bb.cc:                                            ; preds = %.noexc46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !11281, !noalias !10870
@@ -1347,7 +1347,7 @@ bb.cd:                                            ; preds = %.noexc47
     #dbg_value(i8 %i.in, !10843, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !9973)
   store i64 %i.im, ptr %i.ba, align 8, !dbg !11290, !alias.scope !10842, !noalias !10570
   store i8 %i.in, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11290, !alias.scope !10842, !noalias !10570
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11291
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11291
 
 bb.ce:                                            ; preds = %.noexc47
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !11289, !noalias !10870
@@ -1414,7 +1414,8 @@ bb.ch:                                            ; preds = %.noexc118
   store i64 %i.ix, ptr %i.ba, align 8, !dbg !11304, !alias.scope !10876
   store i64 %i.iy, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11304, !alias.scope !10876
   store i64 %.sroa.543.0.copyload.i99, ptr %.sroa.546.0..sroa_idx.i, align 8, !dbg !11304, !alias.scope !10876
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11305
+  store i64 -1, ptr %i.ag, align 8, !dbg !11304, !alias.scope !10876
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11305
 
 bb.ci:                                            ; preds = %.noexc118
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !11303, !noalias !10876
@@ -1444,7 +1445,8 @@ bb.cj:                                            ; preds = %.noexc119
   store i64 %i.iz, ptr %i.ba, align 8, !dbg !11312, !alias.scope !10876
   store i64 %i.ja, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11312, !alias.scope !10876
   store i64 %.sroa.552.0.copyload.i104, ptr %.sroa.546.0..sroa_idx.i, align 8, !dbg !11312, !alias.scope !10876
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11313
+  store i64 -1, ptr %i.ag, align 8, !dbg !11312, !alias.scope !10876
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11313
 
 bb.ck:                                            ; preds = %.noexc119
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !11311, !noalias !10876
@@ -1470,7 +1472,8 @@ bb.cl:                                            ; preds = %.noexc120
     #dbg_value(i8 %i.jc, !10877, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !10025)
   store i64 %i.jb, ptr %i.ba, align 8, !dbg !11320, !alias.scope !10876
   store i8 %i.jc, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11320, !alias.scope !10876
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11321
+  store i64 -1, ptr %i.ag, align 8, !dbg !11320, !alias.scope !10876
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11321
 
 bb.cm:                                            ; preds = %.noexc120
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !11319, !noalias !10876
@@ -1541,7 +1544,8 @@ bb.cp:                                            ; preds = %.noexc94
   store i64 %i.jm, ptr %i.ba, align 8, !dbg !11334, !alias.scope !10909
   store i64 %i.jn, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11334, !alias.scope !10909
   store i64 %.sroa.543.0.copyload.i, ptr %.sroa.546.0..sroa_idx.i, align 8, !dbg !11334, !alias.scope !10909
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11335
+  store i64 -1, ptr %i.ag, align 8, !dbg !11334, !alias.scope !10909
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11335
 
 bb.cq:                                            ; preds = %.noexc94
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !11333, !noalias !10909
@@ -1571,7 +1575,8 @@ bb.cr:                                            ; preds = %.noexc95
   store i64 %i.jo, ptr %i.ba, align 8, !dbg !11342, !alias.scope !10909
   store i64 %i.jp, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11342, !alias.scope !10909
   store i64 %.sroa.552.0.copyload.i, ptr %.sroa.546.0..sroa_idx.i, align 8, !dbg !11342, !alias.scope !10909
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11343
+  store i64 -1, ptr %i.ag, align 8, !dbg !11342, !alias.scope !10909
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11343
 
 bb.cs:                                            ; preds = %.noexc95
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !11341, !noalias !10909
@@ -1597,7 +1602,8 @@ bb.ct:                                            ; preds = %.noexc96
     #dbg_value(i8 %i.jr, !10910, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !10079)
   store i64 %i.jq, ptr %i.ba, align 8, !dbg !11350, !alias.scope !10909
   store i8 %i.jr, ptr %.sroa.445.0..sroa_idx.i, align 8, !dbg !11350, !alias.scope !10909
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, !dbg !11351
+  store i64 -1, ptr %i.ag, align 8, !dbg !11350, !alias.scope !10909
+  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11351
 
 bb.cu:                                            ; preds = %.noexc96
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !11349, !noalias !10909
@@ -1908,11 +1914,7 @@ bb.dm:                                            ; preds = %bb.dd, %bb.dc
   invoke void @_RNvNtNtNtCsjfnSKV9Rz3v_3h3i7prompts2h37headers14prompt_headers(ptr noalias nofree noundef nonnull sret([208 x i8]) align 8 captures(none) dereferenceable(208) %i.ag, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bu, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.na, i64 noundef %i.nb, i1 noundef zeroext %.sroa.02.0.i, i1 noundef zeroext %.sroa.01.0324.i)
           to label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.i unwind label %bb.dv, !dbg !11404
 
-_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split: ; preds = %bb.v, %bb.ar, %bb.bz, %bb.cb, %bb.cd, %bb.cp, %bb.cr, %bb.ct, %bb.ch, %bb.cj, %bb.cl
-  store i64 -1, ptr %i.ag, align 8, !dbg !11154
-  br label %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i, !dbg !11405
-
-_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i: ; preds = %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i.sink.split, %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.i
+_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.thread.i: ; preds = %bb.cl, %bb.cj, %bb.ch, %bb.ct, %bb.cr, %bb.cp, %_RNvNtNtCsjfnSKV9Rz3v_3h3i7prompts2h311prompt_data.exit.i, %bb.cd, %bb.cb, %bb.bz, %bb.ar, %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !dbg !11405, !noalias !10570
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ac, ptr noundef nonnull align 8 dereferenceable(24) %i.ba, i64 24, i1 false), !dbg !11405, !noalias !10570
   call void @llvm.experimental.noalias.scope.decl(metadata !10955), !dbg !11406
@@ -1997,7 +1999,7 @@ bb.du:                                            ; preds = %bb.dt
 
 _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCsjfnSKV9Rz3v_3h3i7actions2h36ActionE3newBK_.exit.i: ; preds = %bb.dr
     #dbg_value(ptr %i.nh, !10946, !DIExpression(), !10161)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %i.nh, ptr noundef nonnull align 8 dereferenceable(208) %i.ad, i64 208, i1 false), !dbg !11422
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %i.nh, ptr noundef nonnull align 8 dereferenceable(208) %i.ag, i64 208, i1 false), !dbg !11422
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !dbg !11423, !noalias !10570
   br label %.thread148, !dbg !11423
 

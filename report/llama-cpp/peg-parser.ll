@@ -205,14 +205,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62: ; preds = %bb.
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 19 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 19 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 15 uses
-  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 18 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 40 ; 4 uses
   %.promoted238 = load i64, ptr %i.bg, align 8    ; 14 uses
   %.promoted253 = load i64, ptr %i.bh, align 8    ; 14 uses
-  %.promoted268.a = load ptr, ptr %i.bi, align 8  ; 14 uses
-  %.promoted283 = load ptr, ptr %i.bj, align 8    ; 14 uses
+  %.promoted268 = load ptr, ptr %i.bi, align 8    ; 14 uses
+  %.promoted268.a = load ptr, ptr %i.bj, align 8  ; 14 uses
+  %.promoted283 = load ptr, ptr %i.bk, align 8    ; 14 uses
   %i.bo = load i32, ptr %i.ao, align 4, !tbaa !271 ; 2 uses
   %i.bp = icmp eq i32 %i.bo, -1
   %i.bq = icmp sgt i32 %i.bo, 0
@@ -231,8 +232,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62: ; preds = %bb.
 bb.e:                                             ; preds = %.critedge
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 32
   %i.bv = load i32, ptr %i.bu, align 8, !tbaa !258
@@ -293,8 +295,9 @@ bb.h:                                             ; preds = %.critedge
 bb.i:                                             ; preds = %bb.h
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.40, i64 noundef %i.cl, i64 noundef %i.cs) #30
           to label %.noexc unwind label %.loopexit.split-lp, !inline_history !98
@@ -316,8 +319,9 @@ _ZNKSt6vectorISt7variantIJ25common_peg_epsilon_parser23common_peg_start_parser21
 bb.j:                                             ; preds = %_ZNKSt6vectorISt7variantIJ25common_peg_epsilon_parser23common_peg_start_parser21common_peg_end_parser25common_peg_literal_parser26common_peg_sequence_parser24common_peg_choice_parser28common_peg_repetition_parser21common_peg_and_parser21common_peg_not_parser21common_peg_any_parser23common_peg_space_parser23common_peg_chars_parser24common_peg_string_parser23common_peg_until_parser24common_peg_schema_parser22common_peg_rule_parser21common_peg_ref_parser24common_peg_atomic_parser21common_peg_tag_parser22common_peg_gbnf_parser20common_peg_ac_parserEESaISM_EE2atEm.exit.i
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   %i.cw = call ptr @__cxa_allocate_exception(i64 16) #31, !noalias !990, !inline_history !1 ; 3 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt18bad_variant_access, i64 16), ptr %i.cw, align 8, !tbaa !106, !noalias !990
@@ -428,8 +432,9 @@ bb.n:                                             ; preds = %bb.m
           catch ptr null
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   %i.em = extractvalue { ptr, i32 } %i.el, 0
   call void @__clang_call_terminate(ptr %i.em) #32, !inline_history !267
@@ -440,8 +445,9 @@ bb.n:                                             ; preds = %bb.m
           cleanup                                 ; 2 uses
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   call void @_ZNSt3setImSt4lessImESaImEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %3) #31, !inline_history !267
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #31, !noalias !994
@@ -485,8 +491,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80: ; preds = %_ZN
           cleanup
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   br label %_ZN23common_peg_parse_resultD2Ev.exit104
 
@@ -500,8 +507,9 @@ bb.p:                                             ; preds = %bb.l
           cleanup
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #31
   br label %bb.ao
@@ -511,8 +519,9 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
           cleanup
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit83
 
@@ -581,8 +590,9 @@ bb.v:                                             ; preds = %bb.u
           cleanup
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #31
   br label %bb.ao
@@ -613,8 +623,9 @@ bb.y:                                             ; preds = %bb.x
           cleanup
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   br label %bb.ao
 
@@ -639,8 +650,9 @@ bb.ab:                                            ; preds = %bb.aa
           cleanup
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   br label %bb.ao
 
@@ -693,8 +705,9 @@ bb.ae:                                            ; preds = %bb.ad
           cleanup
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #31
   br label %bb.ao
@@ -741,8 +754,9 @@ bb.ah:                                            ; preds = %bb.ag
           cleanup
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #31
   br label %bb.ao
@@ -753,7 +767,6 @@ bb.ai:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ig = load <2 x ptr>, ptr %7, align 16, !tbaa !56
   %i.ih = load ptr, ptr %i.bf, align 16, !tbaa !146
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %7, i8 0, i64 24, i1 false)
-  store ptr %i.ih, ptr %i.bk, align 8, !tbaa !146
   %i.ii = load ptr, ptr %i.au, align 8, !tbaa !145 ; 3 uses
   %.not.i.i.i.i.jt1 = icmp eq ptr %i.ii, null
   br i1 %.not.i.i.i.i.jt1, label %_ZN23common_peg_parse_resultD2Ev.exit.jt1, label %bb.al
@@ -799,6 +812,7 @@ _ZN23common_peg_parse_resultD2Ev.exit.jt1:        ; preds = %bb.al, %bb.ai
   store i64 %i.ie, ptr %i.bg, align 8
   store i64 %i.if, ptr %i.bh, align 8
   store <2 x ptr> %i.ig, ptr %i.bi, align 8
+  store ptr %i.ih, ptr %i.bk, align 8
   store i32 2, ptr %0, align 8
   br label %bb.bb
 
@@ -838,8 +852,9 @@ _ZN23common_peg_parse_resultD2Ev.exit104:         ; preds = %.loopexit153, %.loo
   %.039564 = phi i64 [ %.039616, %_ZN23common_peg_parse_resultD2Ev.exit.jt3 ], [ %i.an, %.preheader ], [ %i.ik, %_ZN23common_peg_parse_resultD2Ev.exit.jt2 ]
   store i64 %.promoted238, ptr %i.bg, align 8
   store i64 %.promoted253, ptr %i.bh, align 8
-  store ptr %.promoted268.a, ptr %i.bi, align 8
-  store ptr %.promoted283, ptr %i.bj, align 8
+  store ptr %.promoted268, ptr %i.bi, align 8
+  store ptr %.promoted268.a, ptr %i.bj, align 8
+  store ptr %.promoted283, ptr %i.bk, align 8
   store i32 %.promoted, ptr %0, align 8
   br label %bb.aq
 

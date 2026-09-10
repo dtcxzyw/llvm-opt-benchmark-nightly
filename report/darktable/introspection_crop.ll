@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %_iop_gui_alloc.exit
   %i.cs = tail call noalias dereferenceable_or_null(16) ptr @g_malloc(i64 noundef 16) #23 ; 4 uses
   %i.ct = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv ; 3 uses
   %i.cu = load ptr, ptr %i.ct, align 16, !tbaa !175 ; 2 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %i.ct, i64 8 ; 2 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
+  %2 = load i32, ptr %i.cv, align 8, !tbaa !172   ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ct, i64 12
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !173 ; 3 uses
   %i.cy = icmp eq i32 %i.cx, 0
@@ -215,7 +216,6 @@ bb.e:                                             ; preds = %bb.d
   br label %_aspect_format.exit
 
 bb.f:                                             ; preds = %bb.d
-  %2 = load i32, ptr %i.cv, align 8, !tbaa !172
   %i.da = sitofp reassoc nsz arcp contract afn i32 %2 to float
   %i.db = sitofp reassoc nsz arcp contract afn i32 %i.cx to float
   %i.dc = fdiv reassoc nsz arcp contract afn float %i.da, %i.db
@@ -226,9 +226,8 @@ bb.f:                                             ; preds = %bb.d
 _aspect_format.exit:                              ; preds = %bb.e, %bb.f
   %.0.i = phi ptr [ %i.de, %bb.f ], [ %i.cz, %bb.e ]
   store ptr %.0.i, ptr %i.cs, align 8, !tbaa !175
-  %3 = load i32, ptr %i.cv, align 8, !tbaa !172
   %i.df = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
-  store i32 %3, ptr %i.df, align 8, !tbaa !172
+  store i32 %2, ptr %i.df, align 8, !tbaa !172
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cs, i64 12
   store i32 %i.cx, ptr %i.dg, align 4, !tbaa !173
   %i.dh = load ptr, ptr %i.d, align 8, !tbaa !176

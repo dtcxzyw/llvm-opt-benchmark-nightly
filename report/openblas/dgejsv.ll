@@ -53,7 +53,7 @@ bb.a:
   %i.h = alloca double, align 8                   ; 17 uses
   %i.i = alloca i32, align 4                      ; 32 uses
   %i.j = alloca double, align 8                   ; 54 uses
-  %i.k = alloca i32, align 4                      ; 130 uses
+  %i.k = alloca i32, align 4                      ; 129 uses
   %i.l = alloca i32, align 4                      ; 24 uses
   %i.m = alloca double, align 8                   ; 5 uses
   %i.n = alloca double, align 8                   ; 5 uses
@@ -456,7 +456,7 @@ bb.cq:                                            ; preds = %.lr.ph2383, %bb.cp
 
 .lr.ph2390:                                       ; preds = %.loopexit2365.thread
   %i.kt = load double, ptr %i.q, align 8, !tbaa !116
-  %i.ku = add nuw i32 %i.ks, 1
+  %i.ku = add nuw i32 %i.ks, 1                    ; 2 uses
   %wide.trip.count2923 = zext i32 %i.ku to i64
   br label %bb.cr
 
@@ -489,7 +489,9 @@ bb.ct:                                            ; preds = %bb.cr, %bb.cs
 
 bb.cu:                                            ; preds = %._crit_edge2391, %.loopexit2365.thread
   %i.ld = phi i32 [ %.pre3131, %._crit_edge2391 ], [ %i.ks, %.loopexit2365.thread ]
+  %storemerge2129.lcssa = phi i32 [ %i.ku, %._crit_edge2391 ], [ 1, %.loopexit2365.thread ]
   %.01953.lcssa = phi double [ %.11954, %._crit_edge2391 ], [ 0.000000e+00, %.loopexit2365.thread ]
+  store i32 %storemerge2129.lcssa, ptr %i.k, align 4, !tbaa !114
   %i.le = fneg double %.01953.lcssa
   %i.lf = sitofp i32 %i.ld to double
   %i.lg = call double @log(double noundef %i.lf) #7
@@ -498,11 +500,11 @@ bb.cu:                                            ; preds = %._crit_edge2391, %.
   %i.lj = load i32, ptr %6, align 4, !tbaa !114   ; 3 uses
   %i.lk = add nsw i32 %i.lj, %i.li                ; 2 uses
   store i32 %i.lk, ptr %i.d, align 4, !tbaa !114
-  %storemerge21312395 = add i32 %i.li, 1          ; 2 uses
   %.not2132.not2396 = icmp sgt i32 %i.lj, 0
   br i1 %.not2132.not2396, label %.lr.ph2400, label %bb.cy
 
 .lr.ph2400:                                       ; preds = %bb.cu
+  %storemerge21312395 = add i32 %i.li, 1
   %i.ll = load double, ptr %i.q, align 8, !tbaa !116
   %i.lm = sext i32 %storemerge21312395 to i64
   %i.ln = sext i32 %i.lk to i64
@@ -526,21 +528,18 @@ bb.cw:                                            ; preds = %bb.cv
 
 bb.cx:                                            ; preds = %bb.cv, %bb.cw
   %.11930 = phi double [ %i.lv, %bb.cw ], [ %.019292397, %bb.cv ] ; 2 uses
-  %indvars.iv.next2926 = add nsw i64 %indvars.iv2925, 1 ; 2 uses
+  %indvars.iv.next2926 = add nsw i64 %indvars.iv2925, 1
   %.not2132.not = icmp slt i64 %indvars.iv2925, %i.ln
   br i1 %.not2132.not, label %bb.cv, label %._crit_edge2401, !llvm.loop !14
 
 ._crit_edge2401:                                  ; preds = %bb.cx
-  %19 = trunc nsw i64 %indvars.iv.next2926 to i32
   store double %i.lq, ptr %i.f, align 8, !tbaa !116
   %.pre3132 = load i32, ptr %6, align 4, !tbaa !114
   br label %bb.cy
 
 bb.cy:                                            ; preds = %._crit_edge2401, %bb.cu
   %i.lw = phi i32 [ %.pre3132, %._crit_edge2401 ], [ %i.lj, %bb.cu ]
-  %storemerge2131.lcssa = phi i32 [ %19, %._crit_edge2401 ], [ %storemerge21312395, %bb.cu ]
   %.01929.lcssa = phi double [ %.11930, %._crit_edge2401 ], [ 0.000000e+00, %bb.cu ]
-  store i32 %storemerge2131.lcssa, ptr %i.k, align 4, !tbaa !114
   %i.lx = fneg double %.01929.lcssa
   %i.ly = sitofp i32 %i.lw to double
   %i.lz = call double @log(double noundef %i.ly) #7
@@ -943,7 +942,7 @@ bb.dn:                                            ; preds = %.lr.ph2431, %bb.dm
   br label %bb.do
 
 bb.do:                                            ; preds = %._crit_edge2432, %.loopexit2364
-  %i.te = load i32, ptr %7, align 4, !tbaa !114   ; 4 uses
+  %i.te = load i32, ptr %7, align 4, !tbaa !114   ; 3 uses
   %.not21442434 = icmp slt i32 %i.te, 1
   br i1 %.not21442434, label %._crit_edge2438, label %.lr.ph2437.preheader
 
@@ -951,14 +950,11 @@ bb.do:                                            ; preds = %._crit_edge2432, %.
   %i.tf = zext nneg i32 %i.te to i64
   %i.tg = shl nuw nsw i64 %i.tf, 2
   call void @llvm.memset.p0.i64(ptr align 4 %17, i8 0, i64 %i.tg, i1 false), !tbaa !114
-  %narrow3348 = add nuw i32 %i.te, 1
   %.pre3139 = load i32, ptr %7, align 4, !tbaa !114
   br label %._crit_edge2438
 
 ._crit_edge2438:                                  ; preds = %.lr.ph2437.preheader, %bb.do
   %i.th = phi i32 [ %i.te, %bb.do ], [ %.pre3139, %.lr.ph2437.preheader ] ; 2 uses
-  %storemerge2143.lcssa = phi i32 [ 1, %bb.do ], [ %narrow3348, %.lr.ph2437.preheader ]
-  store i32 %storemerge2143.lcssa, ptr %i.k, align 4, !tbaa !114
   %i.ti = load i32, ptr %16, align 4, !tbaa !114
   %i.tj = sub nsw i32 %i.ti, %i.th
   store i32 %i.tj, ptr %i.d, align 4, !tbaa !114
