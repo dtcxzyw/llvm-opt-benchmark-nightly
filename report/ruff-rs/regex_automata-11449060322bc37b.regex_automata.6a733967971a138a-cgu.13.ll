@@ -204,30 +204,26 @@ bb.f:                                             ; preds = %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 16
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.h, %bb.f
-  %.sroa.06.0.in.i = phi ptr [ %i.k, %bb.f ], [ %7, %bb.h ]
+bb.g:                                             ; preds = %bb.g, %bb.f
+  %.sroa.06.0.in.i = phi ptr [ %i.k, %bb.f ], [ %6, %bb.g ]
   %.sroa.06.0.i = load ptr, ptr %.sroa.06.0.in.i, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.l = load i64, ptr %.sroa.06.0.i, align 8, !range !19, !noalias !1718, !noundef !4 ; 3 uses
   %i.m = icmp ne i64 %i.l, 4
   tail call void @llvm.assume(i1 %i.m)
-  %5 = add nsw i64 %i.l, -2
-  %.inv10.i = icmp samesign ult i64 %i.l, 2
-  %6 = select i1 %.inv10.i, i64 2, i64 %5
-  switch i64 %6, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit [
-    i64 5, label %bb.h
-    i64 2, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix14required_class.exit
-  ]
+  %5 = icmp eq i64 %i.l, 7
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 8
+  br i1 %5, label %bb.g, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 8
-  br label %bb.g
+  %.inv10.i = icmp samesign ugt i64 %i.l, 1
+  br i1 %.inv10.i, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix14required_class.exit
 
 bb.i:                                             ; preds = %bb.a
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %2, i64 noundef %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #28
   unreachable
 
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix14required_class.exit: ; preds = %bb.c, %bb.g
-  %.sroa.05.0.i = phi ptr [ %.sroa.06.0.i, %bb.g ], [ %.sroa.0.0.i, %bb.c ] ; 2 uses
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix14required_class.exit: ; preds = %bb.c, %bb.h
+  %.sroa.05.0.i = phi ptr [ %.sroa.06.0.i, %bb.h ], [ %.sroa.0.0.i, %bb.c ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1719)
   %.idx43 = shl nuw nsw i64 %4, 5
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 %.idx43
@@ -269,8 +265,8 @@ bb.j:                                             ; preds = %.lr.ph
   %.not12.i = icmp eq ptr %i.y, %i.v
   br i1 %.not12.i, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit, label %.lr.ph.i
 
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit: ; preds = %bb.c, %bb.g, %.lr.ph, %.backedge.i, %.split.i, %bb.e
-  %.sroa.0.0 = phi i1 [ false, %bb.g ], [ true, %.backedge.i ], [ false, %bb.e ], [ false, %.lr.ph ], [ false, %.split.i ], [ false, %bb.c ]
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit: ; preds = %bb.c, %.lr.ph, %.backedge.i, %.split.i, %bb.h, %bb.e
+  %.sroa.0.0 = phi i1 [ false, %bb.h ], [ false, %.lr.ph ], [ false, %bb.e ], [ true, %.backedge.i ], [ false, %.split.i ], [ false, %bb.c ]
   ret i1 %.sroa.0.0
 }
 

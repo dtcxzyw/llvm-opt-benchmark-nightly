@@ -205,9 +205,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.bw, label %.preheader.i.preheader, label %.loopexit.i
 
 .preheader.i.preheader:                           ; preds = %bb.u
-  %.0.i152 = add i64 %.03441.i, -1                ; 2 uses
-  %.not.i112153 = icmp eq i64 %.0.i152, 0
-  br i1 %.not.i112153, label %.loopexit.i, label %.lr.ph156
+  %.0.i152 = add i64 %.03441.i, -1
+  br label %.lr.ph156
 
 .preheader.i:                                     ; preds = %.lr.ph156
   %.0.i = add i64 %.0.i155, -1                    ; 2 uses
@@ -215,8 +214,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not.i112, label %.loopexit.i, label %.lr.ph156, !llvm.loop !32
 
 .lr.ph156:                                        ; preds = %.preheader.i.preheader, %.preheader.i
-  %.0.i155 = phi i64 [ %.0.i, %.preheader.i ], [ %.0.i152, %.preheader.i.preheader ] ; 3 uses
-  %.0.in.i154 = phi i64 [ %.0.i155, %.preheader.i ], [ %.03441.i, %.preheader.i.preheader ]
+  %.0.i155 = phi i64 [ %.0.i152, %.preheader.i.preheader ], [ %.0.i, %.preheader.i ] ; 3 uses
+  %.0.in.i154 = phi i64 [ %.03441.i, %.preheader.i.preheader ], [ %.0.i155, %.preheader.i ]
   %i.bx = getelementptr i8, ptr %i.bl, i64 %.0.in.i154
   %i.by = getelementptr i8, ptr %i.bx, i64 -2
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !60
@@ -244,8 +243,8 @@ bb.x:                                             ; preds = %bb.w
 ..loopexit.i.loopexit_crit_edge:                  ; preds = %.lr.ph156
   br label %.loopexit.i, !llvm.loop !32
 
-.loopexit.i:                                      ; preds = %.preheader.i, %.preheader.i.preheader, %..loopexit.i.loopexit_crit_edge, %bb.x, %bb.w, %bb.v, %bb.u
-  %.2.i = phi i64 [ %i.ce, %bb.w ], [ %.03441.i, %bb.v ], [ %i.ch, %bb.x ], [ %.03441.i, %bb.u ], [ 0, %.preheader.i.preheader ], [ %.0.i155, %..loopexit.i.loopexit_crit_edge ], [ 0, %.preheader.i ] ; 2 uses
+.loopexit.i:                                      ; preds = %.preheader.i, %..loopexit.i.loopexit_crit_edge, %bb.x, %bb.w, %bb.v, %bb.u
+  %.2.i = phi i64 [ %i.ce, %bb.w ], [ %.03441.i, %bb.v ], [ %i.ch, %bb.x ], [ %.03441.i, %bb.u ], [ %.0.i155, %..loopexit.i.loopexit_crit_edge ], [ 0, %.preheader.i ] ; 2 uses
   %i.ci = add i64 %.03540.i, 1
   %i.cj = add i64 %i.ci, %.033.lcssa.i            ; 2 uses
   %i.ck = icmp ult i64 %i.cj, %i.bk
@@ -648,9 +647,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bw, label %.preheader.i.preheader, label %.loopexit.i
 
 .preheader.i.preheader:                           ; preds = %bb.n
-  %.0.i158 = add i64 %.03441.i, -1                ; 2 uses
-  %.not.i34159 = icmp eq i64 %.0.i158, 0
-  br i1 %.not.i34159, label %.loopexit.i, label %.lr.ph162
+  %.0.i158 = add i64 %.03441.i, -1
+  br label %.lr.ph162
 
 .preheader.i:                                     ; preds = %.lr.ph162
   %.0.i = add i64 %.0.i161, -1                    ; 2 uses
@@ -658,8 +656,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not.i34, label %.loopexit.i, label %.lr.ph162, !llvm.loop !32
 
 .lr.ph162:                                        ; preds = %.preheader.i.preheader, %.preheader.i
-  %.0.i161 = phi i64 [ %.0.i, %.preheader.i ], [ %.0.i158, %.preheader.i.preheader ] ; 3 uses
-  %.0.in.i160 = phi i64 [ %.0.i161, %.preheader.i ], [ %.03441.i, %.preheader.i.preheader ]
+  %.0.i161 = phi i64 [ %.0.i158, %.preheader.i.preheader ], [ %.0.i, %.preheader.i ] ; 3 uses
+  %.0.in.i160 = phi i64 [ %.03441.i, %.preheader.i.preheader ], [ %.0.i161, %.preheader.i ]
   %i.bx = getelementptr i8, ptr %i.bl, i64 %.0.in.i160
   %i.by = getelementptr i8, ptr %i.bx, i64 -2
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !60
@@ -687,8 +685,8 @@ bb.q:                                             ; preds = %bb.p
 ..loopexit.i.loopexit_crit_edge:                  ; preds = %.lr.ph162
   br label %.loopexit.i, !llvm.loop !32
 
-.loopexit.i:                                      ; preds = %.preheader.i, %.preheader.i.preheader, %..loopexit.i.loopexit_crit_edge, %bb.q, %bb.p, %bb.o, %bb.n
-  %.2.i = phi i64 [ %i.ce, %bb.p ], [ %.03441.i, %bb.o ], [ %i.ch, %bb.q ], [ %.03441.i, %bb.n ], [ 0, %.preheader.i.preheader ], [ %.0.i161, %..loopexit.i.loopexit_crit_edge ], [ 0, %.preheader.i ] ; 2 uses
+.loopexit.i:                                      ; preds = %.preheader.i, %..loopexit.i.loopexit_crit_edge, %bb.q, %bb.p, %bb.o, %bb.n
+  %.2.i = phi i64 [ %i.ce, %bb.p ], [ %.03441.i, %bb.o ], [ %i.ch, %bb.q ], [ %.03441.i, %bb.n ], [ %.0.i161, %..loopexit.i.loopexit_crit_edge ], [ 0, %.preheader.i ] ; 2 uses
   %i.ci = add i64 %.03540.i, 1
   %i.cj = add i64 %i.ci, %.033.lcssa.i            ; 2 uses
   %i.ck = icmp ult i64 %i.cj, %i.bk
@@ -828,9 +826,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.eh, label %.preheader.i53.preheader, label %.loopexit.i48
 
 .preheader.i53.preheader:                         ; preds = %bb.aa
-  %.0.i55164 = add i64 %.03441.i42, -1            ; 2 uses
-  %.not.i56165 = icmp eq i64 %.0.i55164, 0
-  br i1 %.not.i56165, label %.loopexit.i48, label %.lr.ph168
+  %.0.i55164 = add i64 %.03441.i42, -1
+  br label %.lr.ph168
 
 .preheader.i53:                                   ; preds = %.lr.ph168
   %.0.i55 = add i64 %.0.i55167, -1                ; 2 uses
@@ -838,8 +835,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not.i56, label %.loopexit.i48, label %.lr.ph168, !llvm.loop !32
 
 .lr.ph168:                                        ; preds = %.preheader.i53.preheader, %.preheader.i53
-  %.0.i55167 = phi i64 [ %.0.i55, %.preheader.i53 ], [ %.0.i55164, %.preheader.i53.preheader ] ; 3 uses
-  %.0.in.i54166 = phi i64 [ %.0.i55167, %.preheader.i53 ], [ %.03441.i42, %.preheader.i53.preheader ]
+  %.0.i55167 = phi i64 [ %.0.i55164, %.preheader.i53.preheader ], [ %.0.i55, %.preheader.i53 ] ; 3 uses
+  %.0.in.i54166 = phi i64 [ %.03441.i42, %.preheader.i53.preheader ], [ %.0.i55167, %.preheader.i53 ]
   %i.ei = getelementptr i8, ptr %i.dw, i64 %.0.in.i54166
   %i.ej = getelementptr i8, ptr %i.ei, i64 -2
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !60
@@ -867,8 +864,8 @@ bb.ad:                                            ; preds = %bb.ac
 ..loopexit.i48.loopexit_crit_edge:                ; preds = %.lr.ph168
   br label %.loopexit.i48, !llvm.loop !32
 
-.loopexit.i48:                                    ; preds = %.preheader.i53, %.preheader.i53.preheader, %..loopexit.i48.loopexit_crit_edge, %bb.ad, %bb.ac, %bb.ab, %bb.aa
-  %.2.i49 = phi i64 [ %i.ep, %bb.ac ], [ %.03441.i42, %bb.ab ], [ %i.es, %bb.ad ], [ %.03441.i42, %bb.aa ], [ 0, %.preheader.i53.preheader ], [ %.0.i55167, %..loopexit.i48.loopexit_crit_edge ], [ 0, %.preheader.i53 ] ; 2 uses
+.loopexit.i48:                                    ; preds = %.preheader.i53, %..loopexit.i48.loopexit_crit_edge, %bb.ad, %bb.ac, %bb.ab, %bb.aa
+  %.2.i49 = phi i64 [ %i.ep, %bb.ac ], [ %.03441.i42, %bb.ab ], [ %i.es, %bb.ad ], [ %.03441.i42, %bb.aa ], [ %.0.i55167, %..loopexit.i48.loopexit_crit_edge ], [ 0, %.preheader.i53 ] ; 2 uses
   %i.et = add i64 %.03540.i43, 1
   %i.eu = add i64 %i.et, %.033.lcssa.i47          ; 2 uses
   %i.ev = icmp ult i64 %i.eu, %i.dv
@@ -1032,9 +1029,8 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.hd, label %.preheader.i78.preheader, label %.loopexit.i73
 
 .preheader.i78.preheader:                         ; preds = %bb.an
-  %.0.i80178 = add i64 %.03441.i67, -1            ; 2 uses
-  %.not.i81179 = icmp eq i64 %.0.i80178, 0
-  br i1 %.not.i81179, label %.loopexit.i73, label %.lr.ph182
+  %.0.i80178 = add i64 %.03441.i67, -1
+  br label %.lr.ph182
 
 .preheader.i78:                                   ; preds = %.lr.ph182
   %.0.i80 = add i64 %.0.i80181, -1                ; 2 uses
@@ -1042,8 +1038,8 @@ bb.an:                                            ; preds = %bb.am
   br i1 %.not.i81, label %.loopexit.i73, label %.lr.ph182, !llvm.loop !32
 
 .lr.ph182:                                        ; preds = %.preheader.i78.preheader, %.preheader.i78
-  %.0.i80181 = phi i64 [ %.0.i80, %.preheader.i78 ], [ %.0.i80178, %.preheader.i78.preheader ] ; 3 uses
-  %.0.in.i79180 = phi i64 [ %.0.i80181, %.preheader.i78 ], [ %.03441.i67, %.preheader.i78.preheader ]
+  %.0.i80181 = phi i64 [ %.0.i80178, %.preheader.i78.preheader ], [ %.0.i80, %.preheader.i78 ] ; 3 uses
+  %.0.in.i79180 = phi i64 [ %.03441.i67, %.preheader.i78.preheader ], [ %.0.i80181, %.preheader.i78 ]
   %i.he = getelementptr i8, ptr %i.gs, i64 %.0.in.i79180
   %i.hf = getelementptr i8, ptr %i.he, i64 -2
   %i.hg = load i8, ptr %i.hf, align 1, !tbaa !60
@@ -1071,8 +1067,8 @@ bb.aq:                                            ; preds = %bb.ap
 ..loopexit.i73.loopexit_crit_edge:                ; preds = %.lr.ph182
   br label %.loopexit.i73, !llvm.loop !32
 
-.loopexit.i73:                                    ; preds = %.preheader.i78, %.preheader.i78.preheader, %..loopexit.i73.loopexit_crit_edge, %bb.aq, %bb.ap, %bb.ao, %bb.an
-  %.2.i74 = phi i64 [ %i.hl, %bb.ap ], [ %.03441.i67, %bb.ao ], [ %i.ho, %bb.aq ], [ %.03441.i67, %bb.an ], [ 0, %.preheader.i78.preheader ], [ %.0.i80181, %..loopexit.i73.loopexit_crit_edge ], [ 0, %.preheader.i78 ] ; 2 uses
+.loopexit.i73:                                    ; preds = %.preheader.i78, %..loopexit.i73.loopexit_crit_edge, %bb.aq, %bb.ap, %bb.ao, %bb.an
+  %.2.i74 = phi i64 [ %i.hl, %bb.ap ], [ %.03441.i67, %bb.ao ], [ %i.ho, %bb.aq ], [ %.03441.i67, %bb.an ], [ %.0.i80181, %..loopexit.i73.loopexit_crit_edge ], [ 0, %.preheader.i78 ] ; 2 uses
   %i.hp = add i64 %.03540.i68, 1
   %i.hq = add i64 %i.hp, %.033.lcssa.i72          ; 2 uses
   %i.hr = icmp ult i64 %i.hq, %i.gr
@@ -1200,9 +1196,8 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %i.jg, label %.preheader.i100.preheader, label %.loopexit.i95
 
 .preheader.i100.preheader:                        ; preds = %bb.az
-  %.0.i102171 = add i64 %.03441.i89, -1           ; 2 uses
-  %.not.i103172 = icmp eq i64 %.0.i102171, 0
-  br i1 %.not.i103172, label %.loopexit.i95, label %.lr.ph175
+  %.0.i102171 = add i64 %.03441.i89, -1
+  br label %.lr.ph175
 
 .preheader.i100:                                  ; preds = %.lr.ph175
   %.0.i102 = add i64 %.0.i102174, -1              ; 2 uses
@@ -1210,8 +1205,8 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %.not.i103, label %.loopexit.i95, label %.lr.ph175, !llvm.loop !32
 
 .lr.ph175:                                        ; preds = %.preheader.i100.preheader, %.preheader.i100
-  %.0.i102174 = phi i64 [ %.0.i102, %.preheader.i100 ], [ %.0.i102171, %.preheader.i100.preheader ] ; 3 uses
-  %.0.in.i101173 = phi i64 [ %.0.i102174, %.preheader.i100 ], [ %.03441.i89, %.preheader.i100.preheader ]
+  %.0.i102174 = phi i64 [ %.0.i102171, %.preheader.i100.preheader ], [ %.0.i102, %.preheader.i100 ] ; 3 uses
+  %.0.in.i101173 = phi i64 [ %.03441.i89, %.preheader.i100.preheader ], [ %.0.i102174, %.preheader.i100 ]
   %i.jh = getelementptr i8, ptr %i.iv, i64 %.0.in.i101173
   %i.ji = getelementptr i8, ptr %i.jh, i64 -2
   %i.jj = load i8, ptr %i.ji, align 1, !tbaa !60
@@ -1239,8 +1234,8 @@ bb.bc:                                            ; preds = %bb.bb
 ..loopexit.i95.loopexit_crit_edge:                ; preds = %.lr.ph175
   br label %.loopexit.i95, !llvm.loop !32
 
-.loopexit.i95:                                    ; preds = %.preheader.i100, %.preheader.i100.preheader, %..loopexit.i95.loopexit_crit_edge, %bb.bc, %bb.bb, %bb.ba, %bb.az
-  %.2.i96 = phi i64 [ %i.jo, %bb.bb ], [ %.03441.i89, %bb.ba ], [ %i.jr, %bb.bc ], [ %.03441.i89, %bb.az ], [ 0, %.preheader.i100.preheader ], [ %.0.i102174, %..loopexit.i95.loopexit_crit_edge ], [ 0, %.preheader.i100 ] ; 2 uses
+.loopexit.i95:                                    ; preds = %.preheader.i100, %..loopexit.i95.loopexit_crit_edge, %bb.bc, %bb.bb, %bb.ba, %bb.az
+  %.2.i96 = phi i64 [ %i.jo, %bb.bb ], [ %.03441.i89, %bb.ba ], [ %i.jr, %bb.bc ], [ %.03441.i89, %bb.az ], [ %.0.i102174, %..loopexit.i95.loopexit_crit_edge ], [ 0, %.preheader.i100 ] ; 2 uses
   %i.js = add i64 %.03540.i90, 1
   %i.jt = add i64 %i.js, %.033.lcssa.i94          ; 2 uses
   %i.ju = icmp ult i64 %i.jt, %i.iu

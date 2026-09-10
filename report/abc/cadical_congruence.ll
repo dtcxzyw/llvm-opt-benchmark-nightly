@@ -205,16 +205,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   %.not113121 = icmp eq ptr %1, %0
-  %2 = add nsw i64 %i.e, -1                       ; 2 uses
   br label %bb.c
 
-3:                                                ; preds = %.loopexit115
-  %4 = icmp eq ptr %.sroa.0102.2, %.sroa.0106.3
-  br i1 %4, label %.preheader.preheader, label %.loopexit
-
-.preheader.preheader:                             ; preds = %3
-  %i.g = icmp eq i64 %2, 0
-  br i1 %i.g, label %.preheader.epil.preheader, label %.preheader.preheader.new
+.preheader.preheader:                             ; preds = %.loopexit115
+  %i.g = icmp eq ptr %.sroa.0102.2, %.sroa.0106.3
+  br i1 %i.g, label %.preheader.preheader.new, label %.loopexit
 
 .preheader.preheader.new:                         ; preds = %.preheader.preheader
   %unroll_iter188 = and i64 %i.e, -2
@@ -396,7 +391,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not23.i, label %bb.j, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.i
-  %5 = sub nsw i64 %2, %i.bo
   %xtraiter179 = and i64 %i.bq, 7                 ; 2 uses
   %lcmp.mod180.not = icmp eq i64 %xtraiter179, 0
   br i1 %lcmp.mod180.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
@@ -418,8 +412,9 @@ bb.i:                                             ; preds = %bb.h
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.preheader ], [ %i.bz, %.lr.ph.i.i.i.i.prol ]
   %.08.i.i.i.i.unr = phi ptr [ %.sroa.8.0140, %.lr.ph.i.i.i.i.preheader ], [ %i.bz, %.lr.ph.i.i.i.i.prol ]
   %.057.i.i.i.i.unr = phi i64 [ %i.bq, %.lr.ph.i.i.i.i.preheader ], [ %i.by, %.lr.ph.i.i.i.i.prol ]
-  %6 = icmp ult i64 %5, 7
-  br i1 %6, label %.lr.ph136.preheader, label %.lr.ph.i.i.i.i
+  %2 = sub nsw i64 %i.bo, %i.e
+  %3 = icmp ugt i64 %2, -8
+  br i1 %3, label %.lr.ph136.preheader, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i
   %.08.i.i.i.i = phi ptr [ %i.cq, %.lr.ph.i.i.i.i ], [ %.08.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 17 uses
@@ -614,7 +609,7 @@ bb.n:                                             ; preds = %bb.m
   %i.el = add nuw nsw i64 %.070148, 8
   %i.em = shl i64 %.079143, 8
   %i.en = icmp samesign ult i64 %.070148, 56
-  br i1 %i.en, label %bb.c, label %3, !llvm.loop !606
+  br i1 %i.en, label %bb.c, label %.preheader.preheader, !llvm.loop !606
 
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
   %.0151 = phi i64 [ 0, %.preheader.preheader.new ], [ %i.et, %.preheader ] ; 4 uses
@@ -626,7 +621,7 @@ bb.n:                                             ; preds = %bb.m
   %i.er = getelementptr inbounds [16 x i8], ptr %.sroa.0106.3, i64 %i.eq
   %i.es = getelementptr inbounds [16 x i8], ptr %0, i64 %i.eq
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.es, ptr noundef nonnull align 8 dereferenceable(16) %i.er, i64 16, i1 false), !tbaa.struct !337
-  %i.et = add nuw i64 %.0151, 2                   ; 2 uses
+  %i.et = add nuw i64 %.0151, 2                   ; 3 uses
   %niter189.next.1 = add nuw i64 %niter189, 2     ; 2 uses
   %niter189.ncmp.1 = icmp eq i64 %niter189.next.1, %unroll_iter188
   br i1 %niter189.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.preheader, !llvm.loop !607
@@ -636,16 +631,15 @@ bb.n:                                             ; preds = %bb.m
   %lcmp.mod186.not = icmp eq i64 %i.eu, 0
   br i1 %lcmp.mod186.not, label %.loopexit, label %.preheader.epil.preheader
 
-.preheader.epil.preheader:                        ; preds = %.loopexit.loopexit.unr-lcssa, %.preheader.preheader
-  %.0151.epil.init = phi i64 [ 0, %.preheader.preheader ], [ %i.et, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
+.preheader.epil.preheader:                        ; preds = %.loopexit.loopexit.unr-lcssa
   %lcmp.mod187 = trunc i64 %i.e to i1
   tail call void @llvm.assume(i1 %lcmp.mod187)
-  %i.ev = getelementptr inbounds [16 x i8], ptr %.sroa.0106.3, i64 %.0151.epil.init
-  %i.ew = getelementptr inbounds [16 x i8], ptr %0, i64 %.0151.epil.init
+  %i.ev = getelementptr inbounds [16 x i8], ptr %.sroa.0106.3, i64 %i.et
+  %i.ew = getelementptr inbounds [16 x i8], ptr %0, i64 %i.et
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ew, ptr noundef nonnull align 8 dereferenceable(16) %i.ev, i64 16, i1 false), !tbaa.struct !337
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader.epil.preheader, %.loopexit.loopexit.unr-lcssa, %3
+.loopexit:                                        ; preds = %.preheader.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader.preheader
   %.not.i.i.i = icmp eq ptr %.sroa.095.3, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN7CaDiCaL13LitClausePairESaIS1_EED2Ev.exit, label %bb.o
 

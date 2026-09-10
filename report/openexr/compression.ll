@@ -205,18 +205,14 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, i8 0, i64 %i.e, i1 false)
   %i.f = add nsw i32 %0, -1                       ; 4 uses
   %wide.trip.count.i = zext nneg i32 %0 to i64    ; 6 uses
-  %i.g = add nsw i64 %wide.trip.count.i, -1       ; 3 uses
+  %i.g = add nsw i64 %wide.trip.count.i, -1       ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
-  %5 = icmp eq i64 %i.g, 0
-  br i1 %5, label %.epil.preheader, label %.new
-
-.new:                                             ; preds = %bb.a
   %unroll_iter = and i64 %wide.trip.count.i, 510
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %.new
-  %indvars.iv.i = phi i64 [ 0, %.new ], [ %indvars.iv.next.i.1, %bb.b ] ; 3 uses
-  %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %bb.b ]
+bb.b:                                             ; preds = %bb.b, %bb.a
+  %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.1, %bb.b ] ; 3 uses
+  %niter = phi i64 [ 0, %bb.a ], [ %niter.next.1, %bb.b ]
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.i
   %i.i = load i32, ptr %i.h, align 4, !tbaa !16
   %..i = tail call i32 @llvm.umin.i32(i32 %i.i, i32 %i.f)
@@ -243,11 +239,10 @@ bb.b:                                             ; preds = %bb.b, %.new
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader47.i.preheader, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %.preheader47.i.preheader.unr-lcssa, %bb.a
-  %indvars.iv.i.epil.init = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.1, %.preheader47.i.preheader.unr-lcssa ]
+.epil.preheader:                                  ; preds = %.preheader47.i.preheader.unr-lcssa
   %lcmp.mod99 = trunc i32 %0 to i1
   tail call void @llvm.assume(i1 %lcmp.mod99)
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.i.epil.init
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.next.i.1
   %i.v = load i32, ptr %i.u, align 4, !tbaa !16
   %..i.epil = tail call i32 @llvm.umin.i32(i32 %i.v, i32 %i.f)
   %i.w = zext nneg i32 %..i.epil to i64

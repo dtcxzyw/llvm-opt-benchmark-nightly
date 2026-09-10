@@ -205,34 +205,26 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx
   br label %bb.b
 
-bb.b:                                             ; preds = %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i, %.lr.ph
-  %i.f = phi ptr [ %i.e, %.lr.ph ], [ %i.i, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i ] ; 2 uses
+bb.b:                                             ; preds = %.lr.ph, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i
+  %i.f = phi ptr [ %i.i, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i ], [ %i.e, %.lr.ph ] ; 2 uses
   %i.g = getelementptr i8, ptr %i.f, i64 -8
-  %.val.i = load i8, ptr %i.g, align 8, !range !39, !noalias !3806, !noundef !10 ; 3 uses
+  %.val.i = load i8, ptr %i.g, align 8, !range !39, !noalias !3806, !noundef !10 ; 2 uses
   %i.h = icmp ne i8 %.val.i, 5
   tail call void @llvm.assume(i1 %i.h)
-  %1 = add nsw i8 %.val.i, -2
-  %2 = icmp samesign ugt i8 %.val.i, 1
-  %narrow1.i.i.i.i.i.i.i = select i1 %2, i8 %1, i8 3
-  switch i8 %narrow1.i.i.i.i.i.i.i, label %3 [
-    i8 6, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i
-    i8 5, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i
-    i8 11, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i
+  switch i8 %.val.i, label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs8frGy5WneL6_4fish6parser5BlockENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1o_8iterator8Iterator3any5checkRBJ_NCNvMs5_BL_NtBL_6Parser8is_block0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBN_.exit [
+    i8 8, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i
+    i8 7, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i
+    i8 13, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i
   ]
 
-3:                                                ; preds = %bb.b
-  br label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i
-
-_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i: ; preds = %bb.b, %bb.b, %bb.b, %3
-  %or.cond.i.i.not.i.i.i.lcssa = phi i1 [ false, %bb.b ], [ false, %bb.b ], [ true, %3 ], [ false, %bb.b ] ; 2 uses
+_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i: ; preds = %bb.b, %bb.b, %bb.b
   %i.i = getelementptr inbounds i8, ptr %i.f, i64 -40 ; 2 uses
   %.not.not.not.i.not.not.not.not = icmp eq ptr %i.b, %i.i
-  %or.cond = select i1 %or.cond.i.i.not.i.i.i.lcssa, i1 true, i1 %.not.not.not.i.not.not.not.not
-  br i1 %or.cond, label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs8frGy5WneL6_4fish6parser5BlockENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1o_8iterator8Iterator3any5checkRBJ_NCNvMs5_BL_NtBL_6Parser8is_block0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBN_.exit, label %bb.b
+  br i1 %.not.not.not.i.not.not.not.not, label %_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs8frGy5WneL6_4fish6parser5BlockENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1o_8iterator8Iterator3any5checkRBJ_NCNvMs5_BL_NtBL_6Parser8is_block0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBN_.exit, label %bb.b
 
-_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs8frGy5WneL6_4fish6parser5BlockENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1o_8iterator8Iterator3any5checkRBJ_NCNvMs5_BL_NtBL_6Parser8is_block0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBN_.exit: ; preds = %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i, %bb.a
-  %.not.not.not.i.not.not.not.lcssa = phi i1 [ false, %bb.a ], [ %or.cond.i.i.not.i.i.i.lcssa, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i ]
-  ret i1 %.not.not.not.i.not.not.not.lcssa
+_RINvYINtNtNtCs3oUPovFnLWP_4core5slice4iter4IterNtNtCs8frGy5WneL6_4fish6parser5BlockENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1o_8iterator8Iterator3any5checkRBJ_NCNvMs5_BL_NtBL_6Parser8is_block0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBN_.exit: ; preds = %bb.b, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i, %bb.a
+  %.lcssa.i = phi i1 [ false, %bb.a ], [ false, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkRNtNtCs8frGy5WneL6_4fish6parser5BlockNCNvMs5_B1e_NtB1e_6Parser8is_block0E0B1g_.exit.i ], [ true, %bb.b ]
+  ret i1 %.lcssa.i
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -635,30 +627,27 @@ define hidden noundef zeroext i1 @_RNvXsf_NtNtCs3oUPovFnLWP_4core5slice3cmpNtNtC
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 %2
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5520)
+  %.val1.i.i = load i8, ptr %0, align 1, !range !39, !alias.scope !5520, !noalias !5521 ; 4 uses
+  %3 = icmp ne i8 %.val1.i.i, 5
+  %4 = icmp samesign ugt i8 %.val1.i.i, 1
+  %5 = select i1 %4, i8 %.val1.i.i, i8 5
   %.not.i = icmp samesign eq i64 %2, 0
   br i1 %.not.i, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCs8frGy5WneL6_4fish6parser9BlockTypeENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvXsf_NtB9_3cmpBQ_NtB2m_13SliceContains14slice_contains0EBU_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %.val1.i.i = load i8, ptr %0, align 1, !range !39, !alias.scope !5520, !noalias !5521, !noundef !10 ; 4 uses
-  %3 = icmp ne i8 %.val1.i.i, 5
   tail call void @llvm.assume(i1 %3)
-  %4 = add nsw i8 %.val1.i.i, -2
-  %5 = icmp samesign ugt i8 %.val1.i.i, 1
-  %narrow1.i.i.i = select i1 %5, i8 %4, i8 3      ; 2 uses
-  %6 = icmp ne i8 %narrow1.i.i.i, 3
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %i.b = phi ptr [ %1, %.lr.ph.i ], [ %i.g, %bb.b ] ; 2 uses
+  %i.b = phi ptr [ %i.g, %bb.b ], [ %1, %.lr.ph.i ] ; 2 uses
   %.val2.i = load i8, ptr %i.b, align 1, !range !39, !noalias !5522, !noundef !10 ; 4 uses
   %i.c = icmp ne i8 %.val2.i, 5
   tail call void @llvm.assume(i1 %i.c)
-  %7 = add nsw i8 %.val2.i, -2
-  %i.d = icmp samesign ugt i8 %.val2.i, 1
-  %narrow.i.i.i = select i1 %i.d, i8 %7, i8 3
-  %i.e = icmp eq i8 %narrow.i.i.i, %narrow1.i.i.i
+  %i.d = icmp samesign ugt i8 %.val2.i, 1         ; 2 uses
+  %narrow.i.i.i = select i1 %i.d, i8 %.val2.i, i8 5
+  %i.e = icmp eq i8 %narrow.i.i.i, %5
   %i.f = icmp eq i8 %.val2.i, %.val1.i.i
-  %spec.select.i.i.i = or i1 %6, %i.f
+  %spec.select.i.i.i = or i1 %i.d, %i.f
   %or.cond.i = and i1 %spec.select.i.i.i, %i.e    ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
   %.not6.i = icmp eq ptr %i.g, %i.a

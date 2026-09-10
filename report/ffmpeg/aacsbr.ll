@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.a
   %i.oq = tail call i32 @llvm.umin.i32(i32 %i.np, i32 %i.op)
   store i32 %i.oq, ptr %i.n, align 8, !tbaa !30
   %i.or = add nuw nsw i32 %i.oo, %i.oe            ; 5 uses
-  %i.os = add nuw nsw i32 %i.or, 1                ; 15 uses
+  %i.os = add nuw nsw i32 %i.or, 1                ; 13 uses
   %i.ot = icmp samesign ugt i32 %i.or, 4
   br i1 %i.ot, label %bb.n, label %bb.o
 
@@ -390,14 +390,14 @@ bb.o:                                             ; preds = %bb.m
 ._crit_edge:                                      ; preds = %.lr.ph226.preheader, %.lr.ph226.1, %.lr.ph226.2, %.preheader223
   %i.th = getelementptr inbounds nuw i8, ptr @ceil_log2, i64 %i.pc
   %i.ti = load i8, ptr %i.th, align 1, !tbaa !12
-  %i.tj = sext i8 %i.ti to i32                    ; 8 uses
-  %i.tk = load i32, ptr %i.n, align 8, !tbaa !30  ; 9 uses
+  %i.tj = sext i8 %i.ti to i32                    ; 7 uses
+  %i.tk = load i32, ptr %i.n, align 8, !tbaa !30  ; 8 uses
   %i.tl = load i32, ptr %i.p, align 8, !tbaa !31
   %i.tm = load ptr, ptr %2, align 8, !tbaa !42
   %i.tn = lshr i32 %i.tk, 3
   %i.to = zext nneg i32 %i.tn to i64
   %i.tp = getelementptr inbounds nuw i8, ptr %i.tm, i64 %i.to
-  %i.tq = load i32, ptr %i.tp, align 1, !tbaa !12 ; 7 uses
+  %i.tq = load i32, ptr %i.tp, align 1, !tbaa !12 ; 6 uses
   %i.tr = add i32 %i.tk, %i.tj
   %i.ts = tail call i32 @llvm.umin.i32(i32 %i.tl, i32 %i.tr)
   store i32 %i.ts, ptr %i.n, align 8, !tbaa !30
@@ -529,28 +529,24 @@ bb.t:                                             ; preds = %bb.s
   %i.xd = lshr i8 %i.xc, 7
   %i.xe = getelementptr inbounds nuw i8, ptr %3, i64 18
   store i8 %i.xd, ptr %i.xe, align 2, !tbaa !12
-  %exitcond267.not.5 = icmp eq i32 %i.os, 6
-  br i1 %exitcond267.not.5, label %get_bits1_vector.exit202, label %5
-
-5:                                                ; preds = %bb.t
-  %6 = load i32, ptr %i.n, align 8, !tbaa !30     ; 4 uses
-  %7 = load ptr, ptr %2, align 8, !tbaa !42
-  %8 = lshr i32 %6, 3
-  %9 = zext nneg i32 %8 to i64
-  %10 = getelementptr inbounds nuw i8, ptr %7, i64 %9
-  %11 = load i8, ptr %10, align 1, !tbaa !12
-  %12 = load i32, ptr %i.p, align 8, !tbaa !31
-  %13 = icmp slt i32 %6, %12
-  %14 = zext i1 %13 to i32
-  %spec.select.i205.6 = add i32 %6, %14
-  %15 = zext i8 %11 to i32
-  %16 = and i32 %6, 7
-  %17 = shl nuw nsw i32 %15, %16
+  %5 = load i32, ptr %i.n, align 8, !tbaa !30     ; 4 uses
+  %6 = load ptr, ptr %2, align 8, !tbaa !42
+  %7 = lshr i32 %5, 3
+  %8 = zext nneg i32 %7 to i64
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 %8
+  %10 = load i8, ptr %9, align 1, !tbaa !12
+  %11 = load i32, ptr %i.p, align 8, !tbaa !31
+  %12 = icmp slt i32 %5, %11
+  %13 = zext i1 %12 to i32
+  %spec.select.i205.6 = add i32 %5, %13
+  %14 = zext i8 %10 to i32
+  %15 = and i32 %5, 7
+  %16 = shl nuw nsw i32 %14, %15
   store i32 %spec.select.i205.6, ptr %i.n, align 8, !tbaa !30
-  %18 = trunc i32 %17 to i8
-  %19 = lshr i8 %18, 7
-  %20 = getelementptr inbounds nuw i8, ptr %3, i64 19
-  store i8 %19, ptr %20, align 1, !tbaa !12
+  %17 = trunc i32 %16 to i8
+  %18 = lshr i8 %17, 7
+  %19 = getelementptr inbounds nuw i8, ptr %3, i64 19
+  store i8 %18, ptr %19, align 1, !tbaa !12
   br label %get_bits1_vector.exit202
 
 default.unreachable310:                           ; preds = %bb.a
@@ -561,11 +557,11 @@ default.unreachable310:                           ; preds = %bb.a
   %i.xf = add nuw nsw i32 %i.am, 1
   br label %.lr.ph247.preheader
 
-get_bits1_vector.exit202:                         ; preds = %._crit_edge, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %5, %._crit_edge231, %bb.j, %bb.k, %bb.l, %._crit_edge236, %bb.f, %bb.g, %bb.h
-  %.sink319 = phi i32 [ %i.lc, %._crit_edge231 ], [ %i.fr, %._crit_edge236 ], [ %i.fr, %bb.h ], [ %i.fr, %bb.g ], [ %i.fr, %bb.f ], [ %i.lc, %bb.l ], [ %i.lc, %bb.k ], [ %i.lc, %bb.j ], [ %i.tq, %5 ], [ %i.tq, %bb.t ], [ %i.tq, %bb.s ], [ %i.tq, %bb.r ], [ %i.tq, %bb.q ], [ %i.tq, %bb.p ], [ %i.tq, %._crit_edge ]
-  %.sink = phi i32 [ %i.kw, %._crit_edge231 ], [ %i.fl, %._crit_edge236 ], [ %i.fl, %bb.h ], [ %i.fl, %bb.g ], [ %i.fl, %bb.f ], [ %i.kw, %bb.l ], [ %i.kw, %bb.k ], [ %i.kw, %bb.j ], [ %i.tk, %5 ], [ %i.tk, %bb.t ], [ %i.tk, %bb.s ], [ %i.tk, %bb.r ], [ %i.tk, %bb.q ], [ %i.tk, %bb.p ], [ %i.tk, %._crit_edge ]
-  %.sink316 = phi i32 [ %i.kv, %._crit_edge231 ], [ %i.fk, %._crit_edge236 ], [ %i.fk, %bb.h ], [ %i.fk, %bb.g ], [ %i.fk, %bb.f ], [ %i.kv, %bb.l ], [ %i.kv, %bb.k ], [ %i.kv, %bb.j ], [ %i.tj, %5 ], [ %i.tj, %bb.t ], [ %i.tj, %bb.s ], [ %i.tj, %bb.r ], [ %i.tj, %bb.q ], [ %i.tj, %bb.p ], [ %i.tj, %._crit_edge ]
-  %21 = phi i32 [ %i.it, %._crit_edge231 ], [ %i.cx, %._crit_edge236 ], [ %i.cx, %bb.h ], [ %i.cx, %bb.g ], [ %i.cx, %bb.f ], [ %i.it, %bb.l ], [ %i.it, %bb.k ], [ %i.it, %bb.j ], [ %i.os, %5 ], [ %i.os, %bb.t ], [ %i.os, %bb.s ], [ %i.os, %bb.r ], [ %i.os, %bb.q ], [ %i.os, %bb.p ], [ %i.os, %._crit_edge ] ; 2 uses
+get_bits1_vector.exit202:                         ; preds = %._crit_edge, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %._crit_edge231, %bb.j, %bb.k, %bb.l, %._crit_edge236, %bb.f, %bb.g, %bb.h
+  %.sink319 = phi i32 [ %i.lc, %._crit_edge231 ], [ %i.fr, %._crit_edge236 ], [ %i.fr, %bb.h ], [ %i.fr, %bb.g ], [ %i.fr, %bb.f ], [ %i.lc, %bb.l ], [ %i.lc, %bb.k ], [ %i.lc, %bb.j ], [ %i.tq, %bb.t ], [ %i.tq, %bb.s ], [ %i.tq, %bb.r ], [ %i.tq, %bb.q ], [ %i.tq, %bb.p ], [ %i.tq, %._crit_edge ]
+  %.sink = phi i32 [ %i.kw, %._crit_edge231 ], [ %i.fl, %._crit_edge236 ], [ %i.fl, %bb.h ], [ %i.fl, %bb.g ], [ %i.fl, %bb.f ], [ %i.kw, %bb.l ], [ %i.kw, %bb.k ], [ %i.kw, %bb.j ], [ %i.tk, %bb.t ], [ %i.tk, %bb.s ], [ %i.tk, %bb.r ], [ %i.tk, %bb.q ], [ %i.tk, %bb.p ], [ %i.tk, %._crit_edge ]
+  %.sink316 = phi i32 [ %i.kv, %._crit_edge231 ], [ %i.fk, %._crit_edge236 ], [ %i.fk, %bb.h ], [ %i.fk, %bb.g ], [ %i.fk, %bb.f ], [ %i.kv, %bb.l ], [ %i.kv, %bb.k ], [ %i.kv, %bb.j ], [ %i.tj, %bb.t ], [ %i.tj, %bb.s ], [ %i.tj, %bb.r ], [ %i.tj, %bb.q ], [ %i.tj, %bb.p ], [ %i.tj, %._crit_edge ]
+  %20 = phi i32 [ %i.it, %._crit_edge231 ], [ %i.cx, %._crit_edge236 ], [ %i.cx, %bb.h ], [ %i.cx, %bb.g ], [ %i.cx, %bb.f ], [ %i.it, %bb.l ], [ %i.it, %bb.k ], [ %i.it, %bb.j ], [ %i.os, %bb.t ], [ %i.os, %bb.s ], [ %i.os, %bb.r ], [ %i.os, %bb.q ], [ %i.os, %bb.p ], [ %i.os, %._crit_edge ] ; 2 uses
   %i.xg = tail call i32 @llvm.bswap.i32(i32 %.sink319)
   %i.xh = and i32 %.sink, 7
   %i.xi = shl i32 %i.xg, %i.xh
@@ -581,14 +577,14 @@ bb.u:                                             ; preds = %get_bits1_vector.ex
   unreachable
 
 bb.v:                                             ; preds = %get_bits1_vector.exit202
-  %i.xm = add nuw nsw i32 %21, 1                  ; 2 uses
+  %i.xm = add nuw nsw i32 %20, 1                  ; 2 uses
   %i.xn = icmp samesign ugt i32 %i.xk, %i.xm
   br i1 %i.xn, label %bb.w, label %.lr.ph247.preheader
 
 .lr.ph247.preheader:                              ; preds = %bb.v, %.thread312
   %i.xo = phi i32 [ %i.xf, %.thread312 ], [ %i.xm, %bb.v ] ; 2 uses
   %.0185207314 = phi i32 [ 0, %.thread312 ], [ %i.xk, %bb.v ] ; 7 uses
-  %i.xp = phi i32 [ %i.am, %.thread312 ], [ %21, %bb.v ] ; 5 uses
+  %i.xp = phi i32 [ %i.am, %.thread312 ], [ %20, %bb.v ] ; 5 uses
   %wide.trip.count299 = zext nneg i32 %i.xo to i64
   br label %.lr.ph247
 

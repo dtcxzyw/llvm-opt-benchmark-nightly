@@ -205,30 +205,25 @@ bb.u:                                             ; preds = %bb.r, %bb.s, %bb.n
 .preheader91:                                     ; preds = %bb.u
   %i.ay = icmp samesign ugt i32 %spec.store.select, 6
   %i.az = mul nuw nsw i32 %1, %0
-  %wide.trip.count234.i.i = zext nneg i32 %0 to i64 ; 26 uses
+  %wide.trip.count234.i.i = zext nneg i32 %0 to i64 ; 25 uses
   %wide.trip.count = zext nneg i32 %3 to i64
   %i.ba = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %7 = add nsw i64 %wide.trip.count234.i.i, -1    ; 6 uses
   %xtraiter = and i64 %wide.trip.count234.i.i, 1
-  %8 = icmp eq i64 %7, 0
   %unroll_iter = and i64 %wide.trip.count234.i.i, 62
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod242 = trunc i32 %0 to i1
   %xtraiter243 = and i64 %wide.trip.count234.i.i, 1
-  %9 = icmp eq i64 %7, 0
   %unroll_iter246 = and i64 %wide.trip.count234.i.i, 62
   %lcmp.mod244.not = icmp eq i64 %xtraiter243, 0
   %lcmp.mod245 = trunc i32 %0 to i1
   %xtraiter248 = and i64 %wide.trip.count234.i.i, 1
-  %10 = icmp eq i64 %7, 0
   %unroll_iter251 = and i64 %wide.trip.count234.i.i, 62
   %lcmp.mod249.not = icmp eq i64 %xtraiter248, 0
   %lcmp.mod250 = trunc i32 %0 to i1
   %xtraiter253 = and i64 %wide.trip.count234.i.i, 1
-  %11 = icmp eq i64 %7, 0
   %unroll_iter256 = and i64 %wide.trip.count234.i.i, 62
   %lcmp.mod254.not = icmp eq i64 %xtraiter253, 0
   %lcmp.mod255 = trunc i32 %0 to i1
@@ -255,12 +250,10 @@ bb.u:                                             ; preds = %bb.r, %bb.s, %bb.n
   %induction = or disjoint <4 x i32> %broadcast.splat161, <i32 0, i32 1, i32 2, i32 3>
   %cmp.n166 = icmp eq i64 %n.vec153, %wide.trip.count234.i.i
   %xtraiter258 = and i64 %wide.trip.count234.i.i, 1
-  %12 = icmp eq i64 %7, 0
   %unroll_iter261 = and i64 %wide.trip.count234.i.i, 62
   %lcmp.mod259.not = icmp eq i64 %xtraiter258, 0
   %lcmp.mod260 = trunc i32 %0 to i1
   %xtraiter263 = and i64 %wide.trip.count234.i.i, 1
-  %13 = icmp eq i64 %7, 0
   %unroll_iter266 = and i64 %wide.trip.count234.i.i, 62
   %lcmp.mod264.not = icmp eq i64 %xtraiter263, 0
   %lcmp.mod265 = trunc i32 %0 to i1
@@ -663,11 +656,11 @@ setVal.exit.i.i:                                  ; preds = %setVal.exit.i.i.pre
 
 .preheader147.split.us.us.split.us.preheader.i.i: ; preds = %.preheader147.us.i.i
   %i.go = sext i32 %.pn129.us.i.i to i64          ; 3 uses
-  br i1 %11, label %.preheader147.split.us.us.split.us.i.i.epil.preheader, label %.preheader147.split.us.us.split.us.i.i
+  br label %.preheader147.split.us.us.split.us.i.i
 
-.preheader147.split.us.us.split.us.i.i:           ; preds = %.preheader147.split.us.us.split.us.preheader.i.i, %.preheader147.split.us.us.split.us.i.i
-  %indvars.iv255.i.i = phi i64 [ %indvars.iv.next256.i.i.1, %.preheader147.split.us.us.split.us.i.i ], [ 0, %.preheader147.split.us.us.split.us.preheader.i.i ] ; 5 uses
-  %niter257 = phi i64 [ %niter257.next.1, %.preheader147.split.us.us.split.us.i.i ], [ 0, %.preheader147.split.us.us.split.us.preheader.i.i ]
+.preheader147.split.us.us.split.us.i.i:           ; preds = %.preheader147.split.us.us.split.us.i.i, %.preheader147.split.us.us.split.us.preheader.i.i
+  %indvars.iv255.i.i = phi i64 [ 0, %.preheader147.split.us.us.split.us.preheader.i.i ], [ %indvars.iv.next256.i.i.1, %.preheader147.split.us.us.split.us.i.i ] ; 5 uses
+  %niter257 = phi i64 [ 0, %.preheader147.split.us.us.split.us.preheader.i.i ], [ %niter257.next.1, %.preheader147.split.us.us.split.us.i.i ]
   %i.gp = add nsw i64 %indvars.iv255.i.i, %i.go
   %i.gq = trunc nuw nsw i64 %indvars.iv255.i.i to i32
   %i.gr = lshr i32 %i.gq, 3
@@ -691,18 +684,18 @@ setVal.exit.i.i:                                  ; preds = %setVal.exit.i.i.pre
   %..i.1 = select i1 %i.hd, i64 3, i64 2
   %i.hg = getelementptr i8, ptr %i.hf, i64 %..i.1
   store i8 0, ptr %i.hg, align 1, !tbaa !16
-  %indvars.iv.next256.i.i.1 = add nuw nsw i64 %indvars.iv255.i.i, 2 ; 2 uses
+  %indvars.iv.next256.i.i.1 = add nuw nsw i64 %indvars.iv255.i.i, 2 ; 3 uses
   %niter257.next.1 = add nuw nsw i64 %niter257, 2 ; 2 uses
   %niter257.ncmp.1 = icmp eq i64 %niter257.next.1, %unroll_iter256
   br i1 %niter257.ncmp.1, label %.split.us.us.i.i.loopexit.unr-lcssa, label %.preheader147.split.us.us.split.us.i.i, !llvm.loop !35
 
 .preheader147.split.us.us.split.split.us.preheader.i.i: ; preds = %.preheader147.us.i.i
   %i.hh = zext nneg i32 %.pn129.us.i.i to i64     ; 3 uses
-  br i1 %10, label %.preheader147.split.us.us.split.split.us.i.i.epil.preheader, label %.preheader147.split.us.us.split.split.us.i.i
+  br label %.preheader147.split.us.us.split.split.us.i.i
 
-.preheader147.split.us.us.split.split.us.i.i:     ; preds = %.preheader147.split.us.us.split.split.us.preheader.i.i, %setVal.exit136.us.us.us167.i.i.1
-  %indvars.iv249.i.i = phi i64 [ %indvars.iv.next250.i.i.1, %setVal.exit136.us.us.us167.i.i.1 ], [ 0, %.preheader147.split.us.us.split.split.us.preheader.i.i ] ; 5 uses
-  %niter252 = phi i64 [ %niter252.next.1, %setVal.exit136.us.us.us167.i.i.1 ], [ 0, %.preheader147.split.us.us.split.split.us.preheader.i.i ]
+.preheader147.split.us.us.split.split.us.i.i:     ; preds = %setVal.exit136.us.us.us167.i.i.1, %.preheader147.split.us.us.split.split.us.preheader.i.i
+  %indvars.iv249.i.i = phi i64 [ 0, %.preheader147.split.us.us.split.split.us.preheader.i.i ], [ %indvars.iv.next250.i.i.1, %setVal.exit136.us.us.us167.i.i.1 ] ; 5 uses
+  %niter252 = phi i64 [ 0, %.preheader147.split.us.us.split.split.us.preheader.i.i ], [ %niter252.next.1, %setVal.exit136.us.us.us167.i.i.1 ]
   %i.hi = trunc nuw nsw i64 %indvars.iv249.i.i to i32
   %i.hj = lshr i32 %i.hi, 3
   %i.hk = add nuw nsw i32 %i.hj, %i.gm
@@ -740,7 +733,7 @@ setVal.exit137.us.us.us166.i.i.1:                 ; preds = %setVal.exit136.us.u
   br label %setVal.exit136.us.us.us167.i.i.1
 
 setVal.exit136.us.us.us167.i.i.1:                 ; preds = %setVal.exit137.us.us.us166.i.i.1, %setVal.exit136.us.us.us167.i.i
-  %indvars.iv.next250.i.i.1 = add nuw nsw i64 %indvars.iv249.i.i, 2 ; 2 uses
+  %indvars.iv.next250.i.i.1 = add nuw nsw i64 %indvars.iv249.i.i, 2 ; 3 uses
   %niter252.next.1 = add nuw nsw i64 %niter252, 2 ; 2 uses
   %niter252.ncmp.1 = icmp eq i64 %niter252.next.1, %unroll_iter251
   br i1 %niter252.ncmp.1, label %.split.us.us.i.i.loopexit236.unr-lcssa, label %.preheader147.split.us.us.split.split.us.i.i, !llvm.loop !35
@@ -748,11 +741,10 @@ setVal.exit136.us.us.us167.i.i.1:                 ; preds = %setVal.exit137.us.u
 .split.us.us.i.i.loopexit.unr-lcssa:              ; preds = %.preheader147.split.us.us.split.us.i.i
   br i1 %lcmp.mod254.not, label %.split.us.us.i.i, label %.preheader147.split.us.us.split.us.i.i.epil.preheader
 
-.preheader147.split.us.us.split.us.i.i.epil.preheader: ; preds = %.split.us.us.i.i.loopexit.unr-lcssa, %.preheader147.split.us.us.split.us.preheader.i.i
-  %indvars.iv255.i.i.epil.init = phi i64 [ 0, %.preheader147.split.us.us.split.us.preheader.i.i ], [ %indvars.iv.next256.i.i.1, %.split.us.us.i.i.loopexit.unr-lcssa ] ; 2 uses
+.preheader147.split.us.us.split.us.i.i.epil.preheader: ; preds = %.split.us.us.i.i.loopexit.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod255)
-  %i.ic = add nsw i64 %indvars.iv255.i.i.epil.init, %i.go
-  %i.id = trunc nuw nsw i64 %indvars.iv255.i.i.epil.init to i32
+  %i.ic = add nsw i64 %indvars.iv.next256.i.i.1, %i.go
+  %i.id = trunc nuw nsw i64 %indvars.iv.next256.i.i.1 to i32
   %i.ie = lshr i32 %i.id, 3
   %i.if = add nuw nsw i32 %i.ie, %i.gm
   %i.ig = and i32 %i.if, 1
@@ -767,10 +759,9 @@ setVal.exit136.us.us.us167.i.i.1:                 ; preds = %setVal.exit137.us.u
 .split.us.us.i.i.loopexit236.unr-lcssa:           ; preds = %setVal.exit136.us.us.us167.i.i.1
   br i1 %lcmp.mod249.not, label %.split.us.us.i.i, label %.preheader147.split.us.us.split.split.us.i.i.epil.preheader
 
-.preheader147.split.us.us.split.split.us.i.i.epil.preheader: ; preds = %.split.us.us.i.i.loopexit236.unr-lcssa, %.preheader147.split.us.us.split.split.us.preheader.i.i
-  %indvars.iv249.i.i.epil.init = phi i64 [ 0, %.preheader147.split.us.us.split.split.us.preheader.i.i ], [ %indvars.iv.next250.i.i.1, %.split.us.us.i.i.loopexit236.unr-lcssa ] ; 2 uses
+.preheader147.split.us.us.split.split.us.i.i.epil.preheader: ; preds = %.split.us.us.i.i.loopexit236.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod250)
-  %i.il = trunc nuw nsw i64 %indvars.iv249.i.i.epil.init to i32
+  %i.il = trunc nuw nsw i64 %indvars.iv.next250.i.i.1 to i32
   %i.im = lshr i32 %i.il, 3
   %i.in = add nuw nsw i32 %i.im, %i.gm
   %i.io = and i32 %i.in, 1
@@ -778,7 +769,7 @@ setVal.exit136.us.us.us167.i.i.1:                 ; preds = %setVal.exit137.us.u
   br i1 %i.ip, label %.split.us.us.i.i, label %setVal.exit137.us.us.us166.i.i.epil
 
 setVal.exit137.us.us.us166.i.i.epil:              ; preds = %.preheader147.split.us.us.split.split.us.i.i.epil.preheader
-  %i.iq = add nuw nsw i64 %indvars.iv249.i.i.epil.init, %i.hh
+  %i.iq = add nuw nsw i64 %indvars.iv.next250.i.i.1, %i.hh
   %i.ir = mul nsw i64 %i.iq, %i.gj
   %i.is = getelementptr i8, ptr %i.co, i64 %i.ir  ; 2 uses
   %i.it = getelementptr i8, ptr %i.is, i64 2
@@ -812,11 +803,11 @@ setVal.exit135.i.i:                               ; preds = %setVal.exit135.i.i.
 
 .preheader147.split.split.us.preheader.i.i:       ; preds = %.preheader147.i.i
   %i.jb = sext i32 %.pn129.i.i to i64             ; 3 uses
-  br i1 %9, label %.preheader147.split.split.us.i.i.epil.preheader, label %.preheader147.split.split.us.i.i
+  br label %.preheader147.split.split.us.i.i
 
-.preheader147.split.split.us.i.i:                 ; preds = %.preheader147.split.split.us.preheader.i.i, %.preheader147.split.split.us.i.i
-  %indvars.iv236.i.i = phi i64 [ %indvars.iv.next237.i.i.1, %.preheader147.split.split.us.i.i ], [ 0, %.preheader147.split.split.us.preheader.i.i ] ; 5 uses
-  %niter247 = phi i64 [ %niter247.next.1, %.preheader147.split.split.us.i.i ], [ 0, %.preheader147.split.split.us.preheader.i.i ]
+.preheader147.split.split.us.i.i:                 ; preds = %.preheader147.split.split.us.i.i, %.preheader147.split.split.us.preheader.i.i
+  %indvars.iv236.i.i = phi i64 [ 0, %.preheader147.split.split.us.preheader.i.i ], [ %indvars.iv.next237.i.i.1, %.preheader147.split.split.us.i.i ] ; 5 uses
+  %niter247 = phi i64 [ 0, %.preheader147.split.split.us.preheader.i.i ], [ %niter247.next.1, %.preheader147.split.split.us.i.i ]
   %i.jc = add nsw i64 %indvars.iv236.i.i, %i.jb
   %i.jd = trunc nuw nsw i64 %indvars.iv236.i.i to i32
   %i.je = lshr i32 %i.jd, 3
@@ -840,18 +831,18 @@ setVal.exit135.i.i:                               ; preds = %setVal.exit135.i.i.
   %.255.i.1 = select i1 %i.jq, i64 6, i64 4
   %i.jt = getelementptr i8, ptr %i.js, i64 %.255.i.1
   store i16 0, ptr %i.jt, align 2, !tbaa !18
-  %indvars.iv.next237.i.i.1 = add nuw nsw i64 %indvars.iv236.i.i, 2 ; 2 uses
+  %indvars.iv.next237.i.i.1 = add nuw nsw i64 %indvars.iv236.i.i, 2 ; 3 uses
   %niter247.next.1 = add nuw nsw i64 %niter247, 2 ; 2 uses
   %niter247.ncmp.1 = icmp eq i64 %niter247.next.1, %unroll_iter246
   br i1 %niter247.ncmp.1, label %.split.i.i.loopexit.unr-lcssa, label %.preheader147.split.split.us.i.i, !llvm.loop !35
 
 .preheader147.split.split.split.us.preheader.i.i: ; preds = %.preheader147.i.i
   %i.ju = zext nneg i32 %.pn129.i.i to i64        ; 3 uses
-  br i1 %8, label %.preheader147.split.split.split.us.i.i.epil.preheader, label %.preheader147.split.split.split.us.i.i
+  br label %.preheader147.split.split.split.us.i.i
 
-.preheader147.split.split.split.us.i.i:           ; preds = %.preheader147.split.split.split.us.preheader.i.i, %setVal.exit136.us160.i.i.1
-  %indvars.iv230.i.i = phi i64 [ %indvars.iv.next231.i.i.1, %setVal.exit136.us160.i.i.1 ], [ 0, %.preheader147.split.split.split.us.preheader.i.i ] ; 5 uses
-  %niter = phi i64 [ %niter.next.1, %setVal.exit136.us160.i.i.1 ], [ 0, %.preheader147.split.split.split.us.preheader.i.i ]
+.preheader147.split.split.split.us.i.i:           ; preds = %setVal.exit136.us160.i.i.1, %.preheader147.split.split.split.us.preheader.i.i
+  %indvars.iv230.i.i = phi i64 [ 0, %.preheader147.split.split.split.us.preheader.i.i ], [ %indvars.iv.next231.i.i.1, %setVal.exit136.us160.i.i.1 ] ; 5 uses
+  %niter = phi i64 [ 0, %.preheader147.split.split.split.us.preheader.i.i ], [ %niter.next.1, %setVal.exit136.us160.i.i.1 ]
   %i.jv = trunc nuw nsw i64 %indvars.iv230.i.i to i32
   %i.jw = lshr i32 %i.jv, 3
   %i.jx = add nuw nsw i32 %i.jw, %i.iz
@@ -889,7 +880,7 @@ setVal.exit137.thread.us159.i.i.1:                ; preds = %setVal.exit136.us16
   br label %setVal.exit136.us160.i.i.1
 
 setVal.exit136.us160.i.i.1:                       ; preds = %setVal.exit137.thread.us159.i.i.1, %setVal.exit136.us160.i.i
-  %indvars.iv.next231.i.i.1 = add nuw nsw i64 %indvars.iv230.i.i, 2 ; 2 uses
+  %indvars.iv.next231.i.i.1 = add nuw nsw i64 %indvars.iv230.i.i, 2 ; 3 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.split.i.i.loopexit237.unr-lcssa, label %.preheader147.split.split.split.us.i.i, !llvm.loop !35
@@ -897,11 +888,10 @@ setVal.exit136.us160.i.i.1:                       ; preds = %setVal.exit137.thre
 .split.i.i.loopexit.unr-lcssa:                    ; preds = %.preheader147.split.split.us.i.i
   br i1 %lcmp.mod244.not, label %.split.i.i, label %.preheader147.split.split.us.i.i.epil.preheader
 
-.preheader147.split.split.us.i.i.epil.preheader:  ; preds = %.split.i.i.loopexit.unr-lcssa, %.preheader147.split.split.us.preheader.i.i
-  %indvars.iv236.i.i.epil.init = phi i64 [ 0, %.preheader147.split.split.us.preheader.i.i ], [ %indvars.iv.next237.i.i.1, %.split.i.i.loopexit.unr-lcssa ] ; 2 uses
+.preheader147.split.split.us.i.i.epil.preheader:  ; preds = %.split.i.i.loopexit.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod245)
-  %i.kp = add nsw i64 %indvars.iv236.i.i.epil.init, %i.jb
-  %i.kq = trunc nuw nsw i64 %indvars.iv236.i.i.epil.init to i32
+  %i.kp = add nsw i64 %indvars.iv.next237.i.i.1, %i.jb
+  %i.kq = trunc nuw nsw i64 %indvars.iv.next237.i.i.1 to i32
   %i.kr = lshr i32 %i.kq, 3
   %i.ks = add nuw nsw i32 %i.kr, %i.iz
   %i.kt = and i32 %i.ks, 1
@@ -916,10 +906,9 @@ setVal.exit136.us160.i.i.1:                       ; preds = %setVal.exit137.thre
 .split.i.i.loopexit237.unr-lcssa:                 ; preds = %setVal.exit136.us160.i.i.1
   br i1 %lcmp.mod.not, label %.split.i.i, label %.preheader147.split.split.split.us.i.i.epil.preheader
 
-.preheader147.split.split.split.us.i.i.epil.preheader: ; preds = %.split.i.i.loopexit237.unr-lcssa, %.preheader147.split.split.split.us.preheader.i.i
-  %indvars.iv230.i.i.epil.init = phi i64 [ 0, %.preheader147.split.split.split.us.preheader.i.i ], [ %indvars.iv.next231.i.i.1, %.split.i.i.loopexit237.unr-lcssa ] ; 2 uses
+.preheader147.split.split.split.us.i.i.epil.preheader: ; preds = %.split.i.i.loopexit237.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod242)
-  %i.ky = trunc nuw nsw i64 %indvars.iv230.i.i.epil.init to i32
+  %i.ky = trunc nuw nsw i64 %indvars.iv.next231.i.i.1 to i32
   %i.kz = lshr i32 %i.ky, 3
   %i.la = add nuw nsw i32 %i.kz, %i.iz
   %i.lb = and i32 %i.la, 1
@@ -927,7 +916,7 @@ setVal.exit136.us160.i.i.1:                       ; preds = %setVal.exit137.thre
   br i1 %i.lc, label %.split.i.i, label %setVal.exit137.thread.us159.i.i.epil
 
 setVal.exit137.thread.us159.i.i.epil:             ; preds = %.preheader147.split.split.split.us.i.i.epil.preheader
-  %i.ld = add nuw nsw i64 %indvars.iv230.i.i.epil.init, %i.ju
+  %i.ld = add nuw nsw i64 %indvars.iv.next231.i.i.1, %i.ju
   %i.le = mul nsw i64 %i.ld, %i.gi
   %i.lf = getelementptr [2 x i8], ptr %i.co, i64 %i.le ; 2 uses
   %i.lg = getelementptr i8, ptr %i.lf, i64 4
@@ -1034,17 +1023,11 @@ setVal.exit141.us.i.i:                            ; preds = %bb.ak, %bb.aj, %set
 
 .preheader.split.i.i:                             ; preds = %.preheader.i.i
   %i.mp = sext i32 %.pn.i.i to i64                ; 6 uses
-  br i1 %i.lr, label %.preheader.split.split.us.i.i.preheader, label %.preheader.split.split.split.us.i.i.preheader
+  br i1 %i.lr, label %.preheader.split.split.us.i.i, label %.preheader.split.split.split.us.i.i
 
-.preheader.split.split.split.us.i.i.preheader:    ; preds = %.preheader.split.i.i
-  br i1 %12, label %.preheader.split.split.split.us.i.i.epil.preheader, label %.preheader.split.split.split.us.i.i
-
-.preheader.split.split.us.i.i.preheader:          ; preds = %.preheader.split.i.i
-  br i1 %13, label %.preheader.split.split.us.i.i.epil.preheader, label %.preheader.split.split.us.i.i
-
-.preheader.split.split.us.i.i:                    ; preds = %.preheader.split.split.us.i.i.preheader, %setVal.exit141.us196.i.i.1
-  %indvars.iv301.i.i = phi i64 [ %indvars.iv.next302.i.i.1, %setVal.exit141.us196.i.i.1 ], [ 0, %.preheader.split.split.us.i.i.preheader ] ; 5 uses
-  %niter267 = phi i64 [ %niter267.next.1, %setVal.exit141.us196.i.i.1 ], [ 0, %.preheader.split.split.us.i.i.preheader ]
+.preheader.split.split.us.i.i:                    ; preds = %.preheader.split.i.i, %setVal.exit141.us196.i.i.1
+  %indvars.iv301.i.i = phi i64 [ %indvars.iv.next302.i.i.1, %setVal.exit141.us196.i.i.1 ], [ 0, %.preheader.split.i.i ] ; 5 uses
+  %niter267 = phi i64 [ %niter267.next.1, %setVal.exit141.us196.i.i.1 ], [ 0, %.preheader.split.i.i ]
   %i.mq = trunc nuw nsw i64 %indvars.iv301.i.i to i32
   %i.mr = lshr i32 %i.mq, 3
   %i.ms = add nuw nsw i32 %i.mr, %i.ma
@@ -1080,14 +1063,14 @@ setVal.exit142.us195.i.i.1:                       ; preds = %setVal.exit141.us19
   br label %setVal.exit141.us196.i.i.1
 
 setVal.exit141.us196.i.i.1:                       ; preds = %setVal.exit142.us195.i.i.1, %setVal.exit141.us196.i.i
-  %indvars.iv.next302.i.i.1 = add nuw nsw i64 %indvars.iv301.i.i, 2 ; 2 uses
+  %indvars.iv.next302.i.i.1 = add nuw nsw i64 %indvars.iv301.i.i, 2 ; 3 uses
   %niter267.next.1 = add nuw nsw i64 %niter267, 2 ; 2 uses
   %niter267.ncmp.1 = icmp eq i64 %niter267.next.1, %unroll_iter266
   br i1 %niter267.ncmp.1, label %.split191.us.i.i.loopexit234.unr-lcssa, label %.preheader.split.split.us.i.i, !llvm.loop !38
 
-.preheader.split.split.split.us.i.i:              ; preds = %.preheader.split.split.split.us.i.i.preheader, %setVal.exit141.us201.i.i.1
-  %indvars.iv295.i.i = phi i64 [ %indvars.iv.next296.i.i.1, %setVal.exit141.us201.i.i.1 ], [ 0, %.preheader.split.split.split.us.i.i.preheader ] ; 5 uses
-  %niter262 = phi i64 [ %niter262.next.1, %setVal.exit141.us201.i.i.1 ], [ 0, %.preheader.split.split.split.us.i.i.preheader ]
+.preheader.split.split.split.us.i.i:              ; preds = %.preheader.split.i.i, %setVal.exit141.us201.i.i.1
+  %indvars.iv295.i.i = phi i64 [ %indvars.iv.next296.i.i.1, %setVal.exit141.us201.i.i.1 ], [ 0, %.preheader.split.i.i ] ; 5 uses
+  %niter262 = phi i64 [ %niter262.next.1, %setVal.exit141.us201.i.i.1 ], [ 0, %.preheader.split.i.i ]
   %i.ne = trunc nuw nsw i64 %indvars.iv295.i.i to i32
   %i.nf = lshr i32 %i.ne, 3
   %i.ng = add nuw nsw i32 %i.nf, %i.ma
@@ -1123,7 +1106,7 @@ setVal.exit142.thread.us200.i.i.1:                ; preds = %setVal.exit141.us20
   br label %setVal.exit141.us201.i.i.1
 
 setVal.exit141.us201.i.i.1:                       ; preds = %setVal.exit142.thread.us200.i.i.1, %setVal.exit141.us201.i.i
-  %indvars.iv.next296.i.i.1 = add nuw nsw i64 %indvars.iv295.i.i, 2 ; 2 uses
+  %indvars.iv.next296.i.i.1 = add nuw nsw i64 %indvars.iv295.i.i, 2 ; 3 uses
   %niter262.next.1 = add nuw nsw i64 %niter262, 2 ; 2 uses
   %niter262.ncmp.1 = icmp eq i64 %niter262.next.1, %unroll_iter261
   br i1 %niter262.ncmp.1, label %.split191.us.i.i.loopexit235.unr-lcssa, label %.preheader.split.split.split.us.i.i, !llvm.loop !38
@@ -1131,10 +1114,9 @@ setVal.exit141.us201.i.i.1:                       ; preds = %setVal.exit142.thre
 .split191.us.i.i.loopexit234.unr-lcssa:           ; preds = %setVal.exit141.us196.i.i.1
   br i1 %lcmp.mod264.not, label %.split191.us.i.i, label %.preheader.split.split.us.i.i.epil.preheader
 
-.preheader.split.split.us.i.i.epil.preheader:     ; preds = %.split191.us.i.i.loopexit234.unr-lcssa, %.preheader.split.split.us.i.i.preheader
-  %indvars.iv301.i.i.epil.init = phi i64 [ 0, %.preheader.split.split.us.i.i.preheader ], [ %indvars.iv.next302.i.i.1, %.split191.us.i.i.loopexit234.unr-lcssa ] ; 2 uses
+.preheader.split.split.us.i.i.epil.preheader:     ; preds = %.split191.us.i.i.loopexit234.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod265)
-  %i.ns = trunc nuw nsw i64 %indvars.iv301.i.i.epil.init to i32
+  %i.ns = trunc nuw nsw i64 %indvars.iv.next302.i.i.1 to i32
   %i.nt = lshr i32 %i.ns, 3
   %i.nu = add nuw nsw i32 %i.nt, %i.ma
   %i.nv = and i32 %i.nu, 1
@@ -1142,7 +1124,7 @@ setVal.exit141.us201.i.i.1:                       ; preds = %setVal.exit142.thre
   br i1 %i.nw, label %.split191.us.i.i, label %setVal.exit142.us195.i.i.epil
 
 setVal.exit142.us195.i.i.epil:                    ; preds = %.preheader.split.split.us.i.i.epil.preheader
-  %i.nx = add nsw i64 %indvars.iv301.i.i.epil.init, %i.mp
+  %i.nx = add nsw i64 %indvars.iv.next302.i.i.1, %i.mp
   %i.ny = mul nsw i64 %i.nx, %i.lu                ; 2 uses
   %gep341.i.i.epil = getelementptr i8, ptr %invariant.gep340.i.i, i64 %i.ny
   store i8 %i.lt, ptr %gep341.i.i.epil, align 1, !tbaa !16
@@ -1153,10 +1135,9 @@ setVal.exit142.us195.i.i.epil:                    ; preds = %.preheader.split.sp
 .split191.us.i.i.loopexit235.unr-lcssa:           ; preds = %setVal.exit141.us201.i.i.1
   br i1 %lcmp.mod259.not, label %.split191.us.i.i, label %.preheader.split.split.split.us.i.i.epil.preheader
 
-.preheader.split.split.split.us.i.i.epil.preheader: ; preds = %.split191.us.i.i.loopexit235.unr-lcssa, %.preheader.split.split.split.us.i.i.preheader
-  %indvars.iv295.i.i.epil.init = phi i64 [ 0, %.preheader.split.split.split.us.i.i.preheader ], [ %indvars.iv.next296.i.i.1, %.split191.us.i.i.loopexit235.unr-lcssa ] ; 2 uses
+.preheader.split.split.split.us.i.i.epil.preheader: ; preds = %.split191.us.i.i.loopexit235.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod260)
-  %i.nz = trunc nuw nsw i64 %indvars.iv295.i.i.epil.init to i32
+  %i.nz = trunc nuw nsw i64 %indvars.iv.next296.i.i.1 to i32
   %i.oa = lshr i32 %i.nz, 3
   %i.ob = add nuw nsw i32 %i.oa, %i.ma
   %i.oc = and i32 %i.ob, 1
@@ -1164,7 +1145,7 @@ setVal.exit142.us195.i.i.epil:                    ; preds = %.preheader.split.sp
   br i1 %i.od, label %.split191.us.i.i, label %setVal.exit142.thread.us200.i.i.epil
 
 setVal.exit142.thread.us200.i.i.epil:             ; preds = %.preheader.split.split.split.us.i.i.epil.preheader
-  %i.oe = add nsw i64 %indvars.iv295.i.i.epil.init, %i.mp
+  %i.oe = add nsw i64 %indvars.iv.next296.i.i.1, %i.mp
   %i.of = mul nsw i64 %i.oe, %i.lu                ; 2 uses
   %gep337.i.i.epil = getelementptr [2 x i8], ptr %invariant.gep336.i.i, i64 %i.of
   store i16 %i.ls, ptr %gep337.i.i.epil, align 2, !tbaa !18

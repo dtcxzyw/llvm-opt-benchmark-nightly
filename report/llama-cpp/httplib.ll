@@ -205,9 +205,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53: ; preds = %_ZN
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = ashr exact i64 %i.bm, 7
   %i.bo = mul nsw i64 %i.bn, 3
-  %i.bp = add nsw i64 %i.bo, 1                    ; 4 uses
+  %i.bp = add nsw i64 %i.bo, 1                    ; 3 uses
   %i.bq = icmp ugt i64 %i.bp, 576460752303423487
-  br i1 %i.bq, label %bb.p, label %6
+  br i1 %i.bq, label %bb.p, label %_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE11_M_allocateEm.exit.i
 
 bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.345) #48
@@ -216,29 +216,20 @@ bb.p:                                             ; preds = %_ZNSt7__cxx1112basi
 .noexc55:                                         ; preds = %bb.p
   unreachable
 
-6:                                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53
-  %.not161 = icmp eq i64 %i.bp, 0
-  br i1 %.not161, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE11_M_allocateEm.exit.i
-
-_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE11_M_allocateEm.exit.i: ; preds = %6
+_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE11_M_allocateEm.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53
   %i.br = shl nuw nsw i64 %i.bp, 4
   %i.bs = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.br) #51
-          to label %_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE13_M_deallocateEPS2_m.exit.i unwind label %bb.w ; 2 uses
+          to label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit unwind label %bb.w ; 5 uses
 
-_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE13_M_deallocateEPS2_m.exit.i: ; preds = %_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE11_M_allocateEm.exit.i
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %i.bs, i64 %i.bp
-  br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit
-
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit: ; preds = %6, %_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE13_M_deallocateEPS2_m.exit.i
-  %.sroa.0128.3 = phi ptr [ %i.bs, %_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE13_M_deallocateEPS2_m.exit.i ], [ null, %6 ] ; 4 uses
-  %.sroa.37.3 = phi ptr [ %7, %_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE13_M_deallocateEPS2_m.exit.i ], [ null, %6 ] ; 2 uses
+_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseIN7httplib6detail16MultipartSegmentESaIS2_EE11_M_allocateEm.exit.i
+  %6 = getelementptr inbounds nuw [16 x i8], ptr %i.bs, i64 %i.bp ; 2 uses
   %.not217 = icmp eq ptr %i.bi, %i.bj
   br i1 %.not217, label %._crit_edge214, label %.lr.ph213
 
 ._crit_edge214:                                   ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit
-  %.sroa.0128.0.lcssa = phi ptr [ %.sroa.0128.3, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ], [ %.sroa.0128.7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ] ; 6 uses
-  %.sroa.18.0.lcssa = phi ptr [ %.sroa.0128.3, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ], [ %.sroa.18.5, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ] ; 6 uses
-  %.sroa.37.0.lcssa = phi ptr [ %.sroa.37.3, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ], [ %.sroa.37.7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ] ; 2 uses
+  %.sroa.0128.0.lcssa = phi ptr [ %i.bs, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ], [ %.sroa.0128.7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ] ; 5 uses
+  %.sroa.18.0.lcssa = phi ptr [ %i.bs, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ], [ %.sroa.18.5, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ] ; 6 uses
+  %.sroa.37.0.lcssa = phi ptr [ %6, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ], [ %.sroa.37.7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ] ; 2 uses
   %i.bt = load ptr, ptr %i.ao, align 8, !tbaa !269 ; 2 uses
   %i.bu = getelementptr inbounds i8, ptr %i.bt, i64 -32
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !196 ; 2 uses
@@ -286,21 +277,14 @@ _ZNKSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE12_M_check_lenEmPKc.exi
   %.sroa.6110.0..sroa_idx111 = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
   store i64 %i.bx, ptr %.sroa.6110.0..sroa_idx111, align 8, !tbaa !197
   %i.ck = icmp sgt i64 %i.ca, 0
-  br i1 %i.ck, label %bb.t, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
+  br i1 %i.ck, label %bb.t, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 bb.t:                                             ; preds = %.noexc60
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ci, ptr align 8 %.sroa.0128.0.lcssa, i64 %i.ca, i1 false)
-  br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
-
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i: ; preds = %bb.t, %.noexc60
-  %.not.i17.i.i.i = icmp eq ptr %.sroa.0128.0.lcssa, null
-  br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %8
-
-8:                                                ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0128.0.lcssa, i64 noundef %i.ca) #47
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %8, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
+_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.t, %.noexc60
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0128.0.lcssa, i64 noundef %i.ca) #47
   %i.cl = getelementptr inbounds nuw [16 x i8], ptr %i.ci, i64 %i.cg
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit
 
@@ -335,9 +319,9 @@ bb.w:                                             ; preds = %_ZNSt12_Vector_base
 
 .lr.ph213:                                        ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93
   %.0212 = phi i64 [ %i.ew, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ], [ 0, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ] ; 3 uses
-  %.sroa.37.0211 = phi ptr [ %.sroa.37.7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ], [ %.sroa.37.3, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ] ; 5 uses
-  %.sroa.18.0210 = phi ptr [ %.sroa.18.5, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ], [ %.sroa.0128.3, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ] ; 4 uses
-  %.sroa.0128.0209 = phi ptr [ %.sroa.0128.7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ], [ %.sroa.0128.3, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ] ; 7 uses
+  %.sroa.37.0211 = phi ptr [ %.sroa.37.7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ], [ %6, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ] ; 5 uses
+  %.sroa.18.0210 = phi ptr [ %.sroa.18.5, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ], [ %i.bs, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ] ; 4 uses
+  %.sroa.0128.0209 = phi ptr [ %.sroa.0128.7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93 ], [ %i.bs, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE7reserveEm.exit ] ; 6 uses
   %i.cu = load ptr, ptr %3, align 16, !tbaa !454
   %i.cv = getelementptr inbounds nuw [32 x i8], ptr %i.cu, i64 %.0212 ; 2 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !196 ; 2 uses
@@ -385,26 +369,19 @@ _ZNKSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE12_M_check_lenEmPKc.exi
   %.sroa.6125.0..sroa_idx126 = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
   store i64 %i.cy, ptr %.sroa.6125.0..sroa_idx126, align 8, !tbaa !197
   %i.dl = icmp sgt i64 %i.db, 0
-  br i1 %i.dl, label %bb.aa, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i68
+  br i1 %i.dl, label %bb.aa, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70
 
 bb.aa:                                            ; preds = %.noexc72
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dj, ptr align 8 %.sroa.0128.0209, i64 %i.db, i1 false)
-  br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i68
-
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i68: ; preds = %bb.aa, %.noexc72
-  %.not.i17.i.i.i69 = icmp eq ptr %.sroa.0128.0209, null
-  br i1 %.not.i17.i.i.i69, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70, label %9
-
-9:                                                ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i68
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0128.0209, i64 noundef %i.db) #47
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70
 
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70: ; preds = %9, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i68
+_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70: ; preds = %bb.aa, %.noexc72
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0128.0209, i64 noundef %i.db) #47
   %i.dm = getelementptr inbounds nuw [16 x i8], ptr %i.dj, i64 %i.dh
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit73
 
 _ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit73: ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70, %bb.x
-  %.sroa.0128.5 = phi ptr [ %i.dj, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70 ], [ %.sroa.0128.0209, %bb.x ] ; 7 uses
+  %.sroa.0128.5 = phi ptr [ %i.dj, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70 ], [ %.sroa.0128.0209, %bb.x ] ; 6 uses
   %.pn163.a = phi ptr [ %i.dk, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70 ], [ %.sroa.18.0210, %bb.x ] ; 3 uses
   %.sroa.37.5 = phi ptr [ %i.dm, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i70 ], [ %.sroa.37.0211, %bb.x ] ; 5 uses
   %.sroa.18.3 = getelementptr inbounds nuw i8, ptr %.pn163.a, i64 16 ; 2 uses
@@ -465,21 +442,14 @@ bb.ae:                                            ; preds = %.noexc82
 
 _ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i78: ; preds = %bb.ae, %.noexc82
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ef, i64 16
-  %.not.i17.i.i.i79 = icmp eq ptr %.sroa.0128.5, null
-  br i1 %.not.i17.i.i.i79, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i80, label %10
-
-10:                                               ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i78
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0128.5, i64 noundef %i.dw) #47
-  br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i80
-
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i80: ; preds = %10, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i78
-  %11 = getelementptr inbounds nuw [16 x i8], ptr %i.ee, i64 %i.ec
+  %7 = getelementptr inbounds nuw [16 x i8], ptr %i.ee, i64 %i.ec
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit83
 
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit83: ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i80, %bb.ab
-  %.sroa.0128.6 = phi ptr [ %i.ee, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i80 ], [ %.sroa.0128.5, %bb.ab ] ; 7 uses
-  %.sroa.18.4 = phi ptr [ %i.eh, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i80 ], [ %i.dt, %bb.ab ] ; 7 uses
-  %.sroa.37.6 = phi ptr [ %11, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i80 ], [ %.sroa.37.5, %bb.ab ] ; 2 uses
+_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit83: ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i78, %bb.ab
+  %.sroa.0128.6 = phi ptr [ %i.ee, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i78 ], [ %.sroa.0128.5, %bb.ab ] ; 6 uses
+  %.sroa.18.4 = phi ptr [ %i.eh, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i78 ], [ %i.dt, %bb.ab ] ; 7 uses
+  %.sroa.37.6 = phi ptr [ %7, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i78 ], [ %.sroa.37.5, %bb.ab ] ; 2 uses
   %.not.i.i84 = icmp eq ptr %.sroa.18.4, %.sroa.37.6
   br i1 %.not.i.i84, label %bb.ag, label %bb.af
 
@@ -522,21 +492,14 @@ _ZNKSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE12_M_check_lenEmPKc.exi
   %.sroa.6115.0..sroa_idx116 = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   store i64 2, ptr %.sroa.6115.0..sroa_idx116, align 8, !tbaa !197
   %i.eu = icmp sgt i64 %i.ek, 0
-  br i1 %i.eu, label %bb.ai, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i88
+  br i1 %i.eu, label %bb.ai, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i90
 
 bb.ai:                                            ; preds = %.noexc92
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.es, ptr align 8 %.sroa.0128.6, i64 %i.ek, i1 false)
-  br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i88
-
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i88: ; preds = %bb.ai, %.noexc92
-  %.not.i17.i.i.i89 = icmp eq ptr %.sroa.0128.6, null
-  br i1 %.not.i17.i.i.i89, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i90, label %12
-
-12:                                               ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i88
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0128.6, i64 noundef %i.ek) #47
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i90
 
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i90: ; preds = %12, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i88
+_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i90: ; preds = %bb.ai, %.noexc92
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0128.6, i64 noundef %i.ek) #47
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.es, i64 %i.eq
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93
 
@@ -558,32 +521,32 @@ _ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit93: 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i65
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.av
 
 .loopexit.split-lp:                               ; preds = %bb.z
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.av
 
 .loopexit165:                                     ; preds = %_ZNKSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i75
   %lpad.loopexit167 = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.av
 
 .loopexit.split-lp166:                            ; preds = %bb.ad
   %lpad.loopexit.split-lp168 = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.av
 
 .loopexit170:                                     ; preds = %_ZNKSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i85
   %lpad.loopexit172 = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.av
 
 .loopexit.split-lp171:                            ; preds = %bb.ah
   %lpad.loopexit.split-lp173 = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.av
 
 _ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit: ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.q
   %.sroa.0128.4 = phi ptr [ %i.ci, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %.sroa.0128.0.lcssa, %bb.q ] ; 3 uses
@@ -609,7 +572,7 @@ _ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit.i.i.i.i.i.i.i:
           cleanup
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(72) %i.fh) #23, !noalias !1571
   call void @_ZdlPvm(ptr noundef nonnull %i.fe, i64 noundef 88) #47, !noalias !1571
-  br label %.body
+  br label %bb.av
 
 _ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EEaSEOS4_.exit: ; preds = %.noexc94
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fe, i64 64
@@ -747,12 +710,12 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
 bb.as:                                            ; preds = %_ZNKSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.s
   %i.gz = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.av
 
 bb.at:                                            ; preds = %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EE9push_backEOS2_.exit
   %i.ha = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.av
 
 bb.au:                                            ; preds = %_ZNSt10shared_ptrIZN7httplib6detail31make_multipart_content_providerERKSt6vectorINS0_14UploadFormDataESaIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE14MultipartStateEC2ERKSH_.exit
   %i.hb = landingpad { ptr, i32 }
@@ -761,22 +724,18 @@ bb.au:                                            ; preds = %_ZNSt10shared_ptrIZ
   call fastcc void @_ZNSt12__shared_ptrIZN7httplib6detail31make_multipart_content_providerERKSt6vectorINS0_14UploadFormDataESaIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE14MultipartStateLN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr nonnull %i.fe) #23
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit106
 
-.body:                                            ; preds = %.loopexit170, %.loopexit.split-lp171, %.loopexit165, %.loopexit.split-lp166, %.loopexit, %.loopexit.split-lp, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit.i.i.i.i.i.i.i, %bb.at, %bb.as
-  %.sroa.0128.2 = phi ptr [ %.sroa.0128.4, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit.i.i.i.i.i.i.i ], [ %.sroa.0128.4, %bb.at ], [ %.sroa.0128.0209, %.loopexit.split-lp ], [ %.sroa.0128.5, %.loopexit.split-lp166 ], [ %.sroa.0128.0.lcssa, %bb.as ], [ %.sroa.0128.0209, %.loopexit ], [ %.sroa.0128.5, %.loopexit165 ], [ %.sroa.0128.6, %.loopexit170 ], [ %.sroa.0128.6, %.loopexit.split-lp171 ] ; 3 uses
+bb.av:                                            ; preds = %bb.as, %bb.at, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit.i.i.i.i.i.i.i, %.loopexit.split-lp, %.loopexit, %.loopexit.split-lp166, %.loopexit165, %.loopexit.split-lp171, %.loopexit170
+  %.sroa.0128.2 = phi ptr [ %.sroa.0128.4, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit.i.i.i.i.i.i.i ], [ %.sroa.0128.4, %bb.at ], [ %.sroa.0128.0209, %.loopexit.split-lp ], [ %.sroa.0128.5, %.loopexit.split-lp166 ], [ %.sroa.0128.0.lcssa, %bb.as ], [ %.sroa.0128.0209, %.loopexit ], [ %.sroa.0128.5, %.loopexit165 ], [ %.sroa.0128.6, %.loopexit170 ], [ %.sroa.0128.6, %.loopexit.split-lp171 ] ; 2 uses
   %.sroa.37.2 = phi ptr [ %.sroa.37.4, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit.i.i.i.i.i.i.i ], [ %.sroa.37.4, %bb.at ], [ %.sroa.37.0211, %.loopexit.split-lp ], [ %.sroa.37.5, %.loopexit.split-lp166 ], [ %.sroa.18.0.lcssa, %bb.as ], [ %.sroa.37.0211, %.loopexit ], [ %.sroa.37.5, %.loopexit165 ], [ %.sroa.18.4, %.loopexit170 ], [ %.sroa.18.4, %.loopexit.split-lp171 ]
-  %.pn28.pn = phi { ptr, i32 } [ %i.fj, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit.i.i.i.i.i.i.i ], [ %i.ha, %bb.at ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit.split-lp168, %.loopexit.split-lp166 ], [ %i.gz, %bb.as ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit167, %.loopexit165 ], [ %lpad.loopexit172, %.loopexit170 ], [ %lpad.loopexit.split-lp173, %.loopexit.split-lp171 ] ; 2 uses
-  %.not.i.i.i105 = icmp eq ptr %.sroa.0128.2, null
-  br i1 %.not.i.i.i105, label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit106, label %bb.av
-
-bb.av:                                            ; preds = %.body
+  %.pn28.pn = phi { ptr, i32 } [ %i.fj, %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit.i.i.i.i.i.i.i ], [ %i.ha, %bb.at ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit.split-lp168, %.loopexit.split-lp166 ], [ %i.gz, %bb.as ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit167, %.loopexit165 ], [ %lpad.loopexit172, %.loopexit170 ], [ %lpad.loopexit.split-lp173, %.loopexit.split-lp171 ]
   %i.hc = ptrtoint ptr %.sroa.37.2 to i64
   %i.hd = ptrtoint ptr %.sroa.0128.2 to i64
   %i.he = sub i64 %i.hc, %i.hd
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0128.2, i64 noundef %i.he) #47
   br label %_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit106
 
-_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit106: ; preds = %bb.au, %bb.w, %bb.av, %.body, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45, %bb.d
-  %.pn31.pn = phi { ptr, i32 } [ %.pn31, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45 ], [ %i.r, %bb.d ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63 ], [ %.pn28.pn, %bb.av ], [ %.pn28.pn, %.body ], [ %i.hb, %bb.au ], [ %i.ct, %bb.w ]
+_ZNSt6vectorIN7httplib6detail16MultipartSegmentESaIS2_EED2Ev.exit106: ; preds = %bb.au, %bb.w, %bb.av, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45, %bb.d
+  %.pn31.pn = phi { ptr, i32 } [ %.pn31, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45 ], [ %i.r, %bb.d ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63 ], [ %.pn28.pn, %bb.av ], [ %i.ct, %bb.w ], [ %i.hb, %bb.au ]
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %3) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
   resume { ptr, i32 } %.pn31.pn

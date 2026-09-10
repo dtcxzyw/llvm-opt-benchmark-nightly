@@ -205,10 +205,6 @@ bb.h:                                             ; preds = %bb.g
   %i.al = icmp slt i64 %i.ae, 0
   br i1 %i.al, label %bb.j, label %bb.i
 
-_ZN4jiff5civil4time4Time11to_duration17hacc1d49d9bc9847eE.exit.thread: ; preds = %bb.e
-  %0 = add nsw i64 %i.u, %i.ae
-  br label %.thread
-
 bb.i:                                             ; preds = %bb.h
   %i.am = add nsw i32 %.sroa.0.0.extract.trunc, 1000000000
   %i.an = icmp slt i32 %.sroa.0.0.extract.trunc, 0
@@ -218,6 +214,10 @@ bb.i:                                             ; preds = %bb.h
   %spec.select25 = add nsw i64 %i.ae, %i.ap
   br label %.thread23
 
+_ZN4jiff5civil4time4Time11to_duration17hacc1d49d9bc9847eE.exit.thread: ; preds = %bb.e
+  %0 = add nsw i64 %i.u, %i.ae
+  br label %.thread
+
 bb.j:                                             ; preds = %bb.h
   %i.aq = add nsw i32 %.sroa.0.0.extract.trunc, -1000000000
   %i.ar = icmp sgt i32 %.sroa.0.0.extract.trunc, 0 ; 2 uses
@@ -226,14 +226,12 @@ bb.j:                                             ; preds = %bb.h
   %spec.select27 = add nsw i64 %i.ae, %i.as
   br label %.thread23
 
-.thread23:                                        ; preds = %bb.j, %bb.i, %bb.g, %bb.f
-  %.sroa.010.1.i = phi i32 [ %.sroa.0.0.extract.trunc, %bb.f ], [ %.sroa.0.0.extract.trunc, %bb.g ], [ %spec.select26, %bb.j ], [ %spec.select, %bb.i ] ; 6 uses
-  %.pn = phi i64 [ %i.ae, %bb.f ], [ %i.ae, %bb.g ], [ %spec.select27, %bb.j ], [ %spec.select25, %bb.i ]
+.thread23:                                        ; preds = %bb.j, %bb.i, %bb.f, %bb.g
+  %.sroa.010.1.i = phi i32 [ %.sroa.0.0.extract.trunc, %bb.g ], [ %.sroa.0.0.extract.trunc, %bb.f ], [ %spec.select26, %bb.j ], [ %spec.select, %bb.i ] ; 5 uses
+  %.pn = phi i64 [ %i.ae, %bb.g ], [ %i.ae, %bb.f ], [ %spec.select27, %bb.j ], [ %spec.select25, %bb.i ]
   %.sroa.0.1.i = add nsw i64 %.pn, %i.u           ; 7 uses
-  %1 = icmp eq i64 %.sroa.0.1.i, 0
-  %i.at = icmp eq i32 %.sroa.010.1.i, 0
-  %or.cond.i = select i1 %1, i1 true, i1 %i.at
-  br i1 %or.cond.i, label %.thread, label %bb.k
+  %i.at = icmp eq i64 %.sroa.0.1.i, 0
+  br i1 %i.at, label %.thread, label %bb.k
 
 bb.k:                                             ; preds = %.thread23
   %i.au = tail call i64 @llvm.scmp.i64.i64(i64 %.sroa.0.1.i, i64 0)

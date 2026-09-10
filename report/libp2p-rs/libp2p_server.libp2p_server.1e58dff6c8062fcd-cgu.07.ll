@@ -205,11 +205,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCse0yMYRRwETY_5hyper5proto2h14co
   %i.bt = load i64, ptr %i.bs, align 8, !range !66, !alias.scope !5136, !noundef !17 ; 3 uses
   %i.bu = icmp ne i64 %i.bt, -9223372036854775805
   tail call void @llvm.assume(i1 %i.bu)
-  %i.bv = add i64 %i.bt, 9223372036854775806      ; 2 uses
-  %1 = icmp ugt i64 %i.bv, 3
-  %2 = icmp eq i64 %i.bv, 1
-  %3 = or i1 %1, %2
-  br i1 %3, label %bb.ad, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCse0yMYRRwETY_5hyper5proto2h14conn7WritingECs2Bxje7pdMIr_13libp2p_server.exit
+  %i.bv = add i64 %i.bt, 9223372036854775802
+  %1 = icmp ult i64 %i.bv, -4
+  br i1 %1, label %bb.ad, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCse0yMYRRwETY_5hyper5proto2h14conn7WritingECs2Bxje7pdMIr_13libp2p_server.exit
 
 bb.ad:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCse0yMYRRwETY_5hyper5proto2h14conn7ReadingECs2Bxje7pdMIr_13libp2p_server.exit
   switch i64 %i.bt, label %bb.ae [
@@ -362,11 +360,9 @@ bb.a:
   %i.a = load i64, ptr %0, align 8, !range !66, !noundef !17 ; 3 uses
   %i.b = icmp ne i64 %i.a, -9223372036854775805
   tail call void @llvm.assume(i1 %i.b)
-  %i.c = add i64 %i.a, 9223372036854775806        ; 2 uses
-  %1 = icmp ugt i64 %i.c, 3
-  %2 = icmp eq i64 %i.c, 1
-  %3 = or i1 %1, %2
-  br i1 %3, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCse0yMYRRwETY_5hyper5proto2h16encode7EncoderECs2Bxje7pdMIr_13libp2p_server.exit
+  %i.c = add i64 %i.a, 9223372036854775802
+  %1 = icmp ult i64 %i.c, -4
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCse0yMYRRwETY_5hyper5proto2h16encode7EncoderECs2Bxje7pdMIr_13libp2p_server.exit
 
 bb.b:                                             ; preds = %bb.a
   switch i64 %i.a, label %bb.c [

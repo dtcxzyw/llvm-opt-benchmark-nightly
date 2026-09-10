@@ -205,7 +205,7 @@ _ZNSt6vectorIN4pbrt7Normal3IfEESaIS2_EE7reserveEm.exit: ; preds = %.thread2246, 
   %i.bgh = sub i64 %i.bgf, %i.bgg
   %i.bgi = ashr exact i64 %i.bgh, 3               ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #20
-  %i.bgj = mul nsw i64 %i.bgi, 3                  ; 3 uses
+  %i.bgj = mul nsw i64 %i.bgi, 3                  ; 2 uses
   %i.bgk = icmp ugt i64 %i.bgj, 2305843009213693951
   br i1 %i.bgk, label %bb.ht, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -222,7 +222,7 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %._crit_edge184
   br i1 %.not.i.i.i.i989, label %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.thread.i, label %bb.hu
 
 bb.hu:                                            ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.bgl = mul nuw nsw i64 %i.bgi, 12
+  %i.bgl = mul nuw nsw i64 %i.bgi, 12             ; 3 uses
   %i.bgm = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bgl) #17
           to label %.noexc992 unwind label %bb.iq ; 6 uses
 
@@ -232,15 +232,10 @@ bb.hu:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.bgo = getelementptr inbounds nuw i8, ptr %23, i64 16
   store ptr %i.bgn, ptr %i.bgo, align 8, !tbaa !77
   store i32 0, ptr %i.bgm, align 4, !tbaa !31
-  %i.bgp = getelementptr i8, ptr %i.bgm, i64 4    ; 3 uses
-  %i.bgq = add nsw i64 %i.bgj, -1                 ; 2 uses
-  %28 = icmp eq i64 %i.bgq, 0
-  br i1 %28, label %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.thread.i, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
-
-_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc992
-  %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %i.bgq, 2 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 4 %i.bgp, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !31
-  %29 = getelementptr inbounds nuw i8, ptr %i.bgp, i64 %.idx.i.i.i.i.i.i.i
+  %i.bgp = getelementptr i8, ptr %i.bgm, i64 4
+  %i.bgq = add nsw i64 %i.bgl, -4
+  call void @llvm.memset.p0.i64(ptr align 4 %i.bgp, i8 0, i64 %i.bgq, i1 false), !tbaa !31
+  %28 = getelementptr i8, ptr %i.bgm, i64 %i.bgl
   br label %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.thread.i
 
 bb.hv:                                            ; preds = %_ZNSt12_Vector_baseIN4pbrt7Normal3IfEESaIS2_EE11_M_allocateEm.exit.i, %bb.hq
@@ -643,9 +638,9 @@ _ZNSt6vectorIN4pbrt7Normal3IfEESaIS2_EE9push_backEOS2_.exit: ; preds = %_ZNSt6ve
           cleanup
   br label %bb.kh
 
-_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc992
-  %30 = phi ptr [ %i.bgm, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.bgm, %.noexc992 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ]
-  %.0.i.i.i.i.i990 = phi ptr [ %29, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.bgp, %.noexc992 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ]
+_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, %.noexc992
+  %29 = phi ptr [ %i.bgm, %.noexc992 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ]
+  %.0.i.i.i.i.i990 = phi ptr [ %28, %.noexc992 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ]
   %i.bqa = getelementptr inbounds nuw i8, ptr %23, i64 8
   store ptr %.0.i.i.i.i.i990, ptr %i.bqa, align 8, !tbaa !78
   %i.bqb = load ptr, ptr %i.lx, align 8, !tbaa !53 ; 2 uses
@@ -700,7 +695,7 @@ bb.is:                                            ; preds = %.lr.ph1848
 
 .preheader:                                       ; preds = %.preheader1603, %bb.jn
   %.05351852 = phi i64 [ %i.buk, %bb.jn ], [ 0, %.preheader1603 ] ; 4 uses
-  %.05371851 = phi ptr [ %i.buj, %bb.jn ], [ %30, %.preheader1603 ] ; 4 uses
+  %.05371851 = phi ptr [ %i.buj, %bb.jn ], [ %29, %.preheader1603 ] ; 4 uses
   %i.bqt = load ptr, ptr %15, align 8, !tbaa !45
   %i.bqu = getelementptr inbounds nuw [8 x i8], ptr %i.bqt, i64 %.05351852
   %i.bqv = load ptr, ptr %i.bqu, align 8, !tbaa !23 ; 2 uses

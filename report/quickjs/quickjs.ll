@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %.lr.ph300
   br i1 %i.fb, label %.lr.ph300, label %.critedge2, !llvm.loop !1782
 
 .critedge2:                                       ; preds = %.lr.ph300, %bb.ae, %bb.ac, %js_mp_neg.exit142
-  %.0115.lcssa = phi i32 [ %i.a, %js_mp_neg.exit142 ], [ %i.a, %bb.ac ], [ %.0115299, %.lr.ph300 ], [ 1, %bb.ae ] ; 23 uses
+  %.0115.lcssa = phi i32 [ %i.a, %js_mp_neg.exit142 ], [ %i.a, %bb.ac ], [ %.0115299, %.lr.ph300 ], [ 1, %bb.ae ] ; 22 uses
   %i.fc = icmp slt i32 %.0116.lcssa, %.0115.lcssa
   br i1 %i.fc, label %bb.af, label %bb.bd
 
@@ -608,17 +608,13 @@ js_mp_sub.exit.i:                                 ; preds = %.lr.ph.i104.i.epil.
   %.not101.i = icmp eq i32 %.092.i, 0
   %i.qw = zext i32 %.092.i to i64
   %i.qx = zext i32 %i.mv to i64                   ; 2 uses
-  %.not.i107.i = icmp eq i32 %.0115.lcssa, 0
-  %wide.trip.count.i109.i = zext i32 %.0115.lcssa to i64 ; 5 uses
+  %wide.trip.count.i109.i = zext i32 %.0115.lcssa to i64 ; 4 uses
   %i.qy = zext nneg i32 %.091138.i to i64
-  %4 = add nsw i64 %wide.trip.count.i109.i, -1    ; 2 uses
   %xtraiter427 = and i64 %wide.trip.count.i109.i, 1
-  %5 = icmp eq i64 %4, 0
   %unroll_iter432 = and i64 %wide.trip.count.i109.i, 4294967294
   %lcmp.mod428.not = icmp eq i64 %xtraiter427, 0
   %lcmp.mod431 = trunc i32 %.0115.lcssa to i1
   %xtraiter434 = and i64 %wide.trip.count.i109.i, 1
-  %6 = icmp eq i64 %4, 0
   %unroll_iter438 = and i64 %wide.trip.count.i109.i, 4294967294
   %lcmp.mod435.not = icmp eq i64 %xtraiter434, 0
   %lcmp.mod437 = trunc i32 %.0115.lcssa to i1
@@ -681,25 +677,22 @@ bb.cg:                                            ; preds = %bb.ce
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cf, %bb.cd
-  %.1.i = phi i32 [ %i.sm, %bb.cg ], [ %i.sc, %bb.cf ], [ -1, %bb.cd ] ; 4 uses
+  %.1.i = phi i32 [ %i.sm, %bb.cg ], [ %i.sc, %bb.cf ], [ -1, %bb.cd ] ; 3 uses
   %i.sn = getelementptr inbounds nuw [4 x i8], ptr %i.mr, i64 %indvars.iv.i165 ; 6 uses
-  br i1 %.not.i107.i, label %js_mp_sub_mul1.exit.thread.i, label %.lr.ph.i108.i
+  %4 = zext i32 %.1.i to i64                      ; 3 uses
+  br label %.lr.ph.i108.i.new
 
-.lr.ph.i108.i:                                    ; preds = %bb.ch
-  %7 = zext i32 %.1.i to i64                      ; 3 uses
-  br i1 %5, label %.epil.preheader426, label %.lr.ph.i108.i.new
-
-.lr.ph.i108.i.new:                                ; preds = %.lr.ph.i108.i, %.lr.ph.i108.i.new
-  %indvars.iv.i110.i = phi i64 [ %indvars.iv.next.i111.i.1, %.lr.ph.i108.i.new ], [ 0, %.lr.ph.i108.i ] ; 4 uses
-  %.017.i.i = phi i32 [ %i.to, %.lr.ph.i108.i.new ], [ 0, %.lr.ph.i108.i ]
-  %niter433 = phi i64 [ %niter433.next.1, %.lr.ph.i108.i.new ], [ 0, %.lr.ph.i108.i ]
+.lr.ph.i108.i.new:                                ; preds = %.lr.ph.i108.i.new, %bb.ch
+  %indvars.iv.i110.i = phi i64 [ 0, %bb.ch ], [ %indvars.iv.next.i111.i.1, %.lr.ph.i108.i.new ] ; 4 uses
+  %.017.i.i = phi i32 [ 0, %bb.ch ], [ %i.to, %.lr.ph.i108.i.new ]
+  %niter433 = phi i64 [ 0, %bb.ch ], [ %niter433.next.1, %.lr.ph.i108.i.new ]
   %i.so = getelementptr inbounds nuw [4 x i8], ptr %i.sn, i64 %indvars.iv.i110.i ; 2 uses
   %i.sp = load i32, ptr %i.so, align 4, !tbaa !191
   %i.sq = zext i32 %i.sp to i64
   %i.sr = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv.i110.i
   %i.ss = load i32, ptr %i.sr, align 4, !tbaa !191
   %i.st = zext i32 %i.ss to i64
-  %i.su = mul nuw i64 %7, %i.st
+  %i.su = mul nuw i64 %4, %i.st
   %i.sv = zext i32 %.017.i.i to i64
   %i.sw = add nuw i64 %i.su, %i.sv
   %i.sx = sub i64 %i.sq, %i.sw                    ; 2 uses
@@ -714,7 +707,7 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf, %bb.
   %i.te = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv.next.i111.i
   %i.tf = load i32, ptr %i.te, align 4, !tbaa !191
   %i.tg = zext i32 %i.tf to i64
-  %i.th = mul nuw i64 %7, %i.tg
+  %i.th = mul nuw i64 %4, %i.tg
   %i.ti = and i64 %i.ta, 4294967295
   %i.tj = add nuw i64 %i.th, %i.ti
   %i.tk = sub i64 %i.td, %i.tj                    ; 2 uses
@@ -723,7 +716,7 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf, %bb.
   %i.tm = lshr i64 %i.tk, 32
   %i.tn = trunc nuw i64 %i.tm to i32              ; 2 uses
   %i.to = sub i32 0, %i.tn                        ; 3 uses
-  %indvars.iv.next.i111.i.1 = add nuw nsw i64 %indvars.iv.i110.i, 2 ; 2 uses
+  %indvars.iv.next.i111.i.1 = add nuw nsw i64 %indvars.iv.i110.i, 2 ; 3 uses
   %niter433.next.1 = add i64 %niter433, 2         ; 2 uses
   %niter433.ncmp.1 = icmp eq i64 %niter433.next.1, %unroll_iter432
   br i1 %niter433.ncmp.1, label %js_mp_sub_mul1.exit.i.unr-lcssa, label %.lr.ph.i108.i.new, !llvm.loop !1786
@@ -731,18 +724,16 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf, %bb.
 js_mp_sub_mul1.exit.i.unr-lcssa:                  ; preds = %.lr.ph.i108.i.new
   br i1 %lcmp.mod428.not, label %js_mp_sub_mul1.exit.i, label %.epil.preheader426
 
-.epil.preheader426:                               ; preds = %js_mp_sub_mul1.exit.i.unr-lcssa, %.lr.ph.i108.i
-  %indvars.iv.i110.i.epil.init = phi i64 [ 0, %.lr.ph.i108.i ], [ %indvars.iv.next.i111.i.1, %js_mp_sub_mul1.exit.i.unr-lcssa ] ; 2 uses
-  %.017.i.i.epil.init = phi i32 [ 0, %.lr.ph.i108.i ], [ %i.to, %js_mp_sub_mul1.exit.i.unr-lcssa ]
+.epil.preheader426:                               ; preds = %js_mp_sub_mul1.exit.i.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod431)
-  %i.tp = getelementptr inbounds nuw [4 x i8], ptr %i.sn, i64 %indvars.iv.i110.i.epil.init ; 2 uses
+  %i.tp = getelementptr inbounds nuw [4 x i8], ptr %i.sn, i64 %indvars.iv.next.i111.i.1 ; 2 uses
   %i.tq = load i32, ptr %i.tp, align 4, !tbaa !191
   %i.tr = zext i32 %i.tq to i64
-  %i.ts = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv.i110.i.epil.init
+  %i.ts = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv.next.i111.i.1
   %i.tt = load i32, ptr %i.ts, align 4, !tbaa !191
   %i.tu = zext i32 %i.tt to i64
-  %i.tv = mul nuw i64 %7, %i.tu
-  %i.tw = zext i32 %.017.i.i.epil.init to i64
+  %i.tv = mul nuw i64 %4, %i.tu
+  %i.tw = zext i32 %i.to to i64
   %i.tx = add nuw i64 %i.tv, %i.tw
   %i.ty = sub i64 %i.tr, %i.tx                    ; 2 uses
   %i.tz = trunc i64 %i.ty to i32
@@ -763,12 +754,12 @@ js_mp_sub_mul1.exit.i:                            ; preds = %js_mp_sub_mul1.exit
 
 .lr.ph.preheader.i115.i:                          ; preds = %js_mp_sub_mul1.exit.i, %.lr.ph.preheader.i115.i.backedge
   %.2.i = phi i32 [ %i.vj, %.lr.ph.preheader.i115.i.backedge ], [ %.1.i, %js_mp_sub_mul1.exit.i ]
-  br i1 %6, label %.lr.ph.i117.i.epil.preheader, label %.lr.ph.i117.i
+  br label %.lr.ph.i117.i
 
-.lr.ph.i117.i:                                    ; preds = %.lr.ph.preheader.i115.i, %.lr.ph.i117.i
-  %indvars.iv.i118.i = phi i64 [ %indvars.iv.next.i120.i.1, %.lr.ph.i117.i ], [ 0, %.lr.ph.preheader.i115.i ] ; 4 uses
-  %.021.i119.i = phi i32 [ %i.uz, %.lr.ph.i117.i ], [ 0, %.lr.ph.preheader.i115.i ] ; 2 uses
-  %niter439 = phi i64 [ %niter439.next.1, %.lr.ph.i117.i ], [ 0, %.lr.ph.preheader.i115.i ]
+.lr.ph.i117.i:                                    ; preds = %.lr.ph.i117.i, %.lr.ph.preheader.i115.i
+  %indvars.iv.i118.i = phi i64 [ 0, %.lr.ph.preheader.i115.i ], [ %indvars.iv.next.i120.i.1, %.lr.ph.i117.i ] ; 4 uses
+  %.021.i119.i = phi i32 [ 0, %.lr.ph.preheader.i115.i ], [ %i.uz, %.lr.ph.i117.i ] ; 2 uses
+  %niter439 = phi i64 [ 0, %.lr.ph.preheader.i115.i ], [ %niter439.next.1, %.lr.ph.i117.i ]
   %i.ug = getelementptr inbounds nuw [4 x i8], ptr %i.sn, i64 %indvars.iv.i118.i ; 2 uses
   %i.uh = load i32, ptr %i.ug, align 4, !tbaa !191 ; 2 uses
   %i.ui = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv.i118.i
@@ -790,9 +781,9 @@ js_mp_sub_mul1.exit.i:                            ; preds = %js_mp_sub_mul1.exit
   %i.uw = add i32 %i.uu, %i.up                    ; 2 uses
   %i.ux = icmp ult i32 %i.uw, %i.up
   %i.uy = or i1 %i.uv, %i.ux                      ; 2 uses
-  %i.uz = zext i1 %i.uy to i32                    ; 2 uses
+  %i.uz = zext i1 %i.uy to i32                    ; 3 uses
   store i32 %i.uw, ptr %i.uq, align 4, !tbaa !191
-  %indvars.iv.next.i120.i.1 = add nuw nsw i64 %indvars.iv.i118.i, 2 ; 2 uses
+  %indvars.iv.next.i120.i.1 = add nuw nsw i64 %indvars.iv.i118.i, 2 ; 3 uses
   %niter439.next.1 = add i64 %niter439, 2         ; 2 uses
   %niter439.ncmp.1 = icmp eq i64 %niter439.next.1, %unroll_iter438
   br i1 %niter439.ncmp.1, label %js_mp_add.exit.i.unr-lcssa, label %.lr.ph.i117.i, !llvm.loop !1787
@@ -800,18 +791,16 @@ js_mp_sub_mul1.exit.i:                            ; preds = %js_mp_sub_mul1.exit
 js_mp_add.exit.i.unr-lcssa:                       ; preds = %.lr.ph.i117.i
   br i1 %lcmp.mod435.not, label %js_mp_add.exit.i, label %.lr.ph.i117.i.epil.preheader
 
-.lr.ph.i117.i.epil.preheader:                     ; preds = %js_mp_add.exit.i.unr-lcssa, %.lr.ph.preheader.i115.i
-  %indvars.iv.i118.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i115.i ], [ %indvars.iv.next.i120.i.1, %js_mp_add.exit.i.unr-lcssa ] ; 2 uses
-  %.021.i119.i.epil.init = phi i32 [ 0, %.lr.ph.preheader.i115.i ], [ %i.uz, %js_mp_add.exit.i.unr-lcssa ] ; 2 uses
+.lr.ph.i117.i.epil.preheader:                     ; preds = %js_mp_add.exit.i.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod437)
-  %i.va = getelementptr inbounds nuw [4 x i8], ptr %i.sn, i64 %indvars.iv.i118.i.epil.init ; 2 uses
+  %i.va = getelementptr inbounds nuw [4 x i8], ptr %i.sn, i64 %indvars.iv.next.i120.i.1 ; 2 uses
   %i.vb = load i32, ptr %i.va, align 4, !tbaa !191 ; 2 uses
-  %i.vc = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv.i118.i.epil.init
+  %i.vc = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv.next.i120.i.1
   %i.vd = load i32, ptr %i.vc, align 4, !tbaa !191
   %i.ve = add i32 %i.vd, %i.vb                    ; 2 uses
   %i.vf = icmp ult i32 %i.ve, %i.vb
-  %i.vg = add i32 %i.ve, %.021.i119.i.epil.init   ; 2 uses
-  %i.vh = icmp ult i32 %i.vg, %.021.i119.i.epil.init
+  %i.vg = add i32 %i.ve, %i.uz                    ; 2 uses
+  %i.vh = icmp ult i32 %i.vg, %i.uz
   %i.vi = or i1 %i.vf, %i.vh
   store i32 %i.vg, ptr %i.va, align 4, !tbaa !191
   br label %js_mp_add.exit.i
@@ -831,8 +820,8 @@ bb.ci:                                            ; preds = %js_mp_add.exit.i
 .lr.ph.preheader.i115.i.backedge:                 ; preds = %bb.ci, %js_mp_add.exit.i
   br label %.lr.ph.preheader.i115.i
 
-js_mp_sub_mul1.exit.thread.i:                     ; preds = %bb.ci, %js_mp_sub_mul1.exit.i, %bb.ch
-  %.3.i = phi i32 [ %.1.i, %bb.ch ], [ %.1.i, %js_mp_sub_mul1.exit.i ], [ %i.vj, %bb.ci ]
+js_mp_sub_mul1.exit.thread.i:                     ; preds = %bb.ci, %js_mp_sub_mul1.exit.i
+  %.3.i = phi i32 [ %.1.i, %js_mp_sub_mul1.exit.i ], [ %i.vj, %bb.ci ]
   %i.vn = getelementptr inbounds nuw [4 x i8], ptr %i.mq, i64 %indvars.iv.i165
   store i32 %.3.i, ptr %i.vn, align 4, !tbaa !191
   %indvars.iv.next.i166 = add nsw i64 %indvars.iv.i165, -1

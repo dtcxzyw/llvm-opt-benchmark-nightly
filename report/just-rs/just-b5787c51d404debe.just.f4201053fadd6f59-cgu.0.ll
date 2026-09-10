@@ -205,11 +205,6 @@ bb.j:                                             ; preds = %bb.h
   %i.bc = icmp eq i8 %.sroa.015.0.copyload.i, 2
   br i1 %i.bc, label %3, label %bb.k
 
-3:                                                ; preds = %bb.j
-  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 72
-  store i8 -1, ptr %4, align 8, !alias.scope !40939, !noalias !40940
-  br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit
-
 bb.k:                                             ; preds = %bb.j
   %.sroa.6.0..sroa_idx.i12 = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   %.sroa.6.0.copyload.i = load i64, ptr %.sroa.6.0..sroa_idx.i12, align 8, !noalias !40941
@@ -227,6 +222,11 @@ bb.k:                                             ; preds = %bb.j
   store i64 -9223372036854775749, ptr %i.g, align 8, !noalias !40941
   call fastcc void @_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer5error(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(80) %i.l, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(208) %1, ptr noalias nofree noundef align 8 captures(address) dereferenceable(128) %i.g)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !40941
+  br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit
+
+3:                                                ; preds = %bb.j
+  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 72
+  store i8 -1, ptr %4, align 8, !alias.scope !40939, !noalias !40940
   br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit
 
 _RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit: ; preds = %bb.i, %bb.k, %3
@@ -298,11 +298,6 @@ bb.p:                                             ; preds = %bb.n
   %i.ch = icmp eq i8 %.sroa.015.0.copyload.i16, 3
   br i1 %i.ch, label %5, label %bb.q
 
-5:                                                ; preds = %bb.p
-  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 72
-  store i8 -1, ptr %6, align 8, !alias.scope !40946, !noalias !40947
-  br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit23
-
 bb.q:                                             ; preds = %bb.p
   %.sroa.6.0..sroa_idx.i19 = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
   %.sroa.6.0.copyload.i20 = load i64, ptr %.sroa.6.0..sroa_idx.i19, align 8, !noalias !40948
@@ -320,6 +315,11 @@ bb.q:                                             ; preds = %bb.p
   store i64 -9223372036854775749, ptr %i.e, align 8, !noalias !40948
   call fastcc void @_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer5error(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(80) %i.k, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(208) %1, ptr noalias nofree noundef align 8 captures(address) dereferenceable(128) %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !40948
+  br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit23
+
+5:                                                ; preds = %bb.p
+  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 72
+  store i8 -1, ptr %6, align 8, !alias.scope !40946, !noalias !40947
   br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit23
 
 _RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit23: ; preds = %bb.o, %bb.q, %5
@@ -391,11 +391,6 @@ bb.v:                                             ; preds = %bb.t
   %i.dm = icmp eq i8 %.sroa.015.0.copyload.i27, 5
   br i1 %i.dm, label %7, label %bb.w
 
-7:                                                ; preds = %bb.v
-  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 72
-  store i8 -1, ptr %8, align 8, !alias.scope !40953, !noalias !40954
-  br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit34
-
 bb.w:                                             ; preds = %bb.v
   %.sroa.6.0..sroa_idx.i30 = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
   %.sroa.6.0.copyload.i31 = load i64, ptr %.sroa.6.0..sroa_idx.i30, align 8, !noalias !40955
@@ -413,6 +408,11 @@ bb.w:                                             ; preds = %bb.v
   store i64 -9223372036854775749, ptr %i.c, align 8, !noalias !40955
   call fastcc void @_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer5error(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(80) %i.j, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(208) %1, ptr noalias nofree noundef align 8 captures(address) dereferenceable(128) %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !40955
+  br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit34
+
+7:                                                ; preds = %bb.v
+  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 72
+  store i8 -1, ptr %8, align 8, !alias.scope !40953, !noalias !40954
   br label %_RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit34
 
 _RNvMNtCskXtk6F4WjxZ_4just5lexerNtB2_5Lexer15close_delimiter.exit34: ; preds = %bb.u, %bb.w, %7
@@ -601,23 +601,20 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8
   %i.p = icmp ne i8 %.sroa.015.0.copyload, 4
   tail call void @llvm.assume(i1 %i.p)
-  %4 = add i8 %.sroa.015.0.copyload, -2
-  %.inv = icmp ult i8 %.sroa.015.0.copyload, 2
-  %narrow = select i1 %.inv, i8 2, i8 %4          ; 2 uses
+  %.inv = icmp ult i8 %.sroa.015.0.copyload, 2    ; 2 uses
   %i.q = icmp ne i8 %2, 4
   tail call void @llvm.assume(i1 %i.q)
-  %5 = add nsw i8 %2, -2
   %.inv19 = icmp samesign ult i8 %2, 2
-  %narrow18 = select i1 %.inv19, i8 2, i8 %5
-  %i.r = icmp eq i8 %narrow, %narrow18
+  %4 = select i1 %.inv, i8 4, i8 %.sroa.015.0.copyload
+  %narrow18 = select i1 %.inv19, i8 4, i8 %2
+  %i.r = icmp eq i8 %4, %narrow18
   br i1 %i.r, label %bb.e, label %bb.g
 
 bb.d:                                             ; preds = %bb.h, %bb.g, %bb.b
   ret void
 
 bb.e:                                             ; preds = %bb.c
-  %6 = icmp eq i8 %narrow, 2
-  br i1 %6, label %bb.f, label %bb.h
+  br i1 %.inv, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.s = icmp eq i8 %.sroa.015.0.copyload, %2

@@ -93,7 +93,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.gep250 = getelementptr inbounds nuw i8, ptr @switch.table._PyUnicode_FormatLong.11, i64 %i.e
   %switch.load251 = load i8, ptr %switch.gep250, align 1
   %switch.ext252 = zext i8 %switch.load251 to i32 ; 2 uses
-  %i.f = tail call ptr @PyNumber_ToBase(ptr noundef %0, i32 noundef %switch.ext) #8 ; 15 uses
+  %i.f = tail call ptr @PyNumber_ToBase(ptr noundef %0, i32 noundef %switch.ext) #8 ; 14 uses
   store ptr %i.f, ptr %i.a, align 8, !tbaa !13
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %Py_DECREF.exit109.thread, label %bb.c
@@ -108,16 +108,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i112, label %bb.e, label %Py_DECREF.exit113
 
 bb.e:                                             ; preds = %bb.d
-  %i.g = add nsw i32 %.val, -1                    ; 2 uses
+  %i.g = add nsw i32 %.val, -1
   store i32 %i.g, ptr %i.f, align 8, !tbaa !14
-  %4 = icmp eq i32 %i.g, 0
-  br i1 %4, label %5, label %Py_DECREF.exit113
-
-5:                                                ; preds = %bb.e
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.f) #8
   br label %Py_DECREF.exit113
 
-Py_DECREF.exit113:                                ; preds = %bb.d, %bb.e, %5
+Py_DECREF.exit113:                                ; preds = %bb.e, %bb.d
   tail call void @_PyErr_BadInternalCall(ptr noundef nonnull @.str.1, i32 noundef 237) #8
   br label %Py_DECREF.exit109.thread
 

@@ -205,17 +205,15 @@ bb.d:                                             ; preds = %bb.c
   %i.q = load i8, ptr %i.p, align 8, !range !58, !noundef !5 ; 4 uses
   %i.r = icmp ne i8 %i.q, 3
   tail call void @llvm.assume(i1 %i.r)
-  %2 = add nsw i8 %i.q, -2
-  %i.s = icmp samesign ugt i8 %i.q, 1
-  %narrow = select i1 %i.s, i8 %2, i8 1           ; 2 uses
+  %i.s = icmp samesign ugt i8 %i.q, 1             ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.u = load i8, ptr %i.t, align 8, !range !58, !noundef !5 ; 4 uses
   %i.v = icmp ne i8 %i.u, 3
   tail call void @llvm.assume(i1 %i.v)
-  %3 = add nsw i8 %i.u, -2
-  %4 = icmp samesign ugt i8 %i.u, 1
-  %narrow2 = select i1 %4, i8 %3, i8 1
-  %i.w = icmp eq i8 %narrow, %narrow2
+  %2 = icmp samesign ugt i8 %i.u, 1
+  %3 = select i1 %i.s, i8 %i.q, i8 3
+  %narrow2 = select i1 %2, i8 %i.u, i8 3
+  %i.w = icmp eq i8 %3, %narrow2
   br i1 %i.w, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %bb.d, %bb.b, %bb.a, %bb.c
@@ -223,9 +221,8 @@ bb.e:                                             ; preds = %bb.f, %bb.d, %bb.b,
   ret i1 %.sroa.0.0
 
 bb.f:                                             ; preds = %bb.d
-  %5 = icmp ne i8 %narrow, 1
   %i.x = icmp eq i8 %i.q, %i.u
-  %spec.select = or i1 %5, %i.x
+  %spec.select = or i1 %i.s, %i.x
   br label %bb.e
 }
 

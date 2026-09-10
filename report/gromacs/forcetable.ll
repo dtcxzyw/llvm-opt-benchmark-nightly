@@ -205,7 +205,7 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce
   %i.ij = phi double [ %.pre.i.i, %bb.cf ], [ %i.ib, %bb.ce ]
   %i.ik = fsub double %i.ij, %i.ii
   %i.il = fdiv double %i.ie, 6.000000e+00
-  %i.im = call double @llvm.fmuladd.f64(double %i.ik, double 2.000000e+00, double %i.il) ; 3 uses
+  %i.im = call double @llvm.fmuladd.f64(double %i.ik, double 2.000000e+00, double %i.il) ; 2 uses
   br i1 %i.hr, label %bb.ch, label %bb.ck
 
 bb.ch:                                            ; preds = %bb.cg
@@ -258,7 +258,7 @@ bb.ck:                                            ; preds = %bb.cg
   br label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ck, %bb.cj
-  %wide.trip.count.i.pre-phi.i = phi i64 [ %i.jj, %bb.ck ], [ %i.in, %bb.cj ] ; 10 uses
+  %wide.trip.count.i.pre-phi.i = phi i64 [ %i.jj, %bb.ck ], [ %i.in, %bb.cj ] ; 9 uses
   %.pre-phi.i.i = phi i64 [ %i.jm, %bb.ck ], [ %i.in, %bb.cj ]
   %.0105.i.i = phi i32 [ %i.ji, %bb.ck ], [ %i.hq, %bb.cj ] ; 2 uses
   %.0102.i.i = phi double [ %i.ju, %bb.ck ], [ %i.jh, %bb.cj ]
@@ -274,18 +274,14 @@ bb.ck:                                            ; preds = %bb.cg
   store double %i.im, ptr %i.hs, align 8, !tbaa !80
   %i.jy = add nsw i64 %wide.trip.count.i.pre-phi.i, -1 ; 3 uses
   %xtraiter = and i64 %i.jy, 1
-  %22 = icmp eq i64 %wide.trip.count.i.pre-phi.i, 2
-  br i1 %22, label %.lr.ph.i.i.epil.preheader, label %.noexc222.new
-
-.noexc222.new:                                    ; preds = %.noexc222
   %unroll_iter = and i64 %i.jy, -2
   br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.noexc222.new
-  %i.jz = phi double [ %i.im, %.noexc222.new ], [ %i.ky, %.lr.ph.i.i ]
-  %indvars.iv.i.i = phi i64 [ 1, %.noexc222.new ], [ %indvars.iv.next.i.i.1, %.lr.ph.i.i ] ; 5 uses
-  %.0101119.i.i = phi double [ 1.000000e+00, %.noexc222.new ], [ %i.kp, %.lr.ph.i.i ]
-  %niter = phi i64 [ 0, %.noexc222.new ], [ %niter.next.1, %.lr.ph.i.i ]
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.noexc222
+  %i.jz = phi double [ %i.im, %.noexc222 ], [ %i.ky, %.lr.ph.i.i ]
+  %indvars.iv.i.i = phi i64 [ 1, %.noexc222 ], [ %indvars.iv.next.i.i.1, %.lr.ph.i.i ] ; 5 uses
+  %.0101119.i.i = phi double [ 1.000000e+00, %.noexc222 ], [ %i.kp, %.lr.ph.i.i ]
+  %niter = phi i64 [ 0, %.noexc222 ], [ %niter.next.1, %.lr.ph.i.i ]
   %i.ka = fdiv double 1.000000e+00, %.0101119.i.i ; 2 uses
   %i.kb = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.i.i
   store double %i.ka, ptr %i.kb, align 8, !tbaa !80
@@ -306,7 +302,7 @@ bb.ck:                                            ; preds = %bb.cg
   %i.ko = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.next.i.i
   store double %i.kn, ptr %i.ko, align 8, !tbaa !80
   %i.kp = fsub double 4.000000e+00, %i.kn         ; 4 uses
-  %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 3 uses
+  %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 6 uses
   %i.kq = getelementptr inbounds nuw [8 x i8], ptr %i.gy, i64 %indvars.iv.next.i.i.1
   %i.kr = load double, ptr %i.kq, align 8, !tbaa !80
   %i.ks = getelementptr [8 x i8], ptr %i.gy, i64 %indvars.iv.next.i.i
@@ -326,27 +322,24 @@ bb.ck:                                            ; preds = %bb.cg
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph122.preheader.i.i, label %.lr.ph.i.i.epil.preheader
 
-.lr.ph.i.i.epil.preheader:                        ; preds = %.lr.ph122.preheader.i.i.unr-lcssa, %.noexc222
-  %.epil.init = phi double [ %i.im, %.noexc222 ], [ %i.ky, %.lr.ph122.preheader.i.i.unr-lcssa ]
-  %indvars.iv.i.i.epil.init = phi i64 [ 1, %.noexc222 ], [ %indvars.iv.next.i.i.1, %.lr.ph122.preheader.i.i.unr-lcssa ] ; 4 uses
-  %.0101119.i.i.epil.init = phi double [ 1.000000e+00, %.noexc222 ], [ %i.kp, %.lr.ph122.preheader.i.i.unr-lcssa ]
+.lr.ph.i.i.epil.preheader:                        ; preds = %.lr.ph122.preheader.i.i.unr-lcssa
   %lcmp.mod843 = trunc i64 %i.jy to i1
   call void @llvm.assume(i1 %lcmp.mod843)
-  %i.la = fdiv double 1.000000e+00, %.0101119.i.i.epil.init ; 2 uses
-  %i.lb = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.i.i.epil.init
+  %i.la = fdiv double 1.000000e+00, %i.kp         ; 2 uses
+  %i.lb = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.next.i.i.1
   store double %i.la, ptr %i.lb, align 8, !tbaa !80
   %i.lc = fsub double 4.000000e+00, %i.la         ; 2 uses
-  %i.ld = getelementptr inbounds nuw [8 x i8], ptr %i.gy, i64 %indvars.iv.i.i.epil.init
+  %i.ld = getelementptr inbounds nuw [8 x i8], ptr %i.gy, i64 %indvars.iv.next.i.i.1
   %i.le = getelementptr inbounds nuw i8, ptr %i.ld, i64 8
   %i.lf = load double, ptr %i.le, align 8, !tbaa !80
-  %i.lg = getelementptr [8 x i8], ptr %i.gy, i64 %indvars.iv.i.i.epil.init
+  %i.lg = getelementptr [8 x i8], ptr %i.gy, i64 %indvars.iv.next.i.i.1
   %i.lh = getelementptr i8, ptr %i.lg, i64 -8
   %i.li = load double, ptr %i.lh, align 8, !tbaa !80
   %i.lj = fsub double %i.lf, %i.li
   %i.lk = fmul double %i.lj, 3.000000e+00
-  %i.ll = fsub double %i.lk, %.epil.init
+  %i.ll = fsub double %i.lk, %i.ky
   %i.lm = fdiv double %i.ll, %i.lc
-  %i.ln = getelementptr inbounds nuw [8 x i8], ptr %i.hs, i64 %indvars.iv.i.i.epil.init
+  %i.ln = getelementptr inbounds nuw [8 x i8], ptr %i.hs, i64 %indvars.iv.next.i.i.1
   store double %i.lm, ptr %i.ln, align 8, !tbaa !80
   br label %.lr.ph122.preheader.i.i
 

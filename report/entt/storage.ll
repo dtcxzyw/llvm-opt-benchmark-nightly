@@ -205,12 +205,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread27: 
 
 bb.d:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcm.exit.thread27
   %i.v = add i64 %i.b, -3
-  %spec.select.i.i8 = tail call noundef i64 @llvm.umin.i64(i64 %i.u, i64 %i.v) ; 4 uses
+  %spec.select.i.i8 = tail call noundef i64 @llvm.umin.i64(i64 %i.u, i64 %i.v) ; 3 uses
   %i.w = add nuw i64 %spec.select.i.i8, 3         ; 2 uses
-  %2 = icmp ne i64 %i.b, %i.w
-  %3 = icmp ne i64 %spec.select.i.i8, 0
-  %or.cond.i.i = and i1 %3, %2
-  br i1 %or.cond.i.i, label %bb.e, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm.exit.i
+  %.not81 = icmp eq i64 %i.b, %i.w
+  br i1 %.not81, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.x = sub i64 %i.b, %i.w                       ; 2 uses

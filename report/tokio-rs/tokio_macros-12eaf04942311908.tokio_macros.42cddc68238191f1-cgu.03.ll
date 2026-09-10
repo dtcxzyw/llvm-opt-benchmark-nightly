@@ -202,17 +202,16 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtCsfr4kGEjnBfC_11proc_
   br i1 %i.r, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_5array4iter8IntoIterNtCsfr4kGEjnBfC_11proc_macro29TokenTreeKj1_EECs5JB0sjZZtVB_12tokio_macros.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtCsfr4kGEjnBfC_11proc_macro29TokenTreeKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs5JB0sjZZtVB_12tokio_macros.exit.thread
-  %i.s = add i64 %.lcssa27, -1                    ; 4 uses
+  %i.s = add i64 %.lcssa27, -1                    ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
-  %2 = icmp eq i64 %i.s, 0
-  br i1 %2, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_5array4iter8IntoIterNtCsfr4kGEjnBfC_11proc_macro29TokenTreeKj1_EECs5JB0sjZZtVB_12tokio_macros.exit, label %.lr.ph35
+  br label %.lr.ph35
 
 bb.h:                                             ; preds = %.lr.ph35
   %i.u = icmp eq i64 %i.w, %i.s
   br i1 %i.u, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_5array4iter8IntoIterNtCsfr4kGEjnBfC_11proc_macro29TokenTreeKj1_EECs5JB0sjZZtVB_12tokio_macros.exit, label %.lr.ph35
 
 .lr.ph35:                                         ; preds = %bb.g, %bb.h
-  %.sroa.0.0.i.i.i.i.i.i.i34 = phi i64 [ %i.w, %bb.h ], [ 0, %bb.g ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i.i34 = phi i64 [ 0, %bb.g ], [ %i.w, %bb.h ] ; 2 uses
   %i.v = getelementptr inbounds nuw [32 x i8], ptr %i.t, i64 %.sroa.0.0.i.i.i.i.i.i.i34
   %i.w = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i.i.i34, 1 ; 4 uses
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCsfr4kGEjnBfC_11proc_macro29TokenTreeECs5JB0sjZZtVB_12tokio_macros(ptr noalias nofree noundef align 8 dereferenceable(32) %i.v)
@@ -241,7 +240,7 @@ bb.k:                                             ; preds = %.lr.ph37
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #20
   unreachable
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_5array4iter8IntoIterNtCsfr4kGEjnBfC_11proc_macro29TokenTreeKj1_EECs5JB0sjZZtVB_12tokio_macros.exit: ; preds = %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtCsa5ERaWwhjCQ_10proc_macro9TokenTreeE4pushCs5JB0sjZZtVB_12tokio_macros.exit, %bb.h, %bb.g, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtCsfr4kGEjnBfC_11proc_macro29TokenTreeKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs5JB0sjZZtVB_12tokio_macros.exit.thread, %_RINvXsa_NtCsfr4kGEjnBfC_11proc_macro28fallbackNtB6_11TokenStreamINtNtNtNtCs3oUPovFnLWP_4core4iter6traits7collect6ExtendNtB8_9TokenTreeE6extendAB1T_j1_ECs5JB0sjZZtVB_12tokio_macros.exit
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_5array4iter8IntoIterNtCsfr4kGEjnBfC_11proc_macro29TokenTreeKj1_EECs5JB0sjZZtVB_12tokio_macros.exit: ; preds = %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtCsa5ERaWwhjCQ_10proc_macro9TokenTreeE4pushCs5JB0sjZZtVB_12tokio_macros.exit, %bb.h, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtCsfr4kGEjnBfC_11proc_macro29TokenTreeKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs5JB0sjZZtVB_12tokio_macros.exit.thread, %_RINvXsa_NtCsfr4kGEjnBfC_11proc_macro28fallbackNtB6_11TokenStreamINtNtNtNtCs3oUPovFnLWP_4core4iter6traits7collect6ExtendNtB8_9TokenTreeE6extendAB1T_j1_ECs5JB0sjZZtVB_12tokio_macros.exit
   ret void
 
 bb.l:                                             ; preds = %.lr.ph
