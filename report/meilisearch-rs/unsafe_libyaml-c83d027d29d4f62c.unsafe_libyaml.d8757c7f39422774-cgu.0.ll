@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 11 uses
   %i.c = alloca [24 x i8], align 8                ; 11 uses
   %i.d = alloca [24 x i8], align 8                ; 9 uses
-  %i.e = alloca [24 x i8], align 8                ; 25 uses
+  %i.e = alloca [24 x i8], align 8                ; 21 uses
   %i.f = alloca [24 x i8], align 8                ; 4 uses
   %.sroa.4.i = alloca [24 x i8], align 8          ; 4 uses
   %.sroa.9.sroa.5 = alloca [24 x i8], align 4     ; 4 uses
@@ -361,7 +361,7 @@ _ZN14unsafe_libyaml3api11yaml_malloc17hede18d1f2b9cdb2cE.exit.i: ; preds = %bb.n
   %i.bn = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 38 uses
   store ptr %i.bm, ptr %i.bn, align 8
   %i.bo = getelementptr i8, ptr %i.bk, i64 24
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 21 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 15 uses
   store ptr %i.bo, ptr %i.bp, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, i8 0, i64 16, i1 false)
   %i.bq = tail call noundef zeroext i1 @_ZN4core5alloc6layout6Layout19is_size_align_valid17h26adf6c6175f55f5E(i64 noundef 24, i64 noundef 8)
@@ -764,7 +764,6 @@ _ZN14unsafe_libyaml3api16yaml_string_join17he14af3184f36b16bE.exit223._ZN14unsaf
 
 .lr.ph.preheader.i226.i:                          ; preds = %.preheader.i224.i
   %.pre.i227.i = load ptr, ptr %i.e, align 8
-  %.promoted = load ptr, ptr %i.bp, align 8
   br label %.lr.ph.i228.i
 
 ._crit_edge.i232.i.loopexit:                      ; preds = %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i
@@ -780,10 +779,9 @@ _ZN14unsafe_libyaml3api16yaml_string_join17he14af3184f36b16bE.exit223._ZN14unsaf
   br label %_ZN14unsafe_libyaml3api16yaml_string_join17he14af3184f36b16bE.exit234.i
 
 .lr.ph.i228.i:                                    ; preds = %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i, %.lr.ph.preheader.i226.i
-  %2 = phi ptr [ %i.aba, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i ], [ %.promoted, %.lr.ph.preheader.i226.i ] ; 2 uses
-  %i.aah = phi ptr [ %i.aay, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i ], [ %i.aab, %.lr.ph.preheader.i226.i ]
-  %i.aai = phi ptr [ %i.aba, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i ], [ %i.aaa, %.lr.ph.preheader.i226.i ]
-  %i.aaj = phi ptr [ %i.aaq, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i ], [ %.pre.i227.i, %.lr.ph.preheader.i226.i ] ; 4 uses
+  %i.aah = phi ptr [ %i.aba, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i ], [ %i.aaa, %.lr.ph.preheader.i226.i ]
+  %i.aai = phi ptr [ %i.aay, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i ], [ %i.aab, %.lr.ph.preheader.i226.i ]
+  %i.aaj = phi ptr [ %i.aaq, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i ], [ %.pre.i227.i, %.lr.ph.preheader.i226.i ] ; 2 uses
   %i.aak = phi i64 [ %i.abb, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i ], [ %i.aac, %.lr.ph.preheader.i226.i ]
   %i.aal = ptrtoint ptr %i.aaj to i64             ; 3 uses
   %i.aam = sub i64 %i.aak, %i.aal                 ; 2 uses
@@ -792,15 +790,13 @@ _ZN14unsafe_libyaml3api16yaml_string_join17he14af3184f36b16bE.exit223._ZN14unsaf
   br i1 %i.aao, label %bb.hl, label %"_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i.i229.i", !prof !4
 
 bb.hl:                                            ; preds = %.lr.ph.i228.i
-  store ptr %2, ptr %i.bp, align 8
-  store ptr %i.aaj, ptr %i.e, align 8
   tail call fastcc void @_ZN14unsafe_libyaml3ops3die17h19b81f44728adbc4E()
   unreachable
 
 "_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i.i229.i": ; preds = %.lr.ph.i228.i
   %i.aap = shl nsw i64 %i.aam, 1
   %i.aaq = tail call fastcc noundef ptr @_ZN14unsafe_libyaml3api12yaml_realloc17h5fba004c459eee5cE(ptr noundef %i.aaj, i64 noundef %i.aap) ; 5 uses
-  %i.aar = ptrtoint ptr %i.aai to i64
+  %i.aar = ptrtoint ptr %i.aah to i64
   %i.aas = sub i64 %i.aar, %i.aal                 ; 4 uses
   %i.aat = getelementptr i8, ptr %i.aaq, i64 %i.aas
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.aat, i8 0, i64 %i.aas, i1 false)
@@ -809,17 +805,15 @@ bb.hl:                                            ; preds = %.lr.ph.i228.i
   br i1 %i.aav, label %bb.hm, label %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i, !prof !4
 
 bb.hm:                                            ; preds = %"_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i.i229.i"
-  store ptr %2, ptr %i.bp, align 8
-  store ptr %i.aaj, ptr %i.e, align 8
   tail call fastcc void @_ZN14unsafe_libyaml3ops3die17h19b81f44728adbc4E()
   unreachable
 
 _ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i230.i: ; preds = %"_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i.i229.i"
-  %i.aaw = ptrtoint ptr %i.aah to i64
+  %i.aaw = ptrtoint ptr %i.aai to i64
   %i.aax = sub i64 %i.aaw, %i.aal                 ; 2 uses
   %i.aay = getelementptr i8, ptr %i.aaq, i64 %i.aax ; 2 uses
   %i.aaz = shl nsw i64 %i.aas, 1                  ; 2 uses
-  %i.aba = getelementptr i8, ptr %i.aaq, i64 %i.aaz ; 4 uses
+  %i.aba = getelementptr i8, ptr %i.aaq, i64 %i.aaz ; 3 uses
   %i.abb = ptrtoint ptr %i.aba to i64
   %gepdiff293.i = sub i64 %i.aaz, %i.aax
   %.not.i231.i = icmp sgt i64 %gepdiff293.i, %i.zz
@@ -870,7 +864,6 @@ bb.ho:                                            ; preds = %bb.hh
 
 .lr.ph.preheader.i237.i:                          ; preds = %.preheader.i235.i
   %.pre.i238.i = load ptr, ptr %i.e, align 8
-  %.promoted196 = load ptr, ptr %i.bp, align 8
   br label %.lr.ph.i239.i
 
 ._crit_edge.i243.i.loopexit:                      ; preds = %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i
@@ -886,10 +879,9 @@ bb.ho:                                            ; preds = %bb.hh
   br label %_ZN14unsafe_libyaml3api16yaml_string_join17he14af3184f36b16bE.exit245.i
 
 .lr.ph.i239.i:                                    ; preds = %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i, %.lr.ph.preheader.i237.i
-  %3 = phi ptr [ %i.acq, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i ], [ %.promoted196, %.lr.ph.preheader.i237.i ] ; 2 uses
-  %i.abx = phi ptr [ %i.aco, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i ], [ %i.abr, %.lr.ph.preheader.i237.i ]
-  %i.aby = phi ptr [ %i.acq, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i ], [ %i.abq, %.lr.ph.preheader.i237.i ]
-  %i.abz = phi ptr [ %i.acg, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i ], [ %.pre.i238.i, %.lr.ph.preheader.i237.i ] ; 4 uses
+  %i.abx = phi ptr [ %i.acq, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i ], [ %i.abq, %.lr.ph.preheader.i237.i ]
+  %i.aby = phi ptr [ %i.aco, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i ], [ %i.abr, %.lr.ph.preheader.i237.i ]
+  %i.abz = phi ptr [ %i.acg, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i ], [ %.pre.i238.i, %.lr.ph.preheader.i237.i ] ; 2 uses
   %i.aca = phi i64 [ %i.acr, %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i ], [ %i.abs, %.lr.ph.preheader.i237.i ]
   %i.acb = ptrtoint ptr %i.abz to i64             ; 3 uses
   %i.acc = sub i64 %i.aca, %i.acb                 ; 2 uses
@@ -898,15 +890,13 @@ bb.ho:                                            ; preds = %bb.hh
   br i1 %i.ace, label %bb.hp, label %"_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i.i240.i", !prof !4
 
 bb.hp:                                            ; preds = %.lr.ph.i239.i
-  store ptr %3, ptr %i.bp, align 8
-  store ptr %i.abz, ptr %i.e, align 8
   tail call fastcc void @_ZN14unsafe_libyaml3ops3die17h19b81f44728adbc4E()
   unreachable
 
 "_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i.i240.i": ; preds = %.lr.ph.i239.i
   %i.acf = shl nsw i64 %i.acc, 1
   %i.acg = tail call fastcc noundef ptr @_ZN14unsafe_libyaml3api12yaml_realloc17h5fba004c459eee5cE(ptr noundef %i.abz, i64 noundef %i.acf) ; 5 uses
-  %i.ach = ptrtoint ptr %i.aby to i64
+  %i.ach = ptrtoint ptr %i.abx to i64
   %i.aci = sub i64 %i.ach, %i.acb                 ; 4 uses
   %i.acj = getelementptr i8, ptr %i.acg, i64 %i.aci
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.acj, i8 0, i64 %i.aci, i1 false)
@@ -915,17 +905,15 @@ bb.hp:                                            ; preds = %.lr.ph.i239.i
   br i1 %i.acl, label %bb.hq, label %_ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i, !prof !4
 
 bb.hq:                                            ; preds = %"_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i.i240.i"
-  store ptr %3, ptr %i.bp, align 8
-  store ptr %i.abz, ptr %i.e, align 8
   tail call fastcc void @_ZN14unsafe_libyaml3ops3die17h19b81f44728adbc4E()
   unreachable
 
 _ZN14unsafe_libyaml3api18yaml_string_extend17h62b2adeea2c7d500E.exit.i241.i: ; preds = %"_ZN53_$LT$i64$u20$as$u20$unsafe_libyaml..ops..ForceMul$GT$9force_mul17h9fc10cf53f2f2bf6E.exit.i.i240.i"
-  %i.acm = ptrtoint ptr %i.abx to i64
+  %i.acm = ptrtoint ptr %i.aby to i64
   %i.acn = sub i64 %i.acm, %i.acb                 ; 2 uses
   %i.aco = getelementptr i8, ptr %i.acg, i64 %i.acn ; 2 uses
   %i.acp = shl nsw i64 %i.aci, 1                  ; 2 uses
-  %i.acq = getelementptr i8, ptr %i.acg, i64 %i.acp ; 4 uses
+  %i.acq = getelementptr i8, ptr %i.acg, i64 %i.acp ; 3 uses
   %i.acr = ptrtoint ptr %i.acq to i64
   %gepdiff294.i = sub i64 %i.acp, %i.acn
   %.not.i242.i = icmp sgt i64 %gepdiff294.i, %i.abp

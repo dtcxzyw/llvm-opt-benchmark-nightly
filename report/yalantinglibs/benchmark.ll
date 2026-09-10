@@ -205,12 +205,12 @@ bb.a:
   %15 = alloca %"class.std::basic_string_view", align 8 ; 15 uses
   %i.d = alloca i32, align 4                      ; 10 uses
   %16 = alloca %class.anon.940, align 8           ; 8 uses
-  %17 = alloca %"class.std::basic_string_view", align 8 ; 50 uses
+  %17 = alloca %"class.std::basic_string_view", align 8 ; 45 uses
   %i.e = alloca i32, align 4                      ; 16 uses
   %18 = alloca %class.anon.874, align 8           ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   store i64 %1, ptr %17, align 8
-  %i.f = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 51 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 46 uses
   store ptr %2, ptr %i.f, align 8
   %i.g = icmp eq i64 %1, 0
   br i1 %i.g, label %_ZN6iguana11from_pb_adlIN9pb_sample7MonsterEEEvPNS_12iguana_adl_tERT_St17basic_string_viewIcSt11char_traitsIcEE.exit, label %bb.b, !prof !169
@@ -409,11 +409,9 @@ bb.z:                                             ; preds = %bb.y
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %bb.y
-  %i.cg = sub nuw i64 %i.ce, %.0691               ; 5 uses
+  %i.cg = sub nuw i64 %i.ce, %.0691               ; 4 uses
   %i.ch = load ptr, ptr %i.f, align 8, !tbaa !439 ; 2 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %.0691 ; 15 uses
-  store i64 %i.cg, ptr %17, align 8, !tbaa !249
-  store ptr %i.ci, ptr %i.f, align 8, !tbaa !363
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %.0691 ; 14 uses
   %.not4.i.i = icmp eq i32 %i.by, 2
   br i1 %.not4.i.i, label %bb.ad, label %bb.aa, !prof !257
 
@@ -816,11 +814,9 @@ bb.hf:                                            ; preds = %bb.he
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit43: ; preds = %bb.he
-  %i.yz = sub nuw i64 %i.yx, %.1692.ph            ; 6 uses
+  %i.yz = sub nuw i64 %i.yx, %.1692.ph            ; 5 uses
   %i.za = load ptr, ptr %i.f, align 8, !tbaa !439 ; 2 uses
-  %i.zb = getelementptr inbounds nuw i8, ptr %i.za, i64 %.1692.ph ; 15 uses
-  store i64 %i.yz, ptr %17, align 8, !tbaa !249
-  store ptr %i.zb, ptr %i.f, align 8, !tbaa !363
+  %i.zb = getelementptr inbounds nuw i8, ptr %i.za, i64 %.1692.ph ; 14 uses
   %.not4.i17.i = icmp eq i32 %.0682.ph, 0
   br i1 %.not4.i17.i, label %bb.hj, label %bb.hg, !prof !257
 
@@ -1193,11 +1189,9 @@ bb.ix:                                            ; preds = %bb.iw
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit51: ; preds = %bb.iw
-  %i.aev = sub nuw i64 %i.aet, %.2693             ; 6 uses
+  %i.aev = sub nuw i64 %i.aet, %.2693             ; 5 uses
   %i.aew = load ptr, ptr %i.f, align 8, !tbaa !439 ; 2 uses
-  %i.aex = getelementptr inbounds nuw i8, ptr %i.aew, i64 %.2693 ; 15 uses
-  store i64 %i.aev, ptr %17, align 8, !tbaa !249
-  store ptr %i.aex, ptr %i.f, align 8, !tbaa !363
+  %i.aex = getelementptr inbounds nuw i8, ptr %i.aew, i64 %.2693 ; 14 uses
   %.not4.i31.i = icmp eq i32 %.1683, 0
   br i1 %.not4.i31.i, label %bb.jb, label %bb.iy, !prof !257
 
@@ -1600,11 +1594,9 @@ bb.oh:                                            ; preds = %bb.og
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit80: ; preds = %bb.og
-  %i.azh = sub nuw i64 %i.azf, %.5696778          ; 6 uses
+  %i.azh = sub nuw i64 %i.azf, %.5696778          ; 5 uses
   %i.azi = load ptr, ptr %i.f, align 8, !tbaa !439 ; 2 uses
-  %i.azj = getelementptr inbounds nuw i8, ptr %i.azi, i64 %.5696778 ; 15 uses
-  store i64 %i.azh, ptr %17, align 8, !tbaa !249
-  store ptr %i.azj, ptr %i.f, align 8, !tbaa !363
+  %i.azj = getelementptr inbounds nuw i8, ptr %i.azi, i64 %.5696778 ; 14 uses
   %.not4.i106.i = icmp eq i32 %.4686779, 0
   br i1 %.not4.i106.i, label %bb.ol, label %bb.oi, !prof !257
 
@@ -2007,11 +1999,9 @@ bb.xp:                                            ; preds = %bb.xo
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit149: ; preds = %bb.xo
-  %i.cjj = sub nuw i64 %i.cjh, %.7698819          ; 5 uses
+  %i.cjj = sub nuw i64 %i.cjh, %.7698819          ; 4 uses
   %i.cjk = load ptr, ptr %i.f, align 8, !tbaa !439 ; 2 uses
-  %i.cjl = getelementptr inbounds nuw i8, ptr %i.cjk, i64 %.7698819 ; 15 uses
-  store i64 %i.cjj, ptr %17, align 8, !tbaa !249
-  store ptr %i.cjl, ptr %i.f, align 8, !tbaa !363
+  %i.cjl = getelementptr inbounds nuw i8, ptr %i.cjk, i64 %.7698819 ; 14 uses
   %.not4.i134.i = icmp eq i32 %.6688820, 2
   br i1 %.not4.i134.i, label %bb.xt, label %bb.xq, !prof !257
 

@@ -204,32 +204,32 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !264
   %i.c = shl nsw i32 %2, 2
   %i.d = sext i32 %i.c to i64
-  %i.e = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.d ; 5 uses
+  %i.e = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.d ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !265  ; 4 uses
   %i.h = load i32, ptr %i.e, align 4, !tbaa !40
-  %i.i = sext i32 %i.h to i64                     ; 2 uses
+  %i.i = sext i32 %i.h to i64                     ; 3 uses
   %i.j = getelementptr inbounds [12 x i8], ptr %i.g, i64 %i.i ; 2 uses
   %.sroa.01415.0.copyload = load <2 x float>, ptr %i.j, align 4 ; 5 uses
   %.sroa.91420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %.sroa.91420.0.copyload = load float, ptr %.sroa.91420.0..sroa_idx, align 4 ; 3 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !40
-  %i.m = sext i32 %i.l to i64                     ; 2 uses
+  %i.m = sext i32 %i.l to i64                     ; 3 uses
   %i.n = getelementptr inbounds [12 x i8], ptr %i.g, i64 %i.m ; 2 uses
   %.sroa.0773.0.copyload = load <2 x float>, ptr %i.n, align 4 ; 5 uses
   %.sroa.8778.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %.sroa.8778.0.copyload = load float, ptr %.sroa.8778.0..sroa_idx, align 4 ; 4 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.p = load i32, ptr %i.o, align 4, !tbaa !40
-  %i.q = sext i32 %i.p to i64                     ; 2 uses
+  %i.q = sext i32 %i.p to i64                     ; 3 uses
   %i.r = getelementptr inbounds [12 x i8], ptr %i.g, i64 %i.q ; 2 uses
   %.sroa.0767.0.copyload = load <2 x float>, ptr %i.r, align 4 ; 5 uses
   %.sroa.8772.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %.sroa.8772.0.copyload = load float, ptr %.sroa.8772.0..sroa_idx, align 4 ; 4 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 12 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 12
   %i.t = load i32, ptr %i.s, align 4, !tbaa !40
-  %i.u = sext i32 %i.t to i64                     ; 2 uses
+  %i.u = sext i32 %i.t to i64                     ; 3 uses
   %i.v = getelementptr inbounds [12 x i8], ptr %i.g, i64 %i.u ; 2 uses
   %.sroa.01409.0.copyload = load <2 x float>, ptr %i.v, align 4 ; 5 uses
   %.sroa.91414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 8
@@ -632,7 +632,7 @@ _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit: ; preds = %bb.o, %_ZN4pb
   store float %i.ni, ptr %.sroa.2.0..sroa_idx.i.i.i, align 4
   %i.nj = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   store <2 x float> %i.hr, ptr %i.nj, align 8
-  %.sroa.214.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
+  %.sroa.214.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   store float %i.hl, ptr %.sroa.214.0..sroa_idx.i.i.i, align 8
   %i.nk = getelementptr inbounds nuw i8, ptr %0, i64 52
   store <2 x float> %.sroa.0660.0, ptr %i.nk, align 4
@@ -693,7 +693,7 @@ bb.s:                                             ; preds = %_ZN4pbrt8Point3fiC2
   br label %_ZN4pbrt18SurfaceInteractionC2ENS_8Point3fiENS_6Point2IfEENS_7Vector3IfEES5_S5_NS_7Normal3IfEES7_fbi.exit
 
 _ZN4pbrt18SurfaceInteractionC2ENS_8Point3fiENS_6Point2IfEENS_7Vector3IfEES5_S5_NS_7Normal3IfEES7_fbi.exit: ; preds = %_ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit, %bb.s
-  %.sroa.246.0.copyload = phi float [ %i.hl, %_ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit ], [ %i.nz, %bb.s ] ; 3 uses
+  %.sroa.246.0.copyload = phi float [ %i.hl, %_ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit ], [ %i.nz, %bb.s ] ; 7 uses
   %i.of = getelementptr inbounds nuw i8, ptr %0, i64 188
   store i32 %i.lo, ptr %i.of, align 4, !tbaa !270
   %i.og = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -702,27 +702,19 @@ _ZN4pbrt18SurfaceInteractionC2ENS_8Point3fiENS_6Point2IfEENS_7Vector3IfEES5_S5_N
   br i1 %.not824, label %bb.x, label %bb.t
 
 bb.t:                                             ; preds = %_ZN4pbrt18SurfaceInteractionC2ENS_8Point3fiENS_6Point2IfEENS_7Vector3IfEES5_S5_NS_7Normal3IfEES7_fbi.exit
-  %8 = load i32, ptr %i.e, align 4, !tbaa !40
-  %9 = sext i32 %8 to i64
-  %i.oi = getelementptr inbounds [12 x i8], ptr %i.oh, i64 %9 ; 2 uses
+  %i.oi = getelementptr inbounds [12 x i8], ptr %i.oh, i64 %i.i ; 2 uses
   %.sroa.0217.0.copyload = load <2 x float>, ptr %i.oi, align 4 ; 3 uses
   %.sroa.6220.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.oi, i64 8
   %.sroa.6220.0.copyload = load float, ptr %.sroa.6220.0..sroa_idx, align 4 ; 2 uses
-  %10 = load i32, ptr %i.k, align 4, !tbaa !40
-  %11 = sext i32 %10 to i64
-  %i.oj = getelementptr inbounds [12 x i8], ptr %i.oh, i64 %11 ; 2 uses
+  %i.oj = getelementptr inbounds [12 x i8], ptr %i.oh, i64 %i.m ; 2 uses
   %.sroa.0213.0.copyload = load <2 x float>, ptr %i.oj, align 4 ; 3 uses
   %.sroa.6216.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.oj, i64 8
   %.sroa.6216.0.copyload = load float, ptr %.sroa.6216.0..sroa_idx, align 4 ; 2 uses
-  %12 = load i32, ptr %i.o, align 4, !tbaa !40
-  %13 = sext i32 %12 to i64
-  %i.ok = getelementptr inbounds [12 x i8], ptr %i.oh, i64 %13 ; 2 uses
+  %i.ok = getelementptr inbounds [12 x i8], ptr %i.oh, i64 %i.q ; 2 uses
   %.sroa.0209.0.copyload = load <2 x float>, ptr %i.ok, align 4 ; 3 uses
   %.sroa.6212.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ok, i64 8
   %.sroa.6212.0.copyload = load float, ptr %.sroa.6212.0..sroa_idx, align 4 ; 2 uses
-  %14 = load i32, ptr %i.s, align 4, !tbaa !40
-  %15 = sext i32 %14 to i64
-  %i.ol = getelementptr inbounds [12 x i8], ptr %i.oh, i64 %15 ; 2 uses
+  %i.ol = getelementptr inbounds [12 x i8], ptr %i.oh, i64 %i.u ; 2 uses
   %.sroa.0206.0.copyload = load <2 x float>, ptr %i.ol, align 4 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ol, i64 8
   %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4 ; 2 uses
@@ -874,10 +866,9 @@ bb.u:                                             ; preds = %bb.t
   store <2 x float> %i.pr, ptr %i.nq, align 8
   %.sroa.247.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 136
   store float %i.ps, ptr %.sroa.247.0..sroa_idx.i, align 8
-  %.sroa.229.0.copyload.i = load float, ptr %.sroa.214.0..sroa_idx.i.i.i, align 8 ; 4 uses
-  %i.sy = fmul float %i.ps, %.sroa.229.0.copyload.i ; 2 uses
+  %i.sy = fmul float %i.ps, %.sroa.246.0.copyload ; 2 uses
   %i.sz = fneg float %i.sy
-  %i.ta = call noundef float @llvm.fma.f32(float %.sroa.229.0.copyload.i, float %i.ps, float %i.sz)
+  %i.ta = call noundef float @llvm.fma.f32(float %.sroa.246.0.copyload, float %i.ps, float %i.sz)
   %i.tb = extractelement <2 x float> %i.pr, i64 1
   %i.tc = call noundef float @llvm.fma.f32(float %.sroa.01.4.vec.extract.i.i.i1260, float %i.tb, float %i.sy)
   %i.td = fadd float %i.tc, %i.ta
@@ -885,9 +876,9 @@ bb.u:                                             ; preds = %bb.t
   %i.tf = call noundef float @llvm.fma.f32(float %.sroa.01.0.vec.extract.i.i.i1259, float %i.te, float %i.td)
   %i.tg = fcmp olt float %i.tf, 0.000000e+00      ; 2 uses
   %i.th = fneg <2 x float> %.sroa.045.0.copyload
-  %i.ti = fneg float %.sroa.229.0.copyload.i
+  %i.ti = fneg float %.sroa.246.0.copyload
   %.sroa.0.4.vec.insert.i.pn.i.i = select i1 %i.tg, <2 x float> %i.th, <2 x float> %.sroa.045.0.copyload
-  %.pn.i.i = select i1 %i.tg, float %i.ti, float %.sroa.229.0.copyload.i
+  %.pn.i.i = select i1 %i.tg, float %i.ti, float %.sroa.246.0.copyload
   store <2 x float> %.sroa.0.4.vec.insert.i.pn.i.i, ptr %i.nj, align 8
   store float %.pn.i.i, ptr %.sroa.214.0..sroa_idx.i.i.i, align 8
   store <2 x float> %i.sg, ptr %i.ns, align 4

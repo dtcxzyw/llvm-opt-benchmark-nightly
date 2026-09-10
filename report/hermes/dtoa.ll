@@ -205,13 +205,9 @@ bb.z:                                             ; preds = %bb.x
   %.not557.i = icmp eq i32 %.0479.lcssa11571173.i, 0
   %spec.select597.i = select i1 %.not557.i, i32 %.5484.i, i32 %.0479.lcssa11571173.i ; 6 uses
   %i.em = call i32 @llvm.smin.i32(i32 %.5484.i, i32 17) ; 2 uses
-  %i.en = uitofp i32 %.8434.i to double           ; 4 uses
+  %i.en = uitofp i32 %.8434.i to double           ; 3 uses
   store double %i.en, ptr %2, align 8, !tbaa !19
   %i.eo = icmp sgt i32 %.5484.i, 9
-  %4 = bitcast double %i.en to i64                ; 2 uses
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw nsw i64 %5 to i32
-  %7 = trunc i64 %4 to i32
   br i1 %i.eo, label %bb.aa, label %.thread.i
 
 bb.aa:                                            ; preds = %bb.z
@@ -220,18 +216,12 @@ bb.aa:                                            ; preds = %bb.z
   %i.er = getelementptr i8, ptr %i.eq, i64 -72
   %i.es = load double, ptr %i.er, align 8, !tbaa !21
   %i.et = uitofp i32 %.8.i to double
-  %i.eu = call double @llvm.fmuladd.f64(double %i.es, double %i.en, double %i.et) ; 4 uses
+  %i.eu = call double @llvm.fmuladd.f64(double %i.es, double %i.en, double %i.et) ; 3 uses
   store double %i.eu, ptr %2, align 8, !tbaa !19
   %i.ev = icmp samesign ult i32 %.5484.i, 16
-  %8 = bitcast double %i.eu to i64                ; 2 uses
-  %9 = lshr i64 %8, 32
-  %10 = trunc nuw i64 %9 to i32                   ; 2 uses
-  %11 = trunc i64 %8 to i32                       ; 2 uses
   br i1 %i.ev, label %.thread.i, label %bb.aj
 
 .thread.i:                                        ; preds = %bb.aa, %bb.z
-  %12 = phi i32 [ %6, %bb.z ], [ %10, %bb.aa ]    ; 3 uses
-  %13 = phi i32 [ %7, %bb.z ], [ %11, %bb.aa ]    ; 3 uses
   %i.ew = phi double [ %i.en, %bb.z ], [ %i.eu, %bb.aa ] ; 6 uses
   %i.ex = call i32 @llvm.get.rounding()
   %i.ey = icmp eq i32 %i.ex, 1
@@ -290,8 +280,6 @@ bb.ai:                                            ; preds = %bb.ah
   br label %.loopexit750.i
 
 bb.aj:                                            ; preds = %bb.ah, %bb.af, %.thread.i, %bb.aa
-  %14 = phi i32 [ %12, %bb.af ], [ %12, %bb.ah ], [ %12, %.thread.i ], [ %10, %bb.aa ] ; 2 uses
-  %15 = phi i32 [ %13, %bb.af ], [ %13, %bb.ah ], [ %13, %.thread.i ], [ %11, %bb.aa ]
   %i.fw = phi double [ %i.ew, %bb.af ], [ %i.ew, %bb.ah ], [ %i.ew, %.thread.i ], [ %i.eu, %bb.aa ] ; 4 uses
   %i.fx = sub nsw i32 %.5484.i, %i.em
   %i.fy = add nsw i32 %i.el, %i.fx                ; 7 uses
@@ -307,15 +295,11 @@ bb.al:                                            ; preds = %bb.ak
   %i.gb = zext nneg i32 %i.ga to i64
   %i.gc = getelementptr inbounds nuw [8 x i8], ptr @tens, i64 %i.gb
   %i.gd = load double, ptr %i.gc, align 8, !tbaa !21
-  %i.ge = fmul double %i.fw, %i.gd                ; 3 uses
+  %i.ge = fmul double %i.fw, %i.gd                ; 2 uses
   store double %i.ge, ptr %2, align 8, !tbaa !19
-  %16 = bitcast double %i.ge to i64
-  %17 = lshr i64 %16, 32
-  %18 = trunc nuw i64 %17 to i32
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %19 = phi i32 [ %18, %bb.al ], [ %14, %bb.ak ]  ; 2 uses
   %.promoted1337.i = phi double [ %i.ge, %bb.al ], [ %i.fw, %bb.ak ] ; 2 uses
   %i.gf = and i32 %i.fy, 2147483632               ; 2 uses
   %.not567.i = icmp eq i32 %i.gf, 0
@@ -470,8 +454,6 @@ bb.be:                                            ; preds = %bb.an
   br label %.lr.ph925.i
 
 .lr.ph925.i:                                      ; preds = %bb.bg, %.lr.ph925.preheader.i
-  %20 = phi double [ %.promoted1337.i, %.lr.ph925.preheader.i ], [ %25, %bb.bg ]
-  %21 = phi i32 [ %19, %.lr.ph925.preheader.i ], [ %26, %bb.bg ]
   %indvars.iv1055.i = phi i64 [ 0, %.lr.ph925.preheader.i ], [ %indvars.iv.next1056.i, %bb.bg ] ; 2 uses
   %.0501922.i = phi i32 [ %i.ht, %.lr.ph925.preheader.i ], [ %i.ia, %bb.bg ] ; 3 uses
   %i.hu = phi double [ %.promoted1337.i, %.lr.ph925.preheader.i ], [ %i.hz, %bb.bg ] ; 2 uses
@@ -482,30 +464,25 @@ bb.be:                                            ; preds = %bb.an
 bb.bf:                                            ; preds = %.lr.ph925.i
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr @bigtens, i64 %indvars.iv1055.i
   %i.hx = load double, ptr %i.hw, align 8, !tbaa !21
-  %i.hy = fmul double %i.hu, %i.hx                ; 3 uses
-  %22 = bitcast double %i.hy to i64
-  %23 = lshr i64 %22, 32
-  %24 = trunc nuw i64 %23 to i32
+  %i.hy = fmul double %i.hu, %i.hx
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %.lr.ph925.i
-  %25 = phi double [ %20, %.lr.ph925.i ], [ %i.hy, %bb.bf ] ; 2 uses
-  %26 = phi i32 [ %21, %.lr.ph925.i ], [ %24, %bb.bf ] ; 2 uses
-  %i.hz = phi double [ %i.hu, %.lr.ph925.i ], [ %i.hy, %bb.bf ]
+  %i.hz = phi double [ %i.hu, %.lr.ph925.i ], [ %i.hy, %bb.bf ] ; 2 uses
   %indvars.iv.next1056.i = add nuw nsw i64 %indvars.iv1055.i, 1 ; 2 uses
   %i.ia = lshr i32 %.0501922.i, 1
   %i.ib = icmp samesign ugt i32 %.0501922.i, 3
-  br i1 %i.ib, label %.lr.ph925.i, label %._crit_edge926.loopexit.i, !llvm.loop !37
+  br i1 %i.ib, label %.lr.ph925.i, label %._crit_edge926.i, !llvm.loop !37
 
-._crit_edge926.loopexit.i:                        ; preds = %bb.bg
-  store double %25, ptr %2, align 8
-  br label %._crit_edge926.i
-
-._crit_edge926.i:                                 ; preds = %._crit_edge926.loopexit.i, %bb.be
-  %27 = phi i32 [ %19, %bb.be ], [ %26, %._crit_edge926.loopexit.i ]
-  %.0486.lcssa.i = phi i64 [ 0, %bb.be ], [ %indvars.iv.next1056.i, %._crit_edge926.loopexit.i ]
+._crit_edge926.i:                                 ; preds = %bb.bg, %bb.be
+  %.lcssa923.i = phi double [ %.promoted1337.i, %bb.be ], [ %i.hz, %bb.bg ] ; 2 uses
+  %.0486.lcssa.i = phi i64 [ 0, %bb.be ], [ %indvars.iv.next1056.i, %bb.bg ]
+  store double %.lcssa923.i, ptr %2, align 8
   %i.ic = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
-  %i.id = add i32 %27, -55574528
+  %4 = bitcast double %.lcssa923.i to i64
+  %5 = lshr i64 %4, 32
+  %6 = trunc nuw i64 %5 to i32
+  %i.id = add i32 %6, -55574528
   store i32 %i.id, ptr %i.ic, align 4, !tbaa !19
   %i.ie = getelementptr inbounds nuw [8 x i8], ptr @bigtens, i64 %.0486.lcssa.i
   %i.if = load double, ptr %i.ie, align 8, !tbaa !21
@@ -547,18 +524,12 @@ bb.bm:                                            ; preds = %bb.bl
   %i.is = zext nneg i32 %i.ir to i64
   %i.it = getelementptr inbounds nuw [8 x i8], ptr @tens, i64 %i.is
   %i.iu = load double, ptr %i.it, align 8, !tbaa !21
-  %i.iv = fdiv double %i.fw, %i.iu                ; 3 uses
+  %i.iv = fdiv double %i.fw, %i.iu                ; 2 uses
   store double %i.iv, ptr %2, align 8, !tbaa !19
-  %28 = bitcast double %i.iv to i64               ; 2 uses
-  %29 = lshr i64 %28, 32
-  %30 = trunc nuw i64 %29 to i32
-  %31 = trunc i64 %28 to i32
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm, %bb.bl
-  %32 = phi i32 [ %31, %bb.bm ], [ %15, %bb.bl ]
-  %33 = phi i32 [ %30, %bb.bm ], [ %14, %bb.bl ]
-  %.promoted1335.i = phi double [ %i.iv, %bb.bm ], [ %i.fw, %bb.bl ] ; 2 uses
+  %.promoted1335.i = phi double [ %i.iv, %bb.bm ], [ %i.fw, %bb.bl ]
   %i.iw = lshr i32 %i.iq, 4                       ; 2 uses
   %.not561.i = icmp eq i32 %i.iw, 0
   br i1 %.not561.i, label %bb.cb, label %bb.bo
@@ -568,9 +539,6 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %i.ix, label %bb.ca, label %.preheader
 
 .preheader:                                       ; preds = %bb.bo, %bb.bq
-  %34 = phi double [ %41, %bb.bq ], [ %.promoted1335.i, %bb.bo ]
-  %35 = phi i32 [ %42, %bb.bq ], [ %32, %bb.bo ]
-  %36 = phi i32 [ %43, %bb.bq ], [ %33, %bb.bo ]
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.bq ], [ 0, %bb.bo ] ; 2 uses
   %.1502919.i = phi i32 [ %i.je, %bb.bq ], [ %i.iw, %bb.bo ] ; 2 uses
   %i.iy = phi double [ %i.jd, %bb.bq ], [ %.promoted1335.i, %bb.bo ] ; 2 uses
@@ -581,32 +549,29 @@ bb.bo:                                            ; preds = %bb.bn
 bb.bp:                                            ; preds = %.preheader
   %i.ja = getelementptr inbounds nuw [8 x i8], ptr @tinytens, i64 %indvars.iv.i
   %i.jb = load double, ptr %i.ja, align 8, !tbaa !21
-  %i.jc = fmul double %i.iy, %i.jb                ; 3 uses
-  %37 = bitcast double %i.jc to i64               ; 2 uses
-  %38 = lshr i64 %37, 32
-  %39 = trunc nuw i64 %38 to i32
-  %40 = trunc i64 %37 to i32
+  %i.jc = fmul double %i.iy, %i.jb
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %.preheader
-  %41 = phi double [ %34, %.preheader ], [ %i.jc, %bb.bp ] ; 3 uses
-  %42 = phi i32 [ %35, %.preheader ], [ %40, %bb.bp ] ; 2 uses
-  %43 = phi i32 [ %36, %.preheader ], [ %39, %bb.bp ] ; 3 uses
-  %i.jd = phi double [ %i.iy, %.preheader ], [ %i.jc, %bb.bp ]
+  %i.jd = phi double [ %i.iy, %.preheader ], [ %i.jc, %bb.bp ] ; 4 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %i.je = lshr i32 %.1502919.i, 1                 ; 2 uses
   %.not563.i = icmp eq i32 %i.je, 0
   br i1 %.not563.i, label %bb.br, label %.preheader, !llvm.loop !38
 
 bb.br:                                            ; preds = %bb.bq
-  store double %41, ptr %2, align 8
   %.not562.i = icmp samesign ult i32 %i.iq, 256   ; 2 uses
   %spec.select731.i = select i1 %.not562.i, i32 0, i32 106
+  store double %i.jd, ptr %2, align 8
+  %7 = bitcast double %i.jd to i64                ; 2 uses
+  %8 = lshr i64 %7, 32
+  %9 = trunc nuw i64 %8 to i32                    ; 2 uses
+  %10 = trunc i64 %7 to i32
   br i1 %.not562.i, label %bb.bz, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.jf = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  %i.jg = lshr i32 %43, 20
+  %i.jg = lshr i32 %9, 20
   %i.jh = and i32 %i.jg, 2047                     ; 6 uses
   %i.ji = sub nuw nsw i32 107, %i.jh
   %i.jj = icmp samesign ult i32 %i.jh, 107
@@ -632,22 +597,22 @@ bb.bw:                                            ; preds = %bb.bv
 bb.bx:                                            ; preds = %bb.bv
   %i.jn = sub nuw nsw i32 75, %i.jh
   %i.jo = shl nsw i32 -1, %i.jn
-  %i.jp = and i32 %i.jo, %43
+  %i.jp = and i32 %i.jo, %9
   store i32 %i.jp, ptr %i.jf, align 4, !tbaa !19
   br label %thread-pre-split
 
 bb.by:                                            ; preds = %bb.bt
   %i.jq = shl nsw i32 -1, %i.ji
-  %i.jr = and i32 %i.jq, %42
+  %i.jr = and i32 %i.jq, %10
   store i32 %i.jr, ptr %2, align 8, !tbaa !19
   br label %thread-pre-split
 
-thread-pre-split:                                 ; preds = %bb.bs, %bb.bw, %bb.bx, %bb.by
+thread-pre-split:                                 ; preds = %bb.by, %bb.bx, %bb.bw, %bb.bs
   %.pr = load double, ptr %2, align 8, !tbaa !19
   br label %bb.bz
 
 bb.bz:                                            ; preds = %thread-pre-split, %bb.br
-  %i.js = phi double [ %.pr, %thread-pre-split ], [ %41, %bb.br ]
+  %i.js = phi double [ %.pr, %thread-pre-split ], [ %i.jd, %bb.br ]
   %i.jt = fcmp une double %i.js, 0.000000e+00
   br i1 %i.jt, label %bb.cb, label %bb.ca
 

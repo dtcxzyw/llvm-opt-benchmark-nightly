@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not.i140, label %update_ueid_rnti_counts.exit.thread153, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.cx = tail call noalias dereferenceable_or_null(136) ptr @g_malloc(i64 noundef 136) #8 ; 18 uses
+  %i.cx = tail call noalias dereferenceable_or_null(136) ptr @g_malloc(i64 noundef 136) #8 ; 17 uses
   %.not35.i141 = icmp eq ptr %i.cx, null
   br i1 %.not35.i141, label %update_ueid_rnti_counts.exit.thread153, label %bb.y
 
@@ -231,7 +231,6 @@ bb.y:                                             ; preds = %bb.x
   store i32 0, ptr %i.dj, align 4
   %i.dk = getelementptr i8, ptr %i.cx, i64 128
   store i32 0, ptr %i.dk, align 8
-  store ptr null, ptr %i.cx, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(24) %i.dh, i8 0, i64 24, i1 false)
   %i.dl = load ptr, ptr %i.aw, align 8
   br label %bb.z

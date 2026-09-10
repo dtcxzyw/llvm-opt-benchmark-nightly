@@ -205,7 +205,7 @@ declare void @dissector_delete_uint(ptr noundef, i32 noundef, ptr noundef) local
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc void @dissect_infiniband_common(ptr noundef %0, ptr noundef initializes((284, 296)) %1, ptr noundef %2, i32 noundef range(i32 0, 3) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 79 uses
+  %i.a = alloca i32, align 4                      ; 75 uses
   %4 = alloca %struct.infinibandinfo, align 8     ; 34 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
@@ -426,12 +426,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.el = tail call ptr @proto_tree_add_item(ptr noundef %i.dk, i32 noundef %i.ek, ptr noundef %0, i32 noundef %i.ej, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.em = load i32, ptr @hf_infiniband_reserved7, align 4
   %i.en = tail call ptr @proto_tree_add_item(ptr noundef %i.dk, i32 noundef %i.em, ptr noundef %0, i32 noundef %i.ej, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.eo = add nuw nsw i32 %i.cv, 9                ; 3 uses
-  store i32 %i.eo, ptr %i.a, align 4
+  %i.eo = add nuw nsw i32 %i.cv, 9                ; 2 uses
   %i.ep = load i32, ptr @hf_infiniband_packet_sequence_number, align 4
   %i.eq = getelementptr inbounds nuw i8, ptr %4, i64 28
   %i.er = call ptr @proto_tree_add_item_ret_uint(ptr noundef %i.dk, i32 noundef %i.ep, ptr noundef %0, i32 noundef %i.eo, i32 noundef 3, i32 noundef 0, ptr noundef nonnull %i.eq) ; 0 uses
-  %i.es = add nsw i32 %i.cv, %.0397
+  %i.es = add nuw nsw i32 %i.cv, %.0397
   store i32 %i.es, ptr %i.a, align 4
   %i.et = trunc nuw nsw i32 %.0397 to i16
   %i.eu = sub i16 %.1, %i.et                      ; 17 uses
@@ -686,8 +685,8 @@ bb.af:                                            ; preds = %bb.f
   br label %.critedge
 
 bb.ag:                                            ; preds = %bb.f
-  %i.hl = add nsw i32 %i.eo, %.0397
-  %i.hm = add nsw i32 %i.hl, 7
+  %i.hl = add nuw nsw i32 %i.eo, %.0397
+  %i.hm = add nuw nsw i32 %i.hl, 7
   store i32 %i.hm, ptr %i.a, align 4
   %i.hn = add i16 %i.eu, -16
   %i.ho = zext i16 %i.hn to i32
@@ -718,7 +717,7 @@ bb.ak:                                            ; preds = %bb.f
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.c, %parse_RWH.exit, %bb.g, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj, %bb.ak
-  %i.hr = load i32, ptr %i.a, align 4
+  %i.hr = load i32, ptr %i.a, align 4             ; 5 uses
   %i.hs = call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.hr)
   switch i32 %i.hs, label %bb.ao [
     i32 6, label %bb.al
@@ -728,23 +727,20 @@ bb.ak:                                            ; preds = %bb.f
 
 bb.al:                                            ; preds = %.critedge
   %i.ht = load i32, ptr @hf_infiniband_invariant_crc, align 4
-  %5 = load i32, ptr %i.a, align 4                ; 2 uses
-  %i.hu = call ptr @proto_tree_add_item(ptr noundef %i.k, i32 noundef %i.ht, ptr noundef %0, i32 noundef %5, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %i.hv = add i32 %5, 4
+  %i.hu = call ptr @proto_tree_add_item(ptr noundef %i.k, i32 noundef %i.ht, ptr noundef %0, i32 noundef %i.hr, i32 noundef 4, i32 noundef 0) ; 0 uses
+  %i.hv = add i32 %i.hr, 4
   %i.hw = load i32, ptr @hf_infiniband_variant_crc, align 4
   %i.hx = call ptr @proto_tree_add_item(ptr noundef %i.k, i32 noundef %i.hw, ptr noundef %0, i32 noundef %i.hv, i32 noundef 2, i32 noundef 0) ; 0 uses
   br label %bb.ao
 
 bb.am:                                            ; preds = %.critedge
   %i.hy = load i32, ptr @hf_infiniband_invariant_crc, align 4
-  %6 = load i32, ptr %i.a, align 4
-  %i.hz = call ptr @proto_tree_add_item(ptr noundef %i.k, i32 noundef %i.hy, ptr noundef %0, i32 noundef %6, i32 noundef 4, i32 noundef 0) ; 0 uses
+  %i.hz = call ptr @proto_tree_add_item(ptr noundef %i.k, i32 noundef %i.hy, ptr noundef %0, i32 noundef %i.hr, i32 noundef 4, i32 noundef 0) ; 0 uses
   br label %bb.ao
 
 bb.an:                                            ; preds = %.critedge
   %i.ia = load i32, ptr @hf_infiniband_variant_crc, align 4
-  %7 = load i32, ptr %i.a, align 4
-  %i.ib = call ptr @proto_tree_add_item(ptr noundef %i.k, i32 noundef %i.ia, ptr noundef %0, i32 noundef %7, i32 noundef 2, i32 noundef 0) ; 0 uses
+  %i.ib = call ptr @proto_tree_add_item(ptr noundef %i.k, i32 noundef %i.ia, ptr noundef %0, i32 noundef %i.hr, i32 noundef 2, i32 noundef 0) ; 0 uses
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.critedge, %bb.am, %bb.an, %bb.al

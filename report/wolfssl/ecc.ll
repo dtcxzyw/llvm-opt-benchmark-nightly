@@ -204,139 +204,115 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.as, label %bb.o, label %.thread243
 
 bb.o:                                             ; preds = %bb.n
-  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 6 uses
-  %i.au = load ptr, ptr %i.at, align 8, !tbaa !22
-  %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 6 uses
-  %i.aw = load ptr, ptr %i.av, align 16, !tbaa !22
+  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.au = load ptr, ptr %i.at, align 8, !tbaa !22 ; 6 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %i.aw = load ptr, ptr %i.av, align 16, !tbaa !22 ; 6 uses
   %i.ax = call fastcc i32 @ecc_mont_norm_points(ptr noundef %0, ptr noundef %i.au, ptr noundef %2, ptr noundef %i.aw, ptr noundef %6) ; 2 uses
   %i.ay = icmp eq i32 %i.ax, 0
   br i1 %i.ay, label %bb.p, label %.thread243
 
 bb.p:                                             ; preds = %bb.o
-  %8 = load ptr, ptr %i.at, align 8, !tbaa !22
-  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 5 uses
-  %i.ba = load ptr, ptr %i.az, align 16, !tbaa !22
+  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.ba = load ptr, ptr %i.az, align 16, !tbaa !22 ; 5 uses
   %i.bb = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.bc = call i32 @ecc_projective_dbl_point_safe(ptr noundef %8, ptr noundef %i.ba, ptr poison, ptr noundef %6, i64 noundef %i.bb) ; 2 uses
+  %i.bc = call i32 @ecc_projective_dbl_point_safe(ptr noundef %i.au, ptr noundef %i.ba, ptr poison, ptr noundef %6, i64 noundef %i.bb) ; 2 uses
   %i.bd = icmp eq i32 %i.bc, 0
   br i1 %i.bd, label %bb.q, label %.thread243
 
 bb.q:                                             ; preds = %bb.p
-  %9 = load ptr, ptr %i.at, align 8, !tbaa !22
-  %10 = load ptr, ptr %i.az, align 16, !tbaa !22
-  %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 4 uses
-  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !22
+  %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  %i.bf = load ptr, ptr %i.be, align 8, !tbaa !22 ; 4 uses
   %i.bg = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.bh = call i32 @ecc_projective_add_point_safe(ptr noundef %9, ptr noundef %10, ptr noundef %i.bf, ptr poison, ptr noundef %6, i64 noundef %i.bg, ptr noundef null) ; 2 uses
+  %i.bh = call i32 @ecc_projective_add_point_safe(ptr noundef %i.au, ptr noundef %i.ba, ptr noundef %i.bf, ptr poison, ptr noundef %6, i64 noundef %i.bg, ptr noundef null) ; 2 uses
   %i.bi = icmp eq i32 %i.bh, 0
   br i1 %i.bi, label %bb.r, label %.thread243
 
 bb.r:                                             ; preds = %bb.q
-  %11 = load ptr, ptr %i.av, align 16, !tbaa !22
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 5 uses
-  %i.bk = load ptr, ptr %i.bj, align 16, !tbaa !22
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.a, i64 64
+  %i.bk = load ptr, ptr %i.bj, align 16, !tbaa !22 ; 5 uses
   %i.bl = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.bm = call i32 @ecc_projective_dbl_point_safe(ptr noundef %11, ptr noundef %i.bk, ptr poison, ptr noundef %6, i64 noundef %i.bl) ; 2 uses
+  %i.bm = call i32 @ecc_projective_dbl_point_safe(ptr noundef %i.aw, ptr noundef %i.bk, ptr poison, ptr noundef %6, i64 noundef %i.bl) ; 2 uses
   %i.bn = icmp eq i32 %i.bm, 0
   br i1 %i.bn, label %bb.s, label %.thread243
 
 bb.s:                                             ; preds = %bb.r
-  %12 = load ptr, ptr %i.av, align 16, !tbaa !22
-  %13 = load ptr, ptr %i.bj, align 16, !tbaa !22
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 96 ; 4 uses
-  %i.bp = load ptr, ptr %i.bo, align 16, !tbaa !22
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 96
+  %i.bp = load ptr, ptr %i.bo, align 16, !tbaa !22 ; 4 uses
   %i.bq = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.br = call i32 @ecc_projective_add_point_safe(ptr noundef %12, ptr noundef %13, ptr noundef %i.bp, ptr poison, ptr noundef %6, i64 noundef %i.bq, ptr noundef null) ; 2 uses
+  %i.br = call i32 @ecc_projective_add_point_safe(ptr noundef %i.aw, ptr noundef %i.bk, ptr noundef %i.bp, ptr poison, ptr noundef %6, i64 noundef %i.bq, ptr noundef null) ; 2 uses
   %i.bs = icmp eq i32 %i.br, 0
   br i1 %i.bs, label %bb.t, label %.thread243
 
 bb.t:                                             ; preds = %bb.s
-  %14 = load ptr, ptr %i.at, align 8, !tbaa !22
-  %15 = load ptr, ptr %i.av, align 16, !tbaa !22
   %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !22
   %i.bv = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.bw = call i32 @ecc_projective_add_point_safe(ptr noundef %14, ptr noundef %15, ptr noundef %i.bu, ptr poison, ptr noundef %6, i64 noundef %i.bv, ptr noundef null) ; 2 uses
+  %i.bw = call i32 @ecc_projective_add_point_safe(ptr noundef %i.au, ptr noundef %i.aw, ptr noundef %i.bu, ptr poison, ptr noundef %6, i64 noundef %i.bv, ptr noundef null) ; 2 uses
   %i.bx = icmp eq i32 %i.bw, 0
   br i1 %i.bx, label %bb.u, label %.thread243
 
 bb.u:                                             ; preds = %bb.t
-  %16 = load ptr, ptr %i.at, align 8, !tbaa !22
-  %17 = load ptr, ptr %i.bj, align 16, !tbaa !22
   %i.by = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !22
   %i.ca = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.cb = call i32 @ecc_projective_add_point_safe(ptr noundef %16, ptr noundef %17, ptr noundef %i.bz, ptr poison, ptr noundef %6, i64 noundef %i.ca, ptr noundef null) ; 2 uses
+  %i.cb = call i32 @ecc_projective_add_point_safe(ptr noundef %i.au, ptr noundef %i.bk, ptr noundef %i.bz, ptr poison, ptr noundef %6, i64 noundef %i.ca, ptr noundef null) ; 2 uses
   %i.cc = icmp eq i32 %i.cb, 0
   br i1 %i.cc, label %.preheader.1, label %.thread243
 
 .preheader.1:                                     ; preds = %bb.u
-  %18 = load ptr, ptr %i.at, align 8, !tbaa !22
-  %19 = load ptr, ptr %i.bo, align 16, !tbaa !22
   %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !22
   %i.cf = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.cg = call i32 @ecc_projective_add_point_safe(ptr noundef %18, ptr noundef %19, ptr noundef %i.ce, ptr poison, ptr noundef %6, i64 noundef %i.cf, ptr noundef null) ; 2 uses
+  %i.cg = call i32 @ecc_projective_add_point_safe(ptr noundef %i.au, ptr noundef %i.bp, ptr noundef %i.ce, ptr poison, ptr noundef %6, i64 noundef %i.cf, ptr noundef null) ; 2 uses
   %i.ch = icmp eq i32 %i.cg, 0
   br i1 %i.ch, label %bb.v, label %.thread243
 
 bb.v:                                             ; preds = %.preheader.1
-  %20 = load ptr, ptr %i.az, align 16, !tbaa !22
-  %21 = load ptr, ptr %i.av, align 16, !tbaa !22
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.cj = load ptr, ptr %i.ci, align 16, !tbaa !22
   %i.ck = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.cl = call i32 @ecc_projective_add_point_safe(ptr noundef %20, ptr noundef %21, ptr noundef %i.cj, ptr poison, ptr noundef %6, i64 noundef %i.ck, ptr noundef null) ; 2 uses
+  %i.cl = call i32 @ecc_projective_add_point_safe(ptr noundef %i.ba, ptr noundef %i.aw, ptr noundef %i.cj, ptr poison, ptr noundef %6, i64 noundef %i.ck, ptr noundef null) ; 2 uses
   %i.cm = icmp eq i32 %i.cl, 0
   br i1 %i.cm, label %bb.w, label %.thread243
 
 bb.w:                                             ; preds = %bb.v
-  %22 = load ptr, ptr %i.az, align 16, !tbaa !22
-  %23 = load ptr, ptr %i.bj, align 16, !tbaa !22
   %i.cn = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.co = load ptr, ptr %i.cn, align 16, !tbaa !22
   %i.cp = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.cq = call i32 @ecc_projective_add_point_safe(ptr noundef %22, ptr noundef %23, ptr noundef %i.co, ptr poison, ptr noundef %6, i64 noundef %i.cp, ptr noundef null) ; 2 uses
+  %i.cq = call i32 @ecc_projective_add_point_safe(ptr noundef %i.ba, ptr noundef %i.bk, ptr noundef %i.co, ptr poison, ptr noundef %6, i64 noundef %i.cp, ptr noundef null) ; 2 uses
   %i.cr = icmp eq i32 %i.cq, 0
   br i1 %i.cr, label %.preheader.2, label %.thread243
 
 .preheader.2:                                     ; preds = %bb.w
-  %24 = load ptr, ptr %i.az, align 16, !tbaa !22
-  %25 = load ptr, ptr %i.bo, align 16, !tbaa !22
   %i.cs = getelementptr inbounds nuw i8, ptr %i.a, i64 112
   %i.ct = load ptr, ptr %i.cs, align 16, !tbaa !22
   %i.cu = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.cv = call i32 @ecc_projective_add_point_safe(ptr noundef %24, ptr noundef %25, ptr noundef %i.ct, ptr poison, ptr noundef %6, i64 noundef %i.cu, ptr noundef null) ; 2 uses
+  %i.cv = call i32 @ecc_projective_add_point_safe(ptr noundef %i.ba, ptr noundef %i.bp, ptr noundef %i.ct, ptr poison, ptr noundef %6, i64 noundef %i.cu, ptr noundef null) ; 2 uses
   %i.cw = icmp eq i32 %i.cv, 0
   br i1 %i.cw, label %bb.x, label %.thread243
 
 bb.x:                                             ; preds = %.preheader.2
-  %26 = load ptr, ptr %i.be, align 8, !tbaa !22
-  %27 = load ptr, ptr %i.av, align 16, !tbaa !22
   %i.cx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !22
   %i.cz = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.da = call i32 @ecc_projective_add_point_safe(ptr noundef %26, ptr noundef %27, ptr noundef %i.cy, ptr poison, ptr noundef %6, i64 noundef %i.cz, ptr noundef null) ; 2 uses
+  %i.da = call i32 @ecc_projective_add_point_safe(ptr noundef %i.bf, ptr noundef %i.aw, ptr noundef %i.cy, ptr poison, ptr noundef %6, i64 noundef %i.cz, ptr noundef null) ; 2 uses
   %i.db = icmp eq i32 %i.da, 0
   br i1 %i.db, label %bb.y, label %.thread243
 
 bb.y:                                             ; preds = %bb.x
-  %28 = load ptr, ptr %i.be, align 8, !tbaa !22
-  %29 = load ptr, ptr %i.bj, align 16, !tbaa !22
   %i.dc = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !22
   %i.de = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.df = call i32 @ecc_projective_add_point_safe(ptr noundef %28, ptr noundef %29, ptr noundef %i.dd, ptr poison, ptr noundef %6, i64 noundef %i.de, ptr noundef null) ; 2 uses
+  %i.df = call i32 @ecc_projective_add_point_safe(ptr noundef %i.bf, ptr noundef %i.bk, ptr noundef %i.dd, ptr poison, ptr noundef %6, i64 noundef %i.de, ptr noundef null) ; 2 uses
   %i.dg = icmp eq i32 %i.df, 0
   br i1 %i.dg, label %bb.z, label %.thread243
 
 bb.z:                                             ; preds = %bb.y
-  %30 = load ptr, ptr %i.be, align 8, !tbaa !22
-  %31 = load ptr, ptr %i.bo, align 16, !tbaa !22
   %i.dh = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !22
   %i.dj = load i64, ptr %i.c, align 8, !tbaa !24
-  %i.dk = call i32 @ecc_projective_add_point_safe(ptr noundef %30, ptr noundef %31, ptr noundef %i.di, ptr poison, ptr noundef %6, i64 noundef %i.dj, ptr noundef null) ; 2 uses
+  %i.dk = call i32 @ecc_projective_add_point_safe(ptr noundef %i.bf, ptr noundef %i.bp, ptr noundef %i.di, ptr poison, ptr noundef %6, i64 noundef %i.dj, ptr noundef null) ; 2 uses
   %i.dl = icmp eq i32 %i.dk, 0
   br i1 %i.dl, label %bb.aa, label %.thread243
 
@@ -490,22 +466,20 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.an
   %i.fw = zext nneg i32 %i.fu to i64
-  %i.fx = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.fw ; 3 uses
-  %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !22
+  %i.fx = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.fw
+  %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !22 ; 3 uses
   %i.fz = call i32 @sp_copy(ptr noundef %i.fy, ptr noundef %4) #15 ; 2 uses
   %i.ga = icmp eq i32 %i.fz, 0
   br i1 %i.ga, label %bb.ap, label %.thread243
 
 bb.ap:                                            ; preds = %bb.ao
-  %32 = load ptr, ptr %i.fx, align 8, !tbaa !22
-  %i.gb = getelementptr inbounds nuw i8, ptr %32, i64 1040
+  %i.gb = getelementptr inbounds nuw i8, ptr %i.fy, i64 1040
   %i.gc = call i32 @sp_copy(ptr noundef nonnull %i.gb, ptr noundef nonnull %i.dq) #15 ; 2 uses
   %i.gd = icmp eq i32 %i.gc, 0
   br i1 %i.gd, label %bb.aq, label %.thread243
 
 bb.aq:                                            ; preds = %bb.ap
-  %33 = load ptr, ptr %i.fx, align 8, !tbaa !22
-  %i.ge = getelementptr inbounds nuw i8, ptr %33, i64 2080
+  %i.ge = getelementptr inbounds nuw i8, ptr %i.fy, i64 2080
   %i.gf = call i32 @sp_copy(ptr noundef nonnull %i.ge, ptr noundef nonnull %i.dr) #15
   br label %.outer.backedge
 

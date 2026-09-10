@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc { i64, ptr } @_RNCNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB7_9FormatterNtB9_13DefaultCustomE6format0Bd_(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %0, i32 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc { i64, ptr } @_RNCNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB7_9FormatterNtB9_13DefaultCustomE6format0Bd_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(40) %0, i32 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
@@ -607,7 +607,7 @@ bb.n:                                             ; preds = %bb.l
 }
 
 ; Function Attrs: noinline nonlazybind uwtable
-define { i64, ptr } @_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE6formatBb_(ptr noalias nofree noundef align 8 dereferenceable(40) %0) unnamed_addr #5 personality ptr @rust_eh_personality {
+define { i64, ptr } @_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE6formatBb_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -618,8 +618,8 @@ bb.a:
   %i.g = alloca [4 x i8], align 4                 ; 4 uses
   %i.h = alloca [8 x i8], align 8                 ; 10 uses
   %i.i = alloca [24 x i8], align 8                ; 4 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 9 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   %i.l = load i64, ptr %i.k, align 8, !noundef !6 ; 2 uses
   %i.m = icmp eq i64 %i.l, 0
   br i1 %i.m, label %.loopexit, label %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit.lr.ph
@@ -630,8 +630,8 @@ _RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13Defa
   br label %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit
 
 _RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit: ; preds = %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit.lr.ph, %.backedge
-  %i.p = phi i64 [ %i.l, %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit.lr.ph ], [ %i.cv, %.backedge ] ; 2 uses
-  %.val66 = load ptr, ptr %i.j, align 8, !nonnull !6, !noundef !6 ; 3 uses
+  %i.p = phi i64 [ %i.l, %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit.lr.ph ], [ %i.cv, %.backedge ] ; 3 uses
+  %.val66 = load ptr, ptr %i.j, align 8, !nonnull !6, !noundef !6 ; 4 uses
   %i.q = load i8, ptr %.val66, align 1, !noundef !6 ; 3 uses
   %i.r = icmp eq i8 %i.q, 37
   br i1 %i.r, label %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE8bump_fmtBb_.exit, label %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit70
@@ -966,8 +966,8 @@ bb.aj:                                            ; preds = %_RNvMsf_NtNtCsa9sSW
   %.pr = load i64, ptr %i.k, align 8
   br label %.backedge
 
-.backedge:                                        ; preds = %.backedgethread-pre-split, %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE8bump_fmtBb_.exit77
-  %i.cv = phi i64 [ %.pr, %.backedgethread-pre-split ], [ %5, %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE8bump_fmtBb_.exit77 ] ; 2 uses
+.backedge:                                        ; preds = %.backedgethread-pre-split, %.thread253
+  %i.cv = phi i64 [ %.pr, %.backedgethread-pre-split ], [ %1, %.thread253 ] ; 2 uses
   %i.cw = icmp eq i64 %i.cv, 0
   br i1 %i.cw, label %.loopexit, label %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit
 
@@ -1229,21 +1229,10 @@ bb.bh:                                            ; preds = %bb.ay
   store i8 %i.q, ptr %i.fz, align 1, !noalias !2399
   %i.ga = add i16 %i.fw, 1
   store i16 %i.ga, ptr %i.fx, align 8, !alias.scope !2399
-  call void @llvm.experimental.noalias.scope.decl(metadata !2406)
-  %1 = load i64, ptr %i.k, align 8, !alias.scope !2406, !noundef !6 ; 2 uses
-  %2 = icmp eq i64 %1, 0
-  br i1 %2, label %3, label %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE8bump_fmtBb_.exit77, !prof !14
-
-3:                                                ; preds = %.thread253
-  call void @_RNvNtNtCs3oUPovFnLWP_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #24, !noalias !2406
-  unreachable
-
-_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE8bump_fmtBb_.exit77: ; preds = %.thread253
-  %4 = load ptr, ptr %i.j, align 8, !alias.scope !2406, !nonnull !6, !noundef !6
-  %5 = add i64 %1, -1                             ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 1
-  store ptr %6, ptr %i.j, align 8, !alias.scope !2406, !captures !20
-  store i64 %5, ptr %i.k, align 8, !alias.scope !2406
+  %1 = add i64 %i.p, -1                           ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.val66, i64 1
+  store ptr %2, ptr %i.j, align 8, !alias.scope !2406, !captures !20
+  store i64 %1, ptr %i.k, align 8, !alias.scope !2406
   br label %.backedge
 
 .loopexit.split.loop.exit168:                     ; preds = %_RINvMs4_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedWriter23if_will_fill_then_flushjEBa_.exit.i

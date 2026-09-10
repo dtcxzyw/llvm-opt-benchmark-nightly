@@ -205,15 +205,19 @@ _ZN4pbrt7Sampler16StartPixelSampleENS_6Point2IiEEii.exit417: ; preds = %bb.eb
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.bks = getelementptr inbounds nuw [24 x i8], ptr %15, i64 %indvars.iv1250 ; 3 uses
-  %i.bkt = getelementptr inbounds nuw i8, ptr %i.bks, i64 8 ; 2 uses
-  %i.bku = load ptr, ptr %i.bkt, align 8, !tbaa !180
-  %i.bkv = load ptr, ptr %i.bks, align 8, !tbaa !182 ; 2 uses
+  %i.bks = getelementptr inbounds nuw [24 x i8], ptr %15, i64 %indvars.iv1250 ; 2 uses
+  %i.bkt = getelementptr inbounds nuw i8, ptr %i.bks, i64 8
+  %i.bku = load ptr, ptr %i.bkt, align 8, !tbaa !180 ; 2 uses
+  %i.bkv = load ptr, ptr %i.bks, align 8, !tbaa !182 ; 3 uses
   %.not1192 = icmp eq ptr %i.bku, %i.bkv
   br i1 %.not1192, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4pbrt7Sampler16StartPixelSampleENS_6Point2IiEEii.exit417
   %i.bkw = getelementptr inbounds nuw [24 x i8], ptr %14, i64 %indvars.iv1250
+  %23 = ptrtoint ptr %i.bku to i64
+  %24 = ptrtoint ptr %i.bkv to i64
+  %25 = sub i64 %23, %24
+  %26 = ashr exact i64 %25, 3
   br label %bb.ed
 
 ._crit_edge:                                      ; preds = %_ZN7testing15AssertionResultD2Ev.exit456, %_ZN4pbrt7Sampler16StartPixelSampleENS_6Point2IiEEii.exit417
@@ -233,9 +237,8 @@ bb.ec:                                            ; preds = %bb.eb
 
 bb.ed:                                            ; preds = %.lr.ph, %_ZN7testing15AssertionResultD2Ev.exit456
   %indvars.iv1247 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next1248, %_ZN7testing15AssertionResultD2Ev.exit456 ] ; 3 uses
-  %23 = phi ptr [ %i.bkv, %.lr.ph ], [ %25, %_ZN7testing15AssertionResultD2Ev.exit456 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #24
-  %i.bkz = getelementptr inbounds nuw [8 x i8], ptr %23, i64 %indvars.iv1247 ; 2 uses
+  %i.bkz = getelementptr inbounds nuw [8 x i8], ptr %i.bkv, i64 %indvars.iv1247 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #24
   %i.bla = load i64, ptr %.sroa.0888.01189, align 8, !tbaa !20 ; 2 uses
   %i.blb = and i64 %i.bla, 144115188075855871
@@ -638,13 +641,7 @@ bb.jb:                                            ; preds = %bb.iy
 _ZN7testing15AssertionResultD2Ev.exit456:         ; preds = %bb.ix, %.noexc.i.i452, %bb.iz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i454
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #24
   %indvars.iv.next1248 = add nuw nsw i64 %indvars.iv1247, 1 ; 2 uses
-  %24 = load ptr, ptr %i.bkt, align 8, !tbaa !180
-  %25 = load ptr, ptr %i.bks, align 8, !tbaa !182 ; 2 uses
-  %26 = ptrtoint ptr %24 to i64
-  %27 = ptrtoint ptr %25 to i64
-  %28 = sub i64 %26, %27
-  %29 = ashr exact i64 %28, 3
-  %i.dal = icmp ugt i64 %29, %indvars.iv.next1248
+  %i.dal = icmp ugt i64 %26, %indvars.iv.next1248
   br i1 %i.dal, label %bb.ed, label %._crit_edge, !llvm.loop !178
 
 _ZN7testing15AssertionResultD2Ev.exit450:         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i448, %bb.iu, %.noexc.i.i446, %_ZN7testing7MessageD2Ev.exit444, %.body536

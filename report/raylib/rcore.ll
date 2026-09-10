@@ -205,7 +205,7 @@ bb.a:
   %i.f = alloca i64, align 8                      ; 5 uses
   %i.g = alloca i64, align 8                      ; 5 uses
   %i.h = alloca i64, align 8                      ; 5 uses
-  %4 = alloca %struct.sinfl, align 8              ; 25 uses
+  %4 = alloca %struct.sinfl, align 8              ; 24 uses
   %i.i = alloca [320 x i8], align 16              ; 8 uses
   %i.j = alloca [128 x i32], align 16             ; 5 uses
   %i.k = alloca [19 x i8], align 16               ; 5 uses
@@ -222,7 +222,7 @@ bb.a:
   store ptr %i.p, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 28 ; 6 uses
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 19 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 20 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 19 uses
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 5364 ; 4 uses
   %i.w = ptrtoint ptr %0 to i64                   ; 8 uses
   %i.x = ptrtoint ptr %i.n to i64
@@ -402,8 +402,7 @@ bb.m:                                             ; preds = %bb.l
   %i.db = sub nsw i32 63, %i.cw
   %i.dc = ashr i32 %i.db, 3
   %i.dd = sext i32 %i.dc to i64
-  %i.de = getelementptr inbounds i8, ptr %i.cr, i64 %i.dd ; 2 uses
-  store ptr %i.de, ptr %4, align 8
+  %i.de = getelementptr inbounds i8, ptr %i.cr, i64 %i.dd
   %i.df = or i32 %i.cw, 56
   br label %sinfl_refill.exit182
 
@@ -423,7 +422,8 @@ bb.n:                                             ; preds = %bb.l
   %i.dn = zext nneg i32 %i.dg to i64
   %i.do = shl i64 %.0..0..0..0..0..0..i180, %i.dn
   %i.dp = load i64, ptr %i.t, align 8
-  %i.dq = or i64 %i.dp, %i.do
+  %i.dq = or i64 %i.dp, %i.do                     ; 2 uses
+  store i64 %i.dq, ptr %i.t, align 8
   %i.dr = getelementptr inbounds i8, ptr %i.cr, i64 %i.dm ; 2 uses
   store ptr %i.dr, ptr %4, align 8
   %i.ds = shl i32 %i.dl, 3
@@ -437,10 +437,8 @@ sinfl_refill.exit182:                             ; preds = %bb.m, %bb.n
   %.val.i183 = phi i64 [ %i.da, %bb.m ], [ %i.dq, %bb.n ] ; 4 uses
   %i.dv = lshr i64 %.val.i183, 10
   %i.dw = and i64 %i.dv, 15
-  %i.dx = lshr i64 %.val.i183, 14                 ; 2 uses
-  store i64 %i.dx, ptr %i.t, align 8
-  %i.dy = add nsw i32 %i.du, -14                  ; 2 uses
-  store i32 %i.dy, ptr %i.u, align 8
+  %i.dx = lshr i64 %.val.i183, 14
+  %i.dy = add nsw i32 %i.du, -14
   %i.dz = add nuw nsw i64 %i.dw, 3
   br label %bb.o
 

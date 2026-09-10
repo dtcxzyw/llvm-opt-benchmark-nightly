@@ -204,16 +204,13 @@ bb.a:
   store ptr null, ptr %i.a, align 8, !tbaa !24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 6, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
-  invoke void @_ZN7rocksdb4port7RWMutex9WriteLockEv(ptr noundef nonnull align 8 dereferenceable(56) %i.b)
-          to label %_ZN7rocksdb9WriteLockC2EPNS_4port7RWMutexE.exit unwind label %18
-
-_ZN7rocksdb9WriteLockC2EPNS_4port7RWMutexE.exit:  ; preds = %bb.a
+  tail call void @_ZN7rocksdb4port7RWMutex9WriteLockEv(ptr noundef nonnull align 8 dereferenceable(56) %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
   %17 = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
   invoke void @_ZNK7rocksdb21PersistentCacheConfig16ValidateSettingsEv(ptr dead_on_unwind nonnull writable sret(%"class.rocksdb::Status") align 8 %6, ptr noundef nonnull align 8 dereferenceable(121) %17)
           to label %bb.b unwind label %bb.f
 
-bb.b:                                             ; preds = %_ZN7rocksdb9WriteLockC2EPNS_4port7RWMutexE.exit
+bb.b:                                             ; preds = %bb.a
   %i.c = load <4 x i8>, ptr %6, align 8, !tbaa !25
   store <4 x i8> %i.c, ptr %5, align 8, !tbaa !25
   store <4 x i8> zeroinitializer, ptr %6, align 8, !tbaa !25
@@ -280,12 +277,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.v, ptr %i.p, align 8, !tbaa !41
   br label %_ZN7rocksdb6StatusC2EOS0_.exit
 
-18:                                               ; preds = %bb.a
-  %19 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZN7rocksdb9WriteLockD2Ev.exit92
-
-bb.f:                                             ; preds = %_ZN7rocksdb9WriteLockC2EPNS_4port7RWMutexE.exit
+bb.f:                                             ; preds = %bb.a
   %i.w = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
@@ -688,8 +680,7 @@ bb.az:                                            ; preds = %bb.ay
   call void @__clang_call_terminate(ptr %i.gl) #22
   unreachable
 
-_ZN7rocksdb9WriteLockD2Ev.exit92:                 ; preds = %bb.ay, %18
-  %.pn18.pn = phi { ptr, i32 } [ %19, %18 ], [ %.pn18, %bb.ay ]
+_ZN7rocksdb9WriteLockD2Ev.exit92:                 ; preds = %bb.ay
   %i.gm = load ptr, ptr %i.a, align 8, !tbaa !41  ; 2 uses
   %.not.i.i93 = icmp eq ptr %i.gm, null
   br i1 %.not.i.i93, label %_ZN7rocksdb6StatusD2Ev.exit95, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i94
@@ -700,7 +691,7 @@ _ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_E
 
 _ZN7rocksdb6StatusD2Ev.exit95:                    ; preds = %_ZN7rocksdb9WriteLockD2Ev.exit92, %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i94
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
-  resume { ptr, i32 } %.pn18.pn
+  resume { ptr, i32 } %.pn18
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)

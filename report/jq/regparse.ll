@@ -205,7 +205,7 @@ define internal fastcc i32 @fetch_token(ptr nofree noundef nonnull %0, ptr nofre
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 14 uses
-  %i.c = alloca ptr, align 8                      ; 75 uses
+  %i.c = alloca ptr, align 8                      ; 70 uses
   %i.d = alloca ptr, align 8                      ; 3 uses
   %i.e = alloca ptr, align 8                      ; 4 uses
   %i.f = alloca i32, align 4                      ; 2 uses
@@ -320,11 +320,7 @@ bb.i:                                             ; preds = %bb.g, %bb.a
   %i.az = getelementptr inbounds nuw i8, ptr %i.p, i64 88 ; 5 uses
   br label %bb.j
 
-._crit_edge.loopexit:                             ; preds = %.backedge
-  store ptr %.lcssa11851211, ptr %i.c, align 8
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.i
+._crit_edge:                                      ; preds = %.backedge, %bb.i
   store i32 0, ptr %0, align 8, !tbaa !142
   br label %.thread750
 
@@ -338,7 +334,7 @@ bb.j:                                             ; preds = %.lr.ph943, %.backed
   %i.bd = load ptr, ptr %i.p, align 8, !tbaa !84
   %i.be = tail call i32 %i.bd(ptr noundef %i.ba) #26
   %i.bf = sext i32 %i.be to i64
-  %i.bg = getelementptr inbounds i8, ptr %i.ba, i64 %i.bf ; 40 uses
+  %i.bg = getelementptr inbounds i8, ptr %i.ba, i64 %i.bf ; 39 uses
   %i.bh = load i32, ptr %i.aq, align 4, !tbaa !144
   %i.bi = icmp eq i32 %i.bc, %i.bh
   br i1 %i.bi, label %bb.k, label %bb.gb
@@ -350,7 +346,6 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not637, label %bb.l, label %bb.gb
 
 bb.l:                                             ; preds = %bb.k
-  store ptr %i.bg, ptr %i.c, align 8
   %i.bl = icmp ult ptr %i.bg, %2
   br i1 %i.bl, label %bb.m, label %.thread750
 
@@ -753,9 +748,9 @@ bb.gx:                                            ; preds = %bb.gw
   %i.rx = load ptr, ptr %i.p, align 8, !tbaa !84
   %i.ry = tail call i32 %i.rx(ptr noundef %i.bg) #26
   %i.rz = sext i32 %i.ry to i64
-  %i.sa = getelementptr inbounds i8, ptr %i.bg, i64 %i.rz ; 20 uses
+  %i.sa = getelementptr inbounds i8, ptr %i.bg, i64 %i.rz ; 18 uses
   %i.sb = icmp ult ptr %i.sa, %2
-  br i1 %i.sb, label %bb.gy, label %.loopexit777.loopexit
+  br i1 %i.sb, label %bb.gy, label %.loopexit777
 
 bb.gy:                                            ; preds = %bb.gx
   %i.sc = load ptr, ptr %i.ap, align 8, !tbaa !83
@@ -771,7 +766,7 @@ bb.gz:                                            ; preds = %bb.gy
   %i.sj = sext i32 %i.si to i64
   %i.sk = getelementptr inbounds i8, ptr %i.sa, i64 %i.sj ; 2 uses
   %i.sl = icmp ult ptr %i.sk, %2
-  br i1 %i.sl, label %.lr.ph, label %.thread750.loopexit1100
+  br i1 %i.sl, label %.lr.ph, label %.thread750
 
 .lr.ph:                                           ; preds = %bb.gz, %bb.hd
   %i.sm = phi ptr [ %i.td, %bb.hd ], [ %i.sk, %bb.gz ] ; 3 uses
@@ -803,9 +798,9 @@ bb.hc:                                            ; preds = %.lr.ph
   br i1 %i.tc, label %.backedge, label %bb.hd
 
 bb.hd:                                            ; preds = %bb.hc, %bb.hb, %bb.ha
-  %i.td = phi ptr [ %i.ss, %bb.hc ], [ %i.tb, %bb.hb ], [ %i.ss, %bb.ha ] ; 3 uses
+  %i.td = phi ptr [ %i.ss, %bb.hc ], [ %i.tb, %bb.hb ], [ %i.ss, %bb.ha ] ; 2 uses
   %i.te = icmp ult ptr %i.td, %2
-  br i1 %i.te, label %.lr.ph, label %.thread750.loopexit1098
+  br i1 %i.te, label %.lr.ph, label %.thread750
 
 bb.he:                                            ; preds = %bb.gy
   store ptr %i.sa, ptr %i.c, align 8
@@ -1008,20 +1003,16 @@ bb.hx:                                            ; preds = %bb.hw
   %i.vs = sext i32 %i.vr to i64
   %i.vt = getelementptr inbounds i8, ptr %i.vm, i64 %i.vs ; 3 uses
   store ptr %i.vt, ptr %i.c, align 8, !tbaa !131
-  switch i32 %i.vp, label %4 [
+  switch i32 %i.vp, label %.loopexit777.loopexit [
     i32 61, label %bb.eg
     i32 62, label %bb.fd
   ]
 
-4:                                                ; preds = %bb.hx
+.loopexit777.loopexit:                            ; preds = %bb.hx
   store ptr %i.bg, ptr %i.c, align 8, !tbaa !131
   br label %.loopexit776
 
-.loopexit777.loopexit:                            ; preds = %bb.gx
-  store ptr %i.sa, ptr %i.c, align 8
-  br label %.loopexit777
-
-.loopexit777:                                     ; preds = %.loopexit777.loopexit, %.critedge734.thread766, %bb.hv, %bb.hu
+.loopexit777:                                     ; preds = %bb.gx, %.critedge734.thread766, %bb.hv, %bb.hu
   store ptr %i.bg, ptr %i.c, align 8, !tbaa !131
   br label %.loopexit776
 
@@ -1029,7 +1020,7 @@ bb.hx:                                            ; preds = %bb.hw
   store ptr %i.bg, ptr %i.c, align 8
   br label %.loopexit776
 
-.loopexit776:                                     ; preds = %.loopexit776.loopexit, %.critedge734, %.loopexit777, %4
+.loopexit776:                                     ; preds = %.loopexit776.loopexit, %.critedge734, %.loopexit777, %.loopexit777.loopexit
   %i.vu = load i32, ptr %i.r, align 4, !tbaa !147
   %i.vv = and i32 %i.vu, 4096
   %.not719 = icmp eq i32 %i.vv, 0
@@ -1149,9 +1140,9 @@ bb.io:                                            ; preds = %.preheader771
   br i1 %.not696, label %.preheader771, label %.backedge, !llvm.loop !215
 
 .backedge:                                        ; preds = %.preheader771, %bb.io, %bb.hc, %bb.ip
-  %.lcssa11851211 = phi ptr [ %i.ss, %bb.hc ], [ %i.bg, %bb.ip ], [ %i.xa, %bb.io ], [ %i.wu, %.preheader771 ] ; 3 uses
+  %.lcssa11851211 = phi ptr [ %i.ss, %bb.hc ], [ %i.bg, %bb.ip ], [ %i.xa, %bb.io ], [ %i.wu, %.preheader771 ] ; 2 uses
   %i.xd = icmp ult ptr %.lcssa11851211, %2
-  br i1 %i.xd, label %bb.j, label %._crit_edge.loopexit
+  br i1 %i.xd, label %bb.j, label %._crit_edge
 
 bb.ip:                                            ; preds = %bb.gj, %bb.gj, %bb.gj, %bb.gj, %bb.gj
   %i.xe = load i32, ptr %3, align 8, !tbaa !123
@@ -1174,16 +1165,8 @@ bb.ip:                                            ; preds = %bb.gj, %bb.gj, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #26
   br label %.thread750
 
-.thread750.loopexit1098:                          ; preds = %bb.hd
-  store ptr %i.td, ptr %i.c, align 8
-  br label %.thread750
-
-.thread750.loopexit1100:                          ; preds = %bb.gz
-  store ptr %i.sa, ptr %i.c, align 8
-  br label %.thread750
-
-.thread750:                                       ; preds = %bb.ew, %bb.ev, %.thread750.loopexit1100, %.thread750.loopexit1098, %bb.es, %.critedge734.thread, %get_next_code_point.exit.thread, %bb.hw, %bb.gp, %.critedge732, %bb.ff, %bb.fd, %bb.ep, %bb.eq, %backref_rel_to_abs.exit, %bb.ej, %bb.eh, %bb.ea, %bb.du, %bb.dv, %bb.dm, %bb.di, %bb.dd, %bb.dc, %bb.cz, %bb.cx, %bb.cu, %bb.cr, %bb.co, %bb.ce, %bb.ae, %bb.l, %get_next_code_point.exit, %.thread747, %backref_rel_to_abs.exit739.thread, %._crit_edge
-  %.5 = phi i32 [ %i.xh, %.thread747 ], [ %.0.i741755, %.critedge732 ], [ %i.rl, %bb.gp ], [ %.4582.ph, %.critedge734.thread ], [ -200, %bb.ea ], [ %i.ls, %bb.eh ], [ -208, %bb.ej ], [ -208, %backref_rel_to_abs.exit ], [ -118, %bb.hw ], [ -208, %bb.ep ], [ %i.ol, %bb.fd ], [ -218, %backref_rel_to_abs.exit739.thread ], [ -118, %.thread750.loopexit1100 ], [ -400, %get_next_code_point.exit.thread ], [ -104, %bb.l ], [ %i.dp, %bb.ae ], [ -213, %bb.ce ], [ %i.gv, %bb.co ], [ -400, %bb.cz ], [ %i.ip, %bb.dc ], [ -212, %bb.cx ], [ -212, %bb.cr ], [ %i.hp, %bb.cu ], [ -400, %bb.dd ], [ %i.iu, %bb.di ], [ -208, %bb.du ], [ %phi.call, %bb.dm ], [ %.0.i, %get_next_code_point.exit ], [ 0, %._crit_edge ], [ -208, %bb.dv ], [ -208, %bb.eq ], [ -218, %bb.ff ], [ -217, %bb.es ], [ -118, %.thread750.loopexit1098 ], [ -208, %bb.ev ], [ -208, %bb.ew ]
+.thread750:                                       ; preds = %bb.gz, %bb.hd, %bb.ew, %bb.ev, %bb.es, %.critedge734.thread, %get_next_code_point.exit.thread, %bb.hw, %bb.gp, %.critedge732, %bb.ff, %bb.fd, %bb.ep, %bb.eq, %backref_rel_to_abs.exit, %bb.ej, %bb.eh, %bb.ea, %bb.du, %bb.dv, %bb.dm, %bb.di, %bb.dd, %bb.dc, %bb.cz, %bb.cx, %bb.cu, %bb.cr, %bb.co, %bb.ce, %bb.ae, %bb.l, %get_next_code_point.exit, %.thread747, %backref_rel_to_abs.exit739.thread, %._crit_edge
+  %.5 = phi i32 [ %i.xh, %.thread747 ], [ %.0.i741755, %.critedge732 ], [ %i.rl, %bb.gp ], [ %.4582.ph, %.critedge734.thread ], [ -200, %bb.ea ], [ %i.ls, %bb.eh ], [ -208, %bb.ej ], [ -208, %backref_rel_to_abs.exit ], [ -118, %bb.hw ], [ -208, %bb.ep ], [ %i.ol, %bb.fd ], [ -218, %backref_rel_to_abs.exit739.thread ], [ -118, %bb.hd ], [ -400, %get_next_code_point.exit.thread ], [ -104, %bb.l ], [ %i.dp, %bb.ae ], [ -213, %bb.ce ], [ %i.gv, %bb.co ], [ -400, %bb.cz ], [ %i.ip, %bb.dc ], [ -212, %bb.cx ], [ -212, %bb.cr ], [ %i.hp, %bb.cu ], [ -400, %bb.dd ], [ %i.iu, %bb.di ], [ -208, %bb.du ], [ %phi.call, %bb.dm ], [ %.0.i, %get_next_code_point.exit ], [ 0, %._crit_edge ], [ -208, %bb.dv ], [ -208, %bb.eq ], [ -218, %bb.ff ], [ -217, %bb.es ], [ -208, %bb.ew ], [ -208, %bb.ev ], [ -118, %bb.gz ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
   ret i32 %.5

@@ -204,15 +204,15 @@ bb.a:
   %i.y = alloca [8 x i8], align 8                 ; 4 uses
   %i.z = alloca [8 x i8], align 8                 ; 6 uses
   %.sroa.9.i = alloca [16 x i8], align 8          ; 4 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 6 uses
-  %i.ab = load ptr, ptr %i.aa, align 8, !noundef !4 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 5 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !noundef !4 ; 3 uses
   %.not = icmp eq ptr %i.ab, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.ac = atomicrmw add ptr %i.ab, i64 1 monotonic, align 8
   %i.ad = icmp slt i64 %i.ac, 0
-  br i1 %i.ad, label %bb.ax, label %1
+  br i1 %i.ad, label %bb.ax, label %bb.aw
 
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !903)
@@ -615,15 +615,11 @@ _RNvMNtNtCsefoF4u9kbII_5wasmi6module7builderNtB2_13ModuleBuilder13finish_header.
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i)
   br label %bb.aw
 
-bb.aw:                                            ; preds = %1, %_RNvMNtNtCsefoF4u9kbII_5wasmi6module7builderNtB2_13ModuleBuilder13finish_header.exit
-  %.pn = phi { i64, ptr } [ { i64 0, ptr poison }, %1 ], [ %i.fx, %_RNvMNtNtCsefoF4u9kbII_5wasmi6module7builderNtB2_13ModuleBuilder13finish_header.exit ]
-  %.pn2 = phi ptr [ %2, %1 ], [ %.sroa.3.0.i, %_RNvMNtNtCsefoF4u9kbII_5wasmi6module7builderNtB2_13ModuleBuilder13finish_header.exit ]
+bb.aw:                                            ; preds = %bb.b, %_RNvMNtNtCsefoF4u9kbII_5wasmi6module7builderNtB2_13ModuleBuilder13finish_header.exit
+  %.pn = phi { i64, ptr } [ %i.fx, %_RNvMNtNtCsefoF4u9kbII_5wasmi6module7builderNtB2_13ModuleBuilder13finish_header.exit ], [ { i64 0, ptr poison }, %bb.b ]
+  %.pn2 = phi ptr [ %.sroa.3.0.i, %_RNvMNtNtCsefoF4u9kbII_5wasmi6module7builderNtB2_13ModuleBuilder13finish_header.exit ], [ %i.ab, %bb.b ]
   %.merged = insertvalue { i64, ptr } %.pn, ptr %.pn2, 1
   ret { i64, ptr } %.merged
-
-1:                                                ; preds = %bb.b
-  %2 = load ptr, ptr %i.aa, align 8, !nonnull !4, !noundef !4
-  br label %bb.aw
 
 bb.ax:                                            ; preds = %bb.b
   tail call void @llvm.trap()

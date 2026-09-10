@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc ptr @print(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #8 {
 bb.a:
-  %2 = alloca [1 x %struct.printbuffer], align 16 ; 15 uses
+  %2 = alloca [1 x %struct.printbuffer], align 16 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
@@ -218,24 +218,24 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) @global_hooks, i64 24, i1 false), !tbaa.struct !42
   %i.g = icmp eq ptr %i.c, null
-  br i1 %i.g, label %bb.h, label %bb.b
+  br i1 %i.g, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.h = call fastcc i32 @print_value(ptr noundef %0, ptr noundef %2)
   %.not = icmp eq i32 %i.h, 0
+  %.pre = load ptr, ptr %2, align 16, !tbaa !56   ; 6 uses
   br i1 %.not, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = load ptr, ptr %2, align 16, !tbaa !56      ; 3 uses
-  %i.i = icmp eq ptr %3, null
+  %i.i = icmp eq ptr %.pre, null
   br i1 %i.i, label %update_offset.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.k = load i64, ptr %i.j, align 16, !tbaa !59  ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 %i.k
-  %4 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.l) #29
-  %i.m = add i64 %4, %i.k
+  %i.l = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.k
+  %3 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.l) #29
+  %i.m = add i64 %3, %i.k
   store i64 %i.m, ptr %i.j, align 16, !tbaa !59
   br label %update_offset.exit
 
@@ -248,46 +248,39 @@ bb.e:                                             ; preds = %update_offset.exit
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.p = load i64, ptr %i.o, align 16, !tbaa !59
   %i.q = add i64 %i.p, 1
-  %5 = call ptr %i.n(ptr noundef %3, i64 noundef %i.q) #28 ; 2 uses
-  %i.r = icmp eq ptr %5, null
+  %4 = tail call ptr %i.n(ptr noundef %.pre, i64 noundef %i.q) #28 ; 2 uses
+  %i.r = icmp eq ptr %4, null
   br i1 %i.r, label %bb.h, label %bb.j
 
 bb.f:                                             ; preds = %update_offset.exit
   %i.s = load ptr, ptr @global_hooks, align 8, !tbaa !31
-  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
-  %i.u = load i64, ptr %i.t, align 16, !tbaa !59
-  %i.v = add i64 %i.u, 1
-  %6 = call ptr %i.s(i64 noundef %i.v) #28        ; 4 uses
-  %i.w = icmp eq ptr %6, null
+  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.u = load i64, ptr %i.t, align 16, !tbaa !59  ; 2 uses
+  %i.v = add i64 %i.u, 1                          ; 2 uses
+  %5 = tail call ptr %i.s(i64 noundef %i.v) #28   ; 4 uses
+  %i.w = icmp eq ptr %5, null
   br i1 %i.w, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %7 = load ptr, ptr %2, align 16, !tbaa !56
   %i.x = load i64, ptr %i.d, align 8, !tbaa !57
-  %8 = load i64, ptr %i.t, align 16, !tbaa !59
-  %9 = add i64 %8, 1
-  %10 = call i64 @llvm.umin.i64(i64 %i.x, i64 %9)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %6, ptr align 1 %7, i64 %10, i1 false)
-  %11 = load i64, ptr %i.t, align 16, !tbaa !59
-  %i.y = getelementptr inbounds nuw i8, ptr %6, i64 %11
+  %6 = tail call i64 @llvm.umin.i64(i64 %i.x, i64 %i.v)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %5, ptr align 1 %.pre, i64 %6, i1 false)
+  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 %i.u
   store i8 0, ptr %i.y, align 1, !tbaa !44
-  %12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !32
-  %13 = load ptr, ptr %2, align 16, !tbaa !56
-  call void %12(ptr noundef %13) #28
-  br label %bb.j
+  br label %bb.i
 
-bb.h:                                             ; preds = %bb.f, %bb.e, %bb.b, %bb.a
-  %14 = load ptr, ptr %2, align 16, !tbaa !56     ; 2 uses
-  %.not25 = icmp eq ptr %14, null
+bb.h:                                             ; preds = %bb.b, %bb.f, %bb.e
+  %.not25 = icmp eq ptr %.pre, null
   br i1 %.not25, label %bb.j, label %bb.i
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %bb.h, %bb.g
+  %.017.ph = phi ptr [ %5, %bb.g ], [ null, %bb.h ]
   %i.z = load ptr, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !32
-  call void %i.z(ptr noundef nonnull %14) #28
+  tail call void %i.z(ptr noundef %.pre) #28
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.g, %bb.e, %bb.i, %bb.h
-  %.017 = phi ptr [ null, %bb.i ], [ null, %bb.h ], [ %6, %bb.g ], [ %5, %bb.e ]
+bb.j:                                             ; preds = %bb.i, %bb.e, %bb.a, %bb.h
+  %.017 = phi ptr [ null, %bb.a ], [ null, %bb.h ], [ %4, %bb.e ], [ %.017.ph, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   ret ptr %.017
 }
@@ -335,7 +328,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.l = load ptr, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !32
   %i.m = load ptr, ptr %3, align 8, !tbaa !56
-  call void %i.l(ptr noundef %i.m) #28
+  tail call void %i.l(ptr noundef %i.m) #28
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -349,7 +342,7 @@ bb.f:                                             ; preds = %bb.b, %bb.a, %bb.e,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i32 @print_value(ptr nofree noundef readonly captures(address_is_null) %0, ptr noundef nonnull %1) unnamed_addr #8 {
+define internal fastcc i32 @print_value(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef nonnull captures(none) %1) unnamed_addr #8 {
 bb.a:
   %i.a = alloca [26 x i8], align 16               ; 12 uses
   %i.b = alloca double, align 8                   ; 5 uses
@@ -752,7 +745,7 @@ bb.r:                                             ; preds = %bb.i, %bb.g, %bb.d,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc noundef range(i32 0, 2) i32 @print_object(ptr nofree noundef nonnull readonly captures(none) %0, ptr noundef nonnull %1) unnamed_addr #8 {
+define internal fastcc noundef range(i32 0, 2) i32 @print_object(ptr nofree noundef nonnull readonly captures(none) %0, ptr nofree noundef nonnull captures(none) %1) unnamed_addr #8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !34   ; 2 uses

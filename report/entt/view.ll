@@ -205,7 +205,7 @@ bb.a:
   %i.ab = alloca i32, align 4                     ; 5 uses
   %143 = alloca %"class.testing::Message", align 8 ; 7 uses
   %144 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
-  %145 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
+  %145 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %i.ac = alloca i32, align 4                     ; 5 uses
   %i.ad = alloca i32, align 4                     ; 5 uses
   %146 = alloca %"class.testing::Message", align 8 ; 7 uses
@@ -608,7 +608,7 @@ bb.pp:                                            ; preds = %_ZN7testing7Message
   call void @llvm.lifetime.end.p0(ptr nonnull %118) #26
   br label %bb.ty
 
-bb.pq:                                            ; preds = %bb.pj, %_ZNKSt14default_deleteINSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i1014
+bb.pq:                                            ; preds = %_ZNKSt14default_deleteINSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i1014, %bb.pj
   call void @llvm.lifetime.end.p0(ptr nonnull %120) #26
   call void @_ZN7testing15AssertionResultD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %119) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %119) #26
@@ -1011,9 +1011,7 @@ _ZNKSt14default_deleteINSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE
 
 _ZN7testing7MessageD2Ev.exit1111:                 ; preds = %bb.tn, %_ZNKSt14default_deleteINSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i1110
   call void @llvm.lifetime.end.p0(ptr nonnull %146) #26
-  call void @_ZN7testing15AssertionResultD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %145) #26
-  call void @llvm.lifetime.end.p0(ptr nonnull %145) #26
-  br label %bb.ts
+  br label %.critedge499
 
 bb.to:                                            ; preds = %bb.tj
   %i.ayr = landingpad { ptr, i32 }
@@ -1051,12 +1049,12 @@ _ZN7testing7MessageD2Ev.exit1114:                 ; preds = %_ZNKSt14default_del
   call void @_ZN7testing15AssertionResultD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %145) #26
   br label %bb.tx
 
-.critedge499:                                     ; preds = %bb.tg
+.critedge499:                                     ; preds = %bb.tg, %_ZN7testing7MessageD2Ev.exit1111
   call void @_ZN7testing15AssertionResultD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %145) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %145) #26
   br label %bb.ts
 
-bb.ts:                                            ; preds = %_ZN7testing7MessageD2Ev.exit1100, %_ZN7testing7MessageD2Ev.exit1089, %_ZN7testing7MessageD2Ev.exit1077, %_ZN7testing7MessageD2Ev.exit1056, %_ZN7testing7MessageD2Ev.exit1044, %_ZN7testing7MessageD2Ev.exit1033, %_ZN7testing7MessageD2Ev.exit1025, %bb.pq, %_ZN7testing7MessageD2Ev.exit1005, %_ZN7testing7MessageD2Ev.exit993, %_ZN7testing7MessageD2Ev.exit981, %_ZN7testing7MessageD2Ev.exit969, %_ZN7testing7MessageD2Ev.exit958, %_ZN7testing7MessageD2Ev.exit947, %_ZN7testing7MessageD2Ev.exit935, %_ZN7testing7MessageD2Ev.exit921, %_ZN7testing7MessageD2Ev.exit907, %_ZN7testing7MessageD2Ev.exit893, %_ZN7testing7MessageD2Ev.exit882, %_ZN7testing7MessageD2Ev.exit873, %_ZN7testing7MessageD2Ev.exit855, %_ZN7testing7MessageD2Ev.exit839, %_ZN7testing7MessageD2Ev.exit829, %_ZN7testing7MessageD2Ev.exit815, %_ZN7testing7MessageD2Ev.exit800, %_ZN7testing15AssertionResultD2Ev.exit775, %_ZN7testing15AssertionResultD2Ev.exit748, %_ZN7testing15AssertionResultD2Ev.exit719, %_ZN7testing15AssertionResultD2Ev.exit693, %_ZN7testing15AssertionResultD2Ev.exit670, %_ZN7testing15AssertionResultD2Ev.exit646, %_ZN7testing15AssertionResultD2Ev.exit624, %_ZN7testing15AssertionResultD2Ev.exit607, %_ZN7testing15AssertionResultD2Ev.exit586, %_ZN7testing15AssertionResultD2Ev.exit564, %_ZN7testing15AssertionResultD2Ev.exit540, %_ZN7testing15AssertionResultD2Ev.exit, %_ZN7testing7MessageD2Ev.exit1111, %.critedge499
+bb.ts:                                            ; preds = %_ZN7testing7MessageD2Ev.exit1100, %_ZN7testing7MessageD2Ev.exit1089, %_ZN7testing7MessageD2Ev.exit1077, %_ZN7testing7MessageD2Ev.exit1056, %_ZN7testing7MessageD2Ev.exit1044, %_ZN7testing7MessageD2Ev.exit1033, %_ZN7testing7MessageD2Ev.exit1025, %bb.pq, %_ZN7testing7MessageD2Ev.exit1005, %_ZN7testing7MessageD2Ev.exit993, %_ZN7testing7MessageD2Ev.exit981, %_ZN7testing7MessageD2Ev.exit969, %_ZN7testing7MessageD2Ev.exit958, %_ZN7testing7MessageD2Ev.exit947, %_ZN7testing7MessageD2Ev.exit935, %_ZN7testing7MessageD2Ev.exit921, %_ZN7testing7MessageD2Ev.exit907, %_ZN7testing7MessageD2Ev.exit893, %_ZN7testing7MessageD2Ev.exit882, %_ZN7testing7MessageD2Ev.exit873, %_ZN7testing7MessageD2Ev.exit855, %_ZN7testing7MessageD2Ev.exit839, %_ZN7testing7MessageD2Ev.exit829, %_ZN7testing7MessageD2Ev.exit815, %_ZN7testing7MessageD2Ev.exit800, %_ZN7testing15AssertionResultD2Ev.exit775, %_ZN7testing15AssertionResultD2Ev.exit748, %_ZN7testing15AssertionResultD2Ev.exit719, %_ZN7testing15AssertionResultD2Ev.exit693, %_ZN7testing15AssertionResultD2Ev.exit670, %_ZN7testing15AssertionResultD2Ev.exit646, %_ZN7testing15AssertionResultD2Ev.exit624, %_ZN7testing15AssertionResultD2Ev.exit607, %_ZN7testing15AssertionResultD2Ev.exit586, %_ZN7testing15AssertionResultD2Ev.exit564, %_ZN7testing15AssertionResultD2Ev.exit540, %_ZN7testing15AssertionResultD2Ev.exit, %.critedge499
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4entt16basic_sparse_setINS_6entityESaIS1_EEE, i64 16), ptr %1, align 8, !tbaa !43

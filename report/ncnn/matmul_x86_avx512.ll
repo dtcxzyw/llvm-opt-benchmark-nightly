@@ -204,13 +204,13 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !35     ; 72 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 72 ; 9 uses
   %i.c = load ptr, ptr %2, align 8, !tbaa !35     ; 104 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 4 uses
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !70   ; 7 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !70   ; 9 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 112 ; 4 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !70   ; 7 uses
   %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.e, i32 %i.g)
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !71   ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !71   ; 6 uses
   %i.j = icmp eq i32 %i.e, 1                      ; 3 uses
   %i.k = icmp eq i32 %i.g, 1                      ; 3 uses
   %or.cond = select i1 %i.j, i1 %i.k, i1 false
@@ -613,8 +613,7 @@ bb.rc:                                            ; preds = %bb.ra
   %i.bbh = load <2 x ptr>, ptr %i.a, align 8, !tbaa !73
   store <2 x ptr> %i.bbh, ptr %28, align 16, !tbaa !73
   %i.bbi = getelementptr inbounds nuw i8, ptr %28, i64 16
-  %36 = load i64, ptr %i.h, align 8, !tbaa !71
-  store i64 %36, ptr %i.bbi, align 16, !tbaa !71
+  store i64 %i.i, ptr %i.bbi, align 16, !tbaa !71
   %i.bbj = getelementptr inbounds nuw i8, ptr %28, i64 24
   %i.bbk = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.bbl = load i32, ptr %i.bbk, align 8, !tbaa !74
@@ -624,12 +623,11 @@ bb.rc:                                            ; preds = %bb.ra
   %i.bbo = load ptr, ptr %i.bbn, align 8, !tbaa !42
   store ptr %i.bbo, ptr %i.bbm, align 16, !tbaa !42
   %i.bbp = getelementptr inbounds nuw i8, ptr %28, i64 40
-  %37 = load <4 x i32>, ptr %i.d, align 8, !tbaa !75
-  store <4 x i32> %37, ptr %i.bbp, align 8, !tbaa !75
-  %i.bbq = getelementptr inbounds nuw i8, ptr %28, i64 56
-  %i.bbr = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %38 = load i32, ptr %i.bbr, align 8, !tbaa !76
-  store i32 %38, ptr %i.bbq, align 8, !tbaa !76
+  store i32 %i.e, ptr %i.bbp, align 8, !tbaa !70
+  %i.bbq = getelementptr inbounds nuw i8, ptr %28, i64 44
+  %i.bbr = getelementptr inbounds nuw i8, ptr %i.a, i64 44
+  %36 = load <4 x i32>, ptr %i.bbr, align 4, !tbaa !75
+  store <4 x i32> %36, ptr %i.bbq, align 4, !tbaa !75
   %i.bbs = getelementptr inbounds nuw i8, ptr %28, i64 64
   %i.bbt = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.bbu = load i64, ptr %i.bbt, align 8, !tbaa !39
@@ -1032,8 +1030,7 @@ bb.tg:                                            ; preds = %bb.te
   %i.bmw = load <2 x ptr>, ptr %i.a, align 8, !tbaa !73
   store <2 x ptr> %i.bmw, ptr %32, align 16, !tbaa !73
   %i.bmx = getelementptr inbounds nuw i8, ptr %32, i64 16
-  %39 = load i64, ptr %i.h, align 8, !tbaa !71
-  store i64 %39, ptr %i.bmx, align 16, !tbaa !71
+  store i64 %i.i, ptr %i.bmx, align 16, !tbaa !71
   %i.bmy = getelementptr inbounds nuw i8, ptr %32, i64 24
   %i.bmz = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.bna = load i32, ptr %i.bmz, align 8, !tbaa !74
@@ -1043,12 +1040,11 @@ bb.tg:                                            ; preds = %bb.te
   %i.bnd = load ptr, ptr %i.bnc, align 8, !tbaa !42
   store ptr %i.bnd, ptr %i.bnb, align 16, !tbaa !42
   %i.bne = getelementptr inbounds nuw i8, ptr %32, i64 40
-  %40 = load <4 x i32>, ptr %i.d, align 8, !tbaa !75
-  store <4 x i32> %40, ptr %i.bne, align 8, !tbaa !75
-  %i.bnf = getelementptr inbounds nuw i8, ptr %32, i64 56
-  %i.bng = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %41 = load i32, ptr %i.bng, align 8, !tbaa !76
-  store i32 %41, ptr %i.bnf, align 8, !tbaa !76
+  store i32 %i.e, ptr %i.bne, align 8, !tbaa !70
+  %i.bnf = getelementptr inbounds nuw i8, ptr %32, i64 44
+  %i.bng = getelementptr inbounds nuw i8, ptr %i.a, i64 44
+  %37 = load <4 x i32>, ptr %i.bng, align 4, !tbaa !75
+  store <4 x i32> %37, ptr %i.bnf, align 4, !tbaa !75
   %i.bnh = getelementptr inbounds nuw i8, ptr %32, i64 64
   %i.bni = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.bnj = load i64, ptr %i.bni, align 8, !tbaa !39

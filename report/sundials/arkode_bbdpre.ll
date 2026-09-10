@@ -91,8 +91,8 @@ bb.g:                                             ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   store i64 %i.af, ptr %i.ah, align 8, !tbaa !30
   %i.ai = load ptr, ptr %i.h, align 8, !tbaa !57
-  %i.aj = call ptr @SUNBandMatrixStorage(i64 noundef %1, i64 noundef %i.ad, i64 noundef %i.af, i64 noundef %i.ad, ptr noundef %i.ai) #8 ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 56 ; 10 uses
+  %i.aj = call ptr @SUNBandMatrixStorage(i64 noundef %1, i64 noundef %i.ad, i64 noundef %i.af, i64 noundef %i.ad, ptr noundef %i.ai) #8 ; 5 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 56 ; 7 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !31
   %i.al = icmp eq ptr %i.aj, null
   br i1 %i.al, label %bb.h, label %bb.i
@@ -106,46 +106,40 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.an = add nsw i64 %i.af, %i.ad
   %.180 = call i64 @llvm.smin.i64(i64 %i.an, i64 %i.x)
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.s, i64 64 ; 11 uses
-  store ptr null, ptr %i.ao, align 8, !tbaa !32
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.s, i64 64 ; 8 uses
   %i.ap = load ptr, ptr %i.a, align 8, !tbaa !10
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !57
-  %i.ar = call ptr @SUNBandMatrixStorage(i64 noundef %1, i64 noundef %i.ad, i64 noundef %i.af, i64 noundef %.180, ptr noundef %i.aq) #8 ; 2 uses
+  %i.ar = call ptr @SUNBandMatrixStorage(i64 noundef %1, i64 noundef %i.ad, i64 noundef %i.af, i64 noundef %.180, ptr noundef %i.aq) #8 ; 4 uses
   store ptr %i.ar, ptr %i.ao, align 8, !tbaa !32
   %i.as = icmp eq ptr %i.ar, null
   br i1 %i.as, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %9 = load ptr, ptr %i.ak, align 8, !tbaa !31
-  call void @SUNMatDestroy(ptr noundef %9) #8
+  call void @SUNMatDestroy(ptr noundef nonnull %i.aj) #8
   call void @free(ptr noundef nonnull %i.s) #8
   %i.at = load ptr, ptr %i.a, align 8, !tbaa !10
   call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef %i.at, i32 noundef -4, i32 noundef 121, ptr noundef nonnull @__func__.ARKBBDPrecInit, ptr noundef nonnull @.str, ptr noundef nonnull @.str.2) #8
   br label %bb.ao
 
 bb.k:                                             ; preds = %bb.i
-  %i.au = getelementptr inbounds nuw i8, ptr %i.s, i64 104 ; 8 uses
-  store ptr null, ptr %i.au, align 8, !tbaa !33
+  %i.au = getelementptr inbounds nuw i8, ptr %i.s, i64 104 ; 6 uses
   %i.av = load ptr, ptr %i.a, align 8, !tbaa !10
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !57
-  %i.ax = call ptr @N_VNewEmpty_Serial(i64 noundef %1, ptr noundef %i.aw) #8 ; 2 uses
+  %i.ax = call ptr @N_VNewEmpty_Serial(i64 noundef %1, ptr noundef %i.aw) #8 ; 3 uses
   store ptr %i.ax, ptr %i.au, align 8, !tbaa !33
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %10 = load ptr, ptr %i.ao, align 8, !tbaa !32
-  call void @SUNMatDestroy(ptr noundef %10) #8
-  %11 = load ptr, ptr %i.ak, align 8, !tbaa !31
-  call void @SUNMatDestroy(ptr noundef %11) #8
+  call void @SUNMatDestroy(ptr noundef nonnull %i.ar) #8
+  call void @SUNMatDestroy(ptr noundef nonnull %i.aj) #8
   call void @free(ptr noundef nonnull %i.s) #8
   %i.az = load ptr, ptr %i.a, align 8, !tbaa !10
   call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef %i.az, i32 noundef -4, i32 noundef 136, ptr noundef nonnull @__func__.ARKBBDPrecInit, ptr noundef nonnull @.str, ptr noundef nonnull @.str.2) #8
   br label %bb.ao
 
 bb.m:                                             ; preds = %bb.k
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.s, i64 112 ; 9 uses
-  store ptr null, ptr %i.ba, align 8, !tbaa !34
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.s, i64 112 ; 8 uses
   %i.bb = load ptr, ptr %i.a, align 8, !tbaa !10
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !57
   %i.bd = call ptr @N_VNewEmpty_Serial(i64 noundef %1, ptr noundef %i.bc) #8 ; 2 uses
@@ -154,12 +148,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.be, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %12 = load ptr, ptr %i.au, align 8, !tbaa !33
-  call void @N_VDestroy(ptr noundef %12) #8
-  %13 = load ptr, ptr %i.ao, align 8, !tbaa !32
-  call void @SUNMatDestroy(ptr noundef %13) #8
-  %14 = load ptr, ptr %i.ak, align 8, !tbaa !31
-  call void @SUNMatDestroy(ptr noundef %14) #8
+  call void @N_VDestroy(ptr noundef nonnull %i.ax) #8
+  call void @SUNMatDestroy(ptr noundef nonnull %i.ar) #8
+  call void @SUNMatDestroy(ptr noundef nonnull %i.aj) #8
   call void @free(ptr noundef nonnull %i.s) #8
   %i.bf = load ptr, ptr %i.a, align 8, !tbaa !10
   call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef %i.bf, i32 noundef -4, i32 noundef 150, ptr noundef nonnull @__func__.ARKBBDPrecInit, ptr noundef nonnull @.str, ptr noundef nonnull @.str.2) #8

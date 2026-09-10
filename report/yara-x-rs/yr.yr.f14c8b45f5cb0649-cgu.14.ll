@@ -204,7 +204,7 @@ bb.a:
   %i.ab = alloca [24 x i8], align 8               ; 5 uses
   %.sroa.6.i263.i = alloca [16 x i8], align 8     ; 5 uses
   %i.ac = alloca [16 x i8], align 8               ; 5 uses
-  %i.ad = alloca [600 x i8], align 8              ; 53 uses
+  %i.ad = alloca [600 x i8], align 8              ; 52 uses
   %i.ae = alloca [24 x i8], align 8               ; 6 uses
   %i.af = alloca [600 x i8], align 8              ; 6 uses
   %i.ag = alloca [24 x i8], align 8               ; 5 uses
@@ -232,7 +232,7 @@ bb.a:
   %i.ay = alloca [600 x i8], align 8              ; 5 uses
   %i.az = alloca [600 x i8], align 8              ; 8 uses
   %i.ba = alloca [24 x i8], align 8               ; 6 uses
-  %i.bb = alloca [600 x i8], align 8              ; 54 uses
+  %i.bb = alloca [600 x i8], align 8              ; 53 uses
   %i.bc = alloca [600 x i8], align 8              ; 8 uses
   %i.bd = alloca [600 x i8], align 8              ; 6 uses
   %i.be = alloca [600 x i8], align 8              ; 4 uses
@@ -635,7 +635,6 @@ bb.ay:                                            ; preds = %bb.az
 
 bb.az:                                            ; preds = %bb.av
   %.sroa.01387.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 24 ; 2 uses
-  %.sroa.01387.sroa.51.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 496
   %.sroa.01387.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 48
   %.sroa.01387.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %i.ec = load i64, ptr %i.ae, align 8, !range !9, !noalias !2117, !noundef !8 ; 2 uses
@@ -657,8 +656,6 @@ bb.az:                                            ; preds = %bb.av
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !noalias !2122
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.01522.sroa.6.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.01387.sroa.8.0..sroa_idx.i, i64 16, i1 false), !noalias !2050
   %.sroa.01492.sroa.8.0.copyload.i = load i64, ptr %.sroa.01387.sroa.10.0..sroa_idx.i, align 8, !alias.scope !2120, !noalias !2121
-  %.sroa.01522.sroa.49.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 496
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.01522.sroa.49.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.01387.sroa.51.0..sroa_idx.i, i64 16, i1 false), !noalias !2050
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba), !noalias !2050
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb), !noalias !2050
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay), !noalias !2050

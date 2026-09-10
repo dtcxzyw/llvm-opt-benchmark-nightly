@@ -106,8 +106,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8            ; 4 uses
   %i.ad = load ptr, ptr %i.ac, align 8            ; 3 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 4 uses
-  %i.af = load i32, ptr %i.ae, align 8
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 2 uses
+  %i.af = load i32, ptr %i.ae, align 8            ; 2 uses
   %i.ag = load i32, ptr %i.ad, align 8
   %i.ah = icmp slt i32 %i.af, %i.ag
   br i1 %i.ah, label %.lr.ph, label %._crit_edge
@@ -117,13 +117,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.y
+  %1 = phi i32 [ %i.af, %.lr.ph ], [ %i.bd, %bb.y ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.e, i8 0, i64 128, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.aj = load ptr, ptr %i.ai, align 8
-  %1 = load i32, ptr %i.ae, align 8               ; 2 uses
   %i.ak = sext i32 %1 to i64
   %i.al = getelementptr inbounds [56 x i8], ptr %i.aj, i64 %i.ak ; 25 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
@@ -193,7 +193,7 @@ bb.e:                                             ; preds = %.preheader.9, %.pre
   %i.bb = getelementptr inbounds nuw i8, ptr %i.al, i64 20
   %i.bc = load i32, ptr %i.bb, align 4            ; 2 uses
   %.not147 = icmp eq i32 %i.bc, 0
-  %i.bd = add i32 %1, 1
+  %i.bd = add nsw i32 %1, 1                       ; 3 uses
   store i32 %i.bd, ptr %i.ae, align 8
   br i1 %.not147, label %bb.y, label %.loopexit215
 
@@ -478,9 +478,8 @@ bb.y:                                             ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
-  %2 = load i32, ptr %i.ae, align 8
   %i.gq = load i32, ptr %i.ad, align 8
-  %i.gr = icmp slt i32 %2, %i.gq
+  %i.gr = icmp slt i32 %i.bd, %i.gq
   br i1 %i.gr, label %bb.d, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.y, %bb.c

@@ -205,18 +205,14 @@ bb.hn:                                            ; preds = %bb.hm, %._crit_edge
   %lcmp.mod1221 = trunc i32 %.6 to i1
   call void @llvm.assume(i1 %lcmp.mod1221)
   %.idx870.epil = mul nuw nsw i64 %indvars.iv668.epil.init, 12
-  %i.cly = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx870.epil ; 3 uses
-  %8 = load float, ptr %i.cly, align 4, !tbaa !62
+  %i.cly = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx870.epil ; 2 uses
   %.idx871.epil = mul nsw i64 %indvars.iv666.epil.init, 12
-  %9 = getelementptr inbounds i8, ptr %i.clv, i64 %.idx871.epil ; 3 uses
-  store float %8, ptr %9, align 4, !tbaa !62
-  %i.clz = getelementptr inbounds nuw i8, ptr %i.cly, i64 4
-  %10 = load float, ptr %i.clz, align 4, !tbaa !62
-  %11 = getelementptr i8, ptr %9, i64 4
-  store float %10, ptr %11, align 4, !tbaa !62
+  %i.clz = getelementptr inbounds i8, ptr %i.clv, i64 %.idx871.epil ; 2 uses
+  %8 = load <2 x float>, ptr %i.cly, align 4, !tbaa !62
+  store <2 x float> %8, ptr %i.clz, align 4, !tbaa !62
   %i.cma = getelementptr inbounds nuw i8, ptr %i.cly, i64 8
   %i.cmb = load float, ptr %i.cma, align 4, !tbaa !62
-  %i.cmc = getelementptr i8, ptr %9, i64 8
+  %i.cmc = getelementptr i8, ptr %i.clz, i64 8
   store float %i.cmb, ptr %i.cmc, align 4, !tbaa !62
   %indvars.iv.next667.epil = add nsw i64 %indvars.iv666.epil.init, 1
   br label %._crit_edge574
@@ -249,34 +245,26 @@ bb.hp:                                            ; preds = %bb.hp, %.lr.ph573.n
   %indvars.iv666 = phi i64 [ %i.clw, %.lr.ph573.new ], [ %indvars.iv.next667.1, %bb.hp ] ; 3 uses
   %niter1223 = phi i64 [ 0, %.lr.ph573.new ], [ %niter1223.next.1, %bb.hp ]
   %.idx870 = mul nuw nsw i64 %indvars.iv668, 12
-  %i.cmo = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx870 ; 3 uses
-  %12 = load float, ptr %i.cmo, align 8, !tbaa !62
+  %i.cmo = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx870 ; 2 uses
   %.idx871 = mul nsw i64 %indvars.iv666, 12
-  %13 = getelementptr inbounds i8, ptr %i.clv, i64 %.idx871 ; 3 uses
-  store float %12, ptr %13, align 4, !tbaa !62
-  %i.cmp = getelementptr inbounds nuw i8, ptr %i.cmo, i64 4
-  %14 = load float, ptr %i.cmp, align 4, !tbaa !62
-  %15 = getelementptr i8, ptr %13, i64 4
-  store float %14, ptr %15, align 4, !tbaa !62
+  %i.cmp = getelementptr inbounds i8, ptr %i.clv, i64 %.idx871 ; 2 uses
+  %9 = load <2 x float>, ptr %i.cmo, align 8, !tbaa !62
+  store <2 x float> %9, ptr %i.cmp, align 4, !tbaa !62
   %i.cmq = getelementptr inbounds nuw i8, ptr %i.cmo, i64 8
   %i.cmr = load float, ptr %i.cmq, align 8, !tbaa !62
-  %i.cms = getelementptr i8, ptr %13, i64 8
+  %i.cms = getelementptr i8, ptr %i.cmp, i64 8
   store float %i.cmr, ptr %i.cms, align 4, !tbaa !62
   %i.cmt = mul nuw i64 %indvars.iv668, 12
-  %i.cmu = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.cmt ; 3 uses
+  %i.cmu = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.cmt ; 2 uses
   %i.cmv = getelementptr inbounds nuw i8, ptr %i.cmu, i64 12
-  %16 = load float, ptr %i.cmv, align 4, !tbaa !62
   %i.cmw = mul i64 %indvars.iv666, 12
-  %17 = getelementptr i8, ptr %i.clv, i64 %i.cmw  ; 3 uses
-  %i.cmx = getelementptr i8, ptr %17, i64 12
-  store float %16, ptr %i.cmx, align 4, !tbaa !62
-  %i.cmy = getelementptr inbounds nuw i8, ptr %i.cmu, i64 16
-  %18 = load float, ptr %i.cmy, align 8, !tbaa !62
-  %19 = getelementptr i8, ptr %17, i64 16
-  store float %18, ptr %19, align 4, !tbaa !62
+  %i.cmx = getelementptr i8, ptr %i.clv, i64 %i.cmw ; 2 uses
+  %i.cmy = getelementptr i8, ptr %i.cmx, i64 12
+  %10 = load <2 x float>, ptr %i.cmv, align 4, !tbaa !62
+  store <2 x float> %10, ptr %i.cmy, align 4, !tbaa !62
   %i.cmz = getelementptr inbounds nuw i8, ptr %i.cmu, i64 20
   %i.cna = load float, ptr %i.cmz, align 4, !tbaa !62
-  %i.cnb = getelementptr i8, ptr %17, i64 20
+  %i.cnb = getelementptr i8, ptr %i.cmx, i64 20
   store float %i.cna, ptr %i.cnb, align 4, !tbaa !62
   %indvars.iv.next667.1 = add nsw i64 %indvars.iv666, 2 ; 3 uses
   %indvars.iv.next669.1 = add nuw nsw i64 %indvars.iv668, 2 ; 2 uses

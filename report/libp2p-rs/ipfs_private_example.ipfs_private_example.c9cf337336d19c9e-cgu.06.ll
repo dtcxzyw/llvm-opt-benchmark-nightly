@@ -205,7 +205,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort19bidirectional_merg
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort12sort8_stableTyjENvYB19_NtNtBa_3cmp10PartialOrd2ltECshke30g4Hb4g_20ipfs_private_example(ptr nofree noundef nonnull readonly %0, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 128)) %1, ptr nofree noundef nonnull captures(address) initializes((0, 128)) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort12sort8_stableTyjENvYB19_NtNtBa_3cmp10PartialOrd2ltECshke30g4Hb4g_20ipfs_private_example(ptr nofree noundef nonnull readonly captures(none) %0, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 128)) %1, ptr nofree noundef nonnull captures(address) initializes((0, 128)) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 .lr.ph.i:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val16.i = load i64, ptr %i.a, align 8, !noundef !5 ; 2 uses
@@ -523,7 +523,7 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort19bidirectional_merg
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort18small_sort_generalTyjENvYB1f_NtNtBa_3cmp10PartialOrd2ltECshke30g4Hb4g_20ipfs_private_example(ptr noalias nofree noundef nonnull align 8 %0, i64 noundef range(i64 0, 576460752303423488) %1, ptr noalias nofree noundef nonnull readnone captures(none) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort18small_sort_generalTyjENvYB1f_NtNtBa_3cmp10PartialOrd2ltECshke30g4Hb4g_20ipfs_private_example(ptr noalias nofree noundef nonnull align 8 captures(none) %0, i64 noundef range(i64 0, 576460752303423488) %1, ptr noalias nofree noundef nonnull readnone captures(none) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [768 x i8], align 8               ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -926,7 +926,7 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge.
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_RNvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #34
-          to label %.noexc.i unwind label %bb.l
+          to label %.noexc.i unwind label %bb.l, !noalias !1439
 
 .noexc.i:                                         ; preds = %bb.k
   unreachable
@@ -1329,7 +1329,7 @@ bb.r:                                             ; preds = %bb.q, %._crit_edge.
 
 bb.s:                                             ; preds = %bb.r
   invoke void @_RNvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort22panic_on_ord_violation() #34
-          to label %.noexc.i unwind label %bb.t, !noalias !1883
+          to label %.noexc.i unwind label %bb.t, !noalias !1885
 
 .noexc.i:                                         ; preds = %bb.s
   unreachable
@@ -1732,14 +1732,15 @@ bb.r:                                             ; preds = %_RINvNtNtNtNtCskKLD
   %.sroa.05.038.i = phi i64 [ %.sroa.0.0.i, %.lr.ph.i ], [ %i.jb, %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailRNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB18_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2Q_9Behaviour9heartbeats7_0E0ECshke30g4Hb4g_20ipfs_private_example.exit.i ] ; 4 uses
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %.sroa.05.038.i
   %.idx = shl nuw nsw i64 %.sroa.05.038.i, 3
-  %i.ea = getelementptr inbounds nuw i8, ptr %i.co, i64 %.idx ; 6 uses
-  %i.eb = load i64, ptr %i.dz, align 8, !alias.scope !2514, !noalias !2515
+  %i.ea = getelementptr inbounds nuw i8, ptr %i.co, i64 %.idx ; 5 uses
+  %i.eb = load i64, ptr %i.dz, align 8, !alias.scope !2514, !noalias !2515 ; 3 uses
   store i64 %i.eb, ptr %i.ea, align 8, !alias.scope !2515, !noalias !2514
   %i.ec = getelementptr inbounds i8, ptr %i.ea, i64 -8 ; 4 uses
   %.val.i43.i = load ptr, ptr %.val37, align 8, !noalias !2525, !nonnull !5, !align !10, !noundef !5 ; 5 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %.val.i43.i, i64 24 ; 2 uses
   %i.ee = load i64, ptr %i.ed, align 8, !noalias !2526, !noundef !5
   %i.ef = icmp eq i64 %i.ee, 0
+  %7 = inttoptr i64 %i.eb to ptr
   br i1 %i.ef, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailRNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB18_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2Q_9Behaviour9heartbeats7_0E0ECshke30g4Hb4g_20ipfs_private_example.exit.i, label %.noexc69.i
 
 .noexc69.i:                                       ; preds = %bb.r
@@ -1871,7 +1872,6 @@ _RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapRNtNtCs2iisHxfqoT7_15libp2p
 
 bb.y:                                             ; preds = %.noexc38.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2516
-  %7 = load ptr, ptr %i.ea, align 8, !alias.scope !2515, !noalias !2514, !nonnull !5, !align !10, !noundef !5 ; 2 uses
   store ptr %7, ptr %i.a, align 8, !noalias !2516
   %i.gm = load i64, ptr %i.ec, align 8, !alias.scope !2515, !noalias !2514
   store i64 %i.gm, ptr %i.ea, align 8, !alias.scope !2515, !noalias !2514
@@ -2056,8 +2056,7 @@ _RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapRNtNtCs2iisHxfqoT7_15libp2p
 
 .loopexit.split-lp10.i:                           ; preds = %.loopexit.split-lp10.loopexit.split-lp.i, %.loopexit.split-lp10.loopexit.i, %.loopexit9.i
   %lpad.phi13.i = phi { ptr, i32 } [ %lpad.loopexit11.i, %.loopexit9.i ], [ %lpad.loopexit14.i, %.loopexit.split-lp10.loopexit.i ], [ %lpad.loopexit.split-lp15.i, %.loopexit.split-lp10.loopexit.split-lp.i ]
-  %8 = ptrtoint ptr %7 to i64
-  store i64 %8, ptr %.sroa.0.0.i37.i650, align 8, !alias.scope !2515, !noalias !2557
+  store i64 %i.eb, ptr %.sroa.0.0.i37.i650, align 8, !alias.scope !2515, !noalias !2557
   br label %.body.i
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailRNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB18_7sort_byNCNvMs6_NtCs1pSuea8KFR7_16libp2p_gossipsub9behaviourNtB2Q_9Behaviour9heartbeats7_0E0ECshke30g4Hb4g_20ipfs_private_example.exit.i: ; preds = %.thread6.i, %.noexc38.i, %bb.r

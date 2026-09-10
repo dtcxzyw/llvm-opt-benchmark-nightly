@@ -109,8 +109,8 @@ bb.a:
   store i32 %.val166, ptr %i.c, align 4, !tbaa !54
   %i.d = getelementptr i8, ptr %0, i64 64         ; 3 uses
   %.val169 = load ptr, ptr %i.d, align 8, !tbaa !55 ; 3 uses
-  %i.e = getelementptr i8, ptr %.val169, i64 4    ; 2 uses
-  %.val169.val = load i32, ptr %i.e, align 4, !tbaa !56 ; 3 uses
+  %i.e = getelementptr i8, ptr %.val169, i64 4
+  %.val169.val = load i32, ptr %i.e, align 4, !tbaa !56 ; 4 uses
   %i.f = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #31 ; 6 uses
   %i.g = add i32 %.val169.val, -1
   %or.cond.i = icmp ult i32 %i.g, 15
@@ -196,8 +196,7 @@ Vec_IntAlloc.exit228:                             ; preds = %Vec_IntAlloc.exit, 
   %i.aw = add i32 %narrow.i, %i.at                ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 6 uses
   store i32 1, ptr %i.ax, align 8, !tbaa !70
-  %.val168252 = load i32, ptr %i.e, align 4, !tbaa !56
-  %i.ay = icmp sgt i32 %.val168252, 0
+  %i.ay = icmp sgt i32 %.val169.val, 0
   br i1 %i.ay, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %Vec_IntAlloc.exit228

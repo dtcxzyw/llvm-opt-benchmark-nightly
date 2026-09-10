@@ -205,7 +205,7 @@ declare i64 @A1C_Item_encode(ptr noundef, ptr noundef, i64 noundef, ptr noundef)
 declare { i32, ptr } @A1C_Error_convert(ptr noundef, ptr noundef byval(%struct.A1C_Error) align 8) local_unnamed_addr #4
 
 ; Function Attrs: nounwind uwtable
-define void @ZL_Clustering_deserializeClusteringConfig(ptr dead_on_unwind noalias nofree writable sret(%union.ZL_Result_ZL_ClusteringConfig_u) align 8 captures(none) initializes((16, 40)) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #0 {
+define void @ZL_Clustering_deserializeClusteringConfig(ptr dead_on_unwind noalias nofree writable writeonly sret(%union.ZL_Result_ZL_ClusteringConfig_u) align 8 captures(none) initializes((16, 40)) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #0 {
 bb.a:
   %5 = alloca %struct.ZL_ErrorContext, align 8    ; 6 uses
   %6 = alloca %struct.ZL_ErrorContext, align 8    ; 6 uses
@@ -218,7 +218,7 @@ bb.a:
   %13 = alloca %struct.ZL_ErrorContext, align 8   ; 19 uses
   %14 = alloca %struct.A1C_Decoder, align 8       ; 4 uses
   %15 = alloca %struct.A1C_Map, align 8           ; 7 uses
-  %16 = alloca %struct.A1C_Array, align 8         ; 5 uses
+  %16 = alloca %struct.A1C_Array, align 8         ; 6 uses
   %17 = alloca %struct.A1C_Map, align 8           ; 11 uses
   %18 = alloca %struct.A1C_Map, align 8           ; 9 uses
   %19 = alloca %struct.A1C_Array, align 8         ; 8 uses
@@ -327,6 +327,7 @@ A1C_Item_tryGetArray.exit:                        ; preds = %bb.f, %bb.g
   br i1 %.not.i178, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %A1C_Item_tryGetArray.exit
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %16, i8 0, i64 16, i1 false)
   %i.z = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %13, i32 %i.x, ptr %i.y, ptr null, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 276, ptr noundef nonnull @.str.9) #16 ; 2 uses
   %i.aa = extractvalue { i32, ptr } %i.z, 0
   store i32 %i.aa, ptr %0, align 8
@@ -374,10 +375,9 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph491:                                        ; preds = %.critedge148.preheader
   %i.ao = getelementptr inbounds nuw i8, ptr %17, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %.sroa.450.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 14 uses
+  %.sroa.450.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %19, i64 8
-  %.sroa.450.0..sroa_idx.promoted = load i64, ptr %.sroa.450.0..sroa_idx, align 8
   br label %bb.l
 
 bb.k:                                             ; preds = %.critedge
@@ -393,7 +393,6 @@ bb.k:                                             ; preds = %.critedge
   br label %bb.ar
 
 bb.l:                                             ; preds = %.lr.ph491, %.critedge148
-  %22 = phi i64 [ %.sroa.450.0..sroa_idx.promoted, %.lr.ph491 ], [ %23, %.critedge148 ] ; 2 uses
   %.0115490 = phi i64 [ 0, %.lr.ph491 ], [ %i.dl, %.critedge148 ] ; 3 uses
   %i.aw = call ptr @A1C_Array_get(ptr noundef nonnull %16, i64 noundef %.0115490) #16 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #16
@@ -433,7 +432,6 @@ A1C_Item_tryGetMap.exit192:                       ; preds = %bb.m, %bb.n
   br i1 %.not.i193, label %bb.o, label %.critedge156
 
 .critedge156:                                     ; preds = %A1C_Item_tryGetMap.exit192
-  store i64 %22, ptr %.sroa.450.0..sroa_idx, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, i8 0, i64 16, i1 false)
   %i.bd = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %13, i32 %i.bb, ptr %i.bc, ptr null, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 288, ptr noundef nonnull @.str.9) #16 ; 2 uses
   %i.be = extractvalue { i32, ptr } %i.bd, 0
@@ -487,7 +485,6 @@ A1C_Item_tryGetMap.exit208:                       ; preds = %bb.p, %bb.q
   br i1 %.not.i209, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %A1C_Item_tryGetMap.exit208
-  store i64 %22, ptr %.sroa.450.0..sroa_idx, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %18, i8 0, i64 16, i1 false)
   %i.bn = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %13, i32 %i.bl, ptr %i.bm, ptr null, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 291, ptr noundef nonnull @.str.9) #16 ; 2 uses
   %i.bo = extractvalue { i32, ptr } %i.bn, 0
@@ -503,16 +500,15 @@ bb.s:                                             ; preds = %A1C_Item_tryGetMap.
   store ptr %.sroa.02.0.i211.ph, ptr %18, align 8
   store i64 %.sroa.4.0.i210.ph, ptr %i.ap, align 8
   %i.bq = getelementptr inbounds nuw [48 x i8], ptr %i.an, i64 %.0115490 ; 3 uses
-  %i.br = call fastcc { i32, i64 } @cbor_deserializeTypeSuccessor(ptr noundef %1, ptr noundef %18, ptr noundef nonnull %i.bq) ; 2 uses
+  %i.br = call fastcc { i32, i64 } @cbor_deserializeTypeSuccessor(ptr noundef %1, ptr noundef %18, ptr noundef nonnull %i.bq) ; 3 uses
   %i.bs = extractvalue { i32, i64 } %i.br, 0      ; 2 uses
-  %23 = extractvalue { i32, i64 } %i.br, 1        ; 8 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i8 0, i64 24, i1 false)
   %.not136 = icmp eq i32 %i.bs, 0
   br i1 %.not136, label %bb.u, label %bb.t, !prof !28
 
 bb.t:                                             ; preds = %bb.s
-  store i64 %23, ptr %.sroa.450.0..sroa_idx, align 8
-  %i.bt = inttoptr i64 %23 to ptr
+  %22 = extractvalue { i32, i64 } %i.br, 1
+  %i.bt = inttoptr i64 %22 to ptr
   %i.bu = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %13, i32 %i.bs, ptr %i.bt, ptr nonnull @ZL_Clustering_deserializeClusteringConfig.__zl_static_error_info.43, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 293, ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.8) #16 ; 2 uses
   %i.bv = extractvalue { i32, ptr } %i.bu, 0
   %i.bw = extractvalue { i32, ptr } %i.bu, 1
@@ -559,7 +555,6 @@ A1C_Item_tryGetArray.exit224:                     ; preds = %bb.v, %bb.w
   br i1 %.not.i225, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %A1C_Item_tryGetArray.exit224
-  store i64 %23, ptr %.sroa.450.0..sroa_idx, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %19, i8 0, i64 16, i1 false)
   %i.ce = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %13, i32 %i.cc, ptr %i.cd, ptr null, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 295, ptr noundef nonnull @.str.9) #16 ; 2 uses
   %i.cf = extractvalue { i32, ptr } %i.ce, 0
@@ -589,7 +584,6 @@ bb.y:                                             ; preds = %A1C_Item_tryGetArra
   br i1 %.not140.not475.not, label %.critedge148, label %.lr.ph
 
 bb.z:                                             ; preds = %bb.y
-  store i64 %23, ptr %.sroa.450.0..sroa_idx, align 8
   %i.co = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @ZL_Clustering_deserializeClusteringConfig.__zl_static_error_info.44, ptr noundef nonnull %13, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 299, i32 noundef 70, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6, ptr noundef null, ptr noundef null) #16 ; 2 uses
   %i.cp = extractvalue { i32, ptr } %i.co, 0      ; 2 uses
   %i.cq = extractvalue { i32, ptr } %i.co, 1      ; 2 uses
@@ -635,7 +629,6 @@ A1C_Item_tryGetInt64.exit:                        ; preds = %.thread.i, %bb.ab
   br i1 %.not.i237, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %A1C_Item_tryGetInt64.exit
-  store i64 %23, ptr %.sroa.450.0..sroa_idx, align 8
   %i.cz = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %13, i32 %i.cx, ptr %i.cy, ptr null, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 302, ptr noundef nonnull @.str.9) #16 ; 2 uses
   %i.da = extractvalue { i32, ptr } %i.cz, 0
   store i32 %i.da, ptr %0, align 8
@@ -648,7 +641,6 @@ bb.ad:                                            ; preds = %A1C_Item_tryGetInt6
   br i1 %i.dc, label %.critedge152, label %bb.ae, !prof !28
 
 bb.ae:                                            ; preds = %bb.ad
-  store i64 %23, ptr %.sroa.450.0..sroa_idx, align 8
   %i.dd = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @ZL_Clustering_deserializeClusteringConfig.__zl_static_error_info.47, ptr noundef nonnull %13, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 303, i32 noundef 51, ptr noundef nonnull @.str.49, ptr noundef nonnull @.str.50, ptr noundef nonnull @.str.38, ptr noundef nonnull @.str.51, i64 noundef %.0.i.ph, i64 noundef 2147483647) #16 ; 2 uses
   %i.de = extractvalue { i32, ptr } %i.dd, 0      ; 2 uses
   %i.df = extractvalue { i32, ptr } %i.dd, 1      ; 2 uses
@@ -698,6 +690,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.ar
 
 .critedge158.loopexit:                            ; preds = %.critedge148
+  %23 = extractvalue { i32, i64 } %i.br, 1
   store i64 %23, ptr %.sroa.450.0..sroa_idx, align 8
   br label %.critedge158
 
@@ -769,10 +762,8 @@ bb.ai:                                            ; preds = %A1C_Item_tryGetArra
 
 .lr.ph494:                                        ; preds = %.critedge160.preheader
   %i.ed = getelementptr inbounds nuw i8, ptr %21, i64 8
-  %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.promoted = load i32, ptr %0, align 8
-  %.sroa.415.0..sroa_idx.promoted = load i64, ptr %.sroa.415.0..sroa_idx, align 8
   br label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
@@ -788,8 +779,6 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.aq
 
 bb.ak:                                            ; preds = %.lr.ph494, %.critedge160
-  %24 = phi i64 [ %.sroa.415.0..sroa_idx.promoted, %.lr.ph494 ], [ %26, %.critedge160 ]
-  %25 = phi i32 [ %.promoted, %.lr.ph494 ], [ %i.ev, %.critedge160 ]
   %.0114493 = phi i64 [ 0, %.lr.ph494 ], [ %i.fa, %.critedge160 ] ; 3 uses
   %i.ej = call ptr @A1C_Array_get(ptr noundef nonnull %20, i64 noundef %.0114493) #16 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #16
@@ -829,8 +818,6 @@ A1C_Item_tryGetMap.exit260:                       ; preds = %bb.al, %bb.am
   br i1 %.not.i261, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %A1C_Item_tryGetMap.exit260
-  store i32 %25, ptr %0, align 8
-  store i64 %24, ptr %.sroa.415.0..sroa_idx, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %21, i8 0, i64 16, i1 false)
   %i.eq = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %13, i32 %i.eo, ptr %i.ep, ptr null, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 316, ptr noundef nonnull @.str.9) #16 ; 2 uses
   %i.er = extractvalue { i32, ptr } %i.eq, 0
@@ -847,16 +834,14 @@ bb.ao:                                            ; preds = %A1C_Item_tryGetMap.
   store i64 %.sroa.4.0.i262.ph, ptr %i.ed, align 8
   %i.et = getelementptr inbounds nuw [32 x i8], ptr %i.ec, i64 %.0114493
   %i.eu = call fastcc { i32, i64 } @cbor_deserializeTypeSuccessor(ptr noundef %1, ptr noundef %21, ptr noundef nonnull %i.et) ; 2 uses
-  %i.ev = extractvalue { i32, i64 } %i.eu, 0      ; 5 uses
-  %26 = extractvalue { i32, i64 } %i.eu, 1        ; 4 uses
+  %i.ev = extractvalue { i32, i64 } %i.eu, 0      ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ee, i8 0, i64 24, i1 false)
   %.not145 = icmp eq i32 %i.ev, 0
   br i1 %.not145, label %.critedge160, label %bb.ap, !prof !28
 
 bb.ap:                                            ; preds = %bb.ao
-  store i32 %i.ev, ptr %0, align 8
-  store i64 %26, ptr %.sroa.415.0..sroa_idx, align 8
-  %i.ew = inttoptr i64 %26 to ptr
+  %24 = extractvalue { i32, i64 } %i.eu, 1
+  %i.ew = inttoptr i64 %24 to ptr
   %i.ex = call { i32, ptr } (ptr, i32, ptr, ptr, ptr, ptr, i32, ptr, ...) @ZL_E_addFrame(ptr noundef nonnull %13, i32 %i.ev, ptr %i.ew, ptr nonnull @ZL_Clustering_deserializeClusteringConfig.__zl_static_error_info.55, ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.ZL_Clustering_deserializeClusteringConfig, i32 noundef 318, ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.8) #16 ; 2 uses
   %i.ey = extractvalue { i32, ptr } %i.ex, 0
   %i.ez = extractvalue { i32, ptr } %i.ex, 1
@@ -868,18 +853,13 @@ bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #16
   %i.fa = add nuw i64 %.0114493, 1                ; 2 uses
   %exitcond511.not = icmp eq i64 %i.fa, %.sroa.4.0.i246.ph
-  br i1 %exitcond511.not, label %.critedge164.loopexit, label %bb.ak, !llvm.loop !100
+  br i1 %exitcond511.not, label %.critedge164, label %bb.ak, !llvm.loop !100
 
 .critedge162:                                     ; preds = %bb.ap, %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #16
   br label %bb.aq
 
-.critedge164.loopexit:                            ; preds = %.critedge160
-  store i32 %i.ev, ptr %0, align 8
-  store i64 %26, ptr %.sroa.415.0..sroa_idx, align 8
-  br label %.critedge164
-
-.critedge164:                                     ; preds = %.critedge164.loopexit, %.critedge160.preheader
+.critedge164:                                     ; preds = %.critedge160, %.critedge160.preheader
   store i32 0, ptr %0, align 8, !tbaa !112
   %i.fb = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %i.fb, align 4
@@ -1282,7 +1262,7 @@ XXH_INLINE_XXH3_64bits_withSeed.exit:             ; preds = %bb.al, %XXH3_len_17
 declare void @llvm.assume(i1 noundef) #10
 
 ; Function Attrs: nofree noinline norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define internal fastcc void @XXH3_update_regular(ptr nofree noundef nonnull captures(address) %0, ptr noundef captures(address) %1, i64 noundef range(i64 4, 9) %2) unnamed_addr #11 {
+define internal fastcc void @XXH3_update_regular(ptr nofree noundef nonnull captures(none) %0, ptr noundef captures(address) %1, i64 noundef range(i64 4, 9) %2) unnamed_addr #11 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !242)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]

@@ -205,7 +205,7 @@ begin_hunk_0_@_Z21stbi_write_png_to_memPhiiiiPi:bb.a
   store <4 x i8> <i8 73, i8 68, i8 65, i8 84>, ptr %i.kc, align 1, !tbaa !59
   %i.kd = getelementptr inbounds nuw i8, ptr %i.em, i64 41 ; 2 uses
   %i.ke = sext i32 %i.ej to i64                   ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.kd, ptr nonnull align 1 %i.ei, i64 %i.ke, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.kd, ptr nonnull align 1 %i.ei, i64 %i.ke, i1 false)
   %i.kf = getelementptr inbounds i8, ptr %i.kd, i64 %i.ke ; 6 uses
   tail call void @free(ptr noundef nonnull %i.ei) #33
   %i.kg = icmp sgt i32 %i.ej, -4
@@ -608,7 +608,7 @@ vector.ph:
   %i.n = alloca i8, align 1                       ; 4 uses
   %i.o = alloca i8, align 1                       ; 4 uses
   %i.p = alloca i8, align 1                       ; 4 uses
-  %i.q = alloca [64 x i32], align 16              ; 70 uses
+  %i.q = alloca [64 x i32], align 16              ; 69 uses
   %i.r = load i16, ptr %7, align 2, !tbaa !69     ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %7, i64 2
   %i.t = load i16, ptr %i.s, align 2, !tbaa !69   ; 2 uses
@@ -915,7 +915,7 @@ vector.body328:                                   ; preds = %vector.body
   br i1 %exitcond264.not.1, label %bb.a, label %.preheader213, !llvm.loop !367
 
 bb.a:                                             ; preds = %.preheader213
-  %i.jg = load i32, ptr %i.q, align 16, !tbaa !57 ; 2 uses
+  %i.jg = load i32, ptr %i.q, align 16, !tbaa !57 ; 3 uses
   %i.jh = icmp eq i32 %i.jg, %5
   br i1 %i.jh, label %bb.b, label %bb.f
 
@@ -1318,9 +1318,8 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   br label %bb.cm
 
 bb.cm:                                            ; preds = %.sink.split, %._crit_edge239
-  %.0104 = load i32, ptr %i.q, align 16, !tbaa !57
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #33
-  ret i32 %.0104
+  ret i32 %i.jg
 }
 
 declare void @_ZNSt3__17promiseIvEC1Ev(ptr noundef nonnull align 8 dereferenceable(8)) unnamed_addr #10

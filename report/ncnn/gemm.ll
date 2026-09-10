@@ -204,7 +204,7 @@ bb.a:
   %i.g = alloca i32, align 4                      ; 4 uses
   %4 = alloca %"class.ncnn::Mat", align 16        ; 22 uses
   %5 = alloca %"class.ncnn::Mat", align 16        ; 22 uses
-  %6 = alloca %"class.ncnn::Mat", align 16        ; 26 uses
+  %6 = alloca %"class.ncnn::Mat", align 16        ; 25 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 268
   %i.i = load i32, ptr %i.h, align 4, !tbaa !52
   %.not = icmp eq i32 %i.i, 0
@@ -607,9 +607,9 @@ _ZN4ncnn3MataSERKS0_.exit207:                     ; preds = %_ZN4ncnn3MataSERKS0
   %i.ia = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 4 uses
   %i.ic = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 11 uses
-  %i.id = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 5 uses
+  %i.id = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 4 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %6, i64 56 ; 4 uses
-  %i.if = getelementptr inbounds nuw i8, ptr %6, i64 64 ; 4 uses
+  %i.if = getelementptr inbounds nuw i8, ptr %6, i64 64 ; 3 uses
   store i64 0, ptr %i.if, align 16, !tbaa !22
   %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 232
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(28) %6, i8 0, i64 28, i1 false)
@@ -750,9 +750,6 @@ bb.bd:                                            ; preds = %bb.bc
   br label %_ZN4ncnn3Mat7releaseEv.exit.i186
 
 _ZN4ncnn3Mat7releaseEv.exit.i186:                 ; preds = %bb.ax, %bb.bc, %bb.bd, %bb.bb, %bb.az, %bb.ay
-  store i64 0, ptr %i.if, align 16, !tbaa !22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(28) %6, i8 0, i64 28, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.id, i8 0, i64 20, i1 false)
   %i.kc = load <2 x ptr>, ptr %.pre265, align 8, !tbaa !54
   %i.kd = load ptr, ptr %.pre265, align 8, !tbaa !21
   store <2 x ptr> %i.kc, ptr %6, align 16, !tbaa !54
