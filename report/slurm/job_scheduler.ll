@@ -202,9 +202,8 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.dt, label %.thread273.sink.split, label %.thread273
 
 bb.ar:                                            ; preds = %bb.ao, %bb.ap
-  %4 = trunc nuw i8 %.4269 to i1
-  %5 = select i1 %4, i8 %.0166, i8 0
-  store i8 %5, ptr %3, align 1
+  %4 = and i8 %.0166, %.4269
+  store i8 %4, ptr %3, align 1
   br label %bb.av
 
 .thread273.sink.split:                            ; preds = %bb.aq, %bb.an, %bb.al, %bb.ak, %bb.ae, %bb.ac, %bb.aa, %bb.y, %bb.w, %bb.p, %bb.g, %bb.d

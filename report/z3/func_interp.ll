@@ -205,8 +205,7 @@ _Z9is_groundPK4expr.exit90.prol:                  ; preds = %.lr.ph220.split.pro
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 30
   %i.bd = load i8, ptr %i.bc, align 2
   %.fr.prol = freeze i8 %i.bd
-  %15 = trunc i8 %.fr.prol to i1
-  %spec.select.prol = select i1 %15, i8 %i.ai, i8 0
+  %spec.select.prol = and i8 %i.ai, %.fr.prol
   br label %_Z9is_groundPK4expr.exit90.thread.prol
 
 _Z9is_groundPK4expr.exit90.thread.prol:           ; preds = %_Z9is_groundPK4expr.exit90.prol, %.lr.ph220.split.prol
@@ -246,8 +245,7 @@ _Z9is_groundPK4expr.exit90.us:                    ; preds = %.lr.ph220.split.us
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bk, i64 30
   %i.bq = load i8, ptr %i.bp, align 2
   %.fr.us = freeze i8 %i.bq
-  %16 = trunc i8 %.fr.us to i1
-  %spec.select.us = select i1 %16, i8 %.047218.us, i8 0
+  %spec.select.us = and i8 %.047218.us, %.fr.us
   br label %_Z9is_groundPK4expr.exit90.thread.us
 
 _Z9is_groundPK4expr.exit90.thread.us:             ; preds = %_Z9is_groundPK4expr.exit90.us, %.lr.ph220.split.us
@@ -271,8 +269,7 @@ _Z9is_groundPK4expr.exit91.us:                    ; preds = %_Z9is_groundPK4expr
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 30
   %i.ca = load i8, ptr %i.bz, align 2
   %.fr210.us = freeze i8 %i.ca
-  %17 = trunc i8 %.fr210.us to i1
-  %spec.select209.us = select i1 %17, i8 %.1213.us, i8 0
+  %spec.select209.us = and i8 %.1213.us, %.fr210.us
   br label %_Z9is_groundPK4expr.exit91.thread.us
 
 _Z9is_groundPK4expr.exit91.thread.us:             ; preds = %_Z9is_groundPK4expr.exit91.us, %_Z9is_groundPK4expr.exit90.thread.us.new
@@ -290,8 +287,7 @@ _Z9is_groundPK4expr.exit91.us.1:                  ; preds = %_Z9is_groundPK4expr
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ce, i64 30
   %i.ck = load i8, ptr %i.cj, align 2
   %.fr210.us.1 = freeze i8 %i.ck
-  %18 = trunc i8 %.fr210.us.1 to i1
-  %spec.select209.us.1 = select i1 %18, i8 %i.cb, i8 0
+  %spec.select209.us.1 = and i8 %i.cb, %.fr210.us.1
   br label %_Z9is_groundPK4expr.exit91.thread.us.1
 
 _Z9is_groundPK4expr.exit91.thread.us.1:           ; preds = %_Z9is_groundPK4expr.exit91.us.1, %_Z9is_groundPK4expr.exit91.thread.us
@@ -320,8 +316,7 @@ _Z9is_groundPK4expr.exit91.us.epil:               ; preds = %.epil.preheader
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cn, i64 30
   %i.ct = load i8, ptr %i.cs, align 2
   %.fr210.us.epil = freeze i8 %i.ct
-  %19 = trunc i8 %.fr210.us.epil to i1
-  %spec.select209.us.epil = select i1 %19, i8 %.1213.us.epil.init, i8 0
+  %spec.select209.us.epil = and i8 %.1213.us.epil.init, %.fr210.us.epil
   br label %._crit_edge216.us
 
 ._crit_edge216.us:                                ; preds = %.epil.preheader, %_Z9is_groundPK4expr.exit91.us.epil, %._crit_edge216.us.unr-lcssa
@@ -356,8 +351,7 @@ _Z9is_groundPK4expr.exit90:                       ; preds = %.lr.ph220.split
   %i.de = getelementptr inbounds nuw i8, ptr %i.cz, i64 30
   %i.df = load i8, ptr %i.de, align 2
   %.fr = freeze i8 %i.df
-  %20 = trunc i8 %.fr to i1
-  %spec.select = select i1 %20, i8 %.047218, i8 0
+  %spec.select = and i8 %.047218, %.fr
   br label %_Z9is_groundPK4expr.exit90.thread
 
 _Z9is_groundPK4expr.exit90.thread:                ; preds = %_Z9is_groundPK4expr.exit90, %.lr.ph220.split
@@ -376,8 +370,7 @@ _Z9is_groundPK4expr.exit90.1:                     ; preds = %_Z9is_groundPK4expr
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dk, i64 30
   %i.dq = load i8, ptr %i.dp, align 2
   %.fr.1 = freeze i8 %i.dq
-  %21 = trunc i8 %.fr.1 to i1
-  %spec.select.1 = select i1 %21, i8 %i.dg, i8 0
+  %spec.select.1 = and i8 %i.dg, %.fr.1
   br label %_Z9is_groundPK4expr.exit90.thread.1
 
 _Z9is_groundPK4expr.exit90.thread.1:              ; preds = %_Z9is_groundPK4expr.exit90.1, %_Z9is_groundPK4expr.exit90.thread

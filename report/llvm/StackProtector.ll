@@ -204,17 +204,16 @@ bb.k:                                             ; preds = %.thread174
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   %i.fk = load i8, ptr %i.a, align 1, !tbaa !112, !range !23, !noundef !24
-  %35 = trunc nuw i8 %i.fk to i1
   call void @_ZN4llvm24IRBuilderDefaultInserterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.w) #21
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.v) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
-  %36 = select i1 %35, i8 %.0209, i8 0
+  %35 = and i8 %i.fk, %.0209
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.thread174
   %.1159 = phi ptr [ %.0158205, %.thread174 ], [ %i.fd, %bb.k ] ; 2 uses
-  %.1 = phi i8 [ %.0209, %.thread174 ], [ %36, %bb.k ]
+  %.1 = phi i8 [ %.0209, %.thread174 ], [ %35, %bb.k ]
   %i.fl = trunc i8 %.1 to i1
   br i1 %i.fl, label %._crit_edge, label %bb.m
 

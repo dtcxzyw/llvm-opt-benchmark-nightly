@@ -202,8 +202,8 @@ amdvi_mmio_reg_write.exit:                        ; preds = %bb.z, %bb.aa, %bb.a
   store i8 %i.bx, ptr %i.by, align 1
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 51264
   %i.ca = lshr i64 %.val.i.i91, 17
-  %i.cb = trunc i64 %i.ca to i8
-  %i.cc = and i8 %i.cb, 1                         ; 2 uses
+  %i.cb = trunc i64 %i.ca to i8                   ; 2 uses
+  %i.cc = and i8 %i.cb, 1
   store i8 %i.cc, ptr %i.bz, align 16
   %i.cd = and i64 %.val.i.i91, 1125899906842624
   %.not.i92 = icmp eq i64 %i.cd, 0
@@ -212,8 +212,7 @@ amdvi_mmio_reg_write.exit:                        ; preds = %bb.z, %bb.aa, %bb.a
 bb.ad:                                            ; preds = %amdvi_mmio_reg_write.exit
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 51265
   %i.cf = load i8, ptr %i.ce, align 1, !range !8, !noundef !9
-  %4 = trunc nuw i8 %i.cf to i1
-  %spec.select.i = select i1 %4, i8 %i.cc, i8 0
+  %spec.select.i = and i8 %i.cf, %i.cb
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %amdvi_mmio_reg_write.exit

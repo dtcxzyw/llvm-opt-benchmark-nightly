@@ -205,8 +205,7 @@ _Z9is_groundPK4expr.exit121:                      ; preds = %bb.ba
   %i.kr = getelementptr inbounds nuw i8, ptr %i.ki, i64 30
   %i.ks = load i8, ptr %i.kr, align 2
   %.fr = freeze i8 %i.ks
-  %9 = trunc i8 %.fr to i1
-  %spec.select = select i1 %9, i8 %.058207, i8 0
+  %spec.select = and i8 %.058207, %.fr
   br label %_Z9is_groundPK4expr.exit121.thread
 
 _Z9is_groundPK4expr.exit121.thread:               ; preds = %_Z9is_groundPK4expr.exit121, %bb.ba
@@ -340,8 +339,7 @@ _Z9is_groundPK4expr.exit136.prol:                 ; preds = %.lr.ph205.prol
   %i.mv = getelementptr inbounds nuw i8, ptr %i.mq, i64 30
   %i.mw = load i8, ptr %i.mv, align 2
   %.fr149.prol = freeze i8 %i.mw
-  %10 = trunc i8 %.fr149.prol to i1
-  %spec.select148.prol = select i1 %10, i8 %i.kt, i8 0
+  %spec.select148.prol = and i8 %i.kt, %.fr149.prol
   br label %_Z9is_groundPK4expr.exit136.thread.prol
 
 _Z9is_groundPK4expr.exit136.thread.prol:          ; preds = %_Z9is_groundPK4expr.exit136.prol, %.lr.ph205.prol
@@ -375,8 +373,7 @@ _Z9is_groundPK4expr.exit136:                      ; preds = %.lr.ph205
   %i.ng = getelementptr inbounds nuw i8, ptr %i.nb, i64 30
   %i.nh = load i8, ptr %i.ng, align 2
   %.fr149 = freeze i8 %i.nh
-  %11 = trunc i8 %.fr149 to i1
-  %spec.select148 = select i1 %11, i8 %.1203, i8 0
+  %spec.select148 = and i8 %.1203, %.fr149
   br label %_Z9is_groundPK4expr.exit136.thread
 
 _Z9is_groundPK4expr.exit136.thread:               ; preds = %_Z9is_groundPK4expr.exit136, %.lr.ph205
@@ -393,8 +390,7 @@ _Z9is_groundPK4expr.exit136.1:                    ; preds = %_Z9is_groundPK4expr
   %i.np = getelementptr inbounds nuw i8, ptr %i.nk, i64 30
   %i.nq = load i8, ptr %i.np, align 2
   %.fr149.1 = freeze i8 %i.nq
-  %12 = trunc i8 %.fr149.1 to i1
-  %spec.select148.1 = select i1 %12, i8 %i.ni, i8 0
+  %spec.select148.1 = and i8 %i.ni, %.fr149.1
   br label %_Z9is_groundPK4expr.exit136.thread.1
 
 _Z9is_groundPK4expr.exit136.thread.1:             ; preds = %_Z9is_groundPK4expr.exit136.1, %_Z9is_groundPK4expr.exit136.thread

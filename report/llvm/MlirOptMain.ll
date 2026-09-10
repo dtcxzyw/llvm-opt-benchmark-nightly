@@ -204,10 +204,9 @@ bb.f:                                             ; preds = %_ZN4mlir11TimingSco
 bb.g:                                             ; preds = %bb.f
   %i.bk = call fastcc i8 @_ZL17doVerifyRoundTripPN4mlir9OperationERKNS_17MlirOptMainConfigEb(ptr noundef nonnull %i.bg, ptr noundef nonnull readonly align 8 dereferenceable(568) %3, i1 noundef zeroext false)
   %i.bl = call fastcc i8 @_ZL17doVerifyRoundTripPN4mlir9OperationERKNS_17MlirOptMainConfigEb(ptr noundef nonnull %i.bg, ptr noundef nonnull readonly align 8 dereferenceable(568) %3, i1 noundef zeroext true)
-  %34 = trunc nuw i8 %i.bk to i1
-  %i.bm = trunc i8 %i.bl to i1
-  %35 = select i1 %34, i1 %i.bm, i1 false
-  br i1 %35, label %bb.h, label %bb.cb
+  %34 = and i8 %i.bl, %i.bk
+  %i.bm = trunc i8 %34 to i1
+  br i1 %i.bm, label %bb.h, label %bb.cb
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.bn = xor i1 %i.l, true
