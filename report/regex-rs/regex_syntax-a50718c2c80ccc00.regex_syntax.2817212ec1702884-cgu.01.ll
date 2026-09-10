@@ -202,7 +202,7 @@ bb.a:
   %i.f = icmp ne i64 %i.e, 4, !dbg !11506
   tail call void @llvm.assume(i1 %i.f), !dbg !11506
   %i.g = add nsw i64 %i.e, -2, !dbg !11506
-  %.inv33.i = icmp samesign ult i64 %i.e, 2, !dbg !11506
+  %.inv33.i = icmp samesign ult i64 %i.e, 2, !dbg !11506 ; 2 uses
   %i.h = select i1 %.inv33.i, i64 2, i64 %i.g, !dbg !11506
     #dbg_value(i64 %i.h, !11167, !DIExpression(), !10878)
   %i.i = icmp eq i64 %i.d, %i.h, !dbg !11507
@@ -211,7 +211,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   switch i64 %i.d, label %bb.c [
     i64 1, label %bb.d
-    i64 2, label %bb.e
+    i64 2, label %2
     i64 3, label %.split17
     i64 4, label %bb.g
     i64 5, label %bb.l
@@ -222,6 +222,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   unreachable, !dbg !11505
+
+2:                                                ; preds = %bb.b
+  br i1 %.inv33.i, label %bb.e, label %_RNvXsK_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKindNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.thread13, !dbg !11507
 
 bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %0, !11168, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !10879)
@@ -259,7 +262,7 @@ bb.d:                                             ; preds = %bb.b
   %i.s = icmp eq i32 %bcmp.i, 0, !dbg !11511
   br i1 %i.s, label %_RNvXsK_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKindNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.thread13, label %_RNvXs1U_NtCs3roNzt6HBWW_12regex_syntax3hirNtB6_11PropertiesINtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit, !dbg !11504
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %2
     #dbg_value(ptr %0, !11170, !DIExpression(), !10902)
     #dbg_value(ptr %1, !11171, !DIExpression(), !10902)
     #dbg_value(ptr poison, !11254, !DIExpression(), !10905)
@@ -575,7 +578,7 @@ _RNvXsK_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKindNtNtCsj6eKBz9Db1c_4core3c
   %i.cy = tail call noundef zeroext i1 @_RNvXs_NtNtCs3roNzt6HBWW_12regex_syntax3hir8intervalINtB4_11IntervalSetNtB6_17ClassUnicodeRangeENtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eqB8_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.v, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.w), !dbg !11565
   br i1 %i.cy, label %_RNvXsK_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKindNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.thread13, label %_RNvXs1U_NtCs3roNzt6HBWW_12regex_syntax3hirNtB6_11PropertiesINtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit, !dbg !11504
 
-_RNvXsK_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKindNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.thread13: ; preds = %bb.v, %bb.s, %bb.u, %bb.r, %bb.b, %.split19, %.split18, %.split17, %.split16, %.split15, %_RNvXsK_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKindNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit
+_RNvXsK_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKindNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit.thread13: ; preds = %bb.v, %bb.s, %bb.u, %bb.r, %2, %bb.b, %.split19, %.split18, %.split17, %.split16, %.split15, %_RNvXsK_NtCs3roNzt6HBWW_12regex_syntax3hirNtB5_7HirKindNtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2eq.exit
     #dbg_value(ptr %0, !11457, !DIExpression(DW_OP_plus_uconst, 40, DW_OP_stack_value), !11464)
     #dbg_value(ptr %1, !11461, !DIExpression(DW_OP_plus_uconst, 40, DW_OP_stack_value), !11464)
     #dbg_value(ptr %0, !11465, !DIExpression(DW_OP_plus_uconst, 40, DW_OP_stack_value), !11470)

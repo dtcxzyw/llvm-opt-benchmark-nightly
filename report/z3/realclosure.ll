@@ -205,8 +205,8 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m
-  %i.ec = add i32 %3, -1
-  %i.ed = zext i32 %i.ec to i64                   ; 2 uses
+  %i.ec = add i32 %3, -1                          ; 2 uses
+  %i.ed = zext i32 %i.ec to i64
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ed
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !120
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
@@ -217,6 +217,8 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   store ptr null, ptr %8, align 8, !tbaa !150
   %i.eh = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   store ptr %0, ptr %i.eh, align 8, !tbaa !144
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.ec, i32 1)
+  %wide.trip.count = zext i32 %umax to i64
   br label %_ZN11realclosure7manager3imp11adjust_sizeER10ref_bufferINS_5valueES1_Lj32EE.exit107
 
 _ZN11realclosure7manager3imp11adjust_sizeER10ref_bufferINS_5valueES1_Lj32EE.exit107: ; preds = %_ZN11realclosure7manager3imp11adjust_sizeER10ref_bufferINS_5valueES1_Lj32EE.exit107.backedge, %bb.n
@@ -404,7 +406,7 @@ bb.ad:                                            ; preds = %bb.ac, %.noexc114, 
   %i.ha = getelementptr inbounds nuw [8 x i8], ptr %i.gz, i64 %i.fv
   store ptr %i.fz, ptr %i.ha, align 8, !tbaa !120
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ed
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !441
 
 bb.ae:                                            ; preds = %bb.ac, %.noexc114, %.noexc113, %.noexc112, %.noexc111, %bb.ab, %bb.w, %.lr.ph
@@ -805,6 +807,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #20

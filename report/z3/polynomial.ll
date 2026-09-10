@@ -205,8 +205,8 @@ bb.a:
   %16 = alloca %class.obj_ref, align 8            ; 9 uses
   %17 = alloca %class.obj_ref, align 8            ; 9 uses
   %18 = alloca %class.obj_ref, align 8            ; 10 uses
-  %19 = alloca %class.obj_ref, align 8            ; 11 uses
-  %20 = alloca %class.obj_ref, align 8            ; 21 uses
+  %19 = alloca %class.obj_ref, align 8            ; 12 uses
+  %20 = alloca %class.obj_ref, align 8            ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #29
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !207, !nonnull !99, !align !100 ; 8 uses
@@ -609,19 +609,19 @@ bb.fa:                                            ; preds = %bb.ey, %bb.ex, %bb.
 
 bb.fb:                                            ; preds = %bb.fa
   %i.aef = icmp ugt i32 %i.zj, 1
-  %.pre682 = load ptr, ptr %19, align 8, !tbaa !110 ; 7 uses
-  %.pre684 = load ptr, ptr %20, align 8, !tbaa !110 ; 2 uses
   br i1 %i.aef, label %.lr.ph623.preheader, label %.loopexit584
 
 .lr.ph623.preheader:                              ; preds = %bb.fb
+  %.pre677 = load ptr, ptr %20, align 8, !tbaa !110
+  %.pre678 = load ptr, ptr %19, align 8, !tbaa !110
   %i.aeg = add i32 %i.zj, -2
   br label %.lr.ph623
 
 .lr.ph623:                                        ; preds = %.lr.ph623.preheader, %bb.fg
-  %i.aeh = phi ptr [ %i.aei, %bb.fg ], [ %.pre684, %.lr.ph623.preheader ]
+  %i.aeh = phi ptr [ %i.aei, %bb.fg ], [ %.pre677, %.lr.ph623.preheader ]
   %.050622 = phi i32 [ %i.aer, %bb.fg ], [ 0, %.lr.ph623.preheader ] ; 2 uses
-  %i.aei = invoke noundef ptr @_ZN10polynomial7manager3imp9exact_divEPKNS_10polynomialES4_(ptr noundef nonnull align 8 dereferenceable(824) %0, ptr noundef %i.aeh, ptr noundef %.pre682)
-          to label %bb.fc unwind label %bb.fh     ; 6 uses
+  %i.aei = invoke noundef ptr @_ZN10polynomial7manager3imp9exact_divEPKNS_10polynomialES4_(ptr noundef nonnull align 8 dereferenceable(824) %0, ptr noundef %i.aeh, ptr noundef %.pre678)
+          to label %bb.fc unwind label %bb.fh     ; 5 uses
 
 bb.fc:                                            ; preds = %.lr.ph623
   %.not.i397 = icmp eq ptr %i.aei, null
@@ -663,25 +663,26 @@ bb.fh:                                            ; preds = %bb.ff, %.lr.ph623
   br label %.body
 
 .loopexit584:                                     ; preds = %bb.fg, %bb.fb
-  %21 = phi ptr [ %.pre684, %bb.fb ], [ %i.aei, %bb.fg ] ; 3 uses
-  %.not.i403 = icmp eq ptr %.pre682, %21
+  %21 = load ptr, ptr %19, align 8, !tbaa !110    ; 6 uses
+  %22 = load ptr, ptr %20, align 8, !tbaa !110    ; 3 uses
+  %.not.i403 = icmp eq ptr %21, %22
   br i1 %.not.i403, label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSERKS3_.exit410, label %bb.fi
 
 bb.fi:                                            ; preds = %.loopexit584
-  %.not.i.i404 = icmp eq ptr %.pre682, null
+  %.not.i.i404 = icmp eq ptr %21, null
   br i1 %.not.i.i404, label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i405, label %bb.fj
 
 bb.fj:                                            ; preds = %bb.fi
   %i.aet = load ptr, ptr %i.tz, align 8, !tbaa !111, !nonnull !99, !align !100
   %i.aeu = load ptr, ptr %i.aet, align 8, !tbaa !94
-  %i.aev = load i32, ptr %.pre682, align 8, !tbaa !108
+  %i.aev = load i32, ptr %21, align 8, !tbaa !108
   %i.aew = add i32 %i.aev, -1                     ; 2 uses
-  store i32 %i.aew, ptr %.pre682, align 8, !tbaa !108
+  store i32 %i.aew, ptr %21, align 8, !tbaa !108
   %i.aex = icmp eq i32 %i.aew, 0
   br i1 %i.aex, label %bb.fk, label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i405
 
 bb.fk:                                            ; preds = %bb.fj
-  invoke void @_ZN10polynomial7manager3imp3delEPNS_10polynomialE(ptr noundef nonnull align 8 dereferenceable(824) %i.aeu, ptr noundef nonnull %.pre682)
+  invoke void @_ZN10polynomial7manager3imp3delEPNS_10polynomialE(ptr noundef nonnull align 8 dereferenceable(824) %i.aeu, ptr noundef nonnull %21)
           to label %.noexc409 unwind label %bb.em
 
 .noexc409:                                        ; preds = %bb.fk
@@ -689,7 +690,7 @@ bb.fk:                                            ; preds = %bb.fj
   br label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i405
 
 _ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i405: ; preds = %.noexc409, %bb.fj, %bb.fi
-  %i.aey = phi ptr [ %21, %bb.fi ], [ %.pr.pre.i408, %.noexc409 ], [ %21, %bb.fj ] ; 5 uses
+  %i.aey = phi ptr [ %22, %bb.fi ], [ %.pr.pre.i408, %.noexc409 ], [ %22, %bb.fj ] ; 5 uses
   store ptr %i.aey, ptr %19, align 8, !tbaa !110
   %.not.i3.i406 = icmp eq ptr %i.aey, null
   br i1 %.not.i3.i406, label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSERKS3_.exit410, label %_ZN10polynomial7manager7inc_refEPNS_10polynomialE.exit.i.i407
@@ -701,7 +702,7 @@ _ZN10polynomial7manager7inc_refEPNS_10polynomialE.exit.i.i407: ; preds = %_ZN7ob
   br label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSERKS3_.exit410
 
 _ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSERKS3_.exit410: ; preds = %_ZN10polynomial7manager7inc_refEPNS_10polynomialE.exit.i.i407, %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i405, %.loopexit584
-  %i.afb = phi ptr [ %i.aey, %_ZN10polynomial7manager7inc_refEPNS_10polynomialE.exit.i.i407 ], [ null, %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i405 ], [ %.pre682, %.loopexit584 ] ; 7 uses
+  %i.afb = phi ptr [ %i.aey, %_ZN10polynomial7manager7inc_refEPNS_10polynomialE.exit.i.i407 ], [ null, %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i405 ], [ %21, %.loopexit584 ] ; 7 uses
   %i.afc = getelementptr inbounds nuw i8, ptr %i.aao, i64 8
   %i.afd = load i32, ptr %i.afc, align 8, !tbaa !175 ; 3 uses
   %i.afe = icmp eq i32 %i.afd, 0                  ; 2 uses
@@ -1104,10 +1105,10 @@ bb.gp:                                            ; preds = %bb.gn, %bb.gm, %bb.
 
 bb.gq:                                            ; preds = %bb.gp
   %i.amp = icmp ugt i32 %.122.i458, 1
-  %.pre687 = load ptr, ptr %20, align 8, !tbaa !110 ; 2 uses
   br i1 %i.amp, label %.lr.ph625.preheader, label %.loopexit
 
 .lr.ph625.preheader:                              ; preds = %bb.gq
+  %.pre679 = load ptr, ptr %20, align 8, !tbaa !110
   %i.amq = add i32 %.122.i458, -2
   br label %.lr.ph625
 
@@ -1117,10 +1118,10 @@ bb.gr:                                            ; preds = %bb.hk, %bb.he, %_ZN
   br label %.body
 
 .lr.ph625:                                        ; preds = %.lr.ph625.preheader, %bb.gw
-  %i.ams = phi ptr [ %i.amt, %bb.gw ], [ %.pre687, %.lr.ph625.preheader ]
+  %i.ams = phi ptr [ %i.amt, %bb.gw ], [ %.pre679, %.lr.ph625.preheader ]
   %.0624 = phi i32 [ %i.anc, %bb.gw ], [ 0, %.lr.ph625.preheader ] ; 2 uses
   %i.amt = invoke noundef ptr @_ZN10polynomial7manager3imp9exact_divEPKNS_10polynomialES4_(ptr noundef nonnull align 8 dereferenceable(824) %0, ptr noundef %i.ams, ptr noundef %i.afb)
-          to label %bb.gs unwind label %bb.gx     ; 6 uses
+          to label %bb.gs unwind label %bb.gx     ; 5 uses
 
 bb.gs:                                            ; preds = %.lr.ph625
   %.not.i506 = icmp eq ptr %i.amt, null
@@ -1162,8 +1163,8 @@ bb.gx:                                            ; preds = %bb.gv, %.lr.ph625
   br label %.body
 
 .loopexit:                                        ; preds = %bb.gw, %bb.gq
-  %22 = phi ptr [ %.pre687, %bb.gq ], [ %i.amt, %bb.gw ] ; 3 uses
-  %.not.i512 = icmp eq ptr %i.afb, %22
+  %23 = load ptr, ptr %20, align 8, !tbaa !110    ; 3 uses
+  %.not.i512 = icmp eq ptr %i.afb, %23
   br i1 %.not.i512, label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSERKS3_.exit519, label %bb.gy
 
 bb.gy:                                            ; preds = %.loopexit
@@ -1188,7 +1189,7 @@ bb.ha:                                            ; preds = %bb.gz
   br label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i514
 
 _ZN7obj_refIN10polynomial10polynomialENS0_7managerEE7dec_refEv.exit.i514: ; preds = %.noexc518, %bb.gz, %bb.gy
-  %i.anj = phi ptr [ %22, %bb.gy ], [ %.pr.pre.i517, %.noexc518 ], [ %22, %bb.gz ] ; 5 uses
+  %i.anj = phi ptr [ %23, %bb.gy ], [ %.pr.pre.i517, %.noexc518 ], [ %23, %bb.gz ] ; 5 uses
   store ptr %i.anj, ptr %19, align 8, !tbaa !110
   %.not.i3.i515 = icmp eq ptr %i.anj, null
   br i1 %.not.i3.i515, label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSERKS3_.exit519, label %_ZN10polynomial7manager7inc_refEPNS_10polynomialE.exit.i.i516
@@ -1591,7 +1592,7 @@ bb.fc:                                            ; preds = %bb.fa, %.lr.ph400
   br label %.body
 
 .loopexit366:                                     ; preds = %bb.fb, %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSEPS1_.exit181, %._crit_edge398
-  %.pr.pre.i200 = phi ptr [ %i.yc, %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSEPS1_.exit181 ], [ %i.yr, %._crit_edge398 ], [ %i.afm, %bb.fb ] ; 6 uses
+  %.pr.pre.i200 = phi ptr [ %i.yr, %._crit_edge398 ], [ %i.yc, %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSEPS1_.exit181 ], [ %i.afm, %bb.fb ] ; 6 uses
   %i.afx = load ptr, ptr %20, align 8, !tbaa !110 ; 5 uses
   %.not.i195 = icmp eq ptr %i.afx, %.pr.pre.i200
   br i1 %.not.i195, label %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEEaSERKS3_.exit202.backedge, label %bb.fd
