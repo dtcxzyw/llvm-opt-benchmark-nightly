@@ -1,0 +1,409 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index c881ecc8d2d35..8c29b54ae2ac5 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -1883,6 +1883,7 @@ static void computeKnownBitsFromOperator(const Operator *I,
+       case Instruction::Sub:
+       case Instruction::And:
+       case Instruction::Or:
++      case Instruction::Xor:
+       case Instruction::Mul: {
+         // Change the context instruction to the "edge" that flows into the
+         // phi. This is important because that is where the value is actually
+@@ -1907,8 +1908,17 @@ static void computeKnownBitsFromOperator(const Operator *I,
+         RecQ.CxtI = LatchTerm;
+         computeKnownBits(Step, DemandedElts, KnownStep, RecQ, Depth + 1);
+ 
+-        Known.Zero.setLowBits(std::min(KnownStart.countMinTrailingZeros(),
+-                                       KnownStep.countMinTrailingZeros()));
++        if (Opcode == Instruction::Or || Opcode == Instruction::Xor) {
++          Known.Zero |= KnownStart.Zero & KnownStep.Zero;
++          if (Opcode == Instruction::Or)
++            Known.One |= KnownStart.One;
++        } else if (Opcode == Instruction::And) {
++          Known.Zero |= KnownStart.Zero;
++          Known.One |= KnownStart.One & KnownStep.One;
++        } else {
++          Known.Zero.setLowBits(std::min(KnownStart.countMinTrailingZeros(),
++                                         KnownStep.countMinTrailingZeros()));
++        }
+ 
+         auto *OverflowOp = dyn_cast<OverflowingBinaryOperator>(BO);
+         if (!OverflowOp || !Q.IIQ.hasNoSignedWrap(OverflowOp))
+@@ -3140,6 +3150,8 @@ static bool isNonZeroRecurrence(const PHINode *PN) {
+   case Instruction::AShr:
+   case Instruction::LShr:
+     return BO->isExact();
++  case Instruction::Or:
++    return true;
+   default:
+     return false;
+   }
+diff --git a/llvm/test/Analysis/ValueTracking/phi-known-nonzero.ll b/llvm/test/Analysis/ValueTracking/phi-known-nonzero.ll
+index d80d1704c73d1..378ab3230eb5d 100644
+--- a/llvm/test/Analysis/ValueTracking/phi-known-nonzero.ll
++++ b/llvm/test/Analysis/ValueTracking/phi-known-nonzero.ll
+@@ -262,3 +262,74 @@ T:
+ F:
+   br label %T
+ }
++
++; An or recurrence with a non-zero start value is never zero.
++define i1 @or_recurrence_nonzero_start(ptr %p, i64 %n) {
++; CHECK-LABEL: @or_recurrence_nonzero_start(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[ACC:%.*]] = phi i32 [ 32768, [[ENTRY]] ], [ [[ACC_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i32, ptr [[P:%.*]], i64 [[IV]]
++; CHECK-NEXT:    [[X:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[ACC_NEXT]] = or i32 [[X]], [[ACC]]
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %acc = phi i32 [ 32768, %entry ], [ %acc.next, %loop ]
++  %gep = getelementptr i32, ptr %p, i64 %iv
++  %x = load i32, ptr %gep
++  %acc.next = or i32 %x, %acc
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %cmp = icmp eq i32 %acc.next, 0
++  ret i1 %cmp
++}
++
++; Negative test: the start value is zero.
++define i1 @or_recurrence_zero_start(ptr %p, i64 %n) {
++; CHECK-LABEL: @or_recurrence_zero_start(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[ACC:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[ACC_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i32, ptr [[P:%.*]], i64 [[IV]]
++; CHECK-NEXT:    [[X:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[ACC_NEXT]] = or i32 [[X]], [[ACC]]
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[ACC_NEXT]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %acc = phi i32 [ 0, %entry ], [ %acc.next, %loop ]
++  %gep = getelementptr i32, ptr %p, i64 %iv
++  %x = load i32, ptr %gep
++  %acc.next = or i32 %x, %acc
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %cmp = icmp eq i32 %acc.next, 0
++  ret i1 %cmp
++}
+diff --git a/llvm/test/CodeGen/AMDGPU/GlobalISel/is-safe-to-sink-bug.ll b/llvm/test/CodeGen/AMDGPU/GlobalISel/is-safe-to-sink-bug.ll
+index d039334ab63dc..a1ea35304f113 100644
+--- a/llvm/test/CodeGen/AMDGPU/GlobalISel/is-safe-to-sink-bug.ll
++++ b/llvm/test/CodeGen/AMDGPU/GlobalISel/is-safe-to-sink-bug.ll
+@@ -19,11 +19,11 @@ define amdgpu_ps void @_amdgpu_ps_main(i1 %arg) {
+ ; CHECK-NEXT:    s_mov_b32 s2, s0
+ ; CHECK-NEXT:    s_mov_b32 s3, s0
+ ; CHECK-NEXT:    s_addc_u32 s9, s9, 0
+-; CHECK-NEXT:    s_buffer_load_dword s1, s[0:3], 0x0
++; CHECK-NEXT:    s_buffer_load_dword s2, s[0:3], 0x0
+ ; CHECK-NEXT:    s_mov_b32 s32, 0
+ ; CHECK-NEXT:    v_cmp_ne_u32_e32 vcc_lo, 0, v0
+ ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
+-; CHECK-NEXT:    s_cmp_ge_i32 s1, 0
++; CHECK-NEXT:    s_cmp_ge_i32 s2, 0
+ ; CHECK-NEXT:    s_cbranch_scc0 .LBB0_2
+ ; CHECK-NEXT:  .LBB0_1: ; %bb12
+ ; CHECK-NEXT:    v_cndmask_b32_e64 v0, 1.0, 0, s0
+@@ -35,23 +35,22 @@ define amdgpu_ps void @_amdgpu_ps_main(i1 %arg) {
+ ; CHECK-NEXT:    s_mov_b64 s[2:3], s[10:11]
+ ; CHECK-NEXT:    s_swappc_b64 s[30:31], 0
+ ; CHECK-NEXT:  .LBB0_2: ; %bb2.preheader
+-; CHECK-NEXT:    s_mov_b32 s3, 0
+ ; CHECK-NEXT:    s_mov_b32 s1, 0
+-; CHECK-NEXT:    s_mov_b32 s2, 0
++; CHECK-NEXT:    s_mov_b32 s3, 0
+ ; CHECK-NEXT:    s_branch .LBB0_4
+ ; CHECK-NEXT:    .p2align 6
+ ; CHECK-NEXT:  .LBB0_3: ; %bb6
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_4 Depth=1
+ ; CHECK-NEXT:    s_or_b32 exec_lo, exec_lo, s0
+ ; CHECK-NEXT:    v_cmp_ne_u32_e64 s0, 0, v0
+-; CHECK-NEXT:    s_or_b32 s4, s3, 1
+-; CHECK-NEXT:    s_and_b32 s0, s0, s2
+-; CHECK-NEXT:    s_cmp_lt_i32 s3, 0
++; CHECK-NEXT:    s_or_b32 s4, s2, 1
++; CHECK-NEXT:    s_and_b32 s0, s0, s3
++; CHECK-NEXT:    s_cmp_lt_i32 s2, 0
+ ; CHECK-NEXT:    s_cselect_b32 s5, 1, 0
+-; CHECK-NEXT:    s_andn2_b32 s2, s2, exec_lo
++; CHECK-NEXT:    s_andn2_b32 s2, s3, exec_lo
+ ; CHECK-NEXT:    s_and_b32 s3, exec_lo, s0
+-; CHECK-NEXT:    s_or_b32 s2, s2, s3
+-; CHECK-NEXT:    s_mov_b32 s3, s4
++; CHECK-NEXT:    s_or_b32 s3, s2, s3
++; CHECK-NEXT:    s_mov_b32 s2, s4
+ ; CHECK-NEXT:    s_cmp_lg_u32 s5, 0
+ ; CHECK-NEXT:    s_cbranch_scc0 .LBB0_1
+ ; CHECK-NEXT:  .LBB0_4: ; %bb2
+@@ -71,7 +70,7 @@ bb:
+ 
+ bb2:
+   %i3 = phi i1 [ %i9, %bb6 ], [ false, %bb ]
+-  %i4 = phi i32 [ %i10, %bb6 ], [ 0, %bb ]
++  %i4 = phi i32 [ %i10, %bb6 ], [ %i, %bb ]
+   br i1 %arg, label %bb5, label %bb6
+ 
+ bb5:
+diff --git a/llvm/test/CodeGen/AMDGPU/absdiff.ll b/llvm/test/CodeGen/AMDGPU/absdiff.ll
+index e206b4341a096..6670459880ad2 100644
+--- a/llvm/test/CodeGen/AMDGPU/absdiff.ll
++++ b/llvm/test/CodeGen/AMDGPU/absdiff.ll
+@@ -2,10 +2,9 @@
+ ; RUN: llc -mtriple=amdgpu9.00-amd-amdpal < %s | FileCheck %s
+ 
+ 
+-define amdgpu_gs float @absdiff_valu_input_regression() {
++define amdgpu_gs float @absdiff_valu_input_regression(i32 inreg %start) {
+ ; CHECK-LABEL: absdiff_valu_input_regression:
+ ; CHECK:       ; %bb.0: ; %bb
+-; CHECK-NEXT:    s_mov_b32 s0, 0
+ ; CHECK-NEXT:  .LBB0_1: ; %bb1
+ ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
+ ; CHECK-NEXT:    s_mov_b32 s1, s0
+@@ -22,7 +21,7 @@ bb:
+   br label %bb1
+ 
+ bb1:                                              ; preds = %bb1, %bb
+-  %i = phi i32 [ 0, %bb ], [ %i9, %bb1 ]
++  %i = phi i32 [ %start, %bb ], [ %i9, %bb1 ]
+   %i2 = phi i32 [ 0, %bb ], [ %i5, %bb1 ]
+   %i3 = or i32 %i2, 1
+   %i4 = or i32 %i3, 0
+diff --git a/llvm/test/Transforms/InstCombine/recurrence.ll b/llvm/test/Transforms/InstCombine/recurrence.ll
+index 456b20a187519..51378af5820ab 100644
+--- a/llvm/test/Transforms/InstCombine/recurrence.ll
++++ b/llvm/test/Transforms/InstCombine/recurrence.ll
+@@ -199,3 +199,201 @@ exit:
+ }
+ 
+ declare void @use(i64)
++
++; The high bits of an or recurrence are known zero if they are zero in both
++; the start value and the step.
++define i32 @test_or_known_zero_high_bits(ptr %p, i64 %n) {
++; CHECK-LABEL: @test_or_known_zero_high_bits(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[ACC:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[ACC_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[P:%.*]], i64 [[IV]]
++; CHECK-NEXT:    [[X:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[X_EXT:%.*]] = zext i8 [[X]] to i32
++; CHECK-NEXT:    [[ACC_NEXT]] = or i32 [[ACC]], [[X_EXT]]
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i32 [[ACC_NEXT]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %acc = phi i32 [ 0, %entry ], [ %acc.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %iv
++  %x = load i8, ptr %gep
++  %x.ext = zext i8 %x to i32
++  %acc.next = or i32 %acc, %x.ext
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %masked = and i32 %acc.next, 255
++  ret i32 %masked
++}
++
++; Negative test: the start value has unknown high bits.
++define i32 @test_or_unknown_start(ptr %p, i64 %n, i32 %start) {
++; CHECK-LABEL: @test_or_unknown_start(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[ACC:%.*]] = phi i32 [ [[START:%.*]], [[ENTRY]] ], [ [[ACC_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[P:%.*]], i64 [[IV]]
++; CHECK-NEXT:    [[X:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[X_EXT:%.*]] = zext i8 [[X]] to i32
++; CHECK-NEXT:    [[ACC_NEXT]] = or i32 [[ACC]], [[X_EXT]]
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[MASKED:%.*]] = and i32 [[ACC_NEXT]], 255
++; CHECK-NEXT:    ret i32 [[MASKED]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %acc = phi i32 [ %start, %entry ], [ %acc.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %iv
++  %x = load i8, ptr %gep
++  %x.ext = zext i8 %x to i32
++  %acc.next = or i32 %acc, %x.ext
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %masked = and i32 %acc.next, 255
++  ret i32 %masked
++}
++
++; Bits that are one in the start value stay one in an or recurrence, but bits
++; that are only one in the step do not apply to the first iteration.
++define i64 @test_or_known_one_start(i64 %a) {
++; CHECK-LABEL: @test_or_known_one_start(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    tail call void @use(i64 1)
++; CHECK-NEXT:    br label [[LOOP]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 1, %entry ], [ %iv.next, %loop ]
++  %iv.next = or i64 %iv, %a
++  %bit0 = and i64 %iv, 1
++  tail call void @use(i64 %bit0)
++  br label %loop
++}
++
++; The high bits of an and recurrence are known zero if they are zero in the
++; start value.
++define i32 @test_and_known_zero_start(ptr %p, i64 %n) {
++; CHECK-LABEL: @test_and_known_zero_start(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[ACC:%.*]] = phi i32 [ 255, [[ENTRY]] ], [ [[ACC_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds [4 x i8], ptr [[P:%.*]], i64 [[IV]]
++; CHECK-NEXT:    [[X:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[ACC_NEXT]] = and i32 [[ACC]], [[X]]
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i32 [[ACC_NEXT]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %acc = phi i32 [ 255, %entry ], [ %acc.next, %loop ]
++  %gep = getelementptr inbounds i32, ptr %p, i64 %iv
++  %x = load i32, ptr %gep
++  %acc.next = and i32 %acc, %x
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %masked = and i32 %acc.next, 255
++  ret i32 %masked
++}
++
++; Negative test: an and recurrence does not inherit the zero bits of the step,
++; because the step does not apply to the first iteration.
++define i32 @test_and_step_zero_bits(i32 %start) {
++; CHECK-LABEL: @test_and_step_zero_bits(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    tail call void @use(i64 0)
++; CHECK-NEXT:    br i1 false, label [[LOOP]], label [[EXIT:%.*]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[MASKED:%.*]] = and i32 [[START:%.*]], 4
++; CHECK-NEXT:    ret i32 [[MASKED]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.next = and i32 %iv, 4
++  %masked = and i32 %iv, 4
++  tail call void @use(i64 0)
++  br i1 false, label %loop, label %exit
++
++exit:
++  ret i32 %masked
++}
++
++; The high bits of an xor recurrence are known zero if they are zero in both
++; the start value and the step.
++define i32 @test_xor_known_zero_high_bits(ptr %p, i64 %n) {
++; CHECK-LABEL: @test_xor_known_zero_high_bits(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[ACC:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[ACC_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[P:%.*]], i64 [[IV]]
++; CHECK-NEXT:    [[X:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[X_EXT:%.*]] = zext i8 [[X]] to i32
++; CHECK-NEXT:    [[ACC_NEXT]] = xor i32 [[ACC]], [[X_EXT]]
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[N:%.*]]
++; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i32 [[ACC_NEXT]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %acc = phi i32 [ 0, %entry ], [ %acc.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %p, i64 %iv
++  %x = load i8, ptr %gep
++  %x.ext = zext i8 %x to i32
++  %acc.next = xor i32 %acc, %x.ext
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %masked = and i32 %acc.next, 255
++  ret i32 %masked
++}
