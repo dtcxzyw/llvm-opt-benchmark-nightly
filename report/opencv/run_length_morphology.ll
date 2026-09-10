@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.lr.ph251, %bb.d
   %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 -4
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !43 ; 4 uses
   %i.bd = sub nsw i32 %i.bc, %i.ay                ; 3 uses
-  %i.be = add i32 %i.bd, 1                        ; 5 uses
+  %i.be = add i32 %i.bd, 1                        ; 3 uses
   %i.bf = sext i32 %i.be to i64                   ; 3 uses
   %i.bg = icmp slt i32 %i.bd, -1
   br i1 %i.bg, label %bb.f, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i146
@@ -258,13 +258,15 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit154.thread:     ; preds = %_ZNSt6vectorIiSaIiE
   %.not125253 = icmp slt i32 %i.bd, 0             ; 2 uses
   %i.bt = sub i32 %i.ay, %i.i
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %wide.trip.count293 = zext i32 %i.be to i64     ; 3 uses
+  %3 = add i32 %i.bc, 1
+  %4 = sub i32 %3, %i.ay                          ; 3 uses
+  %wide.trip.count293 = zext i32 %4 to i64        ; 3 uses
   %wide.trip.count305 = zext i32 %i.be to i64
   %xtraiter = and i64 %wide.trip.count293, 1
-  %i.bv = icmp eq i32 %i.bc, %i.ay
+  %i.bv = icmp eq i32 %4, 1
   %unroll_iter = and i64 %wide.trip.count293, 4294967294
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod396 = trunc i32 %i.be to i1
+  %lcmp.mod396 = trunc i32 %4 to i1
   br label %.preheader237
 
 .preheader237:                                    ; preds = %.preheader237.lr.ph, %.thread

@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/gmx_xpm2ps?download=true
 inline.NumInlined: 1528
 inline.NumDeleted: 598
-loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 19
-loop-unroll.NumUnrolled: 25
+loop-unroll.NumUnrolled: 26
 begin_hunk_0_@_ZL6ps_matPKcN3gmx8ArrayRefI8t_matrixEES4_bbbbbbifffS0_S0_i:bb.a
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i385: ; preds = %bb.ke
   %i.avg = load i64, ptr %i.ase, align 8, !tbaa !17
@@ -205,19 +205,19 @@ bb.a:
   %i.o = fdiv double %i.n, f0x40026BB1BBB55516
   %i.p = tail call double @llvm.ceil.f64(double %i.o)
   %i.q = fadd double %i.p, -1.000000e+00
-  %i.r = fptosi double %i.q to i32                ; 2 uses
-  %6 = add nsw i32 %i.r, 2                        ; 2 uses
-  %i.s = add nsw i32 %i.r, -3                     ; 2 uses
+  %i.r = fptosi double %i.q to i32                ; 6 uses
+  %i.s = add nsw i32 %i.r, 2                      ; 2 uses
   %i.t = icmp sgt i32 %0, 0
   %i.u = fpext float %2 to double
   br i1 %i.t, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %0 to i64
+  %6 = add nsw i32 %i.r, -2
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %.split.us.us
-  %.04386.us = phi i32 [ %i.al, %.split.us.us ], [ %6, %.preheader.us.preheader ] ; 2 uses
+  %.04386.us = phi i32 [ %i.al, %.split.us.us ], [ %i.s, %.preheader.us.preheader ] ; 3 uses
   %i.v = sitofp i32 %.04386.us to float
   br label %.lr.ph.us.us
 
@@ -253,18 +253,26 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   br i1 %i.ak, label %.lr.ph.us.us, label %.split.us.us, !llvm.loop !259
 
 .split.us.us:                                     ; preds = %._crit_edge.us.us
-  %i.al = add nsw i32 %.04386.us, -1              ; 2 uses
-  %i.am = icmp sgt i32 %i.al, %i.s
+  %i.al = add nsw i32 %.04386.us, -1
+  %i.am = icmp sgt i32 %.04386.us, %6
   %i.an = select i1 %i.am, i1 %i.ai, i1 false
   br i1 %i.an, label %.preheader.us, label %.split89.us, !llvm.loop !260
 
-.preheader:                                       ; preds = %bb.a, %.preheader
-  %.04386 = phi i32 [ %i.aq, %.preheader ], [ %6, %bb.a ] ; 2 uses
-  %i.ao = sitofp i32 %.04386 to float
+.preheader:                                       ; preds = %bb.a
+  %7 = sitofp i32 %i.s to float
+  %8 = tail call noundef float @powf(float noundef 1.000000e+01, float noundef %7) #26 ; 0 uses
+  %9 = add nsw i32 %i.r, 1
+  %10 = sitofp i32 %9 to float
+  %11 = tail call noundef float @powf(float noundef 1.000000e+01, float noundef %10) #26 ; 0 uses
+  %12 = sitofp i32 %i.r to float
+  %13 = tail call noundef float @powf(float noundef 1.000000e+01, float noundef %12) #26 ; 0 uses
+  %14 = add nsw i32 %i.r, -1
+  %i.ao = sitofp i32 %14 to float
   %i.ap = tail call noundef float @powf(float noundef 1.000000e+01, float noundef %i.ao) #26 ; 0 uses
-  %i.aq = add nsw i32 %.04386, -1                 ; 2 uses
-  %7 = icmp sgt i32 %i.aq, %i.s
-  br i1 %7, label %.preheader, label %.split89.us.thread, !llvm.loop !260
+  %i.aq = add nsw i32 %i.r, -2
+  %15 = sitofp i32 %i.aq to float
+  %16 = tail call noundef float @powf(float noundef 1.000000e+01, float noundef %15) #26 ; 0 uses
+  br label %.split89.us.thread
 
 .split89.us:                                      ; preds = %.split.us.us
   %i.ar = and i64 %indvars.iv102, 4294967295      ; 2 uses
@@ -275,7 +283,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   br label %bb.c
 
 .split89.us.thread:                               ; preds = %.preheader, %.split89.us
-  %.us-phi91110 = phi i64 [ %i.ar, %.split89.us ], [ 3, %.preheader ]
+  %.us-phi91110 = phi i64 [ 3, %.preheader ], [ %i.ar, %.split89.us ]
   %i.as = load float, ptr %i.a, align 4, !tbaa !22
   %i.at = load float, ptr %1, align 4, !tbaa !22  ; 2 uses
   %i.au = fneg float %i.at

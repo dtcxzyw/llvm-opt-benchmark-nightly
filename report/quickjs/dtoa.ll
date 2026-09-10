@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 95
 inline.NumDeleted: 32
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 13
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumRuntimeUnrolled: 14
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@js_dtoa:bb.a
   %.2 = phi ptr [ %i.t, %bb.l ], [ %.1210, %bb.ar ], [ %0, %bb.k ], [ %.1210, %bb.ay ], [ %.1210, %bb.bc ] ; 9 uses
   %i.ii = icmp eq i32 %i.c, 1
@@ -205,7 +205,7 @@ bb.a:
   %i.a = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %2)
   %i.b = icmp samesign ugt i32 %i.a, 1
   %i.c = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %2, i1 true) ; 3 uses
-  %i.d = xor i32 %i.c, 31                         ; 2 uses
+  %i.d = xor i32 %i.c, 31                         ; 4 uses
   %i.e = add nsw i32 %2, -2
   %i.f = sext i32 %i.e to i64                     ; 2 uses
   %i.g = getelementptr inbounds i8, ptr @digits_per_limb_table, i64 %i.f
@@ -216,7 +216,7 @@ bb.a:
   br i1 %.not, label %.preheader, label %.preheader66
 
 .preheader66:                                     ; preds = %bb.a
-  %i.j = lshr i32 2147483647, %i.c
+  %i.j = lshr i32 2147483647, %i.c                ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.l = mul nuw nsw i32 %i.d, %i.i
   br label %bb.d
@@ -312,24 +312,55 @@ limb_to_a.exit.us:                                ; preds = %.lr.ph.i.i.us, %mpb
 
 bb.d:                                             ; preds = %.preheader66, %bb.f
   %.047 = phi i32 [ %i.av, %bb.f ], [ %3, %.preheader66 ] ; 2 uses
-  %..i = tail call noundef i32 @llvm.smin.i32(i32 %.047, i32 %i.i) ; 3 uses
+  %..i = tail call noundef i32 @llvm.smin.i32(i32 %.047, i32 %i.i) ; 4 uses
   %i.av = sub nsw i32 %.047, %..i                 ; 3 uses
   %i.aw = zext nneg i32 %i.av to i64
-  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 %i.aw
+  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 %i.aw ; 3 uses
   %i.ay = icmp sgt i32 %..i, 0
   br i1 %i.ay, label %.lr.ph.i, label %u64toa_bin_len.exit
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %i.az = load i32, ptr %i.k, align 4, !tbaa !18
-  %i.ba = zext nneg i32 %..i to i64
-  br label %bb.e
+  %i.az = load i32, ptr %i.k, align 4, !tbaa !18  ; 3 uses
+  %i.ba = zext nneg i32 %..i to i64               ; 3 uses
+  %xtraiter = and i64 %i.ba, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.e:                                             ; preds = %bb.e, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %i.ba, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 2 uses
-  %.01416.i = phi i32 [ %i.az, %.lr.ph.i ], [ %i.bc, %bb.e ] ; 2 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
-  %i.bb = and i32 %.01416.i, %i.j                 ; 3 uses
-  %i.bc = lshr i32 %.01416.i, %i.d
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i
+  %indvars.iv.next.i.prol = add nsw i64 %i.ba, -1 ; 2 uses
+  %5 = and i32 %i.az, %i.j                        ; 3 uses
+  %6 = lshr i32 %i.az, %i.d
+  %7 = icmp samesign ult i32 %5, 10
+  %8 = or disjoint i32 %5, 48
+  %9 = add nuw nsw i32 %5, 87
+  %.013.i.prol = select i1 %7, i32 %8, i32 %9
+  %10 = trunc i32 %.013.i.prol to i8
+  %11 = getelementptr inbounds nuw i8, ptr %i.ax, i64 %indvars.iv.next.i.prol
+  store i8 %10, ptr %11, align 1, !tbaa !15
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i
+  %indvars.iv.i.unr = phi i64 [ %i.ba, %.lr.ph.i ], [ %indvars.iv.next.i.prol, %.prol.loopexit.unr-lcssa ]
+  %.01416.i.unr = phi i32 [ %i.az, %.lr.ph.i ], [ %6, %.prol.loopexit.unr-lcssa ]
+  %12 = icmp eq i32 %..i, 1
+  br i1 %12, label %u64toa_bin_len.exit, label %bb.e
+
+bb.e:                                             ; preds = %.prol.loopexit, %bb.e
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.e ], [ %indvars.iv.i.unr, %.prol.loopexit ] ; 3 uses
+  %.01416.i = phi i32 [ %i.bc, %bb.e ], [ %.01416.i.unr, %.prol.loopexit ] ; 2 uses
+  %13 = and i32 %.01416.i, %i.j                   ; 3 uses
+  %14 = lshr i32 %.01416.i, %i.d                  ; 2 uses
+  %15 = icmp samesign ult i32 %13, 10
+  %16 = or disjoint i32 %13, 48
+  %17 = add nuw nsw i32 %13, 87
+  %.013.i = select i1 %15, i32 %16, i32 %17
+  %18 = trunc i32 %.013.i to i8
+  %19 = getelementptr i8, ptr %i.ax, i64 %indvars.iv.i
+  %20 = getelementptr i8, ptr %19, i64 -1
+  store i8 %18, ptr %20, align 1, !tbaa !15
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -2 ; 2 uses
+  %i.bb = and i32 %14, %i.j                       ; 3 uses
+  %i.bc = lshr i32 %14, %i.d
   %i.bd = icmp samesign ult i32 %i.bb, 10
   %i.be = or disjoint i32 %i.bb, 48
   %i.bf = add nuw nsw i32 %i.bb, 87
@@ -337,10 +368,10 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   %i.bg = trunc i32 %.013.i.a to i8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ax, i64 %indvars.iv.next.i
   store i8 %i.bg, ptr %i.bh, align 1, !tbaa !15
-  %5 = icmp samesign ugt i64 %indvars.iv.i, 1
-  br i1 %5, label %bb.e, label %u64toa_bin_len.exit, !llvm.loop !1
+  %21 = icmp sgt i64 %indvars.iv.i, 2
+  br i1 %21, label %bb.e, label %u64toa_bin_len.exit, !llvm.loop !1
 
-u64toa_bin_len.exit:                              ; preds = %bb.e, %bb.d
+u64toa_bin_len.exit:                              ; preds = %.prol.loopexit, %bb.e, %bb.d
   %i.bi = icmp eq i32 %i.av, 0
   br i1 %i.bi, label %.loopexit, label %bb.f
 

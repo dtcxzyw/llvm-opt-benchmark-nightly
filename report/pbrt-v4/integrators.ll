@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 13518
 inline.NumDeleted: 3340
 loop-unroll.NumCompletelyUnrolled: 86
-loop-unroll.NumRuntimeUnrolled: 25
-loop-unroll.NumUnrolled: 118
+loop-unroll.NumRuntimeUnrolled: 26
+loop-unroll.NumUnrolled: 119
 begin_hunk_0_@_ZNK4pbrt6Vertex14ConvertDensityEfRKS0_:bb.a
   %.sroa.28.0.copyload.pre = load float, ptr %.sroa.28.0..sroa_idx.phi.trans.insert, align 8 ; 3 uses
   %i.am = fcmp une float %.sroa.28.0.copyload.pre, 0.000000e+00
@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr i8, ptr %i.e, i64 -336     ; 8 uses
   %i.g = select i1 %i.c, ptr %i.f, ptr null       ; 4 uses
   %i.h = icmp sgt i32 %6, 0
-  %i.i = zext i32 %6 to i64                       ; 2 uses
+  %i.i = zext i32 %6 to i64                       ; 5 uses
   %i.j = getelementptr [336 x i8], ptr %3, i64 %i.i ; 10 uses
   %i.k = getelementptr i8, ptr %i.j, i64 -336     ; 9 uses
   %i.l = select i1 %i.h, ptr %i.k, ptr null       ; 5 uses
@@ -529,11 +529,51 @@ bb.v:                                             ; preds = %bb.t, %_ZN4pbrt16Sc
   %i.bt = sub nsw i32 %.sroa.5.12.extract.trunc, %.sroa.2.0.extract.trunc.i.i
   %i.bu = mul nsw i32 %i.bt, %i.bs
   %i.bv = sitofp i32 %i.bu to float
-  %i.bw = fdiv float %i.br, %i.bv                 ; 2 uses
-  br i1 %i.p, label %.lr.ph, label %.preheader
+  %i.bw = fdiv float %i.br, %i.bv                 ; 4 uses
+  br i1 %i.p, label %.lr.ph.preheader, label %.preheader
 
-.preheader:                                       ; preds = %bb.x, %bb.v
-  %.0112.lcssa = phi float [ 0.000000e+00, %bb.v ], [ %.1113.a, %bb.x ] ; 5 uses
+.lr.ph.preheader:                                 ; preds = %bb.v
+  %9 = and i64 %i.i, 1
+  %lcmp.mod.not.not = icmp eq i64 %9, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
+
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
+  %indvars.iv.next.prol = add nsw i64 %i.i, -1    ; 4 uses
+  %10 = getelementptr inbounds nuw [336 x i8], ptr %3, i64 %indvars.iv.next.prol ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 324
+  %12 = load <2 x float>, ptr %11, align 4, !tbaa !189 ; 2 uses
+  %13 = fcmp une <2 x float> %12, zeroinitializer
+  %14 = select <2 x i1> %13, <2 x float> %12, <2 x float> splat (float 1.000000e+00) ; 2 uses
+  %shift558.prol = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop559.prol = fdiv <2 x float> %shift558.prol, %14
+  %15 = extractelement <2 x float> %foldExtExtBinop559.prol, i64 0 ; 2 uses
+  %16 = icmp eq i64 %indvars.iv.next.prol, 1
+  %17 = fdiv float %15, %i.bw
+  %spec.select.prol = select i1 %16, float %17, float %15 ; 3 uses
+  %18 = getelementptr inbounds nuw i8, ptr %10, i64 320
+  %19 = load i8, ptr %18, align 8, !tbaa !489, !range !136, !noundef !137
+  %20 = trunc nuw i8 %19 to i1
+  br i1 %20, label %.lr.ph.prol.loopexit, label %21
+
+21:                                               ; preds = %.lr.ph.prol
+  %22 = getelementptr [336 x i8], ptr %3, i64 %i.i
+  %23 = getelementptr i8, ptr %22, i64 -352
+  %24 = load i8, ptr %23, align 8, !tbaa !489, !range !136, !noundef !137
+  %25 = trunc nuw i8 %24 to i1
+  %26 = fadd float %spec.select.prol, 0.000000e+00
+  %spec.select142.prol = select i1 %25, float 0.000000e+00, float %26 ; 2 uses
+  br label %.lr.ph.prol.loopexit
+
+.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %21, %.lr.ph.preheader
+  %indvars.iv.unr = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %21 ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
+  %.099522.unr = phi float [ 1.000000e+00, %.lr.ph.preheader ], [ %spec.select.prol, %21 ], [ %spec.select.prol, %.lr.ph.prol ]
+  %.0112521.unr = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ 0.000000e+00, %.lr.ph.prol ], [ %spec.select142.prol, %21 ]
+  %.1113.lcssa.unr = phi float [ poison, %.lr.ph.preheader ], [ 0.000000e+00, %.lr.ph.prol ], [ %spec.select142.prol, %21 ]
+  %27 = icmp eq i32 %6, 2
+  br i1 %27, label %.preheader, label %.lr.ph
+
+.preheader:                                       ; preds = %.lr.ph.prol.loopexit, %bb.x, %bb.v
+  %.0112.lcssa = phi float [ 0.000000e+00, %bb.v ], [ %.1113.lcssa.unr, %.lr.ph.prol.loopexit ], [ %.1113.a, %bb.x ] ; 5 uses
   br i1 %i.c, label %.lr.ph530, label %._crit_edge
 
 .lr.ph530:                                        ; preds = %.preheader
@@ -589,10 +629,10 @@ _ZNK4pbrt6Vertex12IsDeltaLightEv.exit.prol.loopexit: ; preds = %_ZNK4pbrt6Vertex
   %i.ct = icmp eq i32 %5, 2
   br i1 %i.ct, label %._crit_edge554, label %_ZNK4pbrt6Vertex12IsDeltaLightEv.exit
 
-.lr.ph:                                           ; preds = %bb.v, %bb.x
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.x ], [ %i.i, %bb.v ] ; 3 uses
-  %.099522 = phi float [ %spec.select, %bb.x ], [ 1.000000e+00, %bb.v ]
-  %.0112521 = phi float [ %.1113.a, %bb.x ], [ 0.000000e+00, %bb.v ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %bb.x
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %bb.x ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 4 uses
+  %.099522 = phi float [ %spec.select.1, %bb.x ], [ %.099522.unr, %.lr.ph.prol.loopexit ]
+  %.0112521 = phi float [ %.1113.a, %bb.x ], [ %.0112521.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %i.cu = getelementptr inbounds nuw [336 x i8], ptr %3, i64 %indvars.iv.next ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 324
@@ -609,21 +649,50 @@ _ZNK4pbrt6Vertex12IsDeltaLightEv.exit.prol.loopexit: ; preds = %_ZNK4pbrt6Vertex
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cu, i64 320
   %i.de = load i8, ptr %i.dd, align 8, !tbaa !489, !range !136, !noundef !137
   %i.df = trunc nuw i8 %i.de to i1
-  br i1 %i.df, label %bb.x, label %bb.w
+  br i1 %i.df, label %.lr.ph.1, label %28
 
-bb.w:                                             ; preds = %.lr.ph
-  %i.dg = getelementptr [336 x i8], ptr %3, i64 %indvars.iv
+28:                                               ; preds = %.lr.ph
+  %29 = getelementptr [336 x i8], ptr %3, i64 %indvars.iv
+  %30 = getelementptr i8, ptr %29, i64 -352
+  %31 = load i8, ptr %30, align 8, !tbaa !489, !range !136, !noundef !137
+  %32 = trunc nuw i8 %31 to i1
+  %33 = fadd float %.0112521, %spec.select
+  %spec.select142 = select i1 %32, float %.0112521, float %33
+  br label %.lr.ph.1
+
+.lr.ph.1:                                         ; preds = %28, %.lr.ph
+  %.1113 = phi float [ %.0112521, %.lr.ph ], [ %spec.select142, %28 ] ; 3 uses
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 3 uses
+  %34 = getelementptr inbounds nuw [336 x i8], ptr %3, i64 %indvars.iv.next.1 ; 2 uses
+  %35 = getelementptr inbounds nuw i8, ptr %34, i64 324
+  %36 = load <2 x float>, ptr %35, align 4, !tbaa !189 ; 2 uses
+  %37 = fcmp une <2 x float> %36, zeroinitializer
+  %38 = select <2 x i1> %37, <2 x float> %36, <2 x float> splat (float 1.000000e+00) ; 2 uses
+  %shift558.1 = shufflevector <2 x float> %38, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop559.1 = fdiv <2 x float> %shift558.1, %38
+  %39 = extractelement <2 x float> %foldExtExtBinop559.1, i64 0
+  %40 = fmul float %spec.select, %39              ; 2 uses
+  %41 = icmp eq i64 %indvars.iv.next.1, 1
+  %42 = fdiv float %40, %i.bw
+  %spec.select.1 = select i1 %41, float %42, float %40 ; 2 uses
+  %43 = getelementptr inbounds nuw i8, ptr %34, i64 320
+  %44 = load i8, ptr %43, align 8, !tbaa !489, !range !136, !noundef !137
+  %45 = trunc nuw i8 %44 to i1
+  br i1 %45, label %bb.x, label %bb.w
+
+bb.w:                                             ; preds = %.lr.ph.1
+  %i.dg = getelementptr [336 x i8], ptr %3, i64 %indvars.iv.next
   %i.dh = getelementptr i8, ptr %i.dg, i64 -352
   %i.di = load i8, ptr %i.dh, align 8, !tbaa !489, !range !136, !noundef !137
   %i.dj = trunc nuw i8 %i.di to i1
-  %i.dk = fadd float %.0112521, %spec.select
-  %spec.select142.a = select i1 %i.dj, float %.0112521, float %i.dk
+  %i.dk = fadd float %.1113, %spec.select.1
+  %spec.select142.a = select i1 %i.dj, float %.1113, float %i.dk
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.w, %.lr.ph
-  %.1113.a = phi float [ %.0112521, %.lr.ph ], [ %spec.select142.a, %bb.w ] ; 2 uses
-  %9 = icmp samesign ugt i64 %indvars.iv, 2
-  br i1 %9, label %.lr.ph, label %.preheader, !llvm.loop !1346
+bb.x:                                             ; preds = %bb.w, %.lr.ph.1
+  %.1113.a = phi float [ %.1113, %.lr.ph.1 ], [ %spec.select142.a, %bb.w ] ; 2 uses
+  %46 = icmp sgt i64 %indvars.iv, 3
+  br i1 %46, label %.lr.ph, label %.preheader, !llvm.loop !1346
 
 ._crit_edge:                                      ; preds = %_ZNK4pbrt6Vertex12IsDeltaLightEv.exit.thread, %.preheader
   %.2114.lcssa = phi float [ %.0112.lcssa, %.preheader ], [ %spec.select144546, %_ZNK4pbrt6Vertex12IsDeltaLightEv.exit.thread ] ; 2 uses
