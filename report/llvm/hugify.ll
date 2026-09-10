@@ -206,7 +206,7 @@ bb.a:
   %i.b = alloca [64 x i8], align 16               ; 4 uses
   %i.c = alloca [42 x i8], align 16               ; 4 uses
   %0 = alloca %"struct.(anonymous namespace)::UtsNameTy", align 1 ; 8 uses
-  %i.d = alloca [64 x i8], align 16               ; 74 uses
+  %i.d = alloca [64 x i8], align 16               ; 11 uses
   %i.e = alloca [40 x i8], align 16               ; 4 uses
   %i.f = and i64 ptrtoint (ptr @__hot_start to i64), 2097144
   %i.g = sub nsw i64 0, %i.f
@@ -214,142 +214,16 @@ bb.a:
   %i.i = and i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @__hot_end, i64 2097151) to i64), 2097151
   %i.j = sub nsw i64 0, %i.i
   %i.k = getelementptr inbounds i8, ptr getelementptr inbounds nuw (i8, ptr @__hot_end, i64 2097151), i64 %i.j ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
-  %i.l = tail call noundef i64 asm sideeffect "movq $$2, %rax\0Asyscall", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str, i64 0, i64 0) #7, !srcloc !22 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #8
+  %i.l = tail call noundef i64 asm sideeffect "movq $$2, %rax\0Asyscall", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str, i64 0, i64 0) #8, !srcloc !22 ; 2 uses
   %i.m = and i64 %i.l, 2147483648
   %.not.i = icmp eq i64 %i.m, 0
   br i1 %.not.i, label %.preheader.preheader.i, label %.sink.split
 
 .preheader.preheader.i:                           ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  store i8 0, ptr %i.d, align 16, !tbaa !8
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  store i8 0, ptr %1, align 1, !tbaa !8
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 3
-  store i8 0, ptr %2, align 2, !tbaa !8
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  store i8 0, ptr %3, align 1, !tbaa !8
-  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 5
-  store i8 0, ptr %4, align 4, !tbaa !8
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 6
-  store i8 0, ptr %5, align 1, !tbaa !8
-  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 7
-  store i8 0, ptr %6, align 2, !tbaa !8
-  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store i8 0, ptr %7, align 1, !tbaa !8
-  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 9
-  store i8 0, ptr %8, align 8, !tbaa !8
-  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 10
-  store i8 0, ptr %9, align 1, !tbaa !8
-  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 11
-  store i8 0, ptr %10, align 2, !tbaa !8
-  %12 = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  store i8 0, ptr %11, align 1, !tbaa !8
-  %13 = getelementptr inbounds nuw i8, ptr %i.d, i64 13
-  store i8 0, ptr %12, align 4, !tbaa !8
-  %14 = getelementptr inbounds nuw i8, ptr %i.d, i64 14
-  store i8 0, ptr %13, align 1, !tbaa !8
-  %15 = getelementptr inbounds nuw i8, ptr %i.d, i64 15
-  store i8 0, ptr %14, align 2, !tbaa !8
-  %16 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store i8 0, ptr %15, align 1, !tbaa !8
-  %17 = getelementptr inbounds nuw i8, ptr %i.d, i64 17
-  store i8 0, ptr %16, align 16, !tbaa !8
-  %18 = getelementptr inbounds nuw i8, ptr %i.d, i64 18
-  store i8 0, ptr %17, align 1, !tbaa !8
-  %19 = getelementptr inbounds nuw i8, ptr %i.d, i64 19
-  store i8 0, ptr %18, align 2, !tbaa !8
-  %20 = getelementptr inbounds nuw i8, ptr %i.d, i64 20
-  store i8 0, ptr %19, align 1, !tbaa !8
-  %21 = getelementptr inbounds nuw i8, ptr %i.d, i64 21
-  store i8 0, ptr %20, align 4, !tbaa !8
-  %22 = getelementptr inbounds nuw i8, ptr %i.d, i64 22
-  store i8 0, ptr %21, align 1, !tbaa !8
-  %23 = getelementptr inbounds nuw i8, ptr %i.d, i64 23
-  store i8 0, ptr %22, align 2, !tbaa !8
-  %24 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  store i8 0, ptr %23, align 1, !tbaa !8
-  %25 = getelementptr inbounds nuw i8, ptr %i.d, i64 25
-  store i8 0, ptr %24, align 8, !tbaa !8
-  %26 = getelementptr inbounds nuw i8, ptr %i.d, i64 26
-  store i8 0, ptr %25, align 1, !tbaa !8
-  %27 = getelementptr inbounds nuw i8, ptr %i.d, i64 27
-  store i8 0, ptr %26, align 2, !tbaa !8
-  %28 = getelementptr inbounds nuw i8, ptr %i.d, i64 28
-  store i8 0, ptr %27, align 1, !tbaa !8
-  %29 = getelementptr inbounds nuw i8, ptr %i.d, i64 29
-  store i8 0, ptr %28, align 4, !tbaa !8
-  %30 = getelementptr inbounds nuw i8, ptr %i.d, i64 30
-  store i8 0, ptr %29, align 1, !tbaa !8
-  %31 = getelementptr inbounds nuw i8, ptr %i.d, i64 31
-  store i8 0, ptr %30, align 2, !tbaa !8
-  %32 = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store i8 0, ptr %31, align 1, !tbaa !8
-  %33 = getelementptr inbounds nuw i8, ptr %i.d, i64 33
-  store i8 0, ptr %32, align 16, !tbaa !8
-  %34 = getelementptr inbounds nuw i8, ptr %i.d, i64 34
-  store i8 0, ptr %33, align 1, !tbaa !8
-  %35 = getelementptr inbounds nuw i8, ptr %i.d, i64 35
-  store i8 0, ptr %34, align 2, !tbaa !8
-  %36 = getelementptr inbounds nuw i8, ptr %i.d, i64 36
-  store i8 0, ptr %35, align 1, !tbaa !8
-  %37 = getelementptr inbounds nuw i8, ptr %i.d, i64 37
-  store i8 0, ptr %36, align 4, !tbaa !8
-  %38 = getelementptr inbounds nuw i8, ptr %i.d, i64 38
-  store i8 0, ptr %37, align 1, !tbaa !8
-  %39 = getelementptr inbounds nuw i8, ptr %i.d, i64 39
-  store i8 0, ptr %38, align 2, !tbaa !8
-  %40 = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  store i8 0, ptr %39, align 1, !tbaa !8
-  %41 = getelementptr inbounds nuw i8, ptr %i.d, i64 41
-  store i8 0, ptr %40, align 8, !tbaa !8
-  %42 = getelementptr inbounds nuw i8, ptr %i.d, i64 42
-  store i8 0, ptr %41, align 1, !tbaa !8
-  %43 = getelementptr inbounds nuw i8, ptr %i.d, i64 43
-  store i8 0, ptr %42, align 2, !tbaa !8
-  %44 = getelementptr inbounds nuw i8, ptr %i.d, i64 44
-  store i8 0, ptr %43, align 1, !tbaa !8
-  %45 = getelementptr inbounds nuw i8, ptr %i.d, i64 45
-  store i8 0, ptr %44, align 4, !tbaa !8
-  %46 = getelementptr inbounds nuw i8, ptr %i.d, i64 46
-  store i8 0, ptr %45, align 1, !tbaa !8
-  %47 = getelementptr inbounds nuw i8, ptr %i.d, i64 47
-  store i8 0, ptr %46, align 2, !tbaa !8
-  %48 = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  store i8 0, ptr %47, align 1, !tbaa !8
-  %49 = getelementptr inbounds nuw i8, ptr %i.d, i64 49
-  store i8 0, ptr %48, align 16, !tbaa !8
-  %50 = getelementptr inbounds nuw i8, ptr %i.d, i64 50
-  store i8 0, ptr %49, align 1, !tbaa !8
-  %51 = getelementptr inbounds nuw i8, ptr %i.d, i64 51
-  store i8 0, ptr %50, align 2, !tbaa !8
-  %52 = getelementptr inbounds nuw i8, ptr %i.d, i64 52
-  store i8 0, ptr %51, align 1, !tbaa !8
-  %53 = getelementptr inbounds nuw i8, ptr %i.d, i64 53
-  store i8 0, ptr %52, align 4, !tbaa !8
-  %54 = getelementptr inbounds nuw i8, ptr %i.d, i64 54
-  store i8 0, ptr %53, align 1, !tbaa !8
-  %55 = getelementptr inbounds nuw i8, ptr %i.d, i64 55
-  store i8 0, ptr %54, align 2, !tbaa !8
-  %56 = getelementptr inbounds nuw i8, ptr %i.d, i64 56
-  store i8 0, ptr %55, align 1, !tbaa !8
-  %57 = getelementptr inbounds nuw i8, ptr %i.d, i64 57
-  store i8 0, ptr %56, align 8, !tbaa !8
-  %58 = getelementptr inbounds nuw i8, ptr %i.d, i64 58
-  store i8 0, ptr %57, align 1, !tbaa !8
-  %59 = getelementptr inbounds nuw i8, ptr %i.d, i64 59
-  store i8 0, ptr %58, align 2, !tbaa !8
-  %60 = getelementptr inbounds nuw i8, ptr %i.d, i64 60
-  store i8 0, ptr %59, align 1, !tbaa !8
-  %61 = getelementptr inbounds nuw i8, ptr %i.d, i64 61
-  store i8 0, ptr %60, align 4, !tbaa !8
-  %62 = getelementptr inbounds nuw i8, ptr %i.d, i64 62
-  store i8 0, ptr %61, align 1, !tbaa !8
-  %63 = getelementptr inbounds nuw i8, ptr %i.d, i64 63
-  store i8 0, ptr %62, align 2, !tbaa !8
-  store i8 0, ptr %63, align 1, !tbaa !8
-  %64 = and i64 %i.l, 2147483647
-  %i.n = call noundef i64 asm sideeffect "movq $$0, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 2147483648) %64, ptr nonnull %i.d, i64 64) #7, !srcloc !23 ; 0 uses
+  %1 = and i64 %i.l, 2147483647
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.d, i8 0, i64 64, i1 false)
+  %i.n = call noundef i64 asm sideeffect "movq $$0, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, 2147483648) %1, ptr nonnull %i.d, i64 64) #8, !srcloc !23 ; 0 uses
   %i.o = load i8, ptr %i.d, align 16, !tbaa !8
   %.not3.i.i.i = icmp eq i8 %i.o, 0
   br i1 %.not3.i.i.i, label %.sink.split, label %.lr.ph.i.preheader.i.i
@@ -501,8 +375,8 @@ _ZN12_GLOBAL__N_16strLenEPKc.exit36.thread.i19.i: ; preds = %.lr.ph.i24.preheade
   br label %.lr.ph.i.preheader.i10.i, !llvm.loop !20
 
 _ZN12_GLOBAL__N_16strStrEPKcS1_.exit.i:           ; preds = %.lr.ph.i24.preheader.i.6.i, %.lr.ph.i24.preheader.i23.7.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %0) #7
-  %i.as = call noundef i32 asm sideeffect "movq $$63, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull %0) #7, !srcloc !24 ; 0 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %0) #8
+  %i.as = call noundef i32 asm sideeffect "movq $$63, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull %0) #8, !srcloc !24 ; 0 uses
   %.ptr.i.i = getelementptr inbounds nuw i8, ptr %0, i64 130 ; 2 uses
   %i.at = load i8, ptr %.ptr.i.i, align 1, !tbaa !8
   %.not3.i.i41.i = icmp eq i8 %i.at, 0
@@ -592,34 +466,34 @@ bb.e:                                             ; preds = %.lr.ph.i18.1.i.i
   br label %_ZL16getKernelVersionPj.exit.i
 
 _ZL22hasPagecacheTHPSupportv.exit.thread14:       ; preds = %_ZN12_GLOBAL__N_16strStrEPKcS1_.exit.i, %_ZN12_GLOBAL__N_16strLenEPKc.exit.i.i, %.critedge.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #8
   br label %.sink.split
 
 _ZL16getKernelVersionPj.exit.i:                   ; preds = %.critedge.i.1.i.i, %.lr.ph.preheader.i.i
   %.sroa.4.0.i = phi i1 [ %i.bt, %.critedge.i.1.i.i ], [ false, %.lr.ph.preheader.i.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #8
   %i.bu = icmp ugt i64 %.0.lcssa.ph.i.i.i, 5
   br i1 %i.bu, label %_ZL22hasPagecacheTHPSupportv.exit.thread12, label %_ZL22hasPagecacheTHPSupportv.exit
 
 _ZL22hasPagecacheTHPSupportv.exit.thread12:       ; preds = %_ZL16getKernelVersionPj.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
   br label %bb.k
 
 _ZL22hasPagecacheTHPSupportv.exit:                ; preds = %_ZL16getKernelVersionPj.exit.i
   %i.bv = icmp eq i64 %.0.lcssa.ph.i.i.i, 5
   %or.cond.i = select i1 %i.bv, i1 %.sroa.4.0.i, i1 false
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
   br i1 %or.cond.i, label %bb.k, label %bb.f
 
 .sink.split:                                      ; preds = %_ZN12_GLOBAL__N_16strLenEPKc.exit.loopexit.i16.i, %.preheader.preheader.i, %bb.a, %_ZL22hasPagecacheTHPSupportv.exit.thread14
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split, %_ZL22hasPagecacheTHPSupportv.exit
   %i.bw = ptrtoint ptr %i.k to i64
   %i.bx = ptrtoint ptr %i.h to i64                ; 2 uses
   %i.by = sub i64 %i.bw, %i.bx                    ; 11 uses
-  %i.bz = call noundef ptr asm sideeffect "movq $$9, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},{r10},{r8},{r9},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 0, i64 %i.by, i64 3, i64 34, i64 -1, i64 0) #7, !srcloc !25 ; 4 uses
+  %i.bz = call noundef ptr asm sideeffect "movq $$9, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},{r10},{r8},{r9},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 0, i64 %i.by, i64 3, i64 34, i64 -1, i64 0) #8, !srcloc !25 ; 4 uses
   %i.ca = icmp eq ptr %i.bz, inttoptr (i64 -1 to ptr)
   br i1 %i.ca, label %.split18.i, label %.split.i
 
@@ -640,11 +514,11 @@ bb.f:                                             ; preds = %.sink.split, %_ZL22
   br i1 %.not.i.i10, label %memcpy.exit.i, label %.lr.ph.i.i, !llvm.loop !0
 
 .split18.i:                                       ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(50) %i.a, ptr noundef nonnull align 16 dereferenceable(50) @__const._ZL18hugifyForOldKernelPhS_.Msg, i64 50, i1 false)
-  %i.cf = call noundef i64 asm sideeffect "movq $$1, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 2, ptr nonnull %i.a, i64 range(i64 40, 65) 50) #7, !srcloc !26 ; 0 uses
-  %i.cg = call noundef i64 asm sideeffect "movq $$231, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 1) #7, !srcloc !27 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  %i.cf = call noundef i64 asm sideeffect "movq $$1, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 2, ptr nonnull %i.a, i64 range(i64 40, 65) 50) #8, !srcloc !26 ; 0 uses
+  %i.cg = call noundef i64 asm sideeffect "movq $$231, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 1) #8, !srcloc !27 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   %.not7.i19.i = icmp eq i64 %i.by, 0
   br i1 %.not7.i19.i, label %memcpy.exit.i, label %.lr.ph.i20.i
 
@@ -661,30 +535,30 @@ bb.f:                                             ; preds = %.sink.split, %_ZL22
   br i1 %.not.i24.i, label %memcpy.exit.i, label %.lr.ph.i20.i, !llvm.loop !0
 
 memcpy.exit.i:                                    ; preds = %.lr.ph.i.i, %.lr.ph.i20.i, %.split18.i, %.split.i
-  %i.cl = call noundef i32 asm sideeffect "movq $$157, %rax\0Asyscall\0A", "={ax},{di},{si},{rdx},{r10},{r8},~{dirflag},~{fpsr},~{flags}"(i32 41, i64 0, i64 0, i64 0, i64 0) #7, !srcloc !28 ; 0 uses
-  %i.cm = call noundef ptr asm sideeffect "movq $$9, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},{r10},{r8},{r9},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 %i.bx, i64 %i.by, i64 3, i64 50, i64 -1, i64 0) #7, !srcloc !25
+  %i.cl = call noundef i32 asm sideeffect "movq $$157, %rax\0Asyscall\0A", "={ax},{di},{si},{rdx},{r10},{r8},~{dirflag},~{fpsr},~{flags}"(i32 41, i64 0, i64 0, i64 0, i64 0) #8, !srcloc !28 ; 0 uses
+  %i.cm = call noundef ptr asm sideeffect "movq $$9, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},{r10},{r8},{r9},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 %i.bx, i64 %i.by, i64 3, i64 50, i64 -1, i64 0) #8, !srcloc !25
   %i.cn = icmp eq ptr %i.cm, inttoptr (i64 -1 to ptr)
   br i1 %i.cn, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %memcpy.exit.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.b, ptr noundef nonnull align 16 dereferenceable(64) @__const._ZL18hugifyForOldKernelPhS_.Msg.3, i64 64, i1 false)
-  %i.co = call noundef i64 asm sideeffect "movq $$1, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 2, ptr nonnull %i.b, i64 range(i64 40, 65) 64) #7, !srcloc !26 ; 0 uses
-  %i.cp = call noundef i64 asm sideeffect "movq $$231, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 1) #7, !srcloc !27 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  %i.co = call noundef i64 asm sideeffect "movq $$1, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 2, ptr nonnull %i.b, i64 range(i64 40, 65) 64) #8, !srcloc !26 ; 0 uses
+  %i.cp = call noundef i64 asm sideeffect "movq $$231, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 1) #8, !srcloc !27 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %memcpy.exit.i
-  %i.cq = call noundef i32 asm sideeffect "movq $$28, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull %i.h, i64 %i.by, i32 14) #7, !srcloc !29
+  %i.cq = call noundef i32 asm sideeffect "movq $$28, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull %i.h, i64 %i.by, i32 14) #8, !srcloc !29
   %i.cr = icmp eq i32 %i.cq, -1
   br i1 %i.cr, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(42) %i.c, ptr noundef nonnull align 16 dereferenceable(42) @__const._ZL18hugifyForOldKernelPhS_.Msg.4, i64 42, i1 false)
-  %i.cs = call noundef i64 asm sideeffect "movq $$1, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 2, ptr nonnull %i.c, i64 range(i64 40, 65) 42) #7, !srcloc !26 ; 0 uses
-  %i.ct = call noundef i64 asm sideeffect "movq $$231, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 1) #7, !srcloc !27 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
+  %i.cs = call noundef i64 asm sideeffect "movq $$1, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 2, ptr nonnull %i.c, i64 range(i64 40, 65) 42) #8, !srcloc !26 ; 0 uses
+  %i.ct = call noundef i64 asm sideeffect "movq $$231, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 1) #8, !srcloc !27 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -704,24 +578,24 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not.i31.i, label %_ZL18hugifyForOldKernelPhS_.exit, label %.lr.ph.i27.i, !llvm.loop !0
 
 _ZL18hugifyForOldKernelPhS_.exit:                 ; preds = %.lr.ph.i27.i, %bb.j
-  %i.cy = call noundef i32 asm sideeffect "movq $$10, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull %i.h, i64 %i.by, i32 5) #7, !srcloc !30 ; 0 uses
-  %i.cz = call noundef i64 asm sideeffect "movq $$11, %rax\0Asyscall\0A", "={ax},{di},{si},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %i.bz, i64 %i.by) #7, !srcloc !31 ; 0 uses
+  %i.cy = call noundef i32 asm sideeffect "movq $$10, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull %i.h, i64 %i.by, i32 5) #8, !srcloc !30 ; 0 uses
+  %i.cz = call noundef i64 asm sideeffect "movq $$11, %rax\0Asyscall\0A", "={ax},{di},{si},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %i.bz, i64 %i.by) #8, !srcloc !31 ; 0 uses
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZL22hasPagecacheTHPSupportv.exit.thread12, %_ZL22hasPagecacheTHPSupportv.exit
   %i.da = ptrtoint ptr %i.k to i64
   %i.db = ptrtoint ptr %i.h to i64
   %i.dc = sub i64 %i.da, %i.db
-  %i.dd = call noundef i32 asm sideeffect "movq $$28, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull %i.h, i64 %i.dc, i32 14) #7, !srcloc !29
+  %i.dd = call noundef i32 asm sideeffect "movq $$28, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull %i.h, i64 %i.dc, i32 14) #8, !srcloc !29
   %i.de = icmp eq i32 %i.dd, -1
   br i1 %i.de, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.e, ptr noundef nonnull align 16 dereferenceable(40) @__const.__bolt_hugify_self_impl.Msg, i64 40, i1 false)
-  %i.df = call noundef i64 asm sideeffect "movq $$1, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 2, ptr nonnull %i.e, i64 range(i64 40, 65) 40) #7, !srcloc !26 ; 0 uses
-  %i.dg = call noundef i64 asm sideeffect "movq $$231, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 1) #7, !srcloc !27 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
+  %i.df = call noundef i64 asm sideeffect "movq $$1, %rax\0Asyscall\0A", "={ax},{di},{si},{dx},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 2, ptr nonnull %i.e, i64 range(i64 40, 65) 40) #8, !srcloc !26 ; 0 uses
+  %i.dg = call noundef i64 asm sideeffect "movq $$231, %rax\0Asyscall\0A", "={ax},{di},~{cc},~{rcx},~{r11},~{memory},~{dirflag},~{fpsr},~{flags}"(i64 1) #8, !srcloc !27 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l, %_ZL18hugifyForOldKernelPhS_.exit
@@ -734,12 +608,15 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress naked noinline nounwind
 define hidden void @__bolt_hugify_self() #5 {
 bb.a:
-  tail call void asm sideeffect "push %rax\0Apush %rbx\0Apush %rcx\0Apush %rdx\0Apush %rdi\0Apush %rsi\0Apush %rbp\0Apush %r8\0Apush %r9\0Apush %r10\0Apush %r11\0Apush %r12\0Apush %r13\0Apush %r14\0Apush %r15\0Asub $$8, %rsp\0Acall __bolt_hugify_self_impl\0Aadd $$8, %rsp\0Apop %r15\0Apop %r14\0Apop %r13\0Apop %r12\0Apop %r11\0Apop %r10\0Apop %r9\0Apop %r8\0Apop %rbp\0Apop %rsi\0Apop %rdi\0Apop %rdx\0Apop %rcx\0Apop %rbx\0Apop %rax\0Ajmp __bolt_hugify_start_program\0A", "~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !32
+  tail call void asm sideeffect "push %rax\0Apush %rbx\0Apush %rcx\0Apush %rdx\0Apush %rdi\0Apush %rsi\0Apush %rbp\0Apush %r8\0Apush %r9\0Apush %r10\0Apush %r11\0Apush %r12\0Apush %r13\0Apush %r14\0Apush %r15\0Asub $$8, %rsp\0Acall __bolt_hugify_self_impl\0Aadd $$8, %rsp\0Apop %r15\0Apop %r14\0Apop %r13\0Apop %r12\0Apop %r11\0Apop %r10\0Apop %r9\0Apop %r8\0Apop %rbp\0Apop %rsi\0Apop %rdi\0Apop %rdx\0Apop %rcx\0Apop %rbx\0Apop %rax\0Ajmp __bolt_hugify_start_program\0A", "~{dirflag},~{fpsr},~{flags}"() #8, !srcloc !32
   unreachable
 }
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #6
+declare void @llvm.assume(i1 noundef) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) "min-legal-vector-width"="0" "no-builtins" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -747,8 +624,9 @@ attributes #2 = { mustprogress nofree norecurse nosync nounwind memory(argmem: w
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) "min-legal-vector-width"="0" "no-builtins" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nounwind "min-legal-vector-width"="0" "no-builtins" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
 attributes #5 = { mustprogress naked noinline nounwind "min-legal-vector-width"="0" "no-builtins" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
-attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #7 = { nounwind }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!1}
 !llvm.ident = !{!2}
