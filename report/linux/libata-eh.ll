@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %.lr.ph, %bb.g
   %or.cond164 = or i1 %.0.i, %or.cond
   %spec.select167 = select i1 %or.cond164, ptr %.0116197, ptr null
   %.1120 = select i1 %.not159, ptr %spec.select167, ptr %.0119195 ; 2 uses
-  %spec.select165.v = select i1 %.0.i, i32 -2, i32 -4
+  %spec.select165.v = select i1 %.0.i, i32 2, i32 0
   %spec.select165 = and i32 %spec.select165.v, %.0126194 ; 2 uses
   br i1 %i.ad, label %bb.i, label %bb.k
 

@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %.noexc17, %.prehead
           to label %.noexc17 unwind label %.loopexit.split-lp.loopexit
 
 .noexc17:                                         ; preds = %.noexc16
-  %i.cj = add nsw i64 %.012.i.i.i.i.i, -1
+  %i.cj = add nuw i64 %.012.i.i.i.i.i, 9223372036854775807
   %i.ck = and i64 %i.cj, %.012.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.ck, 0
   br i1 %.not10.i.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx11setStatusesERKS1_RKNS0_6StatusEE3$_0EEvT_.exit", label %bb.t, !llvm.loop !338
@@ -449,7 +449,7 @@ bb.aj:                                            ; preds = %.noexc26, %.prehead
           to label %.noexc26 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc26:                                         ; preds = %.noexc25
-  %i.fr = add nsw i64 %.012.i48.i.i.i.i, -1
+  %i.fr = add nuw i64 %.012.i48.i.i.i.i, 9223372036854775807
   %i.fs = and i64 %i.fr, %.012.i48.i.i.i.i        ; 2 uses
   %.not10.i51.i.i.i.i = icmp eq i64 %i.fs, 0
   br i1 %.not10.i51.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx11setStatusesERKS1_RKNS0_6StatusEE3$_0EEvT_.exit", label %bb.aj, !llvm.loop !338
@@ -685,7 +685,7 @@ bb.ay:                                            ; preds = %bb.ay, %.preheader.
   %i.jd = load i8, ptr %i.jc, align 1, !tbaa !86
   %i.je = or i8 %i.jd, %i.ja
   store i8 %i.je, ptr %i.jc, align 1, !tbaa !86
-  %i.jf = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.jf = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.jg = and i64 %i.jf, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i57 = icmp eq i64 %i.jg, 0
   br i1 %.not10.i.i.i.i.i57, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx11setStatusesERKS1_RKNS0_6StatusEE3$_1EEvT_.exit", label %bb.ay, !llvm.loop !346
@@ -954,7 +954,7 @@ bb.bo:                                            ; preds = %bb.bo, %.preheader.
   %i.nz = load i8, ptr %i.ny, align 1, !tbaa !86
   %i.oa = or i8 %i.nz, %i.nw
   store i8 %i.oa, ptr %i.ny, align 1, !tbaa !86
-  %i.ob = add nsw i64 %.011.i47.i.i.i.i, -1
+  %i.ob = add nuw i64 %.011.i47.i.i.i.i, 9223372036854775807
   %i.oc = and i64 %i.ob, %.011.i47.i.i.i.i        ; 2 uses
   %.not10.i49.i.i.i.i = icmp eq i64 %i.oc, 0
   br i1 %.not10.i49.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx11setStatusesERKS1_RKNS0_6StatusEE3$_1EEvT_.exit", label %bb.bo, !llvm.loop !346
@@ -1357,7 +1357,7 @@ bb.s:                                             ; preds = %.noexc9, %.preheade
           to label %.noexc9 unwind label %.loopexit.split-lp.loopexit
 
 .noexc9:                                          ; preds = %.noexc8
-  %i.by = add nsw i64 %.012.i.i.i.i.i, -1
+  %i.by = add nuw i64 %.012.i.i.i.i.i, 9223372036854775807
   %i.bz = and i64 %i.by, %.012.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.bz, 0
   br i1 %.not10.i.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx9setErrorsERKS1_RKNSt15__exception_ptr13exception_ptrEE3$_0EEvT_.exit", label %bb.s, !llvm.loop !359
@@ -1601,7 +1601,7 @@ bb.ai:                                            ; preds = %.noexc18, %.prehead
           to label %.noexc18 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc18:                                         ; preds = %.noexc17
-  %i.fg = add nsw i64 %.012.i48.i.i.i.i, -1
+  %i.fg = add nuw i64 %.012.i48.i.i.i.i, 9223372036854775807
   %i.fh = and i64 %i.fg, %.012.i48.i.i.i.i        ; 2 uses
   %.not10.i51.i.i.i.i = icmp eq i64 %i.fh, 0
   br i1 %.not10.i51.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx9setErrorsERKS1_RKNSt15__exception_ptr13exception_ptrEE3$_0EEvT_.exit", label %bb.ai, !llvm.loop !359
@@ -1837,7 +1837,7 @@ bb.ax:                                            ; preds = %bb.ax, %.preheader.
   %i.is = load i8, ptr %i.ir, align 1, !tbaa !86
   %i.it = or i8 %i.is, %i.ip
   store i8 %i.it, ptr %i.ir, align 1, !tbaa !86
-  %i.iu = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.iu = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.iv = and i64 %i.iu, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i49 = icmp eq i64 %i.iv, 0
   br i1 %.not10.i.i.i.i.i49, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx9setErrorsERKS1_RKNSt15__exception_ptr13exception_ptrEE3$_1EEvT_.exit", label %bb.ax, !llvm.loop !367
@@ -2102,7 +2102,7 @@ bb.bn:                                            ; preds = %bb.bn, %.preheader.
   %i.no = load i8, ptr %i.nn, align 1, !tbaa !86
   %i.np = or i8 %i.no, %i.nl
   store i8 %i.np, ptr %i.nn, align 1, !tbaa !86
-  %i.nq = add nsw i64 %.011.i47.i.i.i.i, -1
+  %i.nq = add nuw i64 %.011.i47.i.i.i.i, 9223372036854775807
   %i.nr = and i64 %i.nq, %.011.i47.i.i.i.i        ; 2 uses
   %.not10.i49.i.i.i.i = icmp eq i64 %i.nr, 0
   br i1 %.not10.i49.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx9setErrorsERKS1_RKNSt15__exception_ptr13exception_ptrEE3$_1EEvT_.exit", label %bb.bn, !llvm.loop !367
@@ -2321,7 +2321,7 @@ bb.o:                                             ; preds = %_ZNK8facebook5velox
   br label %"_ZZN8facebook5velox4exec7EvalCtx26addElementErrorsToTopLevelERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS1_10EvalErrorsEEENK3$_0clIiEEDaT_.exit.i.i.i.i.i"
 
 "_ZZN8facebook5velox4exec7EvalCtx26addElementErrorsToTopLevelERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS1_10EvalErrorsEEENK3$_0clIiEEDaT_.exit.i.i.i.i.i": ; preds = %bb.o, %_ZNK8facebook5velox4exec10EvalErrors10hasErrorAtEi.exit.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i
-  %i.cz = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.cz = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.da = and i64 %i.cz, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.da, 0
   br i1 %.not10.i.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx26addElementErrorsToTopLevelERKS1_RKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS3_10EvalErrorsEEE3$_0EEvT_.exit", label %.preheader.i.i.i.i.i, !llvm.loop !380
@@ -2554,7 +2554,7 @@ bb.z:                                             ; preds = %_ZNK8facebook5velox
   br label %"_ZZN8facebook5velox4exec7EvalCtx26addElementErrorsToTopLevelERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS1_10EvalErrorsEEENK3$_0clIiEEDaT_.exit.i52.i.i.i.i"
 
 "_ZZN8facebook5velox4exec7EvalCtx26addElementErrorsToTopLevelERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS1_10EvalErrorsEEENK3$_0clIiEEDaT_.exit.i52.i.i.i.i": ; preds = %bb.z, %_ZNK8facebook5velox4exec10EvalErrors10hasErrorAtEi.exit.i.i.i54.i.i.i.i, %.preheader.i50.i.i.i.i
-  %i.hn = add nsw i64 %.011.i51.i.i.i.i, -1
+  %i.hn = add nuw i64 %.011.i51.i.i.i.i, 9223372036854775807
   %i.ho = and i64 %i.hn, %.011.i51.i.i.i.i        ; 2 uses
   %.not10.i53.i.i.i.i = icmp eq i64 %i.ho, 0
   br i1 %.not10.i53.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx26addElementErrorsToTopLevelERKS1_RKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS3_10EvalErrorsEEE3$_0EEvT_.exit", label %.preheader.i50.i.i.i.i, !llvm.loop !380
@@ -2788,7 +2788,7 @@ bb.o:                                             ; preds = %_ZNK8facebook5velox
   br label %"_ZZN8facebook5velox4exec7EvalCtx35convertElementErrorsToTopLevelNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS0_10BaseVectorEEENK3$_0clIiEEDaT_.exit.i.i.i.i.i"
 
 "_ZZN8facebook5velox4exec7EvalCtx35convertElementErrorsToTopLevelNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS0_10BaseVectorEEENK3$_0clIiEEDaT_.exit.i.i.i.i.i": ; preds = %bb.o, %_ZNK8facebook5velox4exec10EvalErrors10hasErrorAtEi.exit.i.i.i.i.i.i, %.preheader.i.i.i.i.i
-  %i.dp = add nsw i64 %.011.i.i.i.i.i, -1
+  %i.dp = add nuw i64 %.011.i.i.i.i.i, 9223372036854775807
   %i.dq = and i64 %i.dp, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.dq, 0
   br i1 %.not10.i.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx35convertElementErrorsToTopLevelNullsERKS1_RKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS0_10BaseVectorEEE3$_0EEvT_.exit", label %.preheader.i.i.i.i.i, !llvm.loop !385
@@ -3041,7 +3041,7 @@ bb.z:                                             ; preds = %_ZNK8facebook5velox
   br label %"_ZZN8facebook5velox4exec7EvalCtx35convertElementErrorsToTopLevelNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS0_10BaseVectorEEENK3$_0clIiEEDaT_.exit.i52.i.i.i.i"
 
 "_ZZN8facebook5velox4exec7EvalCtx35convertElementErrorsToTopLevelNullsERKNS0_17SelectivityVectorERKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS0_10BaseVectorEEENK3$_0clIiEEDaT_.exit.i52.i.i.i.i": ; preds = %bb.z, %_ZNK8facebook5velox4exec10EvalErrors10hasErrorAtEi.exit.i.i54.i.i.i.i, %.preheader.i50.i.i.i.i
-  %i.jb = add nsw i64 %.011.i51.i.i.i.i, -1
+  %i.jb = add nuw i64 %.011.i51.i.i.i.i, 9223372036854775807
   %i.jc = and i64 %i.jb, %.011.i51.i.i.i.i        ; 2 uses
   %.not10.i53.i.i.i.i = icmp eq i64 %i.jc, 0
   br i1 %.not10.i53.i.i.i.i, label %"_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec7EvalCtx35convertElementErrorsToTopLevelNullsERKS1_RKN5boost13intrusive_ptrINS0_6BufferEEERSt10shared_ptrINS0_10BaseVectorEEE3$_0EEvT_.exit", label %.preheader.i50.i.i.i.i, !llvm.loop !385
@@ -3444,7 +3444,7 @@ bb.d:                                             ; preds = %bb.e, %.preheader.i
 
 bb.e:                                             ; preds = %bb.d
   tail call void @_ZN8facebook5velox4exec10EvalErrors9copyErrorERKS2_ii(ptr noundef nonnull align 8 dereferenceable(40) %i.af, ptr noundef nonnull align 8 dereferenceable(40) %i.ag, i32 noundef %i.aj, i32 noundef %i.aj)
-  %i.am = add nsw i64 %.013.i, -1
+  %i.am = add nuw i64 %.013.i, 9223372036854775807
   %i.an = and i64 %i.am, %.013.i                  ; 2 uses
   %.not12.i = icmp eq i64 %i.an, 0
   br i1 %.not12.i, label %_ZZN8facebook5velox4bits8testBitsIZNS0_4exec10EvalErrors10copyErrorsERKNS0_17SelectivityVectorERKS4_EUlT_E_EEbPKmiibSA_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !686
@@ -3602,7 +3602,7 @@ bb.n:                                             ; preds = %bb.o, %.preheader.i
 
 bb.o:                                             ; preds = %bb.n
   tail call void @_ZN8facebook5velox4exec10EvalErrors9copyErrorERKS2_ii(ptr noundef nonnull align 8 dereferenceable(40) %i.dp, ptr noundef nonnull align 8 dereferenceable(40) %i.dq, i32 noundef %i.dt, i32 noundef %i.dt)
-  %i.dw = add nsw i64 %.013.i51, -1
+  %i.dw = add nuw i64 %.013.i51, 9223372036854775807
   %i.dx = and i64 %i.dw, %.013.i51                ; 2 uses
   %.not12.i53 = icmp eq i64 %i.dx, 0
   br i1 %.not12.i53, label %_ZZN8facebook5velox4bits8testBitsIZNS0_4exec10EvalErrors10copyErrorsERKNS0_17SelectivityVectorERKS4_EUlT_E_EEbPKmiibSA_ENKUlimE_clEim.exit, label %bb.n, !llvm.loop !686
@@ -4005,7 +4005,7 @@ _ZNKSt8functionIFviiEEclEii.exit.i.i:             ; preds = %bb.f
   br label %_ZZNK8facebook5velox4exec14PeeledEncoding23applyToNonNullInnerRowsERKNS0_17SelectivityVectorESt8functionIFviiEEENKUlT_E_clIiEEDaS9_.exit.i
 
 _ZZNK8facebook5velox4exec14PeeledEncoding23applyToNonNullInnerRowsERKNS0_17SelectivityVectorESt8functionIFviiEEENKUlT_E_clIiEEDaS9_.exit.i: ; preds = %_ZNKSt8functionIFviiEEclEii.exit.i.i, %bb.e
-  %i.bj = add nsw i64 %.011.i, -1
+  %i.bj = add nuw i64 %.011.i, 9223372036854775807
   %i.bk = and i64 %i.bj, %.011.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.bk, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_4exec14PeeledEncoding23applyToNonNullInnerRowsERKNS0_17SelectivityVectorESt8functionIFviiEEEUlT_E_EEvPKmiibSB_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !693
@@ -4203,7 +4203,7 @@ _ZNKSt8functionIFviiEEclEii.exit.i.i57:           ; preds = %bb.q
   br label %_ZZNK8facebook5velox4exec14PeeledEncoding23applyToNonNullInnerRowsERKNS0_17SelectivityVectorESt8functionIFviiEEENKUlT_E_clIiEEDaS9_.exit.i58
 
 _ZZNK8facebook5velox4exec14PeeledEncoding23applyToNonNullInnerRowsERKNS0_17SelectivityVectorESt8functionIFviiEEENKUlT_E_clIiEEDaS9_.exit.i58: ; preds = %_ZNKSt8functionIFviiEEclEii.exit.i.i57, %bb.p
-  %i.fd = add nsw i64 %.011.i51, -1
+  %i.fd = add nuw i64 %.011.i51, 9223372036854775807
   %i.fe = and i64 %i.fd, %.011.i51                ; 2 uses
   %.not10.i59 = icmp eq i64 %i.fe, 0
   br i1 %.not10.i59, label %_ZZN8facebook5velox4bits10forEachBitIZNKS0_4exec14PeeledEncoding23applyToNonNullInnerRowsERKNS0_17SelectivityVectorESt8functionIFviiEEEUlT_E_EEvPKmiibSB_ENKUlimE_clEim.exit, label %bb.o, !llvm.loop !693
@@ -4606,7 +4606,7 @@ bb.d:                                             ; preds = %bb.d, %.preheader.i
   %i.ag = trunc nuw nsw i64 %i.af to i32
   %i.ah = or disjoint i32 %i.d, %i.ag             ; 2 uses
   tail call void @_ZN8facebook5velox4exec10EvalErrors9copyErrorERKS2_ii(ptr noundef nonnull align 8 dereferenceable(40) %i.ad, ptr noundef nonnull align 8 dereferenceable(40) %i.ae, i32 noundef %i.ah, i32 noundef %i.ah)
-  %i.ai = add nsw i64 %.011.i, -1
+  %i.ai = add nuw i64 %.011.i, 9223372036854775807
   %i.aj = and i64 %i.ai, %.011.i                  ; 2 uses
   %.not10.i = icmp eq i64 %i.aj, 0
   br i1 %.not10.i, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec10EvalErrors10copyErrorsERKS4_EUlT_E_EEvPKmiibS7_ENKUlimE_clEim.exit, label %bb.d, !llvm.loop !704
@@ -4765,7 +4765,7 @@ bb.m:                                             ; preds = %bb.m, %.preheader.i
   %i.dl = trunc nuw nsw i64 %i.dk to i32
   %i.dm = or disjoint i32 %i.d, %i.dl             ; 2 uses
   tail call void @_ZN8facebook5velox4exec10EvalErrors9copyErrorERKS2_ii(ptr noundef nonnull align 8 dereferenceable(40) %i.di, ptr noundef nonnull align 8 dereferenceable(40) %i.dj, i32 noundef %i.dm, i32 noundef %i.dm)
-  %i.dn = add nsw i64 %.011.i45, -1
+  %i.dn = add nuw i64 %.011.i45, 9223372036854775807
   %i.do = and i64 %i.dn, %.011.i45                ; 2 uses
   %.not10.i46 = icmp eq i64 %i.do, 0
   br i1 %.not10.i46, label %_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec10EvalErrors10copyErrorsERKS4_EUlT_E_EEvPKmiibS7_ENKUlimE_clEim.exit, label %bb.m, !llvm.loop !704

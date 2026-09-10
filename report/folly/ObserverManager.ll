@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.critedge.i.i, %.pr
   br i1 %i.co, label %.loopexit, label %.critedge.i.i, !prof !646
 
 .critedge.i.i:                                    ; preds = %bb.g
-  %i.cp = add nsw i32 %.sroa.042.0.i, -1
+  %i.cp = add nuw nsw i32 %.sroa.042.0.i, 65535
   %i.cq = and i32 %i.cp, %.sroa.042.0.i           ; 2 uses
   %i.cr = and i32 %i.cq, 16382
   %.not70.i = icmp eq i32 %i.cr, 0
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %.preheader, %.crite
   br i1 %i.ae, label %bb.f, label %.critedge.i, !prof !646
 
 .critedge.i:                                      ; preds = %bb.d
-  %i.af = add nsw i32 %.sroa.042.0, -1
+  %i.af = add nuw nsw i32 %.sroa.042.0, 65535
   %i.ag = and i32 %i.af, %.sroa.042.0             ; 2 uses
   %i.ah = and i32 %i.ag, 16382
   %.not70 = icmp eq i32 %i.ah, 0
@@ -1011,7 +1011,7 @@ bb.g:                                             ; preds = %.critedge.i.i.i, %.
   br i1 %i.be, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKvvvvvEEE4findIS5_EENS1_11F14ItemIterIPNS1_8F14ChunkIS5_EEEERKT_.exit.thread39.i, label %.critedge.i.i.i, !prof !646
 
 .critedge.i.i.i:                                  ; preds = %bb.g
-  %i.bf = add nsw i32 %.sroa.014.0.i, -1
+  %i.bf = add nuw nsw i32 %.sroa.014.0.i, 65535
   %i.bg = and i32 %i.bf, %.sroa.014.0.i           ; 2 uses
   %i.bh = and i32 %i.bg, 16382
   %.not51.i = icmp eq i32 %i.bh, 0
@@ -1196,7 +1196,7 @@ bb.g:                                             ; preds = %.critedge.i.i.i, %.
   br i1 %i.bk, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKvvvvvEEE4findIS5_EENS1_11F14ItemIterIPNS1_8F14ChunkIS5_EEEERKT_.exit.thread39.i, label %.critedge.i.i.i, !prof !646
 
 .critedge.i.i.i:                                  ; preds = %bb.g
-  %i.bl = add nsw i32 %.sroa.014.0.i, -1
+  %i.bl = add nuw nsw i32 %.sroa.014.0.i, 65535
   %i.bm = and i32 %i.bl, %.sroa.014.0.i           ; 2 uses
   %i.bn = and i32 %i.bm, 16382
   %.not51.i = icmp eq i32 %i.bn, 0

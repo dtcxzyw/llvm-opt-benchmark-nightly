@@ -203,9 +203,9 @@ bb.p:                                             ; preds = %.lr.ph1013, %._crit
 
 bb.q:                                             ; preds = %bb.p
   %i.js = xor i32 %.06881010, 1
-  %i.jt = icmp eq i32 %.06881010, 1               ; 2 uses
-  %. = select i1 %i.jt, i32 %i.at, i32 %i.bd
-  %.825 = select i1 %i.jt, i32 %i.bd, i32 %i.at
+  %i.jt = icmp eq i32 %.06881010, 0               ; 2 uses
+  %. = select i1 %i.jt, i32 %i.bd, i32 %i.at
+  %.825 = select i1 %i.jt, i32 %i.at, i32 %i.bd
   %.not798987 = icmp slt i32 %.07171008, 1
   br i1 %.not798987, label %._crit_edge997, label %.lr.ph996
 

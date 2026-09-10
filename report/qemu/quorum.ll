@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.br, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !0
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
-  %i.bs = or i32 %i.bo, 64
+  %i.bs = or disjoint i32 %i.bo, 64
   br label %quorum_refresh_flags.exit
 
 quorum_refresh_flags.exit:                        ; preds = %._crit_edge, %._crit_edge.loopexit.i
@@ -436,7 +436,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.as, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !0
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
-  %i.at = or i32 %i.ap, 64
+  %i.at = or disjoint i32 %i.ap, 64
   br label %quorum_refresh_flags.exit
 
 quorum_refresh_flags.exit:                        ; preds = %bb.l, %._crit_edge.loopexit.i
@@ -565,7 +565,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.bb, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !0
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
-  %i.bc = or i32 %i.ay, 64
+  %i.bc = or disjoint i32 %i.ay, 64
   br label %quorum_refresh_flags.exit
 
 quorum_refresh_flags.exit:                        ; preds = %bb.j, %._crit_edge.loopexit.i

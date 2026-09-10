@@ -205,7 +205,7 @@ pcmp_val.exit161.us217:                           ; preds = %pcmp_val.exit161.us
 
 ._crit_edge:                                      ; preds = %pcmp_val.exit161.us217, %pcmp_val.exit161.us209, %pcmp_val.exit161.us201, %pcmp_val.exit161.us, %middle.block497, %middle.block469, %middle.block443, %middle.block, %bb.ae
   %.0124.lcssa = phi i32 [ 1, %bb.ae ], [ %i.mv, %pcmp_val.exit161.us201 ], [ %i.ne, %pcmp_val.exit161.us209 ], [ %i.mm, %pcmp_val.exit161.us ], [ %rdx.select, %middle.block ], [ %rdx.select445, %middle.block443 ], [ %rdx.select471, %middle.block469 ], [ %rdx.select499, %middle.block497 ], [ %i.nn, %pcmp_val.exit161.us217 ]
-  %6 = or i32 %.0124.lcssa, %i.ii                 ; 2 uses
+  %6 = add nuw nsw i32 %.0124.lcssa, %i.ii        ; 2 uses
   %indvars.iv.next334 = add nsw i64 %indvars.iv333, -1
   %i.np = icmp sgt i64 %indvars.iv333, 0
   %indvars.iv.next = add i32 %indvars.iv, 1
