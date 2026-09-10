@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cpython/original/listobject?download=true
 inline.NumInlined: 457
 inline.NumDeleted: 100
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@gallop_left:bb.a
   %.7 = select i1 %i.ap, i64 %.5, i64 %i.ao
   %i.aq = icmp sgt i32 %i.an, -1
@@ -204,7 +204,7 @@ list_concat_lock_held.exit:                       ; preds = %._crit_edge47.i, %l
 define internal ptr @list_repeat(ptr nofree noundef readonly captures(none) %0, i64 noundef %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
-  %.val.i = load i64, ptr %i.a, align 8, !tbaa !33 ; 6 uses
+  %.val.i = load i64, ptr %i.a, align 8, !tbaa !33 ; 8 uses
   %i.b = icmp eq i64 %.val.i, 0
   %i.c = icmp slt i64 %1, 1
   %or.cond.i = or i1 %i.c, %i.b
@@ -277,12 +277,12 @@ list_new_prealloc.exit._crit_edge.i:              ; preds = %list_new_prealloc.e
   br label %bb.k
 
 bb.k:                                             ; preds = %list_new_prealloc.exit._crit_edge.i, %list_new_prealloc.exit.thread45.i
-  %i.w = phi ptr [ %i.n, %list_new_prealloc.exit.thread45.i ], [ %.pre.i, %list_new_prealloc.exit._crit_edge.i ] ; 5 uses
+  %i.w = phi ptr [ %i.n, %list_new_prealloc.exit.thread45.i ], [ %.pre.i, %list_new_prealloc.exit._crit_edge.i ] ; 7 uses
   %.0.i47.i = phi ptr [ %i.i, %list_new_prealloc.exit.thread45.i ], [ %i.u, %list_new_prealloc.exit._crit_edge.i ] ; 3 uses
   %i.x = getelementptr i8, ptr %.0.i47.i, i64 24
   %i.y = icmp eq i64 %.val.i, 1
   %i.z = getelementptr i8, ptr %0, i64 24
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !31  ; 4 uses
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !31  ; 7 uses
   br i1 %i.y, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
@@ -315,35 +315,90 @@ _Py_RefcntAdd.exit.i:                             ; preds = %bb.m, %bb.l
 bb.n:                                             ; preds = %bb.k
   %i.am = getelementptr [8 x i8], ptr %i.aa, i64 %.val.i ; 2 uses
   %i.an = icmp ult ptr %i.aa, %i.am
-  br i1 %i.an, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.an, label %.lr.ph.i.preheader, label %._crit_edge.i
 
-.lr.ph.i:                                         ; preds = %bb.n, %_Py_RefcntAdd.exit43.i.a
-  %.050.i = phi ptr [ %i.aw, %_Py_RefcntAdd.exit43.i.a ], [ %i.aa, %bb.n ] ; 3 uses
-  %.149.i = phi ptr [ %i.ax, %_Py_RefcntAdd.exit43.i.a ], [ %i.w, %bb.n ] ; 2 uses
+.lr.ph.i.preheader:                               ; preds = %bb.n
+  %xtraiter = and i64 %.val.i, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+
+.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
+  %2 = load ptr, ptr %i.aa, align 8, !tbaa !54    ; 3 uses
+  %3 = load i32, ptr %2, align 8, !tbaa !32       ; 2 uses
+  %.not.i42.i.prol = icmp sgt i32 %3, -1
+  br i1 %.not.i42.i.prol, label %4, label %_Py_RefcntAdd.exit43.i.prol
+
+4:                                                ; preds = %.lr.ph.i.prol
+  %5 = zext nneg i32 %3 to i64
+  %6 = add nuw i64 %1, %5                         ; 2 uses
+  %7 = icmp sgt i64 %6, 2147483647
+  %8 = trunc i64 %6 to i32
+  %9 = select i1 %7, i32 -1073741824, i32 %8
+  store i32 %9, ptr %2, align 8, !tbaa !32
+  %.pre54.i.prol = load ptr, ptr %i.aa, align 8, !tbaa !54
+  br label %_Py_RefcntAdd.exit43.i.prol
+
+_Py_RefcntAdd.exit43.i.prol:                      ; preds = %4, %.lr.ph.i.prol
+  %10 = phi ptr [ %2, %.lr.ph.i.prol ], [ %.pre54.i.prol, %4 ]
+  %11 = getelementptr i8, ptr %i.aa, i64 8
+  %12 = getelementptr i8, ptr %i.w, i64 8
+  store ptr %10, ptr %i.w, align 8, !tbaa !54
+  br label %.lr.ph.i.prol.loopexit
+
+.lr.ph.i.prol.loopexit:                           ; preds = %_Py_RefcntAdd.exit43.i.prol, %.lr.ph.i.preheader
+  %.050.i.unr = phi ptr [ %i.aa, %.lr.ph.i.preheader ], [ %11, %_Py_RefcntAdd.exit43.i.prol ]
+  %.149.i.unr = phi ptr [ %i.w, %.lr.ph.i.preheader ], [ %12, %_Py_RefcntAdd.exit43.i.prol ]
+  %13 = and i64 %.val.i, 2305843009213693951
+  %14 = icmp eq i64 %13, 1
+  br i1 %14, label %._crit_edge.loopexit.i, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %_Py_RefcntAdd.exit43.i.a
+  %.050.i = phi ptr [ %i.aw, %_Py_RefcntAdd.exit43.i.a ], [ %.050.i.unr, %.lr.ph.i.prol.loopexit ] ; 4 uses
+  %.149.i = phi ptr [ %i.ax, %_Py_RefcntAdd.exit43.i.a ], [ %.149.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
   %i.ao = load ptr, ptr %.050.i, align 8, !tbaa !54 ; 3 uses
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !32 ; 2 uses
   %.not.i42.i = icmp sgt i32 %i.ap, -1
-  br i1 %.not.i42.i, label %bb.o, label %_Py_RefcntAdd.exit43.i.a
+  br i1 %.not.i42.i, label %15, label %_Py_RefcntAdd.exit43.i
 
-bb.o:                                             ; preds = %.lr.ph.i
-  %i.aq = zext nneg i32 %i.ap to i64
+15:                                               ; preds = %.lr.ph.i
+  %16 = zext nneg i32 %i.ap to i64
+  %17 = add nuw i64 %1, %16                       ; 2 uses
+  %18 = icmp sgt i64 %17, 2147483647
+  %19 = trunc i64 %17 to i32
+  %20 = select i1 %18, i32 -1073741824, i32 %19
+  store i32 %20, ptr %i.ao, align 8, !tbaa !32
+  %.pre54.i = load ptr, ptr %.050.i, align 8, !tbaa !54
+  br label %_Py_RefcntAdd.exit43.i
+
+_Py_RefcntAdd.exit43.i:                           ; preds = %15, %.lr.ph.i
+  %21 = phi ptr [ %i.ao, %.lr.ph.i ], [ %.pre54.i, %15 ]
+  %22 = getelementptr i8, ptr %.050.i, i64 8      ; 2 uses
+  %23 = getelementptr i8, ptr %.149.i, i64 8
+  store ptr %21, ptr %.149.i, align 8, !tbaa !54
+  %24 = load ptr, ptr %22, align 8, !tbaa !54     ; 3 uses
+  %25 = load i32, ptr %24, align 8, !tbaa !32     ; 2 uses
+  %.not.i42.i.1 = icmp sgt i32 %25, -1
+  br i1 %.not.i42.i.1, label %bb.o, label %_Py_RefcntAdd.exit43.i.a
+
+bb.o:                                             ; preds = %_Py_RefcntAdd.exit43.i
+  %i.aq = zext nneg i32 %25 to i64
   %i.ar = add nuw i64 %1, %i.aq                   ; 2 uses
   %i.as = icmp sgt i64 %i.ar, 2147483647
   %i.at = trunc i64 %i.ar to i32
   %i.au = select i1 %i.as, i32 -1073741824, i32 %i.at
-  store i32 %i.au, ptr %i.ao, align 8, !tbaa !32
-  %.pre54.i.a = load ptr, ptr %.050.i, align 8, !tbaa !54
+  store i32 %i.au, ptr %24, align 8, !tbaa !32
+  %.pre54.i.a = load ptr, ptr %22, align 8, !tbaa !54
   br label %_Py_RefcntAdd.exit43.i.a
 
-_Py_RefcntAdd.exit43.i.a:                         ; preds = %bb.o, %.lr.ph.i
-  %i.av = phi ptr [ %i.ao, %.lr.ph.i ], [ %.pre54.i.a, %bb.o ]
-  %i.aw = getelementptr i8, ptr %.050.i, i64 8    ; 2 uses
-  %i.ax = getelementptr i8, ptr %.149.i, i64 8
-  store ptr %i.av, ptr %.149.i, align 8, !tbaa !54
+_Py_RefcntAdd.exit43.i.a:                         ; preds = %bb.o, %_Py_RefcntAdd.exit43.i
+  %i.av = phi ptr [ %24, %_Py_RefcntAdd.exit43.i ], [ %.pre54.i.a, %bb.o ]
+  %i.aw = getelementptr i8, ptr %.050.i, i64 16   ; 2 uses
+  %i.ax = getelementptr i8, ptr %.149.i, i64 16
+  store ptr %i.av, ptr %23, align 8, !tbaa !54
   %i.ay = icmp ult ptr %i.aw, %i.am
   br i1 %i.ay, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !165
 
-._crit_edge.loopexit.i:                           ; preds = %_Py_RefcntAdd.exit43.i.a
+._crit_edge.loopexit.i:                           ; preds = %_Py_RefcntAdd.exit43.i.a, %.lr.ph.i.prol.loopexit
   %.pre55.i = load ptr, ptr %i.x, align 8, !tbaa !31
   br label %._crit_edge.i
 
