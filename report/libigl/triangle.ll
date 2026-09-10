@@ -205,9 +205,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.gv, label %._crit_edge, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op = add i64 1, %i.gi
-  %invariant.op774 = add i64 2, %i.gi
-  %invariant.op776 = add i64 3, %i.gi
+  %invariant.op = add nsw i64 1, %i.gi
+  %invariant.op774 = add nsw i64 2, %i.gi
+  %invariant.op776 = add nsw i64 3, %i.gi
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
@@ -217,17 +217,17 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.gy = load double, ptr %i.gx, align 8, !tbaa !23
   %i.gz = getelementptr inbounds [8 x i8], ptr %i.en, i64 %i.gw
   store double %i.gy, ptr %i.gz, align 8, !tbaa !23
-  %.reass = add i64 %indvars.iv, %invariant.op    ; 2 uses
+  %.reass = add nsw i64 %indvars.iv, %invariant.op ; 2 uses
   %i.ha = getelementptr inbounds [8 x i8], ptr %i.bw, i64 %.reass
   %i.hb = load double, ptr %i.ha, align 8, !tbaa !23
   %i.hc = getelementptr inbounds [8 x i8], ptr %i.en, i64 %.reass
   store double %i.hb, ptr %i.hc, align 8, !tbaa !23
-  %.reass775 = add i64 %indvars.iv, %invariant.op774 ; 2 uses
+  %.reass775 = add nsw i64 %indvars.iv, %invariant.op774 ; 2 uses
   %i.hd = getelementptr inbounds [8 x i8], ptr %i.bw, i64 %.reass775
   %i.he = load double, ptr %i.hd, align 8, !tbaa !23
   %i.hf = getelementptr inbounds [8 x i8], ptr %i.en, i64 %.reass775
   store double %i.he, ptr %i.hf, align 8, !tbaa !23
-  %.reass777 = add i64 %indvars.iv, %invariant.op776 ; 2 uses
+  %.reass777 = add nsw i64 %indvars.iv, %invariant.op776 ; 2 uses
   %i.hg = getelementptr inbounds [8 x i8], ptr %i.bw, i64 %.reass777
   %i.hh = load double, ptr %i.hg, align 8, !tbaa !23
   %i.hi = getelementptr inbounds [8 x i8], ptr %i.en, i64 %.reass777
@@ -336,9 +336,9 @@ scalar.ph710.prol.loopexit:                       ; preds = %scalar.ph710.prol, 
   br i1 %i.iv, label %._crit_edge622, label %scalar.ph710.preheader.new
 
 scalar.ph710.preheader.new:                       ; preds = %scalar.ph710.prol.loopexit
-  %invariant.op778 = add i64 1, %i.ii
-  %invariant.op780 = add i64 2, %i.ii
-  %invariant.op782 = add i64 3, %i.ii
+  %invariant.op778 = add nsw i64 1, %i.ii
+  %invariant.op780 = add nsw i64 2, %i.ii
+  %invariant.op782 = add nsw i64 3, %i.ii
   br label %scalar.ph710
 
 scalar.ph710:                                     ; preds = %scalar.ph710, %scalar.ph710.preheader.new
@@ -348,17 +348,17 @@ scalar.ph710:                                     ; preds = %scalar.ph710, %scal
   %i.iy = load double, ptr %i.ix, align 8, !tbaa !23
   %i.iz = getelementptr inbounds [8 x i8], ptr %i.el, i64 %i.iw
   store double %i.iy, ptr %i.iz, align 8, !tbaa !23
-  %.reass779 = add i64 %indvars.iv635, %invariant.op778 ; 2 uses
+  %.reass779 = add nsw i64 %indvars.iv635, %invariant.op778 ; 2 uses
   %i.ja = getelementptr inbounds [8 x i8], ptr %i.cs, i64 %.reass779
   %i.jb = load double, ptr %i.ja, align 8, !tbaa !23
   %i.jc = getelementptr inbounds [8 x i8], ptr %i.el, i64 %.reass779
   store double %i.jb, ptr %i.jc, align 8, !tbaa !23
-  %.reass781 = add i64 %indvars.iv635, %invariant.op780 ; 2 uses
+  %.reass781 = add nsw i64 %indvars.iv635, %invariant.op780 ; 2 uses
   %i.jd = getelementptr inbounds [8 x i8], ptr %i.cs, i64 %.reass781
   %i.je = load double, ptr %i.jd, align 8, !tbaa !23
   %i.jf = getelementptr inbounds [8 x i8], ptr %i.el, i64 %.reass781
   store double %i.je, ptr %i.jf, align 8, !tbaa !23
-  %.reass783 = add i64 %indvars.iv635, %invariant.op782 ; 2 uses
+  %.reass783 = add nsw i64 %indvars.iv635, %invariant.op782 ; 2 uses
   %i.jg = getelementptr inbounds [8 x i8], ptr %i.cs, i64 %.reass783
   %i.jh = load double, ptr %i.jg, align 8, !tbaa !23
   %i.ji = getelementptr inbounds [8 x i8], ptr %i.el, i64 %.reass783
@@ -761,7 +761,7 @@ scalar.ph727.prol.loopexit:                       ; preds = %scalar.ph727.prol, 
   br i1 %i.uj, label %._crit_edge625, label %scalar.ph727.preheader.new
 
 scalar.ph727.preheader.new:                       ; preds = %scalar.ph727.prol.loopexit
-  %invariant.op784 = add i64 1, %i.tr
+  %invariant.op784 = add nsw i64 1, %i.tr
   br label %scalar.ph727
 
 scalar.ph727:                                     ; preds = %scalar.ph727, %scalar.ph727.preheader.new
@@ -773,7 +773,7 @@ scalar.ph727:                                     ; preds = %scalar.ph727, %scal
   store double %i.um, ptr %i.un, align 8, !tbaa !23
   %i.uo = getelementptr inbounds [8 x i8], ptr %i.rq, i64 %i.uk
   store double %i.um, ptr %i.uo, align 8, !tbaa !23
-  %.reass785 = add i64 %indvars.iv640, %invariant.op784 ; 3 uses
+  %.reass785 = add nsw i64 %indvars.iv640, %invariant.op784 ; 3 uses
   %i.up = getelementptr inbounds [8 x i8], ptr %i.pp, i64 %.reass785
   %i.uq = load double, ptr %i.up, align 8, !tbaa !23 ; 2 uses
   %i.ur = getelementptr inbounds [8 x i8], ptr %i.qn, i64 %.reass785
@@ -1176,7 +1176,7 @@ scalar.ph743.prol.loopexit:                       ; preds = %scalar.ph743.prol, 
   br i1 %i.ahp, label %._crit_edge629, label %scalar.ph743.preheader.new
 
 scalar.ph743.preheader.new:                       ; preds = %scalar.ph743.prol.loopexit
-  %invariant.op786 = add i64 1, %i.agx
+  %invariant.op786 = add nsw i64 1, %i.agx
   br label %scalar.ph743
 
 scalar.ph743:                                     ; preds = %scalar.ph743, %scalar.ph743.preheader.new
@@ -1190,7 +1190,7 @@ scalar.ph743:                                     ; preds = %scalar.ph743, %scal
   %i.ahw = fmul double %i.ahv, 5.000000e-01       ; 2 uses
   store double %i.ahw, ptr %i.ahr, align 8, !tbaa !23
   store double %i.ahw, ptr %i.aht, align 8, !tbaa !23
-  %.reass787 = add i64 %indvars.iv645, %invariant.op786 ; 2 uses
+  %.reass787 = add nsw i64 %indvars.iv645, %invariant.op786 ; 2 uses
   %i.ahx = getelementptr inbounds [8 x i8], ptr %i.aab, i64 %.reass787 ; 2 uses
   %i.ahy = load double, ptr %i.ahx, align 8, !tbaa !23
   %i.ahz = getelementptr inbounds [8 x i8], ptr %.ph756, i64 %.reass787 ; 2 uses

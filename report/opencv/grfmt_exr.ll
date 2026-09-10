@@ -204,9 +204,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.vn, label %._crit_edge.split.us.us.i, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op618 = add i64 1, %i.vg
-  %invariant.op620 = add i64 2, %i.vg
-  %invariant.op622 = add i64 3, %i.vg
+  %invariant.op618 = add nsw i64 1, %i.vg
+  %invariant.op620 = add nsw i64 2, %i.vg
+  %invariant.op622 = add nsw i64 3, %i.vg
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
@@ -215,15 +215,15 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.vp = mul nsw i64 %i.vo, %i.bh
   %i.vq = getelementptr inbounds [4 x i8], ptr %i.uv, i64 %i.vp
   store float %.pre46.i, ptr %i.vq, align 4, !tbaa !16
-  %.reass619 = add i64 %indvars.iv38.i, %invariant.op618
+  %.reass619 = add nsw i64 %indvars.iv38.i, %invariant.op618
   %i.vr = mul nsw i64 %.reass619, %i.bh
   %i.vs = getelementptr inbounds [4 x i8], ptr %i.uv, i64 %i.vr
   store float %.pre46.i, ptr %i.vs, align 4, !tbaa !16
-  %.reass621 = add i64 %indvars.iv38.i, %invariant.op620
+  %.reass621 = add nsw i64 %indvars.iv38.i, %invariant.op620
   %i.vt = mul nsw i64 %.reass621, %i.bh
   %i.vu = getelementptr inbounds [4 x i8], ptr %i.uv, i64 %i.vt
   store float %.pre46.i, ptr %i.vu, align 4, !tbaa !16
-  %.reass623 = add i64 %indvars.iv38.i, %invariant.op622
+  %.reass623 = add nsw i64 %indvars.iv38.i, %invariant.op622
   %i.vv = mul nsw i64 %.reass623, %i.bh
   %i.vw = getelementptr inbounds [4 x i8], ptr %i.uv, i64 %i.vv
   store float %.pre46.i, ptr %i.vw, align 4, !tbaa !16
@@ -288,9 +288,9 @@ scalar.ph583.prol.loopexit:                       ; preds = %scalar.ph583.prol, 
   br i1 %i.wh, label %._crit_edge.split.i, label %scalar.ph583.preheader.new
 
 scalar.ph583.preheader.new:                       ; preds = %scalar.ph583.prol.loopexit
-  %invariant.op = add i64 1, %i.wa
-  %invariant.op612 = add i64 2, %i.wa
-  %invariant.op614 = add i64 3, %i.wa
+  %invariant.op = add nsw i64 1, %i.wa
+  %invariant.op612 = add nsw i64 2, %i.wa
+  %invariant.op614 = add nsw i64 3, %i.wa
   br label %scalar.ph583
 
 ._crit_edge.split.i:                              ; preds = %scalar.ph583.prol.loopexit, %scalar.ph583, %middle.block592
@@ -305,15 +305,15 @@ scalar.ph583:                                     ; preds = %scalar.ph583, %scal
   %i.wk = mul nsw i64 %i.wj, %i.bh
   %i.wl = getelementptr inbounds [4 x i8], ptr %i.uv, i64 %i.wk
   store i32 %.pre.i, ptr %i.wl, align 4, !tbaa !14
-  %.reass = add i64 %indvars.iv.i, %invariant.op
+  %.reass = add nsw i64 %indvars.iv.i, %invariant.op
   %i.wm = mul nsw i64 %.reass, %i.bh
   %i.wn = getelementptr inbounds [4 x i8], ptr %i.uv, i64 %i.wm
   store i32 %.pre.i, ptr %i.wn, align 4, !tbaa !14
-  %.reass613 = add i64 %indvars.iv.i, %invariant.op612
+  %.reass613 = add nsw i64 %indvars.iv.i, %invariant.op612
   %i.wo = mul nsw i64 %.reass613, %i.bh
   %i.wp = getelementptr inbounds [4 x i8], ptr %i.uv, i64 %i.wo
   store i32 %.pre.i, ptr %i.wp, align 4, !tbaa !14
-  %.reass615 = add i64 %indvars.iv.i, %invariant.op614
+  %.reass615 = add nsw i64 %indvars.iv.i, %invariant.op614
   %i.wq = mul nsw i64 %.reass615, %i.bh
   %i.wr = getelementptr inbounds [4 x i8], ptr %i.uv, i64 %i.wq
   store i32 %.pre.i, ptr %i.wr, align 4, !tbaa !14
@@ -716,9 +716,9 @@ scalar.ph52.prol.loopexit:                        ; preds = %scalar.ph52.prol, %
   br i1 %i.u, label %._crit_edge.split.us.us, label %scalar.ph52.preheader.new
 
 scalar.ph52.preheader.new:                        ; preds = %scalar.ph52.prol.loopexit
-  %invariant.op76 = add i64 1, %i.n
-  %invariant.op78 = add i64 2, %i.n
-  %invariant.op80 = add i64 3, %i.n
+  %invariant.op76 = add nsw i64 1, %i.n
+  %invariant.op78 = add nsw i64 2, %i.n
+  %invariant.op80 = add nsw i64 3, %i.n
   br label %scalar.ph52
 
 scalar.ph52:                                      ; preds = %scalar.ph52, %scalar.ph52.preheader.new
@@ -727,15 +727,15 @@ scalar.ph52:                                      ; preds = %scalar.ph52, %scala
   %i.w = mul nsw i64 %i.v, %i.j
   %i.x = getelementptr inbounds [4 x i8], ptr %1, i64 %i.w
   store float %.pre46, ptr %i.x, align 4, !tbaa !16
-  %.reass77 = add i64 %indvars.iv38, %invariant.op76
+  %.reass77 = add nsw i64 %indvars.iv38, %invariant.op76
   %i.y = mul nsw i64 %.reass77, %i.j
   %i.z = getelementptr inbounds [4 x i8], ptr %1, i64 %i.y
   store float %.pre46, ptr %i.z, align 4, !tbaa !16
-  %.reass79 = add i64 %indvars.iv38, %invariant.op78
+  %.reass79 = add nsw i64 %indvars.iv38, %invariant.op78
   %i.aa = mul nsw i64 %.reass79, %i.j
   %i.ab = getelementptr inbounds [4 x i8], ptr %1, i64 %i.aa
   store float %.pre46, ptr %i.ab, align 4, !tbaa !16
-  %.reass81 = add i64 %indvars.iv38, %invariant.op80
+  %.reass81 = add nsw i64 %indvars.iv38, %invariant.op80
   %i.ac = mul nsw i64 %.reass81, %i.j
   %i.ad = getelementptr inbounds [4 x i8], ptr %1, i64 %i.ac
   store float %.pre46, ptr %i.ad, align 4, !tbaa !16
@@ -800,9 +800,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.ao, label %._crit_edge.split, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op = add i64 1, %i.ah
-  %invariant.op70 = add i64 2, %i.ah
-  %invariant.op72 = add i64 3, %i.ah
+  %invariant.op = add nsw i64 1, %i.ah
+  %invariant.op70 = add nsw i64 2, %i.ah
+  %invariant.op72 = add nsw i64 3, %i.ah
   br label %scalar.ph
 
 ._crit_edge30.split:                              ; preds = %._crit_edge.split, %._crit_edge.split.us.us, %bb.a
@@ -820,15 +820,15 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.ar = mul nsw i64 %i.aq, %i.j
   %i.as = getelementptr inbounds [4 x i8], ptr %1, i64 %i.ar
   store i32 %.pre, ptr %i.as, align 4, !tbaa !14
-  %.reass = add i64 %indvars.iv, %invariant.op
+  %.reass = add nsw i64 %indvars.iv, %invariant.op
   %i.at = mul nsw i64 %.reass, %i.j
   %i.au = getelementptr inbounds [4 x i8], ptr %1, i64 %i.at
   store i32 %.pre, ptr %i.au, align 4, !tbaa !14
-  %.reass71 = add i64 %indvars.iv, %invariant.op70
+  %.reass71 = add nsw i64 %indvars.iv, %invariant.op70
   %i.av = mul nsw i64 %.reass71, %i.j
   %i.aw = getelementptr inbounds [4 x i8], ptr %1, i64 %i.av
   store i32 %.pre, ptr %i.aw, align 4, !tbaa !14
-  %.reass73 = add i64 %indvars.iv, %invariant.op72
+  %.reass73 = add nsw i64 %indvars.iv, %invariant.op72
   %i.ax = mul nsw i64 %.reass73, %i.j
   %i.ay = getelementptr inbounds [4 x i8], ptr %1, i64 %i.ax
   store i32 %.pre, ptr %i.ay, align 4, !tbaa !14

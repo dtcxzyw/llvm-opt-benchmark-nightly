@@ -204,9 +204,9 @@ bb.au:                                            ; preds = %bb.at
   %cmp.n1352 = icmp eq i64 %n.vec1347, %i.qv
   %xtraiter1786 = and i64 %i.rg, 3                ; 2 uses
   %lcmp.mod1787.not = icmp eq i64 %xtraiter1786, 0
-  %invariant.op1848 = add i64 1, %i.qc
-  %invariant.op1850 = add i64 2, %i.qc
-  %invariant.op1852 = add i64 3, %i.qc
+  %invariant.op1848 = add nsw i64 1, %i.qc
+  %invariant.op1850 = add nsw i64 2, %i.qc
+  %invariant.op1852 = add nsw i64 3, %i.qc
   br label %.preheader171.us.i305
 
 .preheader174.preheader.i:                        ; preds = %.lr.ph196.i285
@@ -341,17 +341,17 @@ vec.epilog.middle.block1384:                      ; preds = %vec.epilog.vector.b
   %i.sw = getelementptr inbounds i8, ptr %.0136192.us.i307, i64 %i.sv
   %i.sx = load i16, ptr %i.gt, align 1
   store i16 %i.sx, ptr %i.sw, align 1
-  %.reass1849 = add i64 %indvars.iv234.i313, %invariant.op1848
+  %.reass1849 = add nsw i64 %indvars.iv234.i313, %invariant.op1848
   %i.sy = shl nsw i64 %.reass1849, 1
   %i.sz = getelementptr inbounds i8, ptr %.0136192.us.i307, i64 %i.sy
   %i.ta = load i16, ptr %i.gt, align 1
   store i16 %i.ta, ptr %i.sz, align 1
-  %.reass1851 = add i64 %indvars.iv234.i313, %invariant.op1850
+  %.reass1851 = add nsw i64 %indvars.iv234.i313, %invariant.op1850
   %i.tb = shl nsw i64 %.reass1851, 1
   %i.tc = getelementptr inbounds i8, ptr %.0136192.us.i307, i64 %i.tb
   %i.td = load i16, ptr %i.gt, align 1
   store i16 %i.td, ptr %i.tc, align 1
-  %.reass1853 = add i64 %indvars.iv234.i313, %invariant.op1852
+  %.reass1853 = add nsw i64 %indvars.iv234.i313, %invariant.op1852
   %i.te = shl nsw i64 %.reass1853, 1
   %i.tf = getelementptr inbounds i8, ptr %.0136192.us.i307, i64 %i.te
   %i.tg = load i16, ptr %i.gt, align 1
@@ -754,9 +754,9 @@ bb.cg:                                            ; preds = %bb.cf
   %cmp.n1432 = icmp eq i64 %n.vec1425, %i.ajm
   %xtraiter1710 = and i64 %i.ajm, 3               ; 2 uses
   %lcmp.mod1711.not = icmp eq i64 %xtraiter1710, 0
-  %invariant.op1842 = add i64 1, %i.aij
-  %invariant.op1844 = add i64 2, %i.aij
-  %invariant.op1846 = add i64 3, %i.aij
+  %invariant.op1842 = add nsw i64 1, %i.aij
+  %invariant.op1844 = add nsw i64 2, %i.aij
+  %invariant.op1846 = add nsw i64 3, %i.aij
   br label %.preheader171.us.i532
 
 .preheader174.preheader.i509:                     ; preds = %.lr.ph196.i508
@@ -866,17 +866,17 @@ middle.block1450:                                 ; preds = %vector.body1445
   %i.akv = getelementptr inbounds i8, ptr %.0136192.us.i534, i64 %i.aku
   %i.akw = load i32, ptr %i.gt, align 1
   store i32 %i.akw, ptr %i.akv, align 1
-  %.reass1843 = add i64 %indvars.iv234.i540, %invariant.op1842
+  %.reass1843 = add nsw i64 %indvars.iv234.i540, %invariant.op1842
   %i.akx = shl nsw i64 %.reass1843, 2
   %i.aky = getelementptr inbounds i8, ptr %.0136192.us.i534, i64 %i.akx
   %i.akz = load i32, ptr %i.gt, align 1
   store i32 %i.akz, ptr %i.aky, align 1
-  %.reass1845 = add i64 %indvars.iv234.i540, %invariant.op1844
+  %.reass1845 = add nsw i64 %indvars.iv234.i540, %invariant.op1844
   %i.ala = shl nsw i64 %.reass1845, 2
   %i.alb = getelementptr inbounds i8, ptr %.0136192.us.i534, i64 %i.ala
   %i.alc = load i32, ptr %i.gt, align 1
   store i32 %i.alc, ptr %i.alb, align 1
-  %.reass1847 = add i64 %indvars.iv234.i540, %invariant.op1846
+  %.reass1847 = add nsw i64 %indvars.iv234.i540, %invariant.op1846
   %i.ald = shl nsw i64 %.reass1847, 2
   %i.ale = getelementptr inbounds i8, ptr %.0136192.us.i534, i64 %i.ald
   %i.alf = load i32, ptr %i.gt, align 1
@@ -1279,9 +1279,9 @@ bb.ds:                                            ; preds = %bb.dr
   %cmp.n1484 = icmp eq i64 %n.vec1477, %i.bbg
   %xtraiter1635 = and i64 %i.bbg, 3               ; 2 uses
   %lcmp.mod1636.not = icmp eq i64 %xtraiter1635, 0
-  %invariant.op = add i64 1, %i.bad
-  %invariant.op1838 = add i64 2, %i.bad
-  %invariant.op1840 = add i64 3, %i.bad
+  %invariant.op = add nsw i64 1, %i.bad
+  %invariant.op1838 = add nsw i64 2, %i.bad
+  %invariant.op1840 = add nsw i64 3, %i.bad
   br label %.preheader171.us.i759
 
 .preheader174.preheader.i736:                     ; preds = %.lr.ph196.i735
@@ -1390,17 +1390,17 @@ middle.block1502:                                 ; preds = %vector.body1497
   %i.bco = getelementptr inbounds i8, ptr %.0136192.us.i761, i64 %i.bcn
   %i.bcp = load i64, ptr %i.gt, align 1
   store i64 %i.bcp, ptr %i.bco, align 1
-  %.reass = add i64 %indvars.iv234.i767, %invariant.op
+  %.reass = add nsw i64 %indvars.iv234.i767, %invariant.op
   %i.bcq = shl nsw i64 %.reass, 3
   %i.bcr = getelementptr inbounds i8, ptr %.0136192.us.i761, i64 %i.bcq
   %i.bcs = load i64, ptr %i.gt, align 1
   store i64 %i.bcs, ptr %i.bcr, align 1
-  %.reass1839 = add i64 %indvars.iv234.i767, %invariant.op1838
+  %.reass1839 = add nsw i64 %indvars.iv234.i767, %invariant.op1838
   %i.bct = shl nsw i64 %.reass1839, 3
   %i.bcu = getelementptr inbounds i8, ptr %.0136192.us.i761, i64 %i.bct
   %i.bcv = load i64, ptr %i.gt, align 1
   store i64 %i.bcv, ptr %i.bcu, align 1
-  %.reass1841 = add i64 %indvars.iv234.i767, %invariant.op1840
+  %.reass1841 = add nsw i64 %indvars.iv234.i767, %invariant.op1840
   %i.bcw = shl nsw i64 %.reass1841, 3
   %i.bcx = getelementptr inbounds i8, ptr %.0136192.us.i761, i64 %i.bcw
   %i.bcy = load i64, ptr %i.gt, align 1
