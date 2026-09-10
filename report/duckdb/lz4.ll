@@ -204,10 +204,8 @@ bb.j:                                             ; preds = %bb.d, %bb.c, %bb.b
 
 .lr.ph.preheader:                                 ; preds = %bb.j
   %i.af = ptrtoaddr ptr %2 to i64
-  %i.ag = ptrtoaddr ptr %0 to i64                 ; 2 uses
-  %4 = add i64 %i.ag, 16
-  %5 = tail call i64 @llvm.umax.i64(i64 %i.af, i64 %4)
-  %i.ah = add i64 %5, -9
+  %i.ag = ptrtoaddr ptr %0 to i64
+  %i.ah = add i64 %i.af, -9
   %i.ai = sub i64 %i.ah, %i.ag                    ; 2 uses
   %i.aj = lshr i64 %i.ai, 3
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.n = lshr i32 %.val96, 2
   %i.o = zext nneg i32 %i.n to i64
   %i.p = tail call ptr @palloc(i64 noundef %i.o) #11 ; 11 uses
-  %i.q = ptrtoaddr ptr %i.p to i64                ; 6 uses
+  %i.q = ptrtoaddr ptr %i.p to i64                ; 3 uses
   %.val95 = load i32, ptr %i.d, align 4
   %i.r = and i32 %.val95, -4                      ; 2 uses
   store i32 %i.r, ptr %i.p, align 4
@@ -240,13 +240,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ag, label %.lr.ph.preheader, label %.loopexit99
 
 .lr.ph.preheader:                                 ; preds = %bb.f
-  %1 = add i64 %i.q, %i.x
-  %2 = add i64 %i.q, 16
-  %umax = tail call i64 @llvm.umax.i64(i64 %1, i64 %2)
-  %3 = add i64 %umax, -9
-  %4 = sub i64 %3, %i.q
-  %5 = and i64 %4, -8
-  %i.ah = add i64 %5, 8
+  %i.ah = add nsw i64 %i.x, -8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.v, i8 0, i64 %i.ah, i1 false)
   br label %.loopexit99
 
@@ -415,7 +409,7 @@ bb.c:                                             ; preds = %bb.a
   %i.n = lshr i32 %.val106, 2
   %i.o = zext nneg i32 %i.n to i64
   %i.p = tail call ptr @palloc(i64 noundef %i.o) #11 ; 12 uses
-  %i.q = ptrtoaddr ptr %i.p to i64                ; 6 uses
+  %i.q = ptrtoaddr ptr %i.p to i64                ; 3 uses
   %.val105 = load i32, ptr %i.d, align 4          ; 2 uses
   %i.r = and i32 %.val105, -4                     ; 2 uses
   store i32 %i.r, ptr %i.p, align 4
@@ -450,13 +444,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ag, label %.lr.ph.preheader, label %.loopexit109
 
 .lr.ph.preheader:                                 ; preds = %bb.f
-  %1 = add i64 %i.q, %i.aa
-  %2 = add i64 %i.q, 16
-  %umax = tail call i64 @llvm.umax.i64(i64 %1, i64 %2)
-  %3 = add i64 %umax, -9
-  %4 = sub i64 %3, %i.q
-  %5 = and i64 %4, -8
-  %i.ah = add i64 %5, 8
+  %i.ah = add nsw i64 %i.aa, -8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.v, i8 0, i64 %i.ah, i1 false)
   br label %.loopexit109
 

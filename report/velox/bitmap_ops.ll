@@ -205,13 +205,11 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph57.preheader:                               ; preds = %.preheader45
   %i.dl = shl nuw nsw i64 %i.h, 3
-  %3 = add i64 %i.l, %i.a
-  %4 = add i64 %3, %i.dl
-  %i.dm = ptrtoaddr ptr %.039.lcssa to i64        ; 2 uses
-  %i.dn = add i64 %i.dm, 8
-  %5 = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.dn)
+  %i.dm = ptrtoaddr ptr %.039.lcssa to i64
+  %i.dn = add i64 %i.l, %i.a
+  %3 = add i64 %i.dn, %i.dl
   %i.do = xor i64 %i.dm, -1
-  %i.dp = add i64 %5, %i.do                       ; 2 uses
+  %i.dp = add i64 %3, %i.do                       ; 2 uses
   %i.dq = lshr i64 %i.dp, 3
   %i.dr = add nuw nsw i64 %i.dq, 1                ; 2 uses
   %min.iters.check108 = icmp ult i64 %i.dp, 24

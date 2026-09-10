@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN4ncnnL11pack_A_tileERKNS_3MatERS0_iiii:bb.a
   br label %.preheader98
 
 .preheader98:                                     ; preds = %.preheader98.loopexit, %.preheader103
-  %.1587.lcssa = phi i32 [ %.0586.lcssa, %.preheader103 ], [ %i.qo, %.preheader98.loopexit ] ; 10 uses
+  %.1587.lcssa = phi i32 [ %.0586.lcssa, %.preheader103 ], [ %i.qo, %.preheader98.loopexit ] ; 8 uses
   %.10.lcssa = phi ptr [ %.0583.lcssa, %.preheader103 ], [ %.17, %.preheader98.loopexit ] ; 5 uses
   %i.qp = or disjoint i32 %.1587.lcssa, 3
   %i.qq = icmp slt i32 %i.qp, %2
@@ -608,9 +608,7 @@ vec.epilog.middle.block1038:                      ; preds = %vec.epilog.vector.b
   br i1 %i.qr, label %.lr.ph278.split.split.us, label %.lr.ph278.split.split.preheader
 
 .lr.ph278.split.split.preheader:                  ; preds = %.lr.ph278.split
-  %5 = add nuw i32 %.1587.lcssa, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 %5)
-  %i.yj = add i32 %smax, -4
+  %i.yj = add i32 %2, -4
   %i.yk = sub i32 %i.yj, %.1587.lcssa
   %i.yl = and i32 %i.yk, -4
   %i.ym = add i32 %.1587.lcssa, %i.yl
@@ -621,9 +619,7 @@ vec.epilog.middle.block1038:                      ; preds = %vec.epilog.vector.b
   br i1 %i.qu, label %.lr.ph240.us284.us.preheader, label %.loopexit97.us290.preheader
 
 .loopexit97.us290.preheader:                      ; preds = %.lr.ph278.split.split.us
-  %6 = add nuw i32 %.1587.lcssa, 7
-  %smax438 = tail call i32 @llvm.smax.i32(i32 %2, i32 %6)
-  %i.yo = add i32 %smax438, -4
+  %i.yo = add i32 %2, -4
   %i.yp = sub i32 %i.yo, %.1587.lcssa
   %i.yq = and i32 %i.yp, -4
   %i.yr = add i32 %.1587.lcssa, %i.yq
@@ -1026,7 +1022,7 @@ begin_hunk_2_@_ZN4ncnnL11pack_B_tileERKNS_3MatERS0_iiii:bb.a
   br label %.preheader98
 
 .preheader98:                                     ; preds = %.preheader98.loopexit, %.preheader104
-  %.1655.lcssa = phi i32 [ %.0654.lcssa, %.preheader104 ], [ %i.qo, %.preheader98.loopexit ] ; 10 uses
+  %.1655.lcssa = phi i32 [ %.0654.lcssa, %.preheader104 ], [ %i.qo, %.preheader98.loopexit ] ; 8 uses
   %.10.lcssa = phi ptr [ %.0651.lcssa, %.preheader104 ], [ %.18, %.preheader98.loopexit ] ; 5 uses
   %i.qp = or disjoint i32 %.1655.lcssa, 3
   %i.qq = icmp slt i32 %i.qp, %2
@@ -1429,9 +1425,7 @@ vec.epilog.middle.block1090:                      ; preds = %vec.epilog.vector.b
   br i1 %i.qr, label %.lr.ph300.split.split.us, label %.lr.ph300.split.split.preheader
 
 .lr.ph300.split.split.preheader:                  ; preds = %.lr.ph300.split
-  %5 = add nuw i32 %.1655.lcssa, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 %5)
-  %i.yj = add i32 %smax, -4
+  %i.yj = add i32 %2, -4
   %i.yk = sub i32 %i.yj, %.1655.lcssa
   %i.yl = and i32 %i.yk, -4
   %i.ym = add i32 %.1655.lcssa, %i.yl
@@ -1442,9 +1436,7 @@ vec.epilog.middle.block1090:                      ; preds = %vec.epilog.vector.b
   br i1 %i.qu, label %.lr.ph262.us306.us.preheader, label %.loopexit97.us312.preheader
 
 .loopexit97.us312.preheader:                      ; preds = %.lr.ph300.split.split.us
-  %6 = add nuw i32 %.1655.lcssa, 7
-  %smax470 = tail call i32 @llvm.smax.i32(i32 %2, i32 %6)
-  %i.yo = add i32 %smax470, -4
+  %i.yo = add i32 %2, -4
   %i.yp = sub i32 %i.yo, %.1655.lcssa
   %i.yq = and i32 %i.yp, -4
   %i.yr = add i32 %.1655.lcssa, %i.yq
@@ -1847,7 +1839,7 @@ begin_hunk_4_@_ZN4ncnnL16pack_A_tile_bf16ERKNS_3MatERS0_iiii:bb.a
   br label %.preheader274
 
 .preheader274:                                    ; preds = %.preheader274.loopexit, %.preheader279
-  %.1221.lcssa = phi i32 [ %.0220.lcssa, %.preheader279 ], [ %i.ih, %.preheader274.loopexit ] ; 10 uses
+  %.1221.lcssa = phi i32 [ %.0220.lcssa, %.preheader279 ], [ %i.ih, %.preheader274.loopexit ] ; 8 uses
   %.9.lcssa = phi ptr [ %.0219.lcssa, %.preheader279 ], [ %.15, %.preheader274.loopexit ] ; 5 uses
   %i.ii = or disjoint i32 %.1221.lcssa, 3
   %i.ij = icmp slt i32 %i.ii, %3
@@ -2250,9 +2242,7 @@ vec.epilog.middle.block725:                       ; preds = %vec.epilog.vector.b
   br i1 %i.im, label %.lr.ph367.split.split.preheader, label %.lr.ph367.split.split.us
 
 .lr.ph367.split.split.preheader:                  ; preds = %.lr.ph367.split
-  %6 = add nuw i32 %.1221.lcssa, 7
-  %smax474 = tail call i32 @llvm.smax.i32(i32 %3, i32 %6)
-  %i.pq = add i32 %smax474, -4
+  %i.pq = add i32 %3, -4
   %i.pr = sub i32 %i.pq, %.1221.lcssa
   %i.ps = and i32 %i.pr, -4
   %i.pt = add i32 %.1221.lcssa, %i.ps
@@ -2289,9 +2279,7 @@ vec.epilog.middle.block725:                       ; preds = %vec.epilog.vector.b
   br label %iter.check
 
 .preheader272.us373.preheader:                    ; preds = %.lr.ph367.split.split.us
-  %7 = add nuw i32 %.1221.lcssa, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %3, i32 %7)
-  %i.qk = add i32 %smax, -4
+  %i.qk = add i32 %3, -4
   %i.ql = sub i32 %i.qk, %.1221.lcssa
   %i.qm = and i32 %i.ql, -4
   %i.qn = add i32 %.1221.lcssa, %i.qm
@@ -2694,7 +2682,7 @@ middle.block613:                                  ; preds = %vector.body604
   br label %.preheader269
 
 .preheader269:                                    ; preds = %.preheader269.loopexit428, %.preheader272.us373.preheader, %.lr.ph367.split.split.preheader, %.preheader269.loopexit, %.preheader274
-  %.2222.lcssa = phi i32 [ %.1221.lcssa, %.preheader274 ], [ %i.wx, %.preheader269.loopexit ], [ %i.pu, %.lr.ph367.split.split.preheader ], [ %i.qo, %.preheader272.us373.preheader ], [ %i.wy, %.preheader269.loopexit428 ] ; 6 uses
+  %.2222.lcssa = phi i32 [ %.1221.lcssa, %.preheader274 ], [ %i.wx, %.preheader269.loopexit ], [ %i.pu, %.lr.ph367.split.split.preheader ], [ %i.qo, %.preheader272.us373.preheader ], [ %i.wy, %.preheader269.loopexit428 ] ; 5 uses
   %.16.lcssa = phi ptr [ %.9.lcssa, %.preheader274 ], [ %.20.lcssa.us, %.preheader269.loopexit ], [ %.9.lcssa, %.lr.ph367.split.split.preheader ], [ %.9.lcssa, %.preheader272.us373.preheader ], [ %.lcssa551, %.preheader269.loopexit428 ] ; 3 uses
   %i.wz = or disjoint i32 %.2222.lcssa, 1
   %i.xa = icmp slt i32 %i.wz, %3
@@ -2708,9 +2696,7 @@ middle.block613:                                  ; preds = %vector.body604
   br i1 %i.xd, label %.lr.ph393.us.preheader, label %.lr.ph397.split.preheader
 
 .lr.ph397.split.preheader:                        ; preds = %.lr.ph397
-  %8 = add i32 %.2222.lcssa, 3
-  %smax480 = tail call i32 @llvm.smax.i32(i32 %3, i32 %8)
-  %i.xe = add i32 %smax480, -2
+  %i.xe = add i32 %3, -2
   %i.xf = sub i32 %i.xe, %.2222.lcssa
   %i.xg = and i32 %i.xf, -2
   %i.xh = add i32 %.2222.lcssa, %i.xg
@@ -3113,7 +3099,7 @@ begin_hunk_7_@_ZN4ncnnL16pack_B_tile_bf16ERKNS_3MatERS0_iiii:bb.a
   br label %.preheader244
 
 .preheader244:                                    ; preds = %.preheader244.loopexit, %.preheader249
-  %.1229.lcssa = phi i32 [ %.0228.lcssa, %.preheader249 ], [ %i.ih, %.preheader244.loopexit ] ; 10 uses
+  %.1229.lcssa = phi i32 [ %.0228.lcssa, %.preheader249 ], [ %i.ih, %.preheader244.loopexit ] ; 8 uses
   %.9.lcssa = phi ptr [ %.0208.lcssa, %.preheader249 ], [ %.15, %.preheader244.loopexit ] ; 5 uses
   %i.ii = or disjoint i32 %.1229.lcssa, 3
   %i.ij = icmp slt i32 %i.ii, %3
@@ -3516,9 +3502,7 @@ vec.epilog.middle.block664:                       ; preds = %vec.epilog.vector.b
   br i1 %i.im, label %.lr.ph324.split.split.preheader, label %.lr.ph324.split.split.us
 
 .lr.ph324.split.split.preheader:                  ; preds = %.lr.ph324.split
-  %6 = add nuw i32 %.1229.lcssa, 7
-  %smax425 = tail call i32 @llvm.smax.i32(i32 %3, i32 %6)
-  %i.os = add i32 %smax425, -4
+  %i.os = add i32 %3, -4
   %i.ot = sub i32 %i.os, %.1229.lcssa
   %i.ou = and i32 %i.ot, -4
   %i.ov = add i32 %.1229.lcssa, %i.ou
@@ -3555,9 +3539,7 @@ vec.epilog.middle.block664:                       ; preds = %vec.epilog.vector.b
   br label %iter.check
 
 .preheader242.us330.preheader:                    ; preds = %.lr.ph324.split.split.us
-  %7 = add nuw i32 %.1229.lcssa, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %3, i32 %7)
-  %i.pm = add i32 %smax, -4
+  %i.pm = add i32 %3, -4
   %i.pn = sub i32 %i.pm, %.1229.lcssa
   %i.po = and i32 %i.pn, -4
   %i.pp = add i32 %.1229.lcssa, %i.po
@@ -3960,7 +3942,7 @@ middle.block557:                                  ; preds = %vector.body548
   br label %.preheader240
 
 .preheader240:                                    ; preds = %.preheader240.loopexit385, %.preheader242.us330.preheader, %.lr.ph324.split.split.preheader, %.preheader240.loopexit, %.preheader244
-  %.2230.lcssa = phi i32 [ %.1229.lcssa, %.preheader244 ], [ %i.vz, %.preheader240.loopexit ], [ %i.ow, %.lr.ph324.split.split.preheader ], [ %i.pq, %.preheader242.us330.preheader ], [ %i.wa, %.preheader240.loopexit385 ] ; 6 uses
+  %.2230.lcssa = phi i32 [ %.1229.lcssa, %.preheader244 ], [ %i.vz, %.preheader240.loopexit ], [ %i.ow, %.lr.ph324.split.split.preheader ], [ %i.pq, %.preheader242.us330.preheader ], [ %i.wa, %.preheader240.loopexit385 ] ; 5 uses
   %.16.lcssa = phi ptr [ %.9.lcssa, %.preheader244 ], [ %.19.lcssa.us, %.preheader240.loopexit ], [ %.9.lcssa, %.lr.ph324.split.split.preheader ], [ %.9.lcssa, %.preheader242.us330.preheader ], [ %.lcssa495, %.preheader240.loopexit385 ] ; 3 uses
   %i.wb = or disjoint i32 %.2230.lcssa, 1
   %i.wc = icmp slt i32 %i.wb, %3
@@ -3974,9 +3956,7 @@ middle.block557:                                  ; preds = %vector.body548
   br i1 %i.wf, label %.lr.ph350.us.preheader, label %.lr.ph354.split.preheader
 
 .lr.ph354.split.preheader:                        ; preds = %.lr.ph354
-  %8 = add i32 %.2230.lcssa, 3
-  %smax431 = tail call i32 @llvm.smax.i32(i32 %3, i32 %8)
-  %i.wg = add i32 %smax431, -2
+  %i.wg = add i32 %3, -2
   %i.wh = sub i32 %i.wg, %.2230.lcssa
   %i.wi = and i32 %i.wh, -2
   %i.wj = add i32 %.2230.lcssa, %i.wi

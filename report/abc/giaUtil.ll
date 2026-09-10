@@ -205,19 +205,17 @@ Vec_IntGrow.exit.i54:                             ; preds = %bb.q, %bb.m
   %.036.lcssa.i.i = phi ptr [ %i.bs, %Vec_IntGrow.exit.i54 ], [ %.137.i.i, %bb.v ] ; 5 uses
   %.033.lcssa.i.i = phi ptr [ %.val8.i, %Vec_IntGrow.exit.i54 ], [ %.134.i.i, %bb.v ] ; 5 uses
   %.0.lcssa.i.i = phi ptr [ %.val10.i, %Vec_IntGrow.exit.i54 ], [ %.1.i.i, %bb.v ] ; 5 uses
-  %.0.lcssa.i.i103 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 3 uses
+  %.0.lcssa.i.i103 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 2 uses
   %i.cc = icmp ult ptr %.033.lcssa.i.i, %i.bw
   br i1 %i.cc, label %.lr.ph13.i.i.preheader, label %.preheader.i.i
 
 .lr.ph13.i.i.preheader:                           ; preds = %.preheader5.i.i
-  %.033.lcssa.i.i109 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 3 uses
+  %.033.lcssa.i.i109 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
   %.036.lcssa.i.i108 = ptrtoaddr ptr %.036.lcssa.i.i to i64
   %i.cd = ptrtoaddr ptr %.val8.i to i64
-  %1 = add i64 %.idx.i.i, %i.cd
-  %i.ce = add i64 %.033.lcssa.i.i109, 4
-  %2 = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.ce)
+  %i.ce = add i64 %.idx.i.i, %i.cd
   %i.cf = xor i64 %.033.lcssa.i.i109, -1
-  %i.cg = add i64 %2, %i.cf                       ; 2 uses
+  %i.cg = add i64 %i.ce, %i.cf                    ; 2 uses
   %i.ch = lshr i64 %i.cg, 2
   %i.ci = add nuw nsw i64 %i.ch, 1                ; 2 uses
   %min.iters.check112 = icmp ult i64 %i.cg, 28
@@ -303,11 +301,9 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.r
 .lr.ph17.i.i.preheader:                           ; preds = %.preheader.i.i
   %.238.lcssa.i.i102 = ptrtoaddr ptr %.238.lcssa.i.i to i64
   %i.dd = ptrtoaddr ptr %.val10.i to i64
-  %3 = add i64 %.idx19.i.i, %i.dd
-  %i.de = add i64 %.0.lcssa.i.i103, 4
-  %4 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.de)
+  %i.de = add i64 %.idx19.i.i, %i.dd
   %i.df = xor i64 %.0.lcssa.i.i103, -1
-  %i.dg = add i64 %4, %i.df                       ; 2 uses
+  %i.dg = add i64 %i.de, %i.df                    ; 2 uses
   %i.dh = lshr i64 %i.dg, 2
   %i.di = add nuw nsw i64 %i.dh, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dg, 28
@@ -710,19 +706,17 @@ Vec_IntGrow.exit.i60:                             ; preds = %bb.r, %bb.n
   %.036.lcssa.i.i = phi ptr [ %i.cb, %Vec_IntGrow.exit.i60 ], [ %.137.i.i, %bb.w ] ; 5 uses
   %.033.lcssa.i.i = phi ptr [ %.val8.i, %Vec_IntGrow.exit.i60 ], [ %.134.i.i, %bb.w ] ; 5 uses
   %.0.lcssa.i.i = phi ptr [ %.val10.i, %Vec_IntGrow.exit.i60 ], [ %.1.i.i, %bb.w ] ; 5 uses
-  %.0.lcssa.i.i109 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 3 uses
+  %.0.lcssa.i.i109 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 2 uses
   %i.cl = icmp ult ptr %.033.lcssa.i.i, %i.cf
   br i1 %i.cl, label %.lr.ph13.i.i.preheader, label %.preheader.i.i
 
 .lr.ph13.i.i.preheader:                           ; preds = %.preheader5.i.i
-  %.033.lcssa.i.i115 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 3 uses
+  %.033.lcssa.i.i115 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
   %.036.lcssa.i.i114 = ptrtoaddr ptr %.036.lcssa.i.i to i64
   %i.cm = ptrtoaddr ptr %.val8.i to i64
-  %1 = add i64 %.idx.i.i, %i.cm
-  %i.cn = add i64 %.033.lcssa.i.i115, 4
-  %2 = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.cn)
+  %i.cn = add i64 %.idx.i.i, %i.cm
   %i.co = xor i64 %.033.lcssa.i.i115, -1
-  %i.cp = add i64 %2, %i.co                       ; 2 uses
+  %i.cp = add i64 %i.cn, %i.co                    ; 2 uses
   %i.cq = lshr i64 %i.cp, 2
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
   %min.iters.check118 = icmp ult i64 %i.cp, 28
@@ -808,11 +802,9 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.s
 .lr.ph17.i.i.preheader:                           ; preds = %.preheader.i.i
   %.238.lcssa.i.i108 = ptrtoaddr ptr %.238.lcssa.i.i to i64
   %i.dm = ptrtoaddr ptr %.val10.i to i64
-  %3 = add i64 %.idx19.i.i, %i.dm
-  %i.dn = add i64 %.0.lcssa.i.i109, 4
-  %4 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.dn)
+  %i.dn = add i64 %.idx19.i.i, %i.dm
   %i.do = xor i64 %.0.lcssa.i.i109, -1
-  %i.dp = add i64 %4, %i.do                       ; 2 uses
+  %i.dp = add i64 %i.dn, %i.do                    ; 2 uses
   %i.dq = lshr i64 %i.dp, 2
   %i.dr = add nuw nsw i64 %i.dq, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dp, 28
@@ -1214,9 +1206,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #35
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #35
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #35
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }

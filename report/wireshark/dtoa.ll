@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %Balloc.exit
 
 Balloc.exit:                                      ; preds = %bb.c, %bb.h
-  %.1.i = phi ptr [ %i.t, %bb.c ], [ %.0.i, %bb.h ] ; 5 uses
+  %.1.i = phi ptr [ %i.t, %bb.c ], [ %.0.i, %bb.h ] ; 4 uses
   %i.au = getelementptr i8, ptr %.1.i, i64 20     ; 2 uses
   store i32 0, ptr %i.au, align 4
   %i.av = getelementptr i8, ptr %.1.i, i64 16
@@ -217,17 +217,8 @@ Balloc.exit:                                      ; preds = %bb.c, %bb.h
   br i1 %i.az, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %Balloc.exit
-  %.1.i79 = ptrtoaddr ptr %.1.i to i64            ; 3 uses
   %i.ba = shl nsw i64 %i.ax, 2
-  %2 = add i64 %i.ba, %.1.i79
-  %3 = add i64 %2, 24
-  %4 = add i64 %.1.i79, 28
-  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 %4)
-  %5 = add i64 %umax, -25
-  %6 = sub i64 %5, %.1.i79
-  %7 = and i64 %6, -4
-  %8 = add i64 %7, 4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.aw, i8 0, i64 %8, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.aw, i8 0, i64 %i.ba, i1 false)
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %Balloc.exit
@@ -630,9 +621,6 @@ declare noalias ptr @g_malloc(i64 noundef) local_unnamed_addr #5
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
 
@@ -647,6 +635,9 @@ declare i32 @llvm.usub.sat.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

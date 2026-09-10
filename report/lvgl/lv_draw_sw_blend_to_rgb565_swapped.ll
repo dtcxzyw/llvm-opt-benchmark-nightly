@@ -49,6 +49,7 @@ bb.a:
   %i.aa = zext i32 %i.p to i64
   %i.ab = sub nsw i64 0, %i.u
   %i.ac = shl nsw i64 %i.u, 1
+  %1 = add nsw i64 %i.ac, -1
   %i.ad = insertelement <4 x i32> poison, i32 %i.z, i64 0
   %i.ae = shufflevector <4 x i32> %i.ad, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %i.g, i64 0
@@ -83,19 +84,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.al, label %iter.check, label %._crit_edge241
 
 iter.check:                                       ; preds = %.preheader
-  %.0183.lcssa294 = ptrtoaddr ptr %.0183.lcssa to i64 ; 2 uses
-  %1 = add i64 %i.ac, %i.ah
-  %i.am = add i64 %.0183.lcssa294, 2
-  %umax = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.am)
-  %2 = xor i64 %.0183.lcssa294, -1
-  %3 = add i64 %umax, %2                          ; 3 uses
-  %i.an = lshr i64 %3, 1
+  %.0183.lcssa294 = ptrtoaddr ptr %.0183.lcssa to i64
+  %i.am = add i64 %1, %i.ah
+  %2 = sub i64 %i.am, %.0183.lcssa294             ; 3 uses
+  %i.an = lshr i64 %2, 1
   %i.ao = add nuw i64 %i.an, 1                    ; 5 uses
-  %min.iters.check = icmp ult i64 %3, 6
+  %min.iters.check = icmp ult i64 %2, 6
   br i1 %min.iters.check, label %.lr.ph240.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check295 = icmp ult i64 %3, 30
+  %min.iters.check295 = icmp ult i64 %2, 30
   br i1 %min.iters.check295, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -496,9 +494,6 @@ declare i16 @llvm.umin.i16(i16, i16) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.usub.sat.i16(i16, i16) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #3

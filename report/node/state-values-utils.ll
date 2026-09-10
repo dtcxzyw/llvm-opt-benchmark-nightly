@@ -205,14 +205,12 @@ _ZN2v88internal10ZoneVectorISt5arrayIPNS0_8compiler4NodeELm8EEE14EnsureCapacityE
   br i1 %i.s, label %.lr.ph.preheader.i, label %_ZN2v88internal10ZoneVectorISt5arrayIPNS0_8compiler4NodeELm8EEE6resizeEm.exit
 
 .lr.ph.preheader.i:                               ; preds = %_ZN2v88internal10ZoneVectorISt5arrayIPNS0_8compiler4NodeELm8EEE14EnsureCapacityEm.exit.i
-  %i.t = ptrtoaddr ptr %i.p to i64                ; 2 uses
+  %i.t = ptrtoaddr ptr %i.p to i64
   %i.u = ptrtoaddr ptr %i.q to i64
   %i.v = shl nuw nsw i64 %i.j, 6
-  %2 = add nuw i64 %i.v, %i.u
-  %i.w = add i64 %i.t, 64
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.w)
+  %i.w = add i64 %i.v, %i.u
   %i.x = xor i64 %i.t, -1
-  %i.y = add i64 %umax.i, %i.x
+  %i.y = add i64 %i.w, %i.x
   %i.z = and i64 %i.y, -64
   %i.aa = add i64 %i.z, 64
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.p, i8 0, i64 %i.aa, i1 false)
@@ -529,14 +527,12 @@ _ZN2v88internal10ZoneVectorISt5arrayIPNS0_8compiler4NodeELm8EEE14EnsureCapacityE
   br i1 %i.s, label %.lr.ph.preheader.i.i, label %_ZN2v88internal10ZoneVectorISt5arrayIPNS0_8compiler4NodeELm8EEE6resizeEm.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %_ZN2v88internal10ZoneVectorISt5arrayIPNS0_8compiler4NodeELm8EEE14EnsureCapacityEm.exit.i.i
-  %i.t = ptrtoaddr ptr %i.p to i64                ; 2 uses
+  %i.t = ptrtoaddr ptr %i.p to i64
   %i.u = ptrtoaddr ptr %i.q to i64
   %i.v = shl nuw nsw i64 %i.j, 6
-  %6 = add nuw i64 %i.v, %i.u
-  %i.w = add i64 %i.t, 64
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.w)
-  %7 = xor i64 %i.t, -1
-  %i.x = add i64 %umax.i.i, %7
+  %6 = xor i64 %i.t, -1
+  %i.w = add i64 %i.v, %6
+  %i.x = add i64 %i.w, %i.u
   %i.y = and i64 %i.x, -64
   %i.z = add i64 %i.y, 64
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.p, i8 0, i64 %i.z, i1 false)

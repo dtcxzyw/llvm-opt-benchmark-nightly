@@ -205,7 +205,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc ptr @scalarproduct(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef writeonly captures(ret: address, provenance) %3) unnamed_addr #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = icmp ult ptr %0, %1
   br i1 %i.c, label %.preheader.preheader, label %._crit_edge
@@ -242,20 +242,16 @@ bb.a:
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 58
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 60
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 62
-  %4 = add i64 %i.a, 2
-  %5 = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %4)
   %i.ai = xor i64 %i.a, -1
-  %i.aj = add i64 %5, %i.ai                       ; 2 uses
+  %i.aj = add i64 %i.ai, %i.b                     ; 2 uses
   %i.ak = lshr i64 %i.aj, 1
   %i.al = add nuw i64 %i.ak, 1                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.aj, 14
   br i1 %min.iters.check, label %.preheader.preheader123, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
-  %6 = add i64 %i.a, 2
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %6)
   %i.am = xor i64 %i.a, -1
-  %i.an = add i64 %umax, %i.am
+  %i.an = add i64 %i.am, %i.b
   %i.ao = and i64 %i.an, -2                       ; 2 uses
   %i.ap = getelementptr i8, ptr %3, i64 %i.ao
   %scevgep = getelementptr i8, ptr %i.ap, i64 2   ; 2 uses
@@ -634,9 +630,6 @@ declare <8 x i16> @llvm.sadd.sat.v8i16(<8 x i16>, <8 x i16>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i16> @llvm.sadd.sat.v4i16(<4 x i16>, <4 x i16>) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #6
