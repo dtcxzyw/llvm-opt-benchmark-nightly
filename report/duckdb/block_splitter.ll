@@ -205,10 +205,9 @@ bb.ae:                                            ; preds = %bb.ad, %_ZL25Refine
   %i.hv = load i32, ptr %i.hu, align 4, !tbaa !192
   %.inv.i = icmp sgt i32 %i.hv, 10
   %i.hw = select i1 %.inv.i, i64 10, i64 3
-  %i.hx = add i64 %.lcssa879, -1                  ; 8 uses
+  %i.hx = add i64 %.lcssa879, -1                  ; 6 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hi, i64 %i.hx
   %xtraiter897 = and i64 %.lcssa879, 1
-  %10 = icmp eq i64 %i.hx, 0
   %unroll_iter902 = and i64 %.lcssa879, -2
   %lcmp.mod899.not = icmp eq i64 %xtraiter897, 0
   %lcmp.mod901 = trunc i64 %.lcssa879 to i1
@@ -217,7 +216,6 @@ bb.ae:                                            ; preds = %bb.ad, %_ZL25Refine
   %lcmp.mod906.not = icmp eq i64 %xtraiter904, 0
   %lcmp.mod907 = icmp ne i64 %xtraiter904, 0
   %xtraiter916 = and i64 %.lcssa879, 1
-  %11 = icmp eq i64 %i.hx, 0
   %unroll_iter920 = and i64 %.lcssa879, -2
   %lcmp.mod918.not = icmp eq i64 %xtraiter916, 0
   %lcmp.mod919 = trunc i64 %.lcssa879 to i1
@@ -548,13 +546,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i162.i = icmp eq i64 %i.mc, %.1179.i
   br i1 %exitcond.not.i162.i, label %.preheader26.i.i.preheader, label %.lr.ph.i161.i, !llvm.loop !38
 
-.preheader26.i.i.preheader:                       ; preds = %.lr.ph.i161.i, %middle.block716, %vec.epilog.middle.block, %_ZL17FindBlocksLiteralPKhmdmPKN13duckdb_brotli16HistogramLiteralEPdS5_PhS6_.exit.i
-  br i1 %10, label %.preheader26.i.i.epil.preheader, label %.preheader26.i.i
+.preheader26.i.i.preheader:                       ; preds = %_ZL17FindBlocksLiteralPKhmdmPKN13duckdb_brotli16HistogramLiteralEPdS5_PhS6_.exit.i, %vec.epilog.middle.block, %middle.block716, %.lr.ph.i161.i
+  br label %.preheader26.i.i
 
-.preheader26.i.i:                                 ; preds = %.preheader26.i.i.preheader, %bb.bf
-  %.129.i.i = phi i64 [ %i.ms, %bb.bf ], [ 0, %.preheader26.i.i.preheader ] ; 3 uses
-  %.02328.i.i = phi i16 [ %.124.i.i.1, %bb.bf ], [ 0, %.preheader26.i.i.preheader ] ; 3 uses
-  %niter903 = phi i64 [ %niter903.next.1, %bb.bf ], [ 0, %.preheader26.i.i.preheader ]
+.preheader26.i.i:                                 ; preds = %bb.bf, %.preheader26.i.i.preheader
+  %.129.i.i = phi i64 [ 0, %.preheader26.i.i.preheader ], [ %i.ms, %bb.bf ] ; 3 uses
+  %.02328.i.i = phi i16 [ 0, %.preheader26.i.i.preheader ], [ %.124.i.i.1, %bb.bf ] ; 3 uses
+  %niter903 = phi i64 [ 0, %.preheader26.i.i.preheader ], [ %niter903.next.1, %bb.bf ]
   %i.md = getelementptr inbounds nuw i8, ptr %i.hi, i64 %.129.i.i
   %i.me = load i8, ptr %i.md, align 1, !tbaa !167
   %i.mf = zext i8 %i.me to i64
@@ -585,7 +583,7 @@ bb.be:                                            ; preds = %.preheader26.i.i.1
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %.preheader26.i.i.1
-  %.124.i.i.1 = phi i16 [ %i.mr, %bb.be ], [ %.124.i.i, %.preheader26.i.i.1 ] ; 3 uses
+  %.124.i.i.1 = phi i16 [ %i.mr, %bb.be ], [ %.124.i.i, %.preheader26.i.i.1 ] ; 5 uses
   %i.ms = add nuw i64 %.129.i.i, 2                ; 2 uses
   %niter903.next.1 = add i64 %niter903, 2         ; 2 uses
   %niter903.ncmp.1 = icmp eq i64 %niter903.next.1, %unroll_iter902
@@ -594,11 +592,9 @@ bb.bf:                                            ; preds = %bb.be, %.preheader2
 .preheader.i.i.preheader.unr-lcssa:               ; preds = %bb.bf
   br i1 %lcmp.mod899.not, label %.preheader.i.i.preheader.new, label %.preheader26.i.i.epil.preheader
 
-.preheader26.i.i.epil.preheader:                  ; preds = %.preheader.i.i.preheader.unr-lcssa, %.preheader26.i.i.preheader
-  %.129.i.i.epil.init = phi i64 [ 0, %.preheader26.i.i.preheader ], [ %i.ms, %.preheader.i.i.preheader.unr-lcssa ]
-  %.02328.i.i.epil.init = phi i16 [ 0, %.preheader26.i.i.preheader ], [ %.124.i.i.1, %.preheader.i.i.preheader.unr-lcssa ] ; 3 uses
+.preheader26.i.i.epil.preheader:                  ; preds = %.preheader.i.i.preheader.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod901)
-  %i.mt = getelementptr inbounds nuw i8, ptr %i.hi, i64 %.129.i.i.epil.init
+  %i.mt = getelementptr inbounds nuw i8, ptr %i.hi, i64 %i.ms
   %i.mu = load i8, ptr %i.mt, align 1, !tbaa !167
   %i.mv = zext i8 %i.mu to i64
   %i.mw = getelementptr inbounds nuw [2 x i8], ptr %i.ht, i64 %i.mv ; 2 uses
@@ -607,12 +603,12 @@ bb.bf:                                            ; preds = %bb.be, %.preheader2
   br i1 %i.my, label %bb.bg, label %.preheader.i.i.preheader.new
 
 bb.bg:                                            ; preds = %.preheader26.i.i.epil.preheader
-  %i.mz = add i16 %.02328.i.i.epil.init, 1
-  store i16 %.02328.i.i.epil.init, ptr %i.mw, align 2, !tbaa !194
+  %i.mz = add i16 %.124.i.i.1, 1
+  store i16 %.124.i.i.1, ptr %i.mw, align 2, !tbaa !194
   br label %.preheader.i.i.preheader.new
 
 .preheader.i.i.preheader.new:                     ; preds = %.preheader.i.i.preheader.unr-lcssa, %bb.bg, %.preheader26.i.i.epil.preheader
-  %.124.i.i.lcssa = phi i16 [ %.124.i.i.1, %.preheader.i.i.preheader.unr-lcssa ], [ %i.mz, %bb.bg ], [ %.02328.i.i.epil.init, %.preheader26.i.i.epil.preheader ] ; 3 uses
+  %.124.i.i.lcssa = phi i16 [ %.124.i.i.1, %.preheader.i.i.preheader.unr-lcssa ], [ %i.mz, %bb.bg ], [ %.124.i.i.1, %.preheader26.i.i.epil.preheader ] ; 3 uses
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %.preheader.i.i.preheader.new
@@ -739,12 +735,12 @@ _ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.pr
   %epil.iter911.cmp.not = icmp eq i64 %epil.iter911.next, %xtraiter910
   br i1 %epil.iter911.cmp.not, label %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader, label %.lr.ph.i165.i.epil, !llvm.loop !42
 
-_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader: ; preds = %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader.loopexit.unr-lcssa, %.lr.ph.i165.i.epil, %_ZL20RemapBlockIdsLiteralPhmPtm.exit.i
-  br i1 %11, label %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.epil.preheader, label %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i
+_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader: ; preds = %_ZL20RemapBlockIdsLiteralPhmPtm.exit.i, %.lr.ph.i165.i.epil, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader.loopexit.unr-lcssa
+  br label %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i
 
-_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i: ; preds = %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i
-  %.010.i.i = phi i64 [ %i.qb, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i ], [ 0, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader ] ; 4 uses
-  %niter921 = phi i64 [ %niter921.next.1, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i ], [ 0, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader ]
+_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i: ; preds = %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader
+  %.010.i.i = phi i64 [ 0, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader ], [ %i.qb, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i ] ; 4 uses
+  %niter921 = phi i64 [ 0, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader ], [ %niter921.next.1, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i ]
   %i.pa = getelementptr inbounds nuw i8, ptr %i.hi, i64 %.010.i.i
   %i.pb = load i8, ptr %i.pa, align 1, !tbaa !167
   %i.pc = zext i8 %i.pb to i64
@@ -776,7 +772,7 @@ _ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i: ;
   %i.pz = load i64, ptr %i.py, align 8, !tbaa !171
   %i.qa = add i64 %i.pz, 1
   store i64 %i.qa, ptr %i.py, align 8, !tbaa !171
-  %i.qb = add nuw i64 %.010.i.i, 2                ; 2 uses
+  %i.qb = add nuw i64 %.010.i.i, 2                ; 3 uses
   %niter921.next.1 = add i64 %niter921, 2         ; 2 uses
   %niter921.ncmp.1 = icmp eq i64 %niter921.next.1, %unroll_iter920
   br i1 %niter921.ncmp.1, label %_ZL27BuildBlockHistogramsLiteralPKhmS0_mPN13duckdb_brotli16HistogramLiteralE.exit.i.unr-lcssa, label %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i, !llvm.loop !43
@@ -784,14 +780,13 @@ _ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i: ;
 _ZL27BuildBlockHistogramsLiteralPKhmS0_mPN13duckdb_brotli16HistogramLiteralE.exit.i.unr-lcssa: ; preds = %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i
   br i1 %lcmp.mod918.not, label %_ZL27BuildBlockHistogramsLiteralPKhmS0_mPN13duckdb_brotli16HistogramLiteralE.exit.i, label %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.epil.preheader
 
-_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.epil.preheader: ; preds = %_ZL27BuildBlockHistogramsLiteralPKhmS0_mPN13duckdb_brotli16HistogramLiteralE.exit.i.unr-lcssa, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader
-  %.010.i.i.epil.init = phi i64 [ 0, %_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.preheader ], [ %i.qb, %_ZL27BuildBlockHistogramsLiteralPKhmS0_mPN13duckdb_brotli16HistogramLiteralE.exit.i.unr-lcssa ] ; 2 uses
+_ZN13duckdb_brotliL22ClearHistogramsLiteralEPNS_16HistogramLiteralEm.exit.i.i.epil.preheader: ; preds = %_ZL27BuildBlockHistogramsLiteralPKhmS0_mPN13duckdb_brotli16HistogramLiteralE.exit.i.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod919)
-  %i.qc = getelementptr inbounds nuw i8, ptr %i.hi, i64 %.010.i.i.epil.init
+  %i.qc = getelementptr inbounds nuw i8, ptr %i.hi, i64 %i.qb
   %i.qd = load i8, ptr %i.qc, align 1, !tbaa !167
   %i.qe = zext i8 %i.qd to i64
   %i.qf = getelementptr inbounds nuw [1040 x i8], ptr %i.cs, i64 %i.qe ; 2 uses
-  %i.qg = getelementptr inbounds nuw i8, ptr %.ph, i64 %.010.i.i.epil.init
+  %i.qg = getelementptr inbounds nuw i8, ptr %.ph, i64 %i.qb
   %i.qh = load i8, ptr %i.qg, align 1, !tbaa !167
   %i.qi = zext i8 %i.qh to i64
   %i.qj = getelementptr inbounds nuw [4 x i8], ptr %i.qf, i64 %i.qi ; 2 uses
@@ -1194,7 +1189,7 @@ vector.body742:                                   ; preds = %vector.body742, %ve
 .lr.ph.preheader871:                              ; preds = %vector.body742, %vector.memcheck731, %.lr.ph.preheader
   %.055497.ph = phi i64 [ 0, %vector.memcheck731 ], [ 0, %.lr.ph.preheader ], [ %n.vec741, %vector.body742 ] ; 4 uses
   %i.aei = sub i64 %2, %.055497.ph
-  %i.aej = add i64 %2, -1                         ; 7 uses
+  %i.aej = add i64 %2, -1                         ; 5 uses
   %i.aek = sub i64 %i.aej, %.055497.ph
   %xtraiter945 = and i64 %i.aei, 3                ; 2 uses
   %lcmp.mod946.not = icmp eq i64 %xtraiter945, 0
@@ -1597,7 +1592,6 @@ bb.dn:                                            ; preds = %bb.dm, %_ZL25Refine
   %i.bdt = add i64 %2, -1                         ; 3 uses
   %i.bdu = getelementptr inbounds nuw i8, ptr %i.bde, i64 %i.bdt
   %xtraiter967 = and i64 %2, 1
-  %12 = icmp eq i64 %i.aej, 0
   %unroll_iter972 = and i64 %2, -2
   %lcmp.mod969.not = icmp eq i64 %xtraiter967, 0
   %lcmp.mod971 = trunc i64 %2 to i1
@@ -1607,7 +1601,6 @@ bb.dn:                                            ; preds = %bb.dm, %_ZL25Refine
   %lcmp.mod976.not = icmp eq i64 %xtraiter974, 0
   %lcmp.mod977 = icmp ne i64 %xtraiter974, 0
   %xtraiter986 = and i64 %2, 1
-  %13 = icmp eq i64 %i.aej, 0
   %unroll_iter990 = and i64 %2, -2
   %lcmp.mod988.not = icmp eq i64 %xtraiter986, 0
   %lcmp.mod989 = trunc i64 %2 to i1
@@ -1938,13 +1931,13 @@ vec.epilog.middle.block783:                       ; preds = %vec.epilog.vector.b
   %exitcond.not.i162.i124 = icmp eq i64 %i.bhz, %.1180.i
   br i1 %exitcond.not.i162.i124, label %.preheader26.i.i125.preheader, label %.lr.ph.i161.i122, !llvm.loop !88
 
-.preheader26.i.i125.preheader:                    ; preds = %.lr.ph.i161.i122, %middle.block771, %vec.epilog.middle.block783, %_ZL17FindBlocksCommandPKtmdmPKN13duckdb_brotli16HistogramCommandEPdS5_PhS6_.exit.i
-  br i1 %12, label %.preheader26.i.i125.epil.preheader, label %.preheader26.i.i125
+.preheader26.i.i125.preheader:                    ; preds = %_ZL17FindBlocksCommandPKtmdmPKN13duckdb_brotli16HistogramCommandEPdS5_PhS6_.exit.i, %vec.epilog.middle.block783, %middle.block771, %.lr.ph.i161.i122
+  br label %.preheader26.i.i125
 
-.preheader26.i.i125:                              ; preds = %.preheader26.i.i125.preheader, %bb.eo
-  %.129.i.i126 = phi i64 [ %i.bip, %bb.eo ], [ 0, %.preheader26.i.i125.preheader ] ; 3 uses
-  %.02328.i.i127 = phi i16 [ %.124.i.i128.1, %bb.eo ], [ 0, %.preheader26.i.i125.preheader ] ; 3 uses
-  %niter973 = phi i64 [ %niter973.next.1, %bb.eo ], [ 0, %.preheader26.i.i125.preheader ]
+.preheader26.i.i125:                              ; preds = %bb.eo, %.preheader26.i.i125.preheader
+  %.129.i.i126 = phi i64 [ 0, %.preheader26.i.i125.preheader ], [ %i.bip, %bb.eo ] ; 3 uses
+  %.02328.i.i127 = phi i16 [ 0, %.preheader26.i.i125.preheader ], [ %.124.i.i128.1, %bb.eo ] ; 3 uses
+  %niter973 = phi i64 [ 0, %.preheader26.i.i125.preheader ], [ %niter973.next.1, %bb.eo ]
   %i.bia = getelementptr inbounds nuw i8, ptr %i.bde, i64 %.129.i.i126
   %i.bib = load i8, ptr %i.bia, align 1, !tbaa !167
   %i.bic = zext i8 %i.bib to i64
@@ -1975,7 +1968,7 @@ bb.en:                                            ; preds = %.preheader26.i.i125
   br label %bb.eo
 
 bb.eo:                                            ; preds = %bb.en, %.preheader26.i.i125.1
-  %.124.i.i128.1 = phi i16 [ %i.bio, %bb.en ], [ %.124.i.i128, %.preheader26.i.i125.1 ] ; 3 uses
+  %.124.i.i128.1 = phi i16 [ %i.bio, %bb.en ], [ %.124.i.i128, %.preheader26.i.i125.1 ] ; 5 uses
   %i.bip = add nuw i64 %.129.i.i126, 2            ; 2 uses
   %niter973.next.1 = add i64 %niter973, 2         ; 2 uses
   %niter973.ncmp.1 = icmp eq i64 %niter973.next.1, %unroll_iter972
@@ -1984,11 +1977,9 @@ bb.eo:                                            ; preds = %bb.en, %.preheader2
 .preheader.i.i131.preheader.unr-lcssa:            ; preds = %bb.eo
   br i1 %lcmp.mod969.not, label %.preheader.i.i131.preheader, label %.preheader26.i.i125.epil.preheader
 
-.preheader26.i.i125.epil.preheader:               ; preds = %.preheader.i.i131.preheader.unr-lcssa, %.preheader26.i.i125.preheader
-  %.129.i.i126.epil.init = phi i64 [ 0, %.preheader26.i.i125.preheader ], [ %i.bip, %.preheader.i.i131.preheader.unr-lcssa ]
-  %.02328.i.i127.epil.init = phi i16 [ 0, %.preheader26.i.i125.preheader ], [ %.124.i.i128.1, %.preheader.i.i131.preheader.unr-lcssa ] ; 3 uses
+.preheader26.i.i125.epil.preheader:               ; preds = %.preheader.i.i131.preheader.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod971)
-  %i.biq = getelementptr inbounds nuw i8, ptr %i.bde, i64 %.129.i.i126.epil.init
+  %i.biq = getelementptr inbounds nuw i8, ptr %i.bde, i64 %i.bip
   %i.bir = load i8, ptr %i.biq, align 1, !tbaa !167
   %i.bis = zext i8 %i.bir to i64
   %i.bit = getelementptr inbounds nuw [2 x i8], ptr %i.bdp, i64 %i.bis ; 2 uses
@@ -1997,12 +1988,12 @@ bb.eo:                                            ; preds = %bb.en, %.preheader2
   br i1 %i.biv, label %bb.ep, label %.preheader.i.i131.preheader
 
 bb.ep:                                            ; preds = %.preheader26.i.i125.epil.preheader
-  %i.biw = add i16 %.02328.i.i127.epil.init, 1
-  store i16 %.02328.i.i127.epil.init, ptr %i.bit, align 2, !tbaa !194
+  %i.biw = add i16 %.124.i.i128.1, 1
+  store i16 %.124.i.i128.1, ptr %i.bit, align 2, !tbaa !194
   br label %.preheader.i.i131.preheader
 
 .preheader.i.i131.preheader:                      ; preds = %.preheader26.i.i125.epil.preheader, %bb.ep, %.preheader.i.i131.preheader.unr-lcssa
-  %.124.i.i128.lcssa = phi i16 [ %.124.i.i128.1, %.preheader.i.i131.preheader.unr-lcssa ], [ %i.biw, %bb.ep ], [ %.02328.i.i127.epil.init, %.preheader26.i.i125.epil.preheader ] ; 3 uses
+  %.124.i.i128.lcssa = phi i16 [ %.124.i.i128.1, %.preheader.i.i131.preheader.unr-lcssa ], [ %i.biw, %bb.ep ], [ %.124.i.i128.1, %.preheader26.i.i125.epil.preheader ] ; 3 uses
   br i1 %i.bdv, label %.preheader.i.i131.epil.preheader, label %.preheader.i.i131
 
 .preheader.i.i131:                                ; preds = %.preheader.i.i131.preheader, %.preheader.i.i131
@@ -2130,12 +2121,12 @@ _ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.pr
   %epil.iter981.cmp.not = icmp eq i64 %epil.iter981.next, %xtraiter980
   br i1 %epil.iter981.cmp.not, label %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader, label %.lr.ph.i165.i135.epil, !llvm.loop !92
 
-_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader: ; preds = %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader.loopexit.unr-lcssa, %.lr.ph.i165.i135.epil, %_ZL20RemapBlockIdsCommandPhmPtm.exit.i
-  br i1 %13, label %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.epil.preheader, label %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i
+_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader: ; preds = %_ZL20RemapBlockIdsCommandPhmPtm.exit.i, %.lr.ph.i165.i135.epil, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader.loopexit.unr-lcssa
+  br label %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i
 
-_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i: ; preds = %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i
-  %.010.i.i138 = phi i64 [ %i.bly, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i ], [ 0, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader ] ; 4 uses
-  %niter991 = phi i64 [ %niter991.next.1, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i ], [ 0, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader ]
+_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i: ; preds = %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader
+  %.010.i.i138 = phi i64 [ 0, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader ], [ %i.bly, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i ] ; 4 uses
+  %niter991 = phi i64 [ 0, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader ], [ %niter991.next.1, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i ]
   %i.bkx = getelementptr inbounds nuw i8, ptr %i.bde, i64 %.010.i.i138
   %i.bky = load i8, ptr %i.bkx, align 1, !tbaa !167
   %i.bkz = zext i8 %i.bky to i64
@@ -2167,7 +2158,7 @@ _ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i: ;
   %i.blw = load i64, ptr %i.blv, align 8, !tbaa !204
   %i.blx = add i64 %i.blw, 1
   store i64 %i.blx, ptr %i.blv, align 8, !tbaa !204
-  %i.bly = add nuw i64 %.010.i.i138, 2            ; 2 uses
+  %i.bly = add nuw i64 %.010.i.i138, 2            ; 3 uses
   %niter991.next.1 = add i64 %niter991, 2         ; 2 uses
   %niter991.ncmp.1 = icmp eq i64 %niter991.next.1, %unroll_iter990
   br i1 %niter991.ncmp.1, label %_ZL27BuildBlockHistogramsCommandPKtmPKhmPN13duckdb_brotli16HistogramCommandE.exit.i.unr-lcssa, label %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i, !llvm.loop !93
@@ -2175,14 +2166,13 @@ _ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i: ;
 _ZL27BuildBlockHistogramsCommandPKtmPKhmPN13duckdb_brotli16HistogramCommandE.exit.i.unr-lcssa: ; preds = %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i
   br i1 %lcmp.mod988.not, label %_ZL27BuildBlockHistogramsCommandPKtmPKhmPN13duckdb_brotli16HistogramCommandE.exit.i, label %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.epil.preheader
 
-_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.epil.preheader: ; preds = %_ZL27BuildBlockHistogramsCommandPKtmPKhmPN13duckdb_brotli16HistogramCommandE.exit.i.unr-lcssa, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader
-  %.010.i.i138.epil.init = phi i64 [ 0, %_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.preheader ], [ %i.bly, %_ZL27BuildBlockHistogramsCommandPKtmPKhmPN13duckdb_brotli16HistogramCommandE.exit.i.unr-lcssa ] ; 2 uses
+_ZN13duckdb_brotliL22ClearHistogramsCommandEPNS_16HistogramCommandEm.exit.i.i.epil.preheader: ; preds = %_ZL27BuildBlockHistogramsCommandPKtmPKhmPN13duckdb_brotli16HistogramCommandE.exit.i.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod989)
-  %i.blz = getelementptr inbounds nuw i8, ptr %i.bde, i64 %.010.i.i138.epil.init
+  %i.blz = getelementptr inbounds nuw i8, ptr %i.bde, i64 %i.bly
   %i.bma = load i8, ptr %i.blz, align 1, !tbaa !167
   %i.bmb = zext i8 %i.bma to i64
   %i.bmc = getelementptr inbounds nuw [2832 x i8], ptr %i.ahg, i64 %i.bmb ; 2 uses
-  %i.bmd = getelementptr inbounds nuw [2 x i8], ptr %i.acu, i64 %.010.i.i138.epil.init
+  %i.bmd = getelementptr inbounds nuw [2 x i8], ptr %i.acu, i64 %i.bly
   %i.bme = load i16, ptr %i.bmd, align 2, !tbaa !194
   %i.bmf = zext i16 %i.bme to i64
   %i.bmg = getelementptr inbounds nuw [4 x i8], ptr %i.bmc, i64 %i.bmf ; 2 uses
@@ -2585,10 +2575,9 @@ bb.he:                                            ; preds = %bb.hd, %_ZL26Refine
   %i.cxh = load i32, ptr %i.cxg, align 4, !tbaa !192
   %.inv.i257 = icmp sgt i32 %i.cxh, 10
   %i.cxi = select i1 %.inv.i257, i64 10, i64 3
-  %i.cxj = add i64 %.1, -1                        ; 8 uses
+  %i.cxj = add i64 %.1, -1                        ; 6 uses
   %i.cxk = getelementptr inbounds nuw i8, ptr %i.cwu, i64 %i.cxj
   %xtraiter1037 = and i64 %.1, 1
-  %14 = icmp eq i64 %i.cxj, 0
   %unroll_iter1042 = and i64 %.1, -2
   %lcmp.mod1039.not = icmp eq i64 %xtraiter1037, 0
   %lcmp.mod1041 = trunc i64 %.1 to i1
@@ -2597,7 +2586,6 @@ bb.he:                                            ; preds = %bb.hd, %_ZL26Refine
   %lcmp.mod1047.not = icmp eq i64 %xtraiter1045, 0
   %lcmp.mod1048 = icmp ne i64 %xtraiter1045, 0
   %xtraiter1058 = and i64 %.1, 1
-  %15 = icmp eq i64 %i.cxj, 0
   %unroll_iter1062 = and i64 %.1, -2
   %lcmp.mod1060.not = icmp eq i64 %xtraiter1058, 0
   %lcmp.mod1061 = trunc i64 %.1 to i1
@@ -2928,13 +2916,13 @@ vec.epilog.middle.block835:                       ; preds = %vec.epilog.vector.b
   %exitcond.not.i162.i298 = icmp eq i64 %i.dbo, %.1180.i259
   br i1 %exitcond.not.i162.i298, label %.preheader26.i.i299.preheader, label %.lr.ph.i161.i296, !llvm.loop !133
 
-.preheader26.i.i299.preheader:                    ; preds = %.lr.ph.i161.i296, %middle.block823, %vec.epilog.middle.block835, %_ZL18FindBlocksDistancePKtmdmPKN13duckdb_brotli17HistogramDistanceEPdS5_PhS6_.exit.i
-  br i1 %14, label %.preheader26.i.i299.epil.preheader, label %.preheader26.i.i299
+.preheader26.i.i299.preheader:                    ; preds = %_ZL18FindBlocksDistancePKtmdmPKN13duckdb_brotli17HistogramDistanceEPdS5_PhS6_.exit.i, %vec.epilog.middle.block835, %middle.block823, %.lr.ph.i161.i296
+  br label %.preheader26.i.i299
 
-.preheader26.i.i299:                              ; preds = %.preheader26.i.i299.preheader, %bb.if
-  %.129.i.i300 = phi i64 [ %i.dce, %bb.if ], [ 0, %.preheader26.i.i299.preheader ] ; 3 uses
-  %.02328.i.i301 = phi i16 [ %.124.i.i302.1, %bb.if ], [ 0, %.preheader26.i.i299.preheader ] ; 3 uses
-  %niter1043 = phi i64 [ %niter1043.next.1, %bb.if ], [ 0, %.preheader26.i.i299.preheader ]
+.preheader26.i.i299:                              ; preds = %bb.if, %.preheader26.i.i299.preheader
+  %.129.i.i300 = phi i64 [ 0, %.preheader26.i.i299.preheader ], [ %i.dce, %bb.if ] ; 3 uses
+  %.02328.i.i301 = phi i16 [ 0, %.preheader26.i.i299.preheader ], [ %.124.i.i302.1, %bb.if ] ; 3 uses
+  %niter1043 = phi i64 [ 0, %.preheader26.i.i299.preheader ], [ %niter1043.next.1, %bb.if ]
   %i.dbp = getelementptr inbounds nuw i8, ptr %i.cwu, i64 %.129.i.i300
   %i.dbq = load i8, ptr %i.dbp, align 1, !tbaa !167
   %i.dbr = zext i8 %i.dbq to i64
@@ -2965,7 +2953,7 @@ bb.ie:                                            ; preds = %.preheader26.i.i299
   br label %bb.if
 
 bb.if:                                            ; preds = %bb.ie, %.preheader26.i.i299.1
-  %.124.i.i302.1 = phi i16 [ %i.dcd, %bb.ie ], [ %.124.i.i302, %.preheader26.i.i299.1 ] ; 3 uses
+  %.124.i.i302.1 = phi i16 [ %i.dcd, %bb.ie ], [ %.124.i.i302, %.preheader26.i.i299.1 ] ; 5 uses
   %i.dce = add nuw i64 %.129.i.i300, 2            ; 2 uses
   %niter1043.next.1 = add i64 %niter1043, 2       ; 2 uses
   %niter1043.ncmp.1 = icmp eq i64 %niter1043.next.1, %unroll_iter1042
@@ -2974,11 +2962,9 @@ bb.if:                                            ; preds = %bb.ie, %.preheader2
 .preheader.i.i305.preheader.unr-lcssa:            ; preds = %bb.if
   br i1 %lcmp.mod1039.not, label %.preheader.i.i305.preheader.new, label %.preheader26.i.i299.epil.preheader
 
-.preheader26.i.i299.epil.preheader:               ; preds = %.preheader.i.i305.preheader.unr-lcssa, %.preheader26.i.i299.preheader
-  %.129.i.i300.epil.init = phi i64 [ 0, %.preheader26.i.i299.preheader ], [ %i.dce, %.preheader.i.i305.preheader.unr-lcssa ]
-  %.02328.i.i301.epil.init = phi i16 [ 0, %.preheader26.i.i299.preheader ], [ %.124.i.i302.1, %.preheader.i.i305.preheader.unr-lcssa ] ; 3 uses
+.preheader26.i.i299.epil.preheader:               ; preds = %.preheader.i.i305.preheader.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod1041)
-  %i.dcf = getelementptr inbounds nuw i8, ptr %i.cwu, i64 %.129.i.i300.epil.init
+  %i.dcf = getelementptr inbounds nuw i8, ptr %i.cwu, i64 %i.dce
   %i.dcg = load i8, ptr %i.dcf, align 1, !tbaa !167
   %i.dch = zext i8 %i.dcg to i64
   %i.dci = getelementptr inbounds nuw [2 x i8], ptr %i.cxf, i64 %i.dch ; 2 uses
@@ -2987,12 +2973,12 @@ bb.if:                                            ; preds = %bb.ie, %.preheader2
   br i1 %i.dck, label %bb.ig, label %.preheader.i.i305.preheader.new
 
 bb.ig:                                            ; preds = %.preheader26.i.i299.epil.preheader
-  %i.dcl = add i16 %.02328.i.i301.epil.init, 1
-  store i16 %.02328.i.i301.epil.init, ptr %i.dci, align 2, !tbaa !194
+  %i.dcl = add i16 %.124.i.i302.1, 1
+  store i16 %.124.i.i302.1, ptr %i.dci, align 2, !tbaa !194
   br label %.preheader.i.i305.preheader.new
 
 .preheader.i.i305.preheader.new:                  ; preds = %.preheader.i.i305.preheader.unr-lcssa, %bb.ig, %.preheader26.i.i299.epil.preheader
-  %.124.i.i302.lcssa = phi i16 [ %.124.i.i302.1, %.preheader.i.i305.preheader.unr-lcssa ], [ %i.dcl, %bb.ig ], [ %.02328.i.i301.epil.init, %.preheader26.i.i299.epil.preheader ] ; 3 uses
+  %.124.i.i302.lcssa = phi i16 [ %.124.i.i302.1, %.preheader.i.i305.preheader.unr-lcssa ], [ %i.dcl, %bb.ig ], [ %.124.i.i302.1, %.preheader26.i.i299.epil.preheader ] ; 3 uses
   br label %.preheader.i.i305
 
 .preheader.i.i305:                                ; preds = %.preheader.i.i305, %.preheader.i.i305.preheader.new
@@ -3119,12 +3105,12 @@ _ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.
   %epil.iter1052.cmp.not = icmp eq i64 %epil.iter1052.next, %xtraiter1051
   br i1 %epil.iter1052.cmp.not, label %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader, label %.lr.ph.i165.i309.epil, !llvm.loop !137
 
-_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader: ; preds = %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader.loopexit.unr-lcssa, %.lr.ph.i165.i309.epil, %_ZL21RemapBlockIdsDistancePhmPtm.exit.i
-  br i1 %15, label %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.epil.preheader, label %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i
+_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader: ; preds = %_ZL21RemapBlockIdsDistancePhmPtm.exit.i, %.lr.ph.i165.i309.epil, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader.loopexit.unr-lcssa
+  br label %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i
 
-_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i: ; preds = %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i
-  %.010.i.i312 = phi i64 [ %i.dfn, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i ], [ 0, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader ] ; 4 uses
-  %niter1063 = phi i64 [ %niter1063.next.1, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i ], [ 0, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader ]
+_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i: ; preds = %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader
+  %.010.i.i312 = phi i64 [ 0, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader ], [ %i.dfn, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i ] ; 4 uses
+  %niter1063 = phi i64 [ 0, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader ], [ %niter1063.next.1, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i ]
   %i.dem = getelementptr inbounds nuw i8, ptr %i.cwu, i64 %.010.i.i312
   %i.den = load i8, ptr %i.dem, align 1, !tbaa !167
   %i.deo = zext i8 %i.den to i64
@@ -3156,7 +3142,7 @@ _ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i:
   %i.dfl = load i64, ptr %i.dfk, align 8, !tbaa !211
   %i.dfm = add i64 %i.dfl, 1
   store i64 %i.dfm, ptr %i.dfk, align 8, !tbaa !211
-  %i.dfn = add nuw i64 %.010.i.i312, 2            ; 2 uses
+  %i.dfn = add nuw i64 %.010.i.i312, 2            ; 3 uses
   %niter1063.next.1 = add i64 %niter1063, 2       ; 2 uses
   %niter1063.ncmp.1 = icmp eq i64 %niter1063.next.1, %unroll_iter1062
   br i1 %niter1063.ncmp.1, label %_ZL28BuildBlockHistogramsDistancePKtmPKhmPN13duckdb_brotli17HistogramDistanceE.exit.i.unr-lcssa, label %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i, !llvm.loop !138
@@ -3164,14 +3150,13 @@ _ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i:
 _ZL28BuildBlockHistogramsDistancePKtmPKhmPN13duckdb_brotli17HistogramDistanceE.exit.i.unr-lcssa: ; preds = %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i
   br i1 %lcmp.mod1060.not, label %_ZL28BuildBlockHistogramsDistancePKtmPKhmPN13duckdb_brotli17HistogramDistanceE.exit.i, label %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.epil.preheader
 
-_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.epil.preheader: ; preds = %_ZL28BuildBlockHistogramsDistancePKtmPKhmPN13duckdb_brotli17HistogramDistanceE.exit.i.unr-lcssa, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader
-  %.010.i.i312.epil.init = phi i64 [ 0, %_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.preheader ], [ %i.dfn, %_ZL28BuildBlockHistogramsDistancePKtmPKhmPN13duckdb_brotli17HistogramDistanceE.exit.i.unr-lcssa ] ; 2 uses
+_ZN13duckdb_brotliL23ClearHistogramsDistanceEPNS_17HistogramDistanceEm.exit.i.i.epil.preheader: ; preds = %_ZL28BuildBlockHistogramsDistancePKtmPKhmPN13duckdb_brotli17HistogramDistanceE.exit.i.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod1061)
-  %i.dfo = getelementptr inbounds nuw i8, ptr %i.cwu, i64 %.010.i.i312.epil.init
+  %i.dfo = getelementptr inbounds nuw i8, ptr %i.cwu, i64 %i.dfn
   %i.dfp = load i8, ptr %i.dfo, align 1, !tbaa !167
   %i.dfq = zext i8 %i.dfp to i64
   %i.dfr = getelementptr inbounds nuw [2192 x i8], ptr %i.caw, i64 %i.dfq ; 2 uses
-  %i.dfs = getelementptr inbounds nuw [2 x i8], ptr %i.bym, i64 %.010.i.i312.epil.init
+  %i.dfs = getelementptr inbounds nuw [2 x i8], ptr %i.bym, i64 %i.dfn
   %i.dft = load i16, ptr %i.dfs, align 2, !tbaa !194
   %i.dfu = zext i16 %i.dft to i64
   %i.dfv = getelementptr inbounds nuw [4 x i8], ptr %i.dfr, i64 %i.dfu ; 2 uses

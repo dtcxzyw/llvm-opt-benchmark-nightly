@@ -202,26 +202,21 @@ bb.f:                                             ; preds = %bb.e
   %i.x = load i8, ptr %i.w, align 4, !range !721, !alias.scope !718, !noalias !719, !noundef !4 ; 4 uses
   %i.y = icmp ne i8 %i.x, 3
   tail call void @llvm.assume(i1 %i.y)
-  %3 = add nsw i8 %i.x, -2
-  %i.z = icmp samesign ugt i8 %i.x, 1
-  %narrow.i.i = select i1 %i.z, i8 %3, i8 1       ; 2 uses
+  %i.z = icmp samesign ugt i8 %i.x, 1             ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 76
   %i.ab = load i8, ptr %i.aa, align 4, !range !721, !alias.scope !719, !noalias !718, !noundef !4 ; 4 uses
   %i.ac = icmp ne i8 %i.ab, 3
   tail call void @llvm.assume(i1 %i.ac)
-  %4 = add nsw i8 %i.ab, -2
-  %5 = icmp samesign ugt i8 %i.ab, 1
-  %narrow3.i.i = select i1 %5, i8 %4, i8 1
-  %i.ad = icmp eq i8 %narrow.i.i, %narrow3.i.i
-  br i1 %i.ad, label %6, label %_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
+  %3 = icmp samesign ugt i8 %i.ab, 1
+  %4 = select i1 %i.z, i8 %i.x, i8 3
+  %narrow3.i.i = select i1 %3, i8 %i.ab, i8 3
+  %5 = icmp eq i8 %4, %narrow3.i.i
+  %i.ad = icmp eq i8 %i.x, %i.ab
+  %or.cond.i.i = or i1 %i.z, %i.ad
+  %or.cond4.i.i = and i1 %or.cond.i.i, %5
+  br i1 %or.cond4.i.i, label %bb.g, label %_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
 
-6:                                                ; preds = %bb.f
-  %7 = icmp ne i8 %narrow.i.i, 1
-  %8 = icmp eq i8 %i.x, %i.ab
-  %or.cond.i.i = or i1 %7, %8
-  br i1 %or.cond.i.i, label %bb.g, label %_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
-
-bb.g:                                             ; preds = %6
+bb.g:                                             ; preds = %bb.f
   %i.ae = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.af = load i64, ptr %i.ae, align 8, !alias.scope !718, !noalias !719, !noundef !4 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 64
@@ -237,8 +232,8 @@ _RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUS
   %i.an = tail call noundef zeroext i1 @_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsbSS6DM8SDEO_5alloc6string6StringINtB5_14SlicePartialEqBC_E17equal_same_lengthCsdcPuHeDsw6v_13project_model(ptr noundef nonnull %i.am, ptr noundef nonnull %i.ak, i64 noundef %i.af), !noalias !720
   br i1 %i.an, label %bb.b, label %_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
 
-_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread: ; preds = %bb.b, %_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit, %.lr.ph, %bb.f, %bb.e, %bb.c, %6, %bb.d, %bb.g, %bb.a
-  %.lcssa = phi i1 [ true, %bb.a ], [ false, %bb.g ], [ false, %bb.d ], [ false, %6 ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.f ], [ false, %.lr.ph ], [ false, %_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit ], [ true, %bb.b ]
+_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread: ; preds = %bb.b, %_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit, %.lr.ph, %bb.f, %bb.e, %bb.c, %bb.g, %bb.d, %bb.a
+  %.lcssa = phi i1 [ true, %bb.a ], [ false, %bb.d ], [ false, %bb.g ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.f ], [ false, %.lr.ph ], [ false, %_RNvYNtNtCsdcPuHeDsw6v_13project_model15cargo_workspace10TargetDataNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit ], [ true, %bb.b ]
   ret i1 %.lcssa
 }
 

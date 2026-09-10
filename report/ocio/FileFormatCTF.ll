@@ -202,8 +202,8 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i:  ; preds = %_ZNSt12__shared_ptr
   %i.ey = mul nuw nsw i32 %.sroa.speculated, %.sroa.speculated
   %i.ez = mul nuw nsw i32 %i.ey, %.sroa.speculated ; 2 uses
   %i.fa = mul nuw nsw i32 %i.ez, 3
-  %i.fb = zext nneg i32 %i.fa to i64              ; 3 uses
-  %i.fc = shl nuw nsw i64 %i.fb, 2
+  %i.fb = zext nneg i32 %i.fa to i64              ; 2 uses
+  %i.fc = shl nuw nsw i64 %i.fb, 2                ; 2 uses
   %i.fd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fc) #27
           to label %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i unwind label %bb.bm ; 5 uses
 
@@ -212,8 +212,7 @@ _ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i: ; preds = %_ZNKSt6vecto
   %i.ff = getelementptr inbounds nuw i8, ptr %12, i64 8
   store float 0.000000e+00, ptr %i.fd, align 4, !tbaa !96
   %i.fg = getelementptr i8, ptr %i.fd, i64 4
-  %24 = shl nuw nsw i64 %i.fb, 2
-  %.idx.i.i.i.i.i31.i = add nsw i64 %24, -4
+  %.idx.i.i.i.i.i31.i = add nsw i64 %i.fc, -4
   call void @llvm.memset.p0.i64(ptr align 4 %i.fg, i8 0, i64 %.idx.i.i.i.i.i31.i, i1 false), !tbaa !96
   store ptr %i.fd, ptr %12, align 8, !tbaa !102
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.fb ; 2 uses
@@ -437,7 +436,7 @@ bb.ch:                                            ; preds = %bb.s
 
 bb.ci:                                            ; preds = %bb.ch
   %i.hi = mul nsw i32 %spec.store.select, 3
-  %i.hj = sext i32 %i.hi to i64                   ; 3 uses
+  %i.hj = sext i32 %i.hi to i64                   ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.hl = icmp slt i32 %spec.store.select, 0
   br i1 %i.hl, label %bb.cj, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i222
@@ -450,23 +449,15 @@ bb.cj:                                            ; preds = %bb.ci
   unreachable
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i222: ; preds = %bb.ci
-  %i.hm = shl nuw nsw i64 %i.hj, 2
+  %i.hm = shl nuw nsw i64 %i.hj, 2                ; 2 uses
   %i.hn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hm) #27
-          to label %.noexc231 unwind label %bb.cm ; 5 uses
+          to label %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229 unwind label %bb.cm ; 5 uses
 
-.noexc231:                                        ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i222
+_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229: ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i222
   store float 0.000000e+00, ptr %i.hn, align 4, !tbaa !96
-  %25 = add nsw i64 %i.hj, -1                     ; 2 uses
-  %26 = icmp eq i64 %25, 0
-  br i1 %26, label %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229, label %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i224
-
-_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i224: ; preds = %.noexc231
-  %27 = getelementptr i8, ptr %i.hn, i64 4
-  %.idx.i.i.i.i.i31.i225 = shl nuw nsw i64 %25, 2
-  call void @llvm.memset.p0.i64(ptr align 4 %27, i8 0, i64 %.idx.i.i.i.i.i31.i225, i1 false), !tbaa !96
-  br label %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229
-
-_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229: ; preds = %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i224, %.noexc231
+  %24 = getelementptr i8, ptr %i.hn, i64 4
+  %.idx.i.i.i.i.i31.i225 = add nsw i64 %i.hm, -4
+  call void @llvm.memset.p0.i64(ptr align 4 %24, i8 0, i64 %.idx.i.i.i.i.i31.i225, i1 false), !tbaa !96
   store ptr %i.hn, ptr %16, align 8, !tbaa !102
   %i.ho = getelementptr inbounds nuw [4 x i8], ptr %i.hn, i64 %i.hj ; 2 uses
   store ptr %i.ho, ptr %i.hh, align 8, !tbaa !103

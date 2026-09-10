@@ -205,8 +205,8 @@ define void @_Z16dd_move_x_specatPK12gmx_domdec_tP24gmx_domdec_specat_comm_tPA3_
 bb.a:
   %6 = alloca %"class.gmx::ArrayRef", align 8     ; 3 uses
   %7 = alloca %"class.gmx::ArrayRef", align 8     ; 3 uses
-  %.not = icmp eq ptr %4, null                    ; 3 uses
-  %spec.select = select i1 %.not, i32 1, i32 2    ; 10 uses
+  %.not = icmp eq ptr %4, null                    ; 7 uses
+  %spec.select = select i1 %.not, i32 1, i32 2    ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !119
   %i.c = icmp sgt i32 %i.b, 0
@@ -227,19 +227,16 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 8
   %.not.i237 = icmp eq ptr %3, null
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %8 = add nsw i32 %spec.select, -1               ; 2 uses
   %xtraiter609 = and i32 %spec.select, 1
-  %9 = icmp eq i32 %8, 0                          ; 2 uses
   %unroll_iter614 = and i32 %spec.select, 2
   %lcmp.mod611.not = icmp eq i32 %xtraiter609, 0
   %lcmp.mod613 = trunc i32 %spec.select to i1
-  %i.q = select i1 %9, ptr %3, ptr %4
+  %i.q = select i1 %.not, ptr %3, ptr %4
   %xtraiter626 = and i32 %spec.select, 1
-  %10 = icmp eq i32 %8, 0                         ; 2 uses
   %unroll_iter630 = and i32 %spec.select, 2
   %lcmp.mod628.not = icmp eq i32 %xtraiter626, 0
   %lcmp.mod629 = trunc i32 %spec.select to i1
-  %i.r = select i1 %10, ptr %3, ptr %4
+  %i.r = select i1 %.not, ptr %3, ptr %4
   br label %bb.b
 
 ._crit_edge346:                                   ; preds = %bb.aa, %bb.a
@@ -286,7 +283,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ar, label %.split321.us, label %.split319.us.split.preheader
 
 .split319.us.split.preheader:                     ; preds = %.split319.us
-  br i1 %9, label %.split319.us.split.epil.preheader, label %.split319.us.split
+  br i1 %.not, label %.split319.us.split.epil.preheader, label %.split319.us.split
 
 .split319.us.split:                               ; preds = %.split319.us.split.preheader, %.loopexit276.us.1625
   %.1216318.us = phi ptr [ %.2.lcssa.us.1624, %.loopexit276.us.1625 ], [ %i.y, %.split319.us.split.preheader ] ; 2 uses
@@ -378,7 +375,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.bz, label %.split321.us.1, label %.split319.us.split.1.preheader
 
 .split319.us.split.1.preheader:                   ; preds = %.split319.us.1
-  br i1 %10, label %.split319.us.split.1.epil.preheader, label %.split319.us.split.1
+  br i1 %.not, label %.split319.us.split.1.epil.preheader, label %.split319.us.split.1
 
 .split319.us.split.1:                             ; preds = %.split319.us.split.1.preheader, %.loopexit276.us.1.1
   %.1216318.us.1 = phi ptr [ %.2.lcssa.us.1.1, %.loopexit276.us.1.1 ], [ %.us-phi, %.split319.us.split.1.preheader ] ; 2 uses

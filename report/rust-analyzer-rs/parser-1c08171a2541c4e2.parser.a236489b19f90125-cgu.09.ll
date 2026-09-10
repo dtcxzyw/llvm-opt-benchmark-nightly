@@ -202,7 +202,7 @@ bb.ca:                                            ; preds = %_RNvNtCs1FJxqhktgJ4
 
 _RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit346: ; preds = %bb.bx, %.split.i339
   %.sroa.8401.0 = phi i64 [ %.sroa.9397.0, %bb.bx ], [ %i.ni, %.split.i339 ] ; 5 uses
-  %.sroa.6400.0 = phi ptr [ %.sroa.7396.0, %bb.bx ], [ %i.nh, %.split.i339 ] ; 6 uses
+  %.sroa.6400.0 = phi ptr [ %.sroa.7396.0, %bb.bx ], [ %i.nh, %.split.i339 ] ; 7 uses
   store ptr %.sroa.6400.0, ptr %i.ah, align 8, !captures !171
   store i64 %.sroa.8401.0, ptr %i.aj, align 8
   %i.nk = ptrtoint ptr %.sroa.6400.0 to i64
@@ -221,6 +221,7 @@ bb.cb:                                            ; preds = %_RNvMNtCshzWfHUSfYa
   br i1 %i.np, label %.split.i349, label %.invoke
 
 .split.i349:                                      ; preds = %bb.cb, %.split3.i348
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6400.0) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   %i.nq = sub i64 %i.ei, %i.mh
   store i64 %i.nq, ptr %i.w, align 8

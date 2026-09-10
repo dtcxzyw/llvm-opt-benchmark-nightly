@@ -202,7 +202,7 @@ bb.a:
   %i.f = icmp ne i64 %i.e, 4, !dbg !36213
   tail call void @llvm.assume(i1 %i.f), !dbg !36213
   %i.g = add nsw i64 %i.e, -2, !dbg !36213
-  %.inv2 = icmp samesign ult i64 %i.e, 2, !dbg !36213
+  %.inv2 = icmp samesign ult i64 %i.e, 2, !dbg !36213 ; 2 uses
   %i.h = select i1 %.inv2, i64 2, i64 %i.g, !dbg !36213
   %i.i = icmp eq i64 %i.d, %i.h, !dbg !36214
   br i1 %i.i, label %bb.b, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtB9_6option6OptionyENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !36214
@@ -210,17 +210,20 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   switch i64 %i.d, label %bb.c [
     i64 1, label %bb.d
-    i64 2, label %bb.e
+    i64 2, label %2
     i64 3, label %bb.i
     i64 0, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtB9_6option6OptionyENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit
   ], !dbg !36214
 
-_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtB9_6option6OptionyENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit: ; preds = %bb.e, %bb.g, %bb.h, %bb.b, %bb.a, %bb.i, %bb.d
-  %.sroa.0.0 = phi i1 [ %i.n, %bb.d ], [ false, %bb.a ], [ true, %bb.b ], [ %i.ad, %bb.i ], [ %i.y, %bb.h ], [ %spec.select.i.i, %bb.g ], [ false, %bb.e ], !dbg !36215
+_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtB9_6option6OptionyENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit: ; preds = %bb.e, %bb.g, %bb.h, %bb.b, %2, %bb.a, %bb.i, %bb.d
+  %.sroa.0.0 = phi i1 [ %i.n, %bb.d ], [ false, %bb.a ], [ true, %bb.b ], [ %i.ad, %bb.i ], [ %i.y, %bb.h ], [ true, %2 ], [ %spec.select.i.i, %bb.g ], [ false, %bb.e ], !dbg !36215
   ret i1 %.sroa.0.0, !dbg !36216
 
 bb.c:                                             ; preds = %bb.b
   unreachable, !dbg !36212
+
+2:                                                ; preds = %bb.b
+  br i1 %.inv2, label %bb.e, label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtB9_6option6OptionyENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !36214
 
 bb.d:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !36217
@@ -232,7 +235,7 @@ bb.d:                                             ; preds = %bb.b
   %i.n = tail call fastcc noundef zeroext i1 @_RNvXsj_NtNtCsaRr8xKSRVhT_9sqlparser3ast9data_typeNtB5_8DataTypeNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.l, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.m) #29, !dbg !36221, !noalias !36201, !inline_history !377
   br label %_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRINtNtB9_6option6OptionyENtB7_9PartialEq2eqCshquuC4dCYVj_10polars_sql.exit, !dbg !36222
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %2
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !36223
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !36223
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36202), !dbg !36224

@@ -205,15 +205,7 @@ bb.o:                                             ; preds = %_ZN5boost9container
           cleanup
   br label %bb.ay
 
-.preheader132:                                    ; preds = %._crit_edge140, %._crit_edge140.thread
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 20 ; 4 uses
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 28
-  br label %bb.ac
-
-bb.p:                                             ; preds = %.preheader135, %._crit_edge140
+bb.p:                                             ; preds = %._crit_edge140, %.preheader135
   %indvars.iv = phi i64 [ 5, %.preheader135 ], [ %indvars.iv.next, %._crit_edge140 ] ; 2 uses
   %.065141 = phi i64 [ 0, %.preheader135 ], [ %i.dc, %._crit_edge140 ] ; 7 uses
   %umax = call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
@@ -280,7 +272,12 @@ bb.t:                                             ; preds = %_ZN5boost9container
 
 ._crit_edge140.thread:                            ; preds = %.preheader133
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
-  br label %.preheader132
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %7, i64 20 ; 4 uses
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %12 = getelementptr inbounds nuw i8, ptr %7, i64 28
+  br label %bb.ac
 
 .lr.ph139:                                        ; preds = %.preheader133
   %i.cs = trunc nuw nsw i64 %.065141 to i32
@@ -317,10 +314,9 @@ bb.x:                                             ; preds = %.lr.ph
 
 ._crit_edge140:                                   ; preds = %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
-  %i.dc = add nuw nsw i64 %.065141, 1             ; 2 uses
+  %i.dc = add nuw nsw i64 %.065141, 1
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %exitcond159.not = icmp eq i64 %i.dc, 6
-  br i1 %exitcond159.not, label %.preheader132, label %bb.p, !llvm.loop !675
+  br label %bb.p, !llvm.loop !675
 
 bb.y:                                             ; preds = %.lr.ph139, %bb.z
   %.063138 = phi i64 [ 0, %.lr.ph139 ], [ %i.dj, %bb.z ] ; 3 uses
@@ -348,13 +344,9 @@ bb.ab:                                            ; preds = %bb.u, %bb.v, %bb.x,
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   br label %bb.ay
 
-.loopexit201:                                     ; preds = %._crit_edge151, %._crit_edge151.thread
-  invoke void @_Z11test_insertIiLm10EN5boost9container13static_vectorIiLm10EvEES3_EvRKT1_RKT2_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(48) %3)
-          to label %bb.at unwind label %bb.ax
-
-bb.ac:                                            ; preds = %.preheader132, %._crit_edge151
-  %indvars.iv162 = phi i64 [ 5, %.preheader132 ], [ %indvars.iv.next163, %._crit_edge151 ] ; 2 uses
-  %.062152 = phi i64 [ 0, %.preheader132 ], [ %i.fv, %._crit_edge151 ] ; 8 uses
+bb.ac:                                            ; preds = %._crit_edge151, %._crit_edge140.thread
+  %indvars.iv162 = phi i64 [ 5, %._crit_edge140.thread ], [ %indvars.iv.next163, %._crit_edge151 ] ; 2 uses
+  %.062152 = phi i64 [ 0, %._crit_edge140.thread ], [ %i.fv, %._crit_edge151 ] ; 8 uses
   %umax164 = call i64 @llvm.umax.i64(i64 %indvars.iv162, i64 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   store i64 5, ptr %8, align 8, !tbaa !93
@@ -562,7 +554,8 @@ bb.an:                                            ; preds = %bb.am
 
 ._crit_edge151.thread:                            ; preds = %.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  br label %.loopexit201
+  invoke void @_Z11test_insertIiLm10EN5boost9container13static_vectorIiLm10EvEES3_EvRKT1_RKT2_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(48) %3)
+          to label %bb.at unwind label %bb.ax
 
 bb.ao:                                            ; preds = %bb.an, %bb.am, %.preheader128
   %i.fu = landingpad { ptr, i32 }
@@ -571,10 +564,9 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %.pr
 
 ._crit_edge151:                                   ; preds = %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  %i.fv = add nuw nsw i64 %.062152, 1             ; 2 uses
+  %i.fv = add nuw nsw i64 %.062152, 1
   %indvars.iv.next163 = add nsw i64 %indvars.iv162, -1
-  %exitcond166.not = icmp eq i64 %i.fv, 6
-  br i1 %exitcond166.not, label %.loopexit201, label %bb.ac, !llvm.loop !685
+  br label %bb.ac, !llvm.loop !685
 
 bb.ap:                                            ; preds = %.lr.ph150, %bb.aq
   %.0149 = phi i64 [ 0, %.lr.ph150 ], [ %i.gc, %bb.aq ] ; 3 uses
@@ -602,7 +594,7 @@ bb.as:                                            ; preds = %bb.ai, %bb.aj, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   br label %bb.ay
 
-bb.at:                                            ; preds = %.loopexit201
+bb.at:                                            ; preds = %._crit_edge151.thread
   invoke void @_Z11test_insertIiLm10EN5boost9container13static_vectorIiLm10EvEENS1_6vectorIivvEEEvRKT1_RKT2_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(24) %4)
           to label %bb.au unwind label %bb.ax
 
@@ -640,7 +632,7 @@ _ZN5boost9container6vectorIivvED2Ev.exit:         ; preds = %_ZN5boost9container
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   ret void
 
-bb.ax:                                            ; preds = %bb.au, %bb.at, %.loopexit201
+bb.ax:                                            ; preds = %bb.au, %bb.at, %._crit_edge151.thread
   %i.gj = landingpad { ptr, i32 }
           cleanup
   br label %bb.ay
@@ -942,16 +934,6 @@ bb.o:                                             ; preds = %_ZN5boost9container
           cleanup
   br label %bb.aw
 
-.preheader143:                                    ; preds = %._crit_edge151, %._crit_edge151.thread
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 20 ; 4 uses
-  %11 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %12 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %13 = getelementptr inbounds nuw i8, ptr %8, i64 28
-  %14 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %15 = getelementptr inbounds nuw i8, ptr %8, i64 28
-  br label %bb.ab
-
 _ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit.thread: ; preds = %._crit_edge151, %.preheader146
   %indvars.iv = phi i64 [ 5, %.preheader146 ], [ %indvars.iv.next, %._crit_edge151 ] ; 2 uses
   %.065152 = phi i64 [ 0, %.preheader146 ], [ %i.db, %._crit_edge151 ] ; 7 uses
@@ -1019,7 +1001,14 @@ bb.s:                                             ; preds = %_ZN5boost9container
 
 ._crit_edge151.thread:                            ; preds = %.preheader144
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  br label %.preheader143
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 20 ; 4 uses
+  %11 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %12 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %13 = getelementptr inbounds nuw i8, ptr %8, i64 28
+  %14 = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %15 = getelementptr inbounds nuw i8, ptr %8, i64 28
+  br label %bb.ab
 
 .lr.ph150:                                        ; preds = %.preheader144
   %i.cr = trunc nuw nsw i64 %.065152 to i32
@@ -1056,10 +1045,9 @@ bb.w:                                             ; preds = %.lr.ph
 
 ._crit_edge151:                                   ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  %i.db = add nuw nsw i64 %.065152, 1             ; 2 uses
+  %i.db = add nuw nsw i64 %.065152, 1
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %exitcond169.not = icmp eq i64 %i.db, 6
-  br i1 %exitcond169.not, label %.preheader143, label %_ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit.thread, !llvm.loop !700
+  br label %_ZN5boost9container13static_vectorI8value_ndLm10EvEC2ERKS3_.exit.thread, !llvm.loop !700
 
 bb.x:                                             ; preds = %.lr.ph150, %bb.y
   %.063149 = phi i64 [ 0, %.lr.ph150 ], [ %i.di, %bb.y ] ; 3 uses
@@ -1087,13 +1075,9 @@ bb.aa:                                            ; preds = %bb.t, %bb.u, %bb.w,
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   br label %bb.aw
 
-.loopexit214:                                     ; preds = %._crit_edge162, %._crit_edge162.thread
-  invoke void @_Z11test_insertI8value_ndLm10EN5boost9container13static_vectorIS0_Lm10EvEES4_EvRKT1_RKT2_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(48) %3)
-          to label %bb.ar unwind label %bb.av
-
-bb.ab:                                            ; preds = %.preheader143, %._crit_edge162
-  %indvars.iv172 = phi i64 [ 5, %.preheader143 ], [ %indvars.iv.next173, %._crit_edge162 ] ; 2 uses
-  %.062163 = phi i64 [ 0, %.preheader143 ], [ %i.gz, %._crit_edge162 ] ; 9 uses
+bb.ab:                                            ; preds = %._crit_edge162, %._crit_edge151.thread
+  %indvars.iv172 = phi i64 [ 5, %._crit_edge151.thread ], [ %indvars.iv.next173, %._crit_edge162 ] ; 2 uses
+  %.062163 = phi i64 [ 0, %._crit_edge151.thread ], [ %i.gz, %._crit_edge162 ] ; 9 uses
   %i.dk = shl i64 %.062163, 2
   %i.dl = sub i64 16, %i.dk                       ; 2 uses
   %i.dm = lshr exact i64 %i.dl, 2
@@ -1378,7 +1362,8 @@ bb.al:                                            ; preds = %bb.ak
 
 ._crit_edge162.thread:                            ; preds = %.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
-  br label %.loopexit214
+  invoke void @_Z11test_insertI8value_ndLm10EN5boost9container13static_vectorIS0_Lm10EvEES4_EvRKT1_RKT2_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(48) %3)
+          to label %bb.ar unwind label %bb.av
 
 bb.am:                                            ; preds = %bb.al, %bb.ak, %.preheader140
   %i.gy = landingpad { ptr, i32 }
@@ -1387,10 +1372,9 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %.pr
 
 ._crit_edge162:                                   ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
-  %i.gz = add nuw nsw i64 %.062163, 1             ; 2 uses
+  %i.gz = add nuw nsw i64 %.062163, 1
   %indvars.iv.next173 = add nsw i64 %indvars.iv172, -1
-  %exitcond176.not = icmp eq i64 %i.gz, 6
-  br i1 %exitcond176.not, label %.loopexit214, label %bb.ab, !llvm.loop !711
+  br label %bb.ab, !llvm.loop !711
 
 bb.an:                                            ; preds = %.lr.ph161, %bb.ao
   %.0160 = phi i64 [ 0, %.lr.ph161 ], [ %i.hg, %bb.ao ] ; 3 uses
@@ -1418,7 +1402,7 @@ bb.aq:                                            ; preds = %bb.ag, %bb.ah, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   br label %bb.aw
 
-bb.ar:                                            ; preds = %.loopexit214
+bb.ar:                                            ; preds = %._crit_edge162.thread
   invoke void @_Z11test_insertI8value_ndLm10EN5boost9container13static_vectorIS0_Lm10EvEENS2_6vectorIS0_vvEEEvRKT1_RKT2_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(24) %4)
           to label %bb.as unwind label %bb.av
 
@@ -1456,7 +1440,7 @@ _ZN5boost9container6vectorI8value_ndvvED2Ev.exit: ; preds = %_ZN5boost9container
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   ret void
 
-bb.av:                                            ; preds = %bb.as, %bb.ar, %.loopexit214
+bb.av:                                            ; preds = %bb.as, %bb.ar, %._crit_edge162.thread
   %i.hn = landingpad { ptr, i32 }
           cleanup
   br label %bb.aw
@@ -1502,7 +1486,7 @@ bb.a:
   %4 = alloca %"class.boost::container::vector.108", align 8 ; 24 uses
   %5 = alloca %"class.boost::container::list.112", align 8 ; 18 uses
   %6 = alloca %class.counting_value, align 4      ; 22 uses
-  %7 = alloca %"class.boost::container::static_vector.29", align 8 ; 16 uses
+  %7 = alloca %"class.boost::container::static_vector.29", align 8 ; 17 uses
   %8 = alloca %"class.boost::container::static_vector.29", align 8 ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 8 uses
@@ -1876,6 +1860,7 @@ _ZN5boost9container6vectorI14counting_valuevvE9push_backEOS2_.exit.4: ; preds = 
   %i.ec = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 4 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 4 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %7, i64 36
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   %i.ef = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.eg = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.eh = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1903,29 +1888,10 @@ bb.q:                                             ; preds = %_ZN5boost9container
   store i64 %i.es, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   br label %bb.av
 
-.preheader169:                                    ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit.thread
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 80 ; 6 uses
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %8, i64 44
-  %12 = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %13 = getelementptr inbounds nuw i8, ptr %8, i64 52
-  %14 = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %15 = getelementptr inbounds nuw i8, ptr %8, i64 60
-  %16 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %17 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %18 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %19 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %20 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %21 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %22 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %23 = getelementptr inbounds nuw i8, ptr %8, i64 32
-  br label %.lr.ph.i.i.i99
-
 .lr.ph.i.i.i:                                     ; preds = %.preheader172, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit
-  %indvars.iv = phi i64 [ 5, %.preheader172 ], [ %indvars.iv.next, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit ] ; 2 uses
-  %.065190 = phi i64 [ 0, %.preheader172 ], [ %i.hn, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit ] ; 8 uses
-  %umax = call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
+  %indvars.iv = phi i64 [ %umax, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit ], [ 5, %.preheader172 ]
+  %.065190 = phi i64 [ %i.hn, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit ], [ 0, %.preheader172 ] ; 8 uses
+  %indvars.iv271 = phi i64 [ %indvars.iv.next, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit ], [ 5, %.preheader172 ]
   %_ZZN14counting_value1cEvE2co.promoted.i.i.i = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   %i.et = load <2 x i32>, ptr %2, align 8, !tbaa !41
   store <2 x i32> %i.et, ptr %7, align 8, !tbaa !41
@@ -2076,7 +2042,22 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
   %i.gr = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i241, -6
   store i64 %i.gr, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  br label %.preheader169
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 80 ; 6 uses
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %8, i64 44
+  %12 = getelementptr inbounds nuw i8, ptr %8, i64 48
+  %13 = getelementptr inbounds nuw i8, ptr %8, i64 52
+  %14 = getelementptr inbounds nuw i8, ptr %8, i64 56
+  %15 = getelementptr inbounds nuw i8, ptr %8, i64 60
+  %16 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %17 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %18 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %19 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %20 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %21 = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %22 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %23 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  br label %.lr.ph.i.i.i99
 
 .lr.ph188:                                        ; preds = %.preheader170
   %i.gs = trunc nuw nsw i64 %.065190 to i32
@@ -2130,10 +2111,11 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
   %i.hm = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i, -6
   store i64 %i.hm, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  %i.hn = add nuw nsw i64 %.065190, 1             ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %exitcond207.not = icmp eq i64 %i.hn, 6
-  br i1 %exitcond207.not, label %.preheader169, label %.lr.ph.i.i.i, !llvm.loop !727
+  %i.hn = add nuw nsw i64 %.065190, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv271, -1 ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %indvars.iv.next, i64 1)
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
+  br label %.lr.ph.i.i.i, !llvm.loop !727
 
 bb.y:                                             ; preds = %.lr.ph188, %bb.z
   %i.ho = phi i64 [ %i.gt, %.lr.ph188 ], [ %i.hz, %bb.z ]
@@ -2157,7 +2139,7 @@ bb.z:                                             ; preds = %bb.y
   %i.ia = add i64 %i.hz, -1
   store i64 %i.ia, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   %i.ib = add nuw nsw i64 %.063187, 1             ; 2 uses
-  %exitcond206.not = icmp eq i64 %i.ib, %umax
+  %exitcond206.not = icmp eq i64 %i.ib, %indvars.iv
   br i1 %exitcond206.not, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit, label %bb.y, !llvm.loop !728
 
 bb.aa:                                            ; preds = %bb.y
@@ -2180,9 +2162,9 @@ bb.ab:                                            ; preds = %_ZN5boost9container
   invoke void @_Z11test_insertI14counting_valueLm10EN5boost9container13static_vectorIS0_Lm10EvEES4_EvRKT1_RKT2_(ptr noundef nonnull align 8 dereferenceable(88) %2, ptr noundef nonnull align 8 dereferenceable(88) %3)
           to label %bb.aq unwind label %bb.au
 
-.lr.ph.i.i.i99:                                   ; preds = %.preheader169, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit114
-  %indvars.iv210 = phi i64 [ 5, %.preheader169 ], [ %indvars.iv.next211, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit114 ] ; 2 uses
-  %.062201 = phi i64 [ 0, %.preheader169 ], [ %i.ko, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit114 ] ; 7 uses
+.lr.ph.i.i.i99:                                   ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit.thread, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit114
+  %indvars.iv210 = phi i64 [ 5, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit.thread ], [ %indvars.iv.next211, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit114 ] ; 2 uses
+  %.062201 = phi i64 [ 0, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit.thread ], [ %i.ko, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit114 ] ; 7 uses
   %umax212 = call i64 @llvm.umax.i64(i64 %indvars.iv210, i64 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   store i64 5, ptr %9, align 8, !tbaa !128
@@ -2585,12 +2567,6 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
   store i64 %i.bg, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   br label %bb.z
 
-_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit90: ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97.thread
-  %_ZZN14counting_value1cEvE2co.promoted.i.i96222 = phi i64 [ %i.dz, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97.thread ], [ %i.eu, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ]
-  %1 = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i96222, -11
-  store i64 %1, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
-  ret void
-
 .lr.ph.i.i.i:                                     ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader
   %_ZZN14counting_value1cEvE2co.promoted.i.i.i = phi i64 [ %i.aw, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %i.eb, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 3 uses
   %indvars.iv189 = phi i64 [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next190, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 8 uses
@@ -2783,8 +2759,8 @@ bb.u:                                             ; preds = %.lr.ph
   br label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit105
 
 bb.v:                                             ; preds = %._crit_edge
-  %i.dy = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75 ; 3 uses
-  %i.dz = add i64 %i.dy, -1                       ; 2 uses
+  %i.dy = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75 ; 4 uses
+  %i.dz = add i64 %i.dy, -1
   store i64 %i.dz, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   br i1 %.not.i.i.i92, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97.thread, label %.lr.ph172.preheader
 
@@ -2792,7 +2768,9 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
   %i.ea = add i64 %i.dy, -7
   store i64 %i.ea, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #25
-  br label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit90
+  %1 = add i64 %i.dy, -12
+  store i64 %1, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
+  ret void
 
 .lr.ph172.preheader:                              ; preds = %bb.v
   %wide.trip.count187 = zext i32 %umax to i64
@@ -2802,10 +2780,9 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
   %i.eb = add i64 %i.et, -7                       ; 2 uses
   store i64 %i.eb, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #25
-  %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, 1 ; 2 uses
+  %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, 1
   %indvars.iv.next186 = add nsw i32 %indvars.iv185, -1
-  %exitcond192.not = icmp eq i64 %indvars.iv.next190, 6
-  br i1 %exitcond192.not, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit90, label %.lr.ph.i.i.i, !llvm.loop !1334
+  br label %.lr.ph.i.i.i, !llvm.loop !1334
 
 bb.w:                                             ; preds = %._crit_edge
   %i.ec = landingpad { ptr, i32 }
@@ -2836,7 +2813,7 @@ bb.w:                                             ; preds = %._crit_edge
 
 bb.x:                                             ; preds = %.lr.ph172
   %i.et = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75 ; 3 uses
-  %i.eu = add i64 %i.et, -1                       ; 2 uses
+  %i.eu = add i64 %i.et, -1
   store i64 %i.eu, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !75
   %indvars.iv.next183 = add nuw nsw i64 %indvars.iv182, 1 ; 2 uses
   %exitcond188.not = icmp eq i64 %indvars.iv.next183, %wide.trip.count187

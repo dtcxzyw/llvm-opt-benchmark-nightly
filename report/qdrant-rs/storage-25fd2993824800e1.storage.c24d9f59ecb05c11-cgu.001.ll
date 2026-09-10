@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/storage-25fd2993824800e1.storage.c24d9f59ecb05c11-cgu.001?download=true
-inline.NumInlined: 14631
-inline.NumDeleted: 4678
+inline.NumInlined: 14630
+inline.NumDeleted: 4677
 loop-unroll.NumCompletelyUnrolled: 37
 loop-unroll.NumUnrolled: 37
 begin_hunk_0_@_RNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set14shard_transferNtB6_15ShardReplicaSet16transfer_indexes0CsgGgPqgSfnMH_7storage:bb.a
@@ -204,8 +204,8 @@ bb.u:                                             ; preds = %bb.t
   %i.bd = icmp ne i64 %i.bc, 4
   tail call void @llvm.assume(i1 %i.bd)
   %i.be = add nsw i64 %i.bc, -2
-  %.inv = icmp samesign ult i64 %i.bc, 2
-  %i.bf = select i1 %.inv, i64 2, i64 %i.be       ; 3 uses
+  %.inv = icmp samesign ult i64 %i.bc, 2          ; 2 uses
+  %i.bf = select i1 %.inv, i64 2, i64 %i.be       ; 2 uses
   switch i64 %i.bf, label %bb.b [
     i64 0, label %bb.ae
     i64 1, label %switch.lookup
@@ -317,8 +317,7 @@ switch.lookup:                                    ; preds = %bb.u, %bb.u
 
 bb.af:                                            ; preds = %bb.u, %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
-  %3 = icmp eq i64 %i.bf, 2
-  br i1 %3, label %bb.ag, label %bb.ah, !prof !17998
+  br i1 %.inv, label %bb.ag, label %bb.ah, !prof !17998
 
 bb.ag:                                            ; preds = %bb.af
   store i64 -1, ptr %i.m, align 8

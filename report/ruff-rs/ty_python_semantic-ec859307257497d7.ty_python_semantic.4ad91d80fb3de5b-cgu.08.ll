@@ -205,8 +205,8 @@ bb.a:
   %narrow.i = select i1 %i.c, i32 %i.b, i32 2     ; 2 uses
   %i.d = load i32, ptr %1, align 4, !range !79, !alias.scope !21347, !noalias !21346, !noundef !12 ; 4 uses
   %i.e = add nsw i32 %i.d, -5
-  %2 = icmp sgt i32 %i.d, 4
-  %narrow2.i = select i1 %2, i32 %i.e, i32 2
+  %2 = icmp slt i32 %i.d, 5                       ; 2 uses
+  %narrow2.i = select i1 %2, i32 2, i32 %i.e
   %i.f = icmp eq i32 %narrow.i, %narrow2.i
   br i1 %i.f, label %bb.b, label %_RNvXsG_NtNtCsoTR8nlGN3X_18ty_python_semantic5types11bound_superNtB5_14SuperOwnerKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
@@ -285,6 +285,7 @@ bb.l:                                             ; preds = %bb.j
   br label %_RNvXsG_NtNtCsoTR8nlGN3X_18ty_python_semantic5types11bound_superNtB5_14SuperOwnerKindNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.m:                                             ; preds = %bb.b
+  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21356)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21357)
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 12

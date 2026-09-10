@@ -205,13 +205,11 @@ bb.aq:                                            ; preds = %bb.ao
   %.val33.i = load i8, ptr %i.dh, align 8, !range !33, !noalias !1704, !noundef !9 ; 3 uses
   %i.di = icmp ne i8 %.val33.i, 5
   call void @llvm.assume(i1 %i.di)
-  %6 = add nsw i8 %.val33.i, -2
-  %7 = icmp samesign ugt i8 %.val33.i, 1
-  %narrow.i.i = select i1 %7, i8 %6, i8 3
-  switch i8 %narrow.i.i, label %_RNvXsE_NtCs8frGy5WneL6_4fish6parserNtB5_9BlockTypeNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit60.thread.i [
-    i8 6, label %bb.ar
-    i8 5, label %bb.au
-  ]
+  %6 = icmp samesign ugt i8 %.val33.i, 1          ; 3 uses
+  %7 = select i1 %6, i8 %.val33.i, i8 5           ; 2 uses
+  %8 = icmp eq i8 %7, 8
+  %.sroa.0.0.i55.i = and i1 %6, %8
+  br i1 %.sroa.0.0.i55.i, label %bb.ar, label %bb.at
 
 bb.ar:                                            ; preds = %bb.aq
   %i.dj = invoke noundef nonnull align 8 ptr @_RNvMNtCs8frGy5WneL6_4fish17operation_contextNtB2_16OperationContext6parser(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %1)
@@ -219,16 +217,21 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.ar
   %i.dk = invoke noundef zeroext i1 @_RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser29function_stack_is_overflowing(ptr noundef nonnull align 8 %i.dj)
-          to label %bb.at unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1704
+          to label %9 unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1704
 
-bb.at:                                            ; preds = %bb.as
+9:                                                ; preds = %bb.as
   br i1 %i.dk, label %bb.ay, label %_RNvXsE_NtCs8frGy5WneL6_4fish6parserNtB5_9BlockTypeNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit60.thread.i
 
-bb.au:                                            ; preds = %bb.aq
+bb.at:                                            ; preds = %bb.aq
+  %10 = icmp eq i8 %7, 7
+  %.sroa.0.0.i57.i = and i1 %6, %10
+  br i1 %.sroa.0.0.i57.i, label %bb.au, label %_RNvXsE_NtCs8frGy5WneL6_4fish6parserNtB5_9BlockTypeNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit60.thread.i
+
+bb.au:                                            ; preds = %bb.at
   %i.dl = invoke noundef nonnull align 8 ptr @_RNvMNtCs8frGy5WneL6_4fish17operation_contextNtB2_16OperationContext6parser(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %1)
           to label %bb.av unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1704
 
-_RNvXsE_NtCs8frGy5WneL6_4fish6parserNtB5_9BlockTypeNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit60.thread.i: ; preds = %bb.av, %bb.at, %bb.aq
+_RNvXsE_NtCs8frGy5WneL6_4fish6parserNtB5_9BlockTypeNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit60.thread.i: ; preds = %bb.av, %bb.at, %9
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val31.i) ]
   %.idx.i.i = mul nuw nsw i64 %.val32.i, 160
   %i.dm = getelementptr inbounds nuw i8, ptr %.val31.i, i64 %.idx.i.i
@@ -269,7 +272,7 @@ bb.ax:                                            ; preds = %bb.aw
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #33
   unreachable
 
-bb.ay:                                            ; preds = %bb.av, %bb.at
+bb.ay:                                            ; preds = %bb.av, %9
   %i.dw = invoke { i32, i32 } @_RNvYNtNtCs8frGy5WneL6_4fish3ast7JobListNtB4_4Node12source_rangeB6_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ag)
           to label %bb.az unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1704 ; 2 uses
 

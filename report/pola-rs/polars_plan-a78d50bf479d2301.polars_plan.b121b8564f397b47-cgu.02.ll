@@ -205,28 +205,20 @@ _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedItera
   tail call void @llvm.experimental.noalias.scope.decl(metadata !176256), !dbg !176297
   %i.g = load i8, ptr %0, align 1, !dbg !176298, !alias.scope !176255, !noalias !176256, !noundef !4698 ; 5 uses
   %i.h = add nsw i64 %1, -1, !dbg !176299         ; 2 uses
-  %i.i = add nsw i64 %1, -1, !dbg !176300         ; 3 uses
+  %i.i = add nsw i64 %1, -1, !dbg !176300         ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %i.i, !dbg !176301
   %i.k = load i8, ptr %i.j, align 1, !dbg !176301, !alias.scope !176255, !noalias !176262, !noundef !4698 ; 2 uses
   %.not.i.not.i.i = icmp eq i8 %i.k, %i.g, !dbg !176301
-  br i1 %.not.i.not.i.i, label %4, label %bb.d, !dbg !176302
+  br i1 %.not.i.not.i.i, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.1, label %bb.d, !dbg !176302
 
-4:                                                ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i
-  %.not.i = icmp eq i64 %i.i, 0, !dbg !176303
-  br i1 %.not.i, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.1, !dbg !176304
-
-_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.1: ; preds = %4
-  %i.l = add nsw i64 %1, -2, !dbg !176300         ; 3 uses
+_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.1: ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i
+  %i.l = add nsw i64 %1, -2, !dbg !176300         ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.l, !dbg !176301
   %i.n = load i8, ptr %i.m, align 1, !dbg !176301, !alias.scope !176255, !noalias !176262, !noundef !4698 ; 2 uses
   %.not.i.not.i.i.1 = icmp eq i8 %i.n, %i.g, !dbg !176301
-  br i1 %.not.i.not.i.i.1, label %5, label %bb.d, !dbg !176302
+  br i1 %.not.i.not.i.i.1, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.2, label %bb.d, !dbg !176302
 
-5:                                                ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.1
-  %.not.i.1 = icmp eq i64 %i.l, 0, !dbg !176303
-  br i1 %.not.i.1, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.2, !dbg !176304
-
-_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.2: ; preds = %5
+_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.2: ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.1
   %i.o = add nsw i64 %1, -3, !dbg !176300         ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %i.o, !dbg !176301
   %i.q = load i8, ptr %i.p, align 1, !dbg !176301, !alias.scope !176255, !noalias !176262, !noundef !4698 ; 2 uses
@@ -445,7 +437,7 @@ bb.n:                                             ; preds = %._crit_edge.i
   %i.dj = or i8 %.sroa.014.3.lcssa.i, %i.di, !dbg !176363
   br label %bb.m, !dbg !176364
 
-_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit: ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.3, %bb.c, %5, %4
+_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit: ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsfcROwRM8ZtH_11polars_plan.exit.i.i.3, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !176365
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !176365
   call void @_RNvMsu_NtNtCscgRAwXFJnXP_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1), !dbg !176366

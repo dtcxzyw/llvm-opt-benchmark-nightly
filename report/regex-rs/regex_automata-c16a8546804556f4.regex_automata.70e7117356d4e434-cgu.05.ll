@@ -204,33 +204,29 @@ bb.f:                                             ; preds = %bb.e
     #dbg_value(ptr poison, !14857, !DIExpression(), !14665)
   br label %bb.g, !dbg !14977
 
-bb.g:                                             ; preds = %bb.h, %bb.f
-  %.sroa.06.0.in.i = phi ptr [ %i.k, %bb.f ], [ %7, %bb.h ]
+bb.g:                                             ; preds = %bb.g, %bb.f
+  %.sroa.06.0.in.i = phi ptr [ %i.k, %bb.f ], [ %6, %bb.g ]
   %.sroa.06.0.i = load ptr, ptr %.sroa.06.0.in.i, align 8, !dbg !14978, !nonnull !1137, !noundef !1137 ; 3 uses
     #dbg_value(ptr %.sroa.06.0.i, !14857, !DIExpression(), !14665)
   %i.l = load i64, ptr %.sroa.06.0.i, align 8, !dbg !14979, !range !3874, !noalias !14861, !noundef !1137 ; 3 uses
   %i.m = icmp ne i64 %i.l, 4, !dbg !14979
   tail call void @llvm.assume(i1 %i.m), !dbg !14979
-  %5 = add nsw i64 %i.l, -2, !dbg !14979
-  %.inv14.i = icmp samesign ult i64 %i.l, 2, !dbg !14979
-  %6 = select i1 %.inv14.i, i64 2, i64 %5, !dbg !14979
-  switch i64 %6, label %_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit [
-    i64 5, label %bb.h
-    i64 2, label %_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix14required_class.exit
-  ], !dbg !14980
+  %5 = icmp eq i64 %i.l, 7, !dbg !14980
+    #dbg_value(ptr %.sroa.06.0.i, !14859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !14668)
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 8, !dbg !14981
+    #dbg_value(ptr poison, !14857, !DIExpression(), !14665)
+  br i1 %5, label %bb.g, label %bb.h, !dbg !14980
 
 bb.h:                                             ; preds = %bb.g
-    #dbg_value(ptr %.sroa.06.0.i, !14859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !14668)
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 8, !dbg !14981
-    #dbg_value(ptr poison, !14857, !DIExpression(), !14665)
-  br label %bb.g, !dbg !14982
+  %.inv14.i = icmp samesign ugt i64 %i.l, 1, !dbg !14979
+  br i1 %.inv14.i, label %_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit, label %_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix14required_class.exit, !dbg !14982
 
 bb.i:                                             ; preds = %bb.a
   tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %2, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #21, !dbg !14968
   unreachable, !dbg !14968
 
-_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix14required_class.exit: ; preds = %bb.c, %bb.g
-  %.sroa.05.0.i = phi ptr [ %.sroa.06.0.i, %bb.g ], [ %.sroa.0.0.i, %bb.c ], !dbg !14983 ; 2 uses
+_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix14required_class.exit: ; preds = %bb.c, %bb.h
+  %.sroa.05.0.i = phi ptr [ %.sroa.06.0.i, %bb.h ], [ %.sroa.0.0.i, %bb.c ], !dbg !14983 ; 2 uses
     #dbg_value(ptr %.sroa.05.0.i, !14758, !DIExpression(), !14862)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14863), !dbg !14984
     #dbg_value(ptr poison, !14864, !DIExpression(), !14686)
@@ -349,8 +345,8 @@ bb.j:                                             ; preds = %.lr.ph
   %.not13.i = icmp eq ptr %i.y, %i.v, !dbg !14999
   br i1 %.not13.i, label %_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit, label %.lr.ph.i, !dbg !14992
 
-_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit: ; preds = %bb.c, %bb.g, %.lr.ph, %.backedge.i, %.split.i, %bb.e
-  %.sroa.0.0 = phi i1 [ false, %bb.g ], [ true, %.backedge.i ], [ false, %bb.e ], [ false, %.lr.ph ], [ false, %.split.i ], [ false, %bb.c ], !dbg !14819
+_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4meta6prefix31class_is_disjoint_from_literals.exit: ; preds = %bb.c, %.lr.ph, %.backedge.i, %.split.i, %bb.h, %bb.e
+  %.sroa.0.0 = phi i1 [ false, %bb.h ], [ false, %.lr.ph ], [ false, %bb.e ], [ true, %.backedge.i ], [ false, %.split.i ], [ false, %bb.c ], !dbg !14819
   ret i1 %.sroa.0.0, !dbg !15000
 }
 
@@ -753,7 +749,7 @@ begin_hunk_1_@llvm.umin.i64
 !14979 = !DILocation(line: 150, column: 43, scope: !14657, inlinedAt: !14664)
 !14980 = !DILocation(line: 150, column: 15, scope: !14657, inlinedAt: !14664)
 !14981 = !DILocation(line: 151, column: 15, scope: !14657, inlinedAt: !14664)
-!14982 = !DILocation(line: 150, column: 5, scope: !14659, inlinedAt: !14664)
+!14982 = !DILocation(line: 0, scope: !14650, inlinedAt: !14654)
 !14983 = !DILocation(line: 0, scope: !14652, inlinedAt: !14654)
 !14984 = !DILocation(line: 106, column: 5, scope: !14618)
 !14985 = !DILocation(line: 970, column: 18, scope: !14699, inlinedAt: !14700)

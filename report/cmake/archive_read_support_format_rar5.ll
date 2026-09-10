@@ -205,19 +205,14 @@ bb.a:
   %i.e = select i1 %i.d, i32 10, i32 7
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 132 ; 2 uses
   store i32 %i.e, ptr %i.f, align 4, !tbaa !88
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 5 uses
-  %3 = add nsw i64 %wide.trip.count, -1           ; 2 uses
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 4 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %.epil.preheader, label %.new
-
-.new:                                             ; preds = %bb.a
   %unroll_iter = and i64 %wide.trip.count, 510
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %.new
-  %indvars.iv = phi i64 [ 0, %.new ], [ %indvars.iv.next.1, %bb.b ] ; 3 uses
-  %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %bb.b ]
+bb.b:                                             ; preds = %bb.b, %bb.a
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.1, %bb.b ] ; 3 uses
+  %niter = phi i64 [ 0, %bb.a ], [ %niter.next.1, %bb.b ]
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.h = load i8, ptr %i.g, align 1, !tbaa !32
   %i.i = and i8 %i.h, 15
@@ -244,11 +239,10 @@ bb.b:                                             ; preds = %bb.b, %.new
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %bb.c, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %.unr-lcssa, %bb.a
-  %indvars.iv.epil.init = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.1, %.unr-lcssa ]
+.epil.preheader:                                  ; preds = %.unr-lcssa
   %lcmp.mod1 = trunc i32 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod1)
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.epil.init
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next.1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !32
   %i.x = and i8 %i.w, 15
   %i.y = zext nneg i8 %i.x to i64
@@ -411,16 +405,12 @@ bb.c:                                             ; preds = %.unr-lcssa, %.epil.
   store i32 %i.eo, ptr %i.ep, align 4, !tbaa !75
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.b, ptr noundef nonnull align 4 dereferenceable(64) %i.ac, i64 64, i1 false)
   %xtraiter5 = and i64 %wide.trip.count, 1
-  %5 = icmp eq i64 %3, 0
-  br i1 %5, label %.epil.preheader4, label %.new2
-
-.new2:                                            ; preds = %bb.c
   %unroll_iter9 = and i64 %wide.trip.count, 510
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.h, %.new2
-  %indvars.iv94 = phi i64 [ 0, %.new2 ], [ %indvars.iv.next95.1, %bb.h ] ; 4 uses
-  %niter10 = phi i64 [ 0, %.new2 ], [ %niter10.next.1, %bb.h ]
+bb.d:                                             ; preds = %bb.h, %bb.c
+  %indvars.iv94 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next95.1, %bb.h ] ; 4 uses
+  %niter10 = phi i64 [ 0, %bb.c ], [ %niter10.next.1, %bb.h ]
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv94
   %i.er = load i8, ptr %i.eq, align 1, !tbaa !32
   %i.es = and i8 %i.er, 15                        ; 2 uses
@@ -460,7 +450,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %indvars.iv.next95.1 = add nuw nsw i64 %indvars.iv94, 2 ; 2 uses
+  %indvars.iv.next95.1 = add nuw nsw i64 %indvars.iv94, 2 ; 3 uses
   %niter10.next.1 = add nuw nsw i64 %niter10, 2   ; 2 uses
   %niter10.ncmp.1 = icmp eq i64 %niter10.next.1, %unroll_iter9
   br i1 %niter10.ncmp.1, label %.unr-lcssa3, label %bb.d, !llvm.loop !140
@@ -469,11 +459,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %lcmp.mod6.not = icmp eq i64 %xtraiter5, 0
   br i1 %lcmp.mod6.not, label %.epilog-lcssa7, label %.epil.preheader4
 
-.epil.preheader4:                                 ; preds = %.unr-lcssa3, %bb.c
-  %indvars.iv94.epil.init = phi i64 [ 0, %bb.c ], [ %indvars.iv.next95.1, %.unr-lcssa3 ] ; 2 uses
+.epil.preheader4:                                 ; preds = %.unr-lcssa3
   %lcmp.mod8 = trunc i32 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod8)
-  %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv94.epil.init
+  %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next95.1
   %i.fl = load i8, ptr %i.fk, align 1, !tbaa !32
   %i.fm = and i8 %i.fl, 15                        ; 2 uses
   %.not75.epil = icmp eq i8 %i.fm, 0
@@ -483,7 +472,7 @@ bb.i:                                             ; preds = %.epil.preheader4
   %i.fn = zext nneg i8 %i.fm to i64
   %i.fo = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.fn ; 2 uses
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !75 ; 2 uses
-  %i.fq = trunc i64 %indvars.iv94.epil.init to i16
+  %i.fq = trunc i64 %indvars.iv.next95.1 to i16
   %i.fr = sext i32 %i.fp to i64
   %i.fs = getelementptr inbounds [2 x i8], ptr %i.c, i64 %i.fr
   store i16 %i.fq, ptr %i.fs, align 2, !tbaa !87

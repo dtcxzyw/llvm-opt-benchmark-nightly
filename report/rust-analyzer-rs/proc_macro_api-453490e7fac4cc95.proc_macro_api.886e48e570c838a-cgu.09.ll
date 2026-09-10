@@ -202,11 +202,9 @@ bb.e:                                             ; preds = %bb.g
   %.pre = load i64, ptr %i.c, align 8, !range !17 ; 4 uses
   %i.p = icmp ne i64 %.pre, -9223372036854775804
   call void @llvm.assume(i1 %i.p)
-  %i.q = add i64 %.pre, 9223372036854775805       ; 2 uses
-  %6 = icmp ugt i64 %i.q, 3
-  %7 = icmp eq i64 %i.q, 1
-  %8 = or i1 %6, %7
-  br i1 %8, label %bb.i, label %bb.j
+  %i.q = add i64 %.pre, 9223372036854775801
+  %6 = icmp ult i64 %i.q, -4
+  br i1 %6, label %bb.i, label %bb.j
 
 bb.f:                                             ; preds = %bb.h, %bb.d
   %i.r = landingpad { ptr, i32 }
@@ -214,11 +212,9 @@ bb.f:                                             ; preds = %bb.h, %bb.d
   %i.s = load i64, ptr %i.c, align 8, !range !17, !noundef !4 ; 3 uses
   %i.t = icmp ne i64 %i.s, -9223372036854775804
   call void @llvm.assume(i1 %i.t)
-  %i.u = add i64 %i.s, 9223372036854775805        ; 2 uses
-  %9 = icmp ugt i64 %i.u, 3
-  %10 = icmp eq i64 %i.u, 1
-  %11 = or i1 %9, %10
-  br i1 %11, label %bb.o, label %bb.p
+  %i.u = add i64 %i.s, 9223372036854775801
+  %7 = icmp ult i64 %i.u, -4
+  br i1 %7, label %bb.o, label %bb.p
 
 bb.g:                                             ; preds = %bb.d
   %i.v = load i64, ptr %i.a, align 8, !range !7, !noundef !4
@@ -621,7 +617,7 @@ bb.ab:                                            ; preds = %bb.x
           to label %bb.ac unwind label %bb.c
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bm = load i64, ptr %i.k, align 8, !range !19, !noundef !4 ; 7 uses
+  %i.bm = load i64, ptr %i.k, align 8, !range !19, !noundef !4 ; 6 uses
   %i.bn = icmp eq i64 %i.bm, -2
   %i.bo = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(32) %i.bo, i64 32, i1 false)
@@ -678,13 +674,8 @@ bb.ai:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %i.bv = icmp ne i64 %i.bm, -9223372036854775804
   call void @llvm.assume(i1 %i.bv)
-  %12 = add i64 %i.bm, 9223372036854775805        ; 2 uses
-  %13 = icmp ult i64 %12, 4
-  %14 = icmp ne i64 %12, 1
-  %.not91 = and i1 %13, %14
-  %i.bw = icmp slt i64 %i.bm, -9223372036854775805
-  %or.cond.not = or i1 %i.bw, %.not91             ; 2 uses
-  br i1 %or.cond.not, label %bb.aj, label %bb.ak
+  %i.bw = icmp slt i64 %i.bm, -9223372036854775801 ; 2 uses
+  br i1 %i.bw, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
@@ -862,11 +853,9 @@ bb.bc:                                            ; preds = %_RINvNtCshzWfHUSfYa
   %i.cy = load i64, ptr %i.l, align 8, !range !17, !noundef !4 ; 3 uses
   %i.cz = icmp ne i64 %i.cy, -9223372036854775804
   call void @llvm.assume(i1 %i.cz)
-  %i.da = add i64 %i.cy, 9223372036854775805      ; 2 uses
-  %15 = icmp ugt i64 %i.da, 3
-  %16 = icmp eq i64 %i.da, 1
-  %17 = or i1 %15, %16
-  br i1 %17, label %bb.bq, label %bb.br
+  %i.da = add i64 %i.cy, 9223372036854775801
+  %12 = icmp ult i64 %i.da, -4
+  br i1 %12, label %bb.bq, label %bb.br
 
 _RNCNvNtCsJo5RpJFzwk_14proc_macro_api22bidirectional_protocol6expands_0B5_.exit: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxeEINtNtB4_6option6OptionB1w_EEECsJo5RpJFzwk_14proc_macro_api.exit8.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
@@ -896,11 +885,9 @@ bb.be:                                            ; preds = %bb.bh, %bb.bd
   %i.db = load i64, ptr %i.l, align 8, !range !17, !noundef !4 ; 4 uses
   %i.dc = icmp ne i64 %i.db, -9223372036854775804
   call void @llvm.assume(i1 %i.dc)
-  %i.dd = add i64 %i.db, 9223372036854775805      ; 2 uses
-  %18 = icmp ugt i64 %i.dd, 3
-  %19 = icmp eq i64 %i.dd, 1
-  %20 = or i1 %18, %19
-  br i1 %20, label %bb.bi, label %bb.bj
+  %i.dd = add i64 %i.db, 9223372036854775801
+  %13 = icmp ult i64 %i.dd, -4
+  br i1 %13, label %bb.bi, label %bb.bj
 
 bb.bf:                                            ; preds = %bb.aj
   %i.de = load i64, ptr %i.h, align 8, !range !7, !noundef !4
@@ -999,7 +986,7 @@ bb.br:                                            ; preds = %.body67
           to label %.body unwind label %bb.bv
 
 bb.bs:                                            ; preds = %bb.bq
-  br i1 %or.cond.not, label %bb.bu, label %.body
+  br i1 %i.bw, label %bb.bu, label %.body
 
 bb.bt:                                            ; preds = %bb.bq
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsJo5RpJFzwk_14proc_macro_api22bidirectional_protocol3msg8ResponseEBH_(ptr noalias nofree noundef align 8 dereferenceable(264) %i.l) #23

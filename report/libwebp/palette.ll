@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.n
   call void @WebPSafeFree(ptr noundef nonnull %i.ey) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  %i.jd = add nsw i64 %i.fb, -1                   ; 4 uses
+  %i.jd = add nsw i64 %i.fb, -1                   ; 2 uses
   %min.iters.check = icmp ult i32 %3, 8
   %i.je = trunc i64 %i.jd to i32
   %i.jf = icmp ugt i64 %i.jd, 4294967295
@@ -329,18 +329,14 @@ bb.ac:                                            ; preds = %.loopexit
   %i.la = zext i8 %spec.select150.i to i32        ; 2 uses
   %i.lb = mul i32 %3, %i.la                       ; 3 uses
   %xtraiter108 = and i64 %i.fb, 1
-  %6 = icmp eq i64 %i.jd, 0
-  br i1 %6, label %.epil.preheader, label %.new
-
-.new:                                             ; preds = %bb.ac
   %unroll_iter = and i64 %i.fb, 4294967294
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ad, %.new
-  %indvars.iv.i21 = phi i64 [ 0, %.new ], [ %indvars.iv.next.i22.1, %bb.ad ] ; 4 uses
-  %i.lc = phi i8 [ 0, %.new ], [ %spec.select152.i.1, %bb.ad ]
-  %.03144.i.i = phi i32 [ 0, %.new ], [ %spec.select153.i.1, %bb.ad ] ; 2 uses
-  %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %bb.ad ]
+bb.ad:                                            ; preds = %bb.ad, %bb.ac
+  %indvars.iv.i21 = phi i64 [ 0, %bb.ac ], [ %indvars.iv.next.i22.1, %bb.ad ] ; 4 uses
+  %i.lc = phi i8 [ 0, %bb.ac ], [ %spec.select152.i.1, %bb.ad ]
+  %.03144.i.i = phi i32 [ 0, %bb.ac ], [ %spec.select153.i.1, %bb.ad ] ; 2 uses
+  %niter = phi i64 [ 0, %bb.ac ], [ %niter.next.1, %bb.ad ]
   %i.ld = trunc nuw i64 %indvars.iv.i21 to i32
   %i.le = add i32 %i.lb, %i.ld
   %i.lf = zext i32 %i.le to i64
@@ -360,7 +356,7 @@ bb.ad:                                            ; preds = %bb.ad, %.new
   %i.lq = trunc i64 %indvars.iv.next.i22 to i8
   %spec.select152.i.1 = select i1 %i.lp, i8 %i.lq, i8 %spec.select152.i ; 3 uses
   %spec.select153.i.1 = call i32 @llvm.umax.i32(i32 %i.lo, i32 %spec.select153.i) ; 2 uses
-  %indvars.iv.next.i22.1 = add nuw nsw i64 %indvars.iv.i21, 2 ; 2 uses
+  %indvars.iv.next.i22.1 = add nuw nsw i64 %indvars.iv.i21, 2 ; 3 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %CoOccurrenceFindMax.exit.i.unr-lcssa, label %bb.ad, !llvm.loop !34
@@ -369,20 +365,17 @@ CoOccurrenceFindMax.exit.i.unr-lcssa:             ; preds = %bb.ad
   %lcmp.mod109.not = icmp eq i64 %xtraiter108, 0
   br i1 %lcmp.mod109.not, label %CoOccurrenceFindMax.exit.i, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %CoOccurrenceFindMax.exit.i.unr-lcssa, %bb.ac
-  %indvars.iv.i21.epil.init = phi i64 [ 0, %bb.ac ], [ %indvars.iv.next.i22.1, %CoOccurrenceFindMax.exit.i.unr-lcssa ] ; 2 uses
-  %.epil.init = phi i8 [ 0, %bb.ac ], [ %spec.select152.i.1, %CoOccurrenceFindMax.exit.i.unr-lcssa ]
-  %.03144.i.i.epil.init = phi i32 [ 0, %bb.ac ], [ %spec.select153.i.1, %CoOccurrenceFindMax.exit.i.unr-lcssa ]
+.epil.preheader:                                  ; preds = %CoOccurrenceFindMax.exit.i.unr-lcssa
   %lcmp.mod111 = trunc i32 %3 to i1
   call void @llvm.assume(i1 %lcmp.mod111)
-  %i.lr = trunc nuw i64 %indvars.iv.i21.epil.init to i32
+  %i.lr = trunc nuw i64 %indvars.iv.next.i22.1 to i32
   %i.ls = add i32 %i.lb, %i.lr
   %i.lt = zext i32 %i.ls to i64
   %i.lu = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %i.lt
   %i.lv = load i32, ptr %i.lu, align 4, !tbaa !9
-  %i.lw = icmp ugt i32 %i.lv, %.03144.i.i.epil.init
-  %i.lx = trunc i64 %indvars.iv.i21.epil.init to i8
-  %spec.select152.i.epil = select i1 %i.lw, i8 %i.lx, i8 %.epil.init
+  %i.lw = icmp ugt i32 %i.lv, %spec.select153.i.1
+  %i.lx = trunc i64 %indvars.iv.next.i22.1 to i8
+  %spec.select152.i.epil = select i1 %i.lw, i8 %i.lx, i8 %spec.select152.i.1
   br label %CoOccurrenceFindMax.exit.i
 
 CoOccurrenceFindMax.exit.i:                       ; preds = %CoOccurrenceFindMax.exit.i.unr-lcssa, %.epil.preheader
@@ -605,16 +598,12 @@ bb.ak:                                            ; preds = %bb.ak, %.lr.ph141.i
   %.293.i = phi i32 [ 0, %CoOccurrenceFindMax.exit.i ], [ %.192.i, %._crit_edge.thread.i ] ; 3 uses
   call void @WebPSafeFree(ptr noundef nonnull %i.ep) #10
   %xtraiter119 = and i64 %i.fb, 1
-  %7 = icmp eq i64 %i.jd, 0
-  br i1 %7, label %.lr.ph149.i.epil.preheader, label %.lr.ph149.preheader.i.new
-
-.lr.ph149.preheader.i.new:                        ; preds = %.lr.ph149.preheader.i
   %unroll_iter122 = and i64 %i.fb, 4294967294
   br label %.lr.ph149.i
 
-.lr.ph149.i:                                      ; preds = %.lr.ph149.i, %.lr.ph149.preheader.i.new
-  %indvars.iv179.i = phi i64 [ 0, %.lr.ph149.preheader.i.new ], [ %indvars.iv.next180.i.1, %.lr.ph149.i ] ; 4 uses
-  %niter123 = phi i64 [ 0, %.lr.ph149.preheader.i.new ], [ %niter123.next.1, %.lr.ph149.i ]
+.lr.ph149.i:                                      ; preds = %.lr.ph149.i, %.lr.ph149.preheader.i
+  %indvars.iv179.i = phi i64 [ 0, %.lr.ph149.preheader.i ], [ %indvars.iv.next180.i.1, %.lr.ph149.i ] ; 4 uses
+  %niter123 = phi i64 [ 0, %.lr.ph149.preheader.i ], [ %niter123.next.1, %.lr.ph149.i ]
   %i.pz = trunc nuw i64 %indvars.iv179.i to i32
   %i.qa = add i32 %.293.i, %i.pz
   %i.qb = urem i32 %i.qa, %3
@@ -638,7 +627,7 @@ bb.ak:                                            ; preds = %bb.ak, %.lr.ph141.i
   %i.qr = load i32, ptr %i.qq, align 4, !tbaa !9
   %i.qs = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.next180.i
   store i32 %i.qr, ptr %i.qs, align 4, !tbaa !9
-  %indvars.iv.next180.i.1 = add nuw nsw i64 %indvars.iv179.i, 2 ; 2 uses
+  %indvars.iv.next180.i.1 = add nuw nsw i64 %indvars.iv179.i, 2 ; 3 uses
   %niter123.next.1 = add i64 %niter123, 2         ; 2 uses
   %niter123.ncmp.1 = icmp eq i64 %niter123.next.1, %unroll_iter122
   br i1 %niter123.ncmp.1, label %PaletteSortModifiedZeng.exit.loopexit.unr-lcssa, label %.lr.ph149.i, !llvm.loop !38
@@ -647,11 +636,10 @@ PaletteSortModifiedZeng.exit.loopexit.unr-lcssa:  ; preds = %.lr.ph149.i
   %lcmp.mod120.not = icmp eq i64 %xtraiter119, 0
   br i1 %lcmp.mod120.not, label %PaletteSortModifiedZeng.exit, label %.lr.ph149.i.epil.preheader
 
-.lr.ph149.i.epil.preheader:                       ; preds = %PaletteSortModifiedZeng.exit.loopexit.unr-lcssa, %.lr.ph149.preheader.i
-  %indvars.iv179.i.epil.init = phi i64 [ 0, %.lr.ph149.preheader.i ], [ %indvars.iv.next180.i.1, %PaletteSortModifiedZeng.exit.loopexit.unr-lcssa ] ; 2 uses
+.lr.ph149.i.epil.preheader:                       ; preds = %PaletteSortModifiedZeng.exit.loopexit.unr-lcssa
   %lcmp.mod121 = trunc i32 %3 to i1
   call void @llvm.assume(i1 %lcmp.mod121)
-  %i.qt = trunc nuw i64 %indvars.iv179.i.epil.init to i32
+  %i.qt = trunc nuw i64 %indvars.iv.next180.i.1 to i32
   %i.qu = add i32 %.293.i, %i.qt
   %i.qv = urem i32 %i.qu, %3
   %i.qw = zext i32 %i.qv to i64
@@ -660,7 +648,7 @@ PaletteSortModifiedZeng.exit.loopexit.unr-lcssa:  ; preds = %.lr.ph149.i
   %i.qz = zext i8 %i.qy to i64
   %i.ra = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.qz
   %i.rb = load i32, ptr %i.ra, align 4, !tbaa !9
-  %i.rc = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv179.i.epil.init
+  %i.rc = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.next180.i.1
   store i32 %i.rb, ptr %i.rc, align 4, !tbaa !9
   br label %PaletteSortModifiedZeng.exit
 

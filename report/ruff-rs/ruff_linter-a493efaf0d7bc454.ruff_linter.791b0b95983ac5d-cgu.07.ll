@@ -204,17 +204,16 @@ _RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruf
   br i1 %i.ab, label %.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit11.thread.i
-  %i.ac = add i64 %.lcssa10, -1                   ; 4 uses
+  %i.ac = add i64 %.lcssa10, -1                   ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 104 ; 2 uses
-  %1 = icmp eq i64 %i.ac, 0
-  br i1 %1, label %.loopexit, label %.lr.ph34
+  br label %.lr.ph34
 
 bb.i:                                             ; preds = %.lr.ph34
   %i.ae = icmp eq i64 %i.ag, %i.ac
   br i1 %i.ae, label %.loopexit, label %.lr.ph34
 
 .lr.ph34:                                         ; preds = %bb.h, %bb.i
-  %.sroa.0.0.i.i.i.i.i.i.i.i33 = phi i64 [ %i.ag, %bb.i ], [ 0, %bb.h ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i.i.i33 = phi i64 [ 0, %bb.h ], [ %i.ag, %bb.i ] ; 2 uses
   %i.af = getelementptr inbounds nuw [88 x i8], ptr %i.ad, i64 %.sroa.0.0.i.i.i.i.i.i.i.i33
   %i.ag = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i.i.i.i33, 1 ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(88) %i.af)
@@ -271,7 +270,7 @@ bb.o:                                             ; preds = %.body
   invoke void @_RINvCsaSrGj5dYoxL_8thin_vec18drop_non_singletonNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtEBN_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.e)
           to label %.noexc unwind label %bb.p
 
-.loopexit:                                        ; preds = %bb.m, %bb.i, %bb.h, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit11.thread.i, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i
+.loopexit:                                        ; preds = %bb.m, %bb.i, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit11.thread.i, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2304
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !2304
   %.sroa.0.0.copyload = load i64, ptr %i.e, align 8

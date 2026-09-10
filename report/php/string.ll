@@ -205,6 +205,7 @@ zend_parse_arg_long_ex.exit:                      ; preds = %bb.c
   br i1 %i.j, label %bb.d, label %bb.e, !prof !37
 
 bb.d:                                             ; preds = %zend_parse_arg_long_ex.exit.thread, %zend_parse_arg_long_ex.exit
+  %2 = add i32 %i.c, -1                           ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.m = load i32, ptr %i.l, align 8, !tbaa !32
@@ -220,8 +221,7 @@ bb.e:                                             ; preds = %bb.b, %bb.d, %zend_
   br label %bb.w
 
 .critedge:                                        ; preds = %bb.d
-  %2 = add i32 %i.c, -1                           ; 2 uses
-  %i.o = zext i32 %2 to i64                       ; 3 uses
+  %i.o = zext i32 %2 to i64
   %i.p = shl nuw nsw i64 %i.o, 3                  ; 2 uses
   %i.q = icmp ugt i32 %2, 4096                    ; 2 uses
   br i1 %i.q, label %bb.f, label %bb.g, !prof !45
@@ -236,7 +236,13 @@ bb.g:                                             ; preds = %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.g, %bb.f
   %i.t = phi ptr [ %i.s, %bb.g ], [ %i.r, %bb.f ] ; 3 uses
+  %wide.trip.count = zext i32 %2 to i64
   br label %.lr.ph
+
+.lr.ph202.preheader:                              ; preds = %.critedge163
+  %umax211 = call i32 @llvm.umax.i32(i32 %2, i32 1)
+  %wide.trip.count212 = zext i32 %umax211 to i64
+  br label %.lr.ph202
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.critedge163
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.critedge163 ] ; 4 uses
@@ -274,11 +280,11 @@ zend_parse_arg_str_ex.exit:                       ; preds = %bb.h
 
 .critedge163:                                     ; preds = %zend_parse_arg_str_ex.exit.thread, %.lr.ph, %zend_parse_arg_str_ex.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.o
-  br i1 %exitcond.not, label %.lr.ph202, label %.lr.ph, !llvm.loop !284
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.lr.ph202.preheader, label %.lr.ph, !llvm.loop !284
 
-.lr.ph202:                                        ; preds = %.critedge163, %.loopexit
-  %indvars.iv210 = phi i64 [ %indvars.iv.next211, %.loopexit ], [ 0, %.critedge163 ] ; 3 uses
+.lr.ph202:                                        ; preds = %.lr.ph202.preheader, %.loopexit
+  %indvars.iv210 = phi i64 [ 0, %.lr.ph202.preheader ], [ %indvars.iv.next211, %.loopexit ] ; 3 uses
   %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %indvars.iv210 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !32
@@ -417,7 +423,7 @@ bb.u:                                             ; preds = %bb.t
 
 .loopexit:                                        ; preds = %.thread183, %bb.j, %bb.t
   %indvars.iv.next211 = add nuw nsw i64 %indvars.iv210, 1 ; 2 uses
-  %exitcond214.not = icmp eq i64 %indvars.iv.next211, %i.o
+  %exitcond214.not = icmp eq i64 %indvars.iv.next211, %wide.trip.count212
   br i1 %exitcond214.not, label %._crit_edge, label %.lr.ph202, !llvm.loop !286
 
 ._crit_edge:                                      ; preds = %.loopexit
@@ -818,6 +824,9 @@ declare i64 @llvm.smax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #23

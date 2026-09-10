@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %bb.am
   %i.du = icmp ne i32 %i.dp, 4
   call void @llvm.assume(i1 %i.du)
   %i.dv = add nsw i32 %i.dp, -2
-  %.inv3.i.i.i.i.i.i = icmp samesign ult i32 %i.dp, 2
+  %.inv3.i.i.i.i.i.i = icmp samesign ult i32 %i.dp, 2 ; 2 uses
   %narrow2.i.i.i.i.i.i = select i1 %.inv3.i.i.i.i.i.i, i32 2, i32 %i.dv
   %i.dw = icmp eq i32 %narrow.i.i.i.i.i.i, %narrow2.i.i.i.i.i.i
   br i1 %i.dw, label %bb.ao, label %_RNvXs47_NtNtCshMzyYDJGtjv_3api4grpc6qdrantNtB6_12VectorParamsNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i.i
@@ -343,6 +343,7 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %i.fz, label %bb.bz, label %_RNvXs47_NtNtCshMzyYDJGtjv_3api4grpc6qdrantNtB6_12VectorParamsNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i.i
 
 bb.bf:                                            ; preds = %bb.ao
+  call void @llvm.assume(i1 %.inv3.i.i.i.i.i.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !2520)
   call void @llvm.experimental.noalias.scope.decl(metadata !2521)
   %i.ga = getelementptr inbounds i8, ptr %i.l, i64 -16

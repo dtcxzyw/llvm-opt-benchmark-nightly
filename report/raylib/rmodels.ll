@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.b = mul nuw nsw i32 %1, 3                    ; 5 uses
-  %i.c = zext nneg i32 %i.b to i64                ; 12 uses
+  %i.c = zext nneg i32 %i.b to i64                ; 11 uses
   %i.d = mul nuw nsw i64 %i.c, 12                 ; 2 uses
   %i.e = tail call noalias ptr @malloc(i64 noundef %i.d) #56 ; 5 uses
   %i.f = uitofp nneg i32 %1 to float
@@ -281,12 +281,7 @@ middle.block:                                     ; preds = %vector.body
   %i.aq = tail call noalias ptr @malloc(i64 noundef %i.ai) #56 ; 4 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.aq, ptr %i.ar, align 8
-  %3 = add nsw i64 %i.c, -1                       ; 2 uses
   %xtraiter = and i64 %i.c, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %.epil.preheader, label %.loopexit.new
-
-.loopexit.new:                                    ; preds = %.loopexit
   %unroll_iter = and i64 %i.c, 2147483646
   br label %bb.b
 
@@ -300,9 +295,9 @@ scalar.ph:                                        ; preds = %middle.block, %scal
   %exitcond.not = icmp eq i64 %indvars.iv.next100, %i.c
   br i1 %exitcond.not, label %.loopexit, label %scalar.ph, !llvm.loop !188
 
-bb.b:                                             ; preds = %bb.b, %.loopexit.new
-  %indvars.iv105 = phi i64 [ 0, %.loopexit.new ], [ %indvars.iv.next106.1, %bb.b ] ; 4 uses
-  %niter = phi i64 [ 0, %.loopexit.new ], [ %niter.next.1, %bb.b ]
+bb.b:                                             ; preds = %bb.b, %.loopexit
+  %indvars.iv105 = phi i64 [ 0, %.loopexit ], [ %indvars.iv.next106.1, %bb.b ] ; 4 uses
+  %niter = phi i64 [ 0, %.loopexit ], [ %niter.next.1, %bb.b ]
   %i.at = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %indvars.iv105 ; 2 uses
   %.idx = mul nuw nsw i64 %indvars.iv105, 12
   %i.au = getelementptr inbounds nuw i8, ptr %i.aj, i64 %.idx ; 2 uses
@@ -322,7 +317,7 @@ bb.b:                                             ; preds = %bb.b, %.loopexit.ne
   %i.bd = load float, ptr %i.bc, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   store float %i.bd, ptr %i.be, align 4
-  %indvars.iv.next106.1 = add nuw nsw i64 %indvars.iv105, 2 ; 2 uses
+  %indvars.iv.next106.1 = add nuw nsw i64 %indvars.iv105, 2 ; 3 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %vector.ph125.unr-lcssa, label %bb.b
@@ -331,12 +326,11 @@ vector.ph125.unr-lcssa:                           ; preds = %bb.b
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vector.ph125, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %vector.ph125.unr-lcssa, %.loopexit
-  %indvars.iv105.epil.init = phi i64 [ 0, %.loopexit ], [ %indvars.iv.next106.1, %vector.ph125.unr-lcssa ] ; 2 uses
+.epil.preheader:                                  ; preds = %vector.ph125.unr-lcssa
   %lcmp.mod133 = trunc i32 %i.b to i1
   tail call void @llvm.assume(i1 %lcmp.mod133)
-  %i.bf = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %indvars.iv105.epil.init ; 2 uses
-  %.idx.epil = mul nuw nsw i64 %indvars.iv105.epil.init, 12
+  %i.bf = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %indvars.iv.next106.1 ; 2 uses
+  %.idx.epil = mul nuw nsw i64 %indvars.iv.next106.1, 12
   %i.bg = getelementptr inbounds nuw i8, ptr %i.aj, i64 %.idx.epil ; 2 uses
   %i.bh = load <2 x float>, ptr %i.bf, align 4
   store <2 x float> %i.bh, ptr %i.bg, align 4
@@ -369,10 +363,6 @@ middle.block130:                                  ; preds = %vector.body127
 
 .preheader.preheader:                             ; preds = %.preheader90, %middle.block130
   %xtraiter134 = and i64 %i.c, 1
-  %5 = icmp eq i64 %3, 0
-  br i1 %5, label %.preheader.epil.preheader, label %.preheader.preheader.new
-
-.preheader.preheader.new:                         ; preds = %.preheader.preheader
   %unroll_iter137 = and i64 %i.c, 2147483646
   br label %.preheader
 
@@ -389,12 +379,11 @@ middle.block130:                                  ; preds = %vector.body127
   %lcmp.mod135.not = icmp eq i64 %xtraiter134, 0
   br i1 %lcmp.mod135.not, label %bb.c, label %.preheader.epil.preheader
 
-.preheader.epil.preheader:                        ; preds = %.unr-lcssa, %.preheader.preheader
-  %indvars.iv115.epil.init = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next116.1, %.unr-lcssa ] ; 2 uses
+.preheader.epil.preheader:                        ; preds = %.unr-lcssa
   %lcmp.mod136 = trunc i32 %i.b to i1
   tail call void @llvm.assume(i1 %lcmp.mod136)
-  %i.bs = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %indvars.iv115.epil.init ; 2 uses
-  %.idx122.epil = mul nuw nsw i64 %indvars.iv115.epil.init, 12
+  %i.bs = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %indvars.iv.next116.1 ; 2 uses
+  %.idx122.epil = mul nuw nsw i64 %indvars.iv.next116.1, 12
   %i.bt = getelementptr inbounds nuw i8, ptr %i.aq, i64 %.idx122.epil ; 2 uses
   %i.bu = load <2 x float>, ptr %i.bs, align 4
   store <2 x float> %i.bu, ptr %i.bt, align 4
@@ -410,9 +399,9 @@ bb.c:                                             ; preds = %.unr-lcssa, %.prehe
   tail call void @UploadMesh(ptr noundef nonnull %0, i1 noundef zeroext false)
   br label %bb.d
 
-.preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
-  %indvars.iv115 = phi i64 [ 0, %.preheader.preheader.new ], [ %indvars.iv.next116.1, %.preheader ] ; 4 uses
-  %niter138 = phi i64 [ 0, %.preheader.preheader.new ], [ %niter138.next.1, %.preheader ]
+.preheader:                                       ; preds = %.preheader, %.preheader.preheader
+  %indvars.iv115 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next116.1, %.preheader ] ; 4 uses
+  %niter138 = phi i64 [ 0, %.preheader.preheader ], [ %niter138.next.1, %.preheader ]
   %i.by = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %indvars.iv115 ; 2 uses
   %.idx122 = mul nuw nsw i64 %indvars.iv115, 12
   %i.bz = getelementptr inbounds nuw i8, ptr %i.aq, i64 %.idx122 ; 2 uses
@@ -432,7 +421,7 @@ bb.c:                                             ; preds = %.unr-lcssa, %.prehe
   %i.ci = load float, ptr %i.ch, align 4
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
   store float %i.ci, ptr %i.cj, align 4
-  %indvars.iv.next116.1 = add nuw nsw i64 %indvars.iv115, 2 ; 2 uses
+  %indvars.iv.next116.1 = add nuw nsw i64 %indvars.iv115, 2 ; 3 uses
   %niter138.next.1 = add i64 %niter138, 2         ; 2 uses
   %niter138.ncmp.1 = icmp eq i64 %niter138.next.1, %unroll_iter137
   br i1 %niter138.ncmp.1, label %.unr-lcssa, label %.preheader

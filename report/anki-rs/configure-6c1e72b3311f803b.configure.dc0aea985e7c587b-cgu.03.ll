@@ -202,11 +202,10 @@ bb.ae:                                            ; preds = %bb.ad
   %i.fz = icmp samesign ult i64 %.pre.i, 10
   br i1 %i.fz, label %.lr.ph.i44.i.preheader, label %.preheader75.i53.i
 
-.preheader75.i53.i:                               ; preds = %bb.ag, %bb.ae
-  %.sroa.16.0.ph.i54.i = phi i64 [ %.pre.i, %bb.ag ], [ %i.fy, %bb.ae ] ; 2 uses
-  %.sroa.0.0.ph.i55.i = phi ptr [ %i.fv, %bb.ag ], [ %i.fx, %bb.ae ]
-  %.not69.i59.i96 = icmp eq i64 %.sroa.16.0.ph.i54.i, 0
-  br i1 %.not69.i59.i96, label %.loopexit.i49.i, label %.lr.ph
+.preheader75.i53.i:                               ; preds = %bb.ae, %bb.ag
+  %.sroa.0.0.ph.i55.i = phi ptr [ %i.fx, %bb.ae ], [ %i.fv, %bb.ag ]
+  %.sroa.16.0.i57.i98.ph = phi i64 [ %i.fy, %bb.ae ], [ %.pre.i, %bb.ag ]
+  br label %.lr.ph
 
 bb.af:                                            ; preds = %bb.aj
   %.not69.i59.i = icmp eq i64 %i.ge, 0
@@ -216,15 +215,15 @@ bb.ag:                                            ; preds = %bb.ad
   %i.ga = icmp samesign ult i64 %.pre.i, 9
   br i1 %i.ga, label %.lr.ph.i44.i.preheader, label %.preheader75.i53.i
 
-.loopexit.i49.i:                                  ; preds = %bb.af, %bb.ak, %.preheader75.i53.i
-  %.sroa.054.2.i50.i = phi i32 [ %i.gw, %bb.ak ], [ 0, %.preheader75.i53.i ], [ %i.go, %bb.af ]
+.loopexit.i49.i:                                  ; preds = %bb.af, %bb.ak
+  %.sroa.054.2.i50.i = phi i32 [ %i.gw, %bb.ak ], [ %i.go, %bb.af ]
   %i.gb = zext i32 %.sroa.054.2.i50.i to i64
   %i.gc = shl nuw i64 %i.gb, 32
   br label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h6edf09ea7f013b81E.exit64.i"
 
 .lr.ph:                                           ; preds = %.preheader75.i53.i, %bb.af
   %.sroa.0.0.i58.i99 = phi ptr [ %i.gd, %bb.af ], [ %.sroa.0.0.ph.i55.i, %.preheader75.i53.i ] ; 2 uses
-  %.sroa.16.0.i57.i98 = phi i64 [ %i.ge, %bb.af ], [ %.sroa.16.0.ph.i54.i, %.preheader75.i53.i ]
+  %.sroa.16.0.i57.i98 = phi i64 [ %i.ge, %bb.af ], [ %.sroa.16.0.i57.i98.ph, %.preheader75.i53.i ]
   %.sroa.054.0.i56.i97 = phi i32 [ %i.go, %bb.af ], [ 0, %.preheader75.i53.i ]
   %i.gd = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i58.i99, i64 1
   %i.ge = add nsw i64 %.sroa.16.0.i57.i98, -1     ; 2 uses

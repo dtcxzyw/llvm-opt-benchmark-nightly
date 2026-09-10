@@ -204,7 +204,7 @@ Vec_PtrGrow.exit12.sink.split.i332:               ; preds = %bb.bu, %bb.bv, %bb.
 Vec_PtrPush.exit336:                              ; preds = %.Vec_PtrPush.exit336_crit_edge, %bb.bs, %Vec_PtrGrow.exit12.sink.split.i332
   %i.kb = phi ptr [ %.pre472, %.Vec_PtrPush.exit336_crit_edge ], [ %.pre473, %bb.bs ], [ %storemerge, %Vec_PtrGrow.exit12.sink.split.i332 ]
   %i.kc = phi i32 [ %i.k, %.Vec_PtrPush.exit336_crit_edge ], [ %i.k, %bb.bs ], [ %spec.select.sink.i333, %Vec_PtrGrow.exit12.sink.split.i332 ]
-  %i.kd = add nuw nsw i32 %i.l, 1                 ; 6 uses
+  %i.kd = add nuw nsw i32 %i.l, 1                 ; 5 uses
   store i32 %i.kd, ptr %i.b, align 4, !tbaa !16
   %i.ke = zext nneg i32 %i.l to i64
   %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.kb, i64 %i.ke
@@ -513,7 +513,7 @@ bb.ch:                                            ; preds = %bb.ch, %.lr.ph.i.10
   %i.pg = getelementptr i8, ptr %i.pe, i64 4      ; 2 uses
   %.val221375.1 = load i32, ptr %i.pg, align 4, !tbaa !16
   %i.ph = icmp sgt i32 %.val221375.1, 0
-  br i1 %i.ph, label %.lr.ph377.1, label %.critedge12.1
+  br i1 %i.ph, label %.lr.ph377.1, label %bb.cj
 
 .lr.ph377.1:                                      ; preds = %.critedge12.loopexit
   %i.pi = getelementptr i8, ptr %i.pe, i64 8
@@ -529,13 +529,9 @@ bb.ci:                                            ; preds = %bb.ci, %.lr.ph377.1
   %.val221.1 = load i32, ptr %i.pg, align 4, !tbaa !16
   %i.pl = sext i32 %.val221.1 to i64
   %i.pm = icmp slt i64 %indvars.iv.next435.1, %i.pl
-  br i1 %i.pm, label %bb.ci, label %.critedge12.1, !llvm.loop !32
+  br i1 %i.pm, label %bb.ci, label %bb.cj, !llvm.loop !32
 
-.critedge12.1:                                    ; preds = %bb.ci, %.critedge12.loopexit
-  %exitcond440.1.not = icmp eq i32 %i.kd, 2
-  br i1 %exitcond440.1.not, label %.lr.ph382, label %bb.cj
-
-bb.cj:                                            ; preds = %.critedge12.1
+bb.cj:                                            ; preds = %bb.ci, %.critedge12.loopexit
   %i.pn = getelementptr inbounds nuw i8, ptr %.val230, i64 16
   %i.po = load ptr, ptr %i.pn, align 8, !tbaa !19 ; 2 uses
   %i.pp = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.6, i32 noundef 2) ; 0 uses
@@ -634,7 +630,7 @@ bb.cp:                                            ; preds = %.lr.ph377, %bb.cp
   %i.qv = icmp slt i64 %indvars.iv.next435, %i.qu
   br i1 %i.qv, label %bb.cp, label %.critedge12.loopexit, !llvm.loop !32
 
-.lr.ph382:                                        ; preds = %bb.co, %bb.cn, %.critedge12.3, %.critedge12.2, %.critedge12.1
+.lr.ph382:                                        ; preds = %bb.co, %bb.cn, %.critedge12.3, %.critedge12.2
   %.val228 = load ptr, ptr %i.d, align 8, !tbaa !18 ; 3 uses
   %wide.trip.count444 = zext nneg i32 %i.kd to i64
   br label %bb.cq

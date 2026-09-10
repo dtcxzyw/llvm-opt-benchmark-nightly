@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseISt4pairIN6hermes4inst6OpCodeEmESaIS4_EE11_M_allocateEm.exit.
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !187
   store i64 %i.fq, ptr %i.fo, align 8, !tbaa !188
   %i.fr = load ptr, ptr %.sroa.04.08.i.i.i.i.i.i, align 8, !tbaa !67 ; 2 uses
-  %.09.i.i.i.i.i.i.add = add nuw nsw i64 %.09.i.i.i.i.i.i.idx, 16 ; 4 uses
+  %.09.i.i.i.i.i.i.add = add nuw nsw i64 %.09.i.i.i.i.i.i.idx, 16 ; 3 uses
   %.not.i.i.i.i.i.i12 = icmp eq ptr %i.fr, null
   br i1 %.not.i.i.i.i.i.i12, label %_ZNSt6vectorISt4pairIN6hermes4inst6OpCodeEmESaIS4_EEC2INSt8__detail14_Node_iteratorIS0_IKS3_mELb0ELb1EEEvEET_SD_RKS5_.exit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !414
 
@@ -343,13 +343,9 @@ bb.av:                                            ; preds = %"_ZSt25__unguarded_
   %.sroa.09.021.i.add.i.i.i = add nuw nsw i64 %.sroa.09.021.i.idx.i.i.i, 16 ; 2 uses
   %.not.i.i.i.i14 = icmp eq i64 %.sroa.09.021.i.add.i.i.i, 256
   %indvar.next = add i64 %indvar, 1
-  br i1 %.not.i.i.i.i14, label %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_SH_T0_.exit.i.i.i", label %bb.at, !llvm.loop !418
+  br i1 %.not.i.i.i.i14, label %.lr.ph.i12.i.i.i.preheader, label %bb.at, !llvm.loop !418
 
-"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_SH_T0_.exit.i.i.i": ; preds = %bb.av
-  %.not6.i.i.i.i = icmp eq i64 %.09.i.i.i.i.i.i.add, 256
-  br i1 %.not6.i.i.i.i, label %.lr.ph.preheader, label %.lr.ph.i12.i.i.i.preheader
-
-.lr.ph.i12.i.i.i.preheader:                       ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_SH_T0_.exit.i.i.i"
+.lr.ph.i12.i.i.i.preheader:                       ; preds = %bb.av
   %i.hs = getelementptr inbounds nuw i8, ptr %i.fl, i64 256
   br label %.lr.ph.i12.i.i.i
 
@@ -389,7 +385,7 @@ bb.av:                                            ; preds = %"_ZSt25__unguarded_
   %.not19.i24.i.i.i = icmp samesign eq i64 %.09.i.i.i.i.i.i.idx, 0
   br i1 %.not19.i24.i.i.i, label %.lr.ph.preheader, label %.lr.ph.i25.i.i.i
 
-.lr.ph.preheader:                                 ; preds = %bb.az, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_T0_.exit.i14.i.i.i", %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_SH_T0_.exit.i.i.i", %.preheader.i22.i.i.i
+.lr.ph.preheader:                                 ; preds = %bb.az, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_T0_.exit.i14.i.i.i", %.preheader.i22.i.i.i
   br label %.lr.ph
 
 .lr.ph.i25.i.i.i:                                 ; preds = %.preheader.i22.i.i.i

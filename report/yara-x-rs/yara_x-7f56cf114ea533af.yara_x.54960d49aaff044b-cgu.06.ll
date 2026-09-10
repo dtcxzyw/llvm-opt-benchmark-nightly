@@ -205,7 +205,7 @@ bb.a:
   %i.f = icmp ne i64 %i.e, 4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = add nsw i64 %i.e, -2
-  %.inv5 = icmp samesign ult i64 %i.e, 2
+  %.inv5 = icmp samesign ult i64 %i.e, 2          ; 2 uses
   %i.h = select i1 %.inv5, i64 2, i64 %i.g
   %i.i = icmp eq i64 %i.d, %i.h
   br i1 %i.i, label %bb.b, label %_RNvXsS_NtCs2r1H4NiMXj9_12regex_syntax3hirNtB5_5ClassNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
@@ -213,7 +213,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   switch i64 %i.d, label %bb.c [
     i64 1, label %bb.d
-    i64 2, label %bb.f
+    i64 2, label %2
     i64 3, label %bb.l
     i64 4, label %bb.m
     i64 5, label %bb.s
@@ -222,12 +222,15 @@ bb.b:                                             ; preds = %bb.a
     i64 0, label %_RNvXsS_NtCs2r1H4NiMXj9_12regex_syntax3hirNtB5_5ClassNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
   ]
 
-_RNvXsS_NtCs2r1H4NiMXj9_12regex_syntax3hirNtB5_5ClassNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit: ; preds = %.split119, %bb.au, %_RNvYNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neCs7gfv9tzbXmh_6yara_x.exit11, %.lr.ph, %bb.ba, %bb.bj, %bb.bc, %bb.az, %bb.ax, %bb.aw, %bb.av, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bl, %.split.i15, %.split3.i14, %.split118, %bb.aa, %_RNvYNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neCs7gfv9tzbXmh_6yara_x.exit, %.lr.ph64, %bb.ag, %bb.ap, %bb.ai, %bb.af, %bb.ad, %bb.ac, %bb.ab, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ar, %.split.i, %.split3.i, %.lr.ph.i.i, %.lr.ph.i4.i, %bb.at, %bb.z, %bb.x, %bb.w, %bb.v, %bb.u, %bb.s, %.split17, %bb.r, %bb.q, %bb.p, %bb.n, %bb.m, %.split, %bb.k, %bb.j, %bb.i, %bb.h, %bb.f, %bb.as, %bb.y, %bb.d, %bb.b, %bb.a, %bb.e, %bb.l
-  %.sroa.0.0.shrunk = phi i1 [ %i.s, %bb.e ], [ true, %bb.b ], [ false, %bb.a ], [ false, %bb.as ], [ %i.bd, %bb.l ], [ false, %bb.s ], [ false, %.split ], [ false, %.split17 ], [ false, %bb.d ], [ false, %bb.v ], [ false, %bb.y ], [ false, %.split118 ], [ false, %bb.u ], [ false, %bb.w ], [ %i.cy, %bb.x ], [ false, %bb.q ], [ false, %bb.m ], [ false, %bb.n ], [ true, %bb.k ], [ false, %bb.i ], [ false, %bb.h ], [ false, %bb.f ], [ true, %bb.j ], [ %.sroa.0.0.i.not.i.not.i10.i, %.lr.ph.i4.i ], [ true, %bb.z ], [ false, %bb.p ], [ %i.cd, %bb.r ], [ true, %bb.at ], [ %.sroa.0.0.i.not.i.not.i.i, %.lr.ph.i.i ], [ false, %bb.ar ], [ false, %bb.aj ], [ false, %bb.ak ], [ false, %bb.al ], [ false, %bb.am ], [ false, %bb.an ], [ false, %bb.ao ], [ false, %bb.ab ], [ false, %bb.ac ], [ false, %bb.ad ], [ false, %bb.af ], [ false, %bb.ai ], [ false, %bb.ap ], [ false, %bb.ag ], [ false, %.lr.ph64 ], [ false, %_RNvYNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neCs7gfv9tzbXmh_6yara_x.exit ], [ false, %.split.i ], [ true, %bb.aa ], [ false, %.split3.i ], [ false, %bb.bg ], [ false, %.split3.i14 ], [ false, %bb.bh ], [ false, %bb.bi ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.ax ], [ false, %bb.az ], [ false, %bb.bc ], [ false, %bb.bj ], [ false, %bb.ba ], [ false, %.lr.ph ], [ false, %_RNvYNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neCs7gfv9tzbXmh_6yara_x.exit11 ], [ false, %bb.be ], [ false, %bb.bf ], [ true, %bb.au ], [ false, %bb.bl ], [ false, %.split119 ], [ false, %.split.i15 ], [ false, %bb.bd ]
+_RNvXsS_NtCs2r1H4NiMXj9_12regex_syntax3hirNtB5_5ClassNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit: ; preds = %.split119, %bb.au, %_RNvYNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neCs7gfv9tzbXmh_6yara_x.exit11, %.lr.ph, %bb.ba, %bb.bj, %bb.bc, %bb.az, %bb.ax, %bb.aw, %bb.av, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bl, %.split.i15, %.split3.i14, %.split118, %bb.aa, %_RNvYNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neCs7gfv9tzbXmh_6yara_x.exit, %.lr.ph64, %bb.ag, %bb.ap, %bb.ai, %bb.af, %bb.ad, %bb.ac, %bb.ab, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ar, %.split.i, %.split3.i, %.lr.ph.i.i, %.lr.ph.i4.i, %bb.at, %bb.z, %bb.x, %bb.w, %bb.v, %bb.u, %bb.s, %.split17, %bb.r, %bb.q, %bb.p, %bb.n, %bb.m, %.split, %bb.k, %bb.j, %bb.i, %bb.h, %bb.f, %bb.as, %bb.y, %bb.d, %bb.b, %2, %bb.a, %bb.e, %bb.l
+  %.sroa.0.0.shrunk = phi i1 [ %i.s, %bb.e ], [ true, %bb.b ], [ false, %bb.a ], [ false, %bb.as ], [ %i.bd, %bb.l ], [ false, %bb.s ], [ false, %.split ], [ false, %.split17 ], [ false, %bb.d ], [ false, %bb.v ], [ false, %bb.y ], [ false, %.split118 ], [ false, %bb.u ], [ false, %bb.w ], [ %i.cy, %bb.x ], [ false, %bb.q ], [ true, %2 ], [ false, %bb.m ], [ true, %bb.k ], [ false, %bb.i ], [ false, %bb.h ], [ false, %bb.f ], [ true, %bb.j ], [ %.sroa.0.0.i.not.i.not.i10.i, %.lr.ph.i4.i ], [ true, %bb.z ], [ false, %bb.n ], [ %i.cd, %bb.r ], [ false, %bb.p ], [ true, %bb.at ], [ %.sroa.0.0.i.not.i.not.i.i, %.lr.ph.i.i ], [ false, %bb.ar ], [ false, %bb.aj ], [ false, %bb.ak ], [ false, %bb.al ], [ false, %bb.am ], [ false, %bb.an ], [ false, %bb.ao ], [ false, %bb.ab ], [ false, %bb.ac ], [ false, %bb.ad ], [ false, %bb.af ], [ false, %bb.ai ], [ false, %bb.ap ], [ false, %bb.ag ], [ false, %.lr.ph64 ], [ false, %_RNvYNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neCs7gfv9tzbXmh_6yara_x.exit ], [ false, %.split.i ], [ true, %bb.aa ], [ false, %.split3.i ], [ false, %bb.bg ], [ false, %.split3.i14 ], [ false, %bb.bh ], [ false, %bb.bi ], [ false, %bb.av ], [ false, %bb.aw ], [ false, %bb.ax ], [ false, %bb.az ], [ false, %bb.bc ], [ false, %bb.bj ], [ false, %bb.ba ], [ false, %.lr.ph ], [ false, %_RNvYNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirNtNtCskKLDkoKarTP_4core3cmp9PartialEq2neCs7gfv9tzbXmh_6yara_x.exit11 ], [ false, %bb.be ], [ false, %bb.bf ], [ true, %bb.au ], [ false, %bb.bl ], [ false, %.split119 ], [ false, %.split.i15 ], [ false, %bb.bd ]
   ret i1 %.sroa.0.0.shrunk
 
 bb.c:                                             ; preds = %bb.b
   unreachable
+
+2:                                                ; preds = %bb.b
+  br i1 %.inv5, label %bb.f, label %_RNvXsS_NtCs2r1H4NiMXj9_12regex_syntax3hirNtB5_5ClassNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
 
 bb.d:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -246,7 +249,7 @@ bb.e:                                             ; preds = %bb.d
   %i.s = icmp eq i32 %bcmp, 0
   br label %_RNvXsS_NtCs2r1H4NiMXj9_12regex_syntax3hirNtB5_5ClassNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
 
-bb.f:                                             ; preds = %bb.b
+bb.f:                                             ; preds = %2
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7034)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7035)
   %i.t = icmp eq i64 %i.a, %i.e

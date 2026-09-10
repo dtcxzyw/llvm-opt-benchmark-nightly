@@ -52,7 +52,6 @@ bb.a:
 .preheader201.us.preheader.i:                     ; preds = %bb.a
   %i.e = zext nneg i32 %1 to i64                  ; 17 uses
   %i.f = shl nuw nsw i64 %i.e, 3                  ; 9 uses
-  %6 = add nsw i64 %i.e, -1                       ; 2 uses
   %xtraiter = and i64 %i.e, 7                     ; 3 uses
   %i.g = icmp ult i32 %1, 8
   br i1 %i.g, label %.preheader201.us.i.epil.preheader, label %.preheader201.us.preheader.i.new
@@ -192,7 +191,6 @@ bb.a:
   %i.au = add nsw i32 %1, -3                      ; 2 uses
   %i.av = add nsw i64 %i.e, -2
   %xtraiter82 = and i64 %i.e, 1
-  %7 = icmp eq i64 %6, 0
   %unroll_iter86 = and i64 %i.e, 2147483646
   %lcmp.mod84.not = icmp eq i64 %xtraiter82, 0
   %lcmp.mod85 = trunc i32 %1 to i1
@@ -223,11 +221,12 @@ bb.a:
   %indvars.iv256.i.us = phi i64 [ %indvars.iv.next257.i.us, %.loopexit196.i.us ], [ 0, %.preheader198.i.us ] ; 4 uses
   %indvars.iv249.i.us = phi i64 [ %indvars.iv.next250.i.us, %.loopexit196.i.us ], [ 1, %.preheader198.i.us ] ; 3 uses
   %.0172210.i.us = phi double [ %.lcssa, %.loopexit196.i.us ], [ 0.000000e+00, %.preheader198.i.us ] ; 2 uses
-  %8 = sub i64 %6, %indvars.iv256.i.us
+  %6 = xor i64 %indvars.iv256.i.us, -1
+  %7 = add nsw i64 %6, %i.e
   %i.aw = sub i64 %i.av, %indvars.iv256.i.us
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv256.i.us
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !11 ; 9 uses
-  %xtraiter65 = and i64 %8, 7                     ; 2 uses
+  %xtraiter65 = and i64 %7, 7                     ; 2 uses
   %lcmp.mod66.not = icmp eq i64 %xtraiter65, 0
   br i1 %lcmp.mod66.not, label %.prol.loopexit, label %.prol.preheader
 
@@ -630,13 +629,13 @@ scalar.ph39:                                      ; preds = %scalar.ph39.prol.lo
   %exitcond.3 = icmp eq i32 %1, %lftr.wideiv.3
   br i1 %exitcond.3, label %.preheader.i.us, label %scalar.ph39, !llvm.loop !39
 
-.preheader.i.us:                                  ; preds = %scalar.ph39.prol.loopexit, %scalar.ph39, %middle.block54, %.preheader194.i.us..preheader.i.us_crit_edge
+.preheader.i.us:                                  ; preds = %.preheader194.i.us..preheader.i.us_crit_edge, %middle.block54, %scalar.ph39, %scalar.ph39.prol.loopexit
   %.pre-phi = phi double [ %.pre8, %.preheader194.i.us..preheader.i.us_crit_edge ], [ %i.ig, %middle.block54 ], [ %i.ig, %scalar.ph39 ], [ %i.ig, %scalar.ph39.prol.loopexit ] ; 3 uses
-  br i1 %7, label %.epil.preheader81, label %.preheader.i.us.new
+  br label %.preheader.i.us.new
 
-.preheader.i.us.new:                              ; preds = %.preheader.i.us, %.preheader.i.us.new
-  %indvars.iv281.i.us = phi i64 [ %indvars.iv.next282.i.us.1, %.preheader.i.us.new ], [ 0, %.preheader.i.us ] ; 3 uses
-  %niter87 = phi i64 [ %niter87.next.1, %.preheader.i.us.new ], [ 0, %.preheader.i.us ]
+.preheader.i.us.new:                              ; preds = %.preheader.i.us.new, %.preheader.i.us
+  %indvars.iv281.i.us = phi i64 [ 0, %.preheader.i.us ], [ %indvars.iv.next282.i.us.1, %.preheader.i.us.new ] ; 3 uses
+  %niter87 = phi i64 [ 0, %.preheader.i.us ], [ %niter87.next.1, %.preheader.i.us.new ]
   %i.ky = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv281.i.us
   %i.kz = load ptr, ptr %i.ky, align 8, !tbaa !11 ; 2 uses
   %i.la = getelementptr inbounds nuw [8 x i8], ptr %i.kz, i64 %indvars.iv292.i.us ; 2 uses
@@ -793,10 +792,9 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge224.i.loopexit.us.unr-lcssa:           ; preds = %.preheader.i.us.new
   br i1 %lcmp.mod84.not, label %._crit_edge224.i.loopexit.us, label %.epil.preheader81
 
-.epil.preheader81:                                ; preds = %._crit_edge224.i.loopexit.us.unr-lcssa, %.preheader.i.us
-  %indvars.iv281.i.us.epil.init = phi i64 [ 0, %.preheader.i.us ], [ %indvars.iv.next282.i.us.1, %._crit_edge224.i.loopexit.us.unr-lcssa ]
+.epil.preheader81:                                ; preds = %._crit_edge224.i.loopexit.us.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod85)
-  %i.nk = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv281.i.us.epil.init
+  %i.nk = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next282.i.us.1
   %i.nl = load ptr, ptr %i.nk, align 8, !tbaa !11 ; 2 uses
   %i.nm = getelementptr inbounds nuw [8 x i8], ptr %i.nl, i64 %indvars.iv292.i.us ; 2 uses
   %i.nn = load double, ptr %i.nm, align 8, !tbaa !13 ; 3 uses
