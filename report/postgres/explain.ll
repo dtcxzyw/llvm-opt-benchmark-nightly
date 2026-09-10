@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.sink.split, %bb.d,
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @show_scan_io_usage(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.IOStats, align 8            ; 24 uses
+  %2 = alloca %struct.IOStats, align 8            ; 21 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
@@ -482,123 +482,61 @@ bb.n:                                             ; preds = %bb.e
   br i1 %.not59, label %bb.r, label %.preheader84
 
 .preheader84:                                     ; preds = %bb.n
-  %.promoted = load i64, ptr %2, align 8          ; 3 uses
-  %i.ew = load i32, ptr %i.ev, align 8            ; 3 uses
+  %.promoted = load i64, ptr %2, align 8          ; 2 uses
+  %i.ew = load i32, ptr %i.ev, align 8            ; 2 uses
   %i.ex = icmp sgt i32 %i.ew, 0
   br i1 %i.ex, label %AccumulateIOStats.exit71.lr.ph, label %.sink.split
 
 AccumulateIOStats.exit71.lr.ph:                   ; preds = %.preheader84
-  %i.ey = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 18 ; 2 uses
-  %i.ez = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.fa = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.fb = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %i.fc = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
-  %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
+  %i.ey = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
+  %i.ez = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.fa = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.fb = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
+  %i.fc = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ff = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
-  %.promoted87 = load i64, ptr %3, align 8        ; 2 uses
-  %.promoted89 = load i16, ptr %4, align 8        ; 2 uses
-  %.promoted91 = load i16, ptr %5, align 2        ; 2 uses
-  %.promoted93 = load i64, ptr %i.ez, align 8     ; 2 uses
-  %.promoted95 = load i64, ptr %i.fa, align 8     ; 2 uses
-  %.promoted97 = load i64, ptr %i.fb, align 8     ; 2 uses
-  %.promoted99 = load i64, ptr %i.fc, align 8     ; 2 uses
-  %6 = load ptr, ptr %i.fd, align 8
-  %7 = icmp eq ptr %6, null
-  br i1 %7, label %AccumulateIOStats.exit71.lr.ph.split.us, label %AccumulateIOStats.exit71
-
-AccumulateIOStats.exit71.lr.ph.split.us:          ; preds = %AccumulateIOStats.exit71.lr.ph
-  %wide.trip.count = zext nneg i32 %i.ew to i64
-  br label %AccumulateIOStats.exit71.us
-
-AccumulateIOStats.exit71.us:                      ; preds = %AccumulateIOStats.exit71.us, %AccumulateIOStats.exit71.lr.ph.split.us
-  %indvars.iv169 = phi i64 [ %indvars.iv.next170, %AccumulateIOStats.exit71.us ], [ 0, %AccumulateIOStats.exit71.lr.ph.split.us ] ; 2 uses
-  %8 = phi i64 [ %35, %AccumulateIOStats.exit71.us ], [ %.promoted99, %AccumulateIOStats.exit71.lr.ph.split.us ]
-  %9 = phi i64 [ %32, %AccumulateIOStats.exit71.us ], [ %.promoted97, %AccumulateIOStats.exit71.lr.ph.split.us ]
-  %10 = phi i64 [ %29, %AccumulateIOStats.exit71.us ], [ %.promoted95, %AccumulateIOStats.exit71.lr.ph.split.us ]
-  %11 = phi i64 [ %26, %AccumulateIOStats.exit71.us ], [ %.promoted93, %AccumulateIOStats.exit71.lr.ph.split.us ]
-  %spec.store.select8192.us = phi i16 [ %spec.store.select81.us, %AccumulateIOStats.exit71.us ], [ %.promoted91, %AccumulateIOStats.exit71.lr.ph.split.us ]
-  %spec.store.select7890.us = phi i16 [ %spec.store.select78.us, %AccumulateIOStats.exit71.us ], [ %.promoted89, %AccumulateIOStats.exit71.lr.ph.split.us ]
-  %12 = phi i64 [ %19, %AccumulateIOStats.exit71.us ], [ %.promoted87, %AccumulateIOStats.exit71.lr.ph.split.us ]
-  %13 = phi i64 [ %16, %AccumulateIOStats.exit71.us ], [ %.promoted, %AccumulateIOStats.exit71.lr.ph.split.us ]
-  %14 = getelementptr inbounds nuw [56 x i8], ptr %i.ey, i64 %indvars.iv169 ; 8 uses
-  %15 = load i64, ptr %14, align 8
-  %16 = add i64 %13, %15                          ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %18 = load i64, ptr %17, align 8
-  %19 = add i64 %12, %18                          ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %14, i64 16
-  %21 = load i16, ptr %20, align 8
-  %spec.store.select78.us = tail call i16 @llvm.smax.i16(i16 %21, i16 %spec.store.select7890.us) ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %14, i64 18
-  %23 = load i16, ptr %22, align 2
-  %spec.store.select81.us = tail call i16 @llvm.smax.i16(i16 %23, i16 %spec.store.select8192.us) ; 2 uses
-  %24 = getelementptr inbounds nuw i8, ptr %14, i64 24
-  %25 = load i64, ptr %24, align 8
-  %26 = add i64 %11, %25                          ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %14, i64 32
-  %28 = load i64, ptr %27, align 8
-  %29 = add i64 %10, %28                          ; 2 uses
-  %30 = getelementptr inbounds nuw i8, ptr %14, i64 40
-  %31 = load i64, ptr %30, align 8
-  %32 = add i64 %9, %31                           ; 2 uses
-  %33 = getelementptr inbounds nuw i8, ptr %14, i64 48
-  %34 = load i64, ptr %33, align 8
-  %35 = add i64 %8, %34                           ; 2 uses
-  %indvars.iv.next170 = add nuw nsw i64 %indvars.iv169, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next170, %wide.trip.count
-  br i1 %exitcond.not, label %..loopexit85_crit_edge, label %AccumulateIOStats.exit71.us, !llvm.loop !50
+  %.promoted97 = load i64, ptr %i.ez, align 8
+  %3 = load <2 x i16>, ptr %i.fa, align 8
+  %4 = load <2 x i64>, ptr %i.fb, align 8
+  %5 = load <2 x i64>, ptr %i.fc, align 8
+  br label %AccumulateIOStats.exit71
 
 AccumulateIOStats.exit71:                         ; preds = %AccumulateIOStats.exit71.lr.ph, %bb.q
-  %i.fg = phi i32 [ %i.gy, %bb.q ], [ %i.ew, %AccumulateIOStats.exit71.lr.ph ]
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %AccumulateIOStats.exit71.lr.ph ] ; 4 uses
-  %36 = phi i64 [ %51, %bb.q ], [ %.promoted99, %AccumulateIOStats.exit71.lr.ph ]
-  %i.fh = phi i64 [ %49, %bb.q ], [ %.promoted97, %AccumulateIOStats.exit71.lr.ph ]
-  %i.fi = phi i64 [ %47, %bb.q ], [ %.promoted95, %AccumulateIOStats.exit71.lr.ph ]
-  %i.fj = phi i64 [ %i.fp, %bb.q ], [ %.promoted93, %AccumulateIOStats.exit71.lr.ph ]
-  %spec.store.select8192 = phi i16 [ %spec.store.select81, %bb.q ], [ %.promoted91, %AccumulateIOStats.exit71.lr.ph ]
-  %spec.store.select7890 = phi i16 [ %spec.store.select78, %bb.q ], [ %.promoted89, %AccumulateIOStats.exit71.lr.ph ]
-  %37 = phi i64 [ %i.fm, %bb.q ], [ %.promoted87, %AccumulateIOStats.exit71.lr.ph ]
-  %38 = phi i64 [ %40, %bb.q ], [ %.promoted, %AccumulateIOStats.exit71.lr.ph ]
-  %i.fk = getelementptr inbounds nuw [56 x i8], ptr %i.ey, i64 %indvars.iv ; 9 uses
-  %39 = load i64, ptr %i.fk, align 8
-  %40 = add i64 %38, %39                          ; 2 uses
-  %41 = getelementptr inbounds nuw i8, ptr %i.fk, i64 8
-  %i.fl = load i64, ptr %41, align 8
-  %i.fm = add i64 %37, %i.fl                      ; 2 uses
-  %42 = getelementptr inbounds nuw i8, ptr %i.fk, i64 16
-  %43 = load i16, ptr %42, align 8
-  %spec.store.select78 = tail call i16 @llvm.smax.i16(i16 %43, i16 %spec.store.select7890) ; 2 uses
-  %44 = getelementptr inbounds nuw i8, ptr %i.fk, i64 18
-  %45 = load i16, ptr %44, align 2
-  %spec.store.select81 = tail call i16 @llvm.smax.i16(i16 %45, i16 %spec.store.select8192) ; 2 uses
-  %i.fn = getelementptr inbounds nuw i8, ptr %i.fk, i64 24
+  %i.fg = phi i32 [ %i.ew, %AccumulateIOStats.exit71.lr.ph ], [ %i.gy, %bb.q ]
+  %i.fh = phi i64 [ 0, %AccumulateIOStats.exit71.lr.ph ], [ %indvars.iv.next, %bb.q ] ; 4 uses
+  %i.fi = phi i64 [ %.promoted97, %AccumulateIOStats.exit71.lr.ph ], [ %i.fp, %bb.q ]
+  %i.fj = phi i64 [ %.promoted, %AccumulateIOStats.exit71.lr.ph ], [ %i.fm, %bb.q ]
+  %6 = phi <2 x i16> [ %3, %AccumulateIOStats.exit71.lr.ph ], [ %10, %bb.q ]
+  %7 = phi <2 x i64> [ %4, %AccumulateIOStats.exit71.lr.ph ], [ %12, %bb.q ]
+  %8 = phi <2 x i64> [ %5, %AccumulateIOStats.exit71.lr.ph ], [ %14, %bb.q ]
+  %i.fk = getelementptr inbounds nuw [56 x i8], ptr %i.ey, i64 %i.fh ; 6 uses
+  %i.fl = load i64, ptr %i.fk, align 8
+  %i.fm = add i64 %i.fj, %i.fl                    ; 2 uses
+  %i.fn = getelementptr inbounds nuw i8, ptr %i.fk, i64 8
   %i.fo = load i64, ptr %i.fn, align 8
-  %i.fp = add i64 %i.fj, %i.fo                    ; 2 uses
-  %i.fq = getelementptr inbounds nuw i8, ptr %i.fk, i64 32
-  %46 = load i64, ptr %i.fq, align 8
-  %47 = add i64 %i.fi, %46                        ; 2 uses
-  %i.fr = getelementptr inbounds nuw i8, ptr %i.fk, i64 40
-  %48 = load i64, ptr %i.fr, align 8
-  %49 = add i64 %i.fh, %48                        ; 2 uses
-  %i.fs = getelementptr inbounds nuw i8, ptr %i.fk, i64 48
-  %50 = load i64, ptr %i.fs, align 8
-  %51 = add i64 %36, %50                          ; 2 uses
+  %i.fp = add i64 %i.fi, %i.fo                    ; 2 uses
+  %i.fq = getelementptr inbounds nuw i8, ptr %i.fk, i64 16
+  %9 = load <2 x i16>, ptr %i.fq, align 8
+  %10 = tail call <2 x i16> @llvm.smax.v2i16(<2 x i16> %9, <2 x i16> %6) ; 2 uses
+  %i.fr = getelementptr inbounds nuw i8, ptr %i.fk, i64 24
+  %11 = load <2 x i64>, ptr %i.fr, align 8
+  %12 = add <2 x i64> %7, %11                     ; 2 uses
+  %i.fs = getelementptr inbounds nuw i8, ptr %i.fk, i64 40
+  %13 = load <2 x i64>, ptr %i.fs, align 8
+  %14 = add <2 x i64> %8, %13                     ; 2 uses
   %i.ft = load ptr, ptr %i.fd, align 8
   %.not60 = icmp eq ptr %i.ft, null
   br i1 %.not60, label %bb.q, label %bb.o
 
 bb.o:                                             ; preds = %AccumulateIOStats.exit71
-  %i.fu = trunc nuw nsw i64 %indvars.iv to i32
+  %i.fu = trunc nuw nsw i64 %i.fh to i32
   tail call fastcc void @ExplainOpenWorker(i32 noundef %i.fu, ptr noundef nonnull %1)
   tail call fastcc void @print_io_usage(ptr noundef nonnull %1, ptr noundef %i.fk)
   %i.fv = load ptr, ptr %i.fd, align 8            ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 24
   %i.fx = load ptr, ptr %i.fw, align 8
-  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.fx, i64 %indvars.iv
+  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.fx, i64 %i.fh
   tail call void @ExplainSaveGroup(ptr noundef nonnull %1, i32 noundef 2, ptr noundef %i.fy) #6
   %i.fz = load i32, ptr %i.fe, align 8
   %i.ga = icmp eq i32 %i.fz, 0
@@ -650,10 +588,10 @@ ExplainCloseWorker.exit76:                        ; preds = %bb.o, %.critedge.i7
 
 bb.q:                                             ; preds = %AccumulateIOStats.exit71, %ExplainCloseWorker.exit76
   %i.gy = phi i32 [ %i.fg, %AccumulateIOStats.exit71 ], [ %.pre, %ExplainCloseWorker.exit76 ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %i.fh, 1     ; 2 uses
   %i.gz = sext i32 %i.gy to i64
   %i.ha = icmp slt i64 %indvars.iv.next, %i.gz
-  br i1 %i.ha, label %AccumulateIOStats.exit71, label %..loopexit85_crit_edge, !llvm.loop !51
+  br i1 %i.ha, label %AccumulateIOStats.exit71, label %..loopexit85_crit_edge, !llvm.loop !50
 
 ..loopexit_crit_edge:                             ; preds = %bb.i
   store i64 %i.ak, ptr %i.o, align 8
@@ -669,26 +607,15 @@ bb.q:                                             ; preds = %AccumulateIOStats.e
   store <2 x i64> %i.dl, ptr %i.ck, align 8
   br label %.sink.split
 
-..loopexit85_crit_edge:                           ; preds = %bb.q, %AccumulateIOStats.exit71.us
-  %.us-phi = phi i64 [ %35, %AccumulateIOStats.exit71.us ], [ %51, %bb.q ]
-  %.us-phi101 = phi i64 [ %32, %AccumulateIOStats.exit71.us ], [ %49, %bb.q ]
-  %.us-phi102 = phi i64 [ %29, %AccumulateIOStats.exit71.us ], [ %47, %bb.q ]
-  %.us-phi103 = phi i64 [ %26, %AccumulateIOStats.exit71.us ], [ %i.fp, %bb.q ]
-  %.us-phi104 = phi i16 [ %spec.store.select81.us, %AccumulateIOStats.exit71.us ], [ %spec.store.select81, %bb.q ]
-  %.us-phi105 = phi i16 [ %spec.store.select78.us, %AccumulateIOStats.exit71.us ], [ %spec.store.select78, %bb.q ]
-  %.us-phi106 = phi i64 [ %19, %AccumulateIOStats.exit71.us ], [ %i.fm, %bb.q ]
-  %.us-phi107 = phi i64 [ %16, %AccumulateIOStats.exit71.us ], [ %40, %bb.q ]
-  store i64 %.us-phi106, ptr %3, align 8
-  store i16 %.us-phi105, ptr %4, align 8
-  store i16 %.us-phi104, ptr %5, align 2
-  store i64 %.us-phi103, ptr %i.ez, align 8
-  store i64 %.us-phi102, ptr %i.fa, align 8
-  store i64 %.us-phi101, ptr %i.fb, align 8
-  store i64 %.us-phi, ptr %i.fc, align 8
+..loopexit85_crit_edge:                           ; preds = %bb.q
+  store i64 %i.fp, ptr %i.ez, align 8
+  store <2 x i16> %10, ptr %i.fa, align 8
+  store <2 x i64> %12, ptr %i.fb, align 8
+  store <2 x i64> %14, ptr %i.fc, align 8
   br label %.sink.split
 
 .sink.split:                                      ; preds = %.preheader84, %..loopexit85_crit_edge, %.preheader82, %..loopexit83_crit_edge, %.preheader, %..loopexit_crit_edge
-  %.lcssa.sink = phi i64 [ %.promoted108, %.preheader82 ], [ %.promoted126, %.preheader ], [ %i.ah, %..loopexit_crit_edge ], [ %i.cz, %..loopexit83_crit_edge ], [ %.us-phi107, %..loopexit85_crit_edge ], [ %.promoted, %.preheader84 ]
+  %.lcssa.sink = phi i64 [ %.promoted108, %.preheader82 ], [ %.promoted126, %.preheader ], [ %i.ah, %..loopexit_crit_edge ], [ %i.cz, %..loopexit83_crit_edge ], [ %i.fm, %..loopexit85_crit_edge ], [ %.promoted, %.preheader84 ]
   store i64 %.lcssa.sink, ptr %2, align 8
   br label %bb.r
 
@@ -918,7 +845,7 @@ bb.i:                                             ; preds = %bb.b, %bb.h
   %i.ah = load i32, ptr %i.a, align 4
   %i.ai = sext i32 %i.ah to i64
   %.not = icmp slt i64 %indvars.iv.next, %i.ai
-  br i1 %.not, label %bb.b, label %.critedge, !llvm.loop !53
+  br i1 %.not, label %bb.b, label %.critedge, !llvm.loop !51
 }
 
 declare ptr @list_delete_first(ptr noundef) local_unnamed_addr #2
@@ -1317,7 +1244,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.1.us = phi ptr [ %i.z, %bb.e ], [ %.03814.us, %bb.d ] ; 2 uses
   %indvars.iv.next36 = add nuw nsw i64 %indvars.iv35, 1 ; 2 uses
   %exitcond40.not = icmp eq i64 %indvars.iv.next36, %wide.trip.count39
-  br i1 %exitcond40.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !54
+  br i1 %exitcond40.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !52
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.t
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.t ], [ 0, %.lr.ph ] ; 6 uses
@@ -1449,7 +1376,7 @@ bb.t:                                             ; preds = %bb.s, %show_sortord
   %.1 = phi ptr [ %i.br, %bb.s ], [ %.03814, %show_sortorder_options.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count39
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !54
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !52
 
 ._crit_edge:                                      ; preds = %bb.t, %bb.f
   %.039.lcssa = phi ptr [ %i.x, %bb.f ], [ %i.bp, %bb.t ]
@@ -1710,7 +1637,7 @@ bb.e:                                             ; preds = %.peel.next
   tail call void @pfree(ptr noundef %i.ab) #6
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !55
+  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !53
 }
 
 declare ptr @get_window_frame_options_for_explain(i32 noundef, ptr noundef, ptr noundef, ptr noundef, i1 noundef zeroext) local_unnamed_addr #2
@@ -1956,9 +1883,6 @@ declare zeroext i1 @bms_is_member(i32 noundef, ptr noundef) local_unnamed_addr #
 declare void @llvm.assume(i1 noundef) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.smax.i16(i16, i16) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -2037,9 +1961,7 @@ attributes #11 = { cold nounwind }
 !48 = distinct !{!48, !9}
 !49 = distinct !{!49, !9}
 !50 = distinct !{!50, !9}
-!51 = distinct !{!51, !9, !52}
-!52 = !{!"llvm.loop.unswitch.partial.disable"}
-!53 = distinct !{!53, !9}
-!54 = distinct !{!54, !9}
-!55 = distinct !{!55, !9, !12}
+!51 = distinct !{!51, !9}
+!52 = distinct !{!52, !9}
+!53 = distinct !{!53, !9, !12}
 end_hunk_0

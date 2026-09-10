@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.not28.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %4 = call i64 @llvm.usub.sat.i64(i64 32, i64 %i.s)
+  %4 = sub nuw nsw i64 32, %i.s
   %i.u = call ptr @__memcpy_chk(ptr noundef nonnull %.2.i, ptr noundef nonnull %.224.i, i64 noundef 2, i64 noundef %4) #12, !alias.scope !22 ; 0 uses
   %i.v = getelementptr i8, ptr %.224.i, i64 2
   %i.w = getelementptr i8, ptr %.2.i, i64 2
@@ -300,9 +300,6 @@ declare i32 @crypto_verify_16(ptr noundef, ptr noundef) local_unnamed_addr #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.fshl.v2i64(<2 x i64>, <2 x i64>, <2 x i64>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10

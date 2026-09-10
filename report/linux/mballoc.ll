@@ -204,7 +204,7 @@ mb_buddy_adjust_border.exit.i:                    ; preds = %bb.ae, %mb_clear_bi
   br label %bb.af
 
 bb.af:                                            ; preds = %mb_buddy_adjust_border.exit.i, %.lr.ph.i134
-  %.161.i = phi i32 [ %.06078.i, %.lr.ph.i134 ], [ %.363.i, %mb_buddy_adjust_border.exit.i ] ; 5 uses
+  %.161.i = phi i32 [ %.06078.i, %.lr.ph.i134 ], [ %.363.i, %mb_buddy_adjust_border.exit.i ] ; 4 uses
   %i.gz = and i32 %.05879.i.in, 2
   %.not22.i = icmp eq i32 %i.gz, 0
   br i1 %.not22.i, label %.split15.i25.i, label %bb.ah
@@ -251,7 +251,7 @@ mb_buddy_adjust_border.exit35.i:                  ; preds = %bb.ag, %mb_clear_bi
   br label %bb.ah
 
 bb.ah:                                            ; preds = %mb_buddy_adjust_border.exit35.i, %bb.af
-  %.159.i = phi i32 [ %.3.i, %mb_buddy_adjust_border.exit35.i ], [ %.05879.i, %bb.af ] ; 4 uses
+  %.159.i = phi i32 [ %.3.i, %mb_buddy_adjust_border.exit35.i ], [ %.05879.i, %bb.af ] ; 5 uses
   %i.hw = icmp sgt i32 %.161.i, %.159.i
   br i1 %i.hw, label %mb_buddy_mark_free.exit, label %bb.ai
 
@@ -271,7 +271,7 @@ bb.ak:                                            ; preds = %bb.ai
   %i.ia = load i16, ptr %i.fv, align 8
   %i.ib = zext i16 %i.ia to i64
   %i.ic = icmp samesign ugt i64 %indvars.iv.i, %i.ib
-  br i1 %i.ic, label %mb_find_buddy.exit38.thread.i, label %mb_find_buddy.exit38.i
+  br i1 %i.ic, label %.lr.ph.i.i, label %mb_find_buddy.exit38.i
 
 mb_find_buddy.exit38.i:                           ; preds = %bb.ak
   %i.id = load ptr, ptr %i.c, align 8
@@ -284,14 +284,10 @@ mb_find_buddy.exit38.i:                           ; preds = %bb.ak
   %i.ij = zext i16 %i.ii to i64
   %i.ik = getelementptr i8, ptr %i.hy, i64 %i.ij  ; 2 uses
   %.not23.i = icmp eq ptr %i.ik, null
-  br i1 %.not23.i, label %mb_find_buddy.exit38.thread.i, label %.lr.ph.i134
+  br i1 %.not23.i, label %.lr.ph.i.i, label %.lr.ph.i134
 
-mb_find_buddy.exit38.thread.i:                    ; preds = %mb_find_buddy.exit38.i, %bb.ak
-  %4 = add i32 %.159.i, 1                         ; 3 uses
-  %5 = icmp slt i32 %.161.i, %4
-  br i1 %5, label %.lr.ph.i.i, label %mb_clear_bits.exit.i
-
-.lr.ph.i.i:                                       ; preds = %mb_find_buddy.exit38.thread.i
+.lr.ph.i.i:                                       ; preds = %bb.ak, %mb_find_buddy.exit38.i
+  %4 = add nsw i32 %.159.i, 1
   %i.il = ptrtoint ptr %.01781.i to i64           ; 2 uses
   %.tr.i.i.i39.i = trunc i64 %i.il to i32
   %i.im = shl i32 %.tr.i.i.i39.i, 3
@@ -318,17 +314,17 @@ bb.am:                                            ; preds = %bb.al
 
 .backedge.i.i:                                    ; preds = %bb.an, %bb.am
   %.sink.i.i = phi i32 [ 32, %bb.am ], [ 1, %bb.an ]
-  %i.ix = add i32 %.sink.i.i, %.015.i.i           ; 2 uses
-  %6 = icmp slt i32 %i.ix, %4
-  br i1 %6, label %bb.al, label %mb_clear_bits.exit.i, !llvm.loop !3
+  %i.ix = add nsw i32 %.sink.i.i, %.015.i.i       ; 2 uses
+  %.not96.i = icmp sgt i32 %i.ix, %.159.i
+  br i1 %.not96.i, label %mb_clear_bits.exit.i, label %bb.al, !llvm.loop !3
 
 bb.an:                                            ; preds = %bb.al
-  %i.iy = add i32 %.015.i.i, %i.in
+  %i.iy = add nsw i32 %.015.i.i, %i.in
   %i.iz = sext i32 %i.iy to i64
   tail call void asm sideeffect " btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.ip, i64 range(i64 -2147483648, 2147483648) %i.iz) #14, !srcloc !36
   br label %.backedge.i.i
 
-mb_clear_bits.exit.i:                             ; preds = %.backedge.i.i, %mb_find_buddy.exit38.thread.i
+mb_clear_bits.exit.i:                             ; preds = %.backedge.i.i
   %i.ja = load ptr, ptr %i.r, align 8
   %i.jb = getelementptr i8, ptr %i.ja, i64 88
   %i.jc = getelementptr [4 x i8], ptr %i.jb, i64 %indvars.iv.i ; 2 uses

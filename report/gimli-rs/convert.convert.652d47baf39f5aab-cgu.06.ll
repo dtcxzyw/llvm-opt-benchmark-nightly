@@ -204,7 +204,7 @@ bb.cx:                                            ; preds = %bb.cw
   %i.jf = icmp sgt i64 %.val.i41, -1
   call void @llvm.assume(i1 %i.jf)
   %i.jg = sub nsw i64 %.val.i41, %.val376.i
-  %i.jh = invoke range(i64 0, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer14write_udata_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(32) %i.du, i64 noundef %.val.i.i, i64 noundef %i.jg, i8 noundef range(i8 4, 9) %.sroa.4.0.extract.trunc.i)
+  %i.jh = invoke range(i64 0, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer14write_udata_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(32) %i.du, i64 noundef %.val.i.i, i64 noundef %i.jg, i8 noundef range(i8 4, 9) %.sroa.4.0.extract.trunc.i)
           to label %_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer23write_initial_length_atCs8GyQQEoxZtT_7convert.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !119 ; 2 uses
 
 _RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer23write_initial_length_atCs8GyQQEoxZtT_7convert.exit.i: ; preds = %._crit_edge37.i
@@ -607,7 +607,7 @@ _RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13R
   %i.hn = icmp sgt i64 %.val.i41, -1
   call void @llvm.assume(i1 %i.hn)
   %i.ho = sub nsw i64 %.val.i41, %.val268.i
-  %i.hp = invoke range(i64 0, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer14write_udata_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(32) %i.db, i64 noundef %.val.i.i, i64 noundef %i.ho, i8 noundef range(i8 4, 9) %.sroa.4.0.extract.trunc.i)
+  %i.hp = invoke range(i64 0, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer14write_udata_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(32) %i.db, i64 noundef %.val.i.i, i64 noundef %i.ho, i8 noundef range(i8 4, 9) %.sroa.4.0.extract.trunc.i)
           to label %_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer23write_initial_length_atCs8GyQQEoxZtT_7convert.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !255 ; 2 uses
 
 _RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer23write_initial_length_atCs8GyQQEoxZtT_7convert.exit.i: ; preds = %._crit_edge34.i
@@ -1010,7 +1010,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 3, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer11write_sdataCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i64 noundef %1, i8 noundef %2) unnamed_addr #0 {
+define hidden range(i64 3, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer11write_sdataCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i64 noundef %1, i8 noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 5 uses
@@ -1163,7 +1163,7 @@ bb.j:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 3, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer11write_udataCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i64 noundef %1, i8 noundef %2) unnamed_addr #0 {
+define hidden range(i64 3, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer11write_udataCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i64 noundef %1, i8 noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 5 uses
@@ -1345,14 +1345,14 @@ bb.l:                                             ; preds = %bb.f
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 3, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer12write_offsetCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i64 noundef %1, i8 noundef range(i8 0, 25) %2, i8 noundef %3) unnamed_addr #0 {
+define hidden range(i64 3, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer12write_offsetCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(32) %0, i64 noundef %1, i8 noundef range(i8 0, 25) %2, i8 noundef %3) unnamed_addr #0 {
 bb.a:
   %i.a = tail call i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer11write_udataCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, i8 noundef %3)
   ret i64 %i.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 3, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer13write_addressCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, i8 noundef %2) unnamed_addr #0 {
+define hidden range(i64 3, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer13write_addressCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef align 8 dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, i8 noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %1, align 8, !range !12, !noundef !5
   %i.b = trunc nuw i64 %i.a to i1
@@ -1722,7 +1722,7 @@ _RNvXs_NtNtCsi68uqYEhoRA_5gimli5write10endian_vecINtB4_9EndianVecNtNtB8_9endiani
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer14write_udata_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i64 noundef %2, i8 noundef %3) unnamed_addr #0 {
+define hidden range(i64 0, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer14write_udata_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i64 noundef %2, i8 noundef %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 5 uses
@@ -1963,7 +1963,7 @@ _RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13R
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer15write_offset_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i64 noundef %2, i8 noundef range(i8 0, 25) %3, i8 noundef %4) unnamed_addr #0 {
+define hidden range(i64 0, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer15write_offset_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i64 noundef %2, i8 noundef range(i8 0, 25) %3, i8 noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = tail call i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer14write_udata_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, i64 noundef %2, i8 noundef %4)
   ret i64 %i.a
@@ -2032,7 +2032,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, 65288) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer23write_initial_length_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i64 noundef %2, i8 noundef range(i8 4, 9) %3) unnamed_addr #0 {
+define hidden range(i64 0, 65285) i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer23write_initial_length_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0, i64 noundef %1, i64 noundef %2, i8 noundef range(i8 4, 9) %3) unnamed_addr #0 {
 bb.a:
   %i.a = tail call i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity13RunTimeEndianENtNtB7_6writer6Writer14write_udata_atCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, i64 noundef %2, i8 noundef %3)
   ret i64 %i.a

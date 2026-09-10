@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.036 = phi i64 [ %i.af, %bb.k ], [ %i.f, %bb.j ] ; 15 uses
+  %.036 = phi i64 [ %i.af, %bb.k ], [ %i.f, %bb.j ] ; 13 uses
   %i.ag = trunc i64 %.036 to i1
   br i1 %i.ag, label %bb.m, label %bb.z
 
@@ -450,7 +450,7 @@ rb_bigzero_p.exit:                                ; preds = %.preheader.i.i.i, %
   %i.dd = and i64 %i.ce, 31
   %i.de = icmp eq i64 %i.dd, 10
   %or.cond = and i1 %.not80, %i.de
-  br i1 %or.cond, label %bb.ab, label %bignorm.exit
+  br i1 %or.cond, label %bb.ab, label %bignorm.exit.thread
 
 bb.ab:                                            ; preds = %rb_bigzero_p.exit
   br i1 %.not.i.i, label %bb.ad, label %bb.ac
@@ -532,7 +532,7 @@ bb.ae:                                            ; preds = %.lr.ph.i.i
   %i.ee = getelementptr [4 x i8], ptr %.0.i26.i.i, i64 %indvars.iv.next40.i.i.epil
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !44
   %i.eg = zext i32 %i.ef to i64
-  %i.eh = or disjoint i64 %i.ed, %i.eg            ; 4 uses
+  %i.eh = or disjoint i64 %i.ed, %i.eg            ; 3 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %.02232.i.i
   br i1 %epil.iter.cmp.not, label %._crit_edge.i.i.epilog-lcssa, label %.lr.ph36.i.i.epil, !llvm.loop !411
@@ -547,29 +547,18 @@ bb.af:                                            ; preds = %._crit_edge.i.i.epi
   br i1 %i.ei, label %bb.ag, label %bb.ai
 
 bb.ag:                                            ; preds = %bb.af
-  %3 = shl nuw nsw i64 %i.eh, 1
-  %4 = or disjoint i64 %3, 1
-  br label %bignorm.exit
+  %3 = icmp eq i64 %i.eh, 1
+  br i1 %3, label %int_pow_tmp3.exit, label %bignorm.exit.thread
 
 bb.ah:                                            ; preds = %._crit_edge.i.i.epilog-lcssa
   %i.ek = icmp ult i64 %i.eh, 4611686018427387905
-  br i1 %i.ek, label %5, label %bb.ai
-
-5:                                                ; preds = %bb.ah
-  %.neg.i.i = mul nsw i64 %i.eh, -2
-  %6 = or disjoint i64 %.neg.i.i, 1
-  br label %bignorm.exit
+  br i1 %i.ek, label %bignorm.exit.thread, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.af, %.critedge.i.i
   tail call void @rb_big_resize(i64 noundef %.036, i64 noundef %.02232.i.i)
-  br label %bignorm.exit
+  br label %bignorm.exit.thread
 
-bignorm.exit:                                     ; preds = %rb_bigzero_p.exit, %bb.ag, %5, %bb.ai
-  %.0.i56 = phi i64 [ %.036, %rb_bigzero_p.exit ], [ %4, %bb.ag ], [ %6, %5 ], [ %.036, %bb.ai ]
-  %7 = icmp eq i64 %.0.i56, 3
-  br i1 %7, label %int_pow_tmp3.exit, label %bignorm.exit.thread
-
-bignorm.exit.thread:                              ; preds = %bb.ae, %BIGNUM_DIGITS.exit.i.i, %bignorm.exit
+bignorm.exit.thread:                              ; preds = %bb.ae, %rb_bigzero_p.exit, %bb.ai, %bb.ah, %BIGNUM_DIGITS.exit.i.i, %bb.ag
   %i.el = tail call i64 @rb_int_modulo(i64 noundef %2, i64 noundef %.036) #23 ; 2 uses
   br i1 %i.g, label %.preheader.i60, label %.lr.ph.i58
 
@@ -643,8 +632,8 @@ bb.ap:                                            ; preds = %bb.ao
   %i.fb = tail call i64 @rb_int_minus(i64 noundef %.2.lcssa.i65, i64 noundef %.036) #23
   br label %int_pow_tmp3.exit
 
-int_pow_tmp3.exit:                                ; preds = %bb.ap, %bb.ao, %bb.an, %._crit_edge.i, %bb.i, %bb.m, %int_pow_tmp2.exit, %int_pow_tmp1.exit, %bignorm.exit, %bb.c
-  %.2 = phi i64 [ %i.d, %bb.c ], [ 1, %bb.i ], [ %i.ah, %bb.m ], [ 1, %bignorm.exit ], [ %i.cc, %int_pow_tmp2.exit ], [ %i.bb, %int_pow_tmp1.exit ], [ %.2.lcssa.i65, %bb.ao ], [ %i.fb, %bb.ap ], [ %.2.lcssa.i65, %bb.an ], [ %.2.lcssa.i65, %._crit_edge.i ]
+int_pow_tmp3.exit:                                ; preds = %bb.ap, %bb.ao, %bb.an, %._crit_edge.i, %bb.i, %bb.m, %int_pow_tmp2.exit, %int_pow_tmp1.exit, %bb.ag, %bb.c
+  %.2 = phi i64 [ %i.d, %bb.c ], [ 1, %bb.i ], [ %i.ah, %bb.m ], [ 1, %bb.ag ], [ %i.cc, %int_pow_tmp2.exit ], [ %i.bb, %int_pow_tmp1.exit ], [ %.2.lcssa.i65, %bb.ao ], [ %i.fb, %bb.ap ], [ %.2.lcssa.i65, %bb.an ], [ %.2.lcssa.i65, %._crit_edge.i ]
   ret i64 %.2
 }
 

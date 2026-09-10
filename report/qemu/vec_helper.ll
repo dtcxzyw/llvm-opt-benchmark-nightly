@@ -205,7 +205,7 @@ bb.a:
   %sext14 = shl i32 %3, 16
   %i.e = ashr exact i32 %sext14, 1
   %i.f = or disjoint i32 %i.e, 16384
-  %i.g = sub i32 %i.f, %i.d
+  %i.g = sub nsw i32 %i.f, %i.d
   %i.h = ashr i32 %i.g, 15                        ; 3 uses
   %i.i = add nsw i32 %i.h, 32768
   %.not.i = icmp ult i32 %i.i, 65536

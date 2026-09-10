@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.p = tail call ptr @_PyCompile_InstrSequence(ptr noundef %0) #10
   %i.q = shl nsw i64 %i.n, 8
   %i.r = or disjoint i64 %i.q, %.03254.i
-  %i.s = trunc i64 %i.r to i32
+  %i.s = trunc nsw i64 %i.r to i32
   %i.t = tail call i32 @_PyInstructionSequence_Addop(ptr noundef %i.p, i32 noundef 118, i32 noundef %i.s, i64 %1, i64 %2) #10
   %i.u = icmp eq i32 %i.t, -1
   br i1 %i.u, label %codegen_pattern_unpack_helper.exit.thread, label %.thread60.i

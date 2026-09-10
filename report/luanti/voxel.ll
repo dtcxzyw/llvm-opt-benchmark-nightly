@@ -202,11 +202,12 @@ bb.a:
   %.02638 = phi i16 [ 0, %.preheader.preheader ], [ %i.af, %._crit_edge37 ]
   %i.z = sext i16 %indvars.iv to i32
   %i.aa = sext i16 %indvars.iv46 to i32
-  %6 = icmp sgt i16 %i.y, 0
-  %7 = load i16, ptr %5, align 2                  ; 3 uses
-  %i.ab = icmp sgt i16 %7, 0
-  %or.cond = select i1 %6, i1 %i.ab, i1 false
-  br i1 %or.cond, label %.lr.ph36.split, label %._crit_edge37
+  %i.ab = icmp sgt i16 %i.y, 0
+  br i1 %i.ab, label %.lr.ph36, label %._crit_edge37
+
+.lr.ph36:                                         ; preds = %.preheader
+  %.pre = load i16, ptr %5, align 2, !tbaa !45    ; 2 uses
+  br label %.lr.ph36.split
 
 ._crit_edge39:                                    ; preds = %._crit_edge37, %.preheader.lr.ph, %bb.a
   ret void
@@ -216,22 +217,22 @@ bb.a:
   br label %._crit_edge37
 
 ._crit_edge37:                                    ; preds = %._crit_edge37.loopexit, %.preheader
-  %i.ac = phi i16 [ %i.w, %.preheader ], [ %.pre53, %._crit_edge37.loopexit ] ; 2 uses
-  %i.ad = phi i16 [ %i.x, %.preheader ], [ %i.bt, %._crit_edge37.loopexit ]
-  %i.ae = phi i16 [ %i.y, %.preheader ], [ %i.bt, %._crit_edge37.loopexit ]
+  %i.ac = phi i16 [ %.pre53, %._crit_edge37.loopexit ], [ %i.w, %.preheader ] ; 2 uses
+  %i.ad = phi i16 [ %i.bt, %._crit_edge37.loopexit ], [ %i.x, %.preheader ]
+  %i.ae = phi i16 [ %i.bt, %._crit_edge37.loopexit ], [ %i.y, %.preheader ]
   %i.af = add nuw nsw i16 %.02638, 1              ; 2 uses
   %i.ag = icmp slt i16 %i.af, %i.ac
   %indvars.iv.next = add i16 %indvars.iv, 1
   %indvars.iv.next47 = add i16 %indvars.iv46, 1
   br i1 %i.ag, label %.preheader, label %._crit_edge39, !llvm.loop !139
 
-.lr.ph36.split:                                   ; preds = %.preheader, %._crit_edge
-  %i.ah = phi i16 [ %i.bt, %._crit_edge ], [ %i.x, %.preheader ]
-  %i.ai = phi i16 [ %i.bu, %._crit_edge ], [ %7, %.preheader ] ; 2 uses
-  %i.aj = phi i16 [ %i.bv, %._crit_edge ], [ %7, %.preheader ] ; 2 uses
-  %indvars.iv48 = phi i16 [ %indvars.iv.next49, %._crit_edge ], [ %.sroa.221.0.extract.trunc, %.preheader ] ; 2 uses
-  %indvars.iv42 = phi i16 [ %indvars.iv.next43, %._crit_edge ], [ %.sroa.2.0.extract.trunc, %.preheader ] ; 2 uses
-  %.02535 = phi i16 [ %i.bw, %._crit_edge ], [ 0, %.preheader ]
+.lr.ph36.split:                                   ; preds = %.lr.ph36, %._crit_edge
+  %i.ah = phi i16 [ %i.x, %.lr.ph36 ], [ %i.bt, %._crit_edge ]
+  %i.ai = phi i16 [ %.pre, %.lr.ph36 ], [ %i.bu, %._crit_edge ] ; 2 uses
+  %i.aj = phi i16 [ %.pre, %.lr.ph36 ], [ %i.bv, %._crit_edge ] ; 2 uses
+  %indvars.iv48 = phi i16 [ %.sroa.221.0.extract.trunc, %.lr.ph36 ], [ %indvars.iv.next49, %._crit_edge ] ; 2 uses
+  %indvars.iv42 = phi i16 [ %.sroa.2.0.extract.trunc, %.lr.ph36 ], [ %indvars.iv.next43, %._crit_edge ] ; 2 uses
+  %.02535 = phi i16 [ 0, %.lr.ph36 ], [ %i.bw, %._crit_edge ]
   %i.ak = icmp sgt i16 %i.aj, 0
   br i1 %i.ak, label %.lr.ph.preheader, label %._crit_edge
 
@@ -634,7 +635,7 @@ attributes #22 = { builtin allocsize(0) }
 !137 = !{!"llvm.loop.unroll.runtime.disable"}
 !138 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !139 = distinct !{!139, !30, !46}
-!140 = distinct !{!140, !30, !46}
+!140 = distinct !{!140, !30}
 !141 = distinct !{!141, !30}
 !142 = !{!"_ZTS7MapNode", !12, i64 0, !5, i64 2, !5, i64 3}
 !143 = !{!142, !12, i64 0}

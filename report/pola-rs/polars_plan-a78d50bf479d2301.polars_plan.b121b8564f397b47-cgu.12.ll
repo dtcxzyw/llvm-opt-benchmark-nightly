@@ -205,7 +205,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs2mZqlW55729_12polars_utils6pl
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i48 4295491584, 4307877888) i48 @_RNvMNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans5aexpr13function_expr7stringsNtB2_16IRStringFunction16function_options(ptr noalias noundef readonly align 16 captures(none) dereferenceable(96) %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !89209 {
+define range(i48 4295491585, 4307877635) i48 @_RNvMNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans5aexpr13function_expr7stringsNtB2_16IRStringFunction16function_options(ptr noalias noundef readonly align 16 captures(none) dereferenceable(96) %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !89209 {
 bb.a:
   %i.a = load i8, ptr %0, align 16, !dbg !89219, !range !2928, !noundef !2568
   switch i8 %i.a, label %default.unreachable244 [

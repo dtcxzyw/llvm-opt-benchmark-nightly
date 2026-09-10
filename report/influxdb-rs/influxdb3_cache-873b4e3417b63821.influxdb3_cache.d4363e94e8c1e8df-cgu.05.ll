@@ -204,7 +204,7 @@ _RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit: ; preds = %bb.w, 
   %i.du = getelementptr i8, ptr %i.dt, i64 -48
   %.val2.i = load ptr, ptr %i.du, align 8, !noalias !275, !nonnull !3, !noundef !3 ; 4 uses
   %i.dv = getelementptr i8, ptr %i.dt, i64 -40
-  %.val3.i = load i64, ptr %i.dv, align 8, !noalias !275, !noundef !3 ; 6 uses
+  %.val3.i = load i64, ptr %i.dv, align 8, !noalias !275, !noundef !3 ; 5 uses
   %i.dw = load ptr, ptr %.val.i, align 8, !noalias !275, !nonnull !3, !align !8, !noundef !3 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 24
   %.val.i.i17 = load i64, ptr %i.dx, align 8, !noalias !275, !noundef !3 ; 2 uses
@@ -214,7 +214,7 @@ _RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit: ; preds = %bb.w, 
   %i.ea = xor i64 %.val1.i.i18, 7237128888997146477 ; 2 uses
   %i.eb = xor i64 %.val.i.i17, 7816392313619706465 ; 2 uses
   %i.ec = xor i64 %.val1.i.i18, 8387220255154660723 ; 2 uses
-  %i.ed = and i64 %.val3.i, 7                     ; 6 uses
+  %i.ed = and i64 %.val3.i, 7                     ; 7 uses
   %i.ee = and i64 %.val3.i, -8                    ; 2 uses
   %.not = icmp eq i64 %i.ee, 0
   br i1 %.not, label %._crit_edge.i62, label %.lr.ph.i55
@@ -224,10 +224,10 @@ _RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit: ; preds = %bb.w, 
   br label %._crit_edge.i62
 
 ._crit_edge.i62:                                  ; preds = %._crit_edge.i62.loopexit, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit
-  %.sroa.32.4 = phi i64 [ %i.ec, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.fl, %._crit_edge.i62.loopexit ] ; 3 uses
-  %.sroa.22.4 = phi i64 [ %i.ea, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.fj, %._crit_edge.i62.loopexit ] ; 5 uses
-  %.sroa.12.4 = phi i64 [ %i.eb, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.fm, %._crit_edge.i62.loopexit ] ; 3 uses
-  %.sroa.071.4 = phi i64 [ %i.dz, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.fn, %._crit_edge.i62.loopexit ] ; 3 uses
+  %.sroa.32.4 = phi i64 [ %i.ec, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.fl, %._crit_edge.i62.loopexit ] ; 4 uses
+  %.sroa.22.4 = phi i64 [ %i.ea, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.fj, %._crit_edge.i62.loopexit ] ; 6 uses
+  %.sroa.12.4 = phi i64 [ %i.eb, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.fm, %._crit_edge.i62.loopexit ] ; 4 uses
+  %.sroa.071.4 = phi i64 [ %i.dz, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.fn, %._crit_edge.i62.loopexit ] ; 4 uses
   %.sroa.0.1.lcssa.i45 = phi i64 [ 0, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ], [ %i.ef, %._crit_edge.i62.loopexit ] ; 3 uses
   %i.eg = icmp samesign ugt i64 %i.ed, 3
   br i1 %i.eg, label %bb.m, label %bb.n
@@ -260,20 +260,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %.sroa.03.1.i13.i48 = phi i64 [ %i.er, %bb.o ], [ %.sroa.03.0.i11.i46, %bb.n ] ; 3 uses
   %.sroa.0.1.i14.i49 = phi i64 [ %i.eq, %bb.o ], [ %.sroa.0.0.i12.i47, %bb.n ] ; 2 uses
   %i.es = icmp samesign ult i64 %.sroa.03.1.i13.i48, %i.ed
-  br i1 %i.es, label %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.thread, label %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a
-
-_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.thread: ; preds = %bb.p
-  %4 = add i64 %.sroa.03.1.i13.i48, %.sroa.0.1.lcssa.i45 ; 2 uses
-  %5 = icmp ult i64 %4, %.val3.i
-  call void @llvm.assume(i1 %5), !noalias !275
-  %6 = getelementptr inbounds nuw i8, ptr %.val2.i, i64 %4
-  %7 = load i8, ptr %6, align 1, !alias.scope !276, !noalias !277, !noundef !3
-  %8 = zext i8 %7 to i64
-  %9 = shl nuw nsw i64 %.sroa.03.1.i13.i48, 3
-  %10 = shl nuw nsw i64 %8, %9
-  %11 = or i64 %10, %.sroa.0.1.i14.i49
-  %12 = add i64 %.val3.i, 1
-  br label %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i
+  br i1 %i.es, label %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i, label %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64
 
 .lr.ph.i55:                                       ; preds = %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit, %.lr.ph.i55
   %i.et = phi i64 [ %i.fm, %.lr.ph.i55 ], [ %i.eb, %_RNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes.exit ]
@@ -303,17 +290,29 @@ _RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Ha
   %i.fp = icmp ult i64 %i.fo, %i.ee
   br i1 %i.fp, label %.lr.ph.i55, label %._crit_edge.i62.loopexit
 
-_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a: ; preds = %bb.p
-  %13 = add i64 %.val3.i, 1                       ; 2 uses
-  %14 = icmp eq i64 %i.ed, 0
-  br i1 %14, label %bb.r, label %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i
+_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64: ; preds = %bb.p
+  %4 = icmp eq i64 %i.ed, 0
+  br i1 %4, label %bb.r, label %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a
 
-_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i: ; preds = %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.thread
-  %15 = phi i64 [ %12, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.thread ], [ %13, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ] ; 2 uses
-  %.sroa.0.2.i15.i5198 = phi i64 [ %11, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.thread ], [ %.sroa.0.1.i14.i49, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ]
+_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a: ; preds = %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64
+  %5 = shl nuw nsw i64 %i.ed, 3
+  %6 = shl nuw nsw i64 255, %5
+  %7 = or i64 %6, %.sroa.0.1.i14.i49
+  br label %bb.r
+
+_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i: ; preds = %bb.p
+  %8 = add i64 %.sroa.03.1.i13.i48, %.sroa.0.1.lcssa.i45 ; 2 uses
+  %9 = icmp ult i64 %8, %.val3.i
+  call void @llvm.assume(i1 %9), !noalias !275
+  %10 = getelementptr inbounds nuw i8, ptr %.val2.i, i64 %8
+  %11 = load i8, ptr %10, align 1, !alias.scope !276, !noalias !277, !noundef !3
+  %12 = zext i8 %11 to i64
+  %13 = shl nuw nsw i64 %.sroa.03.1.i13.i48, 3
+  %14 = shl nuw nsw i64 %12, %13
   %i.fq = shl nuw nsw i64 %i.ed, 3
   %i.fr = shl nuw i64 255, %i.fq
-  %i.fs = or i64 %i.fr, %.sroa.0.2.i15.i5198      ; 3 uses
+  %15 = or i64 %14, %i.fr
+  %i.fs = or i64 %15, %.sroa.0.1.i14.i49          ; 3 uses
   %.not99 = icmp eq i64 %i.ed, 7
   br i1 %.not99, label %.thread, label %bb.r
 
@@ -342,14 +341,14 @@ bb.q:                                             ; preds = %bb.w
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsc96bKABWO34_9hashbrown10scopeguard10ScopeGuardQNtNtNtBG_3raw5inner13RawTableInnerNCNvMsa_B1v_B1t_15rehash_in_place0EECsidB8gjke19X_15influxdb3_cache(ptr noalias noundef align 8 dereferenceable(24) %i.a) #25
           to label %bb.z unwind label %bb.y, !noalias !260
 
-bb.r:                                             ; preds = %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a, %.thread, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i
-  %16 = phi i64 [ %15, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %15, %.thread ], [ %13, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ]
-  %.sroa.50.0 = phi i64 [ %i.fs, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ 0, %.thread ], [ 255, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ]
-  %.sroa.32.2 = phi i64 [ %.sroa.32.4, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %i.gg, %.thread ], [ %.sroa.32.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ]
-  %.sroa.22.2 = phi i64 [ %.sroa.22.4, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %i.ge, %.thread ], [ %.sroa.22.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ] ; 3 uses
-  %.sroa.12.2 = phi i64 [ %.sroa.12.4, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %i.gh, %.thread ], [ %.sroa.12.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ]
-  %.sroa.071.2 = phi i64 [ %.sroa.071.4, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %i.gi, %.thread ], [ %.sroa.071.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ]
-  %17 = shl i64 %16, 56
+bb.r:                                             ; preds = %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64, %.thread, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i
+  %.sroa.50.0 = phi i64 [ %i.fs, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %7, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ], [ 0, %.thread ], [ 255, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64 ]
+  %.sroa.32.2 = phi i64 [ %.sroa.32.4, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %.sroa.32.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ], [ %i.gg, %.thread ], [ %.sroa.32.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64 ]
+  %.sroa.22.2 = phi i64 [ %.sroa.22.4, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %.sroa.22.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ], [ %i.ge, %.thread ], [ %.sroa.22.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64 ] ; 3 uses
+  %.sroa.12.2 = phi i64 [ %.sroa.12.4, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %.sroa.12.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ], [ %i.gh, %.thread ], [ %.sroa.12.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64 ]
+  %.sroa.071.2 = phi i64 [ %.sroa.071.4, %_RNvNtNtCs4NRVxsYgnAr_4core4hash3sip9u8to64_le.exit.i ], [ %.sroa.071.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64.a ], [ %i.gi, %.thread ], [ %.sroa.071.4, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsidB8gjke19X_15influxdb3_cache.exit64 ]
+  %16 = shl i64 %.val3.i, 56
+  %17 = add i64 %16, 72057594037927936
   %i.gk = or i64 %17, %.sroa.50.0                 ; 2 uses
   %i.gl = xor i64 %i.gk, %.sroa.32.2              ; 3 uses
   %i.gm = add i64 %.sroa.071.2, %.sroa.22.2       ; 3 uses

@@ -205,26 +205,22 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.m = load ptr, ptr %i.h, align 8, !tbaa !379, !nonnull !37, !align !120
+  %i.m = load ptr, ptr %i.e, align 8, !tbaa !379
   %i.n = load i32, ptr %i.m, align 4, !tbaa !18   ; 3 uses
-  %2 = icmp sgt i32 %i.n, 0
-  br i1 %2, label %.lr.ph.split.preheader, label %._crit_edge51
-
-.lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %.pre = load ptr, ptr %i.e, align 8, !tbaa !380
-  %.pre55 = load i32, ptr %.pre, align 4, !tbaa !18 ; 3 uses
+  %.pre55 = load ptr, ptr %i.h, align 8, !tbaa !380
+  %.pre56 = load i32, ptr %.pre55, align 4, !tbaa !18 ; 2 uses
   br label %.lr.ph.split
 
-._crit_edge51:                                    ; preds = %._crit_edge46, %.lr.ph, %bb.a
+._crit_edge51:                                    ; preds = %._crit_edge46, %bb.a
   ret void
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %._crit_edge46
-  %i.o = phi i32 [ %i.ct, %._crit_edge46 ], [ %i.n, %.lr.ph.split.preheader ] ; 3 uses
-  %i.p = phi i32 [ %i.cu, %._crit_edge46 ], [ %.pre55, %.lr.ph.split.preheader ] ; 3 uses
-  %i.q = phi i32 [ %i.cv, %._crit_edge46 ], [ %.pre55, %.lr.ph.split.preheader ] ; 4 uses
-  %i.r = phi i32 [ %i.cw, %._crit_edge46 ], [ %i.n, %.lr.ph.split.preheader ] ; 5 uses
-  %i.s = phi i32 [ %i.cx, %._crit_edge46 ], [ %.pre55, %.lr.ph.split.preheader ] ; 4 uses
-  %.03749 = phi i32 [ %i.cy, %._crit_edge46 ], [ %i.a, %.lr.ph.split.preheader ] ; 3 uses
+.lr.ph.split:                                     ; preds = %.lr.ph, %._crit_edge46
+  %i.o = phi i32 [ %.pre56, %.lr.ph ], [ %i.ct, %._crit_edge46 ] ; 3 uses
+  %i.p = phi i32 [ %i.n, %.lr.ph ], [ %i.cu, %._crit_edge46 ] ; 3 uses
+  %i.q = phi i32 [ %i.n, %.lr.ph ], [ %i.cv, %._crit_edge46 ] ; 4 uses
+  %i.r = phi i32 [ %.pre56, %.lr.ph ], [ %i.cw, %._crit_edge46 ] ; 5 uses
+  %i.s = phi i32 [ %i.n, %.lr.ph ], [ %i.cx, %._crit_edge46 ] ; 4 uses
+  %.03749 = phi i32 [ %i.a, %.lr.ph ], [ %i.cy, %._crit_edge46 ] ; 3 uses
   %i.t = load ptr, ptr %0, align 8, !tbaa !381, !nonnull !37, !align !120
   %i.u = load i32, ptr %i.t, align 4, !tbaa !18   ; 3 uses
   %i.v = sdiv i32 %.03749, %i.u                   ; 2 uses
@@ -264,7 +260,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader41.us, %bb.e
   %.03542.us = phi i32 [ 0, %.preheader41.us ], [ %i.bx, %bb.e ] ; 3 uses
-  %i.au = load ptr, ptr %i.h, align 8, !tbaa !379, !nonnull !37, !align !120
+  %i.au = load ptr, ptr %i.h, align 8, !tbaa !380, !nonnull !37, !align !120
   %i.av = load i32, ptr %i.au, align 4, !tbaa !18
   %i.aw = mul nsw i32 %i.av, %.03542.us
   %i.ax = add nsw i32 %i.aw, %.03645.us
@@ -282,7 +278,7 @@ bb.b:                                             ; preds = %.preheader41.us, %b
   %i.bj = load ptr, ptr %i.l, align 8, !tbaa !387, !nonnull !37
   %i.bk = load i8, ptr %i.bj, align 1, !tbaa !22, !range !36, !noundef !37
   %i.bl = trunc nuw i8 %i.bk to i1
-  %i.bm = load ptr, ptr %i.e, align 8, !tbaa !380, !nonnull !37, !align !120
+  %i.bm = load ptr, ptr %i.e, align 8, !tbaa !379, !nonnull !37, !align !120
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !18
   %i.bo = mul nsw i32 %i.bn, %.03645.us
   %i.bp = add nsw i32 %i.bo, %.03542.us
@@ -317,7 +313,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.cc = getelementptr inbounds i8, ptr %i.ar, i64 %i.cb
   store i8 0, ptr %i.cc, align 1, !tbaa !43
   %i.cd = add nuw nsw i32 %.043.us, 1             ; 2 uses
-  %i.ce = load ptr, ptr %i.e, align 8, !tbaa !380, !nonnull !37, !align !120
+  %i.ce = load ptr, ptr %i.e, align 8, !tbaa !379, !nonnull !37, !align !120
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !18 ; 3 uses
   %i.cg = icmp slt i32 %i.cd, %i.cf
   br i1 %i.cg, label %.lr.ph44.us, label %._crit_edge.us, !llvm.loop !374
@@ -325,13 +321,13 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 ._crit_edge.us:                                   ; preds = %.lr.ph44.us, %..preheader_crit_edge.us
   %i.ch = phi i32 [ %i.cn, %..preheader_crit_edge.us ], [ %i.cf, %.lr.ph44.us ] ; 3 uses
   %i.ci = add nuw nsw i32 %.03645.us, 1           ; 2 uses
-  %i.cj = load ptr, ptr %i.h, align 8, !tbaa !379, !nonnull !37, !align !120
+  %i.cj = load ptr, ptr %i.h, align 8, !tbaa !380, !nonnull !37, !align !120
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !18 ; 3 uses
   %i.cl = icmp slt i32 %i.ci, %i.ck
   br i1 %i.cl, label %.preheader41.us, label %._crit_edge46, !llvm.loop !375
 
 ..preheader_crit_edge.us:                         ; preds = %bb.e
-  %i.cm = load ptr, ptr %i.e, align 8, !tbaa !380, !nonnull !37, !align !120
+  %i.cm = load ptr, ptr %i.e, align 8, !tbaa !379, !nonnull !37, !align !120
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !18 ; 3 uses
   %i.co = icmp slt i32 %.sroa.speculated, %i.cn
   br i1 %i.co, label %.lr.ph44.us, label %._crit_edge.us
@@ -359,7 +355,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.da, label %.lr.ph.split, label %._crit_edge51, !llvm.loop !376
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph44
-  %.pre56.a = load ptr, ptr %i.h, align 8, !tbaa !379
+  %.pre56.a = load ptr, ptr %i.h, align 8, !tbaa !380
   %.pre57 = load i32, ptr %.pre56.a, align 4, !tbaa !18
   br label %._crit_edge
 
@@ -379,7 +375,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.dj = getelementptr inbounds i8, ptr %i.ar, i64 %i.di
   store i8 0, ptr %i.dj, align 1, !tbaa !43
   %i.dk = add nsw i32 %.043, 1                    ; 2 uses
-  %i.dl = load ptr, ptr %i.e, align 8, !tbaa !380, !nonnull !37, !align !120
+  %i.dl = load ptr, ptr %i.e, align 8, !tbaa !379, !nonnull !37, !align !120
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !18 ; 3 uses
   %i.dn = icmp slt i32 %i.dk, %i.dm
   br i1 %i.dn, label %.lr.ph44, label %._crit_edge.loopexit, !llvm.loop !374
@@ -782,11 +778,11 @@ begin_hunk_1_@llvm.vector.reduce.mul.v4i32
 !373 = distinct !{!373, !98}
 !374 = distinct !{!374, !98}
 !375 = distinct !{!375, !98}
-!376 = distinct !{!376, !98, !388}
+!376 = distinct !{!376, !98}
 !377 = distinct !{!377, !98, !388}
 !378 = !{!"_ZTSZNK2cv3dnn18Conv2Int8LayerImpl23quantizeInterleaveBlockERKNS_3MatERS2_iEUlRKNS_5RangeEE_", !14, i64 0, !14, i64 8, !14, i64 16, !55, i64 24, !14, i64 32, !49, i64 40, !16, i64 48, !14, i64 56, !53, i64 64}
-!379 = !{!378, !14, i64 32}
-!380 = !{!378, !14, i64 8}
+!379 = !{!378, !14, i64 8}
+!380 = !{!378, !14, i64 32}
 !381 = !{!378, !14, i64 0}
 !382 = !{!378, !14, i64 16}
 !383 = !{!378, !55, i64 24}

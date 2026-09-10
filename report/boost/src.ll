@@ -206,8 +206,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !250  ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #47
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 240
   store i64 0, ptr %i.f, align 8, !tbaa !229
@@ -250,7 +250,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.x = zext nneg i16 %i.u to i32
-  %i.y = sub nsw i32 0, %i.x                      ; 3 uses
+  %i.y = sub nsw i32 0, %i.x
   store i32 %i.y, ptr %i.c, align 8, !tbaa !352
   %i.z = zext nneg i16 %i.u to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.z ; 4 uses
@@ -397,7 +397,6 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.az
 
 .thread309:                                       ; preds = %bb.q, %bb.f
-  %3 = phi i32 [ %i.y, %bb.f ], [ 0, %bb.q ]
   %.6300 = phi ptr [ %i.aa, %bb.f ], [ %i.bl, %bb.q ] ; 8 uses
   %i.bw = icmp ult ptr %.6300, %i.b
   br i1 %i.bw, label %.preheader.preheader, label %bb.s, !prof !251
@@ -451,7 +450,6 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.ck, label %.preheader._crit_edge, label %.lr.ph392, !prof !357
 
 bb.u:                                             ; preds = %.thread334, %.thread324, %.thread321, %.thread313
-  %4 = phi i32 [ %3, %.thread324 ], [ %i.y, %.thread313 ], [ 0, %.thread321 ], [ 0, %.thread334 ]
   %.8301 = phi ptr [ %i.bb, %.thread324 ], [ %i.ae, %.thread313 ], [ %i.o, %.thread321 ], [ %i.bk, %.thread334 ] ; 6 uses
   %i.cl = icmp ult ptr %.8301, %i.b
   br i1 %i.cl, label %bb.w, label %bb.v, !prof !251
@@ -477,7 +475,6 @@ bb.y:                                             ; preds = %bb.w
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.w, %bb.x, %bb.y
-  %5 = phi i1 [ false, %bb.x ], [ true, %bb.y ], [ false, %bb.w ]
   %.9302 = phi ptr [ %i.co, %bb.x ], [ %i.cp, %bb.y ], [ %.8301, %bb.w ] ; 8 uses
   %.9302362 = ptrtoaddr ptr %.9302 to i64         ; 2 uses
   %i.cq = icmp ult ptr %.9302, %i.b
@@ -509,7 +506,7 @@ bb.ad:                                            ; preds = %bb.z
 
 bb.ae:                                            ; preds = %bb.ad
   %i.da = zext nneg i8 %i.cw to i32
-  %i.db = add nsw i32 %i.da, -48                  ; 2 uses
+  %i.db = add nsw i32 %i.da, -48
   store i32 %i.db, ptr %i.d, align 4, !tbaa !359
   %.11355 = getelementptr inbounds nuw i8, ptr %.9302, i64 1 ; 4 uses
   %i.dc = icmp ult ptr %.11355, %i.b
@@ -532,7 +529,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.di = load i8, ptr %.11356.prol, align 1, !tbaa !93
   %i.dj = add i8 %i.di, -48
   %i.dk = icmp ult i8 %i.dj, 10
-  br i1 %i.dk, label %bb.af, label %.thread348, !prof !251
+  br i1 %i.dk, label %bb.af, label %.thread317, !prof !251
 
 bb.af:                                            ; preds = %.lr.ph.prol
   %.11.prol = getelementptr inbounds nuw i8, ptr %.11356.prol, i64 1 ; 2 uses
@@ -550,7 +547,7 @@ bb.af:                                            ; preds = %.lr.ph.prol
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.dn = load i8, ptr %i.dm, align 8, !tbaa !226, !range !231, !noundef !125
   %i.do = trunc nuw i8 %i.dn to i1
-  br i1 %i.do, label %bb.ag, label %.thread348, !prof !252
+  br i1 %i.do, label %bb.ag, label %.thread317, !prof !252
 
 bb.ag:                                            ; preds = %._crit_edge
   %i.dp = call noundef ptr @_ZN5boost4json12basic_parserINS0_6detail7handlerEE7suspendEPKcNS4_5stateERKNS4_6numberE(ptr noundef nonnull align 8 dereferenceable(274) %0, ptr noundef nonnull %.11.lcssa, i8 noundef signext 48, ptr noundef nonnull align 8 dereferenceable(24) %2)
@@ -561,57 +558,33 @@ bb.ag:                                            ; preds = %._crit_edge
   %i.dq = load i8, ptr %.11356, align 1, !tbaa !93
   %i.dr = add i8 %i.dq, -48
   %i.ds = icmp ult i8 %i.dr, 10
-  br i1 %i.ds, label %.lr.ph.1, label %.thread348, !prof !251
+  br i1 %i.ds, label %.lr.ph.1, label %.thread317, !prof !251
 
 .lr.ph.1:                                         ; preds = %.lr.ph
   %.11 = getelementptr inbounds nuw i8, ptr %.11356, i64 1
   %i.dt = load i8, ptr %.11, align 1, !tbaa !93
   %i.du = add i8 %i.dt, -48
   %i.dv = icmp ult i8 %i.du, 10
-  br i1 %i.dv, label %.lr.ph.2, label %.thread348.loopexit.loopexit.split.loop.exit431, !prof !251
+  br i1 %i.dv, label %.lr.ph.2, label %.thread317.loopexit.loopexit.split.loop.exit429, !prof !251
 
 .lr.ph.2:                                         ; preds = %.lr.ph.1
   %.11.1 = getelementptr inbounds nuw i8, ptr %.11356, i64 2
   %i.dw = load i8, ptr %.11.1, align 1, !tbaa !93
   %i.dx = add i8 %i.dw, -48
   %i.dy = icmp ult i8 %i.dx, 10
-  br i1 %i.dy, label %.lr.ph.3, label %.thread348.loopexit.loopexit.split.loop.exit429, !prof !251
+  br i1 %i.dy, label %.lr.ph.3, label %.thread317.loopexit.loopexit.split.loop.exit427, !prof !251
 
 .lr.ph.3:                                         ; preds = %.lr.ph.2
   %.11.2 = getelementptr inbounds nuw i8, ptr %.11356, i64 3
   %i.dz = load i8, ptr %.11.2, align 1, !tbaa !93
   %i.ea = add i8 %i.dz, -48
   %i.eb = icmp ult i8 %i.ea, 10
-  br i1 %i.eb, label %bb.ah, label %.thread348.loopexit.loopexit.split.loop.exit, !prof !251
+  br i1 %i.eb, label %bb.ah, label %.thread317.loopexit.loopexit.split.loop.exit, !prof !251
 
 bb.ah:                                            ; preds = %.lr.ph.3
   %.11.3 = getelementptr inbounds nuw i8, ptr %.11356, i64 4 ; 2 uses
   %exitcond.not.3 = icmp eq ptr %.11.3, %i.b
   br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph, !prof !353, !llvm.loop !917
-
-.thread348.loopexit.loopexit.split.loop.exit:     ; preds = %.lr.ph.3
-  %.11.2.le = getelementptr inbounds nuw i8, ptr %.11356, i64 3
-  br label %.thread348
-
-.thread348.loopexit.loopexit.split.loop.exit429:  ; preds = %.lr.ph.2
-  %.11.1.le = getelementptr inbounds nuw i8, ptr %.11356, i64 2
-  br label %.thread348
-
-.thread348.loopexit.loopexit.split.loop.exit431:  ; preds = %.lr.ph.1
-  %.11.le = getelementptr inbounds nuw i8, ptr %.11356, i64 1
-  br label %.thread348
-
-.thread348:                                       ; preds = %.lr.ph, %.thread348.loopexit.loopexit.split.loop.exit431, %.thread348.loopexit.loopexit.split.loop.exit429, %.thread348.loopexit.loopexit.split.loop.exit, %.lr.ph.prol, %._crit_edge
-  %.11352 = phi ptr [ %.11.lcssa, %._crit_edge ], [ %.11356, %.lr.ph ], [ %.11.le, %.thread348.loopexit.loopexit.split.loop.exit431 ], [ %.11.1.le, %.thread348.loopexit.loopexit.split.loop.exit429 ], [ %.11.2.le, %.thread348.loopexit.loopexit.split.loop.exit ], [ %.11356.prol, %.lr.ph.prol ] ; 2 uses
-  %6 = or disjoint i32 %i.db, -2147483648
-  %7 = icmp slt i32 %4, %6
-  %or.cond385 = select i1 %5, i1 %7, i1 false, !prof !360
-  br i1 %or.cond385, label %.critedge93, label %.thread317, !prof !360
-
-.critedge93:                                      ; preds = %.thread348
-  store i32 0, ptr %i.c, align 8, !tbaa !352
-  store i32 2147483647, ptr %i.d, align 4, !tbaa !359
-  br label %.thread317
 
 bb.ai:                                            ; preds = %bb.i, %bb.l, %bb.c
   %.15 = phi ptr [ %i.k, %bb.c ], [ %i.ag, %bb.i ], [ %i.ag, %bb.l ]
@@ -711,8 +684,20 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   store ptr %i.fx, ptr %i.ed, align 8, !tbaa !224
   br label %bb.az
 
-.thread317:                                       ; preds = %.thread348, %.loopexit, %bb.f, %.critedge93, %bb.s, %.preheader._crit_edge
-  %.16 = phi ptr [ %.11352, %.critedge93 ], [ %.11352, %.thread348 ], [ %.6300, %bb.s ], [ %.2296391.lcssa, %.loopexit ], [ %i.aa, %bb.f ], [ %scevgep, %.preheader._crit_edge ]
+.thread317.loopexit.loopexit.split.loop.exit:     ; preds = %.lr.ph.3
+  %.11.2.le = getelementptr inbounds nuw i8, ptr %.11356, i64 3
+  br label %.thread317
+
+.thread317.loopexit.loopexit.split.loop.exit427:  ; preds = %.lr.ph.2
+  %.11.1.le = getelementptr inbounds nuw i8, ptr %.11356, i64 2
+  br label %.thread317
+
+.thread317.loopexit.loopexit.split.loop.exit429:  ; preds = %.lr.ph.1
+  %.11.le = getelementptr inbounds nuw i8, ptr %.11356, i64 1
+  br label %.thread317
+
+.thread317:                                       ; preds = %.lr.ph, %.thread317.loopexit.loopexit.split.loop.exit429, %.thread317.loopexit.loopexit.split.loop.exit427, %.thread317.loopexit.loopexit.split.loop.exit, %.lr.ph.prol, %._crit_edge, %.loopexit, %bb.f, %bb.s, %.preheader._crit_edge
+  %.16 = phi ptr [ %.2296391.lcssa, %.loopexit ], [ %scevgep, %.preheader._crit_edge ], [ %.6300, %bb.s ], [ %i.aa, %bb.f ], [ %.11.lcssa, %._crit_edge ], [ %.11356, %.lr.ph ], [ %.11.le, %.thread317.loopexit.loopexit.split.loop.exit429 ], [ %.11.1.le, %.thread317.loopexit.loopexit.split.loop.exit427 ], [ %.11.2.le, %.thread317.loopexit.loopexit.split.loop.exit ], [ %.11356.prol, %.lr.ph.prol ]
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !224 ; 2 uses

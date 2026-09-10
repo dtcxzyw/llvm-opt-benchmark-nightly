@@ -204,9 +204,8 @@ bb.i:                                             ; preds = %bb.h
   %i.iu = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.iv = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.iw = getelementptr inbounds nuw i8, ptr %1, i64 136
-  %i.ix = load i32, ptr %i.in, align 4, !tbaa !15 ; 2 uses
-  %23 = icmp sgt i32 %i.ix, 0
-  br i1 %23, label %.lr.ph611.split, label %.thread498.thread
+  %i.ix = load i32, ptr %i.in, align 4, !tbaa !15
+  br label %.lr.ph611.split
 
 bb.j:                                             ; preds = %.lr.ph561, %.thread391
   %indvars.iv638 = phi i64 [ 0, %.lr.ph561 ], [ %indvars.iv.next639, %.thread391 ] ; 2 uses
@@ -413,22 +412,22 @@ bb.q:                                             ; preds = %bb.p
   br i1 %exitcond642.not, label %.preheader, label %bb.j, !llvm.loop !44
 
 .lr.ph611.split:                                  ; preds = %.lr.ph611, %._crit_edge580
-  %i.nv = phi i32 [ %i.uz, %._crit_edge580 ], [ %i.il, %.lr.ph611 ]
-  %i.nw = phi i32 [ %i.va, %._crit_edge580 ], [ %i.ix, %.lr.ph611 ] ; 2 uses
-  %indvars.iv646 = phi i64 [ %indvars.iv.next647, %._crit_edge580 ], [ 0, %.lr.ph611 ] ; 3 uses
-  %.10114610 = phi float [ %.11115.lcssa, %._crit_edge580 ], [ %.5109.lcssa, %.lr.ph611 ] ; 2 uses
-  %.0129607 = phi i32 [ %.1130.lcssa, %._crit_edge580 ], [ -1, %.lr.ph611 ] ; 2 uses
-  %.0137606 = phi i32 [ %.1138.lcssa, %._crit_edge580 ], [ -1, %.lr.ph611 ] ; 2 uses
-  %.sroa.0273.0605 = phi float [ %.sroa.0273.1.lcssa, %._crit_edge580 ], [ 0.000000e+00, %.lr.ph611 ] ; 2 uses
-  %.sroa.6275.0604 = phi float [ %.sroa.6275.1.lcssa, %._crit_edge580 ], [ 0.000000e+00, %.lr.ph611 ] ; 2 uses
-  %.sroa.9277.0603 = phi float [ %.sroa.9277.1.lcssa, %._crit_edge580 ], [ 0.000000e+00, %.lr.ph611 ] ; 2 uses
-  %.sroa.0282.0602 = phi float [ %.sroa.0282.1.lcssa, %._crit_edge580 ], [ 0.000000e+00, %.lr.ph611 ] ; 2 uses
-  %.sroa.5283.0601 = phi float [ %.sroa.5283.1.lcssa, %._crit_edge580 ], [ 0.000000e+00, %.lr.ph611 ] ; 2 uses
-  %.sroa.7284.0600 = phi float [ %.sroa.7284.1.lcssa, %._crit_edge580 ], [ 0.000000e+00, %.lr.ph611 ] ; 2 uses
-  %.sroa.0286.0599 = phi <2 x float> [ %.sroa.0286.1.lcssa, %._crit_edge580 ], [ undef, %.lr.ph611 ] ; 2 uses
-  %.sroa.5287.0598 = phi <2 x float> [ %.sroa.5287.1.lcssa, %._crit_edge580 ], [ undef, %.lr.ph611 ] ; 2 uses
-  %.sroa.0288.0597 = phi <2 x float> [ %.sroa.0288.1.lcssa, %._crit_edge580 ], [ undef, %.lr.ph611 ] ; 2 uses
-  %.sroa.5289.0596 = phi <2 x float> [ %.sroa.5289.1.lcssa, %._crit_edge580 ], [ undef, %.lr.ph611 ] ; 2 uses
+  %i.nv = phi i32 [ %i.il, %.lr.ph611 ], [ %i.uz, %._crit_edge580 ]
+  %i.nw = phi i32 [ %i.ix, %.lr.ph611 ], [ %i.va, %._crit_edge580 ] ; 2 uses
+  %indvars.iv646 = phi i64 [ 0, %.lr.ph611 ], [ %indvars.iv.next647, %._crit_edge580 ] ; 3 uses
+  %.10114610 = phi float [ %.5109.lcssa, %.lr.ph611 ], [ %.11115.lcssa, %._crit_edge580 ] ; 2 uses
+  %.0129607 = phi i32 [ -1, %.lr.ph611 ], [ %.1130.lcssa, %._crit_edge580 ] ; 2 uses
+  %.0137606 = phi i32 [ -1, %.lr.ph611 ], [ %.1138.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.0273.0605 = phi float [ 0.000000e+00, %.lr.ph611 ], [ %.sroa.0273.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.6275.0604 = phi float [ 0.000000e+00, %.lr.ph611 ], [ %.sroa.6275.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.9277.0603 = phi float [ 0.000000e+00, %.lr.ph611 ], [ %.sroa.9277.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.0282.0602 = phi float [ 0.000000e+00, %.lr.ph611 ], [ %.sroa.0282.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.5283.0601 = phi float [ 0.000000e+00, %.lr.ph611 ], [ %.sroa.5283.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.7284.0600 = phi float [ 0.000000e+00, %.lr.ph611 ], [ %.sroa.7284.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.0286.0599 = phi <2 x float> [ undef, %.lr.ph611 ], [ %.sroa.0286.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.5287.0598 = phi <2 x float> [ undef, %.lr.ph611 ], [ %.sroa.5287.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.0288.0597 = phi <2 x float> [ undef, %.lr.ph611 ], [ %.sroa.0288.1.lcssa, %._crit_edge580 ] ; 2 uses
+  %.sroa.5289.0596 = phi <2 x float> [ undef, %.lr.ph611 ], [ %.sroa.5289.1.lcssa, %._crit_edge580 ] ; 2 uses
   %i.nx = load ptr, ptr %i.im, align 8, !tbaa !16
   %i.ny = getelementptr inbounds nuw [16 x i8], ptr %i.nx, i64 %indvars.iv646 ; 3 uses
   %.sroa.0266.0.copyload = load float, ptr %i.ny, align 4
@@ -831,7 +830,7 @@ bb.aq:                                            ; preds = %bb.ap, %_Z23btSegme
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #7
   br label %.thread498.thread
 
-.thread498.thread:                                ; preds = %.lr.ph611, %.preheader, %bb.aq, %.thread498
+.thread498.thread:                                ; preds = %.preheader, %bb.aq, %.thread498
   %i.xs = load <2 x float>, ptr %4, align 4, !tbaa !18 ; 3 uses
   %i.xt = extractelement <2 x float> %i.xs, i64 1
   %i.xu = fmul float %i.cn, %i.xt
@@ -1044,7 +1043,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %.1 = select i1 %i.cg, i32 %i.ch, i32 %.063163  ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.g, !llvm.loop !49
+  br i1 %exitcond.not, label %._crit_edge, label %bb.g, !llvm.loop !48
 
 bb.h:                                             ; preds = %._crit_edge
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -1429,7 +1428,7 @@ _ZN20btAlignedObjectArrayI9btVector3E6resizeEiRKS0_.exit114: ; preds = %bb.m, %_
   store i32 0, ptr %i.nb, align 4, !tbaa !15
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #7
   %exitcond179.not = icmp eq i64 %indvars.iv175, %i.df
-  br i1 %exitcond179.not, label %._crit_edge169.loopexit.peel.begin, label %bb.l, !llvm.loop !50
+  br i1 %exitcond179.not, label %._crit_edge169.loopexit.peel.begin, label %bb.l, !llvm.loop !49
 
 bb.p:                                             ; preds = %.lr.ph173, %bb.r
   %i.nn = phi i32 [ %i.jh, %.lr.ph173 ], [ %i.ny, %bb.r ]
@@ -1466,7 +1465,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %indvars.iv.next181 = add nuw nsw i64 %indvars.iv180, 1 ; 2 uses
   %i.nz = sext i32 %i.ny to i64
   %i.oa = icmp slt i64 %indvars.iv.next181, %i.nz
-  br i1 %i.oa, label %bb.p, label %.loopexit, !llvm.loop !51
+  br i1 %i.oa, label %bb.p, label %.loopexit, !llvm.loop !50
 
 .loopexit:                                        ; preds = %bb.r, %_ZN20btAlignedObjectArrayI9btVector3E7reserveEi.exit, %._crit_edge169, %._crit_edge
   ret void
@@ -1618,7 +1617,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %.1 = select i1 %i.cd, i32 %i.ce, i32 %.058     ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !53
+  br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !52
 
 ._crit_edge61:                                    ; preds = %_ZN20btAlignedObjectArrayI9btVector3E9push_backERKS0_.exit, %_ZN20btAlignedObjectArrayI9btVector3E6resizeEiRKS0_.exit
   %i.cf = icmp sgt i32 %.0.lcssa, -1
@@ -1769,7 +1768,7 @@ _ZN20btAlignedObjectArrayI9btVector3E9push_backERKS0_.exit: ; preds = %bb.f, %bb
   store i32 %i.ev, ptr %i.ae, align 4, !tbaa !15
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
   %exitcond67.not = icmp eq i64 %indvars.iv.next64, %wide.trip.count66
-  br i1 %exitcond67.not, label %._crit_edge61, label %bb.f, !llvm.loop !54
+  br i1 %exitcond67.not, label %._crit_edge61, label %bb.f, !llvm.loop !53
 
 bb.m:                                             ; preds = %._crit_edge61
   call void @_ZN27btPolyhedralContactClipping19clipFaceAgainstHullERK9btVector3RK18btConvexPolyhedronRK11btTransformR20btAlignedObjectArrayIS0_ESB_ffRN36btDiscreteCollisionDetectorInterface6ResultE(ptr noundef nonnull align 4 dereferenceable(16) %10, ptr noundef nonnull align 8 dereferenceable(172) %1, ptr noundef nonnull align 4 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(25) %7, ptr noundef nonnull align 8 dereferenceable(25) %8, float noundef %5, float noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %9)
@@ -1863,13 +1862,12 @@ attributes #7 = { nounwind }
 !43 = distinct !{!43, !22}
 !44 = distinct !{!44, !22}
 !45 = distinct !{!45, !22}
-!46 = distinct !{!46, !22, !48}
+!46 = distinct !{!46, !22}
 !47 = !{!13, !13, i64 0}
-!48 = !{!"llvm.loop.unswitch.partial.disable"}
-!49 = distinct !{!49, !22}
-!50 = distinct !{!50, !22, !52}
-!51 = distinct !{!51, !22}
-!52 = !{!"llvm.loop.peeled.count", i32 1}
+!48 = distinct !{!48, !22}
+!49 = distinct !{!49, !22, !51}
+!50 = distinct !{!50, !22}
+!51 = !{!"llvm.loop.peeled.count", i32 1}
+!52 = distinct !{!52, !22}
 !53 = distinct !{!53, !22}
-!54 = distinct !{!54, !22}
 end_hunk_1

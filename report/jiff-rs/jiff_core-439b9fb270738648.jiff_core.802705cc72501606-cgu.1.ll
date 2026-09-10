@@ -204,7 +204,7 @@ _RNvNtCsb09rMIQFAXO_9jiff_core5civil13days_in_month.exit.i55.i.i: ; preds = %bb.
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.sink.split.i, %bb.ab, %bb.t, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsb09rMIQFAXO_9jiff_core5civil4date4DateNtNtBN_6bounds10RangeErrorE6expectBN_.exit45.i
-  %.sroa.5.0.i48.ph.i = phi i32 [ 767, %bb.ab ], [ 4095, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsb09rMIQFAXO_9jiff_core5civil4date4DateNtNtBN_6bounds10RangeErrorE6expectBN_.exit45.i ], [ 767, %bb.t ], [ %.sroa.429.0.insert.insert.i.i.i, %.sink.split.i ]
+  %.sroa.5.0.i48.ph.i = phi i32 [ 767, %bb.t ], [ 767, %bb.ab ], [ %.sroa.429.0.insert.insert.i.i.i, %.sink.split.i ], [ 4095, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsb09rMIQFAXO_9jiff_core5civil4date4DateNtNtBN_6bounds10RangeErrorE6expectBN_.exit45.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !163
   store i32 %.sroa.5.0.i48.ph.i, ptr %i.a, align 4, !noalias !163
   call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 25, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @25) #18, !noalias !156
@@ -607,7 +607,7 @@ _RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser27parse_unquoted_abbrev
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc range(i64 0, -4278190080) i64 @_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser18parse_posix_offset(ptr nofree noundef nonnull align 8 captures(none) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc range(i64 0, -4278254334) i64 @_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser18parse_posix_offset(ptr nofree noundef nonnull align 8 captures(none) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 3 uses

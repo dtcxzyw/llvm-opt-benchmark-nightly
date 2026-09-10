@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !29  ; 2 uses
   %i.ba = zext i8 %i.az to i32
   %i.bb = shl i32 %i.ba, 28
-  %i.bc = add i32 %i.aw, -268435456
+  %i.bc = add nsw i32 %i.aw, -268435456
   %i.bd = add i32 %i.bc, %i.bb
   %i.be = icmp slt i8 %i.az, 0
   br i1 %i.be, label %_ZN6google8protobuf8internal12_GLOBAL__N_121ParseEndsInSlopRegionEPKcii.exit.thread, label %bb.k, !prof !30
@@ -607,7 +607,7 @@ bb.f:                                             ; preds = %bb.e
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !29  ; 2 uses
   %i.at = zext i8 %i.as to i32
   %i.au = shl i32 %i.at, 28
-  %i.av = add i32 %i.ap, -268435456
+  %i.av = add nsw i32 %i.ap, -268435456
   %i.aw = add i32 %i.av, %i.au
   %i.ax = icmp slt i8 %i.as, 0
   br i1 %i.ax, label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread, label %bb.g, !prof !30
