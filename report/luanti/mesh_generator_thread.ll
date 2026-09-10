@@ -204,12 +204,16 @@ bb.a:
   %.not2729 = icmp eq ptr %i.j, %i.l
   br i1 %.not2729, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.critedge, %bb.a
-  %.0.lcssa = phi i1 [ true, %bb.a ], [ %.1, %.critedge ]
+._crit_edge.loopexit:                             ; preds = %.critedge
+  %2 = trunc nuw i8 %.1 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.0.lcssa = phi i1 [ true, %bb.a ], [ %2, %._crit_edge.loopexit ]
   ret i1 %.0.lcssa
 
 .lr.ph:                                           ; preds = %bb.a, %.critedge
-  %.031 = phi i1 [ %.1, %.critedge ], [ true, %bb.a ] ; 7 uses
+  %.031 = phi i8 [ %.1, %.critedge ], [ 1, %bb.a ] ; 7 uses
   %.sroa.015.030 = phi ptr [ %i.af, %.critedge ], [ %i.j, %bb.a ] ; 2 uses
   %i.m = load ptr, ptr %.sroa.015.030, align 8, !tbaa !38 ; 5 uses
   %.not = icmp eq ptr %i.m, null
@@ -276,15 +280,14 @@ bb.i:                                             ; preds = %_ZNK4core8vector3dI
 _ZN8MapBlock5isAirEv.exit:                        ; preds = %_ZNK4core8vector3dIsEltERKS1_.exit.thread, %bb.i
   %i.ad = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !89, !range !87, !noundef !88
-  %2 = trunc nuw i8 %i.ae to i1
-  %3 = select i1 %2, i1 %.031, i1 false
+  %3 = and i8 %i.ae, %.031
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.h, %bb.f, %bb.b, %bb.d, %_ZNK4core8vector3dIsEgeERKS1_.exit, %.lr.ph, %_ZN8MapBlock5isAirEv.exit
-  %.1 = phi i1 [ %3, %_ZN8MapBlock5isAirEv.exit ], [ %.031, %bb.h ], [ %.031, %bb.b ], [ %.031, %_ZNK4core8vector3dIsEgeERKS1_.exit ], [ %.031, %.lr.ph ], [ %.031, %bb.d ], [ %.031, %bb.f ] ; 2 uses
+  %.1 = phi i8 [ %3, %_ZN8MapBlock5isAirEv.exit ], [ %.031, %bb.h ], [ %.031, %bb.b ], [ %.031, %_ZNK4core8vector3dIsEgeERKS1_.exit ], [ %.031, %.lr.ph ], [ %.031, %bb.d ], [ %.031, %bb.f ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.015.030, i64 8 ; 2 uses
   %.not27 = icmp eq ptr %i.af, %i.l
-  br i1 %.not27, label %._crit_edge, label %.lr.ph
+  br i1 %.not27, label %._crit_edge.loopexit, label %.lr.ph
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
@@ -687,7 +690,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not2729.i, label %_ZN16QueuedMeshUpdate9checkSkipEt.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.x, %.critedge.i
-  %.031.i = phi i1 [ %.1.i, %.critedge.i ], [ true, %bb.x ] ; 7 uses
+  %.031.i = phi i8 [ %.1.i, %.critedge.i ], [ 1, %bb.x ] ; 7 uses
   %.sroa.015.030.i = phi ptr [ %i.eh, %.critedge.i ], [ %i.dl, %bb.x ] ; 2 uses
   %i.do = load ptr, ptr %.sroa.015.030.i, align 8, !tbaa !38 ; 5 uses
   %.not.i72 = icmp eq ptr %i.do, null
@@ -754,18 +757,18 @@ bb.af:                                            ; preds = %_ZNK4core8vector3dI
 _ZN8MapBlock5isAirEv.exit.i:                      ; preds = %bb.af, %_ZNK4core8vector3dIsEltERKS1_.exit.thread.i
   %i.ef = getelementptr inbounds nuw i8, ptr %i.do, i64 72
   %i.eg = load i8, ptr %i.ef, align 8, !tbaa !89, !range !87, !noundef !88
-  %10 = trunc nuw i8 %i.eg to i1
-  %11 = select i1 %10, i1 %.031.i, i1 false
+  %10 = and i8 %i.eg, %.031.i
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %_ZN8MapBlock5isAirEv.exit.i, %bb.ae, %bb.ac, %_ZNK4core8vector3dIsEgeERKS1_.exit.i, %bb.aa, %bb.y, %.lr.ph.i
-  %.1.i = phi i1 [ %11, %_ZN8MapBlock5isAirEv.exit.i ], [ %.031.i, %bb.ae ], [ %.031.i, %bb.y ], [ %.031.i, %_ZNK4core8vector3dIsEgeERKS1_.exit.i ], [ %.031.i, %.lr.ph.i ], [ %.031.i, %bb.aa ], [ %.031.i, %bb.ac ] ; 2 uses
+  %.1.i = phi i8 [ %10, %_ZN8MapBlock5isAirEv.exit.i ], [ %.031.i, %bb.ae ], [ %.031.i, %bb.y ], [ %.031.i, %_ZNK4core8vector3dIsEgeERKS1_.exit.i ], [ %.031.i, %.lr.ph.i ], [ %.031.i, %bb.aa ], [ %.031.i, %bb.ac ] ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.015.030.i, i64 8 ; 2 uses
   %.not27.i = icmp eq ptr %i.eh, %i.dn
   br i1 %.not27.i, label %_ZN16QueuedMeshUpdate9checkSkipEt.exit, label %.lr.ph.i
 
 _ZN16QueuedMeshUpdate9checkSkipEt.exit:           ; preds = %.critedge.i
-  br i1 %.1.i, label %_ZN16QueuedMeshUpdate9checkSkipEt.exit.thread, label %bb.ak
+  %11 = trunc nuw i8 %.1.i to i1
+  br i1 %11, label %_ZN16QueuedMeshUpdate9checkSkipEt.exit.thread, label %bb.ak
 
 _ZN16QueuedMeshUpdate9checkSkipEt.exit.thread:    ; preds = %bb.x, %_ZN16QueuedMeshUpdate9checkSkipEt.exit
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 32
