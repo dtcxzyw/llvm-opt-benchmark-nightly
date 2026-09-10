@@ -1,0 +1,962 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 77208bffce21b..6f7336d281323 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2213,10 +2213,10 @@ class ScalarEvolution {
+   ExitLimit howFarToNonZero(const SCEV *V, const Loop *L);
+ 
+   /// Return the number of times an exit condition containing the specified
+-  /// less-than comparison will execute.  If not computable, return
+-  /// CouldNotCompute.
++  /// less-than (or, if \p IsGT is set, greater-than) comparison will execute.
++  /// If not computable, return CouldNotCompute.
+   ///
+-  /// \p isSigned specifies whether the less-than is signed.
++  /// \p isSigned specifies whether the comparison is signed.
+   ///
+   /// \p ControlsOnlyExit is true when the LHS < RHS condition directly controls
+   /// the branch (loops exits only if condition is true). In this case, we can
+@@ -2224,13 +2224,12 @@ class ScalarEvolution {
+   ///
+   /// If \p AllowPredicates is set, this call will try to use a minimal set of
+   /// SCEV predicates in order to return an exact answer.
++  ///
++  /// If \p IsGT is set, the IV is non-increasing and only a loop-invariant
++  /// \p RHS is supported.
+   ExitLimit howManyLessThans(const SCEV *LHS, const SCEV *RHS, const Loop *L,
+                              bool isSigned, bool ControlsOnlyExit,
+-                             bool AllowPredicates = false);
+-
+-  ExitLimit howManyGreaterThans(const SCEV *LHS, const SCEV *RHS, const Loop *L,
+-                                bool isSigned, bool IsSubExpr,
+-                                bool AllowPredicates = false);
++                             bool AllowPredicates, bool IsGT);
+ 
+   /// Return a predecessor of BB (which may not be an immediate predecessor)
+   /// which has exactly one successor from which BB is reachable, or null if
+@@ -2503,9 +2502,28 @@ class ScalarEvolution {
+   std::optional<std::pair<const SCEV *, SmallVector<const SCEVPredicate *, 3>>>
+   createAddRecFromPHIWithCastsImpl(const SCEVUnknown *SymbolicPHI);
+ 
++  /// Return the smallest resp. largest value \p S can take in the signed
++  /// (\p IsSigned) or unsigned domain.
++  ///
++  /// If \p Mirrored, the domain is read through the bitwise complement, which
++  /// reverses its order and preserves distances, as "~B - ~A == A - B". This
++  /// lets logic written for a non-decreasing IV serve a non-increasing one;
++  /// see howManyLessThans.
++  APInt getRangeMin(const SCEV *S, bool IsSigned, bool Mirrored = false) {
++    if (Mirrored)
++      return ~(IsSigned ? getSignedRangeMax(S) : getUnsignedRangeMax(S));
++    return IsSigned ? getSignedRangeMin(S) : getUnsignedRangeMin(S);
++  }
++  APInt getRangeMax(const SCEV *S, bool IsSigned, bool Mirrored = false) {
++    if (Mirrored)
++      return ~(IsSigned ? getSignedRangeMin(S) : getUnsignedRangeMin(S));
++    return IsSigned ? getSignedRangeMax(S) : getUnsignedRangeMax(S);
++  }
++
+   /// Compute the maximum backedge count based on the range of values
+   /// permitted by Start, End, and Stride. This is for loops of the form
+-  /// {Start, +, Stride} LT End.
++  /// {Start, +, Stride} LT End, or, if \p IsGT is set, of the form
++  /// {Start, +, -Stride} GT End.
+   ///
+   /// Preconditions:
+   /// * the induction variable is known to be positive.
+@@ -2514,17 +2532,13 @@ class ScalarEvolution {
+   /// We *don't* assert these preconditions so please be careful.
+   const SCEV *computeMaxBECountForLT(const SCEV *Start, const SCEV *Stride,
+                                      const SCEV *End, unsigned BitWidth,
+-                                     bool IsSigned);
+-
+-  /// Verify if an linear IV with positive stride can overflow when in a
+-  /// less-than comparison, knowing the invariant term of the comparison,
+-  /// the stride.
+-  bool canIVOverflowOnLT(const SCEV *RHS, const SCEV *Stride, bool IsSigned);
++                                     bool IsSigned, bool IsGT);
+ 
+-  /// Verify if an linear IV with negative stride can overflow when in a
+-  /// greater-than comparison, knowing the invariant term of the comparison,
+-  /// the stride.
+-  bool canIVOverflowOnGT(const SCEV *RHS, const SCEV *Stride, bool IsSigned);
++  /// Verify if a linear IV with positive \p Stride can overflow when compared
++  /// against the invariant term \p RHS with a less-than, or, if \p IsGT is
++  /// set, when the negated IV is compared with a greater-than.
++  bool canIVOverflow(const SCEV *RHS, const SCEV *Stride, bool IsSigned,
++                     bool IsGT);
+ 
+   /// Get add expr already created or create a new one.
+   const SCEV *getOrCreateAddExpr(ArrayRef<SCEVUse> Ops,
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 9211b3d60b6ed..dc3c8a0158ae1 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -9498,7 +9498,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+   case ICmpInst::ICMP_ULT: { // while (X < Y)
+     bool IsSigned = ICmpInst::isSigned(Pred);
+     ExitLimit EL = howManyLessThans(LHS, RHS, L, IsSigned, ControlsOnlyExit,
+-                                    AllowPredicates);
++                                    AllowPredicates, /*IsGT=*/false);
+     if (EL.hasAnyInfo())
+       return EL;
+     break;
+@@ -9515,8 +9515,8 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+   case ICmpInst::ICMP_SGT:
+   case ICmpInst::ICMP_UGT: { // while (X > Y)
+     bool IsSigned = ICmpInst::isSigned(Pred);
+-    ExitLimit EL = howManyGreaterThans(LHS, RHS, L, IsSigned, ControlsOnlyExit,
+-                                       AllowPredicates);
++    ExitLimit EL = howManyLessThans(LHS, RHS, L, IsSigned, ControlsOnlyExit,
++                                    AllowPredicates, /*IsGT=*/true);
+     if (EL.hasAnyInfo())
+       return EL;
+     break;
+@@ -13236,51 +13236,25 @@ bool ScalarEvolution::isImpliedCondOperandsViaRanges(
+   return LHSRange.icmp(Pred, ConstRHS);
+ }
+ 
+-bool ScalarEvolution::canIVOverflowOnLT(const SCEV *RHS, const SCEV *Stride,
+-                                        bool IsSigned) {
++bool ScalarEvolution::canIVOverflow(const SCEV *RHS, const SCEV *Stride,
++                                    bool IsSigned, bool IsGT) {
+   assert(isKnownPositive(Stride) && "Positive stride expected!");
+ 
+   unsigned BitWidth = getTypeSizeInBits(RHS->getType());
+   const SCEV *One = getOne(Stride->getType());
+ 
+-  if (IsSigned) {
+-    APInt MaxRHS = getSignedRangeMax(RHS);
+-    APInt MaxValue = APInt::getSignedMaxValue(BitWidth);
+-    APInt MaxStrideMinusOne = getSignedRangeMax(getMinusSCEV(Stride, One));
+-
+-    // SMaxRHS + SMaxStrideMinusOne > SMaxValue => overflow!
+-    return (std::move(MaxValue) - MaxStrideMinusOne).slt(MaxRHS);
+-  }
+-
+-  APInt MaxRHS = getUnsignedRangeMax(RHS);
+-  APInt MaxValue = APInt::getMaxValue(BitWidth);
+-  APInt MaxStrideMinusOne = getUnsignedRangeMax(getMinusSCEV(Stride, One));
+-
+-  // UMaxRHS + UMaxStrideMinusOne > UMaxValue => overflow!
+-  return (std::move(MaxValue) - MaxStrideMinusOne).ult(MaxRHS);
+-}
+-
+-bool ScalarEvolution::canIVOverflowOnGT(const SCEV *RHS, const SCEV *Stride,
+-                                        bool IsSigned) {
+-
+-  unsigned BitWidth = getTypeSizeInBits(RHS->getType());
+-  const SCEV *One = getOne(Stride->getType());
+-
+-  if (IsSigned) {
+-    APInt MinRHS = getSignedRangeMin(RHS);
+-    APInt MinValue = APInt::getSignedMinValue(BitWidth);
+-    APInt MaxStrideMinusOne = getSignedRangeMax(getMinusSCEV(Stride, One));
+-
+-    // SMinRHS - SMaxStrideMinusOne < SMinValue => overflow!
+-    return (std::move(MinValue) + MaxStrideMinusOne).sgt(MinRHS);
+-  }
+-
+-  APInt MinRHS = getUnsignedRangeMin(RHS);
+-  APInt MinValue = APInt::getMinValue(BitWidth);
+-  APInt MaxStrideMinusOne = getUnsignedRangeMax(getMinusSCEV(Stride, One));
++  // Mirrored, the claim "RHS - MaxStrideMinusOne < MinValue" is the same as
++  // "~RHS + MaxStrideMinusOne > ~MinValue", i.e. the one below with RHS read
++  // through the complement. Stride is the negated step, hence positive either
++  // way, and is not mirrored.
++  APInt MaxRHS = getRangeMax(RHS, IsSigned, /*Mirrored=*/IsGT);
++  APInt MaxValue = IsSigned ? APInt::getSignedMaxValue(BitWidth)
++                            : APInt::getMaxValue(BitWidth);
++  APInt MaxStrideMinusOne = getRangeMax(getMinusSCEV(Stride, One), IsSigned);
+ 
+-  // UMinRHS - UMaxStrideMinusOne < UMinValue => overflow!
+-  return (std::move(MinValue) + MaxStrideMinusOne).ugt(MinRHS);
++  // MaxRHS + MaxStrideMinusOne > MaxValue => overflow!
++  MaxValue -= MaxStrideMinusOne;
++  return IsSigned ? MaxValue.slt(MaxRHS) : MaxValue.ult(MaxRHS);
+ }
+ 
+ const SCEV *ScalarEvolution::getUDivCeilSCEV(const SCEV *N, const SCEV *D) {
+@@ -13296,7 +13270,7 @@ const SCEV *ScalarEvolution::computeMaxBECountForLT(const SCEV *Start,
+                                                     const SCEV *Stride,
+                                                     const SCEV *End,
+                                                     unsigned BitWidth,
+-                                                    bool IsSigned) {
++                                                    bool IsSigned, bool IsGT) {
+   // The logic in this function assumes we can represent a positive stride.
+   // If we can't, the backedge-taken count must be zero.
+   if (IsSigned && BitWidth == 1)
+@@ -13309,12 +13283,13 @@ const SCEV *ScalarEvolution::computeMaxBECountForLT(const SCEV *Start,
+     return getCouldNotCompute();
+ 
+   // Calculate the maximum backedge count based on the range of values
+-  // permitted by Start, End, and Stride.
+-  APInt MinStart =
+-      IsSigned ? getSignedRangeMin(Start) : getUnsignedRangeMin(Start);
++  // permitted by Start, End, and Stride. A non-increasing IV (IsGT) travels
++  // the same distance downwards, so its ranges are read mirrored. Negating
++  // them would not work, as SMIN has no positive counterpart. Stride is the
++  // negated step and hence already positive.
++  APInt MinStart = getRangeMin(Start, IsSigned, /*Mirrored=*/IsGT);
+ 
+-  APInt MinStride =
+-      IsSigned ? getSignedRangeMin(Stride) : getUnsignedRangeMin(Stride);
++  APInt MinStride = getRangeMin(Stride, IsSigned);
+ 
+   // We assume either the stride is positive, or the backedge-taken count
+   // is zero. So force StrideForMaxBECount to be at least one.
+@@ -13330,8 +13305,9 @@ const SCEV *ScalarEvolution::computeMaxBECountForLT(const SCEV *Start,
+   // the case End = RHS of the loop termination condition. This is safe because
+   // in the other case (End - Start) is zero, leading to a zero maximum backedge
+   // taken count.
+-  APInt MaxEnd = IsSigned ? APIntOps::smin(getSignedRangeMax(End), Limit)
+-                          : APIntOps::umin(getUnsignedRangeMax(End), Limit);
++  APInt MaxEnd = getRangeMax(End, IsSigned, /*Mirrored=*/IsGT);
++  MaxEnd =
++      IsSigned ? APIntOps::smin(MaxEnd, Limit) : APIntOps::umin(MaxEnd, Limit);
+ 
+   // MaxBECount = ceil((max(MaxEnd, MinStart) - MinStart) / Stride)
+   MaxEnd = IsSigned ? APIntOps::smax(MaxEnd, MinStart)
+@@ -13341,15 +13317,31 @@ const SCEV *ScalarEvolution::computeMaxBECountForLT(const SCEV *Start,
+                          getConstant(StrideForMaxBECount) /* Step */);
+ }
+ 
+-ScalarEvolution::ExitLimit
+-ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+-                                  const Loop *L, bool IsSigned,
+-                                  bool ControlsOnlyExit, bool AllowPredicates) {
++ScalarEvolution::ExitLimit ScalarEvolution::howManyLessThans(
++    const SCEV *LHS, const SCEV *RHS, const Loop *L, bool IsSigned,
++    bool ControlsOnlyExit, bool AllowPredicates, bool IsGT) {
+   SmallVector<const SCEVPredicate *> Predicates;
+ 
++  // Mirrored, only "IV > Invariant" is handled.
++  // FIXME: The non-invariant RHS case below needs its own mirrored proof.
++  if (IsGT && !isLoopInvariant(RHS, L))
++    return getCouldNotCompute();
++
++  // Everything below is written for a non-decreasing IV that is less than RHS.
++  // A non-increasing IV that is greater than RHS (IsGT) travels the same
++  // distance downwards, and is handled by mirroring each step individually
++  // rather than transforming LHS and RHS up-front: negating drops the IV's
++  // no-wrap flags and hides the loop guards from isLoopEntryGuardedByCond,
++  // while complementing introduces "-1 - X" terms that do not fold back.
++  //
++  // A comparison is reversed either by swapping its predicate or by swapping
++  // its operands. Cond does the former, but the guard queries below do the
++  // latter: isLoopEntryGuardedByCond is sensitive to operand order and loses
++  // proofs if the IV bound moves to the other side.
+   const SCEVAddRecExpr *IV = dyn_cast<SCEVAddRecExpr>(LHS);
+   bool PredicatedIV = false;
+-  if (!IV) {
++  // Inferring NUW below requires a strictly increasing IV.
++  if (!IV && !IsGT) {
+     if (auto *ZExt = dyn_cast<SCEVZeroExtendExpr>(LHS)) {
+       const SCEVAddRecExpr *AR = dyn_cast<SCEVAddRecExpr>(ZExt->getOperand());
+       if (AR && AR->getLoop() == L && AR->isAffine()) {
+@@ -13425,16 +13417,23 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+   auto WrapType = IsSigned ? SCEV::FlagNSW : SCEV::FlagNUW;
+   bool NoWrap = ControlsOnlyExit && any(IV->getNoWrapFlags(WrapType));
+   ICmpInst::Predicate Cond = IsSigned ? ICmpInst::ICMP_SLT : ICmpInst::ICMP_ULT;
+-
+   const SCEV *Stride = IV->getStepRecurrence(*this);
++  if (IsGT) {
++    Cond = ICmpInst::getSwappedPredicate(Cond);
++    Stride = getNegativeSCEV(Stride);
++  }
+ 
+   bool PositiveStride = isKnownPositive(Stride);
+ 
+-  // Whether the IV may reach the maximum value before the exit is taken.
++  // Whether the IV may reach the end it moves towards before exiting.
+   bool IVMayOverflow = true;
+ 
+   // Avoid negative or zero stride values.
+   if (!PositiveStride) {
++    // FIXME: The reasoning below needs its own mirrored proof.
++    if (IsGT)
++      return getCouldNotCompute();
++
+     // We can compute the correct backedge taken count for loops with unknown
+     // strides if we can prove that the loop is not an infinite loop with side
+     // effects. Here's the loop structure we are trying to handle -
+@@ -13505,7 +13504,7 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+   } else {
+     // Avoid proven overflow cases: this will ensure that the backedge taken
+     // count will not generate any unsigned overflow.
+-    IVMayOverflow = canIVOverflowOnLT(RHS, Stride, IsSigned);
++    IVMayOverflow = canIVOverflow(RHS, Stride, IsSigned, IsGT);
+     if (IVMayOverflow && !NoWrap)
+       return getCouldNotCompute();
+   }
+@@ -13514,12 +13513,13 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+   //   IV can be assumed not to overflow up to and including the exiting
+   //   iteration.  We proved this in one of two ways:
+   //   1) We can show overflow doesn't occur before the exiting iteration
+-  //      1a) canIVOverflowOnLT, and b) step of one
++  //      1a) !IVMayOverflow, and b) step of one
+   //   2) We can show that if overflow occurs, the loop must execute UB
+   //      before any possible exit.
+   // Note that we have not yet proved RHS invariant (in general).
+ 
+   const SCEV *Start = IV->getStart();
++  unsigned BitWidth = getTypeSizeInBits(LHS->getType());
+ 
+   // Preserve pointer-typed Start/RHS to pass to isLoopEntryGuardedByCond.
+   // If we convert to integers, isLoopEntryGuardedByCond will miss some cases.
+@@ -13588,31 +13588,126 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+       // given the start, stride and max value for the end bound of the
+       // loop (RHS), and the fact that IV does not overflow (which is
+       // checked above).
+-      const SCEV *MaxBECount = computeMaxBECountForLT(
+-          Start, Stride, RHS, getTypeSizeInBits(LHS->getType()), IsSigned);
++      const SCEV *MaxBECount =
++          computeMaxBECountForLT(Start, Stride, RHS, BitWidth, IsSigned, IsGT);
+       return ExitLimit(getCouldNotCompute() /* ExactNotTaken */, MaxBECount,
+                        MaxBECount, false /*MaxOrZero*/, Predicates);
+     }
+   } else {
++    auto StepBack = [&](const SCEV *V, const SCEV *Offset) {
++      return IsGT ? getAddExpr(V, Offset) : getMinusSCEV(V, Offset);
++    };
++    auto Distance = [&](const SCEV *From, const SCEV *To) {
++      return IsGT ? getMinusSCEV(From, To) : getMinusSCEV(To, From);
++    };
++    auto ClampToStart = [&](const SCEV *V) {
++      if (IsGT)
++        return IsSigned ? getSMinExpr(V, Start) : getUMinExpr(V, Start);
++      return IsSigned ? getSMaxExpr(V, Start) : getUMaxExpr(V, Start);
++    };
++
+     // Let End = max(RHS,Start).  We use the expression (End-Start)/Stride to
+     // describe the backedge count: if the backedge is taken at least once then
+     // End is RHS, and if not End is Start so we get a backedge count of zero.
+-    auto *OrigStartMinusStride = getMinusSCEV(OrigStart, Stride);
+-    assert(isAvailableAtLoopEntry(OrigStartMinusStride, L) && "Must be!");
++    // When mirroring, End is min(RHS, Start).
++    //
++    // AddingStrideMinusOneMayOverflow has the following preconditions:
++    //
++    // 1. Start <=s End if IsSigned, else Start <=u End (mirrored: swapped)
++    // 2. The index variable doesn't overflow.
++    //
++    // Therefore, we know N exists such that
++    // (Start + Stride * N) >= End, and computing "(Start + Stride * N)"
++    // doesn't overflow.
++    //
++    // Using this information, try to prove whether the addition in
++    // "(Start - End) + (Stride - 1)" has unsigned overflow.
++    //
++    // If the IV cannot overflow, RHS is at least Stride - 1 from the end it
++    // moves towards, so the distance travelled is at most UMAX - (Stride - 1)
++    // and the (Stride - 1) addition below cannot overflow.
++    const SCEV *One = getOne(Stride->getType());
++    bool AddingStrideMinusOneMayOverflow = IVMayOverflow && [&] {
++      if (isKnownToBeAPowerOfTwo(Stride)) {
++        // Suppose Stride is a power of two, and Start/End are unsigned
++        // integers.  Let UMAX be the largest representable unsigned
++        // integer.
++        //
++        // By the preconditions of this function, we know
++        // "(Start + Stride * N) >= End", and this doesn't overflow.
++        // As a formula:
++        //
++        //   End <= (Start + Stride * N) <= UMAX
++        //
++        // Subtracting Start from all the terms:
++        //
++        //   End - Start <= Stride * N <= UMAX - Start
++        //
++        // Since Start is unsigned, UMAX - Start <= UMAX.  Therefore:
++        //
++        //   End - Start <= Stride * N <= UMAX
++        //
++        // Stride * N is a multiple of Stride. Therefore,
++        //
++        //   End - Start <= Stride * N <= UMAX - (UMAX mod Stride)
++        //
++        // Since Stride is a power of two, UMAX + 1 is divisible by
++        // Stride. Therefore, UMAX mod Stride == Stride - 1.  So we can
++        // write:
++        //
++        //   End - Start <= Stride * N <= UMAX - Stride - 1
++        //
++        // Dropping the middle term:
++        //
++        //   End - Start <= UMAX - Stride - 1
++        //
++        // Adding Stride - 1 to both sides:
++        //
++        //   (End - Start) + (Stride - 1) <= UMAX
++        //
++        // In other words, the addition doesn't have unsigned overflow.
++        //
++        // A similar proof works if we treat Start/End as signed values.
++        // Just rewrite steps before "End - Start <= Stride * N <= UMAX"
++        // to use signed max instead of unsigned max. Note that we're
++        // trying to prove a lack of unsigned overflow in either case.
++        //
++        // Mirrored: "Start - End <= Stride * N <= Start - MIN <= UMAX", so
++        // the same argument applies.
++        return false;
++      }
++      if (!IsGT && (Start == Stride || Start == getMinusSCEV(Stride, One))) {
++        // If Start is equal to Stride, (End - Start) + (Stride - 1) == End
++        // - 1. If !IsSigned, 0 <u Stride == Start <=u End; so 0 <u End - 1
++        // <u End. If IsSigned, 0 <s Stride == Start <=s End; so 0 <s End -
++        // 1 <s End.
++        //
++        // If Start is equal to Stride - 1, (End - Start) + Stride - 1 ==
++        // End.
++        //
++        // Both need Start to be the smaller value, so neither applies mirrored.
++        return false;
++      }
++      return true;
++    }();
++
++    const SCEV *OrigPrevStart = StepBack(OrigStart, Stride);
++    assert(isAvailableAtLoopEntry(OrigPrevStart, L) && "Must be!");
+     assert(isAvailableAtLoopEntry(OrigStart, L) && "Must be!");
+     assert(isAvailableAtLoopEntry(OrigRHS, L) && "Must be!");
+     // Can we prove Start - Stride < RHS, and either Start - Stride < Start or
+-    // (via !IVMayOverflow) that RHS + Stride - 1 does not overflow?
+-    if ((!IVMayOverflow ||
+-         isLoopEntryGuardedByCond(L, Cond, OrigStartMinusStride, OrigStart)) &&
+-        isLoopEntryGuardedByCond(L, Cond, OrigStartMinusStride, OrigRHS)) {
++    // (via !AddingStrideMinusOneMayOverflow) that (RHS - Start) + (Stride - 1)
++    // does not overflow?
++    if ((!AddingStrideMinusOneMayOverflow ||
++         isLoopEntryGuardedByCond(L, Cond, OrigPrevStart, OrigStart)) &&
++        isLoopEntryGuardedByCond(L, Cond, OrigPrevStart, OrigRHS)) {
+       // In this case, we can use a refined formula for computing backedge
+       // taken count.  The general formula remains:
+       //   "End-Start /uceiling Stride"
+       // We want to use the alternate formula:
+       //   "((RHS - 1) - (Start - Stride)) /u Stride"
+       // Let's do a quick case analysis to show these are equivalent under
+-      // our preconditions.
++      // our preconditions. Every comparison below is reversed when mirroring.
+       // * For RHS <= Start (End is Start), the backedge-taken count must be
+       //   zero. Together with the precondition "Start - Stride < RHS", we have
+       //   "Start - Stride < RHS <= Start". Subtracting Start - Stride from
+@@ -13629,26 +13724,42 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+       //   "RHS - (Start - Stride) - 1" does not overflow, which is the
+       //   reassociated numerator.
+       //
+-      //   Otherwise !IVMayOverflow guarantees "RHS + (Stride - 1) <= MaxV",
+-      //   where MaxV is the maximum signed/unsigned value. Let MinV be the
+-      //   matching minimum value. "Start >= MinV" gives
+-      //   "RHS + (Stride - 1) - Start <= MaxV - MinV", and as "MaxV - MinV" is
+-      //   the largest unsigned value, the reassociated numerator does not
+-      //   overflow.
+-      const SCEV *MinusOne = getMinusOne(Stride->getType());
++      //   Otherwise we rely on !AddingStrideMinusOneMayOverflow, which gives
++      //   3 cases:
++      //
++      //   - !IVMayOverflow proved: "RHS + (Stride - 1) <= MaxV", where MaxV
++      //     is the maximum signed/unsigned value. Let MinV be the matching
++      //     minimum value. "Start >= MinV" gives
++      //     "RHS + (Stride - 1) - Start <= MaxV - MinV", and as "MaxV - MinV"
++      //     is the largest unsigned value, the reassociated numerator does not
++      //     overflow.
++      //
++      //   - Stride is a power of two, so the largest multiple of Stride that
++      //     is representable is "UMAX - (Stride - 1)", and the IV not
++      //     overflowing bounds "RHS - Start" by such a multiple.
++      //
++      //   - "Start == Stride" or "Start == Stride - 1", for which
++      //     "(RHS - Start) + (Stride - 1)" is "RHS - 1" respectively "RHS",
++      //     which is trivially in range. Does not apply when mirroring.
+       const SCEV *Numerator =
+-          getMinusSCEV(getAddExpr(RHS, MinusOne), getMinusSCEV(Start, Stride));
++          Distance(StepBack(Start, Stride), StepBack(RHS, One));
+       BECount = getUDivExpr(Numerator, Stride);
+     }
+ 
+     if (!BECount) {
+-      auto canProveRHSGreaterThanEqualStart = [&]() {
+-        auto CondGE = IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE;
+-        const SCEV *GuardedRHS = applyLoopGuards(OrigRHS, L);
+-        const SCEV *GuardedStart = applyLoopGuards(OrigStart, L);
++      auto canProveRHSIsAtOrBeyondStart = [&]() {
++        // Mirrored, the claim is "RHS <= Start". Reverse the two comparisons
++        // below by swapping their operands rather than their predicates; see
++        // the note on operand order at the top of this function.
++        auto MirrorOps = [&](const SCEV *A, const SCEV *B) {
++          return IsGT ? std::pair(B, A) : std::pair(A, B);
++        };
+ 
+-        if (isLoopEntryGuardedByCond(L, CondGE, OrigRHS, OrigStart) ||
+-            isKnownPredicate(CondGE, GuardedRHS, GuardedStart))
++        auto CondGE = IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE;
++        auto [GELHS, GERHS] = MirrorOps(OrigRHS, OrigStart);
++        if (isLoopEntryGuardedByCond(L, CondGE, GELHS, GERHS) ||
++            isKnownPredicate(CondGE, applyLoopGuards(GELHS, L),
++                             applyLoopGuards(GERHS, L)))
+           return true;
+ 
+         // (RHS > Start - 1) implies RHS >= Start.
+@@ -13661,14 +13772,13 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+         //
+         // FIXME: Should isLoopEntryGuardedByCond do this for us?
+         auto CondGT = IsSigned ? ICmpInst::ICMP_SGT : ICmpInst::ICMP_UGT;
+-        auto *StartMinusOne =
+-            getAddExpr(OrigStart, getMinusOne(OrigStart->getType()));
+-        return isLoopEntryGuardedByCond(L, CondGT, OrigRHS, StartMinusOne);
++        auto [GTLHS, GTRHS] = MirrorOps(OrigRHS, StepBack(OrigStart, One));
++        return isLoopEntryGuardedByCond(L, CondGT, GTLHS, GTRHS);
+       };
+ 
+       // If we know that RHS >= Start in the context of loop, then we know
+       // that max(RHS, Start) = RHS at this point.
+-      if (canProveRHSGreaterThanEqualStart()) {
++      if (canProveRHSIsAtOrBeyondStart()) {
+         End = RHS;
+       } else {
+         // If RHS < Start, the backedge will be taken zero times.  So in
+@@ -13679,91 +13789,15 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+         // We convert it to the following to make it more convenient for SCEV:
+         //
+         //     ceil(max(RHS, Start) - Start) / Stride
+-        End = IsSigned ? getSMaxExpr(RHS, Start) : getUMaxExpr(RHS, Start);
++        End = ClampToStart(RHS);
+ 
+         // See what would happen if we assume the backedge is taken. This is
+         // used to compute MaxBECount.
+-        BECountIfBackedgeTaken =
+-            getUDivCeilSCEV(getMinusSCEV(RHS, Start), Stride);
++        BECountIfBackedgeTaken = getUDivCeilSCEV(Distance(Start, RHS), Stride);
+       }
+ 
+-      // At this point, we know:
+-      //
+-      // 1. If IsSigned, Start <=s End; otherwise, Start <=u End
+-      // 2. The index variable doesn't overflow.
+-      //
+-      // Therefore, we know N exists such that
+-      // (Start + Stride * N) >= End, and computing "(Start + Stride * N)"
+-      // doesn't overflow.
+-      //
+-      // Using this information, try to prove whether the addition in
+-      // "(Start - End) + (Stride - 1)" has unsigned overflow.
+-      //
+-      // If the IV cannot overflow, RHS is at least Stride - 1 below the maximum
+-      // value, so the distance End - Start is at most UMAX - (Stride - 1) and
+-      // the (Stride - 1) addition below cannot overflow.
+-      const SCEV *One = getOne(Stride->getType());
+-      bool MayAddOverflow = IVMayOverflow && [&] {
+-        if (isKnownToBeAPowerOfTwo(Stride)) {
+-          // Suppose Stride is a power of two, and Start/End are unsigned
+-          // integers.  Let UMAX be the largest representable unsigned
+-          // integer.
+-          //
+-          // By the preconditions of this function, we know
+-          // "(Start + Stride * N) >= End", and this doesn't overflow.
+-          // As a formula:
+-          //
+-          //   End <= (Start + Stride * N) <= UMAX
+-          //
+-          // Subtracting Start from all the terms:
+-          //
+-          //   End - Start <= Stride * N <= UMAX - Start
+-          //
+-          // Since Start is unsigned, UMAX - Start <= UMAX.  Therefore:
+-          //
+-          //   End - Start <= Stride * N <= UMAX
+-          //
+-          // Stride * N is a multiple of Stride. Therefore,
+-          //
+-          //   End - Start <= Stride * N <= UMAX - (UMAX mod Stride)
+-          //
+-          // Since Stride is a power of two, UMAX + 1 is divisible by
+-          // Stride. Therefore, UMAX mod Stride == Stride - 1.  So we can
+-          // write:
+-          //
+-          //   End - Start <= Stride * N <= UMAX - Stride - 1
+-          //
+-          // Dropping the middle term:
+-          //
+-          //   End - Start <= UMAX - Stride - 1
+-          //
+-          // Adding Stride - 1 to both sides:
+-          //
+-          //   (End - Start) + (Stride - 1) <= UMAX
+-          //
+-          // In other words, the addition doesn't have unsigned overflow.
+-          //
+-          // A similar proof works if we treat Start/End as signed values.
+-          // Just rewrite steps before "End - Start <= Stride * N <= UMAX"
+-          // to use signed max instead of unsigned max. Note that we're
+-          // trying to prove a lack of unsigned overflow in either case.
+-          return false;
+-        }
+-        if (Start == Stride || Start == getMinusSCEV(Stride, One)) {
+-          // If Start is equal to Stride, (End - Start) + (Stride - 1) == End
+-          // - 1. If !IsSigned, 0 <u Stride == Start <=u End; so 0 <u End - 1
+-          // <u End. If IsSigned, 0 <s Stride == Start <=s End; so 0 <s End -
+-          // 1 <s End.
+-          //
+-          // If Start is equal to Stride - 1, (End - Start) + Stride - 1 ==
+-          // End.
+-          return false;
+-        }
+-        return true;
+-      }();
+-
+-      const SCEV *Delta = getMinusSCEV(End, Start);
+-      if (!MayAddOverflow) {
++      const SCEV *Delta = Distance(Start, End);
++      if (!AddingStrideMinusOneMayOverflow) {
+         // floor((D + (S - 1)) / S)
+         // We prefer this formulation if it's legal because it's fewer
+         // operations.
+@@ -13787,8 +13821,8 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+     ConstantMaxBECount = BECountIfBackedgeTaken;
+     MaxOrZero = true;
+   } else {
+-    ConstantMaxBECount = computeMaxBECountForLT(
+-        Start, Stride, RHS, getTypeSizeInBits(LHS->getType()), IsSigned);
++    ConstantMaxBECount =
++        computeMaxBECountForLT(Start, Stride, RHS, BitWidth, IsSigned, IsGT);
+   }
+ 
+   if (isa<SCEVCouldNotCompute>(ConstantMaxBECount) &&
+@@ -13801,117 +13835,6 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+                    Predicates);
+ }
+ 
+-ScalarEvolution::ExitLimit ScalarEvolution::howManyGreaterThans(
+-    const SCEV *LHS, const SCEV *RHS, const Loop *L, bool IsSigned,
+-    bool ControlsOnlyExit, bool AllowPredicates) {
+-  SmallVector<const SCEVPredicate *> Predicates;
+-  // We handle only IV > Invariant
+-  if (!isLoopInvariant(RHS, L))
+-    return getCouldNotCompute();
+-
+-  const SCEVAddRecExpr *IV = dyn_cast<SCEVAddRecExpr>(LHS);
+-  if (!IV && AllowPredicates)
+-    // Try to make this an AddRec using runtime tests, in the first X
+-    // iterations of this loop, where X is the SCEV expression found by the
+-    // algorithm below.
+-    IV = convertSCEVToAddRecWithPredicates(LHS, L, Predicates);
+-
+-  // Avoid weird loops
+-  if (!IV || IV->getLoop() != L || !IV->isAffine())
+-    return getCouldNotCompute();
+-
+-  auto WrapType = IsSigned ? SCEV::FlagNSW : SCEV::FlagNUW;
+-  bool NoWrap = ControlsOnlyExit && any(IV->getNoWrapFlags(WrapType));
+-  ICmpInst::Predicate Cond = IsSigned ? ICmpInst::ICMP_SGT : ICmpInst::ICMP_UGT;
+-
+-  const SCEV *Stride = getNegativeSCEV(IV->getStepRecurrence(*this));
+-
+-  // Avoid negative or zero stride values
+-  if (!isKnownPositive(Stride))
+-    return getCouldNotCompute();
+-
+-  // Avoid proven overflow cases: this will ensure that the backedge taken count
+-  // will not generate any unsigned overflow. Relaxed no-overflow conditions
+-  // exploit NoWrapFlags, allowing to optimize in presence of undefined
+-  // behaviors like the case of C language.
+-  bool MayAddOverflow = false;
+-  const SCEV *Start = IV->getStart();
+-  const SCEV *End = RHS;
+-  if (!Stride->isOne() && canIVOverflowOnGT(RHS, Stride, IsSigned)) {
+-    if (!NoWrap)
+-      return getCouldNotCompute();
+-    MayAddOverflow = true;
+-  }
+-
+-  if (!isLoopEntryGuardedByCond(L, Cond, getAddExpr(Start, Stride), RHS)) {
+-    // If we know that Start >= RHS in the context of loop, then we know that
+-    // min(RHS, Start) = RHS at this point.
+-    if (isLoopEntryGuardedByCond(
+-            L, IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE, Start, RHS))
+-      End = RHS;
+-    else
+-      End = IsSigned ? getSMinExpr(RHS, Start) : getUMinExpr(RHS, Start);
+-  }
+-
+-  if (Start->getType()->isPointerTy()) {
+-    Start = getPtrToAddrExpr(Start);
+-    if (isa<SCEVCouldNotCompute>(Start))
+-      return Start;
+-  }
+-  if (End->getType()->isPointerTy()) {
+-    End = getPtrToAddrExpr(End);
+-    if (isa<SCEVCouldNotCompute>(End))
+-      return End;
+-  }
+-
+-  const SCEV *Delta = getMinusSCEV(Start, End);
+-  const SCEV *BECount;
+-  if (MayAddOverflow) {
+-    // The ceiling division instead needs Start >= End, so that (Start - End) is
+-    // the exact unsigned distance between them.
+-    if (!isLoopEntryGuardedByCond(
+-            L, IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE, Start, End))
+-      return getCouldNotCompute();
+-    BECount = getUDivCeilSCEV(Delta, Stride);
+-  } else {
+-    // Compute ((Start - End) + (Stride - 1)) / Stride, if the IV cannot
+-    // overflow as it requires fewer operations.
+-    const SCEV *One = getOne(Stride->getType());
+-    BECount = getUDivExpr(getAddExpr(Delta, getMinusSCEV(Stride, One)), Stride);
+-  }
+-
+-  APInt MaxStart = IsSigned ? getSignedRangeMax(Start)
+-                            : getUnsignedRangeMax(Start);
+-
+-  APInt MinStride = IsSigned ? getSignedRangeMin(Stride)
+-                             : getUnsignedRangeMin(Stride);
+-
+-  unsigned BitWidth = getTypeSizeInBits(LHS->getType());
+-  APInt Limit = IsSigned ? APInt::getSignedMinValue(BitWidth) + (MinStride - 1)
+-                         : APInt::getMinValue(BitWidth) + (MinStride - 1);
+-
+-  // Although End can be a MIN expression we estimate MinEnd considering only
+-  // the case End = RHS. This is safe because in the other case (Start - End)
+-  // is zero, leading to a zero maximum backedge taken count.
+-  APInt MinEnd =
+-    IsSigned ? APIntOps::smax(getSignedRangeMin(RHS), Limit)
+-             : APIntOps::umax(getUnsignedRangeMin(RHS), Limit);
+-
+-  const SCEV *ConstantMaxBECount =
+-      isa<SCEVConstant>(BECount)
+-          ? BECount
+-          : getUDivCeilSCEV(getConstant(MaxStart - MinEnd),
+-                            getConstant(MinStride));
+-
+-  if (isa<SCEVCouldNotCompute>(ConstantMaxBECount))
+-    ConstantMaxBECount = BECount;
+-  const SCEV *SymbolicMaxBECount =
+-      isa<SCEVCouldNotCompute>(BECount) ? ConstantMaxBECount : BECount;
+-
+-  return ExitLimit(BECount, ConstantMaxBECount, SymbolicMaxBECount, false,
+-                   Predicates);
+-}
+-
+ const SCEV *SCEVAddRecExpr::getNumIterationsInRange(const ConstantRange &Range,
+                                                     ScalarEvolution &SE) const {
+   if (Range.isFullSet())  // Infinite loop.
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll b/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
+index e976506d87619..cf939b730959d 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exit-count-greater-than.ll
+@@ -86,9 +86,10 @@ exit:
+ define i32 @sgt_stride_4_variable_bound(i32 %n, i32 %m) {
+ ; CHECK-LABEL: 'sgt_stride_4_variable_bound'
+ ; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride_4_variable_bound
+-; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((3 + (-1 * %m) + %n) /u 4)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((3 + (-1 * %m) + %n) /u 4)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   %add = add nsw i32 %n, 4
+@@ -115,9 +116,10 @@ ret:
+ define i32 @ugt_stride_4_variable_bound(i32 %n, i32 %m) {
+ ; CHECK-LABEL: 'ugt_stride_4_variable_bound'
+ ; CHECK-NEXT:  Determining loop execution counts for: @ugt_stride_4_variable_bound
+-; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((3 + (-1 * %m) + %n) /u 4)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1073741823
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((3 + (-1 * %m) + %n) /u 4)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   %add = add nuw i32 %n, 4
+@@ -145,9 +147,10 @@ ret:
+ define i32 @sgt_stride_3_variable_bound(i32 %n, i32 %m) {
+ ; CHECK-LABEL: 'sgt_stride_3_variable_bound'
+ ; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride_3_variable_bound
+-; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((((-1 * (1 umin ((-1 * (%n smin %m)) + %n)))<nuw><nsw> + (-1 * (%n smin %m)) + %n) /u 3) + (1 umin ((-1 * (%n smin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1431655765
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * (%n smin %m)) + %n)))<nuw><nsw> + (-1 * (%n smin %m)) + %n) /u 3) + (1 umin ((-1 * (%n smin %m)) + %n)))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   %add = add nsw i32 %n, 3
+@@ -170,9 +173,9 @@ ret:
+ define void @sgt_stride_4_no_overflow(i32 %n) {
+ ; CHECK-LABEL: 'sgt_stride_4_no_overflow'
+ ; CHECK-NEXT:  Determining loop execution counts for: @sgt_stride_4_no_overflow
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is ((3 + %n) /u 4)
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((3 + %n)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 536870912
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((3 + %n) /u 4)
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((3 + %n)<nsw> /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-value-nowrap-flags.ll b/llvm/test/Analysis/ScalarEvolution/exit-value-nowrap-flags.ll
+index 92e1a3da73c85..e181566fc2cba 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exit-value-nowrap-flags.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exit-value-nowrap-flags.ll
+@@ -13,13 +13,13 @@ define void @dec_to_start_of_nuw_addrec(i64 %start) {
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%up> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %up: Computable }
+ ; CHECK-NEXT:    %y = phi i64 [ %x, %up ], [ %y.next, %down ]
+-; CHECK-NEXT:    --> {{\{\{}}%start,+,1}<nuw><%up>,+,-1}<%down> U: full-set S: full-set --> {(9 + %start)<u nuw>,+,-1}<%down> U: full-set S: full-set Exits: (1 + ((8 + %start) umin %start)) LoopDispositions: { %down: Computable }
++; CHECK-NEXT:    --> {{\{\{}}%start,+,1}<nuw><%up>,+,-1}<nw><%down> U: full-set S: full-set --> {(9 + %start)<u nuw>,+,-1}<nw><%down> U: full-set S: full-set Exits: (1 + ((8 + %start) umin %start)) LoopDispositions: { %down: Computable }
+ ; CHECK-NEXT:    %y.next = add i64 %y, -1
+-; CHECK-NEXT:    --> {{\{\{}}(-1 + %start),+,1}<nw><%up>,+,-1}<%down> U: full-set S: full-set --> {(8 + %start),+,-1}<%down> U: full-set S: full-set Exits: ((8 + %start) umin %start) LoopDispositions: { %down: Computable }
++; CHECK-NEXT:    --> {{\{\{}}(-1 + %start),+,1}<nw><%up>,+,-1}<nw><%down> U: full-set S: full-set --> {(8 + %start),+,-1}<nw><%down> U: full-set S: full-set Exits: ((8 + %start) umin %start) LoopDispositions: { %down: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @dec_to_start_of_nuw_addrec
+ ; CHECK-NEXT:  Loop %down: backedge-taken count is (8 + (-1 * ((8 + %start) umin %start)) + %start)
+-; CHECK-NEXT:  Loop %down: constant max backedge-taken count is i64 -1
+-; CHECK-NEXT:  Loop %down: symbolic max backedge-taken count is (8 + (-1 * ((8 + %start) umin %start)) + %start)
++; CHECK-NEXT:  Loop %down: constant max backedge-taken count is i64 8, actual taken count either this or zero.
++; CHECK-NEXT:  Loop %down: symbolic max backedge-taken count is (8 + (-1 * ((8 + %start) umin %start)) + %start), actual taken count either this or zero.
+ ; CHECK-NEXT:  Loop %down: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %up: backedge-taken count is i32 9
+ ; CHECK-NEXT:  Loop %up: constant max backedge-taken count is i32 9
+@@ -59,13 +59,13 @@ define void @dec_to_start_of_nuw_ptr_addrec(ptr %start) {
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%up> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %up: Computable }
+ ; CHECK-NEXT:    %q = phi ptr [ %p, %up ], [ %q.next, %down ]
+-; CHECK-NEXT:    --> {{\{\{}}%start,+,1}<nuw><%up>,+,-1}<%down> U: full-set S: full-set --> {(9 + %start)<u nuw>,+,-1}<%down> U: full-set S: full-set Exits: (1 + (-1 * (ptrtoaddr ptr %start to i64)) + ((8 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %start to i64)) + %start) LoopDispositions: { %down: Computable }
++; CHECK-NEXT:    --> {{\{\{}}%start,+,1}<nuw><%up>,+,-1}<nw><%down> U: full-set S: full-set --> {(9 + %start)<u nuw>,+,-1}<nw><%down> U: full-set S: full-set Exits: (1 + (-1 * (ptrtoaddr ptr %start to i64)) + ((8 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %start to i64)) + %start) LoopDispositions: { %down: Computable }
+ ; CHECK-NEXT:    %q.next = getelementptr i8, ptr %q, i64 -1
+-; CHECK-NEXT:    --> {{\{\{}}(-1 + %start),+,1}<nw><%up>,+,-1}<%down> U: full-set S: full-set --> {(8 + %start),+,-1}<%down> U: full-set S: full-set Exits: ((-1 * (ptrtoaddr ptr %start to i64)) + ((8 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %start to i64)) + %start) LoopDispositions: { %down: Computable }
++; CHECK-NEXT:    --> {{\{\{}}(-1 + %start),+,1}<nw><%up>,+,-1}<nw><%down> U: full-set S: full-set --> {(8 + %start),+,-1}<nw><%down> U: full-set S: full-set Exits: ((-1 * (ptrtoaddr ptr %start to i64)) + ((8 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %start to i64)) + %start) LoopDispositions: { %down: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @dec_to_start_of_nuw_ptr_addrec
+ ; CHECK-NEXT:  Loop %down: backedge-taken count is (8 + (-1 * ((8 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %start to i64))) + (ptrtoaddr ptr %start to i64))
+-; CHECK-NEXT:  Loop %down: constant max backedge-taken count is i64 -1
+-; CHECK-NEXT:  Loop %down: symbolic max backedge-taken count is (8 + (-1 * ((8 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %start to i64))) + (ptrtoaddr ptr %start to i64))
++; CHECK-NEXT:  Loop %down: constant max backedge-taken count is i64 8, actual taken count either this or zero.
++; CHECK-NEXT:  Loop %down: symbolic max backedge-taken count is (8 + (-1 * ((8 + (ptrtoaddr ptr %start to i64)) umin (ptrtoaddr ptr %start to i64))) + (ptrtoaddr ptr %start to i64)), actual taken count either this or zero.
+ ; CHECK-NEXT:  Loop %down: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %up: backedge-taken count is i32 9
+ ; CHECK-NEXT:  Loop %up: constant max backedge-taken count is i32 9
+@@ -105,13 +105,13 @@ define void @dec_to_start_of_wrapping_addrec(i64 %start) {
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%up> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %up: Computable }
+ ; CHECK-NEXT:    %y = phi i64 [ %x, %up ], [ %y.next, %down ]
+-; CHECK-NEXT:    --> {{\{\{}}%start,+,1}<nw><%up>,+,-1}<%down> U: full-set S: full-set --> {(9 + %start),+,-1}<%down> U: full-set S: full-set Exits: (1 + ((8 + %start) umin %start)) LoopDispositions: { %down: Computable }
++; CHECK-NEXT:    --> {{\{\{}}%start,+,1}<nw><%up>,+,-1}<nw><%down> U: full-set S: full-set --> {(9 + %start),+,-1}<nw><%down> U: full-set S: full-set Exits: (1 + ((8 + %start) umin %start)) LoopDispositions: { %down: Computable }
+ ; CHECK-NEXT:    %y.next = add i64 %y, -1
+-; CHECK-NEXT:    --> {{\{\{}}(-1 + %start),+,1}<nw><%up>,+,-1}<%down> U: full-set S: full-set --> {(8 + %start),+,-1}<%down> U: full-set S: full-set Exits: ((8 + %start) umin %start) LoopDispositions: { %down: Computable }
++; CHECK-NEXT:    --> {{\{\{}}(-1 + %start),+,1}<nw><%up>,+,-1}<nw><%down> U: full-set S: full-set --> {(8 + %start),+,-1}<nw><%down> U: full-set S: full-set Exits: ((8 + %start) umin %start) LoopDispositions: { %down: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @dec_to_start_of_wrapping_addrec
+ ; CHECK-NEXT:  Loop %down: backedge-taken count is (8 + (-1 * ((8 + %start) umin %start)) + %start)
+-; CHECK-NEXT:  Loop %down: constant max backedge-taken count is i64 -1
+-; CHECK-NEXT:  Loop %down: symbolic max backedge-taken count is (8 + (-1 * ((8 + %start) umin %start)) + %start)
++; CHECK-NEXT:  Loop %down: constant max backedge-taken count is i64 8, actual taken count either this or zero.
++; CHECK-NEXT:  Loop %down: symbolic max backedge-taken count is (8 + (-1 * ((8 + %start) umin %start)) + %start), actual taken count either this or zero.
+ ; CHECK-NEXT:  Loop %down: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %up: backedge-taken count is i32 9
+ ; CHECK-NEXT:  Loop %up: constant max backedge-taken count is i32 9
+diff --git a/llvm/test/Analysis/ScalarEvolution/no-wrap-symbolic-becount.ll b/llvm/test/Analysis/ScalarEvolution/no-wrap-symbolic-becount.ll
+index 85c213c7ab090..a17ddd9e6d26c 100644
+--- a/llvm/test/Analysis/ScalarEvolution/no-wrap-symbolic-becount.ll
++++ b/llvm/test/Analysis/ScalarEvolution/no-wrap-symbolic-becount.ll
+@@ -126,13 +126,13 @@ define void @pointer_iv_nowrap_guard(ptr %startptr, ptr %endptr) local_unnamed_a
+ ; CHECK-NEXT:    %init = getelementptr inbounds i32, ptr %startptr, i64 2000
+ ; CHECK-NEXT:    --> (8000 + %startptr)<nuw> U: [8000,0) S: [8000,0)
+ ; CHECK-NEXT:    %iv = phi ptr [ %init, %entry ], [ %iv.next, %loop ]
+-; CHECK-NEXT:    --> {(8000 + %startptr)<nuw>,+,4}<nuw><%loop> U: [8000,0) S: [8000,0) Exits: (8000 + (4 * ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + ((8004 + (ptrtoaddr ptr %startptr to i64)) umax (ptrtoaddr ptr %endptr to i64))) /u 4))<nuw> + %startptr) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(8000 + %startptr)<nuw>,+,4}<nuw><%loop> U: [8000,0) S: [8000,0) Exits: (8000 + (4 * ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + (ptrtoaddr ptr %endptr to i64)) /u 4))<nuw> + %startptr) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = getelementptr inbounds i32, ptr %iv, i64 1
+-; CHECK-NEXT:    --> {(8004 + %startptr),+,4}<nuw><%loop> U: full-set S: full-set Exits: (8004 + (4 * ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + ((8004 + (ptrtoaddr ptr %startptr to i64)) umax (ptrtoaddr ptr %endptr to i64))) /u 4))<nuw> + %startptr) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(8004 + %startptr),+,4}<nuw><%loop> U: full-set S: full-set Exits: (8004 + (4 * ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + (ptrtoaddr ptr %endptr to i64)) /u 4))<nuw> + %startptr) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @pointer_iv_nowrap_guard
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + ((8004 + (ptrtoaddr ptr %startptr to i64)) umax (ptrtoaddr ptr %endptr to i64))) /u 4)
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + (ptrtoaddr ptr %endptr to i64)) /u 4)
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4611686018427387903
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + ((8004 + (ptrtoaddr ptr %startptr to i64)) umax (ptrtoaddr ptr %endptr to i64))) /u 4)
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + (ptrtoaddr ptr %endptr to i64)) /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
+index 1f08a620b2e15..ee5a02ef0250a 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
+@@ -14,9 +14,9 @@ define void @foo1(ptr nocapture %A, i32 %n, i32 %s) mustprogress {
+ ;
+ ; CHECK-LABEL: 'foo1'
+ ; CHECK-NEXT:  Determining loop execution counts for: @foo1
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is ((-1 + (%n smax %s)) /u %s)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is ((-1 + %n) /u %s)
+ ; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is ((-1 + (%n smax %s)) /u %s)
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is ((-1 + %n) /u %s)
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count13.ll b/llvm/test/Analysis/ScalarEvolution/trip-count13.ll
+index 720b2ae49c090..8dddefbb827f0 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count13.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count13.ll
+@@ -106,8 +106,8 @@ define void @s_2(i8 %start) {
+ ; CHECK-LABEL: 's_2'
+ ; CHECK-NEXT:  Determining loop execution counts for: @s_2
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 * ((-100 + %start) smin %start)) + %start)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 * ((-100 + %start) smin %start)) + %start)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 100, actual taken count either this or zero.
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 * ((-100 + %start) smin %start)) + %start), actual taken count either this or zero.
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/CodeGen/Thumb2/LowOverheadLoops/arm_cmplx_dot_prod_f32.ll b/llvm/test/CodeGen/Thumb2/LowOverheadLoops/arm_cmplx_dot_prod_f32.ll
+index a87d363fa61ee..71b07bd313336 100644
+--- a/llvm/test/CodeGen/Thumb2/LowOverheadLoops/arm_cmplx_dot_prod_f32.ll
++++ b/llvm/test/CodeGen/Thumb2/LowOverheadLoops/arm_cmplx_dot_prod_f32.ll
+@@ -12,16 +12,11 @@ define void @arm_cmplx_dot_prod_f32(ptr %pSrcA, ptr %pSrcB, i32 %numSamples, ptr
+ ; CHECK-NEXT:    cmp r2, #8
+ ; CHECK-NEXT:    blo .LBB0_6
+ ; CHECK-NEXT:  @ %bb.1: @ %while.body.preheader
+-; CHECK-NEXT:    lsrs r4, r2, #2
+-; CHECK-NEXT:    mov.w lr, #2
+-; CHECK-NEXT:    cmp r4, #2
++; CHECK-NEXT:    mov.w r4, #-1
++; CHECK-NEXT:    add.w lr, r4, r2, lsr #2
+ ; CHECK-NEXT:    vldrw.u32 q2, [r1], #32
+ ; CHECK-NEXT:    vldrw.u32 q1, [r0], #32
+-; CHECK-NEXT:    it lt
+-; CHECK-NEXT:    lsrlt.w lr, r2, #2
+-; CHECK-NEXT:    rsb r4, lr, r2, lsr #2
+ ; CHECK-NEXT:    vmov.i32 q0, #0x0
+-; CHECK-NEXT:    add.w lr, r4, #1
+ ; CHECK-NEXT:  .LBB0_2: @ %while.body
+ ; CHECK-NEXT:    @ =>This Inner Loop Header: Depth=1
+ ; CHECK-NEXT:    vcmla.f32 q0, q1, q2, #0
+diff --git a/llvm/test/CodeGen/Thumb2/mve-pipelineloops.ll b/llvm/test/CodeGen/Thumb2/mve-pipelineloops.ll
+index 43ed5eefbf4c7..5bfc96cf12def 100644
+--- a/llvm/test/CodeGen/Thumb2/mve-pipelineloops.ll
++++ b/llvm/test/CodeGen/Thumb2/mve-pipelineloops.ll
+@@ -10,18 +10,14 @@ define void @arm_cmplx_dot_prod_q15(ptr noundef %pSrcA, ptr noundef %pSrcB, i32
+ ; CHECK-NEXT:    cmp r2, #16
+ ; CHECK-NEXT:    blo .LBB0_5
+ ; CHECK-NEXT:  @ %bb.1: @ %while.body.preheader
+-; CHECK-NEXT:    movs r6, #2
+-; CHECK-NEXT:    lsrs r7, r2, #3
+-; CHECK-NEXT:    rsb r6, r6, r2, lsr #3
+-; CHECK-NEXT:    cmp r7, #2
+-; CHECK-NEXT:    mov.w r5, #0
+-; CHECK-NEXT:    csel r7, r6, r5, hs
+-; CHECK-NEXT:    add.w lr, r7, #1
+-; CHECK-NEXT:    mov r4, r5
++; CHECK-NEXT:    mov.w r7, #-1
++; CHECK-NEXT:    movs r5, #0
++; CHECK-NEXT:    add.w lr, r7, r2, lsr #3
+ ; CHECK-NEXT:    vldrh.u16 q0, [r0], #32
++; CHECK-NEXT:    mov r4, r5
+ ; CHECK-NEXT:    movs r7, #0
+-; CHECK-NEXT:    mov r8, r5
+ ; CHECK-NEXT:    vldrh.u16 q1, [r1], #32
++; CHECK-NEXT:    mov r8, r5
+ ; CHECK-NEXT:    vmlsldava.s16 r4, r7, q0, q1
+ ; CHECK-NEXT:    vldrh.u16 q2, [r0, #-16]
+ ; CHECK-NEXT:    vmlaldavax.s16 r8, r5, q0, q1
