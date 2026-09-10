@@ -170,38 +170,23 @@ define hidden range(i32 -1, 2) i32 @zlib_inflate_table(i32 noundef %0, ptr nofre
   %i.b = alloca [16 x i16], align 16              ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
-  store i16 0, ptr %i.a, align 16
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 3 uses
-  store i16 0, ptr %i.c, align 2
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 4 uses
-  store i16 0, ptr %i.d, align 4
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 6 ; 4 uses
-  store i16 0, ptr %i.e, align 2
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
-  store i16 0, ptr %i.f, align 8
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 10 ; 4 uses
-  store i16 0, ptr %i.g, align 2
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 4 uses
-  store i16 0, ptr %i.h, align 4
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 14 ; 4 uses
-  store i16 0, ptr %i.i, align 2
-  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
-  store i16 0, ptr %i.j, align 16
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 18 ; 4 uses
-  store i16 0, ptr %i.k, align 2
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 20 ; 4 uses
-  store i16 0, ptr %i.l, align 4
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 22 ; 4 uses
-  store i16 0, ptr %i.m, align 2
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 4 uses
-  store i16 0, ptr %i.n, align 8
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 26 ; 4 uses
-  store i16 0, ptr %i.o, align 2
-  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 28 ; 4 uses
-  store i16 0, ptr %i.p, align 4
-  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 30 ; 2 uses
-  store i16 0, ptr %i.q, align 2
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 6 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 10 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 14 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 18 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 20 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 22 ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 26 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 28 ; 3 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 30
   %.not281 = icmp eq i32 %2, 0                    ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   br i1 %.not281, label %._crit_edge.thread, label %.lr.ph.preheader
 
 ._crit_edge.thread:                               ; preds = %.preheader247
@@ -604,13 +589,11 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i64 0, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 0, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.g, align 8
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store ptr null, ptr %i.h, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store i64 1, ptr %1, align 8
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 80
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
+  store i64 1, ptr %i.h, align 8
   store i32 0, ptr %i.c, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 0, ptr %i.i, align 4
@@ -652,7 +635,7 @@ bb.a:
   br i1 %i.a, label %zlib_inflateReset.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr null, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 4 uses
@@ -684,11 +667,10 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   store i64 0, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 0, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.s, align 8
-  store ptr null, ptr %i.b, align 8
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, i8 0, i64 16, i1 false)
   store i64 1, ptr %2, align 8
   store i32 0, ptr %i.o, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 4
