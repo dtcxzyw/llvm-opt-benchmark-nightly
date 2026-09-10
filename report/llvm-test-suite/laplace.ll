@@ -143,12 +143,12 @@ middle.block:                                     ; preds = %vector.body
   %i.ar = icmp slt i32 %i.aq, %2                  ; 12 uses
   %i.as = or i1 %.not, %i.ar
   %i.at = zext i1 %i.ar to i32
-  %invariant.op331 = add i32 %i.am, %i.at
+  %invariant.op331 = add nsw i32 %i.am, %i.at
   %i.au = zext i1 %i.ar to i32
   %i.av = zext i1 %i.ar to i32
   %i.aw = zext i1 %i.ar to i32
   %storemerge.v = select i1 %i.ar, i32 2, i32 1
-  %invariant.op332 = add i32 %i.ao, %storemerge.v
+  %invariant.op332 = add nsw i32 %i.ao, %storemerge.v
   %storemerge288.v = select i1 %i.ar, i32 2, i32 1
   %storemerge288.v.1 = select i1 %i.ar, i32 2, i32 1
   %storemerge288.v.epil = select i1 %i.ar, i32 2, i32 1
@@ -171,7 +171,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ay, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.preheader189.us.us
-  %simplifycfg.merge.reass = add i32 %spec.select187.us.us.us.peel, %invariant.op331
+  %simplifycfg.merge.reass = add nsw i32 %spec.select187.us.us.us.peel, %invariant.op331
   %storemerge298 = select i1 %i.as, i32 %simplifycfg.merge.reass, i32 %spec.select187.us.us.us.peel
   store i32 %storemerge298, ptr %i.ba, align 4, !tbaa !7
   %indvars.iv.next247.peel = add nsw i64 %i.az, 1 ; 3 uses
@@ -185,7 +185,7 @@ bb.b:                                             ; preds = %.preheader189.us.us
   br i1 %i.an, label %.epil.preheader, label %.lr.ph194.split.us200.us.peel.next.new
 
 bb.c:                                             ; preds = %.preheader189.us.us
-  %storemerge.reass = add i32 %spec.select187.us.us.us.peel, %invariant.op332
+  %storemerge.reass = add nsw i32 %spec.select187.us.us.us.peel, %invariant.op332
   store i32 %storemerge.reass, ptr %i.ba, align 4, !tbaa !7
   %indvars.iv.next252.peel = add nsw i64 %i.az, 1 ; 3 uses
   br i1 %exitcond254.peel.not, label %._crit_edge195.us.us, label %.lr.ph194.split.us.us.us.peel.next
@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %.preheader189.us.us
   %.0173192.us202.us = phi i32 [ %i.bq, %.lr.ph194.split.us200.us.peel.next.new ], [ 1, %.lr.ph194.split.us200.us.peel.next ] ; 2 uses
   %niter = phi i32 [ %niter.next.1, %.lr.ph194.split.us200.us.peel.next.new ], [ 0, %.lr.ph194.split.us200.us.peel.next ]
   %i.bg = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv246
-  %spec.select187.us204.us.reass = add i32 %store_forwarded, %invariant.op ; 2 uses
+  %spec.select187.us204.us.reass = add nsw i32 %store_forwarded, %invariant.op ; 2 uses
   %i.bh = add nsw i32 %spec.select187.us204.us.reass, 1 ; 2 uses
   %i.bi = add nuw nsw i32 %.0173192.us202.us, 1
   %i.bj = icmp slt i32 %i.bi, %0                  ; 2 uses
@@ -215,7 +215,7 @@ bb.c:                                             ; preds = %.preheader189.us.us
   store i32 %storemerge299, ptr %i.bg, align 4, !tbaa !7
   %i.bn = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv246
   %i.bo = getelementptr i8, ptr %i.bn, i64 4
-  %spec.select187.us204.us.reass.1 = add i32 %storemerge299, %invariant.op ; 2 uses
+  %spec.select187.us204.us.reass.1 = add nsw i32 %storemerge299, %invariant.op ; 2 uses
   %i.bp = add nsw i32 %spec.select187.us204.us.reass.1, 1 ; 2 uses
   %i.bq = add nuw nsw i32 %.0173192.us202.us, 2   ; 3 uses
   %i.br = icmp slt i32 %i.bq, %0                  ; 2 uses
@@ -236,7 +236,7 @@ bb.c:                                             ; preds = %.preheader189.us.us
   %.0173192.us.us.us = phi i32 [ %i.ca, %.lr.ph194.split.us.us.us.peel.next.new ], [ 1, %.lr.ph194.split.us.us.us.peel.next ] ; 2 uses
   %niter323 = phi i32 [ %niter323.next.1, %.lr.ph194.split.us.us.us.peel.next.new ], [ 0, %.lr.ph194.split.us.us.us.peel.next ]
   %i.bv = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv251
-  %spec.select187.us.us.us.reass = add i32 %store_forwarded308, %invariant.op293
+  %spec.select187.us.us.us.reass = add nsw i32 %store_forwarded308, %invariant.op293
   %i.bw = add nuw nsw i32 %.0173192.us.us.us, 1
   %i.bx = icmp slt i32 %i.bw, %0
   %spec.select296.v = select i1 %i.bx, i32 2, i32 1
@@ -245,7 +245,7 @@ bb.c:                                             ; preds = %.preheader189.us.us
   store i32 %storemerge288, ptr %i.bv, align 4, !tbaa !7
   %i.by = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv251
   %i.bz = getelementptr i8, ptr %i.by, i64 4
-  %spec.select187.us.us.us.reass.1 = add i32 %storemerge288, %invariant.op293
+  %spec.select187.us.us.us.reass.1 = add nsw i32 %storemerge288, %invariant.op293
   %i.ca = add nuw nsw i32 %.0173192.us.us.us, 2   ; 3 uses
   %i.cb = icmp slt i32 %i.ca, %0
   %spec.select296.v.1 = select i1 %i.cb, i32 2, i32 1
@@ -266,7 +266,7 @@ bb.c:                                             ; preds = %.preheader189.us.us
   %.0173192.us.us.us.epil.init = phi i32 [ 1, %.lr.ph194.split.us.us.us.peel.next ], [ %i.ca, %._crit_edge195.us.us.loopexit.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod321)
   %i.cc = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv251.epil.init
-  %spec.select187.us.us.us.reass.epil = add i32 %store_forwarded308.epil.init, %invariant.op293
+  %spec.select187.us.us.us.reass.epil = add nsw i32 %store_forwarded308.epil.init, %invariant.op293
   %i.cd = add nuw nsw i32 %.0173192.us.us.us.epil.init, 1
   %i.ce = icmp slt i32 %i.cd, %0
   %spec.select296.v.epil = select i1 %i.ce, i32 2, i32 1
@@ -285,7 +285,7 @@ bb.c:                                             ; preds = %.preheader189.us.us
   %.0173192.us202.us.epil.init = phi i32 [ 1, %.lr.ph194.split.us200.us.peel.next ], [ %i.bq, %._crit_edge195.us.us.loopexit311.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod316)
   %i.cf = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv246.epil.init
-  %spec.select187.us204.us.reass.epil = add i32 %store_forwarded.epil.init, %invariant.op ; 2 uses
+  %spec.select187.us204.us.reass.epil = add nsw i32 %store_forwarded.epil.init, %invariant.op ; 2 uses
   %i.cg = add nsw i32 %spec.select187.us204.us.reass.epil, 1 ; 2 uses
   %i.ch = add nuw nsw i32 %.0173192.us202.us.epil.init, 1
   %i.ci = icmp slt i32 %i.ch, %0                  ; 2 uses

@@ -205,9 +205,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.jf, label %._crit_edge, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op = add i64 1, %i.iq
-  %invariant.op720 = add i64 2, %i.iq
-  %invariant.op722 = add i64 3, %i.iq
+  %invariant.op = add nsw i64 1, %i.iq
+  %invariant.op720 = add nsw i64 2, %i.iq
+  %invariant.op722 = add nsw i64 3, %i.iq
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
@@ -217,17 +217,17 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.ji = load double, ptr %i.jh, align 8, !tbaa !59
   %i.jj = getelementptr inbounds [8 x i8], ptr %i.ip, i64 %i.jg
   store double %i.ji, ptr %i.jj, align 8, !tbaa !59
-  %.reass = add i64 %indvars.iv, %invariant.op    ; 2 uses
+  %.reass = add nsw i64 %indvars.iv, %invariant.op ; 2 uses
   %i.jk = getelementptr inbounds [8 x i8], ptr %i.im, i64 %.reass
   %i.jl = load double, ptr %i.jk, align 8, !tbaa !59
   %i.jm = getelementptr inbounds [8 x i8], ptr %i.ip, i64 %.reass
   store double %i.jl, ptr %i.jm, align 8, !tbaa !59
-  %.reass721 = add i64 %indvars.iv, %invariant.op720 ; 2 uses
+  %.reass721 = add nsw i64 %indvars.iv, %invariant.op720 ; 2 uses
   %i.jn = getelementptr inbounds [8 x i8], ptr %i.im, i64 %.reass721
   %i.jo = load double, ptr %i.jn, align 8, !tbaa !59
   %i.jp = getelementptr inbounds [8 x i8], ptr %i.ip, i64 %.reass721
   store double %i.jo, ptr %i.jp, align 8, !tbaa !59
-  %.reass723 = add i64 %indvars.iv, %invariant.op722 ; 2 uses
+  %.reass723 = add nsw i64 %indvars.iv, %invariant.op722 ; 2 uses
   %i.jq = getelementptr inbounds [8 x i8], ptr %i.im, i64 %.reass723
   %i.jr = load double, ptr %i.jq, align 8, !tbaa !59
   %i.js = getelementptr inbounds [8 x i8], ptr %i.ip, i64 %.reass723
@@ -630,9 +630,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.mg, label %._crit_edge, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op = add i64 1, %i.lr
-  %invariant.op814 = add i64 2, %i.lr
-  %invariant.op816 = add i64 3, %i.lr
+  %invariant.op = add nsw i64 1, %i.lr
+  %invariant.op814 = add nsw i64 2, %i.lr
+  %invariant.op816 = add nsw i64 3, %i.lr
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
@@ -642,17 +642,17 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.mj = load double, ptr %i.mi, align 8, !tbaa !59
   %i.mk = getelementptr inbounds [8 x i8], ptr %i.lq, i64 %i.mh
   store double %i.mj, ptr %i.mk, align 8, !tbaa !59
-  %.reass = add i64 %indvars.iv, %invariant.op    ; 2 uses
+  %.reass = add nsw i64 %indvars.iv, %invariant.op ; 2 uses
   %i.ml = getelementptr inbounds [8 x i8], ptr %i.lo, i64 %.reass
   %i.mm = load double, ptr %i.ml, align 8, !tbaa !59
   %i.mn = getelementptr inbounds [8 x i8], ptr %i.lq, i64 %.reass
   store double %i.mm, ptr %i.mn, align 8, !tbaa !59
-  %.reass815 = add i64 %indvars.iv, %invariant.op814 ; 2 uses
+  %.reass815 = add nsw i64 %indvars.iv, %invariant.op814 ; 2 uses
   %i.mo = getelementptr inbounds [8 x i8], ptr %i.lo, i64 %.reass815
   %i.mp = load double, ptr %i.mo, align 8, !tbaa !59
   %i.mq = getelementptr inbounds [8 x i8], ptr %i.lq, i64 %.reass815
   store double %i.mp, ptr %i.mq, align 8, !tbaa !59
-  %.reass817 = add i64 %indvars.iv, %invariant.op816 ; 2 uses
+  %.reass817 = add nsw i64 %indvars.iv, %invariant.op816 ; 2 uses
   %i.mr = getelementptr inbounds [8 x i8], ptr %i.lo, i64 %.reass817
   %i.ms = load double, ptr %i.mr, align 8, !tbaa !59
   %i.mt = getelementptr inbounds [8 x i8], ptr %i.lq, i64 %.reass817
@@ -739,9 +739,9 @@ scalar.ph782.prol.loopexit:                       ; preds = %scalar.ph782.prol, 
   br i1 %i.nr, label %._crit_edge.1, label %scalar.ph782.preheader.new
 
 scalar.ph782.preheader.new:                       ; preds = %scalar.ph782.prol.loopexit
-  %invariant.op818 = add i64 1, %i.nd
-  %invariant.op820 = add i64 2, %i.nd
-  %invariant.op822 = add i64 3, %i.nd
+  %invariant.op818 = add nsw i64 1, %i.nd
+  %invariant.op820 = add nsw i64 2, %i.nd
+  %invariant.op822 = add nsw i64 3, %i.nd
   br label %scalar.ph782
 
 scalar.ph782:                                     ; preds = %scalar.ph782, %scalar.ph782.preheader.new
@@ -751,17 +751,17 @@ scalar.ph782:                                     ; preds = %scalar.ph782, %scal
   %i.nu = load double, ptr %i.nt, align 8, !tbaa !59
   %i.nv = getelementptr inbounds [8 x i8], ptr %i.lb, i64 %i.ns
   store double %i.nu, ptr %i.nv, align 8, !tbaa !59
-  %.reass819 = add i64 %indvars.iv.1, %invariant.op818 ; 2 uses
+  %.reass819 = add nsw i64 %indvars.iv.1, %invariant.op818 ; 2 uses
   %i.nw = getelementptr inbounds [8 x i8], ptr %i.nb, i64 %.reass819
   %i.nx = load double, ptr %i.nw, align 8, !tbaa !59
   %i.ny = getelementptr inbounds [8 x i8], ptr %i.lb, i64 %.reass819
   store double %i.nx, ptr %i.ny, align 8, !tbaa !59
-  %.reass821 = add i64 %indvars.iv.1, %invariant.op820 ; 2 uses
+  %.reass821 = add nsw i64 %indvars.iv.1, %invariant.op820 ; 2 uses
   %i.nz = getelementptr inbounds [8 x i8], ptr %i.nb, i64 %.reass821
   %i.oa = load double, ptr %i.nz, align 8, !tbaa !59
   %i.ob = getelementptr inbounds [8 x i8], ptr %i.lb, i64 %.reass821
   store double %i.oa, ptr %i.ob, align 8, !tbaa !59
-  %.reass823 = add i64 %indvars.iv.1, %invariant.op822 ; 2 uses
+  %.reass823 = add nsw i64 %indvars.iv.1, %invariant.op822 ; 2 uses
   %i.oc = getelementptr inbounds [8 x i8], ptr %i.nb, i64 %.reass823
   %i.od = load double, ptr %i.oc, align 8, !tbaa !59
   %i.oe = getelementptr inbounds [8 x i8], ptr %i.lb, i64 %.reass823
@@ -1164,9 +1164,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.fqp, label %._crit_edge1751, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op = add i64 1, %i.fqc
-  %invariant.op2669 = add i64 2, %i.fqc
-  %invariant.op2671 = add i64 3, %i.fqc
+  %invariant.op = add nsw i64 1, %i.fqc
+  %invariant.op2669 = add nsw i64 2, %i.fqc
+  %invariant.op2671 = add nsw i64 3, %i.fqc
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
@@ -1176,17 +1176,17 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.fqs = load double, ptr %i.fqr, align 8, !tbaa !59
   %i.fqt = getelementptr inbounds [8 x i8], ptr %.sroa.01174.1, i64 %i.fqq
   store double %i.fqs, ptr %i.fqt, align 8, !tbaa !59
-  %.reass = add i64 %indvars.iv2029, %invariant.op ; 2 uses
+  %.reass = add nsw i64 %indvars.iv2029, %invariant.op ; 2 uses
   %i.fqu = getelementptr inbounds [8 x i8], ptr %i.flt, i64 %.reass
   %i.fqv = load double, ptr %i.fqu, align 8, !tbaa !59
   %i.fqw = getelementptr inbounds [8 x i8], ptr %.sroa.01174.1, i64 %.reass
   store double %i.fqv, ptr %i.fqw, align 8, !tbaa !59
-  %.reass2670 = add i64 %indvars.iv2029, %invariant.op2669 ; 2 uses
+  %.reass2670 = add nsw i64 %indvars.iv2029, %invariant.op2669 ; 2 uses
   %i.fqx = getelementptr inbounds [8 x i8], ptr %i.flt, i64 %.reass2670
   %i.fqy = load double, ptr %i.fqx, align 8, !tbaa !59
   %i.fqz = getelementptr inbounds [8 x i8], ptr %.sroa.01174.1, i64 %.reass2670
   store double %i.fqy, ptr %i.fqz, align 8, !tbaa !59
-  %.reass2672 = add i64 %indvars.iv2029, %invariant.op2671 ; 2 uses
+  %.reass2672 = add nsw i64 %indvars.iv2029, %invariant.op2671 ; 2 uses
   %i.fra = getelementptr inbounds [8 x i8], ptr %i.flt, i64 %.reass2672
   %i.frb = load double, ptr %i.fra, align 8, !tbaa !59
   %i.frc = getelementptr inbounds [8 x i8], ptr %.sroa.01174.1, i64 %.reass2672
@@ -1589,7 +1589,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.kz, label %.preheader.preheader, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op = add i64 1, %i.kb
+  %invariant.op = add nsw i64 1, %i.kb
   br label %scalar.ph
 
 .lr.ph99:                                         ; preds = %.lr.ph99.prol.loopexit, %.lr.ph99
@@ -1626,7 +1626,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.lu = fmul double %i.lt, 5.000000e-01
   %i.lv = getelementptr inbounds [8 x i8], ptr %.0.i69, i64 %i.lo
   store double %i.lu, ptr %i.lv, align 8, !tbaa !59
-  %.reass = add i64 %indvars.iv115, %invariant.op ; 3 uses
+  %.reass = add nsw i64 %indvars.iv115, %invariant.op ; 3 uses
   %i.lw = getelementptr inbounds [8 x i8], ptr %i.fa, i64 %.reass
   %i.lx = load double, ptr %i.lw, align 8, !tbaa !59
   %i.ly = getelementptr inbounds [8 x i8], ptr %i.fg, i64 %.reass

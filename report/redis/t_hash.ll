@@ -202,7 +202,7 @@ hashTypeInitIterator.exit:                        ; preds = %bb.m, %bb.n
   %.03449 = phi i32 [ %.reass, %.lr.ph.split.split ], [ 0, %.lr.ph.split ]
   call fastcc void @addHashIteratorCursorToReply(ptr noundef nonnull %0, ptr noundef %2, i32 noundef 1)
   call fastcc void @addHashIteratorCursorToReply(ptr noundef nonnull %0, ptr noundef %2, i32 noundef 2)
-  %.reass = add i32 %.03449, 2                    ; 2 uses
+  %.reass = add nuw nsw i32 %.03449, 2            ; 2 uses
   %i.al = call i32 @hashTypeNext(ptr noundef nonnull %2, i32 noundef 1)
   %.not42 = icmp eq i32 %i.al, -1
   br i1 %.not42, label %._crit_edge, label %.lr.ph.split.split, !llvm.loop !174

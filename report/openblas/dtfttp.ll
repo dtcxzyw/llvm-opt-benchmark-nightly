@@ -202,9 +202,9 @@ bb.v:                                             ; preds = %bb.j
   %broadcast.splat1376 = shufflevector <4 x i64> %broadcast.splatinsert1375, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.zq = shl nuw nsw <4 x i64> %broadcast.splat1376, splat (i64 2) ; 5 uses
   %i.zr = mul nuw nsw <4 x i64> %broadcast.splat1376, <i64 0, i64 1, i64 2, i64 3>
-  %invariant.op1676 = add <4 x i64> %i.zq, %i.zq  ; 2 uses
-  %invariant.op1677 = add <4 x i64> %invariant.op1676, %i.zq ; 2 uses
-  %invariant.op1680 = add <4 x i64> %invariant.op1677, %i.zq
+  %invariant.op1676 = add nsw <4 x i64> %i.zq, %i.zq ; 2 uses
+  %invariant.op1677 = add nsw <4 x i64> %invariant.op1676, %i.zq ; 2 uses
+  %invariant.op1680 = add nsw <4 x i64> %invariant.op1677, %i.zq
   %broadcast.splatinsert1409 = insertelement <4 x i64> poison, i64 %i.zn, i64 0
   %broadcast.splat1410 = shufflevector <4 x i64> %broadcast.splatinsert1409, <4 x i64> poison, <4 x i32> zeroinitializer
   %i.zs = mul nuw nsw <4 x i64> %broadcast.splat1410, <i64 0, i64 1, i64 2, i64 3>
@@ -295,8 +295,8 @@ vector.body1380:                                  ; preds = %vector.body1380, %v
   %index1381 = phi i64 [ 0, %vector.ph1373 ], [ %index.next1394, %vector.body1380 ] ; 2 uses
   %vec.ind1382 = phi <4 x i64> [ %induction1379, %vector.ph1373 ], [ %vec.ind.next1395.reass, %vector.body1380 ] ; 5 uses
   %step.add1383 = add nsw <4 x i64> %vec.ind1382, %i.zq
-  %step.add.21384.reass = add <4 x i64> %vec.ind1382, %invariant.op1676
-  %step.add.31385.reass = add <4 x i64> %vec.ind1382, %invariant.op1677
+  %step.add.21384.reass = add nsw <4 x i64> %vec.ind1382, %invariant.op1676
+  %step.add.31385.reass = add nsw <4 x i64> %vec.ind1382, %invariant.op1677
   %wide.gep1386 = getelementptr inbounds [8 x i8], ptr %3, <4 x i64> %vec.ind1382
   %wide.gep1387 = getelementptr inbounds [8 x i8], ptr %3, <4 x i64> %step.add1383
   %wide.gep1388 = getelementptr inbounds [8 x i8], ptr %3, <4 x i64> %step.add.21384.reass
@@ -314,7 +314,7 @@ vector.body1380:                                  ; preds = %vector.body1380, %v
   store <4 x double> %wide.masked.gather1392, ptr %i.abb, align 8, !tbaa !92, !alias.scope !103, !noalias !102
   store <4 x double> %wide.masked.gather1393, ptr %i.abc, align 8, !tbaa !92, !alias.scope !103, !noalias !102
   %index.next1394 = add nuw i64 %index1381, 16    ; 2 uses
-  %vec.ind.next1395.reass = add <4 x i64> %vec.ind1382, %invariant.op1680
+  %vec.ind.next1395.reass = add nsw <4 x i64> %vec.ind1382, %invariant.op1680
   %i.abd = icmp eq i64 %index.next1394, %n.vec1374
   br i1 %i.abd, label %middle.block1396, label %vector.body1380, !llvm.loop !70
 

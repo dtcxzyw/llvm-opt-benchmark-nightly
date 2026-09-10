@@ -205,7 +205,7 @@ vec.epilog.scalar.ph671.prol.loopexit:            ; preds = %vec.epilog.scalar.p
   br i1 %i.iw, label %._crit_edge383, label %vec.epilog.scalar.ph671.preheader.new
 
 vec.epilog.scalar.ph671.preheader.new:            ; preds = %vec.epilog.scalar.ph671.prol.loopexit
-  %invariant.op = add i64 1, %i.hc
+  %invariant.op = add nsw i64 1, %i.hc
   br label %vec.epilog.scalar.ph671
 
 vec.epilog.scalar.ph671:                          ; preds = %vec.epilog.scalar.ph671, %vec.epilog.scalar.ph671.preheader.new
@@ -221,7 +221,7 @@ vec.epilog.scalar.ph671:                          ; preds = %vec.epilog.scalar.p
   %i.jf = sub i16 %i.jc, %i.je
   %i.jg = getelementptr inbounds [2 x i8], ptr %i.bw, i64 %i.ix
   store i16 %i.jf, ptr %i.jg, align 2, !tbaa !77
-  %.reass = add i64 %indvars.iv442, %invariant.op ; 4 uses
+  %.reass = add nsw i64 %indvars.iv442, %invariant.op ; 4 uses
   %i.jh = getelementptr inbounds [2 x i8], ptr %i.gy, i64 %.reass
   %i.ji = load i16, ptr %i.jh, align 2, !tbaa !77
   %i.jj = getelementptr inbounds [2 x i8], ptr %i.de, i64 %.reass
@@ -557,7 +557,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   br i1 %i.pk, label %._crit_edge394, label %vec.epilog.scalar.ph.preheader.new
 
 vec.epilog.scalar.ph.preheader.new:               ; preds = %vec.epilog.scalar.ph.prol.loopexit
-  %invariant.op780 = add i64 1, %i.od
+  %invariant.op780 = add nsw i64 1, %i.od
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph, %vec.epilog.scalar.ph.preheader.new
@@ -570,7 +570,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.pq = mul i16 %i.pp, %i.nz
   %i.pr = add i16 %i.pq, %i.pn
   store i16 %i.pr, ptr %i.pm, align 2, !tbaa !77
-  %.reass781 = add i64 %indvars.iv455, %invariant.op780 ; 2 uses
+  %.reass781 = add nsw i64 %indvars.iv455, %invariant.op780 ; 2 uses
   %i.ps = getelementptr inbounds [2 x i8], ptr %i.bw, i64 %.reass781 ; 2 uses
   %i.pt = load i16, ptr %i.ps, align 2, !tbaa !77
   %i.pu = getelementptr inbounds [2 x i8], ptr %i.de, i64 %.reass781

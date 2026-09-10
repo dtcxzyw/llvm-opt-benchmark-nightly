@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.lw = load float, ptr %i.lv, align 4, !tbaa !167
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lq, i64 8
   store float %i.lw, ptr %i.lx, align 4, !tbaa !167
-  %.reass.i = add i32 %i.ll, %.1287
+  %.reass.i = add nsw i32 %i.ll, %.1287
   store i32 %.reass.i, ptr %i.lj, align 4, !tbaa !168
   br label %bb.as
 
@@ -236,7 +236,7 @@ bb.at:                                            ; preds = %bb.as
   %i.mq = load float, ptr %i.mp, align 4, !tbaa !167
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mk, i64 8
   store float %i.mq, ptr %i.mr, align 4, !tbaa !167
-  %.reass.i.1 = add i32 %i.mf, %.1287
+  %.reass.i.1 = add nsw i32 %i.mf, %.1287
   store i32 %.reass.i.1, ptr %i.md, align 4, !tbaa !168
   br label %bb.au
 
@@ -280,7 +280,7 @@ bb.av:                                            ; preds = %.epil.preheader
   %i.nl = load float, ptr %i.nk, align 4, !tbaa !167
   %i.nm = getelementptr inbounds nuw i8, ptr %i.nf, i64 8
   store float %i.nl, ptr %i.nm, align 4, !tbaa !167
-  %.reass.i.epil = add i32 %i.na, %.1287
+  %.reass.i.epil = add nsw i32 %i.na, %.1287
   store i32 %.reass.i.epil, ptr %i.my, align 4, !tbaa !168
   br label %.loopexit505
 
@@ -338,7 +338,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.oi = load float, ptr %i.oh, align 4, !tbaa !167
   %i.oj = getelementptr inbounds nuw i8, ptr %i.oc, i64 8
   store float %i.oi, ptr %i.oj, align 4, !tbaa !167
-  %.reass.i336 = add i32 %invariant.op.i, %i.nx
+  %.reass.i336 = add nsw i32 %invariant.op.i, %i.nx
   store i32 %.reass.i336, ptr %i.nv, align 4, !tbaa !168
   br label %bb.ay
 
@@ -369,7 +369,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.pc = load float, ptr %i.pb, align 4, !tbaa !167
   %i.pd = getelementptr inbounds nuw i8, ptr %i.ow, i64 8
   store float %i.pc, ptr %i.pd, align 4, !tbaa !167
-  %.reass.i336.1 = add i32 %invariant.op.i, %i.or
+  %.reass.i336.1 = add nsw i32 %invariant.op.i, %i.or
   store i32 %.reass.i336.1, ptr %i.op, align 4, !tbaa !168
   br label %bb.ba
 
@@ -413,7 +413,7 @@ bb.bb:                                            ; preds = %.epil.preheader1183
   %i.px = load float, ptr %i.pw, align 4, !tbaa !167
   %i.py = getelementptr inbounds nuw i8, ptr %i.pr, i64 8
   store float %i.px, ptr %i.py, align 4, !tbaa !167
-  %.reass.i336.epil = add i32 %invariant.op.i, %i.pm
+  %.reass.i336.epil = add nsw i32 %invariant.op.i, %i.pm
   store i32 %.reass.i336.epil, ptr %i.pk, align 4, !tbaa !168
   br label %_ZL29copyMovedAtomsToBufferPerAtomN3gmx8ArrayRefIKiEEiiPA3_fP17gmx_domdec_comm_t.exit337
 
@@ -478,7 +478,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.qv = load float, ptr %i.qu, align 4, !tbaa !167
   %i.qw = getelementptr inbounds nuw i8, ptr %i.qp, i64 8
   store float %i.qv, ptr %i.qw, align 4, !tbaa !167
-  %.reass.i342 = add i32 %invariant.op.i339, %i.qk
+  %.reass.i342 = add nsw i32 %invariant.op.i339, %i.qk
   store i32 %.reass.i342, ptr %i.qi, align 4, !tbaa !168
   br label %bb.bg
 
@@ -509,7 +509,7 @@ bb.bh:                                            ; preds = %bb.bg
   %i.rp = load float, ptr %i.ro, align 4, !tbaa !167
   %i.rq = getelementptr inbounds nuw i8, ptr %i.rj, i64 8
   store float %i.rp, ptr %i.rq, align 4, !tbaa !167
-  %.reass.i342.1 = add i32 %invariant.op.i339, %i.re
+  %.reass.i342.1 = add nsw i32 %invariant.op.i339, %i.re
   store i32 %.reass.i342.1, ptr %i.rc, align 4, !tbaa !168
   br label %bb.bi
 
@@ -553,7 +553,7 @@ bb.bj:                                            ; preds = %.epil.preheader1189
   %i.sk = load float, ptr %i.sj, align 4, !tbaa !167
   %i.sl = getelementptr inbounds nuw i8, ptr %i.se, i64 8
   store float %i.sk, ptr %i.sl, align 4, !tbaa !167
-  %.reass.i342.epil = add i32 %invariant.op.i339, %i.rz
+  %.reass.i342.epil = add nsw i32 %invariant.op.i339, %i.rz
   store i32 %.reass.i342.epil, ptr %i.rx, align 4, !tbaa !168
   br label %_ZL29copyMovedAtomsToBufferPerAtomN3gmx8ArrayRefIKiEEiiPA3_fP17gmx_domdec_comm_t.exit343
 

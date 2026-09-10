@@ -204,7 +204,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.de, label %.loopexit, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op = add i64 1, %i.ci
+  %invariant.op = add nsw i64 1, %i.ci
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
@@ -221,7 +221,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.dn = load float, ptr %i.di, align 4, !tbaa !170, !llvm.access.group !618
   %i.do = fmul float %i.dm, %i.dn
   store float %i.do, ptr %i.dl, align 4, !tbaa !170, !llvm.access.group !618
-  %.reass = add i64 %indvars.iv91, %invariant.op  ; 3 uses
+  %.reass = add nsw i64 %indvars.iv91, %invariant.op ; 3 uses
   %i.dp = getelementptr inbounds [4 x i8], ptr %i.cg, i64 %.reass ; 2 uses
   %i.dq = load float, ptr %i.dp, align 4, !tbaa !170, !llvm.access.group !618
   %i.dr = getelementptr inbounds [4 x i8], ptr %i.ce, i64 %.reass ; 2 uses
