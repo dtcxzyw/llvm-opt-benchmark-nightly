@@ -203,8 +203,9 @@ scalar.ph75:                                      ; preds = %scalar.ph75.prehead
 
 ff_clz_c.exit.us.us:                              ; preds = %scalar.ph75, %middle.block83
   %.1.us.us.lcssa = phi i32 [ %i.au, %middle.block83 ], [ %.1.us.us, %scalar.ph75 ]
-  %i.az = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.1.us.us.lcssa, i1 true)
-  %i.ba = sub nuw nsw i32 16, %i.az
+  %5 = lshr i32 %.1.us.us.lcssa, 1
+  %i.az = tail call range(i32 1, 18) i32 @llvm.ctlz.i32(i32 %5, i1 true)
+  %i.ba = sub nuw nsw i32 17, %i.az
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv61
   store i32 %i.ba, ptr %i.bb, align 4, !tbaa !16
   %indvars.iv.next62 = add nuw nsw i64 %indvars.iv61, 1 ; 2 uses
@@ -259,12 +260,12 @@ middle.block:                                     ; preds = %vector.body
 define internal i32 @sbc_calc_scalefactors_j(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3) #4 {
 bb.a:
   %i.a = alloca [16 x [2 x i32]], align 16        ; 11 uses
-  %i.b = add nsw i32 %3, -1                       ; 3 uses
+  %i.b = add nsw i32 %3, -1                       ; 2 uses
   %i.c = icmp sgt i32 %2, 0                       ; 3 uses
-  br i1 %i.c, label %.lr.ph, label %ff_clz_c.exit160
+  %4 = sext i32 %i.b to i64                       ; 20 uses
+  br i1 %i.c, label %.lr.ph, label %.preheader166
 
 .lr.ph:                                           ; preds = %bb.a
-  %4 = sext i32 %i.b to i64                       ; 18 uses
   %wide.trip.count = zext nneg i32 %2 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %2, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -391,11 +392,24 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 .preheader166.loopexit:                           ; preds = %scalar.ph, %middle.block
   %.1113.lcssa = phi i32 [ %i.cs, %middle.block ], [ %.1113, %scalar.ph ]
   %.1.lcssa = phi i32 [ %i.cr, %middle.block ], [ %.1, %scalar.ph ]
-  %i.ct = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.1113.lcssa, i1 true)
-  %i.cu = sub nuw nsw i32 16, %i.ct
-  %i.cv = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.1.lcssa, i1 true)
-  %i.cw = sub nuw nsw i32 16, %i.cv
-  br label %ff_clz_c.exit160
+  %5 = lshr i32 %.1113.lcssa, 1
+  %i.ct = tail call range(i32 1, 18) i32 @llvm.ctlz.i32(i32 %5, i1 true)
+  %i.cu = sub nuw nsw i32 17, %i.ct
+  %6 = lshr i32 %.1.lcssa, 1
+  %i.cv = tail call range(i32 1, 18) i32 @llvm.ctlz.i32(i32 %6, i1 true)
+  %i.cw = sub nuw nsw i32 17, %i.cv
+  br label %.preheader166
+
+.preheader166:                                    ; preds = %bb.a, %.preheader166.loopexit
+  %.0112.lcssa = phi i32 [ %i.cu, %.preheader166.loopexit ], [ 0, %bb.a ]
+  %.0111.lcssa = phi i32 [ %i.cw, %.preheader166.loopexit ], [ 0, %bb.a ]
+  %7 = getelementptr inbounds [4 x i8], ptr %1, i64 %4
+  store i32 %.0112.lcssa, ptr %7, align 4, !tbaa !16
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
+  %9 = getelementptr inbounds [4 x i8], ptr %8, i64 %4
+  store i32 %.0111.lcssa, ptr %9, align 4, !tbaa !16
+  %10 = icmp sgt i32 %3, 1
+  br i1 %10, label %.lr.ph217, label %._crit_edge
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
@@ -421,19 +435,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader166.loopexit, label %scalar.ph, !llvm.loop !42
 
-ff_clz_c.exit160:                                 ; preds = %.preheader166.loopexit, %bb.a
-  %.0112.lcssa = phi i32 [ 0, %bb.a ], [ %i.cu, %.preheader166.loopexit ]
-  %.0111.lcssa = phi i32 [ 0, %bb.a ], [ %i.cw, %.preheader166.loopexit ]
-  %5 = sext i32 %i.b to i64                       ; 2 uses
-  %6 = getelementptr inbounds [4 x i8], ptr %1, i64 %5
-  store i32 %.0112.lcssa, ptr %6, align 4, !tbaa !16
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
-  %8 = getelementptr inbounds [4 x i8], ptr %7, i64 %5
-  store i32 %.0111.lcssa, ptr %8, align 4, !tbaa !16
-  %9 = icmp sgt i32 %3, 1
-  br i1 %9, label %.lr.ph217, label %._crit_edge
-
-.lr.ph217:                                        ; preds = %ff_clz_c.exit160
+.lr.ph217:                                        ; preds = %.preheader166
   %i.dj = add nsw i32 %3, -2
   %i.dk = zext nneg i32 %i.dj to i64
   %wide.trip.count228 = zext i32 %2 to i64        ; 7 uses
@@ -556,9 +558,9 @@ middle.block291:                                  ; preds = %vector.body282
 ff_clz_c.exit152.thread:                          ; preds = %bb.b
   %i.ga = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv240 ; 2 uses
   store i32 0, ptr %i.ga, align 4, !tbaa !16
-  %i.gb = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %indvars.iv240 ; 2 uses
+  %i.gb = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv240 ; 2 uses
   store i32 0, ptr %i.gb, align 4, !tbaa !16
-  br label %ff_clz_c.exit
+  br label %.preheader
 
 .lr.ph184:                                        ; preds = %.lr.ph184.preheader298, %bb.d
   %indvars.iv225 = phi i64 [ %indvars.iv.next226, %bb.d ], [ %indvars.iv225.ph, %.lr.ph184.preheader298 ] ; 3 uses
@@ -603,11 +605,12 @@ ff_clz_c.exit152:                                 ; preds = %bb.d, %middle.block
   %.3.lcssa = phi i32 [ %i.fy, %middle.block291 ], [ %.3, %bb.d ]
   %i.gu = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.3115.lcssa, i1 true)
   %i.gv = sub nuw nsw i32 16, %i.gu               ; 2 uses
-  %i.gw = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.3.lcssa, i1 true)
-  %i.gx = sub nuw nsw i32 16, %i.gw               ; 2 uses
+  %11 = lshr i32 %.3.lcssa, 1
+  %i.gw = tail call range(i32 1, 18) i32 @llvm.ctlz.i32(i32 %11, i1 true)
+  %i.gx = sub nuw nsw i32 17, %i.gw               ; 2 uses
   %i.gy = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv240 ; 2 uses
   store i32 %i.gv, ptr %i.gy, align 4, !tbaa !16
-  %i.gz = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %indvars.iv240 ; 2 uses
+  %i.gz = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv240 ; 2 uses
   store i32 %i.gx, ptr %i.gz, align 4, !tbaa !16
   br i1 %min.iters.check257, label %.lr.ph200.preheader, label %vector.body260
 
@@ -667,13 +670,25 @@ middle.block271:                                  ; preds = %vector.body260
 .preheader.loopexit:                              ; preds = %.lr.ph200, %middle.block271
   %i.ic = phi <2 x i32> [ %i.ib, %middle.block271 ], [ %i.ip, %.lr.ph200 ] ; 2 uses
   %i.id = extractelement <2 x i32> %i.ic, i64 0
-  %i.ie = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.id, i1 true)
-  %10 = sub nuw nsw i32 16, %i.ie
-  %11 = extractelement <2 x i32> %i.ic, i64 1
-  %i.if = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %11, i1 true)
-  %i.ig = sub nuw nsw i32 16, %i.if
+  %12 = lshr i32 %i.id, 1
+  %i.ie = tail call range(i32 1, 18) i32 @llvm.ctlz.i32(i32 %12, i1 true)
+  %13 = extractelement <2 x i32> %i.ic, i64 1
+  %14 = lshr i32 %13, 1
+  %i.if = tail call range(i32 1, 18) i32 @llvm.ctlz.i32(i32 %14, i1 true)
+  %15 = sub nuw nsw i32 17, %i.ie
+  %i.ig = sub nuw nsw i32 17, %i.if
   %i.ih = add nuw nsw i32 %i.gx, %i.gv
-  br label %ff_clz_c.exit
+  br label %.preheader
+
+.preheader:                                       ; preds = %ff_clz_c.exit152.thread, %.preheader.loopexit
+  %16 = phi ptr [ %i.gb, %ff_clz_c.exit152.thread ], [ %i.gz, %.preheader.loopexit ]
+  %17 = phi ptr [ %i.ga, %ff_clz_c.exit152.thread ], [ %i.gy, %.preheader.loopexit ]
+  %.4116.lcssa = phi i32 [ 0, %ff_clz_c.exit152.thread ], [ %15, %.preheader.loopexit ] ; 2 uses
+  %.4.lcssa = phi i32 [ 0, %ff_clz_c.exit152.thread ], [ %i.ig, %.preheader.loopexit ] ; 2 uses
+  %18 = phi i32 [ 0, %ff_clz_c.exit152.thread ], [ %i.ih, %.preheader.loopexit ]
+  %19 = add nuw nsw i32 %.4.lcssa, %.4116.lcssa
+  %20 = icmp samesign ugt i32 %18, %19
+  br i1 %20, label %bb.e, label %.loopexit
 
 .lr.ph200:                                        ; preds = %.lr.ph200.preheader, %.lr.ph200
   %indvars.iv230 = phi i64 [ %indvars.iv.next231, %.lr.ph200 ], [ %indvars.iv230.ph, %.lr.ph200.preheader ] ; 2 uses
@@ -689,22 +704,12 @@ middle.block271:                                  ; preds = %vector.body260
   %exitcond234.not = icmp eq i64 %indvars.iv.next231, %wide.trip.count233
   br i1 %exitcond234.not, label %.preheader.loopexit, label %.lr.ph200, !llvm.loop !46
 
-ff_clz_c.exit:                                    ; preds = %ff_clz_c.exit152.thread, %.preheader.loopexit
-  %12 = phi ptr [ %i.gb, %ff_clz_c.exit152.thread ], [ %i.gz, %.preheader.loopexit ]
-  %13 = phi ptr [ %i.ga, %ff_clz_c.exit152.thread ], [ %i.gy, %.preheader.loopexit ]
-  %.4116.lcssa = phi i32 [ 0, %ff_clz_c.exit152.thread ], [ %10, %.preheader.loopexit ] ; 2 uses
-  %.4.lcssa = phi i32 [ 0, %ff_clz_c.exit152.thread ], [ %i.ig, %.preheader.loopexit ] ; 2 uses
-  %14 = phi i32 [ 0, %ff_clz_c.exit152.thread ], [ %i.ih, %.preheader.loopexit ]
-  %15 = add nuw nsw i32 %.4.lcssa, %.4116.lcssa
-  %16 = icmp samesign ugt i32 %14, %15
-  br i1 %16, label %bb.e, label %.loopexit
-
-bb.e:                                             ; preds = %ff_clz_c.exit
+bb.e:                                             ; preds = %.preheader
   %i.iq = sub nsw i32 %3, %.0216
   %i.ir = shl nuw i32 1, %i.iq
   %i.is = or i32 %i.ir, %.0118215                 ; 3 uses
-  store i32 %.4116.lcssa, ptr %13, align 4, !tbaa !16
-  store i32 %.4.lcssa, ptr %12, align 4, !tbaa !16
+  store i32 %.4116.lcssa, ptr %17, align 4, !tbaa !16
+  store i32 %.4.lcssa, ptr %16, align 4, !tbaa !16
   br i1 %i.c, label %.lr.ph214.preheader, label %.loopexit
 
 .lr.ph214.preheader:                              ; preds = %bb.e
@@ -757,16 +762,16 @@ bb.e:                                             ; preds = %ff_clz_c.exit
   store i32 %i.jo, ptr %i.jq, align 4, !tbaa !16
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph214.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.e, %ff_clz_c.exit
-  %.1119 = phi i32 [ %.0118215, %ff_clz_c.exit ], [ %i.is, %bb.e ], [ %i.is, %.loopexit.loopexit.unr-lcssa ], [ %i.is, %.lr.ph214.epil.preheader ] ; 2 uses
+.loopexit:                                        ; preds = %.lr.ph214.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.e, %.preheader
+  %.1119 = phi i32 [ %.0118215, %.preheader ], [ %i.is, %bb.e ], [ %i.is, %.loopexit.loopexit.unr-lcssa ], [ %i.is, %.lr.ph214.epil.preheader ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %indvars.iv.next241 = add nsw i64 %indvars.iv240, -1
   %i.jr = icmp sgt i64 %indvars.iv240, 0
   %i.js = trunc nuw nsw i64 %indvars.iv240 to i32
   br i1 %i.jr, label %bb.b, label %._crit_edge, !llvm.loop !48
 
-._crit_edge:                                      ; preds = %.loopexit, %ff_clz_c.exit160
-  %.0118.lcssa = phi i32 [ 0, %ff_clz_c.exit160 ], [ %.1119, %.loopexit ]
+._crit_edge:                                      ; preds = %.loopexit, %.preheader166
+  %.0118.lcssa = phi i32 [ 0, %.preheader166 ], [ %.1119, %.loopexit ]
   ret i32 %.0118.lcssa
 }
 
