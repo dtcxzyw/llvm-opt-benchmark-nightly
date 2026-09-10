@@ -204,7 +204,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.eg, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.eh = call i32 @wc_RsaPrivateDecrypt_ex(ptr noundef nonnull %i.c, i32 noundef %i.ee, ptr noundef nonnull %i.d, i32 noundef 512, ptr noundef nonnull %0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef null, i32 noundef 0) #19 ; 3 uses
+  %i.eh = call i32 @wc_RsaPrivateDecrypt_ex(ptr noundef nonnull %i.c, i32 noundef %i.ee, ptr noundef nonnull %i.d, i32 noundef 512, ptr noundef nonnull %0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef null, i32 noundef 0) #19 ; 4 uses
   %i.ei = icmp eq i32 %i.eh, -108
   br i1 %i.ei, label %.preheader.peel.next, label %bb.aw
 
@@ -242,16 +242,17 @@ bb.ay:                                            ; preds = %bb.aw
   %i.ez = icmp ne i128 %i.ey, 0
   %i.fa = zext i1 %i.ez to i32
   %.not108 = icmp eq i32 %i.fa, 0
-  %spec.select = select i1 %.not108, i32 0, i32 -28845
+  %spec.select = select i1 %.not108, i32 %i.eh, i32 -28845
   br label %.thread
 
-.thread:                                          ; preds = %bb.ay, %bb.ar, %bb.ax, %bb.av, %bb.aj, %bb.aq, %bb.ao, %bb.ae, %bb.ai, %bb.x, %bb.ad, %bb.ab, %bb.s, %bb.w, %bb.r, %bb.n, %bb.q, %bb.g, %bb.m, %bb.k, %bb.f, %bb.d
-  %i.fb = phi i32 [ %spec.select, %bb.ay ], [ -28820, %bb.ar ], [ %i.ep, %bb.ax ], [ %i.el, %bb.av ], [ -28789, %bb.aj ], [ %i.ds, %bb.aq ], [ %i.do, %bb.ao ], [ -28765, %bb.ae ], [ %i.dd, %bb.ai ], [ -28741, %bb.x ], [ %i.ck, %bb.ad ], [ %i.cg, %bb.ab ], [ -28717, %bb.s ], [ %i.bx, %bb.w ], [ -28714, %bb.r ], [ -28702, %bb.n ], [ %i.bd, %bb.q ], [ -28678, %bb.g ], [ %i.am, %bb.m ], [ %i.ai, %bb.k ], [ %i.p, %bb.f ], [ %i.l, %bb.d ]
+.thread:                                          ; preds = %bb.ay, %bb.ar, %bb.aj, %bb.ae, %bb.x, %bb.s, %bb.r, %bb.n, %bb.g, %bb.d, %bb.f, %bb.k, %bb.m, %bb.q, %bb.w, %bb.ab, %bb.ad, %bb.ai, %bb.ao, %bb.aq, %bb.av, %bb.ax
+  %i.fb = phi i32 [ %i.l, %bb.d ], [ %i.p, %bb.f ], [ %spec.select, %bb.ay ], [ %i.ai, %bb.k ], [ %i.am, %bb.m ], [ -28678, %bb.g ], [ %i.bd, %bb.q ], [ -28702, %bb.n ], [ -28714, %bb.r ], [ %i.bx, %bb.w ], [ -28717, %bb.s ], [ %i.cg, %bb.ab ], [ %i.ck, %bb.ad ], [ -28741, %bb.x ], [ %i.dd, %bb.ai ], [ -28765, %bb.ae ], [ %i.do, %bb.ao ], [ %i.ds, %bb.aq ], [ -28789, %bb.aj ], [ %i.el, %bb.av ], [ %i.ep, %bb.ax ], [ -28820, %bb.ar ]
+  %spec.store.select = call i32 @llvm.smin.i32(i32 %i.fb, i32 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  ret i32 %i.fb
+  ret i32 %spec.store.select
 }
 
 ; Function Attrs: nounwind uwtable

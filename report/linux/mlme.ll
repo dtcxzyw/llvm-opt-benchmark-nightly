@@ -204,7 +204,7 @@ define internal fastcc void @ieee80211_process_neg_ttlm_req(ptr noundef %0, ptr 
 bb.a:
   %3 = alloca %struct.ieee80211_elems_parse_params, align 8 ; 11 uses
   %i.a = alloca [2 x i8], align 2                 ; 6 uses
-  %4 = alloca %struct.ieee80211_neg_ttlm, align 8 ; 36 uses
+  %4 = alloca %struct.ieee80211_neg_ttlm, align 8 ; 32 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   store i16 0, ptr %i.a, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
@@ -253,8 +253,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %ieee80211_parse_neg_ttlm.exit.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  %i.o = getelementptr i8, ptr %i.n, i64 768      ; 3 uses
-  %i.p = load i8, ptr %i.o, align 8
+  %i.o = getelementptr i8, ptr %i.n, i64 768
+  %i.p = load i8, ptr %i.o, align 8               ; 4 uses
   %.not110 = icmp eq i8 %i.p, 0
   br i1 %.not110, label %ieee80211_parse_neg_ttlm.exit.thread, label %.lr.ph
 
@@ -263,9 +263,15 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 14 ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 30 ; 5 uses
+  %.not46 = icmp eq i8 %i.p, 1
+  %5 = zext i8 %i.p to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.bv
+  %6 = phi i16 [ 0, %.lr.ph ], [ %17, %bb.bv ]    ; 2 uses
+  %7 = phi i16 [ 0, %.lr.ph ], [ %18, %bb.bv ]    ; 2 uses
+  %8 = phi i16 [ 0, %.lr.ph ], [ %19, %bb.bv ]    ; 2 uses
+  %9 = phi i16 [ 0, %.lr.ph ], [ %20, %bb.bv ]    ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.bv ] ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %i.q, i64 %indvars.iv
   %i.v = load ptr, ptr %i.u, align 8              ; 5 uses
@@ -284,7 +290,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not55.i, label %bb.e, label %ieee80211_parse_neg_ttlm.exit.thread75
 
 ieee80211_parse_neg_ttlm.exit.thread75:           ; preds = %bb.d
-  %i.ac = load i16, ptr %i.b, align 8             ; 16 uses
+  %i.ac = load i16, ptr %i.b, align 8             ; 19 uses
   store i16 %i.ac, ptr %4, align 8
   store i16 %i.ac, ptr %i.r, align 8
   store i16 %i.ac, ptr %.sink86.i.sroa.gep49, align 2
@@ -337,7 +343,7 @@ bb.g:                                             ; preds = %ieee80211_get_ttlm.
 
 bb.h:                                             ; preds = %bb.g, %.split.us.preheader.i
   %.1.us.i = phi ptr [ %i.aj, %bb.g ], [ %i.af, %.split.us.preheader.i ] ; 3 uses
-  %.0.us.i = phi i16 [ %.val.i.us.i, %bb.g ], [ 0, %.split.us.preheader.i ] ; 4 uses
+  %.0.us.i = phi i16 [ %.val.i.us.i, %bb.g ], [ 0, %.split.us.preheader.i ] ; 8 uses
   switch i8 %i.ad, label %default.unreachable145 [
     i8 2, label %bb.k
     i8 0, label %bb.j
@@ -358,6 +364,8 @@ bb.k:                                             ; preds = %bb.h
   br label %.split.us.1.i
 
 .split.us.1.i:                                    ; preds = %bb.k, %bb.j, %bb.i
+  %10 = phi i16 [ %.0.us.i, %bb.k ], [ %8, %bb.j ], [ %.0.us.i, %bb.i ] ; 3 uses
+  %11 = phi i16 [ %.0.us.i, %bb.k ], [ %.0.us.i, %bb.j ], [ %9, %bb.i ] ; 3 uses
   %i.ak = and i64 %i.ah, 2
   %.not60.us.1.i = icmp eq i64 %i.ak, 0
   br i1 %.not60.us.1.i, label %bb.m, label %ieee80211_get_ttlm.exit.us.1.i
@@ -559,7 +567,7 @@ ieee80211_get_ttlm.exit.us.7.i:                   ; preds = %.split.us.7.i
   br i1 %.not61.us.7.i, label %ieee80211_parse_neg_ttlm.exit.thread, label %bb.aj
 
 bb.aj:                                            ; preds = %ieee80211_get_ttlm.exit.us.7.i, %.split.us.7.i
-  %.0.us.7.i = phi i16 [ 0, %.split.us.7.i ], [ %.val.i.us.7.i, %ieee80211_get_ttlm.exit.us.7.i ] ; 4 uses
+  %.0.us.7.i = phi i16 [ 0, %.split.us.7.i ], [ %.val.i.us.7.i, %ieee80211_get_ttlm.exit.us.7.i ] ; 7 uses
   switch i8 %i.ad, label %default.unreachable145 [
     i8 2, label %bb.am
     i8 0, label %bb.al
@@ -568,11 +576,11 @@ bb.aj:                                            ; preds = %ieee80211_get_ttlm.
 
 bb.ak:                                            ; preds = %bb.aj
   store i16 %.0.us.7.i, ptr %i.t, align 2
-  br label %ieee80211_parse_neg_ttlm.exit._crit_edge
+  br label %bb.bv
 
 bb.al:                                            ; preds = %bb.aj
   store i16 %.0.us.7.i, ptr %i.s, align 2
-  br label %ieee80211_parse_neg_ttlm.exit._crit_edge
+  br label %bb.bv
 
 bb.am:                                            ; preds = %bb.aj
   store i16 %.0.us.7.i, ptr %i.s, align 2
@@ -591,7 +599,7 @@ bb.an:                                            ; preds = %ieee80211_get_ttlm.
 
 bb.ao:                                            ; preds = %bb.an, %.split.preheader.i
   %.1.i = phi ptr [ %i.ay, %bb.an ], [ %i.af, %.split.preheader.i ] ; 3 uses
-  %.0.i = phi i16 [ %i.ax, %bb.an ], [ 0, %.split.preheader.i ] ; 4 uses
+  %.0.i = phi i16 [ %i.ax, %bb.an ], [ 0, %.split.preheader.i ] ; 8 uses
   switch i8 %i.ad, label %default.unreachable145 [
     i8 2, label %bb.ap
     i8 0, label %bb.aq
@@ -612,6 +620,8 @@ bb.ar:                                            ; preds = %bb.ao
   br label %.split.1.i
 
 .split.1.i:                                       ; preds = %bb.ar, %bb.aq, %bb.ap
+  %12 = phi i16 [ %.0.i, %bb.ar ], [ %8, %bb.aq ], [ %.0.i, %bb.ap ] ; 3 uses
+  %13 = phi i16 [ %9, %bb.ar ], [ %.0.i, %bb.aq ], [ %.0.i, %bb.ap ] ; 3 uses
   %i.az = and i64 %i.ah, 2
   %.not60.1.i = icmp eq i64 %i.az, 0
   br i1 %.not60.1.i, label %bb.at, label %ieee80211_get_ttlm.exit.1.i
@@ -823,7 +833,7 @@ bb.bq:                                            ; preds = %ieee80211_get_ttlm.
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %.split.7.i
-  %.0.7.i = phi i16 [ %i.by, %bb.bq ], [ 0, %.split.7.i ] ; 4 uses
+  %.0.7.i = phi i16 [ %i.by, %bb.bq ], [ 0, %.split.7.i ] ; 7 uses
   switch i8 %i.ad, label %default.unreachable145 [
     i8 2, label %bb.bu
     i8 0, label %bb.bt
@@ -832,11 +842,11 @@ bb.br:                                            ; preds = %bb.bq, %.split.7.i
 
 bb.bs:                                            ; preds = %bb.br
   store i16 %.0.7.i, ptr %i.t, align 2
-  br label %ieee80211_parse_neg_ttlm.exit._crit_edge
+  br label %bb.bv
 
 bb.bt:                                            ; preds = %bb.br
   store i16 %.0.7.i, ptr %i.s, align 2
-  br label %ieee80211_parse_neg_ttlm.exit._crit_edge
+  br label %bb.bv
 
 bb.bu:                                            ; preds = %bb.br
   store i16 %.0.7.i, ptr %i.s, align 2
@@ -846,24 +856,23 @@ bb.bu:                                            ; preds = %bb.br
 default.unreachable145:                           ; preds = %bb.br, %bb.bn, %bb.bj, %bb.bf, %bb.bb, %bb.ax, %bb.at, %bb.ao, %bb.aj, %bb.ag, %bb.ac, %bb.y, %bb.u, %bb.q, %bb.m, %bb.h
   unreachable
 
-ieee80211_parse_neg_ttlm.exit._crit_edge:         ; preds = %bb.bt, %bb.bs, %bb.al, %bb.ak
-  %.pre = load i8, ptr %i.o, align 8
-  br label %bb.bv
-
 ieee80211_parse_neg_ttlm.exit:                    ; preds = %bb.am, %bb.bu, %ieee80211_parse_neg_ttlm.exit.thread75
-  %5 = load i8, ptr %i.o, align 8
-  %.not46 = icmp eq i8 %5, 1
+  %14 = phi i16 [ %i.ac, %ieee80211_parse_neg_ttlm.exit.thread75 ], [ %.0.7.i, %bb.bu ], [ %.0.us.7.i, %bb.am ] ; 2 uses
+  %15 = phi i16 [ %i.ac, %ieee80211_parse_neg_ttlm.exit.thread75 ], [ %12, %bb.bu ], [ %10, %bb.am ]
+  %16 = phi i16 [ %i.ac, %ieee80211_parse_neg_ttlm.exit.thread75 ], [ %13, %bb.bu ], [ %11, %bb.am ]
   br i1 %.not46, label %bb.bv, label %ieee80211_parse_neg_ttlm.exit.thread
 
-bb.bv:                                            ; preds = %ieee80211_parse_neg_ttlm.exit._crit_edge, %ieee80211_parse_neg_ttlm.exit
-  %6 = phi i8 [ %.pre, %ieee80211_parse_neg_ttlm.exit._crit_edge ], [ 1, %ieee80211_parse_neg_ttlm.exit ] ; 2 uses
+bb.bv:                                            ; preds = %bb.ak, %bb.al, %bb.bs, %bb.bt, %ieee80211_parse_neg_ttlm.exit
+  %17 = phi i16 [ %14, %ieee80211_parse_neg_ttlm.exit ], [ %.0.us.7.i, %bb.ak ], [ %6, %bb.al ], [ %.0.7.i, %bb.bs ], [ %6, %bb.bt ] ; 3 uses
+  %18 = phi i16 [ %14, %ieee80211_parse_neg_ttlm.exit ], [ %7, %bb.ak ], [ %.0.us.7.i, %bb.al ], [ %7, %bb.bs ], [ %.0.7.i, %bb.bt ] ; 3 uses
+  %19 = phi i16 [ %15, %ieee80211_parse_neg_ttlm.exit ], [ %10, %bb.ak ], [ %10, %bb.al ], [ %12, %bb.bs ], [ %12, %bb.bt ] ; 3 uses
+  %20 = phi i16 [ %16, %ieee80211_parse_neg_ttlm.exit ], [ %11, %bb.ak ], [ %11, %bb.al ], [ %13, %bb.bs ], [ %13, %bb.bt ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %7 = zext i8 %6 to i64
-  %i.bz = icmp samesign ult i64 %indvars.iv.next, %7
+  %i.bz = icmp samesign ult i64 %indvars.iv.next, %5
   br i1 %i.bz, label %bb.c, label %._crit_edge, !llvm.loop !362
 
 ._crit_edge:                                      ; preds = %bb.bv
-  switch i8 %6, label %bb.bx [
+  switch i8 %i.p, label %bb.bx [
     i8 0, label %ieee80211_parse_neg_ttlm.exit.thread
     i8 2, label %bb.bw
   ]
@@ -876,13 +885,11 @@ bb.bw:                                            ; preds = %._crit_edge
   br i1 %i.cd, label %ieee80211_parse_neg_ttlm.exit.thread, label %bb.bx
 
 bb.bx:                                            ; preds = %._crit_edge, %bb.bw
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %9 = load i16, ptr %4, align 8                  ; 2 uses
-  %.not41 = icmp eq i16 %9, 0
+  %.not41 = icmp eq i16 %20, 0
   br i1 %.not41, label %bb.bz, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %i.ce = zext i16 %9 to i32
+  %i.ce = zext i16 %20 to i32
   %i.cf = load i16, ptr %i.b, align 8
   %i.cg = zext i16 %i.cf to i32
   %i.ch = xor i32 %i.cg, -1
@@ -891,12 +898,11 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %.not42, label %bb.bz, label %ieee80211_parse_neg_ttlm.exit.thread
 
 bb.bz:                                            ; preds = %bb.by, %bb.bx
-  %10 = load i16, ptr %8, align 8                 ; 2 uses
-  %.not43 = icmp eq i16 %10, 0
+  %.not43 = icmp eq i16 %19, 0
   br i1 %.not43, label %bb.cb, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.cj = zext i16 %10 to i32
+  %i.cj = zext i16 %19 to i32
   %i.ck = load i16, ptr %i.b, align 8
   %i.cl = zext i16 %i.ck to i32
   %i.cm = xor i32 %i.cl, -1
@@ -1079,13 +1085,11 @@ bb.cy:                                            ; preds = %bb.cx
   br i1 %.not44.6, label %bb.cz, label %ieee80211_parse_neg_ttlm.exit.thread
 
 bb.cz:                                            ; preds = %bb.cy, %bb.cx
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 14
-  %12 = load i16, ptr %11, align 2                ; 2 uses
-  %.not41.7 = icmp eq i16 %12, 0
+  %.not41.7 = icmp eq i16 %18, 0
   br i1 %.not41.7, label %bb.db, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
-  %i.fo = zext i16 %12 to i32
+  %i.fo = zext i16 %18 to i32
   %i.fp = load i16, ptr %i.b, align 8
   %i.fq = zext i16 %i.fp to i32
   %i.fr = xor i32 %i.fq, -1
@@ -1094,13 +1098,11 @@ bb.da:                                            ; preds = %bb.cz
   br i1 %.not42.7, label %bb.db, label %ieee80211_parse_neg_ttlm.exit.thread
 
 bb.db:                                            ; preds = %bb.da, %bb.cz
-  %13 = getelementptr inbounds nuw i8, ptr %4, i64 30
-  %14 = load i16, ptr %13, align 2                ; 2 uses
-  %.not43.7 = icmp eq i16 %14, 0
+  %.not43.7 = icmp eq i16 %17, 0
   br i1 %.not43.7, label %bb.dd, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
-  %i.ft = zext i16 %14 to i32
+  %i.ft = zext i16 %17 to i32
   %i.fu = load i16, ptr %i.b, align 8
   %i.fv = zext i16 %i.fu to i32
   %i.fw = xor i32 %i.fv, -1

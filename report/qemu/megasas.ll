@@ -205,7 +205,8 @@ bb.a:
   %i.g = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.f, ptr noundef nonnull @.str, ptr noundef nonnull @.str.37, i32 noundef 140, ptr noundef nonnull @__func__.MEGASAS_GET_CLASS) #16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2048) %3, i8 noundef 0, i64 noundef 2048, i1 noundef false) #16
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2040) %4, i8 noundef 0, i64 noundef 2040, i1 noundef false) #16
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 3 uses
   %i.i = load i64, ptr %i.h, align 8              ; 2 uses
   %i.j = icmp ult i64 %i.i, 2048
