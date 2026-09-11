@@ -204,7 +204,7 @@ _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19: ; preds = %bb.c, %_RNvNt
 
 _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader: ; preds = %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge, %.split, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19
   %.sroa.0.1.lcssa = phi i64 [ %.sroa.0.126, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit.thread19 ], [ %.sroa.0.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge ], [ %.sroa.0.128, %.split ] ; 2 uses
-  %.sroa.04.130 = add nuw nsw i64 %0, 1           ; 4 uses
+  %.sroa.04.130 = add nuw nsw i64 %0, 1           ; 3 uses
   %i.n = icmp eq i64 %.sroa.04.130, %2
   br i1 %i.n, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.thread, label %.lr.ph34
 
@@ -243,8 +243,8 @@ _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit14.backedge: ; preds = %.split, %bb
   %.sroa.04.133 = phi i64 [ %.sroa.04.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge ], [ %.sroa.04.130, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader ] ; 5 uses
   %.sroa.04.1.in32 = phi i64 [ %.sroa.04.133, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge ], [ %0, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !228)
-  %3 = icmp ult i64 %.sroa.04.133, %2
-  br i1 %3, label %bb.g, label %bb.h
+  %exitcond.not = icmp eq i64 %.sroa.04.133, %2
+  br i1 %exitcond.not, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph34
   %i.z = getelementptr i8, ptr %1, i64 %.sroa.04.133
@@ -253,8 +253,7 @@ bb.g:                                             ; preds = %.lr.ph34
   br i1 %i.ab, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge, label %.split23
 
 bb.h:                                             ; preds = %.lr.ph34
-  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %.sroa.04.130)
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %umax, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #20, !noalias !228
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %2, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #20, !noalias !228
   unreachable
 
 .split23:                                         ; preds = %bb.g
@@ -266,9 +265,11 @@ bb.h:                                             ; preds = %.lr.ph34
   br i1 %i.ag, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.thread, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge
 
 _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge: ; preds = %.split23, %bb.g
-  %.sroa.04.1 = add nuw nsw i64 %.sroa.04.133, 1  ; 3 uses
+  %.sroa.04.1 = add i64 %.sroa.04.133, 1          ; 4 uses
+  %3 = icmp eq i64 %.sroa.04.1, 0
   %i.ah = icmp eq i64 %.sroa.04.1, %2
-  br i1 %i.ah, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.thread, label %.lr.ph34
+  %or.cond.i15 = or i1 %3, %i.ah
+  br i1 %or.cond.i15, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.thread, label %.lr.ph34
 
 _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.thread: ; preds = %.split23, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader
   %.sroa.04.1.lcssa = phi i64 [ %.sroa.04.130, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.preheader ], [ %.sroa.04.133, %.split23 ], [ %.sroa.04.1, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit17.backedge ]
@@ -437,9 +438,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #15

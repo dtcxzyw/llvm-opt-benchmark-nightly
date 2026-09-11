@@ -205,15 +205,13 @@ _RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3c
 .lr.ph:                                           ; preds = %.preheader17, %bb.c
   %.sroa.01.0.i19 = phi i64 [ %i.p, %bb.c ], [ 2, %.preheader17 ] ; 5 uses
   %i.i = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.sroa.01.0.i19 ; 2 uses
-  %3 = add nsw i64 %.sroa.01.0.i19, -1            ; 2 uses
-  %4 = icmp samesign ult i64 %3, %1
-  tail call void @llvm.assume(i1 %4)
-  %5 = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %3 ; 2 uses
+  %3 = getelementptr [32 x i8], ptr %0, i64 %.sroa.01.0.i19 ; 2 uses
+  %4 = getelementptr i8, ptr %3, i64 -32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !67)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
-  %i.j = tail call noundef range(i8 0, 3) i8 @_RINvNtCs8Chj7Szqq0n_4core3cmp21default_chaining_implNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringBO_NvMB2_NtB2_8Ordering5is_ltECs7tUkaH0Ivrh_11iox2_tunnel(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %5) #21
+  %i.j = tail call noundef range(i8 0, 3) i8 @_RINvNtCs8Chj7Szqq0n_4core3cmp21default_chaining_implNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringBO_NvMB2_NtB2_8Ordering5is_ltECs7tUkaH0Ivrh_11iox2_tunnel(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %4) #21
   switch i8 %i.j, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7tUkaH0Ivrh_11iox2_tunnel.exit [
     i8 2, label %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4
     i8 0, label %bb.c
@@ -221,7 +219,7 @@ _RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3c
 
 _RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4: ; preds = %.lr.ph
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %i.l = getelementptr i8, ptr %3, i64 -8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !69)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !70)
   %i.m = load i64, ptr %i.k, align 8, !alias.scope !71, !noalias !72, !noundef !6
@@ -232,20 +230,18 @@ _RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3c
 bb.c:                                             ; preds = %.lr.ph, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4
   %i.p = add nuw nsw i64 %.sroa.01.0.i19, 1       ; 2 uses
   %exitcond.not = icmp eq i64 %i.p, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7tUkaH0Ivrh_11iox2_tunnel.exit, label %.lr.ph
+  br i1 %exitcond.not, label %_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE7reverseCs7tUkaH0Ivrh_11iox2_tunnel.exit, label %.lr.ph
 
 .lr.ph24:                                         ; preds = %.preheader, %bb.d
   %.sroa.01.1.i23 = phi i64 [ %i.x, %bb.d ], [ 2, %.preheader ] ; 5 uses
   %i.q = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.sroa.01.1.i23 ; 2 uses
-  %6 = add nsw i64 %.sroa.01.1.i23, -1            ; 2 uses
-  %7 = icmp samesign ult i64 %6, %1
-  tail call void @llvm.assume(i1 %7)
-  %8 = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %6 ; 2 uses
+  %5 = getelementptr [32 x i8], ptr %0, i64 %.sroa.01.1.i23 ; 2 uses
+  %6 = getelementptr i8, ptr %5, i64 -32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !75)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !76)
-  %i.r = tail call noundef range(i8 0, 3) i8 @_RINvNtCs8Chj7Szqq0n_4core3cmp21default_chaining_implNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringBO_NvMB2_NtB2_8Ordering5is_ltECs7tUkaH0Ivrh_11iox2_tunnel(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.q, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %8) #21
+  %i.r = tail call noundef range(i8 0, 3) i8 @_RINvNtCs8Chj7Szqq0n_4core3cmp21default_chaining_implNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringBO_NvMB2_NtB2_8Ordering5is_ltECs7tUkaH0Ivrh_11iox2_tunnel(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.q, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %6) #21
   switch i8 %i.r, label %bb.d [
     i8 2, label %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7
     i8 0, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7tUkaH0Ivrh_11iox2_tunnel.exit
@@ -253,7 +249,7 @@ bb.c:                                             ; preds = %.lr.ph, %_RNvYNvYTN
 
 _RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7: ; preds = %.lr.ph24
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 24
-  %i.t = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.t = getelementptr i8, ptr %5, i64 -8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !77)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !78)
   %i.u = load i64, ptr %i.s, align 8, !alias.scope !79, !noalias !80, !noundef !6
@@ -264,11 +260,11 @@ _RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3c
 bb.d:                                             ; preds = %.lr.ph24, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7
   %i.x = add nuw nsw i64 %.sroa.01.1.i23, 1       ; 2 uses
   %exitcond33.not = icmp eq i64 %i.x, %1
-  br i1 %exitcond33.not, label %_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7tUkaH0Ivrh_11iox2_tunnel.exit, label %.lr.ph24
+  br i1 %exitcond33.not, label %_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE12split_at_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit11.preheader.i.i, label %.lr.ph24
 
-_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7tUkaH0Ivrh_11iox2_tunnel.exit: ; preds = %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4, %bb.c, %.lr.ph, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7, %bb.d, %.lr.ph24, %.preheader17, %.preheader
-  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader17 ], [ true, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7 ], [ true, %.lr.ph24 ], [ true, %bb.d ], [ false, %.lr.ph ], [ false, %bb.c ], [ false, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4 ]
-  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader17 ], [ %.sroa.01.1.i23, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7 ], [ %1, %bb.d ], [ %.sroa.01.1.i23, %.lr.ph24 ], [ %.sroa.01.0.i19, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4 ], [ %1, %bb.c ], [ %.sroa.01.0.i19, %.lr.ph ] ; 2 uses
+_RINvNtNtNtCs8Chj7Szqq0n_4core5slice4sort6shared17find_existing_runTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENvYB12_NtNtB8_3cmp10PartialOrd2ltECs7tUkaH0Ivrh_11iox2_tunnel.exit: ; preds = %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4, %.lr.ph, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7, %.lr.ph24, %.preheader17, %.preheader
+  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader17 ], [ true, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7 ], [ true, %.lr.ph24 ], [ false, %.lr.ph ], [ false, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4 ]
+  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader17 ], [ %.sroa.01.1.i23, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit7 ], [ %.sroa.01.1.i23, %.lr.ph24 ], [ %.sroa.01.0.i19, %.lr.ph ], [ %.sroa.01.0.i19, %_RNvYNvYTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENtNtCs8Chj7Szqq0n_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit4 ] ; 2 uses
   %i.y = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.y)
   %i.z = icmp eq i64 %.sroa.0.0.i, %1
@@ -286,10 +282,10 @@ bb.f:                                             ; preds = %_RINvNtNtNtCs8Chj7S
   tail call fastcc void @_RINvNtNtNtNtCs8Chj7Szqq0n_4core5slice4sort8unstable9quicksort9quicksortTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjENvYB17_NtNtBa_3cmp10PartialOrd2ltECs7tUkaH0Ivrh_11iox2_tunnel(ptr noalias nofree noundef nonnull align 8 %0, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) null, i32 noundef %i.ae) #21
   br label %_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE7reverseCs7tUkaH0Ivrh_11iox2_tunnel.exit
 
-_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE7reverseCs7tUkaH0Ivrh_11iox2_tunnel.exit: ; preds = %_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE12split_at_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit11.i.i, %bb.a, %bb.e, %bb.f
+_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE7reverseCs7tUkaH0Ivrh_11iox2_tunnel.exit: ; preds = %bb.c, %_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE12split_at_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit11.i.i, %bb.a, %bb.e, %bb.f
   ret void
 
-_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE12split_at_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit11.preheader.i.i: ; preds = %bb.e
+_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE12split_at_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit11.preheader.i.i: ; preds = %bb.d, %bb.e
   %i.af = lshr i64 %1, 1
   %i.ag = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %1
   br label %_RNvMNtCs8Chj7Szqq0n_4core5sliceSTNtNtNtCsigunbJSLHCW_3std3ffi6os_str8OsStringjE12split_at_mutCs7tUkaH0Ivrh_11iox2_tunnel.exit11.i.i

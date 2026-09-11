@@ -204,9 +204,8 @@ bb.j:                                             ; preds = %bb.i
   ]
 
 bb.k:                                             ; preds = %bb.j, %bb.j
-  %2 = add i64 %indvars.iv, 4294967295
-  %3 = and i64 %2, 4294967295
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %3
+  %2 = getelementptr i8, ptr %0, i64 %indvars.iv
+  %i.ap = getelementptr i8, ptr %2, i64 -1
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !22  ; 2 uses
   %i.ar = sext i8 %i.aq to i64
   %i.as = getelementptr inbounds [2 x i8], ptr %i.ab, i64 %i.ar

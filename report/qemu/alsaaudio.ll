@@ -202,7 +202,7 @@ declare i64 @audio_generic_buffer_get_free(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc range(i32 -1, 1) i32 @alsa_poll_helper(ptr noundef %0, ptr noundef %1, i32 noundef range(i32 1, 5) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @snd_pcm_poll_descriptors_count(ptr noundef %0) #11 ; 6 uses
+  %i.a = tail call i32 @snd_pcm_poll_descriptors_count(ptr noundef %0) #11 ; 5 uses
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -211,23 +211,19 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.o
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = zext nneg i32 %i.a to i64
+  %i.c = zext nneg i32 %i.a to i64                ; 2 uses
   %i.d = tail call noalias ptr @g_malloc0_n(i64 noundef %i.c, i64 noundef 8) #13 ; 4 uses
   %i.e = tail call i32 @snd_pcm_poll_descriptors(ptr noundef %0, ptr noundef %i.d, i32 noundef %i.a) #11 ; 3 uses
   %i.f = icmp slt i32 %i.e, 0
-  br i1 %i.f, label %bb.d, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %wide.trip.count = zext nneg i32 %i.a to i64
-  br label %.lr.ph
+  br i1 %i.f, label %bb.d, label %.lr.ph
 
 bb.d:                                             ; preds = %bb.c
   tail call void (i32, ptr, ...) @alsa_logerr(i32 noundef %i.e, ptr noundef nonnull @.str.51)
   tail call void @g_free(ptr noundef %i.d) #11
   br label %bb.o
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %trace_alsa_set_handler.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %trace_alsa_set_handler.exit ] ; 4 uses
+.lr.ph:                                           ; preds = %bb.c, %trace_alsa_set_handler.exit
+  %indvars.iv = phi i64 [ %indvars.iv.next, %trace_alsa_set_handler.exit ], [ 0, %bb.c ] ; 4 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 4 ; 3 uses
   %i.i = load i16, ptr %i.h, align 4              ; 2 uses
@@ -303,7 +299,7 @@ bb.n:                                             ; preds = %bb.m
 
 trace_alsa_set_handler.exit:                      ; preds = %bb.k, %bb.l, %bb.m, %bb.n
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %trace_alsa_set_handler.exit

@@ -205,8 +205,6 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.old, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.split, %bb.m
-  %4 = add nuw nsw i64 %2, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 %4)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.p
@@ -231,12 +229,12 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ac, label %.loopexit, label %bb.p
 
 bb.p:                                             ; preds = %bb.n, %bb.o
-  %i.ad = add nuw nsw i64 %.sroa.0.031, 1         ; 2 uses
-  %5 = icmp ult i64 %i.ad, %3
-  br i1 %5, label %.lr.ph, label %.loopexit
+  %i.ad = add i64 %.sroa.0.031, 1                 ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ad, %3
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph
 
 .loopexit:                                        ; preds = %bb.o, %bb.p, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.split, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %_RNvCsgy7pbN39oAf_6uu_ptx20assert_str_integrity.exit, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit, %bb.m
-  %.sroa.019.0 = phi i64 [ %2, %bb.e ], [ %2, %bb.m ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %_RNvCsgy7pbN39oAf_6uu_ptx20assert_str_integrity.exit ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %bb.e ], [ %2, %bb.e ], [ %2, %bb.e ], [ %2, %bb.e ], [ %2, %bb.e ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %.split ], [ %.sroa.0.031, %bb.o ], [ %umax, %bb.p ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ]
+  %.sroa.019.0 = phi i64 [ %2, %bb.e ], [ %2, %bb.m ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %_RNvCsgy7pbN39oAf_6uu_ptx20assert_str_integrity.exit ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %bb.e ], [ %2, %bb.e ], [ %2, %bb.e ], [ %2, %bb.e ], [ %2, %bb.e ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %2, %.split ], [ %.sroa.0.031, %bb.o ], [ %3, %bb.p ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.031, %.lr.ph ]
   ret i64 %.sroa.019.0
 }
 
@@ -346,8 +344,6 @@ bb.n:                                             ; preds = %bb.l
   br i1 %.old, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.n, %bb.m
-  %4 = add nsw i64 %3, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %2, i64 %4)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.s
@@ -385,7 +381,7 @@ bb.s:                                             ; preds = %bb.q, %bb.r
   br i1 %i.af, label %.lr.ph, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.r, %bb.s, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.o, %bb.n, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %_RNvCsgy7pbN39oAf_6uu_ptx20assert_str_integrity.exit, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit, %bb.m
-  %.sroa.019.0 = phi i64 [ %3, %bb.e ], [ %3, %bb.m ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %_RNvCsgy7pbN39oAf_6uu_ptx20assert_str_integrity.exit ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %bb.e ], [ %3, %bb.e ], [ %3, %bb.e ], [ %3, %bb.e ], [ %3, %bb.e ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %bb.n ], [ %.sroa.0.033, %bb.r ], [ %umin, %bb.s ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ]
+  %.sroa.019.0 = phi i64 [ %3, %bb.e ], [ %3, %bb.m ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %_RNvCsgy7pbN39oAf_6uu_ptx20assert_str_integrity.exit ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %bb.e ], [ %3, %bb.e ], [ %3, %bb.e ], [ %3, %bb.e ], [ %3, %bb.e ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %_RNvNtNtNtCs6JMX4GRUq9U_4core7unicode12unicode_data11white_space6lookup.exit.thread ], [ %3, %bb.n ], [ %.sroa.0.033, %bb.r ], [ %2, %bb.s ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ], [ %.sroa.0.033, %bb.o ]
   ret i64 %.sroa.019.0
 }
 

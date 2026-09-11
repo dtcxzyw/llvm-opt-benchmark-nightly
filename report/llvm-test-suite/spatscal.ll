@@ -204,8 +204,7 @@ Subsample_Vertical.exit157:                       ; preds = %._crit_edge.i155, %
   %i.ka = zext nneg i32 %i.d to i64               ; 2 uses
   %i.kb = shl nuw nsw i64 %i.jz, 1
   %scevgep301 = getelementptr i8, ptr %4, i64 %i.kb ; 2 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ka, i64 3)
-  %i.kc = shl nuw nsw i64 %umax, 1
+  %i.kc = shl nuw nsw i64 %i.ka, 1
   %i.kd = and i64 %i.kc, 4294967292
   %i.ke = mul nuw nsw i64 %i.kd, %i.jz
   %scevgep302 = getelementptr i8, ptr %4, i64 %i.ke ; 2 uses
@@ -607,9 +606,6 @@ declare i32 @llvm.smax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7

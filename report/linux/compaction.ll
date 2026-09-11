@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %bb.ax
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.bm, %.lr.ph134.i.i
-  %indvars.iv.i.i170 = phi i64 [ %i.kb, %.lr.ph134.i.i ], [ %indvars.iv.next.i.i173, %bb.bm ] ; 2 uses
+  %indvars.iv.i.i170 = phi i64 [ %i.kb, %.lr.ph134.i.i ], [ %indvars.iv.next.i.i173, %bb.bm ] ; 3 uses
   %.070132.i.i = phi i32 [ 0, %.lr.ph134.i.i ], [ %.3.i.i, %bb.bm ] ; 5 uses
   %.072131.i.i = phi i64 [ %i.jf, %.lr.ph134.i.i ], [ %.5.i.i, %bb.bm ] ; 4 uses
   %i.kc = load ptr, ptr %i.b, align 8             ; 2 uses
@@ -405,9 +405,8 @@ bb.bm:                                            ; preds = %.thread.i.i, %bb.az
   %.483.i.i = phi i1 [ %.382.i.i, %.thread.i.i ], [ false, %bb.az ] ; 2 uses
   %.5.i.i = phi i64 [ %.4.i.i, %.thread.i.i ], [ %.072131.i.i, %bb.az ] ; 5 uses
   %.3.i.i = phi i32 [ %.2.i.i172, %.thread.i.i ], [ %.070132.i.i, %bb.az ] ; 3 uses
-  %indvars.iv.next.i.i173 = add nsw i64 %indvars.iv.i.i170, -1 ; 2 uses
-  %indvars.i.i = trunc i64 %indvars.iv.next.i.i173 to i32
-  %i.lv = icmp slt i32 %indvars.i.i, 3
+  %indvars.iv.next.i.i173 = add nsw i64 %indvars.iv.i.i170, -1
+  %i.lv = icmp slt i64 %indvars.iv.i.i170, 4
   %or.cond.i.i174 = or i1 %i.lv, %.483.i.i
   %i.lw = icmp ugt i32 %.3.i.i, %i.jm
   %.not92.i.i = select i1 %or.cond.i.i174, i1 true, i1 %i.lw

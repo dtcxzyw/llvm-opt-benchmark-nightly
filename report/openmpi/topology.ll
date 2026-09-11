@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c,
 define internal fastcc void @hwloc_propagate_symmetric_subtree(ptr nofree noundef captures(none) initializes((136, 140)) %0) unnamed_addr #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !122  ; 5 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !122  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   store i32 0, ptr %i.c, align 8, !tbaa !114
   %.not = icmp eq i32 %i.b, 0
@@ -239,7 +239,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.thread
-  %i.j = zext i32 %i.b to i64
+  %i.j = zext i32 %i.b to i64                     ; 4 uses
   %i.k = shl nuw nsw i64 %i.j, 3                  ; 2 uses
   %i.l = tail call noalias ptr @malloc(i64 noundef %i.k) #35 ; 11 uses
   %.not44 = icmp eq ptr %i.l, null
@@ -249,10 +249,9 @@ bb.c:                                             ; preds = %._crit_edge.thread
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !87
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr align 8 %i.n, i64 %i.k, i1 false)
-  %wide.trip.count = zext i32 %i.b to i64         ; 3 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %xtraiter = and i64 %i.j, 3                     ; 3 uses
   %i.o = icmp ult i32 %i.b, 4
-  %unroll_iter = and i64 %wide.trip.count, 4294967292
+  %unroll_iter = and i64 %i.j, 4294967292
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod27 = icmp ne i64 %xtraiter, 0
   br label %.lr.ph10.us
@@ -290,7 +289,7 @@ bb.c:                                             ; preds = %._crit_edge.thread
 
 bb.d:                                             ; preds = %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.j
   br i1 %exitcond.not, label %._crit_edge11.us, label %bb.e, !llvm.loop !181
 
 bb.e:                                             ; preds = %.lr.ph10.us, %bb.d

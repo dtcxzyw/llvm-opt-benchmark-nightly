@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.aa
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !95
   %i.cn = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.cm) #40
   %i.co = trunc i64 %i.cn to i32                  ; 3 uses
-  %i.cp = sext i32 %1 to i64                      ; 2 uses
+  %i.cp = sext i32 %1 to i64                      ; 3 uses
   %indvars.iv.next174236 = add nsw i64 %i.ck, 1   ; 2 uses
   %i.cq = icmp slt i64 %indvars.iv.next174236, %i.cp
   br i1 %i.cq, label %.lr.ph238, label %._crit_edge
@@ -344,8 +344,7 @@ Vec_WrdPush.exit113:                              ; preds = %Abc_TtReadBin64.exi
   %i.eg = getelementptr inbounds [8 x i8], ptr %i.ed, i64 %i.ef
   store i64 %.0.i, ptr %i.eg, align 8, !tbaa !100
   %indvars.iv.next177 = add nsw i64 %indvars.iv176, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next177 to i32
-  %exitcond179.not = icmp eq i32 %1, %lftr.wideiv
+  %exitcond179.not = icmp eq i64 %indvars.iv.next177, %i.cp
   br i1 %exitcond179.not, label %.loopexit, label %bb.af, !llvm.loop !1341
 
 .loopexit:                                        ; preds = %Vec_WrdPush.exit105, %Vec_WrdPush.exit113, %bb.q, %._crit_edge, %Vec_WrdPush.exit97, %bb.o, %Vec_WrdPush.exit

@@ -205,8 +205,7 @@ _cmsQuantizeVal.exit.us:                          ; preds = %bb.f, %bb.e
   %.0.i.i.us = phi i16 [ %i.ac, %bb.f ], [ -1, %bb.e ]
   %i.ad = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.l
   store i16 %.0.i.i.us, ptr %i.ad, align 2, !tbaa !57
-  %4 = trunc nuw i64 %indvars.iv to i32
-  %i.ae = icmp sgt i32 %4, 1
+  %i.ae = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ae, label %bb.e, label %._crit_edge.us, !llvm.loop !128
 
 bb.g:                                             ; preds = %._crit_edge.us
@@ -313,8 +312,7 @@ _cmsQuantizeVal.exit.us:                          ; preds = %bb.f, %bb.e
   %i.ae = fdiv float %.0.i.i.us, 6.553500e+04
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.l
   store float %i.ae, ptr %i.af, align 4, !tbaa !40
-  %4 = trunc nuw i64 %indvars.iv to i32
-  %i.ag = icmp sgt i32 %4, 1
+  %i.ag = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ag, label %bb.e, label %._crit_edge.us, !llvm.loop !130
 
 bb.g:                                             ; preds = %._crit_edge.us

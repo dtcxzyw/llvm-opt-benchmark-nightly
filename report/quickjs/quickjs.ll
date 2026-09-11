@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.sink.split, %bb.i
 ; Function Attrs: nounwind uwtable
 define internal fastcc { i64, i64 } @js_sub_string(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) unnamed_addr #2 {
 bb.a:
-  %i.a = sub i32 %3, %2                           ; 9 uses
+  %i.a = sub i32 %3, %2                           ; 8 uses
   %i.b = icmp eq i32 %2, 0
   br i1 %i.b, label %bb.b, label %bb.d
 
@@ -608,7 +608,7 @@ bb.am:                                            ; preds = %bb.al
   store i64 %i.hx, ptr %i.gs, align 8, !tbaa !196
   %i.hy = getelementptr inbounds i8, ptr %i.gz, i64 -4
   store i32 1, ptr %i.hy, align 4, !tbaa !191
-  %i.hz = zext nneg i32 %i.a to i64               ; 2 uses
+  %i.hz = zext nneg i32 %i.a to i64               ; 3 uses
   store i64 %i.hz, ptr %i.gz, align 8
   %i.ia = getelementptr inbounds nuw i8, ptr %i.gz, i64 8
   store i32 0, ptr %i.ia, align 8, !tbaa !249
@@ -617,7 +617,6 @@ bb.am:                                            ; preds = %bb.al
   %i.id = getelementptr inbounds nuw i8, ptr %i.gz, i64 24 ; 3 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %i.gz, i64 32
   %i.if = sext i32 %2 to i64
-  %wide.trip.count147 = zext nneg i32 %i.a to i64
   br label %bb.an
 
 bb.an:                                            ; preds = %.lr.ph127, %str8.exit
@@ -687,7 +686,7 @@ str8.exit:                                        ; preds = %str16.exit90, %bb.a
   %i.je = getelementptr inbounds nuw i8, ptr %.0.i.i91, i64 %indvars.iv144
   store i8 %i.it, ptr %i.je, align 1, !tbaa !218
   %indvars.iv.next145 = add nuw nsw i64 %indvars.iv144, 1 ; 2 uses
-  %exitcond148.not = icmp eq i64 %indvars.iv.next145, %wide.trip.count147
+  %exitcond148.not = icmp eq i64 %indvars.iv.next145, %i.hz
   br i1 %exitcond148.not, label %._crit_edge128, label %bb.an, !llvm.loop !1491
 
 ._crit_edge128:                                   ; preds = %str8.exit
@@ -1090,7 +1089,7 @@ define internal fastcc ptr @js_bigint_add(ptr noundef %0, ptr nofree noundef rea
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !191    ; 6 uses
   %i.b = load i32, ptr %2, align 4, !tbaa !191    ; 6 uses
-  %..i = tail call noundef i32 @llvm.smax.i32(i32 %i.a, i32 %i.b) ; 7 uses
+  %..i = tail call noundef i32 @llvm.smax.i32(i32 %i.a, i32 %i.b) ; 9 uses
   %..i91 = tail call noundef i32 @llvm.smin.i32(i32 %i.a, i32 %i.b) ; 6 uses
   %i.c = icmp sgt i32 %..i, 32768
   br i1 %i.c, label %bb.b, label %bb.c
@@ -1358,8 +1357,8 @@ bb.m:                                             ; preds = %._crit_edge
   %i.eg = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 3 uses
   %i.eh = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %i.a) ; 3 uses
   %smin = sext i32 %i.eh to i64                   ; 4 uses
-  %i.ei = tail call i32 @llvm.smax.i32(i32 %i.a, i32 %i.b) ; 3 uses
-  %i.ej = sub i32 %i.ei, %i.eh
+  %i.ei = tail call i32 @llvm.smax.i32(i32 %i.a, i32 %i.b)
+  %i.ej = sub i32 %..i, %i.eh
   %.neg176 = add i32 %i.eh, 1
   %xtraiter170 = and i32 %i.ej, 1
   %lcmp.mod171.not = icmp eq i32 %xtraiter170, 0
@@ -1384,7 +1383,7 @@ bb.m:                                             ; preds = %._crit_edge
   %.lcssa166.unr = phi i32 [ poison, %.lr.ph122 ], [ %i.es, %.prol.loopexit.unr-lcssa ]
   %indvars.iv140.unr = phi i64 [ %smin, %.lr.ph122 ], [ %indvars.iv.next141.prol, %.prol.loopexit.unr-lcssa ]
   %.286120.unr = phi i32 [ %.084.lcssa, %.lr.ph122 ], [ %i.es, %.prol.loopexit.unr-lcssa ]
-  %i.eu = icmp eq i32 %i.ei, %.neg176
+  %i.eu = icmp eq i32 %..i, %.neg176
   br i1 %i.eu, label %.loopexit, label %.lr.ph122.new
 
 .lr.ph122.new:                                    ; preds = %.prol.loopexit, %.lr.ph122.new
@@ -1787,8 +1786,8 @@ select.unfold:                                    ; preds = %bb.g, %bb.d
   br i1 %i.ac, label %.thread123.thread, label %.thread123
 
 .thread123:                                       ; preds = %bb.e, %select.unfold, %.thread119
-  %.0112125 = phi i64 [ %i.ab, %.thread119 ], [ %.sink.i.i.ph, %select.unfold ], [ 0, %bb.e ] ; 13 uses
-  %i.ad = load i64, ptr %i.a, align 8, !tbaa !240 ; 9 uses
+  %.0112125 = phi i64 [ %i.ab, %.thread119 ], [ %.sink.i.i.ph, %select.unfold ], [ 0, %bb.e ] ; 14 uses
+  %i.ad = load i64, ptr %i.a, align 8, !tbaa !240 ; 8 uses
   %.not85 = icmp slt i64 %.0112125, %i.ad
   br i1 %.not85, label %bb.i, label %.thread123.thread
 
@@ -2091,20 +2090,20 @@ js_dup.exit96:                                    ; preds = %._crit_edge156, %bb
   store i64 %i.em, ptr %.2.lcssa, align 8, !tbaa !218
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.2.lcssa, i64 8
   store i64 %i.eo, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !240
-  %.380187 = add nuw nsw i64 %.0112125, 1         ; 2 uses
-  %5 = icmp slt i64 %.380187, %i.ad
-  br i1 %5, label %.lr.ph190, label %JS_ToInt64Sat.exit.thread131
+  %.380187 = add nsw i64 %i.ad, -1                ; 2 uses
+  %exitcond171.not188 = icmp eq i64 %.0112125, %.380187
+  br i1 %exitcond171.not188, label %JS_ToInt64Sat.exit.thread131, label %.lr.ph190
 
 bb.w:                                             ; preds = %.lr.ph190
-  %.380 = add nuw nsw i64 %.380189, 1             ; 2 uses
-  %6 = icmp slt i64 %.380, %i.ad
-  br i1 %6, label %.lr.ph190, label %JS_ToInt64Sat.exit.thread131, !llvm.loop !2135
+  %exitcond171.not = icmp eq i64 %.380, %.380187
+  br i1 %exitcond171.not, label %JS_ToInt64Sat.exit.thread131, label %.lr.ph190, !llvm.loop !2135
 
 .lr.ph190:                                        ; preds = %js_dup.exit96, %bb.w
-  %.380189 = phi i64 [ %.380, %bb.w ], [ %.380187, %js_dup.exit96 ] ; 2 uses
-  %.2.pn188 = phi ptr [ %.3, %bb.w ], [ %.2.lcssa, %js_dup.exit96 ]
-  %.3 = getelementptr inbounds nuw i8, ptr %.2.pn188, i64 16 ; 2 uses
-  %i.ev = tail call fastcc i32 @JS_TryGetPropertyInt64(ptr noundef %0, i64 %i.c, i64 %i.d, i64 noundef %.380189, ptr noundef nonnull %.3)
+  %.2.pn190 = phi ptr [ %.3, %bb.w ], [ %.2.lcssa, %js_dup.exit96 ]
+  %.380189 = phi i64 [ %.380, %bb.w ], [ %.0112125, %js_dup.exit96 ]
+  %.380 = add nuw nsw i64 %.380189, 1             ; 3 uses
+  %.3 = getelementptr inbounds nuw i8, ptr %.2.pn190, i64 16 ; 2 uses
+  %i.ev = tail call fastcc i32 @JS_TryGetPropertyInt64(ptr noundef %0, i64 %i.c, i64 %i.d, i64 noundef %.380, ptr noundef nonnull %.3)
   %i.ew = icmp eq i32 %i.ev, -1
   br i1 %i.ew, label %JS_ToInt64Sat.exit, label %bb.w, !llvm.loop !2135
 
@@ -2507,7 +2506,7 @@ bb.bj:                                            ; preds = %bb.bd, %bb.bd, %JS_
   br i1 %.not82.us, label %bb.bk, label %.loopexit
 
 bb.bk:                                            ; preds = %.lr.ph115.split.us
-  %i.hi = add nuw i32 %.176113.us, 1              ; 2 uses
+  %i.hi = add nuw nsw i32 %.176113.us, 1          ; 2 uses
   %exitcond147.not = icmp eq i32 %i.hi, %i.ar
   br i1 %exitcond147.not, label %._crit_edge116, label %.lr.ph115.split.us, !llvm.loop !2250
 
@@ -2521,7 +2520,7 @@ bb.bk:                                            ; preds = %.lr.ph115.split.us
   br i1 %.not81, label %bb.bl, label %.loopexit
 
 bb.bl:                                            ; preds = %.lr.ph115.split
-  %i.hn = add nuw i32 %.176113, 1                 ; 2 uses
+  %i.hn = add nuw nsw i32 %.176113, 1             ; 2 uses
   %exitcond146.not = icmp eq i32 %i.hn, %i.ar
   br i1 %exitcond146.not, label %._crit_edge116, label %.lr.ph115.split, !llvm.loop !2250
 

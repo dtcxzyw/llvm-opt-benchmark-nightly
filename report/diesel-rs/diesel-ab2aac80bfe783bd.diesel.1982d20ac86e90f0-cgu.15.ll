@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.z
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.09.0 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !647)
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
@@ -310,11 +310,8 @@ _RNvYNvYRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNa
   %i.bi = phi i64 [ %i.bo, %_RNvYNvYRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNameNtNtCscI6d9CVNmLh_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutBc_.exit22.thread.i ], [ %i.u, %.critedge.preheader.i ] ; 2 uses
   %i.bj = phi ptr [ %i.bm, %_RNvYNvYRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNameNtNtCscI6d9CVNmLh_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutBc_.exit22.thread.i ], [ %i.s, %.critedge.preheader.i ]
   %.val9.i = phi ptr [ %.val8.i, %_RNvYNvYRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNameNtNtCscI6d9CVNmLh_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutBc_.exit22.thread.i ], [ %.val10.i, %.critedge.preheader.i ] ; 5 uses
-  %.sroa.01.0.i60.i = phi i64 [ %i.cy, %_RNvYNvYRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNameNtNtCscI6d9CVNmLh_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutBc_.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 6 uses
+  %.sroa.01.0.i60.i = phi i64 [ %i.cy, %_RNvYNvYRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNameNtNtCscI6d9CVNmLh_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutBc_.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 5 uses
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.0.i60.i
-  %6 = add nsw i64 %.sroa.01.0.i60.i, -1
-  %7 = icmp samesign ult i64 %6, %i.n
-  tail call void @llvm.assume(i1 %7)
   %.val8.i = load ptr, ptr %i.bk, align 8, !alias.scope !647, !noalias !648, !nonnull !4, !align !6, !noundef !4 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !658)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !659)
@@ -398,11 +395,8 @@ _RNvYNvYRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNa
   %i.cz = phi i64 [ %i.df, %bb.u ], [ %i.u, %.preheader.i ] ; 2 uses
   %i.da = phi ptr [ %i.dd, %bb.u ], [ %i.s, %.preheader.i ]
   %.val7.i = phi ptr [ %.val.i, %bb.u ], [ %.val10.i, %.preheader.i ] ; 5 uses
-  %.sroa.01.1.i54.i = phi i64 [ %i.ep, %bb.u ], [ 2, %.preheader.i ] ; 7 uses
+  %.sroa.01.1.i54.i = phi i64 [ %i.ep, %bb.u ], [ 2, %.preheader.i ] ; 6 uses
   %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.sroa.01.1.i54.i
-  %8 = add nsw i64 %.sroa.01.1.i54.i, -1
-  %9 = icmp samesign ult i64 %8, %i.n
-  tail call void @llvm.assume(i1 %9)
   %.val.i = load ptr, ptr %i.db, align 8, !alias.scope !647, !noalias !648, !nonnull !4, !align !6, !noundef !4 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !667)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !668)

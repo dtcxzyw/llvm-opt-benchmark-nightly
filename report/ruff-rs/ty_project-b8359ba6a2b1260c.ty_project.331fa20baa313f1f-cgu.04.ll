@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br label %bb.ab
 
 bb.h:                                             ; preds = %bb.f
-  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
-  %i.o = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.09.0 ; 10 uses
+  %i.n = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
+  %i.o = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2009)
   %.not.i33 = icmp ult i64 %i.n, %.sroa.01.0
   br i1 %.not.i33, label %bb.i, label %bb.j
@@ -282,21 +282,17 @@ _RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84x
 
 .lr.ph54.i:                                       ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB7_6string6StringEIB15_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEE7sort_byNCNCINvMs4_NtBA_3mapINtB3p_8IndexMapB14_B2d_INtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE7sort_byNCNCNvMNtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB5B_7Options24prioritize_all_selectors00E00E0B5F_.exit.i, %bb.t
   %.val13.i = phi i64 [ %.val11.i, %bb.t ], [ %.val15.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB7_6string6StringEIB15_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEE7sort_byNCNCINvMs4_NtBA_3mapINtB3p_8IndexMapB14_B2d_INtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE7sort_byNCNCNvMNtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB5B_7Options24prioritize_all_selectors00E00E0B5F_.exit.i ] ; 2 uses
-  %.sroa.01.0.i53.i = phi i64 [ %i.bs, %bb.t ], [ 2, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB7_6string6StringEIB15_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEE7sort_byNCNCINvMs4_NtBA_3mapINtB3p_8IndexMapB14_B2d_INtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE7sort_byNCNCNvMNtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB5B_7Options24prioritize_all_selectors00E00E0B5F_.exit.i ] ; 5 uses
-  %6 = getelementptr inbounds nuw [96 x i8], ptr %i.o, i64 %.sroa.01.0.i53.i ; 2 uses
-  %7 = add nsw i64 %.sroa.01.0.i53.i, -1          ; 2 uses
-  %8 = icmp samesign ult i64 %7, %i.n
-  tail call void @llvm.assume(i1 %8)
-  %i.ar = getelementptr inbounds nuw [96 x i8], ptr %i.o, i64 %7
-  %i.as = getelementptr i8, ptr %6, i64 32
+  %.sroa.01.0.i53.i = phi i64 [ %i.bs, %bb.t ], [ 2, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB7_6string6StringEIB15_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEE7sort_byNCNCINvMs4_NtBA_3mapINtB3p_8IndexMapB14_B2d_INtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE7sort_byNCNCNvMNtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB5B_7Options24prioritize_all_selectors00E00E0B5F_.exit.i ] ; 4 uses
+  %i.ar = getelementptr inbounds nuw [96 x i8], ptr %i.o, i64 %.sroa.01.0.i53.i ; 3 uses
+  %i.as = getelementptr i8, ptr %i.ar, i64 32
   %.val11.i = load i64, ptr %i.as, align 8, !alias.scope !2009, !noalias !2010, !noundef !3 ; 2 uses
-  %i.at = getelementptr i8, ptr %i.ar, i64 24
+  %i.at = getelementptr i8, ptr %i.ar, i64 -72
   %.val12.i = load ptr, ptr %i.at, align 8, !alias.scope !2009, !noalias !2010 ; 4 uses
   %i.au = icmp eq i64 %.val11.i, 3
   br i1 %i.au, label %bb.p, label %.thread.i.i.i18.i
 
 bb.p:                                             ; preds = %.lr.ph54.i
-  %i.av = getelementptr i8, ptr %6, i64 24
+  %i.av = getelementptr i8, ptr %i.ar, i64 24
   %.val10.i = load ptr, ptr %i.av, align 8, !alias.scope !2009, !noalias !2010, !nonnull !3, !noundef !3 ; 2 uses
   %i.aw = load i16, ptr %.val10.i, align 1
   %i.ax = xor i16 %i.aw, 27745
@@ -346,11 +342,8 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q,
 
 .lr.ph.i:                                         ; preds = %.split.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB7_6string6StringEIB15_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEE7sort_byNCNCINvMs4_NtBA_3mapINtB3p_8IndexMapB14_B2d_INtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE7sort_byNCNCNvMNtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB5B_7Options24prioritize_all_selectors00E00E0B5F_.exit29.i
   %.val8.i = phi ptr [ %.val.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB7_6string6StringEIB15_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEE7sort_byNCNCINvMs4_NtBA_3mapINtB3p_8IndexMapB14_B2d_INtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE7sort_byNCNCNvMNtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB5B_7Options24prioritize_all_selectors00E00E0B5F_.exit29.i ], [ %.val14.i, %.split.i ] ; 2 uses
-  %.sroa.01.1.i46.i = phi i64 [ %i.cr, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB7_6string6StringEIB15_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEE7sort_byNCNCINvMs4_NtBA_3mapINtB3p_8IndexMapB14_B2d_INtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE7sort_byNCNCNvMNtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB5B_7Options24prioritize_all_selectors00E00E0B5F_.exit29.i ], [ 2, %.split.i ] ; 6 uses
+  %.sroa.01.1.i46.i = phi i64 [ %i.cr, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtCs5e9M2GLoJMY_8indexmap6BucketINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtB7_6string6StringEIB15_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEE7sort_byNCNCINvMs4_NtBA_3mapINtB3p_8IndexMapB14_B2d_INtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE7sort_byNCNCNvMNtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB5B_7Options24prioritize_all_selectors00E00E0B5F_.exit29.i ], [ 2, %.split.i ] ; 5 uses
   %i.bt = getelementptr inbounds nuw [96 x i8], ptr %i.o, i64 %.sroa.01.1.i46.i ; 2 uses
-  %9 = add nsw i64 %.sroa.01.1.i46.i, -1
-  %10 = icmp samesign ult i64 %9, %i.n
-  tail call void @llvm.assume(i1 %10)
   %i.bu = getelementptr i8, ptr %i.bt, i64 32
   %.val7.i = load i64, ptr %i.bu, align 8, !alias.scope !2009, !noalias !2010, !noundef !3
   %i.bv = icmp eq i64 %.val7.i, 3

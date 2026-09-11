@@ -204,11 +204,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h
 
 .preheader:                                       ; preds = %bb.k
   %.not100 = icmp eq i64 %.val, 1
-  br i1 %.not100, label %._crit_edge99, label %.lr.ph95.preheader
-
-.lr.ph95.preheader:                               ; preds = %.preheader
-  %smax = tail call i64 @llvm.smax.i64(i64 %.val, i64 2)
-  br label %.lr.ph95
+  br i1 %.not100, label %._crit_edge99, label %.lr.ph95
 
 bb.l:                                             ; preds = %bb.k
   %i.ao = icmp eq i64 %.05293, 1
@@ -218,8 +214,8 @@ bb.l:                                             ; preds = %bb.k
   %i.as = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.aq, ptr noundef nonnull @.str.38, i64 noundef %i.ar, ptr noundef nonnull %i.ap, i64 noundef %.05293) #10 ; 0 uses
   br label %_PyObject_VectorcallTstate.exit
 
-.lr.ph95:                                         ; preds = %.lr.ph95.preheader, %bb.s
-  %.15994 = phi i64 [ %i.bm, %bb.s ], [ 1, %.lr.ph95.preheader ] ; 5 uses
+.lr.ph95:                                         ; preds = %.preheader, %bb.s
+  %.15994 = phi i64 [ %i.bm, %bb.s ], [ 1, %.preheader ] ; 5 uses
   %i.at = load ptr, ptr %i.d, align 8, !tbaa !33
   %i.au = getelementptr i8, ptr %i.at, i64 32
   %i.av = getelementptr [8 x i8], ptr %i.au, i64 %.15994
@@ -272,7 +268,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.p
   %i.bm = add nuw nsw i64 %.15994, 1              ; 2 uses
-  %exitcond106.not = icmp eq i64 %i.bm, %smax
+  %exitcond106.not = icmp eq i64 %i.bm, %.val
   br i1 %exitcond106.not, label %._crit_edge99, label %.lr.ph95, !llvm.loop !65
 
 _PyObject_VectorcallTstate.exit:                  ; preds = %bb.g, %_PyVectorcall_FunctionInline.exit.thread.i, %bb.e, %bb.l, %bb.i
@@ -674,9 +670,6 @@ declare void @_Py_Dealloc(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9

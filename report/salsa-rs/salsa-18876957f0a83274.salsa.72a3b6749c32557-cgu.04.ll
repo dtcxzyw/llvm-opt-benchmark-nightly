@@ -204,9 +204,6 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8Ide
   %i.s = phi i32 [ %i.v, %bb.c ], [ %i.c, %.preheader17 ] ; 2 uses
   %.sroa.01.0.i19 = phi i64 [ %i.ak, %bb.c ], [ 2, %.preheader17 ] ; 5 uses
   %i.t = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.01.0.i19 ; 3 uses
-  %3 = add nsw i64 %.sroa.01.0.i19, -1            ; 2 uses
-  %4 = icmp samesign ult i64 %3, %1
-  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !41)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !43)
@@ -217,12 +214,12 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8Ide
   br i1 %i.w, label %.split11, label %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit5
 
 .split11:                                         ; preds = %.lr.ph
-  %i.x = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %3 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 20
+  %i.x = getelementptr [24 x i8], ptr %0, i64 %.sroa.01.0.i19 ; 2 uses
+  %i.y = getelementptr i8, ptr %i.x, i64 -4
   %i.z = load i32, ptr %i.y, align 4, !alias.scope !46, !noalias !45, !noundef !3
   %i.aa = getelementptr inbounds nuw i8, ptr %i.t, i64 20
   %i.ab = load i32, ptr %i.aa, align 4, !alias.scope !45, !noalias !46, !noundef !3
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 16
+  %i.ac = getelementptr i8, ptr %i.x, i64 -8
   %i.ad = load i32, ptr %i.ac, align 8, !range !4, !alias.scope !46, !noalias !45, !noundef !3 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.af = load i32, ptr %i.ae, align 8, !range !4, !alias.scope !45, !noalias !46, !noundef !3 ; 2 uses
@@ -239,15 +236,12 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8Ide
 bb.c:                                             ; preds = %.split11, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit5
   %i.ak = add nuw nsw i64 %.sroa.01.0.i19, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %i.ak, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtB17_2id2IdENCINvMB6_SB12_16sort_unstable_byNCNvMs1_B15_NtB15_11IdentityMap5drain0E0EB17_.exit, label %.lr.ph
+  br i1 %exitcond.not, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBz_2id2IdE7reverseBz_.exit, label %.lr.ph
 
 .lr.ph23:                                         ; preds = %.preheader, %bb.d
   %i.al = phi i32 [ %i.ao, %bb.d ], [ %i.c, %.preheader ] ; 2 uses
   %.sroa.01.1.i22 = phi i64 [ %i.bd, %bb.d ], [ 2, %.preheader ] ; 5 uses
   %i.am = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.01.1.i22 ; 3 uses
-  %5 = add nsw i64 %.sroa.01.1.i22, -1            ; 2 uses
-  %6 = icmp samesign ult i64 %5, %1
-  tail call void @llvm.assume(i1 %6)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !47)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49)
@@ -258,12 +252,12 @@ bb.c:                                             ; preds = %.split11, %_RNCINvM
   br i1 %i.ap, label %.split12, label %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit8
 
 .split12:                                         ; preds = %.lr.ph23
-  %i.aq = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %5 ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 20
+  %i.aq = getelementptr [24 x i8], ptr %0, i64 %.sroa.01.1.i22 ; 2 uses
+  %i.ar = getelementptr i8, ptr %i.aq, i64 -4
   %i.as = load i32, ptr %i.ar, align 4, !alias.scope !52, !noalias !51, !noundef !3
   %i.at = getelementptr inbounds nuw i8, ptr %i.am, i64 20
   %i.au = load i32, ptr %i.at, align 4, !alias.scope !51, !noalias !52, !noundef !3
-  %i.av = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
+  %i.av = getelementptr i8, ptr %i.aq, i64 -8
   %i.aw = load i32, ptr %i.av, align 8, !range !4, !alias.scope !52, !noalias !51, !noundef !3 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %i.ay = load i32, ptr %i.ax, align 8, !range !4, !alias.scope !51, !noalias !52, !noundef !3 ; 2 uses
@@ -280,11 +274,11 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8Ide
 bb.d:                                             ; preds = %.split12, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit8
   %i.bd = add nuw nsw i64 %.sroa.01.1.i22, 1      ; 2 uses
   %exitcond31.not = icmp eq i64 %i.bd, %1
-  br i1 %exitcond31.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtB17_2id2IdENCINvMB6_SB12_16sort_unstable_byNCNvMs1_B15_NtB15_11IdentityMap5drain0E0EB17_.exit, label %.lr.ph23
+  br i1 %exitcond31.not, label %.lr.ph.preheader.i.i, label %.lr.ph23
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtB17_2id2IdENCINvMB6_SB12_16sort_unstable_byNCNvMs1_B15_NtB15_11IdentityMap5drain0E0EB17_.exit: ; preds = %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit5, %bb.c, %.split11, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit8, %bb.d, %.split12, %.preheader17, %.preheader
-  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader17 ], [ true, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit8 ], [ true, %.split12 ], [ true, %bb.d ], [ false, %.split11 ], [ false, %bb.c ], [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit5 ]
-  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader17 ], [ %.sroa.01.1.i22, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit8 ], [ %1, %bb.d ], [ %.sroa.01.1.i22, %.split12 ], [ %.sroa.01.0.i19, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit5 ], [ %1, %bb.c ], [ %.sroa.01.0.i19, %.split11 ] ; 2 uses
+_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtB17_2id2IdENCINvMB6_SB12_16sort_unstable_byNCNvMs1_B15_NtB15_11IdentityMap5drain0E0EB17_.exit: ; preds = %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit5, %.split11, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit8, %.split12, %.preheader17, %.preheader
+  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader17 ], [ true, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit8 ], [ true, %.split12 ], [ false, %.split11 ], [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit5 ]
+  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader17 ], [ %.sroa.01.1.i22, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit8 ], [ %.sroa.01.1.i22, %.split12 ], [ %.sroa.01.0.i19, %.split11 ], [ %.sroa.01.0.i19, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBC_2id2IdE16sort_unstable_byNCNvMs1_BA_NtBA_11IdentityMap5drain0E0BC_.exit5 ] ; 2 uses
   %i.be = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.be)
   %i.bf = icmp eq i64 %.sroa.0.0.i, %1
@@ -302,10 +296,10 @@ bb.f:                                             ; preds = %_RINvNtNtNtCs4NRVxs
   tail call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort9quicksortTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtB1c_2id2IdENCINvMB8_SB17_16sort_unstable_byNCNvMs1_B1a_NtB1a_11IdentityMap5drain0E0EB1c_(ptr noalias noundef nonnull align 8 %0, i64 noundef %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(24) null, i32 noundef %i.bk, ptr noalias noundef nonnull align 8 dereferenceable(8) %2)
   br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBz_2id2IdE7reverseBz_.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBz_2id2IdE7reverseBz_.exit: ; preds = %_RINvNtCs4NRVxsYgnAr_4core10intrinsics25typed_swap_nonoverlappingTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtB15_2id2IdEEB15_.exit.i.i, %bb.a, %bb.e, %bb.f
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBz_2id2IdE7reverseBz_.exit: ; preds = %bb.c, %_RINvNtCs4NRVxsYgnAr_4core10intrinsics25typed_swap_nonoverlappingTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtB15_2id2IdEEB15_.exit.i.i, %bb.a, %bb.e, %bb.f
   ret void
 
-.lr.ph.preheader.i.i:                             ; preds = %bb.e
+.lr.ph.preheader.i.i:                             ; preds = %bb.d, %bb.e
   %i.bl = lshr i64 %1, 1
   %i.bm = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %1
   br label %.lr.ph.i.i

@@ -181,8 +181,8 @@ __roundup_pow_of_two.exit:                        ; preds = %bb.c, %.critedge
   br label %_kmalloc_noprof.exit.i
 
 _kmalloc_noprof.exit.i:                           ; preds = %__roundup_pow_of_two.exit, %bb.e
-  %.068 = phi i32 [ %i.i, %bb.e ], [ %i.q, %__roundup_pow_of_two.exit ] ; 5 uses
-  %i.r = zext i32 %.068 to i64
+  %.068 = phi i32 [ %i.i, %bb.e ], [ %i.q, %__roundup_pow_of_two.exit ] ; 4 uses
+  %i.r = zext i32 %.068 to i64                    ; 2 uses
   %i.s = shl nuw nsw i64 %i.r, 3
   %i.t = add nuw nsw i64 %i.s, 24
   %i.u = tail call i64 @kmalloc_size_roundup(i64 noundef %i.t) #9 ; 2 uses
@@ -315,8 +315,7 @@ bb.q:                                             ; preds = %bb.n
 
 dma_fence_put.exit:                               ; preds = %bb.m, %bb.o, %bb.p, %bb.q
   %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next104 to i32
-  %exitcond.not = icmp eq i32 %.068, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next104, %i.r
   br i1 %exitcond.not, label %._crit_edge, label %bb.m, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %dma_fence_put.exit, %.critedge81

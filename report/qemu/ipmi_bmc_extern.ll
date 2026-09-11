@@ -202,7 +202,7 @@ addchar.exit:                                     ; preds = %bb.f, %bb.g
   %i.ac = load i32, ptr %i.e, align 4
   %i.ad = add i32 %i.ac, 1                        ; 2 uses
   store i32 %i.ad, ptr %i.e, align 4
-  %wide.trip.count = zext nneg i32 %2 to i64
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 6 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %addchar.exit, %addchar.exit39
@@ -240,7 +240,6 @@ addchar.exit39:                                   ; preds = %bb.h, %bb.i
   br i1 %exitcond.not, label %iter.check, label %bb.h, !llvm.loop !13
 
 iter.check:                                       ; preds = %addchar.exit39
-  %5 = zext nneg i32 %2 to i64                    ; 5 uses
   %min.iters.check = icmp ult i32 %2, 4
   br i1 %min.iters.check, label %.lr.ph.i42.preheader, label %vector.main.loop.iter.check
 
@@ -249,8 +248,8 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check60, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.aq = and i64 %5, 28
-  %n.vec = and i64 %5, 480                        ; 5 uses
+  %i.aq = and i64 %wide.trip.count, 28
+  %n.vec = and i64 %wide.trip.count, 480          ; 5 uses
   %i.ar = getelementptr i8, ptr %1, i64 %n.vec
   %i.as = trunc nuw nsw i64 %n.vec to i32
   %i.at = sub nsw i32 %2, %i.as
@@ -274,7 +273,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <16 x i8> %i.ax, %i.aw
   %i.az = tail call i8 @llvm.vector.reduce.add.v16i8(<16 x i8> %bin.rdx) ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %5
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %ipmb_checksum.exit46, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -284,7 +283,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i8 [ %i.az, %vec.epilog.iter.check ], [ %4, %vector.main.loop.iter.check ]
-  %n.vec64 = and i64 %5, 508                      ; 4 uses
+  %n.vec64 = and i64 %wide.trip.count, 508        ; 4 uses
   %i.ba = getelementptr i8, ptr %1, i64 %n.vec64
   %i.bb = trunc nuw nsw i64 %n.vec64 to i32
   %i.bc = sub nsw i32 %2, %i.bb
@@ -303,7 +302,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %i.bg = tail call i8 @llvm.vector.reduce.add.v4i8(<4 x i8> %i.be) ; 2 uses
-  %cmp.n70 = icmp eq i64 %n.vec64, %5
+  %cmp.n70 = icmp eq i64 %n.vec64, %wide.trip.count
   br i1 %cmp.n70, label %ipmb_checksum.exit46, label %.lr.ph.i42.preheader
 
 .lr.ph.i42.preheader:                             ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block

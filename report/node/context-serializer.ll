@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   store i32 0, ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 4 uses
   store ptr null, ptr %i.j, align 8
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 2 uses
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 3 uses
   %invariant.op = add i64 %i.f, 15
   br label %bb.d
 
@@ -513,7 +513,6 @@ _ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.ac, %bb.ab, %bb.
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 672 ; 6 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 4 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 688 ; 3 uses
-  %wide.trip.count173 = zext nneg i32 %2 to i64
   %invariant.op193 = add i64 %i.co, 15
   br label %bb.ai
 
@@ -689,7 +688,7 @@ bb.aq:                                            ; preds = %_ZN2v88internal16Sn
 
 bb.ar:                                            ; preds = %_ZN2v88internal16SnapshotByteSink3PutEhPKc.exit, %bb.aq, %bb.aj, %bb.ai
   %indvars.iv.next171 = add nuw nsw i64 %indvars.iv170, 1 ; 2 uses
-  %exitcond174.not = icmp eq i64 %indvars.iv.next171, %wide.trip.count173
+  %exitcond174.not = icmp eq i64 %indvars.iv.next171, %wide.trip.count
   br i1 %exitcond174.not, label %._crit_edge159, label %bb.ai, !llvm.loop !25
 }
 

@@ -202,9 +202,8 @@ bb.bt:                                            ; preds = %bb.bs, %bb.bq
   %i.nj = load ptr, ptr %i.ni, align 8, !tbaa !30 ; 2 uses
   %i.nk = getelementptr inbounds nuw [8 x i8], ptr %i.nj, i64 %i.aa
   %i.nl = load ptr, ptr %i.nk, align 8, !tbaa !31 ; 2 uses
-  %2 = trunc nuw i64 %indvars.iv4587 to i32
-  %3 = icmp sgt i32 %2, 1
-  br i1 %3, label %.preheader, label %._crit_edge4371, !llvm.loop !56
+  %2 = icmp samesign ugt i64 %indvars.iv4587, 1
+  br i1 %2, label %.preheader, label %._crit_edge4371, !llvm.loop !56
 
 ._crit_edge4371:                                  ; preds = %.thread3459, %.critedge
   %.02705.lcssa = phi ptr [ %.02827.lcssa, %.critedge ], [ %i.nl, %.thread3459 ] ; 8 uses
@@ -607,9 +606,8 @@ bb.es:                                            ; preds = %bb.er, %bb.ep
   %i.act = load ptr, ptr %i.acs, align 8, !tbaa !30 ; 2 uses
   %i.acu = getelementptr inbounds nuw [8 x i8], ptr %i.act, i64 %i.pk
   %i.acv = load ptr, ptr %i.acu, align 8, !tbaa !31 ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv4568 to i32
-  %5 = icmp sgt i32 %4, 1
-  br i1 %5, label %.preheader3888, label %._crit_edge4338, !llvm.loop !58
+  %3 = icmp samesign ugt i64 %indvars.iv4568, 1
+  br i1 %3, label %.preheader3888, label %._crit_edge4338, !llvm.loop !58
 
 ._crit_edge4338:                                  ; preds = %.thread3507, %.critedge122
   %.02687.lcssa = phi ptr [ %.42831.lcssa, %.critedge122 ], [ %i.acv, %.thread3507 ] ; 8 uses
@@ -1012,9 +1010,8 @@ bb.ia:                                            ; preds = %bb.hz, %bb.hx
   %i.asw = load ptr, ptr %i.asv, align 8, !tbaa !30 ; 2 uses
   %i.asx = getelementptr inbounds nuw [8 x i8], ptr %i.asw, i64 %i.aex
   %i.asy = load ptr, ptr %i.asx, align 8, !tbaa !31 ; 2 uses
-  %6 = trunc nuw i64 %indvars.iv4549 to i32
-  %7 = icmp sgt i32 %6, 1
-  br i1 %7, label %.preheader3890, label %._crit_edge4305, !llvm.loop !60
+  %4 = icmp samesign ugt i64 %indvars.iv4549, 1
+  br i1 %4, label %.preheader3890, label %._crit_edge4305, !llvm.loop !60
 
 ._crit_edge4305:                                  ; preds = %.thread3555, %.critedge128
   %.02672.lcssa = phi ptr [ %.82835.lcssa, %.critedge128 ], [ %i.asy, %.thread3555 ] ; 8 uses
@@ -1417,9 +1414,8 @@ bb.la:                                            ; preds = %bb.kz, %bb.kx
   %i.bih = load ptr, ptr %i.big, align 8, !tbaa !30 ; 2 uses
   %i.bii = getelementptr inbounds nuw [8 x i8], ptr %i.bih, i64 %i.auy
   %i.bij = load ptr, ptr %i.bii, align 8, !tbaa !31 ; 2 uses
-  %8 = trunc nuw i64 %indvars.iv4530 to i32
-  %9 = icmp sgt i32 %8, 1
-  br i1 %9, label %.preheader3891, label %._crit_edge4268, !llvm.loop !62
+  %5 = icmp samesign ugt i64 %indvars.iv4530, 1
+  br i1 %5, label %.preheader3891, label %._crit_edge4268, !llvm.loop !62
 
 ._crit_edge4268:                                  ; preds = %.thread3603, %.critedge134
   %.02657.lcssa = phi ptr [ %.122839.lcssa, %.critedge134 ], [ %i.bij, %.thread3603 ] ; 8 uses
@@ -1822,9 +1818,8 @@ bb.nz:                                            ; preds = %bb.ny, %bb.nw
   %i.bxr = load ptr, ptr %i.bxq, align 8, !tbaa !30 ; 2 uses
   %i.bxs = getelementptr inbounds nuw [8 x i8], ptr %i.bxr, i64 %i.bki
   %i.bxt = load ptr, ptr %i.bxs, align 8, !tbaa !31 ; 2 uses
-  %10 = trunc nuw i64 %indvars.iv4511 to i32
-  %11 = icmp sgt i32 %10, 1
-  br i1 %11, label %.preheader3893, label %._crit_edge4235, !llvm.loop !64
+  %6 = icmp samesign ugt i64 %indvars.iv4511, 1
+  br i1 %6, label %.preheader3893, label %._crit_edge4235, !llvm.loop !64
 
 ._crit_edge4235:                                  ; preds = %.thread3651, %.critedge140
   %.02642.lcssa = phi ptr [ %.162843.lcssa, %.critedge140 ], [ %i.bxt, %.thread3651 ] ; 8 uses
@@ -2227,9 +2222,8 @@ bb.qy:                                            ; preds = %bb.qx, %bb.qv
   %i.cnb = load ptr, ptr %i.cna, align 8, !tbaa !30 ; 2 uses
   %i.cnc = getelementptr inbounds nuw [8 x i8], ptr %i.cnb, i64 %i.bzs
   %i.cnd = load ptr, ptr %i.cnc, align 8, !tbaa !31 ; 2 uses
-  %12 = trunc nuw i64 %indvars.iv4492 to i32
-  %13 = icmp sgt i32 %12, 1
-  br i1 %13, label %.preheader3895, label %._crit_edge4202, !llvm.loop !66
+  %7 = icmp samesign ugt i64 %indvars.iv4492, 1
+  br i1 %7, label %.preheader3895, label %._crit_edge4202, !llvm.loop !66
 
 ._crit_edge4202:                                  ; preds = %.thread3699, %.critedge146
   %.02627.lcssa = phi ptr [ %.202847.lcssa, %.critedge146 ], [ %i.cnd, %.thread3699 ] ; 8 uses
@@ -2632,9 +2626,8 @@ bb.uf:                                            ; preds = %bb.ue, %bb.uc
   %i.ddm = load ptr, ptr %i.ddl, align 8, !tbaa !30 ; 2 uses
   %i.ddn = getelementptr inbounds nuw [8 x i8], ptr %i.ddm, i64 %i.cpj
   %i.ddo = load ptr, ptr %i.ddn, align 8, !tbaa !31 ; 2 uses
-  %14 = trunc nuw i64 %indvars.iv4473 to i32
-  %15 = icmp sgt i32 %14, 1
-  br i1 %15, label %.preheader3897, label %._crit_edge4169, !llvm.loop !68
+  %8 = icmp samesign ugt i64 %indvars.iv4473, 1
+  br i1 %8, label %.preheader3897, label %._crit_edge4169, !llvm.loop !68
 
 ._crit_edge4169:                                  ; preds = %.thread3748, %.critedge152
   %.02612.lcssa = phi ptr [ %.242851.lcssa, %.critedge152 ], [ %i.ddo, %.thread3748 ] ; 8 uses
@@ -3037,9 +3030,8 @@ bb.xf:                                            ; preds = %bb.xe, %bb.xc
   %i.dtb = load ptr, ptr %i.dta, align 8, !tbaa !30 ; 2 uses
   %i.dtc = getelementptr inbounds nuw [8 x i8], ptr %i.dtb, i64 %i.dfs
   %i.dtd = load ptr, ptr %i.dtc, align 8, !tbaa !31 ; 2 uses
-  %16 = trunc nuw i64 %indvars.iv4454 to i32
-  %17 = icmp sgt i32 %16, 1
-  br i1 %17, label %.preheader3899, label %._crit_edge4133, !llvm.loop !70
+  %9 = icmp samesign ugt i64 %indvars.iv4454, 1
+  br i1 %9, label %.preheader3899, label %._crit_edge4133, !llvm.loop !70
 
 ._crit_edge4133:                                  ; preds = %.thread3796, %.critedge158
   %.02597.lcssa = phi ptr [ %.282855.lcssa, %.critedge158 ], [ %i.dtd, %.thread3796 ] ; 8 uses
@@ -3442,9 +3434,8 @@ bb.aae:                                           ; preds = %bb.aad, %bb.aab
   %i.eiz = load ptr, ptr %i.eiy, align 8, !tbaa !30 ; 2 uses
   %i.eja = getelementptr inbounds nuw [8 x i8], ptr %i.eiz, i64 %i.dvd
   %i.ejb = load ptr, ptr %i.eja, align 8, !tbaa !31 ; 2 uses
-  %18 = trunc nuw i64 %indvars.iv to i32
-  %19 = icmp sgt i32 %18, 1
-  br i1 %19, label %.preheader3901, label %._crit_edge4100, !llvm.loop !72
+  %10 = icmp samesign ugt i64 %indvars.iv, 1
+  br i1 %10, label %.preheader3901, label %._crit_edge4100, !llvm.loop !72
 
 ._crit_edge4100:                                  ; preds = %.thread3844, %.critedge164
   %.02582.lcssa = phi ptr [ %.322859.lcssa, %.critedge164 ], [ %i.ejb, %.thread3844 ] ; 8 uses

@@ -205,8 +205,7 @@ bb.an:                                            ; preds = %.thread265
   %indvars.iv = phi i64 [ %i.ik, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ao ] ; 3 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
   %i.il = load ptr, ptr %4, align 8, !tbaa !338
-  %6 = and i64 %indvars.iv.next, 4294967295
-  %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 %6 ; 2 uses
+  %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 %indvars.iv.next ; 2 uses
   %i.in = load i8, ptr %i.im, align 1, !tbaa !232
   %i.io = icmp sgt i8 %i.in, 57
   br i1 %i.io, label %bb.ao, label %.critedge
@@ -226,9 +225,8 @@ bb.ao:                                            ; preds = %.lr.ph
   %i.iw = load i8, ptr %i.iv, align 1, !tbaa !232
   %i.ix = add i8 %i.iw, 1
   store i8 %i.ix, ptr %i.iv, align 1, !tbaa !232
-  %7 = trunc nuw i64 %indvars.iv to i32
-  %8 = icmp sgt i32 %7, 2
-  br i1 %8, label %.lr.ph, label %.critedge, !llvm.loop !5639
+  %6 = icmp samesign ugt i64 %indvars.iv, 2
+  br i1 %6, label %.lr.ph, label %.critedge, !llvm.loop !5639
 
 bb.ap:                                            ; preds = %.critedge
   store i8 49, ptr %i.iq, align 1, !tbaa !232
@@ -631,8 +629,7 @@ bb.eo:                                            ; preds = %_ZN3fmt3v126detail1
   %indvars.iv666 = phi i64 [ %indvars.iv.next667, %bb.eq ], [ %i.agw, %bb.eo ] ; 3 uses
   %indvars.iv.next667 = add nsw i64 %indvars.iv666, -1 ; 2 uses
   %i.akl = load ptr, ptr %3, align 8, !tbaa !338
-  %9 = and i64 %indvars.iv.next667, 4294967295
-  %i.akm = getelementptr inbounds nuw i8, ptr %i.akl, i64 %9 ; 2 uses
+  %i.akm = getelementptr inbounds nuw i8, ptr %i.akl, i64 %indvars.iv.next667 ; 2 uses
   %i.akn = load i8, ptr %i.akm, align 1, !tbaa !232
   %i.ako = icmp eq i8 %i.akn, 58
   br i1 %i.ako, label %bb.eq, label %.critedge
@@ -656,9 +653,8 @@ bb.eq:                                            ; preds = %.lr.ph617
   %i.akw = load i8, ptr %i.akv, align 1, !tbaa !232
   %i.akx = add i8 %i.akw, 1
   store i8 %i.akx, ptr %i.akv, align 1, !tbaa !232
-  %10 = trunc nuw i64 %indvars.iv666 to i32
-  %11 = icmp sgt i32 %10, 2
-  br i1 %11, label %.lr.ph617, label %.critedge, !llvm.loop !5722
+  %9 = icmp samesign ugt i64 %indvars.iv666, 2
+  br i1 %9, label %.lr.ph617, label %.critedge, !llvm.loop !5722
 
 bb.er:                                            ; preds = %.critedge
   store i8 49, ptr %i.akp, align 1, !tbaa !232
@@ -1061,13 +1057,13 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !538  ; 5 uses
   %i.c = trunc i64 %i.b to i32                    ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 4 uses
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !537  ; 4 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !537  ; 3 uses
   %i.f = add nsw i32 %i.e, %i.c                   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !538  ; 3 uses
   %i.i = trunc i64 %i.h to i32                    ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 3 uses
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !537  ; 3 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !537  ; 2 uses
   %i.l = add nsw i32 %i.k, %i.i                   ; 2 uses
   %.not.i = icmp eq i32 %i.f, %i.l
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -1116,7 +1112,7 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.x, label %select.unfold, label %_ZN3fmt3v126detail7compareERKNS1_6bigintES4_.exit
 
 select.unfold:                                    ; preds = %.loopexit.i, %bb.b, %._crit_edge
-  %i.y = sub nsw i32 %i.e, %i.k                   ; 4 uses
+  %i.y = sub nsw i32 %i.e, %i.k                   ; 5 uses
   %i.z = icmp slt i32 %i.y, 1
   br i1 %i.z, label %_ZN3fmt3v126detail6bigint5alignERKS2_.exit, label %bb.e
 
@@ -1216,12 +1212,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.bh, label %.lr.ph.preheader.i.i, label %scalar.ph
 
 .lr.ph.preheader.i.i:                             ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i
-  %2 = xor i32 %i.k, -1
-  %3 = add i32 %i.e, %2
-  %i.bi = zext i32 %3 to i64
+  %i.bi = zext nneg i32 %i.y to i64
   %i.bj = shl nuw nsw i64 %i.bi, 2
-  %4 = add nuw nsw i64 %i.bj, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.pre.i, i8 0, i64 %4, i1 false), !tbaa !239
+  tail call void @llvm.memset.p0.i64(ptr align 4 %.pre.i, i8 0, i64 %i.bj, i1 false), !tbaa !239
   %i.bk = load i32, ptr %i.d, align 8, !tbaa !537
   %i.bl = sub nsw i32 %i.bk, %i.y                 ; 2 uses
   store i32 %i.bl, ptr %i.d, align 8, !tbaa !537

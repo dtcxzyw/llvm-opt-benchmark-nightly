@@ -205,8 +205,7 @@ _ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb0EE26findNearestCommonDomi
 .lr.ph222:                                        ; preds = %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb0EE26findNearestCommonDominatorEPS1_S3_.exit
   %i.ne = load i32, ptr %i.av, align 8, !tbaa !203 ; 2 uses
   %i.nf = load ptr, ptr %i.at, align 8            ; 2 uses
-  %umax = call i32 @llvm.umax.i32(i32 %i.hc, i32 2)
-  %wide.trip.count249 = zext i32 %umax to i64
+  %wide.trip.count249 = zext i32 %i.hc to i64
   br label %bb.al
 
 bb.ak:                                            ; preds = %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE26findNearestCommonDominatorEPS1_S3_.exit

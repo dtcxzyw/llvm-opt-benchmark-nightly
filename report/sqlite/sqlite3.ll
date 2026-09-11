@@ -206,7 +206,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !991  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !1546
-  %i.e = sext i32 %1 to i64
+  %i.e = sext i32 %1 to i64                       ; 2 uses
   %i.f = mul nsw i64 %i.e, 56
   %i.g = tail call fastcc ptr @sqlite3Realloc(ptr noundef %i.d, i64 noundef %i.f) ; 4 uses
   %.not = icmp eq ptr %i.g, null
@@ -302,10 +302,10 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.ax = trunc i64 %indvars.iv.next to i32       ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
+  %i.ax = trunc nsw i64 %indvars.iv.next to i32
   store i32 %i.ax, ptr %i.a, align 8, !tbaa !991
-  %exitcond.not = icmp eq i32 %1, %i.ax
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.e
   br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !3687
 
 .loopexit:                                        ; preds = %bb.i, %bb.b, %sqlite3BitvecCreate.exit.thread, %bb.a
@@ -708,16 +708,16 @@ bb.cg:                                            ; preds = %bb.bc
   br i1 %i.lf, label %.thread2092, label %sqlite3Strlen30.exit
 
 sqlite3Strlen30.exit:                             ; preds = %bb.cg
-  %i.lg = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %.01371) #59 ; 2 uses
+  %i.lg = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %.01371) #59
   %i.lh = trunc i64 %i.lg to i32
   %i.li = and i32 %i.lh, 1073741823               ; 2 uses
   %.not2170 = icmp eq i32 %i.li, 0
   br i1 %.not2170, label %select.unfold, label %.preheader.i1746.preheader
 
 .preheader.i1746.preheader:                       ; preds = %sqlite3Strlen30.exit
-  %5 = and i64 %i.lg, 1073741823
-  %6 = getelementptr i8, ptr @.str.440, i64 %5
-  %scevgep2648 = getelementptr i8, ptr %6, i64 -1
+  %5 = add nsw i32 %i.li, -1
+  %6 = zext nneg i32 %5 to i64                    ; 6 uses
+  %scevgep2648 = getelementptr i8, ptr @.str.440, i64 %6
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i1746.preheader, %bb.ci
@@ -763,9 +763,7 @@ sqlite3_strnicmp.exit:                            ; preds = %sqlite3_strnicmp.ex
   br i1 %i.ly, label %select.unfold, label %.preheader.i1746.1
 
 .preheader.i1746.1:                               ; preds = %sqlite3_strnicmp.exit
-  %7 = add nsw i32 %i.li, -1
-  %8 = zext nneg i32 %7 to i64                    ; 5 uses
-  %scevgep2646 = getelementptr i8, ptr @.str.441, i64 %8
+  %scevgep2646 = getelementptr i8, ptr @.str.441, i64 %6
   br label %.lr.ph.i.1
 
 .lr.ph.i.1:                                       ; preds = %bb.ck, %.preheader.i1746.1
@@ -811,7 +809,7 @@ sqlite3_strnicmp.exit.1:                          ; preds = %sqlite3_strnicmp.ex
   br i1 %i.mo, label %select.unfold, label %.preheader.i1746.2
 
 .preheader.i1746.2:                               ; preds = %sqlite3_strnicmp.exit.1
-  %scevgep2643 = getelementptr i8, ptr @.str.442, i64 %8
+  %scevgep2643 = getelementptr i8, ptr @.str.442, i64 %6
   br label %.lr.ph.i.2
 
 .lr.ph.i.2:                                       ; preds = %bb.cm, %.preheader.i1746.2
@@ -857,7 +855,7 @@ sqlite3_strnicmp.exit.2:                          ; preds = %sqlite3_strnicmp.ex
   br i1 %i.ne, label %sqlite3_strnicmp.exit.thread.thread, label %.preheader.i1746.3
 
 .preheader.i1746.3:                               ; preds = %sqlite3_strnicmp.exit.2
-  %scevgep2640 = getelementptr i8, ptr @.str.443, i64 %8
+  %scevgep2640 = getelementptr i8, ptr @.str.443, i64 %6
   br label %.lr.ph.i.3
 
 .lr.ph.i.3:                                       ; preds = %bb.co, %.preheader.i1746.3
@@ -903,7 +901,7 @@ sqlite3_strnicmp.exit.3:                          ; preds = %sqlite3_strnicmp.ex
   br i1 %i.nu, label %select.unfold, label %.preheader.i1746.4
 
 .preheader.i1746.4:                               ; preds = %sqlite3_strnicmp.exit.3
-  %scevgep2637 = getelementptr i8, ptr @.str.444, i64 %8
+  %scevgep2637 = getelementptr i8, ptr @.str.444, i64 %6
   br label %.lr.ph.i.4
 
 .lr.ph.i.4:                                       ; preds = %bb.cq, %.preheader.i1746.4
@@ -949,7 +947,7 @@ sqlite3_strnicmp.exit.4:                          ; preds = %sqlite3_strnicmp.ex
   br i1 %i.ok, label %select.unfold, label %.preheader.i1746.5
 
 .preheader.i1746.5:                               ; preds = %sqlite3_strnicmp.exit.4
-  %scevgep = getelementptr i8, ptr @.str.445, i64 %8
+  %scevgep = getelementptr i8, ptr @.str.445, i64 %6
   br label %.lr.ph.i.5
 
 .lr.ph.i.5:                                       ; preds = %bb.cs, %.preheader.i1746.5

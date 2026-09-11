@@ -205,8 +205,7 @@ bb.ej:                                            ; preds = %_ZN3fmt3v116detail1
   %indvars.iv666 = phi i64 [ %indvars.iv.next667, %bb.el ], [ %i.afv, %bb.ej ] ; 3 uses
   %indvars.iv.next667 = add nsw i64 %indvars.iv666, -1 ; 2 uses
   %i.ajk = load ptr, ptr %3, align 8, !tbaa !269
-  %9 = and i64 %indvars.iv.next667, 4294967295
-  %i.ajl = getelementptr inbounds nuw i8, ptr %i.ajk, i64 %9 ; 2 uses
+  %i.ajl = getelementptr inbounds nuw i8, ptr %i.ajk, i64 %indvars.iv.next667 ; 2 uses
   %i.ajm = load i8, ptr %i.ajl, align 1, !tbaa !202
   %i.ajn = icmp eq i8 %i.ajm, 58
   br i1 %i.ajn, label %bb.el, label %.critedge
@@ -230,9 +229,8 @@ bb.el:                                            ; preds = %.lr.ph617
   %i.ajv = load i8, ptr %i.aju, align 1, !tbaa !202
   %i.ajw = add i8 %i.ajv, 1
   store i8 %i.ajw, ptr %i.aju, align 1, !tbaa !202
-  %10 = trunc nuw i64 %indvars.iv666 to i32
-  %11 = icmp sgt i32 %10, 2
-  br i1 %11, label %.lr.ph617, label %.critedge, !llvm.loop !1000
+  %9 = icmp samesign ugt i64 %indvars.iv666, 2
+  br i1 %9, label %.lr.ph617, label %.critedge, !llvm.loop !1000
 
 bb.em:                                            ; preds = %.critedge
   store i8 49, ptr %i.ajo, align 1, !tbaa !202
@@ -635,8 +633,7 @@ bb.ao:                                            ; preds = %.thread269
   %indvars.iv = phi i64 [ %i.jj, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ap ] ; 3 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
   %i.jk = load ptr, ptr %4, align 8, !tbaa !269
-  %6 = and i64 %indvars.iv.next, 4294967295
-  %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 %6 ; 2 uses
+  %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 %indvars.iv.next ; 2 uses
   %i.jm = load i8, ptr %i.jl, align 1, !tbaa !202
   %i.jn = icmp sgt i8 %i.jm, 57
   br i1 %i.jn, label %bb.ap, label %.critedge
@@ -656,9 +653,8 @@ bb.ap:                                            ; preds = %.lr.ph
   %i.jv = load i8, ptr %i.ju, align 1, !tbaa !202
   %i.jw = add i8 %i.jv, 1
   store i8 %i.jw, ptr %i.ju, align 1, !tbaa !202
-  %7 = trunc nuw i64 %indvars.iv to i32
-  %8 = icmp sgt i32 %7, 2
-  br i1 %8, label %.lr.ph, label %.critedge, !llvm.loop !1149
+  %6 = icmp samesign ugt i64 %indvars.iv, 2
+  br i1 %6, label %.lr.ph, label %.critedge, !llvm.loop !1149
 
 bb.aq:                                            ; preds = %.critedge
   store i8 49, ptr %i.jp, align 1, !tbaa !202
@@ -1061,8 +1057,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit33: ; preds = %_ZStl
   %i.aa = ptrtoint ptr %i.y to i64
   %i.ab = ptrtoint ptr %i.z to i64
   %i.ac = sub i64 %i.aa, %i.ab
-  %i.ad = lshr exact i64 %i.ac, 2
-  %i.ae = trunc i64 %i.ad to i32                  ; 3 uses
+  %i.ad = lshr exact i64 %i.ac, 2                 ; 2 uses
+  %i.ae = trunc i64 %i.ad to i32                  ; 2 uses
   %i.af = icmp sgt i32 %i.ae, 0
   br i1 %i.af, label %bb.c, label %bb.k
 
@@ -1071,16 +1067,16 @@ bb.c:                                             ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35.preheader unwind label %bb.e ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35.preheader: ; preds = %bb.c
-  %5 = add nsw i32 %i.ae, -1                      ; 2 uses
   %.not = icmp eq i32 %i.ae, 1                    ; 2 uses
   br i1 %.not, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35.preheader
-  %wide.trip.count = zext nneg i32 %5 to i64      ; 2 uses
+  %5 = add nuw nsw i64 %i.ad, 4294967295
+  %wide.trip.count = and i64 %5, 4294967295       ; 2 uses
   br label %.lr.ph
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35._crit_edge: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit37, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35.preheader
-  %.pre-phi = phi i64 [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35.preheader ], [ %wide.trip.count, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit37 ] ; 2 uses
+  %.pre-phi = phi i64 [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit35.preheader ], [ %wide.trip.count, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit37 ] ; 3 uses
   %i.ah = load ptr, ptr %i.u, align 8, !tbaa !58
   %i.ai = getelementptr inbounds nuw [24 x i8], ptr %i.ah, i64 %i.n
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !62
@@ -1144,8 +1140,6 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit45.preheader: ; pred
 
 .lr.ph63:                                         ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit45.preheader
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 552
-  %smax = call i32 @llvm.smax.i32(i32 %5, i32 1)
-  %wide.trip.count69 = zext nneg i32 %smax to i64
   br label %bb.i
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit45._crit_edge: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit51, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit45.preheader
@@ -1174,7 +1168,7 @@ _ZNSolsEd.exit49:                                 ; preds = %bb.i
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit51: ; preds = %_ZNSolsEd.exit49
   %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, 1 ; 2 uses
-  %exitcond70.not = icmp eq i64 %indvars.iv.next67, %wide.trip.count69
+  %exitcond70.not = icmp eq i64 %indvars.iv.next67, %.pre-phi
   br i1 %exitcond70.not, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit45._crit_edge, label %bb.i, !llvm.loop !1196
 
 bb.j:                                             ; preds = %_ZNSolsEd.exit49, %bb.i

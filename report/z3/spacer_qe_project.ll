@@ -205,10 +205,9 @@ bb.ca:                                            ; preds = %bb.ck, %bb.cj, %bb.
   br label %bb.da
 
 bb.cb:                                            ; preds = %bb.bz, %bb.bx
-  %indvars.iv.next345 = add nsw i64 %indvars.iv344486, -1 ; 3 uses
+  %indvars.iv.next345 = add nsw i64 %indvars.iv344486, -1 ; 5 uses
   %i.mm = load ptr, ptr %i.kx, align 8, !tbaa !259
-  %18 = and i64 %indvars.iv.next345, 4294967295   ; 3 uses
-  %i.mn = getelementptr inbounds nuw [16 x i8], ptr %i.mm, i64 %18
+  %i.mn = getelementptr inbounds nuw [16 x i8], ptr %i.mm, i64 %indvars.iv.next345
   %i.mo = getelementptr inbounds nuw i8, ptr %i.mn, i64 8
   %i.mp = load ptr, ptr %i.mo, align 8, !tbaa !47
   %i.mq = load ptr, ptr %i.mp, align 8, !tbaa !23
@@ -282,7 +281,7 @@ bb.cl:                                            ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %.split, %.noexc176, %bb.cl
   %i.nr = load ptr, ptr %i.al, align 8, !tbaa !259 ; 2 uses
-  %i.ns = getelementptr inbounds nuw [16 x i8], ptr %i.nr, i64 %18
+  %i.ns = getelementptr inbounds nuw [16 x i8], ptr %i.nr, i64 %indvars.iv.next345
   %i.nt = getelementptr inbounds nuw i8, ptr %i.ns, i64 8
   %i.nu = load ptr, ptr %i.nt, align 8, !tbaa !47
   %i.nv = load ptr, ptr %i.nu, align 8, !tbaa !23 ; 3 uses
@@ -320,7 +319,7 @@ bb.cp:                                            ; preds = %bb.co
 bb.cq:                                            ; preds = %bb.cp, %_ZN11ast_manager7inc_refEP3ast.exit.i, %bb.co
   store ptr %i.nv, ptr %i.ny, align 8, !tbaa !23
   %i.oi = load ptr, ptr %i.kx, align 8, !tbaa !259 ; 2 uses
-  %i.oj = getelementptr inbounds nuw [16 x i8], ptr %i.oi, i64 %18
+  %i.oj = getelementptr inbounds nuw [16 x i8], ptr %i.oi, i64 %indvars.iv.next345
   %i.ok = getelementptr inbounds nuw i8, ptr %i.oj, i64 8
   %i.ol = load ptr, ptr %i.ok, align 8, !tbaa !47
   %i.om = load ptr, ptr %i.ol, align 8, !tbaa !23 ; 3 uses

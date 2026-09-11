@@ -205,7 +205,7 @@ _RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileR
   br i1 %i.t, label %.preheader, label %.preheader15
 
 .preheader15:                                     ; preds = %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit
-  br i1 %.not23, label %_RNvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE7reverseCs6oosyzwIepl_6ide_db.exit, label %.lr.ph
+  br i1 %.not23, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader15
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -213,7 +213,7 @@ _RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileR
   br label %bb.e
 
 .preheader:                                       ; preds = %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit
-  br i1 %.not23, label %.lr.ph.preheader.i.i, label %.lr.ph20
+  br i1 %.not23, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit, label %.lr.ph20
 
 .lr.ph20:                                         ; preds = %.preheader
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -222,12 +222,9 @@ _RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileR
 
 bb.e:                                             ; preds = %.lr.ph, %bb.h
   %i.y = phi i32 [ %i.j, %.lr.ph ], [ %i.ad, %bb.h ]
-  %.sroa.01.0.i17 = phi i64 [ 2, %.lr.ph ], [ %i.aj, %bb.h ] ; 4 uses
+  %.sroa.01.0.i17 = phi i64 [ 2, %.lr.ph ], [ %i.aj, %bb.h ] ; 3 uses
   %i.z = phi <4 x i32> [ %i.i, %.lr.ph ], [ %i.ac, %bb.h ]
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.0.i17 ; 2 uses
-  %3 = add nsw i64 %.sroa.01.0.i17, -1
-  %4 = icmp samesign ult i64 %3, %1
-  call void @llvm.assume(i1 %4)
   call void @llvm.experimental.noalias.scope.decl(metadata !177)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !178
   call void @llvm.experimental.noalias.scope.decl(metadata !179)
@@ -262,16 +259,13 @@ _RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileR
 bb.h:                                             ; preds = %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit5
   %i.aj = add nuw nsw i64 %.sroa.01.0.i17, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %i.aj, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit, label %bb.e
+  br i1 %exitcond.not, label %bb.m, label %bb.e
 
 bb.i:                                             ; preds = %.lr.ph20, %bb.l
   %i.ak = phi i32 [ %i.j, %.lr.ph20 ], [ %i.ap, %bb.l ]
-  %.sroa.01.1.i19 = phi i64 [ 2, %.lr.ph20 ], [ %i.av, %bb.l ] ; 4 uses
+  %.sroa.01.1.i19 = phi i64 [ 2, %.lr.ph20 ], [ %i.av, %bb.l ] ; 3 uses
   %i.al = phi <4 x i32> [ %i.i, %.lr.ph20 ], [ %i.ao, %bb.l ]
   %i.am = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.01.1.i19 ; 2 uses
-  %5 = add nsw i64 %.sroa.01.1.i19, -1
-  %6 = icmp samesign ult i64 %5, %1
-  call void @llvm.assume(i1 %6)
   call void @llvm.experimental.noalias.scope.decl(metadata !186)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !187
   call void @llvm.experimental.noalias.scope.decl(metadata !188)
@@ -306,16 +300,16 @@ _RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileR
 bb.l:                                             ; preds = %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit9
   %i.av = add nuw nsw i64 %.sroa.01.1.i19, 1      ; 2 uses
   %exitcond27.not = icmp eq i64 %i.av, %1
-  br i1 %exitcond27.not, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit, label %bb.i
+  br i1 %exitcond27.not, label %bb.m, label %bb.i
 
-_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit: ; preds = %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit5, %bb.h, %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit9, %bb.l
-  %.sroa.0.0.i = phi i64 [ %1, %bb.l ], [ %.sroa.01.1.i19, %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit9 ], [ %1, %bb.h ], [ %.sroa.01.0.i17, %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit5 ] ; 2 uses
+_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit: ; preds = %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit5, %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit9, %.preheader15, %.preheader
+  %.sroa.0.0.i = phi i64 [ 2, %.preheader15 ], [ 2, %.preheader ], [ %.sroa.01.1.i19, %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit9 ], [ %.sroa.01.0.i17, %_RNCINvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE20sort_unstable_by_keyTB1q_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB7_3cmp7ReverseB2S_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB47_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0B49_.exit5 ] ; 2 uses
   %i.aw = icmp samesign ule i64 %.sroa.0.0.i, %1
   call void @llvm.assume(i1 %i.aw)
   %i.ax = icmp eq i64 %.sroa.0.0.i, %1
   br i1 %i.ax, label %bb.m, label %bb.n
 
-bb.m:                                             ; preds = %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit
+bb.m:                                             ; preds = %bb.h, %bb.l, %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit
   br i1 %i.t, label %.lr.ph.preheader.i.i, label %_RNvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE7reverseCs6oosyzwIepl_6ide_db.exit
 
 bb.n:                                             ; preds = %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB6_SB12_20sort_unstable_by_keyTB1V_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtB8_3cmp7ReverseB3B_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4Q_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4S_.exit
@@ -327,10 +321,10 @@ bb.n:                                             ; preds = %_RINvNtNtNtCshzWfHU
   call void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort8unstable9quicksort9quicksortINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdENCINvMB8_SB17_20sort_unstable_by_keyTB20_NtNtCsuAhG64lL82_9text_size4size8TextSizeINtNtBa_3cmp7ReverseB3G_EENCNvNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4V_10FindUsages37short_associated_function_fast_search24collect_possible_aliasess4_0E0EB4X_(ptr noalias nofree noundef nonnull align 4 %0, i64 noundef %1, ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable_or_null(16) null, i32 noundef %i.bc, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2)
   br label %_RNvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE7reverseCs6oosyzwIepl_6ide_db.exit
 
-_RNvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE7reverseCs6oosyzwIepl_6ide_db.exit: ; preds = %_RINvNtCshzWfHUSfYae_4core10intrinsics25typed_swap_nonoverlappingINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdEECs6oosyzwIepl_6ide_db.exit.i.i, %.preheader15, %bb.a, %bb.m, %bb.n
+_RNvMNtCshzWfHUSfYae_4core5sliceSINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdE7reverseCs6oosyzwIepl_6ide_db.exit: ; preds = %_RINvNtCshzWfHUSfYae_4core10intrinsics25typed_swap_nonoverlappingINtNtCs33K2ylI4knu_10hir_expand5files16FileRangeWrapperNtNtCsgIpRO4v45SJ_7base_db17editioned_file_id15EditionedFileIdEECs6oosyzwIepl_6ide_db.exit.i.i, %bb.a, %bb.m, %bb.n
   ret void
 
-.lr.ph.preheader.i.i:                             ; preds = %.preheader, %bb.m
+.lr.ph.preheader.i.i:                             ; preds = %bb.m
   %i.bd = lshr i64 %1, 1
   %i.be = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %1
   br label %.lr.ph.i.i

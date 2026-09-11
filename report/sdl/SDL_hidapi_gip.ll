@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ba, label %.lr.ph74.preheader, label %.loopexit
 
 .lr.ph74.preheader:                               ; preds = %._crit_edge
-  %umax = tail call i32 @llvm.umax.i32(i32 %4, i32 20)
-  %i.bb = add nsw i32 %umax, -19
+  %i.bb = add nsw i32 %4, -19
   %i.bc = lshr i32 %i.bb, 1                       ; 2 uses
   %wide.trip.count = zext nneg i32 %i.bc to i64
   %exitcond.not85 = icmp eq i32 %i.bc, 0
@@ -604,9 +603,6 @@ declare i16 @llvm.smin.i16(i16, i16) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9

@@ -180,7 +180,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.sroa.01.0 = phi i64 [ %.sroa.0.0.i32, %bb.d ], [ %i.h, %bb.c ] ; 2 uses
+  %.sroa.01.0 = phi i64 [ %.sroa.0.0.i32, %bb.d ], [ %i.h, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   br label %bb.f
@@ -205,11 +205,11 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not.i33, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  br i1 %4, label %bb.n, label %bb.m
+  br i1 %4, label %bb.m, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a
 
 bb.j:                                             ; preds = %bb.h
   %i.o = icmp samesign ult i64 %i.m, 2
-  br i1 %i.o, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a, label %bb.k
+  br i1 %i.o, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 104
@@ -220,31 +220,30 @@ bb.k:                                             ; preds = %bb.j
   %or.cond.i.i.i.i = select i1 %i.q, i1 true, i1 %i.r
   %or.cond.not.i.i.i.i = xor i1 %or.cond.i.i.i.i, true
   %or.cond3.i.i.i.i = select i1 %or.cond.not.i.i.i.i, i1 true, i1 %i.r
-  br i1 %or.cond3.i.i.i.i, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a, label %bb.l
+  br i1 %or.cond3.i.i.i.i, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   tail call void @llvm.assume(i1 %i.q)
-  br label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a
+  br label %bb.n
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a: ; preds = %bb.k, %bb.l, %bb.j
+_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a: ; preds = %bb.i
   %i.s = shl nuw nsw i64 %i.m, 1
-  %6 = or disjoint i64 %i.s, 1
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB13_NtNtBa_3cmp10PartialOrd2ltEB15_.exit
 
 bb.m:                                             ; preds = %bb.i
-  %.sroa.0.0.i14.i = tail call noundef range(i64 0, 144115188075855872) i64 @llvm.umin.i64(i64 range(i64 0, 88686269585142076) %i.m, i64 %.sroa.01.0)
+  %.sroa.0.0.i14.i = tail call noundef range(i64 0, 144115188075855872) i64 @llvm.umin.i64(i64 range(i64 0, 88686269585142076) %i.m, i64 32) ; 2 uses
+  tail call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB15_NtNtBa_3cmp10PartialOrd2ltEB17_(ptr noalias noundef nonnull align 8 %i.n, i64 noundef %.sroa.0.0.i14.i, ptr noalias noundef nonnull align 8 %2, i64 noundef range(i64 0, 88686269585142076) %3, i32 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(104) null, ptr noalias noundef nonnull %5)
   %i.t = shl nuw nsw i64 %.sroa.0.0.i14.i, 1
+  %6 = or disjoint i64 %i.t, 1
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB13_NtNtBa_3cmp10PartialOrd2ltEB15_.exit
 
-bb.n:                                             ; preds = %bb.i
-  %.sroa.0.0.i15.i = tail call noundef range(i64 0, 144115188075855872) i64 @llvm.umin.i64(i64 range(i64 0, 88686269585142076) %i.m, i64 32) ; 2 uses
-  tail call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB15_NtNtBa_3cmp10PartialOrd2ltEB17_(ptr noalias noundef nonnull align 8 %i.n, i64 noundef %.sroa.0.0.i15.i, ptr noalias noundef nonnull align 8 %2, i64 noundef range(i64 0, 88686269585142076) %3, i32 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(104) null, ptr noalias noundef nonnull %5)
-  %i.u = shl nuw nsw i64 %.sroa.0.0.i15.i, 1
+bb.n:                                             ; preds = %bb.j, %bb.k, %bb.l
+  %i.u = shl nuw nsw i64 %i.m, 1
   %i.v = or disjoint i64 %i.u, 1
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB13_NtNtBa_3cmp10PartialOrd2ltEB15_.exit
 
-_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB13_NtNtBa_3cmp10PartialOrd2ltEB15_.exit: ; preds = %bb.m, %bb.n, %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a
-  %.sroa.0.0.i34 = phi i64 [ %6, %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a ], [ %i.v, %bb.n ], [ %i.t, %bb.m ] ; 2 uses
+_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift10create_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB13_NtNtBa_3cmp10PartialOrd2ltEB15_.exit: ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a, %bb.m, %bb.n
+  %.sroa.0.0.i34 = phi i64 [ %i.v, %bb.n ], [ %6, %bb.m ], [ %i.s, %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNvYB12_NtNtB8_3cmp10PartialOrd2ltEB14_.exit.i.a ] ; 2 uses
   %i.w = lshr i64 %.sroa.023.0, 1
   %i.x = lshr i64 %.sroa.0.0.i34, 1
   %factor = shl nuw nsw i64 %.sroa.09.0, 1        ; 2 uses

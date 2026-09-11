@@ -205,8 +205,7 @@ _ZN7lodepngL18decodeICC15Fixed16EPKhmPm.exit:     ; preds = %bb.a
 
 .lr.ph401:                                        ; preds = %.preheader
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 144)
-  %i.dl = trunc nuw i64 %umax to i32
+  %i.dl = trunc nuw i64 %2 to i32
   %.lhs.trunc = add i32 %i.dl, -133
   %i.dm = udiv i32 %.lhs.trunc, 12
   %.zext = zext nneg i32 %i.dm to i64

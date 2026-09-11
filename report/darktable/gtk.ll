@@ -204,7 +204,7 @@ bb.a:
   %3 = alloca %struct._GtkRequisition, align 4    ; 4 uses
   %4 = alloca %struct._cairo_rectangle_int, align 4 ; 4 uses
   %5 = alloca %struct._cairo_rectangle_int, align 4 ; 5 uses
-  %i.a = tail call i32 @gtk_notebook_get_n_pages(ptr noundef %0) #16 ; 4 uses
+  %i.a = tail call i32 @gtk_notebook_get_n_pages(ptr noundef %0) #16 ; 3 uses
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.c, !prof !90
 
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = zext nneg i32 %i.a to i64                ; 4 uses
+  %i.c = zext nneg i32 %i.a to i64                ; 5 uses
   %i.d = tail call noalias ptr @g_malloc_n(i64 noundef %i.c, i64 noundef 16) #20 ; 7 uses
   br label %bb.e
 
@@ -260,7 +260,6 @@ bb.e:                                             ; preds = %bb.c, %bb.e
 
 .lr.ph49.preheader:                               ; preds = %.lr.ph
   call void @gtk_widget_size_allocate(ptr noundef %0, ptr noundef %1) #16
-  %wide.trip.count59 = zext nneg i32 %i.a to i64
   br label %.lr.ph49
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -280,7 +279,7 @@ bb.e:                                             ; preds = %bb.c, %bb.e
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !267
   call void @gtk_widget_set_size_request(ptr noundef %i.ac, i32 noundef -1, i32 noundef -1) #16
   %indvars.iv.next57 = add nuw nsw i64 %indvars.iv56, 1 ; 2 uses
-  %exitcond60.not = icmp eq i64 %indvars.iv.next57, %wide.trip.count59
+  %exitcond60.not = icmp eq i64 %indvars.iv.next57, %i.c
   br i1 %exitcond60.not, label %.loopexit, label %.lr.ph49
 
 .loopexit:                                        ; preds = %.lr.ph49, %bb.d

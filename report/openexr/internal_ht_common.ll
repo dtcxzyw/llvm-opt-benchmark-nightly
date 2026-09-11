@@ -205,10 +205,8 @@ _ZN12MemoryWriter11push_uint16Et.exit10:          ; preds = %_ZNKSt6vectorI21Cod
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef range(i64 6, 4294967302) i64 @_Z11read_headerPvmRSt6vectorI21CodestreamChannelInfoSaIS1_EE(ptr noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define hidden noundef range(i64 6, 4294967302) i64 @_Z11read_headerPvmRSt6vectorI21CodestreamChannelInfoSaIS1_EE(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %1
-  %4 = ptrtoint ptr %3 to i64
   %i.a = icmp slt i64 %1, 2
   br i1 %i.a, label %bb.b, label %_ZN12MemoryReader11pull_uint16Ev.exit
 
@@ -382,6 +380,8 @@ _ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE6resizeEm.exit: ; preds = %bb.s, %bb
   %i.bk = ptrtoint ptr %i.bj to i64
   %i.bl = sub i64 %i.bk, %.pre-phi
   %i.bm = ashr exact i64 %i.bl, 4
+  %3 = add nsw i64 %1, -8
+  %4 = lshr i64 %3, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.bm, i64 1)
   br label %.lr.ph
 
@@ -389,12 +389,10 @@ _ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE6resizeEm.exit: ; preds = %bb.s, %bb
   ret i64 %i.ai
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit
-  %.029 = phi i64 [ %i.by, %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.5.028 = phi ptr [ %i.bt, %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit ], [ %i.at, %.lr.ph.preheader ] ; 4 uses
-  %5 = ptrtoint ptr %.sroa.5.028 to i64
-  %6 = sub i64 %4, %5
-  %7 = icmp slt i64 %6, 2
-  br i1 %7, label %bb.v, label %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit
+  %.029 = phi i64 [ %i.by, %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.sroa.5.028 = phi ptr [ %i.bt, %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit ], [ %i.at, %.lr.ph.preheader ] ; 3 uses
+  %exitcond = icmp eq i64 %.029, %4
+  br i1 %exitcond, label %bb.v, label %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE2atEm.exit
 
 bb.v:                                             ; preds = %.lr.ph
   %i.bn = tail call ptr @__cxa_allocate_exception(i64 16) #13 ; 3 uses

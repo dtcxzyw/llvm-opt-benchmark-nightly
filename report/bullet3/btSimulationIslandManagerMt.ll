@@ -204,13 +204,13 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %.critedge.split.loop.exit66
-  %.036.lcssa = phi i32 [ %i.p, %.critedge.split.loop.exit66 ], [ %smax, %bb.d ] ; 6 uses
+  %.036.lcssa = phi i32 [ %i.p, %.critedge.split.loop.exit66 ], [ %smax, %bb.d ] ; 5 uses
   %i.q = icmp slt i32 %.03544, %.036.lcssa
   br i1 %i.q, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.critedge
   %i.r = load ptr, ptr %i.e, align 8, !tbaa !53
-  %wide.trip.count = sext i32 %.036.lcssa to i64
+  %wide.trip.count = sext i32 %.036.lcssa to i64  ; 2 uses
   br label %.outer
 
 .outer:                                           ; preds = %_ZNK17btCollisionObject8isActiveEv.exit.thread, %.lr.ph
@@ -413,8 +413,7 @@ _ZN20btAlignedObjectArrayIP17btCollisionObjectE9push_backERKS1_.exit: ; preds = 
   %i.cj = add nsw i32 %i.cf, 1                    ; 2 uses
   store i32 %i.cj, ptr %i.ag, align 4, !tbaa !54
   %indvars.iv.next53 = add nsw i64 %indvars.iv52, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next53 to i32
-  %exitcond55.not = icmp eq i32 %.036.lcssa, %lftr.wideiv
+  %exitcond55.not = icmp eq i64 %indvars.iv.next53, %wide.trip.count
   br i1 %exitcond55.not, label %.loopexit, label %bb.f, !llvm.loop !153
 
 .loopexit:                                        ; preds = %_ZN20btAlignedObjectArrayIP17btCollisionObjectE9push_backERKS1_.exit, %.critedge, %._crit_edge

@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %"_ZN63_$LT$alloc..a
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.af, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h4c2ffab09fcfeb15E.exit.i.i.i.i.i.i.i.i"
   %i.he = phi ptr [ %i.ip, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h4c2ffab09fcfeb15E.exit.i.i.i.i.i.i.i.i" ], [ %.sroa.10.0.i.i.i.i.i.i.i, %bb.af ]
-  %i.hf = phi i64 [ %i.ir, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h4c2ffab09fcfeb15E.exit.i.i.i.i.i.i.i.i" ], [ 1, %bb.af ] ; 5 uses
+  %i.hf = phi i64 [ %i.ir, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h4c2ffab09fcfeb15E.exit.i.i.i.i.i.i.i.i" ], [ 1, %bb.af ] ; 4 uses
   %.lcssa1225.i.i.i.i.i.i.i.i = phi ptr [ %.promoted12.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h4c2ffab09fcfeb15E.exit.i.i.i.i.i.i.i.i" ], [ %.sroa.13.0.i.i.i.i, %bb.af ] ; 2 uses
   %.lcssa1322.i.i.i.i.i.i.i.i = phi ptr [ %.promoted8.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h4c2ffab09fcfeb15E.exit.i.i.i.i.i.i.i.i" ], [ %.sroa.10.0.i.i.i.i, %bb.af ] ; 2 uses
   %i.hg = phi i16 [ %i.hp, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h4c2ffab09fcfeb15E.exit.i.i.i.i.i.i.i.i" ], [ %i.fy, %bb.af ] ; 2 uses
@@ -258,8 +258,6 @@ bb.ag:                                            ; preds = %"_ZN99_$LT$hashbrow
   %.sroa.6.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.6.0..sroa_idx2.i.i.i.i.i.i.i.i.i, align 8, !noalias !11816 ; 3 uses
   %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx2.i.sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds i8, ptr %i.hr, i64 -8
   %.sroa.6.sroa.5.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx2.i.sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11816
-  %4 = icmp samesign ult i64 %i.hf, 384307168202282326
-  call void @llvm.assume(i1 %4)
   %i.hu = load i64, ptr %i.e, align 8, !range !22, !alias.scope !11817, !noalias !11818, !noundef !21
   %i.hv = icmp eq i64 %i.hf, %i.hu
   br i1 %i.hv, label %bb.al, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h4c2ffab09fcfeb15E.exit.i.i.i.i.i.i.i.i"
@@ -662,7 +660,7 @@ bb.cg:                                            ; preds = %_ZN3fst3raw4node13S
 
 .peel.next.i.split.split.us.split.us:             ; preds = %.peel.next.i.split.split.us, %bb.cj
   %i.vq = phi i64 [ %i.vr, %bb.cj ], [ 1, %.peel.next.i.split.split.us ] ; 5 uses
-  %i.vr = add i64 %i.vq, 1                        ; 2 uses
+  %i.vr = add nuw i64 %i.vq, 1                    ; 2 uses
   %reass.sub612.i.us.us = sub i64 %i.uu, %i.vq
   %.reass1167.i.us.us = add i64 %invariant.op1166.i, %reass.sub612.i.us.us ; 3 uses
   %i.vs = icmp ult i64 %.reass1167.i.us.us, %i.va
@@ -698,7 +696,7 @@ bb.cj:                                            ; preds = %.lr.ph.preheader.i.
 
 .peel.next.i.split.split.us.split.split.us:       ; preds = %.peel.next.i.split.split.us.split, %bb.cn
   %i.vz = phi i64 [ %i.wa, %bb.cn ], [ 1, %.peel.next.i.split.split.us.split ] ; 6 uses
-  %i.wa = add i64 %i.vz, 1                        ; 2 uses
+  %i.wa = add nuw i64 %i.vz, 1                    ; 2 uses
   %reass.sub612.i.us.us174 = sub i64 %i.uu, %i.vz
   %.reass1167.i.us.us175 = add i64 %invariant.op1166.i, %reass.sub612.i.us.us174 ; 3 uses
   %i.wb = icmp ult i64 %.reass1167.i.us.us175, %i.va

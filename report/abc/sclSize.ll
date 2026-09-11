@@ -204,13 +204,12 @@ bb.y:                                             ; preds = %.lr.ph
   %i.cr = add nsw i32 %.1155.lcssa, -1
   %i.cs = getelementptr i8, ptr %0, i64 32
   %.val215 = load ptr, ptr %i.cs, align 8, !tbaa !94 ; 3 uses
+  %3 = add nsw i32 %.val193, -1                   ; 2 uses
   %.not252 = icmp eq i32 %.val193, 2
   br i1 %.not252, label %._crit_edge234, label %.lr.ph233.preheader
 
 .lr.ph233.preheader:                              ; preds = %._crit_edge
-  %3 = tail call i32 @llvm.smax.i32(i32 %.val193, i32 3)
-  %smax = add nsw i32 %3, -1                      ; 2 uses
-  %wide.trip.count259 = zext nneg i32 %smax to i64
+  %wide.trip.count259 = zext nneg i32 %3 to i64
   br label %.lr.ph233
 
 .lr.ph233:                                        ; preds = %.lr.ph233.preheader, %bb.z
@@ -230,7 +229,7 @@ bb.z:                                             ; preds = %.lr.ph233
   br label %._crit_edge234
 
 ._crit_edge234:                                   ; preds = %bb.z, %._crit_edge234.loopexit.split.loop.exit, %._crit_edge
-  %.1.lcssa = phi i32 [ 1, %._crit_edge ], [ %i.cw, %._crit_edge234.loopexit.split.loop.exit ], [ %smax, %bb.z ] ; 4 uses
+  %.1.lcssa = phi i32 [ 1, %._crit_edge ], [ %i.cw, %._crit_edge234.loopexit.split.loop.exit ], [ %3, %bb.z ] ; 4 uses
   %i.cx = zext nneg i32 %.1155.lcssa to i64       ; 2 uses
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %.val216, i64 %i.cx
   %i.cz = load float, ptr %i.cy, align 4, !tbaa !65 ; 2 uses

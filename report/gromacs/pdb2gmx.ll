@@ -205,7 +205,7 @@ bb.wd:                                            ; preds = %.lr.ph5705, %bb.aev
   %i.cyb = load i32, ptr %i.cya, align 4, !tbaa !113 ; 3 uses
   %indvars.iv.next6900.a = add nuw nsw i64 %indvars.iv6899.a, 1 ; 3 uses
   %i.cyc = getelementptr inbounds nuw [4 x i8], ptr %i.cxz, i64 %indvars.iv.next6900.a
-  %i.cyd = load i32, ptr %i.cyc, align 4, !tbaa !113 ; 8 uses
+  %i.cyd = load i32, ptr %i.cyc, align 4, !tbaa !113 ; 7 uses
   %i.cye = sext i32 %.04705703 to i64             ; 8 uses
   %i.cyf = load ptr, ptr %i.cxs, align 8, !tbaa !157
   %i.cyg = getelementptr inbounds nuw [4 x i8], ptr %i.cyf, i64 %i.cye ; 5 uses
@@ -230,7 +230,7 @@ bb.wd:                                            ; preds = %.lr.ph5705, %bb.aev
 .noexc.i1365:                                     ; preds = %bb.wd
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #33
   %i.cyr = load ptr, ptr %i.cyj, align 8, !tbaa !149
-  %i.cys = sext i32 %i.cyd to i64
+  %i.cys = sext i32 %i.cyd to i64                 ; 2 uses
   %i.cyt = getelementptr [32 x i8], ptr %i.cyr, i64 %i.cys ; 2 uses
   %i.cyu = getelementptr i8, ptr %i.cyt, i64 -32
   %i.cyv = load ptr, ptr %i.cyu, align 8, !tbaa !151
@@ -633,8 +633,7 @@ bb.aar:                                           ; preds = %.thread444.i, %.thr
   %.2170.i = phi i32 [ %.0168665.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i1375 ], [ %.0168665.i, %bb.zo ], [ %.0168665.i, %.thread443.i ], [ %i.dpl, %.thread444.i ]
   %.2161.i = phi i32 [ %.0159666.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i1375 ], [ %.0159666.i, %bb.zo ], [ %i.dnf, %.thread443.i ], [ %.0159666.i, %.thread444.i ] ; 2 uses
   %indvars.iv.next.i1376 = add nsw i64 %indvars.iv.i1374, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i1376 to i32
-  %exitcond.not.i1377 = icmp eq i32 %i.cyd, %lftr.wideiv.i
+  %exitcond.not.i1377 = icmp eq i64 %indvars.iv.next.i1376, %i.cys
   br i1 %exitcond.not.i1377, label %.critedgethread-pre-split.i, label %bb.yh, !llvm.loop !387
 
 bb.aas:                                           ; preds = %bb.acj, %.lr.ph671.i

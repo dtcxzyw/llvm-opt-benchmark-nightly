@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 324
   %i.l = load i32, ptr %i.k, align 4, !tbaa !246  ; 2 uses
-  %i.m = add nsw i32 %i.l, -1                     ; 4 uses
+  %i.m = add nsw i32 %i.l, -1                     ; 6 uses
   %.not46 = icmp slt i32 %1, %i.m
   br i1 %.not46, label %bb.e, label %bb.z
 
@@ -417,10 +417,9 @@ bb.w:                                             ; preds = %bb.v, %.epil.prehea
 
 .loopexit:                                        ; preds = %.loopexit.loopexit83.unr-lcssa, %bb.w, %bb.v, %bb.m, %bb.n, %bb.j
   %.4 = phi i32 [ %.1, %bb.m ], [ 0, %bb.j ], [ 0, %bb.n ], [ %.3.1, %.loopexit.loopexit83.unr-lcssa ], [ %i.dc, %bb.w ], [ %.254.epil.init, %bb.v ]
-  %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 %i.m) ; 3 uses
-  %wide.trip.count = sext i32 %smax to i64
-  %exitcond64.not79.not = icmp slt i32 %1, %i.m
-  br i1 %exitcond64.not79.not, label %.lr.ph81, label %.critedge2
+  %wide.trip.count = sext i32 %i.m to i64
+  %exitcond64.not79 = icmp eq i32 %1, %i.m
+  br i1 %exitcond64.not79, label %.critedge2, label %.lr.ph81
 
 bb.x:                                             ; preds = %.lr.ph81
   %exitcond64.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -440,7 +439,7 @@ bb.x:                                             ; preds = %.lr.ph81
   br label %.critedge2
 
 .critedge2:                                       ; preds = %bb.x, %.loopexit, %.critedge2.split.loop.exit75
-  %.041.lcssa = phi i32 [ %i.dg, %.critedge2.split.loop.exit75 ], [ %smax, %.loopexit ], [ %smax, %bb.x ] ; 2 uses
+  %.041.lcssa = phi i32 [ %i.dg, %.critedge2.split.loop.exit75 ], [ %i.m, %.loopexit ], [ %i.m, %bb.x ] ; 2 uses
   %i.dh = icmp eq i32 %.041.lcssa, %1
   br i1 %i.dh, label %bb.z, label %bb.y
 

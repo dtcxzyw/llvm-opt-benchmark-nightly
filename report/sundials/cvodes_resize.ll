@@ -202,8 +202,7 @@ bb.d:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !11
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %i.o, ptr noundef %i.q) #4
-  %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 2)
-  %i.r = add nuw i32 %smax, 1
+  %i.r = add nuw i32 %4, 1
   %wide.trip.count158 = zext i32 %i.r to i64
   br label %.lr.ph
 
@@ -243,19 +242,19 @@ bb.f:                                             ; preds = %.preheader117, %bb.
   br label %bb.g
 
 bb.g:                                             ; preds = %.preheader.us, %bb.g
-  %indvars.iv160 = phi i64 [ %i.m, %.preheader.us ], [ %indvars.iv.next161, %bb.g ] ; 3 uses
+  %indvars.iv160 = phi i64 [ %i.m, %.preheader.us ], [ %indvars.iv.next161, %bb.g ] ; 4 uses
   %i.ai = load double, ptr %0, align 8, !tbaa !12
   %i.aj = load double, ptr %i.ah, align 8, !tbaa !12
   %i.ak = fsub double %i.ai, %i.aj
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv160 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !11 ; 2 uses
-  %i.ao = trunc nuw i64 %indvars.iv160 to i32     ; 2 uses
+  %i.ao = trunc nuw nsw i64 %indvars.iv160 to i32
   %i.ap = uitofp nneg i32 %i.ao to double
   %i.aq = load ptr, ptr %i.al, align 8, !tbaa !11
   tail call void @N_VLinearSum(double noundef %i.ak, ptr noundef %i.an, double noundef %i.ap, ptr noundef %i.aq, ptr noundef %i.an) #4
   %indvars.iv.next161 = add nsw i64 %indvars.iv160, -1
-  %i.ar = icmp sgt i32 %i.ao, 1
+  %i.ar = icmp sgt i64 %indvars.iv160, 1
   br i1 %i.ar, label %bb.g, label %._crit_edge132.us
 
 ._crit_edge132.us:                                ; preds = %bb.g
@@ -267,8 +266,7 @@ bb.g:                                             ; preds = %.preheader.us, %bb.
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !11
   tail call void @N_VLinearSum(double noundef %i.au, ptr noundef %i.av, double noundef 1.000000e+00, ptr noundef %i.ax, ptr noundef %i.av) #4
   %indvars.iv.next164 = add nsw i64 %indvars.iv163, -1
-  %7 = trunc nuw i64 %indvars.iv163 to i32
-  %i.ay = icmp sgt i32 %7, 0
+  %i.ay = icmp sgt i64 %indvars.iv163, 0
   br i1 %i.ay, label %.preheader.us, label %.lr.ph138.preheader
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -449,9 +447,8 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 .lr.ph164:                                        ; preds = %.lr.ph162, %._crit_edge165
   %indvars.iv207 = phi i64 [ %indvars.iv.next208, %._crit_edge165 ], [ %wide.trip.count, %.lr.ph162 ] ; 2 uses
-  %indvars.iv.next208 = add nsw i64 %indvars.iv207, -1 ; 2 uses
-  %7 = and i64 %indvars.iv.next208, 4294967295    ; 2 uses
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %7
+  %indvars.iv.next208 = add nsw i64 %indvars.iv207, -1 ; 3 uses
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next208
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !12
   %i.ar = fsub double %i.i, %i.aq                 ; 2 uses
   br label %bb.i
@@ -461,25 +458,24 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   br label %.lr.ph173.preheader
 
 ._crit_edge165:                                   ; preds = %bb.i
-  %.phi.trans.insert218 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %7
-  %.pre219 = load ptr, ptr %.phi.trans.insert218, align 8, !tbaa !11
-  %i.as = load ptr, ptr %6, align 8, !tbaa !11    ; 2 uses
-  tail call void @N_VLinearSum(double noundef %i.ar, ptr noundef %i.as, double noundef 1.000000e+00, ptr noundef %.pre219, ptr noundef %i.as) #4
-  %8 = trunc nuw i64 %indvars.iv207 to i32
-  %i.at = icmp sgt i32 %8, 1
+  %7 = load ptr, ptr %6, align 8, !tbaa !11       ; 2 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next208
+  %i.as = load ptr, ptr %8, align 8, !tbaa !11
+  tail call void @N_VLinearSum(double noundef %i.ar, ptr noundef %7, double noundef 1.000000e+00, ptr noundef %i.as, ptr noundef %7) #4
+  %i.at = icmp sgt i64 %indvars.iv207, 1
   br i1 %i.at, label %.lr.ph164, label %._crit_edge168
 
 bb.i:                                             ; preds = %.lr.ph164, %bb.i
-  %indvars.iv204 = phi i64 [ %wide.trip.count, %.lr.ph164 ], [ %indvars.iv.next205, %bb.i ] ; 3 uses
+  %indvars.iv204 = phi i64 [ %wide.trip.count, %.lr.ph164 ], [ %indvars.iv.next205, %bb.i ] ; 4 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv204 ; 2 uses
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !11 ; 2 uses
-  %i.aw = trunc nuw i64 %indvars.iv204 to i32     ; 2 uses
+  %i.aw = trunc nuw nsw i64 %indvars.iv204 to i32
   %i.ax = uitofp nneg i32 %i.aw to double
   %i.ay = getelementptr i8, ptr %i.au, i64 -8
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !11
   tail call void @N_VLinearSum(double noundef %i.ar, ptr noundef %i.av, double noundef %i.ax, ptr noundef %i.az, ptr noundef %i.av) #4
   %indvars.iv.next205 = add nsw i64 %indvars.iv204, -1
-  %i.ba = icmp sgt i32 %i.aw, 1
+  %i.ba = icmp sgt i64 %indvars.iv204, 1
   br i1 %i.ba, label %bb.i, label %._crit_edge165
 
 .lr.ph173.preheader:                              ; preds = %._crit_edge, %._crit_edge168
@@ -544,14 +540,14 @@ declare void @N_VScale(double noundef, ptr noundef, ptr noundef) local_unnamed_a
 
 declare void @N_VConst(double noundef, ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #3
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

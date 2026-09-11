@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bk, i64 417
   store i8 1, ptr %i.cc, align 1, !tbaa !422
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.pr = load i32, ptr %i.b, align 4, !tbaa !235  ; 8 uses
+  %.pr = load i32, ptr %i.b, align 4, !tbaa !235  ; 6 uses
   %i.cd = sext i32 %.pr to i64
   %i.ce = icmp slt i64 %indvars.iv.next, %i.cd
   br i1 %i.ce, label %bb.e, label %._crit_edge, !llvm.loop !871
@@ -410,7 +410,7 @@ bb.i:                                             ; preds = %_ZN20btAlignedObjec
   %i.ff = fdiv float 1.000000e+00, %i.fe          ; 2 uses
   %i.fg = insertelement <2 x float> poison, float %i.ff, i64 0
   %i.fh = fmul float %.sroa.0495.0.lcssa, %i.ff
-  %i.fi = zext nneg i32 %.pr to i64               ; 3 uses
+  %i.fi = zext nneg i32 %.pr to i64               ; 5 uses
   %i.fj = shl nuw nsw i64 %i.fi, 4
   %i.fk = tail call noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %i.fj, i32 noundef 16) ; 13 uses
   %i.fl = insertelement <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, float %i.fh, i64 0
@@ -469,9 +469,6 @@ _ZN20btAlignedObjectArrayI9btVector3E6resizeEiRKS0_.exit.preheader: ; preds = %b
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 944 ; 6 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fk, i64 4
   %.not634 = icmp eq i32 %.pr, 1
-  %smax675 = tail call i32 @llvm.smax.i32(i32 %.pr, i32 2)
-  %wide.trip.count670 = zext nneg i32 %.pr to i64
-  %wide.trip.count676 = zext nneg i32 %smax675 to i64
   br label %.preheader547.preheader
 
 .preheader547.preheader:                          ; preds = %._crit_edge602, %_ZN20btAlignedObjectArrayI9btVector3E6resizeEiRKS0_.exit.preheader
@@ -660,7 +657,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %.loopexit546, %._crit_edge585
   %.1141 = phi i1 [ %i.jh, %.loopexit546 ], [ %.0140590, %._crit_edge585 ] ; 2 uses
   %indvars.iv.next669 = add nuw nsw i64 %indvars.iv668, 1 ; 2 uses
-  %exitcond671.not = icmp eq i64 %indvars.iv.next669, %wide.trip.count670
+  %exitcond671.not = icmp eq i64 %indvars.iv.next669, %i.fi
   br i1 %exitcond671.not, label %.preheader548, label %.preheader547, !llvm.loop !878
 
 .lr.ph601:                                        ; preds = %.preheader548, %bb.u
@@ -864,7 +861,7 @@ _ZN20btAlignedObjectArrayIPN10btSoftBody4NodeEE10deallocateEv.exit.i.i247: ; pre
   %.1135 = select i1 %i.mg, i32 %i.mh, i32 %.0134593 ; 2 uses
   %.1133 = select i1 %i.mg, float %i.mf, float %.0132594
   %indvars.iv.next673 = add nuw nsw i64 %indvars.iv672, 1 ; 2 uses
-  %exitcond677.not = icmp eq i64 %indvars.iv.next673, %wide.trip.count676
+  %exitcond677.not = icmp eq i64 %indvars.iv.next673, %i.fi
   br i1 %exitcond677.not, label %._crit_edge598.loopexit, label %.lr.ph597, !llvm.loop !882
 
 bb.u:                                             ; preds = %_ZN20btAlignedObjectArrayIPN10btSoftBody4NodeEE10deallocateEv.exit.i.i247, %bb.q, %._crit_edge598

@@ -13,7 +13,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !21   ; 15 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !22   ; 13 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !22   ; 12 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %.critedge, label %bb.b
 
@@ -26,6 +26,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 8 uses
   %i.i = sext i32 %i.f to i64
+  %wide.trip.count = sext i32 %i.d to i64         ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
@@ -51,13 +52,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %i.d, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !84
 
 bb.g:                                             ; preds = %bb.e
-  %3 = sext i32 %i.d to i64
-  %i.t = shl nsw i64 %3, 2                        ; 3 uses
+  %i.t = shl nsw i64 %wide.trip.count, 2          ; 3 uses
   %i.u = icmp ugt i64 %i.t, 32768                 ; 2 uses
   br i1 %i.u, label %bb.h, label %.thread259, !prof !47
 

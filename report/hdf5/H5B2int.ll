@@ -204,10 +204,10 @@ bb.z:                                             ; preds = %.thread653, %bb.q
   br i1 %i.im, label %bb.aa, label %bb.ai
 
 bb.aa:                                            ; preds = %bb.z
-  %i.in = sub nuw nsw i32 %i.il, %.pre-phi        ; 7 uses
+  %i.in = sub nuw nsw i32 %i.il, %.pre-phi        ; 6 uses
   %i.io = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 4 uses
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !39 ; 2 uses
-  %i.iq = zext nneg i32 %i.in to i64              ; 6 uses
+  %i.iq = zext nneg i32 %i.in to i64              ; 7 uses
   %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.ip, i64 %i.iq
   %i.is = load i64, ptr %i.ir, align 8, !tbaa !19
   %i.it = getelementptr inbounds nuw i8, ptr %.2514, i64 %i.is
@@ -376,8 +376,7 @@ bb.ae:                                            ; preds = %._crit_edge782
 
 bb.af:                                            ; preds = %bb.ag
   %indvars.iv.next.i591 = add nuw nsw i64 %indvars.iv.i590, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i591 to i32
-  %exitcond808 = icmp eq i32 %i.in, %lftr.wideiv
+  %exitcond808 = icmp eq i64 %indvars.iv.next.i591, %i.iq
   br i1 %exitcond808, label %.thread670, label %bb.ag, !llvm.loop !0
 
 bb.ag:                                            ; preds = %bb.af, %.lr.ph.i589
@@ -414,10 +413,10 @@ bb.ai:                                            ; preds = %.thread670, %bb.z
   br i1 %i.mv, label %bb.aj, label %bb.ar
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.mw = sub nuw nsw i32 %i.mu, %i.df            ; 6 uses
+  %i.mw = sub nuw nsw i32 %i.mu, %i.df            ; 5 uses
   %i.mx = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 4 uses
   %i.my = load ptr, ptr %i.mx, align 8, !tbaa !39 ; 2 uses
-  %i.mz = zext nneg i32 %i.mw to i64              ; 6 uses
+  %i.mz = zext nneg i32 %i.mw to i64              ; 7 uses
   %i.na = getelementptr inbounds nuw [8 x i8], ptr %i.my, i64 %i.mz
   %i.nb = load i64, ptr %i.na, align 8, !tbaa !19
   %i.nc = getelementptr inbounds nuw i8, ptr %.2511, i64 %i.nb
@@ -581,8 +580,7 @@ bb.an:                                            ; preds = %._crit_edge788
 
 bb.ao:                                            ; preds = %bb.ap
   %indvars.iv.next.i599 = add nuw nsw i64 %indvars.iv.i598, 1 ; 2 uses
-  %lftr.wideiv814 = trunc i64 %indvars.iv.next.i599 to i32
-  %exitcond815 = icmp eq i32 %i.mw, %lftr.wideiv814
+  %exitcond815 = icmp eq i64 %indvars.iv.next.i599, %i.mz
   br i1 %exitcond815, label %.thread688, label %bb.ap, !llvm.loop !0
 
 bb.ap:                                            ; preds = %bb.ao, %.lr.ph.i597

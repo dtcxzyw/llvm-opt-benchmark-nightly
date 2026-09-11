@@ -205,12 +205,12 @@ bb.a:
   store i32 10000, ptr %i.a, align 4, !tbaa !46
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !77
-  %i.ab = call fastcc i32 @scan_prefix(ptr noundef %0, ptr noundef %i.aa, ptr noundef %1, i32 noundef 12, ptr noundef %i.a) ; 6 uses
+  %i.ab = call fastcc i32 @scan_prefix(ptr noundef %0, ptr noundef %i.aa, ptr noundef %1, i32 noundef 12, ptr noundef %i.a) ; 5 uses
   %i.ac = icmp slt i32 %i.ab, 1
   br i1 %i.ac, label %sljit_emit_op1.exit319, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %i.ab to i64   ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.ab to i64   ; 6 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.h
@@ -522,7 +522,6 @@ bb.ab:                                            ; preds = %bb.aa
 .lr.ph656.preheader:                              ; preds = %._crit_edge, %.loopexit.loopexit
   %.0152 = phi i64 [ 0, %._crit_edge ], [ %i.el, %.loopexit.loopexit ]
   %i.em = zext i32 %.1156 to i64
-  %wide.trip.count675 = zext nneg i32 %i.ab to i64
   br label %.lr.ph656
 
 .lr.ph656:                                        ; preds = %.lr.ph656.preheader, %bb.af
@@ -560,7 +559,7 @@ bb.ae:                                            ; preds = %bb.ac
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %.lr.ph656
   %.1163 = phi i32 [ %.0162653, %.lr.ph656 ], [ %spec.select181, %bb.ad ], [ %spec.select182, %bb.ae ] ; 7 uses
   %indvars.iv.next672 = add nuw nsw i64 %indvars.iv671, 1 ; 2 uses
-  %exitcond676.not = icmp eq i64 %indvars.iv.next672, %wide.trip.count675
+  %exitcond676.not = icmp eq i64 %indvars.iv.next672, %wide.trip.count
   br i1 %exitcond676.not, label %._crit_edge657, label %.lr.ph656, !llvm.loop !504
 
 ._crit_edge657:                                   ; preds = %bb.af

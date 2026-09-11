@@ -204,9 +204,8 @@ _ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit33: ; preds = %.lr.ph.i25, 
   %i.bb = trunc i64 %.0.lcssa.i30 to i8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.x
   store i8 %i.bb, ptr %i.bc, align 1
-  %2 = trunc nuw i64 %indvars.iv to i32
-  %3 = icmp sgt i32 %2, 1
-  br i1 %3, label %.lr.ph, label %._crit_edge, !llvm.loop !144
+  %2 = icmp samesign ugt i64 %indvars.iv, 1
+  br i1 %2, label %.lr.ph, label %._crit_edge, !llvm.loop !144
 
 ._crit_edge:                                      ; preds = %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit33, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit
   %.0.lcssa = phi ptr [ %i.f, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit ], [ %i.ah, %_ZNK4absl13cord_internal12CordRepBtree7IndexOfEm.exit33 ] ; 3 uses
