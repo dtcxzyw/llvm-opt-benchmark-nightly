@@ -202,14 +202,8 @@ declare i32 @list_count(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @_foreach_test_job_dependency(ptr noundef %0, ptr nofree noundef captures(none) initializes((16, 17)) %1) #0 {
 bb.a:
-  %2 = alloca i8, align 1                         ; 15 uses
-  %3 = alloca i8, align 1                         ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8              ; 11 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  store i8 0, ptr %2, align 1
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store i8 0, ptr %3, align 1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
   %i.d = load i16, ptr %i.c, align 2              ; 2 uses
   %i.e = and i16 %i.d, 2
@@ -351,25 +345,21 @@ bb.t:                                             ; preds = %bb.s
   %i.au = load ptr, ptr @job_list, align 8
   %i.av = tail call ptr @list_find_first(ptr noundef %i.au, ptr noundef nonnull @_find_singleton_job, ptr noundef nonnull %i.b) #15
   %.not74 = icmp eq ptr %i.av, null
-  br i1 %.not74, label %bb.u, label %bb.be
+  br i1 %.not74, label %bb.u, label %bb.bi
 
 bb.u:                                             ; preds = %bb.t
   %i.aw = tail call zeroext i1 @fed_mgr_is_singleton_satisfied(ptr noundef nonnull %i.b, ptr noundef nonnull %0, i1 noundef zeroext true) #15
-  br i1 %i.aw, label %4, label %bb.be
-
-4:                                                ; preds = %bb.u
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %i.aw, label %bb.bf, label %bb.bi
 
 bb.v:                                             ; preds = %bb.s, %bb.r
   %.not69 = icmp eq ptr %i.an, null
-  br i1 %.not69, label %5, label %bb.w
+  br i1 %.not69, label %bb.bf, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.ax = getelementptr inbounds nuw i8, ptr %i.an, i64 24
   %i.ay = load i32, ptr %i.ax, align 8
   %.not70 = icmp eq i32 %i.ay, -256427732
-  br i1 %.not70, label %bb.x, label %5
+  br i1 %.not70, label %bb.x, label %bb.bf
 
 bb.x:                                             ; preds = %bb.w
   %i.az = getelementptr inbounds nuw i8, ptr %i.an, i64 448
@@ -382,11 +372,7 @@ bb.y:                                             ; preds = %bb.x
   %i.bc = getelementptr inbounds nuw i8, ptr %i.an, i64 80
   %i.bd = load i32, ptr %i.bc, align 8
   %.not72 = icmp eq i32 %i.bd, %i.bb
-  br i1 %.not72, label %bb.z, label %5
-
-5:                                                ; preds = %bb.y, %bb.w, %bb.v
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %.not72, label %bb.z, label %bb.bf
 
 bb.z:                                             ; preds = %bb.y, %bb.x
   %i.be = load i32, ptr %0, align 8
@@ -435,13 +421,13 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   ]
 
 bb.ad:                                            ; preds = %bb.ac
-  br i1 %.0, label %bb.be, label %bb.ae
+  br i1 %.0, label %bb.bi, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.cb = load i32, ptr %i.ca, align 4            ; 2 uses
   %.not80.i = icmp eq i32 %i.cb, 0
-  br i1 %.not80.i, label %6, label %bb.af
+  br i1 %.not80.i, label %bb.bf, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bx, i64 1032
@@ -451,53 +437,33 @@ bb.af:                                            ; preds = %bb.ae
   %i.cf = zext i32 %i.cb to i64
   %.not82.i = icmp slt i64 %i.ce, %i.cf
   %or.cond.i = select i1 %.not81.i, i1 true, i1 %.not82.i
-  br i1 %or.cond.i, label %bb.ag, label %6
+  br i1 %or.cond.i, label %bb.ag, label %bb.bf
 
 bb.ag:                                            ; preds = %bb.af
   %i.cg = tail call zeroext i1 @fed_mgr_job_started_on_sib(ptr noundef nonnull %i.bx) #15
-  br i1 %i.cg, label %6, label %bb.be
-
-6:                                                ; preds = %bb.ag, %bb.af, %bb.ae
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %i.cg, label %bb.bf, label %bb.bi
 
 bb.ah:                                            ; preds = %bb.ac
-  br i1 %.061, label %7, label %bb.be
-
-7:                                                ; preds = %bb.ah
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %.061, label %bb.bf, label %bb.bi
 
 bb.ai:                                            ; preds = %bb.ac
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bx, i64 512
   %i.ci = load i32, ptr %i.ch, align 8
   %i.cj = and i32 %i.ci, 4096
   %.not79.i = icmp eq i32 %i.cj, 0
-  br i1 %.not79.i, label %bb.aj, label %8
-
-8:                                                ; preds = %bb.ai
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %.not79.i, label %bb.aj, label %bb.bf
 
 bb.aj:                                            ; preds = %bb.ai
-  br i1 %.061, label %bb.ak, label %bb.be
+  br i1 %.061, label %bb.ak, label %bb.bi
 
 bb.ak:                                            ; preds = %bb.aj
-  br i1 %.062.in, label %_test_job_dependency_common.exit.thread, label %9
-
-9:                                                ; preds = %bb.ak
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %.062.in, label %_test_job_dependency_common.exit.thread, label %bb.bf
 
 bb.al:                                            ; preds = %bb.ac
-  br i1 %.061, label %bb.am, label %bb.be
+  br i1 %.061, label %bb.am, label %bb.bi
 
 bb.am:                                            ; preds = %bb.al
-  br i1 %.062.in, label %10, label %_test_job_dependency_common.exit.thread
-
-10:                                               ; preds = %bb.am
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %.062.in, label %bb.bf, label %_test_job_dependency_common.exit.thread
 
 bb.an:                                            ; preds = %bb.ac
   %i.ck = getelementptr inbounds nuw i8, ptr %i.b, i64 84 ; 2 uses
@@ -519,25 +485,17 @@ bb.ap:                                            ; preds = %bb.ao
   %i.cs = and i32 %i.cp, 32768
   %i.ct = icmp eq i32 %i.cs, 0
   %or.cond85.i = and i1 %i.cr, %i.ct
-  br i1 %or.cond85.i, label %bb.aq, label %bb.be
+  br i1 %or.cond85.i, label %bb.aq, label %bb.bi
 
 bb.aq:                                            ; preds = %bb.ap
   %i.cu = icmp eq i32 %i.cq, 3
-  br i1 %i.cu, label %11, label %_test_job_dependency_common.exit.thread
-
-11:                                               ; preds = %bb.aq
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %i.cu, label %bb.bf, label %_test_job_dependency_common.exit.thread
 
 .thread.i:                                        ; preds = %bb.ao, %bb.an
-  br i1 %.061, label %bb.ar, label %bb.be
+  br i1 %.061, label %bb.ar, label %bb.bi
 
 bb.ar:                                            ; preds = %.thread.i
-  br i1 %.062.in, label %12, label %bb.as
-
-12:                                               ; preds = %bb.ar
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %.062.in, label %bb.bf, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
   %i.cv = getelementptr inbounds nuw i8, ptr %i.b, i64 88
@@ -548,26 +506,22 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.as
   %i.cx = load i32, ptr %i.ck, align 4
   %i.cy = icmp eq i32 %i.cx, -2
-  br i1 %i.cy, label %bb.be, label %_test_job_dependency_common.exit.thread
+  br i1 %i.cy, label %bb.bi, label %_test_job_dependency_common.exit.thread
 
 bb.au:                                            ; preds = %bb.ac
-  br i1 %.061, label %bb.av, label %bb.be
+  br i1 %.061, label %bb.av, label %bb.bi
 
 bb.av:                                            ; preds = %bb.au
   %i.cz = tail call i32 @bb_g_job_test_stage_out(ptr noundef %i.bx) #15
   %i.da = icmp eq i32 %i.cz, 1
-  br i1 %i.da, label %13, label %bb.be
-
-13:                                               ; preds = %bb.av
-  store i8 1, ptr %2, align 1
-  br label %bb.be
+  br i1 %i.da, label %bb.bf, label %bb.bi
 
 bb.aw:                                            ; preds = %bb.ac
   %i.db = tail call i64 @time(ptr noundef null) #15 ; 2 uses
   br i1 %.0, label %.thread104, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  br i1 %.061, label %14, label %bb.ay
+  br i1 %.061, label %_test_job_dependency_common.exit.thread, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.dc = getelementptr inbounds nuw i8, ptr %i.bx, i64 272
@@ -583,16 +537,10 @@ bb.az:                                            ; preds = %bb.ay
   %i.dh = getelementptr inbounds nuw i8, ptr %i.b, i64 1104
   %i.di = udiv i32 %i.dg, 60
   store i32 %i.di, ptr %i.dh, align 8
-  br label %14
+  br label %.thread104
 
-14:                                               ; preds = %bb.ax, %bb.az
-  %.sink.i = phi ptr [ %2, %bb.az ], [ %3, %bb.ax ]
-  store i8 1, ptr %.sink.i, align 1
-  %.0..0..0.84.pre = load i8, ptr %3, align 1, !range !8
-  %15 = trunc nuw i8 %.0..0..0.84.pre to i1
-  br i1 %15, label %_test_job_dependency_common.exit.thread, label %.thread104
-
-.thread104:                                       ; preds = %bb.aw, %bb.ay, %14
+.thread104:                                       ; preds = %bb.aw, %bb.ay, %bb.az
+  %.189.ph = phi i1 [ true, %bb.az ], [ false, %bb.ay ], [ false, %bb.aw ]
   %i.dj = getelementptr inbounds nuw i8, ptr %i.b, i64 256 ; 2 uses
   %i.dk = load ptr, ptr %i.dj, align 8            ; 2 uses
   %.not75.i = icmp eq ptr %i.dk, null
@@ -617,7 +565,7 @@ bb.bb:                                            ; preds = %bb.ba
   store i8 %i.ds, ptr %i.du, align 8
   br label %bb.be
 
-_test_job_dependency_common.exit.thread:          ; preds = %bb.ac, %bb.as, %bb.at, %bb.aq, %bb.am, %bb.ak, %14
+_test_job_dependency_common.exit.thread:          ; preds = %bb.as, %bb.at, %bb.aq, %bb.am, %bb.ak, %bb.ac, %bb.ax
   store i32 2, ptr %i.x, align 8
   %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 1, ptr %i.dv, align 1
@@ -649,12 +597,10 @@ _depend_type2str.exit80:                          ; preds = %bb.bd, %switch.look
   tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.103, ptr noundef nonnull @__func__._foreach_test_job_dependency, ptr noundef %i.b, ptr noundef nonnull %.0.i79, i32 noundef %i.ec) #15
   br label %bb.bi
 
-bb.be:                                            ; preds = %.thread104, %bb.ba, %bb.bb, %bb.av, %13, %bb.ap, %12, %bb.at, %.thread.i, %10, %9, %bb.aj, %7, %6, %bb.ag, %bb.au, %11, %bb.al, %8, %bb.ah, %bb.ad, %5, %4, %bb.u, %bb.t
-  %.0..0..0.85 = load i8, ptr %2, align 1, !range !8, !noundef !9
-  %16 = trunc nuw i8 %.0..0..0.85 to i1
-  br i1 %16, label %bb.bf, label %bb.bi
+bb.be:                                            ; preds = %bb.bb, %.thread104, %bb.ba
+  br i1 %.189.ph, label %bb.bf, label %bb.bi
 
-bb.bf:                                            ; preds = %bb.be
+bb.bf:                                            ; preds = %bb.av, %bb.ah, %bb.ae, %bb.af, %bb.ag, %bb.u, %bb.ar, %bb.am, %bb.aq, %bb.ak, %bb.ai, %bb.v, %bb.y, %bb.w, %bb.be
   store i32 1, ptr %i.x, align 8
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 1, ptr %i.ed, align 1
@@ -686,7 +632,7 @@ _depend_type2str.exit82:                          ; preds = %bb.bh, %switch.look
   tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.104, ptr noundef nonnull @__func__._foreach_test_job_dependency, ptr noundef %i.b, ptr noundef nonnull %.0.i81, i32 noundef %i.ek) #15
   br label %bb.bi
 
-bb.bi:                                            ; preds = %bb.be, %bb.bg, %_depend_type2str.exit82, %bb.bf, %_test_job_dependency_common.exit.thread, %_depend_type2str.exit80, %bb.bc
+bb.bi:                                            ; preds = %bb.av, %bb.aj, %bb.ah, %bb.ap, %bb.ag, %bb.ad, %.thread.i, %bb.at, %bb.u, %bb.au, %bb.al, %bb.t, %bb.be, %bb.bg, %_depend_type2str.exit82, %bb.bf, %_test_job_dependency_common.exit.thread, %_depend_type2str.exit80, %bb.bc
   %i.el = load i16, ptr %i.c, align 2             ; 2 uses
   %i.em = trunc i16 %i.el to i1
   %i.en = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -728,8 +674,6 @@ bb.bo:                                            ; preds = %bb.bm
   br label %_test_dependency_state.exit
 
 _test_dependency_state.exit:                      ; preds = %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   ret i32 0
 }
 

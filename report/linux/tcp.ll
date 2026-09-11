@@ -205,24 +205,18 @@ bb.k:                                             ; preds = %.sink.split, %bb.d
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local range(i32 0, 29) i32 @tcp_inbound_hash(ptr noundef %0, ptr nofree noundef readnone captures(address_is_null) %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readnone captures(none) %4, i32 noundef %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %8 = alloca ptr, align 8                        ; 8 uses
-  %9 = alloca ptr, align 8                        ; 8 uses
   %i.a = getelementptr i8, ptr %2, i64 182
   %.val52 = load i16, ptr %i.a, align 2
   %i.b = getelementptr i8, ptr %2, i64 200
   %.val53 = load ptr, ptr %i.b, align 8
   %i.c = zext i16 %.val52 to i64
   %i.d = getelementptr i8, ptr %.val53, i64 %i.c  ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
   %i.e = getelementptr i8, ptr %i.d, i64 12
   %i.f = load i16, ptr %i.e, align 4
   %i.g = lshr i16 %i.f, 2
   %i.h = and i16 %i.g, 60
   %i.i = zext nneg i16 %i.h to i32
   %i.j = add nsw i32 %i.i, -20                    ; 2 uses
-  store ptr null, ptr %8, align 8
-  store ptr null, ptr %9, align 8
   %i.k = icmp ugt i32 %i.j, 17
   br i1 %i.k, label %.lr.ph.preheader.i.i, label %.loopexit
 
@@ -231,12 +225,14 @@ bb.a:
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.critedge.i.i, %.lr.ph.preheader.i.i
-  %.03048.i.i = phi ptr [ %.1.i.i, %.critedge.i.i ], [ %i.l, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.03147.i.i = phi i32 [ %.132.i.i, %.critedge.i.i ], [ %i.j, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.021.i = phi ptr [ null, %.lr.ph.preheader.i.i ], [ %.122.i, %.critedge.i.i ] ; 5 uses
+  %.020.i = phi ptr [ null, %.lr.ph.preheader.i.i ], [ %.1.i, %.critedge.i.i ] ; 5 uses
+  %.03048.i.i = phi ptr [ %i.l, %.lr.ph.preheader.i.i ], [ %.1.i.i, %.critedge.i.i ] ; 3 uses
+  %.03147.i.i = phi i32 [ %i.j, %.lr.ph.preheader.i.i ], [ %.132.i.i, %.critedge.i.i ] ; 3 uses
   %i.m = getelementptr i8, ptr %.03048.i.i, i64 1 ; 2 uses
   %i.n = load i8, ptr %.03048.i.i, align 1        ; 2 uses
   switch i8 %i.n, label %bb.c [
-    i8 0, label %.loopexit.loopexit
+    i8 0, label %.loopexit
     i8 1, label %bb.b
   ]
 
@@ -245,7 +241,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br label %.critedge.i.i, !llvm.loop !2
 
 bb.c:                                             ; preds = %.lr.ph.i.i
-  %i.p = getelementptr i8, ptr %.03048.i.i, i64 2 ; 2 uses
+  %i.p = getelementptr i8, ptr %.03048.i.i, i64 2 ; 3 uses
   %i.q = load i8, ptr %i.m, align 1               ; 5 uses
   %i.r = zext i8 %i.q to i32                      ; 2 uses
   %i.s = icmp ult i8 %i.q, 2
@@ -264,31 +260,24 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not37.i.i, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
-  %.0..0..0..0..0.19.i = load ptr, ptr %8, align 8
-  %.not38.i.i = icmp eq ptr %.0..0..0..0..0.19.i, null
-  %.0..0..0..0..0.16.i = load ptr, ptr %9, align 8
-  %.not46.i.i = icmp eq ptr %.0..0..0..0..0.16.i, null
+  %.not38.i.i = icmp eq ptr %.021.i, null
+  %.not46.i.i = icmp eq ptr %.020.i, null
   %or.cond.i = select i1 %.not38.i.i, i1 %.not46.i.i, i1 false, !prof !38
-  br i1 %or.cond.i, label %.sink.split.i.i, label %bb.j, !prof !38
+  br i1 %or.cond.i, label %bb.i, label %bb.j, !prof !38
 
 bb.g:                                             ; preds = %bb.d
   %i.u = icmp ult i8 %i.q, 5
   br i1 %i.u, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %.0..0..0..0..0.18.i = load ptr, ptr %8, align 8
-  %.not.i.i = icmp eq ptr %.0..0..0..0..0.18.i, null
-  %.0..0..0..0..0.15.i = load ptr, ptr %9, align 8
-  %.not45.i.i = icmp eq ptr %.0..0..0..0..0.15.i, null
+  %.not.i.i = icmp eq ptr %.021.i, null
+  %.not45.i.i = icmp eq ptr %.020.i, null
   %or.cond22.i = select i1 %.not.i.i, i1 %.not45.i.i, i1 false, !prof !38
-  br i1 %or.cond22.i, label %.sink.split.i.i, label %bb.j, !prof !38
+  br i1 %or.cond22.i, label %bb.i, label %bb.j, !prof !38
 
-.sink.split.i.i:                                  ; preds = %bb.h, %bb.f
-  %.sink.i.i = phi ptr [ %8, %bb.f ], [ %9, %bb.h ]
-  store ptr %i.p, ptr %.sink.i.i, align 8
-  br label %bb.i
-
-bb.i:                                             ; preds = %.sink.split.i.i, %bb.d
+bb.i:                                             ; preds = %bb.h, %bb.f, %bb.d
+  %.324.i = phi ptr [ %.021.i, %bb.d ], [ %i.p, %bb.f ], [ null, %bb.h ]
+  %.3.i = phi ptr [ %.020.i, %bb.d ], [ null, %bb.f ], [ %i.p, %bb.h ]
   %i.v = zext i8 %i.q to i64
   %i.w = getelementptr i8, ptr %i.p, i64 %i.v
   %i.x = getelementptr i8, ptr %i.w, i64 -2
@@ -296,14 +285,14 @@ bb.i:                                             ; preds = %.sink.split.i.i, %b
   br label %.critedge.i.i
 
 .critedge.i.i:                                    ; preds = %bb.i, %bb.b
-  %.132.i.i = phi i32 [ %i.o, %bb.b ], [ %i.y, %bb.i ] ; 2 uses
-  %.1.i.i = phi ptr [ %i.m, %bb.b ], [ %i.x, %bb.i ]
+  %.122.i = phi ptr [ %.324.i, %bb.i ], [ %.021.i, %bb.b ] ; 2 uses
+  %.1.i = phi ptr [ %.3.i, %bb.i ], [ %.020.i, %bb.b ] ; 2 uses
+  %.132.i.i = phi i32 [ %i.y, %bb.i ], [ %i.o, %bb.b ] ; 2 uses
+  %.1.i.i = phi ptr [ %i.x, %bb.i ], [ %i.m, %bb.b ]
   %i.z = icmp ugt i32 %.132.i.i, 17
-  br i1 %i.z, label %.lr.ph.i.i, label %.loopexit.loopexit
+  br i1 %i.z, label %.lr.ph.i.i, label %.loopexit
 
 bb.j:                                             ; preds = %bb.e, %bb.c, %bb.f, %bb.g, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_tcp_hash_bad_header, i64 8), i1 false) #19
           to label %trace_tcp_hash_bad_header.exit [label %cpumask_test_cpu.exit.i.i], !srcloc !19
 
@@ -336,19 +325,12 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.ak, ptr elementtype(i64) %i.ak) #19, !srcloc !37
   br label %trace_tcp_hash_bad_header.exit
 
-.loopexit.loopexit:                               ; preds = %.lr.ph.i.i, %.critedge.i.i
-  %.0..0..0..0..0.17.i.pre = load ptr, ptr %8, align 8
-  %.0..0..0..0..0..i.pre = load ptr, ptr %9, align 8
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.a
-  %.0..0..0..0..i = phi ptr [ %.0..0..0..0..0..i.pre, %.loopexit.loopexit ], [ null, %bb.a ] ; 2 uses
-  %.0..0..0..0.17.i = phi ptr [ %.0..0..0..0..0.17.i.pre, %.loopexit.loopexit ], [ null, %bb.a ] ; 2 uses
-  %.not14.i = icmp eq ptr %.0..0..0..0..i, null
-  %i.al = getelementptr i8, ptr %.0..0..0..0..i, i64 -2
+.loopexit:                                        ; preds = %.critedge.i.i, %.lr.ph.i.i, %bb.a
+  %.425.i = phi ptr [ null, %bb.a ], [ %.122.i, %.critedge.i.i ], [ %.021.i, %.lr.ph.i.i ] ; 2 uses
+  %.4.i = phi ptr [ null, %bb.a ], [ %.1.i, %.critedge.i.i ], [ %.020.i, %.lr.ph.i.i ] ; 2 uses
+  %.not14.i = icmp eq ptr %.4.i, null
+  %i.al = getelementptr i8, ptr %.4.i, i64 -2
   %.sink.i = select i1 %.not14.i, ptr null, ptr %i.al ; 4 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
   %.not44 = icmp eq ptr %1, null
   %.not45 = icmp eq ptr %.sink.i, null            ; 3 uses
   %or.cond = select i1 %.not44, i1 true, i1 %.not45
@@ -403,7 +385,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %.loopexit
   %.not46 = icmp eq i32 %7, 0
   %i.bh = select i1 %.not46, i32 0, i32 %6        ; 2 uses
-  %.not47 = icmp eq ptr %.0..0..0..0.17.i, null
+  %.not47 = icmp eq ptr %.425.i, null
   %i.bi = select i1 %.not47, i1 %.not45, i1 false, !prof !16
   br i1 %i.bi, label %bb.s, label %bb.u, !prof !16
 
@@ -430,7 +412,7 @@ bb.u:                                             ; preds = %bb.r
   br i1 %.not45, label %bb.v, label %trace_tcp_hash_bad_header.exit
 
 bb.v:                                             ; preds = %bb.u
-  %i.bo = tail call fastcc i32 @tcp_inbound_md5_hash(ptr noundef %0, ptr noundef %2, ptr noundef %3, i32 noundef %5, i32 noundef %i.bh, ptr noundef %.0..0..0..0.17.i) #21
+  %i.bo = tail call fastcc i32 @tcp_inbound_md5_hash(ptr noundef %0, ptr noundef %2, ptr noundef %3, i32 noundef %5, i32 noundef %i.bh, ptr noundef %.425.i) #21
   br label %trace_tcp_hash_bad_header.exit
 
 trace_tcp_hash_bad_header.exit:                   ; preds = %bb.s, %bb.u, %bb.q, %cpumask_test_cpu.exit.i.i56, %bb.n, %bb.m, %cpumask_test_cpu.exit.i.i, %bb.j, %tcp_md5_do_lookup.exit, %bb.v, %bb.t

@@ -204,7 +204,7 @@ get_reg_offset_16.exit.thread.i.i:                ; preds = %thread-pre-split.i.
   %.0.2428.i.i = phi i32 [ %i.ay, %thread-pre-split.i.i ], [ -33, %bb.l ]
   %.015.i.i = phi i32 [ %i.be, %thread-pre-split.i.i ], [ 0, %bb.l ]
   %.not33.i.i = icmp samesign ult i32 %i.as, 4
-  br i1 %.not33.i.i, label %bb.m, label %get_eff_addr_modrm_16.exit.i, !prof !21
+  br i1 %.not33.i.i, label %bb.m, label %get_eff_addr_modrm_16.exit.i
 
 bb.m:                                             ; preds = %get_reg_offset_16.exit.thread.i.i
   %i.bf = zext nneg i32 %i.av to i64
@@ -216,7 +216,7 @@ bb.m:                                             ; preds = %get_reg_offset_16.e
   br label %get_eff_addr_modrm_16.exit.i
 
 get_eff_addr_modrm_16.exit.i:                     ; preds = %bb.m, %get_reg_offset_16.exit.thread.i.i
-  %.0.i20.i = phi i32 [ 0, %get_reg_offset_16.exit.thread.i.i ], [ %i.bk, %bb.m ]
+  %.0.i20.i = phi i32 [ %i.bk, %bb.m ], [ 0, %get_reg_offset_16.exit.thread.i.i ]
   %i.bl = getelementptr i8, ptr %0, i64 48
   %i.bm = load i32, ptr %i.bl, align 8
   %i.bn = add i32 %.0.i20.i, %.015.i.i
@@ -227,9 +227,9 @@ get_eff_addr_modrm_16.exit.i:                     ; preds = %bb.m, %get_reg_offs
 regs_get_register.exit.i.i:                       ; preds = %get_eff_addr_modrm_16.exit.i, %get_reg_offset.exit.i.i
   %.025.i.a = phi i32 [ %.0.2428.i.i, %get_eff_addr_modrm_16.exit.i ], [ %i.ah, %get_reg_offset.exit.i.i ]
   %.024.i = phi i64 [ %i.bp, %get_eff_addr_modrm_16.exit.i ], [ %i.am, %get_reg_offset.exit.i.i ]
-  store i64 0, ptr %i.h, align 8, !annotation !22
-  store i64 0, ptr %i.i, align 8, !annotation !22
-  %i.bq = call fastcc i32 @get_seg_base_limit(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %.025.i.a, ptr noundef nonnull %i.h, ptr noundef nonnull %i.i) #12, !srcloc !23
+  store i64 0, ptr %i.h, align 8, !annotation !21
+  store i64 0, ptr %i.i, align 8, !annotation !21
+  %i.bq = call fastcc i32 @get_seg_base_limit(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %.025.i.a, ptr noundef nonnull %i.h, ptr noundef nonnull %i.i) #12, !srcloc !22
   %.not18.i = icmp eq i32 %i.bq, 0
   br i1 %.not18.i, label %bb.n, label %get_addr_ref_16.exit
 
@@ -256,8 +256,8 @@ bb.p:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #10
-  store i32 0, ptr %i.f, align 4, !annotation !22
-  store i64 0, ptr %i.g, align 8, !annotation !22
+  store i32 0, ptr %i.f, align 4, !annotation !21
+  store i64 0, ptr %i.g, align 8, !annotation !21
   %i.bx = getelementptr i8, ptr %0, i64 32        ; 2 uses
   %i.by = load i32, ptr %i.bx, align 8
   %i.bz = and i32 %i.by, 192
@@ -326,12 +326,12 @@ bb.t:                                             ; preds = %bb.p
   br i1 %.not23.i, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.cz = call fastcc i32 @get_eff_addr_sib(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g) #12, !srcloc !24
+  %i.cz = call fastcc i32 @get_eff_addr_sib(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g) #12, !srcloc !23
   %.not25.i = icmp eq i32 %i.cz, 0
   br i1 %.not25.i, label %get_eff_addr_reg.exit.thread.i, label %get_addr_ref_32.exit
 
 bb.v:                                             ; preds = %bb.t
-  %i.da = call fastcc i32 @get_eff_addr_modrm(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g) #12, !srcloc !25
+  %i.da = call fastcc i32 @get_eff_addr_modrm(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g) #12, !srcloc !24
   %.not24.i = icmp eq i32 %i.da, 0
   br i1 %.not24.i, label %get_eff_addr_reg.exit.thread.i, label %get_addr_ref_32.exit
 
@@ -341,11 +341,11 @@ get_eff_addr_reg.exit.thread.sink.split.i:        ; preds = %regs_get_register.e
   br label %get_eff_addr_reg.exit.thread.i
 
 get_eff_addr_reg.exit.thread.i:                   ; preds = %get_eff_addr_reg.exit.thread.sink.split.i, %bb.v, %bb.u
-  store i64 0, ptr %i.d, align 8, !annotation !22
-  store i64 0, ptr %i.e, align 8, !annotation !22
+  store i64 0, ptr %i.d, align 8, !annotation !21
+  store i64 0, ptr %i.e, align 8, !annotation !21
   %.0.in.i = load i64, ptr %i.g, align 8
   %i.db = load i32, ptr %i.f, align 4
-  %i.dc = call fastcc i32 @get_seg_base_limit(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %i.db, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #12, !srcloc !26
+  %i.dc = call fastcc i32 @get_seg_base_limit(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %i.db, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #12, !srcloc !25
   %.not27.i = icmp eq i32 %i.dc, 0
   br i1 %.not27.i, label %bb.w, label %get_addr_ref_32.exit
 
@@ -380,8 +380,8 @@ bb.x:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
-  store i32 0, ptr %i.b, align 4, !annotation !22
-  store i64 0, ptr %i.c, align 8, !annotation !22
+  store i32 0, ptr %i.b, align 4, !annotation !21
+  store i64 0, ptr %i.c, align 8, !annotation !21
   %i.dl = getelementptr i8, ptr %0, i64 32        ; 2 uses
   %i.dm = load i32, ptr %i.dl, align 8
   %i.dn = and i32 %i.dm, 192
@@ -450,12 +450,12 @@ bb.ab:                                            ; preds = %bb.x
   br i1 %.not15.i26, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.en = call fastcc i32 @get_eff_addr_sib(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #12, !srcloc !27
+  %i.en = call fastcc i32 @get_eff_addr_sib(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #12, !srcloc !26
   %.not17.i = icmp eq i32 %i.en, 0
   br i1 %.not17.i, label %get_eff_addr_reg.exit.thread.i27, label %get_addr_ref_64.exit
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.eo = call fastcc i32 @get_eff_addr_modrm(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #12, !srcloc !28
+  %i.eo = call fastcc i32 @get_eff_addr_modrm(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #12, !srcloc !27
   %.not16.i = icmp eq i32 %i.eo, 0
   br i1 %.not16.i, label %get_eff_addr_reg.exit.thread.i27, label %get_addr_ref_64.exit
 
@@ -465,9 +465,9 @@ get_eff_addr_reg.exit.thread.sink.split.i37:      ; preds = %regs_get_register.e
   br label %get_eff_addr_reg.exit.thread.i27
 
 get_eff_addr_reg.exit.thread.i27:                 ; preds = %get_eff_addr_reg.exit.thread.sink.split.i37, %bb.ad, %bb.ac
-  store i64 0, ptr %i.a, align 8, !annotation !22
+  store i64 0, ptr %i.a, align 8, !annotation !21
   %i.ep = load i32, ptr %i.b, align 4
-  %i.eq = call fastcc i32 @get_seg_base_limit(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %i.ep, ptr noundef nonnull %i.a, ptr noundef null) #12, !srcloc !29
+  %i.eq = call fastcc i32 @get_seg_base_limit(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %i.ep, ptr noundef nonnull %i.a, ptr noundef null) #12, !srcloc !28
   %.not19.i = icmp eq i32 %i.eq, 0
   br i1 %.not19.i, label %bb.ae, label %get_addr_ref_64.exit
 
@@ -567,13 +567,13 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.f = load i64, ptr %i.e, align 8
   %i.g = add i64 %i.f, %.0.i
   %i.h = inttoptr i64 %i.g to ptr
-  tail call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09stac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !30
+  tail call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09stac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !29
   %i.i = tail call i64 @llvm.read_register.i64(metadata !0)
-  %i.j = tail call { i64, ptr, ptr, i64 } asm sideeffect "1:\0A\09# ALT: oldinstr\0A771:\0A\09rep movsb\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte (((1 << 0) << 16) $| ((18*32+ 4)))\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09call rep_movs_alternative\0A775:\0A.popsection\0A2:\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (2b) - .\0A .long 3 \0A .popsection\0A", "={cx},={di},={si},={rsp},0,1,2,{rsp},~{memory},~{rax},~{dirflag},~{fpsr},~{flags}"(i64 15, ptr %1, ptr %i.h, i64 %i.i) #10, !srcloc !31 ; 2 uses
+  %i.j = tail call { i64, ptr, ptr, i64 } asm sideeffect "1:\0A\09# ALT: oldinstr\0A771:\0A\09rep movsb\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte (((1 << 0) << 16) $| ((18*32+ 4)))\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09call rep_movs_alternative\0A775:\0A.popsection\0A2:\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (2b) - .\0A .long 3 \0A .popsection\0A", "={cx},={di},={si},={rsp},0,1,2,{rsp},~{memory},~{rax},~{dirflag},~{fpsr},~{flags}"(i64 15, ptr %1, ptr %i.h, i64 %i.i) #10, !srcloc !30 ; 2 uses
   %i.k = extractvalue { i64, ptr, ptr, i64 } %i.j, 0
   %i.l = extractvalue { i64, ptr, ptr, i64 } %i.j, 3
   tail call void @llvm.write_register.i64(metadata !0, i64 %i.l)
-  tail call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09clac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !32
+  tail call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09clac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !31
   %i.m = trunc i64 %i.k to i32
   %i.n = sub i32 15, %i.m
   br label %insn_get_effective_ip.exit
@@ -976,7 +976,7 @@ bb.o:                                             ; preds = %bb.i, %bb.h
   %.1.i.i = phi i32 [ %.020.i.i, %bb.h ], [ 2, %bb.i ] ; 2 uses
   %i.v = add nuw nsw i32 %.1.i.i, 1
   %i.w = icmp samesign ult i32 %.1.i.i, 3
-  br i1 %i.w, label %bb.g, label %get_seg_reg_override_idx.exit.i, !llvm.loop !33
+  br i1 %i.w, label %bb.g, label %get_seg_reg_override_idx.exit.i, !llvm.loop !32
 
 get_seg_reg_override_idx.exit.i:                  ; preds = %bb.o, %bb.g, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j
   %.015.lcssa.i.i = phi i32 [ %i.r, %bb.k ], [ %i.q, %bb.j ], [ %i.u, %bb.n ], [ %i.t, %bb.m ], [ %i.s, %bb.l ], [ %.01519.i.i, %bb.g ], [ %.116.i.i, %bb.o ]
@@ -1292,7 +1292,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.s = icmp samesign ugt i32 %i.p, 160
-  br i1 %i.s, label %regs_get_register.exit, label %bb.j, !prof !35
+  br i1 %i.s, label %regs_get_register.exit, label %bb.j, !prof !34
 
 bb.j:                                             ; preds = %bb.i
   %i.t = zext nneg i32 %i.p to i64
@@ -1313,7 +1313,7 @@ bb.k:                                             ; preds = %regs_get_register.e
 
 bb.l:                                             ; preds = %bb.k
   %i.aa = icmp samesign ugt i32 %i.o, 160
-  br i1 %i.aa, label %regs_get_register.exit53, label %bb.m, !prof !35
+  br i1 %i.aa, label %regs_get_register.exit53, label %bb.m, !prof !34
 
 bb.m:                                             ; preds = %bb.l
   %i.ab = zext nneg i32 %i.o to i64
@@ -1528,19 +1528,18 @@ attributes #12 = { noredzone "no-builtin-wcslen" }
 !18 = !{i64 2148545469}
 !19 = !{i64 3548256, i64 3548277, i64 2151060429, i64 2151060524, i64 2151060547, i64 2151060580, i64 2151060611, i64 2151060650}
 !20 = !{i64 2148303233, i64 2148303273, i64 2148303390, i64 2148303411, i64 2148303454, i64 2148303469, i64 2148303502, i64 2148303536, i64 2148303560}
-!21 = !{!"branch_weights", i32 2000, i32 2002}
-!22 = !{!"auto-init"}
-!23 = !{i64 35555}
-!24 = !{i64 37113}
-!25 = !{i64 37224}
-!26 = !{i64 37332}
-!27 = !{i64 39561}
-!28 = !{i64 39657}
-!29 = !{i64 39751}
-!30 = !{i64 2153658382, i64 2153658411, i64 2153658417, i64 2153658433, i64 2153658449, i64 2153658476, i64 2153658576, i64 2153658636, i64 2153658750, i64 2153658798, i64 2153658846, i64 2153658910, i64 2153658967, i64 2153659019, i64 2153659145, i64 2153659364, i64 2153659231, i64 2153659262, i64 2153659268, i64 2153659284, i64 2153659300}
-!31 = !{i64 6300670, i64 6300675, i64 2153791850, i64 2153791856, i64 2153791872, i64 2153791888, i64 2153791915, i64 2153792015, i64 2153792084, i64 2153792198, i64 2153792246, i64 2153792294, i64 2153792358, i64 2153792415, i64 2153792467, i64 2153792670, i64 2153792910, i64 2153792756, i64 2153792787, i64 2153792793, i64 2153792809, i64 2153792825, i64 6300772, i64 2153793379, i64 2153793474, i64 2153793497, i64 2153793530, i64 2153793561, i64 2153793600}
-!32 = !{i64 2153656542, i64 2153656571, i64 2153656577, i64 2153656593, i64 2153656609, i64 2153656636, i64 2153656736, i64 2153656796, i64 2153656910, i64 2153656958, i64 2153657006, i64 2153657070, i64 2153657127, i64 2153657179, i64 2153657305, i64 2153657524, i64 2153657391, i64 2153657422, i64 2153657428, i64 2153657444, i64 2153657460}
-!33 = distinct !{!33, !34}
-!34 = !{!"llvm.loop.mustprogress"}
-!35 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!21 = !{!"auto-init"}
+!22 = !{i64 35555}
+!23 = !{i64 37113}
+!24 = !{i64 37224}
+!25 = !{i64 37332}
+!26 = !{i64 39561}
+!27 = !{i64 39657}
+!28 = !{i64 39751}
+!29 = !{i64 2153658382, i64 2153658411, i64 2153658417, i64 2153658433, i64 2153658449, i64 2153658476, i64 2153658576, i64 2153658636, i64 2153658750, i64 2153658798, i64 2153658846, i64 2153658910, i64 2153658967, i64 2153659019, i64 2153659145, i64 2153659364, i64 2153659231, i64 2153659262, i64 2153659268, i64 2153659284, i64 2153659300}
+!30 = !{i64 6300670, i64 6300675, i64 2153791850, i64 2153791856, i64 2153791872, i64 2153791888, i64 2153791915, i64 2153792015, i64 2153792084, i64 2153792198, i64 2153792246, i64 2153792294, i64 2153792358, i64 2153792415, i64 2153792467, i64 2153792670, i64 2153792910, i64 2153792756, i64 2153792787, i64 2153792793, i64 2153792809, i64 2153792825, i64 6300772, i64 2153793379, i64 2153793474, i64 2153793497, i64 2153793530, i64 2153793561, i64 2153793600}
+!31 = !{i64 2153656542, i64 2153656571, i64 2153656577, i64 2153656593, i64 2153656609, i64 2153656636, i64 2153656736, i64 2153656796, i64 2153656910, i64 2153656958, i64 2153657006, i64 2153657070, i64 2153657127, i64 2153657179, i64 2153657305, i64 2153657524, i64 2153657391, i64 2153657422, i64 2153657428, i64 2153657444, i64 2153657460}
+!32 = distinct !{!32, !33}
+!33 = !{!"llvm.loop.mustprogress"}
+!34 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_1

@@ -202,8 +202,6 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal fastcc i32 @conn_state(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %2 = alloca ptr, align 8                        ; 8 uses
-  %3 = alloca ptr, align 8                        ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !29   ; 3 uses
@@ -240,11 +238,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.n, label %bb.f, label %bb.r
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store ptr null, ptr %2, align 8, !tbaa !31
-  store ptr null, ptr %3, align 8, !tbaa !31
-  %i.o = load i8, ptr %i.k, align 1, !tbaa !32
+  %i.o = load i8, ptr %i.k, align 1, !tbaa !31
   %i.p = icmp eq i8 %i.o, 91
   br i1 %i.p, label %bb.g, label %bb.j
 
@@ -259,7 +253,7 @@ bb.h:                                             ; preds = %bb.g
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = sub i64 %i.t, %i.u                       ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 1
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !32
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !31
   switch i8 %i.x, label %.loopexit88 [
     i8 58, label %bb.i
     i8 0, label %bb.n
@@ -294,71 +288,46 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.i,
   %.238.i = phi ptr [ %i.k, %bb.l ], [ %i.s, %bb.i ], [ %i.k, %bb.m ], [ %i.s, %bb.h ]
   %.3.i = phi ptr [ null, %bb.l ], [ %i.y, %bb.i ], [ %i.ab, %bb.m ], [ null, %bb.h ] ; 2 uses
   %.2.i = phi i64 [ %i.ad, %bb.l ], [ %i.v, %bb.i ], [ %i.ag, %bb.m ], [ %i.v, %bb.h ]
-  %i.ah = call ptr @OPENSSL_strndup(ptr noundef nonnull %.238.i, i64 noundef %.2.i) #8 ; 3 uses
-  store ptr %i.ah, ptr %2, align 8, !tbaa !31
+  %i.ah = call ptr @OPENSSL_strndup(ptr noundef nonnull %.238.i, i64 noundef %.2.i) #8 ; 5 uses
   %i.ai = icmp eq ptr %i.ah, null
   br i1 %i.ai, label %.loopexit88, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %4 = icmp ne ptr %.3.i, null                    ; 2 uses
-  br i1 %4, label %bb.p, label %.critedge.sink.split.i
+  %2 = icmp eq ptr %.3.i, null
+  br i1 %2, label %.loopexit88, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.aj = call ptr @OPENSSL_strdup(ptr noundef nonnull %.3.i) #8 ; 3 uses
-  store ptr %i.aj, ptr %3, align 8, !tbaa !31
+  %i.aj = call ptr @OPENSSL_strdup(ptr noundef nonnull %.3.i) #8 ; 2 uses
   %i.ak = icmp eq ptr %i.aj, null
-  br i1 %i.ak, label %bb.q, label %split_host_and_port.exit
+  br i1 %i.ak, label %bb.q, label %.thread
 
 bb.q:                                             ; preds = %bb.p
   call void @OPENSSL_free(ptr noundef nonnull %i.ah) #8
-  br label %.critedge.sink.split.i
+  br label %.loopexit88
 
-.critedge.sink.split.i:                           ; preds = %bb.q, %bb.o
-  %.sink.i = phi ptr [ %2, %bb.q ], [ %3, %bb.o ]
-  store ptr null, ptr %.sink.i, align 8, !tbaa !31
-  %.0..0..0.79.pre = load ptr, ptr %3, align 8
-  br label %split_host_and_port.exit
-
-split_host_and_port.exit:                         ; preds = %bb.p, %.critedge.sink.split.i
-  %.0..0.79 = phi ptr [ %i.aj, %bb.p ], [ %.0..0..0.79.pre, %.critedge.sink.split.i ] ; 3 uses
-  %.140.i = phi i1 [ false, %bb.p ], [ %4, %.critedge.sink.split.i ]
-  %5 = icmp eq ptr %.0..0.79, null
-  %or.cond = select i1 %.140.i, i1 true, i1 %5
-  br i1 %or.cond, label %.loopexit88.loopexit, label %.thread
-
-.thread:                                          ; preds = %split_host_and_port.exit
+.thread:                                          ; preds = %bb.p
   %i.al = load ptr, ptr %i.f, align 8, !tbaa !26
   call void @OPENSSL_free(ptr noundef %i.al) #8
-  store ptr %.0..0.79, ptr %i.f, align 8, !tbaa !26
+  store ptr %i.aj, ptr %i.f, align 8, !tbaa !26
   %i.am = load ptr, ptr %i.e, align 8, !tbaa !25
   call void @OPENSSL_free(ptr noundef %i.am) #8
-  %.0..0..0.81 = load ptr, ptr %2, align 8, !tbaa !31 ; 2 uses
-  store ptr %.0..0..0.81, ptr %i.e, align 8, !tbaa !25
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store ptr %i.ah, ptr %i.e, align 8, !tbaa !25
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !26
   br label %bb.r
 
-.loopexit88.loopexit:                             ; preds = %split_host_and_port.exit
-  %.0..0..0.80.pre = load ptr, ptr %2, align 8, !tbaa !31
-  br label %.loopexit88
-
-.loopexit88:                                      ; preds = %bb.n, %bb.g, %bb.h, %.loopexit88.loopexit
-  %.0..0.80 = phi ptr [ %.0..0..0.80.pre, %.loopexit88.loopexit ], [ null, %bb.h ], [ null, %bb.g ], [ null, %bb.n ]
-  %.0.7986 = phi ptr [ %.0..0.79, %.loopexit88.loopexit ], [ null, %bb.h ], [ null, %bb.g ], [ null, %bb.n ]
-  call void @OPENSSL_free(ptr noundef %.0..0.80) #8
-  call void @OPENSSL_free(ptr noundef %.0.7986) #8
+.loopexit88:                                      ; preds = %bb.o, %bb.n, %bb.g, %bb.h, %bb.q
+  %.18590 = phi ptr [ null, %bb.q ], [ null, %bb.h ], [ null, %bb.n ], [ %i.ah, %bb.o ], [ null, %bb.g ]
+  call void @OPENSSL_free(ptr noundef %.18590) #8
+  call void @OPENSSL_free(ptr noundef null) #8
   call void @ERR_put_error(i32 noundef 17, i32 noundef 0, i32 noundef 109, ptr noundef nonnull @.str.3, i32 noundef 142) #8
   %i.an = load ptr, ptr %i.e, align 8, !tbaa !25
   call void (i32, ...) @ERR_add_error_data(i32 noundef 2, ptr noundef nonnull @.str.4, ptr noundef %i.an) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   br label %.loopexit
 
 bb.r:                                             ; preds = %.thread, %bb.e
   %i.ao = phi ptr [ %.pre, %.thread ], [ %i.m, %bb.e ]
-  %i.ap = phi ptr [ %.0..0..0.81, %.thread ], [ %i.k, %bb.e ]
-  %i.aq = call i32 @bio_ip_and_port_to_socket_and_addr(ptr noundef nonnull %i.d, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef %i.ap, ptr noundef %i.ao) #8
+  %i.ap = phi ptr [ %i.ah, %.thread ], [ %i.k, %bb.e ]
+  %i.aq = call i32 @bio_ip_and_port_to_socket_and_addr(ptr noundef nonnull %i.d, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef nonnull %i.ap, ptr noundef %i.ao) #8
   %.not72 = icmp eq i32 %i.aq, 0
   br i1 %.not72, label %bb.s, label %bb.t
 
@@ -405,7 +374,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.w
   call void @BIO_clear_retry_flags(ptr noundef nonnull %0) #8
   %i.bd = load i32, ptr %i.d, align 8, !tbaa !22
-  %i.be = load i32, ptr %i.h, align 8, !tbaa !33
+  %i.be = load i32, ptr %i.h, align 8, !tbaa !32
   %i.bf = call i32 @connect(i32 noundef %i.bd, ptr noundef nonnull %i.g, i32 noundef %i.be) #8 ; 5 uses
   %i.bg = icmp slt i32 %i.bf, 0
   br i1 %i.bg, label %bb.z, label %bb.ag
@@ -419,7 +388,7 @@ bb.aa:                                            ; preds = %bb.z
   call void @BIO_set_flags(ptr noundef nonnull %0, i32 noundef 12) #8
   store i32 1, ptr %1, align 8, !tbaa !21
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i32 2, ptr %i.bi, align 4, !tbaa !34
+  store i32 2, ptr %i.bi, align 4, !tbaa !33
   br label %.loopexit
 
 bb.ab:                                            ; preds = %bb.z
@@ -446,7 +415,7 @@ bb.ae:                                            ; preds = %bb.ad
   call void @BIO_set_flags(ptr noundef nonnull %0, i32 noundef 12) #8
   store i32 1, ptr %1, align 8, !tbaa !21
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i32 2, ptr %i.bo, align 4, !tbaa !34
+  store i32 2, ptr %i.bo, align 4, !tbaa !33
   br label %.loopexit
 
 bb.af:                                            ; preds = %bb.ad
@@ -588,8 +557,7 @@ attributes #9 = { nounwind willreturn memory(read) }
 !28 = !{!16, !5, i64 44}
 !29 = !{!20, !9, i64 168}
 !30 = !{!9, !9, i64 0}
-!31 = !{!13, !13, i64 0}
-!32 = !{!4, !4, i64 0}
-!33 = !{!20, !5, i64 160}
-!34 = !{!16, !5, i64 52}
+!31 = !{!4, !4, i64 0}
+!32 = !{!20, !5, i64 160}
+!33 = !{!16, !5, i64 52}
 end_hunk_0

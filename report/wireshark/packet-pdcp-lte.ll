@@ -204,9 +204,6 @@ declare i32 @__vsnprintf_chk(ptr noundef, i64 noundef, i32 noundef, i64 noundef,
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc void @addChannelSequenceInfo(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef captures(none) %7) unnamed_addr #0 {
 bb.a:
-  %8 = alloca i32, align 4                        ; 3 uses
-  %9 = alloca i32, align 4                        ; 3 uses
-  %10 = alloca i32, align 4                       ; 3 uses
   %i.a = load i32, ptr @hf_pdcp_lte_sequence_analysis, align 4
   %i.b = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_string_format(ptr noundef %4, i32 noundef %i.a, ptr noundef %5, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @.str.267, ptr noundef nonnull @.str.79) ; 7 uses
   %i.c = load i32, ptr @ett_pdcp_lte_sequence_analysis, align 4
@@ -435,9 +432,6 @@ bb.y:                                             ; preds = %bb.x
 proto_item_set_generated.exit157:                 ; preds = %switch.lookup, %bb.x, %bb.y
   %i.cf = getelementptr i8, ptr %7, i64 28
   store i32 %i.bx, ptr %i.cf, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  call void @llvm.lifetime.start.p0(ptr nonnull %10)
   %i.cg = getelementptr i8, ptr %1, i64 2
   %i.ch = load i16, ptr %i.cg, align 2            ; 2 uses
   %i.ci = getelementptr i8, ptr %3, i64 20
@@ -453,7 +447,7 @@ proto_item_set_generated.exit157:                 ; preds = %switch.lookup, %bb.
 .preheader.i:                                     ; preds = %proto_item_set_generated.exit157
   %i.cp = load i32, ptr @num_ue_keys_uat, align 4 ; 2 uses
   %.not54.i = icmp eq i32 %i.cp, 0
-  br i1 %.not54.i, label %look_up_keys_record.exit.thread, label %.lr.ph51.i
+  br i1 %.not54.i, label %bb.bm, label %.lr.ph51.i
 
 .lr.ph51.i:                                       ; preds = %.preheader.i
   %i.cq = load ptr, ptr @uat_ue_keys_records, align 8
@@ -485,7 +479,7 @@ bb.aa:                                            ; preds = %bb.ai, %.lr.ph.i
   %indvars.iv.i = phi i64 [ %i.de, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.ai ] ; 3 uses
   %i.df = getelementptr [40 x i8], ptr %i.co, i64 %indvars.iv.i ; 11 uses
   %i.dg = getelementptr i8, ptr %i.df, i64 4
-  %i.dh = load i32, ptr %i.dg, align 4            ; 2 uses
+  %i.dh = load i32, ptr %i.dg, align 4
   %i.di = icmp ugt i32 %i.cj, %i.dh
   br i1 %i.di, label %bb.ab, label %bb.ai
 
@@ -511,7 +505,7 @@ bb.ad:                                            ; preds = %bb.ac
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %i.dd, ptr noundef align 8 dereferenceable(16) %i.dp, i64 noundef 16, i1 noundef false) #14
   %i.dq = load i8, ptr %i.df, align 8, !range !7, !noundef !8
   store i8 %i.dq, ptr %i.db, align 8
-  br label %.sink.split.i
+  br label %bb.ai
 
 bb.ae:                                            ; preds = %bb.ab
   %i.dr = load i8, ptr %i.cy, align 2, !range !7, !noundef !8
@@ -526,7 +520,7 @@ bb.af:                                            ; preds = %bb.ae
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 2 dereferenceable(16) %i.da, ptr noundef align 8 dereferenceable(16) %i.dv, i64 noundef 16, i1 noundef false) #14
   %i.dw = load i8, ptr %i.df, align 8, !range !7, !noundef !8
   store i8 %i.dw, ptr %i.cy, align 2
-  br label %.sink.split.i
+  br label %bb.ai
 
 bb.ag:                                            ; preds = %bb.ab
   %i.dx = load i8, ptr %i.cv, align 1, !range !7, !noundef !8
@@ -541,14 +535,9 @@ bb.ah:                                            ; preds = %bb.ag
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(16) %i.cx, ptr noundef align 8 dereferenceable(16) %i.eb, i64 noundef 16, i1 noundef false) #14
   %i.ec = load i8, ptr %i.df, align 8, !range !7, !noundef !8
   store i8 %i.ec, ptr %i.cv, align 1
-  br label %.sink.split.i
-
-.sink.split.i:                                    ; preds = %bb.ah, %bb.af, %bb.ad
-  %.sink.i = phi ptr [ %8, %bb.ad ], [ %9, %bb.af ], [ %10, %bb.ah ]
-  store i32 %i.dh, ptr %.sink.i, align 4
   br label %bb.ai
 
-bb.ai:                                            ; preds = %.sink.split.i, %bb.ag, %bb.ae, %bb.ac, %bb.ab, %bb.aa
+bb.ai:                                            ; preds = %bb.ad, %bb.af, %bb.ah, %bb.ag, %bb.ae, %bb.ac, %bb.ab, %bb.aa
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
   %i.ed = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.ed, label %bb.aa, label %look_up_keys_record.exit, !llvm.loop !13
@@ -556,7 +545,7 @@ bb.ai:                                            ; preds = %.sink.split.i, %bb.
 bb.aj:                                            ; preds = %bb.ak
   %indvars.iv.next58.i = add nuw nsw i64 %indvars.iv57.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next58.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %look_up_keys_record.exit.thread, label %bb.ak, !llvm.loop !14
+  br i1 %exitcond.not.i, label %bb.bm, label %bb.ak, !llvm.loop !14
 
 bb.ak:                                            ; preds = %bb.aj, %.lr.ph51.i
   %indvars.iv57.i = phi i64 [ 0, %.lr.ph51.i ], [ %indvars.iv.next58.i, %bb.aj ] ; 2 uses
@@ -568,7 +557,7 @@ bb.ak:                                            ; preds = %bb.aj, %.lr.ph51.i
 look_up_keys_record.exit:                         ; preds = %bb.ai, %bb.ak, %bb.z
   %.046.i = phi ptr [ %i.ee, %bb.ak ], [ %i.cs, %bb.z ], [ %i.cs, %bb.ai ] ; 10 uses
   %.not138 = icmp eq ptr %.046.i, null
-  br i1 %.not138, label %look_up_keys_record.exit.thread, label %bb.al
+  br i1 %.not138, label %bb.bm, label %bb.al
 
 bb.al:                                            ; preds = %look_up_keys_record.exit
   %i.eh = getelementptr i8, ptr %1, i64 20
@@ -677,12 +666,6 @@ proto_item_set_generated.exit164:                 ; preds = %bb.aq, %bb.ay, %bb.
   %i.fw = load i8, ptr %1, align 8
   %i.fx = getelementptr i8, ptr %7, i64 33
   store i8 %i.fw, ptr %i.fx, align 1
-  br label %look_up_keys_record.exit.thread
-
-look_up_keys_record.exit.thread:                  ; preds = %bb.aj, %.preheader.i, %proto_item_set_generated.exit164, %look_up_keys_record.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %10)
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
   br label %bb.bm
 
 bb.az:                                            ; preds = %bb.i
@@ -831,7 +814,7 @@ bb.bl:                                            ; preds = %bb.i
   %i.iy = tail call ptr (ptr, ptr, ptr, ptr, ...) @expert_add_info_format(ptr noundef %3, ptr noundef %i.q, ptr noundef nonnull @ei_pdcp_lte_sequence_analysis_wrong_sequence_number, ptr noundef nonnull @.str.307, ptr noundef %i.in, i32 noundef %i.iq, ptr noundef %i.it, i32 noundef %i.iw, i32 noundef %2, i32 noundef %i.ix) ; 0 uses
   br label %bb.bm
 
-bb.bm:                                            ; preds = %bb.be, %bb.bf, %bb.q, %look_up_keys_record.exit.thread, %bb.bl, %proto_item_set_generated.exit176
+bb.bm:                                            ; preds = %bb.aj, %.preheader.i, %look_up_keys_record.exit, %proto_item_set_generated.exit164, %bb.be, %bb.bf, %bb.q, %bb.bl, %proto_item_set_generated.exit176
   ret void
 }
 

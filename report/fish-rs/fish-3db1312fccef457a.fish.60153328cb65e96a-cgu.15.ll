@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.d
   %i.s = icmp eq i64 %i.j, 0
   br i1 %i.s, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB16_.exit, label %.lr.ph.i
 
-_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB16_.exit: ; preds = %.lr.ph.i, %bb.f, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %bb.f ], [ %i.g, %.lr.ph.i ]
+_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtNtCs8frGy5WneL6_4fish2io6IoDataEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB16_.exit: ; preds = %bb.f, %.lr.ph.i, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %.lr.ph.i ], [ %i.g, %bb.f ]
   store i64 %i.d, ptr %0, align 8, !noalias !6730
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !6730
@@ -267,8 +267,8 @@ _RNvXsu_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtCs8frGy5WneL6_4fish5event12Even
   %i.q = icmp eq i64 %i.j, 0
   br i1 %i.q, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB15_.exit, label %.lr.ph.i
 
-_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB15_.exit: ; preds = %.lr.ph.i, %_RNvXsu_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneBK_.exit.i, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %_RNvXsu_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneBK_.exit.i ], [ %i.g, %.lr.ph.i ]
+_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB15_.exit: ; preds = %_RNvXsu_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneBK_.exit.i, %.lr.ph.i, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %.lr.ph.i ], [ %i.g, %_RNvXsu_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcNtNtCs8frGy5WneL6_4fish5event12EventHandlerENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneBK_.exit.i ]
   store i64 %i.d, ptr %0, align 8, !noalias !6739
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !6739
@@ -671,8 +671,8 @@ _RNvXsh_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRefNtNtCs3o
   %i.q = icmp eq i64 %i.j, 0
   br i1 %i.q, label %_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment10EnvNodeRefNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBS_.exit, label %.lr.ph.i
 
-_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment10EnvNodeRefNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBS_.exit: ; preds = %.lr.ph.i, %_RNvXsh_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRefNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %bb.a
-  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %_RNvXsh_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRefNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %i.g, %.lr.ph.i ]
+_RINvXNvMNtCs1xwejQucwHj_5alloc5sliceSp9to_vec_inNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment10EnvNodeRefNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBS_.exit: ; preds = %_RNvXsh_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRefNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %.lr.ph.i, %bb.a
+  %.sroa.5.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.g, %.lr.ph.i ], [ %i.g, %_RNvXsh_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_10EnvNodeRefNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
   store i64 %i.d, ptr %0, align 8, !noalias !7034
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !7034

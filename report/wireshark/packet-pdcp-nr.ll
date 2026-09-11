@@ -204,10 +204,6 @@ declare ptr @register_dissector(ptr noundef, ptr noundef, i32 noundef) local_unn
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal i32 @dissect_pdcp_nr(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) #0 {
 bb.a:
-  %4 = alloca i32, align 4                        ; 5 uses
-  %5 = alloca i32, align 4                        ; 5 uses
-  %6 = alloca i32, align 4                        ; 5 uses
-  %7 = alloca i32, align 4                        ; 5 uses
   %i.a = alloca ptr, align 8                      ; 8 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
   %i.c = alloca i64, align 8                      ; 4 uses
@@ -610,7 +606,7 @@ bb.dx:                                            ; preds = %bb.cg
   br label %bb.le
 
 bb.dy:                                            ; preds = %bb.ck, %.thread525
-  %.3.ph = phi i32 [ %.sink743, %.thread525 ], [ 2, %bb.ck ] ; 7 uses
+  %.3.ph = phi i32 [ %.sink743, %.thread525 ], [ 2, %bb.ck ] ; 10 uses
   %i.vh = load i32, ptr @global_pdcp_check_sequence_numbers, align 4
   switch i32 %i.vh, label %.critedge421 [
     i32 2, label %.split
@@ -1013,7 +1009,7 @@ bb.fx:                                            ; preds = %bb.fw
 
 proto_item_set_generated.exit188.i:               ; preds = %bb.fx, %bb.fw, %bb.fv
   %i.age = load i8, ptr %i.afu, align 8
-  %i.agf = add i8 %i.age, -1
+  %i.agf = add i8 %i.age, -1                      ; 4 uses
   %i.agg = load i32, ptr @hf_pdcp_nr_security_direction, align 4
   %i.agh = load i8, ptr %.0371, align 8
   %i.agi = zext i8 %i.agh to i32
@@ -1053,7 +1049,7 @@ bb.gc:                                            ; preds = %bb.ga, %proto_item_
   %i.agq = getelementptr i8, ptr %.sink.i, i64 24
   %i.agr = load i32, ptr %i.agq, align 4
   %i.ags = mul i32 %i.agr, %.0150.i
-  %i.agt = add i32 %i.ags, %i.vr                  ; 2 uses
+  %i.agt = add i32 %i.ags, %i.vr                  ; 5 uses
   %i.agu = load i32, ptr @hf_pdcp_nr_security_count, align 4
   %i.agv = call ptr @proto_tree_add_uint(ptr noundef %.0369, i32 noundef %i.agu, ptr noundef %0, i32 noundef 0, i32 noundef 0, i32 noundef %i.agt) ; 2 uses
   %.not.i192.i = icmp eq ptr %i.agv, null
@@ -1073,14 +1069,6 @@ bb.ge:                                            ; preds = %bb.gd
   br label %proto_item_set_generated.exit194.i
 
 proto_item_set_generated.exit194.i:               ; preds = %bb.ge, %bb.gd, %bb.gc
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  store i32 0, ptr %4, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  store i32 0, ptr %5, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  store i32 0, ptr %6, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  store i32 0, ptr %7, align 4
   %i.ahb = load i16, ptr %i.lp, align 2           ; 2 uses
   %i.ahc = load i32, ptr %i.lr, align 4
   %i.ahd = load ptr, ptr @pdcp_security_key_hash, align 8
@@ -1094,7 +1082,7 @@ proto_item_set_generated.exit194.i:               ; preds = %bb.ge, %bb.gd, %bb.
 .preheader.i.i:                                   ; preds = %proto_item_set_generated.exit194.i
   %i.ahi = load i32, ptr @num_ue_keys_uat, align 4 ; 2 uses
   %.not63.i.i = icmp eq i32 %i.ahi, 0
-  br i1 %.not63.i.i, label %look_up_keys_record.exit.thread.i, label %.lr.ph60.i.i
+  br i1 %.not63.i.i, label %.critedge421, label %.lr.ph60.i.i
 
 .lr.ph60.i.i:                                     ; preds = %.preheader.i.i
   %i.ahj = load ptr, ptr @uat_ue_keys_records, align 8
@@ -1126,10 +1114,14 @@ bb.gf:                                            ; preds = %proto_item_set_gene
   br label %bb.gg
 
 bb.gg:                                            ; preds = %bb.gq, %.lr.ph.i.i
+  %.0222.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.1223.i, %bb.gq ] ; 9 uses
+  %.0218.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.1219.i, %bb.gq ] ; 9 uses
+  %.0214.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.1215.i, %bb.gq ] ; 9 uses
+  %.0211.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.1212.i, %bb.gq ] ; 9 uses
   %indvars.iv.i.i = phi i64 [ %i.aia, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.gq ] ; 3 uses
   %i.aib = getelementptr [40 x i8], ptr %i.ahh, i64 %indvars.iv.i.i ; 14 uses
   %i.aic = getelementptr i8, ptr %i.aib, i64 4
-  %i.aid = load i32, ptr %i.aic, align 4          ; 2 uses
+  %i.aid = load i32, ptr %i.aic, align 4          ; 5 uses
   %i.aie = icmp ugt i32 %i.ahc, %i.aid
   br i1 %i.aie, label %bb.gh, label %bb.gq
 
@@ -1156,7 +1148,7 @@ bb.gj:                                            ; preds = %bb.gi
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %i.ahz, ptr noundef align 8 dereferenceable(16) %i.ail, i64 noundef 16, i1 noundef false) #14
   %i.aim = load i8, ptr %i.aib, align 8, !range !7, !noundef !8
   store i8 %i.aim, ptr %i.ahx, align 8
-  br label %.sink.split.i.i
+  br label %bb.gq
 
 bb.gk:                                            ; preds = %bb.gh
   %i.ain = load i8, ptr %i.ahu, align 2, !range !7, !noundef !8
@@ -1171,7 +1163,7 @@ bb.gl:                                            ; preds = %bb.gk
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 2 dereferenceable(16) %i.ahw, ptr noundef align 8 dereferenceable(16) %i.air, i64 noundef 16, i1 noundef false) #14
   %i.ais = load i8, ptr %i.aib, align 8, !range !7, !noundef !8
   store i8 %i.ais, ptr %i.ahu, align 2
-  br label %.sink.split.i.i
+  br label %bb.gq
 
 bb.gm:                                            ; preds = %bb.gh
   %i.ait = load i8, ptr %i.ahr, align 1, !range !7, !noundef !8
@@ -1186,7 +1178,7 @@ bb.gn:                                            ; preds = %bb.gm
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(16) %i.aht, ptr noundef align 8 dereferenceable(16) %i.aix, i64 noundef 16, i1 noundef false) #14
   %i.aiy = load i8, ptr %i.aib, align 8, !range !7, !noundef !8
   store i8 %i.aiy, ptr %i.ahr, align 1
-  br label %.sink.split.i.i
+  br label %bb.gq
 
 bb.go:                                            ; preds = %bb.gh
   %i.aiz = load i8, ptr %i.aho, align 1, !range !7, !noundef !8
@@ -1201,14 +1193,13 @@ bb.gp:                                            ; preds = %bb.go
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(16) %i.ahq, ptr noundef align 8 dereferenceable(16) %i.ajd, i64 noundef 16, i1 noundef false) #14
   %i.aje = load i8, ptr %i.aib, align 8, !range !7, !noundef !8
   store i8 %i.aje, ptr %i.aho, align 1
-  br label %.sink.split.i.i
-
-.sink.split.i.i:                                  ; preds = %bb.gp, %bb.gn, %bb.gl, %bb.gj
-  %.sink.i.i = phi ptr [ %4, %bb.gj ], [ %5, %bb.gl ], [ %6, %bb.gn ], [ %7, %bb.gp ]
-  store i32 %i.aid, ptr %.sink.i.i, align 4
   br label %bb.gq
 
-bb.gq:                                            ; preds = %.sink.split.i.i, %bb.go, %bb.gm, %bb.gk, %bb.gi, %bb.gh, %bb.gg
+bb.gq:                                            ; preds = %bb.gp, %bb.go, %bb.gn, %bb.gm, %bb.gl, %bb.gk, %bb.gj, %bb.gi, %bb.gh, %bb.gg
+  %.1223.i = phi i32 [ %.0222.i, %bb.gh ], [ %.0222.i, %bb.gi ], [ %.0222.i, %bb.gg ], [ %.0222.i, %bb.gk ], [ %.0222.i, %bb.gm ], [ %.0222.i, %bb.go ], [ %i.aid, %bb.gj ], [ %.0222.i, %bb.gl ], [ %.0222.i, %bb.gn ], [ %.0222.i, %bb.gp ] ; 2 uses
+  %.1219.i = phi i32 [ %.0218.i, %bb.gh ], [ %.0218.i, %bb.gi ], [ %.0218.i, %bb.gg ], [ %.0218.i, %bb.gk ], [ %.0218.i, %bb.gm ], [ %.0218.i, %bb.go ], [ %.0218.i, %bb.gj ], [ %i.aid, %bb.gl ], [ %.0218.i, %bb.gn ], [ %.0218.i, %bb.gp ] ; 2 uses
+  %.1215.i = phi i32 [ %.0214.i, %bb.gh ], [ %.0214.i, %bb.gi ], [ %.0214.i, %bb.gg ], [ %.0214.i, %bb.gk ], [ %.0214.i, %bb.gm ], [ %.0214.i, %bb.go ], [ %.0214.i, %bb.gj ], [ %.0214.i, %bb.gl ], [ %i.aid, %bb.gn ], [ %.0214.i, %bb.gp ] ; 2 uses
+  %.1212.i = phi i32 [ %.0211.i, %bb.gh ], [ %.0211.i, %bb.gi ], [ %.0211.i, %bb.gg ], [ %.0211.i, %bb.gk ], [ %.0211.i, %bb.gm ], [ %.0211.i, %bb.go ], [ %.0211.i, %bb.gj ], [ %.0211.i, %bb.gl ], [ %.0211.i, %bb.gn ], [ %i.aid, %bb.gp ] ; 2 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   %i.ajf = icmp sgt i64 %indvars.iv.i.i, 1
   br i1 %i.ajf, label %bb.gg, label %look_up_keys_record.exit.i, !llvm.loop !11
@@ -1216,7 +1207,7 @@ bb.gq:                                            ; preds = %.sink.split.i.i, %b
 bb.gr:                                            ; preds = %bb.gs
   %indvars.iv.next67.i.i = add nuw nsw i64 %indvars.iv66.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next67.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %look_up_keys_record.exit.thread.i, label %bb.gs, !llvm.loop !12
+  br i1 %exitcond.not.i.i, label %.critedge421, label %bb.gs, !llvm.loop !12
 
 bb.gs:                                            ; preds = %bb.gr, %.lr.ph60.i.i
   %indvars.iv66.i.i = phi i64 [ 0, %.lr.ph60.i.i ], [ %indvars.iv.next67.i.i, %bb.gr ] ; 2 uses
@@ -1226,9 +1217,13 @@ bb.gs:                                            ; preds = %bb.gr, %.lr.ph60.i.
   br i1 %i.aji, label %look_up_keys_record.exit.i, label %bb.gr
 
 look_up_keys_record.exit.i:                       ; preds = %bb.gq, %bb.gs, %bb.gf
+  %.3225.i = phi i32 [ 0, %bb.gs ], [ 0, %bb.gf ], [ %.1223.i, %bb.gq ]
+  %.3221.i = phi i32 [ 0, %bb.gs ], [ 0, %bb.gf ], [ %.1219.i, %bb.gq ]
+  %.3217.i = phi i32 [ 0, %bb.gs ], [ 0, %bb.gf ], [ %.1215.i, %bb.gq ]
+  %.3.i = phi i32 [ 0, %bb.gs ], [ 0, %bb.gf ], [ %.1212.i, %bb.gq ]
   %.055.i.i = phi ptr [ %i.ajg, %bb.gs ], [ %i.ahl, %bb.gf ], [ %i.ahl, %bb.gq ] ; 11 uses
   %.not161.i = icmp eq ptr %.055.i.i, null
-  br i1 %.not161.i, label %look_up_keys_record.exit.thread.i, label %bb.gt
+  br i1 %.not161.i, label %.critedge421, label %bb.gt
 
 bb.gt:                                            ; preds = %look_up_keys_record.exit.i
   %i.ajj = load i32, ptr %i.w, align 4
@@ -1245,13 +1240,12 @@ bb.gv:                                            ; preds = %bb.gu
   %i.ajo = getelementptr i8, ptr %.055.i.i, i64 8
   %i.ajp = load ptr, ptr %i.ajo, align 8
   %i.ajq = getelementptr i8, ptr %.055.i.i, i64 40
-  %.0..0..0..0..0.210.i = load i32, ptr %4, align 4
   br label %bb.gw
 
 bb.gw:                                            ; preds = %bb.gv, %bb.gu
   %.sroa.11.0 = phi ptr [ %i.ajq, %bb.gv ], [ null, %bb.gu ] ; 2 uses
   %.0147.i = phi ptr [ %i.ajp, %bb.gv ], [ null, %bb.gu ] ; 2 uses
-  %.0145.i = phi i32 [ %.0..0..0..0..0.210.i, %bb.gv ], [ 0, %bb.gu ] ; 2 uses
+  %.0145.i = phi i32 [ %.3225.i, %bb.gv ], [ 0, %bb.gu ] ; 2 uses
   %i.ajr = getelementptr i8, ptr %.055.i.i, i64 90
   %i.ajs = load i8, ptr %i.ajr, align 2, !range !7, !noundef !8
   %i.ajt = trunc nuw i8 %i.ajs to i1
@@ -1267,13 +1261,12 @@ bb.gy:                                            ; preds = %bb.gx
   %i.ajx = getelementptr i8, ptr %.055.i.i, i64 16
   %i.ajy = load ptr, ptr %i.ajx, align 8
   %i.ajz = getelementptr i8, ptr %.055.i.i, i64 57
-  %.0..0..0..0..0.208.i = load i32, ptr %6, align 4
   br label %bb.gz
 
 bb.gz:                                            ; preds = %bb.gy, %bb.gx
   %.sroa.11.1 = phi ptr [ %i.ajz, %bb.gy ], [ null, %bb.gx ] ; 2 uses
   %.1148.i = phi ptr [ %i.ajy, %bb.gy ], [ null, %bb.gx ] ; 2 uses
-  %.1.i449 = phi i32 [ %.0..0..0..0..0.208.i, %bb.gy ], [ 0, %bb.gx ] ; 2 uses
+  %.1.i449 = phi i32 [ %.3217.i, %bb.gy ], [ 0, %bb.gx ] ; 2 uses
   %i.aka = getelementptr i8, ptr %.055.i.i, i64 107
   %i.akb = load i8, ptr %i.aka, align 1, !range !7, !noundef !8
   %i.akc = trunc nuw i8 %i.akb to i1
@@ -1284,13 +1277,12 @@ bb.gz:                                            ; preds = %bb.gy, %bb.gx
   %.sroa.16.2 = phi i1 [ %i.ajn, %bb.gw ], [ %i.ajw, %bb.gz ]
   %.sink263.i = phi i64 [ 24, %bb.gw ], [ 32, %bb.gz ]
   %.sink261.i = phi i64 [ 74, %bb.gw ], [ 91, %bb.gz ]
-  %.sink.i452 = phi ptr [ %5, %bb.gw ], [ %7, %bb.gz ]
-  %.2149.ph.i = phi ptr [ %.0147.i, %bb.gw ], [ %.1148.i, %bb.gz ]
-  %.2.ph.i.a = phi i32 [ %.0145.i, %bb.gw ], [ %.1.i449, %bb.gz ]
+  %.sink.i452 = phi ptr [ %.0147.i, %bb.gw ], [ %.1148.i, %bb.gz ]
+  %.2.ph.i = phi i32 [ %.0145.i, %bb.gw ], [ %.1.i449, %bb.gz ]
+  %.2.ph.i.a = phi i32 [ %.3221.i, %bb.gw ], [ %.3.i, %bb.gz ]
   %i.akd = getelementptr i8, ptr %.055.i.i, i64 %.sink263.i
   %i.ake = load ptr, ptr %i.akd, align 8
   %i.akf = getelementptr i8, ptr %.055.i.i, i64 %.sink261.i
-  %.0..0..i = load i32, ptr %.sink.i452, align 4
   br label %bb.ha
 
 bb.ha:                                            ; preds = %.sink.split.i451, %bb.gz, %bb.gw
@@ -1298,10 +1290,10 @@ bb.ha:                                            ; preds = %.sink.split.i451, %
   %.sroa.14.0 = phi ptr [ %i.akf, %.sink.split.i451 ], [ null, %bb.gw ], [ null, %bb.gz ]
   %.sroa.16.3 = phi i1 [ %.sroa.16.2, %.sink.split.i451 ], [ %i.ajn, %bb.gw ], [ %i.ajw, %bb.gz ]
   %.sroa.19.0 = phi i1 [ true, %.sink.split.i451 ], [ false, %bb.gw ], [ false, %bb.gz ]
-  %.2149.i = phi ptr [ %.2149.ph.i, %.sink.split.i451 ], [ %.0147.i, %bb.gw ], [ %.1148.i, %bb.gz ] ; 2 uses
+  %.2149.i = phi ptr [ %.sink.i452, %.sink.split.i451 ], [ %.0147.i, %bb.gw ], [ %.1148.i, %bb.gz ] ; 2 uses
   %.0146.i = phi ptr [ %i.ake, %.sink.split.i451 ], [ null, %bb.gw ], [ null, %bb.gz ] ; 2 uses
-  %.2.i = phi i32 [ %.2.ph.i.a, %.sink.split.i451 ], [ %.0145.i, %bb.gw ], [ %.1.i449, %bb.gz ] ; 2 uses
-  %.0.i450 = phi i32 [ %.0..0..i, %.sink.split.i451 ], [ 0, %bb.gw ], [ 0, %bb.gz ] ; 2 uses
+  %.2.i = phi i32 [ %.2.ph.i, %.sink.split.i451 ], [ %.0145.i, %bb.gw ], [ %.1.i449, %bb.gz ] ; 2 uses
+  %.0.i450 = phi i32 [ %.2.ph.i.a, %.sink.split.i451 ], [ 0, %bb.gw ], [ 0, %bb.gz ] ; 2 uses
   %.not162.i = icmp eq ptr %.2149.i, null
   br i1 %.not162.i, label %proto_item_set_generated.exit201.i, label %bb.hb
 
@@ -1395,29 +1387,17 @@ bb.hm:                                            ; preds = %bb.hl
 
 proto_item_set_generated.exit207.i:               ; preds = %bb.hm, %bb.hl, %bb.hk, %proto_item_set_generated.exit204.i, %proto_item_set_generated.exit201.i
   %i.ali = load i8, ptr %.0371, align 8
-  br label %look_up_keys_record.exit.thread.i
-
-look_up_keys_record.exit.thread.i:                ; preds = %bb.gr, %proto_item_set_generated.exit207.i, %look_up_keys_record.exit.i, %.preheader.i.i
-  %.sroa.11.4 = phi ptr [ null, %.preheader.i.i ], [ null, %look_up_keys_record.exit.i ], [ %.sroa.11.3, %proto_item_set_generated.exit207.i ], [ null, %bb.gr ]
-  %.sroa.14.1 = phi ptr [ null, %.preheader.i.i ], [ null, %look_up_keys_record.exit.i ], [ %.sroa.14.0, %proto_item_set_generated.exit207.i ], [ null, %bb.gr ]
-  %.sroa.16.4 = phi i1 [ false, %.preheader.i.i ], [ false, %look_up_keys_record.exit.i ], [ %.sroa.16.3, %proto_item_set_generated.exit207.i ], [ false, %bb.gr ]
-  %.sroa.19.1 = phi i1 [ false, %.preheader.i.i ], [ false, %look_up_keys_record.exit.i ], [ %.sroa.19.0, %proto_item_set_generated.exit207.i ], [ false, %bb.gr ]
-  %.sroa.27.0 = phi i8 [ 0, %.preheader.i.i ], [ 0, %look_up_keys_record.exit.i ], [ %i.ali, %proto_item_set_generated.exit207.i ], [ 0, %bb.gr ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %.critedge421
 
-.critedge421:                                     ; preds = %bb.fu, %bb.ec, %look_up_keys_record.exit.thread.i, %.split, %.thread517, %bb.ea, %bb.dz, %bb.dy
-  %.sroa.11.5 = phi ptr [ null, %bb.dy ], [ null, %bb.fu ], [ %.sroa.11.4, %look_up_keys_record.exit.thread.i ], [ null, %bb.ec ], [ null, %.split ], [ null, %bb.dz ], [ null, %bb.ea ], [ null, %.thread517 ] ; 5 uses
-  %.sroa.14.2 = phi ptr [ null, %bb.dy ], [ null, %bb.fu ], [ %.sroa.14.1, %look_up_keys_record.exit.thread.i ], [ null, %bb.ec ], [ null, %.split ], [ null, %bb.dz ], [ null, %bb.ea ], [ null, %.thread517 ] ; 5 uses
-  %.sroa.16.5 = phi i1 [ false, %bb.dy ], [ false, %bb.fu ], [ %.sroa.16.4, %look_up_keys_record.exit.thread.i ], [ false, %bb.ec ], [ false, %.split ], [ false, %bb.dz ], [ false, %bb.ea ], [ false, %.thread517 ] ; 5 uses
-  %.sroa.19.2 = phi i1 [ false, %bb.dy ], [ false, %bb.fu ], [ %.sroa.19.1, %look_up_keys_record.exit.thread.i ], [ false, %bb.ec ], [ false, %.split ], [ false, %bb.dz ], [ false, %bb.ea ], [ false, %.thread517 ] ; 5 uses
-  %.sroa.21589.0 = phi i32 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %i.agt, %look_up_keys_record.exit.thread.i ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ 0, %.thread517 ] ; 5 uses
-  %.sroa.24.0 = phi i8 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %i.agf, %look_up_keys_record.exit.thread.i ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ 0, %.thread517 ] ; 5 uses
-  %.sroa.27.1 = phi i8 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %.sroa.27.0, %look_up_keys_record.exit.thread.i ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ 0, %.thread517 ] ; 5 uses
-  %.3531.ph = phi i32 [ %.3.ph, %bb.dy ], [ %.3.ph, %bb.fu ], [ %.3.ph, %look_up_keys_record.exit.thread.i ], [ %.3.ph, %bb.ec ], [ %.3.ph, %.split ], [ %.3.ph, %bb.dz ], [ %.3.ph, %bb.ea ], [ %.1501, %.thread517 ] ; 5 uses
+.critedge421:                                     ; preds = %bb.gr, %bb.fu, %bb.ec, %.preheader.i.i, %look_up_keys_record.exit.i, %proto_item_set_generated.exit207.i, %.split, %.thread517, %bb.ea, %bb.dz, %bb.dy
+  %.sroa.11.4 = phi ptr [ null, %bb.dy ], [ null, %bb.fu ], [ null, %.preheader.i.i ], [ null, %look_up_keys_record.exit.i ], [ %.sroa.11.3, %proto_item_set_generated.exit207.i ], [ null, %.thread517 ], [ null, %bb.ec ], [ null, %.split ], [ null, %bb.dz ], [ null, %bb.ea ], [ null, %bb.gr ] ; 5 uses
+  %.sroa.14.1 = phi ptr [ null, %bb.dy ], [ null, %bb.fu ], [ null, %.preheader.i.i ], [ null, %look_up_keys_record.exit.i ], [ %.sroa.14.0, %proto_item_set_generated.exit207.i ], [ null, %.thread517 ], [ null, %bb.ec ], [ null, %.split ], [ null, %bb.dz ], [ null, %bb.ea ], [ null, %bb.gr ] ; 5 uses
+  %.sroa.16.4 = phi i1 [ false, %bb.dy ], [ false, %bb.fu ], [ false, %.preheader.i.i ], [ false, %look_up_keys_record.exit.i ], [ %.sroa.16.3, %proto_item_set_generated.exit207.i ], [ false, %.thread517 ], [ false, %bb.ec ], [ false, %.split ], [ false, %bb.dz ], [ false, %bb.ea ], [ false, %bb.gr ] ; 5 uses
+  %.sroa.19.1 = phi i1 [ false, %bb.dy ], [ false, %bb.fu ], [ false, %.preheader.i.i ], [ false, %look_up_keys_record.exit.i ], [ %.sroa.19.0, %proto_item_set_generated.exit207.i ], [ false, %.thread517 ], [ false, %bb.ec ], [ false, %.split ], [ false, %bb.dz ], [ false, %bb.ea ], [ false, %bb.gr ] ; 5 uses
+  %.sroa.21588.0 = phi i32 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %i.agt, %.preheader.i.i ], [ %i.agt, %look_up_keys_record.exit.i ], [ %i.agt, %proto_item_set_generated.exit207.i ], [ 0, %.thread517 ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ %i.agt, %bb.gr ] ; 5 uses
+  %.sroa.24.0 = phi i8 [ 0, %bb.dy ], [ 0, %bb.fu ], [ %i.agf, %.preheader.i.i ], [ %i.agf, %look_up_keys_record.exit.i ], [ %i.agf, %proto_item_set_generated.exit207.i ], [ 0, %.thread517 ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ %i.agf, %bb.gr ] ; 5 uses
+  %.sroa.27.0 = phi i8 [ 0, %bb.dy ], [ 0, %bb.fu ], [ 0, %.preheader.i.i ], [ 0, %look_up_keys_record.exit.i ], [ %i.ali, %proto_item_set_generated.exit207.i ], [ 0, %.thread517 ], [ 0, %bb.ec ], [ 0, %.split ], [ 0, %bb.dz ], [ 0, %bb.ea ], [ 0, %bb.gr ] ; 5 uses
+  %.3530.ph = phi i32 [ %.3.ph, %bb.dy ], [ %.3.ph, %bb.fu ], [ %.3.ph, %.preheader.i.i ], [ %.3.ph, %look_up_keys_record.exit.i ], [ %.3.ph, %proto_item_set_generated.exit207.i ], [ %.1501, %.thread517 ], [ %.3.ph, %bb.ec ], [ %.3.ph, %.split ], [ %.3.ph, %bb.dz ], [ %.3.ph, %bb.ea ], [ %.3.ph, %bb.gr ] ; 5 uses
   %.pr = load i32, ptr %i.w, align 4              ; 2 uses
   %i.alj = icmp eq i32 %.pr, 2
   br i1 %i.alj, label %bb.hn, label %.thread535
@@ -1447,15 +1427,15 @@ bb.hq:                                            ; preds = %bb.hp, %bb.ho
   br label %.thread535
 
 .thread535:                                       ; preds = %bb.hn, %bb.ch, %bb.ho, %bb.hp, %bb.hq, %.critedge421
-  %.sroa.11.6 = phi ptr [ null, %bb.ch ], [ %.sroa.11.5, %bb.hn ], [ %.sroa.11.5, %bb.ho ], [ %.sroa.11.5, %bb.hq ], [ %.sroa.11.5, %bb.hp ], [ %.sroa.11.5, %.critedge421 ]
-  %.sroa.14.3 = phi ptr [ null, %bb.ch ], [ %.sroa.14.2, %bb.hn ], [ %.sroa.14.2, %bb.ho ], [ %.sroa.14.2, %bb.hq ], [ %.sroa.14.2, %bb.hp ], [ %.sroa.14.2, %.critedge421 ]
-  %.sroa.16.6 = phi i1 [ false, %bb.ch ], [ %.sroa.16.5, %bb.hn ], [ %.sroa.16.5, %bb.ho ], [ %.sroa.16.5, %bb.hq ], [ %.sroa.16.5, %bb.hp ], [ %.sroa.16.5, %.critedge421 ]
-  %.sroa.19.3 = phi i1 [ false, %bb.ch ], [ %.sroa.19.2, %bb.hn ], [ %.sroa.19.2, %bb.ho ], [ %.sroa.19.2, %bb.hq ], [ %.sroa.19.2, %bb.hp ], [ %.sroa.19.2, %.critedge421 ]
-  %.sroa.21589.1 = phi i32 [ 0, %bb.ch ], [ %.sroa.21589.0, %bb.hn ], [ %.sroa.21589.0, %bb.ho ], [ %.sroa.21589.0, %bb.hq ], [ %.sroa.21589.0, %bb.hp ], [ %.sroa.21589.0, %.critedge421 ] ; 8 uses
+  %.sroa.11.6 = phi ptr [ null, %bb.ch ], [ %.sroa.11.4, %bb.hn ], [ %.sroa.11.4, %bb.ho ], [ %.sroa.11.4, %bb.hq ], [ %.sroa.11.4, %bb.hp ], [ %.sroa.11.4, %.critedge421 ]
+  %.sroa.14.3 = phi ptr [ null, %bb.ch ], [ %.sroa.14.1, %bb.hn ], [ %.sroa.14.1, %bb.ho ], [ %.sroa.14.1, %bb.hq ], [ %.sroa.14.1, %bb.hp ], [ %.sroa.14.1, %.critedge421 ]
+  %.sroa.16.6 = phi i1 [ false, %bb.ch ], [ %.sroa.16.4, %bb.hn ], [ %.sroa.16.4, %bb.ho ], [ %.sroa.16.4, %bb.hq ], [ %.sroa.16.4, %bb.hp ], [ %.sroa.16.4, %.critedge421 ]
+  %.sroa.19.3 = phi i1 [ false, %bb.ch ], [ %.sroa.19.1, %bb.hn ], [ %.sroa.19.1, %bb.ho ], [ %.sroa.19.1, %bb.hq ], [ %.sroa.19.1, %bb.hp ], [ %.sroa.19.1, %.critedge421 ]
+  %.sroa.21589.1 = phi i32 [ 0, %bb.ch ], [ %.sroa.21588.0, %bb.hn ], [ %.sroa.21588.0, %bb.ho ], [ %.sroa.21588.0, %bb.hq ], [ %.sroa.21588.0, %bb.hp ], [ %.sroa.21588.0, %.critedge421 ] ; 8 uses
   %.sroa.24.1 = phi i8 [ 0, %bb.ch ], [ %.sroa.24.0, %bb.hn ], [ %.sroa.24.0, %bb.ho ], [ %.sroa.24.0, %bb.hq ], [ %.sroa.24.0, %bb.hp ], [ %.sroa.24.0, %.critedge421 ] ; 2 uses
-  %.sroa.27.2 = phi i8 [ 0, %bb.ch ], [ %.sroa.27.1, %bb.hn ], [ %.sroa.27.1, %bb.ho ], [ %.sroa.27.1, %bb.hq ], [ %.sroa.27.1, %bb.hp ], [ %.sroa.27.1, %.critedge421 ] ; 2 uses
+  %.sroa.27.2 = phi i8 [ 0, %bb.ch ], [ %.sroa.27.0, %bb.hn ], [ %.sroa.27.0, %bb.ho ], [ %.sroa.27.0, %bb.hq ], [ %.sroa.27.0, %bb.hp ], [ %.sroa.27.0, %.critedge421 ] ; 2 uses
   %i.alr = phi i1 [ false, %bb.ch ], [ true, %bb.hn ], [ true, %bb.ho ], [ true, %bb.hq ], [ true, %bb.hp ], [ false, %.critedge421 ] ; 2 uses
-  %.3531534 = phi i32 [ 0, %bb.ch ], [ %.3531.ph, %bb.hn ], [ %.3531.ph, %bb.ho ], [ %.3531.ph, %bb.hq ], [ %.3531.ph, %bb.hp ], [ %.3531.ph, %.critedge421 ] ; 17 uses
+  %.3531534 = phi i32 [ 0, %bb.ch ], [ %.3530.ph, %bb.hn ], [ %.3530.ph, %bb.ho ], [ %.3530.ph, %bb.hq ], [ %.3530.ph, %bb.hp ], [ %.3530.ph, %.critedge421 ] ; 17 uses
   %i.als = phi i32 [ 1, %bb.ch ], [ 2, %bb.hn ], [ 2, %bb.ho ], [ 2, %bb.hq ], [ 2, %bb.hp ], [ %.pr, %.critedge421 ] ; 3 uses
   %.not414 = phi i1 [ true, %bb.ch ], [ true, %bb.hn ], [ true, %bb.ho ], [ false, %bb.hq ], [ true, %bb.hp ], [ true, %.critedge421 ]
   %.0346 = phi i32 [ 0, %bb.ch ], [ 0, %bb.hn ], [ 0, %bb.ho ], [ 1, %bb.hq ], [ 0, %bb.hp ], [ 0, %.critedge421 ] ; 2 uses
