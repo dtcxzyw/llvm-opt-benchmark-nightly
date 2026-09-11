@@ -206,7 +206,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74484)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74485)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74486)
-  %i.f = mul i64 %.sroa.0.0.copyload.i, 48        ; 7 uses
+  %i.f = mul i64 %.sroa.0.0.copyload.i, 48        ; 6 uses
   %i.g = udiv i64 %i.f, 40                        ; 2 uses
   %.not7.i.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.5.0.copyload.i, 0
   br i1 %.not7.i.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i
@@ -329,13 +329,9 @@ bb.g:                                             ; preds = %"_ZN5alloc3vec9into
 
 bb.h:                                             ; preds = %bb.g
   %i.al = icmp ult i64 %i.f, 40
-  br i1 %i.al, label %2, label %bb.j
+  br i1 %i.al, label %bb.i, label %bb.j
 
-2:                                                ; preds = %bb.h
-  %3 = icmp eq i64 %i.f, 0
-  br i1 %3, label %_ZN4core4iter6traits8iterator8Iterator7collect17h66d99b2ec374be13E.exit, label %bb.i
-
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.h
   tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.4.0.copyload.i, i64 noundef %i.f, i64 noundef 8) #42, !noalias !74490
   br label %_ZN4core4iter6traits8iterator8Iterator7collect17h66d99b2ec374be13E.exit
 
@@ -353,8 +349,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   unreachable
 
-_ZN4core4iter6traits8iterator8Iterator7collect17h66d99b2ec374be13E.exit: ; preds = %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h124f0316e49afba8E.exit.i.i.i.i.i", %bb.g, %2, %bb.i, %bb.j
-  %.sroa.01.0.i.i.i.i.i = phi ptr [ %.sroa.4.0.copyload.i, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h124f0316e49afba8E.exit.i.i.i.i.i" ], [ %.sroa.4.0.copyload.i, %bb.g ], [ %i.an, %bb.j ], [ inttoptr (i64 8 to ptr), %bb.i ], [ inttoptr (i64 8 to ptr), %2 ]
+_ZN4core4iter6traits8iterator8Iterator7collect17h66d99b2ec374be13E.exit: ; preds = %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h124f0316e49afba8E.exit.i.i.i.i.i", %bb.g, %bb.i, %bb.j
+  %.sroa.01.0.i.i.i.i.i = phi ptr [ %.sroa.4.0.copyload.i, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h124f0316e49afba8E.exit.i.i.i.i.i" ], [ %.sroa.4.0.copyload.i, %bb.g ], [ %i.an, %bb.j ], [ inttoptr (i64 8 to ptr), %bb.i ]
   store i64 %i.g, ptr %0, align 8, !alias.scope !74505, !noalias !74506
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.01.0.i.i.i.i.i, ptr %i.ap, align 8, !alias.scope !74505, !noalias !74506
@@ -757,7 +753,7 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74899)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74900)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74901)
-  %i.aa = shl i64 %.sroa.03.0.copyload, 5         ; 5 uses
+  %i.aa = shl i64 %.sroa.03.0.copyload, 5         ; 4 uses
   %i.ab = udiv i64 %i.aa, 24                      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74902)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74903)
@@ -1024,13 +1020,9 @@ bb.s:                                             ; preds = %bb.v
 bb.t:                                             ; preds = %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h0c557140c12986f4E.exit.i.i.i.i.i.i.i"
   %i.br = mul nuw i64 %i.ab, 24                   ; 4 uses
   %.not49.i.i.i.i.i.i.i = icmp eq i64 %i.aa, %i.br
-  br i1 %.not49.i.i.i.i.i.i.i, label %bb.aa, label %2
+  br i1 %.not49.i.i.i.i.i.i.i, label %bb.aa, label %bb.u
 
-2:                                                ; preds = %bb.t
-  %3 = icmp eq i64 %i.aa, 0
-  br i1 %3, label %bb.aa, label %bb.u
-
-bb.u:                                             ; preds = %2
+bb.u:                                             ; preds = %bb.t
   %i.bs = icmp ule i64 %i.br, %i.aa
   call void @llvm.assume(i1 %i.bs)
   %i.bt = call noundef align 8 ptr @_RNvCskdKJRKLKjqM_7___rustc14___rust_realloc(ptr noundef nonnull %.sroa.7.sroa.0.0.copyload, i64 noundef %i.aa, i64 noundef 8, i64 noundef range(i64 0, -15) %i.br) #42, !noalias !74929 ; 2 uses
@@ -1068,8 +1060,8 @@ bb.z:                                             ; preds = %.body
   call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val56, i64 noundef %.val55, i64 noundef range(i64 1, -9223372036854775807) 1) #42, !noalias !74939
   br label %"_ZN4core3ptr89drop_in_place$LT$dump..reader..v1..settings..UpdateState$LT$alloc..string..String$GT$$GT$17ha303ecc51db4546eE.exit"
 
-bb.aa:                                            ; preds = %bb.u, %2, %bb.t, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h0c557140c12986f4E.exit.i.i.i.i.i.i.i"
-  %.sroa.01.0.i.i.i.i.i.i.i = phi ptr [ %.sroa.7.sroa.0.0.copyload, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h0c557140c12986f4E.exit.i.i.i.i.i.i.i" ], [ %.sroa.7.sroa.0.0.copyload, %bb.t ], [ %i.bt, %bb.u ], [ inttoptr (i64 8 to ptr), %2 ]
+bb.aa:                                            ; preds = %bb.u, %bb.t, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h0c557140c12986f4E.exit.i.i.i.i.i.i.i"
+  %.sroa.01.0.i.i.i.i.i.i.i = phi ptr [ %.sroa.7.sroa.0.0.copyload, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h0c557140c12986f4E.exit.i.i.i.i.i.i.i" ], [ %.sroa.7.sroa.0.0.copyload, %bb.t ], [ %i.bt, %bb.u ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !74929
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !74896
   store i64 %i.ab, ptr %i.q, align 8
@@ -1472,7 +1464,7 @@ _ZN4core3ops8function5FnMut8call_mut17hf332dcc7b415fdfcE.exit.i: ; preds = %.noe
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.055.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.055.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.055.sroa.6)
-  %i.ee = add nuw i64 %.sroa.06.0.i.i, 1          ; 2 uses
+  %i.ee = add nuw nsw i64 %.sroa.06.0.i.i, 1      ; 2 uses
   %i.ef = icmp eq i64 %i.ee, %.idx72
   br i1 %i.ef, label %bb.ai, label %bb.z
 

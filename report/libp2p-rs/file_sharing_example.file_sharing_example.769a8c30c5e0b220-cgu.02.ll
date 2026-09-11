@@ -204,7 +204,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.s = load i64, ptr %i.r, align 8, !noundef !11 ; 3 uses
   %i.t = load ptr, ptr %1, align 8, !nonnull !11, !noundef !11 ; 9 uses
-  %i.u = mul i64 %i.s, 152                        ; 7 uses
+  %i.u = mul i64 %i.s, 152                        ; 6 uses
   %i.v = udiv i64 %i.u, 112                       ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1503)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1504)
@@ -607,8 +607,8 @@ _RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskC4O4hr3vz7_1
   %or.cond = select i1 %.not.i, i1 %i.eu, i1 false
   br i1 %or.cond, label %bb.bb, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECsabk8e3lPnsy_20file_sharing_example.exit.thread
 
-_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECsabk8e3lPnsy_20file_sharing_example.exit.thread: ; preds = %bb.bc, %2, %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordE32forget_allocation_drop_remainingCsabk8e3lPnsy_20file_sharing_example.exit, %bb.bd
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.bc ], [ %i.fd, %bb.bd ], [ %i.t, %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordE32forget_allocation_drop_remainingCsabk8e3lPnsy_20file_sharing_example.exit ], [ inttoptr (i64 8 to ptr), %2 ]
+_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECsabk8e3lPnsy_20file_sharing_example.exit.thread: ; preds = %bb.bc, %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordE32forget_allocation_drop_remainingCsabk8e3lPnsy_20file_sharing_example.exit, %bb.bd
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.bc ], [ %i.fd, %bb.bd ], [ %i.t, %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordE32forget_allocation_drop_remainingCsabk8e3lPnsy_20file_sharing_example.exit ]
   store i64 %i.v, ptr %0, align 8
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ev, align 8
@@ -653,13 +653,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters4take4TakeINtN
 
 bb.bb:                                            ; preds = %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordE32forget_allocation_drop_remainingCsabk8e3lPnsy_20file_sharing_example.exit
   %i.fb = icmp ult i64 %i.u, 112
-  br i1 %i.fb, label %2, label %bb.bd
+  br i1 %i.fb, label %bb.bc, label %bb.bd
 
-2:                                                ; preds = %bb.bb
-  %3 = icmp eq i64 %i.u, 0
-  br i1 %3, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECsabk8e3lPnsy_20file_sharing_example.exit.thread, label %bb.bc
-
-bb.bc:                                            ; preds = %2
+bb.bc:                                            ; preds = %bb.bb
   call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.t, i64 noundef %i.u, i64 noundef 8) #24
   br label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECsabk8e3lPnsy_20file_sharing_example.exit.thread
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %.zext16 = zext nneg i32 %i.c to i64            ; 2 uses
   %.neg.i.i = mul nsw i64 %.zext16, -1000
   %i.d = add nsw i64 %.neg.i.i, %i.b
-  %i.e = mul nsw i64 %i.d, 1000000
+  %i.e = mul nuw nsw i64 %i.d, 1000000
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   store i64 %.zext16, ptr %3, align 8, !tbaa !182
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -272,7 +272,7 @@ bb.g:                                             ; preds = %_ZN14V3LockGuardImp
   %.zext = zext nneg i32 %i.y to i64              ; 2 uses
   %.neg.i.i4 = mul nsw i64 %.zext, -1000
   %i.z = add nsw i64 %.neg.i.i4, %i.x
-  %i.aa = mul nsw i64 %i.z, 1000000
+  %i.aa = mul nuw nsw i64 %i.z, 1000000
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
   store i64 %.zext, ptr %2, align 8, !tbaa !182
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -454,7 +454,7 @@ bb.f:                                             ; preds = %_ZN14V3LockGuardImp
   %.zext.i.i.i.i.i.i.i = zext nneg i32 %i.v to i64 ; 2 uses
   %.neg.i.i.i.i.i.i.i.i.i = mul nsw i64 %.zext.i.i.i.i.i.i.i, -1000
   %i.w = add nsw i64 %.neg.i.i.i.i.i.i.i.i.i, %i.u
-  %i.x = mul nsw i64 %i.w, 1000000
+  %i.x = mul nuw nsw i64 %i.w, 1000000
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
   store i64 %.zext.i.i.i.i.i.i.i, ptr %1, align 8, !tbaa !182
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -596,7 +596,7 @@ bb.d:                                             ; preds = %_ZN14V3LockGuardImp
   %.zext.i.i.i.i.i.i.i = zext nneg i32 %i.l to i64 ; 2 uses
   %.neg.i.i.i.i.i.i.i.i.i = mul nsw i64 %.zext.i.i.i.i.i.i.i, -1000
   %i.m = add nsw i64 %.neg.i.i.i.i.i.i.i.i.i, %i.k
-  %i.n = mul nsw i64 %i.m, 1000000
+  %i.n = mul nuw nsw i64 %i.m, 1000000
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
   store i64 %.zext.i.i.i.i.i.i.i, ptr %1, align 8, !tbaa !182
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8

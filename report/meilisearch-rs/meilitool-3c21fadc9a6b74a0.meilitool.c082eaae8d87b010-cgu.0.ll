@@ -206,7 +206,7 @@ bb.a:
 
 ._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i, %._crit_edge.i.thread, %._crit_edge.i
   %i.ax = phi i64 [ %i.w, %._crit_edge.i ], [ 0, %._crit_edge.i.thread ], [ %i.w, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.w, %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit ] ; 4 uses
-  %i.ay = phi i64 [ %i.v, %._crit_edge.i ], [ 0, %._crit_edge.i.thread ], [ %i.v, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.v, %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %i.ay = phi i64 [ %i.v, %._crit_edge.i ], [ 0, %._crit_edge.i.thread ], [ %i.v, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.v, %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit ] ; 3 uses
   %.sroa.635.0..sroa_idx.i126 = phi ptr [ %.sroa.635.0..sroa_idx.i, %._crit_edge.i ], [ %.sroa.635.0..sroa_idx.i120, %._crit_edge.i.thread ], [ %.sroa.635.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.sroa.635.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit ]
   %.sroa.534.0..sroa_idx.i125 = phi ptr [ %.sroa.534.0..sroa_idx.i, %._crit_edge.i ], [ %.sroa.534.0..sroa_idx.i119, %._crit_edge.i.thread ], [ %.sroa.534.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.sroa.534.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit ]
   %.sroa.433.0..sroa_idx.i124 = phi ptr [ %.sroa.433.0..sroa_idx.i, %._crit_edge.i ], [ %.sroa.433.0..sroa_idx.i118, %._crit_edge.i.thread ], [ %.sroa.433.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.sroa.433.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit ]
@@ -271,13 +271,9 @@ bb.c:                                             ; preds = %bb.f
 bb.d:                                             ; preds = %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hfd4bd62cdae2deffE.exit.i.i.i.i.i.i"
   %i.bt = mul nuw i64 %i.ax, 24                   ; 4 uses
   %.not49.i.i.i.i.i.i = icmp eq i64 %i.ay, %i.bt
-  br i1 %.not49.i.i.i.i.i.i, label %bb.w, label %5
+  br i1 %.not49.i.i.i.i.i.i, label %bb.w, label %bb.e
 
-5:                                                ; preds = %bb.d
-  %6 = icmp eq i64 %i.ay, 0
-  br i1 %6, label %bb.w, label %bb.e
-
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %bb.d
   %i.bu = icmp ule i64 %i.bt, %i.ay
   call void @llvm.assume(i1 %i.bu)
   %i.bv = call noundef align 8 ptr @_RNvCskdKJRKLKjqM_7___rustc14___rust_realloc(ptr noundef nonnull %.sroa.437.0.copyload.i122, i64 noundef %i.ay, i64 noundef 8, i64 noundef range(i64 0, -15) %i.bt) #45, !noalias !7752 ; 2 uses
@@ -470,8 +466,8 @@ bb.v:                                             ; preds = %"_ZN70_$LT$alloc..v
 "_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hf5e3b17ec5838f1eE.exit": ; preds = %bb.aq, %bb.z
   br i1 %.sroa.013.1, label %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hf5e3b17ec5838f1eE.exit92", label %.thread
 
-bb.w:                                             ; preds = %bb.e, %5, %bb.d, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hfd4bd62cdae2deffE.exit.i.i.i.i.i.i"
-  %.sroa.01.0.i.i.i.i.i.i = phi ptr [ %.sroa.437.0.copyload.i122, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hfd4bd62cdae2deffE.exit.i.i.i.i.i.i" ], [ %.sroa.437.0.copyload.i122, %bb.d ], [ %i.bv, %bb.e ], [ inttoptr (i64 8 to ptr), %5 ] ; 5 uses
+bb.w:                                             ; preds = %bb.e, %bb.d, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hfd4bd62cdae2deffE.exit.i.i.i.i.i.i"
+  %.sroa.01.0.i.i.i.i.i.i = phi ptr [ %.sroa.437.0.copyload.i122, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hfd4bd62cdae2deffE.exit.i.i.i.i.i.i" ], [ %.sroa.437.0.copyload.i122, %bb.d ], [ %i.bv, %bb.e ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !7744
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !7739
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !7737
@@ -874,7 +870,7 @@ _ZN4core3ops8function5FnMut8call_mut17h64f86012820353cbE.exit.i: ; preds = %"_ZN
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gi, i64 96
   store i64 %i.fq, ptr %.sroa.423.0..sroa_idx, align 8, !noalias !49760
   %i.gj = add i64 %.sroa.616.0, 1                 ; 2 uses
-  %i.gk = add nuw i64 %.sroa.06.0.i, 1            ; 2 uses
+  %i.gk = add nuw nsw i64 %.sroa.06.0.i, 1        ; 2 uses
   %i.gl = icmp eq i64 %i.gk, %.idx29
   br i1 %i.gl, label %bb.as, label %bb.ag
 

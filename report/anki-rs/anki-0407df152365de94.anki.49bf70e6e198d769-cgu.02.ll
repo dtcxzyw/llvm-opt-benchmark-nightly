@@ -205,7 +205,7 @@ bb.a:
   %i.g = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.i = load ptr, ptr %i.h, align 8, !noundef !14
-  %i.j = shl i64 %i.f, 5                          ; 5 uses
+  %i.j = shl i64 %i.f, 5                          ; 4 uses
   %i.k = udiv i64 %i.j, 24                        ; 2 uses
   %i.l = invoke { ptr, ptr } @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h9917ddfec2aff8a0E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.g, ptr noundef nonnull %i.g, ptr noundef %i.i)
           to label %bb.d unwind label %bb.c
@@ -269,10 +269,10 @@ bb.e:                                             ; preds = %.noexc, %bb.d, %bb.
 bb.f:                                             ; preds = %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit"
   %i.ab = mul nuw i64 %i.k, 24                    ; 4 uses
   %.not10 = icmp eq i64 %i.j, %i.ab
-  br i1 %.not10, label %.thread, label %2
+  br i1 %.not10, label %.thread, label %bb.j
 
-.thread:                                          ; preds = %2, %bb.j, %bb.f, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit"
-  %.sroa.03.0 = phi ptr [ %i.g, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit" ], [ %i.g, %bb.f ], [ %i.ar, %bb.j ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.j, %bb.f, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit"
+  %.sroa.03.0 = phi ptr [ %i.g, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit" ], [ %i.g, %bb.f ], [ %i.ar, %bb.j ]
   store i64 %i.k, ptr %0, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ac, align 8
@@ -328,11 +328,7 @@ bb.i:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !6244
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %.thread, label %bb.j
-
-bb.j:                                             ; preds = %2
+bb.j:                                             ; preds = %bb.f
   %i.aq = icmp ule i64 %i.ab, %i.j
   call void @llvm.assume(i1 %i.aq)
   %i.ar = call noundef align 8 ptr @_RNvCsiGVaDesi5rv_7___rustc14___rust_realloc(ptr noundef nonnull %i.g, i64 noundef %i.j, i64 noundef 8, i64 noundef range(i64 0, -15) %i.ab) #34 ; 2 uses
@@ -363,7 +359,7 @@ bb.a:
   %i.e = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !noundef !14
-  %i.h = shl i64 %i.d, 5                          ; 5 uses
+  %i.h = shl i64 %i.d, 5                          ; 4 uses
   %i.i = udiv i64 %i.h, 24                        ; 2 uses
   %i.j = invoke { ptr, ptr } @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h5b5cfd37fa2d7137E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.e, ptr noundef %i.g)
           to label %bb.d unwind label %bb.c
@@ -485,10 +481,10 @@ bb.j:                                             ; preds = %bb.d, %bb.m
 bb.k:                                             ; preds = %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h274a0978c267eac3E.exit"
   %i.al = mul nuw i64 %i.i, 24                    ; 4 uses
   %.not10 = icmp eq i64 %i.h, %i.al
-  br i1 %.not10, label %.thread, label %2
+  br i1 %.not10, label %.thread, label %bb.l
 
-.thread:                                          ; preds = %2, %bb.l, %bb.k, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h274a0978c267eac3E.exit"
-  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h274a0978c267eac3E.exit" ], [ %i.e, %bb.k ], [ %i.ap, %bb.l ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.l, %bb.k, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h274a0978c267eac3E.exit"
+  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h274a0978c267eac3E.exit" ], [ %i.e, %bb.k ], [ %i.ap, %bb.l ]
   store i64 %i.i, ptr %0, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.am, align 8
@@ -498,11 +494,7 @@ bb.k:                                             ; preds = %"_ZN5alloc3vec9into
   call void @"_ZN86_$LT$alloc..vec..into_iter..IntoIter$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h153bb1ad1e9e0c4aE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(32) %1)
   ret void
 
-2:                                                ; preds = %bb.k
-  %3 = icmp eq i64 %i.h, 0
-  br i1 %3, label %.thread, label %bb.l
-
-bb.l:                                             ; preds = %2
+bb.l:                                             ; preds = %bb.k
   %i.ao = icmp ule i64 %i.al, %i.h
   call void @llvm.assume(i1 %i.ao)
   %i.ap = call noundef align 8 ptr @_RNvCsiGVaDesi5rv_7___rustc14___rust_realloc(ptr noundef nonnull %i.e, i64 noundef %i.h, i64 noundef 8, i64 noundef range(i64 0, -15) %i.al) #34 ; 2 uses
@@ -905,7 +897,7 @@ bb.a:
   %i.e = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !noundef !14
-  %i.h = mul i64 %i.d, 160                        ; 7 uses
+  %i.h = mul i64 %i.d, 160                        ; 6 uses
   %i.i = udiv i64 %i.h, 144                       ; 2 uses
   %i.j = invoke { ptr, ptr } @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17he65c0596b3624815E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.e, ptr noundef %i.g)
           to label %bb.d unwind label %bb.c
@@ -1009,8 +1001,8 @@ bb.j:                                             ; preds = %"_ZN5alloc3vec9into
   %.not10 = icmp eq i64 %i.h, %i.aj
   br i1 %.not10, label %.thread, label %bb.k
 
-.thread:                                          ; preds = %bb.l, %2, %bb.m, %bb.j, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h76c95fd2f6b67cd8E.exit"
-  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h76c95fd2f6b67cd8E.exit" ], [ %i.e, %bb.j ], [ %i.ao, %bb.m ], [ inttoptr (i64 8 to ptr), %2 ], [ inttoptr (i64 8 to ptr), %bb.l ]
+.thread:                                          ; preds = %bb.l, %bb.m, %bb.j, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h76c95fd2f6b67cd8E.exit"
+  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h76c95fd2f6b67cd8E.exit" ], [ %i.e, %bb.j ], [ %i.ao, %bb.m ], [ inttoptr (i64 8 to ptr), %bb.l ]
   store i64 %i.i, ptr %0, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ak, align 8
@@ -1022,13 +1014,9 @@ bb.j:                                             ; preds = %"_ZN5alloc3vec9into
 
 bb.k:                                             ; preds = %bb.j
   %i.am = icmp ult i64 %i.h, 144
-  br i1 %i.am, label %2, label %bb.m
+  br i1 %i.am, label %bb.l, label %bb.m
 
-2:                                                ; preds = %bb.k
-  %3 = icmp eq i64 %i.h, 0
-  br i1 %3, label %.thread, label %bb.l
-
-bb.l:                                             ; preds = %2
+bb.l:                                             ; preds = %bb.k
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %i.h, i64 noundef 8) #34
   br label %.thread
 
@@ -1431,7 +1419,7 @@ bb.a:
   %i.e = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !noundef !14
-  %i.h = mul i64 %i.d, 104                        ; 7 uses
+  %i.h = mul i64 %i.d, 104                        ; 6 uses
   %i.i = udiv i64 %i.h, 72                        ; 2 uses
   %i.j = invoke { ptr, ptr } @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17hc08ddd628b2b6f22E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.e, ptr noundef %i.g)
           to label %bb.d unwind label %bb.c
@@ -1535,8 +1523,8 @@ bb.j:                                             ; preds = %"_ZN5alloc3vec9into
   %.not10 = icmp eq i64 %i.h, %i.aj
   br i1 %.not10, label %.thread, label %bb.k
 
-.thread:                                          ; preds = %bb.l, %2, %bb.m, %bb.j, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hc437f108cb0a586bE.exit"
-  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hc437f108cb0a586bE.exit" ], [ %i.e, %bb.j ], [ %i.ao, %bb.m ], [ inttoptr (i64 8 to ptr), %2 ], [ inttoptr (i64 8 to ptr), %bb.l ]
+.thread:                                          ; preds = %bb.l, %bb.m, %bb.j, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hc437f108cb0a586bE.exit"
+  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hc437f108cb0a586bE.exit" ], [ %i.e, %bb.j ], [ %i.ao, %bb.m ], [ inttoptr (i64 8 to ptr), %bb.l ]
   store i64 %i.i, ptr %0, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ak, align 8
@@ -1548,13 +1536,9 @@ bb.j:                                             ; preds = %"_ZN5alloc3vec9into
 
 bb.k:                                             ; preds = %bb.j
   %i.am = icmp ult i64 %i.h, 72
-  br i1 %i.am, label %2, label %bb.m
+  br i1 %i.am, label %bb.l, label %bb.m
 
-2:                                                ; preds = %bb.k
-  %3 = icmp eq i64 %i.h, 0
-  br i1 %3, label %.thread, label %bb.l
-
-bb.l:                                             ; preds = %2
+bb.l:                                             ; preds = %bb.k
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %i.h, i64 noundef 8) #34
   br label %.thread
 
@@ -1957,7 +1941,7 @@ bb.a:
   %i.g = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.i = load ptr, ptr %i.h, align 8, !noundef !14
-  %i.j = shl i64 %i.f, 5                          ; 5 uses
+  %i.j = shl i64 %i.f, 5                          ; 4 uses
   %i.k = udiv i64 %i.j, 24                        ; 2 uses
   %i.l = invoke { ptr, ptr } @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h0cb8b60ff610ea60E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.g, ptr noundef nonnull %i.g, ptr noundef %i.i)
           to label %bb.d unwind label %bb.c
@@ -2021,10 +2005,10 @@ bb.e:                                             ; preds = %.noexc, %bb.d, %bb.
 bb.f:                                             ; preds = %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit"
   %i.ab = mul nuw i64 %i.k, 24                    ; 4 uses
   %.not10 = icmp eq i64 %i.j, %i.ab
-  br i1 %.not10, label %.thread, label %2
+  br i1 %.not10, label %.thread, label %bb.j
 
-.thread:                                          ; preds = %2, %bb.j, %bb.f, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit"
-  %.sroa.03.0 = phi ptr [ %i.g, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit" ], [ %i.g, %bb.f ], [ %i.ar, %bb.j ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.j, %bb.f, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit"
+  %.sroa.03.0 = phi ptr [ %i.g, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h19378b3fef491804E.exit" ], [ %i.g, %bb.f ], [ %i.ar, %bb.j ]
   store i64 %i.k, ptr %0, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ac, align 8
@@ -2080,11 +2064,7 @@ bb.i:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !6614
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %.thread, label %bb.j
-
-bb.j:                                             ; preds = %2
+bb.j:                                             ; preds = %bb.f
   %i.aq = icmp ule i64 %i.ab, %i.j
   call void @llvm.assume(i1 %i.aq)
   %i.ar = call noundef align 8 ptr @_RNvCsiGVaDesi5rv_7___rustc14___rust_realloc(ptr noundef nonnull %i.g, i64 noundef %i.j, i64 noundef 8, i64 noundef range(i64 0, -15) %i.ab) #34 ; 2 uses
@@ -2118,7 +2098,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = load i64, ptr %i.h, align 8, !noundef !14 ; 3 uses
   %i.j = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 10 uses
-  %i.k = mul i64 %i.i, 152                        ; 7 uses
+  %i.k = mul i64 %i.i, 152                        ; 6 uses
   %i.l = udiv i64 %i.k, 48                        ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6632)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6633)
@@ -2369,8 +2349,8 @@ bb.x:                                             ; preds = %bb.w
   %.not10 = icmp eq i64 %i.k, %i.ca
   br i1 %.not10, label %.thread, label %bb.y
 
-.thread:                                          ; preds = %bb.z, %2, %bb.aa, %bb.x, %bb.w
-  %.sroa.03.0 = phi ptr [ %i.j, %bb.w ], [ %i.j, %bb.x ], [ %i.cf, %bb.aa ], [ inttoptr (i64 8 to ptr), %2 ], [ inttoptr (i64 8 to ptr), %bb.z ]
+.thread:                                          ; preds = %bb.z, %bb.aa, %bb.x, %bb.w
+  %.sroa.03.0 = phi ptr [ %i.j, %bb.w ], [ %i.j, %bb.x ], [ %i.cf, %bb.aa ], [ inttoptr (i64 8 to ptr), %bb.z ]
   store i64 %i.l, ptr %0, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.cb, align 8
@@ -2382,13 +2362,9 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.cd = icmp ult i64 %i.k, 48
-  br i1 %i.cd, label %2, label %bb.aa
+  br i1 %i.cd, label %bb.z, label %bb.aa
 
-2:                                                ; preds = %bb.y
-  %3 = icmp eq i64 %i.k, 0
-  br i1 %3, label %.thread, label %bb.z
-
-bb.z:                                             ; preds = %2
+bb.z:                                             ; preds = %bb.y
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %i.j, i64 noundef %i.k, i64 noundef 8) #34
   br label %.thread
 
@@ -2519,7 +2495,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load i64, ptr %i.g, align 8, !noundef !14 ; 3 uses
   %i.i = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 10 uses
-  %i.j = mul i64 %i.h, 152                        ; 7 uses
+  %i.j = mul i64 %i.h, 152                        ; 6 uses
   %i.k = udiv i64 %i.j, 48                        ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6678)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6679)
@@ -2873,8 +2849,8 @@ bb.aa:                                            ; preds = %bb.z
   %.not10 = icmp eq i64 %i.j, %i.dp
   br i1 %.not10, label %.thread, label %bb.ab
 
-.thread:                                          ; preds = %bb.ac, %2, %bb.ad, %bb.aa, %bb.z
-  %.sroa.03.0 = phi ptr [ %i.i, %bb.z ], [ %i.i, %bb.aa ], [ %i.du, %bb.ad ], [ inttoptr (i64 8 to ptr), %2 ], [ inttoptr (i64 8 to ptr), %bb.ac ]
+.thread:                                          ; preds = %bb.ac, %bb.ad, %bb.aa, %bb.z
+  %.sroa.03.0 = phi ptr [ %i.i, %bb.z ], [ %i.i, %bb.aa ], [ %i.du, %bb.ad ], [ inttoptr (i64 8 to ptr), %bb.ac ]
   store i64 %i.k, ptr %0, align 8
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.dq, align 8
@@ -2886,13 +2862,9 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.ds = icmp ult i64 %i.j, 48
-  br i1 %i.ds, label %2, label %bb.ad
+  br i1 %i.ds, label %bb.ac, label %bb.ad
 
-2:                                                ; preds = %bb.ab
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %.thread, label %bb.ac
-
-bb.ac:                                            ; preds = %2
+bb.ac:                                            ; preds = %bb.ab
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %i.i, i64 noundef %i.j, i64 noundef 8) #34
   br label %.thread
 
@@ -3295,7 +3267,7 @@ bb.a:
   %i.e = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !noundef !14
-  %i.h = mul i64 %i.d, 168                        ; 7 uses
+  %i.h = mul i64 %i.d, 168                        ; 6 uses
   %i.i = udiv i64 %i.h, 152                       ; 2 uses
   %i.j = invoke { ptr, ptr } @"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h8967cadbbaf92bc2E"(ptr noalias noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.e, ptr noundef %i.g)
           to label %bb.d unwind label %bb.c
@@ -3420,8 +3392,8 @@ bb.k:                                             ; preds = %"_ZN5alloc3vec9into
   %.not10 = icmp eq i64 %i.h, %i.am
   br i1 %.not10, label %.thread, label %bb.l
 
-.thread:                                          ; preds = %bb.m, %2, %bb.n, %bb.k, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h1bc9b9029c95568eE.exit"
-  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h1bc9b9029c95568eE.exit" ], [ %i.e, %bb.k ], [ %i.ar, %bb.n ], [ inttoptr (i64 8 to ptr), %2 ], [ inttoptr (i64 8 to ptr), %bb.m ]
+.thread:                                          ; preds = %bb.m, %bb.n, %bb.k, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h1bc9b9029c95568eE.exit"
+  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17h1bc9b9029c95568eE.exit" ], [ %i.e, %bb.k ], [ %i.ar, %bb.n ], [ inttoptr (i64 8 to ptr), %bb.m ]
   store i64 %i.i, ptr %0, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.an, align 8
@@ -3433,13 +3405,9 @@ bb.k:                                             ; preds = %"_ZN5alloc3vec9into
 
 bb.l:                                             ; preds = %bb.k
   %i.ap = icmp ult i64 %i.h, 152
-  br i1 %i.ap, label %2, label %bb.n
+  br i1 %i.ap, label %bb.m, label %bb.n
 
-2:                                                ; preds = %bb.l
-  %3 = icmp eq i64 %i.h, 0
-  br i1 %3, label %.thread, label %bb.m
-
-bb.m:                                             ; preds = %2
+bb.m:                                             ; preds = %bb.l
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %i.h, i64 noundef 8) #34
   br label %.thread
 
@@ -3842,7 +3810,7 @@ bb.a:
   %i.e = load ptr, ptr %1, align 8, !nonnull !14, !noundef !14 ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !noundef !14
-  %i.h = mul i64 %i.d, 232                        ; 7 uses
+  %i.h = mul i64 %i.d, 232                        ; 6 uses
   %i.i = udiv i64 %i.h, 224                       ; 2 uses
   %i.j = invoke { ptr, ptr } @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h7582e0212c079f51E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.e, ptr noundef %i.g)
           to label %bb.d unwind label %bb.c
@@ -3946,8 +3914,8 @@ bb.j:                                             ; preds = %"_ZN5alloc3vec9into
   %.not10 = icmp eq i64 %i.h, %i.aj
   br i1 %.not10, label %.thread, label %bb.k
 
-.thread:                                          ; preds = %bb.l, %2, %bb.m, %bb.j, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hd9dd149b1e445b08E.exit"
-  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hd9dd149b1e445b08E.exit" ], [ %i.e, %bb.j ], [ %i.ao, %bb.m ], [ inttoptr (i64 8 to ptr), %2 ], [ inttoptr (i64 8 to ptr), %bb.l ]
+.thread:                                          ; preds = %bb.l, %bb.m, %bb.j, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hd9dd149b1e445b08E.exit"
+  %.sroa.03.0 = phi ptr [ %i.e, %"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$32forget_allocation_drop_remaining17hd9dd149b1e445b08E.exit" ], [ %i.e, %bb.j ], [ %i.ao, %bb.m ], [ inttoptr (i64 8 to ptr), %bb.l ]
   store i64 %i.i, ptr %0, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ak, align 8
@@ -3959,13 +3927,9 @@ bb.j:                                             ; preds = %"_ZN5alloc3vec9into
 
 bb.k:                                             ; preds = %bb.j
   %i.am = icmp ult i64 %i.h, 224
-  br i1 %i.am, label %2, label %bb.m
+  br i1 %i.am, label %bb.l, label %bb.m
 
-2:                                                ; preds = %bb.k
-  %3 = icmp eq i64 %i.h, 0
-  br i1 %3, label %.thread, label %bb.l
-
-bb.l:                                             ; preds = %2
+bb.l:                                             ; preds = %bb.k
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %i.h, i64 noundef 8) #34
   br label %.thread
 

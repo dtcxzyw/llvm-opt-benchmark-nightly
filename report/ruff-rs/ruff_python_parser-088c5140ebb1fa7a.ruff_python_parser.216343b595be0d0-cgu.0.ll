@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bn
   %i.mi = phi i64 [ %i.lg, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBU_6Parser34try_parse_parenthesized_with_itemss_0EBW_.exit.thread.i.i ], [ %i.kk, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBU_6Parser34try_parse_parenthesized_with_itemss_0EBW_.exit.thread.i.thread.i ], [ %i.lg, %.lr.ph.i.i.i.i.i.i ], [ %i.lg, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 3 uses
   %.val.i.i45.i.i = phi ptr [ %i.is, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBU_6Parser34try_parse_parenthesized_with_itemss_0EBW_.exit.thread.i.i ], [ %i.is, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBU_6Parser34try_parse_parenthesized_with_itemss_0EBW_.exit.thread.i.thread.i ], [ %.lcssa503.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ], [ %i.mf, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
   %.sroa.4.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.is, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBU_6Parser34try_parse_parenthesized_with_itemss_0EBW_.exit.thread.i.i ], [ %i.is, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBU_6Parser34try_parse_parenthesized_with_itemss_0EBW_.exit.thread.i.thread.i ], [ %.lcssa.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ], [ %i.mg, %.lr.ph.i.i.i.i.i.i ]
-  %i.mj = mul i64 %i.mi, 104                      ; 7 uses
+  %i.mj = mul i64 %i.mi, 104                      ; 6 uses
   %i.mk = udiv i64 %i.mj, 96                      ; 2 uses
   %i.ml = ptrtoint ptr %.sroa.4.0.lcssa.i.i.i.i.i.i to i64
   %i.mm = ptrtoint ptr %i.is to i64
@@ -243,13 +243,9 @@ _RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsb6FLkjZuKG_1
 
 bb.bo:                                            ; preds = %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemE32forget_allocation_drop_remainingB11_.exit.i.i.i
   %i.my = icmp ult i64 %i.mj, 96
-  br i1 %i.my, label %3, label %bb.bq
+  br i1 %i.my, label %bb.bp, label %bb.bq
 
-3:                                                ; preds = %bb.bo
-  %4 = icmp eq i64 %i.mj, 0
-  br i1 %4, label %bb.by, label %bb.bp
-
-bb.bp:                                            ; preds = %3
+bb.bp:                                            ; preds = %bb.bo
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.is, i64 noundef %i.mj, i64 noundef 8) #42, !noalias !12228
   br label %bb.by
 
@@ -300,8 +296,8 @@ bb.bx:                                            ; preds = %_RNvXso_NtCscdodAO9
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.is, i64 noundef %i.nh, i64 noundef range(i64 1, -9223372036854775807) 8) #42, !noalias !12231
   br label %bb.ce
 
-bb.by:                                            ; preds = %bb.bq, %bb.bp, %3, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemE32forget_allocation_drop_remainingB11_.exit.i.i.i
-  %.sroa.03.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %3 ], [ %i.na, %bb.bq ], [ %i.is, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemE32forget_allocation_drop_remainingB11_.exit.i.i.i ], [ inttoptr (i64 8 to ptr), %bb.bp ]
+bb.by:                                            ; preds = %bb.bq, %bb.bp, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemE32forget_allocation_drop_remainingB11_.exit.i.i.i
+  %.sroa.03.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.bp ], [ %i.na, %bb.bq ], [ %i.is, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsb6FLkjZuKG_18ruff_python_parser6parser9statement14ParsedWithItemE32forget_allocation_drop_remainingB11_.exit.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !12225
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !12179
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !12179

@@ -204,7 +204,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !5
-  %i.g = shl i64 %i.c, 5                          ; 5 uses
+  %i.g = shl i64 %i.c, 5                          ; 4 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTdNtNtB14_6string6StringEENCINvNtNtNtCsdjW2DEjcQy2_12clap_builder6parser8features11suggestions12did_you_meanB1M_INtNtB8_10filter_map9FilterMapIBO_INtNtNtBc_5slice4iter4IterNtNtB2l_7mkeymap3KeyENCNvMs4_B4y_NtB4y_7MKeyMap4keys0ENCNCINvB2f_17did_you_mean_flagIBO_IB47_B1M_ENCNvMs0_NtB2j_6parserNtB6e_6Parser18did_you_mean_errors_0EReINtB49_7IterMutNtNtNtB2l_7builder7command7CommandEE00EEs0_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB1M_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB1M_E0INtNtBc_6result6ResultB8J_zEEB2l_(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -245,10 +245,10 @@ bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw i64 %i.h, 24                     ; 4 uses
   %i.t = icmp ne i64 %i.g, %i.s
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.t, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %.thread
+  br i1 %.sroa.0.0.i, label %bb.g, label %.thread
 
-.thread:                                          ; preds = %2, %bb.g, %bb.f
-  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.g, %bb.f
+  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -258,11 +258,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTdNtNtB9_6string6StringEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsdjW2DEjcQy2_12clap_builder(ptr noalias noundef nonnull align 8 dereferenceable(32) %1)
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %.thread, label %bb.g
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.f
   %i.w = icmp ule i64 %i.s, %i.g
   tail call void @llvm.assume(i1 %i.w)
   %i.x = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8, i64 noundef range(i64 0, -15) %i.s) #21 ; 2 uses
@@ -295,7 +291,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !5
-  %i.g = shl i64 %i.c, 5                          ; 5 uses
+  %i.g = shl i64 %i.c, 5                          ; 4 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTdNtNtB14_6string6StringEENCINvNtNtNtCsdjW2DEjcQy2_12clap_builder6parser8features11suggestions12did_you_meanRB1M_INtNtNtBc_5slice4iter4IterB1M_EEs0_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB1M_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB1M_E0INtNtBc_6result6ResultB4R_zEEB2l_(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -336,10 +332,10 @@ bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw i64 %i.h, 24                     ; 4 uses
   %i.t = icmp ne i64 %i.g, %i.s
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.t, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %.thread
+  br i1 %.sroa.0.0.i, label %bb.g, label %.thread
 
-.thread:                                          ; preds = %2, %bb.g, %bb.f
-  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.g, %bb.f
+  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -349,11 +345,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTdNtNtB9_6string6StringEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsdjW2DEjcQy2_12clap_builder(ptr noalias noundef nonnull align 8 dereferenceable(32) %1)
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %.thread, label %bb.g
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.f
   %i.w = icmp ule i64 %i.s, %i.g
   tail call void @llvm.assume(i1 %i.w)
   %i.x = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8, i64 noundef range(i64 0, -15) %i.s) #21 ; 2 uses
@@ -386,7 +378,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !5
-  %i.g = shl i64 %i.c, 5                          ; 5 uses
+  %i.g = shl i64 %i.c, 5                          ; 4 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTdNtNtB14_6string6StringEENCINvNtNtNtCsdjW2DEjcQy2_12clap_builder6parser8features11suggestions12did_you_meanReIBO_INtNtNtBc_5slice4iter4IterB1M_ENCNvMs0_NtB2j_6parserNtB4d_6Parser18did_you_mean_errors_0EEs0_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB1M_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB1M_E0INtNtBc_6result6ResultB5O_zEEB2l_(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -427,10 +419,10 @@ bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw i64 %i.h, 24                     ; 4 uses
   %i.t = icmp ne i64 %i.g, %i.s
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.t, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %.thread
+  br i1 %.sroa.0.0.i, label %bb.g, label %.thread
 
-.thread:                                          ; preds = %2, %bb.g, %bb.f
-  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.g, %bb.f
+  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -440,11 +432,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTdNtNtB9_6string6StringEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsdjW2DEjcQy2_12clap_builder(ptr noalias noundef nonnull align 8 dereferenceable(32) %1)
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %.thread, label %bb.g
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.f
   %i.w = icmp ule i64 %i.s, %i.g
   tail call void @llvm.assume(i1 %i.w)
   %i.x = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8, i64 noundef range(i64 0, -15) %i.s) #21 ; 2 uses
@@ -477,7 +465,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !5
-  %i.g = shl i64 %i.c, 5                          ; 5 uses
+  %i.g = shl i64 %i.c, 5                          ; 4 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTdNtNtB14_6string6StringEENCINvNtNtNtCsdjW2DEjcQy2_12clap_builder6parser8features11suggestions12did_you_meanReINtNtB8_7flatten7FlatMapINtNtNtBc_5slice4iter4IterNtNtNtB2l_7builder7command7CommandEINtNtB8_5chain5ChainINtNtNtBa_7sources4once4OnceB3u_EIBO_IB3V_TNtNtB4o_3str3StrbEENCNvMs2_B4m_B4k_15get_all_aliases0EENCNvMs5_B4m_B4k_20all_subcommand_names0EEs0_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB1M_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB1M_E0INtNtBc_6result6ResultB8e_zEEB2l_(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -518,10 +506,10 @@ bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw i64 %i.h, 24                     ; 4 uses
   %i.t = icmp ne i64 %i.g, %i.s
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.t, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %.thread
+  br i1 %.sroa.0.0.i, label %bb.g, label %.thread
 
-.thread:                                          ; preds = %2, %bb.g, %bb.f
-  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.g, %bb.f
+  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -531,11 +519,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTdNtNtB9_6string6StringEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsdjW2DEjcQy2_12clap_builder(ptr noalias noundef nonnull align 8 dereferenceable(32) %1)
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %.thread, label %bb.g
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.f
   %i.w = icmp ule i64 %i.s, %i.g
   tail call void @llvm.assume(i1 %i.w)
   %i.x = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8, i64 noundef range(i64 0, -15) %i.s) #21 ; 2 uses

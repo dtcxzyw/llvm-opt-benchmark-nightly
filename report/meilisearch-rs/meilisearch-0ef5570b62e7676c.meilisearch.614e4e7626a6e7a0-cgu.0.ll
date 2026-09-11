@@ -205,7 +205,7 @@ _ZN4core3ops8function5FnMut8call_mut17h454f304c85c11aeaE.exit.i: ; preds = %"_ZN
   %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fu, i64 96
   store i64 %i.fc, ptr %.sroa.424.0..sroa_idx, align 8, !noalias !39762
   %i.fv = add i64 %.sroa.617.0, 1                 ; 2 uses
-  %i.fw = add nuw i64 %.sroa.06.0.i, 1            ; 2 uses
+  %i.fw = add nuw nsw i64 %.sroa.06.0.i, 1        ; 2 uses
   %i.fx = icmp eq i64 %i.fw, %.idx30
   br i1 %i.fx, label %bb.as, label %bb.ag
 

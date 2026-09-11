@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.u, %bb.d ], !dbg !21391 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !21393
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !21394 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !21394 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !21395 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21346), !dbg !21396
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21347), !dbg !21396
@@ -245,7 +245,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i60 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ag, %bb.f ], !dbg !21410 ; 2 uses
   %.sroa.1.0.i.i.in.i.i61 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i64, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i63 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i70, %bb.f ], !dbg !21412
-  %.sroa.1.0.i.i.i.i64 = add nuw i64 %.sroa.1.0.i.i.in.i.i61, 1, !dbg !21413 ; 3 uses
+  %.sroa.1.0.i.i.i.i64 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i61, 1, !dbg !21413 ; 3 uses
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %.sroa.1.0.i.i.in.i.i61, !dbg !21414 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21358), !dbg !21415
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21359), !dbg !21415
@@ -648,7 +648,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !24759 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !24761
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !24762 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !24762 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !24763 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !24692), !dbg !24764
   tail call void @llvm.experimental.noalias.scope.decl(metadata !24693), !dbg !24764
@@ -690,7 +690,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !24778 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !24780
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !24781 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !24781 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !24782 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !24705), !dbg !24783
   tail call void @llvm.experimental.noalias.scope.decl(metadata !24706), !dbg !24783
@@ -1093,7 +1093,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !25299 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !25301
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !25302 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !25302 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !25303 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25232), !dbg !25304
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25233), !dbg !25304
@@ -1135,7 +1135,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !25318 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !25320
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !25321 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !25321 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !25322 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25245), !dbg !25323
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25246), !dbg !25323
@@ -1538,7 +1538,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !25839 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !25841
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !25842 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !25842 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !25843 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25772), !dbg !25844
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25773), !dbg !25844
@@ -1580,7 +1580,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !25858 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !25860
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !25861 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !25861 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !25862 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25785), !dbg !25863
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25786), !dbg !25863
@@ -1983,7 +1983,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !26379 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !26381
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !26382 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !26382 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !26383 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26312), !dbg !26384
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26313), !dbg !26384
@@ -2025,7 +2025,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !26398 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !26400
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !26401 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !26401 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !26402 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26325), !dbg !26403
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26326), !dbg !26403
@@ -2428,7 +2428,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !26929 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !26931
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !26932 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !26932 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !26933 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26862), !dbg !26934
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26863), !dbg !26934
@@ -2470,7 +2470,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !26948 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !26950
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !26951 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !26951 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !26952 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26875), !dbg !26953
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26876), !dbg !26953
@@ -2873,7 +2873,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !27479 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !27481
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !27482 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !27482 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !27483 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27412), !dbg !27484
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27413), !dbg !27484
@@ -2915,7 +2915,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !27498 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !27500
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !27501 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !27501 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !27502 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27425), !dbg !27503
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27426), !dbg !27503
@@ -3318,7 +3318,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !28029 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !28031
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !28032 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !28032 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !28033 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27962), !dbg !28034
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27963), !dbg !28034
@@ -3360,7 +3360,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !28048 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !28050
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !28051 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !28051 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !28052 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27975), !dbg !28053
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27976), !dbg !28053
@@ -3763,7 +3763,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !28579 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !28581
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !28582 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !28582 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !28583 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !28512), !dbg !28584
   tail call void @llvm.experimental.noalias.scope.decl(metadata !28513), !dbg !28584
@@ -3805,7 +3805,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !28598 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !28600
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !28601 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !28601 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !28602 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !28525), !dbg !28603
   tail call void @llvm.experimental.noalias.scope.decl(metadata !28526), !dbg !28603
@@ -4208,7 +4208,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !29129 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !29131
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !29132 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !29132 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !29133 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29062), !dbg !29134
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29063), !dbg !29134
@@ -4250,7 +4250,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !29148 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !29150
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !29151 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !29151 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !29152 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29075), !dbg !29153
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29076), !dbg !29153
@@ -4653,7 +4653,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.c ], [ %i.v, %bb.d ], !dbg !29679 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.1.0.i.i.i.i, %bb.d ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.c ], [ %.1.i.i.i.i.i.i, %bb.d ], !dbg !29681
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !29682 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !29682 ; 3 uses
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %.sroa.1.0.i.i.in.i.i, !dbg !29683 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29612), !dbg !29684
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29613), !dbg !29684
@@ -4695,7 +4695,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.val3.i.i.i.i.i.i61 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.e ], [ %i.ai, %bb.f ], !dbg !29698 ; 2 uses
   %.sroa.1.0.i.i.in.i.i62 = phi i64 [ 0, %bb.e ], [ %.sroa.1.0.i.i.i.i65, %bb.f ] ; 2 uses
   %.sroa.02.0.i.i.i.i64 = phi i64 [ 0, %bb.e ], [ %.1.i.i.i.i.i.i71, %bb.f ], !dbg !29700
-  %.sroa.1.0.i.i.i.i65 = add nuw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !29701 ; 3 uses
+  %.sroa.1.0.i.i.i.i65 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i62, 1, !dbg !29701 ; 3 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.sroa.1.0.i.i.in.i.i62, !dbg !29702 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29625), !dbg !29703
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29626), !dbg !29703
@@ -5098,7 +5098,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.w, %bb.g ], !dbg !60869 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !60871
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !60872 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !60872 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !60873 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60821), !dbg !60874
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60822), !dbg !60874
@@ -5138,7 +5138,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i32 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ai, %bb.i ], !dbg !60888 ; 2 uses
   %.sroa.1.0.i.i.in.i.i33 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i36, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i35 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i42, %bb.i ], !dbg !60890
-  %.sroa.1.0.i.i.i.i36 = add nuw i64 %.sroa.1.0.i.i.in.i.i33, 1, !dbg !60891 ; 3 uses
+  %.sroa.1.0.i.i.i.i36 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i33, 1, !dbg !60891 ; 3 uses
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.y, i64 %.sroa.1.0.i.i.in.i.i33, !dbg !60892 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60833), !dbg !60893
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60834), !dbg !60893
@@ -5541,7 +5541,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !63023 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !63025
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !63026 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !63026 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !63027 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62961), !dbg !63028
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62962), !dbg !63028
@@ -5583,7 +5583,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !63042 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !63044
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !63045 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !63045 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !63046 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62974), !dbg !63047
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62975), !dbg !63047
@@ -5914,7 +5914,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !63459 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !63461
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !63462 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !63462 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !63463 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63397), !dbg !63464
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63398), !dbg !63464
@@ -5956,7 +5956,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !63478 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !63480
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !63481 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !63481 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !63482 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63410), !dbg !63483
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63411), !dbg !63483
@@ -6287,7 +6287,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !63895 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !63897
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !63898 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !63898 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !63899 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63833), !dbg !63900
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63834), !dbg !63900
@@ -6329,7 +6329,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !63914 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !63916
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !63917 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !63917 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !63918 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63846), !dbg !63919
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63847), !dbg !63919
@@ -6660,7 +6660,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !64331 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !64333
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !64334 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !64334 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !64335 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64269), !dbg !64336
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64270), !dbg !64336
@@ -6702,7 +6702,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !64350 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !64352
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !64353 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !64353 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !64354 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64282), !dbg !64355
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64283), !dbg !64355
@@ -7033,7 +7033,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !64773 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !64775
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !64776 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !64776 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !64777 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64711), !dbg !64778
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64712), !dbg !64778
@@ -7075,7 +7075,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !64792 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !64794
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !64795 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !64795 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !64796 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64724), !dbg !64797
   tail call void @llvm.experimental.noalias.scope.decl(metadata !64725), !dbg !64797
@@ -7406,7 +7406,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !65215 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !65217
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !65218 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !65218 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !65219 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65153), !dbg !65220
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65154), !dbg !65220
@@ -7448,7 +7448,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !65234 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !65236
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !65237 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !65237 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !65238 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65166), !dbg !65239
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65167), !dbg !65239
@@ -7779,7 +7779,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !65657 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !65659
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !65660 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !65660 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !65661 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65595), !dbg !65662
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65596), !dbg !65662
@@ -7821,7 +7821,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !65676 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !65678
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !65679 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !65679 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !65680 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65608), !dbg !65681
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65609), !dbg !65681
@@ -8152,7 +8152,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !66099 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !66101
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !66102 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !66102 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !66103 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66037), !dbg !66104
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66038), !dbg !66104
@@ -8194,7 +8194,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !66118 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !66120
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !66121 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !66121 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !66122 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66050), !dbg !66123
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66051), !dbg !66123
@@ -8525,7 +8525,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !66541 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !66543
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !66544 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !66544 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !66545 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66479), !dbg !66546
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66480), !dbg !66546
@@ -8567,7 +8567,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !66560 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !66562
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !66563 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !66563 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !66564 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66492), !dbg !66565
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66493), !dbg !66565
@@ -8898,7 +8898,7 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %.val.i.i.i.i.i.i = phi ptr [ %.val.i.i.pre.i.i.i.i, %bb.f ], [ %i.x, %bb.g ], !dbg !66983 ; 2 uses
   %.sroa.1.0.i.i.in.i.i = phi i64 [ 0, %bb.f ], [ %.sroa.1.0.i.i.i.i, %bb.g ] ; 2 uses
   %.sroa.02.0.i.i.i.i = phi i64 [ 0, %bb.f ], [ %.1.i.i.i.i.i.i, %bb.g ], !dbg !66985
-  %.sroa.1.0.i.i.i.i = add nuw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !66986 ; 3 uses
+  %.sroa.1.0.i.i.i.i = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 1, !dbg !66986 ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.1.0.i.i.in.i.i, !dbg !66987 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66921), !dbg !66988
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66922), !dbg !66988
@@ -8940,7 +8940,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   %.val3.i.i.i.i.i.i33 = phi ptr [ %.val3.i.i.pre.i.i.i.i, %bb.h ], [ %i.ak, %bb.i ], !dbg !67002 ; 2 uses
   %.sroa.1.0.i.i.in.i.i34 = phi i64 [ 0, %bb.h ], [ %.sroa.1.0.i.i.i.i37, %bb.i ] ; 2 uses
   %.sroa.02.0.i.i.i.i36 = phi i64 [ 0, %bb.h ], [ %.1.i.i.i.i.i.i43, %bb.i ], !dbg !67004
-  %.sroa.1.0.i.i.i.i37 = add nuw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !67005 ; 3 uses
+  %.sroa.1.0.i.i.i.i37 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i34, 1, !dbg !67005 ; 3 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i34, !dbg !67006 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66934), !dbg !67007
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66935), !dbg !67007

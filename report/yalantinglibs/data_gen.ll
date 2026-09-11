@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = udiv i64 %.reload87, 1000                ; 2 uses
   %.neg.i.i = mul nsw i64 %i.e, -1000
   %i.f = add nsw i64 %.neg.i.i, %.reload87
-  %i.g = mul nsw i64 %i.f, 1000000
+  %i.g = mul nuw nsw i64 %i.f, 1000000
   store i64 %i.e, ptr %.reload.addr91, align 8, !tbaa !2048
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %i.g, ptr %i.h, align 8, !tbaa !2049

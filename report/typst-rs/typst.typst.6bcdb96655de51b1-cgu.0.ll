@@ -205,7 +205,7 @@ bb.a:
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i, %._crit_edge.i.thread, %._crit_edge.i
   %i.ay = phi i64 [ %i.x, %._crit_edge.i ], [ 0, %._crit_edge.i.thread ], [ %i.x, %.lr.ph.i.i.i.i.i.i ], [ %i.x, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 3 uses
-  %i.az = phi i64 [ %i.w, %._crit_edge.i ], [ 0, %._crit_edge.i.thread ], [ %i.w, %.lr.ph.i.i.i.i.i.i ], [ %i.w, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %i.az = phi i64 [ %i.w, %._crit_edge.i ], [ 0, %._crit_edge.i.thread ], [ %i.w, %.lr.ph.i.i.i.i.i.i ], [ %i.w, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 3 uses
   %.sroa.6.0..sroa_idx.i116 = phi ptr [ %.sroa.6.0..sroa_idx.i, %._crit_edge.i ], [ %.sroa.6.0..sroa_idx.i112, %._crit_edge.i.thread ], [ %.sroa.6.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.6.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.prol.loopexit ]
   %.sroa.5.0..sroa_idx.i115 = phi ptr [ %.sroa.5.0..sroa_idx.i, %._crit_edge.i ], [ %.sroa.5.0..sroa_idx.i111, %._crit_edge.i.thread ], [ %.sroa.5.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.5.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.prol.loopexit ]
   %.sroa.46.0..sroa_idx.i114 = phi ptr [ %.sroa.46.0..sroa_idx.i, %._crit_edge.i ], [ %.sroa.46.0..sroa_idx.i110, %._crit_edge.i.thread ], [ %.sroa.46.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.46.0..sroa_idx.i, %.lr.ph.i.i.i.i.i.i.prol.loopexit ]
@@ -268,13 +268,9 @@ bb.c:                                             ; preds = %bb.e
   %i.bv = mul nuw i64 %i.ay, 24                   ; 5 uses
   %i.bw = icmp ne i64 %i.az, %i.bv
   %.sroa.0.0.i.i.i.i = select i1 %.not.i.i.i.i, i1 %i.bw, i1 false
-  br i1 %.sroa.0.0.i.i.i.i, label %5, label %bb.w
+  br i1 %.sroa.0.0.i.i.i.i, label %bb.d, label %bb.w
 
-5:                                                ; preds = %.loopexit.i.i.i
-  %6 = icmp eq i64 %i.az, 0
-  br i1 %6, label %bb.w, label %bb.d
-
-bb.d:                                             ; preds = %5
+bb.d:                                             ; preds = %.loopexit.i.i.i
   %i.bx = icmp ule i64 %i.bv, %i.az
   call void @llvm.assume(i1 %i.bx)
   %i.by = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %i.bb, i64 noundef %i.az, i64 noundef 8, i64 noundef %i.bv) #56, !noalias !28879 ; 2 uses
@@ -468,8 +464,8 @@ bb.v:                                             ; preds = %_RNvXsp_NtCs1xwejQu
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs9fPPV5zPXBl_5typst.exit: ; preds = %bb.aq, %bb.z
   br i1 %.sroa.013.1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs9fPPV5zPXBl_5typst.exit86, label %.thread
 
-bb.w:                                             ; preds = %bb.d, %5, %.loopexit.i.i.i
-  %.sroa.03.0.i.i.i = phi ptr [ %i.bb, %.loopexit.i.i.i ], [ %i.by, %bb.d ], [ inttoptr (i64 8 to ptr), %5 ] ; 5 uses
+bb.w:                                             ; preds = %bb.d, %.loopexit.i.i.i
+  %.sroa.03.0.i.i.i = phi ptr [ %i.bb, %.loopexit.i.i.i ], [ %i.by, %bb.d ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !28871
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !28867
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !28867

@@ -202,54 +202,38 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.dc = icmp eq i32 %.1105.i, 1000000           ; 2 uses
   %spec.select.i = select i1 %i.dc, i32 100000, i32 %.1105.i ; 3 uses
   %i.dd = icmp ult i32 %spec.select.i, 1000000
-  br i1 %i.dd, label %_ZN4absl16numbers_internal12PutTwoDigitsEjPc.exit.i, label %2
+  br i1 %i.dd, label %_ZN4abslL10SplitToSixEd.exit, label %bb.y
 
-2:                                                ; preds = %bb.x
+bb.y:                                             ; preds = %bb.x
   tail call void @__assert_fail(ptr noundef nonnull @.str.15, ptr noundef nonnull @.str, i32 noundef 288, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4absl16numbers_internal12PutTwoDigitsEjPc) #13
   unreachable
 
-_ZN4absl16numbers_internal12PutTwoDigitsEjPc.exit.i: ; preds = %bb.x
-  %3 = udiv i32 %spec.select.i, 10000             ; 3 uses
-  %.neg.i = mul nsw i32 %3, -10000
-  %4 = add nsw i32 %.neg.i, %spec.select.i        ; 3 uses
-  %5 = udiv i32 %4, 100                           ; 3 uses
-  %.neg110.i = mul i32 %5, -100
-  %6 = add i32 %.neg110.i, %4                     ; 3 uses
-  %7 = icmp ult i32 %4, 10000
-  br i1 %7, label %_ZN4absl16numbers_internal12PutTwoDigitsEjPc.exit114.i, label %8
-
-8:                                                ; preds = %_ZN4absl16numbers_internal12PutTwoDigitsEjPc.exit.i
-  tail call void @__assert_fail(ptr noundef nonnull @.str.15, ptr noundef nonnull @.str, i32 noundef 288, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4absl16numbers_internal12PutTwoDigitsEjPc) #13
-  unreachable
-
-_ZN4absl16numbers_internal12PutTwoDigitsEjPc.exit114.i: ; preds = %_ZN4absl16numbers_internal12PutTwoDigitsEjPc.exit.i
-  %9 = icmp ult i32 %6, 100
-  br i1 %9, label %_ZN4abslL10SplitToSixEd.exit, label %bb.y
-
-bb.y:                                             ; preds = %_ZN4absl16numbers_internal12PutTwoDigitsEjPc.exit114.i
-  tail call void @__assert_fail(ptr noundef nonnull @.str.15, ptr noundef nonnull @.str, i32 noundef 288, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4absl16numbers_internal12PutTwoDigitsEjPc) #13
-  unreachable
-
-_ZN4abslL10SplitToSixEd.exit:                     ; preds = %_ZN4absl16numbers_internal12PutTwoDigitsEjPc.exit114.i
-  %narrow.i112.i = mul nuw nsw i32 %5, 103
+_ZN4abslL10SplitToSixEd.exit:                     ; preds = %bb.x
+  %2 = udiv i32 %spec.select.i, 10000             ; 3 uses
+  %.neg.i = mul nsw i32 %2, -10000
+  %3 = add nsw i32 %.neg.i, %spec.select.i        ; 2 uses
+  %4 = udiv i32 %3, 100                           ; 3 uses
+  %.neg110.i = mul nsw i32 %4, -100
+  %5 = add i32 %.neg110.i, %3                     ; 2 uses
+  %narrow.i112.i = mul nuw nsw i32 %4, 103
   %i.de = lshr i32 %narrow.i112.i, 10             ; 2 uses
   %.neg.i113.i = mul nsw i32 %i.de, -10
-  %i.df = add nsw i32 %.neg.i113.i, %5
+  %i.df = add nsw i32 %.neg.i113.i, %4
   %i.dg = shl nsw i32 %i.df, 8
-  %narrow.i.i = mul nuw nsw i32 %3, 103
+  %narrow.i.i = mul nuw nsw i32 %2, 103
   %i.dh = lshr i32 %narrow.i.i, 10                ; 2 uses
   %.neg.i.i = mul nsw i32 %i.dh, -10
-  %i.di = add nsw i32 %.neg.i.i, %3
+  %i.di = add nsw i32 %.neg.i.i, %2
   %i.dj = shl nsw i32 %i.di, 8
   %i.dk = zext i1 %i.dc to i32
   %spec.select111.i = add nsw i32 %.16.i, %i.dk   ; 4 uses
-  %narrow.i115.i = mul nuw nsw i32 %6, 103
+  %narrow.i115.i = mul nuw nsw i32 %5, 103
   %i.dl = lshr i32 %narrow.i115.i, 10             ; 2 uses
   %.neg.i116.i = mul nsw i32 %i.dl, -10
-  %i.dm = add nsw i32 %.neg.i116.i, %6
+  %i.dm = add nsw i32 %.neg.i116.i, %5
   %i.dn = shl nsw i32 %i.dm, 8
-  %10 = or disjoint i32 %i.dl, 12336              ; 2 uses
-  %i.do = add nsw i32 %i.dn, %10                  ; 4 uses
+  %6 = add nuw nsw i32 %i.dl, 12336               ; 2 uses
+  %i.do = add i32 %i.dn, %6                       ; 4 uses
   %i.dp = add nuw nsw i32 %i.de, 12336
   %i.dq = add i32 %i.dp, %i.dg                    ; 2 uses
   %i.dr = and i32 %i.dq, 65535
@@ -328,7 +312,7 @@ bb.ad:                                            ; preds = %_ZN4abslL10SplitToS
   %i.eh = getelementptr inbounds nuw i8, ptr %.1142, i64 4 ; 2 uses
   %.sroa.16.9.extract.shift165 = lshr i32 %.sroa.4132.8.insert.ext.i, 8 ; 2 uses
   %.sroa.16.9.extract.trunc166 = trunc nuw i32 %.sroa.16.9.extract.shift165 to i8
-  %.sroa.4132.8.insert.ext.i.masked = and i32 %10, 63
+  %.sroa.4132.8.insert.ext.i.masked = and i32 %6, 63
   %.mask = or i32 %.sroa.16.9.extract.shift165, %.sroa.4132.8.insert.ext.i.masked
   %.not = icmp eq i32 %.mask, 48
   br i1 %.not, label %bb.ag, label %bb.ae

@@ -204,8 +204,8 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   %i.eej = shufflevector <2 x i8> %i.eei, <2 x i8> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
   %i.eek = shufflevector <4 x i8> <i8 58, i8 poison, i8 poison, i8 46>, <4 x i8> %i.eej, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   store <4 x i8> %i.eek, ptr %i.eeh, align 1, !tbaa !142, !noalias !21590
-  %i.eel = shl nsw i64 %i.ecz, 1
-  %i.eem = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eel
+  %i.eel = shl nuw nsw i64 %i.ecz, 1
+  %i.eem = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.eel
   %i.een = shl nuw nsw i64 %i.ecx, 1
   %i.eeo = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.een
   %i.eep = add nsw i32 %.sroa.037.0.i.i.i.i.i.i, 719468 ; 2 uses
@@ -608,8 +608,8 @@ bb.apy:                                           ; preds = %bb.apx, %bb.apw
   %i.ero = add nsw i64 %.neg.i7.i.i.i111.i.i.i.i.i, %spec.select.i.i.i.i109.i.i.i.i.i
   %.neg.i8.i.i.i112.i.i.i.i.i = mul nsw i64 %i.ern, -60
   %i.erp = add nsw i64 %i.ero, %.neg.i8.i.i.i112.i.i.i.i.i
-  %i.erq = shl nsw i64 %i.erp, 1
-  %i.err = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.erq ; 2 uses
+  %i.erq = shl nuw nsw i64 %i.erp, 1
+  %i.err = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.erq ; 2 uses
   %i.ers = getelementptr inbounds nuw i8, ptr %i.err, i64 1
   %i.ert = load i8, ptr %i.ers, align 1, !tbaa !142, !noalias !21593
   %i.eru = getelementptr inbounds i8, ptr %.sroa.phi.i.i.i.i.i.i, i64 -1
@@ -619,8 +619,8 @@ bb.apy:                                           ; preds = %bb.apx, %bb.apw
   store i8 %i.erv, ptr %i.erw, align 1, !tbaa !142, !noalias !21593
   %i.erx = getelementptr inbounds i8, ptr %.sroa.phi.i.i.i.i.i.i, i64 -3
   store i8 58, ptr %i.erx, align 1, !tbaa !142, !noalias !21593
-  %i.ery = shl nsw i64 %i.ern, 1
-  %i.erz = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ery
+  %i.ery = shl nuw nsw i64 %i.ern, 1
+  %i.erz = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ery
   %i.esa = shl nuw nsw i64 %i.erl, 1
   %i.esb = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.esa
   %i.esc = add nsw i32 %.sroa.030.0.i.i.i.i.i.i, 719468 ; 2 uses
@@ -1023,8 +1023,8 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   %i.fca = phi ptr [ %i.fbs, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i1276 ], [ %scevgep31.i.i.i.i.i.i, %.lr.ph.i.i.preheader.i.i.i.i.i.i1282 ] ; 2 uses
   %i.fcb = shl nsw i64 %.sext.i.i.i.i.i.i, 1
   %i.fcc = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fcb
-  %i.fcd = shl nsw i64 %i.fav, 1
-  %i.fce = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fcd
+  %i.fcd = shl nuw nsw i64 %i.fav, 1
+  %i.fce = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fcd
   %i.fcf = shl nuw nsw i64 %.zext.i.i.i.i.i.i, 1
   %i.fcg = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fcf ; 2 uses
   %i.fch = getelementptr inbounds nuw i8, ptr %i.fcg, i64 1
@@ -1281,10 +1281,10 @@ bb.asi:                                           ; preds = %bb.ash
   %i.fgl = add nsw i64 %.neg.i7.i.i.i61.i.i.i.i.i, %i.fgh
   %.neg.i8.i.i.i62.i.i.i.i.i = mul nsw i64 %i.fgk, -60
   %i.fgm = add nsw i64 %i.fgl, %.neg.i8.i.i.i62.i.i.i.i.i
-  %i.fgn = shl nsw i64 %i.fgm, 1
-  %i.fgo = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fgn
-  %i.fgp = shl nsw i64 %i.fgk, 1
-  %i.fgq = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fgp
+  %i.fgn = shl nuw nsw i64 %i.fgm, 1
+  %i.fgo = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fgn
+  %i.fgp = shl nuw nsw i64 %i.fgk, 1
+  %i.fgq = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fgp
   %i.fgr = shl nuw nsw i64 %.zext.i59.i.i.i.i.i, 1
   %i.fgs = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fgr
   call void @llvm.lifetime.start.p0(ptr nonnull %81), !noalias !21604
@@ -1687,8 +1687,8 @@ _ZN5arrow8internal6detail14FormatHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl10
   %i.fod = phi ptr [ %i.fnv, %_ZN5arrow8internal6detail15FormatAllDigitsIlEEvT_PPc.exit.i.i.i.i.i.i.i.i1376 ], [ %scevgep31.i.i.i.i.i.i1385, %.lr.ph.i.i.preheader.i.i.i.i.i.i1382 ] ; 2 uses
   %i.foe = shl nsw i64 %.sext.i.i.i.i.i.i1371, 1
   %i.fof = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.foe
-  %i.fog = shl nsw i64 %i.fmy, 1
-  %i.foh = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fog
+  %i.fog = shl nuw nsw i64 %i.fmy, 1
+  %i.foh = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fog
   %i.foi = shl nuw nsw i64 %.zext.i.i.i.i.i.i1365, 1
   %i.foj = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.foi ; 2 uses
   %i.fok = getelementptr inbounds nuw i8, ptr %i.foj, i64 1
@@ -1963,10 +1963,10 @@ bb.aur:                                           ; preds = %bb.auq
   %i.fte = add nsw i64 %.neg.i7.i.i.i65.i.i.i.i.i, %.val4.i.i1293
   %.neg.i8.i.i.i66.i.i.i.i.i = mul nsw i64 %i.ftd, -60
   %i.ftf = add nsw i64 %i.fte, %.neg.i8.i.i.i66.i.i.i.i.i
-  %i.ftg = shl nsw i64 %i.ftf, 1
-  %i.fth = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ftg
-  %i.fti = shl nsw i64 %i.ftd, 1
-  %i.ftj = getelementptr inbounds i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fti
+  %i.ftg = shl nuw nsw i64 %i.ftf, 1
+  %i.fth = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ftg
+  %i.fti = shl nuw nsw i64 %i.ftd, 1
+  %i.ftj = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.fti
   %i.ftk = shl nuw nsw i64 %.zext.i63.i.i.i.i.i, 1
   %i.ftl = getelementptr inbounds nuw i8, ptr @_ZN5arrow8internal6detail11digit_pairsE, i64 %i.ftk
   call void @llvm.lifetime.start.p0(ptr nonnull %73), !noalias !21617

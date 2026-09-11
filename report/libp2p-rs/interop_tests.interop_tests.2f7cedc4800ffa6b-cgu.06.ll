@@ -205,7 +205,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !10, !noundef !10 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !10
-  %i.g = mul i64 %i.c, 56                         ; 7 uses
+  %i.g = mul i64 %i.c, 56                         ; 6 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXNtNtCskKLDkoKarTP_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCs5hzaM3VbZx4_5redis5types5ValueENvYNtNtB1l_6string6StringNtB24_14FromRedisValue16from_redis_valueEINtNtB7_6result6ResultzNtNtNtB26_6errors13parsing_error12ParsingErrorEENtNtNtB5_6traits8iterator8Iterator8try_foldINtNtB1j_13in_place_drop11InPlaceDropB2G_ENCINvNtB1j_16in_place_collect24write_in_place_with_dropB2G_E0IB3I_B5x_zEECs44McOc0n4RX_13interop_tests(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -248,8 +248,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCs5hzaM3VbZx4_5redis5types5ValueNtNtB6_6string6StringECs44McOc0n4RX_13interop_tests.exit.thread
 
-_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCs5hzaM3VbZx4_5redis5types5ValueNtNtB6_6string6StringECs44McOc0n4RX_13interop_tests.exit.thread: ; preds = %2, %bb.h, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.y, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %bb.h ]
+_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCs5hzaM3VbZx4_5redis5types5ValueNtNtB6_6string6StringECs44McOc0n4RX_13interop_tests.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -261,13 +261,9 @@ _RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCs5hzaM3Vb
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ult i64 %i.g, 24
-  br i1 %i.w, label %2, label %bb.i
+  br i1 %i.w, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCs5hzaM3VbZx4_5redis5types5ValueNtNtB6_6string6StringECs44McOc0n4RX_13interop_tests.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #38
   br label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCs5hzaM3VbZx4_5redis5types5ValueNtNtB6_6string6StringECs44McOc0n4RX_13interop_tests.exit.thread
 

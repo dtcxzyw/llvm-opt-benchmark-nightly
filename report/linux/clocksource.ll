@@ -204,27 +204,21 @@ bb.j:                                             ; preds = %bb.i
   %or.cond6077.i = or i1 %i.bb, %i.bc
   br i1 %or.cond6077.i, label %.critedge2.i, label %.critedge.i
 
-.critedge2.i:                                     ; preds = %.loopexit.i, %.critedge2.i
-  %3 = phi i32 [ %i.be, %.critedge2.i ], [ %.022.lcssa.i.i, %.loopexit.i ]
-  %4 = phi i32 [ %i.bd, %.critedge2.i ], [ %i.aw, %.loopexit.i ]
-  %i.bd = lshr i32 %4, 1                          ; 5 uses
-  %i.be = add i32 %3, -1                          ; 2 uses
+.critedge2.i:                                     ; preds = %.loopexit.i
+  %i.bd = lshr i32 %i.aw, 1                       ; 3 uses
+  %i.be = add i32 %.022.lcssa.i.i, -1
   %storemerge.in.in.in.i = zext nneg i32 %i.bd to i64
   %storemerge.in.in.i = mul nuw nsw i64 %storemerge.in.in.in.i, 11
   %storemerge.in.i = udiv i64 %storemerge.in.in.i, 100
-  %storemerge.i = trunc nuw nsw i64 %storemerge.in.i to i32 ; 2 uses
-  %5 = icmp samesign ult i32 %i.bd, %storemerge.i
-  br i1 %5, label %.critedge2.i, label %...critedge_crit_edge.split_crit_edge.i
-
-...critedge_crit_edge.split_crit_edge.i:          ; preds = %.critedge2.i
+  %storemerge.i = trunc nuw nsw i64 %storemerge.in.i to i32
   store i32 %i.bd, ptr %i.w, align 8
   store i32 %i.be, ptr %i.x, align 4
   br label %.critedge.i
 
-.critedge.i:                                      ; preds = %...critedge_crit_edge.split_crit_edge.i, %.loopexit.i, %.thread.i
-  %i.bf = phi ptr [ %.phi.trans.insert.i, %.thread.i ], [ %i.w, %.loopexit.i ], [ %i.w, %...critedge_crit_edge.split_crit_edge.i ]
-  %i.bg = phi i32 [ %.val61.pre.i, %.thread.i ], [ %i.aw, %.loopexit.i ], [ %i.bd, %...critedge_crit_edge.split_crit_edge.i ] ; 2 uses
-  %storemerge.lcssa64.i = phi i32 [ %storemerge6896.i, %.thread.i ], [ %storemerge68.i, %.loopexit.i ], [ %storemerge.i, %...critedge_crit_edge.split_crit_edge.i ] ; 3 uses
+.critedge.i:                                      ; preds = %.critedge2.i, %.loopexit.i, %.thread.i
+  %i.bf = phi ptr [ %.phi.trans.insert.i, %.thread.i ], [ %i.w, %.loopexit.i ], [ %i.w, %.critedge2.i ]
+  %i.bg = phi i32 [ %.val61.pre.i, %.thread.i ], [ %i.aw, %.loopexit.i ], [ %i.bd, %.critedge2.i ] ; 2 uses
+  %storemerge.lcssa64.i = phi i32 [ %storemerge6896.i, %.thread.i ], [ %storemerge68.i, %.loopexit.i ], [ %storemerge.i, %.critedge2.i ] ; 3 uses
   %i.bh = getelementptr i8, ptr %0, i64 32        ; 2 uses
   store i32 %storemerge.lcssa64.i, ptr %i.bh, align 8
   %i.bi = xor i32 %i.bg, -1
