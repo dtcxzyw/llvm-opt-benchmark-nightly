@@ -205,7 +205,7 @@ _ZN5zxing8ArrayRefIcED2Ev.exit:                   ; preds = %_ZN5zxing3RefINS_9B
   br label %bb.ag
 
 .lr.ph120:                                        ; preds = %.lr.ph120.preheader, %._crit_edge121.split
-  %.071122 = phi i32 [ %i.ey, %._crit_edge121.split ], [ 0, %.lr.ph120.preheader ] ; 4 uses
+  %.071122 = phi i32 [ 0, %.lr.ph120.preheader ], [ %i.ey, %._crit_edge121.split ] ; 4 uses
   %i.en = sub nsw i32 %.071122, %i.u
   %i.eo = call i32 @llvm.smax.i32(i32 %i.en, i32 -1)
   %i.ep = add nsw i32 %i.eo, 1                    ; 2 uses
@@ -215,28 +215,22 @@ _ZN5zxing8ArrayRefIcED2Ev.exit:                   ; preds = %_ZN5zxing3RefINS_9B
   %i.et = mul nsw i32 %i.ep, %i.x                 ; 2 uses
   %i.eu = sub nsw i32 %i.er, %i.ep
   %i.ev = mul i32 %i.eu, 36
-  %i.ew = mul nuw i32 %.071122, 6                 ; 8 uses
-  %i.ex = add nuw i32 %i.ew, 6
-  %5 = icmp slt i32 %i.ew, 2147483642
-  br i1 %5, label %.lr.ph116.preheader, label %._crit_edge121.split
-
-.lr.ph116.preheader:                              ; preds = %.lr.ph120
-  %6 = or disjoint i32 %i.ew, 1                   ; 2 uses
-  %7 = icmp slt i32 %6, %i.ex
-  %8 = add nuw nsw i32 %i.ew, 2
-  %9 = add nuw nsw i32 %i.ew, 3
-  %10 = add nuw nsw i32 %i.ew, 4
-  %11 = add nuw nsw i32 %i.ew, 5
+  %i.ew = mul nuw nsw i32 %.071122, 6             ; 6 uses
+  %5 = or disjoint i32 %i.ew, 1
+  %6 = add nuw nsw i32 %i.ew, 2
+  %7 = add nuw nsw i32 %i.ew, 3
+  %i.ex = add nuw nsw i32 %i.ew, 4
+  %8 = add nuw nsw i32 %i.ew, 5
   br label %.lr.ph116
 
-._crit_edge121.split:                             ; preds = %._crit_edge117.split, %.lr.ph120
+._crit_edge121.split:                             ; preds = %.lr.ph116
   %i.ey = add nuw nsw i32 %.071122, 1             ; 2 uses
   %exitcond133.not = icmp eq i32 %i.ey, %umax132
   br i1 %exitcond133.not, label %._crit_edge125.split, label %.lr.ph120, !llvm.loop !80
 
-.lr.ph116:                                        ; preds = %.lr.ph116.preheader, %._crit_edge117.split
-  %indvars.iv127 = phi i64 [ %indvars.iv.next128, %._crit_edge117.split ], [ 0, %.lr.ph116.preheader ] ; 18 uses
-  %.070118 = phi i32 [ %25, %._crit_edge117.split ], [ 0, %.lr.ph116.preheader ] ; 4 uses
+.lr.ph116:                                        ; preds = %.lr.ph120, %.lr.ph116
+  %indvars.iv127 = phi i64 [ 0, %.lr.ph120 ], [ %indvars.iv.next122, %.lr.ph116 ] ; 18 uses
+  %.070118 = phi i32 [ 0, %.lr.ph120 ], [ %187, %.lr.ph116 ] ; 3 uses
   %i.ez = sub nsw i32 %.070118, %i.u
   %i.fa = call i32 @llvm.smax.i32(i32 %i.ez, i32 -1)
   %i.fb = add nsw i32 %i.fa, 1                    ; 3 uses
@@ -265,314 +259,267 @@ _ZN5zxing8ArrayRefIcED2Ev.exit:                   ; preds = %_ZN5zxing3RefINS_9B
   %i.fx = sub nsw i32 %i.fd, %i.fb
   %i.fy = mul i32 %i.ev, %i.fx
   %i.fz = sdiv i32 %i.fw, %i.fy                   ; 36 uses
-  %i.ga = mul nuw i32 %.070118, 6                 ; 2 uses
-  %i.gb = icmp slt i32 %i.ga, 2147483642
-  br i1 %i.gb, label %.lr.ph113.preheader, label %._crit_edge117.split
-
-.lr.ph113.preheader:                              ; preds = %.lr.ph116
-  %12 = add nuw i32 %i.ga, 6
-  %indvars.iv.next130 = or disjoint i64 %indvars.iv127, 1 ; 13 uses
-  %13 = trunc nuw i64 %indvars.iv.next130 to i32
-  %14 = icmp sgt i32 %12, %13                     ; 6 uses
-  %indvars.iv.next130.1 = add nuw nsw i64 %indvars.iv127, 2 ; 12 uses
-  %indvars.iv.next130.2 = add nuw nsw i64 %indvars.iv127, 3 ; 12 uses
-  %indvars.iv.next130.3 = add nuw nsw i64 %indvars.iv127, 4 ; 12 uses
-  %indvars.iv.next130.4 = add nuw nsw i64 %indvars.iv127, 5 ; 12 uses
-  %15 = load ptr, ptr %i.am, align 8, !tbaa !43
-  %16 = load i32, ptr %i.i, align 4, !tbaa !32
-  %17 = mul nsw i32 %16, %i.ew
-  %18 = sext i32 %17 to i64                       ; 2 uses
-  %19 = getelementptr inbounds [4 x i8], ptr %15, i64 %18 ; 6 uses
-  %20 = getelementptr inbounds i8, ptr %i.dm, i64 %18 ; 6 uses
-  %21 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %indvars.iv127
-  %22 = load i32, ptr %21, align 4, !tbaa !60
-  %23 = icmp slt i32 %22, %i.fz
-  %spec.select = zext i1 %23 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %20, i64 %indvars.iv127
-  store i8 %spec.select, ptr %24, align 1, !tbaa !62
-  br i1 %14, label %181, label %._crit_edge
-
-._crit_edge117.split:                             ; preds = %._crit_edge.4, %160, %._crit_edge, %.lr.ph116
-  %25 = add nuw nsw i32 %.070118, 1               ; 2 uses
-  %indvars.iv.next128 = add nuw nsw i64 %indvars.iv127, 6
-  %exitcond.not = icmp eq i32 %25, %umax
-  br i1 %exitcond.not, label %._crit_edge121.split, label %.lr.ph116, !llvm.loop !81
-
-._crit_edge:                                      ; preds = %181, %.lr.ph113.preheader
-  br i1 %7, label %.lr.ph113.1, label %._crit_edge117.split
-
-.lr.ph113.1:                                      ; preds = %._crit_edge
-  %26 = load ptr, ptr %i.am, align 8, !tbaa !43
-  %27 = load i32, ptr %i.i, align 4, !tbaa !32
-  %28 = mul nsw i32 %27, %6
-  %29 = sext i32 %28 to i64                       ; 2 uses
-  %30 = getelementptr inbounds [4 x i8], ptr %26, i64 %29 ; 6 uses
-  %31 = getelementptr inbounds i8, ptr %i.dm, i64 %29 ; 6 uses
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %30, i64 %indvars.iv127
-  %33 = load i32, ptr %32, align 4, !tbaa !60
-  %34 = icmp slt i32 %33, %i.fz
-  %spec.select.1 = zext i1 %34 to i8
-  %35 = getelementptr inbounds nuw i8, ptr %31, i64 %indvars.iv127
-  store i8 %spec.select.1, ptr %35, align 1, !tbaa !62
-  br i1 %14, label %36, label %._crit_edge.1
-
-36:                                               ; preds = %.lr.ph113.1
-  %37 = getelementptr inbounds nuw [4 x i8], ptr %30, i64 %indvars.iv.next130
-  %38 = load i32, ptr %37, align 4, !tbaa !60
-  %39 = icmp slt i32 %38, %i.fz
-  %spec.select153.1 = zext i1 %39 to i8
-  %40 = getelementptr inbounds nuw i8, ptr %31, i64 %indvars.iv.next130
-  store i8 %spec.select153.1, ptr %40, align 1, !tbaa !62
-  %41 = getelementptr inbounds nuw [4 x i8], ptr %30, i64 %indvars.iv.next130.1
-  %42 = load i32, ptr %41, align 4, !tbaa !60
-  %43 = icmp slt i32 %42, %i.fz
-  %.sink135.1 = zext i1 %43 to i8
-  %44 = getelementptr inbounds nuw i8, ptr %31, i64 %indvars.iv.next130.1
-  store i8 %.sink135.1, ptr %44, align 1, !tbaa !62
-  %45 = getelementptr inbounds nuw [4 x i8], ptr %30, i64 %indvars.iv.next130.2
+  %indvars.iv.next124.4 = add nuw nsw i64 %indvars.iv127, 5 ; 12 uses
+  %indvars.iv.next124.3 = add nuw nsw i64 %indvars.iv127, 4 ; 12 uses
+  %indvars.iv.next124.2 = add nuw nsw i64 %indvars.iv127, 3 ; 12 uses
+  %indvars.iv.next124.1 = add nuw nsw i64 %indvars.iv127, 2 ; 12 uses
+  %indvars.iv.next124 = or disjoint i64 %indvars.iv127, 1 ; 12 uses
+  %9 = load ptr, ptr %i.am, align 8, !tbaa !43
+  %10 = load i32, ptr %i.i, align 4, !tbaa !32
+  %11 = mul nsw i32 %10, %i.ew
+  %12 = sext i32 %11 to i64                       ; 2 uses
+  %13 = getelementptr inbounds [4 x i8], ptr %9, i64 %12 ; 6 uses
+  %14 = getelementptr inbounds i8, ptr %i.dm, i64 %12 ; 6 uses
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv127
+  %16 = load i32, ptr %15, align 4, !tbaa !60
+  %17 = icmp slt i32 %16, %i.fz
+  %spec.select = zext i1 %17 to i8
+  %18 = getelementptr inbounds nuw i8, ptr %14, i64 %indvars.iv127
+  store i8 %spec.select, ptr %18, align 1, !tbaa !62
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv.next124
+  %20 = load i32, ptr %19, align 4, !tbaa !60
+  %21 = icmp slt i32 %20, %i.fz
+  %.sink133 = zext i1 %21 to i8
+  %22 = getelementptr inbounds nuw i8, ptr %14, i64 %indvars.iv.next124
+  store i8 %.sink133, ptr %22, align 1, !tbaa !62
+  %23 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv.next124.1
+  %24 = load i32, ptr %23, align 4, !tbaa !60
+  %25 = icmp slt i32 %24, %i.fz
+  %.sink134 = zext i1 %25 to i8
+  %26 = getelementptr inbounds nuw i8, ptr %14, i64 %indvars.iv.next124.1
+  store i8 %.sink134, ptr %26, align 1, !tbaa !62
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv.next124.2
+  %28 = load i32, ptr %27, align 4, !tbaa !60
+  %29 = icmp slt i32 %28, %i.fz
+  %.sink135 = zext i1 %29 to i8
+  %30 = getelementptr inbounds nuw i8, ptr %14, i64 %indvars.iv.next124.2
+  store i8 %.sink135, ptr %30, align 1, !tbaa !62
+  %31 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv.next124.3
+  %32 = load i32, ptr %31, align 4, !tbaa !60
+  %33 = icmp slt i32 %32, %i.fz
+  %.sink136 = zext i1 %33 to i8
+  %34 = getelementptr inbounds nuw i8, ptr %14, i64 %indvars.iv.next124.3
+  store i8 %.sink136, ptr %34, align 1, !tbaa !62
+  %35 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %indvars.iv.next124.4
+  %36 = load i32, ptr %35, align 4, !tbaa !60
+  %37 = icmp slt i32 %36, %i.fz
+  %.sink137 = zext i1 %37 to i8
+  %38 = getelementptr inbounds nuw i8, ptr %14, i64 %indvars.iv.next124.4
+  store i8 %.sink137, ptr %38, align 1, !tbaa !62
+  %39 = load ptr, ptr %i.am, align 8, !tbaa !43
+  %40 = load i32, ptr %i.i, align 4, !tbaa !32
+  %41 = mul nsw i32 %40, %5
+  %42 = sext i32 %41 to i64                       ; 2 uses
+  %43 = getelementptr inbounds [4 x i8], ptr %39, i64 %42 ; 6 uses
+  %44 = getelementptr inbounds i8, ptr %i.dm, i64 %42 ; 6 uses
+  %45 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %indvars.iv127
   %46 = load i32, ptr %45, align 4, !tbaa !60
   %47 = icmp slt i32 %46, %i.fz
-  %.sink136.1 = zext i1 %47 to i8
-  %48 = getelementptr inbounds nuw i8, ptr %31, i64 %indvars.iv.next130.2
-  store i8 %.sink136.1, ptr %48, align 1, !tbaa !62
-  %49 = getelementptr inbounds nuw [4 x i8], ptr %30, i64 %indvars.iv.next130.3
+  %spec.select.1 = zext i1 %47 to i8
+  %48 = getelementptr inbounds nuw i8, ptr %44, i64 %indvars.iv127
+  store i8 %spec.select.1, ptr %48, align 1, !tbaa !62
+  %49 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %indvars.iv.next124
   %50 = load i32, ptr %49, align 4, !tbaa !60
   %51 = icmp slt i32 %50, %i.fz
-  %.sink137.1 = zext i1 %51 to i8
-  %52 = getelementptr inbounds nuw i8, ptr %31, i64 %indvars.iv.next130.3
-  store i8 %.sink137.1, ptr %52, align 1, !tbaa !62
-  %53 = getelementptr inbounds nuw [4 x i8], ptr %30, i64 %indvars.iv.next130.4
+  %.sink133.1 = zext i1 %51 to i8
+  %52 = getelementptr inbounds nuw i8, ptr %44, i64 %indvars.iv.next124
+  store i8 %.sink133.1, ptr %52, align 1, !tbaa !62
+  %53 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %indvars.iv.next124.1
   %54 = load i32, ptr %53, align 4, !tbaa !60
   %55 = icmp slt i32 %54, %i.fz
-  %.sink138.1 = zext i1 %55 to i8
-  %56 = getelementptr inbounds nuw i8, ptr %31, i64 %indvars.iv.next130.4
-  store i8 %.sink138.1, ptr %56, align 1, !tbaa !62
-  br label %._crit_edge.1
-
-._crit_edge.1:                                    ; preds = %36, %.lr.ph113.1
-  %57 = load ptr, ptr %i.am, align 8, !tbaa !43
-  %58 = load i32, ptr %i.i, align 4, !tbaa !32
-  %59 = mul nsw i32 %58, %8
-  %60 = sext i32 %59 to i64                       ; 2 uses
-  %61 = getelementptr inbounds [4 x i8], ptr %57, i64 %60 ; 6 uses
-  %62 = getelementptr inbounds i8, ptr %i.dm, i64 %60 ; 6 uses
-  %63 = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv127
-  %64 = load i32, ptr %63, align 4, !tbaa !60
-  %65 = icmp slt i32 %64, %i.fz
-  %spec.select.2 = zext i1 %65 to i8
-  %66 = getelementptr inbounds nuw i8, ptr %62, i64 %indvars.iv127
-  store i8 %spec.select.2, ptr %66, align 1, !tbaa !62
-  br i1 %14, label %67, label %._crit_edge.2
-
-67:                                               ; preds = %._crit_edge.1
-  %68 = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv.next130
-  %69 = load i32, ptr %68, align 4, !tbaa !60
-  %70 = icmp slt i32 %69, %i.fz
-  %spec.select153.2 = zext i1 %70 to i8
-  %71 = getelementptr inbounds nuw i8, ptr %62, i64 %indvars.iv.next130
-  store i8 %spec.select153.2, ptr %71, align 1, !tbaa !62
-  %72 = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv.next130.1
-  %73 = load i32, ptr %72, align 4, !tbaa !60
-  %74 = icmp slt i32 %73, %i.fz
-  %.sink135.2 = zext i1 %74 to i8
-  %75 = getelementptr inbounds nuw i8, ptr %62, i64 %indvars.iv.next130.1
-  store i8 %.sink135.2, ptr %75, align 1, !tbaa !62
-  %76 = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv.next130.2
-  %77 = load i32, ptr %76, align 4, !tbaa !60
-  %78 = icmp slt i32 %77, %i.fz
-  %.sink136.2 = zext i1 %78 to i8
-  %79 = getelementptr inbounds nuw i8, ptr %62, i64 %indvars.iv.next130.2
-  store i8 %.sink136.2, ptr %79, align 1, !tbaa !62
-  %80 = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv.next130.3
-  %81 = load i32, ptr %80, align 4, !tbaa !60
-  %82 = icmp slt i32 %81, %i.fz
-  %.sink137.2 = zext i1 %82 to i8
-  %83 = getelementptr inbounds nuw i8, ptr %62, i64 %indvars.iv.next130.3
-  store i8 %.sink137.2, ptr %83, align 1, !tbaa !62
-  %84 = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv.next130.4
-  %85 = load i32, ptr %84, align 4, !tbaa !60
-  %86 = icmp slt i32 %85, %i.fz
-  %.sink138.2 = zext i1 %86 to i8
-  %87 = getelementptr inbounds nuw i8, ptr %62, i64 %indvars.iv.next130.4
-  store i8 %.sink138.2, ptr %87, align 1, !tbaa !62
-  br label %._crit_edge.2
-
-._crit_edge.2:                                    ; preds = %67, %._crit_edge.1
-  %88 = load ptr, ptr %i.am, align 8, !tbaa !43
-  %89 = load i32, ptr %i.i, align 4, !tbaa !32
-  %90 = mul nsw i32 %89, %9
-  %91 = sext i32 %90 to i64                       ; 2 uses
-  %92 = getelementptr inbounds [4 x i8], ptr %88, i64 %91 ; 6 uses
-  %93 = getelementptr inbounds i8, ptr %i.dm, i64 %91 ; 6 uses
-  %94 = getelementptr inbounds nuw [4 x i8], ptr %92, i64 %indvars.iv127
-  %95 = load i32, ptr %94, align 4, !tbaa !60
-  %96 = icmp slt i32 %95, %i.fz
-  %spec.select.3 = zext i1 %96 to i8
-  %97 = getelementptr inbounds nuw i8, ptr %93, i64 %indvars.iv127
-  store i8 %spec.select.3, ptr %97, align 1, !tbaa !62
-  br i1 %14, label %98, label %._crit_edge.3
-
-98:                                               ; preds = %._crit_edge.2
-  %99 = getelementptr inbounds nuw [4 x i8], ptr %92, i64 %indvars.iv.next130
-  %100 = load i32, ptr %99, align 4, !tbaa !60
-  %101 = icmp slt i32 %100, %i.fz
-  %spec.select153.3 = zext i1 %101 to i8
-  %102 = getelementptr inbounds nuw i8, ptr %93, i64 %indvars.iv.next130
-  store i8 %spec.select153.3, ptr %102, align 1, !tbaa !62
-  %103 = getelementptr inbounds nuw [4 x i8], ptr %92, i64 %indvars.iv.next130.1
-  %104 = load i32, ptr %103, align 4, !tbaa !60
-  %105 = icmp slt i32 %104, %i.fz
-  %.sink135.3 = zext i1 %105 to i8
-  %106 = getelementptr inbounds nuw i8, ptr %93, i64 %indvars.iv.next130.1
-  store i8 %.sink135.3, ptr %106, align 1, !tbaa !62
-  %107 = getelementptr inbounds nuw [4 x i8], ptr %92, i64 %indvars.iv.next130.2
-  %108 = load i32, ptr %107, align 4, !tbaa !60
-  %109 = icmp slt i32 %108, %i.fz
-  %.sink136.3 = zext i1 %109 to i8
-  %110 = getelementptr inbounds nuw i8, ptr %93, i64 %indvars.iv.next130.2
-  store i8 %.sink136.3, ptr %110, align 1, !tbaa !62
-  %111 = getelementptr inbounds nuw [4 x i8], ptr %92, i64 %indvars.iv.next130.3
-  %112 = load i32, ptr %111, align 4, !tbaa !60
-  %113 = icmp slt i32 %112, %i.fz
-  %.sink137.3 = zext i1 %113 to i8
-  %114 = getelementptr inbounds nuw i8, ptr %93, i64 %indvars.iv.next130.3
-  store i8 %.sink137.3, ptr %114, align 1, !tbaa !62
-  %115 = getelementptr inbounds nuw [4 x i8], ptr %92, i64 %indvars.iv.next130.4
-  %116 = load i32, ptr %115, align 4, !tbaa !60
-  %117 = icmp slt i32 %116, %i.fz
-  %.sink138.3 = zext i1 %117 to i8
-  %118 = getelementptr inbounds nuw i8, ptr %93, i64 %indvars.iv.next130.4
-  store i8 %.sink138.3, ptr %118, align 1, !tbaa !62
-  br label %._crit_edge.3
-
-._crit_edge.3:                                    ; preds = %98, %._crit_edge.2
-  %119 = load ptr, ptr %i.am, align 8, !tbaa !43
-  %120 = load i32, ptr %i.i, align 4, !tbaa !32
-  %121 = mul nsw i32 %120, %10
-  %122 = sext i32 %121 to i64                     ; 2 uses
-  %123 = getelementptr inbounds [4 x i8], ptr %119, i64 %122 ; 6 uses
-  %124 = getelementptr inbounds i8, ptr %i.dm, i64 %122 ; 6 uses
-  %125 = getelementptr inbounds nuw [4 x i8], ptr %123, i64 %indvars.iv127
+  %.sink134.1 = zext i1 %55 to i8
+  %56 = getelementptr inbounds nuw i8, ptr %44, i64 %indvars.iv.next124.1
+  store i8 %.sink134.1, ptr %56, align 1, !tbaa !62
+  %57 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %indvars.iv.next124.2
+  %58 = load i32, ptr %57, align 4, !tbaa !60
+  %59 = icmp slt i32 %58, %i.fz
+  %.sink135.1 = zext i1 %59 to i8
+  %60 = getelementptr inbounds nuw i8, ptr %44, i64 %indvars.iv.next124.2
+  store i8 %.sink135.1, ptr %60, align 1, !tbaa !62
+  %61 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %indvars.iv.next124.3
+  %62 = load i32, ptr %61, align 4, !tbaa !60
+  %63 = icmp slt i32 %62, %i.fz
+  %.sink136.1 = zext i1 %63 to i8
+  %64 = getelementptr inbounds nuw i8, ptr %44, i64 %indvars.iv.next124.3
+  store i8 %.sink136.1, ptr %64, align 1, !tbaa !62
+  %65 = getelementptr inbounds nuw [4 x i8], ptr %43, i64 %indvars.iv.next124.4
+  %66 = load i32, ptr %65, align 4, !tbaa !60
+  %67 = icmp slt i32 %66, %i.fz
+  %.sink137.1 = zext i1 %67 to i8
+  %68 = getelementptr inbounds nuw i8, ptr %44, i64 %indvars.iv.next124.4
+  store i8 %.sink137.1, ptr %68, align 1, !tbaa !62
+  %69 = load ptr, ptr %i.am, align 8, !tbaa !43
+  %70 = load i32, ptr %i.i, align 4, !tbaa !32
+  %71 = mul nsw i32 %70, %6
+  %72 = sext i32 %71 to i64                       ; 2 uses
+  %73 = getelementptr inbounds [4 x i8], ptr %69, i64 %72 ; 6 uses
+  %74 = getelementptr inbounds i8, ptr %i.dm, i64 %72 ; 6 uses
+  %75 = getelementptr inbounds nuw [4 x i8], ptr %73, i64 %indvars.iv127
+  %76 = load i32, ptr %75, align 4, !tbaa !60
+  %77 = icmp slt i32 %76, %i.fz
+  %spec.select.2 = zext i1 %77 to i8
+  %78 = getelementptr inbounds nuw i8, ptr %74, i64 %indvars.iv127
+  store i8 %spec.select.2, ptr %78, align 1, !tbaa !62
+  %79 = getelementptr inbounds nuw [4 x i8], ptr %73, i64 %indvars.iv.next124
+  %80 = load i32, ptr %79, align 4, !tbaa !60
+  %81 = icmp slt i32 %80, %i.fz
+  %.sink133.2 = zext i1 %81 to i8
+  %82 = getelementptr inbounds nuw i8, ptr %74, i64 %indvars.iv.next124
+  store i8 %.sink133.2, ptr %82, align 1, !tbaa !62
+  %83 = getelementptr inbounds nuw [4 x i8], ptr %73, i64 %indvars.iv.next124.1
+  %84 = load i32, ptr %83, align 4, !tbaa !60
+  %85 = icmp slt i32 %84, %i.fz
+  %.sink134.2 = zext i1 %85 to i8
+  %86 = getelementptr inbounds nuw i8, ptr %74, i64 %indvars.iv.next124.1
+  store i8 %.sink134.2, ptr %86, align 1, !tbaa !62
+  %87 = getelementptr inbounds nuw [4 x i8], ptr %73, i64 %indvars.iv.next124.2
+  %88 = load i32, ptr %87, align 4, !tbaa !60
+  %89 = icmp slt i32 %88, %i.fz
+  %.sink135.2 = zext i1 %89 to i8
+  %90 = getelementptr inbounds nuw i8, ptr %74, i64 %indvars.iv.next124.2
+  store i8 %.sink135.2, ptr %90, align 1, !tbaa !62
+  %91 = getelementptr inbounds nuw [4 x i8], ptr %73, i64 %indvars.iv.next124.3
+  %92 = load i32, ptr %91, align 4, !tbaa !60
+  %93 = icmp slt i32 %92, %i.fz
+  %.sink136.2 = zext i1 %93 to i8
+  %94 = getelementptr inbounds nuw i8, ptr %74, i64 %indvars.iv.next124.3
+  store i8 %.sink136.2, ptr %94, align 1, !tbaa !62
+  %95 = getelementptr inbounds nuw [4 x i8], ptr %73, i64 %indvars.iv.next124.4
+  %96 = load i32, ptr %95, align 4, !tbaa !60
+  %97 = icmp slt i32 %96, %i.fz
+  %.sink137.2 = zext i1 %97 to i8
+  %98 = getelementptr inbounds nuw i8, ptr %74, i64 %indvars.iv.next124.4
+  store i8 %.sink137.2, ptr %98, align 1, !tbaa !62
+  %99 = load ptr, ptr %i.am, align 8, !tbaa !43
+  %100 = load i32, ptr %i.i, align 4, !tbaa !32
+  %101 = mul nsw i32 %100, %7
+  %102 = sext i32 %101 to i64                     ; 2 uses
+  %103 = getelementptr inbounds [4 x i8], ptr %99, i64 %102 ; 6 uses
+  %104 = getelementptr inbounds i8, ptr %i.dm, i64 %102 ; 6 uses
+  %105 = getelementptr inbounds nuw [4 x i8], ptr %103, i64 %indvars.iv127
+  %106 = load i32, ptr %105, align 4, !tbaa !60
+  %107 = icmp slt i32 %106, %i.fz
+  %spec.select.3 = zext i1 %107 to i8
+  %108 = getelementptr inbounds nuw i8, ptr %104, i64 %indvars.iv127
+  store i8 %spec.select.3, ptr %108, align 1, !tbaa !62
+  %109 = getelementptr inbounds nuw [4 x i8], ptr %103, i64 %indvars.iv.next124
+  %110 = load i32, ptr %109, align 4, !tbaa !60
+  %111 = icmp slt i32 %110, %i.fz
+  %.sink133.3 = zext i1 %111 to i8
+  %112 = getelementptr inbounds nuw i8, ptr %104, i64 %indvars.iv.next124
+  store i8 %.sink133.3, ptr %112, align 1, !tbaa !62
+  %113 = getelementptr inbounds nuw [4 x i8], ptr %103, i64 %indvars.iv.next124.1
+  %114 = load i32, ptr %113, align 4, !tbaa !60
+  %115 = icmp slt i32 %114, %i.fz
+  %.sink134.3 = zext i1 %115 to i8
+  %116 = getelementptr inbounds nuw i8, ptr %104, i64 %indvars.iv.next124.1
+  store i8 %.sink134.3, ptr %116, align 1, !tbaa !62
+  %117 = getelementptr inbounds nuw [4 x i8], ptr %103, i64 %indvars.iv.next124.2
+  %118 = load i32, ptr %117, align 4, !tbaa !60
+  %119 = icmp slt i32 %118, %i.fz
+  %.sink135.3 = zext i1 %119 to i8
+  %120 = getelementptr inbounds nuw i8, ptr %104, i64 %indvars.iv.next124.2
+  store i8 %.sink135.3, ptr %120, align 1, !tbaa !62
+  %121 = getelementptr inbounds nuw [4 x i8], ptr %103, i64 %indvars.iv.next124.3
+  %122 = load i32, ptr %121, align 4, !tbaa !60
+  %123 = icmp slt i32 %122, %i.fz
+  %.sink136.3 = zext i1 %123 to i8
+  %124 = getelementptr inbounds nuw i8, ptr %104, i64 %indvars.iv.next124.3
+  store i8 %.sink136.3, ptr %124, align 1, !tbaa !62
+  %125 = getelementptr inbounds nuw [4 x i8], ptr %103, i64 %indvars.iv.next124.4
   %126 = load i32, ptr %125, align 4, !tbaa !60
   %127 = icmp slt i32 %126, %i.fz
-  %spec.select.4 = zext i1 %127 to i8
-  %128 = getelementptr inbounds nuw i8, ptr %124, i64 %indvars.iv127
-  store i8 %spec.select.4, ptr %128, align 1, !tbaa !62
-  br i1 %14, label %129, label %._crit_edge.4
-
-129:                                              ; preds = %._crit_edge.3
-  %130 = getelementptr inbounds nuw [4 x i8], ptr %123, i64 %indvars.iv.next130
-  %131 = load i32, ptr %130, align 4, !tbaa !60
-  %132 = icmp slt i32 %131, %i.fz
-  %spec.select153.4 = zext i1 %132 to i8
-  %133 = getelementptr inbounds nuw i8, ptr %124, i64 %indvars.iv.next130
-  store i8 %spec.select153.4, ptr %133, align 1, !tbaa !62
-  %134 = getelementptr inbounds nuw [4 x i8], ptr %123, i64 %indvars.iv.next130.1
-  %135 = load i32, ptr %134, align 4, !tbaa !60
-  %136 = icmp slt i32 %135, %i.fz
-  %.sink135.4 = zext i1 %136 to i8
-  %137 = getelementptr inbounds nuw i8, ptr %124, i64 %indvars.iv.next130.1
-  store i8 %.sink135.4, ptr %137, align 1, !tbaa !62
-  %138 = getelementptr inbounds nuw [4 x i8], ptr %123, i64 %indvars.iv.next130.2
-  %139 = load i32, ptr %138, align 4, !tbaa !60
-  %140 = icmp slt i32 %139, %i.fz
-  %.sink136.4 = zext i1 %140 to i8
-  %141 = getelementptr inbounds nuw i8, ptr %124, i64 %indvars.iv.next130.2
-  store i8 %.sink136.4, ptr %141, align 1, !tbaa !62
-  %142 = getelementptr inbounds nuw [4 x i8], ptr %123, i64 %indvars.iv.next130.3
-  %143 = load i32, ptr %142, align 4, !tbaa !60
-  %144 = icmp slt i32 %143, %i.fz
-  %.sink137.4 = zext i1 %144 to i8
-  %145 = getelementptr inbounds nuw i8, ptr %124, i64 %indvars.iv.next130.3
-  store i8 %.sink137.4, ptr %145, align 1, !tbaa !62
-  %146 = getelementptr inbounds nuw [4 x i8], ptr %123, i64 %indvars.iv.next130.4
-  %147 = load i32, ptr %146, align 4, !tbaa !60
-  %148 = icmp slt i32 %147, %i.fz
-  %.sink138.4 = zext i1 %148 to i8
-  %149 = getelementptr inbounds nuw i8, ptr %124, i64 %indvars.iv.next130.4
-  store i8 %.sink138.4, ptr %149, align 1, !tbaa !62
-  br label %._crit_edge.4
-
-._crit_edge.4:                                    ; preds = %129, %._crit_edge.3
-  %150 = load ptr, ptr %i.am, align 8, !tbaa !43
-  %151 = load i32, ptr %i.i, align 4, !tbaa !32
-  %152 = mul nsw i32 %151, %11
-  %153 = sext i32 %152 to i64                     ; 2 uses
-  %154 = getelementptr inbounds [4 x i8], ptr %150, i64 %153 ; 6 uses
-  %155 = getelementptr inbounds i8, ptr %i.dm, i64 %153 ; 6 uses
-  %156 = getelementptr inbounds nuw [4 x i8], ptr %154, i64 %indvars.iv127
-  %157 = load i32, ptr %156, align 4, !tbaa !60
-  %158 = icmp slt i32 %157, %i.fz
-  %spec.select.5 = zext i1 %158 to i8
-  %159 = getelementptr inbounds nuw i8, ptr %155, i64 %indvars.iv127
-  store i8 %spec.select.5, ptr %159, align 1, !tbaa !62
-  br i1 %14, label %160, label %._crit_edge117.split
-
-160:                                              ; preds = %._crit_edge.4
-  %161 = getelementptr inbounds nuw [4 x i8], ptr %154, i64 %indvars.iv.next130
-  %162 = load i32, ptr %161, align 4, !tbaa !60
-  %163 = icmp slt i32 %162, %i.fz
-  %spec.select153.5 = zext i1 %163 to i8
-  %164 = getelementptr inbounds nuw i8, ptr %155, i64 %indvars.iv.next130
-  store i8 %spec.select153.5, ptr %164, align 1, !tbaa !62
-  %165 = getelementptr inbounds nuw [4 x i8], ptr %154, i64 %indvars.iv.next130.1
-  %166 = load i32, ptr %165, align 4, !tbaa !60
-  %167 = icmp slt i32 %166, %i.fz
-  %.sink135.5 = zext i1 %167 to i8
-  %168 = getelementptr inbounds nuw i8, ptr %155, i64 %indvars.iv.next130.1
-  store i8 %.sink135.5, ptr %168, align 1, !tbaa !62
-  %169 = getelementptr inbounds nuw [4 x i8], ptr %154, i64 %indvars.iv.next130.2
-  %170 = load i32, ptr %169, align 4, !tbaa !60
-  %171 = icmp slt i32 %170, %i.fz
-  %.sink136.5 = zext i1 %171 to i8
-  %172 = getelementptr inbounds nuw i8, ptr %155, i64 %indvars.iv.next130.2
-  store i8 %.sink136.5, ptr %172, align 1, !tbaa !62
-  %173 = getelementptr inbounds nuw [4 x i8], ptr %154, i64 %indvars.iv.next130.3
-  %174 = load i32, ptr %173, align 4, !tbaa !60
-  %175 = icmp slt i32 %174, %i.fz
-  %.sink137.5 = zext i1 %175 to i8
-  %176 = getelementptr inbounds nuw i8, ptr %155, i64 %indvars.iv.next130.3
-  store i8 %.sink137.5, ptr %176, align 1, !tbaa !62
-  %177 = getelementptr inbounds nuw [4 x i8], ptr %154, i64 %indvars.iv.next130.4
-  %178 = load i32, ptr %177, align 4, !tbaa !60
-  %179 = icmp slt i32 %178, %i.fz
-  %.sink138.5 = zext i1 %179 to i8
-  %180 = getelementptr inbounds nuw i8, ptr %155, i64 %indvars.iv.next130.4
-  store i8 %.sink138.5, ptr %180, align 1, !tbaa !62
-  br label %._crit_edge117.split
-
-181:                                              ; preds = %.lr.ph113.preheader
-  %182 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %indvars.iv.next130
-  %183 = load i32, ptr %182, align 4, !tbaa !60
-  %184 = icmp slt i32 %183, %i.fz
-  %spec.select153 = zext i1 %184 to i8
-  %185 = getelementptr inbounds nuw i8, ptr %20, i64 %indvars.iv.next130
-  store i8 %spec.select153, ptr %185, align 1, !tbaa !62
-  %186 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %indvars.iv.next130.1
-  %187 = load i32, ptr %186, align 4, !tbaa !60
-  %188 = icmp slt i32 %187, %i.fz
-  %.sink135 = zext i1 %188 to i8
-  %189 = getelementptr inbounds nuw i8, ptr %20, i64 %indvars.iv.next130.1
-  store i8 %.sink135, ptr %189, align 1, !tbaa !62
-  %190 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %indvars.iv.next130.2
-  %191 = load i32, ptr %190, align 4, !tbaa !60
-  %192 = icmp slt i32 %191, %i.fz
-  %.sink136 = zext i1 %192 to i8
-  %193 = getelementptr inbounds nuw i8, ptr %20, i64 %indvars.iv.next130.2
-  store i8 %.sink136, ptr %193, align 1, !tbaa !62
-  %194 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %indvars.iv.next130.3
-  %195 = load i32, ptr %194, align 4, !tbaa !60
-  %196 = icmp slt i32 %195, %i.fz
-  %.sink137 = zext i1 %196 to i8
-  %197 = getelementptr inbounds nuw i8, ptr %20, i64 %indvars.iv.next130.3
-  store i8 %.sink137, ptr %197, align 1, !tbaa !62
-  %198 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %indvars.iv.next130.4
-  %199 = load i32, ptr %198, align 4, !tbaa !60
-  %200 = icmp slt i32 %199, %i.fz
-  %.sink138 = zext i1 %200 to i8
-  %201 = getelementptr inbounds nuw i8, ptr %20, i64 %indvars.iv.next130.4
-  store i8 %.sink138, ptr %201, align 1, !tbaa !62
-  br label %._crit_edge
+  %.sink137.3 = zext i1 %127 to i8
+  %128 = getelementptr inbounds nuw i8, ptr %104, i64 %indvars.iv.next124.4
+  store i8 %.sink137.3, ptr %128, align 1, !tbaa !62
+  %129 = load ptr, ptr %i.am, align 8, !tbaa !43
+  %130 = load i32, ptr %i.i, align 4, !tbaa !32
+  %131 = mul nsw i32 %130, %i.ex
+  %132 = sext i32 %131 to i64                     ; 2 uses
+  %133 = getelementptr inbounds [4 x i8], ptr %129, i64 %132 ; 6 uses
+  %134 = getelementptr inbounds i8, ptr %i.dm, i64 %132 ; 6 uses
+  %135 = getelementptr inbounds nuw [4 x i8], ptr %133, i64 %indvars.iv127
+  %136 = load i32, ptr %135, align 4, !tbaa !60
+  %137 = icmp slt i32 %136, %i.fz
+  %spec.select.4 = zext i1 %137 to i8
+  %138 = getelementptr inbounds nuw i8, ptr %134, i64 %indvars.iv127
+  store i8 %spec.select.4, ptr %138, align 1, !tbaa !62
+  %139 = getelementptr inbounds nuw [4 x i8], ptr %133, i64 %indvars.iv.next124
+  %140 = load i32, ptr %139, align 4, !tbaa !60
+  %141 = icmp slt i32 %140, %i.fz
+  %.sink133.4 = zext i1 %141 to i8
+  %142 = getelementptr inbounds nuw i8, ptr %134, i64 %indvars.iv.next124
+  store i8 %.sink133.4, ptr %142, align 1, !tbaa !62
+  %143 = getelementptr inbounds nuw [4 x i8], ptr %133, i64 %indvars.iv.next124.1
+  %144 = load i32, ptr %143, align 4, !tbaa !60
+  %145 = icmp slt i32 %144, %i.fz
+  %.sink134.4 = zext i1 %145 to i8
+  %146 = getelementptr inbounds nuw i8, ptr %134, i64 %indvars.iv.next124.1
+  store i8 %.sink134.4, ptr %146, align 1, !tbaa !62
+  %147 = getelementptr inbounds nuw [4 x i8], ptr %133, i64 %indvars.iv.next124.2
+  %148 = load i32, ptr %147, align 4, !tbaa !60
+  %149 = icmp slt i32 %148, %i.fz
+  %.sink135.4 = zext i1 %149 to i8
+  %150 = getelementptr inbounds nuw i8, ptr %134, i64 %indvars.iv.next124.2
+  store i8 %.sink135.4, ptr %150, align 1, !tbaa !62
+  %151 = getelementptr inbounds nuw [4 x i8], ptr %133, i64 %indvars.iv.next124.3
+  %152 = load i32, ptr %151, align 4, !tbaa !60
+  %153 = icmp slt i32 %152, %i.fz
+  %.sink136.4 = zext i1 %153 to i8
+  %154 = getelementptr inbounds nuw i8, ptr %134, i64 %indvars.iv.next124.3
+  store i8 %.sink136.4, ptr %154, align 1, !tbaa !62
+  %155 = getelementptr inbounds nuw [4 x i8], ptr %133, i64 %indvars.iv.next124.4
+  %156 = load i32, ptr %155, align 4, !tbaa !60
+  %157 = icmp slt i32 %156, %i.fz
+  %.sink137.4 = zext i1 %157 to i8
+  %158 = getelementptr inbounds nuw i8, ptr %134, i64 %indvars.iv.next124.4
+  store i8 %.sink137.4, ptr %158, align 1, !tbaa !62
+  %159 = load ptr, ptr %i.am, align 8, !tbaa !43
+  %160 = load i32, ptr %i.i, align 4, !tbaa !32
+  %i.ga = mul nsw i32 %160, %8
+  %161 = sext i32 %i.ga to i64                    ; 2 uses
+  %162 = getelementptr inbounds [4 x i8], ptr %159, i64 %161 ; 6 uses
+  %163 = getelementptr inbounds i8, ptr %i.dm, i64 %161 ; 6 uses
+  %164 = getelementptr inbounds nuw [4 x i8], ptr %162, i64 %indvars.iv127
+  %165 = load i32, ptr %164, align 4, !tbaa !60
+  %166 = icmp slt i32 %165, %i.fz
+  %spec.select.5 = zext i1 %166 to i8
+  %167 = getelementptr inbounds nuw i8, ptr %163, i64 %indvars.iv127
+  store i8 %spec.select.5, ptr %167, align 1, !tbaa !62
+  %168 = getelementptr inbounds nuw [4 x i8], ptr %162, i64 %indvars.iv.next124
+  %169 = load i32, ptr %168, align 4, !tbaa !60
+  %170 = icmp slt i32 %169, %i.fz
+  %.sink133.5 = zext i1 %170 to i8
+  %171 = getelementptr inbounds nuw i8, ptr %163, i64 %indvars.iv.next124
+  store i8 %.sink133.5, ptr %171, align 1, !tbaa !62
+  %172 = getelementptr inbounds nuw [4 x i8], ptr %162, i64 %indvars.iv.next124.1
+  %173 = load i32, ptr %172, align 4, !tbaa !60
+  %174 = icmp slt i32 %173, %i.fz
+  %.sink134.5 = zext i1 %174 to i8
+  %175 = getelementptr inbounds nuw i8, ptr %163, i64 %indvars.iv.next124.1
+  store i8 %.sink134.5, ptr %175, align 1, !tbaa !62
+  %176 = getelementptr inbounds nuw [4 x i8], ptr %162, i64 %indvars.iv.next124.2
+  %177 = load i32, ptr %176, align 4, !tbaa !60
+  %178 = icmp slt i32 %177, %i.fz
+  %.sink135.5 = zext i1 %178 to i8
+  %179 = getelementptr inbounds nuw i8, ptr %163, i64 %indvars.iv.next124.2
+  store i8 %.sink135.5, ptr %179, align 1, !tbaa !62
+  %180 = getelementptr inbounds nuw [4 x i8], ptr %162, i64 %indvars.iv.next124.3
+  %181 = load i32, ptr %180, align 4, !tbaa !60
+  %182 = icmp slt i32 %181, %i.fz
+  %.sink136.5 = zext i1 %182 to i8
+  %183 = getelementptr inbounds nuw i8, ptr %163, i64 %indvars.iv.next124.3
+  store i8 %.sink136.5, ptr %183, align 1, !tbaa !62
+  %184 = getelementptr inbounds nuw [4 x i8], ptr %162, i64 %indvars.iv.next124.4
+  %185 = load i32, ptr %184, align 4, !tbaa !60
+  %i.gb = icmp slt i32 %185, %i.fz
+  %.sink137.5 = zext i1 %i.gb to i8
+  %186 = getelementptr inbounds nuw i8, ptr %163, i64 %indvars.iv.next124.4
+  store i8 %.sink137.5, ptr %186, align 1, !tbaa !62
+  %187 = add nuw nsw i32 %.070118, 1              ; 2 uses
+  %indvars.iv.next122 = add nuw nsw i64 %indvars.iv127, 6
+  %exitcond130.not = icmp eq i32 %187, %umax
+  br i1 %exitcond130.not, label %._crit_edge121.split, label %.lr.ph116, !llvm.loop !81
 
 bb.t:                                             ; preds = %bb.m
   store i32 -559026175, ptr %i.cw, align 8, !tbaa !25

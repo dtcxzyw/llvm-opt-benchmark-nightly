@@ -204,11 +204,8 @@ bb.m:                                             ; preds = %bb.k
 normalize_pair.exit.i.i:                          ; preds = %bb.m
   %i.cb = udiv i32 %i.ca, 1000000                 ; 2 uses
   %.neg.i.i = mul nsw i32 %i.cb, -1000000
-  %1 = add nsw i32 %.neg.i.i, %i.ca               ; 3 uses
-  %2 = icmp slt i32 %1, 0
-  %3 = select i1 %2, i32 1000000, i32 0
-  %storemerge.i.i.i.i = add nsw i32 %3, %1
-  %.lobit.i.i.i.i = ashr i32 %1, 31
+  %storemerge.i.i.i.i = add nsw i32 %.neg.i.i, %i.ca ; 2 uses
+  %.lobit.i.i.i.i = ashr i32 %storemerge.i.i.i.i, 31
   %.0.i.i.i.i = add nuw nsw i32 %i.cb, %i.bn
   %i.cc = add nsw i32 %.0.i.i.i.i, %.lobit.i.i.i.i
   br label %._crit_edge.i.i
@@ -222,11 +219,8 @@ normalize_pair.exit.i.i:                          ; preds = %bb.m
 normalize_d_s_us.exit.i:                          ; preds = %._crit_edge.i.i
   %i.cd = udiv i32 %.131.i, 86400                 ; 2 uses
   %.neg15.i.i = mul nsw i32 %i.cd, -86400
-  %4 = add nsw i32 %.neg15.i.i, %.131.i           ; 3 uses
-  %5 = icmp slt i32 %4, 0
-  %6 = select i1 %5, i32 86400, i32 0
-  %storemerge.i.i11.i.i = add nsw i32 %6, %4
-  %.lobit.i.i12.i.i = ashr i32 %4, 31
+  %storemerge.i.i11.i.i = add nsw i32 %.neg15.i.i, %.131.i ; 2 uses
+  %.lobit.i.i12.i.i = ashr i32 %storemerge.i.i11.i.i, 31
   %i.ce = add nsw i32 %.lobit.i.i12.i.i, %i.cd
   br label %check_delta_day_range.exit.i
 
@@ -629,11 +623,8 @@ ymd_to_ord.exit:                                  ; preds = %bb.m, %is_leap.exit
 normalize_pair.exit.i.i:                          ; preds = %ymd_to_ord.exit
   %i.dv = udiv i32 %i.du, 1000000                 ; 2 uses
   %.neg.i.i88 = mul nsw i32 %i.dv, -1000000
-  %1 = add nsw i32 %.neg.i.i88, %i.du             ; 3 uses
-  %2 = icmp slt i32 %1, 0
-  %3 = select i1 %2, i32 1000000, i32 0
-  %storemerge.i.i.i.i = add nsw i32 %3, %1
-  %.lobit.i.i.i.i = ashr i32 %1, 31
+  %storemerge.i.i.i.i = add nsw i32 %.neg.i.i88, %i.du ; 2 uses
+  %.lobit.i.i.i.i = ashr i32 %storemerge.i.i.i.i, 31
   %.0.i.i.i.i = add nuw nsw i32 %i.dv, %i.dh
   %i.dw = add nsw i32 %.0.i.i.i.i, %.lobit.i.i.i.i
   br label %._crit_edge.i.i
@@ -647,11 +638,8 @@ normalize_pair.exit.i.i:                          ; preds = %ymd_to_ord.exit
 normalize_pair.exit14.i.i:                        ; preds = %._crit_edge.i.i
   %i.dx = udiv i32 %.131.i, 86400                 ; 2 uses
   %.neg15.i.i = mul nsw i32 %i.dx, -86400
-  %4 = add nsw i32 %.neg15.i.i, %.131.i           ; 3 uses
-  %5 = icmp slt i32 %4, 0
-  %6 = select i1 %5, i32 86400, i32 0
-  %storemerge.i.i11.i.i = add nsw i32 %6, %4
-  %.lobit.i.i12.i.i = ashr i32 %4, 31
+  %storemerge.i.i11.i.i = add nsw i32 %.neg15.i.i, %.131.i ; 2 uses
+  %.lobit.i.i12.i.i = ashr i32 %storemerge.i.i11.i.i, 31
   %.0.i.i13.i.i = add i32 %i.dx, %i.cu
   %i.dy = add i32 %.0.i.i13.i.i, %.lobit.i.i12.i.i
   br label %normalize_d_s_us.exit.i

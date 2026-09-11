@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d
   %.sroa.647.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 2 uses
   store ptr %i.ai, ptr %.sroa.647.0..sroa_idx, align 8, !alias.scope !15750, !noalias !15751
   tail call void @llvm.experimental.noalias.scope.decl(metadata !15752)
-  %i.ak = mul i64 %.sroa.01.0.copyload, 56        ; 8 uses
+  %i.ak = mul i64 %.sroa.01.0.copyload, 56        ; 7 uses
   %i.al = udiv i64 %i.ak, 24                      ; 3 uses
   %.not.i34116 = icmp eq i64 %.sroa.53.0.copyload, 0
   br i1 %.not.i34116, label %_RNvXs0_NtNtCs1xwejQucwHj_5alloc3vec16in_place_collectINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB7_9into_iter8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeENvNCNvNtCs9gmjTwvRRSu_10typst_html5rules12OUTLINE_RULE012convert_nodeEINtB5_18SpecInPlaceCollectNtNtNtB2a_11foundations7content7ContentBP_E16collect_in_placeB3d_.exit.i, label %.lr.ph
@@ -402,13 +402,9 @@ bb.t:                                             ; preds = %bb.w, %_RNvXs0_NtNt
 
 bb.u:                                             ; preds = %_RNvMs0_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeE32forget_allocation_drop_remainingCs9gmjTwvRRSu_10typst_html.exit.i
   %i.bs = icmp ult i64 %i.ak, 24
-  br i1 %i.bs, label %2, label %_RNvMs0_NtCs1xwejQucwHj_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.i
+  br i1 %i.bs, label %bb.v, label %_RNvMs0_NtCs1xwejQucwHj_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.i
 
-2:                                                ; preds = %bb.u
-  %3 = icmp eq i64 %i.ak, 0
-  br i1 %3, label %.noexc, label %bb.v
-
-bb.v:                                             ; preds = %2
+bb.v:                                             ; preds = %bb.u
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.42.0.copyload, i64 noundef %i.ak, i64 noundef 8) #53, !noalias !15765, !inline_history !15719
   br label %.noexc
 
@@ -432,8 +428,8 @@ bb.y:                                             ; preds = %bb.t, %.body39
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #50, !noalias !15765, !inline_history !15715
   unreachable
 
-.noexc:                                           ; preds = %_RNvMs0_NtCs1xwejQucwHj_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.i, %_RNvMs0_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeE32forget_allocation_drop_remainingCs9gmjTwvRRSu_10typst_html.exit.i, %2, %bb.v
-  %.sroa.03.0.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.v ], [ %i.bu, %_RNvMs0_NtCs1xwejQucwHj_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.i ], [ %.sroa.42.0.copyload, %_RNvMs0_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeE32forget_allocation_drop_remainingCs9gmjTwvRRSu_10typst_html.exit.i ], [ inttoptr (i64 8 to ptr), %2 ] ; 8 uses
+.noexc:                                           ; preds = %_RNvMs0_NtCs1xwejQucwHj_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.i, %_RNvMs0_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeE32forget_allocation_drop_remainingCs9gmjTwvRRSu_10typst_html.exit.i, %bb.v
+  %.sroa.03.0.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.v ], [ %i.bu, %_RNvMs0_NtCs1xwejQucwHj_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.i ], [ %.sroa.42.0.copyload, %_RNvMs0_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library5model7outline11OutlineNodeE32forget_allocation_drop_remainingCs9gmjTwvRRSu_10typst_html.exit.i ] ; 8 uses
   store i64 %i.al, ptr %i.m, align 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store ptr %.sroa.03.0.i.i, ptr %i.bx, align 8

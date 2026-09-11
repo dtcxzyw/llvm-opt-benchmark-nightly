@@ -204,7 +204,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !4
-  %i.g = mul i64 %i.c, 56                         ; 7 uses
+  %i.g = mul i64 %i.c, 56                         ; 6 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs8Xq8PKFYOms_3hir5ParamENCNCINvNtNtB24_11term_search7tactics11impl_methodNtCs6oosyzwIepl_6ide_db12RootDatabaseEs4_0s_0EINtNtB7_6option6OptionNtNtB7_7convert10InfallibleEENtNtNtB5_6traits8iterator8Iterator8try_foldINtNtB1j_13in_place_drop11InPlaceDropINtB1j_3VecNtNtB2C_4expr4ExprEENCINvNtB1j_16in_place_collect24write_in_place_with_dropB67_E0INtNtB7_6result6ResultB5w_zEECscA5P7HRgTCP_15ide_diagnostics(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -247,8 +247,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread
 
-_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread: ; preds = %bb.h, %2, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %2 ]
+_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -260,13 +260,9 @@ _RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOm
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ult i64 %i.g, 24
-  br i1 %i.w, label %2, label %bb.i
+  br i1 %i.w, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #33
   br label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread
 
@@ -303,7 +299,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !4
-  %i.g = mul i64 %i.c, 56                         ; 7 uses
+  %i.g = mul i64 %i.c, 56                         ; 6 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs8Xq8PKFYOms_3hir5ParamENCNCINvNtNtB24_11term_search7tactics18impl_static_methodNtCs6oosyzwIepl_6ide_db12RootDatabaseEs5_00EINtNtB7_6option6OptionNtNtB7_7convert10InfallibleEENtNtNtB5_6traits8iterator8Iterator8try_foldINtNtB1j_13in_place_drop11InPlaceDropINtB1j_3VecNtNtB2C_4expr4ExprEENCINvNtB1j_16in_place_collect24write_in_place_with_dropB6c_E0INtNtB7_6result6ResultB5B_zEECscA5P7HRgTCP_15ide_diagnostics(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -346,8 +342,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread
 
-_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread: ; preds = %bb.h, %2, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %2 ]
+_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -359,13 +355,9 @@ _RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOm
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ult i64 %i.g, 24
-  br i1 %i.w, label %2, label %bb.i
+  br i1 %i.w, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #33
   br label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread
 
@@ -402,7 +394,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !4
-  %i.g = mul i64 %i.c, 56                         ; 7 uses
+  %i.g = mul i64 %i.c, 56                         ; 6 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs8Xq8PKFYOms_3hir5ParamENCNCNCINvNtNtB24_11term_search7tactics13free_functionNtCs6oosyzwIepl_6ide_db12RootDatabaseE0s2_0s_0EINtNtB7_6option6OptionNtNtB7_7convert10InfallibleEENtNtNtB5_6traits8iterator8Iterator8try_foldINtNtB1j_13in_place_drop11InPlaceDropINtB1j_3VecNtNtB2E_4expr4ExprEENCINvNtB1j_16in_place_collect24write_in_place_with_dropB6c_E0INtNtB7_6result6ResultB5B_zEECscA5P7HRgTCP_15ide_diagnostics(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -445,8 +437,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread
 
-_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread: ; preds = %bb.h, %2, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %2 ]
+_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -458,13 +450,9 @@ _RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOm
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ult i64 %i.g, 24
-  br i1 %i.w, label %2, label %bb.i
+  br i1 %i.w, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #33
   br label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocNtCs8Xq8PKFYOms_3hir5ParamINtB4_3VecNtNtNtB13_11term_search4expr4ExprEECscA5P7HRgTCP_15ide_diagnostics.exit.thread
 

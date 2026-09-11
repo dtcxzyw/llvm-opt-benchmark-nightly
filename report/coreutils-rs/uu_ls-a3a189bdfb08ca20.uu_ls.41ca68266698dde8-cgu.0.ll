@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.a
   %.sroa.558.0.copyload = load i64, ptr %.sroa.558.0..sroa_idx, align 8, !alias.scope !700, !noalias !701 ; 2 uses
   %.sroa.659.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.659.0.copyload = load ptr, ptr %.sroa.659.0..sroa_idx, align 8, !alias.scope !700, !noalias !701, !nonnull !4, !noundef !4 ; 4 uses
-  %i.y = shl i64 %.sroa.558.0.copyload, 5         ; 5 uses
+  %i.y = shl i64 %.sroa.558.0.copyload, 5         ; 4 uses
   %i.z = udiv i64 %i.y, 24                        ; 2 uses
   %.not14.i.i.i.i.i = icmp eq ptr %.sroa.4.0.copyload, %.sroa.659.0.copyload
   br i1 %.not14.i.i.i.i.i, label %_RNvXs0_NtNtCs7tKScEop1B6_5alloc3vec16in_place_collectINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB7_9into_iter8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteENCINvB26_12display_gridB1D_E0EINtB5_18SpecInPlaceCollectNtNtB9_6string6StringBP_E16collect_in_placeB28_.exit.i.i, label %.lr.ph.i.i.i.i.i
@@ -367,13 +367,9 @@ _RNvMs0_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5EcwQX7phGK_5
   %i.bl = mul nuw i64 %i.z, 24                    ; 4 uses
   %i.bm = icmp ne i64 %i.y, %i.bl
   %.sroa.0.0.i.i.i = select i1 %.not.i.i.i, i1 %i.bm, i1 false
-  br i1 %.sroa.0.0.i.i.i, label %6, label %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec16in_place_collectINtB6_3VecNtNtB8_6string6StringEINtNtB6_14spec_from_iter12SpecFromIterBY_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB6_9into_iter8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteENCINvB3g_12display_gridB2N_E0EE9from_iterB3i_.exit
+  br i1 %.sroa.0.0.i.i.i, label %_RNvMNtCs7tKScEop1B6_5alloc5allocNtB2_6Global19shrink_impl_runtime.exit.i.i, label %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec16in_place_collectINtB6_3VecNtNtB8_6string6StringEINtNtB6_14spec_from_iter12SpecFromIterBY_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB6_9into_iter8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteENCINvB3g_12display_gridB2N_E0EE9from_iterB3i_.exit
 
-6:                                                ; preds = %_RNvMs0_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteE32forget_allocation_drop_remainingB10_.exit.i.i
-  %7 = icmp eq i64 %i.y, 0
-  br i1 %7, label %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec16in_place_collectINtB6_3VecNtNtB8_6string6StringEINtNtB6_14spec_from_iter12SpecFromIterBY_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB6_9into_iter8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteENCINvB3g_12display_gridB2N_E0EE9from_iterB3i_.exit, label %_RNvMNtCs7tKScEop1B6_5alloc5allocNtB2_6Global19shrink_impl_runtime.exit.i.i
-
-_RNvMNtCs7tKScEop1B6_5alloc5allocNtB2_6Global19shrink_impl_runtime.exit.i.i: ; preds = %6
+_RNvMNtCs7tKScEop1B6_5alloc5allocNtB2_6Global19shrink_impl_runtime.exit.i.i: ; preds = %_RNvMs0_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteE32forget_allocation_drop_remainingB10_.exit.i.i
   %i.bn = icmp ule i64 %i.bl, %i.y
   call void @llvm.assume(i1 %i.bn)
   %i.bo = call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc14___rust_realloc(ptr noundef nonnull %.sroa.057.0.copyload, i64 noundef %i.y, i64 noundef 8, i64 noundef %i.bl) #37, !noalias !716 ; 2 uses
@@ -384,8 +380,8 @@ bb.s:                                             ; preds = %_RNvMNtCs7tKScEop1B
   call void @_RNvNtCs7tKScEop1B6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %i.bl) #39, !noalias !716
   unreachable
 
-_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec16in_place_collectINtB6_3VecNtNtB8_6string6StringEINtNtB6_14spec_from_iter12SpecFromIterBY_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB6_9into_iter8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteENCINvB3g_12display_gridB2N_E0EE9from_iterB3i_.exit: ; preds = %_RNvMs0_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteE32forget_allocation_drop_remainingB10_.exit.i.i, %6, %_RNvMNtCs7tKScEop1B6_5alloc5allocNtB2_6Global19shrink_impl_runtime.exit.i.i
-  %.sroa.04.0.i.i = phi ptr [ %.sroa.057.0.copyload, %_RNvMs0_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteE32forget_allocation_drop_remainingB10_.exit.i.i ], [ %i.bo, %_RNvMNtCs7tKScEop1B6_5alloc5allocNtB2_6Global19shrink_impl_runtime.exit.i.i ], [ inttoptr (i64 8 to ptr), %6 ] ; 2 uses
+_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec16in_place_collectINtB6_3VecNtNtB8_6string6StringEINtNtB6_14spec_from_iter12SpecFromIterBY_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB6_9into_iter8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteENCINvB3g_12display_gridB2N_E0EE9from_iterB3i_.exit: ; preds = %_RNvMs0_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteE32forget_allocation_drop_remainingB10_.exit.i.i, %_RNvMNtCs7tKScEop1B6_5alloc5allocNtB2_6Global19shrink_impl_runtime.exit.i.i
+  %.sroa.04.0.i.i = phi ptr [ %.sroa.057.0.copyload, %_RNvMs0_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs5EcwQX7phGK_5uu_ls7display16DisplayWithQuoteE32forget_allocation_drop_remainingB10_.exit.i.i ], [ %i.bo, %_RNvMNtCs7tKScEop1B6_5alloc5allocNtB2_6Global19shrink_impl_runtime.exit.i.i ] ; 2 uses
   %i.bq = ptrtoint ptr %.sroa.4.0.lcssa.i.i.i.i.i to i64
   %i.br = ptrtoint ptr %.sroa.057.0.copyload to i64
   %i.bs = sub nuw i64 %i.bq, %i.br                ; 4 uses

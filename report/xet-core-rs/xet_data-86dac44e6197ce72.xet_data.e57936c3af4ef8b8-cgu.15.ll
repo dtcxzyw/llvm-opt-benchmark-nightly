@@ -204,7 +204,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !7, !noundef !7 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !noundef !7
-  %i.g = mul i64 %i.c, 184                        ; 7 uses
+  %i.g = mul i64 %i.c, 184                        ; 6 uses
   %i.h = udiv i64 %i.g, 168                       ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtB8_3zip3ZipINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB1i_3VecjEyEEIB1e_yEENCNvMNtNtCsjHtSR7YjKD4_8xet_data13deduplication15data_aggregatorNtB3R_14DataAggregator8finalize0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB1i_13in_place_drop11InPlaceDropTyB22_yEENCINvNtB1i_16in_place_collect24write_in_place_with_dropB6D_E0INtNtBc_6result6ResultB62_zEEB3V_(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -308,8 +308,8 @@ _RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCs31YAwBA1Al
   %or.cond = select i1 %.not.i, i1 %i.ao, i1 false
   br i1 %or.cond, label %bb.j, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB4_3VecjEyETyB12_yEECsjHtSR7YjKD4_8xet_data.exit.thread
 
-_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB4_3VecjEyETyB12_yEECsjHtSR7YjKD4_8xet_data.exit.thread: ; preds = %2, %bb.k, %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB7_3VecjEyEE32forget_allocation_drop_remainingCsjHtSR7YjKD4_8xet_data.exit, %bb.l
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.ax, %bb.l ], [ %i.d, %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB7_3VecjEyEE32forget_allocation_drop_remainingCsjHtSR7YjKD4_8xet_data.exit ], [ inttoptr (i64 8 to ptr), %bb.k ]
+_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB4_3VecjEyETyB12_yEECsjHtSR7YjKD4_8xet_data.exit.thread: ; preds = %bb.k, %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB7_3VecjEyEE32forget_allocation_drop_remainingCsjHtSR7YjKD4_8xet_data.exit, %bb.l
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.k ], [ %i.ax, %bb.l ], [ %i.d, %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB7_3VecjEyEE32forget_allocation_drop_remainingCsjHtSR7YjKD4_8xet_data.exit ]
   store i64 %i.h, ptr %0, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ap, align 8
@@ -336,13 +336,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtB
 
 bb.j:                                             ; preds = %_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB7_3VecjEyEE32forget_allocation_drop_remainingCsjHtSR7YjKD4_8xet_data.exit
   %i.av = icmp ult i64 %i.g, 168
-  br i1 %i.av, label %2, label %bb.l
+  br i1 %i.av, label %bb.k, label %bb.l
 
-2:                                                ; preds = %bb.j
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB4_3VecjEyETyB12_yEECsjHtSR7YjKD4_8xet_data.exit.thread, label %bb.k
-
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.j
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #26
   br label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoINtB4_3VecjEyETyB12_yEECsjHtSR7YjKD4_8xet_data.exit.thread
 

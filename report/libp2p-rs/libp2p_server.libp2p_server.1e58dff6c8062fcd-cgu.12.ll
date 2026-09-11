@@ -204,7 +204,7 @@ bb.a:
   %i.f = load ptr, ptr %1, align 8, !nonnull !19, !noundef !19 ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !noundef !19
-  %i.i = mul i64 %i.e, 152                        ; 7 uses
+  %i.i = mul i64 %i.e, 152                        ; 6 uses
   %i.j = udiv i64 %i.i, 112                       ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5934)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5935)
@@ -270,8 +270,8 @@ bb.g:                                             ; preds = %bb.e
   %or.cond = select i1 %.not.i, i1 %i.ab, i1 false
   br i1 %or.cond, label %bb.h, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECs2Bxje7pdMIr_13libp2p_server.exit.thread
 
-_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECs2Bxje7pdMIr_13libp2p_server.exit.thread: ; preds = %2, %bb.i, %bb.g, %bb.j
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.ag, %bb.j ], [ %i.f, %bb.g ], [ inttoptr (i64 8 to ptr), %bb.i ]
+_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECs2Bxje7pdMIr_13libp2p_server.exit.thread: ; preds = %bb.i, %bb.g, %bb.j
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.i ], [ %i.ag, %bb.j ], [ %i.f, %bb.g ]
   store i64 %i.j, ptr %0, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ac, align 8
@@ -283,13 +283,9 @@ _RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = icmp ult i64 %i.i, 112
-  br i1 %i.ae, label %2, label %bb.j
+  br i1 %i.ae, label %bb.i, label %bb.j
 
-2:                                                ; preds = %bb.h
-  %3 = icmp eq i64 %i.i, 0
-  br i1 %3, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECs2Bxje7pdMIr_13libp2p_server.exit.thread, label %bb.i
-
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.h
   call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.f, i64 noundef %i.i, i64 noundef 8) #38
   br label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocNtNtCskC4O4hr3vz7_10libp2p_kad6record14ProviderRecordNtNtB15_8protocol7KadPeerECs2Bxje7pdMIr_13libp2p_server.exit.thread
 

@@ -205,7 +205,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !8, !noundef !8 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !noundef !8
-  %i.g = mul i64 %i.c, 112                        ; 7 uses
+  %i.g = mul i64 %i.c, 112                        ; 6 uses
   %i.h = udiv i64 %i.g, 40                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtCsIdnmPPg5ba_10data_types9NamespaceENCNCNCNCNvMs0_NtCs1yQqqZMFGFX_16iox_v1_query_api7handlerNtB2A_13V1HttpHandler13execute_query0s2_000ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropNtNtCs21s4ZTvHFSd_5authz10permission10PermissionENCINvNtB12_16in_place_collect24write_in_place_with_dropB5g_E0INtNtBc_6result6ResultB4F_zEECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -298,8 +298,8 @@ _RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtCsIdnmPPg5ba_10dat
   %or.cond = select i1 %.not.i, i1 %i.ai, i1 false
   br i1 %or.cond, label %bb.j, label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtCsIdnmPPg5ba_10data_types9NamespaceNtNtCs21s4ZTvHFSd_5authz10permission10PermissionECsgsNUVCRJO2f_13influxdb3_lib.exit.thread
 
-_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtCsIdnmPPg5ba_10data_types9NamespaceNtNtCs21s4ZTvHFSd_5authz10permission10PermissionECsgsNUVCRJO2f_13influxdb3_lib.exit.thread: ; preds = %2, %bb.k, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtCsIdnmPPg5ba_10data_types9NamespaceE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit, %bb.l
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.an, %bb.l ], [ %i.d, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtCsIdnmPPg5ba_10data_types9NamespaceE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit ], [ inttoptr (i64 8 to ptr), %bb.k ]
+_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtCsIdnmPPg5ba_10data_types9NamespaceNtNtCs21s4ZTvHFSd_5authz10permission10PermissionECsgsNUVCRJO2f_13influxdb3_lib.exit.thread: ; preds = %bb.k, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtCsIdnmPPg5ba_10data_types9NamespaceE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit, %bb.l
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.k ], [ %i.an, %bb.l ], [ %i.d, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtCsIdnmPPg5ba_10data_types9NamespaceE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit ]
   store i64 %i.h, ptr %0, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.aj, align 8
@@ -311,13 +311,9 @@ _RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtCsIdnmPPg5ba_
 
 bb.j:                                             ; preds = %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtCsIdnmPPg5ba_10data_types9NamespaceE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit
   %i.al = icmp ult i64 %i.g, 40
-  br i1 %i.al, label %2, label %bb.l
+  br i1 %i.al, label %bb.k, label %bb.l
 
-2:                                                ; preds = %bb.j
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtCsIdnmPPg5ba_10data_types9NamespaceNtNtCs21s4ZTvHFSd_5authz10permission10PermissionECsgsNUVCRJO2f_13influxdb3_lib.exit.thread, label %bb.k
-
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.j
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #44
   br label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtCsIdnmPPg5ba_10data_types9NamespaceNtNtCs21s4ZTvHFSd_5authz10permission10PermissionECsgsNUVCRJO2f_13influxdb3_lib.exit.thread
 
@@ -720,7 +716,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !8, !noundef !8 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !noundef !8
-  %i.g = mul i64 %i.c, 104                        ; 7 uses
+  %i.g = mul i64 %i.c, 104                        ; 6 uses
   %i.h = udiv i64 %i.g, 96                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEENCNCNvMs_NtB1N_9persisterNtB3j_9Persister33list_latest_checkpoints_per_month0s3_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB2s_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB2s_E0INtNtBc_6result6ResultB5b_zEECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -815,8 +811,8 @@ _RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTNtCs92BnbMq7p8c_15i
   %or.cond = select i1 %.not.i, i1 %i.ak, i1 false
   br i1 %or.cond, label %bb.h, label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEB1I_ECsgsNUVCRJO2f_13influxdb3_lib.exit.thread
 
-_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEB1I_ECsgsNUVCRJO2f_13influxdb3_lib.exit.thread: ; preds = %2, %bb.i, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit, %bb.j
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.ap, %bb.j ], [ %i.d, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit ], [ inttoptr (i64 8 to ptr), %bb.i ]
+_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEB1I_ECsgsNUVCRJO2f_13influxdb3_lib.exit.thread: ; preds = %bb.i, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit, %bb.j
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.i ], [ %i.ap, %bb.j ], [ %i.d, %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit ]
   store i64 %i.h, ptr %0, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.al, align 8
@@ -828,13 +824,9 @@ _RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocTNtCs92BnbMq7p8
 
 bb.h:                                             ; preds = %_RNvMs0_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEE32forget_allocation_drop_remainingCsgsNUVCRJO2f_13influxdb3_lib.exit
   %i.an = icmp ult i64 %i.g, 96
-  br i1 %i.an, label %2, label %bb.j
+  br i1 %i.an, label %bb.i, label %bb.j
 
-2:                                                ; preds = %bb.h
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEB1I_ECsgsNUVCRJO2f_13influxdb3_lib.exit.thread, label %bb.i
-
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.h
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #44
   br label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocTNtCs92BnbMq7p8c_15influxdb3_write9YearMonthNtCs1LivM9IBWqb_12object_store10ObjectMetaEB1I_ECsgsNUVCRJO2f_13influxdb3_lib.exit.thread
 
@@ -1089,7 +1081,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !8, !noundef !8 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.f = load ptr, ptr %i.e, align 8, !noundef !8
-  %i.g = shl i64 %i.c, 5                          ; 5 uses
+  %i.g = shl i64 %i.c, 5                          ; 4 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTdNtNtB14_6string6StringEENCINvNtNtNtCsbyItyepKEh3_12clap_builder6parser8features11suggestions12did_you_meanRB1M_INtNtNtBc_5slice4iter4IterB1M_EEs0_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB1M_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB1M_E0INtNtBc_6result6ResultB4R_zEECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -1141,10 +1133,10 @@ bb.f:                                             ; preds = %bb.d
   %i.x = mul nuw i64 %i.h, 24                     ; 4 uses
   %i.y = icmp ne i64 %i.g, %i.x
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.y, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %.thread
+  br i1 %.sroa.0.0.i, label %bb.k, label %.thread
 
-.thread:                                          ; preds = %2, %bb.k, %bb.f
-  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.ap, %bb.k ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.k, %bb.f
+  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.ap, %bb.k ]
   store i64 %i.h, ptr %0, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.z, align 8
@@ -1194,11 +1186,7 @@ common.resume:                                    ; preds = %bb.b, %bb.g, %bb.h
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTdNtNtB1g_6string6StringEENCINvNtNtNtCsbyItyepKEh3_12clap_builder6parser8features11suggestions12did_you_meanRB1Y_INtNtNtB4_5slice4iter4IterB1Y_EEs0_0EECsgsNUVCRJO2f_13influxdb3_lib.exit: ; preds = %bb.i, %bb.j
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %.thread, label %bb.k
-
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.f
   %i.ao = icmp ule i64 %i.x, %i.g
   tail call void @llvm.assume(i1 %i.ao)
   %i.ap = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8, i64 noundef %i.x) #44 ; 2 uses

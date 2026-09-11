@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !noundef !6 ; 4 uses
   %i.c = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6 ; 6 uses
-  %i.d = shl i64 %i.b, 5                          ; 6 uses
+  %i.d = shl i64 %i.b, 5                          ; 5 uses
   %i.e = udiv i64 %i.d, 24                        ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8131)
   %i.f = invoke noundef i64 @_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterINtCs96Uix8yqi9Q_8indexmap6BuckethNtNtBb_4time8DurationEENvMs0_B1G_B1D_9key_valueENtNtB7_3zip27TrustedRandomAccessNoCoerce4sizeCs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1)
@@ -307,10 +307,10 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   %i.w = mul nuw i64 %i.e, 24                     ; 4 uses
   %i.x = icmp ne i64 %i.d, %i.w
   %.sroa.0.0.i = select i1 %.not.i15, i1 %i.x, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterINtCs96Uix8yqi9Q_8indexmap6BuckethNtNtB4_4time8DurationEENvMs0_B1Z_B1W_9key_valueEECs844E4pPEVZX_17influxdb3_catalog.exit16
+  br i1 %.sroa.0.0.i, label %bb.e, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterINtCs96Uix8yqi9Q_8indexmap6BuckethNtNtB4_4time8DurationEENvMs0_B1Z_B1W_9key_valueEECs844E4pPEVZX_17influxdb3_catalog.exit16
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterINtCs96Uix8yqi9Q_8indexmap6BuckethNtNtB4_4time8DurationEENvMs0_B1Z_B1W_9key_valueEECs844E4pPEVZX_17influxdb3_catalog.exit16: ; preds = %.loopexit, %bb.e, %2
-  %.sroa.03.0 = phi ptr [ %i.c, %.loopexit ], [ %i.ab, %bb.e ], [ inttoptr (i64 8 to ptr), %2 ]
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterINtCs96Uix8yqi9Q_8indexmap6BuckethNtNtB4_4time8DurationEENvMs0_B1Z_B1W_9key_valueEECs844E4pPEVZX_17influxdb3_catalog.exit16: ; preds = %.loopexit, %bb.e
+  %.sroa.03.0 = phi ptr [ %i.c, %.loopexit ], [ %i.ab, %bb.e ]
   store i64 %i.e, ptr %0, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.y, align 8
@@ -318,11 +318,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtN
   store i64 %i.f, ptr %i.z, align 8
   ret void
 
-2:                                                ; preds = %.loopexit
-  %3 = icmp eq i64 %i.d, 0
-  br i1 %3, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterINtCs96Uix8yqi9Q_8indexmap6BuckethNtNtB4_4time8DurationEENvMs0_B1Z_B1W_9key_valueEECs844E4pPEVZX_17influxdb3_catalog.exit16, label %bb.e
-
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %.loopexit
   %i.aa = icmp ule i64 %i.w, %i.d
   tail call void @llvm.assume(i1 %i.aa)
   %i.ab = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.c, i64 noundef %i.d, i64 noundef 8, i64 noundef %i.w) #35 ; 2 uses

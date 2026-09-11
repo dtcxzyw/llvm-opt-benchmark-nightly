@@ -205,7 +205,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !16, !noundef !16 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !16
-  %i.g = mul i64 %i.c, 56                         ; 7 uses
+  %i.g = mul i64 %i.c, 56                         ; 6 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB6_3MapINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtCs8frGy5WneL6_4fish8complete10CompletionENCNvMNtB1P_15parse_executionNtB2z_16ExecutionContext26apply_variable_assignments0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringENCINvNtB12_16in_place_collect24write_in_place_with_dropB56_E0INtNtBc_6result6ResultB4v_zEEB1P_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -248,8 +248,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtCs8frGy5WneL6_4fish8complete10CompletionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEB15_.exit.thread
 
-_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtCs8frGy5WneL6_4fish8complete10CompletionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEB15_.exit.thread: ; preds = %2, %bb.h, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.y, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %bb.h ]
+_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtCs8frGy5WneL6_4fish8complete10CompletionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEB15_.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -261,13 +261,9 @@ _RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtCs8frGy5Wn
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ult i64 %i.g, 24
-  br i1 %i.w, label %2, label %bb.i
+  br i1 %i.w, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtCs8frGy5WneL6_4fish8complete10CompletionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEB15_.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #31
   br label %_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtCs8frGy5WneL6_4fish8complete10CompletionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringEB15_.exit.thread
 
@@ -304,7 +300,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !16, !noundef !16 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !16
-  %i.g = mul i64 %i.c, 112                        ; 7 uses
+  %i.g = mul i64 %i.c, 112                        ; 6 uses
   %i.h = udiv i64 %i.g, 48                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB6_3MapINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtNtCs8frGy5WneL6_4fish5input7binding7BindingENCNvMs6_B1N_NtB1N_10BindingSet9get_namess_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropNtB1N_11BindingNameENCINvNtB12_16in_place_collect24write_in_place_with_dropB4x_E0INtNtBc_6result6ResultB3W_zEEB1R_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -347,8 +343,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtNtCs8frGy5WneL6_4fish5input7binding7BindingNtB13_11BindingNameEB17_.exit.thread
 
-_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtNtCs8frGy5WneL6_4fish5input7binding7BindingNtB13_11BindingNameEB17_.exit.thread: ; preds = %2, %bb.h, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.y, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %bb.h ]
+_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtNtCs8frGy5WneL6_4fish5input7binding7BindingNtB13_11BindingNameEB17_.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -360,13 +356,9 @@ _RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtNtCs8frGy5
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ult i64 %i.g, 48
-  br i1 %i.w, label %2, label %bb.i
+  br i1 %i.w, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtNtCs8frGy5WneL6_4fish5input7binding7BindingNtB13_11BindingNameEB17_.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #31
   br label %_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect13needs_reallocNtNtNtCs8frGy5WneL6_4fish5input7binding7BindingNtB13_11BindingNameEB17_.exit.thread
 
@@ -769,7 +761,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !alias.scope !6266, !noalias !6265, !nonnull !16, !noundef !16 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !6266, !noalias !6265, !noundef !16
-  %i.g = mul i64 %i.c, 56                         ; 7 uses
+  %i.g = mul i64 %i.c, 56                         ; 6 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3mapINtB6_3MapINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtCs8frGy5WneL6_4fish8complete10CompletionENCINvMs8_B1N_NtB1N_9Completer21apply_var_assignmentsNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB3k_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB3k_E0INtNtBc_6result6ResultB4V_zEEB1P_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c, !noalias !6265
@@ -814,13 +806,9 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.u = icmp ult i64 %i.g, 24
-  br i1 %i.u, label %2, label %bb.i
+  br i1 %i.u, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtCs8frGy5WneL6_4fish8complete10CompletionENCINvMs8_B2n_NtB2n_9Completer21apply_var_assignmentsNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0EB3U_EB2p_.exit, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #31, !noalias !6265
   br label %_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtCs8frGy5WneL6_4fish8complete10CompletionENCINvMs8_B2n_NtB2n_9Completer21apply_var_assignmentsNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0EB3U_EB2p_.exit
 
@@ -847,8 +835,8 @@ bb.l:                                             ; preds = %bb.b
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtCs8frGy5WneL6_4fish8complete10CompletionENCINvMs8_B1Z_NtB1Z_9Completer21apply_var_assignmentsNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0EEB21_.exit.i: ; preds = %bb.b
   resume { ptr, i32 } %.pn.i
 
-_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtCs8frGy5WneL6_4fish8complete10CompletionENCINvMs8_B2n_NtB2n_9Completer21apply_var_assignmentsNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0EB3U_EB2p_.exit: ; preds = %bb.f, %2, %bb.h, %bb.i
-  %.sroa.03.0.i = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.w, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %bb.h ]
+_RINvNtNtCs1xwejQucwHj_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtCs8frGy5WneL6_4fish8complete10CompletionENCINvMs8_B2n_NtB2n_9Completer21apply_var_assignmentsNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0EB3U_EB2p_.exit: ; preds = %bb.f, %bb.h, %bb.i
+  %.sroa.03.0.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.w, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8, !alias.scope !6265, !noalias !6266
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0.i, ptr %i.z, align 8, !alias.scope !6265, !noalias !6266

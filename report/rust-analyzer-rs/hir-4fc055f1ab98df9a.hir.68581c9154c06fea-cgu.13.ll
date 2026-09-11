@@ -205,7 +205,7 @@ bb.a:
   %i.e = load ptr, ptr %1, align 8, !nonnull !8, !noundef !8 ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !noundef !8
-  %i.h = mul i64 %i.d, 80                         ; 7 uses
+  %i.h = mul i64 %i.d, 80                         ; 6 uses
   %i.i = udiv i64 %i.h, 72                        ; 2 uses
   %i.j = invoke { ptr, ptr } @_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEENvMs0_B1O_B1L_3keyENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB2i_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB2i_E0INtNtBc_6result6ResultB41_zEEB2m_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.e, ptr noundef %i.g)
           to label %bb.d unwind label %bb.c
@@ -316,8 +316,8 @@ _RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterINtCs3gqD4ldeioo_8i
   %or.cond = select i1 %.not.i, i1 %i.ao, i1 false
   br i1 %or.cond, label %bb.h, label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEB1y_EB1C_.exit.thread
 
-_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEB1y_EB1C_.exit.thread: ; preds = %bb.i, %2, %_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEE32forget_allocation_drop_remainingB1x_.exit, %bb.j
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.i ], [ %i.at, %bb.j ], [ %i.e, %_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEE32forget_allocation_drop_remainingB1x_.exit ], [ inttoptr (i64 8 to ptr), %2 ]
+_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEB1y_EB1C_.exit.thread: ; preds = %bb.i, %_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEE32forget_allocation_drop_remainingB1x_.exit, %bb.j
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.i ], [ %i.at, %bb.j ], [ %i.e, %_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEE32forget_allocation_drop_remainingB1x_.exit ]
   store i64 %i.i, ptr %0, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ap, align 8
@@ -329,13 +329,9 @@ _RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocINtCs3gqD4ldei
 
 bb.h:                                             ; preds = %_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEE32forget_allocation_drop_remainingB1x_.exit
   %i.ar = icmp ult i64 %i.h, 72
-  br i1 %i.ar, label %2, label %bb.j
+  br i1 %i.ar, label %bb.i, label %bb.j
 
-2:                                                ; preds = %bb.h
-  %3 = icmp eq i64 %i.h, 0
-  br i1 %3, label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEB1y_EB1C_.exit.thread, label %bb.i
-
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.h
   call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %i.h, i64 noundef 8) #31
   br label %_RINvNtNtCsbSS6DM8SDEO_5alloc3vec16in_place_collect13needs_reallocINtCs3gqD4ldeioo_8indexmap6BucketNtNtCs8Xq8PKFYOms_3hir7symbols10FileSymboluEB1y_EB1C_.exit.thread
 

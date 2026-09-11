@@ -205,10 +205,10 @@ _ZNSt15__new_allocatorIN3gmx11BasicVectorIfEEE8allocateEmPKv.exit.i.i.i.i.i._ZNS
 
 _ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i._crit_edge.i: ; preds = %_ZNSt15__new_allocatorIN3gmx11BasicVectorIfEEE8allocateEmPKv.exit.i.i.i.i.i._ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i._crit_edge.i_crit_edge, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i
   %.pre260 = phi i32 [ %.pre260.pre, %_ZNSt15__new_allocatorIN3gmx11BasicVectorIfEEE8allocateEmPKv.exit.i.i.i.i.i._ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i._crit_edge.i_crit_edge ], [ 0, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i ] ; 3 uses
-  %.pre-phi.i.i = phi i64 [ %.pre240.i, %_ZNSt15__new_allocatorIN3gmx11BasicVectorIfEEE8allocateEmPKv.exit.i.i.i.i.i._ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i._crit_edge.i_crit_edge ], [ 0, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i ] ; 8 uses
+  %.pre-phi.i.i = phi i64 [ %.pre240.i, %_ZNSt15__new_allocatorIN3gmx11BasicVectorIfEEE8allocateEmPKv.exit.i.i.i.i.i._ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i._crit_edge.i_crit_edge ], [ 0, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i ] ; 7 uses
   %i.pe = phi ptr [ %i.pd, %_ZNSt15__new_allocatorIN3gmx11BasicVectorIfEEE8allocateEmPKv.exit.i.i.i.i.i._ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i._crit_edge.i_crit_edge ], [ null, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i ] ; 20 uses
   %i.pf = getelementptr inbounds nuw i8, ptr %i.pe, i64 %.pre240.i ; 13 uses
-  %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.pe, i64 %.pre-phi.i.i ; 3 uses
+  %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.pe, i64 %.pre-phi.i.i ; 2 uses
   %i.pg = load ptr, ptr %39, align 8, !tbaa !108
   %i.ph = getelementptr inbounds nuw i8, ptr %39, i64 8 ; 5 uses
   %i.pi = load ptr, ptr %i.ph, align 8, !tbaa !108
@@ -286,10 +286,10 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc140.i
 
 _ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i.i: ; preds = %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc140.i
   %.idx233365374 = phi i64 [ %.idx233, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %.idx233, %.noexc140.i ], [ %.idx233, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ 0, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 2 uses
-  %.pre-phi.i133.i366373 = phi i64 [ %.pre-phi.i133.i, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %.pre-phi.i133.i, %.noexc140.i ], [ %.pre-phi.i133.i, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ 0, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 6 uses
+  %.pre-phi.i133.i366373 = phi i64 [ %.pre-phi.i133.i, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %.pre-phi.i133.i, %.noexc140.i ], [ %.pre-phi.i133.i, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ 0, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 5 uses
   %i.qd = phi ptr [ %i.pr, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.pr, %.noexc140.i ], [ %i.pr, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ null, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 19 uses
   %i.qe = phi ptr [ %i.ps, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.ps, %.noexc140.i ], [ %i.ps, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ null, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 14 uses
-  %scevgep.i.i.i.i.i134.i367372 = phi ptr [ %scevgep.i.i.i.i.i134.i, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %scevgep.i.i.i.i.i134.i, %.noexc140.i ], [ %scevgep.i.i.i.i.i134.i, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ null, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 3 uses
+  %scevgep.i.i.i.i.i134.i367372 = phi ptr [ %scevgep.i.i.i.i.i134.i, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %scevgep.i.i.i.i.i134.i, %.noexc140.i ], [ %scevgep.i.i.i.i.i134.i, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ null, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 2 uses
   %.sroa.0218.0 = phi ptr [ %i.px, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.px, %.noexc140.i ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ null, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 13 uses
   %.sroa.17.0 = phi ptr [ %i.py, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.py, %.noexc140.i ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ null, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 6 uses
   %i.qf = phi ptr [ %i.qc, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.pz, %.noexc140.i ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ null, %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i130.i ] ; 6 uses
@@ -661,16 +661,14 @@ bb.cm:                                            ; preds = %bb.cg
   br i1 %i.wg, label %bb.cn, label %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE6resizeEm.exit.i
 
 bb.cn:                                            ; preds = %bb.cm
-  %.idx.i = mul nuw nsw i64 %i.vn, 12             ; 2 uses
+  %.idx.i = mul nuw nsw i64 %i.vn, 12
   %i.wh = getelementptr inbounds nuw i8, ptr %i.pe, i64 %.idx.i
-  %.not.i4.i.i = icmp eq i64 %.pre-phi.i.i, %.idx.i
-  %spec.select.i = select i1 %.not.i4.i.i, ptr %scevgep.i.i.i.i.i.i, ptr %i.wh
   br label %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE6resizeEm.exit.i
 
 _ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE6resizeEm.exit.i: ; preds = %bb.cn, %bb.cm, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i.i, %bb.ci
   %.pre233.i = phi i32 [ %.pre233.pre.i, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i.i ], [ %i.vm, %bb.ci ], [ %i.vm, %bb.cn ], [ %i.vm, %bb.cm ] ; 6 uses
   %.sroa.19.4.i = phi ptr [ %i.wf, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i.i ], [ %i.pf, %bb.ci ], [ %i.pf, %bb.cn ], [ %i.pf, %bb.cm ]
-  %.sroa.12.0.i = phi ptr [ %i.we, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i.i ], [ %scevgep.i.i.i.i.i145.i, %bb.ci ], [ %spec.select.i, %bb.cn ], [ %scevgep.i.i.i.i.i.i, %bb.cm ]
+  %.sroa.12.0.i = phi ptr [ %i.we, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i.i ], [ %scevgep.i.i.i.i.i145.i, %bb.ci ], [ %i.wh, %bb.cn ], [ %scevgep.i.i.i.i.i.i, %bb.cm ]
   %.sroa.0162.4.i = phi ptr [ %i.vz, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i.i ], [ %i.pe, %bb.ci ], [ %i.pe, %bb.cn ], [ %i.pe, %bb.cm ]
   %i.wi = load ptr, ptr %38, align 8, !tbaa !107  ; 7 uses
   %i.wj = getelementptr inbounds nuw i8, ptr %38, i64 8 ; 2 uses
@@ -757,17 +755,15 @@ bb.cu:                                            ; preds = %bb.co
   br i1 %i.xj, label %bb.cv, label %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE6resizeEm.exit
 
 bb.cv:                                            ; preds = %bb.cu
-  %.idx = mul nuw nsw i64 %i.wp, 12               ; 2 uses
+  %.idx = mul nuw nsw i64 %i.wp, 12
   %i.xk = getelementptr inbounds nuw i8, ptr %i.qd, i64 %.idx
-  %.not.i4.i = icmp eq i64 %.pre-phi.i133.i366373, %.idx
-  %spec.select = select i1 %.not.i4.i, ptr %scevgep.i.i.i.i.i134.i367372, ptr %i.xk
   br label %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE6resizeEm.exit
 
 _ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EE6resizeEm.exit: ; preds = %bb.cv, %bb.cu, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i, %bb.cq
   %.pre232.i = phi i32 [ %.pre232.i.pre, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i ], [ %.pre233.i, %bb.cq ], [ %.pre233.i, %bb.cv ], [ %.pre233.i, %bb.cu ]
   %i.xl = phi ptr [ %.pre261, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i ], [ %i.wm, %bb.cq ], [ %i.wm, %bb.cv ], [ %i.wm, %bb.cu ]
   %.sroa.0223.5 = phi ptr [ %i.xb, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i ], [ %i.qd, %bb.cq ], [ %i.qd, %bb.cv ], [ %i.qd, %bb.cu ]
-  %.sroa.10.0 = phi ptr [ %i.xh, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i ], [ %scevgep.i.i.i.i.i, %bb.cq ], [ %spec.select, %bb.cv ], [ %scevgep.i.i.i.i.i134.i367372, %bb.cu ]
+  %.sroa.10.0 = phi ptr [ %i.xh, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i ], [ %scevgep.i.i.i.i.i, %bb.cq ], [ %i.xk, %bb.cv ], [ %scevgep.i.i.i.i.i134.i367372, %bb.cu ]
   %.sroa.17228.5 = phi ptr [ %i.xi, %_ZNSt12_Vector_baseIN3gmx11BasicVectorIfEESaIS2_EE13_M_deallocateEPS2_m.exit32.i.i ], [ %i.qe, %bb.cq ], [ %i.qe, %bb.cv ], [ %i.qe, %bb.cu ]
   %i.xm = getelementptr inbounds nuw i8, ptr %39, i64 16 ; 2 uses
   %i.xn = load ptr, ptr %i.xm, align 8, !tbaa !123

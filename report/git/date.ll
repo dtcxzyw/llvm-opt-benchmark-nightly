@@ -204,7 +204,7 @@ Q_.exit:                                          ; preds = %bb.h, %bb.i
 
 bb.j:                                             ; preds = %bb.f
   %i.p = add i64 %i.j, 30                         ; 7 uses
-  %i.q = udiv i64 %i.p, 60                        ; 4 uses
+  %i.q = udiv i64 %i.p, 60                        ; 3 uses
   %i.r = icmp ult i64 %i.p, 5400
   br i1 %i.r, label %bb.k, label %bb.m
 
@@ -231,20 +231,14 @@ bb.m:                                             ; preds = %bb.j
 bb.n:                                             ; preds = %bb.m
   %i.x = load i32, ptr @git_gettext_enabled, align 4, !tbaa !24
   %.not.i60 = icmp eq i32 %i.x, 0
-  br i1 %.not.i60, label %4, label %bb.o
-
-4:                                                ; preds = %bb.n
-  %.off89 = add nsw i64 %i.q, -30
-  %5 = icmp ult i64 %.off89, 60
-  %6 = select i1 %5, ptr @.str.5, ptr @.str.6
-  br label %Q_.exit62
+  br i1 %.not.i60, label %Q_.exit62, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.y = tail call ptr @dcngettext(ptr noundef null, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6, i64 noundef range(i64 0, 584942417356) %i.v, i32 noundef 5) #19
   br label %Q_.exit62
 
-Q_.exit62:                                        ; preds = %4, %bb.o
-  %.0.i61 = phi ptr [ %i.y, %bb.o ], [ %6, %4 ]
+Q_.exit62:                                        ; preds = %bb.n, %bb.o
+  %.0.i61 = phi ptr [ %i.y, %bb.o ], [ @.str.6, %bb.n ]
   tail call void (ptr, ptr, ...) @strbuf_addf(ptr noundef %1, ptr noundef %.0.i61, i64 noundef %i.v) #19
   br label %bb.ao
 
