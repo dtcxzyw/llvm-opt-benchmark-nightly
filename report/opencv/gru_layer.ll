@@ -204,7 +204,9 @@ bb.ah:                                            ; preds = %_ZNK2cv8MatShapeixE
   %.072 = phi i1 [ %i.bn, %bb.u ], [ %i.da, %_ZNK2cv8MatShapeixEm.exit161 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #21
   call void @_ZN2cv8MatShapeC1Ev(ptr noundef nonnull align 4 dereferenceable(52) %23)
-  %i.dc = load i32, ptr %i.h, align 4, !tbaa !81  ; 6 uses
+  %i.dc = load i32, ptr %i.h, align 4, !tbaa !81  ; 4 uses
+  %narrow.i162 = call i32 @llvm.smax.i32(i32 %i.dc, i32 0) ; 3 uses
+  %spec.select.i163 = zext nneg i32 %narrow.i162 to i64
   %i.dd = icmp sgt i32 %i.dc, 1
   br i1 %i.dd, label %.preheader.i, label %bb.al
 
@@ -215,15 +217,14 @@ bb.ah:                                            ; preds = %_ZNK2cv8MatShapeixE
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.de = getelementptr inbounds nuw i8, ptr %i.h, i64 12 ; 9 uses
   %i.df = add nsw i32 %i.dc, -2
-  %i.dg = add nsw i32 %i.dc, -3
-  %.not33.not.i = icmp samesign ugt i32 %i.df, %i.dg
+  %i.dg = add nsw i32 %narrow.i162, -3
+  %.not33.not.i = icmp ugt i32 %i.df, %i.dg
   br i1 %.not33.not.i, label %_ZNK2cv8MatShapeixEm.exit.i.preheader, label %bb.ai
 
 _ZNK2cv8MatShapeixEm.exit.i.preheader:            ; preds = %.lr.ph.i
-  %umax = zext nneg i32 %i.dc to i64
-  %i.dh = add nsw i64 %umax, -2                   ; 2 uses
+  %i.dh = add nsw i64 %spec.select.i163, -2       ; 2 uses
   %xtraiter = and i64 %i.dh, 7                    ; 3 uses
-  %i.di = add nsw i32 %i.dc, -3
+  %i.di = add nsw i32 %narrow.i162, -3
   %i.dj = icmp ult i32 %i.di, 7
   br i1 %i.dj, label %_ZNK2cv8MatShapeixEm.exit.i.epil.preheader, label %_ZNK2cv8MatShapeixEm.exit.i.preheader.new
 
