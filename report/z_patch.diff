@@ -1,0 +1,133 @@
+diff --git a/llvm/include/llvm/Analysis/MemorySSAUpdater.h b/llvm/include/llvm/Analysis/MemorySSAUpdater.h
+index 5b81deee5987f..6585702d48a62 100644
+--- a/llvm/include/llvm/Analysis/MemorySSAUpdater.h
++++ b/llvm/include/llvm/Analysis/MemorySSAUpdater.h
+@@ -217,6 +217,12 @@ class MemorySSAUpdater {
+   /// on the MemoryAccess for that store/load.
+   LLVM_ABI void removeMemoryAccess(MemoryAccess *, bool OptimizePhis = false);
+ 
++  /// Remove the MemoryPhis in \p Phis that have become trivial, recursing into
++  /// any phis that become trivial as a result. Handles that have been
++  /// invalidated since they were collected are skipped, so callers may hold
++  /// them across unrelated MemorySSA updates.
++  LLVM_ABI void tryRemoveTrivialPhis(ArrayRef<WeakVH> Phis);
++
+   /// Remove MemoryAccess for a given instruction, if a MemoryAccess exists.
+   /// This should be called when an instruction (load/store) is deleted from
+   /// the program.
+@@ -261,7 +267,6 @@ class MemorySSAUpdater {
+   MemoryAccess *tryRemoveTrivialPhi(MemoryPhi *Phi);
+   template <class RangeType>
+   MemoryAccess *tryRemoveTrivialPhi(MemoryPhi *Phi, RangeType &Operands);
+-  void tryRemoveTrivialPhis(ArrayRef<WeakVH> UpdatedPHIs);
+   void fixupDefs(const SmallVectorImpl<WeakVH> &);
+   /// Clone all uses and defs from BB to NewBB given a 1:1 map of all
+   /// instructions and blocks cloned, and a map of MemoryPhi : Definition
+diff --git a/llvm/lib/Analysis/MemorySSAUpdater.cpp b/llvm/lib/Analysis/MemorySSAUpdater.cpp
+index 37cea287284cd..1f62e5a270b6e 100644
+--- a/llvm/lib/Analysis/MemorySSAUpdater.cpp
++++ b/llvm/lib/Analysis/MemorySSAUpdater.cpp
+@@ -1495,8 +1495,8 @@ void MemorySSAUpdater::removeBlocks(
+   }
+ }
+ 
+-void MemorySSAUpdater::tryRemoveTrivialPhis(ArrayRef<WeakVH> UpdatedPHIs) {
+-  for (const auto &VH : UpdatedPHIs)
++void MemorySSAUpdater::tryRemoveTrivialPhis(ArrayRef<WeakVH> Phis) {
++  for (const auto &VH : Phis)
+     if (auto *MPhi = cast_or_null<MemoryPhi>(VH))
+       tryRemoveTrivialPhi(MPhi);
+ }
+diff --git a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+index 0cd0b6f05e6c7..ca5ebf0ba797e 100644
+--- a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+@@ -72,6 +72,7 @@
+ #include "llvm/IR/PassManager.h"
+ #include "llvm/IR/PatternMatch.h"
+ #include "llvm/IR/Value.h"
++#include "llvm/IR/ValueHandle.h"
+ #include "llvm/InitializePasses.h"
+ #include "llvm/Support/Casting.h"
+ #include "llvm/Support/CommandLine.h"
+@@ -984,6 +985,11 @@ struct DSEState {
+   SmallVector<MemoryDef *, 64> MemDefs;
+   // Any that should be skipped as they are already deleted
+   SmallPtrSet<MemoryAccess *, 4> SkipStores;
++  // MemoryPhis that used an access removed by deleteDeadInstruction and may
++  // therefore have become trivial. They are cleaned up once all worklists are
++  // dead, because removing a phi eagerly can free an access that is still
++  // queued in eliminateDeadDefs.
++  SmallVector<WeakVH, 8> MaybeTrivialPhis;
+   // Keep track whether a given object is captured before return or not.
+   DenseMap<const Value *, bool> CapturedBeforeReturn;
+   // Keep track of all of the objects that are invisible to the caller after
+@@ -2057,6 +2063,13 @@ void DSEState::deleteDeadInstruction(Instruction *SI,
+         }
+       }
+ 
++      // Removing MA can leave a user phi with identical operands. Record
++      // those phis rather than letting the updater drop them here; see
++      // MaybeTrivialPhis.
++      for (User *U : MA->users())
++        if (auto *MP = dyn_cast<MemoryPhi>(U))
++          MaybeTrivialPhis.push_back(MP);
++
+       Updater.removeMemoryAccess(MA);
+     }
+ 
+@@ -2816,6 +2829,14 @@ static bool eliminateDeadStores(Function &F, AliasAnalysis &AA, MemorySSA &MSSA,
+     DeadInst->eraseFromParent();
+   }
+ 
++  // DSE reports MemorySSA as preserved, so any phi left trivial by a deleted
++  // def would be handed to the next pass and block its walker. Nothing holds
++  // raw MemoryAccess pointers at this point, so the phis are safe to remove.
++  if (!State.MaybeTrivialPhis.empty()) {
++    MemorySSAUpdater Updater(&MSSA);
++    Updater.tryRemoveTrivialPhis(State.MaybeTrivialPhis);
++  }
++
+   return MadeChange;
+ }
+ 
+diff --git a/llvm/test/Transforms/DeadStoreElimination/trivial-memoryphi.ll b/llvm/test/Transforms/DeadStoreElimination/trivial-memoryphi.ll
+new file mode 100644
+index 0000000000000..1f562067627b5
+--- /dev/null
++++ b/llvm/test/Transforms/DeadStoreElimination/trivial-memoryphi.ll
+@@ -0,0 +1,34 @@
++; RUN: opt < %s -passes='dse,print<memoryssa>' -disable-output 2>&1 | FileCheck %s --check-prefix=MSSA
++; RUN: opt < %s -passes='dse,early-cse<memssa>' -S | FileCheck %s
++
++; DSE reports MemorySSA as preserved. When it deletes a MemoryDef that was an
++; incoming value of a MemoryPhi, the remaining operands can become identical
++; and leave the phi trivial. A stale phi is still valid, but it is returned as
++; the clobber for later queries and blocks the next MemorySSA consumer.
++
++define void @dead_store_on_one_arm(i1 %c, ptr %p, ptr %q, i1 %v) {
++; The phi in %join is trivial once the store in %right is gone, so it should
++; not survive into the preserved MemorySSA.
++; MSSA-LABEL: MemorySSA for function: dead_store_on_one_arm
++; MSSA-NOT:   MemoryPhi
++;
++; CHECK-LABEL: define void @dead_store_on_one_arm(
++; CHECK:       join:
++; CHECK-NEXT:    ret void
++;
++entry:
++  store i1 %v, ptr %q
++  %x = load i32, ptr %p
++  br i1 %c, label %left, label %right
++
++left:
++  br label %join
++
++right:
++  store i1 %v, ptr %q
++  br label %join
++
++join:
++  store i32 %x, ptr %p
++  ret void
++}
