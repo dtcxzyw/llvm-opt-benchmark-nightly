@@ -204,33 +204,18 @@ _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %bb.as, %bb.at
   ret i1 %.not
 }
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+declare noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef, i32 noundef) local_unnamed_addr #1
 
-declare noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef, i32 noundef) local_unnamed_addr #2
-
-declare void @_ZN9rcContext3logE13rcLogCategoryPKcz(ptr noundef nonnull align 8 dereferenceable(10), i32 noundef, ptr noundef, ...) local_unnamed_addr #2
+declare void @_ZN9rcContext3logE13rcLogCategoryPKcz(ptr noundef nonnull align 8 dereferenceable(10), i32 noundef, ptr noundef, ...) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #2
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
-
-declare void @_Z6rcFreePv(ptr noundef) local_unnamed_addr #2
+declare void @_Z6rcFreePv(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
 define noundef zeroext i1 @_Z26rcMedianFilterWalkableAreaP9rcContextR20rcCompactHeightfield(ptr noundef %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(96) %1) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0 = alloca i8, align 1                   ; 19 uses
-  %.sroa.20 = alloca i8, align 1                  ; 27 uses
-  %.sroa.46 = alloca i8, align 1                  ; 24 uses
-  %.sroa.69 = alloca i8, align 1                  ; 21 uses
-  %.sroa.89 = alloca i8, align 1                  ; 19 uses
-  %.sroa.107 = alloca i8, align 1                 ; 14 uses
-  %.sroa.121 = alloca i8, align 1                 ; 11 uses
-  %.sroa.132 = alloca i8, align 1                 ; 8 uses
-  %.sroa.140 = alloca i8, align 1                 ; 4 uses
   %i.a = load i32, ptr %1, align 8, !tbaa !23     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !24   ; 2 uses
@@ -250,7 +235,7 @@ _ZN13rcScopedTimerC2EP9rcContext12rcTimerLabel.exit: ; preds = %bb.a, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !69
   %i.l = sext i32 %i.k to i64
-  %i.m = tail call noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef %i.l, i32 noundef 1) #5 ; 6 uses
+  %i.m = tail call noundef ptr @_Z7rcAllocm11rcAllocHint(i64 noundef %i.l, i32 noundef 1) #5 ; 5 uses
   %.not = icmp ne ptr %i.m, null                  ; 2 uses
   %i.n = load i32, ptr %i.j, align 8, !tbaa !69   ; 2 uses
   br i1 %.not, label %bb.d, label %bb.c
@@ -331,305 +316,144 @@ bb.e:                                             ; preds = %.preheader131, %._c
   br i1 %exitcond.not, label %._crit_edge137, label %bb.e
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ai
-  %indvars.iv = phi i64 [ %i.aq, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ai ] ; 5 uses
+  %indvars.iv = phi i64 [ %i.aq, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ai ] ; 4 uses
   %i.au = load ptr, ptr %i.s, align 8, !tbaa !73  ; 5 uses
   %i.av = load ptr, ptr %i.t, align 8, !tbaa !71  ; 9 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %indvars.iv
-  %i.ax = load i8, ptr %i.aw, align 1, !tbaa !72  ; 39 uses
+  %i.ax = load i8, ptr %i.aw, align 1, !tbaa !72  ; 26 uses
   %i.ay = icmp eq i8 %i.ax, 0
-  br i1 %i.ay, label %2, label %.preheader
-
-2:                                                ; preds = %.lr.ph
-  %3 = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv
-  store i8 0, ptr %3, align 1, !tbaa !72
-  br label %bb.ai
+  br i1 %i.ay, label %bb.ai, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.20)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.46)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.69)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.89)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.107)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.121)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.132)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.140)
-  store i8 %i.ax, ptr %.sroa.0, align 1, !tbaa !72
-  store i8 %i.ax, ptr %.sroa.20, align 1, !tbaa !72
-  store i8 %i.ax, ptr %.sroa.46, align 1, !tbaa !72
-  store i8 %i.ax, ptr %.sroa.69, align 1, !tbaa !72
-  store i8 %i.ax, ptr %.sroa.89, align 1, !tbaa !72
-  store i8 %i.ax, ptr %.sroa.107, align 1, !tbaa !72
-  store i8 %i.ax, ptr %.sroa.121, align 1, !tbaa !72
-  store i8 %i.ax, ptr %.sroa.132, align 1, !tbaa !72
-  store i8 %i.ax, ptr %.sroa.140, align 1, !tbaa !72
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 4
   %i.bb = load i32, ptr %i.ba, align 4            ; 4 uses
   %i.bc = and i32 %i.bb, 63                       ; 2 uses
   %i.bd = icmp eq i32 %i.bc, 63
   br i1 %i.bd, label %bb.y, label %bb.w
 
-4:                                                ; preds = %bb.ah
-  store i8 %.sroa.0.0..sroa.0.0., ptr %.sroa.20, align 1, !tbaa !72
-  br label %.critedge.i
-
-.critedge.i:                                      ; preds = %4, %bb.ah
-  %.0.in.lcssa.i.sroa.phi = phi ptr [ %.sroa.0, %4 ], [ %.sroa.20, %bb.ah ]
-  store i8 %.sroa.20.0..sroa.20.1.165, ptr %.0.in.lcssa.i.sroa.phi, align 1, !tbaa !72
-  %.sroa.20.0..sroa.20.0..sroa.20.1.164 = load i8, ptr %.sroa.20, align 1, !tbaa !72 ; 2 uses
-  %5 = icmp ugt i8 %.sroa.20.0..sroa.20.0..sroa.20.1.164, %.sroa.46.0..sroa.46.2.171
-  br i1 %5, label %6, label %.critedge.1.i
-
-6:                                                ; preds = %.critedge.i
-  store i8 %.sroa.20.0..sroa.20.0..sroa.20.1.164, ptr %.sroa.46, align 1, !tbaa !72
-  %.sroa.0.0..sroa.0.0..sroa.0.0.158 = load i8, ptr %.sroa.0, align 1, !tbaa !72 ; 2 uses
-  %7 = icmp ugt i8 %.sroa.0.0..sroa.0.0..sroa.0.0.158, %.sroa.46.0..sroa.46.2.171
-  br i1 %7, label %8, label %.critedge.1.i
-
-8:                                                ; preds = %6
-  store i8 %.sroa.0.0..sroa.0.0..sroa.0.0.158, ptr %.sroa.20, align 1, !tbaa !72
-  br label %.critedge.1.i
-
-.critedge.1.i:                                    ; preds = %8, %6, %.critedge.i
-  %.0.in.lcssa.1.i.sroa.phi = phi ptr [ %.sroa.0, %8 ], [ %.sroa.46, %.critedge.i ], [ %.sroa.20, %6 ]
-  store i8 %.sroa.46.0..sroa.46.2.171, ptr %.0.in.lcssa.1.i.sroa.phi, align 1, !tbaa !72
-  %.sroa.46.0..sroa.46.0..sroa.46.2.170 = load i8, ptr %.sroa.46, align 1, !tbaa !72 ; 2 uses
-  %9 = icmp ugt i8 %.sroa.46.0..sroa.46.0..sroa.46.2.170, %.sroa.69.0..sroa.69.3.176
-  br i1 %9, label %10, label %.critedge.2.i
-
-10:                                               ; preds = %.critedge.1.i
-  store i8 %.sroa.46.0..sroa.46.0..sroa.46.2.170, ptr %.sroa.69, align 1, !tbaa !72
-  %.sroa.20.0..sroa.20.0..sroa.20.1. = load i8, ptr %.sroa.20, align 1, !tbaa !72 ; 2 uses
-  %11 = icmp ugt i8 %.sroa.20.0..sroa.20.0..sroa.20.1., %.sroa.69.0..sroa.69.3.176
-  br i1 %11, label %12, label %.critedge.2.i
-
-12:                                               ; preds = %10
-  store i8 %.sroa.20.0..sroa.20.0..sroa.20.1., ptr %.sroa.46, align 1, !tbaa !72
-  %.sroa.0.0..sroa.0.0..sroa.0.0.157 = load i8, ptr %.sroa.0, align 1, !tbaa !72 ; 2 uses
-  %13 = icmp ugt i8 %.sroa.0.0..sroa.0.0..sroa.0.0.157, %.sroa.69.0..sroa.69.3.176
-  br i1 %13, label %14, label %.critedge.2.i
-
-14:                                               ; preds = %12
-  store i8 %.sroa.0.0..sroa.0.0..sroa.0.0.157, ptr %.sroa.20, align 1, !tbaa !72
-  br label %.critedge.2.i
-
-.critedge.2.i:                                    ; preds = %14, %12, %10, %.critedge.1.i
-  %.0.in.lcssa.2.i.sroa.phi = phi ptr [ %.sroa.0, %14 ], [ %.sroa.69, %.critedge.1.i ], [ %.sroa.46, %10 ], [ %.sroa.20, %12 ]
-  store i8 %.sroa.69.0..sroa.69.3.176, ptr %.0.in.lcssa.2.i.sroa.phi, align 1, !tbaa !72
-  %.sroa.69.0..sroa.69.0..sroa.69.3.175 = load i8, ptr %.sroa.69, align 1, !tbaa !72 ; 2 uses
-  %15 = icmp ugt i8 %.sroa.69.0..sroa.69.0..sroa.69.3.175, %.sroa.89.0..sroa.89.4.180
-  br i1 %15, label %16, label %.critedge.3.i.a
-
-16:                                               ; preds = %.critedge.2.i
-  store i8 %.sroa.69.0..sroa.69.0..sroa.69.3.175, ptr %.sroa.89, align 1, !tbaa !72
-  %.sroa.46.0..sroa.46.0..sroa.46.2. = load i8, ptr %.sroa.46, align 1, !tbaa !72 ; 2 uses
-  %17 = icmp ugt i8 %.sroa.46.0..sroa.46.0..sroa.46.2., %.sroa.89.0..sroa.89.4.180
-  br i1 %17, label %bb.f, label %.critedge.3.i.a
-
-bb.f:                                             ; preds = %16
-  store i8 %.sroa.46.0..sroa.46.0..sroa.46.2., ptr %.sroa.69, align 1, !tbaa !72
-  %.sroa.20.0..sroa.20.0..sroa.20.1.159 = load i8, ptr %.sroa.20, align 1, !tbaa !72 ; 2 uses
-  %i.be = icmp ugt i8 %.sroa.20.0..sroa.20.0..sroa.20.1.159, %.sroa.89.0..sroa.89.4.180
+bb.f:                                             ; preds = %bb.ah
+  %i.be = icmp ugt i8 %.sroa.20.1, %.sroa.69.5
   br i1 %i.be, label %bb.g, label %.critedge.3.i.a
 
 bb.g:                                             ; preds = %bb.f
-  store i8 %.sroa.20.0..sroa.20.0..sroa.20.1.159, ptr %.sroa.46, align 1, !tbaa !72
-  %.sroa.0.0..sroa.0.0..sroa.0.0.156 = load i8, ptr %.sroa.0, align 1, !tbaa !72 ; 2 uses
-  %18 = icmp ugt i8 %.sroa.0.0..sroa.0.0..sroa.0.0.156, %.sroa.89.0..sroa.89.4.180
-  br i1 %18, label %19, label %.critedge.3.i.a
-
-19:                                               ; preds = %bb.g
-  store i8 %.sroa.0.0..sroa.0.0..sroa.0.0.156, ptr %.sroa.20, align 1, !tbaa !72
+  %spec.select272 = tail call i8 @llvm.umin.i8(i8 %.sroa.0.1, i8 %.sroa.69.5)
+  %spec.select273 = tail call i8 @llvm.umax.i8(i8 %.sroa.0.1, i8 %.sroa.69.5)
   br label %.critedge.3.i.a
 
-.critedge.3.i.a:                                  ; preds = %19, %bb.g, %bb.f, %16, %.critedge.2.i
-  %.0.in.lcssa.3.i.sroa.phi = phi ptr [ %.sroa.0, %19 ], [ %.sroa.89, %.critedge.2.i ], [ %.sroa.69, %16 ], [ %.sroa.20, %bb.g ], [ %.sroa.46, %bb.f ]
-  store i8 %.sroa.89.0..sroa.89.4.180, ptr %.0.in.lcssa.3.i.sroa.phi, align 1, !tbaa !72
-  %.sroa.89.0..sroa.89.0..sroa.89.4.179 = load i8, ptr %.sroa.89, align 1, !tbaa !72 ; 2 uses
-  %i.bf = icmp ugt i8 %.sroa.89.0..sroa.89.0..sroa.89.4.179, %.sroa.107.0..sroa.107.5.184
-  br i1 %i.bf, label %20, label %.critedge.4.i.a
+.critedge.3.i.a:                                  ; preds = %bb.g, %bb.f, %bb.ah
+  %.sroa.0.2 = phi i8 [ %spec.select272, %bb.g ], [ %.sroa.0.1, %bb.f ], [ %.sroa.0.1, %bb.ah ] ; 5 uses
+  %.sroa.20.2 = phi i8 [ %spec.select273, %bb.g ], [ %.sroa.20.1, %bb.f ], [ %.sroa.20.1, %bb.ah ] ; 5 uses
+  %.sroa.46.1 = phi i8 [ %.sroa.20.1, %bb.g ], [ %.sroa.69.5, %bb.f ], [ %.sroa.46.0, %bb.ah ] ; 5 uses
+  %.sroa.69.0 = phi i8 [ %.sroa.46.0, %bb.g ], [ %.sroa.46.0, %bb.f ], [ %.sroa.69.5, %bb.ah ] ; 5 uses
+  %i.bf = icmp ugt i8 %.sroa.69.0, %.sroa.89.6
+  br i1 %i.bf, label %bb.h, label %.critedge.4.i.a
 
-20:                                               ; preds = %.critedge.3.i.a
-  store i8 %.sroa.89.0..sroa.89.0..sroa.89.4.179, ptr %.sroa.107, align 1, !tbaa !72
-  %.sroa.69.0..sroa.69.0..sroa.69.3. = load i8, ptr %.sroa.69, align 1, !tbaa !72 ; 2 uses
-  %21 = icmp ugt i8 %.sroa.69.0..sroa.69.0..sroa.69.3., %.sroa.107.0..sroa.107.5.184
-  br i1 %21, label %bb.h, label %.critedge.4.i.a
-
-bb.h:                                             ; preds = %20
-  store i8 %.sroa.69.0..sroa.69.0..sroa.69.3., ptr %.sroa.89, align 1, !tbaa !72
-  %.sroa.46.0..sroa.46.0..sroa.46.2.166 = load i8, ptr %.sroa.46, align 1, !tbaa !72 ; 2 uses
-  %i.bg = icmp ugt i8 %.sroa.46.0..sroa.46.0..sroa.46.2.166, %.sroa.107.0..sroa.107.5.184
+bb.h:                                             ; preds = %.critedge.3.i.a
+  %i.bg = icmp ugt i8 %.sroa.46.1, %.sroa.89.6
   br i1 %i.bg, label %bb.i, label %.critedge.4.i.a
 
 bb.i:                                             ; preds = %bb.h
-  store i8 %.sroa.46.0..sroa.46.0..sroa.46.2.166, ptr %.sroa.69, align 1, !tbaa !72
-  %.sroa.20.0..sroa.20.0..sroa.20.1.160 = load i8, ptr %.sroa.20, align 1, !tbaa !72 ; 2 uses
-  %i.bh = icmp ugt i8 %.sroa.20.0..sroa.20.0..sroa.20.1.160, %.sroa.107.0..sroa.107.5.184
+  %i.bh = icmp ugt i8 %.sroa.20.2, %.sroa.89.6
   br i1 %i.bh, label %bb.j, label %.critedge.4.i.a
 
 bb.j:                                             ; preds = %bb.i
-  store i8 %.sroa.20.0..sroa.20.0..sroa.20.1.160, ptr %.sroa.46, align 1, !tbaa !72
-  %.sroa.0.0..sroa.0.0..sroa.0.0.155 = load i8, ptr %.sroa.0, align 1, !tbaa !72 ; 2 uses
-  %22 = icmp ugt i8 %.sroa.0.0..sroa.0.0..sroa.0.0.155, %.sroa.107.0..sroa.107.5.184
-  br i1 %22, label %23, label %.critedge.4.i.a
-
-23:                                               ; preds = %bb.j
-  store i8 %.sroa.0.0..sroa.0.0..sroa.0.0.155, ptr %.sroa.20, align 1, !tbaa !72
+  %spec.select274 = tail call i8 @llvm.umin.i8(i8 %.sroa.0.2, i8 %.sroa.89.6)
+  %spec.select275 = tail call i8 @llvm.umax.i8(i8 %.sroa.0.2, i8 %.sroa.89.6)
   br label %.critedge.4.i.a
 
-.critedge.4.i.a:                                  ; preds = %23, %bb.j, %bb.i, %bb.h, %20, %.critedge.3.i.a
-  %.0.in.lcssa.4.i.sroa.phi = phi ptr [ %.sroa.0, %23 ], [ %.sroa.107, %.critedge.3.i.a ], [ %.sroa.89, %20 ], [ %.sroa.20, %bb.j ], [ %.sroa.69, %bb.h ], [ %.sroa.46, %bb.i ]
-  store i8 %.sroa.107.0..sroa.107.5.184, ptr %.0.in.lcssa.4.i.sroa.phi, align 1, !tbaa !72
-  %.sroa.107.0..sroa.107.0..sroa.107.5.183 = load i8, ptr %.sroa.107, align 1, !tbaa !72 ; 2 uses
-  %i.bi = icmp ugt i8 %.sroa.107.0..sroa.107.0..sroa.107.5.183, %.sroa.121.0..sroa.121.6.186
-  br i1 %i.bi, label %24, label %.critedge.5.i.a
+.critedge.4.i.a:                                  ; preds = %bb.j, %bb.i, %bb.h, %.critedge.3.i.a
+  %.sroa.0.3 = phi i8 [ %spec.select274, %bb.j ], [ %.sroa.0.2, %bb.i ], [ %.sroa.0.2, %bb.h ], [ %.sroa.0.2, %.critedge.3.i.a ]
+  %.sroa.20.3 = phi i8 [ %spec.select275, %bb.j ], [ %.sroa.20.2, %bb.i ], [ %.sroa.20.2, %bb.h ], [ %.sroa.20.2, %.critedge.3.i.a ] ; 6 uses
+  %.sroa.46.2 = phi i8 [ %.sroa.20.2, %bb.j ], [ %.sroa.89.6, %bb.i ], [ %.sroa.46.1, %bb.h ], [ %.sroa.46.1, %.critedge.3.i.a ] ; 6 uses
+  %.sroa.69.1 = phi i8 [ %.sroa.46.1, %bb.j ], [ %.sroa.46.1, %bb.i ], [ %.sroa.89.6, %bb.h ], [ %.sroa.69.0, %.critedge.3.i.a ] ; 6 uses
+  %.sroa.89.0 = phi i8 [ %.sroa.69.0, %bb.j ], [ %.sroa.69.0, %bb.i ], [ %.sroa.69.0, %bb.h ], [ %.sroa.89.6, %.critedge.3.i.a ] ; 6 uses
+  %i.bi = icmp ugt i8 %.sroa.89.0, %.sroa.107.3
+  br i1 %i.bi, label %bb.k, label %.critedge.5.i.a
 
-24:                                               ; preds = %.critedge.4.i.a
-  store i8 %.sroa.107.0..sroa.107.0..sroa.107.5.183, ptr %.sroa.121, align 1, !tbaa !72
-  %.sroa.89.0..sroa.89.0..sroa.89.4. = load i8, ptr %.sroa.89, align 1, !tbaa !72 ; 2 uses
-  %25 = icmp ugt i8 %.sroa.89.0..sroa.89.0..sroa.89.4., %.sroa.121.0..sroa.121.6.186
-  br i1 %25, label %26, label %.critedge.5.i.a
-
-26:                                               ; preds = %24
-  store i8 %.sroa.89.0..sroa.89.0..sroa.89.4., ptr %.sroa.107, align 1, !tbaa !72
-  %.sroa.69.0..sroa.69.0..sroa.69.3.172 = load i8, ptr %.sroa.69, align 1, !tbaa !72 ; 2 uses
-  %27 = icmp ugt i8 %.sroa.69.0..sroa.69.0..sroa.69.3.172, %.sroa.121.0..sroa.121.6.186
-  br i1 %27, label %bb.k, label %.critedge.5.i.a
-
-bb.k:                                             ; preds = %26
-  store i8 %.sroa.69.0..sroa.69.0..sroa.69.3.172, ptr %.sroa.89, align 1, !tbaa !72
-  %.sroa.46.0..sroa.46.0..sroa.46.2.167 = load i8, ptr %.sroa.46, align 1, !tbaa !72 ; 2 uses
-  %i.bj = icmp ugt i8 %.sroa.46.0..sroa.46.0..sroa.46.2.167, %.sroa.121.0..sroa.121.6.186
+bb.k:                                             ; preds = %.critedge.4.i.a
+  %i.bj = icmp ugt i8 %.sroa.69.1, %.sroa.107.3
   br i1 %i.bj, label %bb.l, label %.critedge.5.i.a
 
 bb.l:                                             ; preds = %bb.k
-  store i8 %.sroa.46.0..sroa.46.0..sroa.46.2.167, ptr %.sroa.69, align 1, !tbaa !72
-  %.sroa.20.0..sroa.20.0..sroa.20.1.161 = load i8, ptr %.sroa.20, align 1, !tbaa !72 ; 2 uses
-  %i.bk = icmp ugt i8 %.sroa.20.0..sroa.20.0..sroa.20.1.161, %.sroa.121.0..sroa.121.6.186
+  %i.bk = icmp ugt i8 %.sroa.46.2, %.sroa.107.3
   br i1 %i.bk, label %bb.m, label %.critedge.5.i.a
 
 bb.m:                                             ; preds = %bb.l
-  store i8 %.sroa.20.0..sroa.20.0..sroa.20.1.161, ptr %.sroa.46, align 1, !tbaa !72
-  %.sroa.0.0..sroa.0.0..sroa.0.0.154 = load i8, ptr %.sroa.0, align 1, !tbaa !72 ; 2 uses
-  %i.bl = icmp ugt i8 %.sroa.0.0..sroa.0.0..sroa.0.0.154, %.sroa.121.0..sroa.121.6.186
+  %i.bl = icmp ugt i8 %.sroa.20.3, %.sroa.107.3
   br i1 %i.bl, label %bb.n, label %.critedge.5.i.a
 
 bb.n:                                             ; preds = %bb.m
-  store i8 %.sroa.0.0..sroa.0.0..sroa.0.0.154, ptr %.sroa.20, align 1, !tbaa !72
+  %spec.select277 = tail call i8 @llvm.umax.i8(i8 %.sroa.0.3, i8 %.sroa.107.3)
   br label %.critedge.5.i.a
 
-.critedge.5.i.a:                                  ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %26, %24, %.critedge.4.i.a
-  %.0.in.lcssa.5.i.sroa.phi = phi ptr [ %.sroa.0, %bb.n ], [ %.sroa.121, %.critedge.4.i.a ], [ %.sroa.107, %24 ], [ %.sroa.20, %bb.m ], [ %.sroa.89, %26 ], [ %.sroa.46, %bb.l ], [ %.sroa.69, %bb.k ]
-  store i8 %.sroa.121.0..sroa.121.6.186, ptr %.0.in.lcssa.5.i.sroa.phi, align 1, !tbaa !72
-  %.sroa.121.0..sroa.121.0..sroa.121.6.185 = load i8, ptr %.sroa.121, align 1, !tbaa !72 ; 2 uses
-  %i.bm = icmp ugt i8 %.sroa.121.0..sroa.121.0..sroa.121.6.185, %.sroa.132.0..sroa.132.7.187
-  br i1 %i.bm, label %28, label %.critedge.6.i.a
+.critedge.5.i.a:                                  ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %.critedge.4.i.a
+  %.sroa.20.4 = phi i8 [ %spec.select277, %bb.n ], [ %.sroa.20.3, %bb.m ], [ %.sroa.20.3, %bb.l ], [ %.sroa.20.3, %bb.k ], [ %.sroa.20.3, %.critedge.4.i.a ]
+  %.sroa.46.3 = phi i8 [ %.sroa.20.3, %bb.n ], [ %.sroa.107.3, %bb.m ], [ %.sroa.46.2, %bb.l ], [ %.sroa.46.2, %bb.k ], [ %.sroa.46.2, %.critedge.4.i.a ] ; 6 uses
+  %.sroa.69.2 = phi i8 [ %.sroa.46.2, %bb.n ], [ %.sroa.46.2, %bb.m ], [ %.sroa.107.3, %bb.l ], [ %.sroa.69.1, %bb.k ], [ %.sroa.69.1, %.critedge.4.i.a ] ; 6 uses
+  %.sroa.89.1 = phi i8 [ %.sroa.69.1, %bb.n ], [ %.sroa.69.1, %bb.m ], [ %.sroa.69.1, %bb.l ], [ %.sroa.107.3, %bb.k ], [ %.sroa.89.0, %.critedge.4.i.a ] ; 6 uses
+  %.sroa.107.0 = phi i8 [ %.sroa.89.0, %bb.n ], [ %.sroa.89.0, %bb.m ], [ %.sroa.89.0, %bb.l ], [ %.sroa.89.0, %bb.k ], [ %.sroa.107.3, %.critedge.4.i.a ] ; 6 uses
+  %i.bm = icmp ugt i8 %.sroa.107.0, %.sroa.121.3
+  br i1 %i.bm, label %bb.o, label %.critedge.6.i.a
 
-28:                                               ; preds = %.critedge.5.i.a
-  store i8 %.sroa.121.0..sroa.121.0..sroa.121.6.185, ptr %.sroa.132, align 1, !tbaa !72
-  %.sroa.107.0..sroa.107.0..sroa.107.5. = load i8, ptr %.sroa.107, align 1, !tbaa !72 ; 2 uses
-  %29 = icmp ugt i8 %.sroa.107.0..sroa.107.0..sroa.107.5., %.sroa.132.0..sroa.132.7.187
-  br i1 %29, label %30, label %.critedge.6.i.a
-
-30:                                               ; preds = %28
-  store i8 %.sroa.107.0..sroa.107.0..sroa.107.5., ptr %.sroa.121, align 1, !tbaa !72
-  %.sroa.89.0..sroa.89.0..sroa.89.4.177 = load i8, ptr %.sroa.89, align 1, !tbaa !72 ; 2 uses
-  %31 = icmp ugt i8 %.sroa.89.0..sroa.89.0..sroa.89.4.177, %.sroa.132.0..sroa.132.7.187
-  br i1 %31, label %32, label %.critedge.6.i.a
-
-32:                                               ; preds = %30
-  store i8 %.sroa.89.0..sroa.89.0..sroa.89.4.177, ptr %.sroa.107, align 1, !tbaa !72
-  %.sroa.69.0..sroa.69.0..sroa.69.3.173 = load i8, ptr %.sroa.69, align 1, !tbaa !72 ; 2 uses
-  %33 = icmp ugt i8 %.sroa.69.0..sroa.69.0..sroa.69.3.173, %.sroa.132.0..sroa.132.7.187
-  br i1 %33, label %bb.o, label %.critedge.6.i.a
-
-bb.o:                                             ; preds = %32
-  store i8 %.sroa.69.0..sroa.69.0..sroa.69.3.173, ptr %.sroa.89, align 1, !tbaa !72
-  %.sroa.46.0..sroa.46.0..sroa.46.2.168 = load i8, ptr %.sroa.46, align 1, !tbaa !72 ; 2 uses
-  %i.bn = icmp ugt i8 %.sroa.46.0..sroa.46.0..sroa.46.2.168, %.sroa.132.0..sroa.132.7.187
+bb.o:                                             ; preds = %.critedge.5.i.a
+  %i.bn = icmp ugt i8 %.sroa.89.1, %.sroa.121.3
   br i1 %i.bn, label %bb.p, label %.critedge.6.i.a
 
 bb.p:                                             ; preds = %bb.o
-  store i8 %.sroa.46.0..sroa.46.0..sroa.46.2.168, ptr %.sroa.69, align 1, !tbaa !72
-  %.sroa.20.0..sroa.20.0..sroa.20.1.162 = load i8, ptr %.sroa.20, align 1, !tbaa !72 ; 2 uses
-  %i.bo = icmp ugt i8 %.sroa.20.0..sroa.20.0..sroa.20.1.162, %.sroa.132.0..sroa.132.7.187
+  %i.bo = icmp ugt i8 %.sroa.69.2, %.sroa.121.3
   br i1 %i.bo, label %bb.q, label %.critedge.6.i.a
 
 bb.q:                                             ; preds = %bb.p
-  store i8 %.sroa.20.0..sroa.20.0..sroa.20.1.162, ptr %.sroa.46, align 1, !tbaa !72
-  %.sroa.0.0..sroa.0.0..sroa.0.0.153 = load i8, ptr %.sroa.0, align 1, !tbaa !72 ; 2 uses
-  %i.bp = icmp ugt i8 %.sroa.0.0..sroa.0.0..sroa.0.0.153, %.sroa.132.0..sroa.132.7.187
+  %i.bp = icmp ugt i8 %.sroa.46.3, %.sroa.121.3
   br i1 %i.bp, label %bb.r, label %.critedge.6.i.a
 
 bb.r:                                             ; preds = %bb.q
-  store i8 %.sroa.0.0..sroa.0.0..sroa.0.0.153, ptr %.sroa.20, align 1, !tbaa !72
+  %spec.select293 = tail call i8 @llvm.umax.i8(i8 %.sroa.20.4, i8 %.sroa.121.3)
   br label %.critedge.6.i.a
 
-.critedge.6.i.a:                                  ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %32, %30, %28, %.critedge.5.i.a
-  %.0.in.lcssa.6.i.sroa.phi = phi ptr [ %.sroa.0, %bb.r ], [ %.sroa.132, %.critedge.5.i.a ], [ %.sroa.121, %28 ], [ %.sroa.20, %bb.q ], [ %.sroa.107, %30 ], [ %.sroa.69, %bb.o ], [ %.sroa.89, %32 ], [ %.sroa.46, %bb.p ]
-  store i8 %.sroa.132.0..sroa.132.7.187, ptr %.0.in.lcssa.6.i.sroa.phi, align 1, !tbaa !72
-  %.sroa.132.0..sroa.132.0..sroa.132.7. = load i8, ptr %.sroa.132, align 1, !tbaa !72
-  %i.bq = icmp ugt i8 %.sroa.132.0..sroa.132.0..sroa.132.7., %i.ax
-  br i1 %i.bq, label %34, label %_ZL10insertSortPhi.exit.a
+.critedge.6.i.a:                                  ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %.critedge.5.i.a
+  %.sroa.46.4 = phi i8 [ %.sroa.46.3, %.critedge.5.i.a ], [ %.sroa.46.3, %bb.q ], [ %.sroa.46.3, %bb.p ], [ %spec.select293, %bb.r ], [ %.sroa.46.3, %bb.o ]
+  %.sroa.69.3 = phi i8 [ %.sroa.69.2, %.critedge.5.i.a ], [ %.sroa.121.3, %bb.q ], [ %.sroa.69.2, %bb.p ], [ %.sroa.46.3, %bb.r ], [ %.sroa.69.2, %bb.o ] ; 6 uses
+  %.sroa.89.2 = phi i8 [ %.sroa.89.1, %.critedge.5.i.a ], [ %.sroa.69.2, %bb.q ], [ %.sroa.121.3, %bb.p ], [ %.sroa.69.2, %bb.r ], [ %.sroa.89.1, %bb.o ] ; 6 uses
+  %.sroa.107.1 = phi i8 [ %.sroa.107.0, %.critedge.5.i.a ], [ %.sroa.89.1, %bb.q ], [ %.sroa.89.1, %bb.p ], [ %.sroa.89.1, %bb.r ], [ %.sroa.121.3, %bb.o ] ; 6 uses
+  %.sroa.121.0 = phi i8 [ %.sroa.121.3, %.critedge.5.i.a ], [ %.sroa.107.0, %bb.q ], [ %.sroa.107.0, %bb.p ], [ %.sroa.107.0, %bb.r ], [ %.sroa.107.0, %bb.o ] ; 6 uses
+  %i.bq = icmp ugt i8 %.sroa.121.0, %.sroa.132.1
+  br i1 %i.bq, label %bb.s, label %_ZL10insertSortPhi.exit.a
 
-34:                                               ; preds = %.critedge.6.i.a
-  %.sroa.121.0..sroa.121.0..sroa.121.6. = load i8, ptr %.sroa.121, align 1, !tbaa !72
-  %35 = icmp ugt i8 %.sroa.121.0..sroa.121.0..sroa.121.6., %i.ax
-  br i1 %35, label %36, label %_ZL10insertSortPhi.exit.a
-
-36:                                               ; preds = %34
-  %.sroa.107.0..sroa.107.0..sroa.107.5.182 = load i8, ptr %.sroa.107, align 1, !tbaa !72
-  %37 = icmp ugt i8 %.sroa.107.0..sroa.107.0..sroa.107.5.182, %i.ax
-  br i1 %37, label %38, label %_ZL10insertSortPhi.exit.a
-
-38:                                               ; preds = %36
-  %.sroa.89.0..sroa.89.0..sroa.89.4.178 = load i8, ptr %.sroa.89, align 1, !tbaa !72
-  %39 = icmp ugt i8 %.sroa.89.0..sroa.89.0..sroa.89.4.178, %i.ax
-  br i1 %39, label %40, label %_ZL10insertSortPhi.exit.a
-
-40:                                               ; preds = %38
-  %.sroa.69.0..sroa.69.0..sroa.69.3.174 = load i8, ptr %.sroa.69, align 1, !tbaa !72 ; 2 uses
-  %41 = icmp ugt i8 %.sroa.69.0..sroa.69.0..sroa.69.3.174, %i.ax
-  br i1 %41, label %bb.s, label %_ZL10insertSortPhi.exit.a
-
-bb.s:                                             ; preds = %40
-  store i8 %.sroa.69.0..sroa.69.0..sroa.69.3.174, ptr %.sroa.89, align 1, !tbaa !72
-  %.sroa.46.0..sroa.46.0..sroa.46.2.169 = load i8, ptr %.sroa.46, align 1, !tbaa !72 ; 2 uses
-  %i.br = icmp ugt i8 %.sroa.46.0..sroa.46.0..sroa.46.2.169, %i.ax
+bb.s:                                             ; preds = %.critedge.6.i.a
+  %i.br = icmp ugt i8 %.sroa.107.1, %.sroa.132.1
   br i1 %i.br, label %bb.t, label %_ZL10insertSortPhi.exit.a
 
 bb.t:                                             ; preds = %bb.s
-  store i8 %.sroa.46.0..sroa.46.0..sroa.46.2.169, ptr %.sroa.69, align 1, !tbaa !72
-  %.sroa.20.0..sroa.20.0..sroa.20.1.163 = load i8, ptr %.sroa.20, align 1, !tbaa !72 ; 2 uses
-  %i.bs = icmp ugt i8 %.sroa.20.0..sroa.20.0..sroa.20.1.163, %i.ax
+  %i.bs = icmp ugt i8 %.sroa.89.2, %.sroa.132.1
   br i1 %i.bs, label %bb.u, label %_ZL10insertSortPhi.exit.a
 
 bb.u:                                             ; preds = %bb.t
-  store i8 %.sroa.20.0..sroa.20.0..sroa.20.1.163, ptr %.sroa.46, align 1, !tbaa !72
-  %.sroa.0.0..sroa.0.0..sroa.0.0.152 = load i8, ptr %.sroa.0, align 1, !tbaa !72 ; 2 uses
-  %i.bt = icmp ugt i8 %.sroa.0.0..sroa.0.0..sroa.0.0.152, %i.ax
+  %i.bt = icmp ugt i8 %.sroa.69.3, %.sroa.132.1
   br i1 %i.bt, label %bb.v, label %_ZL10insertSortPhi.exit.a
 
 bb.v:                                             ; preds = %bb.u
-  store i8 %.sroa.0.0..sroa.0.0..sroa.0.0.152, ptr %.sroa.20, align 1, !tbaa !72
+  %spec.select294 = tail call i8 @llvm.umax.i8(i8 %.sroa.46.4, i8 %.sroa.132.1)
   br label %_ZL10insertSortPhi.exit.a
 
-_ZL10insertSortPhi.exit.a:                        ; preds = %.critedge.6.i.a, %34, %36, %38, %40, %bb.s, %bb.t, %bb.u, %bb.v
-  %.0.in.lcssa.7.i.sroa.phi = phi ptr [ %.sroa.0, %bb.v ], [ %.sroa.140, %.critedge.6.i.a ], [ %.sroa.132, %34 ], [ %.sroa.20, %bb.u ], [ %.sroa.121, %36 ], [ %.sroa.69, %bb.s ], [ %.sroa.107, %38 ], [ %.sroa.46, %bb.t ], [ %.sroa.89, %40 ]
-  store i8 %i.ax, ptr %.0.in.lcssa.7.i.sroa.phi, align 1, !tbaa !72
-  %.sroa.89.0..sroa.89.0..sroa.89.4.181 = load i8, ptr %.sroa.89, align 1, !tbaa !72
-  %42 = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv
-  store i8 %.sroa.89.0..sroa.89.0..sroa.89.4.181, ptr %42, align 1, !tbaa !72
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.20)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.46)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.69)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.89)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.107)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.121)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.132)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.140)
+_ZL10insertSortPhi.exit.a:                        ; preds = %bb.v, %bb.u, %bb.t, %bb.s, %.critedge.6.i.a
+  %.sroa.69.4 = phi i8 [ %.sroa.69.3, %.critedge.6.i.a ], [ %.sroa.69.3, %bb.s ], [ %.sroa.69.3, %bb.u ], [ %.sroa.69.3, %bb.t ], [ %spec.select294, %bb.v ]
+  %.sroa.89.3 = phi i8 [ %.sroa.89.2, %.critedge.6.i.a ], [ %.sroa.89.2, %bb.s ], [ %.sroa.132.1, %bb.u ], [ %.sroa.89.2, %bb.t ], [ %.sroa.69.3, %bb.v ] ; 2 uses
+  %.sroa.107.2 = phi i8 [ %.sroa.107.1, %.critedge.6.i.a ], [ %.sroa.107.1, %bb.s ], [ %.sroa.89.2, %bb.u ], [ %.sroa.132.1, %bb.t ], [ %.sroa.89.2, %bb.v ]
+  %.sroa.121.1 = phi i8 [ %.sroa.121.0, %.critedge.6.i.a ], [ %.sroa.132.1, %bb.s ], [ %.sroa.107.1, %bb.u ], [ %.sroa.107.1, %bb.t ], [ %.sroa.107.1, %bb.v ]
+  %.sroa.132.0 = phi i8 [ %.sroa.132.1, %.critedge.6.i.a ], [ %.sroa.121.0, %bb.s ], [ %.sroa.121.0, %bb.u ], [ %.sroa.121.0, %bb.t ], [ %.sroa.121.0, %bb.v ]
+  %2 = icmp ugt i8 %.sroa.132.0, %i.ax
+  %3 = icmp ugt i8 %.sroa.121.1, %i.ax
+  %or.cond = select i1 %2, i1 %3, i1 false
+  %4 = icmp ugt i8 %.sroa.107.2, %i.ax
+  %or.cond281 = select i1 %or.cond, i1 %4, i1 false
+  %5 = icmp ugt i8 %.sroa.89.3, %i.ax
+  %or.cond282 = select i1 %or.cond281, i1 %5, i1 false
+  br i1 %or.cond282, label %6, label %bb.ai
+
+6:                                                ; preds = %_ZL10insertSortPhi.exit.a
+  %spec.select292 = tail call i8 @llvm.umax.i8(i8 %.sroa.69.4, i8 %i.ax)
   br label %bb.ai
 
 bb.w:                                             ; preds = %.preheader
@@ -641,43 +465,33 @@ bb.w:                                             ; preds = %.preheader
   %i.bz = add nuw nsw i32 %i.by, %i.bc
   %i.ca = zext nneg i32 %i.bz to i64              ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.ca
-  %i.cc = load i8, ptr %i.cb, align 1, !tbaa !72  ; 3 uses
-  %.not92.a = icmp eq i8 %i.cc, 0
-  br i1 %.not92.a, label %44, label %43
+  %i.cc = load i8, ptr %i.cb, align 1, !tbaa !72  ; 2 uses
+  %.not92 = icmp eq i8 %i.cc, 0
+  %spec.select284 = select i1 %.not92, i8 %i.ax, i8 %i.cc ; 2 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.ca
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %9 = load i32, ptr %8, align 4
+  %10 = lshr i32 %9, 6
+  %11 = and i32 %10, 63                           ; 2 uses
+  %.not92.a = icmp eq i32 %11, 63
+  br i1 %.not92.a, label %bb.y, label %bb.x
 
-43:                                               ; preds = %bb.w
-  store i8 %i.cc, ptr %.sroa.0, align 1, !tbaa !72
-  br label %44
-
-44:                                               ; preds = %43, %bb.w
-  %.sroa.0.0..sroa.0.0.189 = phi i8 [ %i.cc, %43 ], [ %i.ax, %bb.w ] ; 3 uses
-  %45 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.ca
-  %46 = getelementptr inbounds nuw i8, ptr %45, i64 4
-  %47 = load i32, ptr %46, align 4
-  %48 = lshr i32 %47, 6
-  %49 = and i32 %48, 63                           ; 2 uses
-  %.not93 = icmp eq i32 %49, 63
-  br i1 %.not93, label %bb.y, label %bb.x
-
-bb.x:                                             ; preds = %44
+bb.x:                                             ; preds = %bb.w
   %i.cd = getelementptr [4 x i8], ptr %i.bu, i64 %i.as
   %i.ce = getelementptr [4 x i8], ptr %i.cd, i64 %i.x
   %i.cf = load i32, ptr %i.ce, align 4
   %i.cg = and i32 %i.cf, 16777215
-  %i.ch = add nuw nsw i32 %i.cg, %49
+  %i.ch = add nuw nsw i32 %i.cg, %11
   %i.ci = zext nneg i32 %i.ch to i64
   %i.cj = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.ci
-  %i.ck = load i8, ptr %i.cj, align 1, !tbaa !72  ; 3 uses
+  %i.ck = load i8, ptr %i.cj, align 1, !tbaa !72  ; 2 uses
   %.not94 = icmp eq i8 %i.ck, 0
-  br i1 %.not94, label %bb.y, label %50
-
-50:                                               ; preds = %bb.x
-  store i8 %i.ck, ptr %.sroa.20, align 1, !tbaa !72
+  %spec.select285 = select i1 %.not94, i8 %i.ax, i8 %i.ck
   br label %bb.y
 
-bb.y:                                             ; preds = %44, %50, %bb.x, %.preheader
-  %.sroa.0.0..sroa.0.0. = phi i8 [ %.sroa.0.0..sroa.0.0.189, %44 ], [ %.sroa.0.0..sroa.0.0.189, %50 ], [ %.sroa.0.0..sroa.0.0.189, %bb.x ], [ %i.ax, %.preheader ] ; 2 uses
-  %.sroa.20.0..sroa.20.1.165 = phi i8 [ %i.ax, %44 ], [ %i.ck, %50 ], [ %i.ax, %bb.x ], [ %i.ax, %.preheader ] ; 2 uses
+bb.y:                                             ; preds = %bb.x, %bb.w, %.preheader
+  %.sroa.0.8 = phi i8 [ %i.ax, %.preheader ], [ %spec.select284, %bb.w ], [ %spec.select284, %bb.x ] ; 2 uses
+  %.sroa.20.7 = phi i8 [ %i.ax, %.preheader ], [ %i.ax, %bb.w ], [ %spec.select285, %bb.x ] ; 2 uses
   %i.cl = lshr i32 %i.bb, 6
   %i.cm = and i32 %i.cl, 63                       ; 2 uses
   %i.cn = icmp eq i32 %i.cm, 63
@@ -692,44 +506,34 @@ bb.z:                                             ; preds = %bb.y
   %i.ct = add nuw nsw i32 %i.cs, %i.cm
   %i.cu = zext nneg i32 %i.ct to i64              ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.cu
-  %i.cw = load i8, ptr %i.cv, align 1, !tbaa !72  ; 3 uses
-  %.not92.1.a = icmp eq i8 %i.cw, 0
-  br i1 %.not92.1.a, label %52, label %51
+  %i.cw = load i8, ptr %i.cv, align 1, !tbaa !72  ; 2 uses
+  %.not92.1 = icmp eq i8 %i.cw, 0
+  %spec.select286 = select i1 %.not92.1, i8 %i.ax, i8 %i.cw ; 2 uses
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.cu
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %14 = load i32, ptr %13, align 4
+  %15 = lshr i32 %14, 12
+  %16 = and i32 %15, 63                           ; 2 uses
+  %.not92.1.a = icmp eq i32 %16, 63
+  br i1 %.not92.1.a, label %bb.ab, label %bb.aa
 
-51:                                               ; preds = %bb.z
-  store i8 %i.cw, ptr %.sroa.46, align 1, !tbaa !72
-  br label %52
-
-52:                                               ; preds = %51, %bb.z
-  %.sroa.46.0..sroa.46.2.171191 = phi i8 [ %i.cw, %51 ], [ %i.ax, %bb.z ] ; 3 uses
-  %53 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.cu
-  %54 = getelementptr inbounds nuw i8, ptr %53, i64 4
-  %55 = load i32, ptr %54, align 4
-  %56 = lshr i32 %55, 12
-  %57 = and i32 %56, 63                           ; 2 uses
-  %.not93.1 = icmp eq i32 %57, 63
-  br i1 %.not93.1, label %bb.ab, label %bb.aa
-
-bb.aa:                                            ; preds = %52
+bb.aa:                                            ; preds = %bb.z
   %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %indvars.iv144
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 4
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %i.z
   %i.da = load i32, ptr %i.cz, align 4
   %i.db = and i32 %i.da, 16777215
-  %i.dc = add nuw nsw i32 %i.db, %57
+  %i.dc = add nuw nsw i32 %i.db, %16
   %i.dd = zext nneg i32 %i.dc to i64
   %i.de = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.dd
-  %i.df = load i8, ptr %i.de, align 1, !tbaa !72  ; 3 uses
+  %i.df = load i8, ptr %i.de, align 1, !tbaa !72  ; 2 uses
   %.not94.1 = icmp eq i8 %i.df, 0
-  br i1 %.not94.1, label %bb.ab, label %58
-
-58:                                               ; preds = %bb.aa
-  store i8 %i.df, ptr %.sroa.69, align 1, !tbaa !72
+  %spec.select287 = select i1 %.not94.1, i8 %i.ax, i8 %i.df
   br label %bb.ab
 
-bb.ab:                                            ; preds = %58, %bb.aa, %52, %bb.y
-  %.sroa.69.0..sroa.69.3.176 = phi i8 [ %i.df, %58 ], [ %i.ax, %bb.aa ], [ %i.ax, %52 ], [ %i.ax, %bb.y ] ; 4 uses
-  %.sroa.46.0..sroa.46.2.171 = phi i8 [ %.sroa.46.0..sroa.46.2.171191, %58 ], [ %.sroa.46.0..sroa.46.2.171191, %bb.aa ], [ %.sroa.46.0..sroa.46.2.171191, %52 ], [ %i.ax, %bb.y ] ; 3 uses
+bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
+  %.sroa.46.7 = phi i8 [ %i.ax, %bb.y ], [ %spec.select286, %bb.z ], [ %spec.select286, %bb.aa ] ; 4 uses
+  %.sroa.69.5 = phi i8 [ %i.ax, %bb.y ], [ %i.ax, %bb.z ], [ %spec.select287, %bb.aa ] ; 6 uses
   %i.dg = lshr i32 %i.bb, 12
   %i.dh = and i32 %i.dg, 63                       ; 2 uses
   %i.di = icmp eq i32 %i.dh, 63
@@ -744,43 +548,33 @@ bb.ac:                                            ; preds = %bb.ab
   %i.do = add nuw nsw i32 %i.dn, %i.dh
   %i.dp = zext nneg i32 %i.do to i64              ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.dp
-  %i.dr = load i8, ptr %i.dq, align 1, !tbaa !72  ; 3 uses
-  %.not92.2.a = icmp eq i8 %i.dr, 0
-  br i1 %.not92.2.a, label %60, label %59
+  %i.dr = load i8, ptr %i.dq, align 1, !tbaa !72  ; 2 uses
+  %.not92.2 = icmp eq i8 %i.dr, 0
+  %spec.select288 = select i1 %.not92.2, i8 %i.ax, i8 %i.dr ; 2 uses
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.dp
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 4
+  %19 = load i32, ptr %18, align 4
+  %20 = lshr i32 %19, 18
+  %21 = and i32 %20, 63                           ; 2 uses
+  %.not92.2.a = icmp eq i32 %21, 63
+  br i1 %.not92.2.a, label %bb.ae, label %bb.ad
 
-59:                                               ; preds = %bb.ac
-  store i8 %i.dr, ptr %.sroa.89, align 1, !tbaa !72
-  br label %60
-
-60:                                               ; preds = %59, %bb.ac
-  %.sroa.89.0..sroa.89.4.180194 = phi i8 [ %i.dr, %59 ], [ %i.ax, %bb.ac ] ; 3 uses
-  %61 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.dp
-  %62 = getelementptr inbounds nuw i8, ptr %61, i64 4
-  %63 = load i32, ptr %62, align 4
-  %64 = lshr i32 %63, 18
-  %65 = and i32 %64, 63                           ; 2 uses
-  %.not93.2 = icmp eq i32 %65, 63
-  br i1 %.not93.2, label %bb.ae, label %bb.ad
-
-bb.ad:                                            ; preds = %60
+bb.ad:                                            ; preds = %bb.ac
   %i.ds = getelementptr [4 x i8], ptr %i.dj, i64 %i.at
   %i.dt = getelementptr [4 x i8], ptr %i.ds, i64 %i.ab
   %i.du = load i32, ptr %i.dt, align 4
   %i.dv = and i32 %i.du, 16777215
-  %i.dw = add nuw nsw i32 %i.dv, %65
+  %i.dw = add nuw nsw i32 %i.dv, %21
   %i.dx = zext nneg i32 %i.dw to i64
   %i.dy = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.dx
-  %i.dz = load i8, ptr %i.dy, align 1, !tbaa !72  ; 3 uses
+  %i.dz = load i8, ptr %i.dy, align 1, !tbaa !72  ; 2 uses
   %.not94.2 = icmp eq i8 %i.dz, 0
-  br i1 %.not94.2, label %bb.ae, label %66
-
-66:                                               ; preds = %bb.ad
-  store i8 %i.dz, ptr %.sroa.107, align 1, !tbaa !72
+  %spec.select289 = select i1 %.not94.2, i8 %i.ax, i8 %i.dz
   br label %bb.ae
 
-bb.ae:                                            ; preds = %66, %bb.ad, %60, %bb.ab
-  %.sroa.107.0..sroa.107.5.184 = phi i8 [ %i.dz, %66 ], [ %i.ax, %bb.ad ], [ %i.ax, %60 ], [ %i.ax, %bb.ab ] ; 6 uses
-  %.sroa.89.0..sroa.89.4.180 = phi i8 [ %.sroa.89.0..sroa.89.4.180194, %66 ], [ %.sroa.89.0..sroa.89.4.180194, %bb.ad ], [ %.sroa.89.0..sroa.89.4.180194, %60 ], [ %i.ax, %bb.ab ] ; 5 uses
+bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.ab
+  %.sroa.89.6 = phi i8 [ %i.ax, %bb.ab ], [ %spec.select288, %bb.ac ], [ %spec.select288, %bb.ad ] ; 8 uses
+  %.sroa.107.3 = phi i8 [ %i.ax, %bb.ab ], [ %i.ax, %bb.ac ], [ %spec.select289, %bb.ad ] ; 9 uses
   %i.ea = lshr i32 %i.bb, 18
   %i.eb = and i32 %i.ea, 63                       ; 2 uses
   %i.ec = icmp eq i32 %i.eb, 63
@@ -795,47 +589,48 @@ bb.af:                                            ; preds = %bb.ae
   %i.ei = add nuw nsw i32 %i.eh, %i.eb
   %i.ej = zext nneg i32 %i.ei to i64              ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.ej
-  %i.el = load i8, ptr %i.ek, align 1, !tbaa !72  ; 3 uses
-  %.not92.3.a = icmp eq i8 %i.el, 0
-  br i1 %.not92.3.a, label %68, label %67
+  %i.el = load i8, ptr %i.ek, align 1, !tbaa !72  ; 2 uses
+  %.not92.3 = icmp eq i8 %i.el, 0
+  %spec.select290 = select i1 %.not92.3, i8 %i.ax, i8 %i.el ; 2 uses
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.ej
+  %23 = getelementptr inbounds nuw i8, ptr %22, i64 4
+  %24 = load i32, ptr %23, align 4
+  %25 = and i32 %24, 63                           ; 2 uses
+  %.not92.3.a = icmp eq i32 %25, 63
+  br i1 %.not92.3.a, label %bb.ah, label %bb.ag
 
-67:                                               ; preds = %bb.af
-  store i8 %i.el, ptr %.sroa.121, align 1, !tbaa !72
-  br label %68
-
-68:                                               ; preds = %67, %bb.af
-  %.sroa.121.0..sroa.121.6.186197 = phi i8 [ %i.el, %67 ], [ %i.ax, %bb.af ] ; 3 uses
-  %69 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.ej
-  %70 = getelementptr inbounds nuw i8, ptr %69, i64 4
-  %71 = load i32, ptr %70, align 4
-  %72 = and i32 %71, 63                           ; 2 uses
-  %.not93.3 = icmp eq i32 %72, 63
-  br i1 %.not93.3, label %bb.ah, label %bb.ag
-
-bb.ag:                                            ; preds = %68
+bb.ag:                                            ; preds = %bb.af
   %i.em = getelementptr [4 x i8], ptr %i.ed, i64 %indvars.iv144
   %i.en = getelementptr i8, ptr %i.em, i64 -4
   %i.eo = getelementptr [4 x i8], ptr %i.en, i64 %i.ad
   %i.ep = load i32, ptr %i.eo, align 4
   %i.eq = and i32 %i.ep, 16777215
-  %i.er = add nuw nsw i32 %i.eq, %72
+  %i.er = add nuw nsw i32 %i.eq, %25
   %i.es = zext nneg i32 %i.er to i64
   %i.et = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.es
-  %i.eu = load i8, ptr %i.et, align 1, !tbaa !72  ; 3 uses
+  %i.eu = load i8, ptr %i.et, align 1, !tbaa !72  ; 2 uses
   %.not94.3 = icmp eq i8 %i.eu, 0
-  br i1 %.not94.3, label %bb.ah, label %73
-
-73:                                               ; preds = %bb.ag
-  store i8 %i.eu, ptr %.sroa.132, align 1, !tbaa !72
+  %spec.select291 = select i1 %.not94.3, i8 %i.ax, i8 %i.eu
   br label %bb.ah
 
-bb.ah:                                            ; preds = %73, %bb.ag, %68, %bb.ae
-  %.sroa.132.0..sroa.132.7.187 = phi i8 [ %i.eu, %73 ], [ %i.ax, %bb.ag ], [ %i.ax, %68 ], [ %i.ax, %bb.ae ] ; 8 uses
-  %.sroa.121.0..sroa.121.6.186 = phi i8 [ %.sroa.121.0..sroa.121.6.186197, %73 ], [ %.sroa.121.0..sroa.121.6.186197, %bb.ag ], [ %.sroa.121.0..sroa.121.6.186197, %68 ], [ %i.ax, %bb.ae ] ; 7 uses
-  %i.ev = icmp ugt i8 %.sroa.0.0..sroa.0.0., %.sroa.20.0..sroa.20.1.165
-  br i1 %i.ev, label %4, label %.critedge.i
+bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.ae
+  %.sroa.121.3 = phi i8 [ %i.ax, %bb.ae ], [ %spec.select290, %bb.af ], [ %spec.select290, %bb.ag ] ; 9 uses
+  %.sroa.132.1 = phi i8 [ %i.ax, %bb.ae ], [ %i.ax, %bb.af ], [ %spec.select291, %bb.ag ] ; 9 uses
+  %.sroa.0.0 = tail call i8 @llvm.umin.i8(i8 %.sroa.0.8, i8 %.sroa.20.7) ; 3 uses
+  %.sroa.20.0 = tail call i8 @llvm.umax.i8(i8 %.sroa.0.8, i8 %.sroa.20.7) ; 3 uses
+  %26 = icmp ugt i8 %.sroa.20.0, %.sroa.46.7      ; 2 uses
+  %spec.select = tail call i8 @llvm.umin.i8(i8 %.sroa.0.0, i8 %.sroa.46.7)
+  %spec.select271 = tail call i8 @llvm.umax.i8(i8 %.sroa.0.0, i8 %.sroa.46.7)
+  %.sroa.0.1 = select i1 %26, i8 %spec.select, i8 %.sroa.0.0 ; 4 uses
+  %.sroa.20.1 = select i1 %26, i8 %spec.select271, i8 %.sroa.20.0 ; 4 uses
+  %.sroa.46.0 = tail call i8 @llvm.umax.i8(i8 %.sroa.20.0, i8 %.sroa.46.7) ; 4 uses
+  %i.ev = icmp ugt i8 %.sroa.46.0, %.sroa.69.5
+  br i1 %i.ev, label %bb.f, label %.critedge.3.i.a
 
-bb.ai:                                            ; preds = %_ZL10insertSortPhi.exit.a, %2
+bb.ai:                                            ; preds = %6, %_ZL10insertSortPhi.exit.a, %.lr.ph
+  %.sroa.89.4.sink = phi i8 [ 0, %.lr.ph ], [ %spec.select292, %6 ], [ %.sroa.89.3, %_ZL10insertSortPhi.exit.a ]
+  %27 = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv
+  store i8 %.sroa.89.4.sink, ptr %27, align 1, !tbaa !72
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ew = icmp samesign ult i64 %indvars.iv.next, %i.ar
   br i1 %i.ew, label %.lr.ph, label %._crit_edge
@@ -857,7 +652,7 @@ _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %bb.aj, %bb.ak
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
 ; Function Attrs: nounwind uwtable
 define void @_Z13rcMarkBoxAreaP9rcContextPKfS2_hR20rcCompactHeightfield(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i8 noundef zeroext %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(96) %4) local_unnamed_addr #0 {
@@ -1260,7 +1055,7 @@ _ZN13rcScopedTimerD2Ev.exit:                      ; preds = %.loopexit116, %bb.h
   ret void
 }
 
-declare noundef float @_Z6rcSqrtf(float noundef) local_unnamed_addr #2
+declare noundef float @_Z6rcSqrtf(float noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
@@ -1269,15 +1064,21 @@ declare i32 @llvm.smin.i32(i32, i32) #4
 declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umin.i8(i8, i8) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.uadd.sat.i8(i8, i8) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umax.i8(i8, i8) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #5 = { nounwind }
 

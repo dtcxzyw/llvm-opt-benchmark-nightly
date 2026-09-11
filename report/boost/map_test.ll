@@ -205,8 +205,6 @@ bb.a:
   %27 = alloca %"class.boost::container::test::movable_int", align 4 ; 6 uses
   %28 = alloca %"class.boost::container::test::movable_int", align 4 ; 7 uses
   %29 = alloca %"struct.boost::container::insert_return_type_base", align 8 ; 15 uses
-  %.sroa.7472 = alloca ptr, align 8               ; 6 uses
-  %.sroa.7 = alloca ptr, align 8                  ; 6 uses
   %30 = alloca %"struct.boost::container::insert_return_type_base", align 8 ; 6 uses
   %31 = alloca %"class.boost::container::dtl::iterator_from_iiterator.1", align 8 ; 2 uses
   %32 = alloca %"class.boost::container::node_handle", align 8 ; 7 uses
@@ -604,7 +602,6 @@ bb.v:                                             ; preds = %.noexc153
   store i8 0, ptr %29, align 8, !tbaa !198
   %i.en = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 7 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.en, i8 0, i64 16, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7472)
   %i.eo = load ptr, ptr %i.f, align 8, !tbaa !189, !noalias !1016
   %i.ep = ptrtoint ptr %i.eo to i64
   %i.eq = and i64 %i.ep, -2                       ; 2 uses
@@ -646,7 +643,6 @@ _ZN5boost9container3mapINS0_4test11movable_intES3_St4lessIS3_EvvE7extractERKS3_.
   call void @_ZN5boost9intrusive11bstree_implINS0_8bhtraitsINS_9container9base_nodeISt4pairIKNS3_4test11movable_intES7_ENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISC_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEENSA_11key_of_nodeISF_NSA_9select1stIS8_EEEESt4lessIS7_EmLb1ELNS0_10algo_typesE5EvE5eraseENS0_13tree_iteratorISK_Lb1EEE(ptr dead_on_unwind nonnull writable sret(%"class.boost::intrusive::tree_iterator") align 8 %24, ptr noundef nonnull align 8 dereferenceable(32) %25, ptr noundef nonnull align 8 dead_on_return %23) #26, !noalias !1018
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #26, !noalias !1018
   call void @llvm.lifetime.end.p0(ptr nonnull %23), !noalias !1017
-  call void @llvm.experimental.noalias.scope.decl(metadata !1019)
   br label %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEEvEC2INS0_24pair_key_mapped_of_valueIS6_S6_EEEEONS1_ISF_T_EEPNS_11move_detail11enable_if_cIXeqplcvjL_ZNSN_7is_sameIvvE5valueEEcvjsr3dtl7is_sameISK_vEE5valueLj1EENSN_13enable_if_natEE4typeE.exit.i
 
 _ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEEvEC2INS0_24pair_key_mapped_of_valueIS6_S6_EEEEONS1_ISF_T_EEPNS_11move_detail11enable_if_cIXeqplcvjL_ZNSN_7is_sameIvvE5valueEEcvjsr3dtl7is_sameISK_vEE5valueLj1EENSN_13enable_if_natEE4typeE.exit.i: ; preds = %bb.v, %_ZN5boost9intrusive17bstree_algorithmsINS0_18rbtree_node_traitsIPvLb1EEEE11lower_boundINS_9container4test11movable_intENS0_6detail16key_nodeptr_compISt4lessIS9_ENS0_8bhtraitsINS7_9base_nodeISt4pairIKS9_S9_ENS7_3dtl19intrusive_tree_hookIS3_LNS7_14tree_type_enumE0ELb1EEELb1EEES4_LNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEENSJ_11key_of_nodeISN_NSJ_9select1stISH_EEEEEEEEPNS0_19compact_rbtree_nodeIS3_EEPKSX_RKT_T0_.exit.i.i.i.i.i.i, %_ZN5boost9container3dtl4treeISt4pairIKNS0_4test11movable_intES5_EiSt4lessIS5_EvvE4findERS6_.exit.i.i, %_ZN5boost9container3mapINS0_4test11movable_intES3_St4lessIS3_EvvE7extractERKS3_.exit
@@ -665,8 +661,7 @@ _ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorIN
   %i.ez = getelementptr inbounds nuw i8, ptr %22, i64 8
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !206, !noalias !1019
   %i.fb = getelementptr inbounds nuw i8, ptr %22, i64 16
-  %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !202, !noalias !1019 ; 3 uses
-  store ptr %i.fc, ptr %.sroa.7472, align 8, !tbaa !207, !alias.scope !1019
+  %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !202, !noalias !1019 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #26, !noalias !1019
   %i.fd = load ptr, ptr %21, align 8, !tbaa !202, !noalias !1019 ; 2 uses
   %.not.i.i4.i = icmp eq ptr %i.fd, null
@@ -696,59 +691,38 @@ bb.z:                                             ; preds = %bb.y
 
 .body.thread:                                     ; preds = %bb.y, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #26, !noalias !1019
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7472)
   br label %bb.ce
 
 bb.aa:                                            ; preds = %bb.x, %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EEvEEED2Ev.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #26, !noalias !1019
   store i8 %i.ey, ptr %29, align 8, !tbaa !198
   store ptr %i.fa, ptr %i.en, align 8, !tbaa !206
-  %i.fk = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 11 uses
-  %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !207 ; 3 uses
+  %i.fk = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 7 uses
+  %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !207 ; 2 uses
   %.not.i.i.i155 = icmp eq ptr %i.fl, null        ; 2 uses
   %.not.i9.i.i = icmp eq ptr %i.fc, null
   br i1 %.not.i9.i.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  br i1 %.not.i.i.i155, label %73, label %70
-
-70:                                               ; preds = %bb.ab
-  %71 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
-  %72 = add i32 %71, -2
-  store i32 %72, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
-  call void @_ZdlPvm(ptr noundef nonnull %i.fl, i64 noundef 32) #26
-  br label %73
-
-73:                                               ; preds = %70, %bb.ab
-  store ptr %i.fc, ptr %i.fk, align 8, !tbaa !207
-  br label %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit
+  br i1 %.not.i.i.i155, label %bb.ae, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.aa
   br i1 %.not.i.i.i155, label %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit, label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ac
+bb.ad:                                            ; preds = %bb.ac, %bb.ab
+  %.sink.ph = phi ptr [ %i.fc, %bb.ab ], [ null, %bb.ac ]
   %i.fm = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
   %i.fn = add i32 %i.fm, -2
   store i32 %i.fn, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
   call void @_ZdlPvm(ptr noundef nonnull %i.fl, i64 noundef 32) #26
-  br label %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit
+  br label %bb.ae
 
-_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit: ; preds = %73, %bb.ad
-  %.sink.i.i = phi ptr [ %i.fk, %bb.ad ], [ %.sroa.7472, %73 ]
-  store ptr null, ptr %.sink.i.i, align 8, !tbaa !207
-  %.sroa.7472.0..sroa.7472.0..sroa.7472.0..sroa.7472.16.473.pre = load ptr, ptr %.sroa.7472, align 8, !tbaa !207 ; 2 uses
-  %.not.i.i.i156 = icmp eq ptr %.sroa.7472.0..sroa.7472.0..sroa.7472.0..sroa.7472.16.473.pre, null
-  br i1 %.not.i.i.i156, label %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit, label %bb.ae
-
-bb.ae:                                            ; preds = %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit
-  %74 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
-  %75 = add i32 %74, -2
-  store i32 %75, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.7472.0..sroa.7472.0..sroa.7472.0..sroa.7472.16.473.pre, i64 noundef 32) #26
+bb.ae:                                            ; preds = %bb.ad, %bb.ab
+  %.sink = phi ptr [ %i.fc, %bb.ab ], [ %.sink.ph, %bb.ad ]
+  store ptr %.sink, ptr %i.fk, align 8, !tbaa !207
   br label %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit
 
-_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit: ; preds = %bb.ac, %bb.ae, %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7472)
+_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit: ; preds = %bb.ae, %bb.ac
   %i.fo = load ptr, ptr %i.en, align 8, !tbaa !206
   %i.fp = icmp eq ptr %i.fo, %i.dj
   %i.fq = load i8, ptr %29, align 8, !range !205
@@ -757,12 +731,10 @@ _ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0
   br i1 %or.cond, label %bb.af, label %.critedge
 
 bb.af:                                            ; preds = %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit
-  %76 = load ptr, ptr %i.fk, align 8, !tbaa !207  ; 2 uses
-  %.not.i.not = icmp eq ptr %76, null
+  %.not.i.not = icmp eq ptr %i.fc, null
   br i1 %.not.i.not, label %bb.ag, label %.critedge.thread
 
 bb.ag:                                            ; preds = %bb.af
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %i.fs = load ptr, ptr %i.f, align 8, !tbaa !189, !noalias !1021
   %i.ft = ptrtoint ptr %i.fs to i64
   %i.fu = and i64 %i.ft, -2                       ; 2 uses
@@ -806,7 +778,6 @@ select.unfold:                                    ; preds = %bb.ai, %bb.ag, %_ZN
   call void @_ZN5boost9intrusive11bstree_implINS0_8bhtraitsINS_9container9base_nodeISt4pairIKNS3_4test11movable_intES7_ENS3_3dtl19intrusive_tree_hookIPvLNS3_14tree_type_enumE0ELb1EEELb1EEENS0_18rbtree_node_traitsISC_Lb1EEELNS0_14link_mode_typeE0ENS0_7dft_tagELj3EEENSA_11key_of_nodeISF_NSA_9select1stIS8_EEEESt4lessIS7_EmLb1ELNS0_10algo_typesE5EvE5eraseENS0_13tree_iteratorISK_Lb1EEE(ptr dead_on_unwind nonnull writable sret(%"class.boost::intrusive::tree_iterator") align 8 %19, ptr noundef nonnull align 8 dereferenceable(32) %25, ptr noundef nonnull align 8 dead_on_return %18) #26, !noalias !1023
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #26, !noalias !1023
   call void @llvm.lifetime.end.p0(ptr nonnull %18), !noalias !1022
-  call void @llvm.experimental.noalias.scope.decl(metadata !1024)
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #26, !noalias !1024
   store ptr %i.gc, ptr %16, align 8, !tbaa !202, !noalias !1024
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #26, !noalias !1024
@@ -821,8 +792,7 @@ _ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorIN
   %i.ge = getelementptr inbounds nuw i8, ptr %17, i64 8
   %i.gf = load ptr, ptr %i.ge, align 8, !tbaa !206, !noalias !1024
   %i.gg = getelementptr inbounds nuw i8, ptr %17, i64 16
-  %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !202, !noalias !1024 ; 3 uses
-  store ptr %i.gh, ptr %.sroa.7, align 8, !tbaa !207, !alias.scope !1024
+  %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !202, !noalias !1024 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #26, !noalias !1024
   %i.gi = load ptr, ptr %16, align 8, !tbaa !202, !noalias !1024 ; 2 uses
   %.not.i.i4.i164 = icmp eq ptr %i.gi, null
@@ -852,58 +822,37 @@ bb.al:                                            ; preds = %bb.ak
 
 .body165.thread:                                  ; preds = %bb.ak, %bb.al
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #26, !noalias !1024
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   br label %bb.ce
 
 bb.am:                                            ; preds = %bb.aj, %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EEvEEED2Ev.exit.i163
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #26, !noalias !1024
   store i8 %i.gd, ptr %29, align 8, !tbaa !198
   store ptr %i.gf, ptr %i.en, align 8, !tbaa !206
-  %i.gp = load ptr, ptr %i.fk, align 8, !tbaa !207 ; 3 uses
+  %i.gp = load ptr, ptr %i.fk, align 8, !tbaa !207 ; 2 uses
   %.not.i.i.i168 = icmp eq ptr %i.gp, null        ; 2 uses
   %.not.i9.i.i169 = icmp eq ptr %i.gh, null
   br i1 %.not.i9.i.i169, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  br i1 %.not.i.i.i168, label %80, label %77
-
-77:                                               ; preds = %bb.an
-  %78 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
-  %79 = add i32 %78, -2
-  store i32 %79, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
-  call void @_ZdlPvm(ptr noundef nonnull %i.gp, i64 noundef 32) #26
-  br label %80
-
-80:                                               ; preds = %77, %bb.an
-  store ptr %i.gh, ptr %i.fk, align 8, !tbaa !207
-  br label %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit173
+  br i1 %.not.i.i.i168, label %bb.aq, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.am
   br i1 %.not.i.i.i168, label %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit177, label %bb.ap
 
-bb.ap:                                            ; preds = %bb.ao
+bb.ap:                                            ; preds = %bb.ao, %bb.an
+  %.sink688.ph = phi ptr [ %i.gh, %bb.an ], [ null, %bb.ao ]
   %i.gq = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
   %i.gr = add i32 %i.gq, -2
   store i32 %i.gr, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
   call void @_ZdlPvm(ptr noundef nonnull %i.gp, i64 noundef 32) #26
-  br label %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit173
+  br label %bb.aq
 
-_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit173: ; preds = %80, %bb.ap
-  %.sink.i.i172 = phi ptr [ %i.fk, %bb.ap ], [ %.sroa.7, %80 ]
-  store ptr null, ptr %.sink.i.i172, align 8, !tbaa !207
-  %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16.463.pre = load ptr, ptr %.sroa.7, align 8, !tbaa !207 ; 2 uses
-  %.not.i.i.i174 = icmp eq ptr %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16.463.pre, null
-  br i1 %.not.i.i.i174, label %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit177, label %bb.aq
-
-bb.aq:                                            ; preds = %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit173
-  %81 = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
-  %82 = add i32 %81, -2
-  store i32 %82, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16.463.pre, i64 noundef 32) #26
+bb.aq:                                            ; preds = %bb.ap, %bb.an
+  %.sink688 = phi ptr [ %i.gh, %bb.an ], [ %.sink688.ph, %bb.ap ]
+  store ptr %.sink688, ptr %i.fk, align 8, !tbaa !207
   br label %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit177
 
-_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit177: ; preds = %bb.ao, %bb.aq, %_ZN5boost9container23insert_return_type_baseINS0_3dtl23iterator_from_iiteratorINS_9intrusive13tree_iteratorINS4_8bhtraitsINS0_9base_nodeISt4pairIKNS0_4test11movable_intESA_ENS2_19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEENS4_18rbtree_node_traitsISE_Lb1EEELNS4_14link_mode_typeE0ENS4_7dft_tagELj3EEELb0EEELb0EEENS0_11node_handleINS0_13new_allocatorISH_EENS0_24pair_key_mapped_of_valueISA_SA_EEEEEaSEOSV_.exit173
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
+_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit177: ; preds = %bb.aq, %bb.ao
   %i.gs = load ptr, ptr %i.dj, align 8, !tbaa !189, !noalias !1026
   %i.gt = ptrtoint ptr %i.gs to i64
   %i.gu = and i64 %i.gt, -2                       ; 2 uses
@@ -949,8 +898,7 @@ _ZN5boost9container3dtl4treeISt4pairIKNS0_4test11movable_intES5_EiSt4lessIS5_Evv
   br i1 %or.cond80, label %bb.at, label %.critedge
 
 bb.at:                                            ; preds = %_ZN5boost9container3dtl4treeISt4pairIKNS0_4test11movable_intES5_EiSt4lessIS5_EvvE4findERS6_.exit189
-  %83 = load ptr, ptr %i.fk, align 8, !tbaa !207  ; 2 uses
-  %.not.i190.not = icmp eq ptr %83, null
+  %.not.i190.not = icmp eq ptr %i.gh, null
   br i1 %.not.i190.not, label %bb.au, label %.critedge.thread
 
 bb.au:                                            ; preds = %bb.at
@@ -1212,7 +1160,7 @@ bb.br:                                            ; preds = %bb.bq
 
 .critedge.thread:                                 ; preds = %bb.af, %bb.at, %bb.bb, %.critedge
   %.0515 = phi i32 [ %.0.ph, %.critedge ], [ 1, %bb.bb ], [ 1, %bb.at ], [ 1, %bb.af ]
-  %i.jy = phi ptr [ %.pr512, %.critedge ], [ %i.ig, %bb.bb ], [ %83, %bb.at ], [ %76, %bb.af ]
+  %i.jy = phi ptr [ %.pr512, %.critedge ], [ %i.ig, %bb.bb ], [ %i.gh, %bb.at ], [ %i.fc, %bb.af ]
   %i.jz = load i32, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
   %i.ka = add i32 %i.jz, -2
   store i32 %i.ka, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !182
@@ -1400,7 +1348,7 @@ bb.cd:                                            ; preds = %_ZN5boost9container
   %.not58 = icmp eq i64 %i.ls, 4
   br i1 %.not58, label %bb.cn, label %bb.er
 
-bb.ce:                                            ; preds = %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit218, %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit211, %.body165.thread, %.body.thread
+bb.ce:                                            ; preds = %.body165.thread, %.body.thread, %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit218, %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit211
   %.pn51 = phi { ptr, i32 } [ %i.fg, %.body.thread ], [ %.pn48, %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit218 ], [ %i.gl, %.body165.thread ], [ %.pn46, %_ZN5boost9container11node_handleINS0_13new_allocatorINS0_9base_nodeISt4pairIKNS0_4test11movable_intES6_ENS0_3dtl19intrusive_tree_hookIPvLNS0_14tree_type_enumE0ELb1EEELb1EEEEENS0_24pair_key_mapped_of_valueIS6_S6_EEED2Ev.exit211 ]
   %i.lt = getelementptr inbounds nuw i8, ptr %29, i64 16
   %i.lu = load ptr, ptr %i.lt, align 8, !tbaa !207 ; 2 uses
