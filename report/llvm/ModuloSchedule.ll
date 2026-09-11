@@ -204,11 +204,11 @@ bb.a:
   %i.c = icmp eq i32 %2, %4
   %i.d = add nuw i32 %2, 1
   %i.e = zext i32 %1 to i64
-  %i.f = zext i32 %i.d to i64                     ; 2 uses
+  %i.f = zext i32 %i.d to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZL13getLoopPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit, %.lr.ph
-  %indvars.iv = phi i64 [ %i.e, %.lr.ph ], [ %indvars.iv.next, %_ZL13getLoopPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit ] ; 5 uses
+  %indvars.iv = phi i64 [ %i.e, %.lr.ph ], [ %indvars.iv.next, %_ZL13getLoopPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit ] ; 4 uses
   %i.g = phi i32 [ %3, %.lr.ph ], [ %.sroa.0.1.i52, %_ZL13getLoopPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit ] ; 7 uses
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !132, !nonnull !47, !align !101
   %i.i = tail call noundef ptr @_ZNK4llvm19MachineRegisterInfo10getVRegDefENS_8RegisterE(ptr noundef nonnull align 8 dereferenceable(520) %i.h, i32 %i.g) #19 ; 6 uses
@@ -328,7 +328,7 @@ bb.h:                                             ; preds = %.loopexit, %.loopex
 
 bb.i:                                             ; preds = %bb.h
   %i.bv = icmp eq i64 %indvars.iv, %i.f
-  br i1 %i.bv, label %bb.j, label %8
+  br i1 %i.bv, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
   %i.bw = getelementptr i8, ptr %i.i, i64 32
@@ -359,11 +359,7 @@ bb.l:                                             ; preds = %.lr.ph.i
   %i.cg = getelementptr inbounds nuw [32 x i8], ptr %.val, i64 %i.cf
   br label %_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit.sink.split
 
-8:                                                ; preds = %bb.i
-  %9 = icmp ugt i64 %indvars.iv, %i.f
-  br i1 %9, label %bb.m, label %_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit
-
-bb.m:                                             ; preds = %8
+bb.m:                                             ; preds = %bb.i
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.ch = getelementptr i8, ptr %i.i, i64 32
   %.val39 = load ptr, ptr %i.ch, align 8          ; 2 uses
@@ -406,8 +402,8 @@ _ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit.sink.split
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !131
   br label %_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit
 
-_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit: ; preds = %8, %bb.h, %.loopexit, %bb.k, %_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit.sink.split, %bb.a, %bb.j
-  %.sroa.0.0 = phi i32 [ %i.cw, %_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit.sink.split ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.a ], [ %i.g, %bb.h ], [ 0, %8 ], [ %i.g, %.loopexit ]
+_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit: ; preds = %bb.h, %.loopexit, %bb.k, %_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit.sink.split, %bb.a, %bb.j
+  %.sroa.0.0 = phi i32 [ %i.cw, %_ZL13getInitPhiRegRN4llvm12MachineInstrEPNS_17MachineBasicBlockE.exit.sink.split ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.a ], [ %i.g, %.loopexit ], [ %i.g, %bb.h ]
   ret i32 %.sroa.0.0
 }
 
