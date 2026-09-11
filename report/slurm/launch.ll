@@ -202,7 +202,8 @@ bb.aw:                                            ; preds = %bb.av
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.en = load ptr, ptr %i.em, align 8
   %.not92.not = icmp eq i32 %.1, 0
-  %1 = select i1 %.not92.not, i32 3, i32 2
+  %1 = zext i1 %.not92.not to i32
+  %2 = or disjoint i32 %1, 2
   %.not8.i = icmp eq i32 %i.el, 0
   br i1 %.not8.i, label %_update_task_exit_state.exit, label %.lr.ph.preheader.i
 
@@ -214,7 +215,7 @@ bb.aw:                                            ; preds = %bb.av
   %indvars.iv.i112 = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i113, %.lr.ph.i111 ] ; 2 uses
   %i.eo = getelementptr inbounds nuw [4 x i8], ptr %i.en, i64 %indvars.iv.i112
   %i.ep = load i32, ptr %i.eo, align 4
-  call void @task_state_update(ptr noundef nonnull %i.ek, i32 noundef %i.ep, i32 noundef %1) #17
+  call void @task_state_update(ptr noundef nonnull %i.ek, i32 noundef %i.ep, i32 noundef %2) #17
   %indvars.iv.next.i113 = add nuw nsw i64 %indvars.iv.i112, 1 ; 2 uses
   %exitcond.not.i114 = icmp eq i64 %indvars.iv.next.i113, %wide.trip.count.i110
   br i1 %exitcond.not.i114, label %_update_task_exit_state.exit, label %.lr.ph.i111, !llvm.loop !25

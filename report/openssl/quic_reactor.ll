@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i
   %i.au = load i8, ptr %i.a, align 8              ; 9 uses
   %i.av = and i8 %i.au, 1                         ; 2 uses
   %i.aw = lshr i8 %i.au, 1
-  %i.ax = and i8 %i.aw, 1                         ; 2 uses
+  %i.ax = and i8 %i.aw, 1                         ; 3 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.j, align 8, !tbaa !20 ; 2 uses
   %i.ay = trunc i8 %i.au to i1
   %i.az = and i8 %i.au, 3
@@ -264,24 +264,23 @@ bb.o:                                             ; preds = %poll_descriptor_to_
   store i16 %i.bo, ptr %i.s, align 4, !tbaa !41
   %i.bp = icmp sgt i32 %.sink.i.i, -1
   %or.cond61.not.i.i = and i1 %i.bp, %i.ay        ; 4 uses
-  %.044.i.i = zext i1 %or.cond61.not.i.i to i64   ; 2 uses
+  %.044.i.i = zext i1 %or.cond61.not.i.i to i64
   %.044.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = select i1 %or.cond61.not.i.i, i64 8, i64 0
   %.044.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %4, i64 %.044.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx
   store i32 %.sink.i8.i, ptr %.044.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, align 8, !tbaa !40
-  %.not52.i.i = icmp eq i8 %i.ax, 0               ; 2 uses
-  %6 = select i1 %.not52.i.i, i16 0, i16 4
+  %6 = shl nuw nsw i8 %i.ax, 2
+  %7 = zext nneg i8 %6 to i16
   %.044.sroa.sel.sroa.sel.i.i = select i1 %or.cond61.not.i.i, ptr %.sroa.gep65.sroa.gep.i.i, ptr %i.s
-  store i16 %6, ptr %.044.sroa.sel.sroa.sel.i.i, align 4, !tbaa !41
-  %7 = icmp sgt i32 %.sink.i8.i, -1
-  br i1 %7, label %8, label %bb.p
-
-8:                                                ; preds = %bb.o
+  store i16 %7, ptr %.044.sroa.sel.sroa.sel.i.i, align 4, !tbaa !41
+  %8 = icmp slt i32 %.sink.i8.i, 0
+  %.not53.i.i = icmp eq i8 %i.ax, 0
+  %or.cond62.i.i = or i1 %.not53.i.i, %8
   %9 = select i1 %or.cond61.not.i.i, i64 2, i64 1
-  %spec.select.i.i = select i1 %.not52.i.i, i64 %.044.i.i, i64 %9
+  %spec.select65.i.i = select i1 %or.cond62.i.i, i64 %.044.i.i, i64 %9
   br label %bb.p
 
-bb.p:                                             ; preds = %8, %bb.o, %bb.n
-  %.1.i.i = phi i64 [ %spec.select.i.i, %8 ], [ %.044.i.i, %bb.o ], [ %spec.select64.i.i, %bb.n ] ; 4 uses
+bb.p:                                             ; preds = %bb.o, %bb.n
+  %.1.i.i = phi i64 [ %spec.select64.i.i, %bb.n ], [ %spec.select65.i.i, %bb.o ] ; 4 uses
   br i1 %i.t, label %.thread.i.i, label %bb.q
 
 .thread.i.i:                                      ; preds = %bb.p

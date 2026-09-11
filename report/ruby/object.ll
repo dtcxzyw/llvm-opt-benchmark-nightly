@@ -204,14 +204,14 @@ thread-pre-split:                                 ; preds = %bb.s, %bb.p
   %i.bh = phi i8 [ %i.au, %bb.p ], [ %i.bb, %bb.s ] ; 9 uses
   %.8 = phi ptr [ %.6125, %bb.p ], [ %i.ba, %bb.s ] ; 2 uses
   %i.bi = getelementptr i8, ptr %.8, i64 1        ; 5 uses
-  %i.bj = sext i8 %i.bh to i32                    ; 4 uses
+  %i.bj = sext i8 %i.bh to i32                    ; 3 uses
   br i1 %i.bx, label %bb.u, label %._crit_edge
 
 bb.u:                                             ; preds = %thread-pre-split
-  %i.bk = add nsw i32 %i.bj, -91
-  %i.bl = icmp ult i32 %i.bk, -26
-  %5 = or i32 %i.bj, 32
-  %6 = select i1 %i.bl, i32 %i.bj, i32 %5
+  %i.bk = add nsw i32 %i.bj, -65
+  %i.bl = icmp ult i32 %i.bk, 26
+  %5 = select i1 %i.bl, i32 32, i32 0
+  %6 = or i32 %5, %i.bj
   %i.bm = icmp eq i32 %6, %.194
   br i1 %i.bm, label %bb.v, label %._crit_edge
 

@@ -206,7 +206,6 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %bb.bq
   %i.jr = and i32 %i.jj, 1                        ; 2 uses
-  %.not213 = icmp eq i32 %i.jr, 0
   %i.js = sub nuw nsw i32 100, %i.jr
   %i.jt = trunc nuw nsw i64 %indvars.iv404 to i32
   %i.ju = tail call ptr @Abc_NamStr(ptr noundef %1, i32 noundef %i.jt) #34
@@ -221,9 +220,10 @@ bb.br:                                            ; preds = %bb.bq
   %i.kc = getelementptr inbounds [8 x i8], ptr %.val259, i64 %i.jm
   store ptr %i.jz, ptr %i.kc, align 8, !tbaa !74
   %i.kd = load ptr, ptr %i.it, align 8, !tbaa !178 ; 2 uses
+  %.not.i314 = icmp eq i32 %i.jr, 0
   %i.ke = and i32 %i.jl, 31
   %i.kf = shl nuw i32 1, %i.ke                    ; 2 uses
-  br i1 %.not213, label %bb.bt, label %bb.bs
+  br i1 %.not.i314, label %bb.bt, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kd, i64 8

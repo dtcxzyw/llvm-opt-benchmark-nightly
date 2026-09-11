@@ -202,8 +202,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.j = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
-  %.not46 = icmp eq i32 %7, 0                     ; 2 uses
-  %10 = select i1 %.not46, i32 38, i32 39         ; 2 uses
+  %10 = or disjoint i32 %7, 38                    ; 2 uses
   %wide.trip.count87 = zext nneg i32 %6 to i64    ; 2 uses
   br i1 %.not45, label %.lr.ph66.split.us, label %.lr.ph66.split
 
@@ -289,6 +288,7 @@ bb.g:                                             ; preds = %.lr.ph66.split
   br i1 %i.ai, label %.split68.us, label %bb.h
 
 .split68.us:                                      ; preds = %bb.g, %bb.b
+  %.not46 = icmp eq i32 %7, 0
   %.str.22..str.21 = select i1 %.not46, ptr @.str.22, ptr @.str.21
   call void @ff_log_net_error(ptr noundef %0, i32 noundef 16, ptr noundef nonnull %.str.22..str.21) #11
   %i.aj = tail call ptr @__errno_location() #13

@@ -205,8 +205,7 @@ bb.ad:                                            ; preds = %_ZN4llvm23SmallVect
 
 bb.ae:                                            ; preds = %bb.m
   %i.tf = icmp eq i32 %2, 7                       ; 2 uses
-  %spec.select = select i1 %i.tf, i32 %i.bs, i32 %i.cd
-  %spec.select664.v = select i1 %i.tf, i32 %i.by, i32 %i.cj
+  %spec.select664.v = select i1 %i.tf, i32 %i.bs, i32 %i.cd
   %i.tg = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %.sroa.08.0.copyload = load ptr, ptr %i.tg, align 8, !tbaa !436
   %i.th = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -298,13 +297,13 @@ bb.ae:                                            ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   %i.up = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr null, ptr %i.up, align 8, !tbaa !438, !alias.scope !941
-  %.not.i325 = icmp eq i32 %spec.select664.v, 0
-  %42 = select i1 %.not.i325, i32 0, i32 67108864
+  %42 = select i1 %i.tf, i32 %i.by, i32 %i.cj
+  %43 = shl nuw nsw i32 %42, 26
   %i.uq = getelementptr inbounds nuw i8, ptr %6, i64 4
-  store i32 %spec.select, ptr %i.uq, align 4, !tbaa !207, !alias.scope !941
+  store i32 %spec.select664.v, ptr %i.uq, align 4, !tbaa !207, !alias.scope !941
   %i.ur = getelementptr inbounds nuw i8, ptr %6, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ur, i8 0, i64 16, i1 false), !alias.scope !941
-  store i32 %42, ptr %6, align 8, !alias.scope !941
+  store i32 %43, ptr %6, align 8, !alias.scope !941
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.ud, ptr noundef nonnull align 8 dereferenceable(1065) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   %i.us = getelementptr inbounds nuw i8, ptr %i.tm, i64 44 ; 2 uses
@@ -707,8 +706,7 @@ bb.d:                                             ; preds = %bb.c
   %i.z = lshr i32 %i.t, 24
   %.lobit.i = and i32 %i.z, 1
   %i.aa = xor i32 %.lobit.i, 1
-  %i.ab = and i32 %i.aa, %i.y
-  %.not = icmp eq i32 %i.ab, 0                    ; 2 uses
+  %i.ab = and i32 %i.aa, %i.y                     ; 2 uses
   %i.ac = lshr i32 %i.v, 26
   %i.ad = lshr i32 %i.v, 24
   %.lobit.i67 = and i32 %i.ad, 1
@@ -766,7 +764,7 @@ _ZN4llvm7BuildMIERNS_15MachineFunctionERKNS_10MIMetadataERKNS_11MCInstrDescE.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   %i.be = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr null, ptr %i.be, align 8, !tbaa !438, !alias.scope !954
-  %10 = select i1 %.not, i32 0, i32 67108864
+  %10 = shl nuw nsw i32 %i.ab, 26
   %i.bf = getelementptr inbounds nuw i8, ptr %7, i64 4
   store i32 %i.p, ptr %i.bf, align 4, !tbaa !207, !alias.scope !954
   %i.bg = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -837,7 +835,7 @@ bb.h:                                             ; preds = %._crit_edge, %bb.g
   %i.ci = load ptr, ptr %i.h, align 8, !tbaa !342
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 64 ; 2 uses
   %i.ck = load i32, ptr %i.cj, align 8
-  %11 = select i1 %.not, i32 0, i32 67108864
+  %11 = shl nuw nsw i32 %i.ab, 26
   %i.cl = and i32 %i.ck, -67108865
   %i.cm = or disjoint i32 %i.cl, %11
   store i32 %i.cm, ptr %i.cj, align 8

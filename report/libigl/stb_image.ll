@@ -205,10 +205,10 @@ _ZL13stbi__get16leP13stbi__context.exit282:       ; preds = %bb.bo, %bb.bp, %_ZL
   %i.kn = phi ptr [ %i.js, %bb.bo ], [ %.sink.i.i5.i280, %_ZL19stbi__refill_bufferP13stbi__context.exit.i4.i279 ], [ %i.js, %bb.bp ] ; 3 uses
   %i.ko = phi ptr [ %i.jv, %bb.bo ], [ %i.km, %_ZL19stbi__refill_bufferP13stbi__context.exit.i4.i279 ], [ %i.jt, %bb.bp ] ; 4 uses
   %.0.i6.i281 = phi i8 [ %i.jw, %bb.bo ], [ %i.kl, %_ZL19stbi__refill_bufferP13stbi__context.exit.i4.i279 ], [ 0, %bb.bp ]
-  %i.kp = zext i8 %.0.i.i276 to i32               ; 4 uses
+  %i.kp = zext i8 %.0.i.i276 to i32               ; 3 uses
   %i.kq = zext i8 %.0.i6.i281 to i32
-  %i.kr = shl nuw nsw i32 %i.kq, 8                ; 4 uses
-  %i.ks = or disjoint i32 %i.kr, %i.kp            ; 9 uses
+  %i.kr = shl nuw nsw i32 %i.kq, 8                ; 3 uses
+  %i.ks = or disjoint i32 %i.kr, %i.kp            ; 8 uses
   %i.kt = icmp ult ptr %i.ko, %i.kn
   br i1 %i.kt, label %bb.bt, label %bb.bu
 
@@ -440,6 +440,7 @@ bb.co:                                            ; preds = %bb.cr, %bb.cq, %bb.
 
 bb.cp:                                            ; preds = %bb.cn, %bb.cn
   %i.og = lshr i8 %.0.i245, 3
+  %5 = zext nneg i8 %i.og to i32
   br label %bb.ct
 
 bb.cq:                                            ; preds = %_ZL10stbi__get8P13stbi__context.exit306
@@ -454,11 +455,14 @@ bb.cq:                                            ; preds = %_ZL10stbi__get8P13s
 bb.cr:                                            ; preds = %bb.cq
   %i.oh = add nsw i32 %i.br, -8
   %spec.select = select i1 %i.oc, i32 %i.oh, i32 %i.br
-  %i.oi = icmp eq i32 %spec.select, 3
+  %i.oi = icmp eq i32 %spec.select, 3             ; 2 uses
+  %6 = zext i1 %i.oi to i32
+  %.mux.i = xor i32 %6, 3
   br i1 %i.oi, label %bb.ct, label %bb.co
 
 bb.cs:                                            ; preds = %bb.cq, %bb.cq
   %i.oj = lshr i8 %.0.i299, 3
+  %7 = zext nneg i8 %i.oj to i32
   br label %bb.ct
 
 _ZL18stbi__tga_get_compiiPi.exit:                 ; preds = %bb.cq, %bb.cn
@@ -468,8 +472,7 @@ _ZL18stbi__tga_get_compiiPi.exit:                 ; preds = %bb.cq, %bb.cn
 bb.ct:                                            ; preds = %bb.co, %bb.cp, %bb.cn, %bb.cs, %bb.cq, %bb.cr
   %i.ok = phi i1 [ false, %bb.cs ], [ false, %bb.cp ], [ false, %bb.cr ], [ false, %bb.cq ], [ true, %bb.co ], [ false, %bb.cn ] ; 2 uses
   %.not204 = phi i1 [ true, %bb.cs ], [ true, %bb.cp ], [ true, %bb.cr ], [ true, %bb.cq ], [ false, %bb.co ], [ true, %bb.cn ] ; 2 uses
-  %.0189.ph.shrunk = phi i8 [ %i.oj, %bb.cs ], [ %i.og, %bb.cp ], [ 2, %bb.cr ], [ 1, %bb.cq ], [ 3, %bb.co ], [ 1, %bb.cn ] ; 6 uses
-  %.0189.ph = zext nneg i8 %.0189.ph.shrunk to i32 ; 16 uses
+  %.0189.ph = phi i32 [ %7, %bb.cs ], [ %5, %bb.cp ], [ %.mux.i, %bb.cr ], [ 1, %bb.cq ], [ 3, %bb.co ], [ 1, %bb.cn ] ; 17 uses
   store i32 %i.ks, ptr %1, align 4, !tbaa !24
   store i32 %i.mm, ptr %2, align 4, !tbaa !24
   %.not199 = icmp eq ptr %3, null
@@ -511,7 +514,7 @@ _ZL21stbi__mul2sizes_validii.exit.i.i:            ; preds = %_ZL21stbi__mul2size
 
 _ZL17stbi__malloc_mad3iiii.exit:                  ; preds = %_ZL21stbi__mul2sizes_validii.exit.i.i, %_ZL21stbi__mul2sizes_validii.exit.thread15.i
   %i.os = phi i32 [ %i.op, %_ZL21stbi__mul2sizes_validii.exit.i.i ], [ %i.on, %_ZL21stbi__mul2sizes_validii.exit.thread15.i ] ; 7 uses
-  %i.ot = mul nuw nsw i32 %i.os, %.0189.ph
+  %i.ot = mul nsw i32 %.0189.ph, %i.os
   %i.ou = zext nneg i32 %i.ot to i64
   %i.ov = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %i.ou) #34 ; 25 uses
   %.not201 = icmp eq ptr %i.ov, null
@@ -561,7 +564,7 @@ _ZL10stbi__skipP13stbi__contexti.exit:            ; preds = %bb.cz, %.thread.i
 
 .lr.ph:                                           ; preds = %.preheader31
   %.not202.not = icmp eq i8 %i.oe, 0              ; 2 uses
-  %i.pk = mul nuw nsw i32 %i.ks, %.0189.ph        ; 10 uses
+  %i.pk = mul nuw nsw i32 %.0189.ph, %i.ks        ; 10 uses
   %i.pl = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.pm = zext nneg i32 %i.pk to i64              ; 14 uses
   %i.pn = load ptr, ptr %i.ow, align 8, !tbaa !33
@@ -781,7 +784,7 @@ bb.dk:                                            ; preds = %bb.dj
   br label %_ZL10stbi__skipP13stbi__contexti.exit327
 
 _ZL10stbi__skipP13stbi__contexti.exit327:         ; preds = %bb.dk, %.thread.i323
-  %i.sp = mul nuw nsw i32 %i.ff, %.0189.ph        ; 2 uses
+  %i.sp = mul nuw nsw i32 %.0189.ph, %i.ff        ; 2 uses
   %i.sq = zext nneg i32 %i.sp to i64
   %i.sr = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %i.sq) #34 ; 7 uses
   %.not203 = icmp eq ptr %i.sr, null
@@ -800,7 +803,7 @@ bb.dl:                                            ; preds = %_ZL10stbi__skipP13s
   br i1 %.not58, label %.loopexit30, label %.lr.ph36
 
 .lr.ph36:                                         ; preds = %.preheader29
-  %i.ss = zext nneg i8 %.0189.ph.shrunk to i64
+  %i.ss = zext nneg i32 %.0189.ph to i64
   %i.st = or disjoint i32 %i.fe, %i.fc
   br label %bb.dm
 
@@ -836,9 +839,8 @@ bb.do:                                            ; preds = %bb.dn
   %i.ta = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 5 uses
   %i.tb = getelementptr inbounds nuw i8, ptr %0, i64 57 ; 12 uses
   %i.tc = icmp eq i8 %.0.i299, 8
-  %i.td = zext nneg i8 %.0189.ph.shrunk to i64    ; 3 uses
+  %i.td = zext nneg i32 %.0189.ph to i64          ; 4 uses
   %wide.trip.count89 = zext nneg i32 %i.os to i64
-  %wide.trip.count76 = zext nneg i8 %.0189.ph.shrunk to i64
   br label %bb.dp
 
 bb.dp:                                            ; preds = %.lr.ph44, %.loopexit26
@@ -1069,7 +1071,7 @@ _ZL13stbi__get16leP13stbi__context.exit353:       ; preds = %bb.el, %bb.em, %_ZL
   %i.vt = zext nneg i32 %spec.store.select to i64
   %i.vu = mul nuw nsw i64 %i.td, %i.vt
   %scevgep = getelementptr nuw i8, ptr %.0187, i64 %i.vu
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.a, ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i64 %i.td, i1 false), !tbaa !34
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.a, ptr align 1 %scevgep, i64 %i.td, i1 false), !tbaa !34
   br label %.loopexit26
 
 bb.eq:                                            ; preds = %.thread
@@ -1135,13 +1137,13 @@ _ZL10stbi__get8P13stbi__context.exit359:          ; preds = %bb.es, %bb.et, %_ZL
   %i.wl = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv73
   store i8 %.0.i358, ptr %i.wl, align 1, !tbaa !34
   %indvars.iv.next74 = add nuw nsw i64 %indvars.iv73, 1 ; 2 uses
-  %exitcond77.not = icmp eq i64 %indvars.iv.next74, %wide.trip.count76
+  %exitcond77.not = icmp eq i64 %indvars.iv.next74, %i.td
   br i1 %exitcond77.not, label %.loopexit26, label %.preheader27, !llvm.loop !408
 
 .loopexit26:                                      ; preds = %_ZL10stbi__get8P13stbi__context.exit359, %.loopexit26.loopexit, %bb.dx, %bb.er
   %.117723 = phi i32 [ %.117722, %.loopexit26.loopexit ], [ %.117722, %bb.er ], [ 1, %bb.dx ], [ %.117722, %_ZL10stbi__get8P13stbi__context.exit359 ]
   %.117921 = phi i32 [ %.117920, %.loopexit26.loopexit ], [ %.117920, %bb.er ], [ %.017841, %bb.dx ], [ %.117920, %_ZL10stbi__get8P13stbi__context.exit359 ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep82, ptr noundef nonnull align 4 dereferenceable(1) %i.a, i64 %i.td, i1 false), !tbaa !34
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep82, ptr nonnull align 4 %i.a, i64 %i.td, i1 false), !tbaa !34
   %i.wm = add nsw i32 %.117921, -1
   %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87, 1 ; 2 uses
   %exitcond90.not = icmp eq i64 %indvars.iv.next88, %wide.trip.count89
@@ -1154,39 +1156,29 @@ _ZL10stbi__get8P13stbi__context.exit359:          ; preds = %bb.es, %bb.et, %_ZL
   br i1 %or.cond56, label %.lr.ph52, label %.loopexit25
 
 .lr.ph52:                                         ; preds = %._crit_edge
-  %i.wo = mul nuw nsw i32 %i.ks, %.0189.ph        ; 4 uses
-  %.not60 = icmp eq i32 %i.ks, 0
-  br i1 %.not60, label %.loopexit25, label %.lr.ph49.preheader
+  %i.wo = mul nuw nsw i32 %.0189.ph, %i.ks        ; 11 uses
+  %8 = icmp sgt i32 %i.wo, 0
+  br i1 %8, label %.lr.ph49.preheader, label %.loopexit25
 
 .lr.ph49.preheader:                               ; preds = %.lr.ph52
   %i.wp = or disjoint i32 %i.ml, %i.mj
   %i.wq = add nsw i32 %i.wp, -1                   ; 2 uses
-  %5 = or disjoint i32 %i.kr, %i.kp               ; 2 uses
-  %6 = mul i32 %i.wq, %5
-  %7 = mul i32 %6, %.0189.ph
-  %i.wr = mul nuw nsw i32 %5, %.0189.ph           ; 2 uses
-  %8 = lshr i32 %i.wq, 1
-  %i.ws = or disjoint i32 %i.kr, %i.kp            ; 3 uses
-  %i.wt = mul nuw nsw i32 %i.ws, %.0189.ph        ; 3 uses
-  %smin = tail call i32 @llvm.smin.i32(i32 %i.wt, i32 1)
-  %9 = sub nsw i32 %i.wt, %smin
-  %narrow = add nuw nsw i32 %9, 1
-  %i.wu = zext nneg i32 %narrow to i64            ; 2 uses
+  %i.wr = mul nsw i32 %.0189.ph, %i.wq
+  %i.ws = or disjoint i32 %i.kr, %i.kp
+  %i.wt = mul i32 %i.wr, %i.ws
+  %9 = lshr i32 %i.wq, 1
+  %i.wu = zext nneg i32 %i.wo to i64              ; 2 uses
   %scevgep251.a = getelementptr i8, ptr %i.ov, i64 %i.wu
   %i.wv = or disjoint i32 %i.ml, %i.mj
   %i.ww = add nsw i32 %i.wv, -1
-  %10 = mul i32 %i.ww, %i.ws
-  %11 = mul i32 %10, %.0189.ph
-  %i.wx = mul nuw nsw i32 %i.ws, %.0189.ph
-  %scevgep254 = getelementptr i8, ptr %i.ov, i64 %i.wu
-  %i.wy = or disjoint i32 %i.kr, %i.kp
-  %i.wz = mul nuw nsw i32 %i.wy, %.0189.ph        ; 2 uses
-  %smin256 = tail call i32 @llvm.smin.i32(i32 %i.wz, i32 1)
-  %12 = sub nsw i32 %i.wz, %smin256               ; 3 uses
-  %narrow272 = add nuw nsw i32 %12, 1
-  %i.xa = zext nneg i32 %narrow272 to i64         ; 5 uses
-  %min.iters.check = icmp ult i32 %12, 3
-  %min.iters.check257 = icmp ult i32 %12, 31
+  %i.wx = mul i32 %.0189.ph, %i.ww
+  %i.wy = or disjoint i32 %i.kr, %i.kp            ; 2 uses
+  %i.wz = mul i32 %i.wx, %i.wy
+  %10 = mul i32 %.0189.ph, %i.wy
+  %scevgep255 = getelementptr i8, ptr %i.ov, i64 %i.wu
+  %i.xa = zext nneg i32 %i.wo to i64              ; 5 uses
+  %min.iters.check = icmp ult i32 %i.wo, 4
+  %min.iters.check257 = icmp ult i32 %i.wo, 32
   %i.xb = and i64 %i.xa, 28
   %n.vec = and i64 %i.xa, 2147483616              ; 6 uses
   %i.xc = trunc nuw nsw i64 %n.vec to i32
@@ -1200,21 +1192,20 @@ _ZL10stbi__get8P13stbi__context.exit359:          ; preds = %bb.es, %bb.et, %_ZL
   br label %iter.check
 
 iter.check:                                       ; preds = %.lr.ph49.preheader, %._crit_edge50
-  %indvars.iv97 = phi i32 [ 0, %.lr.ph49.preheader ], [ %indvars.iv.next98, %._crit_edge50 ] ; 2 uses
-  %indvars.iv93 = phi i32 [ %7, %.lr.ph49.preheader ], [ %indvars.iv.next94, %._crit_edge50 ] ; 2 uses
-  %.351 = phi i32 [ 0, %.lr.ph49.preheader ], [ %i.ya, %._crit_edge50 ] ; 4 uses
+  %indvars.iv97 = phi i32 [ 0, %.lr.ph49.preheader ], [ %indvars.iv.next98, %._crit_edge50 ] ; 3 uses
+  %indvars.iv93 = phi i32 [ %i.wt, %.lr.ph49.preheader ], [ %indvars.iv.next94, %._crit_edge50 ] ; 2 uses
+  %.351 = phi i32 [ 0, %.lr.ph49.preheader ], [ %i.ya, %._crit_edge50 ] ; 3 uses
   %i.xg = sext i32 %indvars.iv93 to i64           ; 6 uses
   %i.xh = zext i32 %indvars.iv97 to i64           ; 6 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.xi = mul i32 %i.wx, %.351
-  %i.xj = sub i32 %11, %i.xi
+  %i.xi = mul i32 %10, %.351
+  %i.xj = sub i32 %i.wz, %i.xi
   %i.xk = sext i32 %i.xj to i64                   ; 2 uses
-  %scevgep255.a = getelementptr i8, ptr %scevgep254, i64 %i.xk
+  %scevgep255.a = getelementptr i8, ptr %scevgep255, i64 %i.xk
   %scevgep253.a = getelementptr i8, ptr %i.ov, i64 %i.xk
-  %13 = mul i32 %i.wt, %.351
-  %i.xl = zext i32 %13 to i64                     ; 2 uses
+  %i.xl = zext i32 %indvars.iv97 to i64           ; 2 uses
   %scevgep252 = getelementptr i8, ptr %scevgep251.a, i64 %i.xl
   %scevgep250 = getelementptr nuw i8, ptr %i.ov, i64 %i.xl
   %bound0 = icmp ult ptr %scevgep250, %scevgep255.a
@@ -1303,9 +1294,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 ._crit_edge50:                                    ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %i.ya = add nuw nsw i32 %.351, 1
-  %indvars.iv.next94 = sub i32 %indvars.iv93, %i.wr
-  %indvars.iv.next98 = add i32 %indvars.iv97, %i.wr
-  %exitcond104.not = icmp eq i32 %.351, %8
+  %indvars.iv.next94 = sub i32 %indvars.iv93, %i.wo
+  %indvars.iv.next98 = add i32 %indvars.iv97, %i.wo
+  %exitcond104.not = icmp eq i32 %.351, %9
   br i1 %exitcond104.not, label %.loopexit25, label %iter.check, !llvm.loop !416
 
 .loopexit25:                                      ; preds = %._crit_edge50, %.lr.ph52, %._crit_edge
@@ -1363,14 +1354,14 @@ bb.ez:                                            ; preds = %..thread_crit_edge.
   br label %.loopexit32
 
 .loopexit32:                                      ; preds = %_ZL10stbi__getnP13stbi__contextPhi.exit, %.loopexit32.loopexit274.unr-lcssa, %bb.ez, %..thread_crit_edge.i319.us.epil.preheader, %.loopexit32.loopexit.unr-lcssa, %bb.ey, %..thread_crit_edge.i319.us.us.epil.preheader, %.preheader31, %.loopexit25, %bb.ex
-  %i.yn = icmp samesign ult i8 %.0189.ph.shrunk, 3
+  %i.yn = icmp samesign ult i32 %.0189.ph, 3
   %.not61 = icmp eq i32 %i.os, 0
   %i.yo = or i1 %i.yn, %.not61
   %or.cond246 = or i1 %i.yo, %i.ok
   br i1 %or.cond246, label %.loopexit, label %.lr.ph55
 
 .lr.ph55:                                         ; preds = %.loopexit32
-  %i.yp = zext nneg i8 %.0189.ph.shrunk to i64    ; 5 uses
+  %i.yp = zext nneg i32 %.0189.ph to i64          ; 5 uses
   %i.yq = add i32 %i.os, -1
   %xtraiter284 = and i32 %i.os, 3                 ; 3 uses
   %i.yr = icmp ult i32 %i.yq, 3
@@ -1773,7 +1764,8 @@ bb.bu:                                            ; preds = %_ZL10stbi__get8P13s
 bb.bv:                                            ; preds = %bb.bu
   %i.jr = and i8 %.0.i91, -9
   %i.js = icmp eq i8 %i.jr, 3
-  %.mux.i = select i1 %i.js, i32 2, i32 3
+  %4 = zext i1 %i.js to i32
+  %.mux.i = xor i32 %4, 3
   br label %_ZL18stbi__tga_get_compiiPi.exit.thread
 
 bb.bw:                                            ; preds = %bb.bu

@@ -202,11 +202,9 @@ bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 28
   %i.s = load i32, ptr %i.r, align 4, !tbaa !61
   %i.t = and i32 %i.s, 512
-  %spec.select.i = xor i32 %i.t, 544              ; 2 uses
   %i.u = call fastcc i32 @check_crl_time(ptr noundef %0, ptr noundef nonnull %i.k, i32 noundef 0)
-  %.not15.i = icmp eq i32 %i.u, 0
-  %i.v = or disjoint i32 %spec.select.i, 128
-  %.1.i = select i1 %.not15.i, i32 %spec.select.i, i32 %i.v
+  %5 = shl nuw nsw i32 %i.u, 7
+  %i.v = or disjoint i32 %5, %i.t
   %i.w = call ptr @X509_CRL_get_issuer(ptr noundef nonnull %i.k) #12
   %i.x = load i32, ptr %i.g, align 8, !tbaa !46   ; 2 uses
   %i.y = sext i32 %i.x to i64
@@ -264,7 +262,8 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.i
 .loopexit51.i:                                    ; preds = %bb.e, %bb.d
   %.sink33.i.i = phi i32 [ 28, %bb.d ], [ 12, %bb.e ]
   %.lcssa.sink.i.i = phi ptr [ %i.af, %bb.d ], [ %i.aq, %bb.e ]
-  %i.ba = or disjoint i32 %.sink33.i.i, %.1.i     ; 7 uses
+  %i.ba = or disjoint i32 %.sink33.i.i, %i.v
+  %6 = xor i32 %i.ba, 544                         ; 7 uses
   %i.bb = load i32, ptr %i.l, align 8, !tbaa !67  ; 3 uses
   %i.bc = and i32 %i.bb, 16
   %.not.i19.i = icmp eq i32 %i.bc, 0
@@ -451,20 +450,20 @@ idp_check_dp.exit.thread.i.i:                     ; preds = %._crit_edge.i.i.i, 
 crl_crldp_check.exit.i:                           ; preds = %._crit_edge.i.i
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !127
   %.not35.i.not.i = icmp eq ptr %i.dq, null
-  %i.dr = or disjoint i32 %i.ba, 256
-  %spec.select47.i = select i1 %.not35.i.not.i, i32 %i.dr, i32 %i.ba
+  %i.dr = or disjoint i32 %6, 256
+  %spec.select47.i = select i1 %.not35.i.not.i, i32 %i.dr, i32 %6
   br label %get_crl_score.exit
 
 bb.z:                                             ; preds = %._crit_edge.i.i
-  %i.ds = or disjoint i32 %i.ba, 256
+  %i.ds = or disjoint i32 %6, 256
   br label %get_crl_score.exit
 
 .loopexit.i:                                      ; preds = %idp_check_dp.exit.i.i, %bb.o, %bb.v, %.lr.ph60.i.i.i
-  %i.dt = or disjoint i32 %i.ba, 320
+  %i.dt = or disjoint i32 %6, 320
   br label %get_crl_score.exit
 
 get_crl_score.exit:                               ; preds = %.loopexit51.i, %bb.h, %bb.i, %crl_crldp_check.exit.i, %bb.z, %.loopexit.i
-  %.0.i = phi i32 [ %i.ba, %.loopexit51.i ], [ %i.ba, %bb.h ], [ %i.ba, %bb.i ], [ %spec.select47.i, %crl_crldp_check.exit.i ], [ %i.ds, %bb.z ], [ %i.dt, %.loopexit.i ] ; 3 uses
+  %.0.i = phi i32 [ %6, %.loopexit51.i ], [ %6, %bb.h ], [ %6, %bb.i ], [ %spec.select47.i, %crl_crldp_check.exit.i ], [ %i.ds, %bb.z ], [ %i.dt, %.loopexit.i ] ; 3 uses
   %i.du = icmp slt i32 %.0.i, %.04159
   br i1 %i.du, label %get_crl_score.exit.thread, label %bb.aa
 

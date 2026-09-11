@@ -117,12 +117,12 @@ bb.e:                                             ; preds = %.lr.ph58, %bb.e
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %.val52, i64 %indvars.iv
   %i.w = load i32, ptr %i.v, align 4, !tbaa !24   ; 2 uses
   %i.x = ashr i32 %i.w, 1
-  %2 = and i32 %i.w, 1
-  %.not42 = icmp eq i32 %2, 0
-  %3 = select i1 %.not42, i8 49, i8 48
+  %2 = trunc i32 %i.w to i8
+  %3 = and i8 %2, 1
+  %4 = xor i8 %3, 49
   %i.y = sext i32 %i.x to i64
   %i.z = getelementptr inbounds i8, ptr %i.l, i64 %i.y
-  store i8 %3, ptr %i.z, align 1, !tbaa !22
+  store i8 %4, ptr %i.z, align 1, !tbaa !22
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.val48 = load i32, ptr %i.q, align 4, !tbaa !21
   %i.aa = sext i32 %.val48 to i64
@@ -347,12 +347,12 @@ bb.g:                                             ; preds = %.lr.ph127, %bb.g
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %.val110, i64 %indvars.iv
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !24 ; 2 uses
   %i.ax = ashr i32 %i.aw, 1
-  %2 = and i32 %i.aw, 1
-  %.not99 = icmp eq i32 %2, 0
-  %3 = select i1 %.not99, i8 49, i8 48
+  %2 = trunc i32 %i.aw to i8
+  %3 = and i8 %2, 1
+  %4 = xor i8 %3, 49
   %i.ay = sext i32 %i.ax to i64
   %i.az = getelementptr inbounds i8, ptr %i.ak, i64 %i.ay
-  store i8 %3, ptr %i.az, align 1, !tbaa !22
+  store i8 %4, ptr %i.az, align 1, !tbaa !22
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.val106 = load i32, ptr %i.as, align 4, !tbaa !21
   %i.ba = sext i32 %.val106 to i64

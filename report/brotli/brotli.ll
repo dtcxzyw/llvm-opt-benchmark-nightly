@@ -204,8 +204,7 @@ bb.hp:                                            ; preds = %bb.ho
   br label %bb.hr
 
 bb.hq:                                            ; preds = %bb.hn
-  %.not38.peel.i.i = icmp eq i32 %.132.peel.i.i, 0
-  %3 = select i1 %.not38.peel.i.i, i32 0, i32 2
+  %3 = shl nuw nsw i32 %.132.peel.i.i, 1
   %i.pp = call i32 @BrotliEncoderCompressStream(ptr noundef nonnull %i.nm, i32 noundef %3, ptr noundef nonnull %i.mz, ptr noundef nonnull %i.ng, ptr noundef nonnull %i.na, ptr noundef nonnull %i.nb, ptr noundef null) #20
   %.not39.peel.i.i = icmp eq i32 %i.pp, 0
   br i1 %.not39.peel.i.i, label %.loopexit62.i.i, label %bb.hr
@@ -306,8 +305,7 @@ ProvideInput.exit.i.i:                            ; preds = %bb.hv
 
 bb.hw:                                            ; preds = %ProvideInput.exit.i.i, %.peel.next.i.i
   %.132.i.i = phi i32 [ %.031.i.i, %.peel.next.i.i ], [ %i.rh, %ProvideInput.exit.i.i ] ; 2 uses
-  %.not38.i.i = icmp eq i32 %.132.i.i, 0
-  %4 = select i1 %.not38.i.i, i32 0, i32 2
+  %4 = shl nuw nsw i32 %.132.i.i, 1
   %i.ri = call i32 @BrotliEncoderCompressStream(ptr noundef nonnull %i.nm, i32 noundef %4, ptr noundef nonnull %i.mz, ptr noundef nonnull %i.ng, ptr noundef nonnull %i.na, ptr noundef nonnull %i.nb, ptr noundef null) #20
   %.not39.i.i = icmp eq i32 %i.ri, 0
   br i1 %.not39.i.i, label %.loopexit62.i.i, label %._crit_edge70.i.i

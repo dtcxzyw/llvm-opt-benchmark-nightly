@@ -204,10 +204,11 @@ bb.ak:                                            ; preds = %bb.b
 
 bb.al:                                            ; preds = %bb.b, %bb.b, %bb.b
   %i.ed = add i32 %8, %6
-  %i.ee = tail call fastcc i32 @detect_add_path_prefix46(ptr noundef %7, i32 noundef %8, i32 noundef %i.ed, i32 noundef 255)
+  %i.ee = tail call fastcc i32 @detect_add_path_prefix46(ptr noundef %7, i32 noundef %8, i32 noundef %i.ed, i32 noundef 255) ; 2 uses
   %.not939.not = icmp eq i32 %i.ee, 0             ; 2 uses
   %i.ef = add i32 %8, 4                           ; 2 uses
   %spec.select = select i1 %.not939.not, i32 %8, i32 %i.ef ; 2 uses
+  %spec.select943 = shl nuw nsw i32 %i.ee, 2
   %i.eg = tail call zeroext i8 @tvb_get_uint8(ptr noundef %7, i32 noundef %spec.select)
   %i.eh = zext i8 %i.eg to i32                    ; 4 uses
   %i.ei = getelementptr i8, ptr %10, i64 416      ; 2 uses
@@ -287,7 +288,6 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
-  %15 = phi i32 [ 13, %bb.au ], [ 9, %bb.at ]
   %.1875 = phi i32 [ %i.ef, %bb.au ], [ %8, %bb.at ] ; 2 uses
   %i.fp = load i32, ptr @hf_bgp_prefix_length, align 4
   %i.fq = call ptr @proto_tree_add_item(ptr noundef %i.fn, i32 noundef %i.fp, ptr noundef %7, i32 noundef %.1875, i32 noundef 1, i32 noundef 0) ; 0 uses
@@ -302,6 +302,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   %i.fz = call ptr @proto_tree_add_string(ptr noundef %i.fn, i32 noundef %i.fv, ptr noundef %7, i32 noundef %i.fw, i32 noundef 8, ptr noundef %i.fy) ; 0 uses
   %i.ga = load i32, ptr %i.a, align 4
   %i.gb = call ptr @proto_tree_add_ipv4(ptr noundef %i.fn, i32 noundef %2, ptr noundef %7, i32 noundef %i.fd, i32 noundef %i.fe, i32 noundef %i.ga) ; 0 uses
+  %15 = or disjoint i32 %spec.select943, 9
   %i.gc = add i32 %15, %i.ew
   %i.gd = add i32 %i.gc, %i.fe
   br label %bb.er
@@ -559,10 +560,11 @@ bb.cb:                                            ; preds = %bb.ba
 
 bb.cc:                                            ; preds = %bb.ba, %bb.ba, %bb.ba
   %i.kl = add i32 %8, %6
-  %i.km = tail call fastcc i32 @detect_add_path_prefix46(ptr noundef %7, i32 noundef %8, i32 noundef %i.kl, i32 noundef 255)
+  %i.km = tail call fastcc i32 @detect_add_path_prefix46(ptr noundef %7, i32 noundef %8, i32 noundef %i.kl, i32 noundef 255) ; 2 uses
   %.not935.not = icmp eq i32 %i.km, 0             ; 2 uses
   %i.kn = add i32 %8, 4                           ; 2 uses
   %spec.select944 = select i1 %.not935.not, i32 %8, i32 %i.kn ; 2 uses
+  %spec.select945 = shl nuw nsw i32 %i.km, 2
   %i.ko = tail call zeroext i8 @tvb_get_uint8(ptr noundef %7, i32 noundef %spec.select944)
   %i.kp = zext i8 %i.ko to i32                    ; 4 uses
   %i.kq = getelementptr i8, ptr %10, i64 416      ; 3 uses
@@ -631,7 +633,6 @@ bb.cl:                                            ; preds = %bb.ck
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl, %bb.ck
-  %16 = phi i32 [ 13, %bb.cl ], [ 9, %bb.ck ]
   %.3877 = phi i32 [ %i.kn, %bb.cl ], [ %8, %bb.ck ] ; 2 uses
   %i.lq = load i32, ptr @hf_bgp_prefix_length, align 4
   %i.lr = call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.lq, ptr noundef %7, i32 noundef %.3877, i32 noundef 1, i32 noundef 0) ; 0 uses
@@ -653,6 +654,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck
   %i.md = load ptr, ptr %i.kq, align 8
   %i.me = call ptr @address_to_str(ptr noundef %i.md, ptr noundef nonnull %13)
   %i.mf = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_ipv6_format_value(ptr noundef %0, i32 noundef %3, ptr noundef %7, i32 noundef %i.ll, i32 noundef %i.lm, ptr noundef nonnull %14, ptr noundef nonnull @.str.1954, ptr noundef %i.me, i32 noundef %i.lk) ; 0 uses
+  %16 = or disjoint i32 %spec.select945, 9
   %i.mg = add i32 %16, %i.le
   %i.mh = add i32 %i.mg, %i.lm
   br label %bb.er

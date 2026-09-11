@@ -204,8 +204,7 @@ bb.ac:                                            ; preds = %.tail235, %.tail231
   br i1 %.not163331, label %.loopexit, label %.lr.ph335
 
 .lr.ph335:                                        ; preds = %bb.ac
-  %.not168 = icmp eq i32 %.fr407, 0
-  %. = select i1 %.not168, i32 1, i32 2
+  %. = add nuw nsw i32 %.fr407, 1
   %storemerge162332412 = add i32 %i.c, 1
   %i.mo = xor i32 %.fr407, 1
   br label %bb.ad
@@ -233,20 +232,20 @@ bb.af:                                            ; preds = %bb.ad
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %bb.af
-  %.sink605 = phi i32 [ %.606, %bb.ae ], [ %i.mx, %bb.af ] ; 6 uses
-  %.330 = phi i32 [ %i.ms, %bb.ae ], [ %., %bb.af ] ; 7 uses
+  %.sink605 = phi i32 [ %.606, %bb.ae ], [ %i.mx, %bb.af ] ; 7 uses
+  %.330 = phi i32 [ %i.ms, %bb.ae ], [ %., %bb.af ] ; 9 uses
   %.neg411 = phi i32 [ %.neg410, %bb.ae ], [ -1, %bb.af ]
-  %.not170.not313 = icmp samesign ugt i32 %.330, 1
+  %.not170.not313 = icmp sgt i32 %.330, 1
   br i1 %.not170.not313, label %iter.check732, label %._crit_edge317
 
 iter.check732:                                    ; preds = %bb.ag
   %i.my = add nsw i32 %storemerge162332, -1       ; 3 uses
   %i.mz = add nsw i32 %.330, -1                   ; 5 uses
-  %min.iters.check709 = icmp samesign ult i32 %.330, 5
+  %min.iters.check709 = icmp ult i32 %.330, 5
   br i1 %min.iters.check709, label %vec.epilog.scalar.ph733.preheader, label %vector.main.loop.iter.check710
 
 vector.main.loop.iter.check710:                   ; preds = %iter.check732
-  %min.iters.check711 = icmp samesign ult i32 %.330, 17
+  %min.iters.check711 = icmp ult i32 %.330, 17
   br i1 %min.iters.check711, label %vec.epilog.ph736, label %vector.ph712
 
 vector.ph712:                                     ; preds = %vector.main.loop.iter.check710
@@ -352,14 +351,13 @@ vec.epilog.scalar.ph733:                          ; preds = %vec.epilog.scalar.p
   %i.nw = mul i32 %storemerge162332, %storemerge162332412
   %invariant.op = add i32 %i.nw, %.neg411         ; 5 uses
   %i.nx = add nsw i32 %storemerge162332, -1       ; 5 uses
-  %i.ny = zext nneg i32 %.330 to i64              ; 4 uses
+  %i.ny = zext nneg i32 %.330 to i64              ; 2 uses
   %i.nz = add nuw i32 %.sink605, 1                ; 3 uses
-  %wide.trip.count453 = zext i32 %i.nz to i64     ; 2 uses
-  %16 = sub nsw i64 %wide.trip.count453, %i.ny
-  %17 = zext i32 %.sink605 to i64
-  %18 = sub nsw i64 %17, %i.ny
-  %xtraiter = and i64 %16, 3                      ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %16 = add i32 %.sink605, 1
+  %17 = sub i32 %16, %.330
+  %18 = sub i32 %.sink605, %.330
+  %xtraiter = and i32 %17, 3                      ; 2 uses
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %.lr.ph321
@@ -371,8 +369,8 @@ vec.epilog.scalar.ph733:                          ; preds = %vec.epilog.scalar.p
 
 bb.ah:                                            ; preds = %bb.ah, %.prol.preheader
   %indvars.iv450.prol = phi i64 [ %i.ny, %.prol.preheader ], [ %indvars.iv.next451.prol, %bb.ah ] ; 3 uses
-  %prol.iter = phi i64 [ 0, %.prol.preheader ], [ %prol.iter.next, %bb.ah ]
-  %i.od = trunc nuw nsw i64 %indvars.iv450.prol to i32
+  %prol.iter = phi i32 [ 0, %.prol.preheader ], [ %prol.iter.next, %bb.ah ]
+  %i.od = trunc nsw i64 %indvars.iv450.prol to i32
   %.reass.prol = add i32 %invariant.op, %i.od
   %i.oe = sext i32 %.reass.prol to i64
   %i.of = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.oe
@@ -380,13 +378,13 @@ bb.ah:                                            ; preds = %bb.ah, %.prol.prehe
   %gep1032 = getelementptr [8 x i8], ptr %invariant.gep1031, i64 %indvars.iv450.prol
   store double %i.og, ptr %gep1032, align 8, !tbaa !14
   %indvars.iv.next451.prol = add nuw nsw i64 %indvars.iv450.prol, 1 ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %bb.ah, !llvm.loop !251
 
 .prol.loopexit:                                   ; preds = %bb.ah, %.lr.ph321
   %indvars.iv450.unr = phi i64 [ %i.ny, %.lr.ph321 ], [ %indvars.iv.next451.prol, %bb.ah ]
-  %i.oh = icmp ult i64 %18, 3
+  %i.oh = icmp ult i32 %18, 3
   br i1 %i.oh, label %._crit_edge322, label %.lr.ph321.new
 
 .lr.ph321.new:                                    ; preds = %.prol.loopexit
@@ -408,7 +406,7 @@ bb.ah:                                            ; preds = %bb.ah, %.prol.prehe
 
 bb.ai:                                            ; preds = %bb.ai, %.lr.ph321.new
   %indvars.iv450 = phi i64 [ %indvars.iv450.unr, %.lr.ph321.new ], [ %indvars.iv.next451.3, %bb.ai ] ; 7 uses
-  %i.or = trunc nuw nsw i64 %indvars.iv450 to i32
+  %i.or = trunc nsw i64 %indvars.iv450 to i32
   %.reass = add i32 %invariant.op, %i.or
   %i.os = sext i32 %.reass to i64
   %i.ot = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.os
@@ -423,7 +421,7 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph321.n
   %gep1020 = getelementptr [8 x i8], ptr %invariant.gep1019, i64 %indvars.iv450
   store double %i.oy, ptr %gep1020, align 8, !tbaa !14
   %indvars.iv.next451.1 = add nuw nsw i64 %indvars.iv450, 2 ; 2 uses
-  %i.oz = trunc nuw nsw i64 %indvars.iv.next451.1 to i32
+  %i.oz = trunc nsw i64 %indvars.iv.next451.1 to i32
   %.reass.2 = add i32 %invariant.op, %i.oz
   %i.pa = sext i32 %.reass.2 to i64
   %i.pb = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.pa
@@ -431,7 +429,7 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph321.n
   %gep1022 = getelementptr [8 x i8], ptr %invariant.gep1021, i64 %indvars.iv.next451.1
   store double %i.pc, ptr %gep1022, align 8, !tbaa !14
   %indvars.iv.next451.2 = add nuw nsw i64 %indvars.iv450, 3 ; 2 uses
-  %i.pd = trunc nuw nsw i64 %indvars.iv.next451.2 to i32
+  %i.pd = trunc nsw i64 %indvars.iv.next451.2 to i32
   %.reass.3 = add i32 %invariant.op, %i.pd
   %i.pe = sext i32 %.reass.3 to i64
   %i.pf = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.pe
@@ -439,7 +437,8 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph321.n
   %gep1024 = getelementptr [8 x i8], ptr %invariant.gep1023, i64 %indvars.iv.next451.2
   store double %i.pg, ptr %gep1024, align 8, !tbaa !14
   %indvars.iv.next451.3 = add nuw nsw i64 %indvars.iv450, 4 ; 2 uses
-  %exitcond454.not.3 = icmp eq i64 %indvars.iv.next451.3, %wide.trip.count453
+  %19 = trunc i64 %indvars.iv.next451.3 to i32
+  %exitcond454.not.3 = icmp eq i32 %i.nz, %19
   br i1 %exitcond454.not.3, label %._crit_edge322, label %bb.ai, !llvm.loop !252
 
 ._crit_edge322:                                   ; preds = %.prol.loopexit, %bb.ai, %._crit_edge317.._crit_edge322_crit_edge

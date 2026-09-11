@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i64 %i.ab, ptr %i.a, align 8, !tbaa !19
   %i.ac = select i1 %i.q, i32 15, i32 16          ; 4 uses
   store i32 %i.ac, ptr %i.b, align 8, !tbaa !20
-  %i.ad = icmp eq i32 %i.y, 255                   ; 3 uses
-  %i.ae = zext i1 %i.ad to i32
+  %i.ad = icmp eq i32 %i.y, 255                   ; 2 uses
+  %i.ae = zext i1 %i.ad to i32                    ; 2 uses
   store i32 %i.ae, ptr %i.c, align 4, !tbaa !36
   %exitcond.not.1 = icmp eq i32 %i.h, 2
   br i1 %exitcond.not.1, label %bb.m, label %bb.g
@@ -232,11 +232,11 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ao = shl nuw nsw i64 %i.am, %i.an
   %i.ap = or i64 %i.ao, %i.ab                     ; 3 uses
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !19
-  %4 = select i1 %i.ad, i32 7, i32 8
-  %i.aq = add nuw nsw i32 %4, %i.ac               ; 4 uses
+  %reass.sub.2 = sub nuw nsw i32 %i.ac, %i.ae
+  %i.aq = add nuw nsw i32 %reass.sub.2, 8         ; 4 uses
   store i32 %i.aq, ptr %i.b, align 8, !tbaa !20
-  %i.ar = icmp eq i32 %i.al, 255                  ; 3 uses
-  %i.as = zext i1 %i.ar to i32
+  %i.ar = icmp eq i32 %i.al, 255                  ; 2 uses
+  %i.as = zext i1 %i.ar to i32                    ; 2 uses
   store i32 %i.as, ptr %i.c, align 4, !tbaa !36
   %exitcond.not.2 = icmp eq i32 %i.h, 1
   br i1 %exitcond.not.2, label %bb.m, label %bb.j
@@ -262,8 +262,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bc = shl i64 %i.ba, %i.bb
   %i.bd = or i64 %i.bc, %i.ap                     ; 2 uses
   store i64 %i.bd, ptr %i.a, align 8, !tbaa !19
-  %5 = select i1 %i.ar, i32 7, i32 8
-  %i.be = add nuw nsw i32 %5, %i.aq               ; 2 uses
+  %reass.sub.3 = sub nuw nsw i32 %i.aq, %i.as
+  %i.be = add nuw nsw i32 %reass.sub.3, 8         ; 2 uses
   store i32 %i.be, ptr %i.b, align 8, !tbaa !20
   %i.bf = icmp eq i32 %i.az, 255                  ; 2 uses
   %i.bg = zext i1 %i.bf to i32
@@ -346,7 +346,7 @@ frwd_read.exit:                                   ; preds = %.lr.ph.i, %bb.n, %b
   %i.cz = or i64 %i.cy, %.lcssa44
   store i64 %i.cz, ptr %i.a, align 8, !tbaa !19
   %i.da = add nsw i32 %i.ct, %.lcssa43
-  %i.db = add nsw i32 %i.da, %i.cm
+  %i.db = add i32 %i.da, %i.cm
   store i32 %i.db, ptr %i.b, align 8, !tbaa !20
   ret void
 }

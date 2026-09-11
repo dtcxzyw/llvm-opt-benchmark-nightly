@@ -148,7 +148,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.n = load i8, ptr %i.b, align 1, !tbaa !70    ; 2 uses
   %i.o = lshr i8 %i.n, 7
-  %i.p = zext nneg i8 %i.o to i32                 ; 4 uses
+  %i.p = zext nneg i8 %i.o to i32                 ; 5 uses
   %.not = icmp sgt i8 %i.n, -1                    ; 5 uses
   %spec.select = select i1 %.not, i32 1, i32 8    ; 4 uses
   %i.q = lshr i32 %spec.select, 3
@@ -551,19 +551,20 @@ bb.ca:                                            ; preds = %bb.bz, %bb.bw
   store i64 %i.ta, ptr %i.tb, align 8, !tbaa !84
   %i.tc = getelementptr inbounds nuw i8, ptr %1, i64 276 ; 3 uses
   %i.td = load i32, ptr %i.tc, align 4, !tbaa !125 ; 2 uses
+  %10 = sub nuw nsw i32 2, %i.p                   ; 2 uses
   %i.te = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
   br i1 %.not, label %bb.cb, label %.thread454
 
 bb.cb:                                            ; preds = %bb.ca
   %i.tf = and i32 %i.td, -3
   store i32 %i.tf, ptr %i.tc, align 4, !tbaa !125
-  store i32 2, ptr %i.te, align 8, !tbaa !126
+  store i32 %10, ptr %i.te, align 8, !tbaa !126
   br i1 %i.bi, label %bb.cc, label %bb.cg
 
 .thread454:                                       ; preds = %bb.ca
   %i.tg = or i32 %i.td, 2
   store i32 %i.tg, ptr %i.tc, align 4, !tbaa !125
-  store i32 1, ptr %i.te, align 8, !tbaa !126
+  store i32 %10, ptr %i.te, align 8, !tbaa !126
   br i1 %i.bi, label %bb.cc, label %.thread455
 
 bb.cc:                                            ; preds = %.thread454, %bb.cb

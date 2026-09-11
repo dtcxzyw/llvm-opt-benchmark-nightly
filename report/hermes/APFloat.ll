@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %or.cond, label %_ZN4llvhL27trailingHexadecimalFractionEPKcS1_j.exit.thread, label %_ZN4llvh13hexDigitValueEc.exit.thread
 
 _ZN4llvh13hexDigitValueEc.exit.thread:            ; preds = %bb.i, %bb.g, %bb.j
-  %.0.i5772 = phi i32 [ %i.al, %bb.j ], [ %i.aj, %bb.i ], [ %i.ah, %bb.g ] ; 4 uses
+  %.0.i5772 = phi i32 [ %i.al, %bb.j ], [ %i.aj, %bb.i ], [ %i.ah, %bb.g ] ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.04092, i64 1 ; 11 uses
   %.not55 = icmp eq i32 %.04490, 0
   br i1 %.not55, label %bb.l, label %bb.k
@@ -267,20 +267,20 @@ bb.n:                                             ; preds = %bb.m
   %i.bh = add i8 %i.bg, -71
   %i.bi = icmp ult i8 %i.bh, -6
   %or.cond23.i = and i1 %or.cond.i.i, %i.bi
-  %4 = icmp eq i32 %.0.i5772, 0                   ; 2 uses
   br i1 %or.cond23.i, label %_ZN4llvh13hexDigitValueEc.exit.thread19.i, label %_ZN4llvh13hexDigitValueEc.exit.thread.i
 
 _ZN4llvh13hexDigitValueEc.exit.thread19.i:        ; preds = %.critedge.i
-  %5 = select i1 %4, i32 0, i32 2
+  %4 = lshr exact i32 %.0.i5772, 2
   br label %_ZN4llvhL27trailingHexadecimalFractionEPKcS1_j.exit
 
 _ZN4llvh13hexDigitValueEc.exit.thread.i:          ; preds = %.critedge.i
-  %i.bj = select i1 %4, i32 1, i32 3
+  %5 = icmp eq i32 %.0.i5772, 0
+  %i.bj = select i1 %5, i32 1, i32 3
   br label %_ZN4llvhL27trailingHexadecimalFractionEPKcS1_j.exit
 
 _ZN4llvhL27trailingHexadecimalFractionEPKcS1_j.exit: ; preds = %_ZN4llvh13hexDigitValueEc.exit.thread.i, %_ZN4llvh13hexDigitValueEc.exit.thread19.i, %bb.n, %bb.m, %bb.k, %bb.l, %bb.e
   %.168 = phi ptr [ %.04092, %bb.e ], [ %.088, %_ZN4llvh13hexDigitValueEc.exit.thread19.i ], [ %.088, %bb.l ], [ %.088, %_ZN4llvh13hexDigitValueEc.exit.thread.i ], [ %.088, %bb.k ], [ %.088, %bb.m ], [ %.088, %bb.n ] ; 2 uses
-  %.249 = phi i32 [ %.04789, %bb.e ], [ %5, %_ZN4llvh13hexDigitValueEc.exit.thread19.i ], [ %.04789, %bb.l ], [ %i.bj, %_ZN4llvh13hexDigitValueEc.exit.thread.i ], [ %.04789, %bb.k ], [ 3, %bb.m ], [ 1, %bb.n ] ; 2 uses
+  %.249 = phi i32 [ %.04789, %bb.e ], [ %4, %_ZN4llvh13hexDigitValueEc.exit.thread19.i ], [ %.04789, %bb.l ], [ %i.bj, %_ZN4llvh13hexDigitValueEc.exit.thread.i ], [ %.04789, %bb.k ], [ 3, %bb.m ], [ 1, %bb.n ] ; 2 uses
   %.246 = phi i32 [ %.04490, %bb.e ], [ 0, %_ZN4llvh13hexDigitValueEc.exit.thread19.i ], [ 0, %bb.l ], [ 0, %_ZN4llvh13hexDigitValueEc.exit.thread.i ], [ %i.ap, %bb.k ], [ 0, %bb.m ], [ 0, %bb.n ]
   %.243 = phi i1 [ %.04191, %bb.e ], [ true, %_ZN4llvh13hexDigitValueEc.exit.thread19.i ], [ true, %bb.l ], [ true, %_ZN4llvh13hexDigitValueEc.exit.thread.i ], [ %.04191, %bb.k ], [ true, %bb.m ], [ true, %bb.n ]
   %.1 = phi ptr [ %i.ae, %bb.e ], [ %i.an, %_ZN4llvh13hexDigitValueEc.exit.thread19.i ], [ %i.an, %bb.l ], [ %i.an, %_ZN4llvh13hexDigitValueEc.exit.thread.i ], [ %i.an, %bb.k ], [ %i.an, %bb.m ], [ %i.an, %bb.n ] ; 3 uses

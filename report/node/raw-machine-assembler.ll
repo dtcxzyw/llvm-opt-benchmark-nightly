@@ -204,13 +204,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
 .thread:                                          ; preds = %scalar.ph, %bb.d
   %i.bl = icmp eq i32 %6, 1
   %spec.select = select i1 %i.bl, i32 192, i32 64
-  %.sroa.022.1 = select i1 %5, i32 %spec.select, i32 0 ; 2 uses
-  %.not20 = icmp eq i32 %7, 0
-  %i.bm = or disjoint i32 %.sroa.022.1, 512
-  %spec.select40 = select i1 %.not20, i32 %.sroa.022.1, i32 %i.bm
+  %.sroa.022.1 = select i1 %5, i32 %spec.select, i32 0
+  %9 = shl nuw nsw i32 %7, 9
+  %i.bm = or disjoint i32 %.sroa.022.1, %9
   %i.bn = load ptr, ptr %i.a, align 8
   %i.bo = load ptr, ptr %i.bn, align 8
-  %i.bp = tail call noundef ptr @_ZN2v88internal8compiler7Linkage24GetSimplifiedCDescriptorEPNS0_4ZoneEPKNS0_9SignatureINS0_11MachineTypeEEENS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENSB_INS1_8Operator8PropertyEhhEE(ptr noundef %i.bo, ptr noundef nonnull %i.q, i32 %spec.select40, i8 32) #18
+  %i.bp = tail call noundef ptr @_ZN2v88internal8compiler7Linkage24GetSimplifiedCDescriptorEPNS0_4ZoneEPKNS0_9SignatureINS0_11MachineTypeEEENS_4base5FlagsINS1_14CallDescriptor4FlagEiiEENSB_INS1_8Operator8PropertyEhhEE(ptr noundef %i.bo, ptr noundef nonnull %i.q, i32 %i.bm, i8 32) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.bq = add i64 %4, 1                           ; 4 uses
   %i.br = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 4 uses

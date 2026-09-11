@@ -202,9 +202,9 @@ bb.a:
   %i.m = alloca [16 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.o = load i32, ptr %i.n, align 8, !range !17, !noundef !6
-  %.not = icmp eq i32 %i.o, 0                     ; 2 uses
-  %. = select i1 %.not, i32 5, i32 6
+  %i.o = load i32, ptr %i.n, align 8, !range !17, !noundef !6 ; 2 uses
+  %.not = icmp eq i32 %i.o, 0
+  %. = add nuw nsw i32 %i.o, 5
   %i.p = load i64, ptr %1, align 8, !range !5, !noundef !6
   %.not24 = icmp ne i64 %i.p, -2                  ; 2 uses
   %.sroa.08.0 = zext i1 %.not24 to i32
@@ -446,10 +446,10 @@ bb.a:
   %i.j = alloca [32 x i8], align 8                ; 6 uses
   %i.k = alloca [16 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  %i.l = load i32, ptr %1, align 8, !range !17, !noundef !6
-  %.not = icmp eq i32 %i.l, 0                     ; 2 uses
+  %i.l = load i32, ptr %1, align 8, !range !17, !noundef !6 ; 2 uses
+  %.not = icmp eq i32 %i.l, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !319
-  %3 = select i1 %.not, i32 4, i32 5
+  %3 = or disjoint i32 %i.l, 4
   call fastcc void @_RNvMNtCs8jn5zD2RXga_10serde_cbor3serINtB2_10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE9write_u32Csl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %2, i8 noundef 5, i32 noundef %3) #15, !noalias !320
   %i.m = load i64, ptr %i.f, align 8, !range !15, !noalias !319, !noundef !6 ; 2 uses
   %.not.i = icmp eq i64 %i.m, -1
@@ -651,10 +651,10 @@ bb.a:
   %i.i = alloca [32 x i8], align 8                ; 6 uses
   %i.j = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  %i.k = load i32, ptr %1, align 8, !range !17, !noundef !6
-  %.not = icmp eq i32 %i.k, 0                     ; 2 uses
+  %i.k = load i32, ptr %1, align 8, !range !17, !noundef !6 ; 2 uses
+  %.not = icmp eq i32 %i.k, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !361
-  %3 = select i1 %.not, i32 3, i32 4
+  %3 = add nuw nsw i32 %i.k, 3
   call fastcc void @_RNvMNtCs8jn5zD2RXga_10serde_cbor3serINtB2_10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE9write_u32Csl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %2, i8 noundef 5, i32 noundef %3) #15, !noalias !362
   %i.l = load i64, ptr %i.f, align 8, !range !15, !noalias !361, !noundef !6 ; 2 uses
   %.not.i = icmp eq i64 %i.l, -1

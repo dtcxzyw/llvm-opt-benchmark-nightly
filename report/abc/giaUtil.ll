@@ -205,9 +205,8 @@ Gia_ObjIsMux.exit.thread:                         ; preds = %bb.o, %Gia_ObjIsMux
   %i.dg = lshr i64 %.val440, 32                   ; 2 uses
   %i.dh = trunc nuw i64 %i.dg to i32
   %i.di = and i32 %i.dh, 536870911
-  %4 = icmp samesign uge i32 %i.df, %i.di
-  %cond.fr = freeze i1 %4
-  %spec.select = select i1 %cond.fr, i32 1, i32 2
+  %4 = icmp samesign ult i32 %i.df, %i.di
+  %spec.select = select i1 %4, i32 2, i32 1
   br label %Gia_ObjIsXor.exit.thread
 
 Gia_ObjIsXor.exit.thread:                         ; preds = %bb.n, %Gia_ObjIsMux.exit.Gia_ObjIsXor.exit.thread_crit_edge, %Gia_ObjIsMux.exit.thread

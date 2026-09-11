@@ -25,12 +25,12 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 7 uses
   %i.c = load ptr, ptr %0, align 8, !nonnull !3, !align !4, !noundef !3 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.e = load i8, ptr %i.d, align 8, !range !5, !noundef !3 ; 2 uses
+  %i.e = load i8, ptr %i.d, align 8, !range !5, !noundef !3
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load i8, ptr %i.f, align 8, !range !5, !noundef !3
-  %2 = icmp eq i8 %i.g, 0
-  %i.h = or disjoint i8 %i.e, 2
-  %.sroa.01.1 = select i1 %2, i8 %i.h, i8 %i.e    ; 2 uses
+  %2 = shl nuw nsw i8 %i.g, 1
+  %i.h = or disjoint i8 %2, %i.e
+  %.sroa.01.1 = xor i8 %i.h, 2                    ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 11 uses
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !44, !noundef !3 ; 3 uses
   %i.k = icmp sgt i64 %i.j, -1
@@ -157,12 +157,12 @@ define hidden noundef zeroext i1 @_RINvMs_NtCsdjunURa2XPj_19ruff_python_literal6
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !3, !align !4, !noundef !3 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !5, !noundef !3 ; 2 uses
+  %i.c = load i8, ptr %i.b, align 8, !range !5, !noundef !3
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i8, ptr %i.d, align 8, !range !5, !noundef !3
-  %2 = icmp eq i8 %i.e, 0
-  %i.f = or disjoint i8 %i.c, 2
-  %.sroa.01.1 = select i1 %2, i8 %i.f, i8 %i.c    ; 2 uses
+  %2 = shl nuw nsw i8 %i.e, 1
+  %i.f = or disjoint i8 %2, %i.c
+  %.sroa.01.1 = xor i8 %i.f, 2                    ; 2 uses
   %i.g = tail call { ptr, i64 } @_RNvYNtNtCskLngH8kgpZI_15ruff_python_ast5nodes18StringLiteralFlagsNtB4_11StringFlags9quote_strCsjSXNr8pNfhj_19ruff_python_codegen(i8 noundef %.sroa.01.1) ; 2 uses
   %i.h = extractvalue { ptr, i64 } %i.g, 1        ; 4 uses
   tail call void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCsjSXNr8pNfhj_19ruff_python_codegen(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.h), !noalias !90

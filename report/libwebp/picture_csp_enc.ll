@@ -204,12 +204,12 @@ bb.d:                                             ; preds = %bb.c
   %i.l = icmp sgt i32 %.in.i, 1
   br i1 %i.l, label %bb.c, label %CheckNonOpaque.exit, !llvm.loop !1
 
-CheckNonOpaque.exit:                              ; preds = %bb.d, %bb.c, %bb.a, %bb.b
-  %.0.i341 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.d ], [ 1, %bb.c ] ; 2 uses
-  %.not339 = phi i1 [ true, %bb.a ], [ true, %bb.b ], [ %.not.i, %bb.c ], [ %.not.i, %bb.d ] ; 6 uses
-  %i.m = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.d ], [ 4, %bb.c ]
+CheckNonOpaque.exit:                              ; preds = %bb.c, %bb.d, %bb.a, %bb.b
+  %.not339 = phi i1 [ true, %bb.b ], [ true, %bb.a ], [ %.not.i, %bb.d ], [ %.not.i, %bb.c ] ; 6 uses
+  %i.m = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %bb.c ], [ 0, %bb.d ] ; 3 uses
+  %10 = shl nuw nsw i32 %i.m, 2
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 4
-  store i32 %i.m, ptr %i.n, align 4, !tbaa !26
+  store i32 %10, ptr %i.n, align 4, !tbaa !26
   store i32 0, ptr %8, align 8, !tbaa !17
   %i.o = tail call i32 @WebPPictureAllocYUVA(ptr noundef nonnull %8) #6
   %.not216 = icmp eq i32 %i.o, 0
@@ -332,7 +332,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !31
   %i.bt = getelementptr inbounds nuw i8, ptr %8, i64 56 ; 2 uses
   %i.bu = load i32, ptr %i.bt, align 8, !tbaa !25
-  call void %i.bo(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %.0.i341, i32 noundef %i.b, i32 noundef %i.d, ptr noundef nonnull %i.ar, i32 noundef %i.bq, i32 noundef %i.bs, i32 noundef %i.bu, ptr noundef %i.at, ptr noundef %i.av, ptr noundef %i.ax, ptr noundef %i.az) #6
+  call void %i.bo(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %i.m, i32 noundef %i.b, i32 noundef %i.d, ptr noundef nonnull %i.ar, i32 noundef %i.bq, i32 noundef %i.bs, i32 noundef %i.bu, ptr noundef %i.at, ptr noundef %i.av, ptr noundef %i.ax, ptr noundef %i.az) #6
   %i.bv = and i32 %i.d, 1
   %.not223 = icmp eq i32 %i.bv, 0
   br i1 %.not223, label %.loopexit, label %bb.m
@@ -370,7 +370,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.0209 = phi ptr [ %i.cs, %bb.n ], [ %3, %bb.m ]
   %.0197 = phi ptr [ %i.cr, %bb.n ], [ %i.az, %bb.m ]
   %i.ct = load ptr, ptr @WebPImportYUVAFromRGBALastLine, align 8, !tbaa !22
-  call void %i.ct(ptr noundef nonnull %i.cl, ptr noundef nonnull %i.cn, ptr noundef nonnull %i.cm, ptr noundef %.0209, i32 noundef %4, i32 noundef %.0.i341, i32 noundef %i.b, ptr noundef nonnull %i.ar, ptr noundef %i.cb, ptr noundef %i.ch, ptr noundef %i.ci, ptr noundef %.0197) #6
+  call void %i.ct(ptr noundef nonnull %i.cl, ptr noundef nonnull %i.cn, ptr noundef nonnull %i.cm, ptr noundef %.0209, i32 noundef %4, i32 noundef %i.m, i32 noundef %i.b, ptr noundef nonnull %i.ar, ptr noundef %i.cb, ptr noundef %i.ch, ptr noundef %i.ci, ptr noundef %.0197) #6
   br label %.loopexit
 
 bb.p:                                             ; preds = %.lr.ph, %ConvertRowsToUV.exit

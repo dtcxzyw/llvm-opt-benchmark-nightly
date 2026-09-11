@@ -204,19 +204,19 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load i32, ptr %i.m, align 4, !tbaa !65
   %i.o = tail call fastcc i32 @Bac_ObjAlloc(ptr noundef %2, i32 noundef 3, i32 noundef %i.n) ; 0 uses
   %.val16 = load i64, ptr %1, align 4
-  %4 = and i64 %.val16, 536870912
-  %.not14 = icmp eq i64 %4, 0
-  %5 = select i1 %.not14, i32 10, i32 11
+  %4 = trunc i64 %.val16 to i32
+  %5 = lshr i32 %4, 29
+  %6 = and i32 %5, 1
+  %7 = or disjoint i32 %6, 10
   br label %.critedge
 
 bb.d:                                             ; preds = %bb.b
-  %6 = and i32 %i.g, 536870912
-  %.not13 = icmp eq i32 %6, 0
-  %7 = select i1 %.not13, i32 6, i32 7
+  %8 = lshr i32 %i.g, 29
+  %9 = or i32 %8, 6
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %bb.a, %bb.c
-  %.sink = phi i32 [ %5, %bb.c ], [ 6, %bb.a ], [ %7, %bb.d ]
+  %.sink = phi i32 [ %7, %bb.c ], [ 6, %bb.a ], [ %9, %bb.d ]
   %i.p = tail call fastcc i32 @Bac_ObjAlloc(ptr noundef %2, i32 noundef %.sink, i32 noundef -1) ; 0 uses
   %i.q = tail call fastcc i32 @Bac_ObjAlloc(ptr noundef %2, i32 noundef 4, i32 noundef -1)
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses

@@ -204,25 +204,22 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   %i.acw = load ptr, ptr %i.acv, align 8, !tbaa !220
   %i.acx = getelementptr inbounds nuw i8, ptr %i.acw, i64 128
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.abr, ptr noundef nonnull align 8 dereferenceable(1065) %i.abq, ptr noundef nonnull align 8 dereferenceable(32) %i.acx) #16
-  %35 = lshr i32 %i.aak, 26
-  %36 = lshr i32 %i.aak, 24
-  %.lobit.i.i = and i32 %36, 1
-  %37 = xor i32 %.lobit.i.i, 1
-  %i.acy = and i32 %37, %35
-  %.not496.i = icmp eq i32 %i.acy, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   store ptr null, ptr %i.bn, align 8, !tbaa !371, !alias.scope !687
-  %38 = select i1 %.not496.i, i32 0, i32 67108864 ; 2 uses
+  %35 = shl i32 %i.aak, 2
+  %i.acy = and i32 %35, 67108864
+  %36 = xor i32 %i.acy, 67108864
+  %37 = and i32 %36, %i.aak                       ; 2 uses
   store i32 %i.aam, ptr %i.bo, align 4, !tbaa !221, !alias.scope !687
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, i8 0, i64 16, i1 false), !alias.scope !687
-  store i32 %38, ptr %4, align 8, !alias.scope !687
+  store i32 %37, ptr %4, align 8, !alias.scope !687
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.aay, ptr noundef nonnull align 8 dereferenceable(1065) %i.aax, ptr noundef nonnull align 8 dereferenceable(32) %4) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   store ptr null, ptr %i.bq, align 8, !tbaa !371, !alias.scope !688
   store i32 %i.aao, ptr %i.br, align 4, !tbaa !221, !alias.scope !688
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bs, i8 0, i64 16, i1 false), !alias.scope !688
-  store i32 %38, ptr %5, align 8, !alias.scope !688
+  store i32 %37, ptr %5, align 8, !alias.scope !688
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.abr, ptr noundef nonnull align 8 dereferenceable(1065) %i.abq, ptr noundef nonnull align 8 dereferenceable(32) %5) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   %i.acz = load ptr, ptr %31, align 8, !tbaa !569

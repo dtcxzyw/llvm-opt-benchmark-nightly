@@ -202,35 +202,29 @@ bb.ec:                                            ; preds = %bb.eb
   %i.aeu = load ptr, ptr %i.abz, align 8, !tbaa !63
   %i.aev = getelementptr inbounds nuw i8, ptr %i.aeu, i64 64
   %i.aew = load i32, ptr %i.aev, align 8          ; 2 uses
-  %9 = lshr i32 %i.aew, 26
-  %10 = lshr i32 %i.aew, 24
-  %.lobit.i.i = and i32 %10, 1
-  %11 = xor i32 %.lobit.i.i, 1
-  %i.aex = and i32 %11, %9
-  %.not24.i = icmp eq i32 %i.aex, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   store ptr null, ptr %i.v, align 8, !tbaa !237, !alias.scope !388
-  %12 = select i1 %.not24.i, i32 0, i32 67108864
+  %9 = shl i32 %i.aew, 2
+  %i.aex = and i32 %9, 67108864
+  %10 = xor i32 %i.aex, 67108864
+  %11 = and i32 %10, %i.aew
   store i32 %i.aas, ptr %i.w, align 4, !tbaa !64, !alias.scope !388
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.x, i8 0, i64 16, i1 false), !alias.scope !388
-  store i32 %12, ptr %2, align 8, !alias.scope !388
+  store i32 %11, ptr %2, align 8, !alias.scope !388
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.aes, ptr noundef nonnull align 8 dereferenceable(1065) %i.aer, ptr noundef nonnull align 8 dereferenceable(32) %2) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   %i.aey = load ptr, ptr %i.abz, align 8, !tbaa !63
   %i.aez = getelementptr inbounds nuw i8, ptr %i.aey, i64 32
   %i.afa = load i32, ptr %i.aez, align 8          ; 2 uses
-  %13 = lshr i32 %i.afa, 26
-  %14 = lshr i32 %i.afa, 24
-  %.lobit.i51.i = and i32 %14, 1
-  %15 = xor i32 %.lobit.i51.i, 1
-  %i.afb = and i32 %15, %13
-  %.not25.i = icmp eq i32 %i.afb, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   store ptr null, ptr %i.y, align 8, !tbaa !237, !alias.scope !389
-  %16 = select i1 %.not25.i, i32 0, i32 67108864
+  %12 = shl i32 %i.afa, 2
+  %i.afb = and i32 %12, 67108864
+  %13 = xor i32 %i.afb, 67108864
+  %14 = and i32 %13, %i.afa
   store i32 %i.ace, ptr %i.z, align 4, !tbaa !64, !alias.scope !389
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aa, i8 0, i64 16, i1 false), !alias.scope !389
-  store i32 %16, ptr %3, align 8, !alias.scope !389
+  store i32 %14, ptr %3, align 8, !alias.scope !389
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.aes, ptr noundef nonnull align 8 dereferenceable(1065) %i.aer, ptr noundef nonnull align 8 dereferenceable(32) %3) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   %i.afc = zext nneg i32 %.146.i to i64

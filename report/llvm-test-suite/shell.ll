@@ -204,14 +204,18 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next
   %i.u = load i8, ptr %i.t, align 1, !tbaa !19    ; 2 uses
   %.not51 = icmp eq i8 %i.u, 0
-  br i1 %.not51, label %._crit_edge, label %.lr.ph, !llvm.loop !101
+  br i1 %.not51, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !101
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.d
-  %.040.lcssa = phi i32 [ 0, %bb.d ], [ %i.s, %.lr.ph ]
-  %.0.lcssa = phi i32 [ %i.l, %bb.d ], [ %.1, %.lr.ph ]
-  %.not52 = icmp eq i32 %.0.lcssa, 0              ; 3 uses
-  %2 = select i1 %.not52, i32 1, i32 3
-  %i.v = add i32 %2, %.040.lcssa
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %2 = add i32 %i.s, 1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d
+  %.040.lcssa = phi i32 [ 1, %bb.d ], [ %2, %._crit_edge.loopexit ]
+  %.0.lcssa = phi i32 [ %i.l, %bb.d ], [ %.1, %._crit_edge.loopexit ] ; 2 uses
+  %.not52 = icmp eq i32 %.0.lcssa, 0              ; 2 uses
+  %3 = shl nuw nsw i32 %.0.lcssa, 1
+  %i.v = add i32 %.040.lcssa, %3
   %i.w = sext i32 %i.v to i64
   %i.x = tail call noalias ptr @malloc(i64 noundef %i.w) #24 ; 7 uses
   store ptr %i.x, ptr %i.a, align 8, !tbaa !27

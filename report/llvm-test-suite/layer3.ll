@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i:                                         ; preds = %bb.e, %.thread.i
   %invariant.gep.i = getelementptr [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @gainpow2, i64 2048), i64 %i.u
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.not.i = icmp eq i32 %.0125, 0
-  %spec.select.idx.i = select i1 %.not.i, i64 0, i64 16
+  %4 = shl nuw nsw i32 %.0125, 3
+  %spec.select.idx.i = zext nneg i32 %4 to i64
   %invariant.gep60.i = getelementptr i8, ptr %invariant.gep.i, i64 %spec.select.idx.i
   %i.an = icmp eq i32 %i.g, 8
   %i.ao = getelementptr inbounds [144 x i8], ptr @bandInfo, i64 %i.s ; 2 uses
@@ -428,8 +428,8 @@ bb.r:                                             ; preds = %bb.q
 
 .preheader66.i:                                   ; preds = %bb.s
   %invariant.gep.i146 = getelementptr [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @gainpow2, i64 2048), i64 %i.u
-  %.not.i147 = icmp eq i32 %.0125, 0
-  %spec.select.idx.i148 = select i1 %.not.i147, i64 0, i64 16
+  %5 = shl nuw nsw i32 %.0125, 3
+  %spec.select.idx.i148 = zext nneg i32 %5 to i64
   %invariant.gep74.i = getelementptr i8, ptr %invariant.gep.i146, i64 %spec.select.idx.i148 ; 2 uses
   %i.fc = getelementptr inbounds [144 x i8], ptr @bandInfo, i64 %i.s ; 4 uses
   br label %bb.t

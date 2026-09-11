@@ -95,9 +95,9 @@ bb.d:                                             ; preds = %..critedge4_crit_ed
   br i1 %i.v, label %bb.e, label %.lr.ph.us.i.preheader
 
 bb.e:                                             ; preds = %bb.d
-  %.not.i.us.i = icmp eq i64 %indvars.iv50.i, 0
-  %2 = select i1 %.not.i.us.i, i32 1024, i32 2048
-  %i.w = and i32 %2, %.val34.i
+  %2 = trunc nuw nsw i64 %indvars.iv50.i to i32
+  %3 = shl nuw nsw i32 1024, %2
+  %i.w = and i32 %3, %.val34.i
   %.not32.us.i = icmp eq i32 %i.w, 0
   br i1 %.not32.us.i, label %.lr.ph.us.i.preheader, label %.sink.split
 

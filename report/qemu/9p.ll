@@ -204,8 +204,6 @@ bb.c:                                             ; preds = %.tail33
   br i1 %.not27, label %bb.d, label %name_is_illegal.exit.thread
 
 bb.d:                                             ; preds = %bb.c
-  %.not28 = icmp eq i32 %i.w, 0
-  %spec.select = select i1 %.not28, i32 0, i32 512
   %i.y = load i32, ptr %i.a, align 4
   %i.z = call ptr @get_fid(ptr noundef %0, i32 noundef %i.y) ; 6 uses
   %i.aa = icmp eq ptr %i.z, null
@@ -225,7 +223,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ag, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ah = call i32 @v9fs_co_unlinkat(ptr noundef %0, ptr noundef nonnull %i.ab, ptr noundef nonnull %1, i32 noundef %spec.select) #23 ; 2 uses
+  %i.ah = call i32 @v9fs_co_unlinkat(ptr noundef %0, ptr noundef nonnull %i.ab, ptr noundef nonnull %1, i32 noundef %i.w) #23 ; 2 uses
   %.not29 = icmp eq i32 %i.ah, 0
   %spec.select30 = select i1 %.not29, i32 7, i32 %i.ah
   br label %bb.h

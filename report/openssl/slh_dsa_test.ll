@@ -204,9 +204,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   store ptr null, ptr %i.a, align 8, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
-  %.not = icmp eq i32 %3, 0                       ; 2 uses
+  %.not = icmp eq i32 %3, 0
   %i.b = select i1 %.not, ptr @.str.39, ptr @.str.38
-  %6 = select i1 %.not, i32 135, i32 134
+  %6 = xor i32 %3, 135
   call void @OSSL_PARAM_construct_octet_string(ptr dead_on_unwind nonnull writable sret(%struct.ossl_param_st) align 8 %4, ptr noundef nonnull %i.b, ptr noundef %1, i64 noundef %2) #5
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 40
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #5

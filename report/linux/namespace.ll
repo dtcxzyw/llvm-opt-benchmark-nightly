@@ -204,8 +204,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %mntget.exit.i
 
 mntget.exit.i:                                    ; preds = %bb.aa, %bb.z
-  %.not77.i = icmp eq i32 %i.c, 0
-  %4 = select i1 %.not77.i, i32 0, i32 524288
+  %4 = shl nuw nsw i32 %i.c, 19
   %i.cn = tail call i32 @get_unused_fd_flags(i32 noundef %4) #27 ; 5 uses
   %i.co = icmp sgt i32 %i.cn, -1
   br i1 %i.co, label %bb.ab, label %class_fd_prepare_lock_err.exit93.thread.i, !prof !44

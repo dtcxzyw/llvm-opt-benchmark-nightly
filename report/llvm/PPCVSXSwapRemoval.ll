@@ -202,30 +202,24 @@ bb.ed:                                            ; preds = %bb.ec, %bb.eb
   %i.bxp = load ptr, ptr %i.bxa, align 8, !tbaa !526 ; 2 uses
   %i.bxq = getelementptr inbounds nuw i8, ptr %i.bxp, i64 32 ; 2 uses
   %i.bxr = load i32, ptr %i.bxq, align 8          ; 3 uses
-  %15 = lshr i32 %i.bxr, 26
-  %16 = lshr i32 %i.bxr, 24
-  %.lobit.i.i.i = and i32 %16, 1
-  %17 = xor i32 %.lobit.i.i.i, 1
-  %18 = and i32 %17, %15
-  %.not.i.i61 = icmp eq i32 %18, 0
   %i.bxs = getelementptr inbounds nuw i8, ptr %i.bxp, i64 64
   %i.bxt = load i32, ptr %i.bxs, align 8          ; 2 uses
-  %19 = lshr i32 %i.bxt, 26
-  %20 = lshr i32 %i.bxt, 24
-  %.lobit.i72.i.i = and i32 %20, 1
-  %i.bxu = xor i32 %.lobit.i72.i.i, 1
-  %i.bxv = and i32 %i.bxu, %19
-  %.not100.i.i = icmp eq i32 %i.bxv, 0
-  %21 = select i1 %.not100.i.i, i32 0, i32 67108864
+  %15 = shl i32 %i.bxt, 2
+  %.lobit.i72.i.i = and i32 %15, 67108864
+  %i.bxu = xor i32 %.lobit.i72.i.i, 67108864
+  %i.bxv = and i32 %i.bxu, %i.bxt
   %i.bxw = and i32 %i.bxr, -67108865
-  %i.bxx = or disjoint i32 %21, %i.bxw
+  %i.bxx = or disjoint i32 %i.bxv, %i.bxw
   store i32 %i.bxx, ptr %i.bxq, align 8
   %i.bxy = load ptr, ptr %i.bxa, align 8, !tbaa !526
   %i.bxz = getelementptr inbounds nuw i8, ptr %i.bxy, i64 64 ; 2 uses
   %i.bya = load i32, ptr %i.bxz, align 8
-  %22 = select i1 %.not.i.i61, i32 0, i32 67108864
+  %16 = shl i32 %i.bxr, 2
+  %17 = and i32 %16, 67108864
+  %18 = xor i32 %17, 67108864
+  %19 = and i32 %18, %i.bxr
   %i.byb = and i32 %i.bya, -67108865
-  %i.byc = or disjoint i32 %22, %i.byb
+  %i.byc = or disjoint i32 %i.byb, %19
   store i32 %i.byc, ptr %i.bxz, align 8
   br label %_ZN12_GLOBAL__N_117PPCVSXSwapRemoval23handleSpecialSwappablesEi.exit.i
 

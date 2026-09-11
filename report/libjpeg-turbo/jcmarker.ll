@@ -205,10 +205,10 @@ emit_byte.exit47:                                 ; preds = %emit_byte.exit45, %
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @emit_dht(ptr noundef %0, i32 noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
-  %.not = icmp eq i32 %2, 0                       ; 2 uses
+  %.not = icmp eq i32 %2, 0
   %i.a = sext i32 %1 to i64
-  %3 = add nsw i32 %1, 16
-  %.036 = select i1 %.not, i32 %1, i32 %3         ; 2 uses
+  %3 = shl nuw nsw i32 %2, 4
+  %.036 = add nsw i32 %3, %1                      ; 2 uses
   %.035.in.v.v = select i1 %.not, i64 128, i64 160
   %.035.in.v = getelementptr inbounds nuw i8, ptr %0, i64 %.035.in.v.v
   %.035.in = getelementptr inbounds [8 x i8], ptr %.035.in.v, i64 %i.a

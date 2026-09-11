@@ -205,8 +205,7 @@ bb.aq:                                            ; preds = %bb.ao, %bb.an, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   %i.fd = or i64 %.1.i155, %.119.i
-  %.not.i157 = icmp eq i32 %2, 0
-  %..i158 = select i1 %.not.i157, i32 2, i32 3
+  %..i158 = or disjoint i32 %2, 2
   %.069.i = load ptr, ptr %.0127.in, align 8, !tbaa !36 ; 3 uses
   %.070.i = load ptr, ptr %.0125.in, align 8, !tbaa !36
   %.071.in.i = getelementptr i8, ptr %1, i64 24
@@ -609,8 +608,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.y = tail call ptr @_PyCompile_InstrSequence(ptr noundef %0) #10
-  %.not = icmp eq i32 %3, 0
-  %4 = select i1 %.not, i32 2, i32 3
+  %4 = or disjoint i32 %3, 2
   %i.z = tail call i32 @_PyInstructionSequence_Addop(ptr noundef %i.y, i32 noundef 128, i32 noundef %4, i64 %1, i64 %2) #10
   %i.aa = icmp eq i32 %i.z, -1
   br i1 %i.aa, label %bb.o, label %bb.j

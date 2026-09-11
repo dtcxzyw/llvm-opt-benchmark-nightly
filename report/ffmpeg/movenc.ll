@@ -205,9 +205,10 @@ bb.g:                                             ; preds = %bb.d
   br i1 %.not43, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %.not49 = icmp eq i32 %1, 0                     ; 2 uses
-  %4 = select i1 %.not49, i32 1630693171, i32 1647470387
-  tail call void @avio_wl32(ptr noundef %0, i32 noundef %4) #18
+  %.not49 = icmp eq i32 %1, 0
+  %4 = shl nuw nsw i32 %1, 24
+  %5 = add nuw nsw i32 %4, 1630693171
+  tail call void @avio_wl32(ptr noundef %0, i32 noundef %5) #18
   %i.n = select i1 %.not49, i32 65536, i32 131072
   br label %bb.u
 

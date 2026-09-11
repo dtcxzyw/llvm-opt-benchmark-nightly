@@ -202,11 +202,12 @@ bb.j:                                             ; preds = %bb.i
   %.val44.val = load ptr, ptr %i.ae, align 16
   %i.af = getelementptr i8, ptr %.val45, i64 2096
   %.val45.val = load ptr, ptr %i.af, align 16
-  %.not = icmp ne ptr %.val44.val, %.val45.val
+  %.not = icmp eq ptr %.val44.val, %.val45.val
+  %spec.select = zext i1 %.not to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
-  %.032 = phi i1 [ %.not, %bb.j ], [ false, %bb.h ], [ true, %bb.i ] ; 3 uses
+  %.032 = phi i32 [ %spec.select, %bb.j ], [ 1, %bb.h ], [ 0, %bb.i ] ; 4 uses
   %i.ag = icmp eq i32 %i.d, 32
   br i1 %i.ag, label %bb.l, label %.thread
 
@@ -226,7 +227,8 @@ thread_group_empty.exit:                          ; preds = %bb.l
   br i1 %.not68, label %bb.m, label %bb.aj
 
 bb.m:                                             ; preds = %thread_group_empty.exit, %bb.l
-  br i1 %.032, label %bb.n, label %bb.o, !prof !21
+  %.not39 = icmp eq i32 %.032, 0
+  br i1 %.not39, label %bb.n, label %bb.o, !prof !21
 
 bb.n:                                             ; preds = %bb.m
   %i.an = getelementptr i8, ptr %2, i64 48
@@ -609,7 +611,8 @@ bb.ai:                                            ; preds = %bb.ah
   br label %wait_task_zombie.exit
 
 bb.aj:                                            ; preds = %thread_group_empty.exit
-  br i1 %.032, label %.critedge, label %bb.ak, !prof !115
+  %.not41 = icmp eq i32 %.032, 0
+  br i1 %.not41, label %.thread, label %bb.ak, !prof !115
 
 bb.ak:                                            ; preds = %bb.aj
   %i.jb = getelementptr i8, ptr %0, i64 4
@@ -618,17 +621,13 @@ bb.ak:                                            ; preds = %bb.aj
   %.not42 = icmp eq i32 %i.jd, 0
   br i1 %.not42, label %.thread62, label %.thread
 
-.thread:                                          ; preds = %bb.k, %bb.ak, %bb.n
+.thread:                                          ; preds = %bb.k, %bb.aj, %bb.ak, %bb.n
   %i.je = getelementptr i8, ptr %0, i64 80
   store i32 0, ptr %i.je, align 8
-  br i1 %.032, label %bb.al, label %.thread62
+  %.not77.i = icmp eq i32 %.032, 0
+  br i1 %.not77.i, label %bb.al, label %.thread62
 
-.critedge:                                        ; preds = %bb.aj
-  %3 = getelementptr i8, ptr %0, i64 80
-  store i32 0, ptr %3, align 8
-  br label %bb.al
-
-bb.al:                                            ; preds = %.critedge, %.thread
+bb.al:                                            ; preds = %.thread
   %i.jf = getelementptr i8, ptr %0, i64 4
   %i.jg = load i32, ptr %i.jf, align 4
   %i.jh = and i32 %i.jg, 2
@@ -681,7 +680,6 @@ bb.ao:                                            ; preds = %bb.am
   br i1 %or.cond87.i, label %.thread.i49, label %task_stopped_code.exit59.thread.i, !prof !116
 
 task_stopped_code.exit59.thread.i:                ; preds = %bb.ao, %bb.an
-  %.not77.i64 = phi i32 [ 5, %bb.ao ], [ 4, %bb.an ]
   %.0.i5686.i = phi ptr [ %i.kc, %bb.ao ], [ %i.jl, %bb.an ] ; 2 uses
   %i.kd = phi ptr [ %i.jw, %bb.ao ], [ %i.js, %bb.an ] ; 2 uses
   %i.ke = load i32, ptr %.0.i5686.i, align 4      ; 3 uses
@@ -735,6 +733,7 @@ bb.as:                                            ; preds = %bb.ar
 
 get_task_struct.exit.i:                           ; preds = %.sink.split.i.i.i.i.i, %bb.as
   %i.kt = tail call i32 @__task_pid_nr_ns(ptr noundef %2, i32 noundef 0, ptr noundef null) #16 ; 3 uses
+  %3 = xor i32 %.032, 5
   tail call void @_raw_read_unlock(ptr noundef nonnull @tasklist_lock) #16
   %i.ku = getelementptr i8, ptr %0, i64 32
   %i.kv = load ptr, ptr %i.ku, align 8            ; 2 uses
@@ -785,7 +784,7 @@ bb.az:                                            ; preds = %bb.ay, %put_task_st
 
 bb.ba:                                            ; preds = %bb.az
   %i.lh = getelementptr i8, ptr %i.lg, i64 12
-  store i32 %.not77.i64, ptr %i.lh, align 4
+  store i32 %3, ptr %i.lh, align 4
   %i.li = getelementptr i8, ptr %i.lg, i64 8
   store i32 %i.ke, ptr %i.li, align 4
   store i32 %i.kt, ptr %i.lg, align 4

@@ -205,10 +205,11 @@ _tg3_flag.exit67:                                 ; preds = %bb.c, %._crit_edge,
   %i.aw = getelementptr i8, ptr %0, i64 848
   %i.ax = load i32, ptr %i.aw, align 16
   %i.ay = load volatile i64, ptr %i.f, align 8
-  %1 = and i64 %i.ay, 16
-  %.not60 = icmp eq i64 %1, 0
-  %2 = select i1 %.not60, i32 3, i32 2
-  %i.az = icmp sgt i32 %i.ax, %2
+  %1 = trunc i64 %i.ay to i32
+  %2 = lshr i32 %1, 4
+  %3 = and i32 %2, 1
+  %4 = xor i32 %3, 3
+  %i.az = icmp sgt i32 %i.ax, %4
   br i1 %i.az, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %_tg3_flag.exit67
@@ -232,13 +233,14 @@ bb.h:                                             ; preds = %_tg3_flag.exit67
 
 _tg3_flag.exit70:                                 ; preds = %.lr.ph80, %_tg3_flag.exit70
   %.05579 = phi ptr [ %.05576, %.lr.ph80 ], [ %.055, %_tg3_flag.exit70 ] ; 7 uses
-  %.05678 = phi i32 [ 0, %.lr.ph80 ], [ %5, %_tg3_flag.exit70 ] ; 2 uses
+  %.05678 = phi i32 [ 0, %.lr.ph80 ], [ %8, %_tg3_flag.exit70 ]
   %i.be = getelementptr i8, ptr %.05579, i64 40
   %i.bf = load volatile i64, ptr %i.f, align 8
-  %3 = and i64 %i.bf, 16
-  %.not63 = icmp eq i64 %3, 0
-  %4 = select i1 %.not63, i32 1, i32 2
-  %i.bg = add i32 %4, %.05678                     ; 2 uses
+  %5 = trunc i64 %i.bf to i32
+  %6 = lshr i32 %5, 4
+  %7 = and i32 %6, 1
+  %8 = add i32 %.05678, 1                         ; 2 uses
+  %i.bg = add i32 %8, %7                          ; 2 uses
   %i.bh = load i8, ptr %i.be, align 1
   %i.bi = zext i8 %i.bh to i32
   %i.bj = shl nuw nsw i32 %i.bi, 8
@@ -274,7 +276,6 @@ _tg3_flag.exit70:                                 ; preds = %.lr.ph80, %_tg3_fla
   %i.ck = load ptr, ptr %i.bd, align 8
   %i.cl = add i32 %.26.i, %i.ci
   tail call void %i.ck(ptr noundef %i.b, i32 noundef %i.cl, i32 noundef %i.cf) #27, !inline_history !19
-  %5 = add i32 %.05678, 1
   %.055 = load ptr, ptr %.05579, align 8          ; 2 uses
   %.not72 = icmp eq ptr %.055, %i.av
   br i1 %.not72, label %.loopexit, label %_tg3_flag.exit70, !llvm.loop !305

@@ -205,11 +205,9 @@ bb.a:
   %i.o = and i32 %i.m, %i.n
   %i.p = and i32 %i.l, %i.n
   %i.q = and i32 %i.m, %i.j
-  %.not = icmp eq i32 %i.q, 0
-  %7 = select i1 %.not, i32 0, i32 2              ; 2 uses
+  %7 = shl nuw nsw i32 %i.q, 1                    ; 2 uses
   %i.r = and i32 %i.j, %i.k
-  %.not66 = icmp eq i32 %i.r, 0
-  %8 = select i1 %.not66, i32 0, i32 2            ; 2 uses
+  %8 = shl nuw nsw i32 %i.r, 1                    ; 2 uses
   %.tr = trunc nuw nsw i32 %i.p to i16
   %i.s = shl nuw i16 %.tr, 15                     ; 2 uses
   %.tr83 = trunc nuw nsw i32 %i.o to i16
@@ -360,11 +358,9 @@ bb.a:
   %i.q = and i32 %i.l, %i.n
   %i.r = shl nuw i32 %i.q, 31                     ; 2 uses
   %i.s = and i32 %i.m, %i.j
-  %.not = icmp eq i32 %i.s, 0
-  %7 = select i1 %.not, i32 0, i32 2              ; 2 uses
+  %7 = shl nuw nsw i32 %i.s, 1                    ; 2 uses
   %i.t = and i32 %i.j, %i.k
-  %.not65 = icmp eq i32 %i.t, 0
-  %8 = select i1 %.not65, i32 0, i32 2            ; 2 uses
+  %8 = shl nuw nsw i32 %i.t, 1                    ; 2 uses
   br i1 %.not70, label %.split.us.us, label %.split
 
 .split.us.us:                                     ; preds = %bb.a, %.split72.us.us
@@ -513,11 +509,9 @@ bb.a:
   %i.s = zext nneg i32 %i.r to i64
   %i.t = shl nuw i64 %i.s, 63                     ; 2 uses
   %i.u = and i32 %i.m, %i.j
-  %.not = icmp eq i32 %i.u, 0
-  %7 = select i1 %.not, i32 0, i32 2              ; 2 uses
+  %7 = shl nuw nsw i32 %i.u, 1                    ; 2 uses
   %i.v = and i32 %i.j, %i.k
-  %.not65 = icmp eq i32 %i.v, 0
-  %8 = select i1 %.not65, i32 0, i32 2            ; 2 uses
+  %8 = shl nuw nsw i32 %i.v, 1                    ; 2 uses
   br i1 %.not70, label %.split.us.us, label %.split
 
 .split.us.us:                                     ; preds = %bb.a, %.split72.us.us

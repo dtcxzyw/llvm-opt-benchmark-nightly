@@ -205,8 +205,7 @@ bb.d:                                             ; preds = %bb.a, %invalidateAl
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 8) i32 @sqlite3BtreeLockTable(ptr noundef %0, i32 noundef %1, i8 noundef zeroext range(i8 0, 2) %2) unnamed_addr #5 {
 bb.a:
-  %.not = icmp eq i8 %2, 0                        ; 4 uses
-  %3 = select i1 %.not, i8 1, i8 2                ; 2 uses
+  %3 = add nuw nsw i8 %2, 1                       ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !350  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 17
@@ -232,8 +231,8 @@ bb.d:                                             ; preds = %bb.c
   %i.i = load i32, ptr %i.h, align 8, !tbaa !352
   %i.j = and i32 %i.i, 16384
   %i.k = icmp eq i32 %i.j, 0
-  %not..not = xor i1 %.not, true
-  %or.cond.i = or i1 %i.k, %not..not
+  %4 = icmp eq i8 %3, 2
+  %or.cond.i = or i1 %4, %i.k
   %i.l = icmp eq i32 %1, 1
   %or.cond4.i = or i1 %i.l, %or.cond.i
   br i1 %or.cond4.i, label %bb.e, label %.thread.thread
@@ -245,7 +244,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not3236.i, label %.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e
-  br i1 %.not, label %.lr.ph.split.i, label %.lr.ph.split.us.i
+  %.not41.i = icmp eq i8 %2, 0
+  br i1 %.not41.i, label %.lr.ph.split.i, label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %bb.g
   %.037.us.i = phi ptr [ %.0.us.i, %bb.g ], [ %.035.i, %.lr.ph.i ] ; 3 uses
@@ -297,9 +297,10 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.p
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !352
   %i.ab = and i32 %i.aa, 16384
   %i.ac = icmp ne i32 %i.ab, 0
-  %4 = icmp ne i32 %1, 1
-  %i.ad = and i1 %4, %i.ac
-  %or.cond4.i11 = and i1 %.not, %i.ad
+  %5 = icmp eq i8 %2, 0
+  %i.ad = and i1 %5, %i.ac
+  %6 = icmp ne i32 %1, 1
+  %or.cond4.i11 = and i1 %6, %i.ad
   br i1 %or.cond4.i11, label %queryTableLock.exit, label %bb.k
 
 bb.k:                                             ; preds = %.thread.thread, %.thread
@@ -346,8 +347,8 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i12
 .loopexit.i:                                      ; preds = %bb.l
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.045.i, i64 12
   %.pre = load i8, ptr %.phi.trans.insert, align 4, !tbaa !738
-  %5 = icmp ugt i8 %3, %.pre
-  br i1 %5, label %bb.n, label %queryTableLock.exit
+  %7 = icmp ult i8 %2, %.pre
+  br i1 %7, label %queryTableLock.exit, label %bb.n
 
 bb.n:                                             ; preds = %.loopexit.i.thread, %.loopexit.i
   %.1.i26 = phi ptr [ %i.al, %.loopexit.i.thread ], [ %.045.i, %.loopexit.i ]
@@ -750,10 +751,10 @@ bb.jf:                                            ; preds = %sqlite3VdbeAddOp2.e
   store i8 1, ptr %i.aqw, align 1, !tbaa !638
   %i.aqx = getelementptr inbounds nuw i8, ptr %.val740.val, i64 16
   store i8 0, ptr %i.aqx, align 8, !tbaa !700
-  %.not912.i.i = icmp eq i32 %.lobit, 0
-  %5 = select i1 %.not912.i.i, i8 2, i8 3
+  %5 = trunc nuw nsw i32 %.lobit to i8
+  %6 = or disjoint i8 %5, 2
   %i.aqy = getelementptr inbounds nuw i8, ptr %.val740.val, i64 17
-  store i8 %5, ptr %i.aqy, align 1, !tbaa !710
+  store i8 %6, ptr %i.aqy, align 1, !tbaa !710
   br label %bb.jh
 
 bb.jg:                                            ; preds = %bb.jf
@@ -769,10 +770,10 @@ bb.jg:                                            ; preds = %bb.jf
   %i.arf = zext i1 %narrow.i.i to i8
   %i.arg = getelementptr inbounds nuw i8, ptr %.val740.val, i64 16
   store i8 %i.arf, ptr %i.arg, align 8, !tbaa !700
-  %.not9.i.i = icmp eq i32 %.lobit, 0
-  %6 = select i1 %.not9.i.i, i8 2, i8 3
+  %7 = trunc nuw nsw i32 %.lobit to i8
+  %8 = or disjoint i8 %7, 2
   %i.arh = getelementptr inbounds nuw i8, ptr %.val740.val, i64 17
-  store i8 %6, ptr %i.arh, align 1, !tbaa !710
+  store i8 %8, ptr %i.arh, align 1, !tbaa !710
   br i1 %i.arb, label %bb.jh, label %sqlite3_free.exit887
 
 bb.jh:                                            ; preds = %bb.jg, %.thread11.i.i
@@ -1175,10 +1176,10 @@ sqlite3VdbeAddOp3.exit62:                         ; preds = %resizeOpArray.exit.
   %.not46 = icmp eq i8 %i.dv, 0
   %.not47 = icmp eq i32 %5, 0
   %i.dw = select i1 %.not47, i8 3, i8 5
-  %.0 = select i1 %.not46, i8 %i.dw, i8 0         ; 2 uses
-  %.not48 = icmp eq i32 %7, 0
-  %8 = or disjoint i8 %.0, 8
-  %.1 = select i1 %.not48, i8 %.0, i8 %8
+  %.0 = select i1 %.not46, i8 %i.dw, i8 0
+  %8 = trunc nuw nsw i32 %7 to i8
+  %9 = shl nuw nsw i8 %8, 3
+  %.1 = or disjoint i8 %.0, %9
   %i.dx = load i32, ptr %i.bh, align 4, !tbaa !215 ; 6 uses
   %.not.i63 = icmp sgt i32 %i.dx, %i.dt
   br i1 %.not.i63, label %bb.y, label %bb.u

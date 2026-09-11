@@ -204,135 +204,132 @@ dyn_get_32bit.exit:                               ; preds = %getstreambits.exit.
 
 bb.am:                                            ; preds = %dyn_get_32bit.exit
   %.not.i95 = icmp sgt i32 %spec.store.select, -1
-  br i1 %.not.i95, label %6, label %lead.exit126
+  br i1 %.not.i95, label %bb.an, label %lead.exit126
 
-6:                                                ; preds = %bb.am
-  %.not.1.i97 = icmp samesign ult i32 %spec.store.select, 1073741824
-  br i1 %.not.1.i97, label %bb.an, label %lead.exit126
-
-bb.an:                                            ; preds = %6
-  %.not.2.i98.a = icmp samesign ult i32 %spec.store.select, 536870912
+bb.an:                                            ; preds = %bb.am
+  %.not.2.i98.a = icmp samesign ult i32 %spec.store.select, 1073741824
   br i1 %.not.2.i98.a, label %bb.ao, label %lead.exit126
 
 bb.ao:                                            ; preds = %bb.an
-  %.not.3.i99.a = icmp samesign ult i32 %spec.store.select, 268435456
+  %.not.3.i99.a = icmp samesign ult i32 %spec.store.select, 536870912
   br i1 %.not.3.i99.a, label %bb.ap, label %lead.exit126
 
 bb.ap:                                            ; preds = %bb.ao
-  %.not.4.i100.a = icmp samesign ult i32 %spec.store.select, 134217728
+  %.not.4.i100.a = icmp samesign ult i32 %spec.store.select, 268435456
   br i1 %.not.4.i100.a, label %bb.aq, label %lead.exit126
 
 bb.aq:                                            ; preds = %bb.ap
-  %.not.5.i101.a = icmp samesign ult i32 %spec.store.select, 67108864
+  %.not.5.i101.a = icmp samesign ult i32 %spec.store.select, 134217728
   br i1 %.not.5.i101.a, label %bb.ar, label %lead.exit126
 
 bb.ar:                                            ; preds = %bb.aq
-  %.not.6.i102.a = icmp samesign ult i32 %spec.store.select, 33554432
+  %.not.6.i102.a = icmp samesign ult i32 %spec.store.select, 67108864
   br i1 %.not.6.i102.a, label %bb.as, label %lead.exit126
 
 bb.as:                                            ; preds = %bb.ar
-  %.not.7.i103.a = icmp samesign ult i32 %spec.store.select, 16777216
+  %.not.7.i103.a = icmp samesign ult i32 %spec.store.select, 33554432
   br i1 %.not.7.i103.a, label %bb.at, label %lead.exit126
 
 bb.at:                                            ; preds = %bb.as
-  %.not.8.i104.a = icmp samesign ult i32 %spec.store.select, 8388608
+  %.not.8.i104.a = icmp samesign ult i32 %spec.store.select, 16777216
   br i1 %.not.8.i104.a, label %bb.au, label %lead.exit126
 
 bb.au:                                            ; preds = %bb.at
-  %.not.9.i105.a = icmp samesign ult i32 %spec.store.select, 4194304
+  %.not.9.i105.a = icmp samesign ult i32 %spec.store.select, 8388608
   br i1 %.not.9.i105.a, label %bb.av, label %lead.exit126
 
 bb.av:                                            ; preds = %bb.au
-  %.not.10.i106.a = icmp samesign ult i32 %spec.store.select, 2097152
+  %.not.10.i106.a = icmp samesign ult i32 %spec.store.select, 4194304
   br i1 %.not.10.i106.a, label %bb.aw, label %lead.exit126
 
 bb.aw:                                            ; preds = %bb.av
-  %.not.11.i107.a = icmp samesign ult i32 %spec.store.select, 1048576
+  %.not.11.i107.a = icmp samesign ult i32 %spec.store.select, 2097152
   br i1 %.not.11.i107.a, label %bb.ax, label %lead.exit126
 
 bb.ax:                                            ; preds = %bb.aw
-  %.not.12.i108.a = icmp samesign ult i32 %spec.store.select, 524288
+  %.not.12.i108.a = icmp samesign ult i32 %spec.store.select, 1048576
   br i1 %.not.12.i108.a, label %bb.ay, label %lead.exit126
 
 bb.ay:                                            ; preds = %bb.ax
-  %.not.13.i109.a = icmp samesign ult i32 %spec.store.select, 262144
+  %.not.13.i109.a = icmp samesign ult i32 %spec.store.select, 524288
   br i1 %.not.13.i109.a, label %bb.az, label %lead.exit126
 
 bb.az:                                            ; preds = %bb.ay
-  %.not.14.i110.a = icmp samesign ult i32 %spec.store.select, 131072
+  %.not.14.i110.a = icmp samesign ult i32 %spec.store.select, 262144
   br i1 %.not.14.i110.a, label %bb.ba, label %lead.exit126
 
 bb.ba:                                            ; preds = %bb.az
-  %.not.15.i111.a = icmp samesign ult i32 %spec.store.select, 65536
+  %.not.15.i111.a = icmp samesign ult i32 %spec.store.select, 131072
   br i1 %.not.15.i111.a, label %bb.bb, label %lead.exit126
 
 bb.bb:                                            ; preds = %bb.ba
-  %.not.16.i112.a = icmp samesign ult i32 %spec.store.select, 32768
+  %.not.16.i112.a = icmp samesign ult i32 %spec.store.select, 65536
   br i1 %.not.16.i112.a, label %bb.bc, label %lead.exit126
 
 bb.bc:                                            ; preds = %bb.bb
-  %.not.17.i113.a = icmp samesign ult i32 %spec.store.select, 16384
+  %.not.17.i113.a = icmp samesign ult i32 %spec.store.select, 32768
   br i1 %.not.17.i113.a, label %bb.bd, label %lead.exit126
 
 bb.bd:                                            ; preds = %bb.bc
-  %.not.18.i114.a = icmp samesign ult i32 %spec.store.select, 8192
+  %.not.18.i114.a = icmp samesign ult i32 %spec.store.select, 16384
   br i1 %.not.18.i114.a, label %bb.be, label %lead.exit126
 
 bb.be:                                            ; preds = %bb.bd
-  %.not.19.i115.a = icmp samesign ult i32 %spec.store.select, 4096
+  %.not.19.i115.a = icmp samesign ult i32 %spec.store.select, 8192
   br i1 %.not.19.i115.a, label %bb.bf, label %lead.exit126
 
 bb.bf:                                            ; preds = %bb.be
-  %.not.20.i116.a = icmp samesign ult i32 %spec.store.select, 2048
+  %.not.20.i116.a = icmp samesign ult i32 %spec.store.select, 4096
   br i1 %.not.20.i116.a, label %bb.bg, label %lead.exit126
 
 bb.bg:                                            ; preds = %bb.bf
-  %.not.21.i117.a = icmp samesign ult i32 %spec.store.select, 1024
+  %.not.21.i117.a = icmp samesign ult i32 %spec.store.select, 2048
   br i1 %.not.21.i117.a, label %bb.bh, label %lead.exit126
 
 bb.bh:                                            ; preds = %bb.bg
-  %.not.22.i118.a = icmp samesign ult i32 %spec.store.select, 512
+  %.not.22.i118.a = icmp samesign ult i32 %spec.store.select, 1024
   br i1 %.not.22.i118.a, label %bb.bi, label %lead.exit126
 
 bb.bi:                                            ; preds = %bb.bh
-  %.not.23.i119.a = icmp samesign ult i32 %spec.store.select, 256
+  %.not.23.i119.a = icmp samesign ult i32 %spec.store.select, 512
   br i1 %.not.23.i119.a, label %bb.bj, label %lead.exit126
 
 bb.bj:                                            ; preds = %bb.bi
-  %.not.24.i120.a = icmp samesign ult i32 %spec.store.select, 128
+  %.not.24.i120.a = icmp samesign ult i32 %spec.store.select, 256
   br i1 %.not.24.i120.a, label %bb.bk, label %lead.exit126
 
 bb.bk:                                            ; preds = %bb.bj
-  %.not.25.i121.a = icmp samesign ult i32 %spec.store.select, 64
+  %.not.25.i121.a = icmp samesign ult i32 %spec.store.select, 128
   br i1 %.not.25.i121.a, label %bb.bl, label %lead.exit126
 
 bb.bl:                                            ; preds = %bb.bk
-  %.not.26.i122.a = icmp samesign ult i32 %spec.store.select, 32
+  %.not.26.i122.a = icmp samesign ult i32 %spec.store.select, 64
   br i1 %.not.26.i122.a, label %bb.bm, label %lead.exit126
 
 bb.bm:                                            ; preds = %bb.bl
-  %.not.27.i123.a = icmp samesign ult i32 %spec.store.select, 16
+  %.not.27.i123.a = icmp samesign ult i32 %spec.store.select, 32
   br i1 %.not.27.i123.a, label %bb.bn, label %lead.exit126
 
 bb.bn:                                            ; preds = %bb.bm
-  %.not.28.i124.a = icmp samesign ult i32 %spec.store.select, 8
+  %.not.28.i124.a = icmp samesign ult i32 %spec.store.select, 16
   br i1 %.not.28.i124.a, label %bb.bo, label %lead.exit126
 
 bb.bo:                                            ; preds = %bb.bn
-  %.not.29.i125.a = icmp samesign ult i32 %spec.store.select, 4
+  %.not.29.i125.a = icmp samesign ult i32 %spec.store.select, 8
   br i1 %.not.29.i125.a, label %bb.bp, label %lead.exit126
 
 bb.bp:                                            ; preds = %bb.bo
-  %.not.30.i.a = icmp samesign ult i32 %spec.store.select, 2
+  %.not.30.i.a = icmp samesign ult i32 %spec.store.select, 4
   br i1 %.not.30.i.a, label %bb.bq, label %lead.exit126
 
 bb.bq:                                            ; preds = %bb.bp
-  %.not.31.i = icmp eq i32 %spec.store.select, 0
-  %i.cw = select i1 %.not.31.i, i32 8, i32 7
+  %.not.30.i = icmp samesign ult i32 %spec.store.select, 2
+  %6 = sub nuw nsw i32 8, %spec.store.select
+  %i.cw = select i1 %.not.30.i, i32 %6, i32 6
   br label %lead.exit126
 
-lead.exit126:                                     ; preds = %bb.am, %6, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq
-  %.06.lcssa.i96 = phi i32 [ -24, %bb.am ], [ -8, %bb.bb ], [ -23, %6 ], [ %i.cw, %bb.bq ], [ -22, %bb.an ], [ -4, %bb.bf ], [ -21, %bb.ao ], [ 6, %bb.bp ], [ -20, %bb.ap ], [ -7, %bb.bc ], [ -19, %bb.aq ], [ 5, %bb.bo ], [ -18, %bb.ar ], [ -1, %bb.bi ], [ -17, %bb.as ], [ 4, %bb.bn ], [ -16, %bb.at ], [ -6, %bb.bd ], [ -15, %bb.au ], [ 3, %bb.bm ], [ -14, %bb.av ], [ -3, %bb.bg ], [ -13, %bb.aw ], [ 2, %bb.bl ], [ -12, %bb.ax ], [ -5, %bb.be ], [ -11, %bb.ay ], [ 1, %bb.bk ], [ -10, %bb.az ], [ -2, %bb.bh ], [ -9, %bb.ba ], [ 0, %bb.bj ]
+lead.exit126:                                     ; preds = %bb.bq, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp
+  %.06.lcssa.i96 = phi i32 [ -24, %bb.am ], [ -8, %bb.bc ], [ -23, %bb.an ], [ 0, %bb.bk ], [ -22, %bb.ao ], [ -4, %bb.bg ], [ -21, %bb.ap ], [ %i.cw, %bb.bq ], [ -20, %bb.aq ], [ -7, %bb.bd ], [ -19, %bb.ar ], [ 5, %bb.bp ], [ -18, %bb.as ], [ -1, %bb.bj ], [ -17, %bb.at ], [ 4, %bb.bo ], [ -16, %bb.au ], [ -6, %bb.be ], [ -15, %bb.av ], [ 3, %bb.bn ], [ -14, %bb.aw ], [ -3, %bb.bh ], [ -13, %bb.ax ], [ 2, %bb.bm ], [ -12, %bb.ay ], [ -5, %bb.bf ], [ -11, %bb.az ], [ 1, %bb.bl ], [ -10, %bb.ba ], [ -2, %bb.bi ], [ -9, %bb.bb ]
   %i.cx = add nuw nsw i32 %spec.store.select, 16
   %i.cy = lshr i32 %i.cx, 6
   %i.cz = add nsw i32 %.06.lcssa.i96, %i.cy       ; 3 uses

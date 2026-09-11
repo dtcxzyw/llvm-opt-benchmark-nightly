@@ -204,135 +204,132 @@ define internal noundef i32 @_ZL9b_countlzP9lua_State(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noundef i32 @_Z18luaL_checkunsignedP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 32 uses
   %.not = icmp sgt i32 %i.a, -1
-  br i1 %.not, label %1, label %bb.af
+  br i1 %.not, label %bb.b, label %bb.af
 
-1:                                                ; preds = %bb.a
-  %.not.1 = icmp samesign ult i32 %i.a, 1073741824
-  br i1 %.not.1, label %bb.b, label %bb.af
-
-bb.b:                                             ; preds = %1
-  %.not.2.a = icmp samesign ult i32 %i.a, 536870912
+bb.b:                                             ; preds = %bb.a
+  %.not.2.a = icmp samesign ult i32 %i.a, 1073741824
   br i1 %.not.2.a, label %bb.c, label %bb.af
 
 bb.c:                                             ; preds = %bb.b
-  %.not.3.a = icmp samesign ult i32 %i.a, 268435456
+  %.not.3.a = icmp samesign ult i32 %i.a, 536870912
   br i1 %.not.3.a, label %bb.d, label %bb.af
 
 bb.d:                                             ; preds = %bb.c
-  %.not.4.a = icmp samesign ult i32 %i.a, 134217728
+  %.not.4.a = icmp samesign ult i32 %i.a, 268435456
   br i1 %.not.4.a, label %bb.e, label %bb.af
 
 bb.e:                                             ; preds = %bb.d
-  %.not.5.a = icmp samesign ult i32 %i.a, 67108864
+  %.not.5.a = icmp samesign ult i32 %i.a, 134217728
   br i1 %.not.5.a, label %bb.f, label %bb.af
 
 bb.f:                                             ; preds = %bb.e
-  %.not.6.a = icmp samesign ult i32 %i.a, 33554432
+  %.not.6.a = icmp samesign ult i32 %i.a, 67108864
   br i1 %.not.6.a, label %bb.g, label %bb.af
 
 bb.g:                                             ; preds = %bb.f
-  %.not.7.a = icmp samesign ult i32 %i.a, 16777216
+  %.not.7.a = icmp samesign ult i32 %i.a, 33554432
   br i1 %.not.7.a, label %bb.h, label %bb.af
 
 bb.h:                                             ; preds = %bb.g
-  %.not.8.a = icmp samesign ult i32 %i.a, 8388608
+  %.not.8.a = icmp samesign ult i32 %i.a, 16777216
   br i1 %.not.8.a, label %bb.i, label %bb.af
 
 bb.i:                                             ; preds = %bb.h
-  %.not.9.a = icmp samesign ult i32 %i.a, 4194304
+  %.not.9.a = icmp samesign ult i32 %i.a, 8388608
   br i1 %.not.9.a, label %bb.j, label %bb.af
 
 bb.j:                                             ; preds = %bb.i
-  %.not.10.a = icmp samesign ult i32 %i.a, 2097152
+  %.not.10.a = icmp samesign ult i32 %i.a, 4194304
   br i1 %.not.10.a, label %bb.k, label %bb.af
 
 bb.k:                                             ; preds = %bb.j
-  %.not.11.a = icmp samesign ult i32 %i.a, 1048576
+  %.not.11.a = icmp samesign ult i32 %i.a, 2097152
   br i1 %.not.11.a, label %bb.l, label %bb.af
 
 bb.l:                                             ; preds = %bb.k
-  %.not.12.a = icmp samesign ult i32 %i.a, 524288
+  %.not.12.a = icmp samesign ult i32 %i.a, 1048576
   br i1 %.not.12.a, label %bb.m, label %bb.af
 
 bb.m:                                             ; preds = %bb.l
-  %.not.13.a = icmp samesign ult i32 %i.a, 262144
+  %.not.13.a = icmp samesign ult i32 %i.a, 524288
   br i1 %.not.13.a, label %bb.n, label %bb.af
 
 bb.n:                                             ; preds = %bb.m
-  %.not.14.a = icmp samesign ult i32 %i.a, 131072
+  %.not.14.a = icmp samesign ult i32 %i.a, 262144
   br i1 %.not.14.a, label %bb.o, label %bb.af
 
 bb.o:                                             ; preds = %bb.n
-  %.not.15.a = icmp samesign ult i32 %i.a, 65536
+  %.not.15.a = icmp samesign ult i32 %i.a, 131072
   br i1 %.not.15.a, label %bb.p, label %bb.af
 
 bb.p:                                             ; preds = %bb.o
-  %.not.16.a = icmp samesign ult i32 %i.a, 32768
+  %.not.16.a = icmp samesign ult i32 %i.a, 65536
   br i1 %.not.16.a, label %bb.q, label %bb.af
 
 bb.q:                                             ; preds = %bb.p
-  %.not.17.a = icmp samesign ult i32 %i.a, 16384
+  %.not.17.a = icmp samesign ult i32 %i.a, 32768
   br i1 %.not.17.a, label %bb.r, label %bb.af
 
 bb.r:                                             ; preds = %bb.q
-  %.not.18.a = icmp samesign ult i32 %i.a, 8192
+  %.not.18.a = icmp samesign ult i32 %i.a, 16384
   br i1 %.not.18.a, label %bb.s, label %bb.af
 
 bb.s:                                             ; preds = %bb.r
-  %.not.19.a = icmp samesign ult i32 %i.a, 4096
+  %.not.19.a = icmp samesign ult i32 %i.a, 8192
   br i1 %.not.19.a, label %bb.t, label %bb.af
 
 bb.t:                                             ; preds = %bb.s
-  %.not.20.a = icmp samesign ult i32 %i.a, 2048
+  %.not.20.a = icmp samesign ult i32 %i.a, 4096
   br i1 %.not.20.a, label %bb.u, label %bb.af
 
 bb.u:                                             ; preds = %bb.t
-  %.not.21.a = icmp samesign ult i32 %i.a, 1024
+  %.not.21.a = icmp samesign ult i32 %i.a, 2048
   br i1 %.not.21.a, label %bb.v, label %bb.af
 
 bb.v:                                             ; preds = %bb.u
-  %.not.22.a = icmp samesign ult i32 %i.a, 512
+  %.not.22.a = icmp samesign ult i32 %i.a, 1024
   br i1 %.not.22.a, label %bb.w, label %bb.af
 
 bb.w:                                             ; preds = %bb.v
-  %.not.23.a = icmp samesign ult i32 %i.a, 256
+  %.not.23.a = icmp samesign ult i32 %i.a, 512
   br i1 %.not.23.a, label %bb.x, label %bb.af
 
 bb.x:                                             ; preds = %bb.w
-  %.not.24.a = icmp samesign ult i32 %i.a, 128
+  %.not.24.a = icmp samesign ult i32 %i.a, 256
   br i1 %.not.24.a, label %bb.y, label %bb.af
 
 bb.y:                                             ; preds = %bb.x
-  %.not.25.a = icmp samesign ult i32 %i.a, 64
+  %.not.25.a = icmp samesign ult i32 %i.a, 128
   br i1 %.not.25.a, label %bb.z, label %bb.af
 
 bb.z:                                             ; preds = %bb.y
-  %.not.26.a = icmp samesign ult i32 %i.a, 32
+  %.not.26.a = icmp samesign ult i32 %i.a, 64
   br i1 %.not.26.a, label %bb.aa, label %bb.af
 
 bb.aa:                                            ; preds = %bb.z
-  %.not.27.a = icmp samesign ult i32 %i.a, 16
+  %.not.27.a = icmp samesign ult i32 %i.a, 32
   br i1 %.not.27.a, label %bb.ab, label %bb.af
 
 bb.ab:                                            ; preds = %bb.aa
-  %.not.28.a = icmp samesign ult i32 %i.a, 8
+  %.not.28.a = icmp samesign ult i32 %i.a, 16
   br i1 %.not.28.a, label %bb.ac, label %bb.af
 
 bb.ac:                                            ; preds = %bb.ab
-  %.not.29.a = icmp samesign ult i32 %i.a, 4
+  %.not.29.a = icmp samesign ult i32 %i.a, 8
   br i1 %.not.29.a, label %bb.ad, label %bb.af
 
 bb.ad:                                            ; preds = %bb.ac
-  %.not.30.a = icmp samesign ult i32 %i.a, 2
+  %.not.30.a = icmp samesign ult i32 %i.a, 4
   br i1 %.not.30.a, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %.not.31 = icmp eq i32 %i.a, 0
-  %spec.select.a = select i1 %.not.31, i32 32, i32 31
+  %.not.30 = icmp samesign ult i32 %i.a, 2
+  %spec.select = sub nuw nsw i32 32, %i.a
+  %spec.select.a = select i1 %.not.30, i32 %spec.select, i32 30
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %1, %bb.a
-  %.07 = phi i32 [ 16, %bb.p ], [ 0, %bb.a ], [ 1, %1 ], [ %spec.select.a, %bb.ae ], [ 2, %bb.b ], [ 20, %bb.t ], [ 3, %bb.c ], [ 30, %bb.ad ], [ 4, %bb.d ], [ 17, %bb.q ], [ 5, %bb.e ], [ 29, %bb.ac ], [ 6, %bb.f ], [ 23, %bb.w ], [ 7, %bb.g ], [ 28, %bb.ab ], [ 8, %bb.h ], [ 18, %bb.r ], [ 9, %bb.i ], [ 27, %bb.aa ], [ 10, %bb.j ], [ 21, %bb.u ], [ 11, %bb.k ], [ 26, %bb.z ], [ 12, %bb.l ], [ 19, %bb.s ], [ 13, %bb.m ], [ 25, %bb.y ], [ 14, %bb.n ], [ 22, %bb.v ], [ 15, %bb.o ], [ 24, %bb.x ]
+bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.07 = phi i32 [ 16, %bb.q ], [ 0, %bb.a ], [ 1, %bb.b ], [ 24, %bb.y ], [ 2, %bb.c ], [ 20, %bb.u ], [ 3, %bb.d ], [ %spec.select.a, %bb.ae ], [ 4, %bb.e ], [ 17, %bb.r ], [ 5, %bb.f ], [ 29, %bb.ad ], [ 6, %bb.g ], [ 23, %bb.x ], [ 7, %bb.h ], [ 28, %bb.ac ], [ 8, %bb.i ], [ 18, %bb.s ], [ 9, %bb.j ], [ 27, %bb.ab ], [ 10, %bb.k ], [ 21, %bb.v ], [ 11, %bb.l ], [ 26, %bb.aa ], [ 12, %bb.m ], [ 19, %bb.t ], [ 13, %bb.n ], [ 25, %bb.z ], [ 14, %bb.o ], [ 22, %bb.w ], [ 15, %bb.p ]
   tail call void @_Z16lua_pushunsignedP9lua_Statej(ptr noundef %0, i32 noundef %.07)
   ret i32 1
 }

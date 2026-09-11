@@ -204,17 +204,17 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.s
 
 bb.i:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.g, %bb.f
-  %.0 = phi i32 [ 1, %bb.d ], [ 0, %bb.c ], [ 0, %bb.f ], [ %.lobit, %bb.g ], [ 0, %bb.e ]
+  %.0 = phi i32 [ 1, %bb.d ], [ 0, %bb.c ], [ 0, %bb.f ], [ %.lobit, %bb.g ], [ 0, %bb.e ] ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 31
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !213
-  %.not46 = icmp eq i32 %.0, 0                    ; 3 uses
   switch i8 %i.ad, label %bb.r [
     i8 18, label %bb.j
     i8 34, label %bb.n
   ], !prof !154
 
 bb.j:                                             ; preds = %bb.i
-  br i1 %.not46, label %bb.l, label %bb.k
+  %.not48 = icmp eq i32 %.0, 0
+  br i1 %.not48, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -235,7 +235,8 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.s
 
 bb.n:                                             ; preds = %bb.i
-  br i1 %.not46, label %bb.o, label %bb.p
+  %.not47 = icmp eq i32 %.0, 0
+  br i1 %.not47, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -256,7 +257,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.i
-  %2 = select i1 %.not46, i32 2, i32 3
+  %2 = or disjoint i32 %.0, 2
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !75
   %i.ay = sext i32 %i.ax to i64
@@ -659,17 +660,17 @@ bb.h:                                             ; preds = %bb.g
   ret ptr %i.ad
 
 bb.i:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.g, %bb.f
-  %.0 = phi i32 [ 1, %bb.d ], [ 0, %bb.c ], [ 0, %bb.f ], [ %.lobit, %bb.g ], [ 0, %bb.e ]
+  %.0 = phi i32 [ 1, %bb.d ], [ 0, %bb.c ], [ 0, %bb.f ], [ %.lobit, %bb.g ], [ 0, %bb.e ] ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 31
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !213
-  %.not48 = icmp eq i32 %.0, 0                    ; 3 uses
   switch i8 %i.af, label %bb.r [
     i8 18, label %bb.j
     i8 34, label %bb.n
   ], !prof !154
 
 bb.j:                                             ; preds = %bb.i
-  br i1 %.not48, label %bb.l, label %bb.k
+  %.not50 = icmp eq i32 %.0, 0
+  br i1 %.not50, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -690,7 +691,8 @@ bb.m:                                             ; preds = %bb.l
   ret ptr %i.ao
 
 bb.n:                                             ; preds = %bb.i
-  br i1 %.not48, label %bb.o, label %bb.p
+  %.not49 = icmp eq i32 %.0, 0
+  br i1 %.not49, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -711,7 +713,7 @@ bb.q:                                             ; preds = %bb.p
   ret ptr %i.ax
 
 bb.r:                                             ; preds = %bb.i
-  %2 = select i1 %.not48, i32 2, i32 3
+  %2 = or disjoint i32 %.0, 2
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.az = load i32, ptr %i.ay, align 8, !tbaa !75
   %i.ba = sext i32 %i.az to i64

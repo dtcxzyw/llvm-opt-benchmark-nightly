@@ -205,28 +205,20 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.j
-  %i.g = phi i64 [ %i.b, %.lr.ph ], [ %i.ej, %bb.j ] ; 6 uses
+  %i.g = phi i64 [ %i.b, %.lr.ph ], [ %i.ej, %bb.j ] ; 4 uses
   %.05075 = phi i64 [ %3, %.lr.ph ], [ %.1, %bb.j ] ; 4 uses
   %i.h = icmp ult i64 %i.g, %4
-  br i1 %i.h, label %bb.c, label %._crit_edge78
-
-._crit_edge78:                                    ; preds = %bb.b
-  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.g
-  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !15 ; 2 uses
-  %.phi.trans.insert79 = getelementptr inbounds nuw i8, ptr %1, i64 %.pre
-  %.pre80 = load i8, ptr %.phi.trans.insert79, align 1, !tbaa !21
-  br label %bb.d
+  br i1 %i.h, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %5 = or disjoint i64 %i.g, 1                    ; 2 uses
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.g
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !15   ; 2 uses
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.g ; 2 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !15
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %i.j ; 2 uses
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !21    ; 3 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %5
-  %i.m = load i64, ptr %6, align 8, !tbaa !15     ; 2 uses
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !21    ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %i.m = load i64, ptr %5, align 8, !tbaa !15
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %i.m ; 2 uses
-  %i.o = load i8, ptr %i.n, align 1, !tbaa !21    ; 3 uses
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !21    ; 2 uses
   %i.p = icmp ugt i8 %i.l, %i.o
   %spec.select.i = call i8 @llvm.umin.i8(i8 %i.l, i8 %i.o)
   %i.q = zext i8 %spec.select.i to i64
@@ -235,24 +227,22 @@ bb.c:                                             ; preds = %bb.b
   %..i = zext i1 %i.p to i32
   %.lobit.i = lshr i32 %i.r, 31
   %.025.i = select i1 %i.s, i32 %..i, i32 %.lobit.i
-  %.not53 = icmp eq i32 %.025.i, 0                ; 3 uses
-  %spec.select = select i1 %.not53, i64 %i.g, i64 %5
-  %7 = select i1 %.not53, i64 %i.j, i64 %i.m
-  %8 = select i1 %.not53, i8 %i.l, i8 %i.o
+  %6 = zext nneg i32 %.025.i to i64
+  %spec.select = or disjoint i64 %i.g, %6
   br label %bb.d
 
-bb.d:                                             ; preds = %._crit_edge78, %bb.c
-  %9 = phi i8 [ %.pre80, %._crit_edge78 ], [ %8, %bb.c ] ; 3 uses
-  %10 = phi i64 [ %.pre, %._crit_edge78 ], [ %7, %bb.c ]
-  %.0 = phi i64 [ %i.g, %._crit_edge78 ], [ %spec.select, %bb.c ] ; 5 uses
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.0 = phi i64 [ %i.g, %bb.b ], [ %spec.select, %bb.c ] ; 5 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.05075 ; 7 uses
   %i.u = load i64, ptr %i.t, align 8, !tbaa !15
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %i.u ; 2 uses
   %i.w = load i8, ptr %i.v, align 1, !tbaa !21    ; 2 uses
-  %i.x = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0 ; 4 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %10 ; 2 uses
-  %i.z = icmp ugt i8 %i.w, %9
-  %spec.select.i55 = call i8 @llvm.umin.i8(i8 %i.w, i8 %9)
+  %i.x = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0 ; 5 uses
+  %7 = load i64, ptr %i.x, align 8, !tbaa !15
+  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %7 ; 3 uses
+  %8 = load i8, ptr %i.y, align 1, !tbaa !21      ; 3 uses
+  %i.z = icmp ugt i8 %i.w, %8
+  %spec.select.i55 = call i8 @llvm.umin.i8(i8 %i.w, i8 %8)
   %i.aa = zext i8 %spec.select.i55 to i64
   %i.ab = call i32 @strncmp(ptr noundef nonnull readonly %i.v, ptr noundef nonnull readonly %i.y, i64 noundef %i.aa) #12 ; 2 uses
   %i.ac = icmp eq i32 %i.ab, 0
@@ -263,7 +253,7 @@ bb.d:                                             ; preds = %._crit_edge78, %bb.
   br i1 %.not54, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ad = zext i8 %9 to i64
+  %i.ad = zext i8 %8 to i64
   %i.ae = add nuw nsw i64 %i.ad, 1
   call void @MoveMemory(ptr noundef nonnull %i.a, ptr noundef nonnull %i.y, i64 noundef %i.ae) #11
   %i.af = load i64, ptr %i.t, align 8, !tbaa !15

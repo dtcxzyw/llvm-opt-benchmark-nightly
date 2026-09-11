@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.k
   %i.y = load ptr, ptr @zend_resolve_path, align 8, !tbaa !49
   %i.z = call ptr %i.y(ptr noundef %i.x) #10, !inline_history !247 ; 2 uses
   %.not.i47 = icmp eq ptr %i.z, null
-  br i1 %.not.i47, label %filename_is_in_file_cache.exit.thread, label %filename_is_in_file_cache.exit.a
+  br i1 %.not.i47, label %bb.n, label %filename_is_in_file_cache.exit.a
 
 filename_is_in_file_cache.exit.a:                 ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
@@ -211,16 +211,14 @@ filename_is_in_file_cache.exit.a:                 ; preds = %bb.m
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !248
   %i.ab = call ptr @zend_file_cache_script_load_ex(ptr noundef nonnull %2, i1 noundef zeroext true) #10
   call void @zend_destroy_file_handle(ptr noundef nonnull %2) #10
-  %.fr = freeze ptr %i.ab
-  %.not = icmp eq ptr %.fr, null
+  %3 = icmp ne ptr %i.ab, null
+  %4 = zext i1 %3 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
-  br i1 %.not, label %filename_is_in_file_cache.exit.thread, label %bb.n
-
-filename_is_in_file_cache.exit.thread:            ; preds = %bb.m, %filename_is_in_file_cache.exit.a
+  %5 = or disjoint i32 %4, 2
   br label %bb.n
 
-bb.n:                                             ; preds = %filename_is_in_file_cache.exit.a, %filename_is_in_file_cache.exit.thread
-  %i.ac = phi i32 [ 2, %filename_is_in_file_cache.exit.thread ], [ 3, %filename_is_in_file_cache.exit.a ]
+bb.n:                                             ; preds = %bb.m, %filename_is_in_file_cache.exit.a
+  %i.ac = phi i32 [ %5, %filename_is_in_file_cache.exit.a ], [ 2, %bb.m ]
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %i.ac, ptr %i.ad, align 8, !tbaa !48
   br label %bb.o

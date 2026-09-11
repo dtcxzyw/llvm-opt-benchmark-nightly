@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j
-  %.1 = phi i32 [ 1, %bb.j ], [ 0, %bb.i ]
+  %.1 = phi i32 [ -1, %bb.j ], [ 0, %bb.i ]
   %i.ag = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7804), align 4, !tbaa !21
   %.not35.1 = icmp eq i32 %i.ag, %i.r
   br i1 %.not35.1, label %bb.m, label %bb.l
@@ -214,22 +214,22 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %.1.1 = phi i32 [ 1, %bb.l ], [ %.1, %bb.k ]
+  %.1.1 = phi i32 [ -1, %bb.l ], [ %.1, %bb.k ]
   %i.ah = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7808), align 8, !tbaa !21
   %.not35.2 = icmp eq i32 %i.ah, %i.aa
   br i1 %.not35.2, label %bb.n, label %.thread51
 
 .thread51:                                        ; preds = %bb.m
   store i32 %i.aa, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7808), align 8, !tbaa !21
+  br label %bb.n
+
+bb.n:                                             ; preds = %.thread51, %bb.m
+  %.1.2.neg = phi i32 [ -1, %.thread51 ], [ %.1.1, %bb.m ]
+  %4 = add nsw i32 %.1.2.neg, 2
   br label %bb.o
 
-bb.n:                                             ; preds = %bb.m
-  %.not34 = icmp eq i32 %.1.1, 0
-  %spec.select = select i1 %.not34, i32 2, i32 1
-  br label %bb.o
-
-bb.o:                                             ; preds = %bb.n, %.thread51, %.thread, %bb.b
-  %.2 = phi i32 [ 0, %bb.b ], [ 0, %.thread ], [ 1, %.thread51 ], [ %spec.select, %bb.n ]
+bb.o:                                             ; preds = %.thread, %bb.n, %bb.b
+  %.2 = phi i32 [ 0, %bb.b ], [ 0, %.thread ], [ %4, %bb.n ]
   ret i32 %.2
 }
 

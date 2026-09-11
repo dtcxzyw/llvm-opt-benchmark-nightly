@@ -202,9 +202,9 @@ bb.a:
   store ptr @_ZL10zalloc_gprPvjj, ptr %i.e, align 8, !tbaa !26
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 72
   store ptr @_ZL9zfree_gprPvS_, ptr %i.f, align 8, !tbaa !27
-  %.not = icmp eq i32 %2, 0
-  %5 = select i1 %.not, i32 15, i32 31
-  %i.g = call i32 @inflateInit2_(ptr noundef nonnull %3, i32 noundef %5, ptr noundef nonnull @.str.2, i32 noundef 112)
+  %5 = shl nuw nsw i32 %2, 4
+  %6 = or disjoint i32 %5, 15
+  %i.g = call i32 @inflateInit2_(ptr noundef nonnull %3, i32 noundef %6, ptr noundef nonnull @.str.2, i32 noundef 112)
   %.not25.not = icmp eq i32 %i.g, 0
   br i1 %.not25.not, label %.critedge, label %bb.b, !prof !28
 
@@ -332,9 +332,9 @@ bb.a:
   store ptr @_ZL10zalloc_gprPvjj, ptr %i.e, align 8, !tbaa !26
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 72
   store ptr @_ZL9zfree_gprPvS_, ptr %i.f, align 8, !tbaa !27
-  %.not = icmp eq i32 %2, 0
-  %5 = select i1 %.not, i32 15, i32 31
-  %i.g = call i32 @deflateInit2_(ptr noundef nonnull %3, i32 noundef -1, i32 noundef 8, i32 noundef %5, i32 noundef 8, i32 noundef 0, ptr noundef nonnull @.str.2, i32 noundef 112)
+  %5 = shl nuw nsw i32 %2, 4
+  %6 = or disjoint i32 %5, 15
+  %i.g = call i32 @deflateInit2_(ptr noundef nonnull %3, i32 noundef -1, i32 noundef 8, i32 noundef %6, i32 noundef 8, i32 noundef 0, ptr noundef nonnull @.str.2, i32 noundef 112)
   %.not27.not = icmp eq i32 %i.g, 0
   br i1 %.not27.not, label %.critedge, label %bb.b, !prof !28
 

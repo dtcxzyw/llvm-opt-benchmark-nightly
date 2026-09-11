@@ -205,47 +205,56 @@ _ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescript
 
 .noexc102:                                        ; preds = %_ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescriptorE.exit.thread.i.i
   %i.py = invoke fastcc noundef zeroext i1 @_ZN6google8protobuf8internal12_GLOBAL__N_122GetEnumValidationRangeEPKNS0_14EnumDescriptorERiS6_(ptr noundef %i.px, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
+          to label %.noexc103 unwind label %.loopexit
+
+.noexc103:                                        ; preds = %.noexc102
+  br i1 %i.py, label %bb.cu, label %_ZN6google8protobuf8internal12_GLOBAL__N_116GetEnumRangeInfoEPKNS0_15FieldDescriptorERh.exit.thread.i.i
+
+_ZN6google8protobuf8internal12_GLOBAL__N_116GetEnumRangeInfoEPKNS0_15FieldDescriptorERh.exit.thread.i.i: ; preds = %.noexc103
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19, !noalias !171
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19, !noalias !171
+  %14 = invoke noundef zeroext i1 @_ZNK6google8protobuf15FieldDescriptor9is_packedEv(ptr noundef nonnull align 8 dereferenceable(88) %i.lm)
           to label %.noexc103.a unwind label %.loopexit
 
-.noexc103.a:                                      ; preds = %.noexc102
-  br i1 %i.py, label %bb.cu, label %bb.cw
+.noexc103.a:                                      ; preds = %_ZN6google8protobuf8internal12_GLOBAL__N_116GetEnumRangeInfoEPKNS0_15FieldDescriptorERh.exit.thread.i.i
+  br i1 %14, label %bb.cx, label %bb.cy
 
-bb.cu:                                            ; preds = %.noexc103.a
+bb.cu:                                            ; preds = %.noexc103
   %i.pz = load i32, ptr %i.b, align 4, !tbaa !8, !noalias !171 ; 2 uses
   %i.qa = icmp slt i32 %i.pz, 128
   %i.qb = load i32, ptr %i.a, align 4, !noalias !171 ; 2 uses
   %or.cond.i.i.i = icmp ult i32 %i.qb, 2
   %or.cond4.i.i.i = select i1 %i.qa, i1 %or.cond.i.i.i, i1 false
-  br i1 %or.cond4.i.i.i, label %bb.cv, label %16
+  br i1 %or.cond4.i.i.i, label %bb.cw, label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu
-  %14 = trunc i32 %i.pz to i8                     ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19, !noalias !171
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19, !noalias !171
   %i.qc = invoke noundef zeroext i1 @_ZNK6google8protobuf15FieldDescriptor9is_packedEv(ptr noundef nonnull align 8 dereferenceable(88) %i.lm)
-          to label %.noexc104 unwind label %.loopexit ; 2 uses
+          to label %.noexc104 unwind label %.loopexit
 
 .noexc104:                                        ; preds = %bb.cv
-  %15 = icmp eq i32 %i.qb, 0
-  br i1 %15, label %bb.df, label %bb.dk
+  br i1 %i.qc, label %bb.db, label %bb.dc
 
-bb.cw:                                            ; preds = %.noexc103.a
+bb.cw:                                            ; preds = %bb.cu
+  %15 = trunc i32 %i.pz to i8                     ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19, !noalias !171
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19, !noalias !171
   %i.qd = invoke noundef zeroext i1 @_ZNK6google8protobuf15FieldDescriptor9is_packedEv(ptr noundef nonnull align 8 dereferenceable(88) %i.lm)
-          to label %.noexc105 unwind label %.loopexit
+          to label %.noexc105 unwind label %.loopexit ; 2 uses
 
 .noexc105:                                        ; preds = %bb.cw
-  br i1 %i.qd, label %bb.cx, label %bb.cy
+  %16 = icmp eq i32 %i.qb, 1
+  br i1 %16, label %bb.dk, label %bb.df
 
-bb.cx:                                            ; preds = %.noexc105
+bb.cx:                                            ; preds = %.noexc103.a
   %i.qe = getelementptr inbounds nuw i8, ptr %i.lm, i64 4
   %i.qf = load i32, ptr %i.qe, align 4, !tbaa !20, !noalias !171
   %i.qg = icmp slt i32 %i.qf, 16
   %i.qh = select i1 %i.qg, i8 47, i8 48
   br label %_ZN6google8protobuf8internal12_GLOBAL__N_118MakeFastFieldEntryERKNS1_17TailCallTableInfo14FieldEntryInfoERKNS3_12FieldOptionsERKNS3_14MessageOptionsE.exit.i
 
-bb.cy:                                            ; preds = %.noexc105
+bb.cy:                                            ; preds = %.noexc103.a
   %i.qi = getelementptr inbounds nuw i8, ptr %i.lm, i64 1
   %i.qj = load i8, ptr %i.qi, align 1, !noalias !171
   %i.qk = and i8 %i.qj, 32
@@ -263,23 +272,14 @@ bb.da:                                            ; preds = %bb.cy
   %i.qp = select i1 %i.qn, i8 43, i8 44
   br label %_ZN6google8protobuf8internal12_GLOBAL__N_118MakeFastFieldEntryERKNS1_17TailCallTableInfo14FieldEntryInfoERKNS3_12FieldOptionsERKNS3_14MessageOptionsE.exit.i
 
-16:                                               ; preds = %bb.cu
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19, !noalias !171
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19, !noalias !171
-  %17 = invoke noundef zeroext i1 @_ZNK6google8protobuf15FieldDescriptor9is_packedEv(ptr noundef nonnull align 8 dereferenceable(88) %i.lm)
-          to label %.noexc106 unwind label %.loopexit
-
-.noexc106:                                        ; preds = %16
-  br i1 %17, label %bb.db, label %bb.dc
-
-bb.db:                                            ; preds = %.noexc106
+bb.db:                                            ; preds = %.noexc104
   %i.qq = getelementptr inbounds nuw i8, ptr %i.lm, i64 4
   %i.qr = load i32, ptr %i.qq, align 4, !tbaa !20, !noalias !171
   %i.qs = icmp slt i32 %i.qr, 16
   %i.qt = select i1 %i.qs, i8 53, i8 54
   br label %_ZN6google8protobuf8internal12_GLOBAL__N_118MakeFastFieldEntryERKNS1_17TailCallTableInfo14FieldEntryInfoERKNS3_12FieldOptionsERKNS3_14MessageOptionsE.exit.i
 
-bb.dc:                                            ; preds = %.noexc106
+bb.dc:                                            ; preds = %.noexc104
   %i.qu = getelementptr inbounds nuw i8, ptr %i.lm, i64 1
   %i.qv = load i8, ptr %i.qu, align 1, !noalias !171
   %i.qw = and i8 %i.qv, 32
@@ -297,8 +297,8 @@ bb.de:                                            ; preds = %bb.dc
   %i.rb = select i1 %i.qz, i8 49, i8 50
   br label %_ZN6google8protobuf8internal12_GLOBAL__N_118MakeFastFieldEntryERKNS1_17TailCallTableInfo14FieldEntryInfoERKNS3_12FieldOptionsERKNS3_14MessageOptionsE.exit.i
 
-bb.df:                                            ; preds = %.noexc104
-  br i1 %i.qc, label %bb.dg, label %bb.dh
+bb.df:                                            ; preds = %.noexc105
+  br i1 %i.qd, label %bb.dg, label %bb.dh
 
 bb.dg:                                            ; preds = %bb.df
   %i.rc = getelementptr inbounds nuw i8, ptr %i.lm, i64 4
@@ -325,8 +325,8 @@ bb.dj:                                            ; preds = %bb.dh
   %i.rn = select i1 %i.rl, i8 55, i8 56
   br label %_ZN6google8protobuf8internal12_GLOBAL__N_118MakeFastFieldEntryERKNS1_17TailCallTableInfo14FieldEntryInfoERKNS3_12FieldOptionsERKNS3_14MessageOptionsE.exit.i
 
-bb.dk:                                            ; preds = %.noexc104
-  br i1 %i.qc, label %bb.dl, label %bb.dm
+bb.dk:                                            ; preds = %.noexc105
+  br i1 %i.qd, label %bb.dl, label %bb.dm
 
 bb.dl:                                            ; preds = %bb.dk
   %i.ro = getelementptr inbounds nuw i8, ptr %i.lm, i64 4
@@ -677,8 +677,8 @@ bb.fm:                                            ; preds = %.noexc107
   unreachable
 
 _ZN6google8protobuf8internal12_GLOBAL__N_118MakeFastFieldEntryERKNS1_17TailCallTableInfo14FieldEntryInfoERKNS3_12FieldOptionsERKNS3_14MessageOptionsE.exit.i: ; preds = %bb.fk, %bb.fj, %bb.fh, %bb.fg, %bb.fd, %bb.fc, %bb.fa, %bb.ez, %bb.ex, %bb.ew, %bb.ev, %bb.et, %bb.er, %bb.ep, %bb.eo, %bb.el, %bb.ek, %bb.ei, %bb.eg, %bb.ee, %bb.ed, %bb.dz, %bb.dy, %bb.dw, %bb.du, %bb.ds, %bb.dr, %bb.do, %bb.dn, %bb.dl, %bb.dj, %bb.di, %bb.dg, %bb.de, %bb.dd, %bb.db, %bb.da, %bb.cz, %bb.cx, %bb.ct, %bb.cs, %bb.cq, %bb.cm, %bb.cl, %bb.cj, %bb.ch, %bb.cg, %bb.ce, %bb.cc, %bb.cb, %bb.bz, %bb.bx, %bb.bw, %bb.bu, %bb.bs, %bb.br, %bb.bp, %bb.bn, %bb.bm, %bb.bk, %bb.bi, %bb.bh, %bb.bf
-  %.sroa.51.0.i = phi i8 [ %i.lo, %bb.bf ], [ %i.lo, %bb.bi ], [ %i.lo, %bb.bh ], [ %i.lo, %bb.bk ], [ %i.lo, %bb.bn ], [ %i.lo, %bb.bm ], [ %i.lo, %bb.bp ], [ %i.lo, %bb.bs ], [ %i.lo, %bb.br ], [ %i.lo, %bb.bu ], [ %i.lo, %bb.bx ], [ %i.lo, %bb.bw ], [ %i.lo, %bb.bz ], [ %i.lo, %bb.cc ], [ %i.lo, %bb.cb ], [ %i.lo, %bb.ce ], [ %i.lo, %bb.ch ], [ %i.lo, %bb.cg ], [ %i.lo, %bb.cj ], [ %i.lo, %bb.cm ], [ %i.lo, %bb.cl ], [ %i.lo, %bb.cq ], [ %i.lo, %bb.ct ], [ %i.lo, %bb.cs ], [ %14, %bb.dg ], [ %14, %bb.dj ], [ %14, %bb.di ], [ %14, %bb.dl ], [ %14, %bb.do ], [ %14, %bb.dn ], [ %i.lo, %bb.db ], [ %i.lo, %bb.de ], [ %i.lo, %bb.dd ], [ %i.lo, %bb.cx ], [ %i.lo, %bb.da ], [ %i.lo, %bb.cz ], [ %i.lo, %bb.dw ], [ %i.lo, %bb.dz ], [ %i.lo, %bb.dy ], [ %i.lo, %bb.ds ], [ %i.lo, %bb.dr ], [ %i.lo, %bb.du ], [ %i.lo, %bb.ei ], [ %i.lo, %bb.el ], [ %i.lo, %bb.ek ], [ %i.lo, %bb.ee ], [ %i.lo, %bb.ed ], [ %i.lo, %bb.eg ], [ %i.lo, %bb.et ], [ %i.lo, %bb.ew ], [ %i.lo, %bb.ev ], [ %i.lo, %bb.ep ], [ %i.lo, %bb.eo ], [ %i.lo, %bb.er ], [ %i.lo, %bb.ex ], [ %i.lo, %bb.fa ], [ %i.lo, %bb.ez ], [ %i.lo, %bb.fd ], [ %i.lo, %bb.fc ], [ %i.lo, %bb.fh ], [ %i.lo, %bb.fg ], [ %i.lo, %bb.fk ], [ %i.lo, %bb.fj ]
-  %.0.ph.i.i = phi i8 [ %i.lv, %bb.bf ], [ %i.md, %bb.bi ], [ %i.mc, %bb.bh ], [ %i.mi, %bb.bk ], [ %i.mq, %bb.bn ], [ %i.mp, %bb.bm ], [ %i.mv, %bb.bp ], [ %i.nd, %bb.bs ], [ %i.nc, %bb.br ], [ %i.ni, %bb.bu ], [ %i.nq, %bb.bx ], [ %i.np, %bb.bw ], [ %i.nv, %bb.bz ], [ %i.od, %bb.cc ], [ %i.oc, %bb.cb ], [ %i.oi, %bb.ce ], [ %i.oq, %bb.ch ], [ %i.op, %bb.cg ], [ %i.ov, %bb.cj ], [ %i.pd, %bb.cm ], [ %i.pc, %bb.cl ], [ %i.po, %bb.cq ], [ %i.pw, %bb.ct ], [ %i.pv, %bb.cs ], [ %i.rf, %bb.dg ], [ %i.rn, %bb.dj ], [ %i.rm, %bb.di ], [ %i.rr, %bb.dl ], [ %i.rz, %bb.do ], [ %i.ry, %bb.dn ], [ %i.qt, %bb.db ], [ %i.rb, %bb.de ], [ %i.ra, %bb.dd ], [ %i.qh, %bb.cx ], [ %i.qp, %bb.da ], [ %i.qo, %bb.cz ], [ %i.sy, %bb.dw ], [ %i.tg, %bb.dz ], [ %i.tf, %bb.dy ], [ %i.sk, %bb.ds ], [ %i.sj, %bb.dr ], [ %i.sr, %bb.du ], [ %i.uh, %bb.ei ], [ %i.up, %bb.el ], [ %i.uo, %bb.ek ], [ %i.tt, %bb.ee ], [ %i.ts, %bb.ed ], [ %i.ua, %bb.eg ], [ %i.vo, %bb.et ], [ %i.vw, %bb.ew ], [ %i.vv, %bb.ev ], [ %i.va, %bb.ep ], [ %i.uz, %bb.eo ], [ %i.vh, %bb.er ], [ %i.we, %bb.ex ], [ %i.wm, %bb.fa ], [ %i.wl, %bb.ez ], [ %i.wo, %bb.fd ], [ %i.wn, %bb.fc ], [ %i.wz, %bb.fh ], [ %i.wy, %bb.fg ], [ %i.xb, %bb.fk ], [ %i.xa, %bb.fj ]
+  %.sroa.51.0.i = phi i8 [ %i.lo, %bb.bf ], [ %i.lo, %bb.bi ], [ %i.lo, %bb.bh ], [ %i.lo, %bb.bk ], [ %i.lo, %bb.bn ], [ %i.lo, %bb.bm ], [ %i.lo, %bb.bp ], [ %i.lo, %bb.bs ], [ %i.lo, %bb.br ], [ %i.lo, %bb.bu ], [ %i.lo, %bb.bx ], [ %i.lo, %bb.bw ], [ %i.lo, %bb.bz ], [ %i.lo, %bb.cc ], [ %i.lo, %bb.cb ], [ %i.lo, %bb.ce ], [ %i.lo, %bb.ch ], [ %i.lo, %bb.cg ], [ %i.lo, %bb.cj ], [ %i.lo, %bb.cm ], [ %i.lo, %bb.cl ], [ %i.lo, %bb.cq ], [ %i.lo, %bb.ct ], [ %i.lo, %bb.cs ], [ %15, %bb.dl ], [ %15, %bb.do ], [ %15, %bb.dn ], [ %15, %bb.dg ], [ %15, %bb.dj ], [ %15, %bb.di ], [ %i.lo, %bb.db ], [ %i.lo, %bb.de ], [ %i.lo, %bb.dd ], [ %i.lo, %bb.cx ], [ %i.lo, %bb.da ], [ %i.lo, %bb.cz ], [ %i.lo, %bb.dw ], [ %i.lo, %bb.dz ], [ %i.lo, %bb.dy ], [ %i.lo, %bb.ds ], [ %i.lo, %bb.dr ], [ %i.lo, %bb.du ], [ %i.lo, %bb.ei ], [ %i.lo, %bb.el ], [ %i.lo, %bb.ek ], [ %i.lo, %bb.ee ], [ %i.lo, %bb.ed ], [ %i.lo, %bb.eg ], [ %i.lo, %bb.et ], [ %i.lo, %bb.ew ], [ %i.lo, %bb.ev ], [ %i.lo, %bb.ep ], [ %i.lo, %bb.eo ], [ %i.lo, %bb.er ], [ %i.lo, %bb.ex ], [ %i.lo, %bb.fa ], [ %i.lo, %bb.ez ], [ %i.lo, %bb.fd ], [ %i.lo, %bb.fc ], [ %i.lo, %bb.fh ], [ %i.lo, %bb.fg ], [ %i.lo, %bb.fk ], [ %i.lo, %bb.fj ]
+  %.0.ph.i.i = phi i8 [ %i.lv, %bb.bf ], [ %i.md, %bb.bi ], [ %i.mc, %bb.bh ], [ %i.mi, %bb.bk ], [ %i.mq, %bb.bn ], [ %i.mp, %bb.bm ], [ %i.mv, %bb.bp ], [ %i.nd, %bb.bs ], [ %i.nc, %bb.br ], [ %i.ni, %bb.bu ], [ %i.nq, %bb.bx ], [ %i.np, %bb.bw ], [ %i.nv, %bb.bz ], [ %i.od, %bb.cc ], [ %i.oc, %bb.cb ], [ %i.oi, %bb.ce ], [ %i.oq, %bb.ch ], [ %i.op, %bb.cg ], [ %i.ov, %bb.cj ], [ %i.pd, %bb.cm ], [ %i.pc, %bb.cl ], [ %i.po, %bb.cq ], [ %i.pw, %bb.ct ], [ %i.pv, %bb.cs ], [ %i.rr, %bb.dl ], [ %i.rz, %bb.do ], [ %i.ry, %bb.dn ], [ %i.rf, %bb.dg ], [ %i.rn, %bb.dj ], [ %i.rm, %bb.di ], [ %i.qt, %bb.db ], [ %i.rb, %bb.de ], [ %i.ra, %bb.dd ], [ %i.qh, %bb.cx ], [ %i.qp, %bb.da ], [ %i.qo, %bb.cz ], [ %i.sy, %bb.dw ], [ %i.tg, %bb.dz ], [ %i.tf, %bb.dy ], [ %i.sk, %bb.ds ], [ %i.sj, %bb.dr ], [ %i.sr, %bb.du ], [ %i.uh, %bb.ei ], [ %i.up, %bb.el ], [ %i.uo, %bb.ek ], [ %i.tt, %bb.ee ], [ %i.ts, %bb.ed ], [ %i.ua, %bb.eg ], [ %i.vo, %bb.et ], [ %i.vw, %bb.ew ], [ %i.vv, %bb.ev ], [ %i.va, %bb.ep ], [ %i.uz, %bb.eo ], [ %i.vh, %bb.er ], [ %i.we, %bb.ex ], [ %i.wm, %bb.fa ], [ %i.wl, %bb.ez ], [ %i.wo, %bb.fd ], [ %i.wn, %bb.fc ], [ %i.wz, %bb.fh ], [ %i.wy, %bb.fg ], [ %i.xb, %bb.fk ], [ %i.xa, %bb.fj ]
   %i.xd = getelementptr inbounds nuw i8, ptr %i.ji, i64 12
   %i.xe = load float, ptr %i.xd, align 4, !tbaa !56, !noalias !171 ; 2 uses
   store i8 %.0.ph.i.i, ptr %i.le, align 16, !tbaa !168
@@ -922,7 +922,7 @@ bb.ga:                                            ; preds = %bb.ar
           cleanup
   br label %bb.gv
 
-.loopexit:                                        ; preds = %bb.bb, %bb.be, %bb.bj, %bb.bo, %bb.bt, %bb.by, %bb.cd, %bb.ci, %bb.cn, %bb.co, %_ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescriptorE.exit.i.i, %_ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescriptorE.exit.thread1.i.i, %_ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescriptorE.exit.thread.i.i, %.noexc102, %bb.cv, %bb.cw, %16
+.loopexit:                                        ; preds = %bb.bb, %bb.be, %bb.bj, %bb.bo, %bb.bt, %bb.by, %bb.cd, %bb.ci, %bb.cn, %bb.co, %_ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescriptorE.exit.i.i, %_ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescriptorE.exit.thread1.i.i, %_ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescriptorE.exit.thread.i.i, %.noexc102, %_ZN6google8protobuf8internal12_GLOBAL__N_116GetEnumRangeInfoEPKNS0_15FieldDescriptorERh.exit.thread.i.i, %bb.cv, %bb.cw
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %bb.gu

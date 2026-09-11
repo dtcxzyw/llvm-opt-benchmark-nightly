@@ -205,12 +205,13 @@ bb.ch:                                            ; preds = %.critedge.i
 
 bb.ci:                                            ; preds = %.critedge.i
   %i.apw = and i32 %i.apo, 1015821
-  %.not4.i.i = icmp eq i32 %i.apw, 32768
-  %7 = select i1 %.not4.i.i, i32 4, i32 5
+  %7 = icmp ne i32 %i.apw, 32768
+  %8 = zext i1 %7 to i32
+  %9 = or disjoint i32 %8, 4
   br label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.ci, %bb.ch, %bb.cg
-  %.sink.i.i = phi i32 [ %7, %bb.ci ], [ %i.apv, %bb.ch ], [ %i.apt, %bb.cg ] ; 2 uses
+  %.sink.i.i = phi i32 [ %9, %bb.ci ], [ %i.apv, %bb.ch ], [ %i.apt, %bb.cg ] ; 2 uses
   store i32 %.sink.i.i, ptr %i.bt, align 4, !tbaa !206
   br label %_ZNK12_GLOBAL__N_116X86MCCodeEmitter19emitVEXOpcodePrefixEiRKN4llvm6MCInstERKNS1_15MCSubtargetInfoERNS1_15SmallVectorImplIcEE.exit
 

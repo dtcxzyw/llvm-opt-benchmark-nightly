@@ -202,8 +202,7 @@ bb.p:                                             ; preds = %bb.e, %bb.f, %bb.g,
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !35
 
 ._crit_edge:                                      ; preds = %bb.p
-  %3 = icmp eq i32 %.155, 0
-  %4 = select i1 %3, i32 0, i32 524288
+  %3 = shl nuw nsw i32 %.155, 19
   %i.x = icmp eq i32 %.1, 0
   %i.y = select i1 %i.x, i32 65, i32 193
   switch i32 %i.u, label %bb.t [
@@ -256,7 +255,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ak = select i1 %i.aj, i32 512, i32 1024
   %i.al = or disjoint i32 %i.y, %i.ak
   %i.am = select i1 %i.ag, i32 0, i32 %i.al
-  %i.an = or disjoint i32 %4, %i.am
+  %i.an = or disjoint i32 %3, %i.am
   %i.ao = tail call i32 (ptr, i32, ...) @open(ptr noundef nonnull %0, i32 noundef %i.an, i32 noundef 438) #15 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   store i32 %i.ao, ptr %i.ap, align 4, !tbaa !24

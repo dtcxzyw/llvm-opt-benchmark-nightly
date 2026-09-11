@@ -204,9 +204,9 @@ bb.av:                                            ; preds = %bb.au, %bb.aj
 bb.aw:                                            ; preds = %bb.av
   %i.gf = load i32, ptr %i.fk, align 4
   %i.gg = getelementptr i8, ptr %i.fk, i64 4
-  %.val89 = load i16, ptr %i.gg, align 4          ; 2 uses
+  %.val89 = load i16, ptr %i.gg, align 4          ; 3 uses
   %i.gh = zext i16 %.val89 to i32                 ; 2 uses
-  %i.gi = icmp ult i16 %.val89, -32767            ; 2 uses
+  %i.gi = icmp ult i16 %.val89, -32767
   %i.gj = add nsw i32 %i.gh, -32768
   %i.gk = select i1 %i.gi, i32 %i.gh, i32 %i.gj
   %i.gl = getelementptr i8, ptr %i.fk, i64 6
@@ -217,7 +217,8 @@ bb.aw:                                            ; preds = %bb.av
   %i.go = zext i16 %.val87 to i64
   %i.gp = shl nuw nsw i64 %i.go, 32
   %i.gq = or disjoint i64 %i.gp, %i.gn
-  %i.gr = select i1 %i.gi, i32 1, i32 2
+  %5 = icmp ugt i16 %.val89, -32768
+  %i.gr = select i1 %5, i32 2, i32 1
   tail call void @ext4_es_insert_extent(ptr noundef %1, i32 noundef %i.gf, i32 noundef %i.gk, i64 noundef %i.gq, i32 noundef %i.gr, i1 noundef zeroext false) #14
   br label %ext4_split_extent.exit.thread
 

@@ -205,16 +205,16 @@ bb.e:                                             ; preds = %RSTRING_END.exit99
   br i1 %.not92, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph133
-  %i.ac = zext i8 %i.ab to i32                    ; 2 uses
-  %i.ad = zext i8 %i.aa to i32                    ; 2 uses
-  %i.ae = add i8 %i.aa, -91
-  %i.af = icmp ult i8 %i.ae, -26
-  %2 = or i32 %i.ad, 32
-  %3 = select i1 %i.af, i32 %i.ad, i32 %2         ; 2 uses
-  %i.ag = add i8 %i.ab, -91
-  %i.ah = icmp ult i8 %i.ag, -26
-  %4 = or i32 %i.ac, 32
-  %5 = select i1 %i.ah, i32 %i.ac, i32 %4         ; 2 uses
+  %i.ac = zext i8 %i.ab to i32
+  %i.ad = zext i8 %i.aa to i32
+  %i.ae = add i8 %i.aa, -65
+  %i.af = icmp ult i8 %i.ae, 26
+  %2 = select i1 %i.af, i32 32, i32 0
+  %3 = or i32 %2, %i.ad                           ; 2 uses
+  %i.ag = add i8 %i.ab, -65
+  %i.ah = icmp ult i8 %i.ag, 26
+  %4 = select i1 %i.ah, i32 32, i32 0
+  %5 = or i32 %4, %i.ac                           ; 2 uses
   %.not93 = icmp eq i32 %3, %5
   br i1 %.not93, label %.thread, label %bb.g
 
@@ -241,23 +241,23 @@ bb.h:                                             ; preds = %bb.e, %RSTRING_END.
   %.167129 = phi ptr [ %i.bq, %bb.o ], [ %i.r, %bb.h ] ; 4 uses
   %.170128 = phi ptr [ %i.bo, %bb.o ], [ %i.i, %bb.h ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
-  %i.as = call i32 @rb_enc_ascget(ptr noundef %.170128, ptr noundef nonnull %i.l, ptr noundef nonnull %i.a, ptr noundef nonnull %i.c) #28 ; 4 uses
+  %i.as = call i32 @rb_enc_ascget(ptr noundef %.170128, ptr noundef nonnull %i.l, ptr noundef nonnull %i.a, ptr noundef nonnull %i.c) #28 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
-  %i.at = call i32 @rb_enc_ascget(ptr noundef %.167129, ptr noundef nonnull %i.u, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #28 ; 4 uses
+  %i.at = call i32 @rb_enc_ascget(ptr noundef %.167129, ptr noundef nonnull %i.u, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #28 ; 3 uses
   %i.au = icmp sgt i32 %i.as, -1
   %i.av = icmp sgt i32 %i.at, -1
   %or.cond = select i1 %i.au, i1 %i.av, i1 false
   br i1 %or.cond, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %.lr.ph
-  %i.aw = add nsw i32 %i.as, -91
-  %i.ax = icmp ult i32 %i.aw, -26
-  %6 = or i32 %i.as, 32
-  %7 = select i1 %i.ax, i32 %i.as, i32 %6         ; 2 uses
-  %i.ay = add nsw i32 %i.at, -91
-  %i.az = icmp ult i32 %i.ay, -26
-  %8 = or i32 %i.at, 32
-  %9 = select i1 %i.az, i32 %i.at, i32 %8         ; 2 uses
+  %i.aw = add nsw i32 %i.as, -65
+  %i.ax = icmp ult i32 %i.aw, 26
+  %6 = select i1 %i.ax, i32 32, i32 0
+  %7 = or i32 %6, %i.as                           ; 2 uses
+  %i.ay = add nsw i32 %i.at, -65
+  %i.az = icmp ult i32 %i.ay, 26
+  %8 = select i1 %i.az, i32 32, i32 0
+  %9 = or i32 %8, %i.at                           ; 2 uses
   %.not91 = icmp eq i32 %7, %9
   br i1 %.not91, label %._crit_edge, label %bb.j
 

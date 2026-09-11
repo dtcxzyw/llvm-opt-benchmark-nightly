@@ -204,17 +204,15 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 4
   %i.kl = load i32, ptr %i.kk, align 4, !tbaa !206, !noalias !482
   %i.km = load i32, ptr %i.kj, align 8, !noalias !482 ; 2 uses
-  %24 = lshr i32 %i.km, 26
-  %25 = lshr i32 %i.km, 24
-  %.lobit.i.i.peel.i.i = and i32 %25, 1
-  %i.kn = xor i32 %.lobit.i.i.peel.i.i, 1
-  %i.ko = and i32 %i.kn, %24
-  %.not107.i.peel.i.i = icmp eq i32 %i.ko, 0
   store ptr null, ptr %i.de, align 8, !tbaa !214, !alias.scope !780, !noalias !482
-  %26 = select i1 %.not107.i.peel.i.i, i32 33554432, i32 100663296
+  %24 = shl i32 %i.km, 2
+  %.lobit.i.i.peel.i.i = and i32 %24, 67108864
+  %i.kn = xor i32 %.lobit.i.i.peel.i.i, 67108864
+  %i.ko = and i32 %i.kn, %i.km
+  %25 = or disjoint i32 %i.ko, 33554432
   store i32 %i.kl, ptr %i.df, align 4, !tbaa !206, !alias.scope !780, !noalias !482
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dg, i8 0, i64 16, i1 false), !alias.scope !780, !noalias !482
-  store i32 %26, ptr %22, align 8, !alias.scope !780, !noalias !482
+  store i32 %25, ptr %22, align 8, !alias.scope !780, !noalias !482
   call void @_ZN4llvm12MachineInstr10addOperandERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.jz, ptr noundef nonnull align 8 dereferenceable(32) %22) #17, !noalias !482
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #17, !noalias !482
   br i1 %i.gd, label %.loopexit.i.i, label %bb.ag
@@ -265,17 +263,15 @@ bb.af:                                            ; preds = %bb.ad
   %i.ky = getelementptr inbounds nuw i8, ptr %i.kw, i64 36
   %i.kz = load i32, ptr %i.ky, align 4, !tbaa !206, !noalias !482
   %i.la = load i32, ptr %i.kx, align 8, !noalias !482 ; 2 uses
-  %27 = lshr i32 %i.la, 26
-  %28 = lshr i32 %i.la, 24
-  %.lobit.i.i.i.i = and i32 %28, 1
-  %i.lb = xor i32 %.lobit.i.i.i.i, 1
-  %i.lc = and i32 %i.lb, %27
-  %.not107.i.i.i = icmp eq i32 %i.lc, 0
   store ptr null, ptr %i.de, align 8, !tbaa !214, !alias.scope !780, !noalias !482
-  %29 = select i1 %.not107.i.i.i, i32 33554432, i32 100663296
+  %26 = shl i32 %i.la, 2
+  %.lobit.i.i.i.i = and i32 %26, 67108864
+  %i.lb = xor i32 %.lobit.i.i.i.i, 67108864
+  %i.lc = and i32 %i.lb, %i.la
+  %27 = or disjoint i32 %i.lc, 33554432
   store i32 %i.kz, ptr %i.df, align 4, !tbaa !206, !alias.scope !780, !noalias !482
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dg, i8 0, i64 16, i1 false), !alias.scope !780, !noalias !482
-  store i32 %29, ptr %22, align 8, !alias.scope !780, !noalias !482
+  store i32 %27, ptr %22, align 8, !alias.scope !780, !noalias !482
   call void @_ZN4llvm12MachineInstr10addOperandERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.jz, ptr noundef nonnull align 8 dereferenceable(32) %22) #17, !noalias !482
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #17, !noalias !482
   br label %bb.ag

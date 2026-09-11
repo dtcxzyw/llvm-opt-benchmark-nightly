@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c
   %i.t = tail call ptr @X509_get_issuer_name(ptr noundef %4) #11
   %i.u = tail call ptr @X509_CRL_get_issuer(ptr noundef nonnull %3) #11
-  %i.v = tail call i32 @X509_NAME_cmp(ptr noundef %i.t, ptr noundef %i.u) #11
+  %i.v = tail call i32 @X509_NAME_cmp(ptr noundef %i.t, ptr noundef %i.u) #11 ; 2 uses
   %.not27 = icmp eq i32 %i.v, 0
   br i1 %.not27, label %bb.i, label %bb.h
 
@@ -218,12 +218,11 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !141
   %i.ab = lshr i32 %i.aa, 1
   %i.ac = and i32 %i.ab, 256
-  %5 = or disjoint i32 %i.ac, %.044
-  %spec.select = xor i32 %5, 256                  ; 2 uses
-  %6 = tail call i32 @ossl_x509_check_crl_time(ptr noundef nonnull %0, ptr noundef nonnull %3, i32 noundef 0)
-  %.not28 = icmp eq i32 %6, 0
-  %i.ad = or disjoint i32 %spec.select, 64
-  %.2 = select i1 %.not28, i32 %spec.select, i32 %i.ad ; 7 uses
+  %5 = tail call i32 @ossl_x509_check_crl_time(ptr noundef nonnull %0, ptr noundef nonnull %3, i32 noundef 0)
+  %6 = shl nuw nsw i32 %5, 6
+  %7 = or disjoint i32 %i.ac, %6
+  %i.ad = or disjoint i32 %7, %.044
+  %.2 = xor i32 %i.ad, 256                        ; 6 uses
   %i.ae = tail call ptr @X509_CRL_get_issuer(ptr noundef nonnull %3) #11 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 180
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !60 ; 2 uses
@@ -239,14 +238,12 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 136 ; 3 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !243
   %i.aq = tail call i32 @X509_check_akid(ptr noundef %i.an, ptr noundef %i.ap) #11
-  %7 = icmp ne i32 %i.aq, 0
-  %8 = and i32 %.2, 32
+  %8 = or i32 %i.aq, %i.v
   %.not41.i = icmp eq i32 %8, 0
-  %or.cond = select i1 %7, i1 true, i1 %.not41.i
-  br i1 %or.cond, label %bb.k, label %bb.j
+  br i1 %.not41.i, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.ar = or i32 %.2, 28
+  %i.ar = or disjoint i32 %.2, 28
   store ptr %i.an, ptr %1, align 8, !tbaa !95
   br label %crl_akid_check.exit
 
@@ -273,7 +270,7 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %i.bb, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.bc = or i32 %.2, 12
+  %i.bc = or disjoint i32 %.2, 12
   store ptr %i.aw, ptr %1, align 8, !tbaa !95
   br label %crl_akid_check.exit
 
@@ -316,7 +313,7 @@ bb.o:                                             ; preds = %.lr.ph48.i
 
 bb.p:                                             ; preds = %bb.o
   store ptr %i.bq, ptr %1, align 8, !tbaa !95
-  %i.bw = or i32 %.2, 4
+  %i.bw = or disjoint i32 %.2, 4
   br label %crl_akid_check.exit
 
 bb.q:                                             ; preds = %bb.o, %.lr.ph48.i

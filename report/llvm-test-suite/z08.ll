@@ -202,9 +202,8 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader, %bb.ap
-  %3 = phi i32 [ 15, %bb.ap ], [ 16, %.preheader ] ; 2 uses
   %i.aq = phi i1 [ false, %bb.ap ], [ true, %.preheader ]
-  %indvars.iv = phi i64 [ 1, %bb.ap ], [ 0, %.preheader ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %bb.ap ], [ 0, %.preheader ] ; 5 uses
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 3 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !12
   %.not78 = icmp eq ptr %i.as, null
@@ -217,8 +216,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not79, label %bb.ak, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %4 = zext nneg i32 %3 to i64
-  %i.av = getelementptr inbounds nuw i8, ptr @zz_lengths, i64 %4
+  %3 = sub nuw nsw i64 16, %indvars.iv            ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr @zz_lengths, i64 %3
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !8   ; 2 uses
   %i.ax = zext i8 %i.aw to i32                    ; 2 uses
   store i32 %i.ax, ptr @zz_size, align 4, !tbaa !7
@@ -242,7 +241,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.k, %bb.l
   %i.bf = phi ptr [ %i.bd, %bb.k ], [ %i.ba, %bb.l ] ; 25 uses
-  %i.bg = trunc nuw nsw i32 %3 to i8
+  %i.bg = trunc nuw nsw i64 %3 to i8
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 32
   store i8 %i.bg, ptr %i.bh, align 8, !tbaa !8
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 16 ; 7 uses

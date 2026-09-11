@@ -204,12 +204,6 @@ bb.j:                                             ; preds = %bb.i
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !330 ; 15 uses
   %i.eg = getelementptr inbounds nuw [32 x i8], ptr %i.ec, i64 %.0.i10.i
   %i.eh = load i32, ptr %i.eg, align 8            ; 2 uses
-  %7 = lshr i32 %i.eh, 26
-  %8 = lshr i32 %i.eh, 24
-  %.lobit.i.i.i = and i32 %8, 1
-  %9 = xor i32 %.lobit.i.i.i, 1
-  %10 = and i32 %9, %7
-  %.not.i.i18 = icmp eq i32 %10, 0
   %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.013.022.i, i64 72
   %.sroa.031.0.copyload.i.i = load ptr, ptr %i.ei, align 8, !tbaa !377 ; 2 uses
   %i.ej = call noundef ptr @_ZNK4llvm12MachineInstr5getMFEv(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.013.022.i) #17 ; 3 uses
@@ -482,7 +476,11 @@ bb.ag:                                            ; preds = %_ZN4llvm7BuildMIERN
   call void @_ZN4llvm15MachineFunction22moveAdditionalCallInfoEPKNS_12MachineInstrES3_(ptr noundef nonnull align 8 dereferenceable(1065) %i.ej, ptr noundef nonnull %.sroa.013.022.i, ptr noundef nonnull %.sroa.phi.sroa.speculated.i.i) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
   store ptr null, ptr %i.x, align 8, !tbaa !335, !alias.scope !393
-  %11 = select i1 %.not.i.i18, i32 33554432, i32 100663296
+  %7 = shl i32 %i.eh, 2
+  %8 = and i32 %7, 67108864
+  %9 = xor i32 %8, 67108864
+  %10 = and i32 %9, %i.eh
+  %11 = or disjoint i32 %10, 33554432
   store i32 %i.ef, ptr %i.y, align 4, !tbaa !330, !alias.scope !393
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.z, i8 0, i64 16, i1 false), !alias.scope !393
   store i32 %11, ptr %6, align 8, !alias.scope !393

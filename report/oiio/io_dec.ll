@@ -69,50 +69,38 @@ bb.e:                                             ; preds = %bb.a, %bb.d
 
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @CustomSetup(ptr noundef %0) #1 {
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %3 = load ptr, ptr %2, align 8, !tbaa !13       ; 20 uses
-  %4 = load ptr, ptr %3, align 8, !tbaa !23
-  %5 = load i32, ptr %4, align 8, !tbaa !25       ; 6 uses
-  %6 = icmp ugt i32 %5, 10                        ; 2 uses
-  switch i32 %5, label %WebPIsAlphaMode.exit [
-    i32 12, label %WebPIsAlphaMode.exit.thread
-    i32 5, label %WebPIsAlphaMode.exit.thread
-    i32 4, label %WebPIsAlphaMode.exit.thread
-    i32 3, label %WebPIsAlphaMode.exit.thread
-    i32 1, label %WebPIsAlphaMode.exit.thread
-  ]
-
-WebPIsAlphaMode.exit.thread:                      ; preds = %1, %1, %1, %1, %1
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 80 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, i8 0, i64 32, i1 false)
-  br label %bb.a
-
-WebPIsAlphaMode.exit:                             ; preds = %1
-  %8 = add i32 %5, -11
-  %narrow.i.i = icmp ult i32 %8, -4               ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 80 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %9, i8 0, i64 32, i1 false)
-  %spec.select78 = select i1 %narrow.i.i, i32 12, i32 11
-  br label %bb.a
-
-bb.a:                                             ; preds = %WebPIsAlphaMode.exit, %WebPIsAlphaMode.exit.thread
-  %10 = phi ptr [ %7, %WebPIsAlphaMode.exit.thread ], [ %9, %WebPIsAlphaMode.exit ] ; 3 uses
-  %.not77 = phi i1 [ false, %WebPIsAlphaMode.exit.thread ], [ %narrow.i.i, %WebPIsAlphaMode.exit ] ; 3 uses
-  %11 = phi i32 [ 11, %WebPIsAlphaMode.exit.thread ], [ %spec.select78, %WebPIsAlphaMode.exit ]
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 104
-  %.in = getelementptr inbounds nuw i8, ptr %3, i64 40
+bb.a:
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %2 = load ptr, ptr %1, align 8, !tbaa !13       ; 19 uses
+  %3 = load ptr, ptr %2, align 8, !tbaa !23
+  %4 = load i32, ptr %3, align 8, !tbaa !25       ; 6 uses
+  %5 = icmp ugt i32 %4, 10                        ; 2 uses
+  %switch.tableidx = add i32 %4, -1               ; 2 uses
+  %6 = icmp ult i32 %switch.tableidx, 12
+  %switch.maskindex = trunc i32 %switch.tableidx to i16
+  %switch.shifted = lshr i16 2077, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond73 = select i1 %6, i1 %switch.lobit, i1 false
+  %7 = add i32 %4, -7
+  %narrow.i.i = icmp ult i32 %7, 4
+  %narrow = or i1 %or.cond73, %narrow.i.i         ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 5 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 104
+  %.in = getelementptr inbounds nuw i8, ptr %2, i64 40
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %8, i8 0, i64 32, i1 false)
   %i.d = load ptr, ptr %.in, align 8, !tbaa !73
-  %i.e = tail call i32 @WebPIoInitFromOptions(ptr noundef %i.d, ptr noundef nonnull %0, i32 noundef %11) #7
+  %9 = select i1 %narrow, i32 11, i32 12
+  %i.e = tail call i32 @WebPIoInitFromOptions(ptr noundef %i.d, ptr noundef nonnull %0, i32 noundef %9) #7
   %.not51 = icmp eq i32 %i.e, 0
   br i1 %.not51, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add i32 %5, -11
-  %narrow.i = icmp ult i32 %i.f, -4
-  %or.cond72 = or i1 %narrow.i, %.not77
-  br i1 %or.cond72, label %bb.d, label %bb.c
+  %i.f = add i32 %4, -7
+  %narrow.i = icmp ult i32 %i.f, 4
+  %or.cond69.not = and i1 %narrow.i, %narrow
+  br i1 %or.cond69.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @WebPInitUpsamplers() #7
@@ -125,7 +113,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not53, label %bb.r, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = load ptr, ptr %3, align 8, !tbaa !23     ; 9 uses
+  %i.i = load ptr, ptr %2, align 8, !tbaa !23     ; 9 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !25   ; 2 uses
   %switch.tableidx83 = add i32 %i.j, -1           ; 2 uses
   %i.k = icmp ult i32 %switch.tableidx83, 12
@@ -140,7 +128,7 @@ bb.e:                                             ; preds = %bb.d
   %i.n = load i32, ptr %i.m, align 4, !tbaa !26   ; 11 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.p = load i32, ptr %i.o, align 8, !tbaa !75   ; 7 uses
-  br i1 %6, label %WebPIsAlphaMode.exit.i59, label %WebPIsAlphaMode.exit.i
+  br i1 %5, label %WebPIsAlphaMode.exit.i59, label %WebPIsAlphaMode.exit.i
 
 WebPIsAlphaMode.exit.i:                           ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
@@ -162,7 +150,7 @@ WebPIsAlphaMode.exit.i:                           ; preds = %bb.e
   %i.af = add nuw nsw i64 %i.ae, 31
   %i.ag = add nsw i64 %i.af, %i.ad
   %i.ah = tail call ptr @WebPSafeMalloc(i64 noundef 1, i64 noundef %i.ag) #7 ; 8 uses
-  store ptr %i.ah, ptr %10, align 8, !tbaa !27
+  store ptr %i.ah, ptr %8, align 8, !tbaa !27
   %i.ai = icmp eq ptr %i.ah, null
   br i1 %i.ai, label %.critedge, label %bb.f
 
@@ -173,17 +161,17 @@ bb.f:                                             ; preds = %WebPIsAlphaMode.exi
   %i.am = add i64 %i.al, 31
   %i.an = and i64 %i.am, -32
   %i.ao = inttoptr i64 %i.an to ptr               ; 5 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 48
+  %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 48
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !28
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 104
-  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
   store ptr %i.aq, ptr %i.ar, align 8, !tbaa !29
   %i.as = getelementptr inbounds nuw i8, ptr %i.ao, i64 208
-  %i.at = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   store ptr %i.as, ptr %i.at, align 8, !tbaa !30
   %i.au = getelementptr inbounds nuw i8, ptr %i.ao, i64 312
   %i.av = select i1 %.not.i60.not, ptr %i.au, ptr null
-  %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 2 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   store ptr %i.av, ptr %i.aw, align 8, !tbaa !31
   %i.ax = load i32, ptr %i.q, align 4, !tbaa !14
   %i.ay = load i32, ptr %i.u, align 8, !tbaa !15
@@ -230,7 +218,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   store ptr @EmitRescaledAlphaRGB, ptr %i.b, align 8, !tbaa !21
-  %i.bs = load ptr, ptr %3, align 8, !tbaa !23
+  %i.bs = load ptr, ptr %2, align 8, !tbaa !23
   %i.bt = load i32, ptr %i.bs, align 8, !tbaa !25 ; 2 uses
   %switch.selectcmp.case1.i = icmp eq i32 %i.bt, 5
   %switch.selectcmp.case2.i = icmp eq i32 %i.bt, 10
@@ -261,33 +249,33 @@ WebPIsAlphaMode.exit.i59:                         ; preds = %bb.e
   %i.cm = add nsw i64 %i.cl, %i.ci
   %i.cn = shl nsw i64 %i.cm, 2
   %i.co = shl nsw i64 %i.ch, 3
-  %spec.select80 = select i1 %.not.i60.not, i64 447, i64 343
-  %spec.select81 = select i1 %.not.i60.not, i64 %i.co, i64 0
-  %.0.i62 = add nsw i64 %i.cn, %spec.select81     ; 2 uses
-  %i.cp = add nsw i64 %.0.i62, %spec.select80
+  %spec.select80 = select i1 %.not.i60.not, i64 %i.co, i64 0
+  %.0.i61 = add nsw i64 %i.cn, %spec.select80     ; 2 uses
+  %10 = select i1 %.not.i60.not, i64 447, i64 343
+  %i.cp = add nsw i64 %.0.i61, %10
   %i.cq = tail call ptr @WebPSafeMalloc(i64 noundef 1, i64 noundef %i.cp) #7 ; 5 uses
-  store ptr %i.cq, ptr %10, align 8, !tbaa !27
+  store ptr %i.cq, ptr %8, align 8, !tbaa !27
   %i.cr = icmp eq ptr %i.cq, null
   br i1 %i.cr, label %.critedge, label %bb.l
 
 bb.l:                                             ; preds = %WebPIsAlphaMode.exit.i59
   %i.cs = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.ct = getelementptr inbounds i8, ptr %i.cq, i64 %.0.i62
+  %i.ct = getelementptr inbounds i8, ptr %i.cq, i64 %.0.i61
   %i.cu = ptrtoint ptr %i.ct to i64
   %i.cv = add i64 %i.cu, 31
   %i.cw = and i64 %i.cv, -32
   %i.cx = inttoptr i64 %i.cw to ptr               ; 5 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %3, i64 48
+  %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 48
   store ptr %i.cx, ptr %i.cy, align 8, !tbaa !28
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cx, i64 104
-  %i.da = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
   store ptr %i.cz, ptr %i.da, align 8, !tbaa !29
   %i.db = getelementptr inbounds nuw i8, ptr %i.cx, i64 208
-  %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   store ptr %i.db, ptr %i.dc, align 8, !tbaa !30
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cx, i64 312
   %i.de = select i1 %.not.i60.not, ptr %i.dd, ptr null
-  %i.df = getelementptr inbounds nuw i8, ptr %3, i64 72 ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   store ptr %i.de, ptr %i.df, align 8, !tbaa !31
   %i.dg = load i32, ptr %i.bz, align 4, !tbaa !14
   %i.dh = load i32, ptr %i.cd, align 8, !tbaa !15
@@ -343,7 +331,7 @@ bb.q:                                             ; preds = %bb.p
   br label %.critedge
 
 bb.r:                                             ; preds = %bb.d
-  br i1 %6, label %.thread67.a, label %bb.s
+  br i1 %5, label %.thread67.a, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   tail call void @WebPInitSamplers() #7
@@ -361,41 +349,41 @@ bb.t:                                             ; preds = %bb.s
   %i.ep = add nsw i32 %i.eo, %i.em
   %i.eq = sext i32 %i.ep to i64
   %i.er = tail call ptr @WebPSafeMalloc(i64 noundef 1, i64 noundef %i.eq) #7 ; 4 uses
-  store ptr %i.er, ptr %10, align 8, !tbaa !27
+  store ptr %i.er, ptr %8, align 8, !tbaa !27
   %.not56 = icmp eq ptr %i.er, null
   br i1 %.not56, label %.critedge, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.es = ashr i32 %i.en, 1
-  %i.et = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.et = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %i.er, ptr %i.et, align 8, !tbaa !43
   %i.eu = load i32, ptr %i.el, align 4, !tbaa !14
   %i.ev = sext i32 %i.eu to i64
   %i.ew = getelementptr inbounds i8, ptr %i.er, i64 %i.ev ; 2 uses
-  %i.ex = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.ex = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %i.ew, ptr %i.ex, align 8, !tbaa !44
   %i.ey = sext i32 %i.es to i64
   %i.ez = getelementptr inbounds i8, ptr %i.ew, i64 %i.ey
-  %i.fa = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.fa = getelementptr inbounds nuw i8, ptr %2, i64 24
   store ptr %i.ez, ptr %i.fa, align 8, !tbaa !45
   store ptr @EmitFancyRGB, ptr %i.a, align 8, !tbaa !20
   tail call void @WebPInitUpsamplers() #7
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.s
-  br i1 %.not77, label %.critedge, label %bb.w
+  br i1 %narrow, label %bb.w, label %.critedge
 
 .thread67.a:                                      ; preds = %bb.r
   store ptr @EmitYUV, ptr %i.a, align 8, !tbaa !20
-  br i1 %.not77, label %.critedge, label %.thread68
+  br i1 %narrow, label %.thread68, label %.critedge
 
 .thread68:                                        ; preds = %.thread67.a
   store ptr @EmitAlphaYUV, ptr %i.b, align 8, !tbaa !21
   br label %.critedge
 
 bb.w:                                             ; preds = %bb.v
-  %i.fb = icmp eq i32 %5, 5
-  %i.fc = icmp eq i32 %5, 10
+  %i.fb = icmp eq i32 %4, 5
+  %i.fc = icmp eq i32 %4, 10
   %or.cond = or i1 %i.fb, %i.fc
   %i.fd = select i1 %or.cond, ptr @EmitAlphaRGBA4444, ptr @EmitAlphaRGB
   store ptr %i.fd, ptr %i.b, align 8, !tbaa !21

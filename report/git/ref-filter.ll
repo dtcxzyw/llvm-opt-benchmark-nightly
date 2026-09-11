@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/git/original/ref-filter?download=true
-inline.NumInlined: 234
-inline.NumDeleted: 69
+inline.NumInlined: 236
+inline.NumDeleted: 70
 loop-unroll.NumCompletelyUnrolled: 31
 loop-unroll.NumRuntimeUnrolled: 3
 loop-unroll.NumUnrolled: 34
@@ -205,7 +205,7 @@ declare i32 @refs_for_each_ref_in_prefixes(ptr noundef, ptr noundef, ptr noundef
 define internal fastcc noundef ptr @apply_ref_filter(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !236  ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !237  ; 2 uses
   %i.c = and i32 %i.b, 8
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.b
 
 _.exit:                                           ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.e, %bb.c ], [ @.str.150, %bb.b ]
-  %i.f = load ptr, ptr %0, align 8, !tbaa !237
+  %i.f = load ptr, ptr %0, align 8, !tbaa !238
   tail call void (ptr, ...) @warning(ptr noundef %.0.i, ptr noundef %i.f) #24
   br label %match_points_at.exit
 
@@ -241,12 +241,12 @@ bb.f:                                             ; preds = %bb.e
 
 _.exit71:                                         ; preds = %bb.e, %bb.f
   %.0.i70 = phi ptr [ %i.i, %bb.f ], [ @.str.151, %bb.e ]
-  %i.j = load ptr, ptr %0, align 8, !tbaa !237
+  %i.j = load ptr, ptr %0, align 8, !tbaa !238
   tail call void (ptr, ...) @warning(ptr noundef %.0.i70, ptr noundef %i.j) #24
   br label %match_points_at.exit
 
 bb.g:                                             ; preds = %bb.d
-  %i.k = load ptr, ptr %0, align 8, !tbaa !237    ; 6 uses
+  %i.k = load ptr, ptr %0, align 8, !tbaa !238    ; 6 uses
   %i.l = getelementptr i8, ptr %1, i64 108        ; 3 uses
   %.val = load i32, ptr %i.l, align 4, !tbaa !92  ; 5 uses
   switch i32 %.val, label %bb.h [
@@ -313,13 +313,13 @@ bb.l:                                             ; preds = %filter_ref_kind.exi
 
 bb.m:                                             ; preds = %filter_ref_kind.exit, %bb.l
   %.0 = phi i32 [ %.0.i7280, %bb.l ], [ 128, %filter_ref_kind.exit ]
-  %i.ab = load ptr, ptr %0, align 8, !tbaa !237   ; 4 uses
+  %i.ab = load ptr, ptr %0, align 8, !tbaa !238   ; 5 uses
   %i.ac = load ptr, ptr %1, align 8, !tbaa !94    ; 4 uses
   %.not.i = icmp eq ptr %i.ac, null
   br i1 %.not.i, label %filter_pattern_match.exit.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !49
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !49 ; 2 uses
   %.not10.i = icmp eq ptr %i.ad, null
   br i1 %.not10.i, label %filter_pattern_match.exit.thread, label %bb.o
 
@@ -329,31 +329,68 @@ bb.o:                                             ; preds = %bb.n
   %i.ag = and i8 %i.af, 2
   %.not11.i = icmp eq i8 %i.ag, 0
   %i.ah = lshr i8 %i.af, 2
-  %i.ai = and i8 %i.ah, 1
-  %2 = zext nneg i8 %i.ai to i32                  ; 2 uses
-  br i1 %.not11.i, label %bb.q, label %bb.p
+  %i.ai = and i8 %i.ah, 1                         ; 2 uses
+  br i1 %.not11.i, label %filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %3 = tail call fastcc i32 @match_name_as_path(ptr noundef nonnull %i.ac, ptr noundef %i.ab, i32 noundef %2)
-  br label %filter_pattern_match.exit.a
+  %2 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ab) #25
+  %3 = trunc i64 %2 to i32
+  %4 = or disjoint i8 %i.ai, 2
+  %spec.select.i.i = zext nneg i8 %4 to i32
+  br label %.lr.ph.i.i
 
-bb.q:                                             ; preds = %bb.o
-  %4 = tail call fastcc i32 @match_pattern(ptr noundef nonnull %i.ac, ptr noundef %i.ab, i32 noundef %2)
-  br label %filter_pattern_match.exit.a
+5:                                                ; preds = %filter_pattern_match.exit.a
+  %6 = getelementptr inbounds nuw i8, ptr %.02434.i.i, i64 8 ; 2 uses
+  %7 = load ptr, ptr %6, align 8, !tbaa !49       ; 2 uses
+  %.not28.i.i = icmp eq ptr %7, null
+  br i1 %.not28.i.i, label %match_points_at.exit, label %.lr.ph.i.i, !llvm.loop !235
 
-filter_pattern_match.exit.a:                      ; preds = %bb.p, %bb.q
-  %.0.i73 = phi i32 [ %3, %bb.p ], [ %4, %bb.q ]
-  %.not55.a = icmp eq i32 %.0.i73, 0
-  br i1 %.not55.a, label %match_points_at.exit, label %filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge
+.lr.ph.i.i:                                       ; preds = %5, %bb.p
+  %8 = phi ptr [ %7, %5 ], [ %i.ad, %bb.p ]       ; 4 uses
+  %.02434.i.i = phi ptr [ %6, %5 ], [ %i.ac, %bb.p ]
+  %9 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %8) #25 ; 2 uses
+  %10 = trunc i64 %9 to i32
+  %.not29.i.i = icmp sgt i32 %10, %3
+  br i1 %.not29.i.i, label %filter_pattern_match.exit.a, label %11
 
-filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge: ; preds = %filter_pattern_match.exit.a
-  %.pre87 = load ptr, ptr %0, align 8, !tbaa !237
-  br label %filter_pattern_match.exit.thread
+11:                                               ; preds = %.lr.ph.i.i
+  %sext.i.i = shl i64 %9, 32                      ; 2 uses
+  %12 = ashr exact i64 %sext.i.i, 32              ; 2 uses
+  %13 = tail call i32 @strncmp(ptr noundef nonnull %i.ab, ptr noundef nonnull %8, i64 noundef %12) #25
+  %.not30.i.i = icmp eq i32 %13, 0
+  br i1 %.not30.i.i, label %14, label %filter_pattern_match.exit.a
 
-filter_pattern_match.exit.thread:                 ; preds = %filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge, %bb.m, %bb.n
-  %5 = phi ptr [ %.pre87, %filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge ], [ %i.ab, %bb.m ], [ %i.ab, %bb.n ] ; 2 uses
+14:                                               ; preds = %11
+  %15 = getelementptr inbounds i8, ptr %i.ab, i64 %12
+  %16 = load i8, ptr %15, align 1, !tbaa !22
+  switch i8 %16, label %bb.q [
+    i8 0, label %filter_pattern_match.exit.thread
+    i8 47, label %filter_pattern_match.exit.thread
+  ]
+
+bb.q:                                             ; preds = %14
+  %sext31.i.i = add i64 %sext.i.i, -4294967296
+  %17 = ashr exact i64 %sext31.i.i, 32
+  %18 = getelementptr inbounds i8, ptr %8, i64 %17
+  %19 = load i8, ptr %18, align 1, !tbaa !22
+  %20 = icmp eq i8 %19, 47
+  br i1 %20, label %filter_pattern_match.exit.thread, label %filter_pattern_match.exit.a
+
+filter_pattern_match.exit.a:                      ; preds = %bb.q, %11, %.lr.ph.i.i
+  %21 = tail call i32 @wildmatch(ptr noundef nonnull %8, ptr noundef nonnull %i.ab, i32 noundef %spec.select.i.i) #24
+  %.not55.a = icmp eq i32 %21, 0
+  br i1 %.not55.a, label %filter_pattern_match.exit.thread, label %5
+
+filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge: ; preds = %bb.o
+  %22 = zext nneg i8 %i.ai to i32
+  %23 = tail call fastcc i32 @match_pattern(ptr noundef nonnull %i.ac, ptr noundef %i.ab, i32 noundef %22)
+  %.not55 = icmp eq i32 %23, 0
+  br i1 %.not55, label %match_points_at.exit, label %filter_pattern_match.exit.thread
+
+filter_pattern_match.exit.thread:                 ; preds = %filter_pattern_match.exit.a, %bb.q, %14, %14, %bb.n, %bb.m, %filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge
+  %24 = load ptr, ptr %0, align 8, !tbaa !238     ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !238
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !239
   %.not.i74 = icmp eq i64 %i.ak, 0
   br i1 %.not.i74, label %filter_exclude_match.exit.thread, label %bb.r
 
@@ -363,36 +400,79 @@ bb.r:                                             ; preds = %filter_pattern_matc
   %i.an = load i8, ptr %i.am, align 8             ; 2 uses
   %i.ao = and i8 %i.an, 2
   %.not8.i = icmp eq i8 %i.ao, 0
-  %i.ap = load ptr, ptr %i.al, align 8, !tbaa !93 ; 2 uses
+  %i.ap = load ptr, ptr %i.al, align 8, !tbaa !93 ; 3 uses
   %i.aq = lshr i8 %i.an, 2
-  %i.ar = and i8 %i.aq, 1
-  %6 = zext nneg i8 %i.ar to i32                  ; 2 uses
-  br i1 %.not8.i, label %bb.t, label %bb.s
+  %i.ar = and i8 %i.aq, 1                         ; 2 uses
+  br i1 %.not8.i, label %filter_exclude_match.exit, label %25
 
-bb.s:                                             ; preds = %bb.r
-  %7 = tail call fastcc i32 @match_name_as_path(ptr noundef %i.ap, ptr noundef %5, i32 noundef %6)
-  br label %filter_exclude_match.exit
+25:                                               ; preds = %bb.r
+  %26 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %24) #25
+  %27 = trunc i64 %26 to i32
+  %28 = or disjoint i8 %i.ar, 2
+  %spec.select.i.i75 = zext nneg i8 %28 to i32
+  %29 = load ptr, ptr %i.ap, align 8, !tbaa !49   ; 2 uses
+  %.not2833.i.i = icmp eq ptr %29, null
+  br i1 %.not2833.i.i, label %filter_exclude_match.exit.thread, label %.lr.ph.i.i76
 
-bb.t:                                             ; preds = %bb.r
-  %8 = tail call fastcc i32 @match_pattern(ptr noundef %i.ap, ptr noundef %5, i32 noundef %6)
-  br label %filter_exclude_match.exit
+30:                                               ; preds = %bb.t
+  %31 = getelementptr inbounds nuw i8, ptr %.02434.i.i77, i64 8 ; 2 uses
+  %32 = load ptr, ptr %31, align 8, !tbaa !49     ; 2 uses
+  %.not28.i.i82 = icmp eq ptr %32, null
+  br i1 %.not28.i.i82, label %filter_exclude_match.exit.thread, label %.lr.ph.i.i76, !llvm.loop !235
 
-filter_exclude_match.exit:                        ; preds = %bb.s, %bb.t
-  %.0.i75 = phi i32 [ %7, %bb.s ], [ %8, %bb.t ]
-  %.not56 = icmp eq i32 %.0.i75, 0
+.lr.ph.i.i76:                                     ; preds = %25, %30
+  %33 = phi ptr [ %32, %30 ], [ %29, %25 ]        ; 4 uses
+  %.02434.i.i77 = phi ptr [ %31, %30 ], [ %i.ap, %25 ]
+  %34 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %33) #25 ; 2 uses
+  %35 = trunc i64 %34 to i32
+  %.not29.i.i78 = icmp sgt i32 %35, %27
+  br i1 %.not29.i.i78, label %bb.t, label %36
+
+36:                                               ; preds = %.lr.ph.i.i76
+  %sext.i.i79 = shl i64 %34, 32                   ; 2 uses
+  %37 = ashr exact i64 %sext.i.i79, 32            ; 2 uses
+  %38 = tail call i32 @strncmp(ptr noundef nonnull %24, ptr noundef nonnull %33, i64 noundef %37) #25
+  %.not30.i.i80 = icmp eq i32 %38, 0
+  br i1 %.not30.i.i80, label %39, label %bb.t
+
+39:                                               ; preds = %36
+  %40 = getelementptr inbounds i8, ptr %24, i64 %37
+  %41 = load i8, ptr %40, align 1, !tbaa !22
+  switch i8 %41, label %bb.s [
+    i8 0, label %match_points_at.exit
+    i8 47, label %match_points_at.exit
+  ]
+
+bb.s:                                             ; preds = %39
+  %sext31.i.i84 = add i64 %sext.i.i79, -4294967296
+  %42 = ashr exact i64 %sext31.i.i84, 32
+  %43 = getelementptr inbounds i8, ptr %33, i64 %42
+  %44 = load i8, ptr %43, align 1, !tbaa !22
+  %45 = icmp eq i8 %44, 47
+  br i1 %45, label %match_points_at.exit, label %bb.t
+
+bb.t:                                             ; preds = %bb.s, %36, %.lr.ph.i.i76
+  %46 = tail call i32 @wildmatch(ptr noundef nonnull %33, ptr noundef nonnull %24, i32 noundef %spec.select.i.i75) #24
+  %.not32.not.i.i81 = icmp eq i32 %46, 0
+  br i1 %.not32.not.i.i81, label %match_points_at.exit, label %30
+
+filter_exclude_match.exit:                        ; preds = %bb.r
+  %47 = zext nneg i8 %i.ar to i32
+  %48 = tail call fastcc i32 @match_pattern(ptr noundef %i.ap, ptr noundef %24, i32 noundef %47)
+  %.not56 = icmp eq i32 %48, 0
   br i1 %.not56, label %filter_exclude_match.exit.thread, label %match_points_at.exit
 
-filter_exclude_match.exit.thread:                 ; preds = %filter_pattern_match.exit.thread, %filter_exclude_match.exit
+filter_exclude_match.exit.thread:                 ; preds = %30, %25, %filter_pattern_match.exit.thread, %filter_exclude_match.exit
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.at = load i64, ptr %i.as, align 8, !tbaa !239
+  %i.at = load i64, ptr %i.as, align 8, !tbaa !240
   %.not57 = icmp eq i64 %i.at, 0
   br i1 %.not57, label %match_points_at.exit.thread, label %bb.u
 
 bb.u:                                             ; preds = %filter_exclude_match.exit.thread
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !240 ; 2 uses
-  %i.ax = load ptr, ptr %0, align 8, !tbaa !237
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !241 ; 2 uses
+  %i.ax = load ptr, ptr %0, align 8, !tbaa !238
   %i.ay = tail call i32 @oid_array_lookup(ptr noundef nonnull %i.au, ptr noundef %i.aw) #24
   %i.az = icmp sgt i32 %i.ay, -1
   br i1 %i.az, label %match_points_at.exit.thread, label %bb.v
@@ -459,14 +539,14 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !241
+  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !242
   %.not63 = icmp eq i32 %i.bx, 0
   br i1 %.not63, label %bb.ai, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.z, %match_points_at.exit.thread
   %i.by = load ptr, ptr @the_repository, align 8, !tbaa !47
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !240
+  %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !241
   %i.cb = tail call ptr @lookup_commit_reference_gently(ptr noundef %i.by, ptr noundef %i.ca, i32 noundef 1) #24 ; 5 uses
   %.not64 = icmp eq ptr %i.cb, null
   br i1 %.not64, label %match_points_at.exit, label %bb.ae
@@ -497,21 +577,21 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ag, %bb.ah, %bb.ac
   %.048 = phi ptr [ %i.cb, %bb.ah ], [ %i.cb, %bb.ag ], [ null, %bb.ac ]
-  %i.ck = load ptr, ptr %0, align 8, !tbaa !237
+  %i.ck = load ptr, ptr %0, align 8, !tbaa !238
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !240
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !241
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.co = load ptr, ptr %i.cn, align 8, !tbaa !242
+  %i.co = load ptr, ptr %i.cn, align 8, !tbaa !243
   %i.cp = tail call fastcc ptr @new_ref_array_item(ptr noundef %i.ck, ptr noundef %i.cm, ptr noundef %i.co) ; 5 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 96
   store ptr %.048, ptr %i.cq, align 8, !tbaa !78
-  %i.cr = load i32, ptr %i.a, align 8, !tbaa !236
+  %i.cr = load i32, ptr %i.a, align 8, !tbaa !237
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cp, i64 80
   store i32 %i.cr, ptr %i.cs, align 8, !tbaa !14
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cp, i64 84
   store i32 %.0, ptr %i.ct, align 4, !tbaa !14
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !243 ; 2 uses
+  %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !244 ; 2 uses
   %.not.i77 = icmp eq ptr %i.cv, null
   br i1 %.not.i77, label %xstrdup_or_null.exit, label %bb.aj
 
@@ -525,71 +605,14 @@ xstrdup_or_null.exit:                             ; preds = %bb.ai, %bb.aj
   store ptr %i.cx, ptr %i.cy, align 8, !tbaa !49
   br label %match_points_at.exit
 
-match_points_at.exit:                             ; preds = %.lr.ph.i, %bb.ah, %bb.af, %bb.ad, %filter_exclude_match.exit, %filter_pattern_match.exit.a, %bb.l, %xstrdup_or_null.exit, %_.exit71, %_.exit
-  %.049 = phi ptr [ null, %_.exit ], [ null, %_.exit71 ], [ null, %filter_pattern_match.exit.a ], [ null, %bb.af ], [ %i.cp, %xstrdup_or_null.exit ], [ null, %bb.ad ], [ null, %bb.ah ], [ null, %filter_exclude_match.exit ], [ null, %bb.l ], [ null, %.lr.ph.i ]
+match_points_at.exit:                             ; preds = %5, %bb.t, %39, %39, %bb.s, %.lr.ph.i, %bb.ah, %bb.af, %bb.ad, %filter_exclude_match.exit, %filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge, %bb.l, %xstrdup_or_null.exit, %_.exit71, %_.exit
+  %.049 = phi ptr [ null, %_.exit ], [ null, %_.exit71 ], [ null, %filter_pattern_match.exit.filter_pattern_match.exit.thread_crit_edge ], [ null, %bb.af ], [ %i.cp, %xstrdup_or_null.exit ], [ null, %bb.ad ], [ null, %.lr.ph.i ], [ null, %filter_exclude_match.exit ], [ null, %bb.l ], [ null, %bb.ah ], [ null, %bb.t ], [ null, %bb.s ], [ null, %39 ], [ null, %39 ], [ null, %5 ]
   ret ptr %.049
 }
 
 declare void @warning(ptr noundef, ...) local_unnamed_addr #4
 
 declare i32 @commit_contains(ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #4
-
-; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 0, 2) i32 @match_name_as_path(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
-  %4 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #25
-  %5 = trunc i64 %4 to i32
-  %.not = icmp eq i32 %2, 0
-  %spec.select = select i1 %.not, i32 2, i32 3
-  %6 = load ptr, ptr %0, align 8, !tbaa !49       ; 2 uses
-  %.not2833 = icmp eq ptr %6, null
-  br i1 %.not2833, label %.critedge, label %.lr.ph
-
-7:                                                ; preds = %24
-  %8 = getelementptr inbounds nuw i8, ptr %.02434, i64 8 ; 2 uses
-  %9 = load ptr, ptr %8, align 8, !tbaa !49       ; 2 uses
-  %.not28 = icmp eq ptr %9, null
-  br i1 %.not28, label %.critedge, label %.lr.ph, !llvm.loop !244
-
-.lr.ph:                                           ; preds = %3, %7
-  %10 = phi ptr [ %9, %7 ], [ %6, %3 ]            ; 4 uses
-  %.02434 = phi ptr [ %8, %7 ], [ %0, %3 ]
-  %11 = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %10) #25 ; 2 uses
-  %12 = trunc i64 %11 to i32
-  %.not29 = icmp sgt i32 %12, %5
-  br i1 %.not29, label %24, label %13
-
-13:                                               ; preds = %.lr.ph
-  %sext = shl i64 %11, 32                         ; 2 uses
-  %14 = ashr exact i64 %sext, 32                  ; 2 uses
-  %15 = tail call i32 @strncmp(ptr noundef nonnull %1, ptr noundef nonnull %10, i64 noundef %14) #25
-  %.not30 = icmp eq i32 %15, 0
-  br i1 %.not30, label %16, label %24
-
-16:                                               ; preds = %13
-  %17 = getelementptr inbounds i8, ptr %1, i64 %14
-  %18 = load i8, ptr %17, align 1, !tbaa !22
-  switch i8 %18, label %19 [
-    i8 0, label %.critedge
-    i8 47, label %.critedge
-  ]
-
-19:                                               ; preds = %16
-  %sext31 = add i64 %sext, -4294967296
-  %20 = ashr exact i64 %sext31, 32
-  %21 = getelementptr inbounds i8, ptr %10, i64 %20
-  %22 = load i8, ptr %21, align 1, !tbaa !22
-  %23 = icmp eq i8 %22, 47
-  br i1 %23, label %.critedge, label %24
-
-24:                                               ; preds = %19, %13, %.lr.ph
-  %25 = tail call i32 @wildmatch(ptr noundef nonnull %10, ptr noundef nonnull %1, i32 noundef %spec.select) #24
-  %.not32.not = icmp eq i32 %25, 0
-  br i1 %.not32.not, label %.critedge, label %7
-
-.critedge:                                        ; preds = %24, %7, %16, %16, %19, %3
-  %.2 = phi i32 [ 0, %3 ], [ 0, %7 ], [ 1, %16 ], [ 1, %19 ], [ 1, %16 ], [ 1, %24 ]
-  ret i32 %.2
-}
 
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @match_pattern(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
@@ -994,16 +1017,16 @@ begin_hunk_1_@llvm.assume
 !232 = !{!44, !41, i64 136}
 !233 = distinct !{!233, !27}
 !234 = distinct !{!234, !27}
-!235 = !{!"reference", !16, i64 0, !16, i64 8, !41, i64 16, !41, i64 24, !11, i64 32}
-!236 = !{!235, !11, i64 32}
-!237 = !{!235, !16, i64 0}
-!238 = !{!91, !28, i64 24}
-!239 = !{!91, !28, i64 48}
-!240 = !{!235, !41, i64 16}
-!241 = !{!91, !11, i64 120}
-!242 = !{!235, !41, i64 24}
-!243 = !{!235, !16, i64 8}
-!244 = distinct !{!244, !27}
+!235 = distinct !{!235, !27}
+!236 = !{!"reference", !16, i64 0, !16, i64 8, !41, i64 16, !41, i64 24, !11, i64 32}
+!237 = !{!236, !11, i64 32}
+!238 = !{!236, !16, i64 0}
+!239 = !{!91, !28, i64 24}
+!240 = !{!91, !28, i64 48}
+!241 = !{!236, !41, i64 16}
+!242 = !{!91, !11, i64 120}
+!243 = !{!236, !41, i64 24}
+!244 = !{!236, !16, i64 8}
 !245 = distinct !{!245, !27}
 !246 = distinct !{!246, !27}
 !247 = distinct !{!247, !27}

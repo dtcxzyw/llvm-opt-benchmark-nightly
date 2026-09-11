@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = icmp eq i8 %i.a, 0
-  %3 = select i1 %2, i32 0, i32 8
+  %2 = shl nuw nsw i8 %i.a, 3
+  %3 = zext nneg i8 %2 to i32
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %bb.a, %bb.b

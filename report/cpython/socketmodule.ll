@@ -202,11 +202,11 @@ bb.a:
   %or.cond = or i1 %i.b, %i.a
   %i.c = getelementptr i8, ptr %0, i64 16         ; 4 uses
   %.not.i64 = icmp eq i32 %1, 0
-  %i.d = select i1 %.not.i64, i16 1, i16 4        ; 2 uses
+  %i.d = select i1 %.not.i64, i16 1, i16 4
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %.not13.i65 = icmp eq i32 %4, 0
-  %9 = or disjoint i16 %i.d, 8
-  %spec.select.i66 = select i1 %.not13.i65, i16 %i.d, i16 %9 ; 2 uses
+  %9 = trunc nuw nsw i32 %4 to i16
+  %10 = shl nuw nsw i16 %9, 3
+  %spec.select.i65 = or disjoint i16 %10, %i.d    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 4
   %.not61 = icmp eq ptr %5, null                  ; 7 uses
   %i.g = getelementptr i8, ptr %0, i64 40         ; 3 uses
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %.split90.us
 bb.c:                                             ; preds = %bb.b
   %i.j = load atomic i32, ptr %i.c monotonic, align 4
   store i32 %i.j, ptr %7, align 4, !tbaa !207
-  store i16 %spec.select.i66, ptr %i.e, align 4, !tbaa !208
+  store i16 %spec.select.i65, ptr %i.e, align 4, !tbaa !208
   %i.k = call i64 @_PyTime_AsMilliseconds(i64 noundef %6, i32 noundef 1) #11
   %i.l = call i64 @llvm.smax.i64(i64 %i.k, i64 -1)
   %spec.store.select1.i67.us = call i64 @llvm.smin.i64(i64 %i.l, i64 2147483647)
@@ -271,7 +271,7 @@ bb.g:                                             ; preds = %.thread.us, %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.w = load atomic i32, ptr %i.c monotonic, align 4
   store i32 %i.w, ptr %8, align 4, !tbaa !207
-  store i16 %spec.select.i66, ptr %i.f, align 4, !tbaa !208
+  store i16 %spec.select.i65, ptr %i.f, align 4, !tbaa !208
   %i.x = call i64 @_PyTime_AsMilliseconds(i64 noundef %.04174.us, i32 noundef 1) #11
   %i.y = call i64 @llvm.smax.i64(i64 %i.x, i64 -1)
   %spec.store.select1.i.us = call i64 @llvm.smin.i64(i64 %i.y, i64 2147483647)

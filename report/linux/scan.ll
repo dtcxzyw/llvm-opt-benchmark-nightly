@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.ae = and i8 %i.s, 3                          ; 2 uses
-  %i.af = icmp eq i8 %i.ae, 0                     ; 2 uses
+  %i.af = icmp eq i8 %i.ae, 0
   %i.ag = icmp ugt i8 %i.w, 15
   %or.cond.i = and i1 %i.af, %i.ag
   br i1 %or.cond.i, label %.split.us, label %.split
@@ -259,7 +259,7 @@ bb.f:                                             ; preds = %.split.split.us
   %i.az = trunc i16 %i.ay to i8
   %i.ba = and i8 %i.az, 15
   %.not30.i.us34 = icmp eq i8 %3, %i.ba
-  br i1 %.not30.i.us34, label %.critedge.loopexit.i.loopexit, label %bb.g
+  br i1 %.not30.i.us34, label %.critedge.loopexit.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.split.split.us
   %i.bb = getelementptr i8, ptr %.14364.i.us32, i64 %i.z
@@ -289,14 +289,10 @@ bb.g:                                             ; preds = %bb.f, %.split.split
   %.not.i = icmp samesign ult i64 %.be, %i.bi
   br i1 %.not.i, label %cfg80211_iter_rnr.exit, label %.lr.ph, !llvm.loop !3
 
-.critedge.loopexit.i.loopexit:                    ; preds = %bb.f
-  %7 = select i1 %i.af, i8 3, i8 2
-  br label %.critedge.loopexit.i
-
-.critedge.loopexit.i:                             ; preds = %.critedge.loopexit.i.loopexit, %.critedge.loopexit.i.split.us
-  %i.bj = phi i8 [ 3, %.critedge.loopexit.i.split.us ], [ %7, %.critedge.loopexit.i.loopexit ]
-  %.us-phi28 = phi i16 [ %i.ak, %.critedge.loopexit.i.split.us ], [ %i.ay, %.critedge.loopexit.i.loopexit ]
-  %.us-phi29 = phi i8 [ %i.at, %.critedge.loopexit.i.split.us ], [ 0, %.critedge.loopexit.i.loopexit ]
+.critedge.loopexit.i:                             ; preds = %bb.f, %.critedge.loopexit.i.split.us
+  %i.bj = phi i8 [ 3, %.critedge.loopexit.i.split.us ], [ 2, %bb.f ]
+  %.us-phi28 = phi i16 [ %i.ak, %.critedge.loopexit.i.split.us ], [ %i.ay, %bb.f ]
+  %.us-phi29 = phi i8 [ %i.at, %.critedge.loopexit.i.split.us ], [ 0, %bb.f ]
   %i.bk = lshr i16 %.us-phi28, 4
   %i.bl = trunc i16 %i.bk to i8
   br label %cfg80211_iter_rnr.exit

@@ -20,30 +20,22 @@ bb.a:
   %i.e = tail call fastcc i32 @idct_row(ptr noundef nonnull %i.d, ptr noundef nonnull @TAB26, i32 noundef 2260) ; 0 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.g = tail call fastcc i32 @idct_row(ptr noundef nonnull %i.f, ptr noundef nonnull @TAB35, i32 noundef 1203)
-  %.not = icmp eq i32 %i.g, 0
-  %spec.select = select i1 %.not, i32 7, i32 15   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.i = tail call fastcc i32 @idct_row(ptr noundef nonnull %i.h, ptr noundef nonnull @TAB04, i32 noundef 0)
-  %.not29 = icmp eq i32 %i.i, 0
-  %1 = or disjoint i32 %spec.select, 16
-  %.1 = select i1 %.not29, i32 %spec.select, i32 %1 ; 2 uses
+  %1 = shl nuw nsw i32 %i.i, 4
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.k = tail call fastcc i32 @idct_row(ptr noundef nonnull %i.j, ptr noundef nonnull @TAB35, i32 noundef 120)
-  %.not30 = icmp eq i32 %i.k, 0
-  %i.l = or disjoint i32 %.1, 32
-  %.2 = select i1 %.not30, i32 %.1, i32 %i.l      ; 2 uses
+  %2 = shl nuw nsw i32 %i.k, 5
+  %i.l = or disjoint i32 %2, %1
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.n = tail call fastcc i32 @idct_row(ptr noundef nonnull %i.m, ptr noundef nonnull @TAB26, i32 noundef 512)
-  %.not31 = icmp eq i32 %i.n, 0
-  %2 = or disjoint i32 %.2, 64
-  %.3 = select i1 %.not31, i32 %.2, i32 %2        ; 2 uses
+  %3 = shl nuw nsw i32 %i.n, 6
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.p = tail call fastcc i32 @idct_row(ptr noundef nonnull %i.o, ptr noundef nonnull @TAB17, i32 noundef 512)
-  %.not32 = icmp eq i32 %i.p, 0
-  %i.q = or i32 %.3, 128
-  %.4 = select i1 %.not32, i32 %.3, i32 %i.q      ; 2 uses
-  %3 = and i32 %.4, 240
-  %.not33 = icmp eq i32 %3, 0
+  %4 = shl nuw nsw i32 %i.p, 7
+  %i.q = or disjoint i32 %4, %3
+  %.4 = or disjoint i32 %i.q, %i.l
+  %.not33 = icmp eq i32 %.4, 0
   br i1 %.not33, label %bb.b, label %vector.body
 
 vector.body:                                      ; preds = %bb.a
@@ -141,8 +133,7 @@ vector.body:                                      ; preds = %bb.a
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %4 = and i32 %.4, 8
-  %.not34 = icmp eq i32 %4, 0
+  %.not34 = icmp eq i32 %i.g, 0
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %wide.load73 = load <8 x i16>, ptr %i.co, align 2, !tbaa !10
   %i.cp = sext <8 x i16> %wide.load73 to <8 x i32> ; 8 uses

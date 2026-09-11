@@ -204,18 +204,19 @@ bb.a:
 bb.b:                                             ; preds = %.split.i
   %i.m = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.021.0.i ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 72
-  %i.o = load i8, ptr %i.n, align 8, !range !7, !alias.scope !39, !noalias !40, !noundef !4
-  %.not.peel = icmp eq i8 %i.o, 0                 ; 2 uses
+  %i.o = load i8, ptr %i.n, align 8, !range !7, !alias.scope !39, !noalias !40, !noundef !4 ; 2 uses
   %spec.select.i.peel = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.021.0.i, i64 1) ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 73
   %i.q = load i8, ptr %i.p, align 1, !range !8, !alias.scope !39, !noalias !40, !noundef !4
   %i.r = load i8, ptr %i.h, align 1, !range !8, !alias.scope !39, !noalias !40, !noundef !4 ; 2 uses
-  %i.s = icmp eq i8 %i.q, %i.r
-  %or.cond.i.peel = and i1 %i.s, %.not.peel
+  %5 = icmp eq i8 %i.q, %i.r
+  %i.s = icmp eq i8 %i.o, 0
+  %or.cond.i.peel = and i1 %5, %i.s
   br i1 %or.cond.i.peel, label %.loopexit.split.i, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.b
-  %.sroa.022.0.i.peel = select i1 %.not.peel, i32 0, i32 2
+  %6 = shl nuw nsw i8 %i.o, 1
+  %.sroa.022.0.i.peel = zext nneg i8 %6 to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.peel.next

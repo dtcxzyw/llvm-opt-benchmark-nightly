@@ -45,8 +45,8 @@ bb.a:
 define hidden noundef zeroext i1 @_ZN17hb_raster_image_t9configureE18hb_raster_format_t19hb_raster_extents_t(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(56) %0, i32 noundef %1, ptr nofree noundef byval(%struct.hb_raster_extents_t) align 8 captures(none) %2) local_unnamed_addr #1 align 2 {
 bb.a:
   %or.cond = icmp ugt i32 %1, 1
-  %spec.store.select = select i1 %or.cond, i32 0, i32 %1 ; 2 uses
-  %.not = icmp eq i32 %spec.store.select, 0       ; 2 uses
+  %spec.store.select = select i1 %or.cond, i32 0, i32 %1 ; 3 uses
+  %.not = icmp eq i32 %spec.store.select, 0
   %i.a = select i1 %.not, i32 1, i32 4
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load i32, ptr %i.b, align 8, !tbaa !76   ; 2 uses
@@ -55,7 +55,7 @@ bb.a:
   br i1 %mul.ov, label %_ZN11hb_vector_tIhLb0EE12resize_dirtyEi.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = select i1 %.not, i32 0, i32 2
+  %3 = shl nuw nsw i32 %spec.store.select, 1
   %i.d = shl i32 %i.c, %3
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !77
@@ -458,8 +458,8 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 12
   %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !32 ; 2 uses
   %or.cond.i = icmp ugt i32 %1, 1
-  %spec.store.select.i = select i1 %or.cond.i, i32 0, i32 %1 ; 2 uses
-  %.not.i = icmp eq i32 %spec.store.select.i, 0   ; 2 uses
+  %spec.store.select.i = select i1 %or.cond.i, i32 0, i32 %1 ; 3 uses
+  %.not.i = icmp eq i32 %spec.store.select.i, 0
   %i.e = select i1 %.not.i, i32 1, i32 4
   %mul.i = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.e, i32 %.sroa.2.0.copyload)
   %mul.ov.i = extractvalue { i32, i1 } %mul.i, 1
@@ -468,7 +468,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.413.0.copyload = load i32, ptr %.sroa.413.0..sroa_idx, align 4, !tbaa !32
-  %3 = select i1 %.not.i, i32 0, i32 2
+  %3 = shl nuw nsw i32 %spec.store.select.i, 1
   %i.f = shl i32 %.sroa.2.0.copyload, %3
   %i.g = tail call i32 @llvm.umax.i32(i32 %.sroa.413.0.copyload, i32 %i.f) ; 2 uses
   %i.h = zext i32 %i.g to i64

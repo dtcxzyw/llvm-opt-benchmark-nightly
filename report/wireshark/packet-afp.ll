@@ -202,9 +202,9 @@ bb.a:
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %.not = icmp eq i32 %8, 0                       ; 3 uses
+  %.not = icmp eq i32 %8, 0                       ; 2 uses
   %i.b = shl nuw nsw i32 %7, 1
-  %9 = select i1 %.not, i32 1, i32 2
+  %9 = add nuw nsw i32 %8, 1
   %.not85 = icmp eq ptr %2, null
   %i.c = getelementptr i8, ptr %1, i64 416
   br label %bb.b
@@ -239,7 +239,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not85, label %bb.m, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = add nuw nsw i32 %.0, %9
+  %i.l = add nuw nsw i32 %9, %.0
   %.not86 = icmp eq i8 %i.k, 0
   %i.m = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.n = add i32 %i.l, %.08191                    ; 2 uses

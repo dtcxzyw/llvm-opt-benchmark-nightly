@@ -202,12 +202,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not5.i, label %redisNetClose.exit, label %redisNetClose.exit.sink.split
 
 bb.c:                                             ; preds = %bb.a
-  %.not = icmp eq i32 %1, 0
   %i.o = and i32 %i.e, -2049
-  %masksel = select i1 %.not, i32 2048, i32 0
-  %.0.a = or disjoint i32 %i.o, %masksel
+  %2 = shl nuw nsw i32 %1, 11
+  %.0.a = or disjoint i32 %i.o, %2
+  %.0 = xor i32 %.0.a, 2048
   %i.p = load i32, ptr %i.c, align 4, !tbaa !24
-  %i.q = tail call i32 (i32, i32, ...) @fcntl(i32 noundef %i.p, i32 noundef 4, i32 noundef %.0.a) #9
+  %i.q = tail call i32 (i32, i32, ...) @fcntl(i32 noundef %i.p, i32 noundef 4, i32 noundef %.0) #9
   %i.r = icmp eq i32 %i.q, -1
   br i1 %i.r, label %bb.d, label %redisNetClose.exit
 

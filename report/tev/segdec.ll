@@ -168,8 +168,7 @@ bb.j:                                             ; preds = %_getBool16.exit27
 
 bb.k:                                             ; preds = %bb.j
   %i.at = tail call fastcc i32 @_getBool16(ptr noundef nonnull %2)
-  %.not24 = icmp eq i32 %i.at, 0
-  %spec.select = select i1 %.not24, i32 4, i32 3
+  %spec.select = sub nuw nsw i32 4, %i.at
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.a

@@ -205,12 +205,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not70, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %3 = icmp eq i32 %2, 0
-  %4 = select i1 %3, i32 1, i32 2
+  %3 = add nuw nsw i32 %2, 1
   br label %common.ret118
 
 common.ret118:                                    ; preds = %bb.j, %bb.k, %bb.h, %.thread, %bb.m, %bb.o, %bb.i, %.preheader, %tailrecurse, %.split, %bb.l, %bb.p
-  %common.ret118.op = phi i32 [ %i.ap, %bb.p ], [ %i.p, %.preheader ], [ %4, %bb.o ], [ %.059.ph, %.thread ], [ %i.x, %bb.j ], [ 0, %bb.m ], [ %spec.select78, %bb.k ], [ %i.h, %bb.h ], [ %i.s, %bb.i ], [ 0, %tailrecurse ], [ 0, %.split ], [ 0, %bb.l ]
+  %common.ret118.op = phi i32 [ %i.ap, %bb.p ], [ %i.p, %.preheader ], [ %3, %bb.o ], [ %.059.ph, %.thread ], [ %i.x, %bb.j ], [ 0, %bb.m ], [ %spec.select78, %bb.k ], [ %i.h, %bb.h ], [ %i.s, %bb.i ], [ 0, %tailrecurse ], [ 0, %.split ], [ 0, %bb.l ]
   ret i32 %common.ret118.op
 
 bb.p:                                             ; preds = %bb.n

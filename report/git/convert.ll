@@ -205,16 +205,16 @@ git_path_check_encoding.exit:                     ; preds = %.thread73, %bb.r, %
 bb.v:                                             ; preds = %git_path_check_encoding.exit
   switch i32 %.pre89, label %text_eol_is_crlf.exit [
     i32 1, label %.thread85.sink.split
-    i32 -1, label %text_eol_is_crlf.exit.thread
+    i32 -1, label %3
   ]
+
+3:                                                ; preds = %bb.v
+  br label %.thread85.sink.split
 
 text_eol_is_crlf.exit:                            ; preds = %bb.v
   %i.be = load i32, ptr @core_eol, align 4, !tbaa !24
-  %.fr = freeze i32 %i.be
-  %.not87 = icmp eq i32 %.fr, 1
-  br i1 %.not87, label %.thread85.sink.split, label %text_eol_is_crlf.exit.thread
-
-text_eol_is_crlf.exit.thread:                     ; preds = %bb.v, %text_eol_is_crlf.exit
+  %4 = icmp eq i32 %i.be, 1
+  %5 = select i1 %4, i32 4, i32 3
   br label %.thread85.sink.split
 
 bb.w:                                             ; preds = %git_path_check_encoding.exit
@@ -233,8 +233,8 @@ bb.y:                                             ; preds = %bb.x
   %or.cond9 = select i1 %i.bf, i1 %i.bi, i1 false
   br i1 %or.cond9, label %.thread85.sink.split, label %.thread85
 
-.thread85.sink.split:                             ; preds = %bb.y, %bb.x, %bb.w, %bb.v, %text_eol_is_crlf.exit, %text_eol_is_crlf.exit.thread
-  %.sink97 = phi i32 [ 7, %bb.x ], [ 1, %bb.w ], [ 4, %bb.v ], [ 3, %text_eol_is_crlf.exit.thread ], [ 4, %text_eol_is_crlf.exit ], [ 6, %bb.y ]
+.thread85.sink.split:                             ; preds = %bb.y, %bb.x, %bb.w, %bb.v, %3, %text_eol_is_crlf.exit
+  %.sink97 = phi i32 [ 7, %bb.x ], [ 1, %bb.w ], [ %5, %text_eol_is_crlf.exit ], [ 4, %bb.v ], [ 3, %3 ], [ 6, %bb.y ]
   store i32 %.sink97, ptr %i.w, align 4, !tbaa !45
   br label %.thread85
 
@@ -637,8 +637,7 @@ bb.w:                                             ; preds = %.thread212, %.threa
 
 text_eol_is_crlf.exit.i.i:                        ; preds = %bb.w
   %i.be = load i32, ptr @core_eol, align 4, !tbaa !24
-  %.fr.i.i = freeze i32 %i.be
-  %.not.i.i = icmp eq i32 %.fr.i.i, 1
+  %.not.i.i = icmp eq i32 %i.be, 1
   br i1 %.not.i.i, label %output_eol.exit.thread.i, label %will_convert_lf_to_crlf.exit.thread
 
 bb.x:                                             ; preds = %.thread212
@@ -1041,8 +1040,7 @@ bb.z:                                             ; preds = %bb.y, %bb.y
 
 text_eol_is_crlf.exit.i.i:                        ; preds = %bb.z
   %i.cf = load i32, ptr @core_eol, align 4, !tbaa !24
-  %.fr.i.i = freeze i32 %i.cf
-  %.not.i.i65 = icmp eq i32 %.fr.i.i, 1
+  %.not.i.i65 = icmp eq i32 %i.cf, 1
   br i1 %.not.i.i65, label %.lr.ph.i.i60.preheader, label %crlf_to_worktree.exit
 
 bb.aa:                                            ; preds = %bb.y
@@ -1189,8 +1187,7 @@ bb.ap:                                            ; preds = %._crit_edge.i.i, %.
 
 text_eol_is_crlf.exit.i.i.i:                      ; preds = %bb.ap
   %i.du = load i32, ptr @core_eol, align 4, !tbaa !24
-  %.fr.i.i.i = freeze i32 %i.du
-  %.not.i.i.i = icmp ne i32 %.fr.i.i.i, 1
+  %.not.i.i.i = icmp ne i32 %i.du, 1
   %.not11.i.old.i = icmp eq i32 %.sroa.7.1.i, 0
   %or.cond62.i = select i1 %.not.i.i.i, i1 true, i1 %.not11.i.old.i
   br i1 %or.cond62.i, label %crlf_to_worktree.exit, label %bb.as
@@ -1516,8 +1513,7 @@ bb.i:                                             ; preds = %bb.h, %bb.h
 
 text_eol_is_crlf.exit.i:                          ; preds = %bb.i
   %i.w = load i32, ptr @core_eol, align 4, !tbaa !24
-  %.fr.i = freeze i32 %i.w
-  %.not.i11.a = icmp eq i32 %.fr.i, 1
+  %.not.i11.a = icmp eq i32 %i.w, 1
   br i1 %.not.i11.a, label %output_eol.exit.thread, label %output_eol.exit.thread23
 
 bb.j:                                             ; preds = %bb.h
@@ -1536,7 +1532,7 @@ output_eol.exit:                                  ; preds = %bb.j, %bb.k
   %i.aa = icmp eq i32 %i.z, 1
   br i1 %i.aa, label %output_eol.exit.thread, label %output_eol.exit.thread23
 
-output_eol.exit.thread:                           ; preds = %bb.h, %bb.h, %bb.h, %text_eol_is_crlf.exit.i, %bb.i, %output_eol.exit
+output_eol.exit.thread:                           ; preds = %text_eol_is_crlf.exit.i, %bb.h, %bb.h, %bb.h, %bb.i, %output_eol.exit
   %i.ab = tail call noundef ptr @xcalloc(i64 noundef 1, i64 noundef 16) #22 ; 4 uses
   store ptr @lf_to_crlf_vtbl, ptr %i.ab, align 8, !tbaa !136
   %.not.i12 = icmp eq ptr %.0, null

@@ -205,12 +205,13 @@ bb.bs:                                            ; preds = %bb.cj, %.lr.ph.i161
   %i.ko = getelementptr inbounds nuw [32 x i8], ptr %i.kl, i64 %.0132169.i ; 8 uses
   %.val158.i = load i32, ptr %i.ko, align 8, !tbaa !414 ; 2 uses
   %i.kp = and i32 %.val158.i, 12
-  %.not167.i = icmp eq i32 %i.kp, 0               ; 3 uses
-  %i.kq = add nuw nsw i64 %.0132169.i, 1          ; 3 uses
-  %15 = select i1 %.not167.i, i64 %.0132169.i, i64 %i.kq ; 3 uses
+  %15 = icmp ne i32 %i.kp, 0                      ; 3 uses
+  %i.kq = add nuw nsw i64 %.0132169.i, 1          ; 2 uses
+  %16 = zext i1 %15 to i64
+  %17 = add nuw nsw i64 %.0132169.i, %16          ; 3 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %i.ko, i64 20 ; 3 uses
   %i.ks = load i32, ptr %i.kr, align 4, !tbaa !417 ; 4 uses
-  %i.kt = getelementptr inbounds nuw [32 x i8], ptr %i.kl, i64 %15 ; 7 uses
+  %i.kt = getelementptr inbounds nuw [32 x i8], ptr %i.kl, i64 %17 ; 7 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 20 ; 3 uses
   %i.kv = load i32, ptr %i.ku, align 4, !tbaa !417 ; 3 uses
   %i.kw = and i32 %.val158.i, 16
@@ -231,7 +232,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.lh = sub nsw i32 0, %i.lg                    ; 3 uses
   %i.li = add i32 %i.kn, -1
   %i.lj = zext i32 %i.li to i64
-  %.not143.i = icmp samesign ult i64 %15, %i.lj
+  %.not143.i = icmp samesign ult i64 %17, %i.lj
   br i1 %.not143.i, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt
@@ -285,7 +286,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
 
 bb.cb:                                            ; preds = %.thread162.i
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  store i64 %15, ptr %6, align 8, !tbaa !734
+  store i64 %17, ptr %6, align 8, !tbaa !734
   %i.ma = sub nsw i32 %i.lf, %.0131165.i
   store i32 %i.ma, ptr %i.km, align 8, !tbaa !735
   %i.mb = load ptr, ptr %i.kk, align 8, !tbaa !350
@@ -297,7 +298,7 @@ bb.cb:                                            ; preds = %.thread162.i
   %.0131161.i = phi i32 [ %i.lh, %bb.ca ], [ %.0131165.i, %bb.cb ], [ %.0131165.i, %.thread162.i ], [ %i.lf, %bb.bw ], [ %i.lt, %bb.bx ] ; 2 uses
   %i.mc = add i32 %.0131161.i, %i.ks
   store i32 %i.mc, ptr %i.kr, align 4, !tbaa !417
-  br i1 %.not167.i, label %bb.cd, label %bb.cc
+  br i1 %15, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %.thread.i168
   %i.md = add i32 %.0131161.i, %i.kv
@@ -331,7 +332,7 @@ bb.cf:                                            ; preds = %bb.ce
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf, %bb.ce, %bb.cd
-  br i1 %.not167.i, label %bb.cj, label %bb.ch
+  br i1 %15, label %bb.ch, label %bb.cj
 
 bb.ch:                                            ; preds = %bb.cg
   %i.ms = getelementptr inbounds nuw i8, ptr %i.kt, i64 16

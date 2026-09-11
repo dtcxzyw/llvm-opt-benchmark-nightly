@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !26
   %i.i = tail call i32 @OSSL_CMP_SRV_CTX_set_grant_implicit_confirm(ptr noundef %i.h, i32 noundef %1) #5 ; 0 uses
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !26
-  %.not = icmp eq i32 %2, 0                       ; 2 uses
+  %.not = icmp eq i32 %2, 0
   %i.k = select i1 %.not, i32 -1, i32 24
   %i.l = tail call i32 @ossl_cmp_mock_srv_set_sendError(ptr noundef %i.j, i32 noundef %i.k) #5 ; 0 uses
-  %3 = select i1 %.not, i32 0, i32 2
+  %3 = shl nuw nsw i32 %2, 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   store i32 %3, ptr %i.m, align 4, !tbaa !24
   %i.n = tail call fastcc i32 @execute_exec_certrequest_ses_test(ptr noundef %i.a)

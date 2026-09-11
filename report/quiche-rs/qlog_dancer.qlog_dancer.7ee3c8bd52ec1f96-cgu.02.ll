@@ -204,9 +204,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !9228
     #dbg_value(ptr %1, !9234, !DIExpression(), !9237)
     #dbg_value(ptr %1, !9238, !DIExpression(), !9241)
-  %i.d = load i64, ptr %1, align 8, !dbg !9551, !range !3432, !noundef !2201
-  %.not = icmp eq i64 %i.d, 0, !dbg !9552         ; 2 uses
-  %. = select i1 %.not, i64 1, i64 2, !dbg !9228
+  %i.d = load i64, ptr %1, align 8, !dbg !9551, !range !3432, !noundef !2201 ; 2 uses
+  %.not = icmp eq i64 %i.d, 0, !dbg !9552
+  %. = add nuw nsw i64 %i.d, 1, !dbg !9228
     #dbg_value(ptr %1, !9243, !DIExpression(DW_OP_plus_uconst, 138, DW_OP_stack_value), !9247)
     #dbg_value(ptr %1, !9248, !DIExpression(DW_OP_plus_uconst, 138, DW_OP_stack_value), !9252)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 138, !dbg !9553 ; 2 uses
@@ -277,7 +277,7 @@ bb.a:
   %i.ae = load i64, ptr %i.ad, align 8, !dbg !9567, !range !2805, !noundef !2201
   %.not200 = icmp ne i64 %i.ae, -1, !dbg !9567    ; 2 uses
   %.sroa.017.0 = zext i1 %.not200 to i64, !dbg !9236
-  %i.af = add nuw nsw i64 %i.h, %., !dbg !9228
+  %i.af = add nuw nsw i64 %., %i.h, !dbg !9228
   %i.ag = add nuw nsw i64 %i.af, %.sroa.06.0, !dbg !9228
   %i.ah = add nuw nsw i64 %i.ag, %.sroa.08.0, !dbg !9228
   %i.ai = add nuw nsw i64 %i.ah, %.sroa.09.0, !dbg !9228
@@ -680,9 +680,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !22560
     #dbg_value(ptr %1, !22566, !DIExpression(), !22569)
     #dbg_value(ptr %1, !22570, !DIExpression(), !22573)
-  %i.d = load i64, ptr %1, align 8, !dbg !22609, !range !3432, !noundef !2201
-  %.not = icmp eq i64 %i.d, 0, !dbg !22610        ; 2 uses
-  %. = select i1 %.not, i64 1, i64 2, !dbg !22560
+  %i.d = load i64, ptr %1, align 8, !dbg !22609, !range !3432, !noundef !2201 ; 2 uses
+  %.not = icmp eq i64 %i.d, 0, !dbg !22610
+  %. = add nuw nsw i64 %i.d, 1, !dbg !22560
   call void @_RNvXs_NtNtCsenfyI6F4F2A_10serde_json5value3serNtB4_10SerializerNtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @149, i64 noundef 15, i64 noundef %.), !dbg !22560
   %i.e = load i64, ptr %i.b, align 8, !dbg !22611, !range !2805, !noundef !2201 ; 2 uses
   %i.f = icmp eq i64 %i.e, -1, !dbg !22611
@@ -1085,12 +1085,12 @@ bb.e:                                             ; preds = %bb.a
     #dbg_value(ptr %i.db, !32300, !DIExpression(), !32435)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.be), !dbg !33726
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !dbg !33726
-  %i.dc = load i64, ptr %i.cz, align 8, !dbg !33727, !range !3432, !noundef !2201
-  %.not1359 = icmp eq i64 %i.dc, 0, !dbg !33728   ; 2 uses
+  %i.dc = load i64, ptr %i.cz, align 8, !dbg !33727, !range !3432, !noundef !2201 ; 2 uses
+  %.not1359 = icmp eq i64 %i.dc, 0, !dbg !33728
   %i.dd = load ptr, ptr %i.db, align 8, !dbg !33729, !align !3616, !noundef !2201
   %.not1360 = icmp ne ptr %i.dd, null, !dbg !33729 ; 2 uses
   %.sroa.099.0 = zext i1 %.not1360 to i64, !dbg !33730
-  %2 = select i1 %.not1359, i64 4, i64 5, !dbg !33726
+  %2 = or disjoint i64 %i.dc, 4, !dbg !33726
   %i.de = add nuw nsw i64 %2, %.sroa.099.0, !dbg !33726
   call void @_RNvXs_NtNtCsenfyI6F4F2A_10serde_json5value3serNtB4_10SerializerNtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.bd, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @261, i64 noundef 9, i64 noundef %i.de), !dbg !33726
   %i.df = load i64, ptr %i.bd, align 8, !dbg !33731, !range !2805, !noundef !2201 ; 2 uses
@@ -1118,12 +1118,12 @@ bb.f:                                             ; preds = %bb.a
     #dbg_value(ptr %i.dm, !32300, !DIExpression(), !32460)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bb), !dbg !33734
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba), !dbg !33734
-  %i.dn = load i64, ptr %i.dl, align 8, !dbg !33735, !range !3432, !noundef !2201
-  %.not1350 = icmp eq i64 %i.dn, 0, !dbg !33736   ; 2 uses
+  %i.dn = load i64, ptr %i.dl, align 8, !dbg !33735, !range !3432, !noundef !2201 ; 2 uses
+  %.not1350 = icmp eq i64 %i.dn, 0, !dbg !33736
   %i.do = load ptr, ptr %i.dm, align 8, !dbg !33737, !align !3616, !noundef !2201
   %.not1351 = icmp ne ptr %i.do, null, !dbg !33737 ; 2 uses
   %.sroa.0135.0 = zext i1 %.not1351 to i64, !dbg !33738
-  %3 = select i1 %.not1350, i64 3, i64 4, !dbg !33734
+  %3 = add nuw nsw i64 %i.dn, 3, !dbg !33734
   %i.dp = add nuw nsw i64 %3, %.sroa.0135.0, !dbg !33734
   call void @_RNvXs_NtNtCsenfyI6F4F2A_10serde_json5value3serNtB4_10SerializerNtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.ba, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @261, i64 noundef 9, i64 noundef %i.dp), !dbg !33734
   %i.dq = load i64, ptr %i.ba, align 8, !dbg !33739, !range !2805, !noundef !2201 ; 2 uses
@@ -1197,15 +1197,15 @@ bb.i:                                             ; preds = %bb.a
     #dbg_value(ptr %i.el, !32300, !DIExpression(), !32527)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.as), !dbg !33752
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar), !dbg !33752
-  %i.em = load i64, ptr %i.ej, align 8, !dbg !33753, !range !3432, !noundef !2201
-  %.not1329 = icmp eq i64 %i.em, 0, !dbg !33754   ; 2 uses
+  %i.em = load i64, ptr %i.ej, align 8, !dbg !33753, !range !3432, !noundef !2201 ; 2 uses
+  %.not1329 = icmp eq i64 %i.em, 0, !dbg !33754
   %i.en = load i8, ptr %i.ek, align 1, !dbg !33755, !range !3599, !noundef !2201
   %.not1330 = icmp ne i8 %i.en, 2, !dbg !33755    ; 2 uses
   %.sroa.0214.0 = zext i1 %.not1330 to i64, !dbg !33756
   %i.eo = load ptr, ptr %i.el, align 8, !dbg !33757, !align !3616, !noundef !2201
   %.not1331 = icmp ne ptr %i.eo, null, !dbg !33757 ; 2 uses
   %.sroa.0215.0 = zext i1 %.not1331 to i64, !dbg !33756
-  %4 = select i1 %.not1329, i64 2, i64 3, !dbg !33752
+  %4 = or disjoint i64 %i.em, 2, !dbg !33752
   %i.ep = add nuw nsw i64 %4, %.sroa.0214.0, !dbg !33752
   %i.eq = add nuw nsw i64 %i.ep, %.sroa.0215.0, !dbg !33752
   call void @_RNvXs_NtNtCsenfyI6F4F2A_10serde_json5value3serNtB4_10SerializerNtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.ar, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @261, i64 noundef 9, i64 noundef %i.eq), !dbg !33752

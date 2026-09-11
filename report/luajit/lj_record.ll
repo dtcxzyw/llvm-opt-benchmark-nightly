@@ -205,15 +205,16 @@ bb.n:                                             ; preds = %bb.m
   %i.an = zext nneg i32 %.mask53 to i64
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.an
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !9
-  %.not = icmp eq i32 %2, 0                       ; 2 uses
-  %6 = select i1 %.not, i32 -2147483648, i32 2147483647
-  %7 = sub nsw i32 %6, %i.ap
-  %8 = select i1 %.not, i16 403, i16 659
+  %6 = add i32 %2, %i.ap
+  %7 = sub i32 -2147483648, %6
+  %.tr = trunc nuw nsw i32 %2 to i16
+  %8 = shl nuw nsw i16 %.tr, 8
+  %9 = add nuw nsw i16 %8, 403
   %i.aq = tail call i32 @lj_ir_kint(ptr noundef %0, i32 noundef %7) #8
   %i.ar = trunc i32 %i.aq to i16
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 188
-  store i16 %8, ptr %i.at, align 4, !tbaa !9
+  store i16 %9, ptr %i.at, align 4, !tbaa !9
   store i16 %i.ak, ptr %i.as, align 8, !tbaa !9
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 186
   store i16 %i.ar, ptr %i.au, align 2, !tbaa !9

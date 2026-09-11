@@ -204,19 +204,16 @@ bb.l:                                             ; preds = %bb.k
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !48
   %i.aj = getelementptr inbounds nuw i8, ptr %i.y, i64 64
   %i.ak = load i32, ptr %i.aj, align 8            ; 2 uses
-  %25 = lshr i32 %i.ak, 26
-  %26 = lshr i32 %i.ak, 24
-  %.lobit.i = and i32 %26, 1
-  %i.al = xor i32 %.lobit.i, 1
-  %i.am = and i32 %i.al, %25
-  %.not150 = icmp eq i32 %i.am, 0
-  %27 = select i1 %.not150, i32 0, i32 67108864
+  %25 = shl i32 %i.ak, 2
+  %.lobit.i = and i32 %25, 67108864
+  %i.al = xor i32 %.lobit.i, 67108864
+  %i.am = and i32 %i.al, %i.ak
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %.thread
   %i.an = phi i64 [ 0, %.thread ], [ %i.ag, %bb.l ] ; 2 uses
   %.sroa.0140.0144147 = phi i32 [ %i.ai, %.thread ], [ 0, %bb.l ] ; 2 uses
-  %.not.i = phi i32 [ %27, %.thread ], [ 0, %bb.l ] ; 2 uses
+  %.not.i = phi i32 [ %i.am, %.thread ], [ 0, %bb.l ] ; 2 uses
   %i.ao = icmp sgt i64 %i.ad, 3                   ; 2 uses
   %i.ap = add nsw i64 %i.ad, -4
   %spec.select.v = select i1 %i.ao, i32 -347, i32 -346

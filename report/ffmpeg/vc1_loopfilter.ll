@@ -174,14 +174,12 @@ bb.o:                                             ; preds = %bb.l
   %i.co = select i1 %.not45.i, i32 8, i32 %i.cn
   %i.cp = zext nneg i32 %i.co to i64
   %i.cq = or i32 %i.bq, %i.bp
-  %.not46.i = icmp eq i32 %i.cq, 0
-  %1 = select i1 %.not46.i, i32 1, i32 2
+  %1 = add nuw nsw i32 %i.cq, 1
   tail call void %i.br(ptr noundef nonnull %i.cg, ptr noundef nonnull %i.ch, i64 noundef %i.cl, i64 noundef %i.cp, i32 noundef %1) #1, !inline_history !0
   br label %vc1_h_overlap_filter.exit
 
 bb.p:                                             ; preds = %bb.l
-  %.not.i = icmp eq i32 %i.bq, 0
-  %2 = select i1 %.not.i, i32 1, i32 2
+  %2 = add nuw nsw i32 %i.bq, 1
   tail call void %i.br(ptr noundef nonnull %i.ai, ptr noundef nonnull %i.aj, i64 noundef 8, i64 noundef 8, i32 noundef %2) #1, !inline_history !0
   br label %vc1_h_overlap_filter.exit
 
@@ -547,14 +545,12 @@ bb.k:                                             ; preds = %bb.h
   %i.cj = select i1 %.not45.i, i32 8, i32 %i.ci
   %i.ck = zext nneg i32 %i.cj to i64
   %i.cl = or i32 %i.bl, %i.bk
-  %.not46.i = icmp eq i32 %i.cl, 0
-  %1 = select i1 %.not46.i, i32 1, i32 2
+  %1 = add nuw nsw i32 %i.cl, 1
   tail call void %i.bm(ptr noundef nonnull %i.cb, ptr noundef nonnull %i.cc, i64 noundef %i.cg, i64 noundef %i.ck, i32 noundef %1) #1, !inline_history !0
   br label %vc1_h_overlap_filter.exit
 
 bb.l:                                             ; preds = %bb.h
-  %.not.i = icmp eq i32 %i.bl, 0
-  %2 = select i1 %.not.i, i32 1, i32 2
+  %2 = add nuw nsw i32 %i.bl, 1
   tail call void %i.bm(ptr noundef nonnull %i.ag, ptr noundef nonnull %i.ah, i64 noundef 8, i64 noundef 8, i32 noundef %2) #1, !inline_history !0
   br label %vc1_h_overlap_filter.exit
 

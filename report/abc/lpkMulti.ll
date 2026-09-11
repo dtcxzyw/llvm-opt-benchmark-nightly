@@ -205,8 +205,8 @@ Kit_DsdNtkRoot.exit:                              ; preds = %bb.m, %bb.q
 
 bb.n:                                             ; preds = %Kit_DsdNtkRoot.exit
   %i.jj = and i16 %i.ix, 1
-  %.not154 = icmp eq i16 %i.jj, 0
-  %4 = select i1 %.not154, i32 -1, i32 -2
+  %4 = xor i16 %i.jj, -1
+  %5 = sext i16 %4 to i32
   br label %bb.q
 
 bb.o:                                             ; preds = %Kit_DsdNtkRoot.exit
@@ -222,7 +222,7 @@ bb.p:                                             ; preds = %Kit_DsdNtkRoot.exit
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.n, %bb.p, %bb.o
-  %.sink = phi i32 [ %4, %bb.n ], [ %i.jp, %bb.p ], [ %i.jo, %bb.o ]
+  %.sink = phi i32 [ %5, %bb.n ], [ %i.jp, %bb.p ], [ %i.jo, %bb.o ]
   %i.jq = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv266
   store i32 %.sink, ptr %i.jq, align 4, !tbaa !19
   %indvars.iv.next267 = add nuw nsw i64 %indvars.iv266, 1 ; 2 uses

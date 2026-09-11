@@ -204,10 +204,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.c = tail call fastcc i32 @rev_same_tree_as_empty(ptr noundef %0, ptr noundef nonnull %1, i32 noundef 0)
-  %.not37 = icmp eq i32 %i.c, 0
   %i.d = load i64, ptr %1, align 8
   %i.e = and i64 %i.d, -17179869185
-  %masksel = select i1 %.not37, i64 0, i64 17179869184
+  %3 = zext nneg i32 %i.c to i64
+  %masksel = shl nuw nsw i64 %3, 34
   %storemerge = or disjoint i64 %i.e, %masksel
   store i64 %storemerge, ptr %1, align 8
   br label %bb.p

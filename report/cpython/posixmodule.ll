@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.j = load i32, ptr %i.g, align 8, !tbaa !180
-  %.not18 = icmp eq i32 %2, 0
-  %4 = select i1 %.not18, i32 256, i32 0
-  %i.k = call i32 @fstatat64(i32 noundef %i.j, ptr noundef %i.f, ptr noundef nonnull %3, i32 noundef %4) #19
+  %4 = shl nuw nsw i32 %2, 8
+  %5 = xor i32 %4, 256
+  %i.k = call i32 @fstatat64(i32 noundef %i.j, ptr noundef %i.f, ptr noundef nonnull %3, i32 noundef %5) #19
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b

@@ -202,8 +202,8 @@ match_ns.exit.thread.sink.split.i:                ; preds = %bb.v, %bb.u, %bb.g,
   tail call void (ptr, ptr, ...) @zend_throw_error(ptr noundef null, ptr noundef nonnull @.str.1) #13
   br label %sxe_prop_is_empty.exit
 
-sxe_prop_is_empty.exit:                           ; preds = %bb.m, %.thread.i.us.i, %bb.n, %bb.p, %.thread.i.i49, %bb.o, %bb.aq, %match_ns.exit114.thread.us.i, %match_ns.exit114.us.i, %match_ns.exit114.thread.i, %bb.av, %match_ns.exit114.i, %bb.z, %match_ns.exit.thread.sink.split.i, %bb.ag, %bb.ab, %bb.y, %php_sxe_get_first_node_non_destructive.exit107.i, %.thread
-  %i.fp = phi i32 [ 2, %match_ns.exit.thread.sink.split.i ], [ 2, %.thread ], [ 2, %php_sxe_get_first_node_non_destructive.exit107.i ], [ 2, %bb.y ], [ 2, %bb.ab ], [ 2, %bb.ag ], [ 3, %bb.z ], [ 2, %match_ns.exit114.i ], [ 2, %match_ns.exit114.us.i ], [ 3, %bb.p ], [ 3, %match_ns.exit114.thread.i ], [ 3, %bb.av ], [ 3, %bb.aq ], [ 3, %match_ns.exit114.thread.us.i ], [ 3, %bb.o ], [ 3, %.thread.i.i49 ], [ 3, %bb.n ], [ 3, %.thread.i.us.i ], [ 3, %bb.m ]
+sxe_prop_is_empty.exit:                           ; preds = %bb.m, %bb.n, %.thread.i.us.i, %bb.o, %bb.p, %.thread.i.i49, %match_ns.exit114.thread.us.i, %bb.aq, %match_ns.exit114.us.i, %bb.av, %match_ns.exit114.thread.i, %match_ns.exit114.i, %.thread, %php_sxe_get_first_node_non_destructive.exit107.i, %bb.y, %bb.z, %bb.ab, %bb.ag, %match_ns.exit.thread.sink.split.i
+  %i.fp = phi i32 [ 2, %match_ns.exit.thread.sink.split.i ], [ 2, %.thread ], [ 3, %bb.z ], [ 2, %php_sxe_get_first_node_non_destructive.exit107.i ], [ 2, %bb.y ], [ 3, %bb.av ], [ 2, %bb.ag ], [ 3, %match_ns.exit114.thread.us.i ], [ 2, %bb.ab ], [ 3, %bb.o ], [ 2, %match_ns.exit114.i ], [ 3, %match_ns.exit114.thread.i ], [ 3, %bb.aq ], [ 2, %match_ns.exit114.us.i ], [ 3, %.thread.i.i49 ], [ 3, %bb.p ], [ 3, %.thread.i.us.i ], [ 3, %bb.n ], [ 3, %bb.m ]
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %i.fp, ptr %i.fq, align 8, !tbaa !17
   br label %bb.bu

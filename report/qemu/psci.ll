@@ -177,11 +177,11 @@ bb.n:                                             ; preds = %bb.f
 bb.o:                                             ; preds = %bb.f, %bb.f, %bb.f
   %i.ac = getelementptr i8, ptr %0, i64 95424     ; 2 uses
   %.val48 = load i64, ptr %i.ac, align 16         ; 3 uses
-  %1 = and i64 %.val48, 268435456
-  %.not41.not = icmp eq i64 %1, 0                 ; 3 uses
-  %2 = select i1 %.not41.not, i32 1, i32 2
-  %3 = trunc i64 %.val48 to i32
-  %i.ad = lshr i32 %3, 25
+  %1 = trunc i64 %.val48 to i32                   ; 2 uses
+  %2 = lshr i32 %1, 28
+  %3 = and i32 %2, 1
+  %4 = add nuw nsw i32 %3, 1                      ; 2 uses
+  %i.ad = lshr i32 %1, 25
   %i.ae = and i32 %i.ad, 1                        ; 2 uses
   %.not.i49 = icmp eq i32 %i.ae, 0
   %i.af = trunc nuw nsw i32 %i.ae to i8
@@ -204,7 +204,9 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not8.i.i, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  br i1 %.not41.not, label %arm_scr_rw_eff.exit.i, label %bb.s
+  %5 = and i64 %.val48, 268435456
+  %.not9.i.i = icmp eq i64 %5, 0
+  br i1 %.not9.i.i, label %arm_scr_rw_eff.exit.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.al = getelementptr i8, ptr %0, i64 96264
@@ -225,7 +227,8 @@ arm_scr_rw_eff.exit.i:                            ; preds = %bb.t, %bb.s, %bb.r,
 
 bb.u:                                             ; preds = %arm_scr_rw_eff.exit.i, %bb.o
   %.0.i = phi i8 [ %.mux.i, %bb.o ], [ %i.ap, %arm_scr_rw_eff.exit.i ] ; 4 uses
-  br i1 %.not41.not, label %bb.v, label %arm_el_is_aa64.exit
+  %6 = icmp eq i32 %4, 2
+  br i1 %6, label %arm_el_is_aa64.exit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.aq = tail call i32 @arm_security_space_below_el3(ptr noundef nonnull %i.a) #5 ; 2 uses
@@ -267,7 +270,7 @@ bb.z:                                             ; preds = %arm_is_el2_enabled.
 arm_el_is_aa64.exit:                              ; preds = %bb.u, %bb.x, %arm_is_el2_enabled.exit.i, %arm_is_el2_enabled.exit.thread.i, %bb.z
   %.015.in.i = phi i8 [ %.0.i, %bb.u ], [ %.0.i, %arm_is_el2_enabled.exit.i ], [ 0, %arm_is_el2_enabled.exit.thread.i ], [ %i.az, %bb.z ], [ %.0.i, %bb.x ]
   %.015.i = trunc i8 %.015.in.i to i1
-  %i.ba = tail call i32 @arm_set_cpu_on(i64 noundef %.sroa.6.0, i64 noundef %.sroa.8.0, i64 noundef %.sroa.10.0, i32 noundef %2, i1 noundef zeroext %.015.i) #5
+  %i.ba = tail call i32 @arm_set_cpu_on(i64 noundef %.sroa.6.0, i64 noundef %.sroa.8.0, i64 noundef %.sroa.10.0, i32 noundef %4, i1 noundef zeroext %.015.i) #5
   br label %bb.aj
 
 bb.aa:                                            ; preds = %bb.f, %bb.f, %bb.f

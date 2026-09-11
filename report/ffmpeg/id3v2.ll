@@ -204,6 +204,8 @@ get_extra_meta_func.exit:                         ; preds = %.lr.ph, %.split16.s
 define internal fastcc ptr @get_extra_meta_func(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #0 {
 bb.a:
   %.not12 = icmp eq ptr %0, null
+  %2 = add nuw nsw i32 %1, 3
+  %3 = zext nneg i32 %2 to i64                    ; 7 uses
   br i1 %.not12, label %.split16, label %.split
 
 .split:                                           ; preds = %bb.a
@@ -211,68 +213,37 @@ bb.a:
   br i1 %.not13, label %.split.split.us, label %.split.split.preheader
 
 .split.split.preheader:                           ; preds = %.split
-  %2 = load i32, ptr %0, align 1
-  %3 = icmp ne i32 %2, 1112491335
-  %4 = zext i1 %3 to i32
-  %.not14 = icmp eq i32 %4, 0
+  %bcmp = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) @.str.127, i64 %3)
+  %.not14 = icmp eq i32 %bcmp, 0
   br i1 %.not14, label %.split16, label %.split.split.1
 
 .split.split.us:                                  ; preds = %.split
-  %5 = load i16, ptr %0, align 1
-  %6 = xor i16 %5, 17735
-  %7 = getelementptr i8, ptr %0, i64 2
-  %8 = load i8, ptr %7, align 1
-  %9 = zext i8 %8 to i16
-  %10 = xor i16 %9, 79
-  %11 = or i16 %6, %10
-  %12 = icmp ne i16 %11, 0
-  %13 = zext i1 %12 to i32
-  %.not14.us20 = icmp eq i32 %13, 0
+  %bcmp.us19 = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) @.str.126, i64 %3)
+  %.not14.us20 = icmp eq i32 %bcmp.us19, 0
   br i1 %.not14.us20, label %.split16, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.split.split.us
-  %14 = load i16, ptr %0, align 1
-  %15 = xor i16 %14, 18768
-  %16 = getelementptr i8, ptr %0, i64 2
-  %17 = load i8, ptr %16, align 1
-  %18 = zext i8 %17 to i16
-  %19 = xor i16 %18, 67
-  %20 = or i16 %15, %19
-  %21 = icmp ne i16 %20, 0
-  %22 = zext i1 %21 to i32
-  %.not14.us = icmp eq i32 %22, 0
+  %bcmp.us = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) @.str.128, i64 %3)
+  %.not14.us = icmp eq i32 %bcmp.us, 0
   br i1 %.not14.us, label %.split16, label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %.lr.ph.preheader
-  %23 = load i16, ptr %0, align 1
-  %24 = xor i16 %23, 18499
-  %25 = getelementptr i8, ptr %0, i64 2
-  %26 = load i8, ptr %25, align 1
-  %27 = zext i8 %26 to i16
-  %28 = xor i16 %27, 65
-  %29 = or i16 %24, %28
-  %30 = icmp ne i16 %29, 0
-  %31 = zext i1 %30 to i32
-  %.not14.us.1 = icmp eq i32 %31, 0
+  %bcmp.us.1 = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) @.str.70, i64 %3)
+  %.not14.us.1 = icmp eq i32 %bcmp.us.1, 0
   br i1 %.not14.us.1, label %.split16, label %.split16.sink.split, !llvm.loop !69
 
 .split.split.1:                                   ; preds = %.split.split.preheader
-  %32 = load i32, ptr %0, align 1
-  %33 = icmp ne i32 %32, 1128878145
-  %34 = zext i1 %33 to i32
-  %.not14.1 = icmp eq i32 %34, 0
+  %bcmp.1 = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) @.str.68, i64 %3)
+  %.not14.1 = icmp eq i32 %bcmp.1, 0
   br i1 %.not14.1, label %.split16, label %.split.split.2
 
 .split.split.2:                                   ; preds = %.split.split.1
-  %35 = load i32, ptr %0, align 1
-  %36 = icmp ne i32 %35, 1346455619
-  %37 = zext i1 %36 to i32
-  %.not14.2 = icmp eq i32 %37, 0
+  %bcmp.2 = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) @.str.70, i64 %3)
+  %.not14.2 = icmp eq i32 %bcmp.2, 0
   br i1 %.not14.2, label %.split16, label %.split16.sink.split
 
 .split16.sink.split:                              ; preds = %.split.split.2, %.lr.ph.1
-  %.sink = phi i64 [ 3, %.lr.ph.1 ], [ 4, %.split.split.2 ]
-  %bcmp.3 = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(3) %0, ptr noundef nonnull dereferenceable(3) @.str.71, i64 %.sink)
+  %bcmp.3 = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) @.str.71, i64 %3)
   %.not14.3 = icmp eq i32 %bcmp.3, 0
   %spec.select27 = select i1 %.not14.3, ptr getelementptr inbounds nuw (i8, ptr @id3v2_extra_meta_funcs, i64 96), ptr null
   br label %.split16

@@ -205,50 +205,38 @@ bb.d:                                             ; preds = %.critedge
 .split:                                           ; preds = %.critedge33
   %i.f = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %1, i1 true)
   switch i32 %i.f, label %bb.i [
-    i32 3, label %3
-    i32 2, label %5
-    i32 1, label %7
-    i32 0, label %9
+    i32 3, label %bb.e
+    i32 2, label %bb.f
+    i32 1, label %bb.g
+    i32 0, label %bb.h
   ]
 
-3:                                                ; preds = %.split
+bb.e:                                             ; preds = %.split
+  %3 = icmp slt i32 %.026, 0
+  %. = sub nuw nsw i32 4, %2
+  %..a = select i1 %3, i32 1, i32 %.
+  br label %bb.i
+
+bb.f:                                             ; preds = %.split
   %4 = icmp slt i32 %.026, 0
-  br i1 %4, label %bb.i, label %bb.e
-
-bb.e:                                             ; preds = %3
-  %.not31 = icmp eq i32 %2, 0
-  %..a = select i1 %.not31, i32 4, i32 3
+  %.34 = sub nuw nsw i32 8, %2
+  %.34.a = select i1 %4, i32 5, i32 %.34
   br label %bb.i
 
-5:                                                ; preds = %.split
+bb.g:                                             ; preds = %.split
+  %5 = icmp slt i32 %.026, 0
+  %.35 = sub nuw nsw i32 12, %2
+  %.35.a = select i1 %5, i32 9, i32 %.35
+  br label %bb.i
+
+bb.h:                                             ; preds = %.split
   %6 = icmp slt i32 %.026, 0
-  br i1 %6, label %bb.i, label %bb.f
-
-bb.f:                                             ; preds = %5
-  %.not30 = icmp eq i32 %2, 0
-  %.34.a = select i1 %.not30, i32 8, i32 7
+  %.36 = sub nuw nsw i32 16, %2
+  %.36.a = select i1 %6, i32 13, i32 %.36
   br label %bb.i
 
-7:                                                ; preds = %.split
-  %8 = icmp slt i32 %.026, 0
-  br i1 %8, label %bb.i, label %bb.g
-
-bb.g:                                             ; preds = %7
-  %.not29 = icmp eq i32 %2, 0
-  %.35.a = select i1 %.not29, i32 12, i32 11
-  br label %bb.i
-
-9:                                                ; preds = %.split
-  %10 = icmp slt i32 %.026, 0
-  br i1 %10, label %bb.i, label %bb.h
-
-bb.h:                                             ; preds = %9
-  %.not = icmp eq i32 %2, 0
-  %.36.a = select i1 %.not, i32 16, i32 15
-  br label %bb.i
-
-bb.i:                                             ; preds = %bb.d, %bb.c, %.split, %.critedge33, %3, %bb.e, %5, %bb.f, %7, %bb.g, %9, %bb.h
-  %.0 = phi i32 [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %.split ], [ 0, %.critedge33 ], [ %..a, %bb.e ], [ 1, %3 ], [ 13, %9 ], [ %.34.a, %bb.f ], [ 5, %5 ], [ %.36.a, %bb.h ], [ %.35.a, %bb.g ], [ 9, %7 ]
+bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.split, %.critedge33
+  %.0 = phi i32 [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %.split ], [ 0, %.critedge33 ], [ %.35.a, %bb.g ], [ %.34.a, %bb.f ], [ %.36.a, %bb.h ], [ %..a, %bb.e ]
   ret i32 %.0
 }
 

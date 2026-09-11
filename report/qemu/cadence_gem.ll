@@ -204,7 +204,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %.val.i = load i8, ptr %1, align 1              ; 2 uses
-  %i.o = and i8 %.val.i, 1
+  %i.o = and i8 %.val.i, 1                        ; 2 uses
+  %3 = zext nneg i8 %i.o to i32
   %.not28.i = icmp eq i8 %i.o, 0
   br i1 %.not28.i, label %.critedge.i, label %bb.e
 
@@ -219,7 +220,6 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not30.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.critedge.i, %bb.e
-  %3 = phi i32 [ -5, %.critedge.i ], [ -4, %bb.e ]
   %i.r = zext i8 %.val.i to i32                   ; 8 uses
   %i.s = lshr i32 %i.r, 5
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 1
@@ -344,6 +344,7 @@ bb.f:                                             ; preds = %.critedge.i, %bb.e
   %i.eh = shl nuw i64 1, %i.eg
   %i.ei = and i64 %i.eh, %i.ef
   %.not31.i = icmp eq i64 %i.ei, 0
+  %4 = add nuw nsw i32 %3, -5
   br i1 %.not31.i, label %bb.g, label %select.unfold
 
 bb.g:                                             ; preds = %bb.f, %.critedge.i, %bb.e
@@ -443,7 +444,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not33.3.i, label %select.unfold, label %.critedge168
 
 select.unfold:                                    ; preds = %bb.c, %bb.a, %bb.f, %bb.h, %bb.j, %bb.n, %bb.l
-  %.1.i.ph = phi i32 [ -2, %bb.a ], [ 1, %bb.l ], [ 0, %bb.n ], [ 2, %bb.j ], [ 3, %bb.h ], [ %3, %bb.f ], [ -3, %bb.c ] ; 2 uses
+  %.1.i.ph = phi i32 [ -2, %bb.a ], [ 1, %bb.l ], [ 0, %bb.n ], [ 2, %bb.j ], [ 3, %bb.h ], [ %4, %bb.f ], [ -3, %bb.c ] ; 2 uses
   %i.gz = and i32 %i.c, 65536
   %.not = icmp eq i32 %i.gz, 0
   br i1 %.not, label %.critedge, label %bb.o

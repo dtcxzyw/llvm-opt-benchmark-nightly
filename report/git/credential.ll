@@ -204,6 +204,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !31
   %i.g = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(4) @.str.21) #19
   %.not8.not = icmp eq i32 %i.g, 0                ; 3 uses
+  %5 = zext i1 %.not8.not to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %3, ptr noundef nonnull align 8 dereferenceable(136) @__const.run_credential_helper.helper, i64 136, i1 false)
   %i.h = call ptr @strvec_push(ptr noundef nonnull %3, ptr noundef %i.f) #18 ; 0 uses
@@ -234,8 +235,8 @@ bb.i:                                             ; preds = %bb.h
   %i.q = load i32, ptr %i.l, align 8, !tbaa !62
   %i.r = call ptr @xfdopen(i32 noundef %i.q, ptr noundef nonnull @.str.46) #18 ; 2 uses
   %i.s = call i32 @sigchain_push(i32 noundef 13, ptr noundef nonnull inttoptr (i64 1 to ptr)) #18 ; 0 uses
-  %5 = select i1 %.not8.not, i32 2, i32 3
-  call void @credential_write(ptr noundef %0, ptr noundef %i.r, i32 noundef %5)
+  %6 = xor i32 %5, 3
+  call void @credential_write(ptr noundef %0, ptr noundef %i.r, i32 noundef %6)
   %i.t = call i32 @fclose(ptr noundef %i.r)       ; 0 uses
   %i.u = call i32 @sigchain_pop(i32 noundef 13) #18 ; 0 uses
   br i1 %.not8.not, label %bb.j, label %run_credential_helper.exit.sink.split

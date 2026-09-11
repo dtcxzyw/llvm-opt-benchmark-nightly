@@ -204,8 +204,7 @@ bb.an:                                            ; preds = %_ZN4llvm23SmallVect
   %i.oi = lshr i32 %i.og, 24
   %.lobit.i.i.us.us = and i32 %i.oi, 1
   %i.oj = xor i32 %.lobit.i.i.us.us, 1
-  %i.ok = and i32 %i.oj, %i.oh
-  %.not.i40.us.us = icmp eq i32 %i.ok, 0          ; 2 uses
+  %i.ok = and i32 %i.oj, %i.oh                    ; 2 uses
   %i.ol = getelementptr inbounds nuw i8, ptr %i.oa, i64 64
   %i.om = getelementptr inbounds nuw i8, ptr %i.oa, i64 68
   %i.on = load i32, ptr %i.om, align 4, !tbaa !171 ; 3 uses
@@ -214,8 +213,7 @@ bb.an:                                            ; preds = %_ZN4llvm23SmallVect
   %i.oq = lshr i32 %i.oo, 24
   %.lobit.i74.i.us.us = and i32 %i.oq, 1
   %i.or = xor i32 %.lobit.i74.i.us.us, 1
-  %i.os = and i32 %i.or, %i.op
-  %.not140.i.us.us = icmp eq i32 %i.os, 0         ; 3 uses
+  %i.os = and i32 %i.or, %i.op                    ; 3 uses
   %i.ot = getelementptr inbounds nuw i8, ptr %.sroa.0355.0531.us.us, i64 40
   %i.ou = load i24, ptr %i.ot, align 8
   switch i24 %i.ou, label %bb.ay [
@@ -296,7 +294,7 @@ bb.ar:                                            ; preds = %bb.aq
 _ZNK12_GLOBAL__N_123AArch64SIMDInstrOptImpl8reuseDUPERN4llvm12MachineInstrEjjjPj.exit97.i.us.us: ; preds = %bb.ar
   %i.pz = getelementptr inbounds nuw i8, ptr %i.ps, i64 4
   %i.qa = load i32, ptr %i.pz, align 4, !tbaa !171
-  %.pre149.i.us.us = select i1 %.not140.i.us.us, i32 0, i32 67108864
+  %.pre147.i.us.us = shl nuw nsw i32 %i.os, 26
   br label %bb.as
 
 .loopexit142.i.us.us:                             ; preds = %.critedge.i88.i.us.us, %bb.ao
@@ -352,7 +350,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit65.us.us: ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit234.us.us, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.i61.us.us
   call void @llvm.lifetime.start.p0(ptr nonnull %67) #18
   store ptr null, ptr %i.gr, align 8, !tbaa !465, !alias.scope !468
-  %77 = select i1 %.not140.i.us.us, i32 0, i32 67108864 ; 2 uses
+  %77 = shl nuw nsw i32 %i.os, 26                 ; 2 uses
   store i32 %i.on, ptr %i.gs, align 4, !tbaa !171, !alias.scope !468
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gt, i8 0, i64 16, i1 false), !alias.scope !468
   store i32 %77, ptr %67, align 8, !alias.scope !468
@@ -367,7 +365,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERK
   br label %bb.as
 
 bb.as:                                            ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit65.us.us, %_ZNK12_GLOBAL__N_123AArch64SIMDInstrOptImpl8reuseDUPERN4llvm12MachineInstrEjjjPj.exit97.i.us.us
-  %.pre-phi150.i.us.us = phi i32 [ %.pre149.i.us.us, %_ZNK12_GLOBAL__N_123AArch64SIMDInstrOptImpl8reuseDUPERN4llvm12MachineInstrEjjjPj.exit97.i.us.us ], [ %77, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit65.us.us ]
+  %.pre-phi150.i.us.us = phi i32 [ %.pre147.i.us.us, %_ZNK12_GLOBAL__N_123AArch64SIMDInstrOptImpl8reuseDUPERN4llvm12MachineInstrEjjjPj.exit97.i.us.us ], [ %77, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit65.us.us ]
   %.1134.i.us.us = phi i32 [ %i.qa, %_ZNK12_GLOBAL__N_123AArch64SIMDInstrOptImpl8reuseDUPERN4llvm12MachineInstrEjjjPj.exit97.i.us.us ], [ %i.qb, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit65.us.us ]
   %.sroa.02.0.copyload.i.us.us = load ptr, ptr %i.nt, align 8, !tbaa !462
   %i.qs = getelementptr inbounds nuw i8, ptr %.sroa.0355.0531.us.us, i64 44
@@ -420,7 +418,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.us.us: ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.us.us, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.i.us.us
   call void @llvm.lifetime.start.p0(ptr nonnull %65) #18
   store ptr null, ptr %i.hc, align 8, !tbaa !465, !alias.scope !472
-  %78 = select i1 %.not.i40.us.us, i32 0, i32 67108864
+  %78 = shl nuw nsw i32 %i.ok, 26
   store i32 %i.of, ptr %i.hd, align 4, !tbaa !171, !alias.scope !472
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.he, i8 0, i64 16, i1 false), !alias.scope !472
   store i32 %78, ptr %65, align 8, !alias.scope !472
@@ -444,8 +442,7 @@ bb.at:                                            ; preds = %bb.an
   %i.rn = lshr i32 %i.rl, 24
   %.lobit.i75.i.us.us = and i32 %i.rn, 1
   %i.ro = xor i32 %.lobit.i75.i.us.us, 1
-  %i.rp = and i32 %i.ro, %i.rm
-  %.not141.i.us.us = icmp eq i32 %i.rp, 0         ; 2 uses
+  %i.rp = and i32 %i.ro, %i.rm                    ; 2 uses
   %i.rq = getelementptr inbounds nuw i8, ptr %i.oa, i64 144
   %i.rr = load i64, ptr %i.rq, align 8, !tbaa !171
   %i.rs = load i32, ptr %i.nl, align 8, !tbaa !191
@@ -518,7 +515,7 @@ bb.aw:                                            ; preds = %bb.av
 _ZNK12_GLOBAL__N_123AArch64SIMDInstrOptImpl8reuseDUPERN4llvm12MachineInstrEjjjPj.exit.i.us.us: ; preds = %bb.aw
   %i.su = getelementptr inbounds nuw i8, ptr %i.sn, i64 4
   %i.sv = load i32, ptr %i.su, align 4, !tbaa !171
-  %.pre.i.us.us = select i1 %.not141.i.us.us, i32 0, i32 67108864
+  %.pre.i.us.us = shl nuw nsw i32 %i.rp, 26
   br label %bb.ax
 
 .loopexit.i.us.us:                                ; preds = %.critedge.i.i.us.us, %bb.at
@@ -574,7 +571,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit85.us.us: ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit254.us.us, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.i81.us.us
   call void @llvm.lifetime.start.p0(ptr nonnull %72) #18
   store ptr null, ptr %i.ho, align 8, !tbaa !465, !alias.scope !476
-  %79 = select i1 %.not141.i.us.us, i32 0, i32 67108864 ; 2 uses
+  %79 = shl nuw nsw i32 %i.rp, 26                 ; 2 uses
   store i32 %i.rk, ptr %i.hp, align 4, !tbaa !171, !alias.scope !476
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hq, i8 0, i64 16, i1 false), !alias.scope !476
   store i32 %79, ptr %72, align 8, !alias.scope !476
@@ -642,7 +639,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit75.us.us: ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit244.us.us, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.i71.us.us
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #18
   store ptr null, ptr %i.hz, align 8, !tbaa !465, !alias.scope !480
-  %80 = select i1 %.not.i40.us.us, i32 0, i32 67108864
+  %80 = shl nuw nsw i32 %i.ok, 26
   store i32 %i.of, ptr %i.ia, align 4, !tbaa !171, !alias.scope !480
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ib, i8 0, i64 16, i1 false), !alias.scope !480
   store i32 %80, ptr %70, align 8, !alias.scope !480
@@ -650,7 +647,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockERNS_12MachineInstrERKNS_10MIMetadataERK
   call void @llvm.lifetime.end.p0(ptr nonnull %70) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #18
   store ptr null, ptr %i.ic, align 8, !tbaa !465, !alias.scope !481
-  %81 = select i1 %.not140.i.us.us, i32 0, i32 67108864
+  %81 = shl nuw nsw i32 %i.os, 26
   store i32 %i.on, ptr %i.id, align 4, !tbaa !171, !alias.scope !481
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ie, i8 0, i64 16, i1 false), !alias.scope !481
   store i32 %81, ptr %69, align 8, !alias.scope !481
@@ -879,10 +876,10 @@ bb.bd:                                            ; preds = %bb.bf, %.preheader.
   %.lobit.i.i.i = and i32 %i.wd, 1
   %i.we = xor i32 %.lobit.i.i.i, 1
   %i.wf = and i32 %i.we, %i.wc
-  %.not1.i.i = icmp eq i32 %i.wf, 0
-  %82 = select i1 %.not1.i.i, i16 0, i16 8
+  %82 = trunc nuw nsw i32 %i.wf to i16
+  %83 = shl nuw nsw i16 %82, 3
   %i.wg = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %indvars.iv.i.i
-  store i16 %82, ptr %i.wg, align 2, !tbaa !484
+  store i16 %83, ptr %i.wg, align 2, !tbaa !484
   %i.wh = getelementptr inbounds nuw i8, ptr %i.vw, i64 64
   %i.wi = load i32, ptr %i.wh, align 8
   %i.wj = and i32 %i.wi, 255

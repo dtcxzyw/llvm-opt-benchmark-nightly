@@ -204,12 +204,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %.val37, i64 %indvars.iv
   %i.o = load i32, ptr %i.n, align 4, !tbaa !21
   %.not42 = icmp eq i32 %i.o, 1
-  %1 = select i1 %.not42, i32 536870912, i32 268435456
-  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 12 ; 2 uses
-  %3 = load i32, ptr %2, align 4
-  %i.p = and i32 %3, -805306369
-  %i.q = or disjoint i32 %i.p, %1
-  store i32 %i.q, ptr %2, align 4
+  %1 = getelementptr inbounds nuw i8, ptr %i.k, i64 12 ; 2 uses
+  %2 = load i32, ptr %1, align 4
+  %3 = select i1 %.not42, i32 536870912, i32 268435456
+  %i.p = and i32 %2, -805306369
+  %i.q = or disjoint i32 %i.p, %3
+  store i32 %i.q, ptr %1, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.r = load i32, ptr %i.c, align 8, !tbaa !67   ; 3 uses
   %i.s = sext i32 %i.r to i64
@@ -612,12 +612,12 @@ bb.bk:                                            ; preds = %Abc_Clock.exit439
   %i.yn = getelementptr inbounds nuw [4 x i8], ptr %.val37.i, i64 %indvars.iv.i449
   %i.yo = load i32, ptr %i.yn, align 4, !tbaa !21
   %.not42.i = icmp eq i32 %i.yo, 1
-  %29 = select i1 %.not42.i, i32 536870912, i32 268435456
-  %30 = getelementptr inbounds nuw i8, ptr %i.yk, i64 12 ; 2 uses
-  %31 = load i32, ptr %30, align 4
-  %i.yp = and i32 %31, -805306369
-  %i.yq = or disjoint i32 %i.yp, %29
-  store i32 %i.yq, ptr %30, align 4
+  %29 = getelementptr inbounds nuw i8, ptr %i.yk, i64 12 ; 2 uses
+  %30 = load i32, ptr %29, align 4
+  %31 = select i1 %.not42.i, i32 536870912, i32 268435456
+  %i.yp = and i32 %30, -805306369
+  %i.yq = or disjoint i32 %i.yp, %31
+  store i32 %i.yq, ptr %29, align 4
   %indvars.iv.next.i450 = add nuw nsw i64 %indvars.iv.i449, 1 ; 2 uses
   %i.yr = load i32, ptr %i.ck, align 8, !tbaa !67 ; 3 uses
   %i.ys = sext i32 %i.yr to i64

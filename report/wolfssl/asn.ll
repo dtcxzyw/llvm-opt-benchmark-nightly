@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %.not16.i = icmp eq i32 %i.bg, 0
   br label %CheckDate.exit
 
-CheckDate.exit:                                   ; preds = %bb.b, %.thread.i, %bb.c
+CheckDate.exit:                                   ; preds = %bb.b, %bb.c, %.thread.i
   %.2.i = phi i1 [ %.not16.i, %.thread.i ], [ true, %bb.c ], [ true, %bb.b ]
   %i.bh = icmp ne i32 %1, 0                       ; 4 uses
   %or.cond4 = and i1 %i.bh, %.2.i

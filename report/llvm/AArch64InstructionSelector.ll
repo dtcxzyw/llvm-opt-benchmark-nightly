@@ -204,7 +204,7 @@ _ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread310.i.i: ; preds = %
 
 bb.z:                                             ; preds = %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread310.i.i, %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread.i.i
   %.sroa.0.40304307.i.i = phi i64 [ %.sroa.0.40304308.i.i, %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread310.i.i ], [ %.sroa.0.40304309.i50.i, %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread.i.i ] ; 2 uses
-  %.sroa.131.26.i.i = phi i64 [ %i.on, %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread310.i.i ], [ %.sroa.131.25.i.i, %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread.i.i ] ; 2 uses
+  %.sroa.131.26.i.i = phi i64 [ %i.on, %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread310.i.i ], [ %.sroa.131.25.i.i, %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit179.thread.i.i ]
   br i1 %i.cs, label %bb.aa, label %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit180.thread.i.thread.i
 
 bb.aa:                                            ; preds = %bb.z
@@ -313,9 +313,10 @@ _ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit183.i.i: ; preds = %bb.ak
   %i.py = getelementptr inbounds nuw i8, ptr %1, i64 514
   %i.pz = load i8, ptr %i.py, align 2, !tbaa !799, !range !238, !noundef !239 ; 2 uses
   %i.qa = or i8 %i.pz, %i.fi
-  %brmerge576.not665.i.i = icmp eq i8 %i.qa, 0
-  %.sroa.0.45666.v.i.i = select i1 %brmerge576.not665.i.i, i64 18014398509481984, i64 18018796555993088
-  %.sroa.0.45666.i.i.a = or i64 %.sroa.0.45666.v.i.i, %.sroa.0.43.i.i
+  %3 = zext nneg i8 %i.qa to i64
+  %4 = shl nuw nsw i64 %3, 42
+  %5 = or i64 %.sroa.0.43.i.i, %4
+  %.sroa.0.45666.i.i.a = or i64 %5, 18014398509481984
   br label %bb.al
 
 .thread376.i.i:                                   ; preds = %_ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit183.i.i, %bb.ak, %bb.ai
@@ -323,13 +324,13 @@ _ZNK4llvm16AArch64Subtarget14isSVEAvailableEv.exit183.i.i: ; preds = %bb.ak
   %i.qc = load i8, ptr %i.qb, align 1, !tbaa !842, !range !238, !noundef !239
   %i.qd = zext nneg i8 %i.qc to i64
   %i.qe = shl nuw nsw i64 %i.qd, 54
-  %.sroa.0.44381.i.i = or i64 %i.qe, %.sroa.0.43.i.i ; 2 uses
   %i.qf = getelementptr inbounds nuw i8, ptr %1, i64 514
   %i.qg = load i8, ptr %i.qf, align 2, !tbaa !799, !range !238, !noundef !239 ; 2 uses
   %i.qh = or i8 %i.qg, %i.fi
-  %brmerge576.not.i.i = icmp eq i8 %i.qh, 0
-  %i.qi = or i64 %.sroa.0.44381.i.i, 4398046511104
-  %.sroa.0.45.i.i = select i1 %brmerge576.not.i.i, i64 %.sroa.0.44381.i.i, i64 %i.qi ; 2 uses
+  %6 = zext nneg i8 %i.qh to i64
+  %7 = shl nuw nsw i64 %6, 42
+  %i.qi = or disjoint i64 %i.qe, %7
+  %.sroa.0.45.i.i = or i64 %i.qi, %.sroa.0.43.i.i ; 2 uses
   br i1 %i.cs, label %.thread376.i._crit_edge.i, label %.thread410.i.i
 
 .thread376.i._crit_edge.i:                        ; preds = %.thread376.i.i
@@ -370,17 +371,17 @@ bb.an:                                            ; preds = %_ZNK4llvm16AArch64S
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %.thread410.i.i
-  %.sroa.0.46.ph.i.i = phi i64 [ %.sroa.0.45667.i.i.a, %.thread410.i.i ], [ %i.qq, %bb.an ] ; 2 uses
+  %.sroa.0.46.ph.i.i = phi i64 [ %.sroa.0.45667.i.i.a, %.thread410.i.i ], [ %i.qq, %bb.an ]
   %i.qr = getelementptr inbounds nuw i8, ptr %1, i64 519
   %i.qs = load i8, ptr %i.qr, align 1, !tbaa !800, !range !238, !noundef !239 ; 3 uses
   %i.qt = or i8 %i.qs, %i.fi
-  %brmerge577.not.i.i = icmp eq i8 %i.qt, 0
-  %3 = or i64 %.sroa.131.26.i.i, 256
-  %.sroa.131.27.ph.i.i = select i1 %brmerge577.not.i.i, i64 %.sroa.131.26.i.i, i64 %3 ; 3 uses
+  %8 = zext nneg i8 %i.qt to i64
+  %9 = shl nuw nsw i64 %8, 8
+  %.sroa.131.27.ph.i.i = or i64 %9, %.sroa.131.26.i.i ; 3 uses
   %i.qu = or i8 %i.qs, %i.gv
-  %brmerge578.not.i.i = icmp eq i8 %i.qu, 0
-  %4 = or i64 %.sroa.0.46.ph.i.i, 281474976710656
-  %.sroa.0.47.ph.i.i = select i1 %brmerge578.not.i.i, i64 %.sroa.0.46.ph.i.i, i64 %4 ; 2 uses
+  %10 = zext nneg i8 %i.qu to i64
+  %11 = shl nuw nsw i64 %10, 48
+  %.sroa.0.47.ph.i.i = or i64 %11, %.sroa.0.46.ph.i.i ; 2 uses
   %i.qv = trunc nuw i8 %i.qs to i1
   br i1 %i.qv, label %.thread673.i.i, label %.thread670.i.i
 
