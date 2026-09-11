@@ -205,8 +205,8 @@ _ZNK5boost6system10error_codecvbEv.exit.thread80: ; preds = %_ZN5boost5beast6det
   %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.bo = load ptr, ptr %0, align 8, !tbaa !92    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #38
-  %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 1024 ; 3 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 1032 ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 1024 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 1032
   %i.br = getelementptr inbounds nuw i8, ptr %11, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, i8 0, i64 16, i1 false)
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !520
@@ -223,11 +223,9 @@ _ZNK5boost6system10error_codecvbEv.exit.thread80: ; preds = %_ZN5boost5beast6det
   store ptr %.sroa.0.0.copyload.i.i.i.i.i.1, ptr %i.bt, align 8, !tbaa !246
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   store i64 %.sroa.4.0.copyload.i.i.i.i.i.1, ptr %i.bu, align 8, !tbaa !777
-  %i.bv = add i64 %.sroa.4.0.copyload.i.i.i.i.i.1, %i.cc ; 4 uses
-  store i64 %i.bv, ptr %i.bq, align 8, !tbaa !847
+  %i.bv = add i64 %.sroa.4.0.copyload.i.i.i.i.i.1, %i.cc ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i114, i64 32 ; 2 uses
-  %i.bx = add nuw nsw i64 %i.by, 2                ; 4 uses
-  store i64 %i.bx, ptr %i.bp, align 8, !tbaa !848
+  %i.bx = add nuw nsw i64 %i.by, 2                ; 5 uses
   %.not.i.i.i.i.i.1 = icmp eq ptr %i.bw, %.0.v.i.i.i.i.i.i.sroa.sel.v.sroa.sel.v.sroa.sel
   br i1 %.not.i.i.i.i.i.1, label %_ZN5boost5beast12basic_streamINS_4asio2ip3tcpENS2_15any_io_executorENS0_21unlimited_rate_policyEE9read_someINS0_6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit, label %.lr.ph.i.i.i.i.i.1, !llvm.loop !60
 
@@ -246,17 +244,18 @@ bb.t:                                             ; preds = %.lr.ph.i.i.i.i.i.1,
   store ptr %.sroa.0.0.copyload.i.i.i.i.i, ptr %i.ca, align 8, !tbaa !246
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i64 %.sroa.4.0.copyload.i.i.i.i.i, ptr %i.cb, align 8, !tbaa !777
-  %i.cc = add i64 %.sroa.4.0.copyload.i.i.i.i.i, %i.bz ; 3 uses
-  store i64 %i.cc, ptr %i.bq, align 8, !tbaa !847
+  %i.cc = add i64 %.sroa.4.0.copyload.i.i.i.i.i, %i.bz ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i114, i64 16 ; 2 uses
   %i.ce = or disjoint i64 %i.by, 1                ; 3 uses
-  store i64 %i.ce, ptr %i.bp, align 8, !tbaa !848
   %.not.i.i.i.i.i = icmp eq ptr %i.cd, %.0.v.i.i.i.i.i.i.sroa.sel.v.sroa.sel.v.sroa.sel
   br i1 %.not.i.i.i.i.i, label %_ZN5boost5beast12basic_streamINS_4asio2ip3tcpENS2_15any_io_executorENS0_21unlimited_rate_policyEE9read_someINS0_6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !60
 
 _ZN5boost5beast12basic_streamINS_4asio2ip3tcpENS2_15any_io_executorENS0_21unlimited_rate_policyEE9read_someINS0_6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit: ; preds = %.lr.ph.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i, %bb.t
-  %.lcssa = phi i64 [ %i.bv, %.lr.ph.i.i.i.i.i.1 ], [ %i.cc, %bb.t ], [ %i.bv, %.lr.ph.i.i.i.i.i ]
+  %12 = phi i64 [ %i.bx, %.lr.ph.i.i.i.i.i.1 ], [ %i.ce, %bb.t ], [ %i.bx, %.lr.ph.i.i.i.i.i ]
+  %.lcssa = phi i64 [ %i.bv, %.lr.ph.i.i.i.i.i.1 ], [ %i.cc, %bb.t ], [ %i.bv, %.lr.ph.i.i.i.i.i ] ; 2 uses
   %i.cf = phi i64 [ 64, %.lr.ph.i.i.i.i.i.1 ], [ %i.ce, %bb.t ], [ %i.bx, %.lr.ph.i.i.i.i.i ]
+  store i64 %.lcssa, ptr %i.bq, align 8, !tbaa !847
+  store i64 %12, ptr %i.bp, align 8, !tbaa !848
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bo, i64 24
   %i.ch = load i32, ptr %i.cg, align 8, !tbaa !481
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bo, i64 28
@@ -659,8 +658,8 @@ _ZNK5boost6system10error_codecvbEv.exit.thread80: ; preds = %_ZN5boost5beast6det
   %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.bo = load ptr, ptr %0, align 8, !tbaa !92    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #38
-  %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 1024 ; 3 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 1032 ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 1024 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 1032
   %i.br = getelementptr inbounds nuw i8, ptr %11, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, i8 0, i64 16, i1 false)
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !520
@@ -677,11 +676,9 @@ _ZNK5boost6system10error_codecvbEv.exit.thread80: ; preds = %_ZN5boost5beast6det
   store ptr %.sroa.0.0.copyload.i.i.i.i.i.1, ptr %i.bt, align 8, !tbaa !246
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   store i64 %.sroa.4.0.copyload.i.i.i.i.i.1, ptr %i.bu, align 8, !tbaa !777
-  %i.bv = add i64 %.sroa.4.0.copyload.i.i.i.i.i.1, %i.cc ; 4 uses
-  store i64 %i.bv, ptr %i.bq, align 8, !tbaa !847
+  %i.bv = add i64 %.sroa.4.0.copyload.i.i.i.i.i.1, %i.cc ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i114, i64 32 ; 2 uses
-  %i.bx = add nuw nsw i64 %i.by, 2                ; 4 uses
-  store i64 %i.bx, ptr %i.bp, align 8, !tbaa !848
+  %i.bx = add nuw nsw i64 %i.by, 2                ; 5 uses
   %.not.i.i.i.i.i.1 = icmp eq ptr %i.bw, %.0.v.i.i.i.i.i.i.sroa.sel.v.sroa.sel.v.sroa.sel
   br i1 %.not.i.i.i.i.i.1, label %_ZN5boost5beast12basic_streamINS_4asio2ip3tcpENS2_15any_io_executorENS0_21unlimited_rate_policyEE9read_someINS0_6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit, label %.lr.ph.i.i.i.i.i.1, !llvm.loop !60
 
@@ -700,17 +697,18 @@ bb.t:                                             ; preds = %.lr.ph.i.i.i.i.i.1,
   store ptr %.sroa.0.0.copyload.i.i.i.i.i, ptr %i.ca, align 8, !tbaa !246
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i64 %.sroa.4.0.copyload.i.i.i.i.i, ptr %i.cb, align 8, !tbaa !777
-  %i.cc = add i64 %.sroa.4.0.copyload.i.i.i.i.i, %i.bz ; 3 uses
-  store i64 %i.cc, ptr %i.bq, align 8, !tbaa !847
+  %i.cc = add i64 %.sroa.4.0.copyload.i.i.i.i.i, %i.bz ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i114, i64 16 ; 2 uses
   %i.ce = or disjoint i64 %i.by, 1                ; 3 uses
-  store i64 %i.ce, ptr %i.bp, align 8, !tbaa !848
   %.not.i.i.i.i.i = icmp eq ptr %i.cd, %.0.v.i.i.i.i.i.i.sroa.sel.v.sroa.sel.v.sroa.sel
   br i1 %.not.i.i.i.i.i, label %_ZN5boost5beast12basic_streamINS_4asio2ip3tcpENS2_15any_io_executorENS0_21unlimited_rate_policyEE9read_someINS0_6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !60
 
 _ZN5boost5beast12basic_streamINS_4asio2ip3tcpENS2_15any_io_executorENS0_21unlimited_rate_policyEE9read_someINS0_6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit: ; preds = %.lr.ph.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i, %bb.t
-  %.lcssa = phi i64 [ %i.bv, %.lr.ph.i.i.i.i.i.1 ], [ %i.cc, %bb.t ], [ %i.bv, %.lr.ph.i.i.i.i.i ]
+  %12 = phi i64 [ %i.bx, %.lr.ph.i.i.i.i.i.1 ], [ %i.ce, %bb.t ], [ %i.bx, %.lr.ph.i.i.i.i.i ]
+  %.lcssa = phi i64 [ %i.bv, %.lr.ph.i.i.i.i.i.1 ], [ %i.cc, %bb.t ], [ %i.bv, %.lr.ph.i.i.i.i.i ] ; 2 uses
   %i.cf = phi i64 [ 64, %.lr.ph.i.i.i.i.i.1 ], [ %i.ce, %bb.t ], [ %i.bx, %.lr.ph.i.i.i.i.i ]
+  store i64 %.lcssa, ptr %i.bq, align 8, !tbaa !847
+  store i64 %12, ptr %i.bp, align 8, !tbaa !848
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bo, i64 24
   %i.ch = load i32, ptr %i.cg, align 8, !tbaa !481
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bo, i64 28

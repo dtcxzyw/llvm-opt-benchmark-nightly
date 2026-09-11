@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %_ZNSt3__16vectorIjN
   %i.hq = phi ptr [ %i.dh, %._crit_edge260 ], [ %i.jp, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ] ; 2 uses
   %i.hr = phi ptr [ %i.di, %._crit_edge260 ], [ %.0.i149, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ]
   %i.hs = phi ptr [ %i.dg, %._crit_edge260 ], [ %i.jo, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ] ; 2 uses
-  %i.ht = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.ht = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 6 uses
   %i.hu = icmp eq ptr %i.df, %i.de
   %.pre300 = load ptr, ptr %6, align 8            ; 5 uses
   br i1 %i.hu, label %.preheader, label %.lr.ph265
@@ -347,14 +347,15 @@ _ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit: ; preds = %bb
   br i1 %i.js, label %bb.af, label %.preheader217, !llvm.loop !53
 
 .preheader.loopexit:                              ; preds = %bb.ba
+  store ptr %.0.i176434, ptr %i.ht, align 8, !tbaa !100
   %.pre299 = load ptr, ptr %6, align 8, !tbaa !98
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %.preheader217
-  %i.jt = phi ptr [ %11, %.preheader.loopexit ], [ %i.hq, %.preheader217 ]
-  %i.ju = phi ptr [ %14, %.preheader.loopexit ], [ %i.hs, %.preheader217 ]
-  %i.jv = phi ptr [ %12, %.preheader.loopexit ], [ %i.dd, %.preheader217 ]
-  %i.jw = phi ptr [ %10, %.preheader.loopexit ], [ %i.df, %.preheader217 ]
+  %i.jt = phi ptr [ %8, %.preheader.loopexit ], [ %i.hq, %.preheader217 ]
+  %i.ju = phi ptr [ %11, %.preheader.loopexit ], [ %i.hs, %.preheader217 ]
+  %i.jv = phi ptr [ %9, %.preheader.loopexit ], [ %i.dd, %.preheader217 ]
+  %i.jw = phi ptr [ %7, %.preheader.loopexit ], [ %i.df, %.preheader217 ]
   %i.jx = phi ptr [ %.pre299, %.preheader.loopexit ], [ %.pre300, %.preheader217 ] ; 2 uses
   %i.jy = load ptr, ptr %i.g, align 8, !tbaa !81
   %i.jz = load ptr, ptr %0, align 8, !tbaa !80    ; 3 uses
@@ -365,20 +366,19 @@ _ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit: ; preds = %bb
   br label %bb.bb
 
 bb.al:                                            ; preds = %.lr.ph265, %bb.ba
-  %i.ke = phi ptr [ %i.df, %.lr.ph265 ], [ %10, %bb.ba ] ; 10 uses
-  %i.kf = phi ptr [ %i.hq, %.lr.ph265 ], [ %11, %bb.ba ] ; 7 uses
-  %i.kg = phi ptr [ %i.dd, %.lr.ph265 ], [ %12, %bb.ba ] ; 7 uses
-  %i.kh = phi ptr [ %i.hr, %.lr.ph265 ], [ %13, %bb.ba ] ; 4 uses
-  %i.ki = phi ptr [ %i.hs, %.lr.ph265 ], [ %14, %bb.ba ] ; 11 uses
-  %i.kj = phi ptr [ %i.de, %.lr.ph265 ], [ %9, %bb.ba ] ; 3 uses
-  %i.kk = getelementptr inbounds i8, ptr %i.kj, i64 -4 ; 11 uses
+  %i.ke = phi ptr [ %i.df, %.lr.ph265 ], [ %7, %bb.ba ] ; 10 uses
+  %i.kf = phi ptr [ %i.hq, %.lr.ph265 ], [ %8, %bb.ba ] ; 9 uses
+  %i.kg = phi ptr [ %i.dd, %.lr.ph265 ], [ %9, %bb.ba ] ; 7 uses
+  %i.kh = phi ptr [ %i.hr, %.lr.ph265 ], [ %10, %bb.ba ] ; 4 uses
+  %i.ki = phi ptr [ %i.hs, %.lr.ph265 ], [ %11, %bb.ba ] ; 13 uses
+  %i.kj = phi ptr [ %i.de, %.lr.ph265 ], [ %.0.i176434, %bb.ba ] ; 3 uses
+  %i.kk = getelementptr inbounds i8, ptr %i.kj, i64 -4 ; 15 uses
   %i.kl = load i32, ptr %i.kk, align 4, !tbaa !82 ; 6 uses
-  store ptr %i.kk, ptr %i.ht, align 8, !tbaa !100
   %i.km = icmp eq ptr %i.ki, %i.kh
   br i1 %i.km, label %.thread215, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.kn = getelementptr inbounds i8, ptr %i.kh, i64 -4 ; 11 uses
+  %i.kn = getelementptr inbounds i8, ptr %i.kh, i64 -4 ; 13 uses
   %i.ko = load i32, ptr %i.kn, align 4, !tbaa !82
   store ptr %i.kn, ptr %i.hv, align 8, !tbaa !100
   %i.kp = zext i32 %i.ko to i64                   ; 2 uses
@@ -418,6 +418,7 @@ bb.ap:                                            ; preds = %bb.an
   br i1 %i.li, label %bb.aq, label %_ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8nn180100Em.exit.i.i150
 
 bb.aq:                                            ; preds = %bb.ap
+  store ptr %i.kk, ptr %i.ht, align 8, !tbaa !100
   call void @_ZNKSt3__16vectorIjNS_9allocatorIjEEE20__throw_length_errorB8nn180100Ev(ptr noundef nonnull align 8 dereferenceable(24) %4) #10
   unreachable
 
@@ -434,6 +435,7 @@ _ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8nn180100Em.exit.i.i150: ; pr
   br i1 %i.ln, label %bb.ar, label %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIjEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i.i.i154
 
 bb.ar:                                            ; preds = %_ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8nn180100Em.exit.i.i150
+  store ptr %i.kk, ptr %i.ht, align 8, !tbaa !100
   tail call void @_ZSt28__throw_bad_array_new_lengthB8nn180100v() #10
   unreachable
 
@@ -531,7 +533,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au
   store i32 %i.kl, ptr %i.kk, align 4, !tbaa !82
-  br label %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177
+  br label %bb.ba
 
 bb.aw:                                            ; preds = %bb.au
   %i.mr = ptrtoint ptr %i.kk to i64
@@ -543,6 +545,7 @@ bb.aw:                                            ; preds = %bb.au
   br i1 %i.mw, label %bb.ax, label %_ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8nn180100Em.exit.i.i164
 
 bb.ax:                                            ; preds = %bb.aw
+  store ptr %i.kk, ptr %i.ht, align 8, !tbaa !100
   call void @_ZNKSt3__16vectorIjNS_9allocatorIjEEE20__throw_length_errorB8nn180100Ev(ptr noundef nonnull align 8 dereferenceable(24) %5) #10
   unreachable
 
@@ -559,6 +562,7 @@ _ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8nn180100Em.exit.i.i164: ; pr
   br i1 %i.nb, label %bb.ay, label %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIjEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i.i.i168
 
 bb.ay:                                            ; preds = %_ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8nn180100Em.exit.i.i164
+  store ptr %i.kk, ptr %i.ht, align 8, !tbaa !100
   tail call void @_ZSt28__throw_bad_array_new_lengthB8nn180100v() #10
   unreachable
 
@@ -633,27 +637,20 @@ _ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173: 
   store ptr %storemerge.i.i174, ptr %5, align 8, !tbaa !84
   store ptr %i.nf, ptr %i.hw, align 8, !tbaa !84
   %.not.i4.i.i175 = icmp eq ptr %i.ke, null
-  br i1 %.not.i4.i.i175, label %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177, label %bb.az
+  br i1 %.not.i4.i.i175, label %bb.ba, label %bb.az
 
 bb.az:                                            ; preds = %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ke, i64 noundef %i.my) #12
-  br label %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177
-
-_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177: ; preds = %bb.av, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173, %bb.az
-  %7 = phi ptr [ %i.ke, %bb.av ], [ %storemerge.i.i174, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %storemerge.i.i174, %bb.az ]
-  %8 = phi ptr [ %i.kg, %bb.av ], [ %i.nf, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %i.nf, %bb.az ]
-  %.0.i176 = phi ptr [ %i.kj, %bb.av ], [ %i.ng, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %i.ng, %bb.az ] ; 2 uses
-  store ptr %.0.i176, ptr %i.ht, align 8, !tbaa !100
   br label %bb.ba
 
-bb.ba:                                            ; preds = %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177, %bb.at
-  %9 = phi ptr [ %i.kk, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %.0.i176, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177 ], [ %i.kk, %bb.at ] ; 2 uses
-  %10 = phi ptr [ %i.ke, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %7, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177 ], [ %i.ke, %bb.at ] ; 3 uses
-  %11 = phi ptr [ %i.mn, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.kf, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177 ], [ %i.kf, %bb.at ] ; 2 uses
-  %12 = phi ptr [ %i.kg, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %8, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177 ], [ %i.kg, %bb.at ] ; 2 uses
-  %13 = phi ptr [ %.0.i162, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.kn, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177 ], [ %i.kn, %bb.at ]
-  %14 = phi ptr [ %i.mo, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.ki, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177 ], [ %i.ki, %bb.at ] ; 2 uses
-  %i.ob = icmp eq ptr %10, %9
+bb.ba:                                            ; preds = %bb.az, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173, %bb.av, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163, %bb.at
+  %.0.i176434 = phi ptr [ %i.kk, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.kk, %bb.at ], [ %i.kj, %bb.av ], [ %i.ng, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %i.ng, %bb.az ] ; 3 uses
+  %7 = phi ptr [ %i.ke, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.ke, %bb.at ], [ %i.ke, %bb.av ], [ %storemerge.i.i174, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %storemerge.i.i174, %bb.az ] ; 3 uses
+  %8 = phi ptr [ %i.mn, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.kf, %bb.at ], [ %i.kf, %bb.av ], [ %i.kf, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %i.kf, %bb.az ] ; 2 uses
+  %9 = phi ptr [ %i.kg, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.kg, %bb.at ], [ %i.kg, %bb.av ], [ %i.nf, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %i.nf, %bb.az ] ; 2 uses
+  %10 = phi ptr [ %.0.i162, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.kn, %bb.at ], [ %i.kn, %bb.av ], [ %i.kn, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %i.kn, %bb.az ]
+  %11 = phi ptr [ %i.mo, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit163 ], [ %i.ki, %bb.at ], [ %i.ki, %bb.av ], [ %i.ki, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i173 ], [ %i.ki, %bb.az ] ; 2 uses
+  %i.ob = icmp eq ptr %7, %.0.i176434
   br i1 %i.ob, label %.preheader.loopexit, label %bb.al
 
 bb.bb:                                            ; preds = %.preheader, %bb.bi
@@ -724,6 +721,7 @@ bb.bi:                                            ; preds = %bb.bg, %bb.bh
   br i1 %i.pj, label %bb.bb, label %.thread215.thread, !llvm.loop !74
 
 .thread215:                                       ; preds = %bb.al
+  store ptr %i.kk, ptr %i.ht, align 8, !tbaa !100
   %.not.i.i = icmp eq ptr %.pre300, null
   br i1 %.not.i.i, label %_ZNSt3__16vectorIjNS_9allocatorIjEEED2B8nn180100Ev.exit, label %.thread215.thread
 

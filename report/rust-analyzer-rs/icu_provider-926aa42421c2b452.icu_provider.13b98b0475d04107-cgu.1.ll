@@ -204,10 +204,10 @@ _RNCINvXsd_NtCs96xUavsWfLi_15icu_locale_core4dataNtB8_10DataLocaleNtCs8xIf8eOPpr
   %i.b = alloca [136 x i8], align 8               ; 5 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
   %i.d = alloca [1 x i8], align 1                 ; 10 uses
-  %i.e = alloca [16 x i8], align 8                ; 22 uses
+  %i.e = alloca [16 x i8], align 8                ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store ptr %0, ptr %i.e, align 8
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 5 uses
   store i64 %1, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !5, !noundef !5 ; 6 uses
@@ -353,15 +353,13 @@ bb.o:                                             ; preds = %_RINvMs9_NtCs96xUav
 .lr.ph.i:                                         ; preds = %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i, %.lr.ph.preheader.i
   %.sroa.4.0.i8691.i = phi i64 [ %.sroa.4.0.i.i, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i ], [ %.promoted.i, %.lr.ph.preheader.i ] ; 3 uses
   %.sroa.0.0.i8890.i = phi ptr [ %.sroa.0.0.i.i, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i ], [ %.promoted87.i, %.lr.ph.preheader.i ] ; 4 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i8890.i, i64 1 ; 5 uses
-  %i.ba = add i64 %.sroa.4.0.i8691.i, -1          ; 7 uses
-  store ptr %i.az, ptr %i.e, align 8, !alias.scope !172, !captures !8
-  store i64 %i.ba, ptr %i.f, align 8, !alias.scope !172
+  %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i8890.i, i64 1 ; 6 uses
+  %i.ba = add i64 %.sroa.4.0.i8691.i, -1          ; 8 uses
   %i.bb = load i8, ptr %.sroa.0.0.i8890.i, align 1, !noalias !172, !noundef !5 ; 5 uses
   %i.bc = lshr i8 %i.bb, 5
   switch i8 %i.bc, label %bb.ao [
     i8 4, label %bb.p
-    i8 5, label %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit
+    i8 5, label %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit.sink.split
     i8 6, label %bb.q
     i8 7, label %bb.q
   ]
@@ -394,12 +392,10 @@ _RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.thread.i: ; preds =
   br i1 %i.bi, label %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i, label %.preheader.i.i
 
 _RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i: ; preds = %.lr.ph, %bb.p
-  %.sroa.4.0.i.i = phi i64 [ %i.ba, %bb.p ], [ %i.bg, %.lr.ph ] ; 3 uses
+  %.sroa.4.0.i.i = phi i64 [ %i.ba, %bb.p ], [ %i.bg, %.lr.ph ] ; 2 uses
   %.sroa.0.0.i.i = phi ptr [ %i.az, %bb.p ], [ %i.bf, %.lr.ph ] ; 2 uses
-  store ptr %.sroa.0.0.i.i, ptr %i.e, align 8, !alias.scope !172, !captures !8
-  store i64 %.sroa.4.0.i.i, ptr %i.f, align 8, !alias.scope !172
   %.not.i8 = icmp eq i64 %.sroa.4.0.i.i, 0
-  br i1 %.not.i8, label %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit, label %.lr.ph.i
+  br i1 %.not.i8, label %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit.sink.split, label %.lr.ph.i
 
 bb.q:                                             ; preds = %.lr.ph.i, %.lr.ph.i
   %i.bj = and i8 %i.bb, 31
@@ -446,7 +442,7 @@ _RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta2.exit.i: ; preds = %.preh
   %.not40.i = icmp ugt i64 %spec.store.select.i, %.sroa.4.0.i50.i
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i51.i, i64 %spec.store.select.i
   %.sroa.030.0.i = select i1 %.not40.i, ptr inttoptr (i64 1 to ptr), ptr %i.cb ; 8 uses
-  %.sroa.8.0.i = call i64 @llvm.umin.i64(i64 %spec.store.select.i, i64 %.sroa.4.0.i50.i) ; 6 uses
+  %.sroa.8.0.i = call i64 @llvm.umin.i64(i64 %spec.store.select.i, i64 %.sroa.4.0.i50.i) ; 7 uses
   %.sroa.331.0.i = call i64 @llvm.usub.sat.i64(i64 %.sroa.4.0.i50.i, i64 %spec.store.select.i) ; 9 uses
   switch i64 %.sroa.8.0.i, label %.lr.ph.i.i [
     i64 0, label %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit.sink.split
@@ -746,16 +742,19 @@ bb.an:                                            ; preds = %bb.am
   unreachable
 
 bb.ao:                                            ; preds = %.lr.ph.i
+  store ptr %i.az, ptr %i.e, align 8, !alias.scope !172
+  store i64 %i.ba, ptr %i.f, align 8, !alias.scope !172
   %i.gh = icmp eq i8 %i.bb, 30
   br i1 %i.gh, label %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit, label %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit.sink.split
 
-_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit.sink.split: ; preds = %bb.ao, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta2.exit.i, %bb.r, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.thread.i
-  %scevgep.i.le.i.sink = phi ptr [ %scevgep.i.le.i, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.thread.i ], [ inttoptr (i64 1 to ptr), %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta2.exit.i ], [ inttoptr (i64 1 to ptr), %bb.r ], [ inttoptr (i64 1 to ptr), %bb.ao ]
-  store ptr %scevgep.i.le.i.sink, ptr %i.e, align 8, !alias.scope !172
-  store i64 0, ptr %i.f, align 8, !alias.scope !172
+_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit.sink.split: ; preds = %.lr.ph.i, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i, %bb.ao, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta2.exit.i, %bb.r, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.thread.i
+  %.sroa.0.0.i.i34.sink = phi ptr [ inttoptr (i64 1 to ptr), %bb.ao ], [ %scevgep.i.le.i, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.thread.i ], [ inttoptr (i64 1 to ptr), %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta2.exit.i ], [ inttoptr (i64 1 to ptr), %bb.r ], [ %.sroa.0.0.i.i, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i ], [ %i.az, %.lr.ph.i ]
+  %.sink = phi i64 [ 0, %bb.ao ], [ 0, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.thread.i ], [ %.sroa.8.0.i, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta2.exit.i ], [ 0, %bb.r ], [ 0, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i ], [ %i.ba, %.lr.ph.i ]
+  store ptr %.sroa.0.0.i.i34.sink, ptr %i.e, align 8, !alias.scope !172
+  store i64 %.sink, ptr %i.f, align 8, !alias.scope !172
   br label %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit
 
-_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit: ; preds = %.lr.ph.i, %_RNvNtCsl2c274gG30Y_8zerotrie6varint17read_varint_meta3.exit.i, %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit.sink.split, %bb.am, %bb.o, %bb.ao
+_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit: ; preds = %_RINvNtCsl2c274gG30Y_8zerotrie6reader18step_parameterizedINtNtB4_8zerotrie19ZeroTrieSimpleAsciiShEECs1GZEXNOm2AR_12icu_provider.exit.sink.split, %bb.am, %bb.o, %bb.ao
   %i.gi = call noundef zeroext i1 @_RNvXs4_NtCsl2c274gG30Y_8zerotrie6cursorNtB5_25ZeroTrieSimpleAsciiCursorNtNtCshzWfHUSfYae_4core3fmt5Write9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ay, i64 noundef %i.aw)
   br i1 %i.gi, label %.loopexit, label %.preheader
 

@@ -204,8 +204,8 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 4                   ; 10 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 9 uses
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !125  ; 10 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 7 uses
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !125  ; 12 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.l = load i32, ptr %i.k, align 8, !tbaa !106
   switch i32 %i.l, label %.loopexit [
@@ -608,30 +608,22 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %i.kl, label %.preheader158, label %.loopexit
 
 .preheader158:                                    ; preds = %bb.cm, %bb.cn
-  %i.km = phi i32 [ %9, %bb.cn ], [ %i.j, %bb.cm ]
-  %i.kn = add nsw i32 %i.km, 1                    ; 4 uses
-  store i32 %i.kn, ptr %i.i, align 4, !tbaa !125
+  %i.km = phi i32 [ %spec.select171, %bb.cn ], [ %i.j, %bb.cm ]
+  %i.kn = add nsw i32 %i.km, 1                    ; 3 uses
   %.not78 = icmp eq i32 %i.kn, %i.j
-  br i1 %.not78, label %.loopexit, label %6
+  br i1 %.not78, label %.loopexit159, label %bb.cn
 
-6:                                                ; preds = %.preheader158
-  %7 = sext i32 %i.kn to i64
-  %.not79 = icmp ugt i64 %i.h, %7
-  br i1 %.not79, label %bb.cn, label %8
-
-8:                                                ; preds = %6
-  store i32 0, ptr %i.i, align 4, !tbaa !125
-  br label %bb.cn
-
-bb.cn:                                            ; preds = %8, %6
-  %9 = phi i32 [ 0, %8 ], [ %i.kn, %6 ]           ; 2 uses
-  %i.ko = sext i32 %9 to i64
+bb.cn:                                            ; preds = %.preheader158
+  %6 = sext i32 %i.kn to i64
+  %.not79 = icmp ugt i64 %i.h, %6
+  %spec.select171 = select i1 %.not79, i32 %i.kn, i32 0 ; 3 uses
+  %i.ko = sext i32 %spec.select171 to i64
   %i.kp = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.ko
   %i.kq = load ptr, ptr %i.kp, align 8, !tbaa !114
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kq, i64 80
   %i.ks = load i32, ptr %i.kr, align 8, !tbaa !106
   %i.kt = icmp eq i32 %i.ks, 3
-  br i1 %i.kt, label %.preheader158, label %.loopexit, !llvm.loop !740
+  br i1 %i.kt, label %.preheader158, label %.loopexit159, !llvm.loop !740
 
 bb.co:                                            ; preds = %bb.cl
   %i.ku = icmp ugt i64 %i.h, 1
@@ -639,33 +631,25 @@ bb.co:                                            ; preds = %bb.cl
 
 .preheader160:                                    ; preds = %bb.co
   %i.kv = trunc i64 %i.h to i32
-  %i.kw = add i32 %i.kv, -1                       ; 2 uses
+  %i.kw = add i32 %i.kv, -1
   br label %bb.cp
 
 bb.cp:                                            ; preds = %.preheader160, %bb.cq
-  %i.kx = phi i32 [ %i.j, %.preheader160 ], [ %13, %bb.cq ] ; 2 uses
-  %i.ky = add nsw i32 %i.kx, -1                   ; 3 uses
-  store i32 %i.ky, ptr %i.i, align 4, !tbaa !125
+  %i.kx = phi i32 [ %i.j, %.preheader160 ], [ %spec.select172, %bb.cq ] ; 2 uses
+  %i.ky = add nsw i32 %i.kx, -1                   ; 2 uses
   %.not = icmp eq i32 %i.ky, %i.j
-  br i1 %.not, label %.loopexit, label %10
+  br i1 %.not, label %.loopexit161, label %bb.cq
 
-10:                                               ; preds = %bb.cp
-  %11 = icmp slt i32 %i.kx, 1
-  br i1 %11, label %12, label %bb.cq
-
-12:                                               ; preds = %10
-  store i32 %i.kw, ptr %i.i, align 4, !tbaa !125
-  br label %bb.cq
-
-bb.cq:                                            ; preds = %12, %10
-  %13 = phi i32 [ %i.kw, %12 ], [ %i.ky, %10 ]    ; 2 uses
-  %i.kz = sext i32 %13 to i64
+bb.cq:                                            ; preds = %bb.cp
+  %7 = icmp slt i32 %i.kx, 1
+  %spec.select172 = select i1 %7, i32 %i.kw, i32 %i.ky ; 3 uses
+  %i.kz = sext i32 %spec.select172 to i64
   %i.la = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.kz
   %i.lb = load ptr, ptr %i.la, align 8, !tbaa !114
   %i.lc = getelementptr inbounds nuw i8, ptr %i.lb, i64 80
   %i.ld = load i32, ptr %i.lc, align 8, !tbaa !106
   %i.le = icmp eq i32 %i.ld, 3
-  br i1 %i.le, label %bb.cp, label %.loopexit, !llvm.loop !741
+  br i1 %i.le, label %bb.cp, label %.loopexit161, !llvm.loop !741
 
 bb.cr:                                            ; preds = %bb.cl
   %i.lf = sext i32 %i.j to i64                    ; 2 uses
@@ -770,8 +754,18 @@ _ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.cp, %bb.cq, %.preheader158, %bb.cn, %bb.cv, %.preheader157, %.thread153, %bb.cm, %bb.co, %bb.cr, %_ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.a, %bb.cs, %_ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit150, %bb.cu, %bb.ct
-  %.4 = phi i32 [ 2, %bb.cs ], [ 2, %_ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit150 ], [ 0, %bb.a ], [ 1, %bb.cu ], [ %., %.thread153 ], [ 0, %bb.cr ], [ 1, %bb.ct ], [ 1, %.preheader158 ], [ 0, %.preheader157 ], [ %.166221, %_ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ 0, %bb.cm ], [ 0, %bb.co ], [ 0, %bb.cv ], [ 1, %bb.cn ], [ 1, %bb.cq ], [ 1, %bb.cp ]
+.loopexit159:                                     ; preds = %bb.cn, %.preheader158
+  %8 = phi i32 [ %spec.select171, %bb.cn ], [ %i.j, %.preheader158 ]
+  store i32 %8, ptr %i.i, align 4, !tbaa !125
+  br label %.loopexit
+
+.loopexit161:                                     ; preds = %bb.cq, %bb.cp
+  %9 = phi i32 [ %spec.select172, %bb.cq ], [ %i.j, %bb.cp ]
+  store i32 %9, ptr %i.i, align 4, !tbaa !125
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.cv, %.preheader157, %.loopexit161, %.loopexit159, %.thread153, %bb.cm, %bb.co, %bb.cr, %_ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.a, %bb.cs, %_ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit150, %bb.cu, %bb.ct
+  %.4 = phi i32 [ 2, %bb.cs ], [ 2, %_ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit150 ], [ 0, %bb.a ], [ 1, %bb.cu ], [ %., %.thread153 ], [ 0, %bb.cr ], [ 1, %bb.ct ], [ 1, %.loopexit161 ], [ 1, %.loopexit159 ], [ %.166221, %_ZNSt12__shared_ptrIN12lldb_private6curses4MenuELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ 0, %bb.cm ], [ 0, %bb.co ], [ 0, %.preheader157 ], [ 0, %bb.cv ]
   ret i32 %.4
 }
 

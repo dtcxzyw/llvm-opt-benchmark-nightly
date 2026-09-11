@@ -205,8 +205,8 @@ bb.a:
   %i.h = add nsw i64 %i.f, %i.g
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 41 ; 3 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   br label %bb.b
@@ -251,13 +251,17 @@ bb.b:                                             ; preds = %"_ZN3tbb6detail2d06
   br i1 %i.ao, label %"_ZN3tbb6detail2d06invokeIRKZN4moldL9propagateESt4spanINS3_6DigestELm18446744073709551615EES6_S4_IjLm18446744073709551615EES7_E3$_0JRlEEENSt13invoke_resultIT_JDpT0_EE4typeEOSD_DpOSE_.exit.i.i.i.i.i", label %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.preheader.i.i.i.i.i:             ; preds = %bb.b
+  %.promoted.i.i.i.i.i = load i64, ptr %i.m, align 8, !tbaa !317
+  %.promoted3.i.i.i.i.i = load i64, ptr %i.k, align 8, !tbaa !318
+  %.promoted.i.pre.pre.i.i.i.i.i = load i64, ptr %i.l, align 8, !tbaa !319
   %.pre.i.i.i.i.i = load i8, ptr %i.i, align 8, !tbaa !313
-  %.promoted.i.pre.pre.i.i.i.i.i = load i64, ptr %i.m, align 8, !tbaa !317
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %._crit_edge.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i
-  %.promoted.i.pre.i.i.i.i.i = phi i64 [ %i.cf, %._crit_edge.i.i.i.i.i.i ], [ %.promoted.i.pre.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i ] ; 2 uses
   %2 = phi i8 [ %storemerge.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ], [ %.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i ] ; 2 uses
+  %.promoted6.i.i7.i.i.i.i.i = phi i64 [ %i.cj, %._crit_edge.i.i.i.i.i.i ], [ %.promoted.i.pre.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i ] ; 2 uses
+  %.promoted.i.pre.i.i.i.i.i = phi i64 [ %i.ci, %._crit_edge.i.i.i.i.i.i ], [ %.promoted3.i.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i ] ; 4 uses
+  %3 = phi i64 [ %i.cf, %._crit_edge.i.i.i.i.i.i ], [ %.promoted.i.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i ] ; 2 uses
   %.sroa.010.015.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.co, %._crit_edge.i.i.i.i.i.i ], [ %i.am, %.lr.ph.i.i.i.i.i.preheader.i.i.i.i.i ] ; 2 uses
   %i.ap = load i32, ptr %.sroa.010.015.i.i.i.i.i.i.i.i.i.i, align 4, !tbaa !147
   %i.aq = zext i32 %i.ap to i64
@@ -271,9 +275,7 @@ bb.b:                                             ; preds = %"_ZN3tbb6detail2d06
   br i1 %.not.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i, label %bb.c
 
 .lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i:    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
-  %.promoted29.i.pre.i.i.i.i.i = load i64, ptr %1, align 8
-  %.promoted30.i.pre.i.i.i.i.i = load i64, ptr %i.k, align 8, !tbaa !318
-  %.promoted31.i.pre.i.i.i.i.i = load i64, ptr %i.l, align 8, !tbaa !319
+  %.promoted31.i.pre.i.i.i.i.i = load i64, ptr %1, align 8
   br label %.lr.ph.i.i.i.i.i.i.preheader
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -282,21 +284,19 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ay = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.aw
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ay, ptr nonnull align 1 %i.at, i64 %i.ax, i1 false)
   %.0.copyload.i.i.i.i.i.i.i = load i64, ptr %i.n, align 8 ; 2 uses
-  %i.az = xor i64 %.0.copyload.i.i.i.i.i.i.i, %.promoted.i.pre.i.i.i.i.i ; 3 uses
-  %.promoted.i.i.i.i.i.i.i = load i64, ptr %1, align 8
-  %.promoted5.i.i.i.i.i.i.i = load i64, ptr %i.k, align 8, !tbaa !318 ; 3 uses
-  %.promoted6.i.i.i.i.i.i.i = load i64, ptr %i.l, align 8, !tbaa !319
-  %i.ba = add i64 %.promoted5.i.i.i.i.i.i.i, %.promoted.i.i.i.i.i.i.i ; 3 uses
-  %i.bb = call noundef i64 @llvm.fshl.i64(i64 %.promoted5.i.i.i.i.i.i.i, i64 %.promoted5.i.i.i.i.i.i.i, i64 13)
+  %i.az = xor i64 %.0.copyload.i.i.i.i.i.i.i, %3  ; 3 uses
+  %.promoted6.i.i.i.i.i.i.i = load i64, ptr %1, align 8
+  %i.ba = add i64 %.promoted6.i.i.i.i.i.i.i, %.promoted.i.pre.i.i.i.i.i ; 3 uses
+  %i.bb = call noundef i64 @llvm.fshl.i64(i64 %.promoted.i.pre.i.i.i.i.i, i64 %.promoted.i.pre.i.i.i.i.i, i64 13)
   %i.bc = xor i64 %i.ba, %i.bb                    ; 3 uses
   %i.bd = call noundef i64 @llvm.fshl.i64(i64 %i.ba, i64 %i.ba, i64 32)
-  %i.be = add i64 %.promoted6.i.i.i.i.i.i.i, %i.az ; 2 uses
+  %i.be = add i64 %i.az, %.promoted6.i.i7.i.i.i.i.i ; 2 uses
   %i.bf = call noundef i64 @llvm.fshl.i64(i64 %i.az, i64 %i.az, i64 16)
   %i.bg = xor i64 %i.be, %i.bf                    ; 3 uses
   %i.bh = add i64 %i.bg, %i.bd                    ; 2 uses
   %i.bi = call noundef i64 @llvm.fshl.i64(i64 %i.bg, i64 %i.bg, i64 21)
   %i.bj = xor i64 %i.bi, %i.bh                    ; 2 uses
-  %i.bk = add i64 %i.be, %i.bc                    ; 3 uses
+  %i.bk = add i64 %i.bc, %i.be                    ; 3 uses
   %i.bl = call noundef i64 @llvm.fshl.i64(i64 %i.bc, i64 %i.bc, i64 17)
   %i.bm = xor i64 %i.bk, %i.bl                    ; 2 uses
   %i.bn = call noundef i64 @llvm.fshl.i64(i64 %i.bk, i64 %i.bk, i64 32) ; 2 uses
@@ -311,10 +311,10 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   br label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.c, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i
-  %.ph = phi i64 [ %.promoted31.i.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bn, %bb.c ]
-  %.ph11 = phi i64 [ %.promoted30.i.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bm, %bb.c ]
-  %.ph12 = phi i64 [ %.promoted29.i.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bo, %bb.c ]
-  %.ph13 = phi i64 [ %.promoted.i.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bj, %bb.c ]
+  %.ph = phi i64 [ %.promoted6.i.i7.i.i.i.i.i, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bn, %bb.c ]
+  %.ph11 = phi i64 [ %.promoted.i.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bm, %bb.c ]
+  %.ph12 = phi i64 [ %.promoted31.i.pre.i.i.i.i.i, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bo, %bb.c ]
+  %.ph13 = phi i64 [ %3, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bj, %bb.c ]
   %.127.i.i.i.i.i.i.ph = phi i64 [ 16, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bq, %bb.c ]
   %.12026.i.i.i.i.i.i.ph = phi ptr [ %i.at, %.lr.ph.i.i.i.i.i..lr.ph.i_crit_edge.i.i.i.i.i ], [ %i.bp, %bb.c ]
   br label %.lr.ph.i.i.i.i.i.i
@@ -340,8 +340,8 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.cf = xor i64 %i.ce, %i.cd                    ; 3 uses
   %i.cg = add i64 %i.ca, %i.by                    ; 3 uses
   %i.ch = call noundef i64 @llvm.fshl.i64(i64 %i.by, i64 %i.by, i64 17)
-  %i.ci = xor i64 %i.cg, %i.ch                    ; 2 uses
-  %i.cj = call noundef i64 @llvm.fshl.i64(i64 %i.cg, i64 %i.cg, i64 32) ; 2 uses
+  %i.ci = xor i64 %i.cg, %i.ch                    ; 3 uses
+  %i.cj = call noundef i64 @llvm.fshl.i64(i64 %i.cg, i64 %i.cg, i64 32) ; 3 uses
   store i64 %i.ci, ptr %i.k, align 8, !tbaa !318
   store i64 %i.cj, ptr %i.l, align 8, !tbaa !319
   store i64 %i.cf, ptr %i.m, align 8, !tbaa !317
@@ -744,14 +744,14 @@ _ZNSt6atomicIPN3tbb6detail2d29list_nodeImEEE23compare_exchange_strongERS5_S5_St1
 ; Function Attrs: inlinehint mustprogress nounwind
 define internal fastcc void @_ZSt4sortIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EvSG_SG_T0_(ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #5 {
 bb.a:
-  %2 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 10 uses
+  %2 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 6 uses
   %3 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 6 uses
   %4 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 6 uses
   %5 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 6 uses
   %6 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 6 uses
   %7 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 6 uses
   %8 = alloca %"class.tbb::detail::d1::vector_iterator.506", align 8 ; 6 uses
-  %i.a = load ptr, ptr %0, align 8, !tbaa !241    ; 8 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !241    ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !242  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -811,57 +811,79 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3.i6.i.i.i, label %_ZN3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EppEv.exit.lr.ph.i.i.i, label %_ZSt26__unguarded_insertion_sortIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEEvSJ_SJ_T0_.exit.i.i
 
 _ZN3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EppEv.exit.lr.ph.i.i.i: ; preds = %bb.c
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 16
   br i1 %.fr.i.i, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.preheader.i, label %_ZN3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EppEv.exit.i.i.i
 
 _ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.preheader.i: ; preds = %_ZN3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EppEv.exit.lr.ph.i.i.i
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 8 uses
   br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i
 
-_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i: ; preds = %_ZSt25__unguarded_linear_insertIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops14_Val_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEEvSJ_T0_.exit.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.preheader.i
-  %.sroa.5.08.i.us.i.i = phi i64 [ %93, %_ZSt25__unguarded_linear_insertIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops14_Val_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEEvSJ_T0_.exit.i ], [ %i.x, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.preheader.i ] ; 4 uses
-  store ptr %i.a, ptr %2, align 8, !tbaa !241
-  store i64 %.sroa.5.08.i.us.i.i, ptr %i.ab, align 8, !tbaa !242
-  store ptr null, ptr %i.ac, align 8, !tbaa !243
-  %i.ae = or i64 %.sroa.5.08.i.us.i.i, 1
+_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i: ; preds = %bb.f, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.preheader.i
+  %.sroa.5.08.i.us.i.i = phi i64 [ %61, %bb.f ], [ %i.x, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.preheader.i ] ; 7 uses
+  %9 = or i64 %.sroa.5.08.i.us.i.i, 1
+  %10 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %9, i1 true)
+  %11 = xor i64 %10, 63                           ; 3 uses
+  %12 = load atomic ptr, ptr %i.ad acquire, align 8
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %11
+  %14 = load atomic ptr, ptr %13 acquire, align 8
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %.sroa.5.08.i.us.i.i
+  %16 = load ptr, ptr %15, align 8, !tbaa !130    ; 4 uses
+  %17 = add i64 %.sroa.5.08.i.us.i.i, -1          ; 4 uses
+  %18 = getelementptr i8, ptr %16, i64 48         ; 2 uses
+  %i.ae = or i64 %17, 1
   %i.af = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ae, i1 true)
-  %i.ag = xor i64 %i.af, 63
+  %i.ag = xor i64 %i.af, 63                       ; 2 uses
   %i.ah = load atomic ptr, ptr %i.ad acquire, align 8
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.ag
   %i.aj = load atomic ptr, ptr %i.ai acquire, align 8
-  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %.sroa.5.08.i.us.i.i
-  %.pr.i.i = load ptr, ptr %i.ac, align 8, !tbaa !243 ; 4 uses
-  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !130 ; 4 uses
-  %i.am = load ptr, ptr %2, align 8, !tbaa !241   ; 2 uses
-  %9 = load i64, ptr %i.ab, align 8, !tbaa !242   ; 6 uses
-  %10 = add i64 %9, -1                            ; 7 uses
-  %.not.i.i.i = icmp eq ptr %.pr.i.i, null        ; 2 uses
-  %11 = add i64 %9, -3
-  %12 = and i64 %11, %10
-  %13 = icmp eq i64 %12, 0
-  %14 = getelementptr inbounds i8, ptr %.pr.i.i, i64 -8 ; 3 uses
-  %15 = select i1 %.not.i.i.i, i1 true, i1 %13    ; 4 uses
-  %.sroa.14.1.i.i = select i1 %15, ptr null, ptr %14 ; 2 uses
-  %16 = getelementptr i8, ptr %i.al, i64 48       ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.am, i64 16 ; 6 uses
-  br i1 %15, label %bb.d, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %17
+  %.pr.i.i = load ptr, ptr %i.ak, align 8, !tbaa !130 ; 2 uses
+  %i.al = load ptr, ptr %16, align 8, !tbaa !249
+  %.val2.i.i.peel.i = load i32, ptr %18, align 8, !tbaa !250
+  %i.am = load ptr, ptr %.pr.i.i, align 8, !tbaa !249
+  %19 = getelementptr i8, ptr %.pr.i.i, i64 48
+  %.val4.i.i.peel.i = load i32, ptr %19, align 8, !tbaa !250
+  %20 = getelementptr i8, ptr %i.al, i64 128
+  %.val.val.i.i.peel.i = load i64, ptr %20, align 8, !tbaa !275
+  %21 = getelementptr i8, ptr %i.am, i64 128
+  %.val3.val.i.i.peel.i = load i64, ptr %21, align 8, !tbaa !275
+  %22 = shl i64 %.val.val.i.i.peel.i, 32
+  %23 = sext i32 %.val2.i.i.peel.i to i64
+  %24 = or i64 %22, %23
+  %25 = shl i64 %.val3.val.i.i.peel.i, 32
+  %26 = sext i32 %.val4.i.i.peel.i to i64
+  %27 = or i64 %25, %26
+  %28 = icmp slt i64 %24, %27
+  br i1 %28, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i
-  %18 = or i64 %10, 1
-  %19 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %18, i1 true)
-  %20 = xor i64 %19, 63
-  %i.an = load atomic ptr, ptr %17 acquire, align 8
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %20
+  %29 = load atomic ptr, ptr %i.ad acquire, align 8
+  %30 = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %i.ag
+  %31 = load atomic ptr, ptr %30 acquire, align 8
+  %32 = getelementptr inbounds nuw [8 x i8], ptr %31, i64 %17
+  %33 = load ptr, ptr %32, align 8, !tbaa !130
+  %i.an = load atomic ptr, ptr %i.ad acquire, align 8
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %11
   %i.ap = load atomic ptr, ptr %i.ao acquire, align 8
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %10
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %.sroa.5.08.i.us.i.i
+  store ptr %33, ptr %i.aq, align 8, !tbaa !130
+  %34 = add i64 %.sroa.5.08.i.us.i.i, -2
   br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i
 
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i: ; preds = %bb.d, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i
-  %.0.i.i.i.peel.i = phi ptr [ %i.aq, %bb.d ], [ %14, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i ]
-  %i.ar = load ptr, ptr %.0.i.i.i.peel.i, align 8, !tbaa !130 ; 2 uses
-  %.val.i.i.peel.i = load ptr, ptr %i.al, align 8, !tbaa !249
-  %.val2.i.i.peel.i.a = load i32, ptr %16, align 8, !tbaa !250
+_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i, %bb.d
+  %.sroa.6.0.i14.i = phi i64 [ %.sroa.6.0.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i ], [ %17, %bb.d ] ; 4 uses
+  %.sroa.6.0.i.i = phi i64 [ %57, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i ], [ %34, %bb.d ] ; 6 uses
+  %35 = or i64 %.sroa.6.0.i.i, 1
+  %36 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %35, i1 true)
+  %37 = xor i64 %36, 63
+  %38 = load atomic ptr, ptr %i.ad acquire, align 8
+  %39 = getelementptr inbounds nuw [8 x i8], ptr %38, i64 %37
+  %40 = load atomic ptr, ptr %39 acquire, align 8
+  %41 = getelementptr inbounds nuw [8 x i8], ptr %40, i64 %.sroa.6.0.i.i
+  %i.ar = load ptr, ptr %41, align 8, !tbaa !130  ; 2 uses
+  %.val.i.i.peel.i = load ptr, ptr %16, align 8, !tbaa !249
+  %.val2.i.i.peel.i.a = load i32, ptr %18, align 8, !tbaa !250
   %.val3.i.i.peel.i = load ptr, ptr %i.ar, align 8, !tbaa !249
   %i.as = getelementptr i8, ptr %i.ar, i64 48
   %.val4.i.i.peel.i.a = load i32, ptr %i.as, align 8, !tbaa !250
@@ -876,152 +898,43 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEv
   %i.az = sext i32 %.val4.i.i.peel.i.a to i64
   %i.ba = or i64 %i.ay, %i.az
   %i.bb = icmp slt i64 %i.ax, %i.ba
-  br i1 %i.bb, label %21, label %.loopexit.i
+  br i1 %i.bb, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i, label %bb.e
 
-21:                                               ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i
-  br i1 %15, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.i, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.thread.i
+_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i
+  %42 = or i64 %.sroa.6.0.i.i, 1
+  %43 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %42, i1 true)
+  %44 = xor i64 %43, 63
+  %45 = load atomic ptr, ptr %i.ad acquire, align 8
+  %46 = getelementptr inbounds nuw [8 x i8], ptr %45, i64 %44
+  %47 = load atomic ptr, ptr %46 acquire, align 8
+  %48 = getelementptr inbounds nuw [8 x i8], ptr %47, i64 %.sroa.6.0.i.i
+  %49 = load ptr, ptr %48, align 8, !tbaa !130
+  %50 = or i64 %.sroa.6.0.i14.i, 1
+  %51 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %50, i1 true)
+  %52 = xor i64 %51, 63
+  %53 = load atomic ptr, ptr %i.ad acquire, align 8
+  %54 = getelementptr inbounds nuw [8 x i8], ptr %53, i64 %52
+  %55 = load atomic ptr, ptr %54 acquire, align 8
+  %56 = getelementptr inbounds nuw [8 x i8], ptr %55, i64 %.sroa.6.0.i14.i
+  store ptr %49, ptr %56, align 8, !tbaa !130
+  %57 = add i64 %.sroa.6.0.i.i, -1
+  br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i, !llvm.loop !1013
 
-_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.thread.i: ; preds = %21
-  %22 = load ptr, ptr %14, align 8, !tbaa !130
-  br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i
-
-_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.i: ; preds = %21
-  %23 = or i64 %10, 1
-  %24 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %23, i1 true)
-  %25 = xor i64 %24, 63
-  %26 = load atomic ptr, ptr %17 acquire, align 8
-  %27 = getelementptr inbounds nuw [8 x i8], ptr %26, i64 %25
-  %28 = load atomic ptr, ptr %27 acquire, align 8
-  %29 = getelementptr inbounds nuw [8 x i8], ptr %28, i64 %10
-  %30 = load ptr, ptr %29, align 8, !tbaa !130    ; 2 uses
-  br i1 %.not.i.i.i, label %31, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i
-
-31:                                               ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.i
-  %32 = or i64 %9, 1
-  %33 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %32, i1 true)
-  %34 = xor i64 %33, 63
-  %35 = load atomic ptr, ptr %17 acquire, align 8
-  %36 = getelementptr inbounds nuw [8 x i8], ptr %35, i64 %34
-  %37 = load atomic ptr, ptr %36 acquire, align 8
-  %38 = getelementptr inbounds nuw [8 x i8], ptr %37, i64 %9
-  br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i
-
-_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i: ; preds = %31, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.thread.i
-  %39 = phi ptr [ %30, %31 ], [ %30, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.i ], [ %22, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.thread.i ]
-  %.0.i3.i.peel.i = phi ptr [ %38, %31 ], [ %.pr.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.i ], [ %.pr.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.peel.thread.i ]
-  store ptr %39, ptr %.0.i3.i.peel.i, align 8, !tbaa !130
-  store i64 %10, ptr %i.ab, align 8, !tbaa !242
-  store ptr %.sroa.14.1.i.i, ptr %i.ac, align 8, !tbaa !243
-  %40 = add i64 %9, -2                            ; 2 uses
-  %41 = add i64 %9, -4
-  %42 = and i64 %41, %40
-  br label %select.unfold.i
-
-select.unfold.i:                                  ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i
-  %.sink.i = phi i64 [ %82, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i ], [ %42, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i ]
-  %.sroa.14.0.i.be.sink.i = phi ptr [ %.sroa.14.0.i.be.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i ], [ %.sroa.14.1.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i ] ; 3 uses
-  %.sink21.i = phi i1 [ %45, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i ], [ %15, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i ]
-  %.sroa.6.0.i14.i = phi i64 [ %.sroa.6.0.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i ], [ %10, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i ] ; 2 uses
-  %.sroa.6.0.i.i = phi i64 [ %80, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i ], [ %40, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.peel.i ] ; 8 uses
-  %43 = icmp eq i64 %.sink.i, 0
-  %44 = getelementptr inbounds i8, ptr %.sroa.14.0.i.be.sink.i, i64 -8 ; 3 uses
-  %45 = select i1 %.sink21.i, i1 true, i1 %43     ; 4 uses
-  %.sroa.14.0.i.be.i = select i1 %45, ptr null, ptr %44 ; 2 uses
-  br i1 %45, label %46, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i
-
-46:                                               ; preds = %select.unfold.i
-  %47 = or i64 %.sroa.6.0.i.i, 1
-  %48 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %47, i1 true)
-  %49 = xor i64 %48, 63
-  %50 = load atomic ptr, ptr %17 acquire, align 8
-  %51 = getelementptr inbounds nuw [8 x i8], ptr %50, i64 %49
-  %52 = load atomic ptr, ptr %51 acquire, align 8
-  %53 = getelementptr inbounds nuw [8 x i8], ptr %52, i64 %.sroa.6.0.i.i
-  br label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i
-
-_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i: ; preds = %46, %select.unfold.i
-  %.0.i.i.i.i = phi ptr [ %53, %46 ], [ %44, %select.unfold.i ]
-  %54 = load ptr, ptr %.0.i.i.i.i, align 8, !tbaa !130 ; 2 uses
-  %.val.i.i.i = load ptr, ptr %i.al, align 8, !tbaa !249
-  %.val2.i.i.i = load i32, ptr %16, align 8, !tbaa !250
-  %.val3.i.i.i = load ptr, ptr %54, align 8, !tbaa !249
-  %55 = getelementptr i8, ptr %54, i64 48
-  %.val4.i.i.i = load i32, ptr %55, align 8, !tbaa !250
-  %56 = getelementptr i8, ptr %.val.i.i.i, i64 128
-  %.val.val.i.i.i = load i64, ptr %56, align 8, !tbaa !275
-  %57 = getelementptr i8, ptr %.val3.i.i.i, i64 128
-  %.val3.val.i.i.i = load i64, ptr %57, align 8, !tbaa !275
-  %58 = shl i64 %.val.val.i.i.i, 32
-  %59 = sext i32 %.val2.i.i.i to i64
-  %60 = or i64 %58, %59
-  %61 = shl i64 %.val3.val.i.i.i, 32
-  %62 = sext i32 %.val4.i.i.i to i64
-  %63 = or i64 %61, %62
-  %64 = icmp slt i64 %60, %63
-  br i1 %64, label %65, label %.loopexit.i
-
-65:                                               ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i
-  br i1 %45, label %66, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.i
-
-66:                                               ; preds = %65
-  %67 = or i64 %.sroa.6.0.i.i, 1
-  %68 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %67, i1 true)
-  %69 = xor i64 %68, 63
-  %70 = load atomic ptr, ptr %17 acquire, align 8
-  %71 = getelementptr inbounds nuw [8 x i8], ptr %70, i64 %69
-  %72 = load atomic ptr, ptr %71 acquire, align 8
-  %73 = getelementptr inbounds nuw [8 x i8], ptr %72, i64 %.sroa.6.0.i.i
-  br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.i
-
-_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.i: ; preds = %66, %65
-  %.0.i1.i.i = phi ptr [ %73, %66 ], [ %44, %65 ]
-  %74 = load ptr, ptr %.0.i1.i.i, align 8, !tbaa !130
-  %75 = icmp eq ptr %.sroa.14.0.i.be.sink.i, null
-  br i1 %75, label %bb.e, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i
-
-bb.e:                                             ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.i
+bb.e:                                             ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i
   %i.bc = or i64 %.sroa.6.0.i14.i, 1
   %i.bd = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.bc, i1 true)
   %i.be = xor i64 %i.bd, 63
-  %76 = load atomic ptr, ptr %17 acquire, align 8
-  %77 = getelementptr inbounds nuw [8 x i8], ptr %76, i64 %i.be
-  %78 = load atomic ptr, ptr %77 acquire, align 8
-  %79 = getelementptr inbounds nuw [8 x i8], ptr %78, i64 %.sroa.6.0.i14.i
-  br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i
+  br label %bb.f
 
-_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit4.i.i: ; preds = %bb.e, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.i
-  %.0.i3.i.i = phi ptr [ %79, %bb.e ], [ %.sroa.14.0.i.be.sink.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit2.i.i ]
-  store ptr %74, ptr %.0.i3.i.i, align 8, !tbaa !130
-  store ptr %i.am, ptr %2, align 8, !tbaa !241
-  store i64 %.sroa.6.0.i.i, ptr %i.ab, align 8, !tbaa !242
-  store ptr %.sroa.14.0.i.be.i, ptr %i.ac, align 8, !tbaa !243
-  %80 = add i64 %.sroa.6.0.i.i, -1                ; 2 uses
-  %81 = add i64 %.sroa.6.0.i.i, -3
-  %82 = and i64 %81, %80
-  br label %select.unfold.i, !llvm.loop !1013
-
-.loopexit.i:                                      ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.i, %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN4moldL18print_icf_sectionsINS2_6X86_64EEEvRNS2_7ContextIT_EEEUlPNS2_12InputSectionIS4_EESB_E_EclISB_N3tbb6detail2d115vector_iteratorINSH_17concurrent_vectorISB_NSH_23cache_aligned_allocatorISB_EEEESB_EEEEbRS6_T0_.exit.i.peel.i
-  %83 = load ptr, ptr %i.ac, align 8, !tbaa !243  ; 2 uses
-  %84 = icmp eq ptr %83, null
-  br i1 %84, label %bb.f, label %_ZSt25__unguarded_linear_insertIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops14_Val_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEEvSJ_T0_.exit.i
-
-bb.f:                                             ; preds = %.loopexit.i
-  %85 = load ptr, ptr %2, align 8, !tbaa !241
-  %86 = load i64, ptr %i.ab, align 8, !tbaa !242  ; 2 uses
-  %87 = or i64 %86, 1
-  %88 = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %87, i1 true)
-  %89 = xor i64 %88, 63
-  %90 = getelementptr inbounds nuw i8, ptr %85, i64 16
-  %i.bf = load atomic ptr, ptr %90 acquire, align 8
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %89
-  %91 = load atomic ptr, ptr %i.bg acquire, align 8
-  %92 = getelementptr inbounds nuw [8 x i8], ptr %91, i64 %86
-  br label %_ZSt25__unguarded_linear_insertIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops14_Val_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEEvSJ_T0_.exit.i
-
-_ZSt25__unguarded_linear_insertIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops14_Val_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEEvSJ_T0_.exit.i: ; preds = %bb.f, %.loopexit.i
-  %.0.i9.i.i = phi ptr [ %92, %bb.f ], [ %83, %.loopexit.i ]
-  store ptr %i.al, ptr %.0.i9.i.i, align 8, !tbaa !130
-  %93 = add i64 %.sroa.5.08.i.us.i.i, 1
+bb.f:                                             ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i, %bb.e
+  %.pre-phi14 = phi i64 [ %i.be, %bb.e ], [ %11, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i ]
+  %58 = phi i64 [ %.sroa.6.0.i14.i, %bb.e ], [ %.sroa.5.08.i.us.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i ]
+  %59 = load atomic ptr, ptr %i.ad acquire, align 8
+  %60 = getelementptr inbounds nuw [8 x i8], ptr %59, i64 %.pre-phi14
+  %i.bf = load atomic ptr, ptr %60 acquire, align 8
+  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %58
+  store ptr %16, ptr %i.bg, align 8, !tbaa !130
+  %61 = add i64 %.sroa.5.08.i.us.i.i, 1
   br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EdeEv.exit.i.i
 
 _ZN3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EppEv.exit.i.i.i: ; preds = %_ZN3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EppEv.exit.lr.ph.i.i.i, %_ZN3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold12InputSectionINS4_6X86_64EEENS1_23cache_aligned_allocatorIS8_EEEES8_EppEv.exit.i.i.i

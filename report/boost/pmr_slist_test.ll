@@ -204,7 +204,7 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #9
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE4sortINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvT_(ptr noundef nonnull align 8 dereferenceable(16) %0) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.boost::intrusive::slist_impl", align 8 ; 9 uses
+  %1 = alloca %"class.boost::intrusive::slist_impl", align 8 ; 7 uses
   %2 = alloca %"class.boost::intrusive::detail::array_initializer", align 16 ; 136 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 11 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !23
@@ -478,7 +478,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ec, label %.preheader.._crit_edge_crit_edge, label %.lr.ph139
 
 .lr.ph139:                                        ; preds = %bb.b
+  %.promoted = load i64, ptr %1, align 8, !tbaa !26
   %.promoted.a = load i64, ptr %0, align 8, !tbaa !26
+  %3 = add i64 %.promoted, 1
   %i.ed = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   br label %bb.c
 
@@ -498,7 +500,8 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph146
 
 bb.c:                                             ; preds = %.lr.ph139, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit
-  %i.ef = phi i64 [ %.promoted.a, %.lr.ph139 ], [ %i.ej, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit ]
+  %4 = phi i64 [ %.promoted.a, %.lr.ph139 ], [ %i.ej, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit ]
+  %i.ef = phi i64 [ %3, %.lr.ph139 ], [ 1, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit ] ; 3 uses
   %i.eg = phi ptr [ %i.eb, %.lr.ph139 ], [ %i.gu, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit ] ; 6 uses
   %.024138 = phi i32 [ 0, %.lr.ph139 ], [ %spec.select, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit ] ; 5 uses
   %.not17.i.i.i.i = icmp eq ptr %i.d, %i.eg
@@ -513,9 +516,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_.exit
 
 _ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_.exit: ; preds = %bb.c, %bb.d
-  %3 = load i64, ptr %1, align 8, !tbaa !26
-  %4 = add i64 %3, 1                              ; 3 uses
-  %i.ej = add i64 %i.ef, -1                       ; 2 uses
+  %i.ej = add i64 %4, -1                          ; 2 uses
   %.not148 = icmp eq i32 %.024138, 0
   br i1 %.not148, label %.critedge, label %.lr.ph.preheader
 
@@ -536,8 +537,8 @@ _ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_
   %i.er = phi ptr [ %i.ep, %.lr.ph ], [ %i.el, %.lr.ph.preheader ] ; 5 uses
   %i.es = phi ptr [ %i.eo, %.lr.ph ], [ %i.ed, %.lr.ph.preheader ] ; 19 uses
   %i.et = phi ptr [ %i.en, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 6 uses
-  %indvars.iv261 = phi i64 [ %indvars.iv.next207, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %i.eu = phi i64 [ %i.gh, %.lr.ph ], [ %4, %.lr.ph.preheader ] ; 3 uses
+  %indvars.iv261 = phi i64 [ %i.gh, %.lr.ph ], [ %i.ef, %.lr.ph.preheader ] ; 3 uses
+  %i.eu = phi i64 [ %indvars.iv.next207, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.ev = icmp eq ptr %i.et, %1                   ; 2 uses
   br i1 %i.ev, label %.critedge.lr.ph.split.us.i, label %bb.e
 
@@ -591,8 +592,8 @@ _ZN5boost9intrusive25circular_slist_algorithmsINS0_17slist_node_traitsIPvEEE17ge
   %i.fj = select i1 %i.ex, ptr %i.es, ptr %i.fi   ; 3 uses
   store ptr %i.fj, ptr %i.es, align 8, !tbaa !23
   %i.fk = load i64, ptr %i.et, align 8, !tbaa !26 ; 2 uses
-  store i64 %i.eu, ptr %i.et, align 8, !tbaa !26
-  %indvars.iv.next205 = add nuw nsw i64 %indvars.iv261, 1 ; 3 uses
+  store i64 %indvars.iv261, ptr %i.et, align 8, !tbaa !26
+  %indvars.iv.next205 = add nuw nsw i64 %i.eu, 1  ; 3 uses
   %i.fl = icmp eq ptr %i.fj, %i.es
   br i1 %i.fl, label %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_PNS0_14slist_iteratorISF_Lb1EEE.exit, label %.critedge.i.preheader
 
@@ -602,14 +603,14 @@ _ZN5boost9intrusive25circular_slist_algorithmsINS0_17slist_node_traitsIPvEEE17ge
 
 .critedge.lr.ph.split.us.i:                       ; preds = %.lr.ph262
   %i.fn = load i64, ptr %i.et, align 8, !tbaa !26
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv261, 1
+  %indvars.iv.next = add nuw nsw i64 %i.eu, 1
   %i.fo = load ptr, ptr %i.d, align 8, !tbaa !23  ; 2 uses
   %i.fp = icmp eq ptr %i.fo, %i.d
   call void @llvm.assume(i1 %i.fp)
   br label %.preheader.i.preheader.i
 
 .critedge.i:                                      ; preds = %.critedge.i.preheader, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i
-  %i.fq = phi i64 [ %i.gf, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %i.eu, %.critedge.i.preheader ] ; 2 uses
+  %i.fq = phi i64 [ %i.gf, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %indvars.iv261, %.critedge.i.preheader ] ; 2 uses
   %i.fr = phi i64 [ %i.ge, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %i.fk, %.critedge.i.preheader ] ; 2 uses
   %i.fs = phi ptr [ %i.gc, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %i.fj, %.critedge.i.preheader ] ; 5 uses
   %i.ft = phi ptr [ %i.gd, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %i.fm, %.critedge.i.preheader ] ; 4 uses
@@ -618,8 +619,8 @@ _ZN5boost9intrusive25circular_slist_algorithmsINS0_17slist_node_traitsIPvEEE17ge
 
 .preheader.i.preheader.i:                         ; preds = %.critedge.i, %.critedge.lr.ph.split.us.i
   %indvars.iv.next206209 = phi i64 [ %indvars.iv.next, %.critedge.lr.ph.split.us.i ], [ %indvars.iv.next205, %.critedge.i ]
-  %i.fv = phi i64 [ %i.fn, %.critedge.lr.ph.split.us.i ], [ %i.fr, %.critedge.i ]
-  %i.fw = phi i64 [ %i.eu, %.critedge.lr.ph.split.us.i ], [ %i.fq, %.critedge.i ]
+  %i.fv = phi i64 [ %indvars.iv261, %.critedge.lr.ph.split.us.i ], [ %i.fq, %.critedge.i ]
+  %i.fw = phi i64 [ %i.fn, %.critedge.lr.ph.split.us.i ], [ %i.fr, %.critedge.i ]
   %.us-phi.i = phi ptr [ %i.fo, %.critedge.lr.ph.split.us.i ], [ %i.ft, %.critedge.i ]
   %.us-phi54.i = phi ptr [ %i.er, %.critedge.lr.ph.split.us.i ], [ %i.fs, %.critedge.i ]
   br label %.preheader.i.i
@@ -644,8 +645,7 @@ bb.i:                                             ; preds = %_ZN5boost9intrusive
   br label %_ZN5boost9intrusive6detail23common_slist_algorithmsINS0_17slist_node_traitsIPvEEE14transfer_afterEPNS0_10slist_nodeIS4_EES9_S9_.exit.i.i
 
 _ZN5boost9intrusive6detail23common_slist_algorithmsINS0_17slist_node_traitsIPvEEE14transfer_afterEPNS0_10slist_nodeIS4_EES9_S9_.exit.i.i: ; preds = %bb.i, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE8previousENS0_14slist_iteratorISF_Lb0EEE.exit.i.i
-  %i.fz = add i64 %i.fv, %i.fw                    ; 2 uses
-  store i64 %i.fz, ptr %1, align 8, !tbaa !26
+  %i.fz = add i64 %i.fw, %i.fv
   store i64 0, ptr %i.et, align 8, !tbaa !26
   br label %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_PNS0_14slist_iteratorISF_Lb1EEE.exit
 
@@ -691,7 +691,7 @@ _ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_PNS0_14slist_iteratorISF_Lb1EEE.exit, %.lr.ph.preheader, %.lr.ph..critedge.loopexit.split.loop.exit_crit_edge, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_.exit
-  %i.gj = phi i64 [ %4, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_.exit ], [ %4, %.lr.ph.preheader ], [ %i.gh, %.lr.ph..critedge.loopexit.split.loop.exit_crit_edge ], [ %i.gh, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_PNS0_14slist_iteratorISF_Lb1EEE.exit ]
+  %i.gj = phi i64 [ %i.ef, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_.exit ], [ %i.ef, %.lr.ph.preheader ], [ %i.gh, %.lr.ph..critedge.loopexit.split.loop.exit_crit_edge ], [ %i.gh, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_PNS0_14slist_iteratorISF_Lb1EEE.exit ]
   %.sroa.0107.1.lcssa = phi ptr [ %i.eg, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_.exit ], [ %i.eg, %.lr.ph.preheader ], [ %.sroa.0107.3, %.lr.ph..critedge.loopexit.split.loop.exit_crit_edge ], [ %.sroa.0107.3, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_PNS0_14slist_iteratorISF_Lb1EEE.exit ] ; 2 uses
   %.023.lcssa = phi i32 [ 0, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE12splice_afterENS0_14slist_iteratorISF_Lb1EEERSG_SI_.exit ], [ 0, %.lr.ph.preheader ], [ %i.gi, %.lr.ph..critedge.loopexit.split.loop.exit_crit_edge ], [ %.024138, %_ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl10slist_hookIPvEELb0EEENS0_17slist_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj2EEEmLm2EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_PNS0_14slist_iteratorISF_Lb1EEE.exit ] ; 2 uses
   br label %bb.k
@@ -725,7 +725,6 @@ _ZN5boost9intrusive10slist_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_
   %i.gq = load i64, ptr %i.gm, align 16, !tbaa !26
   %i.gr = add i64 %i.gq, %i.gj
   store i64 %i.gr, ptr %i.gm, align 16, !tbaa !26
-  store i64 0, ptr %1, align 8, !tbaa !26
   %i.gs = icmp eq i32 %.023.lcssa, %.024138
   %i.gt = zext i1 %i.gs to i32
   %spec.select = add nuw nsw i32 %.024138, %i.gt  ; 4 uses

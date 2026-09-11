@@ -204,23 +204,21 @@ bb.m:                                             ; preds = %bb.h
 _ZNKSt7__cxx118numpunctIwE13thousands_sepEv.exit: ; preds = %bb.m
   %i.ar = load ptr, ptr %2, align 8, !tbaa !52    ; 3 uses
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !25  ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.av = load i32, ptr %i.au, align 4, !tbaa !139
   %.promoted = load i32, ptr %0, align 8, !tbaa !136
+  %.promoted63 = load ptr, ptr %i.at, align 8
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.s, %_ZNKSt7__cxx118numpunctIwE13thousands_sepEv.exit
+  %.pre64 = phi ptr [ %.promoted63, %_ZNKSt7__cxx118numpunctIwE13thousands_sepEv.exit ], [ %i.bn, %bb.s ] ; 2 uses
   %i.aw = phi i32 [ %.promoted, %_ZNKSt7__cxx118numpunctIwE13thousands_sepEv.exit ], [ %i.bq, %bb.s ] ; 3 uses
   %.020 = phi i64 [ 0, %_ZNKSt7__cxx118numpunctIwE13thousands_sepEv.exit ], [ %.121, %bb.s ] ; 2 uses
   %.018 = phi i8 [ %i.as, %_ZNKSt7__cxx118numpunctIwE13thousands_sepEv.exit ], [ %.2, %bb.s ] ; 2 uses
   %.016 = phi i8 [ %i.as, %_ZNKSt7__cxx118numpunctIwE13thousands_sepEv.exit ], [ %i.bm, %bb.s ] ; 2 uses
   %i.ax = icmp eq i8 %.016, 0
-  br i1 %i.ax, label %bb.o, label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.n
-  %.pre = load ptr, ptr %i.at, align 8, !tbaa !137
-  br label %bb.s
+  br i1 %i.ax, label %bb.o, label %bb.s
 
 bb.o:                                             ; preds = %bb.n
   %i.ay = add i64 %.020, 1                        ; 3 uses
@@ -250,19 +248,18 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 bb.r:                                             ; preds = %bb.p, %bb.o
   %.119 = phi i8 [ %i.bd, %bb.p ], [ %.018, %bb.o ] ; 2 uses
-  %3 = load ptr, ptr %i.at, align 8, !tbaa !137
-  %i.bk = getelementptr inbounds i8, ptr %3, i64 -4 ; 3 uses
+  %i.bk = getelementptr inbounds i8, ptr %.pre64, i64 -4 ; 3 uses
   store ptr %i.bk, ptr %i.at, align 8, !tbaa !137
   store i32 %i.aq, ptr %i.bk, align 4, !tbaa !91
   br label %bb.s
 
-bb.s:                                             ; preds = %._crit_edge, %bb.r
-  %i.bl = phi ptr [ %i.bk, %bb.r ], [ %.pre, %._crit_edge ] ; 2 uses
-  %.121 = phi i64 [ %i.ay, %bb.r ], [ %.020, %._crit_edge ]
-  %.2 = phi i8 [ %.119, %bb.r ], [ %.018, %._crit_edge ]
-  %.117 = phi i8 [ %.119, %bb.r ], [ %.016, %._crit_edge ]
+bb.s:                                             ; preds = %bb.n, %bb.r
+  %i.bl = phi ptr [ %i.bk, %bb.r ], [ %.pre64, %bb.n ] ; 2 uses
+  %.121 = phi i64 [ %i.ay, %bb.r ], [ %.020, %bb.n ]
+  %.2 = phi i8 [ %.119, %bb.r ], [ %.018, %bb.n ]
+  %.117 = phi i8 [ %.119, %bb.r ], [ %.016, %bb.n ]
   %i.bm = add i8 %.117, -1
-  %i.bn = getelementptr inbounds i8, ptr %i.bl, i64 -4 ; 2 uses
+  %i.bn = getelementptr inbounds i8, ptr %i.bl, i64 -4 ; 3 uses
   store ptr %i.bn, ptr %i.at, align 8, !tbaa !137
   %i.bo = urem i32 %i.aw, 10
   %i.bp = add i32 %i.av, %i.bo

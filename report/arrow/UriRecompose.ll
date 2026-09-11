@@ -202,7 +202,7 @@ bb.cd:                                            ; preds = %bb.bv
   br label %bb.ce
 
 bb.ce:                                            ; preds = %.thread761, %bb.cd, %bb.ca, %.thread584, %.thread601, %bb.q
-  %.26 = phi i32 [ 0, %.thread584 ], [ %.23, %.thread601 ], [ %.3384, %bb.q ], [ %i.gs, %bb.ca ], [ %.23, %bb.cd ], [ 0, %.thread761 ] ; 7 uses
+  %.26 = phi i32 [ 0, %.thread584 ], [ %.23, %.thread601 ], [ %.3384, %bb.q ], [ %i.gs, %bb.ca ], [ %.23, %bb.cd ], [ 0, %.thread761 ] ; 6 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.hb = load i32, ptr %i.ha, align 8, !tbaa !31
   %.not547 = icmp eq i32 %i.hb, 0
@@ -269,38 +269,30 @@ bb.cl:                                            ; preds = %bb.cg, %bb.cf
   br label %.preheader.split
 
 .preheader.split.us:                              ; preds = %.thread783, %.preheader
-  %i.hq = phi ptr [ %i.hg, %.preheader ], [ %i.hk, %.thread783 ] ; 3 uses
+  %i.hq = phi ptr [ %i.hg, %.preheader ], [ %i.hk, %.thread783 ]
   %.promoted699 = load i32, ptr %4, align 4, !tbaa !6
-  %5 = getelementptr inbounds nuw i8, ptr %i.hq, i64 8
-  %6 = load ptr, ptr %5, align 8, !tbaa !34
-  %7 = load ptr, ptr %i.hq, align 8, !tbaa !35
-  %8 = ptrtoint ptr %6 to i64
-  %9 = ptrtoint ptr %7 to i64
-  %10 = sub i64 %8, %9
-  %11 = trunc i64 %10 to i32
-  %12 = add nsw i32 %.promoted699, %11            ; 2 uses
-  store i32 %12, ptr %4, align 4, !tbaa !6
-  %13 = getelementptr inbounds nuw i8, ptr %i.hq, i64 16
-  %14 = load ptr, ptr %13, align 8, !tbaa !36     ; 2 uses
-  %.not556.us832 = icmp eq ptr %14, null
-  br i1 %.not556.us832, label %.thread647, label %.lr.ph833
+  br label %.lr.ph833
 
-.lr.ph833:                                        ; preds = %.preheader.split.us, %.lr.ph833
-  %15 = phi ptr [ %i.ib, %.lr.ph833 ], [ %14, %.preheader.split.us ] ; 3 uses
-  %i.hr = phi i32 [ %i.hz, %.lr.ph833 ], [ %12, %.preheader.split.us ]
-  %16 = add nsw i32 %i.hr, 1
-  %i.hs = getelementptr inbounds nuw i8, ptr %15, i64 8
+.lr.ph833:                                        ; preds = %.lr.ph833, %.preheader.split.us
+  %i.hr = phi i32 [ %5, %.lr.ph833 ], [ %.promoted699, %.preheader.split.us ]
+  %.0.us = phi ptr [ %i.ib, %.lr.ph833 ], [ %i.hq, %.preheader.split.us ] ; 3 uses
+  %i.hs = getelementptr inbounds nuw i8, ptr %.0.us, i64 8
   %i.ht = load ptr, ptr %i.hs, align 8, !tbaa !34
-  %i.hu = load ptr, ptr %15, align 8, !tbaa !35
+  %i.hu = load ptr, ptr %.0.us, align 8, !tbaa !35
   %i.hv = ptrtoint ptr %i.ht to i64
   %i.hw = ptrtoint ptr %i.hu to i64
   %i.hx = sub i64 %i.hv, %i.hw
   %i.hy = trunc i64 %i.hx to i32
-  %i.hz = add nsw i32 %16, %i.hy                  ; 2 uses
-  %i.ia = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %i.hz = add nsw i32 %i.hr, %i.hy                ; 2 uses
+  %i.ia = getelementptr inbounds nuw i8, ptr %.0.us, i64 16
   %i.ib = load ptr, ptr %i.ia, align 8, !tbaa !36 ; 2 uses
   %.not556.us = icmp eq ptr %i.ib, null
-  br i1 %.not556.us, label %.thread647.loopexit, label %.lr.ph833
+  %5 = add nsw i32 %i.hz, 1
+  br i1 %.not556.us, label %.thread647.loopexit.split.us, label %.lr.ph833
+
+.thread647.loopexit.split.us:                     ; preds = %.lr.ph833
+  store i32 %i.hz, ptr %4, align 4, !tbaa !6
+  br label %.thread647
 
 .preheader.split:                                 ; preds = %.preheader.split.preheader, %bb.co
   %.28 = phi i32 [ %i.ip, %bb.co ], [ %.28.ph, %.preheader.split.preheader ] ; 2 uses
@@ -358,12 +350,8 @@ bb.cq:                                            ; preds = %bb.cp
   store i32 0, ptr %3, align 4, !tbaa !6
   br label %.critedge
 
-.thread647.loopexit:                              ; preds = %.lr.ph833
-  store i32 %i.hz, ptr %4, align 4, !tbaa !6
-  br label %.thread647
-
-.thread647:                                       ; preds = %bb.co, %.thread647.loopexit, %.preheader.split.us, %bb.cl
-  %.32 = phi i32 [ %.26, %bb.cl ], [ %.26, %.preheader.split.us ], [ %.26, %.thread647.loopexit ], [ %i.ip, %bb.co ] ; 2 uses
+.thread647:                                       ; preds = %bb.co, %.thread647.loopexit.split.us, %bb.cl
+  %.32 = phi i32 [ %.26, %bb.cl ], [ %.26, %.thread647.loopexit.split.us ], [ %i.ip, %bb.co ] ; 2 uses
   %i.is = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !37 ; 2 uses
   %.not560 = icmp eq ptr %i.it, null
@@ -766,7 +754,7 @@ bb.cd:                                            ; preds = %bb.bv
   br label %bb.ce
 
 bb.ce:                                            ; preds = %.thread771, %bb.cd, %bb.ca, %.thread584, %.thread601, %bb.q
-  %.26 = phi i32 [ 0, %.thread584 ], [ %.23, %.thread601 ], [ %.3384, %bb.q ], [ %i.hk, %bb.ca ], [ %.23, %bb.cd ], [ 0, %.thread771 ] ; 7 uses
+  %.26 = phi i32 [ 0, %.thread584 ], [ %.23, %.thread601 ], [ %.3384, %bb.q ], [ %i.hk, %bb.ca ], [ %.23, %bb.cd ], [ 0, %.thread771 ] ; 6 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.hu = load i32, ptr %i.ht, align 8, !tbaa !60
   %.not547 = icmp eq i32 %i.hu, 0
@@ -833,40 +821,31 @@ bb.cl:                                            ; preds = %bb.cg, %bb.cf
   br label %.preheader.split
 
 .preheader.split.us:                              ; preds = %.thread793, %.preheader
-  %i.ij = phi ptr [ %i.hz, %.preheader ], [ %i.id, %.thread793 ] ; 3 uses
+  %i.ij = phi ptr [ %i.hz, %.preheader ], [ %i.id, %.thread793 ]
   %.promoted709 = load i32, ptr %4, align 4, !tbaa !6
-  %5 = getelementptr inbounds nuw i8, ptr %i.ij, i64 8
-  %6 = load ptr, ptr %5, align 8, !tbaa !63
-  %7 = load ptr, ptr %i.ij, align 8, !tbaa !64
-  %8 = ptrtoint ptr %6 to i64
-  %9 = ptrtoint ptr %7 to i64
-  %10 = sub i64 %8, %9
-  %11 = lshr exact i64 %10, 2
-  %12 = trunc i64 %11 to i32
-  %13 = add nsw i32 %.promoted709, %12            ; 2 uses
-  store i32 %13, ptr %4, align 4, !tbaa !6
-  %14 = getelementptr inbounds nuw i8, ptr %i.ij, i64 16
-  %15 = load ptr, ptr %14, align 8, !tbaa !65     ; 2 uses
-  %.not556.us842 = icmp eq ptr %15, null
-  br i1 %.not556.us842, label %.thread647, label %.lr.ph843
+  br label %.lr.ph843
 
-.lr.ph843:                                        ; preds = %.preheader.split.us, %.lr.ph843
-  %16 = phi ptr [ %i.iv, %.lr.ph843 ], [ %15, %.preheader.split.us ] ; 3 uses
-  %i.ik = phi i32 [ %i.it, %.lr.ph843 ], [ %13, %.preheader.split.us ]
-  %17 = add nsw i32 %i.ik, 1
-  %i.il = getelementptr inbounds nuw i8, ptr %16, i64 8
+.lr.ph843:                                        ; preds = %.lr.ph843, %.preheader.split.us
+  %i.ik = phi i32 [ %5, %.lr.ph843 ], [ %.promoted709, %.preheader.split.us ]
+  %.0.us = phi ptr [ %i.iv, %.lr.ph843 ], [ %i.ij, %.preheader.split.us ] ; 3 uses
+  %i.il = getelementptr inbounds nuw i8, ptr %.0.us, i64 8
   %i.im = load ptr, ptr %i.il, align 8, !tbaa !63
-  %i.in = load ptr, ptr %16, align 8, !tbaa !64
+  %i.in = load ptr, ptr %.0.us, align 8, !tbaa !64
   %i.io = ptrtoint ptr %i.im to i64
   %i.ip = ptrtoint ptr %i.in to i64
   %i.iq = sub i64 %i.io, %i.ip
   %i.ir = lshr exact i64 %i.iq, 2
   %i.is = trunc i64 %i.ir to i32
-  %i.it = add nsw i32 %17, %i.is                  ; 2 uses
-  %i.iu = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.it = add nsw i32 %i.ik, %i.is                ; 2 uses
+  %i.iu = getelementptr inbounds nuw i8, ptr %.0.us, i64 16
   %i.iv = load ptr, ptr %i.iu, align 8, !tbaa !65 ; 2 uses
   %.not556.us = icmp eq ptr %i.iv, null
-  br i1 %.not556.us, label %.thread647.loopexit, label %.lr.ph843
+  %5 = add nsw i32 %i.it, 1
+  br i1 %.not556.us, label %.thread647.loopexit.split.us, label %.lr.ph843
+
+.thread647.loopexit.split.us:                     ; preds = %.lr.ph843
+  store i32 %i.it, ptr %4, align 4, !tbaa !6
+  br label %.thread647
 
 .preheader.split:                                 ; preds = %.preheader.split.preheader, %bb.co
   %.28 = phi i32 [ %i.jl, %bb.co ], [ %.28.ph, %.preheader.split.preheader ] ; 2 uses
@@ -926,12 +905,8 @@ bb.cq:                                            ; preds = %bb.cp
   store i32 0, ptr %3, align 4, !tbaa !6
   br label %.critedge
 
-.thread647.loopexit:                              ; preds = %.lr.ph843
-  store i32 %i.it, ptr %4, align 4, !tbaa !6
-  br label %.thread647
-
-.thread647:                                       ; preds = %bb.co, %.thread647.loopexit, %.preheader.split.us, %bb.cl
-  %.32 = phi i32 [ %.26, %bb.cl ], [ %.26, %.preheader.split.us ], [ %.26, %.thread647.loopexit ], [ %i.jl, %bb.co ] ; 2 uses
+.thread647:                                       ; preds = %bb.co, %.thread647.loopexit.split.us, %bb.cl
+  %.32 = phi i32 [ %.26, %bb.cl ], [ %.26, %.thread647.loopexit.split.us ], [ %i.jl, %bb.co ] ; 2 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.jp = load ptr, ptr %i.jo, align 8, !tbaa !66 ; 2 uses
   %.not560 = icmp eq ptr %i.jp, null

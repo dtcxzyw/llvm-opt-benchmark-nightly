@@ -53,7 +53,7 @@ $_ZN6vectorIjLb0EjE13expand_vectorEv = comdat any
 define hidden void @_ZNK10bit_matrix3row5beginEv(ptr dead_on_unwind noalias nofree writable sret(%"class.bit_matrix::col_iterator") align 8 captures(none) initializes((0, 20)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !15
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 0, ptr %i.a, align 8, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !19
@@ -65,70 +65,58 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %0, align 8, !tbaa !22, !nonnull !23, !align !24
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 40
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !33   ; 4 uses
-  store i32 1, ptr %i.a, align 8, !tbaa !18
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !33   ; 3 uses
   %i.i = icmp ugt i32 %i.h, 1
-  br i1 %i.i, label %.lr.ph17.i.i, label %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit
+  br i1 %i.i, label %.lr.ph17.i.i, label %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit
 
 .lr.ph17.i.i:                                     ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !19   ; 3 uses
-  %2 = load i64, ptr %i.k, align 8, !tbaa !21
-  %3 = and i64 %2, 2
-  %.not4.i.i3 = icmp eq i64 %3, 0
-  br i1 %.not4.i.i3, label %.preheader.i.i.a, label %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !19   ; 2 uses
+  br label %bb.c
 
-bb.c:                                             ; preds = %.critedge2.i.i
-  %i.l = lshr i32 %storemerge.i.i, 6
+bb.c:                                             ; preds = %.critedge2.i.i, %.lr.ph17.i.i
+  %storemerge16.i.i = phi i32 [ 1, %.lr.ph17.i.i ], [ %storemerge.i.i, %.critedge2.i.i ] ; 5 uses
+  %i.l = lshr i32 %storemerge16.i.i, 6
   %i.m = zext nneg i32 %i.l to i64
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.m
   %i.o = load i64, ptr %i.n, align 8, !tbaa !21
-  %i.p = and i32 %storemerge.i.i, 63              ; 2 uses
+  %i.p = and i32 %storemerge16.i.i, 63            ; 2 uses
   %i.q = zext nneg i32 %i.p to i64
   %i.r = shl nuw i64 1, %i.q
   %i.s = and i64 %i.r, %i.o
   %.not4.i.i = icmp eq i64 %i.s, 0
-  br i1 %.not4.i.i, label %.preheader.i.i.a, label %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit, !llvm.loop !0
+  br i1 %.not4.i.i, label %.preheader.i.i, label %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit
 
-.preheader.i.i.a:                                 ; preds = %.lr.ph17.i.i, %bb.c
-  %4 = phi i32 [ %i.p, %bb.c ], [ 1, %.lr.ph17.i.i ]
-  %storemerge16.i.i4 = phi i32 [ %storemerge.i.i, %bb.c ], [ 1, %.lr.ph17.i.i ] ; 3 uses
-  %5 = icmp eq i32 %4, 0
+.preheader.i.i:                                   ; preds = %bb.c
+  %2 = icmp eq i32 %i.p, 0
+  br i1 %2, label %.preheader.i.i.a, label %.critedge2.i.i
+
+.preheader.i.i.a:                                 ; preds = %.preheader.i.i, %.lr.ph.i
+  %storemerge16.i.i4 = phi i32 [ %i.t, %.lr.ph.i ], [ %storemerge16.i.i, %.preheader.i.i ] ; 4 uses
   %i.t = add i32 %storemerge16.i.i4, 64           ; 2 uses
   %i.u = icmp ult i32 %i.t, %i.h
-  %or.cond.i = and i1 %5, %i.u
-  br i1 %or.cond.i, label %.lr.ph.i, label %.critedge2.i.i
+  br i1 %i.u, label %.lr.ph.i, label %.critedge2.i.i
 
-.lr.ph.i:                                         ; preds = %.preheader.i.i.a, %.lr.ph.i.i
-  %6 = phi i32 [ %8, %.lr.ph.i.i ], [ %i.t, %.preheader.i.i.a ] ; 3 uses
-  %7 = phi i32 [ %6, %.lr.ph.i.i ], [ %storemerge16.i.i4, %.preheader.i.i.a ] ; 2 uses
-  %i.v = lshr exact i32 %7, 6
+.lr.ph.i:                                         ; preds = %.preheader.i.i.a
+  %i.v = lshr exact i32 %storemerge16.i.i4, 6
   %i.w = zext nneg i32 %i.v to i64
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.w
   %i.y = load i64, ptr %i.x, align 8, !tbaa !21
   %.not.i.i = icmp eq i64 %i.y, 0
-  br i1 %.not.i.i, label %.lr.ph.i.i, label %.critedge2.i.i
+  br i1 %.not.i.i, label %.preheader.i.i.a, label %.critedge2.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i
-  %8 = add i32 %6, 64                             ; 2 uses
-  %9 = icmp ult i32 %8, %i.h
-  br i1 %9, label %.lr.ph.i, label %.critedge2.i.i
-
-.critedge2.i.i:                                   ; preds = %.lr.ph.i.i, %.lr.ph.i, %.preheader.i.i.a
-  %.promoted8.i.i = phi i32 [ %storemerge16.i.i4, %.preheader.i.i.a ], [ %6, %.lr.ph.i.i ], [ %7, %.lr.ph.i ]
-  %storemerge.i.i = add i32 %.promoted8.i.i, 1    ; 6 uses
+.critedge2.i.i:                                   ; preds = %.lr.ph.i, %.preheader.i.i.a, %.preheader.i.i
+  %.promoted8.i.i = phi i32 [ %storemerge16.i.i, %.preheader.i.i ], [ %storemerge16.i.i4, %.preheader.i.i.a ], [ %storemerge16.i.i4, %.lr.ph.i ]
+  %storemerge.i.i = add i32 %.promoted8.i.i, 1    ; 3 uses
   %i.z = icmp ult i32 %storemerge.i.i, %i.h
-  br i1 %i.z, label %bb.c, label %.critedge2.i.i._ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit_crit_edge, !llvm.loop !0
+  br i1 %i.z, label %bb.c, label %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit, !llvm.loop !0
 
-.critedge2.i.i._ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit_crit_edge: ; preds = %.critedge2.i.i
-  br label %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit, !llvm.loop !0
-
-_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit: ; preds = %bb.c, %.critedge2.i.i._ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit_crit_edge, %.lr.ph17.i.i
-  %storemerge.i.i1 = phi i32 [ %storemerge.i.i, %.critedge2.i.i._ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit_crit_edge ], [ 1, %.lr.ph17.i.i ], [ %storemerge.i.i, %bb.c ]
-  store i32 %storemerge.i.i1, ptr %i.a, align 8
+_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit: ; preds = %.critedge2.i.i, %bb.c, %bb.b
+  %storemerge.i.i1 = phi i32 [ 1, %bb.b ], [ %storemerge16.i.i, %bb.c ], [ %storemerge.i.i, %.critedge2.i.i ]
+  store i32 %storemerge.i.i1, ptr %i.a, align 8, !tbaa !18
   br label %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit
 
-_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit: ; preds = %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit, %bb.a, %bb.b
+_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit: ; preds = %bb.a, %_ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit
   ret void
 }
 
@@ -147,23 +135,22 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_ZN10bit_matrix12col_iterator4nextEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(20) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !22, !nonnull !23, !align !24
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !33   ; 4 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !33   ; 3 uses
   %.promoted7 = load i32, ptr %i.a, align 8, !tbaa !18
   %storemerge15 = add i32 %.promoted7, 1          ; 3 uses
-  store i32 %storemerge15, ptr %i.a, align 8, !tbaa !18
   %i.e = icmp ult i32 %storemerge15, %i.d
-  br i1 %i.e, label %.lr.ph17, label %.critedge
+  br i1 %i.e, label %.lr.ph17, label %.critedge2
 
 .lr.ph17:                                         ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !19   ; 2 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph17, %.critedge2
-  %storemerge16 = phi i32 [ %storemerge15, %.lr.ph17 ], [ %storemerge, %.critedge2 ] ; 5 uses
+bb.b:                                             ; preds = %.lr.ph17, %.lr.ph
+  %storemerge16 = phi i32 [ %storemerge15, %.lr.ph17 ], [ %i.v, %.lr.ph ] ; 5 uses
   %i.h = lshr i32 %storemerge16, 6
   %i.i = zext nneg i32 %i.h to i64
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.i
@@ -173,39 +160,35 @@ bb.b:                                             ; preds = %.lr.ph17, %.critedg
   %i.n = shl nuw i64 1, %i.m
   %i.o = and i64 %i.k, %i.n
   %.not4 = icmp eq i64 %i.o, 0
-  br i1 %.not4, label %.preheader.a, label %.critedge
+  br i1 %.not4, label %.preheader, label %.critedge2
 
-.preheader.a:                                     ; preds = %bb.b
+.preheader:                                       ; preds = %bb.b
   %1 = icmp eq i32 %i.l, 0
-  %i.p = add i32 %storemerge16, 64                ; 2 uses
-  %i.q = icmp ult i32 %i.p, %i.d
-  %or.cond = and i1 %1, %i.q
-  br i1 %or.cond, label %.lr.ph20, label %.critedge2
+  br i1 %1, label %.preheader.a, label %.lr.ph
 
-.lr.ph20:                                         ; preds = %.preheader.a, %.lr.ph
-  %2 = phi i32 [ %i.v, %.lr.ph ], [ %i.p, %.preheader.a ] ; 4 uses
-  %3 = phi i32 [ %2, %.lr.ph ], [ %storemerge16, %.preheader.a ] ; 2 uses
-  %i.r = lshr exact i32 %3, 6
+.preheader.a:                                     ; preds = %.preheader, %.lr.ph20
+  %2 = phi i32 [ %i.p, %.lr.ph20 ], [ %storemerge16, %.preheader ] ; 4 uses
+  %i.p = add i32 %2, 64                           ; 2 uses
+  %i.q = icmp ult i32 %i.p, %i.d
+  br i1 %i.q, label %.lr.ph20, label %.lr.ph
+
+.lr.ph20:                                         ; preds = %.preheader.a
+  %i.r = lshr exact i32 %2, 6
   %i.s = zext nneg i32 %i.r to i64
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.s
   %i.u = load i64, ptr %i.t, align 8, !tbaa !21
   %.not = icmp eq i64 %i.u, 0
-  br i1 %.not, label %.lr.ph, label %.critedge2
+  br i1 %.not, label %.preheader.a, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph20
-  store i32 %2, ptr %i.a, align 8, !tbaa !18
-  %i.v = add i32 %2, 64                           ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph20, %.preheader.a, %.preheader
+  %.promoted8 = phi i32 [ %storemerge16, %.preheader ], [ %2, %.preheader.a ], [ %2, %.lr.ph20 ]
+  %i.v = add i32 %.promoted8, 1                   ; 3 uses
   %i.w = icmp ult i32 %i.v, %i.d
-  br i1 %i.w, label %.lr.ph20, label %.critedge2
+  br i1 %i.w, label %bb.b, label %.critedge2, !llvm.loop !0
 
-.critedge2:                                       ; preds = %.lr.ph, %.lr.ph20, %.preheader.a
-  %.promoted8.a = phi i32 [ %storemerge16, %.preheader.a ], [ %2, %.lr.ph ], [ %3, %.lr.ph20 ]
-  %storemerge = add i32 %.promoted8.a, 1          ; 3 uses
-  store i32 %storemerge, ptr %i.a, align 8, !tbaa !18
-  %4 = icmp ult i32 %storemerge, %i.d
-  br i1 %4, label %bb.b, label %.critedge, !llvm.loop !0
-
-.critedge:                                        ; preds = %bb.b, %.critedge2, %bb.a
+.critedge2:                                       ; preds = %bb.b, %.lr.ph, %bb.a
+  %.promoted8.a = phi i32 [ %storemerge15, %bb.a ], [ %i.v, %.lr.ph ], [ %storemerge16, %bb.b ]
+  store i32 %.promoted8.a, ptr %i.a, align 8, !tbaa !18
   ret void
 }
 
@@ -505,66 +488,55 @@ _ZN10bit_matrix3endEv.exit:
 bb.a:                                             ; preds = %.lr.ph58, %_ZN10bit_matrix12row_iteratorppEv.exit24
   %indvars.iv61 = phi i64 [ 0, %.lr.ph58 ], [ %indvars.iv.next62, %_ZN10bit_matrix12row_iteratorppEv.exit24 ]
   %.sroa.8.056 = phi ptr [ %i.g, %.lr.ph58 ], [ %.sroa.8.1, %_ZN10bit_matrix12row_iteratorppEv.exit24 ] ; 13 uses
-  %i.n = load i64, ptr %.sroa.8.056, align 8, !tbaa !21, !noalias !85 ; 2 uses
+  %i.n = load i64, ptr %.sroa.8.056, align 8, !tbaa !21, !noalias !85
   %i.o = and i64 %i.n, 1
   %.not.i.i = icmp eq i64 %i.o, 0
   br i1 %.not.i.i, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %i.p = load i32, ptr %i.j, align 8, !tbaa !33, !noalias !85 ; 4 uses
+  %i.p = load i32, ptr %i.j, align 8, !tbaa !33, !noalias !85 ; 3 uses
   %i.q = icmp ugt i32 %i.p, 1
-  %2 = and i64 %i.n, 2
-  %.not4.i.i3.i = icmp eq i64 %2, 0
-  %or.cond = and i1 %.not4.i.i3.i, %i.q
-  br i1 %or.cond, label %.preheader.i.i.i.a, label %.loopexit
+  br i1 %i.q, label %bb.c, label %.loopexit
 
-bb.c:                                             ; preds = %.critedge2.i.i.i
-  %i.r = lshr i32 %storemerge.i.i.i, 6
+bb.c:                                             ; preds = %bb.b, %.critedge2.i.i.i
+  %storemerge16.i.i.i = phi i32 [ %storemerge.i.i.i, %.critedge2.i.i.i ], [ 1, %bb.b ] ; 5 uses
+  %i.r = lshr i32 %storemerge16.i.i.i, 6
   %i.s = zext nneg i32 %i.r to i64
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %.sroa.8.056, i64 %i.s
   %i.u = load i64, ptr %i.t, align 8, !tbaa !21, !noalias !85
-  %i.v = and i32 %storemerge.i.i.i, 63            ; 2 uses
+  %i.v = and i32 %storemerge16.i.i.i, 63          ; 2 uses
   %i.w = zext nneg i32 %i.v to i64
   %i.x = shl nuw i64 1, %i.w
-  %i.y = and i64 %i.u, %i.x
+  %i.y = and i64 %i.x, %i.u
   %.not4.i.i.i = icmp eq i64 %i.y, 0
-  br i1 %.not4.i.i.i, label %.preheader.i.i.i.a, label %.loopexit, !llvm.loop !0
+  br i1 %.not4.i.i.i, label %.preheader.i.i.i, label %.loopexit
 
-.preheader.i.i.i.a:                               ; preds = %bb.b, %bb.c
-  %3 = phi i32 [ %i.v, %bb.c ], [ 1, %bb.b ]
-  %storemerge16.i.i4.i = phi i32 [ %storemerge.i.i.i, %bb.c ], [ 1, %bb.b ] ; 3 uses
-  %4 = icmp eq i32 %3, 0
+.preheader.i.i.i:                                 ; preds = %bb.c
+  %2 = icmp eq i32 %i.v, 0
+  br i1 %2, label %.preheader.i.i.i.a, label %.critedge2.i.i.i
+
+.preheader.i.i.i.a:                               ; preds = %.preheader.i.i.i, %.lr.ph.i.i
+  %storemerge16.i.i4.i = phi i32 [ %i.z, %.lr.ph.i.i ], [ %storemerge16.i.i.i, %.preheader.i.i.i ] ; 4 uses
   %i.z = add i32 %storemerge16.i.i4.i, 64         ; 2 uses
   %i.aa = icmp ult i32 %i.z, %i.p
-  %or.cond.i.i = and i1 %4, %i.aa
-  br i1 %or.cond.i.i, label %.lr.ph.i.i, label %.critedge2.i.i.i
+  br i1 %i.aa, label %.lr.ph.i.i, label %.critedge2.i.i.i
 
-.lr.ph.i.i:                                       ; preds = %.preheader.i.i.i.a, %.lr.ph.i.i.i
-  %5 = phi i32 [ %7, %.lr.ph.i.i.i ], [ %i.z, %.preheader.i.i.i.a ] ; 3 uses
-  %6 = phi i32 [ %5, %.lr.ph.i.i.i ], [ %storemerge16.i.i4.i, %.preheader.i.i.i.a ] ; 2 uses
-  %i.ab = lshr exact i32 %6, 6
+.lr.ph.i.i:                                       ; preds = %.preheader.i.i.i.a
+  %i.ab = lshr exact i32 %storemerge16.i.i4.i, 6
   %i.ac = zext nneg i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %.sroa.8.056, i64 %i.ac
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !21, !noalias !85
   %.not.i.i.i = icmp eq i64 %i.ae, 0
-  br i1 %.not.i.i.i, label %.lr.ph.i.i.i, label %.critedge2.i.i.i
+  br i1 %.not.i.i.i, label %.preheader.i.i.i.a, label %.critedge2.i.i.i
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i
-  %7 = add i32 %5, 64                             ; 2 uses
-  %8 = icmp ult i32 %7, %i.p
-  br i1 %8, label %.lr.ph.i.i, label %.critedge2.i.i.i
-
-.critedge2.i.i.i:                                 ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i, %.preheader.i.i.i.a
-  %.promoted8.i.i.i = phi i32 [ %storemerge16.i.i4.i, %.preheader.i.i.i.a ], [ %6, %.lr.ph.i.i ], [ %5, %.lr.ph.i.i.i ]
-  %storemerge.i.i.i = add i32 %.promoted8.i.i.i, 1 ; 6 uses
+.critedge2.i.i.i:                                 ; preds = %.lr.ph.i.i, %.preheader.i.i.i.a, %.preheader.i.i.i
+  %.promoted8.i.i.i = phi i32 [ %storemerge16.i.i.i, %.preheader.i.i.i ], [ %storemerge16.i.i4.i, %.preheader.i.i.i.a ], [ %storemerge16.i.i4.i, %.lr.ph.i.i ]
+  %storemerge.i.i.i = add i32 %.promoted8.i.i.i, 1 ; 3 uses
   %i.af = icmp ult i32 %storemerge.i.i.i, %i.p
-  br i1 %i.af, label %bb.c, label %.critedge2.i.i._ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit_crit_edge.i, !llvm.loop !0
+  br i1 %i.af, label %bb.c, label %.loopexit, !llvm.loop !0
 
-.critedge2.i.i._ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit_crit_edge.i: ; preds = %.critedge2.i.i.i
-  br label %.loopexit, !llvm.loop !0
-
-.loopexit:                                        ; preds = %bb.c, %.critedge2.i.i._ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit_crit_edge.i, %bb.a, %bb.b
-  %.sroa.635.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.b ], [ %storemerge.i.i.i, %.critedge2.i.i._ZN10bit_matrix12col_iteratorC2ERKNS_3rowEb.exit.loopexit_crit_edge.i ], [ %storemerge.i.i.i, %bb.c ] ; 3 uses
+.loopexit:                                        ; preds = %bb.c, %.critedge2.i.i.i, %bb.b, %bb.a
+  %.sroa.635.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.b ], [ %storemerge.i.i.i, %.critedge2.i.i.i ], [ %storemerge16.i.i.i, %bb.c ] ; 3 uses
   %.not47.a = icmp eq i32 %.sroa.635.0, %i.k
   br i1 %.not47.a, label %_ZNK6vectorIPmLb0EjE4sizeEv.exit.i.i23, label %_ZN10bit_matrix3endEv.exit22
 

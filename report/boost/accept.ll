@@ -205,8 +205,8 @@ _ZNK5boost6system10error_codecvbEv.exit:          ; preds = %bb.s
 _ZNK5boost6system10error_codecvbEv.exit.thread80: ; preds = %_ZN5boost5beast6detail22dynamic_buffer_prepareINS0_13static_bufferILm1536EEENS0_4http5errorEEENS_8optionalINT_20mutable_buffers_typeEEERS8_mRNS_6system10error_codeET0_.exit.thread, %_ZN5boost5beast6detail22dynamic_buffer_prepareINS0_13static_bufferILm1536EEENS0_4http5errorEEENS_8optionalINT_20mutable_buffers_typeEEERS8_mRNS_6system10error_codeET0_.exit, %_ZNK5boost6system10error_codecvbEv.exit
   %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #35
-  %i.bo = getelementptr inbounds nuw i8, ptr %5, i64 1024 ; 3 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 1032 ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %5, i64 1024 ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 1032
   %i.bq = getelementptr inbounds nuw i8, ptr %11, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bo, i8 0, i64 16, i1 false)
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !765
@@ -223,11 +223,9 @@ _ZNK5boost6system10error_codecvbEv.exit.thread80: ; preds = %_ZN5boost5beast6det
   store ptr %.sroa.0.0.copyload.i.i.i.i.1, ptr %i.bs, align 8, !tbaa !342
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store i64 %.sroa.4.0.copyload.i.i.i.i.1, ptr %i.bt, align 8, !tbaa !1844
-  %i.bu = add i64 %.sroa.4.0.copyload.i.i.i.i.1, %i.cb ; 4 uses
-  store i64 %i.bu, ptr %i.bp, align 8, !tbaa !1987
+  %i.bu = add i64 %.sroa.4.0.copyload.i.i.i.i.1, %i.cb ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i114, i64 32 ; 2 uses
-  %i.bw = add nuw nsw i64 %i.bx, 2                ; 4 uses
-  store i64 %i.bw, ptr %i.bo, align 8, !tbaa !1988
+  %i.bw = add nuw nsw i64 %i.bx, 2                ; 5 uses
   %.not.i.i.i.i.1 = icmp eq ptr %i.bv, %.0.v.i.i.i.i.i.sroa.sel.v.sroa.sel.v.sroa.sel
   br i1 %.not.i.i.i.i.1, label %_ZN5boost4asio19basic_stream_socketINS0_2ip3tcpENS0_15any_io_executorEE9read_someINS_5beast6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit, label %.lr.ph.i.i.i.i.1, !llvm.loop !201
 
@@ -246,17 +244,18 @@ bb.t:                                             ; preds = %.lr.ph.i.i.i.i.1, %
   store ptr %.sroa.0.0.copyload.i.i.i.i, ptr %i.bz, align 8, !tbaa !342
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   store i64 %.sroa.4.0.copyload.i.i.i.i, ptr %i.ca, align 8, !tbaa !1844
-  %i.cb = add i64 %.sroa.4.0.copyload.i.i.i.i, %i.by ; 3 uses
-  store i64 %i.cb, ptr %i.bp, align 8, !tbaa !1987
+  %i.cb = add i64 %.sroa.4.0.copyload.i.i.i.i, %i.by ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i114, i64 16 ; 2 uses
   %i.cd = or disjoint i64 %i.bx, 1                ; 3 uses
-  store i64 %i.cd, ptr %i.bo, align 8, !tbaa !1988
   %.not.i.i.i.i = icmp eq ptr %i.cc, %.0.v.i.i.i.i.i.sroa.sel.v.sroa.sel.v.sroa.sel
   br i1 %.not.i.i.i.i, label %_ZN5boost4asio19basic_stream_socketINS0_2ip3tcpENS0_15any_io_executorEE9read_someINS_5beast6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit, label %.lr.ph.i.i.i.i, !llvm.loop !201
 
 _ZN5boost4asio19basic_stream_socketINS0_2ip3tcpENS0_15any_io_executorEE9read_someINS_5beast6detail12buffers_pairILb1EEEEEmRKT_RNS_6system10error_codeE.exit: ; preds = %.lr.ph.i.i.i.i.1, %.lr.ph.i.i.i.i, %bb.t
-  %.lcssa = phi i64 [ %i.bu, %.lr.ph.i.i.i.i.1 ], [ %i.cb, %bb.t ], [ %i.bu, %.lr.ph.i.i.i.i ]
+  %12 = phi i64 [ %i.bw, %.lr.ph.i.i.i.i.1 ], [ %i.cd, %bb.t ], [ %i.bw, %.lr.ph.i.i.i.i ]
+  %.lcssa = phi i64 [ %i.bu, %.lr.ph.i.i.i.i.1 ], [ %i.cb, %bb.t ], [ %i.bu, %.lr.ph.i.i.i.i ] ; 2 uses
   %i.ce = phi i64 [ 64, %.lr.ph.i.i.i.i.1 ], [ %i.cd, %bb.t ], [ %i.bw, %.lr.ph.i.i.i.i ]
+  store i64 %.lcssa, ptr %i.bp, align 8, !tbaa !1987
+  store i64 %12, ptr %i.bo, align 8, !tbaa !1988
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !1612
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 12
