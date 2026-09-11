@@ -204,24 +204,20 @@ bb.o:                                             ; preds = %Extract_Components.
   br i1 %or.cond, label %bb.p, label %.thread
 
 bb.p:                                             ; preds = %bb.o
-  %i.cp = load i32, ptr @picture_structure, align 4, !tbaa !7
-  %.fr = freeze i32 %i.cp                         ; 2 uses
-  %3 = icmp eq i32 %.fr, 1
-  %.not67 = icmp eq i32 %.fr, 3                   ; 3 uses
-  %4 = or i1 %3, %.not67
-  %spec.select = select i1 %.not67, i32 1, i32 2
-  %5 = xor i1 %.not67, true
-  %i.cq = zext i1 %5 to i32
+  %i.cp = load i32, ptr @picture_structure, align 4, !tbaa !7 ; 2 uses
+  %.not67 = icmp eq i32 %i.cp, 1
+  %3 = icmp ne i32 %i.cp, 3
+  %i.cq = zext i1 %3 to i32
   br label %.thread
 
 .thread:                                          ; preds = %bb.o, %bb.p
-  %.092 = phi i32 [ %i.cq, %bb.p ], [ 0, %bb.o ]  ; 3 uses
-  %.01790 = phi i1 [ %4, %bb.p ], [ true, %bb.o ] ; 3 uses
-  %i.cr = phi i32 [ %spec.select, %bb.p ], [ 1, %bb.o ] ; 3 uses
+  %.01790 = phi i1 [ %.not67, %bb.p ], [ false, %bb.o ] ; 3 uses
+  %i.cr = phi i32 [ %i.cq, %bb.p ], [ 0, %bb.o ]  ; 7 uses
   %i.cs = load ptr, ptr @substitute_frame, align 16, !tbaa !10 ; 2 uses
   %i.ct = load ptr, ptr %1, align 8, !tbaa !10    ; 2 uses
   %i.cu = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !7 ; 5 uses
   %i.cv = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !7 ; 2 uses
+  %.0.i20 = add nuw nsw i32 %i.cr, 1              ; 3 uses
   %i.cw = icmp sgt i32 %i.cv, 0
   %i.cx = icmp sgt i32 %i.cu, 0
   %or.cond.i = and i1 %i.cx, %i.cw
@@ -230,10 +226,12 @@ bb.p:                                             ; preds = %bb.o
 .preheader.preheader.i:                           ; preds = %.thread
   %i.cy = ptrtoaddr ptr %i.ct to i64
   %i.cz = ptrtoaddr ptr %i.cs to i64
-  %i.da = shl nuw i32 %i.cu, %.092
+  %i.da = shl nuw i32 %i.cu, %i.cr
+  %.not.i21 = icmp eq i32 %i.cr, 0
+  %4 = or i1 %.01790, %.not.i21
   %i.db = sext i32 %i.da to i64                   ; 2 uses
   %i.dc = zext nneg i32 %i.cu to i64              ; 9 uses
-  %i.dd = select i1 %.01790, i64 0, i64 %i.dc     ; 2 uses
+  %i.dd = select i1 %4, i64 0, i64 %i.dc          ; 2 uses
   %i.de = add i64 %i.dd, %i.cz
   %min.iters.check = icmp ult i32 %i.cu, 4
   %i.df = sub i64 %i.de, %i.cy
@@ -348,7 +346,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ._crit_edge.i23:                                  ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %indvars.iv.next35.i = add nsw i64 %indvars.iv34.i, %i.db
   %indvars.iv.next37.i = add nsw i64 %indvars.iv36.i, %i.db
-  %i.dw = add nuw nsw i32 %.02528.i, %i.cr        ; 2 uses
+  %i.dw = add nuw nsw i32 %.02528.i, %.0.i20      ; 2 uses
   %i.dx = icmp slt i32 %i.dw, %i.cv
   br i1 %i.dx, label %iter.check, label %Copy_Frame.exit, !llvm.loop !18
 
@@ -366,10 +364,12 @@ Copy_Frame.exit:                                  ; preds = %._crit_edge.i23, %.
 .preheader.preheader.i27:                         ; preds = %Copy_Frame.exit
   %i.ef = ptrtoaddr ptr %i.ea to i64
   %i.eg = ptrtoaddr ptr %i.dy to i64
-  %i.eh = shl nuw i32 %i.eb, %.092
+  %i.eh = shl nuw i32 %i.eb, %i.cr
+  %.not.i27 = icmp eq i32 %i.cr, 0
+  %5 = or i1 %.01790, %.not.i27
   %i.ei = sext i32 %i.eh to i64                   ; 2 uses
   %i.ej = zext nneg i32 %i.eb to i64              ; 9 uses
-  %i.ek = select i1 %.01790, i64 0, i64 %i.ej     ; 2 uses
+  %i.ek = select i1 %5, i64 0, i64 %i.ej          ; 2 uses
   %i.el = add i64 %i.ek, %i.eg
   %min.iters.check103 = icmp ult i32 %i.eb, 4
   %i.em = sub i64 %i.el, %i.ef
@@ -484,7 +484,7 @@ vec.epilog.scalar.ph117:                          ; preds = %vec.epilog.scalar.p
 ._crit_edge.i41:                                  ; preds = %vec.epilog.scalar.ph117.prol.loopexit, %vec.epilog.scalar.ph117, %vec.epilog.middle.block126, %middle.block113
   %indvars.iv.next35.i42 = add nsw i64 %indvars.iv34.i32, %i.ei
   %indvars.iv.next37.i43 = add nsw i64 %indvars.iv36.i31, %i.ei
-  %i.fd = add nuw nsw i32 %.02528.i33, %i.cr      ; 2 uses
+  %i.fd = add nuw nsw i32 %.02528.i33, %.0.i20    ; 2 uses
   %i.fe = icmp slt i32 %i.fd, %i.ec
   br i1 %i.fe, label %iter.check116, label %Copy_Frame.exit44.loopexit, !llvm.loop !18
 
@@ -507,10 +507,12 @@ Copy_Frame.exit44:                                ; preds = %Copy_Frame.exit44.l
 .preheader.preheader.i48:                         ; preds = %Copy_Frame.exit44
   %i.fm = ptrtoaddr ptr %i.fj to i64
   %i.fn = ptrtoaddr ptr %i.fh to i64
-  %i.fo = shl nuw i32 %i.fg, %.092
+  %i.fo = shl nuw i32 %i.fg, %i.cr
+  %.not.i47 = icmp eq i32 %i.cr, 0
+  %6 = or i1 %.01790, %.not.i47
   %i.fp = sext i32 %i.fo to i64                   ; 2 uses
   %i.fq = zext nneg i32 %i.fg to i64              ; 9 uses
-  %i.fr = select i1 %.01790, i64 0, i64 %i.fq     ; 2 uses
+  %i.fr = select i1 %6, i64 0, i64 %i.fq          ; 2 uses
   %i.fs = add i64 %i.fr, %i.fn
   %min.iters.check131 = icmp ult i32 %i.fg, 4
   %i.ft = sub i64 %i.fs, %i.fm
@@ -625,7 +627,7 @@ vec.epilog.scalar.ph145:                          ; preds = %vec.epilog.scalar.p
 ._crit_edge.i62:                                  ; preds = %vec.epilog.scalar.ph145.prol.loopexit, %vec.epilog.scalar.ph145, %vec.epilog.middle.block154, %middle.block141
   %indvars.iv.next35.i63 = add nsw i64 %indvars.iv34.i53, %i.fp
   %indvars.iv.next37.i64 = add nsw i64 %indvars.iv36.i52, %i.fp
-  %i.gk = add nuw nsw i32 %.02528.i54, %i.cr      ; 2 uses
+  %i.gk = add nuw nsw i32 %.02528.i54, %.0.i20    ; 2 uses
   %i.gl = icmp slt i32 %i.gk, %i.ff
   br i1 %i.gl, label %iter.check144, label %Copy_Frame.exit65, !llvm.loop !18
 

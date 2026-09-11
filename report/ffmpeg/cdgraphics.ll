@@ -205,8 +205,7 @@ declare i32 @ff_reget_buffer(ptr noundef, ptr noundef, i32 noundef) local_unname
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @cdg_load_palette(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #6 {
 bb.a:
-  %.not = icmp eq i32 %2, 0
-  %3 = select i1 %.not, i64 8, i64 0              ; 9 uses
+  %3 = shl nuw nsw i32 %2, 3                      ; 8 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !31
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !34   ; 8 uses
@@ -224,7 +223,9 @@ bb.a:
   %i.o = or disjoint i8 %i.n, %i.j
   %i.p = and i8 %i.h, 15
   %narrow = mul nuw i8 %i.p, 17
-  %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 %3
+  %4 = xor i32 %3, 8
+  %5 = zext nneg i32 %4 to i64                    ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 %5
   %i.r = load i8, ptr %i.q, align 1, !tbaa !32
   %i.s = zext i8 %i.r to i32
   %i.t = shl nuw i32 %i.s, 24
@@ -236,7 +237,7 @@ bb.a:
   %i.z = or disjoint i32 %i.y, %i.w
   %i.aa = zext i8 %narrow to i32
   %i.ab = or disjoint i32 %i.z, %i.aa
-  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %3
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %5
   store i32 %i.ab, ptr %i.ac, align 4, !tbaa !35
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !32  ; 2 uses
@@ -252,8 +253,9 @@ bb.a:
   %i.ao = or disjoint i8 %i.an, %i.aj
   %i.ap = and i8 %i.ah, 15
   %narrow.1 = mul nuw i8 %i.ap, 17
-  %4 = or disjoint i64 %3, 1                      ; 2 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 %4
+  %6 = xor i32 %3, 9
+  %7 = zext nneg i32 %6 to i64                    ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 %7
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !32
   %i.as = zext i8 %i.ar to i32
   %i.at = shl nuw i32 %i.as, 24
@@ -265,7 +267,7 @@ bb.a:
   %i.az = or disjoint i32 %i.ay, %i.aw
   %i.ba = zext i8 %narrow.1 to i32
   %i.bb = or disjoint i32 %i.az, %i.ba
-  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %4
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %7
   store i32 %i.bb, ptr %i.bc, align 4, !tbaa !35
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !32  ; 2 uses
@@ -281,8 +283,9 @@ bb.a:
   %i.bo = or disjoint i8 %i.bn, %i.bj
   %i.bp = and i8 %i.bh, 15
   %narrow.2 = mul nuw i8 %i.bp, 17
-  %5 = or disjoint i64 %3, 2                      ; 2 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.d, i64 %5
+  %8 = xor i32 %3, 10
+  %9 = zext nneg i32 %8 to i64                    ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.d, i64 %9
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !32
   %i.bs = zext i8 %i.br to i32
   %i.bt = shl nuw i32 %i.bs, 24
@@ -294,7 +297,7 @@ bb.a:
   %i.bz = or disjoint i32 %i.by, %i.bw
   %i.ca = zext i8 %narrow.2 to i32
   %i.cb = or disjoint i32 %i.bz, %i.ca
-  %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %5
+  %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %9
   store i32 %i.cb, ptr %i.cc, align 4, !tbaa !35
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 6
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !32  ; 2 uses
@@ -310,8 +313,9 @@ bb.a:
   %i.co = or disjoint i8 %i.cn, %i.cj
   %i.cp = and i8 %i.ch, 15
   %narrow.3 = mul nuw i8 %i.cp, 17
-  %6 = or disjoint i64 %3, 3                      ; 2 uses
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.d, i64 %6
+  %10 = xor i32 %3, 11
+  %11 = zext nneg i32 %10 to i64                  ; 2 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.d, i64 %11
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !32
   %i.cs = zext i8 %i.cr to i32
   %i.ct = shl nuw i32 %i.cs, 24
@@ -323,7 +327,7 @@ bb.a:
   %i.cz = or disjoint i32 %i.cy, %i.cw
   %i.da = zext i8 %narrow.3 to i32
   %i.db = or disjoint i32 %i.cz, %i.da
-  %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %6
+  %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %11
   store i32 %i.db, ptr %i.dc, align 4, !tbaa !35
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !32  ; 2 uses
@@ -339,8 +343,9 @@ bb.a:
   %i.do = or disjoint i8 %i.dn, %i.dj
   %i.dp = and i8 %i.dh, 15
   %narrow.4 = mul nuw i8 %i.dp, 17
-  %7 = or disjoint i64 %3, 4                      ; 2 uses
-  %i.dq = getelementptr inbounds nuw i8, ptr %i.d, i64 %7
+  %12 = xor i32 %3, 12
+  %13 = zext nneg i32 %12 to i64                  ; 2 uses
+  %i.dq = getelementptr inbounds nuw i8, ptr %i.d, i64 %13
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !32
   %i.ds = zext i8 %i.dr to i32
   %i.dt = shl nuw i32 %i.ds, 24
@@ -352,7 +357,7 @@ bb.a:
   %i.dz = or disjoint i32 %i.dy, %i.dw
   %i.ea = zext i8 %narrow.4 to i32
   %i.eb = or disjoint i32 %i.dz, %i.ea
-  %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %7
+  %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %13
   store i32 %i.eb, ptr %i.ec, align 4, !tbaa !35
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.ee = load i8, ptr %i.ed, align 1, !tbaa !32  ; 2 uses
@@ -368,8 +373,9 @@ bb.a:
   %i.eo = or disjoint i8 %i.en, %i.ej
   %i.ep = and i8 %i.eh, 15
   %narrow.5 = mul nuw i8 %i.ep, 17
-  %8 = or disjoint i64 %3, 5                      ; 2 uses
-  %i.eq = getelementptr inbounds nuw i8, ptr %i.d, i64 %8
+  %14 = xor i32 %3, 13
+  %15 = zext nneg i32 %14 to i64                  ; 2 uses
+  %i.eq = getelementptr inbounds nuw i8, ptr %i.d, i64 %15
   %i.er = load i8, ptr %i.eq, align 1, !tbaa !32
   %i.es = zext i8 %i.er to i32
   %i.et = shl nuw i32 %i.es, 24
@@ -381,7 +387,7 @@ bb.a:
   %i.ez = or disjoint i32 %i.ey, %i.ew
   %i.fa = zext i8 %narrow.5 to i32
   %i.fb = or disjoint i32 %i.ez, %i.fa
-  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %8
+  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %15
   store i32 %i.fb, ptr %i.fc, align 4, !tbaa !35
   %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !32  ; 2 uses
@@ -397,8 +403,9 @@ bb.a:
   %i.fo = or disjoint i8 %i.fn, %i.fj
   %i.fp = and i8 %i.fh, 15
   %narrow.6 = mul nuw i8 %i.fp, 17
-  %9 = or disjoint i64 %3, 6                      ; 2 uses
-  %i.fq = getelementptr inbounds nuw i8, ptr %i.d, i64 %9
+  %16 = xor i32 %3, 14
+  %17 = zext nneg i32 %16 to i64                  ; 2 uses
+  %i.fq = getelementptr inbounds nuw i8, ptr %i.d, i64 %17
   %i.fr = load i8, ptr %i.fq, align 1, !tbaa !32
   %i.fs = zext i8 %i.fr to i32
   %i.ft = shl nuw i32 %i.fs, 24
@@ -410,7 +417,7 @@ bb.a:
   %i.fz = or disjoint i32 %i.fy, %i.fw
   %i.ga = zext i8 %narrow.6 to i32
   %i.gb = or disjoint i32 %i.fz, %i.ga
-  %i.gc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %9
+  %i.gc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %17
   store i32 %i.gb, ptr %i.gc, align 4, !tbaa !35
   %i.gd = getelementptr inbounds nuw i8, ptr %1, i64 14
   %i.ge = load i8, ptr %i.gd, align 1, !tbaa !32  ; 2 uses
@@ -426,8 +433,9 @@ bb.a:
   %i.go = or disjoint i8 %i.gn, %i.gj
   %i.gp = and i8 %i.gh, 15
   %narrow.7 = mul nuw i8 %i.gp, 17
-  %10 = or disjoint i64 %3, 7                     ; 2 uses
-  %i.gq = getelementptr inbounds nuw i8, ptr %i.d, i64 %10
+  %18 = xor i32 %3, 15
+  %19 = zext nneg i32 %18 to i64                  ; 2 uses
+  %i.gq = getelementptr inbounds nuw i8, ptr %i.d, i64 %19
   %i.gr = load i8, ptr %i.gq, align 1, !tbaa !32
   %i.gs = zext i8 %i.gr to i32
   %i.gt = shl nuw i32 %i.gs, 24
@@ -439,7 +447,7 @@ bb.a:
   %i.gz = or disjoint i32 %i.gy, %i.gw
   %i.ha = zext i8 %narrow.7 to i32
   %i.hb = or disjoint i32 %i.gz, %i.ha
-  %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %10
+  %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %19
   store i32 %i.hb, ptr %i.hc, align 4, !tbaa !35
   ret void
 }

@@ -205,11 +205,11 @@ bb.aa:                                            ; preds = %bb.z
   %spec.select.i523 = add i32 %i.jy, %i.kh
   %i.ki = zext i8 %i.kd to i32
   %i.kj = and i32 %i.jy, 7
+  %19 = shl nuw nsw i32 %i.ki, %i.kj
+  %i.kk = lshr i32 %19, 7
   store i32 %spec.select.i523, ptr %i.jx, align 8, !tbaa !50
-  %i.kk = lshr exact i32 128, %i.kj
-  %19 = and i32 %i.kk, %i.ki
-  %.not482 = icmp eq i32 %19, 0
-  %20 = select i1 %.not482, i32 1, i32 2
+  %20 = and i32 %i.kk, 1
+  %21 = add nuw nsw i32 %20, 1
   br label %.loopexit.sink.split
 
 bb.ab:                                            ; preds = %bb.k
@@ -424,7 +424,7 @@ get_unary.exit:                                   ; preds = %bb.an, %bb.ao, %bb.
 
 .loopexit.sink.split:                             ; preds = %get_unary.exit, %.thread553, %bb.aa, %read_intra_mode.exit.3
   %.sink686.sroa.phi = phi ptr [ %.sink686.sroa.gep, %read_intra_mode.exit.3 ], [ %.sink686.sroa.gep802, %bb.aa ], [ %.sink686.sroa.gep803, %.thread553 ], [ %.sink686.sroa.gep804, %get_unary.exit ]
-  %.0.i.3.sink = phi i32 [ %.0.i.3, %read_intra_mode.exit.3 ], [ %20, %bb.aa ], [ %i.jw, %.thread553 ], [ %i.ol, %get_unary.exit ]
+  %.0.i.3.sink = phi i32 [ %.0.i.3, %read_intra_mode.exit.3 ], [ %21, %bb.aa ], [ %i.jw, %.thread553 ], [ %i.ol, %get_unary.exit ]
   %.ph = phi ptr [ %i.cq, %read_intra_mode.exit.3 ], [ %i.cq, %bb.aa ], [ %i.cq, %.thread553 ], [ %i.cp, %get_unary.exit ]
   store i32 %.0.i.3.sink, ptr %.sink686.sroa.phi, align 4, !tbaa !41
   br label %.loopexit
@@ -827,14 +827,15 @@ decode_super_cbp.exit:                            ; preds = %get_vlc2.exit26.i, 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @decode_cu_4x4in16x16(ptr nofree noundef nonnull captures(none) %0, i32 noundef range(i32 0, 2) %1, i32 noundef range(i32 0, 32) %2, i32 noundef range(i32 0, 69) %3, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 512)) %4, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 128)) %5, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 128)) %6, i32 noundef range(i32 1, 16777216) %7) unnamed_addr #10 {
 bb.a:
-  %.not.i = icmp eq i32 %1, 0                     ; 2 uses
   %i.a = zext nneg i32 %3 to i64
   %i.b = getelementptr inbounds nuw i8, ptr @rv60_qp_to_idx, i64 %i.a
-  %.0.in.in.idx.i = select i1 %.not.i, i64 0, i64 32
+  %8 = shl nuw nsw i32 %1, 5
+  %.0.in.in.idx.i = zext nneg i32 %8 to i64
   %.0.in.in.i = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.in.in.idx.i
   %.0.in.i = load i8, ptr %.0.in.in.i, align 1, !tbaa !42
+  %.not = icmp eq i32 %1, 0
   %i.c = zext i8 %.0.in.i to i64
-  %.v = select i1 %.not.i, ptr @inter_coeff_vlc, ptr @intra_coeff_vlc
+  %.v = select i1 %.not, ptr @inter_coeff_vlc, ptr @intra_coeff_vlc
   %i.d = getelementptr inbounds nuw [56 x i8], ptr %.v, i64 %i.c ; 24 uses
   %i.e = zext nneg i32 %2 to i64                  ; 3 uses
   %i.f = getelementptr inbounds nuw [2 x i8], ptr @rv60_quants_b, i64 %i.e
@@ -1165,14 +1166,15 @@ get_vlc2.exit:                                    ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @decode_cu_8x8(ptr nofree noundef nonnull captures(none) %0, i32 noundef range(i32 0, 2) %1, i32 noundef range(i32 0, 32) %2, i32 noundef range(i32 0, 69) %3, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 128)) %4, ptr nofree noundef nonnull writeonly captures(none) %5, ptr nofree noundef nonnull writeonly captures(none) %6, i32 noundef %7, i32 noundef range(i32 0, 2) %8) unnamed_addr #10 {
 bb.a:
-  %.not.i = icmp eq i32 %1, 0                     ; 2 uses
   %i.a = zext nneg i32 %3 to i64
   %i.b = getelementptr inbounds nuw i8, ptr @rv60_qp_to_idx, i64 %i.a
-  %.0.in.in.idx.i = select i1 %.not.i, i64 0, i64 32
+  %9 = shl nuw nsw i32 %1, 5
+  %.0.in.in.idx.i = zext nneg i32 %9 to i64
   %.0.in.in.i = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.in.in.idx.i
   %.0.in.i = load i8, ptr %.0.in.in.i, align 1, !tbaa !42
+  %.not = icmp eq i32 %1, 0
   %i.c = zext i8 %.0.in.i to i64
-  %.v = select i1 %.not.i, ptr @inter_coeff_vlc, ptr @intra_coeff_vlc
+  %.v = select i1 %.not, ptr @inter_coeff_vlc, ptr @intra_coeff_vlc
   %i.d = getelementptr inbounds nuw [56 x i8], ptr %.v, i64 %i.c ; 9 uses
   %i.e = zext nneg i32 %2 to i64                  ; 3 uses
   %i.f = getelementptr inbounds nuw [2 x i8], ptr @rv60_quants_b, i64 %i.e

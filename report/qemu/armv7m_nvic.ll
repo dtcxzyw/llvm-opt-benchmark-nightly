@@ -204,11 +204,13 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16496
   %i.o = getelementptr i8, ptr %i.m, i64 95424    ; 3 uses
   %.val37 = load i64, ptr %i.o, align 16
-  %1 = and i64 %.val37, 16777216
-  %.not = icmp eq i64 %1, 0
-  %2 = select i1 %.not, i16 -3, i16 -4
+  %1 = trunc i64 %.val37 to i32
+  %2 = lshr i32 %1, 24
+  %3 = trunc nuw nsw i32 %2 to i16
+  %4 = and i16 %3, 1
+  %5 = xor i16 %4, -3
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 822
-  store i16 %2, ptr %i.p, align 2
+  store i16 %5, ptr %i.p, align 2
   store i16 -2, ptr %i.f, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 834
   store i16 -1, ptr %i.q, align 2
@@ -310,26 +312,29 @@ bb.f:                                             ; preds = %bb.d
   %i.m = icmp eq i8 %i.l, 0
   %i.n = load ptr, ptr %i.b, align 8
   %i.o = getelementptr i8, ptr %i.n, i64 95424
-  %.val31 = load i64, ptr %i.o, align 16
-  %2 = and i64 %.val31, 8
-  %.not30 = icmp eq i64 %2, 0                     ; 2 uses
+  %.val31 = load i64, ptr %i.o, align 16          ; 2 uses
   br i1 %i.m, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
+  %2 = and i64 %.val31, 8
+  %.not30 = icmp eq i64 %2, 0
   %i.p = select i1 %.not30, i8 2, i8 8
   store i8 %i.p, ptr %i.k, align 8
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %3 = zext i8 %i.l to i32                        ; 2 uses
-  %4 = select i1 %.not30, i32 2, i32 3            ; 2 uses
-  %i.q = icmp samesign ugt i32 %4, %3
+  %3 = trunc i64 %.val31 to i32
+  %4 = lshr i32 %3, 3
+  %5 = and i32 %4, 1
+  %6 = or disjoint i32 %5, 2                      ; 2 uses
+  %7 = zext i8 %i.l to i32                        ; 2 uses
+  %i.q = icmp samesign ugt i32 %6, %7
   %i.r = icmp ugt i8 %i.l, 8
   %or.cond = or i1 %i.r, %i.q
   br i1 %or.cond, label %.critedge, label %bb.i
 
 .critedge:                                        ; preds = %bb.h
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %1, ptr noundef nonnull @.str.1, i32 noundef 2749, ptr noundef nonnull @__func__.armv7m_nvic_realize, ptr noundef nonnull @.str.56, i32 noundef %3, i32 noundef %4) #11
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %1, ptr noundef nonnull @.str.1, i32 noundef 2749, ptr noundef nonnull @__func__.armv7m_nvic_realize, ptr noundef nonnull @.str.56, i32 noundef %7, i32 noundef %6) #11
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -352,14 +357,15 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr i8, ptr %i.b, i64 95424
   %.val = load i64, ptr %i.c, align 16
-  %2 = and i64 %.val, 16777216
-  %.not = icmp eq i64 %2, 0
-  %3 = select i1 %.not, i32 -3, i32 -4
+  %2 = trunc i64 %.val to i32
+  %3 = lshr i32 %2, 24
+  %4 = and i32 %3, 1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 816
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 822
   %i.f = load i16, ptr %i.e, align 2
   %i.g = sext i16 %i.f to i32
-  %.not13.a = icmp eq i32 %3, %i.g
+  %5 = xor i32 %4, %i.g
+  %.not13.a = icmp eq i32 %5, -3
   br i1 %.not13.a, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %bb.a

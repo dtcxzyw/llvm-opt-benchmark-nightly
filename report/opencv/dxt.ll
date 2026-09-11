@@ -205,7 +205,8 @@ bb.be:                                            ; preds = %bb.bd, %bb.aw, %bb.
 _ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit102:  ; preds = %bb.ay, %_ZN2cv10AutoBufferIhLm1032EE10deallocateEv.exit.i100, %.noexc101, %_ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit97
   %.163 = phi ptr [ %i.fh, %_ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit97 ], [ %i.fn, %.noexc101 ], [ %i.fl, %_ZN2cv10AutoBufferIhLm1032EE10deallocateEv.exit.i100 ], [ %.pre142, %bb.ay ] ; 7 uses
   %i.fp = load ptr, ptr %7, align 8, !tbaa !29    ; 6 uses
-  %i.fq = load i8, ptr %i.ag, align 1, !tbaa !122, !range !44, !noundef !45 ; 2 uses
+  %i.fq = load i8, ptr %i.ag, align 1, !tbaa !122, !range !44, !noundef !45
+  %12 = zext nneg i8 %i.fq to i32                 ; 2 uses
   %i.fr = icmp eq i32 %.154, 1
   br i1 %i.fr, label %_ZN2cvL7DCTInitEiiPvi.exit, label %bb.bf
 
@@ -263,12 +264,12 @@ bb.bl:                                            ; preds = %bb.bf
   br i1 %i.gc, label %.preheader63.i, label %bb.bm, !llvm.loop !647
 
 bb.bm:                                            ; preds = %.preheader63.i
-  %.not47.i = icmp eq i8 %i.fq, 0
-  %12 = select i1 %.not47.i, double 2.000000e+00, double 1.000000e+00
+  %13 = sub nuw nsw i32 2, %12
+  %14 = uitofp nneg i32 %13 to double
   %i.ge = zext nneg i32 %.0.i to i64              ; 2 uses
   %i.gf = getelementptr inbounds nuw [8 x i8], ptr @_ZZN2cvL7DCTInitEiiPviE8DctScale, i64 %i.ge
   %i.gg = load double, ptr %i.gf, align 8, !tbaa !113
-  %i.gh = fmul double %12, %i.gg
+  %i.gh = fmul double %i.gg, %14
   %i.gi = getelementptr inbounds nuw [16 x i8], ptr @_ZN2cvL6DFTTabE, i64 %i.ge ; 2 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 32
   %i.gk = load double, ptr %i.gj, align 16, !tbaa !113
@@ -281,10 +282,10 @@ bb.bn:                                            ; preds = %bb.bl
   %i.go = shl nsw i32 %.154, 1
   %i.gp = sitofp i32 %i.go to double
   %i.gq = fdiv double 1.000000e+00, %i.gp         ; 2 uses
-  %.not.i103 = icmp eq i8 %i.fq, 0
-  %13 = select i1 %.not.i103, double 2.000000e+00, double 1.000000e+00
+  %15 = sub nuw nsw i32 2, %12
+  %16 = uitofp nneg i32 %15 to double
   %i.gr = call double @sqrt(double noundef %i.gq) #21
-  %i.gs = fmul double %13, %i.gr
+  %i.gs = fmul double %i.gr, %16
   %i.gt = fmul nnan double %i.gq, f0xC00921FB54442D18
   %i.gu = call double @sin(double noundef %i.gt) #21 ; 3 uses
   %i.gv = fneg double %i.gu

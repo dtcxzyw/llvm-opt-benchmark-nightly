@@ -202,12 +202,13 @@ Vec_PtrSort.exit:                                 ; preds = %bb.a
   %.not = icmp eq i32 %3, 0
   %i.h = getelementptr i8, ptr %1, i64 8          ; 13 uses
   %.not22 = icmp eq i32 %2, 5
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %5 = select i1 %.not22, i32 5, i32 4
+  %4 = zext i1 %.not22 to i32
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %invariant.op = or disjoint i32 %4, 4
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %Hop_NodeBalancePushUniqueOrderByLevel.exit
@@ -272,7 +273,7 @@ bb.e:                                             ; preds = %Hop_NodeBalanceFind
   %i.ar = ptrtoint ptr %i.an to i64
   %i.as = and i64 %i.ar, -2
   %i.at = inttoptr i64 %i.as to ptr               ; 2 uses
-  %i.au = load ptr, ptr %4, align 8, !tbaa !16    ; 2 uses
+  %i.au = load ptr, ptr %5, align 8, !tbaa !16    ; 2 uses
   %i.av = icmp eq ptr %i.au, %i.at
   %i.aw = ptrtoint ptr %i.aq to i64
   %i.ax = and i64 %i.aw, -2
@@ -302,14 +303,14 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i15
   %i.bf = ptrtoint ptr %i.be to i64
   %i.bg = and i64 %i.bf, -2
   %i.bh = inttoptr i64 %i.bg to ptr               ; 2 uses
-  %i.bi = load ptr, ptr %4, align 8, !tbaa !16
+  %i.bi = load ptr, ptr %5, align 8, !tbaa !16
   %i.bj = icmp eq ptr %i.bi, %i.bh
   br i1 %i.bj, label %.loopexit.sink.split.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.bk = load i32, ptr %i.i, align 8
   %i.bl = and i32 %i.bk, -8
-  %i.bm = or disjoint i32 %i.bl, %5
+  %i.bm = or disjoint i32 %i.bl, %invariant.op
   store i32 %i.bm, ptr %i.i, align 8
   %i.bn = load i32, ptr %i.ba, align 4, !tbaa !29
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bh, i64 36

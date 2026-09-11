@@ -205,7 +205,7 @@ isPlanarYUV.exit:                                 ; preds = %bb.f
   br i1 %i.m, label %isPlanarYUV.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %isPlanarYUV.exit
-  %i.n = load i32, ptr %i.a, align 4, !tbaa !83   ; 2 uses
+  %i.n = load i32, ptr %i.a, align 4, !tbaa !83   ; 3 uses
   %i.o = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.n) #8 ; 3 uses
   %.not.i231 = icmp eq ptr %i.o, null
   br i1 %.not.i231, label %bb.h, label %bb.i
@@ -220,22 +220,23 @@ bb.i:                                             ; preds = %bb.g
   %i.q = load i64, ptr %i.p, align 8, !tbaa !85
   %i.r = and i64 %i.q, 10
   %or.cond10.i = icmp eq i64 %i.r, 0
-  br i1 %or.cond10.i, label %bb.j, label %isGray.exit.thread
+  br i1 %or.cond10.i, label %bb.j, label %isPlanarYUV.exit.thread
 
 bb.j:                                             ; preds = %bb.i
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.t = load i8, ptr %i.s, align 8, !tbaa !86
-  %1 = icmp ugt i8 %i.t, 2
-  %2 = add i32 %i.n, -9
-  %3 = icmp ult i32 %2, 2
-  %or.cond = or i1 %3, %1
-  br i1 %or.cond, label %isGray.exit.thread, label %isPlanarYUV.exit.thread
+  %1 = icmp ult i8 %i.t, 3
+  %2 = icmp ne i32 %i.n, 10
+  %or.cond.i = and i1 %2, %1
+  br i1 %or.cond.i, label %isGray.exit.thread, label %isPlanarYUV.exit.thread
 
-isGray.exit.thread:                               ; preds = %bb.i, %bb.j
+isGray.exit.thread:                               ; preds = %bb.j
+  %.not = icmp eq i32 %i.n, 9
+  %3 = select i1 %.not, i32 2, i32 1
   br label %isPlanarYUV.exit.thread
 
-isPlanarYUV.exit.thread:                          ; preds = %bb.j, %bb.f, %bb.c, %isGray.exit.thread, %isPlanarYUV.exit
-  %4 = phi i32 [ 1, %isPlanarYUV.exit ], [ 1, %bb.j ], [ 2, %isGray.exit.thread ], [ 1, %bb.c ], [ 1, %bb.f ]
+isPlanarYUV.exit.thread:                          ; preds = %isGray.exit.thread, %bb.j, %bb.i, %bb.f, %bb.c, %isPlanarYUV.exit
+  %4 = phi i32 [ 1, %isPlanarYUV.exit ], [ 1, %bb.f ], [ 1, %bb.c ], [ %3, %isGray.exit.thread ], [ 2, %bb.j ], [ 2, %bb.i ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 53048
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !87
   %.not220 = icmp eq ptr %i.v, null

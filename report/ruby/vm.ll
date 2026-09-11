@@ -205,8 +205,8 @@ scope_to_ci.exit:
   %.0..0..0..0..0..0..i = load volatile ptr, ptr %i.d, align 8, !tbaa !66 ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
-  %cond.not = icmp eq i32 %4, 0                   ; 3 uses
-  %spec.select = select i1 %cond.not, i64 0, i64 4
+  %9 = shl nuw nsw i32 %4, 2
+  %spec.select = zext nneg i32 %9 to i64
   %i.g = sext i32 %2 to i64                       ; 2 uses
   store i64 106522, ptr %8, align 8, !tbaa !50
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %8, i64 8
@@ -390,12 +390,13 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.bs = icmp eq i32 %i.bo, 2
-  %or.cond.i = and i1 %cond.not, %i.bs
+  %10 = icmp eq i32 %4, 0                         ; 2 uses
+  %or.cond.i = and i1 %10, %i.bs
   br i1 %or.cond.i, label %rb_method_call_status.exit.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.bt = icmp eq i32 %i.bo, 3
-  %or.cond3.i = and i1 %cond.not, %i.bt
+  %or.cond3.i = and i1 %10, %i.bt
   br i1 %or.cond3.i, label %bb.x, label %rb_method_call_status.exit
 
 bb.x:                                             ; preds = %bb.w
@@ -798,8 +799,9 @@ bb.c:                                             ; preds = %bb.b
   store i32 %3, ptr %i.a, align 4, !tbaa !48
   %i.e = getelementptr i8, ptr %.037.i, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !64   ; 4 uses
-  %.not.i.i = icmp eq i32 %.039.i, 0
-  %10 = select i1 %.not.i.i, i64 572653569, i64 572653825 ; 2 uses
+  %10 = shl nuw nsw i32 %.039.i, 8
+  %11 = or disjoint i32 %10, 572653569
+  %12 = zext nneg i32 %11 to i64                  ; 2 uses
   %i.g = getelementptr i8, ptr %0, i64 16         ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !107  ; 2 uses
   %i.i = getelementptr i8, ptr %i.h, i64 8        ; 4 uses
@@ -997,7 +999,7 @@ invoke_block.exit:                                ; preds = %.lr.ph.i.i, %middle
   %i.cb = getelementptr [8 x i8], ptr %i.ba, i64 %i.ca
   %i.cc = ptrtoint ptr %.037.i.val7 to i64
   %i.cd = or i64 %i.cc, 1
-  %i.ce = or disjoint i64 %10, 32
+  %i.ce = or disjoint i64 %12, 32
   %i.cf = getelementptr i8, ptr %.0.lcssa.i.i, i64 8
   store i64 0, ptr %.0.lcssa.i.i, align 8, !tbaa !50
   %i.cg = getelementptr i8, ptr %.0.lcssa.i.i, i64 16 ; 2 uses
@@ -1092,7 +1094,7 @@ invoke_bmethod.exit:                              ; preds = %.lr.ph.i.i20, %midd
   %i.dh = ptrtoint ptr %7 to i64
   %i.di = ptrtoint ptr %.037.i.val7 to i64
   %i.dj = or i64 %i.di, 1
-  %i.dk = or disjoint i64 %10, 64
+  %i.dk = or disjoint i64 %12, 64
   %i.dl = getelementptr i8, ptr %.0.lcssa.i.i14, i64 8
   store i64 %i.dh, ptr %.0.lcssa.i.i14, align 8, !tbaa !50
   %i.dm = getelementptr i8, ptr %.0.lcssa.i.i14, i64 16 ; 2 uses
@@ -1287,12 +1289,13 @@ bb.c:                                             ; preds = %bb.b
   %.039.i.in.in.in.in.le = getelementptr i8, ptr %.pn, i64 32
   %.039.i.in.in.in.le = load i8, ptr %.039.i.in.in.in.in.le, align 8
   %.039.i.in.in.le = lshr i8 %.039.i.in.in.in.le, 1
-  %.039.i.in.le = and i8 %.039.i.in.in.le, 1      ; 2 uses
+  %.039.i.in.le = and i8 %.039.i.in.in.le, 1
+  %.039.i.le = zext nneg i8 %.039.i.in.le to i32  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 %3, ptr %i.a, align 4, !tbaa !48
   %i.e = getelementptr i8, ptr %.pn, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !64   ; 3 uses
-  %.not.i.i = icmp eq i8 %.039.i.in.le, 0
+  %9 = shl nuw nsw i32 %.039.i.le, 8
   %i.g = getelementptr i8, ptr %0, i64 16         ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !107  ; 2 uses
   %i.i = getelementptr i8, ptr %i.h, i64 8        ; 4 uses
@@ -1366,8 +1369,7 @@ bb.k:                                             ; preds = %rbimpl_size_mul_or_
 
 ruby_nonempty_memcpy.exit:                        ; preds = %rbimpl_size_mul_or_raise.exit, %bb.k
   %i.ad = load i32, ptr %i.b, align 4, !tbaa !48  ; 2 uses
-  %9 = xor i8 %.039.i.in.le, 1
-  %10 = zext nneg i8 %9 to i32
+  %10 = xor i32 %.039.i.le, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
   %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 32
   store i32 %i.t, ptr %i.ae, align 8, !tbaa !245
@@ -1478,13 +1480,14 @@ invoke_block.exit:                                ; preds = %.lr.ph.i.i, %middle
   %i.bz = getelementptr [8 x i8], ptr %i.ay, i64 %i.by
   %i.ca = ptrtoint ptr %.037.i.val7 to i64
   %i.cb = or i64 %i.ca, 1
-  %11 = select i1 %.not.i.i, i64 572653601, i64 572653857
+  %11 = or disjoint i32 %9, 572653601
+  %12 = zext nneg i32 %11 to i64
   %i.cc = getelementptr i8, ptr %.0.lcssa.i.i, i64 8
   store i64 0, ptr %.0.lcssa.i.i, align 8, !tbaa !50
   %i.cd = getelementptr i8, ptr %.0.lcssa.i.i, i64 16 ; 2 uses
   store i64 %i.cb, ptr %i.cc, align 8, !tbaa !50
   %i.ce = getelementptr i8, ptr %.0.lcssa.i.i, i64 24
-  store i64 %11, ptr %i.cd, align 8, !tbaa !50
+  store i64 %12, ptr %i.cd, align 8, !tbaa !50
   store ptr %i.bz, ptr %i.bj, align 8, !tbaa !112
   %.sroa.2.0..sroa_idx.i.i = getelementptr i8, ptr %i.az, i64 -48
   store ptr %i.ce, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !112
@@ -1887,7 +1890,7 @@ RB_SYMBOL_P.exit.i:                               ; preds = %bb.j
   store i32 %2, ptr %i.a, align 4, !tbaa !48
   %i.au = getelementptr i8, ptr %i.as, i64 16
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !64 ; 3 uses
-  %.not.i = icmp eq i32 %.us-phi, 0
+  %11 = shl nuw nsw i32 %.us-phi, 8
   %i.aw = getelementptr i8, ptr %0, i64 16        ; 3 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !107 ; 2 uses
   %i.ay = getelementptr i8, ptr %i.ax, i64 8      ; 4 uses
@@ -2073,13 +2076,14 @@ invoke_block.exit:                                ; preds = %.lr.ph.i.i, %middle
   %i.dr = ptrtoint ptr %6 to i64
   %i.ds = ptrtoint ptr %.val to i64
   %i.dt = or i64 %i.ds, 1
-  %11 = select i1 %.not.i, i64 572653601, i64 572653857
+  %12 = or i32 %11, 572653601
+  %13 = zext nneg i32 %12 to i64
   %i.du = getelementptr i8, ptr %.0.lcssa.i.i, i64 8
   store i64 %i.dr, ptr %.0.lcssa.i.i, align 8, !tbaa !50
   %i.dv = getelementptr i8, ptr %.0.lcssa.i.i, i64 16 ; 2 uses
   store i64 %i.dt, ptr %i.du, align 8, !tbaa !50
   %i.dw = getelementptr i8, ptr %.0.lcssa.i.i, i64 24
-  store i64 %11, ptr %i.dv, align 8, !tbaa !50
+  store i64 %13, ptr %i.dv, align 8, !tbaa !50
   store ptr %i.dq, ptr %i.da, align 8, !tbaa !112
   %.sroa.2.0..sroa_idx.i.i = getelementptr i8, ptr %i.cq, i64 -48
   store ptr %i.dw, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !112

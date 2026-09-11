@@ -204,7 +204,7 @@ bb.a:
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !141 ; 2 uses
   %i.aw = ptrtoaddr ptr %i.av to i64
   %i.ax = getelementptr inbounds i8, ptr %i.av, i64 %i.as
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.f, i64 312 ; 94 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.f, i64 312 ; 95 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.f, i64 328 ; 57 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !142
   %i.bb = getelementptr inbounds nuw i8, ptr %i.f, i64 320 ; 112 uses
@@ -331,7 +331,7 @@ bb.o:                                             ; preds = %bb.n, %bb.i
   br i1 %.not557, label %decode_mb_row_no_filter.exit, label %.lr.ph552
 
 .lr.ph552:                                        ; preds = %bb.o
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.f, i64 316 ; 68 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.f, i64 316 ; 69 uses
   %.not268.i = icmp eq ptr %.0251.i, %i.i         ; 5 uses
   %.not269.i = icmp eq i32 %3, 0
   %i.di = and i32 %i.k, -65536                    ; 4 uses
@@ -346,7 +346,7 @@ bb.o:                                             ; preds = %bb.n, %bb.i
   %i.dp = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.dq = getelementptr inbounds nuw i8, ptr %i.f, i64 166
   %i.dr = getelementptr inbounds nuw i8, ptr %i.f, i64 372 ; 2 uses
-  %i.ds = getelementptr inbounds nuw i8, ptr %i.f, i64 336 ; 78 uses
+  %i.ds = getelementptr inbounds nuw i8, ptr %i.f, i64 336 ; 79 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.f, i64 164 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.f, i64 130
   %i.dv = getelementptr inbounds nuw i8, ptr %i.f, i64 375
@@ -749,13 +749,13 @@ bb.bq:                                            ; preds = %bb.bp
   br label %vpx_rac_renorm.exit.i.i.i
 
 vpx_rac_renorm.exit.i.i.i:                        ; preds = %bb.bq, %bb.bp, %bb.bo
-  %.018.i.i.i.i = phi i32 [ %i.adh, %bb.bq ], [ %i.acw, %bb.bp ], [ %i.acw, %bb.bo ] ; 3 uses
-  %.0.i.i.i.i = phi i32 [ %i.adg, %bb.bq ], [ %i.acv, %bb.bp ], [ %i.acv, %bb.bo ] ; 4 uses
+  %.018.i.i.i.i = phi i32 [ %i.adh, %bb.bq ], [ %i.acw, %bb.bp ], [ %i.acw, %bb.bo ] ; 2 uses
+  %.0.i.i.i.i = phi i32 [ %i.adg, %bb.bq ], [ %i.acv, %bb.bp ], [ %i.acv, %bb.bo ] ; 3 uses
   store i32 %.018.i.i.i.i, ptr %i.dh, align 4, !tbaa !144
   %i.adi = add nsw i32 %i.acu, -1
   %i.adj = mul nsw i32 %i.adi, %i.acp
   %i.adk = ashr i32 %i.adj, 8
-  %i.adl = add nsw i32 %i.adk, 1                  ; 4 uses
+  %i.adl = add nsw i32 %i.adk, 1                  ; 3 uses
   %i.adm = shl i32 %i.adl, 16                     ; 2 uses
   %.not.i.i.i = icmp ult i32 %.0.i.i.i.i, %i.adm
   br i1 %.not.i.i.i, label %bb.bu, label %bb.br
@@ -794,7 +794,7 @@ bb.bt:                                            ; preds = %bb.bs
   br label %vpx_rac_renorm.exit116.i.i
 
 vpx_rac_renorm.exit116.i.i:                       ; preds = %bb.bt, %bb.bs, %bb.br
-  %.018.i114.i.i = phi i32 [ %i.aeg, %bb.bt ], [ %i.adv, %bb.bs ], [ %i.adv, %bb.br ] ; 2 uses
+  %.018.i114.i.i = phi i32 [ %i.aeg, %bb.bt ], [ %i.adv, %bb.bs ], [ %i.adv, %bb.br ]
   %.0.i115.i.i = phi i32 [ %i.aef, %bb.bt ], [ %i.adu, %bb.bs ], [ %i.adu, %bb.br ] ; 2 uses
   store i32 %.018.i114.i.i, ptr %i.dh, align 4, !tbaa !144
   %i.aeh = add nsw i32 %i.adt, -1
@@ -803,17 +803,18 @@ vpx_rac_renorm.exit116.i.i:                       ; preds = %bb.bt, %bb.bs, %bb.
   %i.aek = ashr i32 %i.aej, 8
   %i.ael = add nsw i32 %i.aek, 1                  ; 3 uses
   %i.aem = shl i32 %i.ael, 16                     ; 2 uses
-  %.not336 = icmp ult i32 %.0.i115.i.i, %i.aem    ; 3 uses
+  %5 = icmp uge i32 %.0.i115.i.i, %i.aem          ; 3 uses
   %i.aen = sub i32 %i.adt, %i.ael
-  %i.aeo = select i1 %.not336, i32 0, i32 %i.aem
-  %i.aep = select i1 %.not336, i32 %i.ael, i32 %i.aen ; 2 uses
+  %i.aeo = select i1 %5, i32 %i.aem, i32 0
+  %i.aep = select i1 %5, i32 %i.aen, i32 %i.ael
   store i32 %i.aep, ptr %i.ay, align 8, !tbaa !152
-  %i.aeq = sub i32 %.0.i115.i.i, %i.aeo           ; 2 uses
+  %i.aeq = sub i32 %.0.i115.i.i, %i.aeo
   store i32 %i.aeq, ptr %i.ds, align 8, !tbaa !153
-  %5 = select i1 %.not336, i8 2, i8 3             ; 2 uses
+  %6 = zext i1 %5 to i8
+  %7 = or disjoint i8 %6, 2                       ; 2 uses
   %i.aer = getelementptr inbounds nuw i8, ptr %.1.i547, i64 2
-  store i8 %5, ptr %i.aer, align 2, !tbaa !163
-  %i.aes = zext nneg i8 %5 to i64
+  store i8 %7, ptr %i.aer, align 2, !tbaa !163
+  %i.aes = zext nneg i8 %7 to i64
   br label %bb.bv
 
 bb.bu:                                            ; preds = %vpx_rac_renorm.exit.i.i.i
@@ -824,9 +825,6 @@ bb.bu:                                            ; preds = %vpx_rac_renorm.exit
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu, %vpx_rac_renorm.exit116.i.i
-  %6 = phi i32 [ %.0.i.i.i.i, %bb.bu ], [ %i.aeq, %vpx_rac_renorm.exit116.i.i ]
-  %7 = phi i32 [ %.018.i.i.i.i, %bb.bu ], [ %.018.i114.i.i, %vpx_rac_renorm.exit116.i.i ]
-  %8 = phi i32 [ %i.adl, %bb.bu ], [ %i.aep, %vpx_rac_renorm.exit116.i.i ] ; 2 uses
   %i.aeu = phi i64 [ 1, %bb.bu ], [ %i.aes, %vpx_rac_renorm.exit116.i.i ] ; 2 uses
   %i.aev = getelementptr [4 x i8], ptr %i.ec, i64 %i.aeu ; 2 uses
   %i.aew = load i32, ptr %i.aev, align 4, !tbaa !117
@@ -996,15 +994,18 @@ bb.cr:                                            ; preds = %bb.cq, %bb.cp, %bb.
   %i.ahg = load i8, ptr %i.d, align 4, !tbaa !135 ; 2 uses
   %i.ahh = zext i8 %i.ahg to i64
   %i.ahi = getelementptr inbounds nuw [16 x i8], ptr @vp8_mode_contexts, i64 %i.ahh
-  %i.ahj = load i32, ptr %i.ahi, align 16, !tbaa !117
-  %i.ahk = sext i32 %8 to i64
+  %8 = load i32, ptr %i.ahi, align 16, !tbaa !117
+  %i.ahj = load i32, ptr %i.ay, align 8, !tbaa !152 ; 2 uses
+  %i.ahk = sext i32 %i.ahj to i64
   %i.ahl = getelementptr inbounds i8, ptr @ff_vpx_norm_shift, i64 %i.ahk
   %i.ahm = load i8, ptr %i.ahl, align 1, !tbaa !135
   %i.ahn = zext i8 %i.ahm to i32                  ; 3 uses
-  %i.aho = shl i32 %8, %i.ahn                     ; 3 uses
+  %9 = load i32, ptr %i.dh, align 4, !tbaa !144
+  %10 = load i32, ptr %i.ds, align 8, !tbaa !153
+  %i.aho = shl i32 %i.ahj, %i.ahn                 ; 3 uses
   store i32 %i.aho, ptr %i.ay, align 8, !tbaa !152
-  %i.ahp = shl i32 %6, %i.ahn                     ; 3 uses
-  %i.ahq = add nsw i32 %7, %i.ahn                 ; 5 uses
+  %i.ahp = shl i32 %10, %i.ahn                    ; 3 uses
+  %i.ahq = add nsw i32 %9, %i.ahn                 ; 5 uses
   %i.ahr = icmp sgt i32 %i.ahq, -1
   br i1 %i.ahr, label %bb.cs, label %vpx_rac_renorm.exit.i132.i.i
 
@@ -1030,7 +1031,7 @@ vpx_rac_renorm.exit.i132.i.i:                     ; preds = %bb.ct, %bb.cs, %bb.
   %.0.i.i134.i.i = phi i32 [ %i.aia, %bb.ct ], [ %i.ahp, %bb.cs ], [ %i.ahp, %bb.cr ] ; 3 uses
   store i32 %.018.i.i133.i.i, ptr %i.dh, align 4, !tbaa !144
   %i.aic = add nsw i32 %i.aho, -1
-  %i.aid = mul nsw i32 %i.aic, %i.ahj
+  %i.aid = mul nsw i32 %i.aic, %8
   %i.aie = ashr i32 %i.aid, 8
   %i.aif = add nsw i32 %i.aie, 1                  ; 3 uses
   %i.aig = shl i32 %i.aif, 16                     ; 2 uses
@@ -1433,17 +1434,17 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %.32.val, i64 4736
   %i.k = getelementptr inbounds nuw i8, ptr %.32.val, i64 104 ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.32.val, i64 200 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %.32.val, i64 312 ; 94 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.32.val, i64 312 ; 95 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.32.val, i64 328 ; 56 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.32.val, i64 320 ; 111 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %.32.val, i64 316 ; 68 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %.32.val, i64 316 ; 69 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.32.val, i64 340 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.not49.i = icmp eq ptr %1, null
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %.32.val, i64 166
   %i.u = getelementptr inbounds nuw i8, ptr %.32.val, i64 372 ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %.32.val, i64 336 ; 78 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %.32.val, i64 336 ; 79 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.32.val, i64 164
   %i.x = getelementptr inbounds nuw i8, ptr %.32.val, i64 130
   %i.y = getelementptr inbounds nuw i8, ptr %.32.val, i64 375
@@ -1846,13 +1847,13 @@ bb.ay:                                            ; preds = %bb.ax
   br label %vpx_rac_renorm.exit.i.i
 
 vpx_rac_renorm.exit.i.i:                          ; preds = %bb.ay, %bb.ax, %bb.aw
-  %.018.i.i.i = phi i32 [ %i.uk, %bb.ay ], [ %i.tz, %bb.ax ], [ %i.tz, %bb.aw ] ; 3 uses
-  %.0.i.i.i = phi i32 [ %i.uj, %bb.ay ], [ %i.ty, %bb.ax ], [ %i.ty, %bb.aw ] ; 4 uses
+  %.018.i.i.i = phi i32 [ %i.uk, %bb.ay ], [ %i.tz, %bb.ax ], [ %i.tz, %bb.aw ] ; 2 uses
+  %.0.i.i.i = phi i32 [ %i.uj, %bb.ay ], [ %i.ty, %bb.ax ], [ %i.ty, %bb.aw ] ; 3 uses
   store i32 %.018.i.i.i, ptr %i.p, align 4, !tbaa !144
   %i.ul = add nsw i32 %i.tx, -1
   %i.um = mul nsw i32 %i.ul, %i.ts
   %i.un = ashr i32 %i.um, 8
-  %i.uo = add nsw i32 %i.un, 1                    ; 4 uses
+  %i.uo = add nsw i32 %i.un, 1                    ; 3 uses
   %i.up = shl i32 %i.uo, 16                       ; 2 uses
   %.not.i.i3 = icmp ult i32 %.0.i.i.i, %i.up
   br i1 %.not.i.i3, label %bb.bc, label %bb.az
@@ -1891,7 +1892,7 @@ bb.bb:                                            ; preds = %bb.ba
   br label %vpx_rac_renorm.exit116.i
 
 vpx_rac_renorm.exit116.i:                         ; preds = %bb.bb, %bb.ba, %bb.az
-  %.018.i114.i = phi i32 [ %i.vj, %bb.bb ], [ %i.uy, %bb.ba ], [ %i.uy, %bb.az ] ; 2 uses
+  %.018.i114.i = phi i32 [ %i.vj, %bb.bb ], [ %i.uy, %bb.ba ], [ %i.uy, %bb.az ]
   %.0.i115.i = phi i32 [ %i.vi, %bb.bb ], [ %i.ux, %bb.ba ], [ %i.ux, %bb.az ] ; 2 uses
   store i32 %.018.i114.i, ptr %i.p, align 4, !tbaa !144
   %i.vk = add nsw i32 %i.uw, -1
@@ -1900,17 +1901,18 @@ vpx_rac_renorm.exit116.i:                         ; preds = %bb.bb, %bb.ba, %bb.
   %i.vn = ashr i32 %i.vm, 8
   %i.vo = add nsw i32 %i.vn, 1                    ; 3 uses
   %i.vp = shl i32 %i.vo, 16                       ; 2 uses
-  %.not = icmp ult i32 %.0.i115.i, %i.vp          ; 3 uses
+  %3 = icmp uge i32 %.0.i115.i, %i.vp             ; 3 uses
   %i.vq = sub i32 %i.uw, %i.vo
-  %i.vr = select i1 %.not, i32 0, i32 %i.vp
-  %i.vs = select i1 %.not, i32 %i.vo, i32 %i.vq   ; 2 uses
+  %i.vr = select i1 %3, i32 %i.vp, i32 0
+  %i.vs = select i1 %3, i32 %i.vq, i32 %i.vo
   store i32 %i.vs, ptr %i.m, align 8, !tbaa !152
-  %i.vt = sub i32 %.0.i115.i, %i.vr               ; 2 uses
+  %i.vt = sub i32 %.0.i115.i, %i.vr
   store i32 %i.vt, ptr %i.v, align 8, !tbaa !153
-  %3 = select i1 %.not, i8 2, i8 3                ; 2 uses
+  %4 = zext i1 %3 to i8
+  %5 = or disjoint i8 %4, 2                       ; 2 uses
   %i.vu = getelementptr inbounds nuw i8, ptr %.pn.i119, i64 98
-  store i8 %3, ptr %i.vu, align 2, !tbaa !163
-  %i.vv = zext nneg i8 %3 to i64
+  store i8 %5, ptr %i.vu, align 2, !tbaa !163
+  %i.vv = zext nneg i8 %5 to i64
   br label %bb.bd
 
 bb.bc:                                            ; preds = %vpx_rac_renorm.exit.i.i
@@ -1921,9 +1923,6 @@ bb.bc:                                            ; preds = %vpx_rac_renorm.exit
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %vpx_rac_renorm.exit116.i
-  %4 = phi i32 [ %.0.i.i.i, %bb.bc ], [ %i.vt, %vpx_rac_renorm.exit116.i ]
-  %5 = phi i32 [ %.018.i.i.i, %bb.bc ], [ %.018.i114.i, %vpx_rac_renorm.exit116.i ]
-  %6 = phi i32 [ %i.uo, %bb.bc ], [ %i.vs, %vpx_rac_renorm.exit116.i ] ; 2 uses
   %i.vx = phi i64 [ 1, %bb.bc ], [ %i.vv, %vpx_rac_renorm.exit116.i ] ; 2 uses
   %i.vy = getelementptr [4 x i8], ptr %i.af, i64 %i.vx ; 2 uses
   %i.vz = load i32, ptr %i.vy, align 4, !tbaa !117
@@ -2097,15 +2096,18 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx, %bb.
   %i.yn = load i8, ptr %i.a, align 4, !tbaa !135  ; 2 uses
   %i.yo = zext i8 %i.yn to i64
   %i.yp = getelementptr inbounds nuw [16 x i8], ptr @vp8_mode_contexts, i64 %i.yo
-  %i.yq = load i32, ptr %i.yp, align 16, !tbaa !117
-  %i.yr = sext i32 %6 to i64
+  %6 = load i32, ptr %i.yp, align 16, !tbaa !117
+  %i.yq = load i32, ptr %i.m, align 8, !tbaa !152 ; 2 uses
+  %i.yr = sext i32 %i.yq to i64
   %i.ys = getelementptr inbounds i8, ptr @ff_vpx_norm_shift, i64 %i.yr
   %i.yt = load i8, ptr %i.ys, align 1, !tbaa !135
   %i.yu = zext i8 %i.yt to i32                    ; 3 uses
-  %i.yv = shl i32 %6, %i.yu                       ; 3 uses
+  %7 = load i32, ptr %i.p, align 4, !tbaa !144
+  %8 = load i32, ptr %i.v, align 8, !tbaa !153
+  %i.yv = shl i32 %i.yq, %i.yu                    ; 3 uses
   store i32 %i.yv, ptr %i.m, align 8, !tbaa !152
-  %i.yw = shl i32 %4, %i.yu                       ; 3 uses
-  %i.yx = add nsw i32 %5, %i.yu                   ; 5 uses
+  %i.yw = shl i32 %8, %i.yu                       ; 3 uses
+  %i.yx = add nsw i32 %7, %i.yu                   ; 5 uses
   %i.yy = icmp sgt i32 %i.yx, -1
   br i1 %i.yy, label %bb.ca, label %vpx_rac_renorm.exit.i132.i
 
@@ -2131,7 +2133,7 @@ vpx_rac_renorm.exit.i132.i:                       ; preds = %bb.cb, %bb.ca, %bb.
   %.0.i.i134.i = phi i32 [ %i.zh, %bb.cb ], [ %i.yw, %bb.ca ], [ %i.yw, %bb.bz ] ; 3 uses
   store i32 %.018.i.i133.i, ptr %i.p, align 4, !tbaa !144
   %i.zj = add nsw i32 %i.yv, -1
-  %i.zk = mul nsw i32 %i.zj, %i.yq
+  %i.zk = mul nsw i32 %i.zj, %6
   %i.zl = ashr i32 %i.zk, 8
   %i.zm = add nsw i32 %i.zl, 1                    ; 3 uses
   %i.zn = shl i32 %i.zm, 16                       ; 2 uses

@@ -204,10 +204,11 @@ bb.a:
   %i.b = getelementptr [5 x i8], ptr @kbd_table, i64 %i.a
   %i.c = getelementptr i8, ptr %i.b, i64 4
   %.val = load i8, ptr %i.c, align 1
-  %i.d = and i8 %.val, 16
-  %.not = icmp eq i8 %i.d, 0
-  %1 = select i1 %.not, i32 3, i32 4
-  ret i32 %1
+  %1 = lshr i8 %.val, 4
+  %i.d = and i8 %1, 1
+  %narrow = add nuw nsw i8 %i.d, 3
+  %2 = zext nneg i8 %narrow to i32
+  ret i32 %2
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong

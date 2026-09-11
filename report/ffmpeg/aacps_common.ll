@@ -202,13 +202,15 @@ bb.x:                                             ; preds = %.lr.ph411, %.loopex
   %spec.select.i251 = add i32 %.sroa.28.7409, %i.lt ; 4 uses
   %i.lu = zext i8 %i.lr to i32
   %i.lv = and i32 %.sroa.28.7409, 7
-  %i.lw = lshr exact i32 128, %i.lv
-  %i.lx = and i32 %i.lw, %i.lu
-  %.not239 = icmp eq i32 %i.lx, 0                 ; 2 uses
-  %4 = select i1 %.not239, i64 4, i64 5
-  %5 = getelementptr inbounds nuw [8 x i8], ptr @vlc_ps, i64 %4
-  %i.ly = load ptr, ptr %5, align 8, !tbaa !13    ; 4 uses
-  br i1 %.not239, label %.preheader.i260, label %bb.y
+  %4 = shl nuw nsw i32 %i.lu, %i.lv
+  %i.lw = lshr i32 %4, 7
+  %i.lx = and i32 %i.lw, 1                        ; 2 uses
+  %5 = zext nneg i32 %i.lx to i64
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @vlc_ps, i64 %5
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.ly = load ptr, ptr %7, align 8, !tbaa !13    ; 4 uses
+  %.not.i252 = icmp eq i32 %i.lx, 0
+  br i1 %.not.i252, label %.preheader.i260, label %bb.y
 
 .preheader.i260:                                  ; preds = %bb.x
   br i1 %i.ln, label %.lr.ph59.i, label %.loopexit373
@@ -473,13 +475,15 @@ bb.ak:                                            ; preds = %read_ipdopd_data.ex
   %spec.select.i30.i = add i32 %.sroa.28.21, %i.rt ; 4 uses
   %i.ru = zext i8 %i.rr to i32
   %i.rv = and i32 %.sroa.28.21, 7
-  %i.rw = lshr exact i32 128, %i.rv
-  %i.rx = and i32 %i.rw, %i.ru
-  %.not27.i = icmp eq i32 %i.rx, 0                ; 2 uses
-  %6 = select i1 %.not27.i, i64 6, i64 7
-  %7 = getelementptr inbounds nuw [8 x i8], ptr @vlc_ps, i64 %6
-  %i.ry = load ptr, ptr %7, align 8, !tbaa !13    ; 2 uses
-  br i1 %.not27.i, label %.preheader.i.i, label %bb.al
+  %8 = shl nuw nsw i32 %i.ru, %i.rv
+  %i.rw = lshr i32 %8, 7
+  %i.rx = and i32 %i.rw, 1                        ; 2 uses
+  %9 = zext nneg i32 %i.rx to i64
+  %10 = getelementptr inbounds nuw [8 x i8], ptr @vlc_ps, i64 %9
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 48
+  %i.ry = load ptr, ptr %11, align 8, !tbaa !13   ; 2 uses
+  %.not.i.i = icmp eq i32 %i.rx, 0
+  br i1 %.not.i.i, label %.preheader.i.i, label %bb.al
 
 .preheader.i.i:                                   ; preds = %bb.ak
   br i1 %i.rn, label %.lr.ph5.i.i, label %read_ipdopd_data.exit.i
@@ -572,13 +576,15 @@ read_ipdopd_data.exit.i:                          ; preds = %bb.am, %bb.an, %bb.
   %spec.select.i31.i = add i32 %.sroa.28.22, %i.ub ; 4 uses
   %i.uc = zext i8 %i.tz to i32
   %i.ud = and i32 %.sroa.28.22, 7
-  %i.ue = lshr exact i32 128, %i.ud
-  %i.uf = and i32 %i.ue, %i.uc
-  %.not28.i = icmp eq i32 %i.uf, 0                ; 2 uses
-  %8 = select i1 %.not28.i, i64 8, i64 9
-  %9 = getelementptr inbounds nuw [8 x i8], ptr @vlc_ps, i64 %8
-  %i.ug = load ptr, ptr %9, align 8, !tbaa !13    ; 2 uses
-  br i1 %.not28.i, label %.preheader.i40.i, label %bb.ao
+  %12 = shl nuw nsw i32 %i.uc, %i.ud
+  %i.ue = lshr i32 %12, 7
+  %i.uf = and i32 %i.ue, 1                        ; 2 uses
+  %13 = zext nneg i32 %i.uf to i64
+  %14 = getelementptr inbounds nuw [8 x i8], ptr @vlc_ps, i64 %13
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 64
+  %i.ug = load ptr, ptr %15, align 8, !tbaa !13   ; 2 uses
+  %.not.i32.i = icmp eq i32 %i.uf, 0
+  br i1 %.not.i32.i, label %.preheader.i40.i, label %bb.ao
 
 .preheader.i40.i:                                 ; preds = %read_ipdopd_data.exit.i
   br i1 %i.rn, label %.lr.ph5.i41.i, label %read_ipdopd_data.exit47.i

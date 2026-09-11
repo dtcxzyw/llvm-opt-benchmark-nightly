@@ -204,9 +204,9 @@ usb_hcd_unmap_urb_setup_for_dma.exit:             ; preds = %bb.b, %bb.c, %bb.d
   %i.s = load i32, ptr %i.a, align 4              ; 7 uses
   %i.t = and i32 %i.s, -3145729
   store i32 %i.t, ptr %i.a, align 4
-  %2 = and i32 %i.s, 512
-  %.not.not = icmp eq i32 %2, 0                   ; 2 uses
-  %3 = select i1 %.not.not, i32 1, i32 2          ; 4 uses
+  %2 = lshr i32 %i.s, 9
+  %.lobit.i = and i32 %2, 1
+  %3 = add nuw nsw i32 %.lobit.i, 1               ; 5 uses
   %i.u = and i32 %i.s, 262144
   %.not32 = icmp eq i32 %i.u, 0
   br i1 %.not32, label %bb.f, label %bb.e
@@ -272,7 +272,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bc = getelementptr i8, ptr %i.bb, i64 %i.ba
   %.0.copyload.i = load i64, ptr %i.bc, align 1
   %i.bd = inttoptr i64 %.0.copyload.i to ptr      ; 2 uses
-  br i1 %.not.not, label %hcd_free_coherent.exit, label %bb.l
+  %4 = icmp eq i32 %3, 2
+  br i1 %4, label %bb.l, label %hcd_free_coherent.exit
 
 bb.l:                                             ; preds = %bb.k
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bd, ptr align 1 %i.bb, i64 range(i64 0, 4294967296) %i.ba, i1 false)
@@ -432,9 +433,9 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %.sink.split, %bb.h, %bb.a
   %i.aq = getelementptr i8, ptr %1, i64 92        ; 12 uses
   %.val = load i32, ptr %i.aq, align 4            ; 2 uses
-  %3 = and i32 %.val, 512
-  %.not109 = icmp eq i32 %3, 0                    ; 3 uses
-  %4 = select i1 %.not109, i32 1, i32 2           ; 3 uses
+  %3 = lshr i32 %.val, 9
+  %.lobit.i = and i32 %3, 1                       ; 3 uses
+  %4 = add nuw nsw i32 %.lobit.i, 1               ; 4 uses
   %i.ar = and i32 %.val, 4
   %.not110 = icmp eq i32 %i.ar, 0
   br i1 %.not110, label %bb.q, label %bb.m
@@ -446,6 +447,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not123, label %dma_sync_sgtable_for_device.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  %5 = icmp eq i32 %.lobit.i, 0
   %i.au = getelementptr i8, ptr %0, i64 8
   %i.av = load ptr, ptr %i.au, align 8            ; 3 uses
   %.val127 = load ptr, ptr %i.at, align 8         ; 2 uses
@@ -455,13 +457,13 @@ bb.n:                                             ; preds = %bb.m
   %i.ay = load volatile i64, ptr %i.ax, align 8
   %.in.in.i.i.i.i136 = and i64 %i.ay, 8
   %.in.i.not.i.i.i137 = icmp eq i64 %.in.in.i.i.i.i136, 0 ; 2 uses
-  br i1 %.not109, label %.split97, label %.split
+  br i1 %5, label %.split97, label %.split
 
 .split:                                           ; preds = %bb.n
   br i1 %.in.i.not.i.i.i137, label %bb.o, label %dma_sync_sgtable_for_device.exit
 
 bb.o:                                             ; preds = %.split
-  tail call void @__dma_sync_sg_for_device(ptr noundef %i.av, ptr noundef %.val127, i32 noundef %.val128, i32 noundef 2) #18
+  tail call void @__dma_sync_sg_for_device(ptr noundef %i.av, ptr noundef %.val127, i32 noundef %.val128, i32 noundef %4) #18
   br label %dma_sync_sgtable_for_device.exit
 
 .split97:                                         ; preds = %bb.n
@@ -512,7 +514,8 @@ bb.v:                                             ; preds = %bb.u
   %i.bp = ptrtoint ptr %i.bo to i64
   %i.bq = getelementptr i8, ptr %i.bn, i64 %i.be
   store i64 %i.bp, ptr %i.bq, align 1
-  br i1 %.not109, label %bb.w, label %bb.x
+  %6 = icmp eq i32 %.lobit.i, 0
+  br i1 %6, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
   %i.br = load ptr, ptr %i.bd, align 8

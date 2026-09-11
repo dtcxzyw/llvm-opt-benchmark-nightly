@@ -205,32 +205,38 @@ declare i32 @migrate_add_blocker_normal(ptr noundef, ptr noundef) local_unnamed_
 
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @init_mbr(ptr noundef %0, i32 noundef range(i32 64, 1025) %1, i32 noundef range(i32 2, 17) %2, i32 noundef range(i32 18, 64) %3) unnamed_addr #7 {
-sector2CHS.exit:
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 502
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(512) %4, i8 noundef 0, i64 noundef 512, i1 noundef false) #22
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 496
-  store i32 -1105527302, ptr %6, align 1
-  store i8 -128, ptr %5, align 1
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 503
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 32916
-  %9 = load i32, ptr %8, align 4                  ; 4 uses
-  %10 = sdiv i32 %9, %3                           ; 2 uses
-  %11 = srem i32 %9, %3
-  %12 = sdiv i32 %10, %2                          ; 3 uses
-  %13 = srem i32 %10, %2
-  %.not.i = icmp slt i32 %12, %1                  ; 4 uses
-  %14 = trunc nsw i32 %13 to i8
-  %15 = add nsw i32 %11, 1
-  %16 = lshr i32 %12, 2
-  %17 = and i32 %16, 192
-  %18 = or i32 %15, %17
-  %19 = trunc i32 %18 to i8
-  %20 = trunc i32 %12 to i8
-  %.sink22.i = select i1 %.not.i, i8 %14, i8 -1
-  %.sink21.i = select i1 %.not.i, i8 %19, i8 -1
-  %.sink.i = select i1 %.not.i, i8 %20, i8 -1
-  store i8 %.sink22.i, ptr %7, align 1
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 502
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(512) %5, i8 noundef 0, i64 noundef 512, i1 noundef false) #22
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 496
+  store i32 -1105527302, ptr %7, align 1
+  store i8 -128, ptr %6, align 1
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 503
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 32916
+  %10 = load i32, ptr %9, align 4                 ; 4 uses
+  %11 = sdiv i32 %10, %3                          ; 2 uses
+  %12 = srem i32 %10, %3
+  %13 = sdiv i32 %11, %2                          ; 3 uses
+  %14 = srem i32 %11, %2
+  %.not.i = icmp slt i32 %13, %1
+  br i1 %.not.i, label %15, label %sector2CHS.exit
+
+15:                                               ; preds = %4
+  %16 = trunc nsw i32 %14 to i8
+  %17 = add nsw i32 %12, 1
+  %18 = lshr i32 %13, 2
+  %19 = and i32 %18, 192
+  %20 = or i32 %17, %19
+  %21 = trunc i32 %20 to i8
+  %22 = trunc i32 %13 to i8
+  br label %sector2CHS.exit
+
+sector2CHS.exit:                                  ; preds = %4, %15
+  %.sink22.i = phi i8 [ %16, %15 ], [ -1, %4 ]
+  %.sink21.i = phi i8 [ %21, %15 ], [ -1, %4 ]
+  %.sink.i = phi i8 [ %22, %15 ], [ -1, %4 ]
+  %.0.i = phi i32 [ 0, %15 ], [ 1, %4 ]
+  store i8 %.sink22.i, ptr %8, align 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 504
   store i8 %.sink21.i, ptr %i.a, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 505
@@ -263,17 +269,17 @@ sector2CHS.exit33:                                ; preds = %sector2CHS.exit, %b
   %.sink22.i29 = phi i8 [ %i.n, %bb.a ], [ -1, %sector2CHS.exit ]
   %.sink21.i30 = phi i8 [ %i.s, %bb.a ], [ -1, %sector2CHS.exit ]
   %.sink.i31 = phi i8 [ %i.t, %bb.a ], [ -1, %sector2CHS.exit ]
-  %.0.i32 = phi i1 [ %.not.i, %bb.a ], [ false, %sector2CHS.exit ] ; 2 uses
+  %.0.i31 = phi i32 [ %.0.i, %bb.a ], [ 1, %sector2CHS.exit ] ; 2 uses
   store i8 %.sink22.i29, ptr %i.c, align 1
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 508
   store i8 %.sink21.i30, ptr %i.u, align 4
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 509
   store i8 %.sink.i31, ptr %i.v, align 1
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 510
-  store i32 %9, ptr %i.w, align 2
+  store i32 %10, ptr %i.w, align 2
   %i.x = load i64, ptr %i.f, align 8
   %i.y = trunc i64 %i.x to i32
-  %i.z = sub i32 %i.y, %9
+  %i.z = sub i32 %i.y, %10
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 514
   store i32 %i.z, ptr %i.aa, align 2
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 32824
@@ -284,17 +290,19 @@ sector2CHS.exit33:                                ; preds = %sector2CHS.exit, %b
   ]
 
 bb.b:                                             ; preds = %sector2CHS.exit33
-  %21 = select i1 %.0.i32, i8 6, i8 14
+  %.not = icmp eq i32 %.0.i31, 0
+  %23 = select i1 %.not, i32 6, i32 14
   br label %bb.d
 
 bb.c:                                             ; preds = %sector2CHS.exit33
-  %22 = select i1 %.0.i32, i8 11, i8 12
+  %24 = add nuw nsw i32 %.0.i31, 11
   br label %bb.d
 
 bb.d:                                             ; preds = %sector2CHS.exit33, %bb.b, %bb.c
-  %23 = phi i8 [ 1, %sector2CHS.exit33 ], [ %21, %bb.b ], [ %22, %bb.c ]
+  %25 = phi i32 [ 1, %sector2CHS.exit33 ], [ %23, %bb.b ], [ %24, %bb.c ]
+  %26 = trunc nuw nsw i32 %25 to i8
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 506
-  store i8 %23, ptr %i.ad, align 2
+  store i8 %26, ptr %i.ad, align 2
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 566
   store i8 85, ptr %i.ae, align 2
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 567

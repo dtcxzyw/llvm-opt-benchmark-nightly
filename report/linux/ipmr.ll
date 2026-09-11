@@ -204,11 +204,12 @@ bb.ac:                                            ; preds = %bb.ab
   %i.cn = getelementptr i8, ptr %2, i64 3
   %i.co = load i8, ptr %i.cn, align 1
   %i.cp = load i8, ptr %i.h, align 2
-  %7 = zext i8 %i.cp to i16
-  %.not90 = icmp eq i32 %3, 0
-  %8 = select i1 %.not90, i16 -32768, i16 0
-  %9 = or disjoint i16 %8, %7
-  call void @vif_device_init(ptr noundef %i.f, ptr noundef %.1, i64 noundef %i.cm, i8 noundef zeroext %i.co, i16 noundef zeroext %9, i16 noundef zeroext 5) #18
+  %7 = zext i8 %i.cp to i32
+  %8 = shl nuw nsw i32 %3, 15
+  %9 = or disjoint i32 %8, %7
+  %10 = trunc nuw i32 %9 to i16
+  %11 = xor i16 %10, -32768
+  call void @vif_device_init(ptr noundef %i.f, ptr noundef %.1, i64 noundef %i.cm, i8 noundef zeroext %i.co, i16 noundef zeroext %11, i16 noundef zeroext 5) #18
   %i.cq = call i32 @netif_get_port_parent_id(ptr noundef %.1, ptr noundef nonnull %6, i1 noundef zeroext true) #18
   %i.cr = icmp eq i32 %i.cq, 0
   br i1 %i.cr, label %bb.ad, label %bb.ae

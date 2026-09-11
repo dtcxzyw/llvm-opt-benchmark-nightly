@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sdl/original/SDL_evdev_capabilities?download=true
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -108,7 +108,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %.thread140
-  %.272 = phi i32 [ %.171, %bb.m ], [ %spec.select137, %bb.n ], [ %.171, %.thread140 ] ; 5 uses
+  %.272 = phi i32 [ %.171, %bb.m ], [ %spec.select137, %bb.n ], [ %.171, %.thread140 ] ; 3 uses
   %i.ai = and i64 %i.e, 2
   %.not114 = icmp eq i64 %i.ai, 0
   %.pre = load i64, ptr %3, align 8               ; 2 uses
@@ -125,28 +125,41 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %.thre
   %i.aq = or i64 %i.an, %i.ap
   %i.ar = or i64 %i.aq, %.pre
   %.not115 = icmp eq i64 %i.ar, 0
-  br i1 %.not115, label %.lr.ph.a, label %.thread141
+  br i1 %.not115, label %.lr.ph.1.a, label %.thread141
 
 .thread141:                                       ; preds = %.preheader148.preheader
   %i.as = or i32 %.272, 128
   br label %bb.q
 
-.lr.ph.a:                                         ; preds = %.preheader148.preheader, %.lr.ph.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.a ], [ 352, %.preheader148.preheader ] ; 3 uses
-  %i.at = lshr i64 %indvars.iv, 6
+.lr.ph.1163:                                      ; preds = %.lr.ph.1.a
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.1.a, 1 ; 2 uses
+  %5 = lshr i64 %indvars.iv.next, 6
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %5
+  %7 = load i64, ptr %6, align 8
+  %8 = and i64 %indvars.iv.next, 63
+  %9 = shl nuw i64 1, %8
+  %10 = and i64 %7, %9
+  %.not116.1162 = icmp eq i64 %10, 0
+  br i1 %.not116.1162, label %.lr.ph.a, label %._crit_edge.1.thread
+
+.lr.ph.a:                                         ; preds = %.lr.ph.1163
+  %indvars.iv.next.1164 = add nuw nsw i64 %indvars.iv.1.a, 2 ; 2 uses
+  %i.at = lshr i64 %indvars.iv.next.1164, 6
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.at
   %i.av = load i64, ptr %i.au, align 8
-  %i.aw = and i64 %indvars.iv, 63
+  %i.aw = and i64 %indvars.iv.next.1164, 63
   %i.ax = shl nuw i64 1, %i.aw
   %i.ay = and i64 %i.av, %i.ax
-  %.not116 = icmp ne i64 %i.ay, 0                 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 544
-  %or.cond163 = select i1 %.not116, i1 true, i1 %exitcond.not
-  br i1 %or.cond163, label %.lr.ph.1.a, label %.lr.ph.a, !llvm.loop !3
+  %exitcond.not = icmp eq i64 %i.ay, 0
+  br i1 %exitcond.not, label %11, label %._crit_edge.1.thread
 
-.lr.ph.1.a:                                       ; preds = %.lr.ph.a, %bb.p
-  %indvars.iv.1.a = phi i64 [ %indvars.iv.next.1.2, %bb.p ], [ 560, %.lr.ph.a ] ; 5 uses
+11:                                               ; preds = %.lr.ph.a
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv.1.a, 3 ; 2 uses
+  %exitcond.not.2 = icmp eq i64 %indvars.iv.next.2, 544
+  br i1 %exitcond.not.2, label %._crit_edge.1.thread, label %.lr.ph.1.a, !llvm.loop !3
+
+.lr.ph.1.a:                                       ; preds = %.preheader148.preheader, %11
+  %indvars.iv.1.a = phi i64 [ %indvars.iv.next.2, %11 ], [ 352, %.preheader148.preheader ] ; 5 uses
   %i.az = lshr i64 %indvars.iv.1.a, 6
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.az
   %i.bb = load i64, ptr %i.ba, align 8
@@ -154,14 +167,25 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %.thre
   %i.bd = shl nuw i64 1, %i.bc
   %i.be = and i64 %i.bb, %i.bd
   %.not116.1.a = icmp eq i64 %i.be, 0
-  br i1 %.not116.1.a, label %.lr.ph.1.1, label %._crit_edge.1.thread
+  br i1 %.not116.1.a, label %.lr.ph.1163, label %._crit_edge.1.thread
 
-._crit_edge.1.thread:                             ; preds = %.lr.ph.1.2, %.lr.ph.1.1, %.lr.ph.1.a
-  %5 = or i32 %.272, 128
-  br label %bb.q
+._crit_edge.1.thread:                             ; preds = %11, %.lr.ph.a, %.lr.ph.1163, %.lr.ph.1.a
+  %.2.ph = phi i32 [ 0, %11 ], [ 128, %.lr.ph.1.a ], [ 128, %.lr.ph.1163 ], [ 128, %.lr.ph.a ]
+  br label %.lr.ph.1
 
-.lr.ph.1.1:                                       ; preds = %.lr.ph.1.a
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.1.a, 1 ; 2 uses
+.lr.ph.1:                                         ; preds = %bb.p, %._crit_edge.1.thread
+  %indvars.iv.1 = phi i64 [ 560, %._crit_edge.1.thread ], [ %indvars.iv.next.1.2, %bb.p ] ; 5 uses
+  %12 = lshr i64 %indvars.iv.1, 6
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %12
+  %14 = load i64, ptr %13, align 8
+  %15 = and i64 %indvars.iv.1, 63
+  %16 = shl nuw i64 1, %15
+  %17 = and i64 %14, %16
+  %.not116.1 = icmp eq i64 %17, 0
+  br i1 %.not116.1, label %.lr.ph.1.1, label %._crit_edge.1
+
+.lr.ph.1.1:                                       ; preds = %.lr.ph.1
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.1, 1 ; 2 uses
   %i.bf = lshr i64 %indvars.iv.next.1, 6
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.bf
   %i.bh = load i64, ptr %i.bg, align 8
@@ -169,10 +193,10 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %.thre
   %i.bj = shl nuw i64 1, %i.bi
   %i.bk = and i64 %i.bh, %i.bj
   %.not116.1.1 = icmp eq i64 %i.bk, 0
-  br i1 %.not116.1.1, label %.lr.ph.1.2, label %._crit_edge.1.thread
+  br i1 %.not116.1.1, label %.lr.ph.1.2, label %._crit_edge.1
 
 .lr.ph.1.2:                                       ; preds = %.lr.ph.1.1
-  %indvars.iv.next.1.1 = add nuw nsw i64 %indvars.iv.1.a, 2 ; 2 uses
+  %indvars.iv.next.1.1 = add nuw nsw i64 %indvars.iv.1, 2 ; 2 uses
   %i.bl = lshr i64 %indvars.iv.next.1.1, 6
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.bl
   %i.bn = load i64, ptr %i.bm, align 8
@@ -180,20 +204,20 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %.thre
   %i.bp = shl nuw i64 1, %i.bo
   %i.bq = and i64 %i.bn, %i.bp
   %.not116.1.2 = icmp eq i64 %i.bq, 0
-  br i1 %.not116.1.2, label %bb.p, label %._crit_edge.1.thread
+  br i1 %.not116.1.2, label %bb.p, label %._crit_edge.1
 
 bb.p:                                             ; preds = %.lr.ph.1.2
-  %indvars.iv.next.1.2 = add nuw nsw i64 %indvars.iv.1.a, 3 ; 2 uses
+  %indvars.iv.next.1.2 = add nuw nsw i64 %indvars.iv.1, 3 ; 2 uses
   %exitcond.1.not.2 = icmp eq i64 %indvars.iv.next.1.2, 704
-  br i1 %exitcond.1.not.2, label %._crit_edge.1, label %.lr.ph.1.a, !llvm.loop !3
+  br i1 %exitcond.1.not.2, label %._crit_edge.1, label %.lr.ph.1, !llvm.loop !3
 
-._crit_edge.1:                                    ; preds = %bb.p
-  %6 = or i32 %.272, 128
-  %spec.select162 = select i1 %.not116, i32 %6, i32 %.272
+._crit_edge.1:                                    ; preds = %bb.p, %.lr.ph.1.2, %.lr.ph.1.1, %.lr.ph.1
+  %.2.ph.1 = phi i32 [ %.2.ph, %bb.p ], [ 128, %.lr.ph.1 ], [ 128, %.lr.ph.1.1 ], [ 128, %.lr.ph.1.2 ]
+  %spec.select144 = or i32 %.2.ph.1, %.272
   br label %bb.q
 
-bb.q:                                             ; preds = %._crit_edge.1, %._crit_edge.1.thread, %.thread141, %bb.o
-  %.4 = phi i32 [ %.272, %bb.o ], [ %i.as, %.thread141 ], [ %5, %._crit_edge.1.thread ], [ %spec.select162, %._crit_edge.1 ] ; 2 uses
+bb.q:                                             ; preds = %._crit_edge.1, %.thread141, %bb.o
+  %.4 = phi i32 [ %.272, %bb.o ], [ %i.as, %.thread141 ], [ %spec.select144, %._crit_edge.1 ] ; 2 uses
   %i.br = and i64 %.pre, 4294967294
   %i.bs = icmp eq i64 %i.br, 4294967294
   %i.bt = or i32 %.4, 2

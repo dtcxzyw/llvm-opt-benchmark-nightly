@@ -202,8 +202,8 @@ define internal fastcc void @sqlite3_do_callback(ptr nofree noundef readonly cap
 bb.a:
   %5 = alloca %struct._zval_struct, align 8       ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
-  %i.a = icmp ne i32 %4, 0                        ; 4 uses
-  %spec.store.select = select i1 %i.a, i32 2, i32 0 ; 4 uses
+  %i.a = icmp ne i32 %4, 0                        ; 3 uses
+  %spec.store.select = shl nuw nsw i32 %4, 1      ; 3 uses
   %i.b = add i32 %spec.store.select, %1           ; 5 uses
   %.not = icmp eq i32 %i.b, 0                     ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
@@ -372,7 +372,8 @@ bb.o:                                             ; preds = %bb.n, %zend_call_kn
   br i1 %i.bj, label %.lr.ph119.preheader, label %._crit_edge120
 
 .lr.ph119.preheader:                              ; preds = %.preheader
-  %i.bk = zext nneg i32 %spec.store.select to i64
+  %6 = shl nuw nsw i32 %4, 1
+  %i.bk = zext nneg i32 %6 to i64
   br label %.lr.ph119
 
 .lr.ph119:                                        ; preds = %.lr.ph119.preheader, %.lr.ph119

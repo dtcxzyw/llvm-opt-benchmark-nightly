@@ -205,15 +205,16 @@ bb.gy:                                            ; preds = %bb.gx
 
 bb.gz:                                            ; preds = %bb.gy
   %i.abv = load i32, ptr %i.i, align 4, !tbaa !131
-  %i.abw = add i32 %i.abv, -52
-  %or.cond.i158.i.i = icmp ult i32 %i.abw, -16
+  %i.abw = add i32 %i.abv, -36
+  %or.cond.i158.i.i = icmp ult i32 %i.abw, 16
   %i.abx = load i32, ptr %i.j, align 4
-  %4 = icmp slt i32 %i.abx, 100
-  %.not11.i.i.i = select i1 %or.cond.i158.i.i, i1 true, i1 %4
+  %4 = icmp sgt i32 %i.abx, 99
+  %.not11.i.i.i = select i1 %or.cond.i158.i.i, i1 %4, i1 false
+  %5 = zext i1 %.not11.i.i.i to i32
   br label %bb.ha
 
 bb.ha:                                            ; preds = %bb.gz, %bb.gy, %bb.gx
-  %.0.i157.i.i = phi i1 [ %.not11.i.i.i, %bb.gz ], [ true, %bb.gy ], [ true, %bb.gx ] ; 2 uses
+  %.0.i157.i.i = phi i32 [ %5, %bb.gz ], [ 0, %bb.gy ], [ 0, %bb.gx ] ; 2 uses
   switch i64 %i.abs, label %bb.hf [
     i64 0, label %mkv_field_order.exit.i.i
     i64 9, label %bb.he
@@ -229,18 +230,18 @@ bb.hc:                                            ; preds = %bb.ha
   br label %mkv_field_order.exit.i.i
 
 bb.hd:                                            ; preds = %bb.ha
-  %5 = select i1 %.0.i157.i.i, i32 5, i32 4
+  %6 = xor i32 %.0.i157.i.i, 5
   br label %mkv_field_order.exit.i.i
 
 bb.he:                                            ; preds = %bb.ha
-  %6 = select i1 %.0.i157.i.i, i32 4, i32 5
+  %7 = or disjoint i32 %.0.i157.i.i, 4
   br label %mkv_field_order.exit.i.i
 
 bb.hf:                                            ; preds = %bb.ha
   br label %mkv_field_order.exit.i.i
 
 mkv_field_order.exit.i.i:                         ; preds = %bb.hf, %bb.he, %bb.hd, %bb.hc, %bb.hb, %bb.ha
-  %.06.i.i.i = phi i32 [ 0, %bb.hf ], [ %6, %bb.he ], [ 1, %bb.ha ], [ 2, %bb.hb ], [ 3, %bb.hc ], [ %5, %bb.hd ]
+  %.06.i.i.i = phi i32 [ 0, %bb.hf ], [ %7, %bb.he ], [ 1, %bb.ha ], [ 2, %bb.hb ], [ 3, %bb.hc ], [ %6, %bb.hd ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #14
   br label %.sink.split.i.i

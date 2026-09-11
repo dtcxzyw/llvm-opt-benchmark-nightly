@@ -204,9 +204,10 @@ smart_str_alloc.exit212:                          ; preds = %bb.g, %bb.h
   store i64 %.1.i211, ptr %i.ak, align 8, !tbaa !56
   store ptr %3, ptr %i.a, align 8, !tbaa !15
   store i64 %4, ptr %i.b, align 8, !tbaa !20
-  %11 = icmp eq i32 %7, 0
-  %12 = select i1 %11, i64 12, i64 11
-  %i.al = add i64 %12, %i.e
+  %11 = sub nuw nsw i32 4, %7
+  %12 = or disjoint i32 %11, 8
+  %13 = zext nneg i32 %12 to i64
+  %i.al = add i64 %i.e, %13
   %i.am = add i64 %i.al, %i.f
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 15 uses
   %i.ao = add i64 %5, -1

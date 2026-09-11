@@ -202,7 +202,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   store i32 16777216, ptr %3, align 8, !alias.scope !353
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.lk, ptr noundef nonnull align 8 dereferenceable(1065) %i.lj, ptr noundef nonnull align 8 dereferenceable(32) %3) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
-  %i.lu = load i32, ptr %i.kf, align 8            ; 4 uses
+  %i.lu = load i32, ptr %i.kf, align 8            ; 6 uses
   %i.lv = load i32, ptr %i.kg, align 4, !tbaa !245
   %i.lw = add i32 %i.lv, -1
   %i.lx = icmp ult i32 %i.lw, 1073741823
@@ -215,23 +215,50 @@ bb.bj:                                            ; preds = %_ZN4llvm7BuildMIERN
 
 _ZN4llvm11getRegStateERKNS_14MachineOperandE.exit: ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit, %bb.bj
   %i.ma = phi i32 [ 0, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit ], [ %i.lz, %bb.bj ]
+  %8 = icmp slt i32 %i.lu, 0
+  %9 = select i1 %8, i16 128, i16 0
+  %10 = lshr i32 %i.lu, 21
+  %11 = trunc nuw nsw i32 %10 to i16
+  %12 = and i16 %11, 256
+  %13 = lshr i32 %i.lu, 23
+  %14 = trunc nuw nsw i32 %13 to i16              ; 2 uses
+  %15 = and i16 %14, 32
   %i.mb = and i32 %i.lu, 83886080
-  %8 = icmp ne i32 %i.mb, 83886080
+  %16 = icmp eq i32 %i.mb, 83886080
+  %17 = select i1 %16, i16 16, i16 0              ; 2 uses
   %i.mc = lshr i32 %i.lu, 24
   %.lobit.i.i = and i32 %i.mc, 1
   %i.md = xor i32 %.lobit.i.i, 1
   %i.me = lshr i32 %i.lu, 26
   %i.mf = and i32 %i.md, %i.me
-  %.not.i128 = icmp eq i32 %i.mf, 0
+  %18 = trunc nuw nsw i32 %i.mf to i16            ; 2 uses
+  %19 = shl nuw nsw i16 %18, 3
+  %20 = and i16 %14, 6
+  %21 = or disjoint i16 %19, %20
+  %22 = or disjoint i16 %21, %17
+  %23 = or disjoint i16 %15, %9
+  %24 = or disjoint i16 %23, %12
+  %25 = or i16 %24, %22                           ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
+  %26 = and i16 %25, 256
   store ptr null, ptr %i.gx, align 8, !tbaa !352, !alias.scope !354
-  %.not.i129 = and i1 %.not.i128, %8
-  %i.mg = select i1 %.not.i129, i32 0, i32 67108864
+  %27 = or disjoint i16 %17, %18
+  %28 = icmp eq i16 %27, 0
+  %i.mg = select i1 %28, i32 0, i32 67108864
+  %29 = zext nneg i16 %26 to i32
+  %30 = shl nuw nsw i32 %29, 21
+  %31 = and i16 %25, 38
+  %32 = zext nneg i16 %31 to i32
+  %33 = shl nuw nsw i32 %32, 23
+  %34 = or disjoint i32 %33, %i.mg
+  %35 = and i16 %25, 192
+  %36 = zext nneg i16 %35 to i32
+  %37 = shl nuw i32 %36, 24
+  %.masked11.masked.i.i = or disjoint i32 %34, %37
   store i32 %i.kh, ptr %i.gy, align 4, !tbaa !245, !alias.scope !354
   %i.mh = shl nuw nsw i32 %i.kn, 8
-  %9 = and i32 %i.lu, -1291845632
-  %.masked.i.i = or disjoint i32 %9, %i.mg
-  %i.mi = or disjoint i32 %.masked.i.i, %i.ma
+  %.masked.i.i = or disjoint i32 %.masked11.masked.i.i, %30
+  %i.mi = or disjoint i32 %i.ma, %.masked.i.i
   %i.mj = or disjoint i32 %i.mi, %i.mh
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gz, i8 0, i64 16, i1 false), !alias.scope !354
   store i32 %i.mj, ptr %2, align 8, !alias.scope !354
