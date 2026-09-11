@@ -204,15 +204,13 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not, label %.thread, label %bb.e, !llvm.loop !8466
 
 .thread:                                          ; preds = %bb.ah, %bb.m, %bb.l
-  %i.gl = phi ptr [ %i.fw, %bb.ah ], [ %i.t, %bb.m ], [ %i.t, %bb.l ] ; 2 uses
-  %i.gm = phi ptr [ %i.fx, %bb.ah ], [ %i.u, %bb.m ], [ %i.u, %bb.l ] ; 2 uses
-  %.sroa.0203.0.lcssa.ph = phi ptr [ %.sroa.0203.4, %bb.ah ], [ %.sroa.0203.0266, %bb.m ], [ %.sroa.0203.0266, %bb.l ] ; 3 uses
-  %.sroa.0209.0.lcssa.ph = phi ptr [ %.sroa.0209.1, %bb.ah ], [ %.sroa.0209.0267, %bb.m ], [ %.sroa.0209.0267, %bb.l ] ; 2 uses
-  %.sroa.0213.0.lcssa.ph = phi ptr [ %.sroa.0213.2, %bb.ah ], [ %.sroa.0213.0268, %bb.m ], [ %.sroa.0213.0268, %bb.l ] ; 2 uses
-  %.0238.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0238269, %bb.m ], [ %.0238269, %bb.l ] ; 2 uses
-  %.058.lcssa.ph = phi i8 [ %.159, %bb.ah ], [ 1, %bb.m ], [ %.058271, %bb.l ]
-  %27 = trunc nuw i8 %.058.lcssa.ph to i1
-  %28 = select i1 %27, ptr %.sroa.0209.0.lcssa.ph, ptr %.sroa.0203.0.lcssa.ph ; 2 uses
+  %i.gl = phi ptr [ %i.fw, %bb.ah ], [ %i.t, %bb.l ], [ %i.t, %bb.m ] ; 2 uses
+  %i.gm = phi ptr [ %i.fx, %bb.ah ], [ %i.u, %bb.l ], [ %i.u, %bb.m ] ; 2 uses
+  %.sroa.0203.0.lcssa.ph = phi ptr [ %.sroa.0203.4, %bb.ah ], [ %.sroa.0203.0266, %bb.l ], [ %.sroa.0203.0266, %bb.m ] ; 2 uses
+  %.sroa.0209.0.lcssa.ph = phi ptr [ %.sroa.0209.1, %bb.ah ], [ %.sroa.0209.0267, %bb.l ], [ %.sroa.0209.0267, %bb.m ] ; 3 uses
+  %.sroa.0213.0.lcssa.ph = phi ptr [ %.sroa.0213.2, %bb.ah ], [ %.sroa.0213.0268, %bb.l ], [ %.sroa.0213.0268, %bb.m ] ; 2 uses
+  %.0238.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0238269, %bb.l ], [ %.0238269, %bb.m ] ; 2 uses
+  %.058.lcssa.ph = phi i8 [ %.159, %bb.ah ], [ %.058271, %bb.l ], [ 1, %bb.m ] ; 2 uses
   %.not4.i.i105 = icmp eq ptr %i.gm, %i.gl
   br i1 %.not4.i.i105, label %_ZN5boost7movelib7move_opclIPNS_9container3dtl4pairINS3_4test24movable_and_copyable_intES7_EENS3_22stable_vector_iteratorIS9_Lb0EEEEET0_NS0_9forward_tET_SE_SC_.exit109, label %.lr.ph.i.i106
 
@@ -236,10 +234,11 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not.i.i108, label %_ZN5boost7movelib7move_opclIPNS_9container3dtl4pairINS3_4test24movable_and_copyable_intES7_EENS3_22stable_vector_iteratorIS9_Lb0EEEEET0_NS0_9forward_tET_SE_SC_.exit109, label %.lr.ph.i.i106, !llvm.loop !157
 
 _ZN5boost7movelib7move_opclIPNS_9container3dtl4pairINS3_4test24movable_and_copyable_intES7_EENS3_22stable_vector_iteratorIS9_Lb0EEEEET0_NS0_9forward_tET_SE_SC_.exit109: ; preds = %.lr.ph.i.i106, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit75, %.thread
-  %.058.lcssa334 = phi ptr [ %i.h, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit75 ], [ %28, %.thread ], [ %28, %.lr.ph.i.i106 ]
+  %.058.lcssa351 = phi i8 [ 1, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit75 ], [ %.058.lcssa.ph, %.thread ], [ %.058.lcssa.ph, %.lr.ph.i.i106 ]
   %.0238.lcssa333 = phi i64 [ 0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit75 ], [ %.0238.lcssa.ph, %.thread ], [ %.0238.lcssa.ph, %.lr.ph.i.i106 ] ; 2 uses
   %.sroa.0213.0.lcssa332 = phi ptr [ %.sroa.0213.5, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit75 ], [ %.sroa.0213.0.lcssa.ph, %.thread ], [ %.sroa.0213.0.lcssa.ph, %.lr.ph.i.i106 ]
-  %.sroa.0203.0.lcssa331 = phi ptr [ %.sroa.0203.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit75 ], [ %.sroa.0203.0.lcssa.ph, %.thread ], [ %.sroa.0203.0.lcssa.ph, %.lr.ph.i.i106 ]
+  %.sroa.0209.0.lcssa348 = phi ptr [ %i.h, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit75 ], [ %.sroa.0209.0.lcssa.ph, %.thread ], [ %.sroa.0209.0.lcssa.ph, %.lr.ph.i.i106 ]
+  %.sroa.0203.0.lcssa331 = phi ptr [ %.sroa.0203.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit75 ], [ %.sroa.0203.0.lcssa.ph, %.thread ], [ %.sroa.0203.0.lcssa.ph, %.lr.ph.i.i106 ] ; 2 uses
   %.not.i.i110 = icmp eq i64 %6, 0
   br i1 %.not.i.i110, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit113, label %bb.ai
 
@@ -310,6 +309,8 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24m
   %i.hs = load ptr, ptr %21, align 8, !tbaa !397, !noalias !8517
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #21
   %i.ht = load ptr, ptr %20, align 8, !tbaa !479  ; 2 uses
+  %27 = trunc nuw i8 %.058.lcssa351 to i1
+  %.sroa.speculated208 = select i1 %27, ptr %.sroa.0209.0.lcssa348, ptr %.sroa.0203.0.lcssa331
   %i.hu = load ptr, ptr %i.a, align 8, !tbaa !349 ; 3 uses
   %.not15.i = icmp eq ptr %i.hu, %i.ht
   br i1 %.not15.i, label %_ZN5boost7movelib25op_merge_with_left_placedINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEENS3_4pairIS7_S7_EENS3_9select1stIS7_EEEENS0_7move_opEPSA_NS2_22stable_vector_iteratorISF_Lb0EEEEEvT2_SI_SI_T1_SJ_T_T0_.exit, label %.lr.ph.i120
@@ -318,7 +319,7 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24m
   %.sroa.0126.0 = phi ptr [ %.sroa.0126.1, %bb.ao ], [ %.sroa.0203.0.lcssa331, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit119 ] ; 2 uses
   %.sroa.0.0 = phi ptr [ %.sroa.0.1, %bb.ao ], [ %i.hs, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit119 ] ; 3 uses
   %.016.i = phi ptr [ %.1.i121, %bb.ao ], [ %i.ht, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit119 ] ; 4 uses
-  %i.hv = icmp eq ptr %.058.lcssa334, %.sroa.0126.0
+  %i.hv = icmp eq ptr %.sroa.speculated208, %.sroa.0126.0
   br i1 %i.hv, label %.lr.ph.i.i.i, label %bb.al
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i120, %.lr.ph.i.i.i
@@ -721,15 +722,13 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not, label %.thread, label %bb.e, !llvm.loop !8560
 
 .thread:                                          ; preds = %bb.ah, %bb.m, %bb.l
-  %i.gz = phi ptr [ %i.gk, %bb.ah ], [ %i.s, %bb.m ], [ %i.s, %bb.l ] ; 2 uses
-  %i.ha = phi ptr [ %i.gl, %bb.ah ], [ %i.t, %bb.m ], [ %i.t, %bb.l ] ; 2 uses
-  %.sroa.0220.0.lcssa.ph = phi ptr [ %.sroa.0220.4, %bb.ah ], [ %.sroa.0220.0284, %bb.m ], [ %.sroa.0220.0284, %bb.l ] ; 3 uses
-  %.sroa.0226.0.lcssa.ph = phi ptr [ %.sroa.0226.1, %bb.ah ], [ %.sroa.0226.0285, %bb.m ], [ %.sroa.0226.0285, %bb.l ] ; 2 uses
-  %.sroa.0230.0.lcssa.ph = phi ptr [ %.sroa.0230.2, %bb.ah ], [ %.sroa.0230.0286, %bb.m ], [ %.sroa.0230.0286, %bb.l ] ; 2 uses
-  %.0255.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0255287, %bb.m ], [ %.0255287, %bb.l ] ; 2 uses
-  %.052.lcssa.ph = phi i8 [ %.153, %bb.ah ], [ 1, %bb.m ], [ %.052289, %bb.l ]
-  %29 = trunc nuw i8 %.052.lcssa.ph to i1
-  %30 = select i1 %29, ptr %.sroa.0226.0.lcssa.ph, ptr %.sroa.0220.0.lcssa.ph ; 2 uses
+  %i.gz = phi ptr [ %i.gk, %bb.ah ], [ %i.s, %bb.l ], [ %i.s, %bb.m ] ; 2 uses
+  %i.ha = phi ptr [ %i.gl, %bb.ah ], [ %i.t, %bb.l ], [ %i.t, %bb.m ] ; 2 uses
+  %.sroa.0220.0.lcssa.ph = phi ptr [ %.sroa.0220.4, %bb.ah ], [ %.sroa.0220.0284, %bb.l ], [ %.sroa.0220.0284, %bb.m ] ; 2 uses
+  %.sroa.0226.0.lcssa.ph = phi ptr [ %.sroa.0226.1, %bb.ah ], [ %.sroa.0226.0285, %bb.l ], [ %.sroa.0226.0285, %bb.m ] ; 3 uses
+  %.sroa.0230.0.lcssa.ph = phi ptr [ %.sroa.0230.2, %bb.ah ], [ %.sroa.0230.0286, %bb.l ], [ %.sroa.0230.0286, %bb.m ] ; 2 uses
+  %.0255.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0255287, %bb.l ], [ %.0255287, %bb.m ] ; 2 uses
+  %.052.lcssa.ph = phi i8 [ %.153, %bb.ah ], [ %.052289, %bb.l ], [ 1, %bb.m ] ; 2 uses
   %.not1.i.i96 = icmp eq ptr %i.ha, %i.gz
   br i1 %.not1.i.i96, label %_ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPNS3_3dtl4pairINS3_4test24movable_and_copyable_intES8_EELb0EEESB_EET0_NS0_9forward_tET_SE_SC_.exit100, label %.lr.ph.i.i97
 
@@ -760,10 +759,11 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not.i.i99, label %_ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPNS3_3dtl4pairINS3_4test24movable_and_copyable_intES8_EELb0EEESB_EET0_NS0_9forward_tET_SE_SC_.exit100, label %.lr.ph.i.i97, !llvm.loop !164
 
 _ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPNS3_3dtl4pairINS3_4test24movable_and_copyable_intES8_EELb0EEESB_EET0_NS0_9forward_tET_SE_SC_.exit100: ; preds = %.lr.ph.i.i97, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit69, %.thread
-  %.052.lcssa349 = phi ptr [ %i.g, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit69 ], [ %30, %.thread ], [ %30, %.lr.ph.i.i97 ]
+  %.052.lcssa366 = phi i8 [ 1, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit69 ], [ %.052.lcssa.ph, %.thread ], [ %.052.lcssa.ph, %.lr.ph.i.i97 ]
   %.0255.lcssa348 = phi i64 [ 0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit69 ], [ %.0255.lcssa.ph, %.thread ], [ %.0255.lcssa.ph, %.lr.ph.i.i97 ] ; 2 uses
   %.sroa.0230.0.lcssa347 = phi ptr [ %.sroa.0230.5, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit69 ], [ %.sroa.0230.0.lcssa.ph, %.thread ], [ %.sroa.0230.0.lcssa.ph, %.lr.ph.i.i97 ]
-  %.sroa.0220.0.lcssa346 = phi ptr [ %.sroa.0220.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit69 ], [ %.sroa.0220.0.lcssa.ph, %.thread ], [ %.sroa.0220.0.lcssa.ph, %.lr.ph.i.i97 ]
+  %.sroa.0226.0.lcssa363 = phi ptr [ %i.g, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit69 ], [ %.sroa.0226.0.lcssa.ph, %.thread ], [ %.sroa.0226.0.lcssa.ph, %.lr.ph.i.i97 ]
+  %.sroa.0220.0.lcssa346 = phi ptr [ %.sroa.0220.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit69 ], [ %.sroa.0220.0.lcssa.ph, %.thread ], [ %.sroa.0220.0.lcssa.ph, %.lr.ph.i.i97 ] ; 2 uses
   %.not.i.i101 = icmp eq i64 %6, 0                ; 2 uses
   br i1 %.not.i.i101, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit104, label %bb.ai
 
@@ -852,6 +852,8 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24m
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #21
   %i.iu = load ptr, ptr %22, align 8, !tbaa !397, !noalias !8627 ; 3 uses
   store ptr %i.iu, ptr %19, align 8, !tbaa !397
+  %29 = trunc nuw i8 %.052.lcssa366 to i1
+  %.sroa.speculated225 = select i1 %29, ptr %.sroa.0226.0.lcssa363, ptr %.sroa.0220.0.lcssa346
   %i.iv = load ptr, ptr %18, align 8, !tbaa !397  ; 3 uses
   %.not12.i = icmp eq ptr %i.iv, %i.iu
   br i1 %.not12.i, label %_ZN5boost7movelib25op_merge_with_left_placedINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEENS3_4pairIS7_S7_EENS3_9select1stIS7_EEEENS0_7swap_opENS2_22stable_vector_iteratorIPSA_Lb0EEESH_EEvT2_SI_SI_T1_SJ_T_T0_.exit, label %.lr.ph.i116
@@ -860,7 +862,7 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24m
   %.sroa.0126.0 = phi ptr [ %.sroa.0126.1, %bb.ap ], [ %.sroa.0220.0.lcssa346, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit115 ] ; 2 uses
   %.sroa.0123.0 = phi ptr [ %i.ka, %bb.ap ], [ %i.it, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit115 ] ; 2 uses
   %i.iw = phi ptr [ %i.km, %bb.ap ], [ %i.iu, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EELb0EEEl.exit115 ] ; 2 uses
-  %i.ix = icmp eq ptr %.052.lcssa349, %.sroa.0126.0
+  %i.ix = icmp eq ptr %.sroa.speculated225, %.sroa.0126.0
   br i1 %i.ix, label %.lr.ph.i.i.i, label %bb.am
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i116, %.lr.ph.i.i.i
@@ -1263,15 +1265,13 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not, label %.thread, label %bb.e, !llvm.loop !15860
 
 .thread:                                          ; preds = %bb.ah, %bb.m, %bb.l
-  %i.fm = phi ptr [ %i.ex, %bb.ah ], [ %i.t, %bb.m ], [ %i.t, %bb.l ] ; 2 uses
-  %i.fn = phi ptr [ %i.ey, %bb.ah ], [ %i.u, %bb.m ], [ %i.u, %bb.l ] ; 2 uses
-  %.sroa.0203.0.lcssa.ph = phi ptr [ %.sroa.0203.4, %bb.ah ], [ %.sroa.0203.0266, %bb.m ], [ %.sroa.0203.0266, %bb.l ] ; 3 uses
-  %.sroa.0209.0.lcssa.ph = phi ptr [ %.sroa.0209.1, %bb.ah ], [ %.sroa.0209.0267, %bb.m ], [ %.sroa.0209.0267, %bb.l ] ; 2 uses
-  %.sroa.0213.0.lcssa.ph = phi ptr [ %.sroa.0213.2, %bb.ah ], [ %.sroa.0213.0268, %bb.m ], [ %.sroa.0213.0268, %bb.l ] ; 2 uses
-  %.0238.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0238269, %bb.m ], [ %.0238269, %bb.l ] ; 2 uses
-  %.058.lcssa.ph = phi i8 [ %.159, %bb.ah ], [ 1, %bb.m ], [ %.058271, %bb.l ]
-  %27 = trunc nuw i8 %.058.lcssa.ph to i1
-  %28 = select i1 %27, ptr %.sroa.0209.0.lcssa.ph, ptr %.sroa.0203.0.lcssa.ph ; 2 uses
+  %i.fm = phi ptr [ %i.ex, %bb.ah ], [ %i.t, %bb.l ], [ %i.t, %bb.m ] ; 2 uses
+  %i.fn = phi ptr [ %i.ey, %bb.ah ], [ %i.u, %bb.l ], [ %i.u, %bb.m ] ; 2 uses
+  %.sroa.0203.0.lcssa.ph = phi ptr [ %.sroa.0203.4, %bb.ah ], [ %.sroa.0203.0266, %bb.l ], [ %.sroa.0203.0266, %bb.m ] ; 2 uses
+  %.sroa.0209.0.lcssa.ph = phi ptr [ %.sroa.0209.1, %bb.ah ], [ %.sroa.0209.0267, %bb.l ], [ %.sroa.0209.0267, %bb.m ] ; 3 uses
+  %.sroa.0213.0.lcssa.ph = phi ptr [ %.sroa.0213.2, %bb.ah ], [ %.sroa.0213.0268, %bb.l ], [ %.sroa.0213.0268, %bb.m ] ; 2 uses
+  %.0238.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0238269, %bb.l ], [ %.0238269, %bb.m ] ; 2 uses
+  %.058.lcssa.ph = phi i8 [ %.159, %bb.ah ], [ %.058271, %bb.l ], [ 1, %bb.m ] ; 2 uses
   %.not4.i.i105 = icmp eq ptr %i.fn, %i.fm
   br i1 %.not4.i.i105, label %_ZN5boost7movelib7move_opclIPNS_9container4test24movable_and_copyable_intENS3_22stable_vector_iteratorIS6_Lb0EEEEET0_NS0_9forward_tET_SB_S9_.exit109, label %.lr.ph.i.i106
 
@@ -1290,10 +1290,11 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not.i.i108, label %_ZN5boost7movelib7move_opclIPNS_9container4test24movable_and_copyable_intENS3_22stable_vector_iteratorIS6_Lb0EEEEET0_NS0_9forward_tET_SB_S9_.exit109, label %.lr.ph.i.i106, !llvm.loop !266
 
 _ZN5boost7movelib7move_opclIPNS_9container4test24movable_and_copyable_intENS3_22stable_vector_iteratorIS6_Lb0EEEEET0_NS0_9forward_tET_SB_S9_.exit109: ; preds = %.lr.ph.i.i106, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit75, %.thread
-  %.058.lcssa334 = phi ptr [ %i.h, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit75 ], [ %28, %.thread ], [ %28, %.lr.ph.i.i106 ]
+  %.058.lcssa351 = phi i8 [ 1, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit75 ], [ %.058.lcssa.ph, %.thread ], [ %.058.lcssa.ph, %.lr.ph.i.i106 ]
   %.0238.lcssa333 = phi i64 [ 0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit75 ], [ %.0238.lcssa.ph, %.thread ], [ %.0238.lcssa.ph, %.lr.ph.i.i106 ] ; 2 uses
   %.sroa.0213.0.lcssa332 = phi ptr [ %.sroa.0213.5, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit75 ], [ %.sroa.0213.0.lcssa.ph, %.thread ], [ %.sroa.0213.0.lcssa.ph, %.lr.ph.i.i106 ]
-  %.sroa.0203.0.lcssa331 = phi ptr [ %.sroa.0203.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit75 ], [ %.sroa.0203.0.lcssa.ph, %.thread ], [ %.sroa.0203.0.lcssa.ph, %.lr.ph.i.i106 ]
+  %.sroa.0209.0.lcssa348 = phi ptr [ %i.h, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit75 ], [ %.sroa.0209.0.lcssa.ph, %.thread ], [ %.sroa.0209.0.lcssa.ph, %.lr.ph.i.i106 ]
+  %.sroa.0203.0.lcssa331 = phi ptr [ %.sroa.0203.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit75 ], [ %.sroa.0203.0.lcssa.ph, %.thread ], [ %.sroa.0203.0.lcssa.ph, %.lr.ph.i.i106 ] ; 2 uses
   %.not.i.i110 = icmp eq i64 %6, 0
   br i1 %.not.i.i110, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit113, label %bb.ai
 
@@ -1359,6 +1360,8 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_cop
   %i.gn = load ptr, ptr %21, align 8, !tbaa !450, !noalias !15911
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #21
   %i.go = load ptr, ptr %20, align 8, !tbaa !522  ; 2 uses
+  %27 = trunc nuw i8 %.058.lcssa351 to i1
+  %.sroa.speculated208 = select i1 %27, ptr %.sroa.0209.0.lcssa348, ptr %.sroa.0203.0.lcssa331
   %i.gp = load ptr, ptr %i.a, align 8, !tbaa !419 ; 3 uses
   %.not15.i = icmp eq ptr %i.gp, %i.go
   br i1 %.not15.i, label %_ZN5boost7movelib25op_merge_with_left_placedINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS0_7move_opEPS7_NS2_22stable_vector_iteratorISE_Lb0EEEEEvT2_SH_SH_T1_SI_T_T0_.exit, label %.lr.ph.i120
@@ -1367,7 +1370,7 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_cop
   %.sroa.0126.0 = phi ptr [ %.sroa.0126.1, %bb.ao ], [ %.sroa.0203.0.lcssa331, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit119 ] ; 2 uses
   %.sroa.0.0 = phi ptr [ %.sroa.0.1, %bb.ao ], [ %i.gn, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit119 ] ; 3 uses
   %.016.i = phi ptr [ %.1.i121, %bb.ao ], [ %i.go, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit119 ] ; 3 uses
-  %i.gq = icmp eq ptr %.058.lcssa334, %.sroa.0126.0
+  %i.gq = icmp eq ptr %.sroa.speculated208, %.sroa.0126.0
   br i1 %i.gq, label %.lr.ph.i.i.i, label %bb.al
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i120, %.lr.ph.i.i.i
@@ -1770,15 +1773,13 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not, label %.thread, label %bb.e, !llvm.loop !15954
 
 .thread:                                          ; preds = %bb.ah, %bb.m, %bb.l
-  %i.fz = phi ptr [ %i.fk, %bb.ah ], [ %i.s, %bb.m ], [ %i.s, %bb.l ] ; 2 uses
-  %i.ga = phi ptr [ %i.fl, %bb.ah ], [ %i.t, %bb.m ], [ %i.t, %bb.l ] ; 2 uses
-  %.sroa.0220.0.lcssa.ph = phi ptr [ %.sroa.0220.4, %bb.ah ], [ %.sroa.0220.0284, %bb.m ], [ %.sroa.0220.0284, %bb.l ] ; 3 uses
-  %.sroa.0226.0.lcssa.ph = phi ptr [ %.sroa.0226.1, %bb.ah ], [ %.sroa.0226.0285, %bb.m ], [ %.sroa.0226.0285, %bb.l ] ; 2 uses
-  %.sroa.0230.0.lcssa.ph = phi ptr [ %.sroa.0230.2, %bb.ah ], [ %.sroa.0230.0286, %bb.m ], [ %.sroa.0230.0286, %bb.l ] ; 2 uses
-  %.0255.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0255287, %bb.m ], [ %.0255287, %bb.l ] ; 2 uses
-  %.052.lcssa.ph = phi i8 [ %.153, %bb.ah ], [ 1, %bb.m ], [ %.052289, %bb.l ]
-  %29 = trunc nuw i8 %.052.lcssa.ph to i1
-  %30 = select i1 %29, ptr %.sroa.0226.0.lcssa.ph, ptr %.sroa.0220.0.lcssa.ph ; 2 uses
+  %i.fz = phi ptr [ %i.fk, %bb.ah ], [ %i.s, %bb.l ], [ %i.s, %bb.m ] ; 2 uses
+  %i.ga = phi ptr [ %i.fl, %bb.ah ], [ %i.t, %bb.l ], [ %i.t, %bb.m ] ; 2 uses
+  %.sroa.0220.0.lcssa.ph = phi ptr [ %.sroa.0220.4, %bb.ah ], [ %.sroa.0220.0284, %bb.l ], [ %.sroa.0220.0284, %bb.m ] ; 2 uses
+  %.sroa.0226.0.lcssa.ph = phi ptr [ %.sroa.0226.1, %bb.ah ], [ %.sroa.0226.0285, %bb.l ], [ %.sroa.0226.0285, %bb.m ] ; 3 uses
+  %.sroa.0230.0.lcssa.ph = phi ptr [ %.sroa.0230.2, %bb.ah ], [ %.sroa.0230.0286, %bb.l ], [ %.sroa.0230.0286, %bb.m ] ; 2 uses
+  %.0255.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0255287, %bb.l ], [ %.0255287, %bb.m ] ; 2 uses
+  %.052.lcssa.ph = phi i8 [ %.153, %bb.ah ], [ %.052289, %bb.l ], [ 1, %bb.m ] ; 2 uses
   %.not1.i.i96 = icmp eq ptr %i.ga, %i.fz
   br i1 %.not1.i.i96, label %_ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPNS3_4test24movable_and_copyable_intELb0EEES8_EET0_NS0_9forward_tET_SB_S9_.exit100, label %.lr.ph.i.i97
 
@@ -1802,10 +1803,11 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not.i.i99, label %_ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPNS3_4test24movable_and_copyable_intELb0EEES8_EET0_NS0_9forward_tET_SB_S9_.exit100, label %.lr.ph.i.i97, !llvm.loop !273
 
 _ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPNS3_4test24movable_and_copyable_intELb0EEES8_EET0_NS0_9forward_tET_SB_S9_.exit100: ; preds = %.lr.ph.i.i97, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit69, %.thread
-  %.052.lcssa349 = phi ptr [ %i.g, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit69 ], [ %30, %.thread ], [ %30, %.lr.ph.i.i97 ]
+  %.052.lcssa366 = phi i8 [ 1, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit69 ], [ %.052.lcssa.ph, %.thread ], [ %.052.lcssa.ph, %.lr.ph.i.i97 ]
   %.0255.lcssa348 = phi i64 [ 0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit69 ], [ %.0255.lcssa.ph, %.thread ], [ %.0255.lcssa.ph, %.lr.ph.i.i97 ] ; 2 uses
   %.sroa.0230.0.lcssa347 = phi ptr [ %.sroa.0230.5, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit69 ], [ %.sroa.0230.0.lcssa.ph, %.thread ], [ %.sroa.0230.0.lcssa.ph, %.lr.ph.i.i97 ]
-  %.sroa.0220.0.lcssa346 = phi ptr [ %.sroa.0220.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit69 ], [ %.sroa.0220.0.lcssa.ph, %.thread ], [ %.sroa.0220.0.lcssa.ph, %.lr.ph.i.i97 ]
+  %.sroa.0226.0.lcssa363 = phi ptr [ %i.g, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit69 ], [ %.sroa.0226.0.lcssa.ph, %.thread ], [ %.sroa.0226.0.lcssa.ph, %.lr.ph.i.i97 ]
+  %.sroa.0220.0.lcssa346 = phi ptr [ %.sroa.0220.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit69 ], [ %.sroa.0220.0.lcssa.ph, %.thread ], [ %.sroa.0220.0.lcssa.ph, %.lr.ph.i.i97 ] ; 2 uses
   %.not.i.i101 = icmp eq i64 %6, 0                ; 2 uses
   br i1 %.not.i.i101, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit104, label %bb.ai
 
@@ -1887,6 +1889,8 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_cop
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #21
   %i.hm = load ptr, ptr %22, align 8, !tbaa !450, !noalias !16021 ; 3 uses
   store ptr %i.hm, ptr %19, align 8, !tbaa !450
+  %29 = trunc nuw i8 %.052.lcssa366 to i1
+  %.sroa.speculated225 = select i1 %29, ptr %.sroa.0226.0.lcssa363, ptr %.sroa.0220.0.lcssa346
   %i.hn = load ptr, ptr %18, align 8, !tbaa !450  ; 3 uses
   %.not12.i = icmp eq ptr %i.hn, %i.hm
   br i1 %.not12.i, label %_ZN5boost7movelib25op_merge_with_left_placedINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS0_7swap_opENS2_22stable_vector_iteratorIPS7_Lb0EEESG_EEvT2_SH_SH_T1_SI_T_T0_.exit, label %.lr.ph.i116
@@ -1895,7 +1899,7 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_cop
   %.sroa.0126.0 = phi ptr [ %.sroa.0126.1, %bb.ap ], [ %.sroa.0220.0.lcssa346, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit115 ] ; 2 uses
   %.sroa.0123.0 = phi ptr [ %i.io, %bb.ap ], [ %i.hl, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit115 ] ; 2 uses
   %i.ho = phi ptr [ %i.iz, %bb.ap ], [ %i.hm, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit115 ] ; 2 uses
-  %i.hp = icmp eq ptr %.052.lcssa349, %.sroa.0126.0
+  %i.hp = icmp eq ptr %.sroa.speculated225, %.sroa.0126.0
   br i1 %i.hp, label %.lr.ph.i.i.i, label %bb.am
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i116, %.lr.ph.i.i.i

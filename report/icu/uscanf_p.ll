@@ -19,13 +19,13 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %3 = alloca %union.ufmt_args, align 8           ; 4 uses
-  %4 = alloca %struct.u_scanf_spec, align 4       ; 16 uses
+  %4 = alloca %struct.u_scanf_spec, align 4       ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   store i32 0, ptr %i.b, align 4, !tbaa !9
-  %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 6 ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
@@ -88,7 +88,6 @@ bb.g:                                             ; preds = %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %.128, i64 4 ; 3 uses
   %i.w = zext nneg i16 %i.u to i32
   %i.x = add nsw i32 %i.w, -48                    ; 2 uses
-  store i32 %i.x, ptr %i.c, align 4, !tbaa !53
   %i.y = load i16, ptr %i.v, align 2, !tbaa !11   ; 3 uses
   %.off121129.i = add i16 %i.y, -48
   %switch122130.i = icmp ult i16 %.off121129.i, 10
@@ -106,15 +105,13 @@ bb.g:                                             ; preds = %bb.f
   %i.af = load i16, ptr %i.ab, align 2, !tbaa !11 ; 3 uses
   %.off121.i = add i16 %i.af, -48
   %switch122.i = icmp ult i16 %.off121.i, 10
-  br i1 %switch122.i, label %.critedge.i, label %._crit_edge.i, !llvm.loop !48
+  br i1 %switch122.i, label %.critedge.i, label %bb.h, !llvm.loop !48
 
-._crit_edge.i:                                    ; preds = %.critedge.i
-  store i32 %i.ae, ptr %i.c, align 4, !tbaa !53
-  br label %bb.h
-
-bb.h:                                             ; preds = %._crit_edge.i, %bb.g
-  %i.ag = phi i16 [ %i.af, %._crit_edge.i ], [ %i.y, %bb.g ]
-  %.0.lcssa.i = phi ptr [ %i.ab, %._crit_edge.i ], [ %i.v, %bb.g ]
+bb.h:                                             ; preds = %.critedge.i, %bb.g
+  %i.ag = phi i16 [ %i.y, %bb.g ], [ %i.af, %.critedge.i ]
+  %storemerge.lcssa.i = phi i32 [ %i.x, %bb.g ], [ %i.ae, %.critedge.i ]
+  %.0.lcssa.i = phi ptr [ %i.v, %bb.g ], [ %i.ab, %.critedge.i ]
+  store i32 %storemerge.lcssa.i, ptr %i.c, align 4, !tbaa !53
   %.not.i = icmp eq i16 %i.ag, 36
   br i1 %.not.i, label %bb.j, label %bb.i
 
@@ -196,11 +193,10 @@ bb.n:                                             ; preds = %bb.k, %bb.k, %bb.k,
   %i.bg = zext nneg i16 %i.ai to i32
   %i.bh = add nsw i32 %i.bg, -48                  ; 2 uses
   %.5134.i = getelementptr inbounds nuw i8, ptr %.3.i, i64 2 ; 3 uses
-  store i32 %i.bh, ptr %4, align 4, !tbaa !14
   %i.bi = load i16, ptr %.5134.i, align 2, !tbaa !11 ; 3 uses
   %.off123135.i = add i16 %i.bi, -48
   %switch124136.i = icmp ult i16 %.off123135.i, 10
-  br i1 %switch124136.i, label %.critedge4.i, label %.loopexit.i
+  br i1 %switch124136.i, label %.critedge4.i, label %..loopexit_crit_edge.i
 
 .critedge4.i:                                     ; preds = %bb.n, %.critedge4.i
   %i.bj = phi i16 [ %i.bo, %.critedge4.i ], [ %i.bi, %bb.n ]
@@ -216,13 +212,16 @@ bb.n:                                             ; preds = %bb.k, %bb.k, %bb.k,
   %switch124.i = icmp ult i16 %.off123.i, 10
   br i1 %switch124.i, label %.critedge4.i, label %..loopexit_crit_edge.i, !llvm.loop !50
 
-..loopexit_crit_edge.i:                           ; preds = %.critedge4.i
-  store i32 %i.bn, ptr %4, align 4, !tbaa !14
+..loopexit_crit_edge.i:                           ; preds = %.critedge4.i, %bb.n
+  %storemerge118.lcssa.i = phi i32 [ %i.bh, %bb.n ], [ %i.bn, %.critedge4.i ]
+  %.5.lcssa.i = phi ptr [ %.5134.i, %bb.n ], [ %.5.i, %.critedge4.i ]
+  %.lcssa.i = phi i16 [ %i.bi, %bb.n ], [ %i.bo, %.critedge4.i ]
+  store i32 %storemerge118.lcssa.i, ptr %4, align 4, !tbaa !14
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %bb.k, %..loopexit_crit_edge.i, %bb.n
-  %5 = phi i16 [ %i.bi, %bb.n ], [ %i.bo, %..loopexit_crit_edge.i ], [ %i.ai, %bb.k ] ; 2 uses
-  %.6.i = phi ptr [ %.5134.i, %bb.n ], [ %.5.i, %..loopexit_crit_edge.i ], [ %.3.i, %bb.k ] ; 3 uses
+.loopexit.i:                                      ; preds = %bb.k, %..loopexit_crit_edge.i
+  %5 = phi i16 [ %.lcssa.i, %..loopexit_crit_edge.i ], [ %i.ai, %bb.k ] ; 2 uses
+  %.6.i = phi ptr [ %.5.lcssa.i, %..loopexit_crit_edge.i ], [ %.3.i, %bb.k ] ; 3 uses
   switch i16 %5, label %_ZL18u_scanf_parse_specPKDsP12u_scanf_spec.exit [
     i16 104, label %bb.o
     i16 108, label %bb.o

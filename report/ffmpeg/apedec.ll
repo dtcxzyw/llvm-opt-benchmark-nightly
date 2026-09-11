@@ -205,10 +205,12 @@ bb.m:                                             ; preds = %long_filter_high_38
   %i.kf = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 2 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %0, i64 2240
-  %i.ki = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
+  %i.ki = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
+  %.promoted = load ptr, ptr %i.f, align 8, !tbaa !79
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %bb.v
+  %2 = phi ptr [ %.promoted, %.lr.ph ], [ %3, %bb.v ] ; 7 uses
   %.in = phi i32 [ %1, %.lr.ph ], [ %i.kj, %bb.v ]
   %.041120 = phi ptr [ %i.h, %.lr.ph ], [ %.142, %bb.v ] ; 3 uses
   %i.kj = add nsw i32 %.in, -1                    ; 2 uses
@@ -216,7 +218,6 @@ bb.n:                                             ; preds = %.lr.ph, %bb.v
   %i.kl = icmp eq i32 %i.kk, 1000
   %i.km = load i32, ptr %.041120, align 4, !tbaa !59 ; 10 uses
   %i.kn = load i32, ptr %i.jy, align 8, !tbaa !59 ; 6 uses
-  %2 = load ptr, ptr %i.f, align 8, !tbaa !79     ; 7 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %2, i64 200
   store i32 %i.kn, ptr %i.ko, align 4, !tbaa !59
   br i1 %i.kl, label %bb.o, label %bb.r
@@ -346,7 +347,7 @@ filter_fast_3320.exit:                            ; preds = %bb.t, %bb.s, %bb.q,
   store i32 %.sink, ptr %i.kg, align 8, !tbaa !59
   store i32 %.sink, ptr %.041120, align 4, !tbaa !59
   %.142 = getelementptr inbounds nuw i8, ptr %.041120, i64 4
-  %i.nt = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
+  %i.nt = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 4 uses
   store ptr %i.nt, ptr %i.f, align 8, !tbaa !79
   %i.nu = load i32, ptr %i.ka, align 8, !tbaa !80
   %i.nv = add i32 %i.nu, 1
@@ -360,6 +361,7 @@ bb.u:                                             ; preds = %filter_fast_3320.ex
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %filter_fast_3320.exit
+  %3 = phi ptr [ %i.ki, %bb.u ], [ %i.nt, %filter_fast_3320.exit ]
   %.not = icmp eq i32 %i.kj, 0
   br i1 %.not, label %._crit_edge, label %bb.n, !llvm.loop !171
 
@@ -762,10 +764,12 @@ bb.v:                                             ; preds = %long_filter_high_38
   %i.we = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.wf = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 4 uses
   %i.wg = getelementptr inbounds nuw i8, ptr %0, i64 2240
-  %i.wh = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
+  %i.wh = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
+  %.promoted = load ptr, ptr %i.k, align 8, !tbaa !79
   br label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph, %bb.ai
+  %2 = phi ptr [ %.promoted, %.lr.ph ], [ %3, %bb.ai ] ; 14 uses
   %.in = phi i32 [ %1, %.lr.ph ], [ %i.wi, %bb.ai ]
   %.064255 = phi ptr [ %i.o, %.lr.ph ], [ %.165, %bb.ai ] ; 3 uses
   %.066254 = phi ptr [ %i.m, %.lr.ph ], [ %.167, %bb.ai ] ; 4 uses
@@ -775,7 +779,6 @@ bb.w:                                             ; preds = %.lr.ph, %bb.ai
   %i.wl = load i32, ptr %i.p, align 8, !tbaa !49
   %i.wm = icmp eq i32 %i.wl, 1000
   %i.wn = load i32, ptr %i.vp, align 8, !tbaa !59 ; 6 uses
-  %2 = load ptr, ptr %i.k, align 8, !tbaa !79     ; 14 uses
   %i.wo = getelementptr inbounds nuw i8, ptr %2, i64 200
   store i32 %i.wn, ptr %i.wo, align 4, !tbaa !59
   br i1 %i.wm, label %bb.x, label %bb.ac
@@ -1038,7 +1041,7 @@ filter_fast_3320.exit:                            ; preds = %bb.ag, %bb.af, %bb.
   store i32 %.sink, ptr %.064255, align 4, !tbaa !59
   %.165 = getelementptr inbounds nuw i8, ptr %.064255, i64 4
   %.167 = getelementptr inbounds nuw i8, ptr %.066254, i64 4
-  %i.adb = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
+  %i.adb = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 4 uses
   store ptr %i.adb, ptr %i.k, align 8, !tbaa !79
   %i.adc = load i32, ptr %i.vr, align 8, !tbaa !80
   %i.add = add i32 %i.adc, 1
@@ -1052,6 +1055,7 @@ bb.ah:                                            ; preds = %filter_fast_3320.ex
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %filter_fast_3320.exit
+  %3 = phi ptr [ %i.wh, %bb.ah ], [ %i.adb, %filter_fast_3320.exit ]
   %.not = icmp eq i32 %i.wi, 0
   br i1 %.not, label %._crit_edge, label %bb.w, !llvm.loop !224
 

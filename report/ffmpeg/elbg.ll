@@ -205,8 +205,9 @@ define internal fastcc void @do_elbg(ptr noalias nofree noundef nonnull captures
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !26   ; 8 uses
+  store i32 2147483647, ptr %0, align 8, !tbaa !69
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store ptr %1, ptr %i.c, align 8, !tbaa !69
+  store ptr %1, ptr %i.c, align 8, !tbaa !70
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !27
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -327,7 +328,6 @@ bb.b:                                             ; preds = %._crit_edge178, %bb
   %i.bh = add nuw nsw i32 %.0112, 1               ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.g, i8 0, i64 %i.k, i1 false)
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.m, i8 0, i64 %i.n, i1 false)
-  store i32 0, ptr %0, align 8, !tbaa !70
   br i1 %i.o, label %.lr.ph165, label %bb.g
 
 .lr.ph165:                                        ; preds = %bb.b
@@ -418,7 +418,7 @@ distance_limited.exit133.loopexit.us:             ; preds = %bb.f, %bb.e
   %.0108.lcssa = phi i32 [ %.2.i, %distance_limited.exit ], [ 0, %bb.c ], [ %spec.select124.us, %distance_limited.exit133.loopexit.us ] ; 2 uses
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %indvars.iv195 ; 2 uses
   store i32 %.2.lcssa, ptr %i.cp, align 4, !tbaa !71
-  %spec.select = tail call i32 @llvm.sadd.sat.i32(i32 %.0108.lcssa, i32 %spec.select168) ; 3 uses
+  %spec.select = tail call i32 @llvm.sadd.sat.i32(i32 %.0108.lcssa, i32 %spec.select168) ; 2 uses
   %i.cq = sext i32 %.2.lcssa to i64
   %i.cr = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.cq ; 2 uses
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !71
@@ -436,15 +436,11 @@ distance_limited.exit133.loopexit.us:             ; preds = %bb.f, %bb.e
   %i.da = getelementptr inbounds nuw i8, ptr %.0109163, i64 16
   %indvars.iv.next196 = add nuw nsw i64 %indvars.iv195, 1 ; 2 uses
   %exitcond199.not = icmp eq i64 %indvars.iv.next196, %wide.trip.count198
-  br i1 %exitcond199.not, label %._crit_edge166, label %bb.c, !llvm.loop !42
+  br i1 %exitcond199.not, label %bb.g, label %bb.c, !llvm.loop !42
 
-._crit_edge166:                                   ; preds = %._crit_edge
-  store i32 %spec.select, ptr %0, align 8, !tbaa !70
-  br label %bb.g
-
-bb.g:                                             ; preds = %._crit_edge166, %bb.b
-  %.promoted169180 = phi i32 [ %spec.select, %._crit_edge166 ], [ 0, %bb.b ] ; 3 uses
-  %.1111.lcssa = phi i32 [ %.2.lcssa, %._crit_edge166 ], [ %.0110, %bb.b ]
+bb.g:                                             ; preds = %._crit_edge, %bb.b
+  %.promoted169180 = phi i32 [ 0, %bb.b ], [ %spec.select, %._crit_edge ] ; 3 uses
+  %.1111.lcssa = phi i32 [ %.0110, %bb.b ], [ %.2.lcssa, %._crit_edge ]
   br i1 %i.p, label %.lr.ph.i.i, label %do_shiftings.exit
 
 .lr.ph.i.i:                                       ; preds = %bb.g
@@ -847,8 +843,7 @@ distance_limited.exit44.i.i.i:                    ; preds = %distance_limited.ex
 shift_codebook.exit.i.i.thread:                   ; preds = %distance_limited.exit44.i.i.i
   %i.wa = sub nsw i64 %.062.i.i, %i.kr
   %i.wb = trunc i64 %i.wa to i32
-  %i.wc = add i32 %i.ei, %i.wb                    ; 2 uses
-  store i32 %i.wc, ptr %0, align 8, !tbaa !70
+  %i.wc = add i32 %i.ei, %i.wb
   store i32 %.sroa.0.1.i.i, ptr %i.ej, align 4, !tbaa !71
   br label %.lr.ph.i123.i.i
 
@@ -856,8 +851,7 @@ shift_codebook.exit.i.i:                          ; preds = %distance_limited.ex
   %.09.i.i.i.pr = load ptr, ptr %i.hs, align 8, !tbaa !74 ; 2 uses
   %i.wd = sub nsw i64 %.062.i.i, %i.kr
   %i.we = trunc i64 %i.wd to i32
-  %i.wf = add i32 %i.ei, %i.we                    ; 3 uses
-  store i32 %i.wf, ptr %0, align 8, !tbaa !70
+  %i.wf = add i32 %i.ei, %i.we                    ; 2 uses
   store i32 %.sroa.0.1.i.i, ptr %i.ej, align 4, !tbaa !71
   %.not10.i.i.i = icmp eq ptr %.09.i.i.i.pr, null
   br i1 %.not10.i.i.i, label %update_utility_and_n_cb.exit.i.i, label %.lr.ph.i123.i.i
@@ -985,7 +979,7 @@ try_shift_candidate.exit.i:                       ; preds = %.epil.preheader400,
   br i1 %exitcond210.not, label %do_shiftings.exit, label %bb.h, !llvm.loop !63
 
 do_shiftings.exit:                                ; preds = %bb.i, %try_shift_candidate.exit.i, %bb.g
-  %.promoted169181 = phi i32 [ %.promoted169180, %bb.g ], [ %i.xz, %try_shift_candidate.exit.i ], [ %i.ei, %bb.i ] ; 3 uses
+  %.promoted169181 = phi i32 [ %.promoted169180, %bb.g ], [ %i.xz, %try_shift_candidate.exit.i ], [ %i.ei, %bb.i ] ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.b, i8 0, i64 %i.k, i1 false)
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.r, i8 0, i64 %i.w, i1 false)
   br i1 %i.o, label %.lr.ph175, label %.preheader149
@@ -1199,6 +1193,7 @@ vect_division.exit:                               ; preds = %.epil.preheader418,
   br i1 %exitcond230.not, label %._crit_edge178, label %.lr.ph177, !llvm.loop !68
 
 bb.ar:                                            ; preds = %._crit_edge178
+  store i32 %.promoted169181, ptr %0, align 8, !tbaa !69
   ret void
 }
 
@@ -1336,8 +1331,8 @@ attributes #9 = { nounwind }
 !66 = distinct !{!66, !81}
 !67 = distinct !{!67, !29}
 !68 = distinct !{!68, !29}
-!69 = !{!17, !12, i64 56}
-!70 = !{!17, !6, i64 0}
+!69 = !{!17, !6, i64 0}
+!70 = !{!17, !12, i64 56}
 !71 = !{!6, !6, i64 0}
 !72 = !{!"cell_s", !6, i64 0, !16, i64 8}
 !73 = !{!72, !6, i64 0}

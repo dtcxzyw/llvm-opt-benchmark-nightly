@@ -204,15 +204,15 @@ bb.d:                                             ; preds = %.lr.ph369, %_ZN8raw
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59, %.lr.ph.i.i57
-  %i.dv = phi i32 [ %.pre398, %.lr.ph.i.i57 ], [ %i.eq, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
-  %i.dw = phi i32 [ %.pre3.i.i, %.lr.ph.i.i57 ], [ %i.el, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
-  %i.dx = phi i32 [ %.pre397, %.lr.ph.i.i57 ], [ %i.er, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 4 uses
+  %i.dv = phi i32 [ %.pre3.i.i, %.lr.ph.i.i57 ], [ %i.el, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
+  %i.dw = phi i32 [ %.pre397, %.lr.ph.i.i57 ], [ %i.eq, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 4 uses
+  %i.dx = phi i32 [ %.pre398, %.lr.ph.i.i57 ], [ %i.er, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
   %.02.i.i = phi i64 [ %i.dt, %.lr.ph.i.i57 ], [ %i.dy, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
   %i.dy = add nsw i64 %.02.i.i, -1                ; 2 uses
-  %i.dz = icmp slt i32 %i.dx, %i.dw
+  %i.dz = icmp slt i32 %i.dw, %i.dv
   call void @llvm.assume(i1 %i.dz)
-  %i.ea = add nuw nsw i32 %i.dx, 1                ; 3 uses
-  %i.eb = icmp eq i32 %i.ea, %i.dw
+  %i.ea = add nuw nsw i32 %i.dw, 1                ; 3 uses
+  %i.eb = icmp eq i32 %i.ea, %i.dv
   %.0.in.v.i.i.i.i.i.i.i = select i1 %i.eb, i64 8, i64 4
   %.0.in.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pre396, i64 %.0.in.v.i.i.i.i.i.i.i
   %.0.i.i.i.i.i.i.i = load i32, ptr %.0.in.i.i.i.i.i.i.i, align 4, !tbaa !19
@@ -223,11 +223,11 @@ bb.e:                                             ; preds = %_ZN8rawspeed21Cr2Ou
   %i.ee = sub nsw i32 %i.ed, %.sroa.2.0.extract.trunc.i.i.i.i ; 2 uses
   %i.ef = icmp sgt i32 %i.ee, -1
   call void @llvm.assume(i1 %i.ef)
-  %i.eg = sub nsw i32 %.pre395, %i.dv             ; 2 uses
+  %i.eg = sub nsw i32 %.pre395, %i.dx             ; 2 uses
   %i.eh = icmp sgt i32 %i.eg, -1
   call void @llvm.assume(i1 %i.eh)
   %.sroa.speculated.i.i.i.i = call i32 @llvm.umin.i32(i32 %i.eg, i32 %i.ee) ; 2 uses
-  %i.ei = add nsw i32 %.sroa.speculated.i.i.i.i, %i.dv ; 5 uses
+  %i.ei = add nsw i32 %.sroa.speculated.i.i.i.i, %i.dx ; 5 uses
   store i32 %i.ei, ptr %.sroa.8110.0..sroa_idx, align 8, !tbaa !171
   %i.ej = add nsw i32 %.sroa.speculated.i.i.i.i, %.sroa.2.0.extract.trunc.i.i.i.i ; 2 uses
   %.sroa.2.0.insert.ext.i.i.i.i.i = zext i32 %i.ej to i64
@@ -238,7 +238,7 @@ bb.e:                                             ; preds = %_ZN8rawspeed21Cr2Ou
   %i.ek = icmp sgt i32 %i.ei, -1
   call void @llvm.assume(i1 %i.ek)
   %i.el = load i32, ptr %.pre396, align 4, !tbaa !16 ; 2 uses
-  %i.em = icmp slt i32 %i.dx, %i.el
+  %i.em = icmp slt i32 %i.dw, %i.el
   call void @llvm.assume(i1 %i.em)
   %i.en = icmp sle i32 %i.ei, %.pre395
   call void @llvm.assume(i1 %i.en)
@@ -252,8 +252,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.eq = phi i32 [ 0, %bb.f ], [ %i.ei, %bb.e ]  ; 2 uses
-  %i.er = phi i32 [ %i.ea, %bb.f ], [ %i.dx, %bb.e ] ; 2 uses
+  %i.eq = phi i32 [ %i.ea, %bb.f ], [ %i.dw, %bb.e ] ; 2 uses
+  %i.er = phi i32 [ 0, %bb.f ], [ %i.ei, %bb.e ]  ; 2 uses
   %i.es = load i32, ptr %i.du, align 4, !tbaa !18
   %i.et = icmp eq i32 %i.ej, %i.es
   br i1 %i.et, label %bb.h, label %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59
@@ -269,8 +269,8 @@ _ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59: ; preds = %bb.h, %bb.g
   br i1 %.not.i.i, label %_ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit, label %bb.e, !llvm.loop !2
 
 _ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit: ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59, %._crit_edge348
-  %i.ev = phi i32 [ %.pre398, %._crit_edge348 ], [ %i.eq, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
-  %i.ew = phi i32 [ %.pre397, %._crit_edge348 ], [ %i.er, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
+  %i.ev = phi i32 [ %.pre398, %._crit_edge348 ], [ %i.er, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
+  %i.ew = phi i32 [ %.pre397, %._crit_edge348 ], [ %i.eq, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %i.ex = load ptr, ptr %.sroa.9112.0..sroa_idx, align 8, !tbaa !167, !nonnull !122, !align !174
   %i.ey = icmp eq ptr %i.ex, %i.bq
@@ -673,15 +673,15 @@ bb.d:                                             ; preds = %.lr.ph369, %_ZN8raw
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59, %.lr.ph.i.i57
-  %i.dv = phi i32 [ %.pre398, %.lr.ph.i.i57 ], [ %i.eq, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
-  %i.dw = phi i32 [ %.pre3.i.i, %.lr.ph.i.i57 ], [ %i.el, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
-  %i.dx = phi i32 [ %.pre397, %.lr.ph.i.i57 ], [ %i.er, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 4 uses
+  %i.dv = phi i32 [ %.pre3.i.i, %.lr.ph.i.i57 ], [ %i.el, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
+  %i.dw = phi i32 [ %.pre397, %.lr.ph.i.i57 ], [ %i.eq, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 4 uses
+  %i.dx = phi i32 [ %.pre398, %.lr.ph.i.i57 ], [ %i.er, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
   %.02.i.i = phi i64 [ %i.dt, %.lr.ph.i.i57 ], [ %i.dy, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
   %i.dy = add nsw i64 %.02.i.i, -1                ; 2 uses
-  %i.dz = icmp slt i32 %i.dx, %i.dw
+  %i.dz = icmp slt i32 %i.dw, %i.dv
   call void @llvm.assume(i1 %i.dz)
-  %i.ea = add nuw nsw i32 %i.dx, 1                ; 3 uses
-  %i.eb = icmp eq i32 %i.ea, %i.dw
+  %i.ea = add nuw nsw i32 %i.dw, 1                ; 3 uses
+  %i.eb = icmp eq i32 %i.ea, %i.dv
   %.0.in.v.i.i.i.i.i.i.i = select i1 %i.eb, i64 8, i64 4
   %.0.in.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pre396, i64 %.0.in.v.i.i.i.i.i.i.i
   %.0.i.i.i.i.i.i.i = load i32, ptr %.0.in.i.i.i.i.i.i.i, align 4, !tbaa !19
@@ -692,11 +692,11 @@ bb.e:                                             ; preds = %_ZN8rawspeed21Cr2Ou
   %i.ee = sub nsw i32 %i.ed, %.sroa.2.0.extract.trunc.i.i.i.i ; 2 uses
   %i.ef = icmp sgt i32 %i.ee, -1
   call void @llvm.assume(i1 %i.ef)
-  %i.eg = sub nsw i32 %.pre395, %i.dv             ; 2 uses
+  %i.eg = sub nsw i32 %.pre395, %i.dx             ; 2 uses
   %i.eh = icmp sgt i32 %i.eg, -1
   call void @llvm.assume(i1 %i.eh)
   %.sroa.speculated.i.i.i.i = call i32 @llvm.umin.i32(i32 %i.eg, i32 %i.ee) ; 2 uses
-  %i.ei = add nsw i32 %.sroa.speculated.i.i.i.i, %i.dv ; 5 uses
+  %i.ei = add nsw i32 %.sroa.speculated.i.i.i.i, %i.dx ; 5 uses
   store i32 %i.ei, ptr %.sroa.8110.0..sroa_idx, align 8, !tbaa !171
   %i.ej = add nsw i32 %.sroa.speculated.i.i.i.i, %.sroa.2.0.extract.trunc.i.i.i.i ; 2 uses
   %.sroa.2.0.insert.ext.i.i.i.i.i = zext i32 %i.ej to i64
@@ -707,7 +707,7 @@ bb.e:                                             ; preds = %_ZN8rawspeed21Cr2Ou
   %i.ek = icmp sgt i32 %i.ei, -1
   call void @llvm.assume(i1 %i.ek)
   %i.el = load i32, ptr %.pre396, align 4, !tbaa !16 ; 2 uses
-  %i.em = icmp slt i32 %i.dx, %i.el
+  %i.em = icmp slt i32 %i.dw, %i.el
   call void @llvm.assume(i1 %i.em)
   %i.en = icmp sle i32 %i.ei, %.pre395
   call void @llvm.assume(i1 %i.en)
@@ -721,8 +721,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.eq = phi i32 [ 0, %bb.f ], [ %i.ei, %bb.e ]  ; 2 uses
-  %i.er = phi i32 [ %i.ea, %bb.f ], [ %i.dx, %bb.e ] ; 2 uses
+  %i.eq = phi i32 [ %i.ea, %bb.f ], [ %i.dw, %bb.e ] ; 2 uses
+  %i.er = phi i32 [ 0, %bb.f ], [ %i.ei, %bb.e ]  ; 2 uses
   %i.es = load i32, ptr %i.du, align 4, !tbaa !18
   %i.et = icmp eq i32 %i.ej, %i.es
   br i1 %i.et, label %bb.h, label %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59
@@ -738,8 +738,8 @@ _ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59: ; preds = %bb.h, %bb.g
   br i1 %.not.i.i, label %_ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit, label %bb.e, !llvm.loop !2
 
 _ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit: ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59, %._crit_edge348
-  %i.ev = phi i32 [ %.pre398, %._crit_edge348 ], [ %i.eq, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
-  %i.ew = phi i32 [ %.pre397, %._crit_edge348 ], [ %i.er, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
+  %i.ev = phi i32 [ %.pre398, %._crit_edge348 ], [ %i.er, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
+  %i.ew = phi i32 [ %.pre397, %._crit_edge348 ], [ %i.eq, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %i.ex = load ptr, ptr %.sroa.9112.0..sroa_idx, align 8, !tbaa !167, !nonnull !122, !align !174
   %i.ey = icmp eq ptr %i.ex, %i.bq
@@ -1142,15 +1142,15 @@ bb.d:                                             ; preds = %.lr.ph371, %_ZN8raw
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61, %.lr.ph.i.i59
-  %i.dr = phi i32 [ %.pre400, %.lr.ph.i.i59 ], [ %i.em, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ] ; 2 uses
-  %i.ds = phi i32 [ %.pre3.i.i, %.lr.ph.i.i59 ], [ %i.eh, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ] ; 2 uses
-  %i.dt = phi i32 [ %.pre399, %.lr.ph.i.i59 ], [ %i.en, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ] ; 4 uses
+  %i.dr = phi i32 [ %.pre3.i.i, %.lr.ph.i.i59 ], [ %i.eh, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ] ; 2 uses
+  %i.ds = phi i32 [ %.pre399, %.lr.ph.i.i59 ], [ %i.em, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ] ; 4 uses
+  %i.dt = phi i32 [ %.pre400, %.lr.ph.i.i59 ], [ %i.en, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ] ; 2 uses
   %.02.i.i = phi i64 [ %i.dp, %.lr.ph.i.i59 ], [ %i.du, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ]
   %i.du = add nsw i64 %.02.i.i, -1                ; 2 uses
-  %i.dv = icmp slt i32 %i.dt, %i.ds
+  %i.dv = icmp slt i32 %i.ds, %i.dr
   call void @llvm.assume(i1 %i.dv)
-  %i.dw = add nuw nsw i32 %i.dt, 1                ; 3 uses
-  %i.dx = icmp eq i32 %i.dw, %i.ds
+  %i.dw = add nuw nsw i32 %i.ds, 1                ; 3 uses
+  %i.dx = icmp eq i32 %i.dw, %i.dr
   %.0.in.v.i.i.i.i.i.i.i = select i1 %i.dx, i64 8, i64 4
   %.0.in.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pre398, i64 %.0.in.v.i.i.i.i.i.i.i
   %.0.i.i.i.i.i.i.i = load i32, ptr %.0.in.i.i.i.i.i.i.i, align 4, !tbaa !19
@@ -1161,11 +1161,11 @@ bb.e:                                             ; preds = %_ZN8rawspeed21Cr2Ou
   %i.ea = sub nsw i32 %i.dz, %.sroa.2.0.extract.trunc.i.i.i.i ; 2 uses
   %i.eb = icmp sgt i32 %i.ea, -1
   call void @llvm.assume(i1 %i.eb)
-  %i.ec = sub nsw i32 %.pre397, %i.dr             ; 2 uses
+  %i.ec = sub nsw i32 %.pre397, %i.dt             ; 2 uses
   %i.ed = icmp sgt i32 %i.ec, -1
   call void @llvm.assume(i1 %i.ed)
   %.sroa.speculated.i.i.i.i = call i32 @llvm.umin.i32(i32 %i.ec, i32 %i.ea) ; 2 uses
-  %i.ee = add nsw i32 %.sroa.speculated.i.i.i.i, %i.dr ; 5 uses
+  %i.ee = add nsw i32 %.sroa.speculated.i.i.i.i, %i.dt ; 5 uses
   store i32 %i.ee, ptr %.sroa.8112.0..sroa_idx, align 8, !tbaa !171
   %i.ef = add nsw i32 %.sroa.speculated.i.i.i.i, %.sroa.2.0.extract.trunc.i.i.i.i ; 2 uses
   %.sroa.2.0.insert.ext.i.i.i.i.i = zext i32 %i.ef to i64
@@ -1176,7 +1176,7 @@ bb.e:                                             ; preds = %_ZN8rawspeed21Cr2Ou
   %i.eg = icmp sgt i32 %i.ee, -1
   call void @llvm.assume(i1 %i.eg)
   %i.eh = load i32, ptr %.pre398, align 4, !tbaa !16 ; 2 uses
-  %i.ei = icmp slt i32 %i.dt, %i.eh
+  %i.ei = icmp slt i32 %i.ds, %i.eh
   call void @llvm.assume(i1 %i.ei)
   %i.ej = icmp sle i32 %i.ee, %.pre397
   call void @llvm.assume(i1 %i.ej)
@@ -1190,8 +1190,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.em = phi i32 [ 0, %bb.f ], [ %i.ee, %bb.e ]  ; 2 uses
-  %i.en = phi i32 [ %i.dw, %bb.f ], [ %i.dt, %bb.e ] ; 2 uses
+  %i.em = phi i32 [ %i.dw, %bb.f ], [ %i.ds, %bb.e ] ; 2 uses
+  %i.en = phi i32 [ 0, %bb.f ], [ %i.ee, %bb.e ]  ; 2 uses
   %i.eo = load i32, ptr %i.dq, align 4, !tbaa !18
   %i.ep = icmp eq i32 %i.ef, %i.eo
   br i1 %i.ep, label %bb.h, label %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61
@@ -1207,8 +1207,8 @@ _ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61: ; preds = %bb.h, %bb.g
   br i1 %.not.i.i, label %_ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit, label %bb.e, !llvm.loop !2
 
 _ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit: ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61, %._crit_edge350
-  %i.er = phi i32 [ %.pre400, %._crit_edge350 ], [ %i.em, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ]
-  %i.es = phi i32 [ %.pre399, %._crit_edge350 ], [ %i.en, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ]
+  %i.er = phi i32 [ %.pre400, %._crit_edge350 ], [ %i.en, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ]
+  %i.es = phi i32 [ %.pre399, %._crit_edge350 ], [ %i.em, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i61 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %i.et = load ptr, ptr %.sroa.9114.0..sroa_idx, align 8, !tbaa !167, !nonnull !122, !align !174
   %i.eu = icmp eq ptr %i.et, %i.bn
@@ -1611,15 +1611,15 @@ bb.d:                                             ; preds = %.lr.ph369, %_ZN8raw
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59, %.lr.ph.i.i57
-  %i.dy = phi i32 [ %.pre398, %.lr.ph.i.i57 ], [ %i.et, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
-  %i.dz = phi i32 [ %.pre3.i.i, %.lr.ph.i.i57 ], [ %i.eo, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
-  %i.ea = phi i32 [ %.pre397, %.lr.ph.i.i57 ], [ %i.eu, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 4 uses
+  %i.dy = phi i32 [ %.pre3.i.i, %.lr.ph.i.i57 ], [ %i.eo, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
+  %i.dz = phi i32 [ %.pre397, %.lr.ph.i.i57 ], [ %i.et, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 4 uses
+  %i.ea = phi i32 [ %.pre398, %.lr.ph.i.i57 ], [ %i.eu, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ] ; 2 uses
   %.02.i.i = phi i64 [ %i.dw, %.lr.ph.i.i57 ], [ %i.eb, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
   %i.eb = add nsw i64 %.02.i.i, -1                ; 2 uses
-  %i.ec = icmp slt i32 %i.ea, %i.dz
+  %i.ec = icmp slt i32 %i.dz, %i.dy
   call void @llvm.assume(i1 %i.ec)
-  %i.ed = add nuw nsw i32 %i.ea, 1                ; 3 uses
-  %i.ee = icmp eq i32 %i.ed, %i.dz
+  %i.ed = add nuw nsw i32 %i.dz, 1                ; 3 uses
+  %i.ee = icmp eq i32 %i.ed, %i.dy
   %.0.in.v.i.i.i.i.i.i.i = select i1 %i.ee, i64 8, i64 4
   %.0.in.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pre396, i64 %.0.in.v.i.i.i.i.i.i.i
   %.0.i.i.i.i.i.i.i = load i32, ptr %.0.in.i.i.i.i.i.i.i, align 4, !tbaa !19
@@ -1630,11 +1630,11 @@ bb.e:                                             ; preds = %_ZN8rawspeed21Cr2Ou
   %i.eh = sub nsw i32 %i.eg, %.sroa.2.0.extract.trunc.i.i.i.i ; 2 uses
   %i.ei = icmp sgt i32 %i.eh, -1
   call void @llvm.assume(i1 %i.ei)
-  %i.ej = sub nsw i32 %.pre395, %i.dy             ; 2 uses
+  %i.ej = sub nsw i32 %.pre395, %i.ea             ; 2 uses
   %i.ek = icmp sgt i32 %i.ej, -1
   call void @llvm.assume(i1 %i.ek)
   %.sroa.speculated.i.i.i.i = call i32 @llvm.umin.i32(i32 %i.ej, i32 %i.eh) ; 2 uses
-  %i.el = add nsw i32 %.sroa.speculated.i.i.i.i, %i.dy ; 5 uses
+  %i.el = add nsw i32 %.sroa.speculated.i.i.i.i, %i.ea ; 5 uses
   store i32 %i.el, ptr %.sroa.8110.0..sroa_idx, align 8, !tbaa !171
   %i.em = add nsw i32 %.sroa.speculated.i.i.i.i, %.sroa.2.0.extract.trunc.i.i.i.i ; 2 uses
   %.sroa.2.0.insert.ext.i.i.i.i.i = zext i32 %i.em to i64
@@ -1645,7 +1645,7 @@ bb.e:                                             ; preds = %_ZN8rawspeed21Cr2Ou
   %i.en = icmp sgt i32 %i.el, -1
   call void @llvm.assume(i1 %i.en)
   %i.eo = load i32, ptr %.pre396, align 4, !tbaa !16 ; 2 uses
-  %i.ep = icmp slt i32 %i.ea, %i.eo
+  %i.ep = icmp slt i32 %i.dz, %i.eo
   call void @llvm.assume(i1 %i.ep)
   %i.eq = icmp sle i32 %i.el, %.pre395
   call void @llvm.assume(i1 %i.eq)
@@ -1659,8 +1659,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.et = phi i32 [ 0, %bb.f ], [ %i.el, %bb.e ]  ; 2 uses
-  %i.eu = phi i32 [ %i.ed, %bb.f ], [ %i.ea, %bb.e ] ; 2 uses
+  %i.et = phi i32 [ %i.ed, %bb.f ], [ %i.dz, %bb.e ] ; 2 uses
+  %i.eu = phi i32 [ 0, %bb.f ], [ %i.el, %bb.e ]  ; 2 uses
   %i.ev = load i32, ptr %i.dx, align 4, !tbaa !18
   %i.ew = icmp eq i32 %i.em, %i.ev
   br i1 %i.ew, label %bb.h, label %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59
@@ -1676,8 +1676,8 @@ _ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59: ; preds = %bb.h, %bb.g
   br i1 %.not.i.i, label %_ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit, label %bb.e, !llvm.loop !2
 
 _ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit: ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59, %._crit_edge348
-  %i.ey = phi i32 [ %.pre398, %._crit_edge348 ], [ %i.et, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
-  %i.ez = phi i32 [ %.pre397, %._crit_edge348 ], [ %i.eu, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
+  %i.ey = phi i32 [ %.pre398, %._crit_edge348 ], [ %i.eu, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
+  %i.ez = phi i32 [ %.pre397, %._crit_edge348 ], [ %i.et, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.i.i59 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %i.fa = load ptr, ptr %.sroa.9112.0..sroa_idx, align 8, !tbaa !167, !nonnull !122, !align !174
   %i.fb = icmp eq ptr %i.fa, %i.bu

@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.ad, %Exa
   %i.mc = getelementptr inbounds nuw i8, ptr %i.lz, i64 8 ; 8 uses
   store ptr %i.mb, ptr %i.mc, align 8, !tbaa !45
   %i.md = call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #21 ; 18 uses
-  %i.me = getelementptr inbounds nuw i8, ptr %i.md, i64 4 ; 5 uses
+  %i.me = getelementptr inbounds nuw i8, ptr %i.md, i64 4 ; 3 uses
   store i32 0, ptr %i.me, align 4, !tbaa !46
   store i32 100, ptr %i.md, align 8, !tbaa !44
   %i.mf = call noalias dereferenceable_or_null(400) ptr @malloc(i64 noundef 400) #21
@@ -608,7 +608,6 @@ Vec_IntFree.exit290:                              ; preds = %Vec_IntFree.exit292
 bb.dr:                                            ; preds = %bb.fc, %.lr.ph321.i
   %.val171426.i = phi i32 [ %i.vp, %.lr.ph321.i ], [ %i.aas, %bb.fc ]
   %.3137320.i = phi i32 [ 1, %.lr.ph321.i ], [ %i.aar, %bb.fc ] ; 9 uses
-  store i32 0, ptr %i.me, align 4, !tbaa !46
   %i.vx = load i32, ptr %i.gb, align 4, !tbaa !38 ; 3 uses
   %i.vy = icmp sgt i32 %i.vx, 0
   br i1 %i.vy, label %.lr.ph315.i, label %.preheader241.i
@@ -618,9 +617,9 @@ bb.dr:                                            ; preds = %bb.fc, %.lr.ph321.i
   br label %.preheader241.i
 
 .preheader241.i:                                  ; preds = %.preheader241.loopexit.i, %bb.dr
-  %.val171.i = phi i32 [ %.val171.pre.i, %.preheader241.loopexit.i ], [ %.val171426.i, %bb.dr ]
-  %.val170.i = phi i32 [ %i.yu, %.preheader241.loopexit.i ], [ %i.vx, %bb.dr ]
-  %.promoted316.i = phi i32 [ %.promoted309418.i, %.preheader241.loopexit.i ], [ 0, %bb.dr ] ; 11 uses
+  %.val171.i = phi i32 [ %.val171426.i, %bb.dr ], [ %.val171.pre.i, %.preheader241.loopexit.i ]
+  %.val170.i = phi i32 [ %i.vx, %bb.dr ], [ %i.yu, %.preheader241.loopexit.i ]
+  %.promoted316.i = phi i32 [ 0, %bb.dr ], [ %.promoted309418.i, %.preheader241.loopexit.i ] ; 11 uses
   %i.vz = sext i32 %.promoted316.i to i64         ; 2 uses
   %i.wa = shl i32 %.val171.i, 2
   %reass.mul.i217.i = mul i32 %i.wa, %.val170.i
@@ -823,16 +822,15 @@ Vec_IntGrow.exit11.sink.split.i211.1.1.i:         ; preds = %bb.ei, %bb.eg
 
 Vec_IntPush.exit215.1.1.i:                        ; preds = %Vec_IntGrow.exit11.sink.split.i211.1.1.i, %bb.eh, %Vec_IntPush.exit215.1369.i
   %i.ys = phi ptr [ %i.yr, %Vec_IntGrow.exit11.sink.split.i211.1.1.i ], [ %i.yd, %bb.eh ], [ %i.yd, %Vec_IntPush.exit215.1369.i ]
-  %indvars.iv.next358.1.1.i = add i32 %.promoted309.i, 4 ; 2 uses
+  %indvars.iv.next358.1.1.i = add i32 %.promoted309.i, 4
   %i.yt = getelementptr inbounds [4 x i8], ptr %i.ys, i64 %indvars.iv.next358.1368.i
   store i32 %i.yi, ptr %i.yt, align 4, !tbaa !51
-  store i32 %indvars.iv.next358.1.1.i, ptr %i.me, align 4, !tbaa !46
   %.pre422.i = load i32, ptr %i.gb, align 4, !tbaa !38
   br label %bb.ej
 
 bb.ej:                                            ; preds = %Vec_IntPush.exit215.1.1.i, %.lr.ph315.i
-  %i.yu = phi i32 [ %.pre422.i, %Vec_IntPush.exit215.1.1.i ], [ %i.wf, %.lr.ph315.i ] ; 3 uses
-  %.promoted309418.i = phi i32 [ %indvars.iv.next358.1.1.i, %Vec_IntPush.exit215.1.1.i ], [ %.promoted309.i, %.lr.ph315.i ] ; 2 uses
+  %i.yu = phi i32 [ %i.wf, %.lr.ph315.i ], [ %.pre422.i, %Vec_IntPush.exit215.1.1.i ] ; 3 uses
+  %.promoted309418.i = phi i32 [ %.promoted309.i, %.lr.ph315.i ], [ %indvars.iv.next358.1.1.i, %Vec_IntPush.exit215.1.1.i ] ; 2 uses
   %i.yv = add nuw nsw i32 %.1139313.i, 1          ; 2 uses
   %i.yw = icmp slt i32 %i.yv, %i.yu
   br i1 %i.yw, label %.lr.ph315.i, label %.preheader241.loopexit.i, !llvm.loop !69
@@ -913,10 +911,9 @@ bb.et:                                            ; preds = %bb.es
   br i1 %.not.i9.i219.1.i, label %bb.eu, label %.thread.i208
 
 .thread.i208:                                     ; preds = %bb.et
-  %indvars.iv.next371.1483.i = add nuw i32 %.promoted316.i, 2 ; 2 uses
+  %indvars.iv.next371.1483.i = add nuw i32 %.promoted316.i, 2
   %i.zt = getelementptr inbounds nuw [4 x i8], ptr %i.zh, i64 %indvars.iv.next371.i
   store i32 %i.zl, ptr %i.zt, align 4, !tbaa !51
-  store i32 %indvars.iv.next371.1483.i, ptr %i.me, align 4, !tbaa !46
   br label %.lr.ph.i.i
 
 bb.eu:                                            ; preds = %bb.et
@@ -936,7 +933,6 @@ Vec_IntPush.exit225.1.i:                          ; preds = %Vec_IntGrow.exit11.
   %indvars.iv.next371.1.i = add i32 %.promoted316.i, 2 ; 3 uses
   %i.zw = getelementptr inbounds [4 x i8], ptr %.val169.i, i64 %indvars.iv.next371.i
   store i32 %i.zl, ptr %i.zw, align 4, !tbaa !51
-  store i32 %indvars.iv.next371.1.i, ptr %i.me, align 4, !tbaa !46
   %i.zx = icmp eq i32 %indvars.iv.next371.1.i, 0
   br i1 %i.zx, label %bb.fc, label %bb.ev
 
@@ -946,7 +942,7 @@ bb.ev:                                            ; preds = %Vec_IntPush.exit225
 
 .lr.ph.i.i:                                       ; preds = %bb.ev, %.thread.i208
   %.val169484489.i = phi ptr [ %i.zh, %.thread.i208 ], [ %.val169.i, %bb.ev ]
-  %indvars.iv.next371.1485488.i = phi i32 [ %indvars.iv.next371.1483.i, %.thread.i208 ], [ %indvars.iv.next371.1.i, %bb.ev ]
+  %indvars.iv.next371.1485488.i = phi i32 [ %indvars.iv.next371.1483.i, %.thread.i208 ], [ %indvars.iv.next371.1.i, %bb.ev ] ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %indvars.iv.next371.1485488.i to i64
   br label %bb.ew
 
@@ -966,6 +962,7 @@ bb.ew:                                            ; preds = %bb.ew, %.lr.ph.i.i
   br i1 %exitcond.not.i233.i, label %._crit_edge.i226.i, label %bb.ew, !llvm.loop !1
 
 ._crit_edge.i226.i:                               ; preds = %bb.ew, %bb.ev
+  %indvars.iv.next377.1488493.i = phi i32 [ %indvars.iv.next371.1.i, %bb.ev ], [ %indvars.iv.next371.1485488.i, %bb.ew ] ; 2 uses
   %i.aag = load ptr, ptr %i.ho, align 8, !tbaa !40
   call void @kissat_add(ptr noundef %i.aag, i32 noundef 0) #19
   %i.aah = load i32, ptr %i.lu, align 4, !tbaa !42
@@ -1002,18 +999,21 @@ Exa9_KissatAddClause.exit234.i:                   ; preds = %bb.fa, %bb.ez, %bb.
   br i1 %.not13.i229.not.i, label %bb.fc, label %bb.fb
 
 bb.fb:                                            ; preds = %Exa9_KissatAddClause.exit234.i
+  store i32 %indvars.iv.next377.1488493.i, ptr %i.me, align 4, !tbaa !46
   call fastcc void @Vec_IntFree(ptr noundef nonnull %i.lv)
   call fastcc void @Vec_IntFree(ptr noundef nonnull %i.lz)
   call fastcc void @Vec_IntFree(ptr noundef nonnull %i.md)
   br label %.thread
 
 bb.fc:                                            ; preds = %Exa9_KissatAddClause.exit234.i, %Vec_IntPush.exit225.1.i
+  %indvars.iv.next377.1489.i = phi i32 [ %indvars.iv.next377.1488493.i, %Exa9_KissatAddClause.exit234.i ], [ 0, %Vec_IntPush.exit225.1.i ]
   %i.aar = add nuw nsw i32 %.3137320.i, 1
   %i.aas = load i32, ptr %i.gd, align 8, !tbaa !39 ; 2 uses
   %.not146.not.i = icmp slt i32 %.3137320.i, %i.aas
   br i1 %.not146.not.i, label %bb.dr, label %._crit_edge322.i, !llvm.loop !70
 
 ._crit_edge322.i:                                 ; preds = %bb.fc
+  store i32 %indvars.iv.next377.1489.i, ptr %i.me, align 4, !tbaa !46
   %.pre478 = load ptr, ptr %i.ly, align 8, !tbaa !45 ; 2 uses
   %.not.i287 = icmp eq ptr %.pre478, null
   br i1 %.not.i287, label %Vec_IntFree.exit288, label %._crit_edge322.i.thread

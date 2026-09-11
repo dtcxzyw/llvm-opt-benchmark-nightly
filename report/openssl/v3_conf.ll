@@ -202,7 +202,7 @@ bb.a:
 define i32 @X509V3_EXT_REQ_add_nconf(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
-  %i.b = alloca ptr, align 8                      ; 9 uses
+  %i.b = alloca ptr, align 8                      ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   store ptr null, ptr %i.b, align 8, !tbaa !31
   %.not19 = icmp eq ptr %3, null
@@ -222,21 +222,25 @@ bb.b:                                             ; preds = %bb.a
   %i.f = phi i32 [ %i.k, %bb.c ], [ %i.e, %bb.b ]
   %.022 = phi ptr [ %i.j, %bb.c ], [ %i.d, %bb.b ] ; 2 uses
   %i.g = tail call ptr @ossl_x509_req_get1_extensions_by_nid(ptr noundef nonnull %3, i32 noundef %i.f) #7 ; 3 uses
-  store ptr %i.g, ptr %i.b, align 8, !tbaa !31
   %i.h = tail call i32 @OPENSSL_sk_num(ptr noundef %i.g) #7
   %i.i = icmp sgt i32 %i.h, 0
-  br i1 %i.i, label %._crit_edge, label %bb.c
+  br i1 %i.i, label %.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   tail call void @OPENSSL_sk_free(ptr noundef %i.g) #7
-  store ptr null, ptr %i.b, align 8, !tbaa !31
   %i.j = getelementptr inbounds nuw i8, ptr %.022, i64 4 ; 3 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !48   ; 2 uses
   %.not = icmp eq i32 %i.k, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !47
+  br i1 %.not, label %.sink.split, label %.lr.ph, !llvm.loop !47
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.c, %bb.b
-  %.0.lcssa = phi ptr [ %i.d, %bb.b ], [ %i.j, %bb.c ], [ %.022, %.lr.ph ] ; 2 uses
+.sink.split:                                      ; preds = %.lr.ph, %bb.c
+  %.lcssa.sink = phi ptr [ null, %bb.c ], [ %i.g, %.lr.ph ]
+  %.0.lcssa.ph = phi ptr [ %i.j, %bb.c ], [ %.022, %.lr.ph ]
+  store ptr %.lcssa.sink, ptr %i.b, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.sink.split, %bb.b
+  %.0.lcssa = phi ptr [ %i.d, %bb.b ], [ %.0.lcssa.ph, %.sink.split ] ; 2 uses
   %i.l = call i32 @X509V3_EXT_add_nconf_sk(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.b)
   %.not20 = icmp eq i32 %i.l, 0
   br i1 %.not20, label %bb.m, label %bb.d

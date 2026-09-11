@@ -202,7 +202,13 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   br label %bb.b
 
-._crit_edge86.a:                                  ; preds = %._crit_edge, %bb.a
+._crit_edge86:                                    ; preds = %._crit_edge
+  store <2 x double> %i.m, ptr %0, align 8
+  store <2 x double> %i.p, ptr %i.c, align 8
+  store <2 x double> %i.s, ptr %i.d, align 8
+  br label %._crit_edge86.a
+
+._crit_edge86.a:                                  ; preds = %._crit_edge86, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph85, %._crit_edge
@@ -227,19 +233,16 @@ bb.b:                                             ; preds = %.lr.ph85, %._crit_e
   %i.k = insertelement <2 x double> poison, double %.sroa.039.0.lcssa, i64 0
   %i.l = insertelement <2 x double> %i.k, double %.sroa.6.0.lcssa, i64 1
   %i.m = fadd <2 x double> %i.l, %i.e             ; 2 uses
-  store <2 x double> %i.m, ptr %0, align 8, !tbaa !23
   %i.n = insertelement <2 x double> poison, double %.sroa.9.0.lcssa, i64 0
   %i.o = insertelement <2 x double> %i.n, double %.sroa.12.0.lcssa, i64 1
   %i.p = fadd <2 x double> %i.o, %i.f             ; 2 uses
   %i.q = insertelement <2 x double> poison, double %.sroa.15.0.lcssa, i64 0
   %i.r = insertelement <2 x double> %i.q, double %.sroa.18.0.lcssa, i64 1
   %i.s = fadd <2 x double> %i.r, %i.g             ; 2 uses
-  store <2 x double> %i.p, ptr %i.c, align 8, !tbaa !23
-  store <2 x double> %i.s, ptr %i.d, align 8, !tbaa !23
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.047.083, i64 8
   %.sroa.047.0 = load ptr, ptr %i.t, align 8, !tbaa !71 ; 2 uses
   %.not = icmp eq ptr %.sroa.047.0, %i.b
-  br i1 %.not, label %._crit_edge86.a, label %bb.b
+  br i1 %.not, label %._crit_edge86, label %bb.b
 
 .lr.ph:                                           ; preds = %bb.b, %_ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEppEv.exit
   %.sroa.037.075 = phi ptr [ %.sroa.037.0, %_ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEppEv.exit ], [ %.sroa.037.067, %bb.b ] ; 24 uses

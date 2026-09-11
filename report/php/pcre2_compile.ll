@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.c, %._crit_edge,
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 2) i32 @compile_regex(i32 noundef %0, i32 noundef %1, ptr nofree noundef nonnull captures(none) %2, ptr nofree noundef nonnull captures(none) %3, ptr nofree noundef nonnull writeonly captures(none) %4, i32 noundef range(i32 0, 6) %5, ptr nofree noundef nonnull writeonly captures(none) %6, ptr nofree noundef nonnull writeonly captures(none) %7, ptr nofree noundef nonnull writeonly captures(none) %8, ptr nofree noundef nonnull writeonly captures(none) %9, ptr noundef %10, ptr noundef %11, ptr noundef nonnull %12, ptr nofree noundef captures(address_is_null) %13) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 48 uses
+  %i.a = alloca ptr, align 8                      ; 45 uses
   %i.b = alloca i64, align 8                      ; 10 uses
   %i.c = alloca ptr, align 8                      ; 14 uses
   %i.d = alloca [32 x i8], align 16               ; 44 uses
@@ -608,12 +608,12 @@ bb.as:                                            ; preds = %bb.ar
   %i.ih = getelementptr inbounds nuw i8, ptr %.31386.i, i64 4 ; 9 uses
   store ptr %i.ih, ptr %i.e, align 8, !tbaa !27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.d, i8 0, i64 32, i1 false)
-  store ptr %i.fh, ptr %i.a, align 8, !tbaa !68
   %i.ii = load i32, ptr %i.fh, align 4, !tbaa !28 ; 2 uses
   %.not1639.i1169 = icmp eq i32 %i.ii, -2146631680
   br i1 %.not1639.i1169, label %._crit_edge1176.thread, label %.lr.ph1175
 
 ._crit_edge1176.thread:                           ; preds = %.thread256
+  store ptr %i.fh, ptr %i.a, align 8, !tbaa !68
   %spec.store.select33.i1815 = call i32 @llvm.umin.i32(i32 %.01455.i, i32 -2)
   br label %bb.cp
 
@@ -653,8 +653,7 @@ bb.at:                                            ; preds = %.lr.ph1175, %bb.cf
 
 bb.au:                                            ; preds = %bb.at, %bb.at
   %i.iy = zext i1 %i.ix to i32                    ; 2 uses
-  %i.iz = getelementptr inbounds nuw i8, ptr %i.iv, i64 8 ; 5 uses
-  store ptr %i.iz, ptr %i.a, align 8, !tbaa !68
+  %i.iz = getelementptr inbounds nuw i8, ptr %i.iv, i64 8 ; 4 uses
   %i.ja = load i32, ptr %i.iz, align 4, !tbaa !28 ; 2 uses
   %i.jb = icmp slt i32 %i.ja, 3
   %or.cond28.i = select i1 %i.ik, i1 %i.jb, i1 false
@@ -1057,8 +1056,7 @@ bb.bt:                                            ; preds = %.preheader.i
 
 bb.bu:                                            ; preds = %bb.bh, %bb.bh
   %i.rk = and i32 %i.it, 65535
-  %i.rl = getelementptr inbounds nuw i8, ptr %i.iv, i64 8 ; 3 uses
-  store ptr %i.rl, ptr %i.a, align 8, !tbaa !68
+  %i.rl = getelementptr inbounds nuw i8, ptr %i.iv, i64 8 ; 2 uses
   %i.rm = load i32, ptr %i.rl, align 4, !tbaa !28 ; 2 uses
   %i.rn = lshr i32 %i.rm, 16
   %i.ro = icmp eq i32 %i.rk, 16
@@ -1107,8 +1105,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bx
   br i1 %i.se, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %bb.by
-  %i.sf = getelementptr inbounds nuw i8, ptr %i.rx, i64 12 ; 3 uses
-  store ptr %i.sf, ptr %i.a, align 8, !tbaa !68
+  %i.sf = getelementptr inbounds nuw i8, ptr %i.rx, i64 12 ; 2 uses
   %i.sg = load i32, ptr %i.sf, align 4, !tbaa !28
   br label %bb.ca
 
@@ -1165,7 +1162,6 @@ bb.cf:                                            ; preds = %bb.ce, %add_list_to
   %i.sv = phi i64 [ %i.iw, %add_list_to_class.exit163 ], [ %i.st, %bb.ce ]
   %.11337.i = phi i32 [ %.01336.mux.i, %add_list_to_class.exit163 ], [ 1, %bb.ce ] ; 2 uses
   %i.sw = getelementptr inbounds nuw i8, ptr %i.so, i64 4 ; 3 uses
-  store ptr %i.sw, ptr %i.a, align 8, !tbaa !68
   %i.sx = load i32, ptr %i.sw, align 4, !tbaa !28 ; 2 uses
   %.not1639.i = icmp eq i32 %i.sx, -2146631680
   br i1 %.not1639.i, label %._crit_edge1176, label %bb.at, !llvm.loop !177
@@ -1175,6 +1171,7 @@ bb.cf:                                            ; preds = %bb.ce, %add_list_to
   %i.sz = icmp ne i32 %.21335.i, 0                ; 3 uses
   %i.ta = icmp eq i32 %.31330.i, 0
   %i.tb = icmp sgt i32 %.21320.i, 0
+  store ptr %i.sw, ptr %i.a, align 8, !tbaa !68
   %spec.store.select33.i = call i32 @llvm.umin.i32(i32 %.01455.i, i32 -2) ; 4 uses
   br i1 %i.sy, label %bb.cp, label %bb.cg
 

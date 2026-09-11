@@ -205,9 +205,9 @@ bb.al:                                            ; preds = %.lr.ph275
   br label %bb.as
 
 bb.am:                                            ; preds = %.lr.ph279, %bb.aq
+  %indvars.iv344 = phi i64 [ 0, %.lr.ph279 ], [ %indvars.iv.next344, %bb.aq ] ; 2 uses
   %7 = phi i32 [ %i.ma, %.lr.ph279 ], [ %i.pk, %bb.aq ] ; 4 uses
-  %indvars.iv343 = phi i64 [ 0, %.lr.ph279 ], [ %indvars.iv.next344, %bb.aq ] ; 2 uses
-  %i.nw = getelementptr inbounds nuw [2640 x i8], ptr %i.mc, i64 %indvars.iv343 ; 3 uses
+  %i.nw = getelementptr inbounds nuw [2640 x i8], ptr %i.mc, i64 %indvars.iv344 ; 3 uses
   %i.nx = lshr i32 %7, 3
   %i.ny = zext nneg i32 %i.nx to i64
   %i.nz = getelementptr inbounds nuw i8, ptr %i.md, i64 %i.ny
@@ -286,7 +286,7 @@ bb.aq:                                            ; preds = %bb.ap, %get_bitsz.e
   %i.pu = add nuw nsw i32 %i.pt, %i.ps
   %i.pv = getelementptr inbounds nuw i8, ptr %i.nw, i64 20
   store i32 %i.pu, ptr %i.pv, align 4, !tbaa !148
-  %indvars.iv.next344 = add nuw nsw i64 %indvars.iv343, 1 ; 2 uses
+  %indvars.iv.next344 = add nuw nsw i64 %indvars.iv344, 1 ; 2 uses
   %exitcond347.not = icmp eq i64 %indvars.iv.next344, %wide.trip.count346
   br i1 %exitcond347.not, label %.lr.ph282, label %bb.am, !llvm.loop !123
 

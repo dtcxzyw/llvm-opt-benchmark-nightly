@@ -205,25 +205,29 @@ st_mult.exit:                                     ; preds = %bb.a
 .preheader.i.preheader:                           ; preds = %._crit_edge
   %i.r = getelementptr i8, ptr %.0..0..0.64, i64 8 ; 2 uses
   %.023.val.i88 = load ptr, ptr %i.r, align 8, !tbaa !62 ; 2 uses
-  store i32 1, ptr @stats.0, align 4, !tbaa !61
   %.not27.not.i89 = icmp eq ptr %.023.val.i88, null
   br i1 %.not27.not.i89, label %.split.us.i.preheader, label %.split.i
 
-.split.us.i.preheader:                            ; preds = %._crit_edge.i.a, %.preheader.i.preheader
-  %.ph = phi i32 [ 0, %.preheader.i.preheader ], [ %stats.1.promoted31.i, %._crit_edge.i.a ]
-  %.lcssa13.us.i.ph = phi i32 [ 1, %.preheader.i.preheader ], [ %i.cc, %._crit_edge.i.a ]
-  %.ph218 = phi i32 [ 0, %.preheader.i.preheader ], [ %stats.2.promoted34.i, %._crit_edge.i.a ]
-  %.124.us.i.ph = phi ptr [ %.0..0..0.64, %.preheader.i.preheader ], [ %.023.val.i94, %._crit_edge.i.a ]
-  %.0.us.i.ph = phi i64 [ 0, %.preheader.i.preheader ], [ %i.bz, %._crit_edge.i.a ]
+.preheader.i..split.us.i_crit_edge:               ; preds = %._crit_edge.i.a
+  store i32 %stats.1.promoted31.i, ptr @stats.1, align 4, !tbaa !60
+  br label %.split.us.i.preheader
+
+.split.us.i.preheader:                            ; preds = %.preheader.i..split.us.i_crit_edge, %.preheader.i.preheader
+  %.ph = phi i32 [ %stats.2.promoted34.i, %.preheader.i..split.us.i_crit_edge ], [ 0, %.preheader.i.preheader ]
+  %.lcssa13.us.i.ph = phi i32 [ %stats.1.promoted31.i, %.preheader.i..split.us.i_crit_edge ], [ 0, %.preheader.i.preheader ]
+  %.023.i.lcssa = phi ptr [ %.023.val.i94, %.preheader.i..split.us.i_crit_edge ], [ %.0..0..0.64, %.preheader.i.preheader ]
+  %.022.i.lcssa = phi i64 [ %i.bz, %.preheader.i..split.us.i_crit_edge ], [ 0, %.preheader.i.preheader ]
+  %.lcssa85 = phi i32 [ %i.cc, %.preheader.i..split.us.i_crit_edge ], [ 1, %.preheader.i.preheader ] ; 2 uses
+  store i32 %.lcssa85, ptr @stats.0, align 4, !tbaa !61
   br label %.split.us.i
 
-.split.us.i:                                      ; preds = %.split.us.i.preheader, %bb.i
+.split.us.i:                                      ; preds = %bb.i, %.split.us.i.preheader
   %indvars.iv59.i = phi i64 [ %indvars.iv.next60.i, %bb.i ], [ 0, %.split.us.i.preheader ] ; 2 uses
-  %i.s = phi i32 [ %i.as, %bb.i ], [ %.ph, %.split.us.i.preheader ] ; 2 uses
-  %.lcssa13.us.i = phi i32 [ %.lcssa12.us.i, %bb.i ], [ %.lcssa13.us.i.ph, %.split.us.i.preheader ] ; 2 uses
-  %i.t = phi i32 [ %i.at, %bb.i ], [ %.ph218, %.split.us.i.preheader ] ; 2 uses
-  %.124.us.i = phi ptr [ %.2.us.i, %bb.i ], [ %.124.us.i.ph, %.split.us.i.preheader ] ; 5 uses
-  %.0.us.i = phi i64 [ %i.au, %bb.i ], [ %.0.us.i.ph, %.split.us.i.preheader ] ; 3 uses
+  %i.s = phi i32 [ %i.as, %bb.i ], [ %.lcssa13.us.i.ph, %.split.us.i.preheader ] ; 2 uses
+  %.lcssa13.us.i = phi i32 [ %.lcssa12.us.i, %bb.i ], [ %.lcssa85, %.split.us.i.preheader ] ; 2 uses
+  %i.t = phi i32 [ %i.at, %bb.i ], [ %.ph, %.split.us.i.preheader ] ; 2 uses
+  %.124.us.i = phi ptr [ %.2.us.i, %bb.i ], [ %.023.i.lcssa, %.split.us.i.preheader ] ; 5 uses
+  %.0.us.i = phi i64 [ %i.au, %bb.i ], [ %.022.i.lcssa, %.split.us.i.preheader ] ; 3 uses
   %i.u = and i64 %.0.us.i, 1
   %.not28.us.i = icmp eq i64 %i.u, 0
   br i1 %.not28.us.i, label %bb.h, label %bb.c
@@ -307,8 +311,7 @@ bb.i:                                             ; preds = %bb.h, %sort_numbers
   %.023.i92 = phi ptr [ %.023.val.i94, %._crit_edge.i.a ], [ %.0..0..0.64, %.preheader.i.preheader ] ; 3 uses
   %stats.1.promoted30.i91 = phi i32 [ %stats.1.promoted31.i, %._crit_edge.i.a ], [ 0, %.preheader.i.preheader ]
   %stats.2.promoted35.i90 = phi i32 [ %stats.2.promoted34.i, %._crit_edge.i.a ], [ 0, %.preheader.i.preheader ] ; 2 uses
-  %i.ax = add nsw i32 %stats.1.promoted30.i91, 1  ; 3 uses
-  store i32 %i.ax, ptr @stats.1, align 4, !tbaa !60
+  %i.ax = add nsw i32 %stats.1.promoted30.i91, 1  ; 2 uses
   store ptr null, ptr %i.aw, align 8, !tbaa !62
   %i.ay = and i64 %.022.i93, 1
   %.not2819.i = icmp eq i64 %i.ay, 0
@@ -329,8 +332,7 @@ bb.i:                                             ; preds = %bb.h, %sort_numbers
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.i
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !57 ; 3 uses
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !55 ; 2 uses
-  %i.bf = add nsw i32 %i.ba, 1                    ; 2 uses
-  store i32 %i.bf, ptr @stats.2, align 4, !tbaa !59
+  %i.bf = add nsw i32 %i.ba, 1
   %i.bg = icmp sle i32 %i.be, %i.az               ; 3 uses
   %i.bh = zext i1 %i.bg to i32
   %spec.select.i.i = select i1 %i.bg, ptr %.12421.i, ptr %i.bd
@@ -347,29 +349,26 @@ bb.j:                                             ; preds = %bb.m, %.lr.ph.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.l, %bb.j
-  %stats.2.promoted37.i = phi i32 [ %stats.2.promoted36.i, %bb.j ], [ %i.bo, %bb.l ] ; 3 uses
+  %stats.2.promoted37.i = phi i32 [ %stats.2.promoted36.i, %bb.j ], [ %i.bo, %bb.l ] ; 4 uses
   %i.bj = phi i32 [ %.lcssa46.i.i, %bb.j ], [ %i.bl, %bb.l ]
   %.2.i.i = phi ptr [ %.1.i.i, %bb.j ], [ %.2.val.i.i, %bb.l ] ; 3 uses
   %i.bk = getelementptr i8, ptr %.2.i.i, i64 8
   %.2.val.i.i = load ptr, ptr %i.bk, align 8, !tbaa !62 ; 4 uses
-  %i.bl = add nsw i32 %i.bj, 1                    ; 6 uses
+  %i.bl = add nsw i32 %i.bj, 1                    ; 4 uses
   %.not.i.i = icmp eq ptr %.2.val.i.i, null
   br i1 %.not.i.i, label %sort_numbers__merge.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.bm = load i32, ptr %.2.val.i.i, align 8, !tbaa !55
   %i.bn = load i32, ptr %.133.i.i, align 8, !tbaa !55
-  %i.bo = add nsw i32 %stats.2.promoted37.i, 1    ; 3 uses
-  store i32 %i.bo, ptr @stats.2, align 4, !tbaa !59
+  %i.bo = add nsw i32 %stats.2.promoted37.i, 1    ; 2 uses
   %i.bp = tail call range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32 %i.bm, i32 %i.bn)
   %i.bq = icmp slt i32 %i.bp, %.018.i.i
   br i1 %i.bq, label %bb.k, label %bb.m, !llvm.loop !50
 
 bb.m:                                             ; preds = %bb.l
   %i.br = getelementptr i8, ptr %.2.i.i, i64 8
-  store i32 %i.bl, ptr @stats.0, align 4, !tbaa !61
-  %i.bs = add nsw i32 %i.bi, 1                    ; 2 uses
-  store i32 %i.bs, ptr @stats.1, align 4, !tbaa !60
+  %i.bs = add nsw i32 %i.bi, 1
   store ptr %.133.i.i, ptr %i.br, align 8, !tbaa !62
   %i.bt = xor i32 %.018.i.i, 1
   br label %bb.j
@@ -377,31 +376,32 @@ bb.m:                                             ; preds = %bb.l
 sort_numbers__merge.exit.i:                       ; preds = %bb.k
   %i.bu = getelementptr i8, ptr %.2.i.i, i64 8
   %i.bv = tail call i32 @llvm.smin.i32(i32 %i.be, i32 %i.az)
-  store i32 %i.bl, ptr @stats.0, align 4, !tbaa !61
-  %i.bw = add nsw i32 %i.bi, 1                    ; 3 uses
-  store i32 %i.bw, ptr @stats.1, align 4, !tbaa !60
+  %i.bw = add nsw i32 %i.bi, 1                    ; 2 uses
   store ptr %.133.i.i, ptr %i.bu, align 8, !tbaa !62
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.bx = lshr i64 %.024.i, 1
   %i.by = and i64 %.024.i, 2
   %.not28.i = icmp eq i64 %i.by, 0
-  br i1 %.not28.i, label %._crit_edge.i.a, label %.lr.ph.i
+  br i1 %.not28.i, label %._crit_edge.i, label %.lr.ph.i
 
-._crit_edge.i.a:                                  ; preds = %sort_numbers__merge.exit.i, %.split.i
-  %stats.2.promoted34.i = phi i32 [ %stats.2.promoted35.i90, %.split.i ], [ %stats.2.promoted37.i, %sort_numbers__merge.exit.i ] ; 2 uses
-  %stats.1.promoted31.i = phi i32 [ %i.ax, %.split.i ], [ %i.bw, %sort_numbers__merge.exit.i ] ; 2 uses
-  %stats.0.promoted27.i = phi i32 [ %i.av, %.split.i ], [ %i.bl, %sort_numbers__merge.exit.i ]
-  %.124.lcssa18.i = phi ptr [ %.023.i92, %.split.i ], [ %spec.select35.i.i, %sort_numbers__merge.exit.i ]
-  %.020.lcssa17.i = phi i64 [ 0, %.split.i ], [ %indvars.iv.next.i, %sort_numbers__merge.exit.i ]
+._crit_edge.i:                                    ; preds = %sort_numbers__merge.exit.i
+  store i32 %stats.2.promoted37.i, ptr @stats.2, align 4, !tbaa !59
+  br label %._crit_edge.i.a
+
+._crit_edge.i.a:                                  ; preds = %._crit_edge.i, %.split.i
+  %stats.2.promoted34.i = phi i32 [ %stats.2.promoted37.i, %._crit_edge.i ], [ %stats.2.promoted35.i90, %.split.i ] ; 2 uses
+  %stats.1.promoted31.i = phi i32 [ %i.bw, %._crit_edge.i ], [ %i.ax, %.split.i ] ; 3 uses
+  %stats.0.promoted27.i = phi i32 [ %i.bl, %._crit_edge.i ], [ %i.av, %.split.i ]
+  %.124.lcssa18.i = phi ptr [ %spec.select35.i.i, %._crit_edge.i ], [ %.023.i92, %.split.i ]
+  %.020.lcssa17.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ 0, %.split.i ]
   %i.bz = add i64 %.022.i93, 1                    ; 2 uses
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.020.lcssa17.i
   store ptr %.124.lcssa18.i, ptr %i.ca, align 8, !tbaa !57
   %i.cb = getelementptr i8, ptr %.023.val.i94, i64 8 ; 2 uses
   %.023.val.i = load ptr, ptr %i.cb, align 8, !tbaa !62 ; 2 uses
-  %i.cc = add nsw i32 %stats.0.promoted27.i, 1    ; 3 uses
-  store i32 %i.cc, ptr @stats.0, align 4, !tbaa !61
+  %i.cc = add nsw i32 %stats.0.promoted27.i, 1    ; 2 uses
   %.not27.not.i = icmp eq ptr %.023.val.i, null
-  br i1 %.not27.not.i, label %.split.us.i.preheader, label %.split.i
+  br i1 %.not27.not.i, label %.preheader.i..split.us.i_crit_edge, label %.split.i
 
 sort_numbers.exit:                                ; preds = %bb.h, %._crit_edge
   %.0..0. = phi ptr [ null, %._crit_edge ], [ %.124.us.i, %bb.h ] ; 4 uses

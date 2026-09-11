@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
   %i.fj = phi ptr [ %.pre, %.loopexit406.loopexit ], [ %i.dc, %.loopexit405 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #40
   store ptr null, ptr %2, align 8, !tbaa !232
-  %i.fk = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
+  %i.fk = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
   store i32 0, ptr %i.fk, align 8, !tbaa !237
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #40
@@ -289,8 +289,7 @@ bb.o:                                             ; preds = %.lr.ph501, %bb.at
   %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !221
   %i.hp = ptrtoint ptr %i.ho to i64               ; 3 uses
   %i.hq = trunc i64 %i.hp to i32
-  %i.hr = and i32 %i.hq, 15                       ; 2 uses
-  store i32 %i.hr, ptr %i.fk, align 8, !tbaa !237
+  %i.hr = and i32 %i.hq, 15
   %i.hs = and i64 %i.hp, -16                      ; 3 uses
   %i.ht = inttoptr i64 %i.hs to ptr               ; 4 uses
   %i.hu = icmp eq i64 %i.hs, 0
@@ -301,12 +300,11 @@ bb.p:                                             ; preds = %bb.o
   %i.hw = getelementptr inbounds nuw [24 x i8], ptr @_ZN10tetgenmesh10stpivottblE, i64 %i.hv
   %i.hx = sext i32 %i.hj to i64
   %i.hy = getelementptr inbounds [4 x i8], ptr %i.hw, i64 %i.hx
-  %i.hz = load i32, ptr %i.hy, align 4, !tbaa !60 ; 2 uses
-  store i32 %i.hz, ptr %i.fk, align 8, !tbaa !237
+  %i.hz = load i32, ptr %i.hy, align 4, !tbaa !60
   br label %_ZN10tetgenmesh7stpivotERNS_4faceERNS_7trifaceE.exit
 
 _ZN10tetgenmesh7stpivotERNS_4faceERNS_7trifaceE.exit: ; preds = %bb.o, %bb.p
-  %i.ia = phi i32 [ %i.hr, %bb.o ], [ %i.hz, %bb.p ]
+  %i.ia = phi i32 [ %i.hr, %bb.o ], [ %i.hz, %bb.p ] ; 4 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ht, i64 56
   %i.ic = load ptr, ptr %i.ib, align 8, !tbaa !221
   %i.id = load ptr, ptr %i.gb, align 8, !tbaa !251
@@ -709,6 +707,7 @@ bb.am:                                            ; preds = %._crit_edge448, %._
   br i1 %i.acx, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
+  store i32 %i.ia, ptr %i.fk, align 8, !tbaa !237
   store ptr %i.ht, ptr %2, align 8, !tbaa !232
   %i.acy = load ptr, ptr %i.gd, align 8, !tbaa !267
   %i.acz = getelementptr inbounds nuw i8, ptr %i.acy, i64 32
@@ -836,10 +835,12 @@ bb.at:                                            ; preds = %_ZN10tetgenmesh7stp
   br i1 %i.afh, label %bb.o, label %.loopexit403.loopexit.split.loop.exit714, !llvm.loop !1138
 
 .loopexit403.loopexit.split.loop.exit:            ; preds = %.loopexit401
+  store i32 %i.ia, ptr %i.fk, align 8, !tbaa !237
   store ptr %i.ht, ptr %2, align 8, !tbaa !232
   br label %.loopexit403
 
 .loopexit403.loopexit.split.loop.exit714:         ; preds = %bb.at
+  store i32 %i.ia, ptr %i.fk, align 8, !tbaa !237
   store ptr %i.ht, ptr %2, align 8, !tbaa !232
   %indvars.le = trunc i64 %indvars.iv.next580 to i32
   br label %.loopexit403
@@ -1242,17 +1243,17 @@ define void @_ZN10tetgenmesh15reconstructmeshEv(ptr nofree noundef nonnull align
 bb.a:
   %i.a = alloca ptr, align 8                      ; 8 uses
   %1 = alloca %"class.tetgenmesh::triface", align 8 ; 20 uses
-  %2 = alloca %"class.tetgenmesh::triface", align 8 ; 16 uses
+  %2 = alloca %"class.tetgenmesh::triface", align 8 ; 15 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = alloca ptr, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #40
   store ptr null, ptr %1, align 8, !tbaa !232
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 21 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 20 uses
   store i32 0, ptr %i.d, align 8, !tbaa !237
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #40
   store ptr null, ptr %2, align 8, !tbaa !232
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 11 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 10 uses
   store i32 0, ptr %i.e, align 8, !tbaa !237
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 14 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !219  ; 2 uses
@@ -1488,7 +1489,6 @@ bb.v:                                             ; preds = %bb.r, %bb.s, %bb.u,
   %i.dz = load ptr, ptr %i.ba, align 8, !tbaa !231
   %i.ea = tail call noundef ptr @_ZN10tetgenmesh10memorypool5allocEv(ptr noundef nonnull align 8 dereferenceable(88) %i.dz) ; 29 uses
   %i.eb = ptrtoaddr ptr %i.ea to i64
-  store ptr %i.ea, ptr %1, align 8, !tbaa !232
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.ea, i8 0, i64 88, i1 false)
   %i.ec = load i32, ptr %i.bb, align 4, !tbaa !233
   %i.ed = sext i32 %i.ec to i64
@@ -1523,7 +1523,6 @@ bb.w:                                             ; preds = %._crit_edge.i
   br label %_ZN10tetgenmesh15maketetrahedronEPNS_7trifaceE.exit
 
 _ZN10tetgenmesh15maketetrahedronEPNS_7trifaceE.exit: ; preds = %._crit_edge.i, %bb.w
-  store i32 11, ptr %i.d, align 8, !tbaa !237
   %i.es = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN10tetgenmesh8orgpivotE, i64 44), align 4, !tbaa !60
   %i.et = sext i32 %i.es to i64
   %i.eu = getelementptr inbounds [8 x i8], ptr %i.ea, i64 %i.et
@@ -1689,10 +1688,8 @@ bb.ab:                                            ; preds = %bb.aa, %bb.bd
   %i.he = ptrtoint ptr %i.gz to i64               ; 2 uses
   %i.hf = trunc i64 %i.he to i32
   %i.hg = and i32 %i.hf, 15                       ; 2 uses
-  store i32 %i.hg, ptr %i.e, align 8, !tbaa !237
   %i.hh = and i64 %i.he, -16                      ; 2 uses
   %i.hi = inttoptr i64 %i.hh to ptr               ; 2 uses
-  store ptr %i.hi, ptr %2, align 8, !tbaa !232
   %.not257 = icmp eq i64 %i.hh, 0
   br i1 %.not257, label %bb.bd, label %bb.ac
 
@@ -1719,11 +1716,11 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.bc, %bb.ac
-  %.lcssa780786 = phi i32 [ %i.hg, %bb.ac ], [ %i.sh, %bb.bc ]
+  %.lcssa780786 = phi i32 [ %i.hg, %bb.ac ], [ %i.sh, %bb.bc ] ; 2 uses
   %i.ic = phi ptr [ %i.hi, %bb.ac ], [ %i.sj, %bb.bc ] ; 9 uses
   %.sroa.0601.0 = phi ptr [ %i.ea, %bb.ac ], [ %.sroa.0601.1, %bb.bc ] ; 2 uses
   %.sroa.6602.0 = phi i32 [ %i.ib, %bb.ac ], [ %.sroa.6602.1, %bb.bc ] ; 2 uses
-  %i.id = zext nneg i32 %.lcssa780786 to i64      ; 5 uses
+  %i.id = zext nneg i32 %.lcssa780786 to i64      ; 3 uses
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr @_ZN10tetgenmesh8orgpivotE, i64 %i.id
   %i.if = load i32, ptr %i.ie, align 4, !tbaa !60
   %i.ig = sext i32 %i.if to i64
@@ -1740,7 +1737,8 @@ bb.ad:                                            ; preds = %bb.bc, %bb.ac
   %i.ir = getelementptr inbounds [8 x i8], ptr %i.ic, i64 %i.iq
   %i.is = load ptr, ptr %i.ir, align 8, !tbaa !221 ; 6 uses
   %i.it = ptrtoint ptr %i.ic to i64               ; 9 uses
-  %i.iu = getelementptr inbounds nuw [4 x i8], ptr @_ZN10tetgenmesh7esymtblE, i64 %i.id
+  %3 = zext nneg i32 %.lcssa780786 to i64         ; 2 uses
+  %i.iu = getelementptr inbounds nuw [4 x i8], ptr @_ZN10tetgenmesh7esymtblE, i64 %3
   %i.iv = load i32, ptr %i.iu, align 4, !tbaa !60 ; 4 uses
   %i.iw = and i32 %i.iv, 3
   %i.ix = zext nneg i32 %i.iw to i64
@@ -1848,7 +1846,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.ad, %bb.ai, %bb.aj
   %.3184 = phi i32 [ %i.lq, %bb.aj ], [ 1, %bb.ad ], [ %.2183, %bb.ai ] ; 3 uses
-  %i.lr = getelementptr inbounds nuw [4 x i8], ptr @_ZN10tetgenmesh8enexttblE, i64 %i.id
+  %i.lr = getelementptr inbounds nuw [4 x i8], ptr @_ZN10tetgenmesh8enexttblE, i64 %3
   %i.ls = load i32, ptr %i.lr, align 4, !tbaa !60
   %i.lt = sext i32 %i.ls to i64                   ; 2 uses
   %i.lu = getelementptr inbounds [4 x i8], ptr @_ZN10tetgenmesh7esymtblE, i64 %i.lt
@@ -2105,31 +2103,34 @@ bb.bc:                                            ; preds = %bb.ba, %bb.bb
   %i.si = and i64 %i.sf, -16                      ; 2 uses
   %i.sj = inttoptr i64 %i.si to ptr               ; 2 uses
   %.not258 = icmp eq i64 %i.si, 0
-  br i1 %.not258, label %.loopexit752, label %bb.ad, !llvm.loop !1262
+  br i1 %.not258, label %bb.bd, label %bb.ad, !llvm.loop !1262
 
-.loopexit752:                                     ; preds = %bb.bc
-  store ptr %i.sj, ptr %2, align 8, !tbaa !232
-  store i32 %i.sh, ptr %i.e, align 8, !tbaa !237
-  br label %bb.bd
-
-bb.bd:                                            ; preds = %.loopexit752, %bb.ab
+bb.bd:                                            ; preds = %bb.bc, %bb.ab
+  %.lcssa784791 = phi ptr [ %i.hi, %bb.ab ], [ %i.sj, %bb.bc ]
+  %.lcssa787790 = phi i32 [ %i.hg, %bb.ab ], [ %i.sh, %bb.bc ]
   %indvars.iv.next960 = add nuw nsw i64 %indvars.iv959, 1 ; 2 uses
   %exitcond962.not = icmp eq i64 %indvars.iv.next960, 4
   br i1 %exitcond962.not, label %bb.be, label %bb.ab, !llvm.loop !1263
 
 bb.be:                                            ; preds = %bb.bd
-  store i32 4, ptr %i.d, align 8, !tbaa !237
   %indvars.iv.next964 = add nuw nsw i64 %indvars.iv963, 1 ; 2 uses
   %i.sk = getelementptr inbounds nuw i8, ptr %i.fe, i64 128
   %i.sl = load i32, ptr %i.sk, align 8, !tbaa !68
   %i.sm = sext i32 %i.sl to i64
   %i.sn = icmp slt i64 %indvars.iv.next964, %i.sm
-  br i1 %i.sn, label %bb.j, label %._crit_edge793, !llvm.loop !1264
+  br i1 %i.sn, label %bb.j, label %._crit_edge795, !llvm.loop !1264
 
-._crit_edge793:                                   ; preds = %bb.be, %.preheader753
-  %i.so = phi ptr [ %i.ag, %.preheader753 ], [ %i.fe, %bb.be ] ; 2 uses
-  %i.sp = phi i32 [ 0, %.preheader753 ], [ 4, %bb.be ] ; 2 uses
-  %i.sq = phi ptr [ null, %.preheader753 ], [ %i.ea, %bb.be ]
+._crit_edge795:                                   ; preds = %bb.be
+  store ptr %i.ea, ptr %1, align 8
+  store i32 4, ptr %i.d, align 8
+  store i32 %.lcssa787790, ptr %i.e, align 8
+  store ptr %.lcssa784791, ptr %2, align 8
+  br label %._crit_edge793
+
+._crit_edge793:                                   ; preds = %._crit_edge795, %.preheader753
+  %i.so = phi ptr [ %i.fe, %._crit_edge795 ], [ %i.ag, %.preheader753 ] ; 2 uses
+  %i.sp = phi i32 [ 4, %._crit_edge795 ], [ 0, %.preheader753 ] ; 2 uses
+  %i.sq = phi ptr [ %i.ea, %._crit_edge795 ], [ null, %.preheader753 ]
   %i.sr = getelementptr inbounds nuw i8, ptr %0, i64 68592
   store ptr %i.sq, ptr %i.sr, align 8, !tbaa !232
   %i.ss = getelementptr inbounds nuw i8, ptr %0, i64 68600
@@ -2532,8 +2533,8 @@ bb.hr:                                            ; preds = %.lr.ph897.a, %._cri
   br label %bb.hs
 
 bb.hs:                                            ; preds = %bb.hv, %bb.hr
-  %3 = phi ptr [ %i.dad, %bb.hv ], [ %i.cyu, %bb.hr ] ; 2 uses
   %4 = phi i32 [ %i.dal, %bb.hv ], [ %i.czh, %bb.hr ] ; 2 uses
+  %5 = phi ptr [ %i.dad, %bb.hv ], [ %i.cyu, %bb.hr ] ; 2 uses
   %i.czt = phi ptr [ %i.dak, %bb.hv ], [ %i.cze, %bb.hr ] ; 2 uses
   %i.czu = icmp eq ptr %i.czt, %i.czk
   br i1 %i.czu, label %._crit_edge895, label %bb.ht
@@ -2543,7 +2544,7 @@ bb.ht:                                            ; preds = %bb.hs
   br i1 %i.czv, label %bb.hu, label %_ZN10tetgenmesh10memorypool8traverseEv.exit.i365
 
 bb.hu:                                            ; preds = %bb.ht
-  %i.czw = load ptr, ptr %3, align 8, !tbaa !112  ; 3 uses
+  %i.czw = load ptr, ptr %5, align 8, !tbaa !112  ; 3 uses
   store ptr %i.czw, ptr %i.cyv, align 8, !tbaa !204
   %i.czx = getelementptr inbounds nuw i8, ptr %i.czw, i64 8
   %i.czy = ptrtoint ptr %i.czx to i64             ; 2 uses
@@ -2554,7 +2555,7 @@ bb.hu:                                            ; preds = %bb.ht
   br label %_ZN10tetgenmesh10memorypool8traverseEv.exit.i365
 
 _ZN10tetgenmesh10memorypool8traverseEv.exit.i365: ; preds = %bb.hu, %bb.ht
-  %i.dad = phi ptr [ %i.czw, %bb.hu ], [ %3, %bb.ht ] ; 2 uses
+  %i.dad = phi ptr [ %i.czw, %bb.hu ], [ %5, %bb.ht ] ; 2 uses
   %i.dae = phi i32 [ %i.czh, %bb.hu ], [ %4, %bb.ht ]
   %i.daf = phi ptr [ %i.dac, %bb.hu ], [ %i.czt, %bb.ht ] ; 4 uses
   %i.dag = ptrtoint ptr %i.daf to i64
@@ -2580,9 +2581,9 @@ bb.hv:                                            ; preds = %_ZN10tetgenmesh10me
   br label %bb.hw
 
 bb.hw:                                            ; preds = %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit371, %.lr.ph894
-  %5 = phi ptr [ %i.dad, %.lr.ph894 ], [ %i.dbh, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit371 ]
   %6 = phi i32 [ %i.dal, %.lr.ph894 ], [ %i.dbp, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit371 ]
-  %.promoted.i368 = phi ptr [ %i.dak, %.lr.ph894 ], [ %i.dbo, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit371 ]
+  %.promoted.i368904 = phi ptr [ %i.dak, %.lr.ph894 ], [ %i.dbo, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit371 ]
+  %.promoted.i368 = phi ptr [ %i.dad, %.lr.ph894 ], [ %i.dbh, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit371 ]
   %storemerge224893 = phi ptr [ %i.daf, %.lr.ph894 ], [ %i.dbj, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit371 ] ; 2 uses
   %i.das = getelementptr inbounds [4 x i8], ptr %storemerge224893, i64 %i.dar
   %i.dat = load i32, ptr %i.das, align 4, !tbaa !60
@@ -2600,18 +2601,18 @@ bb.hx:                                            ; preds = %bb.hw
   br label %bb.hy
 
 bb.hy:                                            ; preds = %.preheader1542, %bb.ib
-  %7 = phi ptr [ %i.dbh, %bb.ib ], [ %5, %.preheader1542 ] ; 2 uses
-  %8 = phi i32 [ %i.dbp, %bb.ib ], [ %6, %.preheader1542 ] ; 2 uses
-  %.promoted.i3681147 = phi ptr [ %i.dbo, %bb.ib ], [ %.promoted.i368, %.preheader1542 ] ; 2 uses
-  %i.day = icmp eq ptr %.promoted.i3681147, %i.czk
+  %7 = phi i32 [ %i.dbp, %bb.ib ], [ %6, %.preheader1542 ] ; 2 uses
+  %.promoted.i368903 = phi ptr [ %i.dbo, %bb.ib ], [ %.promoted.i368904, %.preheader1542 ] ; 2 uses
+  %.promoted.i3681147 = phi ptr [ %i.dbh, %bb.ib ], [ %.promoted.i368, %.preheader1542 ] ; 2 uses
+  %i.day = icmp eq ptr %.promoted.i368903, %i.czk
   br i1 %i.day, label %._crit_edge895, label %bb.hz
 
 bb.hz:                                            ; preds = %bb.hy
-  %i.daz = icmp eq i32 %8, 0
+  %i.daz = icmp eq i32 %7, 0
   br i1 %i.daz, label %bb.ia, label %_ZN10tetgenmesh10memorypool8traverseEv.exit.i369
 
 bb.ia:                                            ; preds = %bb.hz
-  %i.dba = load ptr, ptr %7, align 8, !tbaa !112  ; 3 uses
+  %i.dba = load ptr, ptr %.promoted.i3681147, align 8, !tbaa !112 ; 3 uses
   store ptr %i.dba, ptr %i.cyv, align 8, !tbaa !204
   %i.dbb = getelementptr inbounds nuw i8, ptr %i.dba, i64 8
   %i.dbc = ptrtoint ptr %i.dbb to i64             ; 2 uses
@@ -2622,9 +2623,9 @@ bb.ia:                                            ; preds = %bb.hz
   br label %_ZN10tetgenmesh10memorypool8traverseEv.exit.i369
 
 _ZN10tetgenmesh10memorypool8traverseEv.exit.i369: ; preds = %bb.ia, %bb.hz
-  %i.dbh = phi ptr [ %i.dba, %bb.ia ], [ %7, %bb.hz ] ; 2 uses
-  %i.dbi = phi i32 [ %i.czh, %bb.ia ], [ %8, %bb.hz ]
-  %i.dbj = phi ptr [ %i.dbg, %bb.ia ], [ %.promoted.i3681147, %bb.hz ] ; 4 uses
+  %i.dbh = phi ptr [ %i.dba, %bb.ia ], [ %.promoted.i3681147, %bb.hz ] ; 2 uses
+  %i.dbi = phi i32 [ %i.czh, %bb.ia ], [ %7, %bb.hz ]
+  %i.dbj = phi ptr [ %i.dbg, %bb.ia ], [ %.promoted.i368903, %bb.hz ] ; 4 uses
   %i.dbk = ptrtoint ptr %i.dbj to i64
   %i.dbl = load i32, ptr %i.czl, align 4, !tbaa !195
   %i.dbm = sext i32 %i.dbl to i64
@@ -3027,7 +3028,7 @@ bb.f:                                             ; preds = %bb.e
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #40
   store ptr null, ptr %1, align 8, !tbaa !225
-  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   store i32 0, ptr %i.y, align 8, !tbaa !226
   %i.z = load ptr, ptr %i.h, align 8, !tbaa !253  ; 8 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !197 ; 3 uses
@@ -3116,7 +3117,7 @@ bb.k:                                             ; preds = %_ZN10tetgenmesh17sh
   %.03464 = phi double [ 3.600000e+02, %.lr.ph66 ], [ %.135, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit48 ] ; 3 uses
   %.03663 = phi ptr [ undef, %.lr.ph66 ], [ %.238.1, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit48 ] ; 3 uses
   %storemerge62 = phi ptr [ %i.bg, %.lr.ph66 ], [ %i.dh, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit48 ] ; 7 uses
-  %i.cb = phi i32 [ 0, %.lr.ph66 ], [ %8, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit48 ]
+  %i.cb = phi i32 [ 0, %.lr.ph66 ], [ %5, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit48 ]
   %.sroa.0.061 = phi ptr [ null, %.lr.ph66 ], [ %.sroa.0.1, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit48 ] ; 2 uses
   %.sroa.6.060 = phi i32 [ 0, %.lr.ph66 ], [ %.sroa.6.1, %_ZN10tetgenmesh17shellfacetraverseEPNS_10memorypoolE.exit48 ] ; 2 uses
   %i.cc = getelementptr [4 x i8], ptr %storemerge62, i64 %i.bt
@@ -3378,32 +3379,23 @@ bb.ab:                                            ; preds = %_ZN10tetgenmesh29ge
 bb.ac:                                            ; preds = %bb.n, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit, %bb.ab, %bb.s
   %.238 = phi ptr [ %i.dt, %bb.ab ], [ %.03663, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit ], [ %.03663, %bb.s ], [ %.03663, %bb.n ] ; 3 uses
   %.2 = phi double [ %.019.i, %bb.ab ], [ %.03365, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit ], [ %.03365, %bb.s ], [ %.03365, %bb.n ] ; 4 uses
-  store i32 0, ptr %i.y, align 8, !tbaa !226
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ch, i64 24 ; 2 uses
   %i.il = load double, ptr %i.ik, align 8, !tbaa !59
   %i.im = fcmp oeq double %i.il, 0.000000e+00
-  br i1 %i.im, label %2, label %bb.an
+  br i1 %i.im, label %bb.ad, label %bb.an
 
-2:                                                ; preds = %bb.ac
-  %3 = load ptr, ptr %i.cq, align 8, !tbaa !221
-  %4 = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
-  %5 = load ptr, ptr %4, align 8, !tbaa !113      ; 6 uses
-  %.not44.1 = icmp eq ptr %3, %5
-  br i1 %.not44.1, label %bb.ad, label %6
-
-6:                                                ; preds = %2
-  store i32 1, ptr %i.y, align 8, !tbaa !226
-  br label %bb.ad
-
-bb.ad:                                            ; preds = %6, %2
-  %7 = phi i32 [ 1, %6 ], [ 0, %2 ]               ; 4 uses
-  %i.in = zext nneg i32 %7 to i64
+bb.ad:                                            ; preds = %bb.ac
+  %2 = load ptr, ptr %i.cq, align 8, !tbaa !221
+  %3 = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
+  %4 = load ptr, ptr %3, align 8, !tbaa !113      ; 6 uses
+  %.not44.1 = icmp ne ptr %2, %4                  ; 4 uses
+  %i.in = zext i1 %.not44.1 to i64
   %i.io = getelementptr inbounds nuw [4 x i8], ptr @_ZN10tetgenmesh9sorgpivotE, i64 %i.in
   %i.ip = load i32, ptr %i.io, align 4, !tbaa !60
   %i.iq = sext i32 %i.ip to i64
   %i.ir = getelementptr inbounds [8 x i8], ptr %storemerge62, i64 %i.iq
   %i.is = load ptr, ptr %i.ir, align 8, !tbaa !221 ; 4 uses
-  %i.it = icmp eq ptr %i.is, %5
+  %i.it = icmp eq ptr %i.is, %4
   br i1 %i.it, label %bb.ae, label %bb.an
 
 bb.ae:                                            ; preds = %bb.ad
@@ -3423,7 +3415,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.je = sext i32 %i.jd to i64
   %i.jf = getelementptr inbounds [8 x i8], ptr %i.iy, i64 %i.je
   %i.jg = load ptr, ptr %i.jf, align 8, !tbaa !221
-  %.not.i.1 = icmp ne ptr %i.jg, %5
+  %.not.i.1 = icmp ne ptr %i.jg, %4
   %i.jh = zext i1 %.not.i.1 to i32
   %spec.select.i.1 = xor i32 %i.ja, %i.jh
   %i.ji = getelementptr inbounds nuw i8, ptr %i.is, i64 8
@@ -3532,7 +3524,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.mk = sext i32 %i.mj to i64
   %i.ml = getelementptr inbounds [8 x i8], ptr %i.me, i64 %i.mk
   %i.mm = load ptr, ptr %i.ml, align 8, !tbaa !221
-  %.not24.i.1 = icmp ne ptr %i.mm, %5
+  %.not24.i.1 = icmp ne ptr %i.mm, %4
   %i.mn = zext i1 %.not24.i.1 to i32
   %spec.select51.i.1 = xor i32 %i.mg, %i.mn
   br label %bb.ag, !llvm.loop !20
@@ -3555,7 +3547,7 @@ bb.al:                                            ; preds = %bb.ah
   %i.mz = sext i32 %i.my to i64
   %i.na = getelementptr inbounds [8 x i8], ptr %i.mv, i64 %i.mz
   %i.nb = load ptr, ptr %i.na, align 8, !tbaa !221
-  %.not23.i.1 = icmp ne ptr %i.nb, %5
+  %.not23.i.1 = icmp ne ptr %i.nb, %4
   %i.nc = zext i1 %.not23.i.1 to i32
   %spec.select50.i.1 = xor i32 %i.mt, %i.nc
   br label %bb.ah, !llvm.loop !19
@@ -3570,9 +3562,11 @@ bb.am:                                            ; preds = %_ZN10tetgenmesh29ge
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit.1, %bb.ad, %bb.ac
-  %8 = phi i32 [ %7, %bb.am ], [ %7, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit.1 ], [ %7, %bb.ad ], [ 0, %bb.ac ]
-  %.238.1 = phi ptr [ %5, %bb.am ], [ %.238, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit.1 ], [ %.238, %bb.ad ], [ %.238, %bb.ac ] ; 2 uses
+  %.shrunk.1 = phi i1 [ %.not44.1, %bb.am ], [ %.not44.1, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit.1 ], [ %.not44.1, %bb.ad ], [ false, %bb.ac ]
+  %.238.1 = phi ptr [ %4, %bb.am ], [ %.238, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit.1 ], [ %.238, %bb.ad ], [ %.238, %bb.ac ] ; 2 uses
   %.2.1 = phi double [ %.019.i.1, %bb.am ], [ %.2, %_ZN10tetgenmesh29get_min_angle_at_ridge_vertexEPNS_4faceE.exit.1 ], [ %.2, %bb.ad ], [ %.2, %bb.ac ] ; 2 uses
+  %5 = zext i1 %.shrunk.1 to i32                  ; 2 uses
+  store i32 %5, ptr %i.y, align 8, !tbaa !226
   br label %bb.o
 
 ._crit_edge67.loopexit:                           ; preds = %_ZN10tetgenmesh10memorypool8traverseEv.exit.i46, %bb.o

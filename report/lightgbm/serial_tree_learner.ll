@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge18, %bb.
 define internal void @_ZN8LightGBM10LeafSplits4InitEPKfS2_.omp_outlined(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree readnone captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %4, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %5, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %6) #17 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
-  %i.b = alloca i32, align 4                      ; 7 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = alloca double, align 8                   ; 7 uses
@@ -235,7 +235,6 @@ bb.b:                                             ; preds = %bb.a
   %.promoted23 = load i32, ptr %i.b, align 4, !tbaa !198
   %.promoted24 = load i32, ptr %i.a, align 4, !tbaa !198 ; 2 uses
   %i.m = call i32 @llvm.smin.i32(i32 %.promoted23, i32 %i.j) ; 3 uses
-  store i32 %i.m, ptr %i.b, align 4, !tbaa !198
   %.not28 = icmp sgt i32 %.promoted24, %i.m
   br i1 %.not28, label %bb.e, label %.preheader.lr.ph
 
@@ -283,10 +282,11 @@ bb.d:                                             ; preds = %bb.c
   %i.ah = extractelement <2 x double> %i.ad, i64 1
   store double %i.ah, ptr %i.f, align 8, !tbaa !309
   store i32 %indvars, ptr %i.a, align 4, !tbaa !198
-  store i32 %i.af, ptr %i.b, align 4, !tbaa !198
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge, %bb.b
+  %.lcssa24 = phi i32 [ %i.af, %._crit_edge ], [ %i.m, %bb.b ]
+  store i32 %.lcssa24, ptr %i.b, align 4, !tbaa !198
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.l)
   store ptr %i.e, ptr %i.g, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.g, i64 8

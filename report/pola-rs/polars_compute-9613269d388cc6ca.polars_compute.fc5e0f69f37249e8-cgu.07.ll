@@ -205,6 +205,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bn = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   %i.bo = load ptr, ptr %i.bm, align 8, !nonnull !1685
   %.promoted = load i64, ptr %i.as, align 8, !alias.scope !9715
+  %.promoted149 = load i64, ptr %i.bk, align 8, !alias.scope !9715
   br label %bb.o, !dbg !9713
 
 bb.n:                                             ; preds = %bb.l
@@ -212,6 +213,7 @@ bb.n:                                             ; preds = %bb.l
           to label %bb.f unwind label %bb.ai, !dbg !9798
 
 bb.o:                                             ; preds = %.lr.ph119, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit
+  %3 = phi i64 [ %.promoted149, %.lr.ph119 ], [ %4, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit ], !dbg !9799
   %i.bp = phi i64 [ %.promoted, %.lr.ph119 ], [ %i.cd, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit ], !dbg !9799 ; 2 uses
   %i.bq = phi i64 [ %i.ad, %.lr.ph119 ], [ %i.bw, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit ], !dbg !9800 ; 3 uses
   %.sroa.017.0117 = phi ptr [ %i.bj, %.lr.ph119 ], [ %i.br, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit ] ; 2 uses
@@ -231,8 +233,7 @@ bb.o:                                             ; preds = %.lr.ph119, %_RNvMNt
   %i.bz = zext i1 %.sroa.0.0.i44 to i64, !dbg !9811
   %i.ca = and i64 %i.bp, 63, !dbg !9812
   %i.cb = shl nuw i64 %i.bz, %i.ca, !dbg !9811
-  %3 = load i64, ptr %i.bk, align 8, !dbg !9813, !alias.scope !9715, !noundef !1685
-  %i.cc = or i64 %i.cb, %3, !dbg !9813            ; 3 uses
+  %i.cc = or i64 %i.cb, %3, !dbg !9813            ; 4 uses
   store i64 %i.cc, ptr %i.bk, align 8, !dbg !9813, !alias.scope !9715
   %i.cd = add i64 %i.bp, 1, !dbg !9814            ; 3 uses
   store i64 %i.cd, ptr %i.as, align 8, !dbg !9814, !alias.scope !9715
@@ -256,6 +257,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit, !dbg !9827
 
 _RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit: ; preds = %bb.p, %bb.o
+  %4 = phi i64 [ 0, %bb.p ], [ %i.cc, %bb.o ]
   %i.cn = icmp eq ptr %i.br, %i.bh, !dbg !9796
   br i1 %i.cn, label %._crit_edge120, label %bb.o, !dbg !9713
 
@@ -658,6 +660,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bn = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   %i.bo = load ptr, ptr %i.bm, align 8, !nonnull !1685
   %.promoted = load i64, ptr %i.as, align 8, !alias.scope !10059
+  %.promoted149 = load i64, ptr %i.bk, align 8, !alias.scope !10059
   br label %bb.o, !dbg !10057
 
 bb.n:                                             ; preds = %bb.l
@@ -665,6 +668,7 @@ bb.n:                                             ; preds = %bb.l
           to label %bb.f unwind label %bb.ai, !dbg !10142
 
 bb.o:                                             ; preds = %.lr.ph119, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit
+  %3 = phi i64 [ %.promoted149, %.lr.ph119 ], [ %4, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit ], !dbg !10143
   %i.bp = phi i64 [ %.promoted, %.lr.ph119 ], [ %i.cd, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit ], !dbg !10143 ; 2 uses
   %i.bq = phi i64 [ %i.ad, %.lr.ph119 ], [ %i.bw, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit ], !dbg !10144 ; 3 uses
   %.sroa.017.0117 = phi ptr [ %i.bj, %.lr.ph119 ], [ %i.br, %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit ] ; 2 uses
@@ -684,8 +688,7 @@ bb.o:                                             ; preds = %.lr.ph119, %_RNvMNt
   %i.bz = zext i1 %.sroa.0.0.i44 to i64, !dbg !10155
   %i.ca = and i64 %i.bp, 63, !dbg !10156
   %i.cb = shl nuw i64 %i.bz, %i.ca, !dbg !10155
-  %3 = load i64, ptr %i.bk, align 8, !dbg !10157, !alias.scope !10059, !noundef !1685
-  %i.cc = or i64 %i.cb, %3, !dbg !10157           ; 3 uses
+  %i.cc = or i64 %i.cb, %3, !dbg !10157           ; 4 uses
   store i64 %i.cc, ptr %i.bk, align 8, !dbg !10157, !alias.scope !10059
   %i.cd = add i64 %i.bp, 1, !dbg !10158           ; 3 uses
   store i64 %i.cd, ptr %i.as, align 8, !dbg !10158, !alias.scope !10059
@@ -709,6 +712,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit, !dbg !10171
 
 _RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder14push_unchecked.exit: ; preds = %bb.p, %bb.o
+  %4 = phi i64 [ 0, %bb.p ], [ %i.cc, %bb.o ]
   %i.cn = icmp eq ptr %i.br, %i.bh, !dbg !10140
   br i1 %i.cn, label %._crit_edge120, label %bb.o, !dbg !10057
 

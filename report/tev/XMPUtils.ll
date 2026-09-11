@@ -205,6 +205,16 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = icmp slt i32 %i.ad, 1
   br i1 %i.ae, label %.lr.ph190, label %.preheader165.preheader
 
+.preheader165.preheader:                          ; preds = %..preheader165_crit_edge, %.preheader167
+  %.ph449 = phi i32 [ %i.ap, %..preheader165_crit_edge ], [ %i.ab, %.preheader167 ]
+  %.ph450 = phi i32 [ %i.an, %..preheader165_crit_edge ], [ %i.aa, %.preheader167 ]
+  %.ph451 = phi i32 [ %i.bf, %..preheader165_crit_edge ], [ %i.ad, %.preheader167 ]
+  br label %.preheader165.outer
+
+..preheader165_crit_edge:                         ; preds = %_ZL11DaysInMonthii.exit
+  store i32 %i.bf, ptr %i.ac, align 4, !tbaa !36
+  br label %.preheader165.preheader
+
 .lr.ph190:                                        ; preds = %.preheader167, %_ZL11DaysInMonthii.exit
   %i.af = phi i32 [ %i.an, %_ZL11DaysInMonthii.exit ], [ %i.aa, %.preheader167 ]
   %i.ag = phi i32 [ %i.be, %_ZL11DaysInMonthii.exit ], [ %i.aa, %.preheader167 ] ; 2 uses
@@ -262,25 +272,12 @@ _ZL11DaysInMonthii.exit:                          ; preds = %bb.d, %bb.e, %_ZL10
   %i.be = phi i32 [ %i.ao, %bb.d ], [ %i.an, %bb.e ], [ %i.an, %_ZL10IsLeapYearl.exit.i ], [ %i.an, %_ZL10IsLeapYearl.exit.thread.i ]
   %.0.i = phi i32 [ %i.at, %bb.d ], [ %i.at, %bb.e ], [ %spec.select.i, %_ZL10IsLeapYearl.exit.i ], [ %i.ba, %_ZL10IsLeapYearl.exit.thread.i ]
   %i.bf = add nsw i32 %.0.i, %i.ai                ; 4 uses
-  store i32 %i.bf, ptr %i.ac, align 4, !tbaa !36
   %i.bg = icmp slt i32 %i.bf, 1
-  br i1 %i.bg, label %.lr.ph190, label %.preheader165.preheader, !llvm.loop !146
-
-.preheader165.preheader:                          ; preds = %_ZL11DaysInMonthii.exit, %.preheader167
-  %.ph443 = phi i32 [ %i.ab, %.preheader167 ], [ %i.ap, %_ZL11DaysInMonthii.exit ]
-  %.ph444 = phi i32 [ %i.aa, %.preheader167 ], [ %i.an, %_ZL11DaysInMonthii.exit ]
-  %.ph445 = phi i32 [ %i.ad, %.preheader167 ], [ %i.bf, %_ZL11DaysInMonthii.exit ]
-  br label %.preheader165.outer
-
-.preheader165.outer:                              ; preds = %.preheader165.preheader, %.sink.split
-  %.ph446 = phi i32 [ %.ph443, %.preheader165.preheader ], [ %.sink, %.sink.split ]
-  %.ph447 = phi i32 [ %.ph444, %.preheader165.preheader ], [ %.ph398, %.sink.split ] ; 7 uses
-  %.ph448 = phi i32 [ %.ph445, %.preheader165.preheader ], [ %.ph399, %.sink.split ]
-  br label %.preheader165
+  br i1 %i.bg, label %.lr.ph190, label %..preheader165_crit_edge, !llvm.loop !146
 
 .preheader165:                                    ; preds = %.preheader165.outer, %_ZL11DaysInMonthii.exit116
-  %i.bh = phi i32 [ %i.ch, %_ZL11DaysInMonthii.exit116 ], [ %.ph446, %.preheader165.outer ] ; 6 uses
-  %i.bi = phi i32 [ %i.cg, %_ZL11DaysInMonthii.exit116 ], [ %.ph448, %.preheader165.outer ] ; 8 uses
+  %i.bh = phi i32 [ %i.ch, %_ZL11DaysInMonthii.exit116 ], [ %.ph452, %.preheader165.outer ] ; 6 uses
+  %i.bi = phi i32 [ %i.cg, %_ZL11DaysInMonthii.exit116 ], [ %.ph454, %.preheader165.outer ] ; 8 uses
   %i.bj = sext i32 %i.bh to i64
   %i.bk = getelementptr inbounds [2 x i8], ptr @_ZZL11DaysInMonthiiE11daysInMonth, i64 %i.bj
   %i.bl = load i16, ptr %i.bk, align 2, !tbaa !151
@@ -289,8 +286,8 @@ _ZL11DaysInMonthii.exit:                          ; preds = %bb.d, %bb.e, %_ZL10
   br i1 %i.bn, label %bb.g, label %_ZL11DaysInMonthii.exit108.thread
 
 bb.g:                                             ; preds = %.preheader165
-  %i.bo = sext i32 %.ph447 to i64                 ; 2 uses
-  %i.bp = icmp slt i32 %.ph447, 0
+  %i.bo = sext i32 %.ph453 to i64                 ; 2 uses
+  %i.bp = icmp slt i32 %.ph453, 0
   %i.bq = sub nsw i64 1, %i.bo
   %spec.select.i.i102 = select i1 %i.bp, i64 %i.bq, i64 %i.bo ; 5 uses
   %i.br = and i64 %spec.select.i.i102, 3
@@ -357,21 +354,27 @@ _ZL11DaysInMonthii.exit116:                       ; preds = %_ZL11DaysInMonthii.
   br i1 %i.ci, label %bb.j, label %.preheader165, !llvm.loop !147
 
 bb.j:                                             ; preds = %_ZL11DaysInMonthii.exit116
-  %i.cj = add nsw i32 %.ph447, 1                  ; 2 uses
+  %i.cj = add nsw i32 %.ph453, 1                  ; 2 uses
   store i32 %i.cj, ptr %0, align 4, !tbaa !29
   %i.ck = add nsw i32 %i.bh, -11
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.j, %_ZL11DaysInMonthii.exit116.thread
   %.sink = phi i32 [ 3, %_ZL11DaysInMonthii.exit116.thread ], [ %i.ck, %bb.j ] ; 2 uses
-  %.ph398 = phi i32 [ %.ph447, %_ZL11DaysInMonthii.exit116.thread ], [ %i.cj, %bb.j ]
+  %.ph398 = phi i32 [ %.ph453, %_ZL11DaysInMonthii.exit116.thread ], [ %i.cj, %bb.j ]
   %.ph399 = phi i32 [ %i.cf, %_ZL11DaysInMonthii.exit116.thread ], [ %i.cg, %bb.j ]
   store i32 %.sink, ptr %i.r, align 4, !tbaa !35
   br label %.preheader165.outer, !llvm.loop !147
 
+.preheader165.outer:                              ; preds = %.preheader165.preheader, %.sink.split
+  %.ph452 = phi i32 [ %.ph449, %.preheader165.preheader ], [ %.sink, %.sink.split ]
+  %.ph453 = phi i32 [ %.ph450, %.preheader165.preheader ], [ %.ph398, %.sink.split ] ; 7 uses
+  %.ph454 = phi i32 [ %.ph451, %.preheader165.preheader ], [ %.ph399, %.sink.split ]
+  br label %.preheader165
+
 .loopexit166:                                     ; preds = %_ZL11DaysInMonthii.exit108.thread, %_ZL11DaysInMonthii.exit108, %_ZL11DaysInMonthii.exit108.thread384, %bb.b
   %.promoted257 = phi i32 [ 0, %bb.b ], [ %i.bh, %_ZL11DaysInMonthii.exit108.thread ], [ 2, %_ZL11DaysInMonthii.exit108 ], [ 2, %_ZL11DaysInMonthii.exit108.thread384 ] ; 6 uses
-  %.promoted262 = phi i32 [ 0, %bb.b ], [ %.ph447, %_ZL11DaysInMonthii.exit108.thread384 ], [ %.ph447, %_ZL11DaysInMonthii.exit108 ], [ %.ph447, %_ZL11DaysInMonthii.exit108.thread ] ; 3 uses
+  %.promoted262 = phi i32 [ 0, %bb.b ], [ %.ph453, %_ZL11DaysInMonthii.exit108.thread384 ], [ %.ph453, %_ZL11DaysInMonthii.exit108 ], [ %.ph453, %_ZL11DaysInMonthii.exit108.thread ] ; 3 uses
   %.promoted196 = phi i32 [ 0, %bb.b ], [ %i.bi, %_ZL11DaysInMonthii.exit108.thread384 ], [ %i.bi, %_ZL11DaysInMonthii.exit108 ], [ %i.bi, %_ZL11DaysInMonthii.exit108.thread ] ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 9 uses
   %.promoted192 = load i32, ptr %i.cl, align 4, !tbaa !31 ; 5 uses
@@ -713,6 +716,16 @@ bb.m:                                             ; preds = %bb.k
   %i.is = icmp slt i32 %i.hs, 1
   br i1 %i.is, label %.lr.ph269, label %.preheader.preheader
 
+.preheader.preheader:                             ; preds = %..preheader_crit_edge, %.preheader156
+  %.ph = phi i32 [ %i.jd, %..preheader_crit_edge ], [ %i.iq, %.preheader156 ]
+  %.ph431 = phi i32 [ %i.jb, %..preheader_crit_edge ], [ %i.ip, %.preheader156 ]
+  %.ph432 = phi i32 [ %i.jt, %..preheader_crit_edge ], [ %i.hs, %.preheader156 ]
+  br label %.preheader.outer
+
+..preheader_crit_edge:                            ; preds = %_ZL11DaysInMonthii.exit124
+  store i32 %i.jt, ptr %i.ir, align 4, !tbaa !36
+  br label %.preheader.preheader
+
 .lr.ph269:                                        ; preds = %.preheader156, %_ZL11DaysInMonthii.exit124
   %i.it = phi i32 [ %i.jb, %_ZL11DaysInMonthii.exit124 ], [ %i.ip, %.preheader156 ]
   %i.iu = phi i32 [ %i.js, %_ZL11DaysInMonthii.exit124 ], [ %i.ip, %.preheader156 ] ; 2 uses
@@ -770,25 +783,12 @@ _ZL11DaysInMonthii.exit124:                       ; preds = %bb.o, %bb.p, %_ZL10
   %i.js = phi i32 [ %i.jc, %bb.o ], [ %i.jb, %bb.p ], [ %i.jb, %_ZL10IsLeapYearl.exit.i122 ], [ %i.jb, %_ZL10IsLeapYearl.exit.thread.i121 ]
   %.0.i117 = phi i32 [ %i.jh, %bb.o ], [ %i.jh, %bb.p ], [ %spec.select.i123, %_ZL10IsLeapYearl.exit.i122 ], [ %i.jo, %_ZL10IsLeapYearl.exit.thread.i121 ]
   %i.jt = add nsw i32 %.0.i117, %i.iw             ; 4 uses
-  store i32 %i.jt, ptr %i.ir, align 4, !tbaa !36
   %i.ju = icmp slt i32 %i.jt, 1
-  br i1 %i.ju, label %.lr.ph269, label %.preheader.preheader, !llvm.loop !148
-
-.preheader.preheader:                             ; preds = %_ZL11DaysInMonthii.exit124, %.preheader156
-  %.ph = phi i32 [ %i.iq, %.preheader156 ], [ %i.jd, %_ZL11DaysInMonthii.exit124 ]
-  %.ph425 = phi i32 [ %i.ip, %.preheader156 ], [ %i.jb, %_ZL11DaysInMonthii.exit124 ]
-  %.ph426 = phi i32 [ %i.hs, %.preheader156 ], [ %i.jt, %_ZL11DaysInMonthii.exit124 ]
-  br label %.preheader.outer
-
-.preheader.outer:                                 ; preds = %.preheader.preheader, %.sink.split401
-  %.ph427 = phi i32 [ %.ph, %.preheader.preheader ], [ %.sink405, %.sink.split401 ]
-  %.ph428 = phi i32 [ %.ph425, %.preheader.preheader ], [ %.ph403, %.sink.split401 ] ; 4 uses
-  %.ph429 = phi i32 [ %.ph426, %.preheader.preheader ], [ %.ph404, %.sink.split401 ]
-  br label %.preheader
+  br i1 %i.ju, label %.lr.ph269, label %..preheader_crit_edge, !llvm.loop !148
 
 .preheader:                                       ; preds = %.preheader.outer, %_ZL11DaysInMonthii.exit140
-  %i.jv = phi i32 [ %i.kv, %_ZL11DaysInMonthii.exit140 ], [ %.ph427, %.preheader.outer ] ; 5 uses
-  %i.jw = phi i32 [ %i.ku, %_ZL11DaysInMonthii.exit140 ], [ %.ph429, %.preheader.outer ] ; 5 uses
+  %i.jv = phi i32 [ %i.kv, %_ZL11DaysInMonthii.exit140 ], [ %.ph433, %.preheader.outer ] ; 5 uses
+  %i.jw = phi i32 [ %i.ku, %_ZL11DaysInMonthii.exit140 ], [ %.ph435, %.preheader.outer ] ; 5 uses
   %i.jx = sext i32 %i.jv to i64
   %i.jy = getelementptr inbounds [2 x i8], ptr @_ZZL11DaysInMonthiiE11daysInMonth, i64 %i.jx
   %i.jz = load i16, ptr %i.jy, align 2, !tbaa !151
@@ -797,8 +797,8 @@ _ZL11DaysInMonthii.exit124:                       ; preds = %bb.o, %bb.p, %_ZL10
   br i1 %i.kb, label %bb.r, label %_ZL11DaysInMonthii.exit132.thread
 
 bb.r:                                             ; preds = %.preheader
-  %i.kc = sext i32 %.ph428 to i64                 ; 2 uses
-  %i.kd = icmp slt i32 %.ph428, 0
+  %i.kc = sext i32 %.ph434 to i64                 ; 2 uses
+  %i.kd = icmp slt i32 %.ph434, 0
   %i.ke = sub nsw i64 1, %i.kc
   %spec.select.i.i126 = select i1 %i.kd, i64 %i.ke, i64 %i.kc ; 5 uses
   %i.kf = and i64 %spec.select.i.i126, 3
@@ -865,17 +865,23 @@ _ZL11DaysInMonthii.exit140:                       ; preds = %_ZL11DaysInMonthii.
   br i1 %i.kw, label %bb.u, label %.preheader, !llvm.loop !149
 
 bb.u:                                             ; preds = %_ZL11DaysInMonthii.exit140
-  %i.kx = add nsw i32 %.ph428, 1                  ; 2 uses
+  %i.kx = add nsw i32 %.ph434, 1                  ; 2 uses
   store i32 %i.kx, ptr %0, align 4, !tbaa !29
   %i.ky = add nsw i32 %i.jv, -11
   br label %.sink.split401
 
 .sink.split401:                                   ; preds = %bb.u, %_ZL11DaysInMonthii.exit140.thread
   %.sink405 = phi i32 [ 3, %_ZL11DaysInMonthii.exit140.thread ], [ %i.ky, %bb.u ] ; 2 uses
-  %.ph403 = phi i32 [ %.ph428, %_ZL11DaysInMonthii.exit140.thread ], [ %i.kx, %bb.u ]
+  %.ph403 = phi i32 [ %.ph434, %_ZL11DaysInMonthii.exit140.thread ], [ %i.kx, %bb.u ]
   %.ph404 = phi i32 [ %i.kt, %_ZL11DaysInMonthii.exit140.thread ], [ %i.ku, %bb.u ]
   store i32 %.sink405, ptr %i.ig, align 4, !tbaa !35
   br label %.preheader.outer, !llvm.loop !149
+
+.preheader.outer:                                 ; preds = %.preheader.preheader, %.sink.split401
+  %.ph433 = phi i32 [ %.ph, %.preheader.preheader ], [ %.sink405, %.sink.split401 ]
+  %.ph434 = phi i32 [ %.ph431, %.preheader.preheader ], [ %.ph403, %.sink.split401 ] ; 4 uses
+  %.ph435 = phi i32 [ %.ph432, %.preheader.preheader ], [ %.ph404, %.sink.split401 ]
+  br label %.preheader
 
 .loopexit:                                        ; preds = %_ZL11DaysInMonthii.exit132.thread, %_ZL11DaysInMonthii.exit132, %_ZL11DaysInMonthii.exit132.thread388, %bb.l
   ret void

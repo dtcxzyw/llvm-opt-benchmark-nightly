@@ -205,12 +205,12 @@ bb.bp:                                            ; preds = %bb.bo
   call fastcc void @deflate_optimize_and_flush_block(ptr noundef nonnull %0, ptr noundef %3, ptr noundef %.0151, i32 noundef %i.aau, ptr noundef nonnull %.lcssa530, i1 noundef zeroext %i.aav, i1 noundef zeroext false, ptr noundef %i.b)
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 32 %.ptr296, ptr nonnull align 2 %.lcssa530, i64 %i.aay, i1 false)
   %.add = add nuw nsw i64 %i.aay, 530368
-  %i.aaz = load <4 x i32>, ptr %i.ag, align 8, !tbaa !14
-  store <4 x i32> %i.aaz, ptr %i.ao, align 32, !tbaa !28
-  %i.aba = load <4 x i32>, ptr %i.ai, align 8, !tbaa !14
-  store <4 x i32> %i.aba, ptr %i.ap, align 16, !tbaa !28
-  %i.abb = load <2 x i32>, ptr %i.ak, align 8, !tbaa !14
-  store <2 x i32> %i.abb, ptr %i.aq, align 32, !tbaa !28
+  %i.aaz = load <4 x i32>, ptr %i.ag, align 4, !tbaa !14
+  store <4 x i32> %i.aaz, ptr %i.ao, align 4, !tbaa !28
+  %i.aba = load <4 x i32>, ptr %i.ai, align 4, !tbaa !14
+  store <4 x i32> %i.aba, ptr %i.ap, align 4, !tbaa !28
+  %i.abb = load <2 x i32>, ptr %i.ak, align 4, !tbaa !14
+  store <2 x i32> %i.abb, ptr %i.aq, align 4, !tbaa !28
   %i.abc = load i32, ptr %i.am, align 4, !tbaa !48
   store i32 %i.abc, ptr %i.ar, align 8, !tbaa !28
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ag, i8 0, i64 40, i1 false), !tbaa !14

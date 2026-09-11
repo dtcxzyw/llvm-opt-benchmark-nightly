@@ -204,13 +204,13 @@ bb.u:                                             ; preds = %huff_dec_1D.exit84,
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph, %symmetry_data.exit
-  %.promoted.i.i = phi i32 [ %.promoted.i.i22, %.lr.ph ], [ %.promoted.i.i20, %symmetry_data.exit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %symmetry_data.exit ] ; 3 uses
+  %spec.select.i.i878 = phi i32 [ %.promoted.i.i22, %.lr.ph ], [ %.promoted.i.i20, %symmetry_data.exit ]
   %.06 = phi i32 [ 0, %.lr.ph ], [ %.1, %symmetry_data.exit ] ; 5 uses
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %bb.v
-  %spec.select.i5.i.i = phi i32 [ %.promoted.i.i, %bb.v ], [ %spec.select.i.i.i, %bb.w ] ; 4 uses
+  %spec.select.i5.i.i = phi i32 [ %spec.select.i.i878, %bb.v ], [ %spec.select.i.i.i, %bb.w ] ; 4 uses
   %.0.i.i = phi i32 [ 0, %bb.v ], [ %i.eg, %bb.w ]
   %i.dq = zext nneg i32 %.0.i.i to i64
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %.070, i64 %i.dq
@@ -499,28 +499,19 @@ bb.i:                                             ; preds = %huff_dec_1D.exit, %
   br i1 %i.ad, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.i
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.af = load ptr, ptr %0, align 8, !tbaa !19    ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !18 ; 3 uses
   %.not37 = icmp eq i32 %3, 2
-  br i1 %.not37, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+  %.promoted = load i32, ptr %i.ae, align 8, !tbaa !20 ; 2 uses
+  %6 = sext i32 %4 to i64                         ; 2 uses
+  %wide.trip.count48 = sext i32 %2 to i64         ; 2 uses
+  br i1 %.not37, label %bb.j, label %.lr.ph.split
 
-.lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %6 = sext i32 %4 to i64
-  %wide.trip.count = sext i32 %2 to i64
-  %.promoted.i29.pre = load i32, ptr %i.ae, align 8, !tbaa !20
-  br label %.lr.ph.split
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  %.promoted = load i32, ptr %i.ae, align 8, !tbaa !20
-  %7 = sext i32 %4 to i64
-  %wide.trip.count46 = sext i32 %2 to i64
-  br label %bb.j
-
-bb.j:                                             ; preds = %huff_dec_1D.exit33.us, %.lr.ph.split.us
-  %indvars.iv43 = phi i64 [ %indvars.iv.next44, %huff_dec_1D.exit33.us ], [ %7, %.lr.ph.split.us ] ; 2 uses
-  %spec.select.i.i32.us36 = phi i32 [ %spec.select.i.i32.us, %huff_dec_1D.exit33.us ], [ %.promoted, %.lr.ph.split.us ]
+bb.j:                                             ; preds = %.lr.ph, %huff_dec_1D.exit33.us
+  %indvars.iv43 = phi i64 [ %indvars.iv.next44, %huff_dec_1D.exit33.us ], [ %6, %.lr.ph ] ; 2 uses
+  %spec.select.i.i32.us36 = phi i32 [ %spec.select.i.i32.us, %huff_dec_1D.exit33.us ], [ %.promoted, %.lr.ph ]
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %bb.j
@@ -552,19 +543,19 @@ huff_dec_1D.exit33.us:                            ; preds = %bb.k
   %i.ba = getelementptr inbounds [2 x i8], ptr %1, i64 %indvars.iv43
   store i16 %i.az, ptr %i.ba, align 2, !tbaa !23
   %indvars.iv.next44 = add nsw i64 %indvars.iv43, 1 ; 2 uses
-  %exitcond47.not = icmp eq i64 %indvars.iv.next44, %wide.trip.count46
+  %exitcond47.not = icmp eq i64 %indvars.iv.next44, %wide.trip.count48
   br i1 %exitcond47.not, label %._crit_edge, label %bb.j, !llvm.loop !147
 
 ._crit_edge:                                      ; preds = %bb.n, %huff_dec_1D.exit33.us, %bb.i
   ret void
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.n
-  %.promoted.i29 = phi i32 [ %.promoted.i29.pre, %.lr.ph.split.preheader ], [ %.promoted.i2949, %bb.n ]
-  %indvars.iv = phi i64 [ %6, %.lr.ph.split.preheader ], [ %indvars.iv.next, %bb.n ] ; 2 uses
+.lr.ph.split:                                     ; preds = %.lr.ph, %bb.n
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.n ], [ %6, %.lr.ph ] ; 2 uses
+  %spec.select.i36 = phi i32 [ %.promoted.i2949, %bb.n ], [ %.promoted, %.lr.ph ]
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.lr.ph.split
-  %spec.select.i5.i30 = phi i32 [ %.promoted.i29, %.lr.ph.split ], [ %spec.select.i.i32, %bb.l ] ; 4 uses
+  %spec.select.i5.i30 = phi i32 [ %spec.select.i36, %.lr.ph.split ], [ %spec.select.i.i32, %bb.l ] ; 4 uses
   %.0.i31 = phi i64 [ 0, %.lr.ph.split ], [ %i.bq, %bb.l ]
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %.024, i64 %.0.i31
   %i.bc = lshr i32 %spec.select.i5.i30, 3
@@ -616,7 +607,7 @@ bb.n:                                             ; preds = %bb.m, %huff_dec_1D.
   %i.cf = getelementptr inbounds [2 x i8], ptr %1, i64 %indvars.iv
   store i16 %.0, ptr %i.cf, align 2, !tbaa !23
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count48
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !147
 }
 

@@ -205,10 +205,10 @@ _ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backER
   %i.adc = phi i64 [ %.0.i.i136.i, %bb.by ], [ %i.vy, %bb.bx ], [ %i.vy, %bb.bt ], [ %i.vy, %bb.bv ], [ %i.vy, %bb.bu ], [ %i.vy, %.thread.3.i ] ; 5 uses
   %i.add = phi i64 [ %.0.i.i136.i, %bb.by ], [ %i.vz, %bb.bx ], [ %i.vz, %bb.bt ], [ %i.vz, %bb.bv ], [ %i.vz, %bb.bu ], [ %i.vz, %.thread.3.i ] ; 5 uses
   %i.ade = phi i64 [ %.0.i.i136.i, %bb.by ], [ %i.wa, %bb.bx ], [ %i.wa, %bb.bt ], [ %i.wa, %bb.bv ], [ %i.wa, %bb.bu ], [ %i.wa, %.thread.3.i ] ; 11 uses
-  %8 = phi i64 [ %.val168.i, %bb.by ], [ %.val168.i, %bb.bx ], [ %i.wp, %bb.bt ], [ %i.wp, %bb.bv ], [ %i.wp, %bb.bu ], [ %i.wp, %.thread.3.i ] ; 9 uses
   %i.adf = phi i64 [ %.0.i.i136.i, %bb.by ], [ %i.wb, %bb.bx ], [ %i.wb, %bb.bt ], [ %i.wb, %bb.bv ], [ %i.wb, %bb.bu ], [ %i.wb, %.thread.3.i ] ; 4 uses
   %i.adg = phi ptr [ %i.ada, %bb.by ], [ %i.wc, %bb.bx ], [ %i.wc, %bb.bt ], [ %i.wc, %bb.bv ], [ %i.wc, %bb.bu ], [ %i.wc, %.thread.3.i ] ; 6 uses
   %i.adh = phi i64 [ %.0.i.i136.i, %bb.by ], [ %i.wb, %bb.bx ], [ %i.wd, %bb.bt ], [ %i.wd, %bb.bv ], [ %i.wd, %bb.bu ], [ %i.wd, %.thread.3.i ] ; 4 uses
+  %.val168.i278 = phi i64 [ %.val168.i, %bb.by ], [ %.val168.i, %bb.bx ], [ %i.wp, %bb.bt ], [ %i.wp, %bb.bv ], [ %i.wp, %bb.bu ], [ %i.wp, %.thread.3.i ] ; 9 uses
   %i.adi = phi ptr [ %i.ada, %bb.by ], [ %i.we, %bb.bx ], [ %i.we, %bb.bt ], [ %i.we, %bb.bv ], [ %i.we, %bb.bu ], [ %i.we, %.thread.3.i ] ; 5 uses
   %i.adj = phi ptr [ %i.ada, %bb.by ], [ %i.wf, %bb.bx ], [ %i.wf, %bb.bt ], [ %i.wf, %bb.bv ], [ %i.wf, %bb.bu ], [ %i.wf, %.thread.3.i ] ; 5 uses
   %i.adk = phi ptr [ %i.ada, %bb.by ], [ %i.wg, %bb.bx ], [ %i.wg, %bb.bt ], [ %i.wg, %bb.bv ], [ %i.wg, %bb.bu ], [ %i.wg, %.thread.3.i ] ; 8 uses
@@ -254,7 +254,7 @@ bb.cc:                                            ; preds = %bb.cb
   store i16 %.2122279, ptr %i.aef, align 2, !tbaa !71
   %i.aei = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %i.adz
   store i16 0, ptr %i.aei, align 2, !tbaa !71
-  %i.aej = icmp slt i64 %8, %i.ade
+  %i.aej = icmp slt i64 %.val168.i278, %i.ade
   br i1 %i.aej, label %bb.ce, label %bb.cd, !prof !107
 
 bb.cd:                                            ; preds = %bb.cc
@@ -264,13 +264,13 @@ bb.cd:                                            ; preds = %bb.cc
   %..i.i135.1.i = tail call i64 @llvm.smax.i64(i64 %i.aem, i64 range(i64 -9223372036854775807, -9223372036854775808) %i.aek)
   %.0.i.i136.1.i = select i1 %i.ael, i64 9223372036854775807, i64 %..i.i135.1.i, !prof !109 ; 7 uses
   %i.aen = call fastcc noundef ptr @_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE17allocate_and_copyEl(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %.0.i.i136.1.i) ; 8 uses
-  %i.aeo = getelementptr inbounds [12 x i8], ptr %i.aen, i64 %8 ; 3 uses
+  %i.aeo = getelementptr inbounds [12 x i8], ptr %i.aen, i64 %.val168.i278 ; 3 uses
   store i32 %i.wk, ptr %i.aeo, align 4, !tbaa !87
   %.sroa.5.0..sroa_idx.1.i = getelementptr inbounds nuw i8, ptr %i.aeo, i64 4
   store i32 %i.adp, ptr %.sroa.5.0..sroa_idx.1.i, align 4, !tbaa !87
   %.sroa.6.0..sroa_idx.1.i = getelementptr inbounds nuw i8, ptr %i.aeo, i64 8
   store i32 %i.adx, ptr %.sroa.6.0..sroa_idx.1.i, align 4, !tbaa !87
-  %i.aep = add nuw nsw i64 %8, 1                  ; 2 uses
+  %i.aep = add nuw nsw i64 %.val168.i278, 1       ; 2 uses
   store i64 %i.aep, ptr %6, align 8, !tbaa !116
   store i64 %.0.i.i136.1.i, ptr %i.bo, align 8, !tbaa !115
   tail call void @_Z6rcFreePv(ptr noundef %i.adg) #8
@@ -278,9 +278,9 @@ bb.cd:                                            ; preds = %bb.cc
   br label %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i
 
 bb.ce:                                            ; preds = %bb.cc
-  %i.aeq = add nuw nsw i64 %8, 1                  ; 2 uses
+  %i.aeq = add nuw nsw i64 %.val168.i278, 1       ; 2 uses
   store i64 %i.aeq, ptr %6, align 8, !tbaa !116
-  %i.aer = getelementptr inbounds [12 x i8], ptr %i.adk, i64 %8 ; 3 uses
+  %i.aer = getelementptr inbounds [12 x i8], ptr %i.adk, i64 %.val168.i278 ; 3 uses
   store i32 %i.wk, ptr %i.aer, align 4, !tbaa !87
   %.sroa.5.0..sroa_idx139.1.i = getelementptr inbounds nuw i8, ptr %i.aer, i64 4
   store i32 %i.adp, ptr %.sroa.5.0..sroa_idx139.1.i, align 4, !tbaa !87
@@ -291,11 +291,11 @@ bb.ce:                                            ; preds = %bb.cc
 _ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i: ; preds = %bb.ce, %bb.cd, %bb.cb, %bb.ca, %bb.bz, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i
   %i.aes = phi i64 [ %i.adc, %bb.ce ], [ %.0.i.i136.1.i, %bb.cd ], [ %i.adc, %bb.cb ], [ %i.adc, %bb.ca ], [ %i.adc, %bb.bz ], [ %i.adc, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 5 uses
   %i.aet = phi i64 [ %i.add, %bb.ce ], [ %.0.i.i136.1.i, %bb.cd ], [ %i.add, %bb.cb ], [ %i.add, %bb.ca ], [ %i.add, %bb.bz ], [ %i.add, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 12 uses
-  %9 = phi i64 [ %i.aeq, %bb.ce ], [ %i.aep, %bb.cd ], [ %8, %bb.cb ], [ %8, %bb.ca ], [ %8, %bb.bz ], [ %8, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 9 uses
   %i.aeu = phi i64 [ %i.ade, %bb.ce ], [ %.0.i.i136.1.i, %bb.cd ], [ %i.ade, %bb.cb ], [ %i.ade, %bb.ca ], [ %i.ade, %bb.bz ], [ %i.ade, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 4 uses
   %i.aev = phi i64 [ %i.ade, %bb.ce ], [ %.0.i.i136.1.i, %bb.cd ], [ %i.adf, %bb.cb ], [ %i.adf, %bb.ca ], [ %i.adf, %bb.bz ], [ %i.adf, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 4 uses
   %i.aew = phi ptr [ %i.adg, %bb.ce ], [ %i.aen, %bb.cd ], [ %i.adg, %bb.cb ], [ %i.adg, %bb.ca ], [ %i.adg, %bb.bz ], [ %i.adg, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 6 uses
   %i.aex = phi i64 [ %i.ade, %bb.ce ], [ %.0.i.i136.1.i, %bb.cd ], [ %i.adh, %bb.cb ], [ %i.adh, %bb.ca ], [ %i.adh, %bb.bz ], [ %i.adh, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 4 uses
+  %.val168.i279 = phi i64 [ %i.aeq, %bb.ce ], [ %i.aep, %bb.cd ], [ %.val168.i278, %bb.cb ], [ %.val168.i278, %bb.ca ], [ %.val168.i278, %bb.bz ], [ %.val168.i278, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 9 uses
   %i.aey = phi ptr [ %i.adi, %bb.ce ], [ %i.aen, %bb.cd ], [ %i.adi, %bb.cb ], [ %i.adi, %bb.ca ], [ %i.adi, %bb.bz ], [ %i.adi, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 5 uses
   %i.aez = phi ptr [ %i.adj, %bb.ce ], [ %i.aen, %bb.cd ], [ %i.adj, %bb.cb ], [ %i.adj, %bb.ca ], [ %i.adj, %bb.bz ], [ %i.adj, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 9 uses
   %i.afa = phi ptr [ %i.adk, %bb.ce ], [ %i.aen, %bb.cd ], [ %i.adk, %bb.cb ], [ %i.adk, %bb.ca ], [ %i.adk, %bb.bz ], [ %i.adk, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.i ] ; 4 uses
@@ -341,7 +341,7 @@ bb.ci:                                            ; preds = %bb.ch
   store i16 %.2122279, ptr %i.afv, align 2, !tbaa !71
   %i.afy = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %i.afp
   store i16 0, ptr %i.afy, align 2, !tbaa !71
-  %i.afz = icmp slt i64 %9, %i.aet
+  %i.afz = icmp slt i64 %.val168.i279, %i.aet
   br i1 %i.afz, label %bb.ck, label %bb.cj, !prof !107
 
 bb.cj:                                            ; preds = %bb.ci
@@ -351,13 +351,13 @@ bb.cj:                                            ; preds = %bb.ci
   %..i.i135.2.i = tail call i64 @llvm.smax.i64(i64 %i.agc, i64 range(i64 -9223372036854775807, -9223372036854775808) %i.aga)
   %.0.i.i136.2.i = select i1 %i.agb, i64 9223372036854775807, i64 %..i.i135.2.i, !prof !109 ; 7 uses
   %i.agd = call fastcc noundef ptr @_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE17allocate_and_copyEl(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %.0.i.i136.2.i) ; 8 uses
-  %i.age = getelementptr inbounds [12 x i8], ptr %i.agd, i64 %9 ; 3 uses
+  %i.age = getelementptr inbounds [12 x i8], ptr %i.agd, i64 %.val168.i279 ; 3 uses
   store i32 %i.aff, ptr %i.age, align 4, !tbaa !87
   %.sroa.5.0..sroa_idx.2.i = getelementptr inbounds nuw i8, ptr %i.age, i64 4
   store i32 %i.wm, ptr %.sroa.5.0..sroa_idx.2.i, align 4, !tbaa !87
   %.sroa.6.0..sroa_idx.2.i = getelementptr inbounds nuw i8, ptr %i.age, i64 8
   store i32 %i.afn, ptr %.sroa.6.0..sroa_idx.2.i, align 4, !tbaa !87
-  %i.agf = add nuw nsw i64 %9, 1                  ; 2 uses
+  %i.agf = add nuw nsw i64 %.val168.i279, 1       ; 2 uses
   store i64 %i.agf, ptr %6, align 8, !tbaa !116
   store i64 %.0.i.i136.2.i, ptr %i.bo, align 8, !tbaa !115
   tail call void @_Z6rcFreePv(ptr noundef %i.aew) #8
@@ -365,9 +365,9 @@ bb.cj:                                            ; preds = %bb.ci
   br label %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i
 
 bb.ck:                                            ; preds = %bb.ci
-  %i.agg = add nuw nsw i64 %9, 1                  ; 2 uses
+  %i.agg = add nuw nsw i64 %.val168.i279, 1       ; 2 uses
   store i64 %i.agg, ptr %6, align 8, !tbaa !116
-  %i.agh = getelementptr inbounds [12 x i8], ptr %i.aez, i64 %9 ; 3 uses
+  %i.agh = getelementptr inbounds [12 x i8], ptr %i.aez, i64 %.val168.i279 ; 3 uses
   store i32 %i.aff, ptr %i.agh, align 4, !tbaa !87
   %.sroa.5.0..sroa_idx139.2.i = getelementptr inbounds nuw i8, ptr %i.agh, i64 4
   store i32 %i.wm, ptr %.sroa.5.0..sroa_idx139.2.i, align 4, !tbaa !87
@@ -377,12 +377,12 @@ bb.ck:                                            ; preds = %bb.ci
 
 _ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i: ; preds = %bb.ck, %bb.cj, %bb.ch, %bb.cg, %bb.cf, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i
   %i.agi = phi i64 [ %i.aes, %bb.ck ], [ %.0.i.i136.2.i, %bb.cj ], [ %i.aes, %bb.ch ], [ %i.aes, %bb.cg ], [ %i.aes, %bb.cf ], [ %i.aes, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 13 uses
-  %10 = phi i64 [ %i.agg, %bb.ck ], [ %i.agf, %bb.cj ], [ %9, %bb.ch ], [ %9, %bb.cg ], [ %9, %bb.cf ], [ %9, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 9 uses
   %i.agj = phi i64 [ %i.aet, %bb.ck ], [ %.0.i.i136.2.i, %bb.cj ], [ %i.aet, %bb.ch ], [ %i.aet, %bb.cg ], [ %i.aet, %bb.cf ], [ %i.aet, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 4 uses
   %i.agk = phi i64 [ %i.aet, %bb.ck ], [ %.0.i.i136.2.i, %bb.cj ], [ %i.aeu, %bb.ch ], [ %i.aeu, %bb.cg ], [ %i.aeu, %bb.cf ], [ %i.aeu, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 4 uses
   %i.agl = phi i64 [ %i.aet, %bb.ck ], [ %.0.i.i136.2.i, %bb.cj ], [ %i.aev, %bb.ch ], [ %i.aev, %bb.cg ], [ %i.aev, %bb.cf ], [ %i.aev, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 4 uses
   %i.agm = phi ptr [ %i.aew, %bb.ck ], [ %i.agd, %bb.cj ], [ %i.aew, %bb.ch ], [ %i.aew, %bb.cg ], [ %i.aew, %bb.cf ], [ %i.aew, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 6 uses
   %i.agn = phi i64 [ %i.aet, %bb.ck ], [ %.0.i.i136.2.i, %bb.cj ], [ %i.aex, %bb.ch ], [ %i.aex, %bb.cg ], [ %i.aex, %bb.cf ], [ %i.aex, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 4 uses
+  %.val168.i280 = phi i64 [ %i.agg, %bb.ck ], [ %i.agf, %bb.cj ], [ %.val168.i279, %bb.ch ], [ %.val168.i279, %bb.cg ], [ %.val168.i279, %bb.cf ], [ %.val168.i279, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 9 uses
   %i.ago = phi ptr [ %i.aey, %bb.ck ], [ %i.agd, %bb.cj ], [ %i.aey, %bb.ch ], [ %i.aey, %bb.cg ], [ %i.aey, %bb.cf ], [ %i.aey, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 10 uses
   %i.agp = phi ptr [ %i.aez, %bb.ck ], [ %i.agd, %bb.cj ], [ %i.aez, %bb.ch ], [ %i.aez, %bb.cg ], [ %i.aez, %bb.cf ], [ %i.aez, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 4 uses
   %i.agq = phi ptr [ %i.aez, %bb.ck ], [ %i.agd, %bb.cj ], [ %i.afa, %bb.ch ], [ %i.afa, %bb.cg ], [ %i.afa, %bb.cf ], [ %i.afa, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.1.i ] ; 4 uses
@@ -428,7 +428,7 @@ bb.co:                                            ; preds = %bb.cn
   store i16 %.2122279, ptr %i.ahl, align 2, !tbaa !71
   %i.aho = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %i.ahf
   store i16 0, ptr %i.aho, align 2, !tbaa !71
-  %i.ahp = icmp slt i64 %10, %i.agi
+  %i.ahp = icmp slt i64 %.val168.i280, %i.agi
   br i1 %i.ahp, label %bb.cq, label %bb.cp, !prof !107
 
 bb.cp:                                            ; preds = %bb.co
@@ -438,13 +438,13 @@ bb.cp:                                            ; preds = %bb.co
   %..i.i135.3.i = tail call i64 @llvm.smax.i64(i64 %i.ahs, i64 range(i64 -9223372036854775807, -9223372036854775808) %i.ahq)
   %.0.i.i136.3.i = select i1 %i.ahr, i64 9223372036854775807, i64 %..i.i135.3.i, !prof !109 ; 7 uses
   %i.aht = call fastcc noundef ptr @_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE17allocate_and_copyEl(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %.0.i.i136.3.i) ; 8 uses
-  %i.ahu = getelementptr inbounds [12 x i8], ptr %i.aht, i64 %10 ; 3 uses
+  %i.ahu = getelementptr inbounds [12 x i8], ptr %i.aht, i64 %.val168.i280 ; 3 uses
   store i32 %i.wk, ptr %i.ahu, align 4, !tbaa !87
   %.sroa.5.0..sroa_idx.3.i = getelementptr inbounds nuw i8, ptr %i.ahu, i64 4
   store i32 %i.agv, ptr %.sroa.5.0..sroa_idx.3.i, align 4, !tbaa !87
   %.sroa.6.0..sroa_idx.3.i = getelementptr inbounds nuw i8, ptr %i.ahu, i64 8
   store i32 %i.ahd, ptr %.sroa.6.0..sroa_idx.3.i, align 4, !tbaa !87
-  %i.ahv = add nuw nsw i64 %10, 1                 ; 2 uses
+  %i.ahv = add nuw nsw i64 %.val168.i280, 1       ; 2 uses
   store i64 %i.ahv, ptr %6, align 8, !tbaa !116
   store i64 %.0.i.i136.3.i, ptr %i.bo, align 8, !tbaa !115
   tail call void @_Z6rcFreePv(ptr noundef %i.agm) #8
@@ -452,9 +452,9 @@ bb.cp:                                            ; preds = %bb.co
   br label %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i
 
 bb.cq:                                            ; preds = %bb.co
-  %i.ahw = add nuw nsw i64 %10, 1                 ; 2 uses
+  %i.ahw = add nuw nsw i64 %.val168.i280, 1       ; 2 uses
   store i64 %i.ahw, ptr %6, align 8, !tbaa !116
-  %i.ahx = getelementptr inbounds [12 x i8], ptr %i.ago, i64 %10 ; 3 uses
+  %i.ahx = getelementptr inbounds [12 x i8], ptr %i.ago, i64 %.val168.i280 ; 3 uses
   store i32 %i.wk, ptr %i.ahx, align 4, !tbaa !87
   %.sroa.5.0..sroa_idx139.3.i = getelementptr inbounds nuw i8, ptr %i.ahx, i64 4
   store i32 %i.agv, ptr %.sroa.5.0..sroa_idx139.3.i, align 4, !tbaa !87
@@ -463,13 +463,13 @@ bb.cq:                                            ; preds = %bb.co
   br label %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i
 
 _ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i: ; preds = %bb.cq, %bb.cp, %bb.cn, %bb.cm, %bb.cl, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i
-  %.val.pre.i = phi i64 [ %i.ahw, %bb.cq ], [ %i.ahv, %bb.cp ], [ %10, %bb.cn ], [ %10, %bb.cm ], [ %10, %bb.cl ], [ %10, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.ahy = phi i64 [ %i.agi, %bb.cq ], [ %.0.i.i136.3.i, %bb.cp ], [ %i.agi, %bb.cn ], [ %i.agi, %bb.cm ], [ %i.agi, %bb.cl ], [ %i.agi, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.ahz = phi i64 [ %i.agi, %bb.cq ], [ %.0.i.i136.3.i, %bb.cp ], [ %i.agj, %bb.cn ], [ %i.agj, %bb.cm ], [ %i.agj, %bb.cl ], [ %i.agj, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.aia = phi i64 [ %i.agi, %bb.cq ], [ %.0.i.i136.3.i, %bb.cp ], [ %i.agk, %bb.cn ], [ %i.agk, %bb.cm ], [ %i.agk, %bb.cl ], [ %i.agk, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.aib = phi i64 [ %i.agi, %bb.cq ], [ %.0.i.i136.3.i, %bb.cp ], [ %i.agl, %bb.cn ], [ %i.agl, %bb.cm ], [ %i.agl, %bb.cl ], [ %i.agl, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.aic = phi ptr [ %i.agm, %bb.cq ], [ %i.aht, %bb.cp ], [ %i.agm, %bb.cn ], [ %i.agm, %bb.cm ], [ %i.agm, %bb.cl ], [ %i.agm, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.aid = phi i64 [ %i.agi, %bb.cq ], [ %.0.i.i136.3.i, %bb.cp ], [ %i.agn, %bb.cn ], [ %i.agn, %bb.cm ], [ %i.agn, %bb.cl ], [ %i.agn, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
+  %.val168.i281 = phi i64 [ %i.ahw, %bb.cq ], [ %i.ahv, %bb.cp ], [ %.val168.i280, %bb.cn ], [ %.val168.i280, %bb.cm ], [ %.val168.i280, %bb.cl ], [ %.val168.i280, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.aie = phi ptr [ %i.ago, %bb.cq ], [ %i.aht, %bb.cp ], [ %i.ago, %bb.cn ], [ %i.ago, %bb.cm ], [ %i.ago, %bb.cl ], [ %i.ago, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.aif = phi ptr [ %i.ago, %bb.cq ], [ %i.aht, %bb.cp ], [ %i.agp, %bb.cn ], [ %i.agp, %bb.cm ], [ %i.agp, %bb.cl ], [ %i.agp, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
   %i.aig = phi ptr [ %i.ago, %bb.cq ], [ %i.aht, %bb.cp ], [ %i.agq, %bb.cn ], [ %i.agq, %bb.cm ], [ %i.agq, %bb.cl ], [ %i.agq, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.2.i ]
@@ -485,7 +485,7 @@ _ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backER
   %i.aim = phi i64 [ %i.wb, %.thread161.i ], [ %i.aib, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i ] ; 4 uses
   %i.ain = phi ptr [ %i.wc, %.thread161.i ], [ %i.aic, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i ] ; 4 uses
   %i.aio = phi i64 [ %i.wd, %.thread161.i ], [ %i.aid, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i ] ; 4 uses
-  %.val.i245 = phi i64 [ %i.wp, %.thread161.i ], [ %.val.pre.i, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i ] ; 2 uses
+  %.val.i245 = phi i64 [ %i.wp, %.thread161.i ], [ %.val168.i281, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i ] ; 2 uses
   %i.aip = phi ptr [ %i.we, %.thread161.i ], [ %i.aie, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i ] ; 4 uses
   %i.aiq = phi ptr [ %i.wf, %.thread161.i ], [ %i.aif, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i ]
   %i.air = phi ptr [ %i.wg, %.thread161.i ], [ %i.aig, %_ZN12rcVectorBaseIN12_GLOBAL__N_115LevelStackEntryEL11rcAllocHint1EE9push_backERKS1_.exit137.3.i ]

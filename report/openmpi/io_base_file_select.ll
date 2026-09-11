@@ -145,10 +145,10 @@ bb.l:                                             ; preds = %opal_list_remove_la
   br label %opal_thread_add_fetch_32.exit
 
 bb.m:                                             ; preds = %opal_list_remove_last.exit
-  %i.am = load volatile i32, ptr %i.ah, align 8, !tbaa !27
+  %i.am = load volatile i32, ptr %i.ah, align 4, !tbaa !27
   %i.an = add nsw i32 %i.am, -1
-  store volatile i32 %i.an, ptr %i.ah, align 8, !tbaa !27
-  %i.ao = load volatile i32, ptr %i.ah, align 8, !tbaa !27
+  store volatile i32 %i.an, ptr %i.ah, align 4, !tbaa !27
+  %i.ao = load volatile i32, ptr %i.ah, align 4, !tbaa !27
   br label %opal_thread_add_fetch_32.exit
 
 opal_thread_add_fetch_32.exit:                    ; preds = %bb.l, %bb.m

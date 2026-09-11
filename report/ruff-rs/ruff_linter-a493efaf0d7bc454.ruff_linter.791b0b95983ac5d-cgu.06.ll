@@ -204,12 +204,12 @@ bb.l:                                             ; preds = %bb.j
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %i.x
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ac = load i32, ptr %i.ab, align 8, !noalias !2459, !noundef !5 ; 2 uses
-  store i32 %i.ac, ptr %i.q, align 8, !alias.scope !2459, !noalias !2460
   %i.ad = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtBV_13SemanticModel18current_statements0INtB7_5FnMutTNtNtBX_5nodes6NodeIdEE8call_mutCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, i32 noundef range(i32 1, 0) %i.u), !noalias !2457 ; 2 uses
   %.not7.i = icmp eq ptr %i.ad, null
   br i1 %.not7.i, label %bb.i, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter.exit
 
 _RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.l
+  store i32 %i.ac, ptr %i.q, align 8, !alias.scope !2459, !noalias !2460
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.n
 
@@ -612,12 +612,12 @@ bb.e:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %i.j
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.o = load i32, ptr %i.n, align 8, !noalias !3360, !noundef !5 ; 3 uses
-  store i32 %i.o, ptr %i.d, align 8, !alias.scope !3360, !noalias !3359
   %i.p = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtBV_13SemanticModel18current_statements0INtB7_5FnMutTNtNtBX_5nodes6NodeIdEE8call_mutCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, i32 noundef range(i32 1, 0) %i.g), !noalias !3358 ; 4 uses
   %.not7.i = icmp eq ptr %i.p, null
   br i1 %.not7.i, label %bb.b, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  store i32 %i.o, ptr %i.d, align 8, !alias.scope !3360, !noalias !3359
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 84
   %i.r = load i8, ptr %i.q, align 4, !range !29, !noundef !5
@@ -1020,12 +1020,12 @@ bb.ai:                                            ; preds = %bb.ag
   %i.ep = getelementptr inbounds nuw [24 x i8], ptr %i.eo, i64 %i.em
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
   %i.er = load i32, ptr %i.eq, align 8, !noalias !3684, !noundef !5 ; 3 uses
-  store i32 %i.er, ptr %i.eg, align 8, !alias.scope !3684, !noalias !3683
   %i.es = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtBV_13SemanticModel18current_statements0INtB7_5FnMutTNtNtBX_5nodes6NodeIdEE8call_mutCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.f, i32 noundef range(i32 1, 0) %i.ej), !noalias !3682 ; 2 uses
   %.not7.i = icmp eq ptr %i.es, null
   br i1 %.not7.i, label %bb.af, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
+  store i32 %i.er, ptr %i.eg, align 8, !alias.scope !3684, !noalias !3683
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 84
   %i.eu = load i8, ptr %i.et, align 4, !range !29, !noundef !5 ; 2 uses
@@ -1428,12 +1428,12 @@ bb.cq:                                            ; preds = %bb.co
   %i.tq = getelementptr inbounds nuw [24 x i8], ptr %i.tp, i64 %i.tn
   %i.tr = getelementptr inbounds nuw i8, ptr %i.tq, i64 16
   %i.ts = load i32, ptr %i.tr, align 8, !noalias !4198, !noundef !5 ; 2 uses
-  store i32 %i.ts, ptr %i.te, align 8, !alias.scope !4198, !noalias !4199
   %i.tt = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtBV_13SemanticModel18current_statements0INtB7_5FnMutTNtNtBX_5nodes6NodeIdEE8call_mutCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.e, i32 noundef range(i32 1, 0) %i.tk), !noalias !4196 ; 4 uses
   %.not7.i.i = icmp eq ptr %i.tt, null
   br i1 %.not7.i.i, label %bb.cn, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
+  store i32 %i.ts, ptr %i.te, align 8, !alias.scope !4198, !noalias !4199
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !4195
   %i.tu = getelementptr inbounds nuw i8, ptr %i.tt, i64 84
   %i.tv = load i8, ptr %i.tu, align 4, !range !29, !noundef !5
@@ -1672,12 +1672,12 @@ bb.do:                                            ; preds = %bb.dm
   %i.xl = getelementptr inbounds nuw [24 x i8], ptr %i.xk, i64 %i.xi
   %i.xm = getelementptr inbounds nuw i8, ptr %i.xl, i64 16
   %i.xn = load i32, ptr %i.xm, align 8, !noalias !4206, !noundef !5 ; 2 uses
-  store i32 %i.xn, ptr %i.wz, align 8, !alias.scope !4206, !noalias !4207
   %i.xo = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtBV_13SemanticModel18current_statements0INtB7_5FnMutTNtNtBX_5nodes6NodeIdEE8call_mutCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, i32 noundef range(i32 1, 0) %i.xf), !noalias !4204 ; 4 uses
   %.not7.i.i26 = icmp eq ptr %i.xo, null
   br i1 %.not7.i.i26, label %bb.dl, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do
+  store i32 %i.xn, ptr %i.wz, align 8, !alias.scope !4206, !noalias !4207
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !4203
   %i.xp = getelementptr inbounds nuw i8, ptr %i.xo, i64 84
   %i.xq = load i8, ptr %i.xp, align 4, !range !29, !noundef !5
@@ -2080,61 +2080,61 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ad, label %bb.n, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolved31is_immediate_resolution_context.exit.thread28
 
 bb.f:                                             ; preds = %bb.s
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !4286
-  call void @llvm.experimental.noalias.scope.decl(metadata !4287)
-  call void @llvm.experimental.noalias.scope.decl(metadata !4288)
+  store i32 %i.bw, ptr %i.bl, align 8, !alias.scope !4286, !noalias !4287
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !4288
   call void @llvm.experimental.noalias.scope.decl(metadata !4289)
-  %.promoted.i.i.i.i = load i32, ptr %i.bl, align 8, !alias.scope !4290, !noalias !4291 ; 2 uses
-  %.not.i19.not.i.i.i.i = icmp eq i32 %.promoted.i.i.i.i, 0
+  call void @llvm.experimental.noalias.scope.decl(metadata !4290)
+  call void @llvm.experimental.noalias.scope.decl(metadata !4291)
+  %.not.i19.not.i.i.i.i = icmp eq i32 %i.bw, 0
   br i1 %.not.i19.not.i.i.i.i, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5J_7helpers21on_conditional_branchBN_E0E0INtNtNtBb_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter.exit.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.f
-  %.val.i.i.i.i.i = load ptr, ptr %i.l, align 8, !alias.scope !4290, !noalias !4291, !nonnull !5, !align !6, !noundef !5 ; 2 uses
+  %.val.i.i.i.i.i = load ptr, ptr %i.l, align 8, !alias.scope !4292, !noalias !4293, !nonnull !5, !align !6, !noundef !5 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 16
-  %i.af = load i64, ptr %i.ae, align 8, !noalias !4292, !noundef !5 ; 2 uses
+  %i.af = load i64, ptr %i.ae, align 8, !noalias !4294, !noundef !5 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 8
-  %.val.i6.i.i.i.i = load ptr, ptr %i.bk, align 8, !alias.scope !4293, !noalias !4294, !nonnull !5, !align !6 ; 2 uses
+  %.val.i6.i.i.i.i = load ptr, ptr %i.bk, align 8, !alias.scope !4295, !noalias !4296, !nonnull !5, !align !6 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.val.i6.i.i.i.i, i64 80
   %i.ai = getelementptr inbounds nuw i8, ptr %.val.i6.i.i.i.i, i64 72
   br label %bb.g
 
 bb.g:                                             ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCINvNtB2a_7helpers21on_conditional_branchINtNtB6_4skip4SkipINtB4_9FilterMapINtNtNtB8_7sources10successors10SuccessorsB1e_NCNvMB1g_NtB1g_5Nodes12ancestor_ids0EB3C_EEE0E0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i, %.lr.ph.i.i.i.i
-  %i.aj = phi i32 [ %.promoted.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.aq, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCINvNtB2a_7helpers21on_conditional_branchINtNtB6_4skip4SkipINtB4_9FilterMapINtNtNtB8_7sources10successors10SuccessorsB1e_NCNvMB1g_NtB1g_5Nodes12ancestor_ids0EB3C_EEE0E0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i ]
-  call void @llvm.experimental.noalias.scope.decl(metadata !4295)
+  %i.aj = phi i32 [ %i.bw, %.lr.ph.i.i.i.i ], [ %i.aq, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCINvNtB2a_7helpers21on_conditional_branchINtNtB6_4skip4SkipINtB4_9FilterMapINtNtNtB8_7sources10successors10SuccessorsB1e_NCNvMB1g_NtB1g_5Nodes12ancestor_ids0EB3C_EEE0E0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i ]
+  call void @llvm.experimental.noalias.scope.decl(metadata !4297)
   %i.ak = add i32 %i.aj, -1
   %i.al = zext i32 %i.ak to i64                   ; 6 uses
   %i.am = icmp ugt i64 %i.af, %i.al
   br i1 %i.am, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.al, i64 noundef %i.af, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @50) #35, !noalias !4292
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.al, i64 noundef %i.af, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @50) #35, !noalias !4294
   unreachable
 
 bb.i:                                             ; preds = %bb.g
-  %i.an = load ptr, ptr %i.ag, align 8, !noalias !4292, !nonnull !5, !noundef !5
+  %i.an = load ptr, ptr %i.ag, align 8, !noalias !4294, !nonnull !5, !noundef !5
   %i.ao = getelementptr inbounds nuw [24 x i8], ptr %i.an, i64 %i.al
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
-  %i.aq = load i32, ptr %i.ap, align 8, !noalias !4292, !noundef !5 ; 2 uses
-  %i.ar = load i64, ptr %i.ah, align 8, !noalias !4296, !noundef !5 ; 2 uses
+  %i.aq = load i32, ptr %i.ap, align 8, !noalias !4294, !noundef !5 ; 2 uses
+  %i.ar = load i64, ptr %i.ah, align 8, !noalias !4298, !noundef !5 ; 2 uses
   %i.as = icmp ugt i64 %i.ar, %i.al
   br i1 %i.as, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.at = load ptr, ptr %i.ai, align 8, !noalias !4296, !nonnull !5, !noundef !5
+  %i.at = load ptr, ptr %i.ai, align 8, !noalias !4298, !nonnull !5, !noundef !5
   %i.au = getelementptr inbounds nuw [24 x i8], ptr %i.at, i64 %i.al ; 2 uses
-  %i.av = load i64, ptr %i.au, align 8, !range !7, !noalias !4296, !noundef !5
+  %i.av = load i64, ptr %i.au, align 8, !range !7, !noalias !4298, !noundef !5
   %i.aw = trunc nuw i64 %i.av to i1
   br i1 %i.aw, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCINvNtB2a_7helpers21on_conditional_branchINtNtB6_4skip4SkipINtB4_9FilterMapINtNtNtB8_7sources10successors10SuccessorsB1e_NCNvMB1g_NtB1g_5Nodes12ancestor_ids0EB3C_EEE0E0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i, label %bb.l
 
 bb.k:                                             ; preds = %bb.i
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.al, i64 noundef %i.ar, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #35, !noalias !4296
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.al, i64 noundef %i.ar, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #35, !noalias !4298
   unreachable
 
 bb.l:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 8
-  %i.ay = load ptr, ptr %i.ax, align 8, !noalias !4296, !nonnull !5, !align !6, !noundef !5 ; 2 uses
+  %i.ay = load ptr, ptr %i.ax, align 8, !noalias !4298, !nonnull !5, !align !6, !noundef !5 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 84
-  %i.ba = load i8, ptr %i.az, align 4, !range !29, !noalias !4296, !noundef !5 ; 2 uses
+  %i.ba = load i8, ptr %i.az, align 4, !range !29, !noalias !4298, !noundef !5 ; 2 uses
   %i.bb = icmp samesign ugt i8 %i.ba, 1
   %i.bc = zext nneg i8 %i.ba to i64
   %i.bd = add nsw i64 %i.bc, -1
@@ -2147,8 +2147,8 @@ bb.l:                                             ; preds = %bb.j
   ]
 
 bb.m:                                             ; preds = %bb.l
-  %i.bf = load ptr, ptr %i.ay, align 8, !noalias !4296, !nonnull !5, !noundef !5
-  %i.bg = load i32, ptr %i.bf, align 8, !range !11, !noalias !4296, !noundef !5
+  %i.bf = load ptr, ptr %i.ay, align 8, !noalias !4298, !nonnull !5, !noundef !5
+  %i.bg = load i32, ptr %i.bf, align 8, !range !11, !noalias !4298, !noundef !5
   %i.bh = icmp eq i32 %i.bg, 5
   br i1 %i.bh, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolved31is_immediate_resolution_context.exit.thread28, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCINvNtB2a_7helpers21on_conditional_branchINtNtB6_4skip4SkipINtB4_9FilterMapINtNtNtB8_7sources10successors10SuccessorsB1e_NCNvMB1g_NtB1g_5Nodes12ancestor_ids0EB3C_EEE0E0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i
 
@@ -2158,23 +2158,23 @@ _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldN
 
 bb.n:                                             ; preds = %bb.e
   %i.bi = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !4297)
-  store i64 0, ptr %i.bi, align 8, !alias.scope !4297, !noalias !4285
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !4298)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !4299)
+  store i64 0, ptr %i.bi, align 8, !alias.scope !4299, !noalias !4285
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !4300)
   %i.bj = call noundef i64 @_RNvXs_NvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10filter_map9FilterMapINtNtNtBc_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2A_NtB2A_5Nodes12ancestor_ids0ENCNvMs_NtB2C_5modelNtB47_13SemanticModel18current_statements0ENtB4_13SpecAdvanceBy15spec_advance_byCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.l, i64 noundef range(i64 0, -1) 0)
   %.not.i.i.i = icmp eq i64 %i.bj, 0
   br i1 %.not.i.i.i, label %bb.o, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5J_7helpers21on_conditional_branchBN_E0E0INtNtNtBb_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter.exit.thread.i
 
 bb.o:                                             ; preds = %bb.n
-  call void @llvm.experimental.noalias.scope.decl(metadata !4299)
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !4300)
   call void @llvm.experimental.noalias.scope.decl(metadata !4301)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !4286
-  store ptr %i.bk, ptr %i.k, align 8, !noalias !4302
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 5 uses
-  %.promoted.i.i.i.i.i.i = load i32, ptr %i.bl, align 8, !alias.scope !4303, !noalias !4304
-  %.val.i.i.i.i.i.i.i = load ptr, ptr %i.l, align 8, !alias.scope !4305, !noalias !4304, !nonnull !5, !align !6 ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !4302)
+  call void @llvm.experimental.noalias.scope.decl(metadata !4303)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !4288
+  store ptr %i.bk, ptr %i.k, align 8, !noalias !4304
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 4 uses
+  %.promoted.i.i.i.i.i.i = load i32, ptr %i.bl, align 8, !alias.scope !4286, !noalias !4287
+  %.val.i.i.i.i.i.i.i = load ptr, ptr %i.l, align 8, !alias.scope !4305, !noalias !4287, !nonnull !5, !align !6 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 16
   %i.bn = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 8
   br label %bb.p
@@ -2182,12 +2182,12 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.s, %bb.o
   %i.bo = phi i32 [ %i.bw, %bb.s ], [ %.promoted.i.i.i.i.i.i, %bb.o ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4306)
-  store i32 0, ptr %i.bl, align 8, !alias.scope !4303, !noalias !4304
   %.not.i.i.i.i.i.i.i = icmp eq i32 %i.bo, 0
   br i1 %.not.i.i.i.i.i.i.i, label %_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1M_NtB1M_5Nodes12ancestor_ids0ENCNvMs_NtB1O_5modelNtB3j_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator3nthCsEhZmuQNqkz_11ruff_linter.exit.thread7.i.i, label %bb.q
 
 _RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1M_NtB1M_5Nodes12ancestor_ids0ENCNvMs_NtB1O_5modelNtB3j_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator3nthCsEhZmuQNqkz_11ruff_linter.exit.thread7.i.i: ; preds = %bb.p
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !4286
+  store i32 0, ptr %i.bl, align 8, !alias.scope !4286, !noalias !4287
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !4288
   br label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5J_7helpers21on_conditional_branchBN_E0E0INtNtNtBb_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter.exit.thread.i
 
 bb.q:                                             ; preds = %bb.p
@@ -2205,14 +2205,13 @@ bb.s:                                             ; preds = %bb.q
   %i.bt = load ptr, ptr %i.bn, align 8, !noalias !4307, !nonnull !5, !noundef !5
   %i.bu = getelementptr inbounds nuw [24 x i8], ptr %i.bt, i64 %i.br
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
-  %i.bw = load i32, ptr %i.bv, align 8, !noalias !4307, !noundef !5 ; 2 uses
-  store i32 %i.bw, ptr %i.bl, align 8, !alias.scope !4303, !noalias !4304
+  %i.bw = load i32, ptr %i.bv, align 8, !noalias !4307, !noundef !5 ; 4 uses
   %i.bx = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtBV_13SemanticModel18current_statements0INtB7_5FnMutTNtNtBX_5nodes6NodeIdEE8call_mutCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.k, i32 noundef range(i32 1, 0) %i.bo), !noalias !4308
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.bx, null
   br i1 %.not7.i.i.i.i.i.i, label %bb.p, label %bb.f
 
 _RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5J_7helpers21on_conditional_branchBN_E0E0INtNtNtBb_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCINvNtB2a_7helpers21on_conditional_branchINtNtB6_4skip4SkipINtB4_9FilterMapINtNtNtB8_7sources10successors10SuccessorsB1e_NCNvMB1g_NtB1g_5Nodes12ancestor_ids0EB3C_EEE0E0E0CsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i, %bb.f
-  store i32 0, ptr %i.bl, align 8, !alias.scope !4290, !noalias !4291
+  store i32 0, ptr %i.bl, align 8, !alias.scope !4292, !noalias !4293
   br label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5J_7helpers21on_conditional_branchBN_E0E0INtNtNtBb_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter.exit.thread.i
 
 _RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5J_7helpers21on_conditional_branchBN_E0E0INtNtNtBb_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter.exit.thread.i: ; preds = %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5J_7helpers21on_conditional_branchBN_E0E0INtNtNtBb_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter.exit.i, %_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1M_NtB1M_5Nodes12ancestor_ids0ENCNvMs_NtB1O_5modelNtB3j_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator3nthCsEhZmuQNqkz_11ruff_linter.exit.thread7.i.i, %bb.n
@@ -2615,61 +2614,61 @@ bb.a:
   br i1 %.not.i.i, label %bb.h, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB6F_.exit
 
 bb.b:                                             ; preds = %bb.l
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5577
-  call void @llvm.experimental.noalias.scope.decl(metadata !5578)
-  call void @llvm.experimental.noalias.scope.decl(metadata !5579)
+  store i32 %i.an, ptr %i.ac, align 8, !alias.scope !5577, !noalias !5578
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5579
   call void @llvm.experimental.noalias.scope.decl(metadata !5580)
-  %.promoted.i.i.i = load i32, ptr %i.ac, align 8, !alias.scope !5581, !noalias !5580 ; 2 uses
-  %.not.i18.not.i.i.i = icmp eq i32 %.promoted.i.i.i, 0
+  call void @llvm.experimental.noalias.scope.decl(metadata !5581)
+  call void @llvm.experimental.noalias.scope.decl(metadata !5582)
+  %.not.i18.not.i.i.i = icmp eq i32 %i.an, 0
   br i1 %.not.i18.not.i.i.i, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB6F_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.b
-  %.val.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !5581, !noalias !5580, !nonnull !5, !align !6, !noundef !5 ; 2 uses
+  %.val.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !5583, !noalias !5582, !nonnull !5, !align !6, !noundef !5 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 16
-  %i.g = load i64, ptr %i.f, align 8, !noalias !5582, !noundef !5 ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !noalias !5584, !noundef !5 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 8
-  %.val.i6.i.i.i = load ptr, ptr %i.ab, align 8, !alias.scope !5583, !noalias !5579, !nonnull !5, !align !6 ; 2 uses
+  %.val.i6.i.i.i = load ptr, ptr %i.ab, align 8, !alias.scope !5585, !noalias !5581, !nonnull !5, !align !6 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.val.i6.i.i.i, i64 80
   %i.j = getelementptr inbounds nuw i8, ptr %.val.i6.i.i.i, i64 72
   br label %bb.c
 
 bb.c:                                             ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B5G_.exit.backedge.i.i.i, %.lr.ph.i.i.i
-  %i.k = phi i32 [ %.promoted.i.i.i, %.lr.ph.i.i.i ], [ %i.r, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B5G_.exit.backedge.i.i.i ]
-  call void @llvm.experimental.noalias.scope.decl(metadata !5584)
+  %i.k = phi i32 [ %i.an, %.lr.ph.i.i.i ], [ %i.r, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B5G_.exit.backedge.i.i.i ]
+  call void @llvm.experimental.noalias.scope.decl(metadata !5586)
   %i.l = add i32 %i.k, -1
   %i.m = zext i32 %i.l to i64                     ; 6 uses
   %i.n = icmp ugt i64 %i.g, %i.m
   br i1 %i.n, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.m, i64 noundef %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @50) #35, !noalias !5582
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.m, i64 noundef %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @50) #35, !noalias !5584
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %i.o = load ptr, ptr %i.h, align 8, !noalias !5582, !nonnull !5, !noundef !5
+  %i.o = load ptr, ptr %i.h, align 8, !noalias !5584, !nonnull !5, !noundef !5
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %i.m
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %i.r = load i32, ptr %i.q, align 8, !noalias !5582, !noundef !5 ; 2 uses
-  %i.s = load i64, ptr %i.i, align 8, !noalias !5585, !noundef !5 ; 2 uses
+  %i.r = load i32, ptr %i.q, align 8, !noalias !5584, !noundef !5 ; 2 uses
+  %i.s = load i64, ptr %i.i, align 8, !noalias !5587, !noundef !5 ; 2 uses
   %i.t = icmp ugt i64 %i.s, %i.m
   br i1 %i.t, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = load ptr, ptr %i.j, align 8, !noalias !5585, !nonnull !5, !noundef !5
+  %i.u = load ptr, ptr %i.j, align 8, !noalias !5587, !nonnull !5, !noundef !5
   %i.v = getelementptr inbounds nuw [24 x i8], ptr %i.u, i64 %i.m ; 2 uses
-  %i.w = load i64, ptr %i.v, align 8, !range !7, !noalias !5585, !noundef !5
+  %i.w = load i64, ptr %i.v, align 8, !range !7, !noalias !5587, !noundef !5
   %i.x = trunc nuw i64 %i.w to i1
   br i1 %i.x, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B5G_.exit.backedge.i.i.i, label %.split.i.i.i
 
 bb.g:                                             ; preds = %bb.e
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.m, i64 noundef %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #35, !noalias !5585
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.m, i64 noundef %i.s, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #35, !noalias !5587
   unreachable
 
 .split.i.i.i:                                     ; preds = %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %i.z = load ptr, ptr %i.y, align 8, !noalias !5585, !nonnull !5, !align !6, !noundef !5
+  %i.z = load ptr, ptr %i.y, align 8, !noalias !5587, !nonnull !5, !align !6, !noundef !5
   %i.aa = getelementptr i8, ptr %i.z, i64 84
-  %.val5.i.i.i.i = load i8, ptr %i.aa, align 4, !range !29, !noalias !5585, !noundef !5
+  %.val5.i.i.i.i = load i8, ptr %i.aa, align 4, !range !29, !noalias !5587, !noundef !5
   %switch.i.i.i.i.i.i = icmp samesign ult i8 %.val5.i.i.i.i, 3
   br i1 %switch.i.i.i.i.i.i, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB6F_.exit, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMs_NtB1i_5modelNtB3J_13SemanticModel18current_statements0NCINvNvNtNtNtB8_6traits8iterator8Iterator3any5checkB25_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B5G_.exit.backedge.i.i.i
 
@@ -2678,15 +2677,15 @@ _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map19filter_map_try_foldN
   br i1 %.not.i.not.i.i.i, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB6F_.exit, label %bb.c
 
 bb.h:                                             ; preds = %bb.a
-  call void @llvm.experimental.noalias.scope.decl(metadata !5586)
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !5587)
   call void @llvm.experimental.noalias.scope.decl(metadata !5588)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5577
-  store ptr %i.ab, ptr %i.a, align 8, !noalias !5589
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
-  %.promoted.i.i.i.i.i = load i32, ptr %i.ac, align 8, !alias.scope !5590, !noalias !5591
-  %.val.i.i.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !5592, !noalias !5591, !nonnull !5, !align !6 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !5589)
+  call void @llvm.experimental.noalias.scope.decl(metadata !5590)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5579
+  store ptr %i.ab, ptr %i.a, align 8, !noalias !5591
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %.promoted.i.i.i.i.i = load i32, ptr %i.ac, align 8, !alias.scope !5577, !noalias !5578
+  %.val.i.i.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !5592, !noalias !5578, !nonnull !5, !align !6 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i, i64 16
   %i.ae = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i, i64 8
   br label %bb.i
@@ -2698,7 +2697,7 @@ bb.i:                                             ; preds = %bb.l, %bb.h
   br i1 %.not.i.i.i.i.i.i, label %_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1M_NtB1M_5Nodes12ancestor_ids0ENCNvMs_NtB1O_5modelNtB3j_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator3nthCsEhZmuQNqkz_11ruff_linter.exit.thread7.i, label %bb.j
 
 _RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1M_NtB1M_5Nodes12ancestor_ids0ENCNvMs_NtB1O_5modelNtB3j_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator3nthCsEhZmuQNqkz_11ruff_linter.exit.thread7.i: ; preds = %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5577
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5579
   br label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtB7_10filter_map9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB2a_NtB2a_5Nodes12ancestor_ids0ENCNvMs_NtB2c_5modelNtB3H_13SemanticModel18current_statements0EENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4B_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB6F_.exit
 
 bb.j:                                             ; preds = %bb.i
@@ -2716,8 +2715,7 @@ bb.l:                                             ; preds = %bb.j
   %i.ak = load ptr, ptr %i.ae, align 8, !noalias !5594, !nonnull !5, !noundef !5
   %i.al = getelementptr inbounds nuw [24 x i8], ptr %i.ak, i64 %i.ai
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
-  %i.an = load i32, ptr %i.am, align 8, !noalias !5594, !noundef !5 ; 2 uses
-  store i32 %i.an, ptr %i.ac, align 8, !alias.scope !5590, !noalias !5591
+  %i.an = load i32, ptr %i.am, align 8, !noalias !5594, !noundef !5 ; 4 uses
   %i.ao = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtBV_13SemanticModel18current_statements0INtB7_5FnMutTNtNtBX_5nodes6NodeIdEE8call_mutCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, i32 noundef range(i32 1, 0) %i.af), !noalias !5595
   %.not7.i.i.i.i.i = icmp eq ptr %i.ao, null
   br i1 %.not7.i.i.i.i.i, label %bb.i, label %bb.b
@@ -3120,12 +3118,12 @@ bb.g:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %i.m
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.r = load i32, ptr %i.q, align 8, !noalias !7261, !noundef !5 ; 2 uses
-  store i32 %i.r, ptr %i.f, align 8, !alias.scope !7261, !noalias !7262
   %i.s = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtBV_13SemanticModel18current_statements0INtB7_5FnMutTNtNtBX_5nodes6NodeIdEE8call_mutCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a, i32 noundef range(i32 1, 0) %i.j), !noalias !7259 ; 2 uses
   %.not7.i = icmp eq ptr %i.s, null
   br i1 %.not7.i, label %bb.d, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter.exit
 
 _RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.g
+  store i32 %i.r, ptr %i.f, align 8, !alias.scope !7261, !noalias !7262
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.i
 
@@ -3528,18 +3526,18 @@ begin_hunk_7_@llvm.vector.reduce.add.v2i64
 !4242 = distinct !{!4242, !"_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB5_9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1S_NtB1S_5Nodes12ancestor_ids0ENCNvMs_NtB1U_5modelNtB3p_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter"}
 !4243 = distinct !{!4243, !4242, !"_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB5_9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1S_NtB1S_5Nodes12ancestor_ids0ENCNvMs_NtB1U_5modelNtB3p_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter: argument 0"}
 !4244 = distinct !{!4244, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter"}
-!4245 = distinct !{!4245, !4244, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter: argument 1"}
-!4246 = distinct !{!4246, !4244, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter: argument 0"}
-!4247 = distinct !{!4247, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBa_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1T_NtB1T_5Nodes12ancestor_ids0ENCNvMs_NtB1V_5modelNtB3q_13SemanticModel18current_statements0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB4j_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5r_7helpers21on_conditional_branchINtNtB8_4skip4SkipBV_EE0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter"}
-!4248 = distinct !{!4248, !4247, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBa_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1T_NtB1T_5Nodes12ancestor_ids0ENCNvMs_NtB1V_5modelNtB3q_13SemanticModel18current_statements0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB4j_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5r_7helpers21on_conditional_branchINtNtB8_4skip4SkipBV_EE0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter: argument 0"}
-!4249 = distinct !{!4249, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCINvNtB4h_7helpers21on_conditional_branchINtNtB3n_4skip4SkipINtB3l_9FilterMapB3_B5J_EEE0E0E0B52_ECsEhZmuQNqkz_11ruff_linter"}
-!4250 = distinct !{!4250, !4249, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCINvNtB4h_7helpers21on_conditional_branchINtNtB3n_4skip4SkipINtB3l_9FilterMapB3_B5J_EEE0E0E0B52_ECsEhZmuQNqkz_11ruff_linter: argument 0"}
-!4251 = distinct !{!4251, !4249, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCINvNtB4h_7helpers21on_conditional_branchINtNtB3n_4skip4SkipINtB3l_9FilterMapB3_B5J_EEE0E0E0B52_ECsEhZmuQNqkz_11ruff_linter: argument 1"}
-!4252 = distinct !{!4252, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter"}
-!4253 = distinct !{!4253, !4252, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter: argument 0"}
-!4254 = distinct !{!4254, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter"}
-!4255 = distinct !{!4255, !4254, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter: argument 0"}
-!4256 = distinct !{!4256, !4254, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter: argument 1"}
+!4245 = distinct !{!4245, !4244, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter: argument 0"}
+!4246 = distinct !{!4246, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter"}
+!4247 = distinct !{!4247, !4246, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter: argument 0"}
+!4248 = distinct !{!4248, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter"}
+!4249 = distinct !{!4249, !4248, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter: argument 0"}
+!4250 = distinct !{!4250, !4244, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter: argument 1"}
+!4251 = distinct !{!4251, !4246, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter: argument 1"}
+!4252 = distinct !{!4252, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBa_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1T_NtB1T_5Nodes12ancestor_ids0ENCNvMs_NtB1V_5modelNtB3q_13SemanticModel18current_statements0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB4j_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5r_7helpers21on_conditional_branchINtNtB8_4skip4SkipBV_EE0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter"}
+!4253 = distinct !{!4253, !4252, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBa_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1T_NtB1T_5Nodes12ancestor_ids0ENCNvMs_NtB1V_5modelNtB3q_13SemanticModel18current_statements0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB4j_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCINvNtB5r_7helpers21on_conditional_branchINtNtB8_4skip4SkipBV_EE0E0INtNtNtBc_3ops12control_flow11ControlFlowuEECsEhZmuQNqkz_11ruff_linter: argument 0"}
+!4254 = distinct !{!4254, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCINvNtB4h_7helpers21on_conditional_branchINtNtB3n_4skip4SkipINtB3l_9FilterMapB3_B5J_EEE0E0E0B52_ECsEhZmuQNqkz_11ruff_linter"}
+!4255 = distinct !{!4255, !4254, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCINvNtB4h_7helpers21on_conditional_branchINtNtB3n_4skip4SkipINtB3l_9FilterMapB3_B5J_EEE0E0E0B52_ECsEhZmuQNqkz_11ruff_linter: argument 0"}
+!4256 = distinct !{!4256, !4254, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCINvNtB4h_7helpers21on_conditional_branchINtNtB3n_4skip4SkipINtB3l_9FilterMapB3_B5J_EEE0E0E0B52_ECsEhZmuQNqkz_11ruff_linter: argument 1"}
 !4257 = distinct !{!4257, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter"}
 !4258 = distinct !{!4258, !4257, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter: argument 0"}
 !4259 = distinct !{!4259, !"_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolved21lazy_import_statement"}
@@ -3569,29 +3567,29 @@ begin_hunk_7_@llvm.vector.reduce.add.v2i64
 !4283 = distinct !{!4283, !"_RNCNvXNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolvedNtB4_29LazyImportImmediatelyResolvedNtNtBc_9violation9Violation9fix_title0Bc_"}
 !4284 = distinct !{!4284, !4283, !"_RNCNvXNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules32lazy_import_immediately_resolvedNtB4_29LazyImportImmediatelyResolvedNtNtBc_9violation9Violation9fix_title0Bc_: argument 0"}
 !4285 = !{!4237}
-!4286 = !{!4246, !4245, !4243, !4241, !4239, !4237}
-!4287 = !{!4248}
-!4288 = !{!4250}
-!4289 = !{!4251}
-!4290 = !{!4253, !4250, !4248, !4239}
-!4291 = !{!4251, !4237}
-!4292 = !{!4253, !4250, !4251, !4248}
-!4293 = !{!4251, !4248, !4239}
-!4294 = !{!4250, !4237}
-!4295 = !{!4253}
-!4296 = !{!4250, !4251, !4248}
-!4297 = !{!4239}
-!4298 = !{!4241}
-!4299 = !{!4243}
-!4300 = !{!4246}
-!4301 = !{!4255}
-!4302 = !{!4255, !4256, !4246, !4245, !4243, !4241, !4239, !4237}
-!4303 = !{!4258, !4255, !4246, !4243, !4241, !4239}
-!4304 = !{!4256, !4245, !4237}
-!4305 = !{!4255, !4246, !4243, !4241, !4239}
-!4306 = !{!4258}
-!4307 = !{!4258, !4255, !4246}
-!4308 = !{!4255, !4246}
+!4286 = !{!4249, !4247, !4245, !4243, !4241, !4239}
+!4287 = !{!4251, !4250, !4237}
+!4288 = !{!4245, !4250, !4243, !4241, !4239, !4237}
+!4289 = !{!4253}
+!4290 = !{!4255}
+!4291 = !{!4256}
+!4292 = !{!4258, !4255, !4253, !4239}
+!4293 = !{!4256, !4237}
+!4294 = !{!4258, !4255, !4256, !4253}
+!4295 = !{!4256, !4253, !4239}
+!4296 = !{!4255, !4237}
+!4297 = !{!4258}
+!4298 = !{!4255, !4256, !4253}
+!4299 = !{!4239}
+!4300 = !{!4241}
+!4301 = !{!4243}
+!4302 = !{!4245}
+!4303 = !{!4247}
+!4304 = !{!4247, !4251, !4245, !4250, !4243, !4241, !4239, !4237}
+!4305 = !{!4247, !4245, !4243, !4241, !4239}
+!4306 = !{!4249}
+!4307 = !{!4249, !4247, !4245}
+!4308 = !{!4247, !4245}
 !4309 = !{!4260}
 !4310 = !{!4261}
 !4311 = !{!4264, !4263}
@@ -3994,41 +3992,41 @@ begin_hunk_8_@llvm.vector.reduce.add.v2i64
 !5558 = distinct !{!5558, !"_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB5_9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1S_NtB1S_5Nodes12ancestor_ids0ENCNvMs_NtB1U_5modelNtB3p_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter"}
 !5559 = distinct !{!5559, !5558, !"_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB5_9FilterMapINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1S_NtB1S_5Nodes12ancestor_ids0ENCNvMs_NtB1U_5modelNtB3p_13SemanticModel18current_statements0ENtNtNtB9_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter: argument 0"}
 !5560 = distinct !{!5560, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter"}
-!5561 = distinct !{!5561, !5560, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter: argument 1"}
-!5562 = distinct !{!5562, !5560, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter: argument 0"}
-!5563 = distinct !{!5563, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBa_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1T_NtB1T_5Nodes12ancestor_ids0ENCNvMs_NtB1V_5modelNtB3q_13SemanticModel18current_statements0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB4j_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBc_3ops12control_flow11ControlFlowuEEB6n_"}
-!5564 = distinct !{!5564, !5563, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBa_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1T_NtB1T_5Nodes12ancestor_ids0ENCNvMs_NtB1V_5modelNtB3q_13SemanticModel18current_statements0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB4j_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBc_3ops12control_flow11ControlFlowuEEB6n_: argument 0"}
-!5565 = distinct !{!5565, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B52_EB7j_"}
-!5566 = distinct !{!5566, !5565, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B52_EB7j_: argument 0"}
-!5567 = distinct !{!5567, !5565, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B52_EB7j_: argument 1"}
-!5568 = distinct !{!5568, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter"}
-!5569 = distinct !{!5569, !5568, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter: argument 0"}
-!5570 = distinct !{!5570, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter"}
-!5571 = distinct !{!5571, !5570, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter: argument 0"}
-!5572 = distinct !{!5572, !5570, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter: argument 1"}
+!5561 = distinct !{!5561, !5560, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter: argument 0"}
+!5562 = distinct !{!5562, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter"}
+!5563 = distinct !{!5563, !5562, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter: argument 0"}
+!5564 = distinct !{!5564, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter"}
+!5565 = distinct !{!5565, !5564, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter: argument 0"}
+!5566 = distinct !{!5566, !5560, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8find_mapRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4c_13SemanticModel18current_statements0ECsEhZmuQNqkz_11ruff_linter: argument 1"}
+!5567 = distinct !{!5567, !5562, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2y_8find_map5checkB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtQNCNvMs_NtB1a_5modelNtB4H_13SemanticModel18current_statements0E0INtNtNtBc_3ops12control_flow11ControlFlowB3K_EECsEhZmuQNqkz_11ruff_linter: argument 1"}
+!5568 = distinct !{!5568, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBa_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1T_NtB1T_5Nodes12ancestor_ids0ENCNvMs_NtB1V_5modelNtB3q_13SemanticModel18current_statements0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB4j_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBc_3ops12control_flow11ControlFlowuEEB6n_"}
+!5569 = distinct !{!5569, !5568, !"_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBa_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1T_NtB1T_5Nodes12ancestor_ids0ENCNvMs_NtB1V_5modelNtB3q_13SemanticModel18current_statements0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB4j_3any5checkRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0INtNtNtBc_3ops12control_flow11ControlFlowuEEB6n_: argument 0"}
+!5570 = distinct !{!5570, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B52_EB7j_"}
+!5571 = distinct !{!5571, !5570, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B52_EB7j_: argument 0"}
+!5572 = distinct !{!5572, !5570, !"_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB18_NtB18_5Nodes12ancestor_ids0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtNtBa_8adapters10filter_map19filter_map_try_foldB16_RNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtuINtNtNtBc_3ops12control_flow11ControlFlowuENCNvMs_NtB1a_5modelNtB5Q_13SemanticModel18current_statements0NCINvNvB2y_3any5checkB4c_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules6pep69517in_nested_context0E0E0B52_EB7j_: argument 1"}
 !5573 = distinct !{!5573, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter"}
 !5574 = distinct !{!5574, !5573, !"_RNvXNtNtNtCs4NRVxsYgnAr_4core4iter7sources10successorsINtB2_10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1a_NtB1a_5Nodes12ancestor_ids0ENtNtNtB6_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter: argument 0"}
 !5575 = !{!5555}
 !5576 = !{!5557}
-!5577 = !{!5562, !5561, !5559, !5557, !5555}
-!5578 = !{!5564}
-!5579 = !{!5566}
-!5580 = !{!5567}
-!5581 = !{!5569, !5566, !5564, !5555}
-!5582 = !{!5569, !5566, !5567, !5564}
-!5583 = !{!5567, !5564, !5555}
-!5584 = !{!5569}
-!5585 = !{!5566, !5567, !5564}
-!5586 = !{!5559}
-!5587 = !{!5562}
-!5588 = !{!5571}
-!5589 = !{!5571, !5572, !5562, !5561, !5559, !5557, !5555}
-!5590 = !{!5574, !5571, !5562, !5559, !5557, !5555}
-!5591 = !{!5572, !5561}
-!5592 = !{!5571, !5562, !5559, !5557, !5555}
-!5593 = !{!5574}
-!5594 = !{!5574, !5571, !5562}
-!5595 = !{!5571, !5562}
+!5577 = !{!5565, !5563, !5561, !5559, !5557, !5555}
+!5578 = !{!5567, !5566}
+!5579 = !{!5561, !5566, !5559, !5557, !5555}
+!5580 = !{!5569}
+!5581 = !{!5571}
+!5582 = !{!5572}
+!5583 = !{!5574, !5571, !5569, !5555}
+!5584 = !{!5574, !5571, !5572, !5569}
+!5585 = !{!5572, !5569, !5555}
+!5586 = !{!5574}
+!5587 = !{!5571, !5572, !5569}
+!5588 = !{!5559}
+!5589 = !{!5561}
+!5590 = !{!5563}
+!5591 = !{!5563, !5567, !5561, !5566, !5559, !5557, !5555}
+!5592 = !{!5563, !5561, !5559, !5557, !5555}
+!5593 = !{!5565}
+!5594 = !{!5565, !5563, !5561}
+!5595 = !{!5563, !5561}
 !5596 = distinct !{!5596, !"_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr8as_bytes"}
 !5597 = distinct !{!5597, !5596, !"_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr8as_bytes: argument 0"}
 !5598 = distinct !{!5598, !"_RNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4_13SemanticModel9statement"}

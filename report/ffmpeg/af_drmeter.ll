@@ -202,7 +202,7 @@ bb.a:
   %i.r = phi i32 [ %i.p, %.lr.ph49.split.preheader ], [ %i.ac, %._crit_edge47.a ] ; 2 uses
   %i.s = phi i32 [ %i.p, %.lr.ph49.split.preheader ], [ %i.ad, %._crit_edge47.a ] ; 2 uses
   %indvars.iv53 = phi i64 [ 0, %.lr.ph49.split.preheader ], [ %indvars.iv.next54, %._crit_edge47.a ] ; 3 uses
-  %i.t = getelementptr inbounds nuw [262176 x i8], ptr %i.k, i64 %indvars.iv53 ; 8 uses
+  %i.t = getelementptr inbounds nuw [262176 x i8], ptr %i.k, i64 %indvars.iv53 ; 7 uses
   %i.u = icmp sgt i32 %i.s, 0
   br i1 %i.u, label %.lr.ph, label %._crit_edge47.a
 
@@ -220,9 +220,13 @@ bb.a:
   %.pre59 = load i64, ptr %i.t, align 8, !tbaa !29
   br label %bb.b
 
-._crit_edge47.a:                                  ; preds = %update_stat.exit, %.lr.ph49.split
-  %i.ac = phi i32 [ %i.r, %.lr.ph49.split ], [ %i.bl, %update_stat.exit ]
-  %i.ad = phi i32 [ %i.s, %.lr.ph49.split ], [ %i.bl, %update_stat.exit ]
+._crit_edge47:                                    ; preds = %update_stat.exit
+  store i64 %i.bm, ptr %i.t, align 8, !tbaa !29
+  br label %._crit_edge47.a
+
+._crit_edge47.a:                                  ; preds = %._crit_edge47, %.lr.ph49.split
+  %i.ac = phi i32 [ %i.bl, %._crit_edge47 ], [ %i.r, %.lr.ph49.split ]
+  %i.ad = phi i32 [ %i.bl, %._crit_edge47 ], [ %i.s, %.lr.ph49.split ]
   %indvars.iv.next54 = add nuw nsw i64 %indvars.iv53, 1 ; 2 uses
   %exitcond57.not = icmp eq i64 %indvars.iv.next54, %wide.trip.count56
   br i1 %exitcond57.not, label %.loopexit, label %.lr.ph49.split, !llvm.loop !47
@@ -240,8 +244,7 @@ bb.b:                                             ; preds = %.lr.ph, %update_sta
   store float %i.ak, ptr %i.x, align 8, !tbaa !31
   %i.al = tail call nsz float @llvm.fmuladd.f32(float %i.ai, float %i.ai, float %i.ag) ; 3 uses
   store float %i.al, ptr %i.y, align 4, !tbaa !30
-  %i.am = add i64 %i.af, 1                        ; 4 uses
-  store i64 %i.am, ptr %i.t, align 8, !tbaa !29
+  %i.am = add i64 %i.af, 1                        ; 3 uses
   %.not.i = icmp ult i64 %i.am, %.val35
   br i1 %.not.i, label %update_stat.exit, label %bb.c
 
@@ -271,7 +274,6 @@ bb.c:                                             ; preds = %bb.b
   %i.bi = add i32 %i.bh, 1
   store i32 %i.bi, ptr %i.bg, align 4, !tbaa !32
   store <2 x float> zeroinitializer, ptr %i.x, align 8, !tbaa !33
-  store i64 0, ptr %i.t, align 8, !tbaa !29
   %i.bj = load i64, ptr %i.ab, align 8, !tbaa !28
   %i.bk = add i64 %i.bj, 1
   store i64 %i.bk, ptr %i.ab, align 8, !tbaa !28
@@ -280,13 +282,13 @@ bb.c:                                             ; preds = %bb.b
 
 update_stat.exit:                                 ; preds = %bb.b, %bb.c
   %i.bl = phi i32 [ %i.ae, %bb.b ], [ %.pre60, %bb.c ] ; 4 uses
-  %i.bm = phi i64 [ %i.am, %bb.b ], [ 0, %bb.c ]
+  %i.bm = phi i64 [ %i.am, %bb.b ], [ 0, %bb.c ]  ; 2 uses
   %i.bn = phi float [ %i.al, %bb.b ], [ 0.000000e+00, %bb.c ]
   %i.bo = phi float [ %i.ak, %bb.b ], [ 0.000000e+00, %bb.c ]
   %i.bp = add nuw nsw i32 %.03245, 1              ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.03344, i64 4
   %i.br = icmp slt i32 %i.bp, %i.bl
-  br i1 %i.br, label %bb.b, label %._crit_edge47.a, !llvm.loop !48
+  br i1 %i.br, label %bb.b, label %._crit_edge47, !llvm.loop !48
 
 bb.d:                                             ; preds = %bb.a
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses

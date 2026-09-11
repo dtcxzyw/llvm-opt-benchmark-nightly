@@ -205,12 +205,12 @@ Vec_StrGetI.exit416.i:                            ; preds = %._crit_edge.loopexi
   br label %bb.ae
 
 bb.ae:                                            ; preds = %._crit_edge798.i, %.lr.ph801.i
-  %i.mh = phi i32 [ %.promoted.i493909.i, %.lr.ph801.i ], [ %.promoted.i493.pre.i, %._crit_edge798.i ]
-  %i.mi = phi i32 [ %.pre123, %.lr.ph801.i ], [ %i.mw, %._crit_edge798.i ] ; 7 uses
-  %.pre893.i = phi i32 [ %.pre, %.lr.ph801.i ], [ %i.my, %._crit_edge798.i ] ; 3 uses
+  %i.mh = phi i32 [ %.pre123, %.lr.ph801.i ], [ %i.mw, %._crit_edge798.i ] ; 7 uses
+  %i.mi = phi i32 [ %.pre, %.lr.ph801.i ], [ %i.my, %._crit_edge798.i ] ; 3 uses
+  %.pre893.i = phi i32 [ %.promoted.i493909.i, %.lr.ph801.i ], [ %.promoted.i493.pre.i, %._crit_edge798.i ]
   %.1800.i = phi i32 [ %i.md, %.lr.ph801.i ], [ %i.sg, %._crit_edge798.i ]
   %i.mj = tail call noalias noundef dereferenceable_or_null(56) ptr @calloc(i64 noundef 1, i64 noundef 56) #20 ; 11 uses
-  %i.mk = icmp eq i32 %.pre893.i, %i.mi
+  %i.mk = icmp eq i32 %i.mi, %i.mh
   br i1 %i.mk, label %bb.af, label %.Vec_PtrPush.exit424_crit_edge.i
 
 .Vec_PtrPush.exit424_crit_edge.i:                 ; preds = %bb.ae
@@ -218,7 +218,7 @@ bb.ae:                                            ; preds = %._crit_edge798.i, %
   br label %Vec_PtrPush.exit424.i
 
 bb.af:                                            ; preds = %bb.ae
-  %i.ml = icmp slt i32 %i.mi, 16
+  %i.ml = icmp slt i32 %i.mh, 16
   br i1 %i.ml, label %bb.ag, label %bb.aj
 
 bb.ag:                                            ; preds = %bb.af
@@ -235,10 +235,10 @@ bb.ai:                                            ; preds = %bb.ag
   br label %Vec_PtrGrow.exit12.sink.split.i420.i
 
 bb.aj:                                            ; preds = %bb.af
-  %i.mp = icmp samesign ult i32 %i.mi, 1073741823
-  %i.mq = shl nuw nsw i32 %i.mi, 1
+  %i.mp = icmp samesign ult i32 %i.mh, 1073741823
+  %i.mq = shl nuw nsw i32 %i.mh, 1
   %spec.select.i417.i = select i1 %i.mp, i32 %i.mq, i32 2147483647 ; 4 uses
-  %.not.i10.i418.i = icmp samesign ult i32 %i.mi, %spec.select.i417.i
+  %.not.i10.i418.i = icmp samesign ult i32 %i.mh, %spec.select.i417.i
   %.pre892.i = load ptr, ptr %i.mg, align 8, !tbaa !25 ; 3 uses
   br i1 %.not.i10.i418.i, label %bb.ak, label %Vec_PtrPush.exit424.i
 
@@ -264,15 +264,15 @@ Vec_PtrGrow.exit12.sink.split.i420.i:             ; preds = %bb.am, %bb.al, %bb.
   br label %Vec_PtrPush.exit424.i
 
 Vec_PtrPush.exit424.i:                            ; preds = %Vec_PtrGrow.exit12.sink.split.i420.i, %bb.aj, %.Vec_PtrPush.exit424_crit_edge.i
-  %i.mw = phi i32 [ %i.mi, %.Vec_PtrPush.exit424_crit_edge.i ], [ %i.mi, %bb.aj ], [ %spec.select.sink.i421.i, %Vec_PtrGrow.exit12.sink.split.i420.i ]
+  %i.mw = phi i32 [ %i.mh, %.Vec_PtrPush.exit424_crit_edge.i ], [ %i.mh, %bb.aj ], [ %spec.select.sink.i421.i, %Vec_PtrGrow.exit12.sink.split.i420.i ]
   %i.mx = phi ptr [ %.pre891.i, %.Vec_PtrPush.exit424_crit_edge.i ], [ %.pre892.i, %bb.aj ], [ %i.mv, %Vec_PtrGrow.exit12.sink.split.i420.i ]
-  %i.my = add nsw i32 %.pre893.i, 1               ; 2 uses
+  %i.my = add nsw i32 %i.mi, 1                    ; 2 uses
   store i32 %i.my, ptr %i.mf, align 4, !tbaa !27
-  %i.mz = sext i32 %.pre893.i to i64
+  %i.mz = sext i32 %i.mi to i64
   %i.na = getelementptr inbounds [8 x i8], ptr %i.mx, i64 %i.mz
   store ptr %i.mj, ptr %i.na, align 8, !tbaa !28
   %.val232.i = load ptr, ptr %i.h, align 8, !tbaa !60 ; 4 uses
-  %i.nb = sext i32 %i.mh to i64                   ; 2 uses
+  %i.nb = sext i32 %.pre893.i to i64              ; 2 uses
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.an, %Vec_PtrPush.exit424.i

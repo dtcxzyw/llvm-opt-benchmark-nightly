@@ -200,11 +200,11 @@ bb.z:                                             ; preds = %bb.x, %bb.y
   %i.lu = icmp sgt i32 %i.ls, 2                   ; 2 uses
   %i.lv = add nsw i32 %i.lg, -1
   %i.lw = sext i32 %i.lj to i64
+  %.promoted = load float, ptr %i.lq, align 4, !tbaa !54
   %i.lx = add i32 %i.ls, -1
   %wide.trip.count = zext nneg i32 %i.lt to i64
   %wide.trip.count484 = zext nneg i32 %i.lt to i64
   %i.ly = add nsw i32 %i.lb, -2
-  %.promoted = load float, ptr %i.lq, align 4
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph423, %.critedge407
@@ -386,8 +386,8 @@ bb.ac:                                            ; preds = %._crit_edge
   br label %._crit_edge424
 
 ._crit_edge424:                                   ; preds = %._crit_edge424.loopexit, %bb.z
-  %.0379.lcssa = phi ptr [ %i.lo, %bb.z ], [ %i.mj, %._crit_edge424.loopexit ] ; 10 uses
-  %.0.lcssa = phi ptr [ %i.lm, %bb.z ], [ %.1, %._crit_edge424.loopexit ] ; 4 uses
+  %.0379.lcssa = phi ptr [ %i.mj, %._crit_edge424.loopexit ], [ %i.lo, %bb.z ] ; 10 uses
+  %.0.lcssa = phi ptr [ %.1, %._crit_edge424.loopexit ], [ %i.lm, %bb.z ] ; 4 uses
   %i.qn = load i16, ptr %.0379.lcssa, align 2, !tbaa !57
   %i.qo = zext i16 %i.qn to i32
   %i.qp = and i32 %i.o, %i.qo                     ; 3 uses

@@ -204,10 +204,10 @@ aclitem_match.exit.thread:                        ; preds = %bb.n, %aclitem_matc
   br i1 %exitcond94.not, label %._crit_edge90, label %.lr.ph89, !llvm.loop !19
 
 ._crit_edge90:                                    ; preds = %.lr.ph89._crit_edge
-  store i32 %.2, ptr %i.y, align 8
+  store i32 %.2, ptr %i.y, align 4
   %i.bf = shl i32 %.2, 6
   %i.bg = add i32 %i.bf, 96
-  store i32 %i.bg, ptr %i.s, align 8
+  store i32 %i.bg, ptr %i.s, align 4
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.f, %._crit_edge90, %._crit_edge

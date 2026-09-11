@@ -205,11 +205,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i:                    ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %42) #25, !noalias !1654
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !1650
   %i.bg = load ptr, ptr %44, align 8, !tbaa !119, !noalias !1650 ; 2 uses
-  store ptr %i.bg, ptr %0, align 8, !tbaa !119, !alias.scope !1650
   call void @llvm.lifetime.end.p0(ptr nonnull %44) #25, !noalias !1650
   %i.bh = icmp eq ptr %i.bg, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #25, !noalias !1650
-  br i1 %i.bh, label %_ZN5arrow6StatusD2Ev.exit18.i.i, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.bh, label %_ZN5arrow6StatusD2Ev.exit18.i.i, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13HalfFloatTypeENS_12NumericArrayIS5_EEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKSA_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i:                  ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i
   %i.bi = add nuw nsw i64 %.020.i.i, 1            ; 2 uses
@@ -221,6 +220,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i:                  ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i:                                  ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i, %.preheader.i.i
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1655
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13HalfFloatTypeENS_12NumericArrayIS5_EEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKSA_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i
+  store ptr %i.bg, ptr %0, align 8, !alias.scope !1648
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.p:                                             ; preds = %bb.a
@@ -283,11 +286,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i94:                  ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #25, !noalias !1665
   call void @llvm.lifetime.end.p0(ptr nonnull %39) #25, !noalias !1665
   %i.co = load ptr, ptr %41, align 8, !tbaa !119, !noalias !1660 ; 2 uses
-  store ptr %i.co, ptr %0, align 8, !tbaa !119, !alias.scope !1660
   call void @llvm.lifetime.end.p0(ptr nonnull %41) #25, !noalias !1660
   %i.cp = icmp eq ptr %i.co, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #25, !noalias !1660
-  br i1 %i.cp, label %_ZN5arrow6StatusD2Ev.exit18.i.i96, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.cp, label %_ZN5arrow6StatusD2Ev.exit18.i.i96, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_10StringTypeENS_11StringArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i96:                ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i94
   %i.cq = add nuw nsw i64 %.020.i.i95, 1          ; 2 uses
@@ -299,6 +301,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i96:                ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i92:                                ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i96, %.preheader.i.i91
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1666
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_10StringTypeENS_11StringArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i94
+  store ptr %i.co, ptr %0, align 8, !alias.scope !1658
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.t:                                             ; preds = %bb.a
@@ -353,11 +359,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i100:                 ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %37) #25, !noalias !1671
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #25, !noalias !1671
   %i.ds = load ptr, ptr %38, align 8, !tbaa !119, !noalias !1669 ; 2 uses
-  store ptr %i.ds, ptr %0, align 8, !tbaa !119, !alias.scope !1669
   call void @llvm.lifetime.end.p0(ptr nonnull %38) #25, !noalias !1669
   %i.dt = icmp eq ptr %i.ds, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #25, !noalias !1669
-  br i1 %i.dt, label %_ZN5arrow6StatusD2Ev.exit18.i.i102, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.dt, label %_ZN5arrow6StatusD2Ev.exit18.i.i102, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_10BinaryTypeENS_11BinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i102:               ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i100
   %i.du = add nuw nsw i64 %.020.i.i101, 1         ; 2 uses
@@ -369,6 +374,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i102:               ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i98:                                ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i102, %.preheader.i.i97
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1672
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_10BinaryTypeENS_11BinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i100
+  store ptr %i.ds, ptr %0, align 8, !alias.scope !1667
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.w:                                             ; preds = %bb.a
@@ -422,11 +431,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i106:                 ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %34) #25, !noalias !1680
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #25, !noalias !1680
   %i.ev = load ptr, ptr %35, align 8, !tbaa !119, !noalias !1675 ; 2 uses
-  store ptr %i.ev, ptr %0, align 8, !tbaa !119, !alias.scope !1675
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #25, !noalias !1675
   %i.ew = icmp eq ptr %i.ev, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #25, !noalias !1675
-  br i1 %i.ew, label %_ZN5arrow6StatusD2Ev.exit18.i.i108, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.ew, label %_ZN5arrow6StatusD2Ev.exit18.i.i108, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_15LargeStringTypeENS_16LargeStringArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i108:               ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i106
   %i.ex = add nuw nsw i64 %.020.i.i107, 1         ; 2 uses
@@ -438,6 +446,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i108:               ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i104:                               ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i108, %.preheader.i.i103
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1681
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_15LargeStringTypeENS_16LargeStringArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i106
+  store ptr %i.ev, ptr %0, align 8, !alias.scope !1673
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.z:                                             ; preds = %bb.a
@@ -487,11 +499,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i112:                 ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #25, !noalias !1686
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #25, !noalias !1686
   %i.fy = load ptr, ptr %32, align 8, !tbaa !119, !noalias !1684 ; 2 uses
-  store ptr %i.fy, ptr %0, align 8, !tbaa !119, !alias.scope !1684
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #25, !noalias !1684
   %i.fz = icmp eq ptr %i.fy, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #25, !noalias !1684
-  br i1 %i.fz, label %_ZN5arrow6StatusD2Ev.exit18.i.i114, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.fz, label %_ZN5arrow6StatusD2Ev.exit18.i.i114, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_15LargeBinaryTypeENS_16LargeBinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i114:               ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i112
   %i.ga = add nuw nsw i64 %.020.i.i113, 1         ; 2 uses
@@ -503,6 +514,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i114:               ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i110:                               ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i114, %.preheader.i.i109
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1687
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_15LargeBinaryTypeENS_16LargeBinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i112
+  store ptr %i.fy, ptr %0, align 8, !alias.scope !1682
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.ab:                                            ; preds = %bb.a
@@ -549,11 +564,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i118:                 ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #25, !noalias !1695
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #25, !noalias !1695
   %i.gy = load ptr, ptr %29, align 8, !tbaa !119, !noalias !1690 ; 2 uses
-  store ptr %i.gy, ptr %0, align 8, !tbaa !119, !alias.scope !1690
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #25, !noalias !1690
   %i.gz = icmp eq ptr %i.gy, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #25, !noalias !1690
-  br i1 %i.gz, label %_ZN5arrow6StatusD2Ev.exit18.i.i120, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.gz, label %_ZN5arrow6StatusD2Ev.exit18.i.i120, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_19FixedSizeBinaryTypeENS_20FixedSizeBinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i120:               ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i118
   %i.ha = add nuw nsw i64 %.020.i.i119, 1         ; 2 uses
@@ -565,6 +579,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i120:               ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i116:                               ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i120, %.preheader.i.i115
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1696
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_19FixedSizeBinaryTypeENS_20FixedSizeBinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i118
+  store ptr %i.gy, ptr %0, align 8, !alias.scope !1688
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.ad:                                            ; preds = %bb.a
@@ -665,11 +683,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i124:                 ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #25, !noalias !1710
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #25, !noalias !1710
   %i.iq = load ptr, ptr %26, align 8, !tbaa !119, !noalias !1708 ; 2 uses
-  store ptr %i.iq, ptr %0, align 8, !tbaa !119, !alias.scope !1708
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #25, !noalias !1708
   %i.ir = icmp eq ptr %i.iq, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #25, !noalias !1708
-  br i1 %i.ir, label %_ZN5arrow6StatusD2Ev.exit18.i.i126, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.ir, label %_ZN5arrow6StatusD2Ev.exit18.i.i126, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13Decimal32TypeENS_14Decimal32ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i126:               ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i124
   %i.is = add nuw nsw i64 %.020.i.i125, 1         ; 2 uses
@@ -681,6 +698,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i126:               ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i122:                               ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i126, %.preheader.i.i121
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1711
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13Decimal32TypeENS_14Decimal32ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i124
+  store ptr %i.iq, ptr %0, align 8, !alias.scope !1706
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.ao:                                            ; preds = %bb.a
@@ -727,11 +748,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i130:                 ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #25, !noalias !1716
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #25, !noalias !1716
   %i.jq = load ptr, ptr %23, align 8, !tbaa !119, !noalias !1714 ; 2 uses
-  store ptr %i.jq, ptr %0, align 8, !tbaa !119, !alias.scope !1714
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #25, !noalias !1714
   %i.jr = icmp eq ptr %i.jq, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25, !noalias !1714
-  br i1 %i.jr, label %_ZN5arrow6StatusD2Ev.exit18.i.i132, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.jr, label %_ZN5arrow6StatusD2Ev.exit18.i.i132, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13Decimal64TypeENS_14Decimal64ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i132:               ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i130
   %i.js = add nuw nsw i64 %.020.i.i131, 1         ; 2 uses
@@ -743,6 +763,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i132:               ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i128:                               ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i132, %.preheader.i.i127
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1717
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13Decimal64TypeENS_14Decimal64ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i130
+  store ptr %i.jq, ptr %0, align 8, !alias.scope !1712
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.aq:                                            ; preds = %bb.a
@@ -789,11 +813,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i136:                 ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #25, !noalias !1722
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #25, !noalias !1722
   %i.kq = load ptr, ptr %20, align 8, !tbaa !119, !noalias !1720 ; 2 uses
-  store ptr %i.kq, ptr %0, align 8, !tbaa !119, !alias.scope !1720
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #25, !noalias !1720
   %i.kr = icmp eq ptr %i.kq, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25, !noalias !1720
-  br i1 %i.kr, label %_ZN5arrow6StatusD2Ev.exit18.i.i138, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.kr, label %_ZN5arrow6StatusD2Ev.exit18.i.i138, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14Decimal128TypeENS_15Decimal128ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i138:               ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i136
   %i.ks = add nuw nsw i64 %.020.i.i137, 1         ; 2 uses
@@ -805,6 +828,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i138:               ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i134:                               ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i138, %.preheader.i.i133
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1723
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14Decimal128TypeENS_15Decimal128ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i136
+  store ptr %i.kq, ptr %0, align 8, !alias.scope !1718
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.as:                                            ; preds = %bb.a
@@ -851,11 +878,10 @@ _ZN5arrow6StatusD2Ev.exit.i.i142:                 ; preds = %_ZN5arrow6StatusD2E
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #25, !noalias !1728
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #25, !noalias !1728
   %i.lq = load ptr, ptr %17, align 8, !tbaa !119, !noalias !1726 ; 2 uses
-  store ptr %i.lq, ptr %0, align 8, !tbaa !119, !alias.scope !1726
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #25, !noalias !1726
   %i.lr = icmp eq ptr %i.lq, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25, !noalias !1726
-  br i1 %i.lr, label %_ZN5arrow6StatusD2Ev.exit18.i.i144, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+  br i1 %i.lr, label %_ZN5arrow6StatusD2Ev.exit18.i.i144, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14Decimal256TypeENS_15Decimal256ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i
 
 _ZN5arrow6StatusD2Ev.exit18.i.i144:               ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i142
   %i.ls = add nuw nsw i64 %.020.i.i143, 1         ; 2 uses
@@ -867,6 +893,10 @@ _ZN5arrow6StatusD2Ev.exit18.i.i144:               ; preds = %_ZN5arrow6StatusD2E
 
 ._crit_edge.i.i140:                               ; preds = %_ZN5arrow6StatusD2Ev.exit18.i.i144, %.preheader.i.i139
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1729
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14Decimal256TypeENS_15Decimal256ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i142
+  store ptr %i.lq, ptr %0, align 8, !alias.scope !1724
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.au:                                            ; preds = %bb.a
@@ -1271,7 +1301,7 @@ bb.ce:                                            ; preds = %bb.a
   tail call void @_ZN5arrow6Status8FromArgsIJRA21_KcEEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind writable sret(%"class.arrow::Status") align 8 %0, i8 noundef signext 10, ptr noundef nonnull align 1 dereferenceable(21) @.str.8)
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
-_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit: ; preds = %_ZN5arrow6StatusD2Ev.exit.i.i142, %_ZN5arrow6StatusD2Ev.exit.i.i136, %_ZN5arrow6StatusD2Ev.exit.i.i130, %_ZN5arrow6StatusD2Ev.exit.i.i124, %_ZN5arrow6StatusD2Ev.exit.i.i118, %_ZN5arrow6StatusD2Ev.exit.i.i112, %_ZN5arrow6StatusD2Ev.exit.i.i106, %_ZN5arrow6StatusD2Ev.exit.i.i100, %_ZN5arrow6StatusD2Ev.exit.i.i94, %_ZN5arrow6StatusD2Ev.exit.i.i, %._crit_edge.i.i140, %bb.at, %._crit_edge.i.i134, %bb.ar, %._crit_edge.i.i128, %bb.ap, %._crit_edge.i.i122, %bb.an, %._crit_edge.i.i116, %bb.ac, %._crit_edge.i.i110, %bb.aa, %._crit_edge.i.i104, %bb.y, %._crit_edge.i.i98, %bb.v, %._crit_edge.i.i92, %bb.s, %._crit_edge.i.i, %bb.o, %bb.ce, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13ExtensionTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_17RunEndEncodedTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_14DictionaryTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_14DenseUnionTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_15SparseUnionTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_10StructTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_17FixedSizeListTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_7MapTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_17LargeListViewTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_12ListViewTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13LargeListTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_8ListTypeEEENS_6StatusERKT_.exit, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.w, %bb.t, %bb.q, %bb.p, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_8NullTypeEEENS_6StatusERKT_.exit
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13HalfFloatTypeEEENS_6StatusERKT_.exit: ; preds = %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14Decimal256TypeENS_15Decimal256ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i140, %bb.at, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14Decimal128TypeENS_15Decimal128ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i134, %bb.ar, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13Decimal64TypeENS_14Decimal64ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i128, %bb.ap, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13Decimal32TypeENS_14Decimal32ArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i122, %bb.an, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_19FixedSizeBinaryTypeENS_20FixedSizeBinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i116, %bb.ac, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_15LargeBinaryTypeENS_16LargeBinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i110, %bb.aa, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_15LargeStringTypeENS_16LargeStringArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i104, %bb.y, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_10BinaryTypeENS_11BinaryArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i98, %bb.v, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_10StringTypeENS_11StringArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit.i, %._crit_edge.i.i92, %bb.s, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_13HalfFloatTypeENS_12NumericArrayIS5_EEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKSA_RKT0_.exit.loopexit.i, %._crit_edge.i.i, %bb.o, %bb.ce, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13ExtensionTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_17RunEndEncodedTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_14DictionaryTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_14DenseUnionTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_15SparseUnionTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_10StructTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_17FixedSizeListTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_7MapTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_17LargeListViewTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_12ListViewTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_13LargeListTypeEEENS_6StatusERKT_.exit, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_8ListTypeEEENS_6StatusERKT_.exit, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.w, %bb.t, %bb.q, %bb.p, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter5VisitINS_8NullTypeEEENS_6StatusERKT_.exit
   ret void
 }
 
@@ -1369,11 +1399,10 @@ _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %.preheader.i, %_ZN5
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25, !noalias !1755
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25, !noalias !1755
   %i.r = load ptr, ptr %5, align 8, !tbaa !119, !noalias !1753 ; 2 uses
-  store ptr %i.r, ptr %0, align 8, !tbaa !119, !alias.scope !1753
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25, !noalias !1753
   %i.s = icmp eq ptr %i.r, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25, !noalias !1753
-  br i1 %i.s, label %_ZN5arrow6StatusD2Ev.exit18.i, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14StringViewTypeENS_15StringViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit
+  br i1 %i.s, label %_ZN5arrow6StatusD2Ev.exit18.i, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14StringViewTypeENS_15StringViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit
 
 _ZN5arrow6StatusD2Ev.exit18.i:                    ; preds = %_ZN5arrow6StatusD2Ev.exit.i
   %i.t = add nuw nsw i64 %.020.i, 1               ; 2 uses
@@ -1387,7 +1416,11 @@ _ZN5arrow6StatusD2Ev.exit18.i:                    ; preds = %_ZN5arrow6StatusD2E
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1756
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14StringViewTypeENS_15StringViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit
 
-_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14StringViewTypeENS_15StringViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit: ; preds = %_ZN5arrow6StatusD2Ev.exit.i, %bb.b, %._crit_edge.i
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14StringViewTypeENS_15StringViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit: ; preds = %_ZN5arrow6StatusD2Ev.exit.i
+  store ptr %i.r, ptr %0, align 8
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14StringViewTypeENS_15StringViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14StringViewTypeENS_15StringViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit: ; preds = %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14StringViewTypeENS_15StringViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit, %bb.b, %._crit_edge.i
   ret void
 }
 
@@ -1434,11 +1467,10 @@ _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %.preheader.i, %_ZN5
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25, !noalias !1770
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25, !noalias !1770
   %i.r = load ptr, ptr %5, align 8, !tbaa !119, !noalias !1768 ; 2 uses
-  store ptr %i.r, ptr %0, align 8, !tbaa !119, !alias.scope !1768
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25, !noalias !1768
   %i.s = icmp eq ptr %i.r, null
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25, !noalias !1768
-  br i1 %i.s, label %_ZN5arrow6StatusD2Ev.exit18.i, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14BinaryViewTypeENS_15BinaryViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit
+  br i1 %i.s, label %_ZN5arrow6StatusD2Ev.exit18.i, label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14BinaryViewTypeENS_15BinaryViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit
 
 _ZN5arrow6StatusD2Ev.exit18.i:                    ; preds = %_ZN5arrow6StatusD2Ev.exit.i
   %i.t = add nuw nsw i64 %.020.i, 1               ; 2 uses
@@ -1452,7 +1484,11 @@ _ZN5arrow6StatusD2Ev.exit18.i:                    ; preds = %_ZN5arrow6StatusD2E
   store ptr null, ptr %0, align 8, !tbaa !119, !alias.scope !1771
   br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14BinaryViewTypeENS_15BinaryViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit
 
-_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14BinaryViewTypeENS_15BinaryViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit: ; preds = %_ZN5arrow6StatusD2Ev.exit.i, %bb.b, %._crit_edge.i
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14BinaryViewTypeENS_15BinaryViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit: ; preds = %_ZN5arrow6StatusD2Ev.exit.i
+  store ptr %i.r, ptr %0, align 8
+  br label %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14BinaryViewTypeENS_15BinaryViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit
+
+_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14BinaryViewTypeENS_15BinaryViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit: ; preds = %_ZN5arrow8internal19DictionaryMemoTable23DictionaryMemoTableImpl19ArrayValuesInserter12InsertValuesINS_14BinaryViewTypeENS_15BinaryViewArrayEEENSt9enable_ifIXntsr3std7is_sameINS0_16DictionaryTraitsIT_vE13MemoTableTypeEvEE5valueENS_6StatusEE4typeERKS9_RKT0_.exit.loopexit, %bb.b, %._crit_edge.i
   ret void
 }
 
