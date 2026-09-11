@@ -204,7 +204,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !13
-  %i.g = mul i64 %i.c, 416                        ; 7 uses
+  %i.g = mul i64 %i.c, 416                        ; 6 uses
   %i.h = udiv i64 %i.g, 112                       ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = invoke { ptr, ptr } @_RINvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB6_8IntoIterNtNtCs7fnekraeopg_15datafusion_expr11select_expr10SelectExprENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropNtNtB10_4expr4ExprENCINvNtNtB21_8adapters10filter_map19filter_map_try_foldBW_B3z_B2Z_INtNtB23_6result6ResultB2Z_zENCNvMNtCs1eXVLxSVbjH_14datafusion_sql6selectINtNtB5w_7planner8SqlToRelNtNtNtCsjyfffbMAcup_10datafusion9execution13session_state22SessionContextProviderE21plan_wildcard_optionss_0NCINvNtB8_16in_place_collect24write_in_place_with_dropB3z_E0E0B4W_ECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noalias noundef nonnull %i.i, ptr noundef %i.f)
@@ -248,8 +248,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.u, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtCs7fnekraeopg_15datafusion_expr11select_expr10SelectExprNtNtB14_4expr4ExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread
 
-_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtCs7fnekraeopg_15datafusion_expr11select_expr10SelectExprNtNtB14_4expr4ExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread: ; preds = %2, %bb.h, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 16 to ptr), %2 ], [ %i.z, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 16 to ptr), %bb.h ]
+_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtCs7fnekraeopg_15datafusion_expr11select_expr10SelectExprNtNtB14_4expr4ExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 16 to ptr), %bb.h ], [ %i.z, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.v, align 8
@@ -261,13 +261,9 @@ _RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtCs7fnekraeo
 
 bb.g:                                             ; preds = %bb.f
   %i.x = icmp ult i64 %i.g, 112
-  br i1 %i.x, label %2, label %bb.i
+  br i1 %i.x, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtCs7fnekraeopg_15datafusion_expr11select_expr10SelectExprNtNtB14_4expr4ExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 16) #43
   br label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtCs7fnekraeopg_15datafusion_expr11select_expr10SelectExprNtNtB14_4expr4ExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread
 
@@ -304,7 +300,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !13
-  %i.g = shl i64 %i.c, 6                          ; 5 uses
+  %i.g = shl i64 %i.c, 6                          ; 4 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsaNmiEuYuYZf_9sqlparser3ast5IdentENCNvMNtNtCs1eXVLxSVbjH_14datafusion_sql4expr10identifierINtNtB2w_7planner8SqlToRelNtNtNtCsjyfffbMAcup_10datafusion9execution13session_state22SessionContextProviderE31sql_compound_identifier_to_exprs1_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropNtNtB14_6string6StringENCINvNtB12_16in_place_collect24write_in_place_with_dropB6V_E0INtNtBc_6result6ResultB6k_zEECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -345,10 +341,10 @@ bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw i64 %i.h, 24                     ; 4 uses
   %i.t = icmp ne i64 %i.g, %i.s
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.t, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %.thread
+  br i1 %.sroa.0.0.i, label %bb.g, label %.thread
 
-.thread:                                          ; preds = %2, %bb.g, %bb.f
-  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.g, %bb.f
+  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -358,11 +354,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsaNmiEuYuYZf_9sqlparser3ast5IdentENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull align 8 dereferenceable(40) %1)
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %.thread, label %bb.g
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.f
   %i.w = icmp ule i64 %i.s, %i.g
   tail call void @llvm.assume(i1 %i.w)
   %i.x = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8, i64 noundef %i.s) #43 ; 2 uses
@@ -395,7 +387,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !13
-  %i.g = shl i64 %i.c, 6                          ; 5 uses
+  %i.g = shl i64 %i.c, 6                          ; 4 uses
   %i.h = udiv i64 %i.g, 24                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCsaNmiEuYuYZf_9sqlparser3ast5IdentENCNvMNtNtCs1eXVLxSVbjH_14datafusion_sql4expr10identifierINtNtB2w_7planner8SqlToRelNtNtNtCsjyfffbMAcup_10datafusion9execution13session_state22SessionContextProviderE31sql_compound_identifier_to_exprs_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropNtNtB14_6string6StringENCINvNtB12_16in_place_collect24write_in_place_with_dropB6U_E0INtNtBc_6result6ResultB6j_zEECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -436,10 +428,10 @@ bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw i64 %i.h, 24                     ; 4 uses
   %i.t = icmp ne i64 %i.g, %i.s
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.t, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %.thread
+  br i1 %.sroa.0.0.i, label %bb.g, label %.thread
 
-.thread:                                          ; preds = %2, %bb.g, %bb.f
-  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.g, %bb.f
+  %.sroa.03.0 = phi ptr [ %i.d, %bb.f ], [ %i.x, %bb.g ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -449,11 +441,7 @@ bb.f:                                             ; preds = %bb.d
   tail call void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsaNmiEuYuYZf_9sqlparser3ast5IdentENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull align 8 dereferenceable(40) %1)
   ret void
 
-2:                                                ; preds = %bb.f
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %.thread, label %bb.g
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %bb.f
   %i.w = icmp ule i64 %i.s, %i.g
   tail call void @llvm.assume(i1 %i.w)
   %i.x = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8, i64 noundef %i.s) #43 ; 2 uses
@@ -486,7 +474,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !13, !noundef !13 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !13
-  %i.g = mul i64 %i.c, 1384                       ; 7 uses
+  %i.g = mul i64 %i.c, 1384                       ; 6 uses
   %i.h = udiv i64 %i.g, 1320                      ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtNtCsaNmiEuYuYZf_9sqlparser3ast3ddl11IndexColumnENCNvMNtCs1eXVLxSVbjH_14datafusion_sql9statementINtNtB2H_7planner8SqlToRelNtNtNtCsjyfffbMAcup_10datafusion9execution13session_state22SessionContextProviderE39sql_statement_to_plan_with_context_implse_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropNtNtB1O_5query11OrderByExprENCINvNtB12_16in_place_collect24write_in_place_with_dropB77_E0INtNtBc_6result6ResultB6w_zEECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -529,8 +517,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtNtCsaNmiEuYuYZf_9sqlparser3ast3ddl11IndexColumnNtNtB14_5query11OrderByExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread
 
-_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtNtCsaNmiEuYuYZf_9sqlparser3ast3ddl11IndexColumnNtNtB14_5query11OrderByExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread: ; preds = %2, %bb.h, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.y, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %bb.h ]
+_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtNtCsaNmiEuYuYZf_9sqlparser3ast3ddl11IndexColumnNtNtB14_5query11OrderByExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -542,13 +530,9 @@ _RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtNtCsaNmiEuY
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ult i64 %i.g, 1320
-  br i1 %i.w, label %2, label %bb.i
+  br i1 %i.w, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtNtCsaNmiEuYuYZf_9sqlparser3ast3ddl11IndexColumnNtNtB14_5query11OrderByExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #43
   br label %_RINvNtNtCscdodAO9FK5_5alloc3vec16in_place_collect13needs_reallocNtNtNtCsaNmiEuYuYZf_9sqlparser3ast3ddl11IndexColumnNtNtB14_5query11OrderByExprECs43kcu4yvms7_24influxdb3_query_executor.exit.thread
 

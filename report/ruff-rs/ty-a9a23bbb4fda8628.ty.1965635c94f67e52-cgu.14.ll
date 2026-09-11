@@ -202,7 +202,7 @@ bb.a:
   %i.e = load ptr, ptr %1, align 8, !nonnull !3, !noundef !3 ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !noundef !3
-  %i.h = shl i64 %i.d, 5                          ; 5 uses
+  %i.h = shl i64 %i.d, 5                          ; 4 uses
   %i.i = udiv i64 %i.h, 24                        ; 2 uses
   %i.j = invoke { ptr, ptr } @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTdNtNtB14_6string6StringEENCINvNtNtNtCsdjW2DEjcQy2_12clap_builder6parser8features11suggestions12did_you_meanRB1M_INtNtNtBc_5slice4iter4IterB1M_EEs0_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB1M_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB1M_E0INtNtBc_6result6ResultB4R_zEECs2bbjMbSOFjy_2ty(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.e, ptr noundef nonnull %i.e, ptr noundef %i.g)
           to label %bb.d unwind label %bb.c
@@ -323,10 +323,10 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTdNtNtCscdodAO9FK5_5alloc6string6StringE
   %i.am = mul nuw i64 %i.i, 24                    ; 4 uses
   %i.an = icmp ne i64 %i.h, %i.am
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.an, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %.thread
+  br i1 %.sroa.0.0.i, label %bb.k, label %.thread
 
-.thread:                                          ; preds = %2, %bb.k, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTdNtNtCscdodAO9FK5_5alloc6string6StringEECs2bbjMbSOFjy_2ty.exit.i.i._crit_edge
-  %.sroa.03.0 = phi ptr [ %i.e, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTdNtNtCscdodAO9FK5_5alloc6string6StringEECs2bbjMbSOFjy_2ty.exit.i.i._crit_edge ], [ %i.ar, %bb.k ], [ inttoptr (i64 8 to ptr), %2 ]
+.thread:                                          ; preds = %bb.k, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTdNtNtCscdodAO9FK5_5alloc6string6StringEECs2bbjMbSOFjy_2ty.exit.i.i._crit_edge
+  %.sroa.03.0 = phi ptr [ %i.e, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTdNtNtCscdodAO9FK5_5alloc6string6StringEECs2bbjMbSOFjy_2ty.exit.i.i._crit_edge ], [ %i.ar, %bb.k ]
   store i64 %i.i, ptr %0, align 8
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.ao, align 8
@@ -336,11 +336,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTdNtNtCscdodAO9FK5_5alloc6string6StringE
   call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTdNtNtB1g_6string6StringEENCINvNtNtNtCsdjW2DEjcQy2_12clap_builder6parser8features11suggestions12did_you_meanRB1Y_INtNtNtB4_5slice4iter4IterB1Y_EEs0_0EECs2bbjMbSOFjy_2ty(ptr noalias noundef align 8 dereferenceable(32) %1)
   ret void
 
-2:                                                ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTdNtNtCscdodAO9FK5_5alloc6string6StringEECs2bbjMbSOFjy_2ty.exit.i.i._crit_edge
-  %3 = icmp eq i64 %i.h, 0
-  br i1 %3, label %.thread, label %bb.k
-
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTdNtNtCscdodAO9FK5_5alloc6string6StringEECs2bbjMbSOFjy_2ty.exit.i.i._crit_edge
   %i.aq = icmp ule i64 %i.am, %i.h
   call void @llvm.assume(i1 %i.aq)
   %i.ar = call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.e, i64 noundef %i.h, i64 noundef 8, i64 noundef range(i64 0, -15) %i.am) #32 ; 2 uses

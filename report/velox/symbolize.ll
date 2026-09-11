@@ -204,7 +204,7 @@ bb.a:
   %i.l = add i64 %i.k, %i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
   %i.m = sub nuw i64 %i.e, %i.h
-  %.sroa.speculated.us = tail call i64 @llvm.umin.i64(i64 %i.m, i64 32) ; 2 uses
+  %.sroa.speculated.us = tail call i64 @llvm.umin.i64(i64 %i.m, i64 32)
   %i.n = mul nuw nsw i64 %.sroa.speculated.us, 24 ; 3 uses
   br label %.critedge.i.us
 
@@ -228,7 +228,7 @@ bb.c:                                             ; preds = %bb.b
   %i.u = tail call ptr @__errno_location() #21
   %i.v = load i32, ptr %i.u, align 4, !tbaa !11
   %i.w = icmp eq i32 %i.v, 4
-  br i1 %i.w, label %bb.b, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread.a, !llvm.loop !0
+  br i1 %i.w, label %bb.b, label %.split26.us, !llvm.loop !0
 
 .critedge27.i.us:                                 ; preds = %bb.b
   %i.x = icmp eq i64 %i.s, 0
@@ -238,20 +238,20 @@ bb.c:                                             ; preds = %bb.b
 .critedge.thread33.i.us:                          ; preds = %.critedge27.i.us, %.critedge.i.us
   %.2.i.us = phi i64 [ %.020.i.us, %.critedge.i.us ], [ %i.y, %.critedge27.i.us ] ; 4 uses
   %.not26.i.us = icmp ugt i64 %.2.i.us, %i.n
-  br i1 %.not26.i.us, label %.split24.us, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.us
+  br i1 %.not26.i.us, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread.a, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.us
 
 _ZN6googleL14ReadFromOffsetEiPvmm.exit.us:        ; preds = %.critedge.thread33.i.us
   %i.z = urem i64 %.2.i.us, 24
-  %i.aa = udiv i64 %.2.i.us, 24                   ; 3 uses
+  %i.aa = udiv i64 %.2.i.us, 24                   ; 2 uses
   %i.ab = icmp eq i64 %i.z, 0
-  br i1 %i.ab, label %bb.d, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread.a
+  br i1 %i.ab, label %bb.d, label %.split26.us
 
 bb.d:                                             ; preds = %_ZN6googleL14ReadFromOffsetEiPvmm.exit.us
-  %.not.us = icmp samesign ugt i64 %i.aa, %.sroa.speculated.us
-  br i1 %.not.us, label %.split26.us, label %.preheader.us
+  %.not.us = icmp ugt i64 %.2.i.us, 23
+  br i1 %.not.us, label %.lr.ph.us, label %.loopexit.us
 
-.lr.ph.us:                                        ; preds = %.preheader.us, %bb.f
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.f ], [ 0, %.preheader.us ] ; 2 uses
+.lr.ph.us:                                        ; preds = %bb.d, %bb.f
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.f ], [ 0, %bb.d ] ; 2 uses
   %i.ac = getelementptr inbounds nuw [24 x i8], ptr %6, i64 %indvars.iv ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !51 ; 2 uses
@@ -333,17 +333,13 @@ _ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us: ; preds = %bb.i, %bb.j, %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   br label %.split22.us
 
-.loopexit.us:                                     ; preds = %bb.f, %.preheader.us
+.loopexit.us:                                     ; preds = %bb.f, %bb.d
   %i.bd = trunc nuw nsw i64 %i.aa to i32
   %i.be = add i32 %.052.us61, %i.bd               ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   %i.bf = zext i32 %i.be to i64                   ; 2 uses
   %.not68.us = icmp ugt i64 %i.e, %i.bf
   br i1 %.not68.us, label %.critedge.i.preheader.us, label %.split22.us, !llvm.loop !46
-
-.preheader.us:                                    ; preds = %bb.d
-  %.not67.not18.us = icmp ugt i64 %.2.i.us, 23
-  br i1 %.not67.not18.us, label %.lr.ph.us, label %.loopexit.us
 
 .split:                                           ; preds = %bb.a
   br i1 %.not68.us60.not, label %.split22.us, label %bb.k
@@ -353,15 +349,11 @@ bb.k:                                             ; preds = %.split
   tail call void @abort() #20
   unreachable
 
-.split24.us:                                      ; preds = %.critedge.thread33.i.us
+_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread.a:  ; preds = %.critedge.thread33.i.us
   tail call void @abort() #20
   unreachable
 
-_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread.a:  ; preds = %_ZN6googleL14ReadFromOffsetEiPvmm.exit.us, %bb.c
-  tail call void @abort() #20
-  unreachable
-
-.split26.us:                                      ; preds = %bb.d
+.split26.us:                                      ; preds = %_ZN6googleL14ReadFromOffsetEiPvmm.exit.us, %bb.c
   tail call void @abort() #20
   unreachable
 

@@ -205,7 +205,7 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !nonnull !8, !noundef !8 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !noundef !8
-  %i.g = mul i64 %i.c, 104                        ; 7 uses
+  %i.g = mul i64 %i.c, 104                        ; 6 uses
   %i.h = udiv i64 %i.g, 48                        ; 2 uses
   %i.i = invoke { ptr, ptr } @_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterTNtCs4vTbZbCai3A_15pingora_runtime7RuntimeNtNtB14_6string6StringEENCNvMs_NtCskeugdADtBsi_12pingora_core6serverNtB2W_6Server3runs0_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropTINtNtNtCsG258MDvU3F_3std6thread11join_handle10JoinHandleuEB2r_EENCINvNtB12_16in_place_collect24write_in_place_with_dropB5b_E0INtNtBc_6result6ResultB4A_zEEB2Y_(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.d, ptr noundef %i.f)
           to label %bb.d unwind label %bb.c
@@ -248,8 +248,8 @@ bb.f:                                             ; preds = %bb.d
   %or.cond = select i1 %.not.i, i1 %i.t, i1 false
   br i1 %or.cond, label %bb.g, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtCs4vTbZbCai3A_15pingora_runtime7RuntimeNtNtB6_6string6StringETINtNtNtCsG258MDvU3F_3std6thread11join_handle10JoinHandleuEB1H_EECskeugdADtBsi_12pingora_core.exit.thread
 
-_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtCs4vTbZbCai3A_15pingora_runtime7RuntimeNtNtB6_6string6StringETINtNtNtCsG258MDvU3F_3std6thread11join_handle10JoinHandleuEB1H_EECskeugdADtBsi_12pingora_core.exit.thread: ; preds = %2, %bb.h, %bb.f, %bb.i
-  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %2 ], [ %i.y, %bb.i ], [ %i.d, %bb.f ], [ inttoptr (i64 8 to ptr), %bb.h ]
+_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtCs4vTbZbCai3A_15pingora_runtime7RuntimeNtNtB6_6string6StringETINtNtNtCsG258MDvU3F_3std6thread11join_handle10JoinHandleuEB1H_EECskeugdADtBsi_12pingora_core.exit.thread: ; preds = %bb.h, %bb.f, %bb.i
+  %.sroa.03.0 = phi ptr [ inttoptr (i64 8 to ptr), %bb.h ], [ %i.y, %bb.i ], [ %i.d, %bb.f ]
   store i64 %i.h, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0, ptr %i.u, align 8
@@ -261,13 +261,9 @@ _RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtCs4vTbZbCai
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ult i64 %i.g, 48
-  br i1 %i.w, label %2, label %bb.i
+  br i1 %i.w, label %bb.h, label %bb.i
 
-2:                                                ; preds = %bb.g
-  %3 = icmp eq i64 %i.g, 0
-  br i1 %3, label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtCs4vTbZbCai3A_15pingora_runtime7RuntimeNtNtB6_6string6StringETINtNtNtCsG258MDvU3F_3std6thread11join_handle10JoinHandleuEB1H_EECskeugdADtBsi_12pingora_core.exit.thread, label %bb.h
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef 8) #35
   br label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect13needs_reallocTNtCs4vTbZbCai3A_15pingora_runtime7RuntimeNtNtB6_6string6StringETINtNtNtCsG258MDvU3F_3std6thread11join_handle10JoinHandleuEB1H_EECskeugdADtBsi_12pingora_core.exit.thread
 

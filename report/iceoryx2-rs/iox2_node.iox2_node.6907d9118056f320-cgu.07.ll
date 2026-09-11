@@ -202,7 +202,7 @@ bb.a:
   %i.c = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !noundef !6
-  %i.f = shl i64 %i.b, 5                          ; 5 uses
+  %i.f = shl i64 %i.b, 5                          ; 4 uses
   %i.g = udiv i64 %i.f, 24                        ; 2 uses
   %i.h = tail call { ptr, ptr } @_RINvXs0_NtNtNtCs8Chj7Szqq0n_4core4iter8adapters3mapINtB6_3MapINtNtNtCsbqH9stoieM8_5alloc3vec9into_iter8IntoIterTdNtNtB14_6string6StringEENCINvNtNtNtCs5WK5l2q0aFk_12clap_builder6parser8features11suggestions12did_you_meanRB1N_INtNtNtBc_5slice4iter4IterB1N_EEs0_0ENtNtNtBa_6traits8iterator8Iterator8try_foldINtNtB12_13in_place_drop11InPlaceDropB1N_ENCINvNtB12_16in_place_collect24write_in_place_with_dropB1N_E0INtNtBc_6result6ResultB4S_zEECs914H3uZQmS2_9iox2_node(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.c, ptr noundef nonnull %i.c, ptr noundef %i.e) #17
   tail call void @_RNvMs0_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterTdNtNtB9_6string6StringEE32forget_allocation_drop_remainingCs914H3uZQmS2_9iox2_node(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) #17
@@ -210,10 +210,10 @@ bb.a:
   %i.i = mul nuw i64 %i.g, 24                     ; 4 uses
   %i.j = icmp ne i64 %i.f, %i.i
   %.sroa.0.0.i = select i1 %.not.i, i1 %i.j, i1 false
-  br i1 %.sroa.0.0.i, label %2, label %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.thread
+  br i1 %.sroa.0.0.i, label %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit, label %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.thread
 
-_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.thread: ; preds = %2, %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit, %bb.a
-  %.sroa.04.0 = phi ptr [ %i.c, %bb.a ], [ %i.s, %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit ], [ inttoptr (i64 8 to ptr), %2 ]
+_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.thread: ; preds = %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit, %bb.a
+  %.sroa.04.0 = phi ptr [ %i.c, %bb.a ], [ %i.s, %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit ]
   %i.k = extractvalue { ptr, ptr } %i.h, 1
   %i.l = ptrtoint ptr %i.k to i64
   %i.m = ptrtoint ptr %i.c to i64
@@ -227,11 +227,7 @@ _RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.threa
   tail call void @_RNvXse_NtNtCsbqH9stoieM8_5alloc3vec9into_iterINtB5_8IntoIterTdNtNtB9_6string6StringEENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCs914H3uZQmS2_9iox2_node(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) #17
   ret void
 
-2:                                                ; preds = %bb.a
-  %3 = icmp eq i64 %i.f, 0
-  br i1 %3, label %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit.thread, label %_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit
-
-_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit: ; preds = %2
+_RNvMs0_NtCsbqH9stoieM8_5alloc5allocNtB5_6Global19shrink_impl_runtime.exit: ; preds = %bb.a
   %i.r = icmp ule i64 %i.i, %i.f
   tail call void @llvm.assume(i1 %i.r)
   %i.s = tail call noundef align 8 ptr @_RNvCsicpYtSlSgpD_7___rustc14___rust_realloc(ptr noundef nonnull %i.c, i64 noundef %i.f, i64 noundef 8, i64 noundef range(i64 0, -15) %i.i) #17 ; 2 uses
