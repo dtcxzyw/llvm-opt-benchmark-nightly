@@ -204,8 +204,8 @@ bb.ad:                                            ; preds = %bb.ab
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %.outer.i.outer
 
-.outer.i.outer:                                   ; preds = %13, %bb.ad
-  %.sroa.011.0.ph.i.ph = phi i64 [ %16, %13 ], [ %i.ai, %bb.ad ] ; 8 uses
+.outer.i.outer:                                   ; preds = %bb.bh, %bb.ad
+  %.sroa.011.0.ph.i.ph = phi i64 [ %14, %bb.bh ], [ %i.ai, %bb.ad ] ; 7 uses
   br label %.outer.i
 
 .outer.i:                                         ; preds = %.outer.i.backedge, %.outer.i.outer
@@ -376,7 +376,7 @@ bb.av:                                            ; preds = %bb.at
 bb.aw:                                            ; preds = %bb.av
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cl, i64 4
   %.sroa.5.0.copyload.i = load i32, ptr %.sroa.5.0..sroa_idx.i, align 4, !alias.scope !1957, !noalias !1951 ; 2 uses
-  %i.cn = zext i32 %.sroa.5.0.copyload.i to i64   ; 11 uses
+  %i.cn = zext i32 %.sroa.5.0.copyload.i to i64   ; 10 uses
   %i.co = icmp ugt i64 %i.ai, %i.cn
   br i1 %i.co, label %.backedge, label %bb.ax
 
@@ -448,31 +448,23 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.be
   %.val.i = load ptr, ptr %i.bh, align 8, !noalias !1944, !nonnull !8, !noundef !8
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %.val.i, i64 %.sroa.011.0.ph.i.ph
   %i.dh = sub nuw nsw i64 %i.cn, %.sroa.011.0.ph.i.ph ; 3 uses
   invoke void @_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecmE7reserveCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef range(i64 0, 4611686018427387904) %i.dh)
-          to label %.noexc49.i unwind label %.loopexit.loopexit.split-lp.i.loopexit.split-lp, !noalias !1951
+          to label %bb.bh unwind label %.loopexit.loopexit.split-lp.i.loopexit.split-lp, !noalias !1951
 
-.noexc49.i:                                       ; preds = %bb.bg
-  %11 = load i64, ptr %.sroa.522.0..sroa_idx.i, align 8, !alias.scope !1958, !noalias !1959, !noundef !8 ; 3 uses
+bb.bh:                                            ; preds = %bb.bg
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %.val.i, i64 %.sroa.011.0.ph.i.ph
+  %11 = load i64, ptr %.sroa.522.0..sroa_idx.i, align 8, !alias.scope !1958, !noalias !1959, !noundef !8 ; 2 uses
   %12 = icmp ult i64 %11, 2305843009213693952
   call void @llvm.assume(i1 %12)
-  %.not.i.i47.i = icmp eq i64 %.sroa.011.0.ph.i.ph, %i.cn
-  br i1 %.not.i.i47.i, label %13, label %bb.bh
-
-bb.bh:                                            ; preds = %.noexc49.i
   %i.di = load ptr, ptr %.sroa.421.0..sroa_idx.i, align 8, !alias.scope !1958, !noalias !1959, !nonnull !8, !noundef !8
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.di, i64 %11
   %i.dk = shl nuw nsw i64 %i.dh, 2
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.dj, ptr nonnull readonly align 4 %10, i64 %i.dk, i1 false), !noalias !1951
   %.pre.i.i48.i = load i64, ptr %.sroa.522.0..sroa_idx.i, align 8, !alias.scope !1958, !noalias !1959
-  br label %13
-
-13:                                               ; preds = %bb.bh, %.noexc49.i
-  %14 = phi i64 [ %.pre.i.i48.i, %bb.bh ], [ %11, %.noexc49.i ]
-  %15 = add i64 %14, %i.dh
-  store i64 %15, ptr %.sroa.522.0..sroa_idx.i, align 8, !alias.scope !1958, !noalias !1959
-  %16 = add nuw nsw i64 %i.cn, 2
+  %13 = add i64 %.pre.i.i48.i, %i.dh
+  store i64 %13, ptr %.sroa.522.0..sroa_idx.i, align 8, !alias.scope !1958, !noalias !1959
+  %14 = add nuw nsw i64 %i.cn, 2
   br label %.outer.i.outer
 
 bb.bi:                                            ; preds = %bb.bj, %.loopexit.i, %.body.i, %.body43.i

@@ -204,11 +204,11 @@ bb.g:                                             ; preds = %bb.a
   %i.bd = zext nneg i32 %narrow to i64
   %i.be = tail call noalias ptr @malloc(i64 noundef %i.bd) #12
   %i.bf = load i32, ptr %i.aw, align 4, !tbaa !19
-  %i.bg = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.be, i32 noundef %i.bf) #11 ; 8 uses
+  %i.bg = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.be, i32 noundef %i.bf) #11 ; 6 uses
   %i.bh = load i32, ptr %i.aw, align 4, !tbaa !19
   %i.bi = add nsw i32 %i.bh, 1                    ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.bk = load i32, ptr %i.a, align 4, !tbaa !13  ; 2 uses
+  %i.bk = load i32, ptr %i.a, align 4, !tbaa !13  ; 3 uses
   %i.bl = icmp sgt i32 %i.bk, 0
   br i1 %i.bl, label %.lr.ph124.preheader, label %._crit_edge125
 
@@ -217,41 +217,35 @@ bb.g:                                             ; preds = %bb.a
   br label %.lr.ph124
 
 .lr.ph124:                                        ; preds = %.lr.ph124.preheader, %bb.i
-  %.0122 = phi i32 [ %.1, %bb.i ], [ %i.bi, %.lr.ph124.preheader ] ; 4 uses
+  %1 = phi i32 [ %2, %bb.i ], [ %i.bk, %.lr.ph124.preheader ]
+  %.0122 = phi i32 [ %.1, %bb.i ], [ %i.bi, %.lr.ph124.preheader ] ; 2 uses
   %.195121 = phi i32 [ %i.bw, %bb.i ], [ 0, %.lr.ph124.preheader ]
-  %.096120 = phi ptr [ %i.bv, %bb.i ], [ %i.bm, %.lr.ph124.preheader ] ; 5 uses
+  %.096120 = phi ptr [ %i.bv, %bb.i ], [ %i.bm, %.lr.ph124.preheader ] ; 4 uses
   %i.bn = load i32, ptr %.096120, align 4, !tbaa !7
-  %i.bo = lshr i32 %i.bn, 16                      ; 2 uses
+  %i.bo = lshr i32 %i.bn, 16
   %i.bp = icmp ult i32 %i.bo, %.0122
-  br i1 %i.bp, label %bb.h, label %1
+  br i1 %i.bp, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph124
   %i.bq = tail call ptr (ptr, ptr, ...) @set_copy(ptr noundef %i.bg, ptr noundef nonnull %.096120) #11 ; 0 uses
   %i.br = load i32, ptr %.096120, align 4, !tbaa !7
   %i.bs = lshr i32 %i.br, 16
+  %.pre140 = load i32, ptr %i.a, align 4, !tbaa !13
   br label %bb.i
 
-1:                                                ; preds = %.lr.ph124
-  %2 = icmp eq i32 %i.bo, %.0122
-  br i1 %2, label %3, label %bb.i
-
-3:                                                ; preds = %1
-  %4 = tail call ptr (ptr, ptr, ptr, ...) @set_or(ptr noundef %i.bg, ptr noundef %i.bg, ptr noundef nonnull %.096120) #11 ; 0 uses
-  br label %bb.i
-
-bb.i:                                             ; preds = %bb.h, %3, %1
-  %.1 = phi i32 [ %i.bs, %bb.h ], [ %.0122, %3 ], [ %.0122, %1 ] ; 2 uses
+bb.i:                                             ; preds = %.lr.ph124, %bb.h
+  %2 = phi i32 [ %.pre140, %bb.h ], [ %1, %.lr.ph124 ] ; 3 uses
+  %.1 = phi i32 [ %i.bs, %bb.h ], [ %.0122, %.lr.ph124 ] ; 2 uses
   %i.bt = load i32, ptr %0, align 8, !tbaa !20
   %i.bu = sext i32 %i.bt to i64
   %i.bv = getelementptr inbounds [4 x i8], ptr %.096120, i64 %i.bu
   %i.bw = add nuw nsw i32 %.195121, 1             ; 2 uses
-  %5 = load i32, ptr %i.a, align 4, !tbaa !13     ; 2 uses
-  %i.bx = icmp slt i32 %i.bw, %5
+  %i.bx = icmp slt i32 %i.bw, %2
   br i1 %i.bx, label %.lr.ph124, label %._crit_edge125
 
 ._crit_edge125:                                   ; preds = %bb.i, %bb.g
   %.0.lcssa = phi i32 [ %i.bi, %bb.g ], [ %.1, %bb.i ]
-  %.lcssa = phi i32 [ %i.bk, %bb.g ], [ %5, %bb.i ]
+  %.lcssa = phi i32 [ %i.bk, %bb.g ], [ %2, %bb.i ]
   switch i32 %.0.lcssa, label %bb.o [
     i32 0, label %bb.j
     i32 1, label %bb.k

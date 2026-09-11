@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i84
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S5_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i84
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   %i.af = load ptr, ptr %4, align 8, !tbaa !30    ; 7 uses
-  %i.ag = load i64, ptr %i.aa, align 8, !tbaa !33 ; 17 uses
+  %i.ag = load i64, ptr %i.aa, align 8, !tbaa !33 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   store ptr %0, ptr %6, align 8, !tbaa !119
   %i.ah = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
@@ -265,7 +265,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit87: ; preds = %_ZZ
 
 bb.j:                                             ; preds = %bb.al, %.lr.ph
   %.sroa.0115.0192296 = phi ptr [ %i.af, %.lr.ph ], [ %i.dq, %bb.al ] ; 7 uses
-  %.sroa.7.0193288 = phi i64 [ 0, %.lr.ph ], [ %i.dp, %bb.al ] ; 12 uses
+  %.sroa.7.0193288 = phi i64 [ 0, %.lr.ph ], [ %i.dp, %bb.al ] ; 9 uses
   %.sroa.11.0194283 = phi i64 [ 0, %.lr.ph ], [ %.sroa.11.1.jt0, %bb.al ] ; 4 uses
   %.sroa.0121.0195279 = phi ptr [ null, %.lr.ph ], [ %.sroa.0121.1.jt0, %bb.al ] ; 4 uses
   %.065202245 = phi i32 [ 0, %.lr.ph ], [ %.166.jt0, %bb.al ] ; 5 uses
@@ -281,22 +281,16 @@ bb.j:                                             ; preds = %bb.al, %.lr.ph
 
 bb.k:                                             ; preds = %bb.j
   %i.ax = sext i32 %.065202245 to i64
-  %.sroa.speculated3.i = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.ax) ; 3 uses
-  %11 = icmp ugt i64 %.sroa.7.0193288, %i.ag
-  %.sroa.speculate.load.false.sroa.speculated.i = call i64 @llvm.umax.i64(i64 %.sroa.7.0193288, i64 %.sroa.speculated3.i)
-  %.sroa.speculated.i = select i1 %11, i64 %i.ag, i64 %.sroa.speculate.load.false.sroa.speculated.i
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculated3.i
-  %12 = sub i64 %.sroa.speculated.i, %.sroa.speculated3.i
+  %.sroa.speculate.load.false.sroa.speculated.i = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.ax) ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculate.load.false.sroa.speculated.i
+  %11 = call i64 @llvm.usub.sat.i64(i64 %.sroa.7.0193288, i64 %.sroa.speculate.load.false.sroa.speculated.i)
   br label %.preheader
 
 bb.l:                                             ; preds = %bb.j
   %i.az = sext i32 %.065202245 to i64
-  %.sroa.speculated3.i88 = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.az) ; 3 uses
-  %13 = icmp ugt i64 %.sroa.7.0193288, %i.ag
-  %.sroa.speculate.load.false.sroa.speculated.i89 = call i64 @llvm.umax.i64(i64 %.sroa.7.0193288, i64 %.sroa.speculated3.i88)
-  %.sroa.speculated.i90 = select i1 %13, i64 %i.ag, i64 %.sroa.speculate.load.false.sroa.speculated.i89
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculated3.i88 ; 4 uses
-  %14 = sub i64 %.sroa.speculated.i90, %.sroa.speculated3.i88 ; 4 uses
+  %.sroa.speculate.load.false.sroa.speculated.i89 = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.az) ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculate.load.false.sroa.speculated.i89 ; 4 uses
+  %12 = call i64 @llvm.usub.sat.i64(i64 %.sroa.7.0193288, i64 %.sroa.speculate.load.false.sroa.speculated.i89) ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0115.0192296, i64 1 ; 2 uses
   %.not.jt3405409 = icmp eq ptr %i.bb, %i.ap
   br i1 %.not.jt3405409, label %._crit_edge.loopexit, label %.lr.ph408
@@ -312,22 +306,19 @@ bb.m:                                             ; preds = %bb.j, %bb.j
 
 bb.n:                                             ; preds = %bb.j, %bb.j
   %i.bh = sext i32 %.065202245 to i64
-  %.sroa.speculated3.i93 = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.bh) ; 3 uses
-  %15 = icmp ugt i64 %.sroa.7.0193288, %i.ag
-  %.sroa.speculate.load.false.sroa.speculated.i94 = call i64 @llvm.umax.i64(i64 %.sroa.7.0193288, i64 %.sroa.speculated3.i93)
-  %.sroa.speculated.i95 = select i1 %15, i64 %i.ag, i64 %.sroa.speculate.load.false.sroa.speculated.i94
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculated3.i93
-  %16 = sub i64 %.sroa.speculated.i95, %.sroa.speculated3.i93
+  %.sroa.speculate.load.false.sroa.speculated.i94 = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.bh) ; 2 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculate.load.false.sroa.speculated.i94
+  %13 = call i64 @llvm.usub.sat.i64(i64 %.sroa.7.0193288, i64 %.sroa.speculate.load.false.sroa.speculated.i94)
   store ptr %.sroa.0121.0195279, ptr %7, align 8, !tbaa !120
   store i64 %.sroa.11.0194283, ptr %.sroa.11.0..sroa_idx128, align 8, !tbaa !70
-  call void @_ZZN4llvm9sandboxir11PassManagerINS0_10RegionPassES2_E15setPassPipelineENS_9StringRefESt8functionIFSt10unique_ptrIS2_St14default_deleteIS2_EES4_S4_S4_EEENKUlS4_S4_S4_E_clES4_S4_S4_(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr %i.bi, i64 %16, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %7)
+  call void @_ZZN4llvm9sandboxir11PassManagerINS0_10RegionPassES2_E15setPassPipelineENS_9StringRefESt8functionIFSt10unique_ptrIS2_St14default_deleteIS2_EES4_S4_S4_EEENKUlS4_S4_S4_E_clES4_S4_S4_(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr %i.bi, i64 %13, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %7)
   %i.bj = trunc i64 %.sroa.7.0193288 to i32
   %i.bk = add i32 %i.bj, 1
   br label %bb.al
 
 bb.o:                                             ; preds = %.lr.ph416, %bb.ak
   %i.bl = phi ptr [ %i.bp, %.lr.ph416 ], [ %i.do, %bb.ak ] ; 5 uses
-  %.sroa.7.0193290415 = phi i64 [ %.sroa.7.0193290.ph303419, %.lr.ph416 ], [ %i.bm, %bb.ak ] ; 3 uses
+  %.sroa.7.0193290415 = phi i64 [ %.sroa.7.0193290.ph303419, %.lr.ph416 ], [ %i.bm, %bb.ak ] ; 2 uses
   %.sroa.0115.0192298414 = phi ptr [ %.sroa.0115.0192298.ph302418, %.lr.ph416 ], [ %i.bl, %bb.ak ]
   %i.bm = add nuw i64 %.sroa.7.0193290415, 1      ; 3 uses
   %i.bn = load i8, ptr %i.bl, align 1, !tbaa !31
@@ -397,7 +388,7 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %.lr.ph408, %bb.aj
   %i.cf = phi ptr [ %i.ck, %.lr.ph408 ], [ %i.dn, %bb.aj ] ; 5 uses
-  %.sroa.7.0193292407 = phi i64 [ %.sroa.7.0193292.ph411, %.lr.ph408 ], [ %i.cg, %bb.aj ] ; 3 uses
+  %.sroa.7.0193292407 = phi i64 [ %.sroa.7.0193292.ph411, %.lr.ph408 ], [ %i.cg, %bb.aj ] ; 2 uses
   %.sroa.0115.0192300406 = phi ptr [ %.sroa.0115.0192300.ph410, %.lr.ph408 ], [ %i.cf, %bb.aj ]
   %i.cg = add nuw i64 %.sroa.7.0193292407, 1      ; 3 uses
   %i.ch = load i8, ptr %i.cf, align 1, !tbaa !31
@@ -446,7 +437,7 @@ bb.ac:                                            ; preds = %bb.x
   %i.ct = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(48) %i.cs, ptr noundef nonnull @.str.22)
   %i.cu = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEc(ptr noundef nonnull align 8 dereferenceable(48) %i.ct, i8 noundef signext 41)
   %i.cv = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(48) %i.cu, ptr noundef nonnull @.str.23)
-  %i.cw = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(48) %i.cv, ptr %i.ba, i64 %14)
+  %i.cw = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(48) %i.cv, ptr %i.ba, i64 %12)
   %i.cx = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(48) %i.cw, ptr noundef nonnull @.str.20) ; 0 uses
   call void @exit(i32 noundef 1) #23
   unreachable
@@ -461,14 +452,14 @@ bb.ad:                                            ; preds = %bb.ah
 
 bb.ae:                                            ; preds = %bb.ad
   store ptr %i.dg, ptr %9, align 8, !tbaa !120
-  store i64 %17, ptr %.sroa.11.0..sroa_idx134, align 8, !tbaa !70
-  call void @_ZZN4llvm9sandboxir11PassManagerINS0_10RegionPassES2_E15setPassPipelineENS_9StringRefESt8functionIFSt10unique_ptrIS2_St14default_deleteIS2_EES4_S4_S4_EEENKUlS4_S4_S4_E_clES4_S4_S4_(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr %i.ba, i64 %14, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %9)
+  store i64 %14, ptr %.sroa.11.0..sroa_idx134, align 8, !tbaa !70
+  call void @_ZZN4llvm9sandboxir11PassManagerINS0_10RegionPassES2_E15setPassPipelineENS_9StringRefESt8functionIFSt10unique_ptrIS2_St14default_deleteIS2_EES4_S4_S4_EEENKUlS4_S4_S4_E_clES4_S4_S4_(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr %i.ba, i64 %12, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %9)
   br label %bb.al
 
 bb.af:                                            ; preds = %bb.ad
   store ptr %i.dg, ptr %10, align 8, !tbaa !120
-  store i64 %17, ptr %.sroa.11.0..sroa_idx136, align 8, !tbaa !70
-  call void @_ZZN4llvm9sandboxir11PassManagerINS0_10RegionPassES2_E15setPassPipelineENS_9StringRefESt8functionIFSt10unique_ptrIS2_St14default_deleteIS2_EES4_S4_S4_EEENKUlS4_S4_S4_E_clES4_S4_S4_(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr %i.ba, i64 %14, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %10)
+  store i64 %14, ptr %.sroa.11.0..sroa_idx136, align 8, !tbaa !70
+  call void @_ZZN4llvm9sandboxir11PassManagerINS0_10RegionPassES2_E15setPassPipelineENS_9StringRefESt8functionIFSt10unique_ptrIS2_St14default_deleteIS2_EES4_S4_S4_EEENKUlS4_S4_S4_E_clES4_S4_S4_(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr %i.ba, i64 %12, ptr null, i64 0, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %10)
   %i.cz = trunc i64 %i.dh to i32
   %i.da = add i32 %i.cz, 1
   br label %bb.al
@@ -476,9 +467,9 @@ bb.af:                                            ; preds = %bb.ad
 .preheader:                                       ; preds = %bb.ad, %bb.k
   %.sroa.0115.0192298.ph = phi ptr [ %.sroa.0115.0192296, %bb.k ], [ %i.di, %bb.ad ] ; 2 uses
   %.sroa.7.0193290.ph = phi i64 [ %.sroa.7.0193288, %bb.k ], [ %i.dh, %bb.ad ] ; 2 uses
-  %.sroa.11.1.jt1.ph = phi i64 [ %.sroa.11.0194283, %bb.k ], [ %17, %bb.ad ]
+  %.sroa.11.1.jt1.ph = phi i64 [ %.sroa.11.0194283, %bb.k ], [ %14, %bb.ad ]
   %.sroa.0121.1.jt1.ph = phi ptr [ %.sroa.0121.0195279, %bb.k ], [ %i.dg, %bb.ad ]
-  %.sroa.10.1.jt1.ph = phi i64 [ %12, %bb.k ], [ %14, %bb.ad ] ; 2 uses
+  %.sroa.10.1.jt1.ph = phi i64 [ %11, %bb.k ], [ %12, %bb.ad ] ; 2 uses
   %.sroa.0145.1.jt1.ph = phi ptr [ %i.ay, %bb.k ], [ %i.ba, %bb.ad ] ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %.sroa.0115.0192298.ph, i64 1 ; 2 uses
   %.not.jt1413417 = icmp eq ptr %i.db, %i.ap
@@ -494,12 +485,9 @@ bb.ah:                                            ; preds = %bb.z
   %i.de = shl i64 %.sroa.7.0193288, 32
   %sext = add i64 %i.de, 4294967296
   %i.df = ashr exact i64 %sext, 32
-  %.sroa.speculated3.i103 = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.df) ; 3 uses
-  %.not = icmp ult i64 %.sroa.7.0193292407, %i.ag
-  %.sroa.speculate.load.false.sroa.speculated.i104 = call i64 @llvm.umax.i64(i64 %i.cg, i64 %.sroa.speculated3.i103)
-  %.sroa.speculated.i105 = select i1 %.not, i64 %.sroa.speculate.load.false.sroa.speculated.i104, i64 %i.ag
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculated3.i103 ; 4 uses
-  %17 = sub i64 %.sroa.speculated.i105, %.sroa.speculated3.i103 ; 4 uses
+  %.sroa.speculate.load.false.sroa.speculated.i104 = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.df) ; 2 uses
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculate.load.false.sroa.speculated.i104 ; 4 uses
+  %14 = call i64 @llvm.usub.sat.i64(i64 %i.cg, i64 %.sroa.speculate.load.false.sroa.speculated.i104) ; 4 uses
   %i.dh = add nuw i64 %.sroa.7.0193292407, 2      ; 4 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.0115.0192300406, i64 2 ; 5 uses
   %.not.jt4 = icmp eq ptr %i.di, %i.ap
@@ -509,15 +497,12 @@ bb.ai:                                            ; preds = %bb.q
   %.168.jt1.ph = shl i64 %.sroa.7.0193290.ph, 32
   %sext349 = add i64 %.168.jt1.ph, 4294967296
   %i.dj = ashr exact i64 %sext349, 32
-  %.sroa.speculated3.i98 = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.dj) ; 3 uses
-  %.not350 = icmp ult i64 %.sroa.7.0193290415, %i.ag
-  %.sroa.speculate.load.false.sroa.speculated.i99 = call i64 @llvm.umax.i64(i64 %i.bm, i64 %.sroa.speculated3.i98)
-  %.sroa.speculated.i100 = select i1 %.not350, i64 %.sroa.speculate.load.false.sroa.speculated.i99, i64 %i.ag
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculated3.i98
-  %18 = sub i64 %.sroa.speculated.i100, %.sroa.speculated3.i98
+  %.sroa.speculate.load.false.sroa.speculated.i99 = call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.dj) ; 2 uses
+  %i.dk = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.speculate.load.false.sroa.speculated.i99
+  %15 = call i64 @llvm.usub.sat.i64(i64 %i.bm, i64 %.sroa.speculate.load.false.sroa.speculated.i99)
   store ptr %.sroa.0121.1.jt1.ph, ptr %8, align 8, !tbaa !120
   store i64 %.sroa.11.1.jt1.ph, ptr %.sroa.11.0..sroa_idx130, align 8, !tbaa !70
-  call void @_ZZN4llvm9sandboxir11PassManagerINS0_10RegionPassES2_E15setPassPipelineENS_9StringRefESt8functionIFSt10unique_ptrIS2_St14default_deleteIS2_EES4_S4_S4_EEENKUlS4_S4_S4_E_clES4_S4_S4_(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr %.sroa.0145.1.jt1.ph, i64 %.sroa.10.1.jt1.ph, ptr %i.dk, i64 %18, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %8)
+  call void @_ZZN4llvm9sandboxir11PassManagerINS0_10RegionPassES2_E15setPassPipelineENS_9StringRefESt8functionIFSt10unique_ptrIS2_St14default_deleteIS2_EES4_S4_S4_EEENKUlS4_S4_S4_E_clES4_S4_S4_(ptr noundef nonnull align 8 dereferenceable(40) %6, ptr %.sroa.0145.1.jt1.ph, i64 %.sroa.10.1.jt1.ph, ptr %i.dk, i64 %15, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %8)
   %i.dl = add nuw i64 %.sroa.7.0193290415, 2      ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.0115.0192298414, i64 2 ; 3 uses
   %.not.jt2 = icmp eq ptr %i.dm, %i.ap
@@ -536,7 +521,7 @@ bb.ak:                                            ; preds = %bb.o
 bb.al:                                            ; preds = %bb.af, %bb.ae, %bb.v, %bb.n, %bb.j
   %.sroa.0115.0192299 = phi ptr [ %i.di, %bb.af ], [ %i.di, %bb.ae ], [ %i.dm, %bb.v ], [ %.sroa.0115.0192296, %bb.n ], [ %.sroa.0115.0192296, %bb.j ]
   %.sroa.7.0193291 = phi i64 [ %i.dh, %bb.af ], [ %i.dh, %bb.ae ], [ %i.dl, %bb.v ], [ %.sroa.7.0193288, %bb.n ], [ %.sroa.7.0193288, %bb.j ]
-  %.sroa.11.1.jt0 = phi i64 [ 0, %bb.af ], [ %17, %bb.ae ], [ 0, %bb.v ], [ %.sroa.11.0194283, %bb.n ], [ %.sroa.11.0194283, %bb.j ]
+  %.sroa.11.1.jt0 = phi i64 [ 0, %bb.af ], [ %14, %bb.ae ], [ 0, %bb.v ], [ %.sroa.11.0194283, %bb.n ], [ %.sroa.11.0194283, %bb.j ]
   %.sroa.0121.1.jt0 = phi ptr [ null, %bb.af ], [ %i.dg, %bb.ae ], [ null, %bb.v ], [ %.sroa.0121.0195279, %bb.n ], [ %.sroa.0121.0195279, %bb.j ]
   %.166.jt0 = phi i32 [ %i.da, %bb.af ], [ %.065202245, %bb.ae ], [ %i.cc, %bb.v ], [ %i.bk, %bb.n ], [ %.065202245, %bb.j ]
   %i.dp = add nuw i64 %.sroa.7.0193291, 1
@@ -939,10 +924,10 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
+declare i64 @llvm.umin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #19
+declare i64 @llvm.usub.sat.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #19

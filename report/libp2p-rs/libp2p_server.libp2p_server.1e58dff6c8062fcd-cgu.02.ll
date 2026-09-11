@@ -205,7 +205,7 @@ _RNvXs7_NtNtNtCse0yMYRRwETY_5hyper5proto2h12ioINtB5_6CursorINtNtCsexYYUdYSQU6_5a
 _RNvYINtNtNtNtCse0yMYRRwETY_5hyper5proto2h12io6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i: ; preds = %_RNvXs7_NtNtNtCse0yMYRRwETY_5hyper5proto2h12ioINtB5_6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf5chunkCs2Bxje7pdMIr_13libp2p_server.exit.i.i, %bb.n
   %.sroa.0.0.i.i.sroa.phi = phi ptr [ %.sroa.0.0.i.i.sroa.gep, %_RNvXs7_NtNtNtCse0yMYRRwETY_5hyper5proto2h12ioINtB5_6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf5chunkCs2Bxje7pdMIr_13libp2p_server.exit.i.i ], [ %i.g, %bb.n ]
   %.sroa.0.0.i.i = phi i64 [ 1, %_RNvXs7_NtNtNtCse0yMYRRwETY_5hyper5proto2h12ioINtB5_6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf5chunkCs2Bxje7pdMIr_13libp2p_server.exit.i.i ], [ 0, %bb.n ] ; 2 uses
-  %i.cw = sub nuw nsw i64 64, %.sroa.0.0.i.i      ; 8 uses
+  %i.cw = sub nuw nsw i64 64, %.sroa.0.0.i.i      ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2648)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2649
   call void @_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtNtCse0yMYRRwETY_5hyper5proto2h16encode10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEE4iterCs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.s)
@@ -220,7 +220,7 @@ bb.q:                                             ; preds = %_RNvXs_NtNtNtCse0yM
   %.sroa.0.sroa.0.0.i.i = phi ptr [ %.sroa.0.sroa.0.0.copyload.i.i, %_RNvYINtNtNtNtCse0yMYRRwETY_5hyper5proto2h12io6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i ], [ %i.cz, %_RNvXs_NtNtNtCse0yMYRRwETY_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i ] ; 3 uses
   %.sroa.9.sroa.5.0.i.i = phi ptr [ %.sroa.9.sroa.5.0.copyload.i.i, %_RNvYINtNtNtNtCse0yMYRRwETY_5hyper5proto2h12io6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i ], [ %.sroa.9.sroa.5.1.i.i, %_RNvXs_NtNtNtCse0yMYRRwETY_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i ] ; 3 uses
   %.sroa.9.sroa.0.0.i.i = phi ptr [ %.sroa.9.sroa.0.0.copyload.i.i, %_RNvYINtNtNtNtCse0yMYRRwETY_5hyper5proto2h12io6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i ], [ %.sroa.9.sroa.0.1.i.i, %_RNvXs_NtNtNtCse0yMYRRwETY_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i ] ; 3 uses
-  %.sroa.0.1.i.i = phi i64 [ 0, %_RNvYINtNtNtNtCse0yMYRRwETY_5hyper5proto2h12io6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i ], [ %i.fi, %_RNvXs_NtNtNtCse0yMYRRwETY_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i ] ; 9 uses
+  %.sroa.0.1.i.i = phi i64 [ 0, %_RNvYINtNtNtNtCse0yMYRRwETY_5hyper5proto2h12io6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtNtCs1eA6bChxBZF_5bytes3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i ], [ %i.fi, %_RNvXs_NtNtNtCse0yMYRRwETY_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i ] ; 7 uses
   %i.cx = icmp eq ptr %.sroa.0.sroa.0.0.i.i, %.sroa.0.sroa.7.0.i.i
   br i1 %i.cx, label %bb.r, label %_RNvXs2_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtNtCse0yMYRRwETY_5hyper5proto2h16encode10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs2Bxje7pdMIr_13libp2p_server.exit.i.i
 
@@ -416,10 +416,8 @@ _RNvXs_NtNtCs1eA6bChxBZF_5bytes3buf5chainINtB4_5ChainIBD_NtNtNtNtCse0yMYRRwETY_5
 bb.ag:                                            ; preds = %bb.t
   %i.eq = getelementptr i8, ptr %.sink6.i.i.i, i64 16
   %.val1.i.i.i = load i64, ptr %i.eq, align 8, !noalias !2650 ; 2 uses
-  %2 = icmp eq i64 %i.cw, %.sroa.0.1.i.i
   %.not.i2.i.i.i = icmp eq i64 %.val1.i.i.i, 0
-  %or.cond.i.i.i.i = select i1 %2, i1 true, i1 %.not.i2.i.i.i
-  br i1 %or.cond.i.i.i.i, label %_RNvXs_NtNtNtCse0yMYRRwETY_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i, label %bb.ah
+  br i1 %.not.i2.i.i.i, label %_RNvXs_NtNtNtCse0yMYRRwETY_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %i.er = getelementptr inbounds nuw i8, ptr %.sink6.i.i.i, i64 8
@@ -434,10 +432,8 @@ bb.ai:                                            ; preds = %bb.t
   call void @llvm.experimental.noalias.scope.decl(metadata !2659)
   %i.et = getelementptr i8, ptr %.sink6.i.i.i, i64 16
   %.val5.i.i.i.i.i = load i64, ptr %i.et, align 8, !noalias !2660 ; 2 uses
-  %3 = icmp eq i64 %i.cw, %.sroa.0.1.i.i
   %.not.i.i.i.i.i.i = icmp eq i64 %.val5.i.i.i.i.i, 0
-  %or.cond.i.i.i.i.i.i = select i1 %3, i1 true, i1 %.not.i.i.i.i.i.i
-  br i1 %or.cond.i.i.i.i.i.i, label %_RNvXs_NtNtCs1eA6bChxBZF_5bytes3buf5chainINtB4_5ChainRShNtNtB8_5bytes5BytesENtNtB6_8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i, label %bb.aj
+  br i1 %.not.i.i.i.i.i.i, label %_RNvXs_NtNtCs1eA6bChxBZF_5bytes3buf5chainINtB4_5ChainRShNtNtB8_5bytes5BytesENtNtB6_8buf_impl3Buf15chunks_vectoredCs2Bxje7pdMIr_13libp2p_server.exit.i.i.i.i, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.eu = getelementptr inbounds nuw i8, ptr %.sink6.i.i.i, i64 8

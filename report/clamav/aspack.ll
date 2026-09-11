@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %._crit_edge, %bb.h
   %indvars.iv143 = phi i64 [ 0, %._crit_edge ], [ %indvars.iv.next144, %bb.h ] ; 3 uses
-  %.091129 = phi i32 [ 0, %._crit_edge ], [ %.192, %bb.h ] ; 6 uses
+  %.091129 = phi i32 [ 0, %._crit_edge ], [ %.192, %bb.h ] ; 4 uses
   %.095127 = phi i32 [ 23, %._crit_edge ], [ %i.av, %bb.h ] ; 3 uses
   %.096126 = phi i32 [ 0, %._crit_edge ], [ %i.w, %bb.h ]
   %indvars.iv.next144 = add nuw nsw i64 %indvars.iv143, 1 ; 7 uses
@@ -232,15 +232,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.ag, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %i.ah = lshr i32 %i.w, 16                       ; 4 uses
+  %i.ah = lshr i32 %i.w, 16                       ; 3 uses
   %i.ai = icmp samesign ult i32 %i.ah, %.091129
-  br i1 %i.ai, label %.critedge, label %3
+  br i1 %i.ai, label %.critedge, label %bb.f
 
-3:                                                ; preds = %bb.e
-  %.not113 = icmp eq i32 %i.ah, %.091129
-  br i1 %.not113, label %bb.h, label %bb.f
-
-bb.f:                                             ; preds = %3
+bb.f:                                             ; preds = %bb.e
   %i.aj = sub nuw nsw i32 %i.ah, %.091129
   %i.ak = zext nneg i32 %i.aj to i64              ; 2 uses
   %i.al = load ptr, ptr %i.s, align 8, !tbaa !13  ; 2 uses
@@ -262,8 +258,8 @@ bb.g:                                             ; preds = %bb.f
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.an, i8 %i.au, i64 %i.ak, i1 false)
   br label %bb.h
 
-bb.h:                                             ; preds = %3, %bb.g, %bb.d
-  %.192 = phi i32 [ %.091129, %bb.d ], [ %i.ah, %bb.g ], [ %.091129, %3 ]
+bb.h:                                             ; preds = %bb.g, %bb.d
+  %.192 = phi i32 [ %.091129, %bb.d ], [ %i.ah, %bb.g ]
   %i.av = add nsw i32 %.095127, -1
   %exitcond146.not = icmp eq i64 %indvars.iv.next144, 15
   br i1 %exitcond146.not, label %bb.i, label %bb.c

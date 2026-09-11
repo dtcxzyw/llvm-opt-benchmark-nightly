@@ -204,7 +204,7 @@ _RNvXs7_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h12ioINtB5_6CursorINtNtCscdodAO9FK5_5al
 _RNvYINtNtNtNtCs2LSxCQSJWSD_5hyper5proto2h12io6CursorINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtNtCsuxFxh2mtOX_5bytes3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit: ; preds = %bb.a, %_RNvXs7_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h12ioINtB5_6CursorINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtNtCsuxFxh2mtOX_5bytes3buf8buf_impl3Buf5chunkCsbakdBCgU4AF_16influxdb3_server.exit.i
   %.sroa.0.0.i = phi i64 [ 1, %_RNvXs7_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h12ioINtB5_6CursorINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtNtCsuxFxh2mtOX_5bytes3buf8buf_impl3Buf5chunkCsbakdBCgU4AF_16influxdb3_server.exit.i ], [ 0, %bb.a ] ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.l = sub nuw nsw i64 64, %.sroa.0.0.i         ; 8 uses
+  %i.l = sub nuw nsw i64 64, %.sroa.0.0.i         ; 6 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %.sroa.0.0.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9205)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !9206
@@ -258,7 +258,7 @@ bb.d:                                             ; preds = %_RNvXs_NtNtNtCs2LSx
   %.sroa.0.sroa.0.0.i = phi ptr [ %.sroa.0.sroa.0.0.copyload.i, %_RNvYINtNtNtNtCs2LSxCQSJWSD_5hyper5proto2h12io6CursorINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtNtCsuxFxh2mtOX_5bytes3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.av, %_RNvXs_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCsuxFxh2mtOX_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i ] ; 3 uses
   %.sroa.9.sroa.5.0.i = phi ptr [ %.sroa.9.sroa.5.0.copyload.i, %_RNvYINtNtNtNtCs2LSxCQSJWSD_5hyper5proto2h12io6CursorINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtNtCsuxFxh2mtOX_5bytes3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit ], [ %.sroa.9.sroa.5.1.i, %_RNvXs_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCsuxFxh2mtOX_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i ] ; 3 uses
   %.sroa.9.sroa.0.0.i = phi ptr [ %.sroa.9.sroa.0.0.copyload.i, %_RNvYINtNtNtNtCs2LSxCQSJWSD_5hyper5proto2h12io6CursorINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtNtCsuxFxh2mtOX_5bytes3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit ], [ %.sroa.9.sroa.0.1.i, %_RNvXs_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCsuxFxh2mtOX_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i ] ; 3 uses
-  %.sroa.0.1.i = phi i64 [ 0, %_RNvYINtNtNtNtCs2LSxCQSJWSD_5hyper5proto2h12io6CursorINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtNtCsuxFxh2mtOX_5bytes3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.df, %_RNvXs_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCsuxFxh2mtOX_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i ] ; 9 uses
+  %.sroa.0.1.i = phi i64 [ 0, %_RNvYINtNtNtNtCs2LSxCQSJWSD_5hyper5proto2h12io6CursorINtNtCscdodAO9FK5_5alloc3vec3VechEENtNtNtCsuxFxh2mtOX_5bytes3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit ], [ %i.df, %_RNvXs_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCsuxFxh2mtOX_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i ] ; 7 uses
   %i.at = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
   br i1 %i.at, label %bb.e, label %_RNvXs2_NtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtNtCs2LSxCQSJWSD_5hyper5proto2h16encode10EncodedBufNtNtCsuxFxh2mtOX_5bytes5bytes5BytesEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsbakdBCgU4AF_16influxdb3_server.exit.i
 
@@ -453,10 +453,8 @@ _RNvXs_NtNtCsuxFxh2mtOX_5bytes3buf5chainINtB4_5ChainIBC_NtNtNtNtCs2LSxCQSJWSD_5h
 bb.t:                                             ; preds = %bb.g
   %i.cm = getelementptr i8, ptr %.sink6.i.i, i64 16
   %.val1.i.i = load i64, ptr %i.cm, align 8, !noalias !9207 ; 2 uses
-  %2 = icmp ne i64 %i.l, %.sroa.0.1.i
-  %3 = icmp ne i64 %.val1.i.i, 0
-  %or.cond.i.i.i = select i1 %2, i1 %3, i1 false
-  br i1 %or.cond.i.i.i, label %bb.u, label %_RNvXs_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCsuxFxh2mtOX_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i
+  %.not74.i = icmp eq i64 %.val1.i.i, 0
+  br i1 %.not74.i, label %_RNvXs_NtNtNtCs2LSxCQSJWSD_5hyper5proto2h16encodeINtB4_10EncodedBufNtNtCsuxFxh2mtOX_5bytes5bytes5BytesENtNtNtB16_3buf8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.cn = getelementptr inbounds nuw i8, ptr %.sink6.i.i, i64 8
@@ -471,10 +469,8 @@ bb.v:                                             ; preds = %bb.g
   call void @llvm.experimental.noalias.scope.decl(metadata !9216)
   %i.cp = getelementptr i8, ptr %.sink6.i.i, i64 16
   %.val5.i.i.i.i = load i64, ptr %i.cp, align 8, !noalias !9217 ; 2 uses
-  %4 = icmp ne i64 %i.l, %.sroa.0.1.i
-  %5 = icmp ne i64 %.val5.i.i.i.i, 0
-  %or.cond.i.i.i.i.i = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond.i.i.i.i.i, label %bb.w, label %_RNvXs_NtNtCsuxFxh2mtOX_5bytes3buf5chainINtB4_5ChainRShNtNtB8_5bytes5BytesENtNtB6_8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i.i.i
+  %.not73.i = icmp eq i64 %.val5.i.i.i.i, 0
+  br i1 %.not73.i, label %_RNvXs_NtNtCsuxFxh2mtOX_5bytes3buf5chainINtB4_5ChainRShNtNtB8_5bytes5BytesENtNtB6_8buf_impl3Buf15chunks_vectoredCsbakdBCgU4AF_16influxdb3_server.exit.i.i.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.cq = getelementptr inbounds nuw i8, ptr %.sink6.i.i, i64 8

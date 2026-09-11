@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_RNCINvNvMsg_NtNtNt
   %i.br = phi i64 [ %i.db, %_RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i ], [ %.promoted1638.i.i.i.i.i.i.i, %bb.h ] ; 3 uses
   %i.bs = phi i64 [ %i.dc, %_RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i ], [ %.promoted1531.i.i.i.i.i.i.i, %bb.h ] ; 3 uses
   %.sroa.0.2.i14.i.i.i13.i.i.i.i.i.i.i = phi i64 [ %.sroa.0.2.i14.i.i.i14.i.i.i.i.i.i.i, %_RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i ], [ %.promoted25.i.i.i.i.i.i.i, %bb.h ]
-  %storemerge.i.i7.i.i.i.i.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i.i.i.i.i.i, %_RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i ], [ %storemerge.i.i.i.lcssa22.i.i.i.i.i.i.i, %bb.h ] ; 6 uses
+  %storemerge.i.i7.i.i.i.i.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i.i.i.i.i.i, %_RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i ], [ %storemerge.i.i.i.lcssa22.i.i.i.i.i.i.i, %bb.h ] ; 5 uses
   %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.dd, %_RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i ], [ 0, %bb.h ] ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bh, i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i
   %.val8.i.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.bt, align 1, !alias.scope !950, !noalias !951, !noundef !6 ; 2 uses
@@ -248,9 +248,6 @@ bb.i:                                             ; preds = %_RNvNtNtCsj6eKBz9Db
   %i.cr = xor i64 %i.cq, %i.cn                    ; 3 uses
   %i.cs = call noundef i64 @llvm.fshl.i64(i64 %i.cm, i64 %i.cm, i64 32) ; 3 uses
   %i.ct = xor i64 %i.cn, %i.cc                    ; 3 uses
-  %.not5.i.i.i.i.i.i.i.i = icmp ne i64 %storemerge.i.i7.i.i.i.i.i.i.i.i, 7 ; 2 uses
-  %spec.select.i.i.i.i.i.i.i = zext i1 %.not5.i.i.i.i.i.i.i.i to i64
-  %spec.select60.i.i.i.i.i.i.i = select i1 %.not5.i.i.i.i.i.i.i.i, i64 %i.by, i64 0
   br label %_RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i
 
 bb.j:                                             ; preds = %_RNvNtNtCsj6eKBz9Db1c_4core4hash3sip9u8to64_le.exit.i.i.i.i.i.i.i.i.i.i
@@ -258,20 +255,20 @@ bb.j:                                             ; preds = %_RNvNtNtCsj6eKBz9Db
   br label %_RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i
 
 _RNvXs2_NtNtCsaKJjC64KgbL_3std4hash6randomNtB5_13DefaultHasherNtNtCsj6eKBz9Db1c_4core4hash6Hasher5write.exit.i.i.i.i.i.i.i.i: ; preds = %..thread.i_crit_edge.i.i.i.i.i.i.i, %bb.i, %bb.j
-  %i.cv = phi i64 [ %i.bl, %bb.j ], [ %i.ct, %bb.i ], [ %i.bl, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %i.cw = phi i64 [ %i.bm, %bb.j ], [ %i.cs, %bb.i ], [ %i.bm, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %i.cx = phi i64 [ %i.bn, %bb.j ], [ %i.cr, %bb.i ], [ %i.bn, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %i.cy = phi i64 [ %i.bo, %bb.j ], [ %i.cp, %bb.i ], [ %i.bo, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %.promoted1847.i.i.i.i.i.i.i = phi i64 [ %.promoted1850.i.i.i.i.i.i.i, %bb.j ], [ %i.cs, %bb.i ], [ %.promoted1850.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %.promoted1740.i.i.i.i.i.i.i = phi i64 [ %.promoted1743.i.i.i.i.i.i.i, %bb.j ], [ %i.cp, %bb.i ], [ %.promoted1743.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %.promoted1633.i.i.i.i.i.i.i = phi i64 [ %.promoted1636.i.i.i.i.i.i.i, %bb.j ], [ %i.ct, %bb.i ], [ %.promoted1636.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %.promoted1526.i.i.i.i.i.i.i = phi i64 [ %.promoted1529.i.i.i.i.i.i.i, %bb.j ], [ %i.cr, %bb.i ], [ %.promoted1529.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %i.cz = phi i64 [ %i.bp, %bb.j ], [ %i.cs, %bb.i ], [ %i.bp, %..thread.i_crit_edge.i.i.i.i.i.i.i ]
-  %i.da = phi i64 [ %i.bq, %bb.j ], [ %i.cp, %bb.i ], [ %i.bq, %..thread.i_crit_edge.i.i.i.i.i.i.i ]
-  %i.db = phi i64 [ %i.br, %bb.j ], [ %i.ct, %bb.i ], [ %i.br, %..thread.i_crit_edge.i.i.i.i.i.i.i ]
-  %i.dc = phi i64 [ %i.bs, %bb.j ], [ %i.cr, %bb.i ], [ %i.bs, %..thread.i_crit_edge.i.i.i.i.i.i.i ]
-  %.sroa.0.2.i14.i.i.i14.i.i.i.i.i.i.i = phi i64 [ %i.cc, %bb.j ], [ %spec.select60.i.i.i.i.i.i.i, %bb.i ], [ %.pre.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 3 uses
-  %storemerge.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.cu, %bb.j ], [ %spec.select.i.i.i.i.i.i.i, %bb.i ], [ 1, %..thread.i_crit_edge.i.i.i.i.i.i.i ] ; 3 uses
+  %i.cv = phi i64 [ %i.bl, %bb.j ], [ %i.bl, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.ct, %bb.i ] ; 2 uses
+  %i.cw = phi i64 [ %i.bm, %bb.j ], [ %i.bm, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cs, %bb.i ] ; 2 uses
+  %i.cx = phi i64 [ %i.bn, %bb.j ], [ %i.bn, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cr, %bb.i ] ; 2 uses
+  %i.cy = phi i64 [ %i.bo, %bb.j ], [ %i.bo, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cp, %bb.i ] ; 2 uses
+  %.promoted1847.i.i.i.i.i.i.i = phi i64 [ %.promoted1850.i.i.i.i.i.i.i, %bb.j ], [ %.promoted1850.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cs, %bb.i ] ; 2 uses
+  %.promoted1740.i.i.i.i.i.i.i = phi i64 [ %.promoted1743.i.i.i.i.i.i.i, %bb.j ], [ %.promoted1743.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cp, %bb.i ] ; 2 uses
+  %.promoted1633.i.i.i.i.i.i.i = phi i64 [ %.promoted1636.i.i.i.i.i.i.i, %bb.j ], [ %.promoted1636.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.ct, %bb.i ] ; 2 uses
+  %.promoted1526.i.i.i.i.i.i.i = phi i64 [ %.promoted1529.i.i.i.i.i.i.i, %bb.j ], [ %.promoted1529.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cr, %bb.i ] ; 2 uses
+  %i.cz = phi i64 [ %i.bp, %bb.j ], [ %i.bp, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cs, %bb.i ]
+  %i.da = phi i64 [ %i.bq, %bb.j ], [ %i.bq, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cp, %bb.i ]
+  %i.db = phi i64 [ %i.br, %bb.j ], [ %i.br, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.ct, %bb.i ]
+  %i.dc = phi i64 [ %i.bs, %bb.j ], [ %i.bs, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.cr, %bb.i ]
+  %.sroa.0.2.i14.i.i.i14.i.i.i.i.i.i.i = phi i64 [ %i.cc, %bb.j ], [ %.pre.i.i.i.i.i.i.i, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ %i.by, %bb.i ] ; 3 uses
+  %storemerge.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.cu, %bb.j ], [ 1, %..thread.i_crit_edge.i.i.i.i.i.i.i ], [ 1, %bb.i ] ; 3 uses
   %i.dd = add nuw nsw i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.de = icmp eq i64 %i.dd, %i.bj
   br i1 %i.de, label %_RNCINvNvMsg_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flattenINtBa_13FlattenCompatppE9iter_fold7flattenRShuNCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator4fold7flattenINtNtNtBg_5slice4iter4IterhEuNCINvNvB1W_8for_each4callRhNCINvXsa_NtNtNtCsjXdHNeFfodD_13hickory_proto2rr6domain4nameNtB3K_4NameNtNtBg_4hash4Hash4hashNtNtNtCsaKJjC64KgbL_3std4hash6random13DefaultHasherE0E0E0E0Csi17nFaBu4HY_10ech_client.exit.loopexit.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i

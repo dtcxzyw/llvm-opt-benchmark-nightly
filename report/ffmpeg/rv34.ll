@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.r
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 9 ; 3 uses
   %reass.sub = sub i32 %i.d, %i.q
-  %i.u = add i32 %reass.sub, -9                   ; 8 uses
+  %i.u = add i32 %reass.sub, -9                   ; 7 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %i.w = load i32, ptr %i.v, align 1, !tbaa !10
   %i.x = icmp eq i32 %i.w, 1
@@ -585,30 +585,22 @@ get_slice_offset.exit:                            ; preds = %bb.ba, %bb.as
   %i.gk = call i32 @llvm.bswap.i32(i32 %i.gj)
   %spec.select.i310 = select i1 %i.gi, i32 %i.gj, i32 %i.gk ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv368, 1 ; 3 uses
-  %5 = icmp samesign ult i64 %indvars.iv368, %i.gc ; 2 uses
-  br i1 %5, label %6, label %get_slice_offset.exit313
-
-6:                                                ; preds = %get_slice_offset.exit
-  %7 = shl nuw nsw i64 %indvars.iv.next, 3
-  %8 = getelementptr inbounds nuw i8, ptr %i.p, i64 %7 ; 2 uses
-  %9 = getelementptr inbounds i8, ptr %8, i64 -4
-  %10 = load i32, ptr %9, align 1, !tbaa !10
-  %11 = icmp eq i32 %10, 1
-  %12 = load i32, ptr %8, align 1, !tbaa !10      ; 2 uses
-  %13 = call i32 @llvm.bswap.i32(i32 %12)
-  %spec.select.i312 = select i1 %11, i32 %12, i32 %13
-  br label %get_slice_offset.exit313
-
-get_slice_offset.exit313:                         ; preds = %get_slice_offset.exit, %6
-  %.0.i311 = phi i32 [ %spec.select.i312, %6 ], [ %i.u, %get_slice_offset.exit ] ; 7 uses
-  %14 = icmp slt i32 %spec.select.i310, 0
-  %15 = icmp sgt i32 %spec.select.i310, %.0.i311
-  %16 = icmp sgt i32 %.0.i311, %i.u
-  %17 = or i1 %15, %16
-  %or.cond305 = select i1 %14, i1 true, i1 %17
+  %5 = shl nuw nsw i64 %indvars.iv.next, 3
+  %6 = getelementptr inbounds nuw i8, ptr %i.p, i64 %5 ; 2 uses
+  %7 = getelementptr inbounds i8, ptr %6, i64 -4
+  %8 = load i32, ptr %7, align 1, !tbaa !10
+  %9 = icmp eq i32 %8, 1
+  %10 = load i32, ptr %6, align 1, !tbaa !10      ; 2 uses
+  %11 = call i32 @llvm.bswap.i32(i32 %10)
+  %spec.select.i312 = select i1 %9, i32 %10, i32 %11 ; 7 uses
+  %12 = icmp slt i32 %spec.select.i310, 0
+  %13 = icmp sgt i32 %spec.select.i310, %spec.select.i312
+  %14 = icmp sgt i32 %spec.select.i312, %i.u
+  %15 = or i1 %13, %14
+  %or.cond305 = select i1 %12, i1 true, i1 %15
   br i1 %or.cond305, label %.thread333.sink.split, label %bb.at
 
-bb.at:                                            ; preds = %get_slice_offset.exit313
+bb.at:                                            ; preds = %get_slice_offset.exit
   %i.gl = load i32, ptr %i.fv, align 4, !tbaa !99 ; 2 uses
   %i.gm = load i32, ptr %i.fw, align 8, !tbaa !100
   %i.gn = mul nsw i32 %i.gm, %i.gl
@@ -620,7 +612,8 @@ bb.at:                                            ; preds = %get_slice_offset.ex
   %i.gs = load i32, ptr %i.ga, align 4, !tbaa !102
   %i.gt = sub i32 %i.gr, %i.gs
   store i32 %i.gt, ptr %i.gb, align 16, !tbaa !82
-  br i1 %5, label %bb.au, label %.thread327
+  %16 = icmp samesign ult i64 %indvars.iv368, %i.gc
+  br i1 %16, label %bb.au, label %.thread327
 
 bb.au:                                            ; preds = %bb.at
   %i.gu = add nuw nsw i64 %indvars.iv368, 2       ; 2 uses
@@ -640,15 +633,15 @@ bb.av:                                            ; preds = %bb.au
 
 get_slice_offset.exit316:                         ; preds = %bb.au, %bb.av
   %.0.i314 = phi i32 [ %spec.select.i315, %bb.av ], [ %i.u, %bb.au ] ; 3 uses
-  %i.hc = icmp slt i32 %.0.i314, %.0.i311
+  %i.hc = icmp slt i32 %.0.i314, %spec.select.i312
   %i.hd = icmp sgt i32 %.0.i314, %i.u
   %or.cond306 = or i1 %i.hc, %i.hd
   br i1 %or.cond306, label %.thread333.sink.split, label %bb.aw
 
 bb.aw:                                            ; preds = %get_slice_offset.exit316
-  %i.he = zext nneg i32 %.0.i311 to i64
+  %i.he = zext nneg i32 %spec.select.i312 to i64
   %i.hf = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.he
-  %i.hg = sub nuw nsw i32 %i.u, %.0.i311          ; 2 uses
+  %i.hg = sub nuw nsw i32 %i.u, %spec.select.i312 ; 2 uses
   %or.cond.i317 = icmp ugt i32 %i.hg, 268435455
   %i.hh = shl nuw nsw i32 %i.hg, 3
   %i.hi = select i1 %or.cond.i317, i32 -8, i32 %i.hh ; 2 uses
@@ -674,7 +667,7 @@ bb.ay:                                            ; preds = %bb.ax
   br label %.thread327
 
 .thread327:                                       ; preds = %bb.ax, %bb.ay, %bb.at
-  %.0.i311.pn = phi i32 [ %.0.i311, %bb.at ], [ %.0.i311, %bb.ay ], [ %.0.i314, %bb.ax ] ; 2 uses
+  %.0.i311.pn = phi i32 [ %spec.select.i312, %bb.at ], [ %spec.select.i312, %bb.ay ], [ %.0.i314, %bb.ax ] ; 2 uses
   %.2 = sub nsw i32 %.0.i311.pn, %spec.select.i310 ; 2 uses
   %i.ho = icmp slt i32 %.2, 0
   %.not294 = icmp sgt i32 %.0.i311.pn, %i.u
@@ -696,7 +689,7 @@ bb.ba:                                            ; preds = %.thread327
   %or.cond369.not = select i1 %.not295, i1 %exitcond, i1 false
   br i1 %or.cond369.not, label %get_slice_offset.exit, label %.thread333
 
-.thread333.sink.split:                            ; preds = %get_slice_offset.exit316, %get_slice_offset.exit313
+.thread333.sink.split:                            ; preds = %get_slice_offset.exit316, %get_slice_offset.exit
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str) #15
   br label %.thread333
 

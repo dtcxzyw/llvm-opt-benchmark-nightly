@@ -205,12 +205,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i16 0, ptr %i.b, align 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.b, label %5
-
-5:                                                ; preds = %bb.a
-  %6 = load i8, ptr %2, align 1, !noundef !4      ; 3 uses
-  switch i8 %6, label %bb.ac [
+  %4 = load i8, ptr %2, align 1, !noundef !4      ; 3 uses
+  switch i8 %4, label %bb.ac [
     i8 9, label %bb.b
     i8 10, label %bb.b
     i8 12, label %bb.b
@@ -218,7 +214,7 @@ bb.a:
     i8 32, label %bb.b
   ]
 
-bb.b:                                             ; preds = %bb.a, %5, %5, %5, %5, %5
+bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   %i.c = tail call noundef ptr @_RNvXs_NtNtNtCsa9sSWSfjDbm_4jiff5error3fmt7rfc2822NtB8_5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB4_5ErrorE4from(i24 37) #24
   br label %bb.c
 
@@ -229,13 +225,13 @@ bb.c:                                             ; preds = %.thread37, %bb.b
   store ptr null, ptr %0, align 8
   br label %bb.z
 
-bb.d:                                             ; preds = %bb.ad, %14, %14, %14, %14, %14
+bb.d:                                             ; preds = %bb.ad, %bb.ad, %bb.ad, %bb.ad, %bb.ad
   %i.e = icmp eq i8 %.sroa.027.0, 117
   %i.f = icmp eq i8 %.sroa.027.0.1, 116
   %or.cond = and i1 %i.e, %i.f
   br i1 %or.cond, label %.loopexit, label %.thread37
 
-bb.e:                                             ; preds = %bb.ae, %18, %18, %18, %18, %18
+bb.e:                                             ; preds = %bb.ae, %bb.ae, %bb.ae, %bb.ae, %bb.ae
   switch i8 %.sroa.027.0, label %.thread36 [
     i8 103, label %bb.f
     i8 101, label %bb.g
@@ -283,7 +279,7 @@ bb.l:                                             ; preds = %bb.g
   br i1 %i.j, label %.loopexit, label %.thread36
 
 .loopexit:                                        ; preds = %bb.y, %bb.v, %bb.x, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.s, %.thread, %bb.d, %bb.f
-  %.sroa.0.04458 = phi i64 [ 3, %bb.r ], [ 3, %bb.q ], [ 1, %.thread ], [ 1, %bb.s ], [ 3, %bb.k ], [ 3, %bb.l ], [ 3, %bb.m ], [ 3, %bb.n ], [ 3, %bb.o ], [ 3, %bb.p ], [ 3, %bb.f ], [ 2, %bb.d ], [ %.sroa.0.04457, %bb.v ], [ %.sroa.0.04457, %bb.x ], [ %.sroa.0.04457, %bb.y ] ; 4 uses
+  %.sroa.0.04458 = phi i64 [ 3, %bb.r ], [ 3, %bb.q ], [ 1, %.thread ], [ 1, %bb.s ], [ 3, %bb.k ], [ 3, %bb.l ], [ 3, %bb.m ], [ 3, %bb.n ], [ 3, %bb.o ], [ 3, %bb.p ], [ 3, %bb.f ], [ 2, %bb.d ], [ %.sroa.0.04463, %bb.v ], [ %.sroa.0.04463, %bb.x ], [ %.sroa.0.04463, %bb.y ] ; 4 uses
   %.sroa.022.0 = phi i32 [ -25200, %bb.r ], [ -28800, %bb.q ], [ 0, %.thread ], [ 0, %bb.s ], [ -18000, %bb.k ], [ -14400, %bb.l ], [ -21600, %bb.m ], [ -18000, %bb.n ], [ -25200, %bb.o ], [ -21600, %bb.p ], [ 0, %bb.f ], [ 0, %bb.d ], [ 0, %bb.v ], [ 0, %bb.x ], [ 0, %bb.y ]
   %i.k = icmp samesign ugt i64 %.sroa.0.04458, %3
   br i1 %i.k, label %bb.ab, label %bb.aa, !prof !10
@@ -312,7 +308,7 @@ bb.r:                                             ; preds = %bb.j
   %i.q = icmp eq i8 %.sroa.027.0.2, 116
   br i1 %i.q, label %.loopexit, label %.thread36
 
-.thread:                                          ; preds = %10, %10, %10, %10, %10, %bb.ac
+.thread:                                          ; preds = %bb.ac, %bb.ac, %bb.ac, %bb.ac, %bb.ac
   %i.r = icmp eq i8 %.sroa.027.0, 122
   br i1 %i.r, label %.loopexit, label %bb.s
 
@@ -328,7 +324,7 @@ bb.s:                                             ; preds = %.thread
   %i.u = tail call noundef ptr @_RNvXs_NtNtNtCsa9sSWSfjDbm_4jiff5error3fmt7rfc2822NtB8_5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB4_5ErrorE4from(i24 18) #24
   br label %bb.c
 
-switch.hole_check:                                ; preds = %22
+switch.hole_check:                                ; preds = %bb.af
   %switch.maskindex = zext nneg i8 %switch.tableidx to i32
   %switch.shifted = lshr i32 8388635, %switch.maskindex
   %switch.lobit = trunc i32 %switch.shifted to i1
@@ -349,7 +345,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.sroa.0.0.i.i.2, label %bb.v, label %.thread37
 
 bb.v:                                             ; preds = %bb.u
-  br i1 %7, label %.loopexit, label %bb.w
+  br i1 %5, label %.loopexit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 3
@@ -359,7 +355,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.sroa.0.0.i.i.3, label %bb.x, label %.thread37
 
 bb.x:                                             ; preds = %bb.w
-  br i1 %8, label %.loopexit, label %bb.y
+  br i1 %6, label %.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -368,10 +364,10 @@ bb.y:                                             ; preds = %bb.x
   %.sroa.0.0.i.i.4 = icmp ult i8 %i.ac, 26
   br i1 %.sroa.0.0.i.i.4, label %.loopexit, label %.thread37
 
-.thread36:                                        ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %.thread.loopexit, %bb.af, %switch.hole_check
-  %7 = phi i1 [ true, %bb.r ], [ true, %bb.e ], [ true, %bb.f ], [ true, %bb.g ], [ true, %bb.h ], [ true, %bb.i ], [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.l ], [ true, %bb.m ], [ true, %bb.n ], [ true, %bb.o ], [ true, %bb.p ], [ true, %bb.q ], [ false, %bb.af ], [ false, %.thread.loopexit ], [ false, %switch.hole_check ]
-  %8 = phi i1 [ false, %bb.r ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.m ], [ false, %bb.n ], [ false, %bb.o ], [ false, %bb.p ], [ false, %bb.q ], [ true, %bb.af ], [ false, %.thread.loopexit ], [ true, %switch.hole_check ]
-  %.sroa.0.04457 = phi i64 [ 3, %bb.r ], [ 3, %bb.e ], [ 3, %bb.f ], [ 3, %bb.g ], [ 3, %bb.h ], [ 3, %bb.i ], [ 3, %bb.j ], [ 3, %bb.k ], [ 3, %bb.l ], [ 3, %bb.m ], [ 3, %bb.n ], [ 3, %bb.o ], [ 3, %bb.p ], [ 3, %bb.q ], [ 4, %bb.af ], [ 5, %.thread.loopexit ], [ 4, %switch.hole_check ] ; 3 uses
+.thread36:                                        ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %.thread.loopexit, %switch.hole_check
+  %5 = phi i1 [ true, %bb.r ], [ true, %bb.e ], [ true, %bb.f ], [ true, %bb.g ], [ true, %bb.h ], [ true, %bb.i ], [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.l ], [ true, %bb.m ], [ true, %bb.n ], [ true, %bb.o ], [ true, %bb.p ], [ true, %bb.q ], [ false, %.thread.loopexit ], [ false, %switch.hole_check ]
+  %6 = phi i1 [ false, %bb.r ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.m ], [ false, %bb.n ], [ false, %bb.o ], [ false, %bb.p ], [ false, %bb.q ], [ false, %.thread.loopexit ], [ true, %switch.hole_check ]
+  %.sroa.0.04463 = phi i64 [ 3, %bb.r ], [ 3, %bb.e ], [ 3, %bb.f ], [ 3, %bb.g ], [ 3, %bb.h ], [ 3, %bb.i ], [ 3, %bb.j ], [ 3, %bb.k ], [ 3, %bb.l ], [ 3, %bb.m ], [ 3, %bb.n ], [ 3, %bb.o ], [ 3, %bb.p ], [ 3, %bb.q ], [ 5, %.thread.loopexit ], [ 4, %switch.hole_check ] ; 3 uses
   %.val.i = load i8, ptr %i.a, align 1, !noalias !229, !noundef !4
   %i.ad = add i8 %.val.i, -97
   %.sroa.0.0.i.i = icmp ult i8 %i.ad, 26
@@ -395,19 +391,15 @@ bb.ab:                                            ; preds = %.loopexit
   tail call void @_RNvNtNtCs3oUPovFnLWP_4core5slice5index16slice_index_fail(i64 noundef %.sroa.0.04458, i64 noundef %3, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #25
   unreachable
 
-bb.ac:                                            ; preds = %5
-  %i.ag = add i8 %6, -65
+bb.ac:                                            ; preds = %bb.a
+  %i.ag = add i8 %4, -65
   %i.ah = icmp ult i8 %i.ag, 26
   %i.ai = select i1 %i.ah, i8 32, i8 0
-  %.sroa.027.0 = or i8 %i.ai, %6                  ; 6 uses
+  %.sroa.027.0 = or i8 %i.ai, %4                  ; 6 uses
   store i8 %.sroa.027.0, ptr %i.a, align 1
-  %9 = icmp eq i64 %3, 1
-  br i1 %9, label %.thread, label %10
-
-10:                                               ; preds = %bb.ac
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %12 = load i8, ptr %11, align 1, !noundef !4    ; 3 uses
-  switch i8 %12, label %bb.ad [
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %8 = load i8, ptr %7, align 1, !noundef !4      ; 3 uses
+  switch i8 %8, label %bb.ad [
     i8 9, label %.thread
     i8 10, label %.thread
     i8 12, label %.thread
@@ -415,20 +407,16 @@ bb.ac:                                            ; preds = %5
     i8 32, label %.thread
   ]
 
-bb.ad:                                            ; preds = %10
-  %i.aj = add i8 %12, -65
+bb.ad:                                            ; preds = %bb.ac
+  %i.aj = add i8 %8, -65
   %i.ak = icmp ult i8 %i.aj, 26
   %i.al = select i1 %i.ak, i8 32, i8 0
-  %.sroa.027.0.1 = or i8 %i.al, %12               ; 7 uses
+  %.sroa.027.0.1 = or i8 %i.al, %8                ; 7 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   store i8 %.sroa.027.0.1, ptr %i.am, align 1
-  %13 = icmp eq i64 %3, 2
-  br i1 %13, label %bb.d, label %14
-
-14:                                               ; preds = %bb.ad
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  %16 = load i8, ptr %15, align 1, !noundef !4    ; 3 uses
-  switch i8 %16, label %bb.ae [
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %10 = load i8, ptr %9, align 1, !noundef !4     ; 3 uses
+  switch i8 %10, label %bb.ae [
     i8 9, label %bb.d
     i8 10, label %bb.d
     i8 12, label %bb.d
@@ -436,20 +424,16 @@ bb.ad:                                            ; preds = %10
     i8 32, label %bb.d
   ]
 
-bb.ae:                                            ; preds = %14
-  %i.an = add i8 %16, -65
+bb.ae:                                            ; preds = %bb.ad
+  %i.an = add i8 %10, -65
   %i.ao = icmp ult i8 %i.an, 26
   %i.ap = select i1 %i.ao, i8 32, i8 0
-  %.sroa.027.0.2 = or i8 %i.ap, %16               ; 10 uses
+  %.sroa.027.0.2 = or i8 %i.ap, %10               ; 10 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 %.sroa.027.0.2, ptr %i.aq, align 1
-  %17 = icmp eq i64 %3, 3
-  br i1 %17, label %bb.e, label %18
-
-18:                                               ; preds = %bb.ae
-  %19 = getelementptr inbounds nuw i8, ptr %2, i64 3
-  %20 = load i8, ptr %19, align 1, !noundef !4    ; 3 uses
-  switch i8 %20, label %bb.af [
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %12 = load i8, ptr %11, align 1, !noundef !4    ; 3 uses
+  switch i8 %12, label %bb.af [
     i8 9, label %bb.e
     i8 10, label %bb.e
     i8 12, label %bb.e
@@ -457,28 +441,24 @@ bb.ae:                                            ; preds = %14
     i8 32, label %bb.e
   ]
 
-bb.af:                                            ; preds = %18
-  %i.ar = add i8 %20, -65
+bb.af:                                            ; preds = %bb.ae
+  %i.ar = add i8 %12, -65
   %i.as = icmp ult i8 %i.ar, 26
   %i.at = select i1 %i.as, i8 32, i8 0
-  %.sroa.027.0.3 = or i8 %i.at, %20
+  %.sroa.027.0.3 = or i8 %i.at, %12
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i8 %.sroa.027.0.3, ptr %i.au, align 1
-  %21 = icmp eq i64 %3, 4
-  br i1 %21, label %.thread36, label %22
+  %13 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %14 = load i8, ptr %13, align 1, !noundef !4    ; 3 uses
+  %switch.tableidx = add i8 %14, -9               ; 2 uses
+  %15 = icmp ult i8 %switch.tableidx, 24
+  br i1 %15, label %switch.hole_check, label %.thread.loopexit
 
-22:                                               ; preds = %bb.af
-  %23 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %24 = load i8, ptr %23, align 1, !noundef !4    ; 3 uses
-  %switch.tableidx = add i8 %24, -9               ; 2 uses
-  %25 = icmp ult i8 %switch.tableidx, 24
-  br i1 %25, label %switch.hole_check, label %.thread.loopexit
-
-.thread.loopexit:                                 ; preds = %switch.hole_check, %22
-  %i.av = add i8 %24, -65
+.thread.loopexit:                                 ; preds = %switch.hole_check, %bb.af
+  %i.av = add i8 %14, -65
   %i.aw = icmp ult i8 %i.av, 26
   %i.ax = select i1 %i.aw, i8 32, i8 0
-  %.sroa.027.0.4 = or i8 %i.ax, %24
+  %.sroa.027.0.4 = or i8 %i.ax, %14
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i8 %.sroa.027.0.4, ptr %i.ay, align 1
   br label %.thread36

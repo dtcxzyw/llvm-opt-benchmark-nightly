@@ -205,44 +205,30 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = add i32 %3, -37
   %or.cond3 = icmp ult i32 %i.c, -35
-  br i1 %or.cond3, label %.loopexit.sink.split, label %4
+  br i1 %or.cond3, label %.loopexit.sink.split, label %bb.c
 
-4:                                                ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b
   %.046 = tail call i32 @llvm.abs.i32(i32 %0, i1 true)
-  br label %bb.c
-
-bb.c:                                             ; preds = %bb.c, %4
-  %.049 = phi i64 [ %2, %4 ], [ %5, %bb.c ]       ; 2 uses
-  %.147 = phi i32 [ %.046, %4 ], [ %6, %bb.c ]    ; 3 uses
-  %.045 = phi ptr [ %1, %4 ], [ %i.g, %bb.c ]     ; 3 uses
-  %i.d = urem i32 %.147, %3                       ; 2 uses
+  %i.d = urem i32 %.046, %3                       ; 2 uses
   %i.e = icmp samesign ugt i32 %i.d, 9
   %i.f = trunc nuw nsw i32 %i.d to i8
   %storemerge.v = select i1 %i.e, i8 87, i8 48
   %storemerge = add nuw nsw i8 %storemerge.v, %i.f
-  store i8 %storemerge, ptr %.045, align 1
-  %i.g = getelementptr inbounds nuw i8, ptr %.045, i64 1 ; 3 uses
-  %5 = add i64 %.049, -1                          ; 3 uses
-  %6 = udiv i32 %.147, %3
-  %7 = icmp ne i64 %5, 0
-  %8 = icmp samesign ule i32 %3, %.147
-  %9 = and i1 %7, %8
-  br i1 %9, label %bb.c, label %10
+  store i8 %storemerge, ptr %1, align 1
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
+  %4 = icmp eq i64 %2, 1
+  br i1 %4, label %.loopexit.sink.split, label %bb.d
 
-10:                                               ; preds = %bb.c
-  %11 = icmp eq i64 %5, 0
-  br i1 %11, label %.loopexit.sink.split, label %bb.d
-
-bb.d:                                             ; preds = %10
+bb.d:                                             ; preds = %bb.c
   %i.h = icmp slt i32 %0, 0
   %i.i = icmp eq i32 %3, 10
   %i.j = and i1 %i.h, %i.i
   br i1 %i.j, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = getelementptr inbounds nuw i8, ptr %.045, i64 2
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 2
   store i8 45, ptr %i.g, align 1
-  %i.l = icmp eq i64 %.049, 2
+  %i.l = icmp eq i64 %2, 2
   br i1 %i.l, label %.loopexit.sink.split, label %.thread
 
 .thread:                                          ; preds = %bb.d, %bb.e
@@ -264,7 +250,7 @@ bb.e:                                             ; preds = %bb.d
   %i.q = icmp ult ptr %i.p, %.2
   br i1 %i.q, label %.lr.ph, label %.loopexit
 
-.loopexit.sink.split:                             ; preds = %bb.e, %10, %bb.b
+.loopexit.sink.split:                             ; preds = %bb.e, %bb.c, %bb.b
   store i8 0, ptr %1, align 1
   br label %.loopexit
 

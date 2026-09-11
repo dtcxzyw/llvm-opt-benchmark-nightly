@@ -205,7 +205,7 @@ bb.a:
   %i.l = sub i32 %i.j, %.sroa.0.4.extract.trunc   ; 3 uses
   %i.m = lshr i32 %i.l, 3                         ; 3 uses
   %i.n = and i32 %i.l, 7                          ; 2 uses
-  %i.o = sub nuw nsw i32 8, %i.n                  ; 5 uses
+  %i.o = sub nuw nsw i32 8, %i.n                  ; 4 uses
   %i.p = xor i32 %i.m, -1
   %i.q = add i32 %i.p, %.sroa.0.0.extract.trunc
   %.fr = freeze i32 %i.q                          ; 3 uses
@@ -223,7 +223,7 @@ bb.a:
 
 .lr.ph68.split.us.split.us:                       ; preds = %.lr.ph68.split.us.split.us.preheader, %.loopexit.us.us
   %.167.us.us = phi i64 [ %i.bz, %.loopexit.us.us ], [ 0, %.lr.ph68.split.us.split.us.preheader ] ; 2 uses
-  %.03266.us.us = phi i32 [ %.4.ph.us.us, %.loopexit.us.us ], [ 8, %.lr.ph68.split.us.split.us.preheader ] ; 6 uses
+  %.03266.us.us = phi i32 [ %.4.ph.us.us, %.loopexit.us.us ], [ 8, %.lr.ph68.split.us.split.us.preheader ] ; 5 uses
   %.03465.us.us = phi i64 [ %.438.ph.us.us, %.loopexit.us.us ], [ 0, %.lr.ph68.split.us.split.us.preheader ] ; 5 uses
   %i.u = load i8, ptr @H5Z_init_g, align 1, !tbaa !10, !range !11, !noundef !12
   %i.v = trunc nuw i8 %i.u to i1
@@ -255,15 +255,11 @@ bb.d:                                             ; preds = %bb.c
   %i.al = shl nuw nsw i32 %i.aj, %i.ak            ; 2 uses
   %i.am = trunc i32 %i.al to i8
   store i8 %i.am, ptr %i.ag, align 1, !tbaa !19
-  %i.an = add nuw i64 %.03465.us.us, 1            ; 4 uses
-  %6 = icmp eq i32 %i.o, %.03266.us.us
-  br i1 %6, label %8, label %7
-
-7:                                                ; preds = %bb.d
+  %i.an = add nuw i64 %.03465.us.us, 1            ; 3 uses
   %.not51.i18.us.us.peel = icmp ult i64 %i.an, %3
   br i1 %.not51.i18.us.us.peel, label %bb.e, label %.split.us
 
-bb.e:                                             ; preds = %7
+bb.e:                                             ; preds = %bb.d
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 %i.an
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !19
   %i.aq = zext i8 %i.ap to i32
@@ -281,23 +277,18 @@ bb.f:                                             ; preds = %bb.c
   %i.az = and i32 %i.ay, %i.t
   br label %.sink.split.a
 
-.sink.split.a:                                    ; preds = %bb.e, %bb.f
-  %.sink110 = phi i32 [ %i.az, %bb.f ], [ %i.aw, %bb.e ]
-  %.640.ph.us.us.peel.ph = phi i64 [ %.03465.us.us, %bb.f ], [ %i.an, %bb.e ]
-  %.6.ph.us.us.peel.ph = phi i32 [ %i.ax, %bb.f ], [ %i.ar, %bb.e ]
+.sink.split.a:                                    ; preds = %bb.f, %bb.e
+  %.sink110 = phi i32 [ %i.aw, %bb.e ], [ %i.az, %bb.f ]
+  %.640.ph.us.us.peel.ph = phi i64 [ %i.an, %bb.e ], [ %.03465.us.us, %bb.f ] ; 2 uses
+  %.6.ph.us.us.peel.ph = phi i32 [ %i.ar, %bb.e ], [ %i.ax, %bb.f ] ; 2 uses
   %i.ba = trunc i32 %.sink110 to i8
   store i8 %i.ba, ptr %i.ag, align 1, !tbaa !19
-  br label %8
-
-8:                                                ; preds = %.sink.split.a, %bb.d
-  %.640.ph.us.us.peel = phi i64 [ %i.an, %bb.d ], [ %.640.ph.us.us.peel.ph, %.sink.split.a ] ; 2 uses
-  %.6.ph.us.us.peel = phi i32 [ 8, %bb.d ], [ %.6.ph.us.us.peel.ph, %.sink.split.a ] ; 2 uses
   br i1 %.not104, label %.loopexit.us.us, label %.lr.ph36.i.us.us
 
-.lr.ph36.i.us.us:                                 ; preds = %8, %bb.l
-  %indvars.iv86.in = phi i64 [ %indvars.iv86, %bb.l ], [ %i.s, %8 ] ; 2 uses
-  %.337.us.us = phi i64 [ %.640.ph.us.us, %bb.l ], [ %.640.ph.us.us.peel, %8 ] ; 5 uses
-  %.3.us.us = phi i32 [ %.6.ph.us.us, %bb.l ], [ %.6.ph.us.us.peel, %8 ] ; 7 uses
+.lr.ph36.i.us.us:                                 ; preds = %.sink.split.a, %bb.l
+  %indvars.iv86.in = phi i64 [ %indvars.iv86, %bb.l ], [ %i.s, %.sink.split.a ] ; 2 uses
+  %.337.us.us = phi i64 [ %.640.ph.us.us, %bb.l ], [ %.640.ph.us.us.peel.ph, %.sink.split.a ] ; 5 uses
+  %.3.us.us = phi i32 [ %.6.ph.us.us, %bb.l ], [ %.6.ph.us.us.peel.ph, %.sink.split.a ] ; 6 uses
   %indvars.iv86 = add nsw i64 %indvars.iv86.in, -1 ; 2 uses
   %i.bb = load i8, ptr @H5Z_init_g, align 1, !tbaa !10, !range !11, !noundef !12
   %i.bc = trunc nuw i8 %i.bb to i1
@@ -324,15 +315,11 @@ bb.i:                                             ; preds = %bb.h
   %i.bn = shl nuw nsw i32 %i.bk, %i.bm            ; 2 uses
   %i.bo = trunc i32 %i.bn to i8
   store i8 %i.bo, ptr %i.bl, align 1, !tbaa !19
-  %i.bp = add nuw i64 %.337.us.us, 1              ; 4 uses
-  %9 = icmp eq i32 %.3.us.us, 8
-  br i1 %9, label %bb.l, label %10
-
-10:                                               ; preds = %bb.i
+  %i.bp = add nuw i64 %.337.us.us, 1              ; 3 uses
   %.not51.i18.us.us = icmp ult i64 %i.bp, %3
   br i1 %.not51.i18.us.us, label %bb.j, label %.split.us
 
-bb.j:                                             ; preds = %10
+bb.j:                                             ; preds = %bb.i
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 %i.bp
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !19
   %i.bs = zext i8 %i.br to i32
@@ -353,15 +340,15 @@ bb.k:                                             ; preds = %bb.h
   store i8 %i.bx, ptr %i.bl, align 1, !tbaa !19
   br label %bb.l
 
-bb.l:                                             ; preds = %.sink.split111, %bb.i, %.lr.ph36.i.us.us
-  %.640.ph.us.us = phi i64 [ %.337.us.us, %.lr.ph36.i.us.us ], [ %i.bp, %bb.i ], [ %.640.ph.us.us.ph, %.sink.split111 ] ; 2 uses
-  %.6.ph.us.us = phi i32 [ %.3.us.us, %.lr.ph36.i.us.us ], [ 8, %bb.i ], [ %.6.ph.us.us.ph, %.sink.split111 ] ; 2 uses
+bb.l:                                             ; preds = %.sink.split111, %.lr.ph36.i.us.us
+  %.640.ph.us.us = phi i64 [ %.337.us.us, %.lr.ph36.i.us.us ], [ %.640.ph.us.us.ph, %.sink.split111 ] ; 2 uses
+  %.6.ph.us.us = phi i32 [ %.3.us.us, %.lr.ph36.i.us.us ], [ %.6.ph.us.us.ph, %.sink.split111 ] ; 2 uses
   %i.by = icmp samesign ugt i64 %indvars.iv86.in, 1
   br i1 %i.by, label %.lr.ph36.i.us.us, label %.loopexit.us.us, !llvm.loop !44
 
-.loopexit.us.us:                                  ; preds = %bb.l, %8, %.lr.ph68.split.us.split.us
-  %.438.ph.us.us = phi i64 [ %.03465.us.us, %.lr.ph68.split.us.split.us ], [ %.640.ph.us.us.peel, %8 ], [ %.640.ph.us.us, %bb.l ]
-  %.4.ph.us.us = phi i32 [ %.03266.us.us, %.lr.ph68.split.us.split.us ], [ %.6.ph.us.us.peel, %8 ], [ %.6.ph.us.us, %bb.l ]
+.loopexit.us.us:                                  ; preds = %bb.l, %.sink.split.a, %.lr.ph68.split.us.split.us
+  %.438.ph.us.us = phi i64 [ %.03465.us.us, %.lr.ph68.split.us.split.us ], [ %.640.ph.us.us.peel.ph, %.sink.split.a ], [ %.640.ph.us.us, %bb.l ]
+  %.4.ph.us.us = phi i32 [ %.03266.us.us, %.lr.ph68.split.us.split.us ], [ %.6.ph.us.us.peel.ph, %.sink.split.a ], [ %.6.ph.us.us, %bb.l ]
   %i.bz = add nuw nsw i64 %.167.us.us, 1          ; 2 uses
   %exitcond92.not = icmp eq i64 %i.bz, %i.g
   br i1 %exitcond92.not, label %.loopexit60, label %.lr.ph68.split.us.split.us, !llvm.loop !45
@@ -377,7 +364,7 @@ bb.l:                                             ; preds = %.sink.split111, %bb
   %i.cc = zext nneg i32 %i.cb to i64              ; 2 uses
   %i.cd = and i64 %4, 4294967295                  ; 2 uses
   %i.ce = icmp eq i32 %i.cb, %i.m
-  %.045.i.peel = select i1 %i.ce, i32 %i.o, i32 8 ; 5 uses
+  %.045.i.peel = select i1 %i.ce, i32 %i.o, i32 8 ; 4 uses
   %i.cf = shl nsw i32 -1, %.045.i.peel
   %i.cg = xor i32 %i.cf, -1
   %indvars.iv.next.peel = add nuw nsw i64 %i.cc, 1 ; 2 uses
@@ -386,7 +373,7 @@ bb.l:                                             ; preds = %.sink.split111, %bb
 
 .lr.ph68.split.split:                             ; preds = %.lr.ph68.split.split.preheader, %.loopexit59
   %.167 = phi i64 [ %i.eu, %.loopexit59 ], [ 0, %.lr.ph68.split.split.preheader ] ; 2 uses
-  %.03266 = phi i32 [ %.4.ph, %.loopexit59 ], [ 8, %.lr.ph68.split.split.preheader ] ; 6 uses
+  %.03266 = phi i32 [ %.4.ph, %.loopexit59 ], [ 8, %.lr.ph68.split.split.preheader ] ; 5 uses
   %.03465 = phi i64 [ %.438.ph, %.loopexit59 ], [ 0, %.lr.ph68.split.split.preheader ] ; 5 uses
   %i.ch = load i8, ptr @H5Z_init_g, align 1, !tbaa !10, !range !11, !noundef !12
   %i.ci = trunc nuw i8 %i.ch to i1
@@ -418,15 +405,11 @@ bb.o:                                             ; preds = %bb.n
   %i.cy = shl nuw nsw i32 %i.cw, %i.cx            ; 2 uses
   %i.cz = trunc i32 %i.cy to i8
   store i8 %i.cz, ptr %i.ct, align 1, !tbaa !19
-  %i.da = add nuw i64 %.03465, 1                  ; 4 uses
-  %11 = icmp eq i32 %.045.i.peel, %.03266
-  br i1 %11, label %13, label %12
-
-12:                                               ; preds = %bb.o
+  %i.da = add nuw i64 %.03465, 1                  ; 3 uses
   %.not51.i.peel = icmp ult i64 %i.da, %3
   br i1 %.not51.i.peel, label %bb.p, label %.split.us
 
-bb.p:                                             ; preds = %12
+bb.p:                                             ; preds = %bb.o
   %i.db = getelementptr inbounds nuw i8, ptr %2, i64 %i.da
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !19
   %i.dd = zext i8 %i.dc to i32
@@ -444,17 +427,12 @@ bb.q:                                             ; preds = %bb.n
   %i.dm = and i32 %i.dl, %i.cg
   br label %.sink.split113
 
-.sink.split113:                                   ; preds = %bb.p, %bb.q
-  %.sink114 = phi i32 [ %i.dm, %bb.q ], [ %i.dj, %bb.p ]
-  %.539.ph.peel.ph = phi i64 [ %.03465, %bb.q ], [ %i.da, %bb.p ]
-  %.5.ph.peel.ph = phi i32 [ %i.dk, %bb.q ], [ %i.de, %bb.p ]
+.sink.split113:                                   ; preds = %bb.q, %bb.p
+  %.sink114 = phi i32 [ %i.dj, %bb.p ], [ %i.dm, %bb.q ]
+  %.539.ph.peel.ph = phi i64 [ %i.da, %bb.p ], [ %.03465, %bb.q ] ; 2 uses
+  %.5.ph.peel.ph = phi i32 [ %i.de, %bb.p ], [ %i.dk, %bb.q ] ; 2 uses
   %i.dn = trunc i32 %.sink114 to i8
   store i8 %i.dn, ptr %i.ct, align 1, !tbaa !19
-  br label %13
-
-13:                                               ; preds = %.sink.split113, %bb.o
-  %.539.ph.peel = phi i64 [ %i.da, %bb.o ], [ %.539.ph.peel.ph, %.sink.split113 ] ; 2 uses
-  %.5.ph.peel = phi i32 [ 8, %bb.o ], [ %.5.ph.peel.ph, %.sink.split113 ] ; 2 uses
   br i1 %exitcond.not.i.peel, label %.loopexit59, label %.lr.ph.i
 
 .sink.split115:                                   ; preds = %bb.w, %bb.u
@@ -465,17 +443,17 @@ bb.q:                                             ; preds = %bb.n
   store i8 %i.do, ptr %i.dz, align 1, !tbaa !19
   br label %bb.r
 
-bb.r:                                             ; preds = %.sink.split115, %bb.v, %.lr.ph.i
-  %.539.ph = phi i64 [ %.135, %.lr.ph.i ], [ %i.ef, %bb.v ], [ %.539.ph.ph, %.sink.split115 ] ; 2 uses
-  %.5.ph = phi i32 [ %.133, %.lr.ph.i ], [ 8, %bb.v ], [ %.5.ph.ph, %.sink.split115 ] ; 2 uses
+bb.r:                                             ; preds = %.sink.split115, %.lr.ph.i
+  %.539.ph = phi i64 [ %.135, %.lr.ph.i ], [ %.539.ph.ph, %.sink.split115 ] ; 2 uses
+  %.5.ph = phi i32 [ %.133, %.lr.ph.i ], [ %.5.ph.ph, %.sink.split115 ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next, %i.cd
   br i1 %exitcond.not.i, label %.loopexit59, label %.lr.ph.i, !llvm.loop !46
 
-.lr.ph.i:                                         ; preds = %13, %bb.r
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.r ], [ %indvars.iv.next.peel, %13 ] ; 2 uses
-  %.135 = phi i64 [ %.539.ph, %bb.r ], [ %.539.ph.peel, %13 ] ; 5 uses
-  %.133 = phi i32 [ %.5.ph, %bb.r ], [ %.5.ph.peel, %13 ] ; 7 uses
+.lr.ph.i:                                         ; preds = %.sink.split113, %bb.r
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.r ], [ %indvars.iv.next.peel, %.sink.split113 ] ; 2 uses
+  %.135 = phi i64 [ %.539.ph, %bb.r ], [ %.539.ph.peel.ph, %.sink.split113 ] ; 5 uses
+  %.133 = phi i32 [ %.5.ph, %bb.r ], [ %.5.ph.peel.ph, %.sink.split113 ] ; 6 uses
   %i.dp = load i8, ptr @H5Z_init_g, align 1, !tbaa !10, !range !11, !noundef !12
   %i.dq = trunc nuw i8 %i.dp to i1
   %i.dr = load i8, ptr @H5_libterm_g, align 1, !range !11
@@ -506,15 +484,11 @@ bb.v:                                             ; preds = %bb.t
   %i.ed = shl nuw nsw i32 %i.dy, %i.ec            ; 2 uses
   %i.ee = trunc i32 %i.ed to i8
   store i8 %i.ee, ptr %i.dz, align 1, !tbaa !19
-  %i.ef = add nuw i64 %.135, 1                    ; 4 uses
-  %14 = icmp eq i32 %.133, 8
-  br i1 %14, label %bb.r, label %15
-
-15:                                               ; preds = %bb.v
+  %i.ef = add nuw i64 %.135, 1                    ; 3 uses
   %.not51.i = icmp ult i64 %i.ef, %3
   br i1 %.not51.i, label %bb.w, label %.split.us
 
-bb.w:                                             ; preds = %15
+bb.w:                                             ; preds = %bb.v
   %i.eg = getelementptr inbounds nuw i8, ptr %2, i64 %i.ef
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !19
   %i.ei = zext i8 %i.eh to i32
@@ -522,9 +496,9 @@ bb.w:                                             ; preds = %15
   %i.ek = or i32 %i.ej, %i.ed
   br label %.sink.split115
 
-.split.us:                                        ; preds = %12, %bb.m, %15, %bb.s, %7, %bb.b, %10, %bb.g
-  %.sink = phi i32 [ 1627, %bb.s ], [ 1649, %10 ], [ 1627, %bb.b ], [ 1627, %bb.g ], [ 1649, %7 ], [ 1649, %15 ], [ 1649, %12 ], [ 1627, %bb.m ]
-  %.sink.i = phi i32 [ 1693, %15 ], [ 1683, %10 ], [ 1683, %7 ], [ 1683, %bb.g ], [ 1683, %bb.b ], [ 1693, %bb.s ], [ 1693, %bb.m ], [ 1693, %12 ]
+.split.us:                                        ; preds = %bb.o, %bb.m, %bb.v, %bb.s, %bb.d, %bb.b, %bb.i, %bb.g
+  %.sink = phi i32 [ 1627, %bb.s ], [ 1649, %bb.i ], [ 1627, %bb.b ], [ 1627, %bb.g ], [ 1649, %bb.d ], [ 1649, %bb.v ], [ 1649, %bb.o ], [ 1627, %bb.m ]
+  %.sink.i = phi i32 [ 1693, %bb.v ], [ 1683, %bb.i ], [ 1683, %bb.d ], [ 1683, %bb.g ], [ 1683, %bb.b ], [ 1693, %bb.s ], [ 1693, %bb.m ], [ 1693, %bb.o ]
   %i.el = load i64, ptr @H5E_PLINE_g, align 8, !tbaa !15
   %i.em = load i64, ptr @H5E_BADVALUE_g, align 8, !tbaa !15
   %i.en = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.H5Z__scaleoffset_decompress_one_byte, i32 noundef %.sink, i64 noundef %i.el, i64 noundef %i.em, ptr noundef nonnull @.str.33) #13 ; 0 uses
@@ -536,9 +510,9 @@ bb.w:                                             ; preds = %15
   %i.et = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.H5Z__scaleoffset_decompress, i32 noundef 1723, i64 noundef %i.er, i64 noundef %i.es, ptr noundef nonnull @.str.28) #13 ; 0 uses
   br label %.loopexit60
 
-.loopexit59:                                      ; preds = %bb.r, %13, %.lr.ph68.split.split
-  %.438.ph = phi i64 [ %.03465, %.lr.ph68.split.split ], [ %.539.ph.peel, %13 ], [ %.539.ph, %bb.r ]
-  %.4.ph = phi i32 [ %.03266, %.lr.ph68.split.split ], [ %.5.ph.peel, %13 ], [ %.5.ph, %bb.r ]
+.loopexit59:                                      ; preds = %bb.r, %.sink.split113, %.lr.ph68.split.split
+  %.438.ph = phi i64 [ %.03465, %.lr.ph68.split.split ], [ %.539.ph.peel.ph, %.sink.split113 ], [ %.539.ph, %bb.r ]
+  %.4.ph = phi i32 [ %.03266, %.lr.ph68.split.split ], [ %.5.ph.peel.ph, %.sink.split113 ], [ %.5.ph, %bb.r ]
   %i.eu = add nuw nsw i64 %.167, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.eu, %i.g
   br i1 %exitcond.not, label %.loopexit60, label %.lr.ph68.split.split, !llvm.loop !45

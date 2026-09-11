@@ -205,14 +205,13 @@ bb.aw:                                            ; preds = %.lr.ph260
 
 iter.check:                                       ; preds = %bb.aw
   %i.lw = mul nuw nsw i64 %indvars.iv285, 644
-  %i.lx = zext nneg i32 %i.lr to i64              ; 7 uses
+  %i.lx = zext nneg i32 %i.lr to i64              ; 6 uses
   %i.ly = zext i16 %i.ls to i64                   ; 2 uses
   %invariant.gep322 = getelementptr i8, ptr %i.a, i64 %i.lw ; 3 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ly, i64 %i.lx)
-  %i.lz = add nuw nsw i64 %umax, 1
+  %i.lz = add nuw nsw i64 %i.ly, 1
   %i.ma = sub nsw i64 %i.lz, %i.lx                ; 3 uses
   %i.mb = lshr i64 %i.ma, 1
-  %i.mc = add nuw nsw i64 %i.mb, 1                ; 4 uses
+  %i.mc = add nuw i64 %i.mb, 1                    ; 4 uses
   %min.iters.check = icmp ult i64 %i.ma, 16
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -224,7 +223,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.md = and i64 %i.mc, 15                       ; 2 uses
   %i.me = icmp eq i64 %i.md, 0
   %i.mf = select i1 %i.me, i64 16, i64 %i.md      ; 2 uses
-  %n.vec = sub nsw i64 %i.mc, %i.mf               ; 3 uses
+  %n.vec = sub i64 %i.mc, %i.mf                   ; 3 uses
   %i.mg = shl i64 %n.vec, 1
   %i.mh = add i64 %i.mg, %i.lx
   %invariant.gep363 = getelementptr i8, ptr %invariant.gep322, i64 %i.lx
@@ -266,7 +265,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %i.na = and i64 %i.mc, 7                        ; 2 uses
   %i.nb = icmp eq i64 %i.na, 0
   %i.nc = select i1 %i.nb, i64 8, i64 %i.na
-  %n.vec333 = sub nsw i64 %i.mc, %i.nc            ; 2 uses
+  %n.vec333 = sub i64 %i.mc, %i.nc                ; 2 uses
   %i.nd = shl i64 %n.vec333, 1
   %i.ne = add i64 %i.nd, %i.lx
   %invariant.gep365 = getelementptr i8, ptr %invariant.gep322, i64 %i.lx
@@ -667,9 +666,6 @@ declare <8 x i32> @llvm.umin.v8i32(<8 x i32>, <8 x i32>) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <7 x i32> @llvm.masked.gather.v7i32.v7p0(<7 x ptr>, <7 x i1>, <7 x i32>) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i16> @llvm.umax.v16i16(<16 x i16>, <16 x i16>) #11

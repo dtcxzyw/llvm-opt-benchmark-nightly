@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %.loopexit.i.i.loope
   %..i.i.i.i.i.i204.i.i.i = phi i64 [ %.promoted203.i.i.i, %.split.split.i.i.i ], [ %..i.i.i.i.i.i.i.i.i, %.outer.i.i.i.i.preheader.i.i.i.backedge ]
   %i.ec = phi ptr [ %.promoted147.i.i.i, %.split.split.i.i.i ], [ %i.eo, %.outer.i.i.i.i.preheader.i.i.i.backedge ] ; 2 uses
   %i.ed = phi i64 [ %.promoted.i.i.i, %.split.split.i.i.i ], [ %i.ep, %.outer.i.i.i.i.preheader.i.i.i.backedge ] ; 2 uses
-  %i.ee = phi i64 [ 0, %.split.split.i.i.i ], [ %i.ft, %.outer.i.i.i.i.preheader.i.i.i.backedge ] ; 9 uses
+  %i.ee = phi i64 [ 0, %.split.split.i.i.i ], [ %i.ft, %.outer.i.i.i.i.preheader.i.i.i.backedge ] ; 8 uses
   %.sroa.08.0.i.i.i = phi i8 [ 0, %.split.split.i.i.i ], [ %i.ja, %.outer.i.i.i.i.preheader.i.i.i.backedge ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !75163)
   call void @llvm.experimental.noalias.scope.decl(metadata !75164)
@@ -332,7 +332,7 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE15append_elementsCskXtk6F4WjxZ_4jus
   %.sroa.6.0114.i.i.i.i.i.i.i = phi i64 [ %.sroa.6.0.i.i.i.i.i.i.i, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i ], [ 0, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCskXtk6F4WjxZ_4just.exit.i.thread.i.i.i.i.i.i.i ] ; 4 uses
   %i.fr = phi i1 [ %i.fg, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i ], [ false, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCskXtk6F4WjxZ_4just.exit.i.thread.i.i.i.i.i.i.i ]
   %i.fs = phi i64 [ %.sink124.i.i.i.i.i.i.i, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i ], [ %i.ej, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCskXtk6F4WjxZ_4just.exit.i.thread.i.i.i.i.i.i.i ]
-  %i.ft = add i64 %i.fs, %.sroa.6.0114.i.i.i.i.i.i.i ; 20 uses
+  %i.ft = add i64 %i.fs, %.sroa.6.0114.i.i.i.i.i.i.i ; 19 uses
   store i64 %i.ft, ptr %.sroa.522.0..sroa_idx.i.i.i, align 8, !alias.scope !75191, !noalias !75189
   %i.fu = add i64 %.sroa.6.0114.i.i.i.i.i.i.i, %i.er
   %..i.i.i.i.i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.eq, i64 %i.fu) ; 3 uses
@@ -587,22 +587,18 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread.i
 
 bb.av:                                            ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread.i.i.i
   %.not.i39.i.i.i = icmp samesign ult i64 %i.ee, %i.ft
-  br i1 %.not.i39.i.i.i, label %bb.aw, label %.split.i.i.i.i
-
-.split.i.i.i.i:                                   ; preds = %bb.av
-  %5 = icmp eq i64 %i.ee, %i.ft
-  br i1 %5, label %bb.ax, label %.split186.i.i.i
+  br i1 %.not.i39.i.i.i, label %bb.aw, label %.split186.i.i.i
 
 bb.aw:                                            ; preds = %bb.av
   %i.ix = load i8, ptr %i.fy, align 1, !alias.scope !75210, !noalias !75209, !noundef !28
   %i.iy = icmp sgt i8 %i.ix, -65
   br i1 %i.iy, label %bb.ax, label %.split186.i.i.i
 
-bb.ax:                                            ; preds = %bb.aw, %.split.i.i.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread.i.i.i
+bb.ax:                                            ; preds = %bb.aw, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread.i.i.i
   %i.iz = invoke { i64, i8 } @_RNvNtCsl7tMOFksck4_7dotenvy4iter14eval_end_state(i8 noundef %.sroa.08.0.i.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.fy, i64 noundef %i.fx)
           to label %bb.az unwind label %.loopexit68.split.i.i.i, !noalias !75209 ; 2 uses
 
-.split186.i.i.i:                                  ; preds = %bb.aw, %.split.i.i.i.i
+.split186.i.i.i:                                  ; preds = %bb.aw, %bb.av
   invoke void @_RNvNtCsj6eKBz9Db1c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.fp, i64 noundef %i.ft, i64 noundef %i.ee, i64 noundef %i.ft, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2822) #71
           to label %bb.ay unwind label %.loopexit.split-lp.i.i.i, !noalias !75209
 
@@ -1005,7 +1001,7 @@ bb.n:                                             ; preds = %_RINvNtCsj6eKBz9Db1
 
 bb.o:                                             ; preds = %.backedge, %bb.n
   %i.bp = phi ptr [ inttoptr (i64 1 to ptr), %bb.n ], [ %i.ei, %.backedge ] ; 2 uses
-  %i.bq = phi i64 [ 0, %bb.n ], [ %.pr.i.i, %.backedge ] ; 9 uses
+  %i.bq = phi i64 [ 0, %bb.n ], [ %.pr.i.i, %.backedge ] ; 8 uses
   %.sroa.08.0.i.i = phi i8 [ 0, %bb.n ], [ %i.hm, %.backedge ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !75494)
   call void @llvm.experimental.noalias.scope.decl(metadata !75495)
@@ -1259,7 +1255,7 @@ bb.ab:                                            ; preds = %bb.y
 
 .loopexit22.i.i.i.i:                              ; preds = %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i.i.i, %.split.i.i.i.i.i.i, %.split38.i.i.i.i.i.i, %.split37.i.i.i.i.i.i, %bb.x
   %i.ei = phi ptr [ %i.du, %bb.x ], [ %i.br, %.split37.i.i.i.i.i.i ], [ %i.br, %.split38.i.i.i.i.i.i ], [ %i.br, %.split.i.i.i.i.i.i ], [ %i.br, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i.i.i ] ; 9 uses
-  %.pr.i.i = phi i64 [ %i.ea, %bb.x ], [ %i.bt, %.split37.i.i.i.i.i.i ], [ %i.bt, %.split38.i.i.i.i.i.i ], [ %i.bt, %.split.i.i.i.i.i.i ], [ %i.bt, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i.i.i ] ; 19 uses
+  %.pr.i.i = phi i64 [ %i.ea, %bb.x ], [ %i.bt, %.split37.i.i.i.i.i.i ], [ %i.bt, %.split38.i.i.i.i.i.i ], [ %i.bt, %.split.i.i.i.i.i.i ], [ %i.bt, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i.i.i ] ; 18 uses
   %.sroa.3.0.i.i.i.i.i.i = phi ptr [ %i.ee, %bb.x ], [ %i.cg, %.split37.i.i.i.i.i.i ], [ %i.cg, %.split38.i.i.i.i.i.i ], [ %i.cg, %.split.i.i.i.i.i.i ], [ %i.cg, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i.i.i ] ; 4 uses
   %.sroa.0.0.i.i.i.i.i.i = phi i64 [ 0, %bb.x ], [ 1, %.split37.i.i.i.i.i.i ], [ 1, %.split38.i.i.i.i.i.i ], [ 1, %.split.i.i.i.i.i.i ], [ 1, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i.i.i ] ; 3 uses
   %i.ej = sub nuw i64 %.pr.i.i, %i.bq             ; 2 uses
@@ -1496,22 +1492,18 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread.i
 
 bb.au:                                            ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread.i.i
   %.not.i39.i.i = icmp samesign ult i64 %i.bq, %.pr.i.i
-  br i1 %.not.i39.i.i, label %bb.av, label %.split.i.i.i
-
-.split.i.i.i:                                     ; preds = %bb.au
-  %3 = icmp eq i64 %i.bq, %.pr.i.i
-  br i1 %3, label %bb.aw, label %bb.ax
+  br i1 %.not.i39.i.i, label %bb.av, label %bb.ax
 
 bb.av:                                            ; preds = %bb.au
   %i.hj = load i8, ptr %i.ek, align 1, !alias.scope !75535, !noalias !75513, !noundef !28
   %i.hk = icmp sgt i8 %i.hj, -65
   br i1 %i.hk, label %bb.aw, label %bb.ax
 
-bb.aw:                                            ; preds = %bb.av, %.split.i.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread.i.i
+bb.aw:                                            ; preds = %bb.av, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread.i.i
   %i.hl = invoke { i64, i8 } @_RNvNtCsl7tMOFksck4_7dotenvy4iter14eval_end_state(i8 noundef %.sroa.08.0.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ek, i64 noundef %i.ej)
           to label %bb.az unwind label %.loopexit68.i.i, !noalias !75513 ; 2 uses
 
-bb.ax:                                            ; preds = %bb.av, %.split.i.i.i
+bb.ax:                                            ; preds = %bb.av, %bb.au
   invoke void @_RNvNtCsj6eKBz9Db1c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ei, i64 noundef %.pr.i.i, i64 noundef %i.bq, i64 noundef %.pr.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2822) #71
           to label %bb.ay unwind label %.loopexit.split-lp.i.i, !noalias !75513
 

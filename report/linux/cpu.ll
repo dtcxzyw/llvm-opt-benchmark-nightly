@@ -70,32 +70,21 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.q, %bb.f
   %.02333.i = phi ptr [ @x86_cap_strs, %bb.f ], [ %.3.i, %bb.q ]
-  %.02532.i = phi i32 [ 0, %bb.f ], [ %i.ao, %bb.q ] ; 6 uses
+  %.02532.i = phi i32 [ 0, %bb.f ], [ %i.ao, %bb.q ] ; 5 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.r, i32 %.02532.i
   %i.t = load i32, ptr %i.s, align 4
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.p, %bb.g
   %.031.i = phi i32 [ %i.t, %bb.g ], [ %i.am, %bb.p ] ; 2 uses
-  %.130.i = phi ptr [ %.02333.i, %bb.g ], [ %.3.i, %bb.p ] ; 5 uses
-  %.02429.i = phi i32 [ 0, %bb.g ], [ %i.an, %bb.p ] ; 4 uses
+  %.130.i = phi ptr [ %.02333.i, %bb.g ], [ %.3.i, %bb.p ] ; 3 uses
+  %.02429.i = phi i32 [ 0, %bb.g ], [ %i.an, %bb.p ] ; 3 uses
   %i.u = load i8, ptr %.130.i, align 1
-  %i.v = zext i8 %i.u to i32                      ; 2 uses
+  %i.v = zext i8 %i.u to i32
   %i.w = icmp samesign ugt i32 %.02532.i, %i.v
-  br i1 %i.w, label %bb.i, label %0
+  br i1 %i.w, label %bb.i, label %.loopexit.i
 
-0:                                                ; preds = %bb.h
-  %1 = icmp eq i32 %.02532.i, %i.v
-  br i1 %1, label %2, label %.loopexit.i
-
-2:                                                ; preds = %0
-  %3 = getelementptr inbounds nuw i8, ptr %.130.i, i32 1
-  %4 = load i8, ptr %3, align 1
-  %5 = zext i8 %4 to i32
-  %6 = icmp samesign ugt i32 %.02429.i, %5
-  br i1 %6, label %bb.i, label %.loopexit.i
-
-bb.i:                                             ; preds = %2, %bb.h
+bb.i:                                             ; preds = %bb.h
   %i.x = getelementptr inbounds nuw i8, ptr %.130.i, i32 2
   br label %bb.j
 
@@ -106,8 +95,8 @@ bb.j:                                             ; preds = %bb.j, %bb.i
   %.not.i = icmp eq i8 %i.z, 0
   br i1 %.not.i, label %.loopexit.i, label %bb.j, !llvm.loop !6
 
-.loopexit.i:                                      ; preds = %bb.j, %2, %0
-  %.3.i = phi ptr [ %.130.i, %0 ], [ %.130.i, %2 ], [ %i.y, %bb.j ] ; 5 uses
+.loopexit.i:                                      ; preds = %bb.j, %bb.h
+  %.3.i = phi ptr [ %.130.i, %bb.h ], [ %i.y, %bb.j ] ; 5 uses
   %i.aa = and i32 %.031.i, 1
   %.not27.i = icmp eq i32 %i.aa, 0
   br i1 %.not27.i, label %bb.p, label %bb.k
