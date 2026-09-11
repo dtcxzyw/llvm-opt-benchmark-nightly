@@ -1,0 +1,56 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 06f350fd2179b..39c4e5c4f0735 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -11798,23 +11798,40 @@ bool ScalarEvolution::isKnownPredicateViaNoOverflow(CmpPredicate Pred,
+ 
+ bool ScalarEvolution::isKnownPredicateViaSplitting(CmpPredicate Pred,
+                                                    SCEVUse LHS, SCEVUse RHS) {
+-  if (Pred != ICmpInst::ICMP_ULT || ProvingSplitPredicate)
++  if (ProvingSplitPredicate)
+     return false;
+ 
+   // Allowing arbitrary number of activations of isKnownPredicateViaSplitting on
+   // the stack can result in exponential time complexity.
+   SaveAndRestore Restore(ProvingSplitPredicate, true);
+ 
+-  // If L >= 0 then I `ult` L <=> I >= 0 && I `slt` L
+-  //
+-  // To prove L >= 0 we use isKnownNonNegative whereas to prove I >= 0 we use
+-  // isKnownPredicate.  isKnownPredicate is more powerful, but also more
+-  // expensive; and using isKnownNonNegative(RHS) is sufficient for most of the
+-  // interesting cases seen in practice.  We can consider "upgrading" L >= 0 to
+-  // use isKnownPredicate later if needed.
+-  return isKnownNonNegative(RHS) &&
+-         isKnownPredicate(CmpInst::ICMP_SGE, LHS, getZero(LHS->getType())) &&
+-         isKnownPredicate(CmpInst::ICMP_SLT, LHS, RHS);
++  switch (Pred) {
++  case ICmpInst::ICMP_ULT:
++    // If L >= 0 then I `ult` L <=> I >= 0 && I `slt` L
++    //
++    // To prove L >= 0 we use isKnownNonNegative whereas to prove I >= 0 we use
++    // isKnownPredicate.  isKnownPredicate is more powerful, but also more
++    // expensive; and using isKnownNonNegative(RHS) is sufficient for most of
++    // the interesting cases seen in practice.  We can consider "upgrading" L >=
++    // 0 to use isKnownPredicate later if needed.
++    return isKnownNonNegative(RHS) &&
++           isKnownPredicate(CmpInst::ICMP_SGE, LHS, getZero(LHS->getType())) &&
++           isKnownPredicate(CmpInst::ICMP_SLT, LHS, RHS);
++  case ICmpInst::ICMP_UGE:
++    // X u>= Y is equivalent to X u> Y - 1, and this holds trivially when Y - 1
++    // does not overflow. When it does overflow, it must be UINT_MAX, and the
++    // comparison would evaluate to false anyway.
++    return isKnownPredicate(ICmpInst::ICMP_UGT, LHS,
++                            getMinusSCEV(RHS, getOne(RHS->getType())));
++  case ICmpInst::ICMP_SGE:
++    // X s>= Y is equivalent to X s> Y - 1, and this holds trivially when Y - 1
++    // does not overflow. When it does overflow, it must be SINT_MAX, and the
++    // comparison would evaluate to false anyway.
++    return isKnownPredicate(ICmpInst::ICMP_SGT, LHS,
++                            getMinusSCEV(RHS, getOne(RHS->getType())));
++  default:
++    return false;
++  }
+ }
+ 
+ bool ScalarEvolution::isImpliedViaGuard(const BasicBlock *BB, CmpPredicate Pred,
