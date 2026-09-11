@@ -202,7 +202,7 @@ _ZN4absl12lts_2026052613cord_internal12_GLOBAL__N_115AnalyzeDataEdgeILNS2_4ModeE
   store i64 %i.al, ptr %1, align 8, !tbaa !12
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph, %.loopexit.loopexit, %bb.b, %bb.c
+.loopexit:                                        ; preds = %.lr.ph, %bb.b, %bb.c, %.loopexit.loopexit
   ret void
 }
 

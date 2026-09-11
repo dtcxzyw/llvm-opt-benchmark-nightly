@@ -205,7 +205,7 @@ upb_Arena_Malloc.exit.i.i:                        ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1760
   %i.s = load i64, ptr %i.r, align 16, !tbaa !1150
   %i.t = getelementptr inbounds nuw i8, ptr %.sink, i64 16
-  store i64 %i.s, ptr %i.t, align 8
+  store i64 %i.s, ptr %i.t, align 1
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1680
   invoke void @_ZN9grpc_core8channelz23ztrace_collector_detail13AppendResultsINS_11H2DataTraceILb0EEEEEvRKSt5dequeISt4pairIdT_ESaIS8_EEP35grpc_channelz_v2_QueryTraceResponseP9upb_Arena(ptr noundef nonnull align 8 dereferenceable(80) %i.u, ptr noundef nonnull %.sink, ptr noundef nonnull %i.d)
           to label %bb.b unwind label %bb.ak

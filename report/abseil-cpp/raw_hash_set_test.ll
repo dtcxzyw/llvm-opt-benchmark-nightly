@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.lr.ph, %bb.j
   %.sroa.028.037 = phi ptr [ %.sroa.0.0.i.ph, %.lr.ph ], [ %.sroa.030.1, %bb.j ] ; 2 uses
-  %.sroa.7.036 = phi ptr [ %.sroa.6.0.i.ph, %.lr.ph ], [ %.sroa.8.0, %bb.j ] ; 4 uses
+  %.sroa.7.036 = phi ptr [ %.sroa.6.0.i.ph, %.lr.ph ], [ %.sroa.030.0, %bb.j ] ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.028.037, i64 1 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.7.036, i64 64 ; 2 uses
   %i.y = load i8, ptr %i.w, align 1, !tbaa !236   ; 2 uses
@@ -222,8 +222,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.j
   br i1 %i.af, label %.lr.ph.i.i.i, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_112StringPolicyEJNS3_10StringHashENS3_8StringEqESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i, !llvm.loop !33
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_112StringPolicyEJNS3_10StringHashENS3_8StringEqESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.g
-  %.sroa.030.0 = phi ptr [ %i.w, %bb.g ], [ %i.ac, %.lr.ph.i.i.i ]
-  %.sroa.8.0 = phi ptr [ %i.x, %bb.g ], [ %i.ad, %.lr.ph.i.i.i ]
+  %.sroa.030.0 = phi ptr [ %i.x, %bb.g ], [ %i.ad, %.lr.ph.i.i.i ]
+  %.sroa.8.0 = phi ptr [ %i.w, %bb.g ], [ %i.ac, %.lr.ph.i.i.i ]
   %i.ag = phi i8 [ %i.y, %bb.g ], [ %i.ae, %.lr.ph.i.i.i ]
   %i.ah = icmp eq i8 %i.ag, -1
   br i1 %i.ah, label %bb.h, label %_ZSt9__advanceIN4absl12lts_2026052618container_internal12raw_hash_setINS2_12_GLOBAL__N_112StringPolicyEJNS4_10StringHashENS4_8StringEqESaIiEEE8iteratorElEvRT_T0_St18input_iterator_tag.exit, !prof !233
@@ -232,7 +232,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20260
   br label %_ZSt9__advanceIN4absl12lts_2026052618container_internal12raw_hash_setINS2_12_GLOBAL__N_112StringPolicyEJNS4_10StringHashENS4_8StringEqESaIiEEE8iteratorElEvRT_T0_St18input_iterator_tag.exit
 
 _ZSt9__advanceIN4absl12lts_2026052618container_internal12raw_hash_setINS2_12_GLOBAL__N_112StringPolicyEJNS4_10StringHashENS4_8StringEqESaIiEEE8iteratorElEvRT_T0_St18input_iterator_tag.exit: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_112StringPolicyEJNS3_10StringHashENS3_8StringEqESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i, %bb.h
-  %.sroa.030.1 = phi ptr [ null, %bb.h ], [ %.sroa.030.0, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_112StringPolicyEJNS3_10StringHashENS3_8StringEqESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i ] ; 2 uses
+  %.sroa.030.1 = phi ptr [ %.sroa.8.0, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_112StringPolicyEJNS3_10StringHashENS3_8StringEqESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ null, %bb.h ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #43
   %.val4.i23 = load ptr, ptr %.sroa.7.036, align 8, !tbaa !160, !noalias !8143
   %i.ai = getelementptr i8, ptr %.sroa.7.036, i64 8
@@ -635,7 +635,7 @@ bb.fp:                                            ; preds = %bb.fo
 
 bb.fq:                                            ; preds = %.noexc352, %.lr.ph.i
   %.sroa.027.036.i = phi ptr [ %.sroa.0.0.i.ph.i, %.lr.ph.i ], [ %.sroa.029.1.i, %.noexc352 ] ; 2 uses
-  %.sroa.7.035.i = phi ptr [ %.sroa.6.0.i.ph.i, %.lr.ph.i ], [ %.sroa.8.0.i, %.noexc352 ] ; 3 uses
+  %.sroa.7.035.i = phi ptr [ %.sroa.6.0.i.ph.i, %.lr.ph.i ], [ %.sroa.029.0.i, %.noexc352 ] ; 3 uses
   %i.qe = getelementptr inbounds nuw i8, ptr %.sroa.027.036.i, i64 1 ; 3 uses
   %i.qf = getelementptr inbounds nuw i8, ptr %.sroa.7.035.i, i64 8 ; 2 uses
   %i.qg = load i8, ptr %i.qe, align 1, !tbaa !236 ; 2 uses
@@ -652,8 +652,8 @@ bb.fq:                                            ; preds = %.noexc352, %.lr.ph.
   br i1 %i.qn, label %.lr.ph.i.i.i.i, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS3_11CountedHashESt8equal_toIiESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i, !llvm.loop !9443
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS3_11CountedHashESt8equal_toIiESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i, %bb.fq
-  %.sroa.029.0.i = phi ptr [ %i.qe, %bb.fq ], [ %i.qk, %.lr.ph.i.i.i.i ]
-  %.sroa.8.0.i = phi ptr [ %i.qf, %bb.fq ], [ %i.ql, %.lr.ph.i.i.i.i ]
+  %.sroa.029.0.i = phi ptr [ %i.qf, %bb.fq ], [ %i.ql, %.lr.ph.i.i.i.i ]
+  %.sroa.8.0.i = phi ptr [ %i.qe, %bb.fq ], [ %i.qk, %.lr.ph.i.i.i.i ]
   %i.qo = phi i8 [ %i.qg, %bb.fq ], [ %i.qm, %.lr.ph.i.i.i.i ]
   %i.qp = icmp eq i8 %i.qo, -1
   br i1 %i.qp, label %bb.fr, label %_ZSt9__advanceIN4absl12lts_2026052618container_internal12raw_hash_setINS2_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS4_11CountedHashESt8equal_toIiESaIiEEE8iteratorElEvRT_T0_St18input_iterator_tag.exit.i, !prof !233
@@ -662,7 +662,7 @@ bb.fr:                                            ; preds = %_ZN4absl12lts_20260
   br label %_ZSt9__advanceIN4absl12lts_2026052618container_internal12raw_hash_setINS2_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS4_11CountedHashESt8equal_toIiESaIiEEE8iteratorElEvRT_T0_St18input_iterator_tag.exit.i
 
 _ZSt9__advanceIN4absl12lts_2026052618container_internal12raw_hash_setINS2_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS4_11CountedHashESt8equal_toIiESaIiEEE8iteratorElEvRT_T0_St18input_iterator_tag.exit.i: ; preds = %bb.fr, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS3_11CountedHashESt8equal_toIiESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i
-  %.sroa.029.1.i = phi ptr [ null, %bb.fr ], [ %.sroa.029.0.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS3_11CountedHashESt8equal_toIiESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ] ; 2 uses
+  %.sroa.029.1.i = phi ptr [ %.sroa.8.0.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS3_11CountedHashESt8equal_toIiESaIiEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ], [ null, %bb.fr ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #43
   call void @llvm.experimental.noalias.scope.decl(metadata !9469)
   call void @llvm.experimental.noalias.scope.decl(metadata !9470)

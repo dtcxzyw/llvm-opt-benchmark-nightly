@@ -202,9 +202,9 @@ bb.d:                                             ; preds = %google_protobuf_Fea
 
 bb.e:                                             ; preds = %google_protobuf_FeatureSetDefaults_parse.exit
   %i.n = getelementptr inbounds nuw i8, ptr %.0.i3.i.i.i, i64 12
-  %i.o = load i32, ptr %i.n, align 4              ; 2 uses
+  %i.o = load i32, ptr %i.n, align 1              ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i3.i.i.i, i64 16
-  %i.q = load i32, ptr %i.p, align 8              ; 2 uses
+  %i.q = load i32, ptr %i.p, align 1              ; 2 uses
   %i.r = icmp sgt i32 %i.o, %i.q
   br i1 %i.r, label %bb.f, label %bb.g
 
@@ -217,7 +217,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @google__protobuf__FeatureSetDefaults__FeatureSetEditionDefault_msg_init) #12, !srcloc !52
   %i.u = getelementptr inbounds nuw i8, ptr %.0.i3.i.i.i, i64 24
-  %i.v = load i64, ptr %i.u, align 8              ; 2 uses
+  %i.v = load i64, ptr %i.u, align 1              ; 2 uses
   %.not.i = icmp eq i64 %i.v, 0
   br i1 %.not.i, label %.critedge44, label %google_protobuf_FeatureSetDefaults_defaults.exit
 

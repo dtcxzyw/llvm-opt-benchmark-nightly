@@ -204,8 +204,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.ab
   br label %bb.aw
 
 bb.ag:                                            ; preds = %.lr.ph, %_ZN4ojph5local9param_atk16read_coefficientEPNS_11infile_baseERsRi.exit
-  %2 = phi i32 [ %i.cz, %.lr.ph ], [ %i.gh, %_ZN4ojph5local9param_atk16read_coefficientEPNS_11infile_baseERsRi.exit ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4ojph5local9param_atk16read_coefficientEPNS_11infile_baseERsRi.exit ] ; 5 uses
+  %2 = phi i32 [ %i.cz, %.lr.ph ], [ %i.gh, %_ZN4ojph5local9param_atk16read_coefficientEPNS_11infile_baseERsRi.exit ] ; 3 uses
   %i.du = load ptr, ptr %i.ds, align 8, !tbaa !133
   %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %indvars.iv
   %i.dw = load ptr, ptr %1, align 8, !tbaa !43
@@ -429,7 +429,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZN4ojph5local9param_atk16read_coefficientEPNS_11infile_baseERsRi.exit, %.loopexit.loopexit, %.preheader76, %.preheader
-  %i.hn = phi i32 [ %i.cz, %.preheader ], [ %.pre99, %.loopexit.loopexit ], [ %i.cz, %.preheader76 ], [ %i.gh, %_ZN4ojph5local9param_atk16read_coefficientEPNS_11infile_baseERsRi.exit ]
+  %i.hn = phi i32 [ %.pre99, %.loopexit.loopexit ], [ %i.cz, %.preheader76 ], [ %i.cz, %.preheader ], [ %i.gh, %_ZN4ojph5local9param_atk16read_coefficientEPNS_11infile_baseERsRi.exit ]
   %.not58 = icmp eq i32 %i.hn, 0
   br i1 %.not58, label %bb.bg, label %bb.bf
 

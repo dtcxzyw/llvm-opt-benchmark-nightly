@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr nonnull align 8 %i.j, i64 %i.o, i1 false)
-  store i32 1, ptr %i.p, align 8, !tbaa !51
+  store i32 1, ptr %i.p, align 4, !tbaa !51
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 4
   store i32 470, ptr %i.r, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit
@@ -334,7 +334,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bw, ptr nonnull align 8 %i.bq, i64 %i.bv, i1 false)
-  store i32 1, ptr %i.bw, align 8, !tbaa !51
+  store i32 1, ptr %i.bw, align 4, !tbaa !51
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 4
   store i32 470, ptr %i.by, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit.i
@@ -435,7 +435,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ac
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dq, ptr nonnull align 8 %i.dk, i64 %i.dp, i1 false)
-  store i32 1, ptr %i.dq, align 8, !tbaa !51
+  store i32 1, ptr %i.dq, align 4, !tbaa !51
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dq, i64 4
   store i32 470, ptr %i.ds, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit82.i
@@ -567,7 +567,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.ap
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ga, ptr nonnull align 8 %i.fu, i64 %i.fz, i1 false)
-  store i32 1, ptr %i.ga, align 8, !tbaa !51
+  store i32 1, ptr %i.ga, align 4, !tbaa !51
   %i.gc = getelementptr inbounds nuw i8, ptr %i.ga, i64 4
   store i32 470, ptr %i.gc, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit.i35
@@ -663,7 +663,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.ba
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.hr, ptr nonnull align 8 %i.hl, i64 %i.hq, i1 false)
-  store i32 1, ptr %i.hr, align 8, !tbaa !51
+  store i32 1, ptr %i.hr, align 4, !tbaa !51
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hr, i64 4
   store i32 470, ptr %i.ht, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit99.i
@@ -762,7 +762,7 @@ bb.bm:                                            ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %bb.bl
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.jl, ptr nonnull align 8 %i.jf, i64 %i.jk, i1 false)
-  store i32 1, ptr %i.jl, align 8, !tbaa !51
+  store i32 1, ptr %i.jl, align 4, !tbaa !51
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jl, i64 4
   store i32 470, ptr %i.jn, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit102.i
@@ -1165,7 +1165,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bl, ptr nonnull align 8 %i.bf, i64 %i.bk, i1 false)
-  store i32 1, ptr %i.bl, align 8, !tbaa !51
+  store i32 1, ptr %i.bl, align 4, !tbaa !51
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 4
   store i32 470, ptr %i.bn, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit
@@ -1277,7 +1277,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.w, ptr nonnull align 8 %i.q, i64 %i.v, i1 false)
-  store i32 1, ptr %i.w, align 8, !tbaa !51
+  store i32 1, ptr %i.w, align 4, !tbaa !51
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 4
   store i32 470, ptr %i.y, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit
@@ -1395,7 +1395,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.u
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bs, ptr nonnull align 8 %i.bm, i64 %i.br, i1 false)
-  store i32 1, ptr %i.bs, align 8, !tbaa !51
+  store i32 1, ptr %i.bs, align 4, !tbaa !51
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bs, i64 4
   store i32 470, ptr %i.bu, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit732
@@ -1560,7 +1560,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.ai
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.eq, ptr nonnull align 8 %i.ek, i64 %i.ep, i1 false)
-  store i32 1, ptr %i.eq, align 8, !tbaa !51
+  store i32 1, ptr %i.eq, align 4, !tbaa !51
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 4
   store i32 470, ptr %i.es, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit735
@@ -1650,7 +1650,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.at
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.gc, ptr nonnull align 8 %i.fw, i64 %i.gb, i1 false)
-  store i32 1, ptr %i.gc, align 8, !tbaa !51
+  store i32 1, ptr %i.gc, align 4, !tbaa !51
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gc, i64 4
   store i32 470, ptr %i.ge, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit738
@@ -1932,7 +1932,7 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %bb.bq
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ki, ptr nonnull align 8 %i.kc, i64 %i.kh, i1 false)
-  store i32 1, ptr %i.ki, align 8, !tbaa !51
+  store i32 1, ptr %i.ki, align 4, !tbaa !51
   %i.kk = getelementptr inbounds nuw i8, ptr %i.ki, i64 4
   store i32 470, ptr %i.kk, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit741
@@ -2030,7 +2030,7 @@ bb.cc:                                            ; preds = %bb.cb
 
 bb.cd:                                            ; preds = %bb.cb
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.mc, ptr nonnull align 8 %i.lw, i64 %i.mb, i1 false)
-  store i32 1, ptr %i.mc, align 8, !tbaa !51
+  store i32 1, ptr %i.mc, align 4, !tbaa !51
   %i.me = getelementptr inbounds nuw i8, ptr %i.mc, i64 4
   store i32 470, ptr %i.me, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit744
@@ -2167,7 +2167,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 bb.cr:                                            ; preds = %bb.cp
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.oo, ptr nonnull align 8 %i.oi, i64 %i.on, i1 false)
-  store i32 1, ptr %i.oo, align 8, !tbaa !51
+  store i32 1, ptr %i.oo, align 4, !tbaa !51
   %i.oq = getelementptr inbounds nuw i8, ptr %i.oo, i64 4
   store i32 470, ptr %i.oq, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit747
@@ -2263,7 +2263,7 @@ bb.db:                                            ; preds = %bb.da
 
 bb.dc:                                            ; preds = %bb.da
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.qf, ptr nonnull align 8 %i.pz, i64 %i.qe, i1 false)
-  store i32 1, ptr %i.qf, align 8, !tbaa !51
+  store i32 1, ptr %i.qf, align 4, !tbaa !51
   %i.qh = getelementptr inbounds nuw i8, ptr %i.qf, i64 4
   store i32 470, ptr %i.qh, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit750
@@ -2397,7 +2397,7 @@ bb.do:                                            ; preds = %bb.dn
 
 bb.dp:                                            ; preds = %bb.dn
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.sp, ptr nonnull align 8 %i.sj, i64 %i.so, i1 false)
-  store i32 1, ptr %i.sp, align 8, !tbaa !51
+  store i32 1, ptr %i.sp, align 4, !tbaa !51
   %i.sr = getelementptr inbounds nuw i8, ptr %i.sp, i64 4
   store i32 470, ptr %i.sr, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit753
@@ -2482,7 +2482,7 @@ bb.dz:                                            ; preds = %bb.dy
 
 bb.ea:                                            ; preds = %bb.dy
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.tw, ptr nonnull align 8 %i.tq, i64 %i.tv, i1 false)
-  store i32 1, ptr %i.tw, align 8, !tbaa !51
+  store i32 1, ptr %i.tw, align 4, !tbaa !51
   %i.ty = getelementptr inbounds nuw i8, ptr %i.tw, i64 4
   store i32 470, ptr %i.ty, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit756
@@ -2569,7 +2569,7 @@ bb.ek:                                            ; preds = %bb.ej
 
 bb.el:                                            ; preds = %bb.ej
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.vf, ptr nonnull align 8 %i.uz, i64 %i.ve, i1 false)
-  store i32 1, ptr %i.vf, align 8, !tbaa !51
+  store i32 1, ptr %i.vf, align 4, !tbaa !51
   %i.vh = getelementptr inbounds nuw i8, ptr %i.vf, i64 4
   store i32 470, ptr %i.vh, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit759
@@ -2693,7 +2693,7 @@ bb.ex:                                            ; preds = %bb.ew
 
 bb.ey:                                            ; preds = %bb.ew
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.xf, ptr nonnull align 8 %i.wz, i64 %i.xe, i1 false)
-  store i32 1, ptr %i.xf, align 8, !tbaa !51
+  store i32 1, ptr %i.xf, align 4, !tbaa !51
   %i.xh = getelementptr inbounds nuw i8, ptr %i.xf, i64 4
   store i32 470, ptr %i.xh, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit762
@@ -2778,7 +2778,7 @@ bb.fi:                                            ; preds = %bb.fh
 
 bb.fj:                                            ; preds = %bb.fh
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ym, ptr nonnull align 8 %i.yg, i64 %i.yl, i1 false)
-  store i32 1, ptr %i.ym, align 8, !tbaa !51
+  store i32 1, ptr %i.ym, align 4, !tbaa !51
   %i.yo = getelementptr inbounds nuw i8, ptr %i.ym, i64 4
   store i32 470, ptr %i.yo, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit765
@@ -2876,7 +2876,7 @@ bb.fu:                                            ; preds = %bb.ft
 
 bb.fv:                                            ; preds = %bb.ft
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.zy, ptr nonnull align 8 %i.zs, i64 %i.zx, i1 false)
-  store i32 1, ptr %i.zy, align 8, !tbaa !51
+  store i32 1, ptr %i.zy, align 4, !tbaa !51
   %i.aaa = getelementptr inbounds nuw i8, ptr %i.zy, i64 4
   store i32 470, ptr %i.aaa, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit768
@@ -3279,7 +3279,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.aa
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ch, ptr nonnull align 8 %i.cb, i64 %i.cg, i1 false)
-  store i32 1, ptr %i.ch, align 8, !tbaa !51
+  store i32 1, ptr %i.ch, align 4, !tbaa !51
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 4
   store i32 470, ptr %i.cj, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit
@@ -3367,7 +3367,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.al
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dr, ptr nonnull align 8 %i.dl, i64 %i.dq, i1 false)
-  store i32 1, ptr %i.dr, align 8, !tbaa !51
+  store i32 1, ptr %i.dr, align 4, !tbaa !51
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dr, i64 4
   store i32 470, ptr %i.dt, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit541
@@ -3489,7 +3489,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.ba
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fr, ptr nonnull align 8 %i.fl, i64 %i.fq, i1 false)
-  store i32 1, ptr %i.fr, align 8, !tbaa !51
+  store i32 1, ptr %i.fr, align 4, !tbaa !51
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fr, i64 4
   store i32 470, ptr %i.ft, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit544
@@ -3892,7 +3892,7 @@ bb.cx:                                            ; preds = %bb.cw
 
 bb.cy:                                            ; preds = %bb.cw
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ni, ptr nonnull align 8 %i.nc, i64 %i.nh, i1 false)
-  store i32 1, ptr %i.ni, align 8, !tbaa !51
+  store i32 1, ptr %i.ni, align 4, !tbaa !51
   %i.nk = getelementptr inbounds nuw i8, ptr %i.ni, i64 4
   store i32 470, ptr %i.nk, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit547
@@ -4035,7 +4035,7 @@ bb.dn:                                            ; preds = %bb.dm
 
 bb.do:                                            ; preds = %bb.dm
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.pp, ptr nonnull align 8 %i.pj, i64 %i.po, i1 false)
-  store i32 1, ptr %i.pp, align 8, !tbaa !51
+  store i32 1, ptr %i.pp, align 4, !tbaa !51
   %i.pr = getelementptr inbounds nuw i8, ptr %i.pp, i64 4
   store i32 470, ptr %i.pr, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit550
@@ -4181,7 +4181,7 @@ bb.ed:                                            ; preds = %bb.ec
 
 bb.ee:                                            ; preds = %bb.ec
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.rx, ptr nonnull align 8 %i.rr, i64 %i.rw, i1 false)
-  store i32 1, ptr %i.rx, align 8, !tbaa !51
+  store i32 1, ptr %i.rx, align 4, !tbaa !51
   %i.rz = getelementptr inbounds nuw i8, ptr %i.rx, i64 4
   store i32 470, ptr %i.rz, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit553
@@ -4269,7 +4269,7 @@ bb.eo:                                            ; preds = %bb.en
 
 bb.ep:                                            ; preds = %bb.en
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.th, ptr nonnull align 8 %i.tb, i64 %i.tg, i1 false)
-  store i32 1, ptr %i.th, align 8, !tbaa !51
+  store i32 1, ptr %i.th, align 4, !tbaa !51
   %i.tj = getelementptr inbounds nuw i8, ptr %i.th, i64 4
   store i32 470, ptr %i.tj, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit556
@@ -4374,7 +4374,7 @@ bb.fb:                                            ; preds = %bb.fa
 
 bb.fc:                                            ; preds = %bb.fa
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.uz, ptr nonnull align 8 %i.ut, i64 %i.uy, i1 false)
-  store i32 1, ptr %i.uz, align 8, !tbaa !51
+  store i32 1, ptr %i.uz, align 4, !tbaa !51
   %i.vb = getelementptr inbounds nuw i8, ptr %i.uz, i64 4
   store i32 470, ptr %i.vb, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit559
@@ -4587,7 +4587,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr nonnull align 8 %i.n, i64 %i.s, i1 false)
-  store i32 1, ptr %i.t, align 8, !tbaa !51
+  store i32 1, ptr %i.t, align 4, !tbaa !51
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   store i32 470, ptr %i.v, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit
@@ -4856,7 +4856,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ay, ptr nonnull align 8 %i.as, i64 %i.ax, i1 false)
-  store i32 1, ptr %i.ay, align 8, !tbaa !51
+  store i32 1, ptr %i.ay, align 4, !tbaa !51
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
   store i32 470, ptr %i.ba, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit
@@ -5005,7 +5005,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.v, ptr nonnull align 8 %i.p, i64 %i.u, i1 false)
-  store i32 1, ptr %i.v, align 8, !tbaa !51
+  store i32 1, ptr %i.v, align 4, !tbaa !51
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 4
   store i32 470, ptr %i.x, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit
@@ -5095,7 +5095,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bh, ptr nonnull align 8 %i.bb, i64 %i.bg, i1 false)
-  store i32 1, ptr %i.bh, align 8, !tbaa !51
+  store i32 1, ptr %i.bh, align 4, !tbaa !51
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 4
   store i32 470, ptr %i.bj, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit99
@@ -5185,7 +5185,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.aa
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ct, ptr nonnull align 8 %i.cn, i64 %i.cs, i1 false)
-  store i32 1, ptr %i.ct, align 8, !tbaa !51
+  store i32 1, ptr %i.ct, align 4, !tbaa !51
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ct, i64 4
   store i32 470, ptr %i.cv, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit102
@@ -5287,7 +5287,7 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.am
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ej, ptr nonnull align 8 %i.ed, i64 %i.ei, i1 false)
-  store i32 1, ptr %i.ej, align 8, !tbaa !51
+  store i32 1, ptr %i.ej, align 4, !tbaa !51
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 4
   store i32 470, ptr %i.el, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit105
@@ -5461,7 +5461,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ay, ptr nonnull align 8 %i.as, i64 %i.ax, i1 false)
-  store i32 1, ptr %i.ay, align 8, !tbaa !51
+  store i32 1, ptr %i.ay, align 4, !tbaa !51
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
   store i32 470, ptr %i.ba, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit
@@ -5548,7 +5548,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ch, ptr nonnull align 8 %i.cb, i64 %i.cg, i1 false)
-  store i32 1, ptr %i.ch, align 8, !tbaa !51
+  store i32 1, ptr %i.ch, align 4, !tbaa !51
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 4
   store i32 470, ptr %i.cj, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit150
@@ -5951,7 +5951,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.af, ptr nonnull align 8 %i.z, i64 %i.ae, i1 false)
-  store i32 1, ptr %i.af, align 8, !tbaa !51
+  store i32 1, ptr %i.af, align 4, !tbaa !51
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   store i32 470, ptr %i.ah, align 4, !tbaa !48
   br label %zend_file_cache_unserialize_interned.exit

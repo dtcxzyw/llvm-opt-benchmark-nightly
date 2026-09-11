@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l, %_ZNSt6vector
 define internal void @_ZN8LightGBM8Metadata25SetInitScoresFromIteratorIPKdEEvT_S4_.omp_outlined(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree readnone captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %3) #17 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca i64, align 8                      ; 7 uses
+  %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 200
@@ -226,7 +226,6 @@ bb.b:                                             ; preds = %bb.a
   call void @__kmpc_for_static_init_8(ptr nonnull @1, i32 %i.i, i32 33, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c, i64 1, i64 512)
   %i.j = load i64, ptr %i.b, align 8, !tbaa !61
   %i.k = call i64 @llvm.smin.i64(i64 %i.j, i64 %i.g) ; 3 uses
-  store i64 %i.k, ptr %i.b, align 8, !tbaa !61
   %i.l = load i64, ptr %i.a, align 8, !tbaa !61   ; 2 uses
   %.not17 = icmp sgt i64 %i.l, %i.k
   br i1 %.not17, label %bb.g, label %.preheader.lr.ph
@@ -276,10 +275,11 @@ bb.f:                                             ; preds = %_ZN8LightGBM6Common
 
 ._crit_edge:                                      ; preds = %bb.f
   store i64 %i.y, ptr %i.a, align 8, !tbaa !61
-  store i64 %i.aa, ptr %i.b, align 8, !tbaa !61
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge, %bb.b
+  %.lcssa = phi i64 [ %i.aa, %._crit_edge ], [ %i.k, %bb.b ]
+  store i64 %.lcssa, ptr %i.b, align 8, !tbaa !61
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18
@@ -682,7 +682,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 define internal void @_ZN8LightGBM8Metadata21SetLabelsFromIteratorIPKfEEvT_S4_.omp_outlined(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree readnone captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %3) #17 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
-  %i.b = alloca i32, align 4                      ; 7 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -704,7 +704,6 @@ bb.b:                                             ; preds = %bb.a
   call void @__kmpc_for_static_init_4(ptr nonnull @1, i32 %i.i, i32 33, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c, i32 1, i32 512)
   %i.j = load i32, ptr %i.b, align 4, !tbaa !76
   %i.k = call i32 @llvm.smin.i32(i32 %i.j, i32 %i.g) ; 3 uses
-  store i32 %i.k, ptr %i.b, align 4, !tbaa !76
   %i.l = load i32, ptr %i.a, align 4, !tbaa !76   ; 2 uses
   %.not17 = icmp sgt i32 %i.l, %i.k
   br i1 %.not17, label %bb.e, label %.preheader.lr.ph
@@ -804,10 +803,11 @@ _ZN8LightGBM6CommonL8AvoidInfEf.exit:             ; preds = %bb.d, %bb.c, %scala
 
 ._crit_edge:                                      ; preds = %.loopexit
   store i32 %indvars, ptr %i.a, align 4, !tbaa !76
-  store i32 %i.au, ptr %i.b, align 4, !tbaa !76
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge, %bb.b
+  %.lcssa = phi i32 [ %i.au, %._crit_edge ], [ %i.k, %bb.b ]
+  store i32 %.lcssa, ptr %i.b, align 4, !tbaa !76
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18
@@ -1210,7 +1210,7 @@ bb.o:                                             ; preds = %bb.n, %_ZNSt6vector
 define internal void @_ZN8LightGBM8Metadata22SetWeightsFromIteratorIPKfEEvT_S4_.omp_outlined(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree readnone captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %3) #17 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
-  %i.b = alloca i32, align 4                      ; 7 uses
+  %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 36
@@ -1232,7 +1232,6 @@ bb.b:                                             ; preds = %bb.a
   call void @__kmpc_for_static_init_4(ptr nonnull @1, i32 %i.i, i32 33, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c, i32 1, i32 512)
   %i.j = load i32, ptr %i.b, align 4, !tbaa !76
   %i.k = call i32 @llvm.smin.i32(i32 %i.j, i32 %i.g) ; 3 uses
-  store i32 %i.k, ptr %i.b, align 4, !tbaa !76
   %i.l = load i32, ptr %i.a, align 4, !tbaa !76   ; 2 uses
   %.not17 = icmp sgt i32 %i.l, %i.k
   br i1 %.not17, label %bb.e, label %.preheader.lr.ph
@@ -1332,10 +1331,11 @@ _ZN8LightGBM6CommonL8AvoidInfEf.exit:             ; preds = %bb.d, %bb.c, %scala
 
 ._crit_edge:                                      ; preds = %.loopexit
   store i32 %indvars, ptr %i.a, align 4, !tbaa !76
-  store i32 %i.au, ptr %i.b, align 4, !tbaa !76
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge, %bb.b
+  %.lcssa = phi i32 [ %i.au, %._crit_edge ], [ %i.k, %bb.b ]
+  store i32 %.lcssa, ptr %i.b, align 4, !tbaa !76
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18

@@ -202,14 +202,15 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph208, %update_stats.exit
-  %8 = phi i32 [ -1, %.lr.ph208 ], [ %i.gf, %update_stats.exit ] ; 3 uses
+  %indvars.iv282 = phi i64 [ 0, %.lr.ph208 ], [ %indvars.iv.next283, %update_stats.exit ] ; 2 uses
   %i.fe = phi i32 [ 0, %.lr.ph208 ], [ %i.fx, %update_stats.exit ] ; 5 uses
-  %indvars.iv270 = phi i64 [ 0, %.lr.ph208 ], [ %indvars.iv.next271, %update_stats.exit ] ; 2 uses
+  %8 = phi i32 [ -1, %.lr.ph208 ], [ %i.gf, %update_stats.exit ] ; 3 uses
   %i.ff = phi double [ 0.000000e+00, %.lr.ph208 ], [ %i.fl, %update_stats.exit ]
   %i.fg = phi double [ 0.000000e+00, %.lr.ph208 ], [ %i.fk, %update_stats.exit ]
-  %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %indvars.iv270
+  %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %indvars.iv282
   %i.fi = load i32, ptr %i.fh, align 4, !tbaa !16 ; 3 uses
   %i.fj = sitofp i32 %i.fi to double              ; 3 uses
+  %indvars.iv.next283 = add nuw nsw i64 %indvars.iv282, 1 ; 2 uses
   %i.fk = fadd double %i.fg, %i.fj                ; 2 uses
   %i.fl = call double @llvm.fmuladd.f64(double %i.fj, double %i.fj, double %i.ff) ; 2 uses
   %.not.i = icmp eq i32 %i.fe, 0
@@ -271,8 +272,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 
 update_stats.exit:                                ; preds = %bb.ae, %bb.af
   %i.gf = phi i32 [ %8, %bb.ae ], [ %.1.i, %bb.af ]
-  %indvars.iv.next271 = add nuw nsw i64 %indvars.iv270, 1 ; 2 uses
-  %exitcond274.not = icmp eq i64 %indvars.iv.next271, %wide.trip.count273
+  %exitcond274.not = icmp eq i64 %indvars.iv.next283, %wide.trip.count273
   br i1 %exitcond274.not, label %.loopexit, label %bb.aa, !llvm.loop !33
 
 bb.ag:                                            ; preds = %bb.y
@@ -290,14 +290,15 @@ bb.ag:                                            ; preds = %bb.y
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.lr.ph200, %update_stats.exit153
-  %9 = phi i32 [ -1, %.lr.ph200 ], [ %i.hn, %update_stats.exit153 ] ; 3 uses
+  %indvars.iv275 = phi i64 [ 0, %.lr.ph200 ], [ %indvars.iv.next276, %update_stats.exit153 ] ; 2 uses
   %i.gm = phi i32 [ 0, %.lr.ph200 ], [ %i.hf, %update_stats.exit153 ] ; 5 uses
-  %indvars.iv265 = phi i64 [ 0, %.lr.ph200 ], [ %indvars.iv.next266, %update_stats.exit153 ] ; 2 uses
+  %9 = phi i32 [ -1, %.lr.ph200 ], [ %i.hn, %update_stats.exit153 ] ; 3 uses
   %i.gn = phi double [ 0.000000e+00, %.lr.ph200 ], [ %i.gt, %update_stats.exit153 ]
   %i.go = phi double [ 0.000000e+00, %.lr.ph200 ], [ %i.gs, %update_stats.exit153 ]
-  %i.gp = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %indvars.iv265
+  %i.gp = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %indvars.iv275
   %i.gq = load i32, ptr %i.gp, align 4, !tbaa !16 ; 3 uses
   %i.gr = sitofp i32 %i.gq to double              ; 3 uses
+  %indvars.iv.next276 = add nuw nsw i64 %indvars.iv275, 1 ; 2 uses
   %i.gs = fadd double %i.go, %i.gr                ; 2 uses
   %i.gt = call double @llvm.fmuladd.f64(double %i.gr, double %i.gr, double %i.gn) ; 2 uses
   %.not.i143 = icmp eq i32 %i.gm, 0
@@ -359,8 +360,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 
 update_stats.exit153:                             ; preds = %bb.al, %bb.am
   %i.hn = phi i32 [ %9, %bb.al ], [ %.1.i152, %bb.am ]
-  %indvars.iv.next266 = add nuw nsw i64 %indvars.iv265, 1 ; 2 uses
-  %exitcond269.not = icmp eq i64 %indvars.iv.next266, %wide.trip.count268
+  %exitcond269.not = icmp eq i64 %indvars.iv.next276, %wide.trip.count268
   br i1 %exitcond269.not, label %.loopexit, label %bb.ah, !llvm.loop !34
 
 .loopexit:                                        ; preds = %update_stats.exit153, %update_stats.exit
@@ -486,7 +486,7 @@ bb.at:                                            ; preds = %.loopexit, %._crit_
   call fastcc void @dump_stats(ptr noundef nonnull %7, ptr noundef nonnull %i.a)
   br label %.thread
 
-.thread:                                          ; preds = %bb.ag, %bb.z, %bb.y, %bb.at
+.thread:                                          ; preds = %bb.z, %bb.y, %bb.ag, %bb.at
   %indvars.iv.next281 = add nuw nsw i64 %indvars.iv280, 1 ; 2 uses
   %exitcond284.not = icmp eq i64 %indvars.iv.next281, %wide.trip.count283
   br i1 %exitcond284.not, label %.loopexit166, label %bb.y, !llvm.loop !36

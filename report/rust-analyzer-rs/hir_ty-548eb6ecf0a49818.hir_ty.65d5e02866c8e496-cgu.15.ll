@@ -205,12 +205,12 @@ _RNvMs10_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree4nodeINtB6_16BalancingCont
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %i.dn, i64 %i.cv
   %i.dp = shl nuw nsw i64 %i.cy, 3
   %i.dq = add nuw nsw i64 %i.dp, 8
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.do, ptr noundef nonnull align 16 dereferenceable(1) %i.dn, i64 %i.dq, i1 false), !alias.scope !97, !noalias !94
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.do, ptr noundef nonnull align 8 dereferenceable(1) %i.dn, i64 %i.dq, i1 false), !alias.scope !97, !noalias !94
   %i.dr = getelementptr inbounds nuw i8, ptr %i.cm, i64 192
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %i.de
   %i.dt = shl nuw nsw i64 %i.cv, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.dn, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.ds, i64 %i.dt, i1 false), !alias.scope !98, !noalias !94
-  %i.du = load ptr, ptr %i.dn, align 16, !noalias !94, !nonnull !9, !noundef !9 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.dn, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.ds, i64 %i.dt, i1 false), !alias.scope !98, !noalias !94
+  %i.du = load ptr, ptr %i.dn, align 8, !noalias !94, !nonnull !9, !noundef !9 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 176
   store ptr %i.cq, ptr %i.dv, align 16, !noalias !94
   %i.dw = getelementptr inbounds nuw i8, ptr %i.du, i64 184
@@ -222,7 +222,7 @@ _RNvMs10_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree4nodeINtB6_16BalancingCont
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dy, i64 184
   store i16 1, ptr %i.ea, align 8, !noalias !94
   %i.eb = getelementptr inbounds nuw i8, ptr %i.cq, i64 208
-  %i.ec = load ptr, ptr %i.eb, align 16, !noalias !94, !nonnull !9, !noundef !9 ; 2 uses
+  %i.ec = load ptr, ptr %i.eb, align 8, !noalias !94, !nonnull !9, !noundef !9 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 176
   store ptr %i.cq, ptr %i.ed, align 16, !noalias !94
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ec, i64 184
@@ -234,7 +234,7 @@ _RNvMs10_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree4nodeINtB6_16BalancingCont
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 184
   store i16 3, ptr %i.ei, align 8, !noalias !94
   %i.ej = getelementptr inbounds nuw i8, ptr %i.cq, i64 224
-  %i.ek = load ptr, ptr %i.ej, align 16, !noalias !94, !nonnull !9, !noundef !9 ; 2 uses
+  %i.ek = load ptr, ptr %i.ej, align 8, !noalias !94, !nonnull !9, !noundef !9 ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 176
   store ptr %i.cq, ptr %i.el, align 16, !noalias !94
   %i.em = getelementptr inbounds nuw i8, ptr %i.ek, i64 184

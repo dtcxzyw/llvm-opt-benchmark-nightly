@@ -205,7 +205,7 @@ bb.gx:                                            ; preds = %bb.gw
   %i.rx = load ptr, ptr %i.p, align 8, !tbaa !84
   %i.ry = tail call i32 %i.rx(ptr noundef %i.bg) #26
   %i.rz = sext i32 %i.ry to i64
-  %i.sa = getelementptr inbounds i8, ptr %i.bg, i64 %i.rz ; 20 uses
+  %i.sa = getelementptr inbounds i8, ptr %i.bg, i64 %i.rz ; 21 uses
   %i.sb = icmp ult ptr %i.sa, %2
   br i1 %i.sb, label %bb.gy, label %.loopexit777.loopexit
 
@@ -255,7 +255,7 @@ bb.hc:                                            ; preds = %.lr.ph
   br i1 %i.tc, label %.backedge, label %bb.hd
 
 bb.hd:                                            ; preds = %bb.hc, %bb.hb, %bb.ha
-  %i.td = phi ptr [ %i.ss, %bb.hc ], [ %i.tb, %bb.hb ], [ %i.ss, %bb.ha ] ; 3 uses
+  %i.td = phi ptr [ %i.ss, %bb.hc ], [ %i.tb, %bb.hb ], [ %i.ss, %bb.ha ] ; 2 uses
   %i.te = icmp ult ptr %i.td, %2
   br i1 %i.te, label %.lr.ph, label %.thread750.loopexit1098
 
@@ -601,7 +601,7 @@ bb.ip:                                            ; preds = %.preheader771
   br i1 %.not696, label %.preheader771, label %.backedge, !llvm.loop !215
 
 .backedge:                                        ; preds = %.preheader771, %bb.ip, %bb.hc, %bb.iq
-  %.lcssa11851211 = phi ptr [ %i.ss, %bb.hc ], [ %i.bg, %bb.iq ], [ %i.xa, %bb.ip ], [ %i.wu, %.preheader771 ] ; 3 uses
+  %.lcssa11851211 = phi ptr [ %i.ss, %bb.hc ], [ %i.bg, %bb.iq ], [ %i.wu, %.preheader771 ], [ %i.xa, %bb.ip ] ; 3 uses
   %i.xd = icmp ult ptr %.lcssa11851211, %2
   br i1 %i.xd, label %bb.j, label %._crit_edge.loopexit
 
@@ -627,7 +627,7 @@ bb.iq:                                            ; preds = %bb.gj, %bb.gj, %bb.
   br label %.thread750
 
 .thread750.loopexit1098:                          ; preds = %bb.hd
-  store ptr %i.td, ptr %i.c, align 8
+  store ptr %i.sa, ptr %i.c, align 8
   br label %.thread750
 
 .thread750.loopexit1100:                          ; preds = %bb.gz

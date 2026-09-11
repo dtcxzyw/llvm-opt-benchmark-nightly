@@ -205,8 +205,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicy
   br i1 %i.bj, label %.lr.ph.i.i.i, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i, !llvm.loop !18
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i: ; preds = %.lr.ph.i.i.i, %.preheader
-  %.sroa.012.0 = phi ptr [ %i.ba, %.preheader ], [ %i.bg, %.lr.ph.i.i.i ]
-  %.sroa.813.0 = phi ptr [ %i.bb, %.preheader ], [ %i.bh, %.lr.ph.i.i.i ] ; 2 uses
+  %.sroa.012.0 = phi ptr [ %i.bb, %.preheader ], [ %i.bh, %.lr.ph.i.i.i ] ; 2 uses
+  %.sroa.813.0 = phi ptr [ %i.ba, %.preheader ], [ %i.bg, %.lr.ph.i.i.i ]
   %i.bk = phi i8 [ %i.bc, %.preheader ], [ %i.bi, %.lr.ph.i.i.i ]
   %i.bl = icmp eq i8 %i.bk, -1
   br i1 %i.bl, label %bb.h, label %_ZSt9__advanceIN4absl12lts_2026052618container_internal12raw_hash_setINS2_17FlatHashMapPolicyIiiEEJEE8iteratorElEvRT_T0_St18input_iterator_tag.exit, !prof !171
@@ -216,8 +216,8 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20260
 
 _ZSt9__advanceIN4absl12lts_2026052618container_internal12raw_hash_setINS2_17FlatHashMapPolicyIiiEEJEE8iteratorElEvRT_T0_St18input_iterator_tag.exit: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE4findIiEENS5_8iteratorERKi.exit, %bb.h, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i
   %.sink38 = phi ptr [ %i.ay, %bb.h ], [ %i.ay, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ null, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE4findIiEENS5_8iteratorERKi.exit ]
-  %.sink36 = phi ptr [ null, %bb.h ], [ %.sroa.012.0, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ null, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE4findIiEENS5_8iteratorERKi.exit ]
-  %.sink = phi ptr [ %.sroa.813.0, %bb.h ], [ %.sroa.813.0, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ %i.az, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE4findIiEENS5_8iteratorERKi.exit ]
+  %.sink36 = phi ptr [ null, %bb.h ], [ %.sroa.813.0, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ null, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE4findIiEENS5_8iteratorERKi.exit ]
+  %.sink = phi ptr [ %.sroa.012.0, %bb.h ], [ %.sroa.012.0, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ %i.az, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiiEEJEE4findIiEENS5_8iteratorERKi.exit ]
   store ptr %.sink38, ptr %0, align 8
   %.sroa.8.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.az, ptr %.sroa.8.0..sroa_idx8, align 8

@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN12_GLOBAL__N_137ChunkedQueue_CountValueConstruct_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 _ZN4absl12lts_2026052613chunked_queueIlLm0ELm0ESaIlEE9push_backERKl.exit.i.1:
-  %1 = alloca %"class.absl::lts_20260526::chunked_queue", align 8 ; 13 uses
+  %1 = alloca %"class.absl::lts_20260526::chunked_queue", align 8 ; 14 uses
   %2 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %3 = alloca %"class.testing::internal::PredicateFormatterFromMatcher.194", align 4 ; 7 uses
   %4 = alloca %"class.testing::Message", align 8  ; 7 uses
@@ -216,7 +216,9 @@ _ZN4absl12lts_2026052613chunked_queueIlLm0ELm0ESaIlEE9push_backERKl.exit.i.1:
   %7 = alloca %"class.testing::Message", align 8  ; 7 uses
   %8 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  store i64 0, ptr %9, align 8
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %.sroa.45.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -227,15 +229,13 @@ _ZN4absl12lts_2026052613chunked_queueIlLm0ELm0ESaIlEE9push_backERKl.exit.i.1:
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = add i64 %i.i, 16
-  %i.k = inttoptr i64 %i.j to ptr                 ; 4 uses
+  %i.k = inttoptr i64 %i.j to ptr                 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   store ptr %i.l, ptr %i.h, align 8, !tbaa !59
   store ptr %i.g, ptr %1, align 8
   store ptr %i.k, ptr %.sroa.45.0..sroa_idx.i.i.i.i.i, align 8
   store ptr %i.l, ptr %.sroa.56.0..sroa_idx.i.i.i.i.i, align 8
   store i64 1, ptr %i.f, align 8, !tbaa !65
-  %9 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  store ptr %9, ptr %i.c, align 8, !tbaa !66
   store i64 10, ptr %i.k, align 8, !tbaa !67
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !59
@@ -297,8 +297,8 @@ _ZN4absl12lts_2026052613chunked_queueIlLm0ELm0ESaIlEE9push_backERKl.exit.i.2: ; 
   %i.au = add i64 %i.at, 1
   store i64 %i.au, ptr %i.f, align 8, !tbaa !65
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 8
-  store ptr %i.av, ptr %i.c, align 8, !tbaa !66
   store i64 10, ptr %i.as, align 8, !tbaa !67
+  store ptr %i.av, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   store i32 10, ptr %3, align 4

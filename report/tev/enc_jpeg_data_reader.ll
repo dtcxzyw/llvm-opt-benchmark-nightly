@@ -205,8 +205,8 @@ bb.bh:                                            ; preds = %bb.bg, %_ZN3jxl4jpe
 bb.bi:                                            ; preds = %bb.bu, %bb.bh
   %.promoted.i.i141.i.us.us743.a = phi i64 [ %.promoted.i.i141.i.us.us741.a, %bb.bu ], [ %.promoted.i.i141.i.us.us744.a, %bb.bh ] ; 4 uses
   %.promoted.i.i164.i.us.us = phi i64 [ %.pre.i16172.i.us.us, %bb.bu ], [ %.promoted.i.i141.i.us.us744.a, %bb.bh ] ; 3 uses
-  %10 = phi i32 [ %i.qc, %bb.bu ], [ %i.oo, %bb.bh ] ; 6 uses
   %indvars.iv.i.us.us = phi i64 [ %indvars.iv.next.i.us.us, %bb.bu ], [ %i.op, %bb.bh ] ; 3 uses
+  %10 = phi i32 [ %i.qc, %bb.bu ], [ %i.oo, %bb.bh ] ; 6 uses
   %.0103.i.us.us = phi i32 [ %.1104.i.us.us, %bb.bu ], [ %i.nm, %bb.bh ] ; 3 uses
   %i.or = getelementptr inbounds [4 x i8], ptr @_ZN3jxl4jpegL17kJPEGNaturalOrderE, i64 %indvars.iv.i.us.us
   %i.os = load i32, ptr %i.or, align 4, !tbaa !89
@@ -609,11 +609,11 @@ bb.di:                                            ; preds = %bb.dh
   %.promoted.i.i132.i.us.us.pre = load i64, ptr %i.hj, align 8, !tbaa !114
   br label %.lr.ph.i200.us.us
 
-.lr.ph.i200.us.us:                                ; preds = %.lr.ph.i200.us.us.preheader, %bb.dz
-  %.promoted.i.i132.i.us.us = phi i64 [ %.promoted.i.i132.i.us.us749, %bb.dz ], [ %.promoted.i.i132.i.us.us.pre, %.lr.ph.i200.us.us.preheader ] ; 2 uses
-  %i.ws = phi i32 [ %i.aam, %bb.dz ], [ %.pre748, %.lr.ph.i200.us.us.preheader ] ; 3 uses
-  %.1309.us.us = phi i32 [ %storemerge.i.us.us, %bb.dz ], [ 0, %.lr.ph.i200.us.us.preheader ] ; 4 uses
-  %.09141.i.us.us = phi i32 [ %i.aan, %bb.dz ], [ %.2.i199.us.us, %.lr.ph.i200.us.us.preheader ] ; 3 uses
+.lr.ph.i200.us.us:                                ; preds = %bb.dz, %.lr.ph.i200.us.us.preheader
+  %.promoted.i.i132.i.us.us = phi i64 [ %.promoted.i.i132.i.us.us.pre, %.lr.ph.i200.us.us.preheader ], [ %.promoted.i.i132.i.us.us749, %bb.dz ] ; 2 uses
+  %i.ws = phi i32 [ %.pre748, %.lr.ph.i200.us.us.preheader ], [ %i.aam, %bb.dz ] ; 3 uses
+  %.1309.us.us = phi i32 [ 0, %.lr.ph.i200.us.us.preheader ], [ %storemerge.i.us.us, %bb.dz ] ; 4 uses
+  %.09141.i.us.us = phi i32 [ %.2.i199.us.us, %.lr.ph.i200.us.us.preheader ], [ %i.aan, %bb.dz ] ; 3 uses
   %i.wt = icmp slt i32 %i.ws, 17
   br i1 %i.wt, label %.preheader.i.i131.i.us.us, label %_ZN3jxl4jpeg12_GLOBAL__N_114BitReaderState13FillBitWindowEv.exit.i127.i.us.us
 

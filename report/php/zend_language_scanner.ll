@@ -204,10 +204,10 @@ bb.chf:                                           ; preds = %bb.chd, %bb.che, %b
   br i1 %exitcond12725.not, label %.critedge46, label %.lr.ph9221, !llvm.loop !190
 
 .critedge46:                                      ; preds = %.critedge48, %.lr.ph9221, %bb.chf
+  %.promoted92249244 = phi ptr [ %.promoted9217, %bb.chf ], [ %i.gqc, %.lr.ph9221 ], [ %i.gqf, %.critedge48 ] ; 11 uses
   %.04977.lcssa = phi i32 [ 0, %bb.chf ], [ %.049779218, %.lr.ph9221 ], [ %i.gqa, %.critedge48 ] ; 4 uses
   %.04975.lcssa = phi i32 [ 0, %bb.chf ], [ %.049759219, %.lr.ph9221 ], [ %.14976, %.critedge48 ] ; 2 uses
-  %.lcssa7121 = phi ptr [ %.promoted9217, %bb.chf ], [ %i.gqc, %.lr.ph9221 ], [ %i.gqf, %.critedge48 ] ; 11 uses
-  %i.gqh = icmp eq ptr %.lcssa7121, %i.ac
+  %i.gqh = icmp eq ptr %.promoted92249244, %i.ac
   br i1 %i.gqh, label %bb.chg, label %bb.chk
 
 bb.chg:                                           ; preds = %.critedge46
@@ -254,7 +254,7 @@ bb.chj:                                           ; preds = %.lr.ph10087, %bb.ch
   br label %.thread6564
 
 bb.chk:                                           ; preds = %.critedge46
-  %i.gqu = load i8, ptr %.lcssa7121, align 1, !tbaa !44 ; 3 uses
+  %i.gqu = load i8, ptr %.promoted92249244, align 1, !tbaa !44 ; 3 uses
   %i.gqv = and i8 %i.gqu, -33
   %i.gqw = add i8 %i.gqv, -65
   %or.cond6614 = icmp ult i8 %i.gqw, 26
@@ -269,19 +269,19 @@ bb.chl:                                           ; preds = %bb.chk
 bb.chm:                                           ; preds = %bb.chk, %bb.chl
   %i.gqz = load i32, ptr %i.gpp, align 8, !tbaa !138
   %i.gra = sext i32 %i.gqz to i64                 ; 3 uses
-  %i.grb = ptrtoint ptr %.lcssa7121 to i64
+  %i.grb = ptrtoint ptr %.promoted92249244 to i64
   %i.grc = sub i64 %i.gpq, %i.grb
   %i.grd = icmp sgt i64 %i.grc, %i.gra
   br i1 %i.grd, label %bb.chn, label %.backedge6963
 
 bb.chn:                                           ; preds = %bb.chm
   %i.gre = load ptr, ptr %i.goy, align 8, !tbaa !47
-  %bcmp5690 = tail call i32 @bcmp(ptr nonnull %.lcssa7121, ptr %i.gre, i64 %i.gra)
+  %bcmp5690 = tail call i32 @bcmp(ptr nonnull %.promoted92249244, ptr %i.gre, i64 %i.gra)
   %.not5691 = icmp eq i32 %bcmp5690, 0
   br i1 %.not5691, label %bb.cho, label %.backedge6963
 
 bb.cho:                                           ; preds = %bb.chn
-  %i.grf = getelementptr inbounds i8, ptr %.lcssa7121, i64 %i.gra
+  %i.grf = getelementptr inbounds i8, ptr %.promoted92249244, i64 %i.gra
   %i.grg = load i8, ptr %i.grf, align 1, !tbaa !44 ; 4 uses
   %i.grh = and i8 %i.grg, -33
   %i.gri = add i8 %i.grh, -65
@@ -298,7 +298,7 @@ bb.chp:                                           ; preds = %bb.cho
   br i1 %or.cond6331, label %.backedge6963, label %bb.chq
 
 .backedge6963:                                    ; preds = %bb.chc, %bb.cid, %bb.cib, %bb.cic, %bb.cic, %bb.chm, %bb.chn, %bb.chl, %bb.chp, %bb.cho, %bb.cia, %switch.early.test6377
-  %i.grm = phi ptr [ %i.gpt, %bb.chc ], [ %i.gss, %bb.cid ], [ %i.gpt, %bb.cib ], [ %i.gpt, %bb.cic ], [ %i.gpt, %bb.cic ], [ %.lcssa7121, %bb.chm ], [ %.lcssa7121, %bb.chn ], [ %.lcssa7121, %bb.chl ], [ %.lcssa7121, %bb.chp ], [ %.lcssa7121, %bb.cho ], [ %i.gpt, %bb.cia ], [ %i.gpt, %switch.early.test6377 ] ; 3 uses
+  %i.grm = phi ptr [ %i.gpt, %switch.early.test6377 ], [ %.promoted92249244, %bb.chp ], [ %.promoted92249244, %bb.chm ], [ %i.gpt, %bb.cia ], [ %.promoted92249244, %bb.cho ], [ %.promoted92249244, %bb.chl ], [ %.promoted92249244, %bb.chn ], [ %i.gpt, %bb.cic ], [ %i.gpt, %bb.cic ], [ %i.gpt, %bb.cib ], [ %i.gss, %bb.cid ], [ %i.gpt, %bb.chc ] ; 3 uses
   %i.grn = icmp ult ptr %i.grm, %i.ac
   br i1 %i.grn, label %bb.chc, label %.loopexit6962, !llvm.loop !192
 
@@ -316,7 +316,7 @@ bb.chr:                                           ; preds = %bb.chq
   br label %bb.chs
 
 bb.chs:                                           ; preds = %._crit_edge12746, %bb.chq
-  %i.grr = phi ptr [ %.pre12747, %._crit_edge12746 ], [ %.lcssa7121, %bb.chq ] ; 4 uses
+  %i.grr = phi ptr [ %.pre12747, %._crit_edge12746 ], [ %.promoted92249244, %bb.chq ] ; 4 uses
   %i.grs = sub nuw i32 -2, %.04977.lcssa
   %i.grt = sext i32 %i.grs to i64
   %i.gru = getelementptr inbounds i8, ptr %i.grr, i64 %i.grt
@@ -719,10 +719,10 @@ bb.cpe:                                           ; preds = %bb.cpc, %bb.cpd, %b
   br i1 %exitcond.not, label %.critedge52, label %.lr.ph, !llvm.loop !195
 
 .critedge52:                                      ; preds = %.critedge54, %.lr.ph, %bb.cpe
+  %13 = phi ptr [ %.promoted, %bb.cpe ], [ %i.hpk, %.lr.ph ], [ %scevgep12721, %.critedge54 ] ; 11 uses
   %.14955.lcssa = phi i32 [ 0, %bb.cpe ], [ %.149559197, %.lr.ph ], [ %i.hpi, %.critedge54 ] ; 10 uses
   %.14950.lcssa = phi i32 [ 0, %bb.cpe ], [ %.149509198, %.lr.ph ], [ %.24951, %.critedge54 ] ; 7 uses
-  %.lcssa7109 = phi ptr [ %.promoted, %bb.cpe ], [ %i.hpk, %.lr.ph ], [ %scevgep12721, %.critedge54 ] ; 11 uses
-  %i.hpp = icmp eq ptr %.lcssa7109, %i.an
+  %i.hpp = icmp eq ptr %13, %i.an
   br i1 %i.hpp, label %bb.cpf, label %bb.cpj
 
 bb.cpf:                                           ; preds = %.critedge52
@@ -769,7 +769,7 @@ bb.cpi:                                           ; preds = %.lr.ph10047, %bb.cp
   br label %.thread6564
 
 bb.cpj:                                           ; preds = %.critedge52
-  %i.hqc = load i8, ptr %.lcssa7109, align 1, !tbaa !44 ; 3 uses
+  %i.hqc = load i8, ptr %13, align 1, !tbaa !44   ; 3 uses
   %i.hqd = and i8 %i.hqc, -33
   %i.hqe = add i8 %i.hqd, -65
   %or.cond6619 = icmp ult i8 %i.hqe, 26
@@ -784,19 +784,19 @@ bb.cpk:                                           ; preds = %bb.cpj
 bb.cpl:                                           ; preds = %bb.cpj, %bb.cpk
   %i.hqh = load i32, ptr %i.hox, align 8, !tbaa !138
   %i.hqi = sext i32 %i.hqh to i64                 ; 3 uses
-  %i.hqj = ptrtoint ptr %.lcssa7109 to i64
+  %i.hqj = ptrtoint ptr %13 to i64
   %i.hqk = sub i64 %i.hoy, %i.hqj
   %i.hql = icmp sgt i64 %i.hqk, %i.hqi
   br i1 %i.hql, label %bb.cpm, label %.backedge6969
 
 bb.cpm:                                           ; preds = %bb.cpl
   %i.hqm = load ptr, ptr %i.hog, align 8, !tbaa !47
-  %bcmp = tail call i32 @bcmp(ptr nonnull %.lcssa7109, ptr %i.hqm, i64 %i.hqi)
+  %bcmp = tail call i32 @bcmp(ptr nonnull %13, ptr %i.hqm, i64 %i.hqi)
   %.not5628 = icmp eq i32 %bcmp, 0
   br i1 %.not5628, label %bb.cpn, label %.backedge6969
 
 bb.cpn:                                           ; preds = %bb.cpm
-  %i.hqn = getelementptr inbounds i8, ptr %.lcssa7109, i64 %i.hqi
+  %i.hqn = getelementptr inbounds i8, ptr %13, i64 %i.hqi
   %i.hqo = load i8, ptr %i.hqn, align 1, !tbaa !44 ; 4 uses
   %i.hqp = and i8 %i.hqo, -33
   %i.hqq = add i8 %i.hqp, -65
@@ -813,7 +813,7 @@ bb.cpo:                                           ; preds = %bb.cpn
   br i1 %or.cond6360, label %.backedge6969, label %bb.cpp
 
 .backedge6969:                                    ; preds = %bb.cpb, %bb.cpm, %bb.cpl, %bb.cpk, %bb.cpo, %bb.cpn
-  %i.hqu = phi ptr [ %.lcssa7109, %bb.cpo ], [ %.lcssa7109, %bb.cpn ], [ %i.hpb, %bb.cpb ], [ %.lcssa7109, %bb.cpm ], [ %.lcssa7109, %bb.cpl ], [ %.lcssa7109, %bb.cpk ] ; 3 uses
+  %i.hqu = phi ptr [ %13, %bb.cpo ], [ %13, %bb.cpn ], [ %i.hpb, %bb.cpb ], [ %13, %bb.cpm ], [ %13, %bb.cpl ], [ %13, %bb.cpk ] ; 3 uses
   %.04954.be = phi i32 [ %.14955.lcssa, %bb.cpo ], [ %.14955.lcssa, %bb.cpn ], [ %.049549207, %bb.cpb ], [ %.14955.lcssa, %bb.cpm ], [ %.14955.lcssa, %bb.cpl ], [ %.14955.lcssa, %bb.cpk ] ; 2 uses
   %.04949.be = phi i32 [ %.14950.lcssa, %bb.cpo ], [ %.14950.lcssa, %bb.cpn ], [ %.049499208, %bb.cpb ], [ %.14950.lcssa, %bb.cpm ], [ %.14950.lcssa, %bb.cpl ], [ %.14950.lcssa, %bb.cpk ] ; 2 uses
   %i.hqv = icmp ult ptr %i.hqu, %i.an
@@ -833,7 +833,7 @@ bb.cpq:                                           ; preds = %bb.cpp
   br label %bb.cpr
 
 bb.cpr:                                           ; preds = %._crit_edge12737, %bb.cpp
-  %i.hqz = phi ptr [ %.pre, %._crit_edge12737 ], [ %.lcssa7109, %bb.cpp ] ; 3 uses
+  %i.hqz = phi ptr [ %.pre, %._crit_edge12737 ], [ %13, %bb.cpp ] ; 3 uses
   %i.hra = sub nuw i32 -2, %.14955.lcssa
   %i.hrb = sext i32 %i.hra to i64
   %i.hrc = getelementptr inbounds i8, ptr %i.hqz, i64 %i.hrb
