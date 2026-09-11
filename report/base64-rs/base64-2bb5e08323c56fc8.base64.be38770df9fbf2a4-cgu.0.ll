@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.db, label %bb.z, label %bb.y
 
 bb.x:                                             ; preds = %bb.v
-  %i.dc = shl i64 %.sroa.13.01029.i.i, 5
+  %i.dc = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.dd = or disjoint i64 %i.dc, 1
   br label %bb.bi
 
@@ -218,7 +218,7 @@ bb.y:                                             ; preds = %bb.w
   br i1 %i.dj, label %bb.ab, label %bb.aa
 
 bb.z:                                             ; preds = %bb.w
-  %i.dk = shl i64 %.sroa.13.01029.i.i, 5
+  %i.dk = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.dl = or disjoint i64 %i.dk, 2
   br label %bb.bi
 
@@ -232,7 +232,7 @@ bb.aa:                                            ; preds = %bb.y
   br i1 %i.dr, label %bb.ad, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.y
-  %i.ds = shl i64 %.sroa.13.01029.i.i, 5
+  %i.ds = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.dt = or disjoint i64 %i.ds, 3
   br label %bb.bi
 
@@ -246,7 +246,7 @@ bb.ac:                                            ; preds = %bb.aa
   br i1 %i.dz, label %bb.af, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.aa
-  %i.ea = shl i64 %.sroa.13.01029.i.i, 5
+  %i.ea = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.eb = or disjoint i64 %i.ea, 4
   br label %bb.bi
 
@@ -260,7 +260,7 @@ bb.ae:                                            ; preds = %bb.ac
   br i1 %i.eh, label %bb.ah, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ac
-  %i.ei = shl i64 %.sroa.13.01029.i.i, 5
+  %i.ei = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.ej = or disjoint i64 %i.ei, 5
   br label %bb.bi
 
@@ -274,17 +274,17 @@ bb.ag:                                            ; preds = %bb.ae
   br i1 %i.ep, label %bb.ai, label %bb.aj
 
 bb.ah:                                            ; preds = %bb.ae
-  %i.eq = shl i64 %.sroa.13.01029.i.i, 5
+  %i.eq = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.er = or disjoint i64 %i.eq, 6
   br label %bb.bi
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.es = shl i64 %.sroa.13.01029.i.i, 5
+  %i.es = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.et = or disjoint i64 %i.es, 7
   br label %bb.bi
 
 .loopexit292.i.i:                                 ; preds = %bb.u
-  %i.eu = shl i64 %.sroa.13.01029.i.i, 5
+  %i.eu = shl nuw i64 %.sroa.13.01029.i.i, 5
   br label %bb.bi
 
 bb.aj:                                            ; preds = %bb.ag
@@ -391,7 +391,7 @@ bb.aq:                                            ; preds = %bb.ap
 .loopexit293.i.i:                                 ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj
   %.sink2439.i.i = phi i64 [ 15, %bb.aq ], [ 14, %bb.ap ], [ 9, %bb.ak ], [ 10, %bb.al ], [ 11, %bb.am ], [ 12, %bb.an ], [ 13, %bb.ao ], [ 8, %bb.aj ]
   %.sroa.1491.0.ph.i.i = phi i8 [ %i.hl, %bb.aq ], [ %i.hf, %bb.ap ], [ %i.gb, %bb.ak ], [ %i.gh, %bb.al ], [ %i.gn, %bb.am ], [ %i.gt, %bb.an ], [ %i.gz, %bb.ao ], [ %i.fv, %bb.aj ]
-  %i.hq = shl i64 %.sroa.13.01029.i.i, 5
+  %i.hq = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.hr = or disjoint i64 %.sink2439.i.i, %i.hq
   br label %bb.bi
 
@@ -499,7 +499,7 @@ bb.ay:                                            ; preds = %bb.ax
 .loopexit294.i.i:                                 ; preds = %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar
   %.sink2440.i.i = phi i64 [ 23, %bb.ay ], [ 22, %bb.ax ], [ 17, %bb.as ], [ 18, %bb.at ], [ 19, %bb.au ], [ 20, %bb.av ], [ 21, %bb.aw ], [ 16, %bb.ar ]
   %.sroa.1495.0.ph.i.i = phi i8 [ %i.ki, %bb.ay ], [ %i.kc, %bb.ax ], [ %i.iy, %bb.as ], [ %i.je, %bb.at ], [ %i.jk, %bb.au ], [ %i.jq, %bb.av ], [ %i.jw, %bb.aw ], [ %i.is, %bb.ar ]
-  %i.kn = shl i64 %.sroa.13.01029.i.i, 5
+  %i.kn = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.ko = or disjoint i64 %.sink2440.i.i, %i.kn
   br label %bb.bi
 
@@ -607,7 +607,7 @@ bb.bg:                                            ; preds = %bb.bf
 .loopexit295.i.i:                                 ; preds = %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az
   %.sink2441.i.i = phi i64 [ 31, %bb.bg ], [ 30, %bb.bf ], [ 25, %bb.ba ], [ 26, %bb.bb ], [ 27, %bb.bc ], [ 28, %bb.bd ], [ 29, %bb.be ], [ 24, %bb.az ]
   %.sroa.1499.0.ph.i.i = phi i8 [ %i.nf, %bb.bg ], [ %i.mz, %bb.bf ], [ %i.lv, %bb.ba ], [ %i.mb, %bb.bb ], [ %i.mh, %bb.bc ], [ %i.mn, %bb.bd ], [ %i.mt, %bb.be ], [ %i.lp, %bb.az ]
-  %i.nk = shl i64 %.sroa.13.01029.i.i, 5
+  %i.nk = shl nuw i64 %.sroa.13.01029.i.i, 5
   %i.nl = or disjoint i64 %.sink2441.i.i, %i.nk
   br label %bb.bi
 

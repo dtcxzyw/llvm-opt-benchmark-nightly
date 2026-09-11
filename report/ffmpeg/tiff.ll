@@ -205,7 +205,7 @@ vec.epilog.middle.block3121:                      ; preds = %vec.epilog.vector.b
   call void @llvm.assume(i1 %lcmp.mod3768)
   %i.dfy = xor i64 %indvars.iv2003.epil.init, -1
   %i.dfz = add nsw i64 %i.ddh, %i.dfy
-  %i.dga = mul nsw i64 %i.dfz, %i.ddi
+  %i.dga = mul nuw nsw i64 %i.dfz, %i.ddi
   %gep2828.epil = getelementptr i8, ptr %invariant.gep2827, i64 %i.dga
   %i.dgb = load i8, ptr %gep2828.epil, align 1, !tbaa !67
   %gep2830.epil = getelementptr inbounds nuw i8, ptr %invariant.gep2829, i64 %indvars.iv2003.epil.init
@@ -222,14 +222,14 @@ vec.epilog.middle.block3121:                      ; preds = %vec.epilog.vector.b
   %niter3770 = phi i64 [ %niter3770.next.1, %.preheader913.new ], [ 0, %.preheader913 ]
   %i.dgc = xor i64 %indvars.iv2003, -1
   %i.dgd = add nsw i64 %i.ddh, %i.dgc
-  %i.dge = mul nsw i64 %i.dgd, %i.ddi
+  %i.dge = mul nuw nsw i64 %i.dgd, %i.ddi
   %gep2828 = getelementptr i8, ptr %invariant.gep2827, i64 %i.dge
   %i.dgf = load i8, ptr %gep2828, align 1, !tbaa !67
   %gep2830 = getelementptr inbounds nuw i8, ptr %invariant.gep2829, i64 %indvars.iv2003
   store i8 %i.dgf, ptr %gep2830, align 1, !tbaa !67
   %i.dgg = xor i64 %indvars.iv2003, -2
   %i.dgh = add nsw i64 %i.dgg, %i.ddh
-  %i.dgi = mul nsw i64 %i.dgh, %i.ddi
+  %i.dgi = mul nuw nsw i64 %i.dgh, %i.ddi
   %gep2828.1 = getelementptr i8, ptr %invariant.gep2827, i64 %i.dgi
   %i.dgj = load i8, ptr %gep2828.1, align 1, !tbaa !67
   %i.dgk = getelementptr inbounds nuw i8, ptr %invariant.gep2829, i64 %indvars.iv2003
