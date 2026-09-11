@@ -73,12 +73,12 @@ bb.a:
   %i.e = add i32 %.neg21, %i.c                    ; 5 uses
   %i.f = udiv i32 %0, 300                         ; 2 uses
   %i.g = shl nuw nsw i32 %i.f, 1
-  %i.h = sub nsw i32 %i.b, %i.g
+  %i.h = sub nuw nsw i32 %i.b, %i.g
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i32 %i.h, ptr %i.i, align 8, !tbaa !13
   %i.j = udiv i32 %0, 600
   %i.k = shl nuw nsw i32 %i.j, 1
-  %i.l = sub nsw i32 %i.f, %i.k
+  %i.l = sub nuw nsw i32 %i.f, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 36
   store i32 %i.l, ptr %i.m, align 4, !tbaa !14
   %.not = icmp ult i32 %0, 600

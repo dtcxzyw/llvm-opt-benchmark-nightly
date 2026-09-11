@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit.i161: ; preds = %bb.r
   %.sroa.02.0.copyload.i1.i158 = load i32, ptr %i.ce, align 1, !alias.scope !1063, !noalias !1060
   %i.ch = zext i32 %.sroa.02.0.copyload.i1.i158 to i64
-  %i.ci = add nsw i64 %i.cf, -4                   ; 2 uses
+  %i.ci = add i64 %i.cf, -4                       ; 2 uses
   %i.cj = shl nuw nsw i64 %i.ch, 2                ; 4 uses
   %.not.i246 = icmp samesign ugt i64 %i.cj, %i.ci
   br i1 %.not.i246, label %bb.u, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit250, !prof !18
@@ -605,7 +605,7 @@ bb.cr:                                            ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit.i145: ; preds = %bb.cp
   %.sroa.02.0.copyload.i1.i142 = load i32, ptr %i.jj, align 1, !alias.scope !1096, !noalias !1093
   %i.jm = zext i32 %.sroa.02.0.copyload.i1.i142 to i64
-  %i.jn = add nsw i64 %i.jk, -4                   ; 2 uses
+  %i.jn = add i64 %i.jk, -4                       ; 2 uses
   %i.jo = shl nuw nsw i64 %i.jm, 2                ; 4 uses
   %.not.i283 = icmp samesign ugt i64 %i.jo, %i.jn
   br i1 %.not.i283, label %bb.cs, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit287, !prof !18
@@ -924,7 +924,7 @@ bb.dw:                                            ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit.i129: ; preds = %bb.du
   %.sroa.02.0.copyload.i1.i126 = load i32, ptr %i.nh, align 1, !alias.scope !1116, !noalias !1113
   %i.nk = zext i32 %.sroa.02.0.copyload.i1.i126 to i64
-  %i.nl = add nsw i64 %i.ni, -4                   ; 2 uses
+  %i.nl = add i64 %i.ni, -4                       ; 2 uses
   %i.nm = shl nuw nsw i64 %i.nk, 2                ; 4 uses
   %.not.i305 = icmp samesign ugt i64 %i.nm, %i.nl
   br i1 %.not.i305, label %bb.dx, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit309, !prof !18
@@ -1327,7 +1327,7 @@ bb.gi:                                            ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit.i: ; preds = %bb.gg
   %.sroa.02.0.copyload.i1.i = load i32, ptr %i.tk, align 1, !alias.scope !1143, !noalias !1140
   %i.tn = zext i32 %.sroa.02.0.copyload.i1.i to i64
-  %i.to = add nsw i64 %i.tl, -4                   ; 2 uses
+  %i.to = add i64 %i.tl, -4                       ; 2 uses
   %i.tp = shl nuw nsw i64 %i.tn, 2                ; 4 uses
   %.not.i339 = icmp samesign ugt i64 %i.tp, %i.to
   br i1 %.not.i339, label %bb.gj, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit343, !prof !18
@@ -1678,7 +1678,7 @@ bb.j:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit.i: ; preds = %bb.h
   %.sroa.02.0.copyload.i1.i = load i32, ptr %i.v, align 1, !alias.scope !1180, !noalias !1175
   %i.y = zext i32 %.sroa.02.0.copyload.i1.i to i64
-  %i.z = add nsw i64 %i.w, -4                     ; 2 uses
+  %i.z = add i64 %i.w, -4                         ; 2 uses
   %i.aa = shl nuw nsw i64 %i.y, 2                 ; 4 uses
   %.not.i7 = icmp samesign ugt i64 %i.aa, %i.z
   br i1 %.not.i7, label %bb.k, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit11, !prof !18
@@ -1845,7 +1845,7 @@ bb.j:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit: ; preds = %bb.h
   %.sroa.02.0.copyload.i1 = load i32, ptr %i.o, align 1, !alias.scope !1205, !noalias !1202
   %i.r = zext i32 %.sroa.02.0.copyload.i1 to i64
-  %i.s = add nsw i64 %i.p, -4                     ; 2 uses
+  %i.s = add i64 %i.p, -4                         ; 2 uses
   %i.t = shl nuw nsw i64 %i.r, 2                  ; 3 uses
   %.not.i11 = icmp samesign ugt i64 %i.t, %i.s
   br i1 %.not.i11, label %bb.k, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit15, !prof !18
@@ -1968,7 +1968,7 @@ bb.k:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit: ; preds = %bb.i
   %.sroa.02.0.copyload.i1 = load i32, ptr %i.u, align 1, !alias.scope !1229, !noalias !1224
   %i.x = zext i32 %.sroa.02.0.copyload.i1 to i64
-  %i.y = add nsw i64 %i.v, -4                     ; 2 uses
+  %i.y = add i64 %i.v, -4                         ; 2 uses
   %i.z = shl nuw nsw i64 %i.x, 2                  ; 4 uses
   %.not.i11 = icmp samesign ugt i64 %i.z, %i.y
   br i1 %.not.i11, label %bb.l, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit15, !prof !18
@@ -2109,7 +2109,7 @@ bb.j:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit: ; preds = %bb.h
   %.sroa.02.0.copyload.i1 = load i32, ptr %i.p, align 1, !alias.scope !1254, !noalias !1249
   %i.s = zext i32 %.sroa.02.0.copyload.i1 to i64
-  %i.t = add nsw i64 %i.q, -4                     ; 2 uses
+  %i.t = add i64 %i.q, -4                         ; 2 uses
   %i.u = shl nuw nsw i64 %i.s, 2                  ; 4 uses
   %.not.i11 = icmp samesign ugt i64 %i.u, %i.t
   br i1 %.not.i11, label %bb.k, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit15, !prof !18
@@ -2254,7 +2254,7 @@ bb.j:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4wire8read_u32.exit.i: ; preds = %bb.h
   %.sroa.02.0.copyload.i1.i = load i32, ptr %i.v, align 1, !alias.scope !1284, !noalias !1279
   %i.y = zext i32 %.sroa.02.0.copyload.i1.i to i64
-  %i.z = add nsw i64 %i.w, -4                     ; 2 uses
+  %i.z = add i64 %i.w, -4                         ; 2 uses
   %i.aa = shl nuw nsw i64 %i.y, 2                 ; 4 uses
   %.not.i7 = icmp samesign ugt i64 %i.aa, %i.z
   br i1 %.not.i7, label %bb.k, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh8split_atCsavRPklju9Q7_4bstr.exit11, !prof !18

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %.zext.i.i.i = zext nneg i32 %i.f to i64        ; 2 uses
   %.neg.i.i.i.i.i = mul nsw i64 %.zext.i.i.i, -1000
   %i.g = add nsw i64 %.neg.i.i.i.i.i, %i.e
-  %i.h = mul nsw i64 %i.g, 1000000
+  %i.h = mul nuw nsw i64 %i.g, 1000000
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   store i64 %.zext.i.i.i, ptr %3, align 8, !tbaa !147
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -567,7 +567,7 @@ bb.c:                                             ; preds = %bb.a
   %.zext.i.i.i = zext nneg i32 %i.e to i64        ; 2 uses
   %.neg.i.i.i.i.i = mul nsw i64 %.zext.i.i.i, -1000
   %i.f = add nsw i64 %.neg.i.i.i.i.i, %i.d
-  %i.g = mul nsw i64 %i.f, 1000000
+  %i.g = mul nuw nsw i64 %i.f, 1000000
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   store i64 %.zext.i.i.i, ptr %3, align 8, !tbaa !147
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8

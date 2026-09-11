@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not114, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ck = add i32 %.recomposed, 1000000
+  %i.ck = add nuw i32 %.recomposed, 1000000
   %i.cl = add i32 %i.ck, %i.bb
   %i.cm = udiv i32 %i.cl, 2000000
   %i.cn = trunc i32 %i.cm to i8
@@ -212,7 +212,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.t
 
 bb.l:                                             ; preds = %bb.j
-  %i.cq = add i32 %.recomposed, 100000
+  %i.cq = add nuw i32 %.recomposed, 100000
   %i.cr = add i32 %i.cq, %i.bb
   %i.cs = udiv i32 %i.cr, 200000                  ; 2 uses
   %narrow153 = mul nuw nsw i32 %i.cs, 103
@@ -255,7 +255,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not113, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.do = add i32 %.recomposed160, 10000
+  %i.do = add nuw i32 %.recomposed160, 10000
   %i.dp = add i32 %i.do, %i.ce
   %i.dq = udiv i32 %i.dp, 20000
   %i.dr = trunc i32 %i.dq to i8
@@ -265,7 +265,7 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.t
 
 bb.p:                                             ; preds = %bb.n
-  %i.du = add i32 %.recomposed160, 1000
+  %i.du = add nuw i32 %.recomposed160, 1000
   %i.dv = add i32 %i.du, %i.ce
   %i.dw = udiv i32 %i.dv, 2000                    ; 2 uses
   %narrow151 = mul nuw nsw i32 %i.dw, 103
@@ -303,7 +303,7 @@ bb.q:                                             ; preds = %bb.m
   br i1 %.not, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.er = add i32 %.recomposed161, 100
+  %i.er = add nuw i32 %.recomposed161, 100
   %i.es = add i32 %i.er, %i.di
   %i.et = udiv i32 %i.es, 200
   %i.eu = trunc i32 %i.et to i8
@@ -314,7 +314,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   %i.ex = getelementptr inbounds nuw i8, ptr %2, i64 10
-  %i.ey = add i32 %.recomposed161, 10
+  %i.ey = add nuw i32 %.recomposed161, 10
   %i.ez = add i32 %i.ey, %i.di
   %i.fa = udiv i32 %i.ez, 20                      ; 2 uses
   %i.fb = zext nneg i32 %i.fa to i64

@@ -205,7 +205,7 @@ bb.cj:                                            ; preds = %bb.cj, %.new
   %i.qm = icmp ult i64 %.val.i.i.i.i359.3, 384307168202282326
   call void @llvm.assume(i1 %i.qm)
   %..i.i.i.i.i.i.i.3 = call noundef i64 @llvm.umax.i64(i64 %.val.i.i.i.i359.3, i64 %..i.i.i.i.i.i.i.2) ; 3 uses
-  %i.qn = add nuw i64 %.sroa.04.0.i.i.i.i357, 4   ; 2 uses
+  %i.qn = add nuw nsw i64 %.sroa.04.0.i.i.i.i357, 4 ; 2 uses
   %niter2291.next.3 = add i64 %niter2291, 4       ; 2 uses
   %niter2291.ncmp.3 = icmp eq i64 %niter2291.next.3, %unroll_iter2290
   br i1 %niter2291.ncmp.3, label %.loopexit66.i.loopexit.unr-lcssa, label %bb.cj
@@ -231,7 +231,7 @@ bb.ck:                                            ; preds = %bb.ck, %.epil.prehe
   %i.qq = icmp ult i64 %.val.i.i.i.i359.epil, 384307168202282326
   call void @llvm.assume(i1 %i.qq)
   %..i.i.i.i.i.i.i.epil = call noundef i64 @llvm.umax.i64(i64 %.val.i.i.i.i359.epil, i64 %.sroa.02.0.i.i.i.i358.epil) ; 2 uses
-  %i.qr = add nuw i64 %.sroa.04.0.i.i.i.i357.epil, 1
+  %i.qr = add nuw nsw i64 %.sroa.04.0.i.i.i.i357.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter2286
   br i1 %epil.iter.cmp.not, label %.loopexit66.i, label %bb.ck, !llvm.loop !43753
