@@ -1,0 +1,30 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 06f350fd2179b..1b9a652eb899a 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -11754,6 +11754,12 @@ bool ScalarEvolution::isKnownPredicateViaNoOverflow(CmpPredicate Pred,
+     break;
+ 
+   case ICmpInst::ICMP_SGE:
++    // X s>= Y is equivalent to X s> Y - 1, and this holds trivially when Y - 1
++    // does not overflow. When it does overflow, it must be SINT_MAX, and the
++    // comparison would evaluate to false anyway.
++    if (MatchBinaryAddToConst(LHS, RHS, C1, C2, SCEV::FlagNSW) && C2.isZero() &&
++        C1.sgt(APInt::getAllOnes(C2.getBitWidth())))
++      return true;
+     std::swap(LHS, RHS);
+     [[fallthrough]];
+   case ICmpInst::ICMP_SLE:
+@@ -11774,6 +11780,12 @@ bool ScalarEvolution::isKnownPredicateViaNoOverflow(CmpPredicate Pred,
+     break;
+ 
+   case ICmpInst::ICMP_UGE:
++    // X u>= Y is equivalent to X u> Y - 1, and this holds trivially when Y - 1
++    // does not overflow. When it does overflow, it must be UINT_MAX, and the
++    // comparison would evaluate to false anyway.
++    if (MatchBinaryAddToConst(LHS, RHS, C1, C2, SCEV::FlagNUW) && C2.isZero() &&
++        C1.ugt(APInt::getAllOnes(C2.getBitWidth())))
++      return true;
+     std::swap(LHS, RHS);
+     [[fallthrough]];
+   case ICmpInst::ICMP_ULE:
