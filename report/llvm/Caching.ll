@@ -202,7 +202,6 @@ _ZN4llvm5ErrorD2Ev.exit7.i:                       ; preds = %bb.e, %_ZN4llvm5Err
   call fastcc void @"_ZN4llvm15handleErrorImplIZZZNS_10localCacheERKNS_5TwineES3_S3_St8functionIFvjS3_St10unique_ptrINS_12MemoryBufferESt14default_deleteIS6_EEEEENK3$_0clEjNS_9StringRefES3_EN11CacheStream6commitEvEUlRKNS_7ECErrorEE_JEEENS_5ErrorES5_INS_13ErrorInfoBaseES7_ISK_EEOT_DpOT0_"(ptr dead_on_unwind noalias writable align 8 %4, ptr nofree noundef align 8 dereferenceable(8) %5, ptr noundef nonnull readonly align 8 dereferenceable(16) %21), !noalias !278
   call void @_ZN4llvm9ErrorList4joinENS_5ErrorES1_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Error") align 8 %2, ptr nofree noundef nonnull align 8 dereferenceable(8) %3, ptr nofree noundef nonnull align 8 dereferenceable(8) %4), !noalias !278
   %i.bo = load ptr, ptr %2, align 8, !tbaa !44, !noalias !278 ; 2 uses
-  store ptr %i.bo, ptr %20, align 8, !tbaa !44, !alias.scope !278
   store ptr null, ptr %2, align 8, !tbaa !44, !noalias !278
   %i.bp = load ptr, ptr %4, align 8, !tbaa !44, !noalias !278 ; 3 uses
   %i.bq = icmp eq ptr %i.bp, null
@@ -243,7 +242,7 @@ _ZN4llvm5ErrorD2Ev.exit9.i:                       ; preds = %bb.g, %_ZNSt10uniqu
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14, !noalias !278
   %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.016.028.i, i64 8 ; 2 uses
   %.not26.i = icmp eq ptr %i.cd, %i.bl
-  br i1 %.not26.i, label %_ZN4llvm5ErrorD2Ev.exit50.sink.split, label %_ZN4llvm5ErrorD2Ev.exit7.i
+  br i1 %.not26.i, label %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i14.i.loopexit, label %_ZN4llvm5ErrorD2Ev.exit7.i
 
 bb.h:                                             ; preds = %bb.d
   %i.ce = ptrtoint ptr %i.bc to i64
@@ -253,8 +252,12 @@ bb.h:                                             ; preds = %bb.d
   %.not.i10.i = icmp eq ptr %i.cf, null
   br i1 %.not.i10.i, label %_ZN4llvm5ErrorD2Ev.exit50, label %_ZN4llvm5ErrorD2Ev.exit50.sink.split
 
-_ZN4llvm5ErrorD2Ev.exit50.sink.split:             ; preds = %_ZN4llvm5ErrorD2Ev.exit9.i, %bb.e, %bb.h
-  %.sink110 = phi ptr [ %i.cf, %bb.h ], [ %i.bc, %bb.e ], [ %i.bc, %_ZN4llvm5ErrorD2Ev.exit9.i ] ; 2 uses
+_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i14.i.loopexit: ; preds = %_ZN4llvm5ErrorD2Ev.exit9.i
+  store ptr %i.bo, ptr %20, align 8
+  br label %_ZN4llvm5ErrorD2Ev.exit50.sink.split
+
+_ZN4llvm5ErrorD2Ev.exit50.sink.split:             ; preds = %bb.e, %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i14.i.loopexit, %bb.h
+  %.sink110 = phi ptr [ %i.cf, %bb.h ], [ %i.bc, %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i14.i.loopexit ], [ %i.bc, %bb.e ] ; 2 uses
   %i.cg = load ptr, ptr %.sink110, align 8, !tbaa !40
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
   %i.ci = load ptr, ptr %i.ch, align 8

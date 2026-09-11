@@ -205,15 +205,13 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not, label %.thread, label %bb.e, !llvm.loop !12176
 
 .thread:                                          ; preds = %bb.ah, %bb.m, %bb.l
-  %i.gl = phi ptr [ %i.fw, %bb.ah ], [ %i.t, %bb.m ], [ %i.t, %bb.l ] ; 2 uses
-  %i.gm = phi ptr [ %i.fx, %bb.ah ], [ %i.u, %bb.m ], [ %i.u, %bb.l ] ; 2 uses
-  %.sroa.0204.0.lcssa.ph = phi ptr [ %.sroa.0204.4, %bb.ah ], [ %.sroa.0204.0267, %bb.m ], [ %.sroa.0204.0267, %bb.l ] ; 3 uses
-  %.sroa.0210.0.lcssa.ph = phi ptr [ %.sroa.0210.1, %bb.ah ], [ %.sroa.0210.0268, %bb.m ], [ %.sroa.0210.0268, %bb.l ] ; 2 uses
-  %.sroa.0214.0.lcssa.ph = phi ptr [ %.sroa.0214.2, %bb.ah ], [ %.sroa.0214.0269, %bb.m ], [ %.sroa.0214.0269, %bb.l ] ; 2 uses
-  %.0239.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0239270, %bb.m ], [ %.0239270, %bb.l ] ; 2 uses
-  %.058.lcssa.ph = phi i8 [ %.159, %bb.ah ], [ 1, %bb.m ], [ %.058272, %bb.l ]
-  %27 = trunc nuw i8 %.058.lcssa.ph to i1
-  %28 = select i1 %27, ptr %.sroa.0210.0.lcssa.ph, ptr %.sroa.0204.0.lcssa.ph ; 2 uses
+  %i.gl = phi ptr [ %i.fw, %bb.ah ], [ %i.t, %bb.l ], [ %i.t, %bb.m ] ; 2 uses
+  %i.gm = phi ptr [ %i.fx, %bb.ah ], [ %i.u, %bb.l ], [ %i.u, %bb.m ] ; 2 uses
+  %.sroa.0204.0.lcssa.ph = phi ptr [ %.sroa.0204.4, %bb.ah ], [ %.sroa.0204.0267, %bb.l ], [ %.sroa.0204.0267, %bb.m ] ; 2 uses
+  %.sroa.0210.0.lcssa.ph = phi ptr [ %.sroa.0210.1, %bb.ah ], [ %.sroa.0210.0268, %bb.l ], [ %.sroa.0210.0268, %bb.m ] ; 3 uses
+  %.sroa.0214.0.lcssa.ph = phi ptr [ %.sroa.0214.2, %bb.ah ], [ %.sroa.0214.0269, %bb.l ], [ %.sroa.0214.0269, %bb.m ] ; 2 uses
+  %.0239.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0239270, %bb.l ], [ %.0239270, %bb.m ] ; 2 uses
+  %.058.lcssa.ph = phi i8 [ %.159, %bb.ah ], [ %.058272, %bb.l ], [ 1, %bb.m ] ; 2 uses
   %.not4.i.i105 = icmp eq ptr %i.gm, %i.gl
   br i1 %.not4.i.i105, label %_ZN5boost7movelib7move_opclIPSt4pairIiiENS_9container22stable_vector_iteratorIS5_Lb0EEEEET0_NS0_9forward_tET_SB_S9_.exit109, label %.lr.ph.i.i106
 
@@ -235,10 +233,11 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not.i.i108, label %_ZN5boost7movelib7move_opclIPSt4pairIiiENS_9container22stable_vector_iteratorIS5_Lb0EEEEET0_NS0_9forward_tET_SB_S9_.exit109, label %.lr.ph.i.i106, !llvm.loop !149
 
 _ZN5boost7movelib7move_opclIPSt4pairIiiENS_9container22stable_vector_iteratorIS5_Lb0EEEEET0_NS0_9forward_tET_SB_S9_.exit109: ; preds = %.lr.ph.i.i106, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit75, %.thread
-  %.058.lcssa331 = phi ptr [ %i.h, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit75 ], [ %28, %.thread ], [ %28, %.lr.ph.i.i106 ]
+  %.058.lcssa348 = phi i8 [ 1, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit75 ], [ %.058.lcssa.ph, %.thread ], [ %.058.lcssa.ph, %.lr.ph.i.i106 ]
   %.0239.lcssa330 = phi i64 [ 0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit75 ], [ %.0239.lcssa.ph, %.thread ], [ %.0239.lcssa.ph, %.lr.ph.i.i106 ] ; 2 uses
   %.sroa.0214.0.lcssa329 = phi ptr [ %.sroa.0214.5, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit75 ], [ %.sroa.0214.0.lcssa.ph, %.thread ], [ %.sroa.0214.0.lcssa.ph, %.lr.ph.i.i106 ]
-  %.sroa.0204.0.lcssa328 = phi ptr [ %.sroa.0204.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit75 ], [ %.sroa.0204.0.lcssa.ph, %.thread ], [ %.sroa.0204.0.lcssa.ph, %.lr.ph.i.i106 ]
+  %.sroa.0210.0.lcssa345 = phi ptr [ %i.h, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit75 ], [ %.sroa.0210.0.lcssa.ph, %.thread ], [ %.sroa.0210.0.lcssa.ph, %.lr.ph.i.i106 ]
+  %.sroa.0204.0.lcssa328 = phi ptr [ %.sroa.0204.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit75 ], [ %.sroa.0204.0.lcssa.ph, %.thread ], [ %.sroa.0204.0.lcssa.ph, %.lr.ph.i.i106 ] ; 2 uses
   %.not.i.i110 = icmp eq i64 %6, 0
   br i1 %.not.i.i110, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit113, label %bb.ai
 
@@ -307,6 +306,8 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit119
   %i.hs = load ptr, ptr %21, align 8, !tbaa !478, !noalias !12227
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #23
   %i.ht = load ptr, ptr %20, align 8, !tbaa !387  ; 2 uses
+  %27 = trunc nuw i8 %.058.lcssa348 to i1
+  %.sroa.speculated209 = select i1 %27, ptr %.sroa.0210.0.lcssa345, ptr %.sroa.0204.0.lcssa328
   %i.hu = load ptr, ptr %i.a, align 8, !tbaa !331 ; 3 uses
   %.not15.i = icmp eq ptr %i.hu, %i.ht
   br i1 %.not15.i, label %_ZN5boost7movelib25op_merge_with_left_placedINS_9container3dtl23flat_tree_value_compareISt4lessIiESt4pairIiiENS3_9select1stIiEEEENS0_7move_opEPS8_NS2_22stable_vector_iteratorISD_Lb0EEEEEvT2_SG_SG_T1_SH_T_T0_.exit, label %.lr.ph.i120
@@ -315,7 +316,7 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit119
   %.sroa.0127.0 = phi ptr [ %.sroa.0127.1, %bb.ao ], [ %.sroa.0204.0.lcssa328, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit119 ] ; 2 uses
   %.sroa.0.0 = phi ptr [ %.sroa.0.1, %bb.ao ], [ %i.hs, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit119 ] ; 3 uses
   %.016.i = phi ptr [ %.1.i121, %bb.ao ], [ %i.ht, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit119 ] ; 4 uses
-  %i.hv = icmp eq ptr %.058.lcssa331, %.sroa.0127.0
+  %i.hv = icmp eq ptr %.sroa.speculated209, %.sroa.0127.0
   br i1 %i.hv, label %.lr.ph.i.i.i, label %bb.al
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i120, %.lr.ph.i.i.i
@@ -718,15 +719,13 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not, label %.thread, label %bb.e, !llvm.loop !12270
 
 .thread:                                          ; preds = %bb.ah, %bb.m, %bb.l
-  %i.gz = phi ptr [ %i.gk, %bb.ah ], [ %i.s, %bb.m ], [ %i.s, %bb.l ] ; 2 uses
-  %i.ha = phi ptr [ %i.gl, %bb.ah ], [ %i.t, %bb.m ], [ %i.t, %bb.l ] ; 2 uses
-  %.sroa.0220.0.lcssa.ph = phi ptr [ %.sroa.0220.4, %bb.ah ], [ %.sroa.0220.0284, %bb.m ], [ %.sroa.0220.0284, %bb.l ] ; 3 uses
-  %.sroa.0226.0.lcssa.ph = phi ptr [ %.sroa.0226.1, %bb.ah ], [ %.sroa.0226.0285, %bb.m ], [ %.sroa.0226.0285, %bb.l ] ; 2 uses
-  %.sroa.0230.0.lcssa.ph = phi ptr [ %.sroa.0230.2, %bb.ah ], [ %.sroa.0230.0286, %bb.m ], [ %.sroa.0230.0286, %bb.l ] ; 2 uses
-  %.0255.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0255287, %bb.m ], [ %.0255287, %bb.l ] ; 2 uses
-  %.052.lcssa.ph = phi i8 [ %.153, %bb.ah ], [ 1, %bb.m ], [ %.052289, %bb.l ]
-  %29 = trunc nuw i8 %.052.lcssa.ph to i1
-  %30 = select i1 %29, ptr %.sroa.0226.0.lcssa.ph, ptr %.sroa.0220.0.lcssa.ph ; 2 uses
+  %i.gz = phi ptr [ %i.gk, %bb.ah ], [ %i.s, %bb.l ], [ %i.s, %bb.m ] ; 2 uses
+  %i.ha = phi ptr [ %i.gl, %bb.ah ], [ %i.t, %bb.l ], [ %i.t, %bb.m ] ; 2 uses
+  %.sroa.0220.0.lcssa.ph = phi ptr [ %.sroa.0220.4, %bb.ah ], [ %.sroa.0220.0284, %bb.l ], [ %.sroa.0220.0284, %bb.m ] ; 2 uses
+  %.sroa.0226.0.lcssa.ph = phi ptr [ %.sroa.0226.1, %bb.ah ], [ %.sroa.0226.0285, %bb.l ], [ %.sroa.0226.0285, %bb.m ] ; 3 uses
+  %.sroa.0230.0.lcssa.ph = phi ptr [ %.sroa.0230.2, %bb.ah ], [ %.sroa.0230.0286, %bb.l ], [ %.sroa.0230.0286, %bb.m ] ; 2 uses
+  %.0255.lcssa.ph = phi i64 [ 0, %bb.ah ], [ %.0255287, %bb.l ], [ %.0255287, %bb.m ] ; 2 uses
+  %.052.lcssa.ph = phi i8 [ %.153, %bb.ah ], [ %.052289, %bb.l ], [ 1, %bb.m ] ; 2 uses
   %.not1.i.i96 = icmp eq ptr %i.ha, %i.gz
   br i1 %.not1.i.i96, label %_ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPSt4pairIiiELb0EEES8_EET0_NS0_9forward_tET_SB_S9_.exit100, label %.lr.ph.i.i97
 
@@ -755,10 +754,11 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br i1 %.not.i.i99, label %_ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPSt4pairIiiELb0EEES8_EET0_NS0_9forward_tET_SB_S9_.exit100, label %.lr.ph.i.i97, !llvm.loop !157
 
 _ZN5boost7movelib7swap_opclINS_9container22stable_vector_iteratorIPSt4pairIiiELb0EEES8_EET0_NS0_9forward_tET_SB_S9_.exit100: ; preds = %.lr.ph.i.i97, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit69, %.thread
-  %.052.lcssa351 = phi ptr [ %i.g, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit69 ], [ %30, %.thread ], [ %30, %.lr.ph.i.i97 ]
+  %.052.lcssa368 = phi i8 [ 1, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit69 ], [ %.052.lcssa.ph, %.thread ], [ %.052.lcssa.ph, %.lr.ph.i.i97 ]
   %.0255.lcssa350 = phi i64 [ 0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit69 ], [ %.0255.lcssa.ph, %.thread ], [ %.0255.lcssa.ph, %.lr.ph.i.i97 ] ; 2 uses
   %.sroa.0230.0.lcssa349 = phi ptr [ %.sroa.0230.5, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit69 ], [ %.sroa.0230.0.lcssa.ph, %.thread ], [ %.sroa.0230.0.lcssa.ph, %.lr.ph.i.i97 ]
-  %.sroa.0220.0.lcssa348 = phi ptr [ %.sroa.0220.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit69 ], [ %.sroa.0220.0.lcssa.ph, %.thread ], [ %.sroa.0220.0.lcssa.ph, %.lr.ph.i.i97 ]
+  %.sroa.0226.0.lcssa365 = phi ptr [ %i.g, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit69 ], [ %.sroa.0226.0.lcssa.ph, %.thread ], [ %.sroa.0226.0.lcssa.ph, %.lr.ph.i.i97 ]
+  %.sroa.0220.0.lcssa348 = phi ptr [ %.sroa.0220.3, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit69 ], [ %.sroa.0220.0.lcssa.ph, %.thread ], [ %.sroa.0220.0.lcssa.ph, %.lr.ph.i.i97 ] ; 2 uses
   %.not.i.i101 = icmp eq i64 %6, 0                ; 2 uses
   br i1 %.not.i.i101, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit104, label %bb.ai
 
@@ -845,6 +845,8 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit115
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #23
   %i.iu = load ptr, ptr %22, align 8, !tbaa !478, !noalias !12337 ; 3 uses
   store ptr %i.iu, ptr %19, align 8, !tbaa !478
+  %29 = trunc nuw i8 %.052.lcssa368 to i1
+  %.sroa.speculated225 = select i1 %29, ptr %.sroa.0226.0.lcssa365, ptr %.sroa.0220.0.lcssa348
   %i.iv = load ptr, ptr %18, align 8, !tbaa !478  ; 3 uses
   %.not12.i = icmp eq ptr %i.iv, %i.iu
   br i1 %.not12.i, label %_ZN5boost7movelib25op_merge_with_left_placedINS_9container3dtl23flat_tree_value_compareISt4lessIiESt4pairIiiENS3_9select1stIiEEEENS0_7swap_opENS2_22stable_vector_iteratorIPS8_Lb0EEESF_EEvT2_SG_SG_T1_SH_T_T0_.exit, label %.lr.ph.i116
@@ -853,7 +855,7 @@ _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit115
   %.sroa.0126.0 = phi ptr [ %.sroa.0126.1, %bb.ap ], [ %.sroa.0220.0.lcssa348, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit115 ] ; 2 uses
   %.sroa.0123.0 = phi ptr [ %i.ka, %bb.ap ], [ %i.it, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit115 ] ; 2 uses
   %i.iw = phi ptr [ %i.kk, %bb.ap ], [ %i.iu, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPSt4pairIiiELb0EEEl.exit115 ] ; 2 uses
-  %i.ix = icmp eq ptr %.052.lcssa351, %.sroa.0126.0
+  %i.ix = icmp eq ptr %.sroa.speculated225, %.sroa.0126.0
   br i1 %i.ix, label %.lr.ph.i.i.i, label %bb.am
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i116, %.lr.ph.i.i.i
@@ -1256,18 +1258,16 @@ bb.bf:                                            ; preds = %_ZN5boost9container
   br i1 %.not, label %.thread, label %bb.k, !llvm.loop !21665
 
 .thread:                                          ; preds = %bb.bf, %bb.w, %bb.v
-  %i.mc = phi ptr [ %i.kx, %bb.bf ], [ %i.ea, %bb.w ], [ %i.ea, %bb.v ] ; 2 uses
-  %i.md = phi ptr [ %i.ky, %bb.bf ], [ %i.dz, %bb.w ], [ %i.dz, %bb.v ] ; 2 uses
-  %.sroa.9.0.lcssa.ph = phi ptr [ %.sroa.9.4, %bb.bf ], [ %.sroa.9.0398, %bb.w ], [ %.sroa.9.0398, %bb.v ] ; 2 uses
-  %.sroa.0304.0.lcssa.ph = phi ptr [ %.sroa.0304.3, %bb.bf ], [ %.sroa.0304.0399, %bb.w ], [ %.sroa.0304.0399, %bb.v ] ; 3 uses
-  %.sroa.0316.0.lcssa.ph = phi ptr [ %.sroa.0316.1, %bb.bf ], [ %.sroa.0316.0400, %bb.w ], [ %.sroa.0316.0400, %bb.v ] ; 2 uses
-  %.sroa.10320.0.lcssa.ph = phi ptr [ %.sroa.10320.1, %bb.bf ], [ %.sroa.10320.0401, %bb.w ], [ %.sroa.10320.0401, %bb.v ] ; 2 uses
-  %.sroa.0324.0.lcssa.ph = phi ptr [ %.sroa.0324.2, %bb.bf ], [ %.sroa.0324.0402, %bb.w ], [ %.sroa.0324.0402, %bb.v ] ; 2 uses
-  %.sroa.12.0.lcssa.ph = phi ptr [ %.sroa.12.2, %bb.bf ], [ %.sroa.12.0403, %bb.w ], [ %.sroa.12.0403, %bb.v ] ; 2 uses
-  %.0349.lcssa.ph = phi i64 [ 0, %bb.bf ], [ %.0349404, %bb.w ], [ %.0349404, %bb.v ] ; 2 uses
-  %.058.lcssa.ph = phi i8 [ %.159, %bb.bf ], [ 1, %bb.w ], [ %.058406, %bb.v ]
-  %29 = trunc nuw i8 %.058.lcssa.ph to i1
-  %30 = select i1 %29, ptr %.sroa.0316.0.lcssa.ph, ptr %.sroa.0304.0.lcssa.ph ; 2 uses
+  %i.mc = phi ptr [ %i.kx, %bb.bf ], [ %i.ea, %bb.v ], [ %i.ea, %bb.w ] ; 2 uses
+  %i.md = phi ptr [ %i.ky, %bb.bf ], [ %i.dz, %bb.v ], [ %i.dz, %bb.w ] ; 2 uses
+  %.sroa.9.0.lcssa.ph = phi ptr [ %.sroa.9.4, %bb.bf ], [ %.sroa.9.0398, %bb.v ], [ %.sroa.9.0398, %bb.w ] ; 2 uses
+  %.sroa.0304.0.lcssa.ph = phi ptr [ %.sroa.0304.3, %bb.bf ], [ %.sroa.0304.0399, %bb.v ], [ %.sroa.0304.0399, %bb.w ] ; 2 uses
+  %.sroa.0316.0.lcssa.ph = phi ptr [ %.sroa.0316.1, %bb.bf ], [ %.sroa.0316.0400, %bb.v ], [ %.sroa.0316.0400, %bb.w ] ; 3 uses
+  %.sroa.10320.0.lcssa.ph = phi ptr [ %.sroa.10320.1, %bb.bf ], [ %.sroa.10320.0401, %bb.v ], [ %.sroa.10320.0401, %bb.w ] ; 2 uses
+  %.sroa.0324.0.lcssa.ph = phi ptr [ %.sroa.0324.2, %bb.bf ], [ %.sroa.0324.0402, %bb.v ], [ %.sroa.0324.0402, %bb.w ] ; 2 uses
+  %.sroa.12.0.lcssa.ph = phi ptr [ %.sroa.12.2, %bb.bf ], [ %.sroa.12.0403, %bb.v ], [ %.sroa.12.0403, %bb.w ] ; 2 uses
+  %.0349.lcssa.ph = phi i64 [ 0, %bb.bf ], [ %.0349404, %bb.v ], [ %.0349404, %bb.w ] ; 2 uses
+  %.058.lcssa.ph = phi i8 [ %.159, %bb.bf ], [ %.058406, %bb.v ], [ 1, %bb.w ] ; 2 uses
   %.not4.i.i130 = icmp eq ptr %i.md, %i.mc
   br i1 %.not4.i.i130, label %_ZN5boost7movelib7move_opclIPSt4pairIiiENS_9container14deque_iteratorIS5_Lb0ELj0ELj0EmEEEET0_NS0_9forward_tET_SB_S9_.exit137, label %.lr.ph.i.preheader.i131
 
@@ -1305,11 +1305,12 @@ _ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135: 
   br i1 %.not.i.i136, label %_ZN5boost7movelib7move_opclIPSt4pairIiiENS_9container14deque_iteratorIS5_Lb0ELj0ELj0EmEEEET0_NS0_9forward_tET_SB_S9_.exit137, label %.lr.ph.i.i133, !llvm.loop !226
 
 _ZN5boost7movelib7move_opclIPSt4pairIiiENS_9container14deque_iteratorIS5_Lb0ELj0ELj0EmEEEET0_NS0_9forward_tET_SB_S9_.exit137: ; preds = %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81, %.thread
-  %.058.lcssa509 = phi ptr [ %i.w, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %30, %.thread ], [ %30, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ]
+  %.058.lcssa530 = phi i8 [ 1, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %.058.lcssa.ph, %.thread ], [ %.058.lcssa.ph, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ]
   %.0349.lcssa508 = phi i64 [ 0, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %.0349.lcssa.ph, %.thread ], [ %.0349.lcssa.ph, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ] ; 2 uses
   %.sroa.12.0.lcssa507 = phi ptr [ %.sroa.6.1.i, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %.sroa.12.0.lcssa.ph, %.thread ], [ %.sroa.12.0.lcssa.ph, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ]
   %.sroa.0324.0.lcssa506 = phi ptr [ %.sroa.0.0.i, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %.sroa.0324.0.lcssa.ph, %.thread ], [ %.sroa.0324.0.lcssa.ph, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ]
-  %.sroa.0304.0.lcssa505 = phi ptr [ %.sroa.0.0.i75, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %.sroa.0304.0.lcssa.ph, %.thread ], [ %.sroa.0304.0.lcssa.ph, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ]
+  %.sroa.0316.0.lcssa526 = phi ptr [ %i.w, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %.sroa.0316.0.lcssa.ph, %.thread ], [ %.sroa.0316.0.lcssa.ph, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ]
+  %.sroa.0304.0.lcssa505 = phi ptr [ %.sroa.0.0.i75, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %.sroa.0304.0.lcssa.ph, %.thread ], [ %.sroa.0304.0.lcssa.ph, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ] ; 2 uses
   %.sroa.9.0.lcssa504 = phi ptr [ %.sroa.6.1.i74, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit81 ], [ %.sroa.9.0.lcssa.ph, %.thread ], [ %.sroa.9.0.lcssa.ph, %_ZN5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEppEv.exit.i.i135 ]
   %.not.i.i138 = icmp eq i64 %6, 0
   br i1 %.not.i.i138, label %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit147, label %bb.bh
@@ -1481,6 +1482,8 @@ _ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit162: ; p
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #23
   %i.qa = load ptr, ptr %22, align 8, !tbaa !387  ; 3 uses
   store ptr %i.qa, ptr %i.b, align 8, !tbaa !331
+  %29 = trunc nuw i8 %.058.lcssa530 to i1
+  %.sroa.speculated315 = select i1 %29, ptr %.sroa.0316.0.lcssa526, ptr %.sroa.0304.0.lcssa505
   %i.qb = load ptr, ptr %i.a, align 8, !tbaa !331 ; 3 uses
   %.not22.i = icmp eq ptr %i.qb, %i.qa
   br i1 %.not22.i, label %_ZN5boost7movelib25op_merge_with_left_placedINS_9container3dtl23flat_tree_value_compareISt4lessIiESt4pairIiiENS3_9select1stIiEEEENS0_7move_opEPS8_NS2_14deque_iteratorISD_Lb0ELj0ELj0EmEEEEvT2_SG_SG_T1_SH_T_T0_.exit, label %.lr.ph.i163
@@ -1491,7 +1494,7 @@ _ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit162: ; p
   %.sroa.6.0 = phi ptr [ %.sroa.6.2, %bb.cd ], [ %i.pz, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit162 ] ; 8 uses
   %.sroa.0.0 = phi ptr [ %.sroa.0.1, %bb.cd ], [ %i.px, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit162 ] ; 5 uses
   %.023.i = phi ptr [ %.1.i164, %bb.cd ], [ %i.qa, %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEplEl.exit162 ] ; 4 uses
-  %i.qc = icmp eq ptr %.058.lcssa509, %.sroa.0172.0
+  %i.qc = icmp eq ptr %.sroa.speculated315, %.sroa.0172.0
   br i1 %i.qc, label %.lr.ph.i.preheader.i.i, label %bb.bt
 
 .lr.ph.i.preheader.i.i:                           ; preds = %.lr.ph.i163
@@ -1894,7 +1897,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEP
   br i1 %.not95, label %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEENS_13move_iteratorIPS5_EEE17copy_n_and_updateIS8_EEvRS6_T_m.exit41.i, label %bb.s
 
 bb.s:                                             ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %1, ptr nonnull align 1 %2, i64 %i.ar, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull align 1 %2, i64 %i.ar, i1 false)
   br label %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEENS_13move_iteratorIPS5_EEE17copy_n_and_updateIS8_EEvRS6_T_m.exit41.i
 
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEENS_13move_iteratorIPS5_EEE17copy_n_and_updateIS8_EEvRS6_T_m.exit41.i: ; preds = %bb.r, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i, %bb.s
@@ -1974,7 +1977,7 @@ bb.aa:                                            ; preds = %_ZN5boost9container
   %i.bs = shl i64 %i.bq, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.br, ptr nonnull align 1 %2, i64 %i.bs, i1 false)
   %i.bt = getelementptr inbounds [8 x i8], ptr %2, i64 %i.bq
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.z, ptr nonnull align 1 %i.bt, i64 %i.aj, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.z, ptr nonnull align 1 %i.bt, i64 %i.aj, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_NS_13move_iteratorIS6_EEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit
 
 _ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_NS_13move_iteratorIS6_EEEEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit: ; preds = %bb.w, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEENS_13move_iteratorIPS5_EEE31uninitialized_copy_n_and_updateIS8_EEvRS6_T_m.exit.i.thread, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i58.thread, %_ZN5boost9container4moveIPSt4pairIiiES4_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i, %bb.y, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i58, %bb.aa
@@ -2377,7 +2380,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEP
   br i1 %.not94, label %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPKS5_E17copy_n_and_updateIPS5_EEvRS6_T_m.exit40.i, label %bb.s
 
 bb.s:                                             ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %1, ptr nonnull align 1 %2, i64 %i.ar, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull align 1 %2, i64 %i.ar, i1 false)
   br label %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPKS5_E17copy_n_and_updateIPS5_EEvRS6_T_m.exit40.i
 
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPKS5_E17copy_n_and_updateIPS5_EEvRS6_T_m.exit40.i: ; preds = %bb.r, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i, %bb.s
@@ -2457,7 +2460,7 @@ bb.aa:                                            ; preds = %_ZN5boost9container
   %i.bs = shl i64 %i.bq, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.br, ptr nonnull align 1 %2, i64 %i.bs, i1 false)
   %i.bt = getelementptr inbounds [8 x i8], ptr %2, i64 %i.bq
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.z, ptr nonnull align 1 %i.bt, i64 %i.aj, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.z, ptr nonnull align 1 %i.bt, i64 %i.aj, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_PKS4_EEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit
 
 _ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_PKS4_EEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SJ_mSE_.exit: ; preds = %bb.w, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPKS5_E31uninitialized_copy_n_and_updateIPS5_EEvRS6_T_m.exit.i.thread, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i57.thread, %_ZN5boost9container4moveIPSt4pairIiiES4_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i, %bb.y, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i57, %bb.aa
@@ -2860,7 +2863,7 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEP
   br i1 %.not94, label %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPS5_E17copy_n_and_updateIS7_EEvRS6_T_m.exit40.i, label %bb.s
 
 bb.s:                                             ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %1, ptr nonnull align 1 %2, i64 %i.ar, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull align 1 %2, i64 %i.ar, i1 false)
   br label %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPS5_E17copy_n_and_updateIS7_EEvRS6_T_m.exit40.i
 
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPS5_E17copy_n_and_updateIS7_EEvRS6_T_m.exit40.i: ; preds = %bb.r, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i, %bb.s
@@ -2940,7 +2943,7 @@ bb.aa:                                            ; preds = %_ZN5boost9container
   %i.bs = shl i64 %i.bq, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.br, ptr nonnull align 1 %2, i64 %i.bs, i1 false)
   %i.bt = getelementptr inbounds [8 x i8], ptr %2, i64 %i.bq
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.z, ptr nonnull align 1 %i.bt, i64 %i.aj, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.z, ptr nonnull align 1 %i.bt, i64 %i.aj, i1 false)
   br label %_ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_S6_EEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SH_mSC_.exit
 
 _ZN5boost9container48expand_backward_and_insert_nonempty_middle_allocINS0_13new_allocatorISt4pairIiiEEEPS4_NS0_3dtl18insert_range_proxyIS5_S6_EEEENS_11move_detail12disable_if_cIXsr3dtl21is_single_value_proxyIT1_EE5valueEvE4typeERT_T0_SH_mSC_.exit: ; preds = %bb.w, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorISt4pairIiiEEEPS5_E31uninitialized_copy_n_and_updateIS7_EEvRS6_T_m.exit.i.thread, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i57.thread, %_ZN5boost9container4moveIPSt4pairIiiES4_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i, %bb.y, %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorISt4pairIiiEEEPS4_S6_EENS0_3dtl40enable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit.i57, %bb.aa

@@ -205,6 +205,7 @@ bb.o:                                             ; preds = %bb.n
   %wide.trip.count565 = zext nneg i32 %i.h to i64 ; 2 uses
   %i.df = insertelement <2 x float> poison, float %i.da, i64 0
   %i.dg = shufflevector <2 x float> %i.df, <2 x float> poison, <2 x i32> zeroinitializer
+  %.promoted625 = load ptr, ptr %i.de, align 8, !tbaa !113
   br label %.backedge
 
 .lr.ph549:                                        ; preds = %bb.r
@@ -213,6 +214,7 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.t
 
 .backedge:                                        ; preds = %.backedge.backedge, %.lr.ph543
+  %6 = phi ptr [ %.promoted625, %.lr.ph543 ], [ %7, %.backedge.backedge ] ; 13 uses
   %indvars.iv562 = phi i64 [ 0, %.lr.ph543 ], [ %indvars.iv.next563, %.backedge.backedge ] ; 2 uses
   %.0433540 = phi i32 [ %i.dc, %.lr.ph543 ], [ %i.dm, %.backedge.backedge ] ; 3 uses
   %indvars.iv.next563 = add nuw nsw i64 %indvars.iv562, 1 ; 5 uses
@@ -259,7 +261,6 @@ bb.q:                                             ; preds = %bb.p, %.backedge
   %i.en = fsub <2 x float> %i.em, %i.ee
   store <2 x float> %i.en, ptr %i.el, align 4, !tbaa !29
   %i.eo = trunc i32 %i.dm to i16                  ; 4 uses
-  %6 = load ptr, ptr %i.de, align 8, !tbaa !113   ; 13 uses
   store i16 %i.eo, ptr %6, align 2, !tbaa !243
   %i.ep = trunc i32 %.0433540 to i16              ; 5 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %6, i64 2
@@ -289,12 +290,13 @@ bb.r:                                             ; preds = %bb.q
   %i.fe = getelementptr inbounds nuw i8, ptr %6, i64 22
   %i.ff = extractelement <4 x i16> %i.fa, i64 2
   store i16 %i.ff, ptr %i.fe, align 2, !tbaa !243
-  %i.fg = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %i.fg = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   store ptr %i.fg, ptr %i.de, align 8, !tbaa !113
   %exitcond566.not = icmp eq i64 %indvars.iv.next563, %wide.trip.count565
   br i1 %exitcond566.not, label %.lr.ph549, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.r, %.thread609
+  %7 = phi ptr [ %i.fg, %bb.r ], [ %i.fl, %.thread609 ]
   br label %.backedge, !llvm.loop !566
 
 .thread609:                                       ; preds = %bb.q
@@ -306,7 +308,7 @@ bb.r:                                             ; preds = %bb.q
   store i16 %i.fj, ptr %i.fk, align 2, !tbaa !243
   store i16 %i.fi, ptr %i.es, align 2, !tbaa !243
   store i16 %i.eo, ptr %i.fh, align 2, !tbaa !243
-  %i.fl = getelementptr inbounds nuw i8, ptr %6, i64 12
+  %i.fl = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
   store ptr %i.fl, ptr %i.de, align 8, !tbaa !113
   %exitcond566.not611 = icmp eq i64 %indvars.iv.next563, %wide.trip.count565
   br i1 %exitcond566.not611, label %.lr.ph547, label %.backedge.backedge

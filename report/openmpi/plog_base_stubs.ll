@@ -204,8 +204,8 @@ bb.ab:                                            ; preds = %bb.y, %bb.z
   %.2282 = phi i8 [ %.2, %.loopexit195 ], [ %.2281, %.loopexit193 ]
   %.0128.lcssa = phi i1 [ true, %.loopexit195 ], [ %.1129, %.loopexit193 ]
   %i.dy = getelementptr inbounds nuw i8, ptr %7, i64 120 ; 4 uses
-  %i.dz = getelementptr inbounds nuw i8, ptr %7, i64 240 ; 5 uses
-  %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !85 ; 3 uses
+  %i.dz = getelementptr inbounds nuw i8, ptr %7, i64 240 ; 6 uses
+  %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !85 ; 2 uses
   %.not151221 = icmp eq ptr %i.ea, %i.dy
   br i1 %.not151221, label %._crit_edge225, label %.lr.ph224
 
@@ -225,10 +225,14 @@ bb.ab:                                            ; preds = %bb.y, %bb.z
   %i.ee = getelementptr inbounds nuw i8, ptr %7, i64 264 ; 4 uses
   %i.ef = load volatile i64, ptr %i.ee, align 8, !tbaa !84
   %i.eg = icmp eq i64 %i.ef, 0
-  br i1 %i.eg, label %._crit_edge237, label %pmix_list_remove_first.exit
+  br i1 %i.eg, label %._crit_edge237, label %pmix_list_remove_first.exit.lr.ph
 
-pmix_list_remove_first.exit:                      ; preds = %.preheader, %pmix_list_remove_first.exit
-  %i.eh = phi ptr [ %i.ep, %pmix_list_remove_first.exit ], [ %i.ea, %.preheader ] ; 2 uses
+pmix_list_remove_first.exit.lr.ph:                ; preds = %.preheader
+  %.promoted238 = load ptr, ptr %i.dz, align 8
+  br label %pmix_list_remove_first.exit
+
+pmix_list_remove_first.exit:                      ; preds = %pmix_list_remove_first.exit.lr.ph, %pmix_list_remove_first.exit
+  %i.eh = phi ptr [ %.promoted238, %pmix_list_remove_first.exit.lr.ph ], [ %i.ep, %pmix_list_remove_first.exit ] ; 2 uses
   %i.ei = load volatile i64, ptr %i.ee, align 8, !tbaa !84
   %i.ej = add i64 %i.ei, -1
   store volatile i64 %i.ej, ptr %i.ee, align 8, !tbaa !84
@@ -407,7 +411,7 @@ bb.ap:                                            ; preds = %bb.aj, %bb.am, %bb.
   br i1 %i.gu, label %._crit_edge236, label %pmix_list_remove_first.exit175.preheader
 
 pmix_list_remove_first.exit175.preheader:         ; preds = %._crit_edge233
-  %.pre = load ptr, ptr %i.dz, align 8, !tbaa !85
+  %.pre = load ptr, ptr %i.dz, align 8
   br label %pmix_list_remove_first.exit175
 
 pmix_list_remove_first.exit175:                   ; preds = %pmix_list_remove_first.exit175.preheader, %pmix_list_remove_first.exit175

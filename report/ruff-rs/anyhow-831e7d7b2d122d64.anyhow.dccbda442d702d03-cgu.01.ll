@@ -202,7 +202,11 @@ bb.a:
 .split.i.preheader:                               ; preds = %bb.a
   %.pr = load ptr, ptr %i.c, align 8, !alias.scope !48 ; 2 uses
   %.not5.i.i14 = icmp eq ptr %.pr, null
-  br i1 %.not5.i.i14, label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit, label %.lr.ph
+  br i1 %.not5.i.i14, label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.split.i.preheader
+  %.promoted = load ptr, ptr %i.d, align 8, !alias.scope !48
+  br label %.lr.ph
 
 .split.us.i:                                      ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -232,23 +236,26 @@ bb.a:
   call void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterRDNtNtCs4NRVxsYgnAr_4core5error5ErrorEL_ENtNtNtB11_3ops4drop4Drop4dropCsiXichZnxgbf_6anyhow(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.a)
   br label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit
 
-.lr.ph:                                           ; preds = %.split.i.preheader, %.lr.ph
-  %i.p = phi ptr [ %i.t, %.lr.ph ], [ %.pr, %.split.i.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %i.p = phi ptr [ %i.u, %.lr.ph ], [ %.promoted, %.lr.ph.preheader ] ; 2 uses
+  %1 = phi ptr [ %i.t, %.lr.ph ], [ %.pr, %.lr.ph.preheader ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !50)
-  %1 = load ptr, ptr %i.d, align 8, !alias.scope !48, !nonnull !5, !noundef !5 ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 48
   %i.r = load ptr, ptr %i.q, align 8, !invariant.load !5, !noalias !48, !nonnull !5
-  %i.s = call { ptr, ptr } %i.r(ptr noundef nonnull %i.p), !noalias !47, !inline_history !52 ; 2 uses
+  %i.s = call { ptr, ptr } %i.r(ptr noundef nonnull %1), !noalias !47, !inline_history !52 ; 2 uses
   %i.t = extractvalue { ptr, ptr } %i.s, 0        ; 3 uses
-  %i.u = extractvalue { ptr, ptr } %i.s, 1
-  store ptr %i.t, ptr %i.c, align 8, !alias.scope !48
-  store ptr %i.u, ptr %i.d, align 8, !alias.scope !48
+  %i.u = extractvalue { ptr, ptr } %i.s, 1        ; 2 uses
   %.not5.i.i = icmp eq ptr %i.t, null
-  br i1 %.not5.i.i, label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit, label %.lr.ph, !llvm.loop !44
+  br i1 %.not5.i.i, label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit.loopexit, label %.lr.ph, !llvm.loop !44
 
-_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit: ; preds = %.lr.ph, %.split.i.preheader, %.split7.us.i
-  %.us-phi826.i = phi ptr [ %.us-phi825.i, %.split7.us.i ], [ null, %.split.i.preheader ], [ %i.p, %.lr.ph ] ; 2 uses
-  %.us-phi24.i = phi ptr [ %.us-phi23.i, %.split7.us.i ], [ undef, %.split.i.preheader ], [ %1, %.lr.ph ] ; 2 uses
+_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit.loopexit: ; preds = %.lr.ph
+  store ptr %i.u, ptr %i.d, align 8
+  store ptr %i.t, ptr %i.c, align 1
+  br label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit
+
+_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit: ; preds = %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit.loopexit, %.split.i.preheader, %.split7.us.i
+  %.us-phi826.i = phi ptr [ %.us-phi825.i, %.split7.us.i ], [ null, %.split.i.preheader ], [ %1, %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit.loopexit ] ; 2 uses
+  %.us-phi24.i = phi ptr [ %.us-phi23.i, %.split7.us.i ], [ undef, %.split.i.preheader ], [ %i.p, %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit.loopexit ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.not = icmp eq ptr %.us-phi826.i, null
   br i1 %.not, label %bb.c, label %bb.b, !prof !3

@@ -158,17 +158,18 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   %i.au = load i64, ptr %i.at, align 8, !tbaa !23
   %i.av = and i64 %i.au, %i.ap                    ; 3 uses
-  %i.aw = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.as) ; 2 uses
+  %i.aw = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.as) ; 3 uses
   %i.ax = icmp eq i64 %i.as, 0
   br i1 %i.ax, label %.preheader185.i, label %.lr.ph.i
 
 .preheader185.loopexit.i:                         ; preds = %.lr.ph.i
+  store i64 %i.aw, ptr %i.ac, align 8
   %i.ay = trunc nuw nsw i64 %i.aw to i32
   br label %.preheader185.i
 
 .preheader185.i:                                  ; preds = %.preheader185.loopexit.i, %bb.e
   %i.az = phi i32 [ %i.ay, %.preheader185.loopexit.i ], [ 0, %bb.e ] ; 6 uses
-  %i.ba = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.av) ; 2 uses
+  %i.ba = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.av) ; 3 uses
   %i.bb = icmp eq i64 %i.av, 0
   br i1 %i.bb, label %._crit_edge.i, label %.lr.ph196.i
 
@@ -182,8 +183,7 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.bd
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !30
   %i.bj = tail call noundef i32 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm10make_indexENS_5ColorENS_6SquareENS_5PieceES5_(i8 noundef zeroext %1, i8 noundef zeroext %i.be, i8 noundef zeroext %i.bi, i8 noundef zeroext %i.z) #11
-  %i.bk = add nuw nsw i64 %i.bc, 1                ; 3 uses
-  store i64 %i.bk, ptr %i.ac, align 8, !tbaa !25
+  %i.bk = add nuw nsw i64 %i.bc, 1                ; 2 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.bc
   store i32 %i.bj, ptr %i.bl, align 4, !tbaa !31
   %exitcond = icmp eq i64 %i.bk, %i.aw
@@ -199,14 +199,14 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 %i.bn
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !30
   %i.bt = tail call noundef i32 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm10make_indexENS_5ColorENS_6SquareENS_5PieceES5_(i8 noundef zeroext %1, i8 noundef zeroext %i.bo, i8 noundef zeroext %i.bs, i8 noundef zeroext %i.z) #11
-  %i.bu = add nuw nsw i64 %i.bm, 1                ; 3 uses
-  store i64 %i.bu, ptr %i.ad, align 8, !tbaa !25
+  %i.bu = add nuw nsw i64 %i.bm, 1                ; 2 uses
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.bm
   store i32 %i.bt, ptr %i.bv, align 4, !tbaa !31
   %exitcond137 = icmp eq i64 %i.bu, %i.ba
   br i1 %exitcond137, label %._crit_edge.loopexit.i, label %.lr.ph196.i, !llvm.loop !51
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph196.i
+  store i64 %i.ba, ptr %i.ad, align 8
   %i.bw = trunc nuw nsw i64 %i.ba to i32
   br label %._crit_edge.i
 
@@ -609,8 +609,8 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN9Stockfish4Eval4NNUE16AccumulatorStack13evaluate_sideINS1_8Features11HalfKAv2_hmELj128EEEvNS_5ColorERKNS_8PositionERKNS1_18FeatureTransformerIXT0_EEERNS1_17AccumulatorCaches5CacheIXT0_EEE(ptr noundef nonnull align 64 dereferenceable(2529288) %0, i8 noundef zeroext %1, ptr noundef nonnull align 8 dereferenceable(1048) %2, ptr noundef nonnull align 1 %3, ptr noundef nonnull align 64 dereferenceable(49152) %4) local_unnamed_addr #2 comdat align 2 {
 bb.a:
-  %5 = alloca %"class.Stockfish::ValueList.26", align 8 ; 35 uses
-  %6 = alloca %"class.Stockfish::ValueList.26", align 8 ; 26 uses
+  %5 = alloca %"class.Stockfish::ValueList.26", align 8 ; 36 uses
+  %6 = alloca %"class.Stockfish::ValueList.26", align 8 ; 27 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2529280 ; 2 uses
   %i.b = load i64, ptr %i.a, align 64, !tbaa !17
   %i.c = zext i8 %1 to i64                        ; 7 uses
@@ -667,7 +667,9 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.z = getelementptr inbounds nuw [768 x i8], ptr %4, i64 %i.x
   %i.aa = getelementptr inbounds nuw [384 x i8], ptr %i.z, i64 %i.c ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 128
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 128
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 288 ; 3 uses
   %i.ac = load <32 x i8>, ptr %i.ab, align 32, !tbaa !26
   %i.ad = load <32 x i8>, ptr %2, align 8, !tbaa !26
@@ -686,17 +688,18 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !23
   %i.as = and i64 %i.ar, %i.am                    ; 3 uses
-  %i.at = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ap) ; 2 uses
+  %i.at = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ap) ; 3 uses
   %i.au = icmp eq i64 %i.ap, 0
   br i1 %i.au, label %.preheader186.i, label %.lr.ph.i
 
 .preheader186.loopexit.i:                         ; preds = %.lr.ph.i
+  store i64 %i.at, ptr %7, align 8
   %i.av = trunc nuw nsw i64 %i.at to i32
   br label %.preheader186.i
 
 .preheader186.i:                                  ; preds = %.preheader186.loopexit.i, %bb.e
   %i.aw = phi i32 [ %i.av, %.preheader186.loopexit.i ], [ 0, %bb.e ] ; 10 uses
-  %i.ax = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.as) ; 2 uses
+  %i.ax = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.as) ; 3 uses
   %i.ay = icmp eq i64 %i.as, 0
   br i1 %i.ay, label %._crit_edge.i, label %.lr.ph197.i
 
@@ -733,6 +736,7 @@ bb.e:                                             ; preds = %_ZNK9Stockfish4Eval
   br i1 %exitcond53, label %._crit_edge.loopexit.i, label %.lr.ph197.i, !llvm.loop !74
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph197.i
+  store i64 %i.ax, ptr %8, align 8
   %i.bt = trunc nuw nsw i64 %i.ax to i32
   br label %._crit_edge.i
 

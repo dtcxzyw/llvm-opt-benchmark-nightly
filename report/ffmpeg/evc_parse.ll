@@ -202,21 +202,22 @@ bb.l:                                             ; preds = %get_ue_golomb_long.
   store i32 %i.fi, ptr %i.fk, align 4, !tbaa !43
   %.sroa.76.0.copyload.i.i119 = load i32, ptr %i.c, align 8, !tbaa !42 ; 5 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %.promoted = load i32, ptr %i.a, align 8, !tbaa !42
   %wide.trip.count = zext nneg i32 %.0.i.i to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %get_ue_golomb_long.exit131
   %indvars.iv = phi i64 [ 0, %bb.l ], [ %indvars.iv.next, %get_ue_golomb_long.exit131 ] ; 2 uses
-  %.sroa.4.0.copyload.i.i117 = load i32, ptr %i.a, align 8, !tbaa !42 ; 6 uses
-  %i.fm = lshr i32 %.sroa.4.0.copyload.i.i117, 3
+  %.sroa.4.0.copyload.i.i117144 = phi i32 [ %.promoted, %bb.l ], [ %.sroa.4.0.copyload.i.i117143, %get_ue_golomb_long.exit131 ] ; 6 uses
+  %i.fm = lshr i32 %.sroa.4.0.copyload.i.i117144, 3
   %i.fn = zext nneg i32 %i.fm to i64
   %i.fo = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i, i64 %i.fn
   %i.fp = load i32, ptr %i.fo, align 1, !tbaa !10
   %i.fq = tail call i32 @llvm.bswap.i32(i32 %i.fp)
-  %i.fr = and i32 %.sroa.4.0.copyload.i.i117, 7
+  %i.fr = and i32 %.sroa.4.0.copyload.i.i117144, 7
   %i.fs = shl i32 %i.fq, %i.fr                    ; 3 uses
   %i.ft = and i32 %i.fs, -65536
-  %i.fu = add i32 %.sroa.4.0.copyload.i.i117, 16
+  %i.fu = add i32 %.sroa.4.0.copyload.i.i117144, 16
   %i.fv = tail call i32 @llvm.umin.i32(i32 %.sroa.76.0.copyload.i.i119, i32 %i.fu) ; 2 uses
   %i.fw = lshr i32 %i.fv, 3
   %i.fx = zext nneg i32 %i.fw to i64
@@ -242,12 +243,12 @@ bb.m:                                             ; preds = %bb.l, %get_ue_golom
   %i.gl = zext i8 %i.gk to i32                    ; 2 uses
   %i.gm = add nuw nsw i32 %.1.i.i125, %i.gl       ; 6 uses
   %i.gn = sub nsw i32 31, %i.gm                   ; 2 uses
-  %i.go = sub nsw i32 0, %.sroa.4.0.copyload.i.i117 ; 2 uses
-  %i.gp = sub nsw i32 %.sroa.76.0.copyload.i.i119, %.sroa.4.0.copyload.i.i117
+  %i.go = sub nsw i32 0, %.sroa.4.0.copyload.i.i117144 ; 2 uses
+  %i.gp = sub nsw i32 %.sroa.76.0.copyload.i.i119, %.sroa.4.0.copyload.i.i117144
   %i.gq = icmp slt i32 %i.gn, %i.go
   %..i.i.i126 = tail call i32 @llvm.smin.i32(i32 range(i32 -248, 32) %i.gn, i32 %i.gp)
   %.0.i.i.i127 = select i1 %i.gq, i32 %i.go, i32 %..i.i.i126
-  %i.gr = add nsw i32 %.0.i.i.i127, %.sroa.4.0.copyload.i.i117 ; 5 uses
+  %i.gr = add nsw i32 %.0.i.i.i127, %.sroa.4.0.copyload.i.i117144 ; 6 uses
   store i32 %i.gr, ptr %i.a, align 8, !tbaa !31
   %.not.i5.i128 = icmp eq i32 %i.gm, 32
   br i1 %.not.i5.i128, label %get_ue_golomb_long.exit131, label %bb.n
@@ -267,7 +268,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ha = lshr i32 %i.gz, %i.gm
   %reass.sub143 = sub i32 %i.gr, %i.gm
   %i.hb = add i32 %reass.sub143, 32
-  %i.hc = tail call i32 @llvm.umin.i32(i32 %.sroa.76.0.copyload.i.i119, i32 %i.hb)
+  %i.hc = tail call i32 @llvm.umin.i32(i32 %.sroa.76.0.copyload.i.i119, i32 %i.hb) ; 2 uses
   store i32 %i.hc, ptr %i.a, align 8, !tbaa !31
   br label %get_ue_golomb_long.exit131
 
@@ -288,12 +289,13 @@ bb.p:                                             ; preds = %bb.n
   %i.hp = or disjoint i32 %i.gl, 16
   %i.hq = lshr i32 %i.ho, %i.hp
   %i.hr = add i32 %i.hf, %i.hg
-  %i.hs = tail call i32 @llvm.umin.i32(i32 %.sroa.76.0.copyload.i.i119, i32 %i.hr)
+  %i.hs = tail call i32 @llvm.umin.i32(i32 %.sroa.76.0.copyload.i.i119, i32 %i.hr) ; 2 uses
   store i32 %i.hs, ptr %i.a, align 8, !tbaa !31
   %i.ht = or i32 %i.hq, %i.hh
   br label %get_ue_golomb_long.exit131
 
 get_ue_golomb_long.exit131:                       ; preds = %bb.m, %bb.o, %bb.p
+  %.sroa.4.0.copyload.i.i117143 = phi i32 [ %i.hc, %bb.o ], [ %i.hs, %bb.p ], [ %i.gr, %bb.m ]
   %.0.i.i129 = phi i32 [ %i.ha, %bb.o ], [ %i.ht, %bb.p ], [ 0, %bb.m ]
   %i.hu = trunc i32 %.0.i.i129 to i16
   %i.hv = add i16 %i.hu, -1

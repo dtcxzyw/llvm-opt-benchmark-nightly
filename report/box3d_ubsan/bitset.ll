@@ -14,16 +14,17 @@ target triple = "x86_64-pc-linux-gnu"
 @5 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 37, i32 10 }, { ptr, i32, i32 } { ptr @.src.1, i32 61, i32 62 }, i32 1 }
 @6 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 43, i32 28 }, ptr @2, i8 3, i8 3 }
 @7 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 48, i32 11 }, { ptr, i32, i32 } { ptr @.src.1, i32 61, i32 62 }, i32 1 }
-@8 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 50, i32 20 }, { ptr, i32, i32 } { ptr @.src.1, i32 44, i32 28 }, i32 2 }
-@9 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 50, i32 20 }, ptr @0, i8 3, i8 0 }
-@10 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 61, i32 30 }, ptr @2, i8 3, i8 3 }
-@11 = private unnamed_addr constant { i16, i16, [47 x i8] } { i16 -1, i16 0, [47 x i8] c"'const b3BitSet' (aka 'const struct b3BitSet')\00" }
-@12 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 26 }, ptr @11, i8 3, i8 3 }
-@13 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 20 } }
-@14 = private unnamed_addr constant { i16, i16, [33 x i8] } { i16 0, i16 12, [33 x i8] c"'uint64_t' (aka 'unsigned long')\00" }
-@15 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 20 }, ptr @14, i8 3, i8 0 }
-@16 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 3 } }
-@17 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 3 }, ptr @14, i8 3, i8 1 }
+@8 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 50, i32 11 }, ptr @0, i8 3, i8 1 }
+@9 = private unnamed_addr global { { ptr, i32, i32 }, { ptr, i32, i32 }, i32 } { { ptr, i32, i32 } { ptr @.src, i32 50, i32 20 }, { ptr, i32, i32 } { ptr @.src.1, i32 44, i32 28 }, i32 2 }
+@10 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 50, i32 20 }, ptr @0, i8 3, i8 0 }
+@11 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 61, i32 30 }, ptr @2, i8 3, i8 3 }
+@12 = private unnamed_addr constant { i16, i16, [47 x i8] } { i16 -1, i16 0, [47 x i8] c"'const b3BitSet' (aka 'const struct b3BitSet')\00" }
+@13 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 26 }, ptr @12, i8 3, i8 3 }
+@14 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 20 } }
+@15 = private unnamed_addr constant { i16, i16, [33 x i8] } { i16 0, i16 12, [33 x i8] c"'uint64_t' (aka 'unsigned long')\00" }
+@16 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 20 }, ptr @15, i8 3, i8 0 }
+@17 = private unnamed_addr global { { ptr, i32, i32 } } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 3 } }
+@18 = private unnamed_addr global { { ptr, i32, i32 }, ptr, i8, i8 } { { ptr, i32, i32 } { ptr @.src, i32 64, i32 3 }, ptr @15, i8 3, i8 1 }
 
 ; Function Attrs: nounwind uwtable
 define hidden { ptr, i64 } @b3CreateBitSet(i32 noundef %0) local_unnamed_addr #0 !func_sanitize !19 {
@@ -187,7 +188,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.j, ptr %i.f, align 8, !tbaa !16
   %i.k = zext i32 %i.j to i64
   %i.l = shl nuw nsw i64 %i.k, 3
-  %i.m = tail call ptr @b3Alloc(i64 noundef %i.l) #5 ; 4 uses
+  %i.m = tail call ptr @b3Alloc(i64 noundef %i.l) #5 ; 5 uses
   %.not = icmp eq ptr %i.m, null, !nosanitize !9
   br i1 %.not, label %bb.e, label %bb.f, !prof !10, !nosanitize !9
 
@@ -203,21 +204,31 @@ bb.f:                                             ; preds = %bb.d
   %i.q = load ptr, ptr %0, align 8, !tbaa !15     ; 3 uses
   %i.r = zext i32 %i.g to i64
   %i.s = shl nuw nsw i64 %i.r, 3                  ; 2 uses
-  %.not22.a = icmp eq ptr %i.q, null, !nosanitize !9
-  br i1 %.not22.a, label %bb.g, label %bb.h, !prof !10, !nosanitize !9
+  %2 = ptrtoint ptr %i.m to i64, !nosanitize !9   ; 2 uses
+  %3 = and i64 %2, 7, !nosanitize !9
+  %.not22.a = icmp eq i64 %3, 0, !nosanitize !9
+  br i1 %.not22.a, label %5, label %4, !prof !11, !nosanitize !9
 
-bb.g:                                             ; preds = %bb.f
-  tail call void @__ubsan_handle_nonnull_arg_abort(ptr nonnull @8) #6, !nosanitize !9
+4:                                                ; preds = %bb.f
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @8, i64 %2) #6, !nosanitize !9
   unreachable, !nosanitize !9
 
-bb.h:                                             ; preds = %bb.f
+5:                                                ; preds = %bb.f
+  %.not22 = icmp eq ptr %i.q, null, !nosanitize !9
+  br i1 %.not22, label %bb.g, label %bb.h, !prof !10, !nosanitize !9
+
+bb.g:                                             ; preds = %5
+  tail call void @__ubsan_handle_nonnull_arg_abort(ptr nonnull @9) #6, !nosanitize !9
+  unreachable, !nosanitize !9
+
+bb.h:                                             ; preds = %5
   %i.t = ptrtoint ptr %i.q to i64, !nosanitize !9 ; 2 uses
   %i.u = and i64 %i.t, 7, !nosanitize !9
   %i.v = icmp eq i64 %i.u, 0, !nosanitize !9
   br i1 %i.v, label %bb.j, label %bb.i, !prof !11, !nosanitize !9
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @9, i64 %i.t) #6, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @10, i64 %i.t) #6, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.j:                                             ; preds = %bb.h
@@ -244,7 +255,7 @@ bb.a:
   br i1 %i.e, label %bb.c, label %bb.b, !prof !11, !nosanitize !9
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @10, i64 %i.b) #6, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @11, i64 %i.b) #6, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.c:                                             ; preds = %bb.a
@@ -284,11 +295,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not39, label %.split.us, label %bb.e, !prof !10, !nosanitize !9
 
 bb.d:                                             ; preds = %.lr.ph
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @12, i64 %i.i) #6, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @13, i64 %i.i) #6, !nosanitize !9
   unreachable, !nosanitize !9
 
 .split.us:                                        ; preds = %.lr.ph.split.split
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @13, i64 %i.n, i64 %i.q) #6, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @14, i64 %i.n, i64 %i.q) #6, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.e:                                             ; preds = %.lr.ph.split.split
@@ -299,7 +310,7 @@ bb.e:                                             ; preds = %.lr.ph.split.split
 
 .split35:                                         ; preds = %bb.e, %.lr.ph.split
   %.us-phi36 = phi i64 [ 0, %.lr.ph.split ], [ %i.r, %bb.e ]
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @15, i64 %.us-phi36) #6, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @16, i64 %.us-phi36) #6, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.f:                                             ; preds = %bb.e
@@ -316,7 +327,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ad, label %bb.h, label %bb.g, !prof !11, !nosanitize !9
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @16, i64 %i.x, i64 %i.y) #6, !nosanitize !9
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @17, i64 %i.x, i64 %i.y) #6, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.h:                                             ; preds = %bb.f
@@ -327,7 +338,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.ah, label %bb.j, label %bb.i, !prof !11, !nosanitize !9
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @17, i64 %i.ae) #6, !nosanitize !9
+  tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @18, i64 %i.ae) #6, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.j:                                             ; preds = %bb.h

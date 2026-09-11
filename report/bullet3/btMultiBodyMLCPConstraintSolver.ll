@@ -205,27 +205,34 @@ bb.w:                                             ; preds = %bb.v
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %0, i64 584 ; 2 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %0, i64 616 ; 2 uses
-  %i.he = getelementptr inbounds nuw i8, ptr %0, i64 1088 ; 3 uses
+  %i.he = getelementptr inbounds nuw i8, ptr %0, i64 1088 ; 2 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %0, i64 1076
   %i.hg = load i32, ptr %i.hf, align 4, !tbaa !67
   %i.hh = getelementptr inbounds nuw i8, ptr %0, i64 1112
   %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !23 ; 3 uses
+  %.promoted188 = load i32, ptr %i.he, align 8, !tbaa !68
   %i.hj = sext i32 %i.hg to i64                   ; 2 uses
   %i.hk = shl nuw i32 %i.b, 1
+  %7 = add i32 %i.hk, -1
   %wide.trip.count221 = zext nneg i32 %i.b to i64 ; 2 uses
   br label %bb.aa
 
 ..loopexit169_crit_edge:                          ; preds = %_ZL37computeDeltaVelocityInConstraintSpacePKfS0_i.exit138.i
-  %i.hl = add i32 %i.mx, %indvars.iv213
-  store i32 %i.hl, ptr %i.he, align 8, !tbaa !68
+  %i.hl = add i32 %.lcssa183189, %indvars.iv213.in
   br label %.loopexit169
 
 .loopexit169:                                     ; preds = %..loopexit169_crit_edge, %.loopexit170
+  %.lcssa183190 = phi i32 [ %i.mx, %.loopexit170 ], [ %i.hl, %..loopexit169_crit_edge ] ; 2 uses
   %indvars.iv.next210 = add nuw nsw i64 %indvars.iv209, 1
+  %indvars.iv.next216 = add i32 %indvars.iv213.in, -2
   %exitcond222.not = icmp eq i64 %indvars.iv.next219, %wide.trip.count221
-  br i1 %exitcond222.not, label %._crit_edge187.a, label %bb.aa, !llvm.loop !226
+  br i1 %exitcond222.not, label %._crit_edge187, label %bb.aa, !llvm.loop !226
 
-._crit_edge187.a:                                 ; preds = %.loopexit169, %bb.w
+._crit_edge187:                                   ; preds = %.loopexit169
+  store i32 %.lcssa183190, ptr %i.he, align 8, !tbaa !68
+  br label %._crit_edge187.a
+
+._crit_edge187.a:                                 ; preds = %._crit_edge187, %bb.w
   call void @_ZN14CProfileSampleD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %4) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   %i.hm = load i32, ptr %i.gy, align 8, !tbaa !81 ; 5 uses
@@ -271,9 +278,9 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 bb.aa:                                            ; preds = %.lr.ph186, %.loopexit169
   %indvars.iv218 = phi i64 [ 0, %.lr.ph186 ], [ %indvars.iv.next219, %.loopexit169 ] ; 5 uses
-  %indvars.iv213.in = phi i32 [ %i.hk, %.lr.ph186 ], [ %indvars.iv213, %.loopexit169 ]
+  %indvars.iv213.in = phi i32 [ %7, %.lr.ph186 ], [ %indvars.iv.next216, %.loopexit169 ] ; 2 uses
   %indvars.iv209 = phi i64 [ 1, %.lr.ph186 ], [ %indvars.iv.next210, %.loopexit169 ] ; 2 uses
-  %indvars.iv213 = add i32 %indvars.iv213.in, -2  ; 2 uses
+  %.lcssa183189 = phi i32 [ %.promoted188, %.lr.ph186 ], [ %.lcssa183190, %.loopexit169 ] ; 2 uses
   %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.ha, i64 %indvars.iv218
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !94 ; 34 uses
   %.val = load ptr, ptr %i.hb, align 8            ; 2 uses
@@ -525,9 +532,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %.pn.i = phi float [ %i.mr, %bb.ai ], [ 0.000000e+00, %bb.af ], [ %i.ls, %.loopexit170.loopexit.unr-lcssa ], [ %i.mw, %.lr.ph.i50.i.epil ]
   %.0.i = fadd float %.0.in.i, 0.000000e+00
   %.1.i = fadd float %.0.i, %.pn.i
-  %7 = load i32, ptr %i.he, align 8, !tbaa !68
-  %i.mx = add nsw i32 %7, 1                       ; 2 uses
-  store i32 %i.mx, ptr %i.he, align 8, !tbaa !68
+  %i.mx = add nsw i32 %.lcssa183189, 1
   %i.my = mul nsw i64 %indvars.iv218, %i.hj       ; 2 uses
   %i.mz = getelementptr [4 x i8], ptr %i.hi, i64 %i.my
   %i.na = getelementptr [4 x i8], ptr %i.mz, i64 %indvars.iv218

@@ -202,7 +202,6 @@ _ZN4llvm5ErrorD2Ev.exit7.i:                       ; preds = %bb.f, %_ZN4llvm5Err
   call fastcc void @_ZN4llvm15handleErrorImplIZNK12_GLOBAL__N_115SelectorStencil4evalERKN5clang12ast_matchers11MatchFinder11MatchResultEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlSt10unique_ptrINS_11StringErrorESt14default_deleteISH_EEE_JEEENS_5ErrorESG_INS_13ErrorInfoBaseESI_ISN_EEOT_DpOT0_(ptr dead_on_unwind noalias nonnull writable align 8 %10, ptr nofree noundef align 8 dereferenceable(8) %11), !noalias !621
   call void @_ZN4llvm9ErrorList4joinENS_5ErrorES1_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Error") align 8 %8, ptr nofree noundef nonnull align 8 dereferenceable(8) %9, ptr nofree noundef nonnull align 8 dereferenceable(8) %10), !noalias !621
   %i.ai = load ptr, ptr %8, align 8, !tbaa !58, !noalias !621 ; 2 uses
-  store ptr %i.ai, ptr %0, align 8, !tbaa !58, !alias.scope !621
   store ptr null, ptr %8, align 8, !tbaa !58, !noalias !621
   %i.aj = load ptr, ptr %10, align 8, !tbaa !58, !noalias !621 ; 3 uses
   %i.ak = icmp eq ptr %i.aj, null
@@ -243,7 +242,7 @@ _ZN4llvm5ErrorD2Ev.exit9.i:                       ; preds = %bb.h, %_ZNSt10uniqu
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19, !noalias !621
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.01.013.i, i64 8 ; 2 uses
   %.not11.i = icmp eq ptr %i.ax, %i.af
-  br i1 %.not11.i, label %_ZN4llvm5ErrorD2Ev.exit.sink.split, label %_ZN4llvm5ErrorD2Ev.exit7.i
+  br i1 %.not11.i, label %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i14.i.loopexit, label %_ZN4llvm5ErrorD2Ev.exit7.i
 
 bb.i:                                             ; preds = %bb.e
   %i.ay = ptrtoint ptr %i.x to i64
@@ -253,8 +252,12 @@ bb.i:                                             ; preds = %bb.e
   %.not.i10.i = icmp eq ptr %i.az, null
   br i1 %.not.i10.i, label %_ZN4llvm5ErrorD2Ev.exit, label %_ZN4llvm5ErrorD2Ev.exit.sink.split
 
-_ZN4llvm5ErrorD2Ev.exit.sink.split:               ; preds = %_ZN4llvm5ErrorD2Ev.exit9.i, %bb.f, %bb.i
-  %.sink75 = phi ptr [ %i.az, %bb.i ], [ %i.x, %bb.f ], [ %i.x, %_ZN4llvm5ErrorD2Ev.exit9.i ] ; 2 uses
+_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i14.i.loopexit: ; preds = %_ZN4llvm5ErrorD2Ev.exit9.i
+  store ptr %i.ai, ptr %0, align 8
+  br label %_ZN4llvm5ErrorD2Ev.exit.sink.split
+
+_ZN4llvm5ErrorD2Ev.exit.sink.split:               ; preds = %bb.f, %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i14.i.loopexit, %bb.i
+  %.sink75 = phi ptr [ %i.az, %bb.i ], [ %i.x, %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i14.i.loopexit ], [ %i.x, %bb.f ] ; 2 uses
   %i.ba = load ptr, ptr %.sink75, align 8, !tbaa !28
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   %i.bc = load ptr, ptr %i.bb, align 8

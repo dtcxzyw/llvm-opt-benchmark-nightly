@@ -205,7 +205,6 @@ _ZN4llvm5ErrorD2Ev.exit9.i:                       ; preds = %bb.p, %_ZN4llvm5Err
   call fastcc void @"_ZN4llvm15handleErrorImplIZNKS_7Pattern5matchENS_9StringRefERKNS_9SourceMgrEE3$_0JZNKS1_5matchES2_S5_E3$_1EEENS_5ErrorESt10unique_ptrINS_13ErrorInfoBaseESt14default_deleteISA_EEOT_DpOT0_"(ptr dead_on_unwind noalias writable align 8 %9, ptr nofree noundef align 8 dereferenceable(8) %10, ptr noundef nonnull readonly align 8 dereferenceable(16) %18, ptr noundef nonnull readonly align 8 dereferenceable(8) %19), !noalias !1032
   call void @_ZN4llvm9ErrorList4joinENS_5ErrorES1_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Error") align 8 %7, ptr nofree noundef nonnull align 8 dereferenceable(8) %8, ptr nofree noundef nonnull align 8 dereferenceable(8) %9), !noalias !1032
   %i.ca = load ptr, ptr %7, align 8, !tbaa !58, !noalias !1032 ; 2 uses
-  store ptr %i.ca, ptr %17, align 8, !tbaa !58, !alias.scope !1032
   store ptr null, ptr %7, align 8, !tbaa !58, !noalias !1032
   %i.cb = load ptr, ptr %9, align 8, !tbaa !58, !noalias !1032 ; 3 uses
   %i.cc = icmp eq ptr %i.cb, null
@@ -246,7 +245,7 @@ _ZN4llvm5ErrorD2Ev.exit11.i:                      ; preds = %bb.r, %_ZNSt10uniqu
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #27, !noalias !1032
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.018.030.i, i64 8 ; 2 uses
   %.not28.i = icmp eq ptr %i.cp, %i.bx
-  br i1 %.not28.i, label %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i16.i, label %_ZN4llvm5ErrorD2Ev.exit9.i
+  br i1 %.not28.i, label %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i16.i.loopexit, label %_ZN4llvm5ErrorD2Ev.exit9.i
 
 bb.s:                                             ; preds = %bb.o
   store i64 %i.bo, ptr %11, align 8, !tbaa !59, !noalias !1032
@@ -262,7 +261,11 @@ _ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i13.i: ; preds = %bb.
   call void %i.ct(ptr noundef nonnull align 8 dereferenceable(8) %i.cq) #27, !inline_history !1022
   br label %"_ZN4llvm12handleErrorsIJZNKS_7Pattern5matchENS_9StringRefERKNS_9SourceMgrEE3$_0ZNKS1_5matchES2_S5_E3$_1EEENS_5ErrorES8_DpOT_.exit"
 
-_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i16.i: ; preds = %_ZN4llvm5ErrorD2Ev.exit11.i, %bb.p
+_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i16.i.loopexit: ; preds = %_ZN4llvm5ErrorD2Ev.exit11.i
+  store ptr %i.ca, ptr %17, align 8
+  br label %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i16.i
+
+_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i16.i: ; preds = %_ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i16.i.loopexit, %bb.p
   %i.cu = load ptr, ptr %i.bp, align 8, !tbaa !68, !noalias !1032
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   %i.cw = load ptr, ptr %i.cv, align 8, !noalias !1032

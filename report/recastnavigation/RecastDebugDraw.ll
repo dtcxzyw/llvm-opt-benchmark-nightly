@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @_Z28duDebugDrawRegionConnectionsP11duDebugDrawRK12rcContourSetf(ptr noundef %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(60) %1, float noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [3 x float], align 8              ; 9 uses
+  %i.a = alloca [3 x float], align 8              ; 8 uses
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.l, label %bb.b
 
@@ -224,13 +224,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %.lr.ph95, label %._crit_edge96.a
 
 .lr.ph95:                                         ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %i.m = extractelement <2 x float> %i.d, i64 1   ; 2 uses
   br label %bb.c
 
-._crit_edge96.a:                                  ; preds = %._crit_edge, %bb.b
+._crit_edge96:                                    ; preds = %._crit_edge
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store <2 x float> %5, ptr %i.a, align 8, !tbaa !35
+  store float %4, ptr %3, align 8, !tbaa !35
+  br label %._crit_edge96.a
+
+._crit_edge96.a:                                  ; preds = %._crit_edge96, %bb.b
   %i.n = load ptr, ptr %0, align 8, !tbaa !14
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 72
   %i.p = load ptr, ptr %i.o, align 8
@@ -258,8 +263,6 @@ bb.c:                                             ; preds = %.lr.ph95, %._crit_e
   %indvars.iv112 = phi i64 [ 0, %.lr.ph95 ], [ %indvars.iv.next113, %._crit_edge ] ; 2 uses
   %i.ad = load ptr, ptr %1, align 8, !tbaa !79
   %i.ae = getelementptr inbounds nuw [32 x i8], ptr %i.ad, i64 %indvars.iv112 ; 4 uses
-  store <2 x float> zeroinitializer, ptr %i.a, align 8, !tbaa !35
-  store float 0.000000e+00, ptr %3, align 8, !tbaa !35
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !82 ; 8 uses
   %.not.i = icmp eq i32 %i.ag, 0
@@ -341,16 +344,14 @@ _ZL16getContourCenterPK9rcContourPKfffPf.exit:    ; preds = %.epil.preheader, %_
   %i.bs = fmul <2 x float> %i.br, %i.bm
   %i.bt = extractelement <2 x float> %i.br, i64 0
   %i.bu = fmul float %i.bt, %i.bl
-  %i.bv = load float, ptr %i.k, align 8, !tbaa !35
-  %i.bw = load float, ptr %i.b, align 4, !tbaa !35
-  %i.bx = tail call float @llvm.fmuladd.f32(float %i.m, float 4.000000e+00, float %i.bv)
-  %i.by = insertelement <2 x float> poison, float %i.bw, i64 0
+  %i.bv = load float, ptr %i.b, align 4, !tbaa !35
+  %i.bw = load float, ptr %i.k, align 8, !tbaa !35
+  %i.bx = tail call float @llvm.fmuladd.f32(float %i.m, float 4.000000e+00, float %i.bw)
+  %i.by = insertelement <2 x float> poison, float %i.bv, i64 0
   %i.bz = insertelement <2 x float> %i.by, float %i.bx, i64 1
-  %i.ca = fadd <2 x float> %i.bs, %i.bz           ; 3 uses
-  store <2 x float> %i.ca, ptr %i.a, align 8, !tbaa !35
+  %i.ca = fadd <2 x float> %i.bs, %i.bz           ; 4 uses
   %i.cb = load float, ptr %i.l, align 4, !tbaa !35
-  %i.cc = fadd float %i.bu, %i.cb                 ; 2 uses
-  store float %i.cc, ptr %3, align 8, !tbaa !35
+  %i.cc = fadd float %i.bu, %i.cb                 ; 3 uses
   %i.cd = icmp sgt i32 %i.ag, 0
   br i1 %i.cd, label %.lr.ph, label %._crit_edge
 
@@ -365,11 +366,13 @@ _ZL16getContourCenterPK9rcContourPKfffPf.exit:    ; preds = %.epil.preheader, %_
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.c, %._crit_edge.loopexit, %_ZL16getContourCenterPK9rcContourPKfffPf.exit
+  %4 = phi float [ %i.cc, %._crit_edge.loopexit ], [ %i.cc, %_ZL16getContourCenterPK9rcContourPKfffPf.exit ], [ 0.000000e+00, %bb.c ]
   %i.ch = phi i32 [ %.pre118, %._crit_edge.loopexit ], [ %i.ac, %_ZL16getContourCenterPK9rcContourPKfffPf.exit ], [ %i.ac, %bb.c ] ; 2 uses
+  %5 = phi <2 x float> [ %i.ca, %._crit_edge.loopexit ], [ %i.ca, %_ZL16getContourCenterPK9rcContourPKfffPf.exit ], [ zeroinitializer, %bb.c ]
   %indvars.iv.next113 = add nuw nsw i64 %indvars.iv112, 1 ; 2 uses
   %i.ci = sext i32 %i.ch to i64
   %i.cj = icmp slt i64 %indvars.iv.next113, %i.ci
-  br i1 %i.cj, label %bb.c, label %._crit_edge96.a
+  br i1 %i.cj, label %bb.c, label %._crit_edge96
 
 bb.e:                                             ; preds = %.lr.ph, %_ZL18findContourFromSetRK12rcContourSett.exit.thread
   %i.ck = phi i32 [ %i.ag, %.lr.ph ], [ %i.fb, %_ZL18findContourFromSetRK12rcContourSett.exit.thread ] ; 4 uses
