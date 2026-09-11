@@ -204,17 +204,16 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.oj, i64 88
   %i.ol = load <2 x double>, ptr %i.ok, align 8, !tbaa !21
   %i.om = load <2 x double>, ptr %.sroa.7.0..sroa_idx.i.i, align 8, !tbaa !21
-  %i.on = fsub <2 x double> %i.om, %i.ol          ; 4 uses
-  %8 = extractelement <2 x double> %i.on, i64 0   ; 3 uses
-  %9 = shufflevector <2 x double> %i.on, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %10 = insertelement <2 x double> %i.on, double -3.000000e+00, i64 1
-  %11 = fadd <2 x double> %9, %10
-  %12 = fmul <2 x double> %11, splat (double 5.000000e-01) ; 2 uses
-  %13 = extractelement <2 x double> %12, i64 0
-  %14 = fadd double %13, 5.000000e+02             ; 2 uses
-  %i.oo = extractelement <2 x double> %12, i64 1
-  %15 = fcmp olt double %i.oo, 2.000000e+00
-  br i1 %15, label %bb.bc, label %bb.be
+  %i.on = fsub <2 x double> %i.om, %i.ol          ; 3 uses
+  %8 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.on)
+  %9 = fmul double %8, 5.000000e-01
+  %10 = fadd double %9, 5.000000e+02              ; 2 uses
+  %11 = extractelement <2 x double> %i.on, i64 1  ; 3 uses
+  %12 = fadd double %11, -3.000000e+00
+  %13 = fmul double %12, 5.000000e-01
+  %14 = fcmp olt double %13, 2.000000e+00
+  %i.oo = extractelement <2 x double> %i.on, i64 0 ; 3 uses
+  br i1 %14, label %bb.bc, label %bb.be
 
 bb.bc:                                            ; preds = %.lr.ph211.i
   %i.op = load i32, ptr %i.oj, align 8, !tbaa !87
@@ -226,12 +225,11 @@ bb.bd:                                            ; preds = %bb.bc
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc, %.lr.ph211.i
-  %.058.i.i = phi double [ %8, %bb.bc ], [ 1.638400e+04, %bb.bd ], [ %8, %.lr.ph211.i ]
-  %.0.i179.i = phi double [ %14, %bb.bc ], [ 1.638400e+04, %bb.bd ], [ %14, %.lr.ph211.i ] ; 2 uses
-  %i.or = fadd double %8, -3.000000e+00
+  %.058.i.i = phi double [ %i.oo, %bb.bc ], [ 1.638400e+04, %bb.bd ], [ %i.oo, %.lr.ph211.i ]
+  %.0.i179.i = phi double [ %10, %bb.bc ], [ 1.638400e+04, %bb.bd ], [ %10, %.lr.ph211.i ] ; 2 uses
+  %i.or = fadd double %i.oo, -3.000000e+00
   %i.os = fmul double %i.or, 5.000000e-01
   %i.ot = fcmp olt double %i.os, 2.000000e+00
-  %16 = extractelement <2 x double> %i.on, i64 1  ; 2 uses
   br i1 %i.ot, label %bb.bf, label %bb.bh
 
 bb.bf:                                            ; preds = %bb.be
@@ -244,7 +242,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf, %bb.be
-  %.057.i.i = phi double [ %16, %bb.bf ], [ 1.638400e+04, %bb.bg ], [ %16, %bb.be ]
+  %.057.i.i = phi double [ %11, %bb.bf ], [ 1.638400e+04, %bb.bg ], [ %11, %bb.be ]
   %.1.i.i = phi double [ %.0.i179.i, %bb.bf ], [ 1.638400e+04, %bb.bg ], [ %.0.i179.i, %bb.be ] ; 4 uses
   %i.ow = getelementptr inbounds nuw i8, ptr %i.oj, i64 64 ; 6 uses
   %i.ox = load ptr, ptr %i.ow, align 8, !tbaa !40 ; 4 uses
@@ -645,6 +643,9 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.maxnum.v2f64(<2 x double>, <2 x double>) #2

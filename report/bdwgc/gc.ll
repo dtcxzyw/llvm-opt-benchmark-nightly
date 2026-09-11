@@ -205,7 +205,7 @@ bb.a:
   %.032 = add i64 %i.u, %i.r
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   store i64 %.032, ptr %i.v, align 8
-  %i.w = lshr i64 %2, 4                           ; 4 uses
+  %i.w = lshr i64 %2, 4                           ; 6 uses
   %i.x = icmp ugt i64 %2, 2063
   %spec.store.select.i = select i1 %i.x, i64 0, i64 %i.w ; 3 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 22000), i64 %spec.store.select.i ; 2 uses
@@ -275,7 +275,7 @@ GC_scratch_alloc.exit.i:                          ; preds = %bb.b
   br i1 %i.bc, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %GC_scratch_alloc.exit.i, %GC_scratch_alloc.exit.thread27.i, %GC_scratch_alloc.exit.thread24.i
-  %.026.i26.i = phi ptr [ %i.au, %GC_scratch_alloc.exit.thread24.i ], [ %i.aa, %GC_scratch_alloc.exit.i ], [ %i.al, %GC_scratch_alloc.exit.thread27.i ] ; 35 uses
+  %.026.i26.i = phi ptr [ %i.au, %GC_scratch_alloc.exit.thread24.i ], [ %i.aa, %GC_scratch_alloc.exit.i ], [ %i.al, %GC_scratch_alloc.exit.thread27.i ] ; 37 uses
   %i.bd = load i32, ptr @GC_print_stats, align 4
   %.not22.i = icmp eq i32 %i.bd, 0
   br i1 %.not22.i, label %bb.g, label %bb.f, !prof !47
@@ -357,17 +357,27 @@ vector.body:                                      ; preds = %bb.g
   br label %.loopexit.i
 
 .preheader29.i:                                   ; preds = %bb.g, %.preheader29.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1.a, %.preheader29.i ], [ 0, %bb.g ] ; 4 uses
-  %i.cm = urem i64 %indvars.iv.i, %i.w
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1.a, %.preheader29.i ], [ 0, %bb.g ] ; 6 uses
+  %5 = urem i64 %indvars.iv.i, %i.w
+  %6 = trunc nuw nsw i64 %5 to i16
+  %7 = getelementptr inbounds nuw [2 x i8], ptr %.026.i26.i, i64 %indvars.iv.i
+  store i16 %6, ptr %7, align 2
+  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
+  %8 = urem i64 %indvars.iv.next.i, %i.w
+  %9 = trunc nuw nsw i64 %8 to i16
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %.026.i26.i, i64 %indvars.iv.next.i
+  store i16 %9, ptr %10, align 2
+  %indvars.iv.next.i.1 = or disjoint i64 %indvars.iv.i, 2 ; 2 uses
+  %i.cm = urem i64 %indvars.iv.next.i.1, %i.w
   %i.cn = trunc nuw nsw i64 %i.cm to i16
-  %i.co = getelementptr inbounds nuw [2 x i8], ptr %.026.i26.i, i64 %indvars.iv.i
+  %i.co = getelementptr inbounds nuw [2 x i8], ptr %.026.i26.i, i64 %indvars.iv.next.i.1
   store i16 %i.cn, ptr %i.co, align 2
-  %indvars.iv.next.i.a = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
+  %indvars.iv.next.i.a = or disjoint i64 %indvars.iv.i, 3 ; 2 uses
   %i.cp = urem i64 %indvars.iv.next.i.a, %i.w
   %i.cq = trunc nuw nsw i64 %i.cp to i16
   %i.cr = getelementptr inbounds nuw [2 x i8], ptr %.026.i26.i, i64 %indvars.iv.next.i.a
   store i16 %i.cq, ptr %i.cr, align 2
-  %indvars.iv.next.i.1.a = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
+  %indvars.iv.next.i.1.a = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1.a, 256
   br i1 %exitcond.not.i.1, label %.loopexit.i, label %.preheader29.i, !llvm.loop !343
 

@@ -205,10 +205,13 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !107)
   %i.e = sdiv i32 %0, 32
   %i.f = sext i32 %i.e to i64                     ; 20 uses
-  %7 = srem i32 %5, 16
-  %i.g = sub nsw i32 %5, %7                       ; 2 uses
-  %8 = srem i32 %6, 16                            ; 2 uses
-  %i.h = sub nsw i32 %6, %8                       ; 5 uses
+  %7 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %6, i64 1
+  %9 = srem <2 x i32> %8, splat (i32 16)          ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %i.g = sub nsw i32 %5, %10                      ; 2 uses
+  %11 = extractelement <2 x i32> %9, i64 1        ; 2 uses
+  %i.h = sub nsw i32 %6, %11                      ; 5 uses
   %i.i = sdiv i32 %i.g, 4
   %i.j = sext i32 %i.i to i64                     ; 5 uses
   %i.k = icmp sgt i32 %i.g, 3
@@ -611,7 +614,7 @@ begin_hunk_1_@ggml_gemm_q4_0_8x8_q8_0:bb.a
 
 ._crit_edge1053.i:                                ; preds = %._crit_edge1053.i.loopexit164.unr-lcssa, %.lr.ph1048.us.i.epil, %._crit_edge.split.us.us.us.i, %.lr.ph.i, %.preheader1019.i
   %.1.lcssa.i = phi i64 [ %.0986.lcssa.i, %.preheader1019.i ], [ %i.nq, %.lr.ph.i ], [ %i.nq, %._crit_edge.split.us.us.us.i ], [ %i.nq, %.lr.ph1048.us.i.epil ], [ %i.nq, %._crit_edge1053.i.loopexit164.unr-lcssa ]
-  %.not.i = icmp eq i32 %8, 0
+  %.not.i = icmp eq i32 %11, 0
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge1053.i
@@ -1014,10 +1017,13 @@ bb.a:
   %i.f = alloca [16 x <8 x float>], align 32      ; 23 uses
   %i.g = sdiv i32 %0, 256
   %i.h = sext i32 %i.g to i64                     ; 20 uses
-  %7 = srem i32 %5, 16
-  %i.i = sub nsw i32 %5, %7                       ; 2 uses
-  %8 = srem i32 %6, 16                            ; 2 uses
-  %i.j = sub nsw i32 %6, %8                       ; 5 uses
+  %7 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %6, i64 1
+  %9 = srem <2 x i32> %8, splat (i32 16)          ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %i.i = sub nsw i32 %5, %10                      ; 2 uses
+  %11 = extractelement <2 x i32> %9, i64 1        ; 2 uses
+  %i.j = sub nsw i32 %6, %11                      ; 5 uses
   %i.k = sdiv i32 %i.i, 4
   %i.l = sext i32 %i.k to i64                     ; 5 uses
   %i.m = icmp sgt i32 %i.i, 3
@@ -1420,7 +1426,7 @@ bb.h:                                             ; preds = %bb.g
 
 ._crit_edge2333:                                  ; preds = %._crit_edge.split.us2347, %._crit_edge.split.us.us.us, %.lr.ph, %.preheader2269
   %.1.lcssa = phi i64 [ %.02228.lcssa, %.preheader2269 ], [ %i.zl, %.lr.ph ], [ %i.zl, %._crit_edge.split.us.us.us ], [ %i.zl, %._crit_edge.split.us2347 ]
-  %.not = icmp eq i32 %8, 0
+  %.not = icmp eq i32 %11, 0
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge2333
@@ -1823,10 +1829,13 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !154)
   %i.e = sdiv i32 %0, 32
   %i.f = sext i32 %i.e to i64                     ; 20 uses
-  %7 = srem i32 %5, 16
-  %i.g = sub nsw i32 %5, %7                       ; 2 uses
-  %8 = srem i32 %6, 16                            ; 2 uses
-  %i.h = sub nsw i32 %6, %8                       ; 5 uses
+  %7 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %6, i64 1
+  %9 = srem <2 x i32> %8, splat (i32 16)          ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %i.g = sub nsw i32 %5, %10                      ; 2 uses
+  %11 = extractelement <2 x i32> %9, i64 1        ; 2 uses
+  %i.h = sub nsw i32 %6, %11                      ; 5 uses
   %i.i = sdiv i32 %i.g, 4
   %i.j = sext i32 %i.i to i64                     ; 5 uses
   %i.k = icmp sgt i32 %i.g, 3
@@ -2229,7 +2238,7 @@ begin_hunk_5_@ggml_gemm_iq4_nl_8x8_q8_0:bb.a
 
 ._crit_edge1053.i:                                ; preds = %._crit_edge1053.i.loopexit164.unr-lcssa, %.lr.ph1048.us.i.epil, %._crit_edge.split.us.us.us.i, %.lr.ph.i, %.preheader1019.i
   %.1.lcssa.i = phi i64 [ %.0986.lcssa.i, %.preheader1019.i ], [ %i.nq, %.lr.ph.i ], [ %i.nq, %._crit_edge.split.us.us.us.i ], [ %i.nq, %.lr.ph1048.us.i.epil ], [ %i.nq, %._crit_edge1053.i.loopexit164.unr-lcssa ]
-  %.not.i = icmp eq i32 %8, 0
+  %.not.i = icmp eq i32 %11, 0
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge1053.i
@@ -2632,10 +2641,13 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !181)
   %i.e = sdiv i32 %0, 32
   %i.f = sext i32 %i.e to i64                     ; 20 uses
-  %7 = srem i32 %5, 16
-  %i.g = sub nsw i32 %5, %7                       ; 2 uses
-  %8 = srem i32 %6, 16                            ; 2 uses
-  %i.h = sub nsw i32 %6, %8                       ; 5 uses
+  %7 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %6, i64 1
+  %9 = srem <2 x i32> %8, splat (i32 16)          ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %i.g = sub nsw i32 %5, %10                      ; 2 uses
+  %11 = extractelement <2 x i32> %9, i64 1        ; 2 uses
+  %i.h = sub nsw i32 %6, %11                      ; 5 uses
   %i.i = sdiv i32 %i.g, 4
   %i.j = sext i32 %i.i to i64                     ; 5 uses
   %i.k = icmp sgt i32 %i.g, 3
@@ -3038,7 +3050,7 @@ begin_hunk_7_@ggml_gemm_mxfp4_8x8_q8_0:bb.a
 
 ._crit_edge1137.i:                                ; preds = %._crit_edge1137.i.loopexit164.unr-lcssa, %.lr.ph1132.us.i.epil, %._crit_edge.split.us.us.us.i, %.lr.ph.i, %.preheader1103.i
   %.1.lcssa.i = phi i64 [ %.01070.lcssa.i, %.preheader1103.i ], [ %i.nr, %.lr.ph.i ], [ %i.nr, %._crit_edge.split.us.us.us.i ], [ %i.nr, %.lr.ph1132.us.i.epil ], [ %i.nr, %._crit_edge1137.i.loopexit164.unr-lcssa ]
-  %.not.i = icmp eq i32 %8, 0
+  %.not.i = icmp eq i32 %11, 0
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge1137.i
@@ -3441,10 +3453,13 @@ bb.a:
   %i.f = alloca [16 x <8 x float>], align 32      ; 23 uses
   %i.g = sdiv i32 %0, 256
   %i.h = sext i32 %i.g to i64                     ; 20 uses
-  %7 = srem i32 %5, 16
-  %i.i = sub nsw i32 %5, %7                       ; 2 uses
-  %8 = srem i32 %6, 16                            ; 2 uses
-  %i.j = sub nsw i32 %6, %8                       ; 5 uses
+  %7 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %6, i64 1
+  %9 = srem <2 x i32> %8, splat (i32 16)          ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %i.i = sub nsw i32 %5, %10                      ; 2 uses
+  %11 = extractelement <2 x i32> %9, i64 1        ; 2 uses
+  %i.j = sub nsw i32 %6, %11                      ; 5 uses
   %i.k = sdiv i32 %i.i, 4
   %i.l = sext i32 %i.k to i64                     ; 5 uses
   %i.m = icmp sgt i32 %i.i, 3
@@ -3847,7 +3862,7 @@ bb.h:                                             ; preds = %bb.g
 
 ._crit_edge4113:                                  ; preds = %._crit_edge.split.us4127, %._crit_edge.split.us.us.us, %.lr.ph, %.preheader4049
   %.1.lcssa = phi i64 [ %.04008.lcssa, %.preheader4049 ], [ %i.apo, %.lr.ph ], [ %i.apo, %._crit_edge.split.us.us.us ], [ %i.apo, %._crit_edge.split.us4127 ]
-  %.not = icmp eq i32 %8, 0
+  %.not = icmp eq i32 %11, 0
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge4113

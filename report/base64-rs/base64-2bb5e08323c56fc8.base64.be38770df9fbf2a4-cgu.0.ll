@@ -204,26 +204,23 @@ _RNvNtNtNtCsgkxsgNF9KUO_6base646engine15general_purpose6decode18complete_quads_l
 
 .preheader.i.i:                                   ; preds = %_RNvNtNtNtCsgkxsgNF9KUO_6base646engine15general_purpose6decode18complete_quads_len.exit.i
   %.not.i.i1028.i.i = icmp eq i64 %i.y, 0
-  br i1 %.not.i.i1028.i.i, label %._crit_edge.i.i, label %.lr.ph.preheader.i.i
-
-.lr.ph.preheader.i.i:                             ; preds = %.preheader.i.i
-  %8 = udiv i64 %5, 24                            ; 2 uses
-  br label %.lr.ph.i.i
+  br i1 %.not.i.i1028.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 bb.h:                                             ; preds = %_RNvNtNtNtCsgkxsgNF9KUO_6base646engine15general_purpose6decode18complete_quads_len.exit.i
   tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.y, i64 noundef range(i64 0, -9223372036854775808) %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #18, !noalias !159
   unreachable
 
-.lr.ph.i.i:                                       ; preds = %bb.bh, %.lr.ph.preheader.i.i
-  %.sroa.0.01031.i.i = phi ptr [ %i.z, %bb.bh ], [ %2, %.lr.ph.preheader.i.i ] ; 33 uses
-  %.sroa.684.01030.i.i = phi i64 [ %i.aa, %bb.bh ], [ %i.y, %.lr.ph.preheader.i.i ]
-  %.sroa.13.01029.i.i = phi i64 [ %i.ab, %bb.bh ], [ 0, %.lr.ph.preheader.i.i ] ; 14 uses
+.lr.ph.i.i:                                       ; preds = %.preheader.i.i, %bb.bh
+  %.sroa.0.01031.i.i = phi ptr [ %i.z, %bb.bh ], [ %2, %.preheader.i.i ] ; 33 uses
+  %.sroa.684.01030.i.i = phi i64 [ %i.aa, %bb.bh ], [ %i.y, %.preheader.i.i ]
+  %.sroa.13.01029.i.i = phi i64 [ %i.ab, %bb.bh ], [ 0, %.preheader.i.i ] ; 13 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.01031.i.i, i64 32
   %i.aa = add i64 %.sroa.684.01030.i.i, -32       ; 2 uses
   %i.ab = add nuw nsw i64 %.sroa.13.01029.i.i, 1
-  %i.ac = mul nuw nsw i64 %.sroa.13.01029.i.i, 24 ; 2 uses
-  %exitcond.i.i = icmp eq i64 %.sroa.13.01029.i.i, %8
-  br i1 %exitcond.i.i, label %bb.t, label %bb.u, !prof !7
+  %i.ac = mul nuw nsw i64 %.sroa.13.01029.i.i, 24 ; 3 uses
+  %8 = add nuw i64 %i.ac, 24                      ; 2 uses
+  %.not16.i.i = icmp ugt i64 %8, %5
+  br i1 %.not16.i.i, label %bb.t, label %bb.u, !prof !7
 
 ._crit_edge.i.i:                                  ; preds = %bb.bh, %.preheader.i.i
   %i.ad = lshr exact i64 %i.y, 2
@@ -340,9 +337,7 @@ bb.s:                                             ; preds = %bb.p
   br i1 %.not.i.i79.i.i, label %_RNvNtNtNtCsgkxsgNF9KUO_6base646engine15general_purpose6decode21decode_complete_quads.exit.i, label %.lr.ph1044.i.i
 
 bb.t:                                             ; preds = %.lr.ph.i.i
-  %9 = mul nuw nsw i64 %8, 24
-  %10 = add nuw i64 %9, 24
-  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.ac, i64 noundef %10, i64 noundef range(i64 0, -9223372036854775808) %5, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @19) #18, !noalias !159
+  tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.ac, i64 noundef %8, i64 noundef range(i64 0, -9223372036854775808) %5, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @19) #18, !noalias !159
   unreachable
 
 bb.u:                                             ; preds = %.lr.ph.i.i

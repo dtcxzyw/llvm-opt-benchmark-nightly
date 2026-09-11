@@ -204,10 +204,8 @@ bb.u:                                             ; preds = %bb.s, %bb.t
   %i.bz = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bw, <2 x float> %i.by, <2 x float> %i.bs)
   %i.ca = call <2 x float> @llvm.floor.v2f32(<2 x float> %i.bz)
   %i.cb = fptosi <2 x float> %i.ca to <2 x i32>
-  %i.cc = sitofp <2 x i32> %i.cb to <2 x float>   ; 2 uses
-  %shift498 = shufflevector <2 x float> %i.cc, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop499 = fadd nnan <2 x float> %shift498, %i.cc
-  %67 = extractelement <2 x float> %foldExtExtBinop499, i64 0
+  %i.cc = sitofp <2 x i32> %i.cb to <2 x float>
+  %67 = call reassoc nnan float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.cc)
   %i.cd = fmul nnan float %67, 5.000000e-01       ; 5 uses
   store float %i.cd, ptr %i.bl, align 4, !tbaa !89
   store float %i.cd, ptr %i.bk, align 8, !tbaa !88
@@ -609,6 +607,9 @@ declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #7
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

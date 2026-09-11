@@ -29,12 +29,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.j = fcmp oeq double %i.c, 0.000000e+00
-  %i.k = add nuw i64 %0, 1                        ; 2 uses
+  %i.k = add nuw i64 %0, 1                        ; 3 uses
   %i.l = tail call i64 @llvm.smax.i64(i64 %i.k, i64 2)
   %i.m = add nsw i64 %i.l, -1                     ; 4 uses
-  %min.iters.check362 = icmp sgt i64 %i.k, 20
-  %ident.check351.not = icmp eq i64 %2, 1
-  %or.cond412 = and i1 %min.iters.check362, %ident.check351.not ; 2 uses
+  %ident.check351.not = icmp eq i64 %2, 1         ; 2 uses
   br i1 %i.j, label %.lr.ph220.preheader, label %.lr.ph217.preheader
 
 .lr.ph220.preheader:                              ; preds = %bb.d
@@ -42,6 +40,8 @@ bb.d:                                             ; preds = %bb.c
   %i.o = load double, ptr %i.n, align 8, !tbaa !41 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.q = load double, ptr %i.p, align 8, !tbaa !41 ; 2 uses
+  %min.iters.check362 = icmp sgt i64 %i.k, 72
+  %or.cond412 = and i1 %min.iters.check362, %ident.check351.not
   br i1 %or.cond412, label %vector.memcheck352, label %.lr.ph220.preheader417
 
 vector.memcheck352:                               ; preds = %.lr.ph220.preheader
@@ -115,7 +115,9 @@ middle.block376:                                  ; preds = %vector.body369
   %i.an = load double, ptr %i.am, align 8, !tbaa !41 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ap = load double, ptr %i.ao, align 8, !tbaa !41 ; 2 uses
-  br i1 %or.cond412, label %vector.memcheck326, label %.lr.ph217.preheader419
+  %min.iters.check333 = icmp sgt i64 %i.k, 64
+  %or.cond413 = and i1 %min.iters.check333, %ident.check351.not
+  br i1 %or.cond413, label %vector.memcheck326, label %.lr.ph217.preheader419
 
 vector.memcheck326:                               ; preds = %.lr.ph217.preheader
   %i.aq = add nuw nsw i64 %2, 1
@@ -198,7 +200,7 @@ middle.block347:                                  ; preds = %vector.body340
   %i.bw = add nuw i64 %0, 1                       ; 2 uses
   %i.bx = tail call i64 @llvm.smax.i64(i64 %i.bw, i64 2)
   %i.by = add nsw i64 %i.bx, -1                   ; 2 uses
-  %min.iters.check391 = icmp sgt i64 %i.bw, 16
+  %min.iters.check391 = icmp sgt i64 %i.bw, 56
   %ident.check380.not = icmp eq i64 %2, 1
   %or.cond415 = and i1 %min.iters.check391, %ident.check380.not
   br i1 %or.cond415, label %vector.memcheck381, label %.lr.ph223.preheader416

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ea = load float, ptr %i.cm, align 4, !tbaa !225 ; 2 uses
   %i.eb = call float @llvm.fmuladd.f32(float %i.ea, float -2.000000e+00, float %i.cp)
   %i.ec = fadd float %i.cr, %i.eb
-  %i.ed = fpext float %i.ec to double             ; 4 uses
+  %i.ed = fpext float %i.ec to double             ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.cm, i64 40
   %i.ef = load float, ptr %i.ee, align 4, !tbaa !225
   %i.eg = getelementptr inbounds nuw i8, ptr %i.cm, i64 28
@@ -256,11 +256,10 @@ bb.g:                                             ; preds = %bb.f
   %i.fy = fpext <2 x float> %i.fx to <2 x double>
   %i.fz = fmul double %i.eu, 2.500000e-01         ; 4 uses
   %i.ga = fmul <2 x double> %i.fy, splat (double 2.500000e-01) ; 7 uses
-  %3 = extractelement <2 x double> %i.fu, i64 1   ; 2 uses
-  %4 = fadd double %3, %i.ed
-  %5 = extractelement <2 x double> %i.fu, i64 0   ; 2 uses
-  %6 = fadd double %5, %i.ed
-  %7 = fadd double %5, %3
+  %3 = insertelement <2 x double> poison, double %i.ed, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %5 = fadd <2 x double> %4, %i.fu                ; 2 uses
+  %6 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.fu)
   %i.gb = shufflevector <4 x double> %i.dn, <4 x double> poison, <2 x i32> <i32 3, i32 poison> ; 2 uses
   %i.gc = insertelement <2 x double> %i.gb, double %sqrt.i22, i64 1 ; 2 uses
   %i.gd = shufflevector <2 x double> %i.gc, <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
@@ -270,16 +269,13 @@ bb.g:                                             ; preds = %bb.f
   %i.gh = insertelement <2 x double> %i.ga, double %i.fz, i64 0 ; 3 uses
   %i.gi = fneg <2 x double> %i.gh
   %i.gj = fmul <2 x double> %i.gh, %i.gi
-  %8 = insertelement <2 x double> poison, double %i.ed, i64 0
-  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.gk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fu, <2 x double> %9, <2 x double> %i.gj) ; 2 uses
+  %i.gk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fu, <2 x double> %4, <2 x double> %i.gj) ; 2 uses
   %i.gl = shufflevector <4 x double> %i.dp, <4 x double> poison, <2 x i32> <i32 3, i32 3>
-  %10 = insertelement <2 x double> %i.gk, double %6, i64 1
-  %i.gm = fmul <2 x double> %i.gl, %10
+  %7 = shufflevector <2 x double> %i.gk, <2 x double> %5, <2 x i32> <i32 0, i32 2>
+  %i.gm = fmul <2 x double> %i.gl, %7
   %i.gn = shufflevector <4 x double> %i.dp, <4 x double> poison, <2 x i32> <i32 2, i32 2>
-  %11 = shufflevector <2 x double> %i.gk, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %12 = insertelement <2 x double> %11, double %4, i64 1
-  %i.go = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gn, <2 x double> %12, <2 x double> %i.gm) ; 2 uses
+  %8 = shufflevector <2 x double> %i.gk, <2 x double> %5, <2 x i32> <i32 1, i32 3>
+  %i.go = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gn, <2 x double> %8, <2 x double> %i.gm) ; 2 uses
   %i.gp = extractelement <2 x double> %i.ga, i64 0 ; 2 uses
   %i.gq = fneg double %i.gp
   %i.gr = fmul double %i.gp, %i.gq
@@ -287,7 +283,7 @@ bb.g:                                             ; preds = %bb.f
   %i.gt = shufflevector <2 x double> %i.fu, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.gu = shufflevector <4 x double> %i.gt, <4 x double> %i.dp, <2 x i32> <i32 0, i32 5>
   %i.gv = shufflevector <2 x double> %i.fu, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.gw = insertelement <2 x double> %i.gv, double %7, i64 1
+  %i.gw = insertelement <2 x double> %i.gv, double %6, i64 1
   %i.gx = insertelement <2 x double> %i.go, double %i.gr, i64 0
   %i.gy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gu, <2 x double> %i.gw, <2 x double> %i.gx) ; 2 uses
   %i.gz = extractelement <2 x double> %i.gy, i64 0
@@ -688,6 +684,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.ctpop.v2i64(<2 x i64>) #9

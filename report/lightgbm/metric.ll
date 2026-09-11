@@ -204,10 +204,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.aq = fmul double %i.am, %i.ap
   %i.ar = insertelement <2 x double> poison, double %i.aq, i64 0
   %i.as = insertelement <2 x double> %i.ar, double %i.ao, i64 1
-  %i.at = fdiv <2 x double> %i.as, %i.v           ; 2 uses
-  %shift = shufflevector <2 x double> %i.at, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.at, %shift
-  %5 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.at = fdiv <2 x double> %i.as, %i.v
+  %5 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.at)
   %i.au = getelementptr inbounds [4 x i8], ptr %i.x, i64 %indvars.iv
   %i.av = load float, ptr %i.au, align 4, !tbaa !108
   %i.aw = fpext float %i.av to double
@@ -489,10 +487,8 @@ bb.d:                                             ; preds = %bb.c
   %i.as = fmul double %i.ao, %i.ai
   %i.at = insertelement <2 x double> poison, double %i.ar, i64 0
   %i.au = insertelement <2 x double> %i.at, double %i.as, i64 1
-  %i.av = fdiv <2 x double> %i.au, %i.al          ; 2 uses
-  %shift = shufflevector <2 x double> %i.av, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %shift, %i.av
-  %6 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.av = fdiv <2 x double> %i.au, %i.al
+  %6 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.av)
   %i.aw = load ptr, ptr %i.r, align 8, !tbaa !275
   %i.ax = getelementptr inbounds [4 x i8], ptr %i.aw, i64 %indvars.iv
   %i.ay = load float, ptr %i.ax, align 4, !tbaa !108
@@ -894,6 +890,9 @@ declare float @llvm.log.f32(float) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #16
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

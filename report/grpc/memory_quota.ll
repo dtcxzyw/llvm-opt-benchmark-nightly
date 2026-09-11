@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 4 uses
   %2 = alloca %"class.absl::lts_20250512::log_internal::LogMessage", align 8 ; 8 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %.val = load ptr, ptr %0, align 8, !tbaa !157   ; 23 uses
+  %.val = load ptr, ptr %0, align 8, !tbaa !157   ; 22 uses
   %i.c = getelementptr i8, ptr %0, i64 8
   %.val1 = load ptr, ptr %i.c, align 8, !tbaa !742
   %.val1.val = load double, ptr %.val1, align 8, !tbaa !44
@@ -243,11 +243,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b
   store i8 0, ptr %i.h, align 8, !tbaa !288
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 64 ; 2 uses
-  %4 = load double, ptr %i.r, align 8, !tbaa !290
-  %5 = getelementptr inbounds nuw i8, ptr %.val, i64 72
-  %6 = load double, ptr %5, align 8, !tbaa !182
-  %7 = fadd double %4, %6
-  %i.s = fmul double %7, 5.000000e-01             ; 2 uses
+  %4 = load <2 x double>, ptr %i.r, align 8, !tbaa !44
+  %5 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %4)
+  %i.s = fmul double %5, 5.000000e-01             ; 2 uses
   store double %i.s, ptr %i.r, align 8, !tbaa !290
   br label %._crit_edge.i.i.i.i.i
 
@@ -649,6 +647,9 @@ declare i64 @llvm.umin.i64(i64, i64) #35
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #35
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #35
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

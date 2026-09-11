@@ -205,10 +205,10 @@ bb.ap:                                            ; preds = %bb.ao
   %i.mu = shufflevector <4 x float> %i.lt, <4 x float> poison, <2 x i32> <i32 1, i32 3>
   %i.mv = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.mt, <2 x float> splat (float -2.000000e+00), <2 x float> %i.mu)
   %i.mw = fadd <2 x float> %i.mq, %i.mv
-  %i.mx = fpext <2 x float> %i.mw to <2 x double> ; 2 uses
-  %i.my = extractelement <2 x double> %i.mx, i64 1 ; 2 uses
-  %i.mz = extractelement <2 x double> %i.mx, i64 0 ; 2 uses
-  %10 = fadd double %i.mz, %i.my
+  %i.mx = fpext <2 x float> %i.mw to <2 x double> ; 3 uses
+  %i.my = extractelement <2 x double> %i.mx, i64 1
+  %i.mz = extractelement <2 x double> %i.mx, i64 0
+  %10 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.mx)
   %i.na = getelementptr inbounds nuw i8, ptr %i.lq, i64 40
   %i.nb = load float, ptr %i.na, align 4, !tbaa !47
   %i.nc = getelementptr inbounds nuw i8, ptr %i.lq, i64 32
@@ -611,10 +611,10 @@ bb.bi:                                            ; preds = %bb.bh
   %i.vc = shufflevector <4 x float> %i.ub, <4 x float> poison, <2 x i32> <i32 1, i32 3>
   %i.vd = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.vb, <2 x float> splat (float -2.000000e+00), <2 x float> %i.vc)
   %i.ve = fadd <2 x float> %i.uy, %i.vd
-  %i.vf = fpext <2 x float> %i.ve to <2 x double> ; 2 uses
-  %i.vg = extractelement <2 x double> %i.vf, i64 1 ; 2 uses
-  %i.vh = extractelement <2 x double> %i.vf, i64 0 ; 2 uses
-  %11 = fadd double %i.vh, %i.vg
+  %i.vf = fpext <2 x float> %i.ve to <2 x double> ; 3 uses
+  %i.vg = extractelement <2 x double> %i.vf, i64 1
+  %i.vh = extractelement <2 x double> %i.vf, i64 0
+  %11 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.vf)
   %i.vi = getelementptr inbounds nuw i8, ptr %i.ty, i64 40
   %i.vj = load float, ptr %i.vi, align 4, !tbaa !47
   %i.vk = getelementptr inbounds nuw i8, ptr %i.ty, i64 32
@@ -1017,7 +1017,7 @@ bb.ao:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.mr = shufflevector <4 x float> %i.lq, <4 x float> poison, <2 x i32> <i32 1, i32 3>
   %i.ms = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.mq, <2 x float> splat (float -2.000000e+00), <2 x float> %i.mr)
   %i.mt = fadd <2 x float> %i.mb, %i.ms
-  %i.mu = fpext <2 x float> %i.mt to <2 x double> ; 5 uses
+  %i.mu = fpext <2 x float> %i.mt to <2 x double> ; 6 uses
   %i.mv = call float @llvm.fmuladd.f32(float %i.mo, float -2.000000e+00, float %i.mn)
   %i.mw = extractelement <2 x float> %i.lz, i64 0
   %i.mx = fadd float %i.mw, %i.mv
@@ -1034,8 +1034,8 @@ bb.ao:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.ni = getelementptr inbounds nuw i8, ptr %i.ll, i64 64
   %i.nj = getelementptr inbounds nuw i8, ptr %i.ll, i64 60
   %i.nk = getelementptr inbounds nuw i8, ptr %i.ll, i64 68
-  %i.nl = extractelement <2 x double> %i.mu, i64 1 ; 2 uses
-  %i.nm = extractelement <2 x double> %i.mu, i64 0 ; 3 uses
+  %i.nl = extractelement <2 x double> %i.mu, i64 1
+  %i.nm = extractelement <2 x double> %i.mu, i64 0 ; 2 uses
   %i.nn = extractelement <2 x double> %i.mf, i64 0
   %shift = shufflevector <2 x double> %i.mf, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fmul <2 x double> %i.mf, %shift
@@ -1086,7 +1086,7 @@ bb.ao:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.pf = insertelement <2 x double> poison, double %i.my, i64 0
   %i.pg = shufflevector <2 x double> %i.pf, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ph = fadd <2 x double> %i.pg, %i.mu          ; 2 uses
-  %10 = fadd double %i.nm, %i.nl
+  %10 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.mu)
   %i.pi = insertelement <2 x double> poison, double %i.lx, i64 0 ; 2 uses
   %i.pj = insertelement <2 x double> %i.pi, double %sqrt.i, i64 1 ; 2 uses
   %i.pk = shufflevector <2 x double> %i.pj, <2 x double> %i.mf, <2 x i32> <i32 3, i32 1> ; 2 uses
@@ -1489,7 +1489,7 @@ bb.bh:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.xl = shufflevector <4 x float> %i.wk, <4 x float> poison, <2 x i32> <i32 1, i32 3>
   %i.xm = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.xk, <2 x float> splat (float -2.000000e+00), <2 x float> %i.xl)
   %i.xn = fadd <2 x float> %i.wv, %i.xm
-  %i.xo = fpext <2 x float> %i.xn to <2 x double> ; 5 uses
+  %i.xo = fpext <2 x float> %i.xn to <2 x double> ; 6 uses
   %i.xp = call float @llvm.fmuladd.f32(float %i.xi, float -2.000000e+00, float %i.xh)
   %i.xq = extractelement <2 x float> %i.wt, i64 0
   %i.xr = fadd float %i.xq, %i.xp
@@ -1506,8 +1506,8 @@ bb.bh:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.yc = getelementptr inbounds nuw i8, ptr %i.wf, i64 64
   %i.yd = getelementptr inbounds nuw i8, ptr %i.wf, i64 60
   %i.ye = getelementptr inbounds nuw i8, ptr %i.wf, i64 68
-  %i.yf = extractelement <2 x double> %i.xo, i64 1 ; 2 uses
-  %i.yg = extractelement <2 x double> %i.xo, i64 0 ; 3 uses
+  %i.yf = extractelement <2 x double> %i.xo, i64 1
+  %i.yg = extractelement <2 x double> %i.xo, i64 0 ; 2 uses
   %i.yh = extractelement <2 x double> %i.wz, i64 0
   %shift235 = shufflevector <2 x double> %i.wz, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop236 = fmul <2 x double> %i.wz, %shift235
@@ -1558,7 +1558,7 @@ bb.bh:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.zz = insertelement <2 x double> poison, double %i.xs, i64 0
   %i.aaa = shufflevector <2 x double> %i.zz, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aab = fadd <2 x double> %i.aaa, %i.xo        ; 2 uses
-  %11 = fadd double %i.yg, %i.yf
+  %11 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.xo)
   %i.aac = insertelement <2 x double> poison, double %i.wr, i64 0 ; 2 uses
   %i.aad = insertelement <2 x double> %i.aac, double %sqrt.i104, i64 1 ; 2 uses
   %i.aae = shufflevector <2 x double> %i.aad, <2 x double> %i.wz, <2 x i32> <i32 3, i32 1> ; 2 uses
@@ -1959,6 +1959,9 @@ declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #9

@@ -204,21 +204,14 @@ bb.a:
   %i.j = load i32, ptr @hf_ansi_637_reserved_bits_8_0f, align 4
   %i.k = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.j, ptr noundef %0, i32 noundef %i.g, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.l = add i32 %.032, 3                         ; 2 uses
-  %.neg = sub i32 %4, %i.l
-  %6 = add i32 %.neg, %3                          ; 2 uses
+  %.neg = sub i32 %i.l, %4                        ; 2 uses
+  %6 = sub i32 %3, %.neg                          ; 2 uses
   %i.m = icmp ugt i32 %6, 2
-  br i1 %i.m, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !17
+  br i1 %i.m, label %.lr.ph, label %._crit_edge, !llvm.loop !17
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %7 = add i32 %3, -3                             ; 2 uses
-  %8 = urem i32 %7, 3
-  %9 = sub nuw i32 %7, %8
-  %10 = add nuw i32 %9, 3
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.lcssa31 = phi i32 [ 0, %bb.a ], [ %10, %._crit_edge.loopexit ]
-  %.lcssa = phi i32 [ %3, %bb.a ], [ %6, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %.lcssa31 = phi i32 [ 0, %bb.a ], [ %.neg, %.lr.ph ]
+  %.lcssa = phi i32 [ %3, %bb.a ], [ %6, %.lr.ph ]
   %i.n = icmp ugt i32 %3, %.lcssa31
   br i1 %i.n, label %bb.b, label %bb.c
 

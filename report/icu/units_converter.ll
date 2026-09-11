@@ -204,12 +204,10 @@ bb.a:
   %.1 = select i1 %i.e, double %i.d, double %i.c
   %i.f = fptosi double %.1 to i32
   %i.g = sext i32 %i.f to i64
-  %i.h = getelementptr inbounds [8 x i8], ptr %2, i64 %i.g ; 2 uses
-  %4 = load double, ptr %i.h, align 8, !tbaa !13
-  %5 = getelementptr i8, ptr %i.h, i64 8
-  %6 = load double, ptr %5, align 8, !tbaa !13
-  %7 = fadd double %4, %6
-  %i.i = fmul double %7, 5.000000e-01
+  %i.h = getelementptr inbounds [8 x i8], ptr %2, i64 %i.g
+  %4 = load <2 x double>, ptr %i.h, align 8, !tbaa !13
+  %5 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %4)
+  %i.i = fmul double %5, 5.000000e-01
   ret double %i.i
 }
 
@@ -292,12 +290,10 @@ bb.d:                                             ; preds = %bb.c
   %.1.i = select i1 %i.l, double 1.700000e+01, double %i.k
   %i.m = fptosi double %.1.i to i32
   %i.n = sext i32 %i.m to i64
-  %i.o = getelementptr inbounds [8 x i8], ptr @_ZN6icu_785unitsL26minMetersPerSecForBeaufortE, i64 %i.n ; 2 uses
-  %2 = load double, ptr %i.o, align 8, !tbaa !13
-  %3 = getelementptr i8, ptr %i.o, i64 8
-  %4 = load double, ptr %3, align 8, !tbaa !13
-  %5 = fadd double %2, %4
-  %i.p = fmul double %5, 5.000000e-01
+  %i.o = getelementptr inbounds [8 x i8], ptr @_ZN6icu_785unitsL26minMetersPerSecForBeaufortE, i64 %i.n
+  %2 = load <2 x double>, ptr %i.o, align 8, !tbaa !13
+  %3 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %2)
+  %i.p = fmul double %3, 5.000000e-01
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
@@ -435,12 +431,10 @@ bb.d:                                             ; preds = %bb.c
   %.1.i = select i1 %i.l, double 1.700000e+01, double %i.k
   %i.m = fptosi double %.1.i to i32
   %i.n = sext i32 %i.m to i64
-  %i.o = getelementptr inbounds [8 x i8], ptr @_ZN6icu_785unitsL26minMetersPerSecForBeaufortE, i64 %i.n ; 2 uses
-  %2 = load double, ptr %i.o, align 8, !tbaa !13
-  %3 = getelementptr i8, ptr %i.o, i64 8
-  %4 = load double, ptr %3, align 8, !tbaa !13
-  %5 = fadd double %2, %4
-  %i.p = fmul double %5, 5.000000e-01
+  %i.o = getelementptr inbounds [8 x i8], ptr @_ZN6icu_785unitsL26minMetersPerSecForBeaufortE, i64 %i.n
+  %2 = load <2 x double>, ptr %i.o, align 8, !tbaa !13
+  %3 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %2)
+  %i.p = fmul double %3, 5.000000e-01
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
@@ -769,6 +763,9 @@ declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

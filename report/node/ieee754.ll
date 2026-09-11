@@ -205,24 +205,20 @@ bb.e:                                             ; preds = %bb.d
   %i.n = phi i1 [ true, %bb.e ], [ false, %bb.d ], [ false, %bb.c ]
   %.177.i = phi double [ %i.m, %bb.e ], [ %0, %bb.d ], [ %0, %bb.c ] ; 5 uses
   %i.o = fmul double %.177.i, %.177.i             ; 5 uses
-  %i.p = fmul double %i.o, %i.o                   ; 5 uses
-  %1 = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.p, i64 0 ; 5 uses
-  %2 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %1, <2 x double> <double f0xBEF375CBDB605373, double 0.000000e+00>, <2 x double> <double f0x3F147E88A03792A6, double 0.000000e+00>)
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %1, <2 x double> %2, <2 x double> <double f0x3F4344D8F2F26501, double 0.000000e+00>)
-  %4 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %1, <2 x double> %3, <2 x double> <double f0x3F6D6D22C9560328, double 0.000000e+00>)
-  %i.q = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %1, <2 x double> %4, <2 x double> <double f0x3F9664F48406D637, double f0x3EFB2A7074BF7AD4>)
-  %5 = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.r = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %5, <2 x double> %i.q, <2 x double> <double f0x3FC111111110FE7A, double f0x3F12B80F32F0A7E9>) ; 2 uses
-  %6 = extractelement <2 x double> %i.r, i64 1
-  %7 = tail call double @llvm.fmuladd.f64(double %i.p, double %6, double f0x3F3026F71A8D1068)
-  %8 = tail call double @llvm.fmuladd.f64(double %i.p, double %7, double f0x3F57DBC8FEE08315)
-  %9 = tail call double @llvm.fmuladd.f64(double %i.p, double %8, double f0x3F8226E3E96E8493)
-  %10 = tail call double @llvm.fmuladd.f64(double %i.p, double %9, double f0x3FABA1BA1BB341FE)
-  %11 = fmul double %i.o, %10
+  %i.p = fmul double %i.o, %i.o                   ; 2 uses
+  %1 = tail call double @llvm.fmuladd.f64(double %i.p, double f0x3EFB2A7074BF7AD4, double f0x3F12B80F32F0A7E9)
+  %2 = insertelement <2 x double> poison, double %i.p, i64 0 ; 2 uses
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
+  %4 = insertelement <2 x double> <double f0xBEF375CBDB605373, double poison>, double %1, i64 1
+  %i.q = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %4, <2 x double> <double f0x3F147E88A03792A6, double f0x3F3026F71A8D1068>)
+  %i.r = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %i.q, <2 x double> <double f0x3F4344D8F2F26501, double f0x3F57DBC8FEE08315>)
+  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %i.r, <2 x double> <double f0x3F6D6D22C9560328, double f0x3F8226E3E96E8493>)
+  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %5, <2 x double> <double f0x3F9664F48406D637, double f0x3FABA1BA1BB341FE>)
+  %7 = insertelement <2 x double> %2, double %i.o, i64 1
+  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %6, <2 x double> <double f0x3FC111111110FE7A, double -0.000000e+00>)
   %i.s = fmul double %.177.i, %i.o                ; 2 uses
-  %12 = extractelement <2 x double> %i.r, i64 0
-  %13 = fadd double %12, %11
-  %i.t = tail call double @llvm.fmuladd.f64(double %i.s, double %13, double 0.000000e+00)
+  %9 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %8)
+  %i.t = tail call double @llvm.fmuladd.f64(double %i.s, double %9, double 0.000000e+00)
   %i.u = tail call double @llvm.fmuladd.f64(double %i.o, double %i.t, double 0.000000e+00)
   %i.v = tail call double @llvm.fmuladd.f64(double %i.s, double f0x3FD5555555555563, double %i.u) ; 2 uses
   %i.w = fadd double %.177.i, %i.v                ; 4 uses
@@ -624,6 +620,9 @@ declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

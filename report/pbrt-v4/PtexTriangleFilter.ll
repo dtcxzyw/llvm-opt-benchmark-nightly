@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.e = load <2 x float>, ptr %i.d, align 4, !tbaa !32 ; 2 uses
   %i.f = fcmp ogt <2 x float> %i.e, zeroinitializer
-  %i.g = select <2 x i1> %i.f, <2 x float> %i.e, <2 x float> zeroinitializer ; 4 uses
+  %i.g = select <2 x i1> %i.f, <2 x float> %i.e, <2 x float> zeroinitializer ; 3 uses
   store <2 x float> %i.g, ptr %i.d, align 4, !tbaa !32
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %i.i = load float, ptr %i.h, align 4, !tbaa !44 ; 2 uses
@@ -223,9 +223,7 @@ bb.a:
   store <2 x float> %i.t, ptr %i.l, align 4, !tbaa !32
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.v = load float, ptr %i.u, align 4, !tbaa !45 ; 2 uses
-  %shift = shufflevector <2 x float> %i.g, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.g, %shift
-  %6 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %6 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.g)
   %i.w = fsub float 1.000000e+00, %6              ; 2 uses
   %i.x = fcmp olt float %i.v, %i.w
   %i.y = select i1 %i.x, float %i.v, float %i.w
@@ -626,6 +624,9 @@ declare i8 @llvm.smin.i8(i8, i8) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5

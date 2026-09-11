@@ -205,10 +205,8 @@ bb.b:                                             ; preds = %_ZStmlIdESt7complex
   %i.k = fneg double %i.j
   %i.l = load <2 x double>, ptr %i.g, align 8     ; 4 uses
   %i.m = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.n = fmul <2 x double> %i.i, %i.l             ; 2 uses
-  %shift = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.n, %shift
-  %2 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %i.n = fmul <2 x double> %i.i, %i.l
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.n) ; 3 uses
   %i.o = fmul <2 x double> %i.i, %i.m             ; 2 uses
   %shift15 = shufflevector <2 x double> %i.o, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop16 = fsub <2 x double> %i.o, %shift15
@@ -295,10 +293,8 @@ bb.b:                                             ; preds = %_ZStmlIdESt7complex
   %i.k = fneg double %i.j
   %i.l = load <2 x double>, ptr %i.g, align 8     ; 4 uses
   %i.m = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.n = fmul <2 x double> %i.i, %i.l             ; 2 uses
-  %shift = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.n, %shift
-  %2 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %i.n = fmul <2 x double> %i.i, %i.l
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.n) ; 3 uses
   %i.o = fmul <2 x double> %i.i, %i.m             ; 2 uses
   %shift15 = shufflevector <2 x double> %i.o, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop16 = fsub <2 x double> %i.o, %shift15
@@ -453,10 +449,8 @@ bb.c:                                             ; preds = %_ZStmlIdESt7complex
   %i.r = fneg double %i.q
   %i.s = load <2 x double>, ptr %i.m, align 8     ; 4 uses
   %i.t = shufflevector <2 x double> %i.s, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.u = fmul <2 x double> %i.p, %i.s             ; 2 uses
-  %shift = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.u, %shift
-  %2 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %i.u = fmul <2 x double> %i.p, %i.s
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.u) ; 3 uses
   %i.v = fmul <2 x double> %i.p, %i.t             ; 2 uses
   %shift16 = shufflevector <2 x double> %i.v, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop17 = fsub <2 x double> %i.v, %shift16
@@ -859,15 +853,13 @@ bb.c:                                             ; preds = %_ZStmlIdESt7complex
   %i.w = fneg double %i.v
   %i.x = load <2 x double>, ptr %i.t, align 8     ; 4 uses
   %i.y = shufflevector <2 x double> %i.x, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %2 = fmul <2 x double> %i.u, %i.x               ; 2 uses
-  %i.z = fmul <2 x double> %i.u, %i.y             ; 2 uses
-  %shift = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %2, %shift
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
-  %shift105 = shufflevector <2 x double> %i.z, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop106 = fsub <2 x double> %i.z, %shift105
+  %i.z = fmul <2 x double> %i.u, %i.x
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.z) ; 3 uses
+  %3 = fmul <2 x double> %i.u, %i.y               ; 2 uses
+  %shift105 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop106 = fsub <2 x double> %3, %shift105
   %i.aa = extractelement <2 x double> %foldExtExtBinop106, i64 0 ; 3 uses
-  %i.ab = fcmp uno double %3, 0.000000e+00
+  %i.ab = fcmp uno double %2, 0.000000e+00
   br i1 %i.ab, label %bb.d, label %_ZStmlIdESt7complexIT_ERKS2_S4_.exit.us.us.us.us, !prof !77
 
 bb.d:                                             ; preds = %bb.c
@@ -884,7 +876,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZStmlIdESt7complexIT_ERKS2_S4_.exit.us.us.us.us
 
 _ZStmlIdESt7complexIT_ERKS2_S4_.exit.us.us.us.us: ; preds = %bb.e, %bb.d, %bb.c
-  %i.aj = phi double [ %3, %bb.c ], [ %3, %bb.d ], [ %i.ah, %bb.e ]
+  %i.aj = phi double [ %2, %bb.c ], [ %2, %bb.d ], [ %i.ah, %bb.e ]
   %i.ak = phi double [ %i.aa, %bb.c ], [ %i.aa, %bb.d ], [ %i.ai, %bb.e ]
   %i.al = insertelement <2 x double> poison, double %i.ak, i64 0
   %i.am = insertelement <2 x double> %i.al, double %i.aj, i64 1
@@ -1285,6 +1277,9 @@ declare i64 @llvm.smin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.xor.v2i64(<2 x i64>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x double> @llvm.fmuladd.v16f64(<16 x double>, <16 x double>, <16 x double>) #12

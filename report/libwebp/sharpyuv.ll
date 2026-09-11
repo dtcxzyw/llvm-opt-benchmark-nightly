@@ -96,13 +96,13 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #4
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @SharpYuvConvertWithOptions(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef readonly captures(address_is_null) %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr nofree noundef writeonly captures(address_is_null) %6, i32 noundef %7, ptr nofree noundef writeonly captures(address_is_null) %8, i32 noundef %9, ptr nofree noundef writeonly captures(address_is_null) %10, i32 noundef %11, i32 noundef %12, i32 noundef %13, i32 noundef %14, ptr nofree noundef readonly captures(none) %15) local_unnamed_addr #1 {
 bb.a:
-  %16 = alloca %struct.SharpYuvConversionMatrix, align 4 ; 16 uses
+  %16 = alloca %struct.SharpYuvConversionMatrix, align 8 ; 13 uses
   %i.a = load ptr, ptr %15, align 8, !tbaa !11    ; 13 uses
   %i.b = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.c = load i32, ptr %i.b, align 8, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #11
   %notmask = shl nsw i32 -1, %5
-  %i.d = xor i32 %notmask, -1                     ; 9 uses
+  %i.d = xor i32 %notmask, -1                     ; 4 uses
   %i.e = add nsw i32 %5, -1
   %i.f = shl nuw i32 1, %i.e                      ; 9 uses
   %notmask152 = shl nsw i32 -1, %12
@@ -214,67 +214,66 @@ bb.k:                                             ; preds = %bb.j, %.critedge
   %i.bd = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.bf = getelementptr inbounds nuw i8, ptr %16, i64 32
-  %17 = load i32, ptr %i.a, align 4, !tbaa !13
-  %18 = mul nsw i32 %17, %i.g
-  %19 = add nsw i32 %18, %i.f
-  %20 = sdiv i32 %19, %i.d
-  store i32 %20, ptr %16, align 4, !tbaa !13
-  %21 = load i32, ptr %i.bc, align 4, !tbaa !13
-  %i.bg = mul nsw i32 %21, %i.g
-  %i.bh = add nsw i32 %i.bg, %i.f
-  %22 = sdiv i32 %i.bh, %i.d
-  store i32 %22, ptr %i.bd, align 4, !tbaa !13
-  %23 = load i32, ptr %i.be, align 4, !tbaa !13
-  %24 = mul nsw i32 %23, %i.g
-  %25 = add nsw i32 %24, %i.f
-  %26 = sdiv i32 %25, %i.d
-  store i32 %26, ptr %i.bf, align 4, !tbaa !13
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !13
-  %i.bk = mul nsw i32 %i.bj, %i.g
-  %27 = add nsw i32 %i.bk, %i.f
-  %28 = sdiv i32 %27, %i.d
-  %29 = getelementptr inbounds nuw i8, ptr %16, i64 4
-  store i32 %28, ptr %29, align 4, !tbaa !13
-  %30 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  %31 = load i32, ptr %30, align 4, !tbaa !13
-  %32 = mul nsw i32 %31, %i.g
-  %33 = add nsw i32 %32, %i.f
-  %34 = sdiv i32 %33, %i.d
-  %35 = getelementptr inbounds nuw i8, ptr %16, i64 20
-  store i32 %34, ptr %35, align 4, !tbaa !13
-  %36 = getelementptr inbounds nuw i8, ptr %i.a, i64 36
-  %37 = load i32, ptr %36, align 4, !tbaa !13
-  %38 = mul nsw i32 %37, %i.g
-  %39 = add nsw i32 %38, %i.f
-  %40 = sdiv i32 %39, %i.d
-  %41 = getelementptr inbounds nuw i8, ptr %16, i64 36
-  store i32 %40, ptr %41, align 4, !tbaa !13
+  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %18 = load i32, ptr %17, align 4, !tbaa !13
+  %19 = load i32, ptr %i.a, align 4, !tbaa !13
+  %20 = mul nsw i32 %18, %i.g
+  %i.bg = mul nsw i32 %19, %i.g
+  %i.bh = add nsw i32 %20, %i.f
+  %21 = add nsw i32 %i.bg, %i.f
+  %22 = insertelement <2 x i32> poison, i32 %21, i64 0
+  %23 = insertelement <2 x i32> %22, i32 %i.bh, i64 1
+  %24 = insertelement <2 x i32> poison, i32 %i.d, i64 0
+  %25 = shufflevector <2 x i32> %24, <2 x i32> poison, <2 x i32> zeroinitializer ; 3 uses
+  %26 = sdiv <2 x i32> %23, %25
+  store <2 x i32> %26, ptr %16, align 8, !tbaa !13
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  %27 = load i32, ptr %i.bi, align 4, !tbaa !13
+  %i.bj = load i32, ptr %i.bc, align 4, !tbaa !13
+  %i.bk = mul nsw i32 %27, %i.g
+  %28 = mul nsw i32 %i.bj, %i.g
+  %29 = add nsw i32 %i.bk, %i.f
+  %30 = add nsw i32 %28, %i.f
+  %31 = insertelement <2 x i32> poison, i32 %30, i64 0
+  %32 = insertelement <2 x i32> %31, i32 %29, i64 1
+  %33 = sdiv <2 x i32> %32, %25
+  store <2 x i32> %33, ptr %i.bd, align 8, !tbaa !13
+  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 36
+  %35 = load i32, ptr %34, align 4, !tbaa !13
+  %36 = load i32, ptr %i.be, align 4, !tbaa !13
+  %37 = mul nsw i32 %35, %i.g
+  %38 = mul nsw i32 %36, %i.g
+  %39 = add nsw i32 %37, %i.f
+  %40 = add nsw i32 %38, %i.f
+  %41 = insertelement <2 x i32> poison, i32 %40, i64 0
+  %42 = insertelement <2 x i32> %41, i32 %39, i64 1
+  %43 = sdiv <2 x i32> %42, %25
+  store <2 x i32> %43, ptr %i.bf, align 8, !tbaa !13
   %i.bl = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !13
   %i.bn = mul nsw i32 %i.bm, %i.g
   %i.bo = add nsw i32 %i.bn, %i.f
   %i.bp = sdiv i32 %i.bo, %i.d
   %i.bq = getelementptr inbounds nuw i8, ptr %16, i64 8
-  store i32 %i.bp, ptr %i.bq, align 4, !tbaa !13
+  store i32 %i.bp, ptr %i.bq, align 8, !tbaa !13
   %i.br = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !13
   %i.bt = mul nsw i32 %i.bs, %i.g
   %i.bu = add nsw i32 %i.bt, %i.f
   %i.bv = sdiv i32 %i.bu, %i.d
   %i.bw = getelementptr inbounds nuw i8, ptr %16, i64 24
-  store i32 %i.bv, ptr %i.bw, align 4, !tbaa !13
+  store i32 %i.bv, ptr %i.bw, align 8, !tbaa !13
   %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !13
   %i.bz = mul nsw i32 %i.by, %i.g
   %i.ca = add nsw i32 %i.bz, %i.f
   %i.cb = sdiv i32 %i.ca, %i.d
   %i.cc = getelementptr inbounds nuw i8, ptr %16, i64 40
-  store i32 %i.cb, ptr %i.cc, align 4, !tbaa !13
+  store i32 %i.cb, ptr %i.cc, align 8, !tbaa !13
   br label %.loopexit
 
 bb.l:                                             ; preds = %bb.k
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %16, ptr noundef nonnull align 4 dereferenceable(48) %i.a, i64 44, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %16, ptr noundef nonnull align 4 dereferenceable(48) %i.a, i64 44, i1 false)
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader, %bb.l

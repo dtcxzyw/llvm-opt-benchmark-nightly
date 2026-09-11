@@ -202,7 +202,7 @@ bb.a:
   %3 = alloca %struct.RangeBound, align 8         ; 6 uses
   %4 = alloca %struct.RangeBound, align 8         ; 6 uses
   %i.a = alloca i8, align 1                       ; 4 uses
-  %5 = alloca %struct.QualCost, align 8           ; 6 uses
+  %5 = alloca %struct.QualCost, align 16          ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
@@ -280,13 +280,11 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   call void @cost_qual_eval_node(ptr noundef nonnull %5, ptr noundef %2, ptr noundef %0) #13
-  %6 = load double, ptr %5, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %8 = load double, ptr %7, align 8
-  %9 = fadd double %6, %8
+  %6 = load <2 x double>, ptr %5, align 16
+  %7 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %6)
   %i.ak = load double, ptr @cpu_operator_cost, align 8
   %i.al = fmul double %i.ak, 1.000000e+01
-  %i.am = fcmp ule double %9, %i.al
+  %i.am = fcmp ule double %7, %i.al
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br i1 %i.am, label %.thread, label %.thread56
 
@@ -659,6 +657,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

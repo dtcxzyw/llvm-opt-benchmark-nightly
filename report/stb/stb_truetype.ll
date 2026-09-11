@@ -204,13 +204,11 @@ bb.q:                                             ; preds = %bb.p, %._crit_edge
   br i1 %i.db, label %.lr.ph117, label %.preheader, !llvm.loop !192
 
 .lr.ph119:                                        ; preds = %.preheader, %.lr.ph119
-  %i.dc = phi ptr [ %i.de, %.lr.ph119 ], [ %.0..0..0..0.82, %.preheader ] ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.dc, i64 12
-  %8 = load float, ptr %7, align 4, !tbaa !96
+  %i.dc = phi ptr [ %i.de, %.lr.ph119 ], [ %.0..0..0..0.82, %.preheader ] ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 8 ; 2 uses
-  %9 = load float, ptr %i.dd, align 8, !tbaa !98
-  %10 = fadd float %8, %9
-  store float %10, ptr %i.dd, align 8, !tbaa !98
+  %7 = load <2 x float>, ptr %i.dd, align 8, !tbaa !80
+  %8 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %7)
+  store float %8, ptr %i.dd, align 8, !tbaa !98
   %i.de = load ptr, ptr %i.dc, align 8, !tbaa !195 ; 2 uses
   %.not92 = icmp eq ptr %i.de, null
   br i1 %.not92, label %._crit_edge120, label %.lr.ph119, !llvm.loop !193
@@ -611,6 +609,9 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #15

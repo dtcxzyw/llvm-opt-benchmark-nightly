@@ -204,6 +204,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.s = load ptr, ptr %.sroa.3.0..sroa_idx, align 8 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.u = load ptr, ptr %i.t, align 8
+  %4 = insertelement <2 x double> poison, double %1, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   %i.v = insertelement <2 x i64> poison, i64 %i.p, i64 0
   %i.w = shufflevector <2 x i64> %i.v, <2 x i64> poison, <2 x i32> zeroinitializer
   br label %.preheader
@@ -249,18 +251,18 @@ _Z30paulis_getTensorProdOfPauliStr8PauliStrS_i.exit: ; preds = %bb.f, %bb.g
   %i.ak = load double, ptr %i.y, align 8, !tbaa !36
   %i.al = load double, ptr %i.z, align 8, !tbaa !36
   %i.am = fneg double %i.al
-  %4 = fmul double %1, %i.ak                      ; 3 uses
-  %5 = fmul double %1, %i.am                      ; 3 uses
-  %6 = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %.02242 ; 2 uses
-  %7 = load double, ptr %6, align 8               ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %9 = load double, ptr %8, align 8               ; 3 uses
-  %10 = fmul double %4, %7
-  %11 = fmul double %5, %9
-  %12 = fmul double %4, %9
-  %13 = fmul double %5, %7
-  %14 = fsub double %10, %11                      ; 3 uses
-  %15 = fadd double %13, %12                      ; 3 uses
+  %6 = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %.02242
+  %7 = insertelement <2 x double> poison, double %i.am, i64 0
+  %8 = insertelement <2 x double> %7, double %i.ak, i64 1
+  %9 = fmul <2 x double> %5, %8                   ; 4 uses
+  %10 = load <2 x double>, ptr %6, align 8        ; 4 uses
+  %11 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %12 = fmul <2 x double> %11, %10                ; 2 uses
+  %13 = fmul <2 x double> %9, %10
+  %shift = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x double> %12, %shift
+  %14 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %15 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %13) ; 3 uses
   %i.an = fcmp uno double %14, 0.000000e+00
   br i1 %i.an, label %bb.h, label %vector.ph, !prof !27
 
@@ -269,7 +271,11 @@ bb.h:                                             ; preds = %_Z30paulis_getTenso
   br i1 %i.ao, label %bb.i, label %vector.ph, !prof !27
 
 bb.i:                                             ; preds = %bb.h
-  %i.ap = tail call noundef { double, double } @__muldc3(double noundef %4, double noundef %5, double noundef %7, double noundef %9) #16 ; 2 uses
+  %16 = extractelement <2 x double> %9, i64 0
+  %17 = extractelement <2 x double> %9, i64 1
+  %18 = extractelement <2 x double> %10, i64 0
+  %19 = extractelement <2 x double> %10, i64 1
+  %i.ap = tail call noundef { double, double } @__muldc3(double noundef %17, double noundef %16, double noundef %18, double noundef %19) #16 ; 2 uses
   %i.aq = extractvalue { double, double } %i.ap, 0
   %i.ar = extractvalue { double, double } %i.ap, 1
   br label %vector.ph
@@ -559,10 +565,8 @@ _Z22paulis_getPauliStrProd8PauliStrS_.exit:       ; preds = %_ZNSt7complexIdEmLI
   %i.bz = fneg double %i.by
   %i.ca = load <2 x double>, ptr %i.bw, align 8   ; 4 uses
   %i.cb = shufflevector <2 x double> %i.ca, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.cc = fmul <2 x double> %i.bx, %i.ca          ; 2 uses
-  %shift = shufflevector <2 x double> %i.cc, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.cc, %shift
-  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %i.cc = fmul <2 x double> %i.bx, %i.ca
+  %4 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.cc) ; 3 uses
   %i.cd = fmul <2 x double> %i.bx, %i.cb          ; 2 uses
   %shift72 = shufflevector <2 x double> %i.cd, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop73 = fsub <2 x double> %i.cd, %shift72
@@ -723,10 +727,8 @@ _Z25paulis_getShiftedPauliStr8PauliStri.exit:     ; preds = %bb.f, %bb.g
   store i64 %i.x, ptr %i.aa, align 8, !tbaa !15
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store i64 %i.z, ptr %.sroa.45.0..sroa_idx, align 8, !tbaa !15
-  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %.022 ; 2 uses
-  %3 = load double, ptr %i.ab, align 8, !tbaa !36 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %5 = load double, ptr %4, align 8, !tbaa !36    ; 3 uses
+  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %.022
+  %3 = load <2 x double>, ptr %i.ab, align 8, !tbaa !36 ; 3 uses
   %.sroa.2.0.copyload = load i64, ptr %.sroa.23.0..sroa_idx, align 8, !tbaa !15
   %.sroa.0.0.copyload = load i64, ptr %i.v, align 8, !tbaa !15
   %broadcast.splatinsert = insertelement <16 x i64> poison, i64 %.sroa.0.0.copyload, i64 0
@@ -770,13 +772,15 @@ _Z28paulis_getSignOfPauliStrConj8PauliStr.exit:   ; preds = %vector.body
   %i.av = bitcast <16 x i1> %bin.rdx to i16
   %i.aw = tail call range(i16 0, 17) i16 @llvm.ctpop.i16(i16 %i.av)
   %i.ax = trunc i16 %i.aw to i1
-  %i.ay = fneg double %5
+  %4 = extractelement <2 x double> %3, i64 1      ; 2 uses
+  %i.ay = fneg double %4
   %i.az = select i1 %i.ax, double -1.000000e+00, double 1.000000e+00 ; 3 uses
-  %6 = fmul double %3, %i.az
-  %7 = fmul double %5, 0.000000e+00
-  %i.ba = fmul double %3, 0.000000e+00
-  %8 = fadd double %6, %7                         ; 3 uses
-  %i.bb = fmul double %5, %i.az
+  %5 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.az, i64 0
+  %6 = fmul <2 x double> %3, %5
+  %7 = extractelement <2 x double> %3, i64 0      ; 2 uses
+  %i.ba = fmul double %7, 0.000000e+00
+  %8 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %6) ; 3 uses
+  %i.bb = fmul double %4, %i.az
   %i.bc = fsub double %i.ba, %i.bb                ; 3 uses
   %i.bd = fcmp uno double %8, 0.000000e+00
   br i1 %i.bd, label %bb.h, label %_ZmlRKSt7complexIdERKi.exit, !prof !27
@@ -786,7 +790,7 @@ bb.h:                                             ; preds = %_Z28paulis_getSignO
   br i1 %i.be, label %bb.i, label %_ZmlRKSt7complexIdERKi.exit, !prof !27
 
 bb.i:                                             ; preds = %bb.h
-  %i.bf = tail call noundef { double, double } @__muldc3(double noundef %3, double noundef %i.ay, double noundef %i.az, double noundef 0.000000e+00) #16 ; 2 uses
+  %i.bf = tail call noundef { double, double } @__muldc3(double noundef %7, double noundef %i.ay, double noundef %i.az, double noundef 0.000000e+00) #16 ; 2 uses
   %i.bg = extractvalue { double, double } %i.bf, 0
   %i.bh = extractvalue { double, double } %i.bf, 1
   br label %_ZmlRKSt7complexIdERKi.exit
@@ -827,6 +831,9 @@ declare i64 @llvm.umin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.ctpop.i16(i16) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #10
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

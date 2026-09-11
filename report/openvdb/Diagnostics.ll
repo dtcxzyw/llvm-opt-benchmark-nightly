@@ -205,10 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.it = select <2 x i1> %i.is, <2 x double> zeroinitializer, <2 x double> %i.fb ; 2 uses
   %i.iu = fmul <2 x double> %i.it, %i.it          ; 2 uses
   %i.iv = fcmp olt <2 x double> %i.ir, %i.iu
-  %i.iw = select <2 x i1> %i.iv, <2 x double> %i.iu, <2 x double> %i.ir ; 2 uses
-  %shift = shufflevector <2 x double> %i.iw, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.iw, %shift
-  %2 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.iw = select <2 x i1> %i.iv, <2 x double> %i.iu, <2 x double> %i.ir
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.iw)
   %i.ix = fcmp olt double %i.if, f0xB690000000000000
   %.sroa.speculated80.i = select i1 %i.ix, double 0.000000e+00, double %i.ih ; 2 uses
   %i.iy = fmul double %.sroa.speculated80.i, %.sroa.speculated80.i
@@ -223,10 +221,8 @@ bb.c:                                             ; preds = %bb.a
   %i.je = select <2 x i1> %i.jb, <2 x double> zeroinitializer, <2 x double> %i.fb ; 2 uses
   %i.jf = fmul <2 x double> %i.je, %i.je          ; 2 uses
   %i.jg = fcmp olt <2 x double> %i.jd, %i.jf
-  %i.jh = select <2 x i1> %i.jg, <2 x double> %i.jf, <2 x double> %i.jd ; 2 uses
-  %shift99 = shufflevector <2 x double> %i.jh, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop100 = fadd <2 x double> %i.jh, %shift99
-  %3 = extractelement <2 x double> %foldExtExtBinop100, i64 0
+  %i.jh = select <2 x i1> %i.jg, <2 x double> %i.jf, <2 x double> %i.jd
+  %3 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.jh)
   %i.ji = fcmp ogt double %i.if, f0x3690000000000000
   %.sroa.speculated62.i = select i1 %i.ji, double 0.000000e+00, double %i.ih ; 2 uses
   %i.jj = fmul double %.sroa.speculated62.i, %.sroa.speculated62.i
@@ -629,10 +625,8 @@ bb.b:                                             ; preds = %bb.a
   %i.iq = select <2 x i1> %i.ip, <2 x double> zeroinitializer, <2 x double> %i.dv ; 2 uses
   %i.ir = fmul <2 x double> %i.iq, %i.iq          ; 2 uses
   %i.is = fcmp olt <2 x double> %i.io, %i.ir
-  %i.it = select <2 x i1> %i.is, <2 x double> %i.ir, <2 x double> %i.io ; 2 uses
-  %shift108 = shufflevector <2 x double> %i.it, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop109 = fadd <2 x double> %i.it, %shift108
-  %2 = extractelement <2 x double> %foldExtExtBinop109, i64 0
+  %i.it = select <2 x i1> %i.is, <2 x double> %i.ir, <2 x double> %i.io
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.it)
   %i.iu = fcmp olt double %i.gl, 0.000000e+00
   %.sroa.speculated80.i = select i1 %i.iu, double 0.000000e+00, double %i.gl ; 2 uses
   %i.iv = fmul double %.sroa.speculated80.i, %.sroa.speculated80.i
@@ -647,10 +641,8 @@ bb.c:                                             ; preds = %bb.a
   %i.jb = select <2 x i1> %i.iy, <2 x double> zeroinitializer, <2 x double> %i.dv ; 2 uses
   %i.jc = fmul <2 x double> %i.jb, %i.jb          ; 2 uses
   %i.jd = fcmp olt <2 x double> %i.ja, %i.jc
-  %i.je = select <2 x i1> %i.jd, <2 x double> %i.jc, <2 x double> %i.ja ; 2 uses
-  %shift111 = shufflevector <2 x double> %i.je, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop112 = fadd <2 x double> %i.je, %shift111
-  %3 = extractelement <2 x double> %foldExtExtBinop112, i64 0
+  %i.je = select <2 x i1> %i.jd, <2 x double> %i.jc, <2 x double> %i.ja
+  %3 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.je)
   %i.jf = fcmp ogt double %i.gl, 0.000000e+00
   %.sroa.speculated62.i = select i1 %i.jf, double 0.000000e+00, double %i.gl ; 2 uses
   %i.jg = fmul double %.sroa.speculated62.i, %.sroa.speculated62.i
@@ -1052,6 +1044,9 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #10
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

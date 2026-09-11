@@ -101,15 +101,14 @@ bb.a:
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ab, i64 140
   %. = select i1 %or.cond, ptr %2, ptr %1
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ab, i64 104
-  %i.az = load <4 x float>, ptr %i.at, align 4, !tbaa !38 ; 7 uses
+  %i.az = load <4 x float>, ptr %i.at, align 4, !tbaa !38 ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ax, ptr noundef nonnull align 4 dereferenceable(12) %., i64 12, i1 false)
   %i.ba = shufflevector <4 x float> %i.az, <4 x float> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x float> %i.ba, ptr %i.ay, align 4, !tbaa !38
-  %shift = shufflevector <4 x float> %i.az, <4 x float> poison, <4 x i32> <i32 poison, i32 3, i32 poison, i32 poison>
-  %foldExtExtBinop = fadd <4 x float> %i.az, %shift
-  %3 = extractelement <4 x float> %foldExtExtBinop, i64 1 ; 2 uses
-  %i.bb = fcmp ogt float %3, 0.000000e+00
-  %i.bc = fdiv float 1.000000e+00, %3
+  %3 = shufflevector <4 x float> %i.az, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %4 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %3) ; 2 uses
+  %i.bb = fcmp ogt float %4, 0.000000e+00
+  %i.bc = fdiv float 1.000000e+00, %4
   %i.bd = select i1 %i.bb, float %i.bc, float 0.000000e+00
   %i.be = getelementptr inbounds nuw i8, ptr %i.ab, i64 132
   store float %i.bd, ptr %i.be, align 4, !tbaa !108
@@ -511,6 +510,9 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9

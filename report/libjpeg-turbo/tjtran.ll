@@ -131,7 +131,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @main(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.tjtransform, align 8        ; 18 uses
+  %2 = alloca %struct.tjtransform, align 16       ; 15 uses
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = alloca i8, align 1                       ; 5 uses
@@ -141,7 +141,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   store ptr null, ptr %i.b, align 8, !tbaa !13
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, i8 0, i64 40, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %2, i8 0, i64 40, i1 false)
   %i.f = icmp sgt i32 %0, 1
   br i1 %i.f, label %.lr.ph, label %._crit_edge.thread
 
@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = load i32, ptr %i.k, align 4
   %i.ae = icmp slt i32 %i.ad, 1
   %or.cond10 = select i1 %or.cond6, i1 true, i1 %i.ae
-  %i.af = load i32, ptr %2, align 8
+  %i.af = load i32, ptr %2, align 16
   %i.ag = icmp slt i32 %i.af, 0
   %or.cond14 = select i1 %or.cond10, i1 true, i1 %i.ag
   %i.ah = load i32, ptr %i.l, align 4
@@ -279,7 +279,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not558, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  store i32 1, ptr %i.h, align 8, !tbaa !18
+  store i32 1, ptr %i.h, align 16, !tbaa !18
   br label %bb.bd
 
 bb.q:                                             ; preds = %bb.o
@@ -288,7 +288,7 @@ bb.q:                                             ; preds = %bb.o
   br i1 %.not559, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  store i32 2, ptr %i.h, align 8, !tbaa !18
+  store i32 2, ptr %i.h, align 16, !tbaa !18
   br label %bb.bd
 
 bb.s:                                             ; preds = %bb.q
@@ -412,7 +412,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not570, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  store i32 5, ptr %i.h, align 8, !tbaa !18
+  store i32 5, ptr %i.h, align 16, !tbaa !18
   br label %bb.bd
 
 bb.am:                                            ; preds = %bb.ak
@@ -422,7 +422,7 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %.not571, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  store i32 6, ptr %i.h, align 8, !tbaa !18
+  store i32 6, ptr %i.h, align 16, !tbaa !18
   br label %bb.bd
 
 bb.ao:                                            ; preds = %bb.am
@@ -431,7 +431,7 @@ bb.ao:                                            ; preds = %bb.am
   br i1 %.not572, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
-  store i32 7, ptr %i.h, align 8, !tbaa !18
+  store i32 7, ptr %i.h, align 16, !tbaa !18
   br label %bb.bd
 
 bb.aq:                                            ; preds = %bb.ao
@@ -494,7 +494,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %.not575, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %bb.ax
-  store i32 4, ptr %i.h, align 8, !tbaa !18
+  store i32 4, ptr %i.h, align 16, !tbaa !18
   br label %bb.bd
 
 bb.az:                                            ; preds = %bb.ax
@@ -515,7 +515,7 @@ bb.bb:                                            ; preds = %bb.az
   br i1 %.not577, label %bb.bc, label %._crit_edge
 
 bb.bc:                                            ; preds = %bb.bb
-  store i32 3, ptr %i.h, align 8, !tbaa !18
+  store i32 3, ptr %i.h, align 16, !tbaa !18
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.aw, %bb.ai, %bb.ae, %bb.af, %bb.ac, %bb.z, %bb.k, %bb.j, %bb.i, %bb.b, %bb.l, %bb.v, %bb.av, %bb.ay, %bb.bc, %bb.ba, %bb.al, %bb.ap, %bb.an, %bb.ah, %bb.x, %bb.p, %bb.r, %bb.g
@@ -816,7 +816,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co
   %.not580 = icmp eq i32 %i.ir, 0
   %spec.store.select50 = select i1 %.not580, i32 %i.io, i32 3 ; 3 uses
   %i.is = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.it = load i32, ptr %i.is, align 8, !tbaa !18
+  %i.it = load i32, ptr %i.is, align 16, !tbaa !18
   switch i32 %i.it, label %bb.cs [
     i32 7, label %bb.cr
     i32 5, label %bb.cr
@@ -874,21 +874,12 @@ bb.cv:                                            ; preds = %bb.cu
   br i1 %or.cond64, label %bb.dv, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv, %bb.cu
-  %3 = load i32, ptr %2, align 8, !tbaa !21       ; 3 uses
-  %4 = icmp ne i32 %3, 0
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  %6 = load i32, ptr %5, align 4                  ; 3 uses
-  %7 = icmp ne i32 %6, 0
-  %or.cond68 = select i1 %4, i1 true, i1 %7
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %9 = load i32, ptr %8, align 8                  ; 2 uses
-  %10 = icmp ne i32 %9, 0
-  %or.cond72 = select i1 %or.cond68, i1 true, i1 %10
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
-  %12 = load i32, ptr %11, align 4                ; 2 uses
-  %13 = icmp ne i32 %12, 0
-  %or.cond76 = select i1 %or.cond72, i1 true, i1 %13
-  br i1 %or.cond76, label %bb.cx, label %bb.cz
+  %3 = load <4 x i32>, ptr %2, align 16
+  %.fr = freeze <4 x i32> %3                      ; 4 uses
+  %4 = icmp ne <4 x i32> %.fr, zeroinitializer
+  %5 = bitcast <4 x i1> %4 to i4
+  %.not811 = icmp eq i4 %5, 0
+  br i1 %.not811, label %bb.cz, label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw
   %i.jo = icmp eq i32 %.0469, -1
@@ -898,18 +889,17 @@ bb.cx:                                            ; preds = %bb.cw
   %i.jp = sext i32 %.0469 to i64                  ; 2 uses
   %i.jq = getelementptr inbounds [4 x i8], ptr @tjMCUWidth, i64 %i.jp
   %i.jr = load i32, ptr %i.jq, align 4, !tbaa !19
-  %14 = srem i32 %3, %i.jr                        ; 2 uses
   %i.js = getelementptr inbounds [4 x i8], ptr @tjMCUHeight, i64 %i.jp
   %i.jt = load i32, ptr %i.js, align 4, !tbaa !19
-  %15 = srem i32 %6, %i.jt                        ; 2 uses
-  %16 = sub nsw i32 %3, %14
-  store i32 %16, ptr %2, align 8, !tbaa !21
-  %17 = add nsw i32 %14, %9
-  store i32 %17, ptr %8, align 8, !tbaa !22
-  %18 = sub nsw i32 %6, %15
-  store i32 %18, ptr %5, align 4, !tbaa !23
-  %19 = add nsw i32 %15, %12
-  store i32 %19, ptr %11, align 4, !tbaa !24
+  %6 = shufflevector <4 x i32> %.fr, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %7 = insertelement <2 x i32> poison, i32 %i.jr, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %i.jt, i64 1
+  %9 = srem <2 x i32> %6, %8
+  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %11 = sub nsw <4 x i32> %.fr, %10
+  %12 = add nsw <4 x i32> %.fr, %10
+  %13 = shufflevector <4 x i32> %11, <4 x i32> %12, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x i32> %13, ptr %2, align 16, !tbaa !19
   br label %bb.cz
 
 bb.cy:                                            ; preds = %bb.cx
@@ -1039,7 +1029,7 @@ bb.ds:                                            ; preds = %bb.dr
 
 bb.dt:                                            ; preds = %bb.dr
   %i.ma = load ptr, ptr %i.b, align 8, !tbaa !13
-  %i.mb = load i64, ptr %i.a, align 8, !tbaa !26
+  %i.mb = load i64, ptr %i.a, align 8, !tbaa !22
   %i.mc = call i64 @fwrite(ptr noundef %i.ma, i64 noundef %i.mb, i64 noundef 1, ptr noundef nonnull %i.lu)
   %i.md = icmp eq i64 %i.mc, 0
   br i1 %i.md, label %bb.du, label %bb.dv
@@ -1284,10 +1274,6 @@ attributes #20 = { cold noreturn nounwind }
 !18 = !{!16, !6, i64 16}
 !19 = !{!6, !6, i64 0}
 !20 = !{!"llvm.loop.mustprogress"}
-!21 = !{!16, !6, i64 0}
-!22 = !{!16, !6, i64 8}
-!23 = !{!16, !6, i64 4}
-!24 = !{!16, !6, i64 12}
-!25 = !{!"long", !5, i64 0}
-!26 = !{!25, !25, i64 0}
+!21 = !{!"long", !5, i64 0}
+!22 = !{!21, !21, i64 0}
 end_hunk_0

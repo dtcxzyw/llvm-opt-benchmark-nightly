@@ -202,24 +202,27 @@ bb.b:                                             ; preds = %bb.a
   call void @gtk_style_context_get_color(ptr noundef %i.c, i32 noundef %i.d, ptr noundef nonnull %6) #7
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.f = load <2 x i32>, ptr %i.e, align 4, !tbaa !24
-  %i.g = sdiv <2 x i32> %i.f, splat (i32 5)       ; 2 uses
+  %i.g = sdiv <2 x i32> %i.f, splat (i32 5)       ; 3 uses
   call void @cairo_save(ptr noundef %1) #7
   call void @gdk_cairo_set_source_rgba(ptr noundef %1, ptr noundef nonnull %6) #7
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !21
-  %7 = load <2 x i32>, ptr %4, align 4, !tbaa !24
-  %8 = add nsw <2 x i32> %7, %i.g                 ; 2 uses
-  %9 = shl nsw <2 x i32> %i.g, splat (i32 1)
+  %7 = load i32, ptr %4, align 4, !tbaa !86
+  %8 = extractelement <2 x i32> %i.g, i64 0
+  %9 = add nsw i32 %7, %8
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %11 = load i32, ptr %10, align 4, !tbaa !87
+  %12 = extractelement <2 x i32> %i.g, i64 1
+  %13 = add nsw i32 %11, %12
   %i.i = load <2 x i32>, ptr %i.e, align 4, !tbaa !24
-  %i.j = sub nsw <2 x i32> %i.i, %9               ; 2 uses
+  %14 = shl nsw <2 x i32> %i.g, splat (i32 1)
+  %i.j = sub nsw <2 x i32> %i.i, %14              ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = load i32, ptr %i.k, align 8, !tbaa !22
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !23
-  %10 = extractelement <2 x i32> %8, i64 0
-  %11 = extractelement <2 x i32> %8, i64 1
   %i.o = extractelement <2 x i32> %i.j, i64 0
   %i.p = extractelement <2 x i32> %i.j, i64 1
-  call void %i.h(ptr noundef %1, i32 noundef %10, i32 noundef %11, i32 noundef %i.o, i32 noundef %i.p, i32 noundef %i.l, ptr noundef %i.n) #7
+  call void %i.h(ptr noundef %1, i32 noundef %9, i32 noundef %13, i32 noundef %i.o, i32 noundef %i.p, i32 noundef %i.l, ptr noundef %i.n) #7
   call void @cairo_restore(ptr noundef %1) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
   br label %bb.c
@@ -354,4 +357,7 @@ attributes #9 = { nounwind willreturn memory(read) }
 !82 = !{!81, !13, i64 144}
 !83 = !{!81, !13, i64 160}
 !84 = !{!81, !13, i64 192}
+!85 = !{!"_cairo_rectangle_int", !8, i64 0, !8, i64 4, !8, i64 8, !8, i64 12}
+!86 = !{!85, !8, i64 0}
+!87 = !{!85, !8, i64 4}
 end_hunk_0

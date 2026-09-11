@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v,
   %i.hg = shufflevector <2 x i32> %i.hf, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.hh = and <2 x i32> %i.hg, <i32 1, i32 2>
   %i.hi = icmp eq <2 x i32> %i.hh, zeroinitializer
-  %i.hj = select <2 x i1> %i.hi, <2 x float> %i.hc, <2 x float> %i.he ; 4 uses
+  %i.hj = select <2 x i1> %i.hi, <2 x float> %i.hc, <2 x float> %i.he ; 3 uses
   %i.hk = load i32, ptr %i.fb, align 8, !tbaa !75
   %.not212.i = icmp eq i32 %i.hk, 0
   %i.hl = insertelement <2 x i1> poison, i1 %.not212.i, i64 0
@@ -224,9 +224,7 @@ bb.z:                                             ; preds = %bb.y
   %i.hr = fpext nsz float %i.hq to double
   %i.hs = fmul nsz double %.1184.i, %i.hr
   %i.ht = fmul nsz double %i.hs, 5.000000e-01
-  %shift57 = shufflevector <2 x float> %i.hj, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop58 = fadd nsz <2 x float> %shift57, %i.hj
-  %1 = extractelement <2 x float> %foldExtExtBinop58, i64 0
+  %1 = call reassoc nsz float @llvm.vector.reduce.fadd.v2f32(float 0.000000e+00, <2 x float> %i.hj)
   %i.hu = fpext nsz float %1 to double
   %i.hv = fmul nsz double %.1184.i, %i.hu
   %i.hw = fmul nsz double %i.hv, 5.000000e-01
@@ -628,6 +626,9 @@ declare <2 x float> @llvm.log.v2f32(<2 x float>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13

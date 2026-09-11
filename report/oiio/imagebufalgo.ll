@@ -205,19 +205,17 @@ _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75: ;
   %.sroa.0.0.vec.extract.i.i76 = extractelement <2 x float> %i.cu, i64 0
   %i.cw = load <2 x float>, ptr %i.ct, align 4    ; 4 uses
   %i.cx = fmul <2 x float> %i.cw, %i.cu           ; 2 uses
-  %i.cy = fmul <2 x float> %i.cv, %i.cw           ; 2 uses
-  %4 = shufflevector <2 x float> %i.cx, <2 x float> %i.cy, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %5 = shufflevector <2 x float> %i.cx, <2 x float> %i.cy, <2 x i32> <i32 1, i32 3> ; 2 uses
-  %i.cz = fsub <2 x float> %4, %5                 ; 2 uses
-  %6 = fadd <2 x float> %4, %5                    ; 2 uses
-  %7 = shufflevector <2 x float> %i.cz, <2 x float> %6, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %8 = extractelement <2 x float> %i.cz, i64 0
-  %9 = fcmp uno float %8, 0.000000e+00
-  br i1 %9, label %bb.i, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit82, !prof !401
+  %i.cy = fmul <2 x float> %i.cv, %i.cw
+  %shift = shufflevector <2 x float> %i.cx, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.cz = fsub <2 x float> %i.cx, %shift          ; 2 uses
+  %4 = extractelement <2 x float> %i.cz, i64 0
+  %5 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.cy) ; 2 uses
+  %6 = fcmp uno float %4, 0.000000e+00
+  %7 = insertelement <2 x float> %i.cz, float %5, i64 1 ; 2 uses
+  br i1 %6, label %bb.i, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit82, !prof !401
 
 bb.i:                                             ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit75
-  %10 = extractelement <2 x float> %6, i64 1
-  %i.da = fcmp uno float %10, 0.000000e+00
+  %i.da = fcmp uno float %5, 0.000000e+00
   br i1 %i.da, label %bb.j, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit82, !prof !401
 
 bb.j:                                             ; preds = %bb.i
@@ -618,6 +616,9 @@ declare i32 @llvm.umin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { float, float } @llvm.sincos.f32(float) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #8

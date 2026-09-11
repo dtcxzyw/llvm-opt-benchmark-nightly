@@ -129,11 +129,11 @@ bb.g:                                             ; preds = %buffer_push_rlw.exi
 buffer_push_rlw.exit._crit_edge:                  ; preds = %buffer_push_rlw.exit, %bb.d, %bb.g, %bb.c
   %.val48 = phi i64 [ %storemerge.i, %bb.c ], [ %.val47, %bb.d ], [ %storemerge.i53, %bb.g ], [ %.val48.pre, %buffer_push_rlw.exit ] ; 2 uses
   %i.ac = phi ptr [ %i.b, %bb.c ], [ %i.b, %bb.d ], [ %i.ab, %bb.g ], [ %i.ab, %buffer_push_rlw.exit ]
-  %.0 = phi i64 [ 0, %bb.c ], [ 0, %bb.d ], [ 1, %bb.g ], [ 1, %buffer_push_rlw.exit ] ; 4 uses
+  %.0 = phi i64 [ 0, %bb.c ], [ 0, %bb.d ], [ 1, %bb.g ], [ 1, %buffer_push_rlw.exit ] ; 3 uses
   %i.ad = lshr i64 %.val48, 1
   %i.ae = and i64 %i.ad, 4294967295               ; 2 uses
   %i.af = xor i64 %i.ae, 4294967295
-  %i.ag = tail call noundef i64 @llvm.umin.i64(i64 %2, i64 range(i64 -2147483648, 4294967296) %i.af) ; 3 uses
+  %i.ag = tail call noundef i64 @llvm.umin.i64(i64 %2, i64 range(i64 -2147483648, 4294967296) %i.af) ; 2 uses
   %i.ah = add nuw nsw i64 %i.ag, %i.ae
   %i.ai = or i64 %.val48, 8589934590
   %i.aj = shl nuw nsw i64 %i.ah, 1
@@ -148,17 +148,12 @@ buffer_push_rlw.exit._crit_edge:                  ; preds = %buffer_push_rlw.exi
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %.not46 = icmp eq i32 %1, 0
-  %3 = add i64 %2, -4294967295
-  %4 = sub i64 %3, %i.ag
-  %5 = udiv i64 %4, 4294967295
-  %6 = add nuw nsw i64 %.0, %5                    ; 3 uses
-  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
   %.pre90.a = load ptr, ptr %0, align 8, !tbaa !20 ; 2 uses
   br i1 %.not46, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %buffer_push_rlw.exit60.us
   %i.aq = phi ptr [ %i.ba, %buffer_push_rlw.exit60.us ], [ %.pre90.a, %.lr.ph ] ; 2 uses
-  %.179.us = phi i64 [ %i.bg, %buffer_push_rlw.exit60.us ], [ %.0, %.lr.ph ] ; 2 uses
+  %.179.us = phi i64 [ %i.bg, %buffer_push_rlw.exit60.us ], [ %.0, %.lr.ph ]
   %.03778.us = phi i64 [ %i.bj, %buffer_push_rlw.exit60.us ], [ %i.am, %.lr.ph ]
   %i.ar = load i64, ptr %i.ao, align 8, !tbaa !19 ; 2 uses
   %i.as = add i64 %i.ar, 1                        ; 3 uses
@@ -194,17 +189,17 @@ buffer_push_rlw.exit60.us:                        ; preds = %st_mult.exit.i.i.i5
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %i.bd
   %i.bf = getelementptr inbounds i8, ptr %i.be, i64 -8 ; 3 uses
   store ptr %i.bf, ptr %i.a, align 8, !tbaa !17
-  %i.bg = add nuw nsw i64 %.179.us, 1
+  %i.bg = add nuw nsw i64 %.179.us, 1             ; 2 uses
   %i.bh = load i64, ptr %i.bf, align 8, !tbaa !18
   %i.bi = or i64 %i.bh, 8589934590
   store i64 %i.bi, ptr %i.bf, align 8, !tbaa !18
-  %i.bj = add i64 %.03778.us, -4294967295         ; 2 uses
-  %exitcond88.not = icmp eq i64 %.179.us, %6
-  br i1 %exitcond88.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !36
+  %i.bj = add i64 %.03778.us, -4294967295         ; 3 uses
+  %3 = icmp ugt i64 %i.bj, 4294967294
+  br i1 %3, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !36
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %buffer_push_rlw.exit60
   %i.bk = phi ptr [ %i.bu, %buffer_push_rlw.exit60 ], [ %.pre90.a, %.lr.ph ] ; 2 uses
-  %.179 = phi i64 [ %i.ca, %buffer_push_rlw.exit60 ], [ %.0, %.lr.ph ] ; 2 uses
+  %.179 = phi i64 [ %i.ca, %buffer_push_rlw.exit60 ], [ %.0, %.lr.ph ]
   %.03778 = phi i64 [ %i.cd, %buffer_push_rlw.exit60 ], [ %i.am, %.lr.ph ]
   %i.bl = load i64, ptr %i.ao, align 8, !tbaa !19 ; 2 uses
   %i.bm = add i64 %i.bl, 1                        ; 3 uses
@@ -245,17 +240,17 @@ buffer_push_rlw.exit60:                           ; preds = %.lr.ph.split, %st_m
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %i.bx
   %i.bz = getelementptr inbounds i8, ptr %i.by, i64 -8 ; 3 uses
   store ptr %i.bz, ptr %i.a, align 8, !tbaa !17
-  %i.ca = add nuw nsw i64 %.179, 1
+  %i.ca = add nuw nsw i64 %.179, 1                ; 2 uses
   %i.cb = load i64, ptr %i.bz, align 8, !tbaa !18
   %i.cc = or i64 %i.cb, 8589934591
   store i64 %i.cc, ptr %i.bz, align 8, !tbaa !18
-  %i.cd = add i64 %.03778, -4294967295            ; 2 uses
-  %exitcond.not = icmp eq i64 %.179, %6
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !36
+  %i.cd = add i64 %.03778, -4294967295            ; 3 uses
+  %4 = icmp ugt i64 %i.cd, 4294967294
+  br i1 %4, label %.lr.ph.split, label %._crit_edge, !llvm.loop !36
 
 ._crit_edge:                                      ; preds = %buffer_push_rlw.exit60, %buffer_push_rlw.exit60.us, %buffer_push_rlw.exit._crit_edge
   %.037.lcssa = phi i64 [ %i.am, %buffer_push_rlw.exit._crit_edge ], [ %i.bj, %buffer_push_rlw.exit60.us ], [ %i.cd, %buffer_push_rlw.exit60 ] ; 2 uses
-  %.1.lcssa = phi i64 [ %.0, %buffer_push_rlw.exit._crit_edge ], [ %7, %buffer_push_rlw.exit60.us ], [ %7, %buffer_push_rlw.exit60 ] ; 2 uses
+  %.1.lcssa = phi i64 [ %.0, %buffer_push_rlw.exit._crit_edge ], [ %i.bg, %buffer_push_rlw.exit60.us ], [ %i.ca, %buffer_push_rlw.exit60 ] ; 2 uses
   %.not44 = icmp eq i64 %.037.lcssa, 0
   br i1 %.not44, label %bb.m, label %bb.j
 
@@ -301,7 +296,7 @@ buffer_push_rlw.exit70:                           ; preds = %bb.j, %st_mult.exit
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %i.ct
   %i.cv = getelementptr inbounds i8, ptr %i.cu, i64 -8 ; 3 uses
   store ptr %i.cv, ptr %i.a, align 8, !tbaa !17
-  %i.cw = add nuw nsw i64 %.1.lcssa, 1
+  %i.cw = add i64 %.1.lcssa, 1
   %.not45 = icmp ne i32 %1, 0
   %.pre91 = load i64, ptr %i.cv, align 8, !tbaa !18
   %storemerge.i73 = zext i1 %.not45 to i64

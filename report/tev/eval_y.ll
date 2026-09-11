@@ -205,10 +205,8 @@ bb.ce:                                            ; preds = %bb.k
   %i.ly = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.lv, <2 x double> %i.lx, <2 x double> %i.lt)
   %i.lz = insertelement <2 x double> %i.ky, double %i.la, i64 1
   %i.ma = fdiv <2 x double> %i.ly, %i.lz          ; 2 uses
-  %i.mb = fmul <2 x double> %i.ma, %i.ma          ; 2 uses
-  %shift = shufflevector <2 x double> %i.mb, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.mb, %shift
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.mb = fmul <2 x double> %i.ma, %i.ma
+  %3 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.mb)
   %i.mc = fcmp ole double %3, 1.000000e+00
   %..i1878 = zext i1 %i.mc to i8
   %i.md = getelementptr inbounds nuw i8, ptr %1, i64 128
@@ -611,10 +609,8 @@ bb.tn:                                            ; preds = %bb.tm
   %i.dmh = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dme, <2 x double> %i.dmg, <2 x double> %i.dmc)
   %i.dmi = insertelement <2 x double> %i.dll, double %i.dlm, i64 1
   %i.dmj = fdiv <2 x double> %i.dmh, %i.dmi       ; 2 uses
-  %i.dmk = fmul <2 x double> %i.dmj, %i.dmj       ; 2 uses
-  %shift3548 = shufflevector <2 x double> %i.dmk, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop3549 = fadd <2 x double> %i.dmk, %shift3548
-  %4 = extractelement <2 x double> %foldExtExtBinop3549, i64 0
+  %i.dmk = fmul <2 x double> %i.dmj, %i.dmj
+  %4 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.dmk)
   %i.dml = fcmp ole double %4, 1.000000e+00
   %..i1881 = zext i1 %i.dml to i8
   %i.dmm = load ptr, ptr %i.ox, align 8, !tbaa !10
@@ -1015,6 +1011,9 @@ declare void @llvm.assume(i1 noundef) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #13

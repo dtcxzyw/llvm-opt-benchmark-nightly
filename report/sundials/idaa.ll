@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2136
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !20   ; 13 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !20   ; 12 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.i = load i32, ptr %i.h, align 8, !tbaa !42
   %i.j = icmp eq i32 %i.i, 0
@@ -229,10 +229,10 @@ bb.h:                                             ; preds = %bb.g
   br label %.critedge165
 
 bb.i:                                             ; preds = %bb.g
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %4 = load double, ptr %3, align 8, !tbaa !59    ; 4 uses
-  %5 = load double, ptr %i.g, align 8, !tbaa !60  ; 5 uses
-  %i.o = fcmp ogt double %4, %5
+  %3 = load <2 x double>, ptr %i.g, align 8, !tbaa !66 ; 3 uses
+  %4 = extractelement <2 x double> %3, i64 0      ; 4 uses
+  %5 = extractelement <2 x double> %3, i64 1      ; 3 uses
+  %i.o = fcmp ogt double %5, %4
   %i.p = select i1 %i.o, i32 1, i32 -1            ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 72 ; 2 uses
   %i.r = load i32, ptr %i.q, align 8, !tbaa !45
@@ -254,13 +254,13 @@ bb.j:                                             ; preds = %.lr.ph, %bb.r
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !91
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 1264
   %i.x = load double, ptr %i.w, align 8, !tbaa !95 ; 3 uses
-  %i.y = fsub double %i.x, %5
+  %i.y = fsub double %i.x, %4
   %i.z = fmul double %i.y, %i.s
   %i.aa = fcmp olt double %i.z, 0.000000e+00
   br i1 %i.aa, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ab = fsub double %4, %i.x
+  %i.ab = fsub double %5, %i.x
   %i.ac = fmul double %i.ab, %i.s
   %i.ad = fcmp olt double %i.ac, 0.000000e+00
   br i1 %i.ad, label %bb.l, label %bb.m
@@ -334,13 +334,13 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %i.au = sitofp i32 %i.p to double               ; 10 uses
-  %i.av = fsub double %1, %5                      ; 2 uses
+  %i.av = fsub double %1, %4                      ; 2 uses
   %i.aw = fmul double %i.av, %i.au
   %i.ax = fcmp olt double %i.aw, 0.000000e+00
   br i1 %i.ax, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.ay = fsub double %4, %1
+  %i.ay = fsub double %5, %1
   %i.az = fmul double %i.ay, %i.au
   %i.ba = fcmp olt double %i.az, 0.000000e+00
   br i1 %i.ba, label %bb.aa, label %bb.ab
@@ -349,10 +349,9 @@ bb.z:                                             ; preds = %bb.x
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !64
   %i.bd = fmul double %i.bc, 1.000000e+02
-  %6 = tail call double @llvm.fabs.f64(double %5)
-  %7 = tail call double @llvm.fabs.f64(double %4)
-  %8 = fadd double %7, %6
-  %i.be = fmul double %8, %i.bd
+  %6 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %3)
+  %7 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %6)
+  %i.be = fmul double %7, %i.bd
   %i.bf = tail call double @llvm.fabs.f64(double %i.av)
   %i.bg = fcmp olt double %i.bf, %i.be
   br i1 %i.bg, label %bb.ab, label %bb.aa
@@ -362,7 +361,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.z
   br label %.critedge165
 
 bb.ab:                                            ; preds = %bb.z, %bb.y
-  %.0139 = phi double [ %1, %bb.y ], [ %5, %bb.z ] ; 5 uses
+  %.0139 = phi double [ %1, %bb.y ], [ %4, %bb.z ] ; 5 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.g, i64 80
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !79 ; 3 uses
   %.not152194 = icmp eq ptr %.fr294, null
@@ -764,6 +763,12 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

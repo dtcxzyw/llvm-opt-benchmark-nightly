@@ -204,15 +204,13 @@ bb.a:
   %i.x = select <4 x i1> %i.w, <4 x float> zeroinitializer, <4 x float> %i.s ; 2 uses
   %i.y = shufflevector <4 x float> %i.x, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.z = shufflevector <4 x float> %i.x, <4 x float> poison, <2 x i32> <i32 0, i32 3>
-  %6 = fadd <2 x float> %i.y, %i.z                ; 2 uses
-  %shift = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %6, %shift
-  %7 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 3 uses
-  %or.cond.i = fcmp ord float %i.a, %7
+  %foldExtExtBinop = fadd <2 x float> %i.y, %i.z
+  %6 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %foldExtExtBinop) ; 3 uses
+  %or.cond.i = fcmp ord float %i.a, %6
   %i.aa = fcmp uno float %i.a, 0.000000e+00
-  %i.ab = fcmp olt float %i.a, %7
+  %i.ab = fcmp olt float %i.a, %6
   %.sink.i = select i1 %or.cond.i, i1 %i.ab, i1 %i.aa
-  %i.ac = select i1 %.sink.i, float %7, float %i.a
+  %i.ac = select i1 %.sink.i, float %6, float %i.a
   ret float %i.ac
 }
 
@@ -614,6 +612,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #7
 
 attributes #0 = { mustprogress uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

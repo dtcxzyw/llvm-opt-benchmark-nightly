@@ -204,8 +204,10 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.ej, label %.lr.ph318, label %._crit_edge319
 
 .lr.ph318:                                        ; preds = %.preheader
-  %i.ek = add nsw i32 %i.dl, -1                   ; 4 uses
+  %i.ek = add nsw i32 %i.dl, -1
   %wide.trip.count = zext nneg i32 %i.dl to i64
+  %6 = insertelement <4 x i32> poison, i32 %i.ek, i64 0
+  %7 = shufflevector <4 x i32> %6, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %bb.ac
 
 .lr.ph314:                                        ; preds = %._crit_edge308, %.lr.ph314
@@ -220,32 +222,37 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %.lr.ph318, %bb.ac
   %indvars.iv = phi i64 [ 0, %.lr.ph318 ], [ %indvars.iv.next, %bb.ac ] ; 6 uses
   %i.ep = trunc i64 %indvars.iv to i32
-  %6 = mul i32 %i.ep, 65535
-  %7 = sdiv i32 %6, %i.ek
-  %i.eq = trunc i64 %indvars.iv to i32
-  %i.er = mul i32 %.0244.lcssa, %i.eq
-  %8 = sdiv i32 %i.er, %i.ek
+  %8 = trunc i64 %indvars.iv to i32
   %9 = trunc i64 %indvars.iv to i32
-  %i.es = mul i32 %.0243.lcssa, %9
-  %10 = sdiv i32 %i.es, %i.ek
-  %11 = trunc i64 %indvars.iv to i32
-  %12 = mul i32 %.0242.lcssa, %11
-  %13 = sdiv i32 %12, %i.ek
-  %i.et = shl i32 %8, %.0241.lcssa
-  %i.eu = shl i32 %10, %.0240.lcssa
+  %i.eq = trunc i64 %indvars.iv to i32
+  %i.er = mul i32 %.0242.lcssa, %i.eq
+  %10 = mul i32 %.0243.lcssa, %9
+  %11 = mul i32 %.0244.lcssa, %8
+  %i.es = mul i32 %i.ep, 65535
+  %12 = insertelement <4 x i32> poison, i32 %i.es, i64 0
+  %13 = insertelement <4 x i32> %12, i32 %11, i64 1
+  %14 = insertelement <4 x i32> %13, i32 %10, i64 2
+  %15 = insertelement <4 x i32> %14, i32 %i.er, i64 3
+  %16 = sdiv <4 x i32> %15, %7                    ; 4 uses
+  %17 = extractelement <4 x i32> %16, i64 1
+  %i.et = shl i32 %17, %.0241.lcssa
+  %18 = extractelement <4 x i32> %16, i64 2
+  %i.eu = shl i32 %18, %.0240.lcssa
   %i.ev = or i32 %i.eu, %i.et
-  %i.ew = shl i32 %13, %.0239.lcssa
+  %19 = extractelement <4 x i32> %16, i64 3
+  %i.ew = shl i32 %19, %.0239.lcssa
   %i.ex = or i32 %i.ev, %i.ew
   %i.ey = zext i32 %i.ex to i64
   %i.ez = getelementptr inbounds nuw [16 x i8], ptr %i.dk, i64 %indvars.iv ; 5 uses
   store i64 %i.ey, ptr %i.ez, align 8
-  %14 = trunc i32 %7 to i16                       ; 3 uses
+  %20 = bitcast <4 x i32> %16 to <8 x i16>
+  %21 = extractelement <8 x i16> %20, i64 0       ; 3 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 8
-  store i16 %14, ptr %i.fa, align 8
+  store i16 %21, ptr %i.fa, align 8
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ez, i64 10
-  store i16 %14, ptr %i.fb, align 2
+  store i16 %21, ptr %i.fb, align 2
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ez, i64 12
-  store i16 %14, ptr %i.fc, align 4
+  store i16 %21, ptr %i.fc, align 4
   %i.fd = getelementptr inbounds nuw i8, ptr %i.ez, i64 14
   store i8 7, ptr %i.fd, align 2
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

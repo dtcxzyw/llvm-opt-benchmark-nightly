@@ -205,10 +205,8 @@ bb.p:                                             ; preds = %.lr.ph156.i
   %i.em = shufflevector <2 x double> %i.ec, <2 x double> %i.ei, <2 x i32> <i32 1, i32 3>
   %i.en = fadd <2 x double> %i.em, %i.el          ; 2 uses
   %i.eo = fcmp ogt <2 x double> %i.en, zeroinitializer
-  %i.ep = select <2 x i1> %i.eo, <2 x double> %i.en, <2 x double> zeroinitializer ; 2 uses
-  %shift = shufflevector <2 x double> %i.ep, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.ep, %shift
-  %2 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.ep = select <2 x i1> %i.eo, <2 x double> %i.en, <2 x double> zeroinitializer
+  %2 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ep) ; 2 uses
   %i.eq = fcmp ogt double %.sroa.0.193165.i, %2   ; 2 uses
   %.sroa.0.294.i = select i1 %i.eq, double %2, double %.sroa.0.193165.i ; 2 uses
   %.sroa.0.2.i = select i1 %i.eq, i64 %.sroa.018.0173.i, i64 %.sroa.0.1167.i ; 2 uses
@@ -611,10 +609,8 @@ bb.aj:                                            ; preds = %.lr.ph227
   %i.kj = fmul <2 x double> %i.kh, %i.ki
   %i.kk = fcmp ogt <2 x double> %i.kb, zeroinitializer
   %i.kl = select <2 x i1> %i.kk, <2 x double> %i.kb, <2 x double> zeroinitializer
-  %i.km = fmul <2 x double> %i.kl, %i.kj          ; 2 uses
-  %shift268 = shufflevector <2 x double> %i.km, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop269 = fadd <2 x double> %i.km, %shift268
-  %3 = extractelement <2 x double> %foldExtExtBinop269, i64 0 ; 2 uses
+  %i.km = fmul <2 x double> %i.kl, %i.kj
+  %3 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.km) ; 2 uses
   %i.kn = fcmp oeq double %i.jv, %.sroa.0.0180238
   %i.ko = fcmp olt double %i.jv, %.sroa.0.0180238
   %i.kp = fcmp olt double %3, %.sroa.5.0237
@@ -1016,6 +1012,9 @@ declare i64 @llvm.abs.i64(i64, i1 immarg) #54
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #49
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #49
 
 attributes #0 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

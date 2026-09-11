@@ -202,18 +202,16 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.o = load double, ptr %i.l, align 8, !tbaa !10
-  %5 = load double, ptr %4, align 8, !tbaa !13    ; 3 uses
-  %6 = load double, ptr %i.n, align 8, !tbaa !12
-  %7 = fadd double %5, %6
-  %i.p = fmul double %7, 6.250000e+00
+  %4 = load <2 x double>, ptr %i.n, align 8, !tbaa !34 ; 3 uses
+  %5 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %4)
+  %i.p = fmul double %5, 6.250000e+00
   %i.q = fdiv double %i.p, 1.023000e+03
   %i.r = load <2 x double>, ptr %3, align 8, !tbaa !34 ; 2 uses
-  %8 = insertelement <2 x double> %i.r, double %5, i64 1
-  %9 = insertelement <2 x double> %i.r, double %5, i64 0
-  %i.s = fadd <2 x double> %8, %9
+  %6 = shufflevector <2 x double> %i.r, <2 x double> %4, <2 x i32> <i32 0, i32 3>
+  %7 = shufflevector <2 x double> %4, <2 x double> %i.r, <2 x i32> <i32 1, i32 3>
+  %i.s = fadd <2 x double> %6, %7
   %i.t = fmul <2 x double> %i.s, splat (double 6.250000e+00)
   %i.u = fdiv <2 x double> %i.t, splat (double 1.023000e+03)
   %i.v = shufflevector <2 x double> %i.u, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
@@ -615,6 +613,9 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_
 declare double @exp2(double) local_unnamed_addr
 
 declare float @exp2f(float) local_unnamed_addr
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #8
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

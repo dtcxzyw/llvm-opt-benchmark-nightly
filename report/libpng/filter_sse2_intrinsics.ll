@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libpng/original/filter_sse2_intrinsics?download=true
 inline.NumInlined: 39
 inline.NumDeleted: 6
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -11,59 +11,24 @@ target triple = "x86_64-pc-linux-gnu"
 define void @png_read_filter_row_sub3_sse2(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !10   ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !10   ; 3 uses
   %i.c = icmp ugt i64 %i.b, 3
-  br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.c, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = add i64 %i.b, -4                           ; 2 uses
-  %4 = udiv i64 %3, 3
-  %5 = and i64 %4, 1
-  %lcmp.mod.not.not = icmp eq i64 %5, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %.019.val.prol = load i32, ptr %1, align 1      ; 2 uses
-  %6 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.019.val.prol, i64 0
-  %7 = bitcast <4 x i32> %6 to <16 x i8>          ; 2 uses
-  %.0.extract.trunc.i.prol = trunc i32 %.019.val.prol to i24
-  store i24 %.0.extract.trunc.i.prol, ptr %1, align 1
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 2 uses
-  %9 = add i64 %i.b, -3
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.unr = phi <16 x i8> [ zeroinitializer, %.lr.ph.preheader ], [ %7, %.lr.ph.prol ]
-  %.01823.unr = phi i64 [ %i.b, %.lr.ph.preheader ], [ %9, %.lr.ph.prol ]
-  %.01922.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %8, %.lr.ph.prol ]
-  %.lcssa38.unr = phi <16 x i8> [ poison, %.lr.ph.preheader ], [ %7, %.lr.ph.prol ]
-  %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %8, %.lr.ph.prol ]
-  %10 = icmp ult i64 %3, 3
-  br i1 %10, label %._crit_edge.thread, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %i.d = phi <16 x i8> [ %i.g, %.lr.ph ], [ %.unr, %.lr.ph.prol.loopexit ]
-  %.01823 = phi i64 [ %i.k, %.lr.ph ], [ %.01823.unr, %.lr.ph.prol.loopexit ]
-  %.01922 = phi ptr [ %i.j, %.lr.ph ], [ %.01922.unr, %.lr.ph.prol.loopexit ] ; 4 uses
-  %.019.val = load i32, ptr %.01922, align 1
-  %11 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.019.val, i64 0
-  %12 = bitcast <4 x i32> %11 to <16 x i8>
-  %13 = add <16 x i8> %i.d, %12                   ; 2 uses
-  %14 = bitcast <16 x i8> %13 to <4 x i32>
-  %15 = extractelement <4 x i32> %14, i64 0
-  %.0.extract.trunc.i = trunc i32 %15 to i24
-  store i24 %.0.extract.trunc.i, ptr %.01922, align 1
-  %16 = getelementptr inbounds nuw i8, ptr %.01922, i64 3 ; 2 uses
-  %.019.val.1 = load i32, ptr %16, align 1
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %i.d = phi <16 x i8> [ %i.g, %.lr.ph ], [ zeroinitializer, %bb.a ]
+  %.01823 = phi i64 [ %i.k, %.lr.ph ], [ %i.b, %bb.a ]
+  %.01922 = phi ptr [ %i.j, %.lr.ph ], [ %1, %bb.a ] ; 3 uses
+  %.019.val.1 = load i32, ptr %.01922, align 1
   %i.e = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.019.val.1, i64 0
   %i.f = bitcast <4 x i32> %i.e to <16 x i8>
-  %i.g = add <16 x i8> %13, %i.f                  ; 3 uses
+  %i.g = add <16 x i8> %i.d, %i.f                 ; 3 uses
   %i.h = bitcast <16 x i8> %i.g to <4 x i32>
   %i.i = extractelement <4 x i32> %i.h, i64 0
   %.0.extract.trunc.i.1 = trunc i32 %i.i to i24
-  store i24 %.0.extract.trunc.i.1, ptr %16, align 1
-  %i.j = getelementptr inbounds nuw i8, ptr %.01922, i64 6 ; 2 uses
-  %i.k = add i64 %.01823, -6                      ; 2 uses
+  store i24 %.0.extract.trunc.i.1, ptr %.01922, align 1
+  %i.j = getelementptr inbounds nuw i8, ptr %.01922, i64 3 ; 2 uses
+  %i.k = add i64 %.01823, -3                      ; 2 uses
   %i.l = icmp ugt i64 %i.k, 3
   br i1 %i.l, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !12
 
@@ -71,9 +36,9 @@ bb.a:
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %bb.b, label %._crit_edge.thread
 
-._crit_edge.thread:                               ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %._crit_edge
-  %.lcssa35 = phi <16 x i8> [ zeroinitializer, %._crit_edge ], [ %.lcssa38.unr, %.lr.ph.prol.loopexit ], [ %i.g, %.lr.ph ]
-  %.019.lcssa34 = phi ptr [ %1, %._crit_edge ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.j, %.lr.ph ] ; 2 uses
+._crit_edge.thread:                               ; preds = %.lr.ph, %._crit_edge
+  %.lcssa35 = phi <16 x i8> [ zeroinitializer, %._crit_edge ], [ %i.g, %.lr.ph ]
+  %.019.lcssa34 = phi ptr [ %1, %._crit_edge ], [ %i.j, %.lr.ph ] ; 2 uses
   %.019.val20 = load i24, ptr %.019.lcssa34, align 1
   %.0.insert.ext.i = zext i24 %.019.val20 to i32
   %i.m = insertelement <4 x i32> poison, i32 %.0.insert.ext.i, i64 0

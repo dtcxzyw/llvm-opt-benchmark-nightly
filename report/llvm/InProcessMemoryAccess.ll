@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InProcessMemoryAccess?download=true
 inline.NumInlined: 707
 inline.NumDeleted: 412
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZN4llvm3orc21InProcessMemoryAccess18writePointersAsyncENS_8ArrayRefINS0_8tpctypes12PointerWriteEEENS_15unique_functionIFvNS_5ErrorEEEE:bb.a
   %.not1831 = icmp eq i64 %2, 0                   ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.c
@@ -204,35 +204,12 @@ _ZN4llvm5ErrorD2Ev.exit19:                        ; preds = %bb.d, %.loopexit
 define dso_local void @_ZN4llvm3orc21InProcessMemoryAccess17writeBuffersAsyncENS_8ArrayRefINS0_8tpctypes11BufferWriteEEENS_15unique_functionIFvNS_5ErrorEEEE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree readonly captures(address) %1, i64 %2, ptr nofree noundef align 8 dereferenceable(40) %3) unnamed_addr #2 align 2 {
 bb.a:
   %4 = alloca %"class.llvm::Error", align 8       ; 3 uses
-  %.idx = mul i64 %2, 24                          ; 2 uses
+  %.idx = mul nuw nsw i64 %2, 24
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   %.not14 = icmp eq i64 %2, 0
-  br i1 %.not14, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not14, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %5 = add i64 %.idx, -24                         ; 2 uses
-  %6 = udiv i64 %5, 24
-  %7 = and i64 %6, 1
-  %lcmp.mod.not.not = icmp eq i64 %7, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %8 = load i64, ptr %1, align 8, !tbaa !12
-  %9 = inttoptr i64 %8 to ptr
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %11 = load ptr, ptr %10, align 8, !tbaa !70
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %13 = load i64, ptr %12, align 8, !tbaa !71
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %9, ptr align 1 %11, i64 %13, i1 false)
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.015.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %14, %.lr.ph.prol ]
-  %15 = icmp ult i64 %5, 24
-  br i1 %15, label %._crit_edge, label %.lr.ph
-
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   store ptr null, ptr %4, align 8, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !20
@@ -251,24 +228,16 @@ bb.b:                                             ; preds = %._crit_edge
 _ZN4llvm5ErrorD2Ev.exit9:                         ; preds = %bb.b, %._crit_edge
   ret void
 
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.015 = phi ptr [ %i.o, %.lr.ph ], [ %.015.unr, %.lr.ph.prol.loopexit ] ; 7 uses
-  %16 = load i64, ptr %.015, align 8, !tbaa !12
-  %17 = inttoptr i64 %16 to ptr
-  %18 = getelementptr inbounds nuw i8, ptr %.015, i64 8
-  %19 = load ptr, ptr %18, align 8, !tbaa !70
-  %20 = getelementptr inbounds nuw i8, ptr %.015, i64 16
-  %21 = load i64, ptr %20, align 8, !tbaa !71
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %17, ptr align 1 %19, i64 %21, i1 false)
-  %22 = getelementptr inbounds nuw i8, ptr %.015, i64 24
-  %i.i = load i64, ptr %22, align 8, !tbaa !12
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %.015 = phi ptr [ %i.o, %.lr.ph ], [ %1, %bb.a ] ; 4 uses
+  %i.i = load i64, ptr %.015, align 8, !tbaa !12
   %i.j = inttoptr i64 %i.i to ptr
-  %i.k = getelementptr inbounds nuw i8, ptr %.015, i64 32
+  %i.k = getelementptr inbounds nuw i8, ptr %.015, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !70
-  %i.m = getelementptr inbounds nuw i8, ptr %.015, i64 40
+  %i.m = getelementptr inbounds nuw i8, ptr %.015, i64 16
   %i.n = load i64, ptr %i.m, align 8, !tbaa !71
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.j, ptr align 1 %i.l, i64 %i.n, i1 false)
-  %i.o = getelementptr inbounds nuw i8, ptr %.015, i64 48 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.015, i64 24 ; 2 uses
   %.not.1 = icmp eq ptr %i.o, %i.a
   br i1 %.not.1, label %._crit_edge, label %.lr.ph
 }

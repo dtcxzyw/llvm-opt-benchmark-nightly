@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/bn_word?download=true
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -14,43 +16,80 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call ptr @BN_dup(ptr noundef %0) #3 ; 3 uses
+  %i.c = tail call ptr @BN_dup(ptr noundef %0) #4 ; 3 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.e = tail call i64 @BN_div_word(ptr noundef nonnull %i.c, i64 noundef %1)
-  tail call void @BN_free(ptr noundef nonnull %i.c) #3
+  tail call void @BN_free(ptr noundef nonnull %i.c) #4
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !11   ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !11   ; 4 uses
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.e
-  %i.i = load ptr, ptr %0, align 8, !tbaa !12
-  %i.j = zext nneg i32 %i.g to i64
+  %i.i = load ptr, ptr %0, align 8, !tbaa !12     ; 3 uses
+  %i.j = zext nneg i32 %i.g to i64                ; 4 uses
+  %xtraiter = and i64 %i.j, 1
+  %2 = icmp eq i32 %i.g, 1
+  br i1 %2, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i64 %i.j, 2147483646
   br label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph, %bb.f
-  %indvars.iv.a = phi i64 [ %i.j, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 2 uses
-  %.02125 = phi i64 [ 0, %.lr.ph ], [ %i.r, %bb.f ]
-  %indvars.iv.next = add nsw i64 %indvars.iv.a, -1 ; 2 uses
+bb.f:                                             ; preds = %bb.f, %.lr.ph.new
+  %indvars.iv = phi i64 [ %i.j, %.lr.ph.new ], [ %indvars.iv.next, %bb.f ] ; 2 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph.new ], [ %i.r, %bb.f ]
+  %.02125 = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.f ]
+  %3 = getelementptr [8 x i8], ptr %i.i, i64 %indvars.iv
+  %4 = getelementptr i8, ptr %3, i64 -8
+  %5 = load i64, ptr %4, align 8, !tbaa !14       ; 2 uses
+  %6 = tail call i64 @llvm.fshl.i64(i64 %indvars.iv.a, i64 %5, i64 32)
+  %7 = urem i64 %6, %1
+  %8 = shl nuw i64 %7, 32
+  %9 = and i64 %5, 4294967295
+  %10 = or disjoint i64 %8, %9
+  %11 = urem i64 %10, %1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -2  ; 3 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next
   %i.l = load i64, ptr %i.k, align 8, !tbaa !14   ; 2 uses
-  %i.m = tail call i64 @llvm.fshl.i64(i64 %.02125, i64 %i.l, i64 32)
+  %i.m = tail call i64 @llvm.fshl.i64(i64 %11, i64 %i.l, i64 32)
   %i.n = urem i64 %i.m, %1
   %i.o = shl nuw i64 %i.n, 32
   %i.p = and i64 %i.l, 4294967295
   %i.q = or disjoint i64 %i.o, %i.p
-  %i.r = urem i64 %i.q, %1                        ; 2 uses
-  %2 = icmp samesign ugt i64 %indvars.iv.a, 1
-  br i1 %2, label %bb.f, label %.loopexit, !llvm.loop !18
+  %i.r = urem i64 %i.q, %1                        ; 3 uses
+  %niter.next.1 = add i64 %.02125, 2              ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %.loopexit.loopexit.unr-lcssa, label %bb.f, !llvm.loop !18
 
-.loopexit:                                        ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.a
-  %.1 = phi i64 [ -1, %bb.c ], [ -1, %bb.a ], [ %i.e, %bb.d ], [ 0, %bb.e ], [ %i.r, %bb.f ]
+.loopexit.loopexit.unr-lcssa:                     ; preds = %bb.f
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph
+  %indvars.iv.epil.init = phi i64 [ %i.j, %.lr.ph ], [ %indvars.iv.next, %.loopexit.loopexit.unr-lcssa ]
+  %.02125.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.r, %.loopexit.loopexit.unr-lcssa ]
+  %lcmp.mod31 = trunc i32 %i.g to i1
+  tail call void @llvm.assume(i1 %lcmp.mod31)
+  %12 = getelementptr [8 x i8], ptr %i.i, i64 %indvars.iv.epil.init
+  %13 = getelementptr i8, ptr %12, i64 -8
+  %14 = load i64, ptr %13, align 8, !tbaa !14     ; 2 uses
+  %15 = tail call i64 @llvm.fshl.i64(i64 %.02125.epil.init, i64 %14, i64 32)
+  %16 = urem i64 %15, %1
+  %17 = shl nuw i64 %16, 32
+  %18 = and i64 %14, 4294967295
+  %19 = or disjoint i64 %17, %18
+  %20 = urem i64 %19, %1
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.e, %bb.d, %bb.c, %bb.a
+  %.1 = phi i64 [ -1, %bb.c ], [ -1, %bb.a ], [ %i.e, %bb.d ], [ 0, %bb.e ], [ %i.r, %.loopexit.loopexit.unr-lcssa ], [ %20, %.epil.preheader ]
   ret i64 %.1
 }
 
@@ -69,11 +108,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call i32 @BN_num_bits_word(i64 noundef %1) #3
+  %i.d = tail call i32 @BN_num_bits_word(i64 noundef %1) #4
   %i.e = sub nsw i32 64, %i.d                     ; 2 uses
   %i.f = zext i32 %i.e to i64                     ; 3 uses
   %i.g = shl i64 %1, %i.f                         ; 2 uses
-  %i.h = tail call i32 @BN_lshift(ptr noundef nonnull %0, ptr noundef nonnull %0, i32 noundef %i.e) #3
+  %i.h = tail call i32 @BN_lshift(ptr noundef nonnull %0, ptr noundef nonnull %0, i32 noundef %i.e) #4
   %.not36 = icmp eq i32 %i.h, 0
   br i1 %.not36, label %bb.h, label %bb.d
 
@@ -94,7 +133,7 @@ bb.d:                                             ; preds = %bb.c
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.next
   %i.n = load i64, ptr %i.m, align 8, !tbaa !14   ; 2 uses
-  %i.o = tail call i64 @bn_div_words(i64 noundef %.03338, i64 noundef %i.n, i64 noundef %i.g) #3 ; 2 uses
+  %i.o = tail call i64 @bn_div_words(i64 noundef %.03338, i64 noundef %i.n, i64 noundef %i.g) #4 ; 2 uses
   %i.p = mul i64 %i.o, %i.g
   %i.q = sub i64 %i.n, %i.p                       ; 4 uses
   %i.r = load ptr, ptr %0, align 8, !tbaa !12     ; 2 uses
@@ -158,12 +197,12 @@ bb.a:
   br i1 %.not, label %.critedge42, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i32 @BN_is_zero(ptr noundef %0) #3
+  %i.a = tail call i32 @BN_is_zero(ptr noundef %0) #4
   %.not37 = icmp eq i32 %i.a, 0
   br i1 %.not37, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.b = tail call i32 @BN_set_word(ptr noundef %0, i64 noundef %1) #3
+  %i.b = tail call i32 @BN_set_word(ptr noundef %0, i64 noundef %1) #4
   br label %.critedge42
 
 bb.d:                                             ; preds = %bb.b
@@ -199,7 +238,7 @@ bb.e:                                             ; preds = %.lr.ph.peel
 bb.f:                                             ; preds = %bb.d
   store i32 0, ptr %i.c, align 8, !tbaa !16
   %i.l = tail call i32 @BN_sub_word(ptr noundef nonnull %0, i64 noundef %1) ; 2 uses
-  %i.m = tail call i32 @BN_is_zero(ptr noundef nonnull %0) #3
+  %i.m = tail call i32 @BN_is_zero(ptr noundef nonnull %0) #4
   %.not40 = icmp eq i32 %i.m, 0
   br i1 %.not40, label %bb.g, label %.critedge42
 
@@ -231,7 +270,7 @@ bb.h:                                             ; preds = %.lr.ph
 
 bb.i:                                             ; preds = %.critedge
   %i.u = add nuw nsw i32 %i.f, 1
-  %i.v = tail call ptr @bn_wexpand(ptr noundef nonnull %0, i32 noundef %i.u) #3
+  %i.v = tail call ptr @bn_wexpand(ptr noundef nonnull %0, i32 noundef %i.u) #4
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %.critedge42, label %bb.j
 
@@ -261,17 +300,17 @@ bb.a:
   br i1 %.not, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i32 @BN_is_zero(ptr noundef %0) #3
+  %i.a = tail call i32 @BN_is_zero(ptr noundef %0) #4
   %.not43 = icmp eq i32 %i.a, 0
   br i1 %.not43, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.b = tail call i32 @BN_set_word(ptr noundef %0, i64 noundef %1) #3 ; 2 uses
+  %i.b = tail call i32 @BN_set_word(ptr noundef %0, i64 noundef %1) #4 ; 2 uses
   %.not46 = icmp eq i32 %i.b, 0
   br i1 %.not46, label %bb.k, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @BN_set_negative(ptr noundef %0, i32 noundef 1) #3
+  tail call void @BN_set_negative(ptr noundef %0, i32 noundef 1) #4
   br label %bb.k
 
 bb.e:                                             ; preds = %bb.b
@@ -367,19 +406,19 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @BN_zero_ex(ptr noundef nonnull %0) #3
+  tail call void @BN_zero_ex(ptr noundef nonnull %0) #4
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
   %i.d = load ptr, ptr %0, align 8, !tbaa !12     ; 2 uses
-  %i.e = tail call i64 @bn_mul_words(ptr noundef %i.d, ptr noundef %i.d, i32 noundef %i.b, i64 noundef %1) #3 ; 2 uses
+  %i.e = tail call i64 @bn_mul_words(ptr noundef %i.d, ptr noundef %i.d, i32 noundef %i.b, i64 noundef %1) #4 ; 2 uses
   %.not17 = icmp eq i64 %i.e, 0
   br i1 %.not17, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.f = load i32, ptr %i.a, align 8, !tbaa !11
   %i.g = add nsw i32 %i.f, 1
-  %i.h = tail call ptr @bn_wexpand(ptr noundef nonnull %0, i32 noundef %i.g) #3
+  %i.h = tail call ptr @bn_wexpand(ptr noundef nonnull %0, i32 noundef %i.g) #4
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.g, label %bb.f
 
@@ -408,10 +447,14 @@ declare i64 @llvm.fshl.i64(i64, i64, i64) #2
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #2
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #3
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

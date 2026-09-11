@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/iceoryx2-rs/original/iceoryx2_tests_common-030fd2955ad72bee.iceoryx2_tests_common.edeaeddec5393c09-cgu.05?download=true
 inline.NumInlined: 473
 inline.NumDeleted: 297
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvXsk_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutexINtB5_11MutexHandleINtNtNtCsg6ZEkMtNi4J_8iceoryx24port10subscriber21SubscriberSharedStateNtNtNtB1a_7service14ipc_threadsafe7ServiceEENtNtB7_11ipc_capable6Handle3newCskqqG2IB5b71_21iceoryx2_tests_common:bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %0, i8 0, i64 40, i1 false)
   %i.a = tail call noundef i32 @_RNvXs_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5clockNtB4_9ClockTypeNtNtCs8Chj7Szqq0n_4core7default7Default7default() #18
@@ -204,67 +202,34 @@ define internal noundef zeroext i1 @_RNvYNCINvMs_NvNtCs7gufeB8TUC6_12iceoryx2_ca
 bb.a:
   %.val = load ptr, ptr %0, align 8, !nonnull !6, !align !22, !noundef !6 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.val, i64 1096
-  %i.b = load i64, ptr %i.a, align 8, !noalias !1735, !noundef !6 ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !noalias !1734, !noundef !6 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.val, i64 1104
-  %i.d = load i64, ptr %i.c, align 8, !noalias !1735, !noundef !6
+  %i.d = load i64, ptr %i.c, align 8, !noalias !1734, !noundef !6
   %i.e = add i64 %i.b, 1
   %i.f = add i64 %i.e, %i.d
   tail call void @_RNvMs4_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsNtB5_20SharedManagementData4init(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %i.b, i64 noundef %i.f) #18
   %i.g = tail call { ptr, i64 } @_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15relocatable_vec14RelocatableVecNtNtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7details7ChannelEINtB7_6VectorB1o_E8as_sliceCskqqG2IB5b71_21iceoryx2_tests_common(ptr noundef nonnull align 8 dereferenceable(80) %1) #18 ; 2 uses
-  %i.h = extractvalue { ptr, i64 } %i.g, 0        ; 4 uses
+  %i.h = extractvalue { ptr, i64 } %i.g, 0        ; 3 uses
   %i.i = extractvalue { ptr, i64 } %i.g, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
-  %.idx.i.i = mul i64 %i.i, 88                    ; 2 uses
+  %.idx.i.i = mul nuw nsw i64 %i.i, 88
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx.i.i
   %i.k = icmp eq i64 %i.i, 0
   br i1 %i.k, label %_RNCINvMs_NvNtCs7gufeB8TUC6_12iceoryx2_cal15dynamic_storage1__INtB7_11TinyClosureNtNtNtNtBb_20zero_copy_connection6common7details20SharedManagementDataKj18_E3newNCNvMs5_B1i_INtB1i_7BuilderINtNtB9_19posix_shared_memory7StorageB1g_EE18create_or_open_shm0Es_0CskqqG2IB5b71_21iceoryx2_tests_common.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %.val, i64 1128
-  %.pre.i.i = load i64, ptr %i.l, align 8, !noalias !1735 ; 9 uses
-  %3 = add i64 %.idx.i.i, -88                     ; 2 uses
-  %4 = udiv i64 %3, 88
-  %5 = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %5, 7                       ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
+  %.pre.i.i = load i64, ptr %i.l, align 8, !noalias !1734
+  br label %.lr.ph.i.i.new
 
-.prol.preheader:                                  ; preds = %.lr.ph.i.i, %.prol.preheader
-  %.sroa.0.01.i.i.prol = phi ptr [ %6, %.prol.preheader ], [ %i.h, %.lr.ph.i.i ] ; 2 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph.i.i ]
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.prol, i64 88 ; 2 uses
-  store atomic i64 %.pre.i.i, ptr %.sroa.0.01.i.i.prol monotonic, align 8
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !1734
-
-.prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph.i.i
-  %.sroa.0.01.i.i.unr = phi ptr [ %i.h, %.lr.ph.i.i ], [ %6, %.prol.preheader ]
-  %7 = icmp ult i64 %3, 616
-  br i1 %7, label %_RNCINvMs_NvNtCs7gufeB8TUC6_12iceoryx2_cal15dynamic_storage1__INtB7_11TinyClosureNtNtNtNtBb_20zero_copy_connection6common7details20SharedManagementDataKj18_E3newNCNvMs5_B1i_INtB1i_7BuilderINtNtB9_19posix_shared_memory7StorageB1g_EE18create_or_open_shm0Es_0CskqqG2IB5b71_21iceoryx2_tests_common.exit, label %.lr.ph.i.i.new
-
-.lr.ph.i.i.new:                                   ; preds = %.prol.loopexit, %.lr.ph.i.i.new
-  %.sroa.0.01.i.i = phi ptr [ %i.m, %.lr.ph.i.i.new ], [ %.sroa.0.01.i.i.unr, %.prol.loopexit ] ; 9 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 88
+.lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i.new, %.lr.ph.i.i
+  %.sroa.0.01.i.i = phi ptr [ %i.h, %.lr.ph.i.i ], [ %i.m, %.lr.ph.i.i.new ] ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 88 ; 2 uses
   store atomic i64 %.pre.i.i, ptr %.sroa.0.01.i.i monotonic, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 176
-  store atomic i64 %.pre.i.i, ptr %8 monotonic, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 264
-  store atomic i64 %.pre.i.i, ptr %9 monotonic, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 352
-  store atomic i64 %.pre.i.i, ptr %10 monotonic, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 440
-  store atomic i64 %.pre.i.i, ptr %11 monotonic, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 528
-  store atomic i64 %.pre.i.i, ptr %12 monotonic, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 616
-  store atomic i64 %.pre.i.i, ptr %13 monotonic, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i, i64 704 ; 2 uses
-  store atomic i64 %.pre.i.i, ptr %14 monotonic, align 8
   %i.n = icmp eq ptr %i.m, %i.j
   br i1 %i.n, label %_RNCINvMs_NvNtCs7gufeB8TUC6_12iceoryx2_cal15dynamic_storage1__INtB7_11TinyClosureNtNtNtNtBb_20zero_copy_connection6common7details20SharedManagementDataKj18_E3newNCNvMs5_B1i_INtB1i_7BuilderINtNtB9_19posix_shared_memory7StorageB1g_EE18create_or_open_shm0Es_0CskqqG2IB5b71_21iceoryx2_tests_common.exit, label %.lr.ph.i.i.new
 
-_RNCINvMs_NvNtCs7gufeB8TUC6_12iceoryx2_cal15dynamic_storage1__INtB7_11TinyClosureNtNtNtNtBb_20zero_copy_connection6common7details20SharedManagementDataKj18_E3newNCNvMs5_B1i_INtB1i_7BuilderINtNtB9_19posix_shared_memory7StorageB1g_EE18create_or_open_shm0Es_0CskqqG2IB5b71_21iceoryx2_tests_common.exit: ; preds = %.prol.loopexit, %.lr.ph.i.i.new, %bb.a
+_RNCINvMs_NvNtCs7gufeB8TUC6_12iceoryx2_cal15dynamic_storage1__INtB7_11TinyClosureNtNtNtNtBb_20zero_copy_connection6common7details20SharedManagementDataKj18_E3newNCNvMs5_B1i_INtB1i_7BuilderINtNtB9_19posix_shared_memory7StorageB1g_EE18create_or_open_shm0Es_0CskqqG2IB5b71_21iceoryx2_tests_common.exit: ; preds = %.lr.ph.i.i.new, %bb.a
   ret i1 true
 }
 
@@ -667,7 +632,5 @@ begin_hunk_1_@llvm.umax.i64
 !1731 = distinct !{!1731, !"_RNCNvMs5_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB7_7BuilderINtNtNtBd_15dynamic_storage19posix_shared_memory7StorageNtB7_20SharedManagementDataEE18create_or_open_shm0CskqqG2IB5b71_21iceoryx2_tests_common"}
 !1732 = distinct !{!1732, !1731, !"_RNCNvMs5_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB7_7BuilderINtNtNtBd_15dynamic_storage19posix_shared_memory7StorageNtB7_20SharedManagementDataEE18create_or_open_shm0CskqqG2IB5b71_21iceoryx2_tests_common: argument 1"}
 !1733 = distinct !{!1733, !1731, !"_RNCNvMs5_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection6common7detailsINtB7_7BuilderINtNtNtBd_15dynamic_storage19posix_shared_memory7StorageNtB7_20SharedManagementDataEE18create_or_open_shm0CskqqG2IB5b71_21iceoryx2_tests_common: argument 0"}
-!1734 = distinct !{!1734, !1736}
-!1735 = !{!1733, !1732, !1730, !1729}
-!1736 = !{!"llvm.loop.unroll.disable"}
+!1734 = !{!1733, !1732, !1730, !1729}
 end_hunk_1

@@ -205,15 +205,13 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4424
-  %3 = load double, ptr %2, align 8, !tbaa !306
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 4416
-  %4 = load double, ptr %i.bm, align 8, !tbaa !307
-  %5 = fadd double %3, %4
+  %2 = load <2 x double>, ptr %i.bm, align 8, !tbaa !245
+  %3 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %2)
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.a, %bb.o
-  %.06 = phi double [ %5, %bb.o ], [ 0.000000e+00, %bb.a ]
+  %.06 = phi double [ %3, %bb.o ], [ 0.000000e+00, %bb.a ]
   ret double %.06
 
 bb.q:                                             ; preds = %bb.d
@@ -616,7 +614,7 @@ bb.fx:                                            ; preds = %_ZN11colvarvalueD2E
 
 bb.fy:                                            ; preds = %bb.fx
   %i.amp = getelementptr inbounds nuw i8, ptr %0, i64 4416
-  store double %i.amo, ptr %i.amp, align 8, !tbaa !307
+  store double %i.amo, ptr %i.amp, align 8, !tbaa !306
   %i.amq = getelementptr inbounds nuw i8, ptr %24, i64 144
   %i.amr = load ptr, ptr %i.amq, align 8, !tbaa !31 ; 3 uses
   %.not.i.i.i.i482 = icmp eq ptr %i.amr, null
@@ -774,7 +772,7 @@ _ZNK6colvar5dist2ERK11colvarvalueS2_.exit:        ; preds = %bb.gk, %bb.gm, %bb.
   %i.apn = fmul double %i.anv, 5.000000e-01
   %i.apo = fmul double %i.apn, %.0.i
   %i.app = getelementptr inbounds nuw i8, ptr %0, i64 4424
-  store double %i.apo, ptr %i.app, align 8, !tbaa !306
+  store double %i.apo, ptr %i.app, align 8, !tbaa !307
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak) #28
@@ -1177,11 +1175,11 @@ bb.l:                                             ; preds = %bb.k
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
   store i64 %i.ci, ptr %i.cj, align 8, !tbaa !281
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 4424
-  %i.cl = load double, ptr %i.ck, align 8, !tbaa !306
+  %i.cl = load double, ptr %i.ck, align 8, !tbaa !307
   %i.cm = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %1, double noundef %i.cl) ; 2 uses
   %i.cn = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, ptr noundef nonnull @.str.22, i64 noundef 1) ; 0 uses
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 4416
-  %i.cp = load double, ptr %i.co, align 8, !tbaa !307
+  %i.cp = load double, ptr %i.co, align 8, !tbaa !306
   %i.cq = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.cm, double noundef %i.cp) ; 0 uses
   %.pre29 = load ptr, ptr %i.i, align 8, !tbaa !57
   br label %bb.m
@@ -1584,6 +1582,9 @@ declare i64 @llvm.smin.i64(i64, i64) #17
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #27
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #17
+
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1929,8 +1930,8 @@ attributes #33 = { nounwind willreturn memory(read) }
 !303 = !{!"llvm.loop.isvectorized", i32 1}
 !304 = !{!"llvm.loop.unroll.runtime.disable"}
 !305 = !{ptr @_ZNK6colvar11dist2_lgradERK11colvarvalueS2_}
-!306 = !{!194, !66, i64 4424}
-!307 = !{!194, !66, i64 4416}
+!306 = !{!194, !66, i64 4416}
+!307 = !{!194, !66, i64 4424}
 !308 = !{!"p1 _ZTSN12colvarmodule8matrix2dIdE3rowE", !27, i64 0}
 !309 = !{!"_ZTSNSt12_Vector_baseIN12colvarmodule8matrix2dIdE3rowESaIS3_EE17_Vector_impl_dataE", !308, i64 0, !308, i64 8, !308, i64 16}
 !310 = !{!"_ZTSNSt12_Vector_baseIN12colvarmodule8matrix2dIdE3rowESaIS3_EE12_Vector_implE", !309, i64 0}

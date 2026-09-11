@@ -205,10 +205,8 @@ _ZN4pstd8optionalISt6vectorIN4pbrt6Point2IfEESaIS4_EEEdeEv.exit.i.i.i: ; preds =
   br i1 %.not27.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %.lr.ph.i.i.i
-  %i.v = fmul <2 x float> %i.am, %i.am            ; 2 uses
-  %shift = shufflevector <2 x float> %i.v, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.v, %shift
-  %2 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.v = fmul <2 x float> %i.am, %i.am
+  %2 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.v)
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %_ZN4pstd8optionalISt6vectorIN4pbrt6Point2IfEESaIS4_EEEdeEv.exit.i.i.i
@@ -230,10 +228,8 @@ _ZN4pstd8optionalISt6vectorIN4pbrt6Point2IfEESaIS4_EEEdeEv.exit.i.i.i: ; preds =
   %.sroa.021.028.i.i.i = phi ptr [ %i.an, %.lr.ph.i.i.i ], [ %i.s, %_ZN4pstd8optionalISt6vectorIN4pbrt6Point2IfEESaIS4_EEEdeEv.exit.i.i.i ] ; 2 uses
   %i.ae = phi <2 x float> [ %i.am, %.lr.ph.i.i.i ], [ zeroinitializer, %_ZN4pstd8optionalISt6vectorIN4pbrt6Point2IfEESaIS4_EEEdeEv.exit.i.i.i ]
   %i.af = load <2 x float>, ptr %.sroa.021.028.i.i.i, align 4
-  %i.ag = fmul <2 x float> %i.af, %i.n            ; 2 uses
-  %shift10 = shufflevector <2 x float> %i.ag, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop11 = fadd <2 x float> %i.ag, %shift10
-  %3 = extractelement <2 x float> %foldExtExtBinop11, i64 0
+  %i.ag = fmul <2 x float> %i.af, %i.n
+  %3 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.ag)
   %i.ah = fmul float %3, f0xC0C90FDB              ; 2 uses
   %i.ai = tail call noundef float @cosf(float noundef %i.ah) #32
   %i.aj = tail call noundef float @sinf(float noundef %i.ah) #32
@@ -635,6 +631,9 @@ declare i32 @llvm.smin.i32(i32, i32) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #29
 
 attributes #0 = { mustprogress norecurse uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { cold mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

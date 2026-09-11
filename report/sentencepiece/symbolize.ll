@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 205
 inline.NumDeleted: 134
 loop-unroll.NumCompletelyUnrolled: 9
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN4absl12lts_2026052618debugging_internalL11ReadAddrMapEPFbPKcPKvS5_mPvES6_S6_m:bb.a
 bb.ag:                                            ; preds = %.lr.ph56
   %i.cv = add nsw i32 %.054, 1
@@ -205,66 +204,34 @@ bb.m:                                             ; preds = %bb.l
   %i.af = add i64 %i.ae, 50                       ; 2 uses
   %i.ag = mul i64 %i.af, 336
   %i.ah = tail call noundef ptr @_ZN4absl12lts_2026052613base_internal12SigSafeArenaEv()
-  %i.ai = tail call noundef ptr @_ZN4absl12lts_2026052613base_internal13LowLevelAlloc14AllocWithArenaEmPNS2_5ArenaE(i64 noundef %i.ag, ptr noundef %i.ah) ; 6 uses
+  %i.ai = tail call noundef ptr @_ZN4absl12lts_2026052613base_internal13LowLevelAlloc14AllocWithArenaEmPNS2_5ArenaE(i64 noundef %i.ag, ptr noundef %i.ah) ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !39 ; 7 uses
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !39 ; 4 uses
   %.not.i = icmp eq ptr %i.ak, null
   br i1 %.not.i, label %bb.q, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.al = load i64, ptr %4, align 8, !tbaa !38    ; 2 uses
-  %.idx.i.i.i.i = mul i64 %i.al, 336              ; 2 uses
+  %.idx.i.i.i.i = mul nsw i64 %i.al, 336
   %i.am = getelementptr inbounds i8, ptr %i.ak, i64 %.idx.i.i.i.i
   %.not11.i.i.i.i.i.i.i = icmp eq i64 %i.al, 0
-  br i1 %.not11.i.i.i.i.i.i.i, label %_ZSt9destroy_nIPN4absl12lts_2026052618debugging_internal12_GLOBAL__N_17ObjFileEmET_S6_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
+  br i1 %.not11.i.i.i.i.i.i.i, label %_ZSt9destroy_nIPN4absl12lts_2026052618debugging_internal12_GLOBAL__N_17ObjFileEmET_S6_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.n
-  %5 = add i64 %.idx.i.i.i.i, -336                ; 2 uses
-  %6 = udiv i64 %5, 336
-  %7 = and i64 %6, 1
-  %lcmp.mod.not.not = icmp eq i64 %7, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.i.i.i.prol:                        ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(336) %i.ai, ptr noundef nonnull align 8 dereferenceable(336) %i.ak, i64 328, i1 false)
-  %8 = getelementptr inbounds nuw i8, ptr %i.ai, i64 328
-  %9 = getelementptr inbounds nuw i8, ptr %i.ak, i64 328 ; 2 uses
-  %10 = load i64, ptr %9, align 8, !tbaa !41
-  store i64 %10, ptr %8, align 8, !tbaa !41
-  store ptr null, ptr %9, align 8, !tbaa !41
-  %11 = getelementptr inbounds nuw i8, ptr %i.ak, i64 336
-  %12 = getelementptr inbounds nuw i8, ptr %i.ai, i64 336
-  br label %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.i.i.i.prol.loopexit:               ; preds = %.lr.ph.i.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.i.preheader
-  %.013.i.i.i.i.i.i.i.unr = phi ptr [ %i.ai, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %12, %.lr.ph.i.i.i.i.i.i.i.prol ]
-  %.sroa.010.012.i.i.i.i.i.i.i.unr = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %11, %.lr.ph.i.i.i.i.i.i.i.prol ]
-  %13 = icmp ult i64 %5, 336
-  br i1 %13, label %_ZSt20uninitialized_move_nIPN4absl12lts_2026052618debugging_internal12_GLOBAL__N_17ObjFileEmS5_ESt4pairIT_T1_ES7_T0_S8_.exit.i, label %.lr.ph.i.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i
-  %.013.i.i.i.i.i.i.i = phi ptr [ %i.ar, %.lr.ph.i.i.i.i.i.i.i ], [ %.013.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
-  %.sroa.010.012.i.i.i.i.i.i.i = phi ptr [ %i.aq, %.lr.ph.i.i.i.i.i.i.i ], [ %.sroa.010.012.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
+.lr.ph.i.i.i.i.i.i.i:                             ; preds = %bb.n, %.lr.ph.i.i.i.i.i.i.i
+  %.013.i.i.i.i.i.i.i = phi ptr [ %i.ar, %.lr.ph.i.i.i.i.i.i.i ], [ %i.ai, %bb.n ] ; 3 uses
+  %.sroa.010.012.i.i.i.i.i.i.i = phi ptr [ %i.aq, %.lr.ph.i.i.i.i.i.i.i ], [ %i.ak, %bb.n ] ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(336) %.013.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(336) %.sroa.010.012.i.i.i.i.i.i.i, i64 328, i1 false)
-  %14 = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.i, i64 328
-  %15 = getelementptr inbounds nuw i8, ptr %.sroa.010.012.i.i.i.i.i.i.i, i64 328 ; 2 uses
-  %16 = load i64, ptr %15, align 8, !tbaa !41
-  store i64 %16, ptr %14, align 8, !tbaa !41
-  store ptr null, ptr %15, align 8, !tbaa !41
-  %17 = getelementptr inbounds nuw i8, ptr %.sroa.010.012.i.i.i.i.i.i.i, i64 336
-  %18 = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.i, i64 336
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(336) %18, ptr noundef nonnull align 8 dereferenceable(336) %17, i64 328, i1 false)
-  %i.an = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.i, i64 664
-  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.010.012.i.i.i.i.i.i.i, i64 664 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.i, i64 328
+  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.010.012.i.i.i.i.i.i.i, i64 328 ; 2 uses
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !41
   store i64 %i.ap, ptr %i.an, align 8, !tbaa !41
   store ptr null, ptr %i.ao, align 8, !tbaa !41
-  %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.010.012.i.i.i.i.i.i.i, i64 672 ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.i, i64 672
+  %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.010.012.i.i.i.i.i.i.i, i64 336 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i.i.i, i64 336
   %.not.i.i.i.i.i.i.i.1 = icmp eq ptr %i.aq, %i.am
   br i1 %.not.i.i.i.i.i.i.i.1, label %_ZSt20uninitialized_move_nIPN4absl12lts_2026052618debugging_internal12_GLOBAL__N_17ObjFileEmS5_ESt4pairIT_T1_ES7_T0_S8_.exit.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !106
 
-_ZSt20uninitialized_move_nIPN4absl12lts_2026052618debugging_internal12_GLOBAL__N_17ObjFileEmS5_ESt4pairIT_T1_ES7_T0_S8_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit
+_ZSt20uninitialized_move_nIPN4absl12lts_2026052618debugging_internal12_GLOBAL__N_17ObjFileEmS5_ESt4pairIT_T1_ES7_T0_S8_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i
   %.pre.i = load ptr, ptr %i.aj, align 8, !tbaa !39 ; 2 uses
   %.pre6.i = load i64, ptr %4, align 8, !tbaa !38 ; 2 uses
   %.not6.i.i.i.i = icmp eq i64 %.pre6.i, 0

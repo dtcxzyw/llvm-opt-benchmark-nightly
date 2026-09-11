@@ -204,22 +204,22 @@ bb.r:                                             ; preds = %bb.h, %_ZNK6duckdb1
   %i.cu = uitofp <2 x i64> %i.ct to <2 x double>
   %i.cv = insertelement <2 x double> poison, double %i.co, i64 0
   %i.cw = shufflevector <2 x double> %i.cv, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cx = fdiv <2 x double> %i.cu, %i.cw          ; 2 uses
-  %3 = extractelement <2 x double> %i.cx, i64 0   ; 3 uses
-  %4 = extractelement <2 x double> %i.cx, i64 1   ; 3 uses
-  %5 = fadd double %3, %4                         ; 2 uses
-  %6 = fcmp olt double %5, 1.000000e+00
-  %7 = fsub double 1.000000e+00, %5
-  %i.cy = fadd double %4, %7
-  %.052 = select i1 %6, double %i.cy, double %4   ; 2 uses
+  %i.cx = fdiv <2 x double> %i.cu, %i.cw          ; 3 uses
+  %3 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.cx) ; 2 uses
+  %4 = fcmp olt double %3, 1.000000e+00
+  %5 = fsub double 1.000000e+00, %3
+  %6 = extractelement <2 x double> %i.cx, i64 1   ; 2 uses
+  %i.cy = fadd double %6, %5
+  %.052 = select i1 %4, double %i.cy, double %6   ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.da = load i64, ptr %i.cz, align 8, !tbaa !134
   %i.db = uitofp i64 %i.da to double              ; 2 uses
-  %i.dc = fcmp ogt double %3, %.052
+  %7 = extractelement <2 x double> %i.cx, i64 0   ; 2 uses
+  %i.dc = fcmp ogt double %7, %.052
   br i1 %i.dc, label %bb.s, label %bb.x
 
 bb.s:                                             ; preds = %bb.r
-  %i.dd = fmul double %3, %i.db
+  %i.dd = fmul double %7, %i.db
   %i.de = tail call double @llvm.round.f64(double %i.dd)
   %i.df = fptoui double %i.de to i64
   %i.dg = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_21BaseReservoirSamplingESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.w) ; 2 uses
@@ -621,6 +621,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #6
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

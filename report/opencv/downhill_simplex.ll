@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #17
-  %i.c = add i32 %i.b, 1                          ; 8 uses
+  %i.c = add i32 %i.b, 1                          ; 7 uses
   invoke void @_ZN2cv3MatC1Eiii(ptr noundef nonnull align 8 dereferenceable(208) %16, i32 noundef 1, i32 noundef %i.c, i32 noundef 6)
           to label %bb.c unwind label %bb.i
 
@@ -478,13 +478,12 @@ _ZN2cv18DownhillSolverImpl14updateCoordSumERKNS_3MatERS1_.exit: ; preds = %._cri
   %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 9 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %wide.trip.count400 = zext i32 %i.c to i64
+  %wide.trip.count400 = zext i32 %i.c to i64      ; 2 uses
   %wide.trip.count405 = zext i32 %i.c to i64
   %wide.trip.count416 = zext i32 %i.b to i64      ; 8 uses
-  %wide.trip.count410 = zext i32 %i.c to i64
   %wide.trip.count431 = zext i32 %i.c to i64
   %wide.trip.count426 = zext nneg i32 %i.b to i64
-  %i.cv = add nsw i64 %wide.trip.count410, -1     ; 3 uses
+  %i.cv = add nsw i64 %wide.trip.count400, -1     ; 3 uses
   %i.cw = add nsw i64 %wide.trip.count416, -1     ; 2 uses
   %xtraiter593 = and i64 %i.cv, 1
   %i.cx = icmp eq i32 %i.c, 2
@@ -887,8 +886,8 @@ middle.block566:                                  ; preds = %vector.body561
 .lr.ph356.split.us:                               ; preds = %.lr.ph356.split.us.preheader569, %.lr.ph356.split.us
   %indvars.iv423 = phi i64 [ %indvars.iv.next424, %.lr.ph356.split.us ], [ %indvars.iv423.ph, %.lr.ph356.split.us.preheader569 ] ; 2 uses
   %i.ha = getelementptr inbounds nuw [8 x i8], ptr %.pre438, i64 %indvars.iv423 ; 2 uses
-  %i.hb = load double, ptr %i.ha, align 8, !tbaa !36 ; 2 uses
-  %19 = fadd double %i.hb, %i.hb
+  %i.hb = load double, ptr %i.ha, align 8, !tbaa !36
+  %19 = fmul double %i.hb, 2.000000e+00
   %i.hc = fmul double %19, 5.000000e-01
   store double %i.hc, ptr %i.ha, align 8, !tbaa !36
   %indvars.iv.next424 = add nuw nsw i64 %indvars.iv423, 1 ; 2 uses

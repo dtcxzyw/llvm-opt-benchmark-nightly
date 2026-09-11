@@ -204,7 +204,7 @@ sumAtoms.exit.i:                                  ; preds = %scalar.ph.prol.loop
   call void @addIntParallel(ptr noundef %i.ih, ptr noundef nonnull %i.ii, i32 noundef 1) #12
   call void @profileStop(i32 noundef 10) #12
   %i.ij = load double, ptr %i.r, align 8, !tbaa !25
-  %i.ik = getelementptr inbounds nuw i8, ptr %i.j, i64 56 ; 2 uses
+  %i.ik = getelementptr inbounds nuw i8, ptr %i.j, i64 56
   %i.il = load double, ptr %i.ik, align 8, !tbaa !26
   %i.im = fadd double %i.ij, %i.il
   %i.in = load ptr, ptr %i.bm, align 8, !tbaa !20
@@ -477,14 +477,13 @@ sumAtoms.exit14:                                  ; preds = %scalar.ph67.prol.lo
   br i1 %.not.i15, label %bb.v, label %bb.s
 
 bb.s:                                             ; preds = %sumAtoms.exit14
-  %4 = load double, ptr %i.r, align 8, !tbaa !25
-  %5 = load double, ptr %i.ik, align 8, !tbaa !26
-  %6 = fadd double %4, %5
+  %4 = load <2 x double>, ptr %i.r, align 8, !tbaa !65
+  %5 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %4)
   %i.mg = load ptr, ptr %i.bm, align 8, !tbaa !20
   %i.mh = getelementptr inbounds nuw i8, ptr %i.mg, i64 4
   %i.mi = load i32, ptr %i.mh, align 4, !tbaa !24 ; 3 uses
   %i.mj = sitofp i32 %i.mi to double
-  %i.mk = fdiv double %6, %i.mj                   ; 2 uses
+  %i.mk = fdiv double %5, %i.mj                   ; 2 uses
   %i.ml = load ptr, ptr @stdout, align 8, !tbaa !10
   %fputc.i16 = call i32 @fputc(i32 10, ptr %i.ml) ; 0 uses
   %i.mm = load ptr, ptr @stdout, align 8, !tbaa !10
@@ -699,6 +698,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #11
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

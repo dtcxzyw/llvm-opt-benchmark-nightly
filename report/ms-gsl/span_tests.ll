@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 8112
 inline.NumDeleted: 2088
 loop-unroll.NumCompletelyUnrolled: 16
-loop-unroll.NumRuntimeUnrolled: 11
-loop-unroll.NumUnrolled: 28
+loop-unroll.NumRuntimeUnrolled: 10
+loop-unroll.NumUnrolled: 27
 begin_hunk_0_@_ZNSt8__detail9_ExecutorIN3gsl7details13span_iteratorIcEESaINSt7__cxx119sub_matchIS4_EEENS5_12regex_traitsIcEELb0EED2Ev:bb.a
   %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %.not4.i.i.i.i = icmp eq ptr %i.e, %i.g
@@ -205,7 +205,7 @@ define linkonce_odr dso_local void @_ZNSt6vectorINSt7__cxx119sub_matchIN3gsl7det
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = load ptr, ptr %0, align 8                ; 12 uses
+  %i.c = load ptr, ptr %0, align 8                ; 8 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -371,51 +371,25 @@ bb.h:                                             ; preds = %bb.e
   br i1 %i.au, label %_ZSt6fill_nIPNSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEmS6_ET_S8_T0_RKT1_.exit, label %.lr.ph.i.i.i.i14
 
 .lr.ph.i.i.i.i14:                                 ; preds = %bb.h
-  %.idx.i.i = mul nuw nsw i64 %1, 56              ; 2 uses
+  %.idx.i.i = mul nuw nsw i64 %1, 56
   %i.av = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i.i ; 2 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 3 uses
-  %3 = add nsw i64 %.idx.i.i, -56                 ; 2 uses
-  %4 = udiv i64 %3, 56
-  %5 = and i64 %4, 1
-  %lcmp.mod.not.not = icmp eq i64 %5, 0
-  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+  %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 48
+  br label %.lr.ph.i.i.i.i14.new
 
-.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i.i.i.i14
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(49) %i.c, ptr noundef nonnull align 8 dereferenceable(49) %2, i64 24, i1 false)
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %i.aw, i64 24, i1 false)
-  %7 = load i8, ptr %i.ax, align 8, !range !34, !noundef !35
-  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  store i8 %7, ptr %8, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  br label %.prol.loopexit
-
-.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i.i.i.i14
-  %.06.i.i.i.i15.unr = phi ptr [ %i.c, %.lr.ph.i.i.i.i14 ], [ %9, %.prol.loopexit.unr-lcssa ]
-  %10 = icmp ult i64 %3, 56
-  br i1 %10, label %_ZSt6fill_nIPNSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEmS6_ET_S8_T0_RKT1_.exit.loopexit, label %.lr.ph.i.i.i.i14.new
-
-.lr.ph.i.i.i.i14.new:                             ; preds = %.prol.loopexit, %.lr.ph.i.i.i.i14.new
-  %.06.i.i.i.i15 = phi ptr [ %i.bb, %.lr.ph.i.i.i.i14.new ], [ %.06.i.i.i.i15.unr, %.prol.loopexit ] ; 7 uses
+.lr.ph.i.i.i.i14.new:                             ; preds = %.lr.ph.i.i.i.i14.new, %.lr.ph.i.i.i.i14
+  %.06.i.i.i.i15 = phi ptr [ %i.c, %.lr.ph.i.i.i.i14 ], [ %i.bb, %.lr.ph.i.i.i.i14.new ] ; 4 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(49) %.06.i.i.i.i15, ptr noundef nonnull align 8 dereferenceable(49) %2, i64 24, i1 false)
-  %11 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef nonnull align 8 dereferenceable(24) %i.aw, i64 24, i1 false)
-  %12 = load i8, ptr %i.ax, align 8, !range !34, !noundef !35
-  %13 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 48
-  store i8 %12, ptr %13, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 56
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(49) %14, ptr noundef nonnull align 8 dereferenceable(49) %2, i64 24, i1 false)
-  %i.ay = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 80
+  %i.ay = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ay, ptr noundef nonnull align 8 dereferenceable(24) %i.aw, i64 24, i1 false)
   %i.az = load i8, ptr %i.ax, align 8, !range !34, !noundef !35
-  %i.ba = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 104
+  %i.ba = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 48
   store i8 %i.az, ptr %i.ba, align 8
-  %i.bb = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 112 ; 2 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i15, i64 56 ; 2 uses
   %.not.i.i.i.i16.1 = icmp eq ptr %i.bb, %i.av
   br i1 %.not.i.i.i.i16.1, label %_ZSt6fill_nIPNSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEmS6_ET_S8_T0_RKT1_.exit.loopexit, label %.lr.ph.i.i.i.i14.new, !llvm.loop !353
 
-_ZSt6fill_nIPNSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEmS6_ET_S8_T0_RKT1_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i14.new, %.prol.loopexit
+_ZSt6fill_nIPNSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEmS6_ET_S8_T0_RKT1_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i14.new
   %.pre = load ptr, ptr %i.v, align 8
   br label %_ZSt6fill_nIPNSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEmS6_ET_S8_T0_RKT1_.exit
 

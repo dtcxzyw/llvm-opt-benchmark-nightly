@@ -35,18 +35,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = insertelement <2 x i32> poison, i32 %0, i64 0
-  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %5 = lshr <2 x i32> %4, <i32 65535, i32 16>
-  %6 = and <2 x i32> %4, <i32 65535, i32 poison>
-  %7 = shufflevector <2 x i32> %6, <2 x i32> %5, <2 x i32> <i32 0, i32 3>
+  %3 = lshr i32 %0, 16
+  %4 = and i32 %0, 65535
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.p, %bb.c
+  %.090 = phi i32 [ %4, %bb.c ], [ %8, %bb.p ]
+  %.088 = phi i32 [ %3, %bb.c ], [ %7, %bb.p ]
   %.086 = phi i64 [ %2, %bb.c ], [ %i.n, %bb.p ]  ; 5 uses
   %.084 = phi ptr [ %1, %bb.c ], [ %.3.lcssa, %bb.p ] ; 3 uses
   %.072 = phi i32 [ %0, %bb.c ], [ %i.cd, %bb.p ] ; 2 uses
-  %8 = phi <2 x i32> [ %7, %bb.c ], [ %i.ca, %bb.p ]
   %i.c = icmp ult i64 %.086, 32
   br i1 %i.c, label %bb.e, label %bb.f
 
@@ -65,13 +63,13 @@ bb.g:                                             ; preds = %bb.f
 .preheader:                                       ; preds = %bb.f, %._crit_edge
   %.185125 = phi ptr [ %.3.lcssa, %._crit_edge ], [ %.084, %bb.f ] ; 5 uses
   %.187124 = phi i64 [ %i.n, %._crit_edge ], [ %.086, %bb.f ] ; 3 uses
-  %9 = phi <2 x i32> [ %i.ca, %._crit_edge ], [ %8, %bb.f ]
-  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %11 = shufflevector <4 x i32> %10, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.g = bitcast <4 x i32> %11 to <2 x i64>
+  %.189123 = phi i32 [ %7, %._crit_edge ], [ %.088, %bb.f ]
+  %.191122 = phi i32 [ %8, %._crit_edge ], [ %.090, %bb.f ]
+  %5 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.191122, i64 0
+  %i.g = bitcast <4 x i32> %5 to <2 x i64>
   %i.h = shufflevector <2 x i64> %i.g, <2 x i64> zeroinitializer, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 2, i32 3, i32 2, i32 3> ; 2 uses
-  %12 = shufflevector <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, <4 x i32> %10, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  %i.i = bitcast <4 x i32> %12 to <2 x i64>
+  %6 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.189123, i64 0
+  %i.i = bitcast <4 x i32> %6 to <2 x i64>
   %i.j = shufflevector <2 x i64> %i.i, <2 x i64> zeroinitializer, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 2, i32 3, i32 2, i32 3> ; 2 uses
   %i.k = call i64 @llvm.umin.i64(i64 %.187124, i64 5552) ; 2 uses
   %i.l = and i64 %i.k, 8128                       ; 4 uses
@@ -199,15 +197,15 @@ bb.o:                                             ; preds = %_mm512_loadu_si512.
   %i.bx = shufflevector <4 x i32> %i.bm, <4 x i32> %i.bs, <2 x i32> <i32 2, i32 6>
   %i.by = add <2 x i32> %i.bw, %i.bx
   %i.bz = add <2 x i32> %i.bv, %i.by
-  %i.ca = urem <2 x i32> %i.bz, splat (i32 65521) ; 4 uses
+  %i.ca = urem <2 x i32> %i.bz, splat (i32 65521) ; 2 uses
+  %7 = extractelement <2 x i32> %i.ca, i64 1      ; 3 uses
+  %8 = extractelement <2 x i32> %i.ca, i64 0      ; 3 uses
   %i.cb = icmp ugt i64 %i.n, 63
   br i1 %i.cb, label %.preheader, label %bb.p, !llvm.loop !18
 
 bb.p:                                             ; preds = %._crit_edge
-  %13 = extractelement <2 x i32> %i.ca, i64 1
-  %i.cc = shl nuw i32 %13, 16
-  %14 = extractelement <2 x i32> %i.ca, i64 0
-  %i.cd = or disjoint i32 %i.cc, %14              ; 2 uses
+  %i.cc = shl nuw i32 %7, 16
+  %i.cd = or disjoint i32 %i.cc, %8               ; 2 uses
   %.not = icmp eq i64 %i.n, 0
   br i1 %.not, label %.loopexit, label %bb.d
 
@@ -244,11 +242,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.c, label %._crit_edge150, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.c
-  %4 = insertelement <2 x i32> poison, i32 %0, i64 0
-  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %6 = lshr <2 x i32> %5, <i32 65535, i32 16>
-  %7 = and <2 x i32> %5, <i32 65535, i32 poison>
-  %8 = shufflevector <2 x i32> %7, <2 x i32> %6, <2 x i32> <i32 0, i32 3>
+  %4 = and i32 %0, 65535
+  %5 = lshr i32 %0, 16
   br label %bb.d
 
 ._crit_edge150:                                   ; preds = %bb.t, %bb.c
@@ -269,13 +264,13 @@ bb.d:                                             ; preds = %.preheader.preheade
   %.195144 = phi ptr [ %1, %.preheader.preheader ], [ %.3.lcssa, %._crit_edge ] ; 6 uses
   %.197143 = phi ptr [ %2, %.preheader.preheader ], [ %.399.lcssa, %._crit_edge ] ; 5 uses
   %.1101142 = phi i64 [ %3, %.preheader.preheader ], [ %i.q, %._crit_edge ] ; 3 uses
-  %9 = phi <2 x i32> [ %8, %.preheader.preheader ], [ %i.cr, %._crit_edge ]
-  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %11 = shufflevector <4 x i32> %10, <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %i.j = bitcast <4 x i32> %11 to <2 x i64>
+  %.1103141 = phi i32 [ %5, %.preheader.preheader ], [ %9, %._crit_edge ]
+  %.1105140 = phi i32 [ %4, %.preheader.preheader ], [ %8, %._crit_edge ]
+  %6 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1105140, i64 0
+  %i.j = bitcast <4 x i32> %6 to <2 x i64>
   %i.k = shufflevector <2 x i64> %i.j, <2 x i64> zeroinitializer, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
-  %12 = shufflevector <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, <4 x i32> %10, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
-  %i.l = bitcast <4 x i32> %12 to <2 x i64>
+  %7 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1103141, i64 0
+  %i.l = bitcast <4 x i32> %7 to <2 x i64>
   %i.m = shufflevector <2 x i64> %i.l, <2 x i64> zeroinitializer, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
   %i.n = call i64 @llvm.umin.i64(i64 %.1101142, i64 5552) ; 2 uses
   %i.o = and i64 %i.n, 8160                       ; 4 uses
@@ -463,15 +458,15 @@ bb.s:                                             ; preds = %bb.q, %bb.r
   %i.co = shufflevector <4 x i32> %i.ci, <4 x i32> %i.cn, <2 x i32> <i32 1, i32 5>
   %i.cp = shufflevector <4 x i32> %i.ci, <4 x i32> %i.cn, <2 x i32> <i32 0, i32 4>
   %i.cq = add <2 x i32> %i.co, %i.cp
-  %i.cr = urem <2 x i32> %i.cq, splat (i32 65521) ; 3 uses
+  %i.cr = urem <2 x i32> %i.cq, splat (i32 65521) ; 2 uses
   %i.cs = icmp ugt i64 %i.q, 31
+  %8 = extractelement <2 x i32> %i.cr, i64 0      ; 2 uses
+  %9 = extractelement <2 x i32> %i.cr, i64 1      ; 2 uses
   br i1 %i.cs, label %bb.d, label %bb.t, !llvm.loop !21
 
 bb.t:                                             ; preds = %._crit_edge
-  %13 = extractelement <2 x i32> %i.cr, i64 1
-  %i.ct = shl nuw i32 %13, 16
-  %14 = extractelement <2 x i32> %i.cr, i64 0
-  %i.cu = or disjoint i32 %i.ct, %14              ; 2 uses
+  %i.ct = shl nuw i32 %9, 16
+  %i.cu = or disjoint i32 %i.ct, %8               ; 2 uses
   %.not = icmp eq i64 %i.q, 0
   br i1 %.not, label %.loopexit, label %._crit_edge150
 

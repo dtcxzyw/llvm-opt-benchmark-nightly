@@ -204,10 +204,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bm = fsub <2 x float> %i.bi, %i.bl
   %i.bn = fadd <2 x float> %i.bi, %i.bl
   %i.bo = shufflevector <2 x float> %i.bm, <2 x float> %i.bn, <2 x i32> <i32 0, i32 3> ; 3 uses
-  %i.bp = fmul <2 x float> %i.bo, %i.bo           ; 2 uses
-  %shift = shufflevector <2 x float> %i.bp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %shift, %i.bp
-  %4 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.bp = fmul <2 x float> %i.bo, %i.bo
+  %4 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.bp) ; 2 uses
   %sqrt.i = tail call float @llvm.sqrt.f32(float %4)
   %i.bq = fcmp ogt float %4, 0.000000e+00
   %i.br = fdiv float 1.000000e+00, %sqrt.i
@@ -610,10 +608,8 @@ bb.n:                                             ; preds = %bb.a
   %i.cd = and i32 %i.bx, 4
   %.not55.i = icmp eq i32 %i.cd, 0
   %i.ce = select i1 %.not55.i, float %i.bv, float 0.000000e+00 ; 7 uses
-  %i.cf = fmul <2 x float> %i.cc, %i.cc           ; 2 uses
-  %shift = shufflevector <2 x float> %i.cf, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.cf, %shift
-  %3 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.cf = fmul <2 x float> %i.cc, %i.cc
+  %3 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.cf) ; 2 uses
   %i.cg = fcmp ogt float %3, %i.bl
   br i1 %i.cg, label %bb.o, label %bb.p
 
@@ -890,12 +886,9 @@ bb.f:                                             ; preds = %._crit_edge
   %i.db = insertelement <2 x float> poison, float %i.cw, i64 0
   %i.dc = shufflevector <2 x float> %i.db, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dd = fmul <2 x float> %i.m, %i.dc
-  %i.de = fadd <2 x float> %i.cz, %i.dd           ; 5 uses
-  %foldExtExtBinop = fmul <2 x float> %i.de, %i.de
+  %i.de = fadd <2 x float> %i.cz, %i.dd           ; 3 uses
   %foldExtExtBinop293 = fmul <2 x float> %i.de, %i.de
-  %shift = shufflevector <2 x float> %foldExtExtBinop, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop295 = fadd <2 x float> %shift, %foldExtExtBinop293
-  %5 = extractelement <2 x float> %foldExtExtBinop295, i64 0 ; 2 uses
+  %5 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %foldExtExtBinop293) ; 2 uses
   %sqrt.i = call float @llvm.sqrt.f32(float %5)
   %i.df = fcmp ogt float %5, 0.000000e+00
   %i.dg = fdiv float 1.000000e+00, %sqrt.i
@@ -1298,10 +1291,8 @@ bb.m:                                             ; preds = %.critedge
   %i.cx = shufflevector <2 x float> %i.cv, <2 x float> %i.cw, <2 x i32> <i32 0, i32 3>
   %i.cy = fadd <2 x float> %i.ce, %i.cx
   %i.cz = fsub <2 x float> %i.cy, %i.cn           ; 3 uses
-  %i.da = fmul <2 x float> %i.cz, %i.cz           ; 2 uses
-  %shift = shufflevector <2 x float> %i.da, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.da, %shift
-  %9 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.da = fmul <2 x float> %i.cz, %i.cz
+  %9 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.da) ; 2 uses
   %i.db = fcmp ogt float %9, f0x057A0000
   br i1 %i.db, label %bb.n, label %b2GetLengthAndNormalize.exit
 
@@ -1564,6 +1555,9 @@ declare float @llvm.sqrt.f32(float) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #6

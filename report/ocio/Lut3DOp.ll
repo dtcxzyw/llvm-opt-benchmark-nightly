@@ -186,6 +186,8 @@ bb.f:                                             ; preds = %bb.b
   %wide.trip.count = zext nneg i32 %i.h to i64
   %i.k = insertelement <2 x float> poison, float %i.f, i64 0
   %i.l = shufflevector <2 x float> %i.k, <2 x float> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.f
@@ -232,11 +234,10 @@ bb.f:                                             ; preds = %bb.b
   %i.ak = sdiv i32 %i.aj, %1
   %i.al = mul nuw nsw i64 %indvars.iv, %i.j
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.al ; 2 uses
-  %4 = srem i32 %i.aj, %1
-  %5 = srem i32 %i.ak, %1
-  %i.an = insertelement <2 x i32> poison, i32 %5, i64 0
-  %6 = insertelement <2 x i32> %i.an, i32 %4, i64 1
-  %i.ao = sitofp <2 x i32> %6 to <2 x float>
+  %6 = insertelement <2 x i32> poison, i32 %i.ak, i64 0
+  %i.an = insertelement <2 x i32> %6, i32 %i.aj, i64 1
+  %7 = srem <2 x i32> %i.an, %5
+  %i.ao = sitofp <2 x i32> %7 to <2 x float>
   %i.ap = fmul <2 x float> %i.l, %i.ao
   store <2 x float> %i.ap, ptr %i.am, align 4, !tbaa !23
   %i.aq = srem i32 %i.ai, %1

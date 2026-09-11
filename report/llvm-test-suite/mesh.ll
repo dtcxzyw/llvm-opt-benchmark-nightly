@@ -205,15 +205,14 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_.exit: ; pr
   %i.ai = and i32 %i.ag, 1
   %i.aj = icmp eq i32 %i.ai, 0
   %i.ak = sext i32 %i.ah to i64
-  %i.al = getelementptr [8 x i8], ptr %i.f, i64 %i.ak ; 3 uses
+  %i.al = getelementptr [8 x i8], ptr %i.f, i64 %i.ak ; 2 uses
   br i1 %i.aj, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_.exit
   %i.am = getelementptr i8, ptr %i.al, i64 -8
-  %5 = load double, ptr %i.am, align 8, !tbaa !59
-  %6 = load double, ptr %i.al, align 8, !tbaa !59
-  %7 = fadd double %5, %6
-  %i.an = fmul double %7, 5.000000e-01
+  %5 = load <2 x double>, ptr %i.am, align 8, !tbaa !59
+  %6 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %5)
+  %i.an = fmul double %6, 5.000000e-01
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_.exit
@@ -615,6 +614,9 @@ declare i32 @llvm.vector.reduce.smin.v4i32(<4 x i32>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #10
 
 attributes #0 = { mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

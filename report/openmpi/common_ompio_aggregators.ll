@@ -204,10 +204,8 @@ cost_calc.exit62:                                 ; preds = %bb.l, %bb.m
   %i.dv = shufflevector <2 x double> %i.du, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dw = fmul <2 x double> %i.dt, %i.dv
   %i.dx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dw, <2 x double> splat (double 6.700000e-10), <2 x double> %i.ds)
-  %i.dy = fmul <2 x double> %i.do, %i.dx          ; 2 uses
-  %shift = shufflevector <2 x double> %i.dy, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.dy, %shift
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.dy = fmul <2 x double> %i.do, %i.dx
+  %3 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.dy) ; 2 uses
   %i.dz = fsub double %.05265, %3                 ; 2 uses
   %i.ea = fdiv double %i.dz, %.05265              ; 3 uses
   %i.eb = icmp eq i64 %indvars.iv, %i.cs
@@ -608,6 +606,9 @@ declare void @llvm.assume(i1 noundef) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8

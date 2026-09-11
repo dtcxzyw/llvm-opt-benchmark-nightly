@@ -202,19 +202,17 @@ finishNode.exit:                                  ; preds = %bb.c, %bb.d, %bb.e
 bb.f:                                             ; preds = %finishNode.exit
   %i.au = load ptr, ptr @stderr, align 8, !tbaa !17
   %i.av = call ptr @agnameof(ptr noundef nonnull %i.u) #13
-  %i.aw = load ptr, ptr %i.v, align 8, !tbaa !21  ; 5 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
-  %2 = load double, ptr %1, align 8, !tbaa !80
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 40
-  %i.ay = load double, ptr %i.ax, align 8, !tbaa !81
-  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 96
-  %i.ba = load double, ptr %i.az, align 8, !tbaa !79
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.aw, i64 104
-  %i.bc = load double, ptr %i.bb, align 8, !tbaa !82
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.aw, i64 112
-  %3 = load double, ptr %i.bd, align 8, !tbaa !83
-  %4 = fadd double %i.bc, %3
-  %i.be = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.au, ptr noundef nonnull @.str.6, ptr noundef %i.av, double noundef %2, double noundef %i.ay, double noundef %i.ba, double noundef %4) #15 ; 0 uses
+  %i.aw = load ptr, ptr %i.v, align 8, !tbaa !21  ; 4 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
+  %i.ay = load double, ptr %i.ax, align 8, !tbaa !80
+  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 40
+  %i.ba = load double, ptr %i.az, align 8, !tbaa !81
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.aw, i64 96
+  %i.bc = load double, ptr %i.bb, align 8, !tbaa !79
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.aw, i64 104
+  %1 = load <2 x double>, ptr %i.bd, align 8, !tbaa !55
+  %2 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %1)
+  %i.be = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.au, ptr noundef nonnull @.str.6, ptr noundef %i.av, double noundef %i.ay, double noundef %i.ba, double noundef %i.bc, double noundef %2) #15 ; 0 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %finishNode.exit, %bb.f, %._crit_edge
@@ -246,7 +244,7 @@ bb.a:
   tail call fastcc void @freeTree(ptr noundef %.089)
   %i.g = add nuw i64 %.010, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.g, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !84
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !82
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -331,6 +329,9 @@ declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -437,7 +438,5 @@ attributes #17 = { cold noreturn nounwind }
 !79 = !{!49, !8, i64 96}
 !80 = !{!49, !8, i64 32}
 !81 = !{!49, !8, i64 40}
-!82 = !{!49, !8, i64 104}
-!83 = !{!49, !8, i64 112}
-!84 = distinct !{!84, !43}
+!82 = distinct !{!82, !43}
 end_hunk_0

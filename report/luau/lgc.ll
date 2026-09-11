@@ -179,11 +179,11 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.bx, ptr %i.bv, align 4, !tbaa !120
   %i.by = add i32 %i.bp, 1
   store i32 %i.by, ptr %i.bo, align 16, !tbaa !119
-  %2 = sitofp i32 %i.bn to double
-  %3 = fmul nnan double %2, 4.050000e-01
-  %4 = sitofp i32 %i.bx to double
-  %5 = fmul nnan double %4, f0x3FCF1A9FBE76C8B5
-  %6 = fadd double %3, %5
+  %2 = insertelement <2 x i32> poison, i32 %i.bn, i64 0
+  %3 = insertelement <2 x i32> %2, i32 %i.bx, i64 1
+  %4 = sitofp <2 x i32> %3 to <2 x double>
+  %5 = fmul nnan <2 x double> %4, <double 4.050000e-01, double f0x3FCF1A9FBE76C8B5>
+  %6 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %5)
   %i.bz = fmul double %6, 1.024000e+03
   %i.ca = fptosi double %i.bz to i64
   %i.cb = add i64 %i.bh, %i.ca
@@ -585,6 +585,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9

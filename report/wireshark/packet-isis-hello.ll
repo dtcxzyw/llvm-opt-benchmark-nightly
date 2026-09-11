@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %.083102 = phi i32 [ %i.eb, %.loopexit ], [ %i.e, %.lr.ph.preheader ] ; 20 uses
   %i.g = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.083102) ; 3 uses
   %i.h = add i32 %.083102, 1
-  %i.i = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.h) ; 7 uses
+  %i.i = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.h) ; 6 uses
   %i.j = add nsw i32 %.082103, -2                 ; 3 uses
   %i.k = add i32 %.083102, 2                      ; 15 uses
-  %i.l = zext i8 %i.i to i32                      ; 24 uses
+  %i.l = zext i8 %i.i to i32                      ; 25 uses
   %i.m = icmp samesign ult i32 %i.j, %i.l
   br i1 %i.m, label %.thread, label %bb.c
 
@@ -342,8 +342,6 @@ bb.m:                                             ; preds = %bb.c
   br i1 %.not29.i, label %.loopexit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.m
-  %6 = urem i8 %i.i, 6
-  %.zext.i = zext nneg i8 %6 to i32
   %i.cl = icmp ult i8 %i.i, 6
   br i1 %i.cl, label %.lr.ph.i93._crit_edge, label %.lr.ph136
 
@@ -353,7 +351,8 @@ bb.m:                                             ; preds = %bb.c
   br i1 %i.cn, label %.lr.ph.i93._crit_edge, label %.lr.ph136, !llvm.loop !8
 
 .lr.ph.i93._crit_edge:                            ; preds = %.lr.ph.i93, %.lr.ph.preheader.i
-  %i.co = tail call ptr (ptr, ptr, ptr, ptr, i32, ptr, ...) @proto_tree_add_expert_format_remaining(ptr noundef %2, ptr noundef %1, ptr noundef nonnull @ei_isis_hello_short_clv, ptr noundef %0, i32 noundef %i.k, ptr noundef nonnull @.str.213, i32 noundef %.zext.i, i32 noundef 6) ; 0 uses
+  %.02730.i.lcssa = phi i32 [ %i.l, %.lr.ph.preheader.i ], [ %i.cy, %.lr.ph.i93 ]
+  %i.co = tail call ptr (ptr, ptr, ptr, ptr, i32, ptr, ...) @proto_tree_add_expert_format_remaining(ptr noundef %2, ptr noundef %1, ptr noundef nonnull @ei_isis_hello_short_clv, ptr noundef %0, i32 noundef %i.k, ptr noundef nonnull @.str.213, i32 noundef %.02730.i.lcssa, i32 noundef 6) ; 0 uses
   br label %.loopexit
 
 .lr.ph136:                                        ; preds = %.lr.ph.preheader.i, %.lr.ph.i93
@@ -368,7 +367,7 @@ bb.m:                                             ; preds = %bb.c
   %i.cv = tail call ptr @proto_tree_add_item(ptr noundef %i.ck, i32 noundef %i.cu, ptr noundef %0, i32 noundef %i.cs, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.cw = load i32, ptr @hf_isis_hello_bvid_m, align 4
   %i.cx = tail call ptr @proto_tree_add_item(ptr noundef %i.ck, i32 noundef %i.cw, ptr noundef %0, i32 noundef %i.cs, i32 noundef 2, i32 noundef 0) ; 0 uses
-  %i.cy = add nsw i32 %.02730.i135, -6            ; 2 uses
+  %i.cy = add nsw i32 %.02730.i135, -6            ; 3 uses
   %.not.i94 = icmp eq i32 %i.cy, 0
   br i1 %.not.i94, label %.loopexit, label %.lr.ph.i93, !llvm.loop !8
 

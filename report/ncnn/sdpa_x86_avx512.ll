@@ -204,8 +204,6 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   store i64 0, ptr %i.av, align 8
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 144
   store ptr %i.ax, ptr %i.m, align 8, !tbaa !74
-  %13 = load i32, ptr %i.n, align 4, !tbaa !60, !noalias !119 ; 2 uses
-  %14 = load i32, ptr %i.o, align 8, !tbaa !61, !noalias !119 ; 2 uses
   %i.ay = load i32, ptr %i.p, align 4, !tbaa !72, !noalias !119
   %i.az = load ptr, ptr %3, align 8, !tbaa !64, !noalias !119
   %i.ba = load i64, ptr %i.q, align 8, !tbaa !59, !noalias !119
@@ -215,20 +213,10 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.be = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.bd
   %i.bf = load i32, ptr %i.s, align 8, !tbaa !56, !noalias !119
   %i.bg = load ptr, ptr %i.t, align 8, !tbaa !57, !noalias !119
-  %15 = sext i32 %13 to i64
-  %16 = sext i32 %14 to i64
-  %17 = mul nsw i64 %16, %15                      ; 2 uses
-  %18 = mul i64 %i.bc, %17
-  %19 = add i64 %18, 15
-  %20 = and i64 %19, -16
-  %21 = udiv i64 %20, %i.bc
   %i.bh = load i32, ptr %i.u, align 8, !tbaa !73, !noalias !119 ; 2 uses
   %i.bi = add nsw i32 %i.bh, -1
   %i.bj = icmp eq i32 %i.bh, 4
-  %spec.select = select i1 %i.bj, i64 %17, i64 %21
   %i.bk = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
-  %.pre124 = load i32, ptr %i.v, align 4, !tbaa !60, !noalias !120 ; 2 uses
-  %.pre125 = load i32, ptr %i.w, align 8, !tbaa !61, !noalias !120 ; 2 uses
   %.pre126 = load i32, ptr %i.x, align 4, !tbaa !72, !noalias !120
   %.pre129 = load i64, ptr %i.z, align 8, !tbaa !55, !noalias !120 ; 4 uses
   %.pre130 = load i32, ptr %i.aa, align 8, !tbaa !56, !noalias !120
@@ -250,27 +238,42 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   store i32 %i.bf, ptr %i.bm, align 8, !tbaa !56
   store ptr %i.bg, ptr %i.as, align 8, !tbaa !57
   store i32 %i.bi, ptr %i.bn, align 8, !tbaa !73
-  store i32 %13, ptr %i.bo, align 4, !tbaa !60
-  store i32 %14, ptr %i.bp, align 8, !tbaa !61
   store i32 1, ptr %i.bq, align 4, !tbaa !72
   store i32 %i.ay, ptr %i.br, align 8, !tbaa !58
-  store i64 %spec.select, ptr %i.at, align 8, !tbaa !59
   %i.bs = trunc nsw i64 %indvars.iv to i32
   %i.bt = sdiv i32 %i.bs, %.pre
   %i.bu = sext i32 %i.bt to i64
   %i.bv = mul i64 %.pre128, %i.bu
   %i.bw = mul i64 %i.bv, %.pre129
   %i.bx = getelementptr inbounds nuw i8, ptr %.pre127, i64 %i.bw
-  %i.by = sext i32 %.pre124 to i64
-  %i.bz = sext i32 %.pre125 to i64
-  %i.ca = mul nsw i64 %i.bz, %i.by                ; 2 uses
-  %i.cb = mul i64 %.pre129, %i.ca
-  %22 = add i64 %i.cb, 15
-  %23 = and i64 %22, -16
-  %24 = udiv i64 %23, %.pre129
+  %13 = load i32, ptr %i.o, align 8, !tbaa !61, !noalias !119 ; 2 uses
+  %14 = load i32, ptr %i.n, align 4, !tbaa !60, !noalias !119 ; 2 uses
+  %.pre125 = load i32, ptr %i.w, align 8, !tbaa !61, !noalias !120 ; 2 uses
+  %.pre124 = load i32, ptr %i.v, align 4, !tbaa !60, !noalias !120 ; 2 uses
+  %15 = sext i32 %.pre124 to i64
+  %16 = sext i32 %14 to i64
+  %i.by = sext i32 %.pre125 to i64
+  %i.bz = sext i32 %13 to i64
+  %17 = mul nsw i64 %i.by, %15                    ; 2 uses
+  %18 = mul nsw i64 %i.bz, %16                    ; 2 uses
+  %i.ca = mul i64 %.pre129, %17
+  %i.cb = mul i64 %i.bc, %18
+  %19 = insertelement <2 x i64> poison, i64 %i.cb, i64 0
+  %20 = insertelement <2 x i64> %19, i64 %i.ca, i64 1
+  %21 = add <2 x i64> %20, splat (i64 15)
+  %22 = and <2 x i64> %21, splat (i64 -16)
+  %23 = insertelement <2 x i64> poison, i64 %i.bc, i64 0
+  %24 = insertelement <2 x i64> %23, i64 %.pre129, i64 1
+  %25 = udiv <2 x i64> %22, %24                   ; 2 uses
+  %26 = extractelement <2 x i64> %25, i64 0
+  %spec.select = select i1 %i.bj, i64 %18, i64 %26
+  store i32 %14, ptr %i.bo, align 4, !tbaa !60
+  store i32 %13, ptr %i.bp, align 8, !tbaa !61
+  store i64 %spec.select, ptr %i.at, align 8, !tbaa !59
   %i.cc = add nsw i32 %.pre132, -1
   %i.cd = icmp eq i32 %.pre132, 4
-  %.sroa.22108.0 = select i1 %i.cd, i64 %i.ca, i64 %24
+  %27 = extractelement <2 x i64> %25, i64 1
+  %.sroa.22108.0 = select i1 %i.cd, i64 %17, i64 %27
   %i.ce = getelementptr inbounds nuw i8, ptr %i.aq, i64 80
   %i.cf = getelementptr inbounds nuw i8, ptr %i.aq, i64 88
   %i.cg = getelementptr inbounds nuw i8, ptr %i.aq, i64 96

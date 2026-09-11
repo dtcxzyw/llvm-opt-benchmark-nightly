@@ -205,10 +205,8 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i, %bb.c
-  %.274.i.i.i.i.i.i.i.i.i.i.i = phi <2 x double> [ %i.j, %bb.c ], [ %i.ae, %bb.e ], [ %i.p, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
-  %shift = shufflevector <2 x double> %.274.i.i.i.i.i.i.i.i.i.i.i, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %.274.i.i.i.i.i.i.i.i.i.i.i, %shift
-  %1 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %.274.i.i.i.i.i.i.i.i.i.i.i = phi <2 x double> [ %i.j, %bb.c ], [ %i.ae, %bb.e ], [ %i.p, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i ]
+  %1 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %.274.i.i.i.i.i.i.i.i.i.i.i) ; 3 uses
   %i.af = icmp slt i64 %i.h, %i.b
   br i1 %i.af, label %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.preheader, label %_ZNK5Eigen8internal15redux_evaluatorINS_16PartialReduxExprIKNS_12CwiseUnaryOpINS0_13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEENS0_10member_sumIddEELi0EEEE17coeffByOuterInnerEll.exit.i.i.i.i
 
@@ -401,10 +399,8 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge.i.i.i.i.i.i.i26.i.i.i.i, %.lr.ph.split.split.i.i.i.i
-  %.274.i.i.i.i.i.i.i20.i.i.i.i = phi <2 x double> [ %i.cx, %.lr.ph.split.split.i.i.i.i ], [ %i.dp, %bb.i ], [ %i.db, %._crit_edge.i.i.i.i.i.i.i26.i.i.i.i ] ; 2 uses
-  %shift456 = shufflevector <2 x double> %.274.i.i.i.i.i.i.i20.i.i.i.i, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop457 = fadd <2 x double> %.274.i.i.i.i.i.i.i20.i.i.i.i, %shift456
-  %2 = extractelement <2 x double> %foldExtExtBinop457, i64 0 ; 3 uses
+  %.274.i.i.i.i.i.i.i20.i.i.i.i = phi <2 x double> [ %i.cx, %.lr.ph.split.split.i.i.i.i ], [ %i.dp, %bb.i ], [ %i.db, %._crit_edge.i.i.i.i.i.i.i26.i.i.i.i ]
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %.274.i.i.i.i.i.i.i20.i.i.i.i) ; 3 uses
   br i1 %i.bu, label %.lr.ph85.i.i.i.i.i.i.i22.i.i.i.i.preheader, label %_ZNK5Eigen8internal15redux_evaluatorINS_16PartialReduxExprIKNS_12CwiseUnaryOpINS0_13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEENS0_10member_sumIddEELi0EEEE17coeffByOuterInnerEll.exit35.i.i.i.i
 
 .lr.ph85.i.i.i.i.i.i.i22.i.i.i.i.preheader:       ; preds = %bb.j
@@ -807,11 +803,9 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %._crit_edge500, label %bb.f, !llvm.loop !993
 
 ._crit_edge500:                                   ; preds = %._crit_edge500.loopexit.unr-lcssa, %bb.f, %.preheader
-  %.0392.lcssa = phi <2 x double> [ zeroinitializer, %.preheader ], [ %i.om, %._crit_edge500.loopexit.unr-lcssa ], [ %i.ot, %bb.f ] ; 2 uses
+  %.0392.lcssa = phi <2 x double> [ zeroinitializer, %.preheader ], [ %i.om, %._crit_edge500.loopexit.unr-lcssa ], [ %i.ot, %bb.f ]
   %.0205.lcssa = phi i64 [ 0, %.preheader ], [ %i.jl, %bb.f ], [ %i.jl, %._crit_edge500.loopexit.unr-lcssa ] ; 5 uses
-  %shift = shufflevector <2 x double> %.0392.lcssa, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %.0392.lcssa, %shift
-  %7 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %7 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %.0392.lcssa) ; 3 uses
   %i.ov = icmp slt i64 %.0205.lcssa, %1
   br i1 %i.ov, label %.lr.ph506, label %._crit_edge507
 
@@ -1212,6 +1206,9 @@ declare i32 @llvm.smax.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #19

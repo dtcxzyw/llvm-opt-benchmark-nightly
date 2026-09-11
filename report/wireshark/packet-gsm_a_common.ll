@@ -204,23 +204,16 @@ bb.a:
   tail call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.e, ptr noundef nonnull @.str.83, ptr noundef %i.f)
   %i.g = add i32 %.03741, 3                       ; 3 uses
   %i.h = add i8 %.042, 1                          ; 2 uses
-  %.neg = sub i32 %3, %i.g
-  %7 = add i32 %.neg, %4                          ; 2 uses
+  %.neg = sub i32 %i.g, %3                        ; 2 uses
+  %7 = sub i32 %4, %.neg                          ; 2 uses
   %i.i = icmp ugt i32 %7, 2
-  br i1 %i.i, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !8
+  br i1 %i.i, label %.lr.ph, label %._crit_edge, !llvm.loop !8
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %8 = add i32 %4, -3                             ; 2 uses
-  %9 = urem i32 %8, 3
-  %10 = sub nuw i32 %8, %9
-  %11 = add nuw i32 %10, 3
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.037.lcssa = phi i32 [ %3, %bb.a ], [ %i.g, %._crit_edge.loopexit ] ; 3 uses
-  %.0.lcssa = phi i8 [ 0, %bb.a ], [ %i.h, %._crit_edge.loopexit ] ; 2 uses
-  %.lcssa40 = phi i32 [ 0, %bb.a ], [ %11, %._crit_edge.loopexit ]
-  %.lcssa = phi i32 [ %4, %bb.a ], [ %7, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %.037.lcssa = phi i32 [ %3, %bb.a ], [ %i.g, %.lr.ph ] ; 3 uses
+  %.0.lcssa = phi i8 [ 0, %bb.a ], [ %i.h, %.lr.ph ] ; 2 uses
+  %.lcssa40 = phi i32 [ 0, %bb.a ], [ %.neg, %.lr.ph ]
+  %.lcssa = phi i32 [ %4, %bb.a ], [ %7, %.lr.ph ] ; 2 uses
   %.not = icmp eq ptr %5, null
   br i1 %.not, label %bb.c, label %bb.b
 

@@ -202,7 +202,7 @@ declare double @log(double noundef) local_unnamed_addr #7
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, errnomem: readwrite, target_mem: none) uwtable
 define hidden noundef float @_ZN16OpenColorIO_v2_57LogUtil15GetLogSideBreakERKSt6vectorIdSaIdEEd(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, double noundef %1) local_unnamed_addr #9 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !17     ; 4 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !17     ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load double, ptr %i.b, align 8, !tbaa !19
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -214,19 +214,20 @@ bb.a:
   %i.j = fpext float %i.i to double
   %i.k = tail call double @log2(double noundef %i.j) #18
   %i.l = fptrunc double %i.k to float
-  %i.m = fptrunc double %1 to float
+  %2 = load double, ptr %i.a, align 8, !tbaa !19
+  %i.m = fptrunc double %2 to float
   %i.n = fpext float %i.m to double
-  %2 = tail call double @log2(double noundef %i.n) #18
-  %i.o = fpext float %i.l to double
-  %3 = load <2 x double>, ptr %i.a, align 8, !tbaa !19
-  %4 = fptrunc <2 x double> %3 to <2 x float>     ; 2 uses
-  %5 = extractelement <2 x float> %4, i64 0
-  %6 = fpext float %5 to double
-  %7 = fdiv double %6, %2
-  %8 = fmul double %7, %i.o
-  %9 = fptrunc double %8 to float
-  %10 = extractelement <2 x float> %4, i64 1
-  %i.p = fadd float %10, %9
+  %3 = fptrunc double %1 to float
+  %i.o = fpext float %3 to double
+  %4 = tail call double @log2(double noundef %i.o) #18
+  %5 = fdiv double %i.n, %4
+  %6 = fpext float %i.l to double
+  %7 = fmul double %5, %6
+  %8 = fptrunc double %7 to float
+  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %10 = load double, ptr %9, align 8, !tbaa !19
+  %11 = fptrunc double %10 to float
+  %i.p = fadd float %11, %8
   ret float %i.p
 }
 

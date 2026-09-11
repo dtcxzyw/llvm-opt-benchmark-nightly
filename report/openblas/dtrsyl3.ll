@@ -113,25 +113,30 @@ bb.a:
   %i.bp = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str) #9 ; 2 uses
   %i.bq = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str) #9 ; 2 uses
   %i.br = tail call i32 @ilaenv_(ptr noundef nonnull @c__1, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull @c_n1, ptr noundef nonnull @c_n1, i32 noundef 6, i32 noundef 0) #9
-  %i.bs = tail call i32 @llvm.smax.i32(i32 %i.br, i32 8) ; 9 uses
+  %i.bs = tail call i32 @llvm.smax.i32(i32 %i.br, i32 8) ; 8 uses
   %i.bt = load i32, ptr %3, align 4, !tbaa !91
-  %i.bu = add nsw i32 %i.bs, -1                   ; 2 uses
-  %i.bv = add i32 %i.bu, %i.bt
-  %17 = sdiv i32 %i.bv, %i.bs                     ; 3 uses
-  %18 = tail call i32 @llvm.smax.i32(i32 %17, i32 1) ; 12 uses
+  %17 = add nsw i32 %i.bs, -1                     ; 2 uses
   store i32 1, ptr %i.ao, align 4, !tbaa !91
-  %19 = load i32, ptr %4, align 4, !tbaa !91
-  %20 = add i32 %i.bu, %19
-  %21 = sdiv i32 %20, %i.bs                       ; 5 uses
-  store i32 %21, ptr %i.ap, align 4, !tbaa !91
-  %i.bw = tail call i32 @llvm.smax.i32(i32 %21, i32 1) ; 12 uses
+  %18 = load i32, ptr %4, align 4, !tbaa !91
+  %i.bu = add i32 %17, %18
+  %i.bv = add i32 %17, %i.bt
+  %19 = insertelement <2 x i32> poison, i32 %i.bv, i64 0
+  %20 = insertelement <2 x i32> %19, i32 %i.bu, i64 1
+  %21 = insertelement <2 x i32> poison, i32 %i.bs, i64 0
+  %22 = shufflevector <2 x i32> %21, <2 x i32> poison, <2 x i32> zeroinitializer
+  %23 = sdiv <2 x i32> %20, %22                   ; 2 uses
+  %24 = extractelement <2 x i32> %23, i64 1       ; 5 uses
+  %25 = extractelement <2 x i32> %23, i64 0       ; 3 uses
+  %26 = tail call i32 @llvm.smax.i32(i32 %25, i32 1) ; 12 uses
+  store i32 %24, ptr %i.ap, align 4, !tbaa !91
+  %i.bw = tail call i32 @llvm.smax.i32(i32 %24, i32 1) ; 12 uses
   store i32 0, ptr %16, align 4, !tbaa !91
   %i.bx = load i32, ptr %13, align 4, !tbaa !91
   %i.by = icmp eq i32 %i.bx, -1
   br i1 %i.by, label %.thread, label %bb.b
 
 .thread:                                          ; preds = %bb.a
-  %i.bz = add nuw nsw i32 %18, 2
+  %i.bz = add nuw nsw i32 %26, 2
   %i.ca = add nuw nsw i32 %i.bz, %i.bw
   store i32 %i.ca, ptr %12, align 4, !tbaa !91
   br label %bb.c
@@ -139,18 +144,18 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.cb = load i32, ptr %15, align 4, !tbaa !91
   %i.cc = icmp eq i32 %i.cb, -1
-  %i.cd = add nuw nsw i32 %18, 2
+  %i.cd = add nuw nsw i32 %26, 2
   %i.ce = add nuw nsw i32 %i.cd, %i.bw
   store i32 %i.ce, ptr %12, align 4, !tbaa !91
   br i1 %i.cc, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.thread, %bb.b
   store i32 2, ptr %15, align 4, !tbaa !91
-  %i.cf = tail call i32 @llvm.umax.i32(i32 %18, i32 %i.bw)
+  %i.cf = tail call i32 @llvm.umax.i32(i32 %26, i32 %i.bw)
   %i.cg = uitofp nneg i32 %i.cf to double
   store double %i.cg, ptr %14, align 8, !tbaa !93
   %i.ch = shl nuw nsw i32 %i.bw, 1
-  %i.ci = add nuw nsw i32 %i.ch, %18
+  %i.ci = add nuw nsw i32 %i.ch, %26
   %i.cj = uitofp nneg i32 %i.ci to double
   %i.ck = sext i32 %i.bm to i64
   %i.cl = getelementptr [8 x i8], ptr %i.bo, i64 %i.ck
@@ -253,13 +258,13 @@ bb.s:                                             ; preds = %bb.r
   %i.dk = zext nneg i32 %i.dj to i64
   %i.dl = shl nuw nsw i64 %i.dk, 3
   %i.dm = tail call noalias ptr @malloc(i64 noundef %i.dl) #10 ; 17 uses
-  %i.dn = tail call i32 @llvm.umin.i32(i32 %18, i32 %i.bw)
+  %i.dn = tail call i32 @llvm.umin.i32(i32 %26, i32 %i.bw)
   %i.do = icmp eq i32 %i.dn, 1
   br i1 %i.do, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.dp = load i32, ptr %15, align 4, !tbaa !91
-  %i.dq = tail call i32 @llvm.umax.i32(i32 %18, i32 %i.bw)
+  %i.dq = tail call i32 @llvm.umax.i32(i32 %26, i32 %i.bw)
   %i.dr = icmp slt i32 %i.dp, %i.dq
   br i1 %i.dr, label %bb.v, label %bb.u
 
@@ -275,14 +280,14 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
 
 iter.check:                                       ; preds = %bb.u
   %i.dv = tail call double @dlamch_(ptr noundef nonnull @.str.6) #9 ; 2 uses
-  %i.dw = add nuw nsw i32 %18, 1                  ; 2 uses
+  %i.dw = add nuw nsw i32 %26, 1                  ; 2 uses
   %wide.trip.count = zext nneg i32 %i.dw to i64   ; 2 uses
-  %i.dx = zext nneg i32 %18 to i64                ; 5 uses
-  %min.iters.check = icmp slt i32 %17, 8
+  %i.dx = zext nneg i32 %26 to i64                ; 5 uses
+  %min.iters.check = icmp slt i32 %25, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check3673 = icmp slt i32 %17, 32
+  %min.iters.check3673 = icmp slt i32 %25, 32
   br i1 %min.iters.check3673, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -378,7 +383,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 .loopexit3748:                                    ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %i.fd = load i32, ptr %3, align 4, !tbaa !91
   %i.fe = add nsw i32 %i.fd, 1
-  %i.ff = zext nneg i32 %18 to i64
+  %i.ff = zext nneg i32 %26 to i64
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ff ; 3 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 4 ; 2 uses
   store i32 %i.fe, ptr %i.fh, align 4, !tbaa !91
@@ -570,23 +575,23 @@ bb.an:                                            ; preds = %.loopexit2620
 
 bb.ao:                                            ; preds = %bb.an
   store i32 %i.ib, ptr %i.fg, align 4, !tbaa !91
-  %i.id = add nsw i32 %18, -1
+  %i.id = add nsw i32 %26, -1
   br label %iter.check3704
 
 iter.check3704:                                   ; preds = %bb.ao, %bb.an
-  %.pre-phi = phi i32 [ %18, %bb.ao ], [ %i.dw, %bb.an ] ; 18 uses
-  %.01789 = phi i32 [ %i.id, %bb.ao ], [ %18, %bb.an ] ; 32 uses
+  %.pre-phi = phi i32 [ %26, %bb.ao ], [ %i.dw, %bb.an ] ; 18 uses
+  %.01789 = phi i32 [ %i.id, %bb.ao ], [ %26, %bb.an ] ; 32 uses
   store i32 %i.bw, ptr %i.ao, align 4, !tbaa !91
   %i.ie = zext i32 %.pre-phi to i64               ; 15 uses
   %i.if = add nuw nsw i32 %i.bw, 1
   %wide.trip.count3031 = zext nneg i32 %i.if to i64 ; 2 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ie ; 3 uses
   %i.ig = zext nneg i32 %i.bw to i64              ; 5 uses
-  %min.iters.check3685 = icmp slt i32 %21, 8
+  %min.iters.check3685 = icmp slt i32 %24, 8
   br i1 %min.iters.check3685, label %vec.epilog.scalar.ph3705.preheader, label %vector.main.loop.iter.check3686
 
 vector.main.loop.iter.check3686:                  ; preds = %iter.check3704
-  %min.iters.check3687 = icmp slt i32 %21, 32
+  %min.iters.check3687 = icmp slt i32 %24, 32
   br i1 %min.iters.check3687, label %vec.epilog.ph3708, label %vector.ph3688
 
 vector.ph3688:                                    ; preds = %vector.main.loop.iter.check3686
@@ -875,7 +880,7 @@ bb.bg:                                            ; preds = %._crit_edge
 bb.bh:                                            ; preds = %bb.bg
   store i32 %i.mi, ptr %i.jr, align 4, !tbaa !91
   %i.mk = add nsw i32 %i.bw, -1                   ; 2 uses
-  %.not19142642 = icmp slt i32 %21, 2
+  %.not19142642 = icmp slt i32 %24, 2
   br i1 %.not19142642, label %._crit_edge2646.split, label %.lr.ph2645
 
 .lr.ph2645:                                       ; preds = %bb.bg, %bb.bh

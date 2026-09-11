@@ -204,22 +204,20 @@ _ZSt11nth_elementIPfEvT_S1_S1_.exit.us.us.us:     ; preds = %_ZSt11nth_elementIP
   %.04172.us.us.us = phi i64 [ 0, %.lr.ph.split.us.split.us.split.us.new ], [ %i.bw, %_ZSt11nth_elementIPfEvT_S1_S1_.exit.us.us.us ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.split.us.split.us.split.us.new ], [ %niter.next.1, %_ZSt11nth_elementIPfEvT_S1_S1_.exit.us.us.us ]
   %i.bn = mul nsw i64 %.04172.us.us.us, %1
-  %gep86 = getelementptr [4 x i8], ptr %invariant.gep85, i64 %i.bn ; 2 uses
-  %3 = load float, ptr %gep86, align 4, !tbaa !56
+  %gep86 = getelementptr [4 x i8], ptr %invariant.gep85, i64 %i.bn
   %i.bo = getelementptr inbounds i8, ptr %gep86, i64 -4
-  %4 = load float, ptr %i.bo, align 4, !tbaa !56
-  %5 = fadd float %3, %4
-  %i.bp = fmul float %5, 5.000000e-01
+  %3 = load <2 x float>, ptr %i.bo, align 4, !tbaa !56
+  %4 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %3)
+  %i.bp = fmul float %4, 5.000000e-01
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.04172.us.us.us
   store float %i.bp, ptr %i.bq, align 4, !tbaa !56
   %i.br = or disjoint i64 %.04172.us.us.us, 1     ; 2 uses
   %i.bs = mul nsw i64 %i.br, %1
-  %gep86.1 = getelementptr [4 x i8], ptr %invariant.gep85, i64 %i.bs ; 2 uses
-  %6 = load float, ptr %gep86.1, align 4, !tbaa !56
+  %gep86.1 = getelementptr [4 x i8], ptr %invariant.gep85, i64 %i.bs
   %i.bt = getelementptr inbounds i8, ptr %gep86.1, i64 -4
-  %7 = load float, ptr %i.bt, align 4, !tbaa !56
-  %8 = fadd float %6, %7
-  %i.bu = fmul float %8, 5.000000e-01
+  %5 = load <2 x float>, ptr %i.bt, align 4, !tbaa !56
+  %6 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %5)
+  %i.bu = fmul float %6, 5.000000e-01
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %i.br
   store float %i.bu, ptr %i.bv, align 4, !tbaa !56
   %i.bw = add nuw nsw i64 %.04172.us.us.us, 2     ; 2 uses
@@ -262,17 +260,16 @@ _ZSt11nth_elementIPfEvT_S1_S1_.exit55.us.us:      ; preds = %_ZSt11nth_elementIP
   %.04172.us.us81 = phi i64 [ %i.cu, %_ZSt11nth_elementIPfEvT_S1_S1_.exit.us.us82 ], [ 0, %.lr.ph.split.us.split ] ; 3 uses
   %i.cm = mul nsw i64 %.04172.us.us81, %1
   %i.cn = getelementptr inbounds [4 x i8], ptr %i.ab, i64 %i.cm ; 3 uses
-  %i.co = getelementptr inbounds i8, ptr %i.cn, i64 %.idx67 ; 3 uses
+  %i.co = getelementptr inbounds i8, ptr %i.cn, i64 %.idx67 ; 2 uses
   %i.cp = getelementptr inbounds i8, ptr %i.cn, i64 %.idx
   invoke void @_ZSt13__introselectIPflN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_S4_T0_T1_(ptr noundef nonnull %i.cn, ptr noundef nonnull %i.co, ptr noundef nonnull %i.cp, i64 noundef %i.bf)
           to label %_ZSt11nth_elementIPfEvT_S1_S1_.exit.us.us82 unwind label %.split.us.split.us
 
 _ZSt11nth_elementIPfEvT_S1_S1_.exit.us.us82:      ; preds = %.lr.ph.split.us.split.split.us
-  %9 = load float, ptr %i.co, align 4, !tbaa !56
   %i.cq = getelementptr inbounds i8, ptr %i.co, i64 -4
-  %10 = load float, ptr %i.cq, align 4, !tbaa !56
-  %11 = fadd float %9, %10
-  %i.cr = fmul float %11, 5.000000e-01
+  %7 = load <2 x float>, ptr %i.cq, align 4, !tbaa !56
+  %8 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %7)
+  %i.cr = fmul float %8, 5.000000e-01
   %i.cs = load ptr, ptr %i.d, align 8, !tbaa !16
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %.04172.us.us81
   store float %i.cr, ptr %i.ct, align 4, !tbaa !56
@@ -465,12 +462,11 @@ _ZSt11nth_elementIPfEvT_S1_S1_.exit.us.us.us.epil.preheader: ; preds = %_ZNSt10u
   %lcmp.mod171 = trunc i32 %.pre to i1
   tail call void @llvm.assume(i1 %lcmp.mod171)
   %i.fn = mul nsw i64 %.04172.us.us.us.epil.init, %1
-  %gep86.epil = getelementptr [4 x i8], ptr %invariant.gep85, i64 %i.fn ; 2 uses
-  %12 = load float, ptr %gep86.epil, align 4, !tbaa !56
+  %gep86.epil = getelementptr [4 x i8], ptr %invariant.gep85, i64 %i.fn
   %i.fo = getelementptr inbounds i8, ptr %gep86.epil, i64 -4
-  %13 = load float, ptr %i.fo, align 4, !tbaa !56
-  %14 = fadd float %12, %13
-  %i.fp = fmul float %14, 5.000000e-01
+  %9 = load <2 x float>, ptr %i.fo, align 4, !tbaa !56
+  %10 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %9)
+  %i.fp = fmul float %10, 5.000000e-01
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %.04172.us.us.us.epil.init
   store float %i.fp, ptr %i.fq, align 4, !tbaa !56
   br label %_ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit
@@ -872,6 +868,9 @@ declare i64 @llvm.umin.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #16
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

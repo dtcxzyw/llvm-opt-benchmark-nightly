@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 381852 ; 7 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !195  ; 4 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !195  ; 3 uses
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.e, label %bb.d
 
@@ -225,7 +225,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 381856 ; 7 uses
-  %i.o = load i32, ptr %i.n, align 8, !tbaa !197  ; 4 uses
+  %i.o = load i32, ptr %i.n, align 8, !tbaa !197  ; 3 uses
   %i.p = icmp eq i32 %i.o, 0
   br i1 %i.p, label %bb.h, label %bb.g
 
@@ -242,13 +242,16 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   unreachable
 
 bb.i:                                             ; preds = %bb.g
-  %3 = add nsw i32 %i.f, -1
-  %4 = add nuw nsw i32 %3, %i.k
-  %5 = udiv i32 %4, %i.f                          ; 3 uses
-  %6 = add nsw i32 %i.o, -1
-  %7 = add nuw nsw i32 %6, %i.r
-  %8 = udiv i32 %7, %i.o
-  %i.u = mul nsw i32 %8, %5                       ; 5 uses
+  %3 = insertelement <2 x i32> poison, i32 %i.o, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.f, i64 1 ; 2 uses
+  %5 = add nsw <2 x i32> %4, splat (i32 -1)
+  %6 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %i.k, i64 1
+  %8 = add nuw nsw <2 x i32> %5, %7
+  %9 = udiv <2 x i32> %8, %4                      ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 0
+  %11 = extractelement <2 x i32> %9, i64 1        ; 3 uses
+  %i.u = mul nsw i32 %10, %11                     ; 5 uses
   %i.v = add nsw i32 %i.u, -1025
   %or.cond = icmp ult i32 %i.v, -1024
   br i1 %or.cond, label %bb.j, label %.noexc
@@ -651,8 +654,8 @@ _ZN27LibRaw_SonyYCC_Decompressor11decode_sonyERSt6vectorItSaItEEii.exit.thread: 
 
 bb.ap:                                            ; preds = %_ZN27LibRaw_SonyYCC_Decompressor11decode_sonyERSt6vectorItSaItEEii.exit
   %i.ht = trunc nuw nsw i64 %indvars.iv219 to i32 ; 2 uses
-  %i.hu = sdiv i32 %i.ht, %5                      ; 3 uses
-  %i.hv = srem i32 %i.ht, %5                      ; 3 uses
+  %i.hu = sdiv i32 %i.ht, %11                     ; 3 uses
+  %i.hv = srem i32 %i.ht, %11                     ; 3 uses
   %i.hw = load i32, ptr %i.eo, align 8, !tbaa !216 ; 2 uses
   %i.hx = and i32 %i.hw, 64
   %.not78 = icmp eq i32 %i.hx, 0

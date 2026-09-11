@@ -204,8 +204,6 @@ bb.rk:                                            ; preds = %.lr.ph1765, %_ZNSt6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.bfg, i8 0, i64 36, i1 false)
   store ptr %i.bfk, ptr %i.bea, align 8, !tbaa !40
   %i.bfl = icmp eq i32 %i.bfa, 1
-  %36 = load i32, ptr %i.beb, align 4, !tbaa !72, !noalias !85 ; 2 uses
-  %37 = load i32, ptr %i.bcy, align 16, !tbaa !79, !noalias !85 ; 2 uses
   %i.bfm = load i32, ptr %i.bec, align 4, !tbaa !80, !noalias !85
   %i.bfn = load ptr, ptr %28, align 16, !tbaa !43, !noalias !85
   %i.bfo = load i64, ptr %i.bed, align 16, !tbaa !39, !noalias !85
@@ -217,20 +215,10 @@ bb.rk:                                            ; preds = %.lr.ph1765, %_ZNSt6
   %i.bfu = getelementptr inbounds nuw i8, ptr %i.bfn, i64 %i.bft
   %i.bfv = load i32, ptr %i.bef, align 8, !tbaa !74, !noalias !85
   %i.bfw = load ptr, ptr %i.beg, align 16, !tbaa !42, !noalias !85
-  %38 = sext i32 %36 to i64
-  %39 = sext i32 %37 to i64
-  %40 = mul nsw i64 %39, %38                      ; 2 uses
-  %41 = mul i64 %i.bfs, %40
-  %42 = add i64 %41, 15
-  %43 = and i64 %42, -16
-  %44 = udiv i64 %43, %i.bfs
   %i.bfx = load i32, ptr %i.beh, align 8, !tbaa !70, !noalias !85 ; 2 uses
   %i.bfy = add nsw i32 %i.bfx, -1
   %i.bfz = icmp eq i32 %i.bfx, 4
-  %spec.select2313 = select i1 %i.bfz, i64 %40, i64 %44
   %i.bga = getelementptr inbounds nuw i8, ptr %i.bfc, i64 8
-  %.pre1897 = load i32, ptr %i.bdd, align 4, !tbaa !72, !noalias !86 ; 2 uses
-  %.pre1898 = load i32, ptr %i.bdf, align 16, !tbaa !79, !noalias !86 ; 2 uses
   %.pre1899 = load i32, ptr %i.bei, align 4, !tbaa !80, !noalias !86
   %.pre1902 = load i64, ptr %i.bek, align 16, !tbaa !71, !noalias !86 ; 4 uses
   %.pre1903 = load i32, ptr %i.bel, align 8, !tbaa !74, !noalias !86
@@ -251,26 +239,41 @@ bb.rk:                                            ; preds = %.lr.ph1765, %_ZNSt6
   store i32 %i.bfv, ptr %i.bgc, align 8, !tbaa !74
   store ptr %i.bfw, ptr %i.bff, align 8, !tbaa !42
   store i32 %i.bfy, ptr %i.bgd, align 8, !tbaa !70
-  store i32 %36, ptr %i.bge, align 4, !tbaa !72
-  store i32 %37, ptr %i.bgf, align 8, !tbaa !79
   store i32 1, ptr %i.bgg, align 4, !tbaa !80
   store i32 %i.bfm, ptr %i.bgh, align 8, !tbaa !76
+  %36 = and i64 %indvars.iv1786, 4294967295
+  %37 = select i1 %i.bfd, i64 0, i64 %36
+  %38 = mul i64 %.pre1901, %37
+  %39 = mul i64 %38, %.pre1902
+  %40 = getelementptr inbounds nuw i8, ptr %.pre1900, i64 %39
+  %41 = load i32, ptr %i.bcy, align 16, !tbaa !79, !noalias !85 ; 2 uses
+  %42 = load i32, ptr %i.beb, align 4, !tbaa !72, !noalias !85 ; 2 uses
+  %.pre1898 = load i32, ptr %i.bdf, align 16, !tbaa !79, !noalias !86 ; 2 uses
+  %.pre1897 = load i32, ptr %i.bdd, align 4, !tbaa !72, !noalias !86 ; 2 uses
+  %43 = sext i32 %.pre1897 to i64
+  %44 = sext i32 %42 to i64
+  %i.bgi = sext i32 %.pre1898 to i64
+  %i.bgj = sext i32 %41 to i64
+  %45 = mul nsw i64 %i.bgi, %43                   ; 2 uses
+  %46 = mul nsw i64 %i.bgj, %44                   ; 2 uses
+  %i.bgk = mul i64 %.pre1902, %45
+  %i.bgl = mul i64 %i.bfs, %46
+  %47 = insertelement <2 x i64> poison, i64 %i.bgl, i64 0
+  %48 = insertelement <2 x i64> %47, i64 %i.bgk, i64 1
+  %49 = add <2 x i64> %48, splat (i64 15)
+  %50 = and <2 x i64> %49, splat (i64 -16)
+  %51 = insertelement <2 x i64> poison, i64 %i.bfs, i64 0
+  %52 = insertelement <2 x i64> %51, i64 %.pre1902, i64 1
+  %53 = udiv <2 x i64> %50, %52                   ; 2 uses
+  %54 = extractelement <2 x i64> %53, i64 0
+  %spec.select2313 = select i1 %i.bfz, i64 %46, i64 %54
+  store i32 %42, ptr %i.bge, align 4, !tbaa !72
+  store i32 %41, ptr %i.bgf, align 8, !tbaa !79
   store i64 %spec.select2313, ptr %i.bfg, align 8, !tbaa !39
-  %45 = and i64 %indvars.iv1786, 4294967295
-  %46 = select i1 %i.bfd, i64 0, i64 %45
-  %47 = mul i64 %.pre1901, %46
-  %48 = mul i64 %47, %.pre1902
-  %49 = getelementptr inbounds nuw i8, ptr %.pre1900, i64 %48
-  %i.bgi = sext i32 %.pre1897 to i64
-  %i.bgj = sext i32 %.pre1898 to i64
-  %i.bgk = mul nsw i64 %i.bgj, %i.bgi             ; 2 uses
-  %i.bgl = mul i64 %.pre1902, %i.bgk
-  %50 = add i64 %i.bgl, 15
-  %51 = and i64 %50, -16
-  %52 = udiv i64 %51, %.pre1902
   %i.bgm = add nsw i32 %.pre1905, -1
   %i.bgn = icmp eq i32 %.pre1905, 4
-  %.sroa.321815.0 = select i1 %i.bgn, i64 %i.bgk, i64 %52
+  %55 = extractelement <2 x i64> %53, i64 1
+  %.sroa.321815.0 = select i1 %i.bgn, i64 %45, i64 %55
   %i.bgo = getelementptr inbounds nuw i8, ptr %i.bfc, i64 80
   %i.bgp = getelementptr inbounds nuw i8, ptr %i.bfc, i64 88
   %i.bgq = getelementptr inbounds nuw i8, ptr %i.bfc, i64 96
@@ -280,7 +283,7 @@ bb.rk:                                            ; preds = %.lr.ph1765, %_ZNSt6
   %i.bgu = getelementptr inbounds nuw i8, ptr %i.bfc, i64 124
   %i.bgv = getelementptr inbounds nuw i8, ptr %i.bfc, i64 128
   %i.bgw = getelementptr inbounds nuw i8, ptr %i.bfc, i64 136
-  store ptr %49, ptr %i.bfh, align 8, !tbaa !43
+  store ptr %40, ptr %i.bfh, align 8, !tbaa !43
   store ptr null, ptr %i.bgo, align 8, !tbaa !41
   store i64 %.pre1902, ptr %i.bgp, align 8, !tbaa !71
   store i32 %.pre1903, ptr %i.bgq, align 8, !tbaa !74
