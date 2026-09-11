@@ -205,21 +205,13 @@ bb.r:                                             ; preds = %bb.b
   br label %.critedge
 
 select.unfold:                                    ; preds = %bb.j, %bb.q, %bb.f, %bb.d, %bb.k, %bb.n, %bb.g, %bb.i
-  %i.ad = load i32, ptr %0, align 4, !tbaa !19    ; 7 uses
+  %i.ad = load i32, ptr %0, align 4, !tbaa !19    ; 6 uses
   %.086.ptr145 = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
   %i.ae = icmp ult i32 %i.ad, 4
-  br i1 %i.ae, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %select.unfold
-  %4 = add i32 %i.ad, -4
-  %5 = udiv i32 %4, 3
-  %6 = shl nuw i32 %5, 1
-  %7 = zext i32 %6 to i64
-  %8 = add nuw nsw i64 %7, 12
-  br label %.lr.ph
+  br i1 %i.ae, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.u, %select.unfold
-  %.086.idx.lcssa = phi i64 [ 10, %select.unfold ], [ %8, %bb.u ] ; 3 uses
+  %.086.idx.lcssa = phi i64 [ 10, %select.unfold ], [ %.086.add107, %bb.u ] ; 3 uses
   %.085.lcssa = phi i32 [ %i.ad, %select.unfold ], [ %i.be, %bb.u ] ; 2 uses
   %.086.ptr.lcssa = phi ptr [ %.086.ptr145, %select.unfold ], [ %.086.ptr, %bb.u ] ; 2 uses
   %i.af = load i16, ptr %.086.ptr.lcssa, align 2, !tbaa !21
@@ -267,37 +259,29 @@ bb.t:                                             ; preds = %._crit_edge155
   tail call fastcc void @decSetOverflow(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %3)
   br label %.critedge
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.u
-  %.086.ptr148 = phi ptr [ %.086.ptr, %bb.u ], [ %.086.ptr145, %.lr.ph.preheader ]
-  %.085147 = phi i32 [ %i.be, %bb.u ], [ %i.ad, %.lr.ph.preheader ]
-  %.086.idx146 = phi i64 [ %.086.add107, %bb.u ], [ 10, %.lr.ph.preheader ]
+.lr.ph:                                           ; preds = %select.unfold, %bb.u
+  %.086.ptr148 = phi ptr [ %.086.ptr, %bb.u ], [ %.086.ptr145, %select.unfold ]
+  %.085147 = phi i32 [ %i.be, %bb.u ], [ %i.ad, %select.unfold ]
+  %.086.idx146 = phi i64 [ %.086.add107, %bb.u ], [ 10, %select.unfold ]
   %i.bd = load i16, ptr %.086.ptr148, align 2, !tbaa !21
   %.not104 = icmp eq i16 %i.bd, 999
   br i1 %.not104, label %bb.u, label %.loopexit
 
 bb.u:                                             ; preds = %.lr.ph
   %i.be = add i32 %.085147, -3                    ; 3 uses
-  %.086.add107 = add nuw nsw i64 %.086.idx146, 2  ; 2 uses
+  %.086.add107 = add nuw nsw i64 %.086.idx146, 2  ; 3 uses
   %.086.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.086.add107 ; 2 uses
   %i.bf = icmp ult i32 %i.be, 4
   br i1 %i.bf, label %._crit_edge, label %.lr.ph
 
 select.unfold123:                                 ; preds = %bb.p, %bb.m, %bb.e, %bb.c
-  %i.bg = load i32, ptr %0, align 4, !tbaa !19    ; 8 uses
+  %i.bg = load i32, ptr %0, align 4, !tbaa !19    ; 7 uses
   %.084.ptr156 = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
   %i.bh = icmp ult i32 %i.bg, 4
-  br i1 %i.bh, label %._crit_edge161, label %.lr.ph160.preheader
-
-.lr.ph160.preheader:                              ; preds = %select.unfold123
-  %9 = add i32 %i.bg, -4
-  %10 = udiv i32 %9, 3
-  %11 = shl nuw i32 %10, 1
-  %12 = zext i32 %11 to i64
-  %13 = add nuw nsw i64 %12, 12
-  br label %.lr.ph160
+  br i1 %i.bh, label %._crit_edge161, label %.lr.ph160
 
 ._crit_edge161:                                   ; preds = %bb.z, %select.unfold123
-  %.084.idx.lcssa = phi i64 [ 10, %select.unfold123 ], [ %13, %bb.z ] ; 7 uses
+  %.084.idx.lcssa = phi i64 [ 10, %select.unfold123 ], [ %.084.add100, %bb.z ] ; 7 uses
   %.0.lcssa = phi i32 [ %i.bg, %select.unfold123 ], [ %i.df, %bb.z ] ; 3 uses
   %.084.ptr.lcssa = phi ptr [ %.084.ptr156, %select.unfold123 ], [ %.084.ptr, %bb.z ] ; 3 uses
   %i.bi = load i16, ptr %.084.ptr.lcssa, align 2, !tbaa !21 ; 2 uses
@@ -433,17 +417,17 @@ bb.y:                                             ; preds = %bb.w, %bb.x
   store i32 %i.dd, ptr %3, align 4, !tbaa !23
   br label %.critedge
 
-.lr.ph160:                                        ; preds = %.lr.ph160.preheader, %bb.z
-  %.084.ptr159 = phi ptr [ %.084.ptr, %bb.z ], [ %.084.ptr156, %.lr.ph160.preheader ]
-  %.0158 = phi i32 [ %i.df, %bb.z ], [ %i.bg, %.lr.ph160.preheader ]
-  %.084.idx157 = phi i64 [ %.084.add100, %bb.z ], [ 10, %.lr.ph160.preheader ]
+.lr.ph160:                                        ; preds = %select.unfold123, %bb.z
+  %.084.ptr159 = phi ptr [ %.084.ptr, %bb.z ], [ %.084.ptr156, %select.unfold123 ]
+  %.0158 = phi i32 [ %i.df, %bb.z ], [ %i.bg, %select.unfold123 ]
+  %.084.idx157 = phi i64 [ %.084.add100, %bb.z ], [ 10, %select.unfold123 ]
   %i.de = load i16, ptr %.084.ptr159, align 2, !tbaa !21
   %.not97 = icmp eq i16 %i.de, 0
   br i1 %.not97, label %bb.z, label %.loopexit
 
 bb.z:                                             ; preds = %.lr.ph160
   %i.df = add i32 %.0158, -3                      ; 3 uses
-  %.084.add100 = add nuw nsw i64 %.084.idx157, 2  ; 2 uses
+  %.084.add100 = add nuw nsw i64 %.084.idx157, 2  ; 3 uses
   %.084.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.084.add100 ; 2 uses
   %i.dg = icmp ult i32 %i.df, 4
   br i1 %i.dg, label %._crit_edge161, label %.lr.ph160

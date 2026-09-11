@@ -204,10 +204,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.b, align 8, !tbaa !13 ; 2 uses
-  %i.c = fmul <2 x float> %.sroa.0.0.copyload.i, %.sroa.0.0.copyload.i ; 2 uses
-  %shift = shufflevector <2 x float> %i.c, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.c, %shift
-  %2 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.c = fmul <2 x float> %.sroa.0.0.copyload.i, %.sroa.0.0.copyload.i
+  %2 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.c)
   %i.d = tail call ptr (...) @py_retval() #16
   %i.e = fpext float %2 to double
   %i.f = tail call double @dmath_sqrt(double noundef %i.e) #16
@@ -232,10 +230,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.b, align 8, !tbaa !13 ; 2 uses
-  %i.c = fmul <2 x float> %.sroa.0.0.copyload.i, %.sroa.0.0.copyload.i ; 2 uses
-  %shift = shufflevector <2 x float> %i.c, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.c, %shift
-  %2 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.c = fmul <2 x float> %.sroa.0.0.copyload.i, %.sroa.0.0.copyload.i
+  %2 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.c)
   %i.d = tail call ptr (...) @py_retval() #16
   %i.e = fpext float %2 to double
   tail call void @py_newfloat(ptr noundef %i.d, double noundef %i.e) #16
@@ -259,10 +255,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.b, align 8, !tbaa !13 ; 3 uses
-  %i.c = fmul <2 x float> %.sroa.0.0.copyload.i, %.sroa.0.0.copyload.i ; 2 uses
-  %shift = shufflevector <2 x float> %i.c, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.c, %shift
-  %2 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.c = fmul <2 x float> %.sroa.0.0.copyload.i, %.sroa.0.0.copyload.i
+  %2 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.c)
   %i.d = fpext float %2 to double                 ; 2 uses
   %i.e = tail call double @dmath_fabs(double noundef %i.d) #16
   %i.f = fcmp olt double %i.e, 1.000000e-04
@@ -478,10 +472,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ak = load float, ptr %i.b, align 4, !tbaa !15
   %i.al = fmul float %i.u, %i.ak                  ; 3 uses
   %i.am = fmul float %i.al, %i.al
-  %i.an = fmul <2 x float> %i.aj, %i.aj           ; 2 uses
-  %shift = shufflevector <2 x float> %i.an, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.an, %shift
-  %2 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.an = fmul <2 x float> %i.aj, %i.aj
+  %2 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.an) ; 2 uses
   %i.ao = fcmp ogt float %2, %i.am
   br i1 %i.ao, label %bb.j, label %bb.k
 
@@ -519,10 +511,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bp = fadd <2 x float> %i.ba, %i.bo           ; 2 uses
   %i.bq = fsub <2 x float> %i.x, %i.w
   %i.br = fsub <2 x float> %i.bp, %i.x
-  %i.bs = fmul <2 x float> %i.bq, %i.br           ; 2 uses
-  %shift101 = shufflevector <2 x float> %i.bs, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop102 = fadd <2 x float> %i.bs, %shift101
-  %3 = extractelement <2 x float> %foldExtExtBinop102, i64 0
+  %i.bs = fmul <2 x float> %i.bq, %i.br
+  %3 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.bs)
   %i.bt = fcmp ogt float %3, 0.000000e+00         ; 2 uses
   %i.bu = fsub <2 x float> %i.x, %i.x
   %i.bv = fdiv <2 x float> %i.bu, %i.bg
@@ -924,6 +914,9 @@ declare i32 @llvm.umax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #14
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

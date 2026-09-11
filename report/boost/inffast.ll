@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/boost/original/inffast?download=true
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@inflate_fast:bb.a
   %i.lg = load i8, ptr %i.lc, align 1, !tbaa !51
   %i.lh = getelementptr inbounds nuw i8, ptr %.3269, i64 2
@@ -202,81 +202,36 @@ vec.epilog.scalar.ph639:                          ; preds = %vec.epilog.scalar.p
   br label %bb.v
 
 bb.v:                                             ; preds = %.loopexit657, %.loopexit656, %bb.t, %.loopexit658, %bb.u, %bb.r, %.loopexit655
-  %.5271 = phi ptr [ %.lcssa517, %.loopexit655 ], [ %.0266, %bb.r ], [ %.lcssa516, %.loopexit656 ], [ %.lcssa515, %.loopexit657 ], [ %.0266, %bb.t ], [ %.lcssa514, %.loopexit658 ], [ %.0266, %bb.u ] ; 6 uses
-  %.1240 = phi i32 [ %i.ic, %.loopexit655 ], [ %.0239, %bb.r ], [ %i.mb, %.loopexit656 ], [ %i.km, %.loopexit657 ], [ %.0239, %bb.t ], [ %i.oj, %.loopexit658 ], [ %.0239, %bb.u ] ; 5 uses
-  %.4 = phi ptr [ %i.if, %.loopexit655 ], [ %i.ga, %bb.r ], [ %i.me, %.loopexit656 ], [ %i.ab, %.loopexit657 ], [ %i.ij, %bb.t ], [ %i.om, %.loopexit658 ], [ %i.mh, %bb.u ] ; 6 uses
+  %.5271 = phi ptr [ %.lcssa517, %.loopexit655 ], [ %.0266, %bb.r ], [ %.lcssa516, %.loopexit656 ], [ %.lcssa515, %.loopexit657 ], [ %.0266, %bb.t ], [ %.lcssa514, %.loopexit658 ], [ %.0266, %bb.u ] ; 2 uses
+  %.1240 = phi i32 [ %i.ic, %.loopexit655 ], [ %.0239, %bb.r ], [ %i.mb, %.loopexit656 ], [ %i.km, %.loopexit657 ], [ %.0239, %bb.t ], [ %i.oj, %.loopexit658 ], [ %.0239, %bb.u ] ; 3 uses
+  %.4 = phi ptr [ %i.if, %.loopexit655 ], [ %i.ga, %bb.r ], [ %i.me, %.loopexit656 ], [ %i.ab, %.loopexit657 ], [ %i.ij, %bb.t ], [ %i.om, %.loopexit658 ], [ %i.mh, %bb.u ] ; 2 uses
   %i.on = icmp ugt i32 %.1240, 2
-  br i1 %i.on, label %.lr.ph376.preheader, label %._crit_edge377
+  br i1 %i.on, label %.lr.ph376, label %._crit_edge377
 
-.lr.ph376.preheader:                              ; preds = %bb.v
-  %2 = add i32 %.1240, -3                         ; 2 uses
-  %3 = udiv i32 %2, 3
-  %4 = and i32 %3, 1
-  %lcmp.mod714.not.not = icmp eq i32 %4, 0
-  br i1 %lcmp.mod714.not.not, label %.lr.ph376.prol, label %.lr.ph376.prol.loopexit
-
-.lr.ph376.prol:                                   ; preds = %.lr.ph376.preheader
-  %5 = getelementptr inbounds nuw i8, ptr %.4, i64 1
-  %6 = load i8, ptr %.4, align 1, !tbaa !51
-  %7 = getelementptr inbounds nuw i8, ptr %.5271, i64 1
-  store i8 %6, ptr %.5271, align 1, !tbaa !51
-  %8 = getelementptr inbounds nuw i8, ptr %.4, i64 2
-  %9 = load i8, ptr %5, align 1, !tbaa !51
-  %10 = getelementptr inbounds nuw i8, ptr %.5271, i64 2
-  store i8 %9, ptr %7, align 1, !tbaa !51
-  %11 = getelementptr inbounds nuw i8, ptr %.4, i64 3 ; 2 uses
-  %12 = load i8, ptr %8, align 1, !tbaa !51
-  %13 = getelementptr inbounds nuw i8, ptr %.5271, i64 3 ; 2 uses
-  store i8 %12, ptr %10, align 1, !tbaa !51
-  %14 = add i32 %.1240, -3                        ; 2 uses
-  br label %.lr.ph376.prol.loopexit
-
-.lr.ph376.prol.loopexit:                          ; preds = %.lr.ph376.prol, %.lr.ph376.preheader
-  %.5374.unr = phi ptr [ %.4, %.lr.ph376.preheader ], [ %11, %.lr.ph376.prol ]
-  %.2241373.unr = phi i32 [ %.1240, %.lr.ph376.preheader ], [ %14, %.lr.ph376.prol ]
-  %.6272372.unr = phi ptr [ %.5271, %.lr.ph376.preheader ], [ %13, %.lr.ph376.prol ]
-  %.lcssa692.unr = phi ptr [ poison, %.lr.ph376.preheader ], [ %11, %.lr.ph376.prol ]
-  %.lcssa691.unr = phi ptr [ poison, %.lr.ph376.preheader ], [ %13, %.lr.ph376.prol ]
-  %.lcssa690.unr = phi i32 [ poison, %.lr.ph376.preheader ], [ %14, %.lr.ph376.prol ]
-  %15 = icmp ult i32 %2, 3
-  br i1 %15, label %._crit_edge377, label %.lr.ph376
-
-.lr.ph376:                                        ; preds = %.lr.ph376.prol.loopexit, %.lr.ph376
-  %.5374 = phi ptr [ %i.ou, %.lr.ph376 ], [ %.5374.unr, %.lr.ph376.prol.loopexit ] ; 7 uses
-  %.2241373 = phi i32 [ %i.ox, %.lr.ph376 ], [ %.2241373.unr, %.lr.ph376.prol.loopexit ]
-  %.6272372 = phi ptr [ %i.ow, %.lr.ph376 ], [ %.6272372.unr, %.lr.ph376.prol.loopexit ] ; 7 uses
-  %16 = getelementptr inbounds nuw i8, ptr %.5374, i64 1
-  %17 = load i8, ptr %.5374, align 1, !tbaa !51
-  %18 = getelementptr inbounds nuw i8, ptr %.6272372, i64 1
-  store i8 %17, ptr %.6272372, align 1, !tbaa !51
-  %19 = getelementptr inbounds nuw i8, ptr %.5374, i64 2
-  %20 = load i8, ptr %16, align 1, !tbaa !51
-  %21 = getelementptr inbounds nuw i8, ptr %.6272372, i64 2
-  store i8 %20, ptr %18, align 1, !tbaa !51
-  %22 = getelementptr inbounds nuw i8, ptr %.5374, i64 3
-  %23 = load i8, ptr %19, align 1, !tbaa !51
-  %24 = getelementptr inbounds nuw i8, ptr %.6272372, i64 3
-  store i8 %23, ptr %21, align 1, !tbaa !51
-  %i.oo = getelementptr inbounds nuw i8, ptr %.5374, i64 4
-  %i.op = load i8, ptr %22, align 1, !tbaa !51
-  %i.oq = getelementptr inbounds nuw i8, ptr %.6272372, i64 4
-  store i8 %i.op, ptr %24, align 1, !tbaa !51
-  %i.or = getelementptr inbounds nuw i8, ptr %.5374, i64 5
+.lr.ph376:                                        ; preds = %bb.v, %.lr.ph376
+  %.5374 = phi ptr [ %i.ou, %.lr.ph376 ], [ %.4, %bb.v ] ; 4 uses
+  %.2241373 = phi i32 [ %i.ox, %.lr.ph376 ], [ %.1240, %bb.v ]
+  %.6272372 = phi ptr [ %i.ow, %.lr.ph376 ], [ %.5271, %bb.v ] ; 4 uses
+  %i.oo = getelementptr inbounds nuw i8, ptr %.5374, i64 1
+  %i.op = load i8, ptr %.5374, align 1, !tbaa !51
+  %i.oq = getelementptr inbounds nuw i8, ptr %.6272372, i64 1
+  store i8 %i.op, ptr %.6272372, align 1, !tbaa !51
+  %i.or = getelementptr inbounds nuw i8, ptr %.5374, i64 2
   %i.os = load i8, ptr %i.oo, align 1, !tbaa !51
-  %i.ot = getelementptr inbounds nuw i8, ptr %.6272372, i64 5
+  %i.ot = getelementptr inbounds nuw i8, ptr %.6272372, i64 2
   store i8 %i.os, ptr %i.oq, align 1, !tbaa !51
-  %i.ou = getelementptr inbounds nuw i8, ptr %.5374, i64 6 ; 2 uses
+  %i.ou = getelementptr inbounds nuw i8, ptr %.5374, i64 3 ; 2 uses
   %i.ov = load i8, ptr %i.or, align 1, !tbaa !51
-  %i.ow = getelementptr inbounds nuw i8, ptr %.6272372, i64 6 ; 2 uses
+  %i.ow = getelementptr inbounds nuw i8, ptr %.6272372, i64 3 ; 2 uses
   store i8 %i.ov, ptr %i.ot, align 1, !tbaa !51
-  %i.ox = add i32 %.2241373, -6                   ; 3 uses
+  %i.ox = add i32 %.2241373, -3                   ; 3 uses
   %i.oy = icmp ugt i32 %i.ox, 2
   br i1 %i.oy, label %.lr.ph376, label %._crit_edge377, !llvm.loop !25
 
-._crit_edge377:                                   ; preds = %.lr.ph376.prol.loopexit, %.lr.ph376, %bb.v
-  %.6272.lcssa = phi ptr [ %.5271, %bb.v ], [ %.lcssa691.unr, %.lr.ph376.prol.loopexit ], [ %i.ow, %.lr.ph376 ] ; 4 uses
-  %.2241.lcssa = phi i32 [ %.1240, %bb.v ], [ %.lcssa690.unr, %.lr.ph376.prol.loopexit ], [ %i.ox, %.lr.ph376 ] ; 2 uses
-  %.5.lcssa = phi ptr [ %.4, %bb.v ], [ %.lcssa692.unr, %.lr.ph376.prol.loopexit ], [ %i.ou, %.lr.ph376 ] ; 2 uses
+._crit_edge377:                                   ; preds = %.lr.ph376, %bb.v
+  %.6272.lcssa = phi ptr [ %.5271, %bb.v ], [ %i.ow, %.lr.ph376 ] ; 4 uses
+  %.2241.lcssa = phi i32 [ %.1240, %bb.v ], [ %i.ox, %.lr.ph376 ] ; 2 uses
+  %.5.lcssa = phi ptr [ %.4, %bb.v ], [ %i.ou, %.lr.ph376 ] ; 2 uses
   %.not324 = icmp eq i32 %.2241.lcssa, 0
   br i1 %.not324, label %bb.ah, label %bb.w
 

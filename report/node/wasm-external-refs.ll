@@ -204,10 +204,8 @@ bb.a:
   %i.p = bitcast <2 x float> %i.o to <2 x i32>
   %i.q = and <2 x i32> %i.d, splat (i32 -2147483648)
   %i.r = or <2 x i32> %i.q, %i.p
-  %i.s = bitcast <2 x i32> %i.r to <2 x float>    ; 2 uses
-  %shift = shufflevector <2 x float> %i.s, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %shift, %i.s
-  %2 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.s = bitcast <2 x i32> %i.r to <2 x float>
+  %2 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.s) ; 2 uses
   %i.t = tail call float @llvm.fabs.f32(float %2)
   %i.u = fmul float %i.t, f0x77800000
   %i.v = fmul float %i.u, f0x08800000
@@ -266,10 +264,8 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.v = sext <2 x i16> %i.h to <2 x i32>
   %i.w = and <2 x i32> %i.v, splat (i32 -2147483648)
   %i.x = or <2 x i32> %i.w, %i.u
-  %i.y = bitcast <2 x i32> %i.x to <2 x float>    ; 2 uses
-  %shift = shufflevector <2 x float> %i.y, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %shift, %i.y
-  %1 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.y = bitcast <2 x i32> %i.x to <2 x float>
+  %1 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.y) ; 2 uses
   %i.z = tail call float @llvm.fabs.f32(float %1)
   %i.aa = fmul float %i.z, f0x77800000
   %i.ab = fmul float %i.aa, f0x08800000
@@ -671,6 +667,9 @@ declare i32 @llvm.umax.i32(i32, i32) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

@@ -16,21 +16,14 @@ declare dso_local ptr @memset(ptr noundef, i32 noundef, i64 noundef) #1
 define dso_local i32 @b64_ntop(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) local_unnamed_addr #2 {
 bb.a:
   %i.a = icmp ugt i64 %1, 2
-  br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.a, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = add i64 %1, -3
-  %5 = udiv i64 %4, 3
-  %6 = shl i64 %5, 2
-  %7 = add i64 %6, 4
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %.051 = phi i64 [ %i.b, %bb.b ], [ 0, %.lr.ph.preheader ]
-  %.03550 = phi ptr [ %i.aj, %bb.b ], [ %2, %.lr.ph.preheader ] ; 5 uses
-  %.03749 = phi i64 [ %i.al, %bb.b ], [ %1, %.lr.ph.preheader ]
-  %.03848 = phi ptr [ %i.ak, %bb.b ], [ %0, %.lr.ph.preheader ] ; 5 uses
-  %i.b = add i64 %.051, 4                         ; 2 uses
+.lr.ph:                                           ; preds = %bb.a, %bb.b
+  %.051 = phi i64 [ %i.b, %bb.b ], [ 0, %bb.a ]
+  %.03550 = phi ptr [ %i.aj, %bb.b ], [ %2, %bb.a ] ; 5 uses
+  %.03749 = phi i64 [ %i.al, %bb.b ], [ %1, %bb.a ]
+  %.03848 = phi ptr [ %i.ak, %bb.b ], [ %0, %bb.a ] ; 5 uses
+  %i.b = add i64 %.051, 4                         ; 3 uses
   %.not43 = icmp ult i64 %i.b, %3
   br i1 %.not43, label %bb.b, label %.loopexit
 
@@ -82,7 +75,7 @@ bb.b:                                             ; preds = %.lr.ph
   %.038.lcssa = phi ptr [ %0, %bb.a ], [ %i.ak, %bb.b ] ; 3 uses
   %.037.lcssa = phi i64 [ %1, %bb.a ], [ %i.al, %bb.b ] ; 2 uses
   %.035.lcssa = phi ptr [ %2, %bb.a ], [ %i.aj, %bb.b ] ; 6 uses
-  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %7, %bb.b ] ; 2 uses
+  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %i.b, %bb.b ] ; 2 uses
   %.not = icmp eq i64 %.037.lcssa, 0
   br i1 %.not, label %bb.h, label %bb.c
 

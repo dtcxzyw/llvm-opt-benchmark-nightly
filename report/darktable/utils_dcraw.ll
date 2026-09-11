@@ -204,25 +204,19 @@ bb.s:                                             ; preds = %bb.r
 
 .preheader:                                       ; preds = %bb.s
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 136672
-  %1 = load i32, ptr %i.bv, align 4, !tbaa !83
-  %2 = udiv i32 %1, %i.em
-  store i32 %2, ptr %i.eu, align 8, !tbaa !83
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 153880
-  %4 = load i32, ptr %3, align 8, !tbaa !83
-  %5 = udiv i32 %4, %i.ep
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 136676
-  store i32 %5, ptr %6, align 4, !tbaa !83
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 153884
-  %8 = load i32, ptr %7, align 4, !tbaa !83
-  %9 = udiv i32 %8, %i.er
-  %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 136680
-  store i32 %9, ptr %i.ev, align 8, !tbaa !83
-  %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 153888
-  %10 = load i32, ptr %i.ew, align 8, !tbaa !83
-  %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 136684
-  %11 = udiv i32 %10, %i.et
-  %12 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %11, i64 0
-  store <4 x i32> %12, ptr %i.ex, align 4, !tbaa !83
+  %1 = load <4 x i32>, ptr %i.bv, align 4, !tbaa !83
+  %2 = insertelement <4 x i32> poison, i32 %i.em, i64 0
+  %3 = insertelement <4 x i32> %2, i32 %i.ep, i64 1
+  %4 = insertelement <4 x i32> %3, i32 %i.er, i64 2
+  %5 = insertelement <4 x i32> %4, i32 %i.et, i64 3
+  %6 = udiv <4 x i32> %1, %5
+  store <4 x i32> %6, ptr %i.eu, align 8, !tbaa !83
+  %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 136696
+  store i32 0, ptr %i.ev, align 8, !tbaa !83
+  %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 136692
+  store i32 0, ptr %i.ew, align 4, !tbaa !83
+  %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 136688
+  store i32 0, ptr %i.ex, align 8, !tbaa !83
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.o, %.preheader

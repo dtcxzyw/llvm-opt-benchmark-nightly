@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 350
 inline.NumDeleted: 63
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 19
-loop-unroll.NumUnrolled: 22
+loop-unroll.NumRuntimeUnrolled: 18
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@spng_set_exif:bb.a
 
 bb.b:                                             ; preds = %bb.a
@@ -205,57 +205,22 @@ bb.a:
 define internal fastcc void @defilter_sub3(i64 noundef range(i64 0, -1) %0, ptr nofree noundef captures(none) %1) unnamed_addr #20 {
 bb.a:
   %i.a = icmp ugt i64 %0, 3
-  br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.a, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %2 = add i64 %0, -4                             ; 2 uses
-  %3 = udiv i64 %2, 3
-  %4 = and i64 %3, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %.017.val.prol = load i32, ptr %1, align 1      ; 2 uses
-  %5 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.017.val.prol, i64 0
-  %6 = bitcast <4 x i32> %5 to <16 x i8>          ; 2 uses
-  %.0.extract.trunc.i.prol = trunc i32 %.017.val.prol to i24
-  store i24 %.0.extract.trunc.i.prol, ptr %1, align 1
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 2 uses
-  %8 = add i64 %0, -3
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.unr = phi <16 x i8> [ zeroinitializer, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
-  %.01621.unr = phi i64 [ %0, %.lr.ph.preheader ], [ %8, %.lr.ph.prol ]
-  %.01720.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %7, %.lr.ph.prol ]
-  %.lcssa36.unr = phi <16 x i8> [ poison, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
-  %.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %7, %.lr.ph.prol ]
-  %9 = icmp ult i64 %2, 3
-  br i1 %9, label %._crit_edge.thread, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %i.b = phi <16 x i8> [ %i.e, %.lr.ph ], [ %.unr, %.lr.ph.prol.loopexit ]
-  %.01621 = phi i64 [ %i.i, %.lr.ph ], [ %.01621.unr, %.lr.ph.prol.loopexit ]
-  %.01720 = phi ptr [ %i.h, %.lr.ph ], [ %.01720.unr, %.lr.ph.prol.loopexit ] ; 4 uses
-  %.017.val = load i32, ptr %.01720, align 1
-  %10 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.017.val, i64 0
-  %11 = bitcast <4 x i32> %10 to <16 x i8>
-  %12 = add <16 x i8> %i.b, %11                   ; 2 uses
-  %13 = bitcast <16 x i8> %12 to <4 x i32>
-  %14 = extractelement <4 x i32> %13, i64 0
-  %.0.extract.trunc.i = trunc i32 %14 to i24
-  store i24 %.0.extract.trunc.i, ptr %.01720, align 1
-  %15 = getelementptr inbounds nuw i8, ptr %.01720, i64 3 ; 2 uses
-  %.017.val.1 = load i32, ptr %15, align 1
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %i.b = phi <16 x i8> [ %i.e, %.lr.ph ], [ zeroinitializer, %bb.a ]
+  %.01621 = phi i64 [ %i.i, %.lr.ph ], [ %0, %bb.a ]
+  %.01720 = phi ptr [ %i.h, %.lr.ph ], [ %1, %bb.a ] ; 3 uses
+  %.017.val.1 = load i32, ptr %.01720, align 1
   %i.c = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.017.val.1, i64 0
   %i.d = bitcast <4 x i32> %i.c to <16 x i8>
-  %i.e = add <16 x i8> %12, %i.d                  ; 3 uses
+  %i.e = add <16 x i8> %i.b, %i.d                 ; 3 uses
   %i.f = bitcast <16 x i8> %i.e to <4 x i32>
   %i.g = extractelement <4 x i32> %i.f, i64 0
   %.0.extract.trunc.i.1 = trunc i32 %i.g to i24
-  store i24 %.0.extract.trunc.i.1, ptr %15, align 1
-  %i.h = getelementptr inbounds nuw i8, ptr %.01720, i64 6 ; 2 uses
-  %i.i = add i64 %.01621, -6                      ; 2 uses
+  store i24 %.0.extract.trunc.i.1, ptr %.01720, align 1
+  %i.h = getelementptr inbounds nuw i8, ptr %.01720, i64 3 ; 2 uses
+  %i.i = add i64 %.01621, -3                      ; 2 uses
   %i.j = icmp ugt i64 %i.i, 3
   br i1 %i.j, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !411
 
@@ -263,9 +228,9 @@ bb.a:
   %.not = icmp eq i64 %0, 0
   br i1 %.not, label %bb.b, label %._crit_edge.thread
 
-._crit_edge.thread:                               ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %._crit_edge
-  %.lcssa33 = phi <16 x i8> [ zeroinitializer, %._crit_edge ], [ %.lcssa36.unr, %.lr.ph.prol.loopexit ], [ %i.e, %.lr.ph ]
-  %.017.lcssa32 = phi ptr [ %1, %._crit_edge ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.h, %.lr.ph ] ; 2 uses
+._crit_edge.thread:                               ; preds = %.lr.ph, %._crit_edge
+  %.lcssa33 = phi <16 x i8> [ zeroinitializer, %._crit_edge ], [ %i.e, %.lr.ph ]
+  %.017.lcssa32 = phi ptr [ %1, %._crit_edge ], [ %i.h, %.lr.ph ] ; 2 uses
   %.017.val18 = load i24, ptr %.017.lcssa32, align 1
   %.0.insert.ext.i = zext i24 %.017.val18 to i32
   %i.k = insertelement <4 x i32> poison, i32 %.0.insert.ext.i, i64 0

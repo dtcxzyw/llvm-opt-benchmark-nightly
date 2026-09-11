@@ -205,7 +205,7 @@ bb.a:
   %2 = alloca %"class.core::dimension2d", align 4 ; 7 uses
   %3 = alloca %"class.core::dimension2d", align 4 ; 5 uses
   %4 = alloca %"class.video::SColor", align 4     ; 4 uses
-  %5 = alloca %"class.core::vector2d", align 4    ; 5 uses
+  %5 = alloca %"class.core::vector2d", align 8    ; 4 uses
   %6 = alloca %"class.video::SColor", align 4     ; 4 uses
   %7 = alloca %"class.core::string", align 8      ; 21 uses
   %8 = alloca %"class.core::string", align 8      ; 21 uses
@@ -370,43 +370,42 @@ bb.j:                                             ; preds = %bb.d
   %i.cm = load ptr, ptr %i.cf, align 8, !tbaa !20
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 592
   %i.co = load ptr, ptr %i.cn, align 8
-  %i.cp = call noundef ptr %i.co(ptr noundef nonnull align 8 dereferenceable(8) %i.cf, i32 noundef %i.ch, ptr noundef nonnull align 4 dereferenceable(8) %i.ci, ptr noundef %i.cl, i1 noundef zeroext true, i1 noundef zeroext false) ; 6 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.cp, i64 12
-  %.sroa.0.0.copyload = load i32, ptr %9, align 4, !tbaa !196
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 16
-  %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !196
+  %i.cp = call noundef ptr %i.co(ptr noundef nonnull align 8 dereferenceable(8) %i.cf, i32 noundef %i.ch, ptr noundef nonnull align 4 dereferenceable(8) %i.ci, ptr noundef %i.cl, i1 noundef zeroext true, i1 noundef zeroext false) ; 5 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 12
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #33
   store i32 -16777216, ptr %4, align 4, !tbaa !212
   %i.cq = load ptr, ptr %i.q, align 8, !tbaa !20
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 80
   %i.cs = load ptr, ptr %i.cr, align 8
+  %9 = load <2 x i32>, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !196
   call void %i.cs(ptr noundef nonnull align 8 dereferenceable(41) %i.q, ptr noundef nonnull align 4 dereferenceable(4) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #33
   %i.ct = load ptr, ptr %i.a, align 8, !tbaa !157 ; 4 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 42
   %i.cv = load i16, ptr %i.cu, align 2, !tbaa !96
-  %10 = zext i16 %i.cv to i32                     ; 2 uses
-  %11 = sub nsw i32 %10, %.sroa.0.0.copyload
-  %12 = ashr i32 %11, 1
-  %13 = getelementptr inbounds nuw i8, ptr %i.ct, i64 88
-  %14 = load i16, ptr %13, align 8, !tbaa !385
-  %15 = sext i16 %14 to i32
-  %16 = getelementptr inbounds nuw i8, ptr %i.ct, i64 80
-  %17 = load i16, ptr %16, align 8, !tbaa !386
-  %18 = zext i16 %17 to i32                       ; 2 uses
-  %19 = sdiv i32 %15, %18
-  %20 = sub nsw i32 %12, %19
-  %21 = sub nsw i32 %10, %.sroa.4.0.copyload
-  %22 = ashr i32 %21, 1
-  %23 = getelementptr inbounds nuw i8, ptr %i.ct, i64 92
-  %24 = load i16, ptr %23, align 4, !tbaa !387
-  %25 = sext i16 %24 to i32
-  %26 = sdiv i32 %25, %18
-  %27 = add nsw i32 %26, %22
-  store i32 %20, ptr %5, align 4, !tbaa !227
-  %28 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store i32 %27, ptr %28, align 4, !tbaa !228
+  %10 = getelementptr inbounds nuw i8, ptr %i.ct, i64 88
+  %11 = load i16, ptr %10, align 8, !tbaa !385
+  %12 = getelementptr inbounds nuw i8, ptr %i.ct, i64 80
+  %13 = load i16, ptr %12, align 8, !tbaa !386
+  %14 = zext i16 %13 to i32
+  %15 = zext i16 %i.cv to i32
+  %16 = insertelement <2 x i32> poison, i32 %15, i64 0
+  %17 = shufflevector <2 x i32> %16, <2 x i32> poison, <2 x i32> zeroinitializer
+  %18 = sub nsw <2 x i32> %17, %9
+  %19 = ashr <2 x i32> %18, splat (i32 1)         ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.ct, i64 92
+  %21 = load i16, ptr %20, align 4, !tbaa !387
+  %22 = insertelement <2 x i16> poison, i16 %11, i64 0
+  %23 = insertelement <2 x i16> %22, i16 %21, i64 1
+  %24 = sext <2 x i16> %23 to <2 x i32>
+  %25 = insertelement <2 x i32> poison, i32 %14, i64 0
+  %26 = shufflevector <2 x i32> %25, <2 x i32> poison, <2 x i32> zeroinitializer
+  %27 = sdiv <2 x i32> %24, %26                   ; 2 uses
+  %28 = sub nsw <2 x i32> %19, %27
+  %29 = add nsw <2 x i32> %19, %27
+  %30 = shufflevector <2 x i32> %28, <2 x i32> %29, <2 x i32> <i32 0, i32 3>
+  store <2 x i32> %30, ptr %5, align 8, !tbaa !196
   %i.cw = load ptr, ptr %i.cp, align 8, !tbaa !20
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 56
   %i.cy = load ptr, ptr %i.cx, align 8

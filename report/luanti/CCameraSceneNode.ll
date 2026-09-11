@@ -204,28 +204,28 @@ begin_hunk_0_@_ZN4core8CMatrix4IfE20setbyproduct_nocheckERKS1_S3_:bb.a
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZN5scene12SViewFrustum7setFromERKN4core8CMatrix4IfEEb(ptr noundef nonnull align 4 dereferenceable(280) %0, ptr noundef nonnull align 4 dereferenceable(64) %1, i1 noundef zeroext %2) local_unnamed_addr #10 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 5 uses
   %i.b = load float, ptr %i.a, align 4, !tbaa !13
   %i.c = load float, ptr %1, align 4, !tbaa !13
   %i.d = fadd float %i.b, %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 44
   store float %i.d, ptr %i.f, align 4, !tbaa !95
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 6 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 5 uses
   %i.h = load float, ptr %i.g, align 4, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.j = load float, ptr %i.i, align 4, !tbaa !13
   %i.k = fadd float %i.h, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   store float %i.k, ptr %i.l, align 4, !tbaa !96
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 6 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 5 uses
   %i.n = load float, ptr %i.m, align 4, !tbaa !13
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.p = load float, ptr %i.o, align 4, !tbaa !13
   %i.q = fadd float %i.n, %i.p                    ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 52
   store float %i.q, ptr %i.r, align 4, !tbaa !97
-  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 60 ; 6 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 60 ; 5 uses
   %i.t = load float, ptr %i.s, align 4, !tbaa !13
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.v = load float, ptr %i.u, align 4, !tbaa !13
@@ -335,31 +335,27 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %3 = load float, ptr %i.a, align 4, !tbaa !13
-  %4 = load float, ptr %i.bz, align 4, !tbaa !13
+  %3 = load <2 x float>, ptr %i.bz, align 4, !tbaa !13
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %5 = fadd float %3, %4                          ; 2 uses
-  store float %5, ptr %i.cy, align 4, !tbaa !95
-  %6 = load float, ptr %i.g, align 4, !tbaa !13
-  %7 = load float, ptr %i.cb, align 4, !tbaa !13
-  %8 = fadd float %6, %7                          ; 2 uses
-  store float %8, ptr %i.cz, align 4, !tbaa !96
-  %9 = load float, ptr %i.m, align 4, !tbaa !13
-  %10 = load float, ptr %i.cd, align 4, !tbaa !13
-  %11 = fadd float %9, %10                        ; 2 uses
-  store float %11, ptr %i.da, align 4, !tbaa !97
-  %12 = load float, ptr %i.s, align 4, !tbaa !13
-  %13 = load float, ptr %i.cf, align 4, !tbaa !13
-  %14 = fadd float %12, %13
+  %4 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %3) ; 2 uses
+  store float %4, ptr %i.cy, align 4, !tbaa !95
+  %5 = load <2 x float>, ptr %i.cb, align 4, !tbaa !13
+  %6 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %5) ; 2 uses
+  store float %6, ptr %i.cz, align 4, !tbaa !96
+  %7 = load <2 x float>, ptr %i.cd, align 4, !tbaa !13
+  %8 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %7) ; 2 uses
+  store float %8, ptr %i.da, align 4, !tbaa !97
+  %9 = load <2 x float>, ptr %i.cf, align 4, !tbaa !13
+  %10 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %9)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.db = phi float [ %i.cv, %bb.b ], [ %11, %bb.c ] ; 2 uses
-  %i.dc = phi float [ %i.ct, %bb.b ], [ %8, %bb.c ] ; 2 uses
-  %i.dd = phi float [ %i.cr, %bb.b ], [ %5, %bb.c ] ; 2 uses
-  %.sink = phi float [ %i.cx, %bb.b ], [ %14, %bb.c ]
+  %i.db = phi float [ %i.cv, %bb.b ], [ %8, %bb.c ] ; 2 uses
+  %i.dc = phi float [ %i.ct, %bb.b ], [ %6, %bb.c ] ; 2 uses
+  %i.dd = phi float [ %i.cr, %bb.b ], [ %4, %bb.c ] ; 2 uses
+  %.sink = phi float [ %i.cx, %bb.b ], [ %10, %bb.c ]
   %i.de = insertelement <4 x float> poison, float %i.cg, i64 0
   %i.df = insertelement <4 x float> %i.de, float %i.cj, i64 1
   %i.dg = insertelement <4 x float> %i.df, float %i.cm, i64 2
@@ -760,6 +756,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.sqrt.v4f32(<4 x float>) #19

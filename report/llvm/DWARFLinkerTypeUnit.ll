@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 3368
 inline.NumDeleted: 1976
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@"_ZNSt17_Function_handlerIFvvEZN4llvm12dwarf_linker8parallel8TypeUnit26prepareDataForTreeCreationEvE3$_1E9_M_invokeERKSt9_Any_data":bb.a
   %.not1213.i.us.i.i.i = icmp eq i64 %i.ad, 0
   br i1 %.not1213.i.us.i.i.i, label %._crit_edge.i.us.i.i.i, label %.lr.ph.i1.us.us.i.i.i
@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvm12dwarf_linker8parallel9ArrayListINS1_22DebugTypeDeclFilePatchELm512EE4sortENS_12function_refIFbRKS3_S7_EEE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %3 = alloca %"class.llvm::SmallVector.299", align 8 ; 13 uses
+  %3 = alloca %"class.llvm::SmallVector.299", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   store ptr %i.a, ptr %3, align 8, !tbaa !127
@@ -279,58 +279,31 @@ _ZSt4sortIPN4llvm12dwarf_linker8parallel22DebugTypeDeclFilePatchENS0_12function_
   br i1 %.not15.i3, label %_ZN4llvm12dwarf_linker8parallel9ArrayListINS1_22DebugTypeDeclFilePatchELm512EE7forEachENS_12function_refIFvRS3_EEE.exit14, label %.lr.ph18.i4
 
 .lr.ph18.i4:                                      ; preds = %_ZSt4sortIPN4llvm12dwarf_linker8parallel22DebugTypeDeclFilePatchENS0_12function_refIFbRKS3_S7_EEEEvT_SA_T0_.exit, %._crit_edge.i12
-  %.0 = phi i64 [ %.1, %._crit_edge.i12 ], [ 0, %_ZSt4sortIPN4llvm12dwarf_linker8parallel22DebugTypeDeclFilePatchENS0_12function_refIFbRKS3_S7_EEEEvT_SA_T0_.exit ] ; 4 uses
-  %.016.i5 = phi ptr [ %i.ad, %._crit_edge.i12 ], [ %i.y, %_ZSt4sortIPN4llvm12dwarf_linker8parallel22DebugTypeDeclFilePatchENS0_12function_refIFbRKS3_S7_EEEEvT_SA_T0_.exit ] ; 6 uses
+  %.0 = phi i64 [ %.1, %._crit_edge.i12 ], [ 0, %_ZSt4sortIPN4llvm12dwarf_linker8parallel22DebugTypeDeclFilePatchENS0_12function_refIFbRKS3_S7_EEEEvT_SA_T0_.exit ] ; 2 uses
+  %.016.i5 = phi ptr [ %i.ad, %._crit_edge.i12 ], [ %i.y, %_ZSt4sortIPN4llvm12dwarf_linker8parallel22DebugTypeDeclFilePatchENS0_12function_refIFbRKS3_S7_EEEEvT_SA_T0_.exit ] ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.016.i5, i64 20488
   %i.aa = load atomic i64, ptr %i.z seq_cst, align 8 ; 2 uses
   %.sroa.speculated.i.i.i6 = call noundef i64 @llvm.umin.i64(i64 %i.aa, i64 512)
-  %.idx.i7 = mul nuw nsw i64 %.sroa.speculated.i.i.i6, 40 ; 2 uses
+  %.idx.i7 = mul nuw nsw i64 %.sroa.speculated.i.i.i6, 40
   %i.ab = getelementptr inbounds nuw i8, ptr %.016.i5, i64 %.idx.i7
   %.not1213.i8 = icmp eq i64 %i.aa, 0
-  br i1 %.not1213.i8, label %._crit_edge.i12, label %.lr.ph.i9.preheader
+  br i1 %.not1213.i8, label %._crit_edge.i12, label %.lr.ph.i9
 
-.lr.ph.i9.preheader:                              ; preds = %.lr.ph18.i4
-  %4 = add nsw i64 %.idx.i7, -40                  ; 2 uses
-  %5 = udiv i64 %4, 40
-  %6 = and i64 %5, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i9.prol, label %.lr.ph.i9.prol.loopexit
-
-.lr.ph.i9.prol:                                   ; preds = %.lr.ph.i9.preheader
-  %7 = add i64 %.0, 1                             ; 2 uses
-  %8 = load ptr, ptr %3, align 8, !tbaa !127
-  %9 = getelementptr inbounds nuw [40 x i8], ptr %8, i64 %.0
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %.016.i5, ptr noundef nonnull align 8 dereferenceable(36) %9, i64 36, i1 false), !tbaa.struct !358
-  %10 = getelementptr inbounds nuw i8, ptr %.016.i5, i64 40
-  br label %.lr.ph.i9.prol.loopexit
-
-.lr.ph.i9.prol.loopexit:                          ; preds = %.lr.ph.i9.prol, %.lr.ph.i9.preheader
-  %.lcssa.unr = phi i64 [ poison, %.lr.ph.i9.preheader ], [ %7, %.lr.ph.i9.prol ]
-  %.2.unr = phi i64 [ %.0, %.lr.ph.i9.preheader ], [ %7, %.lr.ph.i9.prol ]
-  %.01114.i10.unr = phi ptr [ %.016.i5, %.lr.ph.i9.preheader ], [ %10, %.lr.ph.i9.prol ]
-  %11 = icmp ult i64 %4, 40
-  br i1 %11, label %._crit_edge.i12, label %.lr.ph.i9
-
-._crit_edge.i12:                                  ; preds = %.lr.ph.i9.prol.loopexit, %.lr.ph.i9, %.lr.ph18.i4
-  %.1 = phi i64 [ %.0, %.lr.ph18.i4 ], [ %.lcssa.unr, %.lr.ph.i9.prol.loopexit ], [ %i.ae, %.lr.ph.i9 ]
+._crit_edge.i12:                                  ; preds = %.lr.ph.i9, %.lr.ph18.i4
+  %.1 = phi i64 [ %.0, %.lr.ph18.i4 ], [ %i.ae, %.lr.ph.i9 ]
   %i.ac = getelementptr inbounds nuw i8, ptr %.016.i5, i64 20480
   %i.ad = load atomic ptr, ptr %i.ac seq_cst, align 8 ; 2 uses
   %.not.i13 = icmp eq ptr %i.ad, null
   br i1 %.not.i13, label %_ZN4llvm12dwarf_linker8parallel9ArrayListINS1_22DebugTypeDeclFilePatchELm512EE7forEachENS_12function_refIFvRS3_EEE.exit14, label %.lr.ph18.i4, !llvm.loop !8
 
-.lr.ph.i9:                                        ; preds = %.lr.ph.i9.prol.loopexit, %.lr.ph.i9
-  %.2 = phi i64 [ %i.ae, %.lr.ph.i9 ], [ %.2.unr, %.lr.ph.i9.prol.loopexit ] ; 3 uses
-  %.01114.i10 = phi ptr [ %i.ah, %.lr.ph.i9 ], [ %.01114.i10.unr, %.lr.ph.i9.prol.loopexit ] ; 3 uses
-  %12 = load ptr, ptr %3, align 8, !tbaa !127
-  %13 = getelementptr inbounds nuw [40 x i8], ptr %12, i64 %.2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %.01114.i10, ptr noundef nonnull align 8 dereferenceable(36) %13, i64 36, i1 false), !tbaa.struct !358
-  %14 = getelementptr inbounds nuw i8, ptr %.01114.i10, i64 40
-  %i.ae = add i64 %.2, 2                          ; 2 uses
+.lr.ph.i9:                                        ; preds = %.lr.ph18.i4, %.lr.ph.i9
+  %.2 = phi i64 [ %i.ae, %.lr.ph.i9 ], [ %.0, %.lr.ph18.i4 ] ; 2 uses
+  %.01114.i10 = phi ptr [ %i.ah, %.lr.ph.i9 ], [ %.016.i5, %.lr.ph18.i4 ] ; 2 uses
+  %i.ae = add i64 %.2, 1                          ; 2 uses
   %i.af = load ptr, ptr %3, align 8, !tbaa !127
-  %i.ag = getelementptr [40 x i8], ptr %i.af, i64 %.2
-  %15 = getelementptr i8, ptr %i.ag, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %14, ptr noundef nonnull align 8 dereferenceable(36) %15, i64 36, i1 false), !tbaa.struct !358
-  %i.ah = getelementptr inbounds nuw i8, ptr %.01114.i10, i64 80 ; 2 uses
+  %i.ag = getelementptr inbounds nuw [40 x i8], ptr %i.af, i64 %.2
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %.01114.i10, ptr noundef nonnull align 8 dereferenceable(36) %i.ag, i64 36, i1 false), !tbaa.struct !358
+  %i.ah = getelementptr inbounds nuw i8, ptr %.01114.i10, i64 40 ; 2 uses
   %.not12.i11.1 = icmp eq ptr %i.ah, %i.ab
   br i1 %.not12.i11.1, label %._crit_edge.i12, label %.lr.ph.i9
 

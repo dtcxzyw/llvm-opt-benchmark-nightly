@@ -1,6 +1,4 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/f64_rem?download=true
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -72,10 +70,10 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l, %bb.j
   %.0106 = phi i64 [ %i.b, %bb.j ], [ %i.q, %bb.l ] ; 2 uses
-  %.0105 = phi i64 [ %i.c, %bb.j ], [ %i.r, %bb.l ] ; 2 uses
+  %.0105 = phi i64 [ %i.c, %bb.j ], [ %i.r, %bb.l ]
   %i.s = or i64 %.0105, 4503599627370496          ; 3 uses
   %i.t = or i64 %.0102, 4503599627370496          ; 3 uses
-  %i.u = sub nsw i64 %.0106, %.0104               ; 5 uses
+  %i.u = sub nsw i64 %.0106, %.0104               ; 4 uses
   %i.v = icmp slt i64 %i.u, 1
   br i1 %i.v, label %bb.n, label %bb.r
 
@@ -103,77 +101,37 @@ bb.q:                                             ; preds = %bb.o
 bb.r:                                             ; preds = %bb.m
   %i.ad = lshr i64 %i.t, 21
   %i.ae = and i64 %i.ad, 4294967295
-  %i.af = udiv i64 9223372036854775807, %i.ae     ; 4 uses
+  %i.af = udiv i64 9223372036854775807, %i.ae     ; 2 uses
   %i.ag = shl i64 %i.s, 9                         ; 3 uses
-  %i.ah = add nsw i64 %i.u, -30                   ; 4 uses
-  %i.ai = shl i64 %i.t, 9                         ; 9 uses
+  %i.ah = add nsw i64 %i.u, -30                   ; 2 uses
+  %i.ai = shl i64 %i.t, 9                         ; 5 uses
   %i.aj = lshr i64 %i.ag, 32
-  %i.ak = mul nuw i64 %i.aj, %i.af                ; 3 uses
+  %i.ak = mul nuw i64 %i.aj, %i.af                ; 2 uses
   %i.al = icmp samesign ult i64 %i.u, 30
-  br i1 %i.al, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %i.al, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.r
-  %2 = udiv i64 %i.ah, 29
-  %3 = and i64 %2, 1
-  %lcmp.mod.not.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %4 = add nuw i64 %i.ak, 2147483648
-  %5 = lshr i64 %4, 32
-  %6 = shl i64 %.0105, 38
-  %7 = mul i64 %5, %i.ai
-  %8 = sub i64 %6, %7                             ; 2 uses
-  %.not120134.prol = icmp slt i64 %8, 0
-  %9 = select i1 %.not120134.prol, i64 %i.ai, i64 0
-  %spec.select130.prol = add i64 %9, %8           ; 3 uses
-  %10 = add nsw i64 %i.u, -59                     ; 2 uses
-  %11 = lshr i64 %spec.select130.prol, 32
-  %12 = mul nuw i64 %11, %i.af                    ; 2 uses
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %spec.select130.lcssa.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %spec.select130.prol, %.lr.ph.prol ]
-  %.lcssa162.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %10, %.lr.ph.prol ]
-  %.lcssa161.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %12, %.lr.ph.prol ]
-  %.unr = phi i64 [ %i.ak, %.lr.ph.preheader ], [ %12, %.lr.ph.prol ]
-  %.098139.unr = phi i64 [ %i.ah, %.lr.ph.preheader ], [ %10, %.lr.ph.prol ]
-  %.099138.unr = phi i64 [ %i.ag, %.lr.ph.preheader ], [ %spec.select130.prol, %.lr.ph.prol ]
-  %13 = icmp ult i64 %i.ah, 29
-  br i1 %13, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %i.am = phi i64 [ %i.av, %.lr.ph ], [ %.unr, %.lr.ph.prol.loopexit ]
-  %.098139 = phi i64 [ %i.at, %.lr.ph ], [ %.098139.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.099138 = phi i64 [ %spec.select130.1, %.lr.ph ], [ %.099138.unr, %.lr.ph.prol.loopexit ]
-  %14 = add nuw i64 %i.am, 2147483648
-  %15 = lshr i64 %14, 32
-  %16 = shl i64 %.099138, 29
-  %17 = mul i64 %15, %i.ai
-  %18 = sub i64 %16, %17                          ; 2 uses
-  %.not120134 = icmp slt i64 %18, 0
-  %19 = select i1 %.not120134, i64 %i.ai, i64 0
-  %spec.select130 = add i64 %19, %18              ; 2 uses
-  %20 = lshr i64 %spec.select130, 32
-  %21 = mul nuw i64 %20, %i.af
-  %i.an = add nuw i64 %21, 2147483648
+.lr.ph:                                           ; preds = %bb.r, %.lr.ph
+  %i.am = phi i64 [ %i.av, %.lr.ph ], [ %i.ak, %bb.r ]
+  %.098139 = phi i64 [ %i.at, %.lr.ph ], [ %i.ah, %bb.r ] ; 2 uses
+  %.099138 = phi i64 [ %spec.select130.1, %.lr.ph ], [ %i.ag, %bb.r ]
+  %i.an = add nuw i64 %i.am, 2147483648
   %i.ao = lshr i64 %i.an, 32
-  %i.ap = shl i64 %spec.select130, 29
+  %i.ap = shl i64 %.099138, 29
   %i.aq = mul i64 %i.ao, %i.ai
   %i.ar = sub i64 %i.ap, %i.aq                    ; 2 uses
   %.not120134.1 = icmp slt i64 %i.ar, 0
   %i.as = select i1 %.not120134.1, i64 %i.ai, i64 0
   %spec.select130.1 = add i64 %i.as, %i.ar        ; 3 uses
-  %i.at = add nsw i64 %.098139, -58               ; 2 uses
+  %i.at = add nsw i64 %.098139, -29               ; 2 uses
   %i.au = lshr i64 %spec.select130.1, 32
   %i.av = mul nuw i64 %i.au, %i.af                ; 2 uses
-  %22 = icmp slt i64 %.098139, 58
-  br i1 %22, label %._crit_edge, label %.lr.ph
+  %2 = icmp samesign ult i64 %.098139, 29
+  br i1 %2, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.r
-  %.099.lcssa = phi i64 [ %i.ag, %bb.r ], [ %spec.select130.lcssa.unr, %.lr.ph.prol.loopexit ], [ %spec.select130.1, %.lr.ph ]
-  %.098.lcssa = phi i64 [ %i.ah, %bb.r ], [ %.lcssa162.unr, %.lr.ph.prol.loopexit ], [ %i.at, %.lr.ph ] ; 2 uses
-  %.lcssa137 = phi i64 [ %i.ak, %bb.r ], [ %.lcssa161.unr, %.lr.ph.prol.loopexit ], [ %i.av, %.lr.ph ]
+._crit_edge:                                      ; preds = %.lr.ph, %bb.r
+  %.099.lcssa = phi i64 [ %i.ag, %bb.r ], [ %spec.select130.1, %.lr.ph ]
+  %.098.lcssa = phi i64 [ %i.ah, %bb.r ], [ %i.at, %.lr.ph ] ; 2 uses
+  %.lcssa137 = phi i64 [ %i.ak, %bb.r ], [ %i.av, %.lr.ph ]
   %i.aw = lshr i64 %.lcssa137, 32
   %i.ax = trunc nuw i64 %i.aw to i32
   %i.ay = trunc nsw i64 %.098.lcssa to i32

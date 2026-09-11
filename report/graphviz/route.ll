@@ -205,18 +205,15 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   %i.bn = shufflevector <2 x double> %i.bl, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.bo = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bn, <2 x double> splat (double 3.000000e+00), <2 x double> %i.bl)
   %i.bp = fmul <2 x double> %i.bm, %i.bo          ; 2 uses
-  %i.bq = fmul <2 x double> %i.az, %i.bp          ; 2 uses
-  %i.br = fmul <2 x double> %i.bb, %i.bp          ; 2 uses
-  %8 = shufflevector <2 x double> %i.bq, <2 x double> %i.br, <2 x i32> <i32 1, i32 3>
-  %9 = shufflevector <2 x double> %i.bq, <2 x double> %i.br, <2 x i32> <i32 0, i32 2>
-  %10 = fadd <2 x double> %8, %9                  ; 2 uses
+  %i.bq = fmul <2 x double> %i.az, %i.bp
+  %i.br = fmul <2 x double> %i.bb, %i.bp
+  %8 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.bq)
+  %9 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.br)
   %i.bs = load double, ptr %i.bh, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.bu = load double, ptr %i.bt, align 8
-  %11 = extractelement <2 x double> %10, i64 0
-  %i.bv = fsub double %i.bs, %11                  ; 2 uses
-  %12 = extractelement <2 x double> %10, i64 1
-  %i.bw = fsub double %i.bu, %12
+  %i.bv = fsub double %i.bs, %8                   ; 2 uses
+  %i.bw = fsub double %i.bu, %9
   %i.bx = load <2 x double>, ptr %i.bf, align 8   ; 3 uses
   %i.by = shufflevector <2 x double> %i.bx, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.bz = insertelement <2 x double> %i.by, double %i.bw, i64 1 ; 2 uses
@@ -619,24 +616,18 @@ bb.ao:                                            ; preds = %bb.ak, %bb.af
   %i.ra = fcmp ogt <2 x double> %i.qy, splat (double f0x3EB0C6F7A0B5ED8D) ; 2 uses
   %i.rb = fdiv <2 x double> %i.qt, %i.qz
   %i.rc = fdiv <2 x double> %i.qw, %i.qz
-  %i.rd = select <2 x i1> %i.ra, <2 x double> %i.rc, <2 x double> %i.qw ; 2 uses
-  %i.re = select <2 x i1> %i.ra, <2 x double> %i.rb, <2 x double> %i.qt ; 2 uses
-  %13 = shufflevector <2 x double> %i.re, <2 x double> %i.rd, <2 x i32> <i32 0, i32 2>
-  %14 = shufflevector <2 x double> %i.re, <2 x double> %i.rd, <2 x i32> <i32 1, i32 3>
-  %15 = fadd <2 x double> %13, %14                ; 3 uses
-  %16 = extractelement <2 x double> %15, i64 1    ; 3 uses
-  %i.rf = fmul double %16, %16
-  %17 = extractelement <2 x double> %15, i64 0    ; 3 uses
-  %i.rg = call double @llvm.fmuladd.f64(double %17, double %17, double %i.rf) ; 2 uses
+  %i.rd = select <2 x i1> %i.ra, <2 x double> %i.rc, <2 x double> %i.qw
+  %i.re = select <2 x i1> %i.ra, <2 x double> %i.rb, <2 x double> %i.qt
+  %10 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.re) ; 4 uses
+  %11 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.rd) ; 4 uses
+  %i.rf = fmul double %11, %11
+  %i.rg = call double @llvm.fmuladd.f64(double %10, double %10, double %i.rf) ; 2 uses
   %i.rh = fcmp ogt double %i.rg, f0x3EB0C6F7A0B5ED8D ; 2 uses
-  %sqrt.i154 = call double @llvm.sqrt.f64(double %i.rg)
-  %18 = insertelement <2 x double> poison, double %sqrt.i154, i64 0
-  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
-  %20 = fdiv <2 x double> %15, %19                ; 2 uses
-  %21 = extractelement <2 x double> %20, i64 1
-  %.sroa.6.0.i155 = select i1 %i.rh, double %21, double %16 ; 2 uses
-  %22 = extractelement <2 x double> %20, i64 0
-  %.sroa.0.0.i156 = select i1 %i.rh, double %22, double %17 ; 2 uses
+  %sqrt.i154 = call double @llvm.sqrt.f64(double %i.rg) ; 2 uses
+  %12 = fdiv double %10, %sqrt.i154
+  %13 = fdiv double %11, %sqrt.i154
+  %.sroa.6.0.i155 = select i1 %i.rh, double %13, double %11 ; 2 uses
+  %.sroa.0.0.i156 = select i1 %i.rh, double %12, double %10 ; 2 uses
   %i.ri = call fastcc i32 @reallyroutespline(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %2, i32 noundef %i.ql, double %4, double %5, double %.sroa.0.0.i156, double %.sroa.6.0.i155)
   %i.rj = icmp slt i32 %i.ri, 0
   br i1 %i.rj, label %bb.aq, label %bb.ap
@@ -723,6 +714,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

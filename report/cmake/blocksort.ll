@@ -205,9 +205,7 @@ begin_hunk_0_@BZ2_blockSort:bb.a
   br i1 %.not677.i, label %.preheader332.i, label %.lr.ph411.i, !llvm.loop !23
 
 .lr.ph414.i:                                      ; preds = %.preheader332.i, %.split.loop.exit657.i
-  %indvars.iv540.i = phi i32 [ %indvars.iv.next541.i, %.split.loop.exit657.i ], [ 0, %.preheader332.i ] ; 2 uses
   %indvars.iv516.i = phi i64 [ %indvars.iv.next517.i, %.split.loop.exit657.i ], [ 121, %.preheader332.i ] ; 7 uses
-  %1 = urem i32 %indvars.iv540.i, 121
   %i.nj = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv516.i
   %i.nk = load i32, ptr %i.nj, align 4, !tbaa !10 ; 2 uses
   %i.nl = shl i32 %i.nk, 8                        ; 2 uses
@@ -219,7 +217,7 @@ begin_hunk_0_@BZ2_blockSort:bb.a
   %i.nr = getelementptr inbounds [4 x i8], ptr %i.n, i64 %i.nq
   %i.ns = load i32, ptr %i.nr, align 4, !tbaa !10
   %i.nt = sub i32 %i.np, %i.ns                    ; 2 uses
-  %indvars.iv.next539.i = add nsw i64 %indvars.iv516.i, -121 ; 3 uses
+  %indvars.iv.next539.i = add nsw i64 %indvars.iv516.i, -121 ; 4 uses
   %i.nu = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next539.i
   %i.nv = load i32, ptr %i.nu, align 4, !tbaa !10 ; 2 uses
   %i.nw = shl i32 %i.nv, 8                        ; 2 uses
@@ -238,12 +236,12 @@ bb.g:                                             ; preds = %.lr.ph414.i
   %i.og = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv516.i
   store i32 %i.nv, ptr %i.og, align 4, !tbaa !10
   %.not323.not.i = icmp samesign ult i64 %indvars.iv516.i, 242
-  br i1 %.not323.not.i, label %.split.loop.exit657.i.loopexit, label %bb.h
+  br i1 %.not323.not.i, label %.split.loop.exit657.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %2 = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv516.i
-  %3 = getelementptr i8, ptr %2, i64 -968
-  %i.oh = load i32, ptr %3, align 4, !tbaa !10    ; 2 uses
+  %indvars.iv.next536.i.1 = add nsw i64 %indvars.iv516.i, -242 ; 2 uses
+  %1 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next536.i.1
+  %i.oh = load i32, ptr %1, align 4, !tbaa !10    ; 2 uses
   %i.oi = shl i32 %i.oh, 8                        ; 2 uses
   %i.oj = add i32 %i.oi, 256
   %i.ok = sext i32 %i.oj to i64
@@ -259,25 +257,20 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.os = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.next539.i
   store i32 %i.oh, ptr %i.os, align 4, !tbaa !10
-  br label %.split.loop.exit657.i.loopexit
-
-.split.loop.exit657.i.loopexit:                   ; preds = %bb.i, %bb.g
-  %4 = zext nneg i32 %1 to i64
   br label %.split.loop.exit657.i
 
-.split.loop.exit657.i:                            ; preds = %.lr.ph414.i, %bb.h, %.split.loop.exit657.i.loopexit
-  %.3290.i = phi i64 [ %4, %.split.loop.exit657.i.loopexit ], [ %indvars.iv516.i, %.lr.ph414.i ], [ %indvars.iv.next539.i, %bb.h ]
-  %5 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %.3290.i
-  store i32 %i.nk, ptr %5, align 4, !tbaa !10
+.split.loop.exit657.i:                            ; preds = %bb.i, %bb.h, %bb.g, %.lr.ph414.i
+  %.3290.in.i = phi i64 [ %indvars.iv.next539.i, %bb.g ], [ %indvars.iv516.i, %.lr.ph414.i ], [ %indvars.iv.next539.i, %bb.h ], [ %indvars.iv.next536.i.1, %bb.i ]
+  %sext.i = shl i64 %.3290.in.i, 32
+  %2 = ashr exact i64 %sext.i, 30
+  %3 = getelementptr inbounds i8, ptr %i.d, i64 %2
+  store i32 %i.nk, ptr %3, align 4, !tbaa !10
   %indvars.iv.next517.i = add nuw nsw i64 %indvars.iv516.i, 1 ; 2 uses
   %exitcond519.not.i = icmp eq i64 %indvars.iv.next517.i, 256
-  %indvars.iv.next541.i = add nuw nsw i32 %indvars.iv540.i, 1
   br i1 %exitcond519.not.i, label %.lr.ph414.1.i, label %.lr.ph414.i, !llvm.loop !24
 
 .lr.ph414.1.i:                                    ; preds = %.split.loop.exit657.i, %.split.loop.exit659.i
-  %indvars.iv535.i = phi i32 [ %indvars.iv.next536.i, %.split.loop.exit659.i ], [ 0, %.split.loop.exit657.i ] ; 2 uses
   %indvars.iv516.1.i = phi i64 [ %indvars.iv.next517.1.i, %.split.loop.exit659.i ], [ 40, %.split.loop.exit657.i ] ; 15 uses
-  %6 = urem i32 %indvars.iv535.i, 40
   %i.ot = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv516.1.i
   %i.ou = load i32, ptr %i.ot, align 4, !tbaa !10 ; 2 uses
   %i.ov = shl i32 %i.ou, 8                        ; 2 uses
@@ -289,7 +282,7 @@ bb.i:                                             ; preds = %bb.h
   %i.pb = getelementptr inbounds [4 x i8], ptr %i.n, i64 %i.pa
   %i.pc = load i32, ptr %i.pb, align 4, !tbaa !10
   %i.pd = sub i32 %i.oz, %i.pc                    ; 6 uses
-  %indvars.iv.next534.i = add nsw i64 %indvars.iv516.1.i, -40 ; 3 uses
+  %indvars.iv.next534.i = add nsw i64 %indvars.iv516.1.i, -40 ; 4 uses
   %i.pe = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i
   %i.pf = load i32, ptr %i.pe, align 4, !tbaa !10 ; 2 uses
   %i.pg = shl i32 %i.pf, 8                        ; 2 uses
@@ -308,10 +301,10 @@ bb.j:                                             ; preds = %.lr.ph414.1.i
   %i.pq = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv516.1.i
   store i32 %i.pf, ptr %i.pq, align 4, !tbaa !10
   %.not323.not.1.i = icmp samesign ult i64 %indvars.iv516.1.i, 80
-  br i1 %.not323.not.1.i, label %.split.loop.exit659.i.loopexit, label %bb.k
+  br i1 %.not323.not.1.i, label %.split.loop.exit659.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %indvars.iv.next534.i.1 = add nsw i64 %indvars.iv516.1.i, -80 ; 3 uses
+  %indvars.iv.next534.i.1 = add nsw i64 %indvars.iv516.1.i, -80 ; 4 uses
   %i.pr = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i.1
   %i.ps = load i32, ptr %i.pr, align 4, !tbaa !10 ; 2 uses
   %i.pt = shl i32 %i.ps, 8                        ; 2 uses
@@ -330,10 +323,10 @@ bb.l:                                             ; preds = %bb.k
   %i.qd = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i
   store i32 %i.ps, ptr %i.qd, align 4, !tbaa !10
   %.not323.not.1.i.1 = icmp samesign ult i64 %indvars.iv516.1.i, 120
-  br i1 %.not323.not.1.i.1, label %.split.loop.exit659.i.loopexit, label %bb.m
+  br i1 %.not323.not.1.i.1, label %.split.loop.exit659.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %indvars.iv.next534.i.2 = add nsw i64 %indvars.iv516.1.i, -120 ; 3 uses
+  %indvars.iv.next534.i.2 = add nsw i64 %indvars.iv516.1.i, -120 ; 4 uses
   %i.qe = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i.2
   %i.qf = load i32, ptr %i.qe, align 4, !tbaa !10 ; 2 uses
   %i.qg = shl i32 %i.qf, 8                        ; 2 uses
@@ -352,10 +345,10 @@ bb.n:                                             ; preds = %bb.m
   %i.qq = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i.1
   store i32 %i.qf, ptr %i.qq, align 4, !tbaa !10
   %.not323.not.1.i.2 = icmp samesign ult i64 %indvars.iv516.1.i, 160
-  br i1 %.not323.not.1.i.2, label %.split.loop.exit659.i.loopexit, label %bb.o
+  br i1 %.not323.not.1.i.2, label %.split.loop.exit659.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %indvars.iv.next534.i.3 = add nsw i64 %indvars.iv516.1.i, -160 ; 3 uses
+  %indvars.iv.next534.i.3 = add nsw i64 %indvars.iv516.1.i, -160 ; 4 uses
   %i.qr = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i.3
   %i.qs = load i32, ptr %i.qr, align 4, !tbaa !10 ; 2 uses
   %i.qt = shl i32 %i.qs, 8                        ; 2 uses
@@ -374,10 +367,10 @@ bb.p:                                             ; preds = %bb.o
   %i.rd = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i.2
   store i32 %i.qs, ptr %i.rd, align 4, !tbaa !10
   %.not323.not.1.i.3 = icmp samesign ult i64 %indvars.iv516.1.i, 200
-  br i1 %.not323.not.1.i.3, label %.split.loop.exit659.i.loopexit, label %bb.q
+  br i1 %.not323.not.1.i.3, label %.split.loop.exit659.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %indvars.iv.next534.i.4 = add nsw i64 %indvars.iv516.1.i, -200 ; 3 uses
+  %indvars.iv.next534.i.4 = add nsw i64 %indvars.iv516.1.i, -200 ; 4 uses
   %i.re = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i.4
   %i.rf = load i32, ptr %i.re, align 4, !tbaa !10 ; 2 uses
   %i.rg = shl i32 %i.rf, 8                        ; 2 uses
@@ -396,12 +389,12 @@ bb.r:                                             ; preds = %bb.q
   %i.rq = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i.3
   store i32 %i.rf, ptr %i.rq, align 4, !tbaa !10
   %.not323.not.1.i.4 = icmp samesign ult i64 %indvars.iv516.1.i, 240
-  br i1 %.not323.not.1.i.4, label %.split.loop.exit659.i.loopexit, label %bb.s
+  br i1 %.not323.not.1.i.4, label %.split.loop.exit659.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %7 = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv516.1.i
-  %8 = getelementptr i8, ptr %7, i64 -960
-  %i.rr = load i32, ptr %8, align 4, !tbaa !10    ; 2 uses
+  %indvars.iv.next532.i.5 = add nsw i64 %indvars.iv516.1.i, -240 ; 2 uses
+  %4 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next532.i.5
+  %i.rr = load i32, ptr %4, align 4, !tbaa !10    ; 2 uses
   %i.rs = shl i32 %i.rr, 8                        ; 2 uses
   %i.rt = add i32 %i.rs, 256
   %i.ru = sext i32 %i.rt to i64
@@ -417,25 +410,20 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   %i.sc = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.next534.i.4
   store i32 %i.rr, ptr %i.sc, align 4, !tbaa !10
-  br label %.split.loop.exit659.i.loopexit
-
-.split.loop.exit659.i.loopexit:                   ; preds = %bb.t, %bb.r, %bb.p, %bb.n, %bb.l, %bb.j
-  %9 = zext nneg i32 %6 to i64
   br label %.split.loop.exit659.i
 
-.split.loop.exit659.i:                            ; preds = %.lr.ph414.1.i, %bb.k, %bb.m, %bb.o, %bb.q, %bb.s, %.split.loop.exit659.i.loopexit
-  %.3290.1.i = phi i64 [ %9, %.split.loop.exit659.i.loopexit ], [ %indvars.iv516.1.i, %.lr.ph414.1.i ], [ %indvars.iv.next534.i, %bb.k ], [ %indvars.iv.next534.i.1, %bb.m ], [ %indvars.iv.next534.i.2, %bb.o ], [ %indvars.iv.next534.i.3, %bb.q ], [ %indvars.iv.next534.i.4, %bb.s ]
-  %10 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %.3290.1.i
-  store i32 %i.ou, ptr %10, align 4, !tbaa !10
+.split.loop.exit659.i:                            ; preds = %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %.lr.ph414.1.i
+  %.3290.1.in.i = phi i64 [ %indvars.iv.next534.i, %bb.j ], [ %indvars.iv516.1.i, %.lr.ph414.1.i ], [ %indvars.iv.next534.i, %bb.k ], [ %indvars.iv.next534.i.1, %bb.l ], [ %indvars.iv.next534.i.1, %bb.m ], [ %indvars.iv.next534.i.2, %bb.n ], [ %indvars.iv.next534.i.2, %bb.o ], [ %indvars.iv.next534.i.3, %bb.p ], [ %indvars.iv.next534.i.3, %bb.q ], [ %indvars.iv.next534.i.4, %bb.r ], [ %indvars.iv.next534.i.4, %bb.s ], [ %indvars.iv.next532.i.5, %bb.t ]
+  %sext596.i = shl i64 %.3290.1.in.i, 32
+  %5 = ashr exact i64 %sext596.i, 30
+  %6 = getelementptr inbounds i8, ptr %i.d, i64 %5
+  store i32 %i.ou, ptr %6, align 4, !tbaa !10
   %indvars.iv.next517.1.i = add nuw nsw i64 %indvars.iv516.1.i, 1 ; 2 uses
   %exitcond519.1.not.i = icmp eq i64 %indvars.iv.next517.1.i, 256
-  %indvars.iv.next536.i = add nuw nsw i32 %indvars.iv535.i, 1
   br i1 %exitcond519.1.not.i, label %.lr.ph414.2.i, label %.lr.ph414.1.i, !llvm.loop !24
 
 .lr.ph414.2.i:                                    ; preds = %.split.loop.exit659.i, %.split.loop.exit662.i
-  %indvars.iv530.i = phi i32 [ %indvars.iv.next531.i, %.split.loop.exit662.i ], [ 0, %.split.loop.exit659.i ] ; 2 uses
   %indvars.iv516.2.i = phi i64 [ %indvars.iv.next517.2.i, %.split.loop.exit662.i ], [ 13, %.split.loop.exit659.i ] ; 3 uses
-  %11 = urem i32 %indvars.iv530.i, 13
   %i.sd = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv516.2.i
   %i.se = load i32, ptr %i.sd, align 4, !tbaa !10 ; 2 uses
   %i.sf = shl i32 %i.se, 8                        ; 2 uses
@@ -451,7 +439,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.v, %.lr.ph414.2.i
   %indvars.iv528.i = phi i64 [ %indvars.iv.next529.i, %bb.v ], [ %indvars.iv516.2.i, %.lr.ph414.2.i ] ; 4 uses
-  %indvars.iv.next529.i = add nsw i64 %indvars.iv528.i, -13 ; 2 uses
+  %indvars.iv.next529.i = add nsw i64 %indvars.iv528.i, -13 ; 3 uses
   %i.so = getelementptr inbounds [4 x i8], ptr %i.d, i64 %indvars.iv.next529.i
   %i.sp = load i32, ptr %i.so, align 4, !tbaa !10 ; 2 uses
   %i.sq = shl i32 %i.sp, 8                        ; 2 uses
@@ -470,19 +458,16 @@ bb.v:                                             ; preds = %bb.u
   %i.ta = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv528.i
   store i32 %i.sp, ptr %i.ta, align 4, !tbaa !10
   %.not323.not.2.i = icmp slt i64 %indvars.iv528.i, 26
-  br i1 %.not323.not.2.i, label %.split.loop.exit662.i.loopexit, label %bb.u, !llvm.loop !25
+  br i1 %.not323.not.2.i, label %.split.loop.exit662.i, label %bb.u, !llvm.loop !25
 
-.split.loop.exit662.i.loopexit:                   ; preds = %bb.v
-  %12 = zext nneg i32 %11 to i64
-  br label %.split.loop.exit662.i
-
-.split.loop.exit662.i:                            ; preds = %bb.u, %.split.loop.exit662.i.loopexit
-  %.3290.2.i = phi i64 [ %12, %.split.loop.exit662.i.loopexit ], [ %indvars.iv528.i, %bb.u ]
-  %13 = getelementptr inbounds [4 x i8], ptr %i.d, i64 %.3290.2.i
-  store i32 %i.se, ptr %13, align 4, !tbaa !10
+.split.loop.exit662.i:                            ; preds = %bb.v, %bb.u
+  %.3290.2.i = phi i64 [ %indvars.iv.next529.i, %bb.v ], [ %indvars.iv528.i, %bb.u ]
+  %sext597.i = shl i64 %.3290.2.i, 32
+  %7 = ashr exact i64 %sext597.i, 30
+  %8 = getelementptr inbounds i8, ptr %i.d, i64 %7
+  store i32 %i.se, ptr %8, align 4, !tbaa !10
   %indvars.iv.next517.2.i = add nuw nsw i64 %indvars.iv516.2.i, 1 ; 2 uses
   %exitcond519.2.not.i = icmp eq i64 %indvars.iv.next517.2.i, 256
-  %indvars.iv.next531.i = add nuw nsw i32 %indvars.iv530.i, 1
   br i1 %exitcond519.2.not.i, label %.lr.ph414.3.i, label %.lr.ph414.2.i, !llvm.loop !24
 
 .lr.ph414.3.i:                                    ; preds = %.split.loop.exit662.i, %.split.loop.exit665.i

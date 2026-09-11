@@ -202,8 +202,8 @@ _ZN7msdfgen33PerpendicularDistanceSelectorBase19addEdgeTrueDistanceEPKNS_11EdgeS
   %i.de = fcmp une <2 x double> %i.dc, zeroinitializer ; 2 uses
   %i.df = fdiv <2 x double> %i.db, %i.dd
   %i.dg = fdiv <2 x double> %i.cy, %i.dd
-  %i.dh = select <2 x i1> %i.de, <2 x double> %i.dg, <2 x double> zeroinitializer ; 3 uses
-  %i.di = select <2 x i1> %i.de, <2 x double> %i.df, <2 x double> zeroinitializer ; 3 uses
+  %i.dh = select <2 x i1> %i.de, <2 x double> %i.dg, <2 x double> zeroinitializer ; 2 uses
+  %i.di = select <2 x i1> %i.de, <2 x double> %i.df, <2 x double> zeroinitializer ; 2 uses
   %i.dj = load ptr, ptr %4, align 8, !tbaa !16
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 48
   %i.dl = load ptr, ptr %i.dk, align 8
@@ -220,28 +220,24 @@ _ZN7msdfgen33PerpendicularDistanceSelectorBase19addEdgeTrueDistanceEPKNS_11EdgeS
   %i.dw = fcmp une <2 x double> %i.du, zeroinitializer ; 2 uses
   %i.dx = fdiv <2 x double> %i.dt, %i.dv
   %i.dy = fdiv <2 x double> %i.dq, %i.dv
-  %i.dz = select <2 x i1> %i.dw, <2 x double> %i.dy, <2 x double> zeroinitializer ; 4 uses
-  %i.ea = select <2 x i1> %i.dw, <2 x double> %i.dx, <2 x double> zeroinitializer ; 3 uses
-  %5 = shufflevector <2 x double> %i.ea, <2 x double> %i.di, <2 x i32> <i32 0, i32 2>
-  %6 = shufflevector <2 x double> %i.ea, <2 x double> %i.di, <2 x i32> <i32 1, i32 3>
-  %7 = fadd <2 x double> %5, %6                   ; 4 uses
-  %8 = shufflevector <2 x double> %i.dz, <2 x double> %i.dh, <2 x i32> <i32 0, i32 2>
-  %9 = shufflevector <2 x double> %i.dz, <2 x double> %i.dh, <2 x i32> <i32 1, i32 3>
-  %10 = fadd <2 x double> %8, %9                  ; 4 uses
+  %i.dz = select <2 x i1> %i.dw, <2 x double> %i.dy, <2 x double> zeroinitializer ; 3 uses
+  %i.ea = select <2 x i1> %i.dw, <2 x double> %i.dx, <2 x double> zeroinitializer ; 2 uses
+  %5 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.di)
+  %6 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.dh)
+  %7 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ea)
+  %8 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.dz)
+  %9 = insertelement <2 x double> poison, double %8, i64 0
+  %10 = insertelement <2 x double> %9, double %6, i64 1 ; 3 uses
   %i.eb = fmul <2 x double> %10, %10
-  %11 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %7, <2 x double> %i.eb) ; 2 uses
-  %12 = shufflevector <2 x double> %7, <2 x double> %10, <2 x i32> <i32 1, i32 3>
-  %13 = fcmp une <2 x double> %11, zeroinitializer ; 2 uses
-  %14 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %11) ; 2 uses
-  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.ec = fdiv <2 x double> %12, %15              ; 2 uses
-  %16 = shufflevector <2 x double> %7, <2 x double> %10, <2 x i32> <i32 0, i32 2>
-  %17 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ed = fdiv <2 x double> %16, %17              ; 2 uses
-  %18 = shufflevector <2 x double> %i.ed, <2 x double> %i.ec, <2 x i32> <i32 1, i32 3>
-  %i.ee = select <2 x i1> %13, <2 x double> %18, <2 x double> zeroinitializer
-  %19 = shufflevector <2 x double> %i.ed, <2 x double> %i.ec, <2 x i32> <i32 0, i32 2>
-  %i.ef = select <2 x i1> %13, <2 x double> %19, <2 x double> zeroinitializer
+  %11 = insertelement <2 x double> poison, double %7, i64 0
+  %12 = insertelement <2 x double> %11, double %5, i64 1 ; 3 uses
+  %13 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %12, <2 x double> %i.eb) ; 2 uses
+  %14 = fcmp une <2 x double> %13, zeroinitializer ; 2 uses
+  %15 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %13) ; 2 uses
+  %i.ec = fdiv <2 x double> %12, %15
+  %i.ed = fdiv <2 x double> %10, %15
+  %i.ee = select <2 x i1> %14, <2 x double> %i.ed, <2 x double> zeroinitializer
+  %i.ef = select <2 x i1> %14, <2 x double> %i.ec, <2 x double> zeroinitializer
   %i.eg = fmul <2 x double> %i.ce, %i.ee
   %i.eh = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bz, <2 x double> %i.ef, <2 x double> %i.eg) ; 2 uses
   %i.ei = extractelement <2 x double> %i.eh, i64 0 ; 2 uses
@@ -644,8 +640,8 @@ _ZN7msdfgen33PerpendicularDistanceSelectorBase19addEdgeTrueDistanceEPKNS_11EdgeS
   %i.hv = fcmp une <2 x double> %i.ht, zeroinitializer ; 2 uses
   %i.hw = fdiv <2 x double> %i.hs, %i.hu
   %i.hx = fdiv <2 x double> %i.hp, %i.hu
-  %i.hy = select <2 x i1> %i.hv, <2 x double> %i.hx, <2 x double> zeroinitializer ; 3 uses
-  %i.hz = select <2 x i1> %i.hv, <2 x double> %i.hw, <2 x double> zeroinitializer ; 3 uses
+  %i.hy = select <2 x i1> %i.hv, <2 x double> %i.hx, <2 x double> zeroinitializer ; 2 uses
+  %i.hz = select <2 x i1> %i.hv, <2 x double> %i.hw, <2 x double> zeroinitializer ; 2 uses
   %i.ia = load ptr, ptr %4, align 8, !tbaa !16
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 48
   %i.ic = load ptr, ptr %i.ib, align 8
@@ -662,28 +658,24 @@ _ZN7msdfgen33PerpendicularDistanceSelectorBase19addEdgeTrueDistanceEPKNS_11EdgeS
   %i.in = fcmp une <2 x double> %i.il, zeroinitializer ; 2 uses
   %i.io = fdiv <2 x double> %i.ik, %i.im
   %i.ip = fdiv <2 x double> %i.ih, %i.im
-  %i.iq = select <2 x i1> %i.in, <2 x double> %i.ip, <2 x double> zeroinitializer ; 4 uses
-  %i.ir = select <2 x i1> %i.in, <2 x double> %i.io, <2 x double> zeroinitializer ; 3 uses
-  %5 = shufflevector <2 x double> %i.ir, <2 x double> %i.hz, <2 x i32> <i32 0, i32 2>
-  %6 = shufflevector <2 x double> %i.ir, <2 x double> %i.hz, <2 x i32> <i32 1, i32 3>
-  %7 = fadd <2 x double> %5, %6                   ; 4 uses
-  %8 = shufflevector <2 x double> %i.iq, <2 x double> %i.hy, <2 x i32> <i32 0, i32 2>
-  %9 = shufflevector <2 x double> %i.iq, <2 x double> %i.hy, <2 x i32> <i32 1, i32 3>
-  %10 = fadd <2 x double> %8, %9                  ; 4 uses
+  %i.iq = select <2 x i1> %i.in, <2 x double> %i.ip, <2 x double> zeroinitializer ; 3 uses
+  %i.ir = select <2 x i1> %i.in, <2 x double> %i.io, <2 x double> zeroinitializer ; 2 uses
+  %5 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.hz)
+  %6 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.hy)
+  %7 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ir)
+  %8 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.iq)
+  %9 = insertelement <2 x double> poison, double %8, i64 0
+  %10 = insertelement <2 x double> %9, double %6, i64 1 ; 3 uses
   %i.is = fmul <2 x double> %10, %10
-  %11 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %7, <2 x double> %i.is) ; 2 uses
-  %12 = shufflevector <2 x double> %7, <2 x double> %10, <2 x i32> <i32 1, i32 3>
-  %13 = fcmp une <2 x double> %11, zeroinitializer ; 2 uses
-  %14 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %11) ; 2 uses
-  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.it = fdiv <2 x double> %12, %15              ; 2 uses
-  %16 = shufflevector <2 x double> %7, <2 x double> %10, <2 x i32> <i32 0, i32 2>
-  %17 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.iu = fdiv <2 x double> %16, %17              ; 2 uses
-  %18 = shufflevector <2 x double> %i.iu, <2 x double> %i.it, <2 x i32> <i32 1, i32 3>
-  %i.iv = select <2 x i1> %13, <2 x double> %18, <2 x double> zeroinitializer
-  %19 = shufflevector <2 x double> %i.iu, <2 x double> %i.it, <2 x i32> <i32 0, i32 2>
-  %i.iw = select <2 x i1> %13, <2 x double> %19, <2 x double> zeroinitializer
+  %11 = insertelement <2 x double> poison, double %7, i64 0
+  %12 = insertelement <2 x double> %11, double %5, i64 1 ; 3 uses
+  %13 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %12, <2 x double> %i.is) ; 2 uses
+  %14 = fcmp une <2 x double> %13, zeroinitializer ; 2 uses
+  %15 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %13) ; 2 uses
+  %i.it = fdiv <2 x double> %12, %15
+  %i.iu = fdiv <2 x double> %10, %15
+  %i.iv = select <2 x i1> %14, <2 x double> %i.iu, <2 x double> zeroinitializer
+  %i.iw = select <2 x i1> %14, <2 x double> %i.it, <2 x double> zeroinitializer
   %i.ix = fmul <2 x double> %i.gv, %i.iv
   %i.iy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gq, <2 x double> %i.iw, <2 x double> %i.ix) ; 2 uses
   %i.iz = extractelement <2 x double> %i.iy, i64 0 ; 2 uses
@@ -1085,6 +1077,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #3
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -205,14 +205,12 @@ bb.t:                                             ; preds = %._crit_edge161.i.us
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.u, %.lr.ph175.i.us.i
-  %indvars.iv.i = phi i32 [ %indvars.iv.next.i, %bb.u ], [ -255, %.lr.ph175.i.us.i ] ; 2 uses
-  %.3.pn.i.us.i = phi ptr [ %.4.i.us.i, %bb.u ], [ %.3174.i.us.i, %.lr.ph175.i.us.i ]
+  %.3.pn.i.us.i = phi ptr [ %.3174.i.us.i, %.lr.ph175.i.us.i ], [ %.4.i.us.i, %bb.u ]
   %.4.i.us.i = getelementptr inbounds nuw i8, ptr %.3.pn.i.us.i, i64 1 ; 5 uses
   %i.dv = load i8, ptr %.4.i.us.i, align 1
   %i.dw = icmp eq i8 %i.dv, %i.du
   %i.dx = icmp ult ptr %.4.i.us.i, %i.ap          ; 2 uses
   %i.dy = and i1 %i.dw, %i.dx
-  %indvars.iv.next.i = add i32 %indvars.iv.i, 1
   br i1 %i.dy, label %bb.u, label %bb.v, !llvm.loop !19
 
 bb.v:                                             ; preds = %bb.u
@@ -243,16 +241,12 @@ bb.y:                                             ; preds = %bb.x, %bb.v
 .lr.ph171.i.us.i:                                 ; preds = %bb.y, %.lr.ph171.i.us.i
   %.0105169.i.us.i = phi i32 [ %i.ek, %.lr.ph171.i.us.i ], [ %i.ei, %bb.y ] ; 2 uses
   call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext -1) #9
-  %i.ek = add nsw i32 %.0105169.i.us.i, -255
+  %i.ek = add nsw i32 %.0105169.i.us.i, -255      ; 2 uses
   %i.el = icmp samesign ugt i32 %.0105169.i.us.i, 509
-  br i1 %i.el, label %.lr.ph171.i.us.i, label %._crit_edge172.i.us.loopexit.i, !llvm.loop !20
+  br i1 %i.el, label %.lr.ph171.i.us.i, label %._crit_edge172.i.us.i, !llvm.loop !20
 
-._crit_edge172.i.us.loopexit.i:                   ; preds = %.lr.ph171.i.us.i
-  %17 = urem i32 %indvars.iv.i, 255
-  br label %._crit_edge172.i.us.i
-
-._crit_edge172.i.us.i:                            ; preds = %._crit_edge172.i.us.loopexit.i, %bb.y
-  %.0105.lcssa.i.us.i = phi i32 [ %i.ei, %bb.y ], [ %17, %._crit_edge172.i.us.loopexit.i ]
+._crit_edge172.i.us.i:                            ; preds = %.lr.ph171.i.us.i, %bb.y
+  %.0105.lcssa.i.us.i = phi i32 [ %i.ei, %bb.y ], [ %i.ek, %.lr.ph171.i.us.i ]
   %i.em = trunc i32 %.0105.lcssa.i.us.i to i8
   br label %bb.ab
 

@@ -204,18 +204,17 @@ middle.block201:                                  ; preds = %vector.body191
 .lr.ph109.preheader240:                           ; preds = %vector.memcheck172, %.lr.ph109.preheader, %middle.block201
   %.080107.ph = phi i32 [ %.084115, %vector.memcheck172 ], [ %.084115, %.lr.ph109.preheader ], [ %i.cp, %middle.block201 ] ; 4 uses
   %.081106.ph = phi ptr [ %.087112, %vector.memcheck172 ], [ %.087112, %.lr.ph109.preheader ], [ %i.cr, %middle.block201 ] ; 4 uses
-  %.082105.ph = phi ptr [ %i.ci, %vector.memcheck172 ], [ %i.ci, %.lr.ph109.preheader ], [ %i.cs, %middle.block201 ] ; 4 uses
+  %.082105.ph = phi ptr [ %i.ci, %vector.memcheck172 ], [ %i.ci, %.lr.ph109.preheader ], [ %i.cs, %middle.block201 ] ; 3 uses
   %xtraiter = and i32 %.080107.ph, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph109.prol.loopexit, label %.lr.ph109.prol
 
 .lr.ph109.prol:                                   ; preds = %.lr.ph109.preheader240
   %i.dd = getelementptr inbounds i8, ptr %.082105.ph, i64 -4
-  %6 = load float, ptr %i.dd, align 4, !tbaa !25
-  %7 = load float, ptr %.082105.ph, align 4, !tbaa !25
-  %8 = fadd float %6, %7
+  %6 = load <2 x float>, ptr %i.dd, align 4, !tbaa !25
+  %7 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %6)
   %i.de = load float, ptr %.081106.ph, align 4, !tbaa !25
-  %i.df = tail call float @llvm.fmuladd.f32(float %i.by, float %8, float %i.de)
+  %i.df = tail call float @llvm.fmuladd.f32(float %i.by, float %7, float %i.de)
   store float %i.df, ptr %.081106.ph, align 4, !tbaa !25
   %i.dg = add nsw i32 %.080107.ph, -1
   %i.dh = getelementptr inbounds nuw i8, ptr %.082105.ph, i64 4
@@ -237,21 +236,18 @@ middle.block201:                                  ; preds = %vector.body191
 .lr.ph109:                                        ; preds = %.lr.ph109.prol.loopexit, %.lr.ph109
   %.080107 = phi i32 [ %i.dr, %.lr.ph109 ], [ %.080107.unr, %.lr.ph109.prol.loopexit ]
   %.081106 = phi ptr [ %i.dt, %.lr.ph109 ], [ %.081106.unr, %.lr.ph109.prol.loopexit ] ; 4 uses
-  %.082105 = phi ptr [ %i.ds, %.lr.ph109 ], [ %.082105.unr, %.lr.ph109.prol.loopexit ] ; 5 uses
+  %.082105 = phi ptr [ %i.ds, %.lr.ph109 ], [ %.082105.unr, %.lr.ph109.prol.loopexit ] ; 3 uses
   %i.dl = getelementptr inbounds i8, ptr %.082105, i64 -4
-  %9 = load float, ptr %i.dl, align 4, !tbaa !25
-  %10 = load float, ptr %.082105, align 4, !tbaa !25
-  %11 = fadd float %9, %10
+  %8 = load <2 x float>, ptr %i.dl, align 4, !tbaa !25
+  %9 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %8)
   %i.dm = load float, ptr %.081106, align 4, !tbaa !25
-  %i.dn = tail call float @llvm.fmuladd.f32(float %i.by, float %11, float %i.dm)
+  %i.dn = tail call float @llvm.fmuladd.f32(float %i.by, float %9, float %i.dm)
   store float %i.dn, ptr %.081106, align 4, !tbaa !25
-  %12 = getelementptr inbounds nuw i8, ptr %.082105, i64 4
   %i.do = getelementptr inbounds nuw i8, ptr %.081106, i64 4 ; 2 uses
-  %13 = load float, ptr %.082105, align 4, !tbaa !25
-  %14 = load float, ptr %12, align 4, !tbaa !25
-  %15 = fadd float %13, %14
+  %10 = load <2 x float>, ptr %.082105, align 4, !tbaa !25
+  %11 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %10)
   %i.dp = load float, ptr %i.do, align 4, !tbaa !25
-  %i.dq = tail call float @llvm.fmuladd.f32(float %i.by, float %15, float %i.dp)
+  %i.dq = tail call float @llvm.fmuladd.f32(float %i.by, float %11, float %i.dp)
   store float %i.dq, ptr %i.do, align 4, !tbaa !25
   %i.dr = add nsw i32 %.080107, -2                ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.082105, i64 8
@@ -585,18 +581,17 @@ middle.block190:                                  ; preds = %vector.body179
 scalar.ph173.preheader:                           ; preds = %vector.memcheck, %.lr.ph110, %middle.block190
   %.083108.ph = phi i32 [ %.092113, %vector.memcheck ], [ %.092113, %.lr.ph110 ], [ %i.bu, %middle.block190 ] ; 4 uses
   %.084107.ph = phi ptr [ %.093112, %vector.memcheck ], [ %.093112, %.lr.ph110 ], [ %i.bw, %middle.block190 ] ; 4 uses
-  %.085106.ph = phi ptr [ %i.bm, %vector.memcheck ], [ %i.bm, %.lr.ph110 ], [ %i.bx, %middle.block190 ] ; 4 uses
+  %.085106.ph = phi ptr [ %i.bm, %vector.memcheck ], [ %i.bm, %.lr.ph110 ], [ %i.bx, %middle.block190 ] ; 3 uses
   %xtraiter = and i32 %.083108.ph, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph173.prol.loopexit, label %scalar.ph173.prol
 
 scalar.ph173.prol:                                ; preds = %scalar.ph173.preheader
   %i.ci = getelementptr inbounds i8, ptr %.085106.ph, i64 -4
-  %6 = load float, ptr %i.ci, align 4, !tbaa !25
-  %7 = load float, ptr %.085106.ph, align 4, !tbaa !25
-  %8 = fadd float %6, %7
+  %6 = load <2 x float>, ptr %i.ci, align 4, !tbaa !25
+  %7 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %6)
   %i.cj = load float, ptr %.084107.ph, align 4, !tbaa !25
-  %i.ck = tail call float @llvm.fmuladd.f32(float %i.bn, float %8, float %i.cj)
+  %i.ck = tail call float @llvm.fmuladd.f32(float %i.bn, float %7, float %i.cj)
   store float %i.ck, ptr %.084107.ph, align 4, !tbaa !25
   %i.cl = add nsw i32 %.083108.ph, -1
   %i.cm = getelementptr inbounds nuw i8, ptr %.085106.ph, i64 4
@@ -618,21 +613,18 @@ scalar.ph173.prol.loopexit:                       ; preds = %scalar.ph173.prol, 
 scalar.ph173:                                     ; preds = %scalar.ph173.prol.loopexit, %scalar.ph173
   %.083108 = phi i32 [ %i.cv, %scalar.ph173 ], [ %.083108.unr, %scalar.ph173.prol.loopexit ]
   %.084107 = phi ptr [ %i.cx, %scalar.ph173 ], [ %.084107.unr, %scalar.ph173.prol.loopexit ] ; 4 uses
-  %.085106 = phi ptr [ %i.cw, %scalar.ph173 ], [ %.085106.unr, %scalar.ph173.prol.loopexit ] ; 5 uses
+  %.085106 = phi ptr [ %i.cw, %scalar.ph173 ], [ %.085106.unr, %scalar.ph173.prol.loopexit ] ; 3 uses
   %i.cp = getelementptr inbounds i8, ptr %.085106, i64 -4
-  %9 = load float, ptr %i.cp, align 4, !tbaa !25
-  %10 = load float, ptr %.085106, align 4, !tbaa !25
-  %11 = fadd float %9, %10
+  %8 = load <2 x float>, ptr %i.cp, align 4, !tbaa !25
+  %9 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %8)
   %i.cq = load float, ptr %.084107, align 4, !tbaa !25
-  %i.cr = tail call float @llvm.fmuladd.f32(float %i.bn, float %11, float %i.cq)
+  %i.cr = tail call float @llvm.fmuladd.f32(float %i.bn, float %9, float %i.cq)
   store float %i.cr, ptr %.084107, align 4, !tbaa !25
-  %12 = getelementptr inbounds nuw i8, ptr %.085106, i64 4
   %i.cs = getelementptr inbounds nuw i8, ptr %.084107, i64 4 ; 2 uses
-  %13 = load float, ptr %.085106, align 4, !tbaa !25
-  %14 = load float, ptr %12, align 4, !tbaa !25
-  %15 = fadd float %13, %14
+  %10 = load <2 x float>, ptr %.085106, align 4, !tbaa !25
+  %11 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %10)
   %i.ct = load float, ptr %i.cs, align 4, !tbaa !25
-  %i.cu = tail call float @llvm.fmuladd.f32(float %i.bn, float %15, float %i.ct)
+  %i.cu = tail call float @llvm.fmuladd.f32(float %i.bn, float %11, float %i.ct)
   store float %i.cu, ptr %i.cs, align 4, !tbaa !25
   %i.cv = add nsw i32 %.083108, -2                ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.085106, i64 8
@@ -1034,6 +1026,9 @@ declare float @llvm.fmuladd.f32(float, float, float) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #4
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 292
 inline.NumDeleted: 172
 loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZN5draco23TriangleSoupMeshBuilder31SetPerFaceAttributeValueForFaceEiNS_9IndexTypeIjNS_19FaceIndex_tag_type_EEEPKv:bb.a
   br i1 %.not.i, label %_ZN5draco4Mesh7SetFaceENS_9IndexTypeIjNS_19FaceIndex_tag_type_EEERKSt5arrayINS1_IjNS_20PointIndex_tag_type_EEELm3EE.exit, label %bb.b
 
@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !75
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !74
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !15   ; 14 uses
   %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
@@ -216,11 +216,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not65, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load i32, ptr %3, align 4, !tbaa !53     ; 15 uses
+  %i.i = load i32, ptr %3, align 4, !tbaa !53     ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !53   ; 15 uses
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !53   ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !53   ; 15 uses
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !53   ; 7 uses
   %i.n = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.o = sub i64 %i.f, %i.n                       ; 3 uses
   %i.p = sdiv exact i64 %i.o, 12                  ; 3 uses
@@ -284,85 +284,20 @@ _ZSt22__uninitialized_move_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_t
   br i1 %i.aq, label %.lr.ph.i.i.i.i.i69, label %_ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit, !llvm.loop !68
 
 _ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit: ; preds = %.lr.ph.i.i.i.i.i69, %_ZSt22__uninitialized_move_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit
-  %.idx116 = mul nuw nsw i64 %2, 12               ; 2 uses
+  %.idx116 = mul nuw nsw i64 %2, 12
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 %.idx116
-  %4 = add nsw i64 %.idx116, -12                  ; 2 uses
-  %5 = udiv i64 %4, 12
-  %6 = add nuw nsw i64 %5, 1
-  %xtraiter141 = and i64 %6, 7                    ; 2 uses
-  %lcmp.mod142.not = icmp eq i64 %xtraiter141, 0
-  br i1 %lcmp.mod142.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol
+  br label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i.prol:                                ; preds = %_ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit, %.lr.ph.i.i.i.prol
-  %.06.i.i.i.prol = phi ptr [ %9, %.lr.ph.i.i.i.prol ], [ %1, %_ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit ] ; 4 uses
-  %prol.iter143 = phi i64 [ %prol.iter143.next, %.lr.ph.i.i.i.prol ], [ 0, %_ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit ]
-  store i32 %i.i, ptr %.06.i.i.i.prol, align 4, !tbaa !53
-  %7 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.prol, i64 4
-  store i32 %i.k, ptr %7, align 4, !tbaa !53
-  %8 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.prol, i64 8
-  store i32 %i.m, ptr %8, align 4, !tbaa !53
-  %9 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.prol, i64 12 ; 2 uses
-  %prol.iter143.next = add i64 %prol.iter143, 1   ; 2 uses
-  %prol.iter143.cmp.not = icmp eq i64 %prol.iter143.next, %xtraiter141
-  br i1 %prol.iter143.cmp.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol, !llvm.loop !69
-
-.lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %_ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit
-  %.06.i.i.i.unr = phi ptr [ %1, %_ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit ], [ %9, %.lr.ph.i.i.i.prol ]
-  %10 = icmp ult i64 %4, 84
-  br i1 %10, label %_ZSt4fillIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES5_EvT_S7_RKT0_.exit, label %.lr.ph.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i
-  %.06.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i ], [ %.06.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 25 uses
+.lr.ph.i.i.i:                                     ; preds = %_ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit, %.lr.ph.i.i.i
+  %.06.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i ], [ %1, %_ZSt13move_backwardIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_ET0_T_S8_S7_.exit ] ; 4 uses
   store i32 %i.i, ptr %.06.i.i.i, align 4, !tbaa !53
-  %11 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 4
-  store i32 %i.k, ptr %11, align 4, !tbaa !53
-  %12 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 8
-  store i32 %i.m, ptr %12, align 4, !tbaa !53
-  %13 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 12
-  store i32 %i.i, ptr %13, align 4, !tbaa !53
-  %14 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 16
-  store i32 %i.k, ptr %14, align 4, !tbaa !53
-  %15 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 20
-  store i32 %i.m, ptr %15, align 4, !tbaa !53
-  %16 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 24
-  store i32 %i.i, ptr %16, align 4, !tbaa !53
-  %17 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 28
-  store i32 %i.k, ptr %17, align 4, !tbaa !53
-  %18 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 32
-  store i32 %i.m, ptr %18, align 4, !tbaa !53
-  %19 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 36
-  store i32 %i.i, ptr %19, align 4, !tbaa !53
-  %20 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 40
-  store i32 %i.k, ptr %20, align 4, !tbaa !53
-  %21 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 44
-  store i32 %i.m, ptr %21, align 4, !tbaa !53
-  %22 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 48
-  store i32 %i.i, ptr %22, align 4, !tbaa !53
-  %23 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 52
-  store i32 %i.k, ptr %23, align 4, !tbaa !53
-  %24 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 56
-  store i32 %i.m, ptr %24, align 4, !tbaa !53
-  %25 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 60
-  store i32 %i.i, ptr %25, align 4, !tbaa !53
-  %26 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 64
-  store i32 %i.k, ptr %26, align 4, !tbaa !53
-  %27 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 68
-  store i32 %i.m, ptr %27, align 4, !tbaa !53
-  %28 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 72
-  store i32 %i.i, ptr %28, align 4, !tbaa !53
-  %29 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 76
-  store i32 %i.k, ptr %29, align 4, !tbaa !53
-  %30 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 80
-  store i32 %i.m, ptr %30, align 4, !tbaa !53
-  %31 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 84
-  store i32 %i.i, ptr %31, align 4, !tbaa !53
-  %i.as = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 88
+  %i.as = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 4
   store i32 %i.k, ptr %i.as, align 4, !tbaa !53
-  %i.at = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 92
+  %i.at = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 8
   store i32 %i.m, ptr %i.at, align 4, !tbaa !53
-  %i.au = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 96 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 12 ; 2 uses
   %.not.i.i.i.7 = icmp eq ptr %i.au, %i.ar
-  br i1 %.not.i.i.i.7, label %_ZSt4fillIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES5_EvT_S7_RKT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !70
+  br i1 %.not.i.i.i.7, label %_ZSt4fillIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES5_EvT_S7_RKT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !69
 
 bb.e:                                             ; preds = %bb.c
   %i.av = sub nuw i64 %2, %i.p                    ; 4 uses
@@ -387,7 +322,7 @@ bb.e:                                             ; preds = %bb.c
   %i.az = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i.prol, i64 12 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol, !llvm.loop !71
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol, !llvm.loop !70
 
 .lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader
   %.lcssa140.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.preheader ], [ %i.az, %.lr.ph.i.i.i.i.prol ]
@@ -426,7 +361,7 @@ bb.e:                                             ; preds = %bb.c
   %i.bn = add i64 %.01113.i.i.i.i, -4             ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 48 ; 2 uses
   %.not.i.i.i.i.3 = icmp eq i64 %i.bn, 0
-  br i1 %.not.i.i.i.i.3, label %_ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i, !llvm.loop !72
+  br i1 %.not.i.i.i.i.3, label %_ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i, !llvm.loop !71
 
 _ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.e
   %.0.lcssa.i.i.i.i = phi ptr [ %i.d, %bb.e ], [ %.lcssa140.unr, %.lr.ph.i.i.i.i.prol.loopexit ], [ %i.bo, %.lr.ph.i.i.i.i ] ; 3 uses
@@ -470,7 +405,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.i.i
   store i32 %i.m, ptr %i.cb, align 4, !tbaa !53
   %i.cc = getelementptr inbounds nuw i8, ptr %.06.i.i.i79, i64 12 ; 2 uses
   %.not.i.i.i80 = icmp eq ptr %i.cc, %i.d
-  br i1 %.not.i.i.i80, label %_ZSt4fillIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES5_EvT_S7_RKT0_.exit, label %bb.f, !llvm.loop !70
+  br i1 %.not.i.i.i80, label %_ZSt4fillIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES5_EvT_S7_RKT0_.exit, label %bb.f, !llvm.loop !69
 
 bb.g:                                             ; preds = %bb.b
   %i.cd = load ptr, ptr %0, align 8, !tbaa !16    ; 5 uses
@@ -522,7 +457,7 @@ bb.i:                                             ; preds = %_ZNKSt6vectorISt5ar
   %i.cy = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i84.prol, i64 12 ; 2 uses
   %prol.iter146.next = add i64 %prol.iter146, 1   ; 2 uses
   %prol.iter146.cmp.not = icmp eq i64 %prol.iter146.next, %xtraiter144
-  br i1 %prol.iter146.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !73
+  br i1 %prol.iter146.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !72
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph.i.i.i.i83
   %.014.i.i.i.i84.unr = phi ptr [ %i.cs, %.lr.ph.i.i.i.i83 ], [ %i.cy, %.prol.preheader ]
@@ -567,7 +502,7 @@ bb.i:                                             ; preds = %_ZNKSt6vectorISt5ar
   %i.dp = add i64 %.01113.i.i.i.i85, -8           ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i84, i64 96
   %.not.i.i.i.i86.7 = icmp eq i64 %i.dp, 0
-  br i1 %.not.i.i.i.i86.7, label %_ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit88, label %.lr.ph.i.i.i.i83.new, !llvm.loop !72
+  br i1 %.not.i.i.i.i86.7, label %_ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit88, label %.lr.ph.i.i.i.i83.new, !llvm.loop !71
 
 _ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit88: ; preds = %.lr.ph.i.i.i.i83.new, %.prol.loopexit
   %.not13.i.i.i.i.i = icmp eq ptr %i.cd, %1
@@ -589,7 +524,7 @@ _ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag
   %i.dy = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i, i64 12 ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 12 ; 2 uses
   %.not.i.i.i.i.i90 = icmp eq ptr %i.dy, %1
-  br i1 %.not.i.i.i.i.i90, label %_ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit, label %.lr.ph.i.i.i.i.i89, !llvm.loop !74
+  br i1 %.not.i.i.i.i.i90, label %_ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit, label %.lr.ph.i.i.i.i.i89, !llvm.loop !73
 
 _ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i89, %_ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit88
   %.0.lcssa.i.i.i.i.i91 = phi ptr [ %i.cr, %_ZSt24__uninitialized_fill_n_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EEmS5_S5_ET_S7_T0_RKT1_RSaIT2_E.exit88 ], [ %i.dz, %.lr.ph.i.i.i.i.i89 ]
@@ -613,7 +548,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20Poin
   %i.ei = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i95, i64 12 ; 2 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i94, i64 12 ; 2 uses
   %.not.i.i.i.i.i96 = icmp eq ptr %i.ei, %i.d
-  br i1 %.not.i.i.i.i.i96, label %_ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit98, label %.lr.ph.i.i.i.i.i93, !llvm.loop !74
+  br i1 %.not.i.i.i.i.i96, label %_ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit98, label %.lr.ph.i.i.i.i.i93, !llvm.loop !73
 
 _ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit98: ; preds = %.lr.ph.i.i.i.i.i93, %_ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit
   %.0.lcssa.i.i.i.i.i97 = phi ptr [ %i.ea, %_ZSt34__uninitialized_move_if_noexcept_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit ], [ %i.ej, %.lr.ph.i.i.i.i.i93 ]
@@ -629,10 +564,10 @@ _ZNSt12_Vector_baseISt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3
   store ptr %i.cr, ptr %0, align 8, !tbaa !16
   store ptr %.0.lcssa.i.i.i.i.i97, ptr %i.c, align 8, !tbaa !15
   %i.el = getelementptr inbounds nuw [12 x i8], ptr %i.cr, i64 %i.cm
-  store ptr %i.el, ptr %i.a, align 8, !tbaa !75
+  store ptr %i.el, ptr %i.a, align 8, !tbaa !74
   br label %_ZSt4fillIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES5_EvT_S7_RKT0_.exit
 
-_ZSt4fillIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES5_EvT_S7_RKT0_.exit: ; preds = %bb.f, %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %_ZSt22__uninitialized_move_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit76.thread, %_ZNSt12_Vector_baseISt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EESaIS5_EE13_M_deallocateEPS5_m.exit, %bb.a
+_ZSt4fillIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES5_EvT_S7_RKT0_.exit: ; preds = %bb.f, %.lr.ph.i.i.i, %_ZSt22__uninitialized_move_aIPSt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EES6_SaIS5_EET0_T_S9_S8_RT1_.exit76.thread, %_ZNSt12_Vector_baseISt5arrayIN5draco9IndexTypeIjNS1_20PointIndex_tag_type_EEELm3EESaIS5_EE13_M_deallocateEPS5_m.exit, %bb.a
   ret void
 }
 
@@ -742,12 +677,11 @@ attributes #13 = { noreturn }
 !66 = !{!47, !5, i64 60}
 !67 = distinct !{!67, !54}
 !68 = distinct !{!68, !54}
-!69 = distinct !{!69, !76}
-!70 = distinct !{!70, !54}
-!71 = distinct !{!71, !76}
-!72 = distinct !{!72, !54}
-!73 = distinct !{!73, !76}
-!74 = distinct !{!74, !54}
-!75 = !{!14, !13, i64 16}
-!76 = !{!"llvm.loop.unroll.disable"}
+!69 = distinct !{!69, !54}
+!70 = distinct !{!70, !75}
+!71 = distinct !{!71, !54}
+!72 = distinct !{!72, !75}
+!73 = distinct !{!73, !54}
+!74 = !{!14, !13, i64 16}
+!75 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

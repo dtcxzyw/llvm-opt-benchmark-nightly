@@ -205,11 +205,9 @@ _ZNK7xgboost6common4SpanIiLm18446744073709551615EEixEm.exit: ; preds = %_ZNK7xgb
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.aa
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !94 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %7 = load float, ptr %i.ah, align 4, !tbaa !999
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %9 = load float, ptr %8, align 4, !tbaa !1000
-  %10 = fadd float %7, %9
-  %i.ai = fmul float %10, 5.000000e-01            ; 5 uses
+  %7 = load <2 x float>, ptr %i.ah, align 4, !tbaa !102
+  %8 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %7)
+  %i.ai = fmul float %8, 5.000000e-01             ; 5 uses
   %i.aj = fcmp uno float %i.ai, 0.000000e+00
   br i1 %i.aj, label %bb.i, label %bb.j, !prof !120
 
@@ -396,7 +394,7 @@ _ZNSt8functionIFPN7xgboost11TreeUpdaterEPKNS0_7ContextEPKNS0_7ObjInfoEEEC2ERKSA_
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 88 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #21
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 16, i1 false), !tbaa.struct !1001
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 16, i1 false), !tbaa.struct !999
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, i8 0, i64 16, i1 false)
   %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 104 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 112
@@ -522,6 +520,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #30
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -925,7 +926,5 @@ begin_hunk_1_@llvm.fabs.v2f32/@llvm.vector.reduce.fadd.v2f32
 !996 = !{!"_ZTSN7xgboost6common4SpanIiLm18446744073709551615EEE", !33, i64 0, !97, i64 8}
 !997 = !{!996, !33, i64 0}
 !998 = !{!996, !97, i64 8}
-!999 = !{!308, !69, i64 16}
-!1000 = !{!308, !69, i64 20}
-!1001 = !{i64 0, i64 16, !36}
+!999 = !{i64 0, i64 16, !36}
 end_hunk_1

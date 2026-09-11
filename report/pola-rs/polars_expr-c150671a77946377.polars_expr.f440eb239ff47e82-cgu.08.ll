@@ -205,10 +205,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54738
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54736
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54739
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54729 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54740
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54740
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54740
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54729
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54740
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54740
   br label %bb.d, !dbg !54737
 
@@ -245,10 +243,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54761
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54759
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54762
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54752 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54763
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54763
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54763
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54752
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54763
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54763
   br label %bb.d, !dbg !54760
 
@@ -285,10 +281,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54784
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54782
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54785
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54775 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54786
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54786
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54786
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54775
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54786
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54786
   br label %bb.d, !dbg !54783
 
@@ -325,10 +319,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54807
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54805
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54808
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54798 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54809
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54809
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54809
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54798
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54809
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54809
   br label %bb.d, !dbg !54806
 
@@ -365,10 +357,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54830
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54828
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54831
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54821 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54832
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54832
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54832
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54821
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54832
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54832
   br label %bb.d, !dbg !54829
 
@@ -405,10 +395,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54853
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54851
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54854
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54844 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54855
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54855
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54855
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54844
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54855
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54855
   br label %bb.d, !dbg !54852
 
@@ -445,10 +433,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54876
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54874
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54877
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54867 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54878
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54878
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54878
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54867
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54878
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54878
   br label %bb.d, !dbg !54875
 
@@ -485,10 +471,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54899
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54897
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54900
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54890 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54901
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54901
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54901
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54890
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54901
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54901
   br label %bb.d, !dbg !54898
 
@@ -525,10 +509,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54922
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54920
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54923
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54913 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54924
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54924
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54924
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54913
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54924
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54924
   br label %bb.d, !dbg !54921
 
@@ -565,10 +547,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54945
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54943
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54946
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54936 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54947
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54947
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54947
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54936
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54947
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54947
   br label %bb.d, !dbg !54944
 
@@ -605,10 +585,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54968
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54966
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54969
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54959 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54970
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54970
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54970
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54959
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54970
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54970
   br label %bb.d, !dbg !54967
 
@@ -645,10 +623,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !54991
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !54989
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !54992
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54982 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !54993
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !54993
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !54993
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !54982
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !54993
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !54993
   br label %bb.d, !dbg !54990
 
@@ -685,10 +661,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load <2 x i64>, ptr %i.a, align 16, !dbg !55014
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !55012
   %i.k = add <2 x i64> %i.j, splat (i64 1), !dbg !55015
-  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !55005 ; 2 uses
-  %shift = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> <i32 1, i32 poison>, !dbg !55016
-  %foldExtExtBinop = fadd nnan <2 x double> %shift, %i.l, !dbg !55016
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0, !dbg !55016
+  %i.l = uitofp <2 x i64> %i.k to <2 x double>, !dbg !55005
+  %3 = call reassoc nnan double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.l), !dbg !55016
   %i.m = fmul nnan double %3, 5.000000e-01, !dbg !55016
   br label %bb.d, !dbg !55013
 
@@ -1089,6 +1063,9 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #32
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #32
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #32
