@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bl = xor i32 %i.ac, -1                       ; 6 uses
   %i.bm = add i32 %i.p, %i.bl
   %i.bn = sext i32 %i.bm to i64
-  %i.bo = shl nsw i64 %i.bn, 2
+  %i.bo = shl nuw nsw i64 %i.bn, 2
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bj, ptr nonnull align 4 %i.bk, i64 %i.bo, i1 false)
   %i.bp = getelementptr inbounds nuw i8, ptr %i.b, i64 784
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %i.bi ; 2 uses

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %i.z = udiv i64 %.sroa.027.0, 1000              ; 2 uses
   %.neg.i.i = mul nsw i64 %i.z, -1000
   %i.aa = add nsw i64 %.neg.i.i, %.sroa.027.0
-  %i.ab = mul nsw i64 %i.aa, 1000000
+  %i.ab = mul nuw nsw i64 %i.aa, 1000000
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #48
   store i64 %i.z, ptr %3, align 8, !tbaa !1465
   store i64 %i.ab, ptr %i.g, align 8, !tbaa !1466

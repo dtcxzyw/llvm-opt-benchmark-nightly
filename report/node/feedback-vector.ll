@@ -202,8 +202,8 @@ _ZNK2v88internal16FeedbackMetadata10word_countEv.exit.thread.i.i: ; preds = %_ZN
 
 _ZN2v88internal16FeedbackMetadata7SetKindENS0_12FeedbackSlotENS0_16FeedbackSlotKindE.exit: ; preds = %_ZNK2v88internal16FeedbackMetadata10word_countEv.exit.i.i
   %i.al = shl nuw nsw i32 %i.ab, 2
-  %narrow = add nuw i32 %i.al, 15
-  %i.am = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %i.al, 15
+  %i.am = zext nneg i32 %narrow to i64
   %i.an = add i64 %i.z, %i.am
   %i.ao = inttoptr i64 %i.an to ptr               ; 2 uses
   %i.ap = load i32, ptr %i.ao, align 4
@@ -413,8 +413,8 @@ _ZNK2v88internal16FeedbackMetadata10word_countEv.exit.thread.i.i: ; preds = %_ZN
 
 _ZN2v88internal16FeedbackMetadata7SetKindENS0_12FeedbackSlotENS0_16FeedbackSlotKindE.exit: ; preds = %_ZNK2v88internal16FeedbackMetadata10word_countEv.exit.i.i
   %i.an = shl nuw nsw i32 %i.ad, 2
-  %narrow = add nuw i32 %i.an, 15
-  %i.ao = zext i32 %narrow to i64
+  %narrow = add nuw nsw i32 %i.an, 15
+  %i.ao = zext nneg i32 %narrow to i64
   %i.ap = add i64 %i.ab, %i.ao
   %i.aq = inttoptr i64 %i.ap to ptr               ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4

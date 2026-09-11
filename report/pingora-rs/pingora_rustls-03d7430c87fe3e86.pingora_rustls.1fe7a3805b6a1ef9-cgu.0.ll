@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
   %.sroa.627.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   store ptr %i.aa, ptr %.sroa.627.0..sroa_idx, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !298)
-  %i.ab = shl i64 %i.x, 5                         ; 5 uses
+  %i.ab = shl i64 %i.x, 5                         ; 4 uses
   %i.ac = udiv i64 %i.ab, 24                      ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.ae = invoke { ptr, ptr } @_RINvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsfup1golxiVd_14rustls_pemfile7pemfile4ItemENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropNtCsdzNJuPjuSXS_16rustls_pki_types14CertificateDerENCINvNtNtB1P_8adapters10filter_map19filter_map_try_foldBX_B3n_B2N_INtNtB1R_6result6ResultB2N_zENCNvCs2JPny71o0qX_14pingora_rustls24load_certs_and_key_files0NCINvNtB8_16in_place_collect24write_in_place_with_dropB3n_E0E0B5g_EB5N_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull %i.w, ptr noundef nonnull %i.w, ptr noalias nofree noundef nonnull %i.ad, ptr noundef nonnull %i.aa)
@@ -244,10 +244,10 @@ bb.k:                                             ; preds = %bb.i
   %i.ao = mul nuw i64 %i.ac, 24                   ; 4 uses
   %i.ap = icmp ne i64 %i.ab, %i.ao
   %.sroa.0.0.i.i = select i1 %.not.i.i, i1 %i.ap, i1 false
-  br i1 %.sroa.0.0.i.i, label %5, label %.thread.i
+  br i1 %.sroa.0.0.i.i, label %bb.l, label %.thread.i
 
-.thread.i:                                        ; preds = %bb.l, %5, %bb.k
-  %.sroa.03.0.i = phi ptr [ %i.w, %bb.k ], [ %i.at, %bb.l ], [ inttoptr (i64 8 to ptr), %5 ]
+.thread.i:                                        ; preds = %bb.l, %bb.k
+  %.sroa.03.0.i = phi ptr [ %i.w, %bb.k ], [ %i.at, %bb.l ]
   store i64 %i.ac, ptr %i.h, align 8, !alias.scope !298, !noalias !300
   %i.aq = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store ptr %.sroa.03.0.i, ptr %i.aq, align 8, !alias.scope !298, !noalias !300
@@ -257,11 +257,7 @@ bb.k:                                             ; preds = %bb.i
   invoke void @_RNvXse_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfup1golxiVd_14rustls_pemfile7pemfile4ItemENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs2JPny71o0qX_14pingora_rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.g)
           to label %_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtB4_9into_iter8IntoIterNtNtCsfup1golxiVd_14rustls_pemfile7pemfile4ItemENCNvCs2JPny71o0qX_14pingora_rustls24load_certs_and_key_files0ENtCsdzNJuPjuSXS_16rustls_pki_types14CertificateDerEB3p_.exit unwind label %bb.p
 
-5:                                                ; preds = %bb.k
-  %6 = icmp eq i64 %i.ab, 0
-  br i1 %6, label %.thread.i, label %bb.l
-
-bb.l:                                             ; preds = %5
+bb.l:                                             ; preds = %bb.k
   %i.as = icmp ule i64 %i.ao, %i.ab
   call void @llvm.assume(i1 %i.as)
   %i.at = call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %i.w, i64 noundef %i.ab, i64 noundef 8, i64 noundef range(i64 0, -15) %i.ao) #17, !noalias !298 ; 2 uses
