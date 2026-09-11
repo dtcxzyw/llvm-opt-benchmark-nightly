@@ -202,7 +202,7 @@ virtio_vdev_is_big_endian.exit.thread.i50.i:      ; preds = %bb.am, %bb.al
 virtio_ldl_p.exit54.i:                            ; preds = %virtio_vdev_is_big_endian.exit.thread.i50.i, %.thread75.i
   %.0.i4667.i = phi i32 [ %i.ei, %.thread75.i ], [ %.val3.i4572.i, %virtio_vdev_is_big_endian.exit.thread.i50.i ] ; 2 uses
   %.0.i5764.i = phi i64 [ %i.eg, %.thread75.i ], [ %.val3.i61.i, %virtio_vdev_is_big_endian.exit.thread.i50.i ] ; 5 uses
-  %.0.i52.i = phi i32 [ %i.ek, %.thread75.i ], [ %.val3.i51.i, %virtio_vdev_is_big_endian.exit.thread.i50.i ] ; 2 uses
+  %.0.i52.i = phi i32 [ %i.ek, %.thread75.i ], [ %.val3.i51.i, %virtio_vdev_is_big_endian.exit.thread.i50.i ] ; 3 uses
   %.in.v.i = select i1 %i.dp, i64 752, i64 748
   %.in.i = getelementptr inbounds nuw i8, ptr %i.ea, i64 %.in.v.i
   %i.en = load i32, ptr %.in.i, align 4
@@ -254,11 +254,10 @@ bb.ar:                                            ; preds = %virtio_blk_sect_ran
   br i1 %.not.i140, label %bb.as, label %bb.aw, !prof !9
 
 bb.as:                                            ; preds = %bb.ar
-  %.not41.i = icmp eq i32 %.0.i52.i, 0            ; 2 uses
   br i1 %i.dp, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
-  %spec.select.i = select i1 %.not41.i, i32 0, i32 4
+  %spec.select.i = shl nuw nsw i32 %.0.i52.i, 2
   %i.fg = load ptr, ptr %i.fa, align 8
   %i.fh = call ptr @blk_get_stats(ptr noundef %i.fg) #14
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 216
@@ -269,7 +268,8 @@ bb.at:                                            ; preds = %bb.as
   br label %virtio_blk_handle_discard_write_zeroes.exit.thread151
 
 bb.au:                                            ; preds = %bb.as
-  br i1 %.not41.i, label %bb.av, label %bb.ay, !prof !9
+  %.not40.i = icmp eq i32 %.0.i52.i, 0
+  br i1 %.not40.i, label %bb.av, label %bb.ay, !prof !9
 
 bb.av:                                            ; preds = %bb.au
   %i.fm = load ptr, ptr %i.fa, align 8

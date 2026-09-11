@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !17, !noalias !95
   store ptr %i.r, ptr %7, align 8, !tbaa !31, !alias.scope !95
   %i.s = call noundef zeroext i1 @_ZN4cvc58internal6theory11quantifiers15EntailmentCheck11isEntailed2ENS0_12NodeTemplateILb0EEERSt3mapIS5_S5_St4lessIS5_ESaISt4pairIKS5_S5_EEEbb(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 %7, ptr noundef nonnull align 8 dereferenceable(48) %3, i1 noundef zeroext %4, i1 noundef zeroext true)
-  br i1 %i.s, label %bb.i, label %.preheader.1.a
+  br i1 %i.s, label %.preheader.1.a, label %bb.i
 
 bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -260,7 +260,8 @@ bb.h:                                             ; preds = %bb.f
   call void @_ZN4cvc58internal6theory11quantifiers15EntailmentCheck16getEntailedTerm2ENS0_12NodeTemplateILb0EEERSt3mapIS5_S5_St4lessIS5_ESaISt4pairIKS5_S5_EEEb(ptr dead_on_unwind writable sret(%"class.cvc5::internal::NodeTemplate.470") align 8 %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 %6, ptr noundef nonnull align 8 dereferenceable(48) %3, i1 noundef zeroext false)
   br label %bb.aw
 
-.preheader.1.a:                                   ; preds = %.preheader.preheader
+.preheader.1.a:                                   ; preds = %bb.i, %.preheader.preheader
+  %.0153.lcssa = phi i64 [ 1, %.preheader.preheader ], [ 2, %bb.i ]
   call void @llvm.experimental.noalias.scope.decl(metadata !96)
   %i.al = load ptr, ptr %2, align 8, !tbaa !31, !noalias !96 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8
@@ -271,16 +272,16 @@ bb.h:                                             ; preds = %bb.f
   %i.ar = select i1 %i.aq, i32 -1, i32 %i.ap
   %i.as = call noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef %i.ar), !noalias !96
   %i.at = icmp eq i32 %i.as, 2
-  %i.au = getelementptr inbounds nuw i8, ptr %i.al, i64 24
   %18 = zext i1 %i.at to i64
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %18
+  %i.au = getelementptr inbounds nuw i8, ptr %i.al, i64 24
+  %19 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %.0153.lcssa
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %19, i64 %18
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !17, !noalias !96
-  store ptr %i.aw, ptr %7, align 8, !tbaa !31, !alias.scope !96
-  %19 = call noundef zeroext i1 @_ZN4cvc58internal6theory11quantifiers15EntailmentCheck11isEntailed2ENS0_12NodeTemplateILb0EEERSt3mapIS5_S5_St4lessIS5_ESaISt4pairIKS5_S5_EEEbb(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 %7, ptr noundef nonnull align 8 dereferenceable(48) %3, i1 noundef zeroext %4, i1 noundef zeroext false)
-  br i1 %19, label %bb.i, label %.thread
+  store ptr %i.aw, ptr %8, align 8, !tbaa !31, !alias.scope !96
+  call void @_ZN4cvc58internal6theory11quantifiers15EntailmentCheck16getEntailedTerm2ENS0_12NodeTemplateILb0EEERSt3mapIS5_S5_St4lessIS5_ESaISt4pairIKS5_S5_EEEb(ptr dead_on_unwind writable sret(%"class.cvc5::internal::NodeTemplate.470") align 8 %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 %8, ptr noundef nonnull align 8 dereferenceable(48) %3, i1 noundef zeroext %4)
+  br label %bb.aw
 
-bb.i:                                             ; preds = %.preheader.1.a, %.preheader.preheader
-  %20 = phi i64 [ 1, %.preheader.preheader ], [ 2, %.preheader.1.a ]
+bb.i:                                             ; preds = %.preheader.preheader
   call void @llvm.experimental.noalias.scope.decl(metadata !97)
   %i.ax = load ptr, ptr %2, align 8, !tbaa !31, !noalias !97 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
@@ -291,14 +292,13 @@ bb.i:                                             ; preds = %.preheader.1.a, %.p
   %i.bd = select i1 %i.bc, i32 -1, i32 %i.bb
   %i.be = call noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef %i.bd), !noalias !97
   %i.bf = icmp eq i32 %i.be, 2
-  %21 = zext i1 %i.bf to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
-  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %20
-  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %22, i64 %21
+  %20 = zext i1 %i.bf to i64
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %20
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !17, !noalias !97
-  store ptr %i.bi, ptr %8, align 8, !tbaa !31, !alias.scope !97
-  call void @_ZN4cvc58internal6theory11quantifiers15EntailmentCheck16getEntailedTerm2ENS0_12NodeTemplateILb0EEERSt3mapIS5_S5_St4lessIS5_ESaISt4pairIKS5_S5_EEEb(ptr dead_on_unwind writable sret(%"class.cvc5::internal::NodeTemplate.470") align 8 %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 %8, ptr noundef nonnull align 8 dereferenceable(48) %3, i1 noundef zeroext %4)
-  br label %bb.aw
+  store ptr %i.bi, ptr %7, align 8, !tbaa !31, !alias.scope !97
+  %21 = call noundef zeroext i1 @_ZN4cvc58internal6theory11quantifiers15EntailmentCheck11isEntailed2ENS0_12NodeTemplateILb0EEERSt3mapIS5_S5_St4lessIS5_ESaISt4pairIKS5_S5_EEEbb(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 %7, ptr noundef nonnull align 8 dereferenceable(48) %3, i1 noundef zeroext %4, i1 noundef zeroext false)
+  br i1 %21, label %.preheader.1.a, label %.thread
 
 bb.j:                                             ; preds = %bb.c
   %i.bj = call noundef zeroext i1 @_ZN4cvc58internal11NodeManager11hasOperatorENS0_4kind6Kind_tE(i32 noundef %i.l)
@@ -680,13 +680,13 @@ bb.av:                                            ; preds = %bb.as, %bb.ar
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #20
   resume { ptr, i32 } %.pn44.pn.pn
 
-.thread:                                          ; preds = %.preheader.1.a, %_ZNSt8_Rb_treeIN4cvc58internal12NodeTemplateILb0EEESt4pairIKS3_S3_ESt10_Select1stIS6_ESt4lessIS3_ESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS5_.exit.i.i, %bb.d, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb0EEES3_St4lessIS3_ESaISt4pairIKS3_S3_EEE4findERS7_.exit, %.thread149, %bb.j
+.thread:                                          ; preds = %bb.i, %_ZNSt8_Rb_treeIN4cvc58internal12NodeTemplateILb0EEESt4pairIKS3_S3_ESt10_Select1stIS6_ESt4lessIS3_ESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS5_.exit.i.i, %bb.d, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb0EEES3_St4lessIS3_ESaISt4pairIKS3_S3_EEE4findERS7_.exit, %.thread149, %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !100)
   %i.fs = load ptr, ptr @_ZN4cvc58internal12NodeTemplateILb0EE6s_nullE, align 8, !tbaa !31, !noalias !100
   store ptr %i.fs, ptr %0, align 8, !tbaa !31, !alias.scope !100
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.i, %bb.h, %bb.av, %bb.g, %.thread, %bb.b
+bb.aw:                                            ; preds = %.preheader.1.a, %bb.h, %bb.av, %bb.g, %.thread, %bb.b
   ret void
 }
 
@@ -1089,9 +1089,9 @@ attributes #25 = { nounwind willreturn memory(read) }
 !82 = !{!81}
 !83 = distinct !{!83, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi"}
 !84 = distinct !{!84, !83, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi: argument 0"}
-!85 = distinct !{!85, !83, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi: argument 0:It1"}
-!86 = distinct !{!86, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi"}
-!87 = distinct !{!87, !86, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi: argument 0"}
+!85 = distinct !{!85, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi"}
+!86 = distinct !{!86, !85, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi: argument 0"}
+!87 = distinct !{!87, !83, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi: argument 0:It1"}
 !88 = distinct !{!88, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi"}
 !89 = distinct !{!89, !88, !"_ZNK4cvc58internal12NodeTemplateILb0EEixEi: argument 0"}
 !90 = distinct !{!90, !"_ZN4cvc58internal12NodeTemplateILb0EE4nullEv"}
@@ -1100,7 +1100,7 @@ attributes #25 = { nounwind willreturn memory(read) }
 !93 = distinct !{!93, !"_ZN4cvc58internal12NodeTemplateILb0EE4nullEv"}
 !94 = distinct !{!94, !93, !"_ZN4cvc58internal12NodeTemplateILb0EE4nullEv: argument 0"}
 !95 = !{!84}
-!96 = !{!85}
+!96 = !{!86}
 !97 = !{!87}
 !98 = !{!89}
 !99 = !{!91}

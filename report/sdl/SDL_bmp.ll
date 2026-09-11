@@ -204,17 +204,17 @@ bb.a:
   %i.m = sext i32 %i.e to i64
   %i.n = sub nsw i64 0, %i.m                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
+  %3 = sub nuw nsw i32 2, %2                      ; 4 uses
   %i.o = call zeroext i1 @SDL_ReadU8_REAL(ptr noundef nonnull %1, ptr noundef nonnull %i.a) #3
   br i1 %i.o, label %.lr.ph.a, label %.loopexit
 
 .lr.ph.a:                                         ; preds = %bb.a
   %i.p = getelementptr inbounds i8, ptr %i.l, i64 %i.n
-  %3 = xor i32 %2, 1                              ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.a, %bb.v
-  %.04365 = phi i32 [ 0, %.lr.ph.a ], [ %.5, %bb.v ] ; 3 uses
-  %.04564 = phi ptr [ %i.p, %.lr.ph.a ], [ %.146, %bb.v ] ; 7 uses
+  %.04365 = phi i32 [ %.5, %bb.v ], [ 0, %.lr.ph.a ] ; 3 uses
+  %.04564 = phi ptr [ %.146, %bb.v ], [ %i.p, %.lr.ph.a ] ; 7 uses
   %i.q = load i8, ptr %i.a, align 1
   %.not55.a = icmp eq i8 %i.q, 0
   br i1 %.not55.a, label %bb.i, label %bb.c
@@ -227,7 +227,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.s = load i8, ptr %i.a, align 1
   %i.t = zext i8 %i.s to i32
-  %4 = lshr i32 %i.t, %3
+  %4 = udiv i32 %i.t, %3
   %i.u = trunc nuw i32 %4 to i8                   ; 2 uses
   store i8 %i.u, ptr %i.a, align 1
   %i.v = sext i32 %.04365 to i64
@@ -288,11 +288,11 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.aj = zext i8 %i.ah to i32
-  %5 = lshr i32 %i.aj, %3
+  %5 = udiv i32 %i.aj, %3
   %i.ak = add nsw i32 %5, %.04365
   %i.al = load i8, ptr %i.a, align 1
   %i.am = zext i8 %i.al to i32
-  %6 = lshr i32 %i.am, %3
+  %6 = udiv i32 %i.am, %3
   %i.an = mul nsw i32 %6, %i.e
   %i.ao = sext i32 %i.an to i64
   %i.ap = sub nsw i64 0, %i.ao
@@ -301,7 +301,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.j
   %i.ar = zext i8 %i.ae to i32
-  %7 = lshr i32 %i.ar, %3                         ; 2 uses
+  %7 = udiv i32 %i.ar, %3                         ; 2 uses
   %i.as = trunc nuw i32 %7 to i8
   store i8 %i.as, ptr %i.a, align 1
   %i.at = and i32 %7, 1

@@ -205,10 +205,10 @@ bb.m:                                             ; preds = %bb.k, %bb.c, %bb.l
   %i.bb = phi i64 [ %i.c, %bb.c ], [ %i.c, %bb.l ], [ %i.aw, %bb.k ] ; 2 uses
   %i.bc = shl i32 %4, 2
   %i.bd = or disjoint i32 %.052758894, %i.bc
-  %i.be = trunc i32 %i.bd to i8                   ; 2 uses
-  %.not62 = icmp eq i32 %5, 0
-  %12 = or i8 %i.be, 16
-  %storemerge = select i1 %.not62, i8 %i.be, i8 %12
+  %i.be = trunc i32 %i.bd to i8
+  %12 = trunc nuw nsw i32 %5 to i8
+  %13 = shl nuw nsw i8 %12, 4
+  %storemerge = or i8 %13, %i.be
   store i8 %storemerge, ptr %i.a, align 1, !tbaa !43
   %i.bf = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   %i.bg = add i64 %i.bb, 1

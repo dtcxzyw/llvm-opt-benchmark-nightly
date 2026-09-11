@@ -200,8 +200,8 @@ bb.b:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 26 ; 2 uses
   %i.x = trunc nuw i32 %1 to i16                  ; 2 uses
   store i16 %i.x, ptr %i.w, align 2
-  %.not41 = icmp eq i32 %3, 0
-  %6 = select i1 %.not41, i8 0, i8 64
+  %.tr = trunc nuw nsw i32 %3 to i8
+  %6 = shl nuw nsw i8 %.tr, 6
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   store i8 %6, ptr %i.y, align 4, !tbaa !11
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 29
@@ -604,8 +604,8 @@ bb.b:                                             ; preds = %bb.a
   store i16 %i.p, ptr %i.o, align 2
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i8 24, ptr %i.q, align 16, !tbaa !11
-  %.not23 = icmp eq i32 %3, 0
-  %6 = select i1 %.not23, i8 0, i8 32
+  %.tr = trunc nuw nsw i32 %3 to i8
+  %6 = shl nuw nsw i8 %.tr, 5
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 17
   store i8 %6, ptr %i.r, align 1, !tbaa !11
   %i.s = call ptr @jinit_read_targa(ptr noundef nonnull %4) #15 ; 5 uses

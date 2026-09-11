@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.n = call noundef i64 @_RNvMs7_NtNtCs7SkU8gPisFf_4redb10tree_store10btree_baseNtB5_12LeafAccessor12total_length(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.d)
   %i.o = sub i64 %.val16, %i.n
-  %11 = add nuw i64 %10, %8                       ; 2 uses
-  %.not6 = icmp eq i64 %3, 0
-  %12 = add i64 %11, 4
-  %spec.select = select i1 %.not6, i64 %12, i64 %11 ; 2 uses
-  %.not7 = icmp eq i64 %5, 0
-  %i.p = add i64 %spec.select, 4
-  %.sroa.01.1 = select i1 %.not7, i64 %i.p, i64 %spec.select
+  %11 = shl nuw nsw i64 %3, 2
+  %12 = xor i64 %11, 4
+  %13 = shl nuw nsw i64 %5, 2
+  %14 = xor i64 %13, 4
+  %15 = add nuw nsw i64 %14, %12
+  %i.p = add nuw i64 %15, %8
+  %.sroa.01.1 = add i64 %i.p, %10
   %i.q = icmp ule i64 %.sroa.01.1, %i.o
   br label %bb.e
 

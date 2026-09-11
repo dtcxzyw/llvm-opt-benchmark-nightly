@@ -204,11 +204,11 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.l = trunc nuw nsw i32 %i.f to i8
   store i8 %i.l, ptr %i.h, align 1
-  %.not14 = icmp eq i32 %i.f, 0
   %i.m = getelementptr i8, ptr %i.c, i64 60       ; 2 uses
   %i.n = load i8, ptr %i.m, align 4
   %i.o = and i8 %i.n, -5
-  %masksel = select i1 %.not14, i8 0, i8 4
+  %4 = trunc nuw i32 %i.f to i8
+  %masksel = shl nuw nsw i8 %4, 2
   %.sink = or disjoint i8 %i.o, %masksel          ; 2 uses
   store i8 %.sink, ptr %i.m, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11

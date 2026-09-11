@@ -204,10 +204,10 @@ WebPIsAlphaMode.exit.i61:                         ; preds = %bb.d
   %i.cw = add nsw i64 %i.cv, %i.cs
   %i.cx = shl nsw i64 %i.cw, 2
   %i.cy = shl nsw i64 %i.cr, 3
-  %spec.select82 = select i1 %.not.i62.not, i64 447, i64 343
-  %spec.select83 = select i1 %.not.i62.not, i64 %i.cy, i64 0
-  %.0.i64 = add nsw i64 %i.cx, %spec.select83     ; 2 uses
-  %i.cz = add nsw i64 %.0.i64, %spec.select82
+  %spec.select82 = select i1 %.not.i62.not, i64 %i.cy, i64 0
+  %.0.i63 = add nsw i64 %i.cx, %spec.select82     ; 2 uses
+  %1 = select i1 %.not.i62.not, i64 447, i64 343
+  %i.cz = add nsw i64 %.0.i63, %1
   %i.da = tail call ptr @WebPSafeMalloc(i64 noundef 1, i64 noundef %i.cz) #7 ; 5 uses
   %i.db = icmp eq ptr %i.da, null
   br i1 %i.db, label %bb.q, label %bb.k
@@ -215,7 +215,7 @@ WebPIsAlphaMode.exit.i61:                         ; preds = %bb.d
 bb.k:                                             ; preds = %WebPIsAlphaMode.exit.i61
   %i.dc = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   store ptr %i.da, ptr %i.h, align 8, !tbaa !28
-  %i.dd = getelementptr inbounds i8, ptr %i.da, i64 %.0.i64
+  %i.dd = getelementptr inbounds i8, ptr %i.da, i64 %.0.i63
   %i.de = ptrtoint ptr %i.dd to i64
   %i.df = add i64 %i.de, 31
   %i.dg = and i64 %i.df, -32

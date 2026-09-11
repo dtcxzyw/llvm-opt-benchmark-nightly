@@ -204,9 +204,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !22336
     #dbg_value(ptr %1, !22342, !DIExpression(), !22345)
     #dbg_value(ptr %1, !22346, !DIExpression(), !22349)
-  %i.d = load i64, ptr %1, align 8, !dbg !22416, !range !6917, !noundef !2798
-  %.not = icmp eq i64 %i.d, 0, !dbg !22417        ; 2 uses
-  %. = select i1 %.not, i64 2, i64 3, !dbg !22336
+  %i.d = load i64, ptr %1, align 8, !dbg !22416, !range !6917, !noundef !2798 ; 2 uses
+  %.not = icmp eq i64 %i.d, 0, !dbg !22417
+  %. = or disjoint i64 %i.d, 2, !dbg !22336
     #dbg_value(ptr %1, !22351, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !22355)
     #dbg_value(ptr %1, !22356, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !22360)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !22418 ; 2 uses
@@ -496,9 +496,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !22734
     #dbg_value(ptr %1, !22740, !DIExpression(), !22743)
     #dbg_value(ptr %1, !22744, !DIExpression(), !22747)
-  %i.d = load i64, ptr %1, align 8, !dbg !22814, !range !6917, !noundef !2798
-  %.not = icmp eq i64 %i.d, 0, !dbg !22815        ; 2 uses
-  %. = select i1 %.not, i64 2, i64 3, !dbg !22734
+  %i.d = load i64, ptr %1, align 8, !dbg !22814, !range !6917, !noundef !2798 ; 2 uses
+  %.not = icmp eq i64 %i.d, 0, !dbg !22815
+  %. = or disjoint i64 %i.d, 2, !dbg !22734
     #dbg_value(ptr %1, !22749, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !22753)
     #dbg_value(ptr %1, !22754, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !22758)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !22816 ; 2 uses

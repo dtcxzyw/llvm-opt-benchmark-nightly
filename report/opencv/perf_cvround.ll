@@ -202,8 +202,8 @@ bb.i:                                             ; preds = %bb.h
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %.lr.ph4.split.i ] ; 3 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv.i
   %i.at = load float, ptr %i.as, align 4, !tbaa !122
-  %5 = fcmp ord float %i.at, 0.000000e+00
-  %i.au = select i1 %5, i32 2, i32 1
+  %5 = fcmp uno float %i.at, 0.000000e+00
+  %i.au = select i1 %5, i32 1, i32 2
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %indvars.iv.i
   store i32 %i.au, ptr %i.av, align 4, !tbaa !123
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -302,8 +302,8 @@ bb.r:                                             ; preds = %bb.q
   %indvars.iv.i32 = phi i64 [ %indvars.iv.next.i33, %.lr.ph.i31 ], [ 0, %.lr.ph4.split.i27 ] ; 3 uses
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv.i32
   %i.bw = load double, ptr %i.bv, align 8, !tbaa !124
-  %6 = fcmp ord double %i.bw, 0.000000e+00
-  %i.bx = select i1 %6, i32 2, i32 1
+  %6 = fcmp uno double %i.bw, 0.000000e+00
+  %i.bx = select i1 %6, i32 1, i32 2
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %indvars.iv.i32
   store i32 %i.bx, ptr %i.by, align 4, !tbaa !123
   %indvars.iv.next.i33 = add nuw nsw i64 %indvars.iv.i32, 1 ; 2 uses
@@ -706,8 +706,8 @@ bb.i:                                             ; preds = %bb.h
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv.i
   %i.at = load float, ptr %i.as, align 4, !tbaa !122
   %i.au = call float @llvm.fabs.f32(float %i.at)
-  %5 = fcmp une float %i.au, +inf
-  %i.av = select i1 %5, i32 2, i32 1
+  %5 = fcmp oeq float %i.au, +inf
+  %i.av = select i1 %5, i32 1, i32 2
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %indvars.iv.i
   store i32 %i.av, ptr %i.aw, align 4, !tbaa !123
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -807,8 +807,8 @@ bb.r:                                             ; preds = %bb.q
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %indvars.iv.i32
   %i.bx = load double, ptr %i.bw, align 8, !tbaa !124
   %i.by = call double @llvm.fabs.f64(double %i.bx)
-  %6 = fcmp une double %i.by, +inf
-  %i.bz = select i1 %6, i32 2, i32 1
+  %6 = fcmp oeq double %i.by, +inf
+  %i.bz = select i1 %6, i32 1, i32 2
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %indvars.iv.i32
   store i32 %i.bz, ptr %i.ca, align 4, !tbaa !123
   %indvars.iv.next.i33 = add nuw nsw i64 %indvars.iv.i32, 1 ; 2 uses

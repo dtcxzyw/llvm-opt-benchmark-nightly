@@ -202,8 +202,8 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce
   %i.gt = phi i32 [ %i.jl, %bb.do ], [ %i.gk, %.lr.ph ]
   %.0165451 = phi i32 [ %i.jk, %bb.do ], [ 1, %.lr.ph ] ; 2 uses
   %i.gu = icmp eq i32 %.0165451, %i.gt
-  %narrow = and i1 %.not228, %i.gu                ; 2 uses
-  %.0162 = zext i1 %narrow to i32                 ; 2 uses
+  %narrow = and i1 %.not228, %i.gu
+  %.0162 = zext i1 %narrow to i32                 ; 3 uses
   %i.gv = load i16, ptr @mprintf_quiet, align 2, !tbaa !27
   %.not229 = icmp eq i16 %i.gv, 0
   br i1 %.not229, label %bb.ch, label %bb.ck
@@ -344,7 +344,7 @@ bb.dd:                                            ; preds = %bb.dc
   br label %.thread74.i
 
 bb.de:                                            ; preds = %bb.dc
-  %10 = select i1 %narrow, i32 5, i32 4
+  %10 = or disjoint i32 %.0162, 4
   %i.ip = call i32 (i32, ptr, ...) @logg(i32 noundef %10, ptr noundef nonnull @.str.240, ptr noundef nonnull %i.b, ptr noundef nonnull %i.ij) #20 ; 0 uses
   br label %.thread74.i
 

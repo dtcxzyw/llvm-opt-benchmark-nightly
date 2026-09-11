@@ -206,10 +206,10 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !1961
   %i.ed = getelementptr inbounds nuw i8, ptr %5, i64 24
   store ptr %i.ec, ptr %i.ed, align 8, !tbaa !1961
-  %.not297 = icmp eq i32 %.0236, 0
-  %7 = select i1 %.not297, i8 9, i8 10
+  %7 = trunc nuw nsw i32 %.0236 to i8
+  %8 = add nuw nsw i8 %7, 9
   %i.ee = zext i32 %.0244 to i64                  ; 2 uses
-  call fastcc void @jsonBlobAppendNode(ptr noundef nonnull %5, i8 noundef zeroext %7, i64 noundef %i.ee, ptr noundef null)
+  call fastcc void @jsonBlobAppendNode(ptr noundef nonnull %5, i8 noundef zeroext %8, i64 noundef %i.ee, ptr noundef null)
   %i.ef = getelementptr inbounds nuw i8, ptr %5, i64 47
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !1932
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 47 ; 3 uses
@@ -612,11 +612,11 @@ sqlite3GetVdbe.exit:                              ; preds = %bb.a, %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 192 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 60 ; 6 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 132
-  %i.y = icmp eq i32 %3, 0                        ; 2 uses
+  %i.y = icmp eq i32 %3, 0
   %i.z = xor i32 %3, 1
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 44 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 3 uses
-  %5 = select i1 %i.y, i32 164, i32 163           ; 2 uses
+  %5 = sub nuw nsw i32 164, %3                    ; 2 uses
   %i.ac = trunc nuw i32 %5 to i8
   br label %bb.f
 
@@ -1019,13 +1019,13 @@ bb.a:
   %i.d = getelementptr i8, ptr %i.b, i64 144      ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 148 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 136 ; 3 uses
-  %.not58 = icmp eq i32 %8, 0
-  %9 = select i1 %.not58, i16 0, i16 16           ; 3 uses
+  %.tr = trunc nuw nsw i32 %8 to i8
+  %9 = shl nuw nsw i8 %.tr, 4                     ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %10 = trunc nuw nsw i32 %6 to i16
-  %11 = and i16 %10, 2
-  %12 = or disjoint i16 %11, %9
-  %13 = or disjoint i16 %12, 1
+  %10 = trunc nuw nsw i32 %6 to i8
+  %11 = and i8 %10, 2
+  %12 = or disjoint i8 %11, %9
+  %13 = or disjoint i8 %12, 1
   %i.h = zext i32 %3 to i64
   br label %bb.b
 
@@ -1084,11 +1084,11 @@ bb.g:                                             ; preds = %sqlite3VdbeAddOp2.e
   %i.ad = load i32, ptr %i.g, align 8, !tbaa !1083
   %i.ae = and i32 %i.ad, 128
   %i.af = icmp eq i32 %i.ae, 0
-  %spec.select = select i1 %i.af, i16 %9, i16 %13
+  %spec.select = select i1 %i.af, i8 %9, i8 %13
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %sqlite3VdbeAddOp2.exit
-  %.049 = phi i16 [ %spec.select, %bb.g ], [ %9, %sqlite3VdbeAddOp2.exit ]
+  %.049 = phi i8 [ %spec.select, %bb.g ], [ %9, %sqlite3VdbeAddOp2.exit ]
   %i.ag = add nuw i64 %indvars.iv, %i.h           ; 2 uses
   %i.ah = load i32, ptr %i.i, align 4, !tbaa !570 ; 3 uses
   %i.ai = add nsw i32 %i.ah, 1                    ; 2 uses
@@ -1138,11 +1138,12 @@ sqlite3VdbeAddOp4Int.exit:                        ; preds = %bb.i, %bb.j
   br i1 %i.bc, label %bb.k, label %sqlite3VdbeChangeP5.exit
 
 bb.k:                                             ; preds = %sqlite3VdbeAddOp4Int.exit
+  %14 = zext nneg i8 %.049 to i16
   %i.bd = load ptr, ptr %i.f, align 8, !tbaa !702
   %i.be = zext nneg i32 %i.bb to i64
   %i.bf = getelementptr [32 x i8], ptr %i.bd, i64 %i.be
   %i.bg = getelementptr i8, ptr %i.bf, i64 -30
-  store i16 %.049, ptr %i.bg, align 2, !tbaa !930
+  store i16 %14, ptr %i.bg, align 2, !tbaa !930
   br label %sqlite3VdbeChangeP5.exit
 
 sqlite3VdbeChangeP5.exit:                         ; preds = %bb.k, %sqlite3VdbeAddOp4Int.exit, %bb.b
@@ -1168,13 +1169,13 @@ bb.l:                                             ; preds = %._crit_edge
   %i.bo = trunc nuw nsw i32 %6 to i16
   %i.bp = or i16 %i.bo, 1
   %i.bq = select i1 %.not53, i16 33, i16 %i.bp
-  %.1 = select i1 %.not52, i16 %i.bq, i16 0       ; 2 uses
-  %.not54 = icmp eq i32 %7, 0
-  %14 = or disjoint i16 %.1, 8
-  %.2 = select i1 %.not54, i16 %.1, i16 %14       ; 2 uses
-  %.not55 = icmp eq i32 %8, 0
-  %15 = or i16 %.2, 16
-  %.3 = select i1 %.not55, i16 %.2, i16 %15
+  %.1 = select i1 %.not52, i16 %i.bq, i16 0
+  %15 = trunc nuw nsw i32 %7 to i16
+  %16 = shl nuw nsw i16 %15, 3
+  %.2 = or disjoint i16 %.1, %16
+  %17 = trunc nuw nsw i32 %8 to i16
+  %18 = shl nuw nsw i16 %17, 4
+  %.3 = or disjoint i16 %.2, %18
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.0.lcssa
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !570 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.b, i64 144 ; 4 uses
@@ -1240,13 +1241,12 @@ sqlite3VdbeAppendP4.exit:                         ; preds = %bb.p, %bb.o, %sqlit
   br i1 %i.cv, label %bb.q, label %sqlite3VdbeChangeP5.exit63
 
 bb.q:                                             ; preds = %sqlite3VdbeAppendP4.exit
-  %16 = and i16 %.3, 255
   %i.cw = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !702
   %i.cy = zext nneg i32 %i.cu to i64
   %i.cz = getelementptr [32 x i8], ptr %i.cx, i64 %i.cy
   %i.da = getelementptr i8, ptr %i.cz, i64 -30
-  store i16 %16, ptr %i.da, align 2, !tbaa !930
+  store i16 %.3, ptr %i.da, align 2, !tbaa !930
   br label %sqlite3VdbeChangeP5.exit63
 
 sqlite3VdbeChangeP5.exit63:                       ; preds = %bb.q, %sqlite3VdbeAppendP4.exit, %._crit_edge

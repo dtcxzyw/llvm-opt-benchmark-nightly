@@ -202,10 +202,10 @@ declare noundef i64 @read(i32 noundef, ptr noundef captures(none), i64 noundef) 
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef nonnull ptr @tree_reopen(ptr nofree noundef nonnull returned captures(ret: address, provenance) initializes((8, 24), (32, 44), (56, 64), (80, 92), (400, 404), (481, 482), (504, 508), (520, 536)) %0, ptr noundef %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
-  %.not = icmp eq i32 %2, 0
+  %3 = shl nuw nsw i32 %2, 7
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %3 = select i1 %.not, i32 256, i32 384
-  store i32 %3, ptr %i.a, align 8, !tbaa !43
+  %4 = or disjoint i32 %3, 256
+  store i32 %4, ptr %i.a, align 8, !tbaa !43
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i32 0, ptr %i.b, align 4, !tbaa !54
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40

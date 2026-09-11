@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %bb.c
   %i.l = icmp sgt i32 %.in.i, 1
   br i1 %i.l, label %bb.c, label %CheckNonOpaque.exit, !llvm.loop !1
 
-CheckNonOpaque.exit:                              ; preds = %bb.d, %bb.c, %bb.a, %bb.b
-  %.not342 = phi i1 [ true, %bb.b ], [ true, %bb.a ], [ %.not.i, %bb.c ], [ %.not.i, %bb.d ] ; 5 uses
-  %i.m = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 0, %bb.d ], [ 4, %bb.c ]
+CheckNonOpaque.exit:                              ; preds = %bb.c, %bb.d, %bb.a, %bb.b
+  %.not342 = phi i1 [ true, %bb.b ], [ true, %bb.a ], [ %.not.i, %bb.d ], [ %.not.i, %bb.c ] ; 5 uses
+  %i.m = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 4, %bb.c ], [ 0, %bb.d ]
   %i.n = icmp ult ptr %0, %2                      ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %8, i64 4
   store i32 %i.m, ptr %i.o, align 4, !tbaa !25

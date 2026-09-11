@@ -204,10 +204,10 @@ bb.r:                                             ; preds = %.lr.ph, %Vec_StrPus
   %i.bb = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.ba
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !35
   %i.bd = and i32 %.184, 31
-  %2 = shl nuw i32 1, %i.bd
-  %3 = and i32 %i.bc, %2
-  %.not37 = icmp eq i32 %3, 0
-  %4 = select i1 %.not37, i8 2, i8 3
+  %2 = lshr i32 %i.bc, %i.bd
+  %3 = trunc i32 %2 to i8
+  %4 = and i8 %3, 1
+  %5 = or disjoint i8 %4, 2
   %i.be = trunc nsw i64 %indvars.iv to i32
   %i.bf = icmp eq i32 %spec.select.sink.i5987, %i.be
   br i1 %i.bf, label %bb.s, label %Vec_StrPush.exit62
@@ -255,7 +255,7 @@ Vec_StrPush.exit62:                               ; preds = %bb.v, %bb.u, %bb.z,
   %spec.select.sink.i5986 = phi i32 [ %spec.select.sink.i5987, %bb.r ], [ %spec.select.sink.i5987, %bb.w ], [ 16, %bb.v ], [ 16, %bb.u ], [ %spec.select.i55, %bb.y ], [ %spec.select.i55, %bb.z ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.bp = getelementptr inbounds i8, ptr %storemerge8090, i64 %indvars.iv
-  store i8 %4, ptr %i.bp, align 1, !tbaa !43
+  store i8 %5, ptr %i.bp, align 1, !tbaa !43
   %i.bq = add nuw nsw i32 %.03583, 1              ; 2 uses
   %i.br = add nsw i32 %.184, 1                    ; 2 uses
   %i.bs = load i32, ptr %i.at, align 4, !tbaa !68 ; 2 uses

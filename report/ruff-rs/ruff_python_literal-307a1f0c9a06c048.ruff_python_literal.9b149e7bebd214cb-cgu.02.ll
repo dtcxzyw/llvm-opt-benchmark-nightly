@@ -202,10 +202,10 @@ bb.f:                                             ; preds = %bb.b
   %.val8 = load i8, ptr %i.s, align 8, !range !4, !noundef !3
   tail call void @llvm.experimental.noalias.scope.decl(metadata !172)
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.u = load i8, ptr %i.t, align 8, !range !4, !noalias !172, !noundef !3 ; 2 uses
-  %2 = icmp eq i8 %.val8, 0
-  %i.v = or disjoint i8 %i.u, 2
-  %.sroa.01.1.i = select i1 %2, i8 %i.v, i8 %i.u  ; 2 uses
+  %i.u = load i8, ptr %i.t, align 8, !range !4, !noalias !172, !noundef !3
+  %2 = shl nuw nsw i8 %.val8, 1
+  %i.v = or disjoint i8 %i.u, %2
+  %.sroa.01.1.i = xor i8 %i.v, 2                  ; 2 uses
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCsdjunURa2XPj_19ruff_python_literal(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef 1)
           to label %.noexc9 unwind label %bb.m
 
@@ -417,10 +417,10 @@ bb.f:                                             ; preds = %bb.b
   %.val8 = load i8, ptr %i.q, align 8, !range !4, !noundef !3
   tail call void @llvm.experimental.noalias.scope.decl(metadata !221)
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.s = load i8, ptr %i.r, align 8, !range !4, !noalias !221, !noundef !3 ; 2 uses
-  %2 = icmp eq i8 %.val8, 0
-  %i.t = or disjoint i8 %i.s, 2
-  %.sroa.01.1.i = select i1 %2, i8 %i.t, i8 %i.s  ; 2 uses
+  %i.s = load i8, ptr %i.r, align 8, !range !4, !noalias !221, !noundef !3
+  %2 = shl nuw nsw i8 %.val8, 1
+  %i.t = or disjoint i8 %i.s, %2
+  %.sroa.01.1.i = xor i8 %i.t, 2                  ; 2 uses
   %i.u = invoke { ptr, i64 } @_RNvYNtNtCskLngH8kgpZI_15ruff_python_ast5nodes18StringLiteralFlagsNtB4_11StringFlags9quote_strCsdjunURa2XPj_19ruff_python_literal(i8 noundef %.sroa.01.1.i)
           to label %.noexc9 unwind label %bb.l    ; 2 uses
 
@@ -553,10 +553,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load i8, ptr %i.a, align 8, !range !4, !noundef !3
   %i.b = getelementptr inbounds nuw i8, ptr %.val, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !4, !noalias !239, !noundef !3 ; 2 uses
-  %2 = icmp eq i8 %.val1, 0
-  %i.d = or disjoint i8 %i.c, 2
-  %.sroa.01.1.i = select i1 %2, i8 %i.d, i8 %i.c  ; 2 uses
+  %i.c = load i8, ptr %i.b, align 8, !range !4, !noalias !239, !noundef !3
+  %2 = shl nuw nsw i8 %.val1, 1
+  %i.d = or disjoint i8 %2, %i.c
+  %.sroa.01.1.i = xor i8 %i.d, 2                  ; 2 uses
   %i.e = tail call { ptr, i64 } @_RNvYNtNtCskLngH8kgpZI_15ruff_python_ast5nodes18StringLiteralFlagsNtB4_11StringFlags9quote_strCsdjunURa2XPj_19ruff_python_literal(i8 noundef %.sroa.01.1.i), !noalias !239 ; 2 uses
   %i.f = extractvalue { ptr, i64 } %i.e, 0
   %i.g = extractvalue { ptr, i64 } %i.e, 1
@@ -606,10 +606,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1 = load i8, ptr %i.c, align 8, !range !4, !noundef !3
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 16
-  %i.e = load i8, ptr %i.d, align 8, !range !4, !noalias !254, !noundef !3 ; 2 uses
-  %2 = icmp eq i8 %.val1, 0
-  %i.f = or disjoint i8 %i.e, 2
-  %.sroa.01.1.i = select i1 %2, i8 %i.f, i8 %i.e  ; 2 uses
+  %i.e = load i8, ptr %i.d, align 8, !range !4, !noalias !254, !noundef !3
+  %2 = shl nuw nsw i8 %.val1, 1
+  %i.f = or disjoint i8 %2, %i.e
+  %.sroa.01.1.i = xor i8 %i.f, 2                  ; 2 uses
   %i.g = tail call noundef zeroext i1 @_RNvXsb_NtCs4NRVxsYgnAr_4core3fmtNtB5_9FormatterNtB5_5Write10write_char(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i32 noundef 98)
   br i1 %i.g, label %_RINvMs6_NtCsdjunURa2XPj_19ruff_python_literal6escapeNtB6_9BytesRepr5writeNtNtCs4NRVxsYgnAr_4core3fmt9FormatterEB8_.exit, label %bb.b
 

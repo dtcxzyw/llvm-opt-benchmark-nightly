@@ -204,7 +204,7 @@ bb.be:                                            ; preds = %bb.bd
   br label %crec_ct2irt.exit249.i
 
 crec_ct2irt.exit249.i:                            ; preds = %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az
-  %.1.i237.i = phi i32 [ %switch.select29.i247.i, %bb.be ], [ %switch.select25.i242.i, %bb.az ], [ %i.hq, %bb.bc ], [ %i.hm, %bb.bb ], [ 10, %bb.bd ], [ 10, %bb.ba ] ; 22 uses
+  %.1.i237.i = phi i32 [ %switch.select29.i247.i, %bb.be ], [ %switch.select25.i242.i, %bb.az ], [ %i.hq, %bb.bc ], [ %i.hm, %bb.bb ], [ 10, %bb.bd ], [ 10, %bb.ba ] ; 29 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %.0133, i64 4
   %i.hw = load i32, ptr %i.hv, align 4, !tbaa !60 ; 10 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %.5, i64 4 ; 2 uses
@@ -343,14 +343,14 @@ crec_isnonzero.exit.i:                            ; preds = %bb.bp
   br i1 %.not152, label %crec_isnonzero.exit.thread262.i, label %crec_isnonzero.exit.thread.i
 
 crec_isnonzero.exit.thread.i:                     ; preds = %crec_isnonzero.exit.i, %.split.i, %.split268.i, %.split271.i, %.split274.i, %.split277.i, %bb.bm
+  %5 = or i32 %.1.i237.i, 256
   br label %crec_isnonzero.exit.thread262.i
 
 crec_isnonzero.exit.thread262.i:                  ; preds = %crec_isnonzero.exit.thread.i, %crec_isnonzero.exit.i, %.split.i, %.split268.i, %.split271.i, %.split274.i, %.split277.i, %bb.bm
   %.0.i260.i = phi i32 [ 1, %crec_isnonzero.exit.thread.i ], [ 0, %crec_isnonzero.exit.i ], [ 0, %.split277.i ], [ 0, %.split.i ], [ 0, %.split268.i ], [ 0, %.split271.i ], [ 0, %.split274.i ], [ 0, %bb.bm ]
-  %i.jf = phi i32 [ 2304, %crec_isnonzero.exit.thread.i ], [ 2048, %crec_isnonzero.exit.i ], [ 2048, %.split277.i ], [ 2048, %.split.i ], [ 2048, %.split268.i ], [ 2048, %.split271.i ], [ 2048, %.split274.i ], [ 2048, %bb.bm ]
-  %5 = or i32 %i.jf, %.1.i237.i
-  %i.jg = trunc nuw nsw i32 %5 to i16
-  %i.jh = or i16 %i.jg, 128
+  %i.jf = phi i32 [ %5, %crec_isnonzero.exit.thread.i ], [ %.1.i237.i, %crec_isnonzero.exit.i ], [ %.1.i237.i, %.split277.i ], [ %.1.i237.i, %.split.i ], [ %.1.i237.i, %.split268.i ], [ %.1.i237.i, %.split271.i ], [ %.1.i237.i, %.split274.i ], [ %.1.i237.i, %bb.bm ]
+  %i.jg = trunc nuw nsw i32 %i.jf to i16
+  %i.jh = or i16 %i.jg, 2176
   %i.ji = trunc i32 %.6 to i16
   %i.jj = trunc i32 %i.is to i16
   %i.jk = getelementptr inbounds nuw i8, ptr %0, i64 184

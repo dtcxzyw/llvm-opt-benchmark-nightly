@@ -205,10 +205,10 @@ bb.f:                                             ; preds = %bb.d
   unreachable
 
 _ZN6duckdb10NodeHandleINS_8BaseNodeILh4ELNS_5NTypeE3EEEED2Ev.exit: ; preds = %bb.c, %bb.e
-  %.not62 = icmp eq i8 %i.ao, 0
   %i.bk = load i64, ptr %i.as, align 8, !tbaa !157
   %i.bl = and i64 %i.bk, 9223372036854775807
-  %masksel = select i1 %.not62, i64 0, i64 -9223372036854775808
+  %13 = zext nneg i8 %i.ao to i64
+  %masksel = shl nuw i64 %13, 63
   %.sink.i = or disjoint i64 %i.bl, %masksel
   store i64 %.sink.i, ptr %i.as, align 8, !tbaa !157
   %i.bm = load ptr, ptr %i.a, align 8, !tbaa !562, !nonnull !68, !align !69
@@ -611,10 +611,10 @@ bb.d:                                             ; preds = %bb.b
 
 _ZN6duckdb10NodeHandleINS_8BaseNodeILh4ELNS_5NTypeE3EEEED2Ev.exit: ; preds = %bb.a, %bb.c
   %i.z = load ptr, ptr %1, align 8, !tbaa !173    ; 3 uses
-  %.not = icmp eq i8 %i.g, 0
   %10 = load i64, ptr %i.z, align 8, !tbaa !157
   %11 = and i64 %10, 9223372036854775807
-  %masksel = select i1 %.not, i64 0, i64 -9223372036854775808
+  %12 = zext nneg i8 %i.g to i64
+  %masksel = shl nuw i64 %12, 63
   %.sink.i = or disjoint i64 %11, %masksel
   store i64 %.sink.i, ptr %i.z, align 8, !tbaa !157
   %.sroa.0.0.copyload = load i64, ptr %8, align 8

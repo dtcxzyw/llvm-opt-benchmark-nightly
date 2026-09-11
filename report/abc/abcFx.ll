@@ -204,12 +204,12 @@ bb.s:                                             ; preds = %.lr.ph214, %bb.s
   %i.eq = sext i32 %.val136 to i64
   %i.er = getelementptr inbounds [4 x i8], ptr %i.cf, i64 %i.eq
   %i.es = load i32, ptr %i.er, align 4, !tbaa !48
-  %2 = and i32 %i.ej, 1
-  %.not130 = icmp eq i32 %2, 0
-  %3 = select i1 %.not130, i8 49, i8 48
+  %2 = trunc i32 %i.ej to i8
+  %3 = and i8 %2, 1
+  %4 = xor i8 %3, 49
   %i.et = sext i32 %i.es to i64
   %i.eu = getelementptr inbounds i8, ptr %.0124215, i64 %i.et
-  store i8 %3, ptr %i.eu, align 1, !tbaa !41
+  store i8 %4, ptr %i.eu, align 1, !tbaa !41
   %indvars.iv.next238 = add nuw nsw i64 %indvars.iv237, 1 ; 2 uses
   %.val139 = load i32, ptr %i.ef, align 4, !tbaa !45
   %i.ev = sext i32 %.val139 to i64

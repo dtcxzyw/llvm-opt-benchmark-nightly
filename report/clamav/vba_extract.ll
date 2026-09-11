@@ -204,20 +204,18 @@ bb.c:                                             ; preds = %bb.b
   %i.g = zext nneg i32 %i.f to i64
   %i.h = tail call ptr @cli_max_malloc(i64 noundef %i.g) #15 ; 6 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %bb.d, label %3
+  br i1 %i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.169) #15
   br label %bb.m
 
-3:                                                ; preds = %bb.c
-  %.not = icmp eq i32 %2, 0
-  br i1 %.not, label %bb.e, label %.lr.ph.preheader
-
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.c
+  %.not = icmp ne i32 %2, 0
   %i.j = and i32 %1, 1
   %.not69 = icmp eq i32 %i.j, 0
-  br i1 %.not69, label %.lr.ph.preheader, label %bb.f
+  %or.cond74 = or i1 %.not, %.not69
+  br i1 %or.cond74, label %.lr.ph.preheader, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.170, i32 noundef %1) #15
@@ -225,10 +223,11 @@ bb.f:                                             ; preds = %bb.e
   %.not92 = icmp eq i32 %i.k, 0
   br i1 %.not92, label %.thread._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %bb.e, %3, %bb.f
-  %.05991 = phi i32 [ %i.k, %bb.f ], [ %1, %3 ], [ %1, %bb.e ]
-  %4 = phi i64 [ 2, %bb.f ], [ 1, %3 ], [ 2, %bb.e ]
-  %i.l = zext nneg i32 %.05991 to i64             ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.e, %bb.f
+  %.05993 = phi i32 [ %i.k, %bb.f ], [ %1, %bb.e ] ; 2 uses
+  %3 = sub nuw nsw i32 2, %2
+  %4 = zext nneg i32 %3 to i64
+  %i.l = zext nneg i32 %.05993 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
@@ -316,7 +315,8 @@ bb.l:                                             ; preds = %bb.h, %bb.k
   %.2.pn = phi ptr [ %.2, %bb.k ], [ %.06181, %bb.h ]
   %.3 = getelementptr inbounds nuw i8, ptr %.2.pn, i64 1 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %4 ; 2 uses
-  %5 = icmp samesign ult i64 %indvars.iv.next, %i.l
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %5 = icmp sgt i32 %.05993, %indvars
   br i1 %5, label %.lr.ph, label %.thread._crit_edge
 
 .thread._crit_edge:                               ; preds = %bb.l, %.thread, %bb.f

@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 
 .preheader444:                                    ; preds = %bb.g, %.preheader444
   %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader444 ], [ 0, %bb.g ] ; 2 uses
-  %.0369 = phi i64 [ %i.bc, %.preheader444 ], [ 0, %bb.g ]
+  %.0369 = phi i64 [ %i.bc, %.preheader444 ], [ 0, %bb.g ] ; 2 uses
   %i.ap = trunc nuw i64 %indvars.iv to i32
   %i.aq = shl i32 %i.ap, 3                        ; 2 uses
   %i.ar = add i32 %i.aq, %i.z
@@ -219,12 +219,12 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.aw = getelementptr inbounds nuw i8, ptr %.val412, i64 %i.av
   %.0.copyload.i432 = load i64, ptr %i.aw, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i432) #7, !srcloc !20
-  %.not390 = icmp eq i64 %.0369, 0                ; 2 uses
+  %.not390 = icmp eq i64 %.0369, 0
   %i.ax = add i64 %.0.copyload.i432, %.0.copyload.i431 ; 3 uses
-  %i.ay = add i64 %i.ax, 1                        ; 2 uses
+  %i.ay = add i64 %i.ax, 1
   %i.az = icmp ule i64 %i.ay, %.0.copyload.i432
   %i.ba = icmp ult i64 %i.ax, %.0.copyload.i431
-  %.1370 = select i1 %.not390, i64 %i.ax, i64 %i.ay
+  %.1370 = add i64 %i.ax, %.0369
   %.1368.in = select i1 %.not390, i1 %i.ba, i1 %i.az
   %.val421 = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.bb = getelementptr inbounds nuw i8, ptr %.val421, i64 %i.av

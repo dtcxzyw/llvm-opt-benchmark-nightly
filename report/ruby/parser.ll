@@ -205,11 +205,11 @@ bb.p:                                             ; preds = %peek.exit.thread
   br label %peek.exit86
 
 peek.exit86:                                      ; preds = %peek.exit.thread, %bb.p
-  %.0.i85 = phi i32 [ %i.hc, %bb.p ], [ 0, %peek.exit.thread ] ; 3 uses
-  %i.hd = add nsw i32 %.0.i85, -91
-  %i.he = icmp ult i32 %i.hd, -26
-  %4 = or i32 %.0.i85, 32
-  %5 = select i1 %i.he, i32 %.0.i85, i32 %4
+  %.0.i85 = phi i32 [ %i.hc, %bb.p ], [ 0, %peek.exit.thread ] ; 2 uses
+  %i.hd = add nsw i32 %.0.i85, -65
+  %i.he = icmp ult i32 %i.hd, 26
+  %4 = select i1 %i.he, i32 32, i32 0
+  %5 = or i32 %4, %.0.i85
   %i.hf = icmp eq i32 %5, 101
   br i1 %i.hf, label %bb.q, label %bb.y
 

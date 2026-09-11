@@ -204,8 +204,9 @@ bb.m:                                             ; preds = %.loopexit185
   br label %.loopexit185.thread
 
 .loopexit185.thread:                              ; preds = %bb.f, %bb.m, %.loopexit185
-  %i.y = phi i1 [ true, %.loopexit185 ], [ false, %bb.m ], [ true, %bb.f ] ; 5 uses
-  %1 = xor i1 %i.y, true                          ; 2 uses
+  %i.y = phi i1 [ true, %.loopexit185 ], [ false, %bb.m ], [ true, %bb.f ] ; 3 uses
+  %1 = phi i32 [ 10, %.loopexit185 ], [ 11, %bb.m ], [ 10, %bb.f ]
+  %2 = phi i1 [ false, %.loopexit185 ], [ true, %bb.m ], [ false, %bb.f ] ; 2 uses
   %i.z = tail call fastcc i32 @Psr_ManReadSignal(ptr noundef nonnull %0) ; 2 uses
   %i.aa = icmp eq i32 %i.z, 0
   br i1 %i.aa, label %bb.n, label %bb.o
@@ -374,10 +375,9 @@ Vec_IntPush.exit137:                              ; preds = %Vec_IntPush.exit129
   %i.cf = sext i32 %i.cc to i64
   %i.cg = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %i.cf
   store i32 %i.a, ptr %i.cg, align 4, !tbaa !20
-  %2 = select i1 %i.y, i32 10, i32 11
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !31
-  tail call fastcc void @Psr_NtkAddBox(ptr noundef %i.ci, i32 noundef %2, i32 noundef 0, ptr noundef %i.ac)
+  tail call fastcc void @Psr_NtkAddBox(ptr noundef %i.ci, i32 noundef %1, i32 noundef 0, ptr noundef %i.ac)
   br label %bb.bf
 
 bb.ac:                                            ; preds = %Vec_IntPush.exit121
@@ -572,15 +572,15 @@ bb.aw:                                            ; preds = %bb.ap
   br i1 %.not173, label %bb.ax, label %bb.ba
 
 bb.ax:                                            ; preds = %bb.aw
-  %or.cond = or i1 %i.y, %i.dg
+  %or.cond = or i1 %i.dg, %i.y
   br i1 %or.cond, label %bb.ay, label %bb.be
 
 bb.ay:                                            ; preds = %bb.ax
-  %or.cond3 = and i1 %i.y, %i.dg
+  %or.cond3 = and i1 %i.dg, %i.y
   br i1 %or.cond3, label %bb.be, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %or.cond5 = and i1 %i.dg, %1
+  %or.cond5 = and i1 %2, %i.dg
   %spec.select = select i1 %or.cond5, i32 15, i32 12
   br label %bb.be
 
@@ -588,7 +588,7 @@ bb.ba:                                            ; preds = %bb.aw
   br i1 %i.cl, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  %or.cond7 = and i1 %i.dg, %1
+  %or.cond7 = and i1 %2, %i.dg
   %spec.select100 = select i1 %or.cond7, i32 13, i32 14
   br label %bb.be
 
@@ -596,7 +596,7 @@ bb.bc:                                            ; preds = %bb.ba
   br i1 %i.cm, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %bb.bc
-  %or.cond9 = or i1 %i.y, %i.dg
+  %or.cond9 = or i1 %i.dg, %i.y
   %spec.select101 = select i1 %or.cond9, i32 16, i32 17
   br label %bb.be
 

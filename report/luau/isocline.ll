@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ah
   br i1 %.not.i.i.i66.i, label %utf8_char_width.exit, label %.preheader.i.i.i61.i, !llvm.loop !371
 
 utf8_char_width.exit:                             ; preds = %bb.ad, %bb.ak, %bb.ai, %bb.q, %bb.x, %bb.v, %bb.k, %bb.i, %bb.ag, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.t, %bb.o, %bb.n, %bb.m, %bb.g, %bb.f, %bb.e, %bb.c, %bb.b, %bb.a
-  %.0 = phi i64 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %bb.y ], [ 0, %bb.q ], [ 1, %bb.c ], [ -1, %bb.aa ], [ 1, %bb.ab ], [ 1, %bb.k ], [ 0, %bb.e ], [ -1, %bb.f ], [ 1, %bb.g ], [ 1, %bb.ag ], [ 0, %bb.m ], [ -1, %bb.n ], [ 1, %bb.o ], [ 1, %bb.t ], [ 1, %bb.x ], [ 2, %bb.ai ], [ 0, %bb.z ], [ 0, %bb.i ], [ 2, %bb.v ], [ 1, %bb.ak ], [ 0, %bb.ad ]
+  %.0 = phi i64 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %bb.y ], [ 0, %bb.q ], [ 1, %bb.c ], [ -1, %bb.aa ], [ 1, %bb.ag ], [ 1, %bb.k ], [ 0, %bb.e ], [ -1, %bb.f ], [ 1, %bb.g ], [ 1, %bb.ab ], [ 0, %bb.m ], [ -1, %bb.n ], [ 1, %bb.t ], [ 1, %bb.o ], [ 2, %bb.v ], [ 1, %bb.ak ], [ 0, %bb.z ], [ 0, %bb.i ], [ 1, %bb.x ], [ 2, %bb.ai ], [ 0, %bb.ad ]
   ret i64 %.0
 }
 

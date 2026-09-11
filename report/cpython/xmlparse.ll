@@ -205,18 +205,18 @@ bb.k:                                             ; preds = %accountingDiffToler
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !208
   %i.bn = getelementptr i8, ptr %0, i64 560       ; 4 uses
   %i.bo = call i32 %i.bk(i32 noundef %1, ptr noundef %i.bm, ptr noundef %2, ptr noundef %3, ptr noundef %i.bn, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.i) #22, !callees !331
-  %.not72 = icmp eq i32 %i.bo, 0
-  %.not73 = icmp eq i32 %1, 0                     ; 2 uses
-  br i1 %.not72, label %bb.l, label %bb.m
+  %.not73 = icmp eq i32 %i.bo, 0
+  br i1 %.not73, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %. = select i1 %.not73, i32 30, i32 31
+  %. = or disjoint i32 %1, 30
   br label %accountingOnAbort.exit
 
 bb.m:                                             ; preds = %bb.k
+  %4 = icmp eq i32 %1, 0
   %i.bp = load i32, ptr %i.i, align 4
   %i.bq = icmp eq i32 %i.bp, 1
-  %or.cond = select i1 %.not73, i1 %i.bq, i1 false
+  %or.cond = select i1 %4, i1 %i.bq, i1 false
   br i1 %or.cond, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m

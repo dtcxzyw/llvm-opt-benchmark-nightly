@@ -202,8 +202,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.s = getelementptr i8, ptr %0, i64 8
-  %.not23 = icmp eq i32 %i.q, 0
-  %spec.select = select i1 %.not23, i32 524288, i32 0
+  %2 = shl nuw nsw i32 %i.q, 19
+  %spec.select = xor i32 %2, 524288
   store i32 %spec.select, ptr %i.s, align 8
   br label %bb.k
 

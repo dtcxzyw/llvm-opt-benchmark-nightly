@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.i, %ce_compare_g
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 65) i32 @ce_modified_check_fs(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.object_id, align 4          ; 6 uses
+  %3 = alloca %struct.object_id, align 4          ; 5 uses
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = alloca i32, align 4                      ; 6 uses
   %4 = alloca %struct.strbuf, align 8             ; 12 uses
@@ -327,11 +327,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 108
   %i.as = call i32 @repo_resolve_gitlink_ref(ptr noundef %i.aq, ptr noundef nonnull %i.ar, ptr noundef nonnull @.str.38, ptr noundef nonnull %3) #28
   %i.at = icmp slt i32 %i.as, 0
-  br i1 %i.at, label %ce_compare_gitlink.exit.thread, label %ce_compare_gitlink.exit.a
-
-ce_compare_gitlink.exit.thread:                   ; preds = %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
-  br label %bb.j
+  br i1 %i.at, label %ce_compare_gitlink.exit, label %ce_compare_gitlink.exit.a
 
 ce_compare_gitlink.exit.a:                        ; preds = %bb.i
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
@@ -346,12 +342,16 @@ ce_compare_gitlink.exit.a:                        ; preds = %bb.i
   %i.bd = or i128 %i.ax, %i.bc
   %i.be = icmp ne i128 %i.bd, 0
   %i.bf = zext i1 %i.be to i32
-  %bcmp.i.i13.fr = freeze i32 %i.bf
-  %.not.i.i14.not = icmp eq i32 %bcmp.i.i13.fr, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
-  br i1 %.not.i.i14.not, label %bb.j, label %ce_compare_data.exit.thread
+  %.not.i.i14.not = icmp eq i32 %i.bf, 0
+  %6 = select i1 %.not.i.i14.not, i32 0, i32 32
+  br label %ce_compare_gitlink.exit
 
-bb.j:                                             ; preds = %ce_compare_data.exit, %ce_compare_link.exit, %ce_compare_gitlink.exit.thread, %ce_compare_gitlink.exit.a
+ce_compare_gitlink.exit:                          ; preds = %bb.i, %ce_compare_gitlink.exit.a
+  %.0.i14 = phi i32 [ %6, %ce_compare_gitlink.exit.a ], [ 0, %bb.i ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
+  br label %ce_compare_data.exit.thread
+
+bb.j:                                             ; preds = %ce_compare_link.exit, %ce_compare_data.exit
   br label %ce_compare_data.exit.thread
 
 ce_compare_data.exit.thread.critedge:             ; preds = %bb.g
@@ -362,8 +362,8 @@ ce_compare_data.exit.thread.critedge:             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   br label %ce_compare_data.exit.thread
 
-ce_compare_data.exit.thread:                      ; preds = %ce_compare_data.exit.thread.critedge, %bb.b, %bb.j, %ce_compare_gitlink.exit.a, %ce_compare_link.exit.thread23, %ce_compare_link.exit.thread, %ce_compare_data.exit.thread18, %bb.a, %bb.h, %ce_compare_link.exit, %ce_compare_data.exit
-  %.0 = phi i32 [ 32, %ce_compare_link.exit ], [ 32, %ce_compare_link.exit.thread23 ], [ 32, %ce_compare_data.exit.thread.critedge ], [ 32, %ce_compare_data.exit ], [ 64, %bb.h ], [ 64, %bb.a ], [ 32, %ce_compare_gitlink.exit.a ], [ 32, %ce_compare_data.exit.thread18 ], [ 32, %ce_compare_link.exit.thread ], [ 0, %bb.j ], [ 32, %bb.b ]
+ce_compare_data.exit.thread:                      ; preds = %ce_compare_data.exit.thread.critedge, %bb.b, %ce_compare_link.exit.thread23, %ce_compare_link.exit.thread, %ce_compare_data.exit.thread18, %bb.a, %bb.h, %ce_compare_link.exit, %ce_compare_data.exit, %bb.j, %ce_compare_gitlink.exit
+  %.0 = phi i32 [ 32, %ce_compare_link.exit ], [ %.0.i14, %ce_compare_gitlink.exit ], [ 0, %bb.j ], [ 32, %ce_compare_data.exit ], [ 64, %bb.h ], [ 64, %bb.a ], [ 32, %ce_compare_link.exit.thread23 ], [ 32, %ce_compare_data.exit.thread18 ], [ 32, %ce_compare_link.exit.thread ], [ 32, %bb.b ], [ 32, %ce_compare_data.exit.thread.critedge ]
   ret i32 %.0
 }
 

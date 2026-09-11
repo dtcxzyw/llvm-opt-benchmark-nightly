@@ -205,10 +205,10 @@ bb.akj:                                           ; preds = %.thread1444
   br label %bb.akk
 
 bb.akk:                                           ; preds = %bb.akj, %.thread1444, %.thread1444
-  %i.gdw = phi i32 [ 0, %.thread1444 ], [ 0, %.thread1444 ], [ %i.gdv, %bb.akj ] ; 2 uses
+  %i.gdw = phi i32 [ 0, %.thread1444 ], [ 0, %.thread1444 ], [ %i.gdv, %bb.akj ] ; 3 uses
   %i.gdx = and i32 %i.gdt, 256
   %.not.i829 = icmp eq i32 %i.gdx, 0
-  %.not37.i = icmp eq i32 %i.gdw, 0               ; 5 uses
+  %.not37.i = icmp eq i32 %i.gdw, 0               ; 4 uses
   %spec.select56.i = select i1 %.not37.i, i32 -520094722, i32 -486539266
   %.1.i830 = select i1 %.not.i829, i32 0, i32 %spec.select56.i ; 3 uses
   %i.gdy = and i32 %i.gdt, 128
@@ -263,9 +263,9 @@ bb.aks:                                           ; preds = %bb.akq
   br label %bb.akt
 
 bb.akt:                                           ; preds = %bb.aks, %bb.akr, %bb.akp, %bb.akn, %bb.akm
-  %.3.i = phi i32 [ %i.gea, %bb.akm ], [ %i.gej, %bb.akr ], [ %i.gek, %bb.aks ], [ %spec.select57.i, %bb.akp ], [ %spec.select.i837, %bb.akn ] ; 2 uses
-  %5 = or i32 %.3.i, 33554432
-  %spec.select52.i = select i1 %.not37.i, i32 %.3.i, i32 %5
+  %.3.i = phi i32 [ %i.gea, %bb.akm ], [ %i.gej, %bb.akr ], [ %i.gek, %bb.aks ], [ %spec.select57.i, %bb.akp ], [ %spec.select.i837, %bb.akn ]
+  %5 = shl nuw nsw i32 %i.gdw, 25
+  %spec.select52.i = or i32 %.3.i, %5
   br label %zend_array_element_type.exit
 
 zend_array_element_type.exit:                     ; preds = %bb.akk, %bb.akt

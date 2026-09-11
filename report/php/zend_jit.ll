@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.q, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %.not = icmp eq i64 %i.p, 0
-  %1 = select i1 %.not, i32 0, i32 4
-  %i.r = or disjoint i32 %1, %i.n
+  %1 = trunc nuw nsw i64 %i.p to i32
+  %2 = shl nuw nsw i32 %1, 2
+  %i.r = or disjoint i32 %2, %i.n
   store i32 %i.r, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 4), align 4, !tbaa !96
   %.not22 = icmp samesign ult i64 %0, 10000
   br i1 %.not22, label %.sink.split, label %bb.h

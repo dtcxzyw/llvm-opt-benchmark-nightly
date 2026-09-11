@@ -204,8 +204,8 @@ _workspace_radio_shell_sync_active.exit:          ; preds = %bb.g, %bb.f, %g_str
   tail call void @gtk_widget_set_hexpand(ptr noundef %i.p, i32 noundef 1) #9
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !19
-  %.not42 = icmp eq i32 %2, 0                     ; 2 uses
-  %5 = select i1 %.not42, i32 2, i32 1
+  %.not42 = icmp eq i32 %2, 0
+  %5 = sub nuw nsw i32 2, %2
   tail call void @gtk_grid_attach(ptr noundef %i.r, ptr noundef %i.p, i32 noundef 1, i32 noundef %4, i32 noundef %5, i32 noundef 1) #9
   %i.s = tail call i64 @g_signal_connect_data(ptr noundef %i.p, ptr noundef nonnull @.str.17, ptr noundef nonnull @_workspace_select_db, ptr noundef %0, ptr noundef null, i32 noundef 0) #9 ; 0 uses
   %.not43 = icmp eq ptr %.1, null
