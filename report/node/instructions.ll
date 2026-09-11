@@ -204,8 +204,8 @@ _ZNSt12_Vector_baseIN2v88internal6torque18DefinitionLocationESaIS3_EE11_M_alloca
   %i.o = ptrtoint ptr %.lcssa18 to i64
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = sub i64 %i.o, %i.p
-  %i.r = sdiv exact i64 %i.q, 24                  ; 3 uses
-  %i.s = sub nsw i64 %i.r, %2                     ; 2 uses
+  %i.r = sdiv exact i64 %i.q, 24                  ; 2 uses
+  %i.s = sub nuw nsw i64 %i.r, %2
   %i.t = icmp ugt i64 %2, %i.r
   br i1 %i.t, label %bb.d, label %bb.e
 
@@ -215,8 +215,8 @@ bb.d:                                             ; preds = %._crit_edge
           to label %_ZNSt6vectorIN2v88internal6torque18DefinitionLocationESaIS3_EE6resizeEm.exit unwind label %bb.g
 
 bb.e:                                             ; preds = %._crit_edge
-  %3 = icmp ult i64 %i.s, %i.r
-  br i1 %3, label %bb.f, label %_ZNSt6vectorIN2v88internal6torque18DefinitionLocationESaIS3_EE6resizeEm.exit
+  %.not = icmp eq i64 %2, 0
+  br i1 %.not, label %_ZNSt6vectorIN2v88internal6torque18DefinitionLocationESaIS3_EE6resizeEm.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %i.s ; 2 uses
@@ -619,7 +619,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %.not = icmp eq i64 %2, 0
+  %.not = icmp eq i64 %2, 0                       ; 2 uses
   br i1 %.not, label %_ZNSt6vectorIPKN2v88internal6torque4TypeESaIS5_EE7reserveEm.exit.thread, label %_ZNSt12_Vector_baseIPKN2v88internal6torque4TypeESaIS5_EE11_M_allocateEm.exit.i
 
 _ZNSt6vectorIPKN2v88internal6torque4TypeESaIS5_EE7reserveEm.exit.thread: ; preds = %bb.c
@@ -656,8 +656,8 @@ _ZNSt12_Vector_baseIPKN2v88internal6torque4TypeESaIS5_EE11_M_allocateEm.exit.i: 
   %i.o = ptrtoint ptr %.lcssa to i64
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = sub i64 %i.o, %i.p
-  %i.r = ashr exact i64 %i.q, 3                   ; 3 uses
-  %i.s = sub nsw i64 %i.r, %2                     ; 2 uses
+  %i.r = ashr exact i64 %i.q, 3                   ; 2 uses
+  %i.s = sub nuw nsw i64 %i.r, %2
   %i.t = icmp ugt i64 %2, %i.r
   br i1 %i.t, label %bb.d, label %bb.e
 
@@ -667,8 +667,7 @@ bb.d:                                             ; preds = %._crit_edge
           to label %_ZNSt6vectorIPKN2v88internal6torque4TypeESaIS5_EE6resizeEm.exit unwind label %bb.g
 
 bb.e:                                             ; preds = %._crit_edge
-  %3 = icmp ult i64 %i.s, %i.r
-  br i1 %3, label %bb.f, label %_ZNSt6vectorIPKN2v88internal6torque4TypeESaIS5_EE6resizeEm.exit
+  br i1 %.not, label %_ZNSt6vectorIPKN2v88internal6torque4TypeESaIS5_EE6resizeEm.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.s ; 2 uses

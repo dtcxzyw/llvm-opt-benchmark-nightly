@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load i32, ptr %i.d, align 4, !tbaa !13   ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
-  %4 = add i32 %i.k, 1                            ; 2 uses
   %i.n = shl nuw i32 1, %i.l                      ; 5 uses
   %i.o = add i32 %i.n, -1                         ; 5 uses
   %i.p = icmp ugt i32 %i.k, 255
@@ -218,6 +217,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i.a:                                       ; preds = %bb.e
   %sext.i = shl nuw nsw i32 32768, %i.l
   %i.r = lshr exact i32 %sext.i, 16               ; 3 uses
+  %4 = add nuw nsw i32 %i.k, 1                    ; 2 uses
   %wide.trip.count.i = zext nneg i32 %4 to i64    ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.s = icmp eq i32 %i.k, 0
@@ -335,10 +335,10 @@ bb.n:                                             ; preds = %.epil.preheader
   store i16 %i.ax, ptr %i.c, align 16
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   store i16 %.sroa.4.2.i.lcssa, ptr %.sroa.4.0..sroa_idx.i, align 2
-  %i.ay = lshr i32 %i.n, 3
-  %i.az = lshr i32 %i.n, 1
-  %i.ba = add nuw nsw i32 %i.ay, 3
-  %i.bb = add nuw nsw i32 %i.ba, %i.az            ; 3 uses
+  %i.ay = lshr i32 %i.n, 1
+  %i.az = lshr i32 %i.n, 3
+  %i.ba = add nuw nsw i32 %i.az, 3
+  %i.bb = add nuw nsw i32 %i.ba, %i.ay            ; 3 uses
   br label %.preheader77.i
 
 .preheader77.i:                                   ; preds = %._crit_edge85.i, %.preheader77.lr.ph.i
@@ -505,7 +505,6 @@ bb.a:
   %i.a = alloca [256 x i16], align 16             ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
-  %4 = add i32 %2, 1                              ; 3 uses
   %i.c = shl nuw i32 1, %3                        ; 5 uses
   %i.d = add i32 %i.c, -1                         ; 5 uses
   %i.e = icmp ugt i32 %2, 255
@@ -516,10 +515,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %.loopexit, label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %bb.b
-  %5 = trunc nuw nsw i32 %3 to i16
   %sext = shl nuw nsw i32 32768, %3
   %i.g = lshr exact i32 %sext, 16                 ; 3 uses
-  %wide.trip.count = zext nneg i32 %4 to i64      ; 2 uses
+  %4 = add nuw nsw i32 %2, 1                      ; 2 uses
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.h = icmp eq i32 %2, 0
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.new.a
@@ -632,14 +631,14 @@ bb.k:                                             ; preds = %.epil.preheader
 .preheader77.lr.ph:                               ; preds = %.preheader77.lr.ph.unr-lcssa, %.preheader77.lr.ph.epilog-lcssa
   %.172.lcssa = phi i32 [ %.172.1, %.preheader77.lr.ph.unr-lcssa ], [ %.172.epil, %.preheader77.lr.ph.epilog-lcssa ] ; 3 uses
   %.sroa.4.2.lcssa = phi i16 [ %.sroa.4.2.1, %.preheader77.lr.ph.unr-lcssa ], [ %.sroa.4.2.epil, %.preheader77.lr.ph.epilog-lcssa ]
+  %5 = trunc nuw nsw i32 %3 to i16
   store i16 %5, ptr %0, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i16 %.sroa.4.2.lcssa, ptr %.sroa.4.0..sroa_idx, align 2
-  %i.am = lshr i32 %i.c, 3
-  %i.an = lshr i32 %i.c, 1
-  %i.ao = add nuw nsw i32 %i.am, 3
-  %i.ap = add nuw nsw i32 %i.ao, %i.an            ; 3 uses
-  %wide.trip.count96 = zext nneg i32 %4 to i64
+  %i.am = lshr i32 %i.c, 1
+  %i.an = lshr i32 %i.c, 3
+  %i.ao = add nuw nsw i32 %i.an, 3
+  %i.ap = add nuw nsw i32 %i.ao, %i.am            ; 3 uses
   br label %.preheader77
 
 .preheader77:                                     ; preds = %.preheader77.lr.ph, %._crit_edge85
@@ -720,7 +719,7 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
 ._crit_edge85:                                    ; preds = %._crit_edge85.loopexit.unr-lcssa, %bb.q, %.preheader77
   %.167.lcssa = phi i32 [ %.06688, %.preheader77 ], [ %.2.1, %._crit_edge85.loopexit.unr-lcssa ], [ %.2.epil, %bb.q ] ; 2 uses
   %indvars.iv.next94 = add nuw nsw i64 %indvars.iv93, 1 ; 2 uses
-  %exitcond97.not = icmp eq i64 %indvars.iv.next94, %wide.trip.count96
+  %exitcond97.not = icmp eq i64 %indvars.iv.next94, %wide.trip.count
   br i1 %exitcond97.not, label %._crit_edge89, label %.preheader77, !llvm.loop !3
 
 ._crit_edge89:                                    ; preds = %._crit_edge85
@@ -1123,7 +1122,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = add nuw nsw i64 %i.d, 6
   %i.j = add nuw nsw i64 %i.i, %i.f
   %i.k = add nuw nsw i64 %i.j, %i.h               ; 2 uses
-  %i.l = sub i64 %3, %i.k
+  %i.l = sub nuw i64 %3, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 6 ; 4 uses
   %i.n = getelementptr i8, ptr %i.m, i64 %i.d     ; 12 uses
   %i.o = getelementptr i8, ptr %i.n, i64 %i.f     ; 12 uses
@@ -1526,7 +1525,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = add nuw nsw i64 %i.d, 6
   %i.j = add nuw nsw i64 %i.i, %i.f
   %i.k = add nuw nsw i64 %i.j, %i.h               ; 2 uses
-  %i.l = sub i64 %3, %i.k
+  %i.l = sub nuw i64 %3, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 6 ; 4 uses
   %i.n = getelementptr i8, ptr %i.m, i64 %i.d     ; 12 uses
   %i.o = getelementptr i8, ptr %i.n, i64 %i.f     ; 12 uses
@@ -1929,9 +1928,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.as, label %FSEv07_buildDTable.exit.thread.i.i, label %.lr.ph.i.i.i.a
 
 .lr.ph.i.i.i.a:                                   ; preds = %bb.i
-  %3 = add nuw nsw i32 %i.ao, 1                   ; 2 uses
   %sext.i.i.i = shl nuw nsw i32 32768, %i.al
   %i.at = lshr exact i32 %sext.i.i.i, 16          ; 3 uses
+  %3 = add nuw nsw i32 %i.ao, 1                   ; 2 uses
   %wide.trip.count.i.i.i = zext nneg i32 %3 to i64 ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i.i.i, 1
   %i.au = icmp eq i32 %i.ao, 0
@@ -2049,10 +2048,10 @@ bb.r:                                             ; preds = %.epil.preheader
   store i16 %i.bz, ptr %i.an, align 4
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2054
   store i16 %.sroa.4.2.i.i.i.lcssa, ptr %.sroa.4.0..sroa_idx.i.i.i, align 2
-  %i.ca = lshr i32 %i.aq, 3
-  %i.cb = lshr i32 %i.aq, 1
-  %i.cc = add nuw nsw i32 %i.ca, 3
-  %i.cd = add nuw nsw i32 %i.cc, %i.cb            ; 3 uses
+  %i.ca = lshr i32 %i.aq, 1
+  %i.cb = lshr i32 %i.aq, 3
+  %i.cc = add nuw nsw i32 %i.cb, 3
+  %i.cd = add nuw nsw i32 %i.cc, %i.ca            ; 3 uses
   br label %.preheader77.i.i.i
 
 .preheader77.i.i.i:                               ; preds = %._crit_edge85.i.i.i, %.preheader77.lr.ph.i.i.i
@@ -2455,11 +2454,11 @@ bb.d:                                             ; preds = %bb.c
 .new.a:                                           ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  %9 = add nuw nsw i32 %2, 1                      ; 2 uses
   %i.n = shl nuw nsw i32 1, %7                    ; 5 uses
   %i.o = add nsw i32 %i.n, -1                     ; 4 uses
   %sext.i = shl nuw nsw i32 32768, %7
   %i.p = lshr exact i32 %sext.i, 16               ; 3 uses
+  %9 = add nuw nsw i32 %2, 1                      ; 2 uses
   %wide.trip.count.i = zext nneg i32 %9 to i64    ; 3 uses
   %xtraiter75 = and i64 %wide.trip.count.i, 1
   %unroll_iter80 = and i64 %wide.trip.count.i, 126
@@ -2570,10 +2569,10 @@ bb.m:                                             ; preds = %.epil.preheader74
   store i16 %i.au, ptr %0, align 4
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i16 %.sroa.4.2.i.lcssa, ptr %.sroa.4.0..sroa_idx.i, align 2
-  %i.av = lshr exact i32 %i.n, 3
-  %i.aw = lshr exact i32 %i.n, 1
-  %i.ax = add nuw nsw i32 %i.av, 3
-  %i.ay = add nuw nsw i32 %i.ax, %i.aw            ; 3 uses
+  %i.av = lshr exact i32 %i.n, 1
+  %i.aw = lshr exact i32 %i.n, 3
+  %i.ax = add nuw nsw i32 %i.aw, 3
+  %i.ay = add nuw nsw i32 %i.ax, %i.av            ; 3 uses
   br label %.preheader77.i
 
 .preheader77.i:                                   ; preds = %._crit_edge85.i, %.preheader77.lr.ph.i
@@ -2725,9 +2724,9 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.cr, label %FSEv07_buildDTable.exit56, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.w
-  %10 = add nuw nsw i32 %i.cn, 1                  ; 2 uses
   %sext.i18 = shl nuw nsw i32 32768, %i.cl
   %i.cs = lshr exact i32 %sext.i18, 16            ; 3 uses
+  %10 = add nuw nsw i32 %i.cn, 1                  ; 2 uses
   %wide.trip.count.i19 = zext nneg i32 %10 to i64 ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i19, 1
   %i.ct = icmp eq i32 %i.cn, 0
@@ -2845,10 +2844,10 @@ bb.af:                                            ; preds = %.epil.preheader
   store i16 %i.dy, ptr %0, align 4
   %.sroa.4.0..sroa_idx.i31 = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i16 %.sroa.4.2.i27.lcssa, ptr %.sroa.4.0..sroa_idx.i31, align 2
-  %i.dz = lshr i32 %i.cp, 3
-  %i.ea = lshr i32 %i.cp, 1
-  %i.eb = add nuw nsw i32 %i.dz, 3
-  %i.ec = add nuw nsw i32 %i.eb, %i.ea            ; 3 uses
+  %i.dz = lshr i32 %i.cp, 1
+  %i.ea = lshr i32 %i.cp, 3
+  %i.eb = add nuw nsw i32 %i.ea, 3
+  %i.ec = add nuw nsw i32 %i.eb, %i.dz            ; 3 uses
   br label %.preheader77.i33
 
 .preheader77.i33:                                 ; preds = %._crit_edge85.i36, %.preheader77.lr.ph.i30
@@ -2999,10 +2998,10 @@ declare i32 @llvm.smax.i32(i32, i32) #25
 declare i64 @llvm.umin.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #25
+declare i64 @llvm.smin.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #25
+declare i32 @llvm.umax.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #25

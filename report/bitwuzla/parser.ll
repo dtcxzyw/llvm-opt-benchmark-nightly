@@ -205,57 +205,47 @@ _ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5T
   %i.ce = load ptr, ptr %i.i, align 8, !tbaa !314
   %i.cf = getelementptr inbounds i8, ptr %i.ce, i64 -8
   %i.cg = load i64, ptr %i.cf, align 8, !tbaa !164
-  %i.ch = load ptr, ptr %i.b, align 8, !tbaa !182 ; 2 uses
-  %i.ci = load ptr, ptr %i.a, align 8, !tbaa !181 ; 2 uses
+  %i.ch = load ptr, ptr %i.b, align 8, !tbaa !182
+  %i.ci = load ptr, ptr %i.a, align 8, !tbaa !181
   %i.cj = ptrtoint ptr %i.ch to i64
   %i.ck = ptrtoint ptr %i.ci to i64
   %i.cl = sub i64 %i.cj, %i.ck                    ; 2 uses
-  %i.cm = sdiv exact i64 %i.cl, 152               ; 2 uses
+  %i.cm = sdiv exact i64 %i.cl, 152
   %i.cn = xor i64 %i.cg, -1
   %i.co = add i64 %i.cm, %i.cn                    ; 5 uses
   %.not = icmp eq i64 %i.co, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE6resizeEm.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 1336
   br label %bb.o
 
 ._crit_edge.loopexit:                             ; preds = %_ZNK4bzla6parser4smt26Parser13peek_node_argEm.exit
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !182 ; 2 uses
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !182 ; 3 uses
   %.pre44 = load ptr, ptr %i.a, align 8, !tbaa !181 ; 2 uses
   %.pre45 = ptrtoint ptr %.pre to i64
   %.pre46 = ptrtoint ptr %.pre44 to i64
   %.pre48 = sub i64 %.pre45, %.pre46
-  %.pre50 = sdiv exact i64 %.pre48, 152
-  br label %._crit_edge
+  %.pre50 = sdiv exact i64 %.pre48, 152           ; 2 uses
+  %7 = icmp ugt i64 %i.co, %.pre50
+  br i1 %7, label %bb.m, label %bb.n
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit
-  %.pre-phi51 = phi i64 [ %.pre50, %._crit_edge.loopexit ], [ %i.cm, %_ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit ] ; 3 uses
-  %7 = phi ptr [ %.pre44, %._crit_edge.loopexit ], [ %i.ci, %_ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit ]
-  %8 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.ch, %_ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit ] ; 2 uses
-  %9 = sub i64 %.pre-phi51, %i.co                 ; 2 uses
-  %10 = icmp ugt i64 %i.co, %.pre-phi51
-  br i1 %10, label %bb.m, label %11
-
-bb.m:                                             ; preds = %._crit_edge
+bb.m:                                             ; preds = %._crit_edge.loopexit
   %i.cq = sub i64 0, %i.co
   call void @_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %i.cq)
   br label %_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE6resizeEm.exit
 
-11:                                               ; preds = %._crit_edge
-  %12 = icmp ult i64 %9, %.pre-phi51
-  br i1 %12, label %bb.n, label %_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE6resizeEm.exit
-
-bb.n:                                             ; preds = %11
-  %i.cr = getelementptr inbounds nuw [152 x i8], ptr %7, i64 %9 ; 3 uses
-  %.not.i.i = icmp eq ptr %8, %i.cr
+bb.n:                                             ; preds = %._crit_edge.loopexit
+  %8 = sub nuw i64 %.pre50, %i.co
+  %i.cr = getelementptr inbounds nuw [152 x i8], ptr %.pre44, i64 %8 ; 3 uses
+  %.not.i.i = icmp eq ptr %.pre, %i.cr
   br i1 %.not.i.i, label %_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE6resizeEm.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.n, %.lr.ph.i.i.i.i
   %.05.i.i.i.i = phi ptr [ %i.cs, %.lr.ph.i.i.i.i ], [ %i.cr, %bb.n ] ; 2 uses
   call void @_ZN4bzla6parser4smt26Parser10ParsedItemD2Ev(ptr noundef nonnull align 8 dead_on_return(145) dereferenceable(145) %.05.i.i.i.i) #30
   %i.cs = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i, i64 152 ; 2 uses
-  %.not.i.i.i.i = icmp eq ptr %i.cs, %8
+  %.not.i.i.i.i = icmp eq ptr %i.cs, %.pre
   br i1 %.not.i.i.i.i, label %_ZSt8_DestroyIPN4bzla6parser4smt26Parser10ParsedItemES4_EvT_S6_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !3
 
 _ZSt8_DestroyIPN4bzla6parser4smt26Parser10ParsedItemES4_EvT_S6_RSaIT0_E.exit.i.i: ; preds = %.lr.ph.i.i.i.i
@@ -299,8 +289,8 @@ _ZNK4bzla6parser4smt26Parser13peek_node_argEm.exit: ; preds = %bb.o
   %exitcond.not = icmp eq i64 %i.df, %i.co
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.o, !llvm.loop !777
 
-_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE6resizeEm.exit: ; preds = %_ZSt8_DestroyIPN4bzla6parser4smt26Parser10ParsedItemES4_EvT_S6_RSaIT0_E.exit.i.i, %bb.n, %11, %bb.m, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33
-  %.0 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33 ], [ true, %bb.m ], [ true, %11 ], [ true, %bb.n ], [ true, %_ZSt8_DestroyIPN4bzla6parser4smt26Parser10ParsedItemES4_EvT_S6_RSaIT0_E.exit.i.i ]
+_ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE6resizeEm.exit: ; preds = %_ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit, %_ZSt8_DestroyIPN4bzla6parser4smt26Parser10ParsedItemES4_EvT_S6_RSaIT0_E.exit.i.i, %bb.n, %bb.m, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33
+  %.0 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33 ], [ true, %bb.m ], [ true, %_ZN4bzla6parser4smt26Parser8set_itemIN8bitwuzla4TermEEEvRNS2_10ParsedItemENS1_5TokenET_RKSt8optionalINS1_5Lexer10CoordinateEE.exit ], [ true, %bb.n ], [ true, %_ZSt8_DestroyIPN4bzla6parser4smt26Parser10ParsedItemES4_EvT_S6_RSaIT0_E.exit.i.i ]
   ret i1 %.0
 }
 
@@ -703,7 +693,7 @@ bb.j:                                             ; preds = %bb.a, %bb.i, %bb.h,
   %i.o = getelementptr inbounds i8, ptr %i.n, i64 -8
   %i.p = load i64, ptr %i.o, align 8, !tbaa !164  ; 14 uses
   %i.q = xor i64 %i.p, -1
-  %i.r = add i64 %i.l, %i.q                       ; 45 uses
+  %i.r = add i64 %i.l, %i.q                       ; 46 uses
   br i1 %i.b, label %bb.k, label %bb.bf
 
 bb.k:                                             ; preds = %bb.j
@@ -1106,8 +1096,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2507: ; preds = %_
   %i.exn = ptrtoint ptr %i.exl to i64
   %i.exo = ptrtoint ptr %i.exm to i64
   %i.exp = sub i64 %i.exn, %i.exo
-  %i.exq = sdiv exact i64 %i.exp, 152             ; 3 uses
-  %i.exr = sub i64 %i.exq, %i.r                   ; 2 uses
+  %i.exq = sdiv exact i64 %i.exp, 152             ; 2 uses
+  %i.exr = sub nuw i64 %i.exq, %i.r
   %i.exs = icmp ugt i64 %i.r, %i.exq
   br i1 %i.exs, label %bb.afl, label %bb.afm
 
@@ -1117,8 +1107,8 @@ bb.afl:                                           ; preds = %.critedge876.thread
   br label %.critedge
 
 bb.afm:                                           ; preds = %.critedge876.thread
-  %274 = icmp ult i64 %i.exr, %i.exq
-  br i1 %274, label %bb.afn, label %.critedge
+  %.not2666 = icmp eq i64 %i.r, 0
+  br i1 %.not2666, label %.critedge, label %bb.afn
 
 bb.afn:                                           ; preds = %bb.afm
   %i.exu = getelementptr inbounds nuw [152 x i8], ptr %i.exm, i64 %i.exr ; 3 uses

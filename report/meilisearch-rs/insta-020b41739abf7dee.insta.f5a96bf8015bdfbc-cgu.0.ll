@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.r
 
 bb.an:                                            ; preds = %.thread403
   %i.dv = extractvalue { i64, ptr } %i.du, 0
-  %i.dw = extractvalue { i64, ptr } %i.du, 1      ; 4 uses
+  %i.dw = extractvalue { i64, ptr } %i.du, 1      ; 5 uses
   %i.dx = trunc nuw i64 %i.dv to i1
   br i1 %i.dx, label %bb.ao, label %bb.as
 
@@ -244,7 +244,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.an
   %i.ec = icmp eq ptr %i.dw, null
-  %.pre = load i64, ptr %.sroa.571.0..sroa_idx, align 8 ; 11 uses
+  %.pre = load i64, ptr %.sroa.571.0..sroa_idx, align 8 ; 10 uses
   br i1 %i.ec, label %bb.at, label %bb.ax
 
 bb.at:                                            ; preds = %bb.ax, %bb.as
@@ -257,15 +257,15 @@ bb.at:                                            ; preds = %bb.ax, %bb.as
   %i.ed = ptrtoint ptr %i.dw to i64               ; 3 uses
   %i.ee = icmp sgt i64 %.pre, -1
   call void @llvm.assume(i1 %i.ee)
-  %i.ef = sub nsw i64 %.pre, %i.ed                ; 3 uses
+  %i.ef = sub nuw nsw i64 %.pre, %i.ed            ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !18729)
   %.not.i156 = icmp ult i64 %.pre, %i.ed
   br i1 %.not.i156, label %_ZN5alloc6string6String8truncate17hf71e28f22521745fE.exit, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   %i.eg = icmp ne i64 %.pre, %i.ed
-  %.not2.i = icmp samesign ult i64 %i.ef, %.pre
-  %or.cond.i = select i1 %i.eg, i1 %.not2.i, i1 false
+  %.not2.i = icmp ne ptr %i.dw, null
+  %or.cond.i = and i1 %i.eg, %.not2.i
   br i1 %or.cond.i, label %bb.av, label %.split.i157
 
 bb.av:                                            ; preds = %bb.au
@@ -668,7 +668,6 @@ bb.a:
   %i.e = add i64 %spec.select.i.i, 1
   %i.f = add i64 %i.e, %spec.select.i.i56
   %i.g = lshr i64 %i.f, 1                         ; 3 uses
-  %11 = add nuw i64 %i.g, 1
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.i = load i64, ptr %i.h, align 8, !noundef !17 ; 2 uses
   %i.j = icmp ult i64 %i.i, 1152921504606846976
@@ -839,14 +838,14 @@ bb.t:                                             ; preds = %bb.s, %bb.q
   br i1 %i.az, label %._crit_edge152, label %bb.u
 
 ._crit_edge152:                                   ; preds = %bb.t
-  %.pre = add i64 %i.aw, 1
+  %.pre = add nsw i64 %i.aw, 1
   br label %bb.v
 
 ._crit_edge127:                                   ; preds = %bb.ag, %bb.q, %.lr.ph126
-  %12 = icmp slt i64 %.sroa.029.1131, %11         ; 2 uses
-  %i.ba = zext i1 %12 to i64
+  %11 = icmp samesign ule i64 %.sroa.029.1131, %i.g ; 2 uses
+  %i.ba = zext i1 %11 to i64
   %.sroa.029.1 = add nuw nsw i64 %.sroa.029.1131, %i.ba
-  br i1 %12, label %bb.e, label %._crit_edge133
+  br i1 %11, label %bb.e, label %._crit_edge133
 
 bb.u:                                             ; preds = %bb.t
   %.not43 = icmp eq i64 %i.aw, %.sroa.029.0130
@@ -1063,8 +1062,8 @@ bb.ar:                                            ; preds = %bb.aq
   store i64 %.sink192, ptr %i.dz, align 8
   br label %._crit_edge133
 
-._crit_edge133:                                   ; preds = %bb.e, %._crit_edge127, %._crit_edge133.sink.split
-  %.sink = phi i64 [ 1, %._crit_edge133.sink.split ], [ 0, %._crit_edge127 ], [ 0, %bb.e ]
+._crit_edge133:                                   ; preds = %._crit_edge127, %bb.e, %._crit_edge133.sink.split
+  %.sink = phi i64 [ 1, %._crit_edge133.sink.split ], [ 0, %bb.e ], [ 0, %._crit_edge127 ]
   store i64 %.sink, ptr %0, align 8
   ret void
 }
@@ -1084,7 +1083,6 @@ bb.a:
   %i.e = add i64 %spec.select.i.i, 1
   %i.f = add i64 %i.e, %spec.select.i.i56
   %i.g = lshr i64 %i.f, 1                         ; 3 uses
-  %11 = add nuw i64 %i.g, 1
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.i = load i64, ptr %i.h, align 8, !noundef !17 ; 2 uses
   %i.j = icmp ult i64 %i.i, 1152921504606846976
@@ -1164,7 +1162,7 @@ bb.i:                                             ; preds = %bb.h, %bb.f
   br i1 %i.ac, label %._crit_edge162, label %bb.ac
 
 ._crit_edge162:                                   ; preds = %bb.i
-  %.pre167 = add i64 %i.z, 1
+  %.pre167 = add nsw i64 %i.z, 1
   br label %bb.ad
 
 .lr.ph144:                                        ; preds = %.lr.ph144.preheader, %bb.z
@@ -1196,14 +1194,14 @@ bb.m:                                             ; preds = %bb.l, %bb.j
   br i1 %i.ag, label %._crit_edge164, label %bb.n
 
 ._crit_edge164:                                   ; preds = %bb.m
-  %.pre = add i64 %i.ad, 1
+  %.pre = add nsw i64 %i.ad, 1
   br label %bb.o
 
 ._crit_edge145:                                   ; preds = %bb.z, %bb.j, %.lr.ph144
-  %12 = icmp slt i64 %.sroa.029.1149, %11         ; 2 uses
-  %i.ah = zext i1 %12 to i64
+  %11 = icmp samesign ule i64 %.sroa.029.1149, %i.g ; 2 uses
+  %i.ah = zext i1 %11 to i64
   %.sroa.029.1 = add nuw nsw i64 %.sroa.029.1149, %i.ah
-  br i1 %12, label %bb.e, label %._crit_edge151
+  br i1 %11, label %bb.e, label %._crit_edge151
 
 bb.n:                                             ; preds = %bb.m
   %.not43 = icmp eq i64 %i.ad, %.sroa.029.0148
@@ -1468,8 +1466,8 @@ bb.aq:                                            ; preds = %bb.ap
   store i64 %.sink198, ptr %i.dk, align 8
   br label %._crit_edge151
 
-._crit_edge151:                                   ; preds = %bb.e, %._crit_edge145, %._crit_edge151.sink.split
-  %.sink = phi i64 [ 1, %._crit_edge151.sink.split ], [ 0, %._crit_edge145 ], [ 0, %bb.e ]
+._crit_edge151:                                   ; preds = %._crit_edge145, %bb.e, %._crit_edge151.sink.split
+  %.sink = phi i64 [ 1, %._crit_edge151.sink.split ], [ 0, %bb.e ], [ 0, %._crit_edge145 ]
   store i64 %.sink, ptr %0, align 8
   ret void
 }
@@ -1489,7 +1487,6 @@ bb.a:
   %i.e = add i64 %spec.select.i.i, 1
   %i.f = add i64 %i.e, %spec.select.i.i56
   %i.g = lshr i64 %i.f, 1                         ; 3 uses
-  %13 = add nuw i64 %i.g, 1
   %i.h = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.i = load i64, ptr %i.h, align 8, !noundef !17 ; 2 uses
   %i.j = icmp ult i64 %i.i, 1152921504606846976
@@ -1557,7 +1554,7 @@ bb.i:                                             ; preds = %bb.h, %bb.f
   br i1 %i.u, label %._crit_edge163, label %bb.ac
 
 ._crit_edge163:                                   ; preds = %bb.i
-  %.pre168 = add i64 %i.r, 1
+  %.pre168 = add nsw i64 %i.r, 1
   br label %bb.ad
 
 .lr.ph143:                                        ; preds = %.lr.ph143.preheader, %bb.z
@@ -1589,14 +1586,14 @@ bb.m:                                             ; preds = %bb.l, %bb.j
   br i1 %i.y, label %._crit_edge165, label %bb.n
 
 ._crit_edge165:                                   ; preds = %bb.m
-  %.pre = add i64 %i.v, 1
+  %.pre = add nsw i64 %i.v, 1
   br label %bb.o
 
 ._crit_edge144:                                   ; preds = %bb.z, %bb.j, %.lr.ph143
-  %14 = icmp slt i64 %.sroa.029.1148, %13         ; 2 uses
-  %i.z = zext i1 %14 to i64
+  %13 = icmp samesign ule i64 %.sroa.029.1148, %i.g ; 2 uses
+  %i.z = zext i1 %13 to i64
   %.sroa.029.1 = add nuw nsw i64 %.sroa.029.1148, %i.z
-  br i1 %14, label %bb.e, label %._crit_edge150
+  br i1 %13, label %bb.e, label %._crit_edge150
 
 bb.n:                                             ; preds = %bb.m
   %.not43 = icmp eq i64 %i.v, %.sroa.029.0147
@@ -1881,8 +1878,8 @@ bb.ap:                                            ; preds = %bb.ao
   store i64 %.sink203, ptr %i.dc, align 8
   br label %._crit_edge150
 
-._crit_edge150:                                   ; preds = %bb.e, %._crit_edge144, %._crit_edge150.sink.split
-  %.sink = phi i64 [ 1, %._crit_edge150.sink.split ], [ 0, %._crit_edge144 ], [ 0, %bb.e ]
+._crit_edge150:                                   ; preds = %._crit_edge144, %bb.e, %._crit_edge150.sink.split
+  %.sink = phi i64 [ 1, %._crit_edge150.sink.split ], [ 0, %bb.e ], [ 0, %._crit_edge144 ]
   store i64 %.sink, ptr %0, align 8
   ret void
 }
@@ -2285,7 +2282,6 @@ bb.j:                                             ; preds = %bb.f
   %i.q = add i64 %spec.select.i.i.i, 1
   %i.r = add i64 %i.q, %spec.select.i.i56.i
   %i.s = lshr i64 %i.r, 1                         ; 3 uses
-  %11 = add nuw i64 %i.s, 1
   %i.t = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.u = load i64, ptr %i.t, align 8, !alias.scope !21288, !noalias !21290, !noundef !17 ; 2 uses
   %i.v = icmp ult i64 %i.u, 1152921504606846976
@@ -2507,10 +2503,10 @@ bb.ah:                                            ; preds = %bb.ag, %.lr.ph119.p
   br i1 %i.cb, label %bb.aj, label %bb.ai
 
 ._crit_edge120.i:                                 ; preds = %bb.ap, %.lr.ph119.peel.next.i, %bb.n, %bb.af, %.lr.ph119.preheader.i
-  %12 = icmp slt i64 %.sroa.029.1124.i, %11       ; 2 uses
-  %i.cc = zext i1 %12 to i64
+  %11 = icmp samesign ule i64 %.sroa.029.1124.i, %i.s ; 2 uses
+  %i.cc = zext i1 %11 to i64
   %.sroa.029.1.i = add nuw nsw i64 %.sroa.029.1124.i, %i.cc
-  br i1 %12, label %.lr.ph125.i, label %_ZN7similar10algorithms5myers17find_middle_snake17h2bb39926573160f1E.exit
+  br i1 %11, label %.lr.ph125.i, label %_ZN7similar10algorithms5myers17find_middle_snake17h2bb39926573160f1E.exit
 
 bb.ai:                                            ; preds = %bb.ah
   %.not43.i = icmp eq i64 %i.by, %.sroa.029.0123.i
@@ -2913,7 +2909,6 @@ bb.j:                                             ; preds = %bb.f
   %i.q = add i64 %spec.select.i.i.i, 1
   %i.r = add i64 %i.q, %spec.select.i.i56.i
   %i.s = lshr i64 %i.r, 1                         ; 3 uses
-  %11 = add nuw i64 %i.s, 1
   %i.t = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.u = load i64, ptr %i.t, align 8, !alias.scope !21468, !noalias !21470, !noundef !17 ; 2 uses
   %i.v = icmp ult i64 %i.u, 1152921504606846976
@@ -3135,10 +3130,10 @@ bb.ah:                                            ; preds = %bb.ag, %.lr.ph119.p
   br i1 %i.cb, label %bb.aj, label %bb.ai
 
 ._crit_edge120.i:                                 ; preds = %bb.ap, %.lr.ph119.peel.next.i, %bb.n, %bb.af, %.lr.ph119.preheader.i
-  %12 = icmp slt i64 %.sroa.029.1124.i, %11       ; 2 uses
-  %i.cc = zext i1 %12 to i64
+  %11 = icmp samesign ule i64 %.sroa.029.1124.i, %i.s ; 2 uses
+  %i.cc = zext i1 %11 to i64
   %.sroa.029.1.i = add nuw nsw i64 %.sroa.029.1124.i, %i.cc
-  br i1 %12, label %.lr.ph125.i, label %_ZN7similar10algorithms5myers17find_middle_snake17h2f141d3ad4b372e7E.exit
+  br i1 %11, label %.lr.ph125.i, label %_ZN7similar10algorithms5myers17find_middle_snake17h2f141d3ad4b372e7E.exit
 
 bb.ai:                                            ; preds = %bb.ah
   %.not43.i = icmp eq i64 %i.by, %.sroa.029.0123.i
@@ -3541,7 +3536,6 @@ bb.j:                                             ; preds = %bb.f
   %i.q = add i64 %spec.select.i.i.i, 1
   %i.r = add i64 %i.q, %spec.select.i.i56.i
   %i.s = lshr i64 %i.r, 1                         ; 3 uses
-  %11 = add nuw i64 %i.s, 1
   %i.t = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.u = load i64, ptr %i.t, align 8, !alias.scope !21788, !noalias !21790, !noundef !17 ; 2 uses
   %i.v = icmp ult i64 %i.u, 1152921504606846976
@@ -3763,10 +3757,10 @@ bb.ah:                                            ; preds = %bb.ag, %.lr.ph119.p
   br i1 %i.cb, label %bb.aj, label %bb.ai
 
 ._crit_edge120.i:                                 ; preds = %bb.ap, %.lr.ph119.peel.next.i, %bb.n, %bb.af, %.lr.ph119.preheader.i
-  %12 = icmp slt i64 %.sroa.029.1124.i, %11       ; 2 uses
-  %i.cc = zext i1 %12 to i64
+  %11 = icmp samesign ule i64 %.sroa.029.1124.i, %i.s ; 2 uses
+  %i.cc = zext i1 %11 to i64
   %.sroa.029.1.i = add nuw nsw i64 %.sroa.029.1124.i, %i.cc
-  br i1 %12, label %.lr.ph125.i, label %_ZN7similar10algorithms5myers17find_middle_snake17h4543af9f3b03cbf2E.exit
+  br i1 %11, label %.lr.ph125.i, label %_ZN7similar10algorithms5myers17find_middle_snake17h4543af9f3b03cbf2E.exit
 
 bb.ai:                                            ; preds = %bb.ah
   %.not43.i = icmp eq i64 %i.by, %.sroa.029.0123.i

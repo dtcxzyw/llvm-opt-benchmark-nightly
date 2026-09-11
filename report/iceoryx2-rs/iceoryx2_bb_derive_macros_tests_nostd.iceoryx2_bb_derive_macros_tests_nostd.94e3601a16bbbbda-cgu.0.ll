@@ -202,18 +202,17 @@ define internal fastcc void @_RNvMs5_NtCsbqH9stoieM8_5alloc7raw_vecNtB5_11RawVec
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [16 x i8], align 8                ; 4 uses
-  %i.c = mul i64 %1, 72                           ; 6 uses
+  %i.c = mul nuw nsw i64 %1, 72                   ; 4 uses
   %or.cond.not = icmp ugt i64 %1, 128102389400760775
   br i1 %or.cond.not, label %bb.e, label %bb.b, !prof !10
 
 bb.b:                                             ; preds = %bb.a
   %i.d = icmp eq i64 %.0.val, 0
-  br i1 %i.d, label %3, label %bb.c
+  br i1 %i.d, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = mul nuw i64 %.0.val, 72                    ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.e = icmp uge i64 %i.c, %2
+  %i.e = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvXs0_NtCsglnFQv1SDtP_18iceoryx2_bb_memory14heap_allocatorNtB5_13HeapAllocatorNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocator13BaseAllocator8allocate(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @_RNvCscMwKQt1urZC_37iceoryx2_bb_derive_macros_tests_nostd6GLOBAL, i64 noundef range(i64 1, -9223372036854775807) 8, i64 noundef range(i64 0, 9223372036854775801) %i.c) #18
@@ -223,15 +222,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.g, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit.thread11, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %2 = mul nuw nsw i64 %.0.val, 72                ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.f, ptr nonnull align 1 %.8.val, i64 %2, i1 false)
   tail call void @_RNvXs0_NtCsglnFQv1SDtP_18iceoryx2_bb_memory14heap_allocatorNtB5_13HeapAllocatorNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocator13BaseAllocator10deallocate(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @_RNvCscMwKQt1urZC_37iceoryx2_bb_derive_macros_tests_nostd6GLOBAL, ptr noundef nonnull %.8.val, i64 noundef range(i64 1, -9223372036854775807) 8, i64 noundef %2) #18
   br label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit.thread
 
-3:                                                ; preds = %bb.b
-  %4 = icmp eq i64 %i.c, 0
-  br i1 %4, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit.thread, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit
-
-_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit: ; preds = %3
+_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
   tail call void @_RNvCsicpYtSlSgpD_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvXs0_NtCsglnFQv1SDtP_18iceoryx2_bb_memory14heap_allocatorNtB5_13HeapAllocatorNtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits9allocator13BaseAllocator8allocate(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @_RNvCscMwKQt1urZC_37iceoryx2_bb_derive_macros_tests_nostd6GLOBAL, i64 noundef range(i64 1, 9) 8, i64 noundef range(i64 0, -9223372036854775808) %i.c) #18
@@ -245,10 +241,10 @@ _RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Al
   store i64 8, ptr %i.j, align 8
   br label %bb.e
 
-_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit.thread: ; preds = %3, %bb.d, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit
-  %.sroa.0.0.i.i.pn10 = phi ptr [ %i.h, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit ], [ inttoptr (i64 8 to ptr), %3 ], [ %i.f, %bb.d ]
+_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit.thread: ; preds = %bb.d, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit
+  %.sroa.0.0.i.i.pn12 = phi ptr [ %i.f, %bb.d ], [ %i.h, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit ]
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.0.0.i.i.pn10, ptr %i.k, align 8
+  store ptr %.sroa.0.0.i.i.pn12, ptr %i.k, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit.thread11, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit.thread

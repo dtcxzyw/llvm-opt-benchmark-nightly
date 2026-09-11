@@ -159,29 +159,30 @@ bb.a:
 }
 
 ; Function Attrs: cold nounwind nonlazybind uwtable
-define internal fastcc void @_RNvMs5_NtCsbqH9stoieM8_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs8tG85QUCESg_24iceoryx2_bb_system_types(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef range(i64 4, 0) %1) unnamed_addr #1 {
+define internal fastcc void @_RNvMs5_NtCsbqH9stoieM8_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs8tG85QUCESg_24iceoryx2_bb_system_types(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 16)) %0, i64 %.0.val, ptr %.8.val, i64 noundef range(i64 4, 0) %1) unnamed_addr #1 {
 bb.a:
-  %i.a = mul i64 %1, 264                          ; 6 uses
+  %i.a = mul nuw nsw i64 %1, 264                  ; 4 uses
   %or.cond.not = icmp ugt i64 %1, 34937015291116575
-  br i1 %or.cond.not, label %bb.e, label %bb.b, !prof !9
+  br i1 %or.cond.not, label %2, label %bb.b, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   %i.b = icmp eq i64 %.0.val, 0
-  br i1 %i.b, label %2, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit
+  br i1 %i.b, label %bb.c, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit
+
+2:                                                ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %3, align 8
+  br label %bb.e
 
 _RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.c = mul nuw i64 %.0.val, 264                 ; 2 uses
+  %i.c = mul nuw i64 %.0.val, 264
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.d = icmp uge i64 %i.a, %i.c
+  %i.d = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.d)
   %i.e = tail call noundef align 8 ptr @_RNvCsicpYtSlSgpD_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.c, i64 noundef 8, i64 noundef range(i64 0, 9223372036854775801) %i.a) #17
   br label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit
 
-2:                                                ; preds = %bb.b
-  %3 = icmp eq i64 %i.a, 0
-  br i1 %3, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread, label %bb.c
-
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.b
   tail call void @_RNvCsicpYtSlSgpD_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #17
   %i.f = tail call noundef align 8 ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.a, i64 noundef range(i64 1, -9223372036854775807) 8) #17
   br label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit
@@ -189,25 +190,22 @@ bb.c:                                             ; preds = %2
 _RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit: ; preds = %bb.c, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit
   %.pn8 = phi ptr [ %i.e, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator4grow.exit ], [ %i.f, %bb.c ] ; 2 uses
   %i.g = icmp eq ptr %.pn8, null
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   br i1 %i.g, label %bb.d, label %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread
 
 bb.d:                                             ; preds = %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 8, ptr %4, align 8
+  store i64 %i.a, ptr %5, align 8
   br label %bb.e
 
-_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread: ; preds = %2, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit
-  %.pn810 = phi ptr [ %.pn8, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit ], [ inttoptr (i64 8 to ptr), %2 ]
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.pn810, ptr %5, align 8
+_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread: ; preds = %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit
+  store ptr %.pn8, ptr %4, align 8
+  store i64 %i.a, ptr %5, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.a, %bb.d, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread
-  %.sink13 = phi i64 [ 16, %bb.d ], [ 16, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread ], [ 8, %bb.a ]
-  %.sink11 = phi i64 [ %i.a, %bb.d ], [ %i.a, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread ], [ 0, %bb.a ]
-  %.sink = phi i64 [ 1, %bb.d ], [ 0, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread ], [ 1, %bb.a ]
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink13
-  store i64 %.sink11, ptr %6, align 8
+bb.e:                                             ; preds = %bb.d, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread, %2
+  %.sink = phi i64 [ 1, %bb.d ], [ 0, %_RNvXs1_NtCsbqH9stoieM8_5alloc5allocNtB5_6GlobalNtNtCs8Chj7Szqq0n_4core5alloc9Allocator8allocate.exit.thread ], [ 1, %2 ]
   store i64 %.sink, ptr %0, align 8
   ret void
 }

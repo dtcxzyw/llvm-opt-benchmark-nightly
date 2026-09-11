@@ -21,7 +21,6 @@ target triple = "x86_64-unknown-linux-gnu"
 @13 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @11, [16 x i8] c"b\00\00\00\00\00\00\00\1C\02\00\00\16\00\00\00" }>, align 8
 @14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @11, [16 x i8] c"b\00\00\00\00\00\00\00\1D\02\00\00T\00\00\00" }>, align 8
 @15 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @11, [16 x i8] c"b\00\00\00\00\00\00\00\1D\02\00\00\1A\00\00\00" }>, align 8
-@16 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @11, [16 x i8] c"b\00\00\00\00\00\00\00\1F\02\00\00\11\00\00\00" }>, align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvCsdQ1XOHuLjZb_13phf_generator13generate_hashNtCs1ycKUSY4YU7_17fish_localization8LanguageECs4j8jMzqdx39_18build_script_build(ptr sret([56 x i8]) align 8 %0, ptr align 8 %1, i64 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -424,7 +423,7 @@ bb.d:                                             ; preds = %bb.q, %bb.b
   br label %bb.ab
 
 bb.e:                                             ; preds = %bb.b
-  %i.n = sub i64 8, %i.f                          ; 3 uses
+  %i.n = sub nuw i64 8, %i.f                      ; 3 uses
   %i.o = icmp ugt i64 %i.f, 8
   br i1 %i.o, label %bb.l, label %bb.f
 
@@ -472,7 +471,7 @@ bb.k:                                             ; preds = %bb.i
 
 _RNvNtCscqxlOuhQHE7_9siphasher6common9u8to64_leCs4j8jMzqdx39_18build_script_build.exit.i: ; preds = %bb.k, %bb.i
   %.sroa.011.2.i.i = phi i64 [ %i.ag, %bb.k ], [ %.sroa.011.1.i.i, %bb.i ]
-  %i.ah = load i64, ptr %i.e, align 8             ; 5 uses
+  %i.ah = load i64, ptr %i.e, align 8             ; 4 uses
   %i.ai = shl nuw nsw i64 %i.ah, 3
   %i.aj = icmp ugt i64 %i.ah, 2305843009213693951
   br i1 %i.aj, label %bb.n, label %bb.m
@@ -552,9 +551,8 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.d
 
 bb.r:                                             ; preds = %bb.o
-  %i.bx = add i64 %i.ah, %2                       ; 2 uses
-  %3 = icmp ult i64 %i.bx, %i.ah
-  br i1 %3, label %4, label %_RNvXsd_NtCscqxlOuhQHE7_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCs4j8jMzqdx39_18build_script_build.exit
+  %i.bx = add nuw nsw i64 %i.ah, %2
+  br label %_RNvXsd_NtCscqxlOuhQHE7_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCs4j8jMzqdx39_18build_script_build.exit
 
 ._crit_edge.i:                                    ; preds = %bb.ab, %bb.d
   %.sroa.04.0.lcssa.i = phi i64 [ %.sroa.0.0.i, %bb.d ], [ %i.dz, %bb.ab ] ; 5 uses
@@ -671,10 +669,6 @@ bb.ab:                                            ; preds = %bb.ab, %.lr.ph.i
   %i.dz = add nuw i64 %.sroa.04.022.i, 8          ; 3 uses
   %i.ea = icmp ult i64 %i.dz, %i.i
   br i1 %i.ea, label %bb.ab, label %._crit_edge.i
-
-4:                                                ; preds = %bb.r
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr nonnull align 8 @16) #23
-  unreachable
 
 _RNvXsd_NtCscqxlOuhQHE7_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCs4j8jMzqdx39_18build_script_build.exit: ; preds = %bb.r, %_RNvNtCscqxlOuhQHE7_9siphasher6common9u8to64_leCs4j8jMzqdx39_18build_script_build.exit21.i
   %storemerge.i = phi i64 [ %i.h, %_RNvNtCscqxlOuhQHE7_9siphasher6common9u8to64_leCs4j8jMzqdx39_18build_script_build.exit21.i ], [ %i.bx, %bb.r ]
