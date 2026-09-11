@@ -204,60 +204,63 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp eq i64 %1, 0
-  br i1 %i.c, label %A1C_Arena_calloc.exit.thread21, label %A1C_Arena_calloc.exit
+  br i1 %i.c, label %A1C_Arena_calloc.exit.thread21.thread, label %A1C_Arena_calloc.exit
+
+A1C_Arena_calloc.exit.thread21.thread:            ; preds = %bb.b
+  store i32 5, ptr %0, align 8, !tbaa !30
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr @.str.17, ptr %3, align 8, !tbaa !31
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %1, ptr %4, align 8, !tbaa !31
+  br label %A1C_Arena_calloc.exit.thread
 
 A1C_Arena_calloc.exit:                            ; preds = %bb.b
   %i.d = load ptr, ptr %2, align 8, !tbaa !39
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !40
-  %i.g = tail call ptr %i.d(ptr noundef %i.f, i64 noundef %i.b) #16, !inline_history !1 ; 2 uses
+  %i.g = tail call ptr %i.d(ptr noundef %i.f, i64 noundef %i.b) #16, !inline_history !1 ; 9 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %A1C_Arena_calloc.exit.thread, label %A1C_Arena_calloc.exit.thread21
 
-A1C_Arena_calloc.exit.thread21:                   ; preds = %bb.b, %A1C_Arena_calloc.exit
-  %.0.i23 = phi ptr [ %i.g, %A1C_Arena_calloc.exit ], [ @.str.17, %bb.b ] ; 9 uses
+A1C_Arena_calloc.exit.thread21:                   ; preds = %A1C_Arena_calloc.exit
   store i32 5, ptr %0, align 8, !tbaa !30
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.0.i23, ptr %i.i, align 8, !tbaa !31
+  store ptr %i.g, ptr %i.i, align 8, !tbaa !31
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %1, ptr %i.j, align 8, !tbaa !31
-  %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %A1C_Arena_calloc.exit.thread, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %A1C_Arena_calloc.exit.thread21
   %xtraiter = and i64 %1, 3                       ; 3 uses
-  %3 = icmp ult i64 %1, 4
-  br i1 %3, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+  %5 = icmp ult i64 %1, 4
+  br i1 %5, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+.lr.ph.preheader.new:                             ; preds = %A1C_Arena_calloc.exit.thread21
   %unroll_iter = and i64 %1, 288230376151711740
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.024 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.w, %.lr.ph ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
-  %i.k = getelementptr inbounds nuw [64 x i8], ptr %.0.i23, i64 %.024 ; 2 uses
+  %i.k = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %.024 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   store ptr %0, ptr %i.l, align 8, !tbaa !43
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 56
   store ptr %0, ptr %i.m, align 8, !tbaa !44
-  %i.n = getelementptr inbounds nuw [64 x i8], ptr %.0.i23, i64 %.024 ; 2 uses
+  %i.n = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %.024 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 88
   store ptr %0, ptr %i.o, align 8, !tbaa !43
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 120
   store ptr %0, ptr %i.p, align 8, !tbaa !44
-  %i.q = getelementptr inbounds nuw [64 x i8], ptr %.0.i23, i64 %.024 ; 2 uses
+  %i.q = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %.024 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 152
   store ptr %0, ptr %i.r, align 8, !tbaa !43
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 184
   store ptr %0, ptr %i.s, align 8, !tbaa !44
-  %i.t = getelementptr inbounds nuw [64 x i8], ptr %.0.i23, i64 %.024 ; 2 uses
+  %i.t = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %.024 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 216
   store ptr %0, ptr %i.u, align 8, !tbaa !43
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 248
   store ptr %0, ptr %i.v, align 8, !tbaa !44
   %i.w = add nuw nsw i64 %.024, 4                 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !3
 
@@ -265,8 +268,8 @@ A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa:  ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %A1C_Arena_calloc.exit.thread, label %.lr.ph.epil.preheader
 
-.lr.ph.epil.preheader:                            ; preds = %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.024.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.w, %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa ]
+.lr.ph.epil.preheader:                            ; preds = %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, %A1C_Arena_calloc.exit.thread21
+  %.024.epil.init = phi i64 [ 0, %A1C_Arena_calloc.exit.thread21 ], [ %i.w, %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa ]
   %lcmp.mod27 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod27)
   br label %.lr.ph.epil
@@ -274,7 +277,7 @@ A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa:  ; preds = %.lr.ph
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
   %.024.epil = phi i64 [ %i.aa, %.lr.ph.epil ], [ %.024.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
-  %i.x = getelementptr inbounds nuw [64 x i8], ptr %.0.i23, i64 %.024.epil ; 2 uses
+  %i.x = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %.024.epil ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   store ptr %0, ptr %i.y, align 8, !tbaa !43
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 56
@@ -284,8 +287,8 @@ A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa:  ; preds = %.lr.ph
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %A1C_Arena_calloc.exit.thread, label %.lr.ph.epil, !llvm.loop !104
 
-A1C_Arena_calloc.exit.thread:                     ; preds = %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, %.lr.ph.epil, %A1C_Arena_calloc.exit.thread21, %bb.a, %A1C_Arena_calloc.exit
-  %.018 = phi ptr [ null, %A1C_Arena_calloc.exit ], [ null, %bb.a ], [ %.0.i23, %A1C_Arena_calloc.exit.thread21 ], [ %.0.i23, %.lr.ph.epil ], [ %.0.i23, %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa ]
+A1C_Arena_calloc.exit.thread:                     ; preds = %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, %.lr.ph.epil, %A1C_Arena_calloc.exit.thread21.thread, %bb.a, %A1C_Arena_calloc.exit
+  %.018 = phi ptr [ null, %A1C_Arena_calloc.exit ], [ null, %bb.a ], [ @.str.17, %A1C_Arena_calloc.exit.thread21.thread ], [ %i.g, %.lr.ph.epil ], [ %i.g, %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa ]
   ret ptr %.018
 }
 
@@ -437,64 +440,67 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp eq i64 %1, 0
-  br i1 %i.c, label %A1C_Arena_calloc.exit.thread18, label %A1C_Arena_calloc.exit
+  br i1 %i.c, label %A1C_Arena_calloc.exit.thread18.thread, label %A1C_Arena_calloc.exit
+
+A1C_Arena_calloc.exit.thread18.thread:            ; preds = %bb.b
+  store i32 4, ptr %0, align 8, !tbaa !30
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr @.str.17, ptr %3, align 8, !tbaa !31
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %1, ptr %4, align 8, !tbaa !31
+  br label %A1C_Arena_calloc.exit.thread
 
 A1C_Arena_calloc.exit:                            ; preds = %bb.b
   %i.d = load ptr, ptr %2, align 8, !tbaa !39
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !40
-  %i.g = tail call ptr %i.d(ptr noundef %i.f, i64 noundef %i.b) #16, !inline_history !1 ; 2 uses
+  %i.g = tail call ptr %i.d(ptr noundef %i.f, i64 noundef %i.b) #16, !inline_history !1 ; 13 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %A1C_Arena_calloc.exit.thread, label %A1C_Arena_calloc.exit.thread18
 
-A1C_Arena_calloc.exit.thread18:                   ; preds = %bb.b, %A1C_Arena_calloc.exit
-  %.0.i20 = phi ptr [ %i.g, %A1C_Arena_calloc.exit ], [ @.str.17, %bb.b ] ; 13 uses
+A1C_Arena_calloc.exit.thread18:                   ; preds = %A1C_Arena_calloc.exit
   store i32 4, ptr %0, align 8, !tbaa !30
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.0.i20, ptr %i.i, align 8, !tbaa !31
+  store ptr %i.g, ptr %i.i, align 8, !tbaa !31
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %1, ptr %i.j, align 8, !tbaa !31
-  %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %A1C_Arena_calloc.exit.thread, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %A1C_Arena_calloc.exit.thread18
   %xtraiter = and i64 %1, 7                       ; 3 uses
-  %3 = icmp ult i64 %1, 8
-  br i1 %3, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+  %5 = icmp ult i64 %1, 8
+  br i1 %5, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+.lr.ph.preheader.new:                             ; preds = %A1C_Arena_calloc.exit.thread18
   %unroll_iter = and i64 %1, 576460752303423480
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.021 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.aa, %.lr.ph ] ; 9 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.7, %.lr.ph ]
-  %i.k = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021
+  %i.k = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   store ptr %0, ptr %i.l, align 8, !tbaa !41
-  %i.m = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021
+  %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   store ptr %0, ptr %i.n, align 8, !tbaa !41
-  %i.o = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021
+  %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 88
   store ptr %0, ptr %i.p, align 8, !tbaa !41
-  %i.q = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021
+  %i.q = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 120
   store ptr %0, ptr %i.r, align 8, !tbaa !41
-  %i.s = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021
+  %i.s = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 152
   store ptr %0, ptr %i.t, align 8, !tbaa !41
-  %i.u = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021
+  %i.u = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 184
   store ptr %0, ptr %i.v, align 8, !tbaa !41
-  %i.w = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021
+  %i.w = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 216
   store ptr %0, ptr %i.x, align 8, !tbaa !41
-  %i.y = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021
+  %i.y = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 248
   store ptr %0, ptr %i.z, align 8, !tbaa !41
   %i.aa = add nuw nsw i64 %.021, 8                ; 2 uses
-  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
+  %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !5
 
@@ -502,8 +508,8 @@ A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa:  ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %A1C_Arena_calloc.exit.thread, label %.lr.ph.epil.preheader
 
-.lr.ph.epil.preheader:                            ; preds = %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, %.lr.ph.preheader
-  %.021.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.aa, %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa ]
+.lr.ph.epil.preheader:                            ; preds = %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, %A1C_Arena_calloc.exit.thread18
+  %.021.epil.init = phi i64 [ 0, %A1C_Arena_calloc.exit.thread18 ], [ %i.aa, %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa ]
   %lcmp.mod24 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod24)
   br label %.lr.ph.epil
@@ -511,7 +517,7 @@ A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa:  ; preds = %.lr.ph
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
   %.021.epil = phi i64 [ %i.ad, %.lr.ph.epil ], [ %.021.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
-  %i.ab = getelementptr inbounds nuw [32 x i8], ptr %.0.i20, i64 %.021.epil
+  %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %.021.epil
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   store ptr %0, ptr %i.ac, align 8, !tbaa !41
   %i.ad = add nuw nsw i64 %.021.epil, 1
@@ -519,8 +525,8 @@ A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa:  ; preds = %.lr.ph
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %A1C_Arena_calloc.exit.thread, label %.lr.ph.epil, !llvm.loop !106
 
-A1C_Arena_calloc.exit.thread:                     ; preds = %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, %.lr.ph.epil, %A1C_Arena_calloc.exit.thread18, %bb.a, %A1C_Arena_calloc.exit
-  %.015 = phi ptr [ null, %A1C_Arena_calloc.exit ], [ null, %bb.a ], [ %.0.i20, %A1C_Arena_calloc.exit.thread18 ], [ %.0.i20, %.lr.ph.epil ], [ %.0.i20, %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa ]
+A1C_Arena_calloc.exit.thread:                     ; preds = %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa, %.lr.ph.epil, %A1C_Arena_calloc.exit.thread18.thread, %bb.a, %A1C_Arena_calloc.exit
+  %.015 = phi ptr [ null, %A1C_Arena_calloc.exit ], [ null, %bb.a ], [ @.str.17, %A1C_Arena_calloc.exit.thread18.thread ], [ %i.g, %.lr.ph.epil ], [ %i.g, %A1C_Arena_calloc.exit.thread.loopexit.unr-lcssa ]
   ret ptr %.015
 }
 
