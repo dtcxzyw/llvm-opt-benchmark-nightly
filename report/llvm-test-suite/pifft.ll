@@ -204,7 +204,7 @@ bb.a:
   %i.n = select i1 %i.l, double %i.m, double %i.k ; 2 uses
   %i.o = fadd double %i.n, 5.000000e-01
   %i.p = fcmp oge double %i.o, %i.d               ; 5 uses
-  %i.q = zext i1 %i.p to i32                      ; 2 uses
+  %i.q = zext i1 %i.p to i32                      ; 3 uses
   %i.r = extractelement <2 x double> %i.c, i64 0
   %i.s = fmul nnan double %i.r, 5.000000e-01
   %i.t = fmul double %i.s, %i.n                   ; 3 uses
@@ -213,19 +213,19 @@ bb.a:
   %i.w = fsub double %i.v, %i.t
   store double %i.w, ptr %i.j, align 8, !tbaa !28
   store double %i.t, ptr %i.u, align 8, !tbaa !28
-  %i.x = add nsw i32 %i.h, %i.q                   ; 3 uses
+  %i.x = add nsw i32 %i.h, %i.q                   ; 2 uses
   %i.y = icmp sgt i32 %0, %i.x
   br i1 %i.y, label %.loopexit.loopexit, label %.loopexit
 
 .loopexit.loopexit:                               ; preds = %bb.a
   %i.z = add i32 %0, 1
-  %5 = add nsw i32 %i.x, 1
-  %6 = sext i32 %i.z to i64
-  %smin = tail call i32 @llvm.smin.i32(i32 %0, i32 %5)
-  %i.aa = sub i32 %0, %smin
+  %5 = sext i32 %i.z to i64
+  %6 = add nsw i32 %0, -2
+  %7 = add i32 %2, %i.q
+  %i.aa = sub i32 %6, %7
   %i.ab = zext i32 %i.aa to i64                   ; 2 uses
   %i.ac = shl nuw nsw i64 %i.ab, 2
-  %i.ad = sub nsw i64 %6, %i.ab
+  %i.ad = sub nsw i64 %5, %i.ab
   %i.ae = shl nsw i64 %i.ad, 2
   %scevgep = getelementptr i8, ptr %4, i64 %i.ae
   %i.af = add nuw nsw i64 %i.ac, 4
