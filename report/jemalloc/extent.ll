@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %bb.v
   store i64 %i.cj, ptr %i.ch, align 8, !tbaa !25
   br label %extent_recycle_split.exit.thread
 
-extent_recycle_split.exit.thread:                 ; preds = %bb.v, %bb.w, %bb.i
+extent_recycle_split.exit.thread:                 ; preds = %bb.w, %bb.v, %bb.i
   %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 64
   store atomic i8 0, ptr %i.ck monotonic, align 8
   %i.cl = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.a) #9 ; 0 uses

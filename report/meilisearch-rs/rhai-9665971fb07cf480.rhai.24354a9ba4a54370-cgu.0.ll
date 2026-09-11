@@ -205,10 +205,10 @@ bb.hc:                                            ; preds = %bb.gs, %.thread726,
   br i1 %.not829, label %.cont560, label %.noexc
 
 .cont560:                                         ; preds = %bb.hb, %bb.hc
-  %.sroa.0125.sroa.6.0738757764776 = phi i64 [ %.sroa.0125.sroa.6.0.ph, %bb.hc ], [ %i.tq, %bb.hb ]
-  %.sroa.6126.0740752766773 = phi i8 [ 2, %bb.hc ], [ 0, %bb.hb ]
-  %.sroa.0.0 = phi i64 [ %.sroa.0125.sroa.0.0.ph, %bb.hc ], [ %i.oj, %bb.hb ]
-  %.sroa.9.0 = phi i64 [ %i.oj, %bb.hc ], [ %i.tp, %bb.hb ]
+  %.sroa.0125.sroa.6.0738757764776 = phi i64 [ %i.oj, %bb.hb ], [ %.sroa.0125.sroa.0.0.ph, %bb.hc ]
+  %.sroa.6126.0740752766773 = phi i8 [ 0, %bb.hb ], [ 2, %bb.hc ]
+  %.sroa.0.0 = phi i64 [ %i.tq, %bb.hb ], [ %.sroa.0125.sroa.6.0.ph, %bb.hc ]
+  %.sroa.9.0 = phi i64 [ %i.tp, %bb.hb ], [ %i.oj, %bb.hc ]
   %i.ts = load i64, ptr %i.ee, align 8, !alias.scope !39256, !noalias !39257, !noundef !55 ; 2 uses
   %i.tt = icmp ugt i64 %i.ts, 3                   ; 2 uses
   %i.tu = load ptr, ptr %i.ca, align 8, !alias.scope !39256, !noalias !39257, !nonnull !55
@@ -233,9 +233,9 @@ bb.he:                                            ; preds = %.noexc492, %.cont56
   %.sroa.01.0.i489 = phi ptr [ %i.es, %.noexc492 ], [ %.sink9.i.i487, %.cont560 ] ; 2 uses
   %.sroa.0.0.i490 = phi ptr [ %i.tx, %.noexc492 ], [ %.sink10.i.i486, %.cont560 ]
   %i.tz = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0.i490, i64 %i.ty ; 4 uses
-  store i64 %.sroa.0.0, ptr %i.tz, align 8
+  store i64 %.sroa.0125.sroa.6.0738757764776, ptr %i.tz, align 8
   %.sroa.4566.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.tz, i64 8
-  store i64 %.sroa.0125.sroa.6.0738757764776, ptr %.sroa.4566.0..sroa_idx, align 8
+  store i64 %.sroa.0.0, ptr %.sroa.4566.0..sroa_idx, align 8
   %.sroa.5567.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.tz, i64 16
   store i64 %.sroa.9.0, ptr %.sroa.5567.0..sroa_idx, align 8
   %.sroa.6568.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.tz, i64 24

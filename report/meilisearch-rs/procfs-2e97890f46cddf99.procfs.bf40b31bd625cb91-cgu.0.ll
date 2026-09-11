@@ -205,9 +205,9 @@ bb.lf:                                            ; preds = %"_ZN4core3ptr42drop
   call fastcc void @"_ZN4core3ptr132drop_in_place$LT$core..option..Option$LT$core..option..IntoIter$LT$$LP$alloc..string..String$C$alloc..string..String$RP$$GT$$GT$$GT$17h9a3fbf496b2194f5E"(ptr noalias noundef readonly align 8 dereferenceable(48) %i.afo) #44, !noalias !2282
   br label %.body.thread.sink.split.i.i.i.i.i.i
 
-"_ZN106_$LT$core..iter..adapters..flatten..Flatten$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h66e47c6f1e8b9258E.exit.i.i.i.thread.i.i.i": ; preds = %"_ZN4core3ptr132drop_in_place$LT$core..option..Option$LT$core..option..IntoIter$LT$$LP$alloc..string..String$C$alloc..string..String$RP$$GT$$GT$$GT$17h9a3fbf496b2194f5E.exit.i.i.i.i.i.i.i.i", %bb.lc, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit.i.i.i.i.i8.i.i.i.i.i.i.i.i", %bb.lf
-  %.pre.i.i = load ptr, ptr %i.h, align 8, !noalias !2242
+"_ZN106_$LT$core..iter..adapters..flatten..Flatten$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h66e47c6f1e8b9258E.exit.i.i.i.thread.i.i.i": ; preds = %bb.lf, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit.i.i.i.i.i8.i.i.i.i.i.i.i.i", %bb.lc, %"_ZN4core3ptr132drop_in_place$LT$core..option..Option$LT$core..option..IntoIter$LT$$LP$alloc..string..String$C$alloc..string..String$RP$$GT$$GT$$GT$17h9a3fbf496b2194f5E.exit.i.i.i.i.i.i.i.i"
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.f, ptr noundef nonnull readonly align 8 dereferenceable(152) %i.j, i64 48, i1 false), !noalias !2243
+  %4 = load ptr, ptr %i.h, align 8, !noalias !2242, !nonnull !4, !align !7, !noundef !4
   call void @llvm.experimental.noalias.scope.decl(metadata !2283)
   %.promoted.i.i.i.i.i.i.i = load i64, ptr %i.f, align 8, !alias.scope !2284, !noalias !2285 ; 2 uses
   store i64 -9223372036854775808, ptr %i.f, align 8, !alias.scope !2286, !noalias !2287
@@ -222,7 +222,7 @@ bb.lf:                                            ; preds = %"_ZN4core3ptr42drop
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i, ptr noundef nonnull readonly align 8 dereferenceable(40) %.sroa.446.0..sroa_idx.i485, i64 40, i1 false), !noalias !2243
   store i64 %.promoted.i.i.i.i.i.i.i, ptr %i.b, align 8, !noalias !2288
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2289
-  invoke fastcc void @"_ZN9hashbrown3map28HashMap$LT$K$C$V$C$S$C$A$GT$6insert17hda21b9dc1e6260b8E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(48) %.pre.i.i, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b, ptr noalias noundef readonly align 8 captures(address) dereferenceable(24) %i.afq)
+  invoke fastcc void @"_ZN9hashbrown3map28HashMap$LT$K$C$V$C$S$C$A$GT$6insert17hda21b9dc1e6260b8E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(48) %4, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b, ptr noalias noundef readonly align 8 captures(address) dereferenceable(24) %i.afq)
           to label %.noexc.us.i.i.i.i.i.i.i unwind label %bb.lh, !noalias !2290
 
 .noexc.us.i.i.i.i.i.i.i:                          ; preds = %.lr.ph.split.us.i.i.i.i.i.i.i
