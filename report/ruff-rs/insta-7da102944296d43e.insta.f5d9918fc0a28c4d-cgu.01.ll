@@ -204,7 +204,7 @@ _RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE4nextCsl6EuCK7xub
 
 bb.q:                                             ; preds = %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE4nextCsl6EuCK7xub1_5insta.exit243.thread
   %i.co = extractvalue { i64, ptr } %i.cn, 0
-  %i.cp = extractvalue { i64, ptr } %i.cn, 1      ; 4 uses
+  %i.cp = extractvalue { i64, ptr } %i.cn, 1      ; 5 uses
   %i.cq = trunc nuw i64 %i.co to i1
   br i1 %i.cq, label %bb.r, label %bb.v
 
@@ -241,18 +241,18 @@ bb.v:                                             ; preds = %bb.q
 
 bb.w:                                             ; preds = %bb.ab, %bb.v
   %i.cw = ptrtoint ptr %i.cp to i64               ; 3 uses
-  %i.cx = load i64, ptr %.sroa.574.0..sroa_idx, align 8, !noundef !4 ; 5 uses
+  %i.cx = load i64, ptr %.sroa.574.0..sroa_idx, align 8, !noundef !4 ; 4 uses
   %i.cy = icmp sgt i64 %i.cx, -1
   call void @llvm.assume(i1 %i.cy)
-  %i.cz = sub nsw i64 %i.cx, %i.cw                ; 3 uses
+  %i.cz = sub nuw nsw i64 %i.cx, %i.cw            ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !278)
   %.not.i = icmp ult i64 %i.cx, %i.cw
   br i1 %.not.i, label %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String8truncate.exit, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.da = icmp ne i64 %i.cx, %i.cw
-  %.not2.i = icmp samesign ult i64 %i.cz, %i.cx
-  %or.cond.i = select i1 %i.da, i1 %.not2.i, i1 false
+  %.not2.i = icmp ne ptr %i.cp, null
+  %or.cond.i = and i1 %i.da, %.not2.i
   br i1 %or.cond.i, label %bb.y, label %.split.i
 
 .split.i:                                         ; preds = %bb.y, %bb.x

@@ -205,7 +205,7 @@ define internal fastcc range(i32 0, -2147483648) i32 @calc_combed_score(ptr nofr
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load i32, ptr %i.a, align 8, !tbaa !127  ; 10 uses
-  %i.c = mul nsw i32 %i.b, 6                      ; 5 uses
+  %i.c = mul nuw nsw i32 %i.b, 6                  ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 164
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 3 uses
@@ -387,7 +387,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bw = shl nuw nsw i32 %i.bv, 1
   %i.bx = add nsw i32 %i.bt, %i.bw
   %i.by = tail call i32 @llvm.abs.i32(i32 %i.bx, i1 true)
-  %2 = icmp sgt i32 %i.by, %i.c
+  %2 = icmp samesign ugt i32 %i.by, %i.c
   br i1 %2, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
@@ -479,7 +479,7 @@ bb.p:                                             ; preds = %bb.o
   %i.dm = add nsw i32 %i.dl, %i.di
   %i.dn = add nsw i32 %i.dm, %i.dk
   %i.do = tail call i32 @llvm.abs.i32(i32 %i.dn, i1 true)
-  %3 = icmp sgt i32 %i.do, %i.c
+  %3 = icmp samesign ugt i32 %i.do, %i.c
   br i1 %3, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -532,7 +532,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ek = shl nuw nsw i32 %i.ej, 1
   %i.el = add nsw i32 %i.eh, %i.ek
   %i.em = tail call i32 @llvm.abs.i32(i32 %i.el, i1 true)
-  %4 = icmp sgt i32 %i.em, %i.c
+  %4 = icmp samesign ugt i32 %i.em, %i.c
   br i1 %4, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
@@ -593,7 +593,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fn = shl nuw nsw i32 %i.fm, 1
   %i.fo = add nsw i32 %i.fg, %i.fn
   %i.fp = tail call i32 @llvm.abs.i32(i32 %i.fo, i1 true)
-  %5 = icmp sgt i32 %i.fp, %i.c
+  %5 = icmp samesign ugt i32 %i.fp, %i.c
   br i1 %5, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
@@ -639,7 +639,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.gl = shl nuw nsw i32 %i.gk, 1
   %i.gm = add nsw i32 %i.ge, %i.gl
   %i.gn = tail call i32 @llvm.abs.i32(i32 %i.gm, i1 true)
-  %6 = icmp sgt i32 %i.gn, %i.c
+  %6 = icmp samesign ugt i32 %i.gn, %i.c
   br i1 %6, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad

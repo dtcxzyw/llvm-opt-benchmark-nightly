@@ -204,7 +204,7 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8, !tbaa !22   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.j = load i64, ptr %i.i, align 8, !tbaa !23   ; 2 uses
-  %i.k = shl nsw i64 %i.d, 1                      ; 5 uses
+  %i.k = shl nuw nsw i64 %i.d, 1                  ; 5 uses
   %i.l = shl i64 %i.d, 4
   %i.m = tail call ptr @fftw_malloc_plain(i64 noundef %i.l) #4 ; 21 uses
   %i.n = icmp sgt i64 %i.f, 0
@@ -244,8 +244,8 @@ bb.a:
   %i.z = load double, ptr %i.y, align 8, !tbaa !44 ; 2 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.04647.us
   store double %i.z, ptr %i.aa, align 8, !tbaa !44
-  %i.ab = sub nsw i64 %i.k, %.04647.us
-  %i.ac = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.ab
+  %i.ab = sub nuw nsw i64 %i.k, %.04647.us
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ab
   store double %i.z, ptr %i.ac, align 8, !tbaa !44
   %i.ad = add nuw nsw i64 %.04647.us, 1           ; 3 uses
   %i.ae = mul nsw i64 %i.ad, %i.b
@@ -253,8 +253,8 @@ bb.a:
   %i.ag = load double, ptr %i.af, align 8, !tbaa !44 ; 2 uses
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ad
   store double %i.ag, ptr %i.ah, align 8, !tbaa !44
-  %i.ai = sub nsw i64 %i.k, %i.ad
-  %i.aj = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.ai
+  %i.ai = sub nuw nsw i64 %i.k, %i.ad
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ai
   store double %i.ag, ptr %i.aj, align 8, !tbaa !44
   %i.ak = add nuw nsw i64 %.04647.us, 2           ; 3 uses
   %i.al = mul nsw i64 %i.ak, %i.b
@@ -262,8 +262,8 @@ bb.a:
   %i.an = load double, ptr %i.am, align 8, !tbaa !44 ; 2 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ak
   store double %i.an, ptr %i.ao, align 8, !tbaa !44
-  %i.ap = sub nsw i64 %i.k, %i.ak
-  %i.aq = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.ap
+  %i.ap = sub nuw nsw i64 %i.k, %i.ak
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ap
   store double %i.an, ptr %i.aq, align 8, !tbaa !44
   %i.ar = add nuw nsw i64 %.04647.us, 3           ; 3 uses
   %i.as = mul nsw i64 %i.ar, %i.b
@@ -271,8 +271,8 @@ bb.a:
   %i.au = load double, ptr %i.at, align 8, !tbaa !44 ; 2 uses
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ar
   store double %i.au, ptr %i.av, align 8, !tbaa !44
-  %i.aw = sub nsw i64 %i.k, %i.ar
-  %i.ax = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.aw
+  %i.aw = sub nuw nsw i64 %i.k, %i.ar
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.aw
   store double %i.au, ptr %i.ax, align 8, !tbaa !44
   %i.ay = add nuw nsw i64 %.04647.us, 4           ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -295,8 +295,8 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.bb = load double, ptr %i.ba, align 8, !tbaa !44 ; 2 uses
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.04647.us.epil
   store double %i.bb, ptr %i.bc, align 8, !tbaa !44
-  %i.bd = sub nsw i64 %i.k, %.04647.us.epil
-  %i.be = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.bd
+  %i.bd = sub nuw nsw i64 %i.k, %.04647.us.epil
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.bd
   store double %i.bb, ptr %i.be, align 8, !tbaa !44
   %i.bf = add nuw nsw i64 %.04647.us.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses

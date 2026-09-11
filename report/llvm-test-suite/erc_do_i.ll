@@ -203,7 +203,7 @@ vec.epilog.vector.body172:                        ; preds = %vec.epilog.vector.b
   %indvar.next151 = add i64 %indvar150, 1
   br i1 %exitcond137.not.i, label %pixMeanInterpolateBlock.exit, label %iter.check166, !llvm.loop !31
 
-.preheader.us.us.i.split.split.us.preheader:      ; preds = %._crit_edge.split.us.us.split.us.us.split.i.split, %.preheader.us.us.i.preheader93
+.preheader.us.us.i.split.split.us.preheader:      ; preds = %.preheader.us.us.i.preheader93, %._crit_edge.split.us.us.split.us.us.split.i.split
   %indvars.iv120.i = phi i64 [ %indvars.iv.next121.i, %._crit_edge.split.us.us.split.us.us.split.i.split ], [ 0, %.preheader.us.us.i.preheader93 ] ; 2 uses
   %.06373.us.us.i = phi i32 [ %i.hz, %._crit_edge.split.us.us.split.us.us.split.i.split ], [ 0, %.preheader.us.us.i.preheader93 ] ; 2 uses
   %i.hy = sub nuw nsw i32 %i.ao, %.06373.us.us.i  ; 2 uses

@@ -149,11 +149,11 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.t, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %i.u = icmp ugt i64 %i.q, 768614336404564650
+  %i.u = icmp samesign ugt i64 %i.q, 768614336404564650
   br i1 %i.u, label %.invoke, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i: ; preds = %bb.e
-  %i.v = mul i64 %i.q, 24
+  %i.v = mul nuw i64 %i.q, 24
   %i.w = call noalias ptr @malloc(i64 noundef %i.v) #19 ; 3 uses
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %.invoke, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i.i.i

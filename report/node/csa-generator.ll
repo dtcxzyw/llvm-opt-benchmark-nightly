@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.h = ptrtoint ptr %.lcssa to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = ashr exact i64 %i.j, 5                   ; 3 uses
-  %i.l = sub i64 %i.k, %2                         ; 2 uses
+  %i.k = ashr exact i64 %i.j, 5                   ; 2 uses
+  %i.l = sub nuw i64 %i.k, %2
   %i.m = icmp ugt i64 %2, %i.k
   br i1 %i.m, label %bb.c, label %bb.d
 
@@ -215,8 +215,8 @@ bb.c:                                             ; preds = %._crit_edge
           to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit unwind label %bb.f
 
 bb.d:                                             ; preds = %._crit_edge
-  %3 = icmp ult i64 %i.l, %i.k
-  br i1 %3, label %bb.e, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
+  %.not = icmp eq i64 %2, 0
+  br i1 %.not, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.g, i64 %i.l ; 3 uses

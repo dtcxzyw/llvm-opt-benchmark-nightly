@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.gz = call noundef zeroext i1 @_ZN6duckdb7Hugeint7TryCastIdEEbNS_9hugeint_tERT_(i64 %.sroa.0.0.copyload.i, i64 %.sroa.2.0.copyload.i, ptr noundef nonnull align 8 dereferenceable(8) %i.c) ; 0 uses
   %i.ha = load double, ptr %i.c, align 8, !tbaa !748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
-  %i.hb = add i64 %.02.i, 1                       ; 2 uses
+  %i.hb = add nuw nsw i64 %.02.i, 1               ; 2 uses
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.02.i
   store double %i.ha, ptr %i.hc, align 8, !tbaa !748
   %i.hd = icmp eq i64 %i.hb, 2048
@@ -266,7 +266,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i: ; preds = %_Z
   %i.hs = call noundef zeroext i1 @_ZN6duckdb7Hugeint7TryCastIdEEbNS_9hugeint_tERT_(i64 %.sroa.0.0.copyload.i128, i64 %.sroa.2.0.copyload.i130, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 0 uses
   %i.ht = load double, ptr %i.a, align 8, !tbaa !748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %i.hu = add i64 %.03.i, 1                       ; 2 uses
+  %i.hu = add nuw nsw i64 %.03.i, 1               ; 2 uses
   %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.03.i
   store double %i.ht, ptr %i.hv, align 8, !tbaa !748
   %i.hw = icmp eq i64 %i.hu, 2048
@@ -669,7 +669,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ib = call noundef zeroext i1 @_ZN6duckdb7Hugeint7TryCastIdEEbNS_9hugeint_tERT_(i64 %.sroa.0.0.copyload.i, i64 %.sroa.2.0.copyload.i, ptr noundef nonnull align 8 dereferenceable(8) %i.c) ; 0 uses
   %i.ic = load double, ptr %i.c, align 8, !tbaa !748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
-  %i.id = add i64 %.02.i, 1                       ; 2 uses
+  %i.id = add nuw nsw i64 %.02.i, 1               ; 2 uses
   %i.ie = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.02.i
   store double %i.ic, ptr %i.ie, align 8, !tbaa !748
   %i.if = icmp eq i64 %i.id, 2048
@@ -730,7 +730,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i: ; preds = %_Z
   %i.iu = call noundef zeroext i1 @_ZN6duckdb7Hugeint7TryCastIdEEbNS_9hugeint_tERT_(i64 %.sroa.0.0.copyload.i148, i64 %.sroa.2.0.copyload.i150, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 0 uses
   %i.iv = load double, ptr %i.a, align 8, !tbaa !748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %i.iw = add i64 %.03.i, 1                       ; 2 uses
+  %i.iw = add nuw nsw i64 %.03.i, 1               ; 2 uses
   %i.ix = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.03.i
   store double %i.iv, ptr %i.ix, align 8, !tbaa !748
   %i.iy = icmp eq i64 %i.iw, 2048
@@ -1133,7 +1133,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.gz = call noundef zeroext i1 @_ZN6duckdb8Uhugeint7TryCastIdEEbNS_10uhugeint_tERT_(i64 %.sroa.0.0.copyload.i, i64 %.sroa.2.0.copyload.i, ptr noundef nonnull align 8 dereferenceable(8) %i.c) ; 0 uses
   %i.ha = load double, ptr %i.c, align 8, !tbaa !748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
-  %i.hb = add i64 %.02.i, 1                       ; 2 uses
+  %i.hb = add nuw nsw i64 %.02.i, 1               ; 2 uses
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.02.i
   store double %i.ha, ptr %i.hc, align 8, !tbaa !748
   %i.hd = icmp eq i64 %i.hb, 2048
@@ -1194,7 +1194,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i: ; preds = %_Z
   %i.hs = call noundef zeroext i1 @_ZN6duckdb8Uhugeint7TryCastIdEEbNS_10uhugeint_tERT_(i64 %.sroa.0.0.copyload.i128, i64 %.sroa.2.0.copyload.i130, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 0 uses
   %i.ht = load double, ptr %i.a, align 8, !tbaa !748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %i.hu = add i64 %.03.i, 1                       ; 2 uses
+  %i.hu = add nuw nsw i64 %.03.i, 1               ; 2 uses
   %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.03.i
   store double %i.ht, ptr %i.hv, align 8, !tbaa !748
   %i.hw = icmp eq i64 %i.hu, 2048
@@ -1597,7 +1597,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ib = call noundef zeroext i1 @_ZN6duckdb8Uhugeint7TryCastIdEEbNS_10uhugeint_tERT_(i64 %.sroa.0.0.copyload.i, i64 %.sroa.2.0.copyload.i, ptr noundef nonnull align 8 dereferenceable(8) %i.c) ; 0 uses
   %i.ic = load double, ptr %i.c, align 8, !tbaa !748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
-  %i.id = add i64 %.02.i, 1                       ; 2 uses
+  %i.id = add nuw nsw i64 %.02.i, 1               ; 2 uses
   %i.ie = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %.02.i
   store double %i.ic, ptr %i.ie, align 8, !tbaa !748
   %i.if = icmp eq i64 %i.id, 2048
@@ -1658,7 +1658,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i: ; preds = %_Z
   %i.iu = call noundef zeroext i1 @_ZN6duckdb8Uhugeint7TryCastIdEEbNS_10uhugeint_tERT_(i64 %.sroa.0.0.copyload.i148, i64 %.sroa.2.0.copyload.i150, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 0 uses
   %i.iv = load double, ptr %i.a, align 8, !tbaa !748
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %i.iw = add i64 %.03.i, 1                       ; 2 uses
+  %i.iw = add nuw nsw i64 %.03.i, 1               ; 2 uses
   %i.ix = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.03.i
   store double %i.iv, ptr %i.ix, align 8, !tbaa !748
   %i.iy = icmp eq i64 %i.iw, 2048

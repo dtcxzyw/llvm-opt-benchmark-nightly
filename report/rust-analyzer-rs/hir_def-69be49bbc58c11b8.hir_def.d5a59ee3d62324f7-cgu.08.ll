@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsjpcu9PwIgok_8smallvec10infallibleuECsileJQcQObtj_7hir_def.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.p = mul i64 %i.m, 72                         ; 3 uses
+  %i.p = mul nuw i64 %i.m, 72                     ; 3 uses
   %or.cond.not.i = icmp ugt i64 %i.k, 128102389400760774
   br i1 %or.cond.not.i, label %bb.p, label %_RINvCsjpcu9PwIgok_8smallvec12layout_arrayNtNtCsileJQcQObtj_7hir_def10item_scope21DeriveMacroInvocationEBH_.exit.i, !prof !26
 
@@ -321,7 +321,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsjpcu9PwIgok_8smallvec10infallibleuECsileJQcQObtj_7hir_def.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = mul i64 %i.m, 48                         ; 3 uses
+  %i.o = mul nuw i64 %i.m, 48                     ; 3 uses
   %or.cond.not.i = icmp ugt i64 %i.k, 192153584101141161
   br i1 %or.cond.not.i, label %bb.p, label %_RINvCsjpcu9PwIgok_8smallvec12layout_arrayNtNtCsileJQcQObtj_7hir_def5attrs7DocAtomEBH_.exit.i, !prof !26
 
@@ -440,7 +440,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsjpcu9PwIgok_8smallvec10infallibleuECsileJQcQObtj_7hir_def.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.p = mul i64 %i.m, 20                         ; 3 uses
+  %i.p = mul nuw i64 %i.m, 20                     ; 3 uses
   %or.cond.not.i = icmp ugt i64 %i.k, 461168601842738789
   br i1 %or.cond.not.i, label %bb.p, label %_RINvCsjpcu9PwIgok_8smallvec12layout_arrayNtNtCsileJQcQObtj_7hir_def8resolver8ScopeDefEBH_.exit.i, !prof !26
 

@@ -205,7 +205,7 @@ _RNvMNtNtCsf8MNnN4IDbl_8iced_x867encoder15instruction_fmtNtB2_20InstructionForma
           to label %.noexc189 unwind label %.loopexit
 
 bb.hh:                                            ; preds = %bb.fj
-  %i.adq = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.adq = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.hm, label %bb.hi
 
 bb.hi:                                            ; preds = %bb.hh
@@ -231,7 +231,7 @@ bb.hm:                                            ; preds = %bb.hl, %bb.hk, %bb.
           to label %.noexc189 unwind label %.loopexit
 
 bb.hn:                                            ; preds = %bb.fk
-  %i.adu = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.adu = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.hs, label %bb.ho
 
 bb.ho:                                            ; preds = %bb.hn
@@ -257,7 +257,7 @@ bb.hs:                                            ; preds = %bb.hr, %bb.hq, %bb.
           to label %.noexc189 unwind label %.loopexit
 
 bb.ht:                                            ; preds = %bb.fl
-  %i.ady = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.ady = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.hy, label %bb.hu
 
 bb.hu:                                            ; preds = %bb.ht
@@ -283,7 +283,7 @@ bb.hy:                                            ; preds = %bb.hx, %bb.hw, %bb.
           to label %.noexc189 unwind label %.loopexit
 
 bb.hz:                                            ; preds = %bb.fm
-  %i.aec = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.aec = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.ie, label %bb.ia
 
 bb.ia:                                            ; preds = %bb.hz
@@ -473,7 +473,7 @@ _RNvMNtNtCsf8MNnN4IDbl_8iced_x867encoder15instruction_fmtNtB2_20InstructionForma
   br label %.noexc189
 
 bb.iv:                                            ; preds = %bb.fv
-  %i.aff = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.aff = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.ja, label %bb.iw
 
 bb.iw:                                            ; preds = %bb.iv
@@ -523,7 +523,7 @@ _RNvMNtNtCsf8MNnN4IDbl_8iced_x867encoder15instruction_fmtNtB2_20InstructionForma
   br label %.noexc189
 
 bb.jc:                                            ; preds = %bb.fx
-  %i.afk = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.afk = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.jh, label %bb.jd
 
 bb.jd:                                            ; preds = %bb.jc
@@ -597,7 +597,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsf8MNnN4IDbl_8ice
   br label %.noexc189
 
 bb.jj:                                            ; preds = %bb.fw
-  %i.afy = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.afy = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.jo, label %bb.jk
 
 bb.jk:                                            ; preds = %bb.jj
@@ -647,7 +647,7 @@ _RNvMNtNtCsf8MNnN4IDbl_8iced_x867encoder15instruction_fmtNtB2_20InstructionForma
   br label %.noexc189
 
 bb.jq:                                            ; preds = %bb.fy
-  %i.agd = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.agd = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.jv, label %bb.jr
 
 bb.jr:                                            ; preds = %bb.jq
@@ -697,7 +697,7 @@ _RNvMNtNtCsf8MNnN4IDbl_8iced_x867encoder15instruction_fmtNtB2_20InstructionForma
   br label %.noexc189
 
 bb.jx:                                            ; preds = %bb.fz
-  %i.agi = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.agi = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.kc, label %bb.jy
 
 bb.jy:                                            ; preds = %bb.jx
@@ -747,7 +747,7 @@ _RNvMNtNtCsf8MNnN4IDbl_8iced_x867encoder15instruction_fmtNtB2_20InstructionForma
   br label %.noexc189
 
 bb.ke:                                            ; preds = %bb.ga
-  %i.agn = trunc nuw i64 %indvars.iv.next.i to i32
+  %i.agn = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br i1 %.sroa.07.1.i, label %bb.kj, label %bb.kf
 
 bb.kf:                                            ; preds = %bb.ke

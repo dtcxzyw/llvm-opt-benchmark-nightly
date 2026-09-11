@@ -205,8 +205,8 @@ _ZN11hb_vector_tIjLb0EEixEi.exit.i.i:             ; preds = %bb.k, %bb.j
 _ZN3CFFL14cumsum_forwardERK12hb_hashmap_tIjjLb0EEjjR11hb_vector_tIjLb0EE.exit.i: ; preds = %_ZN11hb_vector_tIjLb0EEixEi.exit.i.i, %_ZN11hb_vector_tIjLb0EEixEi.exit.us.i.i
   %i.de = load i32, ptr %i.f, align 4, !tbaa !101 ; 6 uses
   %i.df = load i32, ptr %i.g, align 4, !tbaa !101 ; 4 uses
-  %i.dg = sub i32 %i.df, %i.de                    ; 2 uses
-  %i.dh = add i32 %i.dg, 1                        ; 3 uses
+  %i.dg = sub i32 %i.df, %i.de                    ; 3 uses
+  %i.dh = add nuw nsw i32 %i.dg, 1                ; 2 uses
   %or.cond97.i = icmp ult i32 %i.dg, 2147483647
   br i1 %or.cond97.i, label %.preheader.i205.i, label %_ZN11hb_vector_tIjLb0EE6resizeEi.exit.i79.i, !prof !751
 
@@ -215,8 +215,8 @@ _ZN3CFFL14cumsum_forwardERK12hb_hashmap_tIjjLb0EEjjR11hb_vector_tIjLb0EE.exit.i:
   %i.di = lshr i32 %.043.i206.i, 1
   %i.dj = add nuw i32 %.043.i206.i, 8
   %i.dk = add nuw i32 %i.dj, %i.di                ; 4 uses
-  %20 = icmp ugt i32 %i.dh, %i.dk
-  br i1 %20, label %.preheader.i205.i, label %.thread.i207.i, !llvm.loop !0
+  %.not150.i = icmp ult i32 %i.dg, %i.dk
+  br i1 %.not150.i, label %.thread.i207.i, label %.preheader.i205.i, !llvm.loop !0
 
 .thread.i207.i:                                   ; preds = %.preheader.i205.i
   %i.dl = icmp ugt i32 %i.dk, 1073741823
@@ -232,7 +232,7 @@ _ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_triviall
 bb.l:                                             ; preds = %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i210.i
   %i.dp = shl nuw i32 %i.dh, 2
   %i.dq = zext i32 %i.dp to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.do, i8 0, i64 %i.dq, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.do, i8 0, i64 %i.dq, i1 false)
   br label %_ZN11hb_vector_tIjLb0EE6resizeEi.exit.i79.i
 
 _ZN11hb_vector_tIjLb0EE6resizeEi.exit.i79.i:      ; preds = %bb.l, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i210.i, %.thread.i207.i, %_ZN3CFFL14cumsum_forwardERK12hb_hashmap_tIjjLb0EEjjR11hb_vector_tIjLb0EE.exit.i
@@ -624,8 +624,8 @@ _ZN11hb_vector_tIjLb0EEixEi.exit.us.i118.i.epil:  ; preds = %bb.ai, %bb.ah
 _ZN3CFFL15cumsum_backwardERK12hb_hashmap_tIjjLb0EEjjR11hb_vector_tIjLb0EE.exit.i: ; preds = %_ZN11hb_vector_tIjLb0EEixEi.exit.i116.i, %_ZN11hb_vector_tIjLb0EEixEi.exit.us.i118.i.epil, %_ZN3CFFL15cumsum_backwardERK12hb_hashmap_tIjjLb0EEjjR11hb_vector_tIjLb0EE.exit.i.loopexit.unr-lcssa, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit.i101.i
   %i.iq = load i32, ptr %i.f, align 4, !tbaa !101 ; 9 uses
   %i.ir = load i32, ptr %i.g, align 4, !tbaa !101 ; 7 uses
-  %i.is = sub i32 %i.ir, %i.iq                    ; 3 uses
-  %i.it = add i32 %i.is, 1                        ; 3 uses
+  %i.is = sub i32 %i.ir, %i.iq                    ; 4 uses
+  %i.it = add i32 %i.is, 1                        ; 2 uses
   %or.cond98.i = icmp ult i32 %i.is, 2147483647
   br i1 %or.cond98.i, label %.preheader.i247.i, label %_ZN11hb_vector_tIjLb0EE6resizeEi.exit.i121.i, !prof !751
 
@@ -634,8 +634,8 @@ _ZN3CFFL15cumsum_backwardERK12hb_hashmap_tIjjLb0EEjjR11hb_vector_tIjLb0EE.exit.i
   %i.iu = lshr i32 %.043.i248.i, 1
   %i.iv = add nuw i32 %.043.i248.i, 8
   %i.iw = add nuw i32 %i.iv, %i.iu                ; 4 uses
-  %21 = icmp ugt i32 %i.it, %i.iw
-  br i1 %21, label %.preheader.i247.i, label %.thread.i249.i, !llvm.loop !0
+  %.not151.i = icmp ult i32 %i.is, %i.iw
+  br i1 %.not151.i, label %.thread.i249.i, label %.preheader.i247.i, !llvm.loop !0
 
 .thread.i249.i:                                   ; preds = %.preheader.i247.i
   %i.ix = icmp ugt i32 %i.iw, 1073741823
@@ -651,7 +651,7 @@ _ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_triviall
 bb.aj:                                            ; preds = %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i252.i
   %i.jb = shl nuw i32 %i.it, 2
   %i.jc = zext i32 %i.jb to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ja, i8 0, i64 %i.jc, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ja, i8 0, i64 %i.jc, i1 false)
   br label %_ZN11hb_vector_tIjLb0EE6resizeEi.exit.i121.i
 
 _ZN11hb_vector_tIjLb0EE6resizeEi.exit.i121.i:     ; preds = %bb.aj, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i252.i, %.thread.i249.i, %_ZN3CFFL15cumsum_backwardERK12hb_hashmap_tIjjLb0EEjjR11hb_vector_tIjLb0EE.exit.i

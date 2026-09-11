@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.lr.ph220, %._crit_edge216
   %.sroa.047.0219 = phi i64 [ 0, %.lr.ph220 ], [ %i.al, %._crit_edge216 ] ; 25 uses
-  %i.al = add nuw nsw i64 %.sroa.047.0219, 1
+  %i.al = add nuw i64 %.sroa.047.0219, 1
   %i.am = tail call noundef zeroext i1 @_RNvNtCshFZddwsEKsN_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
   br i1 %i.am, label %._crit_edge221, label %bb.j
 
@@ -605,8 +605,8 @@ bb.br:                                            ; preds = %bb.bq
   store i64 %.sink478, ptr %i.fl, align 8
   br label %._crit_edge221
 
-._crit_edge221:                                   ; preds = %bb.i, %._crit_edge216, %._crit_edge221.sink.split
-  %.sink = phi i64 [ 1, %._crit_edge221.sink.split ], [ 0, %._crit_edge216 ], [ 0, %bb.i ]
+._crit_edge221:                                   ; preds = %._crit_edge216, %bb.i, %._crit_edge221.sink.split
+  %.sink = phi i64 [ 1, %._crit_edge221.sink.split ], [ 0, %bb.i ], [ 0, %._crit_edge216 ]
   store i64 %.sink, ptr %0, align 8
   ret void
 }
@@ -692,7 +692,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.lr.ph220, %._crit_edge216
   %.sroa.047.0219 = phi i64 [ 0, %.lr.ph220 ], [ %i.al, %._crit_edge216 ] ; 25 uses
-  %i.al = add nuw nsw i64 %.sroa.047.0219, 1
+  %i.al = add nuw i64 %.sroa.047.0219, 1
   %i.am = tail call noundef zeroext i1 @_RNvNtCshFZddwsEKsN_7similar16deadline_support17deadline_exceeded(i64 %11, i32 noundef %12)
   br i1 %i.am, label %._crit_edge221, label %bb.j
 
@@ -1095,8 +1095,8 @@ bb.br:                                            ; preds = %bb.bq
   store i64 %.sink478, ptr %i.fl, align 8
   br label %._crit_edge221
 
-._crit_edge221:                                   ; preds = %bb.i, %._crit_edge216, %._crit_edge221.sink.split
-  %.sink = phi i64 [ 1, %._crit_edge221.sink.split ], [ 0, %._crit_edge216 ], [ 0, %bb.i ]
+._crit_edge221:                                   ; preds = %._crit_edge216, %bb.i, %._crit_edge221.sink.split
+  %.sink = phi i64 [ 1, %._crit_edge221.sink.split ], [ 0, %bb.i ], [ 0, %._crit_edge216 ]
   store i64 %.sink, ptr %0, align 8
   ret void
 }

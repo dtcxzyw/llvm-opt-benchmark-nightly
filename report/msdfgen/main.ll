@@ -204,7 +204,7 @@ bb.ss:                                            ; preds = %.thread156.i1499
 
 bb.st:                                            ; preds = %bb.ss
   %i.avr = load i32, ptr %i.ati, align 8, !tbaa !216 ; 2 uses
-  %i.avs = mul nsw i32 %i.avr, 3
+  %i.avs = mul nuw nsw i32 %i.avr, 3
   %i.avt = load i32, ptr %i.atj, align 4, !tbaa !217 ; 3 uses
   %i.avu = icmp sgt i32 %i.avt, 0
   br i1 %i.avu, label %.preheader.lr.ph.i.i1442, label %_ZL20writeTextBitmapFloatP8_IO_FILEPKfiii.exit.i1441
@@ -273,7 +273,7 @@ bb.su:                                            ; preds = %.thread157.i1498
 
 bb.sv:                                            ; preds = %bb.su
   %i.awm = load i32, ptr %i.ati, align 8, !tbaa !216 ; 2 uses
-  %i.awn = mul nsw i32 %i.awm, 3
+  %i.awn = mul nuw nsw i32 %i.awm, 3
   %i.awo = load i32, ptr %i.atj, align 4, !tbaa !217 ; 2 uses
   %i.awp = icmp sgt i32 %i.awo, 0
   br i1 %i.awp, label %.preheader.lr.ph.i117.i1426, label %_ZL14writeBinBitmapP8_IO_FILEPKfiii.exit.i1398
@@ -345,7 +345,7 @@ bb.sy:                                            ; preds = %bb.sy, %.lr.ph.i.i1
 
 bb.sz:                                            ; preds = %bb.su
   %i.axs = load i32, ptr %i.ati, align 8, !tbaa !216 ; 2 uses
-  %i.axt = mul nsw i32 %i.axs, 3
+  %i.axt = mul nuw nsw i32 %i.axs, 3
   %i.axu = load i32, ptr %i.atj, align 4, !tbaa !217 ; 2 uses
   %i.axv = icmp sgt i32 %i.axu, 0
   br i1 %i.axv, label %.preheader.lr.ph.i124.i1400, label %_ZL14writeBinBitmapP8_IO_FILEPKfiii.exit.i1398
@@ -748,7 +748,7 @@ bb.uv:                                            ; preds = %.thread156.i1657
 
 bb.uw:                                            ; preds = %bb.uv
   %i.beu = load i32, ptr %i.bcl, align 8, !tbaa !235 ; 2 uses
-  %i.bev = shl nsw i32 %i.beu, 2
+  %i.bev = shl nuw nsw i32 %i.beu, 2
   %i.bew = load i32, ptr %i.bcm, align 4, !tbaa !236 ; 3 uses
   %i.bex = icmp sgt i32 %i.bew, 0
   br i1 %i.bex, label %.preheader.lr.ph.i.i1599, label %_ZL20writeTextBitmapFloatP8_IO_FILEPKfiii.exit.i1598
@@ -817,7 +817,7 @@ bb.ux:                                            ; preds = %.thread157.i1656
 
 bb.uy:                                            ; preds = %bb.ux
   %i.bfp = load i32, ptr %i.bcl, align 8, !tbaa !235 ; 2 uses
-  %i.bfq = shl nsw i32 %i.bfp, 2
+  %i.bfq = shl nuw nsw i32 %i.bfp, 2
   %i.bfr = load i32, ptr %i.bcm, align 4, !tbaa !236 ; 2 uses
   %i.bfs = icmp sgt i32 %i.bfr, 0
   br i1 %i.bfs, label %.preheader.lr.ph.i117.i1583, label %_ZL14writeBinBitmapP8_IO_FILEPKfiii.exit.i1555
@@ -889,7 +889,7 @@ bb.vb:                                            ; preds = %bb.vb, %.lr.ph.i.i1
 
 bb.vc:                                            ; preds = %bb.ux
   %i.bgv = load i32, ptr %i.bcl, align 8, !tbaa !235 ; 2 uses
-  %i.bgw = shl nsw i32 %i.bgv, 2
+  %i.bgw = shl nuw nsw i32 %i.bgv, 2
   %i.bgx = load i32, ptr %i.bcm, align 4, !tbaa !236 ; 2 uses
   %i.bgy = icmp sgt i32 %i.bgx, 0
   br i1 %i.bgy, label %.preheader.lr.ph.i124.i1557, label %_ZL14writeBinBitmapP8_IO_FILEPKfiii.exit.i1555

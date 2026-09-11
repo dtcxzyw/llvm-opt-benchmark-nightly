@@ -205,7 +205,7 @@ bb.bw:                                            ; preds = %b2SnapCheckCount.ex
   %i.vr = getelementptr inbounds nuw i8, ptr %i.tq, i64 24
   store ptr %i.vq, ptr %i.vr, align 8, !tbaa !121
   %i.vs = load i32, ptr %i.ur, align 4, !tbaa !119 ; 2 uses
-  %i.vt = shl nsw i32 %i.vs, 2                    ; 2 uses
+  %i.vt = shl nuw nsw i32 %i.vs, 2                ; 2 uses
   %i.vu = icmp slt i32 %i.vs, 0
   br i1 %i.vu, label %b2SnapRCheck.exit.thread.i758, label %bb.bx
 
@@ -245,7 +245,7 @@ b2SnapR_Bytes.exit759:                            ; preds = %b2SnapRCheck.exit.t
   %i.wl = getelementptr inbounds nuw i8, ptr %i.tq, i64 32
   store ptr %i.wk, ptr %i.wl, align 8, !tbaa !122
   %i.wm = load i32, ptr %i.uv, align 8, !tbaa !120 ; 2 uses
-  %i.wn = shl nsw i32 %i.wm, 5                    ; 2 uses
+  %i.wn = shl nuw nsw i32 %i.wm, 5                ; 2 uses
   %i.wo = icmp slt i32 %i.wm, 0
   br i1 %i.wo, label %b2SnapRCheck.exit.thread.i763, label %bb.bz
 

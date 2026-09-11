@@ -205,7 +205,7 @@ define internal fastcc i64 @UpdateNodes(i64 noundef %0, i64 noundef %1, i64 noun
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !43   ; 2 uses
-  %i.c = add i64 %2, %1                           ; 5 uses
+  %i.c = add i64 %2, %1                           ; 4 uses
   %i.d = and i64 %4, %i.c                         ; 2 uses
   %i.e = tail call i64 @llvm.umin.i64(i64 %i.c, i64 %6)
   %i.f = add i64 %i.b, %i.c
@@ -383,9 +383,9 @@ bb.l:                                             ; preds = %.lr.ph351, %.loopex
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !21
   %i.df = getelementptr inbounds nuw [4 x i8], ptr @kDistanceCacheOffset, i64 %.0211349
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !21
-  %i.dh = add nsw i32 %i.dg, %i.de                ; 2 uses
+  %i.dh = add nsw i32 %i.dg, %i.de                ; 3 uses
   %i.di = sext i32 %i.dh to i64                   ; 6 uses
-  %i.dj = sub i64 %i.c, %i.di                     ; 2 uses
+  %i.dj = sub nuw i64 %i.c, %i.di
   %i.dk = add i64 %.0213348, %i.d                 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 %i.dk
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !22  ; 2 uses
@@ -401,8 +401,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not, label %bb.v, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %.not234 = icmp ult i64 %i.dj, %i.c
-  br i1 %.not234, label %bb.p, label %.loopexit
+  %.not234.not = icmp eq i32 %i.dh, 0
+  br i1 %.not234.not, label %.loopexit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.dp = and i64 %i.dj, %4                       ; 2 uses

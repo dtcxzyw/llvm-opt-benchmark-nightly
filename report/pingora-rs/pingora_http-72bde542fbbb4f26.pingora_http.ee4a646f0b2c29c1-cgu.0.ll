@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
   %i.s = add i64 %i.l, -1
   %i.t = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.s, i1 true)
   %i.u = lshr i64 -1, %i.t
-  %.sroa.022.0 = select i1 %i.r, i64 0, i64 %i.u  ; 2 uses
-  %i.v = add i64 %.sroa.022.0, 1                  ; 7 uses
+  %.sroa.022.0 = select i1 %i.r, i64 0, i64 %i.u  ; 3 uses
+  %i.v = add nuw nsw i64 %.sroa.022.0, 1          ; 6 uses
   %or.cond = icmp ugt i64 %.sroa.022.0, 32767
   br i1 %or.cond, label %bb.q, label %bb.e, !prof !19
 
@@ -241,7 +241,7 @@ bb.h:                                             ; preds = %bb.g
 
 _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskspKcFIsYcD_12pingora_http.exit.i: ; preds = %bb.g
   %i.ah = load ptr, ptr %i.af, align 8, !noalias !272, !nonnull !5, !noundef !5
-  %2 = icmp ule i64 %i.v, %i.ae
+  %2 = icmp ult i64 %.sroa.022.0, %i.ae
   tail call void @llvm.assume(i1 %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !272
   store i64 %i.ae, ptr %i.b, align 8, !noalias !272

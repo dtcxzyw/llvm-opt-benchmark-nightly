@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %bb.ag
 
 bb.aj:                                            ; preds = %bb.ae, %bb.ah
   %i.dk = load i32, ptr %.sroa.019.0, align 4, !noundef !5 ; 4 uses
-  %i.dl = sub i32 %i.dk, %i.da                    ; 2 uses
+  %i.dl = sub nuw i32 %i.dk, %i.da                ; 2 uses
   %.not95 = icmp ugt i32 %i.da, %i.dk
   br i1 %.not95, label %.invoke, label %bb.cg, !prof !6
 
@@ -219,7 +219,7 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_RNtNtNtNtNtCsEhZmuQNqkz_11ruf
 
 bb.al:                                            ; preds = %bb.ai
   %i.dn = load i32, ptr %.sroa.019.0, align 4, !noundef !5 ; 4 uses
-  %i.do = sub i32 %i.dn, %i.da                    ; 2 uses
+  %i.do = sub nuw i32 %i.dn, %i.da                ; 2 uses
   %.not108 = icmp ugt i32 %i.da, %i.dn
   br i1 %.not108, label %.invoke, label %bb.am, !prof !6
 
@@ -302,7 +302,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax
   %i.dw = load i32, ptr %.sroa.019.0, align 4, !noundef !5 ; 4 uses
-  %i.dx = sub i32 %i.dw, %i.da                    ; 2 uses
+  %i.dx = sub nuw i32 %i.dw, %i.da                ; 2 uses
   %.not98 = icmp ugt i32 %i.da, %i.dw
   br i1 %.not98, label %.invoke, label %bb.az, !prof !6
 
@@ -367,7 +367,7 @@ bb.bh:                                            ; preds = %_RINvMNtCs4NRVxsYgn
 
 bb.bi:                                            ; preds = %bb.bh
   %i.ed = load i32, ptr %.sroa.019.0, align 4, !noundef !5 ; 4 uses
-  %i.ee = sub i32 %i.ed, %i.da                    ; 3 uses
+  %i.ee = sub nuw i32 %i.ed, %i.da                ; 3 uses
   %.not101 = icmp ugt i32 %i.da, %i.ed
   br i1 %.not101, label %.invoke, label %bb.bj, !prof !6
 
@@ -507,7 +507,7 @@ bb.bx:                                            ; preds = %bb.bw
 .cont127:                                         ; preds = %bb.bx, %.else129
   %i.ey = phi ptr [ %.sroa.019.0, %bb.bx ], [ %.else.val130, %.else129 ]
   %i.ez = load i32, ptr %i.ey, align 4, !noundef !5 ; 4 uses
-  %i.fa = sub i32 %i.ez, %i.da                    ; 2 uses
+  %i.fa = sub nuw i32 %i.ez, %i.da                ; 2 uses
   %.not106 = icmp ugt i32 %i.da, %i.ez
   br i1 %.not106, label %.invoke, label %bb.by, !prof !6
 
@@ -674,7 +674,7 @@ bb.cz:                                            ; preds = %bb.cy
 bb.da:                                            ; preds = %bb.cz
   %i.fq = extractvalue { i8, i32 } %i.fn, 1       ; 2 uses
   %i.fr = load i32, ptr %.sroa.019.0, align 4, !noundef !5 ; 4 uses
-  %i.fs = sub i32 %i.fr, %i.fq                    ; 2 uses
+  %i.fs = sub nuw i32 %i.fr, %i.fq                ; 2 uses
   %.not110 = icmp ugt i32 %i.fq, %i.fr
   br i1 %.not110, label %.invoke, label %bb.db, !prof !6
 

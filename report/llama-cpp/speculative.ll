@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.s, label %_ZNSt6vectorIiSaIiEE5clearEv.exit.thread.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.t = tail call noundef i64 @_ZNK16common_ngram_mod5get_nEv(ptr noundef nonnull align 8 dereferenceable(40) %i.q) ; 19 uses
+  %i.t = tail call noundef i64 @_ZNK16common_ngram_mod5get_nEv(ptr noundef nonnull align 8 dereferenceable(40) %i.q) ; 20 uses
   %i.u = sub i64 0, %i.t
   %i.v = load i64, ptr %i.d, align 8, !tbaa !489  ; 3 uses
   %i.w = add i64 %i.v, 32
@@ -384,9 +384,9 @@ _ZNSt6vectorIiSaIiEE5clearEv.exit.thread:         ; preds = %bb.o, %._crit_edge9
   %i.cp = ptrtoint ptr %i.co to i64
   %i.cq = ptrtoint ptr %i.cn to i64               ; 4 uses
   %i.cr = sub i64 %i.cp, %i.cq
-  %i.cs = ashr exact i64 %i.cr, 2                 ; 6 uses
+  %i.cs = ashr exact i64 %i.cr, 2                 ; 5 uses
   %i.ct = icmp ult i64 %i.t, %i.cs
-  %i.cu = sub i64 %i.cs, %i.t                     ; 6 uses
+  %i.cu = sub i64 %i.cs, %i.t                     ; 5 uses
   br i1 %i.ct, label %.lr.ph102.preheader, label %._crit_edge103
 
 .lr.ph102.preheader:                              ; preds = %_ZNSt6vectorIiSaIiEE5clearEv.exit.thread
@@ -456,8 +456,8 @@ bb.p:                                             ; preds = %._crit_edge103
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit80
 
 bb.q:                                             ; preds = %._crit_edge103
-  %3 = icmp ult i64 %i.cu, %i.cs
-  br i1 %3, label %bb.r, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit80
+  %.not108 = icmp eq i64 %i.t, 0
+  br i1 %.not108, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit80, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.cn, i64 %i.cu ; 3 uses

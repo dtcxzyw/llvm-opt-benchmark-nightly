@@ -205,8 +205,8 @@ map_position_value.exit29.i.i:                    ; preds = %bb.z, %bb.y, %map_p
 bb.aa:                                            ; preds = %map_position_value.exit29.i.i, %bb.s
   %.1.i.i = phi i32 [ %i.bk, %bb.s ], [ %spec.select.i.i, %map_position_value.exit29.i.i ] ; 2 uses
   %.0.i.i = phi i32 [ %i.bn, %bb.s ], [ %spec.select27.i.i, %map_position_value.exit29.i.i ] ; 2 uses
-  %i.cv = shl nsw i32 %.1.i.i, 1                  ; 2 uses
-  %i.cw = shl nsw i32 %.0.i.i, 1                  ; 2 uses
+  %i.cv = shl nuw nsw i32 %.1.i.i, 1              ; 2 uses
+  %i.cw = shl nuw nsw i32 %.0.i.i, 1              ; 2 uses
   %i.cx = icmp slt i32 %.0.i.i, 1
   br i1 %i.cx, label %select_opt_exact.exit.i, label %bb.ab
 
@@ -284,7 +284,7 @@ select_opt_exact.exit.i:                          ; preds = %comp_distance_value
 
 bb.aj:                                            ; preds = %select_opt_exact.exit.i
   %i.ed = getelementptr inbounds nuw i8, ptr %4, i64 160 ; 2 uses
-  %i.ee = mul nsw i32 %.pr.i.pre, 60              ; 2 uses
+  %i.ee = mul nuw nsw i32 %.pr.i.pre, 60          ; 2 uses
   %i.ef = udiv i32 200, %i.eb                     ; 2 uses
   %i.eg = icmp samesign ugt i32 %i.eb, 200
   br i1 %i.eg, label %comp_opt_exact_or_map.exit.thread.i, label %bb.ak
@@ -687,8 +687,8 @@ map_position_value.exit29:                        ; preds = %map_position_value.
 bb.k:                                             ; preds = %map_position_value.exit29, %bb.c
   %.1 = phi i32 [ %i.b, %bb.c ], [ %spec.select, %map_position_value.exit29 ] ; 2 uses
   %.0 = phi i32 [ %i.d, %bb.c ], [ %spec.select27, %map_position_value.exit29 ] ; 2 uses
-  %i.ai = shl nsw i32 %.1, 1                      ; 2 uses
-  %i.aj = shl nsw i32 %.0, 1                      ; 2 uses
+  %i.ai = shl nuw nsw i32 %.1, 1                  ; 2 uses
+  %i.aj = shl nuw nsw i32 %.0, 1                  ; 2 uses
   %i.ak = icmp slt i32 %.0, 1
   br i1 %i.ak, label %comp_distance_value.exit, label %bb.l
 

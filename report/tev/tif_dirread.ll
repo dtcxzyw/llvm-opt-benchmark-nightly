@@ -204,7 +204,7 @@ bb.aj:                                            ; preds = %bb.ah
   br i1 %.not226, label %bb.ak, label %bb.ar
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.bx = add nuw i64 %i.j, 2                     ; 2 uses
+  %i.bx = add nuw nsw i64 %i.j, 2                 ; 2 uses
   %i.by = icmp samesign ugt i64 %i.j, 9223372036854775805
   br i1 %i.by, label %bb.am, label %bb.al
 
@@ -243,7 +243,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
-  %i.cj = add nuw i64 %i.j, 8                     ; 2 uses
+  %i.cj = add nuw nsw i64 %i.j, 8                 ; 2 uses
   %i.ck = icmp samesign ugt i64 %i.j, 9223372036854775799
   br i1 %i.ck, label %bb.at, label %bb.as
 

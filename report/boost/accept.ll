@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.t = load ptr, ptr %12, align 8, !tbaa !420
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 40 ; 2 uses
-  %i.v = sub i64 %3, %.018                        ; 2 uses
+  %i.v = sub nuw i64 %3, %.018                    ; 2 uses
   %i.w = icmp ugt i64 %.018, %3
   br i1 %i.w, label %bb.h, label %bb.k
 

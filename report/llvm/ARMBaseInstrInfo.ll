@@ -205,7 +205,7 @@ bb.a:
   %i.c = load i16, ptr %i.b, align 4, !tbaa !522
   %i.d = zext i16 %i.c to i32
   %i.e = sub i32 %i.a, %i.d                       ; 5 uses
-  %i.f = add i32 %i.e, 1                          ; 4 uses
+  %i.f = add nuw nsw i32 %i.e, 1                  ; 4 uses
   %i.g = icmp ugt i32 %i.e, 2147483646
   br i1 %i.g, label %bb.b, label %bb.e
 
@@ -394,7 +394,7 @@ bb.a:
   %i.c = load i16, ptr %i.b, align 4, !tbaa !522
   %i.d = zext i16 %i.c to i32
   %i.e = sub i32 %i.a, %i.d                       ; 5 uses
-  %i.f = add i32 %i.e, 1                          ; 4 uses
+  %i.f = add nuw nsw i32 %i.e, 1                  ; 4 uses
   %i.g = icmp ugt i32 %i.e, 2147483646
   br i1 %i.g, label %bb.b, label %bb.e
 
@@ -754,7 +754,7 @@ bb.l:                                             ; preds = %bb.i, %bb.i, %bb.i,
   %i.cj = load i16, ptr %i.ci, align 4, !tbaa !522
   %i.ck = zext i16 %i.cj to i32
   %i.cl = sub i32 %i.ch, %i.ck                    ; 5 uses
-  %i.cm = add i32 %i.cl, 1                        ; 4 uses
+  %i.cm = add nuw nsw i32 %i.cl, 1                ; 4 uses
   %i.cn = icmp ugt i32 %i.cl, 2147483646
   br i1 %i.cn, label %bb.m, label %bb.o
 
@@ -958,7 +958,7 @@ _ZNK4llvm18InstrItineraryData15getOperandCycleEjj.exit75: ; preds = %bb.ab
 bb.ac:                                            ; preds = %_ZNSt8optionalIjEaSIiEENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS0_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES3_ISt6__and_IJSt9is_scalarIjES4_IjNSt5decayIS7_E4typeEEEEESt16is_constructibleIjJS7_EESt13is_assignableIRjS7_EEERS0_E4typeEOS7_.exit.thread238, %_ZNSt8optionalIjEaSIiEENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS0_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES3_ISt6__and_IJSt9is_scalarIjES4_IjNSt5decayIS7_E4typeEEEEESt16is_constructibleIjJS7_EESt13is_assignableIRjS7_EEERS0_E4typeEOS7_.exit.thread238, %_ZNSt8optionalIjEaSIiEENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS0_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES3_ISt6__and_IJSt9is_scalarIjES4_IjNSt5decayIS7_E4typeEEEEESt16is_constructibleIjJS7_EESt13is_assignableIRjS7_EEERS0_E4typeEOS7_.exit.thread238, %_ZNSt8optionalIjEaSIiEENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS0_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES3_ISt6__and_IJSt9is_scalarIjES4_IjNSt5decayIS7_E4typeEEEEESt16is_constructibleIjJS7_EESt13is_assignableIRjS7_EEERS0_E4typeEOS7_.exit.thread238, %_ZNSt8optionalIjEaSIiEENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS0_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES3_ISt6__and_IJSt9is_scalarIjES4_IjNSt5decayIS7_E4typeEEEEESt16is_constructibleIjJS7_EESt13is_assignableIRjS7_EEERS0_E4typeEOS7_.exit.thread238, %_ZNSt8optionalIjEaSIiEENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS0_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES3_ISt6__and_IJSt9is_scalarIjES4_IjNSt5decayIS7_E4typeEEEEESt16is_constructibleIjJS7_EESt13is_assignableIRjS7_EEERS0_E4typeEOS7_.exit.thread238
   %i.fs = add i32 %6, 1
   %i.ft = sub i32 %i.fs, %i.k                     ; 5 uses
-  %i.fu = add i32 %i.ft, 1                        ; 4 uses
+  %i.fu = add nuw nsw i32 %i.ft, 1                ; 4 uses
   %i.fv = icmp ugt i32 %i.ft, 2147483646
   br i1 %i.fv, label %bb.ad, label %bb.af
 

@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %bb.a
   %i.fn = load i64, ptr %i.fm, align 8, !noundef !46 ; 5 uses
   %i.fo = getelementptr inbounds nuw [64 x i8], ptr %i.fl, i64 %i.fn
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !14167
-  %i.fp = mul nuw i64 %i.fn, 48                   ; 2 uses
+  %i.fp = mul nuw nsw i64 %i.fn, 48               ; 2 uses
   %.not.i.i186 = icmp ugt i64 %i.fn, 192153584101141162
   br i1 %.not.i.i186, label %bb.af, label %bb.ae, !prof !61
 
@@ -608,7 +608,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad
   %.sroa.12.1.i.idx = phi i64 [ %.sroa.12.0.i.idx, %bb.ac ], [ %.sroa.12.0.i.add, %bb.ad ] ; 2 uses
   %.sroa.9.2.i = phi ptr [ %i.cv, %bb.ac ], [ null, %bb.ad ] ; 2 uses
   %.sroa.0.0.i1.i.ph.i.i = phi ptr [ %.sroa.9.0.i, %bb.ac ], [ %.sroa.12.0.i.ptr, %bb.ad ] ; 2 uses
-  %i.da = add i64 %.sroa.27.0.i, 1                ; 3 uses
+  %i.da = add nuw nsw i64 %.sroa.27.0.i, 1        ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !18704
   store i64 %.sroa.27.0.i, ptr %i.f, align 8, !noalias !18704
   %exitcond.i = icmp eq i64 %.sroa.27.0.i, 2147483647
@@ -650,7 +650,7 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.15.0370.i.idx319892 = phi i64 [ %.sroa.15.0370.i.add893, %.lr.ph ], [ %.sroa.15.0.i.idx, %.lr.ph.preheader ] ; 2 uses
   %.sroa.27.0354.i320891 = phi i64 [ %i.de, %.lr.ph ], [ %.sroa.27.0.i, %.lr.ph.preheader ] ; 5 uses
   %.sroa.15.0370.i.add893 = add nuw nsw i64 %.sroa.15.0370.i.idx319892, 16 ; 3 uses
-  %i.de = add i64 %.sroa.27.0354.i320891, 1       ; 6 uses
+  %i.de = add nuw nsw i64 %.sroa.27.0354.i320891, 1 ; 6 uses
   %.sroa.15.0370.i.ptr321 = getelementptr inbounds nuw i8, ptr @157, i64 %.sroa.15.0370.i.idx319892 ; 2 uses
   %i.df = trunc nuw nsw i64 %.sroa.27.0354.i320891 to i32 ; 3 uses
   %.val.i.jt0.i = load ptr, ptr %.sroa.15.0370.i.ptr321, align 8, !noalias !18705, !nonnull !46, !noundef !46 ; 3 uses
@@ -663,7 +663,7 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.18.0365.i.idx324906 = phi i64 [ %.sroa.18.0365.i.add907, %.lr.ph327 ], [ %.sroa.18.0.i.idx, %.lr.ph327.preheader ] ; 2 uses
   %.sroa.27.0353.i325905 = phi i64 [ %i.di, %.lr.ph327 ], [ %.sroa.27.0353.ph.i, %.lr.ph327.preheader ] ; 5 uses
   %.sroa.18.0365.i.add907 = add nuw nsw i64 %.sroa.18.0365.i.idx324906, 16 ; 3 uses
-  %i.di = add i64 %.sroa.27.0353.i325905, 1       ; 6 uses
+  %i.di = add nuw nsw i64 %.sroa.27.0353.i325905, 1 ; 6 uses
   %.sroa.18.0365.i.ptr326 = getelementptr inbounds nuw i8, ptr @188, i64 %.sroa.18.0365.i.idx324906 ; 2 uses
   %i.dj = trunc nuw nsw i64 %.sroa.27.0353.i325905 to i32 ; 3 uses
   %.val.i.jt2.i = load ptr, ptr %.sroa.18.0365.i.ptr326, align 8, !noalias !18705, !nonnull !46, !noundef !46 ; 3 uses
@@ -676,7 +676,7 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.21.0360.i.idx331921 = phi i64 [ %.sroa.21.0360.i.add922, %.lr.ph334 ], [ %.sroa.21.0.i.idx, %.lr.ph334.preheader ] ; 2 uses
   %.sroa.27.0352.i332920 = phi i64 [ %i.dm, %.lr.ph334 ], [ %.sroa.27.0352.ph.i, %.lr.ph334.preheader ] ; 5 uses
   %.sroa.21.0360.i.add922 = add nuw nsw i64 %.sroa.21.0360.i.idx331921, 16 ; 3 uses
-  %i.dm = add i64 %.sroa.27.0352.i332920, 1       ; 6 uses
+  %i.dm = add nuw nsw i64 %.sroa.27.0352.i332920, 1 ; 6 uses
   %.sroa.21.0360.i.ptr333 = getelementptr inbounds nuw i8, ptr @209, i64 %.sroa.21.0360.i.idx331921 ; 2 uses
   %i.dn = trunc nuw nsw i64 %.sroa.27.0352.i332920 to i32 ; 3 uses
   %.val.i.jt18446744073709551615.i = load ptr, ptr %.sroa.21.0360.i.ptr333, align 8, !noalias !18705, !nonnull !46, !noundef !46 ; 3 uses
@@ -689,7 +689,7 @@ bb.af:                                            ; preds = %bb.ae
   %.sroa.24.0355.i.idx338936 = phi i64 [ %.sroa.24.0355.i.add937, %.lr.ph341 ], [ %.sroa.24.0.i.idx, %.lr.ph341.preheader ] ; 2 uses
   %.sroa.27.0351.i339935 = phi i64 [ %i.dq, %.lr.ph341 ], [ %.sroa.27.0351.ph.i, %.lr.ph341.preheader ] ; 5 uses
   %.sroa.24.0355.i.add937 = add nuw nsw i64 %.sroa.24.0355.i.idx338936, 16 ; 3 uses
-  %i.dq = add i64 %.sroa.27.0351.i339935, 1       ; 5 uses
+  %i.dq = add nuw nsw i64 %.sroa.27.0351.i339935, 1 ; 5 uses
   %.sroa.24.0355.i.ptr340 = getelementptr inbounds nuw i8, ptr @230, i64 %.sroa.24.0355.i.idx338936 ; 2 uses
   %i.dr = trunc nuw nsw i64 %.sroa.27.0351.i339935 to i32 ; 3 uses
   %.val.i.jt18446744073709551614.i = load ptr, ptr %.sroa.24.0355.i.ptr340, align 8, !noalias !18705, !nonnull !46, !noundef !46 ; 3 uses

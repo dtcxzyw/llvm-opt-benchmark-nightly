@@ -204,7 +204,7 @@ bb.ck:                                            ; preds = %.lr.ph.epil.prehead
   %i.ho = getelementptr inbounds nuw i8, ptr %i.gf, i64 28
   %i.hp = load i32, ptr %i.ho, align 4, !tbaa !45
   %i.hq = sub nsw i32 %i.hp, %i.gp                ; 2 uses
-  %i.hr = shl nsw i32 %i.hq, 1                    ; 2 uses
+  %i.hr = shl nuw nsw i32 %i.hq, 1                ; 2 uses
   %i.hs = icmp sgt i32 %i.hq, 0
   br i1 %i.hs, label %bb.cl, label %bb.do
 
@@ -265,8 +265,8 @@ bb.cu:                                            ; preds = %bb.dm, %bb.ct
   br i1 %i.ih, label %bb.cw, label %.preheader
 
 .preheader:                                       ; preds = %bb.cu
-  %10 = icmp sgt i32 %.0174, 0
-  br i1 %10, label %.lr.ph325.preheader, label %.critedge
+  %.not332 = icmp eq i32 %.0174, 0
+  br i1 %.not332, label %.critedge, label %.lr.ph325.preheader
 
 .lr.ph325.preheader:                              ; preds = %.preheader
   %i.ii = zext nneg i32 %.0174 to i64
@@ -294,8 +294,8 @@ bb.cx:                                            ; preds = %bb.cw
 
 bb.cy:                                            ; preds = %bb.cw
   %i.in = icmp samesign ult i16 %i.ie, -8193
-  %11 = icmp sgt i32 %.0174, 1
-  %or.cond22 = select i1 %i.in, i1 %11, i1 false
+  %10 = icmp samesign ugt i32 %.0174, 1
+  %or.cond22 = select i1 %i.in, i1 %10, i1 false
   br i1 %or.cond22, label %bb.cz, label %bb.da
 
 bb.cz:                                            ; preds = %bb.cy
@@ -309,8 +309,8 @@ bb.cz:                                            ; preds = %bb.cy
 
 bb.da:                                            ; preds = %bb.cy
   %i.iu = icmp eq i16 %i.ie, -8193
-  %12 = icmp sgt i32 %.0174, 2
-  %or.cond24 = select i1 %i.iu, i1 %12, i1 false
+  %11 = icmp samesign ugt i32 %.0174, 2
+  %or.cond24 = select i1 %i.iu, i1 %11, i1 false
   br i1 %or.cond24, label %bb.db, label %.thread315
 
 bb.db:                                            ; preds = %bb.da
@@ -404,7 +404,7 @@ bb.dm:                                            ; preds = %bb.de, %bb.dk
   %i.ka = getelementptr [2 x i8], ptr %i.jn, i64 %i.jz
   %i.kb = getelementptr i8, ptr %i.ka, i64 2
   %.neg320 = xor i32 %.1172, -1
-  %.neg321 = sub i32 %.0174, %i.je
+  %.neg321 = sub nsw i32 %.0174, %i.je
   %i.kc = add i32 %.neg321, %.neg320              ; 2 uses
   %i.kd = icmp sgt i32 %i.kc, 0
   br i1 %i.kd, label %bb.cu, label %.thread315, !llvm.loop !63

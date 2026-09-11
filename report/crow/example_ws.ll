@@ -205,14 +205,14 @@ _ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit: ; preds = %bb.ac, %bb.ad
   %i.et = ptrtoint ptr %i.er to i64
   %i.eu = ptrtoint ptr %i.es to i64
   %i.ev = sub i64 %i.et, %i.eu
-  %i.ew = ashr exact i64 %i.ev, 2                 ; 3 uses
-  %i.ex = load ptr, ptr %i.cq, align 8, !tbaa !242
-  %i.ey = load ptr, ptr %i.cn, align 8, !tbaa !240
+  %i.ew = ashr exact i64 %i.ev, 2                 ; 2 uses
+  %i.ex = load ptr, ptr %i.cq, align 8, !tbaa !242 ; 2 uses
+  %i.ey = load ptr, ptr %i.cn, align 8, !tbaa !240 ; 2 uses
   %i.ez = ptrtoint ptr %i.ex to i64
   %i.fa = ptrtoint ptr %i.ey to i64
   %i.fb = sub i64 %i.ez, %i.fa
   %i.fc = ashr exact i64 %i.fb, 2                 ; 3 uses
-  %i.fd = sub nsw i64 %i.ew, %i.fc                ; 2 uses
+  %i.fd = sub nuw nsw i64 %i.ew, %i.fc
   %i.fe = icmp ugt i64 %i.fc, %i.ew
   br i1 %i.fe, label %bb.ae, label %bb.af
 
@@ -222,8 +222,8 @@ bb.ae:                                            ; preds = %_ZNSt6vectorIPN4cro
   br label %_ZN4crow6detail18middleware_indices8pop_backERKS1_.exit
 
 bb.af:                                            ; preds = %_ZNSt6vectorIPN4crow9BlueprintESaIS2_EED2Ev.exit
-  %7 = icmp ult i64 %i.fd, %i.ew
-  br i1 %7, label %bb.ag, label %_ZN4crow6detail18middleware_indices8pop_backERKS1_.exit
+  %.not.i72 = icmp eq ptr %i.ex, %i.ey
+  br i1 %.not.i72, label %_ZN4crow6detail18middleware_indices8pop_backERKS1_.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.es, i64 %i.fd ; 2 uses
@@ -626,7 +626,7 @@ bb.dh:                                            ; preds = %bb.u
 
 bb.di:                                            ; preds = %bb.dh
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #40
-  %i.pj = sub i64 %i.pi, %4                       ; 4 uses
+  %i.pj = sub nuw i64 %i.pi, %4                   ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3260)
   %i.pk = icmp ugt i64 %4, %i.pi
   br i1 %i.pk, label %bb.dj, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i321

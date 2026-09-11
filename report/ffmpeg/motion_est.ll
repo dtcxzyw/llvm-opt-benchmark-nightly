@@ -205,8 +205,8 @@ bb.a:
   store i32 0, ptr %i.b, align 4, !tbaa !61
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 3772
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !111  ; 2 uses
-  %i.g = add nsw i32 %i.f, 1                      ; 8 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !111  ; 3 uses
+  %i.g = add nuw nsw i32 %i.f, 1                  ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4464
   %i.i = load ptr, ptr %i.h, align 16, !tbaa !112 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 768
@@ -609,7 +609,7 @@ bb.ap:                                            ; preds = %bb.af
 bb.aq:                                            ; preds = %bb.an, %bb.ao, %bb.ap
   %i.iw = getelementptr inbounds nuw i8, ptr %0, i64 5904
   %i.ix = load ptr, ptr %i.iw, align 16, !tbaa !124
-  %i.iy = lshr exact i32 65536, %i.g
+  %i.iy = lshr exact i32 32768, %i.f
   %i.iz = call i32 @ff_epzs_motion_search(ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef 0, i32 noundef 0, ptr noundef %i.ix, i32 noundef %i.iy, i32 noundef 0, i32 noundef 16)
   br label %bb.ar
 
@@ -1012,8 +1012,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 3772
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !111  ; 2 uses
-  %i.f = add nsw i32 %i.e, 1                      ; 6 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !111  ; 3 uses
+  %i.f = add nuw nsw i32 %i.e, 1                  ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 396
   %i.h = load i32, ptr %i.g, align 4, !tbaa !71   ; 2 uses
   %i.i = mul nsw i32 %i.h, %2
@@ -1321,7 +1321,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.n
-  %i.gb = lshr exact i32 65536, %i.f
+  %i.gb = lshr exact i32 32768, %i.e
   %i.gc = call i32 @ff_epzs_motion_search(ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.ec, i32 noundef %i.gb, i32 noundef 0, i32 noundef 16)
   %i.gd = load i32, ptr %i.a, align 4, !tbaa !61
   %i.ge = shl i32 %i.gd, %i.f

@@ -205,11 +205,11 @@ bb.e:                                             ; preds = %_ZNK12hb_hashmap_tI
   %i.af = load double, ptr %i.ae, align 8, !tbaa !63
   %i.ag = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 128, ptr noundef nonnull @.str.2, double noundef %i.af) #17
   %.sroa.speculated23 = tail call i32 @llvm.smax.i32(i32 %i.ag, i32 0) ; 3 uses
-  %i.ah = add nuw i32 %.sroa.speculated23, 1      ; 2 uses
+  %i.ah = add nuw nsw i32 %.sroa.speculated23, 1  ; 2 uses
   %i.ai = zext nneg i32 %.sroa.speculated23 to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ai
   store i8 58, ptr %i.aj, align 1, !tbaa !69
-  %i.ak = zext i32 %i.ah to i64
+  %i.ak = zext nneg i32 %i.ah to i64
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ak
   %i.am = sub nuw nsw i32 127, %.sroa.speculated23
   %i.an = zext nneg i32 %i.am to i64
@@ -218,7 +218,7 @@ bb.e:                                             ; preds = %_ZNK12hb_hashmap_tI
   %i.aq = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull %i.al, i64 noundef %i.an, ptr noundef nonnull @.str.2, double noundef %i.ap) #17
   %.sroa.speculated17 = tail call i32 @llvm.smax.i32(i32 %i.aq, i32 0)
   %i.ar = add nuw i32 %.sroa.speculated17, %i.ah  ; 3 uses
-  %i.as = add i32 %i.ar, 1                        ; 2 uses
+  %i.as = add nuw i32 %i.ar, 1                    ; 2 uses
   %i.at = zext i32 %i.ar to i64
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.at
   store i8 58, ptr %i.au, align 1, !tbaa !69

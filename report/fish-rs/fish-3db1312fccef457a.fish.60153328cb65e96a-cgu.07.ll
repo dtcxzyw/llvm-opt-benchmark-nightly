@@ -205,12 +205,12 @@ bb.ck:                                            ; preds = %bb.ci
   call void @llvm.experimental.noalias.scope.decl(metadata !2128)
   %i.ih = load ptr, ptr %2, align 8, !alias.scope !2129, !noalias !2130, !nonnull !10, !align !12, !noundef !10 ; 3 uses
   %i.ii = load i64, ptr %i.bl, align 8, !alias.scope !2129, !noalias !2130, !noundef !10 ; 3 uses
-  %i.ij = sub nsw i64 %3, %.sroa.0.052.i          ; 2 uses
+  %i.ij = sub nuw nsw i64 %3, %.sroa.0.052.i      ; 2 uses
   %i.ik = icmp ult i64 %3, %.sroa.0.052.i
   br i1 %i.ik, label %bb.cm, label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck
-  %i.il = icmp ult i64 %i.ij, 2
+  %i.il = icmp samesign ult i64 %i.ij, 2
   br i1 %i.il, label %bb.co, label %bb.cn
 
 bb.cm:                                            ; preds = %bb.ck
@@ -613,7 +613,7 @@ bb.jj:                                            ; preds = %bb.m
 bb.jk:                                            ; preds = %bb.ji, %.noexc75
   %.sroa.0115.0.i = phi i64 [ %i.tk, %bb.ji ], [ 0, %.noexc75 ] ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bk), !noalias !2255
-  %i.tl = sub i64 %.sroa.04.0, %.sroa.0115.0.i    ; 2 uses
+  %i.tl = sub nuw nsw i64 %.sroa.04.0, %.sroa.0115.0.i ; 2 uses
   %i.tm = icmp ult i64 %.sroa.04.0, %.sroa.0115.0.i
   br i1 %i.tm, label %bb.jm, label %bb.jl
 
@@ -1016,7 +1016,7 @@ bb.t:                                             ; preds = %bb.s
   %i.bx = load ptr, ptr %i.ah, align 8, !nonnull !10, !align !11, !noundef !10
   %i.by = load ptr, ptr %i.t, align 8, !nonnull !10
   %i.bz = load i64, ptr %i.u, align 8             ; 2 uses
-  %i.ca = sub i64 %i.bz, %.sroa.015.0             ; 2 uses
+  %i.ca = sub nuw i64 %i.bz, %.sroa.015.0         ; 2 uses
   %i.cb = icmp ult i64 %i.bz, %.sroa.015.0
   br i1 %i.cb, label %bb.w, label %bb.v
 

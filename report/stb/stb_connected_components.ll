@@ -204,8 +204,8 @@ bb.a:
   %i.a = alloca [64 x [8 x i8]], align 16         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.a, i8 0, i64 512, i1 false)
-  %i.b = shl nsw i32 %1, 5
-  %i.c = shl nsw i32 %2, 5
+  %i.b = shl nuw nsw i32 %1, 5
+  %i.c = shl nuw nsw i32 %2, 5
   %i.d = icmp slt i32 %1, 0
   br i1 %i.d, label %.loopexit, label %bb.b
 
@@ -608,8 +608,8 @@ bb.a:
   %i.a = alloca [64 x [8 x i8]], align 16         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.a, i8 0, i64 512, i1 false)
-  %i.b = shl nsw i32 %1, 5
-  %i.c = shl nsw i32 %2, 5
+  %i.b = shl nuw nsw i32 %1, 5
+  %i.c = shl nuw nsw i32 %2, 5
   %i.d = icmp slt i32 %1, 0
   br i1 %i.d, label %.loopexit, label %bb.b
 

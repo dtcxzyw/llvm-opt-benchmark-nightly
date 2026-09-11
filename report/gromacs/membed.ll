@@ -205,7 +205,7 @@ _ZL14gmx_sfree_implIA3_fEvPKcS2_iPT_.exit184.9.i: ; preds = %bb.pa, %_ZL14gmx_sf
 
 ._crit_edge269.i:                                 ; preds = %_ZN14gmx_molblock_taSERKS_.exit.i
   %i.bzp = sext i32 %.1158.i to i64               ; 3 uses
-  %i.bzq = sub nsw i64 %i.cbh, %i.bzp             ; 2 uses
+  %i.bzq = sub nuw nsw i64 %i.cbh, %i.bzp
   %i.bzr = icmp ult i64 %i.cbh, %i.bzp
   br i1 %i.bzr, label %bb.pb, label %bb.pc
 
@@ -215,8 +215,8 @@ bb.pb:                                            ; preds = %._crit_edge269.i
           to label %_ZNSt6vectorI14gmx_molblock_tSaIS0_EE6resizeEm.exit.i unwind label %bb.np
 
 bb.pc:                                            ; preds = %._crit_edge269.i
-  %52 = icmp ult i64 %i.bzq, %i.cbh
-  br i1 %52, label %bb.pd, label %_ZNSt6vectorI14gmx_molblock_tSaIS0_EE6resizeEm.exit.i
+  %.not275.i = icmp eq i32 %.1158.i, 0
+  br i1 %.not275.i, label %_ZNSt6vectorI14gmx_molblock_tSaIS0_EE6resizeEm.exit.i, label %bb.pd
 
 bb.pd:                                            ; preds = %bb.pc
   %i.bzt = getelementptr inbounds nuw [56 x i8], ptr %i.cbb, i64 %i.bzq ; 3 uses
@@ -308,12 +308,12 @@ bb.pi:                                            ; preds = %.noexc187.i, %bb.ph
 _ZN14gmx_molblock_taSERKS_.exit.i:                ; preds = %.noexc187._ZN14gmx_molblock_taSERKS_.exit_crit_edge.i, %bb.pg
   %i.cbb = phi ptr [ %i.caj, %bb.pg ], [ %.pre321.i, %.noexc187._ZN14gmx_molblock_taSERKS_.exit_crit_edge.i ] ; 3 uses
   %i.cbc = phi ptr [ %i.cak, %bb.pg ], [ %.pre320.i, %.noexc187._ZN14gmx_molblock_taSERKS_.exit_crit_edge.i ] ; 4 uses
-  %.1158.i = phi i32 [ %i.cap, %bb.pg ], [ %.0157266.i, %.noexc187._ZN14gmx_molblock_taSERKS_.exit_crit_edge.i ] ; 2 uses
+  %.1158.i = phi i32 [ %i.cap, %bb.pg ], [ %.0157266.i, %.noexc187._ZN14gmx_molblock_taSERKS_.exit_crit_edge.i ] ; 3 uses
   %i.cbd = add nuw i64 %.0267.i, 1                ; 2 uses
   %i.cbe = ptrtoint ptr %i.cbc to i64
   %i.cbf = ptrtoint ptr %i.cbb to i64
   %i.cbg = sub i64 %i.cbe, %i.cbf
-  %i.cbh = sdiv exact i64 %i.cbg, 56              ; 4 uses
+  %i.cbh = sdiv exact i64 %i.cbg, 56              ; 3 uses
   %i.cbi = icmp ult i64 %i.cbd, %i.cbh
   br i1 %i.cbi, label %.lr.ph268.i, label %._crit_edge269.i, !llvm.loop !171
 

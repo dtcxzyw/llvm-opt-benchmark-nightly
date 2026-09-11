@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bt = add nuw nsw i64 %i.bf, 6
   %i.bu = add nuw nsw i64 %i.bt, %i.bh
   %i.bv = add nuw nsw i64 %i.bu, %i.bj            ; 2 uses
-  %i.bw = sub i64 %i.bc, %i.bv
+  %i.bw = sub nuw i64 %i.bc, %i.bv
   %i.bx = icmp ugt i64 %i.bv, %i.bc
   br i1 %i.bx, label %BIT_initDStream.exit.thread.i, label %bb.g
 
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %bb.f
   %i.hu = add nuw nsw i64 %i.hg, 6
   %i.hv = add nuw nsw i64 %i.hu, %i.hi
   %i.hw = add nuw nsw i64 %i.hv, %i.hk            ; 2 uses
-  %i.hx = sub i64 %i.hd, %i.hw
+  %i.hx = sub nuw i64 %i.hd, %i.hw
   %i.hy = icmp ugt i64 %i.hw, %i.hd
   br i1 %i.hy, label %BIT_initDStream.exit.thread.i, label %bb.h
 
@@ -1011,7 +1011,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ff = add nuw nsw i64 %i.er, 6
   %i.fg = add nuw nsw i64 %i.ff, %i.et
   %i.fh = add nuw nsw i64 %i.fg, %i.ev            ; 2 uses
-  %i.fi = sub i64 %i.ej, %i.fh
+  %i.fi = sub nuw i64 %i.ej, %i.fh
   %i.fj = icmp ugt i64 %i.fh, %i.ej
   br i1 %i.fj, label %BIT_initDStream.exit.thread.i, label %bb.e
 
@@ -1414,7 +1414,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.3, label %.loopexit75, label %.lr.ph, !llvm.loop !121
 
 .loopexit75:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.b, %bb.a
-  %i.ac = add i8 %.sroa.5.0.extract.trunc, 1      ; 13 uses
+  %i.ac = add nuw i8 %.sroa.5.0.extract.trunc, 1  ; 13 uses
   %i.ad = sext i32 %5 to i64
   %i.ae = getelementptr inbounds [4 x i8], ptr %9, i64 %i.ad
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !22 ; 2 uses

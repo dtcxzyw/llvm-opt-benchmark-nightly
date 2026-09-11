@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.g = load i8, ptr %i.f, align 1, !tbaa !32    ; 3 uses
   %i.h = sext i8 %i.g to i32
-  %i.i = shl nsw i32 %i.h, 1                      ; 5 uses
+  %i.i = shl nuw nsw i32 %i.h, 1                  ; 5 uses
   %i.j = icmp slt i8 %i.g, 0
   br i1 %i.j, label %bb.c, label %.preheader
 
@@ -360,7 +360,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.e = load i8, ptr %i.d, align 1, !tbaa !32    ; 3 uses
   %i.f = sext i8 %i.e to i32
-  %i.g = shl nsw i32 %i.f, 1                      ; 5 uses
+  %i.g = shl nuw nsw i32 %i.f, 1                  ; 5 uses
   %i.h = icmp slt i8 %i.e, 0
   br i1 %i.h, label %bb.c, label %.preheader
 
@@ -518,7 +518,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.f = load i8, ptr %i.e, align 1, !tbaa !32    ; 3 uses
   %i.g = sext i8 %i.f to i32
-  %i.h = shl nsw i32 %i.g, 1                      ; 8 uses
+  %i.h = shl nuw nsw i32 %i.g, 1                  ; 8 uses
   %i.i = icmp slt i8 %i.f, 0
   br i1 %i.i, label %bb.c, label %.preheader
 
@@ -921,7 +921,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.g = load i8, ptr %i.f, align 1, !tbaa !32    ; 3 uses
   %i.h = sext i8 %i.g to i32
-  %i.i = shl nsw i32 %i.h, 2                      ; 5 uses
+  %i.i = shl nuw nsw i32 %i.h, 2                  ; 5 uses
   %i.j = icmp slt i8 %i.g, 0
   br i1 %i.j, label %bb.c, label %.preheader
 
@@ -1079,7 +1079,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.e = load i8, ptr %i.d, align 1, !tbaa !32    ; 3 uses
   %i.f = sext i8 %i.e to i32
-  %i.g = shl nsw i32 %i.f, 2                      ; 5 uses
+  %i.g = shl nuw nsw i32 %i.f, 2                  ; 5 uses
   %i.h = icmp slt i8 %i.e, 0
   br i1 %i.h, label %bb.c, label %.preheader
 
@@ -1237,7 +1237,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.f = load i8, ptr %i.e, align 1, !tbaa !32    ; 3 uses
   %i.g = sext i8 %i.f to i32
-  %i.h = shl nsw i32 %i.g, 2                      ; 8 uses
+  %i.h = shl nuw nsw i32 %i.g, 2                  ; 8 uses
   %i.i = icmp slt i8 %i.f, 0
   br i1 %i.i, label %bb.c, label %.preheader
 
@@ -1640,7 +1640,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.g = load i8, ptr %i.f, align 1, !tbaa !32    ; 3 uses
   %i.h = sext i8 %i.g to i32
-  %i.i = shl nsw i32 %i.h, 4                      ; 5 uses
+  %i.i = shl nuw nsw i32 %i.h, 4                  ; 5 uses
   %i.j = icmp slt i8 %i.g, 0
   br i1 %i.j, label %bb.c, label %.preheader
 
@@ -1798,7 +1798,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.e = load i8, ptr %i.d, align 1, !tbaa !32    ; 3 uses
   %i.f = sext i8 %i.e to i32
-  %i.g = shl nsw i32 %i.f, 4                      ; 5 uses
+  %i.g = shl nuw nsw i32 %i.f, 4                  ; 5 uses
   %i.h = icmp slt i8 %i.e, 0
   br i1 %i.h, label %bb.c, label %.preheader
 
@@ -1956,7 +1956,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.f = load i8, ptr %i.e, align 1, !tbaa !32    ; 3 uses
   %i.g = sext i8 %i.f to i32
-  %i.h = shl nsw i32 %i.g, 4                      ; 8 uses
+  %i.h = shl nuw nsw i32 %i.g, 4                  ; 8 uses
   %i.i = icmp slt i8 %i.f, 0
   br i1 %i.i, label %bb.c, label %.preheader
 
@@ -2359,7 +2359,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.g = load i8, ptr %i.f, align 1, !tbaa !32    ; 3 uses
   %i.h = sext i8 %i.g to i32
-  %i.i = shl nsw i32 %i.h, 6                      ; 5 uses
+  %i.i = shl nuw nsw i32 %i.h, 6                  ; 5 uses
   %i.j = icmp slt i8 %i.g, 0
   br i1 %i.j, label %bb.c, label %.preheader
 
@@ -2517,7 +2517,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.e = load i8, ptr %i.d, align 1, !tbaa !32    ; 3 uses
   %i.f = sext i8 %i.e to i32
-  %i.g = shl nsw i32 %i.f, 6                      ; 5 uses
+  %i.g = shl nuw nsw i32 %i.f, 6                  ; 5 uses
   %i.h = icmp slt i8 %i.e, 0
   br i1 %i.h, label %bb.c, label %.preheader
 
@@ -2675,7 +2675,7 @@ bb.b:                                             ; preds = %bb.a, %.loopexit
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv
   %i.f = load i8, ptr %i.e, align 1, !tbaa !32    ; 3 uses
   %i.g = sext i8 %i.f to i32
-  %i.h = shl nsw i32 %i.g, 6                      ; 8 uses
+  %i.h = shl nuw nsw i32 %i.g, 6                  ; 8 uses
   %i.i = icmp slt i8 %i.f, 0
   br i1 %i.i, label %bb.c, label %.preheader
 

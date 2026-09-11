@@ -204,9 +204,9 @@ _RINvXs4_NtNtCseeQwDhuaSHd_4rtcp15extended_report4dlrrNtB6_15DLRRReportBlockNtNt
   br label %.loopexit270.a
 
 .noexc186:                                        ; preds = %.noexc187, %.noexc185
-  %.sroa.015.0.copyload.i = phi i16 [ %i.dd, %.noexc185 ], [ %.sroa.015.0.copyload.pre.i, %.noexc187 ] ; 2 uses
+  %.sroa.015.0.copyload.i = phi i16 [ %i.dd, %.noexc185 ], [ %.sroa.015.0.copyload.pre.i, %.noexc187 ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1573
-  %i.de = shl i16 %.sroa.015.0.copyload.i, 2      ; 4 uses
+  %i.de = shl nuw i16 %.sroa.015.0.copyload.i, 2  ; 3 uses
   %i.df = icmp ugt i16 %.sroa.015.0.copyload.i, 16383
   br i1 %i.df, label %bb.at, label %bb.as, !prof !12
 
@@ -239,7 +239,7 @@ bb.av:                                            ; preds = %.noexc190
   store i64 0, ptr %i.b, align 8, !noalias !1573
   store ptr inttoptr (i64 4 to ptr), ptr %i.as, align 8, !noalias !1573
   store i64 0, ptr %i.at, align 8, !noalias !1573
-  %.not38.i = icmp eq i16 %i.de, 0
+  %.not38.i = icmp eq i16 %.sroa.015.0.copyload.i, 0
   br i1 %.not38.i, label %_RINvXs4_NtNtCseeQwDhuaSHd_4rtcp15extended_report4dlrrNtB6_15DLRRReportBlockNtNtCslqlypCAacxc_11webrtc_util7marshal9Unmarshal9unmarshalINtNtNtCs1eA6bChxBZF_5bytes3buf5chain5ChainNtNtB2f_5bytes5BytesINtNtB2d_4take4TakeQRShEEECs4KPtkQIfQGm_13libp2p_webrtc.exit.thread, label %.lr.ph.i175
 
 _RINvXs4_NtNtCseeQwDhuaSHd_4rtcp15extended_report4dlrrNtB6_15DLRRReportBlockNtNtCslqlypCAacxc_11webrtc_util7marshal9Unmarshal9unmarshalINtNtNtCs1eA6bChxBZF_5bytes3buf5chain5ChainNtNtB2f_5bytes5BytesINtNtB2d_4take4TakeQRShEEECs4KPtkQIfQGm_13libp2p_webrtc.exit.thread: ; preds = %bb.bb, %bb.av
