@@ -204,11 +204,10 @@ bb.h:                                             ; preds = %.thread23.us.i
   %i.az = load i32, ptr %i.ay, align 8
   %i.ba = and i32 %i.ad, 4
   %i.bb = and i32 %i.ba, %i.az
-  %.not22.us.i = icmp eq i32 %i.bb, 0
   %.phi.trans.insert = getelementptr i8, ptr %.pn28.us.i, i64 44
-  %.pre = load i32, ptr %.phi.trans.insert, align 4 ; 2 uses
-  %5 = or i32 %.pre, 8
-  %spec.select = select i1 %.not22.us.i, i32 %.pre, i32 %5
+  %.pre = load i32, ptr %.phi.trans.insert, align 4
+  %5 = shl nuw nsw i32 %i.bb, 1
+  %spec.select = or i32 %.pre, %5
   br label %.thread24.us.i
 
 .thread24.us.i:                                   ; preds = %bb.h, %bb.g
@@ -253,7 +252,7 @@ bb.i:                                             ; preds = %.thread.us30.i
   br label %.thread23.us34.i
 
 .thread23.us34.i:                                 ; preds = %bb.i, %.thread.us30.i
-  %i.br = phi i32 [ %i.bq, %bb.i ], [ %i.bh, %.thread.us30.i ] ; 3 uses
+  %i.br = phi i32 [ %i.bq, %bb.i ], [ %i.bh, %.thread.us30.i ] ; 2 uses
   br i1 %i.v, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.thread23.us34.i
@@ -266,13 +265,12 @@ bb.k:                                             ; preds = %.thread23.us34.i
   %i.bv = load i32, ptr %i.bu, align 8
   %i.bw = and i32 %i.bn, 4
   %i.bx = and i32 %i.bw, %i.bv
-  %.not22.us35.i = icmp eq i32 %i.bx, 0
-  %i.by = or i32 %i.br, 8
-  %spec.select.i = select i1 %.not22.us35.i, i32 %i.br, i32 %i.by
+  %6 = shl nuw nsw i32 %i.bx, 1
+  %i.by = or i32 %6, %i.br
   br label %.thread24.us36.i
 
 .thread24.us36.i:                                 ; preds = %bb.k, %bb.j
-  %i.bz = phi i32 [ %i.bs, %bb.j ], [ %spec.select.i, %bb.k ]
+  %i.bz = phi i32 [ %i.bs, %bb.j ], [ %i.by, %bb.k ]
   %i.ca = and i32 %i.bz, -17
   %storemerge.i = or disjoint i32 %i.ca, %masksel.i
   store i32 %storemerge.i, ptr %i.bf, align 4
@@ -302,9 +300,9 @@ bb.k:                                             ; preds = %.thread23.us34.i
   %i.cj = xor i32 %i.ci, -1
   %i.ck = and i32 %i.cg, 4
   %i.cl = and i32 %i.ck, %i.cj
-  %.not22.us43.us.i = icmp eq i32 %i.cl, 0
-  %6 = select i1 %.not22.us43.us.i, i32 16, i32 24
-  %i.cm = or i32 %6, %i.cd
+  %7 = shl nuw nsw i32 %i.cl, 1
+  %spec.select62.i = or i32 %i.cd, %7
+  %i.cm = or i32 %spec.select62.i, 16
   store i32 %i.cm, ptr %i.cb, align 4
   %.pn.us45.us.i = load ptr, ptr %.pn28.us42.us.i, align 8 ; 3 uses
   %.0.us46.us.i = getelementptr i8, ptr %.pn.us45.us.i, i64 -8
@@ -315,7 +313,7 @@ bb.k:                                             ; preds = %.thread23.us34.i
   %.029.us41.i = phi ptr [ %.0.us46.i, %.thread.us40.i ], [ %.026.i, %.lr.ph.split.split.split.us.i ]
   %.pn28.us42.i = phi ptr [ %.pn.us45.i, %.thread.us40.i ], [ %.pn25.i, %.lr.ph.split.split.split.us.i ] ; 3 uses
   %i.cn = getelementptr i8, ptr %.pn28.us42.i, i64 44 ; 3 uses
-  %i.co = load i32, ptr %i.cn, align 4            ; 3 uses
+  %i.co = load i32, ptr %i.cn, align 4            ; 2 uses
   %i.cp = and i32 %i.co, -4
   store i32 %i.cp, ptr %i.cn, align 4
   %i.cq = load ptr, ptr %.029.us41.i, align 8
@@ -326,11 +324,10 @@ bb.k:                                             ; preds = %.thread23.us34.i
   %i.cv = xor i32 %i.cu, -1
   %i.cw = and i32 %i.cs, 4
   %i.cx = and i32 %i.cw, %i.cv
-  %.not22.us43.i = icmp eq i32 %i.cx, 0
-  %7 = or i32 %i.co, 8
-  %spec.select63.i = select i1 %.not22.us43.i, i32 %i.co, i32 %7
-  %8 = and i32 %spec.select63.i, -20
-  store i32 %8, ptr %i.cn, align 4
+  %8 = shl nuw nsw i32 %i.cx, 1
+  %.masked.i = and i32 %i.co, -20
+  %9 = or i32 %8, %.masked.i
+  store i32 %9, ptr %i.cn, align 4
   %.pn.us45.i = load ptr, ptr %.pn28.us42.i, align 8 ; 3 uses
   %.0.us46.i = getelementptr i8, ptr %.pn.us45.i, i64 -8
   %.not.us47.i = icmp eq ptr %.pn.us45.i, @cdrom_list

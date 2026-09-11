@@ -113,9 +113,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   store i32 %0, ptr %i.bq, align 4
   store i32 %1, ptr %i.bs, align 4
-  %7 = icmp eq i32 %spec.select, 0
-  %8 = select i1 %7, i32 1, i32 -1
-  %i.cd = sitofp i32 %8 to double
+  %7 = sub nsw i32 1, %spec.select
+  %i.cd = sitofp i32 %7 to double
   store double %i.cd, ptr %5, align 8
   br label %.sink.split
 

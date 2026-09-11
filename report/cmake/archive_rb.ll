@@ -117,47 +117,47 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !27
   %.03954 = load ptr, ptr %0, align 8, !tbaa !15  ; 2 uses
   %.not55 = icmp eq ptr %.03954, null
-  br i1 %.not55, label %.thread105, label %.lr.ph
-
-.thread105:                                       ; preds = %bb.a
-  %2 = ptrtoint ptr %0 to i64
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  br label %.critedge50
+  br i1 %.not55, label %bb.c, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.03956 = phi ptr [ %.039, %bb.b ], [ %.03954, %bb.a ] ; 11 uses
-  %i.d = tail call i32 %i.c(ptr noundef nonnull %.03956, ptr noundef %1) #6
-  %.fr122 = freeze i32 %i.d                       ; 2 uses
-  %.not48 = icmp eq i32 %.fr122, 0
+  %.03956 = phi ptr [ %.039, %bb.b ], [ %.03954, %bb.a ] ; 3 uses
+  %i.d = tail call i32 %i.c(ptr noundef nonnull %.03956, ptr noundef %1) #6 ; 2 uses
+  %.not48 = icmp eq i32 %i.d, 0
   br i1 %.not48, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.e = icmp sgt i32 %.fr122, 0                  ; 4 uses
+  %i.e = icmp sgt i32 %i.d, 0                     ; 2 uses
   %i.f = zext i1 %i.e to i64
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %.03956, i64 %i.f
   %.039 = load ptr, ptr %i.g, align 8, !tbaa !15  ; 2 uses
   %.not = icmp eq ptr %.039, null
-  br i1 %.not, label %bb.c, label %.lr.ph, !llvm.loop !26
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !26
 
-bb.c:                                             ; preds = %bb.b
-  %4 = zext i1 %i.e to i64
-  %i.h = ptrtoint ptr %.03956 to i64
+._crit_edge:                                      ; preds = %bb.b
+  %2 = zext i1 %i.e to i32
+  br label %bb.c
+
+bb.c:                                             ; preds = %._crit_edge, %bb.a
+  %.041.lcssa = phi ptr [ %.03956, %._crit_edge ], [ %0, %bb.a ] ; 9 uses
+  %.038.lcssa = phi i32 [ %2, %._crit_edge ], [ 0, %bb.a ] ; 3 uses
+  %i.h = ptrtoint ptr %.041.lcssa to i64
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %.masked = and i64 %i.h, -3
-  %spec.select = select i1 %i.e, i64 2, i64 0
-  %i.j = or disjoint i64 %spec.select, %.masked   ; 2 uses
-  %i.k = icmp eq ptr %.03956, %0
+  %3 = shl nuw nsw i32 %.038.lcssa, 1
+  %masksel = zext nneg i32 %3 to i64
+  %i.j = or disjoint i64 %.masked, %masksel       ; 2 uses
+  %i.k = icmp eq ptr %.041.lcssa, %0
   br i1 %i.k, label %.critedge50, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = or i64 %i.j, 1
   store i64 %i.l, ptr %i.i, align 8, !tbaa !21
-  %i.m = getelementptr inbounds nuw i8, ptr %.03956, i64 16
+  %i.m = getelementptr inbounds nuw i8, ptr %.041.lcssa, i64 16
   %i.n = load i64, ptr %i.m, align 8, !tbaa !21
   %i.o = and i64 %i.n, 1
   %i.p = icmp eq i64 %i.o, 0
-  %i.q = zext i1 %i.e to i64
-  %i.r = getelementptr inbounds nuw [8 x i8], ptr %.03956, i64 %i.q ; 2 uses
+  %i.q = zext nneg i32 %.038.lcssa to i64
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %.041.lcssa, i64 %i.q ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !15   ; 2 uses
   store ptr %i.s, ptr %1, align 8, !tbaa !15
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -166,13 +166,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.p, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.u = getelementptr inbounds nuw i8, ptr %.03956, i64 16 ; 4 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %.041.lcssa, i64 16 ; 4 uses
   %i.v = load i64, ptr %i.u, align 8, !tbaa !21   ; 3 uses
   %i.w = and i64 %i.v, -4                         ; 3 uses
   %i.x = inttoptr i64 %i.w to ptr                 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !15
-  %i.aa = icmp eq ptr %i.z, %.03956               ; 3 uses
+  %i.aa = icmp eq ptr %i.z, %.041.lcssa           ; 3 uses
   %i.ab = xor i1 %i.aa, true
   %i.ac = zext i1 %i.ab to i64                    ; 3 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.ac
@@ -243,7 +243,7 @@ bb.i:                                             ; preds = %bb.h
 
 ._crit_edge.i:                                    ; preds = %bb.f, %.lr.ph.i, %.lr.ph.i.preheader, %bb.e
   %.025.lcssa.i = phi ptr [ %1, %bb.e ], [ %1, %.lr.ph.i.preheader ], [ %i.bc, %.lr.ph.i ], [ %i.bc, %bb.f ] ; 2 uses
-  %.0.lcssa.i = phi ptr [ %.03956, %bb.e ], [ %.03956, %.lr.ph.i.preheader ], [ %i.bm, %.lr.ph.i ], [ %i.bm, %bb.f ] ; 3 uses
+  %.0.lcssa.i = phi ptr [ %.041.lcssa, %bb.e ], [ %.041.lcssa, %.lr.ph.i.preheader ], [ %i.bm, %.lr.ph.i ], [ %i.bm, %bb.f ] ; 3 uses
   %.lcssa46.i = phi ptr [ %i.u, %bb.e ], [ %i.u, %.lr.ph.i.preheader ], [ %i.bn, %.lr.ph.i ], [ %i.bn, %bb.f ] ; 4 uses
   %.lcssa44.i = phi i64 [ %i.v, %bb.e ], [ %i.v, %.lr.ph.i.preheader ], [ %i.bo, %.lr.ph.i ], [ %i.bo, %bb.f ]
   %.lcssa42.i = phi i64 [ %i.w, %bb.e ], [ %i.w, %.lr.ph.i.preheader ], [ %i.al, %.lr.ph.i ], [ %i.al, %bb.f ] ; 2 uses
@@ -371,14 +371,11 @@ __archive_rb_tree_reparent_nodes.exit36.i:        ; preds = %.sink.split.i32.i, 
   store i64 %i.eh, ptr %i.ef, align 8, !tbaa !21
   br label %.critedge
 
-.critedge50:                                      ; preds = %.thread105, %bb.c
-  %5 = phi i64 [ %2, %.thread105 ], [ %i.j, %bb.c ]
-  %.041.lcssa99111 = phi ptr [ %0, %.thread105 ], [ %.03956, %bb.c ]
-  %.038.lcssa101110 = phi i64 [ 0, %.thread105 ], [ %4, %bb.c ]
-  %6 = phi ptr [ %3, %.thread105 ], [ %i.i, %bb.c ]
-  %7 = and i64 %5, -2
-  store i64 %7, ptr %6, align 8, !tbaa !21
-  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %.041.lcssa99111, i64 %.038.lcssa101110 ; 2 uses
+.critedge50:                                      ; preds = %bb.c
+  %4 = and i64 %i.j, -2
+  store i64 %4, ptr %i.i, align 8, !tbaa !21
+  %5 = zext nneg i32 %.038.lcssa to i64
+  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %.041.lcssa, i64 %5 ; 2 uses
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !15 ; 2 uses
   store ptr %i.ej, ptr %1, align 8, !tbaa !15
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 8

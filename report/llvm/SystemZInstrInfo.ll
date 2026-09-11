@@ -202,12 +202,6 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !114  ; 2 uses
   %i.v = load i32, ptr %i.s, align 8              ; 3 uses
-  %5 = lshr i32 %i.v, 26
-  %6 = lshr i32 %i.v, 24
-  %.lobit.i = and i32 %6, 1
-  %7 = xor i32 %.lobit.i, 1
-  %8 = and i32 %7, %5
-  %.not = icmp eq i32 %8, 0
   %i.w = and i32 %i.v, 268435456
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.q, i64 4 ; 2 uses
@@ -489,8 +483,11 @@ _ZNK4llvm12MachineInstr8mayStoreENS0_9QueryTypeE.exit.thread: ; preds = %bb.p, %
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   %i.eu = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr null, ptr %i.eu, align 8, !tbaa !124, !alias.scope !500
-  %9 = select i1 %.not, i32 0, i32 67108864
-  %i.ev = or disjoint i32 %9, %i.eq
+  %5 = shl i32 %i.v, 2
+  %6 = and i32 %5, 67108864
+  %7 = xor i32 %6, 67108864
+  %8 = and i32 %7, %i.v
+  %i.ev = or disjoint i32 %8, %i.eq
   %i.ew = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i32 %i.u, ptr %i.ew, align 4, !tbaa !114, !alias.scope !500
   %i.ex = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -893,24 +890,19 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #23
   %i.bk = getelementptr inbounds nuw i8, ptr %i.i, i64 36
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !114
-  %i.bm = load i32, ptr %i.bb, align 8            ; 3 uses
-  %12 = lshr i32 %i.bm, 26
-  %13 = lshr i32 %i.bm, 24
-  %.lobit.i = and i32 %13, 1
-  %14 = xor i32 %.lobit.i, 1
-  %15 = and i32 %14, %12
-  %.not101 = icmp eq i32 %15, 0
-  %i.bn = and i32 %i.bm, 1048320
+  %i.bm = load i32, ptr %i.bb, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
-  %i.bo = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store ptr null, ptr %i.bo, align 8, !tbaa !124, !alias.scope !731
-  %16 = select i1 %.not101, i32 0, i32 67108864
-  %i.bp = getelementptr inbounds nuw i8, ptr %9, i64 4
-  store i32 %i.bl, ptr %i.bp, align 4, !tbaa !114, !alias.scope !731
-  %17 = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %18 = or disjoint i32 %16, %i.bn
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, i8 0, i64 16, i1 false), !alias.scope !731
-  store i32 %18, ptr %9, align 8, !alias.scope !731
+  %12 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  store ptr null, ptr %12, align 8, !tbaa !124, !alias.scope !731
+  %13 = shl i32 %i.bm, 2
+  %i.bn = and i32 %13, 67108864
+  %i.bo = getelementptr inbounds nuw i8, ptr %9, i64 4
+  store i32 %i.bl, ptr %i.bo, align 4, !tbaa !114, !alias.scope !731
+  %i.bp = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %14 = xor i32 %i.bn, 68157184
+  %15 = and i32 %14, %i.bm
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, i8 0, i64 16, i1 false), !alias.scope !731
+  store i32 %15, ptr %9, align 8, !alias.scope !731
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.bj, ptr noundef nonnull align 8 dereferenceable(1065) %i.bi, ptr noundef nonnull align 8 dereferenceable(32) %9) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #23
   %i.bq = zext i32 %.0 to i64

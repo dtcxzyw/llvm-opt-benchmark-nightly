@@ -204,11 +204,10 @@ p4_ht_thread.exit.thread.i38:                     ; preds = %p4_default_cccr_con
   %i.ad = phi i32 [ %i.l, %p4_ht_thread.exit.i40 ], [ %i.w, %p4_default_cccr_conf.exit ]
   %i.ae = phi ptr [ %i.k, %p4_ht_thread.exit.i40 ], [ %i.r, %p4_default_cccr_conf.exit ]
   %i.af = phi i64 [ %., %p4_ht_thread.exit.i40 ], [ 67305472, %p4_default_cccr_conf.exit ]
-  %.not10.i = icmp eq i32 %i.ad, 0
-  %spec.select.i = select i1 %.not10.i, i32 8, i32 0 ; 2 uses
-  %.not11.i = icmp eq i32 %i.ac, 0
-  %i.ag = or disjoint i32 %spec.select.i, 4
-  %spec.select15.i = select i1 %.not11.i, i32 %i.ag, i32 %spec.select.i
+  %1 = shl nuw nsw i32 %i.ad, 3
+  %2 = shl nuw nsw i32 %i.ac, 2
+  %i.ag = or disjoint i32 %1, %2
+  %spec.select15.i = xor i32 %i.ag, 12
   br label %p4_default_escr_conf.exit
 
 bb.e:                                             ; preds = %p4_ht_thread.exit.i40

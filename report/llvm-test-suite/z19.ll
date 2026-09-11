@@ -200,9 +200,8 @@ declare void @AdjustSize(ptr noundef, i32 noundef, i32 noundef, i32 noundef) loc
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef ptr @InterposeWideOrHigh(ptr noundef %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #0 {
 bb.a:
-  %2 = icmp eq i32 %1, 0
-  %3 = select i1 %2, i32 26, i32 27               ; 2 uses
-  %i.a = zext nneg i32 %3 to i64
+  %2 = or disjoint i32 %1, 26                     ; 2 uses
+  %i.a = zext nneg i32 %2 to i64
   %i.b = getelementptr inbounds nuw i8, ptr @zz_lengths, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1, !tbaa !8     ; 2 uses
   %i.d = zext i8 %i.c to i32                      ; 2 uses
@@ -227,7 +226,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.l = phi ptr [ %i.j, %bb.b ], [ %i.g, %bb.c ] ; 23 uses
-  %i.m = trunc nuw nsw i32 %3 to i8
+  %i.m = trunc nuw nsw i32 %2 to i8
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   store i8 %i.m, ptr %i.n, align 8, !tbaa !8
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 24

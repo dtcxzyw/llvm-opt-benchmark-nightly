@@ -205,8 +205,7 @@ define hidden { i8, i8 } @_RNvYINtNtNtNtCsa5QsYiPB8Gl_5image6codecs4webp7decoder
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 183
   %.val = load i8, ptr %i.a, align 1, !range !7, !noundef !5
-  %.not = icmp eq i8 %.val, 0
-  %. = select i1 %.not, i8 16, i8 17
+  %. = or disjoint i8 %.val, 16
   %i.b = insertvalue { i8, i8 } poison, i8 %., 0
   %i.c = insertvalue { i8, i8 } %i.b, i8 undef, 1
   ret { i8, i8 } %i.c

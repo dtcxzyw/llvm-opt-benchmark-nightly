@@ -205,7 +205,6 @@ bb.a:
   br i1 %.not197, label %.thread220, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.not236 = icmp eq i8 %4, 0
   %i.f = trunc nuw nsw i64 %0 to i32
   %.sroa.0.0.copyload.peel = load i32, ptr %1, align 4, !tbaa !30 ; 4 uses
   %.sroa.5.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -213,9 +212,9 @@ bb.a:
   %.sroa.7.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.7.0.copyload.peel = load i8, ptr %.sroa.7.0..sroa_idx.peel, align 4, !tbaa !29
   %.not167.peel = icmp ne i8 %.sroa.7.0.copyload.peel, 0
-  %i.g = zext i1 %.not167.peel to i8              ; 2 uses
-  %8 = or disjoint i8 %i.g, 64
-  %.0126.peel = select i1 %.not236, i8 %i.g, i8 %8 ; 3 uses
+  %i.g = zext i1 %.not167.peel to i8
+  %8 = shl nuw nsw i8 %4, 6
+  %.0126.peel = or disjoint i8 %8, %i.g           ; 3 uses
   %i.h = icmp eq i32 %.sroa.0.0.copyload.peel, 0
   br i1 %i.h, label %bb.d, label %bb.b
 

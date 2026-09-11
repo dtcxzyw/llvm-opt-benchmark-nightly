@@ -204,11 +204,13 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define internal void @ConvertRGBToY_SSE2(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3) #5 {
 bb.a:
-  %i.a = alloca [6 x <2 x i64>], align 16         ; 15 uses
+  %i.a = alloca [6 x <2 x i64>], align 16         ; 13 uses
   %i.b = and i32 %2, -32                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.c = icmp eq i32 %3, 3
-  %indvars.iv.i.sroa.gep24 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
+  %indvars.iv.i.sroa.gep21 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
+  %indvars.iv.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 4 uses
+  %indvars.iv.i.sroa.gep24 = getelementptr inbounds nuw i8, ptr %i.a, i64 80 ; 4 uses
   %i.d = icmp sgt i32 %2, 31                      ; 2 uses
   br i1 %i.c, label %.preheader, label %.preheader41
 
@@ -217,9 +219,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader41
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   br label %bb.d
 
 .preheader:                                       ; preds = %bb.a
@@ -228,8 +228,6 @@ bb.a:
 .lr.ph48:                                         ; preds = %.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph48, %ConvertRGBToYHelper_SSE2.exit
@@ -274,30 +272,29 @@ bb.b:                                             ; preds = %.lr.ph48, %ConvertR
   %i.ar = shufflevector <16 x i8> %i.al, <16 x i8> %i.ao, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   store <16 x i8> %i.ar, ptr %i.a, align 16, !tbaa !9, !noalias !91
   %i.as = shufflevector <16 x i8> %i.al, <16 x i8> %i.ao, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
-  store <16 x i8> %i.as, ptr %indvars.iv.i.sroa.gep24, align 16, !tbaa !9, !noalias !91
+  store <16 x i8> %i.as, ptr %indvars.iv.i.sroa.gep21, align 16, !tbaa !9, !noalias !91
   %i.at = shufflevector <16 x i8> %i.am, <16 x i8> %i.ap, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   store <16 x i8> %i.at, ptr %i.g, align 16, !tbaa !9, !noalias !91
   %i.au = shufflevector <16 x i8> %i.am, <16 x i8> %i.ap, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
   store <16 x i8> %i.au, ptr %i.h, align 16, !tbaa !9, !noalias !91
   %i.av = shufflevector <16 x i8> %i.an, <16 x i8> %i.aq, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  store <16 x i8> %i.av, ptr %6, align 16, !tbaa !9, !noalias !91
+  store <16 x i8> %i.av, ptr %indvars.iv.i.sroa.gep, align 16, !tbaa !9, !noalias !91
   %i.aw = shufflevector <16 x i8> %i.an, <16 x i8> %i.aq, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
-  store <16 x i8> %i.aw, ptr %7, align 16, !tbaa !9, !noalias !91
+  store <16 x i8> %i.aw, ptr %indvars.iv.i.sroa.gep24, align 16, !tbaa !9, !noalias !91
   tail call void @llvm.experimental.noalias.scope.decl(metadata !92)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %indvars.iv41.i = phi i64 [ %.03746, %bb.b ], [ %indvars.iv.next42.i, %bb.c ] ; 2 uses
   %i.ax = phi i1 [ true, %bb.b ], [ false, %bb.c ]
-  %indvars.iv.i.sroa.phi = phi ptr [ %i.a, %bb.b ], [ %indvars.iv.i.sroa.gep24, %bb.c ] ; 2 uses
-  %indvars.iv.i = phi i64 [ 0, %bb.b ], [ 1, %bb.c ]
+  %indvars.iv.i.sroa.phi = phi ptr [ %i.a, %bb.b ], [ %indvars.iv.i.sroa.gep21, %bb.c ] ; 2 uses
+  %indvars.iv.i.sroa.phi56 = phi ptr [ %indvars.iv.i.sroa.gep, %bb.b ], [ %indvars.iv.i.sroa.gep24, %bb.c ]
   %i.ay = load <16 x i8>, ptr %indvars.iv.i.sroa.phi, align 16, !tbaa !9, !noalias !92 ; 2 uses
   %i.az = shufflevector <16 x i8> %i.ay, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.ba = getelementptr inbounds nuw i8, ptr %indvars.iv.i.sroa.phi, i64 32
   %i.bb = load <16 x i8>, ptr %i.ba, align 16, !tbaa !9, !noalias !92 ; 2 uses
   %i.bc = shufflevector <16 x i8> %i.bb, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %gep47.i = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %indvars.iv.i
-  %i.bd = load <16 x i8>, ptr %gep47.i, align 16, !tbaa !9, !noalias !92 ; 2 uses
+  %i.bd = load <16 x i8>, ptr %indvars.iv.i.sroa.phi56, align 16, !tbaa !9, !noalias !92 ; 2 uses
   %i.be = shufflevector <16 x i8> %i.bd, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.bf = bitcast <16 x i8> %i.az to <8 x i16>    ; 2 uses
   %i.bg = bitcast <16 x i8> %i.bc to <8 x i16>    ; 4 uses
@@ -382,7 +379,7 @@ bb.d:                                             ; preds = %.lr.ph, %ConvertRGB
   %i.dw = shufflevector <2 x i64> %i.dn, <2 x i64> %i.dr, <2 x i32> <i32 0, i32 2>
   store <2 x i64> %i.dw, ptr %i.a, align 16, !tbaa !9, !noalias !93
   store <2 x i64> %i.dv, ptr %i.e, align 16, !tbaa !9, !noalias !93
-  store <2 x i64> %i.du, ptr %4, align 16, !tbaa !9, !noalias !93
+  store <2 x i64> %i.du, ptr %indvars.iv.i.sroa.gep, align 16, !tbaa !9, !noalias !93
   %i.dx = shufflevector <16 x i8> %i.df, <16 x i8> %i.dh, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
   %i.dy = bitcast <16 x i8> %i.dx to <2 x i64>    ; 2 uses
   %i.dz = shufflevector <16 x i8> %i.df, <16 x i8> %i.dh, <16 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -394,24 +391,23 @@ bb.d:                                             ; preds = %.lr.ph, %ConvertRGB
   %i.ef = shufflevector <2 x i64> %i.ea, <2 x i64> %i.ee, <2 x i32> <i32 0, i32 2>
   %i.eg = shufflevector <2 x i64> %i.dy, <2 x i64> %i.ec, <2 x i32> <i32 1, i32 3>
   %i.eh = shufflevector <2 x i64> %i.dy, <2 x i64> %i.ec, <2 x i32> <i32 0, i32 2>
-  store <2 x i64> %i.eh, ptr %indvars.iv.i.sroa.gep24, align 16, !tbaa !9, !noalias !93
+  store <2 x i64> %i.eh, ptr %indvars.iv.i.sroa.gep21, align 16, !tbaa !9, !noalias !93
   store <2 x i64> %i.eg, ptr %i.f, align 16, !tbaa !9, !noalias !93
-  store <2 x i64> %i.ef, ptr %5, align 16, !tbaa !9, !noalias !93
+  store <2 x i64> %i.ef, ptr %indvars.iv.i.sroa.gep24, align 16, !tbaa !9, !noalias !93
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
   %indvars.iv41.i18 = phi i64 [ %.13843, %bb.d ], [ %indvars.iv.next42.i22, %bb.e ] ; 2 uses
   %i.ei = phi i1 [ true, %bb.d ], [ false, %bb.e ]
-  %indvars.iv.i19.sroa.phi = phi ptr [ %i.a, %bb.d ], [ %indvars.iv.i.sroa.gep24, %bb.e ] ; 2 uses
-  %indvars.iv.i19 = phi i64 [ 0, %bb.d ], [ 1, %bb.e ]
+  %indvars.iv.i19.sroa.phi = phi ptr [ %i.a, %bb.d ], [ %indvars.iv.i.sroa.gep21, %bb.e ] ; 2 uses
+  %indvars.iv.i18.sroa.phi58 = phi ptr [ %indvars.iv.i.sroa.gep, %bb.d ], [ %indvars.iv.i.sroa.gep24, %bb.e ]
   %i.ej = load <16 x i8>, ptr %indvars.iv.i19.sroa.phi, align 16, !tbaa !9, !noalias !94 ; 2 uses
   %i.ek = shufflevector <16 x i8> %i.ej, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.el = getelementptr inbounds nuw i8, ptr %indvars.iv.i19.sroa.phi, i64 32
   %i.em = load <16 x i8>, ptr %i.el, align 16, !tbaa !9, !noalias !94 ; 2 uses
   %i.en = shufflevector <16 x i8> %i.em, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %gep47.i21 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv.i19
-  %i.eo = load <16 x i8>, ptr %gep47.i21, align 16, !tbaa !9, !noalias !94 ; 2 uses
+  %i.eo = load <16 x i8>, ptr %indvars.iv.i18.sroa.phi58, align 16, !tbaa !9, !noalias !94 ; 2 uses
   %i.ep = shufflevector <16 x i8> %i.eo, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.eq = bitcast <16 x i8> %i.ek to <8 x i16>    ; 2 uses
   %i.er = bitcast <16 x i8> %i.en to <8 x i16>    ; 4 uses
@@ -563,12 +559,16 @@ ConvertRGBToYHelper_SSE2.exit23:                  ; preds = %bb.e
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define internal void @ConvertBGRToY_SSE2(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3) #5 {
 bb.a:
-  %i.a = alloca [6 x <2 x i64>], align 16         ; 15 uses
+  %i.a = alloca [6 x <2 x i64>], align 16         ; 17 uses
   %i.b = and i32 %2, -32                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.c = icmp eq i32 %3, 3
-  %indvars.iv.i.sroa.gep24 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
+  %indvars.iv.i.sroa.gep21 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
+  %indvars.iv.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 4 uses
+  %indvars.iv.i.sroa.gep24 = getelementptr inbounds nuw i8, ptr %i.a, i64 80 ; 4 uses
   %i.d = icmp sgt i32 %2, 31                      ; 2 uses
+  %indvars.iv.i.sroa.gep70 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %indvars.iv.i18.sroa.gep72 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br i1 %i.c, label %.preheader, label %.preheader41
 
 .preheader41:                                     ; preds = %bb.a
@@ -576,9 +576,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader41
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   br label %bb.d
 
 .preheader:                                       ; preds = %bb.a
@@ -587,8 +585,6 @@ bb.a:
 .lr.ph48:                                         ; preds = %.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph48, %ConvertRGBToYHelper_SSE2.exit
@@ -633,30 +629,30 @@ bb.b:                                             ; preds = %.lr.ph48, %ConvertR
   %i.ar = shufflevector <16 x i8> %i.al, <16 x i8> %i.ao, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   store <16 x i8> %i.ar, ptr %i.a, align 16, !tbaa !9, !noalias !106
   %i.as = shufflevector <16 x i8> %i.al, <16 x i8> %i.ao, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
-  store <16 x i8> %i.as, ptr %indvars.iv.i.sroa.gep24, align 16, !tbaa !9, !noalias !106
+  store <16 x i8> %i.as, ptr %indvars.iv.i.sroa.gep21, align 16, !tbaa !9, !noalias !106
   %i.at = shufflevector <16 x i8> %i.am, <16 x i8> %i.ap, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   store <16 x i8> %i.at, ptr %i.g, align 16, !tbaa !9, !noalias !106
   %i.au = shufflevector <16 x i8> %i.am, <16 x i8> %i.ap, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
   store <16 x i8> %i.au, ptr %i.h, align 16, !tbaa !9, !noalias !106
   %i.av = shufflevector <16 x i8> %i.an, <16 x i8> %i.aq, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  store <16 x i8> %i.av, ptr %6, align 16, !tbaa !9, !noalias !106
+  store <16 x i8> %i.av, ptr %indvars.iv.i.sroa.gep, align 16, !tbaa !9, !noalias !106
   %i.aw = shufflevector <16 x i8> %i.an, <16 x i8> %i.aq, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
-  store <16 x i8> %i.aw, ptr %7, align 16, !tbaa !9, !noalias !106
+  store <16 x i8> %i.aw, ptr %indvars.iv.i.sroa.gep24, align 16, !tbaa !9, !noalias !106
   tail call void @llvm.experimental.noalias.scope.decl(metadata !107)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %indvars.iv41.i = phi i64 [ %.03746, %bb.b ], [ %indvars.iv.next42.i, %bb.c ] ; 2 uses
   %i.ax = phi i1 [ true, %bb.b ], [ false, %bb.c ]
-  %indvars.iv.i.sroa.phi = phi ptr [ %i.a, %bb.b ], [ %indvars.iv.i.sroa.gep24, %bb.c ] ; 2 uses
-  %indvars.iv.i = phi i64 [ 0, %bb.b ], [ 1, %bb.c ]
-  %gep.i = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %indvars.iv.i
-  %i.ay = load <16 x i8>, ptr %gep.i, align 16, !tbaa !9, !noalias !107 ; 2 uses
+  %indvars.iv.i.sroa.phi = phi ptr [ %i.a, %bb.b ], [ %indvars.iv.i.sroa.gep21, %bb.c ]
+  %indvars.iv.i.sroa.phi50 = phi ptr [ %indvars.iv.i.sroa.gep, %bb.b ], [ %indvars.iv.i.sroa.gep24, %bb.c ]
+  %indvars.iv.i.sroa.phi68 = phi ptr [ %i.a, %bb.b ], [ %indvars.iv.i.sroa.gep70, %bb.c ]
+  %i.ay = load <16 x i8>, ptr %indvars.iv.i.sroa.phi50, align 16, !tbaa !9, !noalias !107 ; 2 uses
   %i.az = shufflevector <16 x i8> %i.ay, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.ba = getelementptr inbounds nuw i8, ptr %indvars.iv.i.sroa.phi, i64 32
   %i.bb = load <16 x i8>, ptr %i.ba, align 16, !tbaa !9, !noalias !107 ; 2 uses
   %i.bc = shufflevector <16 x i8> %i.bb, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %i.bd = load <16 x i8>, ptr %indvars.iv.i.sroa.phi, align 16, !tbaa !9, !noalias !107 ; 2 uses
+  %i.bd = load <16 x i8>, ptr %indvars.iv.i.sroa.phi68, align 16, !tbaa !9, !noalias !107 ; 2 uses
   %i.be = shufflevector <16 x i8> %i.bd, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.bf = bitcast <16 x i8> %i.az to <8 x i16>    ; 2 uses
   %i.bg = bitcast <16 x i8> %i.bc to <8 x i16>    ; 4 uses
@@ -741,7 +737,7 @@ bb.d:                                             ; preds = %.lr.ph, %ConvertRGB
   %i.dw = shufflevector <2 x i64> %i.dn, <2 x i64> %i.dr, <2 x i32> <i32 0, i32 2>
   store <2 x i64> %i.dw, ptr %i.a, align 16, !tbaa !9, !noalias !108
   store <2 x i64> %i.dv, ptr %i.e, align 16, !tbaa !9, !noalias !108
-  store <2 x i64> %i.du, ptr %4, align 16, !tbaa !9, !noalias !108
+  store <2 x i64> %i.du, ptr %indvars.iv.i.sroa.gep, align 16, !tbaa !9, !noalias !108
   %i.dx = shufflevector <16 x i8> %i.df, <16 x i8> %i.dh, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
   %i.dy = bitcast <16 x i8> %i.dx to <2 x i64>    ; 2 uses
   %i.dz = shufflevector <16 x i8> %i.df, <16 x i8> %i.dh, <16 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -753,24 +749,24 @@ bb.d:                                             ; preds = %.lr.ph, %ConvertRGB
   %i.ef = shufflevector <2 x i64> %i.ea, <2 x i64> %i.ee, <2 x i32> <i32 0, i32 2>
   %i.eg = shufflevector <2 x i64> %i.dy, <2 x i64> %i.ec, <2 x i32> <i32 1, i32 3>
   %i.eh = shufflevector <2 x i64> %i.dy, <2 x i64> %i.ec, <2 x i32> <i32 0, i32 2>
-  store <2 x i64> %i.eh, ptr %indvars.iv.i.sroa.gep24, align 16, !tbaa !9, !noalias !108
+  store <2 x i64> %i.eh, ptr %indvars.iv.i.sroa.gep21, align 16, !tbaa !9, !noalias !108
   store <2 x i64> %i.eg, ptr %i.f, align 16, !tbaa !9, !noalias !108
-  store <2 x i64> %i.ef, ptr %5, align 16, !tbaa !9, !noalias !108
+  store <2 x i64> %i.ef, ptr %indvars.iv.i.sroa.gep24, align 16, !tbaa !9, !noalias !108
   tail call void @llvm.experimental.noalias.scope.decl(metadata !109)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
   %indvars.iv41.i18 = phi i64 [ %.13843, %bb.d ], [ %indvars.iv.next42.i22, %bb.e ] ; 2 uses
   %i.ei = phi i1 [ true, %bb.d ], [ false, %bb.e ]
-  %indvars.iv.i19.sroa.phi = phi ptr [ %i.a, %bb.d ], [ %indvars.iv.i.sroa.gep24, %bb.e ] ; 2 uses
-  %indvars.iv.i19 = phi i64 [ 0, %bb.d ], [ 1, %bb.e ]
-  %gep.i20 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %indvars.iv.i19
-  %i.ej = load <16 x i8>, ptr %gep.i20, align 16, !tbaa !9, !noalias !109 ; 2 uses
+  %indvars.iv.i19.sroa.phi = phi ptr [ %i.a, %bb.d ], [ %indvars.iv.i.sroa.gep21, %bb.e ]
+  %indvars.iv.i18.sroa.phi52 = phi ptr [ %indvars.iv.i.sroa.gep, %bb.d ], [ %indvars.iv.i.sroa.gep24, %bb.e ]
+  %indvars.iv.i18.sroa.phi71 = phi ptr [ %i.a, %bb.d ], [ %indvars.iv.i18.sroa.gep72, %bb.e ]
+  %i.ej = load <16 x i8>, ptr %indvars.iv.i18.sroa.phi52, align 16, !tbaa !9, !noalias !109 ; 2 uses
   %i.ek = shufflevector <16 x i8> %i.ej, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.el = getelementptr inbounds nuw i8, ptr %indvars.iv.i19.sroa.phi, i64 32
   %i.em = load <16 x i8>, ptr %i.el, align 16, !tbaa !9, !noalias !109 ; 2 uses
   %i.en = shufflevector <16 x i8> %i.em, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %i.eo = load <16 x i8>, ptr %indvars.iv.i19.sroa.phi, align 16, !tbaa !9, !noalias !109 ; 2 uses
+  %i.eo = load <16 x i8>, ptr %indvars.iv.i18.sroa.phi71, align 16, !tbaa !9, !noalias !109 ; 2 uses
   %i.ep = shufflevector <16 x i8> %i.eo, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
   %i.eq = bitcast <16 x i8> %i.ek to <8 x i16>    ; 2 uses
   %i.er = bitcast <16 x i8> %i.en to <8 x i16>    ; 4 uses

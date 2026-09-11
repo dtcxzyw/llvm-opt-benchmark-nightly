@@ -205,12 +205,12 @@ _ZN5mldsa12_GLOBAL__N_122mldsa_parse_public_keyILi6EEEiPNS0_10public_keyIXT_EEEP
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa65_marshal_private_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mldsa65_marshal_private_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef i32 @_ZN5mldsa12_GLOBAL__N_125mldsa_marshal_private_keyILi6ELi5EEEiP6cbb_stPKNS0_11private_keyIXT_EXT0_EEE(ptr noundef %0, ptr noundef %1)
-  %.not.i = icmp eq i32 %i.a, 0
-  %2 = select i1 %.not.i, i32 2, i32 0
-  ret i32 %2
+  %2 = shl nuw nsw i32 %i.a, 1
+  %3 = xor i32 %2, 2
+  ret i32 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -613,32 +613,29 @@ bb.d:                                             ; preds = %_ZN5mldsa12_GLOBAL_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 1, 3) i32 @BCM_mldsa65_generate_key(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #5 {
+define range(i32 1, 3) i32 @BCM_mldsa65_generate_key(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call i32 @BCM_rand_bytes_with_additional_data(ptr noundef %1, i64 noundef 32, ptr noundef nonnull @_ZZ14BCM_rand_bytesE19kZeroAdditionalData) ; 0 uses
   %i.b = tail call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_148mldsa_generate_key_external_entropy_no_self_testILi6ELi5EEEiPhPNS0_11private_keyIXT_EXT0_EEEPKh(ptr noundef %0, ptr noundef %2, ptr noundef readonly %1)
-  %.not.i.i = icmp eq i32 %i.b, 0
-  %3 = select i1 %.not.i.i, i32 2, i32 1
+  %3 = sub nuw nsw i32 2, %i.b
   ret i32 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 1, 3) i32 @BCM_mldsa65_generate_key_external_entropy(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #5 {
+define range(i32 1, 3) i32 @BCM_mldsa65_generate_key_external_entropy(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_148mldsa_generate_key_external_entropy_no_self_testILi6ELi5EEEiPhPNS0_11private_keyIXT_EXT0_EEEPKh(ptr noundef %0, ptr noundef %1, ptr noundef readonly %2)
-  %.not.i = icmp eq i32 %i.a, 0
-  %3 = select i1 %.not.i, i32 2, i32 1
+  %3 = sub nuw nsw i32 2, %i.a
   ret i32 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 1, 3) i32 @BCM_mldsa65_private_key_from_seed(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
+define range(i32 1, 3) i32 @BCM_mldsa65_private_key_from_seed(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca [1952 x i8], align 16             ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
   %i.b = call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_148mldsa_generate_key_external_entropy_no_self_testILi6ELi5EEEiPhPNS0_11private_keyIXT_EXT0_EEEPKh(ptr noundef nonnull %i.a, ptr noundef %0, ptr noundef readonly %1)
-  %.not.i.i = icmp eq i32 %i.b, 0
-  %2 = select i1 %.not.i.i, i32 2, i32 1
+  %2 = sub nuw nsw i32 2, %i.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #36
   ret i32 %2
 }
@@ -798,12 +795,12 @@ BCM_mldsa65_check_key_fips.exit:                  ; preds = %bb.d, %_ZN5mldsa12_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa65_public_from_private(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mldsa65_public_from_private(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef i32 @_ZN5mldsa12_GLOBAL__N_125mldsa_public_from_privateILi6ELi5EEEiPNS0_10public_keyIXT_EEEPKNS0_11private_keyIXT_EXT0_EEE(ptr noundef %0, ptr noundef %1)
-  %.not.i = icmp eq i32 %i.a, 0
-  %2 = select i1 %.not.i, i32 2, i32 0
-  ret i32 %2
+  %2 = shl nuw nsw i32 %i.a, 1
+  %3 = xor i32 %2, 2
+  ret i32 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -858,16 +855,16 @@ _ZNSt10unique_ptrIZN5mldsa12_GLOBAL__N_125mldsa_public_from_privateILi6ELi5EEEiP
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa65_sign_internal(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, ptr nofree noundef readonly captures(none) %6, i64 noundef %7, ptr nofree noundef readonly captures(none) %8) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mldsa65_sign_internal(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, ptr nofree noundef readonly captures(none) %6, i64 noundef %7, ptr nofree noundef readonly captures(none) %8) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_132mldsa_sign_internal_no_self_testILi6ELi5EEEiPhPKNS0_11private_keyIXT_EXT0_EEEPKhmS8_mS8_mS8_(ptr noundef %0, ptr noundef readonly %1, ptr noundef readonly %2, i64 noundef %3, ptr noundef readonly %4, i64 noundef %5, ptr noundef readonly %6, i64 noundef %7, ptr noundef readonly %8)
-  %.not.i = icmp eq i32 %i.a, 0
-  %9 = select i1 %.not.i, i32 2, i32 0
-  ret i32 %9
+  %9 = shl nuw nsw i32 %i.a, 1
+  %10 = xor i32 %9, 2
+  ret i32 %10
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa65_sign(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5) local_unnamed_addr #5 {
+define range(i32 0, 4) i32 @BCM_mldsa65_sign(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 4 uses
   %i.b = alloca [2 x i8], align 1                 ; 5 uses
@@ -887,15 +884,15 @@ bb.c:                                             ; preds = %bb.a
   %i.f = trunc nuw i64 %5 to i8
   store i8 %i.f, ptr %i.e, align 1, !tbaa !80
   %i.g = call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_132mldsa_sign_internal_no_self_testILi6ELi5EEEiPhPKNS0_11private_keyIXT_EXT0_EEEPKhmS8_mS8_mS8_(ptr noundef %0, ptr noundef readonly %1, ptr noundef readonly %2, i64 noundef %3, ptr noundef nonnull readonly %i.b, i64 noundef 2, ptr noundef readonly %4, i64 noundef %5, ptr noundef nonnull readonly %i.a)
-  %.not.i.i = icmp eq i32 %i.g, 0
-  %6 = select i1 %.not.i.i, i32 2, i32 0
+  %6 = shl nuw nsw i32 %i.g, 1
+  %7 = xor i32 %6, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #36
-  ret i32 %6
+  ret i32 %7
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa65_verify(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5) local_unnamed_addr #5 {
+define range(i32 0, 4) i32 @BCM_mldsa65_verify(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca [2 x i8], align 1                 ; 5 uses
   %i.b = icmp ult i64 %5, 256
@@ -912,28 +909,28 @@ bb.c:                                             ; preds = %bb.a
   %i.d = trunc nuw i64 %5 to i8
   store i8 %i.d, ptr %i.c, align 1, !tbaa !80
   %i.e = call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_134mldsa_verify_internal_no_self_testILi6ELi5EEEiPKNS0_10public_keyIXT_EEEPKhPS6_mS8_mS8_m(ptr noundef readonly %0, ptr noundef %1, ptr noundef readonly %2, i64 noundef %3, ptr noundef nonnull readonly %i.a, i64 noundef 2, ptr noundef readonly %4, i64 noundef %5)
-  %.not.i.i = icmp eq i32 %i.e, 0
-  %6 = select i1 %.not.i.i, i32 2, i32 0
+  %6 = shl nuw nsw i32 %i.e, 1
+  %7 = xor i32 %6, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #36
-  ret i32 %6
+  ret i32 %7
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa65_verify_internal(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, ptr nofree noundef readonly captures(none) %6, i64 noundef %7) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mldsa65_verify_internal(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, ptr nofree noundef readonly captures(none) %6, i64 noundef %7) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_134mldsa_verify_internal_no_self_testILi6ELi5EEEiPKNS0_10public_keyIXT_EEEPKhPS6_mS8_mS8_m(ptr noundef readonly %0, ptr noundef %1, ptr noundef readonly %2, i64 noundef %3, ptr noundef readonly %4, i64 noundef %5, ptr noundef readonly %6, i64 noundef %7)
-  %.not.i = icmp eq i32 %i.a, 0
-  %8 = select i1 %.not.i, i32 2, i32 0
-  ret i32 %8
+  %8 = shl nuw nsw i32 %i.a, 1
+  %9 = xor i32 %8, 2
+  ret i32 %9
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa65_marshal_public_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mldsa65_marshal_public_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef i32 @_ZN5mldsa12_GLOBAL__N_124mldsa_marshal_public_keyILi6EEEiP6cbb_stPKNS0_10public_keyIXT_EEE(ptr noundef %0, ptr noundef %1)
-  %.not.i = icmp eq i32 %i.a, 0
-  %2 = select i1 %.not.i, i32 2, i32 0
-  ret i32 %2
+  %2 = shl nuw nsw i32 %i.a, 1
+  %3 = xor i32 %2, 2
+  ret i32 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1336,12 +1333,12 @@ BCM_mldsa87_check_key_fips.exit:                  ; preds = %bb.d, %_ZN5mldsa12_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa87_public_from_private(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mldsa87_public_from_private(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef i32 @_ZN5mldsa12_GLOBAL__N_125mldsa_public_from_privateILi8ELi7EEEiPNS0_10public_keyIXT_EEEPKNS0_11private_keyIXT_EXT0_EEE(ptr noundef %0, ptr noundef %1)
-  %.not.i = icmp eq i32 %i.a, 0
-  %2 = select i1 %.not.i, i32 2, i32 0
-  ret i32 %2
+  %2 = shl nuw nsw i32 %i.a, 1
+  %3 = xor i32 %2, 2
+  ret i32 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1541,16 +1538,16 @@ _ZNSt10unique_ptrIZN5mldsa12_GLOBAL__N_125mldsa_public_from_privateILi8ELi7EEEiP
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa87_sign_internal(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, ptr nofree noundef readonly captures(none) %6, i64 noundef %7, ptr nofree noundef readonly captures(none) %8) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mldsa87_sign_internal(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, ptr nofree noundef readonly captures(none) %6, i64 noundef %7, ptr nofree noundef readonly captures(none) %8) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_132mldsa_sign_internal_no_self_testILi8ELi7EEEiPhPKNS0_11private_keyIXT_EXT0_EEEPKhmS8_mS8_mS8_(ptr noundef %0, ptr noundef readonly %1, ptr noundef readonly %2, i64 noundef %3, ptr noundef readonly %4, i64 noundef %5, ptr noundef readonly %6, i64 noundef %7, ptr noundef readonly %8)
-  %.not.i = icmp eq i32 %i.a, 0
-  %9 = select i1 %.not.i, i32 2, i32 0
-  ret i32 %9
+  %9 = shl nuw nsw i32 %i.a, 1
+  %10 = xor i32 %9, 2
+  ret i32 %10
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa87_sign(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5) local_unnamed_addr #5 {
+define range(i32 0, 4) i32 @BCM_mldsa87_sign(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 4 uses
   %i.b = alloca [2 x i8], align 1                 ; 5 uses
@@ -1570,15 +1567,15 @@ bb.c:                                             ; preds = %bb.a
   %i.f = trunc nuw i64 %5 to i8
   store i8 %i.f, ptr %i.e, align 1, !tbaa !80
   %i.g = call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_132mldsa_sign_internal_no_self_testILi8ELi7EEEiPhPKNS0_11private_keyIXT_EXT0_EEEPKhmS8_mS8_mS8_(ptr noundef %0, ptr noundef readonly %1, ptr noundef readonly %2, i64 noundef %3, ptr noundef nonnull readonly %i.b, i64 noundef 2, ptr noundef readonly %4, i64 noundef %5, ptr noundef nonnull readonly %i.a)
-  %.not.i.i = icmp eq i32 %i.g, 0
-  %6 = select i1 %.not.i.i, i32 2, i32 0
+  %6 = shl nuw nsw i32 %i.g, 1
+  %7 = xor i32 %6, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #36
-  ret i32 %6
+  ret i32 %7
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa87_verify(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5) local_unnamed_addr #5 {
+define range(i32 0, 4) i32 @BCM_mldsa87_verify(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca [2 x i8], align 1                 ; 5 uses
   %i.b = icmp ult i64 %5, 256
@@ -1595,19 +1592,19 @@ bb.c:                                             ; preds = %bb.a
   %i.d = trunc nuw i64 %5 to i8
   store i8 %i.d, ptr %i.c, align 1, !tbaa !80
   %i.e = call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_134mldsa_verify_internal_no_self_testILi8ELi7EEEiPKNS0_10public_keyIXT_EEEPKhPS6_mS8_mS8_m(ptr noundef readonly %0, ptr noundef %1, ptr noundef readonly %2, i64 noundef %3, ptr noundef nonnull readonly %i.a, i64 noundef 2, ptr noundef readonly %4, i64 noundef %5)
-  %.not.i.i = icmp eq i32 %i.e, 0
-  %6 = select i1 %.not.i.i, i32 2, i32 0
+  %6 = shl nuw nsw i32 %i.e, 1
+  %7 = xor i32 %6, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #36
-  ret i32 %6
+  ret i32 %7
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mldsa87_verify_internal(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, ptr nofree noundef readonly captures(none) %6, i64 noundef %7) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mldsa87_verify_internal(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, ptr nofree noundef readonly captures(none) %6, i64 noundef %7) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef range(i32 0, 2) i32 @_ZN5mldsa12_GLOBAL__N_134mldsa_verify_internal_no_self_testILi8ELi7EEEiPKNS0_10public_keyIXT_EEEPKhPS6_mS8_mS8_m(ptr noundef readonly %0, ptr noundef %1, ptr noundef readonly %2, i64 noundef %3, ptr noundef readonly %4, i64 noundef %5, ptr noundef readonly %6, i64 noundef %7)
-  %.not.i = icmp eq i32 %i.a, 0
-  %8 = select i1 %.not.i, i32 2, i32 0
-  ret i32 %8
+  %8 = shl nuw nsw i32 %i.a, 1
+  %9 = xor i32 %8, 2
+  ret i32 %9
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -2010,11 +2007,11 @@ _ZN5mlkem12_GLOBAL__N_124mlkem_marshal_public_keyILi4EEE12bcm_status_tP6cbb_stPK
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mlkem768_parse_public_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mlkem768_parse_public_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef i32 @_ZN5mlkem12_GLOBAL__N_122mlkem_parse_public_keyILi3EEEiPNS0_10public_keyIXT_EEEP6cbs_st(ptr noundef %0, ptr noundef %1)
-  %.not = icmp eq i32 %i.a, 0
-  %. = select i1 %.not, i32 2, i32 0
+  %2 = shl nuw nsw i32 %i.a, 1
+  %. = xor i32 %2, 2
   ret i32 %.
 }
 
@@ -2125,11 +2122,11 @@ bb.e:                                             ; preds = %_ZN5mlkem12_GLOBAL_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mlkem768_marshal_private_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mlkem768_marshal_private_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef i32 @_ZN5mlkem12_GLOBAL__N_125mlkem_marshal_private_keyILi3EEEiP6cbb_stPKNS0_11private_keyIXT_EEE(ptr noundef %0, ptr noundef %1)
-  %.not = icmp eq i32 %i.a, 0
-  %. = select i1 %.not, i32 2, i32 0
+  %2 = shl nuw nsw i32 %i.a, 1
+  %. = xor i32 %2, 2
   ret i32 %.
 }
 
@@ -2243,11 +2240,11 @@ bb.e:                                             ; preds = %_ZN5mlkem12_GLOBAL_
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 0, 3) i32 @BCM_mlkem768_parse_private_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
+define range(i32 0, 3) i32 @BCM_mlkem768_parse_private_key(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call fastcc noundef i32 @_ZN5mlkem12_GLOBAL__N_123mlkem_parse_private_keyILi3EEEiPNS0_11private_keyIXT_EEEP6cbs_st(ptr noundef %0, ptr noundef %1)
-  %.not = icmp eq i32 %i.a, 0
-  %. = select i1 %.not, i32 2, i32 0
+  %2 = shl nuw nsw i32 %i.a, 1
+  %. = xor i32 %2, 2
   ret i32 %.
 }
 
@@ -2650,8 +2647,8 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #36
   call void @slhdsa_fors_pk_from_sig(ptr noundef nonnull %i.e, ptr noundef nonnull %i.k, ptr noundef nonnull %i.c, ptr noundef nonnull %2, ptr noundef nonnull %i.d)
   %i.ao = call i32 @slhdsa_ht_verify(ptr noundef nonnull %i.l, ptr noundef nonnull %i.e, i64 noundef %i.aa, i32 noundef %i.ae, ptr noundef nonnull %i.j, ptr noundef nonnull %2)
-  %.not24.i.i = icmp eq i32 %i.ao, 0
-  %..i.i = select i1 %.not24.i.i, i32 2, i32 0
+  %8 = shl nuw nsw i32 %i.ao, 1
+  %..i.i = xor i32 %8, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #36
   br label %BCM_slhdsa_sha2_128s_verify_internal.exit
@@ -2711,8 +2708,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #36
   call void @slhdsa_fors_pk_from_sig(ptr noundef nonnull %i.c, ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, ptr noundef %2, ptr noundef nonnull %i.b)
   %i.x = call i32 @slhdsa_ht_verify(ptr noundef nonnull %i.f, ptr noundef nonnull %i.c, i64 noundef %i.j, i32 noundef %i.n, ptr noundef nonnull %i.d, ptr noundef %2)
-  %.not24.i = icmp eq i32 %i.x, 0
-  %..i = select i1 %.not24.i, i32 2, i32 0
+  %8 = shl nuw nsw i32 %i.x, 1
+  %..i = xor i32 %8, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #36
   br label %_ZN12_GLOBAL__N_115verify_internalEPKhmS1_S1_S1_mS1_m.exit
@@ -2828,8 +2825,8 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #36
   call void @slhdsa_fors_pk_from_sig(ptr noundef nonnull %i.e, ptr noundef nonnull %i.o, ptr noundef nonnull %i.c, ptr noundef nonnull %2, ptr noundef nonnull %i.d)
   %i.as = call i32 @slhdsa_ht_verify(ptr noundef nonnull %i.p, ptr noundef nonnull %i.e, i64 noundef %i.ae, i32 noundef %i.ai, ptr noundef nonnull %i.n, ptr noundef nonnull %2)
-  %.not24.i.i = icmp eq i32 %i.as, 0
-  %..i.i = select i1 %.not24.i.i, i32 2, i32 0
+  %9 = shl nuw nsw i32 %i.as, 1
+  %..i.i = xor i32 %9, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #36
   br label %BCM_slhdsa_sha2_128s_verify_internal.exit

@@ -205,10 +205,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not22, label %bb.c, label %bcemit_jmp.exit.thread
 
 bb.c:                                             ; preds = %bb.b
-  %.not = icmp eq i32 %2, 0
-  %3 = select i1 %.not, i32 14, i32 15
-  %4 = and i32 %i.h, -65536
-  %i.j = or disjoint i32 %4, %3
+  %3 = and i32 %i.h, -65536
+  %4 = or disjoint i32 %2, %3
+  %i.j = or disjoint i32 %4, 14
   store i32 %i.j, ptr %i.g, align 4, !tbaa !88
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.l = load i32, ptr %i.k, align 8, !tbaa !60   ; 3 uses
@@ -322,12 +321,11 @@ bcreg_reserve.exit:                               ; preds = %bcemit_jmp.exit.thr
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.a, %bcreg_reserve.exit
-  %.not24 = icmp eq i32 %2, 0
-  %5 = select i1 %.not24, i32 65293, i32 65292
   %i.bh = load i32, ptr %1, align 8, !tbaa !33
   %i.bi = shl i32 %i.bh, 16
-  %i.bj = or disjoint i32 %i.bi, %5
-  %i.bk = tail call fastcc i32 @bcemit_INS(ptr noundef %0, i32 noundef %i.bj) ; 0 uses
+  %i.bj = or disjoint i32 %i.bi, %2
+  %5 = xor i32 %i.bj, 65293
+  %i.bk = tail call fastcc i32 @bcemit_INS(ptr noundef %0, i32 noundef %5) ; 0 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !60 ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 40

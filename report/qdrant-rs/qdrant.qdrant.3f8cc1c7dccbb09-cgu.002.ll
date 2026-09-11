@@ -204,8 +204,7 @@ bb.jf:                                            ; preds = %bb.je
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCINvMNtNtBO_10collection14shard_transferNtB2S_10Collection20start_shard_transferNCNCNvMNtNtNtCsgGgPqgSfnMH_7storage15content_manager3toc19collection_meta_opsNtB4c_14TableOfContent15handle_transfer0s1_0NCB45_s2_0E0s0_0ECsl8OoimOLbh_6qdrant.exit.i: ; preds = %bb.jf, %bb.je, %bb.jd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !51962
-  %cond.i = icmp eq i8 %i.abv, 0
-  %..i325 = select i1 %cond.i, i8 7, i8 8
+  %..i325 = add nuw nsw i8 %i.abv, 7
   br label %bb.im
 
 bb.jg:                                            ; preds = %bb.im
@@ -608,7 +607,7 @@ bb.aaz:                                           ; preds = %bb.aay
 bb.aba:                                           ; preds = %bb.abx, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.i, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.thread.i, %bb.aaz
   %i.bri = phi ptr [ %i.bse, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.i ], [ %i.bse, %bb.abx ], [ %i.bse, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.thread.i ], [ %i.bqc, %bb.aaz ] ; 2 uses
   %i.brj = phi ptr [ %i.bsf, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.i ], [ %i.bsf, %bb.abx ], [ %i.bsf, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.thread.i ], [ %i.bqd, %bb.aaz ] ; 2 uses
-  %.sink392.i = phi i8 [ %..i411, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.i ], [ 1, %bb.abx ], [ 1, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.thread.i ], [ 0, %bb.aaz ] ; 2 uses
+  %.sink392.i = phi i8 [ %..i410, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.i ], [ 1, %bb.abx ], [ 1, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.thread.i ], [ 0, %bb.aaz ] ; 2 uses
   %i.brk = getelementptr inbounds nuw i8, ptr %1, i64 1371
   store i8 %.sink392.i, ptr %i.brk, align 1, !noalias !52068
   %i.brl = getelementptr inbounds nuw i8, ptr %1, i64 1296
@@ -786,8 +785,7 @@ bb.abu:                                           ; preds = %bb.abt
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateE3mapNtNtNtBO_10operations11cluster_ops19ReshardingDirectionNCNCNvMNtNtBO_10collection14shard_transferNtB2R_10Collection21finish_shard_transfer0s_0ECsl8OoimOLbh_6qdrant.exit.i: ; preds = %bb.abu, %bb.abt, %bb.abs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !52086
-  %cond.i410 = icmp eq i8 %i.btj, 0
-  %..i411 = select i1 %cond.i410, i8 7, i8 8
+  %..i410 = add nuw nsw i8 %i.btj, 7
   br label %bb.aba
 
 bb.abv:                                           ; preds = %bb.abw

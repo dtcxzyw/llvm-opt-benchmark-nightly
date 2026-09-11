@@ -205,32 +205,26 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %.not96, label %bb.ap, label %bb.as
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.jk = load i16, ptr %i.jb, align 8            ; 3 uses
-  %i.jl = load i16, ptr %i.jd, align 4            ; 3 uses
-  %2 = and i16 %i.jk, 2
-  %3 = and i16 %2, %i.jl
-  %.not97.not = icmp eq i16 %3, 0
-  %.pre.pre = load i16, ptr %i.c, align 2         ; 2 uses
-  %4 = or i16 %.pre.pre, 8192
-  %.pre = select i1 %.not97.not, i16 %.pre.pre, i16 %4 ; 2 uses
-  %i.jm = and i16 %i.jk, 4
+  %i.jk = load i16, ptr %i.jb, align 8            ; 2 uses
+  %i.jl = load i16, ptr %i.jd, align 4            ; 2 uses
+  %.pre.pre = load i16, ptr %i.c, align 2
+  %i.jm = and i16 %i.jk, 6
   %i.jn = and i16 %i.jm, %i.jl
-  %.not98.not = icmp eq i16 %i.jn, 0
-  %i.jo = or i16 %.pre, 16384
-  %5 = select i1 %.not98.not, i16 %.pre, i16 %i.jo ; 2 uses
+  %2 = shl nuw nsw i16 %i.jn, 12
+  %i.jo = or i16 %2, %.pre.pre                    ; 2 uses
   %i.jp = and i16 %i.jk, 6
   %i.jq = and i16 %i.jl, %i.jp
   %.not183 = icmp eq i16 %i.jq, 0
   br i1 %.not183, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  store i16 %5, ptr %i.c, align 2
+  store i16 %i.jo, ptr %i.c, align 2
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.ap, %bb.aq
   %i.jr = getelementptr i8, ptr %.val106, i64 5112
   %i.js = load ptr, ptr %i.jr, align 8
-  %i.jt = call i32 %i.js(ptr noundef %i.g, i32 noundef 24724, i16 noundef zeroext %5) #23, !inline_history !214 ; 0 uses
+  %i.jt = call i32 %i.js(ptr noundef %i.g, i32 noundef 24724, i16 noundef zeroext %i.jo) #23, !inline_history !214 ; 0 uses
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ao, %bb.ar, %bb.an

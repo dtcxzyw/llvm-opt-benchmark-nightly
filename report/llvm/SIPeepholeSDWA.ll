@@ -204,7 +204,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12
   store i32 16777216, ptr %6, align 8, !alias.scope !569
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.zy, ptr noundef nonnull align 8 dereferenceable(1065) %i.zx, ptr noundef nonnull align 8 dereferenceable(32) %6) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
-  %i.aaa = load i32, ptr %.03853.i, align 8       ; 4 uses
+  %i.aaa = load i32, ptr %.03853.i, align 8       ; 3 uses
   %trunc50.i = trunc i32 %i.aaa to i8
   switch i8 %trunc50.i, label %bb.cr [
     i8 1, label %bb.cp
@@ -225,20 +225,15 @@ bb.cp:                                            ; preds = %_ZN4llvm7BuildMIERN
 bb.cq:                                            ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.i
   %i.aad = getelementptr inbounds nuw i8, ptr %.03853.i, i64 4
   %i.aae = load i32, ptr %i.aad, align 4, !tbaa !369
-  %20 = lshr i32 %i.aaa, 26
-  %21 = lshr i32 %i.aaa, 24
-  %.lobit.i.i = and i32 %21, 1
-  %22 = xor i32 %.lobit.i.i, 1
-  %23 = and i32 %22, %20
-  %.not51.i = icmp eq i32 %23, 0
-  %i.aaf = and i32 %i.aaa, 1048320
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   store ptr null, ptr %i.bh, align 8, !tbaa !372, !alias.scope !571
-  %24 = select i1 %.not51.i, i32 0, i32 67108864
+  %20 = shl i32 %i.aaa, 2
+  %i.aaf = and i32 %20, 67108864
   store i32 %i.aae, ptr %i.bi, align 4, !tbaa !369, !alias.scope !571
-  %25 = or disjoint i32 %24, %i.aaf
+  %21 = xor i32 %i.aaf, 68157184
+  %22 = and i32 %21, %i.aaa
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bj, i8 0, i64 16, i1 false), !alias.scope !571
-  store i32 %25, ptr %4, align 8, !alias.scope !571
+  store i32 %22, ptr %4, align 8, !alias.scope !571
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.zy, ptr noundef nonnull align 8 dereferenceable(1065) %i.zx, ptr noundef nonnull align 8 dereferenceable(32) %4) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   br label %bb.cr
@@ -641,13 +636,10 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not.i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %3 = lshr i32 %i.r, 26
-  %4 = lshr i32 %i.r, 24
-  %.lobit.i.i = and i32 %4, 1
-  %i.s = xor i32 %.lobit.i.i, 1
-  %i.t = and i32 %i.s, %3
-  %.not.i = icmp eq i32 %i.t, 0
-  %5 = select i1 %.not.i, i32 0, i32 67108864
+  %3 = shl i32 %i.r, 2
+  %.lobit.i.i = and i32 %3, 67108864
+  %i.s = xor i32 %.lobit.i.i, 67108864
+  %i.t = and i32 %i.s, %i.r
   br label %_ZL14copyRegOperandRN4llvm14MachineOperandERKS0_.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -658,7 +650,7 @@ bb.e:                                             ; preds = %bb.c
 
 _ZL14copyRegOperandRN4llvm14MachineOperandERKS0_.exit: ; preds = %bb.d, %bb.e
   %.sink12.i = phi i32 [ -67108865, %bb.e ], [ -83886081, %bb.d ]
-  %.sink.i = phi i32 [ %i.w, %bb.e ], [ %5, %bb.d ]
+  %.sink.i = phi i32 [ %i.w, %bb.e ], [ %i.t, %bb.d ]
   %i.x = and i32 %.sink12.i, %i.p
   %i.y = or disjoint i32 %.sink.i, %i.x
   store i32 %i.y, ptr %i.d, align 8
@@ -1061,13 +1053,10 @@ bb.k:                                             ; preds = %bb.i, %_ZL9isSameRe
   br i1 %.not.i.i, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %3 = lshr i32 %i.by, 26
-  %4 = lshr i32 %i.by, 24
-  %.lobit.i.i = and i32 %4, 1
-  %i.bz = xor i32 %.lobit.i.i, 1
-  %i.ca = and i32 %i.bz, %3
-  %.not.i = icmp eq i32 %i.ca, 0
-  %5 = select i1 %.not.i, i32 0, i32 67108864
+  %3 = shl i32 %i.by, 2
+  %.lobit.i.i = and i32 %3, 67108864
+  %i.bz = xor i32 %.lobit.i.i, 67108864
+  %i.ca = and i32 %i.bz, %i.by
   br label %_ZL14copyRegOperandRN4llvm14MachineOperandERKS0_.exit
 
 bb.m:                                             ; preds = %bb.k
@@ -1078,7 +1067,7 @@ bb.m:                                             ; preds = %bb.k
 
 _ZL14copyRegOperandRN4llvm14MachineOperandERKS0_.exit: ; preds = %bb.l, %bb.m
   %.sink12.i = phi i32 [ -67108865, %bb.m ], [ -83886081, %bb.l ]
-  %.sink.i = phi i32 [ %i.cd, %bb.m ], [ %5, %bb.l ]
+  %.sink.i = phi i32 [ %i.cd, %bb.m ], [ %i.ca, %bb.l ]
   %i.ce = and i32 %.sink12.i, %i.bw
   %i.cf = or disjoint i32 %.sink.i, %i.ce
   store i32 %i.cf, ptr %.458, align 8

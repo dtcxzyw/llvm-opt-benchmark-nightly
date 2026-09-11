@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.z, %bb.y, %.critedge16, %bb.af, %.thread1287, %bb.ah, %bb.ac, %bb.ab, %bb.aa
   %.12878 = phi ptr [ %.11877, %.critedge16 ], [ %i.et, %.thread1287 ], [ %i.fd, %bb.ah ], [ %spec.select, %bb.y ], [ %spec.select1186, %bb.z ], [ %i.eo, %bb.aa ], [ %i.eq, %bb.ab ], [ %i.es, %bb.ac ], [ %i.ez, %bb.af ] ; 6 uses
-  %.3781 = phi i32 [ %.2780, %.critedge16 ], [ %i.fe, %.thread1287 ], [ %.2780, %bb.ah ], [ %i.ed, %bb.y ], [ %i.ei, %bb.z ], [ %i.en, %bb.aa ], [ %i.ep, %bb.ab ], [ %i.er, %bb.ac ], [ %i.ey, %bb.af ] ; 23 uses
+  %.3781 = phi i32 [ %.2780, %.critedge16 ], [ %i.fe, %.thread1287 ], [ %.2780, %bb.ah ], [ %i.ed, %bb.y ], [ %i.ei, %bb.z ], [ %i.en, %bb.aa ], [ %i.ep, %bb.ab ], [ %i.er, %bb.ac ], [ %i.ey, %bb.af ] ; 21 uses
   %i.ff = load i8, ptr %.12878, align 1, !tbaa !9 ; 7 uses
   switch i8 %i.ff, label %bb.hi [
     i8 115, label %bb.aj
@@ -607,9 +607,8 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.mt = add i32 %.2804, 2147483647
   %i.mu = or i32 %i.mt, -2147483648
   %i.mv = call i32 @stbsp__real_to_str(ptr noundef nonnull %i.g, ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, ptr noundef nonnull %i.f, double noundef %i.mr, i32 noundef %i.mu)
-  %.not1111 = icmp eq i32 %i.mv, 0
-  %i.mw = or i32 %.3781, 128
-  %.5783 = select i1 %.not1111, i32 %.3781, i32 %i.mw ; 4 uses
+  %5 = shl nuw nsw i32 %i.mv, 7
+  %i.mw = or i32 %5, %.3781                       ; 4 uses
   %i.mx = load i32, ptr %i.e, align 4, !tbaa !10  ; 2 uses
   %spec.store.select1442 = call i32 @llvm.umin.i32(i32 %i.mx, i32 %.2804) ; 2 uses
   %i.my = icmp ugt i32 %spec.store.select1442, 1
@@ -705,14 +704,13 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
   %spec.store.select23 = select i1 %i.oh, i32 6, i32 %.1803 ; 2 uses
   %i.oi = or i32 %spec.store.select23, -2147483648
   %i.oj = call i32 @stbsp__real_to_str(ptr noundef nonnull %i.g, ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, ptr noundef nonnull %i.f, double noundef %i.og, i32 noundef %i.oi)
-  %.not1110 = icmp eq i32 %i.oj, 0
-  %i.ok = or i32 %.3781, 128
-  %spec.select1191 = select i1 %.not1110, i32 %.3781, i32 %i.ok
+  %6 = shl nuw nsw i32 %i.oj, 7
+  %i.ok = or i32 %6, %.3781
   br label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by, %bb.br, %bb.bq
   %.4806 = phi i32 [ %i.no, %bb.bq ], [ %spec.select1190, %bb.br ], [ %spec.store.select23, %bb.by ] ; 4 uses
-  %.6784 = phi i32 [ %.5783, %bb.bq ], [ %.5783, %bb.br ], [ %spec.select1191, %bb.by ] ; 5 uses
+  %.6784 = phi i32 [ %i.mw, %bb.bq ], [ %i.mw, %bb.br ], [ %i.ok, %bb.by ] ; 5 uses
   %.0736 = phi ptr [ %i.mh, %bb.bq ], [ %i.mh, %bb.br ], [ %i.nw, %bb.by ]
   store i8 0, ptr %i.d, align 1, !tbaa !9
   store i8 0, ptr %i.c, align 1, !tbaa !9
@@ -1052,19 +1050,18 @@ bb.cw:                                            ; preds = %bb.cv
 
 .loopexit1485:                                    ; preds = %.lr.ph1599, %bb.cq, %bb.cr, %bb.cs, %bb.ct, %bb.cu, %bb.cv, %bb.cw, %bb.cp, %bb.co
   %.58072136 = phi i32 [ %.1803, %bb.co ], [ %.58072135, %bb.cp ], [ %.58072135, %bb.cw ], [ %.58072135, %bb.cv ], [ %.58072135, %bb.cu ], [ %.58072135, %bb.ct ], [ %.58072135, %bb.cs ], [ %.58072135, %bb.cr ], [ %.58072135, %bb.cq ], [ %.58072135, %.lr.ph1599 ] ; 2 uses
-  %.9787 = phi i32 [ %.3781, %bb.co ], [ %.77852137, %bb.cp ], [ %.77852137, %.lr.ph1599 ], [ %i.st, %bb.cq ], [ %i.st, %bb.cr ], [ %i.sy, %bb.cs ], [ %i.sy, %bb.ct ], [ %i.td, %bb.cu ], [ %i.td, %bb.cv ], [ %i.ti, %bb.cw ] ; 2 uses
+  %.9787 = phi i32 [ %.3781, %bb.co ], [ %.77852137, %bb.cp ], [ %.77852137, %.lr.ph1599 ], [ %i.st, %bb.cq ], [ %i.st, %bb.cr ], [ %i.sy, %bb.cs ], [ %i.sy, %bb.ct ], [ %i.td, %bb.cu ], [ %i.td, %bb.cv ], [ %i.ti, %bb.cw ]
   %.2705 = phi double [ %i.sl, %bb.co ], [ %.07032138, %bb.cp ], [ %.07032138, %.lr.ph1599 ], [ %i.ss, %bb.cq ], [ %i.ss, %bb.cr ], [ %i.sx, %bb.cs ], [ %i.sx, %bb.ct ], [ %i.tc, %bb.cu ], [ %i.tc, %bb.cv ], [ %i.th, %bb.cw ]
   %i.tj = icmp eq i32 %.58072136, -1
   %spec.store.select25 = select i1 %i.tj, i32 6, i32 %.58072136 ; 2 uses
   %i.tk = call i32 @stbsp__real_to_str(ptr noundef nonnull %i.g, ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, ptr noundef nonnull %i.f, double noundef %.2705, i32 noundef %spec.store.select25)
-  %.not1109 = icmp eq i32 %i.tk, 0
-  %i.tl = or i32 %.9787, 128
-  %spec.select1194 = select i1 %.not1109, i32 %.9787, i32 %i.tl
+  %7 = shl nuw nsw i32 %i.tk, 7
+  %i.tl = or i32 %7, %.9787
   br label %bb.cx
 
 bb.cx:                                            ; preds = %.loopexit1485, %bb.bt, %bb.bu
   %.6808 = phi i32 [ %i.ns, %bb.bt ], [ %i.nu, %bb.bu ], [ %spec.store.select25, %.loopexit1485 ] ; 12 uses
-  %.10788 = phi i32 [ %.5783, %bb.bt ], [ %.5783, %bb.bu ], [ %spec.select1194, %.loopexit1485 ] ; 13 uses
+  %.10788 = phi i32 [ %i.mw, %bb.bt ], [ %i.mw, %bb.bu ], [ %i.tl, %.loopexit1485 ] ; 13 uses
   store i8 0, ptr %i.d, align 1, !tbaa !9
   store i8 0, ptr %i.c, align 1, !tbaa !9
   %i.tm = and i32 %.10788, 128

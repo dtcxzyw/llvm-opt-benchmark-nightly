@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %big_embeddable_p.ex
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.i = tail call i64 @rb_wb_protected_newobj_of(ptr noundef %.0..0..0..0..0..0..i, i64 noundef %0, i64 noundef 16394, i32 noundef 0, i64 noundef %spec.store.select.i.i) #23 ; 3 uses
   %i.j = inttoptr i64 %i.i to ptr                 ; 4 uses
-  %.not = icmp eq i32 %2, 0
   %3 = load i64, ptr %i.j, align 8, !tbaa !48     ; 2 uses
   %4 = and i64 %3, -8193
-  %masksel.i = select i1 %.not, i64 0, i64 8192
+  %5 = shl nuw nsw i32 %2, 13
+  %masksel.i = zext nneg i32 %5 to i64
   %.sink.i = or disjoint i64 %4, %masksel.i       ; 2 uses
   store i64 %.sink.i, ptr %i.j, align 8, !tbaa !48
   %i.k = and i64 %3, 16384
@@ -236,11 +236,11 @@ big_embeddable_p.exit.thread:                     ; preds = %bb.a, %big_embeddab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.r = tail call i64 @rb_wb_protected_newobj_of(ptr noundef %.0..0..0..0..0..0..i22, i64 noundef %0, i64 noundef 10, i32 noundef 0, i64 noundef 32) #23 ; 2 uses
   %i.s = inttoptr i64 %i.r to ptr                 ; 4 uses
-  %.not27 = icmp eq i32 %2, 0
-  %5 = load i64, ptr %i.s, align 8, !tbaa !48
-  %6 = and i64 %5, -8193
-  %masksel.i23 = select i1 %.not27, i64 0, i64 8192
-  %.sink.i24 = or disjoint i64 %6, %masksel.i23
+  %6 = load i64, ptr %i.s, align 8, !tbaa !48
+  %7 = and i64 %6, -8193
+  %8 = shl nuw nsw i32 %2, 13
+  %masksel.i23 = zext nneg i32 %8 to i64
+  %.sink.i24 = or disjoint i64 %7, %masksel.i23
   store i64 %.sink.i24, ptr %i.s, align 8, !tbaa !48
   %i.t = tail call noalias nonnull ptr @ruby_xmalloc2(i64 noundef %1, i64 noundef 4) #24
   %i.u = getelementptr i8, ptr %i.s, i64 16
@@ -643,7 +643,7 @@ bb.ak:                                            ; preds = %.loopexit
   br label %bary_2comp.exit
 
 bb.al:                                            ; preds = %bb.x, %bb.a
-  %.not315 = icmp eq i64 %1, 0                    ; 4 uses
+  %.not315 = icmp eq i64 %1, 0                    ; 3 uses
   br i1 %.not315, label %.loopexit326, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
@@ -851,27 +851,20 @@ bb.at:                                            ; preds = %.loopexit326
 bb.au:                                            ; preds = %bb.at
   %i.hv = getelementptr i8, ptr %i.b, i64 -4
   %i.hw = load i32, ptr %i.hv, align 4, !tbaa !44 ; 2 uses
-  br i1 %.not177, label %bb.av, label %._crit_edge396
+  br i1 %.not177, label %bb.av, label %bary_zero_p.exit
 
 bb.av:                                            ; preds = %bb.au
   %i.hx = sub i32 31, %7
   %i.hy = lshr i32 %i.hw, %i.hx
   %.not181 = icmp eq i32 %i.hy, 0
-  br i1 %.not181, label %bary_2comp.exit, label %._crit_edge396
-
-._crit_edge396:                                   ; preds = %bb.au, %bb.av
-  %8 = sub i32 32, %7
-  %9 = shl nsw i32 -1, %8
-  %10 = getelementptr i8, ptr %i.b, i64 -4
-  %11 = or i32 %i.hw, %9
-  store i32 %11, ptr %10, align 4, !tbaa !44
-  br label %bary_zero_p.exit
+  br i1 %.not181, label %bary_2comp.exit, label %bary_zero_p.exit
 
 bb.aw:                                            ; preds = %bb.at
   br i1 %.not177, label %bb.az, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  br i1 %.not315, label %bary_2comp.exit, label %.preheader.i
+  %8 = icmp eq i64 %1, 0
+  br i1 %8, label %bary_2comp.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.ax, %bb.ay
   %.0.i239 = phi i64 [ %i.hz, %bb.ay ], [ %1, %bb.ax ]
@@ -879,7 +872,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.ia = getelementptr [4 x i8], ptr %0, i64 %i.hz
   %i.ib = load i32, ptr %i.ia, align 4, !tbaa !44
   %.not.i240 = icmp eq i32 %i.ib, 0
-  br i1 %.not.i240, label %bb.ay, label %bary_zero_p.exit
+  br i1 %.not.i240, label %bb.ay, label %.lr.ph.i242.preheader
 
 bb.ay:                                            ; preds = %.preheader.i
   %.not7.i = icmp eq i64 %i.hz, 0
@@ -894,10 +887,15 @@ bb.ba:                                            ; preds = %bb.az
   %.not178 = icmp sgt i32 %i.id, -1
   br i1 %.not178, label %bary_2comp.exit, label %.lr.ph.i242.preheader
 
-bary_zero_p.exit:                                 ; preds = %.preheader.i, %._crit_edge396
+bary_zero_p.exit:                                 ; preds = %bb.au, %bb.av
+  %9 = sub i32 32, %7
+  %10 = shl nsw i32 -1, %9
+  %11 = getelementptr i8, ptr %i.b, i64 -4
+  %12 = or i32 %i.hw, %10
+  store i32 %12, ptr %11, align 4, !tbaa !44
   br i1 %.not315, label %bary_2comp.exit, label %.lr.ph.i242.preheader
 
-.lr.ph.i242.preheader:                            ; preds = %bary_zero_p.exit, %bb.ba
+.lr.ph.i242.preheader:                            ; preds = %.preheader.i, %bb.ba, %bary_zero_p.exit
   br label %.lr.ph.i242
 
 .lr.ph.i242:                                      ; preds = %.lr.ph.i242.preheader, %bb.bb
@@ -964,8 +962,8 @@ middle.block:                                     ; preds = %vector.body
   %exitcond31.not.i250 = icmp eq i64 %.1.i249, %1
   br i1 %exitcond31.not.i250, label %bary_2comp.exit, label %.lr.ph26.i247, !llvm.loop !238
 
-bary_2comp.exit:                                  ; preds = %bb.ay, %bb.bb, %.lr.ph26.i247, %bb.ag, %.lr.ph26.i227, %bb.r, %.lr.ph26.i, %middle.block, %middle.block491, %middle.block503, %bb.ba, %bb.az, %bb.ax, %bb.av, %bb.bc, %bb.af, %bb.ah, %bb.q, %bb.s, %integer_unpack_single_bdigit.exit, %integer_unpack_single_bdigit.exit201, %integer_unpack_single_bdigit.exit207, %bb.as, %bary_zero_p.exit, %bb.ak, %bb.aj, %bb.ai, %bb.w, %bb.u, %bb.v
-  %.1139 = phi i32 [ 1, %bb.ai ], [ %i.ht, %bb.as ], [ %i.bq, %bb.w ], [ %.0.i205, %integer_unpack_single_bdigit.exit207 ], [ -1, %bb.u ], [ 1, %bb.v ], [ 1, %bb.az ], [ -1, %bb.aj ], [ %i.ep, %bb.ak ], [ -1, %middle.block491 ], [ -1, %bary_zero_p.exit ], [ %spec.select317, %integer_unpack_single_bdigit.exit ], [ %spec.select319, %integer_unpack_single_bdigit.exit201 ], [ -2, %bb.ag ], [ -2, %bb.q ], [ -1, %bb.s ], [ -1, %bb.bb ], [ -2, %bb.af ], [ -1, %bb.ah ], [ -1, %middle.block503 ], [ -2, %bb.r ], [ -1, %bb.bc ], [ -1, %middle.block ], [ 1, %bb.av ], [ -2, %bb.ax ], [ 1, %bb.ba ], [ -1, %.lr.ph26.i247 ], [ -1, %.lr.ph26.i ], [ -1, %.lr.ph26.i227 ], [ -2, %bb.ay ]
+bary_2comp.exit:                                  ; preds = %bb.ay, %bb.bb, %.lr.ph26.i247, %bb.ag, %.lr.ph26.i227, %bb.r, %.lr.ph26.i, %middle.block, %middle.block491, %middle.block503, %bb.ax, %bb.ah, %bb.af, %bb.s, %bb.q, %bb.az, %bb.ba, %bb.av, %bb.bc, %integer_unpack_single_bdigit.exit, %integer_unpack_single_bdigit.exit201, %integer_unpack_single_bdigit.exit207, %bb.as, %bary_zero_p.exit, %bb.ak, %bb.aj, %bb.ai, %bb.w, %bb.u, %bb.v
+  %.1139 = phi i32 [ 1, %bb.ai ], [ %i.ht, %bb.as ], [ %i.bq, %bb.w ], [ 1, %bb.az ], [ -1, %bb.u ], [ 1, %bb.v ], [ -1, %middle.block ], [ -1, %bb.aj ], [ %i.ep, %bb.ak ], [ -2, %bb.ax ], [ -1, %bary_zero_p.exit ], [ %spec.select317, %integer_unpack_single_bdigit.exit ], [ %spec.select319, %integer_unpack_single_bdigit.exit201 ], [ %.0.i205, %integer_unpack_single_bdigit.exit207 ], [ -2, %bb.r ], [ -1, %bb.bc ], [ 1, %bb.av ], [ 1, %bb.ba ], [ -1, %bb.s ], [ -2, %bb.q ], [ -1, %bb.bb ], [ -1, %bb.ah ], [ -2, %bb.af ], [ -2, %bb.ag ], [ -1, %middle.block503 ], [ -1, %middle.block491 ], [ -1, %.lr.ph26.i247 ], [ -1, %.lr.ph26.i ], [ -1, %.lr.ph26.i227 ], [ -2, %bb.ay ]
   ret i32 %.1139
 }
 

@@ -205,12 +205,6 @@ _ZNK4llvm19MachineInstrBuilder3addENS_8ArrayRefINS_14MachineOperandEEE.exit: ; p
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 4
   %i.dy = load i32, ptr %i.dx, align 4, !tbaa !239
   %i.dz = load i32, ptr %i.dw, align 8            ; 2 uses
-  %10 = lshr i32 %i.dz, 26
-  %11 = lshr i32 %i.dz, 24
-  %.lobit.i = and i32 %11, 1
-  %12 = xor i32 %.lobit.i, 1
-  %13 = and i32 %12, %10
-  %.not142 = icmp eq i32 %13, 0
   %i.ea = getelementptr inbounds nuw i8, ptr %4, i64 48
   %i.eb = and i32 %3, 2147483647
   %i.ec = zext nneg i32 %i.eb to i64
@@ -239,12 +233,15 @@ _ZNK4llvm19MachineInstrBuilder3addENS_8ArrayRefINS_14MachineOperandEEE.exit: ; p
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   %i.eu = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr null, ptr %i.eu, align 8, !tbaa !396, !alias.scope !1686
-  %14 = select i1 %.not142, i32 0, i32 67108864
+  %10 = shl i32 %i.dz, 2
+  %11 = and i32 %10, 67108864
+  %12 = xor i32 %11, 67108864
+  %13 = and i32 %12, %i.dz
   %i.ev = getelementptr inbounds nuw i8, ptr %6, i64 4
   store i32 %i.dy, ptr %i.ev, align 4, !tbaa !239, !alias.scope !1686
   %i.ew = getelementptr inbounds nuw i8, ptr %6, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ew, i8 0, i64 16, i1 false), !alias.scope !1686
-  store i32 %14, ptr %6, align 8, !alias.scope !1686
+  store i32 %13, ptr %6, align 8, !alias.scope !1686
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.et, ptr noundef nonnull align 8 dereferenceable(1065) %i.es, ptr noundef nonnull align 8 dereferenceable(32) %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   %i.ex = zext i32 %.1110 to i64

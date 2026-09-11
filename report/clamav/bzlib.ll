@@ -205,9 +205,8 @@ bb.ev:                                            ; preds = %bb.fn, %bb.eu
   br i1 %i.bds, label %BZ2_decompress.exit, label %bb.ew
 
 bb.ew:                                            ; preds = %bb.ev
-  %1 = icmp eq i32 %.11117.i, 0
-  %i.bdt = shl nsw i32 %.11294.i, 1               ; 3 uses
-  %.21154.v.i = select i1 %1, i32 %.11294.i, i32 %i.bdt
+  %i.bdt = shl nsw i32 %.11294.i, 1               ; 2 uses
+  %.21154.v.i = shl nsw i32 %.11294.i, %.11117.i
   %.21154.i = add nsw i32 %.21154.v.i, %.11153.i  ; 2 uses
   %i.bdu = icmp eq i32 %.51106.i, 0
   br i1 %i.bdu, label %bb.ex, label %bb.ez

@@ -205,21 +205,18 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i: ; preds
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 68
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !305
   %i.ah = load i32, ptr %i.e, align 8             ; 2 uses
-  %7 = lshr i32 %i.ah, 26
-  %8 = lshr i32 %i.ah, 24
-  %.lobit.i = and i32 %8, 1
-  %9 = xor i32 %.lobit.i, 1
-  %i.ai = and i32 %9, %7
-  %.not = icmp eq i32 %i.ai, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #27
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store ptr null, ptr %10, align 8, !tbaa !595, !alias.scope !1389
-  %11 = select i1 %.not, i32 0, i32 67108864
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store ptr null, ptr %7, align 8, !tbaa !595, !alias.scope !1389
+  %8 = shl i32 %i.ah, 2
+  %i.ai = and i32 %8, 67108864
+  %9 = xor i32 %i.ai, 67108864
+  %10 = and i32 %9, %i.ah
   %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 4
   store i32 %i.ag, ptr %i.aj, align 4, !tbaa !305, !alias.scope !1389
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false), !alias.scope !1389
-  store i32 %11, ptr %6, align 8, !alias.scope !1389
+  store i32 %10, ptr %6, align 8, !alias.scope !1389
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.u, ptr noundef nonnull align 8 dereferenceable(1065) %i.t, ptr noundef nonnull align 8 dereferenceable(32) %6) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27

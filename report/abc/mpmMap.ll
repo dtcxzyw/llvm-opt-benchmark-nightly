@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = icmp ugt i32 %.val78, -3
   %i.s = icmp ult i32 %.val82, -2
   %or.cond108 = select i1 %i.r, i1 true, i1 %i.s
-  br i1 %or.cond108, label %Mig_ObjIsXor.exit.thread.i, label %Mig_ObjIsAnd.exit.i
+  br i1 %or.cond108, label %Mig_ObjNodeType.exit, label %Mig_ObjIsAnd.exit.i
 
 Mig_ObjIsAnd.exit.i:                              ; preds = %bb.d
   %i.t = lshr i32 %.val74, 1                      ; 2 uses
@@ -214,15 +214,13 @@ Mig_ObjIsAnd.exit.i:                              ; preds = %bb.d
   br i1 %.not.i, label %Mig_ObjNodeType.exit, label %Mig_ObjIsXor.exit.i
 
 Mig_ObjIsXor.exit.i:                              ; preds = %Mig_ObjIsAnd.exit.i
-  %6 = icmp samesign ule i32 %i.t, %i.u
-  %cond.fr.i = freeze i1 %6
-  br i1 %cond.fr.i, label %Mig_ObjIsXor.exit.thread.i, label %Mig_ObjNodeType.exit
-
-Mig_ObjIsXor.exit.thread.i:                       ; preds = %Mig_ObjIsXor.exit.i, %bb.d
+  %6 = icmp samesign ugt i32 %i.t, %i.u
+  %7 = zext i1 %6 to i32
+  %8 = xor i32 %7, 3
   br label %Mig_ObjNodeType.exit
 
-Mig_ObjNodeType.exit:                             ; preds = %Mig_ObjIsAnd.exit.i, %Mig_ObjIsXor.exit.i, %Mig_ObjIsXor.exit.thread.i
-  %i.v = phi i32 [ 1, %Mig_ObjIsAnd.exit.i ], [ 3, %Mig_ObjIsXor.exit.thread.i ], [ 2, %Mig_ObjIsXor.exit.i ]
+Mig_ObjNodeType.exit:                             ; preds = %bb.d, %Mig_ObjIsAnd.exit.i, %Mig_ObjIsXor.exit.i
+  %i.v = phi i32 [ 1, %Mig_ObjIsAnd.exit.i ], [ 3, %bb.d ], [ %8, %Mig_ObjIsXor.exit.i ]
   %i.w = tail call i32 @Mpm_CutComputeTruth(ptr noundef nonnull %0, ptr noundef nonnull %i.g, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef %4, i32 noundef %i.m, i32 noundef %i.o, i32 noundef %i.q, i32 noundef %i.v) #21 ; 0 uses
   br label %bb.l
 
@@ -244,7 +242,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ae = icmp ugt i32 %.val77, -3
   %i.af = icmp ult i32 %.val81, -2
   %or.cond109 = select i1 %i.ae, i1 true, i1 %i.af
-  br i1 %or.cond109, label %Mig_ObjIsXor.exit.thread.i89, label %Mig_ObjIsAnd.exit.i85
+  br i1 %or.cond109, label %Mig_ObjNodeType.exit90, label %Mig_ObjIsAnd.exit.i85
 
 Mig_ObjIsAnd.exit.i85:                            ; preds = %bb.f
   %i.ag = lshr i32 %.val73, 1                     ; 2 uses
@@ -253,15 +251,13 @@ Mig_ObjIsAnd.exit.i85:                            ; preds = %bb.f
   br i1 %.not.i86, label %Mig_ObjNodeType.exit90, label %Mig_ObjIsXor.exit.i87
 
 Mig_ObjIsXor.exit.i87:                            ; preds = %Mig_ObjIsAnd.exit.i85
-  %7 = icmp samesign ule i32 %i.ag, %i.ah
-  %cond.fr.i88 = freeze i1 %7
-  br i1 %cond.fr.i88, label %Mig_ObjIsXor.exit.thread.i89, label %Mig_ObjNodeType.exit90
-
-Mig_ObjIsXor.exit.thread.i89:                     ; preds = %Mig_ObjIsXor.exit.i87, %bb.f
+  %9 = icmp samesign ugt i32 %i.ag, %i.ah
+  %10 = zext i1 %9 to i32
+  %11 = xor i32 %10, 3
   br label %Mig_ObjNodeType.exit90
 
-Mig_ObjNodeType.exit90:                           ; preds = %Mig_ObjIsAnd.exit.i85, %Mig_ObjIsXor.exit.i87, %Mig_ObjIsXor.exit.thread.i89
-  %i.ai = phi i32 [ 1, %Mig_ObjIsAnd.exit.i85 ], [ 3, %Mig_ObjIsXor.exit.thread.i89 ], [ 2, %Mig_ObjIsXor.exit.i87 ]
+Mig_ObjNodeType.exit90:                           ; preds = %bb.f, %Mig_ObjIsAnd.exit.i85, %Mig_ObjIsXor.exit.i87
+  %i.ai = phi i32 [ 1, %Mig_ObjIsAnd.exit.i85 ], [ 3, %bb.f ], [ %11, %Mig_ObjIsXor.exit.i87 ]
   %i.aj = tail call i32 @Mpm_CutComputeDsd6(ptr noundef nonnull %0, ptr noundef nonnull %i.g, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef %4, i32 noundef %i.z, i32 noundef %i.ab, i32 noundef %i.ad, i32 noundef %i.ai) #21
   %.not68 = icmp eq i32 %i.aj, 0
   br i1 %.not68, label %bb.o, label %bb.l
@@ -292,7 +288,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = icmp ugt i32 %.val76, -3
   %i.ax = icmp ult i32 %.val80, -2
   %or.cond110 = select i1 %i.aw, i1 true, i1 %i.ax
-  br i1 %or.cond110, label %Mig_ObjIsXor.exit.thread.i97, label %Mig_ObjIsAnd.exit.i93
+  br i1 %or.cond110, label %Mig_ObjNodeType.exit98, label %Mig_ObjIsAnd.exit.i93
 
 Mig_ObjIsAnd.exit.i93:                            ; preds = %bb.i
   %i.ay = lshr i32 %.val72, 1                     ; 2 uses
@@ -301,15 +297,13 @@ Mig_ObjIsAnd.exit.i93:                            ; preds = %bb.i
   br i1 %.not.i94, label %Mig_ObjNodeType.exit98, label %Mig_ObjIsXor.exit.i95
 
 Mig_ObjIsXor.exit.i95:                            ; preds = %Mig_ObjIsAnd.exit.i93
-  %8 = icmp samesign ule i32 %i.ay, %i.az
-  %cond.fr.i96 = freeze i1 %8
-  br i1 %cond.fr.i96, label %Mig_ObjIsXor.exit.thread.i97, label %Mig_ObjNodeType.exit98
-
-Mig_ObjIsXor.exit.thread.i97:                     ; preds = %Mig_ObjIsXor.exit.i95, %bb.i
+  %12 = icmp samesign ugt i32 %i.ay, %i.az
+  %13 = zext i1 %12 to i32
+  %14 = xor i32 %13, 3
   br label %Mig_ObjNodeType.exit98
 
-Mig_ObjNodeType.exit98:                           ; preds = %Mig_ObjIsAnd.exit.i93, %Mig_ObjIsXor.exit.i95, %Mig_ObjIsXor.exit.thread.i97
-  %i.ba = phi i32 [ 1, %Mig_ObjIsAnd.exit.i93 ], [ 3, %Mig_ObjIsXor.exit.thread.i97 ], [ 2, %Mig_ObjIsXor.exit.i95 ]
+Mig_ObjNodeType.exit98:                           ; preds = %bb.i, %Mig_ObjIsAnd.exit.i93, %Mig_ObjIsXor.exit.i95
+  %i.ba = phi i32 [ 1, %Mig_ObjIsAnd.exit.i93 ], [ 3, %bb.i ], [ %14, %Mig_ObjIsXor.exit.i95 ]
   %i.bb = tail call i32 @Mpm_CutComputeTruth(ptr noundef nonnull %0, ptr noundef nonnull %i.ak, ptr noundef nonnull %3, ptr noundef nonnull %2, ptr noundef %4, i32 noundef %i.ar, i32 noundef %i.as, i32 noundef %i.av, i32 noundef %i.ba) #21 ; 0 uses
   br label %bb.l
 
@@ -332,7 +326,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bk = icmp ugt i32 %.val75, -3
   %i.bl = icmp ult i32 %.val79, -2
   %or.cond111 = select i1 %i.bk, i1 true, i1 %i.bl
-  br i1 %or.cond111, label %Mig_ObjIsXor.exit.thread.i105, label %Mig_ObjIsAnd.exit.i101
+  br i1 %or.cond111, label %Mig_ObjNodeType.exit106, label %Mig_ObjIsAnd.exit.i101
 
 Mig_ObjIsAnd.exit.i101:                           ; preds = %bb.k
   %i.bm = lshr i32 %.val71, 1                     ; 2 uses
@@ -341,15 +335,13 @@ Mig_ObjIsAnd.exit.i101:                           ; preds = %bb.k
   br i1 %.not.i102, label %Mig_ObjNodeType.exit106, label %Mig_ObjIsXor.exit.i103
 
 Mig_ObjIsXor.exit.i103:                           ; preds = %Mig_ObjIsAnd.exit.i101
-  %9 = icmp samesign ule i32 %i.bm, %i.bn
-  %cond.fr.i104 = freeze i1 %9
-  br i1 %cond.fr.i104, label %Mig_ObjIsXor.exit.thread.i105, label %Mig_ObjNodeType.exit106
-
-Mig_ObjIsXor.exit.thread.i105:                    ; preds = %Mig_ObjIsXor.exit.i103, %bb.k
+  %15 = icmp samesign ugt i32 %i.bm, %i.bn
+  %16 = zext i1 %15 to i32
+  %17 = xor i32 %16, 3
   br label %Mig_ObjNodeType.exit106
 
-Mig_ObjNodeType.exit106:                          ; preds = %Mig_ObjIsAnd.exit.i101, %Mig_ObjIsXor.exit.i103, %Mig_ObjIsXor.exit.thread.i105
-  %i.bo = phi i32 [ 1, %Mig_ObjIsAnd.exit.i101 ], [ 3, %Mig_ObjIsXor.exit.thread.i105 ], [ 2, %Mig_ObjIsXor.exit.i103 ]
+Mig_ObjNodeType.exit106:                          ; preds = %bb.k, %Mig_ObjIsAnd.exit.i101, %Mig_ObjIsXor.exit.i103
+  %i.bo = phi i32 [ 1, %Mig_ObjIsAnd.exit.i101 ], [ 3, %bb.k ], [ %17, %Mig_ObjIsXor.exit.i103 ]
   %i.bp = tail call i32 @Mpm_CutComputeDsd6(ptr noundef nonnull %0, ptr noundef nonnull %i.ak, ptr noundef nonnull %3, ptr noundef nonnull %2, ptr noundef %4, i32 noundef %i.bf, i32 noundef %i.bg, i32 noundef %i.bj, i32 noundef %i.bo) #21
   %.not65 = icmp eq i32 %i.bp, 0
   br i1 %.not65, label %bb.o, label %bb.l

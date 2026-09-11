@@ -204,13 +204,11 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr i8, ptr %0, i64 156        ; 2 uses
   %i.h = load i32, ptr %i.g, align 4              ; 2 uses
-  switch i32 %i.h, label %bb.f [
-    i32 4, label %bb.e
-    i32 0, label %bb.e
-  ]
+  %1 = and i32 %i.h, -5
+  %or.cond = icmp eq i32 %1, 0
+  br i1 %or.cond, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %bb.d, %bb.d
-  %1 = icmp eq i32 %i.h, 0
+bb.e:                                             ; preds = %bb.d
   tail call void @intel_dmc_wl_get(ptr noundef %i.c, i32 409600) #10
   %.val.i = load ptr, ptr %i.c, align 8
   %i.i = tail call ptr @to_intel_uncore(ptr noundef %.val.i) #10 ; 2 uses
@@ -220,7 +218,7 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   tail call void @intel_dmc_wl_put(ptr noundef %i.c, i32 409600) #10
   %i.m = and i32 %i.l, 16
   %.not16 = icmp eq i32 %i.m, 0
-  %2 = select i1 %1, i32 4, i32 0
+  %2 = xor i32 %i.h, 4
   %spec.select = select i1 %.not16, i32 2, i32 %2
   br label %bb.f
 

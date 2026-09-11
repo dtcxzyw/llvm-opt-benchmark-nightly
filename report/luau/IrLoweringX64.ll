@@ -204,7 +204,6 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit7586:   ; preds = %bb.clv, %bb.clw
   %.sroa.0833.0.copyload = load i32, ptr %i.gyh, align 4, !tbaa !72
   %i.gyi = lshr i32 %.sroa.0833.0.copyload, 4
   %i.gyj = trunc i32 %i.gyi to i8                 ; 4 uses
-  %337 = icmp eq i8 %i.gyj, 0
   %or.cond17 = icmp ult i8 %i.gyj, 2
   br i1 %or.cond17, label %bb.clx, label %bb.cmf
 
@@ -289,7 +288,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit7594:   ; preds = %_ZN4Luau7CodeGen5ge
   %.sroa.310126.0.insert.shift = shl nuw nsw i64 %.sroa.310126.0.insert.ext, 16
   %.sroa.210125.0.insert.insert = or disjoint i64 %.sroa.310126.0.insert.shift, 268468224
   tail call void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX644testENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %i.gzb, i64 %.sroa.210130.0.insert.insert, i64 %.sroa.210125.0.insert.insert)
-  %338 = select i1 %337, i8 23, i8 22
+  %337 = xor i8 %i.gyj, 23
   %i.gzh = load i32, ptr %i.gye, align 8, !tbaa !73
   %.not.i7595 = icmp ugt i32 %i.gzh, 3
   br i1 %.not.i7595, label %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit7596, label %bb.cme, !prof !234
@@ -302,7 +301,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit7596:   ; preds = %_ZN4Luau7CodeGen5ge
   %i.gzi = load ptr, ptr %i.gyd, align 8, !tbaa !74
   %i.gzj = getelementptr inbounds nuw i8, ptr %i.gzi, i64 12
   %.sroa.0827.0.copyload = load i32, ptr %i.gzj, align 4, !tbaa !72
-  tail call void @_ZN4Luau7CodeGen3X6413IrLoweringX6418jumpOrAbortOnUndefENS0_12ConditionX64ENS0_4IrOpEjRKNS0_7IrBlockE(ptr noundef nonnull align 8 dereferenceable(2568) %0, i8 noundef zeroext %338, i32 %.sroa.0827.0.copyload, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(36) %3)
+  tail call void @_ZN4Luau7CodeGen3X6413IrLoweringX6418jumpOrAbortOnUndefENS0_12ConditionX64ENS0_4IrOpEjRKNS0_7IrBlockE(ptr noundef nonnull align 8 dereferenceable(2568) %0, i8 noundef zeroext %337, i32 %.sroa.0827.0.copyload, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(36) %3)
   br label %_ZN4Luau7CodeGen3X6413IrLoweringX6417jumpOrFallthroughERNS0_7IrBlockERKS3_.exit
 
 bb.cmf:                                           ; preds = %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit7586, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit7590, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit7588
@@ -705,7 +704,6 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit8257:   ; preds = %bb.dlf, %bb.dlg
   %.sroa.0306.0.copyload = load i32, ptr %i.jsl, align 4, !tbaa !72
   %i.jsm = lshr i32 %.sroa.0306.0.copyload, 4
   %i.jsn = trunc i32 %i.jsm to i8                 ; 4 uses
-  %339 = icmp eq i8 %i.jsn, 0
   %or.cond19 = icmp ult i8 %i.jsn, 2
   br i1 %or.cond19, label %bb.dlh, label %bb.dlp
 
@@ -790,7 +788,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit8265:   ; preds = %_ZN4Luau7CodeGen5ge
   %.sroa.39168.0.insert.shift = shl nuw nsw i64 %.sroa.39168.0.insert.ext, 16
   %.sroa.29167.0.insert.insert = or disjoint i64 %.sroa.39168.0.insert.shift, 268468224
   tail call void @_ZN4Luau7CodeGen3X6418AssemblyBuilderX644testENS1_10OperandX64ES3_(ptr noundef nonnull align 8 dereferenceable(268) %i.jtf, i64 %.sroa.29172.0.insert.insert, i64 %.sroa.29167.0.insert.insert)
-  %340 = select i1 %339, i8 23, i8 22
+  %338 = xor i8 %i.jsn, 23
   %i.jtl = load i32, ptr %i.jsi, align 8, !tbaa !73
   %.not.i8266 = icmp ugt i32 %i.jtl, 3
   br i1 %.not.i8266, label %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit8267, label %bb.dlo, !prof !234
@@ -803,7 +801,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit8267:   ; preds = %_ZN4Luau7CodeGen5ge
   %i.jtm = load ptr, ptr %i.jsh, align 8, !tbaa !74
   %i.jtn = getelementptr inbounds nuw i8, ptr %i.jtm, i64 12
   %.sroa.0300.0.copyload = load i32, ptr %i.jtn, align 4, !tbaa !72
-  tail call void @_ZN4Luau7CodeGen3X6413IrLoweringX6418jumpOrAbortOnUndefENS0_12ConditionX64ENS0_4IrOpEjRKNS0_7IrBlockE(ptr noundef nonnull align 8 dereferenceable(2568) %0, i8 noundef zeroext %340, i32 %.sroa.0300.0.copyload, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(36) %3)
+  tail call void @_ZN4Luau7CodeGen3X6413IrLoweringX6418jumpOrAbortOnUndefENS0_12ConditionX64ENS0_4IrOpEjRKNS0_7IrBlockE(ptr noundef nonnull align 8 dereferenceable(2568) %0, i8 noundef zeroext %338, i32 %.sroa.0300.0.copyload, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(36) %3)
   br label %_ZN4Luau7CodeGen3X6413IrLoweringX6417jumpOrFallthroughERNS0_7IrBlockERKS3_.exit
 
 bb.dlp:                                           ; preds = %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit8257, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit8261, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit8259

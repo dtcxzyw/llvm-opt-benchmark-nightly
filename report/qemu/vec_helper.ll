@@ -205,11 +205,9 @@ bb.a:
   %i.q = and i32 %i.o, %i.p
   %i.r = and i32 %i.m, %i.p
   %i.s = and i32 %i.o, %i.k
-  %.not = icmp eq i32 %i.s, 0
-  %6 = select i1 %.not, i32 0, i32 2
+  %6 = shl nuw nsw i32 %i.s, 1
   %i.t = and i32 %i.l, %i.m
-  %.not52 = icmp eq i32 %i.t, 0
-  %7 = select i1 %.not52, i32 0, i32 2
+  %7 = shl nuw nsw i32 %i.t, 1
   %i.u = lshr exact i64 %i.g, 1
   %.tr = trunc nuw nsw i32 %i.q to i16
   %i.v = shl nuw i16 %.tr, 15
@@ -291,11 +289,9 @@ bb.a:
   %i.s = and i32 %i.o, %i.r
   %i.t = and i32 %i.l, %i.r
   %i.u = and i32 %i.o, %i.m
-  %.not = icmp eq i32 %i.u, 0
-  %6 = select i1 %.not, i32 0, i32 2              ; 2 uses
+  %6 = shl nuw nsw i32 %i.u, 1                    ; 2 uses
   %i.v = and i32 %i.n, %i.k
-  %.not74 = icmp eq i32 %i.v, 0
-  %7 = select i1 %.not74, i32 0, i32 2            ; 2 uses
+  %7 = shl nuw nsw i32 %i.v, 1                    ; 2 uses
   %i.w = and i32 %i.k, 6
   %i.x = zext nneg i32 %i.w to i64
   %invariant.gep77 = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.x ; 2 uses
@@ -420,11 +416,9 @@ bb.a:
   %i.s = and i32 %i.n, %i.p
   %i.t = shl nuw i32 %i.s, 31
   %i.u = and i32 %i.o, %i.k
-  %.not = icmp eq i32 %i.u, 0
-  %6 = select i1 %.not, i32 0, i32 2
+  %6 = shl nuw nsw i32 %i.u, 1
   %i.v = and i32 %i.l, %i.m
-  %.not51 = icmp eq i32 %i.v, 0
-  %7 = select i1 %.not51, i32 0, i32 2
+  %7 = shl nuw nsw i32 %i.v, 1
   %i.w = lshr exact i64 %i.g, 2
   br label %bb.b
 
@@ -504,11 +498,9 @@ bb.a:
   %i.u = and i32 %i.l, %i.r
   %i.v = shl nuw i32 %i.u, 31                     ; 2 uses
   %i.w = and i32 %i.o, %i.m
-  %.not = icmp eq i32 %i.w, 0
-  %6 = select i1 %.not, i32 0, i32 2              ; 2 uses
+  %6 = shl nuw nsw i32 %i.w, 1                    ; 2 uses
   %i.x = and i32 %i.n, %i.k
-  %.not73 = icmp eq i32 %i.x, 0
-  %7 = select i1 %.not73, i32 0, i32 2            ; 2 uses
+  %7 = shl nuw nsw i32 %i.x, 1                    ; 2 uses
   %i.y = and i32 %i.k, 6
   %i.z = zext nneg i32 %i.y to i64
   %invariant.gep76 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.z ; 2 uses
@@ -631,11 +623,9 @@ bb.a:
   %i.u = zext nneg i32 %i.t to i64
   %i.v = shl nuw i64 %i.u, 63
   %i.w = and i32 %i.o, %i.k
-  %.not = icmp eq i32 %i.w, 0
-  %6 = select i1 %.not, i32 0, i32 2
+  %6 = shl nuw nsw i32 %i.w, 1
   %i.x = and i32 %i.l, %i.m
-  %.not51 = icmp eq i32 %i.x, 0
-  %7 = select i1 %.not51, i32 0, i32 2
+  %7 = shl nuw nsw i32 %i.x, 1
   %i.y = lshr exact i64 %i.g, 3
   br label %bb.b
 

@@ -205,8 +205,7 @@ hashmap_contains_path.exit39:                     ; preds = %bb.r, %bb.s
 
 bb.t:                                             ; preds = %hashmap_contains_path.exit39
   %i.aw = call i32 @hashmap_contains_parent(ptr noundef nonnull %i.z, ptr noundef %0, ptr noundef nonnull %8)
-  %.not33 = icmp eq i32 %i.aw, 0
-  %spec.select = select i1 %.not33, i32 0, i32 2
+  %spec.select = shl nuw nsw i32 %i.aw, 1
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %hashmap_contains_path.exit39, %bb.k, %hashmap_contains_path.exit
@@ -609,7 +608,7 @@ default.unreachable169:                           ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = icmp eq ptr %7, null
-  %i.d = icmp ne i32 %6, 0                        ; 6 uses
+  %i.d = icmp ne i32 %6, 0                        ; 4 uses
   %or.cond = or i1 %i.d, %i.c
   br i1 %or.cond, label %match_pathspec_with_flags.exit.thread140, label %bb.d
 
@@ -678,7 +677,7 @@ bb.h:                                             ; preds = %bb.g
   %i.y = icmp ne i32 %i.x, 0
   %i.z = icmp eq i32 %.0103, 2
   %or.cond3 = or i1 %i.z, %i.y
-  %9 = select i1 %i.d, i32 2, i32 3
+  %9 = xor i32 %6, 3
   %spec.select137 = select i1 %or.cond3, i32 0, i32 %9
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   br label %match_pathspec_with_flags.exit.thread
@@ -832,7 +831,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cf = load i32, ptr %0, align 8, !tbaa !58
   %i.cg = and i32 %i.cf, 4
   %.not131 = icmp eq i32 %i.cg, 0
-  %10 = select i1 %i.d, i32 2, i32 3
+  %10 = xor i32 %6, 3
   %spec.select = select i1 %.not131, i32 %10, i32 0
   br label %match_pathspec_with_flags.exit.thread
 

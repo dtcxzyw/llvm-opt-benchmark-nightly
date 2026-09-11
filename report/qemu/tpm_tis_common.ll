@@ -204,16 +204,15 @@ bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4380
   %i.o = load i8, ptr %i.n, align 4
   %i.p = and i8 %i.o, -9
-  %i.q = zext i8 %i.p to i32                      ; 2 uses
+  %i.q = zext i8 %i.p to i32
   %i.r = tail call fastcc i32 @tpm_tis_check_request_use_except(ptr noundef nonnull %0, i8 noundef zeroext %i.e)
-  %.not77 = icmp eq i32 %i.r, 0
-  %i.s = or i32 %i.q, 4
-  %spec.select = select i1 %.not77, i32 %i.q, i32 %i.s
+  %3 = shl nuw nsw i32 %i.r, 2
+  %i.s = or i32 %3, %i.q
   %i.t = load ptr, ptr %i.g, align 8
   %i.u = tail call zeroext i1 @tpm_backend_get_tpm_established_flag(ptr noundef %i.t) #9
   %i.v = xor i1 %i.u, true
   %i.w = zext i1 %i.v to i32
-  %i.x = or i32 %spec.select, %i.w
+  %i.x = or i32 %i.s, %i.w
   br label %bb.ac
 
 bb.e:                                             ; preds = %bb.c

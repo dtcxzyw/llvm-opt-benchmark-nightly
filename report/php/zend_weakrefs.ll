@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 zend_weakmap_has_dimension.exit.thread:           ; preds = %bb.d
   call void (ptr, ...) @zend_type_error(ptr noundef nonnull @.str.5) #7
-  br label %zend_weakmap_has_dimension.exit.thread6
+  br label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds i8, ptr %i.g, i64 -56
@@ -212,22 +212,20 @@ bb.e:                                             ; preds = %bb.d
   %i.r = lshr exact i64 %i.q, 3
   %i.s = call ptr @zend_hash_index_find(ptr noundef nonnull %i.o, i64 noundef %i.r) #7 ; 2 uses
   %.not12.i = icmp eq ptr %i.s, null
-  br i1 %.not12.i, label %zend_weakmap_has_dimension.exit.thread6, label %zend_weakmap_has_dimension.exit.a
+  br i1 %.not12.i, label %bb.f, label %zend_weakmap_has_dimension.exit.a
 
 zend_weakmap_has_dimension.exit.a:                ; preds = %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.u = load i8, ptr %i.t, align 8, !tbaa !13
-  %.fr = freeze i8 %i.u
-  %.not11 = icmp eq i8 %.fr, 1
-  br i1 %.not11, label %zend_weakmap_has_dimension.exit.thread6, label %bb.f
-
-zend_weakmap_has_dimension.exit.thread6:          ; preds = %bb.e, %zend_weakmap_has_dimension.exit.thread, %zend_weakmap_has_dimension.exit.a
+  %2 = icmp ne i8 %i.u, 1
+  %3 = zext i1 %2 to i32
+  %4 = or disjoint i32 %3, 2
   br label %bb.f
 
-bb.f:                                             ; preds = %zend_weakmap_has_dimension.exit.a, %zend_weakmap_has_dimension.exit.thread6
-  %2 = phi i32 [ 2, %zend_weakmap_has_dimension.exit.thread6 ], [ 3, %zend_weakmap_has_dimension.exit.a ]
+bb.f:                                             ; preds = %bb.e, %zend_weakmap_has_dimension.exit.a, %zend_weakmap_has_dimension.exit.thread
+  %.1.i = phi i32 [ 2, %zend_weakmap_has_dimension.exit.thread ], [ 2, %bb.e ], [ %4, %zend_weakmap_has_dimension.exit.a ]
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %2, ptr %i.v, align 8, !tbaa !13
+  store i32 %.1.i, ptr %i.v, align 8, !tbaa !13
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.a, %bb.f

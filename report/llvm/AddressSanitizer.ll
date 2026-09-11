@@ -205,7 +205,7 @@ bb.a:
   %i.bg = alloca i64, align 8                     ; 6 uses
   %i.bh = alloca [21 x i8], align 16              ; 3 uses
   %62 = alloca %"class.llvm::IRBuilder", align 8  ; 15 uses
-  %63 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %63 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %64 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %65 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %66 = alloca %"class.llvm::SmallVector.308", align 8 ; 12 uses
@@ -364,7 +364,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dg, i8 0, i64 16, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 160) (i8, ptr @_ZTVN4llvm14ConstantFolderE, i64 16), ptr %i.cw, align 8, !tbaa !25
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4llvm24IRBuilderDefaultInserterE, i64 16), ptr %i.cx, align 8, !tbaa !25
-  %i.di = getelementptr inbounds nuw i8, ptr %63, i64 16 ; 4 uses
+  %i.di = getelementptr inbounds nuw i8, ptr %63, i64 16 ; 5 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %63, i64 8 ; 4 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %64, i64 16 ; 5 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %64, i64 8 ; 5 uses
@@ -450,16 +450,15 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %.not61.i, label %.preheader.i, label %bb.g, !llvm.loop !634
 
 ._crit_edge.i.i.i:                                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit167.i, %.preheader.i
-  %.not.i = phi i1 [ true, %.preheader.i ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit167.i ] ; 4 uses
-  %.056295.i = phi i64 [ 0, %.preheader.i ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit167.i ] ; 4 uses
+  %.not.i = phi i1 [ true, %.preheader.i ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit167.i ] ; 2 uses
+  %.056295.i = phi i64 [ 0, %.preheader.i ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit167.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #25
   %i.fp = select i1 %.not.i, ptr @.str.208, ptr @.str.207
   store ptr %i.di, ptr %63, align 8, !tbaa !178
-  %105 = select i1 %.not.i, i64 4, i64 5          ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(4) %i.di, ptr noundef nonnull align 1 dereferenceable(4) %i.fp, i64 %105, i1 false)
+  %105 = or disjoint i64 %.056295.i, 4            ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.di, ptr noundef nonnull align 1 dereferenceable(1) %i.fp, i64 %105, i1 false)
   store i64 %105, ptr %i.dj, align 8, !tbaa !179
-  %.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not.i, i64 20, i64 21
-  %.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %63, i64 %.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v
+  %.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %i.di, i64 %105
   store i8 0, ptr %.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel, align 1, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %64) #25
   store ptr %i.dk, ptr %64, align 8, !tbaa !178

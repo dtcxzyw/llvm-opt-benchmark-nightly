@@ -202,30 +202,21 @@ bb.a:
   %i.d = icmp eq ptr %0, null
   %i.e = icmp eq ptr %1, null
   %or.cond = or i1 %i.d, %i.e
-  br i1 %or.cond, label %.critedge, label %2
+  br i1 %or.cond, label %.critedge, label %.thread
 
-2:                                                ; preds = %bb.a
-  %3 = load i32, ptr %1, align 8, !tbaa !18       ; 2 uses
-  switch i32 %3, label %WebPIsAlphaMode.exit [
-    i32 12, label %.thread
-    i32 5, label %.thread
-    i32 4, label %.thread
-    i32 3, label %.thread
-    i32 1, label %.thread
-  ]
-
-WebPIsAlphaMode.exit:                             ; preds = %2
-  %4 = add i32 %3, -11
-  %narrow.i.i = icmp ult i32 %4, -4
-  br i1 %narrow.i.i, label %5, label %.thread
-
-5:                                                ; preds = %WebPIsAlphaMode.exit
-  br label %.thread
-
-.thread:                                          ; preds = %2, %2, %2, %2, %2, %WebPIsAlphaMode.exit, %5
-  %6 = phi i32 [ 54, %5 ], [ 70, %WebPIsAlphaMode.exit ], [ 70, %2 ], [ 70, %2 ], [ 70, %2 ], [ 70, %2 ], [ 70, %2 ] ; 4 uses
-  %.not7981 = phi i1 [ true, %5 ], [ false, %WebPIsAlphaMode.exit ], [ false, %2 ], [ false, %2 ], [ false, %2 ], [ false, %2 ], [ false, %2 ] ; 2 uses
-  %7 = phi i32 [ 3, %5 ], [ 4, %WebPIsAlphaMode.exit ], [ 4, %2 ], [ 4, %2 ], [ 4, %2 ], [ 4, %2 ], [ 4, %2 ] ; 2 uses
+.thread:                                          ; preds = %bb.a
+  %2 = load i32, ptr %1, align 8, !tbaa !18       ; 2 uses
+  %switch.tableidx = add i32 %2, -1               ; 2 uses
+  %3 = icmp ult i32 %switch.tableidx, 12
+  %switch.maskindex = trunc i32 %switch.tableidx to i16
+  %switch.shifted = lshr i16 2077, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  %or.cond82 = select i1 %3, i1 %switch.lobit, i1 false
+  %4 = add i32 %2, -7
+  %narrow.i.i = icmp ult i32 %4, 4
+  %narrow = select i1 %or.cond82, i1 true, i1 %narrow.i.i ; 4 uses
+  %5 = select i1 %narrow, i32 16, i32 0           ; 2 uses
+  %6 = add nuw nsw i32 %5, 54                     ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.g = load i32, ptr %i.f, align 4, !tbaa !15   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -234,6 +225,7 @@ WebPIsAlphaMode.exit:                             ; preds = %2
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !17   ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.m = load i32, ptr %i.l, align 8, !tbaa !17
+  %7 = select i1 %narrow, i32 4, i32 3            ; 2 uses
   %i.n = mul i32 %7, %i.g                         ; 4 uses
   %i.o = add i32 %i.n, 3
   %i.p = and i32 %i.o, -4                         ; 3 uses
@@ -251,7 +243,7 @@ bb.b:                                             ; preds = %.thread
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 10
   store i32 %6, ptr %i.v, align 2
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 14
-  %8 = add nsw i32 %6, -14
+  %8 = or disjoint i32 %5, 40
   store i32 %8, ptr %i.w, align 2
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 18
   store i32 %i.g, ptr %i.x, align 2
@@ -264,7 +256,7 @@ bb.b:                                             ; preds = %.thread
   %i.ab = shl nuw nsw i16 %.tr, 3
   store i16 %i.ab, ptr %i.aa, align 4
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 30
-  %i.ad = select i1 %.not7981, i32 0, i32 3
+  %i.ad = select i1 %narrow, i32 3, i32 0
   store i32 %i.ad, ptr %i.ac, align 2
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 34
   store i32 %i.r, ptr %i.ae, align 2
@@ -274,7 +266,7 @@ bb.b:                                             ; preds = %.thread
   store i32 2400, ptr %i.ag, align 2
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 46
   store i32 0, ptr %i.ah, align 2
-  br i1 %.not7981, label %bb.d, label %bb.c
+  br i1 %narrow, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 54
@@ -454,21 +446,22 @@ bb.b:                                             ; preds = %WebPIsAlphaMode.exi
   %i.ba = add i32 %i.ay, -7
   %narrow.i.i = icmp ult i32 %i.ba, 4
   %.not.not = or i1 %or.cond49, %narrow.i.i       ; 3 uses
+  %2 = zext i1 %.not.not to i8
   %i.bb = select i1 %.not.not, i8 4, i8 3         ; 4 uses
   store i8 %i.bb, ptr %i.w, align 2, !tbaa !17
   store i8 %i.bb, ptr %i.p, align 2, !tbaa !17
-  %2 = select i1 %.not.not, i8 15, i8 14
-  store i8 %2, ptr %i.d, align 8, !tbaa !17
-  %i.bc = add i32 %i.ay, -11
-  %narrow.i = icmp ult i32 %i.bc, -4
-  %i.bd = select i1 %narrow.i, i8 2, i8 1
+  %3 = or disjoint i8 %2, 14
+  store i8 %3, ptr %i.d, align 8, !tbaa !17
+  %i.bc = add i32 %i.ay, -7
+  %narrow.i = icmp ult i32 %i.bc, 4
+  %i.bd = select i1 %narrow.i, i8 1, i8 2
   store i8 %i.bd, ptr %i.al, align 2, !tbaa !17
   store i32 %i.aq, ptr %i.g, align 2
   store i32 %i.as, ptr %i.k, align 2
   store i32 %i.as, ptr %i.aa, align 2
   %i.be = zext nneg i8 %i.bb to i32
-  %i.bf = mul i32 %i.aq, %i.be
-  %i.bg = mul i32 %i.bf, %i.as
+  %i.bf = mul i32 %i.as, %i.aq
+  %i.bg = mul i32 %i.bf, %i.be
   store i32 %i.bg, ptr %i.ae, align 2
   br i1 %.not.not, label %bb.d, label %bb.c
 

@@ -205,8 +205,7 @@ bb.r:                                             ; preds = %.noexc66
 bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !4503
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !noalias !4503
-  %trunc.not.i = icmp eq i8 %i.as, 0
-  %.53.i = select i1 %trunc.not.i, i8 1, i8 2
+  %.53.i = add nuw nsw i8 %i.as, 1
   %i.ds = load ptr, ptr %i.o, align 8, !noalias !4503, !nonnull !18, !noundef !18
   %i.dt = invoke noundef zeroext i1 @_RNvMs0_NtNtCshbspv01vNlV_29ra_ap_rustc_next_trait_solver5solve9eval_ctxtINtB5_8EvalCtxtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6solver13SolverContextNtNtB1r_8interner10DbInternerE28relate_rigid_alias_non_aliasB1t_(ptr noalias nofree noundef nonnull align 8 dereferenceable(152) %1, ptr noundef nonnull %i.am, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.e, i8 noundef %.53.i, ptr noundef nonnull %i.ds)
           to label %.noexc68 unwind label %bb.b

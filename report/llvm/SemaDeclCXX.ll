@@ -205,8 +205,8 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ap
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
   %i.ip = and i8 %i.ht, %i.hq
-  %or.cond23.not.not = icmp eq i8 %i.ip, 0
-  %.mux = select i1 %or.cond23.not.not, i32 0, i32 2
+  %25 = shl nuw nsw i8 %i.ip, 1
+  %.mux = zext nneg i8 %25 to i32
   br i1 %i.hr, label %bb.ar, label %.thread181
 
 .thread179:                                       ; preds = %bb.ao
@@ -609,9 +609,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %20 = icmp eq i32 %2, 0                         ; 2 uses
-  %. = select i1 %20, i32 3, i32 4
-  %.50 = select i1 %20, i32 1, i32 2
+  %. = add nuw nsw i32 %2, 3
+  %.50 = add nuw nsw i32 %2, 1
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZL41IsPotentiallyTypeAwareOperatorNewOrDeleteRN5clang4SemaEPKNS_12FunctionDeclEPb.exit, %bb.e

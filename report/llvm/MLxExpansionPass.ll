@@ -202,19 +202,7 @@ _ZN12_GLOBAL__N_112MLxExpansion13FindMLxHazardEPN4llvm12MachineInstrE.exit.threa
   %i.ow = getelementptr inbounds nuw i8, ptr %i.ol, i64 100
   %i.ox = load i32, ptr %i.ow, align 4, !tbaa !57
   %i.oy = load i32, ptr %i.os, align 8            ; 2 uses
-  %16 = lshr i32 %i.oy, 26
-  %17 = lshr i32 %i.oy, 24
-  %.lobit.i.i.i = and i32 %17, 1
-  %18 = xor i32 %.lobit.i.i.i, 1
-  %19 = and i32 %18, %16
-  %.not.i28.i = icmp eq i32 %19, 0
   %i.oz = load i32, ptr %i.ov, align 8            ; 2 uses
-  %20 = lshr i32 %i.oz, 26
-  %21 = lshr i32 %i.oz, 24
-  %.lobit.i59.i.i = and i32 %21, 1
-  %22 = xor i32 %.lobit.i59.i.i, 1
-  %23 = and i32 %22, %20
-  %.not84.i.i = icmp eq i32 %23, 0
   br i1 %i.oj, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %_ZN12_GLOBAL__N_112MLxExpansion13FindMLxHazardEPN4llvm12MachineInstrE.exit.thread.i
@@ -256,18 +244,24 @@ bb.az:                                            ; preds = %bb.ay, %_ZN12_GLOBA
   %i.qc = extractvalue { ptr, ptr } %i.qa, 1      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #13
   store ptr null, ptr %i.as, align 8, !tbaa !59, !alias.scope !438
-  %24 = select i1 %.not.i28.i, i32 0, i32 67108864
+  %16 = shl i32 %i.oy, 2
+  %17 = and i32 %16, 67108864
+  %18 = xor i32 %17, 67108864
+  %19 = and i32 %18, %i.oy
   store i32 %i.ou, ptr %i.at, align 4, !tbaa !57, !alias.scope !438
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false), !alias.scope !438
-  store i32 %24, ptr %13, align 8, !alias.scope !438
+  store i32 %19, ptr %13, align 8, !alias.scope !438
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.qc, ptr noundef nonnull align 8 dereferenceable(1065) %i.qb, ptr noundef nonnull align 8 dereferenceable(32) %13) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #13
   store ptr null, ptr %i.av, align 8, !tbaa !59, !alias.scope !439
-  %25 = select i1 %.not84.i.i, i32 0, i32 67108864
+  %20 = shl i32 %i.oz, 2
+  %21 = and i32 %20, 67108864
+  %22 = xor i32 %21, 67108864
+  %23 = and i32 %22, %i.oz
   store i32 %i.ox, ptr %i.aw, align 4, !tbaa !57, !alias.scope !439
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ax, i8 0, i64 16, i1 false), !alias.scope !439
-  store i32 %25, ptr %12, align 8, !alias.scope !439
+  store i32 %23, ptr %12, align 8, !alias.scope !439
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.qc, ptr noundef nonnull align 8 dereferenceable(1065) %i.qb, ptr noundef nonnull align 8 dereferenceable(32) %12) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #13

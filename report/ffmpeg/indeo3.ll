@@ -205,8 +205,7 @@ bb.a:
   %i.ab = add nuw nsw i32 %5, 1
   %.not122.not = icmp eq i32 %5, 0
   %lcmp.mod103 = icmp eq i32 %5, 0
-  %i.ac = icmp eq i32 %5, 0                       ; 3 uses
-  %xtraiter116 = select i1 %i.ac, i32 4, i32 0
+  %i.ac = icmp eq i32 %5, 0
   %.not123.not = icmp eq i32 %5, 0
   br label %.preheader29
 
@@ -242,7 +241,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond, label %copy_block4.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  br i1 %.not123.not, label %.lr.ph.i.epil.preheader, label %.lr.ph.i
+  br i1 %i.ac, label %.lr.ph.i.epil.preheader, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %.0811.i = phi ptr [ %i.bg, %.lr.ph.i ], [ %.132346, %.lr.ph.i.preheader ] ; 2 uses
@@ -278,11 +277,11 @@ bb.c:                                             ; preds = %bb.b
   %i.be = getelementptr inbounds i8, ptr %i.bb, i64 %3 ; 2 uses
   %i.bf = load i32, ptr %i.be, align 1, !tbaa !36
   store i32 %i.bf, ptr %i.bd, align 1, !tbaa !36
-  %i.bg = getelementptr inbounds i8, ptr %i.bd, i64 %3 ; 2 uses
-  %i.bh = getelementptr inbounds i8, ptr %i.be, i64 %3 ; 2 uses
+  %i.bg = getelementptr inbounds i8, ptr %i.bd, i64 %3
+  %i.bh = getelementptr inbounds i8, ptr %i.be, i64 %3
   %niter121.next.7 = add i32 %niter121, 8
   %niter121.ncmp.7 = icmp eq i32 %niter121, 0
-  br i1 %niter121.ncmp.7, label %copy_block4.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !97
+  br i1 %niter121.ncmp.7, label %copy_block4.exit, label %.lr.ph.i, !llvm.loop !97
 
 bb.d:                                             ; preds = %bb.b
   br i1 %i.u, label %bb.e, label %copy_block4.exit
@@ -339,28 +338,23 @@ bb.f:                                             ; preds = %bb.e
   store i64 %i.ce, ptr %.132346, align 8, !tbaa !36
   br label %copy_block4.exit
 
-copy_block4.exit.loopexit.unr-lcssa:              ; preds = %.lr.ph.i
-  br i1 %i.ac, label %.lr.ph.i.epil.preheader, label %copy_block4.exit
-
-.lr.ph.i.epil.preheader:                          ; preds = %copy_block4.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
-  %.0811.i.epil.init = phi ptr [ %.132346, %.lr.ph.i.preheader ], [ %i.bg, %copy_block4.exit.loopexit.unr-lcssa ]
-  %.0910.i.epil.init = phi ptr [ %.132644, %.lr.ph.i.preheader ], [ %i.bh, %copy_block4.exit.loopexit.unr-lcssa ]
-  tail call void @llvm.assume(i1 %i.ac)
+.lr.ph.i.epil.preheader:                          ; preds = %.lr.ph.i.preheader
+  tail call void @llvm.assume(i1 %.not123.not)
   br label %.lr.ph.i.epil
 
 .lr.ph.i.epil:                                    ; preds = %.lr.ph.i.epil, %.lr.ph.i.epil.preheader
-  %.0811.i.epil = phi ptr [ %i.cg, %.lr.ph.i.epil ], [ %.0811.i.epil.init, %.lr.ph.i.epil.preheader ] ; 2 uses
-  %.0910.i.epil = phi ptr [ %i.ch, %.lr.ph.i.epil ], [ %.0910.i.epil.init, %.lr.ph.i.epil.preheader ] ; 2 uses
+  %.0811.i.epil = phi ptr [ %i.cg, %.lr.ph.i.epil ], [ %.132346, %.lr.ph.i.epil.preheader ] ; 2 uses
+  %.0910.i.epil = phi ptr [ %i.ch, %.lr.ph.i.epil ], [ %.132644, %.lr.ph.i.epil.preheader ] ; 2 uses
   %epil.iter117 = phi i32 [ %epil.iter117.next, %.lr.ph.i.epil ], [ 0, %.lr.ph.i.epil.preheader ]
   %i.cf = load i32, ptr %.0910.i.epil, align 1, !tbaa !36
   store i32 %i.cf, ptr %.0811.i.epil, align 1, !tbaa !36
   %i.cg = getelementptr inbounds i8, ptr %.0811.i.epil, i64 %3
   %i.ch = getelementptr inbounds i8, ptr %.0910.i.epil, i64 %3
   %epil.iter117.next = add i32 %epil.iter117, 1   ; 2 uses
-  %epil.iter117.cmp.not = icmp eq i32 %epil.iter117.next, %xtraiter116
+  %epil.iter117.cmp.not = icmp eq i32 %epil.iter117.next, 4
   br i1 %epil.iter117.cmp.not, label %copy_block4.exit, label %.lr.ph.i.epil, !llvm.loop !98
 
-copy_block4.exit:                                 ; preds = %copy_block4.exit.loopexit.unr-lcssa, %.lr.ph.i.epil, %.lr.ph.i365.preheader, %bb.d, %bb.e, %.lr.ph.i364, %bb.c
+copy_block4.exit:                                 ; preds = %.lr.ph.i, %.lr.ph.i.epil, %.lr.ph.i365.preheader, %bb.d, %bb.e, %.lr.ph.i364, %bb.c
   %i.ci = add nsw i32 %.130949, -1
   br label %.loopexit
 

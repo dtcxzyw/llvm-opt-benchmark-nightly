@@ -204,7 +204,7 @@ Mig_ObjIsNode2.exit.i.i:                          ; preds = %.lr.ph
   %i.l = getelementptr inbounds nuw i8, ptr %.01421, i64 8
   %i.m = load i32, ptr %i.l, align 4
   %i.n = icmp ult i32 %i.m, -2
-  br i1 %i.n, label %Mig_ObjIsXor.exit.thread.i, label %Mig_ObjIsAnd.exit.i
+  br i1 %i.n, label %Mig_ObjNodeType.exit, label %Mig_ObjIsAnd.exit.i
 
 Mig_ObjIsAnd.exit.i:                              ; preds = %Mig_ObjIsNode2.exit.i.i
   %i.o = load i32, ptr %.01421, align 4
@@ -214,15 +214,13 @@ Mig_ObjIsAnd.exit.i:                              ; preds = %Mig_ObjIsNode2.exit
   br i1 %.not.i, label %Mig_ObjNodeType.exit, label %Mig_ObjIsXor.exit.i
 
 Mig_ObjIsXor.exit.i:                              ; preds = %Mig_ObjIsAnd.exit.i
-  %2 = icmp samesign ule i32 %i.p, %i.q
-  %cond.fr.i = freeze i1 %2
-  br i1 %cond.fr.i, label %Mig_ObjIsXor.exit.thread.i, label %Mig_ObjNodeType.exit
-
-Mig_ObjIsXor.exit.thread.i:                       ; preds = %Mig_ObjIsXor.exit.i, %Mig_ObjIsNode2.exit.i.i
+  %2 = icmp samesign ugt i32 %i.p, %i.q
+  %3 = zext i1 %2 to i32
+  %4 = xor i32 %3, 3
   br label %Mig_ObjNodeType.exit
 
-Mig_ObjNodeType.exit:                             ; preds = %Mig_ObjIsAnd.exit.i, %Mig_ObjIsXor.exit.i, %Mig_ObjIsXor.exit.thread.i
-  %i.r = phi i32 [ 1, %Mig_ObjIsAnd.exit.i ], [ 3, %Mig_ObjIsXor.exit.thread.i ], [ 2, %Mig_ObjIsXor.exit.i ]
+Mig_ObjNodeType.exit:                             ; preds = %Mig_ObjIsNode2.exit.i.i, %Mig_ObjIsAnd.exit.i, %Mig_ObjIsXor.exit.i
+  %i.r = phi i32 [ 1, %Mig_ObjIsAnd.exit.i ], [ 3, %Mig_ObjIsNode2.exit.i.i ], [ %4, %Mig_ObjIsXor.exit.i ]
   %i.s = icmp eq i32 %i.r, %1
   %i.t = zext i1 %i.s to i32
   %i.u = add nsw i32 %.123, %i.t
@@ -373,7 +371,7 @@ Mig_ObjIsNode2.exit.i.i.i:                        ; preds = %.lr.ph.i
   %i.l = getelementptr inbounds nuw i8, ptr %.01421.i, i64 8
   %i.m = load i32, ptr %i.l, align 4
   %i.n = icmp ult i32 %i.m, -2
-  br i1 %i.n, label %Mig_ObjIsXor.exit.thread.i.i, label %Mig_ObjIsAnd.exit.i.i
+  br i1 %i.n, label %Mig_ObjNodeType.exit.i, label %Mig_ObjIsAnd.exit.i.i
 
 Mig_ObjIsAnd.exit.i.i:                            ; preds = %Mig_ObjIsNode2.exit.i.i.i
   %i.o = load i32, ptr %.01421.i, align 4
@@ -383,15 +381,12 @@ Mig_ObjIsAnd.exit.i.i:                            ; preds = %Mig_ObjIsNode2.exit
   br i1 %.not.i.i, label %Mig_ObjNodeType.exit.i, label %Mig_ObjIsXor.exit.i.i
 
 Mig_ObjIsXor.exit.i.i:                            ; preds = %Mig_ObjIsAnd.exit.i.i
-  %1 = icmp samesign ule i32 %i.p, %i.q
-  %cond.fr.i.i = freeze i1 %1
-  br i1 %cond.fr.i.i, label %Mig_ObjIsXor.exit.thread.i.i, label %Mig_ObjNodeType.exit.i
-
-Mig_ObjIsXor.exit.thread.i.i:                     ; preds = %Mig_ObjIsXor.exit.i.i, %Mig_ObjIsNode2.exit.i.i.i
+  %1 = icmp samesign ugt i32 %i.p, %i.q
+  %2 = zext i1 %1 to i32
   br label %Mig_ObjNodeType.exit.i
 
-Mig_ObjNodeType.exit.i:                           ; preds = %Mig_ObjIsXor.exit.thread.i.i, %Mig_ObjIsXor.exit.i.i, %Mig_ObjIsAnd.exit.i.i
-  %i.r = phi i32 [ 0, %Mig_ObjIsAnd.exit.i.i ], [ 0, %Mig_ObjIsXor.exit.thread.i.i ], [ 1, %Mig_ObjIsXor.exit.i.i ]
+Mig_ObjNodeType.exit.i:                           ; preds = %Mig_ObjIsXor.exit.i.i, %Mig_ObjIsAnd.exit.i.i, %Mig_ObjIsNode2.exit.i.i.i
+  %i.r = phi i32 [ 0, %Mig_ObjIsAnd.exit.i.i ], [ 0, %Mig_ObjIsNode2.exit.i.i.i ], [ %2, %Mig_ObjIsXor.exit.i.i ]
   %i.s = add nsw i32 %i.r, %.123.i
   br label %bb.c
 
@@ -460,7 +455,7 @@ Mig_ObjIsNode2.exit.i.i.i:                        ; preds = %.lr.ph.i
   %i.l = getelementptr inbounds nuw i8, ptr %.01421.i, i64 8
   %i.m = load i32, ptr %i.l, align 4
   %i.n = icmp ult i32 %i.m, -2
-  br i1 %i.n, label %Mig_ObjIsXor.exit.thread.i.i, label %Mig_ObjIsAnd.exit.i.i
+  br i1 %i.n, label %Mig_ObjNodeType.exit.i, label %Mig_ObjIsAnd.exit.i.i
 
 Mig_ObjIsAnd.exit.i.i:                            ; preds = %Mig_ObjIsNode2.exit.i.i.i
   %i.o = load i32, ptr %.01421.i, align 4
@@ -471,14 +466,11 @@ Mig_ObjIsAnd.exit.i.i:                            ; preds = %Mig_ObjIsNode2.exit
 
 Mig_ObjIsXor.exit.i.i:                            ; preds = %Mig_ObjIsAnd.exit.i.i
   %i.r = icmp samesign ule i32 %i.p, %i.q
-  %cond.fr.i.i = freeze i1 %i.r
-  br i1 %cond.fr.i.i, label %Mig_ObjIsXor.exit.thread.i.i, label %Mig_ObjNodeType.exit.i
-
-Mig_ObjIsXor.exit.thread.i.i:                     ; preds = %Mig_ObjIsXor.exit.i.i, %Mig_ObjIsNode2.exit.i.i.i
+  %1 = zext i1 %i.r to i32
   br label %Mig_ObjNodeType.exit.i
 
-Mig_ObjNodeType.exit.i:                           ; preds = %Mig_ObjIsXor.exit.thread.i.i, %Mig_ObjIsXor.exit.i.i, %Mig_ObjIsAnd.exit.i.i
-  %i.s = phi i32 [ 0, %Mig_ObjIsAnd.exit.i.i ], [ 1, %Mig_ObjIsXor.exit.thread.i.i ], [ 0, %Mig_ObjIsXor.exit.i.i ]
+Mig_ObjNodeType.exit.i:                           ; preds = %Mig_ObjIsXor.exit.i.i, %Mig_ObjIsAnd.exit.i.i, %Mig_ObjIsNode2.exit.i.i.i
+  %i.s = phi i32 [ 0, %Mig_ObjIsAnd.exit.i.i ], [ 1, %Mig_ObjIsNode2.exit.i.i.i ], [ %1, %Mig_ObjIsXor.exit.i.i ]
   %i.t = add nsw i32 %i.s, %.123.i
   br label %bb.c
 

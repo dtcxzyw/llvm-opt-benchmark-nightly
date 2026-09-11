@@ -94,8 +94,8 @@ bb.g:                                             ; preds = %bb.e
   %i.z = load i32, ptr %i.v, align 1, !tbaa !20   ; 2 uses
   %i.aa = tail call i32 @llvm.bswap.i32(i32 %i.z) ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 32
-  %i.ac = load i32, ptr %i.y, align 1, !tbaa !20  ; 9 uses
-  %i.ad = tail call i32 @llvm.bswap.i32(i32 %i.ac) ; 2 uses
+  %i.ac = load i32, ptr %i.y, align 1, !tbaa !20  ; 2 uses
+  %i.ad = tail call i32 @llvm.bswap.i32(i32 %i.ac) ; 9 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 36
   %i.af = load i32, ptr %i.ab, align 1, !tbaa !20
   %i.ag = tail call i32 @llvm.bswap.i32(i32 %i.af) ; 2 uses
@@ -331,8 +331,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %or.cond31, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
-  %.not265 = icmp eq i32 %i.ac, 0
-  %4 = select i1 %.not265, i32 39, i32 38
+  %4 = xor i32 %i.ad, 39
   br label %.thread322
 
 bb.as:                                            ; preds = %bb.aq
@@ -343,8 +342,7 @@ bb.as:                                            ; preds = %bb.aq
   br i1 %or.cond37, label %bb.at, label %.thread318
 
 bb.at:                                            ; preds = %bb.as
-  %.not264 = icmp eq i32 %i.ac, 0
-  %5 = select i1 %.not264, i32 43, i32 42
+  %5 = xor i32 %i.ad, 43
   br label %.thread322
 
 bb.au:                                            ; preds = %bb.ap
@@ -361,8 +359,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %or.cond45, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  %.not263 = icmp eq i32 %i.ac, 0
-  %6 = select i1 %.not263, i32 37, i32 36
+  %6 = xor i32 %i.ad, 37
   br label %.thread322
 
 bb.ax:                                            ; preds = %bb.av
@@ -373,8 +370,7 @@ bb.ax:                                            ; preds = %bb.av
   br i1 %or.cond51, label %bb.ay, label %.thread318
 
 bb.ay:                                            ; preds = %bb.ax
-  %.not262 = icmp eq i32 %i.ac, 0
-  %7 = select i1 %.not262, i32 41, i32 40
+  %7 = xor i32 %i.ad, 41
   br label %.thread322
 
 bb.az:                                            ; preds = %bb.au
@@ -392,8 +388,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %or.cond57, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  %.not261 = icmp eq i32 %i.ac, 0
-  %8 = select i1 %.not261, i32 3, i32 2
+  %8 = xor i32 %i.ad, 3
   br label %.thread322
 
 bb.bc:                                            ; preds = %bb.ba
@@ -404,8 +399,7 @@ bb.bc:                                            ; preds = %bb.ba
   br i1 %or.cond63, label %bb.bd, label %.thread318
 
 bb.bd:                                            ; preds = %bb.bc
-  %.not260 = icmp eq i32 %i.ac, 0
-  %9 = select i1 %.not260, i32 2, i32 3
+  %9 = or disjoint i32 %i.ad, 2
   br label %.thread322
 
 bb.be:                                            ; preds = %bb.az
@@ -429,8 +423,7 @@ bb.bg:                                            ; preds = %bb.be
   br i1 %or.cond75, label %bb.bh, label %.thread318
 
 bb.bh:                                            ; preds = %bb.bg
-  %.not258 = icmp eq i32 %i.ac, 0
-  %10 = select i1 %.not258, i32 26, i32 27
+  %10 = or disjoint i32 %i.ad, 26
   br label %.thread322
 
 bb.bi:                                            ; preds = %bb.ag

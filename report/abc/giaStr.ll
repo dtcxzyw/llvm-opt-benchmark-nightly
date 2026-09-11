@@ -205,7 +205,7 @@ Vec_IntAppend.exit231:                            ; preds = %Vec_IntPush.exit.i2
   %i.po = and i64 %.val201, 536870911
   %i.pp = icmp eq i64 %i.po, 536870911
   %narrow.i.not.i = or i1 %.not.i.i232, %i.pp
-  br i1 %narrow.i.not.i, label %Gia_ObjIsXor.exit.thread, label %Gia_ObjIsXor.exit.a
+  br i1 %narrow.i.not.i, label %bb.bc, label %Gia_ObjIsXor.exit.a
 
 Gia_ObjIsXor.exit.a:                              ; preds = %.critedge12
   %i.pq = trunc i64 %.val201 to i32
@@ -213,15 +213,12 @@ Gia_ObjIsXor.exit.a:                              ; preds = %.critedge12
   %i.ps = lshr i64 %.val201, 32
   %i.pt = trunc nuw i64 %i.ps to i32
   %i.pu = and i32 %i.pt, 536870911
-  %5 = icmp samesign uge i32 %i.pr, %i.pu
-  %cond.fr = freeze i1 %5
-  br i1 %cond.fr, label %Gia_ObjIsXor.exit.thread, label %bb.bc
-
-Gia_ObjIsXor.exit.thread:                         ; preds = %.critedge12, %Gia_ObjIsXor.exit.a
+  %5 = icmp samesign ult i32 %i.pr, %i.pu
+  %6 = select i1 %5, i32 4, i32 3
   br label %bb.bc
 
-bb.bc:                                            ; preds = %Gia_ObjIsXor.exit.a, %Gia_ObjIsXor.exit.thread
-  %i.pv = phi i32 [ 3, %Gia_ObjIsXor.exit.thread ], [ 4, %Gia_ObjIsXor.exit.a ]
+bb.bc:                                            ; preds = %.critedge12, %Gia_ObjIsXor.exit.a
+  %i.pv = phi i32 [ 3, %.critedge12 ], [ %6, %Gia_ObjIsXor.exit.a ]
   %i.pw = sub nsw i32 %.val326, %.val166
   %i.px = getelementptr i8, ptr %i.pm, i64 8
   %.val202 = load ptr, ptr %i.px, align 8, !tbaa !42

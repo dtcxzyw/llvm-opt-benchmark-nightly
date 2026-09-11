@@ -202,12 +202,11 @@ bb.xj:                                            ; preds = %bb.xi
 .critedge347:                                     ; preds = %bb.xi, %bb.xj
   %i.afp = load ptr, ptr %0, align 64, !tbaa !34
   call void @zng_flush_pending(ptr noundef %i.afp) #6
-  %2 = icmp eq i32 %i.aev, 0
-  %3 = select i1 %2, i32 0, i32 2
+  %2 = shl nuw nsw i32 %i.aev, 1
   br label %bb.xk
 
 bb.xk:                                            ; preds = %bb.wp, %.critedge347, %bb.wj, %bb.nu, %bb.ni
-  %.0224 = phi i32 [ 1, %bb.nu ], [ 3, %bb.ni ], [ %3, %.critedge347 ], [ 0, %bb.wj ], [ 0, %bb.wp ]
+  %.0224 = phi i32 [ 1, %bb.nu ], [ 3, %bb.ni ], [ %2, %.critedge347 ], [ 0, %bb.wj ], [ 0, %bb.wp ]
   ret i32 %.0224
 }
 

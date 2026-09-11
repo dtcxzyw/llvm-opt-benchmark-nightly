@@ -202,12 +202,11 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.
   store i32 %i.jb, ptr %i.k, align 4, !tbaa !32
   %i.jc = load ptr, ptr %0, align 64, !tbaa !25
   tail call void @zng_flush_pending(ptr noundef %i.jc) #4
-  %2 = icmp eq i32 %i.iw, 0
-  %spec.select307 = select i1 %2, i32 0, i32 2
+  %2 = shl nuw nsw i32 %i.iw, 1
   br label %bb.ar
 
-bb.ar:                                            ; preds = %bb.aq, %bb.am, %bb.al, %bb.z, %bb.w
-  %.0222 = phi i32 [ 1, %bb.z ], [ 3, %bb.w ], [ 0, %bb.am ], [ 0, %bb.al ], [ %spec.select307, %bb.aq ]
+bb.ar:                                            ; preds = %bb.am, %bb.aq, %bb.al, %bb.z, %bb.w
+  %.0222 = phi i32 [ 1, %bb.z ], [ 3, %bb.w ], [ %2, %bb.aq ], [ 0, %bb.al ], [ 0, %bb.am ]
   ret i32 %.0222
 }
 
