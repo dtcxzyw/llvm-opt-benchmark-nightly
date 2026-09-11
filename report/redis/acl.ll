@@ -205,13 +205,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph:                                           ; preds = %bb.f, %cleanupACLKeyResultCache.exit
   %i.m = phi ptr [ %i.r, %cleanupACLKeyResultCache.exit ], [ %i.l, %bb.f ]
-  %.056 = phi i32 [ %.2, %cleanupACLKeyResultCache.exit ], [ 0, %bb.f ] ; 2 uses
-  %.02755 = phi i32 [ %.229, %cleanupACLKeyResultCache.exit ], [ 1, %bb.f ] ; 3 uses
+  %.056 = phi i32 [ %spec.select65, %cleanupACLKeyResultCache.exit ], [ 0, %bb.f ]
+  %.02755 = phi i32 [ %spec.select, %cleanupACLKeyResultCache.exit ], [ 1, %bb.f ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !96
-  %i.p = call fastcc i32 @ACLSelectorCheckCmd(ptr noundef %i.o, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %i.a, ptr noundef %7) ; 4 uses
+  %i.p = call fastcc i32 @ACLSelectorCheckCmd(ptr noundef %i.o, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %i.a, ptr noundef %7) ; 3 uses
   %.not43 = icmp eq i32 %i.p, 0
-  br i1 %.not43, label %bb.g, label %8
+  br i1 %.not43, label %bb.g, label %cleanupACLKeyResultCache.exit
 
 bb.g:                                             ; preds = %.lr.ph
   %i.q = load i32, ptr %7, align 8
@@ -219,23 +219,11 @@ bb.g:                                             ; preds = %.lr.ph
   %or.cond49 = select i1 %.not41, i1 true, i1 %.not.i
   br i1 %or.cond49, label %cleanupACLKeyResultCache.exit46, label %cleanupACLKeyResultCache.exit46.sink.split
 
-8:                                                ; preds = %.lr.ph
-  %9 = icmp samesign ugt i32 %i.p, %.02755
-  %.pre = load i32, ptr %i.a, align 4             ; 2 uses
-  br i1 %9, label %13, label %10
-
-10:                                               ; preds = %8
-  %11 = icmp eq i32 %i.p, %.02755
-  %12 = icmp sgt i32 %.pre, %.056
-  %or.cond = select i1 %11, i1 %12, i1 false
-  br i1 %or.cond, label %13, label %cleanupACLKeyResultCache.exit
-
-13:                                               ; preds = %10, %8
-  br label %cleanupACLKeyResultCache.exit
-
-cleanupACLKeyResultCache.exit:                    ; preds = %10, %13
-  %.229 = phi i32 [ %i.p, %13 ], [ %.02755, %10 ] ; 2 uses
-  %.2 = phi i32 [ %.pre, %13 ], [ %.056, %10 ]    ; 2 uses
+cleanupACLKeyResultCache.exit:                    ; preds = %.lr.ph
+  %8 = icmp samesign ugt i32 %i.p, %.02755
+  %.pre = load i32, ptr %i.a, align 4
+  %spec.select = call i32 @llvm.umax.i32(i32 %i.p, i32 %.02755) ; 2 uses
+  %spec.select65 = select i1 %8, i32 %.pre, i32 %.056 ; 2 uses
   %i.r = call ptr @listNext(ptr noundef nonnull %6) #25 ; 2 uses
   %.not42 = icmp eq ptr %i.r, null
   br i1 %.not42, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !210
@@ -246,8 +234,8 @@ cleanupACLKeyResultCache.exit:                    ; preds = %10, %13
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.f
   %i.s = phi i32 [ %i.k, %bb.f ], [ %.pre58, %._crit_edge.loopexit ]
-  %.027.lcssa = phi i32 [ 1, %bb.f ], [ %.229, %._crit_edge.loopexit ] ; 2 uses
-  %.0.lcssa = phi i32 [ 0, %bb.f ], [ %.2, %._crit_edge.loopexit ]
+  %.027.lcssa = phi i32 [ 1, %bb.f ], [ %spec.select, %._crit_edge.loopexit ] ; 2 uses
+  %.0.lcssa = phi i32 [ 0, %bb.f ], [ %spec.select65, %._crit_edge.loopexit ]
   store i32 %.0.lcssa, ptr %5, align 4, !tbaa !22
   %.not.i45 = icmp eq i32 %i.s, 0
   %or.cond51 = select i1 %.not41, i1 true, i1 %.not.i45
@@ -648,6 +636,9 @@ declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #22

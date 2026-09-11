@@ -204,7 +204,7 @@ _ZNK4llvm17MachineMemOperand7getSizeEv.exit:      ; preds = %_ZNK4llvm12MachineI
 bb.h:                                             ; preds = %.lr.ph, %bb.y
   %.0211 = phi i16 [ %i.ae, %.lr.ph ], [ %i.gv, %bb.y ] ; 5 uses
   %.sroa.070.0210 = phi i32 [ %i.ah, %.lr.ph ], [ %.sroa.070.1, %bb.y ] ; 2 uses
-  %.0113209 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.y ] ; 6 uses
+  %.0113209 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.y ] ; 5 uses
   %.0114208 = phi i32 [ 0, %.lr.ph ], [ %.sroa.0159.0.extract.trunc163, %bb.y ] ; 3 uses
   %.0115207 = phi i32 [ 0, %.lr.ph ], [ %i.du, %bb.y ] ; 3 uses
   %.sroa.0168.0206 = phi i32 [ 0, %.lr.ph ], [ %.sroa.0168.3, %bb.y ] ; 4 uses
@@ -289,11 +289,11 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %.sroa.0168.1 = phi i32 [ %i.el, %bb.o ], [ %.sroa.0168.0206, %bb.n ] ; 10 uses
+  %.sroa.0168.1 = phi i32 [ %i.el, %bb.o ], [ %.sroa.0168.0206, %bb.n ] ; 8 uses
   %i.ep = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.0114208, i1 true)
-  %i.eq = xor i32 %i.ep, 31                       ; 7 uses
+  %i.eq = xor i32 %i.ep, 31                       ; 5 uses
   %i.er = icmp ugt i32 %.0113209, %i.eq
-  br i1 %i.er, label %bb.q, label %17
+  br i1 %i.er, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #24
@@ -323,11 +323,7 @@ bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #24
   br label %bb.s
 
-17:                                               ; preds = %bb.p
-  %18 = icmp samesign ult i32 %.0113209, %i.eq
-  br i1 %18, label %bb.r, label %bb.s
-
-bb.r:                                             ; preds = %17
+bb.r:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #24
   %.sroa.017.0.copyload = load ptr, ptr %12, align 8, !tbaa !389
   store ptr %.sroa.017.0.copyload, ptr %15, align 8, !tbaa !389
@@ -355,10 +351,10 @@ bb.r:                                             ; preds = %17
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #24
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.q, %bb.r, %17, %bb.m
-  %.sroa.0156.0 = phi i32 [ %i.eg, %bb.m ], [ %.sroa.0168.1, %17 ], [ %.sroa.0168.1, %bb.r ], [ %.sroa.0168.1, %bb.q ] ; 2 uses
-  %.sroa.0168.2 = phi i32 [ %.sroa.0168.0206, %bb.m ], [ %.sroa.0168.1, %17 ], [ %.sroa.0168.1, %bb.r ], [ %.sroa.0168.1, %bb.q ] ; 2 uses
-  %.1 = phi i32 [ %.0113209, %bb.m ], [ %i.eq, %17 ], [ %i.eq, %bb.r ], [ %i.eq, %bb.q ]
+bb.s:                                             ; preds = %bb.q, %bb.r, %bb.m
+  %.sroa.0156.0 = phi i32 [ %i.eg, %bb.m ], [ %.sroa.0168.1, %bb.q ], [ %.sroa.0168.1, %bb.r ] ; 2 uses
+  %.sroa.0168.2 = phi i32 [ %.sroa.0168.0206, %bb.m ], [ %.sroa.0168.1, %bb.q ], [ %.sroa.0168.1, %bb.r ] ; 2 uses
+  %.1 = phi i32 [ %.0113209, %bb.m ], [ %i.eq, %bb.q ], [ %i.eq, %bb.r ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #24
   %.sroa.013.0.copyload = load ptr, ptr %12, align 8, !tbaa !389
   store ptr %.sroa.013.0.copyload, ptr %16, align 8, !tbaa !389

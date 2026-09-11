@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 236
 inline.NumDeleted: 63
 loop-unroll.NumCompletelyUnrolled: 13
-loop-unroll.NumRuntimeUnrolled: 13
-loop-unroll.NumUnrolled: 27
+loop-unroll.NumRuntimeUnrolled: 14
+loop-unroll.NumUnrolled: 28
 begin_hunk_0_@_Z23dtBuildTileCacheRegionsP16dtTileCacheAllocR16dtTileCacheLayeri:bb.a
   br i1 %lcmp.mod580.not, label %._crit_edge367, label %.lr.ph366.epil.preheader
 
@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = load ptr, ptr %0, align 8, !tbaa !18
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 24
   %i.aa = load ptr, ptr %i.z, align 8
-  %i.ab = tail call noundef ptr %i.aa(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %i.x) #15, !call_target !28, !inline_history !1 ; 29 uses
+  %i.ab = tail call noundef ptr %i.aa(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %i.x) #15, !call_target !28, !inline_history !1 ; 31 uses
   %.not88 = icmp eq ptr %i.ab, null
   br i1 %.not88, label %_ZN12dtFixedArrayIhED2Ev.exit, label %bb.c
 
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 6 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
-  %i.an = getelementptr inbounds nuw i8, ptr %i.ab, i64 2 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ab, i64 2 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ab, i64 3
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
   %i.aq = fmul float %3, %3
@@ -372,7 +372,7 @@ bb.o:                                             ; preds = %bb.m
 _ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i: ; preds = %bb.o, %bb.n
   %.0.i.3.i = phi i8 [ %spec.select146.i, %bb.o ], [ %i.dd, %bb.n ]
   %.not.3.i = icmp eq i8 %.0.i.3.i, %i.cg
-  br i1 %.not.3.i, label %._crit_edge198.i.a, label %bb.t
+  br i1 %.not.3.i, label %bb.bd, label %bb.t
 
 bb.p:                                             ; preds = %bb.f
   %.not.i.i = icmp sgt i8 %i.bz, -1
@@ -772,9 +772,9 @@ bb.aw:                                            ; preds = %.thread119.i
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %.thread119.i
-  %.sroa.12.4.ph = phi i32 [ %i.jf, %.thread119.i ], [ %spec.select148, %bb.aw ] ; 6 uses
+  %.sroa.12.4.ph = phi i32 [ %i.jf, %.thread119.i ], [ %spec.select148, %bb.aw ] ; 7 uses
   %i.js = icmp sgt i32 %.sroa.12.4.ph, 0
-  br i1 %i.js, label %.lr.ph.i97, label %._crit_edge198.i.a
+  br i1 %i.js, label %.lr.ph.i97, label %bb.bd
 
 .lr.ph.i97:                                       ; preds = %bb.ax
   %i.jt = zext nneg i32 %.sroa.12.4.ph to i64     ; 2 uses
@@ -818,80 +818,97 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
 
 bb.bb:                                            ; preds = %._crit_edge.i
   %.not259.i = icmp eq i32 %.sroa.12.4.ph, 1
-  br i1 %.not259.i, label %._crit_edge198.i.a, label %.lr.ph197.preheader.i
+  br i1 %.not259.i, label %bb.bd, label %.lr.ph197.preheader.i
 
 .lr.ph197.preheader.i:                            ; preds = %bb.bb
-  %i.km = load i8, ptr %i.an, align 1, !tbaa !66
-  %i.kn = zext i8 %i.km to i32                    ; 2 uses
-  %5 = load i8, ptr %i.ab, align 1, !tbaa !66
-  %6 = zext i8 %5 to i32                          ; 2 uses
-  br label %.lr.ph197.i.a
+  %i.km = load i8, ptr %i.ab, align 1, !tbaa !66
+  %i.kn = zext i8 %i.km to i32                    ; 4 uses
+  %5 = add nsw i64 %i.jt, -1                      ; 3 uses
+  %xtraiter = and i64 %5, 1
+  %6 = icmp eq i32 %.sroa.12.4.ph, 2
+  br i1 %6, label %.lr.ph197.i.a, label %._crit_edge198.i.a
 
-._crit_edge198.i.a:                               ; preds = %bb.be, %_ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i, %bb.bb, %bb.ax
-  %.sroa.12.4.ph139 = phi i32 [ 1, %bb.bb ], [ 0, %_ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i ], [ %.sroa.12.4.ph, %bb.ax ], [ %.sroa.12.4.ph, %bb.be ]
-  %.0166.lcssa.i = phi i16 [ 0, %bb.bb ], [ 0, %_ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i ], [ 0, %bb.ax ], [ %.1167.i, %bb.be ]
-  %.0160.lcssa.i = phi i16 [ 0, %bb.bb ], [ 0, %_ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i ], [ 0, %bb.ax ], [ %.1161.i, %bb.be ]
+._crit_edge198.i.a:                               ; preds = %.lr.ph197.preheader.i
+  %unroll_iter = and i64 %5, -2
+  br label %bb.be
+
+._crit_edge198.loopexit.i.unr-lcssa:              ; preds = %bb.be
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %bb.bc, label %.lr.ph197.i.a
+
+.lr.ph197.i.a:                                    ; preds = %._crit_edge198.loopexit.i.unr-lcssa, %.lr.ph197.preheader.i
+  %indvars.iv230.i.a = phi i64 [ 1, %.lr.ph197.preheader.i ], [ %indvars.iv.next231.i.1, %._crit_edge198.loopexit.i.unr-lcssa ] ; 2 uses
+  %.0160194.i.epil.init = phi i32 [ 0, %.lr.ph197.preheader.i ], [ %.1161.i.1, %._crit_edge198.loopexit.i.unr-lcssa ]
+  %.0162193.i = phi i32 [ %i.kn, %.lr.ph197.preheader.i ], [ %.1165.i.1, %._crit_edge198.loopexit.i.unr-lcssa ]
+  %.0164192.i.a = phi i32 [ 0, %.lr.ph197.preheader.i ], [ %spec.select260.i.1, %._crit_edge198.loopexit.i.unr-lcssa ]
+  %.0170189.i.epil.init = phi i32 [ %i.kn, %.lr.ph197.preheader.i ], [ %spec.select259.i.1, %._crit_edge198.loopexit.i.unr-lcssa ]
+  %lcmp.mod231 = trunc i64 %5 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod231)
+  %i.ko = shl nuw nsw i64 %indvars.iv230.i.a, 2
+  %i.kp = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ko
+  %i.kq = load i8, ptr %i.kp, align 1, !tbaa !66
+  %i.kr = zext i8 %i.kq to i32                    ; 2 uses
+  %7 = icmp samesign ugt i32 %.0170189.i.epil.init, %i.kr
+  %8 = trunc nuw nsw i64 %indvars.iv230.i.a to i32 ; 2 uses
+  %spec.select260.i.epil = select i1 %7, i32 %8, i32 %.0164192.i.a
+  %9 = icmp samesign ult i32 %.0162193.i, %i.kr
+  %.1161.i.epil = select i1 %9, i32 %8, i32 %.0160194.i.epil.init
+  br label %bb.bc
+
+bb.bc:                                            ; preds = %._crit_edge198.loopexit.i.unr-lcssa, %.lr.ph197.i.a
+  %.1171.i = phi i32 [ %spec.select260.i.1, %._crit_edge198.loopexit.i.unr-lcssa ], [ %spec.select260.i.epil, %.lr.ph197.i.a ]
+  %.1169.i = phi i32 [ %.1161.i.1, %._crit_edge198.loopexit.i.unr-lcssa ], [ %.1161.i.epil, %.lr.ph197.i.a ]
+  %10 = trunc i32 %.1171.i to i16
+  %11 = trunc i32 %.1169.i to i16
+  br label %bb.bd
+
+bb.bd:                                            ; preds = %_ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i, %bb.bc, %bb.bb, %bb.ax
+  %.sroa.12.4.ph138 = phi i32 [ 1, %bb.bb ], [ %.sroa.12.4.ph, %bb.bc ], [ %.sroa.12.4.ph, %bb.ax ], [ 0, %_ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i ]
+  %.0166.lcssa.i = phi i16 [ 0, %bb.bb ], [ %10, %bb.bc ], [ 0, %bb.ax ], [ 0, %_ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i ]
+  %.0160.lcssa.i = phi i16 [ 0, %bb.bb ], [ %11, %bb.bc ], [ 0, %bb.ax ], [ 0, %_ZL15getNeighbourRegR16dtTileCacheLayeriii.exit.3.i ]
   store i16 %.0166.lcssa.i, ptr %i.ah, align 2, !tbaa !77
   store i16 %.0160.lcssa.i, ptr %i.ap, align 2, !tbaa !77
   br label %.lr.ph217.i
 
-.lr.ph197.i.a:                                    ; preds = %bb.be, %.lr.ph197.preheader.i
-  %indvars.iv230.i.a = phi i64 [ 1, %.lr.ph197.preheader.i ], [ %indvars.iv.next231.i.a, %bb.be ] ; 4 uses
-  %.0160194.i = phi i16 [ 0, %.lr.ph197.preheader.i ], [ %.1161.i, %bb.be ]
-  %.0162193.i = phi i32 [ %i.kn, %.lr.ph197.preheader.i ], [ %.1163.i, %bb.be ] ; 2 uses
-  %.0164192.i.a = phi i32 [ %6, %.lr.ph197.preheader.i ], [ %.1165.i.a, %bb.be ] ; 3 uses
-  %.0166191.i = phi i16 [ 0, %.lr.ph197.preheader.i ], [ %.1167.i, %bb.be ]
-  %.0168190.i = phi i32 [ %i.kn, %.lr.ph197.preheader.i ], [ %.1169.i, %bb.be ] ; 2 uses
-  %.0170189.i = phi i32 [ %6, %.lr.ph197.preheader.i ], [ %.1171.i, %bb.be ] ; 3 uses
-  %i.ko = shl nuw nsw i64 %indvars.iv230.i.a, 2
-  %i.kp = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ko ; 2 uses
-  %i.kq = load i8, ptr %i.kp, align 1, !tbaa !66
-  %i.kr = zext i8 %i.kq to i32                    ; 6 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.kp, i64 2
-  %8 = load i8, ptr %7, align 1, !tbaa !66
-  %9 = zext i8 %8 to i32                          ; 4 uses
-  %10 = icmp samesign ugt i32 %.0170189.i, %i.kr
-  br i1 %10, label %14, label %11
+bb.be:                                            ; preds = %bb.be, %._crit_edge198.i.a
+  %indvars.iv230.i = phi i64 [ 1, %._crit_edge198.i.a ], [ %indvars.iv.next231.i.1, %bb.be ] ; 4 uses
+  %.0160194.i = phi i32 [ 0, %._crit_edge198.i.a ], [ %.1161.i.1, %bb.be ]
+  %.0164192.i = phi i32 [ %i.kn, %._crit_edge198.i.a ], [ %.1165.i.1, %bb.be ] ; 2 uses
+  %.1165.i.a = phi i32 [ 0, %._crit_edge198.i.a ], [ %spec.select260.i.1, %bb.be ]
+  %.1163.i = phi i32 [ %i.kn, %._crit_edge198.i.a ], [ %spec.select259.i.1, %bb.be ] ; 2 uses
+  %niter = phi i64 [ 0, %._crit_edge198.i.a ], [ %indvars.iv.next231.i.a, %bb.be ]
+  %12 = shl nuw nsw i64 %indvars.iv230.i, 2
+  %13 = getelementptr inbounds nuw i8, ptr %i.ab, i64 %12
+  %14 = load i8, ptr %13, align 1, !tbaa !66
+  %15 = zext i8 %14 to i32                        ; 4 uses
+  %16 = icmp samesign ugt i32 %.1163.i, %15
+  %17 = trunc nuw nsw i64 %indvars.iv230.i to i32 ; 2 uses
+  %spec.select259.i = tail call i32 @llvm.umin.i32(i32 %.1163.i, i32 %15) ; 2 uses
+  %spec.select260.i = select i1 %16, i32 %17, i32 %.1165.i.a
+  %18 = icmp samesign ult i32 %.0164192.i, %15
+  %.1165.i = tail call i32 @llvm.umax.i32(i32 %.0164192.i, i32 %15) ; 2 uses
+  %.1161.i = select i1 %18, i32 %17, i32 %.0160194.i
+  %indvars.iv.next231.i = add nuw nsw i64 %indvars.iv230.i, 1 ; 2 uses
+  %19 = shl nuw nsw i64 %indvars.iv.next231.i, 2
+  %20 = getelementptr inbounds nuw i8, ptr %i.ab, i64 %19
+  %21 = load i8, ptr %20, align 1, !tbaa !66
+  %22 = zext i8 %21 to i32                        ; 4 uses
+  %23 = icmp samesign ugt i32 %spec.select259.i, %22
+  %24 = trunc nuw nsw i64 %indvars.iv.next231.i to i32 ; 2 uses
+  %spec.select259.i.1 = tail call i32 @llvm.umin.i32(i32 %spec.select259.i, i32 %22) ; 2 uses
+  %spec.select260.i.1 = select i1 %23, i32 %24, i32 %spec.select260.i ; 3 uses
+  %25 = icmp samesign ult i32 %.1165.i, %22
+  %.1165.i.1 = tail call i32 @llvm.umax.i32(i32 %.1165.i, i32 %22) ; 2 uses
+  %.1161.i.1 = select i1 %25, i32 %24, i32 %.1161.i ; 3 uses
+  %indvars.iv.next231.i.1 = add nuw nsw i64 %indvars.iv230.i, 2 ; 2 uses
+  %indvars.iv.next231.i.a = add nuw i64 %niter, 2 ; 2 uses
+  %exitcond234.not.i = icmp eq i64 %indvars.iv.next231.i.a, %unroll_iter
+  br i1 %exitcond234.not.i, label %._crit_edge198.loopexit.i.unr-lcssa, label %bb.be
 
-11:                                               ; preds = %.lr.ph197.i.a
-  %12 = icmp eq i32 %.0170189.i, %i.kr
-  %13 = icmp samesign ugt i32 %.0168190.i, %9
-  %or.cond.i99 = select i1 %12, i1 %13, i1 false
-  br i1 %or.cond.i99, label %14, label %bb.bc
-
-14:                                               ; preds = %11, %.lr.ph197.i.a
-  %15 = trunc i64 %indvars.iv230.i.a to i16
-  br label %bb.bc
-
-bb.bc:                                            ; preds = %14, %11
-  %.1171.i = phi i32 [ %i.kr, %14 ], [ %.0170189.i, %11 ]
-  %.1169.i = phi i32 [ %9, %14 ], [ %.0168190.i, %11 ]
-  %.1167.i = phi i16 [ %15, %14 ], [ %.0166191.i, %11 ] ; 2 uses
-  %16 = icmp samesign ult i32 %.0164192.i.a, %i.kr
-  br i1 %16, label %19, label %bb.bd
-
-bb.bd:                                            ; preds = %bb.bc
-  %17 = icmp eq i32 %.0164192.i.a, %i.kr
-  %18 = icmp samesign ult i32 %.0162193.i, %9
-  %or.cond182.i = select i1 %17, i1 %18, i1 false
-  br i1 %or.cond182.i, label %19, label %bb.be
-
-19:                                               ; preds = %bb.bd, %bb.bc
-  %20 = trunc i64 %indvars.iv230.i.a to i16
-  br label %bb.be
-
-bb.be:                                            ; preds = %19, %bb.bd
-  %.1165.i.a = phi i32 [ %i.kr, %19 ], [ %.0164192.i.a, %bb.bd ]
-  %.1163.i = phi i32 [ %9, %19 ], [ %.0162193.i, %bb.bd ]
-  %.1161.i = phi i16 [ %20, %19 ], [ %.0160194.i, %bb.bd ] ; 2 uses
-  %indvars.iv.next231.i.a = add nuw nsw i64 %indvars.iv230.i.a, 1 ; 2 uses
-  %exitcond234.not.i = icmp eq i64 %indvars.iv.next231.i.a, %i.jt
-  br i1 %exitcond234.not.i, label %._crit_edge198.i.a, label %.lr.ph197.i.a
-
-.lr.ph217.i:                                      ; preds = %._crit_edge198.i.a, %._crit_edge.i
-  %.sroa.12.4.ph138.a = phi i32 [ %.sroa.12.4.ph139, %._crit_edge198.i.a ], [ %.sroa.12.4.ph, %._crit_edge.i ] ; 4 uses
-  %.sroa.38.0 = phi i32 [ 2, %._crit_edge198.i.a ], [ %.sroa.38.4, %._crit_edge.i ]
-  %i.ks = phi i32 [ 2, %._crit_edge198.i.a ], [ %i.kl, %._crit_edge.i ]
+.lr.ph217.i:                                      ; preds = %bb.bd, %._crit_edge.i
+  %.sroa.12.4.ph138.a = phi i32 [ %.sroa.12.4.ph138, %bb.bd ], [ %.sroa.12.4.ph, %._crit_edge.i ] ; 4 uses
+  %.sroa.38.0 = phi i32 [ 2, %bb.bd ], [ %.sroa.38.4, %._crit_edge.i ]
+  %i.ks = phi i32 [ 2, %bb.bd ], [ %i.kl, %._crit_edge.i ]
   %i.kt = add nsw i32 %.sroa.12.4.ph138.a, -1     ; 2 uses
   br label %bb.bf
 
@@ -1292,6 +1309,12 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #9

@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %"_ZNR9hb_iter_tI13h
   %.sroa.0162.0253.i = phi ptr [ %.sroa.02.0.i.i.i60, %"_ZNK9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjE3endEv.exit.i" ], [ %.sroa.0162.2.i, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjEppEv.exit.i" ] ; 4 uses
   %.sroa.7163.0252.i = phi i32 [ %.sroa.5.sroa.0.0.i.i.i59, %"_ZNK9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjE3endEv.exit.i" ], [ %.sroa.7163.2.i, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjEppEv.exit.i" ] ; 5 uses
   %.sroa.21.0250.i = phi ptr [ %.sroa.21.1.i, %"_ZNK9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjE3endEv.exit.i" ], [ %.sroa.21.4.i, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjEppEv.exit.i" ] ; 6 uses
-  %.sroa.11184.0248.i = phi i32 [ 0, %"_ZNK9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjE3endEv.exit.i" ], [ %.sroa.11184.1.i, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjEppEv.exit.i" ] ; 6 uses
+  %.sroa.11184.0248.i = phi i32 [ 0, %"_ZNK9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjE3endEv.exit.i" ], [ %.sroa.11184.1.i, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjEppEv.exit.i" ] ; 5 uses
   %.sroa.0178.0247.i = phi i32 [ %.sink.i.i, %"_ZNK9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjE3endEv.exit.i" ], [ %.sroa.0178.3.i, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjEppEv.exit.i" ] ; 10 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq i32 %.sroa.7163.0252.i, 0
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %bb.aa, label %"_ZN9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEEMS8_KFbvERK4$_22LPv0EEMS8_FRjvEL24hb_function_sortedness_t0ELSF_0EERK4$_32LSK_0ELSF_0EEjEdeEv.exit.i", !prof !149
@@ -340,7 +340,7 @@ bb.ag:                                            ; preds = %bb.af
   %.043.i.i = phi i32 [ %i.ib, %.preheader.i.i ], [ %.sroa.0178.0247.i, %bb.ag ] ; 2 uses
   %i.hz = lshr i32 %.043.i.i, 1
   %i.ia = add i32 %.043.i.i, 8
-  %i.ib = add i32 %i.ia, %i.hz                    ; 8 uses
+  %i.ib = add i32 %i.ia, %i.hz                    ; 7 uses
   %i.ic = icmp ugt i32 %.pre289.i, %i.ib
   br i1 %i.ic, label %.preheader.i.i, label %.thread.i133.i, !llvm.loop !796
 
@@ -363,15 +363,11 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ai
   %i.if = zext nneg i32 %i.ib to i64
   %i.ig = mul nuw nsw i64 %i.if, 24
-  %i.ih = call ptr @hb_malloc(i64 noundef %i.ig) #16 ; 4 uses
+  %i.ih = call ptr @hb_malloc(i64 noundef %i.ig) #16 ; 3 uses
   %.not10.i.i.i146.i = icmp eq ptr %i.ih, null
-  br i1 %.not10.i.i.i146.i, label %_ZN11hb_vector_tI13lookup_size_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread53.i143.i, label %18, !prof !149
+  br i1 %.not10.i.i.i146.i, label %_ZN11hb_vector_tI13lookup_size_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread53.i143.i, label %bb.ak, !prof !149
 
-18:                                               ; preds = %bb.aj
-  %.not.i.i.i.i147.i = icmp eq i32 %.sroa.11184.0248.i, 0
-  br i1 %.not.i.i.i.i147.i, label %.critedge.i100.i, label %bb.ak, !prof !149
-
-bb.ak:                                            ; preds = %18
+bb.ak:                                            ; preds = %bb.aj
   %i.ii = zext i32 %.sroa.11184.0248.i to i64
   %i.ij = mul nuw nsw i64 %i.ii, 24
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ih, ptr nonnull readonly align 1 %.sroa.21.0250.i, i64 %i.ij, i1 false), !alias.scope !819
@@ -394,9 +390,9 @@ _ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i: ; preds = %_ZN11hb_vec
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) @_hb_CrapPool, ptr noundef nonnull align 16 dereferenceable(24) @_hb_NullPool, i64 24, i1 false)
   br label %_ZN11hb_vector_tI13lookup_size_tLb0EE4pushIJS0_EEEPS0_DpOT_.exit.i
 
-.critedge.i100.i:                                 ; preds = %_ZN11hb_vector_tI13lookup_size_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i136.i, %bb.ak, %18, %bb.ag, %_ZNK12hb_hashmap_tIjPN5graph6LookupELb0EE3getERKj.exit.i74
-  %.sroa.0178.2.i = phi i32 [ %.sroa.0178.0247.i, %bb.ag ], [ %i.ib, %18 ], [ %i.ib, %bb.ak ], [ %i.ib, %_ZN11hb_vector_tI13lookup_size_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i136.i ], [ %.sroa.0178.0247.i, %_ZNK12hb_hashmap_tIjPN5graph6LookupELb0EE3getERKj.exit.i74 ]
-  %.sroa.21.3.i = phi ptr [ %.sroa.21.0250.i, %bb.ag ], [ %i.ih, %18 ], [ %i.ih, %bb.ak ], [ %i.in, %_ZN11hb_vector_tI13lookup_size_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i136.i ], [ %.sroa.21.0250.i, %_ZNK12hb_hashmap_tIjPN5graph6LookupELb0EE3getERKj.exit.i74 ] ; 2 uses
+.critedge.i100.i:                                 ; preds = %_ZN11hb_vector_tI13lookup_size_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i136.i, %bb.ak, %bb.ag, %_ZNK12hb_hashmap_tIjPN5graph6LookupELb0EE3getERKj.exit.i74
+  %.sroa.0178.2.i = phi i32 [ %i.ib, %_ZN11hb_vector_tI13lookup_size_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i136.i ], [ %.sroa.0178.0247.i, %bb.ag ], [ %i.ib, %bb.ak ], [ %.sroa.0178.0247.i, %_ZNK12hb_hashmap_tIjPN5graph6LookupELb0EE3getERKj.exit.i74 ]
+  %.sroa.21.3.i = phi ptr [ %i.in, %_ZN11hb_vector_tI13lookup_size_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i136.i ], [ %.sroa.21.0250.i, %bb.ag ], [ %i.ih, %bb.ak ], [ %.sroa.21.0250.i, %_ZNK12hb_hashmap_tIjPN5graph6LookupELb0EE3getERKj.exit.i74 ] ; 2 uses
   %i.ip = zext i32 %.sroa.11184.0248.i to i64
   %i.iq = getelementptr inbounds nuw [24 x i8], ptr %.sroa.21.3.i, i64 %i.ip ; 3 uses
   store i32 %.val1.i.i.i, ptr %i.iq, align 8, !tbaa !128
@@ -799,7 +795,7 @@ _ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object
 
 _ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit: ; preds = %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i
   %.sroa.0208.1 = phi i32 [ %.sroa.0208.2, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.0208.1.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 16 uses
-  %.sroa.22.1 = phi i32 [ %.sroa.22.2, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.22.1.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 11 uses
+  %.sroa.22.1 = phi i32 [ %.sroa.22.2, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.22.1.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 10 uses
   %.sroa.42.1 = phi ptr [ %.sroa.42.2, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.42.1.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 11 uses
   %.sroa.7.0 = phi i32 [ %i.hl, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.7.0.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 3 uses
   %.sroa.0172.0 = phi ptr [ %i.hm, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.0172.0.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 5 uses
@@ -926,7 +922,7 @@ bb.am:                                            ; preds = %bb.al
   %.043.i154 = phi i32 [ %i.gf, %.preheader.i153 ], [ %.sroa.0208.1, %bb.am ] ; 2 uses
   %i.gd = lshr i32 %.043.i154, 1
   %i.ge = add i32 %.043.i154, 8
-  %i.gf = add i32 %i.ge, %i.gd                    ; 8 uses
+  %i.gf = add i32 %i.ge, %i.gd                    ; 7 uses
   %i.gg = icmp ugt i32 %i.gb, %i.gf
   br i1 %i.gg, label %.preheader.i153, label %.thread.i155, !llvm.loop !20
 
@@ -949,15 +945,11 @@ bb.ao:                                            ; preds = %bb.an
 bb.ap:                                            ; preds = %bb.ao
   %i.gj = shl nuw i32 %i.gf, 4
   %i.gk = zext i32 %i.gj to i64
-  %i.gl = tail call ptr @hb_malloc(i64 noundef %i.gk) #16 ; 4 uses
+  %i.gl = tail call ptr @hb_malloc(i64 noundef %i.gk) #16 ; 3 uses
   %.not10.i.i.i168 = icmp eq ptr %i.gl, null
-  br i1 %.not10.i.i.i168, label %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.thread53.i165, label %1, !prof !149
+  br i1 %.not10.i.i.i168, label %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.thread53.i165, label %bb.aq, !prof !149
 
-1:                                                ; preds = %bb.ap
-  %.not.i.i.i.i169 = icmp eq i32 %.sroa.22.1, 0
-  br i1 %.not.i.i.i.i169, label %_ZN11hb_vector_tI9hb_pair_tIljELb0EE4pushIJS1_EEEPS1_DpOT_.exit77.thread385, label %bb.aq, !prof !149
-
-bb.aq:                                            ; preds = %1
+bb.aq:                                            ; preds = %bb.ap
   %i.gm = zext i32 %.sroa.22.1 to i64
   %i.gn = shl nuw nsw i64 %i.gm, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.gl, ptr nonnull readonly align 1 %.sroa.42.1, i64 %i.gn, i1 false), !alias.scope !893
@@ -980,9 +972,9 @@ _ZN11hb_vector_tI9hb_pair_tIljELb0EE4pushIJS1_EEEPS1_DpOT_.exit77.thread: ; pred
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) @_hb_CrapPool, ptr noundef nonnull align 16 dereferenceable(16) @_hb_NullPool, i64 16, i1 false)
   br label %_ZN19hb_priority_queue_tIlE6insertElj.exit
 
-_ZN11hb_vector_tI9hb_pair_tIljELb0EE4pushIJS1_EEEPS1_DpOT_.exit77.thread385: ; preds = %1, %bb.aq, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i158, %bb.am
-  %.sroa.0208.9.ph = phi i32 [ %.sroa.0208.1, %bb.am ], [ %i.gf, %1 ], [ %i.gf, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i158 ], [ %i.gf, %bb.aq ]
-  %.sroa.42.9.ph = phi ptr [ %.sroa.42.1, %bb.am ], [ %i.gl, %1 ], [ %i.gr, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i158 ], [ %i.gl, %bb.aq ] ; 2 uses
+_ZN11hb_vector_tI9hb_pair_tIljELb0EE4pushIJS1_EEEPS1_DpOT_.exit77.thread385: ; preds = %bb.aq, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i158, %bb.am
+  %.sroa.0208.9.ph = phi i32 [ %.sroa.0208.1, %bb.am ], [ %i.gf, %bb.aq ], [ %i.gf, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i158 ]
+  %.sroa.42.9.ph = phi ptr [ %.sroa.42.1, %bb.am ], [ %i.gl, %bb.aq ], [ %i.gr, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i158 ] ; 2 uses
   %i.gt = zext i32 %.sroa.22.1 to i64
   %i.gu = getelementptr inbounds nuw [16 x i8], ptr %.sroa.42.9.ph, i64 %i.gt ; 2 uses
   store i64 %i.ga, ptr %i.gu, align 8, !tbaa !309
@@ -1385,7 +1377,7 @@ _ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object
 
 _ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit: ; preds = %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i
   %.sroa.0178.1 = phi i32 [ %.sroa.0178.2, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.0178.1.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 15 uses
-  %.sroa.22.1 = phi i32 [ %.sroa.22.2, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.22.1.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 12 uses
+  %.sroa.22.1 = phi i32 [ %.sroa.22.2, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.22.1.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 11 uses
   %.sroa.43.1 = phi ptr [ %.sroa.43.2, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.43.1.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 11 uses
   %.sroa.7.0 = phi i32 [ %i.go, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.7.0.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 3 uses
   %.sroa.0141.0 = phi ptr [ %i.gp, %_ZNR9hb_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEERS4_EppEv.exit.i.i ], [ %.sroa.0141.0.ph, %_ZNR9hb_iter_tI16hb_concat_iter_tI10hb_array_tIKN22hb_serialize_context_t8object_t6link_tEES6_ERS5_EppEv.exit.outer ] ; 5 uses
@@ -1464,7 +1456,7 @@ bb.ab:                                            ; preds = %bb.aa
   %.043.i123 = phi i32 [ %i.fi, %.preheader.i122 ], [ %.sroa.0178.1, %bb.ab ] ; 2 uses
   %i.fg = lshr i32 %.043.i123, 1
   %i.fh = add i32 %.043.i123, 8
-  %i.fi = add i32 %i.fh, %i.fg                    ; 8 uses
+  %i.fi = add i32 %i.fh, %i.fg                    ; 7 uses
   %i.fj = icmp ugt i32 %i.fe, %i.fi
   br i1 %i.fj, label %.preheader.i122, label %.thread.i124, !llvm.loop !20
 
@@ -1487,15 +1479,11 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad
   %i.fm = shl nuw i32 %i.fi, 4
   %i.fn = zext i32 %i.fm to i64
-  %i.fo = tail call ptr @hb_malloc(i64 noundef %i.fn) #16 ; 4 uses
+  %i.fo = tail call ptr @hb_malloc(i64 noundef %i.fn) #16 ; 3 uses
   %.not10.i.i.i137 = icmp eq ptr %i.fo, null
-  br i1 %.not10.i.i.i137, label %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.thread53.i134, label %1, !prof !149
+  br i1 %.not10.i.i.i137, label %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.thread53.i134, label %bb.af, !prof !149
 
-1:                                                ; preds = %bb.ae
-  %.not.i.i.i.i138 = icmp eq i32 %.sroa.22.1, 0
-  br i1 %.not.i.i.i.i138, label %_ZN11hb_vector_tI9hb_pair_tIljELb0EE4pushIJS1_EEEPS1_DpOT_.exit68.thread322, label %bb.af, !prof !149
-
-bb.af:                                            ; preds = %1
+bb.af:                                            ; preds = %bb.ae
   %i.fp = zext i32 %.sroa.22.1 to i64
   %i.fq = shl nuw nsw i64 %i.fp, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fo, ptr nonnull readonly align 1 %.sroa.43.1, i64 %i.fq, i1 false), !alias.scope !912
@@ -1518,9 +1506,9 @@ _ZN11hb_vector_tI9hb_pair_tIljELb0EE4pushIJS1_EEEPS1_DpOT_.exit68.thread: ; pred
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) @_hb_CrapPool, ptr noundef nonnull align 16 dereferenceable(16) @_hb_NullPool, i64 16, i1 false)
   br label %_ZN19hb_priority_queue_tIlE6insertElj.exit
 
-_ZN11hb_vector_tI9hb_pair_tIljELb0EE4pushIJS1_EEEPS1_DpOT_.exit68.thread322: ; preds = %1, %bb.af, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i127, %bb.ab
-  %.sroa.0178.7.ph = phi i32 [ %.sroa.0178.1, %bb.ab ], [ %i.fi, %1 ], [ %i.fi, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i127 ], [ %i.fi, %bb.af ]
-  %.sroa.43.7.ph = phi ptr [ %.sroa.43.1, %bb.ab ], [ %i.fo, %1 ], [ %i.fu, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i127 ], [ %i.fo, %bb.af ] ; 2 uses
+_ZN11hb_vector_tI9hb_pair_tIljELb0EE4pushIJS1_EEEPS1_DpOT_.exit68.thread322: ; preds = %bb.af, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i127, %bb.ab
+  %.sroa.0178.7.ph = phi i32 [ %.sroa.0178.1, %bb.ab ], [ %i.fi, %bb.af ], [ %i.fi, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i127 ]
+  %.sroa.43.7.ph = phi ptr [ %.sroa.43.1, %bb.ab ], [ %i.fo, %bb.af ], [ %i.fu, %_ZN11hb_vector_tI9hb_pair_tIljELb0EE14realloc_vectorIS1_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS1_j11hb_priorityILj0EE.exit.i127 ] ; 2 uses
   %i.fw = zext i32 %.sroa.22.1 to i64
   %i.fx = getelementptr inbounds nuw [16 x i8], ptr %.sroa.43.7.ph, i64 %i.fw ; 2 uses
   store i64 %i.fa, ptr %i.fx, align 8, !tbaa !309
@@ -1923,7 +1911,7 @@ _ZNK5graph20LigatureSubstFormat127ligature_index_to_object_idILNS_7graph_t19vert
   %.124195 = phi i32 [ %i.g, %.lr.ph.preheader ], [ %.3, %bb.ad ] ; 2 uses
   %.1194 = phi i32 [ %.0113205, %.lr.ph.preheader ], [ %.2, %bb.ad ] ; 3 uses
   %.sroa.16.1193 = phi ptr [ %.sroa.16.0204, %.lr.ph.preheader ], [ %.sroa.16.3, %bb.ad ] ; 8 uses
-  %.sroa.10.1191 = phi i32 [ %.sroa.10.0203, %.lr.ph.preheader ], [ %.sroa.10.3, %bb.ad ] ; 8 uses
+  %.sroa.10.1191 = phi i32 [ %.sroa.10.0203, %.lr.ph.preheader ], [ %.sroa.10.3, %bb.ad ] ; 7 uses
   %.sroa.093.1190 = phi i32 [ %.sroa.093.0202, %.lr.ph.preheader ], [ %.sroa.093.3, %bb.ad ] ; 12 uses
   %.not.i32 = icmp samesign ult i64 %indvars.iv, %i.cm
   br i1 %.not.i32, label %bb.r, label %bb.q, !prof !131
@@ -1976,7 +1964,7 @@ _ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit: ; preds = %bb.t, %bb.u
 
 bb.v:                                             ; preds = %_ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit
   %.not.i36 = icmp slt i32 %.sroa.10.1191, %.sroa.093.1190
-  %.pre = add i32 %.sroa.10.1191, 1               ; 6 uses
+  %.pre = add i32 %.sroa.10.1191, 1               ; 3 uses
   br i1 %.not.i36, label %.critedge.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -1991,7 +1979,7 @@ bb.x:                                             ; preds = %bb.w
   %.043.i = phi i32 [ %i.dk, %.preheader.i44 ], [ %.sroa.093.1190, %bb.x ] ; 2 uses
   %i.di = lshr i32 %.043.i, 1
   %i.dj = add i32 %.043.i, 8
-  %i.dk = add i32 %i.dj, %i.di                    ; 8 uses
+  %i.dk = add i32 %i.dj, %i.di                    ; 7 uses
   %i.dl = icmp ugt i32 %.pre, %i.dk
   br i1 %i.dl, label %.preheader.i44, label %.thread.i45, !llvm.loop !12
 
@@ -2014,15 +2002,11 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.do = shl nuw i32 %i.dk, 2
   %i.dp = zext i32 %i.do to i64
-  %i.dq = tail call ptr @hb_malloc(i64 noundef %i.dp) #16 ; 4 uses
+  %i.dq = tail call ptr @hb_malloc(i64 noundef %i.dp) #16 ; 3 uses
   %.not10.i.i.i58 = icmp eq ptr %i.dq, null
-  br i1 %.not10.i.i.i58, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread53.i55, label %4, !prof !149
+  br i1 %.not10.i.i.i58, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread53.i55, label %bb.ab, !prof !149
 
-4:                                                ; preds = %bb.aa
-  %.not.i.i.i.i59 = icmp eq i32 %.sroa.10.1191, 0
-  br i1 %.not.i.i.i.i59, label %.critedge.i, label %bb.ab, !prof !149
-
-bb.ab:                                            ; preds = %4
+bb.ab:                                            ; preds = %bb.aa
   %i.dr = zext i32 %.sroa.10.1191 to i64
   %i.ds = shl nuw nsw i64 %i.dr, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dq, ptr nonnull readonly align 1 %.sroa.16.1193, i64 %i.ds, i1 false), !alias.scope !1867
@@ -2045,10 +2029,9 @@ _ZN11hb_vector_tIjLb0EE5allocEjb.exit61:          ; preds = %bb.w, %_ZN11hb_vect
   store i32 %i.f, ptr @_hb_CrapPool, align 16
   br label %_ZN11hb_vector_tIjLb0EE4pushIJRjEEEPjDpOT_.exit
 
-.critedge.i:                                      ; preds = %bb.v, %4, %bb.ab, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i48, %bb.x
-  %.pre-phi = phi i32 [ %.pre, %bb.x ], [ 1, %4 ], [ %.pre, %bb.ab ], [ %.pre, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i48 ], [ %.pre, %bb.v ]
-  %.sroa.093.8 = phi i32 [ %.sroa.093.1190, %bb.x ], [ %i.dk, %4 ], [ %i.dk, %bb.ab ], [ %i.dk, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i48 ], [ %.sroa.093.1190, %bb.v ]
-  %.sroa.16.8 = phi ptr [ %.sroa.16.1193, %bb.x ], [ %i.dq, %4 ], [ %i.dq, %bb.ab ], [ %i.dw, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i48 ], [ %.sroa.16.1193, %bb.v ] ; 2 uses
+.critedge.i:                                      ; preds = %bb.v, %bb.ab, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i48, %bb.x
+  %.sroa.093.8 = phi i32 [ %i.dk, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i48 ], [ %.sroa.093.1190, %bb.x ], [ %i.dk, %bb.ab ], [ %.sroa.093.1190, %bb.v ]
+  %.sroa.16.8 = phi ptr [ %i.dw, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i48 ], [ %.sroa.16.1193, %bb.x ], [ %i.dq, %bb.ab ], [ %.sroa.16.1193, %bb.v ] ; 2 uses
   %i.dy = zext i32 %.sroa.10.1191 to i64
   %i.dz = getelementptr inbounds nuw [4 x i8], ptr %.sroa.16.8, i64 %i.dy
   store i32 %.1194, ptr %i.dz, align 4, !tbaa !128
@@ -2056,7 +2039,7 @@ _ZN11hb_vector_tIjLb0EE5allocEjb.exit61:          ; preds = %bb.w, %_ZN11hb_vect
 
 _ZN11hb_vector_tIjLb0EE4pushIJRjEEEPjDpOT_.exit:  ; preds = %_ZN11hb_vector_tIjLb0EE5allocEjb.exit61, %.critedge.i
   %.sroa.093.9 = phi i32 [ %.sroa.093.8, %.critedge.i ], [ %.sroa.093.10, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit61 ]
-  %.sroa.10.7 = phi i32 [ %.pre-phi, %.critedge.i ], [ %.sroa.10.1191, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit61 ]
+  %.sroa.10.7 = phi i32 [ %.pre, %.critedge.i ], [ %.sroa.10.1191, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit61 ]
   %.sroa.16.9 = phi ptr [ %.sroa.16.8, %.critedge.i ], [ %.sroa.16.1193, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit61 ]
   %i.ea = add i32 %i.dd, 12
   br label %bb.ac
@@ -2459,7 +2442,7 @@ _ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EED2Ev.exit: ; pre
 bb.g:                                             ; preds = %.lr.ph, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE4pushIJRKS2_EEEPS2_DpOT_.exit
   %.071 = phi ptr [ %i.p, %.lr.ph ], [ %i.bz, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE4pushIJRKS2_EEEPS2_DpOT_.exit ] ; 4 uses
   %.sroa.17.070 = phi ptr [ null, %.lr.ph ], [ %.sroa.17.1, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE4pushIJRKS2_EEEPS2_DpOT_.exit ] ; 7 uses
-  %.sroa.10.069 = phi i32 [ 0, %.lr.ph ], [ %.sroa.10.1, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE4pushIJRKS2_EEEPS2_DpOT_.exit ] ; 7 uses
+  %.sroa.10.069 = phi i32 [ 0, %.lr.ph ], [ %.sroa.10.1, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE4pushIJRKS2_EEEPS2_DpOT_.exit ] ; 6 uses
   %.sroa.0.068 = phi i32 [ 0, %.lr.ph ], [ %.sroa.0.1, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE4pushIJRKS2_EEEPS2_DpOT_.exit ] ; 11 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.071, i64 4
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !300 ; 3 uses
@@ -2470,7 +2453,7 @@ bb.g:                                             ; preds = %.lr.ph, %_ZN11hb_ve
 
 bb.h:                                             ; preds = %bb.g
   %.not.i36 = icmp slt i32 %.sroa.10.069, %.sroa.0.068
-  %.pre77 = add i32 %.sroa.10.069, 1              ; 6 uses
+  %.pre77 = add i32 %.sroa.10.069, 1              ; 3 uses
   br i1 %.not.i36, label %.critedge.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -2485,7 +2468,7 @@ bb.j:                                             ; preds = %bb.i
   %.043.i = phi i32 [ %i.ai, %.preheader.i ], [ %.sroa.0.068, %bb.j ] ; 2 uses
   %i.ag = lshr i32 %.043.i, 1
   %i.ah = add i32 %.043.i, 8
-  %i.ai = add i32 %i.ah, %i.ag                    ; 8 uses
+  %i.ai = add i32 %i.ah, %i.ag                    ; 7 uses
   %i.aj = icmp ugt i32 %.pre77, %i.ai
   br i1 %i.aj, label %.preheader.i, label %.thread.i, !llvm.loop !14
 
@@ -2508,15 +2491,11 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.am = zext nneg i32 %i.ai to i64
   %i.an = mul nuw nsw i64 %i.am, 12
-  %i.ao = tail call ptr @hb_malloc(i64 noundef %i.an) #16 ; 4 uses
+  %i.ao = tail call ptr @hb_malloc(i64 noundef %i.an) #16 ; 3 uses
   %.not10.i.i.i = icmp eq ptr %i.ao, null
-  br i1 %.not10.i.i.i, label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i, label %6, !prof !149
+  br i1 %.not10.i.i.i, label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i, label %bb.n, !prof !149
 
-6:                                                ; preds = %bb.m
-  %.not.i.i.i.i = icmp eq i32 %.sroa.10.069, 0
-  br i1 %.not.i.i.i.i, label %.critedge.i, label %bb.n, !prof !149
-
-bb.n:                                             ; preds = %6
+bb.n:                                             ; preds = %bb.m
   %i.ap = zext i32 %.sroa.10.069 to i64
   %i.aq = mul nuw nsw i64 %i.ap, 12
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ao, ptr nonnull readonly align 1 %.sroa.17.070, i64 %i.aq, i1 false), !alias.scope !1899
@@ -2539,10 +2518,9 @@ _ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5allocEjb.exit: 
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(12) @_hb_CrapPool, ptr noundef nonnull align 16 dereferenceable(12) @_hb_NullPool, i64 12, i1 false)
   br label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE4pushIJRKS2_EEEPS2_DpOT_.exit
 
-.critedge.i:                                      ; preds = %bb.h, %6, %bb.n, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i, %bb.j
-  %.pre-phi = phi i32 [ %.pre77, %bb.j ], [ 1, %6 ], [ %.pre77, %bb.n ], [ %.pre77, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i ], [ %.pre77, %bb.h ]
-  %.sroa.0.2 = phi i32 [ %.sroa.0.068, %bb.j ], [ %i.ai, %6 ], [ %i.ai, %bb.n ], [ %i.ai, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i ], [ %.sroa.0.068, %bb.h ]
-  %.sroa.17.2 = phi ptr [ %.sroa.17.070, %bb.j ], [ %i.ao, %6 ], [ %i.ao, %bb.n ], [ %i.au, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i ], [ %.sroa.17.070, %bb.h ] ; 2 uses
+.critedge.i:                                      ; preds = %bb.h, %bb.n, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i, %bb.j
+  %.sroa.0.2 = phi i32 [ %i.ai, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i ], [ %.sroa.0.068, %bb.j ], [ %i.ai, %bb.n ], [ %.sroa.0.068, %bb.h ]
+  %.sroa.17.2 = phi ptr [ %i.au, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i ], [ %.sroa.17.070, %bb.j ], [ %i.ao, %bb.n ], [ %.sroa.17.070, %bb.h ] ; 2 uses
   %i.aw = zext i32 %.sroa.10.069 to i64
   %i.ax = getelementptr inbounds nuw [12 x i8], ptr %.sroa.17.2, i64 %i.aw
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ax, ptr noundef nonnull align 4 dereferenceable(12) %.071, i64 12, i1 false), !tbaa.struct !297
@@ -2623,7 +2601,7 @@ _ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit41: ; preds = %bb.v, %bb
 
 _ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE4pushIJRKS2_EEEPS2_DpOT_.exit: ; preds = %.critedge.i, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5allocEjb.exit, %_ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit41
   %.sroa.0.1 = phi i32 [ %.sroa.0.068, %_ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit41 ], [ %.sroa.0.2, %.critedge.i ], [ %.sroa.0.4, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5allocEjb.exit ] ; 2 uses
-  %.sroa.10.1 = phi i32 [ %.sroa.10.069, %_ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit41 ], [ %.pre-phi, %.critedge.i ], [ %.sroa.10.069, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5allocEjb.exit ] ; 2 uses
+  %.sroa.10.1 = phi i32 [ %.sroa.10.069, %_ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit41 ], [ %.pre77, %.critedge.i ], [ %.sroa.10.069, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5allocEjb.exit ] ; 2 uses
   %.sroa.17.1 = phi ptr [ %.sroa.17.070, %_ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit41 ], [ %.sroa.17.2, %.critedge.i ], [ %.sroa.17.070, %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5allocEjb.exit ] ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.071, i64 12 ; 2 uses
   %.not = icmp eq ptr %i.bz, %i.t

@@ -202,9 +202,15 @@ bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8              ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 256 ; 2 uses
-  %.val79 = load i32, ptr %i.n, align 1           ; 2 uses
+  %.val79 = load i32, ptr %i.n, align 1           ; 4 uses
   %.not70 = icmp eq i32 %.val79, 0
-  br i1 %.not70, label %bb.f, label %.lr.ph.a
+  br i1 %.not70, label %bb.f, label %.lr.ph.preheader.preheader
+
+.lr.ph.preheader.preheader:                       ; preds = %bb.e
+  %5 = lshr i32 %.val79, 20                       ; 2 uses
+  %6 = and i32 %5, 4092                           ; 2 uses
+  %.not7597 = icmp eq i32 %6, 0
+  br i1 %.not7597, label %pcie_ext_cap_set_next.exit, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %.not71 = icmp eq i16 %3, 256
@@ -218,32 +224,35 @@ bb.g:                                             ; preds = %bb.f
   store i32 %i.r, ptr %i.n, align 1
   br label %bb.i
 
-.lr.ph.a:                                         ; preds = %bb.e, %bb.h
-  %.05888 = phi i32 [ %.val, %bb.h ], [ %.val79, %bb.e ] ; 2 uses
-  %.06187 = phi i16 [ %6, %bb.h ], [ 256, %bb.e ] ; 2 uses
-  %i.s = lshr i32 %.05888, 20                     ; 2 uses
-  %5 = trunc nuw nsw i32 %i.s to i16
-  %6 = and i16 %5, 4092                           ; 2 uses
-  %.not74 = icmp ult i16 %.06187, %3
-  br i1 %.not74, label %7, label %.critedge78
+.lr.ph.a:                                         ; preds = %bb.h
+  %i.s = lshr i32 %.val, 20                       ; 2 uses
+  %7 = and i32 %i.s, 4092                         ; 2 uses
+  %.not75 = icmp eq i32 %7, 0
+  br i1 %.not75, label %pcie_ext_cap_set_next.exit, label %bb.h, !llvm.loop !12
 
-7:                                                ; preds = %.lr.ph.a
-  %8 = and i32 %i.s, 4092                         ; 2 uses
-  %.not75 = icmp eq i32 %8, 0
-  br i1 %.not75, label %pcie_ext_cap_set_next.exit, label %bb.h
-
-bb.h:                                             ; preds = %7
+bb.h:                                             ; preds = %.lr.ph.preheader.preheader, %.lr.ph.a
+  %8 = phi i32 [ %7, %.lr.ph.a ], [ %6, %.lr.ph.preheader.preheader ]
+  %9 = phi i32 [ %i.s, %.lr.ph.a ], [ %5, %.lr.ph.preheader.preheader ]
+  %.0618799 = phi i16 [ %11, %.lr.ph.a ], [ 256, %.lr.ph.preheader.preheader ]
+  %.0588898 = phi i32 [ %.val, %.lr.ph.a ], [ %.val79, %.lr.ph.preheader.preheader ]
+  %10 = trunc nuw nsw i32 %9 to i16
+  %11 = and i16 %10, 4092                         ; 3 uses
   %i.t = zext nneg i32 %8 to i64
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.t
-  %.val = load i32, ptr %i.u, align 1             ; 2 uses
+  %.val = load i32, ptr %i.u, align 1             ; 4 uses
   %i.v = icmp eq i32 %.val, 0
-  %i.w = add nsw i16 %6, -1
+  %i.w = add nsw i16 %11, -1
   %i.x = icmp uge i16 %i.w, %3
   %or.cond76 = select i1 %i.v, i1 true, i1 %i.x
-  br i1 %or.cond76, label %pcie_ext_cap_set_next.exit, label %.lr.ph.a, !llvm.loop !12
+  br i1 %or.cond76, label %.pcie_ext_cap_set_next.exit_crit_edge, label %.lr.ph.a, !llvm.loop !12
 
-pcie_ext_cap_set_next.exit:                       ; preds = %7, %bb.h
-  %i.y = and i32 %.05888, -4194304
+.pcie_ext_cap_set_next.exit_crit_edge:            ; preds = %bb.h
+  br label %pcie_ext_cap_set_next.exit, !llvm.loop !12
+
+pcie_ext_cap_set_next.exit:                       ; preds = %.lr.ph.a, %.pcie_ext_cap_set_next.exit_crit_edge, %.lr.ph.preheader.preheader
+  %.05888.lcssa = phi i32 [ %.val79, %.lr.ph.preheader.preheader ], [ %.0588898, %.pcie_ext_cap_set_next.exit_crit_edge ], [ %.val, %.lr.ph.a ]
+  %.06187.lcssa = phi i16 [ 256, %.lr.ph.preheader.preheader ], [ %.0618799, %.pcie_ext_cap_set_next.exit_crit_edge ], [ %11, %.lr.ph.a ]
+  %i.y = and i32 %.05888.lcssa, -4194304
   %i.z = zext nneg i16 %3 to i64                  ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.z
   %i.ab = zext i16 %1 to i32
@@ -253,7 +262,7 @@ pcie_ext_cap_set_next.exit:                       ; preds = %7, %bb.h
   %i.af = or i32 %i.y, %i.ae
   store i32 %i.af, ptr %i.aa, align 1
   %.val81 = load ptr, ptr %i.l, align 8
-  %i.ag = zext nneg i16 %.06187 to i64
+  %i.ag = zext nneg i16 %.06187.lcssa to i64
   %i.ah = getelementptr inbounds nuw i8, ptr %.val81, i64 %i.ag ; 2 uses
   %.val.i = load i32, ptr %i.ah, align 1
   %i.ai = and i32 %.val.i, 4194303
@@ -279,8 +288,8 @@ bb.i:                                             ; preds = %pcie_ext_cap_set_ne
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.au, i8 noundef -1, i64 noundef range(i64 0, 65536) %i.ao, i1 noundef false) #12
   br label %.critedge78
 
-.critedge78:                                      ; preds = %.lr.ph.a, %bb.f, %bb.c, %bb.d, %bb.i
-  %.2 = phi i1 [ false, %bb.c ], [ false, %bb.f ], [ true, %bb.i ], [ false, %bb.d ], [ false, %.lr.ph.a ]
+.critedge78:                                      ; preds = %bb.f, %bb.c, %bb.d, %bb.i
+  %.2 = phi i1 [ false, %bb.c ], [ false, %bb.f ], [ true, %bb.i ], [ false, %bb.d ]
   ret i1 %.2
 }
 

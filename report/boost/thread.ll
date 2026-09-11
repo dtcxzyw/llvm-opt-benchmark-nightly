@@ -202,37 +202,28 @@ bb.al:                                            ; preds = %_ZSteqIcSt11char_tr
   %i.fa = load ptr, ptr %7, align 8, !tbaa !36    ; 2 uses
   %i.fb = load i8, ptr %i.fa, align 1, !tbaa !37  ; 2 uses
   %.not32.i = icmp eq i8 %i.fb, 0
-  br i1 %.not32.i, label %_ZN5boost13thread_detail18string_to_unsignedERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERj.exit, label %.lr.ph.i
+  br i1 %.not32.i, label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt2, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.al, %bb.am
-  %i.fc = phi i8 [ %i.fk, %bb.am ], [ %i.fb, %bb.al ] ; 3 uses
+  %i.fc = phi i8 [ %i.fk, %bb.am ], [ %i.fb, %bb.al ] ; 2 uses
   %.02133.i = phi ptr [ %i.fj, %bb.am ], [ %i.fa, %bb.al ]
-  %i.fd = phi i32 [ %i.fi, %bb.am ], [ 0, %bb.al ] ; 3 uses
-  %10 = zext nneg i8 %i.fc to i32
+  %i.fd = phi i32 [ %i.fi, %bb.am ], [ 0, %bb.al ] ; 2 uses
   %i.fe = add i8 %i.fc, -58
   %or.cond.i = icmp ult i8 %i.fe, -10
-  %i.ff = icmp ugt i32 %i.fd, 429496729
+  %i.ff = icmp ugt i32 %i.fd, 429496728
   %or.cond40.i = select i1 %or.cond.i, i1 true, i1 %i.ff
-  br i1 %or.cond40.i, label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1, label %11
+  br i1 %or.cond40.i, label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1, label %bb.am
 
-11:                                               ; preds = %.lr.ph.i
-  %12 = icmp ne i32 %i.fd, 429496729
-  %13 = icmp samesign ult i8 %i.fc, 54
-  %or.cond4.not.i = or i1 %13, %12
-  br i1 %or.cond4.not.i, label %bb.am, label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1
-
-bb.am:                                            ; preds = %11
+bb.am:                                            ; preds = %.lr.ph.i
+  %10 = zext nneg i8 %i.fc to i32
   %i.fg = add nsw i32 %10, -48
   %i.fh = mul nuw i32 %i.fd, 10
-  %i.fi = add i32 %i.fg, %i.fh                    ; 2 uses
+  %i.fi = add nuw i32 %i.fg, %i.fh                ; 2 uses
   store i32 %i.fi, ptr %4, align 4, !tbaa !71
   %i.fj = getelementptr inbounds nuw i8, ptr %.02133.i, i64 1 ; 2 uses
   %i.fk = load i8, ptr %i.fj, align 1, !tbaa !37  ; 2 uses
   %.not.i51 = icmp eq i8 %i.fk, 0
-  br i1 %.not.i51, label %_ZN5boost13thread_detail18string_to_unsignedERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERj.exit, label %.lr.ph.i, !llvm.loop !223
-
-_ZN5boost13thread_detail18string_to_unsignedERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERj.exit: ; preds = %bb.am, %bb.al
-  br label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt2, !llvm.loop !210
+  br i1 %.not.i51, label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt2, label %.lr.ph.i, !llvm.loop !223
 
 bb.an:                                            ; preds = %.noexc10.i.i
   %i.fl = landingpad { ptr, i32 }
@@ -313,26 +304,20 @@ bb.as:                                            ; preds = %_ZSteqIcSt11char_tr
   br i1 %.not32.i54, label %_ZN5boost13thread_detail18string_to_unsignedERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERj.exit62, label %.lr.ph.i55
 
 .lr.ph.i55:                                       ; preds = %bb.as, %bb.at
-  %i.fx = phi i8 [ %i.gf, %bb.at ], [ %i.fw, %bb.as ] ; 3 uses
+  %i.fx = phi i8 [ %i.gf, %bb.at ], [ %i.fw, %bb.as ] ; 2 uses
   %.02133.i56 = phi ptr [ %i.ge, %bb.at ], [ %i.fv, %bb.as ]
-  %i.fy = phi i32 [ %i.gd, %bb.at ], [ 0, %bb.as ] ; 3 uses
-  %14 = zext nneg i8 %i.fx to i32
+  %i.fy = phi i32 [ %i.gd, %bb.at ], [ 0, %bb.as ] ; 2 uses
   %i.fz = add i8 %i.fx, -58
   %or.cond.i57 = icmp ult i8 %i.fz, -10
-  %i.ga = icmp ugt i32 %i.fy, 429496729
+  %i.ga = icmp ugt i32 %i.fy, 429496728
   %or.cond40.i58 = select i1 %or.cond.i57, i1 true, i1 %i.ga
-  br i1 %or.cond40.i58, label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1, label %15
+  br i1 %or.cond40.i58, label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1, label %bb.at
 
-15:                                               ; preds = %.lr.ph.i55
-  %16 = icmp ne i32 %i.fy, 429496729
-  %17 = icmp samesign ult i8 %i.fx, 54
-  %or.cond4.not.i59 = or i1 %17, %16
-  br i1 %or.cond4.not.i59, label %bb.at, label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1
-
-bb.at:                                            ; preds = %15
-  %i.gb = add nsw i32 %14, -48
+bb.at:                                            ; preds = %.lr.ph.i55
+  %11 = zext nneg i8 %i.fx to i32
+  %i.gb = add nsw i32 %11, -48
   %i.gc = mul nuw i32 %i.fy, 10
-  %i.gd = add i32 %i.gb, %i.gc                    ; 2 uses
+  %i.gd = add nuw i32 %i.gb, %i.gc                ; 2 uses
   store i32 %i.gd, ptr %i.p, align 4, !tbaa !71
   %i.ge = getelementptr inbounds nuw i8, ptr %.02133.i56, i64 1 ; 2 uses
   %i.gf = load i8, ptr %i.ge, align 1, !tbaa !37  ; 2 uses
@@ -343,7 +328,7 @@ _ZN5boost13thread_detail18string_to_unsignedERKNSt7__cxx1112basic_stringIcSt11ch
   %i.gg = invoke { ptr, i8 } @_ZNSt8_Rb_treeISt4pairIjjES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE16_M_insert_uniqueIRKS1_EES0_ISt17_Rb_tree_iteratorIS1_EbEOT_(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 4 dereferenceable(8) %4)
           to label %_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt2 unwind label %bb.aq ; 0 uses
 
-_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit53.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %15, %.lr.ph.i55, %11, %.lr.ph.i
+_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit53.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %.lr.ph.i55, %.lr.ph.i
   %i.gh = call i64 @sysconf(i32 noundef 84) #31
   %i.gi = trunc i64 %i.gh to i32
   %i.gj = call noundef range(i32 0, -2147483648) i32 @llvm.smax.i32(i32 %i.gi, i32 0)
@@ -351,7 +336,7 @@ _ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt1: ; preds = %_ZSt
   %i.gl = icmp eq ptr %i.gk, %i.u
   br i1 %i.gl, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66.jt1, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i64.jt1
 
-_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt2: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread95, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit53, %_ZN5boost13thread_detail18string_to_unsignedERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERj.exit, %_ZN5boost13thread_detail18string_to_unsignedERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERj.exit62
+_ZNSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE6insertERKS1_.exit.jt2: ; preds = %bb.am, %bb.al, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit53, %_ZN5boost13thread_detail18string_to_unsignedERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERj.exit62, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread95
   %i.gm = load ptr, ptr %7, align 8, !tbaa !36    ; 2 uses
   %i.gn = icmp eq ptr %i.gm, %i.u
   br i1 %i.gn, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66.jt2, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i64.jt2

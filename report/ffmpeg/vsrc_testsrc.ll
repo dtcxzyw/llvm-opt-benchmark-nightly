@@ -205,47 +205,36 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 
 .lr.ph199:                                        ; preds = %.lr.ph199.preheader, %bb.f
   %.0143197 = phi i32 [ %.1, %bb.f ], [ 0, %.lr.ph199.preheader ]
-  %.0144196 = phi i32 [ %.2, %bb.f ], [ %i.bk, %.lr.ph199.preheader ] ; 13 uses
+  %.0144196 = phi i32 [ %.2, %bb.f ], [ %i.bk, %.lr.ph199.preheader ] ; 12 uses
   %.1158195 = phi i32 [ %i.cj, %bb.f ], [ 0, %.lr.ph199.preheader ]
   %.1162193 = phi ptr [ %i.cb, %bb.f ], [ %i.ax, %.lr.ph199.preheader ] ; 5 uses
-  %2 = icmp sgt i32 %.0144196, 255
-  %3 = add i32 %.0144196, -1280
-  %or.cond = icmp ult i32 %3, -1024
-  br i1 %or.cond, label %11, label %4
+  %2 = add i32 %.0144196, -1280
+  %or.cond = icmp ult i32 %2, -1024
+  %3 = and i32 %.0144196, 1536
+  %or.cond3 = icmp eq i32 %3, 512
+  %4 = trunc i32 %.0144196 to i8
+  %spec.select228 = select i1 %or.cond3, i8 0, i8 %4
+  %5 = select i1 %or.cond, i8 -1, i8 %spec.select228
+  %6 = getelementptr inbounds nuw i8, ptr %.1162193, i64 1 ; 2 uses
+  store i8 %5, ptr %.1162193, align 1, !tbaa !61
+  %7 = icmp sgt i32 %.0144196, 1023
+  br i1 %7, label %.thread, label %bb.c
 
-4:                                                ; preds = %.lr.ph199
-  %5 = and i32 %.0144196, 1536
-  %or.cond3 = icmp eq i32 %5, 512
-  br i1 %or.cond3, label %11, label %6
-
-6:                                                ; preds = %4
-  %7 = icmp samesign ult i32 %.0144196, 512
-  %8 = sext i1 %7 to i32
-  %9 = xor i32 %.0144196, %8
-  %10 = trunc i32 %9 to i8
-  br label %11
-
-11:                                               ; preds = %6, %4, %.lr.ph199
-  %12 = phi i8 [ -1, %.lr.ph199 ], [ %10, %6 ], [ 0, %4 ]
-  %13 = getelementptr inbounds nuw i8, ptr %.1162193, i64 1 ; 2 uses
-  store i8 %12, ptr %.1162193, align 1, !tbaa !61
-  %14 = icmp sgt i32 %.0144196, 1023
-  br i1 %14, label %.thread, label %bb.c
-
-.thread:                                          ; preds = %11
+.thread:                                          ; preds = %.lr.ph199
   %i.bl = getelementptr inbounds nuw i8, ptr %.1162193, i64 2
-  store i8 0, ptr %13, align 1, !tbaa !61
+  store i8 0, ptr %6, align 1, !tbaa !61
   br label %bb.d
 
-bb.c:                                             ; preds = %11
+bb.c:                                             ; preds = %.lr.ph199
+  %8 = icmp sgt i32 %.0144196, 255
   %i.bm = add i32 %.0144196, -256
   %or.cond5 = icmp ult i32 %i.bm, 512
-  %i.bn = sext i1 %2 to i32
+  %i.bn = sext i1 %8 to i32
   %i.bo = xor i32 %.0144196, %i.bn
   %i.bp = trunc i32 %i.bo to i8
   %i.bq = select i1 %or.cond5, i8 -1, i8 %i.bp
   %i.br = getelementptr inbounds nuw i8, ptr %.1162193, i64 2 ; 2 uses
-  store i8 %i.bq, ptr %13, align 1, !tbaa !61
+  store i8 %i.bq, ptr %6, align 1, !tbaa !61
   %i.bs = icmp slt i32 %.0144196, 512
   br i1 %i.bs, label %bb.f, label %bb.d
 

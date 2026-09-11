@@ -202,7 +202,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !27
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call noundef i64 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %1) ; 5 uses
+  %i.d = tail call noundef i64 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %1) ; 3 uses
   %.not126 = icmp eq i64 %i.d, 0
   br i1 %.not126, label %_ZNSt6vectorImSaImEED2Ev.exit, label %.lr.ph
 
@@ -370,8 +370,8 @@ bb.o:                                             ; preds = %bb.m, %.lr.ph119
   br i1 %i.bd, label %.lr.ph123, label %._crit_edge124
 
 ._crit_edge124:                                   ; preds = %.loopexit99, %.loopexit100
-  %.055.lcssa = phi i64 [ %i.ay, %.loopexit100 ], [ %i.bh, %.loopexit99 ] ; 3 uses
-  %i.be = add i64 %i.d, -1
+  %.055.lcssa = phi i64 [ %i.ay, %.loopexit100 ], [ %i.bh, %.loopexit99 ] ; 4 uses
+  %i.be = add i64 %i.d, -1                        ; 3 uses
   %i.bf = icmp ult i64 %.055.lcssa, %i.be
   br i1 %i.bf, label %bb.x, label %.loopexit
 
@@ -464,14 +464,12 @@ bb.x:                                             ; preds = %._crit_edge124
 bb.y:                                             ; preds = %bb.x
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 16
   %i.cs = load double, ptr %i.cr, align 8, !tbaa !81
-  %.0164 = add nuw i64 %.055.lcssa, 1             ; 2 uses
-  %3 = icmp ult i64 %.0164, %i.d
-  br i1 %3, label %.lr.ph167, label %.loopexit
+  %exitcond134.not167 = icmp eq i64 %.055.lcssa, %i.be
+  br i1 %exitcond134.not167, label %.loopexit, label %.lr.ph167
 
 bb.z:                                             ; preds = %bb.ab
-  %.0 = add nuw i64 %.0165, 1                     ; 2 uses
-  %4 = icmp ult i64 %.0, %i.d
-  br i1 %4, label %.lr.ph167, label %.loopexit, !llvm.loop !80
+  %exitcond134.not = icmp eq i64 %.0168, %i.be
+  br i1 %exitcond134.not, label %.loopexit, label %.lr.ph167, !llvm.loop !80
 
 bb.aa:                                            ; preds = %bb.x
   %i.ct = landingpad { ptr, i32 }
@@ -479,11 +477,12 @@ bb.aa:                                            ; preds = %bb.x
   br label %bb.af
 
 .lr.ph167:                                        ; preds = %bb.y, %bb.z
-  %.0165 = phi i64 [ %.0, %bb.z ], [ %.0164, %bb.y ] ; 3 uses
+  %.0165 = phi i64 [ %.0168, %bb.z ], [ %.055.lcssa, %bb.y ]
+  %.0168 = add nuw i64 %.0165, 1                  ; 4 uses
   %i.cu = load ptr, ptr %1, align 8, !tbaa !27
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
   %i.cw = load ptr, ptr %i.cv, align 8
-  %i.cx = invoke noundef nonnull align 8 dereferenceable(24) ptr %i.cw(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef %.0165)
+  %i.cx = invoke noundef nonnull align 8 dereferenceable(24) ptr %i.cw(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef %.0168)
           to label %bb.ab unwind label %bb.ac
 
 bb.ab:                                            ; preds = %.lr.ph167
@@ -492,7 +491,7 @@ bb.ab:                                            ; preds = %.lr.ph167
   %i.cy = load ptr, ptr %1, align 8, !tbaa !27
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 72
   %i.da = load ptr, ptr %i.cz, align 8
-  invoke void %i.da(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %.0165)
+  invoke void %i.da(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %.0168)
           to label %bb.z unwind label %bb.ac, !llvm.loop !80
 
 bb.ac:                                            ; preds = %bb.ab, %.lr.ph167

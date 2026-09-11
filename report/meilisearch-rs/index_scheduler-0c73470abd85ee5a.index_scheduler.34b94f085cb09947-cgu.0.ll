@@ -206,7 +206,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val26 = load ptr, ptr %i.g, align 8, !nonnull !57, !noundef !57 ; 35 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %.val27 = load i64, ptr %i.h, align 8, !noundef !57 ; 22 uses
+  %.val27 = load i64, ptr %i.h, align 8, !noundef !57 ; 21 uses
   %i.i = icmp ult i64 %.val27, 128102389400760776
   tail call void @llvm.assume(i1 %i.i)
   %i.j = add nsw i64 %.val27, -2                  ; 3 uses
@@ -397,12 +397,12 @@ bb.h:                                             ; preds = %"_ZN78_$LT$rstar..n
   %i.bs = phi <2 x double> [ %i.cn, %bb.l ], [ %i.cm, %bb.k ] ; 2 uses
   %i.bt = fcmp olt <2 x double> %i.cg, %i.bs
   %i.bu = fcmp olt double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i43.i, %.sroa.020.0.1.i
-  %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i43.1.i = select i1 %i.bu, double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i43.i, double %.sroa.020.0.1.i ; 2 uses
-  %i.bv = select <2 x i1> %i.bt, <2 x double> %i.cg, <2 x double> %i.bs ; 2 uses
+  %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i43.1.i = select i1 %i.bu, double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i43.i, double %.sroa.020.0.1.i
+  %i.bv = select <2 x i1> %i.bt, <2 x double> %i.cg, <2 x double> %i.bs
   %i.bw = fcmp ogt <2 x double> %i.cj, %i.br
   %i.bx = fcmp ogt double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i46.i, %.sroa.728.0.1.i
-  %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i46.1.i = select i1 %i.bx, double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i46.i, double %.sroa.728.0.1.i ; 2 uses
-  %i.by = select <2 x i1> %i.bw, <2 x double> %i.cj, <2 x double> %i.br ; 2 uses
+  %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i46.1.i = select i1 %i.bx, double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i46.i, double %.sroa.728.0.1.i
+  %i.by = select <2 x i1> %i.bw, <2 x double> %i.cj, <2 x double> %i.br
   br i1 %i.n, label %.lr.ph169.i, label %.loopexit.i
 
 bb.i:                                             ; preds = %.lr.ph.preheader.i
@@ -450,7 +450,7 @@ bb.l:                                             ; preds = %"_ZN78_$LT$rstar..n
 .lr.ph169.i:                                      ; preds = %.preheader.i, %._crit_edge157.i
   %.sroa.022.1168.i = phi i64 [ %.sroa.022.1.i, %._crit_edge157.i ], [ 4, %.preheader.i ] ; 3 uses
   %.sroa.0.1167.i = phi i64 [ %.sroa.0.2.i, %._crit_edge157.i ], [ %.sroa.0.0174.i, %.preheader.i ]
-  %.sroa.022.0166.i = phi i64 [ %.sroa.022.1168.i, %._crit_edge157.i ], [ 3, %.preheader.i ] ; 2 uses
+  %.sroa.022.0166.i = phi i64 [ %.sroa.022.1168.i, %._crit_edge157.i ], [ 3, %.preheader.i ]
   %.sroa.0.193165.i = phi double [ %.sroa.0.294.i, %._crit_edge157.i ], [ %.sroa.0.092172.i, %.preheader.i ] ; 2 uses
   %.idx.i = mul nuw nsw i64 %.sroa.022.0166.i, 72
   %i.co = getelementptr inbounds nuw i8, ptr %.val26, i64 %.idx.i ; 3 uses
@@ -502,13 +502,9 @@ bb.n:                                             ; preds = %.lr.ph138.i
   %i.dg = icmp eq ptr %.sroa.024.1137.i, %i.co    ; 2 uses
   %.sroa.024.1.idx.i = select i1 %i.dg, i64 0, i64 72
   %.sroa.024.1.i = getelementptr inbounds nuw i8, ptr %.sroa.024.1137.i, i64 %.sroa.024.1.idx.i
-  br i1 %i.dg, label %._crit_edge.i, label %.lr.ph138.i
+  br i1 %i.dg, label %.lr.ph156.preheader.i, label %.lr.ph138.i
 
-._crit_edge.i:                                    ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb553de6e55b34ee2E.exit49.i"
-  %2 = icmp eq i64 %.sroa.022.0166.i, %.val27
-  br i1 %2, label %._crit_edge157.i, label %.lr.ph156.preheader.i
-
-.lr.ph156.preheader.i:                            ; preds = %._crit_edge.i
+.lr.ph156.preheader.i:                            ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb553de6e55b34ee2E.exit49.i"
   %.sroa.025.1146.i = getelementptr inbounds nuw i8, ptr %i.co, i64 72
   br label %.lr.ph156.i
 
@@ -560,18 +556,14 @@ bb.p:                                             ; preds = %.lr.ph156.i
   %.sroa.025.1.i = getelementptr inbounds nuw i8, ptr %.sroa.025.1154.i, i64 %.sroa.025.1.idx.i
   br i1 %i.dy, label %._crit_edge157.i, label %.lr.ph156.i
 
-._crit_edge157.i:                                 ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb553de6e55b34ee2E.exit57.i", %._crit_edge.i
-  %.sroa.1451.0.lcssa.i = phi double [ %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i46.1.i, %._crit_edge.i ], [ %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i62.i, %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb553de6e55b34ee2E.exit57.i" ]
-  %.sroa.045.0.lcssa.i = phi double [ %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i43.1.i, %._crit_edge.i ], [ %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i59.i, %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb553de6e55b34ee2E.exit57.i" ]
-  %3 = phi <2 x double> [ %i.by, %._crit_edge.i ], [ %i.dx, %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb553de6e55b34ee2E.exit57.i" ]
-  %4 = phi <2 x double> [ %i.bv, %._crit_edge.i ], [ %i.du, %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb553de6e55b34ee2E.exit57.i" ]
+._crit_edge157.i:                                 ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb553de6e55b34ee2E.exit57.i"
   %i.dz = fsub <2 x double> %i.df, %i.dc          ; 2 uses
   %i.ea = insertelement <2 x double> poison, double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i54.i, i64 0
-  %i.eb = insertelement <2 x double> %i.ea, double %.sroa.1451.0.lcssa.i, i64 1
+  %i.eb = insertelement <2 x double> %i.ea, double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i2.i62.i, i64 1
   %i.ec = insertelement <2 x double> poison, double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i51.i, i64 0
-  %i.ed = insertelement <2 x double> %i.ec, double %.sroa.045.0.lcssa.i, i64 1
+  %i.ed = insertelement <2 x double> %i.ec, double %..i.i.i.i.i.i.i.i.i.i.i.i.i.i.i59.i, i64 1
   %i.ee = fsub <2 x double> %i.eb, %i.ed
-  %i.ef = fsub <2 x double> %3, %4                ; 2 uses
+  %i.ef = fsub <2 x double> %i.dx, %i.du          ; 2 uses
   %i.eg = fadd <2 x double> %i.ee, zeroinitializer
   %i.eh = shufflevector <2 x double> %i.dz, <2 x double> %i.ef, <2 x i32> <i32 0, i32 2>
   %i.ei = fadd <2 x double> %i.eh, %i.eg

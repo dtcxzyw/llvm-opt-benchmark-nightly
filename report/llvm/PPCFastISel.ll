@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %.lr.ph136, %bb.f
   %i.bf = load i32, ptr %i.be, align 8, !tbaa !387
   %i.bg = zext i32 %i.bf to i64
   %i.bh = getelementptr inbounds nuw [2 x i8], ptr %i.ar, i64 %i.bg
-  %i.bi = load i16, ptr %i.bh, align 2, !tbaa !388 ; 3 uses
+  %i.bi = load i16, ptr %i.bh, align 2, !tbaa !388 ; 2 uses
   %i.bj = add i16 %i.bi, -19
   %spec.select.i = icmp ult i16 %i.bj, 197
   br i1 %spec.select.i, label %.critedge89, label %bb.h
@@ -225,9 +225,7 @@ _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.h
   %i.bn = getelementptr i8, ptr %i.bl, i64 -16
   %.sroa.0.0.copyload.i = load i64, ptr %i.bn, align 16
   %i.bo = icmp ugt i64 %.sroa.0.0.copyload.i, 64
-  %15 = icmp eq i16 %i.bi, 2
-  %or.cond = or i1 %15, %i.bo
-  br i1 %or.cond, label %.critedge89, label %bb.j
+  br i1 %i.bo, label %.critedge89, label %bb.j
 
 bb.j:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
   %i.bp = getelementptr inbounds nuw i8, ptr %.077133, i64 8

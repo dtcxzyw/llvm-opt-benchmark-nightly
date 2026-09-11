@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.lr.ph, %_ZN11hb_ve
   %indvars.iv371 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next372, %_ZN11hb_vector_tIcLb0EED2Ev.exit99 ] ; 2 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZN11hb_vector_tIcLb0EED2Ev.exit99 ] ; 2 uses
   %.sroa.14.0341 = phi ptr [ null, %.lr.ph ], [ %.sroa.14.2, %_ZN11hb_vector_tIcLb0EED2Ev.exit99 ] ; 6 uses
-  %.sroa.8.0339 = phi i32 [ 0, %.lr.ph ], [ %.sroa.8.1, %_ZN11hb_vector_tIcLb0EED2Ev.exit99 ] ; 6 uses
+  %.sroa.8.0339 = phi i32 [ 0, %.lr.ph ], [ %.sroa.8.1, %_ZN11hb_vector_tIcLb0EED2Ev.exit99 ] ; 5 uses
   %.sroa.0.0338 = phi i32 [ 0, %.lr.ph ], [ %.sroa.0.2, %_ZN11hb_vector_tIcLb0EED2Ev.exit99 ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %5, i8 0, i64 16, i1 false)
@@ -299,7 +299,7 @@ bb.aa:                                            ; preds = %_ZN11hb_vector_tI12
 _ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96: ; preds = %_ZN11hb_vector_tI12hb_pdf_obj_tLb0EE4pushIJS0_EEEPS0_DpOT_.exit.thread.i84, %_ZN11hb_vector_tI12hb_pdf_obj_tLb0EE4pushIJS0_EEEPS0_DpOT_.exit.i94, %bb.aa
   %i.et = add i32 %i.dw, 5
   %.not.i97 = icmp slt i32 %.sroa.8.0339, %.sroa.0.0338
-  %.pre397 = add i32 %.sroa.8.0339, 1             ; 6 uses
+  %.pre397 = add i32 %.sroa.8.0339, 1             ; 3 uses
   br i1 %.not.i97, label %.critedge.i, label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96
@@ -314,7 +314,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.043.i = phi i32 [ %i.ex, %.preheader.i ], [ %.sroa.0.0338, %bb.ac ] ; 2 uses
   %i.ev = lshr i32 %.043.i, 1
   %i.ew = add i32 %.043.i, 8
-  %i.ex = add i32 %i.ew, %i.ev                    ; 8 uses
+  %i.ex = add i32 %i.ew, %i.ev                    ; 7 uses
   %i.ey = icmp ugt i32 %.pre397, %i.ex
   br i1 %i.ey, label %.preheader.i, label %.thread.i, !llvm.loop !1
 
@@ -337,15 +337,11 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae
   %i.fb = shl nuw i32 %i.ex, 2
   %i.fc = zext i32 %i.fb to i64
-  %i.fd = call ptr @hb_malloc(i64 noundef %i.fc) #12 ; 4 uses
+  %i.fd = call ptr @hb_malloc(i64 noundef %i.fc) #12 ; 3 uses
   %.not10.i.i.i = icmp eq ptr %i.fd, null
-  br i1 %.not10.i.i.i, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread53.i, label %7, !prof !23
+  br i1 %.not10.i.i.i, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread53.i, label %bb.ag, !prof !23
 
-7:                                                ; preds = %bb.af
-  %.not.i.i.i.i297 = icmp eq i32 %.sroa.8.0339, 0
-  br i1 %.not.i.i.i.i297, label %.critedge.i, label %bb.ag, !prof !23
-
-bb.ag:                                            ; preds = %7
+bb.ag:                                            ; preds = %bb.af
   %i.fe = zext i32 %.sroa.8.0339 to i64
   %i.ff = shl nuw nsw i64 %i.fe, 2
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fd, ptr nonnull readonly align 1 %.sroa.14.0341, i64 range(i64 0, 103079215081) %i.ff, i1 false), !alias.scope !1037
@@ -368,10 +364,9 @@ _ZN11hb_vector_tIjLb0EE5allocEjb.exit:            ; preds = %bb.ab, %_ZN11hb_vec
   store i32 %i.bb, ptr @_hb_CrapPool, align 16
   br label %_ZN11hb_vector_tIjLb0EE4pushIJjEEEPjDpOT_.exit
 
-.critedge.i:                                      ; preds = %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96, %7, %bb.ag, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i, %bb.ac
-  %.pre-phi = phi i32 [ %.pre397, %bb.ac ], [ 1, %7 ], [ %.pre397, %bb.ag ], [ %.pre397, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.pre397, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96 ]
-  %.sroa.0.1 = phi i32 [ %.sroa.0.0338, %bb.ac ], [ %i.ex, %7 ], [ %i.ex, %bb.ag ], [ %i.ex, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.sroa.0.0338, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96 ]
-  %.sroa.14.1 = phi ptr [ %.sroa.14.0341, %bb.ac ], [ %i.fd, %7 ], [ %i.fd, %bb.ag ], [ %i.fj, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.sroa.14.0341, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96 ] ; 2 uses
+.critedge.i:                                      ; preds = %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96, %bb.ag, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i, %bb.ac
+  %.sroa.0.1 = phi i32 [ %i.ex, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.sroa.0.0338, %bb.ac ], [ %i.ex, %bb.ag ], [ %.sroa.0.0338, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96 ]
+  %.sroa.14.1 = phi ptr [ %i.fj, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.sroa.14.0341, %bb.ac ], [ %i.fd, %bb.ag ], [ %.sroa.14.0341, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit96 ] ; 2 uses
   %i.fl = zext i32 %.sroa.8.0339 to i64
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %.sroa.14.1, i64 %i.fl
   store i32 %i.et, ptr %i.fm, align 4, !tbaa !61
@@ -379,7 +374,7 @@ _ZN11hb_vector_tIjLb0EE5allocEjb.exit:            ; preds = %bb.ab, %_ZN11hb_vec
 
 _ZN11hb_vector_tIjLb0EE4pushIJjEEEPjDpOT_.exit:   ; preds = %_ZN11hb_vector_tIjLb0EE5allocEjb.exit, %.critedge.i
   %.sroa.0.2 = phi i32 [ %.sroa.0.1, %.critedge.i ], [ %.sroa.0.3, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit ] ; 2 uses
-  %.sroa.8.1 = phi i32 [ %.pre-phi, %.critedge.i ], [ %.sroa.8.0339, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit ] ; 3 uses
+  %.sroa.8.1 = phi i32 [ %.pre397, %.critedge.i ], [ %.sroa.8.0339, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit ] ; 3 uses
   %.sroa.14.2 = phi ptr [ %.sroa.14.1, %.critedge.i ], [ %.sroa.14.0341, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit ] ; 3 uses
   %i.fn = load i32, ptr %5, align 8, !tbaa !16
   %i.fo = add i32 %i.fn, -1
@@ -782,7 +777,7 @@ _ZN15hb_vector_buf_t10append_strEPKc.exit80:      ; preds = %_ZN15hb_vector_buf_
   %indvars.iv577 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next578, %_ZN11hb_vector_tIcLb0EED2Ev.exit97 ] ; 2 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZN11hb_vector_tIcLb0EED2Ev.exit97 ] ; 2 uses
   %.sroa.14.0537 = phi ptr [ null, %.lr.ph ], [ %.sroa.14.2, %_ZN11hb_vector_tIcLb0EED2Ev.exit97 ] ; 6 uses
-  %.sroa.8.0535 = phi i32 [ 0, %.lr.ph ], [ %.sroa.8.1, %_ZN11hb_vector_tIcLb0EED2Ev.exit97 ] ; 6 uses
+  %.sroa.8.0535 = phi i32 [ 0, %.lr.ph ], [ %.sroa.8.1, %_ZN11hb_vector_tIcLb0EED2Ev.exit97 ] ; 5 uses
   %.sroa.0.0534 = phi i32 [ 0, %.lr.ph ], [ %.sroa.0.2, %_ZN11hb_vector_tIcLb0EED2Ev.exit97 ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %4, i8 0, i64 16, i1 false)
@@ -1137,7 +1132,7 @@ bb.br:                                            ; preds = %_ZN11hb_vector_tI12
 _ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95: ; preds = %_ZN11hb_vector_tI12hb_pdf_obj_tLb0EE4pushIJS0_EEEPS0_DpOT_.exit.thread.i83, %_ZN11hb_vector_tI12hb_pdf_obj_tLb0EE4pushIJS0_EEEPS0_DpOT_.exit.i93, %bb.br
   %i.mm = add i32 %i.lp, 5
   %.not.i = icmp slt i32 %.sroa.8.0535, %.sroa.0.0534
-  %.pre607 = add i32 %.sroa.8.0535, 1             ; 6 uses
+  %.pre607 = add i32 %.sroa.8.0535, 1             ; 3 uses
   br i1 %.not.i, label %.critedge.i, label %bb.bs
 
 bb.bs:                                            ; preds = %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95
@@ -1152,7 +1147,7 @@ bb.bt:                                            ; preds = %bb.bs
   %.043.i = phi i32 [ %i.mq, %.preheader.i ], [ %.sroa.0.0534, %bb.bt ] ; 2 uses
   %i.mo = lshr i32 %.043.i, 1
   %i.mp = add i32 %.043.i, 8
-  %i.mq = add i32 %i.mp, %i.mo                    ; 8 uses
+  %i.mq = add i32 %i.mp, %i.mo                    ; 7 uses
   %i.mr = icmp ugt i32 %.pre607, %i.mq
   br i1 %i.mr, label %.preheader.i, label %.thread.i, !llvm.loop !1
 
@@ -1175,15 +1170,11 @@ bb.bv:                                            ; preds = %bb.bu
 bb.bw:                                            ; preds = %bb.bv
   %i.mu = shl nuw i32 %i.mq, 2
   %i.mv = zext i32 %i.mu to i64
-  %i.mw = call ptr @hb_malloc(i64 noundef %i.mv) #12 ; 4 uses
+  %i.mw = call ptr @hb_malloc(i64 noundef %i.mv) #12 ; 3 uses
   %.not10.i.i.i = icmp eq ptr %i.mw, null
-  br i1 %.not10.i.i.i, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread53.i, label %6, !prof !23
+  br i1 %.not10.i.i.i, label %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.thread53.i, label %bb.bx, !prof !23
 
-6:                                                ; preds = %bb.bw
-  %.not.i.i.i.i485 = icmp eq i32 %.sroa.8.0535, 0
-  br i1 %.not.i.i.i.i485, label %.critedge.i, label %bb.bx, !prof !23
-
-bb.bx:                                            ; preds = %6
+bb.bx:                                            ; preds = %bb.bw
   %i.mx = zext i32 %.sroa.8.0535 to i64
   %i.my = shl nuw nsw i64 %i.mx, 2
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.mw, ptr nonnull readonly align 1 %.sroa.14.0537, i64 range(i64 0, 103079215081) %i.my, i1 false), !alias.scope !1181
@@ -1206,10 +1197,9 @@ _ZN11hb_vector_tIjLb0EE5allocEjb.exit:            ; preds = %bb.bs, %_ZN11hb_vec
   store i32 %i.cz, ptr @_hb_CrapPool, align 16
   br label %_ZN11hb_vector_tIjLb0EE4pushIJjEEEPjDpOT_.exit
 
-.critedge.i:                                      ; preds = %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95, %6, %bb.bx, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i, %bb.bt
-  %.pre-phi = phi i32 [ %.pre607, %bb.bt ], [ 1, %6 ], [ %.pre607, %bb.bx ], [ %.pre607, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.pre607, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95 ]
-  %.sroa.0.1 = phi i32 [ %.sroa.0.0534, %bb.bt ], [ %i.mq, %6 ], [ %i.mq, %bb.bx ], [ %i.mq, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.sroa.0.0534, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95 ]
-  %.sroa.14.1 = phi ptr [ %.sroa.14.0537, %bb.bt ], [ %i.mw, %6 ], [ %i.mw, %bb.bx ], [ %i.nc, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.sroa.14.0537, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95 ] ; 2 uses
+.critedge.i:                                      ; preds = %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95, %bb.bx, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i, %bb.bt
+  %.sroa.0.1 = phi i32 [ %i.mq, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.sroa.0.0534, %bb.bt ], [ %i.mq, %bb.bx ], [ %.sroa.0.0534, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95 ]
+  %.sroa.14.1 = phi ptr [ %i.nc, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ], [ %.sroa.14.0537, %bb.bt ], [ %i.mw, %bb.bx ], [ %.sroa.14.0537, %_ZN18hb_pdf_resources_t10add_objectEO15hb_vector_buf_t.exit95 ] ; 2 uses
   %i.ne = zext i32 %.sroa.8.0535 to i64
   %i.nf = getelementptr inbounds nuw [4 x i8], ptr %.sroa.14.1, i64 %i.ne
   store i32 %i.mm, ptr %i.nf, align 4, !tbaa !61
@@ -1217,7 +1207,7 @@ _ZN11hb_vector_tIjLb0EE5allocEjb.exit:            ; preds = %bb.bs, %_ZN11hb_vec
 
 _ZN11hb_vector_tIjLb0EE4pushIJjEEEPjDpOT_.exit:   ; preds = %_ZN11hb_vector_tIjLb0EE5allocEjb.exit, %.critedge.i
   %.sroa.0.2 = phi i32 [ %.sroa.0.1, %.critedge.i ], [ %.sroa.0.3, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit ] ; 2 uses
-  %.sroa.8.1 = phi i32 [ %.pre-phi, %.critedge.i ], [ %.sroa.8.0535, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit ] ; 3 uses
+  %.sroa.8.1 = phi i32 [ %.pre607, %.critedge.i ], [ %.sroa.8.0535, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit ] ; 3 uses
   %.sroa.14.2 = phi ptr [ %.sroa.14.1, %.critedge.i ], [ %.sroa.14.0537, %_ZN11hb_vector_tIjLb0EE5allocEjb.exit ] ; 3 uses
   %i.ng = load i32, ptr %4, align 8, !tbaa !16
   %i.nh = add i32 %i.ng, -1
