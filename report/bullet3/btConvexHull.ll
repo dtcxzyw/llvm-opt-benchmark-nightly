@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.f, align 4, !tbaa !62
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store i32 0, ptr %i.g, align 8, !tbaa !63
-  %i.h = zext nneg i32 %2 to i64
+  %i.h = zext nneg i32 %2 to i64                  ; 2 uses
   %i.i = shl nuw nsw i64 %i.h, 2                  ; 2 uses
   %i.j = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %i.i, i32 noundef 16)
           to label %_ZNK20btAlignedObjectArrayIiE4copyEiiPi.exit.i unwind label %bb.k ; 2 uses
@@ -333,7 +333,6 @@ bb.c:                                             ; preds = %_ZNK20btAlignedObje
   store i8 1, ptr %i.k, align 8, !tbaa !61
   store ptr %i.o, ptr %i.l, align 8, !tbaa !60
   store i32 %2, ptr %i.n, align 8, !tbaa !63
-  %wide.trip.count = zext nneg i32 %2 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_Z8btSetMinIfEvRT_RKS0_.exit.i
@@ -619,7 +618,7 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i:                   ; preds = %_ZN20btAlignedObjec
   %i.ej = fcmp olt float %.sroa.10.0386, %i.ec
   %.sroa.10.1 = select i1 %i.ej, float %i.ec, float %.sroa.10.0386 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.h
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !114
 
 bb.k:                                             ; preds = %bb.b
@@ -1022,7 +1021,7 @@ bb.f:                                             ; preds = %bb.f, %.loopexit.ne
   %i.av = select <4 x i1> %i.at, <4 x float> %i.as, <4 x float> %i.ao ; 3 uses
   %i.aw = select <4 x i1> %i.au, <4 x float> %i.as, <4 x float> %i.ap ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.r ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.f, !llvm.loop !155
 

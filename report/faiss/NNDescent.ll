@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
 bb.j:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.t = load i32, ptr %i.s, align 8, !tbaa !50
-  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.t, i32 %2) ; 12 uses
+  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.t, i32 %2) ; 13 uses
   %i.u = add nsw i32 %.sroa.speculated, 1         ; 5 uses
   %i.v = sext i32 %i.u to i64                     ; 4 uses
   %i.w = icmp slt i32 %.sroa.speculated, -1
@@ -245,7 +245,7 @@ bb.k:                                             ; preds = %.noexc91
   unreachable
 
 _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %.noexc91
-  %i.ae = zext nneg i32 %.sroa.speculated to i64  ; 6 uses
+  %i.ae = zext nneg i32 %.sroa.speculated to i64  ; 5 uses
   %.not.i.i.i.i92 = icmp eq i32 %.sroa.speculated, 0 ; 2 uses
   br i1 %.not.i.i.i.i92, label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, label %bb.l
 
@@ -311,7 +311,11 @@ bb.o:                                             ; preds = %bb.m
           to label %.preheader134 unwind label %bb.p
 
 .preheader134:                                    ; preds = %bb.o
-  br i1 %.not.i.i.i.i92, label %.preheader, label %.lr.ph
+  br i1 %.not.i.i.i.i92, label %.preheader, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader134
+  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.q
   %.idx = mul nuw nsw i64 %i.ae, 12               ; 2 uses
@@ -331,8 +335,8 @@ bb.p:                                             ; preds = %bb.o
           cleanup
   br label %bb.aj
 
-.lr.ph:                                           ; preds = %.preheader134, %bb.q
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %.preheader134 ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.q
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.q ] ; 3 uses
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0108.0, i64 %indvars.iv
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !50 ; 2 uses
   %i.bm = sext i32 %i.bl to i64
@@ -350,8 +354,8 @@ bb.q:                                             ; preds = %.lr.ph
   %.sroa.5105.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.br, i64 8
   store i8 1, ptr %.sroa.5105.0..sroa_idx, align 4, !tbaa !60
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %8 = icmp samesign ult i64 %indvars.iv.next, %i.ae
-  br i1 %8, label %.lr.ph, label %._crit_edge, !llvm.loop !154
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !154
 
 .thread:                                          ; preds = %.lr.ph
   %i.bs = landingpad { ptr, i32 }

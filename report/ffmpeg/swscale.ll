@@ -163,7 +163,7 @@ bb.d:                                             ; preds = %is16BPS.exit430, %i
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 460
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !39 ; 4 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 464
-  %i.br = load i32, ptr %i.bq, align 16, !tbaa !39 ; 4 uses
+  %i.br = load i32, ptr %i.bq, align 16, !tbaa !39 ; 3 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.bt = load i32, ptr %i.bs, align 8, !tbaa !132 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 472
@@ -387,9 +387,10 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 52872
   %i.fu = icmp slt i32 %i.br, %i.bt
   %i.fv = sext i32 %i.bp to i64
-  %i.fw = sext i32 %i.br to i64
+  %i.fw = sext i32 %i.br to i64                   ; 2 uses
   %i.fx = sext i32 %.0377 to i64
   %wide.trip.count = zext nneg i32 %i.bp to i64
+  %wide.trip.count520 = sext i32 %i.bt to i64
   br label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph493, %._crit_edge
@@ -581,8 +582,7 @@ bb.aq:                                            ; preds = %.lr.ph484, %bb.aq
   %i.iq = load ptr, ptr %i.ip, align 8, !tbaa !151
   %i.ir = call i32 %i.iq(ptr noundef %0, ptr noundef %i.io, i32 noundef %.0360, i32 noundef %.reass482) #14 ; 0 uses
   %indvars.iv.next513 = add nsw i64 %indvars.iv512, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next513 to i32
-  %exitcond515.not = icmp eq i32 %i.br, %lftr.wideiv
+  %exitcond515.not = icmp eq i64 %indvars.iv.next513, %i.fw
   br i1 %exitcond515.not, label %.loopexit, label %bb.aq, !llvm.loop !105
 
 .loopexit:                                        ; preds = %bb.aq, %.loopexit477
@@ -630,8 +630,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   %i.jj = load ptr, ptr %i.ji, align 8, !tbaa !151
   %i.jk = call i32 %i.jj(ptr noundef nonnull %0, ptr noundef %i.jh, i32 noundef %i.fz, i32 noundef 1) #14 ; 0 uses
   %indvars.iv.next517 = add nsw i64 %indvars.iv516, 1 ; 2 uses
-  %lftr.wideiv519 = trunc i64 %indvars.iv.next517 to i32
-  %exitcond520.not = icmp eq i32 %i.bt, %lftr.wideiv519
+  %exitcond520.not = icmp eq i64 %indvars.iv.next517, %wide.trip.count520
   br i1 %exitcond520.not, label %._crit_edge, label %.lr.ph486, !llvm.loop !106
 
 ._crit_edge:                                      ; preds = %.lr.ph486, %bb.av

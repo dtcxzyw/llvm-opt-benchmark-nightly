@@ -205,7 +205,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val26 = load ptr, ptr %i.g, align 8, !nonnull !16, !noundef !16 ; 35 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %.val27 = load i64, ptr %i.h, align 8, !noundef !16 ; 22 uses
+  %.val27 = load i64, ptr %i.h, align 8, !noundef !16 ; 21 uses
   %i.i = icmp ult i64 %.val27, 128102389400760776
   tail call void @llvm.assume(i1 %i.i)
   %i.j = add nsw i64 %.val27, -2                  ; 3 uses
@@ -608,7 +608,7 @@ bb.q:                                             ; preds = %.loopexit.i
   %.sroa.0.0239 = phi i64 [ %.sroa.0.1, %._crit_edge228 ], [ 3, %.lr.ph240.preheader ]
   %.sroa.0.0180238 = phi double [ %.sroa.0.1181, %._crit_edge228 ], [ 0.000000e+00, %.lr.ph240.preheader ] ; 3 uses
   %.sroa.5.0237 = phi double [ %.sroa.5.1, %._crit_edge228 ], [ 0.000000e+00, %.lr.ph240.preheader ] ; 2 uses
-  %.sroa.075.0236 = phi i64 [ %spec.select189, %._crit_edge228 ], [ 3, %.lr.ph240.preheader ] ; 9 uses
+  %.sroa.075.0236 = phi i64 [ %spec.select189, %._crit_edge228 ], [ 3, %.lr.ph240.preheader ] ; 8 uses
   %i.ev = icmp uge i64 %.sroa.075.0236, %i.eu     ; 2 uses
   %not. = xor i1 %i.ev, true
   %i.ew = zext i1 %not. to i64
@@ -851,10 +851,10 @@ bb.ae:                                            ; preds = %bb.ac
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.ae, %bb.ad
-  %.sroa.26123.1 = phi double [ %.sroa.12109.0.copyload111, %bb.ae ], [ %.sroa.26123.24.copyload, %bb.ad ] ; 2 uses
-  %.sroa.12109.1 = phi double [ %.sroa.12109.0.copyload111, %bb.ae ], [ %.sroa.12109.0.copyload, %bb.ad ] ; 2 uses
-  %i.hv = phi <2 x double> [ %i.hu, %bb.ae ], [ %i.hr, %bb.ad ] ; 2 uses
-  %i.hw = phi <2 x double> [ %i.hu, %bb.ae ], [ %i.hs, %bb.ad ] ; 2 uses
+  %.sroa.26123.1 = phi double [ %.sroa.12109.0.copyload111, %bb.ae ], [ %.sroa.26123.24.copyload, %bb.ad ]
+  %.sroa.12109.1 = phi double [ %.sroa.12109.0.copyload111, %bb.ae ], [ %.sroa.12109.0.copyload, %bb.ad ]
+  %i.hv = phi <2 x double> [ %i.hu, %bb.ae ], [ %i.hr, %bb.ad ]
+  %i.hw = phi <2 x double> [ %i.hu, %bb.ae ], [ %i.hs, %bb.ad ]
   br label %.lr.ph
 
 bb.af:                                            ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit"
@@ -907,13 +907,9 @@ bb.ah:                                            ; preds = %.lr.ph
   %i.io = icmp eq ptr %.sroa.014.1210, %i.hn      ; 2 uses
   %.sroa.014.1.idx = select i1 %i.io, i64 0, i64 72
   %.sroa.014.1 = getelementptr inbounds nuw i8, ptr %.sroa.014.1210, i64 %.sroa.014.1.idx
-  br i1 %i.io, label %._crit_edge, label %.lr.ph
+  br i1 %i.io, label %.lr.ph227.preheader, label %.lr.ph
 
-._crit_edge:                                      ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit59"
-  %2 = icmp eq i64 %.sroa.075.0236, %.val27
-  br i1 %2, label %._crit_edge228, label %.lr.ph227.preheader
-
-.lr.ph227.preheader:                              ; preds = %._crit_edge
+.lr.ph227.preheader:                              ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit59"
   %.sroa.015.1217 = getelementptr inbounds nuw i8, ptr %i.hn, i64 72
   br label %.lr.ph227
 
@@ -953,32 +949,28 @@ bb.aj:                                            ; preds = %.lr.ph227
   %i.iy = phi <2 x double> [ %i.ix, %bb.aj ], [ %i.iu, %bb.ai ] ; 2 uses
   %i.iz = phi <2 x double> [ %i.ix, %bb.aj ], [ %i.iv, %bb.ai ] ; 2 uses
   %i.ja = fcmp olt <2 x double> %i.iq, %i.iz
-  %i.jb = select <2 x i1> %i.ja, <2 x double> %i.iq, <2 x double> %i.iz ; 2 uses
+  %i.jb = select <2 x i1> %i.ja, <2 x double> %i.iq, <2 x double> %i.iz ; 4 uses
   %i.jc = fcmp olt double %.sroa.12109.0221, %.sroa.6147.0
-  %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i64 = select i1 %i.jc, double %.sroa.12109.0221, double %.sroa.6147.0 ; 2 uses
+  %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i64 = select i1 %i.jc, double %.sroa.12109.0221, double %.sroa.6147.0 ; 4 uses
   %i.jd = fcmp ogt <2 x double> %i.ip, %i.iy
-  %i.je = select <2 x i1> %i.jd, <2 x double> %i.ip, <2 x double> %i.iy ; 2 uses
+  %i.je = select <2 x i1> %i.jd, <2 x double> %i.ip, <2 x double> %i.iy ; 4 uses
   %i.jf = fcmp ogt double %.sroa.26123.0218, %.sroa.11155.0
-  %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i67 = select i1 %i.jf, double %.sroa.26123.0218, double %.sroa.11155.0 ; 2 uses
+  %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i67 = select i1 %i.jf, double %.sroa.26123.0218, double %.sroa.11155.0 ; 4 uses
   %i.jg = icmp eq ptr %.sroa.015.1225, %i.o       ; 2 uses
   %.sroa.015.1.idx = select i1 %i.jg, i64 0, i64 72
   %.sroa.015.1 = getelementptr inbounds nuw i8, ptr %.sroa.015.1225, i64 %.sroa.015.1.idx
   br i1 %i.jg, label %._crit_edge228, label %.lr.ph227
 
-._crit_edge228:                                   ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit61", %._crit_edge
-  %.sroa.26123.0.lcssa = phi double [ %.sroa.26123.1, %._crit_edge ], [ %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i67, %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit61" ] ; 3 uses
-  %.sroa.12109.0.lcssa = phi double [ %.sroa.12109.1, %._crit_edge ], [ %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i64, %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit61" ] ; 3 uses
-  %3 = phi <2 x double> [ %i.hv, %._crit_edge ], [ %i.je, %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit61" ] ; 3 uses
-  %4 = phi <2 x double> [ %i.hw, %._crit_edge ], [ %i.jb, %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit61" ] ; 3 uses
-  %i.jh = fcmp ogt double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i, %.sroa.12109.0.lcssa
-  %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i70 = select i1 %i.jh, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i, double %.sroa.12109.0.lcssa
-  %i.ji = fcmp olt double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i, %.sroa.26123.0.lcssa
-  %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i4.i = select i1 %i.ji, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i, double %.sroa.26123.0.lcssa
+._crit_edge228:                                   ; preds = %"_ZN78_$LT$rstar..node..RTreeNode$LT$T$GT$$u20$as$u20$rstar..object..RTreeObject$GT$8envelope17hb51705d4db01ce66E.exit61"
+  %i.jh = fcmp ogt double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i, %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i64
+  %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i70 = select i1 %i.jh, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i64
+  %i.ji = fcmp olt double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i, %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i67
+  %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i4.i = select i1 %i.ji, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i67
   %i.jj = fsub double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i4.i, %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i70 ; 2 uses
-  %i.jk = fcmp ogt <2 x double> %i.ij, %4
-  %i.jl = select <2 x i1> %i.jk, <2 x double> %i.ij, <2 x double> %4
-  %i.jm = fcmp olt <2 x double> %i.im, %3
-  %i.jn = select <2 x i1> %i.jm, <2 x double> %i.im, <2 x double> %3
+  %i.jk = fcmp ogt <2 x double> %i.ij, %i.jb
+  %i.jl = select <2 x i1> %i.jk, <2 x double> %i.ij, <2 x double> %i.jb
+  %i.jm = fcmp olt <2 x double> %i.im, %i.je
+  %i.jn = select <2 x i1> %i.jm, <2 x double> %i.im, <2 x double> %i.je
   %i.jo = fsub <2 x double> %i.jn, %i.jl          ; 2 uses
   %i.jp = fcmp ogt <2 x double> %i.jo, zeroinitializer
   %i.jq = select <2 x i1> %i.jp, <2 x double> %i.jo, <2 x double> zeroinitializer ; 2 uses
@@ -990,13 +982,13 @@ bb.aj:                                            ; preds = %.lr.ph227
   %i.jt = fmul double %..i.i.2.i.i.i.i, %i.jr     ; 3 uses
   %i.ju = fsub <2 x double> %i.im, %i.ij          ; 2 uses
   %i.jv = insertelement <2 x double> poison, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i, i64 0
-  %i.jw = insertelement <2 x double> %i.jv, double %.sroa.26123.0.lcssa, i64 1
+  %i.jw = insertelement <2 x double> %i.jv, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i3.i67, i64 1
   %i.jx = insertelement <2 x double> poison, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i, i64 0
-  %i.jy = insertelement <2 x double> %i.jx, double %.sroa.12109.0.lcssa, i64 1
+  %i.jy = insertelement <2 x double> %i.jx, double %..i.i.i.i.i.i.i.2.i.i.i.i.i.i.i.i64, i64 1
   %i.jz = fsub <2 x double> %i.jw, %i.jy          ; 2 uses
   %i.ka = fcmp ogt <2 x double> %i.ju, zeroinitializer
   %i.kb = select <2 x i1> %i.ka, <2 x double> %i.ju, <2 x double> zeroinitializer ; 2 uses
-  %i.kc = fsub <2 x double> %3, %4                ; 2 uses
+  %i.kc = fsub <2 x double> %i.je, %i.jb          ; 2 uses
   %i.kd = fcmp ogt <2 x double> %i.kc, zeroinitializer
   %i.ke = select <2 x i1> %i.kd, <2 x double> %i.kc, <2 x double> zeroinitializer ; 2 uses
   %i.kf = shufflevector <2 x double> %i.kb, <2 x double> %i.ke, <2 x i32> <i32 1, i32 3>

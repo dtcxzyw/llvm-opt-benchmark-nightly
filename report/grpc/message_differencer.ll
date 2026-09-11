@@ -205,14 +205,14 @@ bb.a:
   %i.l = tail call noundef i32 @_ZNK6google8protobuf10Reflection9FieldSizeERKNS0_7MessageEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %i.k, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %4) ; 10 uses
   %i.m = tail call { ptr, ptr } @_ZNK6google8protobuf7Message11GetMetadataEv(ptr noundef nonnull align 8 dereferenceable(16) %2)
   %i.n = extractvalue { ptr, ptr } %i.m, 1
-  %i.o = tail call noundef i32 @_ZNK6google8protobuf10Reflection9FieldSizeERKNS0_7MessageEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %i.n, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %4) ; 6 uses
+  %i.o = tail call noundef i32 @_ZNK6google8protobuf10Reflection9FieldSizeERKNS0_7MessageEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(96) %i.n, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %4) ; 5 uses
   %i.p = tail call noundef zeroext i1 @_ZN6google8protobuf4util18MessageDifferencer19IsTreatedAsSmartSetEPKNS0_15FieldDescriptorE(ptr noundef nonnull align 8 dereferenceable(408) %0, ptr noundef %4) ; 6 uses
   %i.q = sext i32 %i.l to i64                     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #40
   store i32 -1, ptr %i.h, align 4, !tbaa !27
   call void @_ZNSt6vectorIiSaIiEE14_M_fill_assignEmRKi(ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %i.q, ptr noundef nonnull align 4 dereferenceable(4) %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #40
-  %i.r = sext i32 %i.o to i64                     ; 2 uses
+  %i.r = sext i32 %i.o to i64                     ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #40
   store i32 -1, ptr %i.i, align 4, !tbaa !27
   call void @_ZNSt6vectorIiSaIiEE14_M_fill_assignEmRKi(ptr noundef nonnull align 8 dereferenceable(24) %8, i64 noundef %i.r, ptr noundef nonnull align 4 dereferenceable(4) %i.i)
@@ -615,8 +615,7 @@ bb.bc:                                            ; preds = %bb.av
 .thread266:                                       ; preds = %bb.ax, %_ZNSt6vectorIiSaIiEE2atEm.exit195, %bb.ay, %bb.bc, %.thread268, %bb.as, %bb.at, %_ZNSt6vectorIiSaIiEE2atEm.exit189
   %.1 = phi i32 [ %.0116376, %bb.at ], [ %.0116376, %_ZNSt6vectorIiSaIiEE2atEm.exit189 ], [ %i.hg, %.thread268 ], [ %.0116376, %bb.bc ], [ %.0116376, %bb.as ], [ %.0116376, %bb.ay ], [ %.0116376, %_ZNSt6vectorIiSaIiEE2atEm.exit195 ], [ %.0116376, %bb.ax ] ; 4 uses
   %indvars.iv.next441 = add nsw i64 %indvars.iv440, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next441 to i32
-  %exitcond443.not = icmp eq i32 %i.o, %lftr.wideiv
+  %exitcond443.not = icmp eq i64 %indvars.iv.next441, %i.r
   br i1 %exitcond443.not, label %._crit_edge, label %bb.ap, !llvm.loop !698
 
 ._crit_edge:                                      ; preds = %.thread266

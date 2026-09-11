@@ -204,15 +204,11 @@ _ZN4bssl5ArrayItE16InitForOverwriteEm.exit._crit_edge: ; preds = %_ZN4bssl5Array
 
 .preheader.split:                                 ; preds = %_ZN4bssl5ArrayItE16InitForOverwriteEm.exit._crit_edge
   %.not58104 = icmp ugt i64 %i.m, 2
-  br i1 %.not58104, label %_ZN4bssl5ArrayItEixEm.exit66.preheader, label %.critedge64
-
-_ZN4bssl5ArrayItEixEm.exit66.preheader:           ; preds = %.preheader.split
-  %umax = call i64 @llvm.umax.i64(i64 %i.p, i64 2)
-  br label %_ZN4bssl5ArrayItEixEm.exit66
+  br i1 %.not58104, label %_ZN4bssl5ArrayItEixEm.exit66, label %.critedge64
 
 bb.o:                                             ; preds = %_ZN4bssl5ArrayItEixEm.exit66
   %i.ap = add nuw nsw i64 %.0105, 1               ; 2 uses
-  %exitcond116.not = icmp eq i64 %i.ap, %umax
+  %exitcond116.not = icmp eq i64 %i.ap, %i.p
   br i1 %exitcond116.not, label %.critedge64, label %_ZN4bssl5ArrayItEixEm.exit66, !llvm.loop !624
 
 bb.p:                                             ; preds = %bb.q, %_ZN4bssl5ArrayItE16InitForOverwriteEm.exit._crit_edge
@@ -220,8 +216,8 @@ bb.p:                                             ; preds = %bb.q, %_ZN4bssl5Arr
           cleanup
   br label %bb.v
 
-_ZN4bssl5ArrayItEixEm.exit66:                     ; preds = %_ZN4bssl5ArrayItEixEm.exit66.preheader, %bb.o
-  %.0105 = phi i64 [ %i.ap, %bb.o ], [ 1, %_ZN4bssl5ArrayItEixEm.exit66.preheader ] ; 2 uses
+_ZN4bssl5ArrayItEixEm.exit66:                     ; preds = %.preheader.split, %bb.o
+  %.0105 = phi i64 [ %i.ap, %bb.o ], [ 1, %.preheader.split ] ; 2 uses
   %i.ar = getelementptr [2 x i8], ptr %i.q, i64 %.0105 ; 2 uses
   %i.as = getelementptr i8, ptr %i.ar, i64 -2
   %i.at = load i16, ptr %i.as, align 2, !tbaa !35
@@ -623,9 +619,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #18
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

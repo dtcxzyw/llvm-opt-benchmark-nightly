@@ -204,8 +204,8 @@ bb.ct:                                            ; preds = %bb.cr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.py, ptr noundef nonnull align 8 dereferenceable(24) %i.qf, i64 24, i1 false), !tbaa.struct !80
   %i.qn = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   store i32 1, ptr %i.qn, align 8, !tbaa !19
-  %i.qo = add nsw i32 %i.ko, -1                   ; 2 uses
-  %i.qp = zext nneg i32 %i.qo to i64              ; 2 uses
+  %i.qo = add nsw i32 %i.ko, -1
+  %i.qp = zext nneg i32 %i.qo to i64              ; 3 uses
   %i.qq = mul nuw nsw i64 %i.qp, 24
   %i.qr = add i64 %i.qq, %i.ks, !nosanitize !9    ; 2 uses
   %.not.i167 = icmp ult i64 %i.qr, %i.ks, !nosanitize !9
@@ -234,8 +234,6 @@ bb.cw:                                            ; preds = %bb.cv
   %.sroa.0193.0.copyload.i = load <2 x float>, ptr %i.qt, align 4 ; 7 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.qt, i64 8
   %.sroa.8.0.copyload.i = load float, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !12 ; 5 uses
-  %smax605.i = call i32 @llvm.smax.i32(i32 %i.qo, i32 1)
-  %wide.trip.count606.i = zext nneg i32 %smax605.i to i64
   %i.qz = shufflevector <2 x float> %.sroa.0193.0.copyload.i, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ra = insertelement <4 x float> %i.qz, float 0.000000e+00, i64 3
   %i.rb = insertelement <4 x float> %i.ra, float %.sroa.8.0.copyload.i, i64 2
@@ -303,7 +301,7 @@ bb.cz:                                            ; preds = %bb.cx
   %i.si = trunc nuw nsw i64 %indvars.iv602.i to i32
   %.4.i = select i1 %i.sh, i32 %i.si, i32 %.3529.i ; 3 uses
   %indvars.iv.next603.i = add nuw nsw i64 %indvars.iv602.i, 1 ; 2 uses
-  %exitcond607.not.i = icmp eq i64 %indvars.iv.next603.i, %wide.trip.count606.i
+  %exitcond607.not.i = icmp eq i64 %indvars.iv.next603.i, %i.qp
   br i1 %exitcond607.not.i, label %._crit_edge532.i, label %bb.cx, !llvm.loop !143
 
 bb.da:                                            ; preds = %._crit_edge532.i

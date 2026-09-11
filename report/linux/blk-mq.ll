@@ -204,7 +204,7 @@ bb.a:
   %i.g = icmp eq i32 %i.f, 1                      ; 2 uses
   %i.h = load i32, ptr @nr_cpu_ids, align 4
   %spec.select.i = tail call i32 @llvm.umin.i32(i32 %1, i32 %i.h) ; 2 uses
-  %.0.i = select i1 %i.g, i32 %spec.select.i, i32 %1 ; 8 uses
+  %.0.i = select i1 %i.g, i32 %spec.select.i, i32 %1 ; 7 uses
   %i.i = icmp slt i32 %.0.i, 1
   %i.j = icmp eq i32 %spec.select.i, %i.d
   %or.cond.i = select i1 %i.g, i1 %i.j, i1 false
@@ -303,7 +303,7 @@ blk_mq_elv_switch_none.exit.i:                    ; preds = %.critedge.i.i, %.lr
   br i1 %.not.i121.i, label %_kmalloc_array_node_noprof.exit.i.i, label %.preheader151.i
 
 _kmalloc_array_node_noprof.exit.i.i:              ; preds = %._crit_edge.i
-  %i.al = zext nneg i32 %.0.i to i64
+  %i.al = zext nneg i32 %.0.i to i64              ; 2 uses
   %i.am = shl nuw nsw i64 %i.al, 3
   %i.an = getelementptr i8, ptr %0, i64 76
   %i.ao = load i32, ptr %i.an, align 4
@@ -366,8 +366,7 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bj = call i32 @__SCT__cond_resched() #23     ; 0 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next.i.i to i32
-  %exitcond.not.i.i = icmp eq i32 %.0.i, %lftr.wideiv.i.i
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %i.al
   br i1 %exitcond.not.i.i, label %blk_mq_prealloc_tag_set_tags.exit.i, label %bb.i, !llvm.loop !320
 
 .lr.ph52.i.i:                                     ; preds = %.preheader.i.i, %blk_mq_free_map_and_rqs.exit.i.i

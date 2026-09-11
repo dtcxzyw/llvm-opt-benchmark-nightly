@@ -204,11 +204,8 @@ bb.d:                                             ; preds = %bb.b
 .lr.ph:                                           ; preds = %.preheader28, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread
   %i.x = phi i64 [ %i.z, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread ], [ %i.c, %.preheader28 ]
   %.val5 = phi ptr [ %.val4, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread ], [ %.val6, %.preheader28 ] ; 3 uses
-  %.sroa.01.0.i30 = phi i64 [ %i.at, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread ], [ 2, %.preheader28 ] ; 6 uses
+  %.sroa.01.0.i30 = phi i64 [ %i.at, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread ], [ 2, %.preheader28 ] ; 5 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.0.i30
-  %3 = add nsw i64 %.sroa.01.0.i30, -1
-  %4 = icmp samesign ult i64 %3, %1
-  tail call void @llvm.assume(i1 %4)
   %.val4 = load ptr, ptr %i.y, align 8, !nonnull !5, !align !22, !noundef !5 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1611)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1612)
@@ -254,16 +251,13 @@ bb.f:                                             ; preds = %.lr.ph
 _RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread: ; preds = %bb.e, %.split20, %.split19
   %i.at = add nuw nsw i64 %.sroa.01.0.i30, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %i.at, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNvYB12_NtNtB8_3cmp10PartialOrd2ltECs3ZkgueCtkyH_14ruff_workspace.exit, label %.lr.ph
+  br i1 %exitcond.not, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7reverseCs3ZkgueCtkyH_14ruff_workspace.exit, label %.lr.ph
 
 .lr.ph36:                                         ; preds = %.preheader, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15
   %i.au = phi i64 [ %i.aw, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15 ], [ %i.c, %.preheader ]
   %.val3 = phi ptr [ %.val, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15 ], [ %.val6, %.preheader ] ; 3 uses
-  %.sroa.01.1.i35 = phi i64 [ %i.bq, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15 ], [ 2, %.preheader ] ; 6 uses
+  %.sroa.01.1.i35 = phi i64 [ %i.bq, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15 ], [ 2, %.preheader ] ; 5 uses
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.1.i35
-  %5 = add nsw i64 %.sroa.01.1.i35, -1
-  %6 = icmp samesign ult i64 %5, %1
-  tail call void @llvm.assume(i1 %6)
   %.val = load ptr, ptr %i.av, align 8, !nonnull !5, !align !22, !noundef !5 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1618)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1619)
@@ -309,11 +303,11 @@ bb.h:                                             ; preds = %.lr.ph36
 _RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15: ; preds = %bb.h, %.split22, %.split21
   %i.bq = add nuw nsw i64 %.sroa.01.1.i35, 1      ; 2 uses
   %exitcond47.not = icmp eq i64 %i.bq, %1
-  br i1 %exitcond47.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNvYB12_NtNtB8_3cmp10PartialOrd2ltECs3ZkgueCtkyH_14ruff_workspace.exit, label %.lr.ph36
+  br i1 %exitcond47.not, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection12split_at_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.preheader.i.i, label %.lr.ph36
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNvYB12_NtNtB8_3cmp10PartialOrd2ltECs3ZkgueCtkyH_14ruff_workspace.exit: ; preds = %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread, %.split19, %.split20, %bb.f, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15, %.split21, %.split22, %bb.g, %.preheader28, %.preheader
-  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ true, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15 ], [ false, %.preheader28 ], [ true, %bb.g ], [ true, %.split22 ], [ true, %.split21 ], [ false, %bb.f ], [ false, %.split20 ], [ false, %.split19 ], [ false, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread ]
-  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ %1, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15 ], [ 2, %.preheader28 ], [ %.sroa.01.1.i35, %.split21 ], [ %.sroa.01.1.i35, %.split22 ], [ %.sroa.01.1.i35, %bb.g ], [ %1, %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread ], [ %.sroa.01.0.i30, %.split19 ], [ %.sroa.01.0.i30, %.split20 ], [ %.sroa.01.0.i30, %bb.f ] ; 2 uses
+_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNvYB12_NtNtB8_3cmp10PartialOrd2ltECs3ZkgueCtkyH_14ruff_workspace.exit: ; preds = %.split19, %.split20, %bb.f, %.split21, %.split22, %bb.g, %.preheader28, %.preheader
+  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ true, %.split21 ], [ false, %.preheader28 ], [ true, %bb.g ], [ true, %.split22 ], [ false, %bb.f ], [ false, %.split20 ], [ false, %.split19 ]
+  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ %.sroa.01.1.i35, %.split21 ], [ 2, %.preheader28 ], [ %.sroa.01.1.i35, %bb.g ], [ %.sroa.01.1.i35, %.split22 ], [ %.sroa.01.0.i30, %bb.f ], [ %.sroa.01.0.i30, %.split20 ], [ %.sroa.01.0.i30, %.split19 ] ; 2 uses
   %i.br = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.br)
   %i.bs = icmp eq i64 %.sroa.0.0.i, %1
@@ -331,10 +325,10 @@ bb.j:                                             ; preds = %_RINvNtNtNtCs4NRVxs
   tail call fastcc void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort9quicksortRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNvYB17_NtNtBa_3cmp10PartialOrd2ltECs3ZkgueCtkyH_14ruff_workspace(ptr noalias noundef nonnull align 8 %0, i64 noundef %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(8) null, i32 noundef %i.bx, ptr noalias noundef nonnull %2)
   br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7reverseCs3ZkgueCtkyH_14ruff_workspace.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7reverseCs3ZkgueCtkyH_14ruff_workspace.exit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection12split_at_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.i.i, %middle.block, %bb.a, %bb.i, %bb.j
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7reverseCs3ZkgueCtkyH_14ruff_workspace.exit: ; preds = %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.thread, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection12split_at_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.i.i, %middle.block, %bb.a, %bb.i, %bb.j
   ret void
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection12split_at_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.preheader.i.i: ; preds = %bb.i
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection12split_at_mutCs3ZkgueCtkyH_14ruff_workspace.exit11.preheader.i.i: ; preds = %_RNvYNvYRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1l_3ops8function5FnMutTRB5_B2s_EE8call_mutCs3ZkgueCtkyH_14ruff_workspace.exit15, %bb.i
   %i.by = lshr i64 %1, 1                          ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1625)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1626)

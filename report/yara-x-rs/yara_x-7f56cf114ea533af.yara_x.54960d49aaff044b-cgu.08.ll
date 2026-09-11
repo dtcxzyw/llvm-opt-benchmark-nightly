@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
-  %i.n = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.sroa.09.0 ; 18 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
+  %i.n = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.sroa.09.0 ; 16 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
 
@@ -293,12 +293,9 @@ _RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3c
   %i.as = phi i64 [ %i.bb, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit15.thread30.i ], [ %i.v, %.split28.preheader.i ]
   %i.at = phi ptr [ %i.az, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit15.thread30.i ], [ %i.t, %.split28.preheader.i ]
   %i.au = phi i64 [ %i.ax, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit15.thread30.i ], [ %i.r, %.split28.preheader.i ] ; 2 uses
-  %.sroa.01.0.i48.i = phi i64 [ %i.bt, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit15.thread30.i ], [ 2, %.split28.preheader.i ] ; 6 uses
-  %i.av = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.01.0.i48.i ; 6 uses
-  %6 = add nsw i64 %.sroa.01.0.i48.i, -1          ; 2 uses
-  %7 = icmp samesign ult i64 %6, %i.m
-  tail call void @llvm.assume(i1 %7)
-  %8 = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %6 ; 3 uses
+  %.sroa.01.0.i48.i = phi i64 [ %i.bt, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit15.thread30.i ], [ 2, %.split28.preheader.i ] ; 5 uses
+  %i.av = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.01.0.i48.i ; 9 uses
+  %6 = getelementptr i8, ptr %i.av, i64 -32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2054)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2055)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2056)
@@ -316,7 +313,7 @@ _RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3c
   %.sink11.i.i.i.i.i.i7.i = select i1 %i.ay, ptr %i.az, ptr %i.av
   %.sink10.i.i.i.i.i.i8.i = select i1 %i.ay, i64 %i.bb, i64 %i.ax ; 2 uses
   %i.bc = icmp ugt i64 %i.au, 4                   ; 2 uses
-  %.sink11.i1.i.i.i.i.i9.i = select i1 %i.bc, ptr %i.at, ptr %8
+  %.sink11.i1.i.i.i.i.i9.i = select i1 %i.bc, ptr %i.at, ptr %6
   %.sink10.i2.i.i.i.i.i10.i = select i1 %i.bc, i64 %i.as, i64 %i.au ; 2 uses
   %spec.store.select.i.i.i.i.i.i11.i = tail call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.sink10.i.i.i.i.i.i8.i, i64 range(i64 0, -9223372036854775808) %.sink10.i2.i.i.i.i.i10.i)
   %i.bd = tail call i32 @memcmp(ptr nonnull readonly %.sink11.i.i.i.i.i.i7.i, ptr nonnull readonly %.sink11.i1.i.i.i.i.i9.i, i64 %spec.store.select.i.i.i.i.i.i11.i), !alias.scope !2064, !noalias !2049 ; 2 uses
@@ -330,7 +327,7 @@ _RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3c
 bb.m:                                             ; preds = %.lr.ph.i
   %i.bi = getelementptr inbounds nuw i8, ptr %i.av, i64 26
   %i.bj = load i8, ptr %i.bi, align 2, !range !17, !alias.scope !2065, !noalias !2066, !noundef !5
-  %i.bk = getelementptr inbounds nuw i8, ptr %8, i64 26
+  %i.bk = getelementptr i8, ptr %i.av, i64 -6
   %i.bl = load i8, ptr %i.bk, align 2, !range !17, !alias.scope !2067, !noalias !2068, !noundef !5
   %i.bm = sub nsw i8 %i.bj, %i.bl
   switch i8 %i.bm, label %default.unreachable [
@@ -342,7 +339,7 @@ bb.m:                                             ; preds = %.lr.ph.i
 .split32.i:                                       ; preds = %bb.m
   %i.bn = getelementptr inbounds nuw i8, ptr %i.av, i64 24
   %i.bo = load i16, ptr %i.bn, align 8, !alias.scope !2065, !noalias !2066, !noundef !5
-  %i.bp = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.bp = getelementptr i8, ptr %i.av, i64 -8
   %i.bq = load i16, ptr %i.bp, align 8, !alias.scope !2067, !noalias !2068, !noundef !5
   %i.br = icmp ult i16 %i.bo, %i.bq
   br i1 %i.br, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i, label %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit15.thread30.i
@@ -360,12 +357,9 @@ _RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3c
   %i.bu = phi i64 [ %i.cd, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit24.thread.i ], [ %i.v, %.critedge.preheader.i ]
   %i.bv = phi ptr [ %i.cb, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit24.thread.i ], [ %i.t, %.critedge.preheader.i ]
   %i.bw = phi i64 [ %i.bz, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit24.thread.i ], [ %i.r, %.critedge.preheader.i ] ; 2 uses
-  %.sroa.01.1.i52.i = phi i64 [ %i.cv, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit24.thread.i ], [ 2, %.critedge.preheader.i ] ; 6 uses
-  %i.bx = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.01.1.i52.i ; 6 uses
-  %9 = add nsw i64 %.sroa.01.1.i52.i, -1          ; 2 uses
-  %10 = icmp samesign ult i64 %9, %i.m
-  tail call void @llvm.assume(i1 %10)
-  %11 = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %9 ; 3 uses
+  %.sroa.01.1.i52.i = phi i64 [ %i.cv, %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit24.thread.i ], [ 2, %.critedge.preheader.i ] ; 5 uses
+  %i.bx = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.01.1.i52.i ; 9 uses
+  %7 = getelementptr i8, ptr %i.bx, i64 -32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2069)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2070)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2071)
@@ -383,7 +377,7 @@ _RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3c
   %.sink11.i.i.i.i.i.i16.i = select i1 %i.ca, ptr %i.cb, ptr %i.bx
   %.sink10.i.i.i.i.i.i17.i = select i1 %i.ca, i64 %i.cd, i64 %i.bz ; 2 uses
   %i.ce = icmp ugt i64 %i.bw, 4                   ; 2 uses
-  %.sink11.i1.i.i.i.i.i18.i = select i1 %i.ce, ptr %i.bv, ptr %11
+  %.sink11.i1.i.i.i.i.i18.i = select i1 %i.ce, ptr %i.bv, ptr %7
   %.sink10.i2.i.i.i.i.i19.i = select i1 %i.ce, i64 %i.bu, i64 %i.bw ; 2 uses
   %spec.store.select.i.i.i.i.i.i20.i = tail call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.sink10.i.i.i.i.i.i17.i, i64 range(i64 0, -9223372036854775808) %.sink10.i2.i.i.i.i.i19.i)
   %i.cf = tail call i32 @memcmp(ptr nonnull readonly %.sink11.i.i.i.i.i.i16.i, ptr nonnull readonly %.sink11.i1.i.i.i.i.i18.i, i64 %spec.store.select.i.i.i.i.i.i20.i), !alias.scope !2079, !noalias !2049 ; 2 uses
@@ -397,7 +391,7 @@ _RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3c
 bb.n:                                             ; preds = %.lr.ph53.i
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bx, i64 26
   %i.cl = load i8, ptr %i.ck, align 2, !range !17, !alias.scope !2080, !noalias !2081, !noundef !5
-  %i.cm = getelementptr inbounds nuw i8, ptr %11, i64 26
+  %i.cm = getelementptr i8, ptr %i.bx, i64 -6
   %i.cn = load i8, ptr %i.cm, align 2, !range !17, !alias.scope !2082, !noalias !2083, !noundef !5
   %i.co = sub nsw i8 %i.cl, %i.cn
   switch i8 %i.co, label %default.unreachable [
@@ -409,7 +403,7 @@ bb.n:                                             ; preds = %.lr.ph53.i
 .split36.i:                                       ; preds = %bb.n
   %i.cp = getelementptr inbounds nuw i8, ptr %i.bx, i64 24
   %i.cq = load i16, ptr %i.cp, align 8, !alias.scope !2080, !noalias !2081, !noundef !5
-  %i.cr = getelementptr inbounds nuw i8, ptr %11, i64 24
+  %i.cr = getelementptr i8, ptr %i.bx, i64 -8
   %i.cs = load i16, ptr %i.cr, align 8, !alias.scope !2082, !noalias !2083, !noundef !5
   %i.ct = icmp ult i16 %i.cq, %i.cs
   br i1 %i.ct, label %_RNvYNvYNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNtNtCskKLDkoKarTP_4core3cmp10PartialOrd2ltINtNtNtBU_3ops8function5FnMutTRB5_B20_EE8call_mutBb_.exit24.thread.i, label %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtNtCs7gfv9tzbXmh_6yara_x8compiler5atoms4AtomNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit.i

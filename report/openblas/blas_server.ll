@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.d, %bb.e
   %i.h = sext i32 %3 to i64                       ; 5 uses
-  %wide.trip.count = zext nneg i32 %0 to i64      ; 2 uses
+  %wide.trip.count = zext nneg i32 %0 to i64      ; 4 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.i = icmp ult i32 %0, 4
   br i1 %i.i, label %.epil.preheader, label %.lr.ph.new
@@ -326,11 +326,10 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %bb.g, !llvm.loop !76
 
 ._crit_edge:                                      ; preds = %bb.g, %._crit_edge.unr-lcssa
-  %5 = zext nneg i32 %0 to i64                    ; 2 uses
-  %i.bc = getelementptr [168 x i8], ptr %4, i64 %5
+  %i.bc = getelementptr [168 x i8], ptr %4, i64 %wide.trip.count
   %i.bd = getelementptr i8, ptr %i.bc, i64 -104
   store ptr null, ptr %i.bd, align 8, !tbaa !26
-  %i.be = call i32 @exec_blas(i64 noundef %5, ptr noundef nonnull %4) ; 0 uses
+  %i.be = call i32 @exec_blas(i64 noundef %wide.trip.count, ptr noundef nonnull %4) ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.a, %._crit_edge

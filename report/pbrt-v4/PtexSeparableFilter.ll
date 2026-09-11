@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.j
-  %indvars.iv155 = phi i32 [ -2, %bb.a ], [ %indvars.iv.next156, %bb.j ] ; 2 uses
+  %indvars.iv155 = phi i32 [ -1, %bb.a ], [ %indvars.iv.next156, %bb.j ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.j ] ; 7 uses
   %.068136 = phi i32 [ %2, %bb.a ], [ %i.k, %bb.j ]
   %.074134.in = phi i8 [ %i.g, %bb.a ], [ %i.ag, %bb.j ]
@@ -507,9 +507,7 @@ _ZN4Ptex4v2_419PtexSeparableKernel10accumulateEPKfi.exit.i: ; preds = %.lr.ph.i.
   %i.fp = getelementptr inbounds nuw i8, ptr %5, i64 80 ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.fr = getelementptr inbounds nuw i8, ptr %5, i64 120
-  %smax = tail call i32 @llvm.smax.i32(i32 %indvars.iv155, i32 1)
-  %6 = add nuw nsw i32 %smax, 1
-  %wide.trip.count = zext nneg i32 %6 to i64
+  %wide.trip.count = zext i32 %indvars.iv155 to i64
   %i.fs = insertelement <2 x ptr> poison, ptr %i.fo, i64 0
   %i.ft = insertelement <2 x ptr> %i.fs, ptr %i.fp, i64 1
   br label %bb.p
@@ -910,9 +908,6 @@ declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.smin.i8(i8, i8) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #4

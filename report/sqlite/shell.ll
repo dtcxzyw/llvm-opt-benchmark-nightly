@@ -206,6 +206,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.i
 
 .lr.ph32.i:                                       ; preds = %.loopexit29.i
   %i.at = zext i32 %.1.i to i64
+  %wide.trip.count.i = zext i32 %i.d to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.m, %.lr.ph32.i
@@ -233,8 +234,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bf = phi i32 [ %i.bc, %bb.k ], [ 0, %bb.l ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv45 = trunc i64 %indvars.iv.next.i to i32
-  %exitcond46 = icmp eq i32 %i.d, %lftr.wideiv45
+  %exitcond46 = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond46, label %SHA3Update.exit, label %bb.k, !llvm.loop !9
 
 bb.n:                                             ; preds = %SHA3Init.exit
@@ -290,6 +290,7 @@ bb.q:                                             ; preds = %bb.p, %.lr.ph.i33
 
 .lr.ph32.i28:                                     ; preds = %.loopexit29.i26
   %i.cf = zext i32 %.1.i27 to i64
+  %wide.trip.count.i29 = zext i32 %i.d to i64
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.t, %.lr.ph32.i28
@@ -317,8 +318,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.r
   %i.cr = phi i32 [ %i.co, %bb.r ], [ 0, %bb.s ]
   %indvars.iv.next.i30 = add nuw nsw i64 %indvars.iv.i29, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i30 to i32
-  %exitcond = icmp eq i32 %i.d, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next.i30, %wide.trip.count.i29
   br i1 %exitcond, label %SHA3Update.exit, label %bb.r, !llvm.loop !9
 
 SHA3Update.exit:                                  ; preds = %bb.t, %bb.m, %.loopexit29.i26, %bb.n, %.loopexit29.i, %bb.g
@@ -525,8 +525,8 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not38, label %SHA3Update.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.am = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.al) #46
-  %i.an = trunc i64 %i.am to i32                  ; 5 uses
+  %i.am = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.al) #46 ; 2 uses
+  %i.an = trunc i64 %i.am to i32                  ; 4 uses
   call void (ptr, ptr, ...) @sha3_step_vformat(ptr noundef %3, ptr noundef nonnull @.str.298, i32 noundef %i.an)
   %i.ao = load i32, ptr %i.u, align 4, !tbaa !131 ; 3 uses
   %i.ap = and i32 %i.ao, 7
@@ -578,6 +578,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i
 
 .lr.ph32.i:                                       ; preds = %.loopexit29.i
   %i.bn = zext i32 %.1.i to i64
+  %wide.trip.count.i = and i64 %i.am, 4294967295
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.p, %.lr.ph32.i
@@ -605,8 +606,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bz = phi i32 [ %i.bw, %bb.n ], [ 0, %bb.o ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i to i32
-  %exitcond = icmp eq i32 %lftr.wideiv, %i.an
+  %exitcond = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond, label %SHA3Update.exit, label %bb.n, !llvm.loop !9
 
 SHA3Update.exit:                                  ; preds = %bb.p, %.loopexit29.i, %bb.j
@@ -1009,8 +1009,7 @@ bb.u:                                             ; preds = %._crit_edge.i
   %.v.i = select i1 %i.df, i8 35, i8 38
   %i.dh = add nuw nsw i8 %.v.i, %i.dg
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
-  %3 = and i64 %indvars.iv.next.i, 4294967295
-  %i.di = getelementptr inbounds nuw i8, ptr %.055.lcssa.i, i64 %3
+  %i.di = getelementptr inbounds nuw i8, ptr %.055.lcssa.i, i64 %indvars.iv.next.i
   store i8 %i.dh, ptr %i.di, align 1, !tbaa !52
   %i.dj = trunc nuw i64 %indvars.iv.i to i32
   %i.dk = icmp sgt i32 %i.dj, 1
@@ -1413,8 +1412,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bq = phi i32 [ %i.bn, %bb.e ], [ 0, %bb.f ]
   %indvars.iv.next.i36 = add nuw nsw i64 %indvars.iv.i35, 1 ; 2 uses
-  %2 = and i64 %indvars.iv.next.i36, 4294967295
-  %exitcond.not.i38 = icmp eq i64 %2, 9
+  %exitcond.not.i38 = icmp eq i64 %indvars.iv.next.i36, 9
   br i1 %exitcond.not.i38, label %SHA3Update.exit39, label %bb.e, !llvm.loop !9
 
 SHA3Update.exit39:                                ; preds = %bb.g
@@ -1519,8 +1517,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.du = phi i32 [ %i.dr, %bb.j ], [ 0, %bb.k ]
   %indvars.iv.next.i45 = add nuw nsw i64 %indvars.iv.i44, 1 ; 2 uses
-  %3 = and i64 %indvars.iv.next.i45, 4294967295
-  %exitcond.not.i47 = icmp eq i64 %3, 9
+  %exitcond.not.i47 = icmp eq i64 %indvars.iv.next.i45, 9
   br i1 %exitcond.not.i47, label %SHA3Update.exit51, label %bb.j, !llvm.loop !9
 
 SHA3Update.exit51:                                ; preds = %bb.l
@@ -1591,6 +1588,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 .lr.ph32.i55:                                     ; preds = %.loopexit29.i53
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 1600
   %i.fa = zext i32 %.1.i54 to i64
+  %wide.trip.count.i = zext i32 %i.dv to i64
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.t, %.lr.ph32.i55
@@ -1618,8 +1616,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.r
   %i.fm = phi i32 [ %i.fj, %bb.r ], [ 0, %bb.s ]
   %indvars.iv.next.i57 = add nuw nsw i64 %indvars.iv.i56, 1 ; 2 uses
-  %lftr.wideiv99 = trunc i64 %indvars.iv.next.i57 to i32
-  %exitcond100 = icmp eq i32 %i.dv, %lftr.wideiv99
+  %exitcond100 = icmp eq i64 %indvars.iv.next.i57, %wide.trip.count.i
   br i1 %exitcond100, label %SHA3Update.exit, label %bb.r, !llvm.loop !9
 
 bb.u:                                             ; preds = %bb.a
@@ -1686,6 +1683,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 .lr.ph32.i68:                                     ; preds = %.loopexit29.i66
   %i.gr = getelementptr inbounds nuw i8, ptr %0, i64 1600
   %i.gs = zext i32 %.1.i67 to i64
+  %wide.trip.count.i66 = zext i32 %i.fn to i64
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.ab, %.lr.ph32.i68
@@ -1713,8 +1711,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.he = phi i32 [ %i.hb, %bb.z ], [ 0, %bb.aa ]
   %indvars.iv.next.i70 = add nuw nsw i64 %indvars.iv.i69, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i70 to i32
-  %exitcond = icmp eq i32 %i.fn, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next.i70, %wide.trip.count.i66
   br i1 %exitcond, label %SHA3Update.exit, label %bb.z, !llvm.loop !9
 
 SHA3Update.exit:                                  ; preds = %bb.ab, %bb.t, %.lr.ph32.i, %bb.b, %.loopexit29.i66, %bb.u, %.loopexit29.i53, %bb.m, %SHA3Update.exit51, %SHA3Update.exit39, %bb.a
@@ -1735,8 +1732,8 @@ bb.a:
   call void @llvm.va_start.p0(ptr nonnull %2)
   %i.b = call ptr @sqlite3_vsnprintf(i32 noundef 50, ptr noundef nonnull %i.a, ptr noundef %1, ptr noundef nonnull %2) #45 ; 0 uses
   call void @llvm.va_end.p0(ptr nonnull %2)
-  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #46 ; 2 uses
-  %i.d = trunc i64 %i.c to i32                    ; 3 uses
+  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #46 ; 3 uses
+  %i.d = trunc i64 %i.c to i32                    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1604 ; 7 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !131  ; 3 uses
   %i.g = and i32 %i.f, 7
@@ -1793,6 +1790,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph32.i:                                       ; preds = %.loopexit29.i
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 1600
   %i.ad = zext i32 %.1.i to i64
+  %wide.trip.count.i = and i64 %i.c, 4294967295
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %.lr.ph32.i
@@ -1820,8 +1818,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ap = phi i32 [ %i.am, %bb.e ], [ 0, %bb.f ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %i.d, %lftr.wideiv.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %SHA3Update.exit, label %bb.e, !llvm.loop !9
 
 SHA3Update.exit:                                  ; preds = %bb.g, %.loopexit29.i
@@ -2224,6 +2221,7 @@ bb.f:                                             ; preds = %.critedge
 
 .lr.ph238.preheader:                              ; preds = %.critedge198
   %i.z = sext i32 %.1161 to i64
+  %wide.trip.count259 = sext i32 %1 to i64
   br label %.lr.ph238
 
 .lr.ph238:                                        ; preds = %.lr.ph238.preheader, %bb.g
@@ -2235,8 +2233,7 @@ bb.f:                                             ; preds = %.critedge
 
 bb.g:                                             ; preds = %.lr.ph238
   %indvars.iv.next257 = add nsw i64 %indvars.iv256, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next257 to i32
-  %exitcond259.not = icmp eq i32 %1, %lftr.wideiv
+  %exitcond259.not = icmp eq i64 %indvars.iv.next257, %wide.trip.count259
   br i1 %exitcond259.not, label %.thread, label %.lr.ph238, !llvm.loop !1084
 
 .critedge2.loopexit:                              ; preds = %.lr.ph238
@@ -2250,6 +2247,7 @@ bb.g:                                             ; preds = %.lr.ph238
 
 .lr.ph243.preheader:                              ; preds = %.critedge2
   %i.af = sext i32 %.2162.lcssa to i64
+  %wide.trip.count264 = sext i32 %1 to i64        ; 2 uses
   br label %.lr.ph243
 
 .lr.ph243:                                        ; preds = %.lr.ph243.preheader, %bb.n
@@ -2305,7 +2303,6 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph246.preheader:                              ; preds = %bb.m
   %i.bb = sext i32 %.0153 to i64
-  %2 = sext i32 %1 to i64
   br label %.lr.ph246
 
 .lr.ph246:                                        ; preds = %.lr.ph246.preheader, %.lr.ph246
@@ -2321,7 +2318,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bi = add i32 %i.bh, %i.be
   %.2157 = select i1 %or.cond200, i32 %i.bi, i32 %.1156244 ; 3 uses
   %indvars.iv.next266 = add nsw i64 %indvars.iv265, 1 ; 2 uses
-  %i.bj = icmp slt i64 %indvars.iv.next266, %2
+  %i.bj = icmp slt i64 %indvars.iv.next266, %wide.trip.count264
   %i.bk = icmp slt i32 %.2157, 1000000
   %i.bl = select i1 %i.bj, i1 %i.bk, i1 false
   br i1 %i.bl, label %.lr.ph246, label %._crit_edge, !llvm.loop !1085
@@ -2334,8 +2331,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.h, %bb.k, %bb.j
   %indvars.iv.next261 = add nsw i64 %indvars.iv260, 1 ; 2 uses
-  %lftr.wideiv263 = trunc i64 %indvars.iv.next261 to i32
-  %exitcond264.not = icmp eq i32 %1, %lftr.wideiv263
+  %exitcond264.not = icmp eq i64 %indvars.iv.next261, %wide.trip.count264
   br i1 %exitcond264.not, label %.thread, label %.lr.ph243
 
 .thread:                                          ; preds = %bb.e, %bb.g, %bb.n, %.critedge2, %._crit_edge, %bb.l

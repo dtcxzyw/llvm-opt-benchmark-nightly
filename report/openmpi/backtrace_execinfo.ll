@@ -29,13 +29,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.e, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = call i32 @backtrace(ptr noundef nonnull %i.a, i32 noundef 32) #8 ; 3 uses
+  %i.f = call i32 @backtrace(ptr noundef nonnull %i.a, i32 noundef 32) #8 ; 2 uses
   %i.g = icmp slt i32 %2, %i.f
   br i1 %i.g, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.d
   %.not21 = icmp eq ptr %1, null
   %i.h = sext i32 %2 to i64                       ; 2 uses
+  %wide.trip.count36 = sext i32 %i.f to i64       ; 2 uses
   br i1 %.not21, label %opal_best_effort_write.exit.us, label %.lr.ph.split
 
 opal_best_effort_write.exit.us:                   ; preds = %.lr.ph, %opal_best_effort_write.exit29.us
@@ -74,8 +75,7 @@ opal_best_effort_write.exit29.us:                 ; preds = %bb.e, %bb.f, %bb.g,
   %i.t = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv33
   call void @backtrace_symbols_fd(ptr noundef nonnull %i.t, i32 noundef 1, i32 noundef %.0) #8
   %indvars.iv.next34 = add nsw i64 %indvars.iv33, 1 ; 2 uses
-  %lftr.wideiv36 = trunc i64 %indvars.iv.next34 to i32
-  %exitcond37.not = icmp eq i32 %i.f, %lftr.wideiv36
+  %exitcond37.not = icmp eq i64 %indvars.iv.next34, %wide.trip.count36
   br i1 %exitcond37.not, label %.loopexit, label %opal_best_effort_write.exit.us, !llvm.loop !10
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %opal_best_effort_write.exit29
@@ -142,8 +142,7 @@ opal_best_effort_write.exit29:                    ; preds = %bb.k, %bb.l, %bb.m,
   %i.an = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv
   call void @backtrace_symbols_fd(ptr noundef nonnull %i.an, i32 noundef 1, i32 noundef %.0) #8
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %i.f, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count36
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split, !llvm.loop !10
 
 .loopexit:                                        ; preds = %opal_best_effort_write.exit29, %opal_best_effort_write.exit29.us, %bb.d, %bb.c

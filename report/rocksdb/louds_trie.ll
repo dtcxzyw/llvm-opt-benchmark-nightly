@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.lr.ph.preheader.i.
   %i.ej = getelementptr [32 x i8], ptr %i.ei, i64 %.0138427 ; 6 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
   %i.el = load i64, ptr %i.ek, align 8, !tbaa !92 ; 3 uses
-  %i.em = trunc i64 %i.el to i32                  ; 3 uses
+  %i.em = trunc i64 %i.el to i32
   %.not161 = icmp eq i64 %.0138427, 0
   br i1 %.not161, label %.critedge.thread, label %bb.m
 
@@ -304,7 +304,7 @@ bb.u:                                             ; preds = %bb.s
 
 bb.v:                                             ; preds = %.critedge.thread
   %i.fy = zext i32 %.1392 to i64                  ; 4 uses
-  %i.fz = and i64 %i.el, 4294967295               ; 2 uses
+  %i.fz = and i64 %i.el, 4294967295               ; 4 uses
   %i.ga = load ptr, ptr %i.ej, align 8, !tbaa !104
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ga, i64 %i.fy
   %i.gc = load i8, ptr %i.gb, align 1, !tbaa !62  ; 2 uses
@@ -508,8 +508,7 @@ _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS
   br label %_ZZN7rocksdb10trie_index16LoudsTrieBuilder6FinishEvEN12PerLevelData8AddLabelEhbl.exit.peel
 
 _ZZN7rocksdb10trie_index16LoudsTrieBuilder6FinishEvEN12PerLevelData8AddLabelEhbl.exit.peel: ; preds = %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i.i.peel, %bb.ae
-  %lftr.wideiv.peel = trunc nuw i64 %indvars.iv.next467.peel to i32
-  %exitcond469.peel.not = icmp eq i32 %lftr.wideiv.peel, %i.em
+  %exitcond469.peel.not = icmp eq i64 %indvars.iv.next467.peel, %i.fz
   br i1 %exitcond469.peel.not, label %._crit_edge, label %.lr.ph426.peel.next
 
 ._crit_edge:                                      ; preds = %_ZZN7rocksdb10trie_index16LoudsTrieBuilder6FinishEvEN12PerLevelData8AddLabelEhbl.exit, %_ZZN7rocksdb10trie_index16LoudsTrieBuilder6FinishEvEN12PerLevelData8AddLabelEhbl.exit.peel, %.critedge.thread
@@ -742,8 +741,7 @@ _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS
   br label %_ZZN7rocksdb10trie_index16LoudsTrieBuilder6FinishEvEN12PerLevelData8AddLabelEhbl.exit
 
 _ZZN7rocksdb10trie_index16LoudsTrieBuilder6FinishEvEN12PerLevelData8AddLabelEhbl.exit: ; preds = %bb.as, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i.i.i
-  %lftr.wideiv = trunc i64 %indvars.iv.next467 to i32
-  %exitcond469.not = icmp eq i32 %lftr.wideiv, %i.em
+  %exitcond469.not = icmp eq i64 %indvars.iv.next467, %i.fz
   br i1 %exitcond469.not, label %._crit_edge, label %.lr.ph426.peel.next, !llvm.loop !223
 
 .loopexit415.loopexit:                            ; preds = %_ZNKSt6vectorIlSaIlEE12_M_check_lenEmPKc.exit.i.i.i.i, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i.i, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i

@@ -205,21 +205,19 @@ _RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4
 .lr.ph:                                           ; preds = %.preheader23, %bb.c
   %.sroa.01.0.i25 = phi i64 [ %i.x, %bb.c ], [ 2, %.preheader23 ] ; 5 uses
   %i.m = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.01.0.i25 ; 3 uses
-  %3 = add nsw i64 %.sroa.01.0.i25, -1            ; 2 uses
-  %4 = icmp samesign ult i64 %3, %1
-  tail call void @llvm.assume(i1 %4)
-  %5 = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %3 ; 3 uses
+  %3 = getelementptr [48 x i8], ptr %0, i64 %.sroa.01.0.i25 ; 3 uses
+  %4 = getelementptr i8, ptr %3, i64 -48
   tail call void @llvm.experimental.noalias.scope.decl(metadata !255)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !256)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !257)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !258)
-  %i.n = tail call noundef range(i8 0, 3) i8 @_RINvNtCs3oUPovFnLWP_4core3cmp21default_chaining_implNtNtCsaL1QbXo9JQH_3std4time10SystemTimeBO_NvMB2_NtB2_8Ordering5is_ltECskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.m, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %5) ; 2 uses
+  %i.n = tail call noundef range(i8 0, 3) i8 @_RINvNtCs3oUPovFnLWP_4core3cmp21default_chaining_implNtNtCsaL1QbXo9JQH_3std4time10SystemTimeBO_NvMB2_NtB2_8Ordering5is_ltECskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.m, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %4) ; 2 uses
   %.not.i.i.i2 = icmp eq i8 %i.n, 2
   br i1 %.not.i.i.i2, label %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.i.i6, label %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3
 
 _RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.i.i6: ; preds = %.lr.ph
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.p = getelementptr i8, ptr %3, i64 -32
   %i.q = tail call noundef range(i8 0, 3) i8 @_RINvNtCs3oUPovFnLWP_4core3cmp21default_chaining_implNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdBO_NvMB2_NtB2_8Ordering5is_ltEBU_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.o, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.p) ; 2 uses
   %.not.i.i7 = icmp eq i8 %i.q, 2
   br i1 %.not.i.i7, label %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8, label %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3
@@ -231,7 +229,7 @@ _RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtN
 
 _RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8: ; preds = %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.i.i6
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 40
-  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %i.t = getelementptr i8, ptr %3, i64 -8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !259)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !260)
   %i.u = load i64, ptr %i.s, align 8, !alias.scope !261, !noalias !262, !noundef !4
@@ -242,26 +240,24 @@ _RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4
 bb.c:                                             ; preds = %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8
   %i.x = add nuw nsw i64 %.sroa.01.0.i25, 1       ; 2 uses
   %exitcond.not = icmp eq i64 %i.x, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENvYB12_NtNtB8_3cmp10PartialOrd2ltEB1N_.exit, label %.lr.ph
+  br i1 %exitcond.not, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjE7reverseB1f_.exit, label %.lr.ph
 
 .lr.ph29:                                         ; preds = %.preheader, %bb.d
   %.sroa.01.1.i28 = phi i64 [ %i.aj, %bb.d ], [ 2, %.preheader ] ; 5 uses
   %i.y = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %.sroa.01.1.i28 ; 3 uses
-  %6 = add nsw i64 %.sroa.01.1.i28, -1            ; 2 uses
-  %7 = icmp samesign ult i64 %6, %1
-  tail call void @llvm.assume(i1 %7)
-  %8 = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %6 ; 3 uses
+  %5 = getelementptr [48 x i8], ptr %0, i64 %.sroa.01.1.i28 ; 3 uses
+  %6 = getelementptr i8, ptr %5, i64 -48
   tail call void @llvm.experimental.noalias.scope.decl(metadata !263)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !264)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !265)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !266)
-  %i.z = tail call noundef range(i8 0, 3) i8 @_RINvNtCs3oUPovFnLWP_4core3cmp21default_chaining_implNtNtCsaL1QbXo9JQH_3std4time10SystemTimeBO_NvMB2_NtB2_8Ordering5is_ltECskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.y, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %8) ; 2 uses
+  %i.z = tail call noundef range(i8 0, 3) i8 @_RINvNtCs3oUPovFnLWP_4core3cmp21default_chaining_implNtNtCsaL1QbXo9JQH_3std4time10SystemTimeBO_NvMB2_NtB2_8Ordering5is_ltECskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.y, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %6) ; 2 uses
   %.not.i.i.i9 = icmp eq i8 %i.z, 2
   br i1 %.not.i.i.i9, label %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.i.i13, label %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10
 
 _RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.i.i13: ; preds = %.lr.ph29
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  %i.ab = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.ab = getelementptr i8, ptr %5, i64 -32
   %i.ac = tail call noundef range(i8 0, 3) i8 @_RINvNtCs3oUPovFnLWP_4core3cmp21default_chaining_implNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdBO_NvMB2_NtB2_8Ordering5is_ltEBU_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aa, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ab) ; 2 uses
   %.not.i.i14 = icmp eq i8 %i.ac, 2
   br i1 %.not.i.i14, label %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15, label %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10
@@ -273,7 +269,7 @@ _RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtN
 
 _RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15: ; preds = %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.i.i13
   %i.ae = getelementptr inbounds nuw i8, ptr %i.y, i64 40
-  %i.af = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.af = getelementptr i8, ptr %5, i64 -8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !267)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !268)
   %i.ag = load i64, ptr %i.ae, align 8, !alias.scope !269, !noalias !270, !noundef !4
@@ -284,11 +280,11 @@ _RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4
 bb.d:                                             ; preds = %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15
   %i.aj = add nuw nsw i64 %.sroa.01.1.i28, 1      ; 2 uses
   %exitcond37.not = icmp eq i64 %i.aj, %1
-  br i1 %exitcond37.not, label %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENvYB12_NtNtB8_3cmp10PartialOrd2ltEB1N_.exit, label %.lr.ph29
+  br i1 %exitcond37.not, label %.lr.ph.preheader.i.i, label %.lr.ph29
 
-_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENvYB12_NtNtB8_3cmp10PartialOrd2ltEB1N_.exit: ; preds = %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8, %bb.c, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15, %bb.d, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10, %.preheader23, %.preheader
-  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader23 ], [ true, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15 ], [ true, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10 ], [ true, %bb.d ], [ false, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3 ], [ false, %bb.c ], [ false, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8 ]
-  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader23 ], [ %.sroa.01.1.i28, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15 ], [ %1, %bb.d ], [ %.sroa.01.1.i28, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10 ], [ %.sroa.01.0.i25, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8 ], [ %1, %bb.c ], [ %.sroa.01.0.i25, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3 ] ; 2 uses
+_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENvYB12_NtNtB8_3cmp10PartialOrd2ltEB1N_.exit: ; preds = %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10, %.preheader23, %.preheader
+  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader23 ], [ true, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15 ], [ true, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10 ], [ false, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3 ], [ false, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8 ]
+  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader23 ], [ %.sroa.01.1.i28, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit15 ], [ %.sroa.01.1.i28, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i10 ], [ %.sroa.01.0.i25, %_RNvXsc_NtCs3oUPovFnLWP_4core5tupleTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdENtNtB7_3cmp10PartialOrd13___chaining_ltB1g_.exit.thread.i.i3 ], [ %.sroa.01.0.i25, %_RNvYNvYTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENtNtCs3oUPovFnLWP_4core3cmp10PartialOrd2ltINtNtNtB1C_3ops8function5FnMutTRB5_B2J_EE8call_mutBQ_.exit8 ] ; 2 uses
   %i.ak = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.ak)
   %i.al = icmp eq i64 %.sroa.0.0.i, %1
@@ -306,10 +302,10 @@ bb.f:                                             ; preds = %_RINvNtNtNtCs3oUPov
   tail call void @_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort8unstable9quicksort9quicksortTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjENvYB17_NtNtBa_3cmp10PartialOrd2ltEB1S_(ptr noalias nofree noundef nonnull align 8 %0, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(48) null, i32 noundef %i.aq, ptr noalias nofree noundef nonnull %2)
   br label %_RNvMNtCs3oUPovFnLWP_4core5sliceSTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjE7reverseB1f_.exit
 
-_RNvMNtCs3oUPovFnLWP_4core5sliceSTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjE7reverseB1f_.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjEEB1L_.exit.i.i, %bb.a, %bb.e, %bb.f
+_RNvMNtCs3oUPovFnLWP_4core5sliceSTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjE7reverseB1f_.exit: ; preds = %bb.c, %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingTTNtNtCsaL1QbXo9JQH_3std4time10SystemTimeNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEjEEB1L_.exit.i.i, %bb.a, %bb.e, %bb.f
   ret void
 
-.lr.ph.preheader.i.i:                             ; preds = %bb.e
+.lr.ph.preheader.i.i:                             ; preds = %bb.d, %bb.e
   %i.ar = lshr i64 %1, 1
   %i.as = getelementptr inbounds nuw [48 x i8], ptr %0, i64 %1
   br label %.lr.ph.i.i

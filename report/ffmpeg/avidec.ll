@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ab = load ptr, ptr %i.a, align 8, !tbaa !27  ; 3 uses
   %i.ac = load ptr, ptr %i.c, align 8, !tbaa !28  ; 9 uses
-  %1 = lshr i32 %i.o, 4
+  %1 = sdiv i32 %i.o, 16
   %i.ad = icmp slt i32 %i.o, 16
   br i1 %i.ad, label %avi_read_idx1.exit.thread40, label %bb.h
 
@@ -252,7 +252,6 @@ bb.l:                                             ; preds = %bb.k
   %.081.i = phi i64 [ %i.ay, %bb.l ], [ 0, %bb.k ], [ 0, %bb.j ]
   %i.az = icmp ne i64 %.184.i, 0
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ab, i64 64
-  %2 = tail call i32 @llvm.umax.i32(i32 %1, i32 1)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.y, %.lr.ph.i
@@ -378,7 +377,7 @@ bb.y:                                             ; preds = %get_duration.exit.i
   %.4.i = phi i64 [ %.182115.i, %bb.n ], [ %.182115.i, %bb.o ], [ %.3.i, %get_duration.exit.i ]
   %.1.i = phi i32 [ %.0116.i, %bb.n ], [ %.0116.i, %bb.o ], [ %i.da, %get_duration.exit.i ] ; 2 uses
   %i.db = add nuw nsw i32 %.094111.i, 1           ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.db, %2
+  %exitcond.not.i = icmp eq i32 %i.db, %1
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.m, !llvm.loop !167
 
 ._crit_edge.i:                                    ; preds = %bb.y
@@ -781,11 +780,11 @@ declare i64 @llvm.smax.i64(i64, i64) #9
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #3
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #9
-
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11

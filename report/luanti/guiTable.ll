@@ -204,22 +204,20 @@ _ZNK8GUITable6getRowEi.exit61.preheader:          ; preds = %.preheader
   %i.bf = ptrtoint ptr %i.bd to i64
   %i.bg = ptrtoint ptr %i.be to i64
   %i.bh = sub i64 %i.bf, %i.bg
-  %5 = lshr exact i64 %i.bh, 2
-  %6 = trunc i64 %5 to i32
+  %sext = shl i64 %i.bh, 30
+  %5 = ashr i64 %sext, 32
   %i.bi = load ptr, ptr %i.l, align 8, !tbaa !126
   %i.bj = load i32, ptr %i.bc, align 4, !tbaa !161
   br label %_ZNK8GUITable6getRowEi.exit61
 
 bb.n:                                             ; preds = %_ZNK8GUITable6getRowEi.exit61
-  %7 = trunc nuw i64 %i.bl to i32                 ; 2 uses
-  %i.bk = icmp sgt i32 %7, 0
+  %i.bk = icmp sgt i64 %indvars.iv7895, 1
   br i1 %i.bk, label %_ZNK8GUITable6getRowEi.exit61, label %_ZNK8GUITable6getRowEi.exit59.thread, !llvm.loop !428
 
 _ZNK8GUITable6getRowEi.exit61:                    ; preds = %_ZNK8GUITable6getRowEi.exit61.preheader, %bb.n
-  %8 = phi i32 [ %7, %bb.n ], [ %1, %_ZNK8GUITable6getRowEi.exit61.preheader ] ; 2 uses
-  %indvars.iv7895 = phi i64 [ %i.bl, %bb.n ], [ %i.m, %_ZNK8GUITable6getRowEi.exit61.preheader ]
-  %i.bl = add nsw i64 %indvars.iv7895, -1         ; 3 uses
-  %i.bm = icmp sle i32 %8, %6
+  %indvars.iv7895 = phi i64 [ %i.bl, %bb.n ], [ %i.m, %_ZNK8GUITable6getRowEi.exit61.preheader ] ; 4 uses
+  %i.bl = add nsw i64 %indvars.iv7895, -1         ; 2 uses
+  %i.bm = icmp sle i64 %indvars.iv7895, %5
   tail call void @llvm.assume(i1 %i.bm)
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %i.bl
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !130
@@ -231,18 +229,23 @@ _ZNK8GUITable6getRowEi.exit61:                    ; preds = %_ZNK8GUITable6getRo
   br i1 %.not53, label %.critedge, label %bb.n, !llvm.loop !428
 
 .critedge:                                        ; preds = %_ZNK8GUITable6getRowEi.exit61
-  %i.bt = add nsw i32 %8, -1
+  %6 = trunc nuw nsw i64 %indvars.iv7895 to i32
+  %i.bt = add nsw i32 %6, -1
   br label %_ZNK8GUITable6getRowEi.exit59.thread
 
 _ZNK8GUITable6getRowEi.exit59.thread:             ; preds = %bb.n, %.preheader, %.critedge, %bb.k, %bb.l, %_ZNK8GUITable6getRowEi.exit59, %bb.m
-  %.2 = phi i32 [ %spec.select56, %bb.l ], [ %1, %bb.m ], [ %1, %bb.k ], [ %1, %_ZNK8GUITable6getRowEi.exit59 ], [ %i.bt, %.critedge ], [ %1, %.preheader ], [ %1, %bb.n ] ; 2 uses
+  %.2 = phi i32 [ %spec.select56, %bb.l ], [ %1, %bb.m ], [ %1, %bb.k ], [ %1, %_ZNK8GUITable6getRowEi.exit59 ], [ %i.bt, %.critedge ], [ %1, %.preheader ], [ %1, %bb.n ] ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 372 ; 3 uses
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !88
   %.not55 = icmp eq i32 %.2, %i.bv
-  br i1 %.not55, label %_ZN8GUITable14sendTableEventEib.exit, label %bb.o
+  br i1 %.not55, label %_ZN8GUITable14sendTableEventEib.exit, label %7
 
-bb.o:                                             ; preds = %_ZNK8GUITable6getRowEi.exit59.thread
+7:                                                ; preds = %_ZNK8GUITable6getRowEi.exit59.thread
   store i32 %.2, ptr %i.bu, align 4, !tbaa !88
+  %8 = icmp sgt i32 %.2, -1
+  br i1 %8, label %bb.o, label %_ZN8GUITable10autoScrollEv.exit
+
+bb.o:                                             ; preds = %7
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 2 uses
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !109
   %i.by = tail call noundef i32 @_ZNK3gui13CGUIScrollBar6getPosEv(ptr noundef nonnull align 8 dereferenceable(420) %i.bx) ; 2 uses
@@ -270,7 +273,7 @@ bb.p:                                             ; preds = %bb.o
   tail call void @_ZN3gui13CGUIScrollBar6setPosEi(ptr noundef nonnull align 8 dereferenceable(420) %i.ck, i32 noundef %.sink13.i)
   br label %_ZN8GUITable10autoScrollEv.exit
 
-_ZN8GUITable10autoScrollEv.exit:                  ; preds = %bb.p, %.sink.split.i
+_ZN8GUITable10autoScrollEv.exit:                  ; preds = %7, %bb.p, %.sink.split.i
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 376
   store i32 0, ptr %i.cl, align 8, !tbaa !89
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 380

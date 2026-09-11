@@ -205,18 +205,16 @@ _RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstab
   br i1 %i.x, label %.preheader, label %.preheader52
 
 .preheader52:                                     ; preds = %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit
-  br i1 %.not60, label %.thread, label %.lr.ph
+  br i1 %.not60, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit, label %.lr.ph
 
 .preheader:                                       ; preds = %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit
-  br i1 %.not60, label %.thread77, label %.lr.ph57
+  br i1 %.not60, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit, label %.lr.ph57
 
 .lr.ph:                                           ; preds = %.preheader52, %bb.k
   %.sroa.01.0.i54 = phi i64 [ %i.av, %bb.k ], [ 2, %.preheader52 ] ; 4 uses
   %i.y = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.0.i54 ; 2 uses
-  %3 = add nsw i64 %.sroa.01.0.i54, -1            ; 2 uses
-  %4 = icmp samesign ult i64 %3, %1
-  tail call void @llvm.assume(i1 %4)
-  %5 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %3 ; 2 uses
+  %3 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.0.i54 ; 2 uses
+  %4 = getelementptr i8, ptr %3, i64 -304
   %.val1.i4 = load ptr, ptr %.val3, align 8       ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 48 ; 4 uses
   %i.aa = load i64, ptr %i.z, align 8, !range !6, !noundef !4 ; 2 uses
@@ -249,13 +247,13 @@ _RNCNvCs5EcwQX7phGK_5uu_ls12sort_entries0B3_.exit.i11: ; preds = %bb.h, %_RNvMs_
   %.sroa.5.0.i.i12 = phi i32 [ %spec.select.i.i9, %bb.h ], [ 0, %_RNvMs_Cs5EcwQX7phGK_5uu_lsNtB4_8PathData8metadata.exit.i.i6 ]
   %.sroa.0.0.i.i13 = phi i64 [ %spec.select9.i.i10, %bb.h ], [ 0, %_RNvMs_Cs5EcwQX7phGK_5uu_lsNtB4_8PathData8metadata.exit.i.i6 ] ; 2 uses
   %.val.i14 = load ptr, ptr %.val3, align 8       ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 4 uses
+  %i.ai = getelementptr i8, ptr %3, i64 -256      ; 4 uses
   %i.aj = load i64, ptr %i.ai, align 8, !range !6, !noundef !4 ; 2 uses
   %.not.i.i.i6.i15 = icmp eq i64 %i.aj, -1
   br i1 %.not.i.i.i6.i15, label %bb.i, label %_RNvMs_Cs5EcwQX7phGK_5uu_lsNtB4_8PathData8metadata.exit.i7.i16, !prof !7
 
 bb.i:                                             ; preds = %_RNCNvCs5EcwQX7phGK_5uu_ls12sort_entries0B3_.exit.i11
-  %i.ak = tail call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCs6JMX4GRUq9U_4core4cell4onceINtB3_8OnceCellINtNtB7_6option6OptionNtNtCs2vKOLqTMYjT_3std2fs8MetadataEE8try_initNCINvB2_11get_or_initNCNvMs_Cs5EcwQX7phGK_5uu_lsNtB2m_8PathData8metadata0E0zEB2m_(ptr noundef nonnull align 8 %i.ai, ptr noundef nonnull align 8 %5) #37 ; 0 uses
+  %i.ak = tail call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCs6JMX4GRUq9U_4core4cell4onceINtB3_8OnceCellINtNtB7_6option6OptionNtNtCs2vKOLqTMYjT_3std2fs8MetadataEE8try_initNCINvB2_11get_or_initNCNvMs_Cs5EcwQX7phGK_5uu_lsNtB2m_8PathData8metadata0E0zEB2m_(ptr noundef nonnull align 8 %i.ai, ptr noundef nonnull align 8 %4) #37 ; 0 uses
   %.pre.i.i14.i23 = load i64, ptr %i.ai, align 8, !range !8
   br label %_RNvMs_Cs5EcwQX7phGK_5uu_lsNtB4_8PathData8metadata.exit.i7.i16
 
@@ -288,15 +286,13 @@ _RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstab
 bb.k:                                             ; preds = %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit25
   %i.av = add nuw nsw i64 %.sroa.01.0.i54, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %i.av, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit, label %.lr.ph
+  br i1 %exitcond.not, label %bb.q, label %.lr.ph
 
 .lr.ph57:                                         ; preds = %.preheader, %bb.p
   %.sroa.01.1.i56 = phi i64 [ %i.bt, %bb.p ], [ 2, %.preheader ] ; 4 uses
   %i.aw = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.01.1.i56 ; 2 uses
-  %6 = add nsw i64 %.sroa.01.1.i56, -1            ; 2 uses
-  %7 = icmp samesign ult i64 %6, %1
-  tail call void @llvm.assume(i1 %7)
-  %8 = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %6 ; 2 uses
+  %5 = getelementptr [304 x i8], ptr %0, i64 %.sroa.01.1.i56 ; 2 uses
+  %6 = getelementptr i8, ptr %5, i64 -304
   %.val1.i26 = load ptr, ptr %.val3, align 8      ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 48 ; 4 uses
   %i.ay = load i64, ptr %i.ax, align 8, !range !6, !noundef !4 ; 2 uses
@@ -329,13 +325,13 @@ _RNCNvCs5EcwQX7phGK_5uu_ls12sort_entries0B3_.exit.i33: ; preds = %bb.m, %_RNvMs_
   %.sroa.5.0.i.i34 = phi i32 [ %spec.select.i.i31, %bb.m ], [ 0, %_RNvMs_Cs5EcwQX7phGK_5uu_lsNtB4_8PathData8metadata.exit.i.i28 ]
   %.sroa.0.0.i.i35 = phi i64 [ %spec.select9.i.i32, %bb.m ], [ 0, %_RNvMs_Cs5EcwQX7phGK_5uu_lsNtB4_8PathData8metadata.exit.i.i28 ] ; 2 uses
   %.val.i36 = load ptr, ptr %.val3, align 8       ; 2 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 4 uses
+  %i.bg = getelementptr i8, ptr %5, i64 -256      ; 4 uses
   %i.bh = load i64, ptr %i.bg, align 8, !range !6, !noundef !4 ; 2 uses
   %.not.i.i.i6.i37 = icmp eq i64 %i.bh, -1
   br i1 %.not.i.i.i6.i37, label %bb.n, label %_RNvMs_Cs5EcwQX7phGK_5uu_lsNtB4_8PathData8metadata.exit.i7.i38, !prof !7
 
 bb.n:                                             ; preds = %_RNCNvCs5EcwQX7phGK_5uu_ls12sort_entries0B3_.exit.i33
-  %i.bi = tail call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCs6JMX4GRUq9U_4core4cell4onceINtB3_8OnceCellINtNtB7_6option6OptionNtNtCs2vKOLqTMYjT_3std2fs8MetadataEE8try_initNCINvB2_11get_or_initNCNvMs_Cs5EcwQX7phGK_5uu_lsNtB2m_8PathData8metadata0E0zEB2m_(ptr noundef nonnull align 8 %i.bg, ptr noundef nonnull align 8 %8) #37 ; 0 uses
+  %i.bi = tail call fastcc noundef nonnull align 8 ptr @_RINvMNtNtCs6JMX4GRUq9U_4core4cell4onceINtB3_8OnceCellINtNtB7_6option6OptionNtNtCs2vKOLqTMYjT_3std2fs8MetadataEE8try_initNCINvB2_11get_or_initNCNvMs_Cs5EcwQX7phGK_5uu_lsNtB2m_8PathData8metadata0E0zEB2m_(ptr noundef nonnull align 8 %i.bg, ptr noundef nonnull align 8 %6) #37 ; 0 uses
   %.pre.i.i14.i45 = load i64, ptr %i.bg, align 8, !range !8
   br label %_RNvMs_Cs5EcwQX7phGK_5uu_lsNtB4_8PathData8metadata.exit.i7.i38
 
@@ -368,16 +364,16 @@ _RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstab
 bb.p:                                             ; preds = %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit47
   %i.bt = add nuw nsw i64 %.sroa.01.1.i56, 1      ; 2 uses
   %exitcond64.not = icmp eq i64 %i.bt, %1
-  br i1 %exitcond64.not, label %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit, label %.lr.ph57
+  br i1 %exitcond64.not, label %bb.q, label %.lr.ph57
 
-_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit: ; preds = %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit25, %bb.k, %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit47, %bb.p
-  %.sroa.0.0.i = phi i64 [ %1, %bb.p ], [ %.sroa.01.1.i56, %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit47 ], [ %1, %bb.k ], [ %.sroa.01.0.i54, %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit25 ] ; 2 uses
+_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit: ; preds = %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit25, %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit47, %.preheader52, %.preheader
+  %.sroa.0.0.i = phi i64 [ 2, %.preheader52 ], [ 2, %.preheader ], [ %.sroa.01.1.i56, %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit47 ], [ %.sroa.01.0.i54, %_RNCINvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData20sort_unstable_by_keyINtNtB7_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvBz_12sort_entries0E0Bz_.exit25 ] ; 2 uses
   %i.bu = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.bu)
   %i.bv = icmp eq i64 %.sroa.0.0.i, %1
   br i1 %i.bv, label %bb.q, label %bb.r
 
-bb.q:                                             ; preds = %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit
+bb.q:                                             ; preds = %bb.k, %bb.p, %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit
   br i1 %i.x, label %.thread77, label %.thread
 
 bb.r:                                             ; preds = %_RINvNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared17find_existing_runNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB6_SB12_20sort_unstable_by_keyINtNtB8_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB14_12sort_entries0E0EB14_.exit
@@ -389,10 +385,10 @@ bb.r:                                             ; preds = %_RINvNtNtNtCs6JMX4G
   tail call fastcc void @_RINvNtNtNtNtCs6JMX4GRUq9U_4core5slice4sort8unstable9quicksort9quicksortNtCs5EcwQX7phGK_5uu_ls8PathDataNCINvMB8_SB17_20sort_unstable_by_keyINtNtBa_3cmp7ReverseNtNtCs2vKOLqTMYjT_3std4time10SystemTimeENCNvB19_12sort_entries0E0EB19_(ptr noalias nofree noundef nonnull align 8 %0, i64 noundef %1, ptr noundef align 8 null, i32 noundef %i.ca, ptr noalias nofree noundef align 8 dereferenceable(8) %2) #37
   br label %.thread
 
-.thread:                                          ; preds = %.preheader52, %bb.a, %bb.q, %.thread77, %bb.r
+.thread:                                          ; preds = %bb.a, %bb.q, %.thread77, %bb.r
   ret void
 
-.thread77:                                        ; preds = %.preheader, %bb.q
+.thread77:                                        ; preds = %bb.q
   %i.cb = lshr i64 %1, 1                          ; 4 uses
   %i.cc = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %1
   %i.cd = sub nsw i64 0, %i.cb

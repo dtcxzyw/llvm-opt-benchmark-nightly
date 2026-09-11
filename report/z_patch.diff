@@ -1,0 +1,261 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 9211b3d60b6ed..cab60d4679027 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -227,6 +227,12 @@ static cl::opt<unsigned> MaxLoopGuardCollectionDepth(
+     "scalar-evolution-max-loop-guard-collection-depth", cl::Hidden,
+     cl::desc("Maximum depth for recursive loop guard collection"), cl::init(1));
+ 
++static cl::opt<unsigned> MaxGuardDomTreeSteps(
++    "scalar-evolution-max-guard-dom-tree-steps", cl::Hidden,
++    cl::desc("Maximum number of dominator tree steps taken to find guarding "
++             "conditions, once the unique-predecessor climb ran out"),
++    cl::init(8));
++
+ static cl::opt<bool>
+ ClassifyExpressions("scalar-evolution-classify-expressions",
+     cl::Hidden, cl::init(true),
+@@ -10909,6 +10915,40 @@ ScalarEvolution::getPredecessorWithUniqueSuccessorForBB(const BasicBlock *BB)
+   return {nullptr, BB};
+ }
+ 
++/// Continue the search for conditions guarding \p BB after the cheap
++/// unique-predecessor climb ran out, by walking up the dominator tree from
++/// \p BB. A branch condition only holds at \p BB if the *taken edge* dominates
++/// \p BB, not merely the branching block. Only the previous node on \p BB's
++/// dominator chain can be the target of such an edge, so a single pointer
++/// comparison filters out all steps that cannot contribute (e.g. the head of a
++/// diamond) and at most one edge-dominance query is needed per step.
++///
++/// \p ProcessCond is invoked for each condition found, together with a flag
++/// indicating whether it is known to be true. The walk stops early and returns
++/// true if \p ProcessCond returns true.
++static bool
++collectFromDominatingBranches(const DominatorTree &DT, const BasicBlock *BB,
++                              function_ref<bool(Value *, bool)> ProcessCond) {
++  const DomTreeNode *Node = DT.getNode(BB);
++  for (unsigned I = 0; Node && I != MaxGuardDomTreeSteps; ++I) {
++    const BasicBlock *ChildBB = Node->getBlock();
++    Node = Node->getIDom();
++    if (!Node)
++      break;
++    auto *Br = dyn_cast<CondBrInst>(Node->getBlock()->getTerminator());
++    if (!Br)
++      continue;
++    // If ChildBB is neither or both of the successors, no fact is implied.
++    bool EnterIfTrue = Br->getSuccessor(0) == ChildBB;
++    if (EnterIfTrue == (Br->getSuccessor(1) == ChildBB))
++      continue;
++    if (DT.dominates(BasicBlockEdge(Node->getBlock(), ChildBB), BB) &&
++        ProcessCond(Br->getCondition(), EnterIfTrue))
++      return true;
++  }
++  return false;
++}
++
+ /// SCEV structural equivalence is usually sufficient for testing whether two
+ /// expressions are equal, however for the purposes of looking for a condition
+ /// guarding a loop, it can be useful to be a little more general, since a
+@@ -11998,8 +12038,8 @@ bool ScalarEvolution::isBasicBlockEntryGuardedByCond(const BasicBlock *BB,
+     PredBB = ContainingLoop->getLoopPredecessor();
+   else
+     PredBB = BB->getSinglePredecessor();
+-  for (std::pair<const BasicBlock *, const BasicBlock *> Pair(PredBB, BB);
+-       Pair.first; Pair = getPredecessorWithUniqueSuccessorForBB(Pair.first)) {
++  std::pair<const BasicBlock *, const BasicBlock *> Pair(PredBB, BB);
++  for (; Pair.first; Pair = getPredecessorWithUniqueSuccessorForBB(Pair.first)) {
+     const CondBrInst *BlockEntryPredicate =
+         dyn_cast<CondBrInst>(Pair.first->getTerminator());
+     if (!BlockEntryPredicate)
+@@ -12010,6 +12050,16 @@ bool ScalarEvolution::isBasicBlockEntryGuardedByCond(const BasicBlock *BB,
+       return true;
+   }
+ 
++  // If the climb above ran out of unique predecessors, keep looking for facts
++  // that dominate the block we stopped at (and hence BB) via the dominator
++  // tree.
++  if (!Pair.first &&
++      collectFromDominatingBranches(
++          DT, Pair.second, [&](Value *Cond, bool EnterIfTrue) {
++            return ProveViaCond(Cond, !EnterIfTrue);
++          }))
++    return true;
++
+   // Check conditions due to any @llvm.assume intrinsics.
+   for (auto &AssumeVH : AC.assumptions()) {
+     if (!AssumeVH)
+@@ -16197,6 +16247,17 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+     if (Depth > 0 && NumCollectedConditions == 2)
+       break;
+   }
++
++  // If the climb above ran out of unique predecessors, keep looking for facts
++  // that dominate the block we stopped at (and hence Block) via the dominator
++  // tree.
++  if (!Pair.first)
++    collectFromDominatingBranches(SE.DT, Pair.second,
++                                  [&](Value *Cond, bool EnterIfTrue) {
++                                    Terms.emplace_back(Cond, EnterIfTrue);
++                                    return false;
++                                  });
++
+   // Finally, if we stopped climbing the predecessor chain because
+   // there wasn't a unique one to continue, try to collect conditions
+   // for PHINodes by recursively following all of their incoming
+diff --git a/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll b/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll
+new file mode 100644
+index 0000000000000..3537e2b502aad
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll
+@@ -0,0 +1,138 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -disable-output "-passes=print<scalar-evolution>" < %s 2>&1 | FileCheck %s
++
++; Tests for conditions that guard the loop but are only reachable by walking up
++; the dominator tree, because the chain from the preheader to the guarding
++; branch passes through a block with multiple predecessors.
++
++; The loop preheader has a unique predecessor chain up to the guarding branch,
++; so '%n >u 1' is found and the backedge-taken count is exact.
++define void @single_predecessor_chain(ptr %p) {
++; CHECK-LABEL: 'single_predecessor_chain'
++; CHECK-NEXT:  Classifying expressions for: @single_predecessor_chain
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n, -1
++; CHECK-NEXT:    --> (-1 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-2 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (-1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @single_predecessor_chain
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  %big = icmp ugt i32 %n, 1
++  br i1 %big, label %ph, label %exit
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p, align 4
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Same, but %ph is reached from two blocks and has no PHI, so the
++; unique-predecessor climb stops there. '%n >u 1' still dominates %ph.
++define void @merge_block_without_phi(ptr %p, i1 %c) {
++; CHECK-LABEL: 'merge_block_without_phi'
++; CHECK-NEXT:  Classifying expressions for: @merge_block_without_phi
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n, -1
++; CHECK-NEXT:    --> (-1 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-2 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (-1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @merge_block_without_phi
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  %big = icmp ugt i32 %n, 1
++  br i1 %big, label %split, label %exit
++
++split:
++  br i1 %c, label %a, label %b
++
++a:
++  br label %ph
++
++b:
++  br label %ph
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p, align 4
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; The condition does not dominate the loop: only one of the two paths to %ph
++; goes through it, so nothing may be inferred.
++define void @merge_block_condition_does_not_dominate(ptr %p, i1 %c) {
++; CHECK-LABEL: 'merge_block_condition_does_not_dominate'
++; CHECK-NEXT:  Classifying expressions for: @merge_block_condition_does_not_dominate
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %n2 = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n2 U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n2, -1
++; CHECK-NEXT:    --> (-1 + %n2) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-1 + (1 umax (-1 + %n2))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 umax (-1 + %n2)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @merge_block_condition_does_not_dominate
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (1 umax (-1 + %n2)))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (1 umax (-1 + %n2)))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  br i1 %c, label %check, label %ph
++
++check:
++  %n = load i32, ptr %p, align 4
++  %big = icmp ugt i32 %n, 1
++  br i1 %big, label %ph, label %exit
++
++ph:
++  %n2 = load i32, ptr %p, align 4
++  %m = add i32 %n2, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p, align 4
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/range-iter-threshold.ll b/llvm/test/Transforms/IndVarSimplify/range-iter-threshold.ll
+index 9c442710e2191..1dd1356063d06 100644
+--- a/llvm/test/Transforms/IndVarSimplify/range-iter-threshold.ll
++++ b/llvm/test/Transforms/IndVarSimplify/range-iter-threshold.ll
+@@ -28,7 +28,7 @@ define i32 @test(i1 %c.0, i32 %m) {
+ ; COMMON-NEXT:    br i1 [[C_2]], label [[OUTER_LATCH]], label [[INNER_2_HEADER]]
+ ; COMMON:       outer.latch:
+ ; COMMON-NEXT:    [[MAX_1]] = phi i32 [ [[M]], [[INNER_2_LATCH]] ], [ 0, [[INNER_2_HEADER]] ]
+-; COMMON-NEXT:    [[IV_1_NEXT]] = add i32 [[IV_1]], 1
++; COMMON-NEXT:    [[IV_1_NEXT]] = add nsw i32 [[IV_1]], 1
+ ; COMMON-NEXT:    [[C_3:%.*]] = icmp ugt i32 [[IV_1]], [[MAX_0]]
+ ; COMMON-NEXT:    br i1 [[C_3]], label [[EXIT:%.*]], label [[OUTER_HEADER]], !llvm.loop [[LOOP0:![0-9]+]]
+ ; COMMON:       exit:

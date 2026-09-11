@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = sub nsw i32 0, %1                        ; 3 uses
-  %i.d = lshr i32 %i.c, 5                         ; 3 uses
+  %i.c = sub nsw i32 0, %1                        ; 2 uses
+  %i.d = lshr i32 %i.c, 5                         ; 4 uses
   %i.e = and i32 %i.c, 31                         ; 5 uses
   %.not102 = icmp eq i32 %i.e, 0
   br i1 %.not102, label %mpb_renorm.exit, label %bb.d
@@ -339,10 +339,10 @@ scalar.ph185.preheader:                           ; preds = %.lr.ph134, %middle.
 
 .preheader:                                       ; preds = %scalar.ph185, %middle.block194, %bb.g
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %3 = lshr i32 %i.c, 5
-  %4 = tail call i32 @llvm.umax.i32(i32 %3, i32 1)
-  %5 = shl nuw nsw i32 %4, 2
-  %6 = zext nneg i32 %5 to i64
+  %3 = add nsw i32 %i.d, -1
+  %4 = zext nneg i32 %3 to i64
+  %5 = shl nuw nsw i64 %4, 2
+  %6 = add nuw nsw i64 %5, 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.bb, i8 0, i64 %6, i1 false), !tbaa !18
   %i.bc = add nsw i32 %i.ao, %i.d
   store i32 %i.bc, ptr %0, align 4, !tbaa !18
@@ -744,9 +744,6 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

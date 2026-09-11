@@ -77,7 +77,7 @@ bb.c:                                             ; preds = %.sink.split, %bb.b
   %.082414322075 = phi i32 [ %.2826, %.thread1169 ], [ 0, %.lr.ph1440 ] ; 3 uses
   %.081714332074 = phi i32 [ %.15, %.thread1169 ], [ 0, %.lr.ph1440 ] ; 16 uses
   %.081014342073 = phi i32 [ %.6816, %.thread1169 ], [ 0, %.lr.ph1440 ] ; 15 uses
-  %.079714352072 = phi i32 [ %.3800, %.thread1169 ], [ 0, %.lr.ph1440 ] ; 13 uses
+  %.079714352072 = phi i32 [ %.3800, %.thread1169 ], [ 0, %.lr.ph1440 ] ; 12 uses
   %.078814372071 = phi i32 [ %.3791, %.thread1169 ], [ 0, %.lr.ph1440 ] ; 3 uses
   %.078414382070 = phi ptr [ %.3787, %.thread1169 ], [ null, %.lr.ph1440 ] ; 34 uses
   %i.ab = ptrtoint ptr %.282914312076 to i64      ; 2 uses
@@ -108,12 +108,12 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ag, label %.thread1189, label %.preheader1226
 
 .preheader1226:                                   ; preds = %bb.f
-  %11 = add nsw i32 %.079714352072, -1            ; 2 uses
   %.not1514 = icmp eq i32 %.079714352072, 1
   br i1 %.not1514, label %._crit_edge1453, label %.preheader1225.us.preheader
 
 .preheader1225.us.preheader:                      ; preds = %.preheader1226
-  %wide.trip.count1657 = zext nneg i32 %11 to i64
+  %11 = add nsw i32 %.079714352072, -1            ; 3 uses
+  %wide.trip.count1657 = zext i32 %11 to i64      ; 3 uses
   br label %.preheader1225.us
 
 .preheader1225.us:                                ; preds = %.preheader1225.us.preheader, %..loopexit_crit_edge.us
@@ -159,15 +159,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %.not917.us, label %.lr.ph1452.preheader, label %.preheader1225.us
 
 .lr.ph1452.preheader:                             ; preds = %..loopexit_crit_edge.us
-  %smax = tail call i32 @llvm.smax.i32(i32 %11, i32 1) ; 2 uses
-  %wide.trip.count1662 = zext nneg i32 %smax to i64 ; 2 uses
   %.pre1719 = load i32, ptr %.078414382070, align 4, !tbaa !14 ; 2 uses
-  %xtraiter2241 = and i64 %wide.trip.count1662, 1
-  %12 = icmp slt i32 %.079714352072, 3
+  %xtraiter2241 = and i64 %wide.trip.count1657, 1
+  %12 = icmp eq i32 %11, 1
   br i1 %12, label %.lr.ph1452.epil.preheader, label %.lr.ph1452.preheader.new
 
 .lr.ph1452.preheader.new:                         ; preds = %.lr.ph1452.preheader
-  %unroll_iter = and i64 %wide.trip.count1662, 2147483646
+  %unroll_iter = and i64 %wide.trip.count1657, 4294967294
   br label %.lr.ph1452
 
 .lr.ph1452:                                       ; preds = %bb.l, %.lr.ph1452.preheader.new
@@ -215,7 +213,7 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph1452.1
 .lr.ph1452.epil.preheader:                        ; preds = %._crit_edge1453.loopexit.unr-lcssa, %.lr.ph1452.preheader
   %.epil.init = phi i32 [ %.pre1719, %.lr.ph1452.preheader ], [ %i.bf, %._crit_edge1453.loopexit.unr-lcssa ]
   %indvars.iv1659.epil.init = phi i64 [ 0, %.lr.ph1452.preheader ], [ %indvars.iv.next1660.1, %._crit_edge1453.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod2243 = trunc i32 %smax to i1
+  %lcmp.mod2243 = trunc i32 %11 to i1
   tail call void @llvm.assume(i1 %lcmp.mod2243)
   %i.bh = getelementptr inbounds nuw [36 x i8], ptr %.078414382070, i64 %indvars.iv1659.epil.init
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 4 ; 2 uses
@@ -617,9 +615,6 @@ declare ptr @cli_max_realloc(ptr noundef, i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5

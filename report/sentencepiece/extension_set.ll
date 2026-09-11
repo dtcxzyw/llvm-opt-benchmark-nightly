@@ -205,14 +205,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.g = sext i32 %4 to i64                       ; 2 uses
-  br i1 %i.d, label %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us.preheader, label %.lr.ph28.split
+  %wide.trip.count40 = sext i32 %3 to i64         ; 2 uses
+  br i1 %i.d, label %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us, label %.lr.ph28.split
 
-_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us.preheader: ; preds = %.lr.ph28
-  %wide.trip.count39 = sext i32 %3 to i64
-  br label %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us
-
-_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us: ; preds = %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us.preheader, %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us
-  %indvars.iv36 = phi i64 [ %i.g, %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us.preheader ], [ %indvars.iv.next37, %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us ] ; 3 uses
+_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us: ; preds = %.lr.ph28, %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us
+  %indvars.iv36 = phi i64 [ %indvars.iv.next37, %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us ], [ %i.g, %.lr.ph28 ] ; 3 uses
   %i.h = getelementptr inbounds [8 x i8], ptr %2, i64 %indvars.iv36
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !101
   %i.j = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #28 ; 5 uses
@@ -225,7 +222,7 @@ _ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx111
   %i.m = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv36
   store ptr %i.j, ptr %i.m, align 8, !tbaa !101
   %indvars.iv.next37 = add nsw i64 %indvars.iv36, 1 ; 2 uses
-  %exitcond40.not = icmp eq i64 %indvars.iv.next37, %wide.trip.count39
+  %exitcond40.not = icmp eq i64 %indvars.iv.next37, %wide.trip.count40
   br i1 %exitcond40.not, label %._crit_edge29, label %_ZN6google8protobuf8internal17StringTypeHandler16NewFromPrototypeEPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_5ArenaE.exit.us, !llvm.loop !329
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -271,8 +268,7 @@ _ZNK6google8protobuf8internal9ArenaImpl11RecordAllocEPKSt9type_infom.exit.i.i: ;
   %i.ae = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv32
   store ptr %i.ab, ptr %i.ae, align 8, !tbaa !101
   %indvars.iv.next33 = add nsw i64 %indvars.iv32, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next33 to i32
-  %exitcond35.not = icmp eq i32 %3, %lftr.wideiv
+  %exitcond35.not = icmp eq i64 %indvars.iv.next33, %wide.trip.count40
   br i1 %exitcond35.not, label %._crit_edge29, label %.lr.ph28.split, !llvm.loop !329
 }
 

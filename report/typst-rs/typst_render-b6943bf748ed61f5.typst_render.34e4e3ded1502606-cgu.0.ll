@@ -204,7 +204,7 @@ _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit59.i: ; preds = %
   %.sroa.0.0.i63.i = select i1 %i.alj, i32 0, i32 %..i62.i ; 2 uses
   %i.alk = icmp slt i32 %i.akm, 0
   %..i67.i = call i32 @llvm.umin.i32(i32 %i.akm, i32 range(i32 1, 0) %i.akd)
-  %.sroa.0.0.i68.i = select i1 %i.alk, i32 0, i32 %..i67.i ; 3 uses
+  %.sroa.0.0.i68.i = select i1 %i.alk, i32 0, i32 %..i67.i ; 2 uses
   %i.all = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 32
   %i.alm = load i64, ptr %i.all, align 8, !alias.scope !1415, !noalias !1414 ; 4 uses
   %i.aln = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
@@ -222,6 +222,7 @@ _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit59.i: ; preds = %
 
 .lr.ph106.split.split.i:                          ; preds = %.lr.ph106.split.i
   %i.alv = zext nneg i32 %.sroa.0.0.i63.i to i64  ; 2 uses
+  %wide.trip.count171.i = zext nneg i32 %.sroa.0.0.i68.i to i64 ; 2 uses
   br i1 %i.alq, label %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i, label %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.i
 
 _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i: ; preds = %.lr.ph106.split.split.i, %..loopexit_crit_edge.split.us110.i
@@ -233,7 +234,7 @@ _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i: ; preds 
 bb.fl:                                            ; preds = %.backedge.us109.i, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i
   %indvars.iv167.i = phi i64 [ %indvars.iv.next168.i, %.backedge.us109.i ], [ %i.alv, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i ] ; 2 uses
   %indvars.iv.next168.i = add nuw nsw i64 %indvars.iv167.i, 1 ; 2 uses
-  %i.aly = trunc i64 %indvars.iv167.i to i32      ; 2 uses
+  %i.aly = trunc nsw i64 %indvars.iv167.i to i32  ; 2 uses
   %i.alz = sub i32 %i.aly, %i.akl
   %i.ama = mul i32 %i.alz, %i.akf
   %i.amb = add i32 %i.alx, %i.ama
@@ -292,8 +293,7 @@ bb.fr:                                            ; preds = %bb.fq
   br label %.backedge.us109.i
 
 .backedge.us109.i:                                ; preds = %bb.fr, %bb.fp, %bb.fm
-  %lftr.wideiv170.i = trunc i64 %indvars.iv.next168.i to i32
-  %exitcond171.not.i = icmp eq i32 %.sroa.0.0.i68.i, %lftr.wideiv170.i
+  %exitcond171.not.i = icmp eq i64 %indvars.iv.next168.i, %wide.trip.count171.i
   br i1 %exitcond171.not.i, label %..loopexit_crit_edge.split.us110.i, label %bb.fl
 
 ..loopexit_crit_edge.split.us110.i:               ; preds = %.backedge.us109.i
@@ -318,7 +318,7 @@ bb.fs:                                            ; preds = %.lr.ph106.i
 bb.ft:                                            ; preds = %.backedge.us.i, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.i
   %indvars.iv161.i = phi i64 [ %indvars.iv.next162.i, %.backedge.us.i ], [ %i.alv, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.i ] ; 2 uses
   %indvars.iv.next162.i = add nuw nsw i64 %indvars.iv161.i, 1 ; 2 uses
-  %i.ank = trunc i64 %indvars.iv161.i to i32      ; 2 uses
+  %i.ank = trunc nsw i64 %indvars.iv161.i to i32  ; 2 uses
   %i.anl = sub i32 %i.ank, %i.akl
   %i.anm = mul i32 %i.anl, %i.akf
   %i.ann = add i32 %i.anj, %i.anm
@@ -365,8 +365,7 @@ bb.fw:                                            ; preds = %bb.fv
   br label %.backedge.us.i
 
 .backedge.us.i:                                   ; preds = %bb.fw, %bb.fu
-  %lftr.wideiv164.i = trunc i64 %indvars.iv.next162.i to i32
-  %exitcond165.not.i = icmp eq i32 %.sroa.0.0.i68.i, %lftr.wideiv164.i
+  %exitcond165.not.i = icmp eq i64 %indvars.iv.next162.i, %wide.trip.count171.i
   br i1 %exitcond165.not.i, label %..loopexit_crit_edge.split.us.i, label %bb.ft
 
 ..loopexit_crit_edge.split.us.i:                  ; preds = %.backedge.us.i
@@ -694,6 +693,7 @@ _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit53.i: ; preds = %
 
 _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit63.preheader.i: ; preds = %.lr.ph114.split.i
   %i.aso = zext nneg i32 %.sroa.0.0.i57.i to i64
+  %wide.trip.count135.i = zext nneg i32 %.sroa.0.0.i62.i to i64
   %.sroa.6.0..sroa_idx260 = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %.sroa.8.0..sroa_idx264 = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
   %.sroa.12.0..sroa_idx272 = getelementptr inbounds nuw i8, ptr %i.ai, i64 40
@@ -721,7 +721,7 @@ bb.gt:                                            ; preds = %.lr.ph114.i
 bb.gu:                                            ; preds = %.backedge.i, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit63.i
   %indvars.iv132.i = phi i64 [ %i.aso, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit63.i ], [ %indvars.iv.next133.i, %.backedge.i ] ; 2 uses
   %indvars.iv.next133.i = add nuw nsw i64 %indvars.iv132.i, 1 ; 2 uses
-  %i.asr = trunc i64 %indvars.iv132.i to i32      ; 3 uses
+  %i.asr = trunc nsw i64 %indvars.iv132.i to i32  ; 3 uses
   %i.ass = sub i32 %i.asr, %i.arl
   %i.ast = mul i32 %i.ass, %i.arf
   %i.asu = add i32 %i.asq, %i.ast
@@ -757,8 +757,7 @@ bb.gw:                                            ; preds = %bb.gv
   br i1 %or.cond.i, label %bb.gy, label %bb.gx
 
 .backedge.i:                                      ; preds = %bb.ha, %bb.gz, %bb.gv
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next133.i to i32
-  %exitcond135.not.i = icmp eq i32 %.sroa.0.0.i62.i, %lftr.wideiv.i
+  %exitcond135.not.i = icmp eq i64 %indvars.iv.next133.i, %wide.trip.count135.i
   br i1 %exitcond135.not.i, label %..loopexit_crit_edge.i, label %bb.gu
 
 bb.gx:                                            ; preds = %.noexc135
@@ -1161,6 +1160,7 @@ _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit53.i201: ; preds 
 
 _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit63.preheader.i211: ; preds = %.lr.ph126.split.i
   %i.aza = zext nneg i32 %.sroa.0.0.i57.i206 to i64
+  %wide.trip.count149.i = zext nneg i32 %.sroa.0.0.i62.i208 to i64
   %.sroa.6280.0..sroa_idx281 = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %.sroa.7283.0..sroa_idx284 = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %.sroa.12298.0..sroa_idx299 = getelementptr inbounds nuw i8, ptr %i.p, i64 40
@@ -1197,7 +1197,7 @@ bb.ib:                                            ; preds = %.lr.ph126.i
 bb.ic:                                            ; preds = %.backedge.i214, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit63.i212
   %indvars.iv146.i = phi i64 [ %i.aza, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit63.i212 ], [ %indvars.iv.next147.i, %.backedge.i214 ] ; 2 uses
   %indvars.iv.next147.i = add nuw nsw i64 %indvars.iv146.i, 1 ; 2 uses
-  %i.azl = trunc i64 %indvars.iv146.i to i32      ; 3 uses
+  %i.azl = trunc nsw i64 %indvars.iv146.i to i32  ; 3 uses
   %i.azm = sub i32 %i.azl, %i.axu
   %i.azn = mul i32 %i.azm, %i.axo
   %i.azo = add i32 %i.azj, %i.azn
@@ -1272,8 +1272,7 @@ _RNvXs2_NtCs4xylOWI7Ys4_12typst_render5paintNtB5_13TilingSamplerNtB5_12PaintSamp
   br i1 %or.cond.i213, label %bb.ig, label %bb.if
 
 .backedge.i214:                                   ; preds = %bb.ii, %bb.ih, %bb.id
-  %lftr.wideiv.i215 = trunc i64 %indvars.iv.next147.i to i32
-  %exitcond149.not.i = icmp eq i32 %.sroa.0.0.i62.i208, %lftr.wideiv.i215
+  %exitcond149.not.i = icmp eq i64 %indvars.iv.next147.i, %wide.trip.count149.i
   br i1 %exitcond149.not.i, label %..loopexit_crit_edge.i216, label %bb.ic
 
 bb.if:                                            ; preds = %_RNvXs2_NtCs4xylOWI7Ys4_12typst_render5paintNtB5_13TilingSamplerNtB5_12PaintSampler6sample.exit.i

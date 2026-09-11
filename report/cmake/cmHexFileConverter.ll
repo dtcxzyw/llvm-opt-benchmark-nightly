@@ -202,7 +202,7 @@ bb.u:                                             ; preds = %bb.t, %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %.lr.ph.i.i38.us
-  %indvars.iv33.i.i40.us = phi i64 [ 0, %.lr.ph.i.i38.us ], [ %indvars.iv.next34.i.i44.us, %bb.w ] ; 3 uses
+  %indvars.iv33.i.i40.us = phi i64 [ 0, %.lr.ph.i.i38.us ], [ %indvars.iv.next34.i.i44.us, %bb.w ] ; 2 uses
   %indvars.iv.i.i41.us = phi i64 [ 9, %.lr.ph.i.i38.us ], [ %indvars.iv.next.i.i45.us, %bb.w ] ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv.i.i41.us ; 2 uses
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !9
@@ -213,10 +213,8 @@ bb.v:                                             ; preds = %bb.w, %.lr.ph.i.i38
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   store i32 0, ptr %i.c, align 4, !tbaa !14
   %i.cf = call i32 (ptr, ptr, ...) @__isoc23_sscanf(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.2, ptr noundef nonnull %i.c) #8
-  %.not.i.i42.us = icmp ne i32 %i.cf, 1
-  %2 = icmp samesign ugt i64 %indvars.iv33.i.i40.us, 255
-  %or.cond.i.i43.us = select i1 %.not.i.i42.us, i1 true, i1 %2
-  br i1 %or.cond.i.i43.us, label %_ZL23ConvertMotorolaSrecLinePKcP8_IO_FILE.exit.us59.thread85, label %bb.w
+  %.not.i.not.i.us = icmp eq i32 %i.cf, 1
+  br i1 %.not.i.not.i.us, label %bb.w, label %_ZL23ConvertMotorolaSrecLinePKcP8_IO_FILE.exit.us59.thread85
 
 bb.w:                                             ; preds = %bb.v
   %i.cg = load i32, ptr %i.c, align 4, !tbaa !14

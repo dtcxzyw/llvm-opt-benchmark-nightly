@@ -205,12 +205,10 @@ bb.g:                                             ; preds = %.preheader114, %bb.
   br i1 %exitcond143.not, label %._crit_edge125, label %bb.g, !llvm.loop !54
 
 .preheader112.preheader:                          ; preds = %bb.e, %bb.f
-  %i.ap = zext nneg i32 %4 to i64
+  %i.ap = zext nneg i32 %4 to i64                 ; 2 uses
   %i.aq = zext nneg i32 %.011.i106119 to i64
-  %i.ar = zext nneg i32 %3 to i64
+  %i.ar = zext nneg i32 %3 to i64                 ; 2 uses
   %i.as = zext nneg i32 %.011.i120 to i64
-  %wide.trip.count151 = zext nneg i32 %4 to i64
-  %wide.trip.count = zext nneg i32 %3 to i64
   br label %.preheader112
 
 .preheader112:                                    ; preds = %.preheader112.preheader, %._crit_edge129
@@ -222,7 +220,7 @@ bb.g:                                             ; preds = %.preheader114, %bb.
 
 ._crit_edge129:                                   ; preds = %bb.h
   %indvars.iv.next148 = add nuw nsw i64 %indvars.iv147, 1 ; 2 uses
-  %exitcond152.not = icmp eq i64 %indvars.iv.next148, %wide.trip.count151
+  %exitcond152.not = icmp eq i64 %indvars.iv.next148, %i.ap
   br i1 %exitcond152.not, label %.loopexit113, label %.preheader112, !llvm.loop !55
 
 bb.h:                                             ; preds = %.preheader112, %bb.h
@@ -243,7 +241,7 @@ bb.h:                                             ; preds = %.preheader112, %bb.
   %i.bg = trunc nuw i64 %i.az to i32
   store i32 %i.bg, ptr %i.bf, align 4, !tbaa !22
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond146.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond146.not = icmp eq i64 %indvars.iv.next, %i.ar
   br i1 %exitcond146.not, label %._crit_edge129, label %bb.h, !llvm.loop !56
 
 .loopexit113:                                     ; preds = %._crit_edge125, %._crit_edge129

@@ -204,7 +204,7 @@ bb.ck:                                            ; preds = %.loopexit879, %_ZNS
 ._crit_edge:                                      ; preds = %bb.ck, %bb.ae
   %.sroa.0779.0.lcssa = phi i32 [ 0, %bb.ae ], [ %.sroa.0779.41354, %bb.ck ] ; 3 uses
   %.sroa.16.0.lcssa = phi i32 [ 0, %bb.ae ], [ %.sroa.16.41356, %bb.ck ] ; 3 uses
-  %.0348.lcssa = phi i32 [ 0, %bb.ae ], [ %.1349, %bb.ck ] ; 5 uses
+  %.0348.lcssa = phi i32 [ 0, %bb.ae ], [ %.1349, %bb.ck ] ; 4 uses
   %i.ot = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, i32 noundef %.0348.lcssa)
           to label %bb.cl unwind label %.loopexit.split-lp886
 
@@ -221,7 +221,7 @@ bb.cm:                                            ; preds = %_ZStlsISt11char_tra
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit611 unwind label %.loopexit.split-lp886 ; 0 uses
 
 bb.cn:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit609
-  %i.ox = zext nneg i32 %.0348.lcssa to i64       ; 4 uses
+  %i.ox = zext nneg i32 %.0348.lcssa to i64       ; 5 uses
   invoke void @_ZNSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EE6resizeEm(ptr noundef nonnull align 8 dereferenceable(24) %15, i64 noundef %i.ox)
           to label %bb.co unwind label %.loopexit.split-lp886
 
@@ -593,7 +593,6 @@ _ZNSolsEd.exit:                                   ; preds = %_ZStlsISt11char_tra
   %i.tm = getelementptr inbounds nuw i8, ptr %79, i64 8 ; 2 uses
   %i.tn = getelementptr inbounds nuw i8, ptr %79, i64 16 ; 2 uses
   %i.to = getelementptr inbounds nuw i8, ptr %66, i64 24 ; 2 uses
-  %wide.trip.count1218 = zext nneg i32 %.0348.lcssa to i64
   %.ptr489.1 = getelementptr inbounds nuw i8, ptr %67, i64 208 ; 5 uses
   %i.tp = getelementptr inbounds nuw i8, ptr %67, i64 208
   br label %.preheader863.preheader
@@ -993,7 +992,7 @@ bb.dt:                                            ; preds = %.lr.ph, %bb.dt
   %i.xc = add nsw i32 %.03691055, %i.tz           ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %67) #24
   %indvars.iv.next1216 = add nuw nsw i64 %indvars.iv1215, 1 ; 2 uses
-  %exitcond1219.not = icmp eq i64 %indvars.iv.next1216, %wide.trip.count1218
+  %exitcond1219.not = icmp eq i64 %indvars.iv.next1216, %i.ox
   br i1 %exitcond1219.not, label %._crit_edge1058, label %.preheader863.preheader, !llvm.loop !118
 
 bb.du:                                            ; preds = %bb.ds, %bb.dr, %bb.dq

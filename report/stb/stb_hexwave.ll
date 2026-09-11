@@ -204,7 +204,7 @@ hex_blamp.exit:                                   ; preds = %.lr.ph.i.i.prol.loo
 
 bb.e:                                             ; preds = %hex_blamp.exit, %bb.b
   %i.cr = zext nneg i32 %1 to i64                 ; 2 uses
-  %i.cs = shl nuw nsw i64 %i.cr, 2
+  %i.cs = shl nuw nsw i64 %i.cr, 2                ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %0, i8 0, i64 %i.cs, i1 false)
   %i.ct = load i32, ptr @hexblep, align 8, !tbaa !23 ; 3 uses
   %i.cu = shl nsw i32 %i.ct, 1
@@ -607,9 +607,7 @@ scalar.ph428:                                     ; preds = %scalar.ph428.prehea
   br label %bb.z
 
 ._crit_edge202:                                   ; preds = %bb.y
-  %5 = zext nneg i32 %1 to i64
-  %6 = shl nuw nsw i64 %5, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %0, ptr nonnull align 16 %i.a, i64 %6, i1 false), !tbaa !17
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %0, ptr nonnull align 16 %i.a, i64 %i.cs, i1 false), !tbaa !17
   br label %bb.z
 
 bb.z:                                             ; preds = %._crit_edge202, %._crit_edge199

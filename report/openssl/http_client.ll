@@ -204,9 +204,8 @@ bb.ae:                                            ; preds = %.tail158.thread, %b
   br i1 %.not127, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %8 = trunc nuw i64 %indvars.iv to i32
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %i.bu = icmp sgt i32 %8, 1
+  %i.bu = icmp sgt i64 %indvars.iv, 1
   br i1 %i.bu, label %bb.ae, label %bb.ag, !llvm.loop !68
 
 .preheader:                                       ; preds = %.tail158, %.preheader
@@ -216,9 +215,7 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.ae, %bb.af
   %.098.lcssa = phi i64 [ %indvars.iv, %bb.ae ], [ 0, %bb.af ]
-  %sext = shl i64 %.098.lcssa, 32
-  %9 = ashr exact i64 %sext, 32
-  %i.bx = getelementptr inbounds i8, ptr %i.o, i64 %9
+  %i.bx = getelementptr inbounds i8, ptr %i.o, i64 %.098.lcssa
   store i8 0, ptr %i.bx, align 1, !tbaa !29
   tail call void @ERR_new() #10
   tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 1582, ptr noundef nonnull @__func__.OSSL_HTTP_proxy_connect) #10

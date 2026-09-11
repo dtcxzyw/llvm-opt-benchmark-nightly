@@ -202,10 +202,7 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
   %i.s = phi i64 [ %i.v, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6.thread ], [ %i.c, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit.preheader ]
   %.sroa.01.0.i30 = phi i64 [ %i.ak, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6.thread ], [ 2, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit.preheader ] ; 5 uses
   %i.t = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.01.0.i30 ; 3 uses
-  %3 = add nsw i64 %.sroa.01.0.i30, -1            ; 2 uses
-  %4 = icmp samesign ult i64 %3, %1
-  tail call void @llvm.assume(i1 %4)
-  %i.u = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %3 ; 2 uses
+  %i.u = getelementptr [96 x i8], ptr %0, i64 %.sroa.01.0.i30 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !346)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !347)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !348)
@@ -226,9 +223,9 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
   %i.y = load ptr, ptr %i.x, align 8, !alias.scope !350, !noalias !351, !nonnull !4, !noundef !4
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.aa = load i64, ptr %i.z, align 8, !alias.scope !350, !noalias !351, !noundef !4 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.u, i64 8
+  %i.ab = getelementptr i8, ptr %i.u, i64 -88
   %i.ac = load ptr, ptr %i.ab, align 8, !alias.scope !351, !noalias !350, !nonnull !4, !noundef !4
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.u, i64 16
+  %i.ad = getelementptr i8, ptr %i.u, i64 -80
   %i.ae = load i64, ptr %i.ad, align 8, !alias.scope !351, !noalias !350, !noundef !4 ; 2 uses
   %spec.store.select.i.i3 = tail call i64 @llvm.umin.i64(i64 %i.aa, i64 %i.ae)
   %i.af = tail call i32 @memcmp(ptr nonnull %i.y, ptr nonnull %i.ac, i64 %spec.store.select.i.i3), !noalias !352 ; 2 uses
@@ -242,16 +239,13 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
 _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6.thread: ; preds = %bb.d, %.split15, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6
   %i.ak = add nuw nsw i64 %.sroa.01.0.i30, 1      ; 2 uses
   %exitcond40.not = icmp eq i64 %i.ak, %1
-  br i1 %exitcond40.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1q_5ErrorENCINvMB6_SB12_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2W_31LocalFileSystemWithSortedListOpNtB1q_11ObjectStore16list_with_offsets_0E0EB2Y_.exit, label %.lr.ph31
+  br i1 %exitcond40.not, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBS_5ErrorE7reverseCsfxgMthLVlAZ_21influxdb3_clap_blocks.exit, label %.lr.ph31
 
 .lr.ph:                                           ; preds = %.preheader, %bb.f
   %i.al = phi i64 [ %i.ao, %bb.f ], [ %i.c, %.preheader ]
   %.sroa.01.1.i25 = phi i64 [ %i.bd, %bb.f ], [ 2, %.preheader ] ; 6 uses
   %i.am = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.01.1.i25 ; 3 uses
-  %5 = add nsw i64 %.sroa.01.1.i25, -1            ; 2 uses
-  %6 = icmp samesign ult i64 %5, %1
-  tail call void @llvm.assume(i1 %6)
-  %i.an = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %5 ; 2 uses
+  %i.an = getelementptr [96 x i8], ptr %0, i64 %.sroa.01.1.i25 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !353)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !354)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !355)
@@ -272,9 +266,9 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
   %i.ar = load ptr, ptr %i.aq, align 8, !alias.scope !357, !noalias !358, !nonnull !4, !noundef !4
   %i.as = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %i.at = load i64, ptr %i.as, align 8, !alias.scope !357, !noalias !358, !noundef !4 ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %i.an, i64 8
+  %i.au = getelementptr i8, ptr %i.an, i64 -88
   %i.av = load ptr, ptr %i.au, align 8, !alias.scope !358, !noalias !357, !nonnull !4, !noundef !4
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.an, i64 16
+  %i.aw = getelementptr i8, ptr %i.an, i64 -80
   %i.ax = load i64, ptr %i.aw, align 8, !alias.scope !358, !noalias !357, !noundef !4 ; 2 uses
   %spec.store.select.i.i7 = tail call i64 @llvm.umin.i64(i64 %i.at, i64 %i.ax)
   %i.ay = tail call i32 @memcmp(ptr nonnull %i.ar, ptr nonnull %i.av, i64 %spec.store.select.i.i7), !noalias !359 ; 2 uses
@@ -288,11 +282,11 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
 bb.f:                                             ; preds = %.split17, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit10
   %i.bd = add nuw nsw i64 %.sroa.01.1.i25, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %i.bd, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1q_5ErrorENCINvMB6_SB12_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2W_31LocalFileSystemWithSortedListOpNtB1q_11ObjectStore16list_with_offsets_0E0EB2Y_.exit, label %.lr.ph
+  br i1 %exitcond.not, label %.lr.ph.preheader.i.i, label %.lr.ph
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1q_5ErrorENCINvMB6_SB12_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2W_31LocalFileSystemWithSortedListOpNtB1q_11ObjectStore16list_with_offsets_0E0EB2Y_.exit: ; preds = %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit10, %bb.f, %.split17, %bb.e, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6.thread, %.split15, %.preheader, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit.preheader
-  %.sroa.3.0.i = phi i1 [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit.preheader ], [ true, %.preheader ], [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6 ], [ false, %.split15 ], [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6.thread ], [ true, %bb.e ], [ true, %.split17 ], [ true, %bb.f ], [ true, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit10 ]
-  %.sroa.0.0.i = phi i64 [ 2, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit.preheader ], [ 2, %.preheader ], [ %.sroa.01.0.i30, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6 ], [ %1, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6.thread ], [ %.sroa.01.0.i30, %.split15 ], [ %.sroa.01.1.i25, %bb.e ], [ %.sroa.01.1.i25, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit10 ], [ %1, %bb.f ], [ %.sroa.01.1.i25, %.split17 ] ; 2 uses
+_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1q_5ErrorENCINvMB6_SB12_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2W_31LocalFileSystemWithSortedListOpNtB1q_11ObjectStore16list_with_offsets_0E0EB2Y_.exit: ; preds = %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit10, %.split17, %bb.e, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6, %.split15, %.preheader, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit.preheader
+  %.sroa.3.0.i = phi i1 [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit.preheader ], [ true, %.preheader ], [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6 ], [ false, %.split15 ], [ true, %bb.e ], [ true, %.split17 ], [ true, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit10 ]
+  %.sroa.0.0.i = phi i64 [ 2, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit.preheader ], [ 2, %.preheader ], [ %.sroa.01.0.i30, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6 ], [ %.sroa.01.0.i30, %.split15 ], [ %.sroa.01.1.i25, %bb.e ], [ %.sroa.01.1.i25, %.split17 ], [ %.sroa.01.1.i25, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit10 ] ; 2 uses
   %i.be = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.be)
   %i.bf = icmp eq i64 %.sroa.0.0.i, %1
@@ -310,10 +304,10 @@ bb.h:                                             ; preds = %_RINvNtNtNtCs4NRVxs
   tail call fastcc void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort9quicksortINtNtBa_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1v_5ErrorENCINvMB8_SB17_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB31_31LocalFileSystemWithSortedListOpNtB1v_11ObjectStore16list_with_offsets_0E0EB33_(ptr noalias noundef nonnull align 8 %0, i64 noundef %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(96) null, i32 noundef %i.bk, ptr noalias noundef align 8 dereferenceable(8) %2)
   br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBS_5ErrorE7reverseCsfxgMthLVlAZ_21influxdb3_clap_blocks.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBS_5ErrorE7reverseCsfxgMthLVlAZ_21influxdb3_clap_blocks.exit: ; preds = %_RINvNtCs4NRVxsYgnAr_4core10intrinsics25typed_swap_nonoverlappingINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1o_5ErrorEECsfxgMthLVlAZ_21influxdb3_clap_blocks.exit.i.i, %bb.a, %bb.g, %bb.h
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBS_5ErrorE7reverseCsfxgMthLVlAZ_21influxdb3_clap_blocks.exit: ; preds = %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore16list_with_offsets_0E0B2e_.exit6.thread, %_RINvNtCs4NRVxsYgnAr_4core10intrinsics25typed_swap_nonoverlappingINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1o_5ErrorEECsfxgMthLVlAZ_21influxdb3_clap_blocks.exit.i.i, %bb.a, %bb.g, %bb.h
   ret void
 
-.lr.ph.preheader.i.i:                             ; preds = %bb.g
+.lr.ph.preheader.i.i:                             ; preds = %bb.f, %bb.g
   %i.bl = lshr i64 %1, 1
   %i.bm = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %1
   br label %.lr.ph.i.i
@@ -392,10 +386,7 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
   %i.s = phi i64 [ %i.v, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6.thread ], [ %i.c, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit.preheader ]
   %.sroa.01.0.i30 = phi i64 [ %i.ak, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6.thread ], [ 2, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit.preheader ] ; 5 uses
   %i.t = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.01.0.i30 ; 3 uses
-  %3 = add nsw i64 %.sroa.01.0.i30, -1            ; 2 uses
-  %4 = icmp samesign ult i64 %3, %1
-  tail call void @llvm.assume(i1 %4)
-  %i.u = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %3 ; 2 uses
+  %i.u = getelementptr [96 x i8], ptr %0, i64 %.sroa.01.0.i30 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !385)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !386)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !387)
@@ -416,9 +407,9 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
   %i.y = load ptr, ptr %i.x, align 8, !alias.scope !389, !noalias !390, !nonnull !4, !noundef !4
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.aa = load i64, ptr %i.z, align 8, !alias.scope !389, !noalias !390, !noundef !4 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.u, i64 8
+  %i.ab = getelementptr i8, ptr %i.u, i64 -88
   %i.ac = load ptr, ptr %i.ab, align 8, !alias.scope !390, !noalias !389, !nonnull !4, !noundef !4
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.u, i64 16
+  %i.ad = getelementptr i8, ptr %i.u, i64 -80
   %i.ae = load i64, ptr %i.ad, align 8, !alias.scope !390, !noalias !389, !noundef !4 ; 2 uses
   %spec.store.select.i.i3 = tail call i64 @llvm.umin.i64(i64 %i.aa, i64 %i.ae)
   %i.af = tail call i32 @memcmp(ptr nonnull %i.y, ptr nonnull %i.ac, i64 %spec.store.select.i.i3), !noalias !391 ; 2 uses
@@ -432,16 +423,13 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
 _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6.thread: ; preds = %bb.d, %.split15, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6
   %i.ak = add nuw nsw i64 %.sroa.01.0.i30, 1      ; 2 uses
   %exitcond40.not = icmp eq i64 %i.ak, %1
-  br i1 %exitcond40.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1q_5ErrorENCINvMB6_SB12_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2W_31LocalFileSystemWithSortedListOpNtB1q_11ObjectStore4lists_0E0EB2Y_.exit, label %.lr.ph31
+  br i1 %exitcond40.not, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBS_5ErrorE7reverseCsfxgMthLVlAZ_21influxdb3_clap_blocks.exit, label %.lr.ph31
 
 .lr.ph:                                           ; preds = %.preheader, %bb.f
   %i.al = phi i64 [ %i.ao, %bb.f ], [ %i.c, %.preheader ]
   %.sroa.01.1.i25 = phi i64 [ %i.bd, %bb.f ], [ 2, %.preheader ] ; 6 uses
   %i.am = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.01.1.i25 ; 3 uses
-  %5 = add nsw i64 %.sroa.01.1.i25, -1            ; 2 uses
-  %6 = icmp samesign ult i64 %5, %1
-  tail call void @llvm.assume(i1 %6)
-  %i.an = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %5 ; 2 uses
+  %i.an = getelementptr [96 x i8], ptr %0, i64 %.sroa.01.1.i25 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !392)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !393)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !394)
@@ -462,9 +450,9 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
   %i.ar = load ptr, ptr %i.aq, align 8, !alias.scope !396, !noalias !397, !nonnull !4, !noundef !4
   %i.as = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   %i.at = load i64, ptr %i.as, align 8, !alias.scope !396, !noalias !397, !noundef !4 ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %i.an, i64 8
+  %i.au = getelementptr i8, ptr %i.an, i64 -88
   %i.av = load ptr, ptr %i.au, align 8, !alias.scope !397, !noalias !396, !nonnull !4, !noundef !4
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.an, i64 16
+  %i.aw = getelementptr i8, ptr %i.an, i64 -80
   %i.ax = load i64, ptr %i.aw, align 8, !alias.scope !397, !noalias !396, !noundef !4 ; 2 uses
   %spec.store.select.i.i7 = tail call i64 @llvm.umin.i64(i64 %i.at, i64 %i.ax)
   %i.ay = tail call i32 @memcmp(ptr nonnull %i.ar, ptr nonnull %i.av, i64 %spec.store.select.i.i7), !noalias !398 ; 2 uses
@@ -478,11 +466,11 @@ _RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12obje
 bb.f:                                             ; preds = %.split17, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit10
   %i.bd = add nuw nsw i64 %.sroa.01.1.i25, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %i.bd, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1q_5ErrorENCINvMB6_SB12_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2W_31LocalFileSystemWithSortedListOpNtB1q_11ObjectStore4lists_0E0EB2Y_.exit, label %.lr.ph
+  br i1 %exitcond.not, label %.lr.ph.preheader.i.i, label %.lr.ph
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1q_5ErrorENCINvMB6_SB12_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2W_31LocalFileSystemWithSortedListOpNtB1q_11ObjectStore4lists_0E0EB2Y_.exit: ; preds = %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit10, %bb.f, %.split17, %bb.e, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6.thread, %.split15, %.preheader, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit.preheader
-  %.sroa.3.0.i = phi i1 [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit.preheader ], [ true, %.preheader ], [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6 ], [ false, %.split15 ], [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6.thread ], [ true, %bb.e ], [ true, %.split17 ], [ true, %bb.f ], [ true, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit10 ]
-  %.sroa.0.0.i = phi i64 [ 2, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit.preheader ], [ 2, %.preheader ], [ %.sroa.01.0.i30, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6 ], [ %1, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6.thread ], [ %.sroa.01.0.i30, %.split15 ], [ %.sroa.01.1.i25, %bb.e ], [ %.sroa.01.1.i25, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit10 ], [ %1, %bb.f ], [ %.sroa.01.1.i25, %.split17 ] ; 2 uses
+_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runINtNtB8_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1q_5ErrorENCINvMB6_SB12_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2W_31LocalFileSystemWithSortedListOpNtB1q_11ObjectStore4lists_0E0EB2Y_.exit: ; preds = %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit10, %.split17, %bb.e, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6, %.split15, %.preheader, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit.preheader
+  %.sroa.3.0.i = phi i1 [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit.preheader ], [ true, %.preheader ], [ false, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6 ], [ false, %.split15 ], [ true, %bb.e ], [ true, %.split17 ], [ true, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit10 ]
+  %.sroa.0.0.i = phi i64 [ 2, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit.preheader ], [ 2, %.preheader ], [ %.sroa.01.0.i30, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6 ], [ %.sroa.01.0.i30, %.split15 ], [ %.sroa.01.1.i25, %bb.e ], [ %.sroa.01.1.i25, %.split17 ], [ %.sroa.01.1.i25, %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit10 ] ; 2 uses
   %i.be = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.be)
   %i.bf = icmp eq i64 %.sroa.0.0.i, %1
@@ -500,10 +488,10 @@ bb.h:                                             ; preds = %_RINvNtNtNtCs4NRVxs
   tail call fastcc void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort9quicksortINtNtBa_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1v_5ErrorENCINvMB8_SB17_16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB31_31LocalFileSystemWithSortedListOpNtB1v_11ObjectStore4lists_0E0EB33_(ptr noalias noundef nonnull align 8 %0, i64 noundef %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(96) null, i32 noundef %i.bk, ptr noalias noundef align 8 dereferenceable(8) %2)
   br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBS_5ErrorE7reverseCsfxgMthLVlAZ_21influxdb3_clap_blocks.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBS_5ErrorE7reverseCsfxgMthLVlAZ_21influxdb3_clap_blocks.exit: ; preds = %_RINvNtCs4NRVxsYgnAr_4core10intrinsics25typed_swap_nonoverlappingINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1o_5ErrorEECsfxgMthLVlAZ_21influxdb3_clap_blocks.exit.i.i, %bb.a, %bb.g, %bb.h
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBS_5ErrorE7reverseCsfxgMthLVlAZ_21influxdb3_clap_blocks.exit: ; preds = %_RNCINvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB7_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtBV_5ErrorE16sort_unstable_byNCNvXs15_NtCsfxgMthLVlAZ_21influxdb3_clap_blocks12object_storeNtB2c_31LocalFileSystemWithSortedListOpNtBV_11ObjectStore4lists_0E0B2e_.exit6.thread, %_RINvNtCs4NRVxsYgnAr_4core10intrinsics25typed_swap_nonoverlappingINtNtB4_6result6ResultNtCs1LivM9IBWqb_12object_store10ObjectMetaNtB1o_5ErrorEECsfxgMthLVlAZ_21influxdb3_clap_blocks.exit.i.i, %bb.a, %bb.g, %bb.h
   ret void
 
-.lr.ph.preheader.i.i:                             ; preds = %bb.g
+.lr.ph.preheader.i.i:                             ; preds = %bb.f, %bb.g
   %i.bl = lshr i64 %1, 1
   %i.bm = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %1
   br label %.lr.ph.i.i

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 55
 inline.NumDeleted: 17
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 19
-loop-unroll.NumUnrolled: 20
+loop-unroll.NumRuntimeUnrolled: 20
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@write_callback:bb.a
   br i1 %niter1039.ncmp.3.not, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph632, !llvm.loop !107
 
@@ -205,7 +205,7 @@ bb.bv:                                            ; preds = %bb.bv, %.epil.prehe
 
 .loopexit532:                                     ; preds = %.preheader531, %.preheader534, %.loopexit532.loopexit659, %.loopexit532.loopexit657
   %.15 = phi i32 [ %i.va, %.loopexit532.loopexit657 ], [ 0, %.preheader534 ], [ %i.vb, %.loopexit532.loopexit659 ], [ 0, %.preheader531 ] ; 2 uses
-  %i.vc = shl i32 %.15, 2                         ; 4 uses
+  %i.vc = shl i32 %.15, 2                         ; 3 uses
   %.not646 = icmp eq i32 %i.vc, 0                 ; 2 uses
   br i1 %i.w, label %bb.bw, label %.critedge506
 
@@ -214,9 +214,9 @@ bb.bw:                                            ; preds = %.loopexit532
 
 .lr.ph605.preheader:                              ; preds = %bb.bw
   %i.vd = zext i32 %i.vc to i64
-  %i.ve = add nsw i64 %i.vd, -4                   ; 3 uses
+  %i.ve = add nsw i64 %i.vd, -4                   ; 5 uses
   %i.vf = lshr exact i64 %i.ve, 2
-  %i.vg = add nuw nsw i64 %i.vf, 1                ; 2 uses
+  %i.vg = add nuw nsw i64 %i.vf, 1                ; 4 uses
   %i.vh = icmp eq i64 %i.ve, 0
   br i1 %i.vh, label %.lr.ph605.epil.preheader, label %.lr.ph605.preheader.new
 
@@ -227,7 +227,7 @@ bb.bw:                                            ; preds = %.loopexit532
 .lr.ph608.preheader.unr-lcssa:                    ; preds = %.lr.ph605
   %i.vi = and i64 %i.ve, 4
   %lcmp.mod986.not.not = icmp eq i64 %i.vi, 0
-  br i1 %lcmp.mod986.not.not, label %.lr.ph605.epil.preheader, label %.lr.ph608.preheader.a
+  br i1 %lcmp.mod986.not.not, label %.lr.ph605.epil.preheader, label %.lr.ph608.preheader
 
 .lr.ph605.epil.preheader:                         ; preds = %.lr.ph608.preheader.unr-lcssa, %.lr.ph605.preheader
   %indvars.iv785.epil.init = phi i64 [ 0, %.lr.ph605.preheader ], [ %indvars.iv.next786.1, %.lr.ph608.preheader.unr-lcssa ]
@@ -237,10 +237,14 @@ bb.bw:                                            ; preds = %.loopexit532
   %i.vk = load <4 x i8>, ptr %i.vj, align 4, !tbaa !13
   %i.vl = shufflevector <4 x i8> %i.vk, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   store <4 x i8> %i.vl, ptr %i.vj, align 4, !tbaa !13
-  br label %.lr.ph608.preheader.a
+  br label %.lr.ph608.preheader
 
-.lr.ph608.preheader.a:                            ; preds = %.lr.ph608.preheader.unr-lcssa, %.lr.ph605.epil.preheader
-  %4 = zext i32 %i.vc to i64
+.lr.ph608.preheader:                              ; preds = %.lr.ph608.preheader.unr-lcssa, %.lr.ph605.epil.preheader
+  %4 = icmp eq i64 %i.ve, 0
+  br i1 %4, label %.lr.ph608.epil.preheader, label %.lr.ph608.preheader.a
+
+.lr.ph608.preheader.a:                            ; preds = %.lr.ph608.preheader
+  %unroll_iter980 = and i64 %i.vg, 9223372036854775806
   br label %.lr.ph608
 
 .lr.ph605:                                        ; preds = %.lr.ph605, %.lr.ph605.preheader.new
@@ -260,30 +264,51 @@ bb.bw:                                            ; preds = %.loopexit532
   %niter989.ncmp.1.not = icmp eq i64 %niter989.next.1, %unroll_iter988
   br i1 %niter989.ncmp.1.not, label %.lr.ph608.preheader.unr-lcssa, label %.lr.ph605, !llvm.loop !114
 
-.lr.ph608:                                        ; preds = %.lr.ph608.preheader.a, %.lr.ph608
-  %indvars.iv790 = phi i64 [ 0, %.lr.ph608.preheader.a ], [ %indvars.iv.next791, %.lr.ph608 ] ; 4 uses
-  %indvars.iv788 = phi i64 [ 0, %.lr.ph608.preheader.a ], [ %indvars.iv.next789, %.lr.ph608 ] ; 4 uses
-  %i.vt = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv790
+.lr.ph608:                                        ; preds = %.lr.ph608, %.lr.ph608.preheader.a
+  %indvars.iv784 = phi i64 [ 0, %.lr.ph608.preheader.a ], [ %indvars.iv.next791, %.lr.ph608 ] ; 5 uses
+  %indvars.iv790 = phi i64 [ 0, %.lr.ph608.preheader.a ], [ %indvars.iv.next789, %.lr.ph608 ] ; 5 uses
+  %indvars.iv788 = phi i64 [ 0, %.lr.ph608.preheader.a ], [ %niter981.next.1, %.lr.ph608 ]
+  %5 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv784
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %7 = load i8, ptr %6, align 1, !tbaa !13
+  %8 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv790
+  store i8 %7, ptr %8, align 2, !tbaa !13
+  %9 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv784
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 2
+  %11 = load i8, ptr %10, align 2, !tbaa !13
+  %12 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv790
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 1
+  store i8 %11, ptr %13, align 1, !tbaa !13
+  %indvars.iv.next785 = or disjoint i64 %indvars.iv784, 4 ; 3 uses
+  %14 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv784
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 3
+  %16 = load i8, ptr %15, align 1, !tbaa !13
+  %indvars.iv.next783 = add nuw nsw i64 %indvars.iv790, 3 ; 3 uses
+  %17 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv790
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 2
+  store i8 %16, ptr %18, align 2, !tbaa !13
+  %i.vt = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv.next785
   %i.vu = getelementptr inbounds nuw i8, ptr %i.vt, i64 1
   %i.vv = load i8, ptr %i.vu, align 1, !tbaa !13
-  %i.vw = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv788
+  %i.vw = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv.next783
   store i8 %i.vv, ptr %i.vw, align 1, !tbaa !13
-  %i.vx = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv790
+  %i.vx = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv.next785
   %i.vy = getelementptr inbounds nuw i8, ptr %i.vx, i64 2
   %i.vz = load i8, ptr %i.vy, align 2, !tbaa !13
-  %i.wa = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv788
+  %i.wa = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv.next783
   %i.wb = getelementptr inbounds nuw i8, ptr %i.wa, i64 1
-  store i8 %i.vz, ptr %i.wb, align 1, !tbaa !13
-  %indvars.iv.next791 = add nuw nsw i64 %indvars.iv790, 4 ; 2 uses
-  %i.wc = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv790
+  store i8 %i.vz, ptr %i.wb, align 2, !tbaa !13
+  %indvars.iv.next791 = add nuw nsw i64 %indvars.iv784, 8 ; 2 uses
+  %i.wc = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv.next785
   %i.wd = getelementptr inbounds nuw i8, ptr %i.wc, i64 3
   %i.we = load i8, ptr %i.wd, align 1, !tbaa !13
-  %indvars.iv.next789 = add nuw nsw i64 %indvars.iv788, 3
-  %i.wf = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv788
+  %indvars.iv.next789 = add nuw nsw i64 %indvars.iv790, 6 ; 2 uses
+  %i.wf = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv.next783
   %i.wg = getelementptr inbounds nuw i8, ptr %i.wf, i64 2
   store i8 %i.we, ptr %i.wg, align 1, !tbaa !13
-  %5 = icmp samesign ult i64 %indvars.iv.next791, %4
-  br i1 %5, label %.lr.ph608, label %.loopexit528, !llvm.loop !115
+  %niter981.next.1 = add i64 %indvars.iv788, 2    ; 2 uses
+  %niter981.ncmp.1.not = icmp eq i64 %niter981.next.1, %unroll_iter980
+  br i1 %niter981.ncmp.1.not, label %.loopexit528.loopexit.unr-lcssa, label %.lr.ph608, !llvm.loop !115
 
 .critedge506:                                     ; preds = %.loopexit532
   br i1 %.not646, label %.loopexit528, label %.lr.ph602.preheader
@@ -344,6 +369,35 @@ bb.bw:                                            ; preds = %.loopexit532
   %niter983.ncmp.1.not = icmp eq i64 %niter983.next.1, %unroll_iter982
   br i1 %niter983.ncmp.1.not, label %.loopexit528.loopexit921.unr-lcssa, label %.lr.ph602, !llvm.loop !116
 
+.loopexit528.loopexit.unr-lcssa:                  ; preds = %.lr.ph608
+  %19 = and i64 %i.ve, 4
+  %lcmp.mod978.not.not = icmp eq i64 %19, 0
+  br i1 %lcmp.mod978.not.not, label %.lr.ph608.epil.preheader, label %.loopexit528
+
+.lr.ph608.epil.preheader:                         ; preds = %.loopexit528.loopexit.unr-lcssa, %.lr.ph608.preheader
+  %indvars.iv784.epil.init = phi i64 [ 0, %.lr.ph608.preheader ], [ %indvars.iv.next791, %.loopexit528.loopexit.unr-lcssa ] ; 3 uses
+  %indvars.iv782.epil.init = phi i64 [ 0, %.lr.ph608.preheader ], [ %indvars.iv.next789, %.loopexit528.loopexit.unr-lcssa ] ; 3 uses
+  %lcmp.mod979 = trunc i64 %i.vg to i1
+  call void @llvm.assume(i1 %lcmp.mod979)
+  %20 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv784.epil.init
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 1
+  %22 = load i8, ptr %21, align 1, !tbaa !13
+  %23 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv782.epil.init
+  store i8 %22, ptr %23, align 1, !tbaa !13
+  %24 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv784.epil.init
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 2
+  %26 = load i8, ptr %25, align 2, !tbaa !13
+  %27 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv782.epil.init
+  %28 = getelementptr inbounds nuw i8, ptr %27, i64 1
+  store i8 %26, ptr %28, align 1, !tbaa !13
+  %29 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv784.epil.init
+  %30 = getelementptr inbounds nuw i8, ptr %29, i64 3
+  %31 = load i8, ptr %30, align 1, !tbaa !13
+  %32 = getelementptr inbounds nuw i8, ptr @write_callback.ubuf, i64 %indvars.iv782.epil.init
+  %33 = getelementptr inbounds nuw i8, ptr %32, i64 2
+  store i8 %31, ptr %33, align 1, !tbaa !13
+  br label %.loopexit528
+
 .loopexit528.loopexit921.unr-lcssa:               ; preds = %.lr.ph602
   %i.xm = and i64 %i.wi, 4
   %lcmp.mod980.not.not = icmp eq i64 %i.xm, 0
@@ -372,7 +426,7 @@ bb.bw:                                            ; preds = %.loopexit532
   store i8 %i.xx, ptr %i.xz, align 1, !tbaa !13
   br label %.loopexit528
 
-.loopexit528:                                     ; preds = %.lr.ph602.epil.preheader, %.loopexit528.loopexit921.unr-lcssa, %.lr.ph608, %bb.bw, %.critedge506
+.loopexit528:                                     ; preds = %.lr.ph602.epil.preheader, %.loopexit528.loopexit921.unr-lcssa, %.lr.ph608.epil.preheader, %.loopexit528.loopexit.unr-lcssa, %bb.bw, %.critedge506
   %i.ya = mul i32 %.15, 3
   %i.yb = zext i32 %i.ya to i64
   br label %.loopexit538

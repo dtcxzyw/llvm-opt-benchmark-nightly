@@ -203,7 +203,7 @@ bb.a:
   br i1 %.not67, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.b = zext i32 %2 to i64                       ; 3 uses
+  %i.b = zext i32 %2 to i64                       ; 5 uses
   %i.c = add nsw i64 %i.b, -1
   %i.d = lshr i64 %i.c, 1
   %i.e = add nuw i64 %i.d, 1                      ; 2 uses
@@ -298,7 +298,6 @@ middle.block:                                     ; preds = %vector.body
   %i.at = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @qmf_window, i64 168), align 8, !tbaa !10 ; 3 uses
   %i.au = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @qmf_window, i64 176), align 16, !tbaa !10 ; 3 uses
   %i.av = load <2 x float>, ptr getelementptr inbounds nuw (i8, ptr @qmf_window, i64 184), align 8, !tbaa !10 ; 3 uses
-  %6 = zext i32 %2 to i64                         ; 2 uses
   %min.iters.check95 = icmp ult i32 %2, 4
   br i1 %min.iters.check95, label %.preheader.preheader274, label %vector.memcheck88
 
@@ -316,7 +315,7 @@ vector.memcheck88:                                ; preds = %.preheader.preheade
   br i1 %found.conflict93, label %.preheader.preheader274, label %vector.ph96
 
 vector.ph96:                                      ; preds = %vector.memcheck88
-  %n.vec97 = and i64 %6, 4294967292               ; 4 uses
+  %n.vec97 = and i64 %i.b, 4294967292             ; 4 uses
   %i.bb = shl nuw nsw i64 %n.vec97, 3             ; 2 uses
   %i.bc = getelementptr i8, ptr %5, i64 %i.bb
   %i.bd = trunc nuw i64 %n.vec97 to i32
@@ -527,7 +526,7 @@ vector.body192:                                   ; preds = %vector.body192, %ve
   br i1 %i.ea, label %middle.block269, label %vector.body192, !llvm.loop !41
 
 middle.block269:                                  ; preds = %vector.body192
-  %cmp.n270 = icmp eq i64 %n.vec97, %6
+  %cmp.n270 = icmp eq i64 %n.vec97, %i.b
   br i1 %cmp.n270, label %._crit_edge, label %.preheader.preheader274
 
 .preheader.preheader274:                          ; preds = %vector.memcheck88, %.preheader.preheader, %middle.block269

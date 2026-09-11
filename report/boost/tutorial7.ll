@@ -205,8 +205,7 @@ _ZNSt6vectorIN5boost10filesystem4pathESaIS2_EE7reserveEm.exit: ; preds = %_ZNSt6
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 11 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %0, i32 2)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext nneg i32 %0 to i64
   br label %bb.f
 
 ._crit_edge.loopexit:                             ; preds = %bb.t
@@ -608,9 +607,6 @@ declare i32 @llvm.umax.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #26
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #25
 
 attributes #0 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

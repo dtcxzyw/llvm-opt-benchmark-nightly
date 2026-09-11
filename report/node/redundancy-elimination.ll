@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %_ZNK2v88internal8co
 
 bb.u:                                             ; preds = %.lr.ph76, %bb.t
   %indvars.iv.i75 = phi i64 [ %i.av, %.lr.ph76 ], [ %indvars.iv.next.i, %bb.t ]
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i75, -1 ; 3 uses
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i75, -1 ; 4 uses
   br i1 %.not.i.i.i, label %bb.v, label %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i
 
 bb.v:                                             ; preds = %bb.u
@@ -216,8 +216,7 @@ bb.v:                                             ; preds = %bb.u
 
 _ZNK2v88internal8compiler4Node7InputAtEi.exit.i:  ; preds = %bb.v, %bb.u
   %.sink.i.i.i = phi ptr [ %i.bf, %bb.v ], [ %i.at, %bb.u ]
-  %6 = and i64 %indvars.iv.next.i, 4294967295     ; 2 uses
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %.sink.i.i.i, i64 %6
+  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %.sink.i.i.i, i64 %indvars.iv.next.i
   %i.bh = load ptr, ptr %i.bg, align 8
   br i1 %.not.i.i69.i, label %bb.w, label %_ZNK2v88internal8compiler4Node7InputAtEi.exit71.i
 
@@ -230,7 +229,7 @@ bb.w:                                             ; preds = %_ZNK2v88internal8co
 
 _ZNK2v88internal8compiler4Node7InputAtEi.exit71.i: ; preds = %bb.w, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i
   %.sink.i.i70.i = phi ptr [ %i.bl, %bb.w ], [ %i.e, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.i ]
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %.sink.i.i70.i, i64 %6
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %.sink.i.i70.i, i64 %indvars.iv.next.i
   %i.bn = load ptr, ptr %i.bm, align 8
   %.not66.i = icmp eq ptr %i.bh, %i.bn
   br i1 %.not66.i, label %bb.t, label %_ZN2v88internal8compiler12_GLOBAL__N_113CheckSubsumesEPKNS1_4NodeES5_PNS1_22MachineOperatorBuilderE.exit.thread, !llvm.loop !23

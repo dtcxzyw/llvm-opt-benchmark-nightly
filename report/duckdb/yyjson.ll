@@ -204,7 +204,7 @@ _ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit706: ; preds = %bb.fh, %bb.fk
   %i.aqh = icmp samesign ult i64 %.11609, 1000000000000000
   %.neg129.i = sext i1 %i.aqh to i32
   %i.aqi = add nsw i32 %i.aqg, %.neg129.i
-  %i.aqj = add nsw i32 %i.aqi, %storemerge.i704   ; 8 uses
+  %i.aqj = add nsw i32 %i.aqi, %storemerge.i704   ; 7 uses
   %i.aqk = add nsw i32 %i.aqj, 5
   %or.cond3.i = icmp ult i32 %i.aqk, 27
   %i.aql = udiv i64 %.11609, 100000000            ; 2 uses
@@ -571,10 +571,9 @@ bb.fz:                                            ; preds = %bb.fx
   %.0.i863 = getelementptr inbounds nuw i8, ptr %i.awa, i64 %.pn.i862 ; 2 uses
   %i.azs = getelementptr i8, ptr %i.adn, i64 %.lobit.i624
   %scevgep3718 = getelementptr i8, ptr %i.azs, i64 1
-  %i.azt = zext nneg i32 %i.aqj to i64
+  %i.azt = zext nneg i32 %i.aqj to i64            ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aee, ptr align 1 %scevgep3718, i64 %i.azt, i1 false), !tbaa !99
-  %6 = zext nneg i32 %i.aqj to i64
-  %i.azu = getelementptr inbounds nuw i8, ptr %i.aee, i64 %6 ; 2 uses
+  %i.azu = getelementptr inbounds nuw i8, ptr %i.aee, i64 %i.azt ; 2 uses
   store i8 46, ptr %i.azu, align 1, !tbaa !99
   %i.azv = getelementptr inbounds nuw i8, ptr %i.azu, i64 2 ; 2 uses
   %i.azw = icmp ult ptr %i.azv, %.0.i863
@@ -977,7 +976,7 @@ _ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit136.i: ; preds = %bb.fk, %bb.fh
   %i.aqh = icmp samesign ult i64 %.0775, 1000000000000000
   %.neg129.i.i = sext i1 %i.aqh to i32
   %i.aqi = add nsw i32 %i.aqg, %.neg129.i.i
-  %i.aqj = add nsw i32 %i.aqi, %storemerge.i134.i ; 8 uses
+  %i.aqj = add nsw i32 %i.aqi, %storemerge.i134.i ; 7 uses
   %i.aqk = add nsw i32 %i.aqj, 5
   %or.cond3.i.i = icmp ult i32 %i.aqk, 27
   %i.aql = udiv i64 %.0775, 100000000             ; 2 uses
@@ -1344,10 +1343,9 @@ bb.fz:                                            ; preds = %bb.fx
   %i.azv = getelementptr inbounds nuw i8, ptr %i.awc, i64 %i.azu ; 2 uses
   %i.azw = getelementptr i8, ptr %i.adn, i64 %.lobit.i120.i
   %scevgep2901 = getelementptr i8, ptr %i.azw, i64 1
-  %i.azx = zext nneg i32 %i.aqj to i64
+  %i.azx = zext nneg i32 %i.aqj to i64            ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aee, ptr align 1 %scevgep2901, i64 %i.azx, i1 false), !tbaa !99
-  %7 = zext nneg i32 %i.aqj to i64
-  %i.azy = getelementptr inbounds nuw i8, ptr %i.aee, i64 %7 ; 2 uses
+  %i.azy = getelementptr inbounds nuw i8, ptr %i.aee, i64 %i.azx ; 2 uses
   store i8 46, ptr %i.azy, align 1, !tbaa !99
   %i.azz = getelementptr inbounds nuw i8, ptr %i.azy, i64 2 ; 2 uses
   %i.baa = icmp ult ptr %i.azz, %i.azv

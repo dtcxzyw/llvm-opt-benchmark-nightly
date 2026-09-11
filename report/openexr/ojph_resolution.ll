@@ -205,7 +205,7 @@ tailrecurse:                                      ; preds = %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
   %i.o = getelementptr inbounds nuw i8, ptr %.tr110, i64 36
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !103  ; 31 uses
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !103  ; 34 uses
   %i.q = icmp eq i32 %i.p, 0
   br i1 %i.q, label %bb.bs, label %bb.c
 
@@ -577,18 +577,16 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.not84 = icmp eq i32 %i.hy, 0
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hv, i64 16
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !62 ; 6 uses
-  %3 = add i32 %i.p, -1                           ; 3 uses
-  %i.ib = zext i32 %3 to i64
-  %4 = add nuw nsw i64 %i.ib, 1                   ; 4 uses
+  %i.ib = zext i32 %i.p to i64                    ; 4 uses
   br i1 %.not84, label %.lr.ph128.preheader, label %.lr.ph123.preheader
 
 .lr.ph123.preheader:                              ; preds = %bb.ag
-  %min.iters.check202 = icmp ult i32 %3, 7
+  %min.iters.check202 = icmp ult i32 %i.p, 8
   br i1 %min.iters.check202, label %.lr.ph123.preheader232, label %vector.ph203
 
 vector.ph203:                                     ; preds = %.lr.ph123.preheader
-  %n.vec204 = and i64 %4, 8589934584              ; 4 uses
-  %i.ic = trunc i64 %n.vec204 to i32
+  %n.vec204 = and i64 %i.ib, 4294967288           ; 4 uses
+  %i.ic = trunc nuw i64 %n.vec204 to i32
   %i.id = sub i32 %i.p, %i.ic
   %i.ie = shl nuw nsw i64 %n.vec204, 2
   %i.if = getelementptr i8, ptr %i.ia, i64 %i.ie
@@ -610,7 +608,7 @@ vector.body205:                                   ; preds = %vector.body205, %ve
   br i1 %i.ik, label %middle.block211, label %vector.body205, !llvm.loop !167
 
 middle.block211:                                  ; preds = %vector.body205
-  %cmp.n212 = icmp eq i64 %4, %n.vec204
+  %cmp.n212 = icmp eq i64 %n.vec204, %i.ib
   br i1 %cmp.n212, label %.loopexit, label %.lr.ph123.preheader232
 
 .lr.ph123.preheader232:                           ; preds = %.lr.ph123.preheader, %middle.block211
@@ -619,12 +617,12 @@ middle.block211:                                  ; preds = %vector.body205
   br label %.lr.ph123
 
 .lr.ph128.preheader:                              ; preds = %bb.ag
-  %min.iters.check216 = icmp ult i32 %3, 3
+  %min.iters.check216 = icmp ult i32 %i.p, 4
   br i1 %min.iters.check216, label %.lr.ph128.preheader231, label %vector.ph217
 
 vector.ph217:                                     ; preds = %.lr.ph128.preheader
-  %n.vec218 = and i64 %4, 8589934588              ; 4 uses
-  %i.il = trunc i64 %n.vec218 to i32
+  %n.vec218 = and i64 %i.ib, 4294967292           ; 4 uses
+  %i.il = trunc nuw i64 %n.vec218 to i32
   %i.im = sub i32 %i.p, %i.il
   %i.in = shl nuw nsw i64 %n.vec218, 3
   %i.io = getelementptr i8, ptr %i.ia, i64 %i.in
@@ -646,7 +644,7 @@ vector.body219:                                   ; preds = %vector.body219, %ve
   br i1 %i.it, label %middle.block225, label %vector.body219, !llvm.loop !168
 
 middle.block225:                                  ; preds = %vector.body219
-  %cmp.n226 = icmp eq i64 %4, %n.vec218
+  %cmp.n226 = icmp eq i64 %n.vec218, %i.ib
   br i1 %cmp.n226, label %.loopexit, label %.lr.ph128.preheader231
 
 .lr.ph128.preheader231:                           ; preds = %.lr.ph128.preheader, %middle.block225
@@ -1019,15 +1017,13 @@ bb.bi:                                            ; preds = %bb.bg
   %i.qn = load ptr, ptr %i.qm, align 8, !tbaa !97
   %i.qo = getelementptr inbounds nuw i8, ptr %i.qn, i64 16
   %i.qp = load ptr, ptr %i.qo, align 8, !tbaa !62 ; 3 uses
-  %5 = add i32 %i.p, -1                           ; 2 uses
-  %i.qq = zext i32 %5 to i64
-  %6 = add nuw nsw i64 %i.qq, 1                   ; 2 uses
-  %min.iters.check = icmp ult i32 %5, 7
+  %i.qq = zext i32 %i.p to i64                    ; 2 uses
+  %min.iters.check = icmp ult i32 %i.p, 8
   br i1 %min.iters.check, label %.lr.ph114.preheader237, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph114.preheader
-  %n.vec = and i64 %6, 8589934584                 ; 4 uses
-  %i.qr = trunc i64 %n.vec to i32
+  %n.vec = and i64 %i.qq, 4294967288              ; 4 uses
+  %i.qr = trunc nuw i64 %n.vec to i32
   %i.qs = sub i32 %i.p, %i.qr
   %i.qt = shl nuw nsw i64 %n.vec, 2
   %i.qu = getelementptr i8, ptr %i.qp, i64 %i.qt
@@ -1049,7 +1045,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.qz, label %middle.block, label %vector.body, !llvm.loop !173
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %i.qq
   br i1 %cmp.n, label %.loopexit97, label %.lr.ph114.preheader237
 
 .lr.ph114.preheader237:                           ; preds = %.lr.ph114.preheader, %middle.block

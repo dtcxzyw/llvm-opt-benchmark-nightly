@@ -202,11 +202,7 @@ bb.c:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %.peel.next, %bb.c
   %.032.lcssa = phi i32 [ 2, %bb.c ], [ %.pre44, %.peel.next ]
   %.not = icmp eq i32 %0, 0
-  br i1 %.not, label %.loopexit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %umax = tail call i32 @llvm.umax.i32(i32 %0, i32 2)
-  br label %.lr.ph
+  br i1 %.not, label %.loopexit, label %.lr.ph
 
 .peel.next:                                       ; preds = %bb.d
   %i.d = add i32 %i.i, %.03138                    ; 2 uses
@@ -232,13 +228,13 @@ bb.d:                                             ; preds = %.preheader34, %bb.d
   %exitcond.not = icmp eq i32 %.03036, %i.c
   br i1 %exitcond.not, label %.peel.next, label %bb.d, !llvm.loop !71
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.040 = phi i32 [ %i.l, %.lr.ph ], [ 1, %.lr.ph.preheader ]
-  %.239 = phi i32 [ %i.k, %.lr.ph ], [ %.032.lcssa, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %.preheader, %.lr.ph
+  %.040 = phi i32 [ %i.l, %.lr.ph ], [ 1, %.preheader ]
+  %.239 = phi i32 [ %i.k, %.lr.ph ], [ %.032.lcssa, %.preheader ] ; 2 uses
   %i.k = add i32 %.239, 1                         ; 2 uses
   tail call void %1(i32 noundef %.239, i32 noundef %i.k) #15
   %i.l = add nuw i32 %.040, 1                     ; 2 uses
-  %exitcond43.not = icmp eq i32 %i.l, %umax
+  %exitcond43.not = icmp eq i32 %i.l, %0
   br i1 %exitcond43.not, label %.loopexit, label %.lr.ph, !llvm.loop !72
 
 .loopexit:                                        ; preds = %.lr.ph, %.preheader, %bb.b
@@ -555,7 +551,6 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph:                                           ; preds = %..loopexit_crit_edge, %.preheader65
   %i.q = add i32 %0, -1
   %i.r = mul i32 %i.q, %1                         ; 2 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %1, i32 2)
   br label %bb.f
 
 bb.e:                                             ; preds = %.preheader66, %bb.e
@@ -571,11 +566,7 @@ bb.e:                                             ; preds = %.preheader66, %bb.e
 
 .preheader:                                       ; preds = %bb.f, %.preheader65
   %.not73 = icmp eq i32 %0, 0
-  br i1 %.not73, label %._crit_edge, label %.lr.ph72.preheader
-
-.lr.ph72.preheader:                               ; preds = %.preheader
-  %umax77 = tail call i32 @llvm.umax.i32(i32 %0, i32 2)
-  br label %.lr.ph72
+  br i1 %.not73, label %._crit_edge, label %.lr.ph72
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
   %.05470 = phi i32 [ 1, %.lr.ph ], [ %i.x, %bb.f ] ; 2 uses
@@ -583,15 +574,15 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.x = add nuw i32 %.05470, 1                   ; 3 uses
   %i.y = add i32 %i.x, %i.r
   tail call void %2(i32 noundef %i.w, i32 noundef %i.y) #15
-  %exitcond76.not = icmp eq i32 %i.x, %umax
+  %exitcond76.not = icmp eq i32 %i.x, %1
   br i1 %exitcond76.not, label %.preheader, label %bb.f, !llvm.loop !82
 
 ._crit_edge:                                      ; preds = %.lr.ph72, %.preheader
   %i.z = mul i32 %1, %0
   br label %makePath.exit.sink.split
 
-.lr.ph72:                                         ; preds = %.lr.ph72.preheader, %.lr.ph72
-  %.071 = phi i32 [ %i.ab, %.lr.ph72 ], [ 1, %.lr.ph72.preheader ] ; 3 uses
+.lr.ph72:                                         ; preds = %.preheader, %.lr.ph72
+  %.071 = phi i32 [ %i.ab, %.lr.ph72 ], [ 1, %.preheader ] ; 3 uses
   %i.aa = mul i32 %.071, %1                       ; 2 uses
   %i.ab = add nuw i32 %.071, 1                    ; 3 uses
   %i.ac = mul i32 %i.ab, %1
@@ -600,7 +591,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.ae = mul i32 %i.ad, %1
   %i.af = add i32 %i.ae, 1
   tail call void %2(i32 noundef %i.aa, i32 noundef %i.af) #15
-  %exitcond78.not = icmp eq i32 %i.ab, %umax77
+  %exitcond78.not = icmp eq i32 %i.ab, %0
   br i1 %exitcond78.not, label %._crit_edge, label %.lr.ph72, !llvm.loop !83
 
 makePath.exit.sink.split:                         ; preds = %bb.b, %._crit_edge

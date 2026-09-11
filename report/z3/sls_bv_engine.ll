@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNK3app13get_family_idEv.exit:                   ; preds = %bb.a, %bb.b
   %i.g = phi i32 [ %i.f, %bb.b ], [ -1, %bb.a ]   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !345  ; 22 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !345  ; 21 uses
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %bb.c, label %bb.k
 
@@ -608,8 +608,7 @@ _ZN11sls_tracker9get_valueEP4expr.exit451:        ; preds = %bb.ay, %bb.bb
 
 .lr.ph773:                                        ; preds = %_ZN11sls_tracker9get_valueEP4expr.exit451
   %i.je = getelementptr inbounds nuw i8, ptr %.026.i.i.i.i450, i64 20
-  %umax885 = tail call i32 @llvm.umax.i32(i32 %i.i, i32 2)
-  %wide.trip.count886 = zext i32 %umax885 to i64
+  %wide.trip.count886 = zext i32 %i.i to i64
   br label %bb.be
 
 bb.bd:                                            ; preds = %.split1003, %_ZN11mpz_managerILb0EE3neqERK3mpzS3_.exit470
@@ -761,8 +760,7 @@ bb.bq:                                            ; preds = %bb.bo
 _ZN11mpz_managerILb0EE3setER3mpzRKS1_.exit472:    ; preds = %bb.bp, %bb.bq
   %i.ln = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 4 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %43 = zext i32 %i.i to i64
-  %wide.trip.count880 = zext i32 %i.i to i64
+  %wide.trip.count880 = zext i32 %i.i to i64      ; 2 uses
   br label %bb.br
 
 bb.br:                                            ; preds = %_ZN11mpz_managerILb0EE3setER3mpzRKS1_.exit472, %.critedge2
@@ -778,7 +776,7 @@ bb.br:                                            ; preds = %_ZN11mpz_managerILb
 
 bb.bs:                                            ; preds = %bb.br
   %indvars.iv.next877 = add nuw nsw i64 %indvars.iv876, 1 ; 3 uses
-  %i.lv = icmp samesign ult i64 %indvars.iv.next877, %43
+  %i.lv = icmp samesign ult i64 %indvars.iv.next877, %wide.trip.count880
   br i1 %i.lv, label %.lr.ph769, label %.critedge2
 
 .lr.ph769:                                        ; preds = %bb.bs

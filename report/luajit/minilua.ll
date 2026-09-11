@@ -205,8 +205,7 @@ lua_rawseti.exit:                                 ; preds = %luaH_setnum.exit.i,
   br i1 %.not29, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %smax = tail call i32 @llvm.smax.i32(i32 %0, i32 3)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext nneg i32 %0 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

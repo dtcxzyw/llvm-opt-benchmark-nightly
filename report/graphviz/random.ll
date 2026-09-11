@@ -72,8 +72,8 @@ gv_calloc.exit:                                   ; preds = %gv_calloc.exit.preh
   br i1 %exitcond.not, label %.preheader, label %gv_calloc.exit, !llvm.loop !11
 
 .lr.ph27:                                         ; preds = %.preheader, %gv_random.exit
-  %indvars.iv30 = phi i64 [ %indvars.iv.next31, %gv_random.exit ], [ %i.b, %.preheader ] ; 2 uses
-  %i.m = trunc nuw i64 %indvars.iv30 to i32       ; 3 uses
+  %indvars.iv30 = phi i64 [ %indvars.iv.next31, %gv_random.exit ], [ %i.b, %.preheader ] ; 3 uses
+  %i.m = trunc nuw nsw i64 %indvars.iv30 to i32   ; 2 uses
   %i.n = urem i32 -2147483648, %i.m
   %i.o = sub nuw nsw i32 2147483647, %i.n
   br label %bb.d
@@ -86,15 +86,14 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph27
 gv_random.exit:                                   ; preds = %bb.d
   %indvars.iv.next31 = add nsw i64 %indvars.iv30, -1 ; 2 uses
   %i.r = srem i32 %i.p, %i.m
-  %1 = and i64 %indvars.iv.next31, 4294967295
-  %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %1 ; 2 uses
+  %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next31 ; 2 uses
   %.sroa.0.0.copyload = load i32, ptr %i.s, align 4
   %i.t = sext i32 %i.r to i64
   %i.u = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.t ; 2 uses
   %i.v = load i32, ptr %i.u, align 4, !tbaa !13
   store i32 %i.v, ptr %i.s, align 4, !tbaa !13
   store i32 %.sroa.0.0.copyload, ptr %i.u, align 4
-  %i.w = icmp sgt i32 %i.m, 2
+  %i.w = icmp sgt i64 %indvars.iv30, 2
   br i1 %i.w, label %.lr.ph27, label %.loopexit, !llvm.loop !12
 
 .loopexit:                                        ; preds = %gv_random.exit, %.preheader, %bb.a

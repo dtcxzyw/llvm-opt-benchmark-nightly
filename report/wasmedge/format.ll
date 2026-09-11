@@ -205,8 +205,7 @@ bb.ed:                                            ; preds = %_ZN3fmt3v116detail1
   %indvars.iv534 = phi i64 [ %indvars.iv.next535, %bb.ef ], [ %i.yg, %bb.ed ] ; 3 uses
   %indvars.iv.next535 = add nsw i64 %indvars.iv534, -1 ; 2 uses
   %i.abq = load ptr, ptr %3, align 8, !tbaa !85
-  %9 = and i64 %indvars.iv.next535, 4294967295
-  %i.abr = getelementptr inbounds nuw i8, ptr %i.abq, i64 %9 ; 2 uses
+  %i.abr = getelementptr inbounds nuw i8, ptr %i.abq, i64 %indvars.iv.next535 ; 2 uses
   %i.abs = load i8, ptr %i.abr, align 1, !tbaa !82
   %i.abt = icmp eq i8 %i.abs, 58
   br i1 %i.abt, label %bb.ef, label %.critedge
@@ -230,9 +229,8 @@ bb.ef:                                            ; preds = %.lr.ph494
   %i.acb = load i8, ptr %i.aca, align 1, !tbaa !82
   %i.acc = add i8 %i.acb, 1
   store i8 %i.acc, ptr %i.aca, align 1, !tbaa !82
-  %10 = trunc nuw i64 %indvars.iv534 to i32
-  %11 = icmp sgt i32 %10, 2
-  br i1 %11, label %.lr.ph494, label %.critedge, !llvm.loop !517
+  %9 = icmp samesign ugt i64 %indvars.iv534, 2
+  br i1 %9, label %.lr.ph494, label %.critedge, !llvm.loop !517
 
 bb.eg:                                            ; preds = %.critedge
   store i8 49, ptr %i.abu, align 1, !tbaa !82
@@ -635,8 +633,7 @@ bb.as:                                            ; preds = %.thread293
   %indvars.iv = phi i64 [ %i.jp, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.at ] ; 3 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
   %i.jq = load ptr, ptr %3, align 8, !tbaa !85
-  %5 = and i64 %indvars.iv.next, 4294967295
-  %i.jr = getelementptr inbounds nuw i8, ptr %i.jq, i64 %5 ; 2 uses
+  %i.jr = getelementptr inbounds nuw i8, ptr %i.jq, i64 %indvars.iv.next ; 2 uses
   %i.js = load i8, ptr %i.jr, align 1, !tbaa !82
   %i.jt = icmp sgt i8 %i.js, 57
   br i1 %i.jt, label %bb.at, label %.critedge
@@ -656,9 +653,8 @@ bb.at:                                            ; preds = %.lr.ph
   %i.kb = load i8, ptr %i.ka, align 1, !tbaa !82
   %i.kc = add i8 %i.kb, 1
   store i8 %i.kc, ptr %i.ka, align 1, !tbaa !82
-  %6 = trunc nuw i64 %indvars.iv to i32
-  %7 = icmp sgt i32 %6, 2
-  br i1 %7, label %.lr.ph, label %.critedge, !llvm.loop !765
+  %5 = icmp samesign ugt i64 %indvars.iv, 2
+  br i1 %5, label %.lr.ph, label %.critedge, !llvm.loop !765
 
 bb.au:                                            ; preds = %.critedge
   store i8 49, ptr %i.jv, align 1, !tbaa !82

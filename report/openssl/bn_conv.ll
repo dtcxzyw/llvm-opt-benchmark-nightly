@@ -204,6 +204,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.f
+  %indvars.iv83 = phi i32 [ -1, %bb.d ], [ %indvars.iv.next84, %bb.f ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %bb.f ] ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.054, i64 %indvars.iv
   %i.e = load i8, ptr %i.d, align 1, !tbaa !13
@@ -215,6 +216,7 @@ bb.e:                                             ; preds = %bb.d, %bb.f
 bb.f:                                             ; preds = %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 536870912
+  %indvars.iv.next84 = add nsw i32 %indvars.iv83, 1
   br i1 %exitcond.not, label %.critedge.thread, label %bb.e, !llvm.loop !24
 
 .critedge:                                        ; preds = %bb.e
@@ -272,11 +274,14 @@ bn_expand.exit:                                   ; preds = %bb.n
   br i1 %i.w, label %bn_expand.exit.thread, label %.critedge65.preheader.preheader
 
 .critedge65.preheader.preheader:                  ; preds = %bn_expand.exit, %bb.n
+  %2 = lshr i32 %indvars.iv83, 4
+  %3 = add nuw nsw i32 %2, 1                      ; 2 uses
+  %wide.trip.count = zext nneg i32 %3 to i64
   br label %.critedge65.preheader
 
 .critedge65.preheader:                            ; preds = %.critedge65.preheader.preheader, %.critedge65
-  %indvars.iv78 = phi i64 [ %indvars.iv.next79, %.critedge65 ], [ 0, %.critedge65.preheader.preheader ] ; 2 uses
-  %indvars.iv74 = phi i64 [ %indvars.iv.next75, %.critedge65 ], [ %indvars.iv, %.critedge65.preheader.preheader ] ; 4 uses
+  %indvars.iv78 = phi i64 [ 0, %.critedge65.preheader.preheader ], [ %indvars.iv.next79, %.critedge65 ] ; 2 uses
+  %indvars.iv74 = phi i64 [ %indvars.iv, %.critedge65.preheader.preheader ], [ %indvars.iv.next75, %.critedge65 ] ; 3 uses
   %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv74, i64 16)
   br label %bb.o
 
@@ -301,11 +306,10 @@ bb.o:                                             ; preds = %bb.o, %.critedge65.
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv78
   store i64 %i.ad, ptr %i.ag, align 8, !tbaa !16
   %indvars.iv.next75 = add nsw i64 %indvars.iv74, -16
-  %2 = icmp sgt i64 %indvars.iv74, 16
-  br i1 %2, label %.critedge65.preheader, label %bb.p, !llvm.loop !25
+  %exitcond86.not = icmp eq i64 %indvars.iv.next79, %wide.trip.count
+  br i1 %exitcond86.not, label %bb.p, label %.critedge65.preheader, !llvm.loop !25
 
 bb.p:                                             ; preds = %.critedge65
-  %3 = trunc nuw nsw i64 %indvars.iv.next79 to i32
   %i.ah = getelementptr inbounds nuw i8, ptr %.053, i64 8 ; 2 uses
   store i32 %3, ptr %i.ah, align 8, !tbaa !11
   tail call void @bn_correct_top(ptr noundef nonnull %.053) #3

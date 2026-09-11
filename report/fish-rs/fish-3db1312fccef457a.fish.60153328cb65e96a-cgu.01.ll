@@ -204,7 +204,7 @@ bb.qm:                                            ; preds = %bb.ql, %bb.qk
   br label %_RNvMs3_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData20active_edit_line_tag.exit1408
 
 _RNvMs3_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData20active_edit_line_tag.exit1408: ; preds = %bb.qk, %bb.ql, %bb.qm
-  %.sroa.0.0.i1406 = phi i1 [ true, %bb.qm ], [ false, %bb.ql ], [ false, %bb.qk ] ; 4 uses
+  %.sroa.0.0.i1406 = phi i1 [ true, %bb.qm ], [ false, %bb.ql ], [ false, %bb.qk ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2079)
   %i.asp = getelementptr inbounds nuw i8, ptr %i.asg, i64 2258
   %i.asq = load i8, ptr %i.asp, align 2, !range !13, !alias.scope !2079, !noundef !14
@@ -223,7 +223,7 @@ _RNvMs3_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData3rls.exit1410: ; p
   %.sroa.04.0.idx.i1411 = select i1 %.sroa.0.0.i1406, i64 432, i64 0
   %.sroa.04.0.i1412 = getelementptr inbounds nuw i8, ptr %i.asg, i64 %.sroa.04.0.idx.i1411 ; 3 uses
   %i.asu = getelementptr inbounds nuw i8, ptr %.sroa.04.0.i1412, i64 48
-  %i.asv = load i64, ptr %i.asu, align 8, !alias.scope !2080, !noundef !14 ; 8 uses
+  %i.asv = load i64, ptr %i.asu, align 8, !alias.scope !2080, !noundef !14 ; 5 uses
   %i.asw = icmp ult i64 %i.asv, 2305843009213693952
   tail call void @llvm.assume(i1 %i.asw)
   %i.asx = getelementptr inbounds nuw i8, ptr %.sroa.04.0.i1412, i64 120
@@ -245,20 +245,13 @@ switch.lookup2110:                                ; preds = %_RNvMs3_NtNtCs8frGy
   %i.atb = getelementptr inbounds nuw i8, ptr %i.f, i64 2
   store i8 %switch.masked2114, ptr %i.atb, align 1, !noalias !2080
   %i.atc = getelementptr inbounds nuw i8, ptr %.sroa.04.0.i1412, i64 40
-  br label %.lr.ph.split.us.i1417
+  %2 = load ptr, ptr %i.atc, align 8, !alias.scope !2080, !nonnull !14, !noundef !14
+  br label %bb.qo
 
-.lr.ph.split.us.i1417:                            ; preds = %bb.qq, %switch.lookup2110
-  %.sroa.014.063.us.i1418 = phi i64 [ %i.atf, %bb.qq ], [ %i.asy, %switch.lookup2110 ] ; 5 uses
-  %2 = icmp eq i64 %.sroa.014.063.us.i1418, %i.asv
-  br i1 %2, label %4, label %bb.qo
-
-bb.qo:                                            ; preds = %.lr.ph.split.us.i1417
-  %3 = load ptr, ptr %i.atc, align 8, !alias.scope !2080, !nonnull !14, !noundef !14
-  %i.atd = call noundef zeroext i1 @_RNvMNtNtCs8frGy5WneL6_4fish6reader11word_motionNtB2_20MoveWordStateMachine12consume_char(ptr noalias nofree noundef nonnull dereferenceable(3) %i.f, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %3, i64 noundef %i.asv, i64 noundef %.sroa.014.063.us.i1418), !noalias !2080
+bb.qo:                                            ; preds = %switch.lookup2110, %bb.qq
+  %.sroa.014.063.us.i1418 = phi i64 [ %i.atf, %bb.qq ], [ %i.asy, %switch.lookup2110 ] ; 4 uses
+  %i.atd = call noundef zeroext i1 @_RNvMNtNtCs8frGy5WneL6_4fish6reader11word_motionNtB2_20MoveWordStateMachine12consume_char(ptr noalias nofree noundef nonnull dereferenceable(3) %i.f, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %2, i64 noundef %i.asv, i64 noundef %.sroa.014.063.us.i1418), !noalias !2080
   br i1 %i.atd, label %bb.qp, label %._crit_edge.i1419
-
-4:                                                ; preds = %.lr.ph.split.us.i1417
-  br i1 %.sroa.0.0.i1406, label %bb.qr, label %.sink.split
 
 bb.qp:                                            ; preds = %bb.qo
   %i.ate = icmp eq i64 %.sroa.014.063.us.i1418, -1
@@ -267,23 +260,21 @@ bb.qp:                                            ; preds = %bb.qo
 bb.qq:                                            ; preds = %bb.qp
   %i.atf = add nuw i64 %.sroa.014.063.us.i1418, 1 ; 2 uses
   %.not49.us.i1422 = icmp eq i64 %i.atf, %i.asv
-  br i1 %.not49.us.i1422, label %._crit_edge.i1419, label %.lr.ph.split.us.i1417
+  br i1 %.not49.us.i1422, label %._crit_edge.i1419, label %bb.qo
 
 ._crit_edge.i1419:                                ; preds = %bb.qq, %bb.qo
   %.sroa.014.1.i1420 = phi i64 [ %.sroa.014.063.us.i1418, %bb.qo ], [ %i.asv, %bb.qq ] ; 2 uses
   %i.atg = icmp eq i64 %.sroa.014.1.i1420, -1
-  %..sroa.014.1.i1421 = select i1 %i.atg, i64 0, i64 %.sroa.014.1.i1420 ; 2 uses
+  %..sroa.014.1.i1421 = select i1 %i.atg, i64 0, i64 %.sroa.014.1.i1420
   br i1 %.sroa.0.0.i1406, label %bb.qr, label %.sink.split
 
-.sink.split:                                      ; preds = %._crit_edge.i1419, %4
-  %.sroa.014.9.i.ph = phi i64 [ %i.asv, %4 ], [ %..sroa.014.1.i1421, %._crit_edge.i1419 ]
+.sink.split:                                      ; preds = %._crit_edge.i1419
   %i.ath = getelementptr inbounds nuw i8, ptr %i.asg, i64 2284
   store i8 1, ptr %i.ath, align 4, !alias.scope !2080
   br label %bb.qr
 
-bb.qr:                                            ; preds = %.sink.split, %._crit_edge.i1419, %4
-  %.sroa.014.9.i = phi i64 [ %i.asv, %4 ], [ %..sroa.014.1.i1421, %._crit_edge.i1419 ], [ %.sroa.014.9.i.ph, %.sink.split ]
-  call fastcc void @_RNvMs5_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData4kill(ptr noalias nofree noundef nonnull align 8 dereferenceable(2304) %i.asg, i1 noundef zeroext %.sroa.0.0.i1406, i64 noundef %i.asy, i64 noundef %.sroa.014.9.i, i1 noundef zeroext false, i1 noundef zeroext %i.ast)
+bb.qr:                                            ; preds = %._crit_edge.i1419, %.sink.split
+  call fastcc void @_RNvMs5_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData4kill(ptr noalias nofree noundef nonnull align 8 dereferenceable(2304) %i.asg, i1 noundef zeroext %.sroa.0.0.i1406, i64 noundef %i.asy, i64 noundef %..sroa.014.1.i1421, i1 noundef zeroext false, i1 noundef zeroext %i.ast)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !2080
   br label %_RNvMsd_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData30select_completion_in_direction.exit
 

@@ -202,8 +202,8 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
-  %i.n = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
+  %i.n = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.09.0 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !47)
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -245,19 +245,16 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_
 
 .lr.ph.i:                                         ; preds = %.preheader35.i, %bb.l
   %.val13.i = phi i64 [ %.val11.i, %bb.l ], [ %.val15.i, %.preheader35.i ] ; 3 uses
-  %.sroa.01.0.i37.i = phi i64 [ %i.ac, %bb.l ], [ 2, %.preheader35.i ] ; 5 uses
-  %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.0.i37.i ; 2 uses
-  %6 = add nsw i64 %.sroa.01.0.i37.i, -1          ; 2 uses
-  %7 = icmp samesign ult i64 %6, %i.m
-  tail call void @llvm.assume(i1 %7)
+  %.sroa.01.0.i37.i = phi i64 [ %i.ac, %bb.l ], [ 2, %.preheader35.i ] ; 4 uses
+  %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.0.i37.i ; 3 uses
   %i.x = getelementptr i8, ptr %i.w, i64 8
   %.val11.i = load i64, ptr %i.x, align 8, !alias.scope !47, !noalias !48, !noundef !5 ; 3 uses
   %i.y = icmp eq i64 %.val11.i, %.val13.i
   br i1 %i.y, label %.split25.i, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit19.i
 
 .split25.i:                                       ; preds = %.lr.ph.i
-  %8 = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %6
-  %.val12.i = load ptr, ptr %8, align 8, !alias.scope !47, !noalias !48, !nonnull !5, !noundef !5
+  %6 = getelementptr i8, ptr %i.w, i64 -24
+  %.val12.i = load ptr, ptr %6, align 8, !alias.scope !47, !noalias !48, !nonnull !5, !noundef !5
   %.val10.i = load ptr, ptr %i.w, align 8, !alias.scope !47, !noalias !48, !nonnull !5, !noundef !5
   %i.z = tail call i32 @memcmp(ptr nonnull readonly %.val10.i, ptr nonnull readonly %.val12.i, i64 %.val13.i), !noalias !49
   %i.aa = icmp sgt i32 %i.z, 0
@@ -274,19 +271,16 @@ bb.l:                                             ; preds = %_RNCINvMNtCs1xwejQu
 
 .lr.ph41.i:                                       ; preds = %.preheader.i, %bb.m
   %.val9.i = phi i64 [ %.val7.i, %bb.m ], [ %.val15.i, %.preheader.i ] ; 3 uses
-  %.sroa.01.1.i40.i = phi i64 [ %i.aj, %bb.m ], [ 2, %.preheader.i ] ; 5 uses
-  %i.ad = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.1.i40.i ; 2 uses
-  %9 = add nsw i64 %.sroa.01.1.i40.i, -1          ; 2 uses
-  %10 = icmp samesign ult i64 %9, %i.m
-  tail call void @llvm.assume(i1 %10)
+  %.sroa.01.1.i40.i = phi i64 [ %i.aj, %bb.m ], [ 2, %.preheader.i ] ; 4 uses
+  %i.ad = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.01.1.i40.i ; 3 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
   %.val7.i = load i64, ptr %i.ae, align 8, !alias.scope !47, !noalias !48, !noundef !5 ; 3 uses
   %i.af = icmp eq i64 %.val7.i, %.val9.i
   br i1 %i.af, label %.split26.i, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit21.i
 
 .split26.i:                                       ; preds = %.lr.ph41.i
-  %11 = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %9
-  %.val8.i = load ptr, ptr %11, align 8, !alias.scope !47, !noalias !48, !nonnull !5, !noundef !5
+  %7 = getelementptr i8, ptr %i.ad, i64 -24
+  %.val8.i = load ptr, ptr %7, align 8, !alias.scope !47, !noalias !48, !nonnull !5, !noundef !5
   %.val.i = load ptr, ptr %i.ad, align 8, !alias.scope !47, !noalias !48, !nonnull !5, !noundef !5
   %i.ag = tail call i32 @memcmp(ptr nonnull readonly %.val.i, ptr nonnull readonly %.val8.i, i64 %.val9.i), !noalias !49
   %i.ah = icmp sgt i32 %i.ag, 0

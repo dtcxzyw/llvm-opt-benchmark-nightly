@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.bk
 
 bb.e:                                             ; preds = %bb.a
-  %i.d = zext nneg i32 %2 to i64                  ; 8 uses
+  %i.d = zext nneg i32 %2 to i64                  ; 9 uses
   %i.e = mul nuw nsw i64 %i.d, 3                  ; 2 uses
   %i.f = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.e) #25 ; 48 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -378,8 +378,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %.not172, label %_ZN4gdcm12quantization5Block6shrinkEv.exit, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.d, i64 2) ; 2 uses
-  %i.bt = add nsw i64 %umax, -1                   ; 5 uses
+  %i.bt = add nsw i64 %i.d, -1                    ; 5 uses
   %min.iters.check = icmp ult i32 %2, 9
   br i1 %min.iters.check, label %.preheader.i.preheader, label %vector.main.loop.iter.check
 
@@ -782,7 +781,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ti = tail call i8 @llvm.umin.i8(i8 %i.th, i8 %i.st) ; 2 uses
   %i.tj = tail call i8 @llvm.umax.i8(i8 %i.ss, i8 %i.th) ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond215.not = icmp eq i64 %indvars.iv.next.i, %umax
+  %exitcond215.not = icmp eq i64 %indvars.iv.next.i, %i.d
   br i1 %exitcond215.not, label %_ZN4gdcm12quantization5Block6shrinkEv.exit.loopexit, label %.preheader.i, !llvm.loop !124
 
 _ZN4gdcm12quantization5Block6shrinkEv.exit.loopexit: ; preds = %.preheader.i, %vec.epilog.middle.block, %middle.block

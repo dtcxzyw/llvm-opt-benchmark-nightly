@@ -52,7 +52,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
   %i.n = getelementptr inbounds nuw [216 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -116,11 +116,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i16.i = phi i32 [ %.sroa.5.0.copyload.i11.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB45_15ShardReplicaSet19local_optimizations0s_00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.5.0.copyload.i.i, %.critedge.preheader.i ]
   %.sroa.42.0.copyload.i14.i = phi i32 [ %.sroa.4.0.copyload.i9.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB45_15ShardReplicaSet19local_optimizations0s_00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.4.0.copyload.i.i, %.critedge.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i12.i = phi i32 [ %.sroa.0.0.copyload.i7.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB45_15ShardReplicaSet19local_optimizations0s_00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.0.0.copyload.i.i, %.critedge.preheader.i ] ; 3 uses
-  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB45_15ShardReplicaSet19local_optimizations0s_00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 6 uses
+  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB45_15ShardReplicaSet19local_optimizations0s_00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 5 uses
   %i.w = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.0.i64.i ; 3 uses
-  %6 = add nsw i64 %.sroa.01.0.i64.i, -1
-  %7 = icmp samesign ult i64 %6, %i.m
-  tail call void @llvm.assume(i1 %7)
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 96
   %.sroa.0.0.copyload.i7.i = load i32, ptr %i.x, align 8, !alias.scope !38, !noalias !39 ; 4 uses
   %.sroa.4.0..sroa_idx.i8.i = getelementptr inbounds nuw i8, ptr %i.w, i64 100
@@ -161,11 +158,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i32.i = phi i32 [ %.sroa.5.0.copyload.i27.i, %bb.q ], [ %.sroa.5.0.copyload.i.i, %.preheader.i ]
   %.sroa.42.0.copyload.i30.i = phi i32 [ %.sroa.4.0.copyload.i25.i, %bb.q ], [ %.sroa.4.0.copyload.i.i, %.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i28.i = phi i32 [ %.sroa.0.0.copyload.i23.i, %bb.q ], [ %.sroa.0.0.copyload.i.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 6 uses
+  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 5 uses
   %i.ae = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.1.i58.i ; 3 uses
-  %8 = add nsw i64 %.sroa.01.1.i58.i, -1
-  %9 = icmp samesign ult i64 %8, %i.m
-  tail call void @llvm.assume(i1 %9)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 96
   %.sroa.0.0.copyload.i23.i = load i32, ptr %i.af, align 8, !alias.scope !40, !noalias !41 ; 4 uses
   %.sroa.4.0..sroa_idx.i24.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 100
@@ -416,7 +410,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
   %i.n = getelementptr inbounds nuw [216 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -480,11 +474,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i16.i = phi i32 [ %.sroa.5.0.copyload.i11.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.5.0.copyload.i.i, %.critedge.preheader.i ]
   %.sroa.42.0.copyload.i14.i = phi i32 [ %.sroa.4.0.copyload.i9.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.4.0.copyload.i.i, %.critedge.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i12.i = phi i32 [ %.sroa.0.0.copyload.i7.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.0.0.copyload.i.i, %.critedge.preheader.i ] ; 3 uses
-  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 6 uses
+  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 5 uses
   %i.w = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.0.i64.i ; 3 uses
-  %6 = add nsw i64 %.sroa.01.0.i64.i, -1
-  %7 = icmp samesign ult i64 %6, %i.m
-  tail call void @llvm.assume(i1 %7)
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 96
   %.sroa.0.0.copyload.i7.i = load i32, ptr %i.x, align 8, !alias.scope !74, !noalias !75 ; 4 uses
   %.sroa.4.0..sroa_idx.i8.i = getelementptr inbounds nuw i8, ptr %i.w, i64 100
@@ -525,11 +516,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i32.i = phi i32 [ %.sroa.5.0.copyload.i27.i, %bb.q ], [ %.sroa.5.0.copyload.i.i, %.preheader.i ]
   %.sroa.42.0.copyload.i30.i = phi i32 [ %.sroa.4.0.copyload.i25.i, %bb.q ], [ %.sroa.4.0.copyload.i.i, %.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i28.i = phi i32 [ %.sroa.0.0.copyload.i23.i, %bb.q ], [ %.sroa.0.0.copyload.i.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 6 uses
+  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 5 uses
   %i.ae = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.1.i58.i ; 3 uses
-  %8 = add nsw i64 %.sroa.01.1.i58.i, -1
-  %9 = icmp samesign ult i64 %8, %i.m
-  tail call void @llvm.assume(i1 %9)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 96
   %.sroa.0.0.copyload.i23.i = load i32, ptr %i.af, align 8, !alias.scope !76, !noalias !77 ; 4 uses
   %.sroa.4.0..sroa_idx.i24.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 100
@@ -780,7 +768,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
   %i.n = getelementptr inbounds nuw [216 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -844,11 +832,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i16.i = phi i32 [ %.sroa.5.0.copyload.i11.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.5.0.copyload.i.i, %.critedge.preheader.i ]
   %.sroa.42.0.copyload.i14.i = phi i32 [ %.sroa.4.0.copyload.i9.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.4.0.copyload.i.i, %.critedge.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i12.i = phi i32 [ %.sroa.0.0.copyload.i7.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.0.0.copyload.i.i, %.critedge.preheader.i ] ; 3 uses
-  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 6 uses
+  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection10collection14collection_opsNtB45_10Collection13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 5 uses
   %i.w = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.0.i64.i ; 3 uses
-  %6 = add nsw i64 %.sroa.01.0.i64.i, -1
-  %7 = icmp samesign ult i64 %6, %i.m
-  tail call void @llvm.assume(i1 %7)
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 96
   %.sroa.0.0.copyload.i7.i = load i32, ptr %i.x, align 8, !alias.scope !110, !noalias !111 ; 4 uses
   %.sroa.4.0..sroa_idx.i8.i = getelementptr inbounds nuw i8, ptr %i.w, i64 100
@@ -889,11 +874,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i32.i = phi i32 [ %.sroa.5.0.copyload.i27.i, %bb.q ], [ %.sroa.5.0.copyload.i.i, %.preheader.i ]
   %.sroa.42.0.copyload.i30.i = phi i32 [ %.sroa.4.0.copyload.i25.i, %bb.q ], [ %.sroa.4.0.copyload.i.i, %.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i28.i = phi i32 [ %.sroa.0.0.copyload.i23.i, %bb.q ], [ %.sroa.0.0.copyload.i.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 6 uses
+  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 5 uses
   %i.ae = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.1.i58.i ; 3 uses
-  %8 = add nsw i64 %.sroa.01.1.i58.i, -1
-  %9 = icmp samesign ult i64 %8, %i.m
-  tail call void @llvm.assume(i1 %9)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 96
   %.sroa.0.0.copyload.i23.i = load i32, ptr %i.af, align 8, !alias.scope !112, !noalias !113 ; 4 uses
   %.sroa.4.0..sroa_idx.i24.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 100
@@ -1144,7 +1126,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
   %i.n = getelementptr inbounds nuw [216 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -1208,11 +1190,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i16.i = phi i32 [ %.sroa.5.0.copyload.i11.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.5.0.copyload.i.i, %.critedge.preheader.i ]
   %.sroa.42.0.copyload.i14.i = phi i32 [ %.sroa.4.0.copyload.i9.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.4.0.copyload.i.i, %.critedge.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i12.i = phi i32 [ %.sroa.0.0.copyload.i7.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.0.0.copyload.i.i, %.critedge.preheader.i ] ; 3 uses
-  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 6 uses
+  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s0_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 5 uses
   %i.w = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.0.i64.i ; 3 uses
-  %6 = add nsw i64 %.sroa.01.0.i64.i, -1
-  %7 = icmp samesign ult i64 %6, %i.m
-  tail call void @llvm.assume(i1 %7)
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 96
   %.sroa.0.0.copyload.i7.i = load i32, ptr %i.x, align 8, !alias.scope !146, !noalias !147 ; 4 uses
   %.sroa.4.0..sroa_idx.i8.i = getelementptr inbounds nuw i8, ptr %i.w, i64 100
@@ -1253,11 +1232,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i32.i = phi i32 [ %.sroa.5.0.copyload.i27.i, %bb.q ], [ %.sroa.5.0.copyload.i.i, %.preheader.i ]
   %.sroa.42.0.copyload.i30.i = phi i32 [ %.sroa.4.0.copyload.i25.i, %bb.q ], [ %.sroa.4.0.copyload.i.i, %.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i28.i = phi i32 [ %.sroa.0.0.copyload.i23.i, %bb.q ], [ %.sroa.0.0.copyload.i.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 6 uses
+  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 5 uses
   %i.ae = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.1.i58.i ; 3 uses
-  %8 = add nsw i64 %.sroa.01.1.i58.i, -1
-  %9 = icmp samesign ult i64 %8, %i.m
-  tail call void @llvm.assume(i1 %9)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 96
   %.sroa.0.0.copyload.i23.i = load i32, ptr %i.af, align 8, !alias.scope !148, !noalias !149 ; 4 uses
   %.sroa.4.0..sroa_idx.i24.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 100
@@ -1508,7 +1484,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
   %i.n = getelementptr inbounds nuw [216 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -1572,11 +1548,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i16.i = phi i32 [ %.sroa.5.0.copyload.i11.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.5.0.copyload.i.i, %.critedge.preheader.i ]
   %.sroa.42.0.copyload.i14.i = phi i32 [ %.sroa.4.0.copyload.i9.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.4.0.copyload.i.i, %.critedge.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i12.i = phi i32 [ %.sroa.0.0.copyload.i7.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.0.0.copyload.i.i, %.critedge.preheader.i ] ; 3 uses
-  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 6 uses
+  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet13optimizations0s_0E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 5 uses
   %i.w = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.0.i64.i ; 3 uses
-  %6 = add nsw i64 %.sroa.01.0.i64.i, -1
-  %7 = icmp samesign ult i64 %6, %i.m
-  tail call void @llvm.assume(i1 %7)
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 96
   %.sroa.0.0.copyload.i7.i = load i32, ptr %i.x, align 8, !alias.scope !182, !noalias !183 ; 4 uses
   %.sroa.4.0..sroa_idx.i8.i = getelementptr inbounds nuw i8, ptr %i.w, i64 100
@@ -1617,11 +1590,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i32.i = phi i32 [ %.sroa.5.0.copyload.i27.i, %bb.q ], [ %.sroa.5.0.copyload.i.i, %.preheader.i ]
   %.sroa.42.0.copyload.i30.i = phi i32 [ %.sroa.4.0.copyload.i25.i, %bb.q ], [ %.sroa.4.0.copyload.i.i, %.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i28.i = phi i32 [ %.sroa.0.0.copyload.i23.i, %bb.q ], [ %.sroa.0.0.copyload.i.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 6 uses
+  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 5 uses
   %i.ae = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.1.i58.i ; 3 uses
-  %8 = add nsw i64 %.sroa.01.1.i58.i, -1
-  %9 = icmp samesign ult i64 %8, %i.m
-  tail call void @llvm.assume(i1 %9)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 96
   %.sroa.0.0.copyload.i23.i = load i32, ptr %i.af, align 8, !alias.scope !184, !noalias !185 ; 4 uses
   %.sroa.4.0..sroa_idx.i24.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 100
@@ -1872,7 +1842,7 @@ bb.g:                                             ; preds = %bb.f, %_RINvNtNtNtN
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 14 uses
+  %i.m = sub nuw nsw i64 %1, %.sroa.09.0          ; 12 uses
   %i.n = getelementptr inbounds nuw [216 x i8], ptr %0, i64 %.sroa.09.0 ; 11 uses
   %.not.i31 = icmp ult i64 %i.m, %.sroa.01.0
   br i1 %.not.i31, label %bb.i, label %bb.j
@@ -1936,11 +1906,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i16.i = phi i32 [ %.sroa.5.0.copyload.i11.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet19local_optimizations00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.5.0.copyload.i.i, %.critedge.preheader.i ]
   %.sroa.42.0.copyload.i14.i = phi i32 [ %.sroa.4.0.copyload.i9.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet19local_optimizations00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.4.0.copyload.i.i, %.critedge.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i12.i = phi i32 [ %.sroa.0.0.copyload.i7.i, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet19local_optimizations00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ %.sroa.0.0.copyload.i.i, %.critedge.preheader.i ] ; 3 uses
-  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet19local_optimizations00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 6 uses
+  %.sroa.01.0.i64.i = phi i64 [ %i.ad, %_RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12optimization12Optimization11sort_by_keyINtNtCskKLDkoKarTP_4core3cmp7ReverseINtNtB1U_6option6OptionINtNtCs3bXQNzrqeHk_6chrono8datetime8DateTimeNtNtNtB2R_6offset3utc3UtcEEENCNCNvMNtNtCsPYQCUnoTxQ_10collection6shards11replica_setNtB43_15ShardReplicaSet19local_optimizations00E0Csl8OoimOLbh_6qdrant.exit22.thread.i ], [ 2, %.critedge.preheader.i ] ; 5 uses
   %i.w = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.0.i64.i ; 3 uses
-  %6 = add nsw i64 %.sroa.01.0.i64.i, -1
-  %7 = icmp samesign ult i64 %6, %i.m
-  tail call void @llvm.assume(i1 %7)
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 96
   %.sroa.0.0.copyload.i7.i = load i32, ptr %i.x, align 8, !alias.scope !218, !noalias !219 ; 4 uses
   %.sroa.4.0..sroa_idx.i8.i = getelementptr inbounds nuw i8, ptr %i.w, i64 100
@@ -1981,11 +1948,8 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSNtNtNtCs5QaNqjAn6vc_5shard10operations12opt
   %.sroa.53.0.copyload.i32.i = phi i32 [ %.sroa.5.0.copyload.i27.i, %bb.q ], [ %.sroa.5.0.copyload.i.i, %.preheader.i ]
   %.sroa.42.0.copyload.i30.i = phi i32 [ %.sroa.4.0.copyload.i25.i, %bb.q ], [ %.sroa.4.0.copyload.i.i, %.preheader.i ] ; 2 uses
   %.sroa.01.0.copyload.i28.i = phi i32 [ %.sroa.0.0.copyload.i23.i, %bb.q ], [ %.sroa.0.0.copyload.i.i, %.preheader.i ] ; 2 uses
-  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 6 uses
+  %.sroa.01.1.i58.i = phi i64 [ %i.al, %bb.q ], [ 2, %.preheader.i ] ; 5 uses
   %i.ae = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.sroa.01.1.i58.i ; 3 uses
-  %8 = add nsw i64 %.sroa.01.1.i58.i, -1
-  %9 = icmp samesign ult i64 %8, %i.m
-  tail call void @llvm.assume(i1 %9)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 96
   %.sroa.0.0.copyload.i23.i = load i32, ptr %i.af, align 8, !alias.scope !220, !noalias !221 ; 4 uses
   %.sroa.4.0..sroa_idx.i24.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 100

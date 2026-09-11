@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   %i.it = zext nneg i32 %.1137.lcssa to i64
   %i.iu = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.it ; 2 uses
   %.sroa.045.0.copyload = load <2 x float>, ptr %i.iu, align 8 ; 4 uses
-  %i.iv = add nsw i32 %.1128.lcssa, -2            ; 2 uses
-  %i.iw = zext nneg i32 %i.iv to i64
+  %i.iv = add nsw i32 %.1128.lcssa, -2
+  %i.iw = zext nneg i32 %i.iv to i64              ; 2 uses
   %i.ix = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.iw
   %i.iy = load i64, ptr %i.ix, align 8
   store i64 %i.iy, ptr %i.iu, align 8
@@ -233,7 +233,6 @@ bb.c:                                             ; preds = %._crit_edge243
   %.sroa.012.0.i = phi <2 x float> [ %i.jh, %bb.c ], [ zeroinitializer, %._crit_edge243 ]
   %i.ji = fmul float %i.d, 2.000000e+00
   %i.jj = fmul float %i.d, -2.000000e+00
-  %wide.trip.count286 = zext nneg i32 %i.iv to i64
   br label %bb.d
 
 .lr.ph242:                                        ; preds = %.lr.ph242, %.lr.ph242.preheader.new
@@ -323,7 +322,7 @@ bb.h:                                             ; preds = %.sink.split, %bb.f
   %.1132 = phi i32 [ %.0131245, %bb.f ], [ %.1132.ph, %.sink.split ] ; 2 uses
   %.1130 = phi i32 [ %.0129246, %bb.f ], [ %.1130.ph, %.sink.split ] ; 2 uses
   %indvars.iv.next284 = add nuw nsw i64 %indvars.iv283, 1 ; 2 uses
-  %exitcond287.not = icmp eq i64 %indvars.iv.next284, %wide.trip.count286
+  %exitcond287.not = icmp eq i64 %indvars.iv.next284, %i.iw
   br i1 %exitcond287.not, label %._crit_edge249, label %bb.d, !llvm.loop !13
 
 bb.i:                                             ; preds = %._crit_edge249

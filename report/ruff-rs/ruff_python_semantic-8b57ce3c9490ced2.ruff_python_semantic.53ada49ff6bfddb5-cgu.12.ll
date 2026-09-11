@@ -174,11 +174,8 @@ _RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10Pyth
 
 .lr.ph:                                           ; preds = %.preheader26, %bb.c
   %.val5 = phi i8 [ %.val4, %bb.c ], [ %.val6, %.preheader26 ] ; 3 uses
-  %.sroa.01.0.i28 = phi i64 [ %i.w, %bb.c ], [ 2, %.preheader26 ] ; 5 uses
+  %.sroa.01.0.i28 = phi i64 [ %i.w, %bb.c ], [ 2, %.preheader26 ] ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.01.0.i28
-  %3 = add nsw i64 %.sroa.01.0.i28, -1
-  %4 = icmp samesign ult i64 %3, %1
-  tail call void @llvm.assume(i1 %4)
   %.val4 = load i8, ptr %i.m, align 1, !range !4, !noundef !3 ; 5 uses
   %i.n = icmp ne i8 %.val4, 6
   tail call void @llvm.assume(i1 %i.n)
@@ -204,15 +201,12 @@ _RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10Pyth
 bb.c:                                             ; preds = %.split20, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit12
   %i.w = add nuw nsw i64 %.sroa.01.0.i28, 1       ; 2 uses
   %exitcond.not = icmp eq i64 %i.w, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit, label %.lr.ph
+  br i1 %exitcond.not, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType7reverseBA_.exit, label %.lr.ph
 
 .lr.ph32:                                         ; preds = %.preheader, %bb.d
   %.val3 = phi i8 [ %.val, %bb.d ], [ %.val6, %.preheader ] ; 3 uses
-  %.sroa.01.1.i31 = phi i64 [ %i.ah, %bb.d ], [ 2, %.preheader ] ; 5 uses
+  %.sroa.01.1.i31 = phi i64 [ %i.ah, %bb.d ], [ 2, %.preheader ] ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.01.1.i31
-  %5 = add nsw i64 %.sroa.01.1.i31, -1
-  %6 = icmp samesign ult i64 %5, %1
-  tail call void @llvm.assume(i1 %6)
   %.val = load i8, ptr %i.x, align 1, !range !4, !noundef !3 ; 5 uses
   %i.y = icmp ne i8 %.val, 6
   tail call void @llvm.assume(i1 %i.y)
@@ -238,11 +232,11 @@ _RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10Pyth
 bb.d:                                             ; preds = %.split21, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit17
   %i.ah = add nuw nsw i64 %.sroa.01.1.i31, 1      ; 2 uses
   %exitcond40.not = icmp eq i64 %i.ah, %1
-  br i1 %exitcond40.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit, label %.lr.ph32
+  br i1 %exitcond40.not, label %iter.check, label %.lr.ph32
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit: ; preds = %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit12, %bb.c, %.split20, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit17, %bb.d, %.split21, %.preheader26, %.preheader
-  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader26 ], [ true, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit17 ], [ true, %.split21 ], [ true, %bb.d ], [ false, %.split20 ], [ false, %bb.c ], [ false, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit12 ]
-  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader26 ], [ %.sroa.01.1.i31, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit17 ], [ %1, %bb.d ], [ %.sroa.01.1.i31, %.split21 ], [ %.sroa.01.0.i28, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit12 ], [ %1, %bb.c ], [ %.sroa.01.0.i28, %.split20 ] ; 2 uses
+_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltEB18_.exit: ; preds = %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit12, %.split20, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit17, %.split21, %.preheader26, %.preheader
+  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader26 ], [ true, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit17 ], [ true, %.split21 ], [ false, %.split20 ], [ false, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit12 ]
+  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader26 ], [ %.sroa.01.1.i31, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit17 ], [ %.sroa.01.1.i31, %.split21 ], [ %.sroa.01.0.i28, %.split20 ], [ %.sroa.01.0.i28, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit12 ] ; 2 uses
   %i.ai = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.ai)
   %i.aj = icmp eq i64 %.sroa.0.0.i, %1
@@ -260,10 +254,10 @@ bb.f:                                             ; preds = %_RINvNtNtNtCs4NRVxs
   tail call fastcc void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort9quicksortNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB17_NtNtBa_3cmp10PartialOrd2ltEB1d_(ptr noalias noundef nonnull %0, i64 noundef %1, ptr noalias noundef readonly captures(address, read_provenance) dereferenceable_or_null(1) null, i32 noundef %i.ao, ptr noalias noundef nonnull %2)
   br label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType7reverseBA_.exit
 
-_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType7reverseBA_.exit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType12split_at_mutBA_.exit11.i.i, %middle.block, %vec.epilog.middle.block, %bb.a, %bb.e, %bb.f
+_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType7reverseBA_.exit: ; preds = %bb.c, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType12split_at_mutBA_.exit11.i.i, %middle.block, %vec.epilog.middle.block, %bb.a, %bb.e, %bb.f
   ret void
 
-iter.check:                                       ; preds = %bb.e
+iter.check:                                       ; preds = %bb.d, %bb.e
   %i.ap = lshr i64 %1, 1                          ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17)

@@ -204,12 +204,12 @@ _ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit:   ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !54
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %1
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !14   ; 3 uses
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !14   ; 2 uses
   %i.l = icmp slt i32 %i.k, 2
   br i1 %i.l, label %_ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit
-  %i.m = zext nneg i32 %i.k to i64                ; 3 uses
+  %i.m = zext nneg i32 %i.k to i64                ; 4 uses
   %i.n = shl nuw nsw i64 %i.m, 2                  ; 4 uses
   %i.o = alloca i8, i64 %i.n, align 16            ; 10 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.n ; 5 uses
@@ -387,7 +387,6 @@ bb.m:                                             ; preds = %bb.l
   %.0.i41 = phi ptr [ %i.bu, %bb.m ], [ null, %bb.l ], [ null, %bb.k ], [ null, %bb.j ], [ null, %bb.i ]
   call void @llvm.memcpy.p0.p0.i64(ptr align 16 %i.av, ptr align 1 %.0.i41, i64 %i.at, i1 false)
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %wide.trip.count = zext nneg i32 %i.k to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %_ZN11OpenImageIO4v3_18DeepData8data_ptrElii.exit46
@@ -447,7 +446,7 @@ _ZN11OpenImageIO4v3_18DeepData8data_ptrElii.exit46: ; preds = %bb.n, %bb.o, %bb.
   %i.dc = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.db
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0.i44, ptr align 1 %i.dc, i64 %i.as, i1 false)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.m
   br i1 %exitcond.not, label %_ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit.thread, label %bb.n, !llvm.loop !178
 
 _ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit.thread: ; preds = %_ZN11OpenImageIO4v3_18DeepData8data_ptrElii.exit46, %bb.b, %_ZNK11OpenImageIO4v3_18DeepData7samplesEl.exit, %bb.a

@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.f, %.loopexit152
   br i1 %.not140, label %.loopexit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ai = zext i32 %2 to i64                      ; 5 uses
+  %i.ai = zext i32 %2 to i64                      ; 6 uses
   %i.aj = shl nuw nsw i64 %i.ai, 3                ; 3 uses
   %i.ak = tail call noalias ptr @malloc(i64 noundef %i.aj) #22 ; 10 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -471,7 +471,7 @@ vector.body201:                                   ; preds = %bb.al
   %i.cr = getelementptr inbounds nuw i8, ptr %i.bn, i64 240
   store <4 x i32> splat (i32 -2), ptr %i.cq, align 4, !tbaa !59
   store <4 x i32> splat (i32 -2), ptr %i.cr, align 4, !tbaa !59
-  br i1 %.not162, label %.loopexit, label %.lr.ph159.preheader
+  br i1 %.not162, label %.loopexit, label %.lr.ph159
 
 bb.am:                                            ; preds = %bb.al
   tail call void @free(ptr noundef nonnull %i.bg) #20
@@ -499,12 +499,8 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.28) #20
   br label %bb.ar
 
-.lr.ph159.preheader:                              ; preds = %vector.body201
-  %wide.trip.count179 = zext i32 %2 to i64
-  br label %.lr.ph159
-
-.lr.ph159:                                        ; preds = %.lr.ph159.preheader, %.lr.ph159
-  %indvars.iv176 = phi i64 [ 1, %.lr.ph159.preheader ], [ %indvars.iv.next177, %.lr.ph159 ] ; 4 uses
+.lr.ph159:                                        ; preds = %vector.body201, %.lr.ph159
+  %indvars.iv176 = phi i64 [ %indvars.iv.next177, %.lr.ph159 ], [ 1, %vector.body201 ] ; 4 uses
   %i.cs = shl i64 %indvars.iv176, 6
   %i.ct = and i64 %i.cs, 4294967232               ; 2 uses
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.ct ; 17 uses
@@ -576,7 +572,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   store <4 x i32> splat (i32 -2), ptr %i.ea, align 4, !tbaa !59
   store <4 x i32> splat (i32 -2), ptr %i.eb, align 4, !tbaa !59
   %indvars.iv.next177 = add nuw nsw i64 %indvars.iv176, 1 ; 2 uses
-  %exitcond180.not = icmp eq i64 %indvars.iv.next177, %wide.trip.count179
+  %exitcond180.not = icmp eq i64 %indvars.iv.next177, %i.ai
   br i1 %exitcond180.not, label %.loopexit, label %.lr.ph159
 
 .loopexit:                                        ; preds = %.lr.ph159, %vector.body201, %bb.i

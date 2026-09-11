@@ -204,7 +204,7 @@ _ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequ
   %i.ax = icmp samesign ule i32 %i.aw, %i.aa
   %i.ay = zext nneg i32 %i.av to i64
   %i.az = getelementptr inbounds nuw [2 x i8], ptr %i.ac, i64 %i.ay ; 14 uses
-  %i.ba = zext nneg i32 %i.f to i64               ; 27 uses
+  %i.ba = zext nneg i32 %i.f to i64               ; 21 uses
   %i.bb = zext nneg i32 %i.f to i64
   br label %bb.d
 
@@ -472,9 +472,7 @@ _ZN8rawspeed21SamsungV0Decompressor7calcAdjERNS_16BitStreamerMSB32Ei.exit.2.thre
   %i.dr = load i16, ptr %i.dq, align 2, !tbaa !121
   %i.ds = getelementptr inbounds nuw [2 x i8], ptr %i.as, i64 %i.dp
   store i16 %i.dr, ptr %i.ds, align 2, !tbaa !121
-  %i.dt = or disjoint i64 %indvars.iv, 4          ; 3 uses
-  %3 = icmp samesign ult i64 %i.dt, %i.ba
-  tail call void @llvm.assume(i1 %3)
+  %i.dt = or disjoint i64 %indvars.iv, 4          ; 2 uses
   %i.du = getelementptr inbounds nuw [2 x i8], ptr %i.am, i64 %i.dt
   %i.dv = load i16, ptr %i.du, align 2, !tbaa !121
   %i.dw = getelementptr inbounds nuw [2 x i8], ptr %i.as, i64 %i.dt
@@ -614,9 +612,7 @@ bb.aj:                                            ; preds = %_ZN8rawspeed39BitSt
   %i.ga = shl i64 %i.fu, %i.fz                    ; 2 uses
   %i.gb = ashr i64 %i.fu, %i.fx
   %i.gc = trunc nsw i64 %i.gb to i16
-  %i.gd = or disjoint i64 %indvars.iv, 2          ; 3 uses
-  %4 = icmp samesign ult i64 %i.gd, %i.ba
-  tail call void @llvm.assume(i1 %4)
+  %i.gd = or disjoint i64 %indvars.iv, 2          ; 2 uses
   %i.ge = getelementptr inbounds nuw [2 x i8], ptr %i.am, i64 %i.gd
   %i.gf = load i16, ptr %i.ge, align 2, !tbaa !121
   %i.gg = add i16 %i.gf, %i.gc
@@ -682,9 +678,7 @@ bb.ao:                                            ; preds = %_ZN8rawspeed39BitSt
   %i.hh = shl i64 %i.hb, %i.hg                    ; 2 uses
   %i.hi = ashr i64 %i.hb, %i.he
   %i.hj = trunc nsw i64 %i.hi to i16
-  %i.hk = or disjoint i64 %indvars.iv, 4          ; 3 uses
-  %5 = icmp samesign ult i64 %i.hk, %i.ba
-  tail call void @llvm.assume(i1 %5)
+  %i.hk = or disjoint i64 %indvars.iv, 4          ; 2 uses
   %i.hl = getelementptr inbounds nuw [2 x i8], ptr %i.am, i64 %i.hk
   %i.hm = load i16, ptr %i.hl, align 2, !tbaa !121
   %i.hn = add i16 %i.hm, %i.hj
@@ -759,9 +753,7 @@ _ZN8rawspeed21SamsungV0Decompressor7calcAdjERNS_16BitStreamerMSB32Ei.exit.3: ; p
   %.sroa.24.10.3 = phi i32 [ %.sroa.24.3.3692699, %_ZN8rawspeed21SamsungV0Decompressor7calcAdjERNS_16BitStreamerMSB32Ei.exit.2.thread ], [ %i.in, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit.i.3 ] ; 6 uses
   %.sroa.0198.10.3 = phi i64 [ %.sroa.0198.3.3693698, %_ZN8rawspeed21SamsungV0Decompressor7calcAdjERNS_16BitStreamerMSB32Ei.exit.2.thread ], [ %i.ip, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit.i.3 ] ; 3 uses
   %.0.i.3 = phi i16 [ 0, %_ZN8rawspeed21SamsungV0Decompressor7calcAdjERNS_16BitStreamerMSB32Ei.exit.2.thread ], [ %i.ir, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit.i.3 ]
-  %i.is = or disjoint i64 %indvars.iv, 6          ; 3 uses
-  %6 = icmp samesign ult i64 %i.is, %i.ba
-  tail call void @llvm.assume(i1 %6)
+  %i.is = or disjoint i64 %indvars.iv, 6          ; 2 uses
   %i.it = getelementptr inbounds nuw [2 x i8], ptr %i.am, i64 %i.is
   %i.iu = load i16, ptr %i.it, align 2, !tbaa !121
   %i.iv = add i16 %i.iu, %.0.i.3
@@ -853,9 +845,7 @@ bb.ay:                                            ; preds = %_ZN8rawspeed39BitSt
   %i.kk = shl i64 %i.ke, %i.kj                    ; 2 uses
   %i.kl = ashr i64 %i.ke, %i.kh
   %i.km = trunc nsw i64 %i.kl to i16
-  %i.kn = or disjoint i64 %indvars.iv, 8          ; 3 uses
-  %7 = icmp samesign ult i64 %i.kn, %i.ba
-  tail call void @llvm.assume(i1 %7)
+  %i.kn = or disjoint i64 %indvars.iv, 8          ; 2 uses
   %i.ko = getelementptr inbounds nuw [2 x i8], ptr %i.am, i64 %i.kn
   %i.kp = load i16, ptr %i.ko, align 2, !tbaa !121
   %i.kq = add i16 %i.kp, %i.km
@@ -921,9 +911,7 @@ bb.bd:                                            ; preds = %_ZN8rawspeed39BitSt
   %i.lr = shl i64 %i.ll, %i.lq                    ; 2 uses
   %i.ls = ashr i64 %i.ll, %i.lo
   %i.lt = trunc nsw i64 %i.ls to i16
-  %i.lu = or disjoint i64 %indvars.iv, 10         ; 3 uses
-  %8 = icmp samesign ult i64 %i.lu, %i.ba
-  tail call void @llvm.assume(i1 %8)
+  %i.lu = or disjoint i64 %indvars.iv, 10         ; 2 uses
   %i.lv = getelementptr inbounds nuw [2 x i8], ptr %i.am, i64 %i.lu
   %i.lw = load i16, ptr %i.lv, align 2, !tbaa !121
   %i.lx = add i16 %i.lw, %i.lt

@@ -204,8 +204,7 @@ bb.l:                                             ; preds = %bb.k
 
 put_page.exit.i:                                  ; preds = %bb.l, %bb.k, %.lr.ph.i, %.lr.ph.i
   %indvars.iv.next36.i = add nsw i64 %indvars.iv35.i, -1
-  %10 = trunc nuw i64 %indvars.iv35.i to i32
-  %i.cw = icmp sgt i32 %10, 1
+  %i.cw = icmp sgt i64 %indvars.iv35.i, 1
   br i1 %i.cw, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !278
 
 ._crit_edge.i:                                    ; preds = %put_page.exit.i, %nfs4_call_sync.exit.i
