@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph103.preheader, label %.loopexit100
 
 .lr.ph103.preheader:                              ; preds = %bb.a
-  %i.c = sext i32 %1 to i64                       ; 4 uses
+  %i.c = sext i32 %1 to i64                       ; 5 uses
   %i.d = zext nneg i32 %2 to i64                  ; 2 uses
   %wide.trip.count110 = zext nneg i32 %i.a to i64
   %wide.trip.count = zext nneg i32 %2 to i64      ; 3 uses
@@ -215,8 +215,9 @@ bb.a:
   %i.i = mul i64 %i.h, %i.c
   %i.j = getelementptr i8, ptr %0, i64 %i.i
   %scevgep115 = getelementptr i8, ptr %i.j, i64 %i.g
-  %scevgep116 = getelementptr i8, ptr %0, i64 %i.g
+  %5 = shl nsw i64 %i.c, 2
   %i.k = add nsw i64 %wide.trip.count, -2         ; 2 uses
+  %6 = getelementptr i8, ptr %0, i64 %i.g
   %stride.check = icmp slt i32 %1, 0
   br label %.lr.ph103
 
@@ -228,11 +229,8 @@ bb.a:
   %i.n = add nuw i64 %indvars.iv107, 1
   %i.o = mul i64 %i.f, %i.n
   %scevgep = getelementptr i8, ptr %0, i64 %i.o
-  %5 = trunc i64 %indvars.iv107 to i32
-  %6 = mul i32 %1, %5
-  %7 = sext i32 %6 to i64
-  %8 = shl nsw i64 %7, 2
-  %scevgep117 = getelementptr i8, ptr %scevgep116, i64 %8
+  %7 = mul i64 %5, %indvars.iv107
+  %scevgep117 = getelementptr i8, ptr %6, i64 %7
   %indvars109 = trunc i64 %indvars.iv107 to i32   ; 3 uses
   %i.p = mul nsw i64 %indvars.iv107, %i.c
   %i.q = mul nsw i32 %1, %indvars109
