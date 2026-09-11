@@ -205,14 +205,14 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.c
   %i.w = icmp ne ptr %i.p, null
   %.neg.i.i = sext i1 %i.w to i64
   %i.x = add nsw i64 %i.v, %.neg.i.i
-  %i.y = shl nsw i64 %i.x, 6
+  %i.y = shl nsw i64 %i.x, 6                      ; 2 uses
   %i.z = load ptr, ptr %i.m, align 8, !tbaa !226
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !227
   %i.ac = ptrtoint ptr %i.z to i64
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = sub i64 %i.ac, %i.ad
-  %i.af = ashr exact i64 %i.ae, 3
+  %i.af = ashr exact i64 %i.ae, 3                 ; 2 uses
   %i.ag = add nsw i64 %i.y, %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !265 ; 2 uses
@@ -220,8 +220,8 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.c
   %i.ak = ptrtoint ptr %i.ai to i64
   %i.al = ptrtoint ptr %i.aj to i64               ; 2 uses
   %i.am = sub i64 %i.ak, %i.al
-  %i.an = ashr exact i64 %i.am, 3
-  %i.ao = add nsw i64 %i.ag, %i.an                ; 3 uses
+  %i.an = ashr exact i64 %i.am, 3                 ; 2 uses
+  %i.ao = add nsw i64 %i.ag, %i.an                ; 2 uses
   %.not117 = icmp eq i64 %i.ao, 0
   br i1 %.not117, label %_ZSt8_DestroyIPN8facebook5velox6memory10AllocationES3_EvT_S5_RSaIT0_E.exit.i.thread, label %bb.f
 
@@ -288,6 +288,8 @@ _ZStplRKSt15_Deque_iteratorISt10unique_ptrIN8facebook5velox5cache19AsyncDataCach
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
+  %7 = add nsw i64 %i.af, %i.an
+  %8 = add i64 %7, %i.y
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZStplRKSt15_Deque_iteratorISt10unique_ptrIN8facebook5velox5cache19AsyncDataCacheEntryESt14default_deleteIS4_EERS7_PS7_El.exit, %bb.bb
@@ -690,7 +692,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.aa, %_ZN
   %.280 = phi i32 [ %.078196, %bb.p ], [ %i.er, %bb.aa ], [ %.078196, %bb.ba ], [ %.078196, %_ZNK8facebook5velox5cache19AsyncDataCacheEntry5scoreEi.exit ], [ %.078196, %bb.w ] ; 2 uses
   %.2 = phi i32 [ %.061197, %bb.p ], [ %.162, %bb.aa ], [ %.162, %bb.ba ], [ %.162, %_ZNK8facebook5velox5cache19AsyncDataCacheEntry5scoreEi.exit ], [ %.162, %bb.w ]
   %indvars.iv.next = add nuw i64 %indvars.iv, 1
-  %exitcond = icmp eq i64 %indvars.iv, %i.ao
+  %exitcond = icmp eq i64 %indvars.iv, %8
   br i1 %exitcond, label %.thread, label %bb.l
 
 bb.bc:                                            ; preds = %.loopexit177, %.loopexit.split-lp178, %bb.ab, %bb.al, %bb.ak, %bb.v

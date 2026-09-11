@@ -205,8 +205,8 @@ bb.gl:                                            ; preds = %.lr.ph2317
   %indvars.iv15202026 = phi i64 [ %indvars.iv1520.lcssa, %._crit_edge2318 ], [ %indvars.iv15202315, %.lr.ph2317 ]
   %.089.in1323 = trunc i64 %indvars.iv15202026 to i32 ; 2 uses
   %i.aiu = load i32, ptr %i.ail, align 4, !tbaa !2416 ; 4 uses
-  %i.aiv = load i64, ptr %i.o, align 8, !tbaa !166
-  %i.aiw = trunc i64 %i.aiv to i32                ; 4 uses
+  %i.aiv = load i64, ptr %i.o, align 8, !tbaa !166 ; 2 uses
+  %i.aiw = trunc i64 %i.aiv to i32                ; 3 uses
   %i.aix = icmp slt i32 %i.aiu, %i.aiw
   br i1 %i.aix, label %.lr.ph1312, label %.critedge
 
@@ -216,6 +216,8 @@ bb.gl:                                            ; preds = %.lr.ph2317
   %i.aja = sext i32 %i.aiu to i64
   %smax = call i32 @llvm.smax.i32(i32 %i.aiu, i32 %i.aiz) ; 2 uses
   %wide.trip.count1526 = sext i32 %smax to i64
+  %sext = shl i64 %i.aiv, 32
+  %wide.trip.count1528 = ashr exact i64 %sext, 32
   br label %bb.gm
 
 bb.gm:                                            ; preds = %.lr.ph1312, %bb.go
@@ -232,8 +234,7 @@ bb.gn:                                            ; preds = %bb.gm
 
 bb.go:                                            ; preds = %bb.gn
   %indvars.iv.next1524 = add nsw i64 %indvars.iv1523, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next1524 to i32
-  %exitcond1528.not = icmp eq i32 %lftr.wideiv, %i.aiw
+  %exitcond1528.not = icmp eq i64 %indvars.iv.next1524, %wide.trip.count1528
   br i1 %exitcond1528.not, label %.critedge, label %bb.gm, !llvm.loop !2413
 
 .critedge:                                        ; preds = %bb.gm, %bb.go, %.thread886

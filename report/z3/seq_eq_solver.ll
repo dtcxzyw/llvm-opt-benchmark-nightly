@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.ap
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit157: ; preds = %bb.ap, %bb.aq
   %.0.i.i154 = phi i32 [ %i.hi, %bb.aq ], [ -1, %bb.ap ] ; 3 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %i.he, i64 8 ; 2 uses
-  %i.hk = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %i.hk = trunc nuw i64 %indvars.iv to i32
   %i.hl = xor i32 %i.hk, -1
   %i.hm = add i32 %i.gm, %i.hl                    ; 3 uses
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.gk, i64 %indvars.iv
@@ -301,13 +301,13 @@ _ZNK8seq_util3str7is_unitEPK4expr.exit.thread.i172: ; preds = %_ZNK8seq_util3str
 
 .loopexit:                                        ; preds = %_ZNK8seq_util3str7is_unitEPK4expr.exit.thread.i172, %._crit_edge.i164
   %i.iw = load ptr, ptr %i.ab, align 8, !tbaa !247 ; 3 uses
-  %7 = add nuw i32 %i.hk, 1
   %i.ix = load ptr, ptr %i.iw, align 8, !tbaa !248, !noalias !527
   %i.iy = invoke noundef ptr @_ZNK4expr8get_sortEv(ptr noundef nonnull align 4 dereferenceable(16) %i.ix)
           to label %.noexc187 unwind label %bb.bf ; 0 uses
 
 .noexc187:                                        ; preds = %.loopexit
-  %cond = icmp eq i64 %indvars.iv, 0
+  %7 = trunc i64 %indvars.iv to i32               ; 2 uses
+  %cond = icmp eq i32 %7, 0
   br i1 %cond, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %.noexc187
@@ -315,9 +315,10 @@ bb.aw:                                            ; preds = %.noexc187
   br label %_ZNK8seq_util3str9mk_concatEjPKP4exprP4sort.exit.i183
 
 bb.ax:                                            ; preds = %.noexc187
+  %8 = add i32 %7, 1
   %i.ja = load ptr, ptr %i.m, align 8, !tbaa !286, !noalias !527, !nonnull !40, !align !41
   %i.jb = load i32, ptr %i.o, align 8, !tbaa !266, !noalias !527
-  %i.jc = invoke noundef ptr @_ZN11ast_manager6mk_appEiijPKP4expr(ptr noundef nonnull align 8 dereferenceable(952) %i.ja, i32 noundef %i.jb, i32 noundef 2, i32 noundef %7, ptr noundef nonnull %i.iw)
+  %i.jc = invoke noundef ptr @_ZN11ast_manager6mk_appEiijPKP4expr(ptr noundef nonnull align 8 dereferenceable(952) %i.ja, i32 noundef %i.jb, i32 noundef 2, i32 noundef %8, ptr noundef nonnull %i.iw)
           to label %_ZNK8seq_util3str9mk_concatEjPKP4exprP4sort.exit.i183 unwind label %bb.bf
 
 _ZNK8seq_util3str9mk_concatEjPKP4exprP4sort.exit.i183: ; preds = %bb.ax, %bb.aw

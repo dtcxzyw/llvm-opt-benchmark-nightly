@@ -205,13 +205,20 @@ vector.ph203:                                     ; preds = %vector.main.loop.it
 
 vector.body205:                                   ; preds = %vector.body205, %vector.ph203
   %index206 = phi i64 [ 0, %vector.ph203 ], [ %index.next209, %vector.body205 ] ; 4 uses
-  %i.tg = getelementptr inbounds nuw i8, ptr %i.av, i64 %index206
-  %wide.load207 = load <16 x i8>, ptr %i.tg, align 1, !noalias !4334
-  %i.th = getelementptr inbounds nuw i8, ptr %i.aw, i64 %index206
-  %i.ti = getelementptr inbounds nuw i8, ptr %i.s, i64 %index206
-  %wide.load208 = load <16 x i8>, ptr %i.ti, align 4, !alias.scope !4335, !noalias !4336
-  %2 = xor <16 x i8> %wide.load208, %wide.load207
-  store <16 x i8> %2, ptr %i.th, align 1, !noalias !4334
+  %2 = getelementptr inbounds nuw i8, ptr %i.av, i64 %index206 ; 2 uses
+  %i.tg = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %wide.load207 = load <8 x i8>, ptr %2, align 1, !noalias !4334
+  %wide.load208 = load <8 x i8>, ptr %i.tg, align 1, !noalias !4334
+  %3 = getelementptr inbounds nuw i8, ptr %i.aw, i64 %index206 ; 2 uses
+  %i.th = getelementptr inbounds nuw i8, ptr %i.s, i64 %index206 ; 2 uses
+  %i.ti = getelementptr inbounds nuw i8, ptr %i.th, i64 8
+  %wide.load209 = load <8 x i8>, ptr %i.th, align 4, !alias.scope !4335, !noalias !4336
+  %wide.load210 = load <8 x i8>, ptr %i.ti, align 4, !alias.scope !4335, !noalias !4336
+  %4 = xor <8 x i8> %wide.load209, %wide.load207
+  %5 = xor <8 x i8> %wide.load210, %wide.load208
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store <8 x i8> %4, ptr %3, align 1, !noalias !4334
+  store <8 x i8> %5, ptr %6, align 1, !noalias !4334
   %index.next209 = add nuw i64 %index206, 16      ; 2 uses
   %i.tj = icmp eq i64 %index.next209, %n.vec204
   br i1 %i.tj, label %middle.block210, label %vector.body205, !llvm.loop !4273

@@ -202,13 +202,17 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.i = load i8, ptr %2, align 1
-  switch i8 %i.i, label %.lr.ph [
+  switch i8 %i.i, label %.lr.ph.preheader [
     i8 43, label %bb.i
     i8 45, label %bb.i
   ]
 
-.lr.ph:                                           ; preds = %bb.e, %bb.h
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ %i.f, %bb.e ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.e
+  %wide.trip.count = sext i32 %0 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
+  %indvars.iv = phi i64 [ %i.f, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.h ] ; 3 uses
   %i.j = getelementptr [8 x i8], ptr %1, i64 %indvars.iv
   %i.k = load ptr, ptr %i.j, align 8              ; 3 uses
   %.not46 = icmp eq ptr %i.k, null
@@ -227,8 +231,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.g
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %0, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph
 
 .critedge:                                        ; preds = %bb.g

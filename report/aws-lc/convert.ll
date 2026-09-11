@@ -204,6 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
+  %indvars.iv11 = phi i32 [ %indvars.iv.next12, %bb.e ], [ -1, %bb.d ] ; 2 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.e ], [ 0, %bb.d ] ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.035.i, i64 %indvars.iv.i
   %i.g = load i8, ptr %i.f, align 1, !tbaa !16
@@ -214,6 +215,7 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.l = icmp ne i64 %i.k, 2147483647
   %i.m = select i1 %i.j, i1 %i.l, i1 false
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %indvars.iv.next12 = add nsw i32 %indvars.iv11, 1
   br i1 %i.m, label %bb.e, label %bb.f, !llvm.loop !1
 
 bb.f:                                             ; preds = %bb.e
@@ -256,11 +258,17 @@ bb.n:                                             ; preds = %bb.l
   %i.v = shl nuw nsw i64 %indvars.iv.i, 2
   %i.w = tail call i32 @bn_expand(ptr noundef nonnull %.033.i, i64 noundef %i.v) #4
   %.not.i2 = icmp eq i32 %i.w, 0
-  br i1 %.not.i2, label %bb.s, label %.lr.ph.i
+  br i1 %.not.i2, label %bb.s, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %bb.n, %bb.p
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.p ], [ %indvars.iv.i, %bb.n ] ; 4 uses
-  %indvars.iv33.i = phi i64 [ %indvars.iv.next34.i, %bb.p ], [ 0, %bb.n ] ; 2 uses
+.lr.ph.i.preheader:                               ; preds = %bb.n
+  %2 = lshr i32 %indvars.iv11, 4
+  %3 = add nuw nsw i32 %2, 1                      ; 2 uses
+  %wide.trip.count = zext nneg i32 %3 to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.p
+  %indvars.iv = phi i64 [ %indvars.iv.i, %.lr.ph.i.preheader ], [ %indvars.iv.next, %bb.p ] ; 3 uses
+  %indvars.iv33.i = phi i64 [ 0, %.lr.ph.i.preheader ], [ %indvars.iv.next34.i, %bb.p ] ; 2 uses
   %i.x = trunc nuw i64 %indvars.iv to i32
   %i.y = call i32 @llvm.umin.i32(i32 %i.x, i32 16)
   %umin.i = zext nneg i32 %i.y to i64
@@ -291,13 +299,12 @@ bb.p:                                             ; preds = %bb.o
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv33.i
   store i64 %i.ah, ptr %i.ak, align 8, !tbaa !19
   %indvars.iv.next = add nsw i64 %indvars.iv, -16
-  %.not31.i = icmp ult i64 %indvars.iv, 17
-  br i1 %.not31.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !26
+  %exitcond = icmp eq i64 %indvars.iv.next34.i, %wide.trip.count
+  br i1 %exitcond, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !26
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.p
-  %2 = trunc nuw i64 %indvars.iv.next34.i to i32
   %i.al = getelementptr inbounds nuw i8, ptr %.033.i, i64 8
-  store i32 %2, ptr %i.al, align 8, !tbaa !27
+  store i32 %3, ptr %i.al, align 8, !tbaa !27
   call void @bn_set_minimal_width(ptr noundef nonnull %.033.i) #4
   %i.am = call i32 @BN_is_zero(ptr noundef nonnull %.033.i) #4
   %.not41.i = icmp eq i32 %i.am, 0

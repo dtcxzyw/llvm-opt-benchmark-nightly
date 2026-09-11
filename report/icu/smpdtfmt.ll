@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.a, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = add nsw i32 %1, -1                       ; 3 uses
+  %i.b = add nsw i32 %1, -1                       ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = load i16, ptr %i.c, align 8, !tbaa !50   ; 3 uses
   %i.e = icmp slt i16 %i.d, 0
@@ -246,11 +246,12 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %bb.b, %bb.c
   %.not.i.i.i16 = icmp eq i16 %i.ab, 0
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.ae = zext nneg i32 %i.b to i64               ; 2 uses
+  %i.ae = zext nneg i32 %1 to i64
+  %2 = add nsw i64 %i.ae, -1                      ; 2 uses
   br i1 %.not.i.i.i16, label %.preheader.split.us, label %.preheader.split
 
 .preheader.split.us:                              ; preds = %.preheader, %_ZNK6icu_7813UnicodeString6charAtEi.exit17.us
-  %indvars.iv21 = phi i64 [ %indvars.iv.next22, %_ZNK6icu_7813UnicodeString6charAtEi.exit17.us ], [ %i.ae, %.preheader ] ; 2 uses
+  %indvars.iv21 = phi i64 [ %indvars.iv.next22, %_ZNK6icu_7813UnicodeString6charAtEi.exit17.us ], [ %2, %.preheader ] ; 2 uses
   %indvars.iv.next22 = add nsw i64 %indvars.iv21, -1 ; 3 uses
   %i.af = trunc nsw i64 %indvars.iv.next22 to i32
   %i.ag = icmp ugt i32 %i.aa, %i.af
@@ -268,7 +269,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit17.us:    ; preds = %bb.d, %.preheader.s
   br i1 %i.ak, label %.preheader.split.us, label %.split.us, !llvm.loop !198
 
 .preheader.split:                                 ; preds = %.preheader, %_ZNK6icu_7813UnicodeString6charAtEi.exit17
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK6icu_7813UnicodeString6charAtEi.exit17 ], [ %i.ae, %.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK6icu_7813UnicodeString6charAtEi.exit17 ], [ %2, %.preheader ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %i.al = trunc nsw i64 %indvars.iv.next to i32
   %i.am = icmp ugt i32 %i.aa, %i.al

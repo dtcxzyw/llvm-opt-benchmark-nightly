@@ -205,9 +205,10 @@ _ZN4gdcmL7roundatEPcmji.exit137:                  ; preds = %bb.ag, %bb.af, %bb.
 
 .lr.ph.preheader:                                 ; preds = %_ZN4gdcmL7roundatEPcmji.exit137
   %scevgep = getelementptr i8, ptr %.193, i64 1
-  %i.dz = and i64 %i.s, 2147483647
-  %2 = xor i64 %i.dz, 2147483647
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 48, i64 %2, i1 false), !tbaa !30
+  %2 = sub i64 4294967294, %i.s
+  %i.dz = and i64 %2, 4294967295
+  %3 = add nuw nsw i64 %i.dz, 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 48, i64 %3, i1 false), !tbaa !30
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4gdcmL7roundatEPcmji.exit137

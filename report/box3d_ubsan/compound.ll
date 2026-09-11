@@ -204,12 +204,12 @@ bb.j:                                             ; preds = %bb.i
   %i.ah = shl nsw i64 %i.ag, 5                    ; 3 uses
   %i.ai = call ptr @b3AllocZeroed(i64 noundef %i.ah) #13
   %.fr = freeze ptr %i.ai                         ; 7 uses
-  %i.aj = load i32, ptr %i.j, align 8, !tbaa !164 ; 6 uses
+  %i.aj = load i32, ptr %i.j, align 8, !tbaa !164 ; 7 uses
   %i.ak = sext i32 %i.aj to i64                   ; 3 uses
   %i.al = mul nsw i64 %i.ak, 36                   ; 4 uses
   %i.am = call ptr @b3AllocZeroed(i64 noundef %i.al) #13
   %.fr2360 = freeze ptr %i.am                     ; 11 uses
-  %i.an = load i32, ptr %i.x, align 8, !tbaa !166 ; 5 uses
+  %i.an = load i32, ptr %i.x, align 8, !tbaa !166 ; 6 uses
   %i.ao = sext i32 %i.an to i64                   ; 3 uses
   %i.ap = mul nsw i64 %i.ao, 60                   ; 4 uses
   %i.aq = call ptr @b3AllocZeroed(i64 noundef %i.ap) #13
@@ -329,7 +329,7 @@ bb.p:                                             ; preds = %bb.o
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %b3MaterialMap_reserve.exit
-  %.0347.lcssa = phi i32 [ 0, %b3MaterialMap_reserve.exit ], [ %i.cf, %._crit_edge.loopexit ] ; 4 uses
+  %.0347.lcssa = phi i32 [ 0, %b3MaterialMap_reserve.exit ], [ %i.cf, %._crit_edge.loopexit ] ; 5 uses
   %.0342.lcssa = phi i32 [ 0, %b3MaterialMap_reserve.exit ], [ %.1343, %._crit_edge.loopexit ] ; 2 uses
   %i.cg = shl nsw i64 %i.ak, 4                    ; 2 uses
   %i.ch = call ptr @b3AllocZeroed(i64 noundef %i.cg) #13
@@ -711,7 +711,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bb
   br i1 %exitcond3758.not, label %bb.af, label %.split1907, !llvm.loop !142
 
 bb.bk:                                            ; preds = %bb.af, %._crit_edge
-  %.2349 = phi i32 [ %i.et, %bb.af ], [ %.0347.lcssa, %._crit_edge ] ; 2 uses
+  %.2349 = phi i32 [ %i.et, %bb.af ], [ %.0347.lcssa, %._crit_edge ]
   %.4 = phi i32 [ %.3, %bb.af ], [ %.0342.lcssa, %._crit_edge ] ; 2 uses
   %.2340 = phi i32 [ %.1339, %bb.af ], [ 0, %._crit_edge ] ; 4 uses
   %i.id = shl nsw i64 %i.ao, 4                    ; 2 uses
@@ -763,7 +763,6 @@ bb.bm:                                            ; preds = %b3MeshMap_bucket_co
   br label %.lr.ph2209.split
 
 ._crit_edge2210:                                  ; preds = %bb.db
-  %indvars3769.le = trunc i64 %indvars.iv.next3767 to i32
   %i.jb = load i64, ptr %i.ig, align 8, !tbaa !68 ; 2 uses
   %.not.i441 = icmp eq i64 %i.jb, 0
   br i1 %.not.i441, label %b3MeshMap_cleanup.exit, label %b3MeshMap_init.exit.i
@@ -821,7 +820,7 @@ bb.bq:                                            ; preds = %bb.bo
   %.sroa.2.0.copyload = load float, ptr %.sroa.2.0..sroa_idx, align 4
   call void @b3ComputeMeshAABB(ptr dead_on_unwind nonnull writable sret(%struct.b3AABB) align 4 %10, ptr noundef %i.jt, ptr noundef nonnull byval(%struct.b3Transform) align 8 %i.ju, <2 x float> %.sroa.0.0.copyload, float %.sroa.2.0.copyload) #13
   %i.jw = call i32 @b3DynamicTree_CreateProxy(ptr noundef nonnull %1, ptr noundef nonnull byval(%struct.b3AABB) align 8 %10, i64 noundef -1, i64 noundef %indvars.iv3766) #13 ; 0 uses
-  %indvars.iv.next3767 = add nsw i64 %indvars.iv3766, 1 ; 2 uses
+  %indvars.iv.next3767 = add nsw i64 %indvars.iv3766, 1
   %i.jx = icmp eq i64 %indvars.iv3766, 2147483647
   br i1 %i.jx, label %bb.br, label %bb.bs, !prof !20, !nosanitize !9
 
@@ -1224,7 +1223,6 @@ bb.db:                                            ; preds = %bb.da, %bb.ct
   br i1 %exitcond3772.not, label %._crit_edge2210, label %.lr.ph2209.split, !llvm.loop !149
 
 bb.dc:                                            ; preds = %b3MeshMap_cleanup.exit, %bb.bk
-  %.4351 = phi i32 [ %indvars3769.le, %b3MeshMap_cleanup.exit ], [ %.2349, %bb.bk ] ; 2 uses
   %.8 = phi i32 [ %.6.lcssa, %b3MeshMap_cleanup.exit ], [ %.4, %bb.bk ] ; 2 uses
   %.2 = phi i32 [ %.1336, %b3MeshMap_cleanup.exit ], [ 0, %bb.bk ] ; 4 uses
   %i.qu = load i32, ptr %i.q, align 8, !tbaa !165
@@ -1240,9 +1238,11 @@ bb.dc:                                            ; preds = %b3MeshMap_cleanup.e
   br i1 %.not2352, label %.split2230, label %.lr.ph2218.split.split.preheader, !prof !20
 
 .lr.ph2218.split.split.preheader:                 ; preds = %.lr.ph2218
-  %15 = sext i32 %.4351 to i64
-  %16 = sub i32 2147483647, %.4351
-  %wide.trip.count3780 = zext i32 %16 to i64
+  %smax3775 = call i32 @llvm.smax.i32(i32 %i.aj, i32 0)
+  %15 = add i32 %.0347.lcssa, %smax3775
+  %smax3776 = call i32 @llvm.smax.i32(i32 %i.an, i32 0)
+  %16 = add i32 %15, %smax3776
+  %17 = sext i32 %16 to i64
   br label %.lr.ph2218.split.split
 
 ._crit_edge2219:                                  ; preds = %bb.dt, %bb.dc
@@ -1279,8 +1279,8 @@ bb.dc:                                            ; preds = %b3MeshMap_cleanup.e
   br label %.lr.ph2236.split
 
 .lr.ph2218.split.split:                           ; preds = %.lr.ph2218.split.split.preheader, %bb.dt
-  %indvars.iv3775 = phi i64 [ %15, %.lr.ph2218.split.split.preheader ], [ %indvars.iv.next3776, %bb.dt ] ; 3 uses
-  %indvars.iv3773 = phi i64 [ 0, %.lr.ph2218.split.split.preheader ], [ %indvars.iv.next3774, %bb.dt ] ; 6 uses
+  %indvars.iv3775 = phi i64 [ %17, %.lr.ph2218.split.split.preheader ], [ %indvars.iv.next3776, %bb.dt ] ; 3 uses
+  %indvars.iv3773 = phi i64 [ 0, %.lr.ph2218.split.split.preheader ], [ %indvars.iv.next3774, %bb.dt ] ; 5 uses
   %.92215 = phi i32 [ %.8, %.lr.ph2218.split.split.preheader ], [ %.10, %bb.dt ] ; 7 uses
   %i.rv = load ptr, ptr %i.qw, align 8, !tbaa !189 ; 3 uses
   %i.rw = getelementptr inbounds nuw [56 x i8], ptr %i.rv, i64 %indvars.iv3773 ; 4 uses
@@ -1404,12 +1404,11 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dj
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #13
   call void @b3ComputeSphereAABB(ptr dead_on_unwind nonnull writable sret(%struct.b3AABB) align 4 %14, ptr noundef nonnull %i.rw, ptr noundef nonnull byval(%struct.b3Transform) align 8 @b3Transform_identity) #13
   %i.ts = call i32 @b3DynamicTree_CreateProxy(ptr noundef nonnull %1, ptr noundef nonnull byval(%struct.b3AABB) align 8 %14, i64 noundef -1, i64 noundef %indvars.iv3775) #13 ; 0 uses
-  %exitcond3781 = icmp eq i64 %indvars.iv3773, %wide.trip.count3780
+  %exitcond3781 = icmp eq i64 %indvars.iv3775, 2147483647
   br i1 %exitcond3781, label %bb.ds, label %bb.dt, !prof !20, !nosanitize !9
 
 bb.ds:                                            ; preds = %bb.dr
-  %17 = and i64 %indvars.iv3775, 4294967295
-  call void @__ubsan_handle_add_overflow_abort(ptr nonnull @114, i64 %17, i64 1) #12, !nosanitize !9
+  call void @__ubsan_handle_add_overflow_abort(ptr nonnull @114, i64 2147483647, i64 1) #12, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.dt:                                            ; preds = %bb.dr
@@ -1810,6 +1809,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #2

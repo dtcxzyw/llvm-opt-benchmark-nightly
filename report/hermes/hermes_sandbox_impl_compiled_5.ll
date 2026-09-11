@@ -204,11 +204,13 @@ bb.u:                                             ; preds = %bb.t
   %i.dy = zext i32 %.0843 to i64
   %i.dz = add i32 %i.b, -260
   %i.ea = add i32 %i.b, -276
+  %5 = zext i32 %.0.copyload.i987 to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %.loopexit, %bb.u
-  %.0842 = phi i32 [ 1, %bb.u ], [ %5, %.loopexit ] ; 2 uses
-  %i.eb = shl i32 %.0842, 3
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit ], [ 1, %bb.u ] ; 2 uses
+  %6 = trunc nuw i64 %indvars.iv to i32
+  %i.eb = shl i32 %6, 3
   %i.ec = sub i32 %i.ag, %i.eb                    ; 2 uses
   %i.ed = zext i32 %i.ec to i64
   %.val976 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -611,8 +613,8 @@ bb.ba:                                            ; preds = %bb.v
   %.val879 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.jn = getelementptr inbounds nuw i8, ptr %.val879, i64 %i.x
   store i32 %i.jm, ptr %i.jn, align 1
-  %5 = add i32 %.0842, 1                          ; 2 uses
-  %.not874 = icmp eq i32 %5, %.0.copyload.i987
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not874 = icmp eq i64 %indvars.iv.next, %5
   br i1 %.not874, label %.loopexit1043, label %bb.v
 
 .loopexit1043:                                    ; preds = %.loopexit, %bb.t

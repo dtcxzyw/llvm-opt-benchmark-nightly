@@ -204,7 +204,7 @@ define dso_local range(i32 -1, 15) i32 @rb_enc_symname_type(ptr noundef %0, i64 
 bb.a:
   %i.a = alloca [13 x i8], align 1                ; 5 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
-  %i.c = getelementptr i8, ptr %0, i64 %1         ; 15 uses
+  %i.c = getelementptr i8, ptr %0, i64 %1         ; 14 uses
   %i.d = getelementptr i8, ptr %2, i64 20
   %.val.i.i = load i32, ptr %i.d, align 4, !tbaa !24
   %.not.i.i = icmp eq i32 %.val.i.i, 1
@@ -243,7 +243,9 @@ bb.b:                                             ; preds = %rb_enc_asciicompat.
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = getelementptr i8, ptr %0, i64 1          ; 2 uses
+  %i.h = getelementptr i8, ptr %0, i64 1          ; 5 uses
+  %4 = ptrtoaddr ptr %i.h to i64
+  %5 = ptrtoaddr ptr %i.c to i64
   %.not.i48.i = icmp ult ptr %i.h, %i.c
   br i1 %.not.i48.i, label %bb.d, label %enc_synmane_type_leading_chars.exit.thread78
 
@@ -306,28 +308,27 @@ bb.i:                                             ; preds = %is_global_name_punc
   br i1 %i.ah, label %enc_synmane_type_leading_chars.exit.thread78, label %.preheader.i.i.preheader
 
 .preheader.i.i.preheader:                         ; preds = %bb.i
-  %i.ai = getelementptr i8, ptr %0, i64 2         ; 3 uses
-  %4 = icmp ult ptr %i.ai, %i.c
-  br i1 %4, label %.lr.ph129, label %is_special_global_name.exit.i
+  %6 = xor i64 %4, -1
+  %7 = add i64 %6, %5                             ; 2 uses
+  %i.ai = getelementptr i8, ptr %i.h, i64 %7
+  %exitcond.not.i.i128 = icmp eq i64 %7, 0
+  br i1 %exitcond.not.i.i128, label %enc_synmane_type_leading_chars.exit.thread, label %.lr.ph129
 
 .preheader.i.i:                                   ; preds = %.lr.ph129
-  %5 = getelementptr i8, ptr %i.aj, i64 1         ; 3 uses
-  %6 = icmp ult ptr %5, %i.c
-  br i1 %6, label %.lr.ph129, label %is_special_global_name.exit.i, !llvm.loop !61
+  %exitcond.not.i.i = icmp eq ptr %8, %i.ai
+  br i1 %exitcond.not.i.i, label %enc_synmane_type_leading_chars.exit.thread, label %.lr.ph129, !llvm.loop !61
 
 .lr.ph129:                                        ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %i.aj = phi ptr [ %5, %.preheader.i.i ], [ %i.ai, %.preheader.i.i.preheader ] ; 3 uses
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !18
+  %i.aj = phi ptr [ %8, %.preheader.i.i ], [ %i.h, %.preheader.i.i.preheader ]
+  %8 = getelementptr i8, ptr %i.aj, i64 1         ; 4 uses
+  %i.ak = load i8, ptr %8, align 1, !tbaa !18
   %i.al = sext i8 %i.ak to i32
   %i.am = add nsw i32 %i.al, -58
   %i.an = icmp ult i32 %i.am, -10
-  br i1 %i.an, label %.is_special_global_name.exit.i.loopexit_crit_edge, label %.preheader.i.i, !llvm.loop !61
+  br i1 %i.an, label %is_special_global_name.exit.i, label %.preheader.i.i, !llvm.loop !61
 
-.is_special_global_name.exit.i.loopexit_crit_edge: ; preds = %.lr.ph129
-  br label %is_special_global_name.exit.i, !llvm.loop !61
-
-is_special_global_name.exit.i:                    ; preds = %.preheader.i.i, %.preheader.i.i.preheader, %.is_special_global_name.exit.i.loopexit_crit_edge, %bb.h, %bb.g, %bb.e
-  %.126.i.i = phi ptr [ %i.t, %bb.e ], [ %i.af, %bb.h ], [ %i.v, %bb.g ], [ %i.ai, %.preheader.i.i.preheader ], [ %i.aj, %.is_special_global_name.exit.i.loopexit_crit_edge ], [ %5, %.preheader.i.i ]
+is_special_global_name.exit.i:                    ; preds = %.lr.ph129, %bb.h, %bb.g, %bb.e
+  %.126.i.i = phi ptr [ %i.t, %bb.e ], [ %i.af, %bb.h ], [ %i.v, %bb.g ], [ %8, %.lr.ph129 ]
   %.not83.i = icmp eq ptr %.126.i.i, %i.c
   br i1 %.not83.i, label %enc_synmane_type_leading_chars.exit.thread, label %enc_synmane_type_leading_chars.exit.thread78
 
@@ -510,15 +511,15 @@ rb_sym_constant_char_p.exit.i:                    ; preds = %bb.w
 rb_sym_constant_char_p.exit.thread.i:             ; preds = %rb_sym_constant_char_p.exit.i, %.critedge.i52.i, %bb.ad, %bb.z, %bb.x
   br label %enc_synmane_type_leading_chars.exit.thread78
 
-enc_synmane_type_leading_chars.exit.thread:       ; preds = %bb.r, %bb.u, %bb.u, %bb.t, %bb.k, %bb.l, %bb.m, %bb.o, %bb.p, %bb.q, %is_special_global_name.exit.i, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %.sroa.32.0.i.ph = phi i32 [ 14, %bb.r ], [ 14, %bb.q ], [ 14, %bb.p ], [ 14, %bb.o ], [ 14, %bb.u ], [ 14, %bb.m ], [ 14, %bb.l ], [ 14, %bb.k ], [ 6, %is_special_global_name.exit.i ], [ 14, %bb.t ], [ 14, %bb.u ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ]
-  %.sroa.63.0.i.ph = phi i64 [ %.42.i, %bb.r ], [ %.41.i, %bb.q ], [ %.40.i, %bb.p ], [ 2, %bb.o ], [ 2, %bb.u ], [ %.39.i, %bb.m ], [ %.38.i, %bb.l ], [ 1, %bb.k ], [ %1, %is_special_global_name.exit.i ], [ %.43.i, %bb.t ], [ 2, %bb.u ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ]
+enc_synmane_type_leading_chars.exit.thread:       ; preds = %.preheader.i.i, %.preheader.i.i.preheader, %bb.r, %bb.u, %bb.u, %bb.t, %bb.k, %bb.l, %bb.m, %bb.o, %bb.p, %bb.q, %is_special_global_name.exit.i, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
+  %.sroa.32.0.i.ph = phi i32 [ 14, %bb.r ], [ 14, %bb.b ], [ 14, %bb.q ], [ 14, %bb.p ], [ 14, %bb.o ], [ 14, %bb.u ], [ 14, %bb.m ], [ 14, %bb.l ], [ 14, %bb.k ], [ 6, %is_special_global_name.exit.i ], [ 14, %bb.t ], [ 14, %bb.u ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ], [ 14, %bb.b ], [ 6, %.preheader.i.i.preheader ], [ 6, %.preheader.i.i ]
+  %.sroa.63.0.i.ph = phi i64 [ %.42.i, %bb.r ], [ 1, %bb.b ], [ %.41.i, %bb.q ], [ %.40.i, %bb.p ], [ 2, %bb.o ], [ 2, %bb.u ], [ %.39.i, %bb.m ], [ %.38.i, %bb.l ], [ 1, %bb.k ], [ %1, %is_special_global_name.exit.i ], [ %.43.i, %bb.t ], [ 2, %bb.u ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ %1, %.preheader.i.i.preheader ], [ %1, %.preheader.i.i ]
   %i.cn = getelementptr i8, ptr %0, i64 %.sroa.63.0.i.ph
   br label %.critedge
 
-enc_synmane_type_leading_chars.exit.thread78:     ; preds = %bb.f, %bb.s, %bb.y, %bb.i, %is_special_global_name.exit.i, %rb_sym_constant_char_p.exit.thread.i, %rb_sym_constant_char_p.exit.i, %bb.ah, %bb.ad, %bb.c
-  %.sroa.32.0.i.ph76 = phi i64 [ 25769803778, %bb.c ], [ 42949672962, %bb.ad ], [ 42949672962, %bb.ah ], [ 42949672962, %rb_sym_constant_char_p.exit.i ], [ 2, %rb_sym_constant_char_p.exit.thread.i ], [ 25769803778, %is_special_global_name.exit.i ], [ 25769803778, %bb.i ], [ 42949672962, %bb.y ], [ 60129542146, %bb.s ], [ 25769803778, %bb.f ] ; 2 uses
-  %.sroa.63.0.i.ph77 = phi i64 [ 1, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.ah ], [ 0, %rb_sym_constant_char_p.exit.i ], [ 0, %rb_sym_constant_char_p.exit.thread.i ], [ 1, %is_special_global_name.exit.i ], [ 1, %bb.i ], [ 0, %bb.y ], [ 0, %bb.s ], [ 1, %bb.f ]
+enc_synmane_type_leading_chars.exit.thread78:     ; preds = %bb.c, %bb.s, %bb.y, %bb.f, %is_special_global_name.exit.i, %rb_sym_constant_char_p.exit.thread.i, %rb_sym_constant_char_p.exit.i, %bb.ah, %bb.ad, %bb.i
+  %.sroa.32.0.i.ph76 = phi i64 [ 25769803778, %bb.i ], [ 42949672962, %bb.ad ], [ 42949672962, %bb.ah ], [ 42949672962, %rb_sym_constant_char_p.exit.i ], [ 2, %rb_sym_constant_char_p.exit.thread.i ], [ 25769803778, %is_special_global_name.exit.i ], [ 25769803778, %bb.f ], [ 42949672962, %bb.y ], [ 60129542146, %bb.s ], [ 25769803778, %bb.c ] ; 2 uses
+  %.sroa.63.0.i.ph77 = phi i64 [ 1, %bb.i ], [ 0, %bb.ad ], [ 0, %bb.ah ], [ 0, %rb_sym_constant_char_p.exit.i ], [ 0, %rb_sym_constant_char_p.exit.thread.i ], [ 1, %is_special_global_name.exit.i ], [ 1, %bb.f ], [ 0, %bb.y ], [ 0, %bb.s ], [ 1, %bb.c ]
   %i.co = getelementptr i8, ptr %0, i64 %.sroa.63.0.i.ph77
   %.sroa.0.4.extract.shift83 = lshr i64 %.sroa.32.0.i.ph76, 32 ; 2 uses
   %.sroa.0.4.extract.trunc84 = trunc nuw nsw i64 %.sroa.0.4.extract.shift83 to i32
