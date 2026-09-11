@@ -202,28 +202,26 @@ bb.a:
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.d, %.._crit_edge_crit_edge
-  %i.e = phi ptr [ %.pre, %.._crit_edge_crit_edge ], [ %i.bx, %bb.d ] ; 3 uses
+  %i.e = phi ptr [ %.pre, %.._crit_edge_crit_edge ], [ %i.bx, %bb.d ] ; 2 uses
   %i.f = phi <2 x double> [ %i.b, %.._crit_edge_crit_edge ], [ %i.bz, %bb.d ] ; 3 uses
   %i.g = phi <2 x double> [ zeroinitializer, %.._crit_edge_crit_edge ], [ %i.ci, %bb.d ] ; 3 uses
   %i.h = extractelement <2 x double> %i.g, i64 0
   %i.i = extractelement <2 x double> %i.g, i64 1
   %i.j = tail call double @hypot(double noundef %i.h, double noundef %i.i) #10
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 104
-  %4 = load double, ptr %3, align 8, !tbaa !69
-  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 112
-  %5 = load double, ptr %i.l, align 8, !tbaa !70
-  %6 = fadd nsz double %4, %5
+  %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 104
+  %3 = load <2 x double>, ptr %i.l, align 8, !tbaa !56
+  %4 = tail call reassoc nsz double @llvm.vector.reduce.fadd.v2f64(double 0.000000e+00, <2 x double> %3)
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 96
-  %i.n = load double, ptr %i.m, align 8, !tbaa !71
+  %i.n = load double, ptr %i.m, align 8, !tbaa !69
   %i.o = tail call ptr @agraphof(ptr noundef nonnull %0) #10
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !54
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 356
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !83
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !81
   %i.t = sitofp nsz i32 %i.s to double
   %i.u = fadd nsz double %i.n, %i.t
-  %i.v = tail call nsz double @llvm.maxnum.f64(double %6, double %i.u)
+  %i.v = tail call nsz double @llvm.maxnum.f64(double %4, double %i.u)
   %i.w = load ptr, ptr %i.k, align 8, !tbaa !54
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 32
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -257,11 +255,11 @@ bb.a:
   %i.at = extractelement <2 x double> %i.aq, i64 1
   %i.au = call double @llvm.round.f64(double %i.at) ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.am, i64 104
-  %i.aw = load double, ptr %i.av, align 8, !tbaa !69 ; 2 uses
+  %i.aw = load double, ptr %i.av, align 8, !tbaa !82 ; 2 uses
   %i.ax = fadd double %i.as, %i.aw
   %i.ay = fmul double %i.ax, 2.560000e+02
   %i.az = getelementptr inbounds nuw i8, ptr %i.am, i64 112
-  %i.ba = load double, ptr %i.az, align 8, !tbaa !70
+  %i.ba = load double, ptr %i.az, align 8, !tbaa !83
   %i.bb = fadd double %i.aw, %i.ba
   %i.bc = fdiv double %i.ay, %i.bb
   %i.bd = fptoui double %i.bc to i8               ; 4 uses
@@ -595,6 +593,9 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #8
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #8
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -683,28 +684,28 @@ attributes #13 = { noreturn nounwind }
 !66 = !{!"elist", !65, i64 0, !9, i64 8}
 !67 = !{!"p1 _ZTS8Agraph_s", !8, i64 0}
 !68 = !{!"Agnodeinfo_t", !57, i64 0, !58, i64 16, !8, i64 24, !59, i64 32, !55, i64 48, !55, i64 56, !60, i64 64, !55, i64 96, !55, i64 104, !55, i64 112, !55, i64 120, !55, i64 128, !61, i64 136, !61, i64 144, !8, i64 152, !4, i64 160, !4, i64 161, !62, i64 162, !4, i64 163, !5, i64 164, !5, i64 168, !5, i64 172, !63, i64 176, !55, i64 184, !4, i64 192, !62, i64 193, !17, i64 200, !17, i64 208, !4, i64 216, !9, i64 224, !4, i64 232, !4, i64 233, !4, i64 234, !17, i64 240, !17, i64 248, !66, i64 256, !66, i64 272, !66, i64 288, !66, i64 304, !66, i64 320, !67, i64 336, !5, i64 344, !17, i64 352, !5, i64 360, !5, i64 364, !55, i64 368, !66, i64 376, !66, i64 392, !66, i64 408, !66, i64 424, !22, i64 440, !5, i64 448, !5, i64 452, !5, i64 456, !4, i64 464}
-!69 = !{!68, !55, i64 104}
-!70 = !{!68, !55, i64 112}
-!71 = !{!68, !55, i64 96}
-!72 = !{!"p1 _ZTS8layout_t", !8, i64 0}
-!73 = !{!"short", !4, i64 0}
-!74 = !{!"p1 _ZTS5GVC_s", !8, i64 0}
-!75 = !{!"p2 _ZTS8Agnode_s", !64, i64 0}
-!76 = !{!"p2 double", !64, i64 0}
-!77 = !{!"any p3 pointer", !64, i64 0}
-!78 = !{!"p3 double", !77, i64 0}
-!79 = !{!"p2 _ZTS8Agraph_s", !64, i64 0}
-!80 = !{!"p1 _ZTS6rank_t", !8, i64 0}
-!81 = !{!"nlist_t", !75, i64 0, !9, i64 8}
-!82 = !{!"Agraphinfo_t", !57, i64 0, !72, i64 16, !61, i64 24, !60, i64 32, !4, i64 64, !4, i64 128, !4, i64 129, !62, i64 130, !4, i64 131, !5, i64 132, !55, i64 136, !55, i64 144, !73, i64 152, !8, i64 160, !74, i64 168, !8, i64 176, !75, i64 184, !5, i64 192, !76, i64 200, !76, i64 208, !76, i64 216, !78, i64 224, !73, i64 232, !73, i64 234, !5, i64 236, !79, i64 240, !67, i64 248, !17, i64 256, !80, i64 264, !67, i64 272, !5, i64 280, !17, i64 288, !17, i64 296, !81, i64 304, !17, i64 320, !17, i64 328, !5, i64 336, !5, i64 340, !62, i64 344, !4, i64 345, !5, i64 348, !5, i64 352, !5, i64 356, !17, i64 360, !17, i64 368, !17, i64 376, !75, i64 384, !62, i64 392, !4, i64 393, !4, i64 394, !4, i64 395, !62, i64 396}
-!83 = !{!82, !5, i64 356}
+!69 = !{!68, !55, i64 96}
+!70 = !{!"p1 _ZTS8layout_t", !8, i64 0}
+!71 = !{!"short", !4, i64 0}
+!72 = !{!"p1 _ZTS5GVC_s", !8, i64 0}
+!73 = !{!"p2 _ZTS8Agnode_s", !64, i64 0}
+!74 = !{!"p2 double", !64, i64 0}
+!75 = !{!"any p3 pointer", !64, i64 0}
+!76 = !{!"p3 double", !75, i64 0}
+!77 = !{!"p2 _ZTS8Agraph_s", !64, i64 0}
+!78 = !{!"p1 _ZTS6rank_t", !8, i64 0}
+!79 = !{!"nlist_t", !73, i64 0, !9, i64 8}
+!80 = !{!"Agraphinfo_t", !57, i64 0, !70, i64 16, !61, i64 24, !60, i64 32, !4, i64 64, !4, i64 128, !4, i64 129, !62, i64 130, !4, i64 131, !5, i64 132, !55, i64 136, !55, i64 144, !71, i64 152, !8, i64 160, !72, i64 168, !8, i64 176, !73, i64 184, !5, i64 192, !74, i64 200, !74, i64 208, !74, i64 216, !76, i64 224, !71, i64 232, !71, i64 234, !5, i64 236, !77, i64 240, !67, i64 248, !17, i64 256, !78, i64 264, !67, i64 272, !5, i64 280, !17, i64 288, !17, i64 296, !79, i64 304, !17, i64 320, !17, i64 328, !5, i64 336, !5, i64 340, !62, i64 344, !4, i64 345, !5, i64 348, !5, i64 352, !5, i64 356, !17, i64 360, !17, i64 368, !17, i64 376, !73, i64 384, !62, i64 392, !4, i64 393, !4, i64 394, !4, i64 395, !62, i64 396}
+!81 = !{!80, !5, i64 356}
+!82 = !{!68, !55, i64 104}
+!83 = !{!68, !55, i64 112}
 !84 = !{!68, !62, i64 193}
 !85 = !{!62, !62, i64 0}
 !86 = !{!"p1 _ZTS7splines", !8, i64 0}
 !87 = !{!"port", !59, i64 0, !55, i64 16, !8, i64 24, !62, i64 32, !62, i64 33, !62, i64 34, !62, i64 35, !4, i64 36, !4, i64 37, !21, i64 40}
 !88 = !{!"p1 _ZTS8pointf_s", !8, i64 0}
 !89 = !{!"Ppoly_t", !88, i64 0, !9, i64 8}
-!90 = !{!"Agedgeinfo_t", !57, i64 0, !86, i64 16, !87, i64 24, !87, i64 72, !61, i64 120, !61, i64 128, !61, i64 136, !61, i64 144, !4, i64 152, !4, i64 153, !4, i64 154, !4, i64 155, !4, i64 156, !22, i64 160, !8, i64 168, !55, i64 176, !55, i64 184, !89, i64 192, !4, i64 208, !62, i64 209, !73, i64 210, !5, i64 212, !5, i64 216, !5, i64 220, !73, i64 224, !5, i64 228, !22, i64 232}
+!90 = !{!"Agedgeinfo_t", !57, i64 0, !86, i64 16, !87, i64 24, !87, i64 72, !61, i64 120, !61, i64 128, !61, i64 136, !61, i64 144, !4, i64 152, !4, i64 153, !4, i64 154, !4, i64 155, !4, i64 156, !22, i64 160, !8, i64 168, !55, i64 176, !55, i64 184, !89, i64 192, !4, i64 208, !62, i64 209, !71, i64 210, !5, i64 212, !5, i64 216, !5, i64 220, !71, i64 224, !5, i64 228, !22, i64 232}
 !91 = !{!90, !4, i64 152}
 !92 = !{!68, !4, i64 216}
 !93 = !{!68, !9, i64 280}

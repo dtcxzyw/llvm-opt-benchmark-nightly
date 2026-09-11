@@ -202,10 +202,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ag = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ah = fdiv <2 x double> %i.ae, %i.ag          ; 2 uses
   %i.ai = fadd <2 x double> %i.h, %i.ah           ; 3 uses
-  %i.aj = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ah) ; 2 uses
-  %shift = shufflevector <2 x double> %i.aj, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %shift, %i.aj
-  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.aj = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ah)
+  %4 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.aj)
   %i.ak = fcmp ugt double %4, f0x3D719799812DEA11
   br i1 %i.ak, label %bb.b, label %bb.d
 
@@ -375,6 +373,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #5
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

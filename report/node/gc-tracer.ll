@@ -205,14 +205,13 @@ declare noundef i64 @_ZN2v88internal15MemoryAllocator20GetPooledChunksCountEv(pt
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden noundef double @_ZNK2v88internal8GCTracer36AverageMarkCompactMutatorUtilizationEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(6440) %0) local_unnamed_addr #6 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3728
-  %1 = load double, ptr %i.a, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 3720
-  %3 = load double, ptr %2, align 8               ; 2 uses
-  %4 = fadd double %1, %3                         ; 2 uses
-  %5 = fcmp oeq double %4, 0.000000e+00
-  %i.b = fdiv double %3, %4
-  %.0 = select i1 %5, double 1.000000e+00, double %i.b
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3720
+  %1 = load <2 x double>, ptr %i.a, align 8       ; 2 uses
+  %2 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %1) ; 2 uses
+  %3 = fcmp oeq double %2, 0.000000e+00
+  %4 = extractelement <2 x double> %1, i64 0
+  %i.b = fdiv double %4, %2
+  %.0 = select i1 %3, double 1.000000e+00, double %i.b
   ret double %.0
 }
 
@@ -614,6 +613,9 @@ declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #18
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %bb.a
   %i.aw = fneg <2 x float> %i.av
   %i.ax = insertelement <2 x i1> poison, i1 %i.an, i64 0
   %i.ay = shufflevector <2 x i1> %i.ax, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.az = select <2 x i1> %i.ay, <2 x float> %i.aw, <2 x float> %i.av ; 2 uses
-  %i.ba = extractelement <2 x float> %i.az, i64 1 ; 3 uses
+  %i.az = select <2 x i1> %i.ay, <2 x float> %i.aw, <2 x float> %i.av ; 3 uses
+  %i.ba = extractelement <2 x float> %i.az, i64 1 ; 2 uses
   %i.bb = fcmp ult float %i.ba, 0.000000e+00
-  %i.bc = extractelement <2 x float> %i.az, i64 0 ; 3 uses
+  %i.bc = extractelement <2 x float> %i.az, i64 0 ; 2 uses
   %i.bd = fcmp ult float %i.bc, 0.000000e+00
   %or.cond.not36 = select i1 %i.bb, i1 true, i1 %i.bd
-  %5 = fadd float %i.ba, %i.bc
+  %5 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.az)
   %i.be = fcmp ugt float %5, %.024
   %or.cond29 = select i1 %or.cond.not36, i1 true, i1 %i.be
   br i1 %or.cond29, label %bb.d, label %bb.c
@@ -612,6 +612,9 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

@@ -203,15 +203,14 @@ middle.block422:                                  ; preds = %vector.body413
   %i.oo = load double, ptr %2, align 8, !tbaa !14
   %i.op = getelementptr inbounds [8 x i8], ptr %1, i64 %.0226.lcssa
   store double %i.oo, ptr %i.op, align 8, !tbaa !14
-  %i.oq = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.oq = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.or = load double, ptr %i.oq, align 8, !tbaa !14
   %i.os = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ot = load double, ptr %i.os, align 8, !tbaa !14
   %i.ou = fsub double %i.or, %i.ot
   store double %i.ou, ptr %i.bh, align 8, !tbaa !14
-  %5 = load double, ptr %i.oq, align 8, !tbaa !14
-  %6 = load double, ptr %i.os, align 8, !tbaa !14
-  %7 = fadd double %5, %6
+  %5 = load <2 x double>, ptr %i.os, align 8, !tbaa !14
+  %6 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %5)
   br label %bb.p
 
 bb.o:                                             ; preds = %makect.exit
@@ -226,7 +225,7 @@ bb.o:                                             ; preds = %makect.exit
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %._crit_edge276
-  %storemerge = phi double [ %i.pa, %bb.o ], [ %7, %._crit_edge276 ]
+  %storemerge = phi double [ %i.pa, %bb.o ], [ %6, %._crit_edge276 ]
   store double %storemerge, ptr %1, align 8, !tbaa !14
   ret void
 }
@@ -628,6 +627,9 @@ declare void @llvm.assume(i1 noundef) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #7
 
 attributes #0 = { nofree nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -205,11 +205,10 @@ middle.block236:                                  ; preds = %vector.body229
 .lr.ph31:                                         ; preds = %.lr.ph31.preheader245, %.lr.ph31
   %indvars.iv47 = phi i64 [ %indvars.iv.next48, %.lr.ph31 ], [ %indvars.iv47.ph, %.lr.ph31.preheader245 ] ; 3 uses
   %.119128 = phi ptr [ %i.rc, %.lr.ph31 ], [ %.119128.ph, %.lr.ph31.preheader245 ] ; 4 uses
-  %2 = load double, ptr %.119128, align 8, !tbaa !41
-  %i.qs = getelementptr inbounds nuw i8, ptr %.119128, i64 8 ; 2 uses
-  %3 = load double, ptr %i.qs, align 8, !tbaa !41
-  %4 = fadd nsz double %2, %3
-  %i.qt = fmul nsz double %i.j, %4
+  %i.qs = getelementptr inbounds nuw i8, ptr %.119128, i64 8
+  %2 = load <2 x double>, ptr %.119128, align 8, !tbaa !41
+  %3 = tail call reassoc nsz double @llvm.vector.reduce.fadd.v2f64(double 0.000000e+00, <2 x double> %2)
+  %i.qt = fmul nsz double %i.j, %3
   %i.qu = fmul nsz double %i.qt, 5.000000e-01
   %i.qv = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %indvars.iv47
   store double %i.qu, ptr %i.qv, align 8, !tbaa !41
@@ -363,6 +362,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6

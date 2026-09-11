@@ -204,10 +204,8 @@ _ZZN7xgboost6metric13EvalEWiseBaseINS0_18EvalTweedieNLogLikEE4EvalERKNS_16HostDe
   %i.bs = fmul float %i.ba, %i.br
   %i.bt = insertelement <2 x float> poison, float %i.bs, i64 0
   %i.bu = insertelement <2 x float> %i.bt, float %i.bq, i64 1
-  %i.bv = fdiv <2 x float> %i.bu, %i.bj           ; 2 uses
-  %shift = shufflevector <2 x float> %i.bv, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.bv, %shift
-  %2 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.bv = fdiv <2 x float> %i.bu, %i.bj
+  %2 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.bv)
   %i.bw = fmul float %i.bb, %2
   %i.bx = insertelement <2 x float> poison, float %i.bb, i64 0
   %i.by = insertelement <2 x float> %i.bx, float %i.bw, i64 1
@@ -608,6 +606,9 @@ declare float @llvm.sqrt.f32(float) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.ctpop.v2i64(<2 x i64>) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.ctpop.v4i32(<4 x i32>) #24

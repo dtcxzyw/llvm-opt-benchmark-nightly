@@ -205,11 +205,9 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %._crit_edge500, label %bb.f, !llvm.loop !830
 
 ._crit_edge500:                                   ; preds = %._crit_edge500.loopexit.unr-lcssa, %bb.f, %.preheader
-  %.0392.lcssa = phi <2 x double> [ zeroinitializer, %.preheader ], [ %i.om, %._crit_edge500.loopexit.unr-lcssa ], [ %i.ot, %bb.f ] ; 2 uses
+  %.0392.lcssa = phi <2 x double> [ zeroinitializer, %.preheader ], [ %i.om, %._crit_edge500.loopexit.unr-lcssa ], [ %i.ot, %bb.f ]
   %.0205.lcssa = phi i64 [ 0, %.preheader ], [ %i.jl, %bb.f ], [ %i.jl, %._crit_edge500.loopexit.unr-lcssa ] ; 5 uses
-  %shift = shufflevector <2 x double> %.0392.lcssa, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %.0392.lcssa, %shift
-  %7 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
+  %7 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %.0392.lcssa) ; 3 uses
   %i.ov = icmp slt i64 %.0205.lcssa, %1
   br i1 %i.ov, label %.lr.ph506, label %._crit_edge507
 
@@ -611,6 +609,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #5
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

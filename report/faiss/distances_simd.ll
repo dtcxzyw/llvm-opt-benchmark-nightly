@@ -205,11 +205,11 @@ bb.a:
   %i.f = fsub float %i.c, %i.e
   %i.g = tail call float @llvm.fabs.f32(float %i.f)
   %i.h = fpext float %i.g to double
-  %3 = tail call float @llvm.fabs.f32(float %i.c)
-  %4 = fpext float %3 to double
-  %5 = tail call float @llvm.fabs.f32(float %i.e)
-  %6 = fpext float %5 to double
-  %7 = fadd double %4, %6
+  %3 = insertelement <2 x float> poison, float %i.c, i64 0
+  %4 = insertelement <2 x float> %3, float %i.e, i64 1
+  %5 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %4)
+  %6 = fpext <2 x float> %5 to <2 x double>
+  %7 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %6)
   %i.i = fdiv double %i.h, %7
   %i.j = fpext float %.014 to double
   %i.k = fadd double %i.i, %i.j
@@ -610,6 +610,12 @@ declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fmax.v4f32(<4 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #2

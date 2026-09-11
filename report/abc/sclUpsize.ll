@@ -204,10 +204,8 @@ bb.ci:                                            ; preds = %bb.ch
   %i.nv = add nsw i32 %.037.i, 2
   %i.nw = load <2 x float>, ptr %i.nr, align 4, !tbaa !76
   %i.nx = load <2 x float>, ptr %i.nu, align 4, !tbaa !76
-  %i.ny = fsub <2 x float> %i.nw, %i.nx           ; 2 uses
-  %shift = shufflevector <2 x float> %i.ny, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.ny, %shift
-  %7 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 3 uses
+  %i.ny = fsub <2 x float> %i.nw, %i.nx
+  %7 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.ny) ; 3 uses
   %i.nz = fcmp ogt float %7, 0.000000e+00
   %i.oa = fmul float %7, 1.500000e+00
   %i.ob = select i1 %i.nz, float %7, float %i.oa
@@ -610,12 +608,19 @@ Abc_SclUpsizeRemoveDangling.exit:                 ; preds = %bb.bs, %.loopexit, 
 
 bb.bt:                                            ; preds = %Abc_SclUpsizeRemoveDangling.exit
   %i.qk = load i32, ptr %i.an, align 4, !tbaa !171
-  %i.ql = call i32 @llvm.umax.i32(i32 %.1215, i32 1) ; 4 uses
-  %19 = sdiv i32 %.1205, %i.ql
-  %20 = sdiv i32 %.1203, %i.ql
-  %21 = sdiv i32 %.1199, %i.ql
-  %22 = sdiv i32 %.1201, %i.ql
-  call void @Abc_SclUpsizePrint(ptr noundef nonnull %i.az, i32 noundef %.1215, i32 noundef %i.qk, i32 noundef %19, i32 noundef %20, i32 noundef %21, i32 noundef %22, i32 noundef 1)
+  %i.ql = call i32 @llvm.umax.i32(i32 %.1215, i32 1)
+  %19 = insertelement <4 x i32> poison, i32 %.1205, i64 0
+  %20 = insertelement <4 x i32> %19, i32 %.1203, i64 1
+  %21 = insertelement <4 x i32> %20, i32 %.1199, i64 2
+  %22 = insertelement <4 x i32> %21, i32 %.1201, i64 3
+  %23 = insertelement <4 x i32> poison, i32 %i.ql, i64 0
+  %24 = shufflevector <4 x i32> %23, <4 x i32> poison, <4 x i32> zeroinitializer
+  %25 = sdiv <4 x i32> %22, %24                   ; 4 uses
+  %26 = extractelement <4 x i32> %25, i64 0
+  %27 = extractelement <4 x i32> %25, i64 1
+  %28 = extractelement <4 x i32> %25, i64 2
+  %29 = extractelement <4 x i32> %25, i64 3
+  call void @Abc_SclUpsizePrint(ptr noundef nonnull %i.az, i32 noundef %.1215, i32 noundef %i.qk, i32 noundef %26, i32 noundef %27, i32 noundef %28, i32 noundef %29, i32 noundef 1)
   br label %bb.bv
 
 bb.bu:                                            ; preds = %Abc_SclUpsizeRemoveDangling.exit
@@ -1017,6 +1022,9 @@ declare float @llvm.fabs.f32(float) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #17
 
 attributes #0 = { nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

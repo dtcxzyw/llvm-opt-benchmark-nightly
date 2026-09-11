@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %.noexc46
 
 _ZNK5Ipopt6Vector3DotERKS0_.exit:                 ; preds = %.noexc48, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i
   %.0.i = phi double [ %i.cf, %_ZNK5Ipopt6Vector4Nrm2Ev.exit.i ], [ %i.cm, %.noexc48 ]
-  %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 12 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 11 uses
   store double %.0.i, ptr %i.cn, align 8, !tbaa !94
   %i.co = load ptr, ptr %i.az, align 8, !tbaa !19
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 16
@@ -605,15 +605,14 @@ _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit131:     ; preds = %bb.cw, %bb.cx
   br i1 %i.rj, label %bb.cy, label %bb.df
 
 bb.cy:                                            ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit131
-  %6 = load double, ptr %i.s, align 8, !tbaa !56
-  %7 = load double, ptr %i.cn, align 8, !tbaa !94
-  %8 = fmul double %7, 5.000000e-01
-  %9 = fadd double %6, %8
+  %6 = load <2 x double>, ptr %i.s, align 8, !tbaa !93
+  %7 = fmul <2 x double> %6, <double 1.000000e+00, double 5.000000e-01>
+  %8 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %7)
   %i.rk = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.rl = load double, ptr %i.rk, align 8, !tbaa !218
   %i.rm = fsub double 1.000000e+00, %i.rl
   %i.rn = fmul double %i.ri, %i.rm
-  %i.ro = fdiv double %9, %i.rn                   ; 2 uses
+  %i.ro = fdiv double %8, %i.rn                   ; 2 uses
   %i.rp = fcmp olt double %i.rg, %i.ro
   br i1 %i.rp, label %bb.cz, label %bb.df
 
@@ -1015,6 +1014,9 @@ declare i64 @llvm.umin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

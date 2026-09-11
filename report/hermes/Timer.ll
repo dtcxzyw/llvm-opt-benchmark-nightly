@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.b
   br label %_ZL8printValddRN4llvh11raw_ostreamE.exit
 
 _ZL8printValddRN4llvh11raw_ostreamE.exit:         ; preds = %bb.f, %bb.e, %bb.d, %bb.a
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.y = load double, ptr %i.x, align 8, !tbaa !72 ; 3 uses
   %i.z = fcmp une double %i.y, 0.000000e+00
   br i1 %i.z, label %bb.g, label %_ZL8printValddRN4llvh11raw_ostreamE.exit15
@@ -251,14 +251,13 @@ bb.k:                                             ; preds = %bb.g
   br label %_ZL8printValddRN4llvh11raw_ostreamE.exit15
 
 _ZL8printValddRN4llvh11raw_ostreamE.exit15:       ; preds = %bb.k, %bb.j, %bb.i, %_ZL8printValddRN4llvh11raw_ostreamE.exit
-  %8 = load double, ptr %i.a, align 8, !tbaa !73
-  %9 = load double, ptr %i.x, align 8, !tbaa !72
-  %10 = fadd double %8, %9                        ; 3 uses
-  %i.au = fcmp une double %10, 0.000000e+00
+  %8 = load <2 x double>, ptr %i.a, align 8, !tbaa !71
+  %9 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %8) ; 3 uses
+  %i.au = fcmp une double %9, 0.000000e+00
   br i1 %i.au, label %bb.l, label %_ZL8printValddRN4llvh11raw_ostreamE.exit16
 
 bb.l:                                             ; preds = %_ZL8printValddRN4llvh11raw_ostreamE.exit15
-  %i.av = fcmp olt double %10, f0x3E7AD7F29ABCAF48
+  %i.av = fcmp olt double %9, f0x3E7AD7F29ABCAF48
   br i1 %i.av, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
@@ -291,7 +290,7 @@ bb.p:                                             ; preds = %bb.l
   %i.bl = fadd double %i.bi, %i.bk                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   %i.bm = fmul double %i.bl, 1.000000e+02
-  %i.bn = fdiv double %i.bm, %10
+  %i.bn = fdiv double %i.bm, %9
   %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr @.str.34, ptr %i.bo, align 8, !tbaa !75, !alias.scope !153
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvh13format_objectIJddEEE, i64 16), ptr %4, align 8, !tbaa !13, !alias.scope !153
@@ -693,6 +692,9 @@ declare i64 @llvm.umax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #21
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

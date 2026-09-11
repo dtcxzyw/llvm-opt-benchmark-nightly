@@ -10,7 +10,7 @@ define hidden range(i32 0, 2) i32 @QuantizeLevels(ptr nofree noundef captures(ad
 bb.a:
   %i.a = alloca [256 x i32], align 16             ; 10 uses
   %i.b = alloca [256 x i32], align 16             ; 12 uses
-  %i.c = alloca [256 x double], align 16          ; 16 uses
+  %i.c = alloca [256 x double], align 16          ; 15 uses
   %i.d = alloca [256 x double], align 16          ; 7 uses
   %i.e = alloca [256 x double], align 16          ; 7 uses
   %i.f = alloca [256 x i8], align 16              ; 10 uses
@@ -229,18 +229,16 @@ bb.c:                                             ; preds = %._crit_edge160, %._
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.e
+  %indvars.iv.next179 = add nsw i64 %indvars.iv178222, 1 ; 2 uses
   %exitcond182.not = icmp eq i64 %indvars.iv.next179, %smax181
   br i1 %exitcond182.not, label %.critedge, label %bb.e, !llvm.loop !11
 
 bb.e:                                             ; preds = %.lr.ph223, %bb.d
   %indvars.iv178222 = phi i64 [ %i.cf, %.lr.ph223 ], [ %indvars.iv.next179, %bb.d ] ; 3 uses
-  %5 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv178222
-  %6 = load double, ptr %5, align 8, !tbaa !23
-  %indvars.iv.next179 = add nsw i64 %indvars.iv178222, 1 ; 3 uses
-  %i.cg = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv.next179
-  %7 = load double, ptr %i.cg, align 8, !tbaa !23
-  %8 = fadd double %6, %7
-  %i.ch = fcmp olt double %8, %i.cd
+  %i.cg = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv178222
+  %5 = load <2 x double>, ptr %i.cg, align 8, !tbaa !23
+  %6 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %5)
+  %i.ch = fcmp olt double %6, %i.cd
   br i1 %i.ch, label %bb.d, label %.critedge.split.loop.exit216, !llvm.loop !11
 
 .critedge.split.loop.exit216:                     ; preds = %bb.e
@@ -567,6 +565,9 @@ declare i32 @llvm.umax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4

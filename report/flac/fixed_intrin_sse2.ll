@@ -202,17 +202,17 @@ middle.block:                                     ; preds = %vector.body
   %.1244 = phi i32 [ %.lcssa325, %._crit_edge ], [ %i.dy, %middle.block ], [ %i.ef, %.lr.ph344 ] ; 3 uses
   %.1242 = phi i32 [ %.lcssa324, %._crit_edge ], [ %i.dx, %middle.block ], [ %i.ei, %.lr.ph344 ] ; 4 uses
   %.1240 = phi i32 [ %.lcssa323, %._crit_edge ], [ %i.dw, %middle.block ], [ %i.el, %.lr.ph344 ] ; 5 uses
-  %i.eu = phi <2 x i32> [ %i.bz, %._crit_edge ], [ %i.ea, %middle.block ], [ %i.er, %.lr.ph344 ] ; 2 uses
-  %3 = tail call i32 @llvm.umin.i32(i32 %.1242, i32 %.1240)
-  %4 = extractelement <2 x i32> %i.eu, i64 1      ; 6 uses
-  %..1238 = tail call i32 @llvm.umin.i32(i32 %3, i32 %4)
-  %5 = extractelement <2 x i32> %i.eu, i64 0      ; 6 uses
-  %i.ev = tail call i32 @llvm.umin.i32(i32 %..1238, i32 %5)
+  %i.eu = phi <2 x i32> [ %i.bz, %._crit_edge ], [ %i.ea, %middle.block ], [ %i.er, %.lr.ph344 ] ; 5 uses
+  %3 = tail call i32 @llvm.vector.reduce.umin.v2i32(<2 x i32> %i.eu)
+  %..1238 = tail call i32 @llvm.umin.i32(i32 %3, i32 %.1242)
+  %i.ev = tail call i32 @llvm.umin.i32(i32 %..1238, i32 %.1240)
   %.not249 = icmp ugt i32 %.1244, %i.ev
   br i1 %.not249, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %.loopexit
+  %4 = extractelement <2 x i32> %i.eu, i64 1      ; 3 uses
   %i.ew = tail call i32 @llvm.umin.i32(i32 %.1240, i32 %4)
+  %5 = extractelement <2 x i32> %i.eu, i64 0      ; 3 uses
   %..1236 = tail call i32 @llvm.umin.i32(i32 %i.ew, i32 %5)
   %.not250 = icmp ugt i32 %.1242, %..1236
   br i1 %.not250, label %bb.d, label %.thread
@@ -280,11 +280,12 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   %i.fw = phi float [ %i.fv, %bb.j ], [ 0.000000e+00, %bb.i ]
   %i.fx = getelementptr inbounds nuw i8, ptr %2, i64 8
   store float %i.fw, ptr %i.fx, align 4, !tbaa !16
-  %.not256 = icmp eq i32 %4, 0
+  %6 = extractelement <2 x i32> %i.eu, i64 1      ; 2 uses
+  %.not256 = icmp eq i32 %6, 0
   br i1 %.not256, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.fy = uitofp reassoc nsz arcp i32 %4 to double
+  %i.fy = uitofp reassoc nsz arcp i32 %6 to double
   %i.fz = fmul reassoc nnan nsz arcp double %i.fy, f0x3FE62E42FEFA39EF
   %i.ga = uitofp reassoc nsz arcp i32 %1 to double
   %i.gb = fdiv reassoc nsz arcp double %i.fz, %i.ga
@@ -297,11 +298,12 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   %i.gf = phi float [ %i.ge, %bb.l ], [ 0.000000e+00, %bb.k ]
   %i.gg = getelementptr inbounds nuw i8, ptr %2, i64 12
   store float %i.gf, ptr %i.gg, align 4, !tbaa !16
-  %.not257 = icmp eq i32 %5, 0
+  %7 = extractelement <2 x i32> %i.eu, i64 0      ; 2 uses
+  %.not257 = icmp eq i32 %7, 0
   br i1 %.not257, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.gh = uitofp reassoc nsz arcp i32 %5 to double
+  %i.gh = uitofp reassoc nsz arcp i32 %7 to double
   %i.gi = fmul reassoc nnan nsz arcp double %i.gh, f0x3FE62E42FEFA39EF
   %i.gj = uitofp reassoc nsz arcp i32 %1 to double
   %i.gk = fdiv reassoc nsz arcp double %i.gi, %i.gj
@@ -334,6 +336,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.abs.v2i32(<2 x i32>, i1 immarg) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.umin.v2i32(<2 x i32>) #2
 
 attributes #0 = { nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="128" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

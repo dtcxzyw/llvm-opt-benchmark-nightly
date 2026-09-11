@@ -205,13 +205,11 @@ stbtt__fill_active_edges_new.exit.i.i:            ; preds = %stbtt__handle_clipp
   br i1 %i.auw, label %.lr.ph124.i.i, label %.preheader.i.i, !llvm.loop !842
 
 .lr.ph126.i.i:                                    ; preds = %.preheader.i.i, %.lr.ph126.i.i
-  %i.aux = phi ptr [ %i.auz, %.lr.ph126.i.i ], [ %.0..0..0..0..0..0..0..0.84.i.i, %.preheader.i.i ] ; 3 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.aux, i64 12
-  %13 = load float, ptr %12, align 4, !tbaa !862
+  %i.aux = phi ptr [ %i.auz, %.lr.ph126.i.i ], [ %.0..0..0..0..0..0..0..0.84.i.i, %.preheader.i.i ] ; 2 uses
   %i.auy = getelementptr inbounds nuw i8, ptr %i.aux, i64 8 ; 2 uses
-  %14 = load float, ptr %i.auy, align 8, !tbaa !864
-  %15 = fadd float %13, %14
-  store float %15, ptr %i.auy, align 8, !tbaa !864
+  %12 = load <2 x float>, ptr %i.auy, align 8, !tbaa !54
+  %13 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %12)
+  store float %13, ptr %i.auy, align 8, !tbaa !864
   %i.auz = load ptr, ptr %i.aux, align 8, !tbaa !851 ; 2 uses
   %.not94.i.i = icmp eq ptr %i.auz, null
   br i1 %.not94.i.i, label %._crit_edge127.i.i, label %.lr.ph126.i.i, !llvm.loop !843
@@ -612,6 +610,9 @@ declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #5

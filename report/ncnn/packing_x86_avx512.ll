@@ -52,7 +52,7 @@ bb.a:
   %i.f = alloca i32, align 4                      ; 9 uses
   %i.g = tail call i32 @__kmpc_global_thread_num(ptr nonnull @2) ; 24 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !15   ; 14 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !15   ; 15 uses
   %.not.i = icmp eq i32 %i.i, 0
   br i1 %.not.i, label %.thread, label %_ZNK4ncnn3Mat8elembitsEv.exit
 
@@ -455,14 +455,20 @@ _ZN4ncnn3MataSERKS0_.exit:                        ; preds = %.thread363.thread, 
   %i.hc = sdiv i32 %.pre-phi, %i.ha
   %i.hd = getelementptr inbounds nuw i8, ptr %2, i64 44
   store i32 %i.hc, ptr %i.hd, align 4, !tbaa !43
-  %i.he = sext i32 %i.i to i64                    ; 2 uses
+  %4 = insertelement <2 x i32> poison, i32 %i.ha, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %i.i, i64 1
+  %6 = sext <2 x i32> %5 to <2 x i64>             ; 2 uses
+  %i.he = sext i32 %i.i to i64
   %i.hf = mul i64 %i.hb, %i.he
-  %4 = sext i32 %i.ha to i64                      ; 2 uses
-  %5 = udiv i64 %i.hf, %4
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  store i64 %5, ptr %6, align 8, !tbaa !39
-  %7 = udiv i64 %i.k, %i.he
-  %i.hg = mul i64 %7, %4
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %8 = insertelement <2 x i64> poison, i64 %i.hf, i64 0
+  %9 = insertelement <2 x i64> %8, i64 %i.k, i64 1
+  %10 = udiv <2 x i64> %9, %6                     ; 2 uses
+  %11 = extractelement <2 x i64> %10, i64 0
+  store i64 %11, ptr %7, align 8, !tbaa !39
+  %12 = extractelement <2 x i64> %10, i64 1
+  %13 = extractelement <2 x i64> %6, i64 0
+  %i.hg = mul i64 %12, %13
   %i.hh = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i64 %i.hg, ptr %i.hh, align 8, !tbaa !16
   %i.hi = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -865,11 +871,16 @@ _ZN4ncnn3MataSERKS0_.exit:                        ; preds = %.thread.thread, %_Z
   %i.ge = zext nneg i32 %i.n to i64               ; 2 uses
   %i.gf = mul i64 %i.gb, %i.ge
   %i.gg = sext i32 %i.ga to i64                   ; 2 uses
-  %4 = udiv i64 %i.gf, %i.gg
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  store i64 %4, ptr %5, align 8, !tbaa !39
-  %6 = udiv i64 %i.l, %i.ge
-  %i.gh = mul i64 %6, %i.gg
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %5 = insertelement <2 x i64> poison, i64 %i.gf, i64 0
+  %6 = insertelement <2 x i64> %5, i64 %i.l, i64 1
+  %7 = insertelement <2 x i64> poison, i64 %i.gg, i64 0
+  %8 = insertelement <2 x i64> %7, i64 %i.ge, i64 1
+  %9 = udiv <2 x i64> %6, %8                      ; 2 uses
+  %10 = extractelement <2 x i64> %9, i64 0
+  store i64 %10, ptr %4, align 8, !tbaa !39
+  %11 = extractelement <2 x i64> %9, i64 1
+  %i.gh = mul i64 %11, %i.gg
   %i.gi = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i64 %i.gh, ptr %i.gi, align 8, !tbaa !16
   %i.gj = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -1027,7 +1038,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !16   ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
-  %i.n = load i32, ptr %i.m, align 8, !tbaa !15   ; 12 uses
+  %i.n = load i32, ptr %i.m, align 8, !tbaa !15   ; 13 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !33   ; 22 uses
   %i.q = icmp eq i32 %i.n, %i.p
@@ -1430,14 +1441,20 @@ _ZN4ncnn3MataSERKS0_.exit:                        ; preds = %.thread343.thread, 
   %i.gv = sdiv i32 %.pre-phi, %i.gt
   %i.gw = getelementptr inbounds nuw i8, ptr %2, i64 44
   store i32 %i.gv, ptr %i.gw, align 4, !tbaa !43
-  %i.gx = sext i32 %i.n to i64                    ; 2 uses
+  %4 = insertelement <2 x i32> poison, i32 %i.gt, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %i.n, i64 1
+  %6 = sext <2 x i32> %5 to <2 x i64>             ; 2 uses
+  %i.gx = sext i32 %i.n to i64
   %i.gy = mul i64 %i.gu, %i.gx
-  %4 = sext i32 %i.gt to i64                      ; 2 uses
-  %5 = udiv i64 %i.gy, %4
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  store i64 %5, ptr %6, align 8, !tbaa !39
-  %7 = udiv i64 %i.l, %i.gx
-  %i.gz = mul i64 %7, %4
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %8 = insertelement <2 x i64> poison, i64 %i.gy, i64 0
+  %9 = insertelement <2 x i64> %8, i64 %i.l, i64 1
+  %10 = udiv <2 x i64> %9, %6                     ; 2 uses
+  %11 = extractelement <2 x i64> %10, i64 0
+  store i64 %11, ptr %7, align 8, !tbaa !39
+  %12 = extractelement <2 x i64> %10, i64 1
+  %13 = extractelement <2 x i64> %6, i64 0
+  %i.gz = mul i64 %12, %13
   %i.ha = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i64 %i.gz, ptr %i.ha, align 8, !tbaa !16
   %i.hb = getelementptr inbounds nuw i8, ptr %2, i64 24

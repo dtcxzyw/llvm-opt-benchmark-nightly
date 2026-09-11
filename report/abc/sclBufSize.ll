@@ -204,16 +204,17 @@ Scl_LibHandleInputDriver.exit:                    ; preds = %bb.ap, %bb.ao, %bb.
   call fastcc void @Scl_LibPinArrival(ptr noundef %.sink, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, ptr noundef nonnull readonly %9, ptr noundef %5, ptr noundef nonnull %8)
   %i.pv = load <2 x float>, ptr %5, align 8, !tbaa !73
   %i.pw = load <2 x float>, ptr %4, align 8, !tbaa !73
-  %i.px = fsub <2 x float> %i.pv, %i.pw
+  %i.px = fsub <2 x float> %i.pv, %i.pw           ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
-  %10 = fpext <2 x float> %i.px to <2 x double>   ; 2 uses
-  %11 = extractelement <2 x double> %10, i64 0
-  %12 = fmul double %11, 5.000000e-01
-  %13 = extractelement <2 x double> %10, i64 1
-  %i.py = call double @llvm.fmuladd.f64(double %13, double 5.000000e-01, double %12)
+  %10 = extractelement <2 x float> %i.px, i64 1
+  %11 = fpext float %10 to double
+  %12 = extractelement <2 x float> %i.px, i64 0
+  %13 = fpext float %12 to double
+  %14 = fmul double %13, 5.000000e-01
+  %i.py = call double @llvm.fmuladd.f64(double %11, double 5.000000e-01, double %14)
   %i.pz = fpext float %i.oy to double
   %i.qa = fadd double %i.py, %i.pz
   %i.qb = fptrunc double %i.qa to float

@@ -205,13 +205,11 @@ bb.bg:                                            ; preds = %bb.ao, %bb.bv
   %i.lb = load <2 x double>, ptr %i.la, align 1, !tbaa !27
   %i.lc = fsub <2 x double> %i.kz, %i.lb          ; 2 uses
   %i.ld = fmul <2 x double> %i.lc, %i.lc
-  %36 = fadd <2 x double> %i.ky, %i.ld
-  %i.le = fadd <2 x double> %i.kt, %36
-  %i.lf = fadd <2 x double> %i.ko, %i.le          ; 2 uses
-  %shift = shufflevector <2 x double> %i.lf, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop.a = fadd <2 x double> %i.lf, %shift
-  %37 = extractelement <2 x double> %foldExtExtBinop.a, i64 0
-  %.scalar.i = call noundef double @llvm.sqrt.f64(double %37)
+  %i.le = fadd <2 x double> %i.ky, %i.ld
+  %i.lf = fadd <2 x double> %i.kt, %i.le
+  %foldExtExtBinop.a = fadd <2 x double> %i.ko, %i.lf
+  %36 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %foldExtExtBinop.a)
+  %.scalar.i = call noundef double @llvm.sqrt.f64(double %36)
   %i.lg = fadd double %.022279, %.scalar.i        ; 2 uses
   %i.lh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str, i64 noundef 16)
           to label %bb.bh unwind label %bb.bw     ; 0 uses
@@ -613,6 +611,9 @@ declare i64 @llvm.smin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #16

@@ -202,7 +202,7 @@ declare zeroext i1 @extract_query_dependencies_walker(ptr noundef, ptr noundef) 
 ; Function Attrs: nounwind uwtable
 define dso_local zeroext i1 @plan_cluster_use_sort(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.QualCost, align 8           ; 5 uses
+  %2 = alloca %struct.QualCost, align 16          ; 4 uses
   %3 = alloca %struct.Path, align 8               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
@@ -307,11 +307,9 @@ bb.d:                                             ; preds = %.lr.ph66, %bb.c
   %i.az = getelementptr inbounds nuw i8, ptr %i.ak, i64 136
   %i.ba = load ptr, ptr %i.az, align 8
   call void @cost_qual_eval(ptr noundef nonnull %2, ptr noundef %i.ba, ptr noundef nonnull %i.f) #10
-  %4 = load double, ptr %2, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = load double, ptr %5, align 8
-  %7 = fadd double %4, %6
-  %i.bb = fmul double %7, 2.000000e+00
+  %4 = load <2 x double>, ptr %2, align 16
+  %5 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %4)
+  %i.bb = fmul double %5, 2.000000e+00
   %i.bc = call ptr @create_seqscan_path(ptr noundef nonnull %i.f, ptr noundef %i.ab, ptr noundef null, i32 noundef 0) #10 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 48
   %i.be = load i32, ptr %i.bd, align 8
@@ -713,6 +711,9 @@ declare i32 @llvm.umax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

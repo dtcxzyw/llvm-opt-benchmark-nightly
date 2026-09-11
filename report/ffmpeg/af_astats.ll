@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %.thread641.thread.i
   %i.gb = phi <3 x i64> [ zeroinitializer, %.lr.ph.i28 ], [ %i.jw, %.thread641.thread.i ]
   %i.gc = phi <2 x double> [ zeroinitializer, %.lr.ph.i28 ], [ %i.jk, %.thread641.thread.i ]
   %i.gd = load ptr, ptr %i.fs, align 8, !tbaa !28
-  %i.ge = getelementptr inbounds nuw [65864 x i8], ptr %i.gd, i64 %indvars.iv.i29 ; 38 uses
+  %i.ge = getelementptr inbounds nuw [65864 x i8], ptr %i.gd, i64 %indvars.iv.i29 ; 37 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 240 ; 5 uses
   %i.gg = load i64, ptr %i.gf, align 8, !tbaa !31 ; 4 uses
   %i.gh = load i64, ptr %i.ft, align 8, !tbaa !33
@@ -331,7 +331,6 @@ calc_entropy.exit.i:                              ; preds = %bb.p
   %i.jg = load i64, ptr %i.jf, align 8, !tbaa !57
   %i.jh = add i64 %i.jg, %.0340502.i              ; 2 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.ge, i64 112 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ge, i64 120
   %i.jj = load <2 x double>, ptr %i.ji, align 8, !tbaa !34
   %i.jk = fadd nsz <2 x double> %i.gc, %i.jj      ; 3 uses
   %i.jl = getelementptr inbounds nuw i8, ptr %i.ge, i64 168 ; 2 uses
@@ -653,14 +652,13 @@ bb.ap:                                            ; preds = %bb.ao, %bb.al
   br i1 %.not410.i, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %3 = load double, ptr %i.ji, align 8, !tbaa !46
-  %4 = load double, ptr %2, align 8, !tbaa !47
-  %5 = fadd nsz double %3, %4
+  %2 = load <2 x double>, ptr %i.ji, align 8, !tbaa !34
+  %3 = call reassoc nsz double @llvm.vector.reduce.fadd.v2f64(double 0.000000e+00, <2 x double> %2)
   %i.pr = load i64, ptr %i.jd, align 8, !tbaa !44
   %i.ps = load i64, ptr %i.je, align 8, !tbaa !45
   %i.pt = add i64 %i.ps, %i.pr
   %i.pu = uitofp nsz i64 %i.pt to double
-  %i.pv = fdiv nsz double %5, %i.pu
+  %i.pv = fdiv nsz double %3, %i.pu
   %i.pw = call nsz double @llvm.log10.f64(double %i.pv)
   %i.px = fmul nsz double %i.pw, 2.000000e+01
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cc) #11
@@ -1061,6 +1059,9 @@ declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.vector.reduce.add.v16i8(<16 x i8>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #8

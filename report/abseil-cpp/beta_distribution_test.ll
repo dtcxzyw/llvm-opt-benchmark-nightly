@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v) #39
   store i32 0, ptr %i.v, align 4, !tbaa !96
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 12 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 12 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 10 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 14 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %7, i64 64
   %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -608,10 +608,10 @@ bb.by:                                            ; preds = %_ZN4absl12lts_20260
           to label %_ZN4absl12lts_2026052612log_internal10LogMessagelsILi10EEERS2_RAT__Kc.exit.i unwind label %bb.cj
 
 _ZN4absl12lts_2026052612log_internal10LogMessagelsILi10EEERS2_RAT__Kc.exit.i: ; preds = %bb.by
-  %.val70.i = load double, ptr %i.y, align 8, !tbaa !352 ; 2 uses
-  %.val71.i = load double, ptr %i.z, align 16, !tbaa !353
-  %24 = fadd double %.val70.i, %.val71.i
-  %i.ne = fdiv double %.val70.i, %24
+  %24 = load <2 x double>, ptr %i.y, align 8, !tbaa !100 ; 2 uses
+  %25 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %24)
+  %26 = extractelement <2 x double> %24, i64 0
+  %i.ne = fdiv double %26, %25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   store double %i.ne, ptr %i.o, align 8, !tbaa !100
   %i.nf = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN4absl12lts_2026052612log_internal10LogMessagelsIdEERS2_RKT_(ptr noundef nonnull align 8 dereferenceable(16) %i.nd, ptr noundef nonnull align 8 dereferenceable(8) %i.o)
@@ -624,10 +624,10 @@ bb.bz:                                            ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052612log_internal10LogMessagelsILi12EEERS2_RAT__Kc.exit.i: ; preds = %bb.bz
   %i.ng = load double, ptr %i.as, align 8, !tbaa !359
-  %.val68.i = load double, ptr %i.y, align 8, !tbaa !352 ; 2 uses
-  %.val69.i = load double, ptr %i.z, align 16, !tbaa !353
-  %25 = fadd double %.val68.i, %.val69.i
-  %i.nh = fdiv double %.val68.i, %25
+  %27 = load <2 x double>, ptr %i.y, align 8, !tbaa !100 ; 2 uses
+  %28 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %27)
+  %29 = extractelement <2 x double> %27, i64 0
+  %i.nh = fdiv double %29, %28
   %i.ni = fsub double %i.ng, %i.nh
   %i.nj = call noundef double @llvm.fabs.f64(double %i.ni)
   %i.nk = fdiv double %i.nj, %i.ma
@@ -1028,6 +1028,9 @@ declare i64 @llvm.smin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #36
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #22

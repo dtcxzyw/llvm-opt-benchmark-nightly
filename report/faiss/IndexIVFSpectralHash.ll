@@ -204,7 +204,7 @@ _ZSt4sortIPfEvT_S1_.exit.i:                       ; preds = %.lr.ph191.split, %_
           to label %.noexc129 unwind label %bb.av
 
 .noexc129:                                        ; preds = %.noexc128
-  %i.ny = getelementptr [4 x i8], ptr %i.nw, i64 %i.lp ; 3 uses
+  %i.ny = getelementptr [4 x i8], ptr %i.nw, i64 %i.lp ; 2 uses
   br i1 %.not.i127, label %_ZSt4sortIPfEvT_S1_.exit.thread.i, label %bb.ar
 
 bb.ar:                                            ; preds = %.noexc129
@@ -213,10 +213,9 @@ bb.ar:                                            ; preds = %.noexc129
 
 _ZSt4sortIPfEvT_S1_.exit.thread.i:                ; preds = %.noexc129
   %i.oa = getelementptr i8, ptr %i.ny, i64 -4
-  %6 = load float, ptr %i.oa, align 4, !tbaa !65
-  %7 = load float, ptr %i.ny, align 4, !tbaa !65
-  %8 = fadd float %6, %7
-  %i.ob = fmul float %8, 5.000000e-01
+  %6 = load <2 x float>, ptr %i.oa, align 4, !tbaa !65
+  %7 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %6)
+  %i.ob = fmul float %7, 5.000000e-01
   br label %_ZN5faiss12_GLOBAL__N_16medianEmPf.exit
 
 _ZN5faiss12_GLOBAL__N_16medianEmPf.exit:          ; preds = %_ZSt4sortIPfEvT_S1_.exit.thread.i, %bb.ar
@@ -617,6 +616,9 @@ declare i64 @llvm.umax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.ctpop.v2i64(<2 x i64>) #18

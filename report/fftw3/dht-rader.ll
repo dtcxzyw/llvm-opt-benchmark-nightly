@@ -204,7 +204,7 @@ declare void @fftw_rdft_solve(ptr noundef, ptr noundef) #1
 ; Function Attrs: nounwind uwtable
 define internal void @awake(ptr nofree noundef captures(none) %0, i32 noundef %1) #0 {
 bb.a:
-  %i.a = alloca [2 x double], align 16            ; 5 uses
+  %i.a = alloca [2 x double], align 16            ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !22
   tail call void @fftw_plan_awake(ptr noundef %i.c, i32 noundef %1) #6
@@ -256,7 +256,6 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i:                                         ; preds = %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.af = sub nsw i64 92681, %i.p
   br label %bb.e
 
@@ -266,10 +265,9 @@ bb.e:                                             ; preds = %bb.h, %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.ag = load ptr, ptr %i.ae, align 8, !tbaa !56
   call void %i.ag(ptr noundef %i.ab, i64 noundef %.060.i, ptr noundef nonnull %i.a) #6, !inline_history !48
-  %3 = load double, ptr %i.a, align 16, !tbaa !30
-  %4 = load double, ptr %2, align 8, !tbaa !30
-  %5 = fadd double %3, %4
-  %i.ah = fdiv double %5, %i.aa
+  %2 = load <2 x double>, ptr %i.a, align 16, !tbaa !30
+  %3 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %2)
+  %i.ah = fdiv double %3, %i.aa
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.05259.i
   store double %i.ah, ptr %i.ai, align 8, !tbaa !30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
@@ -670,6 +668,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4

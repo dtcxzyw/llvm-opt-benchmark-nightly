@@ -205,12 +205,10 @@ bb.v:                                             ; preds = %.lr.ph417
 
 _ZNK7xgboost6common4SpanINS0_9WQSummaryIffE5EntryELm18446744073709551615EEixEm.exit72: ; preds = %.lr.ph417
   %i.cg = load ptr, ptr %i.q, align 8, !tbaa !287
-  %i.ch = getelementptr inbounds nuw [16 x i8], ptr %i.cg, i64 %i.ce ; 2 uses
-  %3 = load float, ptr %i.ch, align 4, !tbaa !295
-  %4 = getelementptr inbounds nuw i8, ptr %i.ch, i64 4
-  %5 = load float, ptr %4, align 4, !tbaa !294
-  %6 = fadd float %3, %5
-  %i.ci = fpext float %6 to double
+  %i.ch = getelementptr inbounds nuw [16 x i8], ptr %i.cg, i64 %i.ce
+  %3 = load <2 x float>, ptr %i.ch, align 4, !tbaa !77
+  %4 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %3)
+  %i.ci = fpext float %4 to double
   %i.cj = fcmp ult double %i.cd, %i.ci
   br i1 %i.cj, label %_ZNK7xgboost6common4SpanINS0_9WQSummaryIffE5EntryELm18446744073709551615EEixEm.exit72..critedge_crit_edge, label %bb.u, !llvm.loop !834
 
@@ -612,6 +610,9 @@ declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #22
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

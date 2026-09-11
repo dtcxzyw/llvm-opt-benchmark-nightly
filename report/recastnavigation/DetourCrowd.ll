@@ -205,10 +205,8 @@ bb.ax:                                            ; preds = %bb.aw
   %i.pm = shufflevector <2 x float> %i.pl, <2 x float> poison, <2 x i32> zeroinitializer
   %i.pn = fmul <2 x float> %i.pj, %i.pm
   %i.po = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.pn, <2 x float> splat (float 5.000000e-01), <2 x float> %i.oq) ; 4 uses
-  %i.pp = fmul <2 x float> %i.po, %i.po           ; 2 uses
-  %shift = shufflevector <2 x float> %i.pp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop645 = fadd <2 x float> %i.pp, %shift
-  %3 = extractelement <2 x float> %foldExtExtBinop645, i64 0
+  %i.pp = fmul <2 x float> %i.po, %i.po
+  %3 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.pp)
   %i.pq = extractelement <2 x float> %i.po, i64 0
   %i.pr = extractelement <2 x float> %i.po, i64 1
   br label %bb.ba
@@ -610,6 +608,9 @@ declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

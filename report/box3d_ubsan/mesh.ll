@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %foldExtExtBinop155 = fmul <2 x float> %.sroa.4109.0.copyload, %.sroa.5112.0.copyload
   %i.ba = extractelement <2 x float> %foldExtExtBinop155, i64 0 ; 2 uses
   %i.bb = fmul <2 x float> %.sroa.4109.0.copyload, %.sroa.4109.0.copyload ; 2 uses
-  %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.bd = fsub float %i.ba, %i.ay
   %i.be = fmul float %i.bd, 2.000000e+00          ; 3 uses
   %i.bf = fsub float %i.s, %i.p
@@ -231,8 +231,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ca = insertelement <2 x float> poison, float %i.bz, i64 0
   %i.cb = insertelement <2 x float> %i.ca, float %i.by, i64 1
   %i.cc = fmul <2 x float> %i.cb, splat (float 2.000000e+00) ; 3 uses
-  %foldExtExtBinop158 = fadd <2 x float> %i.bb, %i.bc
-  %5 = extractelement <2 x float> %foldExtExtBinop158, i64 0
+  %5 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.bb)
   %i.cd = fmul float %5, 2.000000e+00
   %i.ce = fsub float 1.000000e+00, %i.cd          ; 3 uses
   %i.cf = fcmp olt float %i.be, 0.000000e+00
@@ -634,6 +633,9 @@ declare float @llvm.sqrt.f32(float) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #3
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

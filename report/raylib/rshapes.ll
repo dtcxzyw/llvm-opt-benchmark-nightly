@@ -204,14 +204,10 @@ declare float @llvm.maxnum.f32(float, float) #7
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define zeroext i1 @CheckCollisionCircleLine(<2 x float> %0, float noundef %1, <2 x float> %2, <2 x float> %3) local_unnamed_addr #10 {
 bb.a:
-  %foldExtExtBinop = fsub <2 x float> %2, %3      ; 3 uses
-  %4 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
-  %foldExtExtBinop48.a = fsub <2 x float> %2, %3  ; 2 uses
-  %5 = extractelement <2 x float> %foldExtExtBinop48.a, i64 1 ; 2 uses
-  %6 = tail call float @llvm.fabs.f32(float %4)
-  %7 = tail call float @llvm.fabs.f32(float %5)
-  %8 = fadd float %6, %7
-  %i.a = fcmp ugt float %8, f0x34000000
+  %foldExtExtBinop48.a = fsub <2 x float> %2, %3  ; 6 uses
+  %4 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %foldExtExtBinop48.a)
+  %5 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %4)
+  %i.a = fcmp ugt float %5, f0x34000000
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -240,8 +236,8 @@ bb.c:                                             ; preds = %bb.a
   %i.n = shufflevector <2 x float> %i.m, <2 x float> %i.l, <2 x i32> <i32 0, i32 3>
   %i.o = fmul <2 x float> %i.l, %i.n
   %i.p = shufflevector <4 x float> %i.j, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %i.q = shufflevector <2 x float> %i.p, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 2>
-  %i.r = shufflevector <2 x float> %foldExtExtBinop, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>
+  %i.q = shufflevector <2 x float> %i.p, <2 x float> %foldExtExtBinop48.a, <2 x i32> <i32 0, i32 2>
+  %i.r = shufflevector <2 x float> %foldExtExtBinop48.a, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>
   %i.s = shufflevector <4 x float> %i.r, <4 x float> %i.j, <2 x i32> <i32 5, i32 1>
   %i.t = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.q, <2 x float> %i.s, <2 x float> %i.o) ; 2 uses
   %i.u = extractelement <2 x float> %i.t, i64 0
@@ -252,9 +248,11 @@ bb.c:                                             ; preds = %bb.a
   %.neg = fneg float %i.w
   %spec.store.select.neg = select i1 %i.y, float -0.000000e+00, float %.neg
   %i.z = select i1 %i.x, float -1.000000e+00, float %spec.store.select.neg ; 2 uses
-  %i.aa = tail call float @llvm.fmuladd.f32(float %i.z, float %4, float %.sroa.025.0.vec.extract)
+  %6 = extractelement <2 x float> %foldExtExtBinop48.a, i64 0
+  %i.aa = tail call float @llvm.fmuladd.f32(float %i.z, float %6, float %.sroa.025.0.vec.extract)
   %i.ab = fsub float %i.aa, %.sroa.039.0.vec.extract ; 2 uses
-  %i.ac = tail call float @llvm.fmuladd.f32(float %i.z, float %5, float %.sroa.025.4.vec.extract)
+  %7 = extractelement <2 x float> %foldExtExtBinop48.a, i64 1
+  %i.ac = tail call float @llvm.fmuladd.f32(float %i.z, float %7, float %.sroa.025.4.vec.extract)
   %i.ad = fsub float %i.ac, %.sroa.039.4.vec.extract ; 2 uses
   %i.ae = fmul float %i.ad, %i.ad
   %i.af = tail call float @llvm.fmuladd.f32(float %i.ab, float %i.ab, float %i.ae)
@@ -310,6 +308,9 @@ declare <4 x float> @llvm.sqrt.v4f32(<4 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

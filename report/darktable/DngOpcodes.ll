@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN8rawspeed10DngOpcodesC2ERKNS_8RawImageENS_10ByteStreamE(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nofree noundef readonly byval(%"class.rawspeed::ByteStream") align 8 captures(none) %2) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.rawspeed::iRectangle2D", align 8 ; 6 uses
+  %3 = alloca %"class.rawspeed::iRectangle2D", align 16 ; 5 uses
   %4 = alloca %"class.rawspeed::ByteStream", align 8 ; 7 uses
   %5 = alloca %"class.std::unique_ptr", align 8   ; 9 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
@@ -493,7 +493,7 @@ _ZNSt6vectorISt10unique_ptrIN8rawspeed10DngOpcodes9DngOpcodeESt14default_deleteI
   %i.cl = getelementptr inbounds nuw i8, ptr %.val, i64 553
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !204
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.val, i64 592
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !205 ; 4 uses
+  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !205 ; 3 uses
   %switch = icmp ult i8 %i.cm, 2
   br i1 %switch, label %._crit_edge.sink.split.i, label %bb.n
 
@@ -520,17 +520,18 @@ bb.n:                                             ; preds = %_ZNSt6vectorISt10un
   %.sroa.0.sroa.0.0.i = phi i32 [ 0, %_ZNSt6vectorISt10unique_ptrIN8rawspeed10DngOpcodes9DngOpcodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit ], [ %i.cp, %._crit_edge.sink.split.i ]
   %.sroa.0.sroa.6.0.i = phi i64 [ 0, %_ZNSt6vectorISt10unique_ptrIN8rawspeed10DngOpcodes9DngOpcodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit ], [ %i.cy, %._crit_edge.sink.split.i ]
   %.sroa.6.0.i = phi i64 [ 0, %_ZNSt6vectorISt10unique_ptrIN8rawspeed10DngOpcodes9DngOpcodeESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit ], [ %.sroa.8.40.insert.insert.i, %._crit_edge.sink.split.i ] ; 2 uses
-  %6 = udiv i32 %.sroa.0.sroa.0.0.i, %.pre.i
   %.sroa.6.8.extract.trunc.i = trunc i64 %.sroa.6.0.i to i32
-  %7 = udiv i32 %.sroa.6.8.extract.trunc.i, %.pre.i
-  %.sroa.6.8.insert.ext.i = zext i32 %7 to i64
   %.sroa.6.8.insert.mask.i = and i64 %.sroa.6.0.i, -4294967296
-  %.sroa.6.8.insert.insert.i = or disjoint i64 %.sroa.6.8.insert.mask.i, %.sroa.6.8.insert.ext.i
-  %.sroa.0.sroa.0.0.insert.ext.i = zext i32 %6 to i64
-  %.sroa.0.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.0.sroa.6.0.i, %.sroa.0.sroa.0.0.insert.ext.i
-  store i64 %.sroa.0.sroa.0.0.insert.insert.i, ptr %3, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %.sroa.6.8.insert.insert.i, ptr %8, align 8
+  %6 = insertelement <2 x i32> poison, i32 %.sroa.0.sroa.0.0.i, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %.sroa.6.8.extract.trunc.i, i64 1
+  %8 = insertelement <2 x i32> poison, i32 %.pre.i, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = udiv <2 x i32> %7, %9
+  %11 = zext <2 x i32> %10 to <2 x i64>
+  %12 = insertelement <2 x i64> poison, i64 %.sroa.0.sroa.6.0.i, i64 0
+  %13 = insertelement <2 x i64> %12, i64 %.sroa.6.8.insert.mask.i, i64 1
+  %14 = or disjoint <2 x i64> %13, %11
+  store <2 x i64> %14, ptr %3, align 16
   br i1 %.not, label %._crit_edge147, label %.lr.ph146
 
 .lr.ph146:                                        ; preds = %bb.n

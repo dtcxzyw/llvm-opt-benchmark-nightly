@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.ad = getelementptr [8 x i8], ptr @perm_comb_small.fast_comb_limits2, i64 %1
-  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !33
+  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !34
   %.not94 = icmp ugt i64 %0, %i.ae
   br i1 %.not94, label %.thread, label %.preheader
 
@@ -213,52 +213,70 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.af, label %.lr.ph116.preheader, label %._crit_edge117
 
 .lr.ph116.preheader:                              ; preds = %.preheader
-  %i.ag = add nsw i64 %1, -1                      ; 3 uses
-  %xtraiter137 = and i64 %i.ag, 1
-  %3 = icmp eq i64 %1, 2
-  br i1 %3, label %.lr.ph116.epil.preheader.a, label %.lr.ph116.preheader.new
+  %i.ag = add nsw i64 %1, -1                      ; 2 uses
+  %3 = add nsw i64 %1, -2
+  %xtraiter137 = and i64 %i.ag, 3                 ; 3 uses
+  %4 = icmp ult i64 %3, 3
+  br i1 %4, label %.lr.ph116.epil.preheader, label %.lr.ph116.preheader.new
 
 .lr.ph116.preheader.new:                          ; preds = %.lr.ph116.preheader
-  %unroll_iter142 = and i64 %i.ag, -2
+  %unroll_iter142 = and i64 %i.ag, -4
   br label %.lr.ph116
 
 ._crit_edge117.loopexit.unr-lcssa:                ; preds = %.lr.ph116
   %lcmp.mod139.not = icmp eq i64 %xtraiter137, 0
-  br i1 %lcmp.mod139.not, label %._crit_edge117, label %.lr.ph116.epil.preheader.a
+  br i1 %lcmp.mod139.not, label %._crit_edge117, label %.lr.ph116.epil.preheader
 
-.lr.ph116.epil.preheader.a:                       ; preds = %._crit_edge117.loopexit.unr-lcssa, %.lr.ph116.preheader
-  %.069115.epil.init.a = phi i64 [ %0, %.lr.ph116.preheader ], [ %i.ao, %._crit_edge117.loopexit.unr-lcssa ]
-  %.071114.epil.init.a = phi i64 [ %0, %.lr.ph116.preheader ], [ %i.ar, %._crit_edge117.loopexit.unr-lcssa ]
-  %.072113.epil.init.a = phi i64 [ 1, %.lr.ph116.preheader ], [ %i.aq, %._crit_edge117.loopexit.unr-lcssa ]
-  %lcmp.mod141 = trunc i64 %i.ag to i1
+.lr.ph116.epil.preheader:                         ; preds = %._crit_edge117.loopexit.unr-lcssa, %.lr.ph116.preheader
+  %.069115.epil.init = phi i64 [ %0, %.lr.ph116.preheader ], [ %i.ao, %._crit_edge117.loopexit.unr-lcssa ]
+  %.071114.epil.init = phi i64 [ %0, %.lr.ph116.preheader ], [ %i.ar, %._crit_edge117.loopexit.unr-lcssa ]
+  %.072113.epil.init = phi i64 [ 1, %.lr.ph116.preheader ], [ %i.aq, %._crit_edge117.loopexit.unr-lcssa ]
+  %lcmp.mod141 = icmp ne i64 %xtraiter137, 0
   tail call void @llvm.assume(i1 %lcmp.mod141)
-  %i.ah = add i64 %.069115.epil.init.a, -1
-  %4 = mul i64 %i.ah, %.071114.epil.init.a
-  %i.ai = add nuw nsw i64 %.072113.epil.init.a, 1
-  %5 = udiv i64 %4, %i.ai
-  br label %._crit_edge117
+  br label %.lr.ph116.epil.preheader.a
 
-._crit_edge117:                                   ; preds = %.lr.ph116.epil.preheader.a, %._crit_edge117.loopexit.unr-lcssa, %.preheader
-  %.071.lcssa = phi i64 [ %0, %.preheader ], [ %i.ar, %._crit_edge117.loopexit.unr-lcssa ], [ %5, %.lr.ph116.epil.preheader.a ]
+.lr.ph116.epil.preheader.a:                       ; preds = %.lr.ph116.epil.preheader.a, %.lr.ph116.epil.preheader
+  %.069115.epil = phi i64 [ %5, %.lr.ph116.epil.preheader.a ], [ %.069115.epil.init, %.lr.ph116.epil.preheader ]
+  %.069115.epil.init.a = phi i64 [ %7, %.lr.ph116.epil.preheader.a ], [ %.071114.epil.init, %.lr.ph116.epil.preheader ]
+  %.071114.epil.init.a = phi i64 [ %i.ah, %.lr.ph116.epil.preheader.a ], [ %.072113.epil.init, %.lr.ph116.epil.preheader ]
+  %.072113.epil.init.a = phi i64 [ %i.ai, %.lr.ph116.epil.preheader.a ], [ 0, %.lr.ph116.epil.preheader ]
+  %5 = add i64 %.069115.epil, -1                  ; 2 uses
+  %6 = mul i64 %5, %.069115.epil.init.a
+  %i.ah = add nuw nsw i64 %.071114.epil.init.a, 1 ; 2 uses
+  %7 = udiv i64 %6, %i.ah                         ; 2 uses
+  %i.ai = add i64 %.072113.epil.init.a, 1         ; 2 uses
+  %epil.iter138.cmp.not = icmp eq i64 %i.ai, %xtraiter137
+  br i1 %epil.iter138.cmp.not, label %._crit_edge117, label %.lr.ph116.epil.preheader.a, !llvm.loop !29
+
+._crit_edge117:                                   ; preds = %._crit_edge117.loopexit.unr-lcssa, %.lr.ph116.epil.preheader.a, %.preheader
+  %.071.lcssa = phi i64 [ %0, %.preheader ], [ %i.ar, %._crit_edge117.loopexit.unr-lcssa ], [ %7, %.lr.ph116.epil.preheader.a ]
   %i.aj = tail call ptr @PyLong_FromUnsignedLongLong(i64 noundef %.071.lcssa) #6
   br label %Py_DECREF.exit96
 
 .lr.ph116:                                        ; preds = %.lr.ph116, %.lr.ph116.preheader.new
-  %.069115 = phi i64 [ %0, %.lr.ph116.preheader.new ], [ %i.ao, %.lr.ph116 ] ; 2 uses
+  %.069115 = phi i64 [ %0, %.lr.ph116.preheader.new ], [ %i.ao, %.lr.ph116 ] ; 4 uses
   %.071114 = phi i64 [ %0, %.lr.ph116.preheader.new ], [ %i.ar, %.lr.ph116 ]
-  %.072113 = phi i64 [ 1, %.lr.ph116.preheader.new ], [ %i.aq, %.lr.ph116 ] ; 2 uses
+  %.072113 = phi i64 [ 1, %.lr.ph116.preheader.new ], [ %i.aq, %.lr.ph116 ] ; 4 uses
   %niter143 = phi i64 [ 0, %.lr.ph116.preheader.new ], [ %niter143.next.1, %.lr.ph116 ]
-  %i.ak = add i64 %.069115, -1
-  %i.al = mul i64 %i.ak, %.071114
-  %i.am = add nuw nsw i64 %.072113, 1
+  %8 = add i64 %.069115, -1
+  %9 = mul i64 %8, %.071114
+  %10 = add nuw nsw i64 %.072113, 1
+  %11 = udiv i64 %9, %10
+  %12 = add i64 %.069115, -2
+  %13 = mul i64 %12, %11
+  %14 = add nuw nsw i64 %.072113, 2
+  %15 = udiv i64 %13, %14
+  %i.ak = add i64 %.069115, -3
+  %i.al = mul i64 %i.ak, %15
+  %i.am = add nuw nsw i64 %.072113, 3
   %i.an = udiv i64 %i.al, %i.am
-  %i.ao = add i64 %.069115, -2                    ; 3 uses
+  %i.ao = add i64 %.069115, -4                    ; 3 uses
   %i.ap = mul i64 %i.ao, %i.an
-  %i.aq = add nuw nsw i64 %.072113, 2             ; 3 uses
+  %i.aq = add nuw nsw i64 %.072113, 4             ; 3 uses
   %i.ar = udiv i64 %i.ap, %i.aq                   ; 3 uses
-  %niter143.next.1 = add nuw i64 %niter143, 2     ; 2 uses
+  %niter143.next.1 = add nuw i64 %niter143, 4     ; 2 uses
   %niter143.ncmp.1 = icmp eq i64 %niter143.next.1, %unroll_iter142
-  br i1 %niter143.ncmp.1, label %._crit_edge117.loopexit.unr-lcssa, label %.lr.ph116, !llvm.loop !29
+  br i1 %niter143.ncmp.1, label %._crit_edge117.loopexit.unr-lcssa, label %.lr.ph116, !llvm.loop !30
 
 bb.g:                                             ; preds = %bb.a
   %i.as = icmp ult i64 %1, 21
@@ -266,7 +284,7 @@ bb.g:                                             ; preds = %bb.a
 
 bb.h:                                             ; preds = %bb.g
   %i.at = getelementptr [8 x i8], ptr @perm_comb_small.fast_perm_limits, i64 %1
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !33
+  %i.au = load i64, ptr %i.at, align 8, !tbaa !34
   %.not = icmp ugt i64 %0, %i.au
   br i1 %.not, label %.thread, label %bb.i
 
@@ -327,7 +345,7 @@ bb.j:                                             ; preds = %bb.i
   %i.br = mul i64 %i.bq, %.074110.epil            ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !30
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %.preheader109
   %.074.lcssa = phi i64 [ %0, %.preheader109 ], [ %i.ci, %._crit_edge.loopexit.unr-lcssa ], [ %i.br, %.lr.ph.epil ]
@@ -356,7 +374,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ci = mul i64 %i.ch, %i.cg                    ; 3 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !31
+  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !32
 
 .thread:                                          ; preds = %bb.b, %bb.g, %bb.h, %bb.e, %bb.f
   %i.cj = lshr i64 %1, 1                          ; 4 uses
@@ -676,7 +694,7 @@ bb.a:
   %i.g = mul i64 %.050, %.02851                   ; 2 uses
   %.028 = add i64 %.02851, 2                      ; 2 uses
   %i.h = icmp ult i64 %.028, %1
-  br i1 %i.h, label %.lr.ph, label %._crit_edge, !llvm.loop !35
+  br i1 %i.h, label %.lr.ph, label %._crit_edge, !llvm.loop !36
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader
   %.0.lcssa = phi i64 [ %0, %.preheader ], [ %i.g, %.lr.ph ]
@@ -771,7 +789,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  %i.e = load ptr, ptr @math_integer_methods, align 16, !tbaa !39 ; 2 uses
+  %i.e = load ptr, ptr @math_integer_methods, align 16, !tbaa !40 ; 2 uses
   %.not42 = icmp eq ptr %i.e, null
   br i1 %.not42, label %.critedge25, label %.lr.ph
 
@@ -852,9 +870,9 @@ bb.n:                                             ; preds = %bb.m
 
 Py_DECREF.exit27:                                 ; preds = %bb.l, %bb.m, %bb.n
   %i.z = getelementptr i8, ptr %.043, i64 32      ; 2 uses
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !39  ; 2 uses
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !40  ; 2 uses
   %.not = icmp eq ptr %i.aa, null
-  br i1 %.not, label %.critedge25, label %.lr.ph, !llvm.loop !36
+  br i1 %.not, label %.critedge25, label %.lr.ph, !llvm.loop !37
 
 .critedge25:                                      ; preds = %Py_DECREF.exit27, %.preheader
   %i.ab = load i32, ptr %i.a, align 8, !tbaa !13  ; 2 uses
@@ -931,15 +949,16 @@ attributes #6 = { nounwind }
 !26 = distinct !{!26, !21}
 !27 = distinct !{!27, !21}
 !28 = distinct !{!28, !21}
-!29 = distinct !{!29, !21}
-!30 = distinct !{!30, !34}
-!31 = distinct !{!31, !21}
-!32 = !{!"long long", !7, i64 0}
-!33 = !{!32, !32, i64 0}
-!34 = !{!"llvm.loop.unroll.disable"}
-!35 = distinct !{!35, !21}
+!29 = distinct !{!29, !35}
+!30 = distinct !{!30, !21}
+!31 = distinct !{!31, !35}
+!32 = distinct !{!32, !21}
+!33 = !{!"long long", !7, i64 0}
+!34 = !{!33, !33, i64 0}
+!35 = !{!"llvm.loop.unroll.disable"}
 !36 = distinct !{!36, !21}
-!37 = !{!"p1 omnipotent char", !10, i64 0}
-!38 = !{!"PyMethodDef", !37, i64 0, !10, i64 8, !8, i64 16, !37, i64 24}
-!39 = !{!38, !37, i64 0}
+!37 = distinct !{!37, !21}
+!38 = !{!"p1 omnipotent char", !10, i64 0}
+!39 = !{!"PyMethodDef", !38, i64 0, !10, i64 8, !8, i64 16, !38, i64 24}
+!40 = !{!39, !38, i64 0}
 end_hunk_0

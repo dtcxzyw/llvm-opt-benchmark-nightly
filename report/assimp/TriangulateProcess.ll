@@ -205,8 +205,10 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.n = tail call i64 @llvm.usub.sat.i64(i64 %i.m, i64 1)
-  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.n
-  %3 = load <2 x float>, ptr %.phi.trans.insert, align 4 ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.n ; 2 uses
+  %.pre = load float, ptr %.phi.trans.insert, align 4 ; 2 uses
+  %.phi.trans.insert72 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert, i64 4
+  %.pre73 = load float, ptr %.phi.trans.insert72, align 4 ; 2 uses
   %i.o = icmp eq i64 %i.l, 8
   br i1 %i.o, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -215,31 +217,36 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
+  %3 = phi float [ %.pre73, %.lr.ph.preheader.new ], [ %19, %.lr.ph ]
+  %4 = phi float [ %.pre, %.lr.ph.preheader.new ], [ %16, %.lr.ph ]
   %.055 = phi double [ 0.000000e+00, %.lr.ph.preheader.new ], [ %i.s, %.lr.ph ]
-  %.04154.a = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.t, %.lr.ph ] ; 3 uses
-  %4 = phi <2 x float> [ %3, %.lr.ph.preheader.new ], [ %12, %.lr.ph ]
-  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.04154.a
-  %6 = fpext <2 x float> %4 to <2 x double>       ; 2 uses
-  %7 = load <2 x float>, ptr %5, align 4          ; 2 uses
-  %8 = fpext <2 x float> %7 to <2 x double>       ; 2 uses
-  %foldExtExtBinop = fsub <2 x double> %6, %8
-  %9 = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %foldExtExtBinop86 = fadd <2 x double> %8, %6
-  %10 = extractelement <2 x double> %foldExtExtBinop86, i64 1
-  %i.p = tail call double @llvm.fmuladd.f64(double %9, double %10, double %.055)
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.04154.a
+  %.04154 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.t, %.lr.ph ] ; 3 uses
+  %.04154.a = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.04154 ; 2 uses
+  %6 = fpext float %4 to double
+  %7 = load float, ptr %5, align 4                ; 2 uses
+  %8 = fpext float %7 to double
+  %9 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %10 = load float, ptr %9, align 4               ; 2 uses
+  %11 = fpext float %10 to double
+  %12 = fpext float %3 to double
+  %13 = fsub double %6, %8
+  %14 = fadd double %11, %12
+  %i.p = tail call double @llvm.fmuladd.f64(double %13, double %14, double %.055)
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.04154 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %11 = fpext <2 x float> %7 to <2 x double>      ; 2 uses
-  %12 = load <2 x float>, ptr %i.r, align 4       ; 3 uses
-  %13 = fpext <2 x float> %12 to <2 x double>     ; 2 uses
-  %foldExtExtBinop.1 = fsub <2 x double> %11, %13
-  %14 = extractelement <2 x double> %foldExtExtBinop.1, i64 0
-  %foldExtExtBinop86.1 = fadd <2 x double> %13, %11
-  %15 = extractelement <2 x double> %foldExtExtBinop86.1, i64 1
-  %i.s = tail call double @llvm.fmuladd.f64(double %14, double %15, double %i.p) ; 3 uses
-  %i.t = add nuw i64 %.04154.a, 2                 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %15 = fpext float %7 to double
+  %16 = load float, ptr %i.r, align 4             ; 3 uses
+  %17 = fpext float %16 to double
+  %18 = getelementptr inbounds nuw i8, ptr %i.q, i64 12
+  %19 = load float, ptr %18, align 4              ; 3 uses
+  %20 = fpext float %19 to double
+  %21 = fpext float %10 to double
+  %22 = fsub double %15, %17
+  %23 = fadd double %20, %21
+  %i.s = tail call double @llvm.fmuladd.f64(double %22, double %23, double %i.p) ; 3 uses
+  %i.t = add nuw i64 %.04154, 2                   ; 2 uses
+  %niter.next.1 = add i64 %.04154.a, 2            ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !39
 
@@ -249,20 +256,23 @@ bb.a:
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
+  %.epil.init = phi float [ %.pre73, %.lr.ph.preheader ], [ %19, %._crit_edge.unr-lcssa ]
+  %.epil.init89 = phi float [ %.pre, %.lr.ph.preheader ], [ %16, %._crit_edge.unr-lcssa ]
   %.055.epil.init = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %i.s, %._crit_edge.unr-lcssa ]
   %.04154.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.t, %._crit_edge.unr-lcssa ]
-  %.epil.init = phi <2 x float> [ %3, %.lr.ph.preheader ], [ %12, %._crit_edge.unr-lcssa ]
   %lcmp.mod92 = trunc i64 %i.m to i1
   tail call void @llvm.assume(i1 %lcmp.mod92)
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.04154.epil.init
-  %16 = fpext <2 x float> %.epil.init to <2 x double> ; 2 uses
-  %17 = load <2 x float>, ptr %i.v, align 4
-  %18 = fpext <2 x float> %17 to <2 x double>     ; 2 uses
-  %foldExtExtBinop.epil = fsub <2 x double> %16, %18
-  %19 = extractelement <2 x double> %foldExtExtBinop.epil, i64 0
-  %foldExtExtBinop86.epil = fadd <2 x double> %18, %16
-  %20 = extractelement <2 x double> %foldExtExtBinop86.epil, i64 1
-  %i.w = tail call double @llvm.fmuladd.f64(double %19, double %20, double %.055.epil.init)
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.04154.epil.init ; 2 uses
+  %24 = fpext float %.epil.init89 to double
+  %25 = load float, ptr %i.v, align 4
+  %26 = fpext float %25 to double
+  %27 = getelementptr inbounds nuw i8, ptr %i.v, i64 4
+  %28 = load float, ptr %27, align 4
+  %29 = fpext float %28 to double
+  %30 = fpext float %.epil.init to double
+  %31 = fsub double %24, %26
+  %32 = fadd double %29, %30
+  %i.w = tail call double @llvm.fmuladd.f64(double %31, double %32, double %.055.epil.init)
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.lr.ph.epil.preheader

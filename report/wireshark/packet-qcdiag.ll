@@ -204,13 +204,13 @@ begin_hunk_0
 define hidden { i64, i32 } @qcdiag_parse_timestamp(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call i64 @tvb_get_uint64(ptr noundef %0, i32 noundef %1, i32 noundef -2147483648) ; 2 uses
-  %2 = lshr i64 %i.a, 16
-  %3 = uitofp nneg i64 %2 to double
-  %4 = fmul nnan double %3, 1.250000e+00
-  %5 = and i64 %i.a, 65535
-  %6 = uitofp nneg i64 %5 to double
-  %7 = fmul nnan double %6, f0x3EF999999999999A
-  %8 = fadd double %4, %7
+  %2 = and i64 %i.a, 65535
+  %3 = lshr i64 %i.a, 16
+  %4 = insertelement <2 x i64> poison, i64 %3, i64 0
+  %5 = insertelement <2 x i64> %4, i64 %2, i64 1
+  %6 = uitofp nneg <2 x i64> %5 to <2 x double>
+  %7 = fmul nnan <2 x double> %6, <double 1.250000e+00, double f0x3EF999999999999A>
+  %8 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %7)
   %i.b = fdiv double %8, 1.000000e+03
   %i.c = fadd double %i.b, f0x41B2D53D80000000    ; 2 uses
   %i.d = fptoui double %i.c to i32                ; 2 uses
@@ -612,6 +612,9 @@ declare i32 @dissector_try_uint_with_data(ptr noundef, i32 noundef, ptr noundef,
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #8
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

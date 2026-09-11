@@ -202,43 +202,45 @@ bb.w:                                             ; preds = %bb.v, %bb.w
   %i.cu = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %.0161, i32 noundef 0, i8 noundef zeroext -103) #11
   %sext166 = shl i32 %.088160, 16
   %i.cv = ashr exact i32 %sext166, 16
-  %i.cw = mul nsw i32 %i.ct, %i.cv
+  %i.cw = mul nsw i32 %i.ct, %i.cv                ; 2 uses
   %i.cx = lshr i32 %i.cw, 8                       ; 3 uses
   %i.cy = tail call ptr @lv_obj_get_parent(ptr noundef nonnull %.0161) #11 ; 2 uses
   %.not104 = icmp eq ptr %i.cy, null
   br i1 %.not104, label %bb.x, label %bb.w, !llvm.loop !138
 
 bb.x:                                             ; preds = %bb.w
-  %3 = trunc i32 %i.cx to i16                     ; 2 uses
   %i.cz = ptrtoint ptr %i.cu to i64
   %.sroa.0.0.extract.trunc.i.i137.le = trunc i64 %i.cz to i32
   %i.da = tail call range(i32 1, -2147483648) i32 @llvm.smax.i32(i32 %.sroa.0.0.extract.trunc.i.i137.le, i32 1)
   %sext106.le = shl i32 %i.cx, 16
   %i.db = ashr exact i32 %sext106.le, 16
-  %i.dc = mul nsw i32 %i.db, %i.da
-  %4 = lshr i32 %i.dc, 8
-  %5 = trunc i32 %4 to i16                        ; 2 uses
-  %i.dd = icmp ne i16 %i.cq, 0
-  %6 = icmp ne i16 %5, 256
-  %or.cond = select i1 %i.dd, i1 true, i1 %6
-  %i.de = icmp ne i16 %3, 256
+  %i.dc = mul nsw i32 %i.db, %i.da                ; 2 uses
+  %3 = icmp ne i16 %i.cq, 0
+  %4 = and i32 %i.dc, 16776960
+  %i.dd = icmp ne i32 %4, 65536
+  %or.cond = select i1 %3, i1 true, i1 %i.dd
+  %5 = and i32 %i.cw, 16776960
+  %i.de = icmp ne i32 %5, 65536
   %or.cond5 = select i1 %or.cond, i1 true, i1 %i.de
   br i1 %or.cond5, label %bb.y, label %.thread
 
 bb.y:                                             ; preds = %bb.x
-  %spec.store.select = tail call i16 @llvm.umax.i16(i16 %3, i16 1)
-  %7 = sext i16 %spec.store.select to i32
-  %spec.store.select6 = tail call i16 @llvm.umax.i16(i16 %5, i16 1)
-  %8 = sext i16 %spec.store.select6 to i32
+  %6 = lshr i32 %i.dc, 8
+  %7 = trunc i32 %i.cx to i16
+  %8 = insertelement <2 x i16> poison, i16 %7, i64 0
+  %9 = trunc i32 %6 to i16
+  %10 = insertelement <2 x i16> %8, i16 %9, i64 1
+  %11 = tail call <2 x i16> @llvm.umax.v2i16(<2 x i16> %10, <2 x i16> splat (i16 1))
   %i.df = sub i16 0, %i.cq
-  %9 = sdiv i32 65536, %7
-  %10 = sdiv i32 65536, %8
+  %12 = sext <2 x i16> %11 to <2 x i32>
+  %13 = sdiv <2 x i32> splat (i32 65536), %12
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 236
   %i.dh = sext i16 %i.df to i32                   ; 2 uses
-  %sext = shl i32 %9, 16
-  %i.di = ashr exact i32 %sext, 16                ; 2 uses
-  %sext105 = shl i32 %10, 16
-  %i.dj = ashr exact i32 %sext105, 16             ; 2 uses
+  %14 = shl <2 x i32> %13, splat (i32 16)         ; 2 uses
+  %15 = extractelement <2 x i32> %14, i64 0
+  %i.di = ashr exact i32 %15, 16                  ; 2 uses
+  %16 = extractelement <2 x i32> %14, i64 1
+  %i.dj = ashr exact i32 %16, 16                  ; 2 uses
   call void @lv_point_transform(ptr noundef nonnull %i.dg, i32 noundef %i.dh, i32 noundef %i.di, i32 noundef %i.dj, ptr noundef nonnull %2, i1 noundef zeroext false) #11
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 244
   call void @lv_point_transform(ptr noundef nonnull %i.dk, i32 noundef %i.dh, i32 noundef %i.di, i32 noundef %i.dj, ptr noundef nonnull %2, i1 noundef zeroext false) #11
@@ -641,13 +643,13 @@ declare i32 @lv_group_get_obj_count(ptr noundef) local_unnamed_addr #2
 declare void @lv_obj_remove_state(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i16> @llvm.umax.v2i16(<2 x i16>, <2 x i16>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

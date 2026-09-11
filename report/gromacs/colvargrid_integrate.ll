@@ -205,10 +205,8 @@ bb.i:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %i.co = shufflevector <2 x double> %i.ch, <2 x double> %i.cj, <2 x i32> <i32 0, i32 3>
   %i.cp = fsub <2 x double> %i.cn, %i.co
   %i.cq = load <2 x double>, ptr %i.cg, align 8, !tbaa !116
-  %i.cr = fdiv <2 x double> %i.cp, %i.cq          ; 2 uses
-  %shift = shufflevector <2 x double> %i.cr, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.cr, %shift
-  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.cr = fdiv <2 x double> %i.cp, %i.cq
+  %3 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.cr)
   %i.cs = fmul double %3, 5.000000e-01
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 736
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !108
@@ -610,6 +608,9 @@ declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #12
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

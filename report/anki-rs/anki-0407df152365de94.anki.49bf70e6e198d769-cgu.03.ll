@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 
 "_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by17hbaa79434593f4d59E.exit": ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !757
-  %i.f = lshr i64 %1, 1                           ; 3 uses
+  %i.f = lshr i64 %1, 1                           ; 2 uses
   %i.g = and i64 %1, 1
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %bb.g, label %bb.j
@@ -224,11 +224,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.i
-  %2 = load float, ptr %i.k, align 4, !noundef !7
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.f
-  %4 = load float, ptr %3, align 4, !noundef !7
-  %5 = fadd float %2, %4
-  %i.l = fmul float %5, 5.000000e-01
+  %2 = load <2 x float>, ptr %i.k, align 4
+  %3 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %2)
+  %i.l = fmul float %3, 5.000000e-01
   br label %bb.f
 
 bb.j:                                             ; preds = %"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by17hbaa79434593f4d59E.exit.thread", %"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by17hbaa79434593f4d59E.exit"
@@ -631,6 +629,7 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h9091f7b0f86bf41fE.exit.i.i.i:
   br i1 %i.k, label %.thread.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i
 
 .thread.i.i.i.i.i.i.i.i:                          ; preds = %_ZN10serde_json3ser9Formatter17begin_array_value17h9091f7b0f86bf41fE.exit.i.i.i
+  %2 = udiv i16 %.val.i.i.i.i, 10000
   %.lhs.trunc.i.i.i.i.i.i.i.i = urem i16 %.val.i.i.i.i, 10000 ; 2 uses
   %i.l = udiv i16 %.lhs.trunc.i.i.i.i.i.i.i.i, 100
   %i.m = shl nuw nsw i16 %i.l, 1
@@ -646,7 +645,6 @@ _ZN10serde_json3ser9Formatter17begin_array_value17h9091f7b0f86bf41fE.exit.i.i.i:
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   %i.w = load i16, ptr %i.u, align 1, !noalias !9615
   store i16 %i.w, ptr %i.v, align 1, !alias.scope !9614, !noalias !9613
-  %2 = udiv i16 %.val.i.i.i.i, 10000
   br label %bb.j
 
 ._crit_edge.i.i.i.i.i.i.i.i:                      ; preds = %_ZN10serde_json3ser9Formatter17begin_array_value17h9091f7b0f86bf41fE.exit.i.i.i
@@ -1047,6 +1045,9 @@ declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.minnum.v2f32(<2 x float>, <2 x float>) #22

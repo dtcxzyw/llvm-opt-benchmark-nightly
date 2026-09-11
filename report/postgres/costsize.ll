@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.a
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bw, i64 64
   %i.ca = load double, ptr %i.bz, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
-  %i.cc = load double, ptr %i.cb, align 8         ; 4 uses
+  %i.cc = load double, ptr %i.cb, align 8         ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.ce = load double, ptr %i.cd, align 8         ; 4 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
@@ -349,14 +349,19 @@ cost_memoize_rescan.exit.i:                       ; preds = %.critedge.loopexit.
   store double %i.fl, ptr %i.fm, align 8
   %i.fn = fsub double 1.000000e+00, %i.fl         ; 2 uses
   %i.fo = load double, ptr @cpu_operator_cost, align 8 ; 3 uses
-  %8 = call double @llvm.fmuladd.f64(double %i.ca, double %i.fn, double %i.fo)
+  %8 = fdiv double %i.fo, 1.000000e+01
+  %9 = fmul double %8, %i.fg
   %i.fp = load double, ptr @cpu_tuple_cost, align 8 ; 3 uses
-  %i.fq = call double @llvm.fmuladd.f64(double %i.fp, double %i.fg, double %8)
-  %9 = fdiv double %i.fo, 1.000000e+01
-  %10 = fmul double %9, %i.fg
-  %11 = call double @llvm.fmuladd.f64(double %10, double %i.cc, double %i.fq)
-  %12 = call double @llvm.fmuladd.f64(double %i.fo, double %i.cc, double %i.fp)
-  %13 = fadd double %12, %11
+  %10 = call double @llvm.fmuladd.f64(double %i.ca, double %i.fn, double %i.fo)
+  %i.fq = call double @llvm.fmuladd.f64(double %i.fp, double %i.fg, double %10)
+  %11 = insertelement <2 x double> poison, double %i.fo, i64 0
+  %12 = insertelement <2 x double> %11, double %9, i64 1
+  %13 = insertelement <2 x double> poison, double %i.cc, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = insertelement <2 x double> poison, double %i.fp, i64 0
+  %16 = insertelement <2 x double> %15, double %i.fq, i64 1
+  %17 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %14, <2 x double> %16)
+  %18 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %17)
   %i.fr = fmul double %i.by, %i.fn
   %i.fs = fadd double %i.fp, %i.fr
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
@@ -371,7 +376,7 @@ bb.r:                                             ; preds = %bb.a
 
 cost_rescan.exit:                                 ; preds = %bb.h, %bb.i, %bb.f, %bb.g, %bb.b, %bb.d, %bb.e, %cost_memoize_rescan.exit.i, %bb.r
   %.048 = phi double [ %i.fu, %bb.r ], [ 0.000000e+00, %bb.b ], [ 0.000000e+00, %bb.d ], [ %i.y, %bb.e ], [ %i.fs, %cost_memoize_rescan.exit.i ], [ 0.000000e+00, %bb.f ], [ 0.000000e+00, %bb.g ], [ 0.000000e+00, %bb.i ], [ 0.000000e+00, %bb.h ] ; 2 uses
-  %.047 = phi double [ %i.fw, %bb.r ], [ %i.o, %bb.b ], [ %i.w, %bb.d ], [ %i.aa, %bb.e ], [ %13, %cost_memoize_rescan.exit.i ], [ %i.ae, %bb.f ], [ %i.ax, %bb.g ], [ %i.bu, %bb.i ], [ %i.bb, %bb.h ]
+  %.047 = phi double [ %i.fw, %bb.r ], [ %i.o, %bb.b ], [ %i.w, %bb.d ], [ %i.aa, %bb.e ], [ %18, %cost_memoize_rescan.exit.i ], [ %i.ae, %bb.f ], [ %i.ax, %bb.g ], [ %i.bu, %bb.i ], [ %i.bb, %bb.h ]
   %i.fx = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.fy = load double, ptr %i.fx, align 8         ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %5, i64 56
@@ -772,6 +777,9 @@ declare i16 @llvm.smax.i16(i16, i16) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.rint.v2f64(<2 x double>) #1

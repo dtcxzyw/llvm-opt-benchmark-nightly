@@ -204,20 +204,25 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = and i64 %i.az, -134217728
   %i.bb = bitcast i64 %i.ba to double             ; 3 uses
   %i.bc = fsub double %i.ar, %i.aq
-  %i.bd = fsub double %.0, %i.bc
   %4 = fmul double %i.ar, %i.av                   ; 2 uses
-  %i.be = fsub double %i.ar, %i.ay                ; 2 uses
-  %i.bf = fsub double %i.av, %i.bb                ; 2 uses
+  %i.bd = fsub double %i.av, %i.bb                ; 2 uses
   %5 = fneg double %4
-  %i.bg = tail call double @llvm.fmuladd.f64(double %i.ay, double %i.bb, double %5)
-  %i.bh = tail call double @llvm.fmuladd.f64(double %i.ay, double %i.bf, double %i.bg)
-  %6 = tail call double @llvm.fmuladd.f64(double %i.be, double %i.bb, double %i.bh)
-  %7 = tail call double @llvm.fmuladd.f64(double %i.be, double %i.bf, double %6)
-  %8 = getelementptr inbounds nuw [8 x i8], ptr @stbsp__negtoperr, i64 %i.at
-  %9 = load double, ptr %8, align 8, !tbaa !16
-  %10 = fmul double %i.bd, %i.av
-  %11 = tail call double @llvm.fmuladd.f64(double %i.ar, double %9, double %10)
-  %12 = fadd double %7, %11
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @stbsp__negtoperr, i64 %i.at
+  %7 = load double, ptr %6, align 8, !tbaa !16
+  %i.be = fsub double %.0, %i.bc
+  %i.bf = fsub double %i.ar, %i.ay                ; 2 uses
+  %8 = tail call double @llvm.fmuladd.f64(double %i.ay, double %i.bb, double %5)
+  %i.bg = tail call double @llvm.fmuladd.f64(double %i.ay, double %i.bd, double %8)
+  %9 = fmul double %i.be, %i.av
+  %i.bh = tail call double @llvm.fmuladd.f64(double %i.bf, double %i.bb, double %i.bg)
+  %10 = insertelement <2 x double> poison, double %i.bf, i64 0
+  %11 = insertelement <2 x double> %10, double %i.ar, i64 1
+  %12 = insertelement <2 x double> poison, double %i.bd, i64 0
+  %13 = insertelement <2 x double> %12, double %7, i64 1
+  %14 = insertelement <2 x double> poison, double %i.bh, i64 0
+  %15 = insertelement <2 x double> %14, double %9, i64 1
+  %16 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> %13, <2 x double> %15)
+  %17 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %16)
   br label %bb.m
 
 bb.h:                                             ; preds = %bb.c
@@ -289,25 +294,30 @@ bb.l:                                             ; preds = %bb.k
   %i.df = and i64 %i.de, -134217728
   %i.dg = bitcast i64 %i.df to double             ; 3 uses
   %i.dh = fsub double %i.cw, %i.cv
-  %i.di = fsub double %.1, %i.dh
-  %13 = fmul double %i.cw, %i.da                  ; 2 uses
-  %i.dj = fsub double %i.cw, %i.dd                ; 2 uses
-  %i.dk = fsub double %i.da, %i.dg                ; 2 uses
-  %14 = fneg double %13
-  %i.dl = tail call double @llvm.fmuladd.f64(double %i.dd, double %i.dg, double %14)
-  %i.dm = tail call double @llvm.fmuladd.f64(double %i.dd, double %i.dk, double %i.dl)
-  %15 = tail call double @llvm.fmuladd.f64(double %i.dj, double %i.dg, double %i.dm)
-  %16 = tail call double @llvm.fmuladd.f64(double %i.dj, double %i.dk, double %15)
-  %17 = getelementptr inbounds nuw [8 x i8], ptr @stbsp__toperr, i64 %i.cy
-  %18 = load double, ptr %17, align 8, !tbaa !16
-  %19 = fmul double %i.di, %i.da
-  %20 = tail call double @llvm.fmuladd.f64(double %i.cw, double %18, double %19)
-  %21 = fadd double %16, %20
+  %18 = fmul double %i.cw, %i.da                  ; 2 uses
+  %i.di = fsub double %i.da, %i.dg                ; 2 uses
+  %19 = fneg double %18
+  %20 = getelementptr inbounds nuw [8 x i8], ptr @stbsp__toperr, i64 %i.cy
+  %21 = load double, ptr %20, align 8, !tbaa !16
+  %i.dj = fsub double %.1, %i.dh
+  %i.dk = fsub double %i.cw, %i.dd                ; 2 uses
+  %22 = tail call double @llvm.fmuladd.f64(double %i.dd, double %i.dg, double %19)
+  %i.dl = tail call double @llvm.fmuladd.f64(double %i.dd, double %i.di, double %22)
+  %23 = fmul double %i.dj, %i.da
+  %i.dm = tail call double @llvm.fmuladd.f64(double %i.dk, double %i.dg, double %i.dl)
+  %24 = insertelement <2 x double> poison, double %i.dk, i64 0
+  %25 = insertelement <2 x double> %24, double %i.cw, i64 1
+  %26 = insertelement <2 x double> poison, double %i.di, i64 0
+  %27 = insertelement <2 x double> %26, double %21, i64 1
+  %28 = insertelement <2 x double> poison, double %i.dm, i64 0
+  %29 = insertelement <2 x double> %28, double %23, i64 1
+  %30 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %25, <2 x double> %27, <2 x double> %29)
+  %31 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %30)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.g, %bb.f, %bb.l, %bb.k, %bb.b
-  %.3 = phi double [ %i.q, %bb.b ], [ %12, %bb.g ], [ %.0, %bb.f ], [ %21, %bb.l ], [ %.1, %bb.k ] ; 2 uses
-  %i.dn = phi double [ %i.d, %bb.b ], [ %4, %bb.g ], [ %i.aq, %bb.f ], [ %13, %bb.l ], [ %i.cv, %bb.k ] ; 2 uses
+  %.3 = phi double [ %i.q, %bb.b ], [ %17, %bb.g ], [ %.0, %bb.f ], [ %31, %bb.l ], [ %.1, %bb.k ] ; 2 uses
+  %i.dn = phi double [ %i.d, %bb.b ], [ %4, %bb.g ], [ %i.aq, %bb.f ], [ %18, %bb.l ], [ %i.cv, %bb.k ] ; 2 uses
   %i.do = fadd double %.3, %i.dn                  ; 2 uses
   %i.dp = fsub double %i.do, %i.dn
   %i.dq = fsub double %.3, %i.dp
@@ -348,6 +358,12 @@ declare void @llvm.assume(i1 noundef) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
