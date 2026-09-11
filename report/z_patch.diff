@@ -1,0 +1,129 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 06f350fd2179b..058009faa9cbe 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -11703,9 +11703,9 @@ bool ScalarEvolution::isKnownPredicateViaNoOverflow(CmpPredicate Pred,
+   // C1 and C2 are constant integers. If either X or Y are not add expressions,
+   // consider them as X + 0 and Y + 0 respectively. C1 and C2 are returned via
+   // OutC1 and OutC2.
+-  auto MatchBinaryAddToConst = [this](SCEVUse X, SCEVUse Y, APInt &OutC1,
+-                                      APInt &OutC2,
+-                                      SCEV::NoWrapFlags ExpectedFlags) {
++  auto MatchBinaryAddToConst = [this, &Pred](SCEVUse X, SCEVUse Y, APInt &OutC1,
++                                             APInt &OutC2,
++                                             SCEV::NoWrapFlags ExpectedFlags) {
+     SCEVUse XNonConstOp, XConstOp;
+     SCEVUse YNonConstOp, YConstOp;
+     SCEV::NoWrapFlags XFlagsPresent;
+@@ -11740,6 +11740,15 @@ bool ScalarEvolution::isKnownPredicateViaNoOverflow(CmpPredicate Pred,
+       return false;
+     }
+ 
++    // X >= Y is equivalent to X > Y - 1, and this holds trivially when Y - 1
++    // does not overflow. When it does overflow, it must be INT_MAX, and the
++    // comparison would evaluate to false anyway.
++    // This simplification is useful when computing backedge-taken-counts.
++    if (YConstOp->isZero() && ICmpInst::isGE(Pred)) {
++      Pred = ICmpInst::getStrictPredicate(Pred);
++      YConstOp = getMinusOne(Y->getType());
++    }
++
+     OutC1 = cast<SCEVConstant>(XConstOp)->getAPInt();
+     OutC2 = cast<SCEVConstant>(YConstOp)->getAPInt();
+ 
+@@ -13723,23 +13732,8 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+         const SCEV *GuardedRHS = applyLoopGuards(OrigRHS, L);
+         const SCEV *GuardedStart = applyLoopGuards(OrigStart, L);
+ 
+-        if (isLoopEntryGuardedByCond(L, CondGE, OrigRHS, OrigStart) ||
+-            isKnownPredicate(CondGE, GuardedRHS, GuardedStart))
+-          return true;
+-
+-        // (RHS > Start - 1) implies RHS >= Start.
+-        // * "RHS >= Start" is trivially equivalent to "RHS > Start - 1" if
+-        //   "Start - 1" doesn't overflow.
+-        // * For signed comparison, if Start - 1 does overflow, it's equal
+-        //   to INT_MAX, and "RHS >s INT_MAX" is trivially false.
+-        // * For unsigned comparison, if Start - 1 does overflow, it's equal
+-        //   to UINT_MAX, and "RHS >u UINT_MAX" is trivially false.
+-        //
+-        // FIXME: Should isLoopEntryGuardedByCond do this for us?
+-        auto CondGT = IsSigned ? ICmpInst::ICMP_SGT : ICmpInst::ICMP_UGT;
+-        auto *StartMinusOne =
+-            getAddExpr(OrigStart, getMinusOne(OrigStart->getType()));
+-        return isLoopEntryGuardedByCond(L, CondGT, OrigRHS, StartMinusOne);
++        return isLoopEntryGuardedByCond(L, CondGE, OrigRHS, OrigStart) ||
++               isKnownPredicate(CondGE, GuardedRHS, GuardedStart);
+       };
+ 
+       // If we know that RHS >= Start in the context of loop, then we know
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+index 8f7d2007cdcc0..f9c7f041bff46 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+@@ -1751,7 +1751,7 @@ define void @range_check_idiom_through_zext_ugt(i32 %len) {
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,-2147483648) S: [1,-2147483648) Exits: %len LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @range_check_idiom_through_zext_ugt
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %len)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %len)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -1982,7 +1982,7 @@ define void @one_sided_guard_does_not_bound_difference(ptr %dst, i64 %n, i64 %st
+ ; CHECK-NEXT:    --> {(1 + %start),+,1}<nuw><%loop> U: full-set S: full-set Exits: %n LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @one_sided_guard_does_not_bound_difference
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (-1 * %start) + %n)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -1
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -2
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (-1 * %start) + %n)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count13.ll b/llvm/test/Analysis/ScalarEvolution/trip-count13.ll
+index 720b2ae49c090..e36dd45d3ba03 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count13.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count13.ll
+@@ -6,10 +6,10 @@ define void @u_0(i8 %rhs) {
+ ;
+ ; CHECK-LABEL: 'u_0'
+ ; CHECK-NEXT:  Determining loop execution counts for: @u_0
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is (-100 + (-1 * %rhs) + ((100 + %rhs) umax %rhs))
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 -100, actual taken count either this or zero.
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-100 + (-1 * %rhs) + ((100 + %rhs) umax %rhs)), actual taken count either this or zero.
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i8 -100
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 -100
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i8 -100
++; CHECK-NEXT:  Loop %loop: Trip multiple is 157
+ ;
+ entry:
+   %start = add i8 %rhs, 100
+diff --git a/llvm/test/Transforms/IndVarSimplify/trivial-checks.ll b/llvm/test/Transforms/IndVarSimplify/trivial-checks.ll
+index 05aba4be5d54f..ce69b5f4fbed5 100644
+--- a/llvm/test/Transforms/IndVarSimplify/trivial-checks.ll
++++ b/llvm/test/Transforms/IndVarSimplify/trivial-checks.ll
+@@ -2,6 +2,7 @@
+ ; RUN: opt -passes=indvars -S < %s | FileCheck %s
+ 
+ ; FIXME: In all cases, x is from [0; 1000) and we cannot prove that x + 1 > x.
++; We can prove it for the ugt case though.
+ 
+ define void @test_sgt(i32 %x) {
+ ; CHECK-LABEL: @test_sgt(
+@@ -101,14 +102,9 @@ define void @test_ugt(i32 %x) {
+ ; CHECK:       loop.preheader:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[IV_NEXT:%.*]], [[GUARDED:%.*]] ], [ [[X]], [[LOOP_PREHEADER]] ]
+-; CHECK-NEXT:    [[TMP:%.*]] = add nsw i32 [[IV]], 1
+-; CHECK-NEXT:    [[GUARD:%.*]] = icmp ugt i32 [[TMP]], [[IV]]
+-; CHECK-NEXT:    br i1 [[GUARD]], label [[GUARDED]], label [[FAIL:%.*]]
++; CHECK-NEXT:    br i1 false, label [[GUARDED:%.*]], label [[FAIL:%.*]]
+ ; CHECK:       guarded:
+-; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], -1
+-; CHECK-NEXT:    [[COND:%.*]] = icmp eq i32 [[IV]], 0
+-; CHECK-NEXT:    br i1 [[COND]], label [[LOOP]], label [[EXIT_LOOPEXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT_LOOPEXIT:%.*]]
+ ; CHECK:       exit.loopexit:
+ ; CHECK-NEXT:    br label [[EXIT]]
+ ; CHECK:       exit:
