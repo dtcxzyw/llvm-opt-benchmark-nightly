@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %thread-pre-split, %
   tail call void @llvm.experimental.noalias.scope.decl(metadata !362)
   %i.be = load i32, ptr %i.e, align 4, !alias.scope !361, !noalias !362, !noundef !7 ; 2 uses
   %i.bf = zext i32 %i.be to i64                   ; 4 uses
-  %i.bg = zext i32 %i.bd to i64                   ; 4 uses
+  %i.bg = zext i32 %i.bd to i64                   ; 3 uses
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 6 uses
   %i.bi = icmp samesign uge i64 %i.bh, %i.bf
   %i.bj = icmp ult i32 %i.bd, 720
@@ -420,18 +420,14 @@ _RNvNtCsfQhfhXbPrjn_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i
   br label %.lr.ph52.i
 
 .lr.ph52.i:                                       ; preds = %._crit_edge48.i, %.lr.ph52.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph52.preheader.i ], [ %i.eq, %._crit_edge48.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph52.preheader.i ], [ %i.eq, %._crit_edge48.i ] ; 2 uses
   %.sroa.011.049.i = phi ptr [ %i.m, %.lr.ph52.preheader.i ], [ %i.ep, %._crit_edge48.i ] ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.sroa.011.049.i, i64 2 ; 2 uses
   %i.eq = add nuw nsw i64 %indvars.iv.i, 1        ; 2 uses
   %exitcond.i = icmp eq i64 %indvars.iv.i, %i.bh
-  br i1 %exitcond.i, label %bb.ad, label %9, !prof !13
+  br i1 %exitcond.i, label %bb.ad, label %.lr.ph47.i, !prof !13
 
-9:                                                ; preds = %.lr.ph52.i
-  %10 = icmp eq i64 %indvars.iv.i, %i.bg
-  br i1 %10, label %._crit_edge48.i, label %.lr.ph47.i
-
-.lr.ph47.i:                                       ; preds = %9
+.lr.ph47.i:                                       ; preds = %.lr.ph52.i
   %i.er = getelementptr inbounds nuw [2 x i8], ptr %i.m, i64 %i.eq
   %i.es = load i16, ptr %.sroa.011.049.i, align 2, !alias.scope !361, !noalias !362, !noundef !7
   br label %bb.af
@@ -452,7 +448,7 @@ bb.af:                                            ; preds = %bb.ae, %.lr.ph47.i
   %i.ex = icmp eq i16 %i.es, %i.ew
   br i1 %i.ex, label %_RNvNtCsfQhfhXbPrjn_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit, label %bb.ae
 
-._crit_edge48.i:                                  ; preds = %bb.ae, %9
+._crit_edge48.i:                                  ; preds = %bb.ae
   %i.ey = icmp eq ptr %i.ep, %i.em
   br i1 %i.ey, label %_RINvNtCsfQhfhXbPrjn_19brotli_decompressor6decode24ReadSimpleHuffmanSymbolsNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocB1a_B1a_ECskeugdADtBsi_12pingora_core.exit.loopexit, label %.lr.ph52.i
 

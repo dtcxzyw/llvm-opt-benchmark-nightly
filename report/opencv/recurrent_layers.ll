@@ -205,11 +205,13 @@ bb.ac:                                            ; preds = %_ZN2cv3dnn14dnn5_v2
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 276
   %i.dr = load i8, ptr %i.dq, align 4, !tbaa !65, !range !59, !noundef !60
   %i.ds = trunc nuw i8 %i.dr to i1
-  %i.dt = load i32, ptr %i.aa, align 4, !tbaa !106 ; 9 uses
+  %i.dt = load i32, ptr %i.aa, align 4, !tbaa !106 ; 5 uses
+  %narrow.i69 = call i32 @llvm.smax.i32(i32 %i.dt, i32 0) ; 5 uses
+  %spec.select.i70 = zext nneg i32 %narrow.i69 to i64 ; 2 uses
+  %30 = icmp sgt i32 %i.dt, 1                     ; 2 uses
   br i1 %i.ds, label %bb.ad, label %bb.an
 
 bb.ad:                                            ; preds = %bb.ac
-  %30 = icmp sgt i32 %i.dt, 1
   br i1 %30, label %.preheader.i, label %bb.ah
 
 .preheader.i:                                     ; preds = %bb.ad
@@ -219,15 +221,14 @@ bb.ad:                                            ; preds = %bb.ac
 .lr.ph.i73:                                       ; preds = %.preheader.i
   %i.du = getelementptr inbounds nuw i8, ptr %i.aa, i64 12 ; 9 uses
   %i.dv = add nsw i32 %i.dt, -2
-  %i.dw = add nsw i32 %i.dt, -3
-  %.not33.not.i74 = icmp samesign ugt i32 %i.dv, %i.dw
+  %i.dw = add nsw i32 %narrow.i69, -3
+  %.not33.not.i74 = icmp ugt i32 %i.dv, %i.dw
   br i1 %.not33.not.i74, label %_ZNK2cv8MatShapeixEm.exit.i79.preheader, label %bb.ae
 
 _ZNK2cv8MatShapeixEm.exit.i79.preheader:          ; preds = %.lr.ph.i73
-  %umax = zext nneg i32 %i.dt to i64
-  %i.dx = add nsw i64 %umax, -2                   ; 2 uses
+  %i.dx = add nsw i64 %spec.select.i70, -2        ; 2 uses
   %xtraiter199 = and i64 %i.dx, 7                 ; 3 uses
-  %i.dy = add nsw i32 %i.dt, -3
+  %i.dy = add nsw i32 %narrow.i69, -3
   %i.dz = icmp ult i32 %i.dy, 7
   br i1 %i.dz, label %_ZNK2cv8MatShapeixEm.exit.i79.epil.preheader, label %_ZNK2cv8MatShapeixEm.exit.i79.preheader.new
 
@@ -402,22 +403,19 @@ _ZNK2cv8MatShapeixEm.exit108:                     ; preds = %bb.am
   br label %bb.ax
 
 bb.an:                                            ; preds = %bb.ac
-  %narrow.i109 = call i32 @llvm.smax.i32(i32 %i.dt, i32 0) ; 3 uses
-  %spec.select.i110 = zext nneg i32 %narrow.i109 to i64
-  %31 = icmp sgt i32 %i.dt, 1
-  br i1 %31, label %.lr.ph.i115, label %bb.ar
+  br i1 %30, label %.lr.ph.i115, label %bb.ar
 
 .lr.ph.i115:                                      ; preds = %bb.an
   %i.gq = getelementptr inbounds nuw i8, ptr %i.aa, i64 12 ; 10 uses
   %i.gr = add nsw i32 %i.dt, -1
-  %i.gs = add nsw i32 %narrow.i109, -2
+  %i.gs = add nsw i32 %narrow.i69, -2
   %.not33.not.i116 = icmp ugt i32 %i.gr, %i.gs
   br i1 %.not33.not.i116, label %_ZNK2cv8MatShapeixEm.exit.i121.preheader, label %bb.ao
 
 _ZNK2cv8MatShapeixEm.exit.i121.preheader:         ; preds = %.lr.ph.i115
-  %i.gt = add nsw i64 %spec.select.i110, -1       ; 2 uses
+  %i.gt = add nsw i64 %spec.select.i70, -1        ; 2 uses
   %xtraiter192 = and i64 %i.gt, 7                 ; 3 uses
-  %i.gu = add nsw i32 %narrow.i109, -2
+  %i.gu = add nsw i32 %narrow.i69, -2
   %i.gv = icmp ult i32 %i.gu, 7
   br i1 %i.gv, label %_ZNK2cv8MatShapeixEm.exit.i121.epil.preheader, label %_ZNK2cv8MatShapeixEm.exit.i121.preheader.new
 

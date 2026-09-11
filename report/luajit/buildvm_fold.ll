@@ -23,7 +23,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.10 = private unnamed_addr constant [6 x i8] c"\0A};\0A\0A\00", align 1
 @.str.11 = private unnamed_addr constant [54 x i8] c"Error: too many fold rules, increase BUILD_MAX_FOLD.\0A\00", align 1
 @foldkeys = internal unnamed_addr global [4096 x i32] zeroinitializer, align 16
-@.str.12 = private unnamed_addr constant [45 x i8] c"Error: duplicate fold definition at line %d\0A\00", align 1
 @.str.13 = private unnamed_addr constant [7 x i8] c"IRFPM_\00", align 1
 @irfpm_names = external local_unnamed_addr constant [0 x ptr], align 8
 @.str.14 = private unnamed_addr constant [6 x i8] c"IRFL_\00", align 1
@@ -190,7 +189,7 @@ nexttoken.exit.i:                                 ; preds = %.lr.ph164.i.i
   br i1 %.not18.i, label %foldrule.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %i.bk = and i32 %i.bh, 16777215                 ; 2 uses
+  %i.bk = and i32 %i.bh, 16777215
   %i.bl = zext nneg i32 %i.bi to i64
   br label %bb.p
 
@@ -206,22 +205,11 @@ bb.p:                                             ; preds = %bb.q, %.lr.ph.i
   %i.bn = and i64 %indvars.iv.next.i, 4294967295  ; 2 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr @foldkeys, i64 %i.bn
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !16 ; 2 uses
-  %i.bq = and i32 %i.bp, 16777215                 ; 2 uses
+  %i.bq = and i32 %i.bp, 16777215
   %i.br = icmp samesign ult i32 %i.bq, %i.bk
-  br i1 %i.br, label %foldrule.exit, label %1
+  br i1 %i.br, label %foldrule.exit, label %bb.q
 
-1:                                                ; preds = %bb.p
-  %2 = icmp eq i32 %i.bq, %i.bk
-  br i1 %2, label %3, label %bb.q
-
-3:                                                ; preds = %1
-  %4 = load ptr, ptr @stderr, align 8, !tbaa !14
-  %5 = load i32, ptr @lineno, align 4, !tbaa !16
-  %6 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %4, ptr noundef nonnull @.str.12, i32 noundef %5) #15 ; 0 uses
-  call void @exit(i32 noundef 1) #13
-  unreachable
-
-bb.q:                                             ; preds = %1
+bb.q:                                             ; preds = %bb.p
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr @foldkeys, i64 %indvars.iv.i
   store i32 %i.bp, ptr %i.bs, align 4, !tbaa !16
   %.not.i = icmp eq i64 %i.bn, 0

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.h, label %bb.bt, label %.split.i, !prof !62
 
 .split.i:                                         ; preds = %bb.l
-  %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 4 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 3 uses
   store i8 34, ptr %i.x, align 1, !tbaa !100
   %i.z = ptrtoint ptr %i.y to i64                 ; 4 uses
   %i.aa = add i64 %i.r, %i.u
@@ -608,10 +608,10 @@ bb.au:                                            ; preds = %bb.ab
 
 .preheader1322:                                   ; preds = %.preheader1322.backedge, %.preheader1322.preheader
   %.8253.i520 = phi ptr [ %.8253.i520.ph, %.preheader1322.preheader ], [ %.8253.i520.be, %.preheader1322.backedge ] ; 35 uses
-  %.8.i521 = phi ptr [ %.8.i521.ph, %.preheader1322.preheader ], [ %.8.i521.be, %.preheader1322.backedge ] ; 24 uses
+  %.8.i521 = phi ptr [ %.8.i521.ph, %.preheader1322.preheader ], [ %.8.i521.be, %.preheader1322.backedge ] ; 23 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %.8.i521, i64 4 ; 3 uses
   %i.hi = icmp ugt ptr %i.hh, %i.y                ; 2 uses
-  br i1 %i.hi, label %6, label %._crit_edge3183, !prof !45
+  br i1 %i.hi, label %bb.av, label %._crit_edge3183, !prof !45
 
 ._crit_edge3183:                                  ; preds = %.preheader1322
   %.pre3184 = load i8, ptr %.8.i521, align 1, !tbaa !100 ; 2 uses
@@ -620,11 +620,7 @@ bb.au:                                            ; preds = %bb.ab
   %.pre3187 = load i8, ptr %.phi.trans.insert3186.a, align 1, !tbaa !100
   br label %bb.aw
 
-6:                                                ; preds = %.preheader1322
-  %7 = icmp eq ptr %i.y, %.8.i521
-  br i1 %7, label %bb.bp, label %bb.av
-
-bb.av:                                            ; preds = %6
+bb.av:                                            ; preds = %.preheader1322
   %i.hj = ptrtoint ptr %.8.i521 to i64
   %i.hk = sub i64 %i.z, %i.hj
   %i.hl = load i8, ptr %.8.i521, align 1, !tbaa !100 ; 3 uses
@@ -917,7 +913,7 @@ bb.bo:                                            ; preds = %bb.bn
   %i.mx = getelementptr inbounds nuw i8, ptr %.8253.i520, i64 12
   br label %.preheader1322.backedge
 
-bb.bp:                                            ; preds = %bb.aw, %6
+bb.bp:                                            ; preds = %bb.aw
   %i.my = getelementptr inbounds nuw i8, ptr %.8253.i520, i64 1
   store i8 34, ptr %.8253.i520, align 1, !tbaa !100
   br label %write_str.exit605
@@ -955,7 +951,7 @@ bb.bt:                                            ; preds = %bb.l
   br i1 %.not105.i, label %.split83.i, label %bb.eb
 
 .split83.i:                                       ; preds = %bb.bt
-  %i.ni = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 4 uses
+  %i.ni = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 3 uses
   %i.nj = ptrtoint ptr %i.ni to i64               ; 4 uses
   %i.nk = add i64 %i.r, %i.u
   br label %bb.bu
@@ -1358,10 +1354,10 @@ bb.dc:                                            ; preds = %bb.cj
 
 .preheader:                                       ; preds = %.preheader.backedge, %.preheader.preheader
   %.8253.i421 = phi ptr [ %.8253.i421.ph, %.preheader.preheader ], [ %.8253.i421.be, %.preheader.backedge ] ; 35 uses
-  %.8.i422 = phi ptr [ %.8.i422.ph, %.preheader.preheader ], [ %.8.i422.be, %.preheader.backedge ] ; 24 uses
+  %.8.i422 = phi ptr [ %.8.i422.ph, %.preheader.preheader ], [ %.8.i422.be, %.preheader.backedge ] ; 23 uses
   %i.ur = getelementptr inbounds nuw i8, ptr %.8.i422, i64 4 ; 3 uses
   %i.us = icmp ugt ptr %i.ur, %i.ni               ; 2 uses
-  br i1 %i.us, label %8, label %._crit_edge3188, !prof !45
+  br i1 %i.us, label %bb.dd, label %._crit_edge3188, !prof !45
 
 ._crit_edge3188:                                  ; preds = %.preheader
   %.pre3189.a = load i8, ptr %.8.i422, align 1, !tbaa !100 ; 2 uses
@@ -1370,11 +1366,7 @@ bb.dc:                                            ; preds = %bb.cj
   %.pre3192 = load i8, ptr %.phi.trans.insert3191, align 1, !tbaa !100
   br label %bb.de
 
-8:                                                ; preds = %.preheader
-  %9 = icmp eq ptr %i.ni, %.8.i422
-  br i1 %9, label %bb.dx, label %bb.dd
-
-bb.dd:                                            ; preds = %8
+bb.dd:                                            ; preds = %.preheader
   %i.ut = ptrtoint ptr %.8.i422 to i64
   %i.uu = sub i64 %i.nj, %i.ut
   %i.uv = load i8, ptr %.8.i422, align 1, !tbaa !100 ; 3 uses
@@ -1667,7 +1659,7 @@ bb.dw:                                            ; preds = %bb.dv
   %i.aah = getelementptr inbounds nuw i8, ptr %.8253.i421, i64 12
   br label %.preheader.backedge
 
-bb.dx:                                            ; preds = %bb.de, %8
+bb.dx:                                            ; preds = %bb.de
   %i.aai = getelementptr inbounds nuw i8, ptr %.8253.i421, i64 1
   store i8 34, ptr %.8253.i421, align 1, !tbaa !100
   br label %write_str.exit605
@@ -2070,7 +2062,7 @@ write_indent.exit742:                             ; preds = %select.unfold.prol.
   br i1 %i.arc, label %bb.ie, label %.split.i33, !prof !62
 
 .split.i33:                                       ; preds = %write_indent.exit742
-  %i.aud = getelementptr inbounds nuw i8, ptr %i.asu, i64 %i.ass ; 4 uses
+  %i.aud = getelementptr inbounds nuw i8, ptr %i.asu, i64 %i.ass ; 3 uses
   store i8 34, ptr %.0.i740.lcssa, align 1, !tbaa !100
   %i.aue = ptrtoint ptr %i.aud to i64             ; 4 uses
   %i.auf = add i64 %i.ass, %i.asv
@@ -2473,11 +2465,11 @@ bb.hg:                                            ; preds = %bb.gn
   br label %.preheader1383
 
 .preheader1383:                                   ; preds = %.preheader1383.backedge, %.preheader1383.preheader
-  %.8253.i322 = phi ptr [ %.8253.i322.ph, %.preheader1383.preheader ], [ %.8253.i322.be, %.preheader1383.backedge ] ; 35 uses
-  %.8.i323 = phi ptr [ %.8.i323.ph, %.preheader1383.preheader ], [ %.8.i323.be, %.preheader1383.backedge ] ; 24 uses
+  %.8253.i322 = phi ptr [ %.8253.i322.ph, %.preheader1383.preheader ], [ %.8253.i322.be, %.preheader1383.backedge ] ; 34 uses
+  %.8.i323 = phi ptr [ %.8.i323.ph, %.preheader1383.preheader ], [ %.8.i323.be, %.preheader1383.backedge ] ; 23 uses
   %i.bbl = getelementptr inbounds nuw i8, ptr %.8.i323, i64 4 ; 3 uses
   %i.bbm = icmp ugt ptr %i.bbl, %i.aud            ; 2 uses
-  br i1 %i.bbm, label %10, label %._crit_edge, !prof !45
+  br i1 %i.bbm, label %bb.hh, label %._crit_edge, !prof !45
 
 ._crit_edge:                                      ; preds = %.preheader1383
   %.pre = load i8, ptr %.8.i323, align 1, !tbaa !100 ; 2 uses
@@ -2486,11 +2478,7 @@ bb.hg:                                            ; preds = %bb.gn
   %.pre3165 = load i8, ptr %.phi.trans.insert3164, align 1, !tbaa !100
   br label %bb.hi
 
-10:                                               ; preds = %.preheader1383
-  %11 = icmp eq ptr %i.aud, %.8.i323
-  br i1 %11, label %write_str.exit407, label %bb.hh
-
-bb.hh:                                            ; preds = %10
+bb.hh:                                            ; preds = %.preheader1383
   %i.bbn = ptrtoint ptr %.8.i323 to i64
   %i.bbo = sub i64 %i.aue, %i.bbn
   %i.bbp = load i8, ptr %.8.i323, align 1, !tbaa !100 ; 3 uses
@@ -2816,7 +2804,7 @@ bb.ie:                                            ; preds = %write_indent.exit74
   br i1 %.not597.i, label %.split567.i, label %bb.kl
 
 .split567.i:                                      ; preds = %bb.ie
-  %i.bhl = getelementptr inbounds nuw i8, ptr %i.asu, i64 %i.ass ; 4 uses
+  %i.bhl = getelementptr inbounds nuw i8, ptr %i.asu, i64 %i.ass ; 3 uses
   %i.bhm = ptrtoint ptr %i.bhl to i64             ; 4 uses
   %i.bhn = add i64 %i.ass, %i.asv
   br label %bb.if
@@ -3219,11 +3207,11 @@ bb.jn:                                            ; preds = %bb.iu
   br label %.preheader1369
 
 .preheader1369:                                   ; preds = %.preheader1369.backedge, %.preheader1369.preheader
-  %.8253.i223 = phi ptr [ %.8253.i223.ph, %.preheader1369.preheader ], [ %.8253.i223.be, %.preheader1369.backedge ] ; 35 uses
-  %.8.i224 = phi ptr [ %.8.i224.ph, %.preheader1369.preheader ], [ %.8.i224.be, %.preheader1369.backedge ] ; 24 uses
+  %.8253.i223 = phi ptr [ %.8253.i223.ph, %.preheader1369.preheader ], [ %.8253.i223.be, %.preheader1369.backedge ] ; 34 uses
+  %.8.i224 = phi ptr [ %.8.i224.ph, %.preheader1369.preheader ], [ %.8.i224.be, %.preheader1369.backedge ] ; 23 uses
   %i.bot = getelementptr inbounds nuw i8, ptr %.8.i224, i64 4 ; 3 uses
   %i.bou = icmp ugt ptr %i.bot, %i.bhl            ; 2 uses
-  br i1 %i.bou, label %12, label %._crit_edge3166, !prof !45
+  br i1 %i.bou, label %bb.jo, label %._crit_edge3166, !prof !45
 
 ._crit_edge3166:                                  ; preds = %.preheader1369
   %.pre3167 = load i8, ptr %.8.i224, align 1, !tbaa !100 ; 2 uses
@@ -3232,11 +3220,7 @@ bb.jn:                                            ; preds = %bb.iu
   %.pre3170 = load i8, ptr %.phi.trans.insert3169, align 1, !tbaa !100
   br label %bb.jp
 
-12:                                               ; preds = %.preheader1369
-  %13 = icmp eq ptr %i.bhl, %.8.i224
-  br i1 %13, label %write_str.exit407, label %bb.jo
-
-bb.jo:                                            ; preds = %12
+bb.jo:                                            ; preds = %.preheader1369
   %i.bov = ptrtoint ptr %.8.i224 to i64
   %i.bow = sub i64 %i.bhm, %i.bov
   %i.box = load i8, ptr %.8.i224, align 1, !tbaa !100 ; 3 uses
@@ -3639,15 +3623,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not.i80.7 = icmp eq i64 %i.bxg, 0
   br i1 %.not.i80.7, label %write_str.exit407, label %.lr.ph2406, !llvm.loop !380
 
-write_str.exit407:                                ; preds = %.preheader1386, %.lr.ph2406.prol.loopexit, %.lr.ph2406, %.preheader1372, %bb.gu, %.lr.ph2384.prol.loopexit, %10, %bb.hi, %bb.jb, %.lr.ph2434.prol.loopexit, %12, %bb.jp, %middle.block, %vec.epilog.middle.block, %.preheader1400
-  %.3248.i316.lcssa.sink4530 = phi ptr [ %.122.i74.lcssa, %.preheader1400 ], [ %.8253.i322, %10 ], [ %.lcssa5867.unr, %.lr.ph2434.prol.loopexit ], [ %i.bvv, %vec.epilog.middle.block ], [ %i.bxf, %.lr.ph2406 ], [ %i.bvp, %middle.block ], [ %.lcssa5784.unr, %.lr.ph2384.prol.loopexit ], [ %.2247.i215.lcssa, %.preheader1372 ], [ %.8253.i223, %12 ], [ %.8253.i223, %bb.jp ], [ %i.bnh, %bb.jb ], [ %.8253.i322, %bb.hi ], [ %i.azz, %bb.gu ], [ %.lcssa5797.unr, %.lr.ph2406.prol.loopexit ], [ %.2247.i314.lcssa, %.preheader1386 ] ; 4 uses
-  %i.bxh = getelementptr inbounds nuw i8, ptr %.3248.i316.lcssa.sink4530, i64 1
-  store i8 34, ptr %.3248.i316.lcssa.sink4530, align 1, !tbaa !100
+write_str.exit407:                                ; preds = %.preheader1386, %.lr.ph2406.prol.loopexit, %.lr.ph2406, %.preheader1372, %bb.gu, %.lr.ph2384.prol.loopexit, %bb.hi, %bb.jb, %.lr.ph2434.prol.loopexit, %bb.jp, %middle.block, %vec.epilog.middle.block, %.preheader1400
+  %.3248.i316.lcssa.sink4541 = phi ptr [ %.lcssa5867.unr, %.lr.ph2434.prol.loopexit ], [ %.8253.i322, %bb.hi ], [ %.2247.i215.lcssa, %.preheader1372 ], [ %.8253.i223, %bb.jp ], [ %i.bxf, %.lr.ph2406 ], [ %.lcssa5784.unr, %.lr.ph2384.prol.loopexit ], [ %.122.i74.lcssa, %.preheader1400 ], [ %i.bvv, %vec.epilog.middle.block ], [ %i.bvp, %middle.block ], [ %i.bnh, %bb.jb ], [ %i.azz, %bb.gu ], [ %.lcssa5797.unr, %.lr.ph2406.prol.loopexit ], [ %.2247.i314.lcssa, %.preheader1386 ] ; 4 uses
+  %i.bxh = getelementptr inbounds nuw i8, ptr %.3248.i316.lcssa.sink4541, i64 1
+  store i8 34, ptr %.3248.i316.lcssa.sink4541, align 1, !tbaa !100
   %i.bxi = select i1 %.not593.i, i8 44, i8 58
-  %i.bxj = getelementptr inbounds nuw i8, ptr %.3248.i316.lcssa.sink4530, i64 2
+  %i.bxj = getelementptr inbounds nuw i8, ptr %.3248.i316.lcssa.sink4541, i64 2
   store i8 %i.bxi, ptr %i.bxh, align 1, !tbaa !100
   %i.bxk = select i1 %.not593.i, i8 10, i8 32
-  %i.bxl = getelementptr inbounds nuw i8, ptr %.3248.i316.lcssa.sink4530, i64 3
+  %i.bxl = getelementptr inbounds nuw i8, ptr %.3248.i316.lcssa.sink4541, i64 3
   store i8 %i.bxk, ptr %i.bxj, align 1, !tbaa !100
   br label %bb.mb
 
@@ -4050,7 +4034,7 @@ bb.mu:                                            ; preds = %.thread1191, %bb.mt
   br i1 %i.cwl, label %bb.pb, label %.split.i47, !prof !62
 
 .split.i47:                                       ; preds = %bb.mu
-  %i.cyn = getelementptr inbounds nuw i8, ptr %i.cxq, i64 %i.cxo ; 4 uses
+  %i.cyn = getelementptr inbounds nuw i8, ptr %i.cxq, i64 %i.cxo ; 3 uses
   store i8 34, ptr %.2387.i, align 1, !tbaa !100
   %i.cyo = ptrtoint ptr %i.cyn to i64             ; 4 uses
   %i.cyp = add i64 %i.cxo, %i.cxr
@@ -4453,11 +4437,11 @@ bb.od:                                            ; preds = %bb.nk
   br label %.preheader1350
 
 .preheader1350:                                   ; preds = %.preheader1350.backedge, %.preheader1350.preheader
-  %.8253.i124 = phi ptr [ %.8253.i124.ph, %.preheader1350.preheader ], [ %.8253.i124.be, %.preheader1350.backedge ] ; 35 uses
-  %.8.i125 = phi ptr [ %.8.i125.ph, %.preheader1350.preheader ], [ %.8.i125.be, %.preheader1350.backedge ] ; 24 uses
+  %.8253.i124 = phi ptr [ %.8253.i124.ph, %.preheader1350.preheader ], [ %.8253.i124.be, %.preheader1350.backedge ] ; 34 uses
+  %.8.i125 = phi ptr [ %.8.i125.ph, %.preheader1350.preheader ], [ %.8.i125.be, %.preheader1350.backedge ] ; 23 uses
   %i.dfv = getelementptr inbounds nuw i8, ptr %.8.i125, i64 4 ; 3 uses
   %i.dfw = icmp ugt ptr %i.dfv, %i.cyn            ; 2 uses
-  br i1 %i.dfw, label %14, label %._crit_edge3172, !prof !45
+  br i1 %i.dfw, label %bb.oe, label %._crit_edge3172, !prof !45
 
 ._crit_edge3172:                                  ; preds = %.preheader1350
   %.pre3173 = load i8, ptr %.8.i125, align 1, !tbaa !100 ; 2 uses
@@ -4466,11 +4450,7 @@ bb.od:                                            ; preds = %bb.nk
   %.pre3176 = load i8, ptr %.phi.trans.insert3175, align 1, !tbaa !100
   br label %bb.of
 
-14:                                               ; preds = %.preheader1350
-  %15 = icmp eq ptr %i.cyn, %.8.i125
-  br i1 %15, label %write_str.exit209, label %bb.oe
-
-bb.oe:                                            ; preds = %14
+bb.oe:                                            ; preds = %.preheader1350
   %i.dfx = ptrtoint ptr %.8.i125 to i64
   %i.dfy = sub i64 %i.cyo, %i.dfx
   %i.dfz = load i8, ptr %.8.i125, align 1, !tbaa !100 ; 3 uses
@@ -4796,7 +4776,7 @@ bb.pb:                                            ; preds = %bb.mu
   br i1 %.not442.i, label %.split420.i, label %bb.ri
 
 .split420.i:                                      ; preds = %bb.pb
-  %i.dlv = getelementptr inbounds nuw i8, ptr %i.cxq, i64 %i.cxo ; 4 uses
+  %i.dlv = getelementptr inbounds nuw i8, ptr %i.cxq, i64 %i.cxo ; 3 uses
   %i.dlw = ptrtoint ptr %i.dlv to i64             ; 4 uses
   %i.dlx = add i64 %i.cxo, %i.cxr
   br label %bb.pc
@@ -5199,11 +5179,11 @@ bb.qk:                                            ; preds = %bb.pr
   br label %.preheader1336
 
 .preheader1336:                                   ; preds = %.preheader1336.backedge, %.preheader1336.preheader
-  %.8253.i = phi ptr [ %.8253.i.ph, %.preheader1336.preheader ], [ %.8253.i.be, %.preheader1336.backedge ] ; 35 uses
-  %.8.i94 = phi ptr [ %.8.i94.ph, %.preheader1336.preheader ], [ %.8.i94.be, %.preheader1336.backedge ] ; 24 uses
+  %.8253.i = phi ptr [ %.8253.i.ph, %.preheader1336.preheader ], [ %.8253.i.be, %.preheader1336.backedge ] ; 34 uses
+  %.8.i94 = phi ptr [ %.8.i94.ph, %.preheader1336.preheader ], [ %.8.i94.be, %.preheader1336.backedge ] ; 23 uses
   %i.dtd = getelementptr inbounds nuw i8, ptr %.8.i94, i64 4 ; 3 uses
   %i.dte = icmp ugt ptr %i.dtd, %i.dlv            ; 2 uses
-  br i1 %i.dte, label %16, label %._crit_edge3177, !prof !45
+  br i1 %i.dte, label %bb.ql, label %._crit_edge3177, !prof !45
 
 ._crit_edge3177:                                  ; preds = %.preheader1336
   %.pre3178 = load i8, ptr %.8.i94, align 1, !tbaa !100 ; 2 uses
@@ -5212,11 +5192,7 @@ bb.qk:                                            ; preds = %bb.pr
   %.pre3181 = load i8, ptr %.phi.trans.insert3180, align 1, !tbaa !100
   br label %bb.qm
 
-16:                                               ; preds = %.preheader1336
-  %17 = icmp eq ptr %i.dlv, %.8.i94
-  br i1 %17, label %write_str.exit209, label %bb.ql
-
-bb.ql:                                            ; preds = %16
+bb.ql:                                            ; preds = %.preheader1336
   %i.dtf = ptrtoint ptr %.8.i94 to i64
   %i.dtg = sub i64 %i.dlw, %i.dtf
   %i.dth = load i8, ptr %.8.i94, align 1, !tbaa !100 ; 3 uses
@@ -5619,12 +5595,12 @@ vec.epilog.middle.block5225:                      ; preds = %vec.epilog.vector.b
   %.not.i70.7 = icmp eq i64 %i.ebq, 0
   br i1 %.not.i70.7, label %write_str.exit209, label %.lr.ph2524, !llvm.loop !396
 
-write_str.exit209:                                ; preds = %.preheader1353, %.lr.ph2524.prol.loopexit, %.lr.ph2524, %.preheader1339, %bb.nr, %.lr.ph2501.prol.loopexit, %14, %bb.of, %bb.py, %.lr.ph2552.prol.loopexit, %16, %bb.qm, %middle.block5207, %vec.epilog.middle.block5225, %.preheader1366
-  %.3248.i118.lcssa.sink4531 = phi ptr [ %.122.i.lcssa, %.preheader1366 ], [ %.8253.i124, %14 ], [ %.lcssa5656.unr, %.lr.ph2552.prol.loopexit ], [ %i.eaf, %vec.epilog.middle.block5225 ], [ %i.ebp, %.lr.ph2524 ], [ %i.dzz, %middle.block5207 ], [ %.lcssa5573.unr, %.lr.ph2501.prol.loopexit ], [ %.2247.i.lcssa, %.preheader1339 ], [ %.8253.i, %16 ], [ %.8253.i, %bb.qm ], [ %i.drr, %bb.py ], [ %.8253.i124, %bb.of ], [ %i.dej, %bb.nr ], [ %.lcssa5586.unr, %.lr.ph2524.prol.loopexit ], [ %.2247.i116.lcssa, %.preheader1353 ] ; 3 uses
-  %i.ebr = getelementptr inbounds nuw i8, ptr %.3248.i118.lcssa.sink4531, i64 1
-  store i8 34, ptr %.3248.i118.lcssa.sink4531, align 1, !tbaa !100
+write_str.exit209:                                ; preds = %.preheader1353, %.lr.ph2524.prol.loopexit, %.lr.ph2524, %.preheader1339, %bb.nr, %.lr.ph2501.prol.loopexit, %bb.of, %bb.py, %.lr.ph2552.prol.loopexit, %bb.qm, %middle.block5207, %vec.epilog.middle.block5225, %.preheader1366
+  %.3248.i118.lcssa.sink4542 = phi ptr [ %.lcssa5656.unr, %.lr.ph2552.prol.loopexit ], [ %.8253.i124, %bb.of ], [ %.2247.i.lcssa, %.preheader1339 ], [ %.8253.i, %bb.qm ], [ %i.ebp, %.lr.ph2524 ], [ %.lcssa5573.unr, %.lr.ph2501.prol.loopexit ], [ %.122.i.lcssa, %.preheader1366 ], [ %i.eaf, %vec.epilog.middle.block5225 ], [ %i.dzz, %middle.block5207 ], [ %i.drr, %bb.py ], [ %i.dej, %bb.nr ], [ %.lcssa5586.unr, %.lr.ph2524.prol.loopexit ], [ %.2247.i116.lcssa, %.preheader1353 ] ; 3 uses
+  %i.ebr = getelementptr inbounds nuw i8, ptr %.3248.i118.lcssa.sink4542, i64 1
+  store i8 34, ptr %.3248.i118.lcssa.sink4542, align 1, !tbaa !100
   %i.ebs = select i1 %.not439.i, i8 44, i8 58
-  %i.ebt = getelementptr inbounds nuw i8, ptr %.3248.i118.lcssa.sink4531, i64 2
+  %i.ebt = getelementptr inbounds nuw i8, ptr %.3248.i118.lcssa.sink4542, i64 2
   store i8 %i.ebs, ptr %i.ebr, align 1, !tbaa !100
   br label %bb.sw
 
@@ -6027,7 +6003,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.h, label %bb.bt, label %.split.i.i, !prof !62
 
 .split.i.i:                                       ; preds = %bb.l
-  %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 4 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 3 uses
   store i8 34, ptr %i.x, align 1, !tbaa !100
   %i.z = ptrtoint ptr %i.y to i64                 ; 4 uses
   %i.aa = add i64 %i.r, %i.u
@@ -6430,10 +6406,10 @@ bb.au:                                            ; preds = %bb.ab
 
 .preheader973:                                    ; preds = %.preheader973.backedge, %.preheader973.preheader
   %.8253.i24.i = phi ptr [ %.8253.i24.i.ph, %.preheader973.preheader ], [ %.8253.i24.i.be, %.preheader973.backedge ] ; 35 uses
-  %.8.i25.i = phi ptr [ %.8.i25.i.ph, %.preheader973.preheader ], [ %.8.i25.i.be, %.preheader973.backedge ] ; 24 uses
+  %.8.i25.i = phi ptr [ %.8.i25.i.ph, %.preheader973.preheader ], [ %.8.i25.i.be, %.preheader973.backedge ] ; 23 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %.8.i25.i, i64 4 ; 3 uses
   %i.hi = icmp ugt ptr %i.hh, %i.y                ; 2 uses
-  br i1 %i.hi, label %7, label %._crit_edge2842, !prof !45
+  br i1 %i.hi, label %bb.av, label %._crit_edge2842, !prof !45
 
 ._crit_edge2842:                                  ; preds = %.preheader973
   %.pre2843 = load i8, ptr %.8.i25.i, align 1, !tbaa !100 ; 2 uses
@@ -6442,11 +6418,7 @@ bb.au:                                            ; preds = %bb.ab
   %.pre2846 = load i8, ptr %.phi.trans.insert2845.a, align 1, !tbaa !100
   br label %bb.aw
 
-7:                                                ; preds = %.preheader973
-  %8 = icmp eq ptr %i.y, %.8.i25.i
-  br i1 %8, label %bb.bp, label %bb.av
-
-bb.av:                                            ; preds = %7
+bb.av:                                            ; preds = %.preheader973
   %i.hj = ptrtoint ptr %.8.i25.i to i64
   %i.hk = sub i64 %i.z, %i.hj
   %i.hl = load i8, ptr %.8.i25.i, align 1, !tbaa !100 ; 3 uses
@@ -6739,7 +6711,7 @@ bb.bo:                                            ; preds = %bb.bn
   %i.mx = getelementptr inbounds nuw i8, ptr %.8253.i24.i, i64 12
   br label %.preheader973.backedge
 
-bb.bp:                                            ; preds = %bb.aw, %7
+bb.bp:                                            ; preds = %bb.aw
   %i.my = getelementptr inbounds nuw i8, ptr %.8253.i24.i, i64 1
   store i8 34, ptr %.8253.i24.i, align 1, !tbaa !100
   br label %write_str.exit109.i
@@ -6777,7 +6749,7 @@ bb.bt:                                            ; preds = %bb.l
   br i1 %.not105.i.i, label %.split83.i.i, label %bb.eb
 
 .split83.i.i:                                     ; preds = %bb.bt
-  %i.ni = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 4 uses
+  %i.ni = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 3 uses
   %i.nj = ptrtoint ptr %i.ni to i64               ; 4 uses
   %i.nk = add i64 %i.r, %i.u
   br label %bb.bu
@@ -7180,10 +7152,10 @@ bb.dc:                                            ; preds = %bb.cj
 
 .preheader:                                       ; preds = %.preheader.backedge, %.preheader.preheader
   %.8253.i.i = phi ptr [ %.8253.i.i.ph, %.preheader.preheader ], [ %.8253.i.i.be, %.preheader.backedge ] ; 35 uses
-  %.8.i.i = phi ptr [ %.8.i.i.ph, %.preheader.preheader ], [ %.8.i.i.be, %.preheader.backedge ] ; 24 uses
+  %.8.i.i = phi ptr [ %.8.i.i.ph, %.preheader.preheader ], [ %.8.i.i.be, %.preheader.backedge ] ; 23 uses
   %i.ur = getelementptr inbounds nuw i8, ptr %.8.i.i, i64 4 ; 3 uses
   %i.us = icmp ugt ptr %i.ur, %i.ni               ; 2 uses
-  br i1 %i.us, label %9, label %._crit_edge2847, !prof !45
+  br i1 %i.us, label %bb.dd, label %._crit_edge2847, !prof !45
 
 ._crit_edge2847:                                  ; preds = %.preheader
   %.pre2848.a = load i8, ptr %.8.i.i, align 1, !tbaa !100 ; 2 uses
@@ -7192,11 +7164,7 @@ bb.dc:                                            ; preds = %bb.cj
   %.pre2851 = load i8, ptr %.phi.trans.insert2850, align 1, !tbaa !100
   br label %bb.de
 
-9:                                                ; preds = %.preheader
-  %10 = icmp eq ptr %i.ni, %.8.i.i
-  br i1 %10, label %bb.dx, label %bb.dd
-
-bb.dd:                                            ; preds = %9
+bb.dd:                                            ; preds = %.preheader
   %i.ut = ptrtoint ptr %.8.i.i to i64
   %i.uu = sub i64 %i.nj, %i.ut
   %i.uv = load i8, ptr %.8.i.i, align 1, !tbaa !100 ; 3 uses
@@ -7489,7 +7457,7 @@ bb.dw:                                            ; preds = %bb.dv
   %i.aah = getelementptr inbounds nuw i8, ptr %.8253.i.i, i64 12
   br label %.preheader.backedge
 
-bb.dx:                                            ; preds = %bb.de, %9
+bb.dx:                                            ; preds = %bb.de
   %i.aai = getelementptr inbounds nuw i8, ptr %.8253.i.i, i64 1
   store i8 34, ptr %.8253.i.i, align 1, !tbaa !100
   br label %write_str.exit109.i
@@ -7892,7 +7860,7 @@ write_indent.exit776.i:                           ; preds = %select.unfold.prol.
   br i1 %i.arc, label %bb.ih, label %.split.i, !prof !62
 
 .split.i:                                         ; preds = %write_indent.exit776.i
-  %i.aue = getelementptr inbounds nuw i8, ptr %i.asv, i64 %i.ast ; 4 uses
+  %i.aue = getelementptr inbounds nuw i8, ptr %i.asv, i64 %i.ast ; 3 uses
   store i8 34, ptr %.0.i774.i.lcssa, align 1, !tbaa !100
   %i.auf = ptrtoint ptr %i.aue to i64             ; 4 uses
   %i.aug = add i64 %i.ast, %i.asw
@@ -8295,11 +8263,11 @@ bb.hj:                                            ; preds = %bb.gq
   br label %.preheader1034
 
 .preheader1034:                                   ; preds = %.preheader1034.backedge, %.preheader1034.preheader
-  %.8253.i659.i = phi ptr [ %.8253.i659.i.ph, %.preheader1034.preheader ], [ %.8253.i659.i.be, %.preheader1034.backedge ] ; 35 uses
-  %.8.i660.i = phi ptr [ %.8.i660.i.ph, %.preheader1034.preheader ], [ %.8.i660.i.be, %.preheader1034.backedge ] ; 24 uses
+  %.8253.i659.i = phi ptr [ %.8253.i659.i.ph, %.preheader1034.preheader ], [ %.8253.i659.i.be, %.preheader1034.backedge ] ; 34 uses
+  %.8.i660.i = phi ptr [ %.8.i660.i.ph, %.preheader1034.preheader ], [ %.8.i660.i.be, %.preheader1034.backedge ] ; 23 uses
   %i.bbm = getelementptr inbounds nuw i8, ptr %.8.i660.i, i64 4 ; 3 uses
   %i.bbn = icmp ugt ptr %i.bbm, %i.aue            ; 2 uses
-  br i1 %i.bbn, label %11, label %._crit_edge, !prof !45
+  br i1 %i.bbn, label %bb.hk, label %._crit_edge, !prof !45
 
 ._crit_edge:                                      ; preds = %.preheader1034
   %.pre = load i8, ptr %.8.i660.i, align 1, !tbaa !100 ; 2 uses
@@ -8308,11 +8276,7 @@ bb.hj:                                            ; preds = %bb.gq
   %.pre2824 = load i8, ptr %.phi.trans.insert2823, align 1, !tbaa !100
   br label %bb.hl
 
-11:                                               ; preds = %.preheader1034
-  %12 = icmp eq ptr %i.aue, %.8.i660.i
-  br i1 %12, label %write_str.exit744.i, label %bb.hk
-
-bb.hk:                                            ; preds = %11
+bb.hk:                                            ; preds = %.preheader1034
   %i.bbo = ptrtoint ptr %.8.i660.i to i64
   %i.bbp = sub i64 %i.auf, %i.bbo
   %i.bbq = load i8, ptr %.8.i660.i, align 1, !tbaa !100 ; 3 uses
@@ -8638,7 +8602,7 @@ bb.ih:                                            ; preds = %write_indent.exit77
   br i1 %.not604.i, label %.split572.i, label %bb.ko
 
 .split572.i:                                      ; preds = %bb.ih
-  %i.bhm = getelementptr inbounds nuw i8, ptr %i.asv, i64 %i.ast ; 4 uses
+  %i.bhm = getelementptr inbounds nuw i8, ptr %i.asv, i64 %i.ast ; 3 uses
   %i.bhn = ptrtoint ptr %i.bhm to i64             ; 4 uses
   %i.bho = add i64 %i.ast, %i.asw
   br label %bb.ii
@@ -9041,11 +9005,11 @@ bb.jq:                                            ; preds = %bb.ix
   br label %.preheader1020
 
 .preheader1020:                                   ; preds = %.preheader1020.backedge, %.preheader1020.preheader
-  %.8253.i.i110 = phi ptr [ %.8253.i.i110.ph, %.preheader1020.preheader ], [ %.8253.i.i110.be, %.preheader1020.backedge ] ; 35 uses
-  %.8.i.i111 = phi ptr [ %.8.i.i111.ph, %.preheader1020.preheader ], [ %.8.i.i111.be, %.preheader1020.backedge ] ; 24 uses
+  %.8253.i.i110 = phi ptr [ %.8253.i.i110.ph, %.preheader1020.preheader ], [ %.8253.i.i110.be, %.preheader1020.backedge ] ; 34 uses
+  %.8.i.i111 = phi ptr [ %.8.i.i111.ph, %.preheader1020.preheader ], [ %.8.i.i111.be, %.preheader1020.backedge ] ; 23 uses
   %i.bou = getelementptr inbounds nuw i8, ptr %.8.i.i111, i64 4 ; 3 uses
   %i.bov = icmp ugt ptr %i.bou, %i.bhm            ; 2 uses
-  br i1 %i.bov, label %13, label %._crit_edge2825, !prof !45
+  br i1 %i.bov, label %bb.jr, label %._crit_edge2825, !prof !45
 
 ._crit_edge2825:                                  ; preds = %.preheader1020
   %.pre2826 = load i8, ptr %.8.i.i111, align 1, !tbaa !100 ; 2 uses
@@ -9054,11 +9018,7 @@ bb.jq:                                            ; preds = %bb.ix
   %.pre2829 = load i8, ptr %.phi.trans.insert2828, align 1, !tbaa !100
   br label %bb.js
 
-13:                                               ; preds = %.preheader1020
-  %14 = icmp eq ptr %i.bhm, %.8.i.i111
-  br i1 %14, label %write_str.exit744.i, label %bb.jr
-
-bb.jr:                                            ; preds = %13
+bb.jr:                                            ; preds = %.preheader1020
   %i.bow = ptrtoint ptr %.8.i.i111 to i64
   %i.box = sub i64 %i.bhn, %i.bow
   %i.boy = load i8, ptr %.8.i.i111, align 1, !tbaa !100 ; 3 uses
@@ -9461,15 +9421,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not.i.i95.7 = icmp eq i64 %i.bxh, 0
   br i1 %.not.i.i95.7, label %write_str.exit744.i, label %.lr.ph2059, !llvm.loop !418
 
-write_str.exit744.i:                              ; preds = %.preheader1037, %.lr.ph2059.prol.loopexit, %.lr.ph2059, %.preheader1023, %bb.gx, %.lr.ph2037.prol.loopexit, %11, %bb.hl, %bb.je, %.lr.ph2087.prol.loopexit, %13, %bb.js, %middle.block, %vec.epilog.middle.block, %.preheader1051
-  %.8253.i659.i.lcssa.sink4191 = phi ptr [ %.8253.i659.i, %11 ], [ %.122.i.i89.lcssa, %.preheader1051 ], [ %i.bvw, %vec.epilog.middle.block ], [ %.lcssa5531.unr, %.lr.ph2087.prol.loopexit ], [ %i.bxg, %.lr.ph2059 ], [ %i.bvq, %middle.block ], [ %.lcssa5448.unr, %.lr.ph2037.prol.loopexit ], [ %.2247.i.i102.lcssa, %.preheader1023 ], [ %.8253.i.i110, %13 ], [ %.8253.i.i110, %bb.js ], [ %i.bni, %bb.je ], [ %.8253.i659.i, %bb.hl ], [ %i.baa, %bb.gx ], [ %.lcssa5461.unr, %.lr.ph2059.prol.loopexit ], [ %.2247.i651.i.lcssa, %.preheader1037 ] ; 4 uses
-  %i.bxi = getelementptr inbounds nuw i8, ptr %.8253.i659.i.lcssa.sink4191, i64 1
-  store i8 34, ptr %.8253.i659.i.lcssa.sink4191, align 1, !tbaa !100
+write_str.exit744.i:                              ; preds = %.preheader1037, %.lr.ph2059.prol.loopexit, %.lr.ph2059, %.preheader1023, %bb.gx, %.lr.ph2037.prol.loopexit, %bb.hl, %bb.je, %.lr.ph2087.prol.loopexit, %bb.js, %middle.block, %vec.epilog.middle.block, %.preheader1051
+  %.8253.i659.i.lcssa.sink4202 = phi ptr [ %.8253.i659.i, %bb.hl ], [ %.lcssa5531.unr, %.lr.ph2087.prol.loopexit ], [ %.8253.i.i110, %bb.js ], [ %.2247.i.i102.lcssa, %.preheader1023 ], [ %i.bxg, %.lr.ph2059 ], [ %.lcssa5448.unr, %.lr.ph2037.prol.loopexit ], [ %.122.i.i89.lcssa, %.preheader1051 ], [ %i.bvw, %vec.epilog.middle.block ], [ %i.bvq, %middle.block ], [ %i.bni, %bb.je ], [ %i.baa, %bb.gx ], [ %.lcssa5461.unr, %.lr.ph2059.prol.loopexit ], [ %.2247.i651.i.lcssa, %.preheader1037 ] ; 4 uses
+  %i.bxi = getelementptr inbounds nuw i8, ptr %.8253.i659.i.lcssa.sink4202, i64 1
+  store i8 34, ptr %.8253.i659.i.lcssa.sink4202, align 1, !tbaa !100
   %i.bxj = select i1 %.not600.i, i8 44, i8 58
-  %i.bxk = getelementptr inbounds nuw i8, ptr %.8253.i659.i.lcssa.sink4191, i64 2
+  %i.bxk = getelementptr inbounds nuw i8, ptr %.8253.i659.i.lcssa.sink4202, i64 2
   store i8 %i.bxj, ptr %i.bxi, align 1, !tbaa !100
   %i.bxl = select i1 %.not600.i, i8 10, i8 32
-  %i.bxm = getelementptr inbounds nuw i8, ptr %.8253.i659.i.lcssa.sink4191, i64 3
+  %i.bxm = getelementptr inbounds nuw i8, ptr %.8253.i659.i.lcssa.sink4202, i64 3
   store i8 %i.bxl, ptr %i.bxk, align 1, !tbaa !100
   br label %bb.mm
 
@@ -9872,7 +9832,7 @@ bb.nl:                                            ; preds = %.thread842, %bb.nj
   br i1 %i.cww, label %bb.ps, label %.split.i262, !prof !62
 
 .split.i262:                                      ; preds = %bb.nl
-  %i.cyy = getelementptr inbounds nuw i8, ptr %i.cyb, i64 %i.cxz ; 4 uses
+  %i.cyy = getelementptr inbounds nuw i8, ptr %i.cyb, i64 %i.cxz ; 3 uses
   store i8 34, ptr %.2392.i, align 1, !tbaa !100
   %i.cyz = ptrtoint ptr %i.cyy to i64             ; 4 uses
   %i.cza = add i64 %i.cxz, %i.cyc
@@ -10275,11 +10235,11 @@ bb.ou:                                            ; preds = %bb.ob
   br label %.preheader1001
 
 .preheader1001:                                   ; preds = %.preheader1001.backedge, %.preheader1001.preheader
-  %.8253.i496.i = phi ptr [ %.8253.i496.i.ph, %.preheader1001.preheader ], [ %.8253.i496.i.be, %.preheader1001.backedge ] ; 35 uses
-  %.8.i497.i = phi ptr [ %.8.i497.i.ph, %.preheader1001.preheader ], [ %.8.i497.i.be, %.preheader1001.backedge ] ; 24 uses
+  %.8253.i496.i = phi ptr [ %.8253.i496.i.ph, %.preheader1001.preheader ], [ %.8253.i496.i.be, %.preheader1001.backedge ] ; 34 uses
+  %.8.i497.i = phi ptr [ %.8.i497.i.ph, %.preheader1001.preheader ], [ %.8.i497.i.be, %.preheader1001.backedge ] ; 23 uses
   %i.dgg = getelementptr inbounds nuw i8, ptr %.8.i497.i, i64 4 ; 3 uses
   %i.dgh = icmp ugt ptr %i.dgg, %i.cyy            ; 2 uses
-  br i1 %i.dgh, label %15, label %._crit_edge2831, !prof !45
+  br i1 %i.dgh, label %bb.ov, label %._crit_edge2831, !prof !45
 
 ._crit_edge2831:                                  ; preds = %.preheader1001
   %.pre2832 = load i8, ptr %.8.i497.i, align 1, !tbaa !100 ; 2 uses
@@ -10288,11 +10248,7 @@ bb.ou:                                            ; preds = %bb.ob
   %.pre2835 = load i8, ptr %.phi.trans.insert2834, align 1, !tbaa !100
   br label %bb.ow
 
-15:                                               ; preds = %.preheader1001
-  %16 = icmp eq ptr %i.cyy, %.8.i497.i
-  br i1 %16, label %write_str.exit581.i, label %bb.ov
-
-bb.ov:                                            ; preds = %15
+bb.ov:                                            ; preds = %.preheader1001
   %i.dgi = ptrtoint ptr %.8.i497.i to i64
   %i.dgj = sub i64 %i.cyz, %i.dgi
   %i.dgk = load i8, ptr %.8.i497.i, align 1, !tbaa !100 ; 3 uses
@@ -10618,7 +10574,7 @@ bb.ps:                                            ; preds = %bb.nl
   br i1 %.not449.i, label %.split425.i, label %bb.rz
 
 .split425.i:                                      ; preds = %bb.ps
-  %i.dmg = getelementptr inbounds nuw i8, ptr %i.cyb, i64 %i.cxz ; 4 uses
+  %i.dmg = getelementptr inbounds nuw i8, ptr %i.cyb, i64 %i.cxz ; 3 uses
   %i.dmh = ptrtoint ptr %i.dmg to i64             ; 4 uses
   %i.dmi = add i64 %i.cxz, %i.cyc
   br label %bb.pt
@@ -11021,11 +10977,11 @@ bb.rb:                                            ; preds = %bb.qi
   br label %.preheader987
 
 .preheader987:                                    ; preds = %.preheader987.backedge, %.preheader987.preheader
-  %.8253.i.i287 = phi ptr [ %.8253.i.i287.ph, %.preheader987.preheader ], [ %.8253.i.i287.be, %.preheader987.backedge ] ; 35 uses
-  %.8.i.i288 = phi ptr [ %.8.i.i288.ph, %.preheader987.preheader ], [ %.8.i.i288.be, %.preheader987.backedge ] ; 24 uses
+  %.8253.i.i287 = phi ptr [ %.8253.i.i287.ph, %.preheader987.preheader ], [ %.8253.i.i287.be, %.preheader987.backedge ] ; 34 uses
+  %.8.i.i288 = phi ptr [ %.8.i.i288.ph, %.preheader987.preheader ], [ %.8.i.i288.be, %.preheader987.backedge ] ; 23 uses
   %i.dto = getelementptr inbounds nuw i8, ptr %.8.i.i288, i64 4 ; 3 uses
   %i.dtp = icmp ugt ptr %i.dto, %i.dmg            ; 2 uses
-  br i1 %i.dtp, label %17, label %._crit_edge2836, !prof !45
+  br i1 %i.dtp, label %bb.rc, label %._crit_edge2836, !prof !45
 
 ._crit_edge2836:                                  ; preds = %.preheader987
   %.pre2837 = load i8, ptr %.8.i.i288, align 1, !tbaa !100 ; 2 uses
@@ -11034,11 +10990,7 @@ bb.rb:                                            ; preds = %bb.qi
   %.pre2840 = load i8, ptr %.phi.trans.insert2839, align 1, !tbaa !100
   br label %bb.rd
 
-17:                                               ; preds = %.preheader987
-  %18 = icmp eq ptr %i.dmg, %.8.i.i288
-  br i1 %18, label %write_str.exit581.i, label %bb.rc
-
-bb.rc:                                            ; preds = %17
+bb.rc:                                            ; preds = %.preheader987
   %i.dtq = ptrtoint ptr %.8.i.i288 to i64
   %i.dtr = sub i64 %i.dmh, %i.dtq
   %i.dts = load i8, ptr %.8.i.i288, align 1, !tbaa !100 ; 3 uses
@@ -11441,12 +11393,12 @@ vec.epilog.middle.block4888:                      ; preds = %vec.epilog.vector.b
   %.not.i.i272.7 = icmp eq i64 %i.ecb, 0
   br i1 %.not.i.i272.7, label %write_str.exit581.i, label %.lr.ph2177, !llvm.loop !434
 
-write_str.exit581.i:                              ; preds = %.preheader1004, %.lr.ph2177.prol.loopexit, %.lr.ph2177, %.preheader990, %bb.oi, %.lr.ph2154.prol.loopexit, %15, %bb.ow, %bb.qp, %.lr.ph2205.prol.loopexit, %17, %bb.rd, %middle.block4870, %vec.epilog.middle.block4888, %.preheader1017
-  %.8253.i496.i.lcssa.sink4192 = phi ptr [ %.8253.i496.i, %15 ], [ %.122.i.i266.lcssa, %.preheader1017 ], [ %i.eaq, %vec.epilog.middle.block4888 ], [ %.lcssa5319.unr, %.lr.ph2205.prol.loopexit ], [ %i.eca, %.lr.ph2177 ], [ %i.eak, %middle.block4870 ], [ %.lcssa5236.unr, %.lr.ph2154.prol.loopexit ], [ %.2247.i.i279.lcssa, %.preheader990 ], [ %.8253.i.i287, %17 ], [ %.8253.i.i287, %bb.rd ], [ %i.dsc, %bb.qp ], [ %.8253.i496.i, %bb.ow ], [ %i.deu, %bb.oi ], [ %.lcssa5249.unr, %.lr.ph2177.prol.loopexit ], [ %.2247.i488.i.lcssa, %.preheader1004 ] ; 3 uses
-  %i.ecc = getelementptr inbounds nuw i8, ptr %.8253.i496.i.lcssa.sink4192, i64 1
-  store i8 34, ptr %.8253.i496.i.lcssa.sink4192, align 1, !tbaa !100
+write_str.exit581.i:                              ; preds = %.preheader1004, %.lr.ph2177.prol.loopexit, %.lr.ph2177, %.preheader990, %bb.oi, %.lr.ph2154.prol.loopexit, %bb.ow, %bb.qp, %.lr.ph2205.prol.loopexit, %bb.rd, %middle.block4870, %vec.epilog.middle.block4888, %.preheader1017
+  %.8253.i496.i.lcssa.sink4203 = phi ptr [ %.8253.i496.i, %bb.ow ], [ %.lcssa5319.unr, %.lr.ph2205.prol.loopexit ], [ %.8253.i.i287, %bb.rd ], [ %.2247.i.i279.lcssa, %.preheader990 ], [ %i.eca, %.lr.ph2177 ], [ %.lcssa5236.unr, %.lr.ph2154.prol.loopexit ], [ %.122.i.i266.lcssa, %.preheader1017 ], [ %i.eaq, %vec.epilog.middle.block4888 ], [ %i.eak, %middle.block4870 ], [ %i.dsc, %bb.qp ], [ %i.deu, %bb.oi ], [ %.lcssa5249.unr, %.lr.ph2177.prol.loopexit ], [ %.2247.i488.i.lcssa, %.preheader1004 ] ; 3 uses
+  %i.ecc = getelementptr inbounds nuw i8, ptr %.8253.i496.i.lcssa.sink4203, i64 1
+  store i8 34, ptr %.8253.i496.i.lcssa.sink4203, align 1, !tbaa !100
   %i.ecd = select i1 %.not446.i, i8 44, i8 58
-  %i.ece = getelementptr inbounds nuw i8, ptr %.8253.i496.i.lcssa.sink4192, i64 2
+  %i.ece = getelementptr inbounds nuw i8, ptr %.8253.i496.i.lcssa.sink4203, i64 2
   store i8 %i.ecd, ptr %i.ecc, align 1, !tbaa !100
   br label %bb.tt
 

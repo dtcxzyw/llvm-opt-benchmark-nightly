@@ -204,8 +204,8 @@ bb.q:                                             ; preds = %bb.o, %bb.n, %bb.m
 
 bb.r:                                             ; preds = %.lr.ph, %bb.cs
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.cs ] ; 5 uses
-  %.082130 = phi i32 [ 0, %.lr.ph ], [ %i.mv, %bb.cs ] ; 10 uses
-  %.083129 = phi i32 [ 0, %.lr.ph ], [ %i.mt, %bb.cs ] ; 40 uses
+  %.082130 = phi i32 [ 0, %.lr.ph ], [ %i.mv, %bb.cs ] ; 9 uses
+  %.083129 = phi i32 [ 0, %.lr.ph ], [ %i.mt, %bb.cs ] ; 34 uses
   %.097128 = phi i32 [ -1, %.lr.ph ], [ %.5106, %bb.cs ] ; 10 uses
   %i.bb = load ptr, ptr %i.aw, align 8            ; 3 uses
   %i.bc = getelementptr [136 x i8], ptr %i.bb, i64 %indvars.iv ; 2 uses
@@ -273,7 +273,7 @@ bb.y:                                             ; preds = %bb.w
   %i.cc = getelementptr i8, ptr %i.bx, i64 28     ; 5 uses
   %i.cd = load i32, ptr %i.cc, align 4
   %i.ce = add i32 %i.cd, %i.cb                    ; 2 uses
-  %i.cf = lshr i32 %i.ce, 3                       ; 13 uses
+  %i.cf = lshr i32 %i.ce, 3                       ; 8 uses
   %i.cg = and i32 %i.ce, 7                        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   store i32 0, ptr %i.a, align 4
@@ -358,33 +358,23 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.dg = load i8, ptr %i.df, align 4, !range !6, !noundef !7
   %i.dh = trunc nuw i8 %i.dg to i1
   %.not6066.i.i = icmp samesign ugt i32 %.083129, %i.cf ; 2 uses
-  br i1 %i.dh, label %.preheader.i.i, label %.preheader61.i.i
+  br i1 %i.dh, label %.lr.ph69.i.i.a, label %.preheader61.i.i
 
 .preheader61.i.i:                                 ; preds = %bb.aj
   br i1 %.not6066.i.i, label %dissect_shifted_and_shortened_uint.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader61.i.i
   %i.di = sub nuw nsw i32 8, %.082130             ; 2 uses
-  br i1 %.not282.i, label %.lr.ph.split.us.preheader.i.i, label %.lr.ph.split.preheader.i.i
+  br i1 %.not282.i, label %.lr.ph.split.us.preheader.i.i, label %.lr.ph.split.peel.next.i.i
 
 .lr.ph.split.us.preheader.i.i:                    ; preds = %.lr.ph.i.i
-  %6 = sub nuw nsw i32 8, %i.cg
-  %7 = lshr i32 255, %6
-  %8 = trunc nuw nsw i32 %7 to i8
   %i.dj = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef range(i32 0, 536870912) %i.cf)
-  %.052.us.peel.i.i = and i8 %i.dj, %8            ; 2 uses
-  %9 = icmp eq i32 %i.cf, %.083129
-  %10 = zext nneg i8 %.052.us.peel.i.i to i32
-  %i.dk = lshr i32 %10, %.082130
+  %6 = sub nuw nsw i32 8, %i.cg
+  %i.dk = lshr i32 255, %6
   %i.dl = trunc nuw nsw i32 %i.dk to i8
-  %.153.us.peel.i.i = select i1 %9, i8 %i.dl, i8 %.052.us.peel.i.i
-  %i.dm = zext nneg i8 %.153.us.peel.i.i to i64   ; 2 uses
-  %.not.us.not.peel.i.i = icmp samesign ugt i32 %i.cf, %.083129
-  br i1 %.not.us.not.peel.i.i, label %.lr.ph.split.us.i.i, label %dissect_shifted_and_shortened_uint.exit.i
-
-.lr.ph.split.preheader.i.i:                       ; preds = %.lr.ph.i.i
-  %.not.not.peel.i.i = icmp samesign ugt i32 %i.cf, %.083129
-  br i1 %.not.not.peel.i.i, label %.lr.ph.split.peel.next.i.i, label %dissect_shifted_and_shortened_uint.exit.i
+  %.052.us.peel.i.i = and i8 %i.dj, %i.dl
+  %i.dm = zext nneg i8 %.052.us.peel.i.i to i64
+  br label %.lr.ph.split.us.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.split.us.preheader.i.i, %.lr.ph.split.us.i.i
   %.05465.us.i.i = phi i64 [ %i.dv, %.lr.ph.split.us.i.i ], [ %i.dm, %.lr.ph.split.us.preheader.i.i ]
@@ -404,34 +394,19 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %.not.us.not.i.i = icmp samesign ugt i32 %.05664.us.i.i, %.083129
   br i1 %.not.us.not.i.i, label %.lr.ph.split.us.i.i, label %dissect_shifted_and_shortened_uint.exit.i, !llvm.loop !32
 
-.preheader.i.i:                                   ; preds = %bb.aj
-  br i1 %.not6066.i.i, label %dissect_shifted_and_shortened_uint.exit.i, label %.lr.ph69.i.i.a
-
-.lr.ph69.i.i.a:                                   ; preds = %.preheader.i.i
-  %11 = lshr i32 255, %.082130
-  %12 = trunc nuw i32 %11 to i8                   ; 2 uses
-  %13 = sub nuw nsw i32 8, %i.cg                  ; 2 uses
-  br i1 %.not282.i, label %.lr.ph69.split.us.preheader.i.i, label %.lr.ph69.split.preheader.i.i
+.lr.ph69.i.i.a:                                   ; preds = %bb.aj
+  br i1 %.not6066.i.i, label %dissect_shifted_and_shortened_uint.exit.i, label %.lr.ph69.split.us.preheader.i.i
 
 .lr.ph69.split.us.preheader.i.i:                  ; preds = %.lr.ph69.i.i.a
-  %14 = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef range(i32 0, 536870912) %.083129)
-  %.048.us.peel.i.i = and i8 %14, %12             ; 2 uses
-  %15 = icmp eq i32 %.083129, %i.cf               ; 2 uses
-  %16 = zext i8 %.048.us.peel.i.i to i32
-  %17 = lshr i32 %16, %13
-  %18 = trunc nuw nsw i32 %17 to i8
-  %.149.us.peel.i.i = select i1 %15, i8 %18, i8 %.048.us.peel.i.i
-  %i.dw = zext i8 %.149.us.peel.i.i to i64        ; 2 uses
-  br i1 %15, label %dissect_shifted_and_shortened_uint.exit.i, label %.lr.ph69.split.us.i.i
+  %7 = lshr i32 255, %.082130
+  %8 = trunc nuw i32 %7 to i8
+  %9 = sub nuw nsw i32 8, %i.cg
+  %10 = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef range(i32 0, 536870912) %.083129)
+  %.048.us.peel.i.i = and i8 %10, %8
+  %i.dw = zext i8 %.048.us.peel.i.i to i64        ; 3 uses
+  br i1 %.not282.i, label %.lr.ph69.split.us.i.i, label %bb.ak
 
-.lr.ph69.split.preheader.i.i:                     ; preds = %.lr.ph69.i.i.a
-  %.not74.peel.i.i = icmp eq i32 %.083129, %i.cf
-  br i1 %.not74.peel.i.i, label %dissect_shifted_and_shortened_uint.exit.i, label %bb.ak
-
-bb.ak:                                            ; preds = %.lr.ph69.split.preheader.i.i
-  %19 = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef range(i32 0, 536870912) %.083129)
-  %.048.peel.i.i = and i8 %19, %12
-  %20 = zext i8 %.048.peel.i.i to i64             ; 2 uses
+bb.ak:                                            ; preds = %.lr.ph69.split.us.preheader.i.i
   %.15767.i311.i = add nuw nsw i32 %.083129, 1    ; 2 uses
   %.not74.i312.i = icmp eq i32 %.15767.i311.i, %i.cf
   br i1 %.not74.i312.i, label %dissect_shifted_and_shortened_uint.exit.i, label %.lr.ph69.split.i.i
@@ -443,7 +418,7 @@ bb.ak:                                            ; preds = %.lr.ph69.split.preh
   %i.dx = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.15767.us.i.i) ; 2 uses
   %i.dy = icmp eq i32 %.15767.us.i.i, %i.cf       ; 3 uses
   %i.dz = zext i8 %i.dx to i32
-  %i.ea = lshr i32 %i.dz, %13
+  %i.ea = lshr i32 %i.dz, %9
   %i.eb = trunc nuw nsw i32 %i.ea to i8
   %.149.us.i.i = select i1 %i.dy, i8 %i.eb, i8 %i.dx
   %.1.us.i.i = select i1 %i.dy, i32 %i.cg, i32 8
@@ -453,9 +428,9 @@ bb.ak:                                            ; preds = %.lr.ph69.split.preh
   %i.ef = or i64 %i.ed, %i.ee                     ; 2 uses
   br i1 %i.dy, label %dissect_shifted_and_shortened_uint.exit.i, label %.lr.ph69.split.us.i.i, !llvm.loop !33
 
-.lr.ph.split.peel.next.i.i:                       ; preds = %.lr.ph.split.preheader.i.i, %.lr.ph.split.peel.next.i.i
-  %.05465.i.i = phi i64 [ %i.eo, %.lr.ph.split.peel.next.i.i ], [ 0, %.lr.ph.split.preheader.i.i ]
-  %.05664.in.i.i = phi i32 [ %.05664.i.i, %.lr.ph.split.peel.next.i.i ], [ %i.cf, %.lr.ph.split.preheader.i.i ]
+.lr.ph.split.peel.next.i.i:                       ; preds = %.lr.ph.i.i, %.lr.ph.split.peel.next.i.i
+  %.05465.i.i = phi i64 [ %i.eo, %.lr.ph.split.peel.next.i.i ], [ 0, %.lr.ph.i.i ]
+  %.05664.in.i.i = phi i32 [ %.05664.i.i, %.lr.ph.split.peel.next.i.i ], [ %i.cf, %.lr.ph.i.i ]
   %.05664.i.i = add nsw i32 %.05664.in.i.i, -1    ; 4 uses
   %i.eg = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.05664.i.i) ; 2 uses
   %i.eh = icmp eq i32 %.05664.i.i, %.083129       ; 2 uses
@@ -473,7 +448,7 @@ bb.ak:                                            ; preds = %.lr.ph69.split.preh
 
 .lr.ph69.split.i.i:                               ; preds = %bb.ak, %.lr.ph69.split.i.i
   %.15767.i314.i = phi i32 [ %.15767.i.i, %.lr.ph69.split.i.i ], [ %.15767.i311.i, %bb.ak ] ; 2 uses
-  %.268.i313.i = phi i64 [ %i.es, %.lr.ph69.split.i.i ], [ %20, %bb.ak ]
+  %.268.i313.i = phi i64 [ %i.es, %.lr.ph69.split.i.i ], [ %i.dw, %bb.ak ]
   %i.ep = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.15767.i314.i)
   %i.eq = shl i64 %.268.i313.i, 8
   %i.er = zext i8 %i.ep to i64
@@ -482,8 +457,8 @@ bb.ak:                                            ; preds = %.lr.ph69.split.preh
   %.not74.i.i = icmp eq i32 %.15767.i.i, %i.cf
   br i1 %.not74.i.i, label %dissect_shifted_and_shortened_uint.exit.i, label %.lr.ph69.split.i.i
 
-dissect_shifted_and_shortened_uint.exit.i:        ; preds = %.lr.ph.split.peel.next.i.i, %.lr.ph.split.us.i.i, %.lr.ph69.split.i.i, %.lr.ph69.split.us.i.i, %bb.ak, %.lr.ph69.split.preheader.i.i, %.lr.ph69.split.us.preheader.i.i, %.preheader.i.i, %.lr.ph.split.preheader.i.i, %.lr.ph.split.us.preheader.i.i, %.preheader61.i.i
-  %.4.i.i = phi i64 [ %i.ef, %.lr.ph69.split.us.i.i ], [ 0, %.preheader.i.i ], [ 0, %.lr.ph69.split.preheader.i.i ], [ 0, %.preheader61.i.i ], [ %i.dv, %.lr.ph.split.us.i.i ], [ %i.es, %.lr.ph69.split.i.i ], [ %i.dw, %.lr.ph69.split.us.preheader.i.i ], [ 0, %.lr.ph.split.preheader.i.i ], [ %i.dm, %.lr.ph.split.us.preheader.i.i ], [ %20, %bb.ak ], [ %i.eo, %.lr.ph.split.peel.next.i.i ] ; 23 uses
+dissect_shifted_and_shortened_uint.exit.i:        ; preds = %.lr.ph.split.peel.next.i.i, %.lr.ph.split.us.i.i, %.lr.ph69.split.i.i, %.lr.ph69.split.us.i.i, %bb.ak, %.lr.ph69.i.i.a, %.preheader61.i.i
+  %.4.i.i = phi i64 [ %i.ef, %.lr.ph69.split.us.i.i ], [ 0, %.lr.ph69.i.i.a ], [ %i.dw, %bb.ak ], [ 0, %.preheader61.i.i ], [ %i.dv, %.lr.ph.split.us.i.i ], [ %i.es, %.lr.ph69.split.i.i ], [ %i.eo, %.lr.ph.split.peel.next.i.i ] ; 23 uses
   %i.et = getelementptr i8, ptr %i.bx, i64 16
   %i.eu = load i32, ptr %i.et, align 8
   switch i32 %i.eu, label %proto_item_set_hidden.exit.i [

@@ -205,8 +205,8 @@ bb.dd:                                            ; preds = %bb.da
   %i.oa = load i16, ptr %i.nz, align 8, !alias.scope !3707, !noalias !3709, !noundef !10
   %i.ob = zext i16 %i.oa to i64
   %i.oc = call i64 @llvm.usub.sat.i64(i64 range(i64 0, -9223372036854775808) %3, i64 %i.ob) ; 2 uses
-  %i.od = sub nuw nsw i64 %3, %i.oc               ; 22 uses
-  %i.oe = getelementptr inbounds nuw i8, ptr %1, i64 %i.oc ; 23 uses
+  %i.od = sub nuw nsw i64 %3, %i.oc               ; 20 uses
+  %i.oe = getelementptr inbounds nuw i8, ptr %1, i64 %i.oc ; 21 uses
   call fastcc void @_RNvMNtNtCs7gfv9tzbXmh_6yara_x2re9bitmapsetINtB2_9BitmapSetuE6insertB6_(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %i.nx, i64 noundef 0) #41
   %spec.select.i28 = select i1 %i.ny, i8 2, i8 0  ; 3 uses
   %i.of = getelementptr inbounds nuw i8, ptr %0, i64 1144 ; 5 uses
@@ -316,7 +316,7 @@ bb.dk:                                            ; preds = %bb.dj
 
 bb.dl:                                            ; preds = %bb.dh
   %i.pw = getelementptr inbounds nuw i8, ptr %i.pr, i64 1
-  %.sroa.045.0.copyload.i249.i = load i16, ptr %i.pw, align 1, !alias.scope !3710, !noalias !3712
+  %.sroa.045.0.copyload.i249.i = load i16, ptr %i.pw, align 1, !alias.scope !3710, !noalias !3712 ; 2 uses
   %i.px = zext i16 %.sroa.045.0.copyload.i249.i to i64 ; 9 uses
   %i.py = add nuw nsw i64 %i.px, 3                ; 6 uses
   %.not58.i250.i = icmp samesign ugt i64 %i.py, %i.pq
@@ -392,6 +392,7 @@ bb.dv:                                            ; preds = %bb.de
   %i.qm = getelementptr inbounds nuw i8, ptr %i.qj, i64 %i.px ; 2 uses
   %i.qn = getelementptr inbounds nuw i8, ptr %.ptr471.i, i64 %i.px
   %i.qo = shl nuw nsw i64 %i.px, %i.oy
+  %7 = icmp eq i16 %.sroa.045.0.copyload.i249.i, 0
   br label %bb.eh
 
 .split636.i:                                      ; preds = %bb.dp
@@ -612,7 +613,7 @@ _RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM21try_match_literal
 bb.eh:                                            ; preds = %.backedge486.i, %.lr.ph641.i
   %.sroa.0102.0639.i = phi ptr [ %.val274.i, %.lr.ph641.i ], [ %i.tn, %.backedge486.i ] ; 2 uses
   %i.tn = getelementptr inbounds nuw i8, ptr %.sroa.0102.0639.i, i64 8 ; 2 uses
-  %i.to = load i64, ptr %.sroa.0102.0639.i, align 8, !noalias !3714, !noundef !10 ; 4 uses
+  %i.to = load i64, ptr %.sroa.0102.0639.i, align 8, !noalias !3714, !noundef !10 ; 3 uses
   %.not224.i = icmp ult i64 %i.to, %i.od
   br i1 %.not224.i, label %bb.ei, label %.backedge486.i
 
@@ -632,38 +633,33 @@ bb.ek:                                            ; preds = %bb.ei
   br i1 %i.tr, label %.backedge486.i, label %bb.eo
 
 bb.el:                                            ; preds = %bb.ej
-  %7 = icmp eq i64 %i.od, %i.to
   br i1 %7, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit.i, label %.lr.ph1307
 
 .lr.ph1307:                                       ; preds = %bb.el
   %i.ts = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.tp
-  br label %bb.em
+  br label %bb.en
 
-8:                                                ; preds = %bb.en
-  %9 = icmp eq ptr %i.oe, %i.tv
-  br i1 %9, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit.i, label %bb.em
-
-bb.em:                                            ; preds = %.lr.ph1307, %8
-  %.sroa.1541.0.i.i1306 = phi ptr [ %i.qm, %.lr.ph1307 ], [ %i.tw, %8 ] ; 2 uses
-  %.sroa.1039.0.i.idx.i1305 = phi i64 [ %i.py, %.lr.ph1307 ], [ %.sroa.1039.0.i.add.i, %8 ] ; 2 uses
-  %.sroa.537.0.i.i1304 = phi ptr [ %i.ts, %.lr.ph1307 ], [ %i.tv, %8 ]
-  %i.tt = icmp eq i64 %.sroa.1039.0.i.idx.i1305, 3
-  %i.tu = icmp eq ptr %i.qj, %.sroa.1541.0.i.i1306
+bb.em:                                            ; preds = %bb.en
+  %i.tt = icmp eq i64 %.sroa.1039.0.i.add.i, 3
+  %i.tu = icmp eq ptr %i.qj, %i.tw
   %or.cond72.i.i = select i1 %i.tt, i1 true, i1 %i.tu
   br i1 %or.cond72.i.i, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit.i, label %bb.en
 
-bb.en:                                            ; preds = %bb.em
-  %i.tv = getelementptr inbounds i8, ptr %.sroa.537.0.i.i1304, i64 -1 ; 3 uses
-  %.sroa.1039.0.i.add.i = add nsw i64 %.sroa.1039.0.i.idx.i1305, -1 ; 2 uses
+bb.en:                                            ; preds = %.lr.ph1307, %bb.em
+  %.sroa.1541.0.i.i1307 = phi ptr [ %i.qm, %.lr.ph1307 ], [ %i.tw, %bb.em ]
+  %.sroa.1039.0.i.idx.i1306 = phi i64 [ %i.py, %.lr.ph1307 ], [ %.sroa.1039.0.i.add.i, %bb.em ]
+  %.sroa.537.0.i.i1305 = phi ptr [ %i.ts, %.lr.ph1307 ], [ %i.tv, %bb.em ]
+  %i.tv = getelementptr inbounds i8, ptr %.sroa.537.0.i.i1305, i64 -1 ; 2 uses
+  %.sroa.1039.0.i.add.i = add nsw i64 %.sroa.1039.0.i.idx.i1306, -1 ; 3 uses
   %.ptr.i = getelementptr inbounds nuw i8, ptr %i.pr, i64 %.sroa.1039.0.i.add.i
-  %i.tw = getelementptr inbounds i8, ptr %.sroa.1541.0.i.i1306, i64 -1 ; 2 uses
+  %i.tw = getelementptr inbounds i8, ptr %.sroa.1541.0.i.i1307, i64 -1 ; 3 uses
   %i.tx = load i8, ptr %i.tv, align 1, !alias.scope !3752, !noalias !3753, !noundef !10
   %i.ty = load i8, ptr %i.tw, align 1, !alias.scope !3751, !noalias !3754, !noundef !10
   %i.tz = load i8, ptr %.ptr.i, align 1, !alias.scope !3750, !noalias !3755, !noundef !10
   %i.ua = xor i8 %i.tz, %i.tx
   %i.ub = and i8 %i.ua, %i.ty
   %.not15.i.i = icmp eq i8 %i.ub, 0
-  br i1 %.not15.i.i, label %8, label %.backedge486.i
+  br i1 %.not15.i.i, label %bb.em, label %.backedge486.i
 
 bb.eo:                                            ; preds = %bb.ek
   %i.uc = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.tp
@@ -719,7 +715,7 @@ bb.et:                                            ; preds = %bb.er, %bb.eq, %bb.
   %i.ut = icmp eq ptr %i.tn, %i.ql
   br i1 %i.ut, label %.loopexit.i37.loopexit376, label %bb.eh
 
-_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit.i: ; preds = %8, %bb.em, %bb.el, %bb.et
+_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit.i: ; preds = %bb.em, %bb.el, %bb.et
   %i.uu = add nuw i64 %i.to, %i.qo
   call fastcc void @_RNvMNtNtCs7gfv9tzbXmh_6yara_x2re9bitmapsetINtB2_9BitmapSetuE6insertB6_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.oz, i64 noundef %i.uu) #41
   br label %.backedge486.i
@@ -727,7 +723,7 @@ _RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_
 .split.i83:                                       ; preds = %.split636.i, %._crit_edge.i89
   %i.uv = phi i16 [ %i.xu, %._crit_edge.i89 ], [ %i.qr, %.split636.i ]
   %.sroa.4108.0.copyload.i84 = load ptr, ptr %.sroa.4108.0..sroa_idx.i30, align 8, !noalias !3715 ; 8 uses
-  %.sroa.6.0.copyload.i85 = load i64, ptr %.sroa.6.0..sroa_idx.i31, align 8, !noalias !3715 ; 9 uses
+  %.sroa.6.0.copyload.i85 = load i64, ptr %.sroa.6.0..sroa_idx.i31, align 8, !noalias !3715 ; 10 uses
   %.sroa.8.0.copyload.i86 = load ptr, ptr %.sroa.8.0..sroa_idx.i32, align 8, !noalias !3715 ; 4 uses
   %.val268.i = load ptr, ptr %i.om, align 8, !alias.scope !3707, !noalias !3709, !nonnull !10, !noundef !10 ; 6 uses
   %.val269.i87 = load i64, ptr %i.of, align 8, !alias.scope !3707, !noalias !3709, !noundef !10 ; 2 uses
@@ -737,7 +733,7 @@ _RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_
   br i1 %i.ux, label %._crit_edge.i89, label %.lr.ph630.i
 
 .lr.ph630.i:                                      ; preds = %.split.i83
-  %.sroa.9.0.copyload.i88 = load i64, ptr %.sroa.9.0..sroa_idx.i33, align 8, !noalias !3715 ; 2 uses
+  %.sroa.9.0.copyload.i88 = load i64, ptr %.sroa.9.0..sroa_idx.i33, align 8, !noalias !3715 ; 3 uses
   %i.uy = getelementptr inbounds nuw i8, ptr %.sroa.4108.0.copyload.i84, i64 %.sroa.6.0.copyload.i85 ; 3 uses
   %i.uz = getelementptr inbounds nuw i8, ptr %.sroa.8.0.copyload.i86, i64 %.sroa.9.0.copyload.i88 ; 2 uses
   %i.va = shl nuw i64 %.sroa.6.0.copyload.i85, 1  ; 2 uses
@@ -749,7 +745,13 @@ _RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_
   ], !prof !50
 
 .lr.ph630.split.us631.i.preheader:                ; preds = %.lr.ph630.i
-  br i1 %i.ny, label %.lr.ph630.split.us631.i.us, label %.lr.ph630.split.us631.i
+  br i1 %i.ny, label %.lr.ph630.split.us631.i.us, label %.lr.ph630.split.us631.i.preheader1317
+
+.lr.ph630.split.us631.i.preheader1317:            ; preds = %.lr.ph630.split.us631.i.preheader
+  %8 = icmp samesign eq i64 %.sroa.6.0.copyload.i85, 0
+  %9 = icmp samesign eq i64 %.sroa.9.0.copyload.i88, 0
+  %or.cond72.i301.us.i1296 = select i1 %8, i1 true, i1 %9
+  br label %.lr.ph630.split.us631.i
 
 .lr.ph630.split.us631.i.us:                       ; preds = %.lr.ph630.split.us631.i.preheader, %.backedge.us635.i.us
   %.sroa.0111.0629.us632.i.us = phi ptr [ %i.vc, %.backedge.us635.i.us ], [ %.val268.i, %.lr.ph630.split.us631.i.preheader ] ; 2 uses
@@ -917,10 +919,10 @@ _RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM21try_match_literal
   %i.xb = icmp eq ptr %i.wt, %i.uw
   br i1 %i.xb, label %._crit_edge.i89, label %.lr.ph630.split.us.split.i
 
-.lr.ph630.split.us631.i:                          ; preds = %.lr.ph630.split.us631.i.preheader, %.backedge.us635.i
-  %.sroa.0111.0629.us632.i = phi ptr [ %i.xc, %.backedge.us635.i ], [ %.val268.i, %.lr.ph630.split.us631.i.preheader ] ; 2 uses
+.lr.ph630.split.us631.i:                          ; preds = %.lr.ph630.split.us631.i.preheader1317, %.backedge.us635.i
+  %.sroa.0111.0629.us632.i = phi ptr [ %i.xc, %.backedge.us635.i ], [ %.val268.i, %.lr.ph630.split.us631.i.preheader1317 ] ; 2 uses
   %i.xc = getelementptr inbounds nuw i8, ptr %.sroa.0111.0629.us632.i, i64 8 ; 2 uses
-  %i.xd = load i64, ptr %.sroa.0111.0629.us632.i, align 8, !noalias !3714, !noundef !10 ; 4 uses
+  %i.xd = load i64, ptr %.sroa.0111.0629.us632.i, align 8, !noalias !3714, !noundef !10 ; 3 uses
   %.not221.us633.i = icmp ult i64 %i.xd, %i.od
   br i1 %.not221.us633.i, label %bb.fh, label %.backedge.us635.i
 
@@ -935,39 +937,34 @@ bb.fh:                                            ; preds = %.lr.ph630.split.us6
   br i1 %i.xf, label %.backedge.us635.i, label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh
-  %10 = icmp eq i64 %i.od, %i.xd
-  br i1 %10, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit321.us.i.loopexit, label %.lr.ph
+  br i1 %or.cond72.i301.us.i1296, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit321.us.i.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.fi
   %i.xg = getelementptr inbounds nuw i8, ptr %i.oe, i64 %i.xe
-  br label %bb.fj
+  br label %bb.fk
 
-11:                                               ; preds = %bb.fk
-  %12 = icmp eq ptr %i.oe, %i.xj
-  br i1 %12, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit321.us.i.loopexit, label %bb.fj
-
-bb.fj:                                            ; preds = %.lr.ph, %11
-  %.sroa.1541.0.i300.us.i1298 = phi ptr [ %i.uz, %.lr.ph ], [ %i.xl, %11 ] ; 2 uses
-  %.sroa.1039.0.i299.us.i1297 = phi ptr [ %i.uy, %.lr.ph ], [ %i.xk, %11 ] ; 2 uses
-  %.sroa.537.0.i298.us.i1296 = phi ptr [ %i.xg, %.lr.ph ], [ %i.xj, %11 ]
-  %i.xh = icmp eq ptr %.sroa.4108.0.copyload.i84, %.sroa.1039.0.i299.us.i1297
-  %i.xi = icmp eq ptr %.sroa.8.0.copyload.i86, %.sroa.1541.0.i300.us.i1298
+bb.fj:                                            ; preds = %bb.fk
+  %i.xh = icmp eq ptr %.sroa.4108.0.copyload.i84, %i.xk
+  %i.xi = icmp eq ptr %.sroa.8.0.copyload.i86, %i.xl
   %or.cond72.i301.us.i = select i1 %i.xh, i1 true, i1 %i.xi
   br i1 %or.cond72.i301.us.i, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit321.us.i.loopexit, label %bb.fk
 
-bb.fk:                                            ; preds = %bb.fj
-  %i.xj = getelementptr inbounds i8, ptr %.sroa.537.0.i298.us.i1296, i64 -1 ; 3 uses
-  %i.xk = getelementptr inbounds i8, ptr %.sroa.1039.0.i299.us.i1297, i64 -1 ; 2 uses
-  %i.xl = getelementptr inbounds i8, ptr %.sroa.1541.0.i300.us.i1298, i64 -1 ; 2 uses
+bb.fk:                                            ; preds = %.lr.ph, %bb.fj
+  %.sroa.1541.0.i300.us.i1299 = phi ptr [ %i.uz, %.lr.ph ], [ %i.xl, %bb.fj ]
+  %.sroa.1039.0.i299.us.i1298 = phi ptr [ %i.uy, %.lr.ph ], [ %i.xk, %bb.fj ]
+  %.sroa.537.0.i298.us.i1297 = phi ptr [ %i.xg, %.lr.ph ], [ %i.xj, %bb.fj ]
+  %i.xj = getelementptr inbounds i8, ptr %.sroa.537.0.i298.us.i1297, i64 -1 ; 2 uses
+  %i.xk = getelementptr inbounds i8, ptr %.sroa.1039.0.i299.us.i1298, i64 -1 ; 3 uses
+  %i.xl = getelementptr inbounds i8, ptr %.sroa.1541.0.i300.us.i1299, i64 -1 ; 3 uses
   %i.xm = load i8, ptr %i.xj, align 1, !alias.scope !3760, !noalias !3763, !noundef !10
   %i.xn = load i8, ptr %i.xl, align 1, !alias.scope !3759, !noalias !3762, !noundef !10
   %i.xo = load i8, ptr %i.xk, align 1, !alias.scope !3758, !noalias !3764, !noundef !10
   %i.xp = xor i8 %i.xo, %i.xm
   %i.xq = and i8 %i.xp, %i.xn
   %.not15.i302.us.i = icmp eq i8 %i.xq, 0
-  br i1 %.not15.i302.us.i, label %11, label %.backedge.us635.i
+  br i1 %.not15.i302.us.i, label %bb.fj, label %.backedge.us635.i
 
-_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit321.us.i.loopexit: ; preds = %bb.fj, %11, %bb.fi
+_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re4fast6fastvmNtB4_6FastVM28try_match_masked_literal_bck.exit321.us.i.loopexit: ; preds = %bb.fj, %bb.fi
   %i.xr = add i64 %i.xd, %i.vb
   call fastcc void @_RNvMNtNtCs7gfv9tzbXmh_6yara_x2re9bitmapsetINtB2_9BitmapSetuE6insertB6_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.oz, i64 noundef %i.xr) #41
   br label %.backedge.us635.i

@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
   %1 = alloca %struct.sigaction, align 8          ; 7 uses
   %2 = alloca %struct.sigaction, align 8          ; 4 uses
-  %3 = alloca %struct.uv_signal_s, align 8        ; 7 uses
+  %3 = alloca %struct.uv_signal_s, align 8        ; 6 uses
   %4 = alloca %struct.__sigset_t, align 8         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
@@ -605,10 +605,10 @@ uv__signal_tree_s_RB_REMOVE.exit:                 ; preds = %.loopexit.i, %.crit
   br i1 %.not8.i.i, label %bb.cn, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %uv__signal_tree_s_RB_REMOVE.exit, %uv__signal_compare.exit.thread3.i.i
-  %.01110.i.i = phi ptr [ %.011.i.i, %uv__signal_compare.exit.thread3.i.i ], [ %.0117.i.i, %uv__signal_tree_s_RB_REMOVE.exit ] ; 10 uses
+  %.01110.i.i = phi ptr [ %.011.i.i, %uv__signal_compare.exit.thread3.i.i ], [ %.0117.i.i, %uv__signal_tree_s_RB_REMOVE.exit ] ; 8 uses
   %.09.i.i = phi ptr [ %.1.i.i, %uv__signal_compare.exit.thread3.i.i ], [ null, %uv__signal_tree_s_RB_REMOVE.exit ] ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %.01110.i.i, i64 104
-  %i.gv = load i32, ptr %i.gu, align 8, !tbaa !27 ; 3 uses
+  %i.gv = load i32, ptr %i.gu, align 8, !tbaa !27 ; 2 uses
   %i.gw = icmp slt i32 %i.gs, %i.gv
   br i1 %i.gw, label %uv__signal_compare.exit.thread3.i.i, label %bb.ck
 
@@ -628,16 +628,14 @@ bb.cm:                                            ; preds = %bb.cl
   %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !36
   %i.hd = icmp ne ptr %i.hc, null
   %i.he = icmp ult ptr %3, %.01110.i.i
-  %or.cond.i = or i1 %i.he, %i.hd
-  br i1 %or.cond.i, label %uv__signal_compare.exit.thread3.i.i, label %uv__signal_compare.exit.i.i
+  %or.cond.i = or i1 %i.he, %i.hd                 ; 2 uses
+  %spec.select.i17 = select i1 %or.cond.i, i64 112, i64 120
+  %spec.select17.i = select i1 %or.cond.i, ptr %.01110.i.i, ptr %.09.i.i
+  br label %uv__signal_compare.exit.thread3.i.i
 
-uv__signal_compare.exit.i.i:                      ; preds = %bb.cm
-  %.not6.i.i = icmp ugt ptr %3, %.01110.i.i
-  br i1 %.not6.i.i, label %uv__signal_compare.exit.thread3.i.i, label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
-
-uv__signal_compare.exit.thread3.i.i:              ; preds = %uv__signal_compare.exit.i.i, %bb.cm, %bb.cl, %bb.ck, %.lr.ph.i.i
-  %.sink.i.i = phi i64 [ 112, %bb.cm ], [ 120, %bb.ck ], [ 112, %.lr.ph.i.i ], [ 112, %bb.cl ], [ 120, %uv__signal_compare.exit.i.i ]
-  %.1.i.i = phi ptr [ %.01110.i.i, %bb.cm ], [ %.09.i.i, %bb.ck ], [ %.01110.i.i, %.lr.ph.i.i ], [ %.01110.i.i, %bb.cl ], [ %.09.i.i, %uv__signal_compare.exit.i.i ] ; 4 uses
+uv__signal_compare.exit.thread3.i.i:              ; preds = %bb.cm, %bb.cl, %bb.ck, %.lr.ph.i.i
+  %.sink.i.i = phi i64 [ %spec.select.i17, %bb.cm ], [ 120, %bb.ck ], [ 112, %.lr.ph.i.i ], [ 112, %bb.cl ]
+  %.1.i.i = phi ptr [ %spec.select17.i, %bb.cm ], [ %.09.i.i, %bb.ck ], [ %.01110.i.i, %.lr.ph.i.i ], [ %.01110.i.i, %bb.cl ] ; 4 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %.01110.i.i, i64 %.sink.i.i
   %.011.i.i = load ptr, ptr %i.hf, align 8, !tbaa !34 ; 2 uses
   %.not.i.i15 = icmp eq ptr %.011.i.i, null
@@ -645,17 +643,12 @@ uv__signal_compare.exit.thread3.i.i:              ; preds = %uv__signal_compare.
 
 uv__signal_tree_s_RB_NFIND.exit.i:                ; preds = %uv__signal_compare.exit.thread3.i.i
   %.not.i16 = icmp eq ptr %.1.i.i, null
-  br i1 %.not.i16, label %bb.cn, label %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i
+  br i1 %.not.i16, label %bb.cn, label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
 
-uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i: ; preds = %uv__signal_tree_s_RB_NFIND.exit.i
-  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 104
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !27
-  br label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
-
-uv__signal_tree_s_RB_NFIND.exit.thread8.i:        ; preds = %uv__signal_compare.exit.i.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i
-  %5 = phi i32 [ %.pre.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i ], [ %i.gv, %uv__signal_compare.exit.i.i ]
-  %.013.i11.i = phi ptr [ %.1.i.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i ], [ %.01110.i.i, %uv__signal_compare.exit.i.i ]
-  %i.hg = icmp eq i32 %5, %i.gs
+uv__signal_tree_s_RB_NFIND.exit.thread8.i:        ; preds = %uv__signal_tree_s_RB_NFIND.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 104
+  %6 = load i32, ptr %5, align 8, !tbaa !27
+  %i.hg = icmp eq i32 %6, %i.gs
   br i1 %i.hg, label %bb.cp, label %bb.cn
 
 bb.cn:                                            ; preds = %uv__signal_tree_s_RB_REMOVE.exit.thread, %uv__signal_tree_s_RB_REMOVE.exit, %uv__signal_tree_s_RB_NFIND.exit.i, %uv__signal_tree_s_RB_NFIND.exit.thread8.i
@@ -680,7 +673,7 @@ bb.cp:                                            ; preds = %uv__signal_tree_s_R
   %i.hj = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.hk = load i32, ptr %i.hj, align 8, !tbaa !35
   %i.hl = and i32 %i.hk, 33554432
-  %i.hm = getelementptr inbounds nuw i8, ptr %.013.i11.i, i64 88
+  %i.hm = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 88
   %i.hn = load i32, ptr %i.hm, align 8, !tbaa !35
   %i.ho = and i32 %i.hn, 33554432
   %i.hp = icmp eq i32 %i.ho, 0
@@ -852,7 +845,7 @@ bb.a:
   %i.b = alloca i8, align 1                       ; 5 uses
   %4 = alloca %struct.sigaction, align 8          ; 8 uses
   %5 = alloca %struct.sigaction, align 8          ; 8 uses
-  %6 = alloca %struct.uv_signal_s, align 8        ; 6 uses
+  %6 = alloca %struct.uv_signal_s, align 8        ; 5 uses
   %7 = alloca %struct.__sigset_t, align 8         ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
   %i.c = icmp eq i32 %2, 0
@@ -887,10 +880,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not8.i.i, label %.split, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.f, %uv__signal_compare.exit.thread3.i.i
-  %.01110.i.i = phi ptr [ %.011.i.i, %uv__signal_compare.exit.thread3.i.i ], [ %.0117.i.i, %bb.f ] ; 10 uses
+  %.01110.i.i = phi ptr [ %.011.i.i, %uv__signal_compare.exit.thread3.i.i ], [ %.0117.i.i, %bb.f ] ; 8 uses
   %.09.i.i = phi ptr [ %.1.i.i, %uv__signal_compare.exit.thread3.i.i ], [ null, %bb.f ] ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.01110.i.i, i64 104
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !27   ; 3 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !27   ; 2 uses
   %i.k = icmp slt i32 %2, %i.j
   br i1 %i.k, label %uv__signal_compare.exit.thread3.i.i, label %bb.g
 
@@ -910,16 +903,14 @@ bb.i:                                             ; preds = %bb.h
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !36
   %i.r = icmp ne ptr %i.q, null
   %i.s = icmp ult ptr %6, %.01110.i.i
-  %or.cond.i = or i1 %i.s, %i.r
-  br i1 %or.cond.i, label %uv__signal_compare.exit.thread3.i.i, label %uv__signal_compare.exit.i.i
+  %or.cond.i = or i1 %i.s, %i.r                   ; 2 uses
+  %spec.select.i = select i1 %or.cond.i, i64 112, i64 120
+  %spec.select17.i = select i1 %or.cond.i, ptr %.01110.i.i, ptr %.09.i.i
+  br label %uv__signal_compare.exit.thread3.i.i
 
-uv__signal_compare.exit.i.i:                      ; preds = %bb.i
-  %.not6.i.i = icmp ugt ptr %6, %.01110.i.i
-  br i1 %.not6.i.i, label %uv__signal_compare.exit.thread3.i.i, label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
-
-uv__signal_compare.exit.thread3.i.i:              ; preds = %uv__signal_compare.exit.i.i, %bb.i, %bb.h, %bb.g, %.lr.ph.i.i
-  %.sink.i.i = phi i64 [ 112, %bb.i ], [ 120, %bb.g ], [ 112, %.lr.ph.i.i ], [ 112, %bb.h ], [ 120, %uv__signal_compare.exit.i.i ]
-  %.1.i.i = phi ptr [ %.01110.i.i, %bb.i ], [ %.09.i.i, %bb.g ], [ %.01110.i.i, %.lr.ph.i.i ], [ %.01110.i.i, %bb.h ], [ %.09.i.i, %uv__signal_compare.exit.i.i ] ; 4 uses
+uv__signal_compare.exit.thread3.i.i:              ; preds = %bb.i, %bb.h, %bb.g, %.lr.ph.i.i
+  %.sink.i.i = phi i64 [ %spec.select.i, %bb.i ], [ 120, %bb.g ], [ 112, %.lr.ph.i.i ], [ 112, %bb.h ]
+  %.1.i.i = phi ptr [ %spec.select17.i, %bb.i ], [ %.09.i.i, %bb.g ], [ %.01110.i.i, %.lr.ph.i.i ], [ %.01110.i.i, %bb.h ] ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.01110.i.i, i64 %.sink.i.i
   %.011.i.i = load ptr, ptr %i.t, align 8, !tbaa !34 ; 2 uses
   %.not.i.i = icmp eq ptr %.011.i.i, null
@@ -927,17 +918,12 @@ uv__signal_compare.exit.thread3.i.i:              ; preds = %uv__signal_compare.
 
 uv__signal_tree_s_RB_NFIND.exit.i:                ; preds = %uv__signal_compare.exit.thread3.i.i
   %.not.i = icmp eq ptr %.1.i.i, null
-  br i1 %.not.i, label %.split, label %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i
+  br i1 %.not.i, label %.split, label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
 
-uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i: ; preds = %uv__signal_tree_s_RB_NFIND.exit.i
-  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 104
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !27
-  br label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
-
-uv__signal_tree_s_RB_NFIND.exit.thread8.i:        ; preds = %uv__signal_compare.exit.i.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i
-  %8 = phi i32 [ %.pre.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i ], [ %i.j, %uv__signal_compare.exit.i.i ]
-  %.013.i11.i = phi ptr [ %.1.i.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i ], [ %.01110.i.i, %uv__signal_compare.exit.i.i ]
-  %i.u = icmp eq i32 %8, %2
+uv__signal_tree_s_RB_NFIND.exit.thread8.i:        ; preds = %uv__signal_tree_s_RB_NFIND.exit.i
+  %8 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 104
+  %9 = load i32, ptr %8, align 8, !tbaa !27
+  %i.u = icmp eq i32 %9, %2
   br i1 %i.u, label %bb.l, label %.split
 
 .split:                                           ; preds = %bb.f, %uv__signal_tree_s_RB_NFIND.exit.i, %uv__signal_tree_s_RB_NFIND.exit.thread8.i
@@ -977,7 +963,7 @@ bb.l:                                             ; preds = %uv__signal_tree_s_R
   br label %bb.x
 
 bb.m:                                             ; preds = %bb.l
-  %i.z = getelementptr inbounds nuw i8, ptr %.013.i11.i, i64 88
+  %i.z = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 88
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !35
   %i.ab = and i32 %i.aa, 33554432
   %.not31 = icmp eq i32 %i.ab, 0
@@ -1380,7 +1366,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define internal void @uv__signal_handler(i32 noundef %0) #8 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
-  %1 = alloca %struct.uv_signal_s, align 8        ; 6 uses
+  %1 = alloca %struct.uv_signal_s, align 8        ; 5 uses
   %i.b = alloca i8, align 1                       ; 4 uses
   %2 = alloca %struct.uv__signal_msg_t, align 8   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
@@ -1417,10 +1403,10 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not8.i.i, label %uv__signal_first_handle.exit.thread, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.d, %uv__signal_compare.exit.thread3.i.i
-  %.01110.i.i = phi ptr [ %.011.i.i, %uv__signal_compare.exit.thread3.i.i ], [ %.0117.i.i, %bb.d ] ; 10 uses
+  %.01110.i.i = phi ptr [ %.011.i.i, %uv__signal_compare.exit.thread3.i.i ], [ %.0117.i.i, %bb.d ] ; 8 uses
   %.09.i.i = phi ptr [ %.1.i.i, %uv__signal_compare.exit.thread3.i.i ], [ null, %bb.d ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.01110.i.i, i64 104
-  %i.m = load i32, ptr %i.l, align 8, !tbaa !27   ; 3 uses
+  %i.m = load i32, ptr %i.l, align 8, !tbaa !27   ; 2 uses
   %i.n = icmp slt i32 %0, %i.m
   br i1 %i.n, label %uv__signal_compare.exit.thread3.i.i, label %bb.e
 
@@ -1440,16 +1426,14 @@ bb.g:                                             ; preds = %bb.f
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !36
   %i.u = icmp ne ptr %i.t, null
   %i.v = icmp ult ptr %1, %.01110.i.i
-  %or.cond.i = or i1 %i.v, %i.u
-  br i1 %or.cond.i, label %uv__signal_compare.exit.thread3.i.i, label %uv__signal_compare.exit.i.i
+  %or.cond.i = or i1 %i.v, %i.u                   ; 2 uses
+  %spec.select.i = select i1 %or.cond.i, i64 112, i64 120
+  %spec.select17.i = select i1 %or.cond.i, ptr %.01110.i.i, ptr %.09.i.i
+  br label %uv__signal_compare.exit.thread3.i.i
 
-uv__signal_compare.exit.i.i:                      ; preds = %bb.g
-  %.not6.i.i = icmp ugt ptr %1, %.01110.i.i
-  br i1 %.not6.i.i, label %uv__signal_compare.exit.thread3.i.i, label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
-
-uv__signal_compare.exit.thread3.i.i:              ; preds = %uv__signal_compare.exit.i.i, %bb.g, %bb.f, %bb.e, %.lr.ph.i.i
-  %.sink.i.i = phi i64 [ 112, %bb.g ], [ 120, %bb.e ], [ 112, %.lr.ph.i.i ], [ 112, %bb.f ], [ 120, %uv__signal_compare.exit.i.i ]
-  %.1.i.i = phi ptr [ %.01110.i.i, %bb.g ], [ %.09.i.i, %bb.e ], [ %.01110.i.i, %.lr.ph.i.i ], [ %.01110.i.i, %bb.f ], [ %.09.i.i, %uv__signal_compare.exit.i.i ] ; 4 uses
+uv__signal_compare.exit.thread3.i.i:              ; preds = %bb.g, %bb.f, %bb.e, %.lr.ph.i.i
+  %.sink.i.i = phi i64 [ %spec.select.i, %bb.g ], [ 120, %bb.e ], [ 112, %.lr.ph.i.i ], [ 112, %bb.f ]
+  %.1.i.i = phi ptr [ %spec.select17.i, %bb.g ], [ %.09.i.i, %bb.e ], [ %.01110.i.i, %.lr.ph.i.i ], [ %.01110.i.i, %bb.f ] ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.01110.i.i, i64 %.sink.i.i
   %.011.i.i = load ptr, ptr %i.w, align 8, !tbaa !34 ; 2 uses
   %.not.i.i = icmp eq ptr %.011.i.i, null
@@ -1457,17 +1441,12 @@ uv__signal_compare.exit.thread3.i.i:              ; preds = %uv__signal_compare.
 
 uv__signal_tree_s_RB_NFIND.exit.i:                ; preds = %uv__signal_compare.exit.thread3.i.i
   %.not.i = icmp eq ptr %.1.i.i, null
-  br i1 %.not.i, label %uv__signal_first_handle.exit.thread, label %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i
+  br i1 %.not.i, label %uv__signal_first_handle.exit.thread, label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
 
-uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i: ; preds = %uv__signal_tree_s_RB_NFIND.exit.i
-  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 104
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !27
-  br label %uv__signal_tree_s_RB_NFIND.exit.thread8.i
-
-uv__signal_tree_s_RB_NFIND.exit.thread8.i:        ; preds = %uv__signal_compare.exit.i.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i
-  %3 = phi i32 [ %.pre.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i ], [ %i.m, %uv__signal_compare.exit.i.i ]
-  %.013.i11.i = phi ptr [ %.1.i.i, %uv__signal_tree_s_RB_NFIND.exit.uv__signal_tree_s_RB_NFIND.exit.thread8_crit_edge.i ], [ %.01110.i.i, %uv__signal_compare.exit.i.i ] ; 2 uses
-  %i.x = icmp eq i32 %3, %0
+uv__signal_tree_s_RB_NFIND.exit.thread8.i:        ; preds = %uv__signal_tree_s_RB_NFIND.exit.i
+  %3 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 104
+  %4 = load i32, ptr %3, align 8, !tbaa !27
+  %i.x = icmp eq i32 %4, %0
   br i1 %i.x, label %.lr.ph, label %uv__signal_first_handle.exit.thread
 
 uv__signal_first_handle.exit.thread:              ; preds = %bb.d, %uv__signal_tree_s_RB_NFIND.exit.i, %uv__signal_tree_s_RB_NFIND.exit.thread8.i
@@ -1477,7 +1456,7 @@ uv__signal_first_handle.exit.thread:              ; preds = %bb.d, %uv__signal_t
 .lr.ph:                                           ; preds = %uv__signal_tree_s_RB_NFIND.exit.thread8.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #9
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %.013.i11.i, i64 104
+  %i.z = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 104
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !27
   %i.ab = icmp eq i32 %i.aa, %0
   br i1 %i.ab, label %.lr.ph50.preheader, label %.critedge
@@ -1487,7 +1466,7 @@ uv__signal_first_handle.exit.thread:              ; preds = %bb.d, %uv__signal_t
   br label %.lr.ph50
 
 .lr.ph50:                                         ; preds = %.lr.ph50.preheader, %uv__signal_tree_s_RB_NEXT.exit
-  %.02549 = phi ptr [ %.2.i, %uv__signal_tree_s_RB_NEXT.exit ], [ %.013.i11.i, %.lr.ph50.preheader ] ; 7 uses
+  %.02549 = phi ptr [ %.2.i, %uv__signal_tree_s_RB_NEXT.exit ], [ %.1.i.i, %.lr.ph50.preheader ] ; 7 uses
   store ptr %.02549, ptr %2, align 8, !tbaa !51
   %i.ac = getelementptr inbounds nuw i8, ptr %.02549, i64 8
   br label %bb.h

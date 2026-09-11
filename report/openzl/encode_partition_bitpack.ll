@@ -49,7 +49,7 @@ bb.a:
   %i.b = alloca [256 x i64], align 16             ; 8 uses
   %i.c = alloca [257 x i32], align 16             ; 13 uses
   %i.d = alloca [256 x i32], align 16             ; 9 uses
-  %i.e = alloca [256 x i32], align 16             ; 32 uses
+  %i.e = alloca [256 x i32], align 16             ; 30 uses
   %3 = alloca %struct.ZL_ErrorContext, align 8    ; 12 uses
   %i.f = alloca [257 x i64], align 16             ; 13 uses
   %4 = alloca %struct.ZL_CopyParam, align 8       ; 7 uses
@@ -452,11 +452,11 @@ PB_buildCumHist.exit61.i:                         ; preds = %bb.p, %PB_buildCumH
 
 bb.q:                                             ; preds = %PB_buildCumHist.exit61.i, %PB_buildCumHist.exit.i
   %i.ho = phi i32 [ %.lcssa407, %PB_buildCumHist.exit61.i ], [ %.lcssa400.a, %PB_buildCumHist.exit.i ]
-  %.pre-phi.i = phi i64 [ %i.gl, %PB_buildCumHist.exit61.i ], [ %i.cf, %PB_buildCumHist.exit.i ] ; 7 uses
-  %.sroa.12.0.i = phi i32 [ %.179.i56.i, %PB_buildCumHist.exit61.i ], [ %.179.i.i, %PB_buildCumHist.exit.i ] ; 16 uses
-  %.sroa.1867.0.i = phi i64 [ 268435456, %PB_buildCumHist.exit61.i ], [ 16384, %PB_buildCumHist.exit.i ] ; 12 uses
-  %.sroa.7.0.i = phi ptr [ %i.dk, %PB_buildCumHist.exit61.i ], [ %i.af, %PB_buildCumHist.exit.i ] ; 35 uses
-  %.sroa.0.0.i = phi ptr [ %i.di, %PB_buildCumHist.exit61.i ], [ %i.ad, %PB_buildCumHist.exit.i ] ; 28 uses
+  %.pre-phi.i = phi i64 [ %i.gl, %PB_buildCumHist.exit61.i ], [ %i.cf, %PB_buildCumHist.exit.i ] ; 6 uses
+  %.sroa.12.0.i = phi i32 [ %.179.i56.i, %PB_buildCumHist.exit61.i ], [ %.179.i.i, %PB_buildCumHist.exit.i ] ; 14 uses
+  %.sroa.1867.0.i = phi i64 [ 268435456, %PB_buildCumHist.exit61.i ], [ 16384, %PB_buildCumHist.exit.i ] ; 11 uses
+  %.sroa.7.0.i = phi ptr [ %i.dk, %PB_buildCumHist.exit61.i ], [ %i.af, %PB_buildCumHist.exit.i ] ; 34 uses
+  %.sroa.0.0.i = phi ptr [ %i.di, %PB_buildCumHist.exit61.i ], [ %i.ad, %PB_buildCumHist.exit.i ] ; 27 uses
   %.073.in.in.in.i = phi ptr [ %i.hn, %PB_buildCumHist.exit61.i ], [ %i.dh, %PB_buildCumHist.exit.i ]
   %.073.in.in.i = load i64, ptr %.073.in.in.in.i, align 8, !tbaa !59, !noalias !57
   %.073.i = add i64 %.073.in.in.i, 4294967295
@@ -480,9 +480,9 @@ bb.q:                                             ; preds = %PB_buildCumHist.exi
   %i.ie = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %i.ic
   %scevgep.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %scevgep126.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.if = add i32 %.sroa.12.0.i, 1                ; 6 uses
+  %i.if = add i32 %.sroa.12.0.i, 1                ; 4 uses
   %i.ig = zext i32 %i.if to i64                   ; 3 uses
-  %7 = icmp ugt i32 %i.if, 1
+  %7 = icmp ult i32 %i.if, 2
   br label %bb.r
 
 bb.r:                                             ; preds = %PB_fixedPartitionFastInner.exit.thread.i, %bb.q
@@ -552,7 +552,7 @@ bb.s:                                             ; preds = %PB_isLegalPartition
   br i1 %exitcond.not.i.i.i, label %PB_dividePartitions.exit.i.i.i, label %.preheader110.i.i.i.i
 
 .preheader110.i.i.i.i:                            ; preds = %.critedge.loopexit.i.i.i.i, %.critedge.preheader.i.i.i.i
-  %.sroa.33.0.i.i.i = phi i64 [ 1, %.critedge.preheader.i.i.i.i ], [ %i.ko, %.critedge.loopexit.i.i.i.i ] ; 12 uses
+  %.sroa.33.0.i.i.i = phi i64 [ 1, %.critedge.preheader.i.i.i.i ], [ %i.ko, %.critedge.loopexit.i.i.i.i ] ; 10 uses
   br label %.lr.ph119.i.i.i.i
 
 .lr.ph119.i.i.i.i:                                ; preds = %bb.t, %.preheader110.i.i.i.i
@@ -577,9 +577,9 @@ bb.t:                                             ; preds = %.lr.ph119.i.i.i.i
   br i1 %i.js, label %PB_dividePartitions.exit.i.i.i, label %.thread.i.i.i.i
 
 .thread.i.i.i.i:                                  ; preds = %.lr.ph119.i.i.i.i, %._crit_edge.i.i.i.i
-  %.2103.i.i.i.i = phi i64 [ %spec.select86.i.i.i.i, %._crit_edge.i.i.i.i ], [ %.070118.i.i.i.i, %.lr.ph119.i.i.i.i ] ; 13 uses
+  %.2103.i.i.i.i = phi i64 [ %spec.select86.i.i.i.i, %._crit_edge.i.i.i.i ], [ %.070118.i.i.i.i, %.lr.ph119.i.i.i.i ] ; 11 uses
   %i.jt = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %.2103.i.i.i.i
-  %i.ju = load i32, ptr %i.jt, align 4, !tbaa !65, !noalias !57 ; 2 uses
+  %i.ju = load i32, ptr %i.jt, align 4, !tbaa !65, !noalias !57 ; 6 uses
   %i.jv = add nuw nsw i64 %.2103.i.i.i.i, 1       ; 3 uses
   %i.jw = icmp eq i64 %i.jv, %.sroa.33.0.i.i.i
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.jv ; 2 uses
@@ -637,27 +637,17 @@ PB_dividePartitionAt.exit.i.i.i.i:                ; preds = %.lr.ph.preheader.i.
   br i1 %.not113.i.i.i, label %.critedge.loopexit.i.i.i.i, label %PB_partitionEnd.exit89.i.i.i.i
 
 PB_partitionEnd.exit89.i.i.i.i:                   ; preds = %.preheader.i.i.i.i
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %.2103.i.i.i.i
-  %9 = load i32, ptr %8, align 4, !tbaa !65, !noalias !57 ; 4 uses
-  %10 = add nuw nsw i64 %.2103.i.i.i.i, 1         ; 4 uses
-  %11 = icmp eq i64 %.2103.i.i.i.i, %.sroa.33.0.i.i.i
-  br i1 %11, label %PB_partitionEnd.exit89.i.cont.i.i.i, label %PB_partitionEnd.exit89.i.else.i.i.i
+  %8 = add nuw i64 %.2103.i.i.i.i, 1              ; 2 uses
+  %9 = getelementptr [4 x i8], ptr %i.e, i64 %8
+  %10 = load i32, ptr %9, align 4, !tbaa !65, !noalias !57 ; 7 uses
+  %11 = icmp ult i32 %i.ju, %10
+  br i1 %11, label %PB_isLegalPartition.exit.i91.i.i.i.i, label %PB_partitionSplitGain.exit101.i.i.i.i
 
-PB_partitionEnd.exit89.i.else.i.i.i:              ; preds = %PB_partitionEnd.exit89.i.i.i.i
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %10
-  %.else.val27.i.i.i = load i32, ptr %12, align 4, !tbaa !65, !noalias !57
-  br label %PB_partitionEnd.exit89.i.cont.i.i.i
-
-PB_partitionEnd.exit89.i.cont.i.i.i:              ; preds = %PB_partitionEnd.exit89.i.else.i.i.i, %PB_partitionEnd.exit89.i.i.i.i
-  %13 = phi i32 [ %.sroa.12.0.i, %PB_partitionEnd.exit89.i.i.i.i ], [ %.else.val27.i.i.i, %PB_partitionEnd.exit89.i.else.i.i.i ] ; 3 uses
-  %14 = icmp ult i32 %9, %13
-  br i1 %14, label %PB_isLegalPartition.exit.i91.i.i.i.i, label %PB_partitionSplitGain.exit101.i.i.i.i
-
-PB_isLegalPartition.exit.i91.i.i.i.i:             ; preds = %PB_partitionEnd.exit89.i.cont.i.i.i
-  %i.kt = zext i32 %13 to i64                     ; 2 uses
+PB_isLegalPartition.exit.i91.i.i.i.i:             ; preds = %PB_partitionEnd.exit89.i.i.i.i
+  %i.kt = zext i32 %10 to i64                     ; 2 uses
   %i.ku = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %i.kt
   %i.kv = load i64, ptr %i.ku, align 8, !tbaa !59, !noalias !57 ; 2 uses
-  %i.kw = zext i32 %9 to i64                      ; 2 uses
+  %i.kw = zext i32 %i.ju to i64                   ; 2 uses
   %i.kx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %i.kw
   %i.ky = load i64, ptr %i.kx, align 8, !tbaa !59, !noalias !57 ; 2 uses
   %i.kz = sub i64 %i.kv, %i.ky                    ; 3 uses
@@ -665,7 +655,7 @@ PB_isLegalPartition.exit.i91.i.i.i.i:             ; preds = %PB_partitionEnd.exi
   br i1 %.not.i92.i.i.i.i, label %PB_partitionSplitGain.exit101.i.i.i.i, label %bb.v
 
 bb.v:                                             ; preds = %PB_isLegalPartition.exit.i91.i.i.i.i
-  %i.la = sub nuw i32 %13, %9                     ; 2 uses
+  %i.la = sub nuw i32 %10, %i.ju                  ; 2 uses
   %i.lb = icmp ult i32 %i.la, 2
   br i1 %i.lb, label %PB_partitionSplitGain.exit101.i.i.i.i, label %bb.w
 
@@ -688,7 +678,7 @@ bb.w:                                             ; preds = %bb.v
   %i.lr = trunc nuw nsw i64 %i.lq to i32
   %i.ls = xor i32 %i.lr, 63
   %i.lt = shl nuw i32 1, %i.ls
-  %i.lu = add i32 %i.lt, %9
+  %i.lu = add i32 %i.lt, %i.ju
   %i.lv = zext i32 %i.lu to i64                   ; 2 uses
   %i.lw = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %i.lv
   %i.lx = load i32, ptr %i.lw, align 4, !tbaa !65, !noalias !57 ; 2 uses
@@ -717,35 +707,25 @@ bb.w:                                             ; preds = %bb.v
   %i.mn = add nsw i64 %i.mm, %.neg2.i.i96.i.i.i.i
   br label %PB_partitionSplitGain.exit101.i.i.i.i
 
-PB_partitionSplitGain.exit101.i.i.i.i:            ; preds = %bb.w, %bb.v, %PB_isLegalPartition.exit.i91.i.i.i.i, %PB_partitionEnd.exit89.i.cont.i.i.i
-  %.0.i90.i.i.i.i = phi i64 [ 9223372036854775807, %PB_isLegalPartition.exit.i91.i.i.i.i ], [ %i.mn, %bb.w ], [ -9223372036854775808, %bb.v ], [ 9223372036854775807, %PB_partitionEnd.exit89.i.cont.i.i.i ]
+PB_partitionSplitGain.exit101.i.i.i.i:            ; preds = %bb.w, %bb.v, %PB_isLegalPartition.exit.i91.i.i.i.i, %PB_partitionEnd.exit89.i.i.i.i
+  %.0.i90.i.i.i.i = phi i64 [ 9223372036854775807, %PB_isLegalPartition.exit.i91.i.i.i.i ], [ %i.mn, %bb.w ], [ -9223372036854775808, %bb.v ], [ 9223372036854775807, %PB_partitionEnd.exit89.i.i.i.i ]
   %i.mo = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.2103.i.i.i.i
   store i64 %.0.i90.i.i.i.i, ptr %i.mo, align 8, !tbaa !59, !noalias !57
   %i.mp = icmp ult i64 %.2103.i.i.i.i, %.sroa.33.0.i.i.i
-  br i1 %i.mp, label %PB_partitionEnd.exit89.i.i.i.i.1, label %.critedge.loopexit.i.i.i.i
+  br i1 %i.mp, label %PB_partitionEnd.exit89.i.else.i.i.i.1, label %.critedge.loopexit.i.i.i.i
 
-PB_partitionEnd.exit89.i.i.i.i.1:                 ; preds = %PB_partitionSplitGain.exit101.i.i.i.i
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %10
-  %16 = load i32, ptr %15, align 4, !tbaa !65, !noalias !57 ; 4 uses
-  %17 = icmp eq i64 %10, %.sroa.33.0.i.i.i
-  br i1 %17, label %PB_partitionEnd.exit89.i.cont.i.i.i.1, label %PB_partitionEnd.exit89.i.else.i.i.i.1
+PB_partitionEnd.exit89.i.else.i.i.i.1:            ; preds = %PB_partitionSplitGain.exit101.i.i.i.i
+  %i.mq = getelementptr [4 x i8], ptr %i.e, i64 %.2103.i.i.i.i
+  %i.mr = getelementptr i8, ptr %i.mq, i64 8
+  %.else.val27.i.i.i.1 = load i32, ptr %i.mr, align 4, !tbaa !65, !noalias !57 ; 3 uses
+  %12 = icmp ult i32 %10, %.else.val27.i.i.i.1
+  br i1 %12, label %PB_isLegalPartition.exit.i91.i.i.i.i.1, label %PB_partitionSplitGain.exit101.i.i.i.i.1
 
-PB_partitionEnd.exit89.i.else.i.i.i.1:            ; preds = %PB_partitionEnd.exit89.i.i.i.i.1
-  %i.mq = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %.2103.i.i.i.i
-  %i.mr = getelementptr inbounds nuw i8, ptr %i.mq, i64 8
-  %.else.val27.i.i.i.1 = load i32, ptr %i.mr, align 4, !tbaa !65, !noalias !57
-  br label %PB_partitionEnd.exit89.i.cont.i.i.i.1
-
-PB_partitionEnd.exit89.i.cont.i.i.i.1:            ; preds = %PB_partitionEnd.exit89.i.else.i.i.i.1, %PB_partitionEnd.exit89.i.i.i.i.1
-  %18 = phi i32 [ %.sroa.12.0.i, %PB_partitionEnd.exit89.i.i.i.i.1 ], [ %.else.val27.i.i.i.1, %PB_partitionEnd.exit89.i.else.i.i.i.1 ] ; 3 uses
-  %19 = icmp ult i32 %16, %18
-  br i1 %19, label %PB_isLegalPartition.exit.i91.i.i.i.i.1, label %PB_partitionSplitGain.exit101.i.i.i.i.1
-
-PB_isLegalPartition.exit.i91.i.i.i.i.1:           ; preds = %PB_partitionEnd.exit89.i.cont.i.i.i.1
-  %i.ms = zext i32 %18 to i64                     ; 2 uses
+PB_isLegalPartition.exit.i91.i.i.i.i.1:           ; preds = %PB_partitionEnd.exit89.i.else.i.i.i.1
+  %i.ms = zext i32 %.else.val27.i.i.i.1 to i64    ; 2 uses
   %i.mt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %i.ms
   %i.mu = load i64, ptr %i.mt, align 8, !tbaa !59, !noalias !57 ; 2 uses
-  %i.mv = zext i32 %16 to i64                     ; 2 uses
+  %i.mv = zext i32 %10 to i64                     ; 2 uses
   %i.mw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %i.mv
   %i.mx = load i64, ptr %i.mw, align 8, !tbaa !59, !noalias !57 ; 2 uses
   %i.my = sub i64 %i.mu, %i.mx                    ; 3 uses
@@ -753,7 +733,7 @@ PB_isLegalPartition.exit.i91.i.i.i.i.1:           ; preds = %PB_partitionEnd.exi
   br i1 %.not.i92.i.i.i.i.1, label %PB_partitionSplitGain.exit101.i.i.i.i.1, label %bb.x
 
 bb.x:                                             ; preds = %PB_isLegalPartition.exit.i91.i.i.i.i.1
-  %i.mz = sub nuw i32 %18, %16                    ; 2 uses
+  %i.mz = sub nuw i32 %.else.val27.i.i.i.1, %10   ; 2 uses
   %i.na = icmp ult i32 %i.mz, 2
   br i1 %i.na, label %PB_partitionSplitGain.exit101.i.i.i.i.1, label %bb.y
 
@@ -776,7 +756,7 @@ bb.y:                                             ; preds = %bb.x
   %i.nq = trunc nuw nsw i64 %i.np to i32
   %i.nr = xor i32 %i.nq, 63
   %i.ns = shl nuw i32 1, %i.nr
-  %i.nt = add i32 %i.ns, %16
+  %i.nt = add i32 %i.ns, %10
   %i.nu = zext i32 %i.nt to i64                   ; 2 uses
   %i.nv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %i.nu
   %i.nw = load i32, ptr %i.nv, align 4, !tbaa !65, !noalias !57 ; 2 uses
@@ -805,9 +785,9 @@ bb.y:                                             ; preds = %bb.x
   %i.om = add nsw i64 %i.ol, %.neg2.i.i96.i.i.i.i.1
   br label %PB_partitionSplitGain.exit101.i.i.i.i.1
 
-PB_partitionSplitGain.exit101.i.i.i.i.1:          ; preds = %bb.y, %bb.x, %PB_isLegalPartition.exit.i91.i.i.i.i.1, %PB_partitionEnd.exit89.i.cont.i.i.i.1
-  %.0.i90.i.i.i.i.1 = phi i64 [ 9223372036854775807, %PB_isLegalPartition.exit.i91.i.i.i.i.1 ], [ %i.om, %bb.y ], [ -9223372036854775808, %bb.x ], [ 9223372036854775807, %PB_partitionEnd.exit89.i.cont.i.i.i.1 ]
-  %i.on = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %10
+PB_partitionSplitGain.exit101.i.i.i.i.1:          ; preds = %bb.y, %bb.x, %PB_isLegalPartition.exit.i91.i.i.i.i.1, %PB_partitionEnd.exit89.i.else.i.i.i.1
+  %.0.i90.i.i.i.i.1 = phi i64 [ 9223372036854775807, %PB_isLegalPartition.exit.i91.i.i.i.i.1 ], [ %i.om, %bb.y ], [ -9223372036854775808, %bb.x ], [ 9223372036854775807, %PB_partitionEnd.exit89.i.else.i.i.i.1 ]
+  %i.on = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %8
   store i64 %.0.i90.i.i.i.i.1, ptr %i.on, align 8, !tbaa !59, !noalias !57
   br label %.critedge.loopexit.i.i.i.i
 
@@ -1210,8 +1190,6 @@ PB_greedyOptimize.exit.i.i:                       ; preds = %PB_isLegalPartition
 bb.an:                                            ; preds = %bb.r
   %i.aab = add i64 %i.ij, -1
   %i.aac = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, -1) %i.aab, i1 true)
-  %20 = trunc nuw nsw i64 %i.aac to i32
-  %21 = sub nuw nsw i32 64, %20                   ; 2 uses
   %i.aad = trunc i64 %i.ij to i32                 ; 2 uses
   %i.aae = tail call i32 @llvm.umin.i32(i32 %.sroa.12.0.i, i32 %i.aad) ; 2 uses
   %i.aaf = add i32 %i.aae, 1
@@ -1219,8 +1197,8 @@ bb.an:                                            ; preds = %bb.r
   %i.aah = mul nuw i64 %i.aag, %i.ig              ; 2 uses
   %i.aai = shl i64 %i.aah, 3                      ; 2 uses
   %i.aaj = shl i64 %i.aah, 2                      ; 2 uses
-  %i.aak = tail call ptr @ZL_Graph_getScratchSpace(ptr noundef %0, i64 noundef %i.aai) #8, !noalias !57 ; 7 uses
-  %i.aal = tail call ptr @ZL_Graph_getScratchSpace(ptr noundef %0, i64 noundef %i.aaj) #8, !noalias !57 ; 6 uses
+  %i.aak = tail call ptr @ZL_Graph_getScratchSpace(ptr noundef %0, i64 noundef %i.aai) #8, !noalias !57 ; 5 uses
+  %i.aal = tail call ptr @ZL_Graph_getScratchSpace(ptr noundef %0, i64 noundef %i.aaj) #8, !noalias !57 ; 5 uses
   %i.aam = icmp ne ptr %i.aak, null
   %i.aan = icmp ne ptr %i.aal, null
   %or.cond.i8.i.i = select i1 %i.aam, i1 %i.aan, i1 false
@@ -1231,114 +1209,36 @@ bb.ao:                                            ; preds = %bb.an
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.aal, i8 -1, i64 %i.aaj, i1 false), !noalias !57
   store i64 0, ptr %i.aak, align 8, !tbaa !59, !noalias !57
   store i32 0, ptr %i.aal, align 4, !tbaa !65, !noalias !57
-  br i1 %7, label %.lr.ph127.i.i.i, label %._crit_edge.i.i.i
-
-.lr.ph127.i.i.i:                                  ; preds = %bb.ao
   %.not113120.i.i.i = icmp eq i32 %i.aad, 0
-  br i1 %.not113120.i.i.i, label %.lr.ph132.i.preheader.i.i, label %.lr.ph123.i.preheader.i.i
+  %or.cond.i.i = or i1 %7, %.not113120.i.i.i
+  br i1 %or.cond.i.i, label %._crit_edge.i.i.i, label %.lr.ph123.i.preheader.i.i
 
-.lr.ph123.i.preheader.i.i:                        ; preds = %.lr.ph127.i.i.i
+.lr.ph123.i.preheader.i.i:                        ; preds = %bb.ao
   %i.aao = and i64 %i.ij, 4294967295
+  %invariant.op = sub i64 64, %i.aac
   br label %.lr.ph123.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge124.i.i.i, %bb.ao
-  %i.aap = zext i32 %i.aae to i64
-  br label %.lr.ph132.i.preheader.i.i
-
-.lr.ph132.i.preheader.i.i:                        ; preds = %._crit_edge.i.i.i, %.lr.ph127.i.i.i
-  %22 = phi i64 [ %i.aap, %._crit_edge.i.i.i ], [ 0, %.lr.ph127.i.i.i ] ; 2 uses
+  %i.aap = zext i32 %i.aae to i64                 ; 2 uses
   br label %.lr.ph132.i.i.i
 
 .lr.ph123.i.i.i:                                  ; preds = %._crit_edge124.i.i.i, %.lr.ph123.i.preheader.i.i
-  %indvars.iv142.i.i.i = phi i64 [ %indvars.iv.next143.i.i.i, %._crit_edge124.i.i.i ], [ 1, %.lr.ph123.i.preheader.i.i ] ; 8 uses
+  %indvars.iv142.i.i.i = phi i64 [ %indvars.iv.next143.i.i.i, %._crit_edge124.i.i.i ], [ 1, %.lr.ph123.i.preheader.i.i ] ; 6 uses
   %umin36.i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv142.i.i.i, i64 %.pre-phi.i)
   %umin37.i.i = tail call i64 @llvm.umin.i64(i64 %umin36.i.i, i64 %i.aao)
-  %umax38.i.i = tail call i64 @llvm.umax.i64(i64 %umin37.i.i, i64 1) ; 2 uses
-  %i.aaq = trunc nuw i64 %indvars.iv142.i.i.i to i32 ; 4 uses
-  %23 = icmp eq i64 %indvars.iv142.i.i.i, %.pre-phi.i
-  %.fr.i.i.i = freeze i1 %23
-  %i.aar = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %indvars.iv142.i.i.i ; 2 uses
-  %i.aas = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %indvars.iv142.i.i.i ; 2 uses
-  br i1 %.fr.i.i.i, label %.lr.ph.us.i.i.i, label %.lr.ph.i.i.i
+  %umax38.i.i = tail call i64 @llvm.umax.i64(i64 %umin37.i.i, i64 1)
+  %i.aaq = trunc nuw i64 %indvars.iv142.i.i.i to i32 ; 2 uses
+  %i.aar = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %indvars.iv142.i.i.i
+  %i.aas = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %indvars.iv142.i.i.i
+  br label %.lr.ph.i.i.i
 
-.lr.ph.us.i.i.i:                                  ; preds = %.lr.ph123.i.i.i, %._crit_edge119.split.us.us.i.i.i
-  %indvars.iv139.i.i.i = phi i64 [ %indvars.iv.next140.i.i.i, %._crit_edge119.split.us.us.i.i.i ], [ 1, %.lr.ph123.i.i.i ] ; 4 uses
-  %24 = add nsw i64 %indvars.iv139.i.i.i, -1      ; 2 uses
-  %25 = sub nuw nsw i64 %indvars.iv142.i.i.i, %24
-  %26 = trunc nuw i64 %24 to i32
-  %27 = mul i32 %i.if, %26
-  %28 = trunc nuw i64 %indvars.iv139.i.i.i to i32
-  %29 = mul i32 %i.if, %28
-  %30 = add i32 %29, %i.aaq
-  %31 = zext i32 %30 to i64                       ; 2 uses
-  %32 = getelementptr inbounds nuw [8 x i8], ptr %i.aak, i64 %31 ; 2 uses
-  %33 = getelementptr inbounds nuw [4 x i8], ptr %i.aal, i64 %31
-  br label %34
-
-34:                                               ; preds = %PB_dpBucketCost.exit.thread.us.us.i.i.i, %.lr.ph.us.i.i.i
-  %.096118.us.us.i.i.i = phi i32 [ 1, %.lr.ph.us.i.i.i ], [ %66, %PB_dpBucketCost.exit.thread.us.us.i.i.i ] ; 3 uses
-  %35 = sub nuw i32 %i.aaq, %.096118.us.us.i.i.i  ; 3 uses
-  %36 = load i64, ptr %i.aar, align 8, !tbaa !59, !noalias !57
-  %37 = zext i32 %35 to i64                       ; 2 uses
-  %38 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.7.0.i, i64 %37
-  %39 = load i64, ptr %38, align 8, !tbaa !59, !noalias !57
-  %40 = sub i64 %36, %39                          ; 3 uses
-  %41 = icmp ugt i64 %40, %.sroa.1867.0.i
-  br i1 %41, label %._crit_edge119.split.us.us.i.i.i, label %42
-
-42:                                               ; preds = %34
-  %43 = add i32 %35, %27
-  %44 = zext i32 %43 to i64
-  %45 = getelementptr inbounds nuw [8 x i8], ptr %i.aak, i64 %44
-  %46 = load i64, ptr %45, align 8, !tbaa !59, !noalias !57 ; 2 uses
-  %47 = icmp ne i64 %46, -1
-  %48 = icmp ne i32 %.096118.us.us.i.i.i, 0
-  %or.cond135.i.i.i = and i1 %48, %47
-  br i1 %or.cond135.i.i.i, label %PB_dpBucketCost.exit.us.us.i.i.i, label %PB_dpBucketCost.exit.thread.us.us.i.i.i
-
-PB_dpBucketCost.exit.us.us.i.i.i:                 ; preds = %42
-  %49 = load i64, ptr %32, align 8, !tbaa !59, !noalias !57
-  %50 = load i32, ptr %i.aas, align 4, !tbaa !65, !noalias !57
-  %51 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %37
-  %52 = load i32, ptr %51, align 4, !tbaa !65, !noalias !57
-  %53 = sub i32 %50, %52
-  %54 = zext i32 %53 to i64
-  %55 = icmp ult i64 %40, 2
-  %56 = add nsw i64 %40, -1
-  %57 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, -1) %56, i1 true)
-  %58 = trunc nuw nsw i64 %57 to i32
-  %59 = sub nuw nsw i32 64, %58
-  %.0.i.i.us.us.i.i.i = select i1 %55, i32 0, i32 %59
-  %60 = add nuw nsw i32 %.0.i.i.us.us.i.i.i, %21
-  %61 = zext nneg i32 %60 to i64
-  %62 = mul nuw nsw i64 %54, %61
-  %63 = add i64 %62, %46                          ; 2 uses
-  %64 = icmp ult i64 %63, %49
-  br i1 %64, label %65, label %PB_dpBucketCost.exit.thread.us.us.i.i.i
-
-65:                                               ; preds = %PB_dpBucketCost.exit.us.us.i.i.i
-  store i64 %63, ptr %32, align 8, !tbaa !59, !noalias !57
-  store i32 %35, ptr %33, align 4, !tbaa !65, !noalias !57
-  br label %PB_dpBucketCost.exit.thread.us.us.i.i.i
-
-PB_dpBucketCost.exit.thread.us.us.i.i.i:          ; preds = %65, %PB_dpBucketCost.exit.us.us.i.i.i, %42
-  %66 = add i32 %.096118.us.us.i.i.i, 1           ; 2 uses
-  %67 = zext i32 %66 to i64
-  %.not114.us.us.i.i.i = icmp samesign ult i64 %25, %67
-  br i1 %.not114.us.us.i.i.i, label %._crit_edge119.split.us.us.i.i.i, label %34, !llvm.loop !33
-
-._crit_edge119.split.us.us.i.i.i:                 ; preds = %PB_dpBucketCost.exit.thread.us.us.i.i.i, %34
-  %indvars.iv.next140.i.i.i = add nuw nsw i64 %indvars.iv139.i.i.i, 1
-  %exitcond39.not.i.i = icmp eq i64 %indvars.iv139.i.i.i, %umax38.i.i
-  br i1 %exitcond39.not.i.i, label %._crit_edge124.i.i.i, label %.lr.ph.us.i.i.i, !llvm.loop !34
-
-._crit_edge124.i.i.i:                             ; preds = %._crit_edge.split.i.i.i, %._crit_edge119.split.us.us.i.i.i
+._crit_edge124.i.i.i:                             ; preds = %._crit_edge.split.i.i.i
   %indvars.iv.next143.i.i.i = add nuw nsw i64 %indvars.iv142.i.i.i, 1 ; 2 uses
   %exitcond.not.i10.i.i = icmp eq i64 %indvars.iv.next143.i.i.i, %i.ig
-  br i1 %exitcond.not.i10.i.i, label %._crit_edge.i.i.i, label %.lr.ph123.i.i.i, !llvm.loop !35
+  br i1 %exitcond.not.i10.i.i, label %._crit_edge.i.i.i, label %.lr.ph123.i.i.i, !llvm.loop !33
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph123.i.i.i, %._crit_edge.split.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %._crit_edge.split.i.i.i ], [ 1, %.lr.ph123.i.i.i ] ; 4 uses
+.lr.ph.i.i.i:                                     ; preds = %._crit_edge.split.i.i.i, %.lr.ph123.i.i.i
+  %indvars.iv.i.i.i = phi i64 [ 1, %.lr.ph123.i.i.i ], [ %indvars.iv.next.i.i.i, %._crit_edge.split.i.i.i ] ; 4 uses
   %i.aat = add nsw i64 %indvars.iv.i.i.i, -1      ; 2 uses
   %i.aau = sub nuw nsw i64 %indvars.iv142.i.i.i, %i.aat
   %i.aav = trunc nuw i64 %i.aat to i32
@@ -1382,12 +1282,10 @@ PB_dpBucketCost.exit.i.i.i:                       ; preds = %bb.aq
   %i.abw = icmp ult i64 %i.abi, 2
   %i.abx = add nsw i64 %i.abi, -1
   %i.aby = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, -1) %i.abx, i1 true)
-  %68 = trunc nuw nsw i64 %i.aby to i32
-  %69 = sub nuw nsw i32 64, %68
-  %.0.i.i.i11.i.i = select i1 %i.abw, i32 0, i32 %69
-  %70 = add nuw nsw i32 %.0.i.i.i11.i.i, %21
-  %71 = zext nneg i32 %70 to i64
-  %i.abz = mul nuw nsw i64 %i.abv, %71
+  %13 = sub nuw nsw i64 64, %i.aby
+  %.0.i.i.i11.i.i = select i1 %i.abw, i64 0, i64 %13
+  %.reass.i.reass.reass = add i64 %.0.i.i.i11.i.i, %invariant.op
+  %i.abz = mul nuw nsw i64 %.reass.i.reass.reass, %i.abv
   %i.aca = add i64 %i.abz, %i.abn                 ; 2 uses
   %i.acb = icmp ult i64 %i.aca, %i.abq
   br i1 %i.acb, label %bb.ar, label %PB_dpBucketCost.exit.thread.i.i.i
@@ -1401,16 +1299,16 @@ PB_dpBucketCost.exit.thread.i.i.i:                ; preds = %bb.ar, %PB_dpBucket
   %i.acc = shl i32 %.096118.i.i.i, 1              ; 2 uses
   %i.acd = zext i32 %i.acc to i64
   %.not114.i.i.i = icmp samesign ult i64 %i.aau, %i.acd
-  br i1 %.not114.i.i.i, label %._crit_edge.split.i.i.i, label %bb.ap, !llvm.loop !33
+  br i1 %.not114.i.i.i, label %._crit_edge.split.i.i.i, label %bb.ap, !llvm.loop !34
 
 ._crit_edge.split.i.i.i:                          ; preds = %PB_dpBucketCost.exit.thread.i.i.i, %bb.ap
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.i.i.i, %umax38.i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge124.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !34
+  br i1 %exitcond.not.i.i, label %._crit_edge124.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !35
 
-.lr.ph132.i.i.i:                                  ; preds = %bb.as, %.lr.ph132.i.preheader.i.i
-  %.0130.i.i.i = phi i64 [ %i.aci, %bb.as ], [ %22, %.lr.ph132.i.preheader.i.i ] ; 2 uses
-  %.095.in129.i.i.i = phi i32 [ %i.ach, %bb.as ], [ %.sroa.12.0.i, %.lr.ph132.i.preheader.i.i ]
+.lr.ph132.i.i.i:                                  ; preds = %bb.as, %._crit_edge.i.i.i
+  %.0130.i.i.i = phi i64 [ %i.aci, %bb.as ], [ %i.aap, %._crit_edge.i.i.i ] ; 2 uses
+  %.095.in129.i.i.i = phi i32 [ %i.ach, %bb.as ], [ %.sroa.12.0.i, %._crit_edge.i.i.i ]
   %.095.i.i.i = zext i32 %.095.in129.i.i.i to i64
   %i.ace = mul i64 %.0130.i.i.i, %i.ig
   %i.acf = getelementptr [4 x i8], ptr %i.aal, i64 %i.ace
@@ -1427,7 +1325,7 @@ bb.as:                                            ; preds = %.lr.ph132.i.i.i
   br i1 %.not.i9.i.i, label %PB_fixedPartitionFastInner.exit.i, label %.lr.ph132.i.i.i, !llvm.loop !36
 
 PB_fixedPartitionFastInner.exit.i:                ; preds = %bb.as, %PB_greedyOptimize.exit.i.thread.i
-  %.0.i45.i = phi i64 [ %.sroa.33.1.i.i.i, %PB_greedyOptimize.exit.i.thread.i ], [ %22, %bb.as ] ; 5 uses
+  %.0.i45.i = phi i64 [ %.sroa.33.1.i.i.i, %PB_greedyOptimize.exit.i.thread.i ], [ %i.aap, %bb.as ] ; 5 uses
   %i.ack = icmp eq i64 %.0.i45.i, 0
   br i1 %i.ack, label %PB_fixedPartitionFastInner.exit.thread.i, label %bb.at
 

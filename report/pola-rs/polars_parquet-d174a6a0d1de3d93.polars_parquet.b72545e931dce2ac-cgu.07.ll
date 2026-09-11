@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %thread-pre-split439
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1019), !dbg !1208
   %i.be = load i32, ptr %i.e, align 4, !dbg !1209, !alias.scope !1018, !noalias !1019, !noundef !107 ; 2 uses
   %i.bf = zext i32 %i.be to i64, !dbg !1210       ; 4 uses
-  %i.bg = zext i32 %i.bd to i64, !dbg !1211       ; 4 uses
+  %i.bg = zext i32 %i.bd to i64, !dbg !1211       ; 3 uses
   %i.bh = add nuw nsw i64 %i.bg, 1, !dbg !1211    ; 6 uses
   %i.bi = icmp samesign uge i64 %i.bh, %i.bf, !dbg !1212
   %i.bj = icmp ult i32 %i.bd, 720
@@ -419,30 +419,26 @@ _RNvNtCsjPfRcqrlXv6_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i
   br label %.lr.ph52.i, !dbg !1246
 
 .lr.ph52.i:                                       ; preds = %._crit_edge48.i, %.lr.ph52.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph52.preheader.i ], [ %i.eq, %._crit_edge48.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph52.preheader.i ], [ %i.eq, %._crit_edge48.i ] ; 2 uses
   %.sroa.011.049.i = phi ptr [ %i.m, %.lr.ph52.preheader.i ], [ %i.ep, %._crit_edge48.i ] ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.sroa.011.049.i, i64 2, !dbg !1247 ; 2 uses
   %i.eq = add nuw nsw i64 %indvars.iv.i, 1, !dbg !1248 ; 2 uses
   %exitcond.i = icmp eq i64 %indvars.iv.i, %i.bh, !dbg !1246
-  br i1 %exitcond.i, label %bb.ad, label %9, !dbg !1246, !prof !132
+  br i1 %exitcond.i, label %bb.ad, label %.lr.ph47.i, !dbg !1246, !prof !132
 
-9:                                                ; preds = %.lr.ph52.i
-  %10 = icmp eq i64 %indvars.iv.i, %i.bg, !dbg !1249
-  br i1 %10, label %._crit_edge48.i, label %.lr.ph47.i, !dbg !1250
-
-.lr.ph47.i:                                       ; preds = %9
-  %i.er = getelementptr inbounds nuw [2 x i8], ptr %i.m, i64 %i.eq, !dbg !1251
+.lr.ph47.i:                                       ; preds = %.lr.ph52.i
+  %i.er = getelementptr inbounds nuw [2 x i8], ptr %i.m, i64 %i.eq, !dbg !1249
   %i.es = load i16, ptr %.sroa.011.049.i, align 2, !alias.scope !1018, !noalias !1019, !noundef !107
   br label %bb.af, !dbg !1250
 
 bb.ad:                                            ; preds = %.lr.ph52.i
   %i.et = add nuw nsw i64 %i.bg, 2, !dbg !1246
-  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.et, i64 noundef %i.bh, i64 noundef 720, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @75) #20, !dbg !1252, !noalias !1021
-  unreachable, !dbg !1252
+  tail call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %i.et, i64 noundef %i.bh, i64 noundef 720, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @75) #20, !dbg !1251, !noalias !1021
+  unreachable, !dbg !1251
 
 bb.ae:                                            ; preds = %bb.af
-  %i.eu = getelementptr inbounds nuw i8, ptr %.sroa.014.045.i, i64 2, !dbg !1253 ; 2 uses
-  %i.ev = icmp eq ptr %i.eu, %scevgep.i, !dbg !1249
+  %i.eu = getelementptr inbounds nuw i8, ptr %.sroa.014.045.i, i64 2, !dbg !1252 ; 2 uses
+  %i.ev = icmp eq ptr %i.eu, %scevgep.i, !dbg !1253
   br i1 %i.ev, label %._crit_edge48.i, label %bb.af, !dbg !1250
 
 bb.af:                                            ; preds = %bb.ae, %.lr.ph47.i
@@ -451,7 +447,7 @@ bb.af:                                            ; preds = %bb.ae, %.lr.ph47.i
   %i.ex = icmp eq i16 %i.es, %i.ew, !dbg !1255
   br i1 %i.ex, label %_RNvNtCsjPfRcqrlXv6_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit, label %bb.ae, !dbg !1255
 
-._crit_edge48.i:                                  ; preds = %bb.ae, %9
+._crit_edge48.i:                                  ; preds = %bb.ae
   %i.ey = icmp eq ptr %i.ep, %i.em, !dbg !1244
   br i1 %i.ey, label %_RINvNtCsjPfRcqrlXv6_19brotli_decompressor6decode24ReadSimpleHuffmanSymbolsNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocB1a_B1a_ECsfISxE4fmY1Y_14polars_parquet.exit.loopexit, label %.lr.ph52.i, !dbg !1245
 
@@ -854,16 +850,16 @@ begin_hunk_1_@llvm.ctlz.i32
 !808 = distinct !DILocation(line: 19, column: 15, scope: !1036, inlinedAt: !807)
 !809 = distinct !DILocation(line: 437, column: 32, scope: !1035, inlinedAt: !808)
 !810 = distinct !DILocation(line: 185, column: 40, scope: !1032, inlinedAt: !800)
-!811 = distinct !DILexicalBlock(scope: !796, file: !165, line: 161, column: 17)
-!812 = distinct !DILexicalBlock(scope: !811, file: !165, line: 162, column: 17)
-!813 = distinct !DILexicalBlock(scope: !805, file: !133, line: 545, column: 5)
-!814 = distinct !DILocation(line: 545, column: 23, scope: !1041, inlinedAt: !746)
-!815 = distinct !DILocation(line: 180, column: 28, scope: !1040, inlinedAt: !814)
-!816 = distinct !DISubprogram(name: "get_offset_len_noubcheck<u16>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core5slice5index24get_offset_len_noubchecktECsfISxE4fmY1Y_14polars_parquet", scope: !152, file: !151, line: 82, type: !108, scopeLine: 82, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !107)
-!817 = distinct !DILexicalBlock(scope: !816, file: !151, line: 87, column: 5)
-!818 = distinct !DILocation(line: 441, column: 24, scope: !1035, inlinedAt: !808)
-!819 = distinct !DILocation(line: 185, column: 40, scope: !1040, inlinedAt: !814)
-!820 = distinct !DILexicalBlock(scope: !813, file: !133, line: 545, column: 5)
+!811 = distinct !DISubprogram(name: "get_offset_len_noubcheck<u16>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core5slice5index24get_offset_len_noubchecktECsfISxE4fmY1Y_14polars_parquet", scope: !152, file: !151, line: 82, type: !108, scopeLine: 82, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !107)
+!812 = distinct !DILexicalBlock(scope: !811, file: !151, line: 87, column: 5)
+!813 = distinct !DILocation(line: 441, column: 24, scope: !1035, inlinedAt: !808)
+!814 = distinct !DILexicalBlock(scope: !796, file: !165, line: 161, column: 17)
+!815 = distinct !DILexicalBlock(scope: !814, file: !165, line: 162, column: 17)
+!816 = distinct !DILexicalBlock(scope: !805, file: !133, line: 545, column: 5)
+!817 = distinct !DILocation(line: 545, column: 23, scope: !1040, inlinedAt: !746)
+!818 = distinct !DILocation(line: 185, column: 40, scope: !1041, inlinedAt: !817)
+!819 = distinct !DILocation(line: 180, column: 28, scope: !1041, inlinedAt: !817)
+!820 = distinct !DILexicalBlock(scope: !816, file: !133, line: 545, column: 5)
 !821 = distinct !DILexicalBlock(scope: !711, file: !133, line: 929, column: 9)
 !822 = distinct !{!822, !"_RINvNtCsjPfRcqrlXv6_19brotli_decompressor6decode25ReadCodeLengthCodeLengthsNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocB1b_B1b_ECsfISxE4fmY1Y_14polars_parquet"}
 !823 = distinct !{!823, !822, !"_RINvNtCsjPfRcqrlXv6_19brotli_decompressor6decode25ReadCodeLengthCodeLengthsNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocB1b_B1b_ECsfISxE4fmY1Y_14polars_parquet: argument 0"}
@@ -1083,8 +1079,8 @@ begin_hunk_1_@llvm.ctlz.i32
 !1037 = !DILexicalBlockFile(scope: !804, file: !155, discriminator: 2)
 !1038 = !DILexicalBlockFile(scope: !805, file: !146, discriminator: 0)
 !1039 = !DILexicalBlockFile(scope: !1038, file: !146, discriminator: 2)
-!1040 = !DILexicalBlockFile(scope: !812, file: !165, discriminator: 4)
-!1041 = !DILexicalBlockFile(scope: !813, file: !133, discriminator: 2)
+!1040 = !DILexicalBlockFile(scope: !816, file: !133, discriminator: 2)
+!1041 = !DILexicalBlockFile(scope: !815, file: !165, discriminator: 4)
 !1042 = !{!823}
 !1043 = !{!824}
 !1044 = !DILexicalBlockFile(scope: !829, file: !146, discriminator: 0)
@@ -1292,11 +1288,11 @@ begin_hunk_1_@llvm.ctlz.i32
 !1246 = !DILocation(line: 977, column: 16, scope: !748, inlinedAt: !809)
 !1247 = !DILocation(line: 659, column: 28, scope: !777, inlinedAt: !810)
 !1248 = !DILocation(line: 545, column: 53, scope: !805, inlinedAt: !746)
-!1249 = !DILocation(line: 1717, column: 9, scope: !764, inlinedAt: !815)
-!1250 = !DILocation(line: 180, column: 28, scope: !812, inlinedAt: !814)
-!1251 = !DILocation(line: 89, column: 24, scope: !817, inlinedAt: !818)
-!1252 = !DILocation(line: 443, column: 13, scope: !802, inlinedAt: !808)
-!1253 = !DILocation(line: 659, column: 28, scope: !777, inlinedAt: !819)
+!1249 = !DILocation(line: 89, column: 24, scope: !812, inlinedAt: !813)
+!1250 = !DILocation(line: 180, column: 28, scope: !815, inlinedAt: !817)
+!1251 = !DILocation(line: 443, column: 13, scope: !802, inlinedAt: !808)
+!1252 = !DILocation(line: 659, column: 28, scope: !777, inlinedAt: !818)
+!1253 = !DILocation(line: 1717, column: 9, scope: !764, inlinedAt: !819)
 !1254 = !DILocation(line: 547, column: 33, scope: !820, inlinedAt: !746)
 !1255 = !DILocation(line: 547, column: 10, scope: !820, inlinedAt: !746)
 !1256 = !DILocation(line: 930, column: 13, scope: !821)

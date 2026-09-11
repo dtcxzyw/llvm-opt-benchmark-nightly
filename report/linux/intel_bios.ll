@@ -204,10 +204,14 @@ get_blocksize.exit.i.i:                           ; preds = %__drm_to_dev.exit69
 
 bb.hw:                                            ; preds = %get_blocksize.exit.i.i, %get_blocksize.exit.thread84.i.i
   %.0.i.i8287.in.i.i = phi i16 [ %i.aib, %get_blocksize.exit.i.i ], [ %i.ahz, %get_blocksize.exit.thread84.i.i ] ; 3 uses
-  %.0.i.i8287.i.i = zext i16 %.0.i.i8287.in.i.i to i32 ; 16 uses
+  %.0.i.i8287.i.i = zext i16 %.0.i.i8287.in.i.i to i32 ; 11 uses
   %spec.select.i.i = getelementptr i8, ptr %.011.i.i167, i64 24 ; 6 uses
   %.not.i70.i172 = icmp eq i16 %.0.i.i8287.in.i.i, 0
-  br i1 %.not.i70.i172, label %._crit_edge.i.i, label %.lr.ph.split.i.i
+  br i1 %.not.i70.i172, label %._crit_edge.i.i, label %.lr.ph.split.i.i.preheader
+
+.lr.ph.split.i.i.preheader:                       ; preds = %bb.hw
+  %7 = icmp ult i16 %.0.i.i8287.in.i.i, 3
+  br i1 %7, label %.split.us.i.i, label %bb.iz
 
 .thread.i184:                                     ; preds = %get_blocksize.exit.i.i
   %.0.i.i8287.i99.i = zext i16 %i.aib to i32
@@ -359,11 +363,7 @@ bb.in:                                            ; preds = %bb.im
   %i.aku = icmp eq i16 %i.aht, %i.akt
   br i1 %i.aku, label %find_panel_sequence_block.exit.i, label %bb.hx
 
-7:                                                ; preds = %bb.jb
-  %8 = icmp samesign ult i32 %i.ank, %.0.i.i8287.i.i
-  br i1 %8, label %.lr.ph.split.i.i.1, label %._crit_edge.i.i
-
-.lr.ph.split.i.i.1:                               ; preds = %7
+.lr.ph.split.i.i.1:                               ; preds = %bb.jb
   %i.akv = add nuw nsw i32 %i.anj, 6              ; 3 uses
   %i.akw = icmp samesign ugt i32 %i.akv, %.0.i.i8287.i.i
   br i1 %i.akw, label %.split.us.i.i, label %bb.io
@@ -374,7 +374,7 @@ bb.io:                                            ; preds = %.lr.ph.split.i.i.1
   %i.akz = getelementptr i8, ptr %i.aky, i64 1
   %i.ala = load i16, ptr %i.akz, align 2
   %i.alb = zext i16 %i.ala to i32                 ; 2 uses
-  %i.alc = add nuw nsw i32 %i.akv, %i.alb         ; 4 uses
+  %i.alc = add nuw nsw i32 %i.akv, %i.alb         ; 3 uses
   %i.ald = icmp samesign ugt i32 %i.alc, %.0.i.i8287.i.i
   br i1 %i.ald, label %.split52.us.i.i, label %bb.ip
 
@@ -382,13 +382,9 @@ bb.ip:                                            ; preds = %bb.io
   %i.ale = load i8, ptr %i.aky, align 1
   %i.alf = zext i8 %i.ale to i16
   %i.alg = icmp eq i16 %i.aht, %i.alf
-  br i1 %i.alg, label %find_panel_sequence_block.exit.i, label %9
+  br i1 %i.alg, label %find_panel_sequence_block.exit.i, label %.lr.ph.split.i.i.2
 
-9:                                                ; preds = %bb.ip
-  %10 = icmp samesign ult i32 %i.alc, %.0.i.i8287.i.i
-  br i1 %10, label %.lr.ph.split.i.i.2, label %._crit_edge.i.i
-
-.lr.ph.split.i.i.2:                               ; preds = %9
+.lr.ph.split.i.i.2:                               ; preds = %bb.ip
   %i.alh = add nuw nsw i32 %i.alc, 3              ; 3 uses
   %i.ali = icmp samesign ugt i32 %i.alh, %.0.i.i8287.i.i
   br i1 %i.ali, label %.split.us.i.i, label %bb.iq
@@ -399,7 +395,7 @@ bb.iq:                                            ; preds = %.lr.ph.split.i.i.2
   %i.all = getelementptr i8, ptr %i.alk, i64 1
   %i.alm = load i16, ptr %i.all, align 2
   %i.aln = zext i16 %i.alm to i32                 ; 2 uses
-  %i.alo = add nuw nsw i32 %i.alh, %i.aln         ; 4 uses
+  %i.alo = add nuw nsw i32 %i.alh, %i.aln         ; 3 uses
   %i.alp = icmp samesign ugt i32 %i.alo, %.0.i.i8287.i.i
   br i1 %i.alp, label %.split52.us.i.i, label %bb.ir
 
@@ -407,13 +403,9 @@ bb.ir:                                            ; preds = %bb.iq
   %i.alq = load i8, ptr %i.alk, align 1
   %i.alr = zext i8 %i.alq to i16
   %i.als = icmp eq i16 %i.aht, %i.alr
-  br i1 %i.als, label %find_panel_sequence_block.exit.i, label %11
+  br i1 %i.als, label %find_panel_sequence_block.exit.i, label %.lr.ph.split.i.i.3
 
-11:                                               ; preds = %bb.ir
-  %12 = icmp samesign ult i32 %i.alo, %.0.i.i8287.i.i
-  br i1 %12, label %.lr.ph.split.i.i.3, label %._crit_edge.i.i
-
-.lr.ph.split.i.i.3:                               ; preds = %11
+.lr.ph.split.i.i.3:                               ; preds = %bb.ir
   %i.alt = add nuw nsw i32 %i.alo, 3              ; 3 uses
   %i.alu = icmp samesign ugt i32 %i.alt, %.0.i.i8287.i.i
   br i1 %i.alu, label %.split.us.i.i, label %bb.is
@@ -424,23 +416,19 @@ bb.is:                                            ; preds = %.lr.ph.split.i.i.3
   %i.alx = getelementptr i8, ptr %i.alw, i64 1
   %i.aly = load i16, ptr %i.alx, align 2
   %i.alz = zext i16 %i.aly to i32                 ; 2 uses
-  %i.ama = add nuw nsw i32 %i.alt, %i.alz         ; 4 uses
-  %i.amb = icmp ugt i32 %i.ama, %.0.i.i8287.i.i
+  %i.ama = add nuw nsw i32 %i.alt, %i.alz         ; 3 uses
+  %i.amb = icmp samesign ugt i32 %i.ama, %.0.i.i8287.i.i
   br i1 %i.amb, label %.split52.us.i.i, label %bb.it
 
 bb.it:                                            ; preds = %bb.is
   %i.amc = load i8, ptr %i.alw, align 1
   %i.amd = zext i8 %i.amc to i16
   %i.ame = icmp eq i16 %i.aht, %i.amd
-  br i1 %i.ame, label %find_panel_sequence_block.exit.i, label %13
+  br i1 %i.ame, label %find_panel_sequence_block.exit.i, label %.lr.ph.split.i.i.4
 
-13:                                               ; preds = %bb.it
-  %14 = icmp ult i32 %i.ama, %.0.i.i8287.i.i
-  br i1 %14, label %.lr.ph.split.i.i.4, label %._crit_edge.i.i
-
-.lr.ph.split.i.i.4:                               ; preds = %13
+.lr.ph.split.i.i.4:                               ; preds = %bb.it
   %i.amf = add nuw nsw i32 %i.ama, 3              ; 3 uses
-  %i.amg = icmp ugt i32 %i.amf, %.0.i.i8287.i.i
+  %i.amg = icmp samesign ugt i32 %i.amf, %.0.i.i8287.i.i
   br i1 %i.amg, label %.split.us.i.i, label %bb.iu
 
 bb.iu:                                            ; preds = %.lr.ph.split.i.i.4
@@ -449,23 +437,19 @@ bb.iu:                                            ; preds = %.lr.ph.split.i.i.4
   %i.amj = getelementptr i8, ptr %i.ami, i64 1
   %i.amk = load i16, ptr %i.amj, align 2
   %i.aml = zext i16 %i.amk to i32                 ; 2 uses
-  %i.amm = add nuw nsw i32 %i.amf, %i.aml         ; 4 uses
-  %i.amn = icmp ugt i32 %i.amm, %.0.i.i8287.i.i
+  %i.amm = add nuw nsw i32 %i.amf, %i.aml         ; 3 uses
+  %i.amn = icmp samesign ugt i32 %i.amm, %.0.i.i8287.i.i
   br i1 %i.amn, label %.split52.us.i.i, label %bb.iv
 
 bb.iv:                                            ; preds = %bb.iu
   %i.amo = load i8, ptr %i.ami, align 1
   %i.amp = zext i8 %i.amo to i16
   %i.amq = icmp eq i16 %i.aht, %i.amp
-  br i1 %i.amq, label %find_panel_sequence_block.exit.i, label %15
+  br i1 %i.amq, label %find_panel_sequence_block.exit.i, label %.lr.ph.split.i.i.5
 
-15:                                               ; preds = %bb.iv
-  %16 = icmp ult i32 %i.amm, %.0.i.i8287.i.i
-  br i1 %16, label %.lr.ph.split.i.i.5, label %._crit_edge.i.i
-
-.lr.ph.split.i.i.5:                               ; preds = %15
+.lr.ph.split.i.i.5:                               ; preds = %bb.iv
   %i.amr = add nuw nsw i32 %i.amm, 3              ; 3 uses
-  %i.ams = icmp ugt i32 %i.amr, %.0.i.i8287.i.i
+  %i.ams = icmp samesign ugt i32 %i.amr, %.0.i.i8287.i.i
   br i1 %i.ams, label %.split.us.i.i, label %bb.iw
 
 bb.iw:                                            ; preds = %.lr.ph.split.i.i.5
@@ -475,7 +459,7 @@ bb.iw:                                            ; preds = %.lr.ph.split.i.i.5
   %i.amw = load i16, ptr %i.amv, align 2
   %i.amx = zext i16 %i.amw to i32                 ; 2 uses
   %i.amy = add nuw nsw i32 %i.amr, %i.amx
-  %i.amz = icmp ugt i32 %i.amy, %.0.i.i8287.i.i
+  %i.amz = icmp samesign ugt i32 %i.amy, %.0.i.i8287.i.i
   br i1 %i.amz, label %.split52.us.i.i, label %bb.ix
 
 bb.ix:                                            ; preds = %bb.iw
@@ -484,11 +468,7 @@ bb.ix:                                            ; preds = %bb.iw
   %i.anc = icmp eq i16 %i.aht, %i.anb
   br i1 %i.anc, label %find_panel_sequence_block.exit.i, label %._crit_edge.i.i
 
-.lr.ph.split.i.i:                                 ; preds = %bb.hw
-  %17 = icmp ult i16 %.0.i.i8287.in.i.i, 3
-  br i1 %17, label %.split.us.i.i, label %bb.iz
-
-.split.us.i.i:                                    ; preds = %.lr.ph.split.i.i, %.lr.ph.split.i.i.1, %.lr.ph.split.i.i.2, %.lr.ph.split.i.i.3, %.lr.ph.split.i.i.4, %.lr.ph.split.i.i.5, %.lr.ph.split.us.preheader.i.i, %.lr.ph.split.us.i.i.1, %.lr.ph.split.us.i.i.2, %.lr.ph.split.us.i.i.3, %.lr.ph.split.us.i.i.4, %.lr.ph.split.us.i.i.5
+.split.us.i.i:                                    ; preds = %.lr.ph.split.us.preheader.i.i, %.lr.ph.split.us.i.i.1, %.lr.ph.split.us.i.i.2, %.lr.ph.split.us.i.i.3, %.lr.ph.split.us.i.i.4, %.lr.ph.split.us.i.i.5, %.lr.ph.split.i.i.preheader, %.lr.ph.split.i.i.1, %.lr.ph.split.i.i.2, %.lr.ph.split.i.i.3, %.lr.ph.split.i.i.4, %.lr.ph.split.i.i.5
   %i.and = load ptr, ptr %0, align 8              ; 2 uses
   %.not.i.i.i182 = icmp eq ptr %i.and, null
   br i1 %.not.i.i.i182, label %__drm_to_dev.exit.i.i183, label %bb.iy
@@ -503,15 +483,15 @@ __drm_to_dev.exit.i.i183:                         ; preds = %bb.iy, %.split.us.i
   call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.ang, ptr noundef nonnull @.str.120) #17
   br label %parse_mipi_sequence.exit
 
-bb.iz:                                            ; preds = %.lr.ph.split.i.i
+bb.iz:                                            ; preds = %.lr.ph.split.i.i.preheader
   %i.anh = getelementptr i8, ptr %.011.i.i167, i64 25
   %i.ani = load i16, ptr %i.anh, align 2
   %i.anj = zext i16 %i.ani to i32                 ; 3 uses
-  %i.ank = add nuw nsw i32 %i.anj, 3              ; 3 uses
+  %i.ank = add nuw nsw i32 %i.anj, 3              ; 2 uses
   %i.anl = icmp samesign ugt i32 %i.ank, %.0.i.i8287.i.i
   br i1 %i.anl, label %.split52.us.i.i, label %bb.jb
 
-.split52.us.i.i:                                  ; preds = %bb.iz, %bb.io, %bb.iq, %bb.is, %bb.iu, %bb.iw, %bb.im, %bb.hy, %bb.ib, %bb.ie, %bb.ih, %bb.ik
+.split52.us.i.i:                                  ; preds = %bb.im, %bb.hy, %bb.ib, %bb.ie, %bb.ih, %bb.ik, %bb.iz, %bb.io, %bb.iq, %bb.is, %bb.iu, %bb.iw
   %i.anm = load ptr, ptr %0, align 8              ; 2 uses
   %.not.i42.i.i = icmp eq ptr %i.anm, null
   br i1 %.not.i42.i.i, label %__drm_to_dev.exit43.i.i, label %bb.ja
@@ -530,9 +510,9 @@ bb.jb:                                            ; preds = %bb.iz
   %i.anq = load i8, ptr %spec.select.i.i, align 1
   %i.anr = zext i8 %i.anq to i16
   %i.ans = icmp eq i16 %i.aht, %i.anr
-  br i1 %i.ans, label %find_panel_sequence_block.exit.i, label %7
+  br i1 %i.ans, label %find_panel_sequence_block.exit.i, label %.lr.ph.split.i.i.1
 
-._crit_edge.i.i:                                  ; preds = %7, %9, %11, %13, %15, %bb.ix, %bb.hx, %bb.ia, %bb.id, %bb.ig, %bb.ij, %bb.il, %.thread91.i.i, %.thread.i184, %bb.hw
+._crit_edge.i.i:                                  ; preds = %bb.hx, %bb.ia, %bb.id, %bb.ig, %bb.ij, %bb.il, %bb.ix, %.thread91.i.i, %.thread.i184, %bb.hw
   %i.ant = load ptr, ptr %0, align 8              ; 2 uses
   %.not.i44.i.i = icmp eq ptr %i.ant, null
   br i1 %.not.i44.i.i, label %__drm_to_dev.exit45.i.i, label %bb.jc
@@ -547,10 +527,10 @@ __drm_to_dev.exit45.i.i:                          ; preds = %bb.jc, %._crit_edge
   call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.anw, ptr noundef nonnull @.str.122) #17
   br label %parse_mipi_sequence.exit
 
-find_panel_sequence_block.exit.i:                 ; preds = %bb.jb, %bb.ip, %bb.ir, %bb.it, %bb.iv, %bb.ix, %bb.in, %bb.hz, %bb.ic, %bb.if, %bb.ii, %bb.il
-  %i.anx = phi i64 [ 28, %bb.in ], [ 28, %bb.il ], [ 28, %bb.ii ], [ 28, %bb.if ], [ 28, %bb.ic ], [ 28, %bb.hz ], [ 24, %bb.ix ], [ 24, %bb.iv ], [ 24, %bb.it ], [ 24, %bb.ir ], [ 24, %bb.ip ], [ 24, %bb.jb ]
-  %.us-phi.i.i = phi i32 [ %i.aki, %bb.il ], [ %i.akp, %bb.in ], [ %i.aim, %bb.hz ], [ %i.aiy, %bb.ic ], [ %i.ajk, %bb.if ], [ %i.ajw, %bb.ii ], [ %i.anj, %bb.jb ], [ %i.alb, %bb.ip ], [ %i.aln, %bb.ir ], [ %i.alz, %bb.it ], [ %i.aml, %bb.iv ], [ %i.amx, %bb.ix ] ; 10 uses
-  %.us-phi55.i.i = phi i32 [ %i.akd, %bb.il ], [ 5, %bb.in ], [ %i.aih, %bb.hz ], [ %i.ait, %bb.ic ], [ %i.ajf, %bb.if ], [ %i.ajr, %bb.ii ], [ 3, %bb.jb ], [ %i.akv, %bb.ip ], [ %i.alh, %bb.ir ], [ %i.alt, %bb.it ], [ %i.amf, %bb.iv ], [ %i.amr, %bb.ix ]
+find_panel_sequence_block.exit.i:                 ; preds = %bb.in, %bb.hz, %bb.ic, %bb.if, %bb.ii, %bb.il, %bb.jb, %bb.ip, %bb.ir, %bb.it, %bb.iv, %bb.ix
+  %i.anx = phi i64 [ 24, %bb.jb ], [ 24, %bb.ix ], [ 24, %bb.iv ], [ 24, %bb.it ], [ 24, %bb.ir ], [ 24, %bb.ip ], [ 28, %bb.il ], [ 28, %bb.ii ], [ 28, %bb.if ], [ 28, %bb.ic ], [ 28, %bb.hz ], [ 28, %bb.in ]
+  %.us-phi.i.i = phi i32 [ %i.anj, %bb.jb ], [ %i.amx, %bb.ix ], [ %i.aml, %bb.iv ], [ %i.alz, %bb.it ], [ %i.aln, %bb.ir ], [ %i.alb, %bb.ip ], [ %i.akp, %bb.in ], [ %i.aim, %bb.hz ], [ %i.aiy, %bb.ic ], [ %i.ajk, %bb.if ], [ %i.ajw, %bb.ii ], [ %i.aki, %bb.il ] ; 10 uses
+  %.us-phi55.i.i = phi i32 [ 3, %bb.jb ], [ %i.amr, %bb.ix ], [ %i.amf, %bb.iv ], [ %i.alt, %bb.it ], [ %i.alh, %bb.ir ], [ %i.akv, %bb.ip ], [ 5, %bb.in ], [ %i.aih, %bb.hz ], [ %i.ait, %bb.ic ], [ %i.ajf, %bb.if ], [ %i.ajr, %bb.ii ], [ %i.akd, %bb.il ]
   %i.any = getelementptr i8, ptr %.011.i.i167, i64 %i.anx
   %i.anz = sext i32 %.us-phi55.i.i to i64
   %i.aoa = getelementptr i8, ptr %i.any, i64 %i.anz ; 2 uses

@@ -205,7 +205,7 @@ bb.a:
   %i.l = load i32, ptr %i.k, align 4, !tbaa !371
   %i.m = add nuw nsw i32 %i.b, 15
   %i.n = lshr i32 %i.m, 5
-  %i.o = zext nneg i32 %i.f to i64                ; 4 uses
+  %i.o = zext nneg i32 %i.f to i64                ; 3 uses
   %i.p = zext i32 %1 to i64
   %i.q = zext nneg i32 %i.l to i64
   %wide.trip.count = zext nneg i32 %i.n to i64
@@ -237,9 +237,7 @@ bb.a:
   br i1 %i.ad, label %.preheader42, label %._crit_edge55.split, !llvm.loop !6920
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %.preheader42, %"_ZSt6all_ofIPhZN8rawspeed12RawImageData18fixBadPixelsThreadEiiE3$_0EbT_S4_T0_.exit.thread"
-  %indvars.iv57 = phi i64 [ 0, %.preheader42 ], [ %indvars.iv.next58, %"_ZSt6all_ofIPhZN8rawspeed12RawImageData18fixBadPixelsThreadEiiE3$_0EbT_S4_T0_.exit.thread" ] ; 4 uses
-  %3 = icmp samesign ule i64 %indvars.iv57, %i.o
-  tail call void @llvm.assume(i1 %3)
+  %indvars.iv57 = phi i64 [ 0, %.preheader42 ], [ %indvars.iv.next58, %"_ZSt6all_ofIPhZN8rawspeed12RawImageData18fixBadPixelsThreadEiiE3$_0EbT_S4_T0_.exit.thread" ] ; 3 uses
   %i.ae = shl nuw nsw i64 %indvars.iv57, 2        ; 3 uses
   %i.af = add nuw nsw i64 %i.ae, 4                ; 2 uses
   %i.ag = icmp samesign ule i64 %i.af, %i.o

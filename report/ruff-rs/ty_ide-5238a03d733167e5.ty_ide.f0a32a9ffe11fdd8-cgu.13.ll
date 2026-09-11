@@ -205,14 +205,14 @@ bb.a:
   %.sroa.0.0154 = phi ptr [ %i.l, %.lr.ph.i.preheader.lr.ph ], [ inttoptr (i64 1 to ptr), %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline9HyperlinkEBL_.exit ] ; 5 uses
   %.sroa.5.0153 = phi i64 [ %i.n, %.lr.ph.i.preheader.lr.ph ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline9HyperlinkEBL_.exit ] ; 15 uses
   %.sroa.05.0152 = phi ptr [ %i.p, %.lr.ph.i.preheader.lr.ph ], [ %i.ib, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline9HyperlinkEBL_.exit ] ; 17 uses
-  %.sroa.9.0151 = phi i64 [ %i.r, %.lr.ph.i.preheader.lr.ph ], [ %i.ia, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline9HyperlinkEBL_.exit ] ; 30 uses
+  %.sroa.9.0151 = phi i64 [ %i.r, %.lr.ph.i.preheader.lr.ph ], [ %i.ia, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline9HyperlinkEBL_.exit ] ; 27 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1102)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.backedge.i
   %.sroa.560.0.copyload = phi i8 [ %.sroa.560.0.copyload234, %.lr.ph.i.preheader ], [ %i.ek, %.backedge.i ]
   %.sroa.058.0.copyload = load i32, ptr %i.i, align 4, !noalias !1103 ; 5 uses
-  %i.x = zext i32 %.sroa.058.0.copyload to i64    ; 27 uses
+  %i.x = zext i32 %.sroa.058.0.copyload to i64    ; 24 uses
   %i.y = trunc nuw i8 %.sroa.560.0.copyload to i1
   br i1 %i.y, label %.backedge.i, label %bb.b
 
@@ -222,11 +222,7 @@ bb.b:                                             ; preds = %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
   %.not.i.i.i = icmp ugt i64 %.sroa.9.0151, %i.x
-  br i1 %.not.i.i.i, label %bb.d, label %.split3.i.i.i
-
-.split3.i.i.i:                                    ; preds = %bb.c
-  %3 = icmp eq i64 %.sroa.9.0151, %i.x
-  br i1 %3, label %.split.i.i.i, label %bb.f
+  br i1 %.not.i.i.i, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.05.0152, i64 %i.x
@@ -234,7 +230,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ac = icmp sgt i8 %i.ab, -65
   br i1 %i.ac, label %.split.i.i.i, label %bb.f
 
-.split.i.i.i:                                     ; preds = %bb.d, %.split3.i.i.i
+.split.i.i.i:                                     ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.05.0152, i64 %i.x
   %i.ae = sub i64 %.sroa.9.0151, %i.x
   br label %_RNvMNtCs4NRVxsYgnAr_4core3stre16split_at_checked.exit.i.i
@@ -255,7 +251,7 @@ bb.e:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
   %i.ai = icmp sgt i8 %i.ah, -65
   br i1 %i.ai, label %bb.g, label %bb.h
 
-bb.f:                                             ; preds = %bb.d, %.split3.i.i.i
+bb.f:                                             ; preds = %bb.c, %bb.d
   call void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0152, i64 noundef %.sroa.9.0151, i64 noundef 0, i64 noundef range(i64 0, 4294967296) %i.x, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @31) #34, !noalias !1101
   unreachable
 
@@ -508,18 +504,14 @@ _RNvNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline13is_link_sta
 bb.s:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !1103
   %.not.i15.i = icmp ugt i64 %.sroa.9.0151, %i.x
-  br i1 %.not.i15.i, label %bb.t, label %.split.i16.i
-
-.split.i16.i:                                     ; preds = %bb.s
-  %4 = icmp eq i64 %.sroa.9.0151, %i.x
-  br i1 %4, label %bb.u, label %bb.v
+  br i1 %.not.i15.i, label %bb.t, label %bb.v
 
 bb.t:                                             ; preds = %bb.s
   %i.em = load i8, ptr %i.al, align 1, !alias.scope !1113, !noalias !1101, !noundef !4
   %i.en = icmp sgt i8 %i.em, -65
   br i1 %i.en, label %bb.u, label %bb.v
 
-bb.u:                                             ; preds = %bb.t, %.split.i16.i, %_RNvNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline13is_link_start.exit.thread19.i
+bb.u:                                             ; preds = %bb.t, %_RNvNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline13is_link_start.exit.thread19.i
   %i.eo = sub nuw i64 %.sroa.9.0151, %i.x         ; 8 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.sroa.05.0152, i64 %i.x ; 5 uses
   call fastcc void @_RNvNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline15parse_candidate(ptr noalias noundef align 8 captures(none) dereferenceable(48) %i.h, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ep, i64 noundef %i.eo), !noalias !1101
@@ -527,7 +519,7 @@ bb.u:                                             ; preds = %bb.t, %.split.i16.i
   %.not13.i = icmp eq i64 %i.eq, -3
   br i1 %.not13.i, label %bb.w, label %_RNvNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline9find_link.exit
 
-bb.v:                                             ; preds = %bb.t, %.split.i16.i
+bb.v:                                             ; preds = %bb.s, %bb.t
   call void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0152, i64 noundef %.sroa.9.0151, i64 noundef %i.x, i64 noundef %.sroa.9.0151, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #34, !noalias !1101
   unreachable
 
@@ -892,25 +884,21 @@ bb.bk:                                            ; preds = %bb.bi, %.noexc39
 
 bb.bl:                                            ; preds = %bb.bk
   %.not.i41 = icmp ugt i64 %.sroa.9.0151, %i.x
-  br i1 %.not.i41, label %bb.bm, label %.split.i
-
-.split.i:                                         ; preds = %bb.bl
-  %5 = icmp eq i64 %.sroa.9.0151, %i.x
-  br i1 %5, label %bb.bn, label %.invoke
+  br i1 %.not.i41, label %bb.bm, label %.invoke
 
 bb.bm:                                            ; preds = %bb.bl
   %i.ho = load i8, ptr %i.ep, align 1, !alias.scope !1126, !noundef !4
   %i.hp = icmp sgt i8 %i.ho, -65
   br i1 %i.hp, label %bb.bn, label %.invoke
 
-bb.bn:                                            ; preds = %bb.bm, %.split.i, %bb.bk
+bb.bn:                                            ; preds = %bb.bm, %bb.bk
   invoke fastcc void @_RNvNtNtNtNtCskEUeM34gmJU_6ty_ide9docstring8markdown7general6inline18render_inline_text(ptr noalias noundef align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0152, i64 noundef %i.x)
           to label %bb.bo unwind label %.loopexit
 
-.invoke:                                          ; preds = %bb.br, %.split.i43, %.split.i, %bb.bm
-  %i.hq = phi i64 [ 0, %.split.i ], [ 0, %bb.bm ], [ %i.hu, %.split.i43 ], [ %i.hu, %bb.br ]
-  %i.hr = phi i64 [ %i.x, %.split.i ], [ %i.x, %bb.bm ], [ %.sroa.9.0151, %.split.i43 ], [ %.sroa.9.0151, %bb.br ]
-  %i.hs = phi ptr [ @10, %.split.i ], [ @10, %bb.bm ], [ @11, %.split.i43 ], [ @11, %bb.br ]
+.invoke:                                          ; preds = %bb.br, %.split.i43, %bb.bm, %bb.bl
+  %i.hq = phi i64 [ 0, %bb.bm ], [ 0, %bb.bl ], [ %i.hu, %.split.i43 ], [ %i.hu, %bb.br ]
+  %i.hr = phi i64 [ %i.x, %bb.bm ], [ %i.x, %bb.bl ], [ %.sroa.9.0151, %.split.i43 ], [ %.sroa.9.0151, %bb.br ]
+  %i.hs = phi ptr [ @10, %bb.bm ], [ @10, %bb.bl ], [ @11, %.split.i43 ], [ @11, %bb.br ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0152, i64 noundef %.sroa.9.0151, i64 noundef %i.hq, i64 noundef %i.hr, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hs) #34
           to label %.cont unwind label %.loopexit.split-lp
 

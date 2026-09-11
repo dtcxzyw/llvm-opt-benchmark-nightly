@@ -203,24 +203,20 @@ vector_zero.exit.i.preheader:                     ; preds = %bb.f, %bb.e
 
 vector_zero.exit.i:                               ; preds = %vector_zero.exit.i.preheader, %._crit_edge.i
   %.1.i = phi ptr [ %i.aj, %._crit_edge.i ], [ %i.ad, %vector_zero.exit.i.preheader ] ; 2 uses
-  %.034.i = phi i64 [ %.135.lcssa.i, %._crit_edge.i ], [ 0, %vector_zero.exit.i.preheader ] ; 4 uses
+  %.034.i = phi i64 [ %i.al, %._crit_edge.i ], [ 0, %vector_zero.exit.i.preheader ] ; 2 uses
   %.033.i = phi ptr [ %i.aw, %._crit_edge.i ], [ %.val19, %vector_zero.exit.i.preheader ] ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.1.i, i64 1
   %i.ak = load i8, ptr %.1.i, align 1, !tbaa !25  ; 2 uses
-  %i.al = zext i8 %i.ak to i64                    ; 4 uses
+  %i.al = zext i8 %i.ak to i64                    ; 5 uses
   %i.am = icmp samesign ugt i64 %.034.i, %i.al
   %i.an = zext i8 %i.ak to i32
   %i.ao = icmp ult i32 %i.x, %i.an
   %or.cond.i = or i1 %i.am, %i.ao
-  br i1 %or.cond.i, label %PACKET_buf_init.exit.thread, label %.preheader11.i
+  br i1 %or.cond.i, label %PACKET_buf_init.exit.thread, label %.lr.ph.i
 
-.preheader11.i:                                   ; preds = %vector_zero.exit.i
-  %5 = icmp samesign ult i64 %.034.i, %i.al
-  br i1 %5, label %.lr.ph.i, label %._crit_edge.i
-
-.lr.ph.i:                                         ; preds = %.preheader11.i, %bb.g
-  %.016.i = phi i32 [ %i.ar, %bb.g ], [ -1, %.preheader11.i ] ; 2 uses
-  %.13515.i = phi i64 [ %i.at, %bb.g ], [ %.034.i, %.preheader11.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %vector_zero.exit.i, %bb.g
+  %.016.i = phi i32 [ %i.ar, %bb.g ], [ -1, %vector_zero.exit.i ] ; 2 uses
+  %.13515.i = phi i64 [ %i.at, %bb.g ], [ %.034.i, %vector_zero.exit.i ] ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.13515.i
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !25  ; 2 uses
   %i.ar = zext i8 %i.aq to i32                    ; 2 uses
@@ -237,14 +233,13 @@ bb.g:                                             ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %i.at, %i.al
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !79
 
-._crit_edge.i:                                    ; preds = %bb.g, %.preheader11.i
-  %.135.lcssa.i = phi i64 [ %.034.i, %.preheader11.i ], [ %i.al, %bb.g ] ; 3 uses
+._crit_edge.i:                                    ; preds = %bb.g
   %i.aw = getelementptr inbounds nuw i8, ptr %.033.i, i64 1024 ; 2 uses
   %i.ax = icmp ult ptr %i.aw, %i.z
   br i1 %i.ax, label %vector_zero.exit.i, label %.preheader.i, !llvm.loop !80
 
 .preheader.i:                                     ; preds = %._crit_edge.i
-  %i.ay = icmp samesign ult i64 %.135.lcssa.i, %i.aa
+  %i.ay = icmp samesign ult i64 %i.al, %i.aa
   br i1 %i.ay, label %.lr.ph18.i, label %hint_bits_decode.exit
 
 bb.h:                                             ; preds = %.lr.ph18.i
@@ -253,7 +248,7 @@ bb.h:                                             ; preds = %.lr.ph18.i
   br i1 %exitcond24.not.i, label %hint_bits_decode.exit, label %.lr.ph18.i, !llvm.loop !81
 
 .lr.ph18.i:                                       ; preds = %.preheader.i, %bb.h
-  %.317.i = phi i64 [ %i.az, %bb.h ], [ %.135.lcssa.i, %.preheader.i ] ; 2 uses
+  %.317.i = phi i64 [ %i.az, %bb.h ], [ %i.al, %.preheader.i ] ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.317.i
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !25
   %.not44.i = icmp eq i8 %i.bb, 0

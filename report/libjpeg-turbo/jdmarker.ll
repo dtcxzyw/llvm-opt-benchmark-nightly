@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 define range(i32 0, 2) i32 @jpeg_resync_to_restart(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 540 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !33   ; 2 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !33   ; 4 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !34     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   store i32 121, ptr %i.d, align 8, !tbaa !37
@@ -30,60 +30,38 @@ bb.a:
   %i.l = and i32 %i.k, 7
   %i.m = or disjoint i32 %i.l, 208
   %i.n = add nsw i32 %1, 2
-  %2 = and i32 %i.n, 7
-  %3 = or disjoint i32 %2, 208
-  %4 = add i32 %1, 7
-  %i.o = and i32 %4, 7
+  %i.o = and i32 %i.n, 7
   %i.p = or disjoint i32 %i.o, 208
-  %5 = add i32 %1, 6
-  %6 = and i32 %5, 7
-  %7 = or disjoint i32 %6, 208
-  br label %8
+  %2 = icmp slt i32 %i.b, 192
+  br i1 %2, label %select.unfold, label %bb.b
 
-8:                                                ; preds = %bb.d, %bb.a
-  %.031 = phi i32 [ %i.b, %bb.a ], [ %i.ai, %bb.d ] ; 9 uses
-  %9 = icmp slt i32 %.031, 192
-  br i1 %9, label %select.unfold, label %bb.b
-
-bb.b:                                             ; preds = %8
-  %i.q = add nsw i32 %.031, -216
+bb.b:                                             ; preds = %bb.d, %bb.a
+  %.031.lcssa = phi i32 [ %i.b, %bb.a ], [ %i.ai, %bb.d ] ; 4 uses
+  %i.q = add nsw i32 %.031.lcssa, -216
   %or.cond = icmp ult i32 %i.q, -8
-  %i.r = icmp eq i32 %.031, %i.m
+  %i.r = icmp eq i32 %.031.lcssa, %i.m
   %or.cond39 = select i1 %or.cond, i1 true, i1 %i.r
-  %i.s = icmp eq i32 %.031, %3
+  %i.s = icmp eq i32 %.031.lcssa, %i.p
   %or.cond40 = select i1 %or.cond39, i1 true, i1 %i.s
-  br i1 %or.cond40, label %.thread35, label %10
-
-10:                                               ; preds = %bb.b
-  %11 = icmp eq i32 %.031, %i.p
-  %12 = icmp eq i32 %.031, %7
-  %or.cond41 = select i1 %11, i1 true, i1 %12
-  br i1 %or.cond41, label %select.unfold, label %bb.c
+  %3 = load ptr, ptr %0, align 8, !tbaa !34       ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 40
+  store i32 97, ptr %4, align 8, !tbaa !37
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 44
+  store i32 %.031.lcssa, ptr %5, align 4, !tbaa !38
+  %6 = load ptr, ptr %0, align 8, !tbaa !34
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 2 uses
+  br i1 %or.cond40, label %.thread35, label %bb.c
 
 .thread35:                                        ; preds = %bb.b
-  %13 = load ptr, ptr %0, align 8, !tbaa !34      ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 40
-  store i32 97, ptr %14, align 8, !tbaa !37
-  %15 = getelementptr inbounds nuw i8, ptr %13, i64 44
-  store i32 %.031, ptr %15, align 4, !tbaa !38
-  %16 = load ptr, ptr %0, align 8, !tbaa !34
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 48
-  store i32 3, ptr %17, align 4, !tbaa !38
+  store i32 3, ptr %7, align 4, !tbaa !38
   %i.t = load ptr, ptr %0, align 8, !tbaa !34
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !39
   tail call void %i.v(ptr noundef nonnull %0, i32 noundef 4) #6
   br label %.loopexit
 
-bb.c:                                             ; preds = %10
-  %18 = load ptr, ptr %0, align 8, !tbaa !34      ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 40
-  store i32 97, ptr %19, align 8, !tbaa !37
-  %20 = getelementptr inbounds nuw i8, ptr %18, i64 44
-  store i32 %.031, ptr %20, align 4, !tbaa !38
-  %21 = load ptr, ptr %0, align 8, !tbaa !34
-  %22 = getelementptr inbounds nuw i8, ptr %21, i64 48
-  store i32 1, ptr %22, align 4, !tbaa !38
+bb.c:                                             ; preds = %bb.b
+  store i32 1, ptr %7, align 4, !tbaa !38
   %i.w = load ptr, ptr %0, align 8, !tbaa !34
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !39
@@ -91,12 +69,13 @@ bb.c:                                             ; preds = %10
   store i32 0, ptr %i.a, align 4, !tbaa !33
   br label %.loopexit
 
-select.unfold:                                    ; preds = %10, %8
+select.unfold:                                    ; preds = %bb.a, %bb.d
+  %.03146 = phi i32 [ %i.ai, %bb.d ], [ %i.b, %bb.a ]
   %i.z = load ptr, ptr %0, align 8, !tbaa !34     ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 40
   store i32 97, ptr %i.aa, align 8, !tbaa !37
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 44
-  store i32 %.031, ptr %i.ab, align 4, !tbaa !38
+  store i32 %.03146, ptr %i.ab, align 4, !tbaa !38
   %i.ac = load ptr, ptr %0, align 8, !tbaa !34
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
   store i32 2, ptr %i.ad, align 4, !tbaa !38
@@ -109,8 +88,9 @@ select.unfold:                                    ; preds = %10, %8
   br i1 %.not, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %select.unfold
-  %i.ai = load i32, ptr %i.a, align 4, !tbaa !33
-  br label %8
+  %i.ai = load i32, ptr %i.a, align 4, !tbaa !33  ; 3 uses
+  %8 = icmp slt i32 %i.ai, 192
+  br i1 %8, label %select.unfold, label %bb.b
 
 .loopexit:                                        ; preds = %select.unfold, %.thread35, %bb.c
   %.032 = phi i32 [ 1, %bb.c ], [ 1, %.thread35 ], [ 0, %select.unfold ]

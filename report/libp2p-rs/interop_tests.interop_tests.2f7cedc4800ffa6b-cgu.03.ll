@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_RNCINvNvMsg_NtNtNt
   %i.ac = phi i64 [ %i.bn, %_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i ], [ %.promoted1638.i, %bb.e ] ; 3 uses
   %i.ad = phi i64 [ %i.bo, %_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i ], [ %.promoted1531.i, %bb.e ] ; 3 uses
   %.sroa.0.2.i14.i.i.i13.i = phi i64 [ %.sroa.0.2.i14.i.i.i14.i, %_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i ], [ %.promoted25.i, %bb.e ]
-  %storemerge.i.i7.i.i = phi i64 [ %storemerge.i.i.i.i, %_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i ], [ %storemerge.i.i.i.lcssa22.i, %bb.e ] ; 6 uses
+  %storemerge.i.i7.i.i = phi i64 [ %storemerge.i.i.i.i, %_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i ], [ %storemerge.i.i.i.lcssa22.i, %bb.e ] ; 5 uses
   %.sroa.01.0.i.i.i.i.i = phi i64 [ %i.bp, %_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i ], [ 0, %bb.e ] ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.w, i64 %.sroa.01.0.i.i.i.i.i
   %.val8.i.i.i.i.i = load i8, ptr %i.ae, align 1, !alias.scope !3620, !noalias !3621, !noundef !10 ; 2 uses
@@ -253,9 +253,6 @@ bb.f:                                             ; preds = %_RNvNtNtCskKLDkoKar
   store i64 %i.bd, ptr %i.u, align 8, !alias.scope !3624, !noalias !3623
   %i.be = xor i64 %i.ay, %i.an                    ; 3 uses
   store i64 %i.be, ptr %1, align 8, !alias.scope !3622, !noalias !3623
-  %.not5.i.i = icmp ne i64 %storemerge.i.i7.i.i, 7 ; 2 uses
-  %spec.select.i = zext i1 %.not5.i.i to i64
-  %spec.select60.i = select i1 %.not5.i.i, i64 %i.aj, i64 0
   br label %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i
 
 bb.g:                                             ; preds = %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit.i.i.i.i
@@ -263,30 +260,29 @@ bb.g:                                             ; preds = %_RNvNtNtCskKLDkoKar
   br label %_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i
 
 _RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i: ; preds = %bb.f, %..thread.i_crit_edge.i
-  %.promoted1848.i = phi i64 [ %i.bd, %bb.f ], [ %.promoted1850.i, %..thread.i_crit_edge.i ]
-  %.promoted1741.i = phi i64 [ %i.ba, %bb.f ], [ %.promoted1743.i, %..thread.i_crit_edge.i ]
-  %.promoted1634.i = phi i64 [ %i.be, %bb.f ], [ %.promoted1636.i, %..thread.i_crit_edge.i ]
-  %.promoted1527.i = phi i64 [ %i.bc, %bb.f ], [ %.promoted1529.i, %..thread.i_crit_edge.i ]
-  %i.bg = phi i64 [ %i.bd, %bb.f ], [ %i.aa, %..thread.i_crit_edge.i ]
-  %i.bh = phi i64 [ %i.ba, %bb.f ], [ %i.ab, %..thread.i_crit_edge.i ]
-  %i.bi = phi i64 [ %i.be, %bb.f ], [ %i.ac, %..thread.i_crit_edge.i ]
-  %i.bj = phi i64 [ %i.bc, %bb.f ], [ %i.ad, %..thread.i_crit_edge.i ]
-  %i.bk = phi i64 [ %spec.select.i, %bb.f ], [ 1, %..thread.i_crit_edge.i ]
-  %.sroa.0.2.i14.i.i.i.i = phi i64 [ %spec.select60.i, %bb.f ], [ %.pre.i, %..thread.i_crit_edge.i ] ; 2 uses
-  store i64 %.sroa.0.2.i14.i.i.i.i, ptr %i.r, align 8, !alias.scope !3622, !noalias !3623
+  %.promoted1741.i = phi i64 [ %.pre.i, %..thread.i_crit_edge.i ], [ %i.aj, %bb.f ] ; 2 uses
+  %.promoted1634.i = phi i64 [ %.promoted1850.i, %..thread.i_crit_edge.i ], [ %i.bd, %bb.f ]
+  %.promoted1527.i = phi i64 [ %.promoted1743.i, %..thread.i_crit_edge.i ], [ %i.ba, %bb.f ]
+  %i.bg = phi i64 [ %.promoted1636.i, %..thread.i_crit_edge.i ], [ %i.be, %bb.f ]
+  %i.bh = phi i64 [ %.promoted1529.i, %..thread.i_crit_edge.i ], [ %i.bc, %bb.f ]
+  %i.bi = phi i64 [ %i.aa, %..thread.i_crit_edge.i ], [ %i.bd, %bb.f ]
+  %i.bj = phi i64 [ %i.ab, %..thread.i_crit_edge.i ], [ %i.ba, %bb.f ]
+  %i.bk = phi i64 [ %i.ac, %..thread.i_crit_edge.i ], [ %i.be, %bb.f ]
+  %.sroa.0.2.i14.i.i.i.i = phi i64 [ %i.ad, %..thread.i_crit_edge.i ], [ %i.bc, %bb.f ]
+  store i64 %.promoted1741.i, ptr %i.r, align 8, !alias.scope !3622, !noalias !3623
   br label %_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i
 
 _RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write.exit.i.i: ; preds = %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i, %bb.g
-  %.promoted1847.i = phi i64 [ %.promoted1850.i, %bb.g ], [ %.promoted1848.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
-  %.promoted1740.i = phi i64 [ %.promoted1743.i, %bb.g ], [ %.promoted1741.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
-  %.promoted1633.i = phi i64 [ %.promoted1636.i, %bb.g ], [ %.promoted1634.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
-  %.promoted1526.i = phi i64 [ %.promoted1529.i, %bb.g ], [ %.promoted1527.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
-  %i.bl = phi i64 [ %i.aa, %bb.g ], [ %i.bg, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ]
-  %i.bm = phi i64 [ %i.ab, %bb.g ], [ %i.bh, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ]
-  %i.bn = phi i64 [ %i.ac, %bb.g ], [ %i.bi, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ]
-  %i.bo = phi i64 [ %i.ad, %bb.g ], [ %i.bj, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ]
-  %.sroa.0.2.i14.i.i.i14.i = phi i64 [ %i.an, %bb.g ], [ %.sroa.0.2.i14.i.i.i.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
-  %storemerge.i.i.i.i = phi i64 [ %i.bf, %bb.g ], [ %i.bk, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 3 uses
+  %.promoted1847.i = phi i64 [ %.promoted1850.i, %bb.g ], [ %.promoted1634.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
+  %.promoted1740.i = phi i64 [ %.promoted1743.i, %bb.g ], [ %.promoted1527.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
+  %.promoted1633.i = phi i64 [ %.promoted1636.i, %bb.g ], [ %i.bg, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
+  %.promoted1526.i = phi i64 [ %.promoted1529.i, %bb.g ], [ %i.bh, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
+  %i.bl = phi i64 [ %i.aa, %bb.g ], [ %i.bi, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ]
+  %i.bm = phi i64 [ %i.ab, %bb.g ], [ %i.bj, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ]
+  %i.bn = phi i64 [ %i.ac, %bb.g ], [ %i.bk, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ]
+  %i.bo = phi i64 [ %i.ad, %bb.g ], [ %.sroa.0.2.i14.i.i.i.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ]
+  %.sroa.0.2.i14.i.i.i14.i = phi i64 [ %i.an, %bb.g ], [ %.promoted1741.i, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 2 uses
+  %storemerge.i.i.i.i = phi i64 [ %i.bf, %bb.g ], [ 1, %_RNvNtNtCskKLDkoKarTP_4core4hash3sip9u8to64_le.exit17.i.i.i.i ] ; 3 uses
   %i.bp = add nuw nsw i64 %.sroa.01.0.i.i.i.i.i, 1 ; 2 uses
   %i.bq = icmp eq i64 %i.bp, %i.y
   br i1 %i.bq, label %_RNCINvNvMsg_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtBa_13FlattenCompatppE9iter_fold7flattenRShuNCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator4fold7flattenINtNtNtBg_5slice4iter4IterhEuNCINvNvB1W_8for_each4callRhNCINvXsa_NtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6domain4nameNtB3K_4NameNtNtBg_4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherE0E0E0E0Cs44McOc0n4RX_13interop_tests.exit.loopexit.i.i, label %.preheader.i

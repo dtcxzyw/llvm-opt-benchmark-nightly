@@ -201,12 +201,12 @@ bb.k:                                             ; preds = %bb.a, %bb.b, %.crit
   ret i32 %.1
 }
 
-; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 -20, 1) i32 @zcvrs(ptr nofree noundef captures(none) %0) #4 {
 bb.a:
-  %i.a = alloca [31 x i8], align 16               ; 3 uses
+  %i.a = alloca [31 x i8], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 31 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 31
   %i.c = getelementptr inbounds i8, ptr %0, i64 -8
   %i.d = load i16, ptr %i.c, align 8, !tbaa !13
   %i.e = and i16 %i.d, 252
@@ -215,7 +215,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds i8, ptr %0, i64 -16
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !14   ; 4 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !14   ; 2 uses
   %i.i = add i64 %i.h, -37
   %or.cond = icmp ult i64 %i.i, -35
   br i1 %or.cond, label %bb.j, label %bb.c
@@ -239,38 +239,28 @@ bb.e:                                             ; preds = %bb.d
   %i.r = load i16, ptr %i.q, align 8, !tbaa !13
   %i.s = and i16 %i.r, 252
   %cond = icmp eq i16 %i.s, 20
-  br i1 %cond, label %1, label %bb.j
+  br i1 %cond, label %bb.f, label %bb.j
 
-1:                                                ; preds = %bb.e
-  %2 = load i64, ptr %i.p, align 8, !tbaa !14     ; 2 uses
-  %3 = tail call i64 @llvm.abs.i64(i64 %2, i1 true)
-  br label %bb.f
-
-bb.f:                                             ; preds = %bb.f, %1
-  %.036 = phi i64 [ %3, %1 ], [ %5, %bb.f ]       ; 3 uses
-  %.035 = phi ptr [ %i.b, %1 ], [ %4, %bb.f ]     ; 2 uses
-  %i.t = urem i64 %.036, %i.h                     ; 2 uses
+bb.f:                                             ; preds = %bb.e
+  %1 = load i64, ptr %i.p, align 8, !tbaa !14     ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 30 ; 2 uses
+  %3 = tail call i64 @llvm.abs.i64(i64 %1, i1 true)
+  %i.t = urem i64 %3, %i.h                        ; 2 uses
   %i.u = trunc nuw nsw i64 %i.t to i8
   %i.v = icmp samesign ult i64 %i.t, 10
   %i.w = select i1 %i.v, i8 48, i8 55
   %i.x = add nuw nsw i8 %i.w, %i.u
-  %4 = getelementptr inbounds i8, ptr %.035, i64 -1 ; 3 uses
-  store i8 %i.x, ptr %4, align 1, !tbaa !14
-  %5 = udiv i64 %.036, %i.h
-  %.not = icmp ugt i64 %i.h, %.036
-  br i1 %.not, label %6, label %bb.f, !llvm.loop !28
+  store i8 %i.x, ptr %2, align 2, !tbaa !14
+  %4 = icmp slt i64 %1, 0
+  br i1 %4, label %bb.g, label %bb.h
 
-6:                                                ; preds = %bb.f
-  %7 = icmp slt i64 %2, 0
-  br i1 %7, label %bb.g, label %bb.h
-
-bb.g:                                             ; preds = %6
-  %i.y = getelementptr inbounds i8, ptr %.035, i64 -2 ; 2 uses
+bb.g:                                             ; preds = %bb.f
+  %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 29 ; 2 uses
   store i8 45, ptr %i.y, align 1, !tbaa !14
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %6
-  %.1 = phi ptr [ %i.y, %bb.g ], [ %4, %6 ]       ; 2 uses
+bb.h:                                             ; preds = %bb.g, %bb.f
+  %.1 = phi ptr [ %i.y, %bb.g ], [ %2, %bb.f ]    ; 2 uses
   %i.z = ptrtoint ptr %i.b to i64
   %i.aa = ptrtoint ptr %.1 to i64
   %i.ab = sub i64 %i.z, %i.aa                     ; 3 uses
@@ -383,7 +373,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ad = call i32 @dict_next(ptr noundef nonnull @dstack, i32 noundef %i.w, ptr noundef nonnull %2) #8 ; 2 uses
   %i.ae = icmp sgt i32 %i.ad, -1
-  br i1 %i.ae, label %bb.h, label %._crit_edge, !llvm.loop !29
+  br i1 %i.ae, label %bb.h, label %._crit_edge, !llvm.loop !27
 
 bb.k:                                             ; preds = %bb.i
   call void @name_string_ref(ptr noundef nonnull %2, ptr noundef nonnull %1) #8
@@ -489,7 +479,7 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
@@ -527,7 +517,6 @@ attributes #9 = { nounwind willreturn memory(read) }
 !24 = !{!21, !8, i64 40}
 !25 = !{!11, !11, i64 0}
 !26 = !{i64 0, i64 8, !14, i64 8, i64 2, !25, i64 10, i64 2, !25}
-!27 = !{!"llvm.loop.mustprogress"}
-!28 = distinct !{!28, !27}
-!29 = distinct !{!29, !27}
+!27 = distinct !{!27, !28}
+!28 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

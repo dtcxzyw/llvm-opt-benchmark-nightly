@@ -205,33 +205,27 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %.sroa.0.023 = phi i32 [ %.sroa.0.020, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
-  %.022 = phi i64 [ -1, %.lr.ph ], [ %.1, %bb.d ] ; 3 uses
-  %.01321 = phi i32 [ %i.a, %.lr.ph ], [ %.114, %bb.d ] ; 2 uses
+  %.022 = phi i64 [ -1, %.lr.ph ], [ %.1, %bb.d ] ; 2 uses
+  %.01321 = phi i32 [ %i.a, %.lr.ph ], [ %.114, %bb.d ]
   %i.n = zext i32 %.sroa.0.023 to i64
   %i.o = getelementptr inbounds nuw [56 x i8], ptr %i.j, i64 %i.n ; 2 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !839
   %i.q = zext i32 %i.p to i64                     ; 2 uses
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.q
-  %3 = load i32, ptr %2, align 4, !tbaa !455      ; 2 uses
   %i.r = getelementptr inbounds nuw [16 x i8], ptr %i.m, i64 %i.q
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   %i.t = load i32, ptr %i.s, align 4, !tbaa !841
-  %i.u = zext i32 %i.t to i64                     ; 3 uses
+  %i.u = zext i32 %i.t to i64                     ; 2 uses
   %i.v = icmp ugt i64 %.022, %i.u
-  br i1 %i.v, label %6, label %bb.c
+  br i1 %i.v, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %4 = icmp eq i64 %.022, %i.u
-  %5 = icmp ult i32 %3, %.01321
-  %or.cond = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond, label %6, label %bb.d
-
-6:                                                ; preds = %bb.c, %bb.b
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.q
+  %3 = load i32, ptr %2, align 4, !tbaa !455
   br label %bb.d
 
-bb.d:                                             ; preds = %6, %bb.c
-  %.114 = phi i32 [ %3, %6 ], [ %.01321, %bb.c ]  ; 2 uses
-  %.1 = phi i64 [ %i.u, %6 ], [ %.022, %bb.c ]
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.114 = phi i32 [ %3, %bb.c ], [ %.01321, %bb.b ] ; 2 uses
+  %.1 = phi i64 [ %i.u, %bb.c ], [ %.022, %bb.b ]
   %i.w = getelementptr inbounds nuw i8, ptr %i.o, i64 12
   %.sroa.0.0 = load i32, ptr %i.w, align 4, !tbaa !455 ; 2 uses
   %i.x = icmp eq i32 %.sroa.0.0, -1

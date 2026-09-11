@@ -204,18 +204,17 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i144.i.i.i: ;
   %.sroa.450.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.659.0..sroa_idx.i.i, align 8, !tbaa !94 ; 3 uses
   %.sroa.551.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.760.0..sroa_idx.i.i, align 4, !tbaa !94 ; 4 uses
   %.sroa.652.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.861.0..sroa_idx.i.i, align 8, !tbaa !94
-  %i.cgi = mul nuw nsw i64 %indvars.iv.i20.i.i, 6 ; 5 uses
+  %i.cgi = mul nuw nsw i64 %indvars.iv.i20.i.i, 6 ; 4 uses
   %i.cgj = icmp ne i32 %.sroa.450.0.copyload.i.i.i.i.i, 0
   call void @llvm.assume(i1 %i.cgj)
   %i.cgk = icmp sge i32 %.sroa.450.0.copyload.i.i.i.i.i, %.sroa.551.0.copyload.i.i.i.i.i
   call void @llvm.assume(i1 %i.cgk)
   %i.cgl = zext nneg i32 %.sroa.450.0.copyload.i.i.i.i.i to i64 ; 6 uses
-  %i.cgm = zext nneg i32 %.sroa.652.0.copyload.i.i.i.i.i to i64 ; 8 uses
+  %i.cgm = zext nneg i32 %.sroa.652.0.copyload.i.i.i.i.i to i64 ; 2 uses
   %i.cgn = zext i32 %i.cgh to i64
-  %i.cgo = add nuw nsw i64 %i.cgi, 2              ; 4 uses
+  %i.cgo = add nuw nsw i64 %i.cgi, 2              ; 3 uses
   %i.cgp = icmp samesign ule i64 %i.cgo, %i.cgm
   call void @llvm.assume(i1 %i.cgp)
-  %12 = icmp samesign ult i64 %i.cgi, %i.cgm
   %i.cgq = mul nuw nsw i64 %i.cgi, %i.cgl
   %i.cgr = getelementptr inbounds nuw [2 x i8], ptr %.sroa.049.0.copyload.i.i.i.i.i, i64 %i.cgq ; 2 uses
   %i.cgs = load i32, ptr %i.ek, align 4, !tbaa !253 ; 2 uses
@@ -227,63 +226,52 @@ _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i144.i.i.i: ;
   %.sroa.0.0.copyload.i.i34.i.i.i.i.i = load ptr, ptr %i.ec, align 8, !tbaa !229, !noalias !272 ; 12 uses
   %i.cgx = zext nneg i32 %i.cgw to i64
   %i.cgy = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cgx
-  call void @llvm.assume(i1 %12)
   %i.cgz = mul nuw nsw i32 %i.cgt, 7
   %i.cha = zext nneg i32 %i.cgz to i64
   %i.chb = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cha
-  %i.chc = or disjoint i64 %i.cgi, 1              ; 2 uses
-  %13 = icmp samesign ult i64 %i.chc, %i.cgm
+  %i.chc = or disjoint i64 %i.cgi, 1
   %i.chd = mul nuw nsw i64 %i.chc, %i.cgl
   %i.che = getelementptr inbounds nuw [2 x i8], ptr %.sroa.049.0.copyload.i.i.i.i.i, i64 %i.chd ; 2 uses
   %i.chf = shl nuw nsw i32 %i.cgt, 3
   %i.chg = zext nneg i32 %i.chf to i64
   %i.chh = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.chg
-  call void @llvm.assume(i1 %13)
   %i.chi = mul nuw nsw i32 %i.cgt, 15
   %i.chj = zext nneg i32 %i.chi to i64
   %i.chk = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.chj
-  %i.chl = add nuw nsw i64 %i.cgi, 4              ; 4 uses
+  %i.chl = add nuw nsw i64 %i.cgi, 4              ; 3 uses
   %i.chm = icmp samesign ule i64 %i.chl, %i.cgm
   call void @llvm.assume(i1 %i.chm)
-  %14 = icmp samesign ult i64 %i.cgo, %i.cgm
   %i.chn = mul nuw nsw i64 %i.cgo, %i.cgl
   %i.cho = getelementptr inbounds nuw [2 x i8], ptr %.sroa.049.0.copyload.i.i.i.i.i, i64 %i.chn ; 2 uses
   %i.chp = mul nuw nsw i32 %i.cgt, 3
   %i.chq = zext nneg i32 %i.chp to i64
   %i.chr = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.chq
-  call void @llvm.assume(i1 %14)
   %i.chs = mul nuw nsw i32 %i.cgt, 9
   %i.cht = zext nneg i32 %i.chs to i64
   %i.chu = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cht
-  %i.chv = or disjoint i64 %i.cgo, 1              ; 2 uses
-  %15 = icmp samesign ult i64 %i.chv, %i.cgm
+  %i.chv = or disjoint i64 %i.cgo, 1
   %i.chw = mul nuw nsw i64 %i.chv, %i.cgl
   %i.chx = getelementptr inbounds nuw [2 x i8], ptr %.sroa.049.0.copyload.i.i.i.i.i, i64 %i.chw ; 2 uses
   %i.chy = mul nuw nsw i32 %i.cgt, 10
   %i.chz = zext nneg i32 %i.chy to i64
   %i.cia = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.chz
-  call void @llvm.assume(i1 %15)
   %i.cib = shl nuw nsw i32 %i.cgt, 4
   %i.cic = zext nneg i32 %i.cib to i64
   %i.cid = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cic
-  %16 = icmp samesign ult i64 %i.chl, %i.cgm
   %i.cie = mul nuw nsw i64 %i.chl, %i.cgl
   %i.cif = getelementptr inbounds nuw [2 x i8], ptr %.sroa.049.0.copyload.i.i.i.i.i, i64 %i.cie ; 2 uses
   %i.cig = shl nuw nsw i32 %i.cgt, 2
   %i.cih = zext nneg i32 %i.cig to i64
   %i.cii = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cih
-  call void @llvm.assume(i1 %16)
   %i.cij = mul nuw nsw i32 %i.cgt, 11
   %i.cik = zext nneg i32 %i.cij to i64
   %i.cil = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cik
-  %i.cim = or disjoint i64 %i.chl, 1              ; 2 uses
-  %17 = icmp samesign ult i64 %i.cim, %i.cgm
+  %i.cim = or disjoint i64 %i.chl, 1
   %i.cin = mul nuw nsw i64 %i.cim, %i.cgl
   %i.cio = getelementptr inbounds nuw [2 x i8], ptr %.sroa.049.0.copyload.i.i.i.i.i, i64 %i.cin ; 2 uses
   %i.cip = mul nuw nsw i32 %i.cgt, 12
   %i.ciq = zext nneg i32 %i.cip to i64
   %i.cir = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.ciq
-  call void @llvm.assume(i1 %17)
   %i.cis = mul nuw nsw i32 %i.cgt, 17
   %i.cit = zext nneg i32 %i.cis to i64
   %i.ciu = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.0.copyload.i.i34.i.i.i.i.i, i64 %i.cit
