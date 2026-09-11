@@ -204,8 +204,8 @@ bb.a:
   br i1 %i.bw, label %.noexc56.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.backedge, %bb.x
-  %.sroa.0.069.i = phi ptr [ %.sroa.0.1.i, %bb.x ], [ %i.bv, %.backedge ] ; 40 uses
-  %.sroa.21.067.i = phi i64 [ %.sroa.21.1.i, %bb.x ], [ %i.bu, %.backedge ] ; 43 uses
+  %.sroa.0.069.i = phi ptr [ %.sroa.0.1.i, %bb.x ], [ %i.bv, %.backedge ] ; 39 uses
+  %.sroa.21.067.i = phi i64 [ %.sroa.21.1.i, %bb.x ], [ %i.bu, %.backedge ] ; 42 uses
   %i.bx = load i8, ptr %.sroa.0.069.i, align 1, !noundef !5 ; 6 uses
   switch i8 %i.bx, label %bb.aa [
     i8 47, label %bb.b
@@ -388,12 +388,12 @@ bb.w:                                             ; preds = %bb.v
   %i.do = icmp sgt i8 %i.dn, -65
   br i1 %i.do, label %.noexc56.thread171, label %.loopexit230.invoke
 
-.loopexit230.invoke:                              ; preds = %.split3.i.i.i95, %bb.dw, %bb.cm, %bb.bd, %bb.be, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i, %bb.ay, %bb.az, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i, %.split.i.i.i, %bb.au, %.split3.i.i52.i.i, %bb.as, %.split3.i.i.i.i, %bb.an, %.split3.i.i12.i, %bb.ak, %bb.z, %bb.w, %.split3.i.i.i, %bb.j, %bb.bn
-  %i.dp = phi ptr [ %.sroa.0.069.i, %.split3.i.i12.i ], [ %.sroa.05.0.i, %bb.bn ], [ %.sroa.0.069.i, %bb.j ], [ %.sroa.0.069.i, %.split3.i.i.i ], [ %.sroa.0.069.i, %bb.w ], [ %.sroa.0.069.i, %bb.z ], [ %.sroa.0.069.i, %bb.ak ], [ %.sroa.0.061.i, %.split3.i.i52.i.i ], [ %.sroa.0.061.i, %.split3.i.i.i.i ], [ %.sroa.0.061.i, %.split3.i.i.i95 ], [ %.sroa.0.061.i, %bb.dw ], [ %.sroa.0.061.i, %bb.an ], [ %.sroa.0.061.i, %bb.as ], [ %.sroa.0.061.i, %bb.au ], [ %.sroa.544.0.copyload.i.i, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ %.sroa.544.0.copyload.i.i, %bb.az ], [ %.sroa.0.061.i, %bb.cm ], [ %.sroa.534.0.copyload.i.i, %bb.be ], [ %.sroa.534.0.copyload.i.i, %bb.bd ], [ %.sroa.544.0.copyload.i.i, %bb.ay ], [ %.sroa.534.0.copyload.i.i, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ %.sroa.0.061.i, %.split.i.i.i ]
-  %i.dq = phi i64 [ %.sroa.21.067.i, %.split3.i.i12.i ], [ %.sroa.710.0.i, %bb.bn ], [ %.sroa.21.067.i, %bb.j ], [ %.sroa.21.067.i, %.split3.i.i.i ], [ %.sroa.21.067.i, %bb.w ], [ %.sroa.21.067.i, %bb.z ], [ %.sroa.21.067.i, %bb.ak ], [ %.sroa.21.066.i, %.split3.i.i52.i.i ], [ %.sroa.21.066.i, %.split3.i.i.i.i ], [ %.sroa.21.066.i, %.split3.i.i.i95 ], [ %.sroa.21.066.i, %bb.dw ], [ %.sroa.21.066.i, %bb.an ], [ %.sroa.21.066.i, %bb.as ], [ %.sroa.21.066.i, %bb.au ], [ %.sroa.645.0.copyload.i.i, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ %.sroa.645.0.copyload.i.i, %bb.az ], [ %.sroa.21.066.i, %bb.cm ], [ %.sroa.635.0.copyload.i.i, %bb.be ], [ %.sroa.635.0.copyload.i.i, %bb.bd ], [ %.sroa.645.0.copyload.i.i, %bb.ay ], [ %.sroa.635.0.copyload.i.i, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ %.sroa.21.066.i, %.split.i.i.i ]
-  %i.dr = phi i64 [ 0, %.split3.i.i12.i ], [ %i.ja, %bb.bn ], [ 0, %bb.j ], [ 0, %.split3.i.i.i ], [ 0, %bb.w ], [ 0, %bb.z ], [ 0, %bb.ak ], [ 0, %.split3.i.i52.i.i ], [ 0, %.split3.i.i.i.i ], [ 0, %.split3.i.i.i95 ], [ 0, %bb.dw ], [ 0, %bb.an ], [ 0, %bb.as ], [ 3, %bb.au ], [ 3, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ 3, %bb.az ], [ 0, %bb.cm ], [ 3, %bb.be ], [ 3, %bb.bd ], [ 3, %bb.ay ], [ 3, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ 3, %.split.i.i.i ]
-  %i.ds = phi i64 [ %.sroa.02.0.i, %.split3.i.i12.i ], [ %.sroa.710.0.i, %bb.bn ], [ %.sroa.02.0.i, %bb.ak ], [ 1, %bb.z ], [ %i.dl, %bb.w ], [ 4, %.split3.i.i.i ], [ 4, %bb.j ], [ 3, %.split3.i.i52.i.i ], [ 3, %.split3.i.i.i.i ], [ 11, %.split3.i.i.i95 ], [ 11, %bb.dw ], [ 3, %bb.an ], [ 3, %bb.as ], [ %.sroa.21.066.i, %bb.au ], [ %i.hn, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ %i.hn, %bb.az ], [ 1, %bb.cm ], [ %i.hz, %bb.be ], [ %i.hz, %bb.bd ], [ %i.hn, %bb.ay ], [ %i.hz, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ %.sroa.21.066.i, %.split.i.i.i ]
-  %i.dt = phi ptr [ @3, %.split3.i.i12.i ], [ @12, %bb.bn ], [ @3, %bb.j ], [ @3, %.split3.i.i.i ], [ @3, %bb.w ], [ @3, %bb.z ], [ @3, %bb.ak ], [ @3, %.split3.i.i52.i.i ], [ @3, %.split3.i.i.i.i ], [ @3, %.split3.i.i.i95 ], [ @3, %bb.dw ], [ @3, %bb.an ], [ @3, %bb.as ], [ @28, %bb.au ], [ @29, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ @29, %bb.az ], [ @3, %bb.cm ], [ @30, %bb.be ], [ @30, %bb.bd ], [ @29, %bb.ay ], [ @30, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ @28, %.split.i.i.i ]
+.loopexit230.invoke:                              ; preds = %.split3.i.i.i95, %bb.dw, %bb.cm, %bb.bd, %bb.be, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i, %bb.ay, %bb.az, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i, %.split.i.i.i, %bb.au, %.split3.i.i52.i.i, %bb.as, %.split3.i.i.i.i, %bb.an, %.thread53.i, %bb.ak, %bb.z, %bb.w, %.split3.i.i.i, %bb.j, %bb.bn
+  %i.dp = phi ptr [ %.sroa.0.069.i, %.thread53.i ], [ %.sroa.05.0.i, %bb.bn ], [ %.sroa.0.069.i, %bb.j ], [ %.sroa.0.069.i, %.split3.i.i.i ], [ %.sroa.0.069.i, %bb.w ], [ %.sroa.0.069.i, %bb.z ], [ %.sroa.0.069.i, %bb.ak ], [ %.sroa.0.061.i, %.split3.i.i52.i.i ], [ %.sroa.0.061.i, %.split3.i.i.i.i ], [ %.sroa.0.061.i, %.split3.i.i.i95 ], [ %.sroa.0.061.i, %bb.dw ], [ %.sroa.0.061.i, %bb.an ], [ %.sroa.0.061.i, %bb.as ], [ %.sroa.0.061.i, %bb.au ], [ %.sroa.544.0.copyload.i.i, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ %.sroa.544.0.copyload.i.i, %bb.az ], [ %.sroa.0.061.i, %bb.cm ], [ %.sroa.534.0.copyload.i.i, %bb.be ], [ %.sroa.534.0.copyload.i.i, %bb.bd ], [ %.sroa.544.0.copyload.i.i, %bb.ay ], [ %.sroa.534.0.copyload.i.i, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ %.sroa.0.061.i, %.split.i.i.i ]
+  %i.dq = phi i64 [ %.sroa.21.067.i, %.thread53.i ], [ %.sroa.710.0.i, %bb.bn ], [ %.sroa.21.067.i, %bb.j ], [ %.sroa.21.067.i, %.split3.i.i.i ], [ %.sroa.21.067.i, %bb.w ], [ %.sroa.21.067.i, %bb.z ], [ %.sroa.21.067.i, %bb.ak ], [ %.sroa.21.066.i, %.split3.i.i52.i.i ], [ %.sroa.21.066.i, %.split3.i.i.i.i ], [ %.sroa.21.066.i, %.split3.i.i.i95 ], [ %.sroa.21.066.i, %bb.dw ], [ %.sroa.21.066.i, %bb.an ], [ %.sroa.21.066.i, %bb.as ], [ %.sroa.21.066.i, %bb.au ], [ %.sroa.645.0.copyload.i.i, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ %.sroa.645.0.copyload.i.i, %bb.az ], [ %.sroa.21.066.i, %bb.cm ], [ %.sroa.635.0.copyload.i.i, %bb.be ], [ %.sroa.635.0.copyload.i.i, %bb.bd ], [ %.sroa.645.0.copyload.i.i, %bb.ay ], [ %.sroa.635.0.copyload.i.i, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ %.sroa.21.066.i, %.split.i.i.i ]
+  %i.dr = phi i64 [ 0, %.thread53.i ], [ %i.ja, %bb.bn ], [ 0, %bb.j ], [ 0, %.split3.i.i.i ], [ 0, %bb.w ], [ 0, %bb.z ], [ 0, %bb.ak ], [ 0, %.split3.i.i52.i.i ], [ 0, %.split3.i.i.i.i ], [ 0, %.split3.i.i.i95 ], [ 0, %bb.dw ], [ 0, %bb.an ], [ 0, %bb.as ], [ 3, %bb.au ], [ 3, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ 3, %bb.az ], [ 0, %bb.cm ], [ 3, %bb.be ], [ 3, %bb.bd ], [ 3, %bb.ay ], [ 3, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ 3, %.split.i.i.i ]
+  %i.ds = phi i64 [ %.sroa.02.0.i, %.thread53.i ], [ %.sroa.710.0.i, %bb.bn ], [ %.sroa.02.0.i, %bb.ak ], [ 1, %bb.z ], [ %i.dl, %bb.w ], [ 4, %.split3.i.i.i ], [ 4, %bb.j ], [ 3, %.split3.i.i52.i.i ], [ 3, %.split3.i.i.i.i ], [ 11, %.split3.i.i.i95 ], [ 11, %bb.dw ], [ 3, %bb.an ], [ 3, %bb.as ], [ %.sroa.21.066.i, %bb.au ], [ %i.hn, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ %i.hn, %bb.az ], [ 1, %bb.cm ], [ %i.hz, %bb.be ], [ %i.hz, %bb.bd ], [ %i.hn, %bb.ay ], [ %i.hz, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ %.sroa.21.066.i, %.split.i.i.i ]
+  %i.dt = phi ptr [ @3, %.thread53.i ], [ @12, %bb.bn ], [ @3, %bb.j ], [ @3, %.split3.i.i.i ], [ @3, %bb.w ], [ @3, %bb.z ], [ @3, %bb.ak ], [ @3, %.split3.i.i52.i.i ], [ @3, %.split3.i.i.i.i ], [ @3, %.split3.i.i.i95 ], [ @3, %bb.dw ], [ @3, %bb.an ], [ @3, %bb.as ], [ @28, %bb.au ], [ @29, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit50.i.i ], [ @29, %bb.az ], [ @3, %bb.cm ], [ @30, %bb.be ], [ @30, %bb.bd ], [ @29, %bb.ay ], [ @30, %_RNvNtNtCshzWfHUSfYae_4core3str6traits11check_range.exit.i.i ], [ @28, %.split.i.i.i ]
   invoke void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dp, i64 noundef %i.dq, i64 noundef %i.dr, i64 noundef %i.ds, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dt) #19
           to label %.loopexit230.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -406,7 +406,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %.noexc56.thread171, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit9.i, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit.i, %.noexc50
   %.sroa.21.1.i = phi i64 [ %i.ea, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit9.i ], [ %i.gg, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i ], [ %i.cl, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit.i ], [ %i.ce, %.noexc50 ], [ %i.du, %.noexc56.thread171 ] ; 2 uses
-  %.sroa.0.1.i = phi ptr [ %i.dz, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit9.i ], [ %3, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i ], [ %i.ck, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit.i ], [ %i.cd, %.noexc50 ], [ %i.dm, %.noexc56.thread171 ] ; 2 uses
+  %.sroa.0.1.i = phi ptr [ %i.dz, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit9.i ], [ %i.gd, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i ], [ %i.ck, %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit.i ], [ %i.cd, %.noexc50 ], [ %i.dm, %.noexc56.thread171 ] ; 2 uses
   %i.dv = icmp eq i64 %.sroa.21.1.i, 0
   br i1 %i.dv, label %.noexc56.thread, label %.lr.ph.i
 
@@ -548,23 +548,18 @@ bb.aj:                                            ; preds = %_RNvNtNtNtCshzWfHUS
   br label %.thread53.i
 
 .thread53.i:                                      ; preds = %bb.ac, %.thread54.thread.i, %.thread54.i, %bb.aj
-  %.sroa.02.0.i = phi i64 [ 2, %bb.aj ], [ 3, %.thread54.thread.i ], [ 4, %.thread54.i ], [ 1, %bb.ac ] ; 7 uses
+  %.sroa.02.0.i = phi i64 [ 2, %bb.aj ], [ 3, %.thread54.thread.i ], [ 4, %.thread54.i ], [ 1, %bb.ac ] ; 5 uses
   %.not.i.i11.i = icmp ult i64 %.sroa.02.0.i, %.sroa.21.067.i
-  br i1 %.not.i.i11.i, label %bb.ak, label %.split3.i.i12.i
-
-.split3.i.i12.i:                                  ; preds = %.thread53.i
-  %2 = icmp eq i64 %.sroa.02.0.i, %.sroa.21.067.i
-  br i1 %2, label %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i, label %.loopexit230.invoke
+  br i1 %.not.i.i11.i, label %bb.ak, label %.loopexit230.invoke
 
 bb.ak:                                            ; preds = %.thread53.i
-  %i.gd = getelementptr inbounds nuw i8, ptr %.sroa.0.069.i, i64 %.sroa.02.0.i
+  %i.gd = getelementptr inbounds nuw i8, ptr %.sroa.0.069.i, i64 %.sroa.02.0.i ; 2 uses
   %i.ge = load i8, ptr %i.gd, align 1, !alias.scope !417, !noalias !418, !noundef !5
   %i.gf = icmp sgt i8 %i.ge, -65
   br i1 %i.gf, label %_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i, label %.loopexit230.invoke
 
-_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i: ; preds = %bb.ak, %.split3.i.i12.i
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.069.i, i64 %.sroa.02.0.i
-  %i.gg = sub i64 %.sroa.21.067.i, %.sroa.02.0.i
+_RNvMNtCsluekWoTk8SK_11proc_macro25parseNtB2_6Cursor7advance.exit13.i: ; preds = %bb.ak
+  %i.gg = sub nuw i64 %.sroa.21.067.i, %.sroa.02.0.i
   br label %bb.x
 
 .body:                                            ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit, %bb.eq, %bb.ej, %bb.eh, %bb.cz, %bb.da, %bb.co, %bb.bq, %bb.bt, %bb.ca, %bb.ce, %bb.cf, %bb.et, %bb.em

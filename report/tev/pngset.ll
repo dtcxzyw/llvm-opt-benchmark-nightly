@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.l
 
 .lr.ph:                                           ; preds = %.preheader, %bb.g
-  %i.d = phi i8 [ %i.o, %bb.g ], [ %i.c, %.preheader ] ; 5 uses
+  %i.d = phi i8 [ %i.o, %bb.g ], [ %i.c, %.preheader ] ; 4 uses
   %.059 = phi i32 [ %.1, %bb.g ], [ 1, %.preheader ]
-  %.04058 = phi i32 [ %.141, %bb.g ], [ 0, %.preheader ] ; 4 uses
+  %.04058 = phi i32 [ %.141, %bb.g ], [ 0, %.preheader ] ; 3 uses
   %.04257 = phi i32 [ %.143, %bb.g ], [ 0, %.preheader ] ; 3 uses
   %.04556 = phi ptr [ %.146, %bb.g ], [ %2, %.preheader ] ; 5 uses
   %.04855 = phi ptr [ %i.e, %bb.g ], [ %1, %.preheader ]
@@ -232,8 +232,6 @@ bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %.04556, i64 1
   store i8 32, ptr %.04556, align 1, !tbaa !10
   %i.m = add nuw nsw i32 %.04257, 1
-  %.not53 = icmp eq i8 %i.d, 32
-  %spec.select = select i1 %.not53, i32 %.04058, i32 %i.f
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -244,7 +242,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
   %.146 = phi ptr [ %i.i, %bb.c ], [ %i.l, %bb.e ], [ %.04556, %bb.f ] ; 2 uses
   %.143 = phi i32 [ %i.j, %bb.c ], [ %i.m, %bb.e ], [ %.04257, %bb.f ] ; 3 uses
-  %.141 = phi i32 [ %.04058, %bb.c ], [ %spec.select, %bb.e ], [ %spec.select54, %bb.f ] ; 2 uses
+  %.141 = phi i32 [ %.04058, %bb.c ], [ %i.f, %bb.e ], [ %spec.select54, %bb.f ] ; 2 uses
   %.1 = phi i32 [ 0, %bb.c ], [ 1, %bb.e ], [ 1, %bb.f ]
   %i.o = load i8, ptr %i.e, align 1, !tbaa !10    ; 2 uses
   %i.p = icmp ne i8 %i.o, 0

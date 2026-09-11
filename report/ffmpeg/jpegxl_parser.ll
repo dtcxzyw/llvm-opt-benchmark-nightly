@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b
   %.0317 = phi i32 [ %.1, %bb.v ], [ 0, %bb.e ]   ; 4 uses
   %.0326 = phi i64 [ %.133, %bb.v ], [ 0, %bb.e ] ; 3 uses
   %.0345 = phi i32 [ %.0353, %bb.v ], [ 0, %bb.e ] ; 5 uses
-  %.0353 = phi i32 [ %i.bb, %bb.v ], [ 0, %bb.e ] ; 10 uses
+  %.0353 = phi i32 [ %i.bb, %bb.v ], [ 0, %bb.e ] ; 8 uses
   %i.ab = icmp samesign ult i64 %.08, 129
   br i1 %i.ab, label %icc_context.exit, label %bb.f
 
@@ -221,17 +221,9 @@ bb.g:                                             ; preds = %bb.f
   %i.af = and i32 %.0353, 253
   %i.ag = icmp eq i32 %i.af, 44
   %or.cond9.i = or i1 %or.cond5.i, %i.ag
-  br i1 %or.cond9.i, label %bb.k, label %3
+  br i1 %or.cond9.i, label %bb.k, label %bb.h
 
-3:                                                ; preds = %bb.g
-  %4 = icmp samesign ult i32 %.0353, 2
-  br i1 %4, label %5, label %bb.h
-
-5:                                                ; preds = %3
-  %6 = add nuw nsw i32 %.0353, 3
-  br label %bb.k
-
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %bb.g
   %i.ah = icmp samesign ult i32 %.0353, 16
   br i1 %i.ah, label %bb.k, label %bb.i
 
@@ -246,8 +238,8 @@ bb.j:                                             ; preds = %bb.i
   %..i = select i1 %i.ak, i32 7, i32 8
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %5, %bb.g, %bb.f
-  %.052.i = phi i32 [ 6, %bb.i ], [ 1, %bb.f ], [ %6, %5 ], [ 2, %bb.g ], [ 5, %bb.h ], [ %..i, %bb.j ]
+bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
+  %.052.i = phi i32 [ 6, %bb.i ], [ 1, %bb.f ], [ %..i, %bb.j ], [ 2, %bb.g ], [ 5, %bb.h ]
   %i.al = and i32 %.0345, 223
   %i.am = add nsw i32 %i.al, -65
   %or.cond57.i = icmp ult i32 %i.am, 26

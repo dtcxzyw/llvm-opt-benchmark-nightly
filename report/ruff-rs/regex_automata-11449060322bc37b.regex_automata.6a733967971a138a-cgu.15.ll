@@ -204,10 +204,10 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %or.cond.not.i.i.i, label %_RNvMsh_NtNtCs98D8VPWzHuM_14regex_automata3dfa6sparseNtB5_5State7next_at.exit.i.i, label %.invoke.i, !prof !9
 
 .invoke.i:                                        ; preds = %bb.am, %bb.x, %bb.ad, %bb.g, %bb.e, %.lr.ph447.i, %bb.k
-  %i.dq = phi i64 [ 1, %bb.k ], [ 0, %bb.ad ], [ 0, %bb.x ], [ 0, %bb.g ], [ 0, %bb.e ], [ %i.ae, %.lr.ph447.i ], [ %i.do, %bb.am ]
-  %i.dr = phi i64 [ %i.bg, %bb.k ], [ 4, %bb.ad ], [ 4, %bb.x ], [ 4, %bb.g ], [ 2, %bb.e ], [ %.val215.i, %.lr.ph447.i ], [ %i.cj, %bb.am ]
-  %i.ds = phi i64 [ %.sroa.1130.0.i.i, %bb.k ], [ %.sroa.0.0.i.i688.i.i, %bb.ad ], [ %.sroa.0.0.i.i673.i.i, %bb.x ], [ %i.at, %bb.g ], [ %i.ag, %bb.e ], [ %.val215.i, %.lr.ph447.i ], [ %i.cj, %bb.am ]
-  %i.dt = phi ptr [ @64, %bb.k ], [ @130, %bb.ad ], [ @129, %bb.x ], [ @139, %bb.g ], [ @138, %bb.e ], [ @65, %.lr.ph447.i ], [ @118, %bb.am ]
+  %i.dq = phi i64 [ 0, %bb.g ], [ 0, %bb.ad ], [ 0, %bb.x ], [ 1, %bb.k ], [ 0, %bb.e ], [ %i.ae, %.lr.ph447.i ], [ %i.do, %bb.am ]
+  %i.dr = phi i64 [ 4, %bb.g ], [ 4, %bb.ad ], [ 4, %bb.x ], [ %i.bg, %bb.k ], [ 2, %bb.e ], [ %.val215.i, %.lr.ph447.i ], [ %i.cj, %bb.am ]
+  %i.ds = phi i64 [ %i.at, %bb.g ], [ %.sroa.0.0.i.i688.i.i, %bb.ad ], [ %.sroa.0.0.i.i673.i.i, %bb.x ], [ %.sroa.1130.0.i.i, %bb.k ], [ %i.ag, %bb.e ], [ %.val215.i, %.lr.ph447.i ], [ %i.cj, %bb.am ]
+  %i.dt = phi ptr [ @139, %bb.g ], [ @130, %bb.ad ], [ @129, %bb.x ], [ @64, %bb.k ], [ @138, %bb.e ], [ @65, %.lr.ph447.i ], [ @118, %bb.am ]
   invoke void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %i.dq, i64 noundef %i.dr, i64 noundef %i.ds, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.dt) #21
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !298
 

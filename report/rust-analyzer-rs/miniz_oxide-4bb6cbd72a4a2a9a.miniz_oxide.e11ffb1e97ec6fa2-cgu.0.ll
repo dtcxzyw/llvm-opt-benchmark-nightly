@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %_RNvMsb_NtNtCsjkkKz
   %i.eb = add nsw i64 %.sroa.04.2, -2             ; 3 uses
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.lcssa.i, i64 %i.eb
   store i16 0, ptr %i.ec, align 2, !alias.scope !70
-  br label %.lr.ph84.preheader.i
+  br label %.lr.ph84.i
 
 .lr.ph.i70:                                       ; preds = %bb.m, %bb.ac
   %.sroa.0.080.i = phi i64 [ %.sroa.0.2.i, %bb.ac ], [ 0, %bb.m ] ; 8 uses
@@ -224,6 +224,15 @@ bb.m:                                             ; preds = %_RNvMsb_NtNtCsjkkKz
   %i.eg = trunc nuw nsw i64 %i.dx to i32
   %i.eh = trunc nuw nsw i64 %.sroa.04.2 to i32
   br label %.preheader.i
+
+.lr.ph84.i:                                       ; preds = %._crit_edge.i72, %bb.r
+  %.sroa.036.082.i = phi i64 [ %5, %bb.r ], [ %i.eb, %._crit_edge.i72 ]
+  %5 = add nsw i64 %.sroa.036.082.i, -1           ; 3 uses
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.lcssa.i, i64 %5 ; 2 uses
+  %7 = load i16, ptr %6, align 2, !alias.scope !70, !noundef !4
+  %8 = zext i16 %7 to i64                         ; 3 uses
+  %9 = icmp samesign ugt i64 %.sroa.04.2, %8
+  br i1 %9, label %bb.r, label %bb.q
 
 .preheader.i:                                     ; preds = %._crit_edge98.i, %._crit_edge85.i
   %.sroa.020.0103.i = phi i32 [ 1, %._crit_edge85.i ], [ %i.eu, %._crit_edge98.i ] ; 2 uses
@@ -297,26 +306,17 @@ bb.p:                                             ; preds = %.lr.ph97.i
   call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %indvars.iv.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @35) #22, !noalias !70
   unreachable
 
-.lr.ph84.preheader.i:                             ; preds = %._crit_edge.i72, %bb.r
-  %.sroa.036.082.i = phi i64 [ %5, %bb.r ], [ %i.eb, %._crit_edge.i72 ]
-  %5 = add nsw i64 %.sroa.036.082.i, -1           ; 3 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.lcssa.i, i64 %5 ; 2 uses
-  %7 = load i16, ptr %6, align 2, !alias.scope !70, !noundef !4
-  %8 = zext i16 %7 to i64                         ; 3 uses
-  %9 = icmp samesign ugt i64 %.sroa.04.2, %8
-  br i1 %9, label %bb.r, label %bb.q
-
-bb.q:                                             ; preds = %.lr.ph84.preheader.i
+bb.q:                                             ; preds = %.lr.ph84.i
   call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %8, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #22, !noalias !70
   unreachable
 
-bb.r:                                             ; preds = %.lr.ph84.preheader.i
+bb.r:                                             ; preds = %.lr.ph84.i
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.lcssa.i, i64 %8
   %i.fc = load i16, ptr %i.fb, align 2, !alias.scope !70, !noundef !4
   %i.fd = add i16 %i.fc, 1
   store i16 %i.fd, ptr %6, align 2, !alias.scope !70
   %.not.i73 = icmp eq i64 %5, 0
-  br i1 %.not.i73, label %._crit_edge85.i.loopexit, label %.lr.ph84.preheader.i
+  br i1 %.not.i73, label %._crit_edge85.i.loopexit, label %.lr.ph84.i
 
 bb.s:                                             ; preds = %.lr.ph.i70
   %i.fe = icmp ult i64 %.sroa.0.080.i, %.sroa.04.2
@@ -350,6 +350,10 @@ bb.x:                                             ; preds = %bb.u, %.lr.ph.i70
   %i.fm = icmp ult i64 %.sroa.0.080.i, %.sroa.04.2
   br i1 %i.fm, label %bb.y, label %10
 
+10:                                               ; preds = %bb.x
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.080.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #22, !noalias !70
+  unreachable
+
 bb.y:                                             ; preds = %bb.x
   %i.fn = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.lcssa.i, i64 %.sroa.0.080.i ; 2 uses
   %i.fo = load i16, ptr %i.fn, align 2, !alias.scope !70, !noundef !4
@@ -359,10 +363,6 @@ bb.y:                                             ; preds = %bb.x
   store i16 %i.fq, ptr %i.fn, align 2, !alias.scope !70
   %i.fr = add nuw nsw i64 %.sroa.0.080.i, 1
   br label %bb.w
-
-10:                                               ; preds = %bb.x
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.080.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #22, !noalias !70
-  unreachable
 
 bb.z:                                             ; preds = %bb.w
   %i.fs = icmp ult i64 %.sroa.0.1.i, %.sroa.034.078.i

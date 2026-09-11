@@ -205,7 +205,7 @@ BIT_reloadDStream.exit29:                         ; preds = %bb.u, %bb.w, %bb.p,
   %.sroa.3.0.extract.shift.i304 = phi i32 [ %.sroa.3.0.extract.shift.i, %bb.z ], [ %.sroa.3.0.extract.shift.i, %bb.y ], [ %.sroa.3.0.extract.shift.i303.a, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %.sroa.3.0.extract.shift.i, %bb.aa ], [ %.sroa.3.0.extract.shift.i294, %.thread ], [ %.sroa.3.0.extract.shift.i303.a, %bb.p ], [ %.sroa.3.0.extract.shift.i303.a, %BIT_reloadDStream.exit29.loopexit331.split.loop.exit ], [ %.sroa.3.0.extract.shift.i303.a, %bb.r ], [ %.sroa.3.0.extract.shift.i303.a, %bb.w ], [ %.sroa.3.0.extract.shift.i303.a, %bb.u ] ; 2 uses
   %i.io = phi ptr [ %i.az, %bb.z ], [ %i.az, %bb.y ], [ %i.bm, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.az, %bb.aa ], [ %i.bi, %.thread ], [ %i.bm, %bb.p ], [ %i.bm, %BIT_reloadDStream.exit29.loopexit331.split.loop.exit ], [ %i.bm, %bb.r ], [ %i.bm, %bb.w ], [ %i.bm, %bb.u ] ; 3 uses
   %i.ip = phi ptr [ %i.ay, %bb.z ], [ %i.ay, %bb.y ], [ %i.bn, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.ay, %bb.aa ], [ %i.bh, %.thread ], [ %i.bn, %bb.p ], [ %i.bn, %BIT_reloadDStream.exit29.loopexit331.split.loop.exit ], [ %i.bn, %bb.r ], [ %i.bn, %bb.w ], [ %i.bn, %bb.u ] ; 2 uses
-  %.sroa.0.0 = phi i64 [ %.val.i, %bb.z ], [ %.val.i61, %bb.y ], [ %.sroa.0.5, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %.val30, %bb.aa ], [ %.sroa.0.9, %.thread ], [ %.sroa.0.4236, %bb.p ], [ %.sroa.0.6, %BIT_reloadDStream.exit29.loopexit331.split.loop.exit ], [ %.sroa.0.5, %bb.r ], [ %.sroa.0.3219, %bb.u ], [ %.sroa.0.6, %bb.w ] ; 3 uses
+  %.sroa.0.0 = phi i64 [ %.val.i, %bb.z ], [ %.val.i61, %bb.y ], [ %.sroa.0.5, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %.val30, %bb.aa ], [ %.sroa.0.9, %.thread ], [ %.sroa.0.4236, %bb.p ], [ %.sroa.0.6, %BIT_reloadDStream.exit29.loopexit331.split.loop.exit ], [ %.sroa.0.5, %bb.r ], [ %.sroa.0.3219, %bb.u ], [ %.sroa.0.6, %bb.w ] ; 2 uses
   %.sroa.31.0 = phi i32 [ %i.aw, %bb.z ], [ %i.ie, %bb.y ], [ %.sroa.31.7, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.im, %bb.aa ], [ %i.bg, %.thread ], [ %.sroa.31.5237, %bb.p ], [ %.sroa.31.8, %BIT_reloadDStream.exit29.loopexit331.split.loop.exit ], [ %i.fd, %bb.r ], [ %.sroa.31.4220, %bb.u ], [ %i.hu, %bb.w ] ; 4 uses
   %.sroa.9790.0 = phi ptr [ %.sroa.9790.9177.ptr.ptr.ptr, %bb.z ], [ %i.id, %bb.y ], [ %.sroa.9790.5.le, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %i.ik, %bb.aa ], [ %2, %.thread ], [ %2, %bb.p ], [ %.sroa.9790.6.le, %BIT_reloadDStream.exit29.loopexit331.split.loop.exit ], [ @BIT_reloadDStream.zeroFilled, %bb.r ], [ %2, %bb.u ], [ @BIT_reloadDStream.zeroFilled, %bb.w ] ; 2 uses
   %.4.i = phi ptr [ %0, %bb.z ], [ %0, %bb.y ], [ %.0.i239, %BIT_reloadDStream.exit29.loopexit.split.loop.exit ], [ %0, %bb.aa ], [ %0, %.thread ], [ %.0.i239, %bb.p ], [ %.1.i5222, %BIT_reloadDStream.exit29.loopexit331.split.loop.exit ], [ %i.fh, %bb.r ], [ %.1.i5222, %bb.u ], [ %i.hy, %bb.w ] ; 4 uses
@@ -224,53 +224,47 @@ BIT_reloadDStream.exit29:                         ; preds = %bb.u, %bb.w, %bb.p,
   br i1 %i.iy, label %.preheader, label %.lr.ph13, !prof !28
 
 .lr.ph13:                                         ; preds = %.preheader202, %bb.ad
-  %.5.i12 = phi ptr [ %i.jt, %bb.ad ], [ %.4.i, %.preheader202 ] ; 5 uses
-  %.sroa.9790.211 = phi ptr [ %.sroa.9790.7, %bb.ad ], [ %.sroa.9790.0, %.preheader202 ] ; 6 uses
-  %.sroa.31.210 = phi i32 [ %i.jp, %bb.ad ], [ %.sroa.31.0, %.preheader202 ] ; 5 uses
-  %.sroa.0.29 = phi i64 [ %.sroa.0.7, %bb.ad ], [ %.sroa.0.0, %.preheader202 ]
+  %.5.i12 = phi ptr [ %i.jt, %bb.ad ], [ %.4.i, %.preheader202 ] ; 4 uses
+  %.sroa.9790.211 = phi ptr [ %.sroa.9790.7, %bb.ad ], [ %.sroa.9790.0, %.preheader202 ] ; 4 uses
+  %.sroa.31.210 = phi i32 [ %i.jp, %bb.ad ], [ %.sroa.31.0, %.preheader202 ] ; 3 uses
   %.not.i16 = icmp ult ptr %.sroa.9790.211, %i.b
-  br i1 %.not.i16, label %6, label %bb.ab
+  %5 = lshr i32 %.sroa.31.210, 3                  ; 2 uses
+  %6 = zext nneg i32 %5 to i64
+  %7 = sub nsw i64 0, %6
+  %8 = getelementptr inbounds i8, ptr %.sroa.9790.211, i64 %7 ; 2 uses
+  br i1 %.not.i16, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph13
-  %5 = lshr i32 %.sroa.31.210, 3
   %i.iz = and i32 %.sroa.31.210, 7
   br label %BIT_reloadDStream.exit22
 
-6:                                                ; preds = %.lr.ph13
-  %7 = icmp eq ptr %.sroa.9790.211, %2
-  br i1 %7, label %.preheader, label %bb.ac
-
-bb.ac:                                            ; preds = %6
-  %8 = lshr i32 %.sroa.31.210, 3                  ; 2 uses
-  %9 = zext nneg i32 %8 to i64
-  %i.ja = sub nsw i64 0, %9
-  %10 = getelementptr inbounds i8, ptr %.sroa.9790.211, i64 %i.ja
-  %11 = icmp uge ptr %10, %2                      ; 2 uses
-  %12 = ptrtoint ptr %.sroa.9790.211 to i64
-  %i.jb = sub i64 %12, %i.iu
-  %13 = trunc i64 %i.jb to i32
-  %.021.i18 = select i1 %11, i32 %8, i32 %13      ; 2 uses
+bb.ac:                                            ; preds = %.lr.ph13
+  %9 = icmp uge ptr %8, %2                        ; 2 uses
+  %10 = ptrtoint ptr %.sroa.9790.211 to i64
+  %i.ja = sub i64 %10, %i.iu
+  %11 = trunc i64 %i.ja to i32
+  %.021.i18 = select i1 %9, i32 %5, i32 %11       ; 2 uses
+  %12 = zext i32 %.021.i18 to i64
+  %i.jb = sub nsw i64 0, %12
+  %13 = getelementptr inbounds i8, ptr %.sroa.9790.211, i64 %i.jb
   %i.jc = shl i32 %.021.i18, 3
   %i.jd = sub i32 %.sroa.31.210, %i.jc
   br label %BIT_reloadDStream.exit22
 
 BIT_reloadDStream.exit22:                         ; preds = %bb.ab, %bb.ac
   %.sroa.31.9 = phi i32 [ %i.iz, %bb.ab ], [ %i.jd, %bb.ac ] ; 3 uses
-  %.pn358.in = phi i32 [ %5, %bb.ab ], [ %.021.i18, %bb.ac ]
-  %.022.i17 = phi i1 [ true, %bb.ab ], [ %11, %bb.ac ]
-  %.pn358 = zext i32 %.pn358.in to i64
-  %.pn357 = sub nsw i64 0, %.pn358
-  %.sroa.9790.7 = getelementptr inbounds i8, ptr %.sroa.9790.211, i64 %.pn357 ; 3 uses
-  %.sroa.0.7 = load i64, ptr %.sroa.9790.7, align 1, !tbaa !22 ; 4 uses
+  %.sroa.9790.7 = phi ptr [ %8, %bb.ab ], [ %13, %bb.ac ] ; 3 uses
+  %.022.i17 = phi i1 [ true, %bb.ab ], [ %9, %bb.ac ]
+  %.sroa.0.7 = load i64, ptr %.sroa.9790.7, align 1, !tbaa !22 ; 3 uses
   %i.je = icmp ule ptr %.5.i12, %i.it
   %i.jf = and i1 %i.je, %.022.i17
   br i1 %i.jf, label %bb.ad, label %.preheader
 
-.preheader:                                       ; preds = %BIT_reloadDStream.exit22, %bb.ad, %6, %.preheader202
-  %.5.i.lcssa = phi ptr [ %.4.i, %.preheader202 ], [ %.5.i12, %BIT_reloadDStream.exit22 ], [ %i.jt, %bb.ad ], [ %.5.i12, %6 ] ; 3 uses
-  %.sroa.9790.7330 = phi ptr [ @BIT_reloadDStream.zeroFilled, %.preheader202 ], [ %.sroa.9790.7, %BIT_reloadDStream.exit22 ], [ @BIT_reloadDStream.zeroFilled, %bb.ad ], [ %.sroa.9790.211, %6 ] ; 2 uses
-  %.sroa.31.9329 = phi i32 [ %.sroa.31.0, %.preheader202 ], [ %.sroa.31.9, %BIT_reloadDStream.exit22 ], [ %i.jp, %bb.ad ], [ %.sroa.31.210, %6 ] ; 2 uses
-  %.sroa.0.7328 = phi i64 [ %.sroa.0.0, %.preheader202 ], [ %.sroa.0.7, %BIT_reloadDStream.exit22 ], [ %.sroa.0.7, %bb.ad ], [ %.sroa.0.29, %6 ] ; 3 uses
+.preheader:                                       ; preds = %BIT_reloadDStream.exit22, %bb.ad, %.preheader202
+  %.5.i.lcssa = phi ptr [ %.4.i, %.preheader202 ], [ %.5.i12, %BIT_reloadDStream.exit22 ], [ %i.jt, %bb.ad ] ; 3 uses
+  %.sroa.9790.7329 = phi ptr [ @BIT_reloadDStream.zeroFilled, %.preheader202 ], [ %.sroa.9790.7, %BIT_reloadDStream.exit22 ], [ @BIT_reloadDStream.zeroFilled, %bb.ad ] ; 2 uses
+  %.sroa.31.9328 = phi i32 [ %.sroa.31.0, %.preheader202 ], [ %.sroa.31.9, %BIT_reloadDStream.exit22 ], [ %i.jp, %bb.ad ] ; 2 uses
+  %.sroa.0.7327 = phi i64 [ %.sroa.0.0, %.preheader202 ], [ %.sroa.0.7, %bb.ad ], [ %.sroa.0.7, %BIT_reloadDStream.exit22 ] ; 3 uses
   %.not.i4245 = icmp ugt ptr %.5.i.lcssa, %i.it
   br i1 %.not.i4245, label %.loopexit, label %.lr.ph248
 
@@ -295,10 +289,10 @@ bb.ad:                                            ; preds = %BIT_reloadDStream.e
 
 .lr.ph248:                                        ; preds = %.preheader, %.lr.ph248
   %.6.i247 = phi ptr [ %i.ki, %.lr.ph248 ], [ %.5.i.lcssa, %.preheader ] ; 2 uses
-  %.sroa.31.3246 = phi i32 [ %i.ke, %.lr.ph248 ], [ %.sroa.31.9329, %.preheader ] ; 2 uses
+  %.sroa.31.3246 = phi i32 [ %i.ke, %.lr.ph248 ], [ %.sroa.31.9328, %.preheader ] ; 2 uses
   %i.jv = and i32 %.sroa.31.3246, 63
   %i.jw = zext nneg i32 %i.jv to i64
-  %i.jx = shl i64 %.sroa.0.7328, %i.jw
+  %i.jx = shl i64 %.sroa.0.7327, %i.jw
   %i.jy = lshr i64 %i.jx, %i.ix
   %i.jz = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %i.jy ; 3 uses
   %i.ka = load i16, ptr %i.jz, align 2
@@ -315,9 +309,9 @@ bb.ad:                                            ; preds = %BIT_reloadDStream.e
   br i1 %.not.i4, label %.loopexit, label %.lr.ph248, !llvm.loop !3
 
 .loopexit:                                        ; preds = %.lr.ph248, %.preheader, %BIT_reloadDStream.exit29
-  %.sroa.0.1 = phi i64 [ %.sroa.0.0, %BIT_reloadDStream.exit29 ], [ %.sroa.0.7328, %.preheader ], [ %.sroa.0.7328, %.lr.ph248 ]
-  %.sroa.31.1 = phi i32 [ %.sroa.31.0, %BIT_reloadDStream.exit29 ], [ %.sroa.31.9329, %.preheader ], [ %i.ke, %.lr.ph248 ] ; 6 uses
-  %.sroa.9790.1 = phi ptr [ %.sroa.9790.0, %BIT_reloadDStream.exit29 ], [ %.sroa.9790.7330, %.preheader ], [ %.sroa.9790.7330, %.lr.ph248 ]
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0, %BIT_reloadDStream.exit29 ], [ %.sroa.0.7327, %.preheader ], [ %.sroa.0.7327, %.lr.ph248 ]
+  %.sroa.31.1 = phi i32 [ %.sroa.31.0, %BIT_reloadDStream.exit29 ], [ %.sroa.31.9328, %.preheader ], [ %i.ke, %.lr.ph248 ] ; 6 uses
+  %.sroa.9790.1 = phi ptr [ %.sroa.9790.0, %BIT_reloadDStream.exit29 ], [ %.sroa.9790.7329, %.preheader ], [ %.sroa.9790.7329, %.lr.ph248 ]
   %.7.i = phi ptr [ %.4.i, %BIT_reloadDStream.exit29 ], [ %.5.i.lcssa, %.preheader ], [ %i.ki, %.lr.ph248 ] ; 2 uses
   %i.kj = icmp ult ptr %.7.i, %i.ip
   br i1 %i.kj, label %bb.ae, label %HUF_decodeStreamX2.exit
@@ -720,12 +714,12 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ib, label %HUF_decompress4X2_usingDTable_internal_fast.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %.val.i.i = load i64, ptr %i.hx, align 1, !tbaa !22 ; 2 uses
+  %.val.i.i = load i64, ptr %i.hx, align 1, !tbaa !22
   %i.ic = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv.i
   %i.id = load i64, ptr %i.ic, align 8, !tbaa !22
   %i.ie = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.id, i1 true) ; 2 uses
   %i.if = trunc nuw nsw i64 %i.ie to i32          ; 5 uses
-  %i.ig = load ptr, ptr %i.h, align 8, !tbaa !39  ; 10 uses
+  %i.ig = load ptr, ptr %i.h, align 8, !tbaa !39  ; 8 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %i.ig, i64 8 ; 3 uses
   %i.ii = ptrtoint ptr %.1.i to i64               ; 2 uses
   %i.ij = ptrtoint ptr %i.hu to i64               ; 2 uses
@@ -739,32 +733,26 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.l, %.preheader64.i
-  %.0.i68.i = phi ptr [ %i.hu, %.preheader64.i ], [ %i.lr, %bb.l ] ; 5 uses
-  %.sroa.0.167.i = phi i64 [ %.val.i.i, %.preheader64.i ], [ %.sroa.0.2.i, %bb.l ]
-  %.sroa.17.166.i = phi i32 [ %i.if, %.preheader64.i ], [ %i.ln, %bb.l ] ; 5 uses
-  %.sroa.6235.165.i = phi ptr [ %i.hx, %.preheader64.i ], [ %.sroa.6235.2.i, %bb.l ] ; 6 uses
+  %.0.i68.i = phi ptr [ %i.hu, %.preheader64.i ], [ %i.lr, %bb.l ] ; 4 uses
+  %.sroa.17.166.i = phi i32 [ %i.if, %.preheader64.i ], [ %i.ln, %bb.l ] ; 3 uses
+  %.sroa.6235.165.i = phi ptr [ %i.hx, %.preheader64.i ], [ %.sroa.6235.2.i, %bb.l ] ; 4 uses
   %.not.i59.i = icmp ult ptr %.sroa.6235.165.i, %i.ih
-  br i1 %.not.i59.i, label %9, label %bb.j
+  %8 = lshr i32 %.sroa.17.166.i, 3                ; 3 uses
+  br i1 %.not.i59.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %8 = lshr i32 %.sroa.17.166.i, 3
   %i.io = and i32 %.sroa.17.166.i, 7
   br label %BIT_reloadDStream.exit.i
 
-9:                                                ; preds = %bb.i
-  %10 = icmp eq ptr %.sroa.6235.165.i, %i.ig
-  br i1 %10, label %BIT_reloadDStream.exit74.loopexit.i, label %bb.k
-
-bb.k:                                             ; preds = %9
-  %11 = lshr i32 %.sroa.17.166.i, 3               ; 2 uses
-  %i.ip = zext nneg i32 %11 to i64
+bb.k:                                             ; preds = %bb.i
+  %i.ip = zext nneg i32 %8 to i64
   %i.iq = sub nsw i64 0, %i.ip
   %i.ir = getelementptr inbounds i8, ptr %.sroa.6235.165.i, i64 %i.iq
   %i.is = icmp uge ptr %i.ir, %i.ig               ; 2 uses
   %i.it = ptrtoint ptr %.sroa.6235.165.i to i64
   %i.iu = sub i64 %i.it, %i.im
   %i.iv = trunc i64 %i.iu to i32
-  %.021.i.i = select i1 %i.is, i32 %11, i32 %i.iv ; 2 uses
+  %.021.i.i = select i1 %i.is, i32 %8, i32 %i.iv  ; 2 uses
   %i.iw = shl i32 %.021.i.i, 3
   %i.ix = sub i32 %.sroa.17.166.i, %i.iw
   br label %BIT_reloadDStream.exit.i
@@ -776,7 +764,7 @@ BIT_reloadDStream.exit.i:                         ; preds = %bb.k, %bb.j
   %.pn62.i = zext i32 %.pn62.in.i to i64
   %.pn.i = sub nsw i64 0, %.pn62.i
   %.sroa.6235.2.i = getelementptr inbounds i8, ptr %.sroa.6235.165.i, i64 %.pn.i ; 3 uses
-  %.sroa.0.2.i = load i64, ptr %.sroa.6235.2.i, align 1, !tbaa !22 ; 8 uses
+  %.sroa.0.2.i = load i64, ptr %.sroa.6235.2.i, align 1, !tbaa !22 ; 6 uses
   %i.iy = icmp ult ptr %.0.i68.i, %i.in
   %i.iz = and i1 %i.iy, %.022.i.i
   br i1 %i.iz, label %bb.l, label %BIT_reloadDStream.exit74.loopexit.i
@@ -895,21 +883,20 @@ bb.p:                                             ; preds = %bb.o
   %.val.i = load i64, ptr %i.mj, align 1, !tbaa !22
   br label %BIT_reloadDStream.exit74.i
 
-BIT_reloadDStream.exit74.loopexit.i:              ; preds = %bb.l, %BIT_reloadDStream.exit.i, %9
-  %.sroa.6235.4.ph.i = phi ptr [ %.sroa.6235.2.i, %BIT_reloadDStream.exit.i ], [ %.sroa.6235.165.i, %9 ], [ @BIT_reloadDStream.zeroFilled, %bb.l ]
-  %.sroa.17.4.ph.i = phi i32 [ %.sroa.17.2.i, %BIT_reloadDStream.exit.i ], [ %.sroa.17.166.i, %9 ], [ %i.ln, %bb.l ]
-  %.sroa.0.4.ph.i = phi i64 [ %.sroa.0.2.i, %BIT_reloadDStream.exit.i ], [ %.sroa.0.167.i, %9 ], [ %.sroa.0.2.i, %bb.l ]
-  %.4.i.ph.i = phi ptr [ %.0.i68.i, %BIT_reloadDStream.exit.i ], [ %.0.i68.i, %9 ], [ %i.lr, %bb.l ] ; 2 uses
-  %.pre.i = ptrtoint ptr %.4.i.ph.i to i64
+BIT_reloadDStream.exit74.loopexit.i:              ; preds = %bb.l, %BIT_reloadDStream.exit.i
+  %.sroa.6235.4.ph.ph.i = phi ptr [ @BIT_reloadDStream.zeroFilled, %bb.l ], [ %.sroa.6235.2.i, %BIT_reloadDStream.exit.i ]
+  %.sroa.17.4.ph.ph.i = phi i32 [ %i.ln, %bb.l ], [ %.sroa.17.2.i, %BIT_reloadDStream.exit.i ]
+  %.4.i.ph.ph.i = phi ptr [ %i.lr, %bb.l ], [ %.0.i68.i, %BIT_reloadDStream.exit.i ] ; 2 uses
+  %.pre.i = ptrtoint ptr %.4.i.ph.ph.i to i64
   %.pre77.i = sub i64 %i.ii, %.pre.i
   br label %BIT_reloadDStream.exit74.i
 
 BIT_reloadDStream.exit74.i:                       ; preds = %BIT_reloadDStream.exit74.loopexit.i, %bb.p, %bb.o, %bb.n
   %.pre-phi78.i = phi i64 [ %.pre77.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %i.ik, %bb.o ], [ %i.ik, %bb.p ], [ %i.ik, %bb.n ]
-  %.sroa.6235.4.i = phi ptr [ %.sroa.6235.4.ph.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %i.hx, %bb.o ], [ %i.mj, %bb.p ], [ %i.lv, %bb.n ]
-  %.sroa.17.4.i = phi i32 [ %.sroa.17.4.ph.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %i.if, %bb.o ], [ %i.ml, %bb.p ], [ %i.lw, %bb.n ] ; 4 uses
-  %.sroa.0.4.i = phi i64 [ %.sroa.0.4.ph.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %.val.i.i, %bb.o ], [ %.val.i, %bb.p ], [ %.val.i95.i, %bb.n ] ; 3 uses
-  %.4.i.i = phi ptr [ %.4.i.ph.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %i.hu, %bb.o ], [ %i.hu, %bb.p ], [ %i.hu, %bb.n ] ; 3 uses
+  %.sroa.6235.4.i = phi ptr [ %.sroa.6235.4.ph.ph.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %i.hx, %bb.o ], [ %i.mj, %bb.p ], [ %i.lv, %bb.n ]
+  %.sroa.17.4.i = phi i32 [ %.sroa.17.4.ph.ph.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %i.if, %bb.o ], [ %i.ml, %bb.p ], [ %i.lw, %bb.n ] ; 4 uses
+  %.sroa.0.4.i = phi i64 [ %.sroa.0.2.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %.val.i.i, %bb.o ], [ %.val.i, %bb.p ], [ %.val.i95.i, %bb.n ] ; 2 uses
+  %.4.i.i = phi ptr [ %.4.i.ph.ph.i, %BIT_reloadDStream.exit74.loopexit.i ], [ %i.hu, %bb.o ], [ %i.hu, %bb.p ], [ %i.hu, %bb.n ] ; 3 uses
   %i.mm = icmp ugt i64 %.pre-phi78.i, 1
   br i1 %i.mm, label %.preheader63.i, label %.loopexit.i
 
@@ -920,52 +907,46 @@ BIT_reloadDStream.exit74.i:                       ; preds = %BIT_reloadDStream.e
   br i1 %i.mp, label %.preheader.i, label %.lr.ph, !prof !28
 
 .lr.ph:                                           ; preds = %.preheader63.i, %bb.s
-  %.5.i.i93 = phi ptr [ %i.nk, %bb.s ], [ %.4.i.i, %.preheader63.i ] ; 5 uses
-  %.sroa.0.5.i92 = phi i64 [ %.sroa.0.6.i, %bb.s ], [ %.sroa.0.4.i, %.preheader63.i ]
-  %.sroa.17.5.i91 = phi i32 [ %i.ng, %bb.s ], [ %.sroa.17.4.i, %.preheader63.i ] ; 5 uses
-  %.sroa.6235.5.i90 = phi ptr [ %.sroa.6235.6.i, %bb.s ], [ %.sroa.6235.4.i, %.preheader63.i ] ; 5 uses
+  %.5.i.i93 = phi ptr [ %i.nk, %bb.s ], [ %.4.i.i, %.preheader63.i ] ; 4 uses
+  %.sroa.17.5.i91 = phi i32 [ %i.ng, %bb.s ], [ %.sroa.17.4.i, %.preheader63.i ] ; 3 uses
+  %.sroa.6235.5.i90 = phi ptr [ %.sroa.6235.6.i, %bb.s ], [ %.sroa.6235.4.i, %.preheader63.i ] ; 4 uses
   %.not.i61.i = icmp ult ptr %.sroa.6235.5.i90, %i.ih
-  br i1 %.not.i61.i, label %13, label %bb.q
+  %9 = lshr i32 %.sroa.17.5.i91, 3                ; 2 uses
+  %10 = zext nneg i32 %9 to i64
+  %11 = sub nsw i64 0, %10
+  %12 = getelementptr inbounds i8, ptr %.sroa.6235.5.i90, i64 %11 ; 2 uses
+  br i1 %.not.i61.i, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph
-  %12 = lshr i32 %.sroa.17.5.i91, 3
   %i.mq = and i32 %.sroa.17.5.i91, 7
   br label %BIT_reloadDStream.exit67.i
 
-13:                                               ; preds = %.lr.ph
-  %14 = icmp eq ptr %.sroa.6235.5.i90, %i.ig
-  br i1 %14, label %.preheader.i, label %bb.r
-
-bb.r:                                             ; preds = %13
-  %15 = lshr i32 %.sroa.17.5.i91, 3               ; 2 uses
-  %16 = zext nneg i32 %15 to i64
-  %i.mr = sub nsw i64 0, %16
-  %17 = getelementptr inbounds i8, ptr %.sroa.6235.5.i90, i64 %i.mr
-  %18 = icmp uge ptr %17, %i.ig                   ; 2 uses
-  %19 = ptrtoint ptr %.sroa.6235.5.i90 to i64
-  %i.ms = sub i64 %19, %i.mo
-  %20 = trunc i64 %i.ms to i32
-  %.021.i63.i = select i1 %18, i32 %15, i32 %20   ; 2 uses
+bb.r:                                             ; preds = %.lr.ph
+  %13 = icmp uge ptr %12, %i.ig                   ; 2 uses
+  %14 = ptrtoint ptr %.sroa.6235.5.i90 to i64
+  %i.mr = sub i64 %14, %i.mo
+  %15 = trunc i64 %i.mr to i32
+  %.021.i63.i = select i1 %13, i32 %9, i32 %15    ; 2 uses
+  %16 = zext i32 %.021.i63.i to i64
+  %i.ms = sub nsw i64 0, %16
+  %17 = getelementptr inbounds i8, ptr %.sroa.6235.5.i90, i64 %i.ms
   %i.mt = shl i32 %.021.i63.i, 3
   %i.mu = sub i32 %.sroa.17.5.i91, %i.mt
   br label %BIT_reloadDStream.exit67.i
 
 BIT_reloadDStream.exit67.i:                       ; preds = %bb.r, %bb.q
-  %.pn95.in.i = phi i32 [ %12, %bb.q ], [ %.021.i63.i, %bb.r ]
+  %.sroa.6235.6.i = phi ptr [ %12, %bb.q ], [ %17, %bb.r ] ; 2 uses
   %.sroa.17.6.i = phi i32 [ %i.mq, %bb.q ], [ %i.mu, %bb.r ] ; 3 uses
-  %.022.i62.i = phi i1 [ true, %bb.q ], [ %18, %bb.r ]
-  %.pn95.i = zext i32 %.pn95.in.i to i64
-  %.pn94.i = sub nsw i64 0, %.pn95.i
-  %.sroa.6235.6.i = getelementptr inbounds i8, ptr %.sroa.6235.5.i90, i64 %.pn94.i ; 2 uses
-  %.sroa.0.6.i = load i64, ptr %.sroa.6235.6.i, align 1, !tbaa !22 ; 4 uses
+  %.022.i62.i = phi i1 [ true, %bb.q ], [ %13, %bb.r ]
+  %.sroa.0.6.i = load i64, ptr %.sroa.6235.6.i, align 1, !tbaa !22 ; 3 uses
   %i.mv = icmp ule ptr %.5.i.i93, %i.mn
   %i.mw = and i1 %i.mv, %.022.i62.i
   br i1 %i.mw, label %bb.s, label %.preheader.i
 
-.preheader.i:                                     ; preds = %bb.s, %13, %BIT_reloadDStream.exit67.i, %.preheader63.i
-  %.5.i.i.lcssa = phi ptr [ %.4.i.i, %.preheader63.i ], [ %.5.i.i93, %BIT_reloadDStream.exit67.i ], [ %.5.i.i93, %13 ], [ %i.nk, %bb.s ] ; 3 uses
-  %.sroa.0.692.i = phi i64 [ %.sroa.0.4.i, %.preheader63.i ], [ %.sroa.0.6.i, %BIT_reloadDStream.exit67.i ], [ %.sroa.0.5.i92, %13 ], [ %.sroa.0.6.i, %bb.s ] ; 3 uses
-  %.sroa.17.691.i = phi i32 [ %.sroa.17.4.i, %.preheader63.i ], [ %.sroa.17.6.i, %BIT_reloadDStream.exit67.i ], [ %.sroa.17.5.i91, %13 ], [ %i.ng, %bb.s ] ; 2 uses
+.preheader.i:                                     ; preds = %bb.s, %BIT_reloadDStream.exit67.i, %.preheader63.i
+  %.5.i.i.lcssa = phi ptr [ %.4.i.i, %.preheader63.i ], [ %.5.i.i93, %BIT_reloadDStream.exit67.i ], [ %i.nk, %bb.s ] ; 3 uses
+  %.sroa.0.691.i = phi i64 [ %.sroa.0.4.i, %.preheader63.i ], [ %.sroa.0.6.i, %BIT_reloadDStream.exit67.i ], [ %.sroa.0.6.i, %bb.s ] ; 3 uses
+  %.sroa.17.690.i = phi i32 [ %.sroa.17.4.i, %.preheader63.i ], [ %.sroa.17.6.i, %BIT_reloadDStream.exit67.i ], [ %i.ng, %bb.s ] ; 2 uses
   %.not.i69.i = icmp ugt ptr %.5.i.i.lcssa, %i.mn
   br i1 %.not.i69.i, label %.loopexit.i, label %.lr.ph.i
 
@@ -990,10 +971,10 @@ bb.s:                                             ; preds = %BIT_reloadDStream.e
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
   %.6.i71.i = phi ptr [ %i.nz, %.lr.ph.i ], [ %.5.i.i.lcssa, %.preheader.i ] ; 2 uses
-  %.sroa.17.770.i = phi i32 [ %i.nv, %.lr.ph.i ], [ %.sroa.17.691.i, %.preheader.i ] ; 2 uses
+  %.sroa.17.770.i = phi i32 [ %i.nv, %.lr.ph.i ], [ %.sroa.17.690.i, %.preheader.i ] ; 2 uses
   %i.nm = and i32 %.sroa.17.770.i, 63
   %i.nn = zext nneg i32 %i.nm to i64
-  %i.no = shl i64 %.sroa.0.692.i, %i.nn
+  %i.no = shl i64 %.sroa.0.691.i, %i.nn
   %i.np = lshr i64 %i.no, 53
   %i.nq = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.np ; 3 uses
   %i.nr = load i16, ptr %i.nq, align 2
@@ -1010,8 +991,8 @@ bb.s:                                             ; preds = %BIT_reloadDStream.e
   br i1 %.not.i.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !3
 
 .loopexit.i:                                      ; preds = %.lr.ph.i, %.preheader.i, %BIT_reloadDStream.exit74.i
-  %.sroa.17.8.i = phi i32 [ %.sroa.17.4.i, %BIT_reloadDStream.exit74.i ], [ %.sroa.17.691.i, %.preheader.i ], [ %i.nv, %.lr.ph.i ]
-  %.sroa.0.7.i = phi i64 [ %.sroa.0.4.i, %BIT_reloadDStream.exit74.i ], [ %.sroa.0.692.i, %.preheader.i ], [ %.sroa.0.692.i, %.lr.ph.i ]
+  %.sroa.17.8.i = phi i32 [ %.sroa.17.4.i, %BIT_reloadDStream.exit74.i ], [ %.sroa.17.690.i, %.preheader.i ], [ %i.nv, %.lr.ph.i ]
+  %.sroa.0.7.i = phi i64 [ %.sroa.0.4.i, %BIT_reloadDStream.exit74.i ], [ %.sroa.0.691.i, %.preheader.i ], [ %.sroa.0.691.i, %.lr.ph.i ]
   %.7.i.i = phi ptr [ %.4.i.i, %BIT_reloadDStream.exit74.i ], [ %.5.i.i.lcssa, %.preheader.i ], [ %i.nz, %.lr.ph.i ] ; 4 uses
   %i.oa = icmp ult ptr %.7.i.i, %.1.i
   br i1 %i.oa, label %HUF_decodeLastSymbolX2.exit.i, label %bb.t
@@ -1414,12 +1395,12 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.is, label %HUF_decompress4X1_usingDTable_internal_fast.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %.val.i.i = load i64, ptr %i.io, align 1, !tbaa !22 ; 2 uses
+  %.val.i.i = load i64, ptr %i.io, align 1, !tbaa !22
   %i.it = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.i
   %i.iu = load i64, ptr %i.it, align 8, !tbaa !22
   %i.iv = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.iu, i1 true) ; 2 uses
   %i.iw = trunc nuw nsw i64 %i.iv to i32          ; 5 uses
-  %i.ix = load ptr, ptr %i.j, align 8, !tbaa !39  ; 7 uses
+  %i.ix = load ptr, ptr %i.j, align 8, !tbaa !39  ; 6 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 8 ; 2 uses
   %i.iz = ptrtoint ptr %.1.i to i64               ; 3 uses
   %i.ja = ptrtoint ptr %i.il to i64
@@ -1433,32 +1414,26 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.l, %.preheader.i
-  %.0.i46.i = phi ptr [ %i.il, %.preheader.i ], [ %i.li, %bb.l ] ; 8 uses
-  %.sroa.0.145.i = phi i64 [ %.val.i.i, %.preheader.i ], [ %.sroa.0.2.i, %bb.l ]
-  %.sroa.12.144.i = phi i32 [ %i.iw, %.preheader.i ], [ %i.lh, %bb.l ] ; 5 uses
-  %.sroa.3820.143.i = phi ptr [ %i.io, %.preheader.i ], [ %.sroa.3820.2.i, %bb.l ] ; 5 uses
+  %.0.i46.i = phi ptr [ %i.il, %.preheader.i ], [ %i.li, %bb.l ] ; 7 uses
+  %.sroa.12.144.i = phi i32 [ %i.iw, %.preheader.i ], [ %i.lh, %bb.l ] ; 3 uses
+  %.sroa.3820.143.i = phi ptr [ %i.io, %.preheader.i ], [ %.sroa.3820.2.i, %bb.l ] ; 4 uses
   %.not.i37.i.i = icmp ult ptr %.sroa.3820.143.i, %i.iy
-  br i1 %.not.i37.i.i, label %9, label %bb.j
+  %8 = lshr i32 %.sroa.12.144.i, 3                ; 3 uses
+  br i1 %.not.i37.i.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %8 = lshr i32 %.sroa.12.144.i, 3
   %i.jf = and i32 %.sroa.12.144.i, 7
   br label %BIT_reloadDStream.exit43.i.i
 
-9:                                                ; preds = %bb.i
-  %10 = icmp eq ptr %.sroa.3820.143.i, %i.ix
-  br i1 %10, label %BIT_reloadDStream.exit.i.i, label %bb.k
-
-bb.k:                                             ; preds = %9
-  %11 = lshr i32 %.sroa.12.144.i, 3               ; 2 uses
-  %i.jg = zext nneg i32 %11 to i64
+bb.k:                                             ; preds = %bb.i
+  %i.jg = zext nneg i32 %8 to i64
   %i.jh = sub nsw i64 0, %i.jg
   %i.ji = getelementptr inbounds i8, ptr %.sroa.3820.143.i, i64 %i.jh
   %i.jj = icmp uge ptr %i.ji, %i.ix               ; 2 uses
   %i.jk = ptrtoint ptr %.sroa.3820.143.i to i64
   %i.jl = sub i64 %i.jk, %i.jd
   %i.jm = trunc i64 %i.jl to i32
-  %.021.i39.i.i = select i1 %i.jj, i32 %11, i32 %i.jm ; 2 uses
+  %.021.i39.i.i = select i1 %i.jj, i32 %8, i32 %i.jm ; 2 uses
   %i.jn = shl i32 %.021.i39.i.i, 3
   %i.jo = sub i32 %.sroa.12.144.i, %i.jn
   br label %BIT_reloadDStream.exit43.i.i
@@ -1470,7 +1445,7 @@ BIT_reloadDStream.exit43.i.i:                     ; preds = %bb.k, %bb.j
   %.pn42.i = zext i32 %.pn42.in.i to i64
   %.pn.i = sub nsw i64 0, %.pn42.i
   %.sroa.3820.2.i = getelementptr inbounds i8, ptr %.sroa.3820.143.i, i64 %.pn.i ; 2 uses
-  %.sroa.0.2.i = load i64, ptr %.sroa.3820.2.i, align 1, !tbaa !22 ; 7 uses
+  %.sroa.0.2.i = load i64, ptr %.sroa.3820.2.i, align 1, !tbaa !22 ; 6 uses
   %i.jp = icmp ult ptr %.0.i46.i, %i.je
   %i.jq = and i1 %i.jp, %.022.i38.i.i
   br i1 %i.jq, label %bb.l, label %BIT_reloadDStream.exit.i.i
@@ -1562,10 +1537,10 @@ bb.p:                                             ; preds = %bb.o
   %.val59.i = load i64, ptr %i.ma, align 1, !tbaa !22
   br label %BIT_reloadDStream.exit.i.i
 
-BIT_reloadDStream.exit.i.i:                       ; preds = %bb.l, %BIT_reloadDStream.exit43.i.i, %9, %bb.p, %bb.o, %bb.n
-  %.sroa.12.4.i = phi i32 [ %i.iw, %bb.o ], [ %i.mc, %bb.p ], [ %i.ln, %bb.n ], [ %.sroa.12.2.i, %BIT_reloadDStream.exit43.i.i ], [ %.sroa.12.144.i, %9 ], [ %i.lh, %bb.l ] ; 3 uses
-  %.sroa.0.4.i = phi i64 [ %.val.i.i, %bb.o ], [ %.val59.i, %bb.p ], [ %.val.i72.i, %bb.n ], [ %.sroa.0.2.i, %BIT_reloadDStream.exit43.i.i ], [ %.sroa.0.145.i, %9 ], [ %.sroa.0.2.i, %bb.l ] ; 3 uses
-  %.3.i.i = phi ptr [ %i.il, %bb.o ], [ %i.il, %bb.p ], [ %i.il, %bb.n ], [ %.0.i46.i, %BIT_reloadDStream.exit43.i.i ], [ %.0.i46.i, %9 ], [ %i.li, %bb.l ] ; 5 uses
+BIT_reloadDStream.exit.i.i:                       ; preds = %bb.l, %BIT_reloadDStream.exit43.i.i, %bb.p, %bb.o, %bb.n
+  %.sroa.12.4.i = phi i32 [ %i.iw, %bb.o ], [ %i.mc, %bb.p ], [ %i.ln, %bb.n ], [ %i.lh, %bb.l ], [ %.sroa.12.2.i, %BIT_reloadDStream.exit43.i.i ] ; 3 uses
+  %.sroa.0.4.i = phi i64 [ %.val.i.i, %bb.o ], [ %.val59.i, %bb.p ], [ %.val.i72.i, %bb.n ], [ %.sroa.0.2.i, %BIT_reloadDStream.exit43.i.i ], [ %.sroa.0.2.i, %bb.l ] ; 3 uses
+  %.3.i.i = phi ptr [ %i.il, %bb.o ], [ %i.il, %bb.p ], [ %i.il, %bb.n ], [ %i.li, %bb.l ], [ %.0.i46.i, %BIT_reloadDStream.exit43.i.i ] ; 5 uses
   %i.md = icmp ult ptr %.3.i.i, %.1.i
   br i1 %i.md, label %.lr.ph.i.preheader, label %._crit_edge.i
 

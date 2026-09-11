@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %.thread151.i.i.i.i, %.lr.ph190.i.i.i.i
   %i.di = phi i64 [ 0, %.lr.ph190.i.i.i.i ], [ %.pre-phi207.i.i.i.i, %.thread151.i.i.i.i ] ; 3 uses
   %.062189.i.i.i.i = phi i32 [ undef, %.lr.ph190.i.i.i.i ], [ %.7156.i.i.i.i, %.thread151.i.i.i.i ] ; 6 uses
-  %.063188.i.i.i.i = phi i32 [ 0, %.lr.ph190.i.i.i.i ], [ %.669155.i.i.i.i, %.thread151.i.i.i.i ] ; 10 uses
+  %.063188.i.i.i.i = phi i32 [ 0, %.lr.ph190.i.i.i.i ], [ %.669155.i.i.i.i, %.thread151.i.i.i.i ] ; 9 uses
   %.070184.i.i.i.i = phi i32 [ 0, %.lr.ph190.i.i.i.i ], [ %.pre-phi205.i.i.i.i, %.thread151.i.i.i.i ] ; 6 uses
   %i.dj = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.copyload.i.i.i, i64 %i.di
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load i64, ptr %i.dj, align 8, !tbaa !43 ; 2 uses
@@ -278,14 +278,12 @@ _ZNK5clang8QualType18getUnqualifiedTypeEv.exit101.i.i.i.i: ; preds = %bb.l, %_ZN
 
 bb.m:                                             ; preds = %_ZNK5clang8QualType18getUnqualifiedTypeEv.exit101.i.i.i.i
   %i.ei = load i8, ptr %i.aa, align 1, !tbaa !1099, !range !912, !noundef !728
-  %i.ej = zext nneg i8 %i.ei to i32               ; 2 uses
-  %.not.i102.i.i.i.i = icmp ult i32 %.063188.i.i.i.i, %i.ej
+  %i.ej = zext nneg i8 %i.ei to i32
   %i.ek = sub nuw i32 %i.dy, %i.ej
-  %spec.select.i.i.i.i.i = select i1 %.not.i102.i.i.i.i, i32 0, i32 %i.ek
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_ZNK5clang8QualType18getUnqualifiedTypeEv.exit101.i.i.i.i
-  %.sroa.04.0.i.i.i.i.i = phi i32 [ 0, %_ZNK5clang8QualType18getUnqualifiedTypeEv.exit101.i.i.i.i ], [ %spec.select.i.i.i.i.i, %bb.m ]
+  %.sroa.04.0.i.i.i.i.i = phi i32 [ 0, %_ZNK5clang8QualType18getUnqualifiedTypeEv.exit101.i.i.i.i ], [ %i.ek, %bb.m ]
   %i.el = load i64, ptr %i.ac, align 8, !tbaa !1161 ; 4 uses
   %i.em = trunc i64 %i.el to i1
   br i1 %i.em, label %bb.o, label %bb.p

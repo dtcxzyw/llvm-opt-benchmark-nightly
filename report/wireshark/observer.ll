@@ -204,16 +204,16 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %skip_to_next_packet.exit
-  %i.i = phi i32 [ %i.e, %.lr.ph ], [ %i.v, %skip_to_next_packet.exit ] ; 9 uses
+  %i.i = phi i32 [ %i.e, %.lr.ph ], [ %i.v, %skip_to_next_packet.exit ] ; 8 uses
   %i.j = load i8, ptr %i.g, align 1
   %i.k = icmp eq i8 %i.j, 0
   br i1 %i.k, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.l = load i16, ptr %i.h, align 2
-  %i.m = zext i16 %i.l to i32                     ; 4 uses
+  %i.m = zext i16 %i.l to i32                     ; 3 uses
   %i.n = icmp samesign ugt i32 %i.i, %i.m
-  br i1 %i.n, label %bb.d, label %6
+  br i1 %i.n, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   store i32 -13, ptr %2, align 4
@@ -221,17 +221,13 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.o, ptr %3, align 8
   br label %skip_to_next_packet.exit30
 
-6:                                                ; preds = %bb.c
-  %.not = icmp eq i32 %i.i, %i.m
-  br i1 %.not, label %skip_to_next_packet.exit, label %bb.e
-
-bb.e:                                             ; preds = %6
+bb.e:                                             ; preds = %bb.c
   %i.p = sub nuw nsw i32 %i.m, %i.i
   %i.q = load ptr, ptr %0, align 8
   %i.r = call zeroext i1 @wtap_read_bytes(ptr noundef %i.q, ptr noundef null, i32 noundef %i.p, ptr noundef %2, ptr noundef %3)
   br i1 %i.r, label %skip_to_next_packet.exit, label %skip_to_next_packet.exit30
 
-skip_to_next_packet.exit:                         ; preds = %6, %bb.e
+skip_to_next_packet.exit:                         ; preds = %bb.e
   %i.s = load ptr, ptr %0, align 8
   %i.t = call i64 @file_tell(ptr noundef %i.s)
   store i64 %i.t, ptr %4, align 8

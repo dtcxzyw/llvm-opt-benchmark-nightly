@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
 _ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i: ; preds = %"_ZN83_$LT$hyper..proto..h1..io..Cursor$LT$T$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$5chunk17h4d8f322e0e19ab0aE.exit.i.i", %bb.n
   %.sroa.0.0.i.i.sroa.phi = phi ptr [ %.sroa.0.0.i.i.sroa.gep, %"_ZN83_$LT$hyper..proto..h1..io..Cursor$LT$T$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$5chunk17h4d8f322e0e19ab0aE.exit.i.i" ], [ %i.e, %bb.n ]
   %.sroa.0.0.i.i = phi i64 [ 1, %"_ZN83_$LT$hyper..proto..h1..io..Cursor$LT$T$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$5chunk17h4d8f322e0e19ab0aE.exit.i.i" ], [ 0, %bb.n ] ; 2 uses
-  %i.br = sub nuw nsw i64 64, %.sroa.0.0.i.i      ; 8 uses
+  %i.br = sub nuw nsw i64 64, %.sroa.0.0.i.i      ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !10099)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10100
   call void @"_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$4iter17h71d8a58c8a9b2d81E"(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.q), !noalias !10101
@@ -220,7 +220,7 @@ bb.q:                                             ; preds = %"_ZN91_$LT$hyper..p
   %.sroa.0.sroa.0.0.i.i = phi ptr [ %.sroa.0.sroa.0.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %i.bu, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
   %.sroa.9.sroa.5.0.i.i = phi ptr [ %.sroa.9.sroa.5.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %.sroa.9.sroa.5.1.i.i, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
   %.sroa.9.sroa.0.0.i.i = phi ptr [ %.sroa.9.sroa.0.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %.sroa.9.sroa.0.1.i.i, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
-  %.sroa.0.1.i.i = phi i64 [ 0, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %i.ck, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 9 uses
+  %.sroa.0.1.i.i = phi i64 [ 0, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %i.ck, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 7 uses
   %i.bs = icmp eq ptr %.sroa.0.sroa.0.0.i.i, %.sroa.0.sroa.7.0.i.i
   br i1 %i.bs, label %bb.r, label %"_ZN109_$LT$alloc..collections..vec_deque..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h90526b73b23fb79bE.exit.i.i"
 
@@ -247,7 +247,7 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.experimental.noalias.scope.decl(metadata !10102)
   %i.by = load i64, ptr %.sink6.i.i.i, align 8, !range !51, !noalias !10102, !noundef !14
   switch i64 %i.by, label %default.unreachable [
-    i64 0, label %2
+    i64 0, label %bb.u
     i64 1, label %bb.w
     i64 2, label %bb.x
     i64 3, label %bb.y
@@ -257,12 +257,8 @@ bb.t:                                             ; preds = %bb.s
 default.unreachable:                              ; preds = %bb.t, %bb.al
   unreachable
 
-2:                                                ; preds = %bb.t
+bb.u:                                             ; preds = %bb.t
   call void @llvm.experimental.noalias.scope.decl(metadata !10103)
-  %3 = icmp eq i64 %i.br, %.sroa.0.1.i.i
-  br i1 %3, label %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i", label %bb.u
-
-bb.u:                                             ; preds = %2
   %i.bz = getelementptr i8, ptr %.sink6.i.i.i, i64 24
   %.val.i.i.i.i.i = load i64, ptr %i.bz, align 8, !noalias !10104, !noundef !14 ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %.val.i.i.i.i.i, 0
@@ -287,20 +283,16 @@ bb.x:                                             ; preds = %bb.t
   br label %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i"
 
 bb.y:                                             ; preds = %bb.t
-  %4 = getelementptr inbounds nuw i8, ptr %.sink6.i.i.i, i64 8
   call void @llvm.experimental.noalias.scope.decl(metadata !10107)
   call void @llvm.experimental.noalias.scope.decl(metadata !10108)
-  %i.cg = icmp eq i64 %i.br, %.sroa.0.1.i.i
-  br i1 %i.cg, label %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i", label %5
+  %2 = getelementptr inbounds nuw i8, ptr %.sink6.i.i.i, i64 16
+  %.val.i.i1.i.i.i = load i64, ptr %2, align 8, !alias.scope !10109, !noalias !10110, !noundef !14 ; 2 uses
+  %i.cg = icmp eq i64 %.val.i.i1.i.i.i, 0
+  br i1 %i.cg, label %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i", label %bb.z
 
-5:                                                ; preds = %bb.y
-  %6 = getelementptr inbounds nuw i8, ptr %.sink6.i.i.i, i64 16
-  %.val.i.i1.i.i.i = load i64, ptr %6, align 8, !alias.scope !10109, !noalias !10110, !noundef !14 ; 2 uses
-  %.not.i2.i.i.i = icmp eq i64 %.val.i.i1.i.i.i, 0
-  br i1 %.not.i2.i.i.i, label %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i", label %bb.z
-
-bb.z:                                             ; preds = %5
-  %.val.i3.i.i.i = load ptr, ptr %4, align 8, !alias.scope !10107, !noalias !10110, !nonnull !14, !align !24, !noundef !14
+bb.z:                                             ; preds = %bb.y
+  %3 = getelementptr inbounds nuw i8, ptr %.sink6.i.i.i, i64 8
+  %.val.i3.i.i.i = load ptr, ptr %3, align 8, !alias.scope !10107, !noalias !10110, !nonnull !14, !align !24, !noundef !14
   store ptr %.val.i3.i.i.i, ptr %i.bx, align 8, !alias.scope !10111, !noalias !10112
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store i64 %.val.i.i1.i.i.i, ptr %i.ch, align 8, !alias.scope !10111, !noalias !10112
@@ -311,8 +303,8 @@ bb.aa:                                            ; preds = %bb.t
   %i.cj = call noundef i64 @"_ZN83_$LT$bytes..buf..chain..Chain$LT$T$C$U$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h01dcd2727dd78d37E"(ptr noundef nonnull align 8 %i.ci, ptr noalias noundef nonnull align 8 %i.bx, i64 noundef range(i64 0, 65) %i.bw)
   br label %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i"
 
-"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i": ; preds = %bb.aa, %bb.z, %5, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %2
-  %.sroa.0.0.i7.i.i = phi i64 [ %i.cj, %bb.aa ], [ %i.cd, %bb.w ], [ %i.cf, %bb.x ], [ 0, %bb.u ], [ 0, %2 ], [ 1, %bb.v ], [ 0, %bb.y ], [ 1, %bb.z ], [ 0, %5 ]
+"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i": ; preds = %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u
+  %.sroa.0.0.i7.i.i = phi i64 [ %i.cj, %bb.aa ], [ %i.cd, %bb.w ], [ %i.cf, %bb.x ], [ 0, %bb.u ], [ 0, %bb.y ], [ 1, %bb.v ], [ 1, %bb.z ]
   %i.ck = add i64 %.sroa.0.0.i7.i.i, %.sroa.0.1.i.i ; 2 uses
   %i.cl = icmp eq i64 %i.ck, %i.br
   br i1 %i.cl, label %"_ZN85_$LT$hyper..proto..h1..io..WriteBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17hce614a55c702703bE.exit", label %bb.q

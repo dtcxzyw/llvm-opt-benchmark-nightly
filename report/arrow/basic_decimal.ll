@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 502
 inline.NumDeleted: 136
 loop-unroll.NumCompletelyUnrolled: 18
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 20
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@_ZN5arrowplERKNS_14BasicDecimal64ES2_:bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define i64 @_ZN5arrowmiERKNS_14BasicDecimal64ES2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #6 {
@@ -205,7 +205,7 @@ bb.a:
 define noundef range(i32 0, 3) i32 @_ZNK5arrow15BasicDecimal1286DivideERKS0_PS0_S3_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [33 x i32], align 16              ; 15 uses
-  %i.b = alloca [33 x i32], align 16              ; 38 uses
+  %i.b = alloca [33 x i32], align 16              ; 40 uses
   %i.c = alloca [32 x i32], align 16              ; 26 uses
   %i.d = alloca [32 x i32], align 16              ; 9 uses
   %.val = load i64, ptr %1, align 8               ; 3 uses
@@ -297,9 +297,8 @@ _ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i: ; preds = %bb.h, %bb
   %.0.i.sroa.phi14.i = phi ptr [ %.0.i.sroa.gep15.i, %bb.c ], [ %.0.i.sroa.gep16.i, %bb.d ], [ %.0.i.sroa.gep17.i, %bb.f ], [ %.0.i.sroa.gep18.i, %bb.h ], [ %i.a, %bb.g ] ; 2 uses
   %i.ad = phi i1 [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.g ] ; 3 uses
   %i.ae = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.h ], [ true, %bb.g ] ; 3 uses
-  %.not.i.i.i = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ true, %bb.h ], [ false, %bb.g ] ; 3 uses
+  %.not.i.i.i = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ true, %bb.h ], [ false, %bb.g ] ; 4 uses
   %i.af = phi i1 [ true, %bb.c ], [ true, %bb.d ], [ true, %bb.f ], [ true, %bb.h ], [ false, %bb.g ] ; 2 uses
-  %min.iters.check24 = phi i1 [ false, %bb.c ], [ true, %bb.d ], [ true, %bb.f ], [ true, %bb.h ], [ true, %bb.g ]
   %.0.i.i.sroa.phi = phi ptr [ %.0.i.i.sroa.gep, %bb.c ], [ %.0.i.i.sroa.gep41, %bb.d ], [ %.0.i.i.sroa.gep42, %bb.f ], [ %.0.i.i.sroa.gep43, %bb.h ], [ %i.b, %bb.g ] ; 2 uses
   %.0.i.i.sroa.phi45 = phi ptr [ %.0.i.i.sroa.gep46, %bb.c ], [ %.0.i.i.sroa.gep47, %bb.d ], [ %.0.i.i.sroa.gep48, %bb.f ], [ %.0.i.i.sroa.gep49, %bb.h ], [ %i.b, %bb.g ]
   %exitcond.not.i.i.2 = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ true, %bb.f ], [ false, %bb.h ], [ false, %bb.g ]
@@ -552,13 +551,13 @@ _ZN5arrowL12SingleDivideINS_15BasicDecimal128EEENS_13DecimalStatusEPKjljPT_bbS6_
 bb.ac:                                            ; preds = %bb.q
   %i.er = sub nuw nsw i64 %i.ah, %.0.i107.i       ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
-  %i.es = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.bi, i1 false) ; 14 uses
+  %i.es = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.bi, i1 false) ; 15 uses
   %.not.i = icmp eq i32 %i.es, 0                  ; 2 uses
   %.pre11 = add nsw i64 %.0.i107.i, -1            ; 9 uses
   br i1 %.not.i, label %.lr.ph34.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.ac
-  %i.et = sub nuw nsw i32 32, %i.es               ; 4 uses
+  %i.et = sub nuw nsw i32 32, %i.es               ; 5 uses
   %min.iters.check = icmp ult i64 %.pre11, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -603,9 +602,9 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %.lr.ph.i.i, %middle.block
   %.ph39 = phi i32 [ %i.bi, %.lr.ph.i.i ], [ %vector.recur.extract, %middle.block ]
   %.019.i.i.ph = phi i64 [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ]
-  br label %scalar.ph
+  br label %vector.ph25
 
-_ZN5arrowL14ShiftArrayLeftEPjll.exit.thread.i:    ; preds = %scalar.ph, %middle.block
+_ZN5arrowL14ShiftArrayLeftEPjll.exit.thread.i:    ; preds = %vector.ph25, %middle.block
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.pre11 ; 2 uses
   %i.fj = load i32, ptr %i.fi, align 4, !tbaa !6
   %i.fk = shl i32 %i.fj, %i.es
@@ -613,45 +612,47 @@ _ZN5arrowL14ShiftArrayLeftEPjll.exit.thread.i:    ; preds = %scalar.ph, %middle.
   br i1 %i.af, label %.lr.ph.i113.i.preheader, label %._crit_edge.i112.i
 
 .lr.ph.i113.i.preheader:                          ; preds = %_ZN5arrowL14ShiftArrayLeftEPjll.exit.thread.i
-  br i1 %min.iters.check24, label %.lr.ph.i113.i.preheader38, label %vector.ph25
+  %xtraiter = and i64 %.0.i.i, 1
+  br i1 %.not.i.i.i, label %scalar.ph, label %.lr.ph.i113.i.preheader.new
 
-vector.ph25:                                      ; preds = %.lr.ph.i113.i.preheader
-  %n.vec26 = and i64 %.0.i.i, 4                   ; 2 uses
-  %broadcast.splatinsert29 = insertelement <4 x i32> poison, i32 %i.et, i64 0
-  %broadcast.splat30 = shufflevector <4 x i32> %broadcast.splatinsert29, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert27 = insertelement <4 x i32> poison, i32 %i.es, i64 0
-  %broadcast.splat28 = shufflevector <4 x i32> %broadcast.splatinsert27, <4 x i32> poison, <4 x i32> zeroinitializer
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %wide.load32 = load <4 x i32>, ptr %4, align 4, !tbaa !6 ; 3 uses
-  %5 = shufflevector <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, <4 x i32> %wide.load32, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %6 = shl <4 x i32> %5, %broadcast.splat28
-  %7 = lshr <4 x i32> %wide.load32, %broadcast.splat30
-  %8 = or disjoint <4 x i32> %7, %6
-  store <4 x i32> %8, ptr %i.b, align 16, !tbaa !6
-  %vector.recur.extract34 = extractelement <4 x i32> %wide.load32, i64 3
-  %cmp.n35 = icmp eq i64 %.0.i.i, %n.vec26
-  br i1 %cmp.n35, label %._crit_edge.i112.loopexit.i, label %.lr.ph.i113.i.preheader38
-
-.lr.ph.i113.i.preheader38:                        ; preds = %.lr.ph.i113.i.preheader, %vector.ph25
-  %.ph = phi i32 [ 0, %.lr.ph.i113.i.preheader ], [ %vector.recur.extract34, %vector.ph25 ]
-  %.019.i115.i.ph = phi i64 [ 0, %.lr.ph.i113.i.preheader ], [ %n.vec26, %vector.ph25 ]
+.lr.ph.i113.i.preheader.new:                      ; preds = %.lr.ph.i113.i.preheader
+  %unroll_iter = and i64 %.0.i.i, 6
   br label %.lr.ph.i113.i
 
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %i.fl = phi i32 [ %i.fo, %scalar.ph ], [ %.ph39, %scalar.ph.preheader ]
-  %.019.i.i.a = phi i64 [ %9, %scalar.ph ], [ %.019.i.i.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.019.i.i.a
+vector.ph25:                                      ; preds = %scalar.ph.preheader, %vector.ph25
+  %4 = phi i32 [ %9, %vector.ph25 ], [ %.ph39, %scalar.ph.preheader ]
+  %.019.i.i = phi i64 [ %7, %vector.ph25 ], [ %.019.i.i.ph, %scalar.ph.preheader ] ; 2 uses
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.019.i.i
+  %6 = shl i32 %4, %i.es
+  %7 = add nuw nsw i64 %.019.i.i, 1               ; 3 uses
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %7
+  %9 = load i32, ptr %8, align 4, !tbaa !6        ; 2 uses
+  %10 = lshr i32 %9, %i.et
+  %11 = or disjoint i32 %10, %6
+  store i32 %11, ptr %5, align 4, !tbaa !6
+  %cmp.n35 = icmp eq i64 %7, %.pre11
+  br i1 %cmp.n35, label %_ZN5arrowL14ShiftArrayLeftEPjll.exit.thread.i, label %vector.ph25, !llvm.loop !22
+
+.lr.ph.i113.i.preheader38:                        ; preds = %.lr.ph.i113.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge.i112.loopexit.i, label %scalar.ph
+
+scalar.ph:                                        ; preds = %.lr.ph.i113.i.preheader38, %.lr.ph.i113.i.preheader
+  %i.fl = phi i32 [ 0, %.lr.ph.i113.i.preheader ], [ %i.fy, %.lr.ph.i113.i.preheader38 ]
+  %.019.i.i.a = phi i64 [ 0, %.lr.ph.i113.i.preheader ], [ %i.fw, %.lr.ph.i113.i.preheader38 ] ; 2 uses
+  %lcmp.mod24 = trunc i64 %.0.i.i to i1
+  tail call void @llvm.assume(i1 %lcmp.mod24)
+  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.019.i.i.a
   %i.fn = shl i32 %i.fl, %i.es
-  %9 = add nuw nsw i64 %.019.i.i.a, 1             ; 3 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %9
-  %i.fo = load i32, ptr %10, align 4, !tbaa !6    ; 2 uses
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.019.i.i.a
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %i.fo = load i32, ptr %13, align 4, !tbaa !6
   %i.fp = lshr i32 %i.fo, %i.et
   %i.fq = or disjoint i32 %i.fp, %i.fn
   store i32 %i.fq, ptr %i.fm, align 4, !tbaa !6
-  %exitcond.not.i109.i = icmp eq i64 %9, %.pre11
-  br i1 %exitcond.not.i109.i, label %_ZN5arrowL14ShiftArrayLeftEPjll.exit.thread.i, label %scalar.ph, !llvm.loop !22
+  br label %._crit_edge.i112.loopexit.i
 
-._crit_edge.i112.loopexit.i:                      ; preds = %.lr.ph.i113.i, %vector.ph25
+._crit_edge.i112.loopexit.i:                      ; preds = %.lr.ph.i113.i.preheader38, %scalar.ph
   %.pre.i = load i32, ptr %.0.i.sroa.phi.i, align 4, !tbaa !6
   br label %._crit_edge.i112.i
 
@@ -662,19 +663,29 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.pre = load i32, ptr %i.c, align 16, !tbaa !6
   br label %.lr.ph34.i
 
-.lr.ph.i113.i:                                    ; preds = %.lr.ph.i113.i.preheader38, %.lr.ph.i113.i
-  %i.ft = phi i32 [ %i.fy, %.lr.ph.i113.i ], [ %.ph, %.lr.ph.i113.i.preheader38 ]
-  %.019.i115.i.a = phi i64 [ %i.fw, %.lr.ph.i113.i ], [ %.019.i115.i.ph, %.lr.ph.i113.i.preheader38 ] ; 2 uses
-  %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.019.i115.i.a
-  %i.fv = shl i32 %i.ft, %i.es
-  %i.fw = add nuw nsw i64 %.019.i115.i.a, 1       ; 3 uses
+.lr.ph.i113.i:                                    ; preds = %.lr.ph.i113.i, %.lr.ph.i113.i.preheader.new
+  %i.ft = phi i32 [ 0, %.lr.ph.i113.i.preheader.new ], [ %i.fy, %.lr.ph.i113.i ]
+  %.019.i115.i = phi i64 [ 0, %.lr.ph.i113.i.preheader.new ], [ %i.fw, %.lr.ph.i113.i ] ; 3 uses
+  %.019.i115.i.a = phi i64 [ 0, %.lr.ph.i113.i.preheader.new ], [ %niter.next.1, %.lr.ph.i113.i ]
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.019.i115.i
+  %15 = shl i32 %i.ft, %i.es
+  %16 = or disjoint i64 %.019.i115.i, 1           ; 2 uses
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %16
+  %18 = load i32, ptr %17, align 4, !tbaa !6      ; 2 uses
+  %19 = lshr i32 %18, %i.et
+  %20 = or disjoint i32 %19, %15
+  store i32 %20, ptr %14, align 8, !tbaa !6
+  %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %16
+  %i.fv = shl i32 %18, %i.es
+  %i.fw = add nuw nsw i64 %.019.i115.i, 2         ; 3 uses
   %i.fx = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.fw
-  %i.fy = load i32, ptr %i.fx, align 4, !tbaa !6  ; 2 uses
+  %i.fy = load i32, ptr %i.fx, align 8, !tbaa !6  ; 3 uses
   %i.fz = lshr i32 %i.fy, %i.et
   %i.ga = or disjoint i32 %i.fz, %i.fv
   store i32 %i.ga, ptr %i.fu, align 4, !tbaa !6
-  %exitcond.not.i116.i = icmp eq i64 %i.fw, %.0.i.i
-  br i1 %exitcond.not.i116.i, label %._crit_edge.i112.loopexit.i, label %.lr.ph.i113.i, !llvm.loop !23
+  %niter.next.1 = add nuw i64 %.019.i115.i.a, 2   ; 2 uses
+  %exitcond.not.i116.i = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %exitcond.not.i116.i, label %.lr.ph.i113.i.preheader38, label %.lr.ph.i113.i, !llvm.loop !23
 
 .lr.ph34.i:                                       ; preds = %bb.ac, %._crit_edge.i112.i
   %i.gb = phi i32 [ %.pre, %._crit_edge.i112.i ], [ %i.bi, %bb.ac ] ; 5 uses
@@ -1077,7 +1088,7 @@ attributes #10 = { nounwind }
 !20 = !{i64 0, i64 32, !7}
 !21 = distinct !{!21, !14, !15, !16}
 !22 = distinct !{!22, !14, !16, !15}
-!23 = distinct !{!23, !14, !16, !15}
+!23 = distinct !{!23, !14}
 !24 = distinct !{!24, !14}
 !25 = distinct !{!25, !14}
 !26 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}

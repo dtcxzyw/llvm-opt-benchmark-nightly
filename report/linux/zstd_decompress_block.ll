@@ -205,9 +205,9 @@ bb.ah:                                            ; preds = %ZSTD_decodeSequence
   %i.ie = phi i64 [ %i.dl, %.lr.ph.i ], [ %i.oe, %ZSTD_decodeSequence.exit.i ] ; 2 uses
   %i.if = phi i64 [ %i.gm, %.lr.ph.i ], [ %i.od, %ZSTD_decodeSequence.exit.i ] ; 2 uses
   %i.ig = phi i64 [ %i.ez, %.lr.ph.i ], [ %i.oc, %ZSTD_decodeSequence.exit.i ] ; 2 uses
-  %.val.i237592600.i = phi i64 [ %.promoted591.i, %.lr.ph.i ], [ %.val.i237593.i, %ZSTD_decodeSequence.exit.i ] ; 6 uses
+  %.val.i237592600.i = phi i64 [ %.promoted591.i, %.lr.ph.i ], [ %.val.i237593.i, %ZSTD_decodeSequence.exit.i ] ; 5 uses
   %i.ih = phi i32 [ %.promoted595.i, %.lr.ph.i ], [ %i.ob, %ZSTD_decodeSequence.exit.i ] ; 5 uses
-  %BIT_reloadDStream.zeroFilled598599.i = phi ptr [ %.promoted596.i, %.lr.ph.i ], [ %BIT_reloadDStream.zeroFilled.i, %ZSTD_decodeSequence.exit.i ] ; 8 uses
+  %BIT_reloadDStream.zeroFilled598599.i = phi ptr [ %.promoted596.i, %.lr.ph.i ], [ %BIT_reloadDStream.zeroFilled.i, %ZSTD_decodeSequence.exit.i ] ; 5 uses
   %.not554.i = icmp eq i64 %indvars.iv.i, %i.hn
   %i.ii = getelementptr [8 x i8], ptr %i.el, i64 %i.ie ; 4 uses
   %i.ij = getelementptr [8 x i8], ptr %i.hi, i64 %i.if ; 4 uses
@@ -328,7 +328,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
-  %i.lg = phi i32 [ %i.kw, %bb.ao ], [ %i.le, %bb.ap ] ; 8 uses
+  %i.lg = phi i32 [ %i.kw, %bb.ao ], [ %i.le, %bb.ap ] ; 6 uses
   %.sroa.9.0.i = phi i64 [ %i.in, %bb.ao ], [ %i.lf, %bb.ap ] ; 2 uses
   %i.lh = icmp ugt i8 %i.jc, 30
   br i1 %i.lh, label %bb.ar, label %BIT_reloadDStream.exit60.i, !prof !31
@@ -343,13 +343,13 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.ar
   %.not.i54.i = icmp ult ptr %BIT_reloadDStream.zeroFilled598599.i, %i.an
-  br i1 %.not.i54.i, label %12, label %bb.au
-
-bb.au:                                            ; preds = %bb.at
-  %8 = lshr i32 %i.lg, 3
+  %8 = lshr i32 %i.lg, 3                          ; 2 uses
   %9 = zext nneg i32 %8 to i64
   %10 = sub nsw i64 0, %9
-  %11 = getelementptr i8, ptr %BIT_reloadDStream.zeroFilled598599.i, i64 %10 ; 3 uses
+  %11 = getelementptr i8, ptr %BIT_reloadDStream.zeroFilled598599.i, i64 %10 ; 4 uses
+  br i1 %.not.i54.i, label %bb.av, label %bb.au
+
+bb.au:                                            ; preds = %bb.at
   store ptr %11, ptr %i.dn, align 8, !noalias !60
   %i.lj = and i32 %i.lg, 7                        ; 2 uses
   store i32 %i.lj, ptr %i.dd, align 8, !noalias !60
@@ -357,20 +357,12 @@ bb.au:                                            ; preds = %bb.at
   store i64 %.val.i234.i, ptr %7, align 8, !noalias !60
   br label %BIT_reloadDStream.exit60.i
 
-12:                                               ; preds = %bb.at
-  %13 = icmp eq ptr %BIT_reloadDStream.zeroFilled598599.i, %3
-  br i1 %13, label %BIT_reloadDStream.exit60.i, label %bb.av
-
-bb.av:                                            ; preds = %12
-  %14 = lshr i32 %i.lg, 3                         ; 2 uses
-  %15 = zext nneg i32 %14 to i64
-  %16 = sub nsw i64 0, %15
-  %17 = getelementptr i8, ptr %BIT_reloadDStream.zeroFilled598599.i, i64 %16
-  %i.lk = icmp ult ptr %17, %3
+bb.av:                                            ; preds = %bb.at
+  %i.lk = icmp ult ptr %11, %3
   %i.ll = ptrtoint ptr %BIT_reloadDStream.zeroFilled598599.i to i64
   %i.lm = sub i64 %i.ll, %i.hm
   %i.ln = trunc i64 %i.lm to i32
-  %.021.i56.i = select i1 %i.lk, i32 %i.ln, i32 %14 ; 2 uses
+  %.021.i56.i = select i1 %i.lk, i32 %i.ln, i32 %8 ; 2 uses
   %i.lo = zext i32 %.021.i56.i to i64
   %i.lp = sub nsw i64 0, %i.lo
   %i.lq = getelementptr i8, ptr %BIT_reloadDStream.zeroFilled598599.i, i64 %i.lp ; 3 uses
@@ -382,28 +374,28 @@ bb.av:                                            ; preds = %12
   store i64 %.val198.i, ptr %7, align 8, !noalias !60
   br label %BIT_reloadDStream.exit60.i
 
-BIT_reloadDStream.exit60.i:                       ; preds = %bb.av, %12, %bb.au, %bb.as, %bb.aq
-  %BIT_reloadDStream.zeroFilled597.i = phi ptr [ %BIT_reloadDStream.zeroFilled598599.i, %12 ], [ %i.lq, %bb.av ], [ %11, %bb.au ], [ @BIT_reloadDStream.zeroFilled, %bb.as ], [ %BIT_reloadDStream.zeroFilled598599.i, %bb.aq ] ; 8 uses
-  %18 = phi i32 [ %i.lg, %12 ], [ %i.ls, %bb.av ], [ %i.lj, %bb.au ], [ %i.lg, %bb.as ], [ %i.lg, %bb.aq ] ; 3 uses
-  %.val.i237594.i = phi i64 [ %.val.i237592600.i, %12 ], [ %.val198.i, %bb.av ], [ %.val.i234.i, %bb.au ], [ %.val.i237592600.i, %bb.as ], [ %.val.i237592600.i, %bb.aq ] ; 7 uses
+BIT_reloadDStream.exit60.i:                       ; preds = %bb.av, %bb.au, %bb.as, %bb.aq
+  %BIT_reloadDStream.zeroFilled597.i = phi ptr [ %BIT_reloadDStream.zeroFilled598599.i, %bb.aq ], [ %i.lq, %bb.av ], [ %11, %bb.au ], [ @BIT_reloadDStream.zeroFilled, %bb.as ] ; 8 uses
+  %12 = phi i32 [ %i.lg, %bb.aq ], [ %i.ls, %bb.av ], [ %i.lj, %bb.au ], [ %i.lg, %bb.as ] ; 3 uses
+  %.val.i237594.i = phi i64 [ %.val.i237592600.i, %bb.aq ], [ %.val198.i, %bb.av ], [ %.val.i234.i, %bb.au ], [ %.val.i237592600.i, %bb.as ] ; 7 uses
   %.not103.i.i = icmp eq i8 %i.iu, 0
   br i1 %.not103.i.i, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %BIT_reloadDStream.exit60.i
-  %i.lt = and i32 %18, 63
+  %i.lt = and i32 %12, 63
   %i.lu = zext nneg i32 %i.lt to i64
   %i.lv = shl i64 %.val.i237594.i, %i.lu
   %i.lw = sub nsw i32 0, %i.iz
   %i.lx = and i32 %i.lw, 63
   %i.ly = zext nneg i32 %i.lx to i64
   %i.lz = lshr i64 %i.lv, %i.ly
-  %i.ma = add i32 %18, %i.iz                      ; 2 uses
+  %i.ma = add i32 %12, %i.iz                      ; 2 uses
   store i32 %i.ma, ptr %i.dd, align 8, !noalias !60
   %i.mb = add i64 %i.lz, %i.iq
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %BIT_reloadDStream.exit60.i
-  %i.mc = phi i32 [ %18, %BIT_reloadDStream.exit60.i ], [ %i.ma, %bb.aw ] ; 2 uses
+  %i.mc = phi i32 [ %12, %BIT_reloadDStream.exit60.i ], [ %i.ma, %bb.aw ] ; 2 uses
   %.sroa.0295.0.i = phi i64 [ %i.iq, %BIT_reloadDStream.exit60.i ], [ %i.mb, %bb.aw ] ; 2 uses
   br i1 %.not554.i, label %ZSTD_decodeSequence.exit.i, label %bb.ay
 

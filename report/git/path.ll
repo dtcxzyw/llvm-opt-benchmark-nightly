@@ -204,18 +204,18 @@ bb.b:                                             ; preds = %.preheader108, %bb.
 
 skip_slashes.exit.preheader:                      ; preds = %bb.b
   %.not81 = icmp eq ptr %2, null
-  %i.y = ptrtoint ptr %.057.lcssa to i64
+  %i.y = ptrtoint ptr %.057.lcssa to i64          ; 3 uses
   br i1 %.not81, label %skip_slashes.exit.us.outer, label %skip_slashes.exit
 
 skip_slashes.exit.us.outer.backedge:              ; preds = %.preheader.us.preheader.a, %.preheader.us, %.lr.ph118.us
   %.ph.be = phi i8 [ %i.av, %.lr.ph118.us ], [ %.pr.us137, %.preheader.us ], [ %.pr.us137, %.preheader.us.preheader.a ]
-  %.158.us.ph198.be = phi ptr [ %i.at, %.lr.ph118.us ], [ %.461.us181, %.preheader.us.preheader.a ], [ %i.ak, %.preheader.us ]
+  %.158.us.ph198.be = phi ptr [ %i.at, %.lr.ph118.us ], [ %.461.us181, %.preheader.us.preheader.a ], [ %scevgep140, %.preheader.us ]
   %.155.us.ph.be = phi ptr [ %.4117.us, %.lr.ph118.us ], [ %.6.us, %.preheader.us ], [ %.6.us, %.preheader.us.preheader.a ]
   br label %skip_slashes.exit.us.outer
 
 skip_slashes.exit.us.outer:                       ; preds = %skip_slashes.exit.preheader, %skip_slashes.exit.us.outer.backedge
   %.ph = phi i8 [ %.ph.be, %skip_slashes.exit.us.outer.backedge ], [ %i.w, %skip_slashes.exit.preheader ]
-  %.158.us.ph198 = phi ptr [ %.158.us.ph198.be, %skip_slashes.exit.us.outer.backedge ], [ %.057.lcssa, %skip_slashes.exit.preheader ] ; 2 uses
+  %.158.us.ph198 = phi ptr [ %.158.us.ph198.be, %skip_slashes.exit.us.outer.backedge ], [ %.057.lcssa, %skip_slashes.exit.preheader ] ; 4 uses
   %.155.us.ph = phi ptr [ %.155.us.ph.be, %skip_slashes.exit.us.outer.backedge ], [ %.0.i, %skip_slashes.exit.preheader ]
   br label %skip_slashes.exit.us
 
@@ -235,6 +235,7 @@ bb.c:                                             ; preds = %skip_slashes.exit.u
   ]
 
 bb.d:                                             ; preds = %bb.c
+  %.158.us139.le = ptrtoaddr ptr %.158.us.ph198 to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %.155.us, i64 2 ; 2 uses
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !17  ; 2 uses
   switch i8 %i.ae, label %.preheader195 [
@@ -258,15 +259,21 @@ skip_slashes.exit89.us:                           ; preds = %bb.f, %bb.d
   %.6.us = phi ptr [ %i.ad, %bb.d ], [ %.0.i87.us, %bb.f ] ; 2 uses
   %i.ai = getelementptr inbounds i8, ptr %.158.us.ph198, i64 -1 ; 2 uses
   %.not79.us = icmp ugt ptr %i.ai, %.057.lcssa
-  br i1 %.not79.us, label %.preheader.us.preheader.a, label %skip_slashes.exit86
+  br i1 %.not79.us, label %.preheader.us.preheader, label %skip_slashes.exit86
+
+.preheader.us.preheader:                          ; preds = %skip_slashes.exit89.us
+  %scevgep138 = getelementptr i8, ptr %.158.us.ph198, i64 %i.y
+  %3 = sub i64 0, %.158.us139.le
+  %scevgep140 = getelementptr i8, ptr %scevgep138, i64 %3
+  br label %.preheader.us.preheader.a
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader.a
   %i.aj = icmp ult ptr %.057.lcssa, %i.ak
   br i1 %i.aj, label %.preheader.us.preheader.a, label %skip_slashes.exit.us.outer.backedge, !llvm.loop !2
 
-.preheader.us.preheader.a:                        ; preds = %skip_slashes.exit89.us, %.preheader.us
-  %.461.us181 = phi ptr [ %i.ak, %.preheader.us ], [ %i.ai, %skip_slashes.exit89.us ] ; 2 uses
-  %i.ak = getelementptr inbounds i8, ptr %.461.us181, i64 -1 ; 4 uses
+.preheader.us.preheader.a:                        ; preds = %.preheader.us.preheader, %.preheader.us
+  %.461.us181 = phi ptr [ %i.ai, %.preheader.us.preheader ], [ %i.ak, %.preheader.us ] ; 2 uses
+  %i.ak = getelementptr inbounds i8, ptr %.461.us181, i64 -1 ; 3 uses
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !17
   %.not80.us = icmp eq i8 %i.al, 47
   br i1 %.not80.us, label %skip_slashes.exit.us.outer.backedge, label %.preheader.us, !llvm.loop !2
@@ -325,8 +332,9 @@ thread-pre-split:                                 ; preds = %bb.m, %.lr.ph118, %
 
 skip_slashes.exit:                                ; preds = %skip_slashes.exit.preheader, %thread-pre-split
   %i.aw = phi i8 [ %.pr, %thread-pre-split ], [ %i.w, %skip_slashes.exit.preheader ]
-  %.158 = phi ptr [ %.562.ph, %thread-pre-split ], [ %.057.lcssa, %skip_slashes.exit.preheader ] ; 3 uses
+  %.158 = phi ptr [ %.562.ph, %thread-pre-split ], [ %.057.lcssa, %skip_slashes.exit.preheader ] ; 5 uses
   %.155 = phi ptr [ %.7.ph, %thread-pre-split ], [ %.0.i, %skip_slashes.exit.preheader ] ; 7 uses
+  %.158136 = ptrtoaddr ptr %.158 to i64
   %i.ax = icmp eq i8 %i.aw, 46
   br i1 %i.ax, label %bb.k, label %.preheader206
 
@@ -407,21 +415,27 @@ skip_slashes.exit89:                              ; preds = %bb.p, %bb.n
   %.6 = phi ptr [ %i.bd, %bb.n ], [ %.0.i87, %bb.p ] ; 2 uses
   %i.bo = getelementptr inbounds i8, ptr %.158, i64 -1 ; 2 uses
   %.not79 = icmp ugt ptr %i.bo, %.057.lcssa
-  br i1 %.not79, label %.preheader.preheader.a, label %skip_slashes.exit86
+  br i1 %.not79, label %.preheader.preheader, label %skip_slashes.exit86
+
+.preheader.preheader:                             ; preds = %skip_slashes.exit89
+  %scevgep = getelementptr i8, ptr %.158, i64 %i.y
+  %4 = sub i64 0, %.158136
+  %scevgep137 = getelementptr i8, ptr %scevgep, i64 %4
+  br label %.preheader.preheader.a
 
 .preheader:                                       ; preds = %.preheader.preheader.a
   %i.bp = icmp ult ptr %.057.lcssa, %i.bq
   br i1 %i.bp, label %.preheader.preheader.a, label %.critedge2, !llvm.loop !2
 
-.preheader.preheader.a:                           ; preds = %skip_slashes.exit89, %.preheader
-  %.461180 = phi ptr [ %i.bq, %.preheader ], [ %i.bo, %skip_slashes.exit89 ] ; 2 uses
-  %i.bq = getelementptr inbounds i8, ptr %.461180, i64 -1 ; 4 uses
+.preheader.preheader.a:                           ; preds = %.preheader.preheader, %.preheader
+  %.461180 = phi ptr [ %i.bo, %.preheader.preheader ], [ %i.bq, %.preheader ] ; 2 uses
+  %i.bq = getelementptr inbounds i8, ptr %.461180, i64 -1 ; 3 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !17
   %.not80 = icmp eq i8 %i.br, 47
   br i1 %.not80, label %.critedge2, label %.preheader, !llvm.loop !2
 
 .critedge2:                                       ; preds = %.preheader, %.preheader.preheader.a
-  %.461.lcssa = phi ptr [ %i.bq, %.preheader ], [ %.461180, %.preheader.preheader.a ] ; 3 uses
+  %.461.lcssa = phi ptr [ %scevgep137, %.preheader ], [ %.461180, %.preheader.preheader.a ] ; 3 uses
   %i.bs = load i32, ptr %2, align 4, !tbaa !56
   %i.bt = sext i32 %i.bs to i64
   %i.bu = ptrtoint ptr %.461.lcssa to i64
@@ -445,7 +459,7 @@ skip_slashes.exit86:                              ; preds = %skip_slashes.exit89
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i32 -1, 1) i32 @normalize_path_copy(ptr nofree noundef captures(address) %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #17 {
+define dso_local range(i32 -1, 1) i32 @normalize_path_copy(ptr noundef %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #17 {
 bb.a:
   %.val.i = load i8, ptr %1, align 1, !tbaa !17
   %i.a = icmp eq i8 %.val.i, 47                   ; 2 uses
@@ -526,7 +540,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph.i
 
 .preheader108.i:                                  ; preds = %.lr.ph.i, %middle.block, %vec.epilog.middle.block, %bb.a
-  %.057.lcssa.i = phi ptr [ %0, %bb.a ], [ %i.q, %vec.epilog.middle.block ], [ %i.l, %middle.block ], [ %i.u, %.lr.ph.i ] ; 3 uses
+  %.057.lcssa.i = phi ptr [ %0, %bb.a ], [ %i.q, %vec.epilog.middle.block ], [ %i.l, %middle.block ], [ %i.u, %.lr.ph.i ] ; 4 uses
   %.054.lcssa.i = phi ptr [ %1, %bb.a ], [ %i.p, %vec.epilog.middle.block ], [ %i.k, %middle.block ], [ %i.s, %.lr.ph.i ]
   br label %bb.b
 
@@ -545,18 +559,16 @@ bb.b:                                             ; preds = %bb.b, %.preheader10
   %i.w = load i8, ptr %.0.i.i, align 1, !tbaa !17 ; 2 uses
   %.not.i.i = icmp eq i8 %i.w, 47
   %i.x = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 1
-  br i1 %.not.i.i, label %bb.b, label %skip_slashes.exit.us.i.outer, !llvm.loop !1
+  br i1 %.not.i.i, label %bb.b, label %skip_slashes.exit.us.i.outer.backedge.a, !llvm.loop !1
 
-skip_slashes.exit.us.i.outer.backedge.a:          ; preds = %.preheader.us.i, %.preheader.us.i.preheader, %thread-pre-split.us.i.loopexit
-  %.ph.be = phi i8 [ %i.at, %thread-pre-split.us.i.loopexit ], [ %.pr.us137.i, %.preheader.us.i.preheader ], [ %.pr.us137.i, %.preheader.us.i ]
-  %.158.us.i.ph62.be = phi ptr [ %i.au, %thread-pre-split.us.i.loopexit ], [ %i.aj, %.preheader.us.i ], [ %.461.us.i47, %.preheader.us.i.preheader ]
-  %.155.us.i.ph.be = phi ptr [ %.4117.us.i, %thread-pre-split.us.i.loopexit ], [ %.6.us.i, %.preheader.us.i.preheader ], [ %.6.us.i, %.preheader.us.i ]
+skip_slashes.exit.us.i.outer.backedge.a:          ; preds = %bb.b
+  %2 = ptrtoint ptr %.057.lcssa.i to i64
   br label %skip_slashes.exit.us.i.outer
 
-skip_slashes.exit.us.i.outer:                     ; preds = %bb.b, %skip_slashes.exit.us.i.outer.backedge.a
-  %.ph = phi i8 [ %.ph.be, %skip_slashes.exit.us.i.outer.backedge.a ], [ %i.w, %bb.b ]
-  %.158.us.i.ph62 = phi ptr [ %.158.us.i.ph62.be, %skip_slashes.exit.us.i.outer.backedge.a ], [ %.057.lcssa.i, %bb.b ] ; 2 uses
-  %.155.us.i.ph = phi ptr [ %.155.us.i.ph.be, %skip_slashes.exit.us.i.outer.backedge.a ], [ %.0.i.i, %bb.b ]
+skip_slashes.exit.us.i.outer:                     ; preds = %skip_slashes.exit.us.i.outer.backedge, %skip_slashes.exit.us.i.outer.backedge.a
+  %.ph = phi i8 [ %i.w, %skip_slashes.exit.us.i.outer.backedge.a ], [ %.ph.be, %skip_slashes.exit.us.i.outer.backedge ]
+  %.158.us.i.ph62 = phi ptr [ %.057.lcssa.i, %skip_slashes.exit.us.i.outer.backedge.a ], [ %.158.us.i.ph62.be, %skip_slashes.exit.us.i.outer.backedge ] ; 4 uses
+  %.155.us.i.ph = phi ptr [ %.0.i.i, %skip_slashes.exit.us.i.outer.backedge.a ], [ %.155.us.i.ph.be, %skip_slashes.exit.us.i.outer.backedge ]
   br label %skip_slashes.exit.us.i
 
 skip_slashes.exit.us.i:                           ; preds = %bb.h, %skip_slashes.exit.us.i.outer
@@ -575,6 +587,7 @@ bb.c:                                             ; preds = %skip_slashes.exit.u
   ]
 
 bb.d:                                             ; preds = %bb.c
+  %.158.us139.i.le = ptrtoaddr ptr %.158.us.i.ph62 to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %.155.us.i, i64 2 ; 2 uses
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !17  ; 2 uses
   switch i8 %i.ad, label %.preheader [
@@ -598,18 +611,24 @@ skip_slashes.exit89.us.i:                         ; preds = %bb.f, %bb.d
   %.6.us.i = phi ptr [ %i.ac, %bb.d ], [ %.0.i87.us.i, %bb.f ] ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %.158.us.i.ph62, i64 -1 ; 2 uses
   %.not79.us.i = icmp ugt ptr %i.ah, %.057.lcssa.i
-  br i1 %.not79.us.i, label %.preheader.us.i.preheader, label %normalize_path_copy_len.exit
+  br i1 %.not79.us.i, label %.preheader.us.preheader.i, label %normalize_path_copy_len.exit
+
+.preheader.us.preheader.i:                        ; preds = %skip_slashes.exit89.us.i
+  %scevgep138.i = getelementptr i8, ptr %.158.us.i.ph62, i64 %2
+  %3 = sub i64 0, %.158.us139.i.le
+  %scevgep140.i = getelementptr i8, ptr %scevgep138.i, i64 %3
+  br label %.preheader.us.i.preheader
 
 .preheader.us.i:                                  ; preds = %.preheader.us.i.preheader
   %i.ai = icmp ult ptr %.057.lcssa.i, %i.aj
-  br i1 %i.ai, label %.preheader.us.i.preheader, label %skip_slashes.exit.us.i.outer.backedge.a, !llvm.loop !2
+  br i1 %i.ai, label %.preheader.us.i.preheader, label %skip_slashes.exit.us.i.outer.backedge, !llvm.loop !2
 
-.preheader.us.i.preheader:                        ; preds = %skip_slashes.exit89.us.i, %.preheader.us.i
-  %.461.us.i47 = phi ptr [ %i.aj, %.preheader.us.i ], [ %i.ah, %skip_slashes.exit89.us.i ] ; 2 uses
-  %i.aj = getelementptr inbounds i8, ptr %.461.us.i47, i64 -1 ; 4 uses
+.preheader.us.i.preheader:                        ; preds = %.preheader.us.preheader.i, %.preheader.us.i
+  %.461.us.i47 = phi ptr [ %i.ah, %.preheader.us.preheader.i ], [ %i.aj, %.preheader.us.i ] ; 2 uses
+  %i.aj = getelementptr inbounds i8, ptr %.461.us.i47, i64 -1 ; 3 uses
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !17
   %.not80.us.i = icmp eq i8 %i.ak, 47
-  br i1 %.not80.us.i, label %skip_slashes.exit.us.i.outer.backedge.a, label %.preheader.us.i, !llvm.loop !2
+  br i1 %.not80.us.i, label %skip_slashes.exit.us.i.outer.backedge, label %.preheader.us.i, !llvm.loop !2
 
 bb.g:                                             ; preds = %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %.155.us.i, i64 2
@@ -658,7 +677,13 @@ bb.j:                                             ; preds = %bb.i
 
 thread-pre-split.us.i.loopexit:                   ; preds = %.lr.ph118.us.i
   %i.au = getelementptr inbounds nuw i8, ptr %.259.us.i, i64 1
-  br label %skip_slashes.exit.us.i.outer.backedge.a
+  br label %skip_slashes.exit.us.i.outer.backedge
+
+skip_slashes.exit.us.i.outer.backedge:            ; preds = %.preheader.us.i, %.preheader.us.i.preheader, %thread-pre-split.us.i.loopexit
+  %.ph.be = phi i8 [ %i.at, %thread-pre-split.us.i.loopexit ], [ %.pr.us137.i, %.preheader.us.i.preheader ], [ %.pr.us137.i, %.preheader.us.i ]
+  %.158.us.i.ph62.be = phi ptr [ %i.au, %thread-pre-split.us.i.loopexit ], [ %scevgep140.i, %.preheader.us.i ], [ %.461.us.i47, %.preheader.us.i.preheader ]
+  %.155.us.i.ph.be = phi ptr [ %.4117.us.i, %thread-pre-split.us.i.loopexit ], [ %.6.us.i, %.preheader.us.i.preheader ], [ %.6.us.i, %.preheader.us.i ]
+  br label %skip_slashes.exit.us.i.outer
 
 .split.us.i:                                      ; preds = %bb.i
   store i8 0, ptr %.259.us.i, align 1, !tbaa !17
@@ -762,7 +787,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph.i.i
 
 .preheader108.i.i:                                ; preds = %.lr.ph.i.i, %middle.block, %vec.epilog.middle.block, %bb.a
-  %.057.lcssa.i.i = phi ptr [ %i.e, %bb.a ], [ %i.x, %vec.epilog.middle.block ], [ %i.s, %middle.block ], [ %i.ab, %.lr.ph.i.i ] ; 3 uses
+  %.057.lcssa.i.i = phi ptr [ %i.e, %bb.a ], [ %i.x, %vec.epilog.middle.block ], [ %i.s, %middle.block ], [ %i.ab, %.lr.ph.i.i ] ; 4 uses
   %.054.lcssa.i.i = phi ptr [ %i.g, %bb.a ], [ %i.w, %vec.epilog.middle.block ], [ %i.r, %middle.block ], [ %i.z, %.lr.ph.i.i ]
   br label %bb.b
 
@@ -781,18 +806,16 @@ bb.b:                                             ; preds = %bb.b, %.preheader10
   %i.ad = load i8, ptr %.0.i.i.i, align 1, !tbaa !17 ; 2 uses
   %.not.i.i.i = icmp eq i8 %i.ad, 47
   %i.ae = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
-  br i1 %.not.i.i.i, label %bb.b, label %skip_slashes.exit.us.i.i.outer, !llvm.loop !1
+  br i1 %.not.i.i.i, label %bb.b, label %skip_slashes.exit.us.i.i.outer.backedge.a, !llvm.loop !1
 
-skip_slashes.exit.us.i.i.outer.backedge.a:        ; preds = %.preheader.us.i.i, %.preheader.us.i.i.preheader, %thread-pre-split.us.i.loopexit.i
-  %.ph.be = phi i8 [ %i.ba, %thread-pre-split.us.i.loopexit.i ], [ %.pr.us137.i.i, %.preheader.us.i.i.preheader ], [ %.pr.us137.i.i, %.preheader.us.i.i ]
-  %.158.us.i.i.ph63.be = phi ptr [ %i.bb, %thread-pre-split.us.i.loopexit.i ], [ %i.aq, %.preheader.us.i.i ], [ %.461.us.i.i48, %.preheader.us.i.i.preheader ]
-  %.155.us.i.i.ph.be = phi ptr [ %.4117.us.i.i, %thread-pre-split.us.i.loopexit.i ], [ %.6.us.i.i, %.preheader.us.i.i.preheader ], [ %.6.us.i.i, %.preheader.us.i.i ]
+skip_slashes.exit.us.i.i.outer.backedge.a:        ; preds = %bb.b
+  %2 = ptrtoint ptr %.057.lcssa.i.i to i64
   br label %skip_slashes.exit.us.i.i.outer
 
-skip_slashes.exit.us.i.i.outer:                   ; preds = %bb.b, %skip_slashes.exit.us.i.i.outer.backedge.a
-  %.ph = phi i8 [ %.ph.be, %skip_slashes.exit.us.i.i.outer.backedge.a ], [ %i.ad, %bb.b ]
-  %.158.us.i.i.ph63 = phi ptr [ %.158.us.i.i.ph63.be, %skip_slashes.exit.us.i.i.outer.backedge.a ], [ %.057.lcssa.i.i, %bb.b ] ; 2 uses
-  %.155.us.i.i.ph = phi ptr [ %.155.us.i.i.ph.be, %skip_slashes.exit.us.i.i.outer.backedge.a ], [ %.0.i.i.i, %bb.b ]
+skip_slashes.exit.us.i.i.outer:                   ; preds = %skip_slashes.exit.us.i.i.outer.backedge, %skip_slashes.exit.us.i.i.outer.backedge.a
+  %.ph = phi i8 [ %i.ad, %skip_slashes.exit.us.i.i.outer.backedge.a ], [ %.ph.be, %skip_slashes.exit.us.i.i.outer.backedge ]
+  %.158.us.i.i.ph63 = phi ptr [ %.057.lcssa.i.i, %skip_slashes.exit.us.i.i.outer.backedge.a ], [ %.158.us.i.i.ph63.be, %skip_slashes.exit.us.i.i.outer.backedge ] ; 4 uses
+  %.155.us.i.i.ph = phi ptr [ %.0.i.i.i, %skip_slashes.exit.us.i.i.outer.backedge.a ], [ %.155.us.i.i.ph.be, %skip_slashes.exit.us.i.i.outer.backedge ]
   br label %skip_slashes.exit.us.i.i
 
 skip_slashes.exit.us.i.i:                         ; preds = %bb.h, %skip_slashes.exit.us.i.i.outer
@@ -811,6 +834,7 @@ bb.c:                                             ; preds = %skip_slashes.exit.u
   ]
 
 bb.d:                                             ; preds = %bb.c
+  %.158.us139.i.i.le = ptrtoaddr ptr %.158.us.i.i.ph63 to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %.155.us.i.i, i64 2 ; 2 uses
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !17  ; 2 uses
   switch i8 %i.ak, label %.preheader [
@@ -834,18 +858,24 @@ skip_slashes.exit89.us.i.i:                       ; preds = %bb.f, %bb.d
   %.6.us.i.i = phi ptr [ %i.aj, %bb.d ], [ %.0.i87.us.i.i, %bb.f ] ; 2 uses
   %i.ao = getelementptr inbounds i8, ptr %.158.us.i.i.ph63, i64 -1 ; 2 uses
   %.not79.us.i.i = icmp ugt ptr %i.ao, %.057.lcssa.i.i
-  br i1 %.not79.us.i.i, label %.preheader.us.i.i.preheader, label %.loopexit
+  br i1 %.not79.us.i.i, label %.preheader.us.preheader.i.i, label %.loopexit
+
+.preheader.us.preheader.i.i:                      ; preds = %skip_slashes.exit89.us.i.i
+  %scevgep138.i.i = getelementptr i8, ptr %.158.us.i.i.ph63, i64 %2
+  %3 = sub i64 0, %.158.us139.i.i.le
+  %scevgep140.i.i = getelementptr i8, ptr %scevgep138.i.i, i64 %3
+  br label %.preheader.us.i.i.preheader
 
 .preheader.us.i.i:                                ; preds = %.preheader.us.i.i.preheader
   %i.ap = icmp ult ptr %.057.lcssa.i.i, %i.aq
-  br i1 %i.ap, label %.preheader.us.i.i.preheader, label %skip_slashes.exit.us.i.i.outer.backedge.a, !llvm.loop !2
+  br i1 %i.ap, label %.preheader.us.i.i.preheader, label %skip_slashes.exit.us.i.i.outer.backedge, !llvm.loop !2
 
-.preheader.us.i.i.preheader:                      ; preds = %skip_slashes.exit89.us.i.i, %.preheader.us.i.i
-  %.461.us.i.i48 = phi ptr [ %i.aq, %.preheader.us.i.i ], [ %i.ao, %skip_slashes.exit89.us.i.i ] ; 2 uses
-  %i.aq = getelementptr inbounds i8, ptr %.461.us.i.i48, i64 -1 ; 4 uses
+.preheader.us.i.i.preheader:                      ; preds = %.preheader.us.preheader.i.i, %.preheader.us.i.i
+  %.461.us.i.i48 = phi ptr [ %i.ao, %.preheader.us.preheader.i.i ], [ %i.aq, %.preheader.us.i.i ] ; 2 uses
+  %i.aq = getelementptr inbounds i8, ptr %.461.us.i.i48, i64 -1 ; 3 uses
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !17
   %.not80.us.i.i = icmp eq i8 %i.ar, 47
-  br i1 %.not80.us.i.i, label %skip_slashes.exit.us.i.i.outer.backedge.a, label %.preheader.us.i.i, !llvm.loop !2
+  br i1 %.not80.us.i.i, label %skip_slashes.exit.us.i.i.outer.backedge, label %.preheader.us.i.i, !llvm.loop !2
 
 bb.g:                                             ; preds = %bb.c
   %i.as = getelementptr inbounds nuw i8, ptr %.155.us.i.i, i64 2
@@ -894,7 +924,13 @@ bb.j:                                             ; preds = %bb.i
 
 thread-pre-split.us.i.loopexit.i:                 ; preds = %.lr.ph118.us.i.i
   %i.bb = getelementptr inbounds nuw i8, ptr %.259.us.i.i, i64 1
-  br label %skip_slashes.exit.us.i.i.outer.backedge.a
+  br label %skip_slashes.exit.us.i.i.outer.backedge
+
+skip_slashes.exit.us.i.i.outer.backedge:          ; preds = %.preheader.us.i.i, %.preheader.us.i.i.preheader, %thread-pre-split.us.i.loopexit.i
+  %.ph.be = phi i8 [ %i.ba, %thread-pre-split.us.i.loopexit.i ], [ %.pr.us137.i.i, %.preheader.us.i.i.preheader ], [ %.pr.us137.i.i, %.preheader.us.i.i ]
+  %.158.us.i.i.ph63.be = phi ptr [ %i.bb, %thread-pre-split.us.i.loopexit.i ], [ %scevgep140.i.i, %.preheader.us.i.i ], [ %.461.us.i.i48, %.preheader.us.i.i.preheader ]
+  %.155.us.i.i.ph.be = phi ptr [ %.4117.us.i.i, %thread-pre-split.us.i.loopexit.i ], [ %.6.us.i.i, %.preheader.us.i.i.preheader ], [ %.6.us.i.i, %.preheader.us.i.i ]
+  br label %skip_slashes.exit.us.i.i.outer
 
 bb.k:                                             ; preds = %bb.i
   store i8 0, ptr %.259.us.i.i, align 1, !tbaa !17

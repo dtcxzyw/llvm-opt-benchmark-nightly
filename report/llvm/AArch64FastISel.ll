@@ -204,16 +204,11 @@ tailrecurse:
     i16 8, label %.split
   ]
 
-tailrecurse.jt7:                                  ; preds = %_ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit
-  %5 = icmp eq i16 %.tr7084, 5
-  %6 = select i1 %5, i64 255, i64 65535
-  br label %.split17
-
-.split17:                                         ; preds = %tailrecurse.jt7, %tailrecurse, %tailrecurse, %tailrecurse, %tailrecurse
-  %.tr7288 = phi i64 [ %6, %tailrecurse.jt7 ], [ %4, %tailrecurse ], [ %4, %tailrecurse ], [ %4, %tailrecurse ], [ %4, %tailrecurse ] ; 7 uses
-  %.tr7185 = phi i32 [ %i.db, %tailrecurse.jt7 ], [ %3, %tailrecurse ], [ %3, %tailrecurse ], [ %3, %tailrecurse ], [ %3, %tailrecurse ] ; 2 uses
-  %.tr7082 = phi i16 [ 7, %tailrecurse.jt7 ], [ %2, %tailrecurse ], [ %2, %tailrecurse ], [ %2, %tailrecurse ], [ %2, %tailrecurse ] ; 2 uses
-  %.tr6979 = phi i32 [ 193, %tailrecurse.jt7 ], [ %1, %tailrecurse ], [ %1, %tailrecurse ], [ %1, %tailrecurse ], [ %1, %tailrecurse ] ; 3 uses
+.split17:                                         ; preds = %_ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit, %tailrecurse, %tailrecurse, %tailrecurse, %tailrecurse
+  %.tr7288 = phi i64 [ %4, %tailrecurse ], [ %4, %tailrecurse ], [ %4, %tailrecurse ], [ %4, %tailrecurse ], [ 65535, %_ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit ] ; 7 uses
+  %.tr7185 = phi i32 [ %3, %tailrecurse ], [ %3, %tailrecurse ], [ %3, %tailrecurse ], [ %3, %tailrecurse ], [ %i.db, %_ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit ] ; 2 uses
+  %.tr7082 = phi i16 [ %2, %tailrecurse ], [ %2, %tailrecurse ], [ %2, %tailrecurse ], [ %2, %tailrecurse ], [ 7, %_ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit ] ; 2 uses
+  %.tr6979 = phi i32 [ %1, %tailrecurse ], [ %1, %tailrecurse ], [ %1, %tailrecurse ], [ %1, %tailrecurse ], [ 193, %_ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit ] ; 3 uses
   %i.a = zext nneg i32 %.tr6979 to i64
   %i.b = getelementptr [8 x i8], ptr @_ZZN12_GLOBAL__N_115AArch64FastISel16emitLogicalOp_riEjN4llvm3MVTENS1_8RegisterEmE8OpcTable, i64 %i.a
   %i.c = getelementptr i8, ptr %i.b, i64 -1544
@@ -326,7 +321,7 @@ _ZN4llvm16isShiftedMask_64Em.exit56.i.i29:        ; preds = %_ZN4llvm16isShifted
 .thread:                                          ; preds = %_ZN4llvm16isShiftedMask_64Em.exit56.i.i, %_ZN4llvm16isShiftedMask_64Em.exit.i.i, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29, %_ZN4llvm16isShiftedMask_64Em.exit.i.i25
   %.tr7289 = phi i64 [ %4, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29 ], [ %4, %_ZN4llvm16isShiftedMask_64Em.exit.i.i25 ], [ %.tr7288, %_ZN4llvm16isShiftedMask_64Em.exit.i.i ], [ %.tr7288, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i ] ; 4 uses
   %.tr7187 = phi i32 [ %3, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29 ], [ %3, %_ZN4llvm16isShiftedMask_64Em.exit.i.i25 ], [ %.tr7185, %_ZN4llvm16isShiftedMask_64Em.exit.i.i ], [ %.tr7185, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i ]
-  %.tr7084 = phi i16 [ 8, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29 ], [ 8, %_ZN4llvm16isShiftedMask_64Em.exit.i.i25 ], [ %.tr7082, %_ZN4llvm16isShiftedMask_64Em.exit.i.i ], [ %.tr7082, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i ] ; 2 uses
+  %.tr7084 = phi i16 [ 8, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29 ], [ 8, %_ZN4llvm16isShiftedMask_64Em.exit.i.i25 ], [ %.tr7082, %_ZN4llvm16isShiftedMask_64Em.exit.i.i ], [ %.tr7082, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i ]
   %.tr6981 = phi i32 [ %1, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29 ], [ %1, %_ZN4llvm16isShiftedMask_64Em.exit.i.i25 ], [ %.tr6979, %_ZN4llvm16isShiftedMask_64Em.exit.i.i ], [ %.tr6979, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i ]
   %.065 = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 3648), %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 3648), %_ZN4llvm16isShiftedMask_64Em.exit.i.i25 ], [ getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 2624), %_ZN4llvm16isShiftedMask_64Em.exit.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4llvm29AArch64MCRegisterClassStorageE, i64 2624), %_ZN4llvm16isShiftedMask_64Em.exit56.i.i ]
   %.01463 = phi i32 [ %i.af, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29 ], [ %i.af, %_ZN4llvm16isShiftedMask_64Em.exit.i.i25 ], [ %i.d, %_ZN4llvm16isShiftedMask_64Em.exit.i.i ], [ %i.d, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i ]
@@ -425,7 +420,7 @@ _ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit: ; preds = %_ZN4llvm16isSh
   %or.cond67 = icmp ult i16 %i.dc, -2
   %.not = icmp eq i32 %.tr6981, 193
   %or.cond68 = or i1 %.not, %or.cond67
-  br i1 %or.cond68, label %.critedge, label %tailrecurse.jt7
+  br i1 %or.cond68, label %.critedge, label %.split17
 
 .critedge:                                        ; preds = %_ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit, %_ZN4llvm16isShiftedMask_64Em.exit.thread.i.i26, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29, %.split, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i, %.split17, %_ZN4llvm16isShiftedMask_64Em.exit.thread.i.i, %tailrecurse
   %.sroa.051.0 = phi i32 [ 0, %tailrecurse ], [ 0, %.split ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit.thread.i.i26 ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit.thread.i.i ], [ 0, %.split17 ], [ %i.db, %_ZN4llvm10AArch64_AML22encodeLogicalImmediateEmj.exit ], [ 0, %_ZN4llvm16isShiftedMask_64Em.exit56.i.i29 ]

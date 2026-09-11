@@ -176,7 +176,7 @@ bb.t:                                             ; preds = %bb.s
   br label %init_displayid.exit
 
 init_displayid.exit:                              ; preds = %bb.q, %bb.t, %bb.s, %bb.r
-  %.0129208 = phi ptr [ %i.at, %bb.t ], [ %i.at, %bb.r ], [ %i.at, %bb.s ], [ null, %bb.q ] ; 11 uses
+  %.0129208 = phi ptr [ %i.at, %bb.t ], [ %i.at, %bb.r ], [ %i.at, %bb.s ], [ null, %bb.q ] ; 10 uses
   %.0128 = phi ptr [ %i.az, %bb.t ], [ null, %bb.r ], [ %i.az, %bb.s ], [ null, %bb.q ] ; 58 uses
   store i8 0, ptr %0, align 1
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -325,13 +325,13 @@ edid_desc_next.exit:                              ; preds = %bb.w, %bb.v
   %.not.i154 = icmp eq i32 %i.fc, 0
   %.not42.i = icmp eq i32 %i.fe, 0
   %.not44.i = icmp eq ptr %.0129208, null         ; 5 uses
-  %i.ff = getelementptr inbounds nuw i8, ptr %.0129208, i64 2 ; 6 uses
+  %i.ff = getelementptr inbounds nuw i8, ptr %.0129208, i64 2 ; 5 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %.0129208, i64 4 ; 2 uses
   br label %bb.x
 
 .preheader.i:                                     ; preds = %bb.ao
   %i.fh = getelementptr inbounds nuw i8, ptr %.0130.ptr, i64 18
-  %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 127 ; 6 uses
+  %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 127 ; 5 uses
   %i.fj = icmp slt i32 %.2.i, 54
   br i1 %i.fj, label %.lr.ph.preheader.i, label %bb.ap
 
@@ -581,36 +581,20 @@ bb.ay:                                            ; preds = %bb.aw
   %.not234 = icmp ult ptr %i.jf, %i.fi
   br i1 %.not234, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !9
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.backedge, %.lr.ph.split.preheader
-  %.3231 = phi ptr [ %.2.ph274, %.lr.ph.split.preheader ], [ %.3231.be, %.lr.ph.split.backedge ] ; 5 uses
+.lr.ph.split:                                     ; preds = %.lr.ph.split, %.lr.ph.split.preheader
+  %.3231 = phi ptr [ %.2.ph274, %.lr.ph.split.preheader ], [ %i.jh, %.lr.ph.split ] ; 4 uses
   store <4 x i8> <i8 0, i8 0, i8 0, i8 16>, ptr %.3231, align 1
   %i.jg = getelementptr inbounds nuw i8, ptr %.3231, i64 4
   store i8 0, ptr %i.jg, align 1
-  %i.jh = getelementptr inbounds nuw i8, ptr %.3231, i64 18 ; 2 uses
+  %i.jh = getelementptr inbounds nuw i8, ptr %.3231, i64 18
   %i.ji = getelementptr inbounds nuw i8, ptr %.3231, i64 36 ; 2 uses
-  %i.jj = icmp ult ptr %i.ji, %i.fi
-  br i1 %i.jj, label %.lr.ph.split.backedge, label %3
+  %3 = icmp ult ptr %i.ji, %i.fi
+  %i.jj = icmp ult ptr %i.ji, %i.jc
+  %or.cond281 = select i1 %3, i1 true, i1 %i.jj
+  br i1 %or.cond281, label %.lr.ph.split, label %._crit_edge, !llvm.loop !9
 
-3:                                                ; preds = %.lr.ph.split
-  %4 = icmp ult ptr %.3231, %i.fi
-  br i1 %4, label %5, label %9
-
-5:                                                ; preds = %3
-  %6 = load i8, ptr %i.ff, align 1
-  %7 = zext i8 %6 to i64
-  %8 = getelementptr inbounds nuw i8, ptr %.0129208, i64 %7
-  br label %.lr.ph.split.backedge
-
-9:                                                ; preds = %3
-  %10 = icmp ult ptr %i.ji, %i.jc
-  br i1 %10, label %.lr.ph.split.backedge, label %._crit_edge
-
-.lr.ph.split.backedge:                            ; preds = %9, %.lr.ph.split, %5
-  %.3231.be = phi ptr [ %i.jh, %.lr.ph.split ], [ %8, %5 ], [ %i.jh, %9 ]
-  br label %.lr.ph.split, !llvm.loop !9
-
-._crit_edge:                                      ; preds = %9, %.lr.ph.split.us, %bb.av, %bb.ay
-  %.0129212271 = phi ptr [ null, %bb.av ], [ null, %.lr.ph.split.us ], [ %.0129208, %bb.ay ], [ %.0129208, %9 ] ; 3 uses
+._crit_edge:                                      ; preds = %.lr.ph.split, %.lr.ph.split.us, %bb.av, %bb.ay
+  %.0129212271 = phi ptr [ null, %bb.av ], [ null, %.lr.ph.split.us ], [ %.0129208, %bb.ay ], [ %.0129208, %.lr.ph.split ] ; 3 uses
   %i.jk = icmp ne ptr %.0128, null                ; 4 uses
   %or.cond6 = and i1 %i.ar, %i.jk
   br i1 %or.cond6, label %bb.az, label %vector.body

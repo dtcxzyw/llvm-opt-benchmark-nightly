@@ -153,8 +153,8 @@ bb.a:
   %i.h = alloca i32, align 4                      ; 6 uses
   %i.i = alloca i32, align 4                      ; 6 uses
   %i.j = alloca i32, align 4                      ; 6 uses
-  %5 = alloca %struct.FSE_DStream_t, align 8      ; 17 uses
-  %6 = alloca %struct.FSE_DStream_t, align 8      ; 10 uses
+  %5 = alloca %struct.FSE_DStream_t, align 8      ; 16 uses
+  %6 = alloca %struct.FSE_DStream_t, align 8      ; 9 uses
   %i.k = alloca [256 x i16], align 16             ; 7 uses
   %i.l = alloca [256 x i16], align 16             ; 8 uses
   %i.m = alloca [4097 x i32], align 16            ; 6 uses
@@ -557,14 +557,14 @@ bb.ef:                                            ; preds = %bb.ee
   %i.ahf = sub nsw i32 0, %i.zx
   %i.ahg = and i32 %i.ahf, 63
   %i.ahh = zext nneg i32 %i.ahg to i64            ; 16 uses
-  %i.ahi = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
-  %i.ahj = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %i.ahk = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
+  %i.ahi = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.ahj = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
+  %i.ahk = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.ahl = getelementptr inbounds nuw i8, ptr %i.aaj, i64 8
   %i.ahm = ptrtoint ptr %i.aaj to i64
-  %i.ahn = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
+  %i.ahn = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.aho = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %i.ahp = load ptr, ptr %i.aho, align 8          ; 4 uses
+  %i.ahp = load ptr, ptr %i.aho, align 8          ; 3 uses
   %i.ahq = getelementptr inbounds nuw i8, ptr %i.ahp, i64 8
   %i.ahr = ptrtoint ptr %i.ahp to i64
   %i.ahs = getelementptr inbounds nuw i8, ptr %i.zr, i64 14
@@ -573,14 +573,14 @@ bb.ef:                                            ; preds = %bb.ee
   %.promoted280.i.i.i.i = load i32, ptr %i.ahj, align 8, !tbaa !32
   %.promoted283.i.i.i.i = load ptr, ptr %i.ahk, align 8
   %.promoted284.i.i.i.i = load ptr, ptr %i.ahn, align 8
-  %i.ahu = load ptr, ptr %i.acr, align 8          ; 4 uses
+  %i.ahu = load ptr, ptr %i.acr, align 8          ; 3 uses
   %i.ahv = getelementptr inbounds nuw i8, ptr %i.ahu, i64 8
   %i.ahw = ptrtoint ptr %i.ahu to i64
   br label %bb.eg
 
 bb.eg:                                            ; preds = %FSE_reloadDStream.exit192.i.i.i.i, %.lr.ph.i23.i.i.i
-  %i.ahx = phi ptr [ %.promoted284.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %24, %FSE_reloadDStream.exit192.i.i.i.i ] ; 8 uses
-  %i.ahy = phi ptr [ %.promoted283.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %15, %FSE_reloadDStream.exit192.i.i.i.i ] ; 8 uses
+  %i.ahx = phi ptr [ %.promoted284.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %10, %FSE_reloadDStream.exit192.i.i.i.i ] ; 5 uses
+  %i.ahy = phi ptr [ %.promoted283.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %8, %FSE_reloadDStream.exit192.i.i.i.i ] ; 5 uses
   %.val7.i140282.i.i.i.i = phi i32 [ %.promoted280.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.val7.i140281.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 2 uses
   %.val7.i136279.i.i.i.i = phi i32 [ %.promoted277.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.val7.i136278.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 2 uses
   %.0112272.i.i.i.i = phi ptr [ %i.bj, %.lr.ph.i23.i.i.i ], [ %i.aos, %FSE_reloadDStream.exit192.i.i.i.i ] ; 17 uses
@@ -590,8 +590,8 @@ bb.eg:                                            ; preds = %FSE_reloadDStream.e
   %.sroa.29217.0268.i.i.i.i = phi ptr [ %.sroa.29217.1.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.sroa.29217.2.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 7 uses
   %.sroa.0218.0267.i.i.i.i = phi i64 [ %.sroa.0218.2.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.sroa.0218.3.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 6 uses
   %.sroa.17.0266.i.i.i.i = phi i32 [ %.sroa.17.1.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.sroa.17.2.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 2 uses
-  %.val.i165260265.i.i.i.i = phi i64 [ %.promoted.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.val.i165259.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 6 uses
-  %.val.i180263264.i.i.i.i = phi i64 [ %.promoted261.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.val.i180262.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 6 uses
+  %.val.i165260265.i.i.i.i = phi i64 [ %.promoted.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.val.i165259.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 5 uses
+  %.val.i180263264.i.i.i.i = phi i64 [ %.promoted261.i.i.i.i, %.lr.ph.i23.i.i.i ], [ %.val.i180262.i.i.i.i, %FSE_reloadDStream.exit192.i.i.i.i ] ; 5 uses
   %i.ahz = and i32 %.sroa.17.0266.i.i.i.i, 63
   %i.aia = zext nneg i32 %i.ahz to i64
   %i.aib = shl i64 %.sroa.0218.0267.i.i.i.i, %i.aia
@@ -756,7 +756,7 @@ bb.eg:                                            ; preds = %FSE_reloadDStream.e
   %i.anr = getelementptr inbounds nuw i8, ptr %i.anp, i64 1
   %i.ans = load i8, ptr %i.anr, align 1, !tbaa !58
   %i.ant = zext i8 %i.ans to i32
-  %i.anu = add i32 %i.amc, %i.ant                 ; 9 uses
+  %i.anu = add i32 %i.amc, %i.ant                 ; 6 uses
   store i32 %i.anu, ptr %i.ahi, align 8, !tbaa !32
   %i.anv = getelementptr inbounds nuw i8, ptr %.0112272.i.i.i.i, i64 13
   store i8 %i.anq, ptr %i.anv, align 1, !tbaa !13
@@ -781,66 +781,55 @@ bb.eg:                                            ; preds = %FSE_reloadDStream.e
   %i.aon = getelementptr inbounds nuw i8, ptr %i.aol, i64 1
   %i.aoo = load i8, ptr %i.aon, align 1, !tbaa !58
   %i.aop = zext i8 %i.aoo to i32
-  %i.aoq = add i32 %i.amy, %i.aop                 ; 9 uses
+  %i.aoq = add i32 %i.amy, %i.aop                 ; 6 uses
   store i32 %i.aoq, ptr %i.ahj, align 8, !tbaa !32
   %i.aor = getelementptr inbounds nuw i8, ptr %.0112272.i.i.i.i, i64 15
   store i8 %i.aom, ptr %i.aor, align 1, !tbaa !13
   %i.aos = getelementptr inbounds nuw i8, ptr %.0112272.i.i.i.i, i64 16 ; 3 uses
   %i.aot = icmp ugt i32 %i.anu, 64
-  br i1 %i.aot, label %FSE_reloadDStream.exit.i.i.i.i, label %7
+  br i1 %i.aot, label %FSE_reloadDStream.exit.i.i.i.i, label %bb.eh
 
-7:                                                ; preds = %bb.eg
+bb.eh:                                            ; preds = %bb.eg
   %.not.i.i.i.i.i = icmp ult ptr %i.ahy, %i.ahv
-  br i1 %.not.i.i.i.i.i, label %9, label %bb.eh
-
-bb.eh:                                            ; preds = %7
-  %i.aou = lshr i32 %i.anu, 3
+  %i.aou = lshr i32 %i.anu, 3                     ; 2 uses
   %i.aov = zext nneg i32 %i.aou to i64
   %i.aow = sub nsw i64 0, %i.aov
-  %i.aox = getelementptr inbounds i8, ptr %i.ahy, i64 %i.aow ; 3 uses
-  store ptr %i.aox, ptr %i.ahk, align 8, !tbaa !30
-  %8 = and i32 %i.anu, 7                          ; 2 uses
-  store i32 %8, ptr %i.ahi, align 8, !tbaa !32
-  %.val30.i.i.i.i.i = load i64, ptr %i.aox, align 1 ; 2 uses
-  store i64 %.val30.i.i.i.i.i, ptr %5, align 8, !tbaa !31
-  br label %FSE_reloadDStream.exit.i.i.i.i
+  %i.aox = getelementptr inbounds i8, ptr %i.ahy, i64 %i.aow ; 2 uses
+  br i1 %.not.i.i.i.i.i, label %bb.ej, label %bb.ei
 
-9:                                                ; preds = %7
-  %10 = icmp eq ptr %i.ahy, %i.ahu
-  br i1 %10, label %bb.ei, label %bb.ej
+bb.ei:                                            ; preds = %bb.eh
+  %7 = and i32 %i.anu, 7
+  br label %FSE_reloadDStream.exit.sink.split.i.i.i.i
 
-bb.ei:                                            ; preds = %9
-  %.not29.i.i.i.i.i = icmp eq i32 %i.anu, 64
-  %..i.i.i.i.i = select i1 %.not29.i.i.i.i.i, i32 2, i32 1
-  br label %FSE_reloadDStream.exit.i.i.i.i
-
-bb.ej:                                            ; preds = %9
-  %11 = lshr i32 %i.anu, 3                        ; 2 uses
-  %12 = zext nneg i32 %11 to i64
-  %13 = sub nsw i64 0, %12
-  %14 = getelementptr inbounds i8, ptr %i.ahy, i64 %13
-  %i.aoy = icmp ult ptr %14, %i.ahu               ; 2 uses
+bb.ej:                                            ; preds = %bb.eh
+  %i.aoy = icmp ult ptr %i.aox, %i.ahu            ; 2 uses
   %i.aoz = ptrtoint ptr %i.ahy to i64
   %i.apa = sub i64 %i.aoz, %i.ahw
   %i.apb = trunc i64 %i.apa to i32
-  %.024.i.i.i.i.i = select i1 %i.aoy, i32 %i.apb, i32 %11 ; 2 uses
+  %.024.i.i.i.i.i = select i1 %i.aoy, i32 %i.apb, i32 %i.aou ; 2 uses
   %.0.i.i24.i.i.i = zext i1 %i.aoy to i32
   %i.apc = zext i32 %.024.i.i.i.i.i to i64
   %i.apd = sub nsw i64 0, %i.apc
-  %i.ape = getelementptr inbounds i8, ptr %i.ahy, i64 %i.apd ; 3 uses
-  store ptr %i.ape, ptr %i.ahk, align 8, !tbaa !30
+  %i.ape = getelementptr inbounds i8, ptr %i.ahy, i64 %i.apd
   %i.apf = shl i32 %.024.i.i.i.i.i, 3
-  %i.apg = sub i32 %i.anu, %i.apf                 ; 2 uses
-  store i32 %i.apg, ptr %i.ahi, align 8, !tbaa !32
-  %.val.i165.i.i.i.i = load i64, ptr %i.ape, align 1 ; 2 uses
-  store i64 %.val.i165.i.i.i.i, ptr %5, align 8, !tbaa !31
+  %i.apg = sub i32 %i.anu, %i.apf
+  br label %FSE_reloadDStream.exit.sink.split.i.i.i.i
+
+FSE_reloadDStream.exit.sink.split.i.i.i.i:        ; preds = %bb.ej, %bb.ei
+  %.sink.i.i.i = phi ptr [ %i.ape, %bb.ej ], [ %i.aox, %bb.ei ] ; 3 uses
+  %.val7.i136278.ph.i.i.i.i = phi i32 [ %i.apg, %bb.ej ], [ %7, %bb.ei ] ; 2 uses
+  %.025.i.ph.i.i.i.i = phi i32 [ %.0.i.i24.i.i.i, %bb.ej ], [ 0, %bb.ei ]
+  store ptr %.sink.i.i.i, ptr %i.ahk, align 8, !tbaa !30
+  store i32 %.val7.i136278.ph.i.i.i.i, ptr %i.ahi, align 8, !tbaa !32
+  %.val30.i.sink.i.i.i.i = load i64, ptr %.sink.i.i.i, align 1 ; 2 uses
+  store i64 %.val30.i.sink.i.i.i.i, ptr %5, align 8, !tbaa !31
   br label %FSE_reloadDStream.exit.i.i.i.i
 
-FSE_reloadDStream.exit.i.i.i.i:                   ; preds = %bb.ej, %bb.ei, %bb.eh, %bb.eg
-  %15 = phi ptr [ %i.ape, %bb.ej ], [ %i.aox, %bb.eh ], [ %i.ahy, %bb.ei ], [ %i.ahy, %bb.eg ]
-  %.val7.i136278.i.i.i.i = phi i32 [ %i.apg, %bb.ej ], [ %8, %bb.eh ], [ %i.anu, %bb.ei ], [ %i.anu, %bb.eg ]
-  %.val.i165259.i.i.i.i = phi i64 [ %.val.i165.i.i.i.i, %bb.ej ], [ %.val30.i.i.i.i.i, %bb.eh ], [ %.val.i165260265.i.i.i.i, %bb.ei ], [ %.val.i165260265.i.i.i.i, %bb.eg ]
-  %.025.i.i.i.i.i = phi i32 [ %.0.i.i24.i.i.i, %bb.ej ], [ 0, %bb.eh ], [ %..i.i.i.i.i, %bb.ei ], [ 3, %bb.eg ]
+FSE_reloadDStream.exit.i.i.i.i:                   ; preds = %FSE_reloadDStream.exit.sink.split.i.i.i.i, %bb.eg
+  %8 = phi ptr [ %i.ahy, %bb.eg ], [ %.sink.i.i.i, %FSE_reloadDStream.exit.sink.split.i.i.i.i ]
+  %.val7.i136278.i.i.i.i = phi i32 [ %i.anu, %bb.eg ], [ %.val7.i136278.ph.i.i.i.i, %FSE_reloadDStream.exit.sink.split.i.i.i.i ]
+  %.val.i165259.i.i.i.i = phi i64 [ %.val.i165260265.i.i.i.i, %bb.eg ], [ %.val30.i.sink.i.i.i.i, %FSE_reloadDStream.exit.sink.split.i.i.i.i ]
+  %.025.i.i.i.i.i = phi i32 [ 3, %bb.eg ], [ %.025.i.ph.i.i.i.i, %FSE_reloadDStream.exit.sink.split.i.i.i.i ]
   %i.aph = icmp ugt i32 %i.aof, 64
   br i1 %i.aph, label %FSE_reloadDStream.exit174.i.i.i.i, label %bb.ek
 
@@ -892,60 +881,49 @@ FSE_reloadDStream.exit174.i.i.i.i:                ; preds = %bb.eo, %bb.en, %bb.
   %.025.i168.i.i.i.i = phi i32 [ 3, %FSE_reloadDStream.exit.i.i.i.i ], [ %..i173.i.i.i.i, %bb.en ], [ %.0.i170.i.i.i.i, %bb.eo ], [ 0, %bb.el ]
   %i.aqb = or i32 %.025.i168.i.i.i.i, %.025.i.i.i.i.i
   %i.aqc = icmp ugt i32 %i.aoq, 64
-  br i1 %i.aqc, label %FSE_reloadDStream.exit183.i.i.i.i, label %16
+  br i1 %i.aqc, label %FSE_reloadDStream.exit183.i.i.i.i, label %bb.ep
 
-16:                                               ; preds = %FSE_reloadDStream.exit174.i.i.i.i
+bb.ep:                                            ; preds = %FSE_reloadDStream.exit174.i.i.i.i
   %.not.i175.i.i.i.i = icmp ult ptr %i.ahx, %i.ahq
-  br i1 %.not.i175.i.i.i.i, label %18, label %bb.ep
-
-bb.ep:                                            ; preds = %16
-  %i.aqd = lshr i32 %i.aoq, 3
+  %i.aqd = lshr i32 %i.aoq, 3                     ; 2 uses
   %i.aqe = zext nneg i32 %i.aqd to i64
   %i.aqf = sub nsw i64 0, %i.aqe
-  %i.aqg = getelementptr inbounds i8, ptr %i.ahx, i64 %i.aqf ; 3 uses
-  store ptr %i.aqg, ptr %i.ahn, align 8, !tbaa !30
-  %17 = and i32 %i.aoq, 7                         ; 2 uses
-  store i32 %17, ptr %i.ahj, align 8, !tbaa !32
-  %.val30.i176.i.i.i.i = load i64, ptr %i.aqg, align 1 ; 2 uses
-  store i64 %.val30.i176.i.i.i.i, ptr %6, align 8, !tbaa !31
-  br label %FSE_reloadDStream.exit183.i.i.i.i
+  %i.aqg = getelementptr inbounds i8, ptr %i.ahx, i64 %i.aqf ; 2 uses
+  br i1 %.not.i175.i.i.i.i, label %bb.er, label %bb.eq
 
-18:                                               ; preds = %16
-  %19 = icmp eq ptr %i.ahx, %i.ahp
-  br i1 %19, label %bb.eq, label %bb.er
+bb.eq:                                            ; preds = %bb.ep
+  %9 = and i32 %i.aoq, 7
+  br label %FSE_reloadDStream.exit183.sink.split.i.i.i.i
 
-bb.eq:                                            ; preds = %18
-  %.not29.i181.i.i.i.i = icmp eq i32 %i.aoq, 64
-  %..i182.i.i.i.i = select i1 %.not29.i181.i.i.i.i, i32 2, i32 1
-  br label %FSE_reloadDStream.exit183.i.i.i.i
-
-bb.er:                                            ; preds = %18
-  %20 = lshr i32 %i.aoq, 3                        ; 2 uses
-  %21 = zext nneg i32 %20 to i64
-  %22 = sub nsw i64 0, %21
-  %23 = getelementptr inbounds i8, ptr %i.ahx, i64 %22
-  %i.aqh = icmp ult ptr %23, %i.ahp               ; 2 uses
+bb.er:                                            ; preds = %bb.ep
+  %i.aqh = icmp ult ptr %i.aqg, %i.ahp            ; 2 uses
   %i.aqi = ptrtoint ptr %i.ahx to i64
   %i.aqj = sub i64 %i.aqi, %i.ahr
   %i.aqk = trunc i64 %i.aqj to i32
-  %.024.i178.i.i.i.i = select i1 %i.aqh, i32 %i.aqk, i32 %20 ; 2 uses
+  %.024.i178.i.i.i.i = select i1 %i.aqh, i32 %i.aqk, i32 %i.aqd ; 2 uses
   %.0.i179.i.i.i.i = zext i1 %i.aqh to i32
   %i.aql = zext i32 %.024.i178.i.i.i.i to i64
   %i.aqm = sub nsw i64 0, %i.aql
-  %i.aqn = getelementptr inbounds i8, ptr %i.ahx, i64 %i.aqm ; 3 uses
-  store ptr %i.aqn, ptr %i.ahn, align 8, !tbaa !30
+  %i.aqn = getelementptr inbounds i8, ptr %i.ahx, i64 %i.aqm
   %i.aqo = shl i32 %.024.i178.i.i.i.i, 3
-  %i.aqp = sub i32 %i.aoq, %i.aqo                 ; 2 uses
-  store i32 %i.aqp, ptr %i.ahj, align 8, !tbaa !32
-  %.val.i180.i.i.i.i = load i64, ptr %i.aqn, align 1 ; 2 uses
-  store i64 %.val.i180.i.i.i.i, ptr %6, align 8, !tbaa !31
+  %i.aqp = sub i32 %i.aoq, %i.aqo
+  br label %FSE_reloadDStream.exit183.sink.split.i.i.i.i
+
+FSE_reloadDStream.exit183.sink.split.i.i.i.i:     ; preds = %bb.er, %bb.eq
+  %.sink199.i.i.i = phi ptr [ %i.aqn, %bb.er ], [ %i.aqg, %bb.eq ] ; 3 uses
+  %.val7.i140281.ph.i.i.i.i = phi i32 [ %i.aqp, %bb.er ], [ %9, %bb.eq ] ; 2 uses
+  %.025.i177.ph.i.i.i.i = phi i32 [ %.0.i179.i.i.i.i, %bb.er ], [ 0, %bb.eq ]
+  store ptr %.sink199.i.i.i, ptr %i.ahn, align 8, !tbaa !30
+  store i32 %.val7.i140281.ph.i.i.i.i, ptr %i.ahj, align 8, !tbaa !32
+  %.val30.i176.sink.i.i.i.i = load i64, ptr %.sink199.i.i.i, align 1 ; 2 uses
+  store i64 %.val30.i176.sink.i.i.i.i, ptr %6, align 8, !tbaa !31
   br label %FSE_reloadDStream.exit183.i.i.i.i
 
-FSE_reloadDStream.exit183.i.i.i.i:                ; preds = %bb.er, %bb.eq, %bb.ep, %FSE_reloadDStream.exit174.i.i.i.i
-  %24 = phi ptr [ %i.aqn, %bb.er ], [ %i.aqg, %bb.ep ], [ %i.ahx, %bb.eq ], [ %i.ahx, %FSE_reloadDStream.exit174.i.i.i.i ]
-  %.val7.i140281.i.i.i.i = phi i32 [ %i.aqp, %bb.er ], [ %17, %bb.ep ], [ %i.aoq, %bb.eq ], [ %i.aoq, %FSE_reloadDStream.exit174.i.i.i.i ]
-  %.val.i180262.i.i.i.i = phi i64 [ %.val.i180.i.i.i.i, %bb.er ], [ %.val30.i176.i.i.i.i, %bb.ep ], [ %.val.i180263264.i.i.i.i, %bb.eq ], [ %.val.i180263264.i.i.i.i, %FSE_reloadDStream.exit174.i.i.i.i ]
-  %.025.i177.i.i.i.i = phi i32 [ %.0.i179.i.i.i.i, %bb.er ], [ 0, %bb.ep ], [ %..i182.i.i.i.i, %bb.eq ], [ 3, %FSE_reloadDStream.exit174.i.i.i.i ]
+FSE_reloadDStream.exit183.i.i.i.i:                ; preds = %FSE_reloadDStream.exit183.sink.split.i.i.i.i, %FSE_reloadDStream.exit174.i.i.i.i
+  %10 = phi ptr [ %i.ahx, %FSE_reloadDStream.exit174.i.i.i.i ], [ %.sink199.i.i.i, %FSE_reloadDStream.exit183.sink.split.i.i.i.i ]
+  %.val7.i140281.i.i.i.i = phi i32 [ %i.aoq, %FSE_reloadDStream.exit174.i.i.i.i ], [ %.val7.i140281.ph.i.i.i.i, %FSE_reloadDStream.exit183.sink.split.i.i.i.i ]
+  %.val.i180262.i.i.i.i = phi i64 [ %.val.i180263264.i.i.i.i, %FSE_reloadDStream.exit174.i.i.i.i ], [ %.val30.i176.sink.i.i.i.i, %FSE_reloadDStream.exit183.sink.split.i.i.i.i ]
+  %.025.i177.i.i.i.i = phi i32 [ 3, %FSE_reloadDStream.exit174.i.i.i.i ], [ %.025.i177.ph.i.i.i.i, %FSE_reloadDStream.exit183.sink.split.i.i.i.i ]
   %i.aqq = or i32 %i.aqb, %.025.i177.i.i.i.i      ; 2 uses
   %i.aqr = icmp ugt i32 %i.anj, 64
   br i1 %i.aqr, label %FSE_reloadDStream.exit192.i.i.i.i, label %bb.es

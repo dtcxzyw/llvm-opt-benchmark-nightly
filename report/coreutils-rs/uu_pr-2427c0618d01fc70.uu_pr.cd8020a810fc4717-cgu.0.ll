@@ -205,23 +205,23 @@ bb.ap:                                            ; preds = %_RNvXs_NtNtCs7tKScE
   br i1 %.not79.i, label %.thread.i, label %._crit_edge284.thread.i
 
 .loopexit229.i:                                   ; preds = %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i, %._crit_edge.i
-  %.sroa.6.0.copyload366.i.a = phi i64 [ %.sroa.6.0.copyload367.i, %._crit_edge.i ], [ %i.wz, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ] ; 2 uses
-  %i.kb = phi i64 [ %7, %._crit_edge.i ], [ %i.wz, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ]
-  %i.kc = phi ptr [ %8, %._crit_edge.i ], [ %i.wx, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ]
-  %i.kd = phi i64 [ %9, %._crit_edge.i ], [ %i.wz, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ]
+  %.sroa.6.0.copyload366.i.a = phi i64 [ %.sroa.6.0.copyload366.i, %._crit_edge.i ], [ %i.wz, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ] ; 2 uses
+  %i.kb = phi i64 [ %5, %._crit_edge.i ], [ %i.wz, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ]
+  %i.kc = phi ptr [ %6, %._crit_edge.i ], [ %i.wx, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ]
+  %i.kd = phi i64 [ %7, %._crit_edge.i ], [ %i.wz, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ]
   %exitcond346.not.i = icmp eq i64 %i.kh, %.sroa.09.0.i
   br i1 %exitcond346.not.i, label %._crit_edge284.i, label %bb.aq
 
 bb.aq:                                            ; preds = %.loopexit229.i, %.lr.ph283.i
-  %.sroa.6.0.copyload368.i = phi i64 [ 0, %.lr.ph283.i ], [ %.sroa.6.0.copyload366.i.a, %.loopexit229.i ] ; 2 uses
-  %i.ke = phi i64 [ 0, %.lr.ph283.i ], [ %i.kb, %.loopexit229.i ] ; 2 uses
-  %i.kf = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph283.i ], [ %i.kc, %.loopexit229.i ] ; 3 uses
-  %i.kg = phi i64 [ 0, %.lr.ph283.i ], [ %i.kd, %.loopexit229.i ] ; 3 uses
-  %.sroa.025.0281.i = phi i64 [ 0, %.lr.ph283.i ], [ %i.wq, %.loopexit229.i ] ; 5 uses
+  %.sroa.6.0.copyload368.i = phi i64 [ 0, %.lr.ph283.i ], [ %.sroa.6.0.copyload366.i.a, %.loopexit229.i ]
+  %i.ke = phi i64 [ 0, %.lr.ph283.i ], [ %i.kb, %.loopexit229.i ]
+  %i.kf = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph283.i ], [ %i.kc, %.loopexit229.i ] ; 2 uses
+  %i.kg = phi i64 [ 0, %.lr.ph283.i ], [ %i.kd, %.loopexit229.i ] ; 2 uses
+  %.sroa.025.0281.i = phi i64 [ 0, %.lr.ph283.i ], [ %i.wq, %.loopexit229.i ] ; 4 uses
   %.sroa.065.0280.i = phi i64 [ 0, %.lr.ph283.i ], [ %i.kh, %.loopexit229.i ] ; 3 uses
   %i.kh = add nuw i64 %.sroa.065.0280.i, 1        ; 2 uses
   %i.ki = icmp ugt i64 %.sroa.025.0281.i, %2
-  br i1 %i.ki, label %bb.df, label %5, !prof !8
+  br i1 %i.ki, label %bb.df, label %.lr.ph.preheader.i, !prof !8
 
 .thread.i:                                        ; preds = %._crit_edge284.i, %bb.w
   %.sroa.020.1207.i = phi i8 [ %.sroa.020.0.i, %._crit_edge284.i ], [ %i.ei, %bb.w ]
@@ -624,11 +624,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringEC
   %i.vz = icmp eq ptr %i.og, %i.np
   br i1 %i.vz, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterINtNtBa_6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEEENtNtNtB8_6traits8iterator8Iterator4nextB1W_.exit.thread.i, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterINtNtBa_6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEEENtNtNtB8_6traits8iterator8Iterator4nextB1W_.exit.i
 
-5:                                                ; preds = %bb.aq
-  %6 = icmp samesign eq i64 %.sroa.025.0281.i, %2
-  br i1 %6, label %._crit_edge.i, label %.lr.ph.preheader.i
-
-.lr.ph.preheader.i:                               ; preds = %5
+.lr.ph.preheader.i:                               ; preds = %bb.aq
   %i.wa = getelementptr inbounds nuw [48 x i8], ptr %1, i64 %.sroa.025.0281.i ; 2 uses
   %i.wb = getelementptr inbounds nuw i8, ptr %i.wa, i64 24
   %i.wc = load i64, ptr %i.wb, align 8, !alias.scope !437, !noalias !533, !noundef !4
@@ -677,14 +673,14 @@ _RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6Opti
   %i.wp = icmp eq ptr %i.wi, %i.ep
   br i1 %i.wp, label %._crit_edge.i, label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i, %.lr.ph.preheader.i, %5
-  %.sroa.6.0.copyload367.i = phi i64 [ %.sroa.6.0.copyload368.i, %5 ], [ %.sroa.6.0.copyload368.i, %.lr.ph.preheader.i ], [ %i.wn, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wn, %.lr.ph.i ]
-  %7 = phi i64 [ %i.ke, %5 ], [ %i.ke, %.lr.ph.preheader.i ], [ %i.wn, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wn, %.lr.ph.i ] ; 2 uses
-  %8 = phi ptr [ %i.kf, %5 ], [ %i.kf, %.lr.ph.preheader.i ], [ %i.wl, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wl, %.lr.ph.i ]
-  %9 = phi i64 [ %i.kg, %5 ], [ %i.kg, %.lr.ph.preheader.i ], [ %i.wn, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wn, %.lr.ph.i ]
-  %.sroa.067.0.lcssa.i = phi i64 [ 0, %5 ], [ 0, %.lr.ph.preheader.i ], [ %i.wo, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wo, %.lr.ph.i ] ; 3 uses
-  %i.wq = add i64 %.sroa.067.0.lcssa.i, %.sroa.025.0281.i
-  %i.wr = icmp ult i64 %.sroa.067.0.lcssa.i, %.sroa.02.0.i
+._crit_edge.i:                                    ; preds = %.lr.ph.i, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i, %.lr.ph.preheader.i
+  %.sroa.6.0.copyload366.i = phi i64 [ %.sroa.6.0.copyload368.i, %.lr.ph.preheader.i ], [ %i.wn, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wn, %.lr.ph.i ]
+  %5 = phi i64 [ %i.ke, %.lr.ph.preheader.i ], [ %i.wn, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wn, %.lr.ph.i ] ; 2 uses
+  %6 = phi ptr [ %i.kf, %.lr.ph.preheader.i ], [ %i.wl, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wl, %.lr.ph.i ]
+  %7 = phi i64 [ %i.kg, %.lr.ph.preheader.i ], [ %i.wn, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wn, %.lr.ph.i ]
+  %.sroa.067.0.lcssa.ph.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.wo, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit.i ], [ %i.wo, %.lr.ph.i ] ; 3 uses
+  %i.wq = add i64 %.sroa.067.0.lcssa.ph.i, %.sroa.025.0281.i
+  %i.wr = icmp ult i64 %.sroa.067.0.lcssa.ph.i, %.sroa.02.0.i
   br i1 %i.wr, label %.lr.ph279.preheader.i, label %.loopexit229.i
 
 .lr.ph279.preheader.i:                            ; preds = %._crit_edge.i
@@ -693,8 +689,8 @@ _RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6Opti
 
 .lr.ph279.i:                                      ; preds = %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i, %.lr.ph279.preheader.i
   %i.ws = phi i64 [ %i.ww, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ], [ %.pre363.i, %.lr.ph279.preheader.i ] ; 2 uses
-  %i.wt = phi i64 [ %i.wz, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ], [ %7, %.lr.ph279.preheader.i ] ; 3 uses
-  %.sroa.067.1277.i = phi i64 [ %i.wu, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ], [ %.sroa.067.0.lcssa.i, %.lr.ph279.preheader.i ]
+  %i.wt = phi i64 [ %i.wz, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ], [ %5, %.lr.ph279.preheader.i ] ; 3 uses
+  %.sroa.067.1277.i = phi i64 [ %i.wu, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEE8push_mutB1k_.exit188.i ], [ %.sroa.067.0.lcssa.ph.i, %.lr.ph279.preheader.i ]
   %i.wu = add i64 %.sroa.067.1277.i, 1            ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !538)
   %i.wv = icmp eq i64 %i.wt, %i.ws

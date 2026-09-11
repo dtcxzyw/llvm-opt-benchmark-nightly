@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %"_ZNR9hb_iter_tI13h
   %.sroa.065.0122.i = phi ptr [ %.sroa.02.1.i.i.i102.i, %.lr.ph.i ], [ %.sroa.065.2.i, %"_ZNR9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EppEv.exit.i" ] ; 2 uses
   %.sroa.766.0121.i = phi i64 [ %.sroa.5.sroa.0.0.insert.insert.i.i.i103.i, %.lr.ph.i ], [ %.sroa.766.2.i, %"_ZNR9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EppEv.exit.i" ] ; 2 uses
   %.sroa.17.0120.i = phi ptr [ %.sroa.17.3.ph.i, %.lr.ph.i ], [ %.sroa.17.5.i, %"_ZNR9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EppEv.exit.i" ] ; 6 uses
-  %.sroa.11.0118.i = phi i32 [ 0, %.lr.ph.i ], [ %.sroa.11.1.i, %"_ZNR9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EppEv.exit.i" ] ; 6 uses
+  %.sroa.11.0118.i = phi i32 [ 0, %.lr.ph.i ], [ %.sroa.11.1.i, %"_ZNR9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EppEv.exit.i" ] ; 5 uses
   %.sroa.071.0117.i = phi i32 [ %.sroa.071.2.ph.i, %.lr.ph.i ], [ %.sroa.071.4.i, %"_ZNR9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EppEv.exit.i" ] ; 10 uses
   %.not.i.i.i.i.i.i.i = icmp eq i64 %.sroa.766.0121.i, 0
   br i1 %.not.i.i.i.i.i.i.i, label %bb.g, label %"_ZN9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EdeEv.exit.i", !prof !32
@@ -236,7 +236,7 @@ bb.i:                                             ; preds = %bb.h
   %.043.i44.i = phi i32 [ %i.bh, %.preheader.i43.i ], [ %.sroa.071.0117.i, %bb.i ] ; 2 uses
   %i.bf = lshr i32 %.043.i44.i, 1
   %i.bg = add i32 %.043.i44.i, 8
-  %i.bh = add i32 %i.bg, %i.bf                    ; 8 uses
+  %i.bh = add i32 %i.bg, %i.bf                    ; 7 uses
   %i.bi = icmp ugt i32 %.pre.i, %i.bh
   br i1 %i.bi, label %.preheader.i43.i, label %.thread.i45.i, !llvm.loop !452
 
@@ -259,15 +259,11 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.bl = shl nuw i32 %i.bh, 3
   %i.bm = zext i32 %i.bl to i64
-  %i.bn = call ptr @hb_malloc(i64 noundef %i.bm) #10 ; 4 uses
+  %i.bn = call ptr @hb_malloc(i64 noundef %i.bm) #10 ; 3 uses
   %.not10.i.i.i58.i = icmp eq ptr %i.bn, null
-  br i1 %.not10.i.i.i58.i, label %_ZN11hb_vector_tI14hb_variation_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread53.i55.i, label %7, !prof !32
+  br i1 %.not10.i.i.i58.i, label %_ZN11hb_vector_tI14hb_variation_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.thread53.i55.i, label %bb.m, !prof !32
 
-7:                                                ; preds = %bb.l
-  %.not.i.i.i.i59.i = icmp eq i32 %.sroa.11.0118.i, 0
-  br i1 %.not.i.i.i.i59.i, label %.critedge.i38.i, label %bb.m, !prof !32
-
-bb.m:                                             ; preds = %7
+bb.m:                                             ; preds = %bb.l
   %i.bo = zext i32 %.sroa.11.0118.i to i64
   %i.bp = shl nuw nsw i64 %i.bo, 3
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bn, ptr nonnull readonly align 1 %.sroa.17.0120.i, i64 range(i64 0, 309237645241) %i.bp, i1 false), !alias.scope !520
@@ -290,9 +286,9 @@ _ZN11hb_vector_tI14hb_variation_tLb0EE5allocEjb.exit61.i: ; preds = %_ZN11hb_vec
   store i64 %i.bb, ptr @_hb_CrapPool, align 16
   br label %_ZN11hb_vector_tI14hb_variation_tLb0EE4pushIJRS0_EEEPS0_DpOT_.exit.i
 
-.critedge.i38.i:                                  ; preds = %_ZN11hb_vector_tI14hb_variation_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i48.i, %bb.m, %7, %bb.i, %"_ZN9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EdeEv.exit.i"
-  %.sroa.071.3.i = phi i32 [ %.sroa.071.0117.i, %bb.i ], [ %i.bh, %7 ], [ %i.bh, %bb.m ], [ %i.bh, %_ZN11hb_vector_tI14hb_variation_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i48.i ], [ %.sroa.071.0117.i, %"_ZN9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EdeEv.exit.i" ]
-  %.sroa.17.4.i = phi ptr [ %.sroa.17.0120.i, %bb.i ], [ %i.bn, %7 ], [ %i.bn, %bb.m ], [ %i.bt, %_ZN11hb_vector_tI14hb_variation_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i48.i ], [ %.sroa.17.0120.i, %"_ZN9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EdeEv.exit.i" ] ; 2 uses
+.critedge.i38.i:                                  ; preds = %_ZN11hb_vector_tI14hb_variation_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i48.i, %bb.m, %bb.i, %"_ZN9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EdeEv.exit.i"
+  %.sroa.071.3.i = phi i32 [ %i.bh, %_ZN11hb_vector_tI14hb_variation_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i48.i ], [ %.sroa.071.0117.i, %bb.i ], [ %i.bh, %bb.m ], [ %.sroa.071.0117.i, %"_ZN9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EdeEv.exit.i" ]
+  %.sroa.17.4.i = phi ptr [ %i.bt, %_ZN11hb_vector_tI14hb_variation_tLb0EE14realloc_vectorIS0_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS0_j11hb_priorityILj0EE.exit.i48.i ], [ %.sroa.17.0120.i, %bb.i ], [ %i.bn, %bb.m ], [ %.sroa.17.0120.i, %"_ZN9hb_iter_tI13hb_map_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIj6TripleLb0EE6item_tEEMS6_KFbvERK3$_9LPv0EEMS6_KF9hb_pair_tIjS4_EvEL24hb_function_sortedness_t0ELSD_0EESG_EdeEv.exit.i" ] ; 2 uses
   %i.bv = zext i32 %.sroa.11.0118.i to i64
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.17.4.i, i64 %i.bv ; 2 uses
   store i32 %i.bc, ptr %i.bw, align 4

@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.backedge.i, %.lr.ph.i
   %i.k = phi i64 [ 0, %.lr.ph.i ], [ %i.ef, %.backedge.i ] ; 4 uses
-  %.sroa.0.0263.i = phi ptr [ %i.g, %.lr.ph.i ], [ %.sroa.0.0.be.i, %.backedge.i ] ; 19 uses
-  %.sroa.31.0262.i = phi i64 [ %i.j, %.lr.ph.i ], [ %.sroa.31.0.be.i, %.backedge.i ] ; 18 uses
+  %.sroa.0.0263.i = phi ptr [ %i.g, %.lr.ph.i ], [ %.sroa.0.0.be.i, %.backedge.i ] ; 18 uses
+  %.sroa.31.0262.i = phi i64 [ %i.j, %.lr.ph.i ], [ %.sroa.31.0.be.i, %.backedge.i ] ; 17 uses
   %i.l = load i8, ptr %.sroa.0.0263.i, align 1, !noalias !104, !noundef !4 ; 6 uses
   switch i8 %i.l, label %bb.g [
     i8 34, label %bb.k
@@ -553,7 +553,7 @@ bb.bb:                                            ; preds = %bb.bs, %bb.az
   %i.cw = phi i64 [ %i.k, %bb.bs ], [ %.pre.i, %bb.az ] ; 6 uses
   %.sroa.060.1.i = phi i32 [ %spec.select.i206.i, %bb.bs ], [ %i.cu, %bb.az ] ; 8 uses
   %.sroa.31.3.i = phi i64 [ %i.ff, %bb.bs ], [ %.sroa.687.0.copyload.i, %bb.az ] ; 4 uses
-  %.sroa.0.3.i = phi ptr [ %4, %bb.bs ], [ %.sroa.586.0.copyload.i, %bb.az ] ; 4 uses
+  %.sroa.0.3.i = phi ptr [ %i.fc, %bb.bs ], [ %.sroa.586.0.copyload.i, %bb.az ] ; 4 uses
   %i.cx = icmp sgt i64 %i.cw, -1
   call void @llvm.assume(i1 %i.cx)
   %i.cy = icmp samesign ult i32 %.sroa.060.1.i, 128
@@ -672,7 +672,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.el = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i31, i64 1
   br label %.lr.ph
 
-.split.i144.thread.i:                             ; preds = %bb.br, %.split.i144.i, %bb.bm, %.backedge.i, %bb.aw, %bb.aj, %bb.ae, %bb.z, %.split.i126.i, %bb.y, %bb.j, %bb.i, %.preheader.i, %bb.bi, %bb.ba, %.split.i.thread.i
+.split.i144.thread.i:                             ; preds = %bb.br, %_RNvNtNtCsgbWeKYPjk8w_3syn3lit5value8next_chr.exit.thread.i, %bb.bm, %.backedge.i, %bb.aw, %bb.aj, %bb.ae, %bb.z, %.split.i126.i, %bb.y, %bb.j, %bb.i, %.preheader.i, %bb.bi, %bb.ba, %.split.i.thread.i
   store ptr null, ptr %0, align 8, !alias.scope !104, !noalias !105
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsgbWeKYPjk8w_3syn.exit.i unwind label %bb.bk, !noalias !104
@@ -745,23 +745,18 @@ bb.bq:                                            ; preds = %bb.bp
 
 _RNvNtNtCsgbWeKYPjk8w_3syn3lit5value8next_chr.exit.thread.i: ; preds = %bb.bq, %bb.bp, %_RNvNtNtCsgbWeKYPjk8w_3syn3lit5value8next_chr.exit.i, %bb.h
   %spec.select.i206.i = phi i32 [ %spec.select.i.i, %bb.bp ], [ %spec.select.i.i, %bb.bq ], [ %spec.select.i.i, %_RNvNtNtCsgbWeKYPjk8w_3syn3lit5value8next_chr.exit.i ], [ %i.x, %bb.h ]
-  %.sroa.068.0.i = phi i64 [ 2, %bb.bp ], [ %..i, %bb.bq ], [ 1, %_RNvNtNtCsgbWeKYPjk8w_3syn3lit5value8next_chr.exit.i ], [ 1, %bb.h ] ; 5 uses
+  %.sroa.068.0.i = phi i64 [ 2, %bb.bp ], [ %..i, %bb.bq ], [ 1, %_RNvNtNtCsgbWeKYPjk8w_3syn3lit5value8next_chr.exit.i ], [ 1, %bb.h ] ; 3 uses
   %.not.i143.i = icmp ult i64 %.sroa.068.0.i, %.sroa.31.0262.i
-  br i1 %.not.i143.i, label %bb.br, label %.split.i144.i
-
-.split.i144.i:                                    ; preds = %_RNvNtNtCsgbWeKYPjk8w_3syn3lit5value8next_chr.exit.thread.i
-  %3 = icmp eq i64 %.sroa.068.0.i, %.sroa.31.0262.i
-  br i1 %3, label %bb.bs, label %.split.i144.thread.i
+  br i1 %.not.i143.i, label %bb.br, label %.split.i144.thread.i
 
 bb.br:                                            ; preds = %_RNvNtNtCsgbWeKYPjk8w_3syn3lit5value8next_chr.exit.thread.i
-  %i.fc = getelementptr inbounds nuw i8, ptr %.sroa.0.0263.i, i64 %.sroa.068.0.i
+  %i.fc = getelementptr inbounds nuw i8, ptr %.sroa.0.0263.i, i64 %.sroa.068.0.i ; 2 uses
   %i.fd = load i8, ptr %i.fc, align 1, !alias.scope !118, !noalias !104, !noundef !4
   %i.fe = icmp sgt i8 %i.fd, -65
   br i1 %i.fe, label %bb.bs, label %.split.i144.thread.i
 
-bb.bs:                                            ; preds = %bb.br, %.split.i144.i
+bb.bs:                                            ; preds = %bb.br
   %i.ff = sub nuw i64 %.sroa.31.0262.i, %.sroa.068.0.i
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.0263.i, i64 %.sroa.068.0.i
   br label %bb.bb
 
 .loopexit225.i:                                   ; preds = %bb.bd, %bb.bc, %bb.ap

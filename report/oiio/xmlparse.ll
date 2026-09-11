@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/xmlparse?download=true
 inline.NumInlined: 238
 inline.NumDeleted: 43
-loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 5
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@reportComment:bb.a
   %i.bs = load i8, ptr %.012.i, align 1           ; 2 uses
   switch i8 %i.bs, label %bb.q [
@@ -205,7 +205,56 @@ bb.a:
   %i.ap = load ptr, ptr @stderr, align 8
   %fwrite = tail call i64 @fwrite(ptr nonnull @__const.accountingReportDiff.ellipis, i64 4, i64 1, ptr %i.ap) #26 ; 0 uses
   %i.aq = getelementptr inbounds i8, ptr %3, i64 -10
-  br label %7
+  %7 = load ptr, ptr @stderr, align 8
+  %8 = load i8, ptr %i.aq, align 1
+  %9 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %8)
+  %fputs = tail call i32 @fputs(ptr nonnull %9, ptr %7) #26 ; 0 uses
+  %10 = getelementptr inbounds i8, ptr %3, i64 -9
+  %11 = load ptr, ptr @stderr, align 8
+  %12 = load i8, ptr %10, align 1
+  %13 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %12)
+  %fputs.1 = tail call i32 @fputs(ptr nonnull %13, ptr %11) #26 ; 0 uses
+  %14 = getelementptr inbounds i8, ptr %3, i64 -8
+  %15 = load ptr, ptr @stderr, align 8
+  %16 = load i8, ptr %14, align 1
+  %17 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %16)
+  %fputs.2 = tail call i32 @fputs(ptr nonnull %17, ptr %15) #26 ; 0 uses
+  %18 = getelementptr inbounds i8, ptr %3, i64 -7
+  %19 = load ptr, ptr @stderr, align 8
+  %20 = load i8, ptr %18, align 1
+  %21 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %20)
+  %fputs.3 = tail call i32 @fputs(ptr nonnull %21, ptr %19) #26 ; 0 uses
+  %22 = getelementptr inbounds i8, ptr %3, i64 -6
+  %23 = load ptr, ptr @stderr, align 8
+  %24 = load i8, ptr %22, align 1
+  %25 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %24)
+  %fputs.4 = tail call i32 @fputs(ptr nonnull %25, ptr %23) #26 ; 0 uses
+  %26 = getelementptr inbounds i8, ptr %3, i64 -5
+  %27 = load ptr, ptr @stderr, align 8
+  %28 = load i8, ptr %26, align 1
+  %29 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %28)
+  %fputs.5 = tail call i32 @fputs(ptr nonnull %29, ptr %27) #26 ; 0 uses
+  %30 = getelementptr inbounds i8, ptr %3, i64 -4
+  %31 = load ptr, ptr @stderr, align 8
+  %32 = load i8, ptr %30, align 1
+  %33 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %32)
+  %fputs.6 = tail call i32 @fputs(ptr nonnull %33, ptr %31) #26 ; 0 uses
+  %34 = getelementptr inbounds i8, ptr %3, i64 -3
+  %35 = load ptr, ptr @stderr, align 8
+  %36 = load i8, ptr %34, align 1
+  %37 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %36)
+  %fputs.7 = tail call i32 @fputs(ptr nonnull %37, ptr %35) #26 ; 0 uses
+  %38 = getelementptr inbounds i8, ptr %3, i64 -2
+  %39 = load ptr, ptr @stderr, align 8
+  %40 = load i8, ptr %38, align 1
+  %41 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %40)
+  %fputs.8 = tail call i32 @fputs(ptr nonnull %41, ptr %39) #26 ; 0 uses
+  %42 = getelementptr inbounds i8, ptr %3, i64 -1
+  %43 = load ptr, ptr @stderr, align 8
+  %44 = load i8, ptr %42, align 1
+  %45 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %44)
+  %fputs.9 = tail call i32 @fputs(ptr nonnull %45, ptr %43) #26 ; 0 uses
+  br label %.loopexit
 
 .preheader:                                       ; preds = %bb.a
   %i.ar = icmp ult ptr %2, %3
@@ -221,17 +270,7 @@ bb.a:
   %exitcond.not = icmp eq ptr %i.av, %3
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph
 
-7:                                                ; preds = %.preheader27.preheader, %7
-  %.229 = phi ptr [ %i.aq, %.preheader27.preheader ], [ %11, %7 ] ; 2 uses
-  %8 = load ptr, ptr @stderr, align 8
-  %9 = load i8, ptr %.229, align 1
-  %10 = tail call ptr @unsignedCharToPrintable(i8 noundef zeroext %9)
-  %fputs = tail call i32 @fputs(ptr nonnull %10, ptr %8) #26 ; 0 uses
-  %11 = getelementptr inbounds nuw i8, ptr %.229, i64 1 ; 2 uses
-  %12 = icmp ult ptr %11, %3
-  br i1 %12, label %7, label %.loopexit
-
-.loopexit:                                        ; preds = %7, %.lr.ph, %.preheader
+.loopexit:                                        ; preds = %.lr.ph, %.preheader27.preheader, %.preheader
   %i.aw = load ptr, ptr @stderr, align 8
   %fwrite21 = tail call i64 @fwrite(ptr nonnull @.str.317, i64 2, i64 1, ptr %i.aw) #26 ; 0 uses
   ret void

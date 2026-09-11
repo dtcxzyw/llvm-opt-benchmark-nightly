@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.j, label %bb.br, label %.split.i, !prof !61
 
 .split.i:                                         ; preds = %bb.j
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.t ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.t ; 3 uses
   store i8 34, ptr %i.z, align 1, !tbaa !99
   %i.ab = ptrtoint ptr %i.aa to i64               ; 4 uses
   %i.ac = add i64 %i.t, %i.w
@@ -607,10 +607,10 @@ bb.as:                                            ; preds = %bb.z
 
 .preheader1875:                                   ; preds = %.preheader1875.backedge, %.preheader1875.preheader
   %.8258.i466 = phi ptr [ %.8258.i466.ph, %.preheader1875.preheader ], [ %.8258.i466.be, %.preheader1875.backedge ] ; 35 uses
-  %.8.i467 = phi ptr [ %.8.i467.ph, %.preheader1875.preheader ], [ %.8.i467.be, %.preheader1875.backedge ] ; 24 uses
+  %.8.i467 = phi ptr [ %.8.i467.ph, %.preheader1875.preheader ], [ %.8.i467.be, %.preheader1875.backedge ] ; 23 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %.8.i467, i64 4 ; 3 uses
   %i.hk = icmp ugt ptr %i.hj, %i.aa               ; 2 uses
-  br i1 %i.hk, label %6, label %._crit_edge3775, !prof !44
+  br i1 %i.hk, label %bb.at, label %._crit_edge3775, !prof !44
 
 ._crit_edge3775:                                  ; preds = %.preheader1875
   %.pre3776 = load i8, ptr %.8.i467, align 1, !tbaa !99 ; 2 uses
@@ -619,11 +619,7 @@ bb.as:                                            ; preds = %bb.z
   %.pre3779 = load i8, ptr %.phi.trans.insert3778.a, align 1, !tbaa !99
   br label %bb.au
 
-6:                                                ; preds = %.preheader1875
-  %7 = icmp eq ptr %i.aa, %.8.i467
-  br i1 %7, label %bb.bn, label %bb.at
-
-bb.at:                                            ; preds = %6
+bb.at:                                            ; preds = %.preheader1875
   %i.hl = ptrtoint ptr %.8.i467 to i64
   %i.hm = sub i64 %i.ab, %i.hl
   %i.hn = load i8, ptr %.8.i467, align 1, !tbaa !99 ; 3 uses
@@ -916,7 +912,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.na = getelementptr inbounds nuw i8, ptr %.8258.i466, i64 12
   br label %.preheader1875.backedge
 
-bb.bn:                                            ; preds = %bb.au, %6
+bb.bn:                                            ; preds = %bb.au
   %i.nb = getelementptr inbounds nuw i8, ptr %.8258.i466, i64 1
   store i8 34, ptr %.8258.i466, align 1, !tbaa !99
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit540
@@ -954,7 +950,7 @@ bb.br:                                            ; preds = %bb.j
   br i1 %.not105.i, label %.split83.i, label %bb.dz
 
 .split83.i:                                       ; preds = %bb.br
-  %i.nl = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.t ; 4 uses
+  %i.nl = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.t ; 3 uses
   %i.nm = ptrtoint ptr %i.nl to i64               ; 4 uses
   %i.nn = add i64 %i.t, %i.w
   br label %bb.bs
@@ -1357,10 +1353,10 @@ bb.da:                                            ; preds = %bb.ch
 
 .preheader:                                       ; preds = %.preheader.backedge, %.preheader.preheader
   %.8258.i378 = phi ptr [ %.8258.i378.ph, %.preheader.preheader ], [ %.8258.i378.be, %.preheader.backedge ] ; 35 uses
-  %.8.i379 = phi ptr [ %.8.i379.ph, %.preheader.preheader ], [ %.8.i379.be, %.preheader.backedge ] ; 24 uses
+  %.8.i379 = phi ptr [ %.8.i379.ph, %.preheader.preheader ], [ %.8.i379.be, %.preheader.backedge ] ; 23 uses
   %i.uu = getelementptr inbounds nuw i8, ptr %.8.i379, i64 4 ; 3 uses
   %i.uv = icmp ugt ptr %i.uu, %i.nl               ; 2 uses
-  br i1 %i.uv, label %8, label %._crit_edge3780, !prof !44
+  br i1 %i.uv, label %bb.db, label %._crit_edge3780, !prof !44
 
 ._crit_edge3780:                                  ; preds = %.preheader
   %.pre3781.a = load i8, ptr %.8.i379, align 1, !tbaa !99 ; 2 uses
@@ -1369,11 +1365,7 @@ bb.da:                                            ; preds = %bb.ch
   %.pre3784 = load i8, ptr %.phi.trans.insert3783, align 1, !tbaa !99
   br label %bb.dc
 
-8:                                                ; preds = %.preheader
-  %9 = icmp eq ptr %i.nl, %.8.i379
-  br i1 %9, label %bb.dv, label %bb.db
-
-bb.db:                                            ; preds = %8
+bb.db:                                            ; preds = %.preheader
   %i.uw = ptrtoint ptr %.8.i379 to i64
   %i.ux = sub i64 %i.nm, %i.uw
   %i.uy = load i8, ptr %.8.i379, align 1, !tbaa !99 ; 3 uses
@@ -1666,7 +1658,7 @@ bb.du:                                            ; preds = %bb.dt
   %i.aal = getelementptr inbounds nuw i8, ptr %.8258.i378, i64 12
   br label %.preheader.backedge
 
-bb.dv:                                            ; preds = %bb.dc, %8
+bb.dv:                                            ; preds = %bb.dc
   %i.aam = getelementptr inbounds nuw i8, ptr %.8258.i378, i64 1
   store i8 34, ptr %.8258.i378, align 1, !tbaa !99
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit540
@@ -2069,7 +2061,7 @@ _ZN13duckdb_yyjsonL12write_indentEPhmm.exit1216:  ; preds = %select.unfold1657.p
   br i1 %i.cgu, label %bb.kx, label %.split.i33, !prof !61
 
 .split.i33:                                       ; preds = %_ZN13duckdb_yyjsonL12write_indentEPhmm.exit1216
-  %i.cjv = getelementptr inbounds nuw i8, ptr %i.cim, i64 %i.cik ; 4 uses
+  %i.cjv = getelementptr inbounds nuw i8, ptr %i.cim, i64 %i.cik ; 3 uses
   store i8 34, ptr %.0.i1214.lcssa, align 1, !tbaa !99
   %i.cjw = ptrtoint ptr %i.cjv to i64             ; 4 uses
   %i.cjx = add i64 %i.cik, %i.cin
@@ -2472,11 +2464,11 @@ bb.jz:                                            ; preds = %bb.jg
   br label %.preheader1936
 
 .preheader1936:                                   ; preds = %.preheader1936.backedge, %.preheader1936.preheader
-  %.8258.i290 = phi ptr [ %.8258.i290.ph, %.preheader1936.preheader ], [ %.8258.i290.be, %.preheader1936.backedge ] ; 35 uses
-  %.8.i291 = phi ptr [ %.8.i291.ph, %.preheader1936.preheader ], [ %.8.i291.be, %.preheader1936.backedge ] ; 24 uses
+  %.8258.i290 = phi ptr [ %.8258.i290.ph, %.preheader1936.preheader ], [ %.8258.i290.be, %.preheader1936.backedge ] ; 34 uses
+  %.8.i291 = phi ptr [ %.8.i291.ph, %.preheader1936.preheader ], [ %.8.i291.be, %.preheader1936.backedge ] ; 23 uses
   %i.crd = getelementptr inbounds nuw i8, ptr %.8.i291, i64 4 ; 3 uses
   %i.cre = icmp ugt ptr %i.crd, %i.cjv            ; 2 uses
-  br i1 %i.cre, label %10, label %._crit_edge3755, !prof !44
+  br i1 %i.cre, label %bb.ka, label %._crit_edge3755, !prof !44
 
 ._crit_edge3755:                                  ; preds = %.preheader1936
   %.pre = load i8, ptr %.8.i291, align 1, !tbaa !99 ; 2 uses
@@ -2485,11 +2477,7 @@ bb.jz:                                            ; preds = %bb.jg
   %.pre3757 = load i8, ptr %.phi.trans.insert3756, align 1, !tbaa !99
   br label %bb.kb
 
-10:                                               ; preds = %.preheader1936
-  %11 = icmp eq ptr %i.cjv, %.8.i291
-  br i1 %11, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit364, label %bb.ka
-
-bb.ka:                                            ; preds = %10
+bb.ka:                                            ; preds = %.preheader1936
   %i.crf = ptrtoint ptr %.8.i291 to i64
   %i.crg = sub i64 %i.cjw, %i.crf
   %i.crh = load i8, ptr %.8.i291, align 1, !tbaa !99 ; 3 uses
@@ -2815,7 +2803,7 @@ bb.kx:                                            ; preds = %_ZN13duckdb_yyjsonL
   br i1 %.not529.i, label %.split500.i, label %bb.ne
 
 .split500.i:                                      ; preds = %bb.kx
-  %i.cxe = getelementptr inbounds nuw i8, ptr %i.cim, i64 %i.cik ; 4 uses
+  %i.cxe = getelementptr inbounds nuw i8, ptr %i.cim, i64 %i.cik ; 3 uses
   %i.cxf = ptrtoint ptr %i.cxe to i64             ; 4 uses
   %i.cxg = add i64 %i.cik, %i.cin
   br label %bb.ky
@@ -3218,11 +3206,11 @@ bb.mg:                                            ; preds = %bb.ln
   br label %.preheader1922
 
 .preheader1922:                                   ; preds = %.preheader1922.backedge, %.preheader1922.preheader
-  %.8258.i202 = phi ptr [ %.8258.i202.ph, %.preheader1922.preheader ], [ %.8258.i202.be, %.preheader1922.backedge ] ; 35 uses
-  %.8.i203 = phi ptr [ %.8.i203.ph, %.preheader1922.preheader ], [ %.8.i203.be, %.preheader1922.backedge ] ; 24 uses
+  %.8258.i202 = phi ptr [ %.8258.i202.ph, %.preheader1922.preheader ], [ %.8258.i202.be, %.preheader1922.backedge ] ; 34 uses
+  %.8.i203 = phi ptr [ %.8.i203.ph, %.preheader1922.preheader ], [ %.8.i203.be, %.preheader1922.backedge ] ; 23 uses
   %i.dem = getelementptr inbounds nuw i8, ptr %.8.i203, i64 4 ; 3 uses
   %i.den = icmp ugt ptr %i.dem, %i.cxe            ; 2 uses
-  br i1 %i.den, label %12, label %._crit_edge3758, !prof !44
+  br i1 %i.den, label %bb.mh, label %._crit_edge3758, !prof !44
 
 ._crit_edge3758:                                  ; preds = %.preheader1922
   %.pre3759 = load i8, ptr %.8.i203, align 1, !tbaa !99 ; 2 uses
@@ -3231,11 +3219,7 @@ bb.mg:                                            ; preds = %bb.ln
   %.pre3762 = load i8, ptr %.phi.trans.insert3761, align 1, !tbaa !99
   br label %bb.mi
 
-12:                                               ; preds = %.preheader1922
-  %13 = icmp eq ptr %i.cxe, %.8.i203
-  br i1 %13, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit364, label %bb.mh
-
-bb.mh:                                            ; preds = %12
+bb.mh:                                            ; preds = %.preheader1922
   %i.deo = ptrtoint ptr %.8.i203 to i64
   %i.dep = sub i64 %i.cxf, %i.deo
   %i.deq = load i8, ptr %.8.i203, align 1, !tbaa !99 ; 3 uses
@@ -3638,15 +3622,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not.i73.7 = icmp eq i64 %i.dna, 0
   br i1 %.not.i73.7, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit364, label %.lr.ph2975, !llvm.loop !310
 
-_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit364: ; preds = %.preheader1939, %.lr.ph2975.prol.loopexit, %.lr.ph2975, %.preheader1925, %bb.jn, %.lr.ph2952.prol.loopexit, %10, %bb.kb, %bb.lu, %.lr.ph3003.prol.loopexit, %12, %bb.mi, %middle.block, %vec.epilog.middle.block, %.preheader1953
-  %.3253.i284.lcssa.sink5228 = phi ptr [ %.122.i67.lcssa, %.preheader1953 ], [ %.8258.i290, %10 ], [ %.lcssa6642.unr, %.lr.ph3003.prol.loopexit ], [ %i.dlp, %vec.epilog.middle.block ], [ %i.dmz, %.lr.ph2975 ], [ %i.dlj, %middle.block ], [ %.lcssa6559.unr, %.lr.ph2952.prol.loopexit ], [ %.2252.i194.lcssa, %.preheader1925 ], [ %.8258.i202, %12 ], [ %.8258.i202, %bb.mi ], [ %i.dda, %bb.lu ], [ %.8258.i290, %bb.kb ], [ %i.cpr, %bb.jn ], [ %.lcssa6572.unr, %.lr.ph2975.prol.loopexit ], [ %.2252.i282.lcssa, %.preheader1939 ] ; 4 uses
-  %i.dnb = getelementptr inbounds nuw i8, ptr %.3253.i284.lcssa.sink5228, i64 1
-  store i8 34, ptr %.3253.i284.lcssa.sink5228, align 1, !tbaa !99
+_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit364: ; preds = %.preheader1939, %.lr.ph2975.prol.loopexit, %.lr.ph2975, %.preheader1925, %bb.jn, %.lr.ph2952.prol.loopexit, %bb.kb, %bb.lu, %.lr.ph3003.prol.loopexit, %bb.mi, %middle.block, %vec.epilog.middle.block, %.preheader1953
+  %.3253.i284.lcssa.sink5239 = phi ptr [ %.lcssa6642.unr, %.lr.ph3003.prol.loopexit ], [ %.8258.i290, %bb.kb ], [ %.2252.i194.lcssa, %.preheader1925 ], [ %.8258.i202, %bb.mi ], [ %i.dmz, %.lr.ph2975 ], [ %.lcssa6559.unr, %.lr.ph2952.prol.loopexit ], [ %.122.i67.lcssa, %.preheader1953 ], [ %i.dlp, %vec.epilog.middle.block ], [ %i.dlj, %middle.block ], [ %i.dda, %bb.lu ], [ %i.cpr, %bb.jn ], [ %.lcssa6572.unr, %.lr.ph2975.prol.loopexit ], [ %.2252.i282.lcssa, %.preheader1939 ] ; 4 uses
+  %i.dnb = getelementptr inbounds nuw i8, ptr %.3253.i284.lcssa.sink5239, i64 1
+  store i8 34, ptr %.3253.i284.lcssa.sink5239, align 1, !tbaa !99
   %i.dnc = select i1 %.not525.i, i8 44, i8 58
-  %i.dnd = getelementptr inbounds nuw i8, ptr %.3253.i284.lcssa.sink5228, i64 2
+  %i.dnd = getelementptr inbounds nuw i8, ptr %.3253.i284.lcssa.sink5239, i64 2
   store i8 %i.dnc, ptr %i.dnb, align 1, !tbaa !99
   %i.dne = select i1 %.not525.i, i8 10, i8 32
-  %i.dnf = getelementptr inbounds nuw i8, ptr %.3253.i284.lcssa.sink5228, i64 3
+  %i.dnf = getelementptr inbounds nuw i8, ptr %.3253.i284.lcssa.sink5239, i64 3
   store i8 %i.dne, ptr %i.dnd, align 1, !tbaa !99
   br label %bb.rv
 
@@ -4049,7 +4033,7 @@ bb.sq:                                            ; preds = %bb.sp, %bb.so
   br i1 %i.gch, label %bb.ux, label %.split.i45, !prof !61
 
 .split.i45:                                       ; preds = %bb.sq
-  %i.gek = getelementptr inbounds nuw i8, ptr %i.gdn, i64 %i.gdl ; 4 uses
+  %i.gek = getelementptr inbounds nuw i8, ptr %i.gdn, i64 %i.gdl ; 3 uses
   store i8 34, ptr %.1352.i, align 1, !tbaa !99
   %i.gel = ptrtoint ptr %i.gek to i64             ; 4 uses
   %i.gem = add i64 %i.gdl, %i.gdo
@@ -4452,11 +4436,11 @@ bb.tz:                                            ; preds = %bb.tg
   br label %.preheader1903
 
 .preheader1903:                                   ; preds = %.preheader1903.backedge, %.preheader1903.preheader
-  %.8258.i114 = phi ptr [ %.8258.i114.ph, %.preheader1903.preheader ], [ %.8258.i114.be, %.preheader1903.backedge ] ; 35 uses
-  %.8.i115 = phi ptr [ %.8.i115.ph, %.preheader1903.preheader ], [ %.8.i115.be, %.preheader1903.backedge ] ; 24 uses
+  %.8258.i114 = phi ptr [ %.8258.i114.ph, %.preheader1903.preheader ], [ %.8258.i114.be, %.preheader1903.backedge ] ; 34 uses
+  %.8.i115 = phi ptr [ %.8.i115.ph, %.preheader1903.preheader ], [ %.8.i115.be, %.preheader1903.backedge ] ; 23 uses
   %i.gls = getelementptr inbounds nuw i8, ptr %.8.i115, i64 4 ; 3 uses
   %i.glt = icmp ugt ptr %i.gls, %i.gek            ; 2 uses
-  br i1 %i.glt, label %14, label %._crit_edge3764, !prof !44
+  br i1 %i.glt, label %bb.ua, label %._crit_edge3764, !prof !44
 
 ._crit_edge3764:                                  ; preds = %.preheader1903
   %.pre3765 = load i8, ptr %.8.i115, align 1, !tbaa !99 ; 2 uses
@@ -4465,11 +4449,7 @@ bb.tz:                                            ; preds = %bb.tg
   %.pre3768 = load i8, ptr %.phi.trans.insert3767, align 1, !tbaa !99
   br label %bb.ub
 
-14:                                               ; preds = %.preheader1903
-  %15 = icmp eq ptr %i.gek, %.8.i115
-  br i1 %15, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit188, label %bb.ua
-
-bb.ua:                                            ; preds = %14
+bb.ua:                                            ; preds = %.preheader1903
   %i.glu = ptrtoint ptr %.8.i115 to i64
   %i.glv = sub i64 %i.gel, %i.glu
   %i.glw = load i8, ptr %.8.i115, align 1, !tbaa !99 ; 3 uses
@@ -4795,7 +4775,7 @@ bb.ux:                                            ; preds = %bb.sq
   br i1 %.not395.i, label %.split373.i, label %bb.xe
 
 .split373.i:                                      ; preds = %bb.ux
-  %i.grt = getelementptr inbounds nuw i8, ptr %i.gdn, i64 %i.gdl ; 4 uses
+  %i.grt = getelementptr inbounds nuw i8, ptr %i.gdn, i64 %i.gdl ; 3 uses
   %i.gru = ptrtoint ptr %i.grt to i64             ; 4 uses
   %i.grv = add i64 %i.gdl, %i.gdo
   br label %bb.uy
@@ -5198,11 +5178,11 @@ bb.wg:                                            ; preds = %bb.vn
   br label %.preheader1889
 
 .preheader1889:                                   ; preds = %.preheader1889.backedge, %.preheader1889.preheader
-  %.8258.i = phi ptr [ %.8258.i.ph, %.preheader1889.preheader ], [ %.8258.i.be, %.preheader1889.backedge ] ; 35 uses
-  %.8.i87 = phi ptr [ %.8.i87.ph, %.preheader1889.preheader ], [ %.8.i87.be, %.preheader1889.backedge ] ; 24 uses
+  %.8258.i = phi ptr [ %.8258.i.ph, %.preheader1889.preheader ], [ %.8258.i.be, %.preheader1889.backedge ] ; 34 uses
+  %.8.i87 = phi ptr [ %.8.i87.ph, %.preheader1889.preheader ], [ %.8.i87.be, %.preheader1889.backedge ] ; 23 uses
   %i.gzb = getelementptr inbounds nuw i8, ptr %.8.i87, i64 4 ; 3 uses
   %i.gzc = icmp ugt ptr %i.gzb, %i.grt            ; 2 uses
-  br i1 %i.gzc, label %16, label %._crit_edge3769, !prof !44
+  br i1 %i.gzc, label %bb.wh, label %._crit_edge3769, !prof !44
 
 ._crit_edge3769:                                  ; preds = %.preheader1889
   %.pre3770 = load i8, ptr %.8.i87, align 1, !tbaa !99 ; 2 uses
@@ -5211,11 +5191,7 @@ bb.wg:                                            ; preds = %bb.vn
   %.pre3773 = load i8, ptr %.phi.trans.insert3772, align 1, !tbaa !99
   br label %bb.wi
 
-16:                                               ; preds = %.preheader1889
-  %17 = icmp eq ptr %i.grt, %.8.i87
-  br i1 %17, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit188, label %bb.wh
-
-bb.wh:                                            ; preds = %16
+bb.wh:                                            ; preds = %.preheader1889
   %i.gzd = ptrtoint ptr %.8.i87 to i64
   %i.gze = sub i64 %i.gru, %i.gzd
   %i.gzf = load i8, ptr %.8.i87, align 1, !tbaa !99 ; 3 uses
@@ -5618,12 +5594,12 @@ vec.epilog.middle.block5994:                      ; preds = %vec.epilog.vector.b
   %.not.i63.7 = icmp eq i64 %i.hhp, 0
   br i1 %.not.i63.7, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit188, label %.lr.ph3092, !llvm.loop !325
 
-_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit188: ; preds = %.preheader1906, %.lr.ph3092.prol.loopexit, %.lr.ph3092, %.preheader1892, %bb.tn, %.lr.ph3069.prol.loopexit, %14, %bb.ub, %bb.vu, %.lr.ph3120.prol.loopexit, %16, %bb.wi, %middle.block5976, %vec.epilog.middle.block5994, %.preheader1919
-  %.3253.i108.lcssa.sink5262 = phi ptr [ %.122.i.lcssa, %.preheader1919 ], [ %.8258.i114, %14 ], [ %.lcssa6429.unr, %.lr.ph3120.prol.loopexit ], [ %i.hge, %vec.epilog.middle.block5994 ], [ %i.hho, %.lr.ph3092 ], [ %i.hfy, %middle.block5976 ], [ %.lcssa6346.unr, %.lr.ph3069.prol.loopexit ], [ %.2252.i.lcssa, %.preheader1892 ], [ %.8258.i, %16 ], [ %.8258.i, %bb.wi ], [ %i.gxp, %bb.vu ], [ %.8258.i114, %bb.ub ], [ %i.gkg, %bb.tn ], [ %.lcssa6359.unr, %.lr.ph3092.prol.loopexit ], [ %.2252.i106.lcssa, %.preheader1906 ] ; 3 uses
-  %i.hhq = getelementptr inbounds nuw i8, ptr %.3253.i108.lcssa.sink5262, i64 1
-  store i8 34, ptr %.3253.i108.lcssa.sink5262, align 1, !tbaa !99
+_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit188: ; preds = %.preheader1906, %.lr.ph3092.prol.loopexit, %.lr.ph3092, %.preheader1892, %bb.tn, %.lr.ph3069.prol.loopexit, %bb.ub, %bb.vu, %.lr.ph3120.prol.loopexit, %bb.wi, %middle.block5976, %vec.epilog.middle.block5994, %.preheader1919
+  %.3253.i108.lcssa.sink5273 = phi ptr [ %.lcssa6429.unr, %.lr.ph3120.prol.loopexit ], [ %.8258.i114, %bb.ub ], [ %.2252.i.lcssa, %.preheader1892 ], [ %.8258.i, %bb.wi ], [ %i.hho, %.lr.ph3092 ], [ %.lcssa6346.unr, %.lr.ph3069.prol.loopexit ], [ %.122.i.lcssa, %.preheader1919 ], [ %i.hge, %vec.epilog.middle.block5994 ], [ %i.hfy, %middle.block5976 ], [ %i.gxp, %bb.vu ], [ %i.gkg, %bb.tn ], [ %.lcssa6359.unr, %.lr.ph3092.prol.loopexit ], [ %.2252.i106.lcssa, %.preheader1906 ] ; 3 uses
+  %i.hhq = getelementptr inbounds nuw i8, ptr %.3253.i108.lcssa.sink5273, i64 1
+  store i8 34, ptr %.3253.i108.lcssa.sink5273, align 1, !tbaa !99
   %i.hhr = select i1 %.not392.i, i8 44, i8 58
-  %i.hhs = getelementptr inbounds nuw i8, ptr %.3253.i108.lcssa.sink5262, i64 2
+  %i.hhs = getelementptr inbounds nuw i8, ptr %.3253.i108.lcssa.sink5273, i64 2
   store i8 %i.hhr, ptr %i.hhq, align 1, !tbaa !99
   br label %bb.abs
 
@@ -6026,7 +6002,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.j, label %bb.br, label %.split.i.i, !prof !61
 
 .split.i.i:                                       ; preds = %bb.j
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.t ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.t ; 3 uses
   store i8 34, ptr %i.z, align 1, !tbaa !99
   %i.ab = ptrtoint ptr %i.aa to i64               ; 4 uses
   %i.ac = add i64 %i.t, %i.w
@@ -6429,10 +6405,10 @@ bb.as:                                            ; preds = %bb.z
 
 .preheader1054:                                   ; preds = %.preheader1054.backedge, %.preheader1054.preheader
   %.8258.i24.i = phi ptr [ %.8258.i24.i.ph, %.preheader1054.preheader ], [ %.8258.i24.i.be, %.preheader1054.backedge ] ; 35 uses
-  %.8.i25.i = phi ptr [ %.8.i25.i.ph, %.preheader1054.preheader ], [ %.8.i25.i.be, %.preheader1054.backedge ] ; 24 uses
+  %.8.i25.i = phi ptr [ %.8.i25.i.ph, %.preheader1054.preheader ], [ %.8.i25.i.be, %.preheader1054.backedge ] ; 23 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %.8.i25.i, i64 4 ; 3 uses
   %i.hk = icmp ugt ptr %i.hj, %i.aa               ; 2 uses
-  br i1 %i.hk, label %7, label %._crit_edge2962, !prof !44
+  br i1 %i.hk, label %bb.at, label %._crit_edge2962, !prof !44
 
 ._crit_edge2962:                                  ; preds = %.preheader1054
   %.pre2963 = load i8, ptr %.8.i25.i, align 1, !tbaa !99 ; 2 uses
@@ -6441,11 +6417,7 @@ bb.as:                                            ; preds = %bb.z
   %.pre2966 = load i8, ptr %.phi.trans.insert2965.a, align 1, !tbaa !99
   br label %bb.au
 
-7:                                                ; preds = %.preheader1054
-  %8 = icmp eq ptr %i.aa, %.8.i25.i
-  br i1 %8, label %bb.bn, label %bb.at
-
-bb.at:                                            ; preds = %7
+bb.at:                                            ; preds = %.preheader1054
   %i.hl = ptrtoint ptr %.8.i25.i to i64
   %i.hm = sub i64 %i.ab, %i.hl
   %i.hn = load i8, ptr %.8.i25.i, align 1, !tbaa !99 ; 3 uses
@@ -6738,7 +6710,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.na = getelementptr inbounds nuw i8, ptr %.8258.i24.i, i64 12
   br label %.preheader1054.backedge
 
-bb.bn:                                            ; preds = %bb.au, %7
+bb.bn:                                            ; preds = %bb.au
   %i.nb = getelementptr inbounds nuw i8, ptr %.8258.i24.i, i64 1
   store i8 34, ptr %.8258.i24.i, align 1, !tbaa !99
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit98.i
@@ -6776,7 +6748,7 @@ bb.br:                                            ; preds = %bb.j
   br i1 %.not105.i.i, label %.split83.i.i, label %bb.dz
 
 .split83.i.i:                                     ; preds = %bb.br
-  %i.nl = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.t ; 4 uses
+  %i.nl = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.t ; 3 uses
   %i.nm = ptrtoint ptr %i.nl to i64               ; 4 uses
   %i.nn = add i64 %i.t, %i.w
   br label %bb.bs
@@ -7179,10 +7151,10 @@ bb.da:                                            ; preds = %bb.ch
 
 .preheader:                                       ; preds = %.preheader.backedge, %.preheader.preheader
   %.8258.i.i = phi ptr [ %.8258.i.i.ph, %.preheader.preheader ], [ %.8258.i.i.be, %.preheader.backedge ] ; 35 uses
-  %.8.i.i = phi ptr [ %.8.i.i.ph, %.preheader.preheader ], [ %.8.i.i.be, %.preheader.backedge ] ; 24 uses
+  %.8.i.i = phi ptr [ %.8.i.i.ph, %.preheader.preheader ], [ %.8.i.i.be, %.preheader.backedge ] ; 23 uses
   %i.uu = getelementptr inbounds nuw i8, ptr %.8.i.i, i64 4 ; 3 uses
   %i.uv = icmp ugt ptr %i.uu, %i.nl               ; 2 uses
-  br i1 %i.uv, label %9, label %._crit_edge2967, !prof !44
+  br i1 %i.uv, label %bb.db, label %._crit_edge2967, !prof !44
 
 ._crit_edge2967:                                  ; preds = %.preheader
   %.pre2968.a = load i8, ptr %.8.i.i, align 1, !tbaa !99 ; 2 uses
@@ -7191,11 +7163,7 @@ bb.da:                                            ; preds = %bb.ch
   %.pre2971 = load i8, ptr %.phi.trans.insert2970, align 1, !tbaa !99
   br label %bb.dc
 
-9:                                                ; preds = %.preheader
-  %10 = icmp eq ptr %i.nl, %.8.i.i
-  br i1 %10, label %bb.dv, label %bb.db
-
-bb.db:                                            ; preds = %9
+bb.db:                                            ; preds = %.preheader
   %i.uw = ptrtoint ptr %.8.i.i to i64
   %i.ux = sub i64 %i.nm, %i.uw
   %i.uy = load i8, ptr %.8.i.i, align 1, !tbaa !99 ; 3 uses
@@ -7488,7 +7456,7 @@ bb.du:                                            ; preds = %bb.dt
   %i.aal = getelementptr inbounds nuw i8, ptr %.8258.i.i, i64 12
   br label %.preheader.backedge
 
-bb.dv:                                            ; preds = %bb.dc, %9
+bb.dv:                                            ; preds = %bb.dc
   %i.aam = getelementptr inbounds nuw i8, ptr %.8258.i.i, i64 1
   store i8 34, ptr %.8258.i.i, align 1, !tbaa !99
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit98.i
@@ -7891,7 +7859,7 @@ _ZN13duckdb_yyjsonL12write_indentEPhmm.exit856.i: ; preds = %select.unfold836.pr
   br i1 %i.cgy, label %bb.la, label %.split.i, !prof !61
 
 .split.i:                                         ; preds = %_ZN13duckdb_yyjsonL12write_indentEPhmm.exit856.i
-  %i.cka = getelementptr inbounds nuw i8, ptr %i.cir, i64 %i.cip ; 4 uses
+  %i.cka = getelementptr inbounds nuw i8, ptr %i.cir, i64 %i.cip ; 3 uses
   store i8 34, ptr %.0.i854.i.lcssa, align 1, !tbaa !99
   %i.ckb = ptrtoint ptr %i.cka to i64             ; 4 uses
   %i.ckc = add i64 %i.cip, %i.cis
@@ -8294,11 +8262,11 @@ bb.kc:                                            ; preds = %bb.jj
   br label %.preheader1115
 
 .preheader1115:                                   ; preds = %.preheader1115.backedge, %.preheader1115.preheader
-  %.8258.i583.i = phi ptr [ %.8258.i583.i.ph, %.preheader1115.preheader ], [ %.8258.i583.i.be, %.preheader1115.backedge ] ; 35 uses
-  %.8.i584.i = phi ptr [ %.8.i584.i.ph, %.preheader1115.preheader ], [ %.8.i584.i.be, %.preheader1115.backedge ] ; 24 uses
+  %.8258.i583.i = phi ptr [ %.8258.i583.i.ph, %.preheader1115.preheader ], [ %.8258.i583.i.be, %.preheader1115.backedge ] ; 34 uses
+  %.8.i584.i = phi ptr [ %.8.i584.i.ph, %.preheader1115.preheader ], [ %.8.i584.i.be, %.preheader1115.backedge ] ; 23 uses
   %i.cri = getelementptr inbounds nuw i8, ptr %.8.i584.i, i64 4 ; 3 uses
   %i.crj = icmp ugt ptr %i.cri, %i.cka            ; 2 uses
-  br i1 %i.crj, label %11, label %._crit_edge2942, !prof !44
+  br i1 %i.crj, label %bb.kd, label %._crit_edge2942, !prof !44
 
 ._crit_edge2942:                                  ; preds = %.preheader1115
   %.pre = load i8, ptr %.8.i584.i, align 1, !tbaa !99 ; 2 uses
@@ -8307,11 +8275,7 @@ bb.kc:                                            ; preds = %bb.jj
   %.pre2944 = load i8, ptr %.phi.trans.insert2943, align 1, !tbaa !99
   br label %bb.ke
 
-11:                                               ; preds = %.preheader1115
-  %12 = icmp eq ptr %i.cka, %.8.i584.i
-  br i1 %12, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit657.i, label %bb.kd
-
-bb.kd:                                            ; preds = %11
+bb.kd:                                            ; preds = %.preheader1115
   %i.crk = ptrtoint ptr %.8.i584.i to i64
   %i.crl = sub i64 %i.ckb, %i.crk
   %i.crm = load i8, ptr %.8.i584.i, align 1, !tbaa !99 ; 3 uses
@@ -8637,7 +8601,7 @@ bb.la:                                            ; preds = %_ZN13duckdb_yyjsonL
   br i1 %.not536.i, label %.split505.i, label %bb.nh
 
 .split505.i:                                      ; preds = %bb.la
-  %i.cxj = getelementptr inbounds nuw i8, ptr %i.cir, i64 %i.cip ; 4 uses
+  %i.cxj = getelementptr inbounds nuw i8, ptr %i.cir, i64 %i.cip ; 3 uses
   %i.cxk = ptrtoint ptr %i.cxj to i64             ; 4 uses
   %i.cxl = add i64 %i.cip, %i.cis
   br label %bb.lb
@@ -9040,11 +9004,11 @@ bb.mj:                                            ; preds = %bb.lq
   br label %.preheader1101
 
 .preheader1101:                                   ; preds = %.preheader1101.backedge, %.preheader1101.preheader
-  %.8258.i.i123 = phi ptr [ %.8258.i.i123.ph, %.preheader1101.preheader ], [ %.8258.i.i123.be, %.preheader1101.backedge ] ; 35 uses
-  %.8.i.i124 = phi ptr [ %.8.i.i124.ph, %.preheader1101.preheader ], [ %.8.i.i124.be, %.preheader1101.backedge ] ; 24 uses
+  %.8258.i.i123 = phi ptr [ %.8258.i.i123.ph, %.preheader1101.preheader ], [ %.8258.i.i123.be, %.preheader1101.backedge ] ; 34 uses
+  %.8.i.i124 = phi ptr [ %.8.i.i124.ph, %.preheader1101.preheader ], [ %.8.i.i124.be, %.preheader1101.backedge ] ; 23 uses
   %i.der = getelementptr inbounds nuw i8, ptr %.8.i.i124, i64 4 ; 3 uses
   %i.des = icmp ugt ptr %i.der, %i.cxj            ; 2 uses
-  br i1 %i.des, label %13, label %._crit_edge2945, !prof !44
+  br i1 %i.des, label %bb.mk, label %._crit_edge2945, !prof !44
 
 ._crit_edge2945:                                  ; preds = %.preheader1101
   %.pre2946 = load i8, ptr %.8.i.i124, align 1, !tbaa !99 ; 2 uses
@@ -9053,11 +9017,7 @@ bb.mj:                                            ; preds = %bb.lq
   %.pre2949 = load i8, ptr %.phi.trans.insert2948, align 1, !tbaa !99
   br label %bb.ml
 
-13:                                               ; preds = %.preheader1101
-  %14 = icmp eq ptr %i.cxj, %.8.i.i124
-  br i1 %14, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit657.i, label %bb.mk
-
-bb.mk:                                            ; preds = %13
+bb.mk:                                            ; preds = %.preheader1101
   %i.det = ptrtoint ptr %.8.i.i124 to i64
   %i.deu = sub i64 %i.cxk, %i.det
   %i.dev = load i8, ptr %.8.i.i124, align 1, !tbaa !99 ; 3 uses
@@ -9460,15 +9420,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not.i.i108.7 = icmp eq i64 %i.dnf, 0
   br i1 %.not.i.i108.7, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit657.i, label %.lr.ph2156, !llvm.loop !347
 
-_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit657.i: ; preds = %.preheader1118, %.lr.ph2156.prol.loopexit, %.lr.ph2156, %.preheader1104, %bb.jq, %.lr.ph2133.prol.loopexit, %11, %bb.ke, %bb.lx, %.lr.ph2184.prol.loopexit, %13, %bb.ml, %middle.block, %vec.epilog.middle.block, %.preheader1132
-  %.8258.i583.i.lcssa.sink4419 = phi ptr [ %.8258.i583.i, %11 ], [ %.122.i.i102.lcssa, %.preheader1132 ], [ %i.dlu, %vec.epilog.middle.block ], [ %.lcssa5840.unr, %.lr.ph2184.prol.loopexit ], [ %i.dne, %.lr.ph2156 ], [ %i.dlo, %middle.block ], [ %.lcssa5757.unr, %.lr.ph2133.prol.loopexit ], [ %.2252.i.i115.lcssa, %.preheader1104 ], [ %.8258.i.i123, %13 ], [ %.8258.i.i123, %bb.ml ], [ %i.ddf, %bb.lx ], [ %.8258.i583.i, %bb.ke ], [ %i.cpw, %bb.jq ], [ %.lcssa5770.unr, %.lr.ph2156.prol.loopexit ], [ %.2252.i575.i.lcssa, %.preheader1118 ] ; 4 uses
-  %i.dng = getelementptr inbounds nuw i8, ptr %.8258.i583.i.lcssa.sink4419, i64 1
-  store i8 34, ptr %.8258.i583.i.lcssa.sink4419, align 1, !tbaa !99
+_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit657.i: ; preds = %.preheader1118, %.lr.ph2156.prol.loopexit, %.lr.ph2156, %.preheader1104, %bb.jq, %.lr.ph2133.prol.loopexit, %bb.ke, %bb.lx, %.lr.ph2184.prol.loopexit, %bb.ml, %middle.block, %vec.epilog.middle.block, %.preheader1132
+  %.8258.i583.i.lcssa.sink4430 = phi ptr [ %.8258.i583.i, %bb.ke ], [ %.lcssa5840.unr, %.lr.ph2184.prol.loopexit ], [ %.8258.i.i123, %bb.ml ], [ %.2252.i.i115.lcssa, %.preheader1104 ], [ %i.dne, %.lr.ph2156 ], [ %.lcssa5757.unr, %.lr.ph2133.prol.loopexit ], [ %.122.i.i102.lcssa, %.preheader1132 ], [ %i.dlu, %vec.epilog.middle.block ], [ %i.dlo, %middle.block ], [ %i.ddf, %bb.lx ], [ %i.cpw, %bb.jq ], [ %.lcssa5770.unr, %.lr.ph2156.prol.loopexit ], [ %.2252.i575.i.lcssa, %.preheader1118 ] ; 4 uses
+  %i.dng = getelementptr inbounds nuw i8, ptr %.8258.i583.i.lcssa.sink4430, i64 1
+  store i8 34, ptr %.8258.i583.i.lcssa.sink4430, align 1, !tbaa !99
   %i.dnh = select i1 %.not532.i, i8 44, i8 58
-  %i.dni = getelementptr inbounds nuw i8, ptr %.8258.i583.i.lcssa.sink4419, i64 2
+  %i.dni = getelementptr inbounds nuw i8, ptr %.8258.i583.i.lcssa.sink4430, i64 2
   store i8 %i.dnh, ptr %i.dng, align 1, !tbaa !99
   %i.dnj = select i1 %.not532.i, i8 10, i8 32
-  %i.dnk = getelementptr inbounds nuw i8, ptr %.8258.i583.i.lcssa.sink4419, i64 3
+  %i.dnk = getelementptr inbounds nuw i8, ptr %.8258.i583.i.lcssa.sink4430, i64 3
   store i8 %i.dnj, ptr %i.dni, align 1, !tbaa !99
   br label %bb.sg
 
@@ -9871,7 +9831,7 @@ bb.th:                                            ; preds = %bb.tg, %bb.te
   br i1 %i.gda, label %bb.vo, label %.split.i272, !prof !61
 
 .split.i272:                                      ; preds = %bb.th
-  %i.gfd = getelementptr inbounds nuw i8, ptr %i.geg, i64 %i.gee ; 4 uses
+  %i.gfd = getelementptr inbounds nuw i8, ptr %i.geg, i64 %i.gee ; 3 uses
   store i8 34, ptr %.1357.i, align 1, !tbaa !99
   %i.gfe = ptrtoint ptr %i.gfd to i64             ; 4 uses
   %i.gff = add i64 %i.gee, %i.geh
@@ -10274,11 +10234,11 @@ bb.uq:                                            ; preds = %bb.tx
   br label %.preheader1082
 
 .preheader1082:                                   ; preds = %.preheader1082.backedge, %.preheader1082.preheader
-  %.8258.i443.i = phi ptr [ %.8258.i443.i.ph, %.preheader1082.preheader ], [ %.8258.i443.i.be, %.preheader1082.backedge ] ; 35 uses
-  %.8.i444.i = phi ptr [ %.8.i444.i.ph, %.preheader1082.preheader ], [ %.8.i444.i.be, %.preheader1082.backedge ] ; 24 uses
+  %.8258.i443.i = phi ptr [ %.8258.i443.i.ph, %.preheader1082.preheader ], [ %.8258.i443.i.be, %.preheader1082.backedge ] ; 34 uses
+  %.8.i444.i = phi ptr [ %.8.i444.i.ph, %.preheader1082.preheader ], [ %.8.i444.i.be, %.preheader1082.backedge ] ; 23 uses
   %i.gml = getelementptr inbounds nuw i8, ptr %.8.i444.i, i64 4 ; 3 uses
   %i.gmm = icmp ugt ptr %i.gml, %i.gfd            ; 2 uses
-  br i1 %i.gmm, label %15, label %._crit_edge2951, !prof !44
+  br i1 %i.gmm, label %bb.ur, label %._crit_edge2951, !prof !44
 
 ._crit_edge2951:                                  ; preds = %.preheader1082
   %.pre2952 = load i8, ptr %.8.i444.i, align 1, !tbaa !99 ; 2 uses
@@ -10287,11 +10247,7 @@ bb.uq:                                            ; preds = %bb.tx
   %.pre2955 = load i8, ptr %.phi.trans.insert2954, align 1, !tbaa !99
   br label %bb.us
 
-15:                                               ; preds = %.preheader1082
-  %16 = icmp eq ptr %i.gfd, %.8.i444.i
-  br i1 %16, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit517.i, label %bb.ur
-
-bb.ur:                                            ; preds = %15
+bb.ur:                                            ; preds = %.preheader1082
   %i.gmn = ptrtoint ptr %.8.i444.i to i64
   %i.gmo = sub i64 %i.gfe, %i.gmn
   %i.gmp = load i8, ptr %.8.i444.i, align 1, !tbaa !99 ; 3 uses
@@ -10617,7 +10573,7 @@ bb.vo:                                            ; preds = %bb.th
   br i1 %.not402.i, label %.split378.i, label %bb.xv
 
 .split378.i:                                      ; preds = %bb.vo
-  %i.gsm = getelementptr inbounds nuw i8, ptr %i.geg, i64 %i.gee ; 4 uses
+  %i.gsm = getelementptr inbounds nuw i8, ptr %i.geg, i64 %i.gee ; 3 uses
   %i.gsn = ptrtoint ptr %i.gsm to i64             ; 4 uses
   %i.gso = add i64 %i.gee, %i.geh
   br label %bb.vp
@@ -11020,11 +10976,11 @@ bb.wx:                                            ; preds = %bb.we
   br label %.preheader1068
 
 .preheader1068:                                   ; preds = %.preheader1068.backedge, %.preheader1068.preheader
-  %.8258.i.i302 = phi ptr [ %.8258.i.i302.ph, %.preheader1068.preheader ], [ %.8258.i.i302.be, %.preheader1068.backedge ] ; 35 uses
-  %.8.i.i303 = phi ptr [ %.8.i.i303.ph, %.preheader1068.preheader ], [ %.8.i.i303.be, %.preheader1068.backedge ] ; 24 uses
+  %.8258.i.i302 = phi ptr [ %.8258.i.i302.ph, %.preheader1068.preheader ], [ %.8258.i.i302.be, %.preheader1068.backedge ] ; 34 uses
+  %.8.i.i303 = phi ptr [ %.8.i.i303.ph, %.preheader1068.preheader ], [ %.8.i.i303.be, %.preheader1068.backedge ] ; 23 uses
   %i.gzu = getelementptr inbounds nuw i8, ptr %.8.i.i303, i64 4 ; 3 uses
   %i.gzv = icmp ugt ptr %i.gzu, %i.gsm            ; 2 uses
-  br i1 %i.gzv, label %17, label %._crit_edge2956, !prof !44
+  br i1 %i.gzv, label %bb.wy, label %._crit_edge2956, !prof !44
 
 ._crit_edge2956:                                  ; preds = %.preheader1068
   %.pre2957 = load i8, ptr %.8.i.i303, align 1, !tbaa !99 ; 2 uses
@@ -11033,11 +10989,7 @@ bb.wx:                                            ; preds = %bb.we
   %.pre2960 = load i8, ptr %.phi.trans.insert2959, align 1, !tbaa !99
   br label %bb.wz
 
-17:                                               ; preds = %.preheader1068
-  %18 = icmp eq ptr %i.gsm, %.8.i.i303
-  br i1 %18, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit517.i, label %bb.wy
-
-bb.wy:                                            ; preds = %17
+bb.wy:                                            ; preds = %.preheader1068
   %i.gzw = ptrtoint ptr %.8.i.i303 to i64
   %i.gzx = sub i64 %i.gsn, %i.gzw
   %i.gzy = load i8, ptr %.8.i.i303, align 1, !tbaa !99 ; 3 uses
@@ -11440,12 +11392,12 @@ vec.epilog.middle.block5191:                      ; preds = %vec.epilog.vector.b
   %.not.i.i287.7 = icmp eq i64 %i.hii, 0
   br i1 %.not.i.i287.7, label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit517.i, label %.lr.ph2273, !llvm.loop !362
 
-_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit517.i: ; preds = %.preheader1085, %.lr.ph2273.prol.loopexit, %.lr.ph2273, %.preheader1071, %bb.ue, %.lr.ph2250.prol.loopexit, %15, %bb.us, %bb.wl, %.lr.ph2301.prol.loopexit, %17, %bb.wz, %middle.block5173, %vec.epilog.middle.block5191, %.preheader1098
-  %.8258.i443.i.lcssa.sink4455 = phi ptr [ %.8258.i443.i, %15 ], [ %.122.i.i281.lcssa, %.preheader1098 ], [ %i.hgx, %vec.epilog.middle.block5191 ], [ %.lcssa5626.unr, %.lr.ph2301.prol.loopexit ], [ %i.hih, %.lr.ph2273 ], [ %i.hgr, %middle.block5173 ], [ %.lcssa5543.unr, %.lr.ph2250.prol.loopexit ], [ %.2252.i.i294.lcssa, %.preheader1071 ], [ %.8258.i.i302, %17 ], [ %.8258.i.i302, %bb.wz ], [ %i.gyi, %bb.wl ], [ %.8258.i443.i, %bb.us ], [ %i.gkz, %bb.ue ], [ %.lcssa5556.unr, %.lr.ph2273.prol.loopexit ], [ %.2252.i435.i.lcssa, %.preheader1085 ] ; 3 uses
-  %i.hij = getelementptr inbounds nuw i8, ptr %.8258.i443.i.lcssa.sink4455, i64 1
-  store i8 34, ptr %.8258.i443.i.lcssa.sink4455, align 1, !tbaa !99
+_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit517.i: ; preds = %.preheader1085, %.lr.ph2273.prol.loopexit, %.lr.ph2273, %.preheader1071, %bb.ue, %.lr.ph2250.prol.loopexit, %bb.us, %bb.wl, %.lr.ph2301.prol.loopexit, %bb.wz, %middle.block5173, %vec.epilog.middle.block5191, %.preheader1098
+  %.8258.i443.i.lcssa.sink4466 = phi ptr [ %.8258.i443.i, %bb.us ], [ %.lcssa5626.unr, %.lr.ph2301.prol.loopexit ], [ %.8258.i.i302, %bb.wz ], [ %.2252.i.i294.lcssa, %.preheader1071 ], [ %i.hih, %.lr.ph2273 ], [ %.lcssa5543.unr, %.lr.ph2250.prol.loopexit ], [ %.122.i.i281.lcssa, %.preheader1098 ], [ %i.hgx, %vec.epilog.middle.block5191 ], [ %i.hgr, %middle.block5173 ], [ %i.gyi, %bb.wl ], [ %i.gkz, %bb.ue ], [ %.lcssa5556.unr, %.lr.ph2273.prol.loopexit ], [ %.2252.i435.i.lcssa, %.preheader1085 ] ; 3 uses
+  %i.hij = getelementptr inbounds nuw i8, ptr %.8258.i443.i.lcssa.sink4466, i64 1
+  store i8 34, ptr %.8258.i443.i.lcssa.sink4466, align 1, !tbaa !99
   %i.hik = select i1 %.not399.i, i8 44, i8 58
-  %i.hil = getelementptr inbounds nuw i8, ptr %.8258.i443.i.lcssa.sink4455, i64 2
+  %i.hil = getelementptr inbounds nuw i8, ptr %.8258.i443.i.lcssa.sink4466, i64 2
   store i8 %i.hik, ptr %i.hij, align 1, !tbaa !99
   br label %bb.acp
 

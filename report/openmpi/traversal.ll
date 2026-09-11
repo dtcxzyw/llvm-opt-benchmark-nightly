@@ -202,7 +202,7 @@ hwloc_get_type_depth.exit:                        ; preds = %bb.a
 
 .preheader:                                       ; preds = %hwloc_get_type_depth.exit
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !36   ; 2 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !36
   %i.h = add i32 %i.g, -1                         ; 2 uses
   %i.i = icmp ugt i32 %i.h, 1
   br i1 %i.i, label %.lr.ph, label %hwloc_get_obj_by_depth_and_gp_index.exit36
@@ -210,18 +210,13 @@ hwloc_get_type_depth.exit:                        ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.l = zext i32 %i.g to i64
-  %wide.trip.count = zext i32 %i.h to i64
-  br label %3
+  %i.l = zext i32 %i.h to i64
+  %3 = load ptr, ptr %i.j, align 8, !tbaa !37
+  br label %hwloc_get_depth_type.exit.thread
 
-3:                                                ; preds = %.lr.ph, %hwloc_get_obj_by_depth_and_gp_index.exit.thread
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %hwloc_get_obj_by_depth_and_gp_index.exit.thread ] ; 4 uses
-  %.not.i = icmp samesign ult i64 %indvars.iv, %i.l
-  br i1 %.not.i, label %hwloc_get_depth_type.exit.thread, label %hwloc_get_obj_by_depth_and_gp_index.exit.thread
-
-hwloc_get_depth_type.exit.thread:                 ; preds = %3
-  %4 = load ptr, ptr %i.j, align 8, !tbaa !37
-  %i.m = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
+hwloc_get_depth_type.exit.thread:                 ; preds = %hwloc_get_obj_by_depth_and_gp_index.exit.thread, %.lr.ph
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %hwloc_get_obj_by_depth_and_gp_index.exit.thread ] ; 3 uses
+  %i.m = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !39
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !41   ; 2 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !46
@@ -248,10 +243,10 @@ bb.b:                                             ; preds = %.lr.ph.i
   %.not.i24 = icmp eq ptr %i.y, null
   br i1 %.not.i24, label %hwloc_get_obj_by_depth_and_gp_index.exit.thread, label %.lr.ph.i, !llvm.loop !58
 
-hwloc_get_obj_by_depth_and_gp_index.exit.thread:  ; preds = %bb.b, %3, %.thread, %hwloc_get_depth_type.exit.thread
+hwloc_get_obj_by_depth_and_gp_index.exit.thread:  ; preds = %bb.b, %.thread, %hwloc_get_depth_type.exit.thread
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %hwloc_get_obj_by_depth_and_gp_index.exit36, label %3, !llvm.loop !59
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.l
+  br i1 %exitcond.not, label %hwloc_get_obj_by_depth_and_gp_index.exit36, label %hwloc_get_depth_type.exit.thread, !llvm.loop !59
 
 bb.c:                                             ; preds = %hwloc_get_type_depth.exit
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 4
