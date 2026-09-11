@@ -202,8 +202,8 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ac, %bb.ad
   %i.km = phi double [ %i.kl, %bb.ad ], [ %i.jr, %bb.ac ]
   %.2 = phi i32 [ 0, %bb.ad ], [ %.1547, %bb.ac ] ; 2 uses
-  %.not527.not = icmp slt i64 %indvars.iv.next565, %indvars.iv567
-  br i1 %.not527.not, label %bb.ac, label %bb.af, !llvm.loop !10
+  %exitcond.not = icmp eq i64 %indvars.iv.next565, %indvars.iv567
+  br i1 %exitcond.not, label %bb.af, label %bb.ac, !llvm.loop !10
 
 bb.af:                                            ; preds = %bb.ae
   %indvars.iv.next568 = add nsw i64 %indvars.iv567, -1 ; 2 uses
