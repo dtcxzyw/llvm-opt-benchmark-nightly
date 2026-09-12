@@ -204,11 +204,12 @@ bb.be:                                            ; preds = %_ZNSt7__cxx1112basi
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit421: ; preds = %bb.be
   %i.mg = load ptr, ptr %28, align 8, !tbaa !81
   %i.mh = load i32, ptr %i.mg, align 1
-  %i.mi = icmp ne i32 %i.mh, 1633776486           ; 2 uses
+  %i.mi = icmp ne i32 %i.mh, 1633776486
   %i.mj = zext i1 %i.mi to i32
-  %i.mk = icmp eq i32 %i.mj, 0
+  %i.mk = icmp eq i32 %i.mj, 0                    ; 2 uses
   %i.ml = and i1 %i.md, %i.mk                     ; 2 uses
-  %i.mm = or i1 %i.md, %i.mi
+  %.not = xor i1 %i.mk, true
+  %i.mm = or i1 %i.md, %.not
   br i1 %i.mm, label %_ZN11StreamProxylsEPFRSoS0_E.exit431, label %bb.bf
 
 bb.bf:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit421

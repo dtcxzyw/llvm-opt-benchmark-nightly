@@ -202,9 +202,9 @@ bb.d:                                             ; preds = %bb.c, %bb.a
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge.i.i, %.lr.ph37.i.i
-  %.01134.i.i = phi i64 [ %i.o, %.lr.ph37.i.i ], [ %.lcssa.a, %._crit_edge.i.i ] ; 3 uses
+  %.01134.i.i = phi i64 [ %i.o, %.lr.ph37.i.i ], [ %.lcssa.a, %._crit_edge.i.i ] ; 4 uses
   %.01233.i.i = phi i64 [ %i.r, %.lr.ph37.i.i ], [ 0, %._crit_edge.i.i ] ; 4 uses
-  %.01532.i.i = phi i64 [ %i.s, %.lr.ph37.i.i ], [ %1, %._crit_edge.i.i ] ; 6 uses
+  %.01532.i.i = phi i64 [ %i.s, %.lr.ph37.i.i ], [ %3, %._crit_edge.i.i ] ; 6 uses
   %i.u = load atomic i64, ptr %.06 monotonic, align 8
   %.not.i.i.i.i = icmp ult i64 %.01532.i.i, %i.u
   br i1 %.not.i.i.i.i, label %bb.h, label %bb.f, !prof !27
@@ -241,27 +241,31 @@ mi_page_map_ensure_submap_at.exit.i.i:            ; preds = %bb.i, %bb.h
 vector.ph:                                        ; preds = %mi_page_map_ensure_submap_at.exit.i.i
   %n.vec = and i64 %i.af, 16380                   ; 4 uses
   %i.ag = sub i64 %.01134.i.i, %n.vec             ; 2 uses
-  %i.ah = add nuw nsw i64 %.01233.i.i, %n.vec
+  %1 = add nuw nsw i64 %.01233.i.i, %n.vec
+  %i.ah = add i64 %.01134.i.i, -1
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.020.i.i, i64 %.01233.i.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index.a = phi i64 [ 0, %vector.ph ], [ %index.next.a, %vector.body ] ; 2 uses
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %index.a ; 2 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index.a = phi i64 [ %i.ah, %vector.ph ], [ %index.next.a, %vector.body ] ; 2 uses
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %index ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   store <2 x ptr> %broadcast.splat, ptr %i.aj, align 8, !tbaa !30
   store <2 x ptr> %broadcast.splat, ptr %i.ak, align 8, !tbaa !30
-  %index.next.a = add nuw i64 %index.a, 4         ; 2 uses
-  %i.al = icmp eq i64 %index.next.a, %n.vec
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %index.next.a = add i64 %index.a, -4
+  %i.al = icmp eq i64 %index.next, %n.vec
   br i1 %i.al, label %middle.block, label %vector.body, !llvm.loop !48
 
 middle.block:                                     ; preds = %vector.body
+  %2 = icmp ne i64 %index.a, 3
   %cmp.n = icmp eq i64 %i.af, %n.vec
   br i1 %cmp.n, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %mi_page_map_ensure_submap_at.exit.i.i, %middle.block
   %.130.i.i.ph = phi i64 [ %.01134.i.i, %mi_page_map_ensure_submap_at.exit.i.i ], [ %i.ag, %middle.block ]
-  %.11329.i.i.ph = phi i64 [ %.01233.i.i, %mi_page_map_ensure_submap_at.exit.i.i ], [ %i.ah, %middle.block ]
+  %.11329.i.i.ph = phi i64 [ %.01233.i.i, %mi_page_map_ensure_submap_at.exit.i.i ], [ %1, %middle.block ]
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
@@ -271,16 +275,16 @@ middle.block:                                     ; preds = %vector.body
   store ptr %0, ptr %i.am, align 8, !tbaa !30
   %i.an = add i64 %.130.i.i, -1                   ; 3 uses
   %i.ao = add nuw nsw i64 %.11329.i.i, 1
-  %i.ap = icmp ne i64 %i.an, 0
+  %i.ap = icmp ne i64 %i.an, 0                    ; 2 uses
   %i.aq = icmp samesign ult i64 %.11329.i.i, 8191
   %i.ar = and i1 %i.ap, %i.aq
   br i1 %i.ar, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !49
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %middle.block
-  %.lcssa.a = phi i64 [ %i.ag, %middle.block ], [ %i.an, %.lr.ph.i.i ] ; 2 uses
-  %1 = add i64 %.01532.i.i, 1
-  %.not.i.i = icmp eq i64 %.lcssa.a, 0
-  br i1 %.not.i.i, label %mi_page_map_set_range.exit, label %bb.e
+  %.lcssa.a = phi i64 [ %i.ag, %middle.block ], [ %i.an, %.lr.ph.i.i ]
+  %.lcssa = phi i1 [ %2, %middle.block ], [ %i.ap, %.lr.ph.i.i ]
+  %3 = add i64 %.01532.i.i, 1
+  br i1 %.lcssa, label %bb.e, label %mi_page_map_set_range.exit
 
 mi_page_map_set_range_prim.exit.i:                ; preds = %bb.i, %bb.g
   %.not.i = icmp eq ptr %0, null
