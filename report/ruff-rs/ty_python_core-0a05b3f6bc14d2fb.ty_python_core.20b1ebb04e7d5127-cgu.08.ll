@@ -205,9 +205,9 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultmNtNtNtB4_3num5error15TryFromIntEr
   %i.e = shl nuw nsw i64 %i.d, 3
   %i.f = and i64 %i.e, 56
   %i.g = or disjoint i64 %i.f, 3
-  %i.h = lshr i64 %i.a, %i.g
-  %1 = trunc i64 %i.h to i32                      ; 2 uses
-  %2 = lshr i32 %1, 2
+  %i.h = lshr i64 %i.a, %i.g                      ; 2 uses
+  %1 = lshr i64 %i.h, 2
+  %2 = trunc i64 %1 to i32
   %i.i = and i32 %2, 63
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.k = load i32, ptr %i.j, align 8, !noundef !4
@@ -223,7 +223,8 @@ bb.b:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
   unreachable
 
 _RNvMsl_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB5_11SegmentInfo3new.exit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultmNtNtNtB4_3num5error15TryFromIntErrorE6expectCs2O29vuvTAEJ_14ty_python_core.exit
-  %i.o = and i32 %1, 3
+  %3 = trunc i64 %i.h to i32
+  %i.o = and i32 %3, 3
   %i.p = shl nuw i32 %i.l, 2
   %i.q = or disjoint i32 %i.p, %i.o
   br label %bb.c

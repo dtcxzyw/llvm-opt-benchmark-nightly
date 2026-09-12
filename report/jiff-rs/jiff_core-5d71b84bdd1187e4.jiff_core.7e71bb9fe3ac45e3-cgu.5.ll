@@ -202,8 +202,11 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.af, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ag = trunc i64 %i.ae to i32
-  %.sroa.027.0.insert.insert = call i32 @llvm.fshl.i32(i32 %.sroa.325.0.extract.trunc, i32 %i.ag, i32 24)
+  %.sroa.224.0.extract.shift = lshr i64 %i.ae, 8
+  %i.ag = trunc i64 %.sroa.224.0.extract.shift to i32
+  %.sroa.228.0.insert.ext = shl i32 %.sroa.325.0.extract.trunc, 24
+  %.sroa.027.0.insert.ext = and i32 %i.ag, 16777215
+  %.sroa.027.0.insert.insert = or disjoint i32 %.sroa.228.0.insert.ext, %.sroa.027.0.insert.ext
   invoke void @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix8TimeZoneNtBM_10ParseErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_14ParseErrorKindEE13from_residualBQ_(ptr nonnull sret([80 x i8]) align 8 %0, i32 %.sroa.027.0.insert.insert, ptr nonnull align 8 @66)
           to label %bb.bi unwind label %bb.g
 
@@ -398,8 +401,11 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.bw, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.bx = trunc i64 %i.bv to i32
-  %.sroa.053.0.insert.insert.i = call i32 @llvm.fshl.i32(i32 %.sroa.342.0.extract.trunc.i, i32 %i.bx, i32 24)
+  %.sroa.241.0.extract.shift.i = lshr i64 %i.bv, 8
+  %i.bx = trunc i64 %.sroa.241.0.extract.shift.i to i32
+  %.sroa.254.0.insert.ext.i = shl i32 %.sroa.342.0.extract.trunc.i, 24
+  %.sroa.053.0.insert.ext.i = and i32 %i.bx, 16777215
+  %.sroa.053.0.insert.insert.i = or disjoint i32 %.sroa.254.0.insert.ext.i, %.sroa.053.0.insert.ext.i
   br label %.invoke99.i
 
 bb.aj:                                            ; preds = %bb.ah
@@ -801,9 +807,6 @@ declare hidden zeroext i1 @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter9writ
 
 ; Function Attrs: inlinehint nonlazybind uwtable
 declare { ptr, ptr } @_RINvMs2_NtCs3oUPovFnLWP_4core3fmtNtB6_9Arguments3newKj68_Kj1_ECsaR3IayqLkK5_9jiff_core(ptr, ptr align 8) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #8

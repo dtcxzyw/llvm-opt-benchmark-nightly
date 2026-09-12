@@ -45,15 +45,16 @@ bb.a:
   %4 = alloca %struct.track_t, align 8            ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   %i.a = tail call ptr @lv_obj_get_style_prop(ptr noundef %0, i32 noundef 0, i8 noundef zeroext -96) #8
-  %i.b = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %i.c = trunc i64 %i.b to i8                     ; 3 uses
+  %i.b = ptrtoint ptr %i.a to i64                 ; 3 uses
+  %i.c = trunc i64 %i.b to i8
   %i.d = and i8 %i.c, 1
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 4 uses
   %i.f = load i8, ptr %i.e, align 4
   %i.g = and i8 %i.f, -8
   %i.h = or disjoint i8 %i.d, %i.g
-  %5 = lshr i8 %i.c, 1
-  %i.i = and i8 %5, 6
+  %5 = lshr i64 %i.b, 1
+  %tr.sh.diff.i = trunc i64 %5 to i8              ; 2 uses
+  %i.i = and i8 %tr.sh.diff.i, 6
   %i.j = or disjoint i8 %i.h, %i.i
   %i.k = xor i8 %i.j, 1                           ; 6 uses
   store i8 %i.k, ptr %i.e, align 4
@@ -186,7 +187,7 @@ bb.j:                                             ; preds = %bb.h
 
 .thread186:                                       ; preds = %.thread, %bb.i, %.thread186.fold.split, %bb.j
   %.182189 = phi i32 [ %.sroa.0.0.extract.trunc.i14.i, %bb.j ], [ 1, %bb.i ], [ %.sroa.0.0.extract.trunc.i14.i, %.thread186.fold.split ], [ 1, %.thread ] ; 2 uses
-  %i.by = and i8 %i.c, 8
+  %i.by = and i8 %tr.sh.diff.i, 4
   %.not88 = icmp eq i8 %i.by, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !25
@@ -484,14 +485,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
   %i.d = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %0, i32 noundef 0, i8 noundef zeroext -96) #8
-  %i.e = ptrtoint ptr %i.d to i64
-  %i.f = trunc i64 %i.e to i8                     ; 3 uses
+  %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.f = trunc i64 %i.e to i8
   %i.g = and i8 %i.f, 1                           ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
   %i.i = load i8, ptr %i.h, align 4
   %i.j = and i8 %i.i, -8
-  %6 = lshr i8 %i.f, 1
-  %i.k = and i8 %6, 6
+  %6 = lshr i64 %i.e, 1
+  %tr.sh.diff.i = trunc i64 %6 to i8              ; 2 uses
+  %i.k = and i8 %tr.sh.diff.i, 6
   %i.l = or disjoint i8 %i.j, %i.k
   %i.m = or disjoint i8 %i.l, %i.g
   %i.n = xor i8 %i.m, 1                           ; 2 uses
@@ -550,7 +552,7 @@ bb.b:                                             ; preds = %bb.a
   %.not.i41 = icmp eq i64 %i.aq, 0
   %i.ar = select i1 %.not.i41, i32 0, i32 %.sroa.0.0.extract.trunc.i9.i40
   %i.as = add nsw i32 %i.ar, %.sroa.0.0.extract.trunc.i.i39
-  %i.at = and i8 %i.f, 8
+  %i.at = and i8 %tr.sh.diff.i, 4
   %.not31 = icmp eq i8 %i.at, 0
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !25
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 64

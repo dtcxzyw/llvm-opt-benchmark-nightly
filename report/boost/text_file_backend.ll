@@ -204,15 +204,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.j,
 
 bb.k:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, i8 0, i64 56, i1 false)
-  %i.q = tail call i48 @_ZN5boost9date_time23gregorian_calendar_baseINS0_19year_month_day_baseINS_9gregorian9greg_yearENS3_10greg_monthENS3_8greg_dayEEEjE15from_day_numberEj(i32 noundef %i.a) ; 2 uses
-  %.sroa.013.0.extract.trunc = trunc i48 %i.q to i32 ; 2 uses
-  %5 = lshr i32 %.sroa.013.0.extract.trunc, 16
+  %i.q = tail call i48 @_ZN5boost9date_time23gregorian_calendar_baseINS0_19year_month_day_baseINS_9gregorian9greg_yearENS3_10greg_monthENS3_8greg_dayEEEjE15from_day_numberEj(i32 noundef %i.a) ; 3 uses
+  %.sroa.013.0.extract.trunc = trunc i48 %i.q to i32
+  %.sroa.4.0.extract.shift = lshr i48 %i.q, 16
+  %.sroa.4.0.extract.trunc = trunc nuw i48 %.sroa.4.0.extract.shift to i32
   %.sroa.5.0.extract.shift = lshr i48 %i.q, 32
   %.sroa.5.0.extract.trunc = trunc nuw nsw i48 %.sroa.5.0.extract.shift to i32
   %i.r = and i32 %.sroa.013.0.extract.trunc, 65535
   %i.s = add nsw i32 %i.r, -1900
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 %i.s, ptr %i.t, align 4, !tbaa !276
+  %5 = and i32 %.sroa.4.0.extract.trunc, 65535
   %i.u = add nsw i32 %5, -1
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %i.u, ptr %i.v, align 8, !tbaa !222

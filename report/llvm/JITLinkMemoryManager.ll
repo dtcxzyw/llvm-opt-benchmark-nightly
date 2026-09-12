@@ -204,9 +204,10 @@ bb.w:                                             ; preds = %.lr.ph167, %bb.w
   %i.ha = add i64 %i.gx, %i.gz                    ; 3 uses
   store i64 %i.ha, ptr %.phi.trans.insert, align 8, !tbaa !80
   %i.hb = load i64, ptr %i.gp, align 8
-  %i.hc = trunc i64 %i.hb to i8
-  %2 = lshr i8 %i.hc, 3
-  %.sroa.speculated96 = tail call i8 @llvm.umax.i8(i8 %.sroa.01.0.copyload.i170, i8 %2) ; 2 uses
+  %2 = lshr i64 %i.hb, 3
+  %i.hc = trunc i64 %2 to i8
+  %3 = and i8 %i.hc, 31
+  %.sroa.speculated96 = tail call i8 @llvm.umax.i8(i8 %.sroa.01.0.copyload.i170, i8 %3) ; 2 uses
   store i8 %.sroa.speculated96, ptr %i.gd, align 8, !tbaa !81
   %i.hd = getelementptr inbounds nuw i8, ptr %.sroa.099.0165, i64 8 ; 2 uses
   %.not142 = icmp eq ptr %i.hd, %i.gj

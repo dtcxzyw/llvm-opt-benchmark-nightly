@@ -205,7 +205,7 @@ bb.dj:                                            ; preds = %bb.dd
   br i1 %i.os, label %bb.dk, label %.critedge291.i
 
 bb.dk:                                            ; preds = %bb.dj
-  %i.ot = load i64, ptr %i.aq, align 8, !tbaa !118
+  %i.ot = load i64, ptr %i.aq, align 8, !tbaa !118 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #17
@@ -214,16 +214,18 @@ bb.dk:                                            ; preds = %bb.dj
   br i1 %i.ov, label %bb.dl, label %.critedge297.i
 
 bb.dl:                                            ; preds = %bb.dk
-  %i.ow = trunc i64 %i.ot to i32                  ; 2 uses
+  %i.ow = trunc i64 %i.ot to i32
   %i.ox = and i32 %i.ow, 65535
-  %7 = lshr i32 %i.ow, 16
+  %7 = lshr i64 %i.ot, 16
+  %8 = trunc i64 %7 to i32
+  %9 = and i32 %8, 65535
   %i.oy = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 141952), align 8, !tbaa !210
   %i.oz = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137840), align 8, !tbaa !106
   %i.pa = load i64, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137856), align 8, !tbaa !189
   %i.pb = load ptr, ptr %i.e, align 8, !tbaa !427
   %i.pc = getelementptr inbounds nuw i8, ptr %i.pb, i64 1248
   %i.pd = load i64, ptr %i.pc, align 8, !tbaa !174
-  %i.pe = call i32 %i.oy(ptr noundef %i.oz, i64 noundef %i.pa, i64 noundef %i.pd, i32 noundef %7, i32 noundef %i.ox, ptr noundef nonnull %i.n, ptr noundef nonnull %i.o, ptr noundef nonnull %i.m) #17, !inline_history !407 ; 0 uses
+  %i.pe = call i32 %i.oy(ptr noundef %i.oz, i64 noundef %i.pa, i64 noundef %i.pd, i32 noundef %9, i32 noundef %i.ox, ptr noundef nonnull %i.n, ptr noundef nonnull %i.o, ptr noundef nonnull %i.m) #17, !inline_history !407 ; 0 uses
   %i.pf = load ptr, ptr %i.e, align 8, !tbaa !427
   %i.pg = load i32, ptr %i.n, align 4, !tbaa !182
   %i.ph = sitofp i32 %i.pg to double

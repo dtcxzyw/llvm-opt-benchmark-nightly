@@ -205,17 +205,19 @@ _ZN3fmt3v126detail10vformat_toERNS1_6bufferIcEENS0_17basic_string_viewIcEENS0_17
   %4 = alloca %"struct.fmt::v12::detail::format_arg_store.1080", align 16 ; 6 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
-  %i.b = load i64, ptr %1, align 4                ; 2 uses
-  %i.c = trunc i64 %i.b to i32                    ; 2 uses
+  %i.b = load i64, ptr %1, align 4                ; 3 uses
+  %i.c = trunc i64 %i.b to i32
   %i.d = and i32 %i.c, 268435455
-  %6 = lshr i32 %i.c, 28
+  %6 = lshr i64 %i.b, 28
+  %7 = trunc i64 %6 to i32
+  %8 = and i32 %7, 15
   %i.e = lshr i64 %i.b, 51
   %i.f = trunc nuw nsw i64 %i.e to i32
   %i.g = and i32 %i.f, 4095
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23, !noalias !352
   store i32 %i.d, ptr %4, align 16, !tbaa !43, !noalias !352
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i32 %6, ptr %i.h, align 16, !tbaa !43, !noalias !352
+  store i32 %8, ptr %i.h, align 16, !tbaa !43, !noalias !352
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 32
   store i32 %i.g, ptr %i.i, align 16, !tbaa !43, !noalias !352
   tail call void @llvm.experimental.noalias.scope.decl(metadata !353)
@@ -335,10 +337,12 @@ _ZN3fmt3v126detail10vformat_toERNS1_6bufferIcEENS0_17basic_string_viewIcEENS0_17
   %4 = alloca %"struct.fmt::v12::detail::format_arg_store.1081", align 16 ; 10 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
-  %i.b = load i64, ptr %1, align 4                ; 6 uses
-  %i.c = trunc i64 %i.b to i32                    ; 2 uses
+  %i.b = load i64, ptr %1, align 4                ; 7 uses
+  %i.c = trunc i64 %i.b to i32
   %i.d = and i32 %i.c, 268435455
-  %6 = lshr i32 %i.c, 28
+  %6 = lshr i64 %i.b, 28
+  %7 = trunc i64 %6 to i32
+  %8 = and i32 %7, 15
   %i.e = lshr i64 %i.b, 51
   %i.f = trunc nuw nsw i64 %i.e to i32
   %i.g = and i32 %i.f, 4095
@@ -356,7 +360,7 @@ _ZN3fmt3v126detail10vformat_toERNS1_6bufferIcEENS0_17basic_string_viewIcEENS0_17
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23, !noalias !362
   store i32 %i.d, ptr %4, align 16, !tbaa !43, !noalias !362
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i32 %6, ptr %i.s, align 16, !tbaa !43, !noalias !362
+  store i32 %8, ptr %i.s, align 16, !tbaa !43, !noalias !362
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 32
   store i32 %i.g, ptr %i.t, align 16, !tbaa !43, !noalias !362
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 48

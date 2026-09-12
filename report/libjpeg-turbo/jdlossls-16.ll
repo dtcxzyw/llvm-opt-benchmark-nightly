@@ -202,10 +202,13 @@ bb.a:
   %.016.prol = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.f = load i32, ptr %.016.prol, align 4, !tbaa !50 ; 2 uses
   %i.g = load i32, ptr %.017.prol, align 4, !tbaa !50
-  %6 = sub i32 %i.f, %i.a
-  %7 = lshr i32 %6, 1
+  %6 = zext i32 %i.f to i64
+  %7 = zext i32 %i.a to i64
+  %8 = sub nsw i64 %6, %7
+  %9 = lshr i64 %8, 1
+  %10 = trunc i64 %9 to i32
   %i.h = add i32 %i.g, %i.c
-  %i.i = add i32 %i.h, %7
+  %i.i = add i32 %i.h, %10
   %i.j = and i32 %i.i, 65535                      ; 2 uses
   store i32 %i.j, ptr %.015.prol, align 4, !tbaa !50
   %i.k = add i32 %5, -2
@@ -233,10 +236,13 @@ bb.a:
   %.016 = getelementptr inbounds nuw i8, ptr %.pn23, i64 4
   %i.n = load i32, ptr %.016, align 4, !tbaa !50  ; 2 uses
   %i.o = load i32, ptr %.017, align 4, !tbaa !50
-  %8 = sub i32 %i.n, %.026
-  %9 = lshr i32 %8, 1
+  %11 = zext i32 %i.n to i64
+  %12 = zext i32 %.026 to i64
+  %13 = sub nsw i64 %11, %12
+  %14 = lshr i64 %13, 1
+  %15 = trunc i64 %14 to i32
   %i.p = add i32 %i.o, %.01325
-  %i.q = add i32 %i.p, %9                         ; 2 uses
+  %i.q = add i32 %i.p, %15                        ; 2 uses
   %i.r = and i32 %i.q, 65535
   store i32 %i.r, ptr %.015, align 4, !tbaa !50
   %.015.1 = getelementptr inbounds nuw i8, ptr %.pn2024, i64 8 ; 2 uses
@@ -244,10 +250,13 @@ bb.a:
   %.016.1 = getelementptr inbounds nuw i8, ptr %.pn23, i64 8 ; 2 uses
   %i.s = load i32, ptr %.016.1, align 4, !tbaa !50 ; 2 uses
   %i.t = load i32, ptr %.017.1, align 4, !tbaa !50
-  %10 = sub i32 %i.s, %i.n
-  %11 = lshr i32 %10, 1
+  %16 = zext i32 %i.s to i64
+  %17 = zext i32 %i.n to i64
+  %18 = sub nsw i64 %16, %17
+  %19 = lshr i64 %18, 1
+  %20 = trunc i64 %19 to i32
   %i.u = add i32 %i.t, %i.q
-  %i.v = add i32 %i.u, %11
+  %i.v = add i32 %i.u, %20
   %i.w = and i32 %i.v, 65535                      ; 2 uses
   store i32 %i.w, ptr %.015.1, align 4, !tbaa !50
   %i.x = add i32 %i.m, -2                         ; 2 uses
@@ -281,9 +290,12 @@ bb.a:
   %.016.prol = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.f = load i32, ptr %.016.prol, align 4, !tbaa !50 ; 2 uses
   %i.g = load i32, ptr %.017.prol, align 4, !tbaa !50
-  %6 = sub i32 %i.d, %i.a
-  %7 = lshr i32 %6, 1
-  %i.h = add i32 %i.f, %7
+  %6 = zext nneg i32 %i.d to i64
+  %7 = zext i32 %i.a to i64
+  %8 = sub nsw i64 %6, %7
+  %9 = lshr i64 %8, 1
+  %10 = trunc i64 %9 to i32
+  %i.h = add i32 %i.f, %10
   %i.i = add i32 %i.h, %i.g
   %i.j = and i32 %i.i, 65535                      ; 2 uses
   store i32 %i.j, ptr %.015.prol, align 4, !tbaa !50
@@ -312,9 +324,12 @@ bb.a:
   %.016 = getelementptr inbounds nuw i8, ptr %.pn23, i64 4
   %i.n = load i32, ptr %.016, align 4, !tbaa !50  ; 2 uses
   %i.o = load i32, ptr %.017, align 4, !tbaa !50
-  %8 = sub i32 %.01325, %.026
-  %9 = lshr i32 %8, 1
-  %i.p = add i32 %i.n, %9
+  %11 = zext nneg i32 %.01325 to i64
+  %12 = zext i32 %.026 to i64
+  %13 = sub nsw i64 %11, %12
+  %14 = lshr i64 %13, 1
+  %15 = trunc i64 %14 to i32
+  %i.p = add i32 %i.n, %15
   %i.q = add i32 %i.p, %i.o
   %i.r = and i32 %i.q, 65535                      ; 2 uses
   store i32 %i.r, ptr %.015, align 4, !tbaa !50
@@ -323,9 +338,12 @@ bb.a:
   %.016.1 = getelementptr inbounds nuw i8, ptr %.pn23, i64 8 ; 2 uses
   %i.s = load i32, ptr %.016.1, align 4, !tbaa !50 ; 2 uses
   %i.t = load i32, ptr %.017.1, align 4, !tbaa !50
-  %10 = sub i32 %i.r, %i.n
-  %11 = lshr i32 %10, 1
-  %i.u = add i32 %i.s, %11
+  %16 = zext nneg i32 %i.r to i64
+  %17 = zext i32 %i.n to i64
+  %18 = sub nsw i64 %16, %17
+  %19 = lshr i64 %18, 1
+  %20 = trunc i64 %19 to i32
+  %i.u = add i32 %i.s, %20
   %i.v = add i32 %i.u, %i.t
   %i.w = and i32 %i.v, 65535                      ; 2 uses
   store i32 %i.w, ptr %.015.1, align 4, !tbaa !50
@@ -360,9 +378,12 @@ bb.a:
   %.015.prol = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.f = load i32, ptr %.015.prol, align 4, !tbaa !50
   %i.g = load i32, ptr %.016.prol, align 4, !tbaa !50
-  %6 = add i32 %i.f, %i.d
-  %7 = lshr i32 %6, 1
-  %i.h = add i32 %7, %i.g
+  %6 = zext nneg i32 %i.d to i64
+  %7 = zext i32 %i.f to i64
+  %8 = add nuw nsw i64 %7, %6
+  %9 = lshr i64 %8, 1
+  %10 = trunc nuw i64 %9 to i32
+  %i.h = add i32 %i.g, %10
   %i.i = and i32 %i.h, 65535                      ; 2 uses
   store i32 %i.i, ptr %.014.prol, align 4, !tbaa !50
   %i.j = add i32 %5, -2
@@ -388,9 +409,12 @@ bb.a:
   %.015 = getelementptr inbounds nuw i8, ptr %.pn21, i64 4
   %i.m = load i32, ptr %.015, align 4, !tbaa !50
   %i.n = load i32, ptr %.016, align 4, !tbaa !50
-  %8 = add i32 %i.m, %.01223
-  %9 = lshr i32 %8, 1
-  %i.o = add i32 %9, %i.n
+  %11 = zext nneg i32 %.01223 to i64
+  %12 = zext i32 %i.m to i64
+  %13 = add nuw nsw i64 %12, %11
+  %14 = lshr i64 %13, 1
+  %15 = trunc nuw i64 %14 to i32
+  %i.o = add i32 %i.n, %15
   %i.p = and i32 %i.o, 65535                      ; 2 uses
   store i32 %i.p, ptr %.014, align 4, !tbaa !50
   %.014.1 = getelementptr inbounds nuw i8, ptr %.pn1822, i64 8 ; 2 uses
@@ -398,9 +422,12 @@ bb.a:
   %.015.1 = getelementptr inbounds nuw i8, ptr %.pn21, i64 8 ; 2 uses
   %i.q = load i32, ptr %.015.1, align 4, !tbaa !50
   %i.r = load i32, ptr %.016.1, align 4, !tbaa !50
-  %10 = add i32 %i.q, %i.p
-  %11 = lshr i32 %10, 1
-  %i.s = add i32 %11, %i.r
+  %16 = zext nneg i32 %i.p to i64
+  %17 = zext i32 %i.q to i64
+  %18 = add nuw nsw i64 %17, %16
+  %19 = lshr i64 %18, 1
+  %20 = trunc nuw i64 %19 to i32
+  %i.s = add i32 %i.r, %20
   %i.t = and i32 %i.s, 65535                      ; 2 uses
   store i32 %i.t, ptr %.014.1, align 4, !tbaa !50
   %i.u = add i32 %i.l, -2                         ; 2 uses

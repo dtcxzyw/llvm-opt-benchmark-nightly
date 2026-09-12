@@ -205,13 +205,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .loopexit916:                                     ; preds = %bb.f, %.preheader915, %bb.c
   %.3676 = phi ptr [ %i.af, %bb.c ], [ %.0673, %.preheader915 ], [ %.2675, %bb.f ] ; 8 uses
-  %.3646 = phi i64 [ %i.z, %bb.c ], [ %.0643, %.preheader915 ], [ %.2645, %bb.f ] ; 5 uses
+  %.3646 = phi i64 [ %i.z, %bb.c ], [ %.0643, %.preheader915 ], [ %.2645, %bb.f ] ; 8 uses
   %.2620 = phi i32 [ %i.ag, %bb.c ], [ %.0618, %.preheader915 ], [ %i.aq, %bb.f ] ; 3 uses
   %.3614 = phi i64 [ %.0611, %bb.c ], [ %.0611, %.preheader915 ], [ %.2613, %bb.f ] ; 7 uses
   %i.at = and i64 %.3646, 1
   %.not744 = icmp eq i64 %i.at, 0
-  %7 = trunc i64 %.3646 to i32                    ; 4 uses
-  %8 = lshr i32 %7, 1
+  %7 = lshr i64 %.3646, 1
+  %8 = trunc i64 %7 to i32
   %i.au = and i32 %8, 3
   switch i32 %i.au, label %default.unreachable [
     i32 2, label %bb.g
@@ -221,14 +221,17 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   ], !prof !19
 
 bb.g:                                             ; preds = %.loopexit916
-  %9 = lshr i32 %7, 3
-  %i.av = and i32 %9, 31
+  %9 = lshr i64 %.3646, 3
+  %10 = trunc i64 %9 to i32
+  %i.av = and i32 %10, 31
   %i.aw = add nuw nsw i32 %i.av, 257              ; 2 uses
-  %10 = lshr i32 %7, 8
-  %i.ax = and i32 %10, 31
+  %11 = lshr i64 %.3646, 8
+  %12 = trunc i64 %11 to i32
+  %i.ax = and i32 %12, 31
   %i.ay = add nuw nsw i32 %i.ax, 1                ; 2 uses
-  %11 = lshr i32 %7, 13                           ; 2 uses
-  %i.az = and i32 %11, 15
+  %13 = lshr i64 %.3646, 13                       ; 2 uses
+  %14 = trunc i64 %13 to i32
+  %i.az = and i32 %14, 15
   store i8 0, ptr %i.j, align 8, !tbaa !20
   %i.ba = lshr i64 %.3646, 17
   %i.bb = trunc i64 %i.ba to i8
@@ -298,11 +301,10 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.6649 = phi i64 [ %i.bn, %bb.h ], [ %i.bd, %.preheader908 ], [ %.5648, %bb.k ]
   %.4622 = phi i32 [ %i.bu, %bb.h ], [ %i.be, %.preheader908 ], [ %i.ce, %bb.k ]
   %.6617 = phi i64 [ %.3614, %bb.h ], [ %.3614, %.preheader908 ], [ %.5616, %bb.k ]
-  %12 = and i32 %11, 15
-  %narrow = add nuw nsw i32 %12, 3                ; 2 uses
-  %13 = zext nneg i32 %narrow to i64              ; 2 uses
-  %xtraiter = and i64 %13, 1
-  %unroll_iter = and i64 %13, 30
+  %15 = and i64 %13, 15
+  %16 = add nuw nsw i64 %15, 3                    ; 3 uses
+  %xtraiter = and i64 %16, 1
+  %unroll_iter = and i64 %16, 30
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.loopexit909
@@ -339,7 +341,7 @@ bb.l:                                             ; preds = %bb.l, %.loopexit909
   br i1 %lcmp.mod.not, label %.preheader907, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.preheader907.unr-lcssa
-  %lcmp.mod1190 = trunc i32 %narrow to i1
+  %lcmp.mod1190 = trunc i64 %16 to i1
   tail call void @llvm.assume(i1 %lcmp.mod1190)
   %i.cv = trunc i64 %i.cu to i8
   %i.cw = and i8 %i.cv, 7
@@ -742,13 +744,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .loopexit916:                                     ; preds = %bb.f, %.preheader915, %bb.c
   %.3676 = phi ptr [ %i.af, %bb.c ], [ %.0673, %.preheader915 ], [ %.2675, %bb.f ] ; 8 uses
-  %.3646 = phi i64 [ %i.z, %bb.c ], [ %.0643, %.preheader915 ], [ %.2645, %bb.f ] ; 5 uses
+  %.3646 = phi i64 [ %i.z, %bb.c ], [ %.0643, %.preheader915 ], [ %.2645, %bb.f ] ; 8 uses
   %.2620 = phi i32 [ %i.ag, %bb.c ], [ %.0618, %.preheader915 ], [ %i.aq, %bb.f ] ; 3 uses
   %.3614 = phi i64 [ %.0611, %bb.c ], [ %.0611, %.preheader915 ], [ %.2613, %bb.f ] ; 7 uses
   %i.at = and i64 %.3646, 1
   %.not744 = icmp eq i64 %i.at, 0
-  %7 = trunc i64 %.3646 to i32                    ; 4 uses
-  %8 = lshr i32 %7, 1
+  %7 = lshr i64 %.3646, 1
+  %8 = trunc i64 %7 to i32
   %i.au = and i32 %8, 3
   switch i32 %i.au, label %default.unreachable [
     i32 2, label %bb.g
@@ -758,14 +760,17 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   ], !prof !19
 
 bb.g:                                             ; preds = %.loopexit916
-  %9 = lshr i32 %7, 3
-  %i.av = and i32 %9, 31
+  %9 = lshr i64 %.3646, 3
+  %10 = trunc i64 %9 to i32
+  %i.av = and i32 %10, 31
   %i.aw = add nuw nsw i32 %i.av, 257              ; 2 uses
-  %10 = lshr i32 %7, 8
-  %i.ax = and i32 %10, 31
+  %11 = lshr i64 %.3646, 8
+  %12 = trunc i64 %11 to i32
+  %i.ax = and i32 %12, 31
   %i.ay = add nuw nsw i32 %i.ax, 1                ; 2 uses
-  %11 = lshr i32 %7, 13                           ; 2 uses
-  %i.az = and i32 %11, 15
+  %13 = lshr i64 %.3646, 13                       ; 2 uses
+  %14 = trunc i64 %13 to i32
+  %i.az = and i32 %14, 15
   store i8 0, ptr %i.j, align 8, !tbaa !20
   %i.ba = lshr i64 %.3646, 17
   %i.bb = trunc i64 %i.ba to i8
@@ -835,11 +840,10 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.6649 = phi i64 [ %i.bn, %bb.h ], [ %i.bd, %.preheader908 ], [ %.5648, %bb.k ]
   %.4622 = phi i32 [ %i.bu, %bb.h ], [ %i.be, %.preheader908 ], [ %i.ce, %bb.k ]
   %.6617 = phi i64 [ %.3614, %bb.h ], [ %.3614, %.preheader908 ], [ %.5616, %bb.k ]
-  %12 = and i32 %11, 15
-  %narrow = add nuw nsw i32 %12, 3                ; 2 uses
-  %13 = zext nneg i32 %narrow to i64              ; 2 uses
-  %xtraiter = and i64 %13, 1
-  %unroll_iter = and i64 %13, 30
+  %15 = and i64 %13, 15
+  %16 = add nuw nsw i64 %15, 3                    ; 3 uses
+  %xtraiter = and i64 %16, 1
+  %unroll_iter = and i64 %16, 30
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.loopexit909
@@ -876,7 +880,7 @@ bb.l:                                             ; preds = %bb.l, %.loopexit909
   br i1 %lcmp.mod.not, label %.preheader907, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.preheader907.unr-lcssa
-  %lcmp.mod1190 = trunc i32 %narrow to i1
+  %lcmp.mod1190 = trunc i64 %16 to i1
   tail call void @llvm.assume(i1 %lcmp.mod1190)
   %i.cv = trunc i64 %i.cu to i8
   %i.cw = and i8 %i.cv, 7

@@ -205,13 +205,14 @@ bb.i:                                             ; preds = %_ZN9Stockfish10atta
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.prol, %.lr.ph.preheader.prol
   %.sroa.0.0.copyload.i81.prol = phi i16 [ %.sroa.0.0.copyload.i.prol, %.lr.ph.prol ], [ %.sroa.0.0.copyload.i79.prol, %.lr.ph.preheader.prol ]
-  %i.aom = phi i64 [ %i.aou, %.lr.ph.prol ], [ %i.aoh, %.lr.ph.preheader.prol ] ; 2 uses
+  %i.aom = phi i64 [ %i.aou, %.lr.ph.prol ], [ %i.aoh, %.lr.ph.preheader.prol ] ; 3 uses
   %.080.prol = phi i32 [ %i.aor, %.lr.ph.prol ], [ %i.aol, %.lr.ph.preheader.prol ]
-  %i.aon = trunc i64 %i.aom to i32                ; 2 uses
+  %i.aon = trunc i64 %i.aom to i32
   %i.aoo = and i32 %i.aon, 8191                   ; 2 uses
   %i.aop = icmp eq i32 %.080.prol, %i.aoo
-  %0 = lshr i32 %i.aon, 16
-  %i.aoq = and i32 %0, 8191
+  %0 = lshr i64 %i.aom, 16
+  %1 = trunc i64 %0 to i32
+  %i.aoq = and i32 %1, 8191
   %i.aor = select i1 %i.aop, i32 %i.aoq, i32 %i.aoo ; 2 uses
   %i.aos = zext nneg i32 %i.aor to i64            ; 2 uses
   %i.aot = getelementptr inbounds nuw [8 x i8], ptr @_ZN9Stockfish6cuckooE, i64 %i.aos ; 2 uses
@@ -295,13 +296,14 @@ bb.n:                                             ; preds = %_ZN9Stockfish10atta
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.sroa.0.0.copyload.i81 = phi i16 [ %.sroa.0.0.copyload.i, %.lr.ph ], [ %.sroa.0.0.copyload.i79, %.lr.ph.preheader ]
-  %i.apy = phi i64 [ %i.aqg, %.lr.ph ], [ %i.apt, %.lr.ph.preheader ] ; 2 uses
+  %i.apy = phi i64 [ %i.aqg, %.lr.ph ], [ %i.apt, %.lr.ph.preheader ] ; 3 uses
   %.080 = phi i32 [ %i.aqd, %.lr.ph ], [ %i.apx, %.lr.ph.preheader ]
-  %i.apz = trunc i64 %i.apy to i32                ; 2 uses
+  %i.apz = trunc i64 %i.apy to i32
   %i.aqa = and i32 %i.apz, 8191                   ; 2 uses
   %i.aqb = icmp eq i32 %.080, %i.aqa
-  %1 = lshr i32 %i.apz, 16
-  %i.aqc = and i32 %1, 8191
+  %2 = lshr i64 %i.apy, 16
+  %3 = trunc i64 %2 to i32
+  %i.aqc = and i32 %3, 8191
   %i.aqd = select i1 %i.aqb, i32 %i.aqc, i32 %i.aqa ; 2 uses
   %i.aqe = zext nneg i32 %i.aqd to i64            ; 2 uses
   %i.aqf = getelementptr inbounds nuw [8 x i8], ptr @_ZN9Stockfish6cuckooE, i64 %i.aqe ; 2 uses
@@ -376,13 +378,14 @@ bb.s:                                             ; preds = %_ZN9Stockfish10atta
 
 .lr.ph.1:                                         ; preds = %.lr.ph.1, %.lr.ph.preheader.1
   %.sroa.0.0.copyload.i81.1 = phi i16 [ %.sroa.0.0.copyload.i.1, %.lr.ph.1 ], [ %.sroa.0.0.copyload.i79.1, %.lr.ph.preheader.1 ]
-  %i.arj = phi i64 [ %i.arr, %.lr.ph.1 ], [ %i.are, %.lr.ph.preheader.1 ] ; 2 uses
+  %i.arj = phi i64 [ %i.arr, %.lr.ph.1 ], [ %i.are, %.lr.ph.preheader.1 ] ; 3 uses
   %.080.1 = phi i32 [ %i.aro, %.lr.ph.1 ], [ %i.ari, %.lr.ph.preheader.1 ]
-  %i.ark = trunc i64 %i.arj to i32                ; 2 uses
+  %i.ark = trunc i64 %i.arj to i32
   %i.arl = and i32 %i.ark, 8191                   ; 2 uses
   %i.arm = icmp eq i32 %.080.1, %i.arl
-  %2 = lshr i32 %i.ark, 16
-  %i.arn = and i32 %2, 8191
+  %4 = lshr i64 %i.arj, 16
+  %5 = trunc i64 %4 to i32
+  %i.arn = and i32 %5, 8191
   %i.aro = select i1 %i.arm, i32 %i.arn, i32 %i.arl ; 2 uses
   %i.arp = zext nneg i32 %i.aro to i64            ; 2 uses
   %i.arq = getelementptr inbounds nuw [8 x i8], ptr @_ZN9Stockfish6cuckooE, i64 %i.arp ; 2 uses
@@ -785,16 +788,12 @@ bb.c:                                             ; preds = %bb.b, %.critedge
   br i1 %.not42, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %i.ae = xor i64 %i.aa, %i.j                     ; 5 uses
-  %i.af = and i64 %i.ae, 8191
+  %i.ae = xor i64 %i.aa, %i.j                     ; 4 uses
+  %i.af = and i64 %i.ae, 8191                     ; 2 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr @_ZN9Stockfish6cuckooE, i64 %i.af
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !13
   %i.ai = icmp eq i64 %i.ah, %i.ae
-  br i1 %i.ai, label %._crit_edge, label %bb.e
-
-._crit_edge:                                      ; preds = %bb.d
-  %.pre = and i64 %i.ae, 8191
-  br label %bb.f
+  br i1 %i.ai, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.aj = lshr i64 %i.ae, 16
@@ -804,8 +803,8 @@ bb.e:                                             ; preds = %bb.d
   %i.an = icmp eq i64 %i.am, %i.ae
   br i1 %i.an, label %bb.f, label %.critedge
 
-bb.f:                                             ; preds = %._crit_edge, %bb.e
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge ], [ %i.ak, %bb.e ]
+bb.f:                                             ; preds = %bb.e, %bb.d
+  %.pre-phi = phi i64 [ %i.ak, %bb.e ], [ %i.af, %bb.d ]
   %i.ao = getelementptr inbounds nuw [2 x i8], ptr @_ZN9Stockfish10cuckooMoveE, i64 %.pre-phi
   %i.ap = load i16, ptr %i.ao, align 2, !tbaa !88 ; 2 uses
   %i.aq = lshr i16 %i.ap, 6

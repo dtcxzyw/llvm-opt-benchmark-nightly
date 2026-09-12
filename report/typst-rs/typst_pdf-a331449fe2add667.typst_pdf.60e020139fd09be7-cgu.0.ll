@@ -205,7 +205,6 @@ bb.p:                                             ; preds = %.lr.ph.split
   %i.be = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.bf = load i64, ptr %i.be, align 8, !alias.scope !8958, !noalias !8957, !noundef !10 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc128 = trunc i64 %i.bf to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift177 = and i64 %i.bf, 4294967040
   %.sroa.34.sroa.32.0.extract.shift96 = lshr i64 %i.bf, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -213,7 +212,6 @@ bb.q:                                             ; preds = %.lr.ph.split
   %i.bg = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.bh = load i64, ptr %i.bg, align 8, !alias.scope !8958, !noalias !8957, !noundef !10 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc122 = trunc i64 %i.bh to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift165 = and i64 %i.bh, 4294967040
   %.sroa.34.sroa.32.0.extract.shift84 = lshr i64 %i.bh, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -223,7 +221,6 @@ bb.r:                                             ; preds = %.lr.ph.split
   %i.bk = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %i.bl = load i64, ptr %i.bk, align 8, !alias.scope !8958, !noalias !8957, !noundef !10
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc121 = trunc i64 %i.bj to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift163 = and i64 %i.bj, 4294967040
   %.sroa.34.sroa.32.0.extract.shift82 = lshr i64 %i.bj, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -231,7 +228,6 @@ bb.s:                                             ; preds = %.lr.ph.split
   %i.bm = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.bn = load i64, ptr %i.bm, align 8, !alias.scope !8958, !noalias !8957, !noundef !10 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc120 = trunc i64 %i.bn to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift161 = and i64 %i.bn, 4294967040
   %.sroa.34.sroa.32.0.extract.shift80 = lshr i64 %i.bn, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -239,7 +235,6 @@ bb.t:                                             ; preds = %.lr.ph.split
   %i.bo = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.bp = load i64, ptr %i.bo, align 8, !alias.scope !8958, !noalias !8957, !noundef !10 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc119 = trunc i64 %i.bp to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift159 = and i64 %i.bp, 4294967040
   %.sroa.34.sroa.32.0.extract.shift78 = lshr i64 %i.bp, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -251,7 +246,6 @@ bb.u:                                             ; preds = %.lr.ph.split
   %i.bu = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %i.bv = load i64, ptr %i.bu, align 8, !alias.scope !8958, !noalias !8957, !noundef !10
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc118 = trunc i64 %i.bt to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift157 = and i64 %i.bt, 4294967040
   %.sroa.34.sroa.32.0.extract.shift76 = lshr i64 %i.bt, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -259,7 +253,6 @@ bb.v:                                             ; preds = %.lr.ph.split
   %i.bw = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.bx = load i64, ptr %i.bw, align 8, !alias.scope !8958, !noalias !8957, !noundef !10 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc117 = trunc i64 %i.bx to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift155 = and i64 %i.bx, 4294967040
   %.sroa.34.sroa.32.0.extract.shift74 = lshr i64 %i.bx, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -350,7 +343,6 @@ bb.ai:                                            ; preds = %bb.ah
 _RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i: ; preds = %bb.ah, %bb.ag
   %i.ct = ptrtoint ptr %.val43.i to i64           ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc115 = trunc i64 %i.ct to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift151 = and i64 %i.ct, 4294967040
   %.sroa.34.sroa.32.0.extract.shift70 = lshr i64 %i.ct, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -375,7 +367,6 @@ bb.al:                                            ; preds = %.lr.ph.split
   %i.dc = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.dd = load i64, ptr %i.dc, align 8, !range !25, !alias.scope !8958, !noalias !8957, !noundef !10 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc125 = trunc i64 %i.dd to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift171 = and i64 %i.dd, 4294967040
   %.sroa.34.sroa.32.0.extract.shift90 = lshr i64 %i.dd, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -383,7 +374,6 @@ bb.am:                                            ; preds = %.lr.ph.split
   %i.de = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %.sroa.34.8.copyload17 = load i64, ptr %i.de, align 8, !alias.scope !8959 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc132 = trunc i64 %.sroa.34.8.copyload17 to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift185 = and i64 %.sroa.34.8.copyload17, 4294967040
   %.sroa.34.sroa.32.0.extract.shift104 = lshr i64 %.sroa.34.8.copyload17, 32
   %.sroa.63.8..sroa_idx24 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %.sroa.63.0.copyload27 = load i32, ptr %.sroa.63.8..sroa_idx24, align 8, !alias.scope !8959
@@ -394,7 +384,6 @@ bb.an:                                            ; preds = %.lr.ph.split
   %i.df = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %.sroa.34.8.copyload16 = load i64, ptr %i.df, align 8, !alias.scope !8959 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc131 = trunc i64 %.sroa.34.8.copyload16 to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift183 = and i64 %.sroa.34.8.copyload16, 4294967040
   %.sroa.34.sroa.32.0.extract.shift102 = lshr i64 %.sroa.34.8.copyload16, 32
   %.sroa.63.8..sroa_idx22 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %.sroa.63.8.copyload23 = load i64, ptr %.sroa.63.8..sroa_idx22, align 8, !alias.scope !8959
@@ -404,7 +393,6 @@ bb.ao:                                            ; preds = %.lr.ph.split
   %i.dg = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %.sroa.34.8.copyload15 = load i64, ptr %i.dg, align 8, !alias.scope !8959 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc130 = trunc i64 %.sroa.34.8.copyload15 to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift181 = and i64 %.sroa.34.8.copyload15, 4294967040
   %.sroa.34.sroa.32.0.extract.shift100 = lshr i64 %.sroa.34.8.copyload15, 32
   %.sroa.63.8..sroa_idx20 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %.sroa.63.8.copyload21 = load i64, ptr %.sroa.63.8..sroa_idx20, align 8, !alias.scope !8959
@@ -419,7 +407,6 @@ bb.ap:                                            ; preds = %.lr.ph.split
 .noexc6:                                          ; preds = %bb.ap
   %.sroa.34.8.copyload = load i64, ptr %i.a, align 8, !noalias !8958 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc129 = trunc i64 %.sroa.34.8.copyload to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift179 = and i64 %.sroa.34.8.copyload, 4294967040
   %.sroa.34.sroa.32.0.extract.shift98 = lshr i64 %.sroa.34.8.copyload, 32
   %.sroa.63.8.copyload = load i64, ptr %.sroa.63.8..sroa_idx, align 8, !noalias !8958
   %.sroa.77.8.copyload = load i64, ptr %.sroa.77.8..sroa_idx, align 8, !noalias !8958
@@ -451,7 +438,6 @@ bb.as:                                            ; preds = %bb.ar
 _RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i: ; preds = %bb.ar, %bb.aq
   %i.dn = ptrtoint ptr %.val45.i to i64           ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc112 = trunc i64 %i.dn to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift145 = and i64 %i.dn, 4294967040
   %.sroa.34.sroa.32.0.extract.shift64 = lshr i64 %i.dn, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -480,7 +466,6 @@ bb.av:                                            ; preds = %bb.au
 _RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i: ; preds = %bb.au, %bb.at
   %i.dt = ptrtoint ptr %.val47.i to i64           ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc111 = trunc i64 %i.dt to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift143 = and i64 %i.dt, 4294967040
   %.sroa.34.sroa.32.0.extract.shift62 = lshr i64 %i.dt, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -568,7 +553,6 @@ bb.bg:                                            ; preds = %bb.bf
 
 _RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i: ; preds = %bb.bf, %bb.be
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc123 = trunc i64 %i.ek to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift167 = and i64 %i.ek, 4294967040
   %.sroa.34.sroa.32.0.extract.shift86 = lshr i64 %i.ek, 32
   %i.eq = ptrtoint ptr %.val51.i to i64
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
@@ -578,7 +562,6 @@ bb.bh:                                            ; preds = %.lr.ph.split
   %i.es = load ptr, ptr %i.er, align 8, !alias.scope !8958, !noalias !8957, !nonnull !10, !align !21, !noundef !10
   %i.et = ptrtoint ptr %i.es to i64               ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc109 = trunc i64 %i.et to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift139 = and i64 %i.et, 4294967040
   %.sroa.34.sroa.32.0.extract.shift58 = lshr i64 %i.et, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -633,7 +616,6 @@ bb.bm:                                            ; preds = %_RNvXs6_NtCsakL8LGk
 _RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i: ; preds = %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i.i
   %i.fh = ptrtoint ptr %.sroa.5.sroa.0.0.i.i to i64 ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc108 = trunc i64 %i.fh to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift137 = and i64 %i.fh, 4294967040
   %.sroa.34.sroa.32.0.extract.shift56 = lshr i64 %i.fh, 32
   %i.fi = ptrtoint ptr %i.fa to i64
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
@@ -676,7 +658,6 @@ bb.br:                                            ; preds = %bb.bo
 bb.bs:                                            ; preds = %bb.ae
   %i.fu = ptrtoint ptr %i.ch to i64               ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc116 = trunc i64 %i.fu to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift153 = and i64 %i.fu, 4294967040
   %.sroa.34.sroa.32.0.extract.shift72 = lshr i64 %i.fu, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -720,7 +701,6 @@ _RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Cl
   %.sroa.017.0.i = phi ptr [ %.val53.i, %bb.by ], [ inttoptr (i64 16 to ptr), %bb.bx ], [ %.val53.i, %bb.aj ]
   %i.ge = ptrtoint ptr %.sroa.017.0.i to i64      ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc114 = trunc i64 %i.ge to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift149 = and i64 %i.ge, 4294967040
   %.sroa.34.sroa.32.0.extract.shift68 = lshr i64 %i.ge, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -729,7 +709,6 @@ bb.bz:                                            ; preds = %bb.ak
   %i.gg = load ptr, ptr %i.gf, align 8, !alias.scope !8958, !noalias !8957, !nonnull !10, !align !21, !noundef !10
   %i.gh = ptrtoint ptr %i.cz to i64               ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc113 = trunc i64 %i.gh to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift147 = and i64 %i.gh, 4294967040
   %.sroa.34.sroa.32.0.extract.shift66 = lshr i64 %i.gh, 32
   %i.gi = ptrtoint ptr %i.gg to i64
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
@@ -741,7 +720,6 @@ bb.ca:                                            ; preds = %bb.ak
 bb.cb:                                            ; preds = %bb.aw
   %i.gj = ptrtoint ptr %i.dv to i64               ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc110 = trunc i64 %i.gj to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift141 = and i64 %i.gj, 4294967040
   %.sroa.34.sroa.32.0.extract.shift60 = lshr i64 %i.gj, 32
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
 
@@ -754,7 +732,6 @@ bb.cd:                                            ; preds = %bb.bn
   %i.gl = load ptr, ptr %i.gk, align 8, !alias.scope !8958, !noalias !8957, !nonnull !10, !align !21, !noundef !10
   %i.gm = ptrtoint ptr %i.fk to i64               ; 3 uses
   %.sroa.34.sroa.0.sroa.0.0.extract.trunc107 = trunc i64 %i.gm to i8
-  %.sroa.34.sroa.0.sroa.32.0.extract.shift135 = and i64 %i.gm, 4294967040
   %.sroa.34.sroa.32.0.extract.shift54 = lshr i64 %i.gm, 32
   %i.gn = ptrtoint ptr %i.gl to i64
   br label %_RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit
@@ -785,16 +762,17 @@ bb.cf:                                            ; preds = %.loopexit.split-lp,
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs8jFhWeO2DFb_9typst_pdf.exit unwind label %bb.h
 
 _RNvXsj_NtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB5_5ValueNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit: ; preds = %bb.cd, %bb.cb, %bb.bz, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i, %bb.bv, %bb.bs, %bb.bq, %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %bb.bh, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i, %_RNvXsf_NtNtCsdaEETE4DqmE_13typst_library11foundations4funcNtB5_9FuncInnerNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i, %.noexc6, %bb.ao, %bb.an, %bb.am, %bb.al, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i, %_RNvXs7_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB5_8GradientNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %.lr.ph.split
-  %.sroa.34.sroa.0.sroa.32.sroa.0.0 = phi i64 [ %i.bb, %.lr.ph.split ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift135, %bb.cd ], [ 0, %bb.n ], [ 0, %bb.o ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift177, %bb.p ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift165, %bb.q ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift163, %bb.r ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift161, %bb.s ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift159, %bb.t ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift157, %bb.u ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift155, %bb.v ], [ 0, %bb.bq ], [ 0, %_RNvXs7_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB5_8GradientNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift153, %bb.bs ], [ 0, %bb.bv ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift151, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift149, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift147, %bb.bz ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift171, %bb.al ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift185, %bb.am ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift183, %bb.an ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift181, %bb.ao ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift179, %.noexc6 ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift145, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift143, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift141, %bb.cb ], [ 0, %_RNvXsf_NtNtCsdaEETE4DqmE_13typst_library11foundations4funcNtB5_9FuncInnerNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift167, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift139, %bb.bh ], [ %.sroa.34.sroa.0.sroa.32.0.extract.shift137, %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
+  %.sroa.34.sroa.0.sroa.32.sroa.0.0 = phi i64 [ %i.bb, %.lr.ph.split ], [ %i.gm, %bb.cd ], [ 0, %bb.n ], [ 0, %bb.o ], [ %i.bf, %bb.p ], [ %i.bh, %bb.q ], [ %i.bj, %bb.r ], [ %i.bn, %bb.s ], [ %i.bp, %bb.t ], [ %i.bt, %bb.u ], [ %i.bx, %bb.v ], [ 0, %bb.bq ], [ 0, %_RNvXs7_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB5_8GradientNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %i.fu, %bb.bs ], [ 0, %bb.bv ], [ %i.ct, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %i.ge, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %i.gh, %bb.bz ], [ %i.dd, %bb.al ], [ %.sroa.34.8.copyload17, %bb.am ], [ %.sroa.34.8.copyload16, %bb.an ], [ %.sroa.34.8.copyload15, %bb.ao ], [ %.sroa.34.8.copyload, %.noexc6 ], [ %i.dn, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %i.dt, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %i.gj, %bb.cb ], [ 0, %_RNvXsf_NtNtCsdaEETE4DqmE_13typst_library11foundations4funcNtB5_9FuncInnerNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %i.ek, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %i.et, %bb.bh ], [ %i.fh, %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
   %.sroa.34.sroa.0.sroa.0.0 = phi i8 [ undef, %.lr.ph.split ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc107, %bb.cd ], [ undef, %bb.n ], [ %i.bd, %bb.o ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc128, %bb.p ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc122, %bb.q ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc121, %bb.r ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc120, %bb.s ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc119, %bb.t ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc118, %bb.u ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc117, %bb.v ], [ %.sroa.01.0.i, %bb.bq ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc127, %_RNvXs7_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB5_8GradientNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc116, %bb.bs ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc126, %bb.bv ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc115, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc114, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc113, %bb.bz ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc125, %bb.al ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc132, %bb.am ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc131, %bb.an ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc130, %bb.ao ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc129, %.noexc6 ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc112, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc111, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc110, %bb.cb ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc124, %_RNvXsf_NtNtCsdaEETE4DqmE_13typst_library11foundations4funcNtB5_9FuncInnerNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc123, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc109, %bb.bh ], [ %.sroa.34.sroa.0.sroa.0.0.extract.trunc108, %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
   %.sroa.34.sroa.32.0 = phi i64 [ %i.bb, %.lr.ph.split ], [ %.sroa.34.sroa.32.0.extract.shift54, %bb.cd ], [ 0, %bb.n ], [ 0, %bb.o ], [ %.sroa.34.sroa.32.0.extract.shift96, %bb.p ], [ %.sroa.34.sroa.32.0.extract.shift84, %bb.q ], [ %.sroa.34.sroa.32.0.extract.shift82, %bb.r ], [ %.sroa.34.sroa.32.0.extract.shift80, %bb.s ], [ %.sroa.34.sroa.32.0.extract.shift78, %bb.t ], [ %.sroa.34.sroa.32.0.extract.shift76, %bb.u ], [ %.sroa.34.sroa.32.0.extract.shift74, %bb.v ], [ %.sroa.52.0.i, %bb.bq ], [ 0, %_RNvXs7_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB5_8GradientNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.sroa.34.sroa.32.0.extract.shift72, %bb.bs ], [ 0, %bb.bv ], [ %.sroa.34.sroa.32.0.extract.shift70, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.32.0.extract.shift68, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.32.0.extract.shift66, %bb.bz ], [ %.sroa.34.sroa.32.0.extract.shift90, %bb.al ], [ %.sroa.34.sroa.32.0.extract.shift104, %bb.am ], [ %.sroa.34.sroa.32.0.extract.shift102, %bb.an ], [ %.sroa.34.sroa.32.0.extract.shift100, %bb.ao ], [ %.sroa.34.sroa.32.0.extract.shift98, %.noexc6 ], [ %.sroa.34.sroa.32.0.extract.shift64, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.32.0.extract.shift62, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.32.0.extract.shift60, %bb.cb ], [ 0, %_RNvXsf_NtNtCsdaEETE4DqmE_13typst_library11foundations4funcNtB5_9FuncInnerNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.sroa.34.sroa.32.0.extract.shift86, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.sroa.34.sroa.32.0.extract.shift58, %bb.bh ], [ %.sroa.34.sroa.32.0.extract.shift56, %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
   %.sroa.63.0 = phi i64 [ undef, %.lr.ph.split ], [ %i.gn, %bb.cd ], [ undef, %bb.n ], [ undef, %bb.o ], [ undef, %bb.p ], [ undef, %bb.q ], [ %i.bl, %bb.r ], [ undef, %bb.s ], [ undef, %bb.t ], [ %i.bv, %bb.u ], [ undef, %bb.v ], [ %i.ft, %bb.bq ], [ %i.cf, %_RNvXs7_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB5_8GradientNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ undef, %bb.bs ], [ %i.ga, %bb.bv ], [ %.val44.i, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.val54.i, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %i.gi, %bb.bz ], [ undef, %bb.al ], [ %.sroa.63.0.insert.ext, %bb.am ], [ %.sroa.63.8.copyload23, %bb.an ], [ %.sroa.63.8.copyload21, %bb.ao ], [ %.sroa.63.8.copyload, %.noexc6 ], [ %.val46.i, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ %.val48.i, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ undef, %bb.cb ], [ %i.ei, %_RNvXsf_NtNtCsdaEETE4DqmE_13typst_library11foundations4funcNtB5_9FuncInnerNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %i.eq, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ undef, %bb.bh ], [ %.sroa.5.sroa.4.0.i.i, %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
   %.sroa.77.0 = phi i64 [ undef, %.lr.ph.split ], [ undef, %bb.cd ], [ undef, %bb.n ], [ undef, %bb.o ], [ undef, %bb.p ], [ undef, %bb.q ], [ undef, %bb.r ], [ undef, %bb.s ], [ undef, %bb.t ], [ %i.bs, %bb.u ], [ undef, %bb.v ], [ %.sroa.7.0.i190, %bb.bq ], [ undef, %_RNvXs7_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB5_8GradientNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ undef, %bb.bs ], [ %.sroa.9.0.i, %bb.bv ], [ undef, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ undef, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ undef, %bb.bz ], [ undef, %bb.al ], [ undef, %bb.am ], [ undef, %bb.an ], [ undef, %bb.ao ], [ %.sroa.77.8.copyload, %.noexc6 ], [ undef, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ undef, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ undef, %bb.cb ], [ %i.eh, %_RNvXsf_NtNtCsdaEETE4DqmE_13typst_library11foundations4funcNtB5_9FuncInnerNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ %.val52.i, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ undef, %bb.bh ], [ %i.fi, %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
   %.sroa.0.0188 = phi i64 [ 2, %.lr.ph.split ], [ 31, %bb.cd ], [ 3, %bb.n ], [ 4, %bb.o ], [ 5, %bb.p ], [ 6, %bb.q ], [ 7, %bb.r ], [ 8, %bb.s ], [ 9, %bb.t ], [ 10, %bb.u ], [ 11, %bb.v ], [ 12, %bb.bq ], [ 13, %_RNvXs7_NtNtCsdaEETE4DqmE_13typst_library9visualize8gradientNtB5_8GradientNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ 14, %bb.bs ], [ 15, %bb.bv ], [ 16, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecmENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ 17, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVechENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ 18, %bb.bz ], [ 19, %bb.al ], [ 20, %bb.am ], [ 21, %bb.an ], [ 22, %bb.ao ], [ 23, %.noexc6 ], [ 24, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecINtNtCs6xpQEr8gLsQ_11typst_utils4hash8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleEENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ 25, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ 26, %bb.cb ], [ 27, %_RNvXsf_NtNtCsdaEETE4DqmE_13typst_library11foundations4funcNtB5_9FuncInnerNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ], [ 28, %_RNvXs6_NtCsakL8LGkl72C_4ecow3vecINtB5_6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCs8jFhWeO2DFb_9typst_pdf.exit.i ], [ 29, %bb.bh ], [ %.sroa.0.0.i.i, %_RNvXs3_NtNtCsdaEETE4DqmE_13typst_library11foundations6moduleNtB5_6ModuleNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i ]
   %.sroa.34.sroa.0.sroa.0.0.insert.ext = zext i8 %.sroa.34.sroa.0.sroa.0.0 to i64
-  %.sroa.34.sroa.0.sroa.0.0.insert.insert = or disjoint i64 %.sroa.34.sroa.0.sroa.32.sroa.0.0, %.sroa.34.sroa.0.sroa.0.0.insert.ext
   %.sroa.34.sroa.32.0.insert.shift = shl nuw i64 %.sroa.34.sroa.32.0, 32
-  %.sroa.34.sroa.0.0.insert.insert = or disjoint i64 %.sroa.34.sroa.32.0.insert.shift, %.sroa.34.sroa.0.sroa.0.0.insert.insert
+  %.sroa.34.sroa.0.sroa.32.sroa.0.0.masked = and i64 %.sroa.34.sroa.0.sroa.32.sroa.0.0, 4294967040
+  %.sroa.34.sroa.0.0.insert.ext = or disjoint i64 %.sroa.34.sroa.0.sroa.32.sroa.0.0.masked, %.sroa.34.sroa.0.sroa.0.0.insert.ext
+  %.sroa.34.sroa.0.0.insert.insert = or disjoint i64 %.sroa.34.sroa.32.0.insert.shift, %.sroa.34.sroa.0.0.insert.ext
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %.sroa.0.0188, ptr %i.b, align 16
   store i64 %.sroa.34.sroa.0.0.insert.insert, ptr %.sroa.6.0..sroa_idx, align 8

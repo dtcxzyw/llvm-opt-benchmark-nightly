@@ -205,14 +205,16 @@ bb.am:                                            ; preds = %bb.al
   br label %_RNvMs8_NtNtNtCseHTIzroA4w0_6object4read5macho5fixupNtB5_5Fixup8parse_64.exit
 
 bb.an:                                            ; preds = %bb.al
-  %i.cc = trunc i64 %2 to i32                     ; 2 uses
+  %i.cc = trunc i64 %2 to i32
   %i.cd = and i32 %i.cc, 16777215
-  %4 = lshr i32 %i.cc, 24
+  %4 = lshr i64 %2, 24
+  %5 = trunc i64 %4 to i32
+  %6 = and i32 %5, 255
   br label %_RNvMs8_NtNtNtCseHTIzroA4w0_6object4read5macho5fixupNtB5_5Fixup8parse_64.exit
 
 _RNvMs8_NtNtNtCseHTIzroA4w0_6object4read5macho5fixupNtB5_5Fixup8parse_64.exit: ; preds = %bb.am, %bb.an
   %.sroa.3.sroa.0.0.i = phi i32 [ %i.cd, %bb.an ], [ undef, %bb.am ]
-  %.sroa.3.sroa.2.0.i = phi i32 [ %4, %bb.an ], [ %.sroa.03.0.extract.trunc.i, %bb.am ]
+  %.sroa.3.sroa.2.0.i = phi i32 [ %6, %bb.an ], [ %.sroa.03.0.extract.trunc.i, %bb.am ]
   %.sroa.3.sroa.4.0.i = phi i32 [ 33554432, %bb.an ], [ %.sroa.03.4.extract.trunc.i, %bb.am ]
   %.sroa.0.0.i173 = phi i32 [ 1, %bb.an ], [ 0, %bb.am ]
   %i.ce = lshr i64 %2, 49
@@ -245,14 +247,16 @@ bb.ap:                                            ; preds = %bb.ao
   br label %_RNvMs8_NtNtNtCseHTIzroA4w0_6object4read5macho5fixupNtB5_5Fixup8parse_64.exit187
 
 bb.aq:                                            ; preds = %bb.ao
-  %i.ck = trunc i64 %2 to i32                     ; 2 uses
+  %i.ck = trunc i64 %2 to i32
   %i.cl = and i32 %i.ck, 16777215
-  %5 = lshr i32 %i.ck, 24
+  %7 = lshr i64 %2, 24
+  %8 = trunc i64 %7 to i32
+  %9 = and i32 %8, 255
   br label %_RNvMs8_NtNtNtCseHTIzroA4w0_6object4read5macho5fixupNtB5_5Fixup8parse_64.exit187
 
 _RNvMs8_NtNtNtCseHTIzroA4w0_6object4read5macho5fixupNtB5_5Fixup8parse_64.exit187: ; preds = %bb.ap, %bb.aq
   %.sroa.3.sroa.0.0.i176 = phi i32 [ %i.cl, %bb.aq ], [ undef, %bb.ap ]
-  %.sroa.3.sroa.2.0.i177 = phi i32 [ %5, %bb.aq ], [ %.sroa.03.0.extract.trunc.i184, %bb.ap ]
+  %.sroa.3.sroa.2.0.i177 = phi i32 [ %9, %bb.aq ], [ %.sroa.03.0.extract.trunc.i184, %bb.ap ]
   %.sroa.3.sroa.4.0.i178 = phi i32 [ 33554432, %bb.aq ], [ %.sroa.03.4.extract.trunc.i186, %bb.ap ]
   %.sroa.0.0.i179 = phi i32 [ 1, %bb.aq ], [ 0, %bb.ap ]
   %i.cm = lshr i64 %2, 49

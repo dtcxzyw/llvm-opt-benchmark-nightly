@@ -204,19 +204,21 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not55, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bh = call i64 @ERR_peek_error() #8           ; 2 uses
+  %i.bh = call i64 @ERR_peek_error() #8           ; 3 uses
   %i.bi = and i64 %i.bh, 2147483648
   %.not.i = icmp eq i64 %i.bi, 0                  ; 2 uses
-  %i.bj = trunc i64 %i.bh to i32                  ; 2 uses
-  %0 = lshr i32 %i.bj, 23
-  %.0.i = select i1 %.not.i, i32 %0, i32 2
+  %0 = lshr i64 %i.bh, 23
+  %i.bj = trunc i64 %0 to i32
+  %1 = and i32 %i.bj, 255
+  %.0.i = select i1 %.not.i, i32 %1, i32 2
   %i.bk = call i32 @test_int_eq(ptr noundef nonnull @.str.18, i32 noundef 4125, ptr noundef nonnull @.str.483, ptr noundef nonnull @.str.484, i32 noundef %.0.i, i32 noundef 57) #8
   %.not56 = icmp eq i32 %i.bk, 0
   br i1 %.not56, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
+  %2 = trunc i64 %i.bh to i32
   %.0.v.i = select i1 %.not.i, i32 8388607, i32 2147483647
-  %.0.i60 = and i32 %.0.v.i, %i.bj
+  %.0.i60 = and i32 %.0.v.i, %2
   %i.bl = call i32 @test_int_eq(ptr noundef nonnull @.str.18, i32 noundef 4126, ptr noundef nonnull @.str.485, ptr noundef nonnull @.str.486, i32 noundef %.0.i60, i32 noundef 106) #8
   %.not57 = icmp eq i32 %i.bl, 0
   br i1 %.not57, label %bb.x, label %bb.w

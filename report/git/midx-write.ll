@@ -205,10 +205,11 @@ bb.c:                                             ; preds = %bb.a
   br label %st_mult.exit
 
 st_mult.exit:                                     ; preds = %bb.c, %bb.b
-  %i.g = trunc i32 %5 to i16                      ; 2 uses
-  %8 = lshr i16 %i.g, 1
-  %spec.select = and i16 %8, 4
-  %i.h = and i16 %i.g, 16
+  %8 = lshr i32 %5, 1
+  %i.g = trunc i32 %8 to i16
+  %spec.select = and i16 %i.g, 4
+  %9 = trunc i32 %5 to i16
+  %i.h = and i16 %9, 16
   %.1 = or disjoint i16 %spec.select, %i.h
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !271

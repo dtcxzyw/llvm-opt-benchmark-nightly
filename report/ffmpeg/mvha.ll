@@ -205,12 +205,13 @@ bb.s:                                             ; preds = %bb.c
   store ptr %i.cq, ptr %i.cl, align 8, !tbaa !65
   %i.cr = lshr i64 %i.cp, 32
   %i.cs = trunc i64 %i.cr to i8
+  %4 = lshr i64 %i.cp, 24
   %i.ct = shl i64 %i.cp, 40
   store i64 %i.ct, ptr %i.d, align 8, !tbaa !68
   store i32 24, ptr %i.cn, align 8, !tbaa !67
-  %i.cu = trunc i64 %i.cp to i32
-  %4 = lshr i32 %i.cu, 24
-  %i.cv = add nuw nsw i32 %4, 1                   ; 2 uses
+  %i.cu = trunc i64 %4 to i32
+  %5 = and i32 %i.cu, 255
+  %i.cv = add nuw nsw i32 %5, 1                   ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   store i32 %i.cv, ptr %i.cw, align 8, !tbaa !40
   %i.cx = getelementptr inbounds nuw i8, ptr %i.d, i64 44

@@ -204,16 +204,11 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %3 = trunc i64 %2 to i32
-  %.sroa.6.sroa.0.0.extract.trunc = trunc i64 %2 to i8
-  %.sroa.6.sroa.7.0.extract.shift = lshr i32 %3, 8
-  %.sroa.6.sroa.7.0.extract.trunc = trunc nuw i32 %.sroa.6.sroa.7.0.extract.shift to i24
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 -9223372036854775801, ptr %i.k, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.413.0..sroa_idx, align 8
-  %.sroa.514.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i24 %.sroa.6.sroa.7.0.extract.trunc, ptr %.sroa.514.0..sroa_idx, align 1
+  %3 = trunc i64 %2 to i32
+  store i32 %3, ptr %.sroa.413.0..sroa_idx, align 8
   store i64 1, ptr %0, align 8
   br label %bb.t
 

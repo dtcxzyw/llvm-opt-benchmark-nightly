@@ -205,10 +205,11 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.a = trunc i32 %1 to i8                       ; 3 uses
+  %i.a = trunc i32 %1 to i8                       ; 2 uses
   %i.b = and i8 %i.a, 1
-  %3 = lshr i8 %i.a, 1
-  %i.c = and i8 %3, 8
+  %sh.diff.i = lshr i32 %1, 1
+  %tr.sh.diff.i = trunc i32 %sh.diff.i to i8
+  %i.c = and i8 %tr.sh.diff.i, 8
   %i.d = or disjoint i8 %i.c, %i.b
   %i.e = shl i8 %i.a, 1
   %i.f = and i8 %i.e, 4
@@ -611,8 +612,8 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
   %.058 = phi i1 [ false, %bb.e ], [ true, %bb.d ], [ true, %bb.c ]
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 7 uses
   %i.n = load i64, ptr %i.m, align 8
-  %2 = trunc i64 %i.n to i16
-  %3 = lshr i16 %2, 4
+  %2 = lshr i64 %i.n, 4
+  %3 = trunc i64 %2 to i16
   %i.o = and i16 %3, 3                            ; 2 uses
   %.not67 = icmp eq i16 %i.o, 3
   br i1 %.not67, label %.critedge, label %bb.g
@@ -1015,8 +1016,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %.0 = phi i8 [ %i.af, %bb.k ], [ 0, %bb.j ], [ 0, %bb.l ], [ 0, %bb.h ]
   store i32 0, ptr %i.b, align 4, !tbaa !41
   %i.ah = load i64, ptr %i.g, align 8
-  %2 = trunc i64 %i.ah to i8
-  %3 = lshr i8 %2, 4
+  %2 = lshr i64 %i.ah, 4
+  %3 = trunc i64 %2 to i8
   %i.ai = and i8 %3, 3
   %i.aj = call fastcc i32 @TlsSessionCacheGetAndLock(ptr noundef nonnull %.037, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i8 noundef zeroext 1, i8 noundef zeroext %i.ai)
   %i.ak = icmp ne i32 %i.aj, 0
@@ -1052,8 +1053,8 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   %i.az = tail call i32 @wc_UnLockRwLock(ptr noundef nonnull @session_lock) #23 ; 0 uses
   %i.ba = load i64, ptr %i.g, align 8
-  %4 = trunc i64 %i.ba to i8
-  %5 = lshr i8 %4, 4
+  %4 = lshr i64 %i.ba, 4
+  %5 = trunc i64 %4 to i8
   %i.bb = and i8 %5, 3
   %i.bc = call fastcc i32 @TlsSessionCacheGetAndLock(ptr noundef nonnull %.037, ptr noundef nonnull %i.d, ptr noundef nonnull %i.b, i8 noundef zeroext 0, i8 noundef zeroext %i.bb)
   %i.bd = icmp eq i32 %i.bc, 0
@@ -1456,8 +1457,8 @@ bb.g:                                             ; preds = %.thread, %bb.f, %bb
   %i.y = phi i64 [ %.pre, %bb.f ], [ %.val, %bb.d ], [ %.val, %bb.c ], [ %.val, %.thread ]
   %.226 = phi ptr [ %i.x, %bb.f ], [ %i.i, %bb.d ], [ %i.i, %bb.c ], [ %i.h, %.thread ]
   %.2 = phi i8 [ 32, %bb.f ], [ 0, %bb.d ], [ %i.k, %bb.c ], [ 32, %.thread ]
-  %1 = trunc i64 %i.y to i32
-  %2 = lshr i32 %1, 4
+  %1 = lshr i64 %i.y, 4
+  %2 = trunc i64 %1 to i32
   %i.z = and i32 %2, 3                            ; 2 uses
   %i.aa = icmp eq i32 %i.z, 1
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 648
@@ -1606,8 +1607,8 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %.sink.split, %bb.b, %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 2 uses
   %i.s = load i64, ptr %i.r, align 16
-  %1 = trunc i64 %i.s to i8
-  %2 = lshr i8 %1, 4
+  %1 = lshr i64 %i.s, 4
+  %2 = trunc i64 %1 to i8
   %i.t = and i8 %2, 3
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   store i8 %i.t, ptr %i.u, align 8, !tbaa !84
@@ -1939,10 +1940,11 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.a = trunc i32 %1 to i8                       ; 3 uses
+  %i.a = trunc i32 %1 to i8                       ; 2 uses
   %i.b = and i8 %i.a, 1
-  %3 = lshr i8 %i.a, 1
-  %i.c = and i8 %3, 8
+  %sh.diff.i = lshr i32 %1, 1
+  %tr.sh.diff.i = trunc i32 %sh.diff.i to i8
+  %i.c = and i8 %tr.sh.diff.i, 8
   %i.d = or disjoint i8 %i.c, %i.b
   %i.e = shl i8 %i.a, 1
   %i.f = and i8 %i.e, 4
@@ -2345,8 +2347,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.b = load i64, ptr %i.a, align 8
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr i32 %1, 17
+  %1 = lshr i64 %i.b, 17
+  %2 = trunc i64 %1 to i32
   %i.c = and i32 %2, 1
   br label %bb.c
 
@@ -2749,8 +2751,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.c = load i64, ptr %i.b, align 8
-  %2 = trunc i64 %i.c to i32
-  %3 = lshr i32 %2, 4
+  %2 = lshr i64 %i.c, 4
+  %3 = trunc i64 %2 to i32
   %i.d = and i32 %3, 3
   %i.e = icmp eq i32 %1, 0
   %or.cond11.v = zext i1 %i.e to i32
@@ -2779,8 +2781,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.b = load i64, ptr %i.a, align 8
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr i32 %1, 4
+  %1 = lshr i64 %i.b, 4
+  %2 = trunc i64 %1 to i32
   %i.c = and i32 %2, 3
   br label %bb.c
 
@@ -3060,8 +3062,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ab = lshr i64 %i.o, 43
   %i.ac = trunc i64 %i.ab to i16
   %i.ad = and i16 %i.ac, 1
-  %2 = trunc i64 %i.o to i32
-  %3 = lshr i32 %2, 4
+  %2 = lshr i64 %i.o, 4
+  %3 = trunc i64 %2 to i32
   %i.ae = and i32 %3, 3
   %i.af = load i16, ptr %i.n, align 2
   tail call void @InitSuites(ptr noundef %i.m, i16 %i.af, i32 noundef %i.j, i16 noundef zeroext 1, i16 noundef zeroext 0, i16 noundef zeroext %i.r, i16 noundef zeroext %i.u, i16 noundef zeroext %i.x, i16 noundef zeroext 1, i16 noundef zeroext %i.aa, i16 noundef zeroext %i.ad, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i32 noundef %i.ae) #23
@@ -3464,8 +3466,8 @@ bb.dg:                                            ; preds = %bb.df
   %i.ot = lshr i64 %i.og, 43
   %i.ou = trunc i64 %i.ot to i16
   %i.ov = and i16 %i.ou, 1
-  %13 = trunc i64 %i.og to i32
-  %14 = lshr i32 %13, 4
+  %13 = lshr i64 %i.og, 4
+  %14 = trunc i64 %13 to i32
   %i.ow = and i32 %14, 3
   %i.ox = load i16, ptr %i.od, align 2
   call void @InitSuites(ptr noundef %i.oc, i16 %i.ox, i32 noundef %i.of, i16 noundef zeroext 1, i16 noundef zeroext 0, i16 noundef zeroext %i.oj, i16 noundef zeroext %i.om, i16 noundef zeroext %i.op, i16 noundef zeroext 1, i16 noundef zeroext %i.os, i16 noundef zeroext %i.ov, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i32 noundef %i.ow) #23
@@ -3868,8 +3870,8 @@ bb.j:                                             ; preds = %bb.i
   %i.au = lshr i64 %i.ah, 43
   %i.av = trunc i64 %i.au to i16
   %i.aw = and i16 %i.av, 1
-  %5 = trunc i64 %i.ah to i32
-  %6 = lshr i32 %5, 4
+  %5 = lshr i64 %i.ah, 4
+  %6 = trunc i64 %5 to i32
   %i.ax = and i32 %6, 3
   %i.ay = load i16, ptr %i.ae, align 2
   tail call void @InitSuites(ptr noundef %i.ad, i16 %i.ay, i32 noundef %i.ag, i16 noundef zeroext 1, i16 noundef zeroext 0, i16 noundef zeroext %i.ak, i16 noundef zeroext %i.an, i16 noundef zeroext %i.aq, i16 noundef zeroext 1, i16 noundef zeroext %i.at, i16 noundef zeroext %i.aw, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i32 noundef %i.ax) #23
@@ -4272,8 +4274,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr i32 %1, 21
+  %1 = lshr i64 %i.b, 21
+  %2 = trunc i64 %1 to i32
   %spec.select = and i32 %2, 1                    ; 2 uses
   %i.c = and i64 %i.b, 1310720
   %or.cond = icmp eq i64 %i.c, 0
@@ -4295,8 +4297,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.b = load i64, ptr %i.a, align 8
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr i32 %1, 11
+  %1 = lshr i64 %i.b, 11
+  %2 = trunc i64 %1 to i32
   %i.c = and i32 %2, 1
   br label %bb.c
 
@@ -4699,8 +4701,8 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.af = load i64, ptr %i.w, align 8             ; 10 uses
-  %3 = trunc i64 %i.af to i32
-  %4 = lshr i32 %3, 4
+  %3 = lshr i64 %i.af, 4
+  %4 = trunc i64 %3 to i32
   %i.ag = and i32 %4, 3                           ; 2 uses
   %i.ah = icmp eq i32 %i.ag, 1
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 726 ; 2 uses
@@ -4751,8 +4753,8 @@ bb.t:                                             ; preds = %bb.p
   %i.bp = and i16 %i.bo, 1
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(434) %2, i8 0, i64 434, i1 false)
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 726
-  %5 = trunc i64 %i.bm to i32
-  %6 = lshr i32 %5, 4
+  %5 = lshr i64 %i.bm, 4
+  %6 = trunc i64 %5 to i32
   %i.br = and i32 %6, 3
   %i.bs = load i16, ptr %i.bq, align 2
   call void @InitSuites(ptr noundef nonnull %2, i16 %i.bs, i32 noundef 0, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 0, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext %i.bp, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i16 noundef zeroext 1, i32 noundef %i.br) #23
@@ -5153,8 +5155,8 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1384
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.h = load ptr, ptr %i.g, align 16, !tbaa !149
-  %2 = trunc i64 %i.d to i32
-  %3 = lshr i32 %2, 4
+  %2 = lshr i64 %i.d, 4
+  %3 = trunc i64 %2 to i32
   %i.i = and i32 %3, 3
   %i.j = tail call i32 @TLSX_UseSupportedCurve(ptr noundef nonnull %i.f, i16 noundef zeroext %1, ptr noundef %i.h, i32 noundef %i.i) #23
   br label %bb.d

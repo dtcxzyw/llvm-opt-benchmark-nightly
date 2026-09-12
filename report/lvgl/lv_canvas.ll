@@ -159,8 +159,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load i64, ptr %i.b, align 8
-  %5 = trunc i64 %i.d to i32
-  %6 = lshr i32 %5, 8                             ; 2 uses
+  %5 = lshr i64 %i.d, 8                           ; 2 uses
+  %6 = trunc i64 %5 to i32
   %i.e = and i32 %6, 255                          ; 3 uses
   %i.f = tail call ptr @lv_draw_buf_goto_xy(ptr noundef nonnull %i.b, i32 noundef %1, i32 noundef %2) #5 ; 20 uses
   %i.g = icmp eq ptr %i.f, null
@@ -224,7 +224,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br label %bb.r
 
 bb.j:                                             ; preds = %bb.d
-  %trunc = trunc i32 %6 to i8
+  %trunc = trunc i64 %5 to i8
   switch i8 %trunc, label %bb.r [
     i8 6, label %bb.k
     i8 14, label %bb.l
@@ -247,13 +247,14 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.j
   %tr.sh.diff = trunc nuw i24 %.sroa.8.0.extract.shift to i16
   %i.af = and i16 %tr.sh.diff, -2048
-  %i.ag = trunc i24 %3 to i16                     ; 2 uses
-  %7 = lshr i16 %i.ag, 5
-  %8 = lshr i16 %i.ag, 3
-  %9 = and i16 %8, 31
-  %.masked = and i16 %7, 2016
-  %10 = or disjoint i16 %i.af, %.masked
-  %i.ah = or disjoint i16 %10, %9
+  %sh.diff88 = lshr i24 %3, 5
+  %i.ag = trunc i24 %sh.diff88 to i16
+  %7 = and i16 %i.ag, 2016
+  %8 = or disjoint i16 %i.af, %7
+  %9 = lshr i24 %3, 3
+  %10 = trunc i24 %9 to i16
+  %11 = and i16 %10, 31
+  %i.ah = or disjoint i16 %8, %11
   store i16 %i.ah, ptr %i.f, align 2
   br label %bb.r
 
@@ -656,8 +657,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = add nsw i32 %i.j, -1                     ; 3 uses
   store ptr %i.b, ptr %1, align 8, !tbaa !56
   %i.l = load i64, ptr %i.b, align 4
-  %2 = trunc i64 %i.l to i32
-  %3 = lshr i32 %2, 8
+  %2 = lshr i64 %i.l, 8
+  %3 = trunc i64 %2 to i32
   %i.m = and i32 %3, 255
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 96
   store i32 %i.m, ptr %i.n, align 8, !tbaa !57

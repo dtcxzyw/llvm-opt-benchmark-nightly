@@ -204,11 +204,12 @@ bb.b:                                             ; preds = %._crit_edge.i, %.lr
   br i1 %i.bq, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.br = load i64, ptr %i.a, align 8             ; 2 uses
-  %i.bs = trunc i64 %i.br to i32                  ; 2 uses
-  %2 = lshr i32 %i.bs, 9
-  %3 = and i32 %2, 127
-  %i.bt = lshr i32 %i.bs, 16
+  %i.br = load i64, ptr %i.a, align 8             ; 3 uses
+  %2 = lshr i64 %i.br, 9
+  %i.bs = trunc i64 %2 to i32
+  %3 = and i32 %i.bs, 127
+  %4 = trunc i64 %i.br to i32
+  %i.bt = lshr i32 %4, 16
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
@@ -392,9 +393,9 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.fc = load i64, ptr %i.e, align 8             ; 3 uses
   %i.fd = lshr i64 %i.fc, 14
   %i.fe = and i64 %i.fd, 262140                   ; 2 uses
-  %4 = trunc i64 %i.fc to i32
-  %5 = lshr i32 %4, 9
-  %i.ff = and i32 %5, 127                         ; 2 uses
+  %5 = lshr i64 %i.fc, 9
+  %6 = trunc i64 %5 to i32
+  %i.ff = and i32 %6, 127                         ; 2 uses
   %i.fg = add nsw i64 %i.fc, %i.aw
   store i64 %i.fg, ptr %i.e, align 8
   %i.fh = getelementptr inbounds nuw i8, ptr %i.cb, i64 %i.fe ; 2 uses

@@ -202,23 +202,25 @@ bb.a:
   store i64 %i.p, ptr %i.j, align 8
   %i.q = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCshzWfHUSfYae_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.k, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @52, i64 noundef 5, ptr noundef nonnull %i.j, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @51)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
-  %i.r = load i32, ptr %0, align 1, !noundef !5   ; 6 uses
+  %i.r = load i32, ptr %0, align 1, !noundef !5   ; 8 uses
   %i.s = and i32 %i.r, 1
   %i.t = icmp eq i32 %i.s, 0                      ; 2 uses
-  %2 = trunc i32 %i.r to i8                       ; 3 uses
-  %3 = lshr i8 %2, 1
+  %2 = lshr i32 %i.r, 1
+  %3 = trunc i32 %2 to i8
   %i.u = and i8 %3, 1                             ; 2 uses
   %storemerge = select i1 %i.t, i8 %i.u, i8 1
   store i8 %storemerge, ptr %i.i, align 1
   %i.v = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCshzWfHUSfYae_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.q, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @54, i64 noundef 8, ptr noundef nonnull %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  %4 = lshr i8 %2, 2
-  %i.w = and i8 %4, 1
+  %4 = lshr i32 %i.r, 2
+  %5 = trunc i32 %4 to i8
+  %i.w = and i8 %5, 1
   store i8 %i.w, ptr %i.h, align 1
   %i.x = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCshzWfHUSfYae_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.v, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @55, i64 noundef 8, ptr noundef nonnull %i.h, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %5 = lshr i8 %2, 3
-  %i.y = and i8 %5, 1
+  %6 = lshr i32 %i.r, 3
+  %7 = trunc i32 %6 to i8
+  %i.y = and i8 %7, 1
   store i8 %i.y, ptr %i.g, align 1
   %i.z = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCshzWfHUSfYae_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.x, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @56, i64 noundef 5, ptr noundef nonnull %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)

@@ -205,9 +205,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond.i, label %jvp_array_offset.exit.i, label %jv_copy.exit
 
 jvp_array_offset.exit.i:                          ; preds = %bb.c
-  %i.e = trunc i64 %0 to i32
-  %3 = lshr i32 %i.e, 16
-  %i.f = add nuw nsw i32 %2, %3                   ; 2 uses
+  %.sroa.21.0.extract.shift.i42.i = lshr i64 %0, 16
+  %i.e = trunc i64 %.sroa.21.0.extract.shift.i42.i to i32
+  %3 = and i32 %i.e, 65535
+  %i.f = add nuw nsw i32 %3, %2                   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !14
   %i.i = icmp slt i32 %i.f, %i.h
@@ -304,8 +305,9 @@ jv_string.exit:                                   ; preds = %jvp_string_new.exit
 
 jvp_array_offset.exit:                            ; preds = %bb.d, %bb.c
   %.0175 = phi i32 [ %i.d, %bb.d ], [ %2, %bb.c ] ; 6 uses
-  %i.r = trunc i64 %0 to i32
-  %5 = lshr i32 %i.r, 16                          ; 3 uses
+  %.sroa.21.0.extract.shift.i14 = lshr i64 %0, 16 ; 2 uses
+  %i.r = trunc i64 %.sroa.21.0.extract.shift.i14 to i32
+  %5 = and i32 %i.r, 65535                        ; 3 uses
   %i.s = xor i32 %5, 536870911
   %i.t = icmp samesign ugt i32 %.0175, %i.s
   br i1 %i.t, label %bb.g, label %jvp_array_offset.exit.i
@@ -459,8 +461,7 @@ jvp_array_length.exit57.lr.ph.i:                  ; preds = %jvp_array_offset.ex
 
 jvp_array_offset.exit58.i.lr.ph:                  ; preds = %jvp_array_length.exit57.lr.ph.i
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %6 = lshr i64 %0, 16
-  %i.bv = and i64 %6, 65535
+  %i.bv = and i64 %.sroa.21.0.extract.shift.i14, 65535
   %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bu, i64 %i.bv
   br label %jvp_array_offset.exit58.i
 
@@ -788,8 +789,8 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 jvp_array_length.exit.i:                          ; preds = %bb.a
-  %4 = trunc i64 %0 to i32
-  %5 = lshr i32 %4, 16                            ; 2 uses
+  %.sroa.08.sroa.747.0.extract.shift.i = lshr i64 %0, 16 ; 2 uses
+  %.sroa.08.sroa.747.0.extract.trunc.i = trunc i64 %.sroa.08.sroa.747.0.extract.shift.i to i32
   %.sroa.21.0.extract.shift.i.i = lshr i64 %0, 32
   %.sroa.21.0.extract.trunc.i.i = trunc nuw i64 %.sroa.21.0.extract.shift.i.i to i32 ; 9 uses
   %i.c = icmp slt i32 %2, 0
@@ -836,7 +837,8 @@ bb.f:                                             ; preds = %bb.e
   br label %jvp_array_slice.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.s = add nuw nsw i32 %.1101.i, %5             ; 2 uses
+  %4 = and i32 %.sroa.08.sroa.747.0.extract.trunc.i, 65535
+  %i.s = add nuw nsw i32 %.1101.i, %4             ; 2 uses
   %i.t = icmp samesign ugt i32 %i.s, 65535
   %i.u = sub nuw nsw i32 %.2.i, %.1101.i          ; 2 uses
   %i.v = zext nneg i32 %i.u to i64                ; 2 uses
@@ -856,7 +858,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.ae = zext nneg i32 %.1101.i to i64           ; 2 uses
-  %6 = zext nneg i32 %5 to i64                    ; 2 uses
+  %5 = and i64 %.sroa.08.sroa.747.0.extract.shift.i, 65535 ; 2 uses
   br i1 %.not.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %jv_array_append.exit.us.i
@@ -868,7 +870,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.ag, label %jvp_array_offset.exit.i.i.us.i, label %jv_array_get.exit.us.i
 
 jvp_array_offset.exit.i.i.us.i:                   ; preds = %.lr.ph.split.us.i
-  %i.ah = add nuw nsw i64 %indvars.iv120.i, %6    ; 2 uses
+  %i.ah = add nuw nsw i64 %indvars.iv120.i, %5    ; 2 uses
   %i.ai = load i32, ptr %i.ac, align 4, !tbaa !14
   %i.aj = trunc nuw i64 %i.ah to i32
   %i.ak = icmp sgt i32 %i.ai, %i.aj
@@ -938,7 +940,7 @@ jv_array_append.exit.us.i:                        ; preds = %jv_copy.exit.i.us.i
   br i1 %i.be, label %jvp_array_offset.exit.i.i.i, label %jv_array_get.exit.i
 
 jvp_array_offset.exit.i.i.i:                      ; preds = %.lr.ph.split.i
-  %i.bf = add nuw nsw i64 %indvars.iv.i, %6       ; 2 uses
+  %i.bf = add nuw nsw i64 %indvars.iv.i, %5       ; 2 uses
   %i.bg = load i32, ptr %i.ac, align 4, !tbaa !14
   %i.bh = trunc nuw i64 %i.bf to i32
   %i.bi = icmp sgt i32 %i.bg, %i.bh
@@ -1056,8 +1058,9 @@ jv_array_length.exit:                             ; preds = %jv_copy.exit
   %i.j = and i64 %2, 15
   %i.k = icmp eq i64 %i.j, 6
   %.sroa.21.0.extract.shift.i.i77 = lshr i64 %2, 32 ; 3 uses
-  %i.l = trunc i64 %2 to i32
-  %4 = lshr i32 %i.l, 16                          ; 2 uses
+  %.sroa.21.0.extract.shift.i42.i.i = lshr i64 %2, 16 ; 2 uses
+  %i.l = trunc i64 %.sroa.21.0.extract.shift.i42.i.i to i32
+  %4 = and i32 %i.l, 65535
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
@@ -1067,11 +1070,11 @@ jv_array_length.exit:                             ; preds = %jv_copy.exit
 .lr.ph154.split.us.preheader:                     ; preds = %.lr.ph154
   %.sroa.21.0.extract.trunc.i.i78 = trunc nuw i64 %.sroa.21.0.extract.shift.i.i77 to i32 ; 2 uses
   %i.q = lshr i64 %0, 16
-  %5 = zext nneg i32 %4 to i64                    ; 2 uses
-  %i.r = and i64 %i.q, 65535                      ; 2 uses
+  %5 = and i64 %i.q, 65535                        ; 2 uses
+  %i.r = and i64 %.sroa.21.0.extract.shift.i42.i.i, 65535 ; 2 uses
   %.not70.not144.us187 = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i78, 0
   %.not70.not144.us = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i78, 0
-  %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %5 ; 2 uses
+  %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %i.r ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %exitcond.peel.not = icmp eq i64 %.sroa.21.0.extract.shift.i.i77, 1
   br label %.lr.ph154.split.us
@@ -1128,7 +1131,7 @@ bb.h:                                             ; preds = %bb.g
   br label %jvp_array_offset.exit.i.i97.us.peel
 
 jvp_array_offset.exit.i.i97.us.peel:              ; preds = %bb.g, %bb.h
-  %i.ah = add nuw nsw i64 %indvars.iv181, %i.r    ; 2 uses
+  %i.ah = add nuw nsw i64 %indvars.iv181, %5      ; 2 uses
   %i.ai = load i32, ptr %i.o, align 4, !tbaa !14
   %i.aj = trunc nuw i64 %i.ah to i32
   %i.ak = icmp sgt i32 %i.ai, %i.aj
@@ -1173,7 +1176,7 @@ bb.l:                                             ; preds = %.lr.ph.us
   br label %jvp_array_offset.exit.i.i.us
 
 jvp_array_offset.exit.i.i.us:                     ; preds = %.lr.ph.us, %bb.l
-  %i.ax = add nuw nsw i64 %indvars.iv, %5         ; 2 uses
+  %i.ax = add nuw nsw i64 %indvars.iv, %i.r       ; 2 uses
   %i.ay = load i32, ptr %i.m, align 4, !tbaa !14
   %i.az = trunc nuw i64 %i.ax to i32
   %i.ba = icmp sgt i32 %i.ay, %i.az
@@ -1211,7 +1214,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br i1 %i.bm, label %jvp_array_offset.exit.i.i97.us, label %jv_array_get.exit99.us
 
 jvp_array_offset.exit.i.i97.us:                   ; preds = %bb.q
-  %i.bn = add nuw nsw i64 %i.bk, %i.r             ; 2 uses
+  %i.bn = add nuw nsw i64 %i.bk, %5               ; 2 uses
   %i.bo = load i32, ptr %i.o, align 4, !tbaa !14
   %i.bp = trunc nuw i64 %i.bn to i32
   %i.bq = icmp sgt i32 %i.bo, %i.bp
@@ -1614,9 +1617,9 @@ jv_array_length.exit:                             ; preds = %bb.d, %bb.c
 
 .lr.ph:                                           ; preds = %.preheader
   %i.o = lshr i64 %0, 16
+  %2 = and i64 %i.o, 65535
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %2 = and i64 %i.o, 65535
   br label %bb.f
 
 bb.e:                                             ; preds = %jv_array_length.exit
@@ -2019,9 +2022,9 @@ bb.a:
   br i1 %i.a, label %jvp_array_equal.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.0.0.extract.trunc.i = trunc i64 %0 to i32 ; 3 uses
+  %.sroa.0.0.extract.trunc.i = trunc i64 %0 to i32 ; 2 uses
   %i.b = and i32 %.sroa.0.0.extract.trunc.i, 15   ; 2 uses
-  %.sroa.0.0.extract.trunc.i228 = trunc i64 %2 to i32 ; 3 uses
+  %.sroa.0.0.extract.trunc.i228 = trunc i64 %2 to i32 ; 2 uses
   %i.c = and i32 %.sroa.0.0.extract.trunc.i228, 15
   %.not = icmp eq i32 %i.b, %i.c
   br i1 %.not, label %bb.c, label %jvp_array_equal.exit
@@ -2069,7 +2072,7 @@ bb.h:                                             ; preds = %bb.g
 
 jvp_array_length.exit254:                         ; preds = %bb.g
   %.sroa.21.0.extract.shift.i252 = lshr i64 %0, 32 ; 3 uses
-  %.sroa.21.0.extract.trunc.i253 = trunc nuw i64 %.sroa.21.0.extract.shift.i252 to i32
+  %.sroa.21.0.extract.trunc.i253 = trunc nuw i64 %.sroa.21.0.extract.shift.i252 to i32 ; 2 uses
   %i.q = and i64 %2, 15
   %i.r = icmp eq i64 %i.q, 6
   br i1 %i.r, label %jvp_array_length.exit251, label %bb.i
@@ -2081,26 +2084,33 @@ bb.i:                                             ; preds = %jvp_array_length.ex
 jvp_array_length.exit251:                         ; preds = %jvp_array_length.exit254
   %.sroa.21.0.extract.shift.i249 = lshr i64 %2, 32
   %.not.i = icmp eq i64 %.sroa.21.0.extract.shift.i252, %.sroa.21.0.extract.shift.i249
-  br i1 %.not.i, label %jvp_array_ptr.exit.a, label %jvp_array_equal.exit
+  br i1 %.not.i, label %jvp_array_ptr.exit, label %jvp_array_equal.exit
 
-jvp_array_ptr.exit.a:                             ; preds = %jvp_array_length.exit251
-  %5 = icmp ne ptr %1, %3
-  %.unshifted279 = xor i32 %.sroa.0.0.extract.trunc.i228, %.sroa.0.0.extract.trunc.i
-  %6 = icmp ugt i32 %.unshifted279, 65535
-  %or.cond280.not291 = or i1 %5, %6
+jvp_array_ptr.exit:                               ; preds = %jvp_array_length.exit251
+  %5 = icmp eq ptr %1, %3
+  br i1 %5, label %jvp_array_ptr.exit.a, label %8
+
+jvp_array_ptr.exit.a:                             ; preds = %jvp_array_ptr.exit
+  %.sroa.21.0.extract.shift.i251285 = xor i64 %2, %0
+  %6 = and i64 %.sroa.21.0.extract.shift.i251285, 4294901760
+  %7 = icmp ne i64 %6, 0
   %i.s = icmp sgt i32 %.sroa.21.0.extract.trunc.i253, 0
-  %or.cond288 = select i1 %or.cond280.not291, i1 %i.s, i1 false
+  %or.cond288 = select i1 %7, i1 %i.s, i1 false
   br i1 %or.cond288, label %jvp_array_offset.exit.i244.lr.ph, label %jvp_array_equal.exit
 
-jvp_array_offset.exit.i244.lr.ph:                 ; preds = %jvp_array_ptr.exit.a
+8:                                                ; preds = %jvp_array_ptr.exit
+  %.old = icmp sgt i32 %.sroa.21.0.extract.trunc.i253, 0
+  br i1 %.old, label %jvp_array_offset.exit.i244.lr.ph, label %jvp_array_equal.exit
+
+jvp_array_offset.exit.i244.lr.ph:                 ; preds = %jvp_array_ptr.exit.a, %8
   %i.t = lshr i64 %0, 16
+  %9 = and i64 %i.t, 65535
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.w = lshr i64 %2, 16
+  %10 = and i64 %i.w, 65535
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %7 = and i64 %i.t, 65535
-  %8 = and i64 %i.w, 65535
   %i.z = ashr i64 %2, 32
   br label %jvp_array_offset.exit.i244
 
@@ -2111,7 +2121,7 @@ jvp_array_length.exit:                            ; preds = %jv_copy.exit
 
 jvp_array_offset.exit.i244:                       ; preds = %jvp_array_offset.exit.i244.lr.ph, %jvp_array_length.exit
   %indvars.iv297 = phi i64 [ 0, %jvp_array_offset.exit.i244.lr.ph ], [ %indvars.iv.next298, %jvp_array_length.exit ] ; 4 uses
-  %i.aa = add nuw nsw i64 %indvars.iv297, %7      ; 2 uses
+  %i.aa = add nuw nsw i64 %indvars.iv297, %9      ; 2 uses
   %i.ab = load i32, ptr %i.u, align 4, !tbaa !14
   %i.ac = sext i32 %i.ab to i64
   %i.ad = icmp slt i64 %i.aa, %i.ac
@@ -2139,7 +2149,7 @@ bb.k:                                             ; preds = %jvp_array_read.exit
 jvp_array_offset.exit.i:                          ; preds = %bb.k, %jvp_array_read.exit246
   %i.al = icmp slt i64 %indvars.iv297, %i.z
   tail call void @llvm.assume(i1 %i.al)
-  %i.am = add nuw nsw i64 %indvars.iv297, %8      ; 2 uses
+  %i.am = add nuw nsw i64 %indvars.iv297, %10     ; 2 uses
   %i.an = load i32, ptr %i.x, align 4, !tbaa !14
   %i.ao = trunc nuw i64 %i.am to i32
   %i.ap = icmp sgt i32 %i.an, %i.ao
@@ -2378,8 +2388,8 @@ jvp_object_equal.exit:                            ; preds = %jvp_object_size.exi
   %.5.i = select i1 %.not37.i.le, i32 %.4.i, i32 %i.du
   br label %jvp_array_equal.exit
 
-jvp_array_equal.exit:                             ; preds = %jvp_array_length.exit, %jv_copy.exit, %bb.f, %jvp_object_equal.exit, %bb.b, %bb.d, %bb.e, %jvp_array_length.exit251, %jvp_string_ptr.exit19.i, %bb.r, %jvp_array_ptr.exit.a, %bb.a
-  %.0223 = phi i32 [ -1, %bb.a ], [ %.5.i, %jvp_object_equal.exit ], [ 0, %bb.b ], [ 1, %bb.d ], [ %i.m, %bb.f ], [ 1, %bb.e ], [ %i.bl, %bb.r ], [ 1, %jvp_array_ptr.exit.a ], [ 0, %jvp_array_length.exit251 ], [ 0, %jvp_string_ptr.exit19.i ], [ 1, %jvp_array_length.exit ], [ %i.ax, %jv_copy.exit ]
+jvp_array_equal.exit:                             ; preds = %jvp_array_length.exit, %jv_copy.exit, %bb.f, %jvp_object_equal.exit, %bb.b, %bb.d, %bb.e, %jvp_array_length.exit251, %jvp_array_ptr.exit.a, %jvp_string_ptr.exit19.i, %bb.r, %8, %bb.a
+  %.0223 = phi i32 [ -1, %bb.a ], [ %.5.i, %jvp_object_equal.exit ], [ 0, %bb.b ], [ 1, %bb.d ], [ %i.m, %bb.f ], [ 1, %bb.e ], [ %i.bl, %bb.r ], [ 1, %jvp_array_ptr.exit.a ], [ 0, %jvp_array_length.exit251 ], [ 0, %jvp_string_ptr.exit19.i ], [ 1, %8 ], [ %i.ax, %jv_copy.exit ], [ 1, %jvp_array_length.exit ]
   tail call void @jv_free(i64 %0, ptr %1)
   tail call void @jv_free(i64 %2, ptr %3)
   ret i32 %.0223
@@ -2412,14 +2422,14 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @jvp_contains(i64 %0, ptr %1, i64 %2, ptr %3, i32 noundef %4) unnamed_addr #1 {
 bb.a:
-  %.fr = freeze i64 %0                            ; 19 uses
+  %.fr = freeze i64 %0                            ; 20 uses
   %i.a = icmp sgt i32 %4, 10000
   br i1 %i.a, label %jvp_object_contains.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.0.0.extract.trunc.i = trunc i64 %.fr to i32 ; 2 uses
+  %.sroa.0.0.extract.trunc.i = trunc i64 %.fr to i32
   %i.b = and i32 %.sroa.0.0.extract.trunc.i, 15   ; 2 uses
-  %.sroa.0.0.extract.trunc.i115 = trunc i64 %2 to i32 ; 2 uses
+  %.sroa.0.0.extract.trunc.i115 = trunc i64 %2 to i32
   %i.c = and i32 %.sroa.0.0.extract.trunc.i115, 15
   %.not = icmp eq i32 %i.b, %i.c
   br i1 %.not, label %bb.c, label %jvp_object_contains.exit
@@ -2613,7 +2623,9 @@ jv_array_length.exit187:                          ; preds = %jv_copy.exit191
   %.sroa.21.0.extract.shift.i.i185 = lshr i64 %2, 32 ; 3 uses
   %.sroa.21.0.extract.trunc.i.i186 = trunc nuw i64 %.sroa.21.0.extract.shift.i.i185 to i32
   tail call void @jv_free(i64 %2, ptr %3)
-  %5 = lshr i32 %.sroa.0.0.extract.trunc.i115, 16 ; 4 uses
+  %.sroa.21.0.extract.shift.i42.i.i179 = lshr i64 %2, 16 ; 4 uses
+  %.sroa.21.0.extract.trunc.i43.i.i180 = trunc i64 %.sroa.21.0.extract.shift.i42.i.i179 to i32
+  %5 = and i32 %.sroa.21.0.extract.trunc.i43.i.i180, 65535
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.bd = and i64 %.fr, 128
@@ -2622,7 +2634,8 @@ jv_array_length.exit187:                          ; preds = %jv_copy.exit191
   %i.bf = icmp eq i64 %i.be, 6
   %.sroa.21.0.extract.shift.i.i165 = lshr i64 %.fr, 32 ; 5 uses
   %.sroa.21.0.extract.trunc.i.i166 = trunc nuw i64 %.sroa.21.0.extract.shift.i.i165 to i32 ; 4 uses
-  %6 = lshr i32 %.sroa.0.0.extract.trunc.i, 16    ; 2 uses
+  %.sroa.21.0.extract.shift.i42.i.i = lshr i64 %.fr, 16 ; 2 uses
+  %6 = and i64 %.sroa.21.0.extract.shift.i42.i.i, 65535 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %.not52.i240.us.us = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i186, 0 ; 3 uses
@@ -2635,8 +2648,7 @@ jv_array_length.exit187.split.us:                 ; preds = %jv_array_length.exi
   br i1 %.not52.i240.us.us, label %.lr.ph242.us.us.preheader, label %jvp_object_contains.exit
 
 .lr.ph242.us.us.preheader:                        ; preds = %.preheader208.us.us
-  %7 = zext nneg i32 %6 to i64                    ; 2 uses
-  %8 = zext nneg i32 %5 to i64
+  %7 = and i64 %.sroa.21.0.extract.shift.i42.i.i179, 65535
   %.not55.i224.us.us262.us.us.us = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i166, 0
   %.not55.i224.us.us.us.us.us.us = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i166, 0
   br label %.lr.ph242.us.us
@@ -2652,7 +2664,7 @@ bb.u:                                             ; preds = %.lr.ph242.us.us
   br label %jvp_array_offset.exit.i.i178.us.us.us.us
 
 jvp_array_offset.exit.i.i178.us.us.us.us:         ; preds = %.lr.ph242.us.us, %bb.u
-  %i.bk = add nuw nsw i64 %indvars.iv388, %8      ; 2 uses
+  %i.bk = add nuw nsw i64 %indvars.iv388, %7      ; 2 uses
   %i.bl = load i32, ptr %i.bb, align 4, !tbaa !14
   %i.bm = trunc nuw i64 %i.bk to i32
   %i.bn = icmp sgt i32 %i.bl, %i.bm
@@ -2686,7 +2698,7 @@ jv_copy.exit170.us.us.us.us:                      ; preds = %bb.w, %bb.v
 
 jvp_array_offset.exit.i.i.us.us.us.us.us.us:      ; preds = %.preheader207.us.us259.us.us.us, %bb.z
   %indvars.iv378 = phi i64 [ %indvars.iv.next379, %bb.z ], [ 0, %.preheader207.us.us259.us.us.us ] ; 2 uses
-  %i.bw = add nuw nsw i64 %indvars.iv378, %7      ; 2 uses
+  %i.bw = add nuw nsw i64 %indvars.iv378, %6      ; 2 uses
   %i.bx = load i32, ptr %i.bg, align 4, !tbaa !14
   %i.by = trunc nuw i64 %i.bw to i32
   %i.bz = icmp sgt i32 %i.bx, %i.by
@@ -2726,7 +2738,7 @@ bb.z:                                             ; preds = %jv_copy.exit154.us.
 
 jvp_array_offset.exit.i.i.us.us.us.us.us.us.us.us: ; preds = %.preheader207.us.us.us.us.us.us, %bb.ac
   %indvars.iv383 = phi i64 [ %indvars.iv.next384, %bb.ac ], [ 0, %.preheader207.us.us.us.us.us.us ] ; 2 uses
-  %i.ck = add nuw nsw i64 %indvars.iv383, %7      ; 2 uses
+  %i.ck = add nuw nsw i64 %indvars.iv383, %6      ; 2 uses
   %i.cl = load i32, ptr %i.bg, align 4, !tbaa !14
   %i.cm = trunc nuw i64 %i.ck to i32
   %i.cn = icmp sgt i32 %i.cl, %i.cm
@@ -2777,8 +2789,8 @@ bb.ad:                                            ; preds = %.split235.us.us.us.
   br i1 %.not52.i240.us.us, label %.lr.ph242.us.preheader, label %jvp_object_contains.exit
 
 .lr.ph242.us.preheader:                           ; preds = %.preheader208.us
-  %9 = zext nneg i32 %6 to i64                    ; 2 uses
-  %10 = zext nneg i32 %5 to i64
+  %8 = and i64 %.sroa.21.0.extract.shift.i42.i.i, 65535 ; 2 uses
+  %9 = and i64 %.sroa.21.0.extract.shift.i42.i.i179, 65535
   %.not55.i224.us252.us331 = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i166, 0
   %.not55.i224.us252.us.us = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i166, 0
   br label %.lr.ph242.us
@@ -2794,7 +2806,7 @@ bb.ae:                                            ; preds = %.lr.ph242.us
   br label %jvp_array_offset.exit.i.i178.us.us321
 
 jvp_array_offset.exit.i.i178.us.us321:            ; preds = %.lr.ph242.us, %bb.ae
-  %i.cz = add nuw nsw i64 %indvars.iv373, %10     ; 2 uses
+  %i.cz = add nuw nsw i64 %indvars.iv373, %9      ; 2 uses
   %i.da = load i32, ptr %i.bb, align 4, !tbaa !14
   %i.db = trunc nuw i64 %i.cz to i32
   %i.dc = icmp sgt i32 %i.da, %i.db
@@ -2834,7 +2846,7 @@ jvp_array_offset.exit.i.i.us.us:                  ; preds = %.preheader207.us249
   %i.dn = load i32, ptr %1, align 4, !tbaa !17
   %i.do = add nsw i32 %i.dn, 1
   store i32 %i.do, ptr %1, align 4, !tbaa !17
-  %i.dp = add nuw nsw i64 %indvars.iv, %9         ; 2 uses
+  %i.dp = add nuw nsw i64 %indvars.iv, %8         ; 2 uses
   %i.dq = load i32, ptr %i.bg, align 4, !tbaa !14
   %i.dr = trunc nuw i64 %i.dp to i32
   %i.ds = icmp sgt i32 %i.dq, %i.dr
@@ -2877,7 +2889,7 @@ jvp_array_offset.exit.i.i.us.us.us302.us:         ; preds = %.preheader207.us249
   %i.ed = load i32, ptr %1, align 4, !tbaa !17
   %i.ee = add nsw i32 %i.ed, 1
   store i32 %i.ee, ptr %1, align 4, !tbaa !17
-  %i.ef = add nuw nsw i64 %indvars.iv368, %9      ; 2 uses
+  %i.ef = add nuw nsw i64 %indvars.iv368, %8      ; 2 uses
   %i.eg = load i32, ptr %i.bg, align 4, !tbaa !14
   %i.eh = trunc nuw i64 %i.ef to i32
   %i.ei = icmp sgt i32 %i.eg, %i.eh
@@ -2946,8 +2958,8 @@ jvp_array_offset.exit.i.i178:                     ; preds = %.lr.ph242.split, %b
   unreachable
 
 bb.ap:                                            ; preds = %jvp_array_offset.exit.i.i178
-  %11 = zext nneg i32 %5 to i64
-  %i.ew = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %11 ; 2 uses
+  %10 = and i64 %.sroa.21.0.extract.shift.i42.i.i179, 65535
+  %i.ew = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %10 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8
   %i.ey = and i64 %i.ex, 128
   %.not.i.i179 = icmp eq i64 %i.ey, 0

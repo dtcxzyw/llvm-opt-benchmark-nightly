@@ -202,9 +202,10 @@ bb.nx:                                            ; preds = %bb.nv, %bb.nw
   store i16 %i.cew, ptr %i.ced, align 4
   %i.cex = load i16, ptr %i.brn, align 2, !tbaa !8
   %i.cey = getelementptr inbounds nuw i8, ptr %i.cdp, i64 46
-  %i.cez = trunc i32 %i.cdy to i16
-  %4 = lshr i16 %i.cez, 8
-  %i.cfa = mul i16 %i.cex, %4
+  %4 = lshr i32 %i.cdy, 8
+  %i.cez = trunc i32 %4 to i16
+  %5 = and i16 %i.cez, 255
+  %i.cfa = mul i16 %i.cex, %5
   store i16 %i.cfa, ptr %i.cey, align 2, !tbaa !8
   %i.cfb = load i8, ptr @zz_lengths, align 1, !tbaa !8 ; 3 uses
   %i.cfc = zext i8 %i.cfb to i32                  ; 2 uses

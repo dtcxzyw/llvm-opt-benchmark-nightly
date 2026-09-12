@@ -205,21 +205,23 @@ bb.an:                                            ; preds = %bb.aj
 
 .preheader.i:                                     ; preds = %.preheader.i, %bb.an
   %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 14, %bb.an ] ; 3 uses
-  %.01226.i = phi i32 [ %i.fp, %.preheader.i ], [ %1, %bb.an ] ; 2 uses
+  %.01226.i = phi i32 [ %i.fp, %.preheader.i ], [ %1, %bb.an ] ; 3 uses
   %i.fc = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv ; 3 uses
-  %i.fd = trunc i32 %.01226.i to i8               ; 3 uses
+  %i.fd = trunc i32 %.01226.i to i8
   %i.fe = and i8 %i.fd, 15                        ; 3 uses
   %i.ff = icmp samesign ult i8 %i.fe, 10
   %i.fg = or disjoint i8 %i.fe, 48
   %i.fh = add nuw nsw i8 %i.fe, 55
   %i.fi = select i1 %i.ff, i8 %i.fg, i8 %i.fh
   store i8 %i.fi, ptr %i.fc, align 2, !tbaa !15
+  %2 = lshr i32 %.01226.i, 4
   %i.fj = getelementptr i8, ptr %i.a, i64 %indvars.iv
   %i.fk = getelementptr i8, ptr %i.fj, i64 -1
-  %2 = lshr i8 %i.fd, 4                           ; 2 uses
-  %i.fl = icmp ult i8 %i.fd, -96
-  %i.fm = or disjoint i8 %2, 48
-  %i.fn = add nuw nsw i8 %2, 55
+  %3 = trunc i32 %2 to i8
+  %4 = and i8 %3, 15                              ; 3 uses
+  %i.fl = icmp samesign ult i8 %4, 10
+  %i.fm = or disjoint i8 %4, 48
+  %i.fn = add nuw nsw i8 %4, 55
   %i.fo = select i1 %i.fl, i8 %i.fm, i8 %i.fn
   store i8 %i.fo, ptr %i.fk, align 1, !tbaa !15
   %i.fp = lshr i32 %.01226.i, 8                   ; 2 uses

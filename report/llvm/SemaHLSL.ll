@@ -205,12 +205,13 @@ bb.b:                                             ; preds = %bb.a
   %i.p = inttoptr i64 %i.o to ptr
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.q, align 8, !tbaa !51
-  %i.r = trunc i64 %.sroa.0.0.copyload.i.i.i.i to i32
-  %6 = lshr i32 %i.r, 9
+  %6 = lshr i64 %.sroa.0.0.copyload.i.i.i.i, 9
+  %i.r = trunc i64 %6 to i32
+  %7 = and i32 %i.r, 8388607
   br label %_ZNK5clang8QualType15getAddressSpaceEv.exit
 
 _ZNK5clang8QualType15getAddressSpaceEv.exit:      ; preds = %bb.a, %bb.b
-  %.sroa.0.0.i.i.i = phi i32 [ %6, %bb.b ], [ 0, %bb.a ] ; 7 uses
+  %.sroa.0.0.i.i.i = phi i32 [ %7, %bb.b ], [ 0, %bb.a ] ; 7 uses
   %.idx4.i = shl nuw nsw i64 %3, 2                ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 %.idx4.i
   %i.t = lshr i64 %3, 2                           ; 2 uses

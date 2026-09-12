@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %bb.v
 
 _ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit.preheader, %_ZNSt6vectorIhSaIhEE6resizeEm.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ], [ 0, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.preheader ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ], [ 0, %_ZNSt6vectorIhSaIhEE6resizeEm.exit.preheader ] ; 5 uses
   %i.bh = lshr i64 %indvars.iv, 5
   %i.bi = trunc i64 %i.bh to i8
   %i.bj = mul nuw i8 %i.bi, 36
@@ -212,15 +212,16 @@ _ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %_ZNSt6vectorIhSaIhE
   %i.bl = load ptr, ptr %i.u, align 8, !tbaa !76
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bk
   store i8 %i.bj, ptr %i.bm, align 1, !tbaa !93
-  %7 = trunc i64 %indvars.iv to i8                ; 2 uses
-  %8 = lshr i8 %7, 2
+  %7 = lshr i64 %indvars.iv, 2
+  %8 = trunc i64 %7 to i8
   %i.bn = and i8 %8, 7
   %i.bo = mul nuw i8 %i.bn, 36
   %i.bp = load ptr, ptr %i.u, align 8, !tbaa !76
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bk
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 1
   store i8 %i.bo, ptr %i.br, align 1, !tbaa !93
-  %i.bs = and i8 %7, 3
+  %9 = trunc i64 %indvars.iv to i8
+  %i.bs = and i8 %9, 3
   %i.bt = mul nuw i8 %i.bs, 85
   %i.bu = load ptr, ptr %i.u, align 8, !tbaa !76
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 %i.bk

@@ -192,23 +192,24 @@ bb.a:
   %.sroa.5.0.extract.shift.i = lshr i64 %1, 32
   %.sroa.4.0.extract.shift.i = lshr i64 %1, 24
   %.sroa.3.0.extract.shift.i = lshr i64 %1, 16
+  %.sroa.2.0.extract.shift.i = lshr i64 %1, 8
   %.sroa.8.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.8.0.extract.shift.i to i16
   %.sroa.7.0.extract.trunc.i = trunc nuw i64 %.sroa.7.0.extract.shift.i to i16
   %.sroa.6.0.extract.trunc.i = trunc i64 %.sroa.6.0.extract.shift.i to i16
   %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.extract.shift.i to i16
   %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i16
   %.sroa.3.0.extract.trunc.i = trunc i64 %.sroa.3.0.extract.shift.i to i16
-  %.sroa.0.0.extract.trunc.i.a = trunc i64 %1 to i16 ; 2 uses
-  %2 = lshr i16 %.sroa.0.0.extract.trunc.i.a, 8
-  %i.a = insertelement <8 x i16> poison, i16 %.sroa.0.0.extract.trunc.i.a, i64 0
-  %i.b = insertelement <8 x i16> %i.a, i16 %2, i64 1
+  %.sroa.0.0.extract.trunc.i.a = trunc i64 %.sroa.2.0.extract.shift.i to i16
+  %.sroa.0.0.extract.trunc.i = trunc i64 %1 to i16
+  %i.a = insertelement <8 x i16> poison, i16 %.sroa.0.0.extract.trunc.i, i64 0
+  %i.b = insertelement <8 x i16> %i.a, i16 %.sroa.0.0.extract.trunc.i.a, i64 1
   %i.c = insertelement <8 x i16> %i.b, i16 %.sroa.3.0.extract.trunc.i, i64 2
   %i.d = insertelement <8 x i16> %i.c, i16 %.sroa.4.0.extract.trunc.i, i64 3
   %i.e = insertelement <8 x i16> %i.d, i16 %.sroa.5.0.extract.trunc.i, i64 4
   %i.f = insertelement <8 x i16> %i.e, i16 %.sroa.6.0.extract.trunc.i, i64 5
   %i.g = insertelement <8 x i16> %i.f, i16 %.sroa.7.0.extract.trunc.i, i64 6
   %i.h = insertelement <8 x i16> %i.g, i16 %.sroa.8.0.extract.trunc.i, i64 7
-  %i.i = and <8 x i16> %i.h, <i16 255, i16 -1, i16 255, i16 255, i16 255, i16 255, i16 255, i16 -1>
+  %i.i = and <8 x i16> %i.h, <i16 255, i16 255, i16 255, i16 255, i16 255, i16 255, i16 255, i16 -1>
   store <8 x i16> %i.i, ptr %0, align 1, !alias.scope !58
   ret void
 }
@@ -261,17 +262,19 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMs3_NtCs5zeGauAcNNa_10wasmi_core4simdNtNtB8_5value4V1289widen_nxmtmECsefoF4u9kbII_5wasmi(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 1 captures(none) dereferenceable(16) initializes((0, 16)) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.0.0.extract.trunc.i = trunc i64 %1 to i32 ; 2 uses
-  %2 = lshr i32 %.sroa.0.0.extract.trunc.i, 16
+  %.sroa.0.0.extract.trunc.i = trunc i64 %1 to i32
+  %.sroa.2.0.extract.shift.i = lshr i64 %1, 16
+  %.sroa.2.0.extract.trunc.i = trunc i64 %.sroa.2.0.extract.shift.i to i32
   %.sroa.3.0.extract.shift.i = lshr i64 %1, 32
   %.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.3.0.extract.shift.i to i32
   %.sroa.4.0.extract.shift.i = lshr i64 %1, 48
   %.sroa.4.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.4.0.extract.shift.i to i32
-  %i.a = and i32 %.sroa.0.0.extract.trunc.i, 65535
+  %2 = and i32 %.sroa.0.0.extract.trunc.i, 65535
+  %i.a = and i32 %.sroa.2.0.extract.trunc.i, 65535
   %i.b = and i32 %.sroa.3.0.extract.trunc.i, 65535
-  store i32 %i.a, ptr %0, align 1, !alias.scope !74
+  store i32 %2, ptr %0, align 1, !alias.scope !74
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %2, ptr %.sroa.45.0..sroa_idx, align 1, !alias.scope !74
+  store i32 %i.a, ptr %.sroa.45.0..sroa_idx, align 1, !alias.scope !74
   %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.b, ptr %.sroa.56.0..sroa_idx, align 1, !alias.scope !74
   %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12

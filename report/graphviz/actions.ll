@@ -205,19 +205,23 @@ bb.bg:                                            ; preds = %bb.bf
 
 bb.bh:                                            ; preds = %.thread114, %bb.be
   %.sroa.0.1.ph120 = phi double [ %.sroa.0.1.ph.ph113, %.thread114 ], [ %.sroa.0.0, %bb.be ]
-  %i.hl = bitcast double %.sroa.0.1.ph120 to i64
-  %.sroa.0.0.extract.trunc = trunc i64 %i.hl to i32 ; 4 uses
+  %i.hl = bitcast double %.sroa.0.1.ph120 to i64  ; 4 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %i.hl to i32
   %i.hm = and i32 %.sroa.0.0.extract.trunc, 255
-  %5 = lshr i32 %.sroa.0.0.extract.trunc, 8
-  %i.hn = and i32 %5, 255
-  %6 = lshr i32 %.sroa.0.0.extract.trunc, 16
-  %i.ho = and i32 %6, 255
+  %.sroa.0.1.extract.shift = lshr i64 %i.hl, 8
+  %.sroa.0.1.extract.trunc = trunc i64 %.sroa.0.1.extract.shift to i32
+  %i.hn = and i32 %.sroa.0.1.extract.trunc, 255
+  %.sroa.0.2.extract.shift = lshr i64 %i.hl, 16
+  %.sroa.0.2.extract.trunc = trunc i64 %.sroa.0.2.extract.shift to i32
+  %i.ho = and i32 %.sroa.0.2.extract.trunc, 255
   call void (ptr, ptr, ...) @agxbprint(ptr noundef %4, ptr noundef nonnull @.str.32, i32 noundef %i.hm, i32 noundef %i.hn, i32 noundef %i.ho)
   br i1 %.not19.not, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
-  %7 = lshr i32 %.sroa.0.0.extract.trunc, 24
-  call void (ptr, ptr, ...) @agxbprint(ptr noundef %4, ptr noundef nonnull @.str.33, i32 noundef %7)
+  %.sroa.0.3.extract.shift = lshr i64 %i.hl, 24
+  %.sroa.0.3.extract.trunc = trunc i64 %.sroa.0.3.extract.shift to i32
+  %5 = and i32 %.sroa.0.3.extract.trunc, 255
+  call void (ptr, ptr, ...) @agxbprint(ptr noundef %4, ptr noundef nonnull @.str.33, i32 noundef %5)
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bh, %bb.bi, %bb.bf, %bb.bg

@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.e, ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @449, i64 noundef 14)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.f = load i16, ptr %0, align 2, !noundef !46  ; 13 uses
+  %i.f = load i16, ptr %0, align 2, !noundef !46  ; 14 uses
   %i.g = and i16 %i.f, 16
   %.not.i = icmp eq i16 %i.g, 0
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -275,13 +275,14 @@ _RNvXs1i_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_14AnyStringFlagsNtB6_11Stri
   store i8 %.sroa.14.0.i, ptr %i.r, align 1
   %i.s = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias noundef nonnull readonly captures(address, read_provenance) @445, i64 noundef 6, ptr noundef nonnull %i.d, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @450)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %2 = trunc i16 %i.f to i8                       ; 2 uses
-  %3 = lshr i8 %2, 1
+  %2 = lshr i16 %i.f, 1
+  %3 = trunc i16 %2 to i8
   %i.t = and i8 %3, 1
   store i8 %i.t, ptr %i.c, align 1
   %i.u = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.s, ptr noalias noundef nonnull readonly captures(address, read_provenance) @447, i64 noundef 13, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @446)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %storemerge = and i8 %2, 1
+  %.not = trunc i16 %i.f to i8
+  %storemerge = and i8 %.not, 1
   store i8 %storemerge, ptr %i.b, align 1
   %i.v = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.u, ptr noalias noundef nonnull readonly captures(address, read_provenance) @443, i64 noundef 11, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @442)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

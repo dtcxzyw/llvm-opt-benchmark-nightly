@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %.lr.ph, %bb.o
 
 bb.e:                                             ; preds = %bb.d
   %i.ae = getelementptr i8, ptr %i.ac, i64 24
-  %.val53 = load i64, ptr %i.ae, align 8          ; 2 uses
-  %i.af = trunc i64 %.val53 to i32                ; 2 uses
+  %.val53 = load i64, ptr %i.ae, align 8          ; 3 uses
+  %i.af = trunc i64 %.val53 to i32
   %i.ag = and i32 %i.af, 7                        ; 2 uses
   %i.ah = add nsw i32 %i.ag, -7
   %narrow.i = icmp ult i32 %i.ah, -2
@@ -262,7 +262,8 @@ bb.i:                                             ; preds = %bb.e
   ]
 
 bb.j:                                             ; preds = %bb.i
-  %.not46 = icmp ult i32 %i.af, 64
+  %1 = and i64 %.val53, 4294967232
+  %.not46 = icmp eq i64 %1, 0
   br i1 %.not46, label %Saig_ObjIsLo.exit, label %bb.k
 
 Saig_ObjIsLo.exit:                                ; preds = %bb.j

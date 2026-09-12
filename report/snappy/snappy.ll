@@ -205,8 +205,8 @@ bb.af:                                            ; preds = %.split, %_ZN6snappy
   %i.ma = shl i64 %i.lw, 8
   %i.mb = add nuw i64 %i.lz, %i.ma
   %i.mc = trunc i64 %i.mb to i32
-  %5 = trunc i64 %i.lw to i32
-  %6 = lshr i32 %5, 3
+  %5 = lshr i64 %i.lw, 3
+  %6 = trunc i64 %5 to i32
   %i.md = and i32 %6, 224
   %i.me = add nsw i32 %i.md, -15
   %i.mf = icmp ult i64 %i.lw, 2048                ; 2 uses
@@ -285,7 +285,7 @@ bb.ag:                                            ; preds = %.split, %_ZN6snappy
   br i1 %i.ng, label %.thread.i165, label %bb.ah
 
 .thread.i165:                                     ; preds = %._crit_edge.i164
-  %.tr.i166 = trunc i64 %i.mk to i32              ; 2 uses
+  %.tr.i166 = trunc i64 %i.mk to i32
   %i.nh = shl i32 %.tr.i166, 8
   %i.ni = or disjoint i32 %i.nh, 238
   store i32 %i.ni, ptr %.015.lcssa.i, align 1
@@ -295,22 +295,18 @@ bb.ag:                                            ; preds = %.split, %_ZN6snappy
 
 bb.ah:                                            ; preds = %._crit_edge.i164
   %i.nl = icmp samesign ult i64 %.0.lcssa.i, 12
-  br i1 %i.nl, label %._crit_edge26.i, label %bb.aj
+  br i1 %i.nl, label %bb.ai, label %bb.aj
 
-._crit_edge26.i:                                  ; preds = %bb.ah
-  %.pre.i = trunc i64 %i.mk to i32
-  br label %bb.ai
-
-bb.ai:                                            ; preds = %._crit_edge26.i, %.thread.i165
-  %.pre-phi.i = phi i32 [ %.pre.i, %._crit_edge26.i ], [ %.tr.i166, %.thread.i165 ]
-  %.120.i = phi i64 [ %.0.lcssa.i, %._crit_edge26.i ], [ %i.nk, %.thread.i165 ]
-  %.11619.i = phi ptr [ %.015.lcssa.i, %._crit_edge26.i ], [ %i.nj, %.thread.i165 ] ; 2 uses
+bb.ai:                                            ; preds = %bb.ah, %.thread.i165
+  %.120.i = phi i64 [ %i.nk, %.thread.i165 ], [ %.0.lcssa.i, %bb.ah ]
+  %.11619.i = phi ptr [ %i.nj, %.thread.i165 ], [ %.015.lcssa.i, %bb.ah ] ; 2 uses
   %i.nm = shl nuw nsw i64 %.120.i, 2
   %i.nn = shl i64 %i.mk, 8
   %i.no = add nuw i64 %i.nm, %i.nn
   %i.np = trunc i64 %i.no to i32
-  %7 = lshr i32 %.pre-phi.i, 3
-  %i.nq = and i32 %7, 224
+  %7 = lshr i64 %i.mk, 3
+  %8 = trunc i64 %7 to i32
+  %i.nq = and i32 %8, 224
   %i.nr = add nsw i32 %i.nq, -15
   %i.ns = icmp ult i64 %i.mk, 2048                ; 2 uses
   %i.nt = select i1 %i.ns, i32 %i.nr, i32 -2
@@ -713,8 +709,8 @@ bb.t:                                             ; preds = %_ZN6snappyL11EmitLi
   %i.go = shl i64 %i.gl, 8
   %i.gp = or disjoint i64 %i.gn, %i.go
   %i.gq = trunc i64 %i.gp to i32
-  %7 = trunc i64 %i.gl to i32
-  %8 = lshr i32 %7, 3
+  %7 = lshr i64 %i.gl, 3
+  %8 = trunc i64 %7 to i32
   %i.gr = and i32 %8, 224
   %i.gs = add nsw i32 %i.gr, -15
   %i.gt = icmp ult i64 %i.gl, 2048                ; 2 uses
@@ -789,7 +785,7 @@ bb.u:                                             ; preds = %_ZN6snappyL11EmitLi
   br i1 %i.hr, label %.thread.i, label %bb.v
 
 .thread.i:                                        ; preds = %._crit_edge.i
-  %.tr.i272 = trunc i64 %i.gl to i32              ; 2 uses
+  %.tr.i272 = trunc i64 %i.gl to i32
   %i.hs = shl i32 %.tr.i272, 8
   %i.ht = or disjoint i32 %i.hs, 238
   store i32 %i.ht, ptr %.015.lcssa.i, align 1
@@ -799,22 +795,18 @@ bb.u:                                             ; preds = %_ZN6snappyL11EmitLi
 
 bb.v:                                             ; preds = %._crit_edge.i
   %i.hw = icmp samesign ult i64 %.0.lcssa.i270, 12
-  br i1 %i.hw, label %._crit_edge26.i, label %bb.x
+  br i1 %i.hw, label %bb.w, label %bb.x
 
-._crit_edge26.i:                                  ; preds = %bb.v
-  %.pre.i = trunc i64 %i.gl to i32
-  br label %bb.w
-
-bb.w:                                             ; preds = %._crit_edge26.i, %.thread.i
-  %.pre-phi.i = phi i32 [ %.pre.i, %._crit_edge26.i ], [ %.tr.i272, %.thread.i ]
-  %.120.i = phi i64 [ %.0.lcssa.i270, %._crit_edge26.i ], [ %i.hv, %.thread.i ]
-  %.11619.i = phi ptr [ %.015.lcssa.i, %._crit_edge26.i ], [ %i.hu, %.thread.i ] ; 2 uses
+bb.w:                                             ; preds = %bb.v, %.thread.i
+  %.120.i = phi i64 [ %i.hv, %.thread.i ], [ %.0.lcssa.i270, %bb.v ]
+  %.11619.i = phi ptr [ %i.hu, %.thread.i ], [ %.015.lcssa.i, %bb.v ] ; 2 uses
   %i.hx = shl nuw nsw i64 %.120.i, 2
   %i.hy = shl i64 %i.gl, 8
   %i.hz = add nuw i64 %i.hx, %i.hy
   %i.ia = trunc i64 %i.hz to i32
-  %9 = lshr i32 %.pre-phi.i, 3
-  %i.ib = and i32 %9, 224
+  %9 = lshr i64 %i.gl, 3
+  %10 = trunc i64 %9 to i32
+  %i.ib = and i32 %10, 224
   %i.ic = add nsw i32 %i.ib, -15
   %i.id = icmp ult i64 %i.gl, 2048                ; 2 uses
   %i.ie = select i1 %i.id, i32 %i.ic, i32 -2

@@ -205,17 +205,19 @@ dbuf_put_u16.exit:
   %i.l = and i32 %5, 32
   %.not = icmp eq i32 %i.l, 0
   %i.m = getelementptr inbounds nuw i8, ptr %7, i64 78
-  %8 = trunc i32 %5 to i8                         ; 3 uses
-  %9 = lshr i8 %8, 1
+  %8 = lshr i32 %5, 1
+  %9 = trunc i32 %8 to i8
   %i.n = and i8 %9, 1
   store i8 %i.n, ptr %i.m, align 2, !tbaa !31
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 79
-  %10 = lshr i8 %8, 2
-  %i.p = and i8 %10, 1
+  %10 = lshr i32 %5, 2
+  %11 = trunc i32 %10 to i8
+  %i.p = and i8 %11, 1
   store i8 %i.p, ptr %i.o, align 1, !tbaa !32
   %i.q = getelementptr inbounds nuw i8, ptr %7, i64 80
-  %11 = lshr i8 %8, 3
-  %i.r = and i8 %11, 1
+  %12 = lshr i32 %5, 3
+  %13 = trunc i32 %12 to i8
+  %i.r = and i8 %13, 1
   store i8 %i.r, ptr %i.q, align 8, !tbaa !33
   %i.s = getelementptr inbounds nuw i8, ptr %7, i64 77
   %i.t = lshr i32 %5, 8

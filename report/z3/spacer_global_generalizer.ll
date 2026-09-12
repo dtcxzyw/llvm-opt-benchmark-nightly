@@ -204,9 +204,10 @@ bb.ar:                                            ; preds = %bb.aq
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !123, !nonnull !47, !align !48
   %i.ek = getelementptr inbounds nuw i8, ptr %i.eh, i64 72
   %i.el = load i64, ptr %i.ek, align 8
-  %i.em = trunc i64 %i.el to i32
-  %8 = lshr i32 %i.em, 16
-  invoke void @_ZN6spacer3pobC1EPS0_RNS_16pred_transformerEjjb(ptr noundef nonnull align 8 dereferenceable(152) %i.eg, ptr noundef nonnull %.0, ptr noundef nonnull align 8 dereferenceable(472) %i.ej, i32 noundef %.0104, i32 noundef %8, i1 noundef zeroext false)
+  %8 = lshr i64 %i.el, 16
+  %i.em = trunc i64 %8 to i32
+  %9 = and i32 %i.em, 65535
+  invoke void @_ZN6spacer3pobC1EPS0_RNS_16pred_transformerEjjb(ptr noundef nonnull align 8 dereferenceable(152) %i.eg, ptr noundef nonnull %.0, ptr noundef nonnull align 8 dereferenceable(472) %i.ej, i32 noundef %.0104, i32 noundef %9, i1 noundef zeroext false)
           to label %bb.au unwind label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
@@ -609,9 +610,10 @@ bb.aq:                                            ; preds = %bb.ap
   %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !123, !nonnull !47, !align !48
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fs, i64 72
   %i.fw = load i64, ptr %i.fv, align 8
-  %i.fx = trunc i64 %i.fw to i32
-  %13 = lshr i32 %i.fx, 16
-  invoke void @_ZN6spacer3pobC1EPS0_RNS_16pred_transformerEjjb(ptr noundef nonnull align 8 dereferenceable(152) %i.fr, ptr noundef nonnull %.0, ptr noundef nonnull align 8 dereferenceable(472) %i.fu, i32 noundef %4, i32 noundef %13, i1 noundef zeroext false)
+  %13 = lshr i64 %i.fw, 16
+  %i.fx = trunc i64 %13 to i32
+  %14 = and i32 %i.fx, 65535
+  invoke void @_ZN6spacer3pobC1EPS0_RNS_16pred_transformerEjjb(ptr noundef nonnull align 8 dereferenceable(152) %i.fr, ptr noundef nonnull %.0, ptr noundef nonnull align 8 dereferenceable(472) %i.fu, i32 noundef %4, i32 noundef %14, i1 noundef zeroext false)
           to label %bb.at unwind label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
@@ -1014,10 +1016,12 @@ bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !111
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.v = load i64, ptr %i.u, align 8
-  %i.w = trunc i64 %i.v to i32                    ; 2 uses
+  %i.v = load i64, ptr %i.u, align 8              ; 2 uses
+  %i.w = trunc i64 %i.v to i32
   %i.x = and i32 %i.w, 65535
-  %6 = lshr i32 %i.w, 16
+  %6 = lshr i64 %i.v, 16
+  %7 = trunc i64 %6 to i32
+  %8 = and i32 %7, 65535
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   call void @llvm.experimental.noalias.scope.decl(metadata !454)
   %i.y = load ptr, ptr %3, align 8, !tbaa !143, !noalias !454, !nonnull !47, !align !48
@@ -1053,7 +1057,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i:        ; preds = %.noexc
 _Z6mk_andRK10ref_vectorI4expr11ast_managerE.exit: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i, %.noexc
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ak = getelementptr inbounds nuw i8, ptr %i.r, i64 136
-  %i.al = invoke noundef ptr @_ZN6spacer16pred_transformer11pob_manager6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE(ptr noundef nonnull align 8 dereferenceable(40) %i.ak, ptr noundef %i.t, i32 noundef %i.x, i32 noundef %6, ptr noundef %i.ad, ptr noundef nonnull align 8 dereferenceable(16) %i.aj)
+  %i.al = invoke noundef ptr @_ZN6spacer16pred_transformer11pob_manager6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE(ptr noundef nonnull align 8 dereferenceable(40) %i.ak, ptr noundef %i.t, i32 noundef %i.x, i32 noundef %8, ptr noundef %i.ad, ptr noundef nonnull align 8 dereferenceable(16) %i.aj)
           to label %_ZN6spacer16pred_transformer6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE.exit unwind label %bb.l
 
 _ZN6spacer16pred_transformer6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE.exit: ; preds = %_Z6mk_andRK10ref_vectorI4expr11ast_managerE.exit
@@ -1456,14 +1460,16 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.c
   %i.r = load ptr, ptr %i.f, align 8, !tbaa !123, !nonnull !47, !align !48
   %i.s = load ptr, ptr %i.h, align 8, !tbaa !111
-  %i.t = load i64, ptr %i.c, align 8
-  %i.u = trunc i64 %i.t to i32                    ; 2 uses
+  %i.t = load i64, ptr %i.c, align 8              ; 2 uses
+  %i.u = trunc i64 %i.t to i32
   %i.v = and i32 %i.u, 65535
-  %2 = lshr i32 %i.u, 16
+  %2 = lshr i64 %i.t, 16
+  %3 = trunc i64 %2 to i32
+  %4 = and i32 %3, 65535
   %i.w = load ptr, ptr %i.j, align 8, !tbaa !134
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 136
-  %i.z = tail call noundef ptr @_ZN6spacer16pred_transformer11pob_manager6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE(ptr noundef nonnull align 8 dereferenceable(40) %i.y, ptr noundef %i.s, i32 noundef %i.v, i32 noundef %2, ptr noundef %i.w, ptr noundef nonnull align 8 dereferenceable(16) %i.x) ; 4 uses
+  %i.z = tail call noundef ptr @_ZN6spacer16pred_transformer11pob_manager6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE(ptr noundef nonnull align 8 dereferenceable(40) %i.y, ptr noundef %i.s, i32 noundef %i.v, i32 noundef %4, ptr noundef %i.w, ptr noundef nonnull align 8 dereferenceable(16) %i.x) ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 72 ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 8
   %i.ac = or i64 %i.ab, 18014398509481984
@@ -1540,10 +1546,12 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.d, %bb.c
   %i.u = load ptr, ptr %i.i, align 8, !tbaa !123, !nonnull !47, !align !48
   %i.v = load ptr, ptr %i.k, align 8, !tbaa !111
-  %i.w = load i64, ptr %i.c, align 8
-  %i.x = trunc i64 %i.w to i32                    ; 2 uses
+  %i.w = load i64, ptr %i.c, align 8              ; 2 uses
+  %i.x = trunc i64 %i.w to i32
   %i.y = and i32 %i.x, 65535
-  %3 = lshr i32 %i.x, 16
+  %3 = lshr i64 %i.w, 16
+  %4 = trunc i64 %3 to i32
+  %5 = and i32 %4, 65535
   %i.z = load ptr, ptr %i.m, align 8, !tbaa !134
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -1553,7 +1561,7 @@ bb.g:                                             ; preds = %bb.d, %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store ptr null, ptr %i.ad, align 8, !tbaa !49
   %i.ae = getelementptr inbounds nuw i8, ptr %i.u, i64 136
-  %i.af = invoke noundef ptr @_ZN6spacer16pred_transformer11pob_manager6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE(ptr noundef nonnull align 8 dereferenceable(40) %i.ae, ptr noundef %i.v, i32 noundef %i.y, i32 noundef %3, ptr noundef %i.z, ptr noundef nonnull align 8 dereferenceable(16) %2)
+  %i.af = invoke noundef ptr @_ZN6spacer16pred_transformer11pob_manager6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE(ptr noundef nonnull align 8 dereferenceable(40) %i.ae, ptr noundef %i.v, i32 noundef %i.y, i32 noundef %5, ptr noundef %i.z, ptr noundef nonnull align 8 dereferenceable(16) %2)
           to label %_ZN6spacer16pred_transformer6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE.exit unwind label %bb.m ; 3 uses
 
 _ZN6spacer16pred_transformer6mk_pobEPNS_3pobEjjP4exprRK10ref_vectorI3app11ast_managerE.exit: ; preds = %bb.g

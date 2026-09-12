@@ -205,6 +205,7 @@ bb.mm:                                            ; preds = %bb.ml
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dr), !noalias !4613
   %i.bdb = and i16 %i.bcz, 3
   %.not38.i = icmp eq i16 %i.bdb, 0
+  %2 = lshr i64 %.sroa.5630.0.copyload, 16
   br i1 %.not38.i, label %bb.mn, label %bb.mo
 
 bb.mn:                                            ; preds = %bb.my, %bb.mm
@@ -429,9 +430,9 @@ _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTRShNtNtNtCs7gfv9tz
   %sh.diff = lshr i64 %.sroa.5630.0.copyload, 16
   %tr.sh.diff = trunc i64 %sh.diff to i24
   %i.bev = and i24 %tr.sh.diff, -256
-  %i.bew = trunc i64 %.sroa.5630.0.copyload to i24
-  %2 = lshr i24 %i.bew, 16
-  %.sroa.0.0.insert.insert.i.i = or disjoint i24 %i.bev, %2
+  %i.bew = trunc i64 %2 to i24
+  %.sroa.0.0.insert.ext.i.i = and i24 %i.bew, 255
+  %.sroa.0.0.insert.insert.i.i = or disjoint i24 %i.bev, %.sroa.0.0.insert.ext.i.i
   %i.bex = and i16 %i.bcz, 4
   %.not42.i = icmp eq i16 %i.bex, 0
   %i.bey = and i16 %i.bcz, 24
@@ -834,15 +835,15 @@ bb.xh:                                            ; preds = %_RNvMs2_NtNtCs7gfv9
   %i.bzs = and i16 %i.bzp, 3
   %.not12.i.i = icmp eq i16 %i.bzs, 0             ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !4789
-  %3 = trunc i16 %i.bzp to i8
-  %4 = lshr i8 %3, 2                              ; 2 uses
+  %3 = lshr i16 %i.bzp, 2                         ; 2 uses
+  %4 = trunc i16 %3 to i8
   %i.bzt = and i8 %4, 1
   store i8 %i.bzt, ptr %i.s, align 1, !noalias !4789
   %i.bzu = and i16 %i.bzp, 64
   %.not13.i.i = icmp eq i16 %i.bzu, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !4789
-  %5 = trunc i8 %4 to i1
-  %spec.select.i67.i = select i1 %5, i16 2, i16 0 ; 2 uses
+  %5 = shl nuw nsw i16 %3, 1
+  %spec.select.i67.i = and i16 %5, 2              ; 2 uses
   %i.bzv = or disjoint i16 %spec.select.i67.i, 24
   %spec.select26.i.i = select i1 %.not13.i.i, i16 %spec.select.i67.i, i16 %i.bzv
   store i16 %spec.select26.i.i, ptr %i.r, align 2, !noalias !4789

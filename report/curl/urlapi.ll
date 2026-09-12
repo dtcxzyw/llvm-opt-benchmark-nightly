@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %bb.c
   br i1 %.not71, label %urlget_format.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %6 = trunc i32 %3 to i8
-  %7 = lshr i8 %6, 6
+  %6 = and i32 %3, 64
+  %7 = icmp ne i32 %6, 0
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !11
   %.not72 = icmp eq i8 %i.ah, 0
   %i.ai = and i32 %3, 16384
@@ -517,7 +517,7 @@ bb.bf:                                            ; preds = %.sink.split, %bb.d,
   br i1 %.not84, label %urlget_format.exit, label %.thread97
 
 .thread97:                                        ; preds = %bb.r, %bb.q, %bb.t, %bb.u, %bb.v, %bb.m, %bb.p, %bb.o, %bb.bf
-  %.0105 = phi i8 [ 0, %bb.bf ], [ 0, %bb.o ], [ 0, %bb.q ], [ %7, %bb.t ], [ 0, %bb.u ], [ 0, %bb.v ], [ 0, %bb.p ], [ 0, %bb.m ], [ 0, %bb.r ]
+  %.0105 = phi i1 [ false, %bb.bf ], [ false, %bb.o ], [ false, %bb.q ], [ %7, %bb.t ], [ false, %bb.u ], [ false, %bb.v ], [ false, %bb.p ], [ false, %bb.m ], [ false, %bb.r ]
   %.2104 = phi ptr [ %.2, %bb.bf ], [ %i.m, %bb.o ], [ %i.m, %bb.q ], [ %i.ag, %bb.t ], [ %i.ak, %bb.u ], [ @.str.8, %bb.v ], [ %i.m, %bb.p ], [ %i.e, %bb.m ], [ %spec.select, %bb.r ] ; 2 uses
   %.052103 = phi i32 [ %.052, %bb.bf ], [ %i.n, %bb.o ], [ %i.n, %bb.q ], [ %3, %bb.t ], [ %3, %bb.u ], [ %3, %bb.v ], [ %i.n, %bb.p ], [ %i.n, %bb.m ], [ %3, %bb.r ] ; 4 uses
   %i.em = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.2104) #7 ; 12 uses
@@ -538,9 +538,8 @@ bb.bf:                                            ; preds = %.sink.split, %bb.d,
   br i1 %.not69.i, label %urlget_format.exit, label %bb.bg
 
 bb.bg:                                            ; preds = %.thread97
-  %8 = trunc i8 %.0105 to i1
   %i.ex = icmp ne i64 %i.em, 0
-  %or.cond.i91 = and i1 %i.ex, %8
+  %or.cond.i91 = and i1 %.0105, %i.ex
   br i1 %or.cond.i91, label %iter.check, label %.loopexit.i
 
 iter.check:                                       ; preds = %bb.bg

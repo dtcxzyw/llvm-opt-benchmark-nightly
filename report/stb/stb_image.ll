@@ -204,18 +204,20 @@ bb.bh:                                            ; preds = %stbi__skip.exit270
 bb.bi:                                            ; preds = %.preheader322, %bb.bi
   %.0177328 = phi ptr [ %i.lj, %.preheader322 ], [ %i.lz, %bb.bi ] ; 4 uses
   %.1188327 = phi i32 [ 0, %.preheader322 ], [ %i.ma, %bb.bi ]
-  %i.lm = tail call i32 @stbi__get16le(ptr noundef nonnull %0)
-  %6 = trunc nuw i32 %i.lm to i16                 ; 3 uses
-  %7 = lshr i16 %6, 10
-  %i.ln = and i16 %7, 31
+  %i.lm = tail call i32 @stbi__get16le(ptr noundef nonnull %0) ; 3 uses
+  %6 = lshr i32 %i.lm, 10
+  %7 = lshr i32 %i.lm, 5
+  %8 = trunc nuw nsw i32 %6 to i16
+  %i.ln = and i16 %8, 31
   %.lhs.trunc.i = mul nuw nsw i16 %i.ln, 255
   %i.lo = udiv i16 %.lhs.trunc.i, 31
   %i.lp = trunc nuw i16 %i.lo to i8
   store i8 %i.lp, ptr %.0177328, align 1, !tbaa !37
-  %8 = lshr i16 %6, 5
   %9 = getelementptr inbounds nuw i8, ptr %.0177328, i64 1
-  %i.lq = insertelement <2 x i16> poison, i16 %8, i64 0
-  %i.lr = insertelement <2 x i16> %i.lq, i16 %6, i64 1
+  %10 = trunc nuw nsw i32 %7 to i16
+  %i.lq = insertelement <2 x i16> poison, i16 %10, i64 0
+  %11 = trunc nuw i32 %i.lm to i16
+  %i.lr = insertelement <2 x i16> %i.lq, i16 %11, i64 1
   %i.ls = and <2 x i16> %i.lr, splat (i16 31)
   %i.lt = mul nuw nsw <2 x i16> %i.ls, splat (i16 255)
   %i.lu = udiv <2 x i16> %i.lt, splat (i16 31)
@@ -434,17 +436,19 @@ bb.cc:                                            ; preds = %.thread
   br label %.preheader320
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.ou = tail call i32 @stbi__get16le(ptr noundef %0)
-  %10 = trunc nuw i32 %i.ou to i16                ; 3 uses
-  %11 = lshr i16 %10, 10
-  %i.ov = and i16 %11, 31
+  %i.ou = tail call i32 @stbi__get16le(ptr noundef %0) ; 3 uses
+  %12 = lshr i32 %i.ou, 10
+  %13 = lshr i32 %i.ou, 5
+  %14 = trunc nuw nsw i32 %12 to i16
+  %i.ov = and i16 %14, 31
   %.lhs.trunc.i285 = mul nuw nsw i16 %i.ov, 255
   %i.ow = udiv i16 %.lhs.trunc.i285, 31
   %i.ox = trunc nuw i16 %i.ow to i8
   store i8 %i.ox, ptr %i.a, align 4, !tbaa !37
-  %12 = lshr i16 %10, 5
-  %i.oy = insertelement <2 x i16> poison, i16 %12, i64 0
-  %i.oz = insertelement <2 x i16> %i.oy, i16 %10, i64 1
+  %15 = trunc nuw nsw i32 %13 to i16
+  %i.oy = insertelement <2 x i16> poison, i16 %15, i64 0
+  %16 = trunc nuw i32 %i.ou to i16
+  %i.oz = insertelement <2 x i16> %i.oy, i16 %16, i64 1
   %i.pa = and <2 x i16> %i.oz, splat (i16 31)
   %i.pb = mul nuw nsw <2 x i16> %i.pa, splat (i16 255)
   %i.pc = udiv <2 x i16> %i.pb, splat (i16 31)
@@ -847,18 +851,20 @@ bb.bk:                                            ; preds = %bb.bi, %bb.bj, %stb
 ; Function Attrs: nounwind uwtable
 define void @stbi__tga_read_rgb16(ptr noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 3)) %1) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i32 @stbi__get16le(ptr noundef %0)
-  %2 = trunc nuw i32 %i.a to i16                  ; 3 uses
-  %3 = lshr i16 %2, 10
-  %i.b = and i16 %3, 31
+  %i.a = tail call i32 @stbi__get16le(ptr noundef %0) ; 3 uses
+  %2 = lshr i32 %i.a, 10
+  %3 = lshr i32 %i.a, 5
+  %4 = trunc nuw nsw i32 %2 to i16
+  %i.b = and i16 %4, 31
   %.lhs.trunc = mul nuw nsw i16 %i.b, 255
   %i.c = udiv i16 %.lhs.trunc, 31
   %i.d = trunc nuw i16 %i.c to i8
   store i8 %i.d, ptr %1, align 1, !tbaa !37
-  %4 = lshr i16 %2, 5
   %5 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.e = insertelement <2 x i16> poison, i16 %4, i64 0
-  %i.f = insertelement <2 x i16> %i.e, i16 %2, i64 1
+  %6 = trunc nuw nsw i32 %3 to i16
+  %i.e = insertelement <2 x i16> poison, i16 %6, i64 0
+  %7 = trunc nuw i32 %i.a to i16
+  %i.f = insertelement <2 x i16> %i.e, i16 %7, i64 1
   %i.g = and <2 x i16> %i.f, splat (i16 31)
   %i.h = mul nuw nsw <2 x i16> %i.g, splat (i16 255)
   %i.i = udiv <2 x i16> %i.h, splat (i16 31)

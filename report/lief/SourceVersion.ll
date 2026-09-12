@@ -205,7 +205,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN4LIEF5MachO13SourceVersionE, i64 16), ptr %0, align 8, !tbaa !48
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !230  ; 3 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !230  ; 5 uses
   %i.l = lshr i64 %i.k, 40
   %i.m = trunc nuw nsw i64 %i.l to i32
   store i32 %i.m, ptr %i.i, align 8, !tbaa !49
@@ -215,16 +215,18 @@ bb.a:
   %i.q = and i32 %i.p, 1023
   store i32 %i.q, ptr %i.n, align 4, !tbaa !49
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %2 = trunc i64 %i.k to i32                      ; 3 uses
-  %3 = lshr i32 %2, 20
+  %2 = lshr i64 %i.k, 20
+  %3 = trunc i64 %2 to i32
   %i.s = and i32 %3, 1023
   store i32 %i.s, ptr %i.r, align 8, !tbaa !49
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %4 = lshr i32 %2, 10
-  %i.u = and i32 %4, 1023
+  %4 = lshr i64 %i.k, 10
+  %5 = trunc i64 %4 to i32
+  %i.u = and i32 %5, 1023
   store i32 %i.u, ptr %i.t, align 4, !tbaa !49
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.w = and i32 %2, 1023
+  %6 = trunc i64 %i.k to i32
+  %i.w = and i32 %6, 1023
   store i32 %i.w, ptr %i.v, align 8, !tbaa !49
   ret void
 }

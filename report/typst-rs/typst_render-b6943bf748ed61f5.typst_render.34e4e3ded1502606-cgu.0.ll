@@ -204,38 +204,26 @@ bb.bv:                                            ; preds = %bb.bu
 
 bb.bw:                                            ; preds = %.noexc.i.i.i
   %i.sx = getelementptr inbounds nuw i8, ptr %.sroa.16.0136.i.i.i, i64 4
-  %4 = trunc i32 %i.su to i16
-  %5 = lshr i16 %4, 8                             ; 2 uses
   %.sroa.548.11.extract.shift.i.i.i = lshr i32 %i.su, 24 ; 4 uses
   %i.sy = icmp eq i32 %.sroa.548.11.extract.shift.i.i.i, 255
-  %.sroa.03.0.insert.ext.i.i.i.i = and i32 %i.su, 255 ; 2 uses
-  br i1 %i.sy, label %6, label %bb.bx
-
-6:                                                ; preds = %bb.bw
-  %sh.diff.i.i.i = lshr i32 %i.su, 8
-  %tr.sh.diff.i.i.i = trunc i32 %sh.diff.i.i.i to i16
-  %.sroa.451.2.insert.ext.i.i.i = and i16 %tr.sh.diff.i.i.i, -256
-  %.sroa.451.2.insert.insert.i.i.i = or disjoint i16 %.sroa.451.2.insert.ext.i.i.i, %5
-  %7 = zext i16 %.sroa.451.2.insert.insert.i.i.i to i32
-  %8 = shl nuw nsw i32 %7, 8
-  %.sroa.44.0.insert.insert.i.i.i.i = or disjoint i32 %8, %.sroa.03.0.insert.ext.i.i.i.i
-  %.sroa.03.0.insert.insert.i.i.i.i = or disjoint i32 %.sroa.44.0.insert.insert.i.i.i.i, -16777216
-  br label %_RNvMNtCsfVrisfeHJNS_9tiny_skia5colorNtB2_7ColorU811premultiply.exit.i.i.i
+  br i1 %i.sy, label %_RNvMNtCsfVrisfeHJNS_9tiny_skia5colorNtB2_7ColorU811premultiply.exit.i.i.i, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %.sroa.451.2.extract.shift133.i.i.i.a = lshr i32 %i.su, 16
-  %.sroa.451.1.extract.trunc.i.i.i = zext nneg i16 %5 to i32
+  %.sroa.03.0.insert.ext.i.i.i.i = and i32 %i.su, 255
+  %.sroa.451.2.extract.shift133.i.i.i.a = lshr i32 %i.su, 8
+  %.sroa.451.2.extract.shift133.i.i.i = lshr i32 %i.su, 16
   %i.sz = mul nuw nsw i32 %.sroa.548.11.extract.shift.i.i.i, %.sroa.03.0.insert.ext.i.i.i.i
   %i.ta = add nuw nsw i32 %i.sz, 128              ; 2 uses
   %i.tb = lshr i32 %i.ta, 8
   %i.tc = add nuw nsw i32 %i.tb, %i.ta
   %i.td = lshr i32 %i.tc, 8
-  %i.te = mul nuw nsw i32 %.sroa.548.11.extract.shift.i.i.i, %.sroa.451.1.extract.trunc.i.i.i
+  %4 = and i32 %.sroa.451.2.extract.shift133.i.i.i.a, 255
+  %i.te = mul nuw nsw i32 %4, %.sroa.548.11.extract.shift.i.i.i
   %i.tf = add nuw nsw i32 %i.te, 128              ; 2 uses
   %i.tg = lshr i32 %i.tf, 8
   %i.th = add nuw nsw i32 %i.tg, %i.tf
   %.sroa.4.0.insert.shift.i.i.i.i = and i32 %i.th, 261888
-  %i.ti = and i32 %.sroa.451.2.extract.shift133.i.i.i.a, 255
+  %i.ti = and i32 %.sroa.451.2.extract.shift133.i.i.i, 255
   %.sroa.6.0.insert.shift.i.i.i.i = and i32 %i.su, -16777216
   %i.tj = mul nuw nsw i32 %.sroa.548.11.extract.shift.i.i.i, 257
   %i.tk = mul nuw nsw i32 %i.tj, %i.ti
@@ -306,8 +294,8 @@ _RNvMNtCs1xwejQucwHj_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsfVrisfeHJ
   store <2 x i32> %i.tn, ptr %.sroa.10120.0..sroa_idx.i.i.i, align 8, !noalias !1803
   br label %_RNCNvNtCs4xylOWI7Ys4_12typst_render5image13build_texture0B5_.exit.i.i
 
-_RNvMNtCsfVrisfeHJNS_9tiny_skia5colorNtB2_7ColorU811premultiply.exit.i.i.i: ; preds = %bb.bx, %6
-  %.sroa.0.0.i.i.i.i = phi i32 [ %.sroa.03.0.insert.insert.i.i.i.i, %6 ], [ %.sroa.02.0.insert.insert.i.i.i.i, %bb.bx ]
+_RNvMNtCsfVrisfeHJNS_9tiny_skia5colorNtB2_7ColorU811premultiply.exit.i.i.i: ; preds = %bb.bx, %bb.bw
+  %.sroa.0.0.i.i.i.i = phi i32 [ %.sroa.02.0.insert.insert.i.i.i.i, %bb.bx ], [ %i.su, %bb.bw ]
   store i32 %.sroa.0.0.i.i.i.i, ptr %.sroa.16.0136.i.i.i, align 1, !noalias !1803
   %.not.i.i.i.i.i = icmp uge i32 %i.sv, %.sroa.04.0.val.i.i.i ; 2 uses
   %i.ts = zext i1 %.not.i.i.i.i.i to i32

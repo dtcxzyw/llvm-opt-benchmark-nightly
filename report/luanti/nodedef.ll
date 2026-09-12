@@ -204,20 +204,22 @@ bb.m:                                             ; preds = %_ZNSt7__cxx1112basi
 
 _Z7readU16RSi.exit:                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit29
   %.0.copyload.i.i = load i16, ptr %i.f, align 2
-  %rev.i.i.i = call noundef i16 @llvm.bswap.i16(i16 %.0.copyload.i.i) ; 2 uses
+  %rev.i.i.i = call noundef i16 @llvm.bswap.i16(i16 %.0.copyload.i.i) ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #32
   %i.bk = zext i16 %rev.i.i.i to i32              ; 3 uses
-  %i.bl = trunc i16 %rev.i.i.i to i8              ; 3 uses
+  %i.bl = trunc i16 %rev.i.i.i to i8
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.bn = and i8 %i.bl, 1
   store i8 %i.bn, ptr %i.bm, align 8, !tbaa !88
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 33
-  %7 = lshr i8 %i.bl, 1
-  %i.bp = and i8 %7, 1
+  %7 = lshr i16 %rev.i.i.i, 1
+  %8 = trunc i16 %7 to i8
+  %i.bp = and i8 %8, 1
   store i8 %i.bp, ptr %i.bo, align 1, !tbaa !91
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 34
-  %8 = lshr i8 %i.bl, 2
-  %i.br = and i8 %8, 1
+  %9 = lshr i16 %rev.i.i.i, 2
+  %10 = trunc i16 %9 to i8
+  %i.br = and i8 %10, 1
   store i8 %i.br, ptr %i.bq, align 2, !tbaa !92
   %i.bs = and i32 %i.bk, 8                        ; 2 uses
   %.not = icmp eq i32 %i.bs, 0

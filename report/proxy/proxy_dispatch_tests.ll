@@ -205,16 +205,17 @@ bb.r:                                             ; preds = %bb.q
 
 .lr.ph.i38.i:                                     ; preds = %.lr.ph.i38.i, %.lr.ph.preheader.i37.i
   %.031.i39.i = phi i32 [ %i.cr, %.lr.ph.i38.i ], [ %i.cf, %.lr.ph.preheader.i37.i ] ; 3 uses
-  %.02830.i40.i = phi i32 [ %i.cl, %.lr.ph.i38.i ], [ %.045, %.lr.ph.preheader.i37.i ] ; 3 uses
-  %i.cg = trunc i32 %.02830.i40.i to i8           ; 2 uses
+  %.02830.i40.i = phi i32 [ %i.cl, %.lr.ph.i38.i ], [ %.045, %.lr.ph.preheader.i37.i ] ; 4 uses
+  %3 = lshr i32 %.02830.i40.i, 3
+  %i.cg = trunc i32 %.02830.i40.i to i8
   %i.ch = and i8 %i.cg, 7
   %i.ci = or disjoint i8 %i.ch, 48
   %i.cj = zext i32 %.031.i39.i to i64
   %i.ck = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.cj
   store i8 %i.ci, ptr %i.ck, align 1, !tbaa !74
   %i.cl = lshr i32 %.02830.i40.i, 6               ; 2 uses
-  %3 = lshr i8 %i.cg, 3
-  %i.cm = and i8 %3, 7
+  %4 = trunc i32 %3 to i8
+  %i.cm = and i8 %4, 7
   %i.cn = or disjoint i8 %i.cm, 48
   %i.co = add nsw i32 %.031.i39.i, -1
   %i.cp = zext i32 %i.co to i64
@@ -617,13 +618,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bg, label %._crit_edge.i.thread.i, label %._crit_edge.i.i
 
 ._crit_edge.i.thread.i:                           ; preds = %bb.k
+  %3 = lshr i8 %1, 3
   %i.bh = and i8 %1, 7
   %i.bi = or disjoint i8 %i.bh, 48
   %i.bj = getelementptr i8, ptr %i.h, i64 %i.bf
   %i.bk = getelementptr i8, ptr %i.bj, i64 -1
   store i8 %i.bi, ptr %i.bk, align 1, !tbaa !74
   %i.bl = lshr i8 %1, 6
-  %3 = lshr i8 %1, 3
   %i.bm = add nuw nsw i64 %i.bf, 4294967294
   %i.bn = and i64 %i.bm, 4294967295
   br label %.sink.split.i
@@ -1026,16 +1027,17 @@ bb.r:                                             ; preds = %bb.q
 
 .lr.ph.i38.i:                                     ; preds = %.lr.ph.i38.i, %.lr.ph.preheader.i37.i
   %.031.i39.i = phi i32 [ %i.cp, %.lr.ph.i38.i ], [ %i.cd, %.lr.ph.preheader.i37.i ] ; 3 uses
-  %.02830.i40.i = phi i32 [ %i.cj, %.lr.ph.i38.i ], [ %1, %.lr.ph.preheader.i37.i ] ; 3 uses
-  %i.ce = trunc i32 %.02830.i40.i to i8           ; 2 uses
+  %.02830.i40.i = phi i32 [ %i.cj, %.lr.ph.i38.i ], [ %1, %.lr.ph.preheader.i37.i ] ; 4 uses
+  %3 = lshr i32 %.02830.i40.i, 3
+  %i.ce = trunc i32 %.02830.i40.i to i8
   %i.cf = and i8 %i.ce, 7
   %i.cg = or disjoint i8 %i.cf, 48
   %i.ch = zext i32 %.031.i39.i to i64
   %i.ci = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.ch
   store i8 %i.cg, ptr %i.ci, align 1, !tbaa !74
   %i.cj = lshr i32 %.02830.i40.i, 6               ; 2 uses
-  %3 = lshr i8 %i.ce, 3
-  %i.ck = and i8 %3, 7
+  %4 = trunc i32 %3 to i8
+  %i.ck = and i8 %4, 7
   %i.cl = or disjoint i8 %i.ck, 48
   %i.cm = add nsw i32 %.031.i39.i, -1
   %i.cn = zext i32 %i.cm to i64
@@ -1438,16 +1440,17 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.i38.i:                                     ; preds = %.lr.ph.i38.i, %.lr.ph.preheader.i37.i
   %.031.i39.i = phi i32 [ %i.co, %.lr.ph.i38.i ], [ %i.cc, %.lr.ph.preheader.i37.i ] ; 3 uses
-  %.02830.i40.i = phi i64 [ %i.ci, %.lr.ph.i38.i ], [ %.045, %.lr.ph.preheader.i37.i ] ; 3 uses
-  %i.cd = trunc i64 %.02830.i40.i to i8           ; 2 uses
+  %.02830.i40.i = phi i64 [ %i.ci, %.lr.ph.i38.i ], [ %.045, %.lr.ph.preheader.i37.i ] ; 4 uses
+  %3 = lshr i64 %.02830.i40.i, 3
+  %i.cd = trunc i64 %.02830.i40.i to i8
   %i.ce = and i8 %i.cd, 7
   %i.cf = or disjoint i8 %i.ce, 48
   %i.cg = zext i32 %.031.i39.i to i64
   %i.ch = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.cg
   store i8 %i.cf, ptr %i.ch, align 1, !tbaa !74
   %i.ci = lshr i64 %.02830.i40.i, 6               ; 2 uses
-  %3 = lshr i8 %i.cd, 3
-  %i.cj = and i8 %3, 7
+  %4 = trunc i64 %3 to i8
+  %i.cj = and i8 %4, 7
   %i.ck = or disjoint i8 %i.cj, 48
   %i.cl = add nsw i32 %.031.i39.i, -1
   %i.cm = zext i32 %i.cl to i64
@@ -1848,16 +1851,17 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.i38.i:                                     ; preds = %.lr.ph.i38.i, %.lr.ph.preheader.i37.i
   %.031.i39.i = phi i32 [ %i.cm, %.lr.ph.i38.i ], [ %i.ca, %.lr.ph.preheader.i37.i ] ; 3 uses
-  %.02830.i40.i = phi i64 [ %i.cg, %.lr.ph.i38.i ], [ %1, %.lr.ph.preheader.i37.i ] ; 3 uses
-  %i.cb = trunc i64 %.02830.i40.i to i8           ; 2 uses
+  %.02830.i40.i = phi i64 [ %i.cg, %.lr.ph.i38.i ], [ %1, %.lr.ph.preheader.i37.i ] ; 4 uses
+  %3 = lshr i64 %.02830.i40.i, 3
+  %i.cb = trunc i64 %.02830.i40.i to i8
   %i.cc = and i8 %i.cb, 7
   %i.cd = or disjoint i8 %i.cc, 48
   %i.ce = zext i32 %.031.i39.i to i64
   %i.cf = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.ce
   store i8 %i.cd, ptr %i.cf, align 1, !tbaa !74
   %i.cg = lshr i64 %.02830.i40.i, 6               ; 2 uses
-  %3 = lshr i8 %i.cb, 3
-  %i.ch = and i8 %3, 7
+  %4 = trunc i64 %3 to i8
+  %i.ch = and i8 %4, 7
   %i.ci = or disjoint i8 %i.ch, 48
   %i.cj = add nsw i32 %.031.i39.i, -1
   %i.ck = zext i32 %i.cj to i64
@@ -2260,16 +2264,17 @@ _ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i30.i: ; preds = %bb.t, %bb.s
 
 .lr.ph.i42.i:                                     ; preds = %.lr.ph.i42.i, %.lr.ph.preheader.i41.i
   %.031.i43.i = phi i32 [ %i.db, %.lr.ph.i42.i ], [ %i.cp, %.lr.ph.preheader.i41.i ] ; 3 uses
-  %.02830.i44.i = phi i128 [ %i.cv, %.lr.ph.i42.i ], [ %.045, %.lr.ph.preheader.i41.i ] ; 3 uses
-  %i.cq = trunc i128 %.02830.i44.i to i8          ; 2 uses
+  %.02830.i44.i = phi i128 [ %i.cv, %.lr.ph.i42.i ], [ %.045, %.lr.ph.preheader.i41.i ] ; 4 uses
+  %3 = lshr i128 %.02830.i44.i, 3
+  %i.cq = trunc i128 %.02830.i44.i to i8
   %i.cr = and i8 %i.cq, 7
   %i.cs = or disjoint i8 %i.cr, 48
   %i.ct = zext i32 %.031.i43.i to i64
   %i.cu = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.ct
   store i8 %i.cs, ptr %i.cu, align 1, !tbaa !74
   %i.cv = lshr i128 %.02830.i44.i, 6              ; 2 uses
-  %3 = lshr i8 %i.cq, 3
-  %i.cw = and i8 %3, 7
+  %4 = trunc i128 %3 to i8
+  %i.cw = and i8 %4, 7
   %i.cx = or disjoint i8 %i.cw, 48
   %i.cy = add nsw i32 %.031.i43.i, -1
   %i.cz = zext i32 %i.cy to i64
@@ -2337,8 +2342,9 @@ _ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i.i: ; preds = %bb.y, %bb.x
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.031.i.i = phi i32 [ %i.ek, %.lr.ph.i.i ], [ %i.dw, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.02830.i.i = phi i128 [ %i.ed, %.lr.ph.i.i ], [ %.045, %.lr.ph.preheader.i.i ] ; 3 uses
-  %i.dx = trunc i128 %.02830.i.i to i64           ; 2 uses
+  %.02830.i.i = phi i128 [ %i.ed, %.lr.ph.i.i ], [ %.045, %.lr.ph.preheader.i.i ] ; 4 uses
+  %5 = lshr i128 %.02830.i.i, 4
+  %i.dx = trunc i128 %.02830.i.i to i64
   %i.dy = and i64 %i.dx, 15
   %i.dz = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail13__to_chars_16IoEENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES3_IS7_sES3_IS7_iES3_IS7_lES3_IS7_xES3_IS7_nEEES2_IJS3_IS7_hES3_IS7_tES3_IS7_jES3_IS7_mES3_IS7_yES3_IS7_oEEES3_IcS7_EEE5valueESt15to_chars_resultE4typeEPcSQ_S5_.__digits, i64 %i.dy
   %i.ea = load i8, ptr %i.dz, align 1, !tbaa !74
@@ -2346,8 +2352,8 @@ _ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i.i: ; preds = %bb.y, %bb.x
   %i.ec = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.eb
   store i8 %i.ea, ptr %i.ec, align 1, !tbaa !74
   %i.ed = lshr i128 %.02830.i.i, 8                ; 2 uses
-  %4 = lshr i64 %i.dx, 4
-  %i.ee = and i64 %4, 15
+  %6 = trunc i128 %5 to i64
+  %i.ee = and i64 %6, 15
   %i.ef = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail13__to_chars_16IoEENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES3_IS7_sES3_IS7_iES3_IS7_lES3_IS7_xES3_IS7_nEEES2_IJS3_IS7_hES3_IS7_tES3_IS7_jES3_IS7_mES3_IS7_yES3_IS7_oEEES3_IcS7_EEE5valueESt15to_chars_resultE4typeEPcSQ_S5_.__digits, i64 %i.ee
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !74
   %i.eh = add nsw i32 %.031.i.i, -1
@@ -2724,16 +2730,17 @@ _ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i30.i: ; preds = %bb.t, %bb.s
 
 .lr.ph.i42.i:                                     ; preds = %.lr.ph.i42.i, %.lr.ph.preheader.i41.i
   %.031.i43.i = phi i32 [ %i.cz, %.lr.ph.i42.i ], [ %i.cn, %.lr.ph.preheader.i41.i ] ; 3 uses
-  %.02830.i44.i = phi i128 [ %i.ct, %.lr.ph.i42.i ], [ %1, %.lr.ph.preheader.i41.i ] ; 3 uses
-  %i.co = trunc i128 %.02830.i44.i to i8          ; 2 uses
+  %.02830.i44.i = phi i128 [ %i.ct, %.lr.ph.i42.i ], [ %1, %.lr.ph.preheader.i41.i ] ; 4 uses
+  %3 = lshr i128 %.02830.i44.i, 3
+  %i.co = trunc i128 %.02830.i44.i to i8
   %i.cp = and i8 %i.co, 7
   %i.cq = or disjoint i8 %i.cp, 48
   %i.cr = zext i32 %.031.i43.i to i64
   %i.cs = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.cr
   store i8 %i.cq, ptr %i.cs, align 1, !tbaa !74
   %i.ct = lshr i128 %.02830.i44.i, 6              ; 2 uses
-  %3 = lshr i8 %i.co, 3
-  %i.cu = and i8 %3, 7
+  %4 = trunc i128 %3 to i8
+  %i.cu = and i8 %4, 7
   %i.cv = or disjoint i8 %i.cu, 48
   %i.cw = add nsw i32 %.031.i43.i, -1
   %i.cx = zext i32 %i.cw to i64
@@ -2801,8 +2808,9 @@ _ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i.i: ; preds = %bb.y, %bb.x
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.031.i.i = phi i32 [ %i.ei, %.lr.ph.i.i ], [ %i.du, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.02830.i.i = phi i128 [ %i.eb, %.lr.ph.i.i ], [ %1, %.lr.ph.preheader.i.i ] ; 3 uses
-  %i.dv = trunc i128 %.02830.i.i to i64           ; 2 uses
+  %.02830.i.i = phi i128 [ %i.eb, %.lr.ph.i.i ], [ %1, %.lr.ph.preheader.i.i ] ; 4 uses
+  %5 = lshr i128 %.02830.i.i, 4
+  %i.dv = trunc i128 %.02830.i.i to i64
   %i.dw = and i64 %i.dv, 15
   %i.dx = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail13__to_chars_16IoEENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES3_IS7_sES3_IS7_iES3_IS7_lES3_IS7_xES3_IS7_nEEES2_IJS3_IS7_hES3_IS7_tES3_IS7_jES3_IS7_mES3_IS7_yES3_IS7_oEEES3_IcS7_EEE5valueESt15to_chars_resultE4typeEPcSQ_S5_.__digits, i64 %i.dw
   %i.dy = load i8, ptr %i.dx, align 1, !tbaa !74
@@ -2810,8 +2818,8 @@ _ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i.i: ; preds = %bb.y, %bb.x
   %i.ea = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.dz
   store i8 %i.dy, ptr %i.ea, align 1, !tbaa !74
   %i.eb = lshr i128 %.02830.i.i, 8                ; 2 uses
-  %4 = lshr i64 %i.dv, 4
-  %i.ec = and i64 %4, 15
+  %6 = trunc i128 %5 to i64
+  %i.ec = and i64 %6, 15
   %i.ed = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail13__to_chars_16IoEENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES3_IS7_sES3_IS7_iES3_IS7_lES3_IS7_xES3_IS7_nEEES2_IJS3_IS7_hES3_IS7_tES3_IS7_jES3_IS7_mES3_IS7_yES3_IS7_oEEES3_IcS7_EEE5valueESt15to_chars_resultE4typeEPcSQ_S5_.__digits, i64 %i.ec
   %i.ee = load i8, ptr %i.ed, align 1, !tbaa !74
   %i.ef = add nsw i32 %.031.i.i, -1

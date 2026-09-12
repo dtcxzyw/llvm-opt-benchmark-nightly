@@ -202,9 +202,10 @@ mutex_ptr.exit:                                   ; preds = %bb.e, %RTYPEDDATA_G
 bb.f:                                             ; preds = %mutex_ptr.exit
   %i.aa = inttoptr i64 %0 to ptr                  ; 6 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !54 ; 2 uses
-  %i.ac = trunc i64 %i.ab to i32
-  %2 = lshr i32 %i.ac, 12                         ; 2 uses
-  %i.ad = icmp eq i32 %2, 1048575
+  %2 = lshr i64 %i.ab, 12
+  %i.ac = trunc i64 %2 to i32
+  %3 = and i32 %i.ac, 1048575                     ; 2 uses
+  %i.ad = icmp eq i32 %3, 1048575
   br i1 %i.ad, label %bb.g, label %rb_thread_shield_waiting_inc.exit
 
 bb.g:                                             ; preds = %bb.f
@@ -213,7 +214,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 rb_thread_shield_waiting_inc.exit:                ; preds = %bb.f
-  %i.af = add nuw nsw i32 %2, 1
+  %i.af = add nuw nsw i32 %3, 1
   %i.ag = zext nneg i32 %i.af to i64
   %i.ah = and i64 %i.ab, -4294963201
   %i.ai = shl nuw nsw i64 %i.ag, 12
@@ -277,9 +278,10 @@ rb_mutex_lock.exit:                               ; preds = %bb.j, %RTYPEDDATA_G
   %i.bc = call fastcc i64 @do_mutex_lock(ptr noundef %1, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   %i.bd = load i64, ptr %i.aa, align 8, !tbaa !54 ; 2 uses
-  %i.be = trunc i64 %i.bd to i32
-  %3 = lshr i32 %i.be, 12                         ; 2 uses
-  %.not.i = icmp eq i32 %3, 0
+  %4 = lshr i64 %i.bd, 12
+  %i.be = trunc i64 %4 to i32
+  %5 = and i32 %i.be, 1048575                     ; 2 uses
+  %.not.i = icmp eq i32 %5, 0
   br i1 %.not.i, label %bb.k, label %rb_thread_shield_waiting_dec.exit
 
 bb.k:                                             ; preds = %rb_mutex_lock.exit
@@ -288,7 +290,7 @@ bb.k:                                             ; preds = %rb_mutex_lock.exit
   unreachable
 
 rb_thread_shield_waiting_dec.exit:                ; preds = %rb_mutex_lock.exit
-  %i.bg = add nsw i32 %3, -1
+  %i.bg = add nsw i32 %5, -1
   %i.bh = and i64 %i.bd, -4294963201
   %i.bi = zext nneg i32 %i.bg to i64
   %i.bj = shl nuw nsw i64 %i.bi, 12

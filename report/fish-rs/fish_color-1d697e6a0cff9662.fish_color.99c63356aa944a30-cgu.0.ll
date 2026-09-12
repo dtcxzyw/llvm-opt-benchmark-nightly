@@ -204,20 +204,19 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvMCsdcxgzuWc7wi_10fish_colorNtB2_7Color249from_bits.exit.i: ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !38
+  %4 = trunc i32 %i.b to i8
   %i.e = load ptr, ptr %1, align 8, !alias.scope !38, !nonnull !5, !noundef !5
   %i.f = load i8, ptr %i.e, align 1, !noalias !38, !noundef !5 ; 2 uses
-  %4 = trunc nuw i32 %i.b to i24
-  %5 = lshr i24 %4, 16                            ; 2 uses
-  %.sroa.01.0.extract.trunc.i = trunc nuw i24 %5 to i8
+  %5 = lshr i32 %i.b, 16                          ; 3 uses
+  %.sroa.01.0.extract.trunc.i = trunc nuw i32 %5 to i8
   %i.g = icmp ugt i8 %i.f, %.sroa.01.0.extract.trunc.i
-  %6 = zext i8 %i.f to i32                        ; 2 uses
-  %i.h = zext nneg i24 %5 to i32                  ; 2 uses
-  %i.i = sub nsw i32 %6, %i.h
-  %i.j = sub nsw i32 %i.h, %6
+  %i.h = zext i8 %i.f to i32                      ; 2 uses
+  %i.i = sub nsw i32 %i.h, %5
+  %i.j = sub nsw i32 %5, %i.h
   %.sroa.01.0.i.i = select i1 %i.g, i32 %i.i, i32 %i.j ; 2 uses
   %i.k = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.01.0.i.i, i32 %.sroa.01.0.i.i) ; 2 uses
   %i.l = extractvalue { i32, i1 } %i.k, 1
-  %i.m = extractvalue { i32, i1 } %i.k, 0         ; 2 uses
+  %i.m = extractvalue { i32, i1 } %i.k, 0
   br i1 %i.l, label %bb.c, label %_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i5.i, !prof !9
 
 bb.c:                                             ; preds = %_RNvMCsdcxgzuWc7wi_10fish_colorNtB2_7Color249from_bits.exit.i
@@ -238,24 +237,17 @@ _RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i5.i: ; preds = %_RNvMCsdcx
   %.sroa.01.0.i3.i = select i1 %i.q, i32 %i.t, i32 %i.u ; 2 uses
   %i.v = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.01.0.i3.i, i32 %.sroa.01.0.i3.i) ; 2 uses
   %i.w = extractvalue { i32, i1 } %i.v, 1
-  br i1 %i.w, label %bb.d, label %_RNvNvCsdcxgzuWc7wi_10fish_color13convert_color18squared_difference.exit8.i, !prof !9
+  br i1 %i.w, label %bb.d, label %_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i11.i, !prof !9
 
 bb.d:                                             ; preds = %_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i5.i
   tail call void @_RNvNtNtNtCs3oUPovFnLWP_4core3num3imp14overflow_panic3pow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #18, !noalias !38
   unreachable
 
-_RNvNvCsdcxgzuWc7wi_10fish_color13convert_color18squared_difference.exit8.i: ; preds = %_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i5.i
-  %7 = extractvalue { i32, i1 } %i.v, 0
-  %8 = add nsw i32 %7, %i.m                       ; 3 uses
-  %9 = icmp ult i32 %8, %i.m
-  br i1 %9, label %10, label %_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i11.i
-
-_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i11.i: ; preds = %_RNvNvCsdcxgzuWc7wi_10fish_color13convert_color18squared_difference.exit8.i
+_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i11.i: ; preds = %_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i5.i
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.y = load ptr, ptr %i.x, align 8, !alias.scope !38, !nonnull !5, !noundef !5
   %i.z = load i8, ptr %i.y, align 1, !noalias !38, !noundef !5 ; 2 uses
-  %.sroa.01.2.extract.trunc.i = trunc i32 %i.b to i8
-  %i.aa = icmp ugt i8 %i.z, %.sroa.01.2.extract.trunc.i
+  %i.aa = icmp ugt i8 %i.z, %4
   %i.ab = zext i8 %i.z to i32                     ; 2 uses
   %i.ac = and i32 %i.b, 255                       ; 2 uses
   %i.ad = sub nsw i32 %i.ab, %i.ac
@@ -270,14 +262,12 @@ bb.e:                                             ; preds = %_RNvMs6_NtCs3oUPovF
   unreachable
 
 _RNvNvCsdcxgzuWc7wi_10fish_color13convert_color18squared_difference.exit14.i: ; preds = %_RNvMs6_NtCs3oUPovFnLWP_4core3numm11checked_pow.exit.i11.i
+  %6 = extractvalue { i32, i1 } %i.v, 0
+  %7 = add nuw nsw i32 %6, %i.m                   ; 2 uses
   %i.ah = extractvalue { i32, i1 } %i.af, 0
-  %i.ai = add nsw i32 %i.ah, %8                   ; 2 uses
-  %i.aj = icmp ult i32 %i.ai, %8
+  %i.ai = add nsw i32 %i.ah, %7                   ; 2 uses
+  %i.aj = icmp ult i32 %i.ai, %7
   br i1 %i.aj, label %bb.f, label %_RNCNvCsdcxgzuWc7wi_10fish_color13convert_color0B3_.exit
-
-10:                                               ; preds = %_RNvNvCsdcxgzuWc7wi_10fish_color13convert_color18squared_difference.exit8.i
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #19, !noalias !38
-  unreachable
 
 bb.f:                                             ; preds = %_RNvNvCsdcxgzuWc7wi_10fish_color13convert_color18squared_difference.exit14.i
   tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #19, !noalias !38

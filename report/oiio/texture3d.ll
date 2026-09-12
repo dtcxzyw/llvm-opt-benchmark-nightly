@@ -205,19 +205,15 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.a
-  %i.ex = load i64, ptr %16, align 8              ; 8 uses
+  %i.ex = load i64, ptr %16, align 8              ; 5 uses
   %i.ey = icmp eq i64 %i.ex, 0
-  %21 = lshr i64 %i.ex, 32
-  %22 = trunc i64 %i.ex to i32
-  %23 = trunc i64 %i.ex to i32
   %i.ez = trunc i64 %i.ex to i32
-  %24 = lshr i32 %i.ez, 8
-  %i.fa = trunc i64 %i.ex to i32
-  %25 = lshr i64 %i.ex, 40
-  %26 = trunc nuw i64 %21 to i32
-  %27 = lshr i32 %22, 16
-  %28 = lshr i32 %i.fa, 24
-  %29 = trunc nuw nsw i64 %25 to i32
+  %21 = lshr i64 %i.ex, 8
+  %i.fa = trunc i64 %21 to i32
+  %22 = insertelement <4 x i64> poison, i64 %i.ex, i64 0
+  %23 = shufflevector <4 x i64> %22, <4 x i64> poison, <4 x i32> zeroinitializer
+  %24 = lshr <4 x i64> %23, <i64 24, i64 40, i64 32, i64 16>
+  %25 = trunc <4 x i64> %24 to <4 x i32>
   br i1 %i.ey, label %bb.iy, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -231,26 +227,22 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.fe, label %.lr.ph.preheader, label %.loopexit556
 
 .lr.ph.preheader:                                 ; preds = %bb.q
-  %i.ff = and i32 %23, 255
-  %i.fg = and i32 %24, 255
+  %26 = and <4 x i32> %25, splat (i32 255)        ; 2 uses
+  %i.ff = and i32 %i.ez, 255
+  %i.fg = and i32 %i.fa, 255
   %i.fh = fsub float 1.000000e+00, %i.ao
   %i.fi = fsub float 1.000000e+00, %i.ax          ; 2 uses
   %i.fj = fsub float 1.000000e+00, %i.aw
-  %30 = insertelement <4 x i32> poison, i32 %28, i64 0
-  %31 = insertelement <4 x i32> %30, i32 %29, i64 1
-  %32 = insertelement <4 x i32> %31, i32 %26, i64 2
-  %33 = insertelement <4 x i32> %32, i32 %27, i64 3
-  %34 = and <4 x i32> %33, <i32 -1, i32 255, i32 255, i32 255> ; 2 uses
-  %i.fk = shufflevector <4 x i32> %34, <4 x i32> poison, <4 x i32> <i32 2, i32 0, i32 3, i32 1>
-  %i.fl = mul nuw nsw <4 x i32> %34, %i.fk        ; 2 uses
+  %i.fk = shufflevector <4 x i32> %26, <4 x i32> poison, <4 x i32> <i32 2, i32 0, i32 3, i32 1>
+  %i.fl = mul nuw nsw <4 x i32> %26, %i.fk        ; 2 uses
   %i.fm = insertelement <4 x i32> poison, i32 %i.ff, i64 0
   %i.fn = shufflevector <4 x i32> %i.fm, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.fo = mul nuw nsw <4 x i32> %i.fl, %i.fn
-  %i.fp = uitofp <4 x i32> %i.fo to <4 x float>
+  %i.fp = uitofp nneg <4 x i32> %i.fo to <4 x float>
   %i.fq = insertelement <4 x i32> poison, i32 %i.fg, i64 0
   %i.fr = shufflevector <4 x i32> %i.fq, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.fs = mul nuw nsw <4 x i32> %i.fl, %i.fr
-  %i.ft = uitofp <4 x i32> %i.fs to <4 x float>
+  %i.ft = uitofp nneg <4 x i32> %i.fs to <4 x float>
   %i.fu = insertelement <4 x float> poison, float %i.ao, i64 0
   %i.fv = shufflevector <4 x float> %i.fu, <4 x float> poison, <4 x i32> zeroinitializer
   %i.fw = fmul <4 x float> %i.fv, %i.ft

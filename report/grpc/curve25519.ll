@@ -204,8 +204,7 @@ bb.e:                                             ; preds = %bb.d
 define internal fastcc void @_ZL12table_selectP10ge_precompia(ptr nofree noundef nonnull writeonly captures(none) %0, i32 noundef range(i32 -1073741824, 32) %1, i8 noundef signext %2) unnamed_addr #2 {
 vector.ph:
   %i.a = alloca [3 x [32 x i8]], align 16         ; 122 uses
-  %3 = ashr i8 %2, 7                              ; 2 uses
-  %.tr = and i8 %3, %2
+  %.tr = tail call i8 @llvm.smin.i8(i8 %2, i8 0)
   %i.b = shl i8 %.tr, 1
   %i.c = sub i8 %2, %i.b                          ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
@@ -608,6 +607,7 @@ begin_hunk_1_@_ZL12table_selectP10ge_precompia:vector.ph
   %i.rz = sub nuw nsw i64 4503599627370494, %i.ro
   %i.sa = sub nuw nsw i64 4503599627370494, %i.rq
   %i.sb = sub nsw i64 4503599627370494, %i.ru
+  %3 = ashr i8 %2, 7
   %i.sc = sext i8 %3 to i64                       ; 10 uses
   %i.sd = xor i64 %i.nw, %i.kj
   %i.se = and i64 %i.sd, %i.sc                    ; 2 uses
@@ -1008,6 +1008,9 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.smin.i8(i8, i8) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7

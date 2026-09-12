@@ -202,9 +202,10 @@ bb.f:                                             ; preds = %bb.e
   %i.m = tail call i64 @ERR_peek_error() #4       ; 2 uses
   %i.n = and i64 %i.m, 2147483648
   %.not.i = icmp eq i64 %i.n, 0
-  %i.o = trunc i64 %i.m to i32
-  %0 = lshr i32 %i.o, 23
-  %.0.i = select i1 %.not.i, i32 %0, i32 2
+  %0 = lshr i64 %i.m, 23
+  %i.o = trunc i64 %0 to i32
+  %1 = and i32 %i.o, 255
+  %.0.i = select i1 %.not.i, i32 %1, i32 2
   %i.p = tail call i32 @test_int_ne(ptr noundef nonnull @.str.18, i32 noundef 240, ptr noundef nonnull @.str.53, ptr noundef nonnull @.str.54, i32 noundef %.0.i, i32 noundef 44) #4
   %.not17 = icmp eq i32 %i.p, 0
   br i1 %.not17, label %bb.h, label %bb.g

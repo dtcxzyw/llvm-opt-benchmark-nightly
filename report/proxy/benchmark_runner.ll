@@ -202,17 +202,18 @@ _ZN9benchmark8internal12_GLOBAL__N_112ComputeItersERKNS0_17BenchmarkInstanceERKN
   store i8 %i.bz, ptr %i.ce, align 1, !tbaa !189
   %i.cf = load ptr, ptr %i.b, align 8, !tbaa !49, !nonnull !48, !align !74
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 272
-  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !190 ; 2 uses
+  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !190 ; 3 uses
   %.not9 = icmp eq i32 %i.ch, 0
   br i1 %.not9, label %_ZN9benchmark8internallsIA54_cEERNS0_7LogTypeES4_RKT_.exit, label %bb.v
 
 bb.v:                                             ; preds = %_ZN9benchmark8internal12_GLOBAL__N_112ComputeItersERKNS0_17BenchmarkInstanceERKNS0_13BenchTimeTypeE.exit
-  %4 = trunc i32 %i.ch to i8                      ; 2 uses
-  %5 = lshr i8 %4, 2
+  %4 = lshr i32 %i.ch, 2
+  %5 = trunc i32 %4 to i8
   %i.ci = and i8 %5, 1
   store i8 %i.ci, ptr %i.cd, align 8, !tbaa !188
-  %6 = lshr i8 %4, 1
-  %i.cj = and i8 %6, 1
+  %6 = lshr i32 %i.ch, 1
+  %7 = trunc i32 %6 to i8
+  %i.cj = and i8 %7, 1
   store i8 %i.cj, ptr %i.ce, align 1, !tbaa !189
   %i.ck = load atomic i8, ptr @_ZGVZN9benchmark8internal18GetNullLogInstanceEvE8null_log acquire, align 8
   %i.cl = icmp eq i8 %i.ck, 0

@@ -205,27 +205,28 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.i, align 1
   %i.j = load ptr, ptr %i.b, align 8
   %i.k = load i32, ptr %i.j, align 8
-  %i.l = call i64 @read(i32 noundef %i.k, ptr noundef nonnull %2, i64 noundef 256) #16
-  %i.m = trunc i64 %i.l to i32                    ; 2 uses
+  %i.l = call i64 @read(i32 noundef %i.k, ptr noundef nonnull %2, i64 noundef 256) #16 ; 2 uses
+  %i.m = trunc i64 %i.l to i32
   %i.n = icmp sgt i32 %i.m, 0
   br i1 %i.n, label %.lr.ph31.i, label %HandleClassicEvents.exit
 
 .loopexit.i:                                      ; preds = %HandleHat.exit.i, %.lr.ph31.i
   %i.o = load ptr, ptr %i.b, align 8
   %i.p = load i32, ptr %i.o, align 8
-  %i.q = call i64 @read(i32 noundef %i.p, ptr noundef nonnull %2, i64 noundef 256) #16
-  %i.r = trunc i64 %i.q to i32                    ; 2 uses
+  %i.q = call i64 @read(i32 noundef %i.p, ptr noundef nonnull %2, i64 noundef 256) #16 ; 2 uses
+  %i.r = trunc i64 %i.q to i32
   %i.s = icmp sgt i32 %i.r, 0
   br i1 %i.s, label %.lr.ph31.i, label %HandleClassicEvents.exit, !llvm.loop !26
 
 .lr.ph31.i:                                       ; preds = %bb.b, %.loopexit.i
-  %3 = phi i32 [ %i.r, %.loopexit.i ], [ %i.m, %bb.b ]
-  %4 = lshr i32 %3, 3                             ; 2 uses
-  %.not.i = icmp eq i32 %4, 0
+  %3 = phi i64 [ %i.q, %.loopexit.i ], [ %i.l, %bb.b ] ; 2 uses
+  %4 = and i64 %3, 2147483640
+  %.not.i = icmp eq i64 %4, 0
   br i1 %.not.i, label %.loopexit.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph31.i
-  %wide.trip.count.i = zext nneg i32 %4 to i64
+  %5 = lshr i64 %3, 3
+  %wide.trip.count.i = and i64 %5, 268435455
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %HandleHat.exit.i, %.lr.ph.preheader.i

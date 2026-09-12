@@ -202,7 +202,6 @@ _ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader: ; preds =
   %i.on = ptrtoint ptr %i.ol to i64
   %i.oo = sub i64 %i.om, %i.on
   %i.op = sdiv exact i64 %i.oo, 24
-  %19 = zext i1 %i.oj to i8
   br label %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit
 
 ._crit_edge929:                                   ; preds = %._crit_edge, %bb.bf
@@ -238,7 +237,7 @@ _ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit: ; preds = %_ZNSt6ve
   %i.oy = phi ptr [ %i.sv, %._crit_edge ], [ null, %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader ] ; 2 uses
   %i.oz = phi i64 [ %i.tb, %._crit_edge ], [ %i.op, %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader ]
   %i.pa = phi ptr [ %i.sx, %._crit_edge ], [ %i.ol, %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader ] ; 2 uses
-  %.0189928 = phi i8 [ %.lcssa820, %._crit_edge ], [ %19, %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader ] ; 3 uses
+  %.0189928 = phi i1 [ %.lcssa820, %._crit_edge ], [ %i.oj, %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader ] ; 3 uses
   %storemerge927 = phi i64 [ %i.qe, %._crit_edge ], [ 0, %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader ] ; 4 uses
   %.sroa.72.0926 = phi ptr [ %.sroa.72.1.lcssa, %._crit_edge ], [ null, %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader ] ; 3 uses
   %.sroa.40.0925 = phi ptr [ %.sroa.40.1.lcssa, %._crit_edge ], [ null, %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit.preheader ] ; 2 uses
@@ -312,8 +311,7 @@ _ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit: ; preds = %_ZNSt6ve
   %.not.i.i = icmp eq ptr %i.ox, %i.oy
   %spec.store.select = select i1 %.not.i.i, ptr %i.ox, ptr %i.oy
   store ptr %spec.store.select, ptr %i.ft, align 8
-  %20 = trunc i8 %.0189928 to i1
-  %i.rh = invoke noundef zeroext i1 @_ZN6Assimp3IFC25IntersectsBoundaryProfileERK10aiVector3tIdES4_RKSt6vectorIS2_SaIS2_EEbRS5_ISt4pairImS2_ESaISB_EEb(ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(24) %i.bt, i1 noundef zeroext %20, ptr noundef nonnull align 8 dereferenceable(24) %14, i1 noundef zeroext false)
+  %i.rh = invoke noundef zeroext i1 @_ZN6Assimp3IFC25IntersectsBoundaryProfileERK10aiVector3tIdES4_RKSt6vectorIS2_SaIS2_EEbRS5_ISt4pairImS2_ESaISB_EEb(ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(24) %i.bt, i1 noundef zeroext %.0189928, ptr noundef nonnull align 8 dereferenceable(24) %14, i1 noundef zeroext false)
           to label %bb.bi unwind label %bb.bl     ; 0 uses
 
 bb.bi:                                            ; preds = %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit
@@ -394,9 +392,9 @@ bb.bl:                                            ; preds = %_ZNSt6vectorISt4pai
   br i1 %.not983, label %._crit_edge, label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %_ZNSt6vectorISt5tupleIJm10aiVector3tIdEmEESaIS3_EE12emplace_backIJRmS2_S7_EEERS3_DpOT_.exit
-  %21 = trunc i64 %i.vo to i8
-  %22 = lshr i8 %21, 5
-  %23 = xor i8 %22, %.0189928
+  %19 = and i64 %i.vo, 32
+  %20 = icmp ne i64 %19, 0
+  %21 = xor i1 %.0189928, %20
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.loopexit792
@@ -405,7 +403,7 @@ bb.bl:                                            ; preds = %_ZNSt6vectorISt4pai
   %.sroa.0611.1.lcssa = phi ptr [ %.sroa.0611.0924, %.loopexit792 ], [ %.sroa.0611.5, %._crit_edge.loopexit ] ; 2 uses
   %.sroa.40.1.lcssa = phi ptr [ %.sroa.40.0925, %.loopexit792 ], [ %.sroa.40.7, %._crit_edge.loopexit ] ; 2 uses
   %.sroa.72.1.lcssa = phi ptr [ %.sroa.72.0926, %.loopexit792 ], [ %.sroa.72.5, %._crit_edge.loopexit ] ; 2 uses
-  %.lcssa820 = phi i8 [ %.0189928, %.loopexit792 ], [ %23, %._crit_edge.loopexit ]
+  %.lcssa820 = phi i1 [ %.0189928, %.loopexit792 ], [ %21, %._crit_edge.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #25
   %i.sw = load ptr, ptr %.sroa.gep712, align 8

@@ -204,10 +204,9 @@ bb.e:                                             ; preds = %bb.a
 
 bb.f:                                             ; preds = %.noexc
   %.sroa.10.8.copyload22 = load i64, ptr %i.a, align 8, !noalias !1451 ; 3 uses
-  %.sroa.10.sroa.0.0.extract.trunc42 = trunc i64 %.sroa.10.8.copyload22 to i32
   %.sroa.10.sroa.0.sroa.0.0.extract.trunc59 = trunc i64 %.sroa.10.8.copyload22 to i8
-  %.sroa.10.sroa.0.sroa.12.0.extract.shift70 = lshr i32 %.sroa.10.sroa.0.0.extract.trunc42, 8
-  %.sroa.10.sroa.0.sroa.12.0.extract.trunc71 = trunc nuw i32 %.sroa.10.sroa.0.sroa.12.0.extract.shift70 to i24
+  %2 = lshr i64 %.sroa.10.8.copyload22, 8
+  %.sroa.10.sroa.0.sroa.12.0.extract.trunc71 = trunc i64 %2 to i24
   %.sroa.10.sroa.12.0.extract.shift51 = lshr i64 %.sroa.10.8.copyload22, 32
   %.sroa.10.sroa.12.0.extract.trunc52 = trunc nuw i64 %.sroa.10.sroa.12.0.extract.shift51 to i32
   %.sroa.19.8..sroa_idx28 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -228,8 +227,9 @@ bb.g:                                             ; preds = %bb.f, %.noexc
 
 bb.h:                                             ; preds = %.noexc12
   %.sroa.10.8.copyload21 = load i64, ptr %i.c, align 8, !noalias !1451 ; 3 uses
-  %.sroa.10.sroa.0.0.extract.trunc41 = trunc i64 %.sroa.10.8.copyload21 to i32
   %.sroa.10.sroa.0.sroa.0.0.extract.trunc58 = trunc i64 %.sroa.10.8.copyload21 to i8
+  %3 = lshr i64 %.sroa.10.8.copyload21, 8
+  %.sroa.10.sroa.0.sroa.12.0.extract.trunc69 = trunc i64 %3 to i24
   %.sroa.10.sroa.12.0.extract.shift49 = lshr i64 %.sroa.10.8.copyload21, 32
   %.sroa.10.sroa.12.0.extract.trunc50 = trunc nuw i64 %.sroa.10.sroa.12.0.extract.shift49 to i32
   %.sroa.19.8..sroa_idx26 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -242,17 +242,17 @@ bb.i:                                             ; preds = %.noexc12
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %.sroa.06.0.copyload.i = load i32, ptr %i.x, align 1, !noalias !1448 ; 2 uses
   %.sroa.10.sroa.0.sroa.0.0.extract.trunc = trunc i32 %.sroa.06.0.copyload.i to i8
+  %.sroa.10.sroa.0.sroa.12.0.extract.shift = lshr i32 %.sroa.06.0.copyload.i, 8
+  %.sroa.10.sroa.0.sroa.12.0.extract.trunc = trunc nuw i32 %.sroa.10.sroa.0.sroa.12.0.extract.shift to i24
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.sroa.10.sroa.0.sroa.12.sroa.0.1.in.in = phi i32 [ %.sroa.06.0.copyload.i, %bb.i ], [ %.sroa.10.sroa.0.0.extract.trunc41, %bb.h ]
+  %.sroa.10.sroa.0.sroa.12.sroa.0.1 = phi i24 [ %.sroa.10.sroa.0.sroa.12.0.extract.trunc, %bb.i ], [ %.sroa.10.sroa.0.sroa.12.0.extract.trunc69, %bb.h ]
   %.sroa.10.sroa.0.sroa.0.1 = phi i8 [ %.sroa.10.sroa.0.sroa.0.0.extract.trunc, %bb.i ], [ %.sroa.10.sroa.0.sroa.0.0.extract.trunc58, %bb.h ]
   %.sroa.10.sroa.12.1 = phi i32 [ undef, %bb.i ], [ %.sroa.10.sroa.12.0.extract.trunc50, %bb.h ]
   %.sroa.21.1 = phi i64 [ undef, %bb.i ], [ %.sroa.21.8.copyload34, %bb.h ]
   %.sroa.19.1 = phi i64 [ undef, %bb.i ], [ %.sroa.19.8.copyload27, %bb.h ]
   %.sink15.i = phi i64 [ -9223372036854775808, %bb.i ], [ -2, %bb.h ]
-  %.sroa.10.sroa.0.sroa.12.sroa.0.1.in = lshr i32 %.sroa.10.sroa.0.sroa.12.sroa.0.1.in.in, 8
-  %.sroa.10.sroa.0.sroa.12.sroa.0.1 = trunc nuw i32 %.sroa.10.sroa.0.sroa.12.sroa.0.1.in to i24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1448
   br label %bb.n
 
@@ -277,9 +277,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.sroa.10.sroa.12.0.in = lshr i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in.in, 32
   %.sroa.10.sroa.12.0 = trunc nuw i64 %.sroa.10.sroa.12.0.in to i32
   %.sroa.10.sroa.0.sroa.0.0 = trunc i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in.in to i8
-  %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in = trunc i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in.in to i32
-  %.sroa.10.sroa.0.sroa.12.sroa.0.0.in = lshr i32 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in, 8
-  %.sroa.10.sroa.0.sroa.12.sroa.0.0 = trunc nuw i32 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in to i24
+  %.sroa.10.sroa.0.sroa.12.sroa.0.0.in = lshr i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in.in, 8
+  %.sroa.10.sroa.0.sroa.12.sroa.0.0 = trunc i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in to i24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1448
   br label %bb.n
 
@@ -535,10 +534,9 @@ _RNvMNtNtCs7ZUl82OSlxp_6rustls4msgs7messageNtB2_14MessagePayload3new.exit.thread
 
 bb.e:                                             ; preds = %bb.b
   %.sroa.10.8.copyload12 = load i64, ptr %i.a, align 8, !noalias !1467 ; 3 uses
-  %.sroa.10.sroa.0.0.extract.trunc32 = trunc i64 %.sroa.10.8.copyload12 to i32
   %.sroa.10.sroa.0.sroa.0.0.extract.trunc49 = trunc i64 %.sroa.10.8.copyload12 to i8
-  %.sroa.10.sroa.0.sroa.12.0.extract.shift60 = lshr i32 %.sroa.10.sroa.0.0.extract.trunc32, 8
-  %.sroa.10.sroa.0.sroa.12.0.extract.trunc61 = trunc nuw i32 %.sroa.10.sroa.0.sroa.12.0.extract.shift60 to i24
+  %2 = lshr i64 %.sroa.10.8.copyload12, 8
+  %.sroa.10.sroa.0.sroa.12.0.extract.trunc61 = trunc i64 %2 to i24
   %.sroa.10.sroa.12.0.extract.shift41 = lshr i64 %.sroa.10.8.copyload12, 32
   %.sroa.10.sroa.12.0.extract.trunc42 = trunc nuw i64 %.sroa.10.sroa.12.0.extract.shift41 to i32
   %.sroa.19.8..sroa_idx18 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -559,8 +557,9 @@ bb.f:                                             ; preds = %bb.e, %bb.b
 
 bb.g:                                             ; preds = %bb.c
   %.sroa.10.8.copyload11 = load i64, ptr %i.c, align 8, !noalias !1467 ; 3 uses
-  %.sroa.10.sroa.0.0.extract.trunc31 = trunc i64 %.sroa.10.8.copyload11 to i32
   %.sroa.10.sroa.0.sroa.0.0.extract.trunc48 = trunc i64 %.sroa.10.8.copyload11 to i8
+  %3 = lshr i64 %.sroa.10.8.copyload11, 8
+  %.sroa.10.sroa.0.sroa.12.0.extract.trunc59 = trunc i64 %3 to i24
   %.sroa.10.sroa.12.0.extract.shift39 = lshr i64 %.sroa.10.8.copyload11, 32
   %.sroa.10.sroa.12.0.extract.trunc40 = trunc nuw i64 %.sroa.10.sroa.12.0.extract.shift39 to i32
   %.sroa.19.8..sroa_idx16 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -573,17 +572,17 @@ bb.h:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %.sroa.06.0.copyload.i = load i32, ptr %i.v, align 1, !noalias !1463 ; 2 uses
   %.sroa.10.sroa.0.sroa.0.0.extract.trunc = trunc i32 %.sroa.06.0.copyload.i to i8
+  %.sroa.10.sroa.0.sroa.12.0.extract.shift = lshr i32 %.sroa.06.0.copyload.i, 8
+  %.sroa.10.sroa.0.sroa.12.0.extract.trunc = trunc nuw i32 %.sroa.10.sroa.0.sroa.12.0.extract.shift to i24
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.sroa.10.sroa.0.sroa.12.sroa.0.1.in.in = phi i32 [ %.sroa.06.0.copyload.i, %bb.h ], [ %.sroa.10.sroa.0.0.extract.trunc31, %bb.g ]
+  %.sroa.10.sroa.0.sroa.12.sroa.0.1 = phi i24 [ %.sroa.10.sroa.0.sroa.12.0.extract.trunc, %bb.h ], [ %.sroa.10.sroa.0.sroa.12.0.extract.trunc59, %bb.g ]
   %.sroa.10.sroa.0.sroa.0.1 = phi i8 [ %.sroa.10.sroa.0.sroa.0.0.extract.trunc, %bb.h ], [ %.sroa.10.sroa.0.sroa.0.0.extract.trunc48, %bb.g ]
   %.sroa.10.sroa.12.1 = phi i32 [ undef, %bb.h ], [ %.sroa.10.sroa.12.0.extract.trunc40, %bb.g ]
   %.sroa.21.1 = phi i64 [ undef, %bb.h ], [ %.sroa.21.8.copyload24, %bb.g ]
   %.sroa.19.1 = phi i64 [ undef, %bb.h ], [ %.sroa.19.8.copyload17, %bb.g ]
   %.sink15.i = phi i64 [ -9223372036854775808, %bb.h ], [ -2, %bb.g ]
-  %.sroa.10.sroa.0.sroa.12.sroa.0.1.in = lshr i32 %.sroa.10.sroa.0.sroa.12.sroa.0.1.in.in, 8
-  %.sroa.10.sroa.0.sroa.12.sroa.0.1 = trunc nuw i32 %.sroa.10.sroa.0.sroa.12.sroa.0.1.in to i24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1463
   br label %_RNvMNtNtCs7ZUl82OSlxp_6rustls4msgs7messageNtB2_14MessagePayload3new.exit
 
@@ -608,9 +607,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.sroa.10.sroa.12.0.in = lshr i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in.in, 32
   %.sroa.10.sroa.12.0 = trunc nuw i64 %.sroa.10.sroa.12.0.in to i32
   %.sroa.10.sroa.0.sroa.0.0 = trunc i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in.in to i8
-  %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in = trunc i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in.in to i32
-  %.sroa.10.sroa.0.sroa.12.sroa.0.0.in = lshr i32 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in, 8
-  %.sroa.10.sroa.0.sroa.12.sroa.0.0 = trunc nuw i32 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in to i24
+  %.sroa.10.sroa.0.sroa.12.sroa.0.0.in = lshr i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in.in.in, 8
+  %.sroa.10.sroa.0.sroa.12.sroa.0.0 = trunc i64 %.sroa.10.sroa.0.sroa.12.sroa.0.0.in to i24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1463
   br label %_RNvMNtNtCs7ZUl82OSlxp_6rustls4msgs7messageNtB2_14MessagePayload3new.exit
 

@@ -204,20 +204,18 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %indvars.iv.i.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.i.1, %bb.b ] ; 4 uses
-  %0 = trunc i64 %indvars.iv.i.i to i32
-  %1 = insertelement <8 x i32> poison, i32 %0, i64 0
-  %2 = shufflevector <8 x i32> %1, <8 x i32> poison, <8 x i32> zeroinitializer
-  %3 = and <8 x i32> %2, <i32 1, i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128>
-  %i.c = icmp ne <8 x i32> %3, zeroinitializer
+  %0 = insertelement <8 x i64> poison, i64 %indvars.iv.i.i, i64 0
+  %1 = shufflevector <8 x i64> %0, <8 x i64> poison, <8 x i32> zeroinitializer
+  %2 = and <8 x i64> %1, <i64 1, i64 2, i64 4, i64 8, i64 16, i64 32, i64 64, i64 128>
+  %i.c = icmp ne <8 x i64> %2, zeroinitializer
   %i.d = sext <8 x i1> %i.c to <8 x i32>
   %i.e = getelementptr inbounds nuw [32 x i8], ptr @_ZN8facebook5velox4simd6detail13fromBitMask32E, i64 %indvars.iv.i.i
   store <8 x i32> %i.d, ptr %i.e, align 32
   %indvars.iv.next.i.i = or disjoint i64 %indvars.iv.i.i, 1 ; 2 uses
-  %4 = trunc i64 %indvars.iv.next.i.i to i32
-  %5 = insertelement <8 x i32> poison, i32 %4, i64 0
-  %6 = shufflevector <8 x i32> %5, <8 x i32> poison, <8 x i32> zeroinitializer
-  %7 = and <8 x i32> %6, <i32 1, i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128>
-  %i.f = icmp ne <8 x i32> %7, zeroinitializer
+  %3 = insertelement <8 x i64> poison, i64 %indvars.iv.next.i.i, i64 0
+  %4 = shufflevector <8 x i64> %3, <8 x i64> poison, <8 x i32> zeroinitializer
+  %5 = and <8 x i64> %4, <i64 1, i64 2, i64 4, i64 8, i64 16, i64 32, i64 64, i64 128>
+  %i.f = icmp ne <8 x i64> %5, zeroinitializer
   %i.g = sext <8 x i1> %i.f to <8 x i32>
   %i.h = getelementptr inbounds nuw [32 x i8], ptr @_ZN8facebook5velox4simd6detail13fromBitMask32E, i64 %indvars.iv.next.i.i
   store <8 x i32> %i.g, ptr %i.h, align 32

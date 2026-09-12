@@ -1,0 +1,64 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+index 1002f34de0b8e..39ea9e54b8b70 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+@@ -492,24 +492,25 @@ Value *InstCombinerImpl::SimplifyDemandedUseBits(Instruction *I,
+     Known = LHSKnown.intersectWith(RHSKnown);
+     break;
+   }
+-  case Instruction::Trunc: {
+-    // If we do not demand the high bits of a right-shifted and truncated value,
+-    // then we may be able to truncate it before the shift.
+-    Value *X;
+-    const APInt *C;
+-    if (match(I->getOperand(0), m_OneUse(m_LShr(m_Value(X), m_APInt(C))))) {
+-      // The shift amount must be valid (not poison) in the narrow type, and
+-      // it must not be greater than the high bits demanded of the result.
+-      if (C->ult(VTy->getScalarSizeInBits()) &&
+-          C->ule(DemandedMask.countl_zero())) {
+-        // trunc (lshr X, C) --> lshr (trunc X), C
+-        IRBuilderBase::InsertPointGuard Guard(Builder);
+-        Builder.SetInsertPoint(I);
+-        Value *Trunc = Builder.CreateTrunc(X, VTy);
+-        return Builder.CreateLShr(Trunc, C->getZExtValue());
+-      }
+-    }
+-  }
++  case Instruction::Trunc: 
++  // {
++  //   // If we do not demand the high bits of a right-shifted and truncated value,
++  //   // then we may be able to truncate it before the shift.
++  //   Value *X;
++  //   const APInt *C;
++  //   if (match(I->getOperand(0), m_OneUse(m_LShr(m_Value(X), m_APInt(C))))) {
++  //     // The shift amount must be valid (not poison) in the narrow type, and
++  //     // it must not be greater than the high bits demanded of the result.
++  //     if (C->ult(VTy->getScalarSizeInBits()) &&
++  //         C->ule(DemandedMask.countl_zero())) {
++  //       // trunc (lshr X, C) --> lshr (trunc X), C
++  //       IRBuilderBase::InsertPointGuard Guard(Builder);
++  //       Builder.SetInsertPoint(I);
++  //       Value *Trunc = Builder.CreateTrunc(X, VTy);
++  //       return Builder.CreateLShr(Trunc, C->getZExtValue());
++  //     }
++  //   }
++  // }
+     [[fallthrough]];
+   case Instruction::ZExt: {
+     unsigned SrcBitWidth = I->getOperand(0)->getType()->getScalarSizeInBits();
+@@ -864,6 +865,15 @@ Value *InstCombinerImpl::SimplifyDemandedUseBits(Instruction *I,
+         }
+       }
+ 
++      // lshr (trunc X), C -> trunc (lshr X, C)
++      Value *X;
++      if (match(I->getOperand(0), m_OneUse(m_Trunc(m_Value(X)))) && ShiftAmt <= DemandedMask.countl_zero()) {
++        IRBuilderBase::InsertPointGuard Guard(Builder);
++        Builder.SetInsertPoint(I);
++        Value *Trunc = Builder.CreateLShr(X, ShiftAmt);
++        return Builder.CreateTrunc(Trunc, VTy);
++      }
++
+       // Unsigned shift right.
+       APInt DemandedMaskIn(DemandedMask.shl(ShiftAmt));
+       if (SimplifyDemandedBits(I, 0, DemandedMaskIn, Known, Q, Depth + 1)) {

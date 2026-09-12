@@ -171,8 +171,8 @@ bb.b:                                             ; preds = %bb.a
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !134
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 -16
   %i.t = load i64, ptr %i.s, align 8, !tbaa !135
-  %19 = trunc i64 %i.t to i8
-  %20 = lshr i8 %19, 1
+  %19 = lshr i64 %i.t, 1
+  %20 = trunc i64 %19 to i8
   %i.u = and i8 %20, 1
   br label %bb.c
 
@@ -566,8 +566,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = phi i1 [ true, %bb.a ], [ %i.f, %bb.b ]  ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i16 0, ptr %i.h, align 1
-  %i.i = trunc i32 %1 to i8                       ; 3 uses
-  %7 = lshr i8 %i.i, 2                            ; 2 uses
+  %i.i = trunc i32 %1 to i8
+  %7 = lshr i32 %1, 2
+  %8 = trunc i32 %7 to i8                         ; 2 uses
   %i.j = lshr i32 %1, 8                           ; 2 uses
   %i.k = trunc i32 %i.j to i8
   %i.l = lshr i32 %1, 9
@@ -577,8 +578,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.p = lshr i32 %1, 11                          ; 2 uses
   %i.q = trunc i32 %i.p to i8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = lshr i8 %i.i, 4
-  %i.s = and i8 %8, 1
+  %9 = lshr i32 %1, 4
+  %10 = trunc i32 %9 to i8
+  %i.s = and i8 %10, 1
   store i8 %i.s, ptr %i.r, align 1, !tbaa !313
   %i.t = and i32 %1, 64
   %.not = icmp ne i32 %i.t, 0
@@ -595,7 +597,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %narrow = select i1 %or.cond40, i1 %i.z, i1 false
   %i.ac = zext i1 %narrow to i8
   %i.ad = insertelement <8 x i8> poison, i8 %i.i, i64 0
-  %i.ae = insertelement <8 x i8> %i.ad, i8 %7, i64 1
+  %i.ae = insertelement <8 x i8> %i.ad, i8 %8, i64 1
   %i.af = insertelement <8 x i8> %i.ae, i8 %i.aa, i64 2
   %i.ag = insertelement <8 x i8> %i.af, i8 %i.k, i64 3
   %i.ah = insertelement <8 x i8> %i.ag, i8 %i.m, i64 4
@@ -603,7 +605,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.aj = insertelement <8 x i8> %i.ai, i8 %i.q, i64 6
   %i.ak = insertelement <8 x i8> %i.aj, i8 %i.ac, i64 7
   %i.al = and <8 x i8> %i.ak, <i8 1, i8 1, i8 -1, i8 1, i8 1, i8 -1, i8 1, i8 -1>
-  %i.am = and i8 %7, 1
+  %i.am = and i8 %8, 1
   store <8 x i8> %i.al, ptr %0, align 1, !tbaa !314
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.ao = lshr i32 %1, 10

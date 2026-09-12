@@ -204,10 +204,11 @@ bb.f:                                             ; preds = %.lr.ph
   %i.o = ptrtoint ptr %.val.i to i64
   %i.p = load i32, ptr getelementptr inbounds nuw (i8, ptr @global_debug_map, i64 8), align 8 ; 3 uses
   %i.q = load ptr, ptr @global_debug_map, align 8 ; 2 uses
+  %0 = lshr i64 %i.o, 6
   %i.r = zext i32 %i.p to i64
-  %i.s = trunc i64 %i.o to i32
-  %0 = lshr i32 %i.s, 6
-  %i.t = urem i32 %0, %i.p
+  %i.s = trunc i64 %0 to i32
+  %.lhs.trunc.i = and i32 %i.s, 67108863
+  %i.t = urem i32 %.lhs.trunc.i, %i.p
   %narrow = add nuw nsw i32 %i.t, 1               ; 2 uses
   %i.u = icmp ult i32 %narrow, %i.p
   br i1 %i.u, label %.lr.ph38, label %event_debug_map_HT_NEXT_RMV.exit
@@ -610,8 +611,8 @@ gettime.exit:                                     ; preds = %bb.ao, %bb.ap, %bb.
   br i1 %.not.i159, label %is_common_timeout.exit, label %is_common_timeout.exit.thread
 
 is_common_timeout.exit:                           ; preds = %gettime.exit
-  %6 = trunc i64 %.val to i32
-  %7 = lshr i32 %6, 20
+  %6 = lshr i64 %.val, 20
+  %7 = trunc i64 %6 to i32
   %i.fk = and i32 %7, 255
   %i.fl = getelementptr inbounds nuw i8, ptr %i.b, i64 288
   %i.fm = load i32, ptr %i.fl, align 8
@@ -720,14 +721,14 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   store i16 %i.hf, ptr %i.aq, align 8
   %i.hg = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
   %i.hh = getelementptr i8, ptr %0, i64 120       ; 3 uses
-  %.val.i = load i64, ptr %i.hh, align 8          ; 4 uses
+  %.val.i = load i64, ptr %i.hh, align 8          ; 3 uses
   %i.hi = and i64 %.val.i, 4026531840
   %.not.i.i163 = icmp eq i64 %i.hi, 1342177280
   br i1 %.not.i.i163, label %is_common_timeout.exit.i, label %is_common_timeout.exit.thread.i
 
 is_common_timeout.exit.i:                         ; preds = %bb.ba
-  %8 = trunc i64 %.val.i to i32
-  %9 = lshr i32 %8, 20
+  %8 = lshr i64 %.val.i, 20                       ; 2 uses
+  %9 = trunc i64 %8 to i32
   %i.hj = and i32 %9, 255
   %i.hk = getelementptr inbounds nuw i8, ptr %i.b, i64 288
   %i.hl = load i32, ptr %i.hk, align 8
@@ -737,8 +738,7 @@ is_common_timeout.exit.i:                         ; preds = %bb.ba
 bb.bb:                                            ; preds = %is_common_timeout.exit.i
   %i.hm = getelementptr i8, ptr %i.b, i64 280
   %.val20.i = load ptr, ptr %i.hm, align 8
-  %10 = lshr i64 %.val.i, 20
-  %i.hn = and i64 %10, 255
+  %i.hn = and i64 %8, 255
   %i.ho = getelementptr inbounds nuw [8 x i8], ptr %.val20.i, i64 %i.hn
   %i.hp = load ptr, ptr %i.ho, align 8            ; 4 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 8 ; 3 uses
@@ -1141,8 +1141,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i, label %is_common_timeout.exit, label %is_common_timeout.exit.thread
 
 is_common_timeout.exit:                           ; preds = %bb.d
-  %2 = trunc i64 %i.e to i32
-  %3 = lshr i32 %2, 20
+  %2 = lshr i64 %i.e, 20
+  %3 = trunc i64 %2 to i32
   %i.h = and i32 %3, 255
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.j = load i32, ptr %i.i, align 8
@@ -1545,14 +1545,14 @@ bb.a:
   %i.i = and i16 %i.h, -2
   store i16 %i.i, ptr %i.a, align 8
   %i.j = getelementptr i8, ptr %1, i64 120
-  %.val = load i64, ptr %i.j, align 8             ; 3 uses
+  %.val = load i64, ptr %i.j, align 8             ; 2 uses
   %i.k = and i64 %.val, 4026531840
   %.not.i = icmp eq i64 %i.k, 1342177280
   br i1 %.not.i, label %is_common_timeout.exit, label %is_common_timeout.exit.thread
 
 is_common_timeout.exit:                           ; preds = %bb.a
-  %2 = trunc i64 %.val to i32
-  %3 = lshr i32 %2, 20
+  %2 = lshr i64 %.val, 20                         ; 2 uses
+  %3 = trunc i64 %2 to i32
   %i.l = and i32 %3, 255
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.n = load i32, ptr %i.m, align 8
@@ -1575,8 +1575,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.t = getelementptr i8, ptr %0, i64 280
   %.val19 = load ptr, ptr %i.t, align 8
-  %4 = lshr i64 %.val, 20
-  %i.u = and i64 %4, 255
+  %i.u = and i64 %2, 255
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %.val19, i64 %i.u
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -1979,8 +1978,8 @@ gettime.exit.is_common_timeout.exit.thread_crit_edge.i: ; preds = %gettime.exit.
   br label %is_common_timeout.exit.thread.i
 
 is_common_timeout.exit.i:                         ; preds = %gettime.exit.i
-  %10 = trunc i64 %.val.i to i32
-  %11 = lshr i32 %10, 20
+  %10 = lshr i64 %.val.i, 20
+  %11 = trunc i64 %10 to i32
   %i.eh = and i32 %11, 255
   %i.ei = load i32, ptr %i.m, align 8
   %.not52.i = icmp slt i32 %i.eh, %i.ei

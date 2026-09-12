@@ -204,7 +204,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.q)
   %i.r = mul i32 %i.m, %1
   %i.s = zext i32 %i.r to i64                     ; 2 uses
-  %i.t = getelementptr [2 x i8], ptr %i.c, i64 %i.s ; 18 uses
+  %i.t = getelementptr [2 x i8], ptr %i.c, i64 %i.s ; 17 uses
   %i.u = udiv i32 %i.h, 9                         ; 3 uses
   %i.v = shl nuw nsw i32 %i.u, 4                  ; 3 uses
   %i.w = mul nuw nsw i32 %i.v, %1                 ; 2 uses
@@ -279,7 +279,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %strided.vec = shufflevector <32 x i32> %wide.vec, <32 x i32> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28> ; 3 uses
   %strided.vec76 = shufflevector <32 x i32> %wide.vec, <32 x i32> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29> ; 3 uses
   %strided.vec77 = shufflevector <32 x i32> %wide.vec, <32 x i32> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30> ; 3 uses
-  %strided.vec78 = shufflevector <32 x i32> %wide.vec, <32 x i32> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31> ; 2 uses
+  %strided.vec78 = shufflevector <32 x i32> %wide.vec, <32 x i32> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31> ; 3 uses
   %i.bc = trunc <8 x i32> %strided.vec to <8 x i16>
   %i.bd = and <8 x i16> %i.bc, splat (i16 16383)  ; 8 uses
   %i.be = extractelement <8 x i64> %i.bb, i64 0
@@ -451,7 +451,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store i16 %i.ft, ptr %i.fl, align 2, !tbaa !143, !alias.scope !144, !noalias !141
   %i.fu = extractelement <8 x i16> %i.fc, i64 7
   store i16 %i.fu, ptr %i.fm, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %i.fv = trunc <8 x i32> %strided.vec78 to <8 x i16> ; 2 uses
+  %i.fv = trunc <8 x i32> %strided.vec78 to <8 x i16>
   %i.fw = shl <8 x i16> %i.fv, splat (i16 12)
   %i.fx = and <8 x i16> %i.fw, splat (i16 12288)
   %i.fy = or disjoint <8 x i16> %i.fx, %i.fe      ; 8 uses
@@ -479,7 +479,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store i16 %i.gn, ptr %i.gf, align 2, !tbaa !143, !alias.scope !144, !noalias !141
   %i.go = extractelement <8 x i16> %i.fy, i64 7
   store i16 %i.go, ptr %i.gg, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %2 = lshr <8 x i16> %i.fv, splat (i16 2)        ; 8 uses
+  %2 = lshr <8 x i32> %strided.vec78, splat (i32 2)
+  %3 = trunc <8 x i32> %2 to <8 x i16>
+  %4 = and <8 x i16> %3, splat (i16 16383)        ; 8 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %i.bf, i64 14
   %i.gq = getelementptr inbounds nuw i8, ptr %i.bh, i64 14
   %i.gr = getelementptr inbounds nuw i8, ptr %i.bj, i64 14
@@ -488,21 +490,21 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.gu = getelementptr inbounds nuw i8, ptr %i.bp, i64 14
   %i.gv = getelementptr inbounds nuw i8, ptr %i.br, i64 14
   %i.gw = getelementptr inbounds nuw i8, ptr %i.bt, i64 14
-  %i.gx = extractelement <8 x i16> %2, i64 0
+  %i.gx = extractelement <8 x i16> %4, i64 0
   store i16 %i.gx, ptr %i.gp, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %i.gy = extractelement <8 x i16> %2, i64 1
+  %i.gy = extractelement <8 x i16> %4, i64 1
   store i16 %i.gy, ptr %i.gq, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %i.gz = extractelement <8 x i16> %2, i64 2
+  %i.gz = extractelement <8 x i16> %4, i64 2
   store i16 %i.gz, ptr %i.gr, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %i.ha = extractelement <8 x i16> %2, i64 3
+  %i.ha = extractelement <8 x i16> %4, i64 3
   store i16 %i.ha, ptr %i.gs, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %i.hb = extractelement <8 x i16> %2, i64 4
+  %i.hb = extractelement <8 x i16> %4, i64 4
   store i16 %i.hb, ptr %i.gt, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %i.hc = extractelement <8 x i16> %2, i64 5
+  %i.hc = extractelement <8 x i16> %4, i64 5
   store i16 %i.hc, ptr %i.gu, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %i.hd = extractelement <8 x i16> %2, i64 6
+  %i.hd = extractelement <8 x i16> %4, i64 6
   store i16 %i.hd, ptr %i.gv, align 2, !tbaa !143, !alias.scope !144, !noalias !141
-  %i.he = extractelement <8 x i16> %2, i64 7
+  %i.he = extractelement <8 x i16> %4, i64 7
   store i16 %i.he, ptr %i.gw, align 2, !tbaa !143, !alias.scope !144, !noalias !141
   %i.hf = lshr <8 x i32> %strided.vec78, splat (i32 16)
   %i.hg = trunc nuw <8 x i32> %i.hf to <8 x i16>
@@ -557,7 +559,7 @@ _ZN8rawspeed14BitStreamerLSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequen
   %i.hz = getelementptr i8, ptr %i.ai, i64 %indvars.iv64 ; 4 uses
   %i.ia = icmp samesign ule i64 %indvars.iv, %i.aj
   tail call void @llvm.assume(i1 %i.ia)
-  %i.ib = mul nuw nsw i64 %indvars.iv, 9          ; 9 uses
+  %i.ib = mul nuw nsw i64 %indvars.iv, 9          ; 8 uses
   %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.pre = load i32, ptr %i.hz, align 1 ; 3 uses
   %i.ic = trunc i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.pre to i16
   %i.id = and i16 %i.ic, 16383
@@ -600,7 +602,7 @@ _ZN8rawspeed14BitStreamerLSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequen
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 10
   store i16 %i.jd, ptr %i.jh, align 2, !tbaa !143
   %i.ji = getelementptr inbounds nuw i8, ptr %i.hz, i64 12
-  %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.6 = load i32, ptr %i.ji, align 1 ; 3 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.6 = load i32, ptr %i.ji, align 1 ; 2 uses
   %i.jj = trunc i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.6 to i16
   %i.jk = shl i16 %i.jj, 12
   %.masked = and i16 %i.jk, 12288
@@ -608,17 +610,14 @@ _ZN8rawspeed14BitStreamerLSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequen
   %i.jm = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %i.ib
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jm, i64 12
   store i16 %i.jl, ptr %i.jn, align 2, !tbaa !143
-  %3 = trunc i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.6 to i16
-  %4 = lshr i16 %3, 2
   %i.jo = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %i.ib
   %i.jp = getelementptr inbounds nuw i8, ptr %i.jo, i64 14
-  store i16 %4, ptr %i.jp, align 2, !tbaa !143
-  %5 = lshr i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.6, 16
-  %6 = trunc nuw i32 %5 to i16
-  %7 = and i16 %6, 16383
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %i.ib
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  store i16 %7, ptr %9, align 2, !tbaa !143
+  %5 = insertelement <2 x i32> poison, i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.6, i64 0
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer
+  %7 = lshr <2 x i32> %6, <i32 2, i32 16>
+  %8 = trunc <2 x i32> %7 to <2 x i16>
+  %9 = and <2 x i16> %8, splat (i16 16383)
+  store <2 x i16> %9, ptr %i.jp, align 2, !tbaa !143
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond70.not = icmp eq i64 %indvars.iv.next, %wide.trip.count69
   br i1 %exitcond70.not, label %._crit_edge, label %.lr.ph, !llvm.loop !134

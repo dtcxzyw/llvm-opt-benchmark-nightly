@@ -119,17 +119,19 @@ bb.a:
   store ptr %1, ptr %i.a, align 8, !tbaa !114
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %4 = trunc i32 %2 to i8                         ; 3 uses
-  %5 = lshr i8 %4, 4
+  %4 = lshr i32 %2, 4
+  %5 = trunc i32 %4 to i8
   %i.d = and i8 %5, 1
   store i8 %i.d, ptr %i.c, align 8, !tbaa !25
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 49
-  %6 = lshr i8 %4, 5
-  %i.f = and i8 %6, 1
+  %6 = lshr i32 %2, 5
+  %7 = trunc i32 %6 to i8
+  %i.f = and i8 %7, 1
   store i8 %i.f, ptr %i.e, align 1, !tbaa !26
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 50
-  %7 = lshr i8 %4, 3
-  %i.h = and i8 %7, 1
+  %8 = lshr i32 %2, 3
+  %9 = trunc i32 %8 to i8
+  %i.h = and i8 %9, 1
   store i8 %i.h, ptr %i.g, align 2, !tbaa !27
   %i.i = tail call noundef nonnull align 8 dereferenceable(49) ptr @_ZNK7Imf_3_410OutputFile6headerEv(ptr noundef nonnull align 8 dereferenceable(16) %1)
   %i.j = tail call noundef nonnull align 4 dereferenceable(16) ptr @_ZNK7Imf_3_46Header10dataWindowEv(ptr noundef nonnull align 8 dereferenceable(49) %i.i) ; 3 uses
@@ -532,8 +534,8 @@ bb.a:
   store ptr %1, ptr %i.a, align 8, !tbaa !164
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %4 = trunc i32 %2 to i8
-  %5 = lshr i8 %4, 5
+  %4 = lshr i32 %2, 5
+  %5 = trunc i32 %4 to i8
   %i.d = and i8 %5, 1
   store i8 %i.d, ptr %i.c, align 8, !tbaa !78
   %i.e = tail call noundef nonnull align 8 dereferenceable(49) ptr @_ZNK7Imf_3_49InputPart6headerEv(ptr noundef nonnull align 8 dereferenceable(8) %1)

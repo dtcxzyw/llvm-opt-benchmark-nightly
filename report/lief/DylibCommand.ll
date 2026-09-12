@@ -205,17 +205,19 @@ _ZN3fmt3v126detail10vformat_toERNS1_6bufferIcEENS0_17basic_string_viewIcEENS0_17
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.p = load i32, ptr %i.o, align 8, !tbaa !252  ; 2 uses
-  %i.q = lshr i32 %i.p, 16
-  %i.r = trunc i32 %i.p to i16                    ; 2 uses
-  %10 = lshr i16 %i.r, 8
-  %i.s = and i16 %i.r, 255
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !252  ; 3 uses
+  %10 = lshr i32 %i.p, 16
+  %i.q = lshr i32 %i.p, 8
+  %i.r = trunc i32 %i.q to i16
+  %11 = and i16 %i.r, 255
+  %12 = trunc i32 %i.p to i16
+  %i.s = and i16 %12, 255
   %.sroa.3.0.insert.ext.i.i = zext nneg i16 %i.s to i48
   %.sroa.3.0.insert.shift.i.i = shl nuw nsw i48 %.sroa.3.0.insert.ext.i.i, 32
-  %.sroa.2.0.insert.ext.i.i = zext nneg i16 %10 to i48
+  %.sroa.2.0.insert.ext.i.i = zext nneg i16 %11 to i48
   %.sroa.2.0.insert.shift.i.i = shl nuw nsw i48 %.sroa.2.0.insert.ext.i.i, 16
-  %.sroa.2.0.insert.insert.i.i = or disjoint i48 %.sroa.3.0.insert.shift.i.i, %.sroa.2.0.insert.shift.i.i
-  %.sroa.0.0.insert.ext.i.i = zext nneg i32 %i.q to i48
+  %.sroa.2.0.insert.insert.i.i = or disjoint i48 %.sroa.2.0.insert.shift.i.i, %.sroa.3.0.insert.shift.i.i
+  %.sroa.0.0.insert.ext.i.i = zext nneg i32 %10 to i48
   %.sroa.0.0.insert.insert.i.i = or disjoint i48 %.sroa.2.0.insert.insert.i.i, %.sroa.0.0.insert.ext.i.i
   store i48 %.sroa.0.0.insert.insert.i.i, ptr %7, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %7, i64 6
@@ -229,17 +231,19 @@ _ZN3fmt3v126detail10vformat_toERNS1_6bufferIcEENS0_17basic_string_viewIcEENS0_17
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 100
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !254  ; 2 uses
-  %i.y = lshr i32 %i.x, 16
-  %i.z = trunc i32 %i.x to i16                    ; 2 uses
-  %11 = lshr i16 %i.z, 8
-  %i.aa = and i16 %i.z, 255
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !254  ; 3 uses
+  %13 = lshr i32 %i.x, 16
+  %i.y = lshr i32 %i.x, 8
+  %i.z = trunc i32 %i.y to i16
+  %14 = and i16 %i.z, 255
+  %15 = trunc i32 %i.x to i16
+  %i.aa = and i16 %15, 255
   %.sroa.3.0.insert.ext.i.i4 = zext nneg i16 %i.aa to i48
   %.sroa.3.0.insert.shift.i.i5 = shl nuw nsw i48 %.sroa.3.0.insert.ext.i.i4, 32
-  %.sroa.2.0.insert.ext.i.i6 = zext nneg i16 %11 to i48
+  %.sroa.2.0.insert.ext.i.i6 = zext nneg i16 %14 to i48
   %.sroa.2.0.insert.shift.i.i7 = shl nuw nsw i48 %.sroa.2.0.insert.ext.i.i6, 16
-  %.sroa.2.0.insert.insert.i.i8 = or disjoint i48 %.sroa.3.0.insert.shift.i.i5, %.sroa.2.0.insert.shift.i.i7
-  %.sroa.0.0.insert.ext.i.i9 = zext nneg i32 %i.y to i48
+  %.sroa.2.0.insert.insert.i.i8 = or disjoint i48 %.sroa.2.0.insert.shift.i.i7, %.sroa.3.0.insert.shift.i.i5
+  %.sroa.0.0.insert.ext.i.i9 = zext nneg i32 %13 to i48
   %.sroa.0.0.insert.insert.i.i10 = or disjoint i48 %.sroa.2.0.insert.insert.i.i8, %.sroa.0.0.insert.ext.i.i9
   store i48 %.sroa.0.0.insert.insert.i.i10, ptr %9, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %9, i64 6

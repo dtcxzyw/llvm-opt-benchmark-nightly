@@ -205,9 +205,9 @@ bb.az:                                            ; preds = %bb.aw
   unreachable
 
 bb.ba:                                            ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc7command24PrefixEncodeCopyDistance.exit
-  %.sink.i = trunc i64 %.sink.in.i to i32
-  %17 = lshr i32 %.sink.i, 10
-  %i.iz = and i32 %17, 63
+  %17 = lshr i64 %.sink.in.i, 10
+  %18 = trunc i64 %17 to i32
+  %i.iz = and i32 %18, 63
   %i.ja = uitofp nneg i32 %i.iz to float
   %i.jb = fadd float %i.dg, %i.ja
   %i.jc = getelementptr inbounds nuw [4 x i8], ptr %.val121, i64 %i.ix
@@ -610,7 +610,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 8201
-  %i.g = load i8, ptr %i.f, align 1, !noundef !4  ; 3 uses
+  %i.g = load i8, ptr %i.f, align 1, !noundef !4
   %i.h = icmp ugt i64 %.val11, 8202
   br i1 %i.h, label %bb.f, label %bb.g
 
@@ -632,9 +632,21 @@ bb.h:                                             ; preds = %bb.f
 
 _RNvMs2_NtNtCsiRgJJXJ4lb7_6brotli3enc9interfaceINtB5_24PredictionModeContextMapNtNtB7_10input_pair17InputReferenceMutE20context_map_speed_f8CskeugdADtBsi_12pingora_core.exit: ; preds = %bb.f
   %i.i = getelementptr inbounds nuw i8, ptr %.val, i64 8202
-  %i.j = load i8, ptr %i.i, align 1, !noundef !4  ; 3 uses
+  %i.j = load i8, ptr %i.i, align 1, !noundef !4
   %i.k = getelementptr inbounds nuw i8, ptr %.val, i64 8203
   %i.l = load i8, ptr %i.k, align 1, !noundef !4  ; 3 uses
+  %.sroa.4.0.insert.ext.i = zext i8 %i.l to i32   ; 2 uses
+  %.sroa.4.0.insert.shift.i = shl nuw i32 %.sroa.4.0.insert.ext.i, 24
+  %.sroa.3.0.insert.ext.i = zext i8 %i.g to i32
+  %.sroa.3.0.insert.shift.i = shl nuw nsw i32 %.sroa.3.0.insert.ext.i, 16
+  %.sroa.2.0.insert.ext.i = zext i8 %i.j to i32
+  %.sroa.2.0.insert.shift.i = shl nuw nsw i32 %.sroa.2.0.insert.ext.i, 8
+  %1 = or disjoint i32 %.sroa.3.0.insert.shift.i, %.sroa.2.0.insert.shift.i
+  %.sroa.0.0.insert.insert.i = or disjoint i32 %1, %.sroa.4.0.insert.shift.i ; 2 uses
+  %.sroa.48.0.extract.shift = lshr exact i32 %.sroa.0.0.insert.insert.i, 8 ; 2 uses
+  %.sroa.48.0.extract.trunc = trunc i32 %.sroa.48.0.extract.shift to i8 ; 2 uses
+  %.sroa.59.0.extract.shift = lshr i32 %.sroa.0.0.insert.insert.i, 16 ; 2 uses
+  %.sroa.59.0.extract.trunc = trunc i32 %.sroa.59.0.extract.shift to i8 ; 2 uses
   %i.m = icmp ult i8 %i.e, 8
   br i1 %i.m, label %bb.j, label %bb.i
 
@@ -654,17 +666,17 @@ bb.i:                                             ; preds = %_RNvMs2_NtNtCsiRgJJ
 
 bb.j:                                             ; preds = %_RNvMs2_NtNtCsiRgJJXJ4lb7_6brotli3enc9interfaceINtB5_24PredictionModeContextMapNtNtB7_10input_pair17InputReferenceMutE20context_map_speed_f8CskeugdADtBsi_12pingora_core.exit, %bb.i
   %.sroa.03.0 = phi i64 [ %i.x, %bb.i ], [ 0, %_RNvMs2_NtNtCsiRgJJXJ4lb7_6brotli3enc9interfaceINtB5_24PredictionModeContextMapNtNtB7_10input_pair17InputReferenceMutE20context_map_speed_f8CskeugdADtBsi_12pingora_core.exit ] ; 2 uses
-  %i.y = icmp ult i8 %i.j, 8
+  %i.y = icmp ult i8 %.sroa.48.0.extract.trunc, 8
   br i1 %i.y, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.z = lshr i8 %i.j, 3
+  %i.z = lshr i8 %.sroa.48.0.extract.trunc, 3
   %i.aa = add nuw nsw i8 %i.z, 15
-  %1 = and i8 %i.j, 7
-  %2 = zext nneg i8 %1 to i16
+  %2 = trunc i32 %.sroa.48.0.extract.shift to i16
+  %3 = and i16 %2, 7
   %i.ab = and i8 %i.aa, 15
   %i.ac = zext nneg i8 %i.ab to i16               ; 2 uses
-  %i.ad = shl i16 %2, %i.ac
+  %i.ad = shl i16 %3, %i.ac
   %i.ae = shl nuw i16 1, %i.ac
   %i.af = lshr i16 %i.ad, 3
   %i.ag = or i16 %i.af, %i.ae
@@ -675,17 +687,17 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j, %bb.k
   %.sroa.04.0 = phi i64 [ %i.aj, %bb.k ], [ %.sroa.03.0, %bb.j ]
-  %i.ak = icmp ult i8 %i.g, 8
+  %i.ak = icmp ult i8 %.sroa.59.0.extract.trunc, 8
   br i1 %i.ak, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.al = lshr i8 %i.g, 3
+  %i.al = lshr i8 %.sroa.59.0.extract.trunc, 3
   %i.am = add nuw nsw i8 %i.al, 15
-  %3 = and i8 %i.g, 7
-  %4 = zext nneg i8 %3 to i16
+  %4 = trunc nuw i32 %.sroa.59.0.extract.shift to i16
+  %5 = and i16 %4, 7
   %i.an = and i8 %i.am, 15
   %i.ao = zext nneg i8 %i.an to i16               ; 2 uses
-  %i.ap = shl i16 %4, %i.ao
+  %i.ap = shl i16 %5, %i.ao
   %i.aq = shl nuw i16 1, %i.ao
   %i.ar = lshr i16 %i.ap, 3
   %i.as = or i16 %i.ar, %i.aq
@@ -699,14 +711,14 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   br i1 %i.av, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %5 = lshr i8 %i.l, 3
-  %narrow = add nuw nsw i8 %5, 15
+  %sum.shift = lshr i32 %.sroa.4.0.insert.ext.i, 3
+  %6 = trunc nuw nsw i32 %sum.shift to i16
+  %7 = add nuw nsw i16 %6, 15
   %i.aw = and i8 %i.l, 7
   %i.ax = zext nneg i8 %i.aw to i16
-  %6 = and i8 %narrow, 15
-  %7 = zext nneg i8 %6 to i16                     ; 2 uses
-  %i.ay = shl i16 %i.ax, %7
-  %i.az = shl nuw i16 1, %7
+  %8 = and i16 %7, 15                             ; 2 uses
+  %i.ay = shl i16 %i.ax, %8
+  %i.az = shl nuw i16 1, %8
   %i.ba = lshr i16 %i.ay, 3
   %i.bb = or i16 %i.ba, %i.az
   %i.bc = zext i16 %i.bb to i64
@@ -742,7 +754,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 8197
-  %i.g = load i8, ptr %i.f, align 1, !noundef !4  ; 3 uses
+  %i.g = load i8, ptr %i.f, align 1, !noundef !4
   %i.h = icmp ugt i64 %.val11, 8198
   br i1 %i.h, label %bb.f, label %bb.g
 
@@ -764,9 +776,21 @@ bb.h:                                             ; preds = %bb.f
 
 _RNvMs2_NtNtCsiRgJJXJ4lb7_6brotli3enc9interfaceINtB5_24PredictionModeContextMapNtNtB7_10input_pair17InputReferenceMutE23stride_context_speed_f8CskeugdADtBsi_12pingora_core.exit: ; preds = %bb.f
   %i.i = getelementptr inbounds nuw i8, ptr %.val, i64 8198
-  %i.j = load i8, ptr %i.i, align 1, !noundef !4  ; 3 uses
+  %i.j = load i8, ptr %i.i, align 1, !noundef !4
   %i.k = getelementptr inbounds nuw i8, ptr %.val, i64 8199
   %i.l = load i8, ptr %i.k, align 1, !noundef !4  ; 3 uses
+  %.sroa.4.0.insert.ext.i = zext i8 %i.l to i32   ; 2 uses
+  %.sroa.4.0.insert.shift.i = shl nuw i32 %.sroa.4.0.insert.ext.i, 24
+  %.sroa.3.0.insert.ext.i = zext i8 %i.g to i32
+  %.sroa.3.0.insert.shift.i = shl nuw nsw i32 %.sroa.3.0.insert.ext.i, 16
+  %.sroa.2.0.insert.ext.i = zext i8 %i.j to i32
+  %.sroa.2.0.insert.shift.i = shl nuw nsw i32 %.sroa.2.0.insert.ext.i, 8
+  %1 = or disjoint i32 %.sroa.3.0.insert.shift.i, %.sroa.2.0.insert.shift.i
+  %.sroa.0.0.insert.insert.i = or disjoint i32 %1, %.sroa.4.0.insert.shift.i ; 2 uses
+  %.sroa.48.0.extract.shift = lshr exact i32 %.sroa.0.0.insert.insert.i, 8 ; 2 uses
+  %.sroa.48.0.extract.trunc = trunc i32 %.sroa.48.0.extract.shift to i8 ; 2 uses
+  %.sroa.59.0.extract.shift = lshr i32 %.sroa.0.0.insert.insert.i, 16 ; 2 uses
+  %.sroa.59.0.extract.trunc = trunc i32 %.sroa.59.0.extract.shift to i8 ; 2 uses
   %i.m = icmp ult i8 %i.e, 8
   br i1 %i.m, label %bb.j, label %bb.i
 
@@ -786,17 +810,17 @@ bb.i:                                             ; preds = %_RNvMs2_NtNtCsiRgJJ
 
 bb.j:                                             ; preds = %_RNvMs2_NtNtCsiRgJJXJ4lb7_6brotli3enc9interfaceINtB5_24PredictionModeContextMapNtNtB7_10input_pair17InputReferenceMutE23stride_context_speed_f8CskeugdADtBsi_12pingora_core.exit, %bb.i
   %.sroa.03.0 = phi i64 [ %i.x, %bb.i ], [ 0, %_RNvMs2_NtNtCsiRgJJXJ4lb7_6brotli3enc9interfaceINtB5_24PredictionModeContextMapNtNtB7_10input_pair17InputReferenceMutE23stride_context_speed_f8CskeugdADtBsi_12pingora_core.exit ] ; 2 uses
-  %i.y = icmp ult i8 %i.j, 8
+  %i.y = icmp ult i8 %.sroa.48.0.extract.trunc, 8
   br i1 %i.y, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.z = lshr i8 %i.j, 3
+  %i.z = lshr i8 %.sroa.48.0.extract.trunc, 3
   %i.aa = add nuw nsw i8 %i.z, 15
-  %1 = and i8 %i.j, 7
-  %2 = zext nneg i8 %1 to i16
+  %2 = trunc i32 %.sroa.48.0.extract.shift to i16
+  %3 = and i16 %2, 7
   %i.ab = and i8 %i.aa, 15
   %i.ac = zext nneg i8 %i.ab to i16               ; 2 uses
-  %i.ad = shl i16 %2, %i.ac
+  %i.ad = shl i16 %3, %i.ac
   %i.ae = shl nuw i16 1, %i.ac
   %i.af = lshr i16 %i.ad, 3
   %i.ag = or i16 %i.af, %i.ae
@@ -807,17 +831,17 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j, %bb.k
   %.sroa.04.0 = phi i64 [ %i.aj, %bb.k ], [ %.sroa.03.0, %bb.j ]
-  %i.ak = icmp ult i8 %i.g, 8
+  %i.ak = icmp ult i8 %.sroa.59.0.extract.trunc, 8
   br i1 %i.ak, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.al = lshr i8 %i.g, 3
+  %i.al = lshr i8 %.sroa.59.0.extract.trunc, 3
   %i.am = add nuw nsw i8 %i.al, 15
-  %3 = and i8 %i.g, 7
-  %4 = zext nneg i8 %3 to i16
+  %4 = trunc nuw i32 %.sroa.59.0.extract.shift to i16
+  %5 = and i16 %4, 7
   %i.an = and i8 %i.am, 15
   %i.ao = zext nneg i8 %i.an to i16               ; 2 uses
-  %i.ap = shl i16 %4, %i.ao
+  %i.ap = shl i16 %5, %i.ao
   %i.aq = shl nuw i16 1, %i.ao
   %i.ar = lshr i16 %i.ap, 3
   %i.as = or i16 %i.ar, %i.aq
@@ -831,14 +855,14 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   br i1 %i.av, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %5 = lshr i8 %i.l, 3
-  %narrow = add nuw nsw i8 %5, 15
+  %sum.shift = lshr i32 %.sroa.4.0.insert.ext.i, 3
+  %6 = trunc nuw nsw i32 %sum.shift to i16
+  %7 = add nuw nsw i16 %6, 15
   %i.aw = and i8 %i.l, 7
   %i.ax = zext nneg i8 %i.aw to i16
-  %6 = and i8 %narrow, 15
-  %7 = zext nneg i8 %6 to i16                     ; 2 uses
-  %i.ay = shl i16 %i.ax, %7
-  %i.az = shl nuw i16 1, %7
+  %8 = and i16 %7, 15                             ; 2 uses
+  %i.ay = shl i16 %i.ax, %8
+  %i.az = shl nuw i16 1, %8
   %i.ba = lshr i16 %i.ay, 3
   %i.bb = or i16 %i.ba, %i.az
   %i.bc = zext i16 %i.bb to i64

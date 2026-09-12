@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call { i32, i32, i32, i32 } asm "movq\09%rbx, %rsi\0A\09cpuid\0A\09xchgq\09%rbx, %rsi\0A\09", "={ax},={si},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #23, !srcloc !27 ; 3 uses
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 0
-  %i.f = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 13 uses
+  %i.f = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 14 uses
   %i.g = extractvalue { i32, i32, i32, i32 } %i.d, 3 ; 4 uses
   %i.h = tail call { ptr, i8 } @_ZN4llvh9StringMapIbNS_15MallocAllocatorEE11try_emplaceIJEEESt4pairINS_17StringMapIteratorIbEEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr nonnull @.str.155, i64 4)
   %.fca.0.extract.i = extractvalue { ptr, i8 } %i.h, 0
@@ -236,7 +236,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = trunc nuw nsw i32 %i.ac to i8
   %i.ae = and i8 %i.ad, 1
   store i8 %i.ae, ptr %i.ab, align 1, !tbaa !97
-  %i.af = trunc i32 %i.f to i8                    ; 2 uses
+  %i.af = trunc i32 %i.f to i8
   %i.ag = tail call { ptr, i8 } @_ZN4llvh9StringMapIbNS_15MallocAllocatorEE11try_emplaceIJEEESt4pairINS_17StringMapIteratorIbEEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr nonnull @.str.159, i64 4)
   %.fca.0.extract.i217 = extractvalue { ptr, i8 } %i.ag, 0
   %i.ah = load ptr, ptr %.fca.0.extract.i217, align 8, !tbaa !41
@@ -247,8 +247,9 @@ bb.b:                                             ; preds = %bb.a
   %.fca.0.extract.i218 = extractvalue { ptr, i8 } %i.ak, 0
   %i.al = load ptr, ptr %.fca.0.extract.i218, align 8, !tbaa !41
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8
-  %1 = lshr i8 %i.af, 1
-  %i.an = and i8 %1, 1
+  %1 = lshr i32 %i.f, 1
+  %2 = trunc i32 %1 to i8
+  %i.an = and i8 %2, 1
   store i8 %i.an, ptr %i.am, align 1, !tbaa !97
   %i.ao = tail call { ptr, i8 } @_ZN4llvh9StringMapIbNS_15MallocAllocatorEE11try_emplaceIJEEESt4pairINS_17StringMapIteratorIbEEbENS_9StringRefEDpOT_(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr nonnull @.str.161, i64 5)
   %.fca.0.extract.i219 = extractvalue { ptr, i8 } %i.ao, 0

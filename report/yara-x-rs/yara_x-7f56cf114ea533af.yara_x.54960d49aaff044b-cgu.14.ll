@@ -205,10 +205,9 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !4207
   %i.ck = ptrtoint ptr %.sroa.0275.0.copyload.i to i64
   %i.cl = ptrtoint ptr %.sroa.5277.0.copyload.i to i64
-  %.sroa.35.sroa.0.0.extract.trunc273 = trunc i64 %.sroa.6278.0.copyload.i to i32
   %.sroa.35.sroa.0.sroa.0.0.extract.trunc286 = trunc i64 %.sroa.6278.0.copyload.i to i8
-  %.sroa.35.sroa.0.sroa.13.0.extract.shift291 = lshr i32 %.sroa.35.sroa.0.0.extract.trunc273, 8
-  %.sroa.35.sroa.0.sroa.13.0.extract.trunc292 = trunc nuw i32 %.sroa.35.sroa.0.sroa.13.0.extract.shift291 to i24
+  %4 = lshr i64 %.sroa.6278.0.copyload.i, 8
+  %.sroa.35.sroa.0.sroa.13.0.extract.trunc292 = trunc i64 %4 to i24
   %.sroa.35.sroa.18.0.extract.shift278 = lshr i64 %.sroa.6278.0.copyload.i, 32
   %.sroa.35.sroa.18.0.extract.trunc279 = trunc nuw i64 %.sroa.35.sroa.18.0.extract.shift278 to i32
   br label %bb.r

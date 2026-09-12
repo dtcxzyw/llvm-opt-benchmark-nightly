@@ -204,8 +204,9 @@ define internal fastcc void @send_msg(ptr nofree noundef readonly captures(addre
 bb.a:
   %8 = alloca [4 x %struct.iovec], align 16       ; 9 uses
   %9 = alloca %struct.era_msg_header_t, align 8   ; 9 uses
-  %.sroa.0.0.extract.trunc = trunc i64 %3 to i32  ; 2 uses
-  %10 = lshr i32 %.sroa.0.0.extract.trunc, 16
+  %.sroa.0.0.extract.trunc = trunc i64 %3 to i32
+  %.sroa.3.0.extract.shift = lshr i64 %3, 16
+  %.sroa.3.0.extract.trunc = trunc i64 %.sroa.3.0.extract.shift to i32
   %.sroa.4.0.extract.shift = lshr i64 %3, 32
   %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
@@ -310,6 +311,7 @@ bb.l:                                             ; preds = %mca_bml_base_get_en
 switch.lookup:                                    ; preds = %bb.l
   %i.ao = load i32, ptr @ompi_ftmpi_output_handle, align 4, !tbaa !52
   %i.ap = tail call ptr @ompi_pmix_print_name(ptr noundef nonnull @opal_process_info) #20
+  %10 = and i32 %.sroa.3.0.extract.trunc, 65535
   %i.aq = and i32 %.sroa.0.0.extract.trunc, 65535
   %i.ar = zext nneg i32 %4 to i64
   %i.as = getelementptr [8 x i8], ptr @switch.table.send_msg, i64 %i.ar

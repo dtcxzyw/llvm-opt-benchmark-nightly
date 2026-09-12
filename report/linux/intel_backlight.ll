@@ -202,8 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = tail call i32 %i.h(ptr noundef %i.f, i32 794628, i1 noundef zeroext true) #9, !inline_history !1
   tail call void @intel_dmc_wl_put(ptr noundef %i.c, i32 794628) #9
-  %2 = trunc i32 %i.i to i8
-  %3 = lshr i8 %2, 5
+  %2 = lshr i32 %i.i, 5
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -214,11 +213,11 @@ bb.e:                                             ; preds = %bb.c
   %i.l = load ptr, ptr %i.k, align 8
   %i.m = tail call i32 %i.l(ptr noundef %i.j, i32 794624, i1 noundef zeroext true) #9, !inline_history !1
   tail call void @intel_dmc_wl_put(ptr noundef %i.c, i32 794624) #9
-  %4 = trunc i32 %i.m to i8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.048.in = phi i8 [ %3, %bb.d ], [ %4, %bb.e ]
+  %.048.in.in = phi i32 [ %2, %bb.d ], [ %i.m, %bb.e ]
+  %.048.in = trunc i32 %.048.in.in to i8
   %i.n = getelementptr i8, ptr %0, i64 2331
   %i.o = and i8 %.048.in, 1
   store i8 %i.o, ptr %i.n, align 1

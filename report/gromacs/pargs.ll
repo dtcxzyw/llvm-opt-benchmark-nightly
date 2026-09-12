@@ -205,7 +205,7 @@ bb.bq:                                            ; preds = %.lr.ph169, %bb.bz
   %indvars.iv173 = phi i64 [ 0, %.lr.ph169 ], [ %indvars.iv.next174, %bb.bz ] ; 2 uses
   %i.ki = getelementptr inbounds nuw [56 x i8], ptr %4, i64 %indvars.iv173 ; 7 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ki, i64 24
-  %i.kk = load i64, ptr %i.kj, align 8, !tbaa !159 ; 3 uses
+  %i.kk = load i64, ptr %i.kj, align 8, !tbaa !159 ; 6 uses
   %i.kl = and i64 %i.kk, 32
   %.not20.i = icmp eq i64 %i.kl, 0
   %i.km = getelementptr inbounds nuw i8, ptr %i.ki, i64 8
@@ -317,15 +317,20 @@ bb.bx:                                            ; preds = %.noexc107, %_ZNSt10
   store i32 %.0.i, ptr %i.hk, align 8, !tbaa !176
   %i.lr = load i32, ptr %i.ki, align 8, !tbaa !157 ; 2 uses
   store i32 %i.lr, ptr %i.hi, align 4, !tbaa !177
-  %i.ls = trunc i64 %i.kk to i8                   ; 2 uses
+  %41 = lshr i64 %i.kk, 1
+  %42 = trunc i64 %41 to i8
+  %43 = lshr i64 %i.kk, 2
+  %i.ls = trunc i64 %43 to i8
   %i.lt = shl i64 %i.kk, 1
   %i.lu = and i64 %i.lt, 16
   %storemerge.i.i.i.i = xor i64 %i.lu, 16
   store i64 %storemerge.i.i.i.i, ptr %i.hn, align 8, !tbaa !178
-  %i.lv = insertelement <4 x i8> <i8 -1, i8 poison, i8 poison, i8 poison>, i8 %i.ls, i64 1
-  %41 = shufflevector <4 x i8> %i.lv, <4 x i8> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %42 = lshr <4 x i8> %41, <i8 0, i8 1, i8 2, i8 4>
-  %i.lw = and <4 x i8> %42, splat (i8 1)
+  %44 = lshr i64 %i.kk, 4
+  %45 = trunc i64 %44 to i8
+  %i.lv = insertelement <4 x i8> <i8 -1, i8 poison, i8 poison, i8 poison>, i8 %42, i64 1
+  %46 = insertelement <4 x i8> %i.lv, i8 %i.ls, i64 2
+  %47 = insertelement <4 x i8> %46, i8 %45, i64 3
+  %i.lw = and <4 x i8> %47, splat (i8 1)
   store <4 x i8> %i.lw, ptr %i.hl, align 4, !tbaa !31
   br i1 %.not20.i, label %_ZN3gmx14OptionTemplateINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_14FileNameOptionEE10multiValueEb.exit.i, label %bb.by
 
@@ -334,8 +339,9 @@ bb.by:                                            ; preds = %.noexc109
   br label %_ZN3gmx14OptionTemplateINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_14FileNameOptionEE10multiValueEb.exit.i
 
 _ZN3gmx14OptionTemplateINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_14FileNameOptionEE10multiValueEb.exit.i: ; preds = %bb.by, %.noexc109
-  %43 = lshr i8 %i.ls, 6
-  %i.lx = and i8 %43, 1
+  %48 = lshr i64 %i.kk, 6
+  %49 = trunc i64 %48 to i8
+  %i.lx = and i8 %49, 1
   store i8 %i.lx, ptr %i.ho, align 8, !tbaa !179
   %i.ly = invoke noundef ptr @_Z8ftp2desci(i32 noundef %i.lr)
           to label %.noexc110 unwind label %.loopexit159

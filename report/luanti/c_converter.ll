@@ -202,12 +202,12 @@ bb.a:
   %.sroa.6.0.extract.trunc = trunc nuw i48 %.sroa.6.0.extract.shift to i32 ; 3 uses
   %.sroa.10.0.extract.shift = lshr i48 %3, 32
   %.sroa.10.0.extract.trunc = trunc nuw nsw i48 %.sroa.10.0.extract.shift to i32 ; 2 uses
-  %6 = trunc i48 %4 to i32
-  %7 = lshr i32 %6, 16
+  %.sroa.728.0.extract.shift = lshr i48 %4, 16
+  %.sroa.728.0.extract.trunc = trunc nuw i48 %.sroa.728.0.extract.shift to i32
   %.sroa.13.0.extract.shift = lshr i48 %4, 32     ; 2 uses
   %.sroa.13.0.extract.trunc = trunc nuw nsw i48 %.sroa.13.0.extract.shift to i32
-  %8 = trunc i48 %5 to i32                        ; 2 uses
-  %9 = lshr i32 %8, 16
+  %.sroa.3.0.extract.shift = lshr i48 %5, 16
+  %.sroa.3.0.extract.trunc = trunc nuw i48 %.sroa.3.0.extract.shift to i32
   %.sroa.521.0.extract.shift = lshr i48 %5, 32
   %.sroa.521.0.extract.trunc = trunc nuw nsw i48 %.sroa.521.0.extract.shift to i32
   %i.a = and i48 %4, 65535
@@ -216,9 +216,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.sroa.023.0.extract.trunc = trunc i48 %4 to i32
+  %.sroa.018.0.extract.trunc = trunc i48 %5 to i32
   %i.b = add i32 %.sroa.023.0.extract.trunc, 65535
   %i.c = and i32 %i.b, 65535                      ; 2 uses
-  %i.d = and i32 %8, 65535
+  %i.d = and i32 %.sroa.018.0.extract.trunc, 65535
   %i.e = add nuw nsw i32 %i.d, %i.c
   %i.f = and i32 %.sroa.037.0.extract.trunc, 65535
   %i.g = tail call i32 @llvm.umin.i32(i32 %i.e, i32 %i.f)
@@ -232,15 +233,16 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not47, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = add nuw nsw i32 %7, 65535
-  %i.j = and i32 %i.i, 65535                      ; 2 uses
-  %i.k = add nuw nsw i32 %9, %i.j
+  %i.i = add i32 %.sroa.728.0.extract.trunc, 65535
+  %6 = and i32 %i.i, 65535                        ; 2 uses
+  %i.j = and i32 %.sroa.3.0.extract.trunc, 65535
+  %i.k = add nuw nsw i32 %i.j, %6
   %i.l = and i32 %.sroa.6.0.extract.trunc, 65535
   %i.m = tail call i32 @llvm.umin.i32(i32 %i.k, i32 %i.l)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.sroa.5.053 = phi i32 [ 0, %bb.c ], [ %i.j, %bb.d ] ; 2 uses
+  %.sroa.5.053 = phi i32 [ 0, %bb.c ], [ %6, %bb.d ] ; 2 uses
   %.sroa.5.0 = phi i32 [ %.sroa.6.0.extract.trunc, %bb.c ], [ %i.m, %bb.d ]
   %.not48 = icmp eq i48 %.sroa.13.0.extract.shift, 0
   br i1 %.not48, label %bb.g, label %bb.f

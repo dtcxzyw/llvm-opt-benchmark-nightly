@@ -205,10 +205,11 @@ _RNvXsb_NtCseKXfNLkF2r6_6chrono8datetimeINtB5_8DateTimeNtNtNtB7_6offset3utc3UtcE
   br i1 %i.az, label %_RINvNtCs9fPPV5zPXBl_5typst7compile16convert_datetimeNtNtNtCseKXfNLkF2r6_6chrono6offset3utc3UtcEB4_.exit.thread, label %_RINvNtCs9fPPV5zPXBl_5typst7compile16convert_datetimeNtNtNtCseKXfNLkF2r6_6chrono6offset3utc3UtcEB4_.exit
 
 _RINvNtCs9fPPV5zPXBl_5typst7compile16convert_datetimeNtNtNtCseKXfNLkF2r6_6chrono6offset3utc3UtcEB4_.exit: ; preds = %_RNvXsb_NtCseKXfNLkF2r6_6chrono8datetimeINtB5_8DateTimeNtNtNtB7_6offset3utc3UtcENtNtB7_6traits8Datelike3dayCs9fPPV5zPXBl_5typst.exit.i
-  %2 = trunc i32 %i.ar to i8
-  %3 = add i8 %i.aw, %2
-  %4 = lshr i8 %3, 1
-  %i.ba = and i8 %4, 31
+  %2 = zext i8 %i.aw to i32
+  %3 = add nuw nsw i32 %i.ar, %2
+  %4 = lshr i32 %3, 1
+  %5 = trunc i32 %4 to i8
+  %i.ba = and i8 %5, 31
   %i.bb = udiv i32 %i.ay, 3600
   %i.bc = trunc nuw i32 %i.bb to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !35291
@@ -306,10 +307,11 @@ _RNvXsb_NtCseKXfNLkF2r6_6chrono8datetimeINtB5_8DateTimeNtNtNtB7_6offset5local5Lo
   br i1 %i.cj, label %_RINvNtCs9fPPV5zPXBl_5typst7compile16convert_datetimeNtNtNtCseKXfNLkF2r6_6chrono6offset5local5LocalEB4_.exit.thread, label %_RINvNtCs9fPPV5zPXBl_5typst7compile16convert_datetimeNtNtNtCseKXfNLkF2r6_6chrono6offset5local5LocalEB4_.exit
 
 _RINvNtCs9fPPV5zPXBl_5typst7compile16convert_datetimeNtNtNtCseKXfNLkF2r6_6chrono6offset5local5LocalEB4_.exit: ; preds = %_RNvXsb_NtCseKXfNLkF2r6_6chrono8datetimeINtB5_8DateTimeNtNtNtB7_6offset5local5LocalENtNtB7_6traits8Datelike3dayCs9fPPV5zPXBl_5typst.exit.i
-  %5 = trunc i32 %i.cb to i8
-  %6 = add i8 %i.cg, %5
-  %7 = lshr i8 %6, 1
-  %i.ck = and i8 %7, 31
+  %6 = zext i8 %i.cg to i32
+  %7 = add nuw nsw i32 %i.cb, %6
+  %8 = lshr i32 %7, 1
+  %9 = trunc i32 %8 to i8
+  %i.ck = and i8 %9, 31
   %i.cl = udiv i32 %i.ci, 3600
   %i.cm = trunc nuw i32 %i.cl to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !35295
@@ -712,7 +714,7 @@ bb.a:
   %i.cu = getelementptr inbounds nuw [16 x i8], ptr @88, i64 %i.ct ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   %i.cw = getelementptr inbounds nuw [16 x i8], ptr @80, i64 %i.ct ; 2 uses
-  %i.cx = lshr i32 %i.br, 3                       ; 3 uses
+  %i.cx = lshr i32 %i.br, 3                       ; 4 uses
   %i.cy = and i32 %i.cx, 1023                     ; 7 uses
   %i.cz = zext nneg i32 %i.cy to i64              ; 7 uses
   %i.da = icmp samesign ult i32 %i.cy, 733        ; 6 uses
@@ -731,7 +733,6 @@ bb.a:
   %i.dj = or disjoint i8 %i.di, 48                ; 2 uses
   %i.dk = urem i8 %i.dh, 10
   %i.dl = or disjoint i8 %i.dk, 48                ; 2 uses
-  %2 = trunc i32 %i.cx to i8                      ; 2 uses
   %i.dm = urem i32 %.sroa.10.0.copyload.i.i, 60   ; 2 uses
   %i.dn = udiv i32 %.sroa.10.0.copyload.i.i, 60
   %i.do = urem i32 %i.dn, 60
@@ -1134,9 +1135,11 @@ bb.ar:                                            ; preds = %bb.k
 
 bb.as:                                            ; preds = %bb.ar
   %i.lf = load i8, ptr %i.db, align 1, !noalias !46452, !noundef !28
-  %3 = add i8 %i.lf, %2
-  %4 = lshr i8 %3, 1
-  %i.lg = and i8 %4, 31
+  %2 = zext i8 %i.lf to i32
+  %3 = add nuw nsw i32 %i.cx, %2
+  %4 = lshr i32 %3, 1
+  %5 = trunc i32 %4 to i8
+  %i.lg = and i8 %5, 31
   br label %.invoke325.i
 
 bb.at:                                            ; preds = %bb.n
@@ -1539,8 +1542,8 @@ _RINvNtNtCseKXfNLkF2r6_6chrono6format10formatting14write_hundredsNtNtCs1xwejQucw
   br label %bb.ev
 
 bb.fb:                                            ; preds = %_RNvXsZ_NtCs1xwejQucwHj_5alloc6stringNtB5_6StringNtNtCs3oUPovFnLWP_4core3fmt5Write10write_char.exit.i94.i
-  %i.adb = load i8, ptr %i.db, align 1, !noalias !46701, !noundef !28 ; 2 uses
-  %i.adc = zext i8 %i.adb to i32
+  %i.adb = load i8, ptr %i.db, align 1, !noalias !46701, !noundef !28
+  %i.adc = zext i8 %i.adb to i32                  ; 2 uses
   %i.add = add nuw nsw i32 %i.cy, %i.adc          ; 3 uses
   %i.ade = lshr i32 %i.add, 6
   %i.adf = trunc nuw nsw i32 %i.ade to i8         ; 2 uses
@@ -1610,9 +1613,10 @@ _RNvXsZ_NtCs1xwejQucwHj_5alloc6stringNtB5_6StringNtNtCs3oUPovFnLWP_4core3fmt5Wri
   store i8 45, ptr %i.ady, align 1, !noalias !46745
   %i.adz = add nuw nsw i64 %i.aby, 4              ; 4 uses
   store i64 %i.adz, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !46744, !noalias !46706
-  %5 = add i8 %i.adb, %2
-  %6 = lshr i8 %5, 1
-  %i.aea = and i8 %6, 31                          ; 2 uses
+  %6 = add nuw nsw i32 %i.cx, %i.adc
+  %7 = lshr i32 %6, 1
+  %8 = trunc i32 %7 to i8
+  %i.aea = and i8 %8, 31                          ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46746)
   %i.aeb = udiv i8 %i.aea, 10
   %i.aec = urem i8 %i.aea, 10

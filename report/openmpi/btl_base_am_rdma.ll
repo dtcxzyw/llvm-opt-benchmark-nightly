@@ -204,15 +204,16 @@ bb.h:                                             ; preds = %bb.g
   %i.u = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store ptr %0, ptr %i.u, align 8, !tbaa !50
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !22   ; 2 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !22   ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 24 ; 3 uses
-  %3 = trunc i32 %i.w to i8                       ; 2 uses
-  %4 = lshr i8 %3, 1
+  %3 = lshr i32 %i.w, 1
+  %4 = trunc i32 %3 to i8
   %i.y = and i8 %4, 1                             ; 2 uses
   store i8 %i.y, ptr %i.x, align 8, !tbaa !51
   %i.z = getelementptr inbounds nuw i8, ptr %i.l, i64 25 ; 2 uses
-  %5 = lshr i8 %3, 2                              ; 2 uses
-  %i.aa = and i8 %5, 1
+  %5 = lshr i32 %i.w, 2                           ; 2 uses
+  %6 = trunc i32 %5 to i8
+  %i.aa = and i8 %6, 1
   store i8 %i.aa, ptr %i.z, align 1, !tbaa !52
   %i.ab = and i32 %i.w, 8388608
   %.not37 = icmp eq i32 %i.ab, 0
@@ -238,7 +239,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.p
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.af = trunc i8 %5 to i1
+  %i.af = trunc i32 %5 to i1
   br i1 %i.af, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l

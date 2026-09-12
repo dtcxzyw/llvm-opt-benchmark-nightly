@@ -205,22 +205,23 @@ bb.f:                                             ; preds = %.preheader.6, %.pre
 rtree_leaf_elm_lookup.exit:                       ; preds = %bb.f, %bb.b, %bb.d, %bb.e
   %.1.i = phi ptr [ %i.k, %bb.b ], [ %i.x, %bb.d ], [ %i.aq, %bb.e ], [ %i.bb, %bb.f ]
   %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !227
-  %i.bd = ptrtoint ptr %i.bc to i64               ; 4 uses
+  %i.bd = ptrtoint ptr %i.bc to i64               ; 5 uses
   %i.be = lshr i64 %i.bd, 48
   %i.bf = trunc nuw nsw i64 %i.be to i32
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.bf, ptr %i.bg, align 8, !tbaa !228, !alias.scope !229
-  %i.bh = trunc i64 %i.bd to i8                   ; 2 uses
+  %i.bh = trunc i64 %i.bd to i8
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 17
   %i.bj = and i8 %i.bh, 1
   store i8 %i.bj, ptr %i.bi, align 1, !tbaa !230, !alias.scope !229
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = lshr i8 %i.bh, 1
-  %i.bl = and i8 %4, 1
+  %4 = lshr i64 %i.bd, 1
+  %5 = trunc i64 %4 to i8
+  %i.bl = and i8 %5, 1
   store i8 %i.bl, ptr %i.bk, align 8, !tbaa !231, !alias.scope !229
-  %5 = trunc i64 %i.bd to i32
-  %6 = lshr i32 %5, 2
-  %i.bm = and i32 %6, 7
+  %6 = lshr i64 %i.bd, 2
+  %7 = trunc i64 %6 to i32
+  %i.bm = and i32 %7, 7
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.bm, ptr %i.bn, align 4, !tbaa !232, !alias.scope !229
   %i.bo = shl i64 %i.bd, 16

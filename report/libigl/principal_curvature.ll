@@ -205,21 +205,24 @@ bb.b:                                             ; preds = %bb.a
   store i8 1, ptr %i.a, align 1, !tbaa !791
   store i32 %3, ptr %i.j, align 4, !tbaa !176
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 71 ; 2 uses
-  %4 = trunc i32 %3 to i8                         ; 4 uses
-  %5 = lshr i8 %4, 2
+  %4 = lshr i32 %3, 2
+  %5 = trunc i32 %4 to i8
   %i.p = and i8 %5, 1                             ; 2 uses
   store i8 %i.p, ptr %i.o, align 1, !tbaa !188
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %6 = lshr i8 %4, 3
-  %i.r = and i8 %6, 1
+  %6 = lshr i32 %3, 3
+  %7 = trunc i32 %6 to i8
+  %i.r = and i8 %7, 1
   store i8 %i.r, ptr %i.q, align 8, !tbaa !189
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 73 ; 2 uses
-  %7 = lshr i8 %4, 4
-  %i.t = and i8 %7, 1
+  %8 = lshr i32 %3, 4
+  %9 = trunc i32 %8 to i8
+  %i.t = and i8 %9, 1
   store i8 %i.t, ptr %i.s, align 1, !tbaa !190
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 74 ; 2 uses
-  %8 = lshr i8 %4, 5
-  %i.v = and i8 %8, 1
+  %10 = lshr i32 %3, 5
+  %11 = trunc i32 %10 to i8
+  %i.v = and i8 %11, 1
   store i8 %i.v, ptr %i.u, align 2, !tbaa !191
   %i.w = tail call i64 @llvm.smin.i64(i64 %2, i64 %1) ; 6 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
