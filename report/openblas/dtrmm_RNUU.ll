@@ -116,11 +116,11 @@ bb.g:                                             ; preds = %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph276, %.lr.ph
   %.0249269 = phi i64 [ %i.bi, %.lr.ph ], [ 0, %.lr.ph276 ] ; 5 uses
-  %i.az = sub nsw i64 %spec.store.select1, %.0249269
+  %i.az = sub nuw nsw i64 %spec.store.select1, %.0249269
   %spec.store.select2 = tail call i64 @llvm.smin.i64(i64 %i.az, i64 12) ; 3 uses
-  %i.ba = add nsw i64 %.0249269, %.0253275        ; 2 uses
-  %i.bb = mul nsw i64 %.0249269, %spec.store.select1
-  %i.bc = getelementptr inbounds [8 x i8], ptr %4, i64 %i.bb ; 2 uses
+  %i.ba = add nuw nsw i64 %.0249269, %.0253275    ; 2 uses
+  %i.bb = mul nuw nsw i64 %.0249269, %spec.store.select1
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.bb ; 2 uses
   %i.bd = tail call i32 @dtrmm_ounucopy(i64 noundef %spec.store.select1, i64 noundef %spec.store.select2, ptr noundef %i.e, i64 noundef %i.i, i64 noundef %.0253275, i64 noundef %i.ba, ptr noundef %i.bc) #3 ; 0 uses
   %i.be = mul nsw i64 %i.ba, %i.k
   %i.bf = getelementptr inbounds [8 x i8], ptr %.0255, i64 %i.be
@@ -142,8 +142,8 @@ bb.g:                                             ; preds = %bb.c
 
 bb.h:                                             ; preds = %.lr.ph271, %bb.h
   %.1270 = phi i64 [ 0, %.lr.ph271 ], [ %i.bz, %bb.h ] ; 4 uses
-  %i.bo = sub nsw i64 %i.av, %.1270
-  %spec.store.select3 = tail call i64 @llvm.smin.i64(i64 %i.bo, i64 12) ; 3 uses
+  %i.bo = sub nuw nsw i64 %i.av, %.1270
+  %spec.store.select3 = tail call i64 @llvm.umin.i64(i64 %i.bo, i64 12) ; 3 uses
   %i.bp = add nsw i64 %i.ax, %.1270               ; 2 uses
   %i.bq = mul nsw i64 %i.bp, %i.i
   %i.br = getelementptr [8 x i8], ptr %i.ay, i64 %i.bq

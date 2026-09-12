@@ -205,9 +205,9 @@ bb.r:                                             ; preds = %bb.q
   %i.ca = xor i64 %i.bx, -1
   %i.cb = add i64 %smax, %i.ca
   %i.cc = mul i64 %i.be, %i.cb
-  %i.cd = sub nsw i64 %1, %.0131312.us.us         ; 2 uses
+  %i.cd = sub nuw nsw i64 %1, %.0131312.us.us     ; 2 uses
   %.sroa.speculated213.us.us = call i64 @llvm.smin.i64(i64 %., i64 %i.cd) ; 3 uses
-  %i.ce = add nsw i64 %.sroa.speculated213.us.us, %.0131312.us.us ; 3 uses
+  %i.ce = add nuw nsw i64 %.sroa.speculated213.us.us, %.0131312.us.us ; 3 uses
   %i.cf = icmp slt i64 %i.cd, 1
   %i.cg = mul nuw nsw i64 %.0131312.us.us, %.sroa.speculated218.us
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.cg ; 2 uses
@@ -610,7 +610,7 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.f
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.aj = sub nsw i64 %i.af, %.04765              ; 2 uses
+  %i.aj = sub nuw nsw i64 %i.af, %.04765          ; 2 uses
   %i.ak = sub nsw i64 %i.aj, %i.l
   %.sroa.speculated = call i64 @llvm.smax.i64(i64 %i.ak, i64 0)
   br label %bb.d
@@ -1013,7 +1013,7 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.f
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.aj = sub nsw i64 %i.af, %.04765              ; 2 uses
+  %i.aj = sub nuw nsw i64 %i.af, %.04765          ; 2 uses
   %i.ak = sub nsw i64 %i.aj, %i.l
   %.sroa.speculated = call i64 @llvm.smax.i64(i64 %i.ak, i64 0)
   br label %bb.d

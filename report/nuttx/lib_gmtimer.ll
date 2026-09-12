@@ -39,12 +39,12 @@ bb.a:
   %.04046.i = phi i32 [ %i.o, %.lr.ph.i ], [ %i.j, %bb.a ] ; 2 uses
   %.04245.i = phi i64 [ %i.p, %.lr.ph.i ], [ %i.i, %bb.a ]
   %i.o = add nsw i32 %.04046.i, 1
-  %i.p = sub nsw i64 %.04245.i, %.03647.i         ; 3 uses
+  %i.p = sub nuw nsw i64 %.04245.i, %.03647.i     ; 3 uses
   %i.q = add nsw i32 %.04046.i, 1971              ; 2 uses
   %i.r = tail call i32 @clock_isleapyear(i32 noundef %i.q) #5
   %i.s = icmp ne i32 %i.r, 0                      ; 2 uses
   %i.t = select i1 %i.s, i64 366, i64 365         ; 2 uses
-  %.not.i = icmp slt i64 %i.p, %i.t
+  %.not.i = icmp samesign ult i64 %i.p, %i.t
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !7
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.a

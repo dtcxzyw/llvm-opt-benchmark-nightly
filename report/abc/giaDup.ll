@@ -205,7 +205,7 @@ Vec_IntGrow.exit11.sink.split.i212:               ; preds = %bb.av, %bb.ax
 
 Vec_IntPush.exit216:                              ; preds = %bb.au, %bb.aw, %Vec_IntGrow.exit11.sink.split.i212
   %storemerge257269 = phi ptr [ %storemerge257270, %bb.au ], [ %storemerge257270, %bb.aw ], [ %i.dx, %Vec_IntGrow.exit11.sink.split.i212 ] ; 2 uses
-  %i.dy = add nsw i32 %.val151263, 1
+  %i.dy = add nuw nsw i32 %.val151263, 1
   store i32 %i.dy, ptr %i.b, align 4, !tbaa !28
   br label %bb.ay
 
@@ -608,7 +608,7 @@ Vec_IntDup.exit.i:                                ; preds = %bb.y, %bb.x
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !29
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ce, ptr align 4 %i.ch, i64 %.pre-phi12.i.i, i1 false)
-  %i.ci = trunc nsw i64 %indvars.iv19.i to i32
+  %i.ci = trunc nuw nsw i64 %indvars.iv19.i to i32
   %i.cj = icmp eq i32 %spec.select.sink.i15.i, %i.ci
   br i1 %i.cj, label %bb.z, label %Vec_PtrPush.exit.i
 
@@ -661,7 +661,7 @@ Vec_PtrPush.exit.i:                               ; preds = %bb.ag, %bb.af, %bb.
   br i1 %i.cv, label %bb.x, label %..critedge_crit_edge.i, !llvm.loop !575
 
 ..critedge_crit_edge.i:                           ; preds = %Vec_PtrPush.exit.i
-  %i.cw = trunc nsw i64 %indvars.iv.next20.i to i32
+  %i.cw = trunc nuw nsw i64 %indvars.iv.next20.i to i32
   store i32 %i.cw, ptr %i.bp, align 4, !tbaa !77
   store i32 %spec.select.sink.i14.i, ptr %i.bn, align 8
   store ptr %storemerge18.i, ptr %i.bt, align 8
@@ -1064,7 +1064,7 @@ bb.p:                                             ; preds = %.lr.ph173.split, %b
   %i.hw = load i32, ptr %i.hv, align 4, !tbaa !30
   %i.hx = sext i32 %i.hw to i64
   %i.hy = getelementptr inbounds [12 x i8], ptr %.val135, i64 %i.hx ; 2 uses
-  %i.hz = mul nsw i32 %.val116172, %i.fr
+  %i.hz = mul nuw nsw i32 %.val116172, %i.fr
   %i.ia = trunc nuw nsw i64 %indvars.iv193 to i32
   %i.ib = add nsw i32 %i.hz, %i.ia
   %i.ic = load i64, ptr %i.hy, align 4            ; 2 uses
@@ -1467,7 +1467,7 @@ Abc_UtilStrsav.exit.i145:                         ; preds = %bb.af
 
 .thread.i136:                                     ; preds = %Abc_UtilStrsav.exit.i145, %bb.af, %bb.ae
   %i.gq = phi ptr [ %i.go, %Abc_UtilStrsav.exit.i145 ], [ null, %bb.af ], [ null, %bb.ae ]
-  %i.gr = trunc nsw i64 %indvars.iv26.i to i32
+  %i.gr = trunc nuw nsw i64 %indvars.iv26.i to i32
   %i.gs = icmp eq i32 %spec.select.sink.i22.i, %i.gr
   br i1 %i.gs, label %bb.ag, label %Vec_PtrPush.exit.i137
 

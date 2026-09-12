@@ -204,8 +204,8 @@ bb.ep:                                            ; preds = %.critedge.i.i.i57
   %i.anx = getelementptr inbounds nuw i8, ptr %i.anu, i64 4
   %i.any = load i32, ptr %i.anx, align 4, !tbaa !66
   %i.anz = add nuw nsw i64 %indvars.iv.i.i.i55, %i.ant
-  %34 = trunc i64 %i.anz to i32
-  %.not17.i.i.i58 = icmp eq i32 %i.any, %34
+  %34 = zext i32 %i.any to i64
+  %.not17.i.i.i58 = icmp eq i64 %i.anz, %34
   br i1 %.not17.i.i.i58, label %bb.ep, label %_ZN12_GLOBAL__N_126ComplexDeinterleavingGraph13identifyNodesEPN4llvm11InstructionE.exit
 
 _ZL18isInterleavingMaskN4llvm8ArrayRefIiEE.exit.i.i: ; preds = %bb.ep, %bb.eo

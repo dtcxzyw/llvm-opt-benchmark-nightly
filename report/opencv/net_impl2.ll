@@ -204,8 +204,8 @@ bb.gh:                                            ; preds = %.lr.ph1630
   call void @llvm.lifetime.start.p0(ptr nonnull %59) #24
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %59) #24
   %i.aad = load ptr, ptr %17, align 8, !tbaa !76
-  %i.aae = getelementptr [208 x i8], ptr %i.aad, i64 %indvars.iv2211
-  %i.aaf = getelementptr [208 x i8], ptr %i.aae, i64 %i.xx
+  %i.aae = getelementptr inbounds nuw [208 x i8], ptr %i.aad, i64 %indvars.iv2211
+  %i.aaf = getelementptr inbounds nuw [208 x i8], ptr %i.aae, i64 %i.xx
   %i.aag = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv3MataSEOS0_(ptr noundef nonnull align 8 dereferenceable(208) %i.aaf, ptr noundef nonnull align 8 dereferenceable(208) %59)
           to label %bb.gi unwind label %bb.gj     ; 0 uses
 
@@ -444,8 +444,8 @@ bb.hc:                                            ; preds = %bb.gy, %bb.gu
 
 ._crit_edge1628:                                  ; preds = %bb.hw, %.preheader
   %i.acn = load ptr, ptr %17, align 8, !tbaa !76
-  %i.aco = getelementptr [208 x i8], ptr %i.acn, i64 %indvars.iv2211
-  %i.acp = getelementptr [208 x i8], ptr %i.aco, i64 %i.xx
+  %i.aco = getelementptr inbounds nuw [208 x i8], ptr %i.acn, i64 %indvars.iv2211
+  %i.acp = getelementptr inbounds nuw [208 x i8], ptr %i.aco, i64 %i.xx
   %i.acq = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv3MataSERKS0_(ptr noundef nonnull align 8 dereferenceable(208) %i.acp, ptr noundef nonnull align 8 dereferenceable(208) %64)
           to label %bb.ie unwind label %bb.hd     ; 0 uses
 

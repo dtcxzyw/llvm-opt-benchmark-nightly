@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %_ZN5Eigen15PlainObj
 
 .lr.ph:                                           ; preds = %bb.l
   %i.cp = sub i64 %i.bo, %.07.lcssa.i             ; 13 uses
-  %i.cq = add nsw i64 %i.cp, 1                    ; 2 uses
+  %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
   %i.cr = icmp sgt i64 %i.cp, 1
   %i.cs = add i64 %i.cp, -1                       ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -608,7 +608,7 @@ _ZN5Eigen5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEaSINS_5SolveIN
   br i1 %i.gu, label %bb.k, label %bb.p
 
 bb.k:                                             ; preds = %_ZN5Eigen5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEaSINS_5SolveINS_14TriangularViewIKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEELj2EEES3_EEEERS3_RKNS_9DenseBaseIT_EE.exit
-  %i.gv = sub nsw i64 %i.gt, %.lcssa              ; 5 uses
+  %i.gv = sub nuw nsw i64 %i.gt, %.lcssa          ; 5 uses
   %i.gw = sub nsw i64 %.pre64, %i.gv
   %i.gx = load ptr, ptr %2, align 8, !tbaa !19, !noalias !1165
   %i.gy = getelementptr inbounds [8 x i8], ptr %i.gx, i64 %i.gw ; 4 uses

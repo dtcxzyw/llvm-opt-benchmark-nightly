@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %i.dw, label %scalar.ph, label %._crit_edge, !llvm.loop !159
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %.preheader79
-  %i.dx = sub nsw i32 %i.dh, %i.dg                ; 2 uses
+  %i.dx = sub nuw nsw i32 %i.dh, %i.dg            ; 2 uses
   %i.dy = zext nneg i32 %i.as to i64              ; 3 uses
   %i.dz = getelementptr inbounds nuw [96 x i8], ptr %i.s, i64 %i.dy
   %i.ea = zext nneg i32 %i.au to i64              ; 4 uses
@@ -237,8 +237,8 @@ bb.g:                                             ; preds = %bb.f
   %i.em = getelementptr inbounds nuw [1024 x i8], ptr %i.v, i64 %i.dy
   %i.en = getelementptr inbounds nuw [256 x i8], ptr %i.em, i64 %i.ea
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %i.en, ptr noundef nonnull align 16 dereferenceable(256) %i.b, i64 256, i1 false), !tbaa !63
-  %1 = icmp sgt i32 %i.dx, 0
-  br i1 %1, label %bb.c, label %.thread, !llvm.loop !160
+  %.not116 = icmp eq i32 %i.dx, 0
+  br i1 %.not116, label %.thread, label %bb.c, !llvm.loop !160
 
 .thread:                                          ; preds = %bb.c, %.preheader, %bb.g, %bb.d, %bb.e, %.preheader80, %._crit_edge, %mjpeg_parse_len.exit.preheader, %mjpeg_parse_len.exit.thread
   %.263 = phi i32 [ -1094995529, %mjpeg_parse_len.exit.thread ], [ 0, %mjpeg_parse_len.exit.preheader ], [ 0, %.preheader ], [ %i.ei, %bb.g ], [ -1094995529, %bb.d ], [ -1094995529, %bb.e ], [ -1094995529, %.preheader80 ], [ -1094995529, %bb.c ], [ %i.ee, %._crit_edge ]

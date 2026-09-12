@@ -205,8 +205,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .preheader.us:                                    ; preds = %.preheader.lr.ph.us, %.loopexit
   %.1779.us = phi i32 [ 0, %.preheader.lr.ph.us ], [ %i.dj, %.loopexit ] ; 2 uses
   %.28.us = phi i32 [ %.17911.us, %.preheader.lr.ph.us ], [ %.lcssa, %.loopexit ] ; 2 uses
-  %i.dk = shl i32 %.1779.us, %i.cs
-  %i.dl = add nsw i32 %i.dc, %i.dk
+  %i.dk = shl nuw i32 %.1779.us, %i.cs
+  %i.dl = add nuw nsw i32 %i.dc, %i.dk
   %i.dm = sext i32 %i.dl to i64
   %invariant.gep40 = getelementptr [4 x i8], ptr %i.a, i64 %i.dm ; 15 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.body

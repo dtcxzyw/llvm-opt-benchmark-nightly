@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w
 vector.memcheck:                                  ; preds = %bb.w
   %i.oq = load ptr, ptr %i.of, align 16, !tbaa !70 ; 12 uses
   %i.or = load ptr, ptr %i.og, align 8, !tbaa !71 ; 12 uses
-  %i.os = trunc nsw i64 %indvars.iv361.i to i32   ; 5 uses
+  %i.os = trunc nuw nsw i64 %indvars.iv361.i to i32 ; 5 uses
   %scevgep155 = getelementptr i8, ptr %i.oq, i64 64
   %scevgep156 = getelementptr i8, ptr %i.or, i64 64
   %bound0 = icmp ult ptr %i.y, %scevgep155
@@ -608,7 +608,7 @@ put_bits.exit:                                    ; preds = %bb.c, %bb.g
 bb.h:                                             ; preds = %put_bits.exit
   %i.ak = shl i32 %.026.i.i, %i.ai
   %i.al = or i32 %i.ak, %i.g
-  %i.am = sub nsw i32 %.0.i.i, %i.ai
+  %i.am = sub nuw nsw i32 %.0.i.i, %i.ai
   br label %put_bits.exit35
 
 bb.i:                                             ; preds = %put_bits.exit
@@ -664,7 +664,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.bf = shl i32 %.pre, %i.bd
-  %i.bg = sub nsw i32 %.pre54, %i.bd
+  %i.bg = sub nuw nsw i32 %.pre54, %i.bd
   br label %put_bits.exit39
 
 bb.p:                                             ; preds = %bb.n

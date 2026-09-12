@@ -205,7 +205,7 @@ middle.block1124:                                 ; preds = %vector.body1119
 
 ._crit_edge.loopexit.i526:                        ; preds = %.lr.ph129.i.prol.loopexit, %.lr.ph129.i, %middle.block1124
   %indvars.iv.next143.i.lcssa = phi i64 [ %i.abe, %middle.block1124 ], [ %indvars.iv.next143.i.lcssa1161.unr, %.lr.ph129.i.prol.loopexit ], [ %indvars.iv.next143.i.3, %.lr.ph129.i ]
-  %i.acg = trunc nsw i64 %indvars.iv.next143.i.lcssa to i32
+  %i.acg = trunc nuw nsw i64 %indvars.iv.next143.i.lcssa to i32
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i526, %.preheader119.i
@@ -346,7 +346,7 @@ middle.block1106:                                 ; preds = %vector.body1101
 
 ._crit_edge133.loopexit.i:                        ; preds = %.lr.ph132.i.prol.loopexit, %.lr.ph132.i, %middle.block1106
   %indvars.iv.next154.i.lcssa = phi i64 [ %i.adc, %middle.block1106 ], [ %indvars.iv.next154.i.lcssa1162.unr, %.lr.ph132.i.prol.loopexit ], [ %indvars.iv.next154.i.3, %.lr.ph132.i ]
-  %i.aee = trunc nsw i64 %indvars.iv.next154.i.lcssa to i32
+  %i.aee = trunc nuw nsw i64 %indvars.iv.next154.i.lcssa to i32
   br label %._crit_edge133.i
 
 ._crit_edge133.i:                                 ; preds = %._crit_edge133.loopexit.i, %.preheader118.i
@@ -749,16 +749,15 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph.i.i
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.cy = add nsw i64 %indvars.iv.i17, -6         ; 2 uses
   %i.cz = icmp eq i64 %i.cy, 31
-  %i.da = trunc nsw i64 %i.cy to i32              ; 2 uses
+  %i.da = trunc nuw nsw i64 %i.cy to i32          ; 2 uses
   %i.db = shl i32 2, %i.da
   %i.dc = sext i32 %i.db to i64
   br i1 %i.cz, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.dd = shl nuw i32 1, %i.da                    ; 2 uses
-  %3 = sext i32 %i.dd to i64
-  %smax.i.i = call i32 @llvm.smax.i32(i32 %i.dd, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %i.dd = shl nuw nsw i32 1, %i.da                ; 2 uses
+  %3 = zext nneg i32 %i.dd to i64
+  %wide.trip.count.i.i = zext nneg i32 %i.dd to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
@@ -1056,16 +1055,15 @@ bb.q:                                             ; preds = %bb.p, %.lr.ph.i.i62
 .preheader.lr.ph.i.i44:                           ; preds = %.lr.ph.split.split.split.i41
   %i.hh = add nsw i64 %indvars.iv.i42, -6         ; 2 uses
   %i.hi = icmp eq i64 %i.hh, 31
-  %i.hj = trunc nsw i64 %i.hh to i32              ; 2 uses
+  %i.hj = trunc nuw nsw i64 %i.hh to i32          ; 2 uses
   %i.hk = shl i32 2, %i.hj
   %i.hl = sext i32 %i.hk to i64
   br i1 %i.hi, label %Abc_TtHasVar.exit.thread.i55, label %.preheader.us.preheader.i.i45
 
 .preheader.us.preheader.i.i45:                    ; preds = %.preheader.lr.ph.i.i44
-  %i.hm = shl nuw i32 1, %i.hj                    ; 2 uses
-  %4 = sext i32 %i.hm to i64
-  %smax.i.i46 = call i32 @llvm.smax.i32(i32 %i.hm, i32 1)
-  %wide.trip.count.i.i47 = zext nneg i32 %smax.i.i46 to i64
+  %i.hm = shl nuw nsw i32 1, %i.hj                ; 2 uses
+  %4 = zext nneg i32 %i.hm to i64
+  %wide.trip.count.i.i47 = zext nneg i32 %i.hm to i64
   br label %.preheader.us.i.i48
 
 .preheader.us.i.i48:                              ; preds = %._crit_edge.us.i.i61, %.preheader.us.preheader.i.i45

@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %.lr.ph722, %.loopex
 
 bb.af:                                            ; preds = %.lr.ph716, %.loopexit500
   %storemerge427714 = phi i32 [ %i.gm, %.lr.ph716 ], [ %i.gr, %.loopexit500 ] ; 2 uses
-  %i.gr = add nsw i32 %storemerge427714, 1        ; 5 uses
+  %i.gr = add nuw nsw i32 %storemerge427714, 1    ; 5 uses
   %i.gs = icmp slt i32 %i.gr, %3
   br i1 %i.gs, label %.lr.ph710, label %.loopexit500
 
@@ -225,7 +225,7 @@ bb.ag:                                            ; preds = %.lr.ph710, %bb.ah
   br i1 %.not429, label %bb.ah, label %.loopexit461
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.ha = add nsw i32 %storemerge428708, 1        ; 2 uses
+  %i.ha = add nuw nsw i32 %storemerge428708, 1    ; 2 uses
   %i.hb = icmp slt i32 %i.ha, %3
   br i1 %i.hb, label %bb.ag, label %.loopexit500, !llvm.loop !75
 
@@ -314,7 +314,7 @@ bb.aj:                                            ; preds = %.lr.ph745, %.loopex
 
 bb.ak:                                            ; preds = %.lr.ph742, %.loopexit495
   %i.ib = phi i32 [ %i.hu, %.lr.ph742 ], [ %i.ic, %.loopexit495 ] ; 3 uses
-  %i.ic = add nsw i32 %i.ib, 1                    ; 6 uses
+  %i.ic = add nuw nsw i32 %i.ib, 1                ; 6 uses
   %i.id = icmp slt i32 %i.ic, %3
   br i1 %i.id, label %.lr.ph739, label %.loopexit495
 
@@ -361,7 +361,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %.not424.4, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.ix = add nsw i32 %i.ii, 1                    ; 3 uses
+  %i.ix = add nuw nsw i32 %i.ii, 1                ; 3 uses
   %i.iy = icmp slt i32 %i.ix, %3
   br i1 %i.iy, label %bb.al, label %.loopexit495, !llvm.loop !80
 
@@ -468,7 +468,7 @@ bb.at:                                            ; preds = %.lr.ph766, %.loopex
 
 bb.au:                                            ; preds = %.lr.ph763, %.loopexit490
   %i.kk = phi i32 [ %i.jx, %.lr.ph763 ], [ %i.kl, %.loopexit490 ] ; 3 uses
-  %i.kl = add nsw i32 %i.kk, 1                    ; 6 uses
+  %i.kl = add nuw nsw i32 %i.kk, 1                ; 6 uses
   %i.km = icmp slt i32 %i.kl, %3
   br i1 %i.km, label %.lr.ph760, label %.loopexit490
 
@@ -528,7 +528,7 @@ bb.ax:                                            ; preds = %.lr.ph756.2
   br i1 %.not419.3, label %.loopexit489.4, label %.loopexit1359
 
 .loopexit489.4:                                   ; preds = %.lr.ph756.3
-  %i.lp = add nsw i32 %i.lr, 1                    ; 3 uses
+  %i.lp = add nuw nsw i32 %i.lr, 1                ; 3 uses
   %i.lq = icmp slt i32 %i.lp, %3
   br i1 %i.lq, label %.lr.ph756, label %.loopexit490, !llvm.loop !85
 
@@ -679,7 +679,7 @@ bb.bc:                                            ; preds = %.lr.ph791, %.loopex
 
 bb.bd:                                            ; preds = %.lr.ph788, %.loopexit483
   %storemerge412786 = phi i32 [ %i.nl, %.lr.ph788 ], [ %i.ob, %.loopexit483 ] ; 3 uses
-  %i.ob = add nsw i32 %storemerge412786, 1        ; 6 uses
+  %i.ob = add nuw nsw i32 %storemerge412786, 1    ; 6 uses
   %i.oc = icmp slt i32 %i.ob, %3
   br i1 %i.oc, label %.lr.ph785, label %.loopexit483
 
@@ -732,7 +732,7 @@ bb.be:                                            ; preds = %.lr.ph778.1
   br i1 %.not414.2, label %.loopexit482.4, label %.loopexit1399
 
 .loopexit482.4:                                   ; preds = %.lr.ph778.2
-  %i.pg = add nsw i32 %i.ps, 1                    ; 3 uses
+  %i.pg = add nuw nsw i32 %i.ps, 1                ; 3 uses
   %i.ph = icmp slt i32 %i.pg, %3
   br i1 %i.ph, label %.lr.ph778, label %.loopexit483, !llvm.loop !90
 
@@ -879,7 +879,7 @@ bb.bk:                                            ; preds = %.lr.ph589, %.loopex
   %storemerge403.lcssa2821 = phi i32 [ %storemerge403.lcssa.lcssa2826, %.lr.ph589 ], [ %storemerge403.lcssa, %.loopexit539 ]
   %i.rf = phi i32 [ %.lcssa28202823, %.lr.ph589 ], [ %i.re, %.loopexit539 ] ; 3 uses
   %storemerge402588 = phi i32 [ %i.qz, %.lr.ph589 ], [ %i.rg, %.loopexit539 ] ; 3 uses
-  %i.rg = add nsw i32 %storemerge402588, 1        ; 5 uses
+  %i.rg = add nuw nsw i32 %storemerge402588, 1    ; 5 uses
   %i.rh = icmp slt i32 %i.rg, %3
   br i1 %i.rh, label %.lr.ph584, label %.loopexit539
 
@@ -887,12 +887,12 @@ bb.bk:                                            ; preds = %.lr.ph589, %.loopex
   %i.ri = shl nuw nsw i32 %storemerge402588, 1
   %i.rj = shl nuw i32 1, %i.ri
   %i.rk = or i32 %i.rd, %i.rj
-  %i.rl = add nsw i32 %storemerge402588, 2        ; 3 uses
+  %i.rl = add nuw nsw i32 %storemerge402588, 2    ; 3 uses
   %i.rm = icmp slt i32 %i.rl, %3
   br i1 %i.rm, label %.lr.ph, label %.loopexit539
 
 .loopexit537:                                     ; preds = %bb.bm
-  %i.rn = add nsw i32 %i.rq, 1                    ; 3 uses
+  %i.rn = add nuw nsw i32 %i.rq, 1                ; 3 uses
   %i.ro = icmp slt i32 %i.rn, %3
   br i1 %i.ro, label %.lr.ph, label %.loopexit539, !llvm.loop !95
 
@@ -915,7 +915,7 @@ bb.bl:                                            ; preds = %.lr.ph, %bb.bm
   br i1 %.not405, label %bb.bm, label %.loopexit461.loopexit2284
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.ry = add nsw i32 %storemerge404580, 1        ; 2 uses
+  %i.ry = add nuw nsw i32 %storemerge404580, 1    ; 2 uses
   %i.rz = icmp slt i32 %i.ry, %3
   br i1 %i.rz, label %bb.bl, label %.loopexit537, !llvm.loop !96
 
@@ -1020,7 +1020,7 @@ bb.bo:                                            ; preds = %.lr.ph618, %.loopex
 bb.bp:                                            ; preds = %.lr.ph615, %.loopexit532
   %.lcssa20592839 = phi i32 [ %.lcssa20592838.lcssa2842, %.lr.ph615 ], [ %.lcssa20592838, %.loopexit532 ] ; 2 uses
   %i.sz = phi i32 [ %i.st, %.lr.ph615 ], [ %i.ta, %.loopexit532 ] ; 4 uses
-  %i.ta = add nsw i32 %i.sz, 1                    ; 6 uses
+  %i.ta = add nuw nsw i32 %i.sz, 1                ; 6 uses
   %i.tb = icmp slt i32 %i.ta, %3
   br i1 %i.tb, label %.lr.ph612, label %.loopexit532
 
@@ -1029,12 +1029,12 @@ bb.bp:                                            ; preds = %.lr.ph615, %.loopex
   %i.td = shl nuw i32 1, %i.tc
   %i.te = or i32 %i.sx, %i.td
   %i.tf = shl i32 3, %i.tc
-  %i.tg = add nsw i32 %i.sz, 2                    ; 4 uses
+  %i.tg = add nuw nsw i32 %i.sz, 2                ; 4 uses
   %i.th = icmp slt i32 %i.tg, %3
   br i1 %i.th, label %.lr.ph609, label %.loopexit532
 
 .loopexit531:                                     ; preds = %bb.bw
-  %i.ti = add nsw i32 %i.tk, 1                    ; 4 uses
+  %i.ti = add nuw nsw i32 %i.tk, 1                ; 4 uses
   %i.tj = icmp slt i32 %i.ti, %3
   br i1 %i.tj, label %.lr.ph609, label %.loopexit532, !llvm.loop !101
 
@@ -1089,7 +1089,7 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %.not399.5, label %bb.bw, label %bb.bx
 
 bb.bw:                                            ; preds = %bb.bv
-  %i.uh = add nsw i32 %i.tq, 1                    ; 2 uses
+  %i.uh = add nuw nsw i32 %i.tq, 1                ; 2 uses
   %i.ui = icmp slt i32 %i.uh, %3
   br i1 %i.ui, label %bb.bq, label %.loopexit531, !llvm.loop !102
 
@@ -1219,7 +1219,7 @@ bb.bz:                                            ; preds = %.lr.ph642, %.loopex
 bb.ca:                                            ; preds = %.lr.ph639, %.loopexit526
   %.lcssa20362860 = phi i32 [ %.lcssa20362859.lcssa2863, %.lr.ph639 ], [ %.lcssa20362859, %.loopexit526 ] ; 2 uses
   %i.vu = phi i32 [ %i.vi, %.lr.ph639 ], [ %i.vv, %.loopexit526 ] ; 7 uses
-  %i.vv = add nsw i32 %i.vu, 1                    ; 6 uses
+  %i.vv = add nuw nsw i32 %i.vu, 1                ; 6 uses
   %i.vw = icmp slt i32 %i.vv, %3
   br i1 %i.vw, label %.lr.ph636, label %.loopexit526
 
@@ -1237,12 +1237,12 @@ bb.ca:                                            ; preds = %.lr.ph639, %.loopex
   %i.wh = shl i32 3, %i.wg
   %i.wi = or i32 %i.vt, %i.wh
   %i.wj = shl i32 3, %i.vx                        ; 2 uses
-  %i.wk = add nsw i32 %i.vu, 2                    ; 4 uses
+  %i.wk = add nuw nsw i32 %i.vu, 2                ; 4 uses
   %i.wl = icmp slt i32 %i.wk, %3
   br i1 %i.wl, label %.lr.ph633, label %.loopexit526
 
 .loopexit525:                                     ; preds = %.loopexit524.5
-  %i.wm = add nsw i32 %i.wo, 1                    ; 4 uses
+  %i.wm = add nuw nsw i32 %i.wo, 1                ; 4 uses
   %i.wn = icmp slt i32 %i.wm, %3
   br i1 %i.wn, label %.lr.ph633, label %.loopexit526, !llvm.loop !107
 
@@ -1332,7 +1332,7 @@ bb.cg:                                            ; preds = %.lr.ph629.3
   br i1 %.not393.4, label %.loopexit524.5, label %.loopexit1023
 
 .loopexit524.5:                                   ; preds = %.lr.ph629.4
-  %i.ye = add nsw i32 %i.yg, 1                    ; 2 uses
+  %i.ye = add nuw nsw i32 %i.yg, 1                ; 2 uses
   %i.yf = icmp slt i32 %i.ye, %3
   br i1 %i.yf, label %.lr.ph629, label %.loopexit525, !llvm.loop !108
 
@@ -1517,7 +1517,7 @@ bb.cm:                                            ; preds = %.lr.ph670, %.loopex
 bb.cn:                                            ; preds = %.lr.ph667, %.loopexit519
   %.lcssa20172875 = phi i32 [ %.lcssa20172874.lcssa2878, %.lr.ph667 ], [ %.lcssa20172874, %.loopexit519 ] ; 2 uses
   %storemerge384665 = phi i32 [ %i.aah, %.lr.ph667 ], [ %i.aay, %.loopexit519 ] ; 10 uses
-  %i.aay = add nsw i32 %storemerge384665, 1       ; 6 uses
+  %i.aay = add nuw nsw i32 %storemerge384665, 1   ; 6 uses
   %i.aaz = icmp slt i32 %i.aay, %3
   br i1 %i.aaz, label %.lr.ph664, label %.loopexit519
 
@@ -1544,12 +1544,12 @@ bb.cn:                                            ; preds = %.lr.ph667, %.loopex
   %i.abt = shl i32 3, %i.abs
   %i.abu = or i32 %i.aaw, %i.abt                  ; 2 uses
   %i.abv = shl i32 3, %i.aba
-  %i.abw = add nsw i32 %storemerge384665, 2       ; 4 uses
+  %i.abw = add nuw nsw i32 %storemerge384665, 2   ; 4 uses
   %i.abx = icmp slt i32 %i.abw, %3
   br i1 %i.abx, label %.lr.ph661, label %.loopexit519
 
 .loopexit518:                                     ; preds = %.loopexit517.5
-  %i.aby = add nsw i32 %i.aca, 1                  ; 4 uses
+  %i.aby = add nuw nsw i32 %i.aca, 1              ; 4 uses
   %i.abz = icmp slt i32 %i.aby, %3
   br i1 %i.abz, label %.lr.ph661, label %.loopexit519, !llvm.loop !113
 
@@ -1654,7 +1654,7 @@ bb.cr:                                            ; preds = %.lr.ph654.2
   br i1 %.not387.3, label %.loopexit517.5, label %.loopexit1068
 
 .loopexit517.5:                                   ; preds = %.lr.ph654.3
-  %i.aee = add nsw i32 %i.aey, 1                  ; 2 uses
+  %i.aee = add nuw nsw i32 %i.aey, 1              ; 2 uses
   %i.aef = icmp slt i32 %i.aee, %3
   br i1 %i.aef, label %.lr.ph654, label %.loopexit518, !llvm.loop !114
 
@@ -1880,7 +1880,7 @@ bb.cz:                                            ; preds = %.lr.ph700, %.loopex
 bb.da:                                            ; preds = %.lr.ph697, %.loopexit510
   %.lcssa19982890 = phi i32 [ %.lcssa19982889.lcssa2893, %.lr.ph697 ], [ %.lcssa19982889, %.loopexit510 ] ; 2 uses
   %storemerge379695 = phi i32 [ %i.agz, %.lr.ph697 ], [ %i.ahs, %.loopexit510 ] ; 13 uses
-  %i.ahs = add nsw i32 %storemerge379695, 1       ; 6 uses
+  %i.ahs = add nuw nsw i32 %storemerge379695, 1   ; 6 uses
   %i.aht = icmp slt i32 %i.ahs, %3
   br i1 %i.aht, label %.lr.ph694, label %.loopexit510
 
@@ -1915,12 +1915,12 @@ bb.da:                                            ; preds = %.lr.ph697, %.loopex
   %i.aiv = shl i32 3, %i.aiu
   %i.aiw = or i32 %i.ahq, %i.aiv                  ; 2 uses
   %i.aix = shl i32 3, %i.ahu
-  %i.aiy = add nsw i32 %storemerge379695, 2       ; 4 uses
+  %i.aiy = add nuw nsw i32 %storemerge379695, 2   ; 4 uses
   %i.aiz = icmp slt i32 %i.aiy, %3
   br i1 %i.aiz, label %.lr.ph691, label %.loopexit510
 
 .loopexit509:                                     ; preds = %.loopexit508.5
-  %i.aja = add nsw i32 %i.ajc, 1                  ; 4 uses
+  %i.aja = add nuw nsw i32 %i.ajc, 1              ; 4 uses
   %i.ajb = icmp slt i32 %i.aja, %3
   br i1 %i.ajb, label %.lr.ph691, label %.loopexit510, !llvm.loop !119
 
@@ -2101,7 +2101,7 @@ bb.dk:                                            ; preds = %._crit_edge683.2
   br i1 %.not.3, label %.loopexit508.5, label %.loopexit1192
 
 .loopexit508.5:                                   ; preds = %.preheader506.lr.ph.3
-  %i.amq = add nsw i32 %i.aog, 1                  ; 2 uses
+  %i.amq = add nuw nsw i32 %i.aog, 1              ; 2 uses
   %i.amr = icmp slt i32 %i.amq, %3
   br i1 %i.amr, label %.preheader506.lr.ph, label %.loopexit509, !llvm.loop !120
 

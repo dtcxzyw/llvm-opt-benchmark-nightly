@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.ak = zext nneg i32 %i.m to i64
   %i.al = zext nneg i32 %.0.val to i64
-  %invariant.gep = getelementptr [4 x i8], ptr %i.aj, i64 %i.ak ; 4 uses
+  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.ak ; 4 uses
   %invariant.gep12 = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %i.al ; 4 uses
   %i.am = load i32, ptr %i.aj, align 4, !tbaa !36
   store i32 %i.am, ptr %.pre, align 4, !tbaa !36
@@ -227,7 +227,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %exitcond8.peel.not, label %._crit_edge, label %.lr.ph.split.us.peel.next
 
 .lr.ph.split.us.peel.next:                        ; preds = %.lr.ph.split.us.preheader
-  %invariant.gep14 = getelementptr [4 x i8], ptr %i.aj, i64 %i.ao ; 3 uses
+  %invariant.gep14 = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.ao ; 3 uses
   %i.au = icmp eq i32 %i.x, 1
   %spec.select.us = select i1 %i.au, i32 1, i32 2 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
@@ -235,7 +235,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ax = zext nneg i32 %spec.select.us to i64
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %i.ax
   store i32 %i.aw, ptr %i.ay, align 4, !tbaa !36
-  %gep15 = getelementptr i8, ptr %invariant.gep14, i64 4
+  %gep15 = getelementptr inbounds nuw i8, ptr %invariant.gep14, i64 4
   %i.az = load i32, ptr %gep15, align 4, !tbaa !36
   %i.ba = add nuw nsw i32 %spec.select.us, %.0.val
   %i.bb = zext nneg i32 %i.ba to i64
@@ -252,7 +252,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bg = zext nneg i32 %spec.select.us.1 to i64
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %i.bg
   store i32 %i.bf, ptr %i.bh, align 4, !tbaa !36
-  %gep15.1 = getelementptr i8, ptr %invariant.gep14, i64 8
+  %gep15.1 = getelementptr inbounds nuw i8, ptr %invariant.gep14, i64 8
   %i.bi = load i32, ptr %gep15.1, align 4, !tbaa !36
   %i.bj = add nuw nsw i32 %spec.select.us.1, %.0.val
   %i.bk = zext nneg i32 %i.bj to i64
@@ -269,7 +269,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bp = zext nneg i32 %spec.select.us.2 to i64
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %i.bp
   store i32 %i.bo, ptr %i.bq, align 4, !tbaa !36
-  %gep15.2 = getelementptr i8, ptr %invariant.gep14, i64 12
+  %gep15.2 = getelementptr inbounds nuw i8, ptr %invariant.gep14, i64 12
   %i.br = load i32, ptr %gep15.2, align 4, !tbaa !36
   %i.bs = add nuw nsw i32 %spec.select.us.2, %.0.val
   %i.bt = zext nneg i32 %i.bs to i64
@@ -292,7 +292,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !36
   %i.ca = getelementptr inbounds nuw i8, ptr %.pre, i64 4
   store i32 %i.bz, ptr %i.ca, align 4, !tbaa !36
-  %gep.1 = getelementptr i8, ptr %invariant.gep, i64 4
+  %gep.1 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 4
   %i.cb = load i32, ptr %gep.1, align 4, !tbaa !36
   %gep13.1 = getelementptr inbounds nuw i8, ptr %invariant.gep12, i64 4
   store i32 %i.cb, ptr %gep13.1, align 4, !tbaa !36
@@ -304,7 +304,7 @@ bb.g:                                             ; preds = %bb.f
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !36
   %i.ce = getelementptr inbounds nuw i8, ptr %.pre, i64 8
   store i32 %i.cd, ptr %i.ce, align 4, !tbaa !36
-  %gep.2 = getelementptr i8, ptr %invariant.gep, i64 8
+  %gep.2 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 8
   %i.cf = load i32, ptr %gep.2, align 4, !tbaa !36
   %gep13.2 = getelementptr inbounds nuw i8, ptr %invariant.gep12, i64 8
   store i32 %i.cf, ptr %gep13.2, align 4, !tbaa !36
@@ -316,7 +316,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !36
   %i.ci = getelementptr inbounds nuw i8, ptr %.pre, i64 12
   store i32 %i.ch, ptr %i.ci, align 4, !tbaa !36
-  %gep.3 = getelementptr i8, ptr %invariant.gep, i64 12
+  %gep.3 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 12
   %i.cj = load i32, ptr %gep.3, align 4, !tbaa !36
   %gep13.3 = getelementptr inbounds nuw i8, ptr %invariant.gep12, i64 12
   store i32 %i.cj, ptr %gep13.3, align 4, !tbaa !36
@@ -719,7 +719,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge.us.loopexit.i.i.i:                    ; preds = %.lr.ph123.us.i.i.i, %vec.epilog.middle.block, %middle.block
   %indvars.iv.next160.i.i.i.lcssa = phi i64 [ %i.fr, %vec.epilog.middle.block ], [ %i.fj, %middle.block ], [ %indvars.iv.next160.i.i.i, %.lr.ph123.us.i.i.i ]
-  %i.gc = trunc nsw i64 %indvars.iv.next160.i.i.i.lcssa to i32
+  %i.gc = trunc nuw nsw i64 %indvars.iv.next160.i.i.i.lcssa to i32
   br label %._crit_edge.us.i.i.i
 
 ._crit_edge.us.i.i.i:                             ; preds = %._crit_edge.us.loopexit.i.i.i, %.loopexit115.us.i.i.i
@@ -1122,7 +1122,7 @@ vec.epilog.middle.block85:                        ; preds = %vec.epilog.vector.b
 
 ._crit_edge.us.loopexit.i.i.i:                    ; preds = %.lr.ph24.us.i.i.i, %vec.epilog.middle.block85, %middle.block71
   %indvars.iv.next61.i.i.i.lcssa = phi i64 [ %i.ga, %vec.epilog.middle.block85 ], [ %i.fs, %middle.block71 ], [ %indvars.iv.next61.i.i.i, %.lr.ph24.us.i.i.i ]
-  %i.gl = trunc nsw i64 %indvars.iv.next61.i.i.i.lcssa to i32
+  %i.gl = trunc nuw nsw i64 %indvars.iv.next61.i.i.i.lcssa to i32
   br label %._crit_edge.us.i.i.i
 
 ._crit_edge.us.i.i.i:                             ; preds = %._crit_edge.us.loopexit.i.i.i, %.loopexit16.us.i.i.i
@@ -1525,7 +1525,7 @@ middle.block46:                                   ; preds = %vector.body42
 
 ._crit_edge.us.loopexit.i.i.i:                    ; preds = %.lr.ph123.us.i.i.i, %middle.block46
   %indvars.iv.next160.i.i.i.lcssa = phi i64 [ %i.fs, %middle.block46 ], [ %indvars.iv.next160.i.i.i, %.lr.ph123.us.i.i.i ]
-  %i.gf = trunc nsw i64 %indvars.iv.next160.i.i.i.lcssa to i32
+  %i.gf = trunc nuw nsw i64 %indvars.iv.next160.i.i.i.lcssa to i32
   br label %._crit_edge.us.i.i.i
 
 ._crit_edge.us.i.i.i:                             ; preds = %._crit_edge.us.loopexit.i.i.i, %.loopexit115.us.i.i.i
@@ -1928,7 +1928,7 @@ middle.block46:                                   ; preds = %vector.body42
 
 ._crit_edge.us.loopexit.i.i.i:                    ; preds = %.lr.ph24.us.i.i.i, %middle.block46
   %indvars.iv.next60.i.i.i.lcssa = phi i64 [ %i.fk, %middle.block46 ], [ %indvars.iv.next60.i.i.i, %.lr.ph24.us.i.i.i ]
-  %i.fx = trunc nsw i64 %indvars.iv.next60.i.i.i.lcssa to i32
+  %i.fx = trunc nuw nsw i64 %indvars.iv.next60.i.i.i.lcssa to i32
   br label %._crit_edge.us.i.i.i
 
 ._crit_edge.us.i.i.i:                             ; preds = %._crit_edge.us.loopexit.i.i.i, %.loopexit16.us.i.i.i

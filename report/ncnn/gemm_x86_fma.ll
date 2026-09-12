@@ -205,7 +205,7 @@ vec.epilog.middle.block377:                       ; preds = %vec.epilog.vector.b
   br i1 %i.nr, label %bb.k, label %.preheader276.loopexit.i, !llvm.loop !617
 
 .preheader.loopexit.i:                            ; preds = %._crit_edge360.i
-  %i.ns = trunc nsw i64 %indvars.iv.next410.i to i32
+  %i.ns = trunc nuw nsw i64 %indvars.iv.next410.i to i32
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %.preheader276.i
@@ -608,7 +608,7 @@ bb.fu:                                            ; preds = %bb.ft, %.thread3548
   br i1 %i.ayr, label %bb.co, label %.preheader3684.loopexit.i, !llvm.loop !743
 
 .preheader3680.loopexit.i:                        ; preds = %._crit_edge3835.i
-  %i.ays = trunc nsw i64 %indvars.iv.next3928.i to i32
+  %i.ays = trunc nuw nsw i64 %indvars.iv.next3928.i to i32
   br label %.preheader3680.i
 
 .preheader3680.i:                                 ; preds = %.preheader3680.loopexit.i, %.preheader3684.i
@@ -1011,7 +1011,7 @@ begin_hunk_2_@_ZN4ncnnL20pack_B_tile_quantizeERKNS_3MatERS0_iiiif:bb.a
   br label %bb.l
 
 .preheader414.loopexit.i:                         ; preds = %._crit_edge.i
-  %i.nn = trunc nsw i64 %indvars.iv.next592.i to i32
+  %i.nn = trunc nuw nsw i64 %indvars.iv.next592.i to i32
   br label %.preheader414.i
 
 .preheader414.i:                                  ; preds = %.preheader414.loopexit.i, %.preheader417.i
@@ -1414,7 +1414,7 @@ begin_hunk_3_@_ZN4ncnnL30transpose_pack_B_tile_quantizeERKNS_3MatERS0_iiiif:bb.a
 .preheader572.loopexit.i:                         ; preds = %.loopexit575.i.loopexit9, %.loopexit575.i.loopexit8.us, %.loopexit575.i.us.us.us, %.loopexit578.i.us.us.preheader
   %.us-phi47 = phi ptr [ %.8.lcssa.i, %.loopexit578.i.us.us.preheader ], [ %i.uh, %.loopexit575.i.loopexit8.us ], [ %.24.i.us.us.us, %.loopexit575.i.us.us.us ], [ %i.abl, %.loopexit575.i.loopexit9 ]
   %.us-phi48 = phi i64 [ %i.qd, %.loopexit578.i.us.us.preheader ], [ %indvars.iv.next775.i.us, %.loopexit575.i.loopexit8.us ], [ %indvars.iv.next775.i.us.us.us, %.loopexit575.i.us.us.us ], [ %indvars.iv.next775.i, %.loopexit575.i.loopexit9 ]
-  %i.wy = trunc nsw i64 %.us-phi48 to i32
+  %i.wy = trunc nuw nsw i64 %.us-phi48 to i32
   br label %.preheader572.i
 
 .preheader572.i:                                  ; preds = %.preheader572.loopexit.i, %.preheader579.i
@@ -1817,7 +1817,7 @@ bb.n:                                             ; preds = %bb.k
   br i1 %i.ua, label %bb.k, label %.preheader664.loopexit.i, !llvm.loop !895
 
 .preheader657.loopexit.i:                         ; preds = %.loopexit660.i
-  %i.ub = trunc nsw i64 %indvars.iv.next851.i to i32
+  %i.ub = trunc nuw nsw i64 %indvars.iv.next851.i to i32
   br label %.preheader657.i
 
 .preheader657.i:                                  ; preds = %.preheader657.loopexit.i, %.preheader664.i
@@ -2220,7 +2220,7 @@ begin_hunk_5_@_ZN4ncnnL20pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb.a
   br label %bb.l
 
 .preheader472.loopexit.i:                         ; preds = %._crit_edge.i
-  %i.ps = trunc nsw i64 %indvars.iv.next666.i to i32
+  %i.ps = trunc nuw nsw i64 %indvars.iv.next666.i to i32
   br label %.preheader472.i
 
 .preheader472.i:                                  ; preds = %.preheader472.loopexit.i, %.preheader475.i

@@ -204,7 +204,7 @@ bb.a:
   %10 = alloca [5 x %"class.llvm::SDValue"], align 16 ; 12 uses
   %11 = alloca %"class.llvm::ArrayRef.277", align 8 ; 5 uses
   %12 = alloca %"class.llvm::SDValue", align 8    ; 4 uses
-  %13 = alloca %"class.llvm::SDLoc", align 8      ; 176 uses
+  %13 = alloca %"class.llvm::SDLoc", align 8      ; 177 uses
   %14 = alloca %"struct.llvm::EVT", align 8       ; 3 uses
   %15 = alloca %"class.llvm::APInt", align 8      ; 7 uses
   %16 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
@@ -355,7 +355,7 @@ bb.a:
   %159 = alloca %"class.llvm::MVT", align 2       ; 5 uses
   %160 = alloca %"class.llvm::ArrayRef.277", align 8 ; 3 uses
   %i.c = alloca [1 x ptr], align 8                ; 4 uses
-  %161 = alloca %"class.llvm::SmallVector.289", align 8 ; 11 uses
+  %161 = alloca %"class.llvm::SmallVector.289", align 8 ; 12 uses
   %162 = alloca %"class.llvm::ArrayRef.277", align 8 ; 3 uses
   %i.d = alloca [1 x ptr], align 8                ; 4 uses
   %163 = alloca %"class.llvm::SmallVector.293", align 8 ; 10 uses
@@ -758,7 +758,7 @@ _ZN4llvm11SmallVectorINS_7SDValueELj8EED2Ev.exit: ; preds = %bb.lb, %bb.lc
 bb.ld:                                            ; preds = %bb.kl, %bb.kl, %bb.kl, %bb.kl, %bb.kl
   %i.bku = icmp eq i32 %i.bia, 12555
   %i.bkv = icmp eq i32 %i.bia, 12576
-  %i.bkw = or i1 %i.bku, %i.bkv                   ; 2 uses
+  %i.bkw = or i1 %i.bku, %i.bkv                   ; 3 uses
   %i.bkx = zext i1 %i.bkw to i8
   %i.bky = add nsw i32 %i.bia, -12575
   %i.bkz = icmp ult i32 %i.bky, 2                 ; 2 uses
@@ -782,7 +782,7 @@ _ZNK4llvm3MVT19getScalarSizeInBitsEv.exit2748:    ; preds = %bb.ld, %bb.le
   %.sroa.0.0.copyload.i.i2747 = load i64, ptr %i.bli, align 16
   %i.blj = trunc i64 %.sroa.0.0.copyload.i.i2747 to i32
   %i.blk = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.blj, i1 false)
-  %i.bll = sub nsw i32 31, %i.blk                 ; 2 uses
+  %i.bll = sub nsw i32 31, %i.blk                 ; 3 uses
   %.not2258 = icmp eq i32 %i.bia, 12558
   call void @llvm.lifetime.start.p0(ptr nonnull %161) #26
   %i.blm = getelementptr inbounds nuw i8, ptr %161, i64 16 ; 2 uses
@@ -799,6 +799,7 @@ _ZNK4llvm3MVT19getScalarSizeInBitsEv.exit2748:    ; preds = %bb.ld, %bb.le
   %.sroa.2604.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bhq, i64 88
   %.sroa.2604.0.copyload = load i32, ptr %.sroa.2604.0..sroa_idx, align 8, !tbaa !387
   call void @_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_(ptr noundef nonnull align 8 dereferenceable(16) %161, ptr %.sroa.0603.0.copyload, i32 %.sroa.2604.0.copyload)
+  call void @_ZN4llvm17RISCVDAGToDAGISel26addVectorLoadStoreOperandsEPNS_6SDNodeEjRKNS_5SDLocEjbbRNS_15SmallVectorImplINS_7SDValueEEEbPNS_3MVTE(ptr noundef nonnull align 8 dereferenceable(960) %0, ptr noundef nonnull %1, i32 noundef %i.bll, ptr noundef nonnull align 8 dereferenceable(12) %13, i32 noundef 3, i1 noundef zeroext %i.bkw, i1 noundef zeroext %i.bkz, ptr noundef nonnull align 8 dereferenceable(16) %161, i1 noundef zeroext true, ptr noundef null)
   br label %bb.lf
 
 .split2191:                                       ; preds = %_ZNK4llvm3MVT19getScalarSizeInBitsEv.exit2748
@@ -806,11 +807,10 @@ _ZNK4llvm3MVT19getScalarSizeInBitsEv.exit2748:    ; preds = %bb.ld, %bb.le
   %i.blr = load ptr, ptr %i.blq, align 8, !tbaa !386
   %i.bls = call noundef ptr @_ZN4llvm12SelectionDAG14getMachineNodeEjRKNS_5SDLocENS_3EVTE(ptr noundef nonnull align 8 dereferenceable(920) %i.blr, i32 noundef 10, ptr noundef nonnull align 8 dereferenceable(12) %13, i16 %.sroa.0.0.copyload.i.i, ptr null) #26
   call void @_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_(ptr noundef nonnull align 8 dereferenceable(16) %161, ptr %i.bls, i32 0)
+  call void @_ZN4llvm17RISCVDAGToDAGISel26addVectorLoadStoreOperandsEPNS_6SDNodeEjRKNS_5SDLocEjbbRNS_15SmallVectorImplINS_7SDValueEEEbPNS_3MVTE(ptr noundef nonnull align 8 dereferenceable(960) %0, ptr noundef nonnull %1, i32 noundef %i.bll, ptr noundef nonnull align 8 dereferenceable(12) %13, i32 noundef 2, i1 noundef zeroext %i.bkw, i1 noundef zeroext false, ptr noundef nonnull align 8 dereferenceable(16) %161, i1 noundef zeroext true, ptr noundef null)
   br label %bb.lf
 
 bb.lf:                                            ; preds = %.split2191, %.split2193
-  %.sink = phi i32 [ 2, %.split2191 ], [ 3, %.split2193 ]
-  call void @_ZN4llvm17RISCVDAGToDAGISel26addVectorLoadStoreOperandsEPNS_6SDNodeEjRKNS_5SDLocEjbbRNS_15SmallVectorImplINS_7SDValueEEEbPNS_3MVTE(ptr noundef nonnull align 8 dereferenceable(960) %0, ptr noundef nonnull %1, i32 noundef %i.bll, ptr noundef nonnull align 8 dereferenceable(12) %13, i32 noundef %.sink, i1 noundef zeroext %i.bkw, i1 noundef zeroext %i.bkz, ptr noundef nonnull align 8 dereferenceable(16) %161, i1 noundef zeroext true, ptr noundef null)
   %i.blt = call noundef zeroext i8 @_ZN4llvm19RISCVTargetLowering7getLMULENS_3MVTE(i16 %.sroa.0.0.copyload.i.i) #26
   %i.blu = trunc nsw i32 %i.bll to i8
   %i.blv = call noundef ptr @_ZN4llvm5RISCV12getVLEPseudoEhhhhh(i8 noundef zeroext %i.bkx, i8 noundef zeroext %i.bla, i8 noundef zeroext 0, i8 noundef zeroext %i.blu, i8 noundef zeroext %i.blt) #26

@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.lr.ph58, %._crit_e
   br i1 %lcmp.mod113.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %indvars.iv.next81.prol = add nsw i64 %i.bx, 1
+  %indvars.iv.next81.prol = add nuw nsw i64 %i.bx, 1
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.bx
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !53
   %i.cc = zext i32 %i.cb to i64
@@ -230,7 +230,7 @@ bb.h:                                             ; preds = %.lr.ph58, %._crit_e
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv88
   store i32 %i.cj, ptr %i.ck, align 4, !tbaa !53
   %i.cl = lshr i128 %.3.lcssa, 32
-  %indvars.iv.next89 = add nsw i64 %indvars.iv88, 1 ; 2 uses
+  %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 2 uses
   %indvars.iv.next79 = add i32 %indvars.iv78, 1
   %exitcond91.not = icmp eq i64 %indvars.iv.next89, %i.e
   %indvar.next = add i32 %indvar, 1
@@ -251,9 +251,9 @@ bb.h:                                             ; preds = %.lr.ph58, %._crit_e
   %i.cu = zext i64 %i.ct to i128
   %i.cv = add i128 %.352, %i.cu
   %indvars.iv82.1 = add nsw i64 %indvars.iv82.in, -2 ; 2 uses
-  %indvars.iv.next81.1 = add nsw i64 %indvars.iv80, 2 ; 2 uses
-  %i.cw = getelementptr [4 x i8], ptr %i.s, i64 %indvars.iv80
-  %i.cx = getelementptr i8, ptr %i.cw, i64 4
+  %indvars.iv.next81.1 = add nuw nsw i64 %indvars.iv80, 2 ; 2 uses
+  %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv80
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 4
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !53
   %i.cz = zext i32 %i.cy to i64
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv82.1

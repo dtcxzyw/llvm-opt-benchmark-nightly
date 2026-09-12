@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.it = sext i32 %i.im to i64
   %i.iu = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.it
   store ptr %i.is, ptr %i.iu, align 8, !tbaa !12
-  %i.iv = add nsw i32 %i.im, 1                    ; 2 uses
+  %i.iv = add nuw nsw i32 %i.im, 1                ; 2 uses
   store i32 %i.iv, ptr %i.m, align 4, !tbaa !167
   br label %bb.aq
 
@@ -224,7 +224,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.jd = sext i32 %i.iw to i64
   %i.je = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.jd
   store ptr %i.jc, ptr %i.je, align 8, !tbaa !12
-  %i.jf = add nsw i32 %i.iw, 1                    ; 2 uses
+  %i.jf = add nuw nsw i32 %i.iw, 1                ; 2 uses
   store i32 %i.jf, ptr %i.m, align 4, !tbaa !167
   br label %bb.as
 
@@ -243,7 +243,7 @@ bb.at:                                            ; preds = %bb.as
   %i.jn = sext i32 %i.jg to i64
   %i.jo = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.jn
   store ptr %i.jm, ptr %i.jo, align 8, !tbaa !12
-  %i.jp = add nsw i32 %i.jg, 1                    ; 2 uses
+  %i.jp = add nuw nsw i32 %i.jg, 1                ; 2 uses
   store i32 %i.jp, ptr %i.m, align 4, !tbaa !167
   br label %bb.au
 
@@ -266,7 +266,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.jx = sext i32 %i.jq to i64
   %i.jy = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.jx
   store ptr %i.jw, ptr %i.jy, align 8, !tbaa !12
-  %i.jz = add nsw i32 %i.jq, 1                    ; 2 uses
+  %i.jz = add nuw nsw i32 %i.jq, 1                ; 2 uses
   store i32 %i.jz, ptr %i.m, align 4, !tbaa !167
   br label %bb.ax
 

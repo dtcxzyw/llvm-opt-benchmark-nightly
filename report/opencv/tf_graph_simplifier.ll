@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.k, %bb.c
 define linkonce_odr hidden void @_ZN2cv3dnn14dnn5_v2026060520ReshapeKerasSubgraph8finalizeERN17opencv_tensorflow8GraphDefEPNS3_7NodeDefERSt6vectorIS7_SaIS7_EE(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(24) %3) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 4 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !147  ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !147  ; 4 uses
   %i.c = icmp slt i32 %i.b, -1
   br i1 %i.c, label %.noexc, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -214,19 +214,17 @@ bb.a:
   unreachable
 
 _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
-  %i.d = add nsw i32 %i.b, 1                      ; 2 uses
-  %i.e = zext nneg i32 %i.d to i64                ; 2 uses
-  %.not.i.i.i.i = icmp ne i32 %i.d, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.d = add nuw nsw i32 %i.b, 1
+  %i.e = zext nneg i32 %i.d to i64
   %i.f = shl nuw nsw i64 %i.e, 2                  ; 3 uses
   %i.g = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #23 ; 9 uses
   store i32 0, ptr %i.g, align 4, !tbaa !40
   %i.h = getelementptr i8, ptr %i.g, i64 4        ; 3 uses
-  %4 = add nsw i64 %i.e, -1                       ; 2 uses
-  %i.i = icmp eq i64 %4, 0
+  %i.i = icmp eq i32 %i.b, 0
   br i1 %i.i, label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
 
 _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
+  %4 = zext i32 %i.b to i64
   %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %4, 2     ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.h, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !40
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx.i.i.i.i.i.i.i

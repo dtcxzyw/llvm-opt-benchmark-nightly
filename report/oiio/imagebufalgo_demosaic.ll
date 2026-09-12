@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %.lr.ph58, %._crit_e
   %i.dd = getelementptr inbounds [4 x i8], ptr %.pre93, i64 %indvars.iv88
   store i32 %i.dc, ptr %i.dd, align 4, !tbaa !67
   %i.de = lshr i128 %.3.lcssa, 32
-  %indvars.iv.next89 = add nsw i64 %indvars.iv88, 1 ; 2 uses
+  %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 2 uses
   %indvars.iv.next79 = add i32 %indvars.iv78, 1
   %exitcond91.not = icmp eq i64 %indvars.iv.next89, %wide.trip.count
   %indvar.next = add i32 %indvar, 1
@@ -608,7 +608,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hf = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
   %i.hg = and i32 %i.hf, -2
   %i.hh = add i32 %i.hg, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.hi = add nsw i32 %i.hh, %spec.store.select.i.i.i.i ; 2 uses
+  %i.hi = add nuw nsw i32 %i.hh, %spec.store.select.i.i.i.i ; 2 uses
   %i.hj = icmp slt i32 %i.hi, 5
   br i1 %i.hj, label %bb.ak, label %bb.al
 
@@ -1011,7 +1011,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hh = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
   %i.hi = and i32 %i.hh, -2
   %i.hj = add i32 %i.hi, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.hk = add nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
+  %i.hk = add nuw nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
   %i.hl = icmp slt i32 %i.hk, 5
   br i1 %i.hl, label %bb.ak, label %bb.al
 
@@ -1414,7 +1414,7 @@ bb.ao:                                            ; preds = %bb.as, %.lr.ph104.i
   %i.hw = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
   %i.hx = and i32 %i.hw, -2
   %i.hy = add i32 %i.hx, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.hz = add nsw i32 %i.hy, %spec.store.select.i.i.i.i ; 2 uses
+  %i.hz = add nuw nsw i32 %i.hy, %spec.store.select.i.i.i.i ; 2 uses
   %i.ia = icmp slt i32 %i.hz, 5
   br i1 %i.ia, label %bb.ap, label %bb.aq
 
@@ -1817,7 +1817,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hh = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
   %i.hi = and i32 %i.hh, -2
   %i.hj = add i32 %i.hi, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.hk = add nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
+  %i.hk = add nuw nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
   %i.hl = icmp slt i32 %i.hk, 5
   br i1 %i.hl, label %bb.ak, label %bb.al
 
@@ -2220,7 +2220,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hh = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
   %i.hi = and i32 %i.hh, -2
   %i.hj = add i32 %i.hi, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.hk = add nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
+  %i.hk = add nuw nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
   %i.hl = icmp slt i32 %i.hk, 5
   br i1 %i.hl, label %bb.ak, label %bb.al
 
@@ -2623,7 +2623,7 @@ bb.ao:                                            ; preds = %bb.as, %.lr.ph104.i
   %i.hw = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
   %i.hx = and i32 %i.hw, -2
   %i.hy = add i32 %i.hx, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.hz = add nsw i32 %i.hy, %spec.store.select.i.i.i.i ; 2 uses
+  %i.hz = add nuw nsw i32 %i.hy, %spec.store.select.i.i.i.i ; 2 uses
   %i.ia = icmp slt i32 %i.hz, 5
   br i1 %i.ia, label %bb.ap, label %bb.aq
 
@@ -3026,7 +3026,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hh = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
   %i.hi = and i32 %i.hh, -2
   %i.hj = add i32 %i.hi, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.hk = add nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
+  %i.hk = add nuw nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
   %i.hl = icmp slt i32 %i.hk, 5
   br i1 %i.hl, label %bb.ak, label %bb.al
 
@@ -3429,7 +3429,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hj = urem i32 %.fr.i.i.i.i, 6
   %i.hk = sub nuw i32 %.fr.i.i.i.i, %i.hj
   %i.hl = add i32 %i.hk, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.hm = add nsw i32 %i.hl, %spec.store.select.i.i.i.i ; 2 uses
+  %i.hm = add nuw nsw i32 %i.hl, %spec.store.select.i.i.i.i ; 2 uses
   %i.hn = icmp slt i32 %i.hm, 5
   br i1 %i.hn, label %bb.ak, label %bb.al
 
@@ -3832,7 +3832,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hl = urem i32 %.fr.i.i.i.i, 6
   %i.hm = sub nuw i32 %.fr.i.i.i.i, %i.hl
   %i.hn = add i32 %i.hm, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.ho = add nsw i32 %i.hn, %spec.store.select.i.i.i.i ; 2 uses
+  %i.ho = add nuw nsw i32 %i.hn, %spec.store.select.i.i.i.i ; 2 uses
   %i.hp = icmp slt i32 %i.ho, 5
   br i1 %i.hp, label %bb.ak, label %bb.al
 
@@ -4235,7 +4235,7 @@ bb.ao:                                            ; preds = %bb.as, %.lr.ph104.i
   %i.ia = urem i32 %.fr.i.i.i.i, 6
   %i.ib = sub nuw i32 %.fr.i.i.i.i, %i.ia
   %i.ic = add i32 %i.ib, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.id = add nsw i32 %i.ic, %spec.store.select.i.i.i.i ; 2 uses
+  %i.id = add nuw nsw i32 %i.ic, %spec.store.select.i.i.i.i ; 2 uses
   %i.ie = icmp slt i32 %i.id, 5
   br i1 %i.ie, label %bb.ap, label %bb.aq
 
@@ -4638,7 +4638,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hl = urem i32 %.fr.i.i.i.i, 6
   %i.hm = sub nuw i32 %.fr.i.i.i.i, %i.hl
   %i.hn = add i32 %i.hm, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.ho = add nsw i32 %i.hn, %spec.store.select.i.i.i.i ; 2 uses
+  %i.ho = add nuw nsw i32 %i.hn, %spec.store.select.i.i.i.i ; 2 uses
   %i.hp = icmp slt i32 %i.ho, 5
   br i1 %i.hp, label %bb.ak, label %bb.al
 
@@ -5041,7 +5041,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hl = urem i32 %.fr.i.i.i.i, 6
   %i.hm = sub nuw i32 %.fr.i.i.i.i, %i.hl
   %i.hn = add i32 %i.hm, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.ho = add nsw i32 %i.hn, %spec.store.select.i.i.i.i ; 2 uses
+  %i.ho = add nuw nsw i32 %i.hn, %spec.store.select.i.i.i.i ; 2 uses
   %i.hp = icmp slt i32 %i.ho, 5
   br i1 %i.hp, label %bb.ak, label %bb.al
 
@@ -5444,7 +5444,7 @@ bb.ao:                                            ; preds = %bb.as, %.lr.ph104.i
   %i.ia = urem i32 %.fr.i.i.i.i, 6
   %i.ib = sub nuw i32 %.fr.i.i.i.i, %i.ia
   %i.ic = add i32 %i.ib, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.id = add nsw i32 %i.ic, %spec.store.select.i.i.i.i ; 2 uses
+  %i.id = add nuw nsw i32 %i.ic, %spec.store.select.i.i.i.i ; 2 uses
   %i.ie = icmp slt i32 %i.id, 5
   br i1 %i.ie, label %bb.ap, label %bb.aq
 
@@ -5847,7 +5847,7 @@ bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i
   %i.hl = urem i32 %.fr.i.i.i.i, 6
   %i.hm = sub nuw i32 %.fr.i.i.i.i, %i.hl
   %i.hn = add i32 %i.hm, %indvars.iv121.i.i.i.i   ; 3 uses
-  %i.ho = add nsw i32 %i.hn, %spec.store.select.i.i.i.i ; 2 uses
+  %i.ho = add nuw nsw i32 %i.hn, %spec.store.select.i.i.i.i ; 2 uses
   %i.hp = icmp slt i32 %i.ho, 5
   br i1 %i.hp, label %bb.ak, label %bb.al
 

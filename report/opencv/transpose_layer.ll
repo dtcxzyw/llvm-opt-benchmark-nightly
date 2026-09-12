@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205.i: ; preds = %
   br label %bb.el
 
 bb.bm:                                            ; preds = %bb.bg
-  %i.ot = add nsw i32 %.095.i, %i.ll
+  %i.ot = add nuw nsw i32 %.095.i, %i.ll
   %i.ou = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.nn
   store i32 %i.ot, ptr %i.ou, align 4, !tbaa !66
   %i.ov = icmp ult i32 %.095.i, %narrow.i206.i
@@ -378,8 +378,8 @@ bb.ce:                                            ; preds = %bb.cd, %bb.cc
   br i1 %or.cond.i.1, label %bb.cf, label %bb.bh
 
 bb.cf:                                            ; preds = %bb.ce
-  %i.qj = add nsw i32 %.095.i.1, %i.ll
-  %i.qk = add nsw i64 %i.nn, 1                    ; 3 uses
+  %i.qj = add nuw nsw i32 %.095.i.1, %i.ll
+  %i.qk = add nuw nsw i64 %i.nn, 1                ; 3 uses
   %i.ql = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.qk
   store i32 %i.qj, ptr %i.ql, align 4, !tbaa !66
   %i.qm = icmp ult i32 %.095.i.1, %narrow.i206.i
@@ -433,8 +433,8 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
   br i1 %or.cond.i.2, label %bb.cl, label %bb.bh
 
 bb.cl:                                            ; preds = %bb.ck
-  %i.rd = add nsw i32 %.095.i.2, %i.ll
-  %i.re = add nsw i64 %i.nn, 2                    ; 3 uses
+  %i.rd = add nuw nsw i32 %.095.i.2, %i.ll
+  %i.re = add nuw nsw i64 %i.nn, 2                ; 3 uses
   %i.rf = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.re
   store i32 %i.rd, ptr %i.rf, align 4, !tbaa !66
   %i.rg = icmp ult i32 %.095.i.2, %narrow.i206.i
@@ -488,8 +488,8 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co
   br i1 %or.cond.i.3, label %bb.cr, label %bb.bh
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.rx = add nsw i32 %.095.i.3, %i.ll
-  %i.ry = add nsw i64 %i.nn, 3                    ; 3 uses
+  %i.rx = add nuw nsw i32 %.095.i.3, %i.ll
+  %i.ry = add nuw nsw i64 %i.nn, 3                ; 3 uses
   %i.rz = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.ry
   store i32 %i.rx, ptr %i.rz, align 4, !tbaa !66
   %i.sa = icmp ult i32 %.095.i.3, %narrow.i206.i
@@ -543,8 +543,8 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cu
   br i1 %or.cond.i.4, label %bb.cx, label %bb.bh
 
 bb.cx:                                            ; preds = %bb.cw
-  %i.sr = add nsw i32 %.095.i.4, %i.ll
-  %i.ss = add nsw i64 %i.nn, 4                    ; 3 uses
+  %i.sr = add nuw nsw i32 %.095.i.4, %i.ll
+  %i.ss = add nuw nsw i64 %i.nn, 4                ; 3 uses
   %i.st = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.ss
   store i32 %i.sr, ptr %i.st, align 4, !tbaa !66
   %i.su = icmp ult i32 %.095.i.4, %narrow.i206.i
@@ -598,8 +598,8 @@ bb.dc:                                            ; preds = %bb.db, %bb.da
   br i1 %or.cond.i.5, label %bb.dd, label %bb.bh
 
 bb.dd:                                            ; preds = %bb.dc
-  %i.tl = add nsw i32 %.095.i.5, %i.ll
-  %i.tm = add nsw i64 %i.nn, 5                    ; 3 uses
+  %i.tl = add nuw nsw i32 %.095.i.5, %i.ll
+  %i.tm = add nuw nsw i64 %i.nn, 5                ; 3 uses
   %i.tn = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.tm
   store i32 %i.tl, ptr %i.tn, align 4, !tbaa !66
   %i.to = icmp ult i32 %.095.i.5, %narrow.i206.i
@@ -653,8 +653,8 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg
   br i1 %or.cond.i.6, label %bb.dj, label %bb.bh
 
 bb.dj:                                            ; preds = %bb.di
-  %i.uf = add nsw i32 %.095.i.6, %i.ll
-  %i.ug = add nsw i64 %i.nn, 6                    ; 3 uses
+  %i.uf = add nuw nsw i32 %.095.i.6, %i.ll
+  %i.ug = add nuw nsw i64 %i.nn, 6                ; 3 uses
   %i.uh = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.ug
   store i32 %i.uf, ptr %i.uh, align 4, !tbaa !66
   %i.ui = icmp ult i32 %.095.i.6, %narrow.i206.i

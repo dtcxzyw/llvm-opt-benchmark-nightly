@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  %i.h = add nsw i32 %1, 1                        ; 3 uses
+  %i.h = add nuw nsw i32 %1, 1                    ; 3 uses
   %.not.i.not.i.i.i = icmp slt i32 %1, %.val5.i
   br i1 %.not.i.not.i.i.i, label %Cba_ObjNtkId.exit, label %bb.d
 
@@ -218,7 +218,7 @@ bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !35   ; 2 uses
   %.not9.i.i.i.i.i = icmp eq ptr %i.l, null
-  %2 = zext nneg i32 %i.h to i64
+  %2 = sext i32 %i.h to i64
   %i.m = shl nuw nsw i64 %2, 2                    ; 2 uses
   br i1 %.not9.i.i.i.i.i, label %bb.g, label %bb.f
 

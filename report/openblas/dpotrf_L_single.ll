@@ -48,13 +48,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %.loopexit
   %.0162181 = phi i64 [ 0, %bb.e ], [ %i.br, %.loopexit ] ; 9 uses
-  %i.v = sub nsw i64 %.0165, %.0162181            ; 2 uses
+  %i.v = sub nuw nsw i64 %.0165, %.0162181        ; 2 uses
   %spec.select173 = call i64 @llvm.smin.i64(i64 %i.v, i64 %spec.select) ; 15 uses
   br i1 %.not, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   store i64 %.0162181, ptr %i.a, align 16, !tbaa !18
-  %i.w = add nsw i64 %spec.select173, %.0162181
+  %i.w = add nuw nsw i64 %spec.select173, %.0162181
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -87,7 +87,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ah = getelementptr [8 x i8], ptr %i.ag, i64 %i.af
   %i.ai = call i32 @dtrsm_oltncopy(i64 noundef %spec.select173, i64 noundef %spec.select173, ptr noundef %i.ah, i64 noundef %i.j, i64 noundef 0, ptr noundef %4) #4 ; 0 uses
   %i.aj = call i64 @llvm.umin.i64(i64 %i.ad, i64 7872) ; 2 uses
-  %i.ak = add i64 %spec.select173, %.0162181      ; 5 uses
+  %i.ak = add nuw i64 %spec.select173, %.0162181  ; 5 uses
   %i.al = icmp slt i64 %i.ak, %.0165
   %i.am = add nsw i64 %i.aj, %i.ak                ; 3 uses
   br i1 %i.al, label %.lr.ph, label %._crit_edge

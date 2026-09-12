@@ -205,16 +205,15 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.cw = add nsw i64 %indvars.iv.i, -6           ; 2 uses
   %i.cx = icmp eq i64 %i.cw, 31
-  %i.cy = trunc nsw i64 %i.cw to i32              ; 2 uses
+  %i.cy = trunc nuw nsw i64 %i.cw to i32          ; 2 uses
   %i.cz = shl i32 2, %i.cy
   %i.da = sext i32 %i.cz to i64
   br i1 %i.cx, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.db = shl nuw i32 1, %i.cy                    ; 2 uses
-  %2 = sext i32 %i.db to i64
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.db, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %i.db = shl nuw nsw i32 1, %i.cy                ; 2 uses
+  %2 = zext nneg i32 %i.db to i64
+  %wide.trip.count.i.i = zext nneg i32 %i.db to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
@@ -372,16 +371,15 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i.i12
 .preheader.lr.ph.i.i111:                          ; preds = %.lr.ph.split.split.split.i108
   %i.fj = add nsw i64 %indvars.iv.i109, -6        ; 2 uses
   %i.fk = icmp eq i64 %i.fj, 31
-  %i.fl = trunc nsw i64 %i.fj to i32              ; 2 uses
+  %i.fl = trunc nuw nsw i64 %i.fj to i32          ; 2 uses
   %i.fm = shl i32 2, %i.fl
   %i.fn = sext i32 %i.fm to i64
   br i1 %i.fk, label %Abc_TtHasVar.exit.thread.i122, label %.preheader.us.preheader.i.i112
 
 .preheader.us.preheader.i.i112:                   ; preds = %.preheader.lr.ph.i.i111
-  %i.fo = shl nuw i32 1, %i.fl                    ; 2 uses
-  %3 = sext i32 %i.fo to i64
-  %smax.i.i113 = tail call i32 @llvm.smax.i32(i32 %i.fo, i32 1)
-  %wide.trip.count.i.i114 = zext nneg i32 %smax.i.i113 to i64
+  %i.fo = shl nuw nsw i32 1, %i.fl                ; 2 uses
+  %3 = zext nneg i32 %i.fo to i64
+  %wide.trip.count.i.i114 = zext nneg i32 %i.fo to i64
   br label %.preheader.us.i.i115
 
 .preheader.us.i.i115:                             ; preds = %._crit_edge.us.i.i127, %.preheader.us.preheader.i.i112

@@ -205,8 +205,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.el, label %_ZL18utf8proc_codepointPKcS0_Ri.exit.thread156, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph
-  %gepdiff = sub nsw i64 %i.dx, %.011.i171        ; 3 uses
-  %23 = icmp slt i64 %gepdiff, 2
+  %gepdiff = sub nuw nsw i64 %i.dx, %.011.i171    ; 3 uses
+  %23 = icmp samesign ult i64 %gepdiff, 2
   br i1 %23, label %_ZL18utf8proc_codepointPKcS0_Ri.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -609,8 +609,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.av, label %_ZL18utf8proc_codepointPKcS0_Ri.exit.thread47, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
-  %gepdiff = sub nsw i64 %i.ah, %.011.i54         ; 3 uses
-  %8 = icmp slt i64 %gepdiff, 2
+  %gepdiff = sub nuw nsw i64 %i.ah, %.011.i54     ; 3 uses
+  %8 = icmp samesign ult i64 %gepdiff, 2
   br i1 %8, label %_ZL18utf8proc_codepointPKcS0_Ri.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g

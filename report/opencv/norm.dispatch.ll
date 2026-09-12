@@ -205,20 +205,20 @@ bb.cm:                                            ; preds = %bb.cs, %.preheader.
   %i.jl = phi ptr [ %.pre360, %.preheader.us.us ], [ %i.jx, %bb.cs ]
   %.0152310.us.us.us = phi i32 [ 0, %.preheader.us.us ], [ %i.kb, %bb.cs ] ; 3 uses
   %.1309.us.us.us = phi i32 [ %.0154.us.us, %.preheader.us.us ], [ %.2.us.us.us, %bb.cs ]
-  %i.jm = sub nsw i32 %i.iu, %.0152310.us.us.us
+  %i.jm = sub nuw nsw i32 %i.iu, %.0152310.us.us.us
   %.sroa.speculated.us.us.us = call i32 @llvm.smin.i32(i32 %.sroa.speculated283380, i32 %i.jm) ; 4 uses
   %i.jn = invoke noundef i32 %.0.i.i(ptr noundef %i.jl, ptr noundef %i.jk, ptr noundef nonnull %22, i32 noundef %.sroa.speculated.us.us.us, i32 noundef %i.aj)
           to label %bb.cn unwind label %.split.us.split.us.split.us ; 0 uses
 
 bb.cn:                                            ; preds = %bb.cm
-  %i.jo = add nsw i32 %.sroa.speculated.us.us.us, %.1309.us.us.us ; 2 uses
+  %i.jo = add nuw nsw i32 %.sroa.speculated.us.us.us, %.1309.us.us.us ; 2 uses
   %.not227.us.us.us = icmp slt i32 %i.jo, %invariant.op381
   br i1 %.not227.us.us.us, label %bb.co, label %bb.cp
 
 bb.co:                                            ; preds = %bb.cn
   %i.jp = load i64, ptr %i.je, align 8, !tbaa !60
   %.not228.us.us.us = icmp ult i64 %i.jj, %i.jp
-  %i.jq = add nsw i32 %.sroa.speculated.us.us.us, %.0152310.us.us.us
+  %i.jq = add nuw nsw i32 %.sroa.speculated.us.us.us, %.0152310.us.us.us
   %.not229.us.us.us = icmp slt i32 %i.jq, %i.iu
   %or.cond302.us.us.us = select i1 %.not228.us.us.us, i1 true, i1 %.not229.us.us.us
   br i1 %or.cond302.us.us.us, label %bb.cq, label %bb.cp
@@ -234,8 +234,8 @@ bb.cp:                                            ; preds = %bb.co, %bb.cn
 
 bb.cq:                                            ; preds = %bb.cp, %bb.co
   %.2.us.us.us = phi i32 [ 0, %bb.cp ], [ %i.jo, %bb.co ] ; 2 uses
-  %23 = sext i32 %.sroa.speculated.us.us.us to i64 ; 2 uses
-  %i.jv = mul nsw i64 %23, %i.it
+  %23 = zext nneg i32 %.sroa.speculated.us.us.us to i64 ; 2 uses
+  %i.jv = mul nuw nsw i64 %23, %i.it
   %i.jw = load ptr, ptr %i.f, align 16, !tbaa !61
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jw, i64 %i.jv ; 2 uses
   store ptr %i.jx, ptr %i.f, align 16, !tbaa !61
@@ -244,7 +244,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co
   br i1 %.not230.us.us.us, label %bb.cs, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.jz = getelementptr inbounds i8, ptr %i.jy, i64 %23 ; 2 uses
+  %i.jz = getelementptr inbounds nuw i8, ptr %i.jy, i64 %23 ; 2 uses
   store ptr %i.jz, ptr %i.jf, align 8, !tbaa !61
   br label %bb.cs
 
@@ -286,20 +286,20 @@ bb.ct:                                            ; preds = %bb.cz, %.preheader.
   %i.kk = phi ptr [ %.pre, %.preheader.us ], [ %i.kw, %bb.cz ]
   %.0152310.us314 = phi i32 [ 0, %.preheader.us ], [ %i.la, %bb.cz ] ; 3 uses
   %.1309.us315 = phi i32 [ %.0154.us, %.preheader.us ], [ %.2.us321, %bb.cz ]
-  %i.kl = sub nsw i32 %i.iu, %.0152310.us314
+  %i.kl = sub nuw nsw i32 %i.iu, %.0152310.us314
   %.sroa.speculated.us316 = call i32 @llvm.smin.i32(i32 %.sroa.speculated283, i32 %i.kl) ; 4 uses
   %i.km = invoke noundef i32 %.0.i.i(ptr noundef %i.kk, ptr noundef %i.kj, ptr noundef nonnull %22, i32 noundef %.sroa.speculated.us316, i32 noundef %i.aj)
           to label %bb.cu unwind label %.split.split.us ; 0 uses
 
 bb.cu:                                            ; preds = %bb.ct
-  %i.kn = add nsw i32 %.sroa.speculated.us316, %.1309.us315 ; 2 uses
+  %i.kn = add nuw nsw i32 %.sroa.speculated.us316, %.1309.us315 ; 2 uses
   %.not227.us317 = icmp slt i32 %i.kn, %invariant.op
   br i1 %.not227.us317, label %bb.cv, label %bb.cw
 
 bb.cv:                                            ; preds = %bb.cu
   %i.ko = load i64, ptr %i.jb, align 8, !tbaa !60
   %.not228.us318 = icmp ult i64 %i.ki, %i.ko
-  %i.kp = add nsw i32 %.sroa.speculated.us316, %.0152310.us314
+  %i.kp = add nuw nsw i32 %.sroa.speculated.us316, %.0152310.us314
   %.not229.us319 = icmp slt i32 %i.kp, %i.iu
   %or.cond302.us320 = select i1 %.not228.us318, i1 true, i1 %.not229.us319
   br i1 %or.cond302.us320, label %bb.cx, label %bb.cw
@@ -315,8 +315,8 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cu
 
 bb.cx:                                            ; preds = %bb.cw, %bb.cv
   %.2.us321 = phi i32 [ 0, %bb.cw ], [ %i.kn, %bb.cv ] ; 2 uses
-  %24 = sext i32 %.sroa.speculated.us316 to i64   ; 2 uses
-  %i.ku = mul nsw i64 %24, %i.it
+  %24 = zext nneg i32 %.sroa.speculated.us316 to i64 ; 2 uses
+  %i.ku = mul nuw nsw i64 %24, %i.it
   %i.kv = load ptr, ptr %i.f, align 16, !tbaa !61
   %i.kw = getelementptr inbounds nuw i8, ptr %i.kv, i64 %i.ku ; 2 uses
   store ptr %i.kw, ptr %i.f, align 16, !tbaa !61
@@ -325,7 +325,7 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv
   br i1 %.not230.us322, label %bb.cz, label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cx
-  %i.ky = getelementptr inbounds i8, ptr %i.kx, i64 %24 ; 2 uses
+  %i.ky = getelementptr inbounds nuw i8, ptr %i.kx, i64 %24 ; 2 uses
   store ptr %i.ky, ptr %i.jc, align 8, !tbaa !61
   br label %bb.cz
 
@@ -728,20 +728,20 @@ bb.de:                                            ; preds = %.preheader.us, %bb.
   %i.ja = phi ptr [ %.pre, %.preheader.us ], [ %i.jo, %bb.dk ]
   %.0159319.us = phi i32 [ 0, %.preheader.us ], [ %i.ju, %bb.dk ] ; 3 uses
   %.1318.us = phi i32 [ %.0161.us, %.preheader.us ], [ %.2.us, %bb.dk ]
-  %i.jb = sub nsw i32 %i.im, %.0159319.us
+  %i.jb = sub nuw nsw i32 %i.im, %.0159319.us
   %.sroa.speculated.us = call i32 @llvm.smin.i32(i32 %.sroa.speculated295, i32 %i.jb) ; 4 uses
   %i.jc = invoke noundef i32 %.0.i.i(ptr noundef %i.ja, ptr noundef %i.iz, ptr noundef %i.iy, ptr noundef nonnull %28, i32 noundef %.sroa.speculated.us, i32 noundef %i.ak)
           to label %bb.df unwind label %.split323.us ; 0 uses
 
 bb.df:                                            ; preds = %bb.de
-  %i.jd = add nsw i32 %.sroa.speculated.us, %.1318.us ; 2 uses
+  %i.jd = add nuw nsw i32 %.sroa.speculated.us, %.1318.us ; 2 uses
   %.not237.us = icmp slt i32 %i.jd, %invariant.op
   br i1 %.not237.us, label %bb.dg, label %bb.dh
 
 bb.dg:                                            ; preds = %bb.df
   %i.je = load i64, ptr %i.it, align 8, !tbaa !60
   %.not238.us = icmp ult i64 %i.jw, %i.je
-  %i.jf = add nsw i32 %.sroa.speculated.us, %.0159319.us
+  %i.jf = add nuw nsw i32 %.sroa.speculated.us, %.0159319.us
   %.not239.us = icmp slt i32 %i.jf, %i.im
   %or.cond310.us = select i1 %.not238.us, i1 true, i1 %.not239.us
   br i1 %or.cond310.us, label %bb.di, label %bb.dh
@@ -760,8 +760,8 @@ bb.dh:                                            ; preds = %bb.dg, %bb.df
 
 bb.di:                                            ; preds = %bb.dh, %bb.dg
   %.2.us = phi i32 [ 0, %bb.dh ], [ %i.jd, %bb.dg ] ; 2 uses
-  %29 = sext i32 %.sroa.speculated.us to i64      ; 2 uses
-  %i.jm = mul nsw i64 %29, %i.il                  ; 2 uses
+  %29 = zext nneg i32 %.sroa.speculated.us to i64 ; 2 uses
+  %i.jm = mul nuw nsw i64 %29, %i.il              ; 2 uses
   %i.jn = load ptr, ptr %i.f, align 16, !tbaa !61
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 %i.jm ; 2 uses
   store ptr %i.jo, ptr %i.f, align 16, !tbaa !61
@@ -773,7 +773,7 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg
   br i1 %.not240.us, label %bb.dk, label %bb.dj
 
 bb.dj:                                            ; preds = %bb.di
-  %i.js = getelementptr inbounds i8, ptr %i.jr, i64 %29 ; 2 uses
+  %i.js = getelementptr inbounds nuw i8, ptr %i.jr, i64 %29 ; 2 uses
   store ptr %i.js, ptr %i.iv, align 16, !tbaa !61
   br label %bb.dk
 

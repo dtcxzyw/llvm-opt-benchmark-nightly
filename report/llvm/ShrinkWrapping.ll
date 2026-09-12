@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %_ZN4llvm4bolt19Call
   br i1 %i.az, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.ba = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.ba = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.d
@@ -378,7 +378,7 @@ bb.c:                                             ; preds = %_ZN4llvm4bolt19Call
   br i1 %i.ad, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ae = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ae = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.c
@@ -533,7 +533,7 @@ bb.d:                                             ; preds = %_ZN4llvm4bolt19Call
   br i1 %i.az, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.ba = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.ba = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.d
@@ -707,7 +707,7 @@ bb.c:                                             ; preds = %_ZN4llvm4bolt19Call
   br i1 %i.ad, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ae = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ae = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.c
@@ -1110,7 +1110,7 @@ bb.r:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.fc, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i159, label %.backedge.i.i.i.i.i.i156
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i159: ; preds = %.backedge.i.i.i.i.i.i156
-  %i.fd = trunc nsw i64 %indvars.iv.next.i.i.i158 to i32
+  %i.fd = trunc nuw nsw i64 %indvars.iv.next.i.i.i158 to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i160
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i160: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i159, %bb.r
@@ -1513,7 +1513,7 @@ bb.aw:                                            ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.mf, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.mg = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.mg = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.aw
@@ -1916,7 +1916,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.u, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.v = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.v = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.b
@@ -2319,7 +2319,7 @@ _ZN4llvm4bolt19StackLayoutModifier10getSlotTagEv.exit30: ; preds = %._crit_edge.
   br i1 %i.dg, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i, label %.backedge.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i: ; preds = %.backedge.i.i.i.i
-  %i.dh = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.dh = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i, %_ZN4llvm4bolt19StackLayoutModifier10getSlotTagEv.exit30
@@ -2722,7 +2722,7 @@ bb.i:                                             ; preds = %_ZN4llvm4bolt19Stac
   br i1 %i.cf, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.cg = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.cg = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.i
@@ -3125,7 +3125,7 @@ _ZN4llvm4bolt19StackLayoutModifier10getSlotTagEv.exit43: ; preds = %._crit_edge.
   br i1 %i.da, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i, label %.backedge.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i: ; preds = %.backedge.i.i.i.i
-  %i.db = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.db = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i, %_ZN4llvm4bolt19StackLayoutModifier10getSlotTagEv.exit43
@@ -3528,7 +3528,7 @@ _ZN4llvm4bolt19StackLayoutModifier10getTodoTagEv.exit51: ; preds = %._crit_edge.
   br i1 %i.da, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i, label %.backedge.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i: ; preds = %.backedge.i.i.i.i
-  %i.db = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.db = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i, %_ZN4llvm4bolt19StackLayoutModifier10getTodoTagEv.exit51
@@ -3931,7 +3931,7 @@ bb.o:                                             ; preds = %_ZN4llvm4bolt19Call
   br i1 %i.jz, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.ka = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.ka = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.o
@@ -4032,7 +4032,7 @@ bb.r:                                             ; preds = %_ZN4llvm4bolt19Call
   br i1 %i.lr, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i67, label %.backedge.i.i.i.i.i.i64
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i67: ; preds = %.backedge.i.i.i.i.i.i64
-  %i.ls = trunc nsw i64 %indvars.iv.next.i.i.i66 to i32
+  %i.ls = trunc nuw nsw i64 %indvars.iv.next.i.i.i66 to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i68
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i68: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i67, %bb.r
@@ -4435,7 +4435,7 @@ bb.aa:                                            ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.lp, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.lq = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.lq = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.aa
@@ -4838,7 +4838,7 @@ bb.ag:                                            ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.he, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i95, label %.backedge.i.i.i.i.i.i92
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i95: ; preds = %.backedge.i.i.i.i.i.i92
-  %i.hf = trunc nsw i64 %indvars.iv.next.i.i.i94 to i32
+  %i.hf = trunc nuw nsw i64 %indvars.iv.next.i.i.i94 to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i96
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i96: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i95, %bb.ag
@@ -4941,7 +4941,7 @@ bb.aj:                                            ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.iz, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.ja = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.ja = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.aj
@@ -5108,7 +5108,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ah, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ai = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d
@@ -5312,7 +5312,7 @@ bb.f:                                             ; preds = %_ZN4llvm4bolt19Stac
   br i1 %i.cg, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.ch = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.ch = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.f
@@ -5483,7 +5483,7 @@ bb.p:                                             ; preds = %_ZN4llvm4bolt19Call
   br i1 %i.ev, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i52, label %.backedge.i.i.i.i.i.i49
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i52: ; preds = %.backedge.i.i.i.i.i.i49
-  %i.ew = trunc nsw i64 %indvars.iv.next.i.i.i51 to i32
+  %i.ew = trunc nuw nsw i64 %indvars.iv.next.i.i.i51 to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i53
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i53: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i52, %bb.p
@@ -5582,7 +5582,7 @@ bb.r:                                             ; preds = %_ZN4llvm4bolt19Call
   br i1 %i.gp, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i76, label %.backedge.i.i.i.i.i.i73
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i76: ; preds = %.backedge.i.i.i.i.i.i73
-  %i.gq = trunc nsw i64 %indvars.iv.next.i.i.i75 to i32
+  %i.gq = trunc nuw nsw i64 %indvars.iv.next.i.i.i75 to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i77
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i77: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i76, %bb.r
@@ -5985,7 +5985,7 @@ bb.ax:                                            ; preds = %_ZN4llvm4bolt14Shri
   br i1 %i.hv, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.hw = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.hw = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.ax
@@ -6388,7 +6388,7 @@ bb.q:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.fg, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.fh = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.fh = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.q
@@ -6791,7 +6791,7 @@ bb.x:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ia, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.ib = trunc nsw i64 %indvars.iv.next.i.i.i to i32
+  %i.ib = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.x
@@ -7194,7 +7194,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ah, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ai = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d
@@ -7597,7 +7597,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.cz, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i.i.i.i, label %.backedge.i.i.i.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i.i.i.i: ; preds = %.backedge.i.i.i.i.i.i.i.i.i
-  %i.da = trunc nsw i64 %indvars.iv.next.i.i.i.i.i.i to i32
+  %i.da = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i.i.i.i, %bb.d
@@ -8000,7 +8000,7 @@ bb.ey:                                            ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ali, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i.i112.i.i, label %.backedge.i.i.i.i.i.i.i109.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i.i112.i.i: ; preds = %.backedge.i.i.i.i.i.i.i109.i.i
-  %i.alj = trunc nsw i64 %indvars.iv.next.i.i.i.i111.i.i to i32
+  %i.alj = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i111.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i.i113.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i.i113.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i.i112.i.i, %bb.ey
@@ -8403,7 +8403,7 @@ bb.hd:                                            ; preds = %_ZN4llvm4bolt14Shri
   br i1 %i.azf, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i37
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i37
-  %i.azg = trunc nsw i64 %indvars.iv.next.i.i39 to i32
+  %i.azg = trunc nuw nsw i64 %indvars.iv.next.i.i39 to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i40
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i40: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.hd
@@ -8608,7 +8608,7 @@ bb.ho:                                            ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.bcj, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.bck = trunc nsw i64 %indvars.iv.next.i.i.i74 to i32
+  %i.bck = trunc nuw nsw i64 %indvars.iv.next.i.i.i74 to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.ho
@@ -8894,7 +8894,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ah, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ai = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d
@@ -9161,7 +9161,7 @@ bb.d:                                             ; preds = %_ZN4llvm4bolt14Shri
   br i1 %i.aw, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ax = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ax = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d
@@ -9280,7 +9280,7 @@ bb.i:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.cz, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, label %.backedge.i.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i: ; preds = %.backedge.i.i.i.i.i.i
-  %i.da = trunc nsw i64 %indvars.iv.next.i.i.i44 to i32
+  %i.da = trunc nuw nsw i64 %indvars.iv.next.i.i.i44 to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i.i, %bb.i
@@ -9683,7 +9683,7 @@ bb.e:                                             ; preds = %_ZNK4llvm4bolt13MCP
   br i1 %i.ar, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.as = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.as = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.e
@@ -10086,7 +10086,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ah, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ai = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d
@@ -10208,7 +10208,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ah, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ai = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d
@@ -10360,7 +10360,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ah, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ai = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d
@@ -10763,7 +10763,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ah, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ai = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d
@@ -11166,7 +11166,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.u, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.v = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.v = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.b
@@ -11569,7 +11569,7 @@ bb.d:                                             ; preds = %_ZNK4llvm4bolt16Dat
   br i1 %i.ah, label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, label %.backedge.i.i.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i: ; preds = %.backedge.i.i.i.i.i
-  %i.ai = trunc nsw i64 %indvars.iv.next.i.i to i32
+  %i.ai = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   br label %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.i.i: ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i.loopexit.i.i, %bb.d

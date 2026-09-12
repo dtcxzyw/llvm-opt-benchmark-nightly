@@ -205,7 +205,7 @@ bb.fi:                                            ; preds = %bb.fh
 .lr.ph932:                                        ; preds = %.preheader.i.preheader, %.preheader.i
   %.0.i930 = phi i32 [ %i.vx, %.preheader.i ], [ 0, %.preheader.i.preheader ] ; 2 uses
   %i.vx = add nuw nsw i32 %.0.i930, 1             ; 3 uses
-  %i.vy = sub i32 %i.vl, %i.vx
+  %i.vy = sub nuw i32 %i.vl, %i.vx
   %i.vz = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.vy)
   %i.wa = zext i8 %i.vz to i32
   %i.wb = sub nuw nsw i32 %i.vo, %.0.i930
@@ -226,7 +226,7 @@ bb.fj:                                            ; preds = %.lr.ph932
 .preheader.i.i511.preheader:                      ; preds = %bb.fj, %.preheader.i.i511
   %.07.i.i933 = phi i32 [ %i.wd, %.preheader.i.i511 ], [ 0, %bb.fj ]
   %i.wd = add nuw nsw i32 %.07.i.i933, 1          ; 3 uses
-  %i.we = sub nsw i32 %i.vl, %i.wd
+  %i.we = sub nuw nsw i32 %i.vl, %i.wd
   %i.wf = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.we)
   %.not.i.i512 = icmp eq i8 %i.wf, 0
   br i1 %.not.i.i512, label %.preheader.i.i511, label %esp_padding_override.exit.thread.i, !llvm.loop !40
@@ -278,7 +278,7 @@ bb.fn:                                            ; preds = %export_ipsec_pdu.ex
 
 bb.fo:                                            ; preds = %bb.fn
   %i.wx = load i32, ptr @hf_esp_pad, align 4
-  %i.wy = sub nsw i32 %i.vl, %i.vo
+  %i.wy = sub nuw nsw i32 %i.vl, %i.vo
   %i.wz = call ptr @proto_tree_add_item(ptr noundef nonnull %i.m, i32 noundef %i.wx, ptr noundef %0, i32 noundef %i.wy, i32 noundef %i.vo, i32 noundef 0)
   br i1 %exitcond.not.i.not908, label %bb.fq, label %bb.fp
 

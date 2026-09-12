@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
-  %i.d = add nsw i32 %1, 1                        ; 3 uses
+  %i.d = add nuw nsw i32 %1, 1                    ; 3 uses
   %.not.i.not.i.i.i = icmp slt i32 %1, %.val.i.i
   br i1 %.not.i.not.i.i.i, label %Cba_FonRange.exit, label %bb.c
 
@@ -608,7 +608,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 8 uses
-  %i.d = add nsw i32 %1, 1                        ; 12 uses
+  %i.d = add nuw nsw i32 %1, 1                    ; 12 uses
   %.not.i.not.i.i.i = icmp slt i32 %1, %.val.i.i
   br i1 %.not.i.not.i.i.i, label %Cba_ObjAttr.exit.i, label %bb.c
 
@@ -699,18 +699,22 @@ Vec_IntGrow.exit.i.i.i.i:                         ; preds = %Vec_IntGrow.exit.si
   br label %Cba_ObjAttr.exit.i
 
 Cba_ObjAttr.exit.i:                               ; preds = %._crit_edge.i.i.i.i, %bb.b
-  %.val.i4.i = phi i32 [ %.val.i.i, %bb.b ], [ %i.d, %._crit_edge.i.i.i.i ] ; 5 uses
+  %.val.i4.i = phi i32 [ %.val.i.i, %bb.b ], [ %i.d, %._crit_edge.i.i.i.i ] ; 6 uses
   %i.ae = getelementptr i8, ptr %0, i64 224       ; 4 uses
-  %.val.i.i.i = load ptr, ptr %i.ae, align 8, !tbaa !27 ; 6 uses
+  %.val.i.i.i = load ptr, ptr %i.ae, align 8, !tbaa !27 ; 7 uses
   %i.af = sext i32 %1 to i64                      ; 4 uses
   %i.ag = getelementptr inbounds [4 x i8], ptr %.val.i.i.i, i64 %i.af
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !28 ; 2 uses
   %.not.i = icmp eq i32 %i.ah, 0
-  br i1 %.not.i, label %Cba_ObjAttrSize.exit, label %bb.n
+  br i1 %.not.i, label %Cba_ObjAttrSize.exit, label %3
 
-bb.n:                                             ; preds = %Cba_ObjAttr.exit.i
+3:                                                ; preds = %Cba_ObjAttr.exit.i
+  %4 = icmp slt i32 %.val.i4.i, 1
+  br i1 %4, label %Cba_ObjAttr.exit22.i, label %bb.n
+
+bb.n:                                             ; preds = %3
   %.not.i.not.i.i5.i = icmp slt i32 %1, %.val.i4.i
-  br i1 %.not.i.not.i.i5.i, label %Cba_ObjAttr.exit22.i, label %bb.o
+  br i1 %.not.i.not.i.i5.i, label %Vec_IntGetEntry.exit.i17.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ai = load i32, ptr %i.c, align 8, !tbaa !42  ; 4 uses
@@ -759,27 +763,37 @@ Vec_IntGrow.exit.i.i.i12.i:                       ; preds = %Vec_IntGrow.exit.si
   store i32 %i.d, ptr %i.a, align 4, !tbaa !26
   %.phi.trans.insert.i = getelementptr inbounds [4 x i8], ptr %i.ao, i64 %i.af
   %.pre.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !28
+  br label %Vec_IntGetEntry.exit.i17.i
+
+Vec_IntGetEntry.exit.i17.i:                       ; preds = %._crit_edge.i.i.i16.i, %bb.n
+  %5 = phi ptr [ %i.ao, %._crit_edge.i.i.i16.i ], [ %.val.i.i.i, %bb.n ]
+  %.val.i.i13.pr58 = phi i32 [ %i.d, %._crit_edge.i.i.i16.i ], [ %.val.i4.i, %bb.n ]
+  %6 = phi i32 [ %.pre.i, %._crit_edge.i.i.i16.i ], [ %i.ah, %bb.n ]
+  %7 = sext i32 %6 to i64
   br label %Cba_ObjAttr.exit22.i
 
-Cba_ObjAttr.exit22.i:                             ; preds = %._crit_edge.i.i.i16.i, %bb.n
-  %i.aw = phi ptr [ %i.ao, %._crit_edge.i.i.i16.i ], [ %.val.i.i.i, %bb.n ]
-  %.val.i.i13.pr56 = phi i32 [ %i.d, %._crit_edge.i.i.i16.i ], [ %.val.i4.i, %bb.n ]
-  %i.ax = phi i32 [ %.pre.i, %._crit_edge.i.i.i16.i ], [ %i.ah, %bb.n ]
-  %3 = sext i32 %i.ax to i64
+Cba_ObjAttr.exit22.i:                             ; preds = %Vec_IntGetEntry.exit.i17.i, %3
+  %i.aw = phi ptr [ %5, %Vec_IntGetEntry.exit.i17.i ], [ %.val.i.i.i, %3 ]
+  %i.ax = phi i32 [ %.val.i.i13.pr58, %Vec_IntGetEntry.exit.i17.i ], [ -2147483648, %3 ]
+  %8 = phi i64 [ %7, %Vec_IntGetEntry.exit.i17.i ], [ 0, %3 ]
   %i.ay = getelementptr i8, ptr %0, i64 240
   %.val.i = load ptr, ptr %i.ay, align 8, !tbaa !27
-  %i.az = getelementptr inbounds [4 x i8], ptr %.val.i, i64 %3
+  %i.az = getelementptr inbounds [4 x i8], ptr %.val.i, i64 %8
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !28
   br label %Cba_ObjAttrSize.exit
 
-Cba_ObjAttrSize.exit:                             ; preds = %Cba_ObjAttr.exit22.i, %Cba_ObjAttr.exit.i
+Cba_ObjAttrSize.exit:                             ; preds = %Cba_ObjAttr.exit.i, %Cba_ObjAttr.exit22.i
   %i.bb = phi ptr [ %.val.i.i.i, %Cba_ObjAttr.exit.i ], [ %i.aw, %Cba_ObjAttr.exit22.i ] ; 4 uses
-  %.val.i.i13.pr = phi i32 [ %.val.i4.i, %Cba_ObjAttr.exit.i ], [ %.val.i.i13.pr56, %Cba_ObjAttr.exit22.i ] ; 4 uses
+  %.val.i.i13.pr = phi i32 [ %.val.i4.i, %Cba_ObjAttr.exit.i ], [ %i.ax, %Cba_ObjAttr.exit22.i ] ; 5 uses
   %.ph = phi i32 [ 0, %Cba_ObjAttr.exit.i ], [ %i.ba, %Cba_ObjAttr.exit22.i ] ; 2 uses
-  %.not.i.not.i.i.i14.a = icmp slt i32 %1, %.val.i.i13.pr
-  br i1 %.not.i.not.i.i.i14.a, label %Cba_ObjAttr.exit.i25, label %bb.r
+  %.not.i.not.i.i.i14.a = icmp slt i32 %.val.i.i13.pr, 1
+  br i1 %.not.i.not.i.i.i14.a, label %Cba_ObjAttrArray.exit, label %9
 
-bb.r:                                             ; preds = %Cba_ObjAttrSize.exit
+9:                                                ; preds = %Cba_ObjAttrSize.exit
+  %.not.i.not.i.i.i14 = icmp slt i32 %1, %.val.i.i13.pr
+  br i1 %.not.i.not.i.i.i14, label %Cba_ObjAttr.exit.i25, label %bb.r
+
+bb.r:                                             ; preds = %9
   %i.bc = load i32, ptr %i.c, align 8, !tbaa !42  ; 4 uses
   %i.bd = shl nsw i32 %i.bc, 1                    ; 2 uses
   %.not.i.i.i15 = icmp slt i32 %1, %i.bd
@@ -826,17 +840,21 @@ Vec_IntGrow.exit.i.i.i.i20:                       ; preds = %Vec_IntGrow.exit.si
   store i32 %i.d, ptr %i.a, align 4, !tbaa !26
   br label %Cba_ObjAttr.exit.i25
 
-Cba_ObjAttr.exit.i25:                             ; preds = %._crit_edge.i.i.i.i24, %Cba_ObjAttrSize.exit
-  %.val.i.i.i27 = phi ptr [ %i.bb, %Cba_ObjAttrSize.exit ], [ %i.bi, %._crit_edge.i.i.i.i24 ] ; 4 uses
-  %.val.i4.i26 = phi i32 [ %.val.i.i13.pr, %Cba_ObjAttrSize.exit ], [ %i.d, %._crit_edge.i.i.i.i24 ] ; 3 uses
+Cba_ObjAttr.exit.i25:                             ; preds = %._crit_edge.i.i.i.i24, %9
+  %.val.i.i.i27 = phi ptr [ %i.bb, %9 ], [ %i.bi, %._crit_edge.i.i.i.i24 ] ; 4 uses
+  %.val.i4.i26 = phi i32 [ %.val.i.i13.pr, %9 ], [ %i.d, %._crit_edge.i.i.i.i24 ] ; 4 uses
   %i.bq = getelementptr inbounds [4 x i8], ptr %.val.i.i.i27, i64 %i.af
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !28 ; 2 uses
   %.not.i28 = icmp eq i32 %i.br, 0
-  br i1 %.not.i28, label %Cba_ObjAttrArray.exit, label %bb.u
+  br i1 %.not.i28, label %Cba_ObjAttrArray.exit, label %10
 
-bb.u:                                             ; preds = %Cba_ObjAttr.exit.i25
+10:                                               ; preds = %Cba_ObjAttr.exit.i25
+  %11 = icmp slt i32 %.val.i4.i26, 1
+  br i1 %11, label %Cba_ObjAttr.exit22.i41, label %bb.u
+
+bb.u:                                             ; preds = %10
   %.not.i.not.i.i5.i29 = icmp slt i32 %1, %.val.i4.i26
-  br i1 %.not.i.not.i.i5.i29, label %Cba_ObjAttr.exit22.i41, label %bb.v
+  br i1 %.not.i.not.i.i5.i29, label %Vec_IntGetEntry.exit.i17.i41, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.bs = load i32, ptr %i.c, align 8, !tbaa !42  ; 4 uses
@@ -885,19 +903,23 @@ Vec_IntGrow.exit.i.i.i12.i34:                     ; preds = %Vec_IntGrow.exit.si
   store i32 %i.d, ptr %i.a, align 4, !tbaa !26
   %.phi.trans.insert.i39 = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.af
   %.pre.i40 = load i32, ptr %.phi.trans.insert.i39, align 4, !tbaa !28
+  br label %Vec_IntGetEntry.exit.i17.i41
+
+Vec_IntGetEntry.exit.i17.i41:                     ; preds = %._crit_edge.i.i.i16.i38, %bb.u
+  %12 = phi i32 [ %.pre.i40, %._crit_edge.i.i.i16.i38 ], [ %i.br, %bb.u ]
+  %13 = add nsw i32 %12, 1
+  %14 = sext i32 %13 to i64
   br label %Cba_ObjAttr.exit22.i41
 
-Cba_ObjAttr.exit22.i41:                           ; preds = %._crit_edge.i.i.i16.i38, %bb.u
-  %4 = phi i32 [ %.pre.i40, %._crit_edge.i.i.i16.i38 ], [ %i.br, %bb.u ]
+Cba_ObjAttr.exit22.i41:                           ; preds = %Vec_IntGetEntry.exit.i17.i41, %10
+  %15 = phi i64 [ %14, %Vec_IntGetEntry.exit.i17.i41 ], [ 1, %10 ]
   %i.cg = getelementptr i8, ptr %0, i64 240
   %.val.i42 = load ptr, ptr %i.cg, align 8, !tbaa !27
-  %5 = sext i32 %4 to i64
-  %i.ch = getelementptr [4 x i8], ptr %.val.i42, i64 %5
-  %6 = getelementptr i8, ptr %i.ch, i64 4
+  %i.ch = getelementptr inbounds [4 x i8], ptr %.val.i42, i64 %15
   br label %Cba_ObjAttrArray.exit
 
-Cba_ObjAttrArray.exit:                            ; preds = %Cba_ObjAttr.exit.i25, %Cba_ObjAttr.exit22.i41
-  %7 = phi ptr [ %6, %Cba_ObjAttr.exit22.i41 ], [ null, %Cba_ObjAttr.exit.i25 ] ; 2 uses
+Cba_ObjAttrArray.exit:                            ; preds = %Cba_ObjAttrSize.exit, %Cba_ObjAttr.exit.i25, %Cba_ObjAttr.exit22.i41
+  %16 = phi ptr [ %i.ch, %Cba_ObjAttr.exit22.i41 ], [ null, %Cba_ObjAttr.exit.i25 ], [ null, %Cba_ObjAttrSize.exit ] ; 2 uses
   %i.ci = icmp sgt i32 %.ph, 0
   br i1 %i.ci, label %.lr.ph, label %.loopexit
 
@@ -909,13 +931,13 @@ bb.y:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %Cba_ObjAttrArray.exit, %bb.y
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.y ], [ 0, %Cba_ObjAttrArray.exit ] ; 3 uses
-  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %indvars.iv
+  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %16, i64 %indvars.iv
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !28
   %i.cn = icmp eq i32 %i.cm, %2
   br i1 %i.cn, label %bb.z, label %bb.y
 
 bb.z:                                             ; preds = %.lr.ph
-  %i.co = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %indvars.iv
+  %i.co = getelementptr inbounds nuw [4 x i8], ptr %16, i64 %indvars.iv
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 4
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !28
   br label %.loopexit

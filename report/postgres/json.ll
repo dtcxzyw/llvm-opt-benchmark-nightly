@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = load i16, ptr %i.aa, align 2
   %i.ac = and i16 %i.ab, 2047
   %i.ad = zext nneg i16 %i.ac to i64
-  %.not = icmp ult i64 %indvars.iv, %i.ad
+  %.not = icmp samesign ult i64 %indvars.iv, %i.ad
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d

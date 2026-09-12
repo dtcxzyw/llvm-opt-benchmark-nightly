@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %.lr.ph28
 
 bb.r:                                             ; preds = %.lr.ph28
   %i.ck = trunc nuw nsw i64 %indvars.iv76 to i32
-  %i.cl = add nsw i32 %i.ck, 1                    ; 3 uses
+  %i.cl = add nuw nsw i32 %i.ck, 1                ; 3 uses
   %i.cm = icmp slt i32 %i.cl, %.112331
   br i1 %i.cm, label %bb.s, label %bb.t
 
@@ -215,7 +215,7 @@ bb.s:                                             ; preds = %bb.r
   %i.cq = sub nuw i32 %.112331, %i.cl
   %i.cr = zext nneg i32 %i.cq to i64
   %i.cs = shl nuw nsw i64 %i.cr, 3
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cn, ptr align 8 %i.cp, i64 %i.cs, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cn, ptr nonnull align 8 %i.cp, i64 %i.cs, i1 false)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.ad = zext i8 %i.ac to i64
   %i.ae = shl nuw nsw i64 %i.ad, 2
-  %i.af = add nsw i64 %i.ae, %i.n
+  %i.af = add nuw nsw i64 %i.ae, %i.n
   %i.ag = trunc nuw nsw i64 %i.af to i32          ; 4 uses
   %i.ah = invoke noundef zeroext i8 @_ZN16checked_buffer_tixEi(ptr noundef nonnull align 8 dereferenceable(48) %2, i32 noundef %i.ag)
           to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp
@@ -401,7 +401,7 @@ scalar.ph:                                        ; preds = %vector.body
 
 .lr.ph.i.preheader:                               ; preds = %scalar.ph
   %i.dy = sub nuw nsw i64 %i.r, %i.bi
-  %i.dz = trunc nsw i64 %i.dy to i32
+  %i.dz = trunc nuw nsw i64 %i.dy to i32
   %sext = shl i64 %i.bg, 32
   %i.ea = ashr exact i64 %sext, 32
   %i.eb = getelementptr inbounds i8, ptr %i.bk, i64 %i.ea
@@ -518,7 +518,7 @@ bb.y:                                             ; preds = %bb.x
   %i.fv = load ptr, ptr %i.v, align 8, !tbaa !193
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.fr
   %i.fx = sub nuw nsw i64 %i.r, %i.ft
-  %i.fy = trunc nsw i64 %i.fx to i32
+  %i.fy = trunc nuw nsw i64 %i.fx to i32
   call void @_ZN6LibRaw12sony_decryptEPjiii(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef %i.fw, i32 noundef %i.fy, i32 noundef 1, i32 noundef %.074.lcssa)
   %i.fz = trunc i64 %i.fr to i32
   %i.ga = invoke noundef zeroext i16 @_ZN16checked_buffer_t5sget2Ei(ptr noundef nonnull align 8 dereferenceable(48) %2, i32 noundef %i.fz)

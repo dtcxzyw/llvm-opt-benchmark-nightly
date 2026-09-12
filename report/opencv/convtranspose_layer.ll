@@ -202,7 +202,7 @@ _ZNSt6vectorIiSaIiEE6resizeEmRKi.exit:            ; preds = %_ZSt8_DestroyIPiiEv
   %i.df = load ptr, ptr %27, align 8              ; 2 uses
   %i.dg = zext nneg i32 %i.bx to i64
   %wide.trip.count226 = zext nneg i32 %i.bx to i64
-  %invariant.gep = getelementptr [4 x i8], ptr %i.df, i64 %i.dg
+  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %i.dg
   br label %bb.ay
 
 bb.av:                                            ; preds = %bb.ak
@@ -428,7 +428,7 @@ bb.bw:                                            ; preds = %bb.bv, %bb.br
   %i.gd = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %indvars.iv223
   store i32 %.072, ptr %i.gd, align 4, !tbaa !76
   %i.ge = sub nsw i32 %i.fq, %.072
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv223
+  %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv223
   store i32 %i.ge, ptr %gep, align 4, !tbaa !76
   %indvars.iv.next224 = add nuw nsw i64 %indvars.iv223, 1 ; 2 uses
   %exitcond227.not = icmp eq i64 %indvars.iv.next224, %wide.trip.count226

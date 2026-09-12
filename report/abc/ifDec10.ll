@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %.lr.ph.i226
   br i1 %i.agh, label %._crit_edge.thread.i, label %bb.ab
 
 ._crit_edge.thread.i:                             ; preds = %bb.aa, %._crit_edge.i225
-  %i.agi = add nsw i32 %.029.i, 1
+  %i.agi = add nuw nsw i32 %.029.i, 1
   %i.agj = sext i32 %.029.i to i64
   %i.agk = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.agj
   store i64 %i.agb, ptr %i.agk, align 8, !tbaa !12
@@ -608,16 +608,15 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i.i
 .preheader.lr.ph.i.i:                             ; preds = %.split.split.i
   %i.w = add nsw i64 %indvars.iv.i13, -6          ; 2 uses
   %i.x = icmp eq i64 %i.w, 31
-  %i.y = trunc nsw i64 %i.w to i32                ; 2 uses
+  %i.y = trunc nuw nsw i64 %i.w to i32            ; 2 uses
   %i.z = shl i32 2, %i.y                          ; 2 uses
   %i.aa = sext i32 %i.z to i64
   br i1 %i.x, label %If_Dec10HasVar.exit.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.ab = shl nuw i32 1, %i.y                     ; 2 uses
-  %5 = sext i32 %i.ab to i64
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.ab, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %i.ab = shl nuw nsw i32 1, %i.y                 ; 2 uses
+  %5 = zext nneg i32 %i.ab to i64
+  %wide.trip.count.i.i = zext nneg i32 %i.ab to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i

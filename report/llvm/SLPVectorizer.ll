@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.u = phi i32 [ 10, %bb.c ], [ %i.t, %bb.d ]
-  %i.v = mul nsw i32 %i.u, %i.q
+  %i.v = mul nuw nsw i32 %i.u, %i.q
   %i.w = zext i32 %7 to i64
   %i.x = load ptr, ptr %0, align 8, !tbaa !359    ; 2 uses
   %i.y = getelementptr inbounds nuw [48 x i8], ptr %i.x, i64 %i.w
@@ -243,7 +243,7 @@ bb.i:                                             ; preds = %bb.h
 
 _ZNK4llvm13slpvectorizer7BoUpSLP10VLOperands19getExternalUseScoreEjjj.exit: ; preds = %bb.f, %bb.g, %bb.h, %bb.i
   %.1.i = phi i32 [ 10, %bb.f ], [ %i.aq, %bb.i ], [ 0, %bb.h ], [ 0, %bb.g ]
-  %i.ar = add nsw i32 %.1.i, %i.v
+  %i.ar = add nuw nsw i32 %.1.i, %i.v
   store i8 1, ptr %8, align 1, !tbaa !783
   br label %bb.j
 

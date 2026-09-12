@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ez = load i8, ptr %.0267.prol, align 1
   %i.fa = getelementptr inbounds nuw i8, ptr %.1302.prol, i64 1 ; 3 uses
   store i8 %i.ez, ptr %.1302.prol, align 1
-  %i.fb = add i32 %.0279.prol, -1                 ; 2 uses
+  %i.fb = add nsw i32 %.0279.prol, -1             ; 2 uses
   %prol.iter638.next = add i32 %prol.iter638, 1   ; 2 uses
   %prol.iter638.cmp.not = icmp eq i32 %prol.iter638.next, %xtraiter636
   br i1 %prol.iter638.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !19
@@ -258,7 +258,7 @@ bb.q:                                             ; preds = %bb.p
   %i.gd = load i8, ptr %i.fz, align 1
   %i.ge = getelementptr inbounds nuw i8, ptr %.1302, i64 8 ; 2 uses
   store i8 %i.gd, ptr %i.gb, align 1
-  %i.gf = add i32 %.0279, -8                      ; 2 uses
+  %i.gf = add nsw i32 %.0279, -8                  ; 2 uses
   %.not352.7 = icmp eq i32 %i.gf, 0
   br i1 %.not352.7, label %.unr-lcssa639, label %.preheader, !llvm.loop !20
 
@@ -297,7 +297,7 @@ bb.s:                                             ; preds = %bb.r
   %i.gs = load i8, ptr %.1268.prol, align 1
   %i.gt = getelementptr inbounds nuw i8, ptr %.2303.prol, i64 1 ; 3 uses
   store i8 %i.gs, ptr %.2303.prol, align 1
-  %i.gu = add i32 %.1280.prol, -1                 ; 2 uses
+  %i.gu = add nsw i32 %.1280.prol, -1             ; 2 uses
   %prol.iter630.next = add i32 %prol.iter630, 1   ; 2 uses
   %prol.iter630.cmp.not = icmp eq i32 %prol.iter630.next, %xtraiter628
   br i1 %prol.iter630.cmp.not, label %.preheader527.prol.loopexit, label %.preheader527.prol, !llvm.loop !21
@@ -350,7 +350,7 @@ bb.s:                                             ; preds = %bb.r
   %i.hw = load i8, ptr %i.hs, align 1
   %i.hx = getelementptr inbounds nuw i8, ptr %.2303, i64 8 ; 2 uses
   store i8 %i.hw, ptr %i.hu, align 1
-  %i.hy = add i32 %.1280, -8                      ; 2 uses
+  %i.hy = add nsw i32 %.1280, -8                  ; 2 uses
   %.not350.7 = icmp eq i32 %i.hy, 0
   br i1 %.not350.7, label %.unr-lcssa631, label %.preheader527, !llvm.loop !22
 
@@ -372,7 +372,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ic = load i8, ptr %.2269.prol, align 1
   %i.id = getelementptr inbounds nuw i8, ptr %.3304.prol, i64 1 ; 3 uses
   store i8 %i.ic, ptr %.3304.prol, align 1
-  %i.ie = add i32 %.2281.prol, -1                 ; 2 uses
+  %i.ie = add nsw i32 %.2281.prol, -1             ; 2 uses
   %prol.iter634.next = add i32 %prol.iter634, 1   ; 2 uses
   %prol.iter634.cmp.not = icmp eq i32 %prol.iter634.next, %xtraiter632
   br i1 %prol.iter634.cmp.not, label %.preheader526.prol.loopexit, label %.preheader526.prol, !llvm.loop !23
@@ -420,7 +420,7 @@ bb.s:                                             ; preds = %bb.r
   %i.jb = load i8, ptr %i.ix, align 1
   %i.jc = getelementptr inbounds nuw i8, ptr %.3304, i64 8 ; 2 uses
   store i8 %i.jb, ptr %i.iz, align 1
-  %i.jd = add i32 %.2281, -8                      ; 2 uses
+  %i.jd = add nsw i32 %.2281, -8                  ; 2 uses
   %.not351.7 = icmp eq i32 %i.jd, 0
   br i1 %.not351.7, label %.unr-lcssa635, label %.preheader526, !llvm.loop !24
 
@@ -454,7 +454,7 @@ bb.t:                                             ; preds = %bb.r
   %i.jo = load i8, ptr %.3270.prol, align 1
   %i.jp = getelementptr inbounds nuw i8, ptr %.4305.prol, i64 1 ; 3 uses
   store i8 %i.jo, ptr %.4305.prol, align 1
-  %i.jq = add i32 %.3282.prol, -1                 ; 2 uses
+  %i.jq = add nsw i32 %.3282.prol, -1             ; 2 uses
   %prol.iter627.next = add i32 %prol.iter627, 1   ; 2 uses
   %prol.iter627.cmp.not = icmp eq i32 %prol.iter627.next, %xtraiter625
   br i1 %prol.iter627.cmp.not, label %.preheader528.prol.loopexit, label %.preheader528.prol, !llvm.loop !25
@@ -507,7 +507,7 @@ bb.t:                                             ; preds = %bb.r
   %i.ks = load i8, ptr %i.ko, align 1
   %i.kt = getelementptr inbounds nuw i8, ptr %.4305, i64 8 ; 2 uses
   store i8 %i.ks, ptr %i.kq, align 1
-  %i.ku = add i32 %.3282, -8                      ; 2 uses
+  %i.ku = add nsw i32 %.3282, -8                  ; 2 uses
   %.not349.7 = icmp eq i32 %i.ku, 0
   br i1 %.not349.7, label %.unr-lcssa, label %.preheader528, !llvm.loop !26
 

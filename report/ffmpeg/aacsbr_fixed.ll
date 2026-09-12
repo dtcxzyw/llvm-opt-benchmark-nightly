@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %.lr.ph.i178
   br i1 %exitcond.not.i181, label %.critedge.i, label %.lr.ph.i178, !llvm.loop !170
 
 .critedge.loopexit.split.loop.exit89.i:           ; preds = %.lr.ph.i178
-  %i.pp = trunc nsw i64 %indvars.iv.i179 to i32
+  %i.pp = trunc nuw nsw i64 %indvars.iv.i179 to i32
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.ar, %.critedge.loopexit.split.loop.exit89.i, %bb.aq
@@ -608,7 +608,7 @@ bb.z:                                             ; preds = %bb.y, %._crit_edge2
   br i1 %or.cond, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.vr = sub nsw i32 %i.ug, %.0185207
+  %i.vr = sub nuw nsw i32 %i.ug, %.0185207
   store i32 %i.vr, ptr %i.vm, align 8, !tbaa !14
   br label %bb.ad
 
