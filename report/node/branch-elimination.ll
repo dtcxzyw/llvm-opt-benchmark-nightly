@@ -202,7 +202,7 @@ _ZN2v84base11SmallVectorIPNS_8internal8compiler4NodeELm2ESaIS5_EE12emplace_backI
   %i.dr = icmp eq i32 %.1.i, 0
   %i.ds = select i1 %i.dr, i8 9, i8 4
   %i.dt = call noundef ptr @_ZN2v88internal8compiler21CommonOperatorBuilder3PhiENS0_21MachineRepresentationEi(ptr noundef nonnull align 8 dereferenceable(16) %i.dq, i8 noundef zeroext %i.ds, i32 noundef %.sroa.3.0.i) #17
-  %i.du = add nsw i32 %.sroa.3.0.i, 1
+  %i.du = add nuw nsw i32 %.sroa.3.0.i, 1
   %i.dv = load ptr, ptr %5, align 8
   %i.dw = call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.ay, ptr noundef %i.dt, i32 noundef %i.du, ptr noundef nonnull %i.dv, i1 noundef zeroext false) #17
   call void @_ZN2v88internal8compiler14NodeProperties17ReplaceValueInputEPNS1_4NodeES4_i(ptr noundef nonnull %1, ptr noundef %i.dw, i32 noundef 0) #17
@@ -605,7 +605,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv.i
   store ptr %i.be, ptr %i.bf, align 8
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.bg = trunc nsw i64 %indvars.iv.next.i to i32 ; 2 uses
+  %i.bg = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 2 uses
   %i.bh = lshr exact i32 -2147483648, %i.bg
   %i.bi = and i32 %i.bh, %i.av
   %.not.i.not.i = icmp eq i32 %i.bi, 0
@@ -621,14 +621,14 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.bm, label %bb.f, label %.thread.i
 
 .thread.i:                                        ; preds = %._crit_edge.i
-  %i.bn = add nsw i32 %.1.lcssa.i, 1
+  %i.bn = add nuw nsw i32 %.1.lcssa.i, 1
   br label %.loopexit
 
 bb.f:                                             ; preds = %._crit_edge.i
   %i.bo = getelementptr inbounds nuw i8, ptr %.046.i, i64 56
   %i.bp = getelementptr inbounds [8 x i8], ptr %i.bo, i64 %i.bj
   %i.bq = load ptr, ptr %i.bp, align 8            ; 2 uses
-  %i.br = add nsw i32 %.1.lcssa.i, 1              ; 2 uses
+  %i.br = add nuw nsw i32 %.1.lcssa.i, 1          ; 2 uses
   %.not.i = icmp eq ptr %i.bq, null
   br i1 %.not.i, label %.loopexit, label %.lr.ph48.i, !llvm.loop !167
 

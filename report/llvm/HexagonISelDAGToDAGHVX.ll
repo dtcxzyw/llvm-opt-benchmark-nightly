@@ -205,8 +205,8 @@ _ZN4llvm11SmallVectorIiLj128EEC2Em.exit:          ; preds = %_ZL7isUndefN4llvm8A
 
 _ZN12_GLOBAL__N_111ShuffleMaskC2EN4llvm8ArrayRefIiEE.exit: ; preds = %_ZN4llvm11SmallVectorIiLj128EEC2Em.exit
   %i.al = load ptr, ptr %7, align 8, !tbaa !31    ; 8 uses
-  %i.am = load i32, ptr %i.q, align 8, !tbaa !32  ; 10 uses
-  %i.an = zext i32 %i.am to i64                   ; 3 uses
+  %i.am = load i32, ptr %i.q, align 8, !tbaa !32  ; 9 uses
+  %i.an = zext i32 %i.am to i64                   ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.val39 = load i32, ptr %i.ao, align 8
   %i.ap = load i32, ptr %i.al, align 4, !tbaa !34, !noalias !1159 ; 2 uses
@@ -270,10 +270,9 @@ bb.h:                                             ; preds = %_ZL9findStripN4llvm
   %indvars.iv24.i = phi i64 [ %indvars.iv.next25.i, %bb.h ], [ %i.aw, %.lr.ph.preheader.i61 ] ; 4 uses
   %indvars.iv = sub i32 %indvars.iv.pn, %i.av     ; 2 uses
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %indvars.iv24.i ; 2 uses
-  %22 = trunc nuw i64 %indvars.iv24.i to i32
-  %23 = sub nsw i32 %i.am, %22                    ; 2 uses
+  %22 = sub nuw nsw i64 %i.an, %indvars.iv24.i    ; 2 uses
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !34, !noalias !1159 ; 2 uses
-  %.not15.i69.i = icmp eq i32 %23, 1
+  %.not15.i69.i = icmp eq i64 %22, 1
   br i1 %.not15.i69.i, label %_ZL9findStripN4llvm8ArrayRefIiEEij.exit83.i, label %.lr.ph.i70.i
 
 .lr.ph.i70.i:                                     ; preds = %.lr.ph.i62, %bb.i
@@ -283,7 +282,7 @@ bb.h:                                             ; preds = %_ZL9findStripN4llvm
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !34, !noalias !1159 ; 2 uses
   %i.bd = sub nsw i32 %i.bc, %.0317.i72.i
   %.not5.i73.i = icmp eq i32 %i.bd, 1
-  br i1 %.not5.i73.i, label %bb.i, label %_ZL9findStripN4llvm8ArrayRefIiEEij.exit83.i
+  br i1 %.not5.i73.i, label %bb.i, label %.critedge.loopexit.i75.loopexit.i
 
 bb.i:                                             ; preds = %.lr.ph.i70.i
   %indvars.iv.next.i80.i = add nuw nsw i64 %indvars.iv.i71.i, 1 ; 2 uses
@@ -291,12 +290,13 @@ bb.i:                                             ; preds = %.lr.ph.i70.i
   %exitcond171 = icmp eq i32 %indvars.iv, %lftr.wideiv170
   br i1 %exitcond171, label %.critedge.loopexit.i75.loopexit.i, label %.lr.ph.i70.i, !llvm.loop !7
 
-.critedge.loopexit.i75.loopexit.i:                ; preds = %bb.i
-  %24 = zext i32 %23 to i64
+.critedge.loopexit.i75.loopexit.i:                ; preds = %bb.i, %.lr.ph.i70.i
+  %.sroa.3.0.ph.i76.in.i = phi i64 [ %indvars.iv.i71.i, %.lr.ph.i70.i ], [ %22, %bb.i ]
+  %23 = and i64 %.sroa.3.0.ph.i76.in.i, 4294967295
   br label %_ZL9findStripN4llvm8ArrayRefIiEEij.exit83.i
 
-_ZL9findStripN4llvm8ArrayRefIiEEij.exit83.i:      ; preds = %.lr.ph.i70.i, %.critedge.loopexit.i75.loopexit.i, %.lr.ph.i62
-  %.sroa.3.0.i77.i = phi i64 [ 1, %.lr.ph.i62 ], [ %24, %.critedge.loopexit.i75.loopexit.i ], [ %indvars.iv.i71.i, %.lr.ph.i70.i ]
+_ZL9findStripN4llvm8ArrayRefIiEEij.exit83.i:      ; preds = %.critedge.loopexit.i75.loopexit.i, %.lr.ph.i62
+  %.sroa.3.0.i77.i = phi i64 [ 1, %.lr.ph.i62 ], [ %23, %.critedge.loopexit.i75.loopexit.i ]
   %.not52.i = icmp eq i64 %.sroa.3.0.i77.i, %.sroa.3.0.i.i
   %i.be = shl nsw i32 %i.ba, 1
   %i.bf = zext i32 %i.be to i64

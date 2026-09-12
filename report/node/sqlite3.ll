@@ -206,7 +206,7 @@ bb.gd:                                            ; preds = %.preheader.i
 
 bb.ge:                                            ; preds = %bb.gd
   store i8 49, ptr %i.vc, align 1, !tbaa !741
-  %i.aaw = add nsw i32 %.4.i, 1
+  %i.aaw = add nuw nsw i32 %.4.i, 1
   %i.aax = load i32, ptr %i.af, align 4, !tbaa !3779
   %i.aay = add nsw i32 %i.aax, 1
   store i32 %i.aay, ptr %i.af, align 4, !tbaa !3779
@@ -609,7 +609,7 @@ bb.be:                                            ; preds = %bb.bd
 bb.bf:                                            ; preds = %.lr.ph236.i
   %i.hm = load ptr, ptr %i.e, align 8, !tbaa !1590 ; 2 uses
   %i.hn = trunc nuw nsw i64 %indvars.iv249.i to i32
-  %i.ho = add nsw i32 %i.hh, %i.hn
+  %i.ho = add nuw nsw i32 %i.hh, %i.hn
   %i.hp = sext i32 %i.ho to i64
   %i.hq = getelementptr inbounds [8 x i8], ptr %i.hm, i64 %i.hp
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !767
@@ -1012,7 +1012,7 @@ bb.c:                                             ; preds = %.critedge, %bb.b
 
 .lr.ph.i:                                         ; preds = %bb.c
   %i.al = trunc i64 %.fr.i to i32                 ; 2 uses
-  %i.am = add nsw i32 %i.al, 1
+  %i.am = add nuw nsw i32 %i.al, 1
   %i.an = icmp sgt i32 %i.al, -1
   br i1 %i.an, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
@@ -1415,7 +1415,7 @@ bb.k:                                             ; preds = %bb.j
   br label %.thread
 
 bb.l:                                             ; preds = %bb.j
-  %i.br = sub nsw i32 %.2, %i.af
+  %i.br = sub nuw nsw i32 %.2, %i.af
   %i.bs = and i32 %i.br, 65535
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 %i.bs, ptr %i.bt, align 4, !tbaa !1732
@@ -1818,7 +1818,7 @@ sqlite3ExprListAppend.exit:                       ; preds = %bb.f, %bb.h
 bb.i:                                             ; preds = %sqlite3ExprListAppend.exit.thread, %sqlite3ExprListAppend.exit
   %.0.i429 = phi ptr [ %.0287466, %sqlite3ExprListAppend.exit.thread ], [ %.0.i, %sqlite3ExprListAppend.exit ] ; 2 uses
   %i.ar = trunc i32 %.0309465 to i16
-  %i.as = add nsw i32 %.0285467, 1
+  %i.as = add nuw nsw i32 %.0285467, 1
   %i.at = sext i32 %.0285467 to i64
   %i.au = getelementptr [24 x i8], ptr %.0.i429, i64 %i.at
   %i.av = getelementptr i8, ptr %i.au, i64 28
@@ -2221,7 +2221,7 @@ bb.o:                                             ; preds = %bb.n
   %i.dl = load i32, ptr %i.dk, align 8, !tbaa !2365 ; 2 uses
   %i.dm = add nsw i32 %i.dl, %i.dh
   store i32 %i.dm, ptr %i.dk, align 8, !tbaa !2365
-  %i.dn = sub nsw i32 %i.dj, %i.dh
+  %i.dn = sub nuw nsw i32 %i.dj, %i.dh
   store i32 %i.dn, ptr %i.di, align 4, !tbaa !2331
   br label %sqlite3GetTempRange.exit
 
@@ -2624,7 +2624,7 @@ bb.hj:                                            ; preds = %bb.hi
   %i.apj = load i32, ptr %i.aby, align 8, !tbaa !2365 ; 2 uses
   %i.apk = add nsw i32 %i.apj, %.0575
   store i32 %i.apk, ptr %i.aby, align 8, !tbaa !2365
-  %i.apl = sub nsw i32 %i.api, %.0575
+  %i.apl = sub nuw nsw i32 %i.api, %.0575
   store i32 %i.apl, ptr %i.abx, align 4, !tbaa !2331
   br label %sqlite3GetTempRange.exit
 
@@ -3027,7 +3027,7 @@ bb.c:                                             ; preds = %.critedge3
   br i1 %i.ao, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.ap = add nsw i32 %i.am, 20                   ; 2 uses
+  %i.ap = add nuw nsw i32 %i.am, 20               ; 2 uses
   store i32 %i.ap, ptr %i.g, align 8, !tbaa !2865
   %i.aq = load ptr, ptr %i.h, align 8, !tbaa !2864
   %i.ar = tail call i32 @sqlite3_initialize(), !inline_history !1272
@@ -3430,7 +3430,7 @@ bb.e:                                             ; preds = %.critedge5
   br i1 %i.au, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  %i.av = add nsw i32 %i.as, 20                   ; 2 uses
+  %i.av = add nuw nsw i32 %i.as, 20               ; 2 uses
   store i32 %i.av, ptr %i.h, align 8, !tbaa !2873
   %i.aw = tail call i32 @sqlite3_initialize(), !inline_history !1272
   %.not.i = icmp eq i32 %i.aw, 0
@@ -3833,7 +3833,7 @@ bb.ch:                                            ; preds = %._crit_edge273.i.i,
   br i1 %i.pp, label %bb.cf, label %._crit_edge249.loopexit.split.loop.exit317.i.i, !llvm.loop !6661
 
 ._crit_edge249.loopexit.split.loop.exit317.i.i:   ; preds = %bb.ch
-  %indvars.le.i.i = trunc nsw i64 %indvars.iv.next268.i.i to i32
+  %indvars.le.i.i = trunc nuw nsw i64 %indvars.iv.next268.i.i to i32
   br label %._crit_edge249.i.i
 
 ._crit_edge249.i.i:                               ; preds = %bb.cg, %._crit_edge249.loopexit.split.loop.exit317.i.i, %bb.ce
@@ -4236,7 +4236,7 @@ bb.as:                                            ; preds = %bb.bo, %.lr.ph349.i
 bb.at:                                            ; preds = %bb.as
   %i.gq = load ptr, ptr %i.bw, align 8, !tbaa !1590
   %i.gr = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
-  %i.gs = add nsw i32 %i.gk, %i.gr
+  %i.gs = add nuw nsw i32 %i.gk, %i.gr
   %i.gt = sext i32 %i.gs to i64
   %i.gu = getelementptr inbounds [8 x i8], ptr %i.gq, i64 %i.gt
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !767

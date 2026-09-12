@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.lr.ph58, %._crit_e
   %i.dg = getelementptr inbounds [4 x i8], ptr %.pre93, i64 %indvars.iv88
   store i32 %i.df, ptr %i.dg, align 4, !tbaa !239
   %i.dh = lshr i128 %.3.lcssa, 32
-  %indvars.iv.next89 = add nsw i64 %indvars.iv88, 1 ; 2 uses
+  %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 2 uses
   %indvars.iv.next79 = add i32 %indvars.iv78, 1
   %exitcond91.not = icmp eq i64 %indvars.iv.next89, %wide.trip.count
   %indvar.next = add i32 %indvar, 1

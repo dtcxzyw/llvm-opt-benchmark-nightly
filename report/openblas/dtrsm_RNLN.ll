@@ -182,11 +182,11 @@ bb.k:                                             ; preds = %.lr.ph279, %._crit_
 
 bb.l:                                             ; preds = %.lr.ph273, %bb.l
   %.1243271 = phi i64 [ 0, %.lr.ph273 ], [ %i.cr, %bb.l ] ; 4 uses
-  %i.ch = sub nsw i64 %i.ca, %.1243271            ; 2 uses
-  %spec.store.select5 = tail call i64 @llvm.smin.i64(i64 %i.ch, i64 2)
-  %.inv = icmp slt i64 %i.ch, 6
+  %i.ch = sub nuw nsw i64 %i.ca, %.1243271        ; 2 uses
+  %spec.store.select5 = tail call i64 @llvm.umin.i64(i64 %i.ch, i64 2)
+  %.inv = icmp samesign ult i64 %i.ch, 6
   %.1 = select i1 %.inv, i64 %spec.store.select5, i64 6 ; 3 uses
-  %i.ci = add nsw i64 %.1243271, %.pre-phi        ; 2 uses
+  %i.ci = add nuw nsw i64 %.1243271, %.pre-phi    ; 2 uses
   %i.cj = mul nsw i64 %i.ci, %i.i
   %i.ck = getelementptr [8 x i8], ptr %i.cg, i64 %i.cj
   %i.cl = mul nsw i64 %.1243271, %spec.store.select4

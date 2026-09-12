@@ -206,7 +206,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ks, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %.idx.i.i.i.i81 = shl nsw i64 %i.kj, 4
+  %.idx.i.i.i.i81 = shl nuw nsw i64 %i.kj, 4
   %i.kt = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i81 ; 2 uses
   %.idx.i.i.i.i82 = shl nuw nsw i64 %.0213, 4
   %i.ku = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i82 ; 2 uses
@@ -609,7 +609,7 @@ bb.b:                                             ; preds = %.lr.ph65, %bb.d
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.bo = sub nsw i64 %i.bk, %.04764              ; 2 uses
+  %i.bo = sub nuw nsw i64 %i.bk, %.04764          ; 2 uses
   %i.bp = sub nsw i64 %i.bo, %i.ar
   %.sroa.speculated = call i64 @llvm.smax.i64(i64 %i.bp, i64 0)
   %.pre = add nuw nsw i64 %.04764, %i.ar

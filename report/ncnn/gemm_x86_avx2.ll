@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %._crit_edge180.i, %
   br i1 %i.im, label %bb.g, label %.preheader148.loopexit.i, !llvm.loop !41
 
 .preheader.loopexit.i:                            ; preds = %._crit_edge202.i
-  %i.in = trunc nsw i64 %indvars.iv.next242.i to i32
+  %i.in = trunc nuw nsw i64 %indvars.iv.next242.i to i32
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %.preheader148.i
@@ -607,7 +607,7 @@ bb.g:                                             ; preds = %._crit_edge180.i, %
   br i1 %i.im, label %bb.g, label %.preheader148.loopexit.i, !llvm.loop !94
 
 .preheader.loopexit.i:                            ; preds = %._crit_edge202.i
-  %i.in = trunc nsw i64 %indvars.iv.next242.i to i32
+  %i.in = trunc nuw nsw i64 %indvars.iv.next242.i to i32
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %.preheader148.i
@@ -1010,7 +1010,7 @@ begin_hunk_2_@_ZN4ncnn29pack_A_tile_fp32_to_int8_avx2ERKNS_3MatERS0_iiiiS2_:bb.a
   br label %bb.j
 
 .preheader369.loopexit.i:                         ; preds = %._crit_edge.i
-  %i.mp = trunc nsw i64 %indvars.iv.next547.i to i32
+  %i.mp = trunc nuw nsw i64 %indvars.iv.next547.i to i32
   br label %.preheader369.i
 
 .preheader369.i:                                  ; preds = %.preheader369.loopexit.i, %.preheader372.i
@@ -1413,7 +1413,7 @@ bb.l:                                             ; preds = %bb.i
   br i1 %i.ss, label %bb.i, label %.preheader632.loopexit.i, !llvm.loop !182
 
 .preheader625.loopexit.i:                         ; preds = %.loopexit628.i
-  %i.st = trunc nsw i64 %indvars.iv.next809.i to i32
+  %i.st = trunc nuw nsw i64 %indvars.iv.next809.i to i32
   br label %.preheader625.i
 
 .preheader625.i:                                  ; preds = %.preheader625.loopexit.i, %.preheader632.i
@@ -1816,7 +1816,7 @@ begin_hunk_4_@_ZN4ncnn29pack_B_tile_fp32_to_int8_avx2ERKNS_3MatERS0_iiiif:bb.a
   br label %bb.j
 
 .preheader350.loopexit.i:                         ; preds = %._crit_edge.i
-  %i.mj = trunc nsw i64 %indvars.iv.next528.i to i32
+  %i.mj = trunc nuw nsw i64 %indvars.iv.next528.i to i32
   br label %.preheader350.i
 
 .preheader350.i:                                  ; preds = %.preheader350.loopexit.i, %.preheader353.i
@@ -2219,7 +2219,7 @@ begin_hunk_5_@_ZN4ncnn39transpose_pack_B_tile_fp32_to_int8_avx2ERKNS_3MatERS0_ii
 .preheader545.loopexit.i:                         ; preds = %.loopexit548.i.loopexit9, %.loopexit548.i.loopexit8.us, %.loopexit548.i.us.us.us, %.loopexit551.i.us.us.preheader
   %.us-phi47 = phi ptr [ %.8.lcssa.i, %.loopexit551.i.us.us.preheader ], [ %i.ta, %.loopexit548.i.loopexit8.us ], [ %.24.i.us.us.us, %.loopexit548.i.us.us.us ], [ %i.zu, %.loopexit548.i.loopexit9 ]
   %.us-phi48 = phi i64 [ %i.ow, %.loopexit551.i.us.us.preheader ], [ %indvars.iv.next748.i.us, %.loopexit548.i.loopexit8.us ], [ %indvars.iv.next748.i.us.us.us, %.loopexit548.i.us.us.us ], [ %indvars.iv.next748.i, %.loopexit548.i.loopexit9 ]
-  %i.vp = trunc nsw i64 %.us-phi48 to i32
+  %i.vp = trunc nuw nsw i64 %.us-phi48 to i32
   br label %.preheader545.i
 
 .preheader545.i:                                  ; preds = %.preheader545.loopexit.i, %.preheader552.i
@@ -2622,7 +2622,7 @@ bb.fm:                                            ; preds = %bb.fl, %.thread1421
   br i1 %i.avr, label %bb.cg, label %.preheader1551.loopexit.i, !llvm.loop !259
 
 .preheader1547.loopexit.i:                        ; preds = %._crit_edge1693.i
-  %i.avs = trunc nsw i64 %indvars.iv.next1784.i to i32
+  %i.avs = trunc nuw nsw i64 %indvars.iv.next1784.i to i32
   br label %.preheader1547.i
 
 .preheader1547.i:                                 ; preds = %.preheader1547.loopexit.i, %.preheader1551.i

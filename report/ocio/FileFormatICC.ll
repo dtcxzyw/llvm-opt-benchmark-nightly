@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit335: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #30
   br label %bb.cc
 
-.thread428:                                       ; preds = %bb.bh, %bb.bd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit308, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit297
+.thread428:                                       ; preds = %bb.bh, %bb.bd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit297, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit308
   %i.qu = fcmp ugt double %i.dj, f0x3FF0000010000000
   br i1 %i.qu, label %.thread405, label %bb.bu
 

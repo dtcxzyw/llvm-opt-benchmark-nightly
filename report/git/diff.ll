@@ -205,9 +205,9 @@ st_mult.exit.i:                                   ; preds = %bb.ft
   %i.xu = mul i32 %.2933.i, 3
   %i.xv = add i32 %i.xu, 48
   %i.xw = sdiv i32 %i.xv, 2
-  %i.xx = trunc nsw i64 %indvars.iv.next48.i to i32
+  %i.xx = trunc nuw nsw i64 %indvars.iv.next48.i to i32
   %..i138 = call i32 @llvm.smax.i32(i32 %i.xw, i32 %i.xx) ; 2 uses
-  %25 = sext i32 %..i138 to i64
+  %25 = zext nneg i32 %..i138 to i64
   %i.xy = shl nuw nsw i64 %25, 4
   %i.xz = call ptr @xrealloc(ptr noundef %i.xf, i64 noundef %i.xy) #33
   %.pre.i139 = load i32, ptr %24, align 8, !tbaa !73
@@ -229,7 +229,7 @@ bb.fu:                                            ; preds = %st_mult.exit.i, %bb
   br i1 %i.yi, label %bb.ft, label %._crit_edge.i141, !llvm.loop !405
 
 ._crit_edge.i141:                                 ; preds = %bb.fu
-  %i.yj = trunc nsw i64 %indvars.iv.next48.i to i32
+  %i.yj = trunc nuw nsw i64 %indvars.iv.next48.i to i32
   store i32 %i.yj, ptr %i.wv, align 4
   store i32 %.28.i, ptr %i.wu, align 8
   store ptr %i.yb, ptr %14, align 8
@@ -632,7 +632,7 @@ st_mult.exit.i.i.i:                               ; preds = %bb.kv
   %i.avx = mul i32 %.02843.i.i.i, 3
   %i.avy = add i32 %i.avx, 48
   %i.avz = sdiv i32 %i.avy, 2
-  %i.awa = trunc nsw i64 %indvars.iv.next.i107.i.i to i32
+  %i.awa = trunc nuw nsw i64 %indvars.iv.next.i107.i.i to i32
   %..i.i.i = call i32 @llvm.smax.i32(i32 %i.avz, i32 %i.awa) ; 2 uses
   %i.awb = sext i32 %..i.i.i to i64
   %i.awc = shl nuw nsw i64 %i.awb, 4
@@ -671,7 +671,7 @@ bb.ky:                                            ; preds = %bb.kx, %bb.kw
   br i1 %.not.i111.i.i, label %bb.kz, label %bb.kv, !llvm.loop !422
 
 bb.kz:                                            ; preds = %bb.ky
-  %i.awp = trunc nsw i64 %indvars.iv.next.i107.i.i to i32 ; 2 uses
+  %i.awp = trunc nuw nsw i64 %indvars.iv.next.i107.i.i to i32 ; 2 uses
   %.not244.i.i = icmp ne i32 %.226.i104198.i.i, 0
   %.pre.i48.i = load i32, ptr %i.aqt, align 4, !tbaa !59 ; 2 uses
   %i.awq = icmp eq i32 %.051258.i.i, %.pre.i48.i

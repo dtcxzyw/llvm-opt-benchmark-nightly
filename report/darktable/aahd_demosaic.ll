@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.dr = sub nuw nsw i32 %i.dh, %i.do
-  %2 = sitofp reassoc nsz arcp contract afn i32 %i.dr to float
+  %2 = uitofp nneg i32 %i.dr to float
   %i.ds = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %2)
   %i.dt = fptosi float %i.ds to i32
   %i.du = add nsw i32 %i.do, %i.dt
@@ -296,7 +296,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.r
   %i.fy = sub nuw nsw i32 %i.fj, %i.fq
-  %3 = sitofp reassoc nsz arcp contract afn i32 %i.fy to float
+  %3 = uitofp nneg i32 %i.fy to float
   %i.fz = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %3)
   %i.ga = fptosi float %i.fz to i32
   %i.gb = add nsw i32 %i.fq, %i.ga

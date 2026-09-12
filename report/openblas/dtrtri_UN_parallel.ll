@@ -65,8 +65,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.f
   %.08692 = phi i64 [ 0, %bb.e ], [ %i.au, %bb.f ] ; 7 uses
-  %i.ad = sub nsw i64 %.088, %.08692              ; 2 uses
-  %spec.select = call i64 @llvm.smin.i64(i64 %i.ad, i64 %.0) ; 7 uses
+  %i.ad = sub nuw nsw i64 %.088, %.08692          ; 2 uses
+  %spec.select = call i64 @llvm.umin.i64(i64 %i.ad, i64 %.0) ; 7 uses
   store <2 x i64> %i.ac, ptr %i.q, align 8, !tbaa !15
   store i64 %i.g, ptr %i.r, align 8, !tbaa !16
   store ptr %i.a, ptr %i.s, align 8, !tbaa !17
@@ -140,7 +140,7 @@ declare i32 @dtrmm_LNUN(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr 
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #3
+declare i64 @llvm.umin.i64(i64, i64) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

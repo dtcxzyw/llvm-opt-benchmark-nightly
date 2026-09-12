@@ -202,7 +202,7 @@ Vec_PtrDup.exit.i.i.i:                            ; preds = %bb.kk, %bb.kj
   %i.aie = sext i32 %i.ahu to i64
   %i.aif = shl nsw i64 %i.aie, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.aia, ptr align 8 %i.aid, i64 %i.aif, i1 false)
-  %i.aig = trunc nsw i64 %indvars.iv19.i.i.i to i32
+  %i.aig = trunc nuw nsw i64 %indvars.iv19.i.i.i to i32
   %i.aih = icmp eq i32 %spec.select.sink.i15.i.i.i, %i.aig
   br i1 %i.aih, label %bb.kl, label %Vec_PtrPush.exit.i.i.i
 
@@ -255,7 +255,7 @@ Vec_PtrPush.exit.i.i.i:                           ; preds = %bb.ks, %bb.kr, %bb.
   br i1 %i.ait, label %bb.kj, label %..critedge_crit_edge.i.i.i, !llvm.loop !75
 
 ..critedge_crit_edge.i.i.i:                       ; preds = %Vec_PtrPush.exit.i.i.i
-  %i.aiu = trunc nsw i64 %indvars.iv.next20.i.i.i to i32
+  %i.aiu = trunc nuw nsw i64 %indvars.iv.next20.i.i.i to i32
   store i32 %i.aiu, ptr %i.ahj, align 4, !tbaa !22
   store i32 %spec.select.sink.i14.i.i.i, ptr %i.ahh, align 8
   store ptr %storemerge18.i.i.i, ptr %i.ahn, align 8
@@ -658,7 +658,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  %i.h = add nsw i32 %1, 1                        ; 4 uses
+  %i.h = add nuw nsw i32 %1, 1                    ; 4 uses
   %.not.i.not.i.i = icmp slt i32 %1, %.val5
   br i1 %.not.i.not.i.i, label %Cba_ObjFunc.exit, label %bb.d
 
@@ -672,7 +672,7 @@ bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !36   ; 2 uses
   %.not9.i.i.i.i = icmp eq ptr %i.l, null
-  %2 = zext nneg i32 %i.h to i64
+  %2 = sext i32 %i.h to i64
   %i.m = shl nuw nsw i64 %2, 2                    ; 2 uses
   br i1 %.not9.i.i.i.i, label %bb.g, label %bb.f
 
@@ -735,7 +735,7 @@ Vec_IntGrow.exit.i.i.i:                           ; preds = %Vec_IntGrow.exit.si
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !36
   %i.ab = sext i32 %i.y to i64                    ; 2 uses
-  %wide.trip.count.i.i.i = zext nneg i32 %i.h to i64
+  %wide.trip.count.i.i.i = sext i32 %i.h to i64
   %i.ac = shl nsw i64 %i.ab, 2
   %scevgep.i.i = getelementptr i8, ptr %i.aa, i64 %i.ac
   %i.ad = sub nsw i64 %wide.trip.count.i.i.i, %i.ab

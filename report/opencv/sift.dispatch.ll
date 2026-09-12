@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %.lr.ph134.split.i.i
   %i.vy = load ptr, ptr %i.b, align 8
   %i.vz = mul nsw i64 %indvars.iv.i.i, %indvars.iv.i.i
   %i.wa = load ptr, ptr %i.d, align 8
-  %i.wb = trunc nsw i64 %i.vz to i32
+  %i.wb = trunc nuw nsw i64 %i.vz to i32
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ar, %.preheader126.i.i
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %_ZNSt6vectorIN2cv8K
 .lr.ph:                                           ; preds = %.preheader49, %bb.d
   %i.az = phi i32 [ %i.br, %bb.d ], [ %i.ar, %.preheader49 ]
   %.03454 = phi i32 [ %i.bq, %bb.d ], [ 1, %.preheader49 ] ; 4 uses
-  %i.ba = add nsw i32 %i.az, 2
+  %i.ba = add nuw nsw i32 %i.az, 2
   %i.bb = mul nuw nsw i32 %i.ba, %.03555
   %i.bc = add nsw i32 %i.bb, %.03454              ; 2 uses
   %i.bd = sext i32 %i.bc to i64

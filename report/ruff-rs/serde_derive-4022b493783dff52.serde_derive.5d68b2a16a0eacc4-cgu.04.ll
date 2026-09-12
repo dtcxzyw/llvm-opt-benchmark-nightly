@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %_RINvNtNtNtCscdodAO
   %i.fp = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %i.ff
   %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %i.fn
   %i.fr = sub nsw i64 %i.fd, %.sroa.5.0.i23
-  %i.fs = shl nsw i64 %i.fr, 3
+  %i.fs = shl nuw nsw i64 %i.fr, 3
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fq, ptr nonnull align 8 %i.fp, i64 %i.fs, i1 false), !noalias !28
   br label %_RINvNtNtNtCscdodAO9FK5_5alloc11collections5btree4node12slice_insertINtNtNtCs4NRVxsYgnAr_4core3ptr8non_null7NonNullINtB2_8LeafNodeNtNtCsfq6Q4Do6HaX_3syn8lifetime8LifetimeNtNtB4_7set_val9SetValZSTEEECs81dfN7NJsQO_12serde_derive.exit.i15.i
 
@@ -607,7 +607,7 @@ bb.aw:                                            ; preds = %_RINvNtNtNtCscdodAO
   %i.fp = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %i.ff
   %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %i.fn
   %i.fr = sub nsw i64 %i.fd, %.sroa.5.0.i23
-  %i.fs = shl nsw i64 %i.fr, 3
+  %i.fs = shl nuw nsw i64 %i.fr, 3
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fq, ptr nonnull align 8 %i.fp, i64 %i.fs, i1 false), !noalias !56
   br label %_RINvNtNtNtCscdodAO9FK5_5alloc11collections5btree4node12slice_insertINtNtNtCs4NRVxsYgnAr_4core3ptr8non_null7NonNullINtB2_8LeafNodeNtNtNtCs81dfN7NJsQO_12serde_derive9internals4name4NameNtNtB4_7set_val9SetValZSTEEEB29_.exit.i15.i
 

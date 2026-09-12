@@ -205,7 +205,7 @@ put_bits.exit.i:                                  ; preds = %bb.oh, %bb.og, %bb.
 bb.oi:                                            ; preds = %._crit_edge72.i
   %i.fjv = shl i32 %i.fjs, %i.fjt
   %i.fjw = or i32 %i.fjv, %.1106.i.lcssa.i
-  %i.fjx = sub nsw i32 %i.fjr, %i.fjt
+  %i.fjx = sub nuw nsw i32 %i.fjr, %i.fjt
   br label %put_bits.exit219.i
 
 bb.oj:                                            ; preds = %._crit_edge72.i
@@ -608,7 +608,7 @@ put_bits.exit.i775:                               ; preds = %bb.un, %bb.um, %bb.
 bb.uo:                                            ; preds = %._crit_edge311.i
   %i.hnz = shl i32 %i.hnw, %i.hnx
   %i.hoa = or i32 %i.hnz, %.1106.i.lcssa.i779
-  %i.hob = sub nsw i32 %i.hnv, %i.hnx
+  %i.hob = sub nuw nsw i32 %i.hnv, %i.hnx
   br label %put_bits.exit225.i
 
 bb.up:                                            ; preds = %._crit_edge311.i
@@ -1011,7 +1011,7 @@ put_bits.exit:                                    ; preds = %bb.er, %bb.es, %bb.
 bb.et:                                            ; preds = %._crit_edge652
   %i.bdn = shl i32 %i.bdk, %i.bdl
   %i.bdo = or i32 %i.bdn, %.1106.i208.lcssa
-  %i.bdp = sub nsw i32 %i.bdj, %i.bdl
+  %i.bdp = sub nuw nsw i32 %i.bdj, %i.bdl
   br label %put_bits.exit333
 
 bb.eu:                                            ; preds = %._crit_edge652
@@ -1414,7 +1414,7 @@ put_bits.exit463:                                 ; preds = %bb.kw, %bb.kx, %bb.
 bb.ky:                                            ; preds = %._crit_edge594
   %i.dkd = shl i32 %i.dka, %i.dkb
   %i.dke = or i32 %i.dkd, %.1106.i.lcssa
-  %i.dkf = sub nsw i32 %i.djz, %i.dkb
+  %i.dkf = sub nuw nsw i32 %i.djz, %i.dkb
   br label %put_bits.exit467
 
 bb.kz:                                            ; preds = %._crit_edge594
@@ -1817,7 +1817,7 @@ put_bits.exit:                                    ; preds = %bb.ez, %bb.fa, %bb.
 bb.fb:                                            ; preds = %._crit_edge712
   %i.bfi = shl i32 %i.bff, %i.bfg
   %i.bfj = or i32 %i.bfi, %.1106.i281.lcssa
-  %i.bfk = sub nsw i32 %i.bfe, %i.bfg
+  %i.bfk = sub nuw nsw i32 %i.bfe, %i.bfg
   br label %put_bits.exit403
 
 bb.fc:                                            ; preds = %._crit_edge712
@@ -2220,7 +2220,7 @@ put_bits.exit533:                                 ; preds = %bb.la, %bb.lb, %bb.
 bb.lc:                                            ; preds = %._crit_edge659
   %i.dgn = shl i32 %i.dgk, %i.dgl
   %i.dgo = or i32 %i.dgn, %.1106.i.lcssa
-  %i.dgp = sub nsw i32 %i.dgj, %i.dgl
+  %i.dgp = sub nuw nsw i32 %i.dgj, %i.dgl
   br label %put_bits.exit537
 
 bb.ld:                                            ; preds = %._crit_edge659
@@ -2623,7 +2623,7 @@ put_bits.exit:                                    ; preds = %bb.fa, %bb.fb, %bb.
 bb.fc:                                            ; preds = %._crit_edge725
   %i.bhd = shl i32 %i.bha, %i.bhb
   %i.bhe = or i32 %i.bhd, %.1106.i292.lcssa
-  %i.bhf = sub nsw i32 %i.bgz, %i.bhb
+  %i.bhf = sub nuw nsw i32 %i.bgz, %i.bhb
   br label %put_bits.exit416
 
 bb.fd:                                            ; preds = %._crit_edge725
@@ -3026,7 +3026,7 @@ put_bits.exit546:                                 ; preds = %bb.lb, %bb.lc, %bb.
 bb.ld:                                            ; preds = %._crit_edge672
   %i.djf = shl i32 %i.djc, %i.djd
   %i.djg = or i32 %i.djf, %.1106.i.lcssa
-  %i.djh = sub nsw i32 %i.djb, %i.djd
+  %i.djh = sub nuw nsw i32 %i.djb, %i.djd
   br label %put_bits.exit550
 
 bb.le:                                            ; preds = %._crit_edge672

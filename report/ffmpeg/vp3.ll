@@ -205,7 +205,7 @@ bb.ev:                                            ; preds = %bb.eu
 
 bb.ew:                                            ; preds = %bb.ev
   %i.anv = load i32, ptr %i.alk, align 4, !tbaa !29
-  %i.anw = mul nsw i32 %i.anu, %i.alf
+  %i.anw = mul nuw nsw i32 %i.anu, %i.alf
   %i.anx = add i32 %i.anw, %i.amw
   %i.any = add i32 %i.anx, %i.anv
   %i.anz = and i32 %.0101.us.i, 2
@@ -228,7 +228,7 @@ bb.ey:                                            ; preds = %bb.ex
 
 bb.ez:                                            ; preds = %bb.ey
   %i.aog = load i32, ptr %i.alk, align 4, !tbaa !29
-  %i.aoh = mul nsw i32 %i.aof, %i.alf
+  %i.aoh = mul nuw nsw i32 %i.aof, %i.alf
   %i.aoi = add i32 %i.aoh, %i.anj
   %i.aoj = add i32 %i.aoi, %i.aog
   %i.aok = and i32 %.0101.us.i, 1
@@ -631,7 +631,7 @@ bb.kv:                                            ; preds = %.preheader.us.i329,
 bb.kw:                                            ; preds = %bb.kv
   %i.deo = add nsw i32 %i.den, %i.ddi
   %i.dep = shl nsw i32 %i.del, 3                  ; 3 uses
-  %i.deq = shl nsw i32 %i.deh, 3                  ; 3 uses
+  %i.deq = shl nuw nsw i32 %i.deh, 3              ; 3 uses
   %i.der = mul i32 %i.dep, %i.ddn
   %i.des = add i32 %i.der, %i.deq                 ; 2 uses
   %.pre440.i = load ptr, ptr %i.az, align 8, !tbaa !53 ; 3 uses

@@ -51,7 +51,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %.loopexit
   %.0139172 = phi i64 [ 0, %bb.e ], [ %.pre-phi, %.loopexit ] ; 9 uses
-  %i.y = sub nsw i64 %.0146, %.0139172            ; 2 uses
+  %i.y = sub nuw nsw i64 %.0146, %.0139172        ; 2 uses
   %i.z = icmp sgt i64 %i.y, %.0143
   %spec.select = call i64 @llvm.smin.i64(i64 %i.y, i64 %.0143)
   %spec.select.fr = freeze i64 %spec.select       ; 15 uses
@@ -103,7 +103,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph167.split.us:                               ; preds = %.lr.ph167, %._crit_edge.us171
   %.0164.us = phi i64 [ %i.bu, %._crit_edge.us171 ], [ %i.ak, %.lr.ph167 ] ; 7 uses
-  %i.ao = sub nsw i64 %.0146, %.0164.us           ; 2 uses
+  %i.ao = sub nuw nsw i64 %.0146, %.0164.us       ; 2 uses
   %spec.store.select.us = call i64 @llvm.smin.i64(i64 %i.ao, i64 8256) ; 2 uses
   %i.ap = add nsw i64 %spec.store.select.us, %.0164.us ; 5 uses
   %i.aq = icmp sgt i64 %i.ao, 0
@@ -111,7 +111,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph.us.us:                                     ; preds = %.lr.ph167.split.us, %._crit_edge.us.us
   %.0140160.us.us = phi i64 [ %i.be, %._crit_edge.us.us ], [ %.0164.us, %.lr.ph167.split.us ] ; 4 uses
-  %i.ar = sub nsw i64 %i.ap, %.0140160.us.us
+  %i.ar = sub nuw nsw i64 %i.ap, %.0140160.us.us
   %spec.store.select1.us.us = call i64 @llvm.smin.i64(i64 %i.ar, i64 2) ; 2 uses
   %i.as = mul nsw i64 %.0140160.us.us, %i.j
   %i.at = getelementptr [8 x i8], ptr %i.am, i64 %i.as ; 2 uses
@@ -182,7 +182,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
 
 .lr.ph167.split:                                  ; preds = %.lr.ph167, %._crit_edge
   %.0164 = phi i64 [ %i.cy, %._crit_edge ], [ %i.ak, %.lr.ph167 ] ; 7 uses
-  %i.bx = sub nsw i64 %.0146, %.0164              ; 2 uses
+  %i.bx = sub nuw nsw i64 %.0146, %.0164          ; 2 uses
   %spec.store.select = call i64 @llvm.smin.i64(i64 %i.bx, i64 8256) ; 2 uses
   %i.by = add nsw i64 %spec.store.select, %.0164  ; 5 uses
   %i.bz = icmp sgt i64 %i.bx, 0
@@ -199,7 +199,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
 
 .lr.ph162:                                        ; preds = %.lr.ph167.split, %.lr.ph162
   %.0140160 = phi i64 [ %i.cj, %.lr.ph162 ], [ %.0164, %.lr.ph167.split ] ; 4 uses
-  %i.cc = sub nsw i64 %i.by, %.0140160
+  %i.cc = sub nuw nsw i64 %i.by, %.0140160
   %spec.store.select1 = call i64 @llvm.smin.i64(i64 %i.cc, i64 2)
   %i.cd = mul nsw i64 %.0140160, %i.j
   %i.ce = getelementptr [8 x i8], ptr %i.am, i64 %i.cd

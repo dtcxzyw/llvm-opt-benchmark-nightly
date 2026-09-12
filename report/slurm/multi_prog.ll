@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %.lr.ph.split.i.i
   br label %bb.x
 
 bb.w:                                             ; preds = %.lr.ph.split.i.i
-  %i.cb = trunc nsw i64 %indvars.iv.i.i to i32
+  %i.cb = trunc nuw nsw i64 %indvars.iv.i.i to i32
   %i.cc = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.13, i32 noundef %i.cb) #9 ; 0 uses
   br label %bb.x
 
@@ -249,7 +249,7 @@ bb.aa:                                            ; preds = %.lr.ph.split.i38.i
   br label %bb.ac
 
 bb.ab:                                            ; preds = %.lr.ph.split.i38.i
-  %i.cs = trunc nsw i64 %indvars.iv.i39.i to i32
+  %i.cs = trunc nuw nsw i64 %indvars.iv.i39.i to i32
   %i.ct = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.13, i32 noundef %i.cs) #9 ; 0 uses
   br label %bb.ac
 
@@ -652,7 +652,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.loopexit
 
 bb.h:                                             ; preds = %bb.f
-  %i.k = add nsw i32 %1, 1                        ; 2 uses
+  %i.k = add nuw nsw i32 %1, 1                    ; 2 uses
   store i32 %i.k, ptr %i.e, align 8
   store i8 1, ptr %i.g, align 4
   store i1 true, ptr @_update_task_mask.i_set_ntasks, align 1

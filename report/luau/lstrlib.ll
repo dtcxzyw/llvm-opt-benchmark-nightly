@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %._crit_edge.i
 
 .lr.ph46.split.us.i:                              ; preds = %.lr.ph46.i, %bb.h
   %indvars.iv58.i = phi i64 [ %indvars.iv.next59.i, %bb.h ], [ 8, %.lr.ph46.i ] ; 2 uses
-  %i.ev = trunc nsw i64 %indvars.iv58.i to i32
+  %i.ev = trunc nuw nsw i64 %indvars.iv58.i to i32
   %i.ew = xor i32 %i.ev, -1
   %i.ex = add nsw i32 %i.w, %i.ew
   %i.ey = sext i32 %i.ex to i64
@@ -445,7 +445,7 @@ bb.j:                                             ; preds = %bb.e
 
 .lr.ph46.split.us.i86:                            ; preds = %bb.k, %.lr.ph46.split.us.preheader.i85
   %indvars.iv58.i87 = phi i64 [ 8, %.lr.ph46.split.us.preheader.i85 ], [ %indvars.iv.next59.i89, %bb.k ] ; 2 uses
-  %i.jr = trunc nsw i64 %indvars.iv58.i87 to i32
+  %i.jr = trunc nuw nsw i64 %indvars.iv58.i87 to i32
   %i.js = xor i32 %i.jr, -1
   %i.jt = add nsw i32 %i.w, %i.js
   %i.ju = sext i32 %i.jt to i64
@@ -848,7 +848,7 @@ begin_hunk_1_@_ZL10str_unpackP9lua_State:bb.a
 
 .lr.ph46.split.us.i118:                           ; preds = %bb.t, %.lr.ph46.split.us.preheader.i117
   %indvars.iv58.i119 = phi i64 [ 8, %.lr.ph46.split.us.preheader.i117 ], [ %indvars.iv.next59.i121, %bb.t ] ; 2 uses
-  %i.qv = trunc nsw i64 %indvars.iv58.i119 to i32
+  %i.qv = trunc nuw nsw i64 %indvars.iv58.i119 to i32
   %i.qw = xor i32 %i.qv, -1
   %i.qx = add nsw i32 %i.w, %i.qw
   %i.qy = sext i32 %i.qx to i64

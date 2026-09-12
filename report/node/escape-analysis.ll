@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.i
   store ptr %i.ah, ptr %i.ai, align 8
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.aj = trunc nsw i64 %indvars.iv.next.i to i32 ; 2 uses
+  %i.aj = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 2 uses
   %i.ak = lshr exact i32 -2147483648, %i.aj
   %i.al = and i32 %i.ak, %i.y
   %.not.i.not.i = icmp eq i32 %i.al, 0
@@ -218,14 +218,14 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.ap, label %bb.f, label %.thread.i
 
 .thread.i:                                        ; preds = %._crit_edge.i
-  %i.aq = add nsw i32 %.1.lcssa.i, 1
+  %i.aq = add nuw nsw i32 %.1.lcssa.i, 1
   br label %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE15GetFocusedValueEPKNS9_11FocusedTreeERKS3_.exit.thread
 
 bb.f:                                             ; preds = %._crit_edge.i
   %i.ar = getelementptr inbounds nuw i8, ptr %.046.i, i64 32
   %i.as = getelementptr inbounds [8 x i8], ptr %i.ar, i64 %i.am
   %i.at = load ptr, ptr %i.as, align 8            ; 2 uses
-  %i.au = add nsw i32 %.1.lcssa.i, 1              ; 2 uses
+  %i.au = add nuw nsw i32 %.1.lcssa.i, 1          ; 2 uses
   %.not.i = icmp eq ptr %i.at, null
   br i1 %.not.i, label %_ZNK2v88internal8compiler13PersistentMapINS1_8VariableEPNS1_4NodeENS_4base4hashIS3_EEE15GetFocusedValueEPKNS9_11FocusedTreeERKS3_.exit.thread, label %.lr.ph48.i, !llvm.loop !88
 

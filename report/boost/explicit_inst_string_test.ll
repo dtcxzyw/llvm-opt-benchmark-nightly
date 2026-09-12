@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = select i1 %i.u, i64 %i.z, i64 %i.r
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.aa ; 2 uses
   %i.ac = getelementptr inbounds [4 x i8], ptr %i.y, i64 %2 ; 2 uses
-  %.idx.i = shl nsw i64 %i.k, 2
+  %.idx.i = shl nuw nsw i64 %i.k, 2
   %i.ad = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx.i
   %i.ae = icmp eq i64 %i.k, 0
   br i1 %i.ae, label %_ZN5boost9container6searchIPwPKwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE9Eq_traitsIS7_EEEET_SE_SE_T0_SF_T1_.exit.i, label %.lr.ph.i.i
@@ -491,7 +491,7 @@ bb.d:                                             ; preds = %bb.b
   %.idx2729.i = add nuw i64 %.sroa.speculated.i, %i.k
   %i.aa = shl i64 %.idx2729.i, 2                  ; 2 uses
   %i.ab = getelementptr i8, ptr %i.y, i64 %i.aa   ; 4 uses
-  %.idx.i = shl nsw i64 %i.k, 2
+  %.idx.i = shl nuw nsw i64 %i.k, 2
   %i.ac = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx.i
   %.not41.i.i = icmp eq i64 %i.aa, 0
   br i1 %.not41.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE5rfindEPKwmm.exit, label %.preheader.i.i
@@ -574,7 +574,7 @@ bb.d:                                             ; preds = %bb.b
   %.idx2729 = add nuw i64 %.sroa.speculated, %3
   %i.p = shl i64 %.idx2729, 2                     ; 2 uses
   %i.q = getelementptr i8, ptr %i.n, i64 %i.p     ; 4 uses
-  %.idx = shl nsw i64 %3, 2
+  %.idx = shl nuw nsw i64 %3, 2
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   %.not41.i = icmp eq i64 %i.p, 0
   br i1 %.not41.i, label %_ZN5boost9container8find_endIPKwS3_NS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE9Eq_traitsIS6_EEEET_SD_SD_T0_SE_T1_.exit.thread, label %.preheader.i
@@ -658,7 +658,7 @@ bb.d:                                             ; preds = %bb.b
   %.idx2729.i = add nuw i64 %.sroa.speculated.i, %i.a
   %i.q = shl i64 %.idx2729.i, 2                   ; 2 uses
   %i.r = getelementptr i8, ptr %i.o, i64 %i.q     ; 4 uses
-  %.idx.i = shl nsw i64 %i.a, 2
+  %.idx.i = shl nuw nsw i64 %i.a, 2
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i
   %.not41.i.i = icmp eq i64 %i.q, 0
   br i1 %.not41.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE5rfindEPKwmm.exit, label %.preheader.i.i
@@ -793,7 +793,7 @@ bb.b:                                             ; preds = %bb.a
   %i.v = load ptr, ptr %i.u, align 8
   %i.w = select i1 %i.s, ptr %i.t, ptr %i.v       ; 3 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.m ; 2 uses
-  %.idx.i = shl nsw i64 %i.r, 2
+  %.idx.i = shl nuw nsw i64 %i.r, 2
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx.i
   %.not1622.i.i = icmp eq i64 %i.r, 0
   br i1 %.not1622.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE13find_first_ofEPKwmm.exit, label %.preheader.i.preheader.i
@@ -1056,7 +1056,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.y, i64 %2)
   %.idx.i = shl i64 %.sroa.speculated.i, 2
   %i.z = add i64 %.idx.i, 4                       ; 2 uses
-  %.idx20.i = shl nsw i64 %i.s, 2
+  %.idx20.i = shl nuw nsw i64 %i.s, 2
   %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx20.i
   %.not714.i.i = icmp eq i64 %i.z, 0
   %.not12.i.i = icmp eq i64 %i.s, 0
@@ -1333,7 +1333,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = and i64 %i.q, 127
   %i.z = select i1 %i.t, i64 %i.y, i64 %i.q       ; 2 uses
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.z ; 4 uses
-  %.idx.i = shl nsw i64 %i.k, 2
+  %.idx.i = shl nuw nsw i64 %i.k, 2
   %i.ab = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx.i ; 2 uses
   %.not15.i.i = icmp eq i64 %2, %i.z
   br i1 %.not15.i.i, label %_ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE17Not_within_traitsIS5_EEEET_SC_SC_T0_.exit.i, label %.lr.ph.i.i
@@ -1616,7 +1616,7 @@ bb.a:
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = select i1 %i.t, ptr %i.u, ptr %i.w       ; 4 uses
-  %.idx18.i = shl nsw i64 %i.s, 2
+  %.idx18.i = shl nuw nsw i64 %i.s, 2
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx18.i ; 2 uses
   %i.z = add nsw i64 %i.m, -1
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.z, i64 %2)
@@ -2019,7 +2019,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = and i64 %i.g, 127
   %i.p = select i1 %i.j, i64 %i.o, i64 %i.g
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.p ; 2 uses
-  %.idx.i.i = shl nsw i64 %i.a, 2
+  %.idx.i.i = shl nuw nsw i64 %i.a, 2
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i.i
   %i.s = icmp eq i64 %i.a, 0
   br i1 %i.s, label %_ZN5boost9container6searchIPwPKwNS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvE9Eq_traitsIS7_EEEET_SE_SE_T0_SF_T1_.exit.i.i, label %.lr.ph.i.i.i
@@ -2422,7 +2422,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = select i1 %i.u, i64 %i.z, i64 %i.r
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.aa ; 2 uses
   %i.ac = getelementptr inbounds [4 x i8], ptr %i.y, i64 %2 ; 2 uses
-  %.idx.i = shl nsw i64 %i.k, 2
+  %.idx.i = shl nuw nsw i64 %i.k, 2
   %i.ad = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx.i
   %i.ae = icmp eq i64 %i.k, 0
   br i1 %i.ae, label %_ZN5boost9container6searchIPwPKwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE9Eq_traitsIS7_EEEET_SC_SC_T0_SD_T1_.exit.i, label %.lr.ph.i.i
@@ -2709,7 +2709,7 @@ bb.d:                                             ; preds = %bb.b
   %.idx2729.i = add nuw i64 %.sroa.speculated.i, %i.k
   %i.aa = shl i64 %.idx2729.i, 2                  ; 2 uses
   %i.ab = getelementptr i8, ptr %i.y, i64 %i.aa   ; 4 uses
-  %.idx.i = shl nsw i64 %i.k, 2
+  %.idx.i = shl nuw nsw i64 %i.k, 2
   %i.ac = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx.i
   %.not41.i.i = icmp eq i64 %i.aa, 0
   br i1 %.not41.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE5rfindEPKwmm.exit, label %.preheader.i.i
@@ -2792,7 +2792,7 @@ bb.d:                                             ; preds = %bb.b
   %.idx2729 = add nuw i64 %.sroa.speculated, %3
   %i.p = shl i64 %.idx2729, 2                     ; 2 uses
   %i.q = getelementptr i8, ptr %i.n, i64 %i.p     ; 4 uses
-  %.idx = shl nsw i64 %3, 2
+  %.idx = shl nuw nsw i64 %3, 2
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
   %.not41.i = icmp eq i64 %i.p, 0
   br i1 %.not41.i, label %_ZN5boost9container8find_endIPKwS3_NS0_12basic_stringIwSt11char_traitsIwESaIwEvE9Eq_traitsIS6_EEEET_SB_SB_T0_SC_T1_.exit.thread, label %.preheader.i
@@ -2876,7 +2876,7 @@ bb.d:                                             ; preds = %bb.b
   %.idx2729.i = add nuw i64 %.sroa.speculated.i, %i.a
   %i.q = shl i64 %.idx2729.i, 2                   ; 2 uses
   %i.r = getelementptr i8, ptr %i.o, i64 %i.q     ; 4 uses
-  %.idx.i = shl nsw i64 %i.a, 2
+  %.idx.i = shl nuw nsw i64 %i.a, 2
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i
   %.not41.i.i = icmp eq i64 %i.q, 0
   br i1 %.not41.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE5rfindEPKwmm.exit, label %.preheader.i.i
@@ -3011,7 +3011,7 @@ bb.b:                                             ; preds = %bb.a
   %i.v = load ptr, ptr %i.u, align 8
   %i.w = select i1 %i.s, ptr %i.t, ptr %i.v       ; 3 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.m ; 2 uses
-  %.idx.i = shl nsw i64 %i.r, 2
+  %.idx.i = shl nuw nsw i64 %i.r, 2
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx.i
   %.not1622.i.i = icmp eq i64 %i.r, 0
   br i1 %.not1622.i.i, label %_ZNK5boost9container12basic_stringIwSt11char_traitsIwESaIwEvE13find_first_ofEPKwmm.exit, label %.preheader.i.preheader.i
@@ -3274,7 +3274,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.y, i64 %2)
   %.idx.i = shl i64 %.sroa.speculated.i, 2
   %i.z = add i64 %.idx.i, 4                       ; 2 uses
-  %.idx20.i = shl nsw i64 %i.s, 2
+  %.idx20.i = shl nuw nsw i64 %i.s, 2
   %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx20.i
   %.not714.i.i = icmp eq i64 %i.z, 0
   %.not12.i.i = icmp eq i64 %i.s, 0
@@ -3551,7 +3551,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = and i64 %i.q, 127
   %i.z = select i1 %i.t, i64 %i.y, i64 %i.q       ; 2 uses
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.z ; 4 uses
-  %.idx.i = shl nsw i64 %i.k, 2
+  %.idx.i = shl nuw nsw i64 %i.k, 2
   %i.ab = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx.i ; 2 uses
   %.not15.i.i = icmp eq i64 %2, %i.z
   br i1 %.not15.i.i, label %_ZN5boost9container7find_ifIPwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE17Not_within_traitsIS5_EEEET_SA_SA_T0_.exit.i, label %.lr.ph.i.i
@@ -3834,7 +3834,7 @@ bb.a:
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = select i1 %i.t, ptr %i.u, ptr %i.w       ; 4 uses
-  %.idx18.i = shl nsw i64 %i.s, 2
+  %.idx18.i = shl nuw nsw i64 %i.s, 2
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx18.i ; 2 uses
   %i.z = add nsw i64 %i.m, -1
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.z, i64 %2)
@@ -4237,7 +4237,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = and i64 %i.g, 127
   %i.p = select i1 %i.j, i64 %i.o, i64 %i.g
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.p ; 2 uses
-  %.idx.i.i = shl nsw i64 %i.a, 2
+  %.idx.i.i = shl nuw nsw i64 %i.a, 2
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i.i
   %i.s = icmp eq i64 %i.a, 0
   br i1 %i.s, label %_ZN5boost9container6searchIPwPKwNS0_12basic_stringIwSt11char_traitsIwESaIwEvE9Eq_traitsIS7_EEEET_SC_SC_T0_SD_T1_.exit.i.i, label %.lr.ph.i.i.i

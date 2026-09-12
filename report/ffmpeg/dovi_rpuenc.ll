@@ -204,7 +204,7 @@ bb.gp:                                            ; preds = %bb.gi
 bb.gq:                                            ; preds = %bb.gp
   %i.bbj = shl i32 %i.bbg, %i.bbf
   %i.bbk = or i32 %i.bbj, %i.bau
-  %i.bbl = sub nsw i32 %i.bbh, %i.bbf
+  %i.bbl = sub nuw nsw i32 %i.bbh, %i.bbf
   br label %set_ue_golomb.exit545
 
 bb.gr:                                            ; preds = %bb.gp
@@ -444,7 +444,7 @@ bb.hp:                                            ; preds = %bb.hi
 bb.hq:                                            ; preds = %bb.hp
   %i.bfw = shl i32 %i.bft, %i.bfs
   %i.bfx = or i32 %i.bfw, %i.bfh
-  %i.bfy = sub nsw i32 %i.bfu, %i.bfs
+  %i.bfy = sub nuw nsw i32 %i.bfu, %i.bfs
   br label %set_ue_golomb.exit652
 
 bb.hr:                                            ; preds = %bb.hp
@@ -645,7 +645,7 @@ bb.ii:                                            ; preds = %bb.ib
 bb.ij:                                            ; preds = %bb.ii
   %i.bjv = shl i32 %.026.i.i565, %i.bjt
   %i.bjw = or i32 %i.bjv, %i.bji
-  %i.bjx = sub nsw i32 %i.bhy, %i.bjt
+  %i.bjx = sub nuw nsw i32 %i.bhy, %i.bjt
   br label %set_ue_golomb.exit665
 
 bb.ik:                                            ; preds = %bb.ii
@@ -822,7 +822,7 @@ bb.iy:                                            ; preds = %bb.ir
 bb.iz:                                            ; preds = %bb.iy
   %i.bnh = shl i32 %i.bne, %i.bnd
   %i.bni = or i32 %i.bnh, %i.bms
-  %i.bnj = sub nsw i32 %i.bnf, %i.bnd
+  %i.bnj = sub nuw nsw i32 %i.bnf, %i.bnd
   br label %set_ue_golomb.exit693
 
 bb.ja:                                            ; preds = %bb.iy
@@ -1225,7 +1225,7 @@ bb.le:                                            ; preds = %bb.kx
 bb.lf:                                            ; preds = %bb.le
   %i.bxg = shl i32 %.026.i.i575, %i.bxe
   %i.bxh = or i32 %i.bxg, %i.bwt
-  %i.bxi = sub nsw i32 %.0.i.i576, %i.bxe
+  %i.bxi = sub nuw nsw i32 %.0.i.i576, %i.bxe
   br label %set_ue_golomb.exit706
 
 bb.lg:                                            ; preds = %bb.le
@@ -1628,7 +1628,7 @@ bb.h:                                             ; preds = %bb.a
 bb.i:                                             ; preds = %bb.h
   %i.at = shl i32 %i.ap, %i.ao
   %i.au = or i32 %i.at, %i.ad
-  %i.av = sub nsw i32 %i.ar, %i.ao
+  %i.av = sub nuw nsw i32 %i.ar, %i.ao
   br label %put_bits.exit10
 
 bb.j:                                             ; preds = %bb.h

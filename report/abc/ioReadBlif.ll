@@ -204,11 +204,11 @@ bb.x:                                             ; preds = %bb.r, %bb.s
   %.val201.prol = load ptr, ptr %i.cb, align 8, !tbaa !29 ; 2 uses
   %i.ce = getelementptr inbounds [8 x i8], ptr %.val201.prol, i64 %indvars.iv379.prol
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !46
-  %i.cg = sub nsw i64 %indvars.iv379.prol, %i.cc
+  %i.cg = sub nuw nsw i64 %indvars.iv379.prol, %i.cc
   %i.ch = getelementptr [8 x i8], ptr %.val201.prol, i64 %i.cg
   %i.ci = getelementptr i8, ptr %i.ch, i64 16
   store ptr %i.cf, ptr %i.ci, align 8, !tbaa !46
-  %indvars.iv.next380.prol = add nsw i64 %indvars.iv379.prol, 1 ; 2 uses
+  %indvars.iv.next380.prol = add nuw nsw i64 %indvars.iv379.prol, 1 ; 2 uses
   %prol.iter475.next = add i64 %prol.iter475, 1   ; 2 uses
   %prol.iter475.cmp.not = icmp eq i64 %prol.iter475.next, %xtraiter473
   br i1 %prol.iter475.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !96
@@ -224,35 +224,35 @@ bb.x:                                             ; preds = %bb.r, %bb.s
   %.val201 = load ptr, ptr %i.cb, align 8, !tbaa !29 ; 2 uses
   %i.cl = getelementptr inbounds [8 x i8], ptr %.val201, i64 %indvars.iv379
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !46
-  %i.cn = sub nsw i64 %indvars.iv379, %i.cc
+  %i.cn = sub nuw nsw i64 %indvars.iv379, %i.cc
   %i.co = getelementptr [8 x i8], ptr %.val201, i64 %i.cn
   %i.cp = getelementptr i8, ptr %i.co, i64 16
   store ptr %i.cm, ptr %i.cp, align 8, !tbaa !46
-  %indvars.iv.next380 = add nsw i64 %indvars.iv379, 1 ; 2 uses
+  %indvars.iv.next380 = add nuw nsw i64 %indvars.iv379, 1 ; 2 uses
   %.val201.1 = load ptr, ptr %i.cb, align 8, !tbaa !29 ; 2 uses
   %i.cq = getelementptr inbounds [8 x i8], ptr %.val201.1, i64 %indvars.iv.next380
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !46
-  %i.cs = sub nsw i64 %indvars.iv.next380, %i.cc
+  %i.cs = sub nuw nsw i64 %indvars.iv.next380, %i.cc
   %i.ct = getelementptr [8 x i8], ptr %.val201.1, i64 %i.cs
   %i.cu = getelementptr i8, ptr %i.ct, i64 16
   store ptr %i.cr, ptr %i.cu, align 8, !tbaa !46
-  %indvars.iv.next380.1 = add nsw i64 %indvars.iv379, 2 ; 2 uses
+  %indvars.iv.next380.1 = add nuw nsw i64 %indvars.iv379, 2 ; 2 uses
   %.val201.2 = load ptr, ptr %i.cb, align 8, !tbaa !29 ; 2 uses
   %i.cv = getelementptr inbounds [8 x i8], ptr %.val201.2, i64 %indvars.iv.next380.1
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !46
-  %i.cx = sub nsw i64 %indvars.iv.next380.1, %i.cc
+  %i.cx = sub nuw nsw i64 %indvars.iv.next380.1, %i.cc
   %i.cy = getelementptr [8 x i8], ptr %.val201.2, i64 %i.cx
   %i.cz = getelementptr i8, ptr %i.cy, i64 16
   store ptr %i.cw, ptr %i.cz, align 8, !tbaa !46
-  %indvars.iv.next380.2 = add nsw i64 %indvars.iv379, 3 ; 2 uses
+  %indvars.iv.next380.2 = add nuw nsw i64 %indvars.iv379, 3 ; 2 uses
   %.val201.3 = load ptr, ptr %i.cb, align 8, !tbaa !29 ; 2 uses
   %i.da = getelementptr inbounds [8 x i8], ptr %.val201.3, i64 %indvars.iv.next380.2
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !46
-  %i.dc = sub nsw i64 %indvars.iv.next380.2, %i.cc
+  %i.dc = sub nuw nsw i64 %indvars.iv.next380.2, %i.cc
   %i.dd = getelementptr [8 x i8], ptr %.val201.3, i64 %i.dc
   %i.de = getelementptr i8, ptr %i.dd, i64 16
   store ptr %i.db, ptr %i.de, align 8, !tbaa !46
-  %indvars.iv.next380.3 = add nsw i64 %indvars.iv379, 4 ; 2 uses
+  %indvars.iv.next380.3 = add nuw nsw i64 %indvars.iv379, 4 ; 2 uses
   %exitcond384.not.3 = icmp eq i64 %indvars.iv.next380.3, %wide.trip.count383
   br i1 %exitcond384.not.3, label %.critedge, label %.lr.ph325.new, !llvm.loop !97
 

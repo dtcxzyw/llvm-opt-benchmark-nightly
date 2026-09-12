@@ -205,8 +205,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.cq = add nuw i64 %index, %i.ci               ; 2 uses
-  %i.cr = sub nsw i64 %i.cq, %i.cj
-  %i.cs = getelementptr inbounds i8, ptr %1, i64 %i.cr ; 2 uses
+  %i.cr = sub nuw nsw i64 %i.cq, %i.cj
+  %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 %i.cr ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   %wide.load = load <16 x i8>, ptr %i.cs, align 1, !tbaa !29
   %wide.load67 = load <16 x i8>, ptr %i.ct, align 1, !tbaa !29
@@ -236,8 +236,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index70 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next72, %vec.epilog.vector.body ] ; 2 uses
   %i.cz = add nuw i64 %index70, %i.ci             ; 2 uses
-  %i.da = sub nsw i64 %i.cz, %i.cj
-  %i.db = getelementptr inbounds i8, ptr %1, i64 %i.da
+  %i.da = sub nuw nsw i64 %i.cz, %i.cj
+  %i.db = getelementptr inbounds nuw i8, ptr %1, i64 %i.da
   %wide.load71 = load <4 x i8>, ptr %i.db, align 1, !tbaa !29
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 %i.cz
   store <4 x i8> %wide.load71, ptr %i.dc, align 1, !tbaa !29
@@ -261,8 +261,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.lr.ph.prol ], [ %indvars.iv.ph, %.lr.ph.preheader ] ; 3 uses
   %.012.prol = phi i32 [ %i.dj, %.lr.ph.prol ], [ %.012.ph, %.lr.ph.preheader ]
   %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
-  %i.df = sub nsw i64 %indvars.iv.prol, %i.cj
-  %i.dg = getelementptr inbounds i8, ptr %1, i64 %i.df
+  %i.df = sub nuw nsw i64 %indvars.iv.prol, %i.cj
+  %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 %i.df
   %i.dh = load i8, ptr %i.dg, align 1, !tbaa !29
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.prol
   store i8 %i.dh, ptr %i.di, align 1, !tbaa !29
@@ -283,26 +283,26 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 6 uses
   %.012 = phi i32 [ %i.ec, %.lr.ph ], [ %.012.unr, %.lr.ph.prol.loopexit ]
-  %i.dm = sub nsw i64 %indvars.iv, %i.cj
-  %i.dn = getelementptr inbounds i8, ptr %1, i64 %i.dm
+  %i.dm = sub nuw nsw i64 %indvars.iv, %i.cj
+  %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 %i.dm
   %i.do = load i8, ptr %i.dn, align 1, !tbaa !29
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   store i8 %i.do, ptr %i.dp, align 1, !tbaa !29
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.dq = sub nsw i64 %indvars.iv.next, %i.cj
-  %i.dr = getelementptr inbounds i8, ptr %1, i64 %i.dq
+  %i.dq = sub nuw nsw i64 %indvars.iv.next, %i.cj
+  %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 %i.dq
   %i.ds = load i8, ptr %i.dr, align 1, !tbaa !29
   %i.dt = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next
   store i8 %i.ds, ptr %i.dt, align 1, !tbaa !29
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.du = sub nsw i64 %indvars.iv.next.1, %i.cj
-  %i.dv = getelementptr inbounds i8, ptr %1, i64 %i.du
+  %i.du = sub nuw nsw i64 %indvars.iv.next.1, %i.cj
+  %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 %i.du
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !29
   %i.dx = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next.1
   store i8 %i.dw, ptr %i.dx, align 1, !tbaa !29
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %i.dy = sub nsw i64 %indvars.iv.next.2, %i.cj
-  %i.dz = getelementptr inbounds i8, ptr %1, i64 %i.dy
+  %i.dy = sub nuw nsw i64 %indvars.iv.next.2, %i.cj
+  %i.dz = getelementptr inbounds nuw i8, ptr %1, i64 %i.dy
   %i.ea = load i8, ptr %i.dz, align 1, !tbaa !29
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next.2
   store i8 %i.ea, ptr %i.eb, align 1, !tbaa !29

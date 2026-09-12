@@ -201,7 +201,7 @@ bb.a:
   store i32 %i.e, ptr %0, align 4, !tbaa !7
   %i.f = zext nneg i32 %i.e to i64
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.f
-  %i.h = shl nsw i32 %i.e, 5
+  %i.h = shl nuw nsw i32 %i.e, 5
   %i.i = sub nsw i32 %i.h, %1
   %i.j = lshr i32 -1, %i.i
   store i32 %i.j, ptr %i.g, align 4, !tbaa !7
@@ -604,7 +604,7 @@ bb.a:
   store i32 %i.o, ptr %i.i, align 4, !tbaa !7
   %i.w = zext nneg i32 %i.o to i64
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.w
-  %i.y = shl nsw i32 %i.o, 5
+  %i.y = shl nuw nsw i32 %i.o, 5
   %i.z = sub nsw i32 %i.y, %i.j
   %i.aa = lshr i32 -1, %i.z
   store i32 %i.aa, ptr %i.x, align 4, !tbaa !7
@@ -1007,7 +1007,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.au, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.loopexit
-  %i.av = trunc nsw i64 %indvars.iv44.i.lcssa to i32
+  %i.av = trunc nuw nsw i64 %indvars.iv44.i.lcssa to i32
   %i.aw = and i64 %indvars.iv.next45.i.lcssa, 4294967295
   %i.ax = getelementptr inbounds nuw i8, ptr @s1, i64 %i.aw
   store i8 46, ptr %i.ax, align 1, !tbaa !23

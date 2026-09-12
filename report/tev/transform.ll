@@ -204,11 +204,11 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i:                                         ; preds = %bb.d
   %i.t = getelementptr inbounds nuw [88 x i8], ptr %i.h, i64 %i.e ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.t, i64 64 ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 72 ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 76 ; 2 uses
-  %3 = add nuw i32 %i.d, 1
-  %i.w = zext i32 %3 to i64                       ; 2 uses
+  %2 = add nuw i32 %i.d, 1
+  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 64 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 72 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.t, i64 76 ; 2 uses
+  %i.w = zext i32 %2 to i64                       ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 56
   %i.y = load i64, ptr %i.x, align 8, !tbaa !51   ; 2 uses
   %i.z = getelementptr inbounds nuw [88 x i8], ptr %i.h, i64 %i.w ; 4 uses
@@ -225,21 +225,21 @@ bb.e:                                             ; preds = %bb.k
   br i1 %.not39.i.1, label %bb.f, label %_ZN3jxl18CheckEqualChannelsERKNS_5ImageEjj.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.af = load i64, ptr %2, align 8, !tbaa !52
+  %i.af = load i64, ptr %i.u, align 8, !tbaa !52
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 152
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !52
   %.not40.i.1 = icmp eq i64 %i.af, %i.ah
   br i1 %.not40.i.1, label %bb.g, label %_ZN3jxl18CheckEqualChannelsERKNS_5ImageEjj.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.ai = load i32, ptr %i.u, align 8, !tbaa !53
+  %i.ai = load i32, ptr %i.v, align 8, !tbaa !53
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ac, i64 160
   %i.ak = load i32, ptr %i.aj, align 8, !tbaa !53
   %.not41.i.1 = icmp eq i32 %i.ai, %i.ak
   br i1 %.not41.i.1, label %bb.h, label %_ZN3jxl18CheckEqualChannelsERKNS_5ImageEjj.exit
 
 bb.h:                                             ; preds = %bb.g
-  %i.al = load i32, ptr %i.v, align 4, !tbaa !54
+  %i.al = load i32, ptr %3, align 4, !tbaa !54
   %i.am = getelementptr inbounds nuw i8, ptr %i.ac, i64 164
   %i.an = load i32, ptr %i.am, align 4, !tbaa !54
   %.not42.i.1 = icmp eq i32 %i.al, %i.an
@@ -247,21 +247,21 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN3jxl18CheckEqualChannelsERKNS_5ImageEjj.exit
 
 bb.i:                                             ; preds = %.lr.ph.i
-  %i.ao = load i64, ptr %2, align 8, !tbaa !52
+  %i.ao = load i64, ptr %i.u, align 8, !tbaa !52
   %i.ap = getelementptr inbounds nuw i8, ptr %i.z, i64 64
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !52
   %.not40.i = icmp eq i64 %i.ao, %i.aq
   br i1 %.not40.i, label %bb.j, label %_ZN3jxl18CheckEqualChannelsERKNS_5ImageEjj.exit
 
 bb.j:                                             ; preds = %bb.i
-  %i.ar = load i32, ptr %i.u, align 8, !tbaa !53
+  %i.ar = load i32, ptr %i.v, align 8, !tbaa !53
   %i.as = getelementptr inbounds nuw i8, ptr %i.z, i64 72
   %i.at = load i32, ptr %i.as, align 8, !tbaa !53
   %.not41.i = icmp eq i32 %i.ar, %i.at
   br i1 %.not41.i, label %bb.k, label %_ZN3jxl18CheckEqualChannelsERKNS_5ImageEjj.exit
 
 bb.k:                                             ; preds = %bb.j
-  %i.au = load i32, ptr %i.v, align 4, !tbaa !54
+  %i.au = load i32, ptr %3, align 4, !tbaa !54
   %i.av = getelementptr inbounds nuw i8, ptr %i.z, i64 76
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !54
   %.not42.i = icmp eq i32 %i.au, %i.aw

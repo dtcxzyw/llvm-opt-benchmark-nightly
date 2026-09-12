@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.q = trunc nsw i64 %indvars.iv.next.i to i32  ; 3 uses
+  %i.q = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 3 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !68
   call void @_ZN6icu_7813MessageFormat17setArgStartFormatEiPNS_6FormatER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(392) %0, i32 noundef %i.q, ptr noundef %i.s, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
@@ -345,7 +345,7 @@ bb.h:                                             ; preds = %bb.g
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.q = trunc nsw i64 %indvars.iv.next.i to i32  ; 3 uses
+  %i.q = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 3 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !68   ; 3 uses
   %.not26 = icmp eq ptr %i.s, null
@@ -454,7 +454,7 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.j = trunc nsw i64 %indvars.iv.next.i to i32  ; 3 uses
+  %i.j = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 3 uses
   %i.k = icmp eq i32 %1, %.015
   %i.l = add nuw nsw i32 %.015, 1
   br i1 %i.k, label %.noexc, label %bb.b, !llvm.loop !138
@@ -565,7 +565,7 @@ bb.f:                                             ; preds = %_ZN6icu_7813Message
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.u = trunc nsw i64 %indvars.iv.next.i to i32  ; 4 uses
+  %i.u = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 4 uses
   %i.v = load i32, ptr %3, align 4, !tbaa !42
   %i.w = icmp sgt i32 %i.v, 0
   br i1 %i.w, label %.critedge, label %bb.h
@@ -741,7 +741,7 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.j = trunc nsw i64 %indvars.iv.next.i to i32  ; 3 uses
+  %i.j = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 3 uses
   %i.k = icmp eq i32 %1, %.011
   %i.l = add nuw nsw i32 %.011, 1
   br i1 %i.k, label %bb.d, label %bb.b, !llvm.loop !140
@@ -869,7 +869,7 @@ bb.e:                                             ; preds = %.backedge
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.u = trunc nsw i64 %indvars.iv.next.i to i32  ; 2 uses
+  %i.u = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 2 uses
   %i.v = add nuw i64 %indvars.iv.i, 2
   %i.w = and i64 %i.v, 4294967295
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %.pre.i, i64 %i.w ; 4 uses
@@ -1002,7 +1002,7 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.t = trunc nsw i64 %indvars.iv.next.i to i32  ; 3 uses
+  %i.t = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 3 uses
   %i.u = load i32, ptr %3, align 4, !tbaa !42
   %i.v = icmp sgt i32 %i.u, 0
   br i1 %i.v, label %.critedge, label %bb.e
@@ -1181,7 +1181,7 @@ _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit.thread: ; preds = %._cri
   br i1 %i.j, label %bb.d, label %bb.f
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.l = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.l = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.m = add nuw nsw i32 %.027, 1
   br label %bb.b, !llvm.loop !143
 
@@ -1250,7 +1250,7 @@ bb.k:                                             ; preds = %bb.j
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit46: ; preds = %._crit_edge.i40
-  %i.af = trunc nsw i64 %indvars.iv.next.i43 to i32 ; 2 uses
+  %i.af = trunc nuw nsw i64 %indvars.iv.next.i43 to i32 ; 2 uses
   %i.ag = load ptr, ptr %i.w, align 8, !tbaa !43  ; 2 uses
   %i.ah = icmp eq ptr %i.ag, null
   br i1 %i.ah, label %_ZNK6icu_7813MessageFormat18getCachedFormatterEi.exit, label %bb.l
@@ -1390,7 +1390,7 @@ bb.j:                                             ; preds = %bb.i
   ]
 
 _ZNK6icu_7813MessageFormat20nextTopLevelArgStartEi.exit: ; preds = %._crit_edge.i
-  %i.s = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.s = trunc nuw nsw i64 %indvars.iv.next.i to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.t = add nuw i64 %indvars.iv.i, 2
   %i.u = and i64 %i.t, 4294967295

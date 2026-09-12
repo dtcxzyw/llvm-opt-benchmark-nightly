@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.f
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.aj = sub nsw i64 %i.af, %.04765              ; 2 uses
+  %i.aj = sub nuw nsw i64 %i.af, %.04765          ; 2 uses
   %i.ak = sub nsw i64 %i.aj, %i.l
   %.sroa.speculated = call i64 @llvm.smax.i64(i64 %i.ak, i64 0)
   br label %bb.d
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.f
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.aj = sub nsw i64 %i.af, %.04765              ; 2 uses
+  %i.aj = sub nuw nsw i64 %i.af, %.04765          ; 2 uses
   %i.ak = sub nsw i64 %i.aj, %i.l
   %.sroa.speculated = call i64 @llvm.smax.i64(i64 %i.ak, i64 0)
   br label %bb.d
@@ -1011,9 +1011,9 @@ bb.r:                                             ; preds = %bb.q
   %i.ca = xor i64 %i.bx, -1
   %i.cb = add i64 %smax, %i.ca
   %i.cc = mul i64 %i.be, %i.cb
-  %i.cd = sub nsw i64 %1, %.0131312.us.us         ; 2 uses
+  %i.cd = sub nuw nsw i64 %1, %.0131312.us.us     ; 2 uses
   %.sroa.speculated213.us.us = call i64 @llvm.smin.i64(i64 %., i64 %i.cd) ; 3 uses
-  %i.ce = add nsw i64 %.sroa.speculated213.us.us, %.0131312.us.us ; 3 uses
+  %i.ce = add nuw nsw i64 %.sroa.speculated213.us.us, %.0131312.us.us ; 3 uses
   %i.cf = icmp slt i64 %i.cd, 1
   %i.cg = mul nuw nsw i64 %.0131312.us.us, %.sroa.speculated218.us
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.cg ; 2 uses
@@ -1416,7 +1416,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.kg, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %.idx.i.i.i.i83 = shl nsw i64 %i.jx, 3
+  %.idx.i.i.i.i83 = shl nuw nsw i64 %i.jx, 3
   %i.kh = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i83 ; 2 uses
   %.idx.i.i.i.i84 = shl nuw nsw i64 %.0213, 3
   %i.ki = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i84 ; 2 uses
@@ -1435,7 +1435,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %i.kp, label %bb.ab, label %.thread194
 
 bb.ab:                                            ; preds = %bb.aa
-  %.idx.i.i.i.i85 = shl nsw i64 %i.jx, 3
+  %.idx.i.i.i.i85 = shl nuw nsw i64 %i.jx, 3
   %i.kq = getelementptr inbounds nuw i8, ptr %i.cj, i64 %.idx.i.i.i.i85 ; 2 uses
   %.idx.i.i.i.i86 = shl nuw nsw i64 %.0213, 3
   %i.kr = getelementptr inbounds nuw i8, ptr %i.cj, i64 %.idx.i.i.i.i86 ; 2 uses
@@ -1838,7 +1838,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.kw, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
-  %.idx.i.i.i.i83 = shl nsw i64 %i.kn, 4
+  %.idx.i.i.i.i83 = shl nuw nsw i64 %i.kn, 4
   %i.kx = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i83 ; 2 uses
   %.idx.i.i.i.i84 = shl nuw nsw i64 %.0214, 4
   %i.ky = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i84 ; 2 uses
@@ -1857,7 +1857,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br i1 %i.lf, label %bb.aa, label %.thread194
 
 bb.aa:                                            ; preds = %bb.z
-  %.idx.i.i.i.i85 = shl nsw i64 %i.kn, 4
+  %.idx.i.i.i.i85 = shl nuw nsw i64 %i.kn, 4
   %i.lg = getelementptr inbounds nuw i8, ptr %i.cj, i64 %.idx.i.i.i.i85 ; 2 uses
   %.idx.i.i.i.i86 = shl nuw nsw i64 %.0214, 4
   %i.lh = getelementptr inbounds nuw i8, ptr %i.cj, i64 %.idx.i.i.i.i86 ; 2 uses

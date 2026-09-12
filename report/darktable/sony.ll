@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.ad = zext i8 %i.ac to i64
   %i.ae = shl nuw nsw i64 %i.ad, 2
-  %i.af = add nsw i64 %i.ae, %i.n
+  %i.af = add nuw nsw i64 %i.ae, %i.n
   %i.ag = trunc nuw nsw i64 %i.af to i32          ; 4 uses
   %i.ah = invoke noundef zeroext i8 @_ZN16checked_buffer_tixEi(ptr noundef nonnull align 8 dereferenceable(48) %2, i32 noundef %i.ag)
           to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp
@@ -608,7 +608,7 @@ bb.x:                                             ; preds = %bb.w
   %i.io = load ptr, ptr %i.v, align 8, !tbaa !217
   %i.ip = getelementptr inbounds nuw i8, ptr %i.io, i64 %i.ik
   %i.iq = sub nuw nsw i64 %i.r, %i.im
-  %i.ir = trunc nsw i64 %i.iq to i32
+  %i.ir = trunc nuw nsw i64 %i.iq to i32
   call void @_ZN6LibRaw12sony_decryptEPjiii(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef %i.ip, i32 noundef %i.ir, i32 noundef 1, i32 noundef %.074.lcssa)
   %i.is = trunc i64 %i.ik to i32
   %i.it = invoke noundef zeroext i16 @_ZN16checked_buffer_t5sget2Ei(ptr noundef nonnull align 8 dereferenceable(48) %2, i32 noundef %i.is)

@@ -50,7 +50,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.k
   %.0178203 = phi i64 [ 0, %bb.e ], [ %i.cf, %bb.k ] ; 12 uses
-  %i.x = sub nsw i64 %.0180, %.0178203
+  %i.x = sub nuw nsw i64 %.0180, %.0178203
   %spec.select = call i64 @llvm.smin.i64(i64 %i.x, i64 %.0176) ; 19 uses
   %.not187 = icmp eq i64 %.0178203, 0
   br i1 %.not187, label %.loopexit192, label %bb.g
@@ -82,8 +82,8 @@ bb.g:                                             ; preds = %bb.f
   %spec.store.select1 = call i64 @llvm.umin.i64(i64 %i.ah, i64 192) ; 2 uses
   %gep = getelementptr [8 x i8], ptr %i.ac, i64 %.0194
   %i.ai = sub nuw nsw i64 %.0194, %.0174202
-  %i.aj = mul nsw i64 %i.ai, %spec.select
-  %i.ak = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.aj ; 2 uses
+  %i.aj = mul nuw nsw i64 %i.ai, %spec.select
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.aj ; 2 uses
   %i.al = call i32 @dgemm_otcopy(i64 noundef %spec.select, i64 noundef %spec.store.select1, ptr noundef %gep, i64 noundef %i.j, ptr noundef %i.ak) #4 ; 0 uses
   %i.am = mul nsw i64 %.0194, %i.j
   %i.an = getelementptr inbounds [8 x i8], ptr %.0179, i64 %i.am
@@ -159,7 +159,7 @@ bb.h:                                             ; preds = %.lr.ph201, %.loopex
 
 bb.i:                                             ; preds = %.loopexit192
   store i64 %.0178203, ptr %i.a, align 16, !tbaa !20
-  %i.ca = add nsw i64 %spec.select, %.0178203
+  %i.ca = add nuw nsw i64 %spec.select, %.0178203
   br label %bb.k
 
 bb.j:                                             ; preds = %.loopexit192

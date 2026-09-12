@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %._crit_edge217.i, %
   br i1 %i.ia, label %bb.k, label %.preheader185.loopexit.i, !llvm.loop !747
 
 .preheader183.loopexit.i:                         ; preds = %._crit_edge236.i
-  %i.ib = trunc nsw i64 %indvars.iv.next303.i to i32
+  %i.ib = trunc nuw nsw i64 %indvars.iv.next303.i to i32
   br label %.preheader183.i
 
 .preheader183.i:                                  ; preds = %.preheader183.loopexit.i, %.preheader185.i
@@ -608,7 +608,7 @@ begin_hunk_1_@_ZN4ncnnL20pack_B_tile_quantizeERKNS_3MatERS0_iiiif:bb.a
 .preheader572.loopexit.i:                         ; preds = %.loopexit574.i.us54, %.loopexit574.i.us, %.loopexit574.i.preheader
   %.us-phi48 = phi ptr [ %.13.lcssa.i, %.loopexit574.i.preheader ], [ %.29.i.us, %.loopexit574.i.us ], [ %.29.i.us55, %.loopexit574.i.us54 ]
   %.us-phi49 = phi i64 [ %i.kl, %.loopexit574.i.preheader ], [ %indvars.iv.next839.i.us, %.loopexit574.i.us ], [ %indvars.iv.next839.i.us56, %.loopexit574.i.us54 ]
-  %i.xv = trunc nsw i64 %.us-phi49 to i32
+  %i.xv = trunc nuw nsw i64 %.us-phi49 to i32
   br label %.preheader572.i
 
 .preheader572.i:                                  ; preds = %.preheader572.loopexit.i, %.preheader579.i
@@ -1011,7 +1011,7 @@ begin_hunk_2_@_ZN4ncnnL30transpose_pack_B_tile_quantizeERKNS_3MatERS0_iiiif:bb.a
 .preheader1079.loopexit.i:                        ; preds = %.loopexit1081.i.loopexit14, %.loopexit1081.i.us
   %.us-phi68 = phi ptr [ %.29.i.us, %.loopexit1081.i.us ], [ %i.aob, %.loopexit1081.i.loopexit14 ]
   %.us-phi69 = phi i64 [ %indvars.iv.next1386.i.us, %.loopexit1081.i.us ], [ %indvars.iv.next1386.i, %.loopexit1081.i.loopexit14 ]
-  %i.ala = trunc nsw i64 %.us-phi69 to i32
+  %i.ala = trunc nuw nsw i64 %.us-phi69 to i32
   br label %.preheader1079.i
 
 .preheader1079.i:                                 ; preds = %.preheader1079.loopexit.i, %.preheader1085.i
@@ -1414,7 +1414,7 @@ bb.u:                                             ; preds = %._crit_edge359.i, %
   store float %i.aet, ptr %.23641362.i, align 4, !tbaa !69
   %i.aeu = getelementptr inbounds nuw i8, ptr %.23363.i, i64 4
   %i.aev = getelementptr inbounds nuw i8, ptr %.23641362.i, i64 4
-  %indvars.iv.next448.i = add nsw i64 %indvars.iv447.i, 1 ; 2 uses
+  %indvars.iv.next448.i = add nuw nsw i64 %indvars.iv447.i, 1 ; 2 uses
   %exitcond450.not.i = icmp eq i64 %indvars.iv.next448.i, %wide.trip.count.i
   br i1 %exitcond450.not.i, label %_ZN4ncnnL41transpose_compute_A_tile_fp32_int8_scalesERKNS_3MatERS0_fS3_ii.exit, label %bb.u, !llvm.loop !1089
 
@@ -1817,7 +1817,7 @@ begin_hunk_4_@_ZN4ncnnL30transpose_pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb
 .preheader1262.loopexit.i:                        ; preds = %.loopexit1264.i.us, %.loopexit1264.i.preheader
   %.us-phi58 = phi ptr [ %.10.lcssa.i, %.loopexit1264.i.preheader ], [ %.29.i.us, %.loopexit1264.i.us ]
   %.us-phi59 = phi i64 [ %i.adi, %.loopexit1264.i.preheader ], [ %indvars.iv.next1534.i.us, %.loopexit1264.i.us ]
-  %i.ats = trunc nsw i64 %.us-phi59 to i32
+  %i.ats = trunc nuw nsw i64 %.us-phi59 to i32
   br label %.preheader1262.i
 
 .preheader1262.i:                                 ; preds = %.preheader1262.loopexit.i, %.preheader1268.i
@@ -2220,7 +2220,7 @@ begin_hunk_5_@_ZN4ncnnL20pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb.a
 .preheader599.loopexit.i:                         ; preds = %.loopexit601.i.us54, %.loopexit601.i.us, %.loopexit601.i.preheader
   %.us-phi48 = phi ptr [ %.13.lcssa.i, %.loopexit601.i.preheader ], [ %.29.i.us, %.loopexit601.i.us ], [ %.29.i.us55, %.loopexit601.i.us54 ]
   %.us-phi49 = phi i64 [ %i.kp, %.loopexit601.i.preheader ], [ %indvars.iv.next866.i.us, %.loopexit601.i.us ], [ %indvars.iv.next866.i.us56, %.loopexit601.i.us54 ]
-  %i.yj = trunc nsw i64 %.us-phi49 to i32
+  %i.yj = trunc nuw nsw i64 %.us-phi49 to i32
   br label %.preheader599.i
 
 .preheader599.i:                                  ; preds = %.preheader599.loopexit.i, %.preheader606.i

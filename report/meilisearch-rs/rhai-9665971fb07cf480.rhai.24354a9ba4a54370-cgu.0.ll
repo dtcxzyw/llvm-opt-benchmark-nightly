@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = sub nsw i64 %i.g, %i.h                   ; 3 uses
   %i.j = tail call i64 @llvm.uadd.sat.i64(i64 %i.i, i64 1)
   %i.k = icmp ne i64 %i.i, -1
-  %i.l = add nsw i64 %i.i, 1
+  %i.l = add nuw nsw i64 %i.i, 1
   %spec.select4.i = zext i1 %i.k to i64
   br label %"_ZN4core4iter5range110_$LT$impl$u20$core..iter..traits..iterator..Iterator$u20$for$u20$core..ops..range..RangeInclusive$LT$A$GT$$GT$9size_hint17h24e87e36fcd3e5bdE.exit"
 
@@ -312,7 +312,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = sub nsw i64 %i.g, %i.h                   ; 3 uses
   %i.j = tail call i64 @llvm.uadd.sat.i64(i64 %i.i, i64 1)
   %i.k = icmp ne i64 %i.i, -1
-  %i.l = add nsw i64 %i.i, 1
+  %i.l = add nuw nsw i64 %i.i, 1
   %spec.select4.i = zext i1 %i.k to i64
   br label %"_ZN4core4iter5range110_$LT$impl$u20$core..iter..traits..iterator..Iterator$u20$for$u20$core..ops..range..RangeInclusive$LT$A$GT$$GT$9size_hint17h3a6fe7e361b1f5a6E.exit"
 
@@ -391,7 +391,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = sub nsw i64 %i.g, %i.h                   ; 3 uses
   %i.j = tail call i64 @llvm.uadd.sat.i64(i64 %i.i, i64 1)
   %i.k = icmp ne i64 %i.i, -1
-  %i.l = add nsw i64 %i.i, 1
+  %i.l = add nuw nsw i64 %i.i, 1
   %spec.select4.i = zext i1 %i.k to i64
   br label %"_ZN4core4iter5range110_$LT$impl$u20$core..iter..traits..iterator..Iterator$u20$for$u20$core..ops..range..RangeInclusive$LT$A$GT$$GT$9size_hint17h1e22a7b4ffac16bfE.exit"
 

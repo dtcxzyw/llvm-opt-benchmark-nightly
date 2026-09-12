@@ -205,7 +205,7 @@ vector.early.exit:                                ; preds = %vector.body
   br i1 %.not24.i.i, label %.lr.ph.i, label %_ZN6duckdb16fixed_size_map_tINS_12list_entry_tEE5beginEv.exit, !llvm.loop !5
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.i
-  %i.as = add nsw i64 %i.an, 1                    ; 2 uses
+  %i.as = add nuw nsw i64 %i.an, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.as, %i.u
   br i1 %exitcond.not.i.i, label %.lr.ph.i.._crit_edge.i.i.loopexit_crit_edge, label %.lr.ph.i.i, !llvm.loop !680
 
@@ -608,7 +608,7 @@ vector.early.exit:                                ; preds = %vector.body
   br i1 %.not24.i.i, label %.lr.ph.i, label %_ZN6duckdb16fixed_size_map_tINS_12list_entry_tEE5beginEv.exit, !llvm.loop !5
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.i
-  %i.fq = add nsw i64 %i.fl, 1                    ; 2 uses
+  %i.fq = add nuw nsw i64 %i.fl, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.fq, %i.es
   br i1 %exitcond.not.i.i, label %.lr.ph.i.._crit_edge.i.i.loopexit_crit_edge, label %.lr.ph.i.i, !llvm.loop !705
 
@@ -722,7 +722,7 @@ bb.r:                                             ; preds = %_ZN6duckdbltERKNS_2
   br i1 %.not24.i119, label %.lr.ph120.preheader, label %_ZN6duckdb23fixed_size_map_iteratorINS_12list_entry_tELb0EEppEv.exit
 
 .lr.ph120.preheader:                              ; preds = %.lr.ph.i80.preheader
-  %i.ha = add nsw i64 %i.gm, 1                    ; 5 uses
+  %i.ha = add nuw nsw i64 %i.gm, 1                ; 5 uses
   %exitcond.not.i202 = icmp eq i64 %i.ha, %i.gv
   br i1 %exitcond.not.i202, label %._crit_edge.i, label %.lr.ph.i80.lr.ph, !llvm.loop !5
 
@@ -785,7 +785,7 @@ vector.early.exit222:                             ; preds = %vector.body214
   br i1 %.not24.i, label %.lr.ph120, label %_ZN6duckdb23fixed_size_map_iteratorINS_12list_entry_tELb0EEppEv.exit, !llvm.loop !5
 
 .lr.ph120:                                        ; preds = %.lr.ph.i80
-  %i.ht = add nsw i64 %i.ho, 1                    ; 2 uses
+  %i.ht = add nuw nsw i64 %i.ho, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ht, %i.gv
   br i1 %exitcond.not.i, label %.lr.ph120.._crit_edge.i.loopexit_crit_edge, label %.lr.ph.i80, !llvm.loop !707
 
@@ -1188,7 +1188,7 @@ vector.early.exit:                                ; preds = %vector.body
   br i1 %.not24.i.i, label %.lr.ph.i, label %_ZNK6duckdb16fixed_size_map_tINS_12list_entry_tEE5beginEv.exit, !llvm.loop !724
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.i
-  %i.ao = add nsw i64 %i.aj, 1                    ; 2 uses
+  %i.ao = add nuw nsw i64 %i.aj, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.ao, %i.q
   br i1 %exitcond.not.i.i, label %.lr.ph.i.._crit_edge.i.i.loopexit_crit_edge, label %.lr.ph.i.i, !llvm.loop !726
 
@@ -1326,7 +1326,7 @@ bb.g:                                             ; preds = %_ZN6duckdbltERKNS_2
   br i1 %.not24.i40, label %.lr.ph.preheader, label %_ZN6duckdb23fixed_size_map_iteratorINS_12list_entry_tELb1EEppEv.exit
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph.i18.preheader
-  %i.di = add nsw i64 %i.ct, 1                    ; 5 uses
+  %i.di = add nuw nsw i64 %i.ct, 1                ; 5 uses
   %exitcond.not.i90 = icmp eq i64 %i.di, %i.dd
   br i1 %exitcond.not.i90, label %._crit_edge.i, label %.lr.ph.i18.lr.ph, !llvm.loop !724
 
@@ -1389,7 +1389,7 @@ vector.early.exit110:                             ; preds = %vector.body102
   br i1 %.not24.i, label %.lr.ph, label %_ZN6duckdb23fixed_size_map_iteratorINS_12list_entry_tELb1EEppEv.exit, !llvm.loop !724
 
 .lr.ph:                                           ; preds = %.lr.ph.i18
-  %i.eb = add nsw i64 %i.dw, 1                    ; 2 uses
+  %i.eb = add nuw nsw i64 %i.dw, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.eb, %i.dd
   br i1 %exitcond.not.i, label %.lr.ph.._crit_edge.i.loopexit_crit_edge, label %.lr.ph.i18, !llvm.loop !730
 
