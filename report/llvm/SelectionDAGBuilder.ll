@@ -205,15 +205,13 @@ bb.dj:                                            ; preds = %bb.cz
 
 .lr.ph844:                                        ; preds = %bb.dj
   %i.adc = load i16, ptr %i.fb, align 8           ; 2 uses
-  %29 = lshr i16 %i.adc, 1
-  %30 = and i16 %29, 1
-  %i.add = trunc i16 %i.adc to i1                 ; 2 uses
+  %i.add = trunc i16 %i.adc to i1
   %i.ade = getelementptr inbounds nuw i8, ptr %2, i64 96
   %.sroa.6.0..sroa_idx26 = getelementptr inbounds nuw i8, ptr %27, i64 2
   %.sroa.8.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %27, i64 8
-  %narrow = select i1 %i.add, i16 1, i16 %30
-  %.sroa.6654.0.insert.ext = zext nneg i16 %narrow to i64
-  %.sroa.6654.0.insert.shift = shl nuw nsw i64 %.sroa.6654.0.insert.ext, 32
+  %29 = and i16 %i.adc, 3
+  %.not798 = icmp eq i16 %29, 0
+  %.sroa.6654.0.insert.shift = select i1 %.not798, i64 0, i64 4294967296
   %.sroa.0652.0.insert.ext = select i1 %i.add, i64 3, i64 4
   %.sroa.0652.0.insert.insert = or disjoint i64 %.sroa.6654.0.insert.shift, %.sroa.0652.0.insert.ext
   br label %bb.dk

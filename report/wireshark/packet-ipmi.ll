@@ -204,21 +204,20 @@ calc_cks.exit113.i:                               ; preds = %bb.s
   br i1 %.not85.i, label %.sink.split.sink.split.i, label %.thread142.i
 
 .thread142.i:                                     ; preds = %calc_cks.exit113.i, %.preheader.preheader.i, %bb.q, %.thread137.i, %calc_cks.exit93.i, %.preheader147.preheader.i, %bb.k, %bb.j
-  %i.ay = phi i32 [ %storemerge.i, %bb.q ], [ %storemerge.i, %calc_cks.exit113.i ], [ %storemerge.i, %.preheader.preheader.i ], [ %.sink.i, %.thread137.i ], [ 8, %calc_cks.exit93.i ], [ 8, %.preheader147.preheader.i ], [ 8, %bb.k ], [ 8, %bb.j ] ; 4 uses
+  %i.ay = phi i32 [ %storemerge.i, %bb.q ], [ %storemerge.i, %calc_cks.exit113.i ], [ %storemerge.i, %.preheader.preheader.i ], [ %.sink.i, %.thread137.i ], [ 8, %calc_cks.exit93.i ], [ 8, %.preheader147.preheader.i ], [ 8, %bb.k ], [ 8, %bb.j ] ; 3 uses
   %i.az = phi i32 [ %i.ab, %bb.q ], [ %i.ab, %calc_cks.exit113.i ], [ %i.ab, %.preheader.preheader.i ], [ %i.aa, %.thread137.i ], [ %i.n, %calc_cks.exit93.i ], [ %i.n, %.preheader147.preheader.i ], [ %i.n, %bb.k ], [ %i.n, %bb.j ] ; 2 uses
-  %7 = and i32 %i.ay, 2                           ; 3 uses
-  %.not86.not.i = icmp eq i32 %7, 0
-  %8 = lshr i32 %i.ay, 3
-  %.lobit145.i = lshr exact i32 %7, 1             ; 3 uses
-  %.067.i = select i1 %.not86.not.i, i32 %8, i32 1 ; 3 uses
+  %7 = lshr i32 %i.ay, 1
+  %.lobit145.i = and i32 %7, 1                    ; 3 uses
+  %8 = and i32 %i.ay, 10                          ; 2 uses
+  %9 = icmp ne i32 %8, 0
+  %.067.i = zext i1 %9 to i32                     ; 3 uses
   %i.ba = or disjoint i32 %.lobit145.i, 6
   %i.bb = add nuw nsw i32 %i.ba, %.067.i
   %i.bc = icmp ult i32 %i.az, %i.bb
   br i1 %i.bc, label %guess_imb_format.exit.thread, label %bb.t
 
 bb.t:                                             ; preds = %.thread142.i
-  %9 = and i32 %i.ay, 10
-  %i.bd = icmp eq i32 %9, 0
+  %i.bd = icmp eq i32 %8, 0
   %.0.i = select i1 %i.bd, i8 32, i8 0
   %i.be = or disjoint i32 %.067.i, 2
   br label %bb.u
@@ -236,7 +235,7 @@ bb.u:                                             ; preds = %bb.u, %bb.t
 
 calc_cks.exit118.i:                               ; preds = %bb.u
   store i8 %i.bi, ptr %i.j, align 4
-  %i.bj = add nuw nsw i32 %.067.i, %.lobit145.i   ; 2 uses
+  %i.bj = add nuw nsw i32 %.lobit145.i, %.067.i   ; 2 uses
   %i.bk = add nuw nsw i32 %i.bj, 2
   %i.bl = add i32 %i.az, -2
   %i.bm = sub nuw i32 %i.bl, %i.bj
@@ -254,31 +253,30 @@ bb.v:                                             ; preds = %bb.v, %calc_cks.exi
   br i1 %.not.i122.i, label %.loopexit, label %bb.v, !llvm.loop !10
 
 .sink.split.sink.split.i:                         ; preds = %calc_cks.exit113.i, %calc_cks.exit103.i, %calc_cks.exit93.i
-  %.sink170.i = phi i32 [ 10, %calc_cks.exit103.i ], [ 12, %calc_cks.exit93.i ], [ 8, %calc_cks.exit113.i ] ; 3 uses
+  %.sink170.i = phi i32 [ 10, %calc_cks.exit103.i ], [ 12, %calc_cks.exit93.i ], [ 8, %calc_cks.exit113.i ] ; 2 uses
   store i32 %.sink170.i, ptr %i.i, align 4
   store i8 0, ptr %i.j, align 4
-  %.pre = and i32 %.sink170.i, 2
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.v, %.sink.split.sink.split.i
-  %.pre-phi = phi i32 [ %.pre, %.sink.split.sink.split.i ], [ %7, %bb.v ]
-  %i.br = phi i32 [ %.sink170.i, %.sink.split.sink.split.i ], [ %i.ay, %bb.v ] ; 2 uses
+  %i.br = phi i32 [ %.sink170.i, %.sink.split.sink.split.i ], [ %i.ay, %bb.v ] ; 3 uses
   %.lcssa.sink.i = phi i8 [ 0, %.sink.split.sink.split.i ], [ %i.bq, %bb.v ]
   store i8 %.lcssa.sink.i, ptr %i.k, align 1
   %i.bs = lshr i32 %i.br, 2
-  %.lobit.a = and i32 %i.bs, 1                    ; 3 uses
-  %.not43 = icmp eq i32 %.pre-phi, 0
+  %.lobit = and i32 %i.bs, 1                      ; 3 uses
+  %.lobit.a = and i32 %i.br, 2
+  %.not43 = icmp eq i32 %.lobit.a, 0
   br i1 %.not43, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %.loopexit
-  %i.bt = add nuw nsw i32 %.lobit.a, 1
-  %i.bu = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.lobit.a)
+  %i.bt = add nuw nsw i32 %.lobit, 1
+  %i.bu = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.lobit)
   %i.bv = getelementptr inbounds nuw i8, ptr %6, i64 3
   store i8 %i.bu, ptr %i.bv, align 1
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %.loopexit
-  %.1 = phi i32 [ %i.bt, %bb.w ], [ %.lobit.a, %.loopexit ] ; 3 uses
+  %.1 = phi i32 [ %i.bt, %bb.w ], [ %.lobit, %.loopexit ] ; 3 uses
   %i.bw = and i32 %i.br, 8
   %.not44 = icmp eq i32 %i.bw, 0
   br i1 %.not44, label %bb.z, label %bb.y
