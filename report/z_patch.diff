@@ -1,0 +1,320 @@
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index 28466a8de286e..b681f6bef83e7 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -1777,6 +1777,12 @@ static void speculateSelectInstLoads(SelectInst &SI, LoadInst &LI,
+ 
+   IRB.SetInsertPoint(&LI);
+ 
++  // AddrSpace casts may separate load from select in the initial code.
++  TV = IRB.CreateAddrSpaceCast(TV, LI.getPointerOperandType(),
++                               LI.getName() + ".sroa.speculate.cast.true");
++  FV = IRB.CreateAddrSpaceCast(FV, LI.getPointerOperandType(),
++                               LI.getName() + ".sroa.speculate.cast.false");
++
+   LoadInst *TL =
+       IRB.CreateAlignedLoad(LI.getType(), TV, LI.getAlign(),
+                             LI.getName() + ".sroa.speculate.load.true");
+@@ -1911,8 +1917,7 @@ static Value *getAdjustedPtr(IRBuilderTy &IRB, const DataLayout &DL, Value *Ptr,
+   if (Offset != 0)
+     Ptr = IRB.CreateInBoundsPtrAdd(Ptr, IRB.getInt(Offset),
+                                    NamePrefix + "sroa_idx");
+-  return IRB.CreatePointerBitCastOrAddrSpaceCast(Ptr, PointerTy,
+-                                                 NamePrefix + "sroa_cast");
++  return IRB.CreateAddrSpaceCast(Ptr, PointerTy, NamePrefix + "sroa_cast");
+ }
+ 
+ /// Compute the adjusted alignment for a load or store from an offset.
+@@ -4442,6 +4447,28 @@ class AggLoadStoreRewriter : public InstVisitor<AggLoadStoreRewriter, bool> {
+     return false;
+   }
+ 
++  void removeIntermediateCasts(GetElementPtrInst &GEPI, Instruction *End) {
++    // Remove dead intermediate casts between two instructions.
++    Value *V = GEPI.getPointerOperand();
++    while (V != End && (V->use_empty() || (V->hasOneUse() && V == GEPI.getPointerOperand()))) {
++      Value *OldV = V;
++      if (auto *GEP = dyn_cast<GEPOperator>(V)) {
++        if (!GEP->hasAllZeroIndices())
++          break;
++        V = GEP->getPointerOperand();
++      } else if (Operator::getOpcode(V) == Instruction::AddrSpaceCast) {
++        V = cast<Operator>(V)->getOperand(0);
++      } else {
++        break;
++      }
++
++      Instruction *I = cast<Instruction>(OldV);
++      I->replaceAllUsesWith(PoisonValue::get(I->getType()));
++      Visited.erase(I);
++      I->eraseFromParent();
++    }
++  }
++
+   // Unfold gep (select cond, ptr1, ptr2), idx
+   //   => select cond, gep(ptr1, idx), gep(ptr2, idx)
+   // and  gep ptr, (select cond, idx1, idx2)
+@@ -4450,7 +4477,7 @@ class AggLoadStoreRewriter : public InstVisitor<AggLoadStoreRewriter, bool> {
+   bool unfoldGEPSelect(GetElementPtrInst &GEPI) {
+     // Check whether the GEP has exactly one select operand and all indices
+     // will become constant after the transform.
+-    Instruction *Sel = dyn_cast<SelectInst>(GEPI.getPointerOperand());
++    Instruction *Sel = dyn_cast<SelectInst>(GEPI.getPointerOperand()->stripPointerCasts());
+     for (Value *Op : GEPI.indices()) {
+       if (auto *SI = dyn_cast<SelectInst>(Op)) {
+         if (Sel)
+@@ -4485,7 +4512,7 @@ class AggLoadStoreRewriter : public InstVisitor<AggLoadStoreRewriter, bool> {
+     auto GetNewOps = [&](Value *SelOp) {
+       SmallVector<Value *> NewOps;
+       for (Value *Op : GEPI.operands())
+-        if (Op == Sel)
++        if ((Op == Sel) || (Op == GEPI.getPointerOperand() && Op->stripPointerCasts() == Sel))
+           NewOps.push_back(SelOp);
+         else
+           NewOps.push_back(Op);
+@@ -4511,12 +4538,19 @@ class AggLoadStoreRewriter : public InstVisitor<AggLoadStoreRewriter, bool> {
+     IRB.SetInsertPoint(&GEPI);
+     GEPNoWrapFlags NW = GEPI.getNoWrapFlags();
+ 
++    auto* NTruePtr = TrueOps[0];
++    NTruePtr = IRB.CreateAddrSpaceCast(NTruePtr,
++        GEPI.getPointerOperandType(), NTruePtr->getName() + ".cast");
++    auto* NFalsePtr = FalseOps[0];
++    NFalsePtr = IRB.CreateAddrSpaceCast(NFalsePtr,
++        GEPI.getPointerOperandType(), NFalsePtr->getName() + ".cast");
++
+     Type *Ty = GEPI.getSourceElementType();
+-    Value *NTrue = IRB.CreateGEP(Ty, TrueOps[0], ArrayRef(TrueOps).drop_front(),
++    Value *NTrue = IRB.CreateGEP(Ty, NTruePtr, ArrayRef(TrueOps).drop_front(),
+                                  True->getName() + ".sroa.gep", NW);
+ 
+     Value *NFalse =
+-        IRB.CreateGEP(Ty, FalseOps[0], ArrayRef(FalseOps).drop_front(),
++        IRB.CreateGEP(Ty, NFalsePtr, ArrayRef(FalseOps).drop_front(),
+                       False->getName() + ".sroa.gep", NW);
+ 
+     Value *NSel = MDFrom
+@@ -4525,6 +4559,8 @@ class AggLoadStoreRewriter : public InstVisitor<AggLoadStoreRewriter, bool> {
+                       : IRB.CreateSelectWithUnknownProfile(
+                             Cond, NTrue, NFalse, DEBUG_TYPE,
+                             Sel->getName() + ".sroa.sel");
++
++    removeIntermediateCasts(GEPI, Sel);
+     Visited.erase(&GEPI);
+     GEPI.replaceAllUsesWith(NSel);
+     GEPI.eraseFromParent();
+diff --git a/llvm/test/Transforms/SROA/select-fold-split.ll b/llvm/test/Transforms/SROA/select-fold-split.ll
+new file mode 100644
+index 0000000000000..30a522172a164
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/select-fold-split.ll
+@@ -0,0 +1,178 @@
++; RUN: opt -passes='sroa<modify-cfg>' -S < %s | FileCheck %s
++
++%struct.T = type { i32, i32 }
++
++; CHECK-LABEL: @test_select_fold_split
++; CHECK-NEXT: [[SEL:%.*]] = select i1 [[COND:%.*]], i32 1, i32 3
++; CHECK-NEXT: ret i32 [[SEL]]
++define i32 @test_select_fold_split(i1 %cond) {
++  %alloc0 = alloca %struct.T, align 8
++  %alloc1 = alloca %struct.T, align 8
++  store %struct.T { i32 0, i32 1 }, ptr %alloc0
++  store %struct.T { i32 2, i32 3 }, ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %gep = getelementptr inbounds %struct.T, ptr %sel, i32 0, i32 1
++  %val = load i32, ptr %gep
++  ret i32 %val
++}
++
++; CHECK-LABEL: @test_select_fold_split_zero
++; CHECK-NEXT: [[SEL:%.*]] = select i1 [[COND:%.*]], i32 0, i32 2
++; CHECK-NEXT: ret i32 [[SEL]]
++define i32 @test_select_fold_split_zero(i1 %cond) {
++  %alloc0 = alloca %struct.T, align 8
++  %alloc1 = alloca %struct.T, align 8
++  store %struct.T { i32 0, i32 1 }, ptr %alloc0
++  store %struct.T { i32 2, i32 3 }, ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %gep = getelementptr inbounds %struct.T, ptr %sel, i32 0, i32 0
++  %val = load i32, ptr %gep
++  ret i32 %val
++}
++
++; CHECK-LABEL: @test_select_fold_split_var_gep
++; CHECK-NEXT: [[ALLOC0:%.*]] = alloca %struct.T, align 8
++; CHECK-NEXT: [[ALLOC1:%.*]] = alloca %struct.T, align 8
++; CHECK-NEXT: [[ELEM0:%.*]] = getelementptr inbounds %struct.T, ptr [[ALLOC0]], i32 0, i32 0
++; CHECK-NEXT: store i32 0, ptr [[ELEM0]], align 4
++; CHECK-NEXT: [[ELEM1:%.*]] = getelementptr inbounds %struct.T, ptr [[ALLOC0]], i32 0, i32 1
++; CHECK-NEXT: store i32 1, ptr [[ELEM1]], align 4
++; CHECK-NEXT: [[ELEM2:%.*]] = getelementptr inbounds %struct.T, ptr [[ALLOC1]], i32 0, i32 0
++; CHECK-NEXT: store i32 2, ptr [[ELEM2]], align 4
++; CHECK-NEXT: [[ELEM3:%.*]] = getelementptr inbounds %struct.T, ptr [[ALLOC1]], i32 0, i32 1
++; CHECK-NEXT: store i32 3, ptr [[ELEM3]], align 4
++; CHECK-NEXT: [[SEL:%.*]] = select i1 [[COND:%.*]], ptr [[ALLOC0]], ptr [[ALLOC1]]
++; CHECK-NEXT: [[GEP:%.*]] = getelementptr inbounds %struct.T, ptr [[SEL]], i32 [[V:%.*]], i32 1
++; CHECK-NEXT: [[RET:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT: ret i32 [[RET]]
++define i32 @test_select_fold_split_var_gep(i1 %cond, i32 %v) {
++  %alloc0 = alloca %struct.T, align 8
++  %alloc1 = alloca %struct.T, align 8
++  store %struct.T { i32 0, i32 1 }, ptr %alloc0
++  store %struct.T { i32 2, i32 3 }, ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %gep = getelementptr inbounds %struct.T, ptr %sel, i32 %v, i32 1
++  %val = load i32, ptr %gep
++ ret i32 %val
++}
++
++; CHECK-LABEL: @test_select_fold_split_addrspace
++; CHECK-NEXT: [[SEL:%.*]] = select i1 [[COND:%.*]], i32 1, i32 3
++; CHECK-NEXT: ret i32 [[SEL]]
++define i32 @test_select_fold_split_addrspace(i1 %cond) {
++  %alloc0 = alloca %struct.T, align 16
++  %alloc1 = alloca %struct.T, align 16
++  store %struct.T { i32 0, i32 1 }, ptr %alloc0
++  store %struct.T { i32 2, i32 3 }, ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %cast = addrspacecast ptr %sel to ptr addrspace(5)
++  %gep = getelementptr inbounds %struct.T, ptr addrspace(5) %cast, i32 0, i32 1
++  %val = load i32, ptr addrspace(5) %gep
++  ret i32 %val
++}
++
++; CHECK-LABEL: @test_select_fold_split_multiple_users_same
++; CHECK-NEXT: [[SEL0:%.*]] = select i1 [[COND:%.*]], i32 0, i32 2
++; CHECK-NEXT: [[SEL1:%.*]] = select i1 [[COND:%.*]], i32 0, i32 2
++; CHECK-NEXT: [[ADD:%.*]] = add i32 [[SEL0]], [[SEL1]]
++; CHECK-NEXT: ret i32 [[ADD]]
++define i32 @test_select_fold_split_multiple_users_same(i1 %cond) {
++  %alloc0 = alloca %struct.T, align 8
++  %alloc1 = alloca %struct.T, align 8
++  store %struct.T { i32 0, i32 1 }, ptr %alloc0
++  store %struct.T { i32 2, i32 3 }, ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %gep0 = getelementptr inbounds %struct.T, ptr %sel, i32 0, i32 0
++  %gep1 = getelementptr inbounds %struct.T, ptr %sel, i32 0, i32 0
++  %val0 = load i32, ptr %gep0
++  %val1 = load i32, ptr %gep1
++  %val = add i32 %val0, %val1
++  ret i32 %val
++}
++
++; CHECK-LABEL: @test_select_fold_split_multiple_users_different
++; CHECK-NEXT: [[SEL0:%.*]] = select i1 [[COND:%.*]], i32 0, i32 2
++; CHECK-NEXT: [[SEL1:%.*]] = select i1 [[COND:%.*]], i32 1, i32 3
++; CHECK-NEXT: [[ADD:%.*]] = add i32 [[SEL0]], [[SEL1]]
++; CHECK-NEXT: ret i32 [[ADD]]
++define i32 @test_select_fold_split_multiple_users_different(i1 %cond) {
++  %alloc0 = alloca %struct.T, align 8
++  %alloc1 = alloca %struct.T, align 8
++  store %struct.T { i32 0, i32 1 }, ptr %alloc0
++  store %struct.T { i32 2, i32 3 }, ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %gep0 = getelementptr inbounds %struct.T, ptr %sel, i32 0, i32 0
++  %gep1 = getelementptr inbounds %struct.T, ptr %sel, i32 0, i32 1
++  %val0 = load i32, ptr %gep0
++  %val1 = load i32, ptr %gep1
++  %val = add i32 %val0, %val1
++  ret i32 %val
++}
++
++; CHECK-LABEL: @test_select_fold_split_gep_chain
++; CHECK-NEXT: [[SEL:%.*]] = select i1 [[COND:%.*]], i32 2, i32 5
++; CHECK-NEXT: ret i32 [[SEL]]
++define i32 @test_select_fold_split_gep_chain(i1 %cond) {
++  %alloc0 = alloca [3 x i32], align 8
++  %alloc1 = alloca [3 x i32], align 8
++  store [3 x i32] [i32 0, i32 1, i32 2], ptr %alloc0
++  store [3 x i32] [i32 3, i32 4, i32 5], ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %gep0 = getelementptr i32, ptr %sel, i32 0
++  %gep1 = getelementptr i32, ptr %gep0, i32 1
++  %gep2 = getelementptr i32, ptr %gep1, i32 1
++  %val = load i32, ptr %gep2
++  ret i32 %val
++}
++
++; CHECK-LABEL: @test_select_fold_split_zero_gep
++; CHECK-NEXT: [[SEL:%.*]] = select i1 [[COND:%.*]], i32 1, i32 3
++; CHECK-NEXT: ret i32 [[SEL]]
++define i32 @test_select_fold_split_zero_gep(i1 %cond) {
++  %alloc0 = alloca %struct.T, align 8
++  %alloc1 = alloca %struct.T, align 8
++  store %struct.T { i32 0, i32 1 }, ptr %alloc0
++  store %struct.T { i32 2, i32 3 }, ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %gep0 = getelementptr %struct.T, ptr %sel, i32 0
++  %gep1 = getelementptr inbounds %struct.T, ptr %gep0, i32 0, i32 1
++  %val = load i32, ptr %gep1
++  ret i32 %val
++}
++
++
++
++; Check for correct addrspacecast insertion for loads.
++; CHECK-LABEL: @test_select_fold_split_volatile
++; CHECK-NEXT: [[SROA_A0:%.*]] = alloca i32, align 8
++; CHECK-NEXT: [[SROA_A1:%.*]] = alloca i32, align 4
++; CHECK-NEXT: [[SROA_B0:%.*]] = alloca i32, align 8
++; CHECK-NEXT: [[SROA_B1:%.*]] = alloca i32, align 4
++; CHECK-NEXT: store i32 0, ptr [[SROA_A0]], align 8
++; CHECK-NEXT: store i32 1, ptr [[SROA_A1]], align 4
++; CHECK-NEXT: store i32 2, ptr [[SROA_B0]], align 8
++; CHECK-NEXT: store i32 3, ptr [[SROA_B1]], align 4
++; CHECK-NEXT: [[CAST_B0:%.*]] = addrspacecast ptr [[SROA_B0]] to ptr addrspace(5)
++; CHECK-NEXT: [[CAST_A0:%.*]] = addrspacecast ptr [[SROA_A0]] to ptr addrspace(5)
++; CHECK-NEXT: [[SEL0:%.*]] = select i1 [[COND:%.*]], ptr addrspace(5) [[CAST_A0]], ptr addrspace(5) [[CAST_B0]]
++; CHECK-NEXT: [[CAST_B1:%.*]] = addrspacecast ptr [[SROA_B1]] to ptr addrspace(5)
++; CHECK-NEXT: [[CAST_A1:%.*]] = addrspacecast ptr [[SROA_A1]] to ptr addrspace(5)
++; CHECK-NEXT: [[SEL1:%.*]] = select i1 [[COND]], ptr addrspace(5) [[CAST_A1]], ptr addrspace(5) [[CAST_B1]]
++; CHECK-NEXT: [[VAL1:%.*]] = load volatile i32, ptr addrspace(5) [[SEL0]], align 4
++; CHECK-NEXT: [[VAL2:%.*]] = load volatile i32, ptr addrspace(5) [[SEL1]], align 4
++; CHECK-NEXT: [[ADD:%.*]] = add i32 [[VAL1]], [[VAL2]]
++; CHECK-NEXT: ret i32 [[ADD]]
++define i32 @test_select_fold_split_volatile(i1 %cond) {
++  %alloc0 = alloca %struct.T, align 8
++  %alloc1 = alloca %struct.T, align 8
++  store %struct.T { i32 0, i32 1 }, ptr %alloc0
++  store %struct.T { i32 2, i32 3 }, ptr %alloc1
++  %sel = select i1 %cond, ptr %alloc0, ptr %alloc1
++  %cast = addrspacecast ptr %sel to ptr addrspace(5)
++  %gep0 = getelementptr inbounds %struct.T, ptr addrspace(5) %cast, i32 0, i32 0
++  %gep1 = getelementptr inbounds %struct.T, ptr addrspace(5) %cast, i32 0, i32 1
++  %val1 = load volatile i32, ptr addrspace(5) %gep0
++  %val2 = load volatile i32, ptr addrspace(5) %gep1
++  %val3 = add i32 %val1, %val2
++  ret i32 %val3
++}
+diff --git a/llvm/test/Transforms/SROA/select-speculate-addrspace.ll b/llvm/test/Transforms/SROA/select-speculate-addrspace.ll
+new file mode 100644
+index 0000000000000..e976a158c55a0
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/select-speculate-addrspace.ll
+@@ -0,0 +1,25 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='sroa<modify-cfg>' -S < %s | FileCheck %s
++
++; Verify that a select of pointers in a non-default address space can be
++; speculated after SROA rewrites one arm to the default address space.
++define i32 @select_speculate_addrspace(i1 %cond) {
++; CHECK-LABEL: define i32 @select_speculate_addrspace(
++; CHECK-SAME: i1 [[COND:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    [[CAST:%.*]] = addrspacecast ptr [[ALLOCA]] to ptr addrspace(5)
++; CHECK-NEXT:    store volatile i32 1, ptr addrspace(5) [[CAST]], align 4
++; CHECK-NEXT:    [[LOAD:%.*]] = load i32, ptr [[ALLOCA]], align 4
++; CHECK-NEXT:    [[SELECT:%.*]] = select i1 [[COND]], i32 [[LOAD]], i32 2
++; CHECK-NEXT:    ret i32 [[SELECT]]
++;
++  %alloc0 = alloca i32, align 4
++  %alloc1 = alloca i32, align 4
++  %cast0 = addrspacecast ptr %alloc0 to ptr addrspace(5)
++  %cast1 = addrspacecast ptr %alloc1 to ptr addrspace(5)
++  store volatile i32 1, ptr addrspace(5) %cast0
++  store i32 2, ptr addrspace(5) %cast1
++  %sel = select i1 %cond, ptr addrspace(5) %cast0, ptr addrspace(5) %cast1
++  %val = load i32, ptr addrspace(5) %sel
++  ret i32 %val
++}
