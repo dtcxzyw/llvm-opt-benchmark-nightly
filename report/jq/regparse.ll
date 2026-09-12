@@ -205,7 +205,7 @@ bb.dp:                                            ; preds = %bb.do
 
 bb.dq:                                            ; preds = %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m
   store ptr %i.bg, ptr %i.c, align 8, !tbaa !131
-  %i.jn = call fastcc i32 @scan_number(ptr noundef %i.c, ptr noundef nonnull %2, ptr noundef nonnull %i.p) ; 6 uses
+  %i.jn = call fastcc i32 @scan_number(ptr noundef %i.c, ptr noundef nonnull %2, ptr noundef nonnull %i.p) ; 5 uses
   %or.cond = icmp ugt i32 %i.jn, 1000
   br i1 %or.cond, label %bb.dx, label %bb.dr
 
@@ -217,8 +217,8 @@ bb.dr:                                            ; preds = %bb.dq
 
 bb.ds:                                            ; preds = %bb.dr
   %i.jq = getelementptr inbounds nuw i8, ptr %3, i64 84
-  %i.jr = load i32, ptr %i.jq, align 4, !tbaa !135 ; 2 uses
-  %i.js = icmp sle i32 %i.jn, %i.jr
+  %i.jr = load i32, ptr %i.jq, align 4, !tbaa !135
+  %i.js = icmp sle i32 %i.jn, %i.jr               ; 2 uses
   %i.jt = icmp samesign ult i32 %i.jn, 10
   %or.cond5 = or i1 %i.jt, %i.js
   br i1 %or.cond5, label %bb.dt, label %bb.dx
@@ -231,8 +231,7 @@ bb.dt:                                            ; preds = %bb.ds
   br i1 %.not644, label %bb.dw, label %bb.du
 
 bb.du:                                            ; preds = %bb.dt
-  %4 = icmp sgt i32 %i.jn, %i.jr
-  br i1 %4, label %.thread750, label %bb.dv
+  br i1 %i.js, label %bb.dv, label %.thread750
 
 bb.dv:                                            ; preds = %bb.du
   %i.jx = getelementptr inbounds nuw i8, ptr %3, i64 224
@@ -635,7 +634,7 @@ bb.n:                                             ; preds = %.split.us.i, %.preh
   %.012145.i = phi i32 [ %.2123.i, %bb.s ], [ 0, %bb.n ] ; 7 uses
   %.012444.i = phi i32 [ %.2126.i, %bb.s ], [ 0, %bb.n ]
   %i.bl = load ptr, ptr %i.bj, align 8, !tbaa !83
-  %i.bm = tail call i32 %i.bl(ptr noundef %.111348.i, ptr noundef nonnull %2) #26, !inline_history !295 ; 4 uses
+  %i.bm = tail call i32 %i.bl(ptr noundef %.111348.i, ptr noundef nonnull %2) #26, !inline_history !295 ; 3 uses
   %i.bn = load ptr, ptr %.val184, align 8, !tbaa !84
   %i.bo = tail call i32 %i.bn(ptr noundef %.111348.i) #26, !inline_history !295
   %i.bp = sext i32 %i.bo to i64
@@ -676,14 +675,13 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.not141.i = icmp ne i32 %.012145.i, 0
   %i.bu = zext i1 %.not141.i to i32
   %spec.select = add nuw nsw i32 %.0127.i, %i.bu  ; 2 uses
-  %i.bv = icmp ne i32 %i.bm, 125
+  %i.bv = icmp ne i32 %i.bm, 125                  ; 2 uses
   %i.bw = icmp samesign ult i32 %spec.select, 4
   %or.cond5.i197 = select i1 %i.bv, i1 %i.bw, i1 false
   br i1 %or.cond5.i197, label %bb.n, label %bb.t, !llvm.loop !10
 
 bb.t:                                             ; preds = %.split.us.i
-  %.not147.i = icmp eq i32 %i.bm, 125
-  br i1 %.not147.i, label %prs_callout_args.exit, label %clear_callout_args.exit
+  br i1 %i.bv, label %clear_callout_args.exit, label %prs_callout_args.exit
 
 prs_callout_args.exit:                            ; preds = %bb.t
   %i.bx = icmp ult ptr %i.bq, %2
@@ -1086,7 +1084,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   br i1 %i.ad, label %.lr.ph.split, label %.loopexit
 
 .split.us:                                        ; preds = %bb.k, %bb.k, %bb.e, %bb.e
-  %.us-phi = phi i32 [ %i.j, %bb.e ], [ %i.j, %bb.e ], [ %i.w, %bb.k ], [ %i.w, %bb.k ] ; 2 uses
+  %.us-phi = phi i32 [ %i.j, %bb.e ], [ %i.j, %bb.e ], [ %i.w, %bb.k ], [ %i.w, %bb.k ]
   %.us-phi52 = phi ptr [ %i.n, %bb.e ], [ %i.n, %bb.e ], [ %i.aa, %bb.k ], [ %i.aa, %bb.k ] ; 2 uses
   %.us-phi53 = phi i32 [ %.012145.us, %bb.e ], [ %.012145.us, %bb.e ], [ %.012145, %bb.k ], [ %.012145, %bb.k ] ; 3 uses
   %.us-phi54 = phi ptr [ %.011846.us, %bb.e ], [ %.011846.us, %bb.e ], [ %.011846, %bb.k ], [ %.011846, %bb.k ]
@@ -1200,14 +1198,13 @@ bb.y:                                             ; preds = %.thread6.thread, %.
 
 bb.z:                                             ; preds = %bb.y, %.split.us
   %.1128 = phi i32 [ %i.be, %bb.y ], [ %.0127, %.split.us ] ; 4 uses
-  %i.bf = icmp ne i32 %.us-phi, 125
+  %i.bf = icmp ne i32 %.us-phi, 125               ; 2 uses
   %i.bg = icmp slt i32 %.1128, 4
   %or.cond5 = select i1 %i.bf, i1 %i.bg, i1 false
   br i1 %or.cond5, label %bb.b, label %bb.aa, !llvm.loop !10
 
 bb.aa:                                            ; preds = %bb.z
-  %.not147 = icmp eq i32 %.us-phi, 125
-  br i1 %.not147, label %bb.ab, label %.loopexit
+  br i1 %i.bf, label %.loopexit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   store ptr %.us-phi52, ptr %1, align 8, !tbaa !131

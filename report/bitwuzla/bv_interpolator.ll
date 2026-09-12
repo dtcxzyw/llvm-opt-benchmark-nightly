@@ -205,7 +205,7 @@ bb.cb:                                            ; preds = %.lr.ph.i.i.i.i.i
 .loopexit448:                                     ; preds = %bb.ca, %bb.bx, %bb.bz
   %.sroa.06.1.i.i.i = phi ptr [ %.sroa.06.0.i.i.i, %bb.bx ], [ %i.kf, %bb.bz ], [ %i.kk, %bb.ca ]
   %i.ko = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i.i, i64 16
-  %i.kp = load i32, ptr %i.ko, align 4, !tbaa !69 ; 4 uses
+  %i.kp = load i32, ptr %i.ko, align 4, !tbaa !69 ; 3 uses
   %.0.i264 = getelementptr inbounds nuw i8, ptr %i.jj, i64 32
   %i.kq = load i64, ptr %.0.i264, align 8, !tbaa !102 ; 4 uses
   %i.kr = icmp eq i64 %i.kq, 0
@@ -294,10 +294,10 @@ bb.cj:                                            ; preds = %.lr.ph.i.i.i.i.i269
   %i.lt = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i.i275, i64 16
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !69 ; 3 uses
   %i.lv = icmp ne i32 %i.kp, %i.lu
-  %i.lw = icmp ne i32 %i.kp, 2
-  %or.cond = and i1 %i.lw, %i.lv
+  %i.lw = icmp ne i32 %i.kp, 2                    ; 2 uses
   %19 = icmp ne i32 %i.lu, 2
-  %or.cond5 = and i1 %19, %or.cond
+  %20 = and i1 %i.lv, %19
+  %or.cond5 = and i1 %20, %i.lw
   br i1 %or.cond5, label %bb.ck, label %bb.cr
 
 bb.ck:                                            ; preds = %.loopexit445
@@ -360,8 +360,7 @@ bb.cq:                                            ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.de
 
 bb.cr:                                            ; preds = %.loopexit445
-  %20 = icmp eq i32 %i.kp, 2
-  %i.mh = select i1 %20, i32 %i.lu, i32 %i.kp
+  %i.mh = select i1 %i.lw, i32 %i.kp, i32 %i.lu
   store i32 %i.mh, ptr %i.je, align 8, !tbaa !68
   br label %_ZNSt6vectorISt17reference_wrapperIKN4bzla8bitblast7AigNodeEESaIS5_EE9push_backEOS5_.exit258
 

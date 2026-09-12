@@ -205,7 +205,7 @@ bb.a:
   %i.i = zext i8 %i.h to i32                      ; 2 uses
   %i.j = xor i8 %i.h, %4                          ; 3 uses
   %i.k = xor i8 %i.j, %i.e
-  %i.l = and i8 %i.k, -128                        ; 6 uses
+  %i.l = and i8 %i.k, -128                        ; 5 uses
   %i.m = or i32 %i.i, %i.f                        ; 2 uses
   %i.n = and i32 %i.m, 112
   %.not = icmp eq i32 %i.n, 0
@@ -608,9 +608,9 @@ bb.bh:                                            ; preds = %.thread349, %.threa
   %.2267 = phi i8 [ %.1266, %.thread349 ], [ %i.e, %.thread348 ]
   %.1258 = phi i32 [ %.0257, %.thread349 ], [ 0, %.thread348 ]
   %.1 = phi ptr [ %.0, %.thread349 ], [ %1, %.thread348 ] ; 2 uses
-  %.not321 = icmp eq i8 %i.l, 0
+  %.not321 = icmp ne i8 %i.l, 0                   ; 2 uses
   %i.fx = sub nsw i32 0, %.1269
-  %spec.select334 = select i1 %.not321, i32 %.1269, i32 %i.fx
+  %spec.select334 = select i1 %.not321, i32 %i.fx, i32 %.1269
   %i.fy = add nsw i32 %i.fw, %.1258
   %.0271 = tail call i32 @llvm.smax.i32(i32 %i.fv, i32 %i.fy) ; 4 uses
   %.ptr368 = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 3 uses
@@ -874,8 +874,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.jw = load i8, ptr %i.gs, align 4, !tbaa !17  ; 3 uses
   %i.jx = and i8 %i.jw, 112
   %i.jy = icmp eq i8 %i.jx, 0
-  %6 = icmp ne i8 %i.l, 0
-  %or.cond7 = and i1 %6, %i.jy
+  %or.cond7 = and i1 %.not321, %i.jy
   br i1 %or.cond7, label %bb.cn, label %bb.co
 
 bb.cn:                                            ; preds = %bb.cm
@@ -1278,7 +1277,7 @@ bb.bj:                                            ; preds = %bb.by, %.loopexit66
   %indvars.iv751 = phi i32 [ %indvars.iv.next752, %bb.by ], [ %i.ht, %.loopexit669 ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.by ], [ %i.hr, %.loopexit669 ] ; 4 uses
   %.0499 = phi ptr [ %.1500, %bb.by ], [ %i.hp, %.loopexit669 ] ; 3 uses
-  %.0495 = phi i32 [ %.1496, %bb.by ], [ 0, %.loopexit669 ] ; 3 uses
+  %.0495 = phi i32 [ %.1496, %bb.by ], [ 0, %.loopexit669 ] ; 2 uses
   %.0486 = phi i32 [ %.3489, %bb.by ], [ 0, %.loopexit669 ] ; 3 uses
   %.0480 = phi ptr [ %.2482.lcssa, %bb.by ], [ %i.er, %.loopexit669 ]
   %.1472 = phi i32 [ %.6477, %bb.by ], [ %spec.select598, %.loopexit669 ]
@@ -1336,10 +1335,10 @@ bb.bm:                                            ; preds = %.preheader667
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm, %.preheader667
-  %.0435 = phi i32 [ %i.in, %bb.bm ], [ 0, %.preheader667 ] ; 3 uses
+  %.0435 = phi i32 [ %i.in, %bb.bm ], [ 0, %.preheader667 ] ; 2 uses
   %i.io = load i16, ptr %.0437, align 2, !tbaa !21
-  %i.ip = zext i16 %i.io to i32                   ; 3 uses
-  %.not569 = icmp ne i32 %.0435, %i.ip
+  %i.ip = zext i16 %i.io to i32                   ; 2 uses
+  %.not569 = icmp ne i32 %.0435, %i.ip            ; 2 uses
   %i.iq = icmp eq ptr %.0437, %.0485
   %or.cond601 = select i1 %.not569, i1 true, i1 %i.iq
   br i1 %or.cond601, label %bb.bp, label %bb.bo
@@ -1354,8 +1353,7 @@ bb.bp:                                            ; preds = %bb.bn
   br i1 %i.is, label %.thread, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %6 = icmp eq i32 %.0435, %i.ip
-  br i1 %6, label %bb.br, label %bb.bs
+  br i1 %.not569, label %bb.bs, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.it = add i16 %.0458, 1
@@ -1381,7 +1379,7 @@ bb.bs:                                            ; preds = %bb.bl, %bb.bq
 .thread:                                          ; preds = %bb.bp, %._crit_edge708, %bb.br
   %.6477 = phi i32 [ 1, %bb.br ], [ %.3474.lcssa, %._crit_edge708 ], [ %.3474.lcssa, %bb.bp ] ; 5 uses
   %.3461 = phi i16 [ %i.it, %bb.br ], [ %.0458, %._crit_edge708 ], [ %.0458, %bb.bp ] ; 3 uses
-  %i.jf = icmp ne i32 %.0495, 0
+  %i.jf = icmp ne i32 %.0495, 0                   ; 2 uses
   %i.jg = zext i16 %.3461 to i32
   %i.jh = icmp ne i16 %.3461, 0
   %or.cond8 = select i1 %i.jf, i1 true, i1 %i.jh
@@ -1389,8 +1387,7 @@ bb.bs:                                            ; preds = %bb.bl, %bb.bq
 
 bb.bt:                                            ; preds = %.thread
   store i16 %.3461, ptr %.0499, align 2, !tbaa !21
-  %7 = icmp eq i32 %.0495, 0
-  br i1 %7, label %.preheader668, label %bb.bu
+  br i1 %i.jf, label %bb.bu, label %.preheader668
 
 .preheader668:                                    ; preds = %bb.bt, %.preheader668
   %.1487.in = phi i32 [ %.1487, %.preheader668 ], [ %.0486, %bb.bt ]

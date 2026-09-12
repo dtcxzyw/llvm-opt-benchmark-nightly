@@ -205,9 +205,9 @@ bb.i:                                             ; preds = %_ZN20b3AlignedObjec
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN20b3AlignedObjectArrayI15b3RigidBodyDataE6resizeEiRKS0_.exit, %bb.i
-  %8 = fcmp une float %2, 0.000000e+00
+  %8 = fcmp oeq float %2, 0.000000e+00            ; 2 uses
   %i.ct = fdiv float 1.000000e+00, %2
-  %i.cu = select i1 %8, float %i.ct, float 0.000000e+00
+  %i.cu = select i1 %8, float 0.000000e+00, float %i.ct
   %i.cv = getelementptr inbounds nuw i8, ptr %i.bw, i64 68
   store float %i.cu, ptr %i.cv, align 4, !tbaa !528
   br i1 %7, label %bb.k, label %_ZN13b3OpenCLArrayI15b3RigidBodyDataE19copyFromHostPointerEPKS0_mmb.exit
@@ -250,8 +250,7 @@ _ZN13b3OpenCLArrayI15b3RigidBodyDataE19copyFromHostPointerEPKS0_mmb.exit: ; pred
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !127
   %i.dt = sext i32 %i.dq to i64
   %i.du = getelementptr inbounds [96 x i8], ptr %i.ds, i64 %i.dt ; 19 uses
-  %9 = fcmp oeq float %2, 0.000000e+00
-  br i1 %9, label %bb.n, label %bb.q
+  br i1 %8, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %_ZN13b3OpenCLArrayI15b3RigidBodyDataE19copyFromHostPointerEPKS0_mmb.exit
   %i.dv = icmp eq i32 %i.dq, 0

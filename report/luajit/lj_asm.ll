@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.2 = phi i32 [ %.1, %bb.d ], [ %i.w, %bb.e ], [ %.1, %bb.c ]
   tail call fastcc void @ra_evictset(ptr noundef %0, i32 noundef %.2)
-  %i.x = load i8, ptr %i.l, align 2, !tbaa !25    ; 9 uses
+  %i.x = load i8, ptr %i.l, align 2, !tbaa !25    ; 7 uses
   %.not40 = icmp sgt i8 %i.x, -1                  ; 3 uses
   br i1 %.not40, label %bb.h, label %bb.g
 
@@ -307,7 +307,7 @@ bb.q:                                             ; preds = %bb.h
 bb.r:                                             ; preds = %bb.q
   %i.bm = zext i8 %i.x to i32                     ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 14
-  %i.bo = load i8, ptr %i.bn, align 2, !tbaa !25  ; 10 uses
+  %i.bo = load i8, ptr %i.bn, align 2, !tbaa !25  ; 9 uses
   %i.bp = zext i8 %i.bo to i32                    ; 5 uses
   %i.bq = zext nneg i8 %i.ac to i32
   %i.br = shl nuw i32 1, %i.bq
@@ -321,7 +321,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bx = icmp eq i32 %i.bw, 0
   %i.by = icmp ne i8 %i.x, 0
   %or.cond.i = and i1 %i.by, %i.bx
-  %i.bz = icmp ne i8 %i.bo, 0
+  %i.bz = icmp ne i8 %i.bo, 0                     ; 2 uses
   %or.cond3.i = select i1 %or.cond.i, i1 %i.bz, i1 false
   br i1 %or.cond3.i, label %bb.s, label %bb.t
 
@@ -336,7 +336,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.cd = phi i32 [ %.pre.i, %bb.s ], [ %i.bv, %bb.r ]
   %i.ce = and i32 %i.cd, 4
   %i.cf = icmp eq i32 %i.ce, 0
-  %i.cg = icmp ne i8 %i.x, 2
+  %i.cg = icmp ne i8 %i.x, 2                      ; 3 uses
   %or.cond5.i = and i1 %i.cg, %i.cf
   %i.ch = icmp ne i8 %i.bo, 2
   %or.cond7.i = select i1 %or.cond5.i, i1 %i.ch, i1 false
@@ -383,16 +383,13 @@ bb.x:                                             ; preds = %bb.w
   store i32 %i.cy, ptr %i.bu, align 8, !tbaa !83
   %i.cz = or i32 %i.cr, %i.cx
   store i32 %i.cz, ptr %i.cp, align 4, !tbaa !71
-  %3 = icmp eq i8 %i.x, 2
-  br i1 %3, label %bb.y, label %bb.ah
+  br i1 %i.cg, label %bb.ah, label %bb.y
 
 .thread.i:                                        ; preds = %bb.w
-  %4 = icmp eq i8 %i.x, 2
-  br i1 %4, label %.thread119.i, label %emit_movrr.exit100.i
+  br i1 %i.cg, label %emit_movrr.exit100.i, label %.thread119.i
 
 bb.y:                                             ; preds = %bb.x
-  %5 = icmp eq i8 %i.bo, 0
-  br i1 %5, label %bb.z, label %.thread119.i
+  br i1 %i.bz, label %.thread119.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 4 uses

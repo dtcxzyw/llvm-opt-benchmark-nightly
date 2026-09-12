@@ -204,9 +204,9 @@ define dso_local noundef i32 @_ZN9ObjectRef10l_is_validEP9lua_State(ptr noundef 
 bb.a:
   %i.a = tail call ptr @luaL_checkudata(ptr noundef %0, i32 noundef 1, ptr noundef nonnull @_ZN9ObjectRef9classNameE)
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !118
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !21   ; 4 uses
-  %.not.i = icmp eq ptr %i.c, null
-  br i1 %.not.i, label %bb.c, label %bb.b
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !21   ; 3 uses
+  %.not.i = icmp ne ptr %i.c, null                ; 2 uses
+  br i1 %.not.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 225
@@ -219,8 +219,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %_ZN9ObjectRef9getobjectEPS_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %1 = icmp ne ptr %i.c, null
-  %i.k = zext i1 %1 to i32
+  %i.k = zext i1 %.not.i to i32
   br label %_ZN9ObjectRef9getobjectEPS_.exit
 
 _ZN9ObjectRef9getobjectEPS_.exit:                 ; preds = %bb.b, %bb.c

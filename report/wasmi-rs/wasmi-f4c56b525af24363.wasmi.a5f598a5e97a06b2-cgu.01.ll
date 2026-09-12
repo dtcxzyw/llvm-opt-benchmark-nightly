@@ -202,14 +202,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 18)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.d = load ptr, ptr %0, align 8, !noundef !4   ; 2 uses
-  %i.e = icmp ne ptr %i.d, null
+  %i.d = load ptr, ptr %0, align 8, !noundef !4
+  %i.e = icmp ne ptr %i.d, null                   ; 2 uses
   %i.f = zext i1 %i.e to i8
   store i8 %i.f, ptr %i.b, align 1
   %i.g = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 8, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @1)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %2 = icmp eq ptr %i.d, null
-  %storemerge.in.v = select i1 %2, i64 8, i64 16
+  %storemerge.in.v = select i1 %i.e, i64 16, i64 8
   %storemerge.in = getelementptr inbounds nuw i8, ptr %0, i64 %storemerge.in.v
   %storemerge = load i32, ptr %storemerge.in, align 8, !noundef !4
   store i32 %storemerge, ptr %i.a, align 4

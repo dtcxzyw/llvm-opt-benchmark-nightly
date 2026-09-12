@@ -31,7 +31,7 @@ bb.a:
   %i.h = alloca [64 x i8], align 16               ; 6 uses
   %i.i = icmp slt i32 %6, 0
   %i.j = load i32, ptr @_ZN7meshoptL20gEncodeVertexVersionE, align 4
-  %i.k = select i1 %i.i, i32 %i.j, i32 %6         ; 3 uses
+  %i.k = select i1 %i.i, i32 %i.j, i32 %6         ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.m = ptrtoint ptr %i.l to i64                 ; 6 uses
   %i.n = ptrtoint ptr %0 to i64
@@ -66,7 +66,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.z = select i1 %i.y, i64 %i.x, i64 256        ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.h, i8 0, i64 64, i1 false)
-  %i.aa = icmp ne i32 %i.k, 0                     ; 2 uses
+  %i.aa = icmp ne i32 %i.k, 0                     ; 7 uses
   %i.ab = icmp sgt i32 %5, 1
   %i.ac = icmp ugt i64 %3, 1
   %i.ad = and i1 %i.ac, %i.ab
@@ -469,9 +469,8 @@ _ZN7meshoptL15estimateChannelEPKhmmmmmii.exit:    ; preds = %.preheader.i.1, %.p
   br i1 %i.zi, label %bb.e, label %.loopexit145, !llvm.loop !25
 
 .loopexit145:                                     ; preds = %_ZN7meshoptL15estimateChannelEPKhmmmmmii.exit, %bb.d
-  %7 = icmp eq i32 %i.k, 0                        ; 5 uses
   %i.zj = lshr i64 %4, 2                          ; 3 uses
-  %i.zk = select i1 %7, i64 0, i64 %i.zj          ; 4 uses
+  %i.zk = select i1 %i.aa, i64 %i.zj, i64 0       ; 4 uses
   %i.zl = icmp eq i32 %5, 0
   br label %bb.s
 
@@ -536,7 +535,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.thread92.i, %.lr.ph.i107
   %.054120.i = phi i64 [ 0, %.lr.ph.i107 ], [ %i.bez, %.thread92.i ] ; 17 uses
   %.058119.i = phi ptr [ %i.zy, %.lr.ph.i107 ], [ %.26095.i, %.thread92.i ] ; 8 uses
-  br i1 %7, label %.thread.i, label %bb.v
+  br i1 %i.aa, label %bb.v, label %.thread.i
 
 bb.v:                                             ; preds = %bb.u
   %i.aan = lshr i64 %.054120.i, 2
@@ -700,7 +699,7 @@ _ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134.loopexit.unr-lcssa: ; preds = 
   br label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134
 
 _ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134: ; preds = %.lr.ph.i.i.i128.epil.preheader, %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134.loopexit.unr-lcssa, %.thread.i
-  br i1 %7, label %.thread79.i, label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i109
+  br i1 %i.aa, label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i109, label %.thread79.i
 
 _ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i109.loopexit.unr-lcssa: ; preds = %.lr.ph.i21.i.i121
   br i1 %lcmp.mod382.not, label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i109, label %.lr.ph.i21.i.i121.epil.preheader
@@ -1103,7 +1102,7 @@ bb.aa:                                            ; preds = %.thread88.i
 .thread79.i:                                      ; preds = %bb.z, %.thread85.i, %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134
   %.081.i = phi i64 [ 1, %.thread85.i ], [ %i.atn, %bb.z ], [ 0, %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.i134 ]
   %i.atp = getelementptr inbounds nuw [4 x i8], ptr @_ZN7meshoptL7kBitsV1E, i64 %.081.i
-  %i.atq = select i1 %7, ptr @_ZN7meshoptL7kBitsV0E, ptr %i.atp ; 7 uses
+  %i.atq = select i1 %i.aa, ptr %i.atp, ptr @_ZN7meshoptL7kBitsV0E ; 7 uses
   %i.atr = ptrtoint ptr %.058119.i to i64
   %i.ats = sub i64 %i.m, %i.atr
   %i.att = icmp ult i64 %i.ats, %i.aac
@@ -1506,7 +1505,7 @@ _ZN7meshoptL17encodeVertexBlockEPhS0_PKhmmS0_S2_ii.exit: ; preds = %.thread92.i
 
 bb.au:                                            ; preds = %bb.s
   %i.bfe = add i64 %i.zk, %4                      ; 3 uses
-  %i.bff = select i1 %7, i64 32, i64 24           ; 2 uses
+  %i.bff = select i1 %i.aa, i64 24, i64 32        ; 2 uses
   %i.bfg = tail call i64 @llvm.umax.i64(i64 %i.bfe, i64 %i.bff) ; 2 uses
   %i.bfh = ptrtoint ptr %.093 to i64
   %i.bfi = sub i64 %i.m, %i.bfh

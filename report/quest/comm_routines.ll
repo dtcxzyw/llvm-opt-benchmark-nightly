@@ -202,11 +202,11 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = load i64, ptr %i.c, align 8, !tbaa !20
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !18   ; 2 uses
-  %i.g = icmp ne i32 %i.f, 0
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !18
+  %i.g = icmp ne i32 %i.f, 0                      ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.i = load i32, ptr %i.h, align 4              ; 2 uses
-  %i.j = icmp ne i32 %i.i, 0
+  %i.i = load i32, ptr %i.h, align 4
+  %i.j = icmp ne i32 %i.i, 0                      ; 2 uses
   %or.cond = select i1 %i.g, i1 %i.j, i1 false
   br i1 %or.cond, label %bb.b, label %bb.d
 
@@ -220,8 +220,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.a
-  %.not = icmp eq i32 %i.i, 0
-  br i1 %.not, label %bb.e, label %.thread
+  br i1 %i.j, label %.thread, label %bb.e
 
 .thread:                                          ; preds = %bb.b, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 80
@@ -233,8 +232,7 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %.thread, %bb.d
   tail call void @_Z30error_commButEnvNotDistributedv()
-  %.not6 = icmp eq i32 %i.f, 0
-  br i1 %.not6, label %bb.g, label %bb.f
+  br i1 %i.g, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -259,8 +257,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !23
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !18   ; 2 uses
-  %i.e = icmp ne i32 %i.d, 0
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !18
+  %i.e = icmp ne i32 %i.d, 0                      ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = load i32, ptr %i.f, align 8
   %i.h = icmp ne i32 %i.g, 0
@@ -282,8 +280,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   tail call void @_Z30error_commButEnvNotDistributedv()
-  %.not = icmp eq i32 %i.d, 0
-  br i1 %.not, label %bb.f, label %bb.e
+  br i1 %i.e, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.thread, %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 88

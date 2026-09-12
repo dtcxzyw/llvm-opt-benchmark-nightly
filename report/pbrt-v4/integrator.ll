@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %._crit_edge378
 
 ._crit_edge378:                                   ; preds = %._crit_edge378.loopexit, %bb.ae
-  %i.dp = phi i64 [ %i.jr, %._crit_edge378.loopexit ], [ 0, %bb.ae ] ; 5 uses
+  %i.dp = phi i64 [ %i.jr, %._crit_edge378.loopexit ], [ 0, %bb.ae ] ; 4 uses
   %i.dq = phi ptr [ %i.jn, %._crit_edge378.loopexit ], [ null, %bb.ae ] ; 3 uses
   %i.dr = phi ptr [ %.pre, %._crit_edge378.loopexit ], [ %i.dk, %bb.ae ] ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.dr, null
@@ -608,8 +608,8 @@ bb.bq:                                            ; preds = %bb.bp
   store ptr %i.lg, ptr %i.o, align 8, !tbaa !120
   %.idx = shl nuw nsw i64 %i.dp, 3
   %i.lh = getelementptr inbounds nuw i8, ptr %i.dq, i64 %.idx
-  %.not389 = icmp eq i64 %i.dp, 0
-  br i1 %.not389, label %._crit_edge393, label %.lr.ph392
+  %.not389 = icmp ne i64 %i.dp, 0                 ; 3 uses
+  br i1 %.not389, label %.lr.ph392, label %._crit_edge393
 
 bb.br:                                            ; preds = %bb.bp
   %i.li = landingpad { ptr, i32 }
@@ -650,7 +650,6 @@ bb.bu:                                            ; preds = %bb.bs, %.lr.ph392
   br label %bb.ew
 
 ._crit_edge393:                                   ; preds = %bb.bt, %bb.bq
-  %29 = icmp ne i64 %i.dp, 0                      ; 2 uses
   %i.lq = getelementptr inbounds nuw i8, ptr %9, i64 24
   %i.lr = load ptr, ptr %i.lq, align 8, !tbaa !552 ; 2 uses
   %i.ls = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
@@ -658,7 +657,7 @@ bb.bu:                                            ; preds = %bb.bs, %.lr.ph392
   br i1 %.not346394, label %._crit_edge399, label %.lr.ph398
 
 ._crit_edge399:                                   ; preds = %bb.bw, %._crit_edge393
-  %.083.in.lcssa = phi i1 [ %29, %._crit_edge393 ], [ %i.lw, %bb.bw ]
+  %.083.in.lcssa = phi i1 [ %.not389, %._crit_edge393 ], [ %i.lw, %bb.bw ]
   br i1 %.083.in.lcssa, label %bb.ca, label %bb.by
 
 bb.bv:                                            ; preds = %bb.cb, %bb.by
@@ -667,7 +666,7 @@ bb.bv:                                            ; preds = %bb.cb, %bb.by
   br label %bb.ew
 
 .lr.ph398:                                        ; preds = %._crit_edge393, %bb.bw
-  %.083.in396 = phi i1 [ %i.lw, %bb.bw ], [ %29, %._crit_edge393 ]
+  %.083.in396 = phi i1 [ %i.lw, %bb.bw ], [ %.not389, %._crit_edge393 ]
   %.sroa.0264.0395 = phi ptr [ %i.lx, %bb.bw ], [ %i.lr, %._crit_edge393 ] ; 2 uses
   %i.lu = getelementptr inbounds nuw i8, ptr %.sroa.0264.0395, i64 64
   %i.lv = invoke noundef zeroext i1 @_ZNK4pbrt6Medium10IsEmissiveEv(ptr noundef nonnull align 8 dereferenceable(8) %i.lu)

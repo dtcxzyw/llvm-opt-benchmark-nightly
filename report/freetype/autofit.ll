@@ -205,10 +205,10 @@ declare i32 @ft_hash_num_insert_no_overwrite(i32 noundef, i64 noundef, ptr nound
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @af_latin_metrics_scale_dim(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
-  %3 = icmp eq i32 %2, 0                          ; 5 uses
-  %.0163.in.v = select i1 %3, i64 24, i64 32
+  %3 = icmp ne i32 %2, 0                          ; 6 uses
+  %.0163.in.v = select i1 %3, i64 32, i64 24
   %.0163.in = getelementptr inbounds nuw i8, ptr %1, i64 %.0163.in.v
-  %.0152.in.v = select i1 %3, i64 8, i64 16
+  %.0152.in.v = select i1 %3, i64 16, i64 8
   %.0152.in = getelementptr inbounds nuw i8, ptr %1, i64 %.0152.in.v
   %.0152 = load i64, ptr %.0152.in, align 8, !tbaa !76 ; 8 uses
   %.0163 = load i64, ptr %.0163.in, align 8, !tbaa !76 ; 7 uses
@@ -287,9 +287,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.0156 = phi i64 [ 40, %bb.f ], [ %spec.select, %bb.g ]
   %i.al = add nsw i64 %.0156, %i.x
   %i.am = and i64 %i.al, -64                      ; 2 uses
-  %4 = icmp ne i64 %i.x, %i.am
-  %i.an = icmp ne i32 %2, 0
-  %or.cond7 = and i1 %i.an, %4
+  %i.an = icmp ne i64 %i.x, %i.am
+  %or.cond7 = and i1 %3, %i.an
   br i1 %or.cond7, label %bb.i, label %.thread
 
 bb.i:                                             ; preds = %bb.h
@@ -375,8 +374,8 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph197.ne
   store i64 %.0152, ptr %i.c, align 8, !tbaa !198
   %i.bx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 %.0163, ptr %i.bx, align 8, !tbaa !561
-  %spec.select255 = select i1 %3, i64 16, i64 24
-  %spec.select256 = select i1 %3, i64 32, i64 40
+  %spec.select255 = select i1 %3, i64 24, i64 16
+  %spec.select256 = select i1 %3, i64 40, i64 32
   br label %bb.k
 
 bb.k:                                             ; preds = %.thread, %.thread.thread
@@ -466,7 +465,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph200.ne
   %i.dn = zext i1 %i.dm to i8
   %i.do = getelementptr inbounds nuw i8, ptr %i.c, i64 424
   store i8 %i.dn, ptr %i.do, align 8, !tbaa !159
-  br i1 %3, label %.loopexit189, label %.preheader190
+  br i1 %3, label %.preheader190, label %.loopexit189
 
 .preheader190:                                    ; preds = %._crit_edge201
   %i.dp = getelementptr inbounds nuw i8, ptr %i.c, i64 428
@@ -869,11 +868,11 @@ bb.e:                                             ; preds = %.lr.ph, %.thread765
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %.0543821, i64 48
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !284 ; 10 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !284 ; 9 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.0543821, i64 40 ; 3 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !204 ; 4 uses
   %i.ae = icmp ne ptr %i.ad, null
-  %i.af = icmp ne ptr %i.ab, null                 ; 2 uses
+  %i.af = icmp ne ptr %i.ab, null                 ; 3 uses
   %or.cond = select i1 %i.ae, i1 %i.af, i1 false
   br i1 %or.cond, label %bb.g, label %bb.l
 
@@ -944,8 +943,7 @@ bb.n:                                             ; preds = %.thread885
   %i.bb = load i8, ptr %i.x, align 8, !tbaa !197
   %i.bc = or i8 %i.bb, 4                          ; 2 uses
   store i8 %i.bc, ptr %i.x, align 8, !tbaa !197
-  %.not701810 = icmp eq ptr %i.ab, null
-  br i1 %.not701810, label %bb.q, label %bb.o
+  br i1 %i.af, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ab, i64 40

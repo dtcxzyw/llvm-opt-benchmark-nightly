@@ -205,20 +205,19 @@ _RNvMs1_NtNtNtCsG258MDvU3F_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i:
 ._crit_edge.i:                                    ; preds = %_RNvMs1_NtNtNtCsG258MDvU3F_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, %bb.b
   %.sroa.0.0.lcssa.i = phi i64 [ %i.e, %bb.b ], [ %i.l, %_RNvMs1_NtNtNtCsG258MDvU3F_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ]
   %.sroa.0.049.lcssa.i = phi i32 [ 0, %bb.b ], [ %i.k, %_RNvMs1_NtNtNtCsG258MDvU3F_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], !dbg !10861
-  %i.o = lshr i64 %.sroa.0.0.lcssa.i, 1           ; 3 uses
+  %i.o = lshr i64 %.sroa.0.0.lcssa.i, 1           ; 2 uses
   %i.p = load atomic i64, ptr %0 acquire, align 128, !dbg !10862 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !10863 ; 2 uses
   %i.r = atomicrmw xchg ptr %i.q, ptr null acq_rel, align 8, !dbg !10864 ; 2 uses
-  %i.s = lshr i64 %i.p, 1, !dbg !10865            ; 3 uses
-  %i.t = icmp ne i64 %i.s, %i.o, !dbg !10865
+  %i.s = lshr i64 %i.p, 1, !dbg !10865            ; 2 uses
+  %i.t = icmp ne i64 %i.s, %i.o, !dbg !10865      ; 2 uses
   %i.u = icmp eq ptr %i.r, null
   %or.cond.i = select i1 %i.t, i1 %i.u, i1 false, !dbg !10865
   br i1 %or.cond.i, label %.preheader.i, label %.loopexit.i, !dbg !10865
 
 .loopexit.i:                                      ; preds = %_RNvMs1_NtNtNtCsG258MDvU3F_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i, %._crit_edge.i
   %.sroa.011.0.i = phi ptr [ %i.r, %._crit_edge.i ], [ %i.z, %_RNvMs1_NtNtNtCsG258MDvU3F_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i ], !dbg !10866 ; 2 uses
-  %.not53.i = icmp eq i64 %i.s, %i.o, !dbg !10867
-  br i1 %.not53.i, label %._crit_edge58.i, label %.lr.ph57.i, !dbg !10867
+  br i1 %i.t, label %.lr.ph57.i, label %._crit_edge58.i, !dbg !10867
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %_RNvMs1_NtNtNtCsG258MDvU3F_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i
   %.sroa.0.1.i = phi i32 [ %i.y, %_RNvMs1_NtNtNtCsG258MDvU3F_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit30.i ], [ %.sroa.0.049.lcssa.i, %._crit_edge.i ], !dbg !10861 ; 6 uses

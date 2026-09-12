@@ -205,11 +205,11 @@ bb.j:                                             ; preds = %bb.i
 _ZN8nanobind6detail10new_objectEPNS0_12nb_internalsEP7_object.exit: ; preds = %bb.i, %.noexc, %bb.j
   store ptr @PyType_Type, ptr getelementptr inbounds nuw (i8, ptr @_ZN8nanobind6detailL13nb_meta_slotsE, i64 8), align 8
   %i.n = invoke ptr @PyType_FromSpec(ptr noundef nonnull @_ZN8nanobind6detailL12nb_meta_specE)
-          to label %.noexc33 unwind label %bb.z   ; 7 uses
+          to label %.noexc33 unwind label %bb.z   ; 6 uses
 
 .noexc33:                                         ; preds = %_ZN8nanobind6detail10new_objectEPNS0_12nb_internalsEP7_object.exit
-  %.not.i32 = icmp eq ptr %i.n, null
-  br i1 %.not.i32, label %_ZN8nanobind6detail8new_typeEPNS0_12nb_internalsEP11PyType_Spec.exit, label %bb.k
+  %.not.i32 = icmp ne ptr %i.n, null              ; 2 uses
+  br i1 %.not.i32, label %bb.k, label %_ZN8nanobind6detail8new_typeEPNS0_12nb_internalsEP11PyType_Spec.exit
 
 bb.k:                                             ; preds = %.noexc33
   %i.o = load ptr, ptr %i.a, align 8
@@ -327,9 +327,8 @@ _ZN8nanobind6detail8new_typeEPNS0_12nb_internalsEP11PyType_Spec.exit53: ; preds 
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.ak, ptr %i.ar, align 32
   %i.as = load ptr, ptr %0, align 64
-  %2 = icmp ne ptr %i.as, null
-  %i.at = icmp ne ptr %i.n, null
-  %or.cond = and i1 %i.at, %2
+  %i.at = icmp ne ptr %i.as, null
+  %or.cond = and i1 %.not.i32, %i.at
   br i1 %or.cond, label %bb.w, label %.critedge, !prof !26
 
 bb.w:                                             ; preds = %_ZN8nanobind6detail8new_typeEPNS0_12nb_internalsEP11PyType_Spec.exit53

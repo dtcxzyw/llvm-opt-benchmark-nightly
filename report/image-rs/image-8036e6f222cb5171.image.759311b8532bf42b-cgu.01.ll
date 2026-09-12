@@ -177,11 +177,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ba = getelementptr inbounds nuw i8, ptr %4, i64 2450
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw)
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 59 uses
-  %i.bc = load i8, ptr %i.bb, align 8, !noundef !5 ; 5 uses
-  %i.bd = icmp ne i8 %i.bc, 0
+  %i.bc = load i8, ptr %i.bb, align 8, !noundef !5 ; 4 uses
+  %i.bd = icmp ne i8 %i.bc, 0                     ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 30 ; 10 uses
-  %i.bf = load i8, ptr %i.be, align 2, !range !7  ; 2 uses
-  %.not = icmp eq i8 %i.bf, -1
+  %i.bf = load i8, ptr %i.be, align 2, !range !7
+  %.not = icmp eq i8 %i.bf, -1                    ; 2 uses
   %or.cond = select i1 %i.bd, i1 true, i1 %.not
   br i1 %or.cond, label %bb.d, label %bb.bw
 
@@ -202,11 +202,11 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !210)
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 31 ; 4 uses
-  %8 = icmp ne i8 %i.bf, -1
+  %.not.not = xor i1 %.not, true
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 35
   %i.bj = load i8, ptr %i.bi, align 1, !range !8, !alias.scope !211, !noalias !212
   %i.bk = trunc nuw i8 %i.bj to i1
-  %or.cond.i.i = select i1 %8, i1 true, i1 %i.bk
+  %or.cond.i.i = select i1 %.not.not, i1 true, i1 %i.bk
   br i1 %or.cond.i.i, label %bb.f, label %bb.g
 
 .loopexit572:                                     ; preds = %.preheader571, %.loopexit574, %bb.be
@@ -307,8 +307,7 @@ bb.n:                                             ; preds = %_RNvXs_NtNtNtCslN0b
   br i1 %i.cu, label %bb.i, label %bb.p
 
 bb.o:                                             ; preds = %bb.g
-  %9 = icmp eq i8 %i.bc, 0
-  br i1 %9, label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream9decode_dcINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECsa5QsYiPB8Gl_5image.exit.thread, label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream6refillINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECsa5QsYiPB8Gl_5image.exit.i.thread
+  br i1 %i.bd, label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream6refillINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECsa5QsYiPB8Gl_5image.exit.i.thread, label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream9decode_dcINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECsa5QsYiPB8Gl_5image.exit.thread
 
 bb.p:                                             ; preds = %bb.n
   %.sroa.0112.0.copyload.i.i = load i32, ptr %i.ac, align 4, !noalias !213 ; 2 uses
@@ -711,11 +710,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ba = getelementptr inbounds nuw i8, ptr %4, i64 2450
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw)
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 59 uses
-  %i.bc = load i8, ptr %i.bb, align 8, !noundef !5 ; 5 uses
-  %i.bd = icmp ne i8 %i.bc, 0
+  %i.bc = load i8, ptr %i.bb, align 8, !noundef !5 ; 4 uses
+  %i.bd = icmp ne i8 %i.bc, 0                     ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 30 ; 10 uses
-  %i.bf = load i8, ptr %i.be, align 2, !range !7  ; 2 uses
-  %.not = icmp eq i8 %i.bf, -1
+  %i.bf = load i8, ptr %i.be, align 2, !range !7
+  %.not = icmp eq i8 %i.bf, -1                    ; 2 uses
   %or.cond = select i1 %i.bd, i1 true, i1 %.not
   br i1 %or.cond, label %bb.d, label %bb.bw
 
@@ -736,11 +735,11 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !479)
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 31 ; 4 uses
-  %8 = icmp ne i8 %i.bf, -1
+  %.not.not = xor i1 %.not, true
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 35
   %i.bj = load i8, ptr %i.bi, align 1, !range !8, !alias.scope !480, !noalias !481
   %i.bk = trunc nuw i8 %i.bj to i1
-  %or.cond.i.i = select i1 %8, i1 true, i1 %i.bk
+  %or.cond.i.i = select i1 %.not.not, i1 true, i1 %i.bk
   br i1 %or.cond.i.i, label %bb.f, label %bb.g
 
 .loopexit572:                                     ; preds = %.preheader571, %.loopexit574, %bb.be
@@ -841,8 +840,7 @@ bb.n:                                             ; preds = %_RNvXs_NtNtNtCslN0b
   br i1 %i.cu, label %bb.i, label %bb.p
 
 bb.o:                                             ; preds = %bb.g
-  %9 = icmp eq i8 %i.bc, 0
-  br i1 %9, label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream9decode_dcINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorRShEECsa5QsYiPB8Gl_5image.exit.thread, label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream6refillINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorRShEECsa5QsYiPB8Gl_5image.exit.i.thread
+  br i1 %i.bd, label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream6refillINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorRShEECsa5QsYiPB8Gl_5image.exit.i.thread, label %_RINvMNtCsaXAyoiiLu3Y_9zune_jpeg9bitstreamNtB3_9BitStream9decode_dcINtNtNtNtCslN0b76tEcC3_9zune_core10bytestream6reader14no_std_readers7ZCursorRShEECsa5QsYiPB8Gl_5image.exit.thread
 
 bb.p:                                             ; preds = %bb.n
   %.sroa.0112.0.copyload.i.i = load i32, ptr %i.ac, align 4, !noalias !482 ; 2 uses

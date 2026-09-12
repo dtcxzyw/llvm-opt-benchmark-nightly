@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.a
   %i.o = and i32 %i.n, %i.m
   %i.p = and i32 %i.m, 7
   %i.q = xor i32 %i.p, 7
-  %i.r = or i32 %i.q, %i.o                        ; 2 uses
+  %i.r = or i32 %i.q, %i.o
   %.not219 = icmp eq i32 %i.r, 7
   %i.s = and i32 %8, 6144                         ; 2 uses
-  %.not220 = icmp eq i32 %i.s, 0                  ; 2 uses
-  %or.cond259 = and i1 %.not220, %.not219
+  %.not220 = icmp eq i32 %i.s, 0                  ; 3 uses
+  %or.cond259 = and i1 %.not220, %.not219         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.u = and i32 %8, 8192
   %.not224 = icmp eq i32 %i.u, 0                  ; 7 uses
@@ -219,7 +219,6 @@ bb.c:                                             ; preds = %bb.a
   %.not16.i = icmp eq i32 %i.x, 0
   %i.y = and i32 %8, 14848
   %.not18.i = icmp eq i32 %i.y, 0                 ; 2 uses
-  %9 = icmp ne i32 %i.s, 0                        ; 3 uses
   %i.z = and i32 %8, 514                          ; 3 uses
   %i.aa = icmp eq i32 %i.z, 514
   br label %JS_FreeValue.exit315.outer
@@ -479,14 +478,14 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 bb.t:                                             ; preds = %bb.s
   %i.el = and i32 %i.ef, -1073741824
   %i.em = icmp eq i32 %i.el, 1073741824           ; 2 uses
-  %i.en = xor i1 %9, %i.em
-  br i1 %i.en, label %check_define_prop_flags.exit.thread, label %bb.u
+  %i.en = xor i1 %.not220, %i.em
+  br i1 %i.en, label %bb.u, label %check_define_prop_flags.exit.thread
 
 bb.u:                                             ; preds = %bb.t
-  %or.cond.i = or i1 %9, %i.em
-  %or.cond.not.i = xor i1 %or.cond.i, true
+  %or.cond.not.i = xor i1 %i.em, true
   %i.eo = and i32 %i.ef, 134217728
-  %.not20.i = icmp eq i32 %i.eo, 0
+  %9 = or disjoint i32 %i.eo, %i.s
+  %.not20.i = icmp eq i32 %9, 0
   %or.cond21.i = and i1 %.not20.i, %or.cond.not.i
   %or.cond23.i = and i1 %i.aa, %or.cond21.i
   br i1 %or.cond23.i, label %check_define_prop_flags.exit.thread, label %check_define_prop_flags.exit.thread691
@@ -889,9 +888,7 @@ JS_FreeValueRT.exit318.thread:                    ; preds = %.split395.thread, %
   br label %js_update_property_flags.exit
 
 bb.dh:                                            ; preds = %bb.dg
-  %10 = icmp ne i32 %i.r, 7
-  %or.cond = or i1 %9, %10
-  br i1 %or.cond, label %bb.di, label %bb.dj
+  br i1 %or.cond259, label %bb.dj, label %bb.di
 
 bb.di:                                            ; preds = %bb.dh
   %i.ta = tail call i32 (ptr, i32, ptr, ...) @JS_ThrowTypeErrorOrFalse(ptr noundef %0, i32 noundef %8, ptr noundef nonnull @.str.52)
@@ -1294,7 +1291,7 @@ bb.abh:                                           ; preds = %bb.abf
 
 bb.abi:                                           ; preds = %bb.abh
   %i.ert = extractvalue { i64, i64 } %i.erp, 0
-  %i.eru = call fastcc i32 @JS_ToBoolFree(ptr noundef %.0, i64 %i.ert, i64 %i.erq), !inline_history !1270 ; 2 uses
+  %i.eru = call fastcc i32 @JS_ToBoolFree(ptr noundef %.0, i64 %i.ert, i64 %i.erq), !inline_history !1270
   %i.erv = call fastcc { i64, i64 } @JS_GetPropertyInternal(ptr noundef %.0, i64 %.sroa.06.0.copyload.i, i64 %.sroa.6.0.copyload.i, i32 noundef 68, i64 %.sroa.06.0.copyload.i, i64 %.sroa.6.0.copyload.i, i1 noundef zeroext false), !inline_history !1269 ; 2 uses
   %i.erw = extractvalue { i64, i64 } %i.erv, 0
   %i.erx = extractvalue { i64, i64 } %i.erv, 1    ; 2 uses
@@ -1319,13 +1316,12 @@ bb.abk:                                           ; preds = %bb.abj
 JS_FreeValue.exit4936:                            ; preds = %bb.abj, %bb.abk
   store i64 %i.erw, ptr %i.erl, align 8, !tbaa !218
   store i64 %i.erx, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !240
-  %i.esf = icmp ne i32 %i.eru, 0
+  %i.esf = icmp ne i32 %i.eru, 0                  ; 2 uses
   %.sroa.0.0.insert.ext.i4932 = zext i1 %i.esf to i64
   store i64 %.sroa.0.0.insert.ext.i4932, ptr %.31, align 8, !tbaa !218
   %.sroa.4.0..sroa_idx.i4164 = getelementptr inbounds nuw i8, ptr %.31, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx.i4164, align 8, !tbaa !240
-  %.not.i4165 = icmp eq i32 %i.eru, 0
-  br i1 %.not.i4165, label %js_iterator_get_value_done.exit, label %bb.abl
+  br i1 %i.esf, label %bb.abl, label %js_iterator_get_value_done.exit
 
 bb.abl:                                           ; preds = %JS_FreeValue.exit4936
   %i.esg = getelementptr inbounds i8, ptr %.31, i64 -64 ; 2 uses
@@ -1728,7 +1724,7 @@ bb.a:
   %i.d = icmp ne ptr %4, null                     ; 4 uses
   %i.e = icmp eq ptr %7, null
   %i.f = and i1 %i.e, %.not
-  %i.g = icmp ne i32 %5, 21
+  %i.g = icmp ne i32 %5, 21                       ; 3 uses
   %i.h = and i1 %i.g, %i.f
   %i.i = and i1 %i.c, %i.h
   %or.cond7 = and i1 %i.d, %i.i
@@ -1762,7 +1758,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.d, label %bb.h, label %.thread
 
 .thread:                                          ; preds = %bb.g
-  %10 = icmp eq i32 %5, 21
+  %.not133 = xor i1 %i.g, true
   br label %bb.n
 
 bb.h:                                             ; preds = %bb.g
@@ -1775,8 +1771,8 @@ bb.i:                                             ; preds = %bb.h
   br label %js_malloc.exit.thread
 
 bb.j:                                             ; preds = %bb.h
-  %11 = icmp eq i32 %5, 21                        ; 2 uses
-  %or.cond9 = and i1 %11, %9
+  %.not134 = xor i1 %i.g, true                    ; 2 uses
+  %or.cond9 = and i1 %9, %.not134
   br i1 %or.cond9, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
@@ -1794,7 +1790,7 @@ bb.m:                                             ; preds = %bb.l
   br label %js_malloc.exit.thread
 
 bb.n:                                             ; preds = %.thread, %bb.l, %bb.k, %bb.j
-  %i.y = phi i1 [ %10, %.thread ], [ true, %bb.l ], [ true, %bb.k ], [ %11, %bb.j ] ; 3 uses
+  %i.y = phi i1 [ %.not133, %.thread ], [ true, %bb.l ], [ true, %bb.k ], [ %.not134, %bb.j ] ; 3 uses
   %i.z = load ptr, ptr %i.a, align 8, !tbaa !232  ; 9 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 40 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 48 ; 3 uses
@@ -2197,13 +2193,12 @@ bb.q:                                             ; preds = %bb.m, %bb.n, %bb.o
   %i.cs = getelementptr inbounds nuw i8, ptr %i.ba, i64 32
   store ptr %.054, ptr %i.cs, align 8, !tbaa !330
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !331 ; 3 uses
-  %i.cv = icmp ne ptr %i.cu, null
+  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !331 ; 2 uses
+  %i.cv = icmp ne ptr %i.cu, null                 ; 2 uses
   %i.cw = zext i1 %i.cv to i8
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ba, i64 27
   store i8 %i.cw, ptr %i.cx, align 1, !tbaa !322
-  %.not62 = icmp eq ptr %i.cu, null
-  br i1 %.not62, label %js_malloc.exit.thread, label %bb.r
+  br i1 %i.cv, label %bb.r, label %js_malloc.exit.thread
 
 bb.r:                                             ; preds = %bb.q
   %i.cy = getelementptr inbounds i8, ptr %i.cu, i64 -4 ; 2 uses
@@ -2606,13 +2601,13 @@ bb.ad:                                            ; preds = %bb.aa, %js_dup.exit
 bb.ae:                                            ; preds = %bb.ad
   %i.ex = icmp eq i32 %i.ec, 1
   %i.ey = shl i32 %i.ec, 1
-  %.029.i = select i1 %i.ex, i32 4, i32 %i.ey     ; 7 uses
+  %.029.i = select i1 %i.ex, i32 4, i32 %i.ey     ; 6 uses
   %i.ez = zext i32 %.029.i to i64                 ; 3 uses
   %i.fa = shl nuw nsw i64 %i.ez, 4
   %i.fb = load ptr, ptr %i.a, align 8, !tbaa !232
   %i.fc = tail call ptr @js_realloc_rt(ptr noundef %i.fb, ptr noundef nonnull %i.eh, i64 noundef %i.fa), !inline_history !1878 ; 8 uses
   %.not.i.i52 = icmp eq ptr %i.fc, null           ; 2 uses
-  %i.fd = icmp ne i32 %.029.i, 0
+  %i.fd = icmp ne i32 %.029.i, 0                  ; 2 uses
   %i.fe = and i1 %i.fd, %.not.i.i52
   br i1 %i.fe, label %bb.af, label %js_realloc.exit.i, !prof !192
 
@@ -2633,8 +2628,7 @@ js_realloc.exit.i:                                ; preds = %bb.ae
   br i1 %.not.i.i52, label %map_hash_resize.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %js_realloc.exit.i
-  %.not.i = icmp eq i32 %.029.i, 0
-  br i1 %.not.i, label %._crit_edge.i53, label %.lr.ph.i.preheader
+  br i1 %i.fd, label %.lr.ph.i.preheader, label %._crit_edge.i53
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
   %xtraiter = and i64 %i.ez, 2                    ; 2 uses
@@ -3037,7 +3031,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #49
   %i.b = and i64 %2, 4294967295
   %i.c = icmp eq i64 %i.b, 4294967295
-  %.not = icmp eq i32 %5, 0
+  %.not = icmp eq i32 %5, 0                       ; 2 uses
   %spec.select = and i1 %i.c, %.not
   br i1 %spec.select, label %bb.b, label %.critedge.thread, !prof !324
 
@@ -3185,10 +3179,9 @@ bb.o:                                             ; preds = %bb.n
   br label %.loopexit
 
 bb.p:                                             ; preds = %bb.n
-  %7 = icmp ne i32 %5, 0
-  %8 = icmp sgt i32 %3, 0                         ; 2 uses
-  %or.cond = and i1 %8, %7
-  br i1 %or.cond, label %bb.q, label %bb.r
+  %7 = icmp slt i32 %3, 1                         ; 2 uses
+  %or.cond.not = or i1 %7, %.not
+  br i1 %or.cond.not, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.bu = tail call fastcc i32 @JS_CopySubArray(ptr noundef %0, i64 %i.bm, i64 %i.bn, i64 noundef %i.bq, i64 noundef 0, i64 noundef %i.bp, i32 noundef -1)
@@ -3196,7 +3189,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not97, label %.lr.ph131.preheader, label %.loopexit
 
 bb.r:                                             ; preds = %bb.p
-  br i1 %8, label %.lr.ph131.preheader, label %._crit_edge132
+  br i1 %7, label %._crit_edge132, label %.lr.ph131.preheader
 
 .lr.ph131.preheader:                              ; preds = %bb.q, %bb.r
   %.085143 = phi i64 [ %i.bp, %bb.r ], [ 0, %bb.q ]
@@ -3599,10 +3592,9 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   %i.dx = phi i64 [ %i.dt, %bb.r ], [ %.pre.i, %bb.s ], [ %i.do, %bb.q ] ; 2 uses
-  %i.dy = and i64 %i.dx, 1024                     ; 2 uses
-  %.not176.i = icmp eq i64 %i.dy, 0
-  %i.dz = icmp ne i64 %i.dy, 0
-  br i1 %.not176.i, label %bb.ag, label %bb.u
+  %i.dy = and i64 %i.dx, 1024
+  %i.dz = icmp ne i64 %i.dy, 0                    ; 2 uses
+  br i1 %i.dz, label %bb.u, label %bb.ag
 
 bb.u:                                             ; preds = %bb.t
   %i.ea = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 2 uses
@@ -3685,10 +3677,9 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad, %bb.t
   %i.fe = phi i64 [ %i.ey, %bb.ad ], [ %i.ey, %bb.ae ], [ %.pre265.i, %bb.af ], [ %i.dx, %bb.t ]
-  %i.ff = and i64 %i.fe, 512                      ; 2 uses
-  %.not180.i = icmp eq i64 %i.ff, 0
-  %i.fg = icmp ne i64 %i.ff, 0
-  br i1 %.not180.i, label %add_arguments_arg.exit.i, label %bb.ah
+  %i.ff = and i64 %i.fe, 512
+  %i.fg = icmp ne i64 %i.ff, 0                    ; 2 uses
+  br i1 %i.fg, label %bb.ah, label %add_arguments_arg.exit.i
 
 bb.ah:                                            ; preds = %bb.ag
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
@@ -4091,7 +4082,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !553  ; 25 uses
   %i.h = icmp samesign ugt i32 %1, 1              ; 3 uses
   %i.i = icmp eq i32 %1, 1                        ; 2 uses
-  %i.j = icmp eq i32 %1, 2                        ; 4 uses
+  %i.j = icmp eq i32 %1, 2                        ; 5 uses
   %or.cond8 = icmp samesign ult i32 %1, 3         ; 2 uses
   br i1 %or.cond8, label %bb.b, label %bb.t
 
@@ -4240,10 +4231,9 @@ bb.r:                                             ; preds = %JS_DupAtom.exit
   br label %.thread845
 
 .thread783:                                       ; preds = %bb.o, %bb.j, %bb.p
-  %9 = icmp ne i32 %1, 2
-  %10 = icmp ne i32 %6, 2
-  %or.cond18 = and i1 %9, %10
-  br i1 %or.cond18, label %bb.s, label %bb.t
+  %9 = icmp eq i32 %6, 2
+  %or.cond18.not = or i1 %i.j, %9
+  br i1 %or.cond18.not, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %.thread783
   %i.bk = tail call i32 (ptr, ptr, ...) @js_parse_error(ptr noundef nonnull %0, ptr noundef nonnull @.str.514) ; 0 uses
@@ -4622,8 +4612,8 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   %i.hf = icmp eq i32 %i.he, 8                    ; 2 uses
   %i.hg = or i1 %or.cond36, %i.hf
   %i.hh = select i1 %i.hg, i64 8, i64 0           ; 2 uses
-  %i.hi = icmp ne i32 %1, 3
-  %i.hj = icmp ne i32 %1, 7                       ; 3 uses
+  %i.hi = icmp ne i32 %1, 3                       ; 3 uses
+  %i.hj = icmp ne i32 %1, 7                       ; 4 uses
   %i.hk = and i1 %i.hi, %i.hj
   %i.hl = select i1 %i.hd, i64 32768, i64 0       ; 2 uses
   %i.hm = select i1 %i.hk, i64 1536, i64 0
@@ -4632,8 +4622,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   %i.hp = or disjoint i64 %i.ho, %i.hl
   %i.hq = or disjoint i64 %i.hp, %i.hh            ; 4 uses
   store i64 %i.hq, ptr %i.gy, align 4
-  %11 = icmp eq i32 %1, 3                         ; 2 uses
-  br i1 %11, label %bb.bb, label %bb.bc
+  br i1 %i.hi, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   %i.hr = getelementptr inbounds nuw i8, ptr %i.gt, i64 8
@@ -4661,8 +4650,7 @@ bb.bb:                                            ; preds = %bb.ba
   br label %bb.bf
 
 bb.bc:                                            ; preds = %bb.ba
-  %12 = icmp eq i32 %1, 7
-  br i1 %12, label %bb.bd, label %bb.be
+  br i1 %i.hj, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
   %i.ig = and i64 %i.hq, -30721
@@ -4735,7 +4723,7 @@ bb.bk:                                            ; preds = %bb.bf
   %i.jm = and i64 %i.ix, -97
   %i.jn = or disjoint i64 %i.jm, 32
   store i64 %i.jn, ptr %i.gy, align 4
-  br i1 %11, label %bb.bl, label %bb.bt
+  br i1 %i.hi, label %bb.bt, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   %i.jo = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -5138,7 +5126,7 @@ bb.h:                                             ; preds = %bb.g
   br label %.thread591
 
 bb.i:                                             ; preds = %bb.g, %JS_DupAtom.exit
-  %.0424 = phi i32 [ %i.ac, %JS_DupAtom.exit ], [ 0, %bb.g ] ; 44 uses
+  %.0424 = phi i32 [ %i.ac, %JS_DupAtom.exit ], [ 0, %bb.g ] ; 43 uses
   br i1 %1, label %JS_DupAtom.exit573, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -5205,7 +5193,7 @@ bb.p:                                             ; preds = %bb.n
 
 emit_op.exit:                                     ; preds = %bb.p, %bb.o, %bb.m
   %.0417 = phi i8 [ 1, %bb.m ], [ 0, %bb.o ], [ 0, %bb.p ] ; 2 uses
-  %i.bt = icmp ne i32 %.0424, 0                   ; 4 uses
+  %i.bt = icmp ne i32 %.0424, 0                   ; 6 uses
   br i1 %i.bt, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %emit_op.exit
@@ -5272,10 +5260,9 @@ bb.w:                                             ; preds = %emit_op.exit574
   br label %emit_u32.exit
 
 emit_u32.exit:                                    ; preds = %bb.v, %bb.w
-  %4 = icmp eq i32 %.0424, 0                      ; 2 uses
   %.not454 = icmp eq i32 %.1421, 0                ; 2 uses
   %. = select i1 %.not454, i32 48, i32 22
-  %.0423 = select i1 %4, i32 %., i32 %.0424       ; 3 uses
+  %.0423 = select i1 %i.bt, i32 %.0424, i32 %.    ; 3 uses
   %.val541 = load ptr, ptr %i.h, align 8, !tbaa !553 ; 4 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %.val541, i64 288 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.val541, i64 296 ; 2 uses
@@ -5678,7 +5665,7 @@ bb.ex:                                            ; preds = %bb.ew
   br label %bb.fa
 
 bb.ey:                                            ; preds = %bb.ev
-  br i1 %4, label %bb.ez, label %bb.fa
+  br i1 %i.bt, label %bb.fa, label %bb.ez
 
 bb.ez:                                            ; preds = %bb.ey
   %.val = load ptr, ptr %i.h, align 8, !tbaa !553
@@ -6081,8 +6068,8 @@ bb.cg:                                            ; preds = %bb.cf
   br label %js_parse_cond_expr.exit
 
 js_parse_cond_expr.exit:                          ; preds = %bb.cg, %bb.cb
-  %i.ks = phi i32 [ %.pre, %bb.cg ], [ %i.kj, %bb.cb ] ; 9 uses
-  %i.kt = icmp eq i32 %i.ks, 61                   ; 3 uses
+  %i.ks = phi i32 [ %.pre, %bb.cg ], [ %i.kj, %bb.cb ] ; 8 uses
+  %i.kt = icmp eq i32 %i.ks, 61                   ; 4 uses
   %i.ku = add i32 %i.ks, 123
   %or.cond4 = icmp ult i32 %i.ku, 12
   %or.cond = or i1 %i.kt, %or.cond4
@@ -6095,8 +6082,8 @@ bb.ch:                                            ; preds = %js_parse_cond_expr.
   br i1 %.not246, label %bb.ci, label %.thread359
 
 bb.ci:                                            ; preds = %bb.ch
-  %2 = icmp ne i32 %i.ks, 61
-  %i.kw = call fastcc i32 @get_lvalue(ptr noundef %0, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef null, i1 noundef zeroext %2, i32 noundef %i.ks)
+  %.not371 = xor i1 %i.kt, true
+  %i.kw = call fastcc i32 @get_lvalue(ptr noundef %0, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef null, i1 noundef zeroext %.not371, i32 noundef %i.ks)
   %i.kx = icmp slt i32 %i.kw, 0
   br i1 %i.kx, label %.thread359, label %bb.cj
 
