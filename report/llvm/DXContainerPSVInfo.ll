@@ -205,29 +205,25 @@ _ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit: ; pred
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.preheader.i
-  %.0614.i = phi i64 [ 0, %.preheader.i ], [ %i.be, %bb.f ] ; 4 uses
+  %.0614.i = phi i64 [ 0, %.preheader.i ], [ %i.be, %bb.f ] ; 3 uses
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %.0614.i
   %bcmp.i = tail call i32 @bcmp(ptr readonly %i.bc, ptr readonly %i.ay, i64 %i.bb)
   %i.bd = icmp eq i32 %bcmp.i, 0
-  br i1 %i.bd, label %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit, label %bb.f
+  br i1 %i.bd, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.be = add i64 %.0614.i, 1                     ; 2 uses
   %.not.i58 = icmp ugt i64 %i.be, %i.ba
   br i1 %.not.i58, label %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit.thread, label %bb.e, !llvm.loop !94
 
-_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit:     ; preds = %bb.e
-  %6 = icmp eq i64 %.0614.i, -1
-  br i1 %6, label %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit.thread, label %bb.g
-
-_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit.thread: ; preds = %bb.f, %_ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit, %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit
+_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit.thread: ; preds = %bb.f, %_ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %i.ax
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.s
   %i.bh = tail call noundef ptr @_ZN4llvm15SmallVectorImplIjE6insertIPKjvEEPjS5_T_S6_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %i.bf, ptr noundef %i.ay, ptr noundef %i.bg) ; 0 uses
   br label %bb.g
 
-bb.g:                                             ; preds = %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit, %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit.thread
-  %.sroa.02.sroa.4.0.in = phi i64 [ %i.ax, %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit.thread ], [ %.0614.i, %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit ]
+bb.g:                                             ; preds = %bb.e, %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit.thread
+  %.sroa.02.sroa.4.0.in = phi i64 [ %i.ax, %_ZL12FindSequenceN4llvm8ArrayRefIjEES1_.exit.thread ], [ %.0614.i, %bb.e ]
   %.sroa.02.sroa.4.0.insert.ext = shl i64 %.sroa.02.sroa.4.0.in, 32 ; 2 uses
   %i.bi = load i32, ptr %i.e, align 8, !tbaa !15  ; 2 uses
   %i.bj = load i32, ptr %i.f, align 4, !tbaa !34

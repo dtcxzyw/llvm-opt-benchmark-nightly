@@ -204,21 +204,17 @@ bb.n:                                             ; preds = %bb.k
   br label %extractLongLatOrReply.exit.thread
 
 bb.o:                                             ; preds = %bb.g, %bb.m, %bb.l, %bb.j, %extractLongLatOrReply.exit
-  %.0341 = phi ptr [ null, %extractLongLatOrReply.exit ], [ null, %bb.j ], [ %i.bc, %bb.m ], [ null, %bb.l ], [ null, %bb.g ] ; 3 uses
+  %.0341 = phi ptr [ null, %extractLongLatOrReply.exit ], [ null, %bb.j ], [ %i.bc, %bb.m ], [ null, %bb.l ], [ null, %bb.g ] ; 2 uses
   %.0332 = phi i32 [ 6, %extractLongLatOrReply.exit ], [ 5, %bb.j ], [ 3, %bb.m ], [ 2, %bb.l ], [ 5, %bb.g ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
   store i64 0, ptr %i.c, align 8, !tbaa !39
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !64 ; 2 uses
   %i.bf = icmp sgt i32 %i.be, %.0332
-  br i1 %i.bf, label %5, label %._crit_edge
+  br i1 %i.bf, label %.lr.ph, label %._crit_edge
 
-5:                                                ; preds = %bb.o
-  %6 = sub nsw i32 %i.be, %.0332                  ; 9 uses
-  %7 = icmp sgt i32 %6, 0
-  br i1 %7, label %.lr.ph, label %._crit_edge
-
-.lr.ph:                                           ; preds = %5
+.lr.ph:                                           ; preds = %bb.o
+  %5 = sub nuw nsw i32 %i.be, %.0332              ; 8 uses
   %i.bg = and i32 %2, 12
   %i.bh = icmp eq i32 %i.bg, 0                    ; 2 uses
   %i.bi = and i32 %2, 8
@@ -289,7 +285,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.ce = add nsw i32 %.0286520, 1                ; 2 uses
-  %i.cf = icmp slt i32 %i.ce, %6
+  %i.cf = icmp slt i32 %i.ce, %5
   br i1 %i.cf, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %bb.w
@@ -315,7 +311,7 @@ bb.aa:                                            ; preds = %bb.w, %bb.v
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cm = add nsw i32 %.0286520, 1                ; 2 uses
-  %i.cn = icmp slt i32 %i.cm, %6
+  %i.cn = icmp slt i32 %i.cm, %5
   %or.cond408 = and i1 %i.bh, %i.cn
   br i1 %or.cond408, label %bb.ac, label %bb.ad
 
@@ -331,7 +327,7 @@ bb.ad:                                            ; preds = %bb.ab, %bb.aa
 
 bb.ae:                                            ; preds = %bb.ad
   %i.cr = add nsw i32 %.0286520, 1                ; 2 uses
-  %i.cs = icmp slt i32 %i.cr, %6
+  %i.cs = icmp slt i32 %i.cr, %5
   %or.cond410 = and i1 %i.bh, %i.cs
   br i1 %or.cond410, label %bb.af, label %bb.ag
 
@@ -350,7 +346,7 @@ bb.ag:                                            ; preds = %bb.ae
 
 bb.ah:                                            ; preds = %.thread
   %i.cw = add nsw i32 %.0286520, 1                ; 3 uses
-  %i.cx = icmp sge i32 %i.cw, %6
+  %i.cx = icmp sge i32 %i.cw, %5
   %i.cy = icmp ne i32 %.0307515, 0
   %i.cz = or i1 %.not386, %i.cx
   %or.cond459 = select i1 %i.cz, i1 true, i1 %i.cy
@@ -377,7 +373,7 @@ bb.al:                                            ; preds = %bb.ah, %.thread
 
 bb.am:                                            ; preds = %bb.al
   %i.df = add nsw i32 %.0286520, 2                ; 2 uses
-  %i.dg = icmp sge i32 %i.df, %6
+  %i.dg = icmp sge i32 %i.df, %5
   %i.dh = icmp ne i32 %.0312514, 0
   %i.di = or i1 %.not386, %i.dg
   %or.cond460 = select i1 %i.di, i1 true, i1 %i.dh
@@ -399,7 +395,7 @@ bb.ao:                                            ; preds = %bb.am, %bb.al
 
 bb.ap:                                            ; preds = %bb.ao
   %i.dq = add nsw i32 %.0286520, 2                ; 2 uses
-  %i.dr = icmp sge i32 %i.dq, %6
+  %i.dr = icmp sge i32 %i.dq, %5
   %i.ds = icmp ne i32 %.0297517, 0
   %i.dt = or i1 %.not386, %i.dr
   %or.cond461 = select i1 %i.dt, i1 true, i1 %i.ds
@@ -425,7 +421,7 @@ bb.as:                                            ; preds = %bb.ap, %bb.ao
 
 bb.at:                                            ; preds = %bb.as
   %i.ea = add nsw i32 %.0286520, 3                ; 2 uses
-  %i.eb = icmp sge i32 %i.ea, %6
+  %i.eb = icmp sge i32 %i.ea, %5
   %i.ec = icmp ne i32 %.0302516, 0
   %i.ed = or i1 %.not386, %i.eb
   %or.cond462 = select i1 %i.ed, i1 true, i1 %i.ec
@@ -463,7 +459,7 @@ bb.ax:                                            ; preds = %bb.an, %bb.ai, %bb.
   %.2291.ph = phi i32 [ %.0289519, %bb.ai ], [ %.0289519, %bb.p ], [ %.0289519, %bb.q ], [ %.0289519, %bb.r ], [ 1, %bb.s ], [ %.0289519, %bb.t ], [ %.0289519, %bb.u ], [ %.0289519, %bb.ac ], [ %.0289519, %bb.af ], [ %.0289519, %bb.y ], [ %.0289519, %bb.ag ], [ %.0289519, %bb.aj ], [ %.0289519, %bb.ar ], [ %.0289519, %bb.av ], [ %.0289519, %bb.an ] ; 2 uses
   %.2288.ph = phi i32 [ %i.cw, %bb.ai ], [ %.0286520, %bb.p ], [ %.0286520, %bb.q ], [ %.0286520, %bb.r ], [ %.0286520, %bb.s ], [ %.0286520, %bb.t ], [ %.0286520, %bb.u ], [ %i.cm, %bb.ac ], [ %i.cr, %bb.af ], [ %i.ce, %bb.y ], [ %.0286520, %bb.ag ], [ %i.cw, %bb.aj ], [ %i.dq, %bb.ar ], [ %i.ea, %bb.av ], [ %i.df, %bb.an ]
   %i.ek = add nsw i32 %.2288.ph, 1                ; 2 uses
-  %i.el = icmp slt i32 %i.ek, %6
+  %i.el = icmp slt i32 %i.ek, %5
   br i1 %i.el, label %bb.p, label %._crit_edge.loopexit, !llvm.loop !87
 
 ._crit_edge.loopexit:                             ; preds = %bb.ax
@@ -476,18 +472,18 @@ bb.ax:                                            ; preds = %bb.an, %bb.ai, %bb.
   %i.es = icmp ne i32 %.2324.ph, 0
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %5, %._crit_edge.loopexit, %bb.o
-  %.5 = phi ptr [ %.0341, %bb.o ], [ %.0341, %5 ], [ %.3344.ph, %._crit_edge.loopexit ] ; 9 uses
-  %.4340 = phi i1 [ true, %bb.o ], [ true, %5 ], [ %i.eq, %._crit_edge.loopexit ]
-  %.4331 = phi i1 [ false, %bb.o ], [ false, %5 ], [ %i.er, %._crit_edge.loopexit ] ; 4 uses
-  %.4326 = phi i1 [ false, %bb.o ], [ false, %5 ], [ %i.es, %._crit_edge.loopexit ] ; 3 uses
-  %.4321 = phi i32 [ 0, %bb.o ], [ 0, %5 ], [ %.2319.ph, %._crit_edge.loopexit ] ; 2 uses
-  %.4316 = phi i1 [ false, %bb.o ], [ false, %5 ], [ %i.em, %._crit_edge.loopexit ]
-  %.4311 = phi i1 [ false, %bb.o ], [ false, %5 ], [ %i.en, %._crit_edge.loopexit ]
-  %.4306 = phi i1 [ false, %bb.o ], [ false, %5 ], [ %i.eo, %._crit_edge.loopexit ]
-  %.4301 = phi i1 [ false, %bb.o ], [ false, %5 ], [ %i.ep, %._crit_edge.loopexit ]
-  %.4296 = phi i32 [ 0, %bb.o ], [ 0, %5 ], [ %.2294.ph, %._crit_edge.loopexit ] ; 2 uses
-  %.4 = phi i32 [ 0, %bb.o ], [ 0, %5 ], [ %.2291.ph, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.o
+  %.5 = phi ptr [ %.0341, %bb.o ], [ %.3344.ph, %._crit_edge.loopexit ] ; 9 uses
+  %.4340 = phi i1 [ true, %bb.o ], [ %i.eq, %._crit_edge.loopexit ]
+  %.4331 = phi i1 [ false, %bb.o ], [ %i.er, %._crit_edge.loopexit ] ; 4 uses
+  %.4326 = phi i1 [ false, %bb.o ], [ %i.es, %._crit_edge.loopexit ] ; 3 uses
+  %.4321 = phi i32 [ 0, %bb.o ], [ %.2319.ph, %._crit_edge.loopexit ] ; 2 uses
+  %.4316 = phi i1 [ false, %bb.o ], [ %i.em, %._crit_edge.loopexit ]
+  %.4311 = phi i1 [ false, %bb.o ], [ %i.en, %._crit_edge.loopexit ]
+  %.4306 = phi i1 [ false, %bb.o ], [ %i.eo, %._crit_edge.loopexit ]
+  %.4301 = phi i1 [ false, %bb.o ], [ %i.ep, %._crit_edge.loopexit ]
+  %.4296 = phi i32 [ 0, %bb.o ], [ %.2294.ph, %._crit_edge.loopexit ] ; 2 uses
+  %.4 = phi i32 [ 0, %bb.o ], [ %.2291.ph, %._crit_edge.loopexit ] ; 2 uses
   %.not395 = icmp eq ptr %.5, null                ; 4 uses
   br i1 %.not395, label %bb.ba, label %bb.ay
 

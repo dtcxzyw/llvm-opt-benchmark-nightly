@@ -205,16 +205,15 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.cc = add nsw i64 %indvars.iv.i, -6           ; 2 uses
   %i.cd = icmp eq i64 %i.cc, 31
-  %i.ce = trunc nsw i64 %i.cc to i32              ; 2 uses
+  %i.ce = trunc nuw nsw i64 %i.cc to i32          ; 2 uses
   %i.cf = shl i32 2, %i.ce
   %i.cg = sext i32 %i.cf to i64
   br i1 %i.cd, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.ch = shl nuw i32 1, %i.ce                    ; 2 uses
-  %1 = sext i32 %i.ch to i64
-  %smax.i.i = call i32 @llvm.smax.i32(i32 %i.ch, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %i.ch = shl nuw nsw i32 1, %i.ce                ; 2 uses
+  %1 = zext nneg i32 %i.ch to i64
+  %wide.trip.count.i.i = zext nneg i32 %i.ch to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
@@ -617,16 +616,15 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i.i11
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.ea = add nsw i64 %indvars.iv.i, -6           ; 2 uses
   %i.eb = icmp eq i64 %i.ea, 31
-  %i.ec = trunc nsw i64 %i.ea to i32              ; 2 uses
+  %i.ec = trunc nuw nsw i64 %i.ea to i32          ; 2 uses
   %i.ed = shl i32 2, %i.ec
   %i.ee = sext i32 %i.ed to i64
   br i1 %i.eb, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.ef = shl nuw i32 1, %i.ec                    ; 2 uses
-  %7 = sext i32 %i.ef to i64
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.ef, i32 1)
-  %wide.trip.count.i.i107 = zext nneg i32 %smax.i.i to i64
+  %i.ef = shl nuw nsw i32 1, %i.ec                ; 2 uses
+  %7 = zext nneg i32 %i.ef to i64
+  %wide.trip.count.i.i107 = zext nneg i32 %i.ef to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
@@ -1029,16 +1027,15 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i.i10
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.dz = add nsw i64 %indvars.iv.i, -6           ; 2 uses
   %i.ea = icmp eq i64 %i.dz, 31
-  %i.eb = trunc nsw i64 %i.dz to i32              ; 2 uses
+  %i.eb = trunc nuw nsw i64 %i.dz to i32          ; 2 uses
   %i.ec = shl i32 2, %i.eb
   %i.ed = sext i32 %i.ec to i64
   br i1 %i.ea, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.ee = shl nuw i32 1, %i.eb                    ; 2 uses
-  %4 = sext i32 %i.ee to i64
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.ee, i32 1)
-  %wide.trip.count.i.i103 = zext nneg i32 %smax.i.i to i64
+  %i.ee = shl nuw nsw i32 1, %i.eb                ; 2 uses
+  %4 = zext nneg i32 %i.ee to i64
+  %wide.trip.count.i.i103 = zext nneg i32 %i.ee to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
@@ -1441,16 +1438,15 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i.i11
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.dz = add nsw i64 %indvars.iv.i, -6           ; 2 uses
   %i.ea = icmp eq i64 %i.dz, 31
-  %i.eb = trunc nsw i64 %i.dz to i32              ; 2 uses
+  %i.eb = trunc nuw nsw i64 %i.dz to i32          ; 2 uses
   %i.ec = shl i32 2, %i.eb
   %i.ed = sext i32 %i.ec to i64
   br i1 %i.ea, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.ee = shl nuw i32 1, %i.eb                    ; 2 uses
-  %5 = sext i32 %i.ee to i64
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.ee, i32 1)
-  %wide.trip.count.i.i110 = zext nneg i32 %smax.i.i to i64
+  %i.ee = shl nuw nsw i32 1, %i.eb                ; 2 uses
+  %5 = zext nneg i32 %i.ee to i64
+  %wide.trip.count.i.i110 = zext nneg i32 %i.ee to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
@@ -1853,16 +1849,15 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph.i.i
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.by = add nsw i64 %indvars.iv.i, -6           ; 2 uses
   %i.bz = icmp eq i64 %i.by, 31
-  %i.ca = trunc nsw i64 %i.by to i32              ; 2 uses
+  %i.ca = trunc nuw nsw i64 %i.by to i32          ; 2 uses
   %i.cb = shl i32 2, %i.ca
   %i.cc = sext i32 %i.cb to i64
   br i1 %i.bz, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.cd = shl nuw i32 1, %i.ca                    ; 2 uses
-  %2 = sext i32 %i.cd to i64
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.cd, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %i.cd = shl nuw nsw i32 1, %i.ca                ; 2 uses
+  %2 = zext nneg i32 %i.cd to i64
+  %wide.trip.count.i.i = zext nneg i32 %i.cd to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i

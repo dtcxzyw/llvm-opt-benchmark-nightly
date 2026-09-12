@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_ZNKSt7__cxx1112bas
   unreachable
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = add i64 %i.n, 1                          ; 10 uses
+  %i.q = add i64 %i.n, 1                          ; 9 uses
   %i.r = icmp eq ptr %i.j, %i.c
   br i1 %i.r, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.thread.i
 
@@ -210,7 +210,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i: ; pred
   %i.s = icmp ult i64 %i.n, 16
   call void @llvm.assume(i1 %i.s)
   %i.t = icmp samesign ugt i64 %i.q, 15
-  br i1 %i.t, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.i, label %"_ZZN4absl12lts_2026052616strings_internal24StringAppendAndOverwriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN12_GLOBAL__N_149StringAppendAndOverwrite_AmortizedComplexity_Test8TestBodyEvE3$_0EEvRT_NSC_9size_typeET0_ENUlPcmE_clESG_m.exit.i.i.i"
+  br i1 %i.t, label %.sink.split.i, label %"_ZZN4absl12lts_2026052616strings_internal24StringAppendAndOverwriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN12_GLOBAL__N_149StringAppendAndOverwrite_AmortizedComplexity_Test8TestBodyEvE3$_0EEvRT_NSC_9size_typeET0_ENUlPcmE_clESG_m.exit.i.i.i"
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.thread.i: ; preds = %bb.e
   %i.u = load i64, ptr %i.c, align 8, !tbaa !27   ; 4 uses
@@ -222,21 +222,17 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit29.thread.
   %i.x = icmp ugt i64 %i.u, %i.w
   br i1 %i.x, label %.sink.split.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.thread.i, !prof !37
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
-  %9 = icmp samesign ult i64 %i.q, 30
-  br i1 %9, label %.sink.split.i, label %.noexc30
-
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.thread.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit29.thread.i
   %i.y = shl i64 %i.u, 1                          ; 2 uses
   %i.z = icmp ult i64 %i.q, %i.y
   br i1 %i.z, label %.sink.split.i, label %.noexc30
 
-.sink.split.i:                                    ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.thread.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit29.thread.i
-  %.sink.i = phi i64 [ 4611686018427387903, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit29.thread.i ], [ 30, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.i ], [ %i.y, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.thread.i ]
+.sink.split.i:                                    ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.thread.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit29.thread.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i
+  %.sink.i = phi i64 [ 4611686018427387903, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit29.thread.i ], [ 30, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i ], [ %i.y, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.thread.i ]
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(32) %1, i64 noundef %.sink.i)
           to label %.noexc30 unwind label %.loopexit
 
-.noexc30:                                         ; preds = %.sink.split.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.thread.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.thread.i
+.noexc30:                                         ; preds = %.sink.split.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit32.thread.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.thread.i
   %i.aa = icmp ugt i64 %i.q, 4611686018427387903
   br i1 %i.aa, label %.invoke, label %"_ZZN4absl12lts_2026052616strings_internal24StringAppendAndOverwriteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN12_GLOBAL__N_149StringAppendAndOverwrite_AmortizedComplexity_Test8TestBodyEvE3$_0EEvRT_NSC_9size_typeET0_ENUlPcmE_clESG_m.exit.i.i.i", !prof !60
 

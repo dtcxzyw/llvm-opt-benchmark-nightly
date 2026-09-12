@@ -205,31 +205,25 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.ao = load ptr, ptr %i.w, align 8, !tbaa !63
   %.not.i29 = icmp eq ptr %i.ao, null
-  br i1 %.not.i29, label %1, label %Abc_NtkIncrementTravId.exit
+  br i1 %.not.i29, label %bb.k, label %Abc_NtkIncrementTravId.exit
 
-1:                                                ; preds = %bb.j
-  %2 = add nsw i32 %.val32, 500                   ; 5 uses
-  %3 = load i32, ptr %i.x, align 8, !tbaa !64
-  %.not.i.i.i = icmp slt i32 %3, %2
-  br i1 %.not.i.i.i, label %bb.k, label %Vec_IntGrow.exit.i.i
-
-bb.k:                                             ; preds = %1
-  %i.ap = sext i32 %2 to i64
+bb.k:                                             ; preds = %bb.j
+  %1 = add nuw nsw i32 %.val32, 500               ; 5 uses
+  %2 = load i32, ptr %i.x, align 8, !tbaa !64
+  %.not.i.i.i = icmp slt i32 %2, %1
+  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.ap = sext i32 %1 to i64
   %i.aq = shl nuw nsw i64 %i.ap, 2
   %i.ar = tail call noalias ptr @malloc(i64 noundef %i.aq) #37 ; 2 uses
   store ptr %i.ar, ptr %i.w, align 8, !tbaa !65
-  store i32 %2, ptr %i.x, align 8, !tbaa !64
-  br label %Vec_IntGrow.exit.i.i
-
-Vec_IntGrow.exit.i.i:                             ; preds = %bb.k, %1
-  %4 = phi ptr [ %i.ar, %bb.k ], [ null, %1 ]
-  %wide.trip.count.i.i = zext nneg i32 %2 to i64
-  %5 = shl nuw nsw i64 %wide.trip.count.i.i, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %4, i8 0, i64 %5, i1 false), !tbaa !54
-  store i32 %2, ptr %i.y, align 4, !tbaa !59
+  store i32 %1, ptr %i.x, align 8, !tbaa !64
+  %wide.trip.count.i.i = zext nneg i32 %1 to i64
+  %3 = shl nuw nsw i64 %wide.trip.count.i.i, 2
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ar, i8 0, i64 %3, i1 false), !tbaa !54
+  store i32 %1, ptr %i.y, align 4, !tbaa !59
   br label %Abc_NtkIncrementTravId.exit
 
-Abc_NtkIncrementTravId.exit:                      ; preds = %bb.j, %Vec_IntGrow.exit.i.i
+Abc_NtkIncrementTravId.exit:                      ; preds = %bb.j, %bb.k
   %i.as = load i32, ptr %i.z, align 8, !tbaa !66
   %i.at = add nsw i32 %i.as, 1
   store i32 %i.at, ptr %i.z, align 8, !tbaa !66
@@ -515,31 +509,25 @@ bb.i:                                             ; preds = %bb.h
   store i32 0, ptr %i.ae, align 4, !tbaa !59
   %i.aw = load ptr, ptr %i.al, align 8, !tbaa !63
   %.not.i22 = icmp eq ptr %i.aw, null
-  br i1 %.not.i22, label %5, label %Abc_NtkIncrementTravId.exit
+  br i1 %.not.i22, label %bb.j, label %Abc_NtkIncrementTravId.exit
 
-5:                                                ; preds = %bb.i
-  %6 = add nsw i32 %.val33, 500                   ; 5 uses
-  %7 = load i32, ptr %i.am, align 8, !tbaa !64
-  %.not.i.i.i = icmp slt i32 %7, %6
-  br i1 %.not.i.i.i, label %bb.j, label %Vec_IntGrow.exit.i.i
-
-bb.j:                                             ; preds = %5
-  %i.ax = sext i32 %6 to i64
+bb.j:                                             ; preds = %bb.i
+  %5 = add nuw nsw i32 %.val33, 500               ; 5 uses
+  %6 = load i32, ptr %i.am, align 8, !tbaa !64
+  %.not.i.i.i = icmp slt i32 %6, %5
+  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.ax = sext i32 %5 to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
   %i.az = call noalias ptr @malloc(i64 noundef %i.ay) #37 ; 2 uses
   store ptr %i.az, ptr %i.al, align 8, !tbaa !65
-  store i32 %6, ptr %i.am, align 8, !tbaa !64
-  br label %Vec_IntGrow.exit.i.i
-
-Vec_IntGrow.exit.i.i:                             ; preds = %bb.j, %5
-  %8 = phi ptr [ %i.az, %bb.j ], [ null, %5 ]
-  %wide.trip.count.i.i = zext nneg i32 %6 to i64
-  %9 = shl nuw nsw i64 %wide.trip.count.i.i, 2
-  call void @llvm.memset.p0.i64(ptr align 4 %8, i8 0, i64 %9, i1 false), !tbaa !54
-  store i32 %6, ptr %i.an, align 4, !tbaa !59
+  store i32 %5, ptr %i.am, align 8, !tbaa !64
+  %wide.trip.count.i.i = zext nneg i32 %5 to i64
+  %7 = shl nuw nsw i64 %wide.trip.count.i.i, 2
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.az, i8 0, i64 %7, i1 false), !tbaa !54
+  store i32 %5, ptr %i.an, align 4, !tbaa !59
   br label %Abc_NtkIncrementTravId.exit
 
-Abc_NtkIncrementTravId.exit:                      ; preds = %bb.i, %Vec_IntGrow.exit.i.i
+Abc_NtkIncrementTravId.exit:                      ; preds = %bb.i, %bb.j
   %i.ba = load i32, ptr %i.ao, align 8, !tbaa !66
   %i.bb = add nsw i32 %i.ba, 1
   store i32 %i.bb, ptr %i.ao, align 8, !tbaa !66
@@ -942,11 +930,11 @@ declare i32 @llvm.smax.i32(i32, i32) #30
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #30
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.ctlz.i32(i32, i1 immarg) #33
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #34
+declare void @llvm.assume(i1 noundef) #33
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.ctlz.i32(i32, i1 immarg) #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #30
@@ -990,8 +978,8 @@ attributes #29 = { mustprogress nocallback nofree nounwind willreturn "no-trappi
 attributes #30 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #31 = { nofree nounwind }
 attributes #32 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #33 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #34 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #33 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #34 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #35 = { nounwind }
 attributes #36 = { nounwind allocsize(1) }
 attributes #37 = { nounwind allocsize(0) }

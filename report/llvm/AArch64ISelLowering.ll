@@ -205,18 +205,21 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not111176, label %.lr.ph178, label %.critedge115
 
 .lr.ph178:                                        ; preds = %bb.t
-  %i.cr = lshr i32 %i.cq, 2                       ; 4 uses
+  %i.cr = lshr i32 %i.cq, 2                       ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !847 ; 4 uses
   %i.cu = shl nuw nsw i32 %i.cr, 1
   %i.cv = mul nuw nsw i32 %i.cr, 3
   %i.cw = getelementptr inbounds nuw i8, ptr %i.bt, i64 88
-  %wide.trip.count = zext nneg i32 %i.cr to i64
+  %4 = zext nneg i32 %i.cr to i64                 ; 2 uses
+  %5 = zext nneg i32 %i.cu to i64
+  %wide.trip.count = zext nneg i32 %i.cv to i64
+  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %wide.trip.count
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.ab
   %indvars.iv.next183 = add nuw nsw i64 %indvars.iv182, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next183, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next183, %4
   br i1 %exitcond.not, label %.critedge115, label %bb.v, !llvm.loop !2507
 
 bb.v:                                             ; preds = %.lr.ph178, %bb.u
@@ -228,28 +231,23 @@ bb.v:                                             ; preds = %.lr.ph178, %bb.u
   br i1 %.not104, label %bb.w, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_10LoadSDNodeELb1EE9push_backES2_.exit
 
 bb.w:                                             ; preds = %bb.v
-  %4 = trunc nuw i64 %indvars.iv182 to i32
-  %5 = add i32 %i.cr, %4                          ; 3 uses
-  %6 = zext i32 %5 to i64                         ; 2 uses
+  %6 = add nuw nsw i64 %indvars.iv182, %4         ; 4 uses
   %7 = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %6
   %8 = load i32, ptr %7, align 4, !tbaa !337
-  %.not105 = icmp eq i32 %8, %5
+  %9 = zext i32 %8 to i64
+  %.not105 = icmp eq i64 %6, %9
   br i1 %.not105, label %bb.x, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_10LoadSDNodeELb1EE9push_backES2_.exit
 
 bb.x:                                             ; preds = %bb.w
-  %9 = trunc nuw i64 %indvars.iv182 to i32
-  %10 = add i32 %i.cu, %9                         ; 2 uses
-  %11 = zext i32 %10 to i64                       ; 2 uses
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %11
-  %13 = load i32, ptr %12, align 4, !tbaa !337
-  %.not106 = icmp eq i32 %13, %10
+  %10 = add nuw nsw i64 %indvars.iv182, %5        ; 3 uses
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %10
+  %12 = load i32, ptr %11, align 4, !tbaa !337
+  %13 = zext i32 %12 to i64
+  %.not106 = icmp eq i64 %10, %13
   br i1 %.not106, label %bb.y, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_10LoadSDNodeELb1EE9push_backES2_.exit
 
 bb.y:                                             ; preds = %bb.x
-  %14 = trunc nuw i64 %indvars.iv182 to i32
-  %15 = add i32 %i.cv, %14
-  %16 = zext i32 %15 to i64
-  %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %16
+  %i.da = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv182
   %i.db = load i32, ptr %i.da, align 4, !tbaa !337 ; 2 uses
   %i.dc = trunc nuw i64 %indvars.iv182 to i32
   %i.dd = add i32 %i.cq, %i.dc
@@ -267,11 +265,12 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %6
   %i.dj = load i32, ptr %i.di, align 4, !tbaa !337
-  %.not109 = icmp eq i32 %i.dj, %5
+  %14 = zext i32 %i.dj to i64
+  %.not109 = icmp eq i64 %6, %14
   br i1 %.not109, label %bb.ab, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_10LoadSDNodeELb1EE9push_backES2_.exit
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %11
+  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %10
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !337
   %.not110 = icmp eq i32 %i.dl, %i.db
   br i1 %.not110, label %bb.u, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_10LoadSDNodeELb1EE9push_backES2_.exit
