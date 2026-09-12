@@ -202,9 +202,10 @@ bb.c:                                             ; preds = %bb.b
   %i.i = and i64 %i.h, 3
   %i.j = icmp eq i64 %i.i, 1
   tail call void @llvm.assume(i1 %i.j)
-  %i.k = trunc i64 %i.h to i32
-  %1 = lshr i32 %i.k, 3
-  store i32 %1, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
+  %1 = lshr i64 %i.h, 3
+  %i.k = trunc i64 %1 to i32
+  %2 = and i32 %i.k, 536870911
+  store i32 %2, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
@@ -363,9 +364,10 @@ bb.l:                                             ; preds = %bb.k
   %i.am = and i64 %i.al, 3
   %i.an = icmp eq i64 %i.am, 1
   tail call void @llvm.assume(i1 %i.an)
-  %i.ao = trunc i64 %i.al to i32
-  %1 = lshr i32 %i.ao, 3
-  store i32 %1, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
+  %1 = lshr i64 %i.al, 3
+  %i.ao = trunc i64 %1 to i32
+  %2 = and i32 %i.ao, 536870911
+  store i32 %2, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.k
@@ -768,9 +770,10 @@ bb.cv:                                            ; preds = %bb.cu
   %i.qs = and i64 %i.qr, 3
   %i.qt = icmp eq i64 %i.qs, 1
   call void @llvm.assume(i1 %i.qt)
-  %i.qu = trunc i64 %i.qr to i32
-  %9 = lshr i32 %i.qu, 3
-  store i32 %9, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
+  %9 = lshr i64 %i.qr, 3
+  %i.qu = trunc i64 %9 to i32
+  %10 = and i32 %i.qu, 536870911
+  store i32 %10, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
   br label %bb.dc
 
 bb.cw:                                            ; preds = %bb.cu
@@ -1173,9 +1176,10 @@ bb.em:                                            ; preds = %bb.el
   %i.xe = and i64 %i.xd, 3
   %i.xf = icmp eq i64 %i.xe, 1
   call void @llvm.assume(i1 %i.xf)
-  %i.xg = trunc i64 %i.xd to i32
-  %10 = lshr i32 %i.xg, 3
-  store i32 %10, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
+  %11 = lshr i64 %i.xd, 3
+  %i.xg = trunc i64 %11 to i32
+  %12 = and i32 %i.xg, 536870911
+  store i32 %12, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
   br label %bb.et
 
 bb.en:                                            ; preds = %bb.el
@@ -1578,9 +1582,10 @@ bb.k:                                             ; preds = %bb.j
   %i.ao = and i64 %i.an, 3
   %i.ap = icmp eq i64 %i.ao, 1
   call void @llvm.assume(i1 %i.ap)
-  %i.aq = trunc i64 %i.an to i32
-  %2 = lshr i32 %i.aq, 3
-  store i32 %2, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
+  %2 = lshr i64 %i.an, 3
+  %i.aq = trunc i64 %2 to i32
+  %3 = and i32 %i.aq, 536870911
+  store i32 %3, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
   br label %bb.p
 
 bb.l:                                             ; preds = %bb.j
@@ -1737,9 +1742,10 @@ bb.z:                                             ; preds = %bb.y
   %i.cy = and i64 %i.cx, 3
   %i.cz = icmp eq i64 %i.cy, 1
   call void @llvm.assume(i1 %i.cz)
-  %i.da = trunc i64 %i.cx to i32
-  %3 = lshr i32 %i.da, 3
-  store i32 %3, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
+  %4 = lshr i64 %i.cx, 3
+  %i.da = trunc i64 %4 to i32
+  %5 = and i32 %i.da, 536870911
+  store i32 %5, ptr getelementptr inbounds nuw (i8, ptr @gc_globals, i64 12), align 4, !tbaa !44
   br label %bb.ae
 
 bb.aa:                                            ; preds = %bb.y

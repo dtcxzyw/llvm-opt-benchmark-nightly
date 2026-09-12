@@ -204,8 +204,9 @@ bb.a:
   %i.r = load i32, ptr %i.q, align 4              ; 3 uses
   %i.s = and i32 %i.r, 255                        ; 2 uses
   %i.t = and i32 %i.r, -256
-  %i.u = trunc i32 %i.r to i16
-  %5 = lshr i16 %i.u, 8
+  %5 = lshr i32 %i.r, 8
+  %i.u = trunc i32 %5 to i16
+  %6 = and i16 %i.u, 255
   %i.v = load ptr, ptr @vga_to_curses, align 8
   %i.w = zext nneg i32 %i.s to i64
   %i.x = getelementptr inbounds nuw [28 x i8], ptr %i.v, i64 %i.w
@@ -223,7 +224,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.ac = getelementptr inbounds nuw [28 x i8], ptr %i.f, i64 %indvars.iv
-  %i.ad = call i32 @setcchar(ptr noundef %i.ac, ptr noundef nonnull %i.a, i32 noundef %i.t, i16 noundef signext %5, ptr noundef null) #12 ; 0 uses
+  %i.ad = call i32 @setcchar(ptr noundef %i.ac, ptr noundef nonnull %i.a, i32 noundef %i.t, i16 noundef signext %6, ptr noundef null) #12 ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ae = load i32, ptr @width, align 4
   %i.af = sext i32 %i.ae to i64

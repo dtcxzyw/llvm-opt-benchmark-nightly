@@ -205,8 +205,8 @@ _RINvXsO_NtCsa5QsYiPB8Gl_5image5colorINtB6_3RgbhENtNtB8_6traits5Pixel6apply2NCIN
 ; Function Attrs: nonlazybind uwtable
 define hidden i48 @_RINvXsO_NtCsa5QsYiPB8Gl_5image5colorINtB6_3RgbtENtNtB8_6traits5Pixel14map_with_alphaNCINvNtNtB8_8imageops8colorops8brightenINtNtNtB8_6images6buffer11ImageBufferBy_INtNtCs4wP2HXfJTCR_5alloc3vec3VectEEBy_tE0NCB1m_s_0EB8_(ptr noalias nofree noundef readonly align 2 captures(none) dereferenceable(6) %0, ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %1, ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.val = load i48, ptr %0, align 2               ; 2 uses
-  %.sroa.0.0.extract.trunc = trunc i48 %.val to i32 ; 2 uses
+  %.val = load i48, ptr %0, align 2               ; 3 uses
+  %.sroa.0.0.extract.trunc = trunc i48 %.val to i32
   %.sroa.8.0.extract.shift = lshr i48 %.val, 32
   %.sroa.8.0.extract.trunc = trunc nuw nsw i48 %.sroa.8.0.extract.shift to i32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !498)
@@ -226,7 +226,9 @@ bb.b:                                             ; preds = %_RNCINvNtNtCsa5QsYi
   unreachable
 
 _RNCINvNtNtCsa5QsYiPB8Gl_5image8imageops8colorops8brightenINtNtNtB8_6images6buffer11ImageBufferINtNtB8_5color3RgbtEINtNtCs4wP2HXfJTCR_5alloc3vec3VectEEB1u_tE0B8_.exit.i: ; preds = %bb.a
-  %3 = lshr i32 %.sroa.0.0.extract.trunc, 16
+  %.sroa.6.0.extract.shift = lshr i48 %.val, 16
+  %.sroa.6.0.extract.trunc = trunc nuw i48 %.sroa.6.0.extract.shift to i32
+  %3 = and i32 %.sroa.6.0.extract.trunc, 65535
   %i.f = add i32 %i.a, %3                         ; 2 uses
   %i.g = icmp slt i32 %i.f, 0
   %..i.i.1.i = tail call i32 @llvm.smin.i32(i32 %i.f, i32 %i.b)
@@ -629,8 +631,8 @@ _RINvXsW_NtCsa5QsYiPB8Gl_5image5colorINtB6_4RgbahENtNtB8_6traits5Pixel6apply2NCI
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef i64 @_RINvXsW_NtCsa5QsYiPB8Gl_5image5colorINtB6_4RgbatENtNtB8_6traits5Pixel14map_with_alphaNCINvNtNtB8_8imageops8colorops8brightenINtNtNtB8_6images6buffer11ImageBufferBy_INtNtCs4wP2HXfJTCR_5alloc3vec3VectEEBy_tE0NCB1n_s_0EB8_(ptr noalias nofree noundef readonly align 2 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %1, ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.val = load i64, ptr %0, align 2               ; 3 uses
-  %.sroa.0.0.extract.trunc = trunc i64 %.val to i32 ; 2 uses
+  %.val = load i64, ptr %0, align 2               ; 4 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %.val to i32
   %.sroa.8.0.extract.shift = lshr i64 %.val, 32
   %.sroa.8.0.extract.trunc = trunc nuw i64 %.sroa.8.0.extract.shift to i32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !650)
@@ -650,7 +652,9 @@ bb.b:                                             ; preds = %_RNCINvNtNtCsa5QsYi
   unreachable
 
 _RNCINvNtNtCsa5QsYiPB8Gl_5image8imageops8colorops8brightenINtNtNtB8_6images6buffer11ImageBufferINtNtB8_5color4RgbatEINtNtCs4wP2HXfJTCR_5alloc3vec3VectEEB1u_tE0B8_.exit.i: ; preds = %bb.a
-  %3 = lshr i32 %.sroa.0.0.extract.trunc, 16
+  %.sroa.6.0.extract.shift = lshr i64 %.val, 16
+  %.sroa.6.0.extract.trunc = trunc i64 %.sroa.6.0.extract.shift to i32
+  %3 = and i32 %.sroa.6.0.extract.trunc, 65535
   %i.f = add i32 %i.a, %3                         ; 2 uses
   %i.g = icmp slt i32 %i.f, 0
   %..i.i.1.i = tail call i32 @llvm.smin.i32(i32 %i.f, i32 %i.b)
@@ -1053,22 +1057,24 @@ bb.ai:                                            ; preds = %.noexc.i1
 
 bb.aj:                                            ; preds = %.noexc.i1
   %i.eg = invoke noundef i32 @_RNvYNtCsbQ1pTce3Gzu_14byteorder_lite12LittleEndianNtB4_9ByteOrder8read_u24Csa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.y, i64 noundef 3)
-          to label %.noexc75.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i, !noalias !745 ; 2 uses
+          to label %.noexc75.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i, !noalias !745 ; 4 uses
 
 .noexc75.i:                                       ; preds = %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !748
   %i.eh = getelementptr inbounds nuw i8, ptr %i.bm, i64 100 ; 6 uses
-  %i.ei = trunc i32 %i.eg to i8                   ; 3 uses
+  %i.ei = trunc i32 %i.eg to i8
   %i.ej = and i8 %i.ei, 1                         ; 2 uses
   %i.ek = xor i8 %i.ej, 1
   store i8 %i.ek, ptr %i.eh, align 4, !alias.scope !749, !noalias !750
+  %2 = lshr i32 %i.eg, 1
   %i.el = getelementptr inbounds nuw i8, ptr %i.bm, i64 103
-  %2 = lshr i8 %i.ei, 1
-  %i.em = and i8 %2, 7
+  %3 = trunc i32 %2 to i8
+  %i.em = and i8 %3, 7
   store i8 %i.em, ptr %i.el, align 1, !alias.scope !749, !noalias !750
   %i.en = getelementptr inbounds nuw i8, ptr %i.bm, i64 101
-  %3 = lshr i8 %i.ei, 4
-  %i.eo = and i8 %3, 1
+  %4 = lshr i32 %i.eg, 4
+  %5 = trunc i32 %4 to i8
+  %i.eo = and i8 %5, 1
   store i8 %i.eo, ptr %i.en, align 1, !alias.scope !749, !noalias !750
   %i.ep = lshr i32 %i.eg, 5
   %.not160.not.i.i = icmp eq i8 %i.ej, 0

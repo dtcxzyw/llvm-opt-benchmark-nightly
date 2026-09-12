@@ -169,8 +169,8 @@ bb.a:
   br i1 %.not.i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 1
+  %1 = lshr i64 %i.a, 1
+  %2 = trunc i64 %1 to i32
   %i.b = and i32 %2, 32767
   br label %vm_ci_argc.exit
 
@@ -214,8 +214,9 @@ bb.a:
   br i1 %.not.i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = trunc i64 %i.a to i32
-  %1 = lshr i32 %i.b, 16
+  %1 = lshr i64 %i.a, 16
+  %i.b = trunc i64 %1 to i32
+  %2 = and i32 %i.b, 65535
   br label %vm_ci_flag.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -225,7 +226,7 @@ bb.c:                                             ; preds = %bb.a
   br label %vm_ci_flag.exit
 
 vm_ci_flag.exit:                                  ; preds = %bb.b, %bb.c
-  %.0.i = phi i32 [ %1, %bb.b ], [ %i.e, %bb.c ]
+  %.0.i = phi i32 [ %2, %bb.b ], [ %i.e, %bb.c ]
   ret i32 %.0.i
 }
 
@@ -267,8 +268,8 @@ bb.a:
 define hidden range(i32 0, 4) i32 @rb_METHOD_ENTRY_VISI(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !70
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 16
+  %1 = lshr i64 %i.a, 16
+  %2 = trunc i64 %1 to i32
   %i.b = and i32 %2, 3
   ret i32 %i.b
 }

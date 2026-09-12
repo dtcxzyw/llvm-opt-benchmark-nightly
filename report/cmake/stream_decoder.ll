@@ -68,25 +68,29 @@ bb.g:                                             ; preds = %._crit_edge, %bb.f
   store i64 %i.n, ptr %i.o, align 8, !tbaa !19
   %i.p = getelementptr inbounds nuw i8, ptr %.034, i64 368
   store i64 32768, ptr %i.p, align 8, !tbaa !20
-  %i.q = trunc nuw nsw i32 %3 to i8               ; 5 uses
+  %i.q = trunc nuw nsw i32 %3 to i8
   %i.r = getelementptr inbounds nuw i8, ptr %.034, i64 376
   %i.s = and i8 %i.q, 1
   store i8 %i.s, ptr %i.r, align 8, !tbaa !21
   %i.t = getelementptr inbounds nuw i8, ptr %.034, i64 377
-  %4 = lshr i8 %i.q, 1
-  %i.u = and i8 %4, 1
+  %4 = lshr i32 %3, 1
+  %5 = trunc nuw nsw i32 %4 to i8
+  %i.u = and i8 %5, 1
   store i8 %i.u, ptr %i.t, align 1, !tbaa !22
   %i.v = getelementptr inbounds nuw i8, ptr %.034, i64 378
-  %5 = lshr i8 %i.q, 2
-  %i.w = and i8 %5, 1
+  %6 = lshr i32 %3, 2
+  %7 = trunc nuw nsw i32 %6 to i8
+  %i.w = and i8 %7, 1
   store i8 %i.w, ptr %i.v, align 2, !tbaa !23
   %i.x = getelementptr inbounds nuw i8, ptr %.034, i64 379
-  %6 = lshr i8 %i.q, 4
-  %i.y = and i8 %6, 1
+  %8 = lshr i32 %3, 4
+  %9 = trunc nuw nsw i32 %8 to i8
+  %i.y = and i8 %9, 1
   store i8 %i.y, ptr %i.x, align 1, !tbaa !24
   %i.z = getelementptr inbounds nuw i8, ptr %.034, i64 380
-  %7 = lshr i8 %i.q, 3
-  %i.aa = and i8 %7, 1
+  %10 = lshr i32 %3, 3
+  %11 = trunc nuw nsw i32 %10 to i8
+  %i.aa = and i8 %11, 1
   store i8 %i.aa, ptr %i.z, align 4, !tbaa !25
   %i.ab = getelementptr inbounds nuw i8, ptr %.034, i64 381
   store i8 1, ptr %i.ab, align 1, !tbaa !26

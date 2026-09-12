@@ -204,15 +204,15 @@ _ZNK8WasmEdge4Host4WASI5INode14unsafeFiletypeEv.exit: ; preds = %bb.c, %switch.l
   %.0.i.i = phi i8 [ %switch.load, %switch.lookup ], [ 0, %bb.c ]
   store i8 %.0.i.i, ptr %1, align 8, !tbaa !191
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
-  %2 = trunc i32 %i.i to i16
-  %3 = lshr i16 %2, 10
+  %2 = lshr i32 %i.i, 10
+  %3 = trunc i32 %2 to i16
   %spec.store.select = and i16 %3, 1
-  %4 = trunc i32 %i.i to i16
-  %5 = lshr i16 %4, 11
+  %4 = lshr i32 %i.i, 11
+  %5 = trunc i32 %4 to i16
   %i.r = and i16 %5, 2
   %spec.select = or disjoint i16 %spec.store.select, %i.r
-  %6 = trunc i32 %i.i to i16
-  %7 = lshr i16 %6, 9
+  %6 = lshr i32 %i.i, 9
+  %7 = trunc i32 %6 to i16
   %i.s = and i16 %7, 4
   %i.t = or disjoint i16 %spec.select, %i.s       ; 2 uses
   store i16 %i.t, ptr %i.q, align 2
@@ -615,11 +615,12 @@ switch.lookup109:                                 ; preds = %.lr.ph, %bb.n
   %.05494.in = phi ptr [ %i.a, %.lr.ph ], [ %i.da, %bb.n ]
   %.05494 = load ptr, ptr %.05494.in, align 8, !tbaa !249 ; 8 uses
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %indvars.iv
-  %i.bj = load i32, ptr %.05494, align 8, !tbaa !240
-  %.not.i73 = trunc i32 %i.bj to i16              ; 3 uses
+  %i.bj = load i32, ptr %.05494, align 8, !tbaa !240 ; 2 uses
+  %.not.i73 = trunc i32 %i.bj to i16              ; 2 uses
   %.2.i = and i16 %.not.i73, 7
-  %12 = lshr i16 %.not.i73, 7
-  %i.bk = and i16 %12, 8
+  %12 = lshr i32 %i.bj, 7
+  %13 = trunc i32 %12 to i16
+  %i.bk = and i16 %13, 8
   %.3.i = or disjoint i16 %i.bk, %.2.i
   %i.bl = shl i16 %.not.i73, 1
   %i.bm = and i16 %i.bl, 112
@@ -1022,8 +1023,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 
 bb.z:                                             ; preds = %.thread82, %bb.u, %bb.v, %bb.o, %bb.p, %bb.j, %bb.f
   %i.cb = load i32, ptr %i.am, align 8, !tbaa !272
-  %14 = trunc i32 %i.cb to i16
-  %15 = lshr i16 %14, 5
+  %14 = lshr i32 %i.cb, 5
+  %15 = trunc i32 %14 to i16
   %spec.store.select = and i16 %15, 1
   store i16 %spec.store.select, ptr %8, align 2
   br label %bb.aa
@@ -1426,8 +1427,8 @@ bb.u:                                             ; preds = %_ZNSt13unordered_ma
 bb.v:                                             ; preds = %bb.u
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dg, i64 24
-  %2 = trunc i32 %i.da to i16
-  %3 = lshr i16 %2, 4
+  %2 = lshr i32 %i.da, 4
+  %3 = trunc i32 %2 to i16
   %spec.store.select.i = and i16 %3, 1
   store i16 %spec.store.select.i, ptr %i.dn, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24
@@ -1474,8 +1475,8 @@ bb.x:                                             ; preds = %bb.w
   store i16 0, ptr %i.dz, align 8, !tbaa !165
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dx, i64 16
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dx, i64 24
-  %4 = trunc i32 %i.ds to i16
-  %5 = lshr i16 %4, 4
+  %4 = lshr i32 %i.ds, 4
+  %5 = trunc i32 %4 to i16
   %spec.store.select1.i54 = and i16 %5, 1
   store i16 %spec.store.select1.i54, ptr %i.eb, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24

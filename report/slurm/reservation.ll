@@ -202,7 +202,7 @@ bb.ah:                                            ; preds = %bb.af
   br label %bb.ai
 
 bb.ai:                                            ; preds = %.sink.split506, %bb.ac
-  %i.bo = load i64, ptr %i.r, align 8             ; 6 uses
+  %i.bo = load i64, ptr %i.r, align 8             ; 9 uses
   %i.bp = and i64 %i.bo, 34370224148
   %.not338 = icmp eq i64 %i.bp, 0
   br i1 %.not338, label %bb.ao, label %bb.aj
@@ -211,18 +211,21 @@ bb.aj:                                            ; preds = %bb.ai
   %i.bq = lshr i64 %i.bo, 35
   %i.br = trunc nuw nsw i64 %i.bq to i32
   %spec.select.i = and i32 %i.br, 1
-  %5 = trunc i64 %i.bo to i32                     ; 4 uses
-  %6 = lshr i32 %5, 2
+  %5 = lshr i64 %i.bo, 2
+  %6 = trunc i64 %5 to i32
   %i.bs = and i32 %6, 1
   %.1.i = add nuw nsw i32 %spec.select.i, %i.bs
-  %7 = lshr i32 %5, 21
-  %i.bt = and i32 %7, 1
+  %7 = lshr i64 %i.bo, 21
+  %8 = trunc i64 %7 to i32
+  %i.bt = and i32 %8, 1
   %.2.i = add nuw nsw i32 %.1.i, %i.bt
-  %8 = lshr i32 %5, 23
-  %i.bu = and i32 %8, 1
+  %9 = lshr i64 %i.bo, 23
+  %10 = trunc i64 %9 to i32
+  %i.bu = and i32 %10, 1
   %.3.i = add nuw nsw i32 %.2.i, %i.bu
-  %9 = lshr i32 %5, 4
-  %i.bv = and i32 %9, 1
+  %11 = lshr i64 %i.bo, 4
+  %12 = trunc i64 %11 to i32
+  %i.bv = and i32 %12, 1
   %.4.i = add nuw nsw i32 %.3.i, %i.bv
   %i.bw = icmp samesign ugt i32 %.4.i, 1
   br i1 %i.bw, label %bb.ak, label %bb.ao
@@ -625,7 +628,7 @@ bb.bb:                                            ; preds = %bb.ba
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %i.cz = phi i64 [ %.pre649, %bb.bb ], [ %i.cu, %bb.ba ] ; 8 uses
+  %i.cz = phi i64 [ %.pre649, %bb.bb ], [ %i.cu, %bb.ba ] ; 11 uses
   %i.da = and i64 %i.cz, 34370224148              ; 2 uses
   %.not487 = icmp eq i64 %i.da, 0
   br i1 %.not487, label %bb.bt, label %bb.bd
@@ -666,18 +669,21 @@ bb.bj:                                            ; preds = %bb.bi
   %i.di = lshr i64 %i.cz, 35
   %i.dj = trunc nuw nsw i64 %i.di to i32
   %spec.select.i = and i32 %i.dj, 1
-  %3 = trunc i64 %i.cz to i32                     ; 4 uses
-  %4 = lshr i32 %3, 2
+  %3 = lshr i64 %i.cz, 2
+  %4 = trunc i64 %3 to i32
   %i.dk = and i32 %4, 1
   %.1.i = add nuw nsw i32 %spec.select.i, %i.dk
-  %5 = lshr i32 %3, 21
-  %i.dl = and i32 %5, 1
+  %5 = lshr i64 %i.cz, 21
+  %6 = trunc i64 %5 to i32
+  %i.dl = and i32 %6, 1
   %.2.i = add nuw nsw i32 %.1.i, %i.dl
-  %6 = lshr i32 %3, 23
-  %i.dm = and i32 %6, 1
+  %7 = lshr i64 %i.cz, 23
+  %8 = trunc i64 %7 to i32
+  %i.dm = and i32 %8, 1
   %.3.i = add nuw nsw i32 %.2.i, %i.dm
-  %7 = lshr i32 %3, 4
-  %i.dn = and i32 %7, 1
+  %9 = lshr i64 %i.cz, 4
+  %10 = trunc i64 %9 to i32
+  %i.dn = and i32 %10, 1
   %.4.i = add nuw nsw i32 %.3.i, %i.dn
   %i.do = icmp samesign ugt i32 %.4.i, 1
   br i1 %i.do, label %bb.bk, label %bb.bo

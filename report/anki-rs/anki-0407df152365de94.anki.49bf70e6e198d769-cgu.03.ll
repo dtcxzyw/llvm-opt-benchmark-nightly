@@ -204,7 +204,7 @@ bb.a:
   %i.ef = getelementptr inbounds nuw [16 x i8], ptr @960, i64 %i.ee ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
   %i.eh = getelementptr inbounds nuw [16 x i8], ptr @913, i64 %i.ee ; 2 uses
-  %i.ei = lshr i32 %i.bf, 3                       ; 3 uses
+  %i.ei = lshr i32 %i.bf, 3                       ; 4 uses
   %i.ej = and i32 %i.ei, 1023                     ; 8 uses
   %i.ek = zext nneg i32 %i.ej to i64              ; 8 uses
   %i.el = icmp samesign ult i32 %i.ej, 733        ; 7 uses
@@ -234,7 +234,6 @@ bb.a:
   %i.ff = or disjoint i8 %i.fe, 48                ; 2 uses
   %i.fg = urem i8 %i.fd, 10
   %i.fh = or disjoint i8 %i.fg, 48                ; 2 uses
-  %2 = trunc i32 %i.ei to i8                      ; 2 uses
   %i.fi = udiv i32 %.sroa.10.0.copyload.i.i, 3600 ; 2 uses
   %i.fj = icmp ugt i32 %.sroa.21.0.copyload.i.i, 999999999 ; 2 uses
   %i.fk = add i32 %.sroa.21.0.copyload.i.i, -1000000000
@@ -637,9 +636,11 @@ bb.as:                                            ; preds = %bb.l
 
 bb.at:                                            ; preds = %bb.as
   %i.se = load i8, ptr %i.em, align 1, !noalias !8670, !noundef !7
-  %3 = add i8 %i.se, %2
-  %4 = lshr i8 %3, 1
-  %i.sf = and i8 %4, 31                           ; 3 uses
+  %2 = zext i8 %i.se to i32
+  %3 = add nuw nsw i32 %i.ei, %2
+  %4 = lshr i32 %3, 1
+  %5 = trunc i32 %4 to i8
+  %i.sf = and i8 %5, 31                           ; 3 uses
   %i.sg = udiv i8 %i.sf, 10
   %i.sh = urem i8 %i.sf, 10
   %i.si = icmp samesign ult i8 %i.sf, 10
@@ -1042,15 +1043,15 @@ _ZN6chrono6format10formatting14write_hundreds17h853608213e2ed4d3E.exit52.i.i: ; 
   br label %bb.ek
 
 bb.el:                                            ; preds = %.noexc117.i
-  %i.ama = load i8, ptr %i.em, align 1, !noalias !8761, !noundef !7 ; 2 uses
+  %i.ama = load i8, ptr %i.em, align 1, !noalias !8761, !noundef !7
+  %6 = zext i8 %i.ama to i32                      ; 2 uses
   %i.amb = icmp sgt i64 %i.ald, -1
   call void @llvm.assume(i1 %i.amb)
   invoke void @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17ha04814356e46461eE"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ba, i64 noundef 1)
           to label %.noexc122.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.i
 
 .noexc122.i:                                      ; preds = %bb.el
-  %5 = zext i8 %i.ama to i32
-  %i.amc = add nuw nsw i32 %i.ej, %5              ; 3 uses
+  %i.amc = add nuw nsw i32 %i.ej, %6              ; 3 uses
   %.cmp.i113.i = icmp samesign ugt i32 %i.amc, 639
   %i.amd = zext i1 %.cmp.i113.i to i8
   %i.ame = or disjoint i8 %i.amd, 48
@@ -1096,9 +1097,10 @@ bb.el:                                            ; preds = %.noexc117.i
           to label %.noexc125.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.i
 
 .noexc125.i:                                      ; preds = %.noexc124.i
-  %6 = add i8 %i.ama, %2
-  %7 = lshr i8 %6, 1
-  %i.amy = and i8 %7, 31                          ; 2 uses
+  %7 = add nuw nsw i32 %i.ei, %6
+  %8 = lshr i32 %7, 1
+  %9 = trunc i32 %8 to i8
+  %i.amy = and i8 %9, 31                          ; 2 uses
   %i.amz = udiv i8 %i.amy, 10
   %i.ana = urem i8 %i.amy, 10
   %i.anb = or disjoint i8 %i.amz, 48

@@ -202,7 +202,8 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.s
   %i.bg = load i64, ptr %5, align 8               ; 2 uses
-  %i.bh = trunc i64 %i.bg to i32
+  %.sroa.1.0.extract.shift.i = lshr i64 %i.bg, 16
+  %i.bh = trunc i64 %.sroa.1.0.extract.shift.i to i32
   %.sroa.2.0.extract.shift.i = lshr i64 %i.bg, 32
   %.sroa.2.0.extract.trunc.i = trunc nuw i64 %.sroa.2.0.extract.shift.i to i32
   %i.bi = call i64 @g_get_real_time()             ; 2 uses
@@ -256,8 +257,8 @@ bb.v:                                             ; preds = %bb.s
   %i.cq = call ptr @__memcpy_chk(ptr noundef %i.co, ptr noundef nonnull %i.c, i64 noundef 4, i64 noundef %i.cp) #10, !alias.scope !32 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  %6 = call i32 @llvm.bswap.i32(i32 %i.bh)
-  %rev.i.i.i = shl i32 %6, 16
+  %6 = and i32 %i.bh, 65535
+  %rev.i.i.i = call noundef i32 @llvm.bswap.i32(i32 range(i32 0, 65536) %6)
   store i32 %rev.i.i.i, ptr %i.b, align 4
   %i.cr = getelementptr i8, ptr %i.ce, i64 20
   store <4 x i8> <i8 0, i8 25, i8 0, i8 4>, ptr %i.cr, align 1

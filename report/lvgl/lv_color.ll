@@ -93,8 +93,8 @@ bb.a:
   %i.d = and i24 %i.c, 2016
   %i.e = or disjoint i24 %i.b, %i.d
   %i.f = trunc nuw i24 %i.e to i16
-  %1 = trunc i24 %0 to i16
-  %2 = lshr i16 %1, 3
+  %1 = lshr i24 %0, 3
+  %2 = trunc i24 %1 to i16
   %i.g = and i16 %2, 31
   %i.h = or disjoint i16 %i.g, %i.f
   ret i16 %i.h
@@ -497,21 +497,26 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %2 = zext i8 %1 to i16                          ; 3 uses
+  %2 = zext i8 %1 to i32                          ; 2 uses
   %i.a = load i16, ptr %0, align 2                ; 3 uses
   %i.b = lshr i16 %i.a, 11
-  %.tr = shl nuw nsw i16 %2, 3
+  %3 = zext i8 %1 to i16
+  %.tr = shl nuw nsw i16 %3, 3
   %tr.sh.diff = mul nuw i16 %.tr, %i.b
   %i.c = and i16 %tr.sh.diff, -2048
   %i.d = and i16 %i.a, 31
   %i.e = lshr i16 %i.a, 5
   %i.f = and i16 %i.e, 63
-  %3 = mul nuw nsw i16 %i.f, %2
-  %4 = lshr i16 %3, 3
-  %i.g = and i16 %4, 2016
-  %5 = mul nuw nsw i16 %i.d, %2
-  %6 = lshr i16 %5, 8
-  %i.h = or disjoint i16 %6, %i.c
+  %4 = zext nneg i16 %i.f to i32
+  %5 = mul nuw nsw i32 %4, %2
+  %sh.diff = lshr i32 %5, 3
+  %tr.sh.diff11 = trunc nuw nsw i32 %sh.diff to i16
+  %i.g = and i16 %tr.sh.diff11, 2016
+  %6 = zext nneg i16 %i.d to i32
+  %7 = mul nuw nsw i32 %6, %2
+  %8 = lshr i32 %7, 8
+  %9 = trunc nuw nsw i32 %8 to i16
+  %i.h = or disjoint i16 %i.c, %9
   %i.i = or disjoint i16 %i.h, %i.g
   store i16 %i.i, ptr %0, align 2
   br label %bb.d

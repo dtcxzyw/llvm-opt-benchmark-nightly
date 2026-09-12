@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.c
   %.sroa.0.sroa.7.0.extract.shift = lshr i64 %i.t, 32
   %.sroa.8.sroa.0.sroa.0.0.extract.trunc = trunc i32 %.sroa.84.0.copyload.i.i to i8
   %.sroa.8.sroa.0.sroa.8.0.extract.shift = lshr i32 %.sroa.84.0.copyload.i.i, 8
-  %.sroa.8.sroa.0.sroa.9.0.extract.shift = and i32 %.sroa.84.0.copyload.i.i, -65536
+  %.sroa.8.sroa.0.sroa.9.0.extract.shift = lshr i32 %.sroa.84.0.copyload.i.i, 16
   br label %_RNvMs0_NtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stackNtB5_5Stack4peek.exit
 
 bb.j:                                             ; preds = %bb.c
@@ -214,13 +214,14 @@ bb.j:                                             ; preds = %bb.c
   %.sroa.8.sroa.0.sroa.0.0.extract.trunc73 = trunc i64 %.sroa.13.0.copyload.i.i to i8
   %.sroa.8.sroa.0.sroa.8.0.extract.shift7481 = lshr i64 %.sroa.13.0.copyload.i.i, 8
   %.sroa.8.sroa.0.sroa.8.0.extract.trunc75 = trunc i64 %.sroa.8.sroa.0.sroa.8.0.extract.shift7481 to i32
-  %5 = trunc i64 %.sroa.13.0.copyload.i.i to i32
-  %6 = and i32 %5, -65536
+  %5 = lshr i64 %.sroa.13.0.copyload.i.i, 16
+  %.sroa.8.sroa.0.sroa.9.0.extract.trunc77 = trunc i64 %5 to i32
   %.sroa.8.sroa.9.0.extract.shift = lshr i64 %.sroa.13.0.copyload.i.i, 32
   %.sroa.8.sroa.9.0.extract.trunc = trunc i64 %.sroa.8.sroa.9.0.extract.shift to i8
   %.sroa.8.sroa.11.0.extract.shift = lshr i64 %.sroa.13.0.copyload.i.i, 40
   %.sroa.8.sroa.11.0.extract.trunc = trunc i64 %.sroa.8.sroa.11.0.extract.shift to i8
   %.sroa.8.sroa.12.0.extract.shift = and i64 %.sroa.13.0.copyload.i.i, -281474976710656
+  %6 = and i32 %.sroa.8.sroa.0.sroa.9.0.extract.trunc77, 65535
   br label %_RNvMs0_NtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stackNtB5_5Stack4peek.exit
 
 bb.k:                                             ; preds = %.lr.ph
@@ -247,9 +248,10 @@ _RNvMs0_NtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stackNtB5_5Stack4pe
   %.sroa.0.sroa.0.0.insert.ext = zext i32 %.sroa.0.sroa.0.0 to i64
   %.sroa.0.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.sroa.7.0.insert.ext, %.sroa.0.sroa.0.0.insert.ext
   store i64 %.sroa.0.sroa.0.0.insert.insert, ptr %i.b, align 8
+  %.sroa.8.sroa.0.sroa.9.0.insert.shift = shl nuw i32 %.sroa.8.sroa.0.sroa.9.0, 16
   %.sroa.8.sroa.0.sroa.8.0.insert.ext = shl i32 %.sroa.8.sroa.0.sroa.8.0, 8
   %.sroa.8.sroa.0.sroa.8.0.insert.shift = and i32 %.sroa.8.sroa.0.sroa.8.0.insert.ext, 65280
-  %.sroa.8.sroa.0.sroa.8.0.insert.insert = or disjoint i32 %.sroa.8.sroa.0.sroa.8.0.insert.shift, %.sroa.8.sroa.0.sroa.9.0
+  %.sroa.8.sroa.0.sroa.8.0.insert.insert = or disjoint i32 %.sroa.8.sroa.0.sroa.8.0.insert.shift, %.sroa.8.sroa.0.sroa.9.0.insert.shift
   %.sroa.8.sroa.0.sroa.0.0.insert.ext = zext i8 %.sroa.8.sroa.0.sroa.0.0 to i32
   %.sroa.8.sroa.0.sroa.0.0.insert.insert = or disjoint i32 %.sroa.8.sroa.0.sroa.8.0.insert.insert, %.sroa.8.sroa.0.sroa.0.0.insert.ext
   %.sroa.8.sroa.11.0.insert.ext = zext i8 %.sroa.8.sroa.11.0 to i64

@@ -127,7 +127,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #5
   store ptr null, ptr %i.d, align 8, !tbaa !11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #5
-  %i.f = tail call i64 @ERR_peek_last_error() #5  ; 3 uses
+  %i.f = tail call i64 @ERR_peek_last_error() #5  ; 4 uses
   %i.g = icmp eq ptr %0, null
   %spec.store.select = select i1 %i.g, ptr @.str, ptr %0 ; 7 uses
   %i.h = icmp eq i64 %i.f, 0
@@ -142,9 +142,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.i = and i64 %i.f, 2147483648
   %.not.i = icmp eq i64 %i.i, 0
-  %i.j = trunc i64 %i.f to i32                    ; 2 uses
-  %2 = lshr i32 %i.j, 23
-  %.0.i = select i1 %.not.i, i32 %2, i32 2
+  %2 = lshr i64 %i.f, 23
+  %i.j = trunc i64 %2 to i32
+  %3 = and i32 %i.j, 255
+  %.0.i = select i1 %.not.i, i32 %3, i32 2
+  %4 = trunc i64 %i.f to i32
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.s, %bb.c
@@ -259,7 +261,7 @@ bb.p:                                             ; preds = %bb.o, %.thread100
   %i.au = load i32, ptr %i.b, align 4, !tbaa !8
   call void @ERR_new() #5
   call void @ERR_set_debug(ptr noundef %i.at, i32 noundef %i.au, ptr noundef %i.as) #5
-  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef range(i32 0, 256) %.0.i, i32 noundef %i.j, ptr noundef null) #5
+  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef range(i32 0, 256) %.0.i, i32 noundef %4, ptr noundef null) #5
   br label %bb.s
 
 .thread:                                          ; preds = %.critedge

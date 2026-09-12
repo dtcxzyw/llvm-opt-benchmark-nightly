@@ -205,14 +205,15 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not24.i, label %.critedge145, label %codegen_default_arguments.exit
 
 codegen_default_arguments.exit:                   ; preds = %bb.k, %bb.l
-  %.119.i = phi i64 [ %.2.i, %bb.l ], [ %.017.i, %bb.k ] ; 2 uses
+  %.119.i = phi i64 [ %.2.i, %bb.l ], [ %.017.i, %bb.k ] ; 3 uses
   br i1 %i.ag, label %bb.m, label %bb.w
 
 bb.m:                                             ; preds = %codegen_default_arguments.exit
-  %.not138 = trunc nuw nsw i64 %.119.i to i32     ; 2 uses
+  %.not138 = trunc nuw nsw i64 %.119.i to i32
   %spec.select = and i32 %.not138, 1
-  %5 = lshr i32 %.not138, 1
-  %.1 = add nuw nsw i32 %5, %spec.select          ; 5 uses
+  %5 = lshr i64 %.119.i, 1
+  %6 = trunc nuw nsw i64 %5 to i32
+  %.1 = add nuw nsw i32 %spec.select, %6          ; 5 uses
   %i.bh = icmp eq i32 %.1, 2
   br i1 %i.bh, label %bb.n, label %bb.o
 

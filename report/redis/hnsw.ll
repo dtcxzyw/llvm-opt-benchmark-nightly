@@ -205,15 +205,18 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load i64, ptr %2, align 8, !tbaa !27     ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !27
-  %i.e = trunc i64 %i.d to i32                    ; 3 uses
-  %i.f = and i32 %i.e, 255                        ; 5 uses
-  %i.g = icmp ugt i32 %i.e, 33554431
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !27   ; 2 uses
+  %5 = trunc i64 %i.d to i32
+  %6 = and i32 %5, 255                            ; 5 uses
+  %7 = lshr i64 %i.d, 24
+  %i.e = trunc i64 %7 to i32
+  %i.f = and i32 %i.e, 255                        ; 2 uses
+  %i.g = icmp samesign ugt i32 %i.f, 1
   br i1 %i.g, label %hnsw_node_free.exit.thread177, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = icmp samesign ugt i32 %i.e, 16777215       ; 2 uses
-  %i.h = zext i1 %5 to i32
+  %8 = icmp eq i32 %i.f, 1                        ; 2 uses
+  %i.h = zext i1 %8 to i32
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.j = load atomic i64, ptr %i.i seq_cst, align 8, !tbaa !56
   %.not = icmp ult i64 %i.b, %i.j
@@ -230,11 +233,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not137, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = tail call ptr @hnsw_node_new(ptr noundef nonnull %0, i64 noundef %i.b, ptr noundef null, ptr noundef %1, float noundef 0.000000e+00, i32 noundef %i.f, i32 noundef 0)
+  %i.m = tail call ptr @hnsw_node_new(ptr noundef nonnull %0, i64 noundef %i.b, ptr noundef null, ptr noundef %1, float noundef 0.000000e+00, i32 noundef %6, i32 noundef 0)
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.n = tail call ptr @hnsw_node_new(ptr noundef nonnull %0, i64 noundef %i.b, ptr noundef %1, ptr noundef null, float noundef 0.000000e+00, i32 noundef %i.f, i32 noundef 0)
+  %i.n = tail call ptr @hnsw_node_new(ptr noundef nonnull %0, i64 noundef %i.b, ptr noundef %1, ptr noundef null, float noundef 0.000000e+00, i32 noundef %6, i32 noundef 0)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -244,7 +247,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 .preheader180:                                    ; preds = %bb.h
   %i.o = getelementptr inbounds nuw i8, ptr %.0120, i64 312 ; 7 uses
-  %i.p = add nuw nsw i32 %i.f, 1
+  %i.p = add nuw nsw i32 %6, 1
   %wide.trip.count197 = zext nneg i32 %i.p to i64
   br label %bb.i
 
@@ -455,7 +458,7 @@ hnsw_node_free.exit158:                           ; preds = %.preheader.i155
 
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.preheader
   %.1.lcssa = phi i32 [ %i.q, %.preheader ], [ %i.by, %middle.block ], [ %.lcssa.unr, %scalar.ph.prol.loopexit ], [ %i.dv, %scalar.ph ] ; 3 uses
-  br i1 %5, label %bb.p, label %bb.q
+  br i1 %8, label %bb.p, label %bb.q
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 5 uses
@@ -621,12 +624,12 @@ hnsw_add_node.exit:                               ; preds = %bb.r, %bb.s
 bb.t:                                             ; preds = %hnsw_add_node.exit
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.gh = load i32, ptr %i.gg, align 4, !tbaa !54
-  %i.gi = icmp ugt i32 %i.f, %i.gh
+  %i.gi = icmp ugt i32 %6, %i.gh
   br i1 %i.gi, label %bb.u, label %hnsw_node_free.exit.thread177
 
 bb.u:                                             ; preds = %bb.t, %hnsw_add_node.exit
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.f, ptr %i.gj, align 4, !tbaa !54
+  store i32 %6, ptr %i.gj, align 4, !tbaa !54
   store ptr %.0120, ptr %0, align 8, !tbaa !53
   br label %hnsw_node_free.exit.thread177
 

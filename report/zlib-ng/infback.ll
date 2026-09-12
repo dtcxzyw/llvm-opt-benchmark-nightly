@@ -203,18 +203,20 @@ bb.ab:                                            ; preds = %bb.z, %.lr.ph
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader689
   %.7565.lcssa = phi i32 [ %.0558, %.preheader689 ], [ %i.dg, %._crit_edge.loopexit ] ; 2 uses
-  %.3527.lcssa = phi i64 [ %.0524, %.preheader689 ], [ %i.dm, %._crit_edge.loopexit ] ; 2 uses
+  %.3527.lcssa = phi i64 [ %.0524, %.preheader689 ], [ %i.dm, %._crit_edge.loopexit ] ; 4 uses
   %.3523.lcssa = phi i32 [ %.0520, %.preheader689 ], [ %i.do, %._crit_edge.loopexit ]
-  %i.dp = trunc i64 %.3527.lcssa to i32           ; 3 uses
+  %i.dp = trunc i64 %.3527.lcssa to i32
   %i.dq = and i32 %i.dp, 31                       ; 2 uses
   %i.dr = add nuw nsw i32 %i.dq, 257
   store i32 %i.dr, ptr %i.r, align 4, !tbaa !61
-  %5 = lshr i32 %i.dp, 5
-  %i.ds = and i32 %5, 31                          ; 2 uses
+  %5 = lshr i64 %.3527.lcssa, 5
+  %6 = trunc i64 %5 to i32
+  %i.ds = and i32 %6, 31                          ; 2 uses
   %i.dt = add nuw nsw i32 %i.ds, 1
   store i32 %i.dt, ptr %i.s, align 16, !tbaa !62
-  %6 = lshr i32 %i.dp, 10
-  %i.du = and i32 %6, 15
+  %7 = lshr i64 %.3527.lcssa, 10
+  %8 = trunc i64 %7 to i32
+  %i.du = and i32 %8, 15
   %i.dv = add nuw nsw i32 %i.du, 4                ; 3 uses
   store i32 %i.dv, ptr %i.t, align 8, !tbaa !63
   %i.dw = lshr i64 %.3527.lcssa, 14               ; 2 uses

@@ -204,8 +204,8 @@ _RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit.
 bb.g:                                             ; preds = %bb.d
   %i.g = and i64 %.sroa.06.0.i, -8
   %i.h = or disjoint i64 %i.g, 1
-  %1 = trunc i64 %.sroa.06.0.i to i8
-  %2 = lshr i8 %1, 5
+  %1 = lshr i64 %.sroa.06.0.i, 5
+  %2 = trunc i64 %1 to i8
   %.2.i.i = and i8 %2, 1
   br label %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State21transition_to_running0Ba_.exit.i
 
@@ -608,34 +608,39 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @62, i64 noundef 8)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %i.i = load i64, ptr %0, align 8, !noundef !4   ; 2 uses
-  %i.j = trunc i64 %i.i to i8                     ; 6 uses
+  %i.i = load i64, ptr %0, align 8, !noundef !4   ; 7 uses
+  %i.j = trunc i64 %i.i to i8
   %i.k = and i8 %i.j, 1
   store i8 %i.k, ptr %i.g, align 1
   %i.l = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @63, i64 noundef 10, ptr noundef nonnull %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  %2 = lshr i8 %i.j, 1
-  %i.m = and i8 %2, 1
+  %2 = lshr i64 %i.i, 1
+  %3 = trunc i64 %2 to i8
+  %i.m = and i8 %3, 1
   store i8 %i.m, ptr %i.f, align 1
   %i.n = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.l, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @64, i64 noundef 11, ptr noundef nonnull %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %3 = lshr i8 %i.j, 2
-  %i.o = and i8 %3, 1
+  %4 = lshr i64 %i.i, 2
+  %5 = trunc i64 %4 to i8
+  %i.o = and i8 %5, 1
   store i8 %i.o, ptr %i.e, align 1
   %i.p = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.n, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @65, i64 noundef 11, ptr noundef nonnull %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %4 = lshr i8 %i.j, 5
-  %i.q = and i8 %4, 1
+  %6 = lshr i64 %i.i, 5
+  %7 = trunc i64 %6 to i8
+  %i.q = and i8 %7, 1
   store i8 %i.q, ptr %i.d, align 1
   %i.r = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.p, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @66, i64 noundef 12, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %5 = lshr i8 %i.j, 3
-  %i.s = and i8 %5, 1
+  %8 = lshr i64 %i.i, 3
+  %9 = trunc i64 %8 to i8
+  %i.s = and i8 %9, 1
   store i8 %i.s, ptr %i.c, align 1
   %i.t = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.r, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @67, i64 noundef 18, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %6 = lshr i8 %i.j, 4
-  %i.u = and i8 %6, 1
+  %10 = lshr i64 %i.i, 4
+  %11 = trunc i64 %10 to i8
+  %i.u = and i8 %11, 1
   store i8 %i.u, ptr %i.b, align 1
   %i.v = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.t, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef 17, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1038,24 +1043,27 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @84, i64 noundef 5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.f = load i64, ptr %0, align 8, !noundef !4
-  %2 = trunc i64 %i.f to i8                       ; 4 uses
-  %3 = lshr i8 %2, 1
+  %i.f = load i64, ptr %0, align 8, !noundef !4   ; 4 uses
+  %2 = lshr i64 %i.f, 1
+  %3 = trunc i64 %2 to i8
   %i.g = and i8 %3, 1
   store i8 %i.g, ptr %i.d, align 1
   %i.h = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @64, i64 noundef 11, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %4 = lshr i8 %2, 2
-  %i.i = and i8 %4, 1
+  %4 = lshr i64 %i.f, 2
+  %5 = trunc i64 %4 to i8
+  %i.i = and i8 %5, 1
   store i8 %i.i, ptr %i.c, align 1
   %i.j = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @59, i64 noundef 9, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.k = and i8 %2, 1
+  %6 = trunc i64 %i.f to i8
+  %i.k = and i8 %6, 1
   store i8 %i.k, ptr %i.b, align 1
   %i.l = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.j, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @85, i64 noundef 14, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %5 = lshr i8 %2, 3
-  %i.m = and i8 %5, 1
+  %7 = lshr i64 %i.f, 3
+  %8 = trunc i64 %7 to i8
+  %i.m = and i8 %8, 1
   store i8 %i.m, ptr %i.a, align 1
   %i.n = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.l, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @86, i64 noundef 14, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
   %i.o = call noundef zeroext i1 @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.n)

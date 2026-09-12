@@ -205,9 +205,10 @@ bb.q:                                             ; preds = %bb.p
   %i.bg = or disjoint i8 %i.bf, -16
   %i.bh = getelementptr inbounds nuw i8, ptr %i.h, i64 %.087106 ; 4 uses
   store i8 %i.bg, ptr %i.bh, align 1, !tbaa !8
-  %i.bi = trunc i16 %i.ba to i8
-  %3 = lshr i8 %i.bi, 2
-  %i.bj = or disjoint i8 %3, -128
+  %3 = lshr i16 %i.ba, 2
+  %i.bi = trunc i16 %3 to i8
+  %4 = and i8 %i.bi, 63
+  %i.bj = or disjoint i8 %4, -128
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 1
   store i8 %i.bj, ptr %i.bk, align 1, !tbaa !8
   %i.bl = shl i16 %spec.select, 4

@@ -206,13 +206,14 @@ _RNvXsb_NtCseKXfNLkF2r6_6chrono8datetimeINtB5_8DateTimeNtNtNtB7_6offset5fixed11F
   %i.as = lshr i32 %i.ar, 6
   %i.at = getelementptr inbounds nuw i8, ptr @381, i64 %i.ao
   %i.au = load i8, ptr %i.at, align 1, !noalias !6048, !noundef !17
+  %3 = zext i8 %i.au to i32
+  %4 = add nuw nsw i32 %i.am, %3
+  %5 = lshr i32 %4, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !6048
-  %3 = trunc nuw nsw i32 %i.as to i8
-  %4 = trunc i32 %i.am to i8
-  %5 = add i8 %i.au, %4
-  %6 = lshr i8 %5, 1
-  %i.av = and i8 %6, 31
-  call void @_RNvMNtNtCsdaEETE4DqmE_13typst_library11foundations8datetimeNtB2_8Datetime8from_ymd(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %0, i32 noundef %i.ad, i8 noundef %3, i8 noundef %i.av)
+  %6 = trunc nuw nsw i32 %i.as to i8
+  %7 = trunc i32 %5 to i8
+  %i.av = and i8 %7, 31
+  call void @_RNvMNtNtCsdaEETE4DqmE_13typst_library11foundations8datetimeNtB2_8Datetime8from_ymd(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %0, i32 noundef %i.ad, i8 noundef %6, i8 noundef %i.av)
   br label %bb.i
 
 bb.h:                                             ; preds = %.thread33

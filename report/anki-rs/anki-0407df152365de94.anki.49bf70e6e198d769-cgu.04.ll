@@ -206,8 +206,8 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.26)
   %i.z = load i64, ptr %2, align 8, !noundef !5
-  %i.aa = extractelement <4 x i16> %i.w, i64 0    ; 2 uses
-  %i.ab = trunc i16 %i.aa to i8                   ; 2 uses
+  %i.aa = extractelement <4 x i16> %i.w, i64 0    ; 3 uses
+  %i.ab = trunc i16 %i.aa to i8
   %i.ac = and i16 %i.aa, 2048                     ; 2 uses
   %.not99.i = icmp eq i16 %i.ac, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !5279
@@ -610,8 +610,9 @@ bb.bk:                                            ; preds = %bb.bg
   %i.fh = trunc nuw nsw i16 %.lobit.i to i8
   store i8 %i.fh, ptr %i.fg, align 1, !noalias !5279
   %i.fi = getelementptr inbounds nuw i8, ptr %i.n, i64 204
-  %3 = lshr i8 %i.ab, 3
-  %i.fj = and i8 %3, 1
+  %3 = lshr i16 %i.aa, 3
+  %4 = trunc i16 %3 to i8
+  %i.fj = and i8 %4, 1
   store i8 %i.fj, ptr %i.fi, align 4, !noalias !5279
   %i.fk = getelementptr inbounds nuw i8, ptr %i.n, i64 184 ; 2 uses
   store i16 %switch.select123.i, ptr %i.fk, align 8, !noalias !5279
@@ -1014,8 +1015,8 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.26)
   %i.ae = load i64, ptr %2, align 8, !noundef !5
-  %i.af = extractelement <4 x i16> %i.ab, i64 0   ; 2 uses
-  %i.ag = trunc i16 %i.af to i8                   ; 2 uses
+  %i.af = extractelement <4 x i16> %i.ab, i64 0   ; 3 uses
+  %i.ag = trunc i16 %i.af to i8
   %i.ah = and i16 %i.af, 2048                     ; 2 uses
   %.not99.i = icmp eq i16 %i.ah, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !5340
@@ -1418,8 +1419,9 @@ bb.bm:                                            ; preds = %bb.bi
   %i.fm = trunc nuw nsw i16 %.lobit.i to i8
   store i8 %i.fm, ptr %i.fl, align 1, !noalias !5340
   %i.fn = getelementptr inbounds nuw i8, ptr %i.n, i64 204
-  %3 = lshr i8 %i.ag, 3
-  %i.fo = and i8 %3, 1
+  %3 = lshr i16 %i.af, 3
+  %4 = trunc i16 %3 to i8
+  %i.fo = and i8 %4, 1
   store i8 %i.fo, ptr %i.fn, align 4, !noalias !5340
   %i.fp = getelementptr inbounds nuw i8, ptr %i.n, i64 184 ; 2 uses
   store i16 %switch.select123.i, ptr %i.fp, align 8, !noalias !5340
@@ -1822,8 +1824,8 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.26)
   %i.z = load i64, ptr %2, align 8, !noundef !5
-  %i.aa = extractelement <4 x i16> %i.w, i64 0    ; 2 uses
-  %i.ab = trunc i16 %i.aa to i8                   ; 2 uses
+  %i.aa = extractelement <4 x i16> %i.w, i64 0    ; 3 uses
+  %i.ab = trunc i16 %i.aa to i8
   %i.ac = and i16 %i.aa, 2048                     ; 2 uses
   %.not99.i = icmp eq i16 %i.ac, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !5401
@@ -2226,8 +2228,9 @@ bb.bk:                                            ; preds = %bb.bg
   %i.fh = trunc nuw nsw i16 %.lobit.i to i8
   store i8 %i.fh, ptr %i.fg, align 1, !noalias !5401
   %i.fi = getelementptr inbounds nuw i8, ptr %i.n, i64 204
-  %3 = lshr i8 %i.ab, 3
-  %i.fj = and i8 %3, 1
+  %3 = lshr i16 %i.aa, 3
+  %4 = trunc i16 %3 to i8
+  %i.fj = and i8 %4, 1
   store i8 %i.fj, ptr %i.fi, align 4, !noalias !5401
   %i.fk = getelementptr inbounds nuw i8, ptr %i.n, i64 184 ; 2 uses
   store i16 %switch.select123.i, ptr %i.fk, align 8, !noalias !5401

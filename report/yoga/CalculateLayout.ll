@@ -204,8 +204,8 @@ bb.v:                                             ; preds = %.thread, %bb.u
 bb.w:                                             ; preds = %bb.u, %bb.v
   tail call void @_ZN8facebook4yoga31cleanupContentsNodesRecursivelyEPNS0_4NodeEb(ptr noundef nonnull %0, i1 noundef zeroext %8)
   %i.hl = load i32, ptr %i.ab, align 8            ; 2 uses
-  %26 = trunc i32 %i.hl to i8
-  %27 = lshr i8 %26, 2
+  %26 = lshr i32 %i.hl, 2
+  %27 = trunc i32 %26 to i8
   %i.hm = and i8 %27, 3                           ; 2 uses
   br i1 %i.x, label %bb.x, label %bb.z
 
@@ -608,8 +608,8 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %bb.bg
   %i.pd = load i32, ptr %i.ab, align 8
-  %28 = trunc i32 %i.pd to i8
-  %29 = lshr i8 %28, 2
+  %28 = lshr i32 %i.pd, 2
+  %29 = trunc i32 %28 to i8
   %i.pe = and i8 %29, 3                           ; 2 uses
   br i1 %i.x, label %bb.bk, label %bb.bm
 
@@ -1012,22 +1012,24 @@ _ZNK8facebook4yoga5Style20resolvedMinDimensionENS0_9DirectionENS0_9DimensionEff.
 bb.ln:                                            ; preds = %._crit_edge201.i, %.thread.i
   %i.bum = phi float [ 0.000000e+00, %.thread.i ], [ %i.buk, %._crit_edge201.i ]
   %i.bun = load i32, ptr %i.ab, align 8
-  %i.buo = trunc i32 %i.bun to i8
-  %30 = lshr i8 %i.buo, 4
+  %30 = lshr i32 %i.bun, 4
+  %i.buo = trunc i32 %30 to i8
+  %31 = and i8 %i.buo, 15
   br label %bb.lp
 
 bb.lo:                                            ; preds = %._crit_edge201.i
   %i.bup = load i32, ptr %i.ab, align 8
-  %i.buq = trunc i32 %i.bup to i8
-  %31 = lshr i8 %i.buq, 4                         ; 2 uses
-  %.off.i.i = add nsw i8 %31, -4
+  %32 = lshr i32 %i.bup, 4
+  %i.buq = trunc i32 %32 to i8
+  %33 = and i8 %i.buq, 15                         ; 2 uses
+  %.off.i.i = add nsw i8 %33, -4
   %switch.i.i = icmp ult i8 %.off.i.i, 3
-  %..i146.i = select i1 %switch.i.i, i8 1, i8 %31
+  %..i146.i = select i1 %switch.i.i, i8 1, i8 %33
   br label %bb.lp
 
 bb.lp:                                            ; preds = %bb.lo, %bb.ln
   %i.bur = phi float [ %i.bum, %bb.ln ], [ %i.buk, %bb.lo ] ; 5 uses
-  %i.bus = phi i8 [ %30, %bb.ln ], [ %..i146.i, %bb.lo ]
+  %i.bus = phi i8 [ %31, %bb.ln ], [ %..i146.i, %bb.lo ]
   %i.but = load i64, ptr %i.ala, align 8, !tbaa !170
   %i.buu = icmp eq i64 %i.but, 0
   br i1 %i.buu, label %bb.lq, label %bb.lx
@@ -1430,8 +1432,8 @@ bb.h:                                             ; preds = %bb.g
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
   %i.ab = load i32, ptr %i.aa, align 8
   %.fr104 = freeze i32 %i.ab
-  %4 = trunc i32 %.fr104 to i8
-  %5 = lshr i8 %4, 2                              ; 2 uses
+  %4 = lshr i32 %.fr104, 2
+  %5 = trunc i32 %4 to i8                         ; 2 uses
   %i.ac = and i8 %5, 3                            ; 3 uses
   %i.ad = icmp eq i8 %i.z, 2
   br i1 %i.ad, label %bb.i, label %_ZN8facebook4yoga16resolveDirectionENS0_13FlexDirectionENS0_9DirectionE.exit

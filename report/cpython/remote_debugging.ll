@@ -203,19 +203,21 @@ bb.aw:                                            ; preds = %bb.av
   br label %send_exec_to_proc_handle.exit
 
 .thread.i.i.i:                                    ; preds = %bb.av, %bb.at
-  %i.hb = phi i64 [ %.pre.i.i.i, %bb.av ], [ %i.gw, %bb.at ]
-  %i.hc = trunc i64 %i.hb to i32                  ; 2 uses
-  %6 = lshr i32 %i.hc, 24                         ; 2 uses
-  %7 = lshr i32 %i.hc, 16
-  %i.hd = and i32 %7, 255                         ; 2 uses
-  %i.he = icmp ne i32 %6, 3
+  %i.hb = phi i64 [ %.pre.i.i.i, %bb.av ], [ %i.gw, %bb.at ] ; 2 uses
+  %6 = lshr i64 %i.hb, 24
+  %i.hc = trunc i64 %6 to i32
+  %7 = and i32 %i.hc, 255                         ; 2 uses
+  %8 = lshr i64 %i.hb, 16
+  %9 = trunc i64 %8 to i32
+  %i.hd = and i32 %9, 255                         ; 2 uses
+  %i.he = icmp ne i32 %7, 3
   %i.hf = icmp ne i32 %i.hd, 15
   %or.cond.i.i.i = or i1 %i.he, %i.hf
   br i1 %or.cond.i.i.i, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %.thread.i.i.i
   %i.hg = load ptr, ptr @PyExc_RuntimeError, align 8, !tbaa !27
-  %i.hh = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.hg, ptr noundef nonnull @.str.33, i32 noundef 3, i32 noundef 15, i32 noundef %6, i32 noundef %i.hd) #9 ; 0 uses
+  %i.hh = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.hg, ptr noundef nonnull @.str.33, i32 noundef 3, i32 noundef 15, i32 noundef %7, i32 noundef %i.hd) #9 ; 0 uses
   br label %send_exec_to_proc_handle.exit
 
 bb.ay:                                            ; preds = %.thread.i.i.i

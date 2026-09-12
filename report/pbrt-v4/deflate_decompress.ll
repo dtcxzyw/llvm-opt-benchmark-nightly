@@ -205,11 +205,11 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 .loopexit592.i:                                   ; preds = %.loopexit592.loopexit.i, %bb.d, %bb.b
   %.3463.i = phi ptr [ %.0460.i, %bb.b ], [ %i.t, %bb.d ], [ %.2462.i.lcssa, %.loopexit592.loopexit.i ] ; 4 uses
-  %.3439.i = phi i64 [ %.0436.i, %bb.b ], [ %i.q, %bb.d ], [ %.2438.i.lcssa, %.loopexit592.loopexit.i ] ; 5 uses
+  %.3439.i = phi i64 [ %.0436.i, %bb.b ], [ %i.q, %bb.d ], [ %.2438.i.lcssa, %.loopexit592.loopexit.i ] ; 6 uses
   %.2415.i = phi i32 [ %.0413.i, %bb.b ], [ %i.u, %bb.d ], [ %i.bn, %.loopexit592.loopexit.i ] ; 2 uses
   %.3406.i = phi i64 [ %.0403.i, %bb.b ], [ %.0403.i, %bb.d ], [ %.2405.i.lcssa, %.loopexit592.loopexit.i ] ; 5 uses
-  %7 = trunc i64 %.3439.i to i32                  ; 2 uses
-  %8 = lshr i32 %7, 1
+  %7 = lshr i64 %.3439.i, 1
+  %8 = trunc i64 %7 to i32
   %i.bo = and i32 %8, 3
   %i.bp = lshr i64 %.3439.i, 3                    ; 3 uses
   %i.bq = add i32 %.2415.i, -3                    ; 3 uses
@@ -232,9 +232,10 @@ bb.v:                                             ; preds = %.loopexit592.i
 .preheader585.i:                                  ; preds = %.loopexit581.i
   %i.bw = trunc i64 %i.bp to i32
   %i.bx = and i32 %i.bw, 31
+  %9 = lshr i64 %.3439.i, 8
   %i.by = add nuw nsw i32 %i.bx, 257              ; 2 uses
-  %9 = lshr i32 %7, 8
-  %i.bz = and i32 %9, 31
+  %10 = trunc i64 %9 to i32
+  %i.bz = and i32 %10, 31
   %i.ca = add nuw nsw i32 %i.bz, 1                ; 2 uses
   %.not = icmp eq i64 %i.bs, 15
   br i1 %.not, label %._crit_edge.i, label %.lr.ph623.i.preheader

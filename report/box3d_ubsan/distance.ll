@@ -204,17 +204,19 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #9
   %i.ph = load i64, ptr %10, align 8              ; 3 uses
-  %i.pi = load i64, ptr %i.ba, align 8            ; 2 uses
+  %i.pi = load i64, ptr %i.ba, align 8            ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !101)
   store ptr %8, ptr %15, align 8, !tbaa !39, !alias.scope !101
   store ptr %9, ptr %i.bc, align 8, !tbaa !40, !alias.scope !101
   %i.pj = lshr i64 %i.ph, 48
   %i.pk = trunc nuw nsw i64 %i.pj to i32
   %i.pl = lshr i64 %i.ph, 56
-  %i.pm = trunc nuw nsw i64 %i.pl to i32
-  %i.pn = trunc i64 %i.pi to i32                  ; 3 uses
-  %16 = lshr i32 %i.pn, 16
-  %17 = lshr i32 %i.pn, 24
+  %16 = trunc nuw nsw i64 %i.pl to i32
+  %i.pm = trunc i64 %i.pi to i32
+  %17 = lshr i64 %i.pi, 16
+  %i.pn = trunc i64 %17 to i32
+  %18 = lshr i64 %i.pi, 24
+  %19 = trunc i64 %18 to i32
   %i.po = lshr i64 %i.pi, 32
   %i.pp = trunc nuw i64 %i.po to i32
   %i.pq = lshr i64 %i.ph, 32                      ; 2 uses
@@ -225,13 +227,14 @@ bb.n:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9, !noalias !101
   %i.ps = and i32 %i.pk, 255
   store i32 %i.ps, ptr %i.a, align 4, !tbaa !27, !noalias !101
-  store i32 %i.pm, ptr %i.bf, align 4, !tbaa !27, !noalias !101
-  %i.pt = and i32 %i.pn, 255
+  store i32 %16, ptr %i.bf, align 4, !tbaa !27, !noalias !101
+  %i.pt = and i32 %i.pm, 255
   store i32 %i.pt, ptr %i.bg, align 4, !tbaa !27, !noalias !101
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9, !noalias !101
-  %i.pu = and i32 %16, 255
+  %i.pu = and i32 %i.pn, 255
   store i32 %i.pu, ptr %i.b, align 4, !tbaa !27, !noalias !101
-  store i32 %17, ptr %i.bh, align 4, !tbaa !27, !noalias !101
+  %20 = and i32 %19, 255
+  store i32 %20, ptr %i.bh, align 4, !tbaa !27, !noalias !101
   %i.pv = and i32 %i.pp, 255
   store i32 %i.pv, ptr %i.bi, align 4, !tbaa !27, !noalias !101
   %i.pw = trunc nuw i64 %i.pq to i32

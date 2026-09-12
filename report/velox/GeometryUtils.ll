@@ -204,13 +204,15 @@ _ZN8facebook5velox9functions10geospatial12_GLOBAL__N_111TilingEntryC2ElPN4geos4g
   %i.aj = load ptr, ptr %i.d, align 8, !tbaa !268, !nonnull !65, !align !269
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !61 ; 2 uses
   %.val.i = load double, ptr %i.ak, align 8
-  %.val4.i = load i64, ptr %4, align 16, !tbaa !100 ; 2 uses
+  %.val4.i = load i64, ptr %4, align 16, !tbaa !100 ; 3 uses
   %.val5.i = load ptr, ptr %i.b, align 8          ; 2 uses
-  %i.al = trunc i64 %.val4.i to i32               ; 2 uses
-  %5 = lshr i32 %i.al, 26
-  %notmask.i.i = shl nsw i32 -1, %5
+  %5 = lshr i64 %.val4.i, 26
+  %i.al = trunc i64 %5 to i32
+  %6 = and i32 %i.al, 63
+  %notmask.i.i = shl nsw i32 -1, %6
   %i.am = xor i32 %notmask.i.i, -1                ; 2 uses
-  %i.an = and i32 %i.al, 16777215
+  %7 = trunc i64 %.val4.i to i32
+  %i.an = and i32 %7, 16777215
   %i.ao = icmp samesign ult i32 %i.an, %i.am
   br i1 %i.ao, label %bb.d, label %bb.e
 

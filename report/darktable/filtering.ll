@@ -204,9 +204,10 @@ bb.b:                                             ; preds = %.lr.ph68, %._crit_e
   call void @dt_conf_set_int(ptr noundef nonnull %i.a, i32 noundef %i.y) #19
   %i.z = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.73, i32 noundef %.056.lcssa) #19 ; 0 uses
   %i.aa = load i64, ptr %i.v, align 4
-  %i.ab = trunc i64 %i.aa to i32
-  %3 = lshr i32 %i.ab, 16
-  call void @dt_conf_set_int(ptr noundef nonnull %i.a, i32 noundef %3) #19
+  %3 = lshr i64 %i.aa, 16
+  %i.ab = trunc i64 %3 to i32
+  %4 = and i32 %i.ab, 65535
+  call void @dt_conf_set_int(ptr noundef nonnull %i.a, i32 noundef %4) #19
   %i.ac = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 200, ptr noundef nonnull @.str.74, i32 noundef %.056.lcssa) #19 ; 0 uses
   %i.ad = load i64, ptr %i.v, align 4
   %i.ae = lshr i64 %i.ad, 32

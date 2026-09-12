@@ -205,16 +205,18 @@ _ZN7obj_refI4expr11ast_managerED2Ev.exit:         ; preds = %bb.br, %bb.bq, %_Z6
           to label %bb.bt unwind label %bb.ck
 
 bb.bt:                                            ; preds = %_ZN7obj_refI4expr11ast_managerED2Ev.exit
-  %i.mp = load i64, ptr %i.js, align 8
-  %i.mq = trunc i64 %i.mp to i32                  ; 2 uses
+  %i.mp = load i64, ptr %i.js, align 8            ; 2 uses
+  %i.mq = trunc i64 %i.mp to i32
   %i.mr = and i32 %i.mq, 65535                    ; 2 uses
   %i.ms = icmp eq i32 %i.mr, 65535
   %spec.select.i = call i32 @llvm.usub.sat.i32(i32 %i.mr, i32 1)
   %.0.i126 = select i1 %i.ms, i32 -1, i32 %spec.select.i
-  %15 = lshr i32 %i.mq, 16
+  %15 = lshr i64 %i.mp, 16
+  %16 = trunc i64 %15 to i32
+  %17 = and i32 %16, 65535
   %i.mt = load ptr, ptr %14, align 8, !tbaa !83
   %i.mu = getelementptr inbounds nuw i8, ptr %i.lt, i64 136
-  %i.mv = invoke noundef ptr @_ZN6spacer16pred_transformer11pob_manager6mk_pobEPNS_3pobEjjP4expr(ptr noundef nonnull align 8 dereferenceable(40) %i.mu, ptr noundef nonnull %1, i32 noundef %.0.i126, i32 noundef %15, ptr noundef %i.mt)
+  %i.mv = invoke noundef ptr @_ZN6spacer16pred_transformer11pob_manager6mk_pobEPNS_3pobEjjP4expr(ptr noundef nonnull align 8 dereferenceable(40) %i.mu, ptr noundef nonnull %1, i32 noundef %.0.i126, i32 noundef %17, ptr noundef %i.mt)
           to label %_ZN6spacer16pred_transformer6mk_pobEPNS_3pobEjjP4expr.exit unwind label %bb.cm ; 10 uses
 
 _ZN6spacer16pred_transformer6mk_pobEPNS_3pobEjjP4expr.exit: ; preds = %bb.bt

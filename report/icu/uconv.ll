@@ -204,7 +204,7 @@ _ZN6icu_7813UnicodeString6appendEDs.exit333:      ; preds = %bb.gb
   br label %bb.gc
 
 bb.gc:                                            ; preds = %bb.fy, %bb.fx, %_ZN6icu_7813UnicodeString6appendEDs.exit333
-  %.1150361369 = phi i32 [ %i.pt, %_ZN6icu_7813UnicodeString6appendEDs.exit333 ], [ %i.ph, %bb.fx ], [ %i.ph, %bb.fy ] ; 3 uses
+  %.1150361369 = phi i32 [ %i.pt, %_ZN6icu_7813UnicodeString6appendEDs.exit333 ], [ %i.ph, %bb.fx ], [ %i.ph, %bb.fy ] ; 4 uses
   %.2362367 = phi i8 [ %i.pq, %_ZN6icu_7813UnicodeString6appendEDs.exit333 ], [ %i.pd, %bb.fx ], [ %i.pd, %bb.fy ] ; 2 uses
   %i.qh = lshr i32 %.1150361369, 12
   %i.qi = trunc i32 %i.qh to i8
@@ -236,11 +236,12 @@ bb.gd:                                            ; preds = %bb.gc
 
 bb.ge:                                            ; preds = %bb.gd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %i.qv = trunc i32 %.1150361369 to i8            ; 3 uses
-  %32 = lshr i8 %i.qv, 4                          ; 2 uses
-  %i.qw = icmp ult i8 %i.qv, -96
-  %i.qx = or disjoint i8 %32, 48
-  %narrow.i342 = add nuw nsw i8 %32, 87
+  %32 = lshr i32 %.1150361369, 4
+  %i.qv = trunc i32 %32 to i8
+  %33 = and i8 %i.qv, 15                          ; 3 uses
+  %i.qw = icmp samesign ult i8 %33, 10
+  %i.qx = or disjoint i8 %33, 48
+  %narrow.i342 = add nuw nsw i8 %33, 87
   %.v.i343 = select i1 %i.qw, i8 %i.qx, i8 %narrow.i342
   %i.qy = zext nneg i8 %.v.i343 to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -250,7 +251,8 @@ bb.ge:                                            ; preds = %bb.gd
 
 bb.gf:                                            ; preds = %bb.ge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.ra = and i8 %i.qv, 15                        ; 3 uses
+  %34 = trunc i32 %.1150361369 to i8
+  %i.ra = and i8 %34, 15                          ; 3 uses
   %i.rb = icmp samesign ult i8 %i.ra, 10
   %i.rc = or disjoint i8 %i.ra, 48
   %narrow.i346 = add nuw nsw i8 %i.ra, 87

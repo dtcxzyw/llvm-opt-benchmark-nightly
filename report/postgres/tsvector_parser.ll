@@ -29,17 +29,19 @@ bb.a:
   %i.f = tail call i32 @pg_database_encoding_max_length() #7
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   store i32 %i.f, ptr %i.g, align 4
-  %i.h = trunc i32 %1 to i8                       ; 3 uses
+  %i.h = trunc i32 %1 to i8
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.j = and i8 %i.h, 1
   store i8 %i.j, ptr %i.i, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 33
-  %3 = lshr i8 %i.h, 1
-  %i.l = and i8 %3, 1
+  %3 = lshr i32 %1, 1
+  %4 = trunc i32 %3 to i8
+  %i.l = and i8 %4, 1
   store i8 %i.l, ptr %i.k, align 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 34
-  %4 = lshr i8 %i.h, 2
-  %i.n = and i8 %4, 1
+  %5 = lshr i32 %1, 2
+  %6 = trunc i32 %5 to i8
+  %i.n = and i8 %6, 1
   store i8 %i.n, ptr %i.m, align 2
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr %2, ptr %i.o, align 8

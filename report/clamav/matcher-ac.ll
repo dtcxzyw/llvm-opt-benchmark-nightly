@@ -205,25 +205,26 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce
 
 bb.ch:                                            ; preds = %bb.cd
   %i.hl = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.he) #26
-  %i.hm = trunc i64 %i.hl to i16
-  %14 = lshr i16 %i.hm, 1                         ; 4 uses
+  %14 = lshr i64 %i.hl, 1                         ; 2 uses
+  %i.hm = trunc i64 %14 to i16
+  %15 = and i16 %i.hm, 32767                      ; 3 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 6 uses
-  store i16 %14, ptr %i.hn, align 8, !tbaa !30
-  %i.ho = zext nneg i16 %14 to i32                ; 2 uses
+  store i16 %15, ptr %i.hn, align 8, !tbaa !30
+  %i.ho = zext nneg i16 %15 to i32                ; 2 uses
   %i.hp = load i8, ptr %i.e, align 8, !tbaa !35
   %i.hq = zext i8 %i.hp to i32                    ; 2 uses
   %i.hr = icmp samesign ult i32 %i.ho, %i.hq
   br i1 %i.hr, label %bb.ci, label %.preheader710
 
 .preheader710:                                    ; preds = %bb.ch
-  %.not819 = icmp eq i16 %14, 0
+  %.not819 = icmp eq i16 %15, 0
   br i1 %.not819, label %._crit_edge, label %.lr.ph754
 
 .lr.ph754:                                        ; preds = %.preheader710
   %i.hs = getelementptr inbounds nuw i8, ptr %i.k, i64 18 ; 4 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %i.k, i64 20 ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %i.k, i64 88
-  %15 = zext nneg i16 %14 to i64
+  %16 = and i64 %14, 32767
   br label %bb.cl
 
 bb.ci:                                            ; preds = %bb.ch
@@ -283,7 +284,7 @@ bb.cn:                                            ; preds = %bb.cl
 bb.co:                                            ; preds = %bb.cm, %bb.cn
   %.1497 = phi i16 [ %i.ir, %bb.cm ], [ %.0496753, %bb.cn ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.iu = icmp samesign ult i64 %indvars.iv.next, %15
+  %i.iu = icmp samesign ult i64 %indvars.iv.next, %16
   br i1 %i.iu, label %bb.cl, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.co, %.preheader710
@@ -686,20 +687,21 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   store ptr %i.e, ptr %i.c, align 8, !tbaa !83
   %i.g = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #26
-  %i.h = trunc i64 %i.g to i16
-  %4 = lshr i16 %i.h, 1                           ; 3 uses
+  %4 = lshr i64 %i.g, 1
+  %i.h = trunc i64 %4 to i16
+  %5 = and i16 %i.h, 32767                        ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 5 uses
-  store i16 %4, ptr %i.i, align 8, !tbaa !132
+  store i16 %5, ptr %i.i, align 8, !tbaa !132
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 10 ; 2 uses
   store i8 1, ptr %i.j, align 2, !tbaa !133
   %i.k = and i8 %1, 1
   %.not75 = icmp eq i8 %i.k, 0
-  %.not126 = icmp eq i16 %4, 0
+  %.not126 = icmp eq i16 %5, 0
   %or.cond = select i1 %.not75, i1 true, i1 %.not126
   br i1 %or.cond, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e, %bb.g
-  %i.l = phi i16 [ %i.v, %bb.g ], [ %4, %bb.e ]
+  %i.l = phi i16 [ %i.v, %bb.g ], [ %5, %bb.e ]
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %bb.e ] ; 2 uses
   %i.m = getelementptr inbounds nuw [2 x i8], ptr %i.e, i64 %indvars.iv ; 2 uses
   %i.n = load i16, ptr %i.m, align 2, !tbaa !30   ; 2 uses

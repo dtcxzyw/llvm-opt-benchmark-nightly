@@ -204,8 +204,8 @@ bb.a:
   %i.a = trunc i32 %1 to i8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8              ; 2 uses
-  %2 = trunc i32 %i.c to i8
-  %3 = lshr i8 %2, 2
+  %2 = lshr i32 %i.c, 2
+  %3 = trunc i32 %2 to i8
   %i.d = and i8 %3, 3
   %.not.i = icmp eq i8 %i.d, %i.a
   br i1 %.not.i, label %_ZN12_GLOBAL__N_111updateStyleITnDaXadL_ZNK8facebook4yoga5Style13flexDirectionEvEETnDaXadL_ZNS3_16setFlexDirectionENS2_13FlexDirectionEEES4_EEvP6YGNodeT1_.exit, label %bb.b
@@ -239,9 +239,10 @@ bb.a:
   %i.a = trunc i32 %1 to i8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8              ; 2 uses
-  %i.d = trunc i32 %i.c to i8
-  %2 = lshr i8 %i.d, 4
-  %.not.i = icmp eq i8 %2, %i.a
+  %2 = lshr i32 %i.c, 4
+  %i.d = trunc i32 %2 to i8
+  %3 = and i8 %i.d, 15
+  %.not.i = icmp eq i8 %3, %i.a
   br i1 %.not.i, label %_ZN12_GLOBAL__N_111updateStyleITnDaXadL_ZNK8facebook4yoga5Style14justifyContentEvEETnDaXadL_ZNS3_17setJustifyContentENS2_7JustifyEEES4_EEvP6YGNodeT1_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

@@ -203,19 +203,21 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.k
 
 .thread:                                          ; preds = %bb.d, %bb.f
-  %i.j = phi i64 [ %.pre, %bb.f ], [ %i.e, %bb.d ]
-  %i.k = trunc i64 %i.j to i32                    ; 2 uses
-  %1 = lshr i32 %i.k, 24                          ; 2 uses
-  %2 = lshr i32 %i.k, 16
-  %i.l = and i32 %2, 255                          ; 2 uses
-  %i.m = icmp ne i32 %1, 3
+  %i.j = phi i64 [ %.pre, %bb.f ], [ %i.e, %bb.d ] ; 2 uses
+  %1 = lshr i64 %i.j, 24
+  %i.k = trunc i64 %1 to i32
+  %2 = and i32 %i.k, 255                          ; 2 uses
+  %3 = lshr i64 %i.j, 16
+  %4 = trunc i64 %3 to i32
+  %i.l = and i32 %4, 255                          ; 2 uses
+  %i.m = icmp ne i32 %2, 3
   %i.n = icmp ne i32 %i.l, 15
   %or.cond = or i1 %i.m, %i.n
   br i1 %or.cond, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.thread
   %i.o = load ptr, ptr @PyExc_RuntimeError, align 8, !tbaa !55
-  %i.p = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.o, ptr noundef nonnull @.str.18, i32 noundef 3, i32 noundef 15, i32 noundef %1, i32 noundef %i.l) #12 ; 0 uses
+  %i.p = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.o, ptr noundef nonnull @.str.18, i32 noundef 3, i32 noundef 15, i32 noundef %2, i32 noundef %i.l) #12 ; 0 uses
   br label %bb.k
 
 bb.i:                                             ; preds = %.thread

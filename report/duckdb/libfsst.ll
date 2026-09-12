@@ -205,6 +205,9 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 9
   %i.f = load i64, ptr %i.e, align 1              ; 14 uses
   %.sroa.0.0.extract.trunc = trunc i64 %i.f to i8 ; 2 uses
+  %.sroa.8.0.extract.shift = lshr i64 %i.f, 8
+  %.sroa.9.0.extract.shift = lshr i64 %i.f, 16
+  %.sroa.10.0.extract.shift = lshr i64 %i.f, 24
   %.sroa.11.0.extract.shift = lshr i64 %i.f, 32
   %.sroa.12.0.extract.shift = lshr i64 %i.f, 40
   %.sroa.13.0.extract.shift = lshr i64 %i.f, 48
@@ -216,9 +219,8 @@ bb.a:
   %i.i = zext nneg i8 %i.c to i32
   %i.j = and i8 %i.b, 1                           ; 2 uses
   %spec.select = sub i8 %.sroa.0.0.extract.trunc, %i.j ; 3 uses
-  %i.k = trunc i64 %i.f to i32
-  %2 = lshr i32 %i.k, 8
-  %i.l = and i32 %2, 255
+  %i.k = trunc i64 %.sroa.8.0.extract.shift to i32
+  %i.l = and i32 %i.k, 255
   %i.m = and i64 %i.f, 65280
   %.not61 = icmp eq i64 %i.m, 0
   br i1 %.not61, label %._crit_edge52, label %.lr.ph51
@@ -235,9 +237,8 @@ bb.a:
 ._crit_edge52:                                    ; preds = %._crit_edge52.loopexit, %.preheader
   %.141.lcssa = phi i32 [ %i.i, %.preheader ], [ %i.p, %._crit_edge52.loopexit ] ; 2 uses
   %.1.lcssa = phi i32 [ 17, %.preheader ], [ %i.if, %._crit_edge52.loopexit ] ; 2 uses
-  %i.q = trunc i64 %i.f to i32
-  %3 = lshr i32 %i.q, 16
-  %i.r = and i32 %3, 255
+  %i.q = trunc i64 %.sroa.9.0.extract.shift to i32
+  %i.r = and i32 %i.q, 255
   %i.s = and i64 %i.f, 16711680
   %.not61.1 = icmp eq i64 %i.s, 0
   br i1 %.not61.1, label %._crit_edge52.1, label %.lr.ph51.1
@@ -283,8 +284,8 @@ bb.a:
 ._crit_edge52.1:                                  ; preds = %._crit_edge52.loopexit.1, %._crit_edge52
   %.141.lcssa.1 = phi i32 [ %.141.lcssa, %._crit_edge52 ], [ %i.al, %._crit_edge52.loopexit.1 ] ; 2 uses
   %.1.lcssa.1 = phi i32 [ %.1.lcssa, %._crit_edge52 ], [ %i.af, %._crit_edge52.loopexit.1 ] ; 2 uses
-  %i.am = trunc i64 %i.f to i32
-  %4 = lshr i32 %i.am, 24
+  %i.am = trunc i64 %.sroa.10.0.extract.shift to i32
+  %2 = and i32 %i.am, 255
   %i.an = and i64 %i.f, 4278190080
   %.not61.2 = icmp eq i64 %i.an, 0
   br i1 %.not61.2, label %._crit_edge52.2, label %.lr.ph51.2
@@ -326,7 +327,7 @@ bb.a:
   store i8 %i.bi, ptr %i.bj, align 1, !tbaa !12
   %i.bk = add nuw nsw i32 %.03750.2, 1            ; 2 uses
   %indvars.iv.next81 = add nuw nsw i64 %indvars.iv80, 1 ; 2 uses
-  %exitcond.2.not = icmp eq i32 %i.bk, %4
+  %exitcond.2.not = icmp eq i32 %i.bk, %2
   br i1 %exitcond.2.not, label %._crit_edge52.loopexit.2, label %.lr.ph.preheader.2, !llvm.loop !131
 
 ._crit_edge52.loopexit.2:                         ; preds = %.lr.ph.preheader.2

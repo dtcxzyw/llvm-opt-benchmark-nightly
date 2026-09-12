@@ -202,9 +202,10 @@ bb.s:                                             ; preds = %bb.h
   %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 0, ptr %i.aq, align 4, !tbaa !9
   %i.ar = trunc i64 %i.q to i32
-  %i.as = trunc i64 %i.q to i16
-  %3 = lshr i16 %i.as, 8
-  %i.at = call i32 @setcchar(ptr noundef nonnull %2, ptr noundef nonnull %i.c, i32 noundef %i.ar, i16 noundef signext %3, ptr noundef null) #9
+  %3 = lshr i64 %i.q, 8
+  %i.as = trunc i64 %3 to i16
+  %4 = and i16 %i.as, 255
+  %i.at = call i32 @setcchar(ptr noundef nonnull %2, ptr noundef nonnull %i.c, i32 noundef %i.ar, i16 noundef signext %4, ptr noundef null) #9
   %i.au = icmp eq i32 %i.at, -1
   br i1 %i.au, label %bb.t, label %bb.u
 
@@ -607,18 +608,20 @@ bb.g:                                             ; preds = %bb.d, %bb.e
 bb.h:                                             ; preds = %bb.g
   %.024 = trunc i64 %.024.in to i32
   %i.q = and i32 %.024, -256
-  %i.r = trunc i64 %.024.in to i16
-  %2 = lshr i16 %i.r, 8
+  %2 = lshr i64 %.024.in, 8
+  %i.r = trunc i64 %2 to i16
+  %3 = and i16 %i.r, 255
   %i.s = load ptr, ptr %i.k, align 8, !tbaa !48
   %i.t = load i32, ptr %i.c, align 4, !tbaa !9
-  %i.u = call i32 @wchgat(ptr noundef %i.s, i32 noundef %i.t, i32 noundef %i.q, i16 noundef signext %2, ptr noundef null) #9
+  %i.u = call i32 @wchgat(ptr noundef %i.s, i32 noundef %i.t, i32 noundef %i.q, i16 noundef signext %3, ptr noundef null) #9
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.b, %bb.c
   %.024.in33 = load i64, ptr %i.d, align 8, !tbaa !27 ; 2 uses
   %.02434 = trunc i64 %.024.in33 to i32
-  %i.v = trunc i64 %.024.in33 to i16
-  %3 = lshr i16 %i.v, 8
+  %4 = lshr i64 %.024.in33, 8
+  %i.v = trunc i64 %4 to i16
+  %5 = and i16 %i.v, 255
   %i.w = and i32 %.02434, -256
   %i.x = getelementptr i8, ptr %0, i64 16         ; 3 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !48
@@ -629,7 +632,7 @@ bb.i:                                             ; preds = %bb.b, %bb.c
   store i32 %i.ab, ptr %i.a, align 4, !tbaa !9
   %i.ac = load ptr, ptr %i.x, align 8, !tbaa !48
   %i.ad = load i32, ptr %i.c, align 4, !tbaa !9
-  %i.ae = call i32 @wchgat(ptr noundef %i.ac, i32 noundef %i.ad, i32 noundef %i.w, i16 noundef signext %3, ptr noundef null) #9
+  %i.ae = call i32 @wchgat(ptr noundef %i.ac, i32 noundef %i.ad, i32 noundef %i.w, i16 noundef signext %5, ptr noundef null) #9
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i

@@ -204,12 +204,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define dso_local ptr @logicalrep_read_truncate(ptr noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 1)) %1, ptr nofree noundef writeonly captures(none) initializes((0, 1)) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call i32 @pq_getmsgint(ptr noundef %0, i32 noundef 4) #8 ; 2 uses
-  %i.b = tail call i32 @pq_getmsgint(ptr noundef %0, i32 noundef 1) #8
-  %i.c = trunc i32 %i.b to i8                     ; 2 uses
+  %i.b = tail call i32 @pq_getmsgint(ptr noundef %0, i32 noundef 1) #8 ; 2 uses
+  %i.c = trunc i32 %i.b to i8
   %i.d = and i8 %i.c, 1
   store i8 %i.d, ptr %1, align 1
-  %3 = lshr i8 %i.c, 1
-  %i.e = and i8 %3, 1
+  %3 = lshr i32 %i.b, 1
+  %4 = trunc i32 %3 to i8
+  %i.e = and i8 %4, 1
   store i8 %i.e, ptr %2, align 1
   %i.f = icmp sgt i32 %i.a, 0
   br i1 %i.f, label %.lr.ph, label %._crit_edge

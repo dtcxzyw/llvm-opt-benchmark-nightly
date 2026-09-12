@@ -31,12 +31,12 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.013 = phi i32 [ 0, %bb.c ], [ %4, %bb.d ]
+  %.013 = phi i64 [ 0, %bb.c ], [ %4, %bb.d ]
   %.0 = phi ptr [ %i.g, %bb.c ], [ %i.i, %bb.d ]  ; 2 uses
-  %2 = mul i32 %.013, 11
+  %2 = mul i64 %.013, 11
   %i.h = load i8, ptr %.0, align 1, !tbaa !20     ; 2 uses
-  %3 = zext i8 %i.h to i32
-  %4 = add i32 %2, %3                             ; 2 uses
+  %3 = zext i8 %i.h to i64
+  %4 = add i64 %2, %3                             ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.0, i64 1
   %.not = icmp eq i8 %i.h, 0
   br i1 %.not, label %bb.e, label %bb.d, !llvm.loop !12
@@ -62,7 +62,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.loopexit
 
 bb.h:                                             ; preds = %.preheader, %bb.i
-  %.1 = phi i32 [ %6, %bb.i ], [ %4, %.preheader ]
+  %.1 = phi i64 [ %6, %bb.i ], [ %4, %.preheader ]
   %i.p = load i64, ptr %i.a, align 8, !tbaa !23   ; 2 uses
   %i.q = add i64 %i.p, -1
   store i64 %i.q, ptr %i.a, align 8, !tbaa !23
@@ -70,10 +70,11 @@ bb.h:                                             ; preds = %.preheader, %bb.i
   br i1 %.not17, label %.loopexit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %5 = mul i32 %.1, 1103515245
-  %6 = add i32 %5, 12345                          ; 2 uses
-  %7 = lshr i32 %6, 16
-  %i.r = and i32 %7, 255
+  %5 = mul i64 %.1, 1103515245
+  %6 = add i64 %5, 12345                          ; 2 uses
+  %7 = lshr i64 %6, 16
+  %8 = trunc i64 %7 to i32
+  %i.r = and i32 %8, 255
   %i.s = load ptr, ptr @stdout, align 8, !tbaa !17
   %i.t = call i32 @putc(i32 noundef %i.r, ptr noundef %i.s), !inline_history !13
   %i.u = icmp eq i32 %i.t, -1

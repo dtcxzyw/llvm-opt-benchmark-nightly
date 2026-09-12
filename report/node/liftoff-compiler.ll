@@ -205,8 +205,8 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit46:
   ret void
 
 bb.a:                                             ; preds = %.lr.ph, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31
-  %indvars.iv = phi i64 [ %i.c, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31 ] ; 6 uses
-  %i.h = shl nuw nsw i64 %indvars.iv, 3           ; 3 uses
+  %indvars.iv = phi i64 [ %i.c, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31 ] ; 7 uses
+  %i.h = shl nuw nsw i64 %indvars.iv, 3           ; 2 uses
   %i.i = icmp eq i64 %indvars.iv, 0
   br i1 %i.i, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31, label %bb.b
 
@@ -215,7 +215,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.sroa.7.sroa.4.0.extract.shift = and i64 %i.h, 4294967040
+  %tr.sh.diff = shl i64 %indvars.iv, 3
+  %.sroa.7.sroa.4.0.extract.shift = and i64 %tr.sh.diff, 4294967040
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31: ; preds = %bb.b, %bb.a, %bb.c

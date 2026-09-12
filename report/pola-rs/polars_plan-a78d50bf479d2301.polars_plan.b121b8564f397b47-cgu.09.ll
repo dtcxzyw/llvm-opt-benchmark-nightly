@@ -204,9 +204,10 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(384) %i.e, ptr noundef nonnull align 16 dereferenceable(384) %i.a, i64 384, i1 false), !dbg !131289
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !131290
-  %i.l = trunc i32 %3 to i8, !dbg !131291         ; 2 uses
-  %6 = lshr i8 %i.l, 2, !dbg !131292
-  %i.m = and i8 %6, 1, !dbg !131292
+  %i.l = trunc i32 %3 to i8, !dbg !131291
+  %6 = lshr i32 %3, 2, !dbg !131292
+  %7 = trunc i32 %6 to i8, !dbg !131292
+  %i.m = and i8 %7, 1, !dbg !131292
   %i.n = and i8 %i.l, 1, !dbg !131292
   %i.o = lshr i32 %3, 11, !dbg !131292
   %i.p = trunc i32 %i.o to i8, !dbg !131292

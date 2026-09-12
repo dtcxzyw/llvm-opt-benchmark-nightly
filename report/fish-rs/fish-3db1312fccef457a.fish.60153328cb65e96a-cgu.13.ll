@@ -205,8 +205,8 @@ bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.c = getelementptr inbounds nuw i8, ptr %.0.val, i64 16
   %i.d = load i32, ptr %i.c, align 4, !noundef !12 ; 2 uses
-  %i.e = tail call i32 @llvm.usub.sat.i32(i32 %i.d, i32 1) ; 2 uses
-  %i.f = trunc i32 %i.e to i8                     ; 4 uses
+  %i.e = tail call i32 @llvm.usub.sat.i32(i32 %i.d, i32 1) ; 5 uses
+  %i.f = trunc i32 %i.e to i8
   %i.g = and i8 %i.f, 1                           ; 2 uses
   %i.h = and i32 %i.e, 79
   %or.cond22 = icmp eq i32 %i.h, 65
@@ -218,12 +218,15 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %. = select i1 %.not, i32 0, i32 %2
   %.not21 = icmp eq i32 %3, -1
   %.sroa.018.0 = select i1 %.not21, i32 0, i32 %3
-  %4 = lshr i8 %i.f, 3
-  %i.i = and i8 %4, 1
-  %5 = lshr i8 %i.f, 1
-  %i.j = and i8 %5, 1
-  %6 = lshr i8 %i.f, 2
-  %i.k = and i8 %6, 1
+  %4 = lshr i32 %i.e, 3
+  %5 = trunc i32 %4 to i8
+  %i.i = and i8 %5, 1
+  %6 = lshr i32 %i.e, 1
+  %7 = trunc i32 %6 to i8
+  %i.j = and i8 %7, 1
+  %8 = lshr i32 %i.e, 2
+  %9 = trunc i32 %8 to i8
+  %i.k = and i8 %9, 1
   %i.l = icmp ne i32 %i.d, 0
   store i32 %1, ptr %0, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -626,19 +629,22 @@ bb.l:                                             ; preds = %bb.j
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.at
   %i.bw = tail call i32 @llvm.usub.sat.i32(i32 %i.cl, i32 1)
-  %4 = trunc i32 %i.bw to i8
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.k
   %.sroa.06.0.lcssa.i = phi i8 [ %i.bt, %bb.k ], [ %.sroa.06.1.i, %._crit_edge.loopexit.i ]
-  %.sroa.0.0.lcssa.i = phi i8 [ 0, %bb.k ], [ %4, %._crit_edge.loopexit.i ] ; 4 uses
-  %5 = lshr i8 %.sroa.0.0.lcssa.i, 2
-  %i.bx = and i8 %5, 1
-  %6 = lshr i8 %.sroa.0.0.lcssa.i, 1
-  %i.by = and i8 %6, 1
-  %i.bz = and i8 %.sroa.0.0.lcssa.i, 1
-  %7 = lshr i8 %.sroa.0.0.lcssa.i, 3
-  %i.ca = and i8 %7, 1
+  %.sroa.0.0.lcssa.i = phi i32 [ 0, %bb.k ], [ %i.bw, %._crit_edge.loopexit.i ] ; 4 uses
+  %4 = trunc i32 %.sroa.0.0.lcssa.i to i8
+  %5 = lshr i32 %.sroa.0.0.lcssa.i, 2
+  %6 = trunc i32 %5 to i8
+  %i.bx = and i8 %6, 1
+  %7 = lshr i32 %.sroa.0.0.lcssa.i, 1
+  %8 = trunc i32 %7 to i8
+  %i.by = and i8 %8, 1
+  %i.bz = and i8 %4, 1
+  %9 = lshr i32 %.sroa.0.0.lcssa.i, 3
+  %10 = trunc i32 %9 to i8
+  %i.ca = and i8 %10, 1
   switch i8 %.sroa.06.0.lcssa.i, label %bb.m [
     i8 32, label %bb.aq
     i8 65, label %bb.n

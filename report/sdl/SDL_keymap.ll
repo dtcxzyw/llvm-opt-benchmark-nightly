@@ -204,9 +204,10 @@ bb.c:                                             ; preds = %bb.b
   %i.w = call zeroext i1 @SDL_FindInHashTable(ptr noundef %i.v, ptr noundef %i.s, ptr noundef nonnull %i.a) #6
   %i.x = load ptr, ptr %i.a, align 8
   %i.y = ptrtoint ptr %i.x to i64
-  %i.z = trunc i64 %i.y to i32
-  %4 = lshr i32 %i.z, 16
-  %.not23 = icmp samesign ule i32 %4, %i.g
+  %4 = lshr i64 %i.y, 16
+  %i.z = trunc i64 %4 to i32
+  %5 = and i32 %i.z, 65535
+  %.not23 = icmp samesign ule i32 %5, %i.g
   %.1.not = select i1 %i.w, i1 %.not23, i1 false
   br i1 %.1.not, label %bb.e, label %bb.d
 

@@ -205,9 +205,9 @@ bb.af:                                            ; preds = %.lr.ph2284.1
 ._crit_edge2285:                                  ; preds = %._crit_edge2285.loopexit, %.preheader1296
   %.21058.lcssa = phi ptr [ %.01056, %.preheader1296 ], [ %.lcssa4172, %._crit_edge2285.loopexit ] ; 3 uses
   %.2994.lcssa = phi i32 [ %.0992, %.preheader1296 ], [ %.lcssa4173, %._crit_edge2285.loopexit ] ; 3 uses
-  %.2931.lcssa = phi i64 [ %.0929, %.preheader1296 ], [ %.lcssa4171, %._crit_edge2285.loopexit ] ; 4 uses
+  %.2931.lcssa = phi i64 [ %.0929, %.preheader1296 ], [ %.lcssa4171, %._crit_edge2285.loopexit ] ; 5 uses
   %.2920.lcssa = phi i32 [ %.0918, %.preheader1296 ], [ %i.eo, %._crit_edge2285.loopexit ] ; 2 uses
-  %i.ep = trunc i64 %.2931.lcssa to i32           ; 5 uses
+  %i.ep = trunc i64 %.2931.lcssa to i32           ; 4 uses
   store i32 %i.ep, ptr %i.aj, align 8, !tbaa !29
   %i.eq = and i32 %i.ep, 255
   %.not1211 = icmp eq i32 %i.eq, 8
@@ -234,8 +234,9 @@ bb.aj:                                            ; preds = %bb.ah
   br i1 %.not1213, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %2 = lshr i32 %i.ep, 8
-  %i.et = and i32 %2, 1
+  %2 = lshr i64 %.2931.lcssa, 8
+  %3 = trunc i64 %2 to i32
+  %i.et = and i32 %3, 1
   store i32 %i.et, ptr %i.es, align 8, !tbaa !81
   br label %bb.al
 
@@ -638,13 +639,14 @@ bb.dr:                                            ; preds = %bb.dq
 bb.ds:                                            ; preds = %._crit_edge2126, %.preheader1298
   %.241080.lcssa = phi ptr [ %i.pl, %._crit_edge2126 ], [ %.231079, %.preheader1298 ] ; 2 uses
   %.241016.lcssa = phi i32 [ %i.pk, %._crit_edge2126 ], [ %.231015, %.preheader1298 ] ; 2 uses
-  %.20949.lcssa = phi i64 [ %i.pq, %._crit_edge2126 ], [ %.19948, %.preheader1298 ] ; 3 uses
+  %.20949.lcssa = phi i64 [ %i.pq, %._crit_edge2126 ], [ %.19948, %.preheader1298 ] ; 4 uses
   %.20.lcssa = phi i32 [ %i.pj, %._crit_edge2126 ], [ %.19, %.preheader1298 ] ; 2 uses
-  %i.pr = trunc i64 %.20949.lcssa to i32          ; 2 uses
+  %i.pr = trunc i64 %.20949.lcssa to i32
   %i.ps = and i32 %i.pr, 1
   store i32 %i.ps, ptr %i.bn, align 4, !tbaa !27
-  %3 = lshr i32 %i.pr, 1
-  %i.pt = and i32 %3, 3
+  %4 = lshr i64 %.20949.lcssa, 1
+  %5 = trunc i64 %4 to i32
+  %i.pt = and i32 %5, 3
   switch i32 %i.pt, label %default.unreachable2931 [
     i32 0, label %.sink.split
     i32 1, label %bb.dt
@@ -856,18 +858,20 @@ bb.el:                                            ; preds = %.lr.ph1772.1
 ._crit_edge1773:                                  ; preds = %._crit_edge1773.loopexit, %.preheader1314
   %.281084.lcssa = phi ptr [ %.01056, %.preheader1314 ], [ %.lcssa4025, %._crit_edge1773.loopexit ] ; 2 uses
   %.281020.lcssa = phi i32 [ %.0992, %.preheader1314 ], [ %.lcssa4026, %._crit_edge1773.loopexit ] ; 2 uses
-  %.24953.lcssa = phi i64 [ %.0929, %.preheader1314 ], [ %.lcssa4024, %._crit_edge1773.loopexit ] ; 2 uses
+  %.24953.lcssa = phi i64 [ %.0929, %.preheader1314 ], [ %.lcssa4024, %._crit_edge1773.loopexit ] ; 4 uses
   %.24.lcssa = phi i32 [ %.0918, %.preheader1314 ], [ %i.sm, %._crit_edge1773.loopexit ]
-  %i.sn = trunc i64 %.24953.lcssa to i32          ; 3 uses
+  %i.sn = trunc i64 %.24953.lcssa to i32
   %i.so = and i32 %i.sn, 31                       ; 2 uses
   %i.sp = add nuw nsw i32 %i.so, 257
   store i32 %i.sp, ptr %i.ao, align 4, !tbaa !93
-  %4 = lshr i32 %i.sn, 5
-  %i.sq = and i32 %4, 31                          ; 2 uses
+  %6 = lshr i64 %.24953.lcssa, 5
+  %7 = trunc i64 %6 to i32
+  %i.sq = and i32 %7, 31                          ; 2 uses
   %i.sr = add nuw nsw i32 %i.sq, 1
   store i32 %i.sr, ptr %i.ap, align 8, !tbaa !94
-  %5 = lshr i32 %i.sn, 10
-  %i.ss = and i32 %5, 15
+  %8 = lshr i64 %.24953.lcssa, 10
+  %9 = trunc i64 %8 to i32
+  %i.ss = and i32 %9, 15
   %i.st = add nuw nsw i32 %i.ss, 4                ; 2 uses
   store i32 %i.st, ptr %i.aq, align 8, !tbaa !95
   %i.su = lshr i64 %.24953.lcssa, 14              ; 2 uses

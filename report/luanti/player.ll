@@ -202,20 +202,23 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local void @_ZN13PlayerControl17unpackKeysPressedEj(ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(24) initializes((0, 7)) %0, i32 noundef %1) local_unnamed_addr #14 align 2 {
 bb.a:
-  %i.a = trunc i32 %1 to i8                       ; 4 uses
+  %i.a = trunc i32 %1 to i8
   %i.b = and i8 %i.a, 15
   store i8 %i.b, ptr %0, align 4, !tbaa !65
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %2 = lshr i8 %i.a, 4
-  %i.d = and i8 %2, 1
+  %2 = lshr i32 %1, 4
+  %3 = trunc i32 %2 to i8
+  %i.d = and i8 %3, 1
   store i8 %i.d, ptr %i.c, align 1, !tbaa !68
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %3 = lshr i8 %i.a, 5
-  %i.f = and i8 %3, 1
+  %4 = lshr i32 %1, 5
+  %5 = trunc i32 %4 to i8
+  %i.f = and i8 %5, 1
   store i8 %i.f, ptr %i.e, align 2, !tbaa !69
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %4 = lshr i8 %i.a, 6
-  %i.h = and i8 %4, 1
+  %6 = lshr i32 %1, 6
+  %7 = trunc i32 %6 to i8
+  %i.h = and i8 %7, 1
   store i8 %i.h, ptr %i.g, align 1, !tbaa !70
   %i.i = and i32 %1, 128
   %i.j = icmp ne i32 %i.i, 0

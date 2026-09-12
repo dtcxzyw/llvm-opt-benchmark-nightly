@@ -205,7 +205,8 @@ bb.a:
   %i.e = load i16, ptr %i.d, align 1              ; 2 uses
   %i.f = lshr i16 %i.e, 8                         ; 3 uses
   %i.g = getelementptr i8, ptr %0, i64 117
-  %.val13 = load i8, ptr %i.g, align 1, !tbaa !418 ; 4 uses
+  %.val13 = load i8, ptr %i.g, align 1, !tbaa !418 ; 3 uses
+  %1 = zext i8 %.val13 to i32                     ; 2 uses
   %i.h = zext i8 %.val13 to i16
   %i.i = xor i16 %i.f, %i.h
   %i.j = and i16 %i.i, 3
@@ -219,17 +220,17 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %.preheader
-  %1 = lshr i8 %.val13, 2
-  %2 = zext nneg i8 %1 to i16
-  %i.n = xor i16 %i.f, %2
+  %2 = lshr i32 %1, 2
+  %3 = trunc nuw nsw i32 %2 to i16
+  %i.n = xor i16 %i.f, %3
   %i.o = and i16 %i.n, 3
   %i.p = icmp eq i16 %i.o, 0
   br i1 %i.p, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = lshr i8 %.val13, 4
-  %4 = zext nneg i8 %3 to i16
-  %i.q = xor i16 %i.f, %4
+  %4 = lshr i32 %1, 4
+  %5 = trunc nuw nsw i32 %4 to i16
+  %i.q = xor i16 %i.f, %5
   %i.r = and i16 %i.q, 3
   %i.s = icmp eq i16 %i.r, 0
   br i1 %i.s, label %bb.e, label %.loopexit

@@ -11,8 +11,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1032
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 7 uses
   %i.c = load i64, ptr %i.b, align 8
-  %1 = trunc i64 %i.c to i16
-  %2 = lshr i16 %1, 4
+  %1 = lshr i64 %i.c, 4
+  %2 = trunc i64 %1 to i16
   %i.d = and i16 %2, 3
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1053
   %i.f = load i8, ptr %i.e, align 1, !tbaa !46
@@ -415,9 +415,9 @@ SetAuthKeys.exit.thread:                          ; preds = %bb.g, %bb.h
 bb.i:                                             ; preds = %SetAuthKeys.exit.thread, %bb.f, %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 730
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1040
-  %i.s = load i64, ptr %i.r, align 8
-  %2 = trunc i64 %i.s to i32                      ; 2 uses
-  %3 = lshr i32 %2, 4
+  %i.s = load i64, ptr %i.r, align 8              ; 2 uses
+  %2 = lshr i64 %i.s, 4
+  %3 = trunc i64 %2 to i32
   %i.t = and i32 %3, 3
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.v = load ptr, ptr %i.u, align 16, !tbaa !71
@@ -425,8 +425,9 @@ bb.i:                                             ; preds = %SetAuthKeys.exit.th
   %i.x = load i32, ptr %i.w, align 4, !tbaa !72
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !73
-  %4 = lshr i32 %2, 16
-  %i.aa = and i32 %4, 1
+  %4 = lshr i64 %i.s, 16
+  %5 = trunc i64 %4 to i32
+  %i.aa = and i32 %5, 1
   %i.ab = tail call i32 @SetKeys(ptr noundef %.026, ptr noundef %.0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.q, i32 noundef %i.t, ptr noundef %i.v, i32 noundef %i.x, ptr noundef %i.z, i32 noundef %i.aa)
   br label %SetAuthKeys.exit
 

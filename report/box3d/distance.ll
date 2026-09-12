@@ -204,17 +204,19 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   %i.ti = load i64, ptr %4, align 8               ; 3 uses
-  %i.tj = load i64, ptr %i.bk, align 8            ; 3 uses
+  %i.tj = load i64, ptr %i.bk, align 8            ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !89)
   %.sroa.1.0.extract.shift.i = lshr i64 %i.ti, 32
   %.sroa.1.0.extract.trunc.i = trunc i64 %.sroa.1.0.extract.shift.i to i16 ; 2 uses
   %.sroa.4654.0.extract.shift.i = lshr i64 %i.ti, 48 ; 5 uses
   %.sroa.4654.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.4654.0.extract.shift.i to i32
   %.sroa.5655.0.extract.shift.i = lshr i64 %i.ti, 56 ; 3 uses
-  %.sroa.5655.0.extract.trunc.i.a = trunc nuw nsw i64 %.sroa.5655.0.extract.shift.i to i32 ; 5 uses
-  %.sroa.6656.8.extract.trunc.i = trunc i64 %i.tj to i32 ; 3 uses
-  %8 = lshr i32 %.sroa.6656.8.extract.trunc.i, 16
-  %9 = lshr i32 %.sroa.6656.8.extract.trunc.i, 24 ; 7 uses
+  %.sroa.5655.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.5655.0.extract.shift.i to i32 ; 5 uses
+  %.sroa.5655.0.extract.trunc.i.a = trunc i64 %i.tj to i32
+  %.sroa.8658.8.extract.shift.i = lshr i64 %i.tj, 16 ; 5 uses
+  %.sroa.6656.8.extract.trunc.i = trunc i64 %.sroa.8658.8.extract.shift.i to i32
+  %.sroa.9659.8.extract.shift.i = lshr i64 %i.tj, 24 ; 3 uses
+  %.sroa.9659.8.extract.trunc.i = trunc i64 %.sroa.9659.8.extract.shift.i to i32
   %.sroa.10660.8.extract.shift.i = lshr i64 %i.tj, 32 ; 2 uses
   %.sroa.10660.8.extract.trunc.i = trunc nuw i64 %.sroa.10660.8.extract.shift.i to i32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bl, i8 0, i64 32, i1 false), !alias.scope !89
@@ -240,9 +242,10 @@ bb.j:                                             ; preds = %bb.h
   store <2 x float> %.sroa.26.0.copyload, ptr %.sroa.26.0..sroa_idx951, align 8
   store <2 x float> %.sroa.28.0.copyload, ptr %.sroa.28.0..sroa_idx954, align 8
   store <2 x float> %.sroa.32.0.copyload, ptr %.sroa.32.0..sroa_idx959, align 8
-  %i.tk = and i32 %.sroa.4654.0.extract.trunc.i, 255 ; 4 uses
-  %i.tl = and i32 %.sroa.6656.8.extract.trunc.i, 255 ; 3 uses
-  %i.tm = and i32 %8, 255                         ; 8 uses
+  %8 = and i32 %.sroa.4654.0.extract.trunc.i, 255 ; 4 uses
+  %i.tk = and i32 %.sroa.5655.0.extract.trunc.i.a, 255 ; 3 uses
+  %i.tl = and i32 %.sroa.6656.8.extract.trunc.i, 255 ; 4 uses
+  %i.tm = and i32 %.sroa.9659.8.extract.trunc.i, 255 ; 5 uses
   %i.tn = and i32 %.sroa.10660.8.extract.trunc.i, 255 ; 3 uses
   switch i16 %.sroa.1.0.extract.trunc.i, label %b3UniqueCount.exit.i [
     i16 1, label %b3UniqueCount.exit737.i
@@ -251,19 +254,19 @@ bb.j:                                             ; preds = %bb.h
   ]
 
 b3UniqueCount.exit.thread1245.i:                  ; preds = %bb.j
-  %.not23.i.i = icmp eq i32 %i.tk, %.sroa.5655.0.extract.trunc.i.a
+  %.not23.i.i = icmp eq i32 %8, %.sroa.5655.0.extract.trunc.i
   %i.to = select i1 %.not23.i.i, i32 1, i32 2
-  %.not23.i736.i = icmp eq i32 %i.tm, %9
+  %.not23.i736.i = icmp eq i32 %i.tl, %i.tm
   %i.tp = select i1 %.not23.i736.i, i32 1, i32 2
   br label %b3UniqueCount.exit737.i
 
 bb.k:                                             ; preds = %bb.j
-  %.not.i.i = icmp eq i32 %i.tk, %.sroa.5655.0.extract.trunc.i.a
-  %i.tq = icmp eq i32 %i.tk, %i.tl                ; 2 uses
+  %.not.i.i = icmp eq i32 %8, %.sroa.5655.0.extract.trunc.i
+  %i.tq = icmp eq i32 %8, %i.tk                   ; 2 uses
   br i1 %.not.i.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %.not22.i.i = icmp eq i32 %i.tl, %.sroa.5655.0.extract.trunc.i.a
+  %.not22.i.i = icmp eq i32 %i.tk, %.sroa.5655.0.extract.trunc.i
   %or.cond.i.i = or i1 %i.tq, %.not22.i.i
   br i1 %or.cond.i.i, label %bb.n, label %b3UniqueCount.exit.thread.i
 
@@ -275,12 +278,12 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 b3UniqueCount.exit.thread.i:                      ; preds = %bb.n, %bb.m, %bb.l
   %.0.i1241.i = phi i32 [ 2, %bb.n ], [ 1, %bb.m ], [ 3, %bb.l ] ; 3 uses
-  %.not.i732.i = icmp eq i32 %i.tm, %9
-  %i.tr = icmp eq i32 %i.tm, %i.tn                ; 2 uses
+  %.not.i732.i = icmp eq i32 %i.tl, %i.tm
+  %i.tr = icmp eq i32 %i.tl, %i.tn                ; 2 uses
   br i1 %.not.i732.i, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %b3UniqueCount.exit.thread.i
-  %.not22.i733.i = icmp eq i32 %9, %i.tn
+  %.not22.i733.i = icmp eq i32 %i.tm, %i.tn
   %or.cond.i734.i = or i1 %i.tr, %.not22.i733.i
   br i1 %or.cond.i734.i, label %bb.q, label %b3UniqueCount.exit737.i
 
@@ -513,13 +516,13 @@ b3Normalize.exit723.i:                            ; preds = %bb.w, %bb.v
   %i.yt = fmul <2 x float> %i.yp, splat (float 2.000000e+00)
   %i.yu = fadd <2 x float> %i.xx, %i.yt           ; 3 uses
   %i.yv = load ptr, ptr %3, align 8, !tbaa !15, !noalias !89 ; 2 uses
-  %10 = zext nneg i32 %i.tm to i64
-  %i.yw = getelementptr inbounds nuw [12 x i8], ptr %i.yv, i64 %10 ; 2 uses
+  %9 = and i64 %.sroa.8658.8.extract.shift.i, 255
+  %i.yw = getelementptr inbounds nuw [12 x i8], ptr %i.yv, i64 %9 ; 2 uses
   %.sroa.0532.0.copyload.i = load <2 x float>, ptr %i.yw, align 4, !noalias !89 ; 5 uses
   %.sroa.5534.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yw, i64 8
   %.sroa.5534.0.copyload.i = load float, ptr %.sroa.5534.0..sroa_idx.i, align 4, !tbaa !16, !noalias !89 ; 3 uses
-  %11 = zext nneg i32 %9 to i64
-  %i.yx = getelementptr inbounds nuw [12 x i8], ptr %i.yv, i64 %11 ; 2 uses
+  %10 = and i64 %.sroa.9659.8.extract.shift.i, 255
+  %i.yx = getelementptr inbounds nuw [12 x i8], ptr %i.yv, i64 %10 ; 2 uses
   %.sroa.0526.0.copyload.i = load <2 x float>, ptr %i.yx, align 4, !noalias !89
   %.sroa.2527.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.yx, i64 8
   %.sroa.2527.0.copyload.i = load float, ptr %.sroa.2527.0..sroa_idx.i, align 4, !noalias !89
@@ -856,8 +859,8 @@ b3Normalize.exit696.i:                            ; preds = %bb.ai, %bb.ah
   %i.ahe = fadd <2 x float> %i.ahb, %.sroa.0406.0.copyload.i
   %i.ahf = fmul <2 x float> %i.ahe, splat (float f0x3EAAAAAB) ; 7 uses
   %i.ahg = load ptr, ptr %3, align 8, !tbaa !15, !noalias !89
-  %12 = zext nneg i32 %i.tm to i64
-  %i.ahh = getelementptr inbounds nuw [12 x i8], ptr %i.ahg, i64 %12 ; 2 uses
+  %11 = and i64 %.sroa.8658.8.extract.shift.i, 255
+  %i.ahh = getelementptr inbounds nuw [12 x i8], ptr %i.ahg, i64 %11 ; 2 uses
   %.sroa.0328.0.copyload.i = load <2 x float>, ptr %i.ahh, align 4, !noalias !89 ; 5 uses
   %.sroa.4329.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ahh, i64 8
   %.sroa.4329.0.copyload.i = load float, ptr %.sroa.4329.0..sroa_idx.i, align 4, !tbaa !16, !noalias !89 ; 3 uses
@@ -977,13 +980,13 @@ bb.aj:                                            ; preds = %bb.ag
 
 bb.ak:                                            ; preds = %bb.aj
   %i.akw = load ptr, ptr %3, align 8, !tbaa !15, !noalias !89 ; 3 uses
-  %13 = zext nneg i32 %i.tm to i64
-  %i.akx = getelementptr inbounds nuw [12 x i8], ptr %i.akw, i64 %13 ; 2 uses
+  %12 = and i64 %.sroa.8658.8.extract.shift.i, 255
+  %i.akx = getelementptr inbounds nuw [12 x i8], ptr %i.akw, i64 %12 ; 2 uses
   %.sroa.0276.0.copyload.i = load <2 x float>, ptr %i.akx, align 4, !noalias !89 ; 3 uses
   %.sroa.6279.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.akx, i64 8
   %.sroa.6279.0.copyload.i = load float, ptr %.sroa.6279.0..sroa_idx.i, align 4, !tbaa !16, !noalias !89 ; 2 uses
-  %14 = zext nneg i32 %9 to i64
-  %i.aky = getelementptr inbounds nuw [12 x i8], ptr %i.akw, i64 %14 ; 2 uses
+  %13 = and i64 %.sroa.9659.8.extract.shift.i, 255
+  %i.aky = getelementptr inbounds nuw [12 x i8], ptr %i.akw, i64 %13 ; 2 uses
   %.sroa.0273.0.copyload.i = load <2 x float>, ptr %i.aky, align 4, !noalias !89 ; 3 uses
   %.sroa.5275.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aky, i64 8
   %.sroa.5275.0.copyload.i = load float, ptr %.sroa.5275.0..sroa_idx.i, align 4, !tbaa !16, !noalias !89 ; 2 uses
@@ -1156,8 +1159,8 @@ b3Normalize.exit687.i:                            ; preds = %bb.al, %bb.ak
   br label %b3MakeSeparationFunction.exit
 
 bb.am:                                            ; preds = %bb.aj
-  %i.apt = icmp eq i32 %i.tk, %.sroa.5655.0.extract.trunc.i.a
-  %spec.select.i = select i1 %i.apt, i32 %i.tl, i32 %.sroa.5655.0.extract.trunc.i.a
+  %i.apt = icmp eq i32 %8, %.sroa.5655.0.extract.trunc.i
+  %spec.select.i = select i1 %i.apt, i32 %i.tk, i32 %.sroa.5655.0.extract.trunc.i
   %i.apu = load ptr, ptr %2, align 8, !tbaa !15, !noalias !89 ; 2 uses
   %i.apv = and i64 %.sroa.4654.0.extract.shift.i, 255
   %i.apw = getelementptr inbounds nuw [12 x i8], ptr %i.apu, i64 %i.apv ; 2 uses
@@ -1224,11 +1227,11 @@ b3Normalize.exit678.i:                            ; preds = %bb.an, %bb.am
   %i.ari = fadd float %.sroa.03.0.vec.extract.i.i1054.i, %i.arh ; 2 uses
   %i.arj = fmul <2 x float> %i.arf, splat (float 2.000000e+00)
   %i.ark = fadd <2 x float> %i.aqn, %i.arj        ; 3 uses
-  %i.arl = icmp eq i32 %i.tm, %9
-  %spec.select1248.i = select i1 %i.arl, i32 %i.tn, i32 %9
+  %i.arl = icmp eq i32 %i.tl, %i.tm
+  %spec.select1248.i = select i1 %i.arl, i32 %i.tn, i32 %i.tm
   %i.arm = load ptr, ptr %3, align 8, !tbaa !15, !noalias !89 ; 2 uses
-  %15 = zext nneg i32 %i.tm to i64
-  %i.arn = getelementptr inbounds nuw [12 x i8], ptr %i.arm, i64 %15 ; 2 uses
+  %14 = and i64 %.sroa.8658.8.extract.shift.i, 255
+  %i.arn = getelementptr inbounds nuw [12 x i8], ptr %i.arm, i64 %14 ; 2 uses
   %.sroa.0111.0.copyload.i = load <2 x float>, ptr %i.arn, align 4, !noalias !89 ; 5 uses
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.arn, i64 8
   %.sroa.5.0.copyload.i = load float, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !16, !noalias !89 ; 3 uses

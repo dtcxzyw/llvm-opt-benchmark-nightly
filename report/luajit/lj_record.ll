@@ -205,7 +205,7 @@ lj_record_constify.exit:                          ; preds = %bb.j, %bb.l, %bb.n
   br i1 %.not125, label %rec_upvalue_constify.exit.thread143, label %.thread155
 
 rec_upvalue_constify.exit.thread143:              ; preds = %lj_record_constify.exit, %bb.m, %bb.g, %getcurrf.exit, %bb.c, %bb.c, %bb.c, %bb.d, %rec_upvalue_constify.exit
-  %.2114 = phi i32 [ %.0.i134, %getcurrf.exit ], [ %.0.i134, %bb.d ], [ %.0.i134, %rec_upvalue_constify.exit ], [ %.0.i134, %bb.c ], [ %.0.i134, %bb.c ], [ %.0.i134, %bb.c ], [ %.0112, %bb.m ], [ %.0.i134, %bb.g ], [ %.0112, %lj_record_constify.exit ] ; 3 uses
+  %.2114 = phi i32 [ %.0.i134, %getcurrf.exit ], [ %.0.i134, %bb.d ], [ %.0.i134, %rec_upvalue_constify.exit ], [ %.0.i134, %bb.c ], [ %.0.i134, %bb.c ], [ %.0.i134, %bb.c ], [ %.0112, %bb.m ], [ %.0.i134, %bb.g ], [ %.0112, %lj_record_constify.exit ] ; 4 uses
   %i.cb = shl i32 %1, 8
   %i.cc = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %i.cd = load i32, ptr %i.cc, align 8, !tbaa !161 ; 2 uses
@@ -346,9 +346,10 @@ bb.w:                                             ; preds = %bb.q, %bb.p, %bb.o
   br label %bb.y
 
 bb.x:                                             ; preds = %rec_upvalue_constify.exit.thread143
-  %i.fj = trunc i32 %.2114 to i16                 ; 2 uses
-  %3 = lshr i16 %i.fj, 8
-  %i.fk = and i16 %3, 128
+  %i.fj = trunc i32 %.2114 to i16
+  %3 = lshr i32 %.2114, 8
+  %4 = trunc i32 %3 to i16
+  %i.fk = and i16 %4, 128
   %i.fl = or disjoint i16 %i.fk, 15625
   %i.fm = trunc i32 %i.cn to i16
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 184

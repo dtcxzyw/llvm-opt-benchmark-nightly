@@ -205,17 +205,18 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   br label %bb.cz
 
 bb.an:                                            ; preds = %bb.aj, %bb.ag
-  %.081 = phi i32 [ %i.ap, %bb.aj ], [ %3, %bb.ag ] ; 4 uses
+  %.081 = phi i32 [ %i.ap, %bb.aj ], [ %3, %bb.ag ] ; 5 uses
   %i.as = and i32 %.081, 16
   %.not97 = icmp eq i32 %i.as, 0                  ; 2 uses
   %.sroa.16.0 = select i1 %.not97, i32 30, i32 100
   %minmaxop = select i1 %.not97, i32 100, i32 1000
   %.sroa.11.0 = call i32 @llvm.umax.i32(i32 %minmaxop, i32 %i.ai)
-  %i.at = trunc i32 %.081 to i8                   ; 2 uses
-  %31 = lshr i8 %i.at, 5
-  %.sroa.19.0 = and i8 %31, 1
-  %32 = lshr i8 %i.at, 6
-  %.sroa.22.0 = and i8 %32, 1
+  %31 = lshr i32 %.081, 5
+  %i.at = trunc i32 %31 to i8
+  %.sroa.19.0 = and i8 %i.at, 1
+  %32 = lshr i32 %.081, 6
+  %33 = trunc i32 %32 to i8
+  %.sroa.22.0 = and i8 %33, 1
   %i.au = and i32 %.081, 128                      ; 2 uses
   %.not100 = icmp ne i32 %i.au, 0
   %i.av = lshr exact i32 %i.au, 6

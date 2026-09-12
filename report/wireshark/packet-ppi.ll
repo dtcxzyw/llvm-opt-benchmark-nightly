@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = tail call ptr @ptvcursor_new(ptr noundef %i.n, ptr noundef %.0, ptr noundef %0, i32 noundef %.066) ; 15 uses
   %i.p = tail call i32 @ptvcursor_current_offset(ptr noundef %i.o)
-  %i.q = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.p) ; 6 uses
+  %i.q = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.p) ; 7 uses
   store i32 %i.q, ptr %6, align 4
   %i.r = getelementptr i8, ptr %8, i64 12         ; 2 uses
   %i.s = load i8, ptr %i.r, align 4
@@ -213,12 +213,13 @@ bb.e:                                             ; preds = %bb.c
   %i.v = getelementptr i8, ptr %8, i64 16
   store i32 %.lobit, ptr %i.v, align 8
   %i.w = getelementptr i8, ptr %8, i64 20         ; 2 uses
-  %9 = trunc i32 %i.q to i8                       ; 2 uses
-  %10 = lshr i8 %9, 2
+  %9 = lshr i32 %i.q, 2
+  %10 = trunc i32 %9 to i8
   %i.x = and i8 %10, 1
   %i.y = load i8, ptr %i.w, align 4
   %i.z = and i8 %i.y, -4
-  %i.aa = shl i8 %9, 1
+  %11 = trunc i32 %i.q to i8
+  %i.aa = shl i8 %11, 1
   %i.ab = and i8 %i.aa, 2
   %i.ac = or disjoint i8 %i.ab, %i.x
   %i.ad = or disjoint i8 %i.ac, %i.z

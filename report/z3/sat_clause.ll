@@ -204,11 +204,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.c:                                             ; preds = %bb.a
+  %2 = lshr i64 %1, 3
+  %3 = trunc nuw nsw i64 %2 to i32
   %i.f = and i64 %1, 7
-  %2 = add nuw nsw i64 %1, 7
-  %3 = lshr i64 %2, 3
+  %.not.i = icmp ne i64 %i.f, 0
+  %4 = zext i1 %.not.i to i32
+  %5 = add nuw nsw i32 %4, %3                     ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %3
+  %6 = zext nneg i32 %5 to i64
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %6
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !36   ; 3 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_ZNK6vectorIPvLb0EjE5emptyEv.exit.thread, label %_ZNK6vectorIPvLb0EjE5emptyEv.exit
@@ -285,12 +289,10 @@ _ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit17: ; preds = %_ZNK6vectorI
   %i.ao = phi i32 [ %i.x, %_ZNK6vectorIPN13sat_allocator5chunkELb0EjE5emptyEv.exit._crit_edge ], [ %i.ah, %_ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit ]
   %i.ap = phi ptr [ %i.s, %_ZNK6vectorIPN13sat_allocator5chunkELb0EjE5emptyEv.exit._crit_edge ], [ %i.ai, %_ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit ]
   %i.aq = phi ptr [ %.pre, %_ZNK6vectorIPN13sat_allocator5chunkELb0EjE5emptyEv.exit._crit_edge ], [ %i.y, %_ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit ] ; 2 uses
-  %.not.i.not.i = icmp eq i64 %i.f, 0
-  %4 = select i1 %.not.i.not.i, i64 0, i64 8
-  %5 = add nuw nsw i64 %4, %1
-  %6 = and i64 %5, 1016                           ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %6
+  %7 = shl nuw nsw i32 %5, 3
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = zext nneg i32 %7 to i64                    ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %9
   %i.as = zext i32 %i.ao to i64
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %i.as
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !34
@@ -334,8 +336,8 @@ _ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit23: ; preds = %bb.g, %bb.h
 
 bb.i:                                             ; preds = %_ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit23, %_ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit17
   %i.bm = phi ptr [ %i.ax, %_ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit23 ], [ %i.aq, %_ZN6vectorIPN13sat_allocator5chunkELb0EjE4backEv.exit17 ] ; 2 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 %6
-  store ptr %i.bn, ptr %7, align 8, !tbaa !38
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 %9
+  store ptr %i.bn, ptr %8, align 8, !tbaa !38
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN6vectorIPvLb0EjE4backEv.exit, %bb.i, %bb.b

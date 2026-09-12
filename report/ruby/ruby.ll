@@ -204,18 +204,20 @@ bb.eb:                                            ; preds = %.tail.thread.i351.i
   br label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb, %.tail.thread.i351.i
-  %.val73.i.i = load i16, ptr %i.ns, align 8      ; 2 uses
+  %.val73.i.i = load i16, ptr %i.ns, align 8      ; 4 uses
   %i.qy = lshr i16 %.val73.i.i, 8
   %i.qz = trunc nuw i16 %i.qy to i8
   %spec.select.i.i353.i = and i8 %i.qz, 1
-  %5 = trunc i16 %.val73.i.i to i8                ; 3 uses
-  %6 = lshr i8 %5, 5
+  %5 = lshr i16 %.val73.i.i, 5
+  %6 = trunc i16 %5 to i8
   %i.ra = and i8 %6, 4
   %.1.i.i.i = or disjoint i8 %spec.select.i.i353.i, %i.ra
-  %7 = lshr i8 %5, 2
-  %i.rb = and i8 %7, 24
+  %7 = lshr i16 %.val73.i.i, 2
+  %8 = trunc i16 %7 to i8
+  %i.rb = and i8 %8, 24
   %.3.i.i.i = or disjoint i8 %.1.i.i.i, %i.rb     ; 2 uses
-  %i.rc = shl i8 %5, 3
+  %9 = trunc i16 %.val73.i.i to i8
+  %i.rc = shl i8 %9, 3
   %i.rd = and i8 %i.rc, 32
   %.4.i.i.i = or disjoint i8 %.3.i.i.i, %i.rd     ; 2 uses
   br i1 %i.qv, label %bb.ed, label %bb.eg
@@ -533,9 +535,9 @@ sub_0.i:                                          ; preds = %.critedge.i
   %i.vg = call i64 @rb_realpath_internal(i64 noundef 4, i64 noundef %i.vf, i32 noundef 1) #23 ; 5 uses
   %i.vh = inttoptr i64 %i.vg to ptr
   %i.vi = load i64, ptr %i.vh, align 8, !tbaa !26
-  %8 = trunc i64 %i.vi to i32
-  %9 = lshr i32 %8, 22
-  %i.vj = and i32 %9, 127                         ; 2 uses
+  %10 = lshr i64 %i.vi, 22
+  %11 = trunc i64 %10 to i32
+  %i.vj = and i32 %11, 127                        ; 2 uses
   %i.vk = icmp eq i32 %i.vj, 127
   br i1 %i.vk, label %bb.fr, label %RB_ENCODING_GET.exit.i
 
@@ -938,18 +940,20 @@ ruby_nonempty_memcpy.exit:                        ; preds = %bb.a, %bb.b
   %.not32 = icmp eq i64 %i.l, 0
   tail call fastcc void @moreswitches(ptr noundef nonnull %i.e, ptr noundef nonnull %3, i32 noundef 0)
   tail call void @free(ptr noundef %i.e) #23
-  %.val = load i16, ptr %i.a, align 8             ; 2 uses
+  %.val = load i16, ptr %i.a, align 8             ; 4 uses
   %i.m = lshr i16 %.val, 8
   %i.n = trunc nuw i16 %i.m to i8
   %spec.select.i = and i8 %i.n, 1
-  %4 = trunc i16 %.val to i8                      ; 3 uses
-  %5 = lshr i8 %4, 5
+  %4 = lshr i16 %.val, 5
+  %5 = trunc i16 %4 to i8
   %i.o = and i8 %5, 4
   %.1.i = or disjoint i8 %spec.select.i, %i.o
-  %6 = lshr i8 %4, 2
-  %i.p = and i8 %6, 24
+  %6 = lshr i16 %.val, 2
+  %7 = trunc i16 %6 to i8
+  %i.p = and i8 %7, 24
   %.3.i = or disjoint i8 %.1.i, %i.p
-  %i.q = shl i8 %4, 3
+  %8 = trunc i16 %.val to i8
+  %i.q = shl i8 %8, 3
   %i.r = and i8 %i.q, 32
   %.4.i = or disjoint i8 %.3.i, %i.r
   tail call void @pm_options_command_line_set(ptr noundef %0, i8 noundef zeroext %.4.i) #23

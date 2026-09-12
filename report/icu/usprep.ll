@@ -205,13 +205,14 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y, %.thread.i
   %i.bh = getelementptr inbounds nuw i8, ptr %i.t, i64 28
-  %i.bi = load i32, ptr %i.bh, align 4, !tbaa !23
-  %i.bj = trunc i32 %i.bi to i8                   ; 2 uses
+  %i.bi = load i32, ptr %i.bh, align 4, !tbaa !23 ; 2 uses
+  %i.bj = trunc i32 %i.bi to i8
   %i.bk = and i8 %i.bj, 1
   %i.bl = getelementptr inbounds nuw i8, ptr %i.t, i64 125
   store i8 %i.bk, ptr %i.bl, align 1, !tbaa !26
-  %7 = lshr i8 %i.bj, 1
-  %i.bm = and i8 %7, 1
+  %7 = lshr i32 %i.bi, 1
+  %8 = trunc i32 %7 to i8
+  %i.bm = and i8 %8, 1
   %i.bn = getelementptr inbounds nuw i8, ptr %i.t, i64 126
   store i8 %i.bm, ptr %i.bn, align 2, !tbaa !27
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15

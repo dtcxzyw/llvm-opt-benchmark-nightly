@@ -204,10 +204,11 @@ files_downcast.exit:                              ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %8, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.g, i8 0, i64 48, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %8, i64 60 ; 2 uses
-  %i.i = trunc i32 %2 to i8                       ; 2 uses
-  %12 = lshr i8 %i.i, 2
-  %13 = and i8 %12, 1
-  %i.j = shl i8 %i.i, 1
+  %12 = lshr i32 %2, 2
+  %i.i = trunc i32 %12 to i8
+  %13 = and i8 %i.i, 1
+  %14 = trunc i32 %2 to i8
+  %i.j = shl i8 %14, 1
   %i.k = and i8 %i.j, 2                           ; 2 uses
   %i.l = or disjoint i8 %13, %i.k
   store i8 %i.l, ptr %i.h, align 4

@@ -205,8 +205,8 @@ _RINvNtNtCshmPyUV8PP35_6chrono6format10formatting14write_hundredsNtNtCs6Po7BT7Nk
 
 bb.d:                                             ; preds = %bb.c
   %i.bj = getelementptr inbounds nuw i8, ptr @13, i64 %i.x
-  %i.bk = load i8, ptr %i.bj, align 1, !noundef !27 ; 2 uses
-  %i.bl = zext i8 %i.bk to i32
+  %i.bk = load i8, ptr %i.bj, align 1, !noundef !27
+  %i.bl = zext i8 %i.bk to i32                    ; 2 uses
   %i.bm = add nuw nsw i32 %i.w, %i.bl             ; 3 uses
   %i.bn = lshr i32 %i.bm, 6
   %i.bo = trunc nuw nsw i32 %i.bn to i8           ; 2 uses
@@ -246,9 +246,9 @@ bb.d:                                             ; preds = %bb.c
   store i8 45, ptr %i.ch, align 1
   %i.ci = add nuw nsw i64 %i.m, 4
   store i64 %i.ci, ptr %i.n, align 8, !alias.scope !12398
-  %3 = trunc i32 %i.v to i8
-  %4 = add i8 %i.bk, %3
-  %5 = lshr i8 %4, 1
+  %3 = add nuw nsw i32 %i.v, %i.bl
+  %4 = lshr i32 %3, 1
+  %5 = trunc i32 %4 to i8
   %i.cj = and i8 %5, 31                           ; 2 uses
   %i.ck = udiv i8 %i.cj, 10
   %i.cl = or disjoint i8 %i.ck, 48
@@ -651,7 +651,6 @@ begin_hunk_1_@_RNvXs_NtNtCshmPyUV8PP35_6chrono6format10formattingINtB4_13Delayed
   %i.ge = add nuw nsw i8 %i.gc, 48
   %i.gf = urem i8 %i.gb, 10
   %i.gg = or disjoint i8 %i.gf, 48
-  %2 = trunc i32 %i.ci to i8
   %i.gh = srem i32 %i.cs, 100                     ; 4 uses
   %i.gi = icmp slt i32 %i.gh, 0
   %i.gj = add nsw i32 %i.gh, 100
@@ -1054,9 +1053,11 @@ bb.ba:                                            ; preds = %bb.l
 
 bb.bb:                                            ; preds = %bb.ba
   %i.pq = load i8, ptr %i.cm, align 1, !noalias !24555, !noundef !27
-  %3 = add i8 %i.pq, %2
-  %4 = lshr i8 %3, 1
-  %i.pr = and i8 %4, 31                           ; 3 uses
+  %2 = zext i8 %i.pq to i32
+  %3 = add nuw nsw i32 %i.ci, %2
+  %4 = lshr i32 %3, 1
+  %5 = trunc i32 %4 to i8
+  %i.pr = and i8 %5, 31                           ; 3 uses
   %i.ps = udiv i8 %i.pr, 10
   %i.pt = urem i8 %i.pr, 10
   %i.pu = icmp samesign ult i8 %i.pr, 10

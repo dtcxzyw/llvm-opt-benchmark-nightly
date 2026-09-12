@@ -205,8 +205,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_ZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEv.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %2 = lshr i32 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i32), 4
-  %i.i = and i32 %2, 3
+  %2 = lshr i64 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i64), 4
+  %3 = trunc i64 %2 to i32
+  %i.i = and i32 %3, 3
   store i32 %i.i, ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces, align 4, !tbaa !129
   %i.j = tail call ptr @llvm.invariant.start.p0(i64 4, ptr nonnull @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) #22
@@ -243,8 +244,9 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   br i1 %.not.i.i13, label %_ZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEv.exit.i8, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = lshr i32 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i32), 4
-  %i.t = and i32 %3, 3
+  %4 = lshr i64 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i64), 4
+  %5 = trunc i64 %4 to i32
+  %i.t = and i32 %5, 3
   store i32 %i.t, ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces, align 4, !tbaa !129
   %i.u = tail call ptr @llvm.invariant.start.p0(i64 4, ptr nonnull @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) #22
@@ -647,8 +649,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_ZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEv.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %2 = lshr i32 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i32), 4
-  %i.h = and i32 %2, 3
+  %2 = lshr i64 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i64), 4
+  %3 = trunc i64 %2 to i32
+  %i.h = and i32 %3, 3
   store i32 %i.h, ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces, align 4, !tbaa !129
   %i.i = tail call ptr @llvm.invariant.start.p0(i64 4, ptr nonnull @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) #22
@@ -685,8 +688,9 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   br i1 %.not.i.i15, label %_ZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEv.exit.i10, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = lshr i32 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i32), 4
-  %i.s = and i32 %3, 3
+  %4 = lshr i64 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i64), 4
+  %5 = trunc i64 %4 to i32
+  %i.s = and i32 %5, 3
   store i32 %i.s, ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces, align 4, !tbaa !129
   %i.t = tail call ptr @llvm.invariant.start.p0(i64 4, ptr nonnull @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) #22
@@ -1089,8 +1093,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_ZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEv.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %2 = lshr i32 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i32), 4
-  %i.j = and i32 %2, 3
+  %2 = lshr i64 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i64), 4
+  %3 = trunc i64 %2 to i32
+  %i.j = and i32 %3, 3
   store i32 %i.j, ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces, align 4, !tbaa !129
   %i.k = tail call ptr @llvm.invariant.start.p0(i64 4, ptr nonnull @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) #22
@@ -1127,8 +1132,9 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   br i1 %.not.i.i13, label %_ZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEv.exit.i8, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = lshr i32 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i32), 4
-  %i.u = and i32 %3, 3
+  %4 = lshr i64 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i64), 4
+  %5 = trunc i64 %4 to i32
+  %i.u = and i32 %5, 3
   store i32 %i.u, ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces, align 4, !tbaa !129
   %i.v = tail call ptr @llvm.invariant.start.p0(i64 4, ptr nonnull @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) #22
@@ -1531,8 +1537,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_ZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEv.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %2 = lshr i32 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i32), 4
-  %i.j = and i32 %2, 3
+  %2 = lshr i64 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i64), 4
+  %3 = trunc i64 %2 to i32
+  %i.j = and i32 %3, 3
   store i32 %i.j, ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces, align 4, !tbaa !129
   %i.k = tail call ptr @llvm.invariant.start.p0(i64 4, ptr nonnull @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) #22
@@ -1569,8 +1576,9 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   br i1 %.not.i.i13, label %_ZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEv.exit.i8, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = lshr i32 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i32), 4
-  %i.u = and i32 %3, 3
+  %4 = lshr i64 ptrtoint (ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces to i64), 4
+  %5 = trunc i64 %4 to i32
+  %i.u = and i32 %5, 3
   store i32 %i.u, ptr @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces, align 4, !tbaa !129
   %i.v = tail call ptr @llvm.invariant.start.p0(i64 4, ptr nonnull @_ZZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) ; 0 uses
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2026052617internal_statusor15StringifyRandom12RandomBracesEvE13kRandomBraces) #22

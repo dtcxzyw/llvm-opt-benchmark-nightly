@@ -205,12 +205,12 @@ tsdn_rtree_ctx.exit:                              ; preds = %bb.b, %bb.c
   %i.f = and i64 %.val.i, 4095
   %i.g = getelementptr inbounds nuw [8 x i8], ptr @duckdb_je_arenas, i64 %i.f
   %i.h = load atomic ptr, ptr %i.g monotonic, align 8 ; 7 uses
-  %4 = trunc i64 %.val.i to i32
-  %5 = lshr i32 %4, 20
-  %i.i = and i32 %5, 255                          ; 2 uses
+  %4 = lshr i64 %.val.i, 20                       ; 2 uses
+  %5 = trunc i64 %4 to i32
+  %i.i = and i32 %5, 255
   %i.j = lshr i64 %.val.i, 38
   %i.k = and i64 %i.j, 63                         ; 2 uses
-  %6 = zext nneg i32 %i.i to i64                  ; 3 uses
+  %6 = and i64 %4, 255                            ; 3 uses
   %i.l = getelementptr inbounds nuw [4 x i8], ptr @duckdb_je_arena_bin_offsets, i64 %6
   %i.m = load i32, ptr %i.l, align 4, !tbaa !6
   %i.n = zext i32 %i.m to i64
@@ -613,22 +613,23 @@ bb.f:                                             ; preds = %.preheader.6, %.pre
 rtree_leaf_elm_lookup.exit:                       ; preds = %bb.f, %bb.b, %bb.d, %bb.e
   %.1.i = phi ptr [ %i.k, %bb.b ], [ %i.x, %bb.d ], [ %i.aq, %bb.e ], [ %i.bb, %bb.f ]
   %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !209
-  %i.bd = ptrtoint ptr %i.bc to i64               ; 4 uses
+  %i.bd = ptrtoint ptr %i.bc to i64               ; 5 uses
   %i.be = lshr i64 %i.bd, 48
   %i.bf = trunc nuw nsw i64 %i.be to i32
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.bf, ptr %i.bg, align 8, !tbaa !210, !alias.scope !211
-  %i.bh = trunc i64 %i.bd to i8                   ; 2 uses
+  %i.bh = trunc i64 %i.bd to i8
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 17
   %i.bj = and i8 %i.bh, 1
   store i8 %i.bj, ptr %i.bi, align 1, !tbaa !212, !alias.scope !211
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = lshr i8 %i.bh, 1
-  %i.bl = and i8 %4, 1
+  %4 = lshr i64 %i.bd, 1
+  %5 = trunc i64 %4 to i8
+  %i.bl = and i8 %5, 1
   store i8 %i.bl, ptr %i.bk, align 8, !tbaa !213, !alias.scope !211
-  %5 = trunc i64 %i.bd to i32
-  %6 = lshr i32 %5, 2
-  %i.bm = and i32 %6, 7
+  %6 = lshr i64 %i.bd, 2
+  %7 = trunc i64 %6 to i32
+  %i.bm = and i32 %7, 7
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.bm, ptr %i.bn, align 4, !tbaa !214, !alias.scope !211
   %i.bo = shl i64 %i.bd, 16

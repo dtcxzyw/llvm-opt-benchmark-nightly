@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.c
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !86
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 56
   %i.q = load ptr, ptr %i.p, align 8
-  %i.r = tail call noundef i32 %i.q(ptr noundef nonnull align 8 dereferenceable(8) %i.n), !call_target !183 ; 2 uses
-  %i.s = trunc i32 %i.r to i8                     ; 3 uses
+  %i.r = tail call noundef i32 %i.q(ptr noundef nonnull align 8 dereferenceable(8) %i.n), !call_target !183 ; 4 uses
+  %i.s = trunc i32 %i.r to i8
   %i.t = and i8 %i.s, 15
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv ; 2 uses
   store i8 %i.t, ptr %i.u, align 2, !tbaa !81
@@ -215,10 +215,13 @@ bb.b:                                             ; preds = %bb.c
   br i1 %i.w, label %.lr.ph77, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
-  %3 = lshr i8 %i.s, 4
+  %3 = lshr i32 %i.r, 4
+  %4 = trunc i32 %3 to i8
+  %5 = and i8 %4, 15
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 1
-  store i8 %3, ptr %i.x, align 1, !tbaa !81
-  %i.y = icmp ugt i8 %i.s, -49
+  store i8 %5, ptr %i.x, align 1, !tbaa !81
+  %6 = and i32 %i.r, 240
+  %i.y = icmp samesign ugt i32 %6, 192
   br i1 %i.y, label %.lr.ph77, label %bb.b
 
 .lr.ph77:                                         ; preds = %.lr.ph, %bb.c

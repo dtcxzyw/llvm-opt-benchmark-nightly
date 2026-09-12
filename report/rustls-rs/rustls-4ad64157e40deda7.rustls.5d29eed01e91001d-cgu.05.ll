@@ -204,7 +204,7 @@ bb.a:
   %i.o = load i64, ptr %i.n, align 8              ; 2 uses
   %i.p = sub i64 %i.m, %i.o
   %.sroa.0.0 = select i1 %.not, i64 %i.o, i64 %i.p
-  %i.q = add i64 %.sroa.0.0, 17                   ; 2 uses
+  %i.q = add i64 %.sroa.0.0, 17                   ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @_RNvMs2_NtNtNtCs7ZUl82OSlxp_6rustls4msgs7message8outboundNtB5_15PrefixedPayload13with_capacity(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.j, i64 noundef %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -425,10 +425,11 @@ bb.l:                                             ; preds = %bb.k
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1198
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.bm, ptr noundef nonnull align 1 dereferenceable(12) %i.i, i64 12, i1 false)
-  %i.bn = trunc i64 %i.q to i40                   ; 2 uses
-  %4 = shl i40 %i.bn, 16
-  %.sroa.035.3.insert.shift = and i40 %4, 4278190080
-  %.sroa.035.4.insert.ext = shl i40 %i.bn, 32
+  %sh.diff = shl i64 %i.q, 16
+  %i.bn = trunc i64 %sh.diff to i40
+  %.sroa.035.3.insert.shift = and i40 %i.bn, 4278190080
+  %4 = trunc i64 %i.q to i40
+  %.sroa.035.4.insert.ext = shl i40 %4, 32
   %.sroa.035.3.insert.insert = or disjoint i40 %.sroa.035.3.insert.shift, %.sroa.035.4.insert.ext
   %.sroa.035.4.insert.insert = or disjoint i40 %.sroa.035.3.insert.insert, 197399
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -831,7 +832,7 @@ bb.a:
   %i.e = alloca [12 x i8], align 1                ; 5 uses
   %i.f = alloca [24 x i8], align 8                ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.h = load i64, ptr %i.g, align 8, !noundef !7 ; 3 uses
+  %i.h = load i64, ptr %i.g, align 8, !noundef !7 ; 4 uses
   %i.i = icmp ult i64 %i.h, 16
   br i1 %i.i, label %bb.c, label %bb.b
 
@@ -987,10 +988,11 @@ _RNvMs6_NtNtCs7ZUl82OSlxp_6rustls6crypto6cipherNtB5_5Nonce12new_from_seq.exit: ;
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.az = load ptr, ptr %2, align 8, !nonnull !7, !noundef !7
-  %i.ba = trunc i64 %i.h to i40                   ; 2 uses
-  %4 = shl i40 %i.ba, 16
-  %.sroa.061.3.insert.shift = and i40 %4, 4278190080
-  %.sroa.061.4.insert.ext = shl i40 %i.ba, 32
+  %sh.diff = shl i64 %i.h, 16
+  %i.ba = trunc i64 %sh.diff to i40
+  %.sroa.061.3.insert.shift = and i40 %i.ba, 4278190080
+  %4 = trunc i64 %i.h to i40
+  %.sroa.061.4.insert.ext = shl i40 %4, 32
   %.sroa.061.3.insert.insert = or disjoint i40 %.sroa.061.3.insert.shift, %.sroa.061.4.insert.ext
   %.sroa.061.4.insert.insert = or disjoint i40 %.sroa.061.3.insert.insert, 197399
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -1051,7 +1053,7 @@ bb.a:
   %i.o = load i64, ptr %i.n, align 8              ; 2 uses
   %i.p = sub i64 %i.m, %i.o
   %.sroa.0.0 = select i1 %.not, i64 %i.o, i64 %i.p
-  %i.q = add i64 %.sroa.0.0, 17                   ; 2 uses
+  %i.q = add i64 %.sroa.0.0, 17                   ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @_RNvMs2_NtNtNtCs7ZUl82OSlxp_6rustls4msgs7message8outboundNtB5_15PrefixedPayload13with_capacity(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.j, i64 noundef %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -1272,10 +1274,11 @@ bb.l:                                             ; preds = %bb.k
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1282
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.bm, ptr noundef nonnull align 1 dereferenceable(12) %i.i, i64 12, i1 false)
-  %i.bn = trunc i64 %i.q to i40                   ; 2 uses
-  %4 = shl i40 %i.bn, 16
-  %.sroa.035.3.insert.shift = and i40 %4, 4278190080
-  %.sroa.035.4.insert.ext = shl i40 %i.bn, 32
+  %sh.diff = shl i64 %i.q, 16
+  %i.bn = trunc i64 %sh.diff to i40
+  %.sroa.035.3.insert.shift = and i40 %i.bn, 4278190080
+  %4 = trunc i64 %i.q to i40
+  %.sroa.035.4.insert.ext = shl i40 %4, 32
   %.sroa.035.3.insert.insert = or disjoint i40 %.sroa.035.3.insert.shift, %.sroa.035.4.insert.ext
   %.sroa.035.4.insert.insert = or disjoint i40 %.sroa.035.3.insert.insert, 197399
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1678,7 +1681,7 @@ bb.a:
   %i.e = alloca [12 x i8], align 1                ; 5 uses
   %i.f = alloca [24 x i8], align 8                ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.h = load i64, ptr %i.g, align 8, !noundef !7 ; 3 uses
+  %i.h = load i64, ptr %i.g, align 8, !noundef !7 ; 4 uses
   %i.i = icmp ult i64 %i.h, 16
   br i1 %i.i, label %bb.c, label %bb.b
 
@@ -1834,10 +1837,11 @@ _RNvMs6_NtNtCs7ZUl82OSlxp_6rustls6crypto6cipherNtB5_5Nonce12new_from_seq.exit: ;
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.az = load ptr, ptr %2, align 8, !nonnull !7, !noundef !7
-  %i.ba = trunc i64 %i.h to i40                   ; 2 uses
-  %4 = shl i40 %i.ba, 16
-  %.sroa.061.3.insert.shift = and i40 %4, 4278190080
-  %.sroa.061.4.insert.ext = shl i40 %i.ba, 32
+  %sh.diff = shl i64 %i.h, 16
+  %i.ba = trunc i64 %sh.diff to i40
+  %.sroa.061.3.insert.shift = and i40 %i.ba, 4278190080
+  %4 = trunc i64 %i.h to i40
+  %.sroa.061.4.insert.ext = shl i40 %4, 32
   %.sroa.061.3.insert.insert = or disjoint i40 %.sroa.061.3.insert.shift, %.sroa.061.4.insert.ext
   %.sroa.061.4.insert.insert = or disjoint i40 %.sroa.061.3.insert.insert, 197399
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)

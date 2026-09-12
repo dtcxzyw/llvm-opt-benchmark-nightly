@@ -204,14 +204,16 @@ heif_encoding_options_copy.exit.thread:           ; preds = %heif_encoding_optio
 bb.k:                                             ; preds = %heif_encoding_options_copy.exit.thread
   %i.ao = load ptr, ptr %1, align 8, !tbaa !154
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 10
-  %.sroa.0.0.copyload.i = load i64, ptr %i.ap, align 2 ; 3 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %i.ap, align 2 ; 4 uses
   store ptr %7, ptr %i.d, align 8, !tbaa !74
   store i8 1, ptr %7, align 4, !tbaa !160
-  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i to i32 ; 2 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i to i32
   %i.aq = and i32 %.sroa.0.0.extract.trunc, 65535
   %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 4
   store i32 %i.aq, ptr %i.ar, align 4, !tbaa !161
-  %10 = lshr i32 %.sroa.0.0.extract.trunc, 16
+  %.sroa.0.2.extract.shift37 = lshr i64 %.sroa.0.0.copyload.i, 16
+  %.sroa.0.2.extract.trunc = trunc i64 %.sroa.0.2.extract.shift37 to i32
+  %10 = and i32 %.sroa.0.2.extract.trunc, 65535
   %i.as = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i32 %10, ptr %i.as, align 4, !tbaa !162
   %.sroa.0.4.extract.shift38 = lshr i64 %.sroa.0.0.copyload.i, 32

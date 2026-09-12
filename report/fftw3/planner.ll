@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.g
   %i.z = load ptr, ptr %i.a, align 8, !tbaa !56
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %indvars.iv ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %i.ac = load i64, ptr %i.ab, align 4            ; 4 uses
+  %i.ac = load i64, ptr %i.ab, align 4            ; 5 uses
   %i.ad = and i64 %i.ac, 4194304
   %.not = icmp eq i64 %i.ad, 0
   br i1 %.not, label %bb.g, label %bb.d
@@ -228,12 +228,14 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %.028 = phi ptr [ %i.aj, %bb.e ], [ @stimeout, %bb.d ]
   %.027 = phi i32 [ %i.al, %bb.e ], [ 0, %bb.d ]
   %i.am = load ptr, ptr %1, align 8, !tbaa !81
-  %i.an = trunc i64 %i.ac to i32                  ; 2 uses
+  %i.an = trunc i64 %i.ac to i32
   %i.ao = and i32 %i.an, 1048575
   %i.ap = lshr i64 %i.ac, 32
   %i.aq = trunc nuw i64 %i.ap to i32
   %i.ar = and i32 %i.aq, 1048575
-  %3 = lshr i32 %i.an, 23
+  %3 = lshr i64 %i.ac, 23
+  %4 = trunc i64 %3 to i32
+  %5 = and i32 %4, 511
   %i.as = load i32, ptr %i.aa, align 4, !tbaa !33
   %i.at = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
   %i.au = load i32, ptr %i.at, align 4, !tbaa !33
@@ -241,7 +243,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !33
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !33
-  call void (ptr, ptr, ...) %i.am(ptr noundef nonnull %1, ptr noundef nonnull @.str.3, ptr noundef %.028, i32 noundef %.027, i32 noundef %i.ao, i32 noundef %i.ar, i32 noundef %3, i32 noundef %i.as, i32 noundef %i.au, i32 noundef %i.aw, i32 noundef %i.ay) #8
+  call void (ptr, ptr, ...) %i.am(ptr noundef nonnull %1, ptr noundef nonnull @.str.3, ptr noundef %.028, i32 noundef %.027, i32 noundef %i.ao, i32 noundef %i.ar, i32 noundef %5, i32 noundef %i.as, i32 noundef %i.au, i32 noundef %i.aw, i32 noundef %i.ay) #8
   %.pre = load i32, ptr %i.v, align 8, !tbaa !57
   br label %bb.g
 
@@ -644,9 +646,9 @@ bb.a:
   br i1 %.not.i.i, label %.split.us.i, label %.split.i
 
 .split.us.i:                                      ; preds = %bb.a, %md5eq.exit.thread.us.i
-  %i.n = phi i32 [ %7, %md5eq.exit.thread.us.i ], [ %.val.i, %bb.a ] ; 6 uses
+  %i.n = phi i32 [ %12, %md5eq.exit.thread.us.i ], [ %.val.i, %bb.a ] ; 7 uses
   %.036.us.i = phi i32 [ %i.az, %md5eq.exit.thread.us.i ], [ %i.e, %bb.a ] ; 2 uses
-  %.035.us.i = phi ptr [ %.2.us.i, %md5eq.exit.thread.us.i ], [ null, %bb.a ] ; 9 uses
+  %.035.us.i = phi ptr [ %.2.us.i, %md5eq.exit.thread.us.i ], [ null, %bb.a ] ; 10 uses
   %i.o = load ptr, ptr %i.c, align 8, !tbaa !56
   %i.p = zext i32 %.036.us.i to i64
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.o, i64 %i.p ; 6 uses
@@ -654,14 +656,15 @@ bb.a:
   %i.s = add nsw i32 %i.r, 1
   store i32 %i.s, ptr %i.j, align 8, !tbaa !61
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 3 uses
-  %i.u = load i64, ptr %i.t, align 4
-  %i.v = trunc i64 %i.u to i32                    ; 4 uses
-  %i.w = and i32 %i.v, 2097152
+  %i.u = load i64, ptr %i.t, align 4              ; 3 uses
+  %4 = lshr i64 %i.u, 20
+  %i.v = trunc i64 %4 to i32                      ; 2 uses
+  %i.w = and i32 %i.v, 2
   %.not.us.i = icmp eq i32 %i.w, 0
   br i1 %.not.us.i, label %.thread.i, label %bb.b
 
 bb.b:                                             ; preds = %.split.us.i
-  %i.x = and i32 %i.v, 4194304
+  %i.x = and i32 %i.v, 4
   %.not38.us.i = icmp eq i32 %i.x, 0
   br i1 %.not38.us.i, label %md5eq.exit.thread.us.i, label %bb.c
 
@@ -693,19 +696,26 @@ md5eq.exit.us.i:                                  ; preds = %bb.e
   br i1 %.not58.us.i, label %subsumes.exit.us.i.a, label %md5eq.exit.thread.us.i
 
 subsumes.exit.us.i.a:                             ; preds = %md5eq.exit.us.i
-  %i.am = load i64, ptr %2, align 4
-  %i.an = trunc i64 %i.am to i32                  ; 2 uses
-  %i.ao = and i32 %i.v, 1048575
+  %i.am = load i64, ptr %2, align 4               ; 2 uses
+  %5 = trunc i64 %i.am to i32
+  %i.an = trunc i64 %i.u to i32
+  %i.ao = and i32 %i.an, 1048575
   %i.ap = xor i32 %i.ao, 1048575
-  %i.aq = and i32 %i.ap, %i.an
+  %i.aq = and i32 %i.ap, %5
   %i.ar = icmp eq i32 %i.aq, 0
-  %4 = lshr i32 %i.an, 23
-  %5 = lshr i32 %i.v, 23
-  %6 = icmp samesign ule i32 %4, %5
-  %narrow.i.us.i = select i1 %i.ar, i1 %6, i1 false
-  br i1 %narrow.i.us.i, label %bb.f, label %md5eq.exit.thread.us.i
+  br i1 %i.ar, label %subsumes.exit.us.i, label %md5eq.exit.thread.us.i
 
-bb.f:                                             ; preds = %subsumes.exit.us.i.a
+subsumes.exit.us.i:                               ; preds = %subsumes.exit.us.i.a
+  %6 = lshr i64 %i.am, 23
+  %7 = trunc i64 %6 to i32
+  %8 = and i32 %7, 511
+  %9 = lshr i64 %i.u, 23
+  %10 = trunc i64 %9 to i32
+  %11 = and i32 %10, 511
+  %.not59.i = icmp samesign ugt i32 %8, %11
+  br i1 %.not59.i, label %md5eq.exit.thread.us.i, label %bb.f
+
+bb.f:                                             ; preds = %subsumes.exit.us.i
   %.not41.us.i = icmp eq ptr %.035.us.i, null
   %spec.select.us.i = select i1 %.not41.us.i, ptr %i.q, ptr %.035.us.i
   %i.as = load i32, ptr %i.m, align 4, !tbaa !58
@@ -718,12 +728,12 @@ bb.f:                                             ; preds = %subsumes.exit.us.i.
   %.pre61.i = load i32, ptr %i.d, align 8, !tbaa !57
   br label %md5eq.exit.thread.us.i
 
-md5eq.exit.thread.us.i:                           ; preds = %bb.f, %subsumes.exit.us.i.a, %md5eq.exit.us.i, %bb.e, %bb.d, %bb.c, %bb.b
-  %7 = phi i32 [ %.pre61.i, %bb.f ], [ %i.n, %subsumes.exit.us.i.a ], [ %i.n, %md5eq.exit.us.i ], [ %i.n, %bb.b ], [ %i.n, %bb.c ], [ %i.n, %bb.e ], [ %i.n, %bb.d ] ; 3 uses
-  %.2.us.i = phi ptr [ %spec.select.us.i, %bb.f ], [ %.035.us.i, %subsumes.exit.us.i.a ], [ %.035.us.i, %md5eq.exit.us.i ], [ %.035.us.i, %bb.b ], [ %.035.us.i, %bb.c ], [ %.035.us.i, %bb.e ], [ %.035.us.i, %bb.d ] ; 2 uses
+md5eq.exit.thread.us.i:                           ; preds = %bb.f, %subsumes.exit.us.i, %subsumes.exit.us.i.a, %md5eq.exit.us.i, %bb.e, %bb.d, %bb.c, %bb.b
+  %12 = phi i32 [ %.pre61.i, %bb.f ], [ %i.n, %subsumes.exit.us.i ], [ %i.n, %md5eq.exit.us.i ], [ %i.n, %bb.b ], [ %i.n, %bb.c ], [ %i.n, %bb.e ], [ %i.n, %bb.d ], [ %i.n, %subsumes.exit.us.i.a ] ; 3 uses
+  %.2.us.i = phi ptr [ %spec.select.us.i, %bb.f ], [ %.035.us.i, %subsumes.exit.us.i ], [ %.035.us.i, %md5eq.exit.us.i ], [ %.035.us.i, %bb.b ], [ %.035.us.i, %bb.c ], [ %.035.us.i, %bb.e ], [ %.035.us.i, %bb.d ], [ %.035.us.i, %subsumes.exit.us.i.a ] ; 2 uses
   %i.ax = add i32 %.036.us.i, %i.i                ; 2 uses
-  %.not.i47.us.i = icmp ult i32 %i.ax, %7
-  %i.ay = select i1 %.not.i47.us.i, i32 0, i32 %7
+  %.not.i47.us.i = icmp ult i32 %i.ax, %12
+  %i.ay = select i1 %.not.i47.us.i, i32 0, i32 %12
   %i.az = sub i32 %i.ax, %i.ay                    ; 2 uses
   %.not42.us.i = icmp eq i32 %i.az, %i.e
   br i1 %.not42.us.i, label %.thread.i, label %.split.us.i, !llvm.loop !92
@@ -739,14 +749,15 @@ md5eq.exit.thread.us.i:                           ; preds = %bb.f, %subsumes.exi
   %i.bf = add nsw i32 %i.be, 1
   store i32 %i.bf, ptr %i.j, align 8, !tbaa !61
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 16 ; 3 uses
-  %i.bh = load i64, ptr %i.bg, align 4            ; 2 uses
-  %i.bi = trunc i64 %i.bh to i32                  ; 3 uses
-  %i.bj = and i32 %i.bi, 2097152
+  %i.bh = load i64, ptr %i.bg, align 4            ; 3 uses
+  %13 = lshr i64 %i.bh, 20
+  %i.bi = trunc i64 %13 to i32                    ; 2 uses
+  %i.bj = and i32 %i.bi, 2
   %.not.i = icmp eq i32 %i.bj, 0
   br i1 %.not.i, label %.thread.i, label %bb.g
 
 bb.g:                                             ; preds = %.split.i
-  %i.bk = and i32 %i.bi, 4194304
+  %i.bk = and i32 %i.bi, 4
   %.not38.i = icmp eq i32 %i.bk, 0
   br i1 %.not38.i, label %md5eq.exit.thread.i, label %bb.h
 
@@ -790,10 +801,11 @@ bb.k:                                             ; preds = %md5eq.exit.i
   br i1 %i.ch, label %subsumes.exit.i, label %md5eq.exit.thread.i
 
 subsumes.exit.i:                                  ; preds = %bb.k
+  %14 = trunc i64 %i.bh to i32
   %i.ci = trunc i64 %i.bz to i32
   %i.cj = and i32 %i.ci, 1048575
   %i.ck = xor i32 %i.cj, 1048575
-  %i.cl = and i32 %i.ck, %i.bi
+  %i.cl = and i32 %i.ck, %14
   %i.cm = icmp eq i32 %i.cl, 0
   br i1 %i.cm, label %bb.l, label %md5eq.exit.thread.i
 
@@ -923,20 +935,21 @@ bb.a:
 bb.b:                                             ; preds = %md5eq.exit.thread, %bb.a
   %i.n = phi i32 [ %.pre, %bb.a ], [ %i.q, %md5eq.exit.thread ]
   %.030 = phi i32 [ %i.b, %bb.a ], [ %i.bo, %md5eq.exit.thread ] ; 2 uses
-  %.029 = phi ptr [ null, %bb.a ], [ %.1, %md5eq.exit.thread ] ; 12 uses
+  %.029 = phi ptr [ null, %bb.a ], [ %.1, %md5eq.exit.thread ] ; 13 uses
   %i.o = zext i32 %.030 to i64
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.j, i64 %i.o ; 6 uses
   %i.q = add nsw i32 %i.n, 1                      ; 2 uses
   store i32 %i.q, ptr %i.k, align 8, !tbaa !95
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %i.s = load i64, ptr %i.r, align 4              ; 4 uses
-  %i.t = trunc i64 %i.s to i32                    ; 5 uses
-  %i.u = and i32 %i.t, 2097152
+  %i.s = load i64, ptr %i.r, align 4              ; 7 uses
+  %3 = lshr i64 %i.s, 20
+  %i.t = trunc i64 %3 to i32                      ; 2 uses
+  %i.u = and i32 %i.t, 2
   %.not = icmp eq i32 %i.u, 0
   br i1 %.not, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.v = and i32 %i.t, 4194304
+  %i.v = and i32 %i.t, 4
   %.not32 = icmp eq i32 %i.v, 0
   br i1 %.not32, label %md5eq.exit.thread, label %bb.d
 
@@ -981,30 +994,38 @@ bb.h:                                             ; preds = %bb.g
   %i.aq = xor i32 %i.ap, 1048575
   %i.ar = and i32 %i.aq, %i.al
   %i.as = icmp eq i32 %i.ar, 0
-  br i1 %i.as, label %subsumes.exit, label %md5eq.exit.thread
+  br i1 %i.as, label %.split, label %md5eq.exit.thread
+
+.split:                                           ; preds = %bb.h
+  %4 = trunc i64 %i.am to i32
+  %5 = trunc i64 %i.s to i32
+  %6 = and i32 %5, 1048575
+  %7 = xor i32 %6, 1048575
+  %8 = and i32 %7, %4
+  %9 = icmp eq i32 %8, 0
+  br i1 %9, label %bb.i, label %md5eq.exit.thread
 
 .split.a:                                         ; preds = %bb.g
-  %i.at = load i64, ptr %2, align 4
-  %i.au = trunc i64 %i.at to i32                  ; 2 uses
+  %10 = trunc i64 %i.s to i32
+  %i.at = load i64, ptr %2, align 4               ; 2 uses
+  %i.au = trunc i64 %i.at to i32
   %i.av = and i32 %i.au, 1048575
   %i.aw = xor i32 %i.av, 1048575
-  %i.ax = and i32 %i.aw, %i.t
+  %i.ax = and i32 %i.aw, %10
   %i.ay = icmp eq i32 %i.ax, 0
-  %3 = lshr i32 %i.t, 23
-  %4 = lshr i32 %i.au, 23
-  %5 = icmp samesign ule i32 %3, %4
-  %narrow.i = select i1 %i.ay, i1 %5, i1 false
-  br i1 %narrow.i, label %bb.i, label %md5eq.exit.thread
+  br i1 %i.ay, label %subsumes.exit, label %md5eq.exit.thread
 
-subsumes.exit:                                    ; preds = %bb.h
-  %i.az = trunc i64 %i.am to i32
-  %i.ba = and i32 %i.t, 1048575
-  %6 = xor i32 %i.ba, 1048575
-  %i.bb = and i32 %6, %i.az
-  %7 = icmp eq i32 %i.bb, 0
-  br i1 %7, label %bb.i, label %md5eq.exit.thread
+subsumes.exit:                                    ; preds = %.split.a
+  %11 = lshr i64 %i.s, 23
+  %i.az = trunc i64 %11 to i32
+  %i.ba = and i32 %i.az, 511
+  %12 = lshr i64 %i.at, 23
+  %13 = trunc i64 %12 to i32
+  %i.bb = and i32 %13, 511
+  %.not55 = icmp samesign ugt i32 %i.ba, %i.bb
+  br i1 %.not55, label %md5eq.exit.thread, label %bb.i
 
-bb.i:                                             ; preds = %.split.a, %subsumes.exit
+bb.i:                                             ; preds = %.split, %subsumes.exit
   %.not35 = icmp eq ptr %.029, null
   br i1 %.not35, label %bb.k, label %bb.j
 
@@ -1024,8 +1045,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.i
   br label %md5eq.exit.thread
 
-md5eq.exit.thread:                                ; preds = %.split.a, %bb.h, %bb.d, %bb.e, %bb.f, %bb.j, %bb.k, %subsumes.exit, %md5eq.exit, %bb.c
-  %.1 = phi ptr [ %i.p, %bb.k ], [ %.029, %bb.j ], [ %.029, %subsumes.exit ], [ %.029, %md5eq.exit ], [ %.029, %bb.c ], [ %.029, %bb.d ], [ %.029, %bb.f ], [ %.029, %bb.e ], [ %.029, %bb.h ], [ %.029, %.split.a ] ; 2 uses
+md5eq.exit.thread:                                ; preds = %.split, %.split.a, %bb.h, %bb.d, %bb.e, %bb.f, %bb.j, %bb.k, %subsumes.exit, %md5eq.exit, %bb.c
+  %.1 = phi ptr [ %i.p, %bb.k ], [ %.029, %bb.j ], [ %.029, %subsumes.exit ], [ %.029, %md5eq.exit ], [ %.029, %bb.c ], [ %.029, %bb.d ], [ %.029, %bb.f ], [ %.029, %bb.e ], [ %.029, %bb.h ], [ %.029, %.split.a ], [ %.029, %.split ] ; 2 uses
   %i.bm = add i32 %i.f, %.030                     ; 2 uses
   %.not.i41 = icmp ult i32 %i.bm, %.val
   %i.bn = select i1 %.not.i41, i32 0, i32 %.val

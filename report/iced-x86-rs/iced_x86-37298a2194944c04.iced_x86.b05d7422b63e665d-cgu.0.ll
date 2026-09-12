@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %_RNvMsG_NtCsexYYUdY
   %i.u = getelementptr inbounds nuw [4 x i8], ptr @_RNvNtNtCsf8MNnN4IDbl_8iced_x867encoder12encoder_data10ENC_FLAGS2, i64 %i.q
   %i.v = load i32, ptr %i.u, align 4, !noundef !21 ; 32 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr @_RNvNtNtCsf8MNnN4IDbl_8iced_x867encoder12encoder_data10ENC_FLAGS3, i64 %i.q
-  %i.x = load i32, ptr %i.w, align 4, !noundef !21 ; 11 uses
-  %i.y = trunc i32 %i.x to i8                     ; 3 uses
+  %i.x = load i32, ptr %i.w, align 4, !noundef !21 ; 13 uses
+  %i.y = trunc i32 %i.x to i8
   %i.z = and i8 %i.y, 7                           ; 2 uses
   %i.aa = icmp samesign ult i8 %i.z, 6
   tail call void @llvm.assume(i1 %i.aa)
@@ -609,10 +609,12 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCsf8MNnN4IDbl_8iced_x867encoder
   %i.mn = lshr i32 %i.v, 16
   %i.mo = trunc i32 %i.mn to i8
   %i.mp = and i8 %i.mo, 1
-  %2 = lshr i8 %i.y, 5
-  %i.mq = and i8 %2, 3
-  %3 = lshr i8 %i.y, 3
-  %i.mr = and i8 %3, 3
+  %2 = lshr i32 %i.x, 5
+  %3 = trunc i32 %2 to i8
+  %i.mq = and i8 %3, 3
+  %4 = lshr i32 %i.x, 3
+  %5 = trunc i32 %4 to i8
+  %i.mr = and i8 %5, 3
   %i.ms = and i32 %i.v, 65535
   %i.mt = icmp sgt i32 %i.v, -1
   %i.mu = lshr i32 %i.v, 27
@@ -1015,7 +1017,7 @@ bb.a:
   %i.d = load i16, ptr %i.c, align 8, !range !28, !noundef !21 ; 2 uses
   %i.e = zext nneg i16 %i.d to i64                ; 3 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtNtCsf8MNnN4IDbl_8iced_x864info10info_table5TABLE, i64 %i.e ; 2 uses
-  %i.g = load i32, ptr %i.f, align 4, !noundef !21 ; 9 uses
+  %i.g = load i32, ptr %i.f, align 4, !noundef !21 ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 4
   %i.i = load i32, ptr %i.h, align 4, !noundef !21
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 20
@@ -1032,7 +1034,7 @@ bb.a:
   %i.r = icmp eq i32 %i.q, 0
   %i.s = or disjoint i32 %spec.select106, 8
   %spec.select = select i1 %i.r, i32 %spec.select106, i32 %i.s ; 14 uses
-  %i.t = trunc i32 %i.g to i8                     ; 2 uses
+  %i.t = trunc i32 %i.g to i8
   %i.u = and i8 %i.t, 15                          ; 4 uses
   %i.v = icmp samesign ult i8 %i.u, 13
   tail call void @llvm.assume(i1 %i.v)
@@ -1118,8 +1120,9 @@ bb.m:                                             ; preds = %bb.o, %bb.i, %bb.n,
   %.sroa.046.0 = phi i8 [ 3, %bb.k ], [ 4, %bb.b ], [ %.96, %bb.l ], [ %.95, %bb.j ], [ 7, %bb.d ], [ 1, %bb.e ], [ 6, %bb.f ], [ 5, %bb.g ], [ 3, %bb.h ], [ %.97, %bb.n ], [ %., %bb.c ], [ 3, %bb.i ], [ %.98, %bb.o ], [ %i.u, %bb.a ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   store i8 %.sroa.046.0, ptr %i.ap, align 8
-  %3 = lshr i8 %i.t, 4
-  %i.aq = and i8 %3, 7                            ; 3 uses
+  %3 = lshr i32 %i.g, 4
+  %4 = trunc i32 %3 to i8
+  %i.aq = and i8 %4, 7                            ; 3 uses
   %i.ar = icmp ne i8 %i.aq, 7
   tail call void @llvm.assume(i1 %i.ar)
   %i.as = zext nneg i8 %i.aq to i64
@@ -1522,10 +1525,11 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.01.0.copyload = load i16, ptr %i.o, align 1 ; 4 uses
   store i64 %i.n, ptr %i.b, align 8
   %i.p = zext i16 %.sroa.01.0.copyload to i32     ; 3 uses
-  %i.q = trunc i16 %.sroa.01.0.copyload to i8
-  %2 = lshr i8 %i.q, 6
+  %2 = lshr i16 %.sroa.01.0.copyload, 6
+  %i.q = trunc i16 %2 to i8
+  %3 = and i8 %i.q, 3
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 34
-  store i8 %2, ptr %i.r, align 2
+  store i8 %3, ptr %i.r, align 2
   %i.s = lshr i32 %i.p, 3
   %i.t = and i32 %i.s, 7
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 28
@@ -1928,10 +1932,11 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %.sink.split, %bb.e
-  %i.ac = trunc i32 %.sroa.0.0 to i8
-  %5 = lshr i8 %i.ac, 6
+  %5 = lshr i32 %.sroa.0.0, 6
+  %i.ac = trunc i32 %5 to i8
+  %6 = and i8 %i.ac, 3
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 34
-  store i8 %5, ptr %i.ad, align 2
+  store i8 %6, ptr %i.ad, align 2
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.af = load i8, ptr %i.ae, align 4, !range !44, !noundef !21
   %i.ag = icmp eq i8 %i.af, 2                     ; 2 uses

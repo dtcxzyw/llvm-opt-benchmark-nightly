@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 4 uses
   %.sroa.717.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.sroa.717.0.copyload = load i32, ptr %.sroa.717.0..sroa_idx, align 8 ; 3 uses
-  %i.h = ptrtoint ptr %.sroa.0.0.copyload to i64  ; 2 uses
+  %i.h = ptrtoint ptr %.sroa.0.0.copyload to i64  ; 4 uses
   %i.i = lshr i64 %i.h, 24
   %i.j = trunc i64 %i.i to i8                     ; 2 uses
   switch i32 %.sroa.717.0.copyload, label %bb.k [
@@ -224,12 +224,14 @@ bb.i:                                             ; preds = %bb.g
   br label %svg_print_gradient_color.exit
 
 bb.j:                                             ; preds = %bb.f
-  %.sroa.0.0.extract.trunc = trunc i64 %i.h to i32 ; 3 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %i.h to i32
   %i.n = and i32 %.sroa.0.0.extract.trunc, 255
-  %3 = lshr i32 %.sroa.0.0.extract.trunc, 8
-  %i.o = and i32 %3, 255
-  %4 = lshr i32 %.sroa.0.0.extract.trunc, 16
-  %i.p = and i32 %4, 255
+  %.sroa.0.1.extract.shift = lshr i64 %i.h, 8
+  %.sroa.0.1.extract.trunc = trunc i64 %.sroa.0.1.extract.shift to i32
+  %i.o = and i32 %.sroa.0.1.extract.trunc, 255
+  %.sroa.0.2.extract.shift = lshr i64 %i.h, 16
+  %.sroa.0.2.extract.trunc = trunc i64 %.sroa.0.2.extract.shift to i32
+  %i.p = and i32 %.sroa.0.2.extract.trunc, 255
   tail call void (ptr, ptr, ...) @gvprintf(ptr noundef %0, ptr noundef nonnull @.str.103, i32 noundef %i.n, i32 noundef %i.o, i32 noundef %i.p) #11
   br label %svg_print_gradient_color.exit
 

@@ -205,7 +205,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i32 %5, ptr %i.h, align 8, !tbaa !69
   %i.i = trunc i32 %6 to i1
-  %i.j = trunc i32 %6 to i8                       ; 3 uses
+  %i.j = trunc i32 %6 to i8
   %i.k = and i8 %i.j, 1
   %i.l = lshr i32 %6, 10
   %i.m = trunc i32 %i.l to i8
@@ -255,12 +255,14 @@ _ZN2cv13determineModeEbii.exit:                   ; preds = %bb.b, %bb.c, %bb.d,
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 42 ; 2 uses
   store i8 %i.k, ptr %i.x, align 2, !tbaa !64
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
-  %8 = lshr i8 %i.j, 2                            ; 2 uses
-  %i.z = and i8 %8, 1
+  %8 = lshr i32 %6, 2                             ; 2 uses
+  %9 = trunc i32 %8 to i8
+  %i.z = and i8 %9, 1
   store i8 %i.z, ptr %i.y, align 4, !tbaa !66
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 77 ; 2 uses
-  %9 = lshr i8 %i.j, 1
-  %i.ab = and i8 %9, 1
+  %10 = lshr i32 %6, 1
+  %11 = trunc i32 %10 to i8
+  %i.ab = and i8 %11, 1
   store i8 %i.ab, ptr %i.aa, align 1, !tbaa !67
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   store i8 0, ptr %i.ac, align 8, !tbaa !62
@@ -292,7 +294,7 @@ bb.j:                                             ; preds = %.thread, %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.al = trunc i8 %8 to i1
+  %i.al = trunc i32 %8 to i1
   br i1 %i.al, label %bb.s, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -695,13 +697,14 @@ bb.b:                                             ; preds = %bb.a
   store i32 %2, ptr %i.n, align 16, !tbaa !120
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 2388
   store i32 %3, ptr %i.o, align 4, !tbaa !121
-  %i.p = trunc i32 %4 to i8                       ; 2 uses
+  %i.p = trunc i32 %4 to i8
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 2369
   %i.r = and i8 %i.p, 1                           ; 2 uses
   store i8 %i.r, ptr %i.q, align 1, !tbaa !122
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 2368
-  %5 = lshr i8 %i.p, 2                            ; 2 uses
-  %i.t = and i8 %5, 1
+  %5 = lshr i32 %4, 2                             ; 2 uses
+  %6 = trunc i32 %5 to i8
+  %i.t = and i8 %6, 1
   store i8 %i.t, ptr %i.s, align 16, !tbaa !123
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 2370
   %i.v = lshr i32 %4, 9                           ; 2 uses
@@ -727,7 +730,7 @@ bb.b:                                             ; preds = %bb.a
   store double 1.000000e+00, ptr %i.ai, align 8, !tbaa !415
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   store ptr %i.aj, ptr %i.b, align 16, !tbaa !126
-  %i.ak = trunc i8 %5 to i1
+  %i.ak = trunc i32 %5 to i1
   %i.al = icmp eq i32 %2, 1
   %or.cond.i = or i1 %i.al, %i.ak
   br i1 %or.cond.i, label %bb.d, label %bb.c

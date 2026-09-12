@@ -202,7 +202,7 @@ bb.ck:                                            ; preds = %bb.cj
   br label %unpremultiply.exit301.i
 
 unpremultiply.exit301.i:                          ; preds = %bb.ck, %bb.cj
-  %i.uc = phi i32 [ %i.ub, %bb.ck ], [ 0, %bb.cj ] ; 2 uses
+  %i.uc = phi i32 [ %i.ub, %bb.ck ], [ 0, %bb.cj ] ; 3 uses
   %i.ud = getelementptr inbounds nuw i8, ptr %i.pe, i64 3
   %i.ue = sub nuw nsw i32 127, %.0243.i
   %i.uf = mul nuw nsw i32 %.sroa.11.0.extract.shift.i290.i, %i.ue
@@ -216,14 +216,16 @@ unpremultiply.exit301.i:                          ; preds = %bb.ck, %bb.cj
   %i.um = trunc nuw i32 %i.ul to i8
   store i8 %i.um, ptr %i.ui, align 1, !tbaa !13
   %i.un = getelementptr inbounds nuw i8, ptr %i.pe, i64 1
-  %i.uo = trunc i32 %i.uc to i16                  ; 2 uses
-  %9 = lshr i16 %i.uo, 8
+  %9 = lshr i32 %i.uc, 8
+  %i.uo = trunc nuw i32 %9 to i16
+  %10 = and i16 %i.uo, 255
   %i.up = trunc nuw nsw i32 %i.ug to i16          ; 2 uses
-  %i.uq = mul nuw i16 %9, %i.up
+  %i.uq = mul nuw i16 %10, %i.up
   %i.ur = lshr i16 %i.uq, 8
   %i.us = trunc nuw i16 %i.ur to i8
   store i8 %i.us, ptr %i.un, align 1, !tbaa !14
-  %i.ut = and i16 %i.uo, 255
+  %11 = trunc i32 %i.uc to i16
+  %i.ut = and i16 %11, 255
   %i.uu = mul nuw i16 %i.ut, %i.up
   %i.uv = lshr i16 %i.uu, 8
   %i.uw = trunc nuw i16 %i.uv to i8
@@ -264,7 +266,7 @@ bb.cn:                                            ; preds = %bb.cm
   br label %unpremultiply.exit313.i
 
 unpremultiply.exit313.i:                          ; preds = %bb.cn, %bb.cm
-  %i.vn = phi i32 [ %i.vm, %bb.cn ], [ 0, %bb.cm ] ; 2 uses
+  %i.vn = phi i32 [ %i.vm, %bb.cn ], [ 0, %bb.cm ] ; 3 uses
   %i.vo = getelementptr inbounds nuw i8, ptr %i.pe, i64 3
   %i.vp = sub nuw nsw i32 127, %.0242.i
   %i.vq = mul nuw nsw i32 %.sroa.11.0.extract.shift.i302.i, %i.vp
@@ -278,14 +280,16 @@ unpremultiply.exit313.i:                          ; preds = %bb.cn, %bb.cm
   %i.vx = trunc nuw i32 %i.vw to i8
   store i8 %i.vx, ptr %i.vt, align 1, !tbaa !13
   %i.vy = getelementptr inbounds nuw i8, ptr %i.pe, i64 1
-  %i.vz = trunc i32 %i.vn to i16                  ; 2 uses
-  %10 = lshr i16 %i.vz, 8
+  %12 = lshr i32 %i.vn, 8
+  %i.vz = trunc nuw i32 %12 to i16
+  %13 = and i16 %i.vz, 255
   %i.wa = trunc nuw nsw i32 %i.vr to i16          ; 2 uses
-  %i.wb = mul nuw i16 %10, %i.wa
+  %i.wb = mul nuw i16 %13, %i.wa
   %i.wc = lshr i16 %i.wb, 8
   %i.wd = trunc nuw i16 %i.wc to i8
   store i8 %i.wd, ptr %i.vy, align 1, !tbaa !14
-  %i.we = and i16 %i.vz, 255
+  %14 = trunc i32 %i.vn to i16
+  %i.we = and i16 %14, 255
   %i.wf = mul nuw i16 %i.we, %i.wa
   %i.wg = lshr i16 %i.wf, 8
   %i.wh = trunc nuw i16 %i.wg to i8

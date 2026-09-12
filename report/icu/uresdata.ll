@@ -202,17 +202,19 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 
 bb.z:                                             ; preds = %bb.y
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !26 ; 3 uses
-  %i.az = trunc i32 %i.ay to i8                   ; 3 uses
+  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !26 ; 5 uses
+  %i.az = trunc i32 %i.ay to i8
   %i.ba = and i8 %i.az, 1
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i8 %i.ba, ptr %i.bb, align 8, !tbaa !79
-  %5 = lshr i8 %i.az, 1
-  %i.bc = and i8 %5, 1                            ; 2 uses
+  %5 = lshr i32 %i.ay, 1
+  %6 = trunc i32 %5 to i8
+  %i.bc = and i8 %6, 1                            ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 57
   store i8 %i.bc, ptr %i.bd, align 1, !tbaa !80
-  %6 = lshr i8 %i.az, 2                           ; 2 uses
-  %i.be = and i8 %6, 1
+  %7 = lshr i32 %i.ay, 2                          ; 2 uses
+  %8 = trunc i32 %7 to i8
+  %i.be = and i8 %8, 1
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 58
   store i8 %i.be, ptr %i.bf, align 2, !tbaa !81
   %i.bg = shl i32 %i.ay, 12
@@ -234,7 +236,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not7483, label %.thread87, label %.thread84
 
 bb.aa:                                            ; preds = %bb.z
-  %i.bp = trunc i8 %6 to i1
+  %i.bp = trunc i32 %7 to i1
   %i.bq = icmp samesign ult i32 %i.ab, 8
   %or.cond5 = select i1 %i.bp, i1 %i.bq, i1 false
   br i1 %or.cond5, label %.thread84, label %bb.ad

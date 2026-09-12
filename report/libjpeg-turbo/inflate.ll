@@ -205,13 +205,14 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %._crit_edge1634, %.preheader919
   %.6785.lcssa = phi ptr [ %i.fc, %._crit_edge1634 ], [ %.5784, %.preheader919 ] ; 2 uses
   %.6738.lcssa = phi i32 [ %i.fb, %._crit_edge1634 ], [ %.5737, %.preheader919 ] ; 2 uses
-  %.6692.lcssa = phi i64 [ %i.fh, %._crit_edge1634 ], [ %.5691, %.preheader919 ] ; 3 uses
+  %.6692.lcssa = phi i64 [ %i.fh, %._crit_edge1634 ], [ %.5691, %.preheader919 ] ; 4 uses
   %.6682.lcssa = phi i32 [ %i.fa, %._crit_edge1634 ], [ %.5681, %.preheader919 ] ; 2 uses
-  %i.fi = trunc i64 %.6692.lcssa to i32           ; 2 uses
+  %i.fi = trunc i64 %.6692.lcssa to i32
   %i.fj = and i32 %i.fi, 1
   store i32 %i.fj, ptr %i.bl, align 4, !tbaa !28
-  %2 = lshr i32 %i.fi, 1
-  %i.fk = and i32 %2, 3
+  %2 = lshr i64 %.6692.lcssa, 1
+  %3 = trunc i64 %2 to i32
+  %i.fk = and i32 %3, 3
   switch i32 %i.fk, label %default.unreachable2220 [
     i32 0, label %.sink.split
     i32 1, label %bb.ai
@@ -423,18 +424,20 @@ bb.ba:                                            ; preds = %.lr.ph1304.1
 ._crit_edge1305:                                  ; preds = %._crit_edge1305.loopexit, %.preheader935
   %.10789.lcssa = phi ptr [ %.0779, %.preheader935 ], [ %.lcssa3096, %._crit_edge1305.loopexit ] ; 2 uses
   %.10742.lcssa = phi i32 [ %.0732, %.preheader935 ], [ %.lcssa3097, %._crit_edge1305.loopexit ] ; 2 uses
-  %.10696.lcssa = phi i64 [ %.0686, %.preheader935 ], [ %.lcssa3095, %._crit_edge1305.loopexit ] ; 2 uses
+  %.10696.lcssa = phi i64 [ %.0686, %.preheader935 ], [ %.lcssa3095, %._crit_edge1305.loopexit ] ; 4 uses
   %.10.lcssa = phi i32 [ %.0676, %.preheader935 ], [ %i.id, %._crit_edge1305.loopexit ]
-  %i.ie = trunc i64 %.10696.lcssa to i32          ; 3 uses
+  %i.ie = trunc i64 %.10696.lcssa to i32
   %i.if = and i32 %i.ie, 31                       ; 2 uses
   %i.ig = add nuw nsw i32 %i.if, 257
   store i32 %i.ig, ptr %i.am, align 4, !tbaa !78
-  %3 = lshr i32 %i.ie, 5
-  %i.ih = and i32 %3, 31                          ; 2 uses
+  %4 = lshr i64 %.10696.lcssa, 5
+  %5 = trunc i64 %4 to i32
+  %i.ih = and i32 %5, 31                          ; 2 uses
   %i.ii = add nuw nsw i32 %i.ih, 1
   store i32 %i.ii, ptr %i.an, align 8, !tbaa !79
-  %4 = lshr i32 %i.ie, 10
-  %i.ij = and i32 %4, 15
+  %6 = lshr i64 %.10696.lcssa, 10
+  %7 = trunc i64 %6 to i32
+  %i.ij = and i32 %7, 15
   %i.ik = add nuw nsw i32 %i.ij, 4                ; 2 uses
   store i32 %i.ik, ptr %i.ao, align 8, !tbaa !80
   %i.il = lshr i64 %.10696.lcssa, 14              ; 2 uses

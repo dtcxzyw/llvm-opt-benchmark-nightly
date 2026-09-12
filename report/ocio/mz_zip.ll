@@ -202,29 +202,35 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = trunc i64 %0 to i32                        ; 6 uses
-  %3 = lshr i32 %2, 16
+  %2 = lshr i64 %0, 16
+  %3 = trunc i64 %2 to i32
   %i.a = and i32 %3, 31                           ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 %i.a, ptr %i.b, align 4, !tbaa !50
-  %4 = lshr i32 %2, 21
-  %i.c = and i32 %4, 15
+  %4 = lshr i64 %0, 21
+  %5 = trunc i64 %4 to i32
+  %i.c = and i32 %5, 15
   %i.d = add nsw i32 %i.c, -1                     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i32 %i.d, ptr %i.e, align 8, !tbaa !51
-  %5 = lshr i32 %2, 25
-  %i.f = add nuw nsw i32 %5, 80
+  %6 = lshr i64 %0, 25
+  %7 = trunc i64 %6 to i32
+  %8 = and i32 %7, 127
+  %i.f = add nuw nsw i32 %8, 80
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 20
   store i32 %i.f, ptr %i.g, align 4, !tbaa !52
-  %6 = lshr i32 %2, 11
-  %i.h = and i32 %6, 31                           ; 2 uses
+  %9 = lshr i64 %0, 11
+  %10 = trunc i64 %9 to i32
+  %i.h = and i32 %10, 31                          ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %i.h, ptr %i.i, align 8, !tbaa !53
-  %7 = lshr i32 %2, 5
-  %i.j = and i32 %7, 63                           ; 2 uses
+  %11 = lshr i64 %0, 5
+  %12 = trunc i64 %11 to i32
+  %i.j = and i32 %12, 63                          ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.j, ptr %i.k, align 4, !tbaa !54
-  %i.l = shl i32 %2, 1
+  %.tr.i = trunc i64 %0 to i32
+  %i.l = shl i32 %.tr.i, 1
   %i.m = and i32 %i.l, 62                         ; 2 uses
   store i32 %i.m, ptr %1, align 8, !tbaa !55
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -257,29 +263,35 @@ define noundef i64 @mz_zip_dosdate_to_time_t(i64 noundef %0) local_unnamed_addr 
 bb.a:
   %1 = alloca %struct.tm, align 8                 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
-  %2 = trunc i64 %0 to i32                        ; 6 uses
-  %3 = lshr i32 %2, 16
+  %2 = lshr i64 %0, 16
+  %3 = trunc i64 %2 to i32
   %i.a = and i32 %3, 31
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 %i.a, ptr %i.b, align 4, !tbaa !50
-  %4 = lshr i32 %2, 21
-  %i.c = and i32 %4, 15
+  %4 = lshr i64 %0, 21
+  %5 = trunc i64 %4 to i32
+  %i.c = and i32 %5, 15
   %i.d = add nsw i32 %i.c, -1
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i32 %i.d, ptr %i.e, align 8, !tbaa !51
-  %5 = lshr i32 %2, 25
-  %i.f = add nuw nsw i32 %5, 80
+  %6 = lshr i64 %0, 25
+  %7 = trunc i64 %6 to i32
+  %8 = and i32 %7, 127
+  %i.f = add nuw nsw i32 %8, 80
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 20
   store i32 %i.f, ptr %i.g, align 4, !tbaa !52
-  %6 = lshr i32 %2, 11
-  %i.h = and i32 %6, 31
+  %9 = lshr i64 %0, 11
+  %10 = trunc i64 %9 to i32
+  %i.h = and i32 %10, 31
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 %i.h, ptr %i.i, align 8, !tbaa !53
-  %7 = lshr i32 %2, 5
-  %i.j = and i32 %7, 63
+  %11 = lshr i64 %0, 5
+  %12 = trunc i64 %11 to i32
+  %i.j = and i32 %12, 63
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.j, ptr %i.k, align 4, !tbaa !54
-  %i.l = shl i32 %2, 1
+  %.tr.i = trunc i64 %0 to i32
+  %i.l = shl i32 %.tr.i, 1
   %i.m = and i32 %i.l, 62
   store i32 %i.m, ptr %1, align 8, !tbaa !55
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32

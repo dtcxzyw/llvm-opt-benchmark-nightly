@@ -180,9 +180,10 @@ bb.g:                                             ; preds = %.epilog-lcssa, %._c
   %i.bu = ptrtoint ptr %i.bs to i64
   %i.bv = ptrtoint ptr %i.bt to i64
   %i.bw = sub i64 %i.bu, %i.bv
-  %i.bx = trunc i64 %i.bw to i32
-  %3 = lshr i32 %i.bx, 3
-  %i.by = call i32 @llvm.bswap.i32(i32 %3)
+  %3 = lshr i64 %i.bw, 3
+  %i.bx = trunc i64 %3 to i32
+  %4 = and i32 %i.bx, 536870911
+  %i.by = call i32 @llvm.bswap.i32(i32 %4)
   store i32 %i.by, ptr %i.d, align 4, !tbaa !20
   %i.bz = call i32 %1(ptr noundef %2, ptr noundef nonnull %i.d, i64 noundef 4) #6
   %.not40 = icmp eq i32 %i.bz, 4
@@ -369,9 +370,10 @@ ewah_serialize_to.exit:                           ; preds = %.epilog-lcssa, %._c
   %i.bp = ptrtoint ptr %i.bn to i64
   %i.bq = ptrtoint ptr %i.bo to i64
   %i.br = sub i64 %i.bp, %i.bq
-  %i.bs = trunc i64 %i.br to i32
-  %2 = lshr i32 %i.bs, 3
-  %i.bt = call i32 @llvm.bswap.i32(i32 %2)
+  %2 = lshr i64 %i.br, 3
+  %i.bs = trunc i64 %2 to i32
+  %3 = and i32 %i.bs, 536870911
+  %i.bt = call i32 @llvm.bswap.i32(i32 %3)
   store i32 %i.bt, ptr %i.d, align 4, !tbaa !20
   call void @strbuf_add(ptr noundef %1, ptr noundef nonnull %i.d, i64 noundef 4) #6
   %i.bu = load i64, ptr %i.i, align 8, !tbaa !21

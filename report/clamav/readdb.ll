@@ -205,10 +205,11 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.v
   %i.ca = load ptr, ptr %i.l, align 16, !tbaa !49
   %i.cb = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ca) #19
-  %i.cc = trunc i64 %i.cb to i16
-  %5 = lshr i16 %i.cc, 1
+  %5 = lshr i64 %i.cb, 1
+  %i.cc = trunc i64 %5 to i16
+  %6 = and i16 %i.cc, 32767
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bq, i64 32
-  store i16 %5, ptr %i.cd, align 8, !tbaa !289
+  store i16 %6, ptr %i.cd, align 8, !tbaa !289
   %i.ce = load ptr, ptr %i.k, align 8, !tbaa !71
   %i.cf = load ptr, ptr %i.i, align 8, !tbaa !49
   %i.cg = call ptr @cli_mpool_strdup(ptr noundef %i.ce, ptr noundef %i.cf) #20 ; 2 uses
@@ -611,13 +612,14 @@ bb.al:                                            ; preds = %bb.aj
   store ptr %i.bw, ptr %i.br, align 8, !tbaa !158
   %i.bx = load ptr, ptr %i.s, align 8, !tbaa !49
   %i.by = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bx) #19
-  %i.bz = trunc i64 %i.by to i16
-  %6 = lshr i16 %i.bz, 1
+  %6 = lshr i64 %i.by, 1
+  %i.bz = trunc i64 %6 to i16
+  %7 = and i16 %i.bz, 32767
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.ca = phi ptr [ %i.bs, %bb.ak ], [ %i.bw, %bb.al ]
-  %.sink = phi i16 [ %i.bv, %bb.ak ], [ %6, %bb.al ]
+  %.sink = phi i16 [ %i.bv, %bb.ak ], [ %7, %bb.al ]
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
   store i16 %.sink, ptr %i.cb, align 8, !tbaa !304
   %.not107 = icmp eq ptr %i.ca, null

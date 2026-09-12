@@ -205,9 +205,10 @@ bb.cq:                                            ; preds = %bb.a
 bb.cr:                                            ; preds = %.loopexit1282
   %i.ml = getelementptr i8, ptr %4, i64 24
   %i.mm = load i64, ptr %i.ml, align 8, !tbaa !231
-  %i.mn = trunc i64 %i.mm to i8
-  %6 = lshr i8 %i.mn, 5
-  %i.mo = or disjoint i8 %6, -16
+  %6 = lshr i64 %i.mm, 5
+  %i.mn = trunc i64 %6 to i8
+  %7 = and i8 %i.mn, 7
+  %i.mo = or disjoint i8 %7, -16
   %i.mp = getelementptr i8, ptr %.12, i64 1
   store i8 %i.mo, ptr %.12, align 1, !tbaa !32
   br label %bb.cs
@@ -610,10 +611,10 @@ bb.et:                                            ; preds = %bb.a
 bb.eu:                                            ; preds = %bb.en
   %i.th = getelementptr i8, ptr %4, i64 24
   %i.ti = load i64, ptr %i.th, align 8, !tbaa !231
-  %7 = trunc i64 %i.ti to i32
-  %8 = lshr i32 %7, 28
-  %9 = trunc nuw nsw i32 %8 to i8
-  %i.tj = or disjoint i8 %9, 48
+  %8 = lshr i64 %i.ti, 28
+  %9 = trunc i64 %8 to i8
+  %10 = and i8 %9, 15
+  %i.tj = or disjoint i8 %10, 48
   %i.tk = getelementptr i8, ptr %.19, i64 1
   store i8 %i.tj, ptr %.19, align 1, !tbaa !32
   br label %.loopexit
