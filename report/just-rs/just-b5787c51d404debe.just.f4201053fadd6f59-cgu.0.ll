@@ -205,7 +205,6 @@ bb.a:
   %i.cs = or disjoint i8 %i.cr, 48                ; 2 uses
   %i.ct = urem i8 %i.cq, 10
   %i.cu = or disjoint i8 %i.ct, 48                ; 2 uses
-  %2 = trunc i32 %i.cg to i8
   %i.cv = urem i32 %.sroa.10.0.copyload.i, 60     ; 2 uses
   %i.cw = udiv i32 %.sroa.10.0.copyload.i, 60
   %i.cx = urem i32 %i.cw, 60
@@ -350,7 +349,6 @@ bb.a:
   %i.gw = zext nneg i32 %i.gv to i64              ; 4 uses
   %i.gx = icmp samesign ult i32 %i.gv, 733        ; 3 uses
   %i.gy = getelementptr inbounds nuw i8, ptr @46, i64 %i.gw ; 3 uses
-  %3 = trunc i32 %i.gu to i8
   %i.gz = srem i32 %i.ex, 100                     ; 4 uses
   %i.ha = icmp slt i32 %i.gz, 0
   %i.hb = add nsw i32 %i.gz, 100
@@ -608,8 +606,10 @@ bb.ak:                                            ; preds = %bb.l
 
 bb.al:                                            ; preds = %bb.ak
   %i.jq = load i8, ptr %i.gy, align 1, !noalias !1195, !noundef !28
-  %4 = add i8 %i.jq, %3
-  %5 = lshr i8 %4, 1
+  %2 = zext i8 %i.jq to i32
+  %3 = add nuw nsw i32 %i.gu, %2
+  %4 = lshr i32 %3, 1
+  %5 = trunc i32 %4 to i8
   %i.jr = and i8 %5, 31
   call fastcc void @_RINvNvMNtNtCs2uF6e5yHHeh_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCs4wP2HXfJTCR_5alloc6string6StringECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i8 noundef %i.jr, i8 noundef range(i8 0, 3) %i.hy)
   br label %.critedge
@@ -1012,8 +1012,8 @@ _RINvNtNtCs2uF6e5yHHeh_6chrono6format10formatting14write_hundredsNtNtCs4wP2HXfJT
   br label %bb.ev
 
 bb.fb:                                            ; preds = %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit.i27
-  %i.abj = load i8, ptr %i.ck, align 1, !noalias !1443, !noundef !28 ; 2 uses
-  %i.abk = zext i8 %i.abj to i32
+  %i.abj = load i8, ptr %i.ck, align 1, !noalias !1443, !noundef !28
+  %i.abk = zext i8 %i.abj to i32                  ; 2 uses
   %i.abl = add nuw nsw i32 %i.ch, %i.abk          ; 3 uses
   %i.abm = lshr i32 %i.abl, 6
   %i.abn = trunc nuw nsw i32 %i.abm to i8         ; 2 uses
@@ -1081,9 +1081,10 @@ _RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Wri
   store i8 45, ptr %i.acg, align 1, !noalias !1487
   %i.ach = add nuw nsw i64 %i.aag, 4              ; 4 uses
   store i64 %i.ach, ptr %i.bh, align 8, !alias.scope !1486, !noalias !1444
-  %6 = add i8 %i.abj, %2
-  %7 = lshr i8 %6, 1
-  %i.aci = and i8 %7, 31                          ; 2 uses
+  %6 = add nuw nsw i32 %i.cg, %i.abk
+  %7 = lshr i32 %6, 1
+  %8 = trunc i32 %7 to i8
+  %i.aci = and i8 %8, 31                          ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1488), !noalias !1277
   %i.acj = udiv i8 %i.aci, 10
   %i.ack = urem i8 %i.aci, 10
@@ -1486,10 +1487,9 @@ bb.dr:                                            ; preds = %bb.dq
   %.sroa.164.sroa.48.sroa.0.0.copyload = load i56, ptr %.sroa.14831.0..sroa_idx.i, align 1, !noalias !48181
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bi), !noalias !48180
   %i.us = ptrtoint ptr %.sroa.0820.0.copyload.i to i64 ; 3 uses
-  %.sroa.50.sroa.0.0.extract.trunc = trunc i64 %i.us to i32
   %.sroa.50.sroa.0.sroa.0.0.extract.trunc1163 = trunc i64 %i.us to i8
-  %.sroa.50.sroa.0.sroa.48.0.extract.shift1196 = lshr i32 %.sroa.50.sroa.0.0.extract.trunc, 8
-  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1197 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.0.extract.shift1196 to i24
+  %10 = lshr i64 %i.us, 8
+  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1197 = trunc i64 %10 to i24
   %.sroa.50.sroa.67.0.extract.shift = lshr i64 %i.us, 32
   %.sroa.50.sroa.67.0.extract.trunc = trunc nuw i64 %.sroa.50.sroa.67.0.extract.shift to i32
   %.sroa.122.sroa.0.0.extract.trunc972 = trunc i64 %.sroa.4821.0.copyload.i to i32
@@ -1522,10 +1522,9 @@ bb.du:                                            ; preds = %bb.dt
   %.sroa.5849.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bh, i64 73
   %.sroa.164.sroa.48.sroa.0.0.copyload781 = load i56, ptr %.sroa.5849.0..sroa_idx.i, align 1, !noalias !48181
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bh), !noalias !48180
-  %.sroa.50.sroa.0.0.extract.trunc1078 = trunc i64 %.sroa.055.i.sroa.0.0.copyload1438 to i32
   %.sroa.50.sroa.0.sroa.0.0.extract.trunc1181 = trunc i64 %.sroa.055.i.sroa.0.0.copyload1438 to i8
-  %.sroa.50.sroa.0.sroa.48.0.extract.shift1230 = lshr i32 %.sroa.50.sroa.0.0.extract.trunc1078, 8
-  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1231 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.0.extract.shift1230 to i24
+  %11 = lshr i64 %.sroa.055.i.sroa.0.0.copyload1438, 8
+  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1231 = trunc i64 %11 to i24
   %.sroa.50.sroa.67.0.extract.shift1129 = lshr i64 %.sroa.055.i.sroa.0.0.copyload1438, 32
   %.sroa.50.sroa.67.0.extract.trunc1130 = trunc nuw i64 %.sroa.50.sroa.67.0.extract.shift1129 to i32
   %.sroa.122.sroa.0.0.extract.trunc941 = trunc i64 %.sroa.055.i.sroa.8.0.copyload1442 to i32
@@ -1628,10 +1627,9 @@ bb.ee:                                            ; preds = %bb.ed
 
 bb.ef:                                            ; preds = %bb.ee
   %.sroa.50.8.copyload = load i64, ptr %i.be, align 8, !noalias !48181 ; 3 uses
-  %.sroa.50.sroa.0.0.extract.trunc1069 = trunc i64 %.sroa.50.8.copyload to i32
   %.sroa.50.sroa.0.sroa.0.0.extract.trunc1172 = trunc i64 %.sroa.50.8.copyload to i8
-  %.sroa.50.sroa.0.sroa.48.0.extract.shift1212 = lshr i32 %.sroa.50.sroa.0.0.extract.trunc1069, 8
-  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1213 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.0.extract.shift1212 to i24
+  %12 = lshr i64 %.sroa.50.8.copyload, 8
+  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1213 = trunc i64 %12 to i24
   %.sroa.50.sroa.67.0.extract.shift1111 = lshr i64 %.sroa.50.8.copyload, 32
   %.sroa.50.sroa.67.0.extract.trunc1112 = trunc nuw i64 %.sroa.50.sroa.67.0.extract.shift1111 to i32
   %.sroa.122.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 8
@@ -2034,10 +2032,9 @@ bb.hj:                                            ; preds = %bb.hi
   %.sroa.164.sroa.48.sroa.0.0.copyload801 = load i56, ptr %.sroa.141114.0..sroa_idx.i, align 1, !noalias !48181
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj), !noalias !48180
   %i.xg = ptrtoint ptr %.sroa.01103.0.copyload.i to i64 ; 3 uses
-  %.sroa.50.sroa.0.0.extract.trunc1061 = trunc i64 %i.xg to i32
   %.sroa.50.sroa.0.sroa.0.0.extract.trunc1164 = trunc i64 %i.xg to i8
-  %.sroa.50.sroa.0.sroa.48.0.extract.shift1198 = lshr i32 %.sroa.50.sroa.0.0.extract.trunc1061, 8
-  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1199 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.0.extract.shift1198 to i24
+  %13 = lshr i64 %i.xg, 8
+  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1199 = trunc i64 %13 to i24
   %.sroa.50.sroa.67.0.extract.shift1097 = lshr i64 %i.xg, 32
   %.sroa.50.sroa.67.0.extract.trunc1098 = trunc nuw i64 %.sroa.50.sroa.67.0.extract.shift1097 to i32
   %.sroa.122.sroa.0.0.extract.trunc973 = trunc i64 %.sroa.41104.0.copyload.i to i32
@@ -2277,10 +2274,9 @@ _RNvMNtCskXtk6F4WjxZ_4just6parserNtB2_6Parser16parse_expression.exit1284.i: ; pr
 
 bb.ic:                                            ; preds = %_RNvMNtCskXtk6F4WjxZ_4just6parserNtB2_6Parser16parse_expression.exit1284.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !48180
-  %.sroa.50.sroa.0.0.extract.trunc1076 = trunc i64 %.sroa.6570.i.sroa.0.0.copyload1550 to i32
   %.sroa.50.sroa.0.sroa.0.0.extract.trunc1179 = trunc i64 %.sroa.6570.i.sroa.0.0.copyload1550 to i8
-  %.sroa.50.sroa.0.sroa.48.0.extract.shift1226 = lshr i32 %.sroa.50.sroa.0.0.extract.trunc1076, 8
-  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1227 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.0.extract.shift1226 to i24
+  %14 = lshr i64 %.sroa.6570.i.sroa.0.0.copyload1550, 8
+  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1227 = trunc i64 %14 to i24
   %.sroa.50.sroa.67.0.extract.shift1125 = lshr i64 %.sroa.6570.i.sroa.0.0.copyload1550, 32
   %.sroa.50.sroa.67.0.extract.trunc1126 = trunc nuw i64 %.sroa.50.sroa.67.0.extract.shift1125 to i32
   %.sroa.122.sroa.0.0.extract.trunc939 = trunc i64 %.sroa.6570.i.sroa.7.0.copyload1552 to i32
@@ -2428,9 +2424,8 @@ bb.im:                                            ; preds = %bb.ip, %bb.il
   %.sroa.50.sroa.67.3.in = lshr i64 %.sroa.50.sroa.0.sroa.48.sroa.0.3.in.in.in, 32
   %.sroa.50.sroa.67.3 = trunc nuw i64 %.sroa.50.sroa.67.3.in to i32
   %.sroa.50.sroa.0.sroa.0.3 = trunc i64 %.sroa.50.sroa.0.sroa.48.sroa.0.3.in.in.in to i8
-  %.sroa.50.sroa.0.sroa.48.sroa.0.3.in.in = trunc i64 %.sroa.50.sroa.0.sroa.48.sroa.0.3.in.in.in to i32
-  %.sroa.50.sroa.0.sroa.48.sroa.0.3.in = lshr i32 %.sroa.50.sroa.0.sroa.48.sroa.0.3.in.in, 8
-  %.sroa.50.sroa.0.sroa.48.sroa.0.3 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.sroa.0.3.in to i24
+  %.sroa.50.sroa.0.sroa.48.sroa.0.3.in = lshr i64 %.sroa.50.sroa.0.sroa.48.sroa.0.3.in.in.in, 8
+  %.sroa.50.sroa.0.sroa.48.sroa.0.3 = trunc i64 %.sroa.50.sroa.0.sroa.48.sroa.0.3.in to i24
   call void @llvm.experimental.noalias.scope.decl(metadata !48191)
   call void @llvm.experimental.noalias.scope.decl(metadata !48192)
   call void @llvm.experimental.noalias.scope.decl(metadata !48193)
@@ -2495,10 +2490,9 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCskXtk6F4WjxZ_4just14string_literal1
 bb.iq:                                            ; preds = %bb.is
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !48180
   %.sroa.50.8.copyload296 = load i64, ptr %i.ae, align 8, !noalias !48181 ; 3 uses
-  %.sroa.50.sroa.0.0.extract.trunc1074 = trunc i64 %.sroa.50.8.copyload296 to i32
   %.sroa.50.sroa.0.sroa.0.0.extract.trunc1177 = trunc i64 %.sroa.50.8.copyload296 to i8
-  %.sroa.50.sroa.0.sroa.48.0.extract.shift1222 = lshr i32 %.sroa.50.sroa.0.0.extract.trunc1074, 8
-  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1223 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.0.extract.shift1222 to i24
+  %15 = lshr i64 %.sroa.50.8.copyload296, 8
+  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1223 = trunc i64 %15 to i24
   %.sroa.50.sroa.67.0.extract.shift1121 = lshr i64 %.sroa.50.8.copyload296, 32
   %.sroa.50.sroa.67.0.extract.trunc1122 = trunc nuw i64 %.sroa.50.sroa.67.0.extract.shift1121 to i32
   %.sroa.122.8..sroa_idx333 = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
@@ -2885,9 +2879,8 @@ bb.jo:                                            ; preds = %bb.jm, %.thread1351
   %.sroa.50.sroa.67.1.in = lshr i64 %.sroa.50.sroa.0.sroa.48.sroa.0.1.in.in.in, 32
   %.sroa.50.sroa.67.1 = trunc nuw i64 %.sroa.50.sroa.67.1.in to i32
   %.sroa.50.sroa.0.sroa.0.1 = trunc i64 %.sroa.50.sroa.0.sroa.48.sroa.0.1.in.in.in to i8
-  %.sroa.50.sroa.0.sroa.48.sroa.0.1.in.in = trunc i64 %.sroa.50.sroa.0.sroa.48.sroa.0.1.in.in.in to i32
-  %.sroa.50.sroa.0.sroa.48.sroa.0.1.in = lshr i32 %.sroa.50.sroa.0.sroa.48.sroa.0.1.in.in, 8
-  %.sroa.50.sroa.0.sroa.48.sroa.0.1 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.sroa.0.1.in to i24
+  %.sroa.50.sroa.0.sroa.48.sroa.0.1.in = lshr i64 %.sroa.50.sroa.0.sroa.48.sroa.0.1.in.in.in, 8
+  %.sroa.50.sroa.0.sroa.48.sroa.0.1 = trunc i64 %.sroa.50.sroa.0.sroa.48.sroa.0.1.in to i24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !48180
   br label %bb.km
 
@@ -3115,10 +3108,9 @@ bb.kd:                                            ; preds = %bb.kc
 bb.ke:                                            ; preds = %bb.kd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !48180
   %.sroa.50.8.copyload299 = load i64, ptr %i.h, align 8, !noalias !48181 ; 3 uses
-  %.sroa.50.sroa.0.0.extract.trunc1077 = trunc i64 %.sroa.50.8.copyload299 to i32
   %.sroa.50.sroa.0.sroa.0.0.extract.trunc1180 = trunc i64 %.sroa.50.8.copyload299 to i8
-  %.sroa.50.sroa.0.sroa.48.0.extract.shift1228 = lshr i32 %.sroa.50.sroa.0.0.extract.trunc1077, 8
-  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1229 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.0.extract.shift1228 to i24
+  %16 = lshr i64 %.sroa.50.8.copyload299, 8
+  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1229 = trunc i64 %16 to i24
   %.sroa.50.sroa.67.0.extract.shift1127 = lshr i64 %.sroa.50.8.copyload299, 32
   %.sroa.50.sroa.67.0.extract.trunc1128 = trunc nuw i64 %.sroa.50.sroa.67.0.extract.shift1127 to i32
   %.sroa.122.8..sroa_idx338 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
@@ -3221,10 +3213,9 @@ bb.kl:                                            ; preds = %_RNvMNtCskXtk6F4Wjx
   %.sroa.164.sroa.48.0.extract.trunc773 = trunc nuw i64 %.sroa.164.sroa.48.0.extract.shift772 to i56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bf), !noalias !48180
   %i.abw = ptrtoint ptr %i.abs to i64             ; 3 uses
-  %.sroa.50.sroa.0.0.extract.trunc1062 = trunc i64 %i.abw to i32
   %.sroa.50.sroa.0.sroa.0.0.extract.trunc1165 = trunc i64 %i.abw to i8
-  %.sroa.50.sroa.0.sroa.48.0.extract.shift1200 = lshr i32 %.sroa.50.sroa.0.0.extract.trunc1062, 8
-  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1201 = trunc nuw i32 %.sroa.50.sroa.0.sroa.48.0.extract.shift1200 to i24
+  %17 = lshr i64 %i.abw, 8
+  %.sroa.50.sroa.0.sroa.48.0.extract.trunc1201 = trunc i64 %17 to i24
   %.sroa.50.sroa.67.0.extract.shift1099 = lshr i64 %i.abw, 32
   %.sroa.50.sroa.67.0.extract.trunc1100 = trunc nuw i64 %.sroa.50.sroa.67.0.extract.shift1099 to i32
   br label %bb.km
@@ -3627,7 +3618,7 @@ bb.ax:                                            ; preds = %.lr.ph.i661.3
   br label %.loopexit.i658
 
 _RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit: ; preds = %bb.at, %.loopexit.i658
-  %.sroa.8.0.insert.insert.i652 = phi i32 [ %spec.select.i659, %bb.at ], [ %i.jb, %.loopexit.i658 ] ; 4 uses
+  %.sroa.8.0.insert.insert.i652 = phi i32 [ %spec.select.i659, %bb.at ], [ %i.jb, %.loopexit.i658 ] ; 5 uses
   %i.lh = trunc i32 %.sroa.8.0.insert.insert.i652 to i1
   br i1 %i.lh, label %_RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit.thread.loopexit980, label %bb.ay, !prof !47
 
@@ -3648,20 +3639,18 @@ _RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit.thread: ; p
   unreachable
 
 bb.ay:                                            ; preds = %_RNvMsz_NtCsj6eKBz9Db1c_4core3numt27from_ascii_bytes_radix_impl.exit
-  %.sroa.5.0.extract.shift.i = lshr i32 %.sroa.8.0.insert.insert.i652, 16 ; 2 uses
+  %.sroa.5.0.extract.shift.i = lshr i32 %.sroa.8.0.insert.insert.i652, 16
   %i.lk = lshr i32 %.sroa.8.0.insert.insert.i652, 24
   %i.ll = and i32 %i.lk, 15
-  %5 = trunc i32 %.sroa.5.0.extract.shift.i to i8
-  %6 = lshr i8 %5, 4
-  %7 = mul nuw i8 %6, 17
+  %5 = lshr i32 %.sroa.8.0.insert.insert.i652, 20
+  %6 = and i32 %5, 15
   %i.lm = and i32 %.sroa.5.0.extract.shift.i, 15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.r, ptr noundef nonnull align 8 dereferenceable(72) %i.s, i64 72, i1 false)
   %i.ln = call fastcc noundef zeroext i1 @_RNvNvNtCskXtk6F4WjxZ_4just8function5style5layer(ptr noalias nofree noundef align 8 captures(address) dereferenceable(72) %i.r) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
   %.sroa.6193.0.insert.shift = mul nuw i32 %i.lm, 285212672
-  %.sroa.5192.0.insert.ext = zext i8 %7 to i32
-  %.sroa.5192.0.insert.shift = shl nuw nsw i32 %.sroa.5192.0.insert.ext, 16
+  %.sroa.5192.0.insert.shift = mul nuw nsw i32 %6, 1114112
   %.sroa.5192.0.insert.insert = or disjoint i32 %.sroa.6193.0.insert.shift, %.sroa.5192.0.insert.shift
   %.sroa.4191.0.insert.shift = mul nuw nsw i32 %i.ll, 4352
   %.sroa.4191.0.insert.insert = or disjoint i32 %.sroa.5192.0.insert.insert, %.sroa.4191.0.insert.shift

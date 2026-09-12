@@ -204,8 +204,7 @@ bb.h:                                             ; preds = %.sink.split, %bb.f,
   br i1 %.not, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %1 = trunc i16 %i.ac to i8
-  %2 = lshr i8 %1, 4
+  %1 = lshr i16 %i.ac, 4
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
@@ -214,11 +213,11 @@ bb.j:                                             ; preds = %bb.h
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr @_ZL22ucase_props_exceptions, i64 %i.ag
   %i.ai = load i16, ptr %i.ah, align 2, !tbaa !15
   %i.aj = lshr i16 %i.ai, 11
-  %3 = trunc nuw nsw i16 %i.aj to i8
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.0.in = phi i8 [ %3, %bb.j ], [ %2, %bb.i ]
+  %.0.in.in = phi i16 [ %i.aj, %bb.j ], [ %1, %bb.i ]
+  %.0.in = trunc i16 %.0.in.in to i8
   %.0 = and i8 %.0.in, 1
   ret i8 %.0
 }
@@ -621,8 +620,7 @@ bb.ag:                                            ; preds = %.sink.split.i17, %b
   br i1 %.not.i, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %2 = trunc i16 %i.ee to i8
-  %3 = lshr i8 %2, 4
+  %2 = lshr i16 %i.ee, 4
   br label %ucase_isCaseSensitive_78.exit
 
 bb.ai:                                            ; preds = %bb.ag
@@ -631,13 +629,12 @@ bb.ai:                                            ; preds = %bb.ag
   %i.ej = getelementptr inbounds nuw [2 x i8], ptr @_ZL22ucase_props_exceptions, i64 %i.ei
   %i.ek = load i16, ptr %i.ej, align 2, !tbaa !15
   %i.el = lshr i16 %i.ek, 11
-  %4 = trunc nuw nsw i16 %i.el to i8
   br label %ucase_isCaseSensitive_78.exit
 
 ucase_isCaseSensitive_78.exit:                    ; preds = %bb.ah, %bb.ai
-  %.0.in.i = phi i8 [ %4, %bb.ai ], [ %3, %bb.ah ]
-  %.0.i = and i8 %.0.in.i, 1
-  %i.em = zext nneg i8 %.0.i to i32
+  %.0.in.in.i = phi i16 [ %i.el, %bb.ai ], [ %2, %bb.ah ]
+  %3 = and i16 %.0.in.in.i, 1
+  %i.em = zext nneg i16 %3 to i32
   br label %bb.bd
 
 bb.aj:                                            ; preds = %bb.a

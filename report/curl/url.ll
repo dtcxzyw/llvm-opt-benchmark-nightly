@@ -204,18 +204,18 @@ bb.ao:                                            ; preds = %bb.an
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dh, ptr noundef nonnull align 8 dereferenceable(16) %i.dg, i64 16, i1 false)
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 2187 ; 13 uses
   %i.dj = load i64, ptr %i.di, align 1
-  %3 = trunc i64 %i.dj to i32
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cy, i64 720 ; 9 uses
   %i.dl = load i32, ptr %i.dk, align 8
-  %4 = lshr i32 %3, 7
-  %i.dm = and i32 %4, 512
+  %sh.diff.i.i.i = lshr i64 %i.dj, 7
+  %tr.sh.diff.i.i.i = trunc i64 %sh.diff.i.i.i to i32
+  %i.dm = and i32 %tr.sh.diff.i.i.i, 512
   %i.dn = and i32 %i.dl, -513
   %i.do = or disjoint i32 %i.dm, %i.dn            ; 2 uses
   store i32 %i.do, ptr %i.dk, align 8
   %i.dp = load i64, ptr %i.di, align 1
-  %5 = trunc i64 %i.dp to i32
-  %6 = lshr i32 %5, 7
-  %i.dq = and i32 %6, 1024
+  %sh.diff41.i.i.i = lshr i64 %i.dp, 7
+  %tr.sh.diff42.i.i.i = trunc i64 %sh.diff41.i.i.i to i32
+  %i.dq = and i32 %tr.sh.diff42.i.i.i, 1024
   %i.dr = and i32 %i.do, -1025
   %i.ds = or disjoint i32 %i.dq, %i.dr            ; 2 uses
   store i32 %i.ds, ptr %i.dk, align 8
@@ -618,16 +618,15 @@ bb.es:                                            ; preds = %bb.er, %bb.eq, %._c
   %i.qz = and i32 %i.qy, -1025
   store i32 %i.qz, ptr %.phi.trans.insert.i, align 4
   %i.ra = load i64, ptr %i.di, align 1
-  %7 = trunc i64 %i.ra to i32                     ; 2 uses
   %i.rb = getelementptr inbounds nuw i8, ptr %0, i64 417 ; 2 uses
   %i.rc = load i32, ptr %i.rb, align 1
-  %8 = lshr i32 %7, 12
-  %i.rd = and i32 %8, 65536
+  %sh.diff.i155.i = lshr i64 %i.ra, 12
+  %tr.sh.diff.i156.i = trunc i64 %sh.diff.i155.i to i32
+  %i.rd = and i32 %tr.sh.diff.i156.i, 65536       ; 2 uses
   %i.re = and i32 %i.rc, -65537
   %i.rf = or disjoint i32 %i.rd, %i.re
   store i32 %i.rf, ptr %i.rb, align 1
-  %9 = and i32 %7, 268435456
-  %.not16.i.i = icmp eq i32 %9, 0
+  %.not16.i.i = icmp eq i32 %i.rd, 0
   br i1 %.not16.i.i, label %bb.eu, label %bb.et
 
 bb.et:                                            ; preds = %bb.es
@@ -852,17 +851,16 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge,
   store i32 %i.o, ptr %i.n, align 4
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.q = load i64, ptr %i.p, align 1
-  %2 = trunc i64 %i.q to i32                      ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 417 ; 2 uses
   %i.t = load i32, ptr %i.s, align 1
-  %3 = lshr i32 %2, 12
-  %i.u = and i32 %3, 65536
+  %sh.diff = lshr i64 %i.q, 12
+  %tr.sh.diff = trunc i64 %sh.diff to i32
+  %i.u = and i32 %tr.sh.diff, 65536               ; 2 uses
   %i.v = and i32 %i.t, -65537
   %i.w = or disjoint i32 %i.u, %i.v
   store i32 %i.w, ptr %i.s, align 1
-  %4 = and i32 %2, 268435456
-  %.not16 = icmp eq i32 %4, 0
+  %.not16 = icmp eq i32 %i.u, 0
   br i1 %.not16, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d

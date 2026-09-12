@@ -58,8 +58,8 @@ bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.g = load i32, ptr %i.f, align 8
   %.fr457 = freeze i32 %i.g
-  %10 = trunc i32 %.fr457 to i8
-  %11 = lshr i8 %10, 2                            ; 2 uses
+  %10 = lshr i32 %.fr457, 2
+  %11 = trunc i32 %10 to i8                       ; 2 uses
   %i.h = and i8 %11, 3                            ; 3 uses
   %i.i = icmp eq i8 %6, 2
   br i1 %i.i, label %bb.d, label %bb.f
@@ -462,12 +462,12 @@ bb.n:                                             ; preds = %bb.i, %bb.h
   br i1 %5, label %bb.o, label %._crit_edge
 
 bb.o:                                             ; preds = %bb.n
-  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.by = load i8, ptr %i.bx, align 4
   %i.bz = and i8 %i.by, 12
   %i.ca = icmp eq i8 %i.bz, 12
-  br i1 %i.ca, label %bb.p, label %8
+  br i1 %i.ca, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   %i.cb = load i32, ptr %i.d, align 8
@@ -477,22 +477,17 @@ bb.p:                                             ; preds = %bb.o
   %i.cf = icmp eq i8 %i.ce, 0
   br i1 %i.cf, label %bb.q, label %_ZN8facebook4yoga25resolveChildJustificationEPKNS0_4NodeES3_.exit.i
 
-bb.q:                                             ; preds = %bb.p
+bb.q:                                             ; preds = %bb.p, %bb.o
+  %.sink20.i = phi i32 [ 8, %bb.p ], [ 4, %bb.o ]
   %i.cg = load i32, ptr %i.bw, align 8
-  %i.ch = lshr i32 %i.cg, 8
+  %i.ch = lshr i32 %i.cg, %.sink20.i
   %i.ci = trunc i32 %i.ch to i8
   %i.cj = and i8 %i.ci, 15
   br label %_ZN8facebook4yoga25resolveChildJustificationEPKNS0_4NodeES3_.exit.i
 
-8:                                                ; preds = %bb.o
-  %9 = load i32, ptr %i.bw, align 8
-  %10 = trunc i32 %9 to i8
-  %11 = lshr i8 %10, 4
-  br label %_ZN8facebook4yoga25resolveChildJustificationEPKNS0_4NodeES3_.exit.i
-
-_ZN8facebook4yoga25resolveChildJustificationEPKNS0_4NodeES3_.exit.i: ; preds = %8, %bb.q, %bb.p
-  %12 = phi i8 [ %11, %8 ], [ %i.cj, %bb.q ], [ %i.ce, %bb.p ]
-  switch i8 %12, label %_ZN8facebook4yogaL20justifyAbsoluteChildEPKNS0_4NodeEPS1_NS0_9DirectionENS0_13FlexDirectionEf.exit [
+_ZN8facebook4yoga25resolveChildJustificationEPKNS0_4NodeES3_.exit.i: ; preds = %bb.q, %bb.p
+  %8 = phi i8 [ %i.ce, %bb.p ], [ %i.cj, %bb.q ]
+  switch i8 %8, label %_ZN8facebook4yogaL20justifyAbsoluteChildEPKNS0_4NodeEPS1_NS0_9DirectionENS0_13FlexDirectionEf.exit [
     i8 8, label %bb.r
     i8 0, label %bb.r
     i8 7, label %bb.r
@@ -889,8 +884,8 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.r
   %i.dn = phi i8 [ 1, %bb.r ], [ %i.dm, %bb.s ]
   %i.do = load i32, ptr %i.al, align 8
-  %12 = trunc i32 %i.do to i8                     ; 3 uses
-  %13 = lshr i8 %12, 2
+  %12 = lshr i32 %i.do, 2
+  %13 = trunc i32 %12 to i8                       ; 3 uses
   %i.dp = and i8 %13, 3                           ; 3 uses
   br i1 %i.am, label %bb.u, label %bb.v
 
@@ -904,12 +899,12 @@ bb.v:                                             ; preds = %bb.t, %bb.u
   %spec.select.i = phi i8 [ 2, %bb.t ], [ 3, %bb.u ]
   %i.dq = icmp samesign ult i8 %i.dp, 2           ; 3 uses
   %i.dr = select i1 %i.dq, i8 %spec.select.i, i8 0 ; 3 uses
-  %i.ds = and i8 %12, 4
+  %i.ds = and i8 %13, 1
   %.not237 = icmp eq i8 %i.ds, 0
   br i1 %.not237, label %_ZN8facebook4yoga24setChildTrailingPositionEPKNS0_4NodeEPS1_NS0_13FlexDirectionE.exit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.dt = and i8 %12, 8
+  %i.dt = and i8 %13, 2
   %.not238 = icmp eq i8 %i.dt, 0
   br i1 %.not238, label %bb.ab, label %.thread187
 

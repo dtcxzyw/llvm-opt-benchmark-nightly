@@ -204,24 +204,18 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %bb.t
   %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.bc = load i32, ptr %i.bb, align 8, !noalias !171, !noundef !3
+  %i.bc = load i32, ptr %i.bb, align 8, !noalias !171, !noundef !3 ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.be = load i64, ptr %i.bd, align 8, !noalias !171, !noundef !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !171
-  %3 = trunc i32 %i.bc to i8                      ; 3 uses
-  %4 = lshr i8 %3, 1
-  %5 = and i8 %4, 1
-  %6 = lshr i8 %3, 2
-  %7 = and i8 %6, 1
-  %.sroa.6.9.insert.ext = zext nneg i8 %5 to i64
-  %.sroa.6.9.insert.shift = shl nuw nsw i64 %.sroa.6.9.insert.ext, 8
-  %8 = and i8 %3, 1
-  %.sroa.6.9.insert.mask = zext nneg i8 %8 to i64
-  %.sroa.6.9.insert.insert = or disjoint i64 %.sroa.6.9.insert.shift, %.sroa.6.9.insert.mask
-  %.sroa.6.10.insert.ext = zext nneg i8 %7 to i64
-  %.sroa.6.10.insert.shift = shl nuw nsw i64 %.sroa.6.10.insert.ext, 16
-  %.sroa.6.10.insert.insert = or disjoint i64 %.sroa.6.9.insert.insert, %.sroa.6.10.insert.shift
-  %.sroa.794.sroa.5.4.extract.trunc = trunc nuw nsw i64 %.sroa.6.10.insert.insert to i24
+  %3 = shl i32 %i.bc, 7
+  %4 = and i32 %3, 256
+  %5 = and i32 %i.bc, 1
+  %.sroa.6.9.insert.insert474 = or disjoint i32 %4, %5
+  %6 = shl i32 %i.bc, 14
+  %7 = and i32 %6, 65536
+  %.sroa.6.10.insert.insert475 = or disjoint i32 %.sroa.6.9.insert.insert474, %7
+  %.sroa.794.sroa.5.4.extract.trunc = trunc nuw nsw i32 %.sroa.6.10.insert.insert475 to i24
   %i.bf = add i64 %i.be, %i.au                    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7108.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
@@ -624,23 +618,25 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.e = load i32, ptr %i.d, align 8, !noundef !3
+  %i.e = load i32, ptr %i.d, align 8, !noundef !3 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.g = load i64, ptr %i.f, align 8, !noundef !3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.h = trunc i32 %i.e to i8                     ; 3 uses
+  %i.h = trunc i32 %i.e to i8
   %i.i = and i8 %i.h, 1
-  %3 = lshr i8 %i.h, 1
-  %i.j = and i8 %3, 1
-  %4 = lshr i8 %i.h, 2
-  %5 = and i8 %4, 1
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %i.i, ptr %6, align 8
+  %4 = lshr i32 %i.e, 1
+  %5 = trunc i32 %4 to i8
+  %i.j = and i8 %5, 1
+  %6 = lshr i32 %i.e, 2
+  %7 = trunc i32 %6 to i8
+  %8 = and i8 %7, 1
+  store i8 %i.i, ptr %3, align 8
   %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %i.j, ptr %.sroa.420.0..sroa_idx, align 1
   %.sroa.521.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %5, ptr %.sroa.521.0..sroa_idx, align 2
+  store i8 %8, ptr %.sroa.521.0..sroa_idx, align 2
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -1043,9 +1039,9 @@ bb.j:                                             ; preds = %"_ZN112_$LT$regex_a
   %i.bg = add i64 %.sroa.0.0, 1
   %.sroa.084.4.extract.shift = lshr i64 %.sroa.084.0, 32 ; 2 uses
   %.sroa.084.4.extract.trunc = trunc nuw i64 %.sroa.084.4.extract.shift to i32
-  %.sroa.084.0.extract.trunc = trunc i64 %.sroa.084.0 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  store i32 %.sroa.084.0.extract.trunc, ptr %i.h, align 4
+  %tr.sh.diff = trunc i64 %.sroa.084.0 to i32
+  store i32 %tr.sh.diff, ptr %i.h, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store i32 %.sroa.084.4.extract.trunc, ptr %i.g, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)

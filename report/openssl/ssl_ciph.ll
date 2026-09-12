@@ -205,17 +205,16 @@ define ptr @ssl_prf_md(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !110
-  %i.c = tail call i64 @ssl_get_algorithm2(ptr noundef %0) #12
-  %1 = trunc i64 %i.c to i32
-  %2 = lshr i32 %1, 8
-  %3 = and i32 %2, 255                            ; 2 uses
-  %i.d = icmp samesign ugt i32 %3, 14
+  %i.c = tail call i64 @ssl_get_algorithm2(ptr noundef %0) #12 ; 2 uses
+  %1 = and i64 %i.c, 65280
+  %i.d = icmp samesign ugt i64 %1, 3584
   br i1 %i.d, label %ssl_md.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %2 = lshr i64 %i.c, 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 1440
-  %4 = zext nneg i32 %3 to i64
-  %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %4
+  %3 = and i64 %2, 255
+  %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %3
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !56
   br label %ssl_md.exit
 

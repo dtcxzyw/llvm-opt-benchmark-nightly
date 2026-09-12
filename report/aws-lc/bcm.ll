@@ -205,19 +205,19 @@ aes_nohw_encrypt.exit:                            ; preds = %.preheader.i.i
 
 AES_encrypt.exit:                                 ; preds = %bb.c, %bb.e, %aes_nohw_encrypt.exit
   %i.fv = add nuw nsw i64 %.02936, %i.k           ; 4 uses
-  %7 = load <4 x i8>, ptr %i.j, align 4, !tbaa !76
-  %i.fw = lshr i64 %i.fv, 8
-  %i.fx = lshr i64 %i.fv, 16
-  %8 = lshr i64 %i.fv, 24
-  %i.fy = trunc i64 %i.fv to i8
+  %7 = lshr i64 %i.fv, 8
+  %i.fw = lshr i64 %i.fv, 16
+  %i.fx = lshr i64 %i.fv, 24
+  %8 = trunc i64 %i.fv to i8
+  %i.fy = trunc i64 %7 to i8
   %i.fz = trunc i64 %i.fw to i8
   %i.ga = trunc i64 %i.fx to i8
-  %9 = trunc i64 %8 to i8
-  %i.gb = insertelement <4 x i8> poison, i8 %9, i64 0
-  %i.gc = insertelement <4 x i8> %i.gb, i8 %i.ga, i64 1
-  %i.gd = insertelement <4 x i8> %i.gc, i8 %i.fz, i64 2
-  %i.ge = insertelement <4 x i8> %i.gd, i8 %i.fy, i64 3
-  %i.gf = xor <4 x i8> %7, %i.ge
+  %9 = load <4 x i8>, ptr %i.j, align 4, !tbaa !76
+  %i.gb = insertelement <4 x i8> poison, i8 %i.ga, i64 0
+  %i.gc = insertelement <4 x i8> %i.gb, i8 %i.fz, i64 1
+  %i.gd = insertelement <4 x i8> %i.gc, i8 %i.fy, i64 2
+  %i.ge = insertelement <4 x i8> %i.gd, i8 %8, i64 3
+  %i.gf = xor <4 x i8> %9, %i.ge
   store <4 x i8> %i.gf, ptr %i.j, align 4, !tbaa !76
   %i.gg = load i64, ptr %i.h, align 8
   store i64 %i.gg, ptr %i.o, align 1
@@ -310,19 +310,19 @@ OPENSSL_memmove.exit:                             ; preds = %bb.a
 bb.b:                                             ; preds = %.preheader, %AES_decrypt.exit
   %.02733 = phi i64 [ %i.h, %.preheader ], [ %i.gi, %AES_decrypt.exit ] ; 3 uses
   %i.n = add nuw nsw i64 %.02733, %i.l            ; 4 uses
-  %7 = load <4 x i8>, ptr %i.i, align 4, !tbaa !76
-  %i.o = lshr i64 %i.n, 8
-  %i.p = lshr i64 %i.n, 16
-  %8 = lshr i64 %i.n, 24
-  %i.q = trunc i64 %i.n to i8
+  %7 = lshr i64 %i.n, 8
+  %i.o = lshr i64 %i.n, 16
+  %i.p = lshr i64 %i.n, 24
+  %8 = trunc i64 %i.n to i8
+  %i.q = trunc i64 %7 to i8
   %i.r = trunc i64 %i.o to i8
   %i.s = trunc i64 %i.p to i8
-  %9 = trunc i64 %8 to i8
-  %i.t = insertelement <4 x i8> poison, i8 %9, i64 0
-  %i.u = insertelement <4 x i8> %i.t, i8 %i.s, i64 1
-  %i.v = insertelement <4 x i8> %i.u, i8 %i.r, i64 2
-  %i.w = insertelement <4 x i8> %i.v, i8 %i.q, i64 3
-  %i.x = xor <4 x i8> %7, %i.w
+  %9 = load <4 x i8>, ptr %i.i, align 4, !tbaa !76
+  %i.t = insertelement <4 x i8> poison, i8 %i.s, i64 0
+  %i.u = insertelement <4 x i8> %i.t, i8 %i.r, i64 1
+  %i.v = insertelement <4 x i8> %i.u, i8 %i.q, i64 2
+  %i.w = insertelement <4 x i8> %i.v, i8 %8, i64 3
+  %i.x = xor <4 x i8> %9, %i.w
   store <4 x i8> %i.x, ptr %i.i, align 4, !tbaa !76
   %i.y = shl i64 %.02733, 3
   %i.z = getelementptr i8, ptr %1, i64 %i.y
@@ -725,6 +725,8 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.bd, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 19 ; 2 uses
   %i.bj = xor i8 %i.bh, -2
   store i8 %i.bj, ptr %i.bg, align 1, !tbaa !76
   %i.bk = lshr i64 %6, 24
@@ -732,18 +734,16 @@ bb.g:                                             ; preds = %bb.f
   %i.bm = load i8, ptr %i.bi, align 2, !tbaa !76
   %i.bn = xor i8 %i.bm, %i.bl
   store i8 %i.bn, ptr %i.bi, align 2, !tbaa !76
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 19 ; 2 uses
-  %9 = load i8, ptr %8, align 1, !tbaa !76
   %i.bo = lshr i64 %6, 16
   %i.bp = trunc i64 %i.bo to i8
-  %10 = xor i8 %9, %i.bp
-  store i8 %10, ptr %8, align 1, !tbaa !76
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
-  %12 = load i8, ptr %11, align 4, !tbaa !76
+  %10 = load i8, ptr %9, align 1, !tbaa !76
+  %11 = xor i8 %10, %i.bp
+  store i8 %11, ptr %9, align 1, !tbaa !76
   %i.bq = lshr i64 %6, 8
   %i.br = trunc i64 %i.bq to i8
+  %12 = load i8, ptr %8, align 4, !tbaa !76
   %i.bs = xor i8 %12, %i.br
-  store i8 %i.bs, ptr %11, align 4, !tbaa !76
+  store i8 %i.bs, ptr %8, align 4, !tbaa !76
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -764,22 +764,22 @@ bb.h:                                             ; preds = %bb.f
   %i.cg = insertelement <4 x i8> %i.cf, i8 %i.by, i64 3
   %i.ch = xor <4 x i8> %i.cc, %i.cg
   store <4 x i8> %i.ch, ptr %i.bi, align 2, !tbaa !76
-  %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 22 ; 2 uses
-  %i.cj = load i8, ptr %i.ci, align 2, !tbaa !76
   %13 = lshr i64 %6, 24
   %14 = trunc i64 %13 to i8
+  %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 22 ; 2 uses
+  %i.cj = load i8, ptr %i.ci, align 2, !tbaa !76
   %15 = xor i8 %i.cj, %14
   store i8 %15, ptr %i.ci, align 2, !tbaa !76
-  %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 23 ; 2 uses
-  %i.cl = load i8, ptr %i.ck, align 1, !tbaa !76
   %16 = lshr i64 %6, 16
   %17 = trunc i64 %16 to i8
+  %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 23 ; 2 uses
+  %i.cl = load i8, ptr %i.ck, align 1, !tbaa !76
   %18 = xor i8 %i.cl, %17
   store i8 %18, ptr %i.ck, align 1, !tbaa !76
-  %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.cn = load i8, ptr %i.cm, align 8, !tbaa !76
   %19 = lshr i64 %6, 8
   %20 = trunc i64 %19 to i8
+  %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %i.cn = load i8, ptr %i.cm, align 8, !tbaa !76
   %i.co = xor i8 %i.cn, %20
   store i8 %i.co, ptr %i.cm, align 8, !tbaa !76
   br label %bb.i
@@ -1182,9 +1182,7 @@ mlk_poly_compress_d11_native.exit.i.i.i.i:        ; preds = %mlkem_poly_reduce.e
   %i.yq = load i16, ptr %i.yp, align 4, !tbaa !131
   %i.yr = sext i16 %i.yq to i64
   %i.ys = mul nsw i64 %i.yr, 5284526080
-  %i.yt = add nsw i64 %i.ys, 4294967296           ; 2 uses
-  %14 = lshr i64 %i.yt, 33                        ; 2 uses
-  %15 = trunc i64 %14 to i16
+  %i.yt = add nsw i64 %i.ys, 4294967296           ; 3 uses
   %i.yu = getelementptr inbounds nuw i8, ptr %i.ye, i64 6
   %i.yv = load i16, ptr %i.yu, align 2, !tbaa !131
   %i.yw = sext i16 %i.yv to i64
@@ -1199,9 +1197,7 @@ mlk_poly_compress_d11_native.exit.i.i.i.i:        ; preds = %mlkem_poly_reduce.e
   %i.zf = load i16, ptr %i.ze, align 2, !tbaa !131
   %i.zg = sext i16 %i.zf to i64
   %i.zh = mul nsw i64 %i.zg, 5284526080
-  %i.zi = add nsw i64 %i.zh, 4294967296           ; 2 uses
-  %16 = lshr i64 %i.zi, 33                        ; 2 uses
-  %17 = trunc i64 %16 to i16
+  %i.zi = add nsw i64 %i.zh, 4294967296           ; 3 uses
   %i.zj = getelementptr inbounds nuw i8, ptr %i.ye, i64 12
   %i.zk = load i16, ptr %i.zj, align 4, !tbaa !131
   %i.zl = sext i16 %i.zk to i64
@@ -1228,22 +1224,23 @@ mlk_poly_compress_d11_native.exit.i.i.i.i:        ; preds = %mlkem_poly_reduce.e
   %i.aac = lshr i64 %i.yo, 38
   %i.aad = trunc i64 %i.aac to i8
   %i.aae = and i8 %i.aad, 63
-  %i.aaf = trunc i64 %14 to i8
-  %18 = shl i8 %i.aaf, 6
-  %i.aag = or disjoint i8 %18, %i.aae
+  %sh.diff5.i.i.i.i = lshr i64 %i.yt, 27
+  %i.aaf = trunc i64 %sh.diff5.i.i.i.i to i8
+  %14 = and i8 %i.aaf, -64
+  %i.aag = or disjoint i8 %14, %i.aae
   %i.aah = getelementptr inbounds nuw i8, ptr %i.zv, i64 2
   store i8 %i.aag, ptr %i.aah, align 1, !tbaa !76
   %i.aai = lshr i64 %i.yt, 35
   %i.aaj = trunc i64 %i.aai to i8
   %i.aak = getelementptr inbounds nuw i8, ptr %i.zv, i64 3
   store i8 %i.aaj, ptr %i.aak, align 1, !tbaa !76
-  %19 = lshr i16 %15, 10
-  %i.aal = trunc nuw nsw i16 %19 to i8
+  %15 = lshr i64 %i.yt, 43
+  %i.aal = trunc i64 %15 to i8
   %i.aam = and i8 %i.aal, 1
   %sh.diff5.i.i.i.i.a = lshr i64 %i.yy, 32
   %tr.sh.diff6.i.i.i.i = trunc i64 %sh.diff5.i.i.i.i.a to i8
   %i.aan = and i8 %tr.sh.diff6.i.i.i.i, -2
-  %i.aao = or disjoint i8 %i.aam, %i.aan
+  %i.aao = or disjoint i8 %i.aan, %i.aam
   %i.aap = getelementptr inbounds nuw i8, ptr %i.zv, i64 4
   store i8 %i.aao, ptr %i.aap, align 1, !tbaa !76
   %i.aaq = lshr i64 %i.yy, 40
@@ -1258,22 +1255,23 @@ mlk_poly_compress_d11_native.exit.i.i.i.i:        ; preds = %mlkem_poly_reduce.e
   %i.aaw = lshr i64 %i.zd, 37
   %i.aax = trunc i64 %i.aaw to i8
   %i.aay = and i8 %i.aax, 127
-  %i.aaz = trunc i64 %16 to i8
-  %20 = shl i8 %i.aaz, 7
-  %i.aba = or disjoint i8 %20, %i.aay
+  %sh.diff11.i.i.i.i = lshr i64 %i.zi, 26
+  %i.aaz = trunc i64 %sh.diff11.i.i.i.i to i8
+  %16 = and i8 %i.aaz, -128
+  %i.aba = or disjoint i8 %16, %i.aay
   %i.abb = getelementptr inbounds nuw i8, ptr %i.zv, i64 6
   store i8 %i.aba, ptr %i.abb, align 1, !tbaa !76
   %i.abc = lshr i64 %i.zi, 34
   %i.abd = trunc i64 %i.abc to i8
   %i.abe = getelementptr inbounds nuw i8, ptr %i.zv, i64 7
   store i8 %i.abd, ptr %i.abe, align 1, !tbaa !76
-  %21 = lshr i16 %17, 9
-  %i.abf = trunc nuw nsw i16 %21 to i8
+  %17 = lshr i64 %i.zi, 42
+  %i.abf = trunc i64 %17 to i8
   %i.abg = and i8 %i.abf, 3
   %sh.diff9.i.i.i.i = lshr i64 %i.zn, 31
   %tr.sh.diff10.i.i.i.i = trunc i64 %sh.diff9.i.i.i.i to i8
   %i.abh = and i8 %tr.sh.diff10.i.i.i.i, -4
-  %i.abi = or disjoint i8 %i.abg, %i.abh
+  %i.abi = or disjoint i8 %i.abh, %i.abg
   %i.abj = getelementptr inbounds nuw i8, ptr %i.zv, i64 8
   store i8 %i.abi, ptr %i.abj, align 1, !tbaa !76
   %i.abk = lshr i64 %i.zn, 39

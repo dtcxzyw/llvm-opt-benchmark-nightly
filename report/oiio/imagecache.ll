@@ -205,8 +205,8 @@ bb.cq:                                            ; preds = %_ZNK11OpenImageIO4v
 
 bb.cr:                                            ; preds = %bb.cq
   %i.tb = getelementptr inbounds nuw i8, ptr %i.ta, i64 8 ; 3 uses
-  %.sroa.0.0.copyload.i378 = load i64, ptr %i.tb, align 8 ; 5 uses
-  %.sroa.4.0.extract.shift391 = lshr i64 %.sroa.0.0.copyload.i378, 8
+  %.sroa.0.0.copyload.i378 = load i64, ptr %i.tb, align 8 ; 4 uses
+  %.sroa.4.0.extract.shift391 = lshr i64 %.sroa.0.0.copyload.i378, 8 ; 2 uses
   %.sroa.5393.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i378, 32
   %.sroa.5393.0.extract.trunc = trunc nuw i64 %.sroa.5393.0.extract.shift to i32
   %narrow.i.i = call i32 @llvm.smax.i32(i32 %.sroa.5393.0.extract.trunc, i32 1) ; 2 uses
@@ -255,9 +255,8 @@ bb.cv:                                            ; preds = %bb.cs
   br i1 %i.ty, label %.preheader, label %.critedge29
 
 .preheader:                                       ; preds = %bb.cv
-  %i.tz = trunc i64 %.sroa.0.0.copyload.i378 to i32
-  %20 = lshr i32 %i.tz, 8
-  %i.ua = and i32 %20, 255
+  %i.tz = trunc i64 %.sroa.4.0.extract.shift391 to i32
+  %i.ua = and i32 %i.tz, 255
   %i.ub = mul i32 %i.ua, %narrow.i.i
   %i.uc = icmp sgt i32 %i.ub, 0
   br i1 %i.uc, label %.lr.ph681, label %.critedge29
@@ -279,12 +278,12 @@ bb.cv:                                            ; preds = %bb.cs
   store float %i.uk, ptr %i.ul, align 4, !tbaa !132
   %indvars.iv.next688 = add nuw nsw i64 %indvars.iv687, 1 ; 2 uses
   %.sroa.0.0.copyload.i386.us = load i64, ptr %i.tb, align 8 ; 2 uses
+  %.sroa.3.0.extract.shift.us = lshr i64 %.sroa.0.0.copyload.i386.us, 8
   %.sroa.4389.0.extract.shift.us = lshr i64 %.sroa.0.0.copyload.i386.us, 32
   %.sroa.4389.0.extract.trunc.us = trunc nuw i64 %.sroa.4389.0.extract.shift.us to i32
   %narrow.i.i387.us = call i32 @llvm.smax.i32(i32 %.sroa.4389.0.extract.trunc.us, i32 1)
-  %i.um = trunc i64 %.sroa.0.0.copyload.i386.us to i32
-  %21 = lshr i32 %i.um, 8
-  %i.un = and i32 %21, 255
+  %i.um = trunc i64 %.sroa.3.0.extract.shift.us to i32
+  %i.un = and i32 %i.um, 255
   %i.uo = mul i32 %i.un, %narrow.i.i387.us
   %i.up = sext i32 %i.uo to i64
   %i.uq = icmp slt i64 %indvars.iv.next688, %i.up
@@ -299,12 +298,12 @@ bb.cv:                                            ; preds = %bb.cs
   store float %i.ut, ptr %i.uu, align 4, !tbaa !132
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.sroa.0.0.copyload.i386 = load i64, ptr %i.tb, align 8 ; 2 uses
+  %.sroa.3.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i386, 8
   %.sroa.4389.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i386, 32
   %.sroa.4389.0.extract.trunc = trunc nuw i64 %.sroa.4389.0.extract.shift to i32
   %narrow.i.i387 = call i32 @llvm.smax.i32(i32 %.sroa.4389.0.extract.trunc, i32 1)
-  %i.uv = trunc i64 %.sroa.0.0.copyload.i386 to i32
-  %22 = lshr i32 %i.uv, 8
-  %i.uw = and i32 %22, 255
+  %i.uv = trunc i64 %.sroa.3.0.extract.shift to i32
+  %i.uw = and i32 %i.uv, 255
   %i.ux = mul i32 %i.uw, %narrow.i.i387
   %i.uy = sext i32 %i.ux to i64
   %i.uz = icmp slt i64 %indvars.iv.next, %i.uy

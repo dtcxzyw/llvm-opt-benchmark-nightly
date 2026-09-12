@@ -206,8 +206,8 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !268  ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load i32, ptr %i.d, align 8, !tbaa !261
-  %4 = trunc i32 %i.e to i8
-  %5 = lshr i8 %4, 1
+  %4 = lshr i32 %i.e, 1
+  %5 = trunc i32 %4 to i8
   %i.f = and i8 %5, 1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store i8 %i.f, ptr %i.g, align 4, !tbaa !262
@@ -257,8 +257,8 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !268  ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load i32, ptr %i.d, align 8, !tbaa !261
-  %4 = trunc i32 %i.e to i8
-  %5 = lshr i8 %4, 2
+  %4 = lshr i32 %i.e, 2
+  %5 = trunc i32 %4 to i8
   %i.f = and i8 %5, 1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store i8 %i.f, ptr %i.g, align 4, !tbaa !262
@@ -307,8 +307,8 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !268  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.d = load i32, ptr %i.c, align 8, !tbaa !261
-  %2 = trunc i32 %i.d to i8
-  %3 = lshr i8 %2, 3
+  %2 = lshr i32 %i.d, 3
+  %3 = trunc i32 %2 to i8
   %i.e = and i8 %3, 1
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 20
   store i8 %i.e, ptr %i.f, align 4, !tbaa !262
@@ -382,8 +382,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.t = load i32, ptr %i.s, align 8, !tbaa !261
-  %2 = trunc i32 %i.t to i8
-  %3 = lshr i8 %2, 4
+  %2 = lshr i32 %i.t, 4
+  %3 = trunc i32 %2 to i8
   %i.u = and i8 %3, 1
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store i8 %i.u, ptr %i.v, align 4, !tbaa !262
@@ -412,8 +412,8 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !268  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load i32, ptr %i.d, align 8, !tbaa !261
-  %2 = trunc i32 %i.e to i8
-  %3 = lshr i8 %2, 5
+  %2 = lshr i32 %i.e, 5
+  %3 = trunc i32 %2 to i8
   %i.f = and i8 %3, 1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store i8 %i.f, ptr %i.g, align 4, !tbaa !262
@@ -465,8 +465,8 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !268  ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load i32, ptr %i.d, align 8, !tbaa !261
-  %2 = trunc i32 %i.e to i8
-  %3 = lshr i8 %2, 6
+  %2 = lshr i32 %i.e, 6
+  %3 = trunc i32 %2 to i8
   %i.f = and i8 %3, 1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store i8 %i.f, ptr %i.g, align 4, !tbaa !262
@@ -869,8 +869,7 @@ bb.fr:                                            ; preds = %.split
   %i.vf = icmp samesign ult i32 %.023.i, 2
   %i.vg = lshr i64 %.1.i, 8
   %.2.i = select i1 %i.vf, i64 %i.vg, i64 %.1.i
-  %1 = trunc i64 %.2.i to i32
-  %2 = lshr i32 %1, 4
+  %1 = lshr i64 %.2.i, 4
   br label %modeTitleDsply.exit
 
 .split587.critedge:                               ; preds = %bb.fp
@@ -921,13 +920,13 @@ bb.fs:                                            ; preds = %.split587
   %.not30.i = icmp eq i32 %.0556.lcssa1389, 0
   %i.wi = lshr i64 %.2.i824, 4
   %.3.i = select i1 %.not30.i, i64 %i.wi, i64 %.2.i824
-  %3 = trunc i64 %.3.i to i32
   br label %modeTitleDsply.exit
 
 modeTitleDsply.exit:                              ; preds = %bb.fs, %bb.fr
   %i.wj = phi i1 [ %i.vj, %bb.fs ], [ false, %bb.fr ] ; 4 uses
   %i.wk = phi i8 [ %i.wc, %bb.fs ], [ %i.vb, %bb.fr ]
-  %phi.call.in = phi i32 [ %3, %bb.fs ], [ %2, %bb.fr ]
+  %phi.call.in.in = phi i64 [ %.3.i, %bb.fs ], [ %1, %bb.fr ]
+  %phi.call.in = trunc i64 %phi.call.in.in to i32
   %phi.call = and i32 %phi.call.in, 3
   switch i32 %phi.call, label %default.unreachable [
     i32 1, label %bb.ft

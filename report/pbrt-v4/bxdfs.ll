@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %bb.f
   %i.as = fmul <2 x float> %i.ar, %.sroa.6.0.copyload.i
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %8, align 16
   %i.at = fmul <2 x float> %i.ar, %.sroa.0.0.copyload.i
-  %10 = trunc i32 %i.t to i8
-  %11 = lshr i8 %10, 4
+  %10 = and i32 %i.t, 16
+  %11 = icmp ne i32 %10, 0
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.aw = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZNK4pbrt11LayeredBxDFINS_14DielectricBxDFENS_11DiffuseBxDFELb1EE8Sample_fENS_7Vector3IfEEfNS_6Point2IfEENS_13TransportModeENS_18BxDFReflTransFlagsEE5total) ; 2 uses
@@ -221,7 +221,7 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %.lr.ph, %bb.an
   %.pn532538.pn.in = phi i64 [ %i.an, %.lr.ph ], [ %.pn.in, %bb.an ]
-  %.0152548 = phi i8 [ %11, %.lr.ph ], [ %.5157520, %bb.an ]
+  %.0152548 = phi i1 [ %11, %.lr.ph ], [ %.5157520, %bb.an ]
   %.0158547 = phi float [ %i.n, %.lr.ph ], [ %.7165519, %bb.an ] ; 3 uses
   %.0166546 = phi float [ %i.ao, %.lr.ph ], [ %.4170518, %bb.an ] ; 3 uses
   %.0171545 = phi i32 [ 0, %.lr.ph ], [ %i.ja, %bb.an ] ; 2 uses
@@ -618,8 +618,7 @@ bb.al:                                            ; preds = %_ZN4pstd8optionalIN
   %i.ii = load i32, ptr %.sroa.8.0..sroa_idx.i.i, align 8, !tbaa !68 ; 2 uses
   %i.ij = and i32 %i.ii, 16
   %i.ik = icmp ne i32 %i.ij, 0
-  %12 = trunc i8 %.0152548 to i1
-  %i.il = select i1 %i.ik, i1 %12, i1 false       ; 2 uses
+  %i.il = select i1 %i.ik, i1 %.0152548, i1 false ; 2 uses
   %.sroa.0401.0.copyload410 = load <2 x float>, ptr %.sroa.5.0..sroa_idx.i.i, align 8 ; 3 uses
   %i.im = and i32 %i.ii, 2
   %.not531 = icmp eq i32 %i.im, 0
@@ -659,7 +658,6 @@ bb.am:                                            ; preds = %bb.al
   br label %.thread480
 
 .thread439:                                       ; preds = %bb.al
-  %13 = zext i1 %i.il to i8
   %i.iv = call noundef float @llvm.fabs.f32(float %i.id)
   %i.iw = insertelement <2 x float> poison, float %i.iv, i64 0
   %i.ix = shufflevector <2 x float> %i.iw, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -669,7 +667,7 @@ bb.am:                                            ; preds = %bb.al
   br label %bb.an
 
 bb.an:                                            ; preds = %.thread439, %.thread439.thread501
-  %.5157520 = phi i8 [ 0, %.thread439.thread501 ], [ %13, %.thread439 ]
+  %.5157520 = phi i1 [ false, %.thread439.thread501 ], [ %i.il, %.thread439 ]
   %.7165519 = phi float [ %i.ei, %.thread439.thread501 ], [ %i.ih, %.thread439 ]
   %.4170518 = phi float [ %i.cu, %.thread439.thread501 ], [ %.3169473, %.thread439 ]
   %.sroa.17.6516 = phi float [ %.fca.1.extract.i, %.thread439.thread501 ], [ %i.id, %.thread439 ]
@@ -1072,8 +1070,8 @@ bb.i:                                             ; preds = %bb.f
   %i.as = fmul <2 x float> %i.ar, %.sroa.6.0.copyload.i
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %8, align 16
   %i.at = fmul <2 x float> %i.ar, %.sroa.0.0.copyload.i
-  %10 = trunc i32 %i.t to i8
-  %11 = lshr i8 %10, 4
+  %10 = and i32 %i.t, 16
+  %11 = icmp ne i32 %10, 0
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 60 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.aw = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZNK4pbrt11LayeredBxDFINS_14DielectricBxDFENS_13ConductorBxDFELb1EE8Sample_fENS_7Vector3IfEEfNS_6Point2IfEENS_13TransportModeENS_18BxDFReflTransFlagsEE5total) ; 2 uses
@@ -1088,7 +1086,7 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %.lr.ph, %bb.ak
   %.pn533539.pn.in = phi i64 [ %i.an, %.lr.ph ], [ %.pn.in, %bb.ak ]
-  %.0152549 = phi i8 [ %11, %.lr.ph ], [ %.5157521, %bb.ak ]
+  %.0152549 = phi i1 [ %11, %.lr.ph ], [ %.5157521, %bb.ak ]
   %.0158548 = phi float [ %i.n, %.lr.ph ], [ %.7165520, %bb.ak ] ; 3 uses
   %.0166547 = phi float [ %i.ao, %.lr.ph ], [ %.4170519, %bb.ak ] ; 3 uses
   %.0171546 = phi i32 [ 0, %.lr.ph ], [ %i.ic, %bb.ak ] ; 2 uses
@@ -1420,8 +1418,7 @@ bb.ai:                                            ; preds = %_ZN4pstd8optionalIN
   %i.hk = load i32, ptr %i.bc, align 8, !tbaa !68 ; 2 uses
   %i.hl = and i32 %i.hk, 16
   %i.hm = icmp ne i32 %i.hl, 0
-  %12 = trunc i8 %.0152549 to i1
-  %i.hn = select i1 %i.hm, i1 %12, i1 false       ; 2 uses
+  %i.hn = select i1 %i.hm, i1 %.0152549, i1 false ; 2 uses
   %.sroa.0402.0.copyload411 = load <2 x float>, ptr %i.bd, align 8 ; 3 uses
   %i.ho = and i32 %i.hk, 2
   %.not532 = icmp eq i32 %i.ho, 0
@@ -1461,7 +1458,6 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.thread481
 
 .thread440:                                       ; preds = %bb.ai
-  %13 = zext i1 %i.hn to i8
   %i.hx = call noundef float @llvm.fabs.f32(float %i.hf)
   %i.hy = insertelement <2 x float> poison, float %i.hx, i64 0
   %i.hz = shufflevector <2 x float> %i.hy, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -1471,7 +1467,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.thread440, %.thread440.thread502
-  %.5157521 = phi i8 [ 0, %.thread440.thread502 ], [ %13, %.thread440 ]
+  %.5157521 = phi i1 [ false, %.thread440.thread502 ], [ %i.hn, %.thread440 ]
   %.7165520 = phi float [ %i.en, %.thread440.thread502 ], [ %i.hj, %.thread440 ]
   %.4170519 = phi float [ %i.cz, %.thread440.thread502 ], [ %.3169474, %.thread440 ]
   %.sroa.17.6517 = phi float [ %.fca.1.extract.i, %.thread440.thread502 ], [ %i.hf, %.thread440 ]

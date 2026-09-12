@@ -204,19 +204,18 @@ tsdn_rtree_ctx.exit.i:                            ; preds = %bb.bp, %bb.bo
   br i1 %or.cond.i, label %emap_alloc_ctx_lookup.exit, label %bb.bq
 
 bb.bq:                                            ; preds = %tsdn_rtree_ctx.exit.i
-  %.val.i = load i64, ptr %i.nc, align 8, !tbaa !48
-  %9 = trunc i64 %.val.i to i32
-  %10 = lshr i32 %9, 20
-  %11 = and i32 %10, 255                          ; 2 uses
+  %.val.i = load i64, ptr %i.nc, align 8, !tbaa !48 ; 2 uses
   %i.ne = load i8, ptr @je_opt_disable_large_size_classes, align 1, !tbaa !19, !range !20, !noundef !21
   %i.nf = trunc nuw i8 %i.ne to i1
-  %i.ng = icmp samesign ugt i32 %11, 35
+  %9 = and i64 %.val.i, 264241152
+  %i.ng = icmp samesign ugt i64 %9, 36700160
   %or.cond.not.i = select i1 %i.nf, i1 %i.ng, i1 false
   br i1 %or.cond.not.i, label %bb.bs, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
-  %12 = zext nneg i32 %11 to i64
-  %i.nh = getelementptr inbounds nuw [8 x i8], ptr @je_sz_index2size_tab, i64 %12
+  %10 = lshr i64 %.val.i, 20
+  %11 = and i64 %10, 255
+  %i.nh = getelementptr inbounds nuw [8 x i8], ptr @je_sz_index2size_tab, i64 %11
   %i.ni = load i64, ptr %i.nh, align 8, !tbaa !17
   br label %emap_alloc_ctx_lookup.exit
 
@@ -619,19 +618,18 @@ tsdn_rtree_ctx.exit.i.i:                          ; preds = %bb.cf, %bb.ce
   br i1 %or.cond.i.i, label %emap_alloc_ctx_lookup.exit.i, label %bb.cg
 
 bb.cg:                                            ; preds = %tsdn_rtree_ctx.exit.i.i
-  %.val.i39.i = load i64, ptr %i.pv, align 8, !tbaa !48
-  %9 = trunc i64 %.val.i39.i to i32
-  %10 = lshr i32 %9, 20
-  %11 = and i32 %10, 255                          ; 2 uses
+  %.val.i39.i = load i64, ptr %i.pv, align 8, !tbaa !48 ; 2 uses
   %i.px = load i8, ptr @je_opt_disable_large_size_classes, align 1, !tbaa !19, !range !20, !noundef !21
   %i.py = trunc nuw i8 %i.px to i1
-  %i.pz = icmp samesign ugt i32 %11, 35
+  %9 = and i64 %.val.i39.i, 264241152
+  %i.pz = icmp samesign ugt i64 %9, 36700160
   %or.cond.not.i.i = select i1 %i.py, i1 %i.pz, i1 false
   br i1 %or.cond.not.i.i, label %bb.ci, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
-  %12 = zext nneg i32 %11 to i64
-  %i.qa = getelementptr inbounds nuw [8 x i8], ptr @je_sz_index2size_tab, i64 %12
+  %10 = lshr i64 %.val.i39.i, 20
+  %11 = and i64 %10, 255
+  %i.qa = getelementptr inbounds nuw [8 x i8], ptr @je_sz_index2size_tab, i64 %11
   %i.qb = load i64, ptr %i.qa, align 8, !tbaa !17
   br label %emap_alloc_ctx_lookup.exit.i
 
@@ -820,22 +818,23 @@ bb.f:                                             ; preds = %.preheader.6, %.pre
 rtree_leaf_elm_lookup.exit:                       ; preds = %bb.f, %bb.b, %bb.d, %bb.e
   %.1.i = phi ptr [ %i.k, %bb.b ], [ %i.x, %bb.d ], [ %i.aq, %bb.e ], [ %i.bb, %bb.f ]
   %i.bc = load atomic ptr, ptr %.1.i monotonic, align 8, !noalias !97
-  %i.bd = ptrtoint ptr %i.bc to i64               ; 4 uses
+  %i.bd = ptrtoint ptr %i.bc to i64               ; 5 uses
   %i.be = lshr i64 %i.bd, 48
   %i.bf = trunc nuw nsw i64 %i.be to i32
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.bf, ptr %i.bg, align 8, !tbaa !50, !alias.scope !98
-  %i.bh = trunc i64 %i.bd to i8                   ; 2 uses
+  %i.bh = trunc i64 %i.bd to i8
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 17
   %i.bj = and i8 %i.bh, 1
   store i8 %i.bj, ptr %i.bi, align 1, !tbaa !51, !alias.scope !98
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = lshr i8 %i.bh, 1
-  %i.bl = and i8 %4, 1
+  %4 = lshr i64 %i.bd, 1
+  %5 = trunc i64 %4 to i8
+  %i.bl = and i8 %5, 1
   store i8 %i.bl, ptr %i.bk, align 8, !tbaa !99, !alias.scope !98
-  %5 = trunc i64 %i.bd to i32
-  %6 = lshr i32 %5, 2
-  %i.bm = and i32 %6, 7
+  %6 = lshr i64 %i.bd, 2
+  %7 = trunc i64 %6 to i32
+  %i.bm = and i32 %7, 7
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.bm, ptr %i.bn, align 4, !tbaa !100, !alias.scope !98
   %i.bo = shl i64 %i.bd, 16

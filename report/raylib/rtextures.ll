@@ -205,22 +205,22 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.g
   %i.bm = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %indvars.iv
-  %1 = load i16, ptr %i.bm, align 2               ; 3 uses
-  %2 = lshr i16 %1, 12
-  %3 = trunc nuw nsw i16 %2 to i8
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv
-  %i.bn = lshr i16 %1, 8
-  %5 = trunc nuw i16 %i.bn to i8
-  %6 = and i8 %5, 15
-  %i.bo = trunc i16 %1 to i8                      ; 2 uses
-  %7 = lshr i8 %i.bo, 4
-  %8 = and i8 %i.bo, 15
-  %i.bp = insertelement <4 x i8> poison, i8 %3, i64 0
-  %9 = insertelement <4 x i8> %i.bp, i8 %6, i64 1
-  %10 = insertelement <4 x i8> %9, i8 %7, i64 2
-  %11 = insertelement <4 x i8> %10, i8 %8, i64 3
+  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv
+  %2 = load i16, ptr %i.bm, align 2               ; 4 uses
+  %3 = lshr i16 %2, 4
+  %4 = lshr i16 %2, 8
+  %i.bn = lshr i16 %2, 12
+  %5 = insertelement <4 x i16> poison, i16 %3, i64 0
+  %6 = insertelement <4 x i16> %5, i16 %2, i64 1
+  %i.bo = trunc nuw i16 %4 to i8
+  %7 = trunc nuw nsw i16 %i.bn to i8
+  %8 = insertelement <4 x i8> poison, i8 %7, i64 0
+  %i.bp = insertelement <4 x i8> %8, i8 %i.bo, i64 1
+  %9 = trunc <4 x i16> %6 to <4 x i8>
+  %10 = shufflevector <4 x i8> %i.bp, <4 x i8> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %11 = and <4 x i8> %10, <i8 -1, i8 15, i8 15, i8 15>
   %i.bq = mul nuw <4 x i8> %11, splat (i8 17)
-  store <4 x i8> %i.bq, ptr %4, align 1
+  store <4 x i8> %i.bq, ptr %1, align 1
   br label %bb.u
 
 bb.m:                                             ; preds = %bb.g
@@ -623,21 +623,20 @@ bb.h:                                             ; preds = %bb.c
   %i.bl = add nuw nsw i32 %i.bk, %1
   %i.bm = zext nneg i32 %i.bl to i64
   %i.bn = getelementptr inbounds nuw [2 x i8], ptr %i.bj, i64 %i.bm
-  %i.bo = load i16, ptr %i.bn, align 2            ; 3 uses
+  %i.bo = load i16, ptr %i.bn, align 2            ; 4 uses
   %i.bp = lshr i16 %i.bo, 8
   %i.bq = lshr i16 %i.bo, 12
-  %3 = trunc nuw i16 %i.bp to i8
-  %i.br = trunc nuw nsw i16 %i.bq to i8
-  %4 = insertelement <2 x i8> poison, i8 %i.br, i64 0
-  %5 = insertelement <2 x i8> %4, i8 %3, i64 1
-  %6 = and <2 x i8> %5, <i8 -1, i8 15>
-  %7 = trunc i16 %i.bo to i8                      ; 2 uses
-  %8 = lshr i8 %7, 4
-  %9 = and i8 %7, 15
-  %10 = shufflevector <2 x i8> %6, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %11 = insertelement <4 x i8> %10, i8 %8, i64 2
-  %12 = insertelement <4 x i8> %11, i8 %9, i64 3
-  %i.bs = mul nuw <4 x i8> %12, splat (i8 17)
+  %3 = lshr i16 %i.bo, 4
+  %i.br = trunc nuw i16 %i.bp to i8
+  %4 = trunc nuw nsw i16 %i.bq to i8
+  %5 = insertelement <4 x i16> poison, i16 %3, i64 0
+  %6 = insertelement <4 x i16> %5, i16 %i.bo, i64 1
+  %7 = insertelement <4 x i8> poison, i8 %4, i64 0
+  %8 = insertelement <4 x i8> %7, i8 %i.br, i64 1
+  %9 = trunc <4 x i16> %6 to <4 x i8>
+  %10 = shufflevector <4 x i8> %8, <4 x i8> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %11 = and <4 x i8> %10, <i8 -1, i8 15, i8 15, i8 15>
+  %i.bs = mul nuw <4 x i8> %11, splat (i8 17)
   br label %bb.s
 
 bb.i:                                             ; preds = %bb.c
@@ -1040,21 +1039,20 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.o
 
 bb.f:                                             ; preds = %bb.a
-  %i.al = load i16, ptr %0, align 2               ; 3 uses
-  %i.am = lshr i16 %i.al, 8
-  %i.an = lshr i16 %i.al, 12
-  %2 = trunc nuw i16 %i.am to i8
-  %i.ao = trunc nuw nsw i16 %i.an to i8
-  %3 = insertelement <2 x i8> poison, i8 %i.ao, i64 0
-  %4 = insertelement <2 x i8> %3, i8 %2, i64 1
-  %5 = and <2 x i8> %4, <i8 -1, i8 15>
-  %6 = trunc i16 %i.al to i8                      ; 2 uses
-  %7 = lshr i8 %6, 4
-  %8 = and i8 %6, 15
-  %9 = shufflevector <2 x i8> %5, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %10 = insertelement <4 x i8> %9, i8 %7, i64 2
-  %11 = insertelement <4 x i8> %10, i8 %8, i64 3
-  %i.ap = mul nuw <4 x i8> %11, splat (i8 17)
+  %i.al = load i16, ptr %0, align 2               ; 4 uses
+  %i.am = lshr i16 %i.al, 12
+  %i.an = lshr i16 %i.al, 8
+  %2 = lshr i16 %i.al, 4
+  %i.ao = trunc nuw nsw i16 %i.am to i8
+  %3 = trunc nuw i16 %i.an to i8
+  %4 = insertelement <4 x i16> poison, i16 %2, i64 0
+  %5 = insertelement <4 x i16> %4, i16 %i.al, i64 1
+  %6 = insertelement <4 x i8> poison, i8 %i.ao, i64 0
+  %7 = insertelement <4 x i8> %6, i8 %3, i64 1
+  %8 = trunc <4 x i16> %5 to <4 x i8>
+  %9 = shufflevector <4 x i8> %7, <4 x i8> %8, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %10 = and <4 x i8> %9, <i8 -1, i8 15, i8 15, i8 15>
+  %i.ap = mul nuw <4 x i8> %10, splat (i8 17)
   br label %bb.o
 
 bb.g:                                             ; preds = %bb.a

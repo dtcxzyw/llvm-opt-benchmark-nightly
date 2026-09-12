@@ -205,8 +205,8 @@ bb.af:                                            ; preds = %.split, %_ZN6snappy
   %i.ly = shl i64 %i.lu, 8
   %i.lz = add nuw i64 %i.lx, %i.ly
   %i.ma = trunc i64 %i.lz to i32
-  %5 = trunc i64 %i.lu to i32
-  %6 = lshr i32 %5, 3
+  %5 = lshr i64 %i.lu, 3
+  %6 = trunc i64 %5 to i32
   %i.mb = and i32 %6, 224
   %i.mc = add nsw i32 %i.mb, -15
   %i.md = icmp ult i64 %i.lu, 2048                ; 2 uses
@@ -285,7 +285,7 @@ bb.ag:                                            ; preds = %.split, %_ZN6snappy
   br i1 %i.ne, label %.thread.i165, label %bb.ah
 
 .thread.i165:                                     ; preds = %._crit_edge.i164
-  %.tr.i166 = trunc i64 %i.mi to i32              ; 2 uses
+  %.tr.i166 = trunc i64 %i.mi to i32
   %i.nf = shl i32 %.tr.i166, 8
   %i.ng = or disjoint i32 %i.nf, 238
   store i32 %i.ng, ptr %.015.lcssa.i, align 1
@@ -295,22 +295,18 @@ bb.ag:                                            ; preds = %.split, %_ZN6snappy
 
 bb.ah:                                            ; preds = %._crit_edge.i164
   %i.nj = icmp samesign ult i64 %.0.lcssa.i, 12
-  br i1 %i.nj, label %._crit_edge26.i, label %bb.aj
+  br i1 %i.nj, label %bb.ai, label %bb.aj
 
-._crit_edge26.i:                                  ; preds = %bb.ah
-  %.pre.i = trunc i64 %i.mi to i32
-  br label %bb.ai
-
-bb.ai:                                            ; preds = %._crit_edge26.i, %.thread.i165
-  %.pre-phi.i = phi i32 [ %.pre.i, %._crit_edge26.i ], [ %.tr.i166, %.thread.i165 ]
-  %.120.i = phi i64 [ %.0.lcssa.i, %._crit_edge26.i ], [ %i.ni, %.thread.i165 ]
-  %.11619.i = phi ptr [ %.015.lcssa.i, %._crit_edge26.i ], [ %i.nh, %.thread.i165 ] ; 2 uses
+bb.ai:                                            ; preds = %bb.ah, %.thread.i165
+  %.120.i = phi i64 [ %i.ni, %.thread.i165 ], [ %.0.lcssa.i, %bb.ah ]
+  %.11619.i = phi ptr [ %i.nh, %.thread.i165 ], [ %.015.lcssa.i, %bb.ah ] ; 2 uses
   %i.nk = shl nuw nsw i64 %.120.i, 2
   %i.nl = shl i64 %i.mi, 8
   %i.nm = add nuw i64 %i.nk, %i.nl
   %i.nn = trunc i64 %i.nm to i32
-  %7 = lshr i32 %.pre-phi.i, 3
-  %i.no = and i32 %7, 224
+  %7 = lshr i64 %i.mi, 3
+  %8 = trunc i64 %7 to i32
+  %i.no = and i32 %8, 224
   %i.np = add nsw i32 %i.no, -15
   %i.nq = icmp ult i64 %i.mi, 2048                ; 2 uses
   %i.nr = select i1 %i.nq, i32 %i.np, i32 -2

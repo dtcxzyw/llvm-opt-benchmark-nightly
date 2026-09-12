@@ -204,24 +204,23 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN5boost9container6vectorIiNS0_4test25small_size_type_allocatorIiEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl20insert_emplace_proxyIS4_JRKiEEEEEvPitT_NS_11move_detail17integral_constantIbLb1EEE.exit.i.i
 
 bb.d:                                             ; preds = %bb.b
+  %5 = lshr exact i64 %i.k, 2
   %i.o = getelementptr inbounds i8, ptr %i.h, i64 -4 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.p = load i32, ptr %i.o, align 4, !tbaa !63, !noalias !812
   store i32 %i.p, ptr %i.h, align 4, !tbaa !63, !noalias !812
   %i.q = add nuw i16 %i.e, 1
   store i16 %i.q, ptr %i.d, align 8, !tbaa !104, !noalias !812
-  %5 = lshr i64 %i.k, 2
-  %i.r = and i64 %5, 65535
-  %i.s = add nuw nsw i64 %i.r, 4294967295
-  %6 = and i64 %i.s, 4294967295                   ; 3 uses
-  %.not.i.i.i.i = icmp eq i64 %6, 0
+  %i.r = and i64 %5, 65535                        ; 2 uses
+  %i.s = add nsw i64 %i.r, -1                     ; 2 uses
+  %.not.i.i.i.i = icmp eq i64 %i.s, 0
   br i1 %.not.i.i.i.i, label %_ZN5boost9container15move_backward_nIPiS2_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S6_E4typeES5_mS6_.exit.i.i.i, label %bb.e, !prof !40
 
 bb.e:                                             ; preds = %bb.d
-  %i.t = sub nsw i64 0, %6                        ; 2 uses
+  %i.t = sub nsw i64 1, %i.r                      ; 2 uses
   %i.u = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.t
   %i.v = getelementptr inbounds [4 x i8], ptr %i.o, i64 %i.t
-  %i.w = shl nuw nsw i64 %6, 2
+  %i.w = shl nsw i64 %i.s, 2
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.u, ptr nonnull align 1 %i.v, i64 %i.w, i1 false), !noalias !812
   %.pre.pre.i.i = load ptr, ptr %4, align 8, !tbaa !87, !noalias !812
   br label %_ZN5boost9container15move_backward_nIPiS2_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S6_E4typeES5_mS6_.exit.i.i.i
@@ -280,24 +279,23 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN5boost9container6vectorIiNS0_4test25small_size_type_allocatorIiEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl20insert_emplace_proxyIS4_JiEEEEEvPitT_NS_11move_detail17integral_constantIbLb1EEE.exit.i.i
 
 bb.d:                                             ; preds = %bb.b
+  %5 = lshr exact i64 %i.k, 2
   %i.o = getelementptr inbounds i8, ptr %i.h, i64 -4 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.p = load i32, ptr %i.o, align 4, !tbaa !63, !noalias !820
   store i32 %i.p, ptr %i.h, align 4, !tbaa !63, !noalias !820
   %i.q = add nuw i16 %i.e, 1
   store i16 %i.q, ptr %i.d, align 8, !tbaa !104, !noalias !820
-  %5 = lshr i64 %i.k, 2
-  %i.r = and i64 %5, 65535
-  %i.s = add nuw nsw i64 %i.r, 4294967295
-  %6 = and i64 %i.s, 4294967295                   ; 3 uses
-  %.not.i.i.i.i = icmp eq i64 %6, 0
+  %i.r = and i64 %5, 65535                        ; 2 uses
+  %i.s = add nsw i64 %i.r, -1                     ; 2 uses
+  %.not.i.i.i.i = icmp eq i64 %i.s, 0
   br i1 %.not.i.i.i.i, label %_ZN5boost9container15move_backward_nIPiS2_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S6_E4typeES5_mS6_.exit.i.i.i, label %bb.e, !prof !40
 
 bb.e:                                             ; preds = %bb.d
-  %i.t = sub nsw i64 0, %6                        ; 2 uses
+  %i.t = sub nsw i64 1, %i.r                      ; 2 uses
   %i.u = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.t
   %i.v = getelementptr inbounds [4 x i8], ptr %i.o, i64 %i.t
-  %i.w = shl nuw nsw i64 %6, 2
+  %i.w = shl nsw i64 %i.s, 2
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.u, ptr nonnull align 1 %i.v, i64 %i.w, i1 false), !noalias !820
   %.pre.pre.i.i = load ptr, ptr %4, align 8, !tbaa !87, !noalias !820
   br label %_ZN5boost9container15move_backward_nIPiS2_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S6_E4typeES5_mS6_.exit.i.i.i

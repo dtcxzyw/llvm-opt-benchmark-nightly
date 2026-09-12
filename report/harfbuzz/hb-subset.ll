@@ -205,16 +205,7 @@ _ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i.i68: ; preds = %_ZNK11hb_vector_tIN
 
 bb.fv:                                            ; preds = %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i.i68
   %i.agi = getelementptr inbounds nuw [8 x i8], ptr %i.aft, i64 %i.agh
-  %14 = getelementptr inbounds nuw i8, ptr %i.agi, i64 4
-  %15 = load i32, ptr %14, align 4, !tbaa !174
-  %16 = zext i32 %15 to i64
-  %17 = getelementptr inbounds nuw [72 x i8], ptr %.sink.i.i.i.i.i.i.i70, i64 %16
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 48
-  %19 = load i64, ptr %18, align 8, !tbaa !176
-  %20 = lshr i64 %19, 38
-  %21 = trunc i64 %20 to i8
-  %22 = and i8 %21, 1
-  br label %_ZL23_dependencies_satisfiedP16hb_subset_plan_tjRK8hb_set_tS3_.exit
+  br label %bb.gl
 
 bb.fw:                                            ; preds = %bb.fn
   %i.agj = load i8, ptr %i.ar, align 4, !tbaa !656, !range !126, !noundef !127
@@ -285,16 +276,7 @@ _ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i19.i: ; preds = %_ZNK11hb_vector_tIN
 
 bb.gd:                                            ; preds = %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i19.i
   %i.ahd = getelementptr inbounds nuw [8 x i8], ptr %i.ago, i64 %i.ahc
-  %23 = getelementptr inbounds nuw i8, ptr %i.ahd, i64 4
-  %24 = load i32, ptr %23, align 4, !tbaa !174
-  %25 = zext i32 %24 to i64
-  %26 = getelementptr inbounds nuw [72 x i8], ptr %.sink.i.i.i.i.i.i21.i, i64 %25
-  %27 = getelementptr inbounds nuw i8, ptr %26, i64 48
-  %28 = load i64, ptr %27, align 8, !tbaa !176
-  %29 = trunc i64 %28 to i8
-  %30 = lshr i8 %29, 6
-  %31 = and i8 %30, 1
-  br label %_ZL23_dependencies_satisfiedP16hb_subset_plan_tjRK8hb_set_tS3_.exit
+  br label %bb.gl
 
 bb.ge:                                            ; preds = %bb.fn, %bb.fn, %bb.fn, %bb.fn, %bb.fn, %bb.fn, %bb.fn
   %i.ahe = load i8, ptr %i.acv, align 2, !tbaa !664, !range !126, !noundef !127
@@ -361,23 +343,29 @@ _ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i37.i: ; preds = %_ZNK11hb_vector_tIN
   %i.ahx = phi i64 [ %i.ahq, %_ZNK11hb_vector_tIN12hb_bit_set_t10page_map_tELb1EE5bfindIS1_Lb1ETnPN12hb_enable_ifIXT0_EvE4typeELPv0EEEbRKT_Pj14hb_not_found_tj.exit.i.i.i.i.i.i36.i ], [ %i.ahk, %bb.gg ]
   %.sink.i.i.i.i.i.i39.i = load ptr, ptr %i.ay, align 8, !tbaa !173 ; 2 uses
   %.not.i.i.i.i.i40.i = icmp eq ptr %.sink.i.i.i.i.i.i39.i, null
-  br i1 %.not.i.i.i.i.i40.i, label %_ZL23_dependencies_satisfiedP16hb_subset_plan_tjRK8hb_set_tS3_.exit, label %bb.gl
+  br i1 %.not.i.i.i.i.i40.i, label %_ZL23_dependencies_satisfiedP16hb_subset_plan_tjRK8hb_set_tS3_.exit, label %14
 
-bb.gl:                                            ; preds = %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i37.i
-  %32 = getelementptr inbounds nuw [8 x i8], ptr %i.ahj, i64 %i.ahx
-  %i.ahy = getelementptr inbounds nuw i8, ptr %32, i64 4
+14:                                               ; preds = %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i37.i
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.ahj, i64 %i.ahx
+  br label %bb.gl
+
+bb.gl:                                            ; preds = %14, %bb.gd, %bb.fv
+  %.sink.i57 = phi ptr [ %15, %14 ], [ %i.ahd, %bb.gd ], [ %i.agi, %bb.fv ]
+  %.sink.i.i.i.i.i.i39.sink.i = phi ptr [ %.sink.i.i.i.i.i.i39.i, %14 ], [ %.sink.i.i.i.i.i.i21.i, %bb.gd ], [ %.sink.i.i.i.i.i.i.i70, %bb.fv ]
+  %.sink48.i = phi i64 [ 50, %14 ], [ 6, %bb.gd ], [ 38, %bb.fv ]
+  %i.ahy = getelementptr inbounds nuw i8, ptr %.sink.i57, i64 4
   %i.ahz = load i32, ptr %i.ahy, align 4, !tbaa !174
   %i.aia = zext i32 %i.ahz to i64
-  %i.aib = getelementptr inbounds nuw [72 x i8], ptr %.sink.i.i.i.i.i.i39.i, i64 %i.aia
+  %i.aib = getelementptr inbounds nuw [72 x i8], ptr %.sink.i.i.i.i.i.i39.sink.i, i64 %i.aia
   %i.aic = getelementptr inbounds nuw i8, ptr %i.aib, i64 48
   %i.aid = load i64, ptr %i.aic, align 8, !tbaa !176
-  %i.aie = lshr i64 %i.aid, 50
+  %i.aie = lshr i64 %i.aid, %.sink48.i
   %i.aif = trunc i64 %i.aie to i8
   %i.aig = and i8 %i.aif, 1
   br label %_ZL23_dependencies_satisfiedP16hb_subset_plan_tjRK8hb_set_tS3_.exit
 
-_ZL23_dependencies_satisfiedP16hb_subset_plan_tjRK8hb_set_tS3_.exit: ; preds = %bb.gk, %bb.gc, %bb.fu, %._crit_edge.i.i.i.i.i.i.i57, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i.i68, %bb.fv, %._crit_edge.i.i.i.i.i.i7.i, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i19.i, %bb.gd, %._crit_edge.i.i.i.i.i.i25.i, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i37.i, %bb.gl
-  %.0.i.i.i.i.i27.sink.i = phi i8 [ 0, %bb.gc ], [ 0, %bb.fu ], [ %22, %bb.fv ], [ 0, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i.i68 ], [ 0, %._crit_edge.i.i.i.i.i.i.i57 ], [ %31, %bb.gd ], [ 0, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i19.i ], [ 0, %._crit_edge.i.i.i.i.i.i7.i ], [ %i.aig, %bb.gl ], [ 0, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i37.i ], [ 0, %._crit_edge.i.i.i.i.i.i25.i ], [ 0, %bb.gk ]
+_ZL23_dependencies_satisfiedP16hb_subset_plan_tjRK8hb_set_tS3_.exit: ; preds = %bb.gk, %bb.gc, %bb.fu, %._crit_edge.i.i.i.i.i.i.i57, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i.i68, %._crit_edge.i.i.i.i.i.i7.i, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i19.i, %._crit_edge.i.i.i.i.i.i25.i, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i37.i, %bb.gl
+  %.0.i.i.i.i.i27.sink.i = phi i8 [ 0, %bb.gc ], [ %i.aig, %bb.gl ], [ 0, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i37.i ], [ 0, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i.i68 ], [ 0, %._crit_edge.i.i.i.i.i.i.i57 ], [ 0, %._crit_edge.i.i.i.i.i.i25.i ], [ 0, %_ZNK12hb_bit_set_t8page_forEj.exit.i.i.i.i.i19.i ], [ 0, %._crit_edge.i.i.i.i.i.i7.i ], [ 0, %bb.fu ], [ 0, %bb.gk ]
   %i.aih = load i8, ptr %i.at, align 8, !tbaa !177, !range !126, !noundef !127
   %.not.i56 = icmp eq i8 %i.aih, %.0.i.i.i.i.i27.sink.i
   br i1 %.not.i56, label %_ZL23_dependencies_satisfiedP16hb_subset_plan_tjRK8hb_set_tS3_.exit.thread, label %select.unfold

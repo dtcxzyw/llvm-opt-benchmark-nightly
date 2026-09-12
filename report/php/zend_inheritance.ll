@@ -205,8 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !111  ; 2 uses
-  %3 = trunc i32 %i.d to i8
-  %4 = lshr i8 %3, 6                              ; 2 uses
+  %3 = and i32 %i.d, 64
+  %4 = icmp ne i32 %3, 0                          ; 2 uses
   %i.e = and i32 %i.d, 512
   %.not40 = icmp eq i32 %i.e, 0
   br i1 %.not40, label %bb.g, label %bb.c
@@ -301,11 +301,11 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l, %bb.k, %bb.j
   %i.at = and i32 %i.ak, 64
   %.not53 = icmp eq i32 %i.at, 0
-  %spec.select = select i1 %.not53, i8 %4, i8 0
+  %spec.select = and i1 %.not53, %4
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.thread
-  %.1 = phi i8 [ %4, %.thread ], [ %spec.select, %bb.n ] ; 2 uses
+  %.1 = phi i1 [ %4, %.thread ], [ %spec.select, %bb.n ] ; 2 uses
   %i.au = load ptr, ptr %i.ah, align 8, !tbaa !117 ; 2 uses
   %.not49.1 = icmp eq ptr %i.au, null             ; 2 uses
   br i1 %.not49.1, label %bb.p, label %._crit_edge62
@@ -315,15 +315,13 @@ bb.o:                                             ; preds = %bb.n, %.thread
   %.pre64 = load i32, ptr %.phi.trans.insert63, align 4, !tbaa !28
   %i.av = and i32 %.pre64, 64
   %.not53.1 = icmp eq i32 %i.av, 0
-  %spec.select.1 = select i1 %.not53.1, i8 %.1, i8 0
-  br label %bb.p
+  %spec.select.1 = and i1 %.not53.1, %.1
+  br i1 %spec.select.1, label %bb.q, label %bb.r
 
-bb.p:                                             ; preds = %._crit_edge62, %bb.o
-  %.1.1 = phi i8 [ %.1, %bb.o ], [ %spec.select.1, %._crit_edge62 ]
-  %5 = trunc i8 %.1.1 to i1
-  br i1 %5, label %bb.q, label %bb.r
+bb.p:                                             ; preds = %bb.o
+  br i1 %.1, label %bb.q, label %bb.r
 
-bb.q:                                             ; preds = %bb.p
+bb.q:                                             ; preds = %._crit_edge62, %bb.p
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !44
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
@@ -331,7 +329,7 @@ bb.q:                                             ; preds = %bb.p
   tail call void (i32, ptr, ...) @zend_error_noreturn(i32 noundef 64, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.ay, ptr noundef nonnull %i.az) #18
   unreachable
 
-bb.r:                                             ; preds = %bb.p
+bb.r:                                             ; preds = %._crit_edge62, %bb.p
   %i.ba = load i32, ptr %i.c, align 4, !tbaa !111 ; 2 uses
   %i.bb = and i32 %i.ba, 512
   %.not44 = icmp ne i32 %i.bb, 0

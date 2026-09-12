@@ -204,18 +204,14 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.thread.i: ; preds = %bb.c
   %i.s = load i64, ptr %i.i, align 8, !tbaa !448
-  %42 = trunc i64 %i.s to i32
-  %43 = xor i32 %42, -1
-  %44 = lshr i32 %43, 6
-  %45 = and i32 %44, 1
+  %42 = xor i64 %i.s, -1
+  %43 = lshr i64 %42, 6
   br label %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread._crit_edge.i
 
 _ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit.thread.i: ; preds = %._crit_edge.i
   %i.t = load i64, ptr %i.i, align 8, !tbaa !448
-  %46 = trunc i64 %i.t to i32
-  %47 = xor i32 %46, -1                           ; 2 uses
-  %48 = lshr i32 %47, 6
-  %49 = and i32 %48, 1                            ; 4 uses
+  %44 = xor i64 %i.t, -1                          ; 2 uses
+  %45 = lshr i64 %44, 6                           ; 4 uses
   br i1 %.1.lcssa.i, label %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.i, label %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i
 
 .lr.ph80.i:                                       ; preds = %bb.c, %._crit_edge.i
@@ -266,9 +262,10 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %.not65.i, label %._crit_edge.i, label %.lr.ph.i
 
 _ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.i: ; preds = %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit.thread.i
-  %50 = lshr i32 %47, 5
-  %51 = and i32 %50, 1
-  %.not.i = icmp eq i32 %51, %49
+  %46 = lshr i64 %44, 5
+  %47 = xor i64 %46, %45
+  %48 = and i64 %47, 1
+  %.not.i = icmp eq i64 %48, 0
   br i1 %.not.i, label %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i, label %.split.i
 
 .split.i:                                         ; preds = %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.i
@@ -293,15 +290,15 @@ _ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.e
 
 _ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread._crit_edge.i: ; preds = %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i, %.noexc76, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.thread.i
   %.pre8397.i = phi ptr [ %i.i, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.thread.i ], [ %i.i, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i ], [ %.pre83.pre.i, %.noexc76 ]
-  %52 = phi i32 [ %45, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.thread.i ], [ %49, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i ], [ %49, %.noexc76 ]
-  %.pre85.i = zext nneg i32 %52 to i64
+  %49 = phi i64 [ %43, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.thread.i ], [ %45, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i ], [ %45, %.noexc76 ]
+  %.pre85.i = and i64 %49, 1
   br label %bb.h
 
 bb.f:                                             ; preds = %.noexc76._crit_edge, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i
   %.pre-phi1546 = phi i64 [ %i.ae, %.noexc76._crit_edge ], [ 1, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i ]
   %.pre8398.i = phi ptr [ %.pre83.pre.i, %.noexc76._crit_edge ], [ %i.i, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread.i ]
-  %53 = zext nneg i32 %49 to i64                  ; 3 uses
-  %.not29.i = icmp eq i64 %.pre-phi1546, %53
+  %50 = and i64 %45, 1                            ; 3 uses
+  %.not29.i = icmp eq i64 %.pre-phi1546, %50
   br i1 %.not29.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -313,7 +310,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %.noexc77, %bb.f, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread._crit_edge.i
-  %.pre-phi.i = phi i64 [ %.pre85.i, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread._crit_edge.i ], [ %53, %.noexc77 ], [ %53, %bb.f ]
+  %.pre-phi.i = phi i64 [ %.pre85.i, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread._crit_edge.i ], [ %50, %.noexc77 ], [ %50, %bb.f ]
   %i.af = phi ptr [ %.pre8397.i, %_ZN3gmxL18forceGroupMtsLevelENS_8ArrayRefIKNS_8MtsLevelEEENS_14MtsForceGroupsE.exit37.thread._crit_edge.i ], [ %.pre.i, %.noexc77 ], [ %.pre8398.i, %bb.f ]
   %i.ag = load ptr, ptr %i.n, align 8, !tbaa !446
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 36

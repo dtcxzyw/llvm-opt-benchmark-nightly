@@ -202,8 +202,6 @@ bb.f:                                             ; preds = %bb.e
   %i.p = load i32, ptr %i.o, align 4
   %i.q = and i32 %i.p, 64                         ; 2 uses
   %i.r = icmp ne i32 %i.q, 0
-  %.lobit = lshr exact i32 %i.q, 6
-  %9 = trunc nuw nsw i32 %.lobit to i8
   %i.s = icmp eq ptr %4, null
   %or.cond = select i1 %i.s, i1 true, i1 %i.r
   br i1 %or.cond, label %bb.h, label %bb.g
@@ -211,13 +209,13 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 20
   %i.u = load i32, ptr %i.t, align 4
-  %10 = trunc i32 %i.u to i8
-  %11 = lshr i8 %10, 6
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.0201 = phi i8 [ %9, %bb.f ], [ %11, %bb.g ]   ; 3 uses
-  %i.v = trunc i8 %.0201 to i1                    ; 2 uses
+  %.0201.in.in = phi i32 [ %i.q, %bb.f ], [ %i.u, %bb.g ]
+  %.0201.in = lshr i32 %.0201.in.in, 6            ; 2 uses
+  %.0201 = trunc i32 %.0201.in to i1              ; 2 uses
+  %i.v = trunc i32 %.0201.in to i1                ; 2 uses
   %i.w = call fastcc i32 @_qos_policy_validate(ptr noundef nonnull %0, ptr noundef %2, ptr noundef %1, ptr noundef nonnull %3, ptr noundef %8, ptr noundef %5, ptr noundef %6, i1 noundef zeroext %7, ptr noundef %i.k, i32 noundef %.0205, i1 noundef zeroext %i.v)
   %.not362 = icmp eq i32 %i.w, 0
   br i1 %.not362, label %.loopexit370, label %bb.i
@@ -236,7 +234,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %or.cond240, label %.thread, label %bb.m
 
 .thread:                                          ; preds = %bb.e, %bb.j
-  %.1202331 = phi i8 [ %.0201, %bb.j ], [ 1, %bb.e ] ; 3 uses
+  %.1202331 = phi i1 [ %.0201, %bb.j ], [ true, %bb.e ] ; 3 uses
   %.not224 = icmp eq ptr %4, null
   br i1 %.not224, label %bb.m, label %bb.k
 
@@ -252,13 +250,12 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.j, %bb.k, %.thread, %bb.l
-  %.1202330 = phi i8 [ %.1202331, %bb.k ], [ %.1202331, %bb.l ], [ %.1202331, %.thread ], [ %.0201, %bb.j ]
+  %.1202330 = phi i1 [ %.1202331, %bb.k ], [ %.1202331, %bb.l ], [ %.1202331, %.thread ], [ %.0201, %bb.j ] ; 6 uses
   %.0200 = phi double [ -1.000000e+00, %bb.k ], [ %i.ad, %bb.l ], [ -1.000000e+00, %.thread ], [ %i.z, %bb.j ] ; 3 uses
   %i.ag = fcmp ugt double %.0200, 0.000000e+00
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 896 ; 9 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %12 = trunc i8 %.1202330 to i1                  ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %8, i64 36
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 700 ; 24 uses
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 208 ; 5 uses
@@ -305,7 +302,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o
   %i.bi = load ptr, ptr %i.aj, align 8            ; 2 uses
   %i.bj = load i32, ptr @g_tres_count, align 4    ; 4 uses
   %i.bk = icmp ne i32 %i.bj, 0                    ; 2 uses
-  %or.cond45.i = select i1 %12, i1 %i.bk, i1 false
+  %or.cond45.i = select i1 %.1202330, i1 %i.bk, i1 false
   br i1 %or.cond45.i, label %.lr.ph.i, label %.loopexit367
 
 .lr.ph.i:                                         ; preds = %._crit_edge
@@ -586,7 +583,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.fi = getelementptr inbounds nuw i8, ptr %.0197450, i64 104
   %i.fj = load ptr, ptr %i.fi, align 8
   %i.fk = load ptr, ptr %i.an, align 8
-  br i1 %12, label %bb.bb, label %.thread334.thread549
+  br i1 %.1202330, label %bb.bb, label %.thread334.thread549
 
 .thread334.thread549:                             ; preds = %bb.ba
   store i32 0, ptr %i.a, align 4
@@ -989,7 +986,7 @@ bb.ch:                                            ; preds = %.critedge243
   %i.mq = load ptr, ptr %i.aj, align 8            ; 3 uses
   %i.mr = load i32, ptr @g_tres_count, align 4    ; 3 uses
   %i.ms = icmp ne i32 %i.mr, 0                    ; 2 uses
-  %or.cond45.i284 = select i1 %12, i1 %i.ms, i1 false
+  %or.cond45.i284 = select i1 %.1202330, i1 %i.ms, i1 false
   br i1 %or.cond45.i284, label %.lr.ph.i286, label %.loopexit
 
 .lr.ph.i286:                                      ; preds = %bb.ch
@@ -1141,7 +1138,7 @@ bb.cv:                                            ; preds = %bb.cu
   %i.pc = getelementptr inbounds nuw i8, ptr %.0197450, i64 232
   %i.pd = load ptr, ptr %i.pc, align 8
   %i.pe = load ptr, ptr %i.as, align 8
-  %i.pf = call fastcc zeroext i1 @_validate_tres_limits_for_assoc(ptr noundef %i.a, ptr noundef %i.mo, i64 noundef %i.pb, ptr noundef %i.pd, ptr noundef %i.pe, ptr noundef %i.mq, i1 noundef zeroext %12, i1 noundef zeroext %7)
+  %i.pf = call fastcc zeroext i1 @_validate_tres_limits_for_assoc(ptr noundef %i.a, ptr noundef %i.mo, i64 noundef %i.pb, ptr noundef %i.pd, ptr noundef %i.pe, ptr noundef %i.mq, i1 noundef zeroext %.1202330, i1 noundef zeroext %7)
   br i1 %i.pf, label %bb.dd, label %bb.cw
 
 bb.cw:                                            ; preds = %.loopexit
@@ -1279,7 +1276,7 @@ bb.dl:                                            ; preds = %bb.dk
   %i.rs = getelementptr inbounds nuw i8, ptr %.0197450, i64 184
   %i.rt = load ptr, ptr %i.rs, align 8
   %i.ru = load ptr, ptr %i.av, align 8
-  br i1 %12, label %bb.dm, label %.thread346
+  br i1 %.1202330, label %bb.dm, label %.thread346
 
 bb.dm:                                            ; preds = %bb.dl
   %i.rv = load i16, ptr %i.ao, align 2
@@ -1409,7 +1406,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.tt = getelementptr inbounds nuw i8, ptr %.0197450, i64 240
   %i.tu = load i32, ptr %i.tt, align 8
   %i.tv = zext i32 %i.tu to i64
-  %i.tw = call fastcc zeroext i1 @_validate_time_limit(ptr noundef nonnull %i.al, i32 noundef %i.ts, i64 noundef 1, i64 noundef %i.tv, ptr noundef nonnull %i.aw, ptr noundef nonnull %i.ao, i1 noundef zeroext %12, i1 noundef zeroext false)
+  %i.tw = call fastcc zeroext i1 @_validate_time_limit(ptr noundef nonnull %i.al, i32 noundef %i.ts, i64 noundef 1, i64 noundef %i.tv, ptr noundef nonnull %i.aw, ptr noundef nonnull %i.ao, i1 noundef zeroext %.1202330, i1 noundef zeroext false)
   br i1 %i.tw, label %.critedge245, label %bb.dw
 
 bb.dw:                                            ; preds = %.thread346

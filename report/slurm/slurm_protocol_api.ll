@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.a
   %i.d = tail call ptr @slurm_conf_lock() #17
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 284
   %i.f = load i32, ptr %i.e, align 4
-  %0 = trunc i32 %i.f to i16
-  %1 = lshr i16 %0, 5
+  %0 = lshr i32 %i.f, 5
+  %1 = trunc i32 %0 to i16
   %i.g = and i16 %1, 1
   tail call void @slurm_conf_unlock() #17
   br label %bb.d
@@ -606,8 +606,8 @@ bb.a:
   store i64 0, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 200
   %i.d = load i16, ptr %i.c, align 8
-  %4 = trunc i16 %i.d to i8
-  %5 = lshr i8 %4, 2                              ; 2 uses
+  %4 = and i16 %i.d, 4
+  %.not69 = icmp eq i16 %4, 0                     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 176 ; 6 uses
   %i.f = load ptr, ptr %i.e, align 8
   %.not = icmp eq ptr %i.f, null
@@ -657,8 +657,7 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %i.w = load ptr, ptr %i.e, align 8
   %i.x = call i32 @slurm_persist_msg_unpack(ptr noundef %i.w, ptr noundef nonnull %3, ptr noundef nonnull %i.t) #17
-  %6 = trunc i8 %5 to i1
-  br i1 %6, label %bb.i, label %bb.j
+  br i1 %.not69, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 168
@@ -789,8 +788,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.bm = trunc i64 %i.bl to i32
   %i.bn = call ptr @create_buf(ptr noundef %i.bk, i32 noundef %i.bm) #17 ; 4 uses
   %i.bo = call i32 @slurm_unpack_received_msg(ptr noundef nonnull %1, i32 noundef %i.ah, ptr noundef %i.bn) ; 3 uses
-  %7 = trunc i8 %5 to i1
-  br i1 %7, label %bb.af, label %bb.ag
+  br i1 %.not69, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 168
