@@ -204,7 +204,7 @@ _RNvXs0_NtNtCs14kzo5Se9zC_5bytes3buf8buf_implRShNtB5_3Buf7advance.exit.peel.i: ;
   %i.x = phi i64 [ %.pre.i.peel.i, %bb.c ], [ %i.n, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCsl8OoimOLbh_6qdrant.exit.i.peel.i ]
   %i.y = add i64 %i.x, %i.e
   store i64 %i.y, ptr %i.g, align 8, !alias.scope !13427, !noalias !13425
-  %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 2 uses
+  %i.z = getelementptr i8, ptr %i.c, i64 %i.e     ; 2 uses
   store ptr %i.z, ptr %i.a, align 8, !alias.scope !13428, !noalias !13423, !captures !121
   store i64 0, ptr %i.f, align 8, !alias.scope !13428, !noalias !13423
   %i.aa = call noundef zeroext i1 @_RNvYRShNtNtNtCs14kzo5Se9zC_5bytes3buf8buf_impl3Buf13has_remainingCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a)
