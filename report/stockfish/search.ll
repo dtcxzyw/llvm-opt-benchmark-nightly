@@ -205,7 +205,7 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
   %.neg445 = sdiv i32 %i.aeh, -4096
   %i.aei = add i32 %.neg445, %.5393               ; 3 uses
   %i.aej = icmp sgt i32 %.4740.ph1007, 1
-  %i.aek = icmp ne i64 %indvars.iv, 0             ; 3 uses
+  %i.aek = icmp ne i64 %indvars.iv, 0             ; 4 uses
   %or.cond22 = select i1 %i.aej, i1 %i.aek, i1 false
   br i1 %or.cond22, label %bb.ce, label %bb.ci
 
@@ -279,7 +279,6 @@ bb.ck:                                            ; preds = %bb.ce, %bb.ch, %bb.
   br i1 %i.afu, label %.thread, label %bb.co
 
 .thread:                                          ; preds = %bb.ci, %bb.ck
-  %16 = phi i1 [ false, %bb.ck ], [ true, %bb.ci ]
   %.07441110 = phi i32 [ %.0744, %bb.ck ], [ %i.aav, %bb.ci ] ; 3 uses
   store ptr %7, ptr %i.sb, align 8, !tbaa !250
   store i16 0, ptr %7, align 16, !tbaa !196
@@ -312,7 +311,6 @@ bb.cn:                                            ; preds = %bb.cl, %bb.cm, %.th
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.ck, %bb.cn
-  %17 = phi i1 [ %16, %bb.cn ], [ false, %bb.ck ]
   %.5386 = phi i32 [ %i.agf, %bb.cn ], [ %.4385, %bb.ck ] ; 16 uses
   call void @_ZN9Stockfish8Position9undo_moveENS_4MoveE(ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %i.sz) #33
   call void @_ZN9Stockfish4Eval4NNUE16AccumulatorStack3popEv(ptr noundef nonnull align 64 dereferenceable(2529288) %i.sf) #33
@@ -467,9 +465,9 @@ bb.da:                                            ; preds = %bb.cz
 bb.db:                                            ; preds = %bb.cz, %bb.da
   %i.ais = phi i32 [ %i.air, %bb.da ], [ %i.aip, %bb.cz ]
   store i32 %i.ais, ptr %i.aim, align 4, !tbaa !257
-  %18 = icmp sgt i32 %.5386, %.0369.ph1010        ; 2 uses
-  %or.cond472 = select i1 %17, i1 true, i1 %18
-  br i1 %or.cond472, label %bb.dc, label %bb.dt
+  %16 = icmp sle i32 %.5386, %.0369.ph1010        ; 2 uses
+  %or.cond472 = select i1 %i.aek, i1 %16, i1 false
+  br i1 %or.cond472, label %bb.dt, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
   %i.ait = getelementptr inbounds nuw i8, ptr %.sroa.08.0.in.sroa.speculated.i.i.i, i64 24 ; 2 uses
@@ -491,7 +489,7 @@ bb.dd:                                            ; preds = %bb.dc
   br label %.sink.split
 
 bb.de:                                            ; preds = %bb.dc
-  br i1 %18, label %bb.dg, label %bb.df
+  br i1 %16, label %bb.df, label %bb.dg
 
 bb.df:                                            ; preds = %bb.de
   store i8 1, ptr %i.aix, align 1, !tbaa !191
@@ -894,7 +892,7 @@ bb.r:                                             ; preds = %bb.j
   %i.ca = add nsw i32 %i.ax, -32000
   %.sroa.speculated824 = tail call i32 @llvm.smax.i32(i32 %i.ca, i32 %.01030) ; 7 uses
   %i.cb = sub nsw i32 31999, %i.ax
-  %.sroa.speculated819 = tail call i32 @llvm.smin.i32(i32 %4, i32 %i.cb) ; 35 uses
+  %.sroa.speculated819 = tail call i32 @llvm.smin.i32(i32 %4, i32 %i.cb) ; 34 uses
   %.not565 = icmp slt i32 %.sroa.speculated824, %.sroa.speculated819
   br i1 %.not565, label %bb.s, label %bb.ga
 
@@ -1220,7 +1218,7 @@ bb.an:                                            ; preds = %bb.al, %bb.ag, %bb.
 bb.ao:                                            ; preds = %bb.an
   %i.ja = getelementptr inbounds nuw i8, ptr %10, i64 20
   %i.jb = load i32, ptr %i.ja, align 4, !tbaa !293
-  %i.jc = load i32, ptr %i.di, align 4, !tbaa !281 ; 4 uses
+  %i.jc = load i32, ptr %i.di, align 4, !tbaa !281 ; 3 uses
   %i.jd = icmp sle i32 %i.jc, %.sroa.speculated819
   %.neg = sext i1 %i.jd to i32
   %i.je = add nsw i32 %.11035, %.neg
@@ -1233,7 +1231,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.jh = getelementptr inbounds nuw i8, ptr %10, i64 24
   %i.ji = load i8, ptr %i.jh, align 8, !tbaa !289
   %i.jj = zext i8 %i.ji to i32
-  %i.jk = icmp sge i32 %i.jc, %.sroa.speculated819 ; 2 uses
+  %i.jk = icmp sge i32 %i.jc, %.sroa.speculated819 ; 3 uses
   %i.jl = select i1 %i.jk, i32 2, i32 1
   %i.jm = and i32 %i.jl, %i.jj
   %.not567 = icmp eq i32 %i.jm, 0
@@ -1247,10 +1245,9 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aq
   %i.jp = load i16, ptr %i.dd, align 8, !tbaa !234 ; 2 uses
-  %15 = icmp eq i16 %i.jp, 0
-  %.not569 = icmp slt i32 %i.jc, %.sroa.speculated819
-  %or.cond1146 = or i1 %.not569, %15
-  br i1 %or.cond1146, label %bb.ax, label %bb.as
+  %15 = icmp ne i16 %i.jp, 0
+  %or.cond1146.not = and i1 %15, %i.jk
+  br i1 %or.cond1146.not, label %bb.as, label %bb.ax
 
 bb.as:                                            ; preds = %bb.ar
   br i1 %i.ei, label %bb.au, label %bb.at

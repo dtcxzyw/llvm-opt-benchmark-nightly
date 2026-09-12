@@ -204,13 +204,13 @@ bb.au:                                            ; preds = %bb.ar
   br i1 %or.cond8, label %bb.av, label %.thread385
 
 .thread385:                                       ; preds = %bb.as, %bb.au
-  %i.gm = phi i64 [ %i.ge, %bb.au ], [ 0, %bb.as ] ; 7 uses
-  %i.gn = icmp eq i64 %i.gm, 0
+  %i.gm = phi i64 [ %i.ge, %bb.au ], [ 0, %bb.as ] ; 6 uses
+  %i.gn = icmp eq i64 %i.gm, 0                    ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.gp = load i64, ptr %i.go, align 16           ; 5 uses
-  %i.gq = icmp ne i64 %i.gp, 0
+  %i.gp = load i64, ptr %i.go, align 16           ; 4 uses
+  %i.gq = icmp ne i64 %i.gp, 0                    ; 2 uses
   %or.cond11 = select i1 %i.gn, i1 %i.gq, i1 false
-  br i1 %or.cond11, label %bb.av, label %7
+  br i1 %or.cond11, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %.thread385, %bb.au
   %i.gr = phi i64 [ 0, %.thread385 ], [ %i.ge, %bb.au ]
@@ -219,17 +219,13 @@ bb.av:                                            ; preds = %.thread385, %bb.au
   %i.gu = call i32 (ptr, i32, ptr, ...) %i.gt(ptr noundef nonnull %0, i32 noundef 22, ptr noundef nonnull @.str.26, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %i.bq, i64 noundef %i.gr) #8
   br label %.thread
 
-7:                                                ; preds = %.thread385
-  %or.cond14 = icmp ugt i64 %i.gp, 2147483647
-  br i1 %or.cond14, label %bb.ax, label %bb.aw
+bb.aw:                                            ; preds = %.thread385
+  %or.cond14 = icmp ult i64 %i.gp, 2147483648
+  %or.cond17.demorgan = or i1 %i.gn, %i.gq
+  %or.cond17 = and i1 %or.cond14, %or.cond17.demorgan
+  br i1 %or.cond17, label %bb.ay, label %bb.ax
 
-bb.aw:                                            ; preds = %7
-  %8 = icmp eq i64 %i.gp, 0
-  %9 = icmp ne i64 %i.gm, 0
-  %or.cond17 = and i1 %9, %8
-  br i1 %or.cond17, label %bb.ax, label %bb.ay
-
-bb.ax:                                            ; preds = %bb.aw, %7
+bb.ax:                                            ; preds = %bb.aw
   %i.gv = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !25
   %i.gx = call i32 (ptr, i32, ptr, ...) %i.gw(ptr noundef nonnull %0, i32 noundef 22, ptr noundef nonnull @.str.27, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %i.bq, i64 noundef %i.gm) #8
@@ -632,7 +628,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !42   ; 3 uses
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !42   ; 2 uses
   switch i32 %i.m, label %bb.f [
     i32 1, label %bb.e
     i32 3, label %bb.e
@@ -657,7 +653,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.thread167
 
 bb.h:                                             ; preds = %bb.f
-  %i.v = icmp eq i64 %5, 0
+  %i.v = icmp eq i64 %5, 0                        ; 2 uses
   %i.w = icmp ne ptr %4, null
   %or.cond = or i1 %i.w, %i.v
   br i1 %or.cond, label %bb.j, label %bb.i
@@ -669,7 +665,7 @@ bb.i:                                             ; preds = %bb.h
   br label %.thread167
 
 bb.j:                                             ; preds = %bb.h
-  %i.aa = icmp ne i32 %i.m, 2
+  %i.aa = icmp ne i32 %i.m, 2                     ; 4 uses
   %i.ab = icmp ugt i64 %5, 2147483647
   %or.cond3 = and i1 %i.ab, %i.aa
   br i1 %or.cond3, label %bb.k, label %bb.l
@@ -682,8 +678,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.af = trunc i64 %5 to i32
-  %9 = icmp eq i32 %i.m, 2                        ; 3 uses
-  br i1 %9, label %bb.m, label %bb.o
+  br i1 %i.aa, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ag = icmp eq ptr %7, null
@@ -781,11 +776,11 @@ bb.y:                                             ; preds = %bb.x
   store i32 %1, ptr %i.a, align 4, !tbaa !46
   %i.br = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 %3, ptr %i.br, align 4, !tbaa !46
-  br i1 %9, label %bb.aa, label %.sink.split
+  br i1 %i.aa, label %.sink.split, label %bb.aa
 
 bb.z:                                             ; preds = %bb.x
   store i32 %3, ptr %i.a, align 4, !tbaa !46
-  br i1 %9, label %bb.aa, label %.sink.split
+  br i1 %i.aa, label %.sink.split, label %bb.aa
 
 .sink.split:                                      ; preds = %bb.z, %bb.y
   %.sink187.sroa.phi = phi ptr [ %.sink187.sroa.gep, %bb.y ], [ %.sink187.sroa.gep188, %bb.z ]
@@ -841,10 +836,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 
 bb.ag:                                            ; preds = %bb.af, %bb.ac
   %.1 = phi i32 [ %.0138, %bb.af ], [ 0, %bb.ac ] ; 2 uses
-  %10 = icmp eq i32 %.1, 0
-  %i.cl = icmp ne i64 %5, 0
-  %or.cond7 = and i1 %i.cl, %10
-  br i1 %or.cond7, label %bb.ah, label %bb.ai
+  %i.cl = icmp ne i32 %.1, 0
+  %or.cond7.not = or i1 %i.cl, %i.v
+  br i1 %or.cond7.not, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cm = load ptr, ptr %i.by, align 8, !tbaa !81
@@ -1042,7 +1036,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !42   ; 3 uses
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !42   ; 2 uses
   switch i32 %i.n, label %bb.f [
     i32 0, label %bb.e
     i32 2, label %bb.e
@@ -1079,7 +1073,7 @@ bb.i:                                             ; preds = %bb.h
   br label %.thread149
 
 bb.j:                                             ; preds = %bb.h
-  %i.ab = icmp ne i32 %i.n, 3
+  %i.ab = icmp ne i32 %i.n, 3                     ; 2 uses
   %i.ac = icmp ugt i64 %8, 2147483647
   %or.cond3 = and i1 %i.ac, %i.ab
   br i1 %or.cond3, label %bb.k, label %bb.l
@@ -1092,8 +1086,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.ag = trunc i64 %8 to i32
-  %12 = icmp eq i32 %i.n, 3
-  br i1 %12, label %bb.m, label %bb.o
+  br i1 %i.ab, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ah = icmp eq ptr %10, null

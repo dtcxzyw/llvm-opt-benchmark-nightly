@@ -205,7 +205,7 @@ bb.dg:                                            ; preds = %._crit_edge.i.i
   %i.xz = sext i16 %i.xy to i32
   %i.ya = sub nsw i32 %i.xs, %i.xz
   %i.yb = sitofp i32 %i.ya to float
-  %i.yc = fdiv float %i.xj, %i.yb                 ; 23 uses
+  %i.yc = fdiv float %i.xj, %i.yb                 ; 22 uses
   %i.yd = icmp sgt i32 %4, 0
   %i.ye = select i1 %i.yd, i32 %4, i32 95         ; 4 uses
   %i.yf = icmp eq ptr %3, null                    ; 3 uses
@@ -261,9 +261,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 bb.di:                                            ; preds = %bb.dj
   %i.yr = zext nneg i32 %spec.select to i64
   %i.ys = tail call noalias ptr @calloc(i64 noundef %i.yr, i64 noundef 40) #40 ; 4 uses
-  %10 = fcmp oeq float %i.yc, 0.000000e+00
+  %10 = fcmp une float %i.yc, 0.000000e+00        ; 2 uses
   %i.yt = fneg float %i.yc                        ; 7 uses
-  %11 = fcmp une float %i.yc, 0.000000e+00
   %i.yu = fdiv float 3.500000e-01, %i.yc          ; 2 uses
   %i.yv = fmul float %i.yu, %i.yu                 ; 4 uses
   %.not143 = icmp ne i32 %5, 2
@@ -324,7 +323,7 @@ bb.dn:                                            ; preds = %bb.dm, %bb.dm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #39
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #39
   %i.zr = call fastcc i32 @stbtt_GetGlyphShape(ptr noundef nonnull readonly %9, i32 noundef %i.zn, ptr noundef %i.m) ; 3 uses
-  br i1 %11, label %bb.do, label %stbtt_GetCodepointBitmap.exit
+  br i1 %10, label %bb.do, label %stbtt_GetCodepointBitmap.exit
 
 bb.do:                                            ; preds = %bb.dn
   %i.zs = getelementptr inbounds nuw i8, ptr %i.zq, i64 8
@@ -727,7 +726,7 @@ bb.mz:                                            ; preds = %bb.my
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #39
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #39
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #39
-  br i1 %10, label %stbtt_GetCodepointSDF.exit, label %bb.na
+  br i1 %10, label %bb.na, label %stbtt_GetCodepointSDF.exit
 
 bb.na:                                            ; preds = %bb.mz
   call fastcc void @stbtt_GetGlyphBitmapBoxSubpixel(ptr noundef nonnull readonly %9, i32 noundef %i.zn, float noundef %i.yc, float noundef %i.yc, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d)

@@ -204,7 +204,7 @@ _RNvMs2_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_10DelayQueueNtNtNt
   %i.be = mul nuw nsw i32 %i.bd, 1000000, !dbg !18922
   %i.bf = call { i64, i32 } @_RNvXs1_NtNtCs2sJxpAufolh_5tokio4time7instantNtB5_7InstantINtNtNtCskKLDkoKarTP_4core3ops5arith3AddNtNtB10_4time8DurationE3add(i64 noundef %i.ay, i32 noundef %i.ba, i64 noundef %i.bb, i32 noundef %i.be), !dbg !18919 ; 2 uses
   %i.bg = extractvalue { i64, i32 } %i.bf, 0, !dbg !18919 ; 3 uses
-  %i.bh = extractvalue { i64, i32 } %i.bf, 1, !dbg !18919 ; 7 uses
+  %i.bh = extractvalue { i64, i32 } %i.bf, 1, !dbg !18919 ; 6 uses
     #dbg_value(i64 %i.bg, !18721, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !18805)
     #dbg_value(i32 %i.bh, !18721, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !18805)
     #dbg_value(ptr undef, !18744, !DIExpression(), !18778)
@@ -243,7 +243,7 @@ _RNvMs2_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_10DelayQueueNtNtNt
   br label %bb.p, !dbg !18926
 
 bb.l:                                             ; preds = %_RNvMs2_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_10DelayQueueNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeE13next_deadlineB1f_.exit43
-  %.not35 = icmp ne i32 %i.bh, -1, !dbg !18923
+  %.not35 = icmp ne i32 %i.bh, -1, !dbg !18923    ; 2 uses
     #dbg_value(ptr undef, !18753, !DIExpression(), !18776)
     #dbg_value(ptr undef, !18757, !DIExpression(), !18737)
     #dbg_value(ptr undef, !18754, !DIExpression(), !18772)
@@ -278,20 +278,19 @@ bb.m:                                             ; preds = %_RNvMs2_NtNtCs3O5ox
 
 bb.n:                                             ; preds = %bb.l
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 160, !dbg !18925 ; 2 uses
-  %.not36 = icmp eq i32 %i.bh, -1, !dbg !18930
-  br i1 %.not36, label %bb.p, label %bb.o, !dbg !18926
+  br i1 %.not35, label %bb.o, label %bb.p, !dbg !18926
 
 .thread:                                          ; preds = %_RNvMs2_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_10DelayQueueNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeE13next_deadlineB1f_.exit43.thread, %.split, %bb.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtCs2sJxpAufolh_5tokio4time5sleep5SleepEEEECsa2e0UnRrdBM_12tokio_quiche.exit49, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtCs2sJxpAufolh_5tokio4time5sleep5SleepEEEECsa2e0UnRrdBM_12tokio_quiche.exit, %bb.m
     #dbg_value(ptr %1, !18817, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !18823)
     #dbg_value(ptr %1, !18824, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !18830)
-  %i.bq = load i64, ptr %i.aq, align 8, !dbg !18931, !noundef !2257
-  %i.br = icmp eq i64 %i.bq, 0, !dbg !18931
-  br i1 %i.br, label %bb.ag, label %bb.af, !dbg !18932
+  %i.bq = load i64, ptr %i.aq, align 8, !dbg !18930, !noundef !2257
+  %i.br = icmp eq i64 %i.bq, 0, !dbg !18930
+  br i1 %i.br, label %bb.ag, label %bb.af, !dbg !18931
 
 bb.o:                                             ; preds = %.thread61, %bb.n
   %i.bs = phi ptr [ %i.bo, %.thread61 ], [ %i.bp, %bb.n ] ; 5 uses
-  %i.bt = load ptr, ptr %i.bs, align 8, !dbg !18930, !align !4555, !noundef !2257 ; 2 uses
-  %.not37 = icmp eq ptr %i.bt, null, !dbg !18930
+  %i.bt = load ptr, ptr %i.bs, align 8, !dbg !18932, !align !4555, !noundef !2257 ; 2 uses
+  %.not37 = icmp eq ptr %i.bt, null, !dbg !18932
   br i1 %.not37, label %bb.w, label %bb.v, !dbg !18926
 
 bb.p:                                             ; preds = %.thread72, %bb.n
@@ -694,9 +693,9 @@ begin_hunk_1_@llvm.umax.i64
 !18927 = !DILocation(line: 49, column: 26, scope: !18606, inlinedAt: !18815)
 !18928 = !DILocation(line: 49, column: 26, scope: !18606, inlinedAt: !18816)
 !18929 = !DILocation(line: 63, column: 17, scope: !18605, inlinedAt: !18740)
-!18930 = !DILocation(line: 765, column: 19, scope: !18513)
-!18931 = !DILocation(line: 651, column: 9, scope: !18608, inlinedAt: !18829)
-!18932 = !DILocation(line: 772, column: 12, scope: !18513)
+!18930 = !DILocation(line: 651, column: 9, scope: !18608, inlinedAt: !18829)
+!18931 = !DILocation(line: 772, column: 12, scope: !18513)
+!18932 = !DILocation(line: 765, column: 19, scope: !18513)
 !18933 = !DILocation(line: 766, column: 30, scope: !18513)
 !18934 = !DILocation(line: 848, column: 1, scope: !619, inlinedAt: !18609)
 !18935 = !DILocation(line: 848, column: 1, scope: !622, inlinedAt: !18615)

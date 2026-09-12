@@ -204,16 +204,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.07.i = phi i64 [ %i.c, %bb.b ], [ %i.h, %bb.c ] ; 2 uses
   %.0.in.i = phi ptr [ %i.d, %bb.b ], [ %.0.i, %bb.c ]
-  %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !85 ; 10 uses
-  %i.e = icmp ne ptr %.0.i, null
+  %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !85 ; 9 uses
+  %i.e = icmp ne ptr %.0.i, null                  ; 2 uses
   %i.f = icmp ne i64 %.07.i, 0
   %i.g = select i1 %i.e, i1 %i.f, i1 false
   %i.h = add nsw i64 %.07.i, -1
   br i1 %i.g, label %bb.c, label %get_array_item.exit
 
 get_array_item.exit:                              ; preds = %bb.c
-  %2 = icmp eq ptr %.0.i, null
-  br i1 %2, label %cJSON_DetachItemViaPointer.exit, label %bb.d
+  br i1 %i.e, label %bb.d, label %cJSON_DetachItemViaPointer.exit
 
 bb.d:                                             ; preds = %get_array_item.exit
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !53   ; 2 uses
@@ -283,16 +282,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.07.i.i = phi i64 [ %i.c, %bb.b ], [ %i.h, %bb.c ] ; 2 uses
   %.0.in.i.i = phi ptr [ %i.d, %bb.b ], [ %.0.i.i, %bb.c ]
-  %.0.i.i = load ptr, ptr %.0.in.i.i, align 8, !tbaa !85 ; 10 uses
-  %i.e = icmp ne ptr %.0.i.i, null
+  %.0.i.i = load ptr, ptr %.0.in.i.i, align 8, !tbaa !85 ; 9 uses
+  %i.e = icmp ne ptr %.0.i.i, null                ; 2 uses
   %i.f = icmp ne i64 %.07.i.i, 0
   %i.g = select i1 %i.e, i1 %i.f, i1 false
   %i.h = add nsw i64 %.07.i.i, -1
   br i1 %i.g, label %bb.c, label %get_array_item.exit.i
 
 get_array_item.exit.i:                            ; preds = %bb.c
-  %2 = icmp eq ptr %.0.i.i, null
-  br i1 %2, label %cJSON_DetachItemFromArray.exit, label %bb.d
+  br i1 %i.e, label %bb.d, label %cJSON_DetachItemFromArray.exit
 
 bb.d:                                             ; preds = %get_array_item.exit.i
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !53   ; 2 uses
@@ -695,16 +693,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.07.i = phi i64 [ %i.d, %bb.b ], [ %i.i, %bb.c ] ; 2 uses
   %.0.in.i = phi ptr [ %i.e, %bb.b ], [ %.0.i, %bb.c ]
-  %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !85 ; 8 uses
-  %i.f = icmp ne ptr %.0.i, null
+  %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !85 ; 7 uses
+  %i.f = icmp ne ptr %.0.i, null                  ; 2 uses
   %i.g = icmp ne i64 %.07.i, 0
   %i.h = select i1 %i.f, i1 %i.g, i1 false
   %i.i = add nsw i64 %.07.i, -1
   br i1 %i.h, label %bb.c, label %get_array_item.exit
 
 get_array_item.exit:                              ; preds = %bb.c
-  %3 = icmp eq ptr %.0.i, null
-  br i1 %3, label %bb.d, label %bb.i
+  br i1 %i.f, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %get_array_item.exit
   %i.j = icmp eq ptr %0, %2
@@ -867,8 +864,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.07.i = phi i64 [ %i.c, %bb.b ], [ %i.h, %bb.c ] ; 2 uses
   %.0.in.i = phi ptr [ %i.d, %bb.b ], [ %.0.i, %bb.c ]
-  %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !85 ; 10 uses
-  %i.e = icmp ne ptr %.0.i, null
+  %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !85 ; 9 uses
+  %i.e = icmp ne ptr %.0.i, null                  ; 2 uses
   %i.f = icmp ne i64 %.07.i, 0
   %i.g = select i1 %i.e, i1 %i.f, i1 false
   %i.h = add nsw i64 %.07.i, -1
@@ -876,12 +873,11 @@ bb.c:                                             ; preds = %bb.c, %bb.b
 
 get_array_item.exit:                              ; preds = %bb.c
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !53   ; 4 uses
-  %3 = icmp eq ptr %i.i, null
-  %4 = icmp eq ptr %2, null
-  %or.cond.i = or i1 %4, %3
-  %5 = icmp eq ptr %.0.i, null
-  %or.cond3.i = or i1 %5, %or.cond.i
-  br i1 %or.cond3.i, label %cJSON_ReplaceItemViaPointer.exit, label %bb.d
+  %3 = icmp ne ptr %i.i, null
+  %4 = icmp ne ptr %2, null
+  %or.cond.i.not15 = and i1 %4, %3
+  %or.cond3.i.not = and i1 %or.cond.i.not15, %i.e
+  br i1 %or.cond3.i.not, label %bb.d, label %cJSON_ReplaceItemViaPointer.exit
 
 bb.d:                                             ; preds = %get_array_item.exit
   %i.j = icmp eq ptr %2, %.0.i

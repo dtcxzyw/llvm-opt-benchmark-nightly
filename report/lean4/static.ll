@@ -206,16 +206,15 @@ _Z27_mi_heap_set_default_directP9mi_heap_s.exit:  ; preds = %bb.e, %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.f, %_Z27_mi_heap_set_default_directP9mi_heap_s.exit
   %.019 = phi ptr [ null, %_Z27_mi_heap_set_default_directP9mi_heap_s.exit ], [ %.0, %bb.f ] ; 2 uses
   %.0.in = phi ptr [ %i.k, %_Z27_mi_heap_set_default_directP9mi_heap_s.exit ], [ %i.o, %bb.f ]
-  %.0 = load ptr, ptr %.0.in, align 8, !tbaa !76  ; 5 uses
-  %i.l = icmp ne ptr %.0, %0
+  %.0 = load ptr, ptr %.0.in, align 8, !tbaa !76  ; 4 uses
+  %i.l = icmp ne ptr %.0, %0                      ; 2 uses
   %i.m = icmp ne ptr %.0, null
   %i.n = and i1 %i.l, %i.m
   %i.o = getelementptr inbounds nuw i8, ptr %.0, i64 232
   br i1 %i.n, label %bb.f, label %bb.g, !llvm.loop !307
 
 bb.g:                                             ; preds = %bb.f
-  %1 = icmp eq ptr %.0, %0
-  br i1 %1, label %bb.h, label %bb.k
+  br i1 %i.l, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %.not = icmp eq ptr %.019, null
@@ -618,11 +617,11 @@ bb.c:                                             ; preds = %bb.a
 _ZL27mi_segment_calculate_slicesmPm.exit:         ; preds = %bb.b, %bb.c
   %.0.i.i = phi i64 [ %i.f, %bb.b ], [ %i.h, %bb.c ] ; 2 uses
   %i.i = add i64 %.0.i.i, 65535                   ; 3 uses
-  %8 = icmp eq i64 %0, 0
+  %8 = icmp ne i64 %0, 0                          ; 3 uses
   %i.j = or i64 %i.i, 65535
   %i.k = add i64 %i.j, %0
   %i.l = lshr i64 %i.k, 16
-  %i.m = select i1 %8, i64 512, i64 %i.l
+  %i.m = select i1 %8, i64 %i.l, i64 512
   %i.n = load atomic i64, ptr @_ZL12thread_count monotonic, align 8
   %i.o = icmp ugt i64 %i.n, 1
   br i1 %i.o, label %bb.d, label %.thread
@@ -654,14 +653,13 @@ bb.g:                                             ; preds = %.thread
 
 mi_option_is_enabled.exit:                        ; preds = %.thread, %bb.g
   %i.x = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 96), align 16, !tbaa !137
-  %i.y = icmp ne i64 %i.x, 0
+  %9 = or i64 %0, %i.x
+  %i.y = icmp ne i64 %9, 0
   br label %bb.h
 
 bb.h:                                             ; preds = %mi_option_is_enabled.exit, %bb.f
   %not..i = phi i1 [ false, %bb.f ], [ true, %mi_option_is_enabled.exit ]
-  %i.z = phi i1 [ false, %bb.f ], [ %i.y, %mi_option_is_enabled.exit ]
-  %9 = icmp ne i64 %0, 0                          ; 2 uses
-  %10 = or i1 %9, %i.z
+  %i.z = phi i1 [ %8, %bb.f ], [ %i.y, %mi_option_is_enabled.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %.not.i = icmp eq i64 %1, 0
   br i1 %.not.i, label %._crit_edge.i, label %bb.i
@@ -705,7 +703,7 @@ _ZL27mi_segment_calculate_slicesmPm.exit.i:       ; preds = %bb.k, %bb.j
   %.042.i = phi i64 [ %1, %_ZL27mi_segment_calculate_slicesmPm.exit.i ], [ 33554432, %bb.h ]
   %.053 = lshr i64 %.053.in, 16                   ; 9 uses
   %i.at = shl nuw i64 %.0, 16                     ; 4 uses
-  %i.au = call noundef ptr @_Z23_mi_arena_alloc_alignedmmmbbiP10mi_memid_s(i64 noundef %i.at, i64 noundef %.042.i, i64 noundef %.043.i, i1 noundef zeroext %10, i1 noundef zeroext %not..i, i32 noundef %2, ptr noundef nonnull %6) ; 28 uses
+  %i.au = call noundef ptr @_Z23_mi_arena_alloc_alignedmmmbbiP10mi_memid_s(i64 noundef %i.at, i64 noundef %.042.i, i64 noundef %.043.i, i1 noundef zeroext %i.z, i1 noundef zeroext %not..i, i32 noundef %2, ptr noundef nonnull %6) ; 28 uses
   %i.av = icmp eq ptr %i.au, null
   br i1 %i.av, label %_ZL19mi_segment_os_allocmmbiPmS_bP17mi_segments_tld_s.exit.thread, label %bb.l
 
@@ -911,7 +909,7 @@ bb.y:                                             ; preds = %bb.x, %.loopexit
   store i64 %i.dv, ptr %i.dw, align 8, !tbaa !203
   %i.dx = getelementptr inbounds nuw i8, ptr %i.au, i64 272 ; 2 uses
   store i64 %i.dn, ptr %i.dx, align 8, !tbaa !139
-  %i.dy = zext i1 %9 to i32
+  %i.dy = zext i1 %8 to i32
   %i.dz = getelementptr inbounds nuw i8, ptr %i.au, i64 264 ; 2 uses
   store i32 %i.dy, ptr %i.dz, align 8, !tbaa !225
   %i.ea = getelementptr inbounds nuw i8, ptr %3, i64 912

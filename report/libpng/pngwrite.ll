@@ -205,8 +205,8 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !109  ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 20 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !112  ; 8 uses
-  %i.i = and i32 %i.h, 8                          ; 2 uses
-  %.not = icmp eq i32 %i.i, 0                     ; 2 uses
+  %i.i = and i32 %i.h, 8
+  %.not = icmp ne i32 %i.i, 0                     ; 3 uses
   %i.j = and i32 %i.h, 12
   %i.k = icmp eq i32 %i.j, 4                      ; 3 uses
   %i.l = and i32 %i.h, 9
@@ -271,7 +271,7 @@ bb.i:                                             ; preds = %bb.f
   unreachable
 
 bb.j:                                             ; preds = %bb.g
-  br i1 %.not, label %bb.ah, label %bb.l
+  br i1 %.not, label %bb.l, label %bb.ah
 
 bb.k:                                             ; preds = %bb.c
   %i.ak = load ptr, ptr %i.b, align 8, !tbaa !110
@@ -674,10 +674,9 @@ bb.au:                                            ; preds = %bb.at, %bb.aq
   br i1 %.not149, label %bb.ay, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %2 = icmp ne i32 %i.i, 0
   %i.mb = and i32 %.0132, 1
   %.not150 = icmp eq i32 %i.mb, 0
-  %or.cond156 = or i1 %2, %.not150
+  %or.cond156 = or i1 %.not, %.not150
   br i1 %or.cond156, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
@@ -690,7 +689,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
 
 bb.ay:                                            ; preds = %bb.ax, %bb.au
   %.1 = phi i32 [ %i.mc, %bb.ax ], [ %.0132, %bb.au ]
-  br i1 %.not, label %bb.bb, label %bb.az
+  br i1 %.not, label %bb.az, label %bb.bb
 
 bb.az:                                            ; preds = %bb.ay
   %i.md = getelementptr inbounds nuw i8, ptr %i.b, i64 28

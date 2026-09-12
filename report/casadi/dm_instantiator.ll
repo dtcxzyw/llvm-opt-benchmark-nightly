@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %._crit_edge606.thre
   store i64 16, ptr %i.ic, align 8, !tbaa !147
   %i.id = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.if = load ptr, ptr %i.ie, align 8, !tbaa !33 ; 3 uses
+  %i.if = load ptr, ptr %i.ie, align 8, !tbaa !33 ; 2 uses
   %i.ig = load ptr, ptr %i.id, align 8, !tbaa !34 ; 3 uses
   %i.ih = ptrtoint ptr %i.if to i64               ; 2 uses
   %i.ii = ptrtoint ptr %i.ig to i64               ; 2 uses
@@ -229,17 +229,18 @@ _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.bg
           to label %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge unwind label %bb.bl
 
 _ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge: ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i
-  %.pre627 = load ptr, ptr %i.id, align 8, !tbaa !37 ; 2 uses
+  %.pre627 = load ptr, ptr %i.id, align 8, !tbaa !37 ; 3 uses
   %.pre628 = load ptr, ptr %i.ie, align 8, !tbaa !37 ; 2 uses
   %.pre629 = ptrtoint ptr %.pre628 to i64
   %.pre630 = ptrtoint ptr %.pre627 to i64
+  %45 = icmp ne ptr %.pre628, %.pre627
   br label %.noexc262
 
 .noexc262:                                        ; preds = %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge, %bb.bf
   %.pre-phi631 = phi i64 [ %.pre630, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge ], [ %i.ii, %bb.bf ]
   %.pre-phi = phi i64 [ %.pre629, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge ], [ %i.ih, %bb.bf ]
-  %45 = phi ptr [ %.pre628, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge ], [ %i.if, %bb.bf ] ; 2 uses
-  %i.im = phi ptr [ %.pre627, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge ], [ %i.ig, %bb.bf ] ; 4 uses
+  %.not577607 = phi i1 [ %45, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge ], [ false, %bb.bf ] ; 3 uses
+  %i.im = phi ptr [ %.pre627, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge ], [ %i.ig, %bb.bf ] ; 2 uses
   %i.in = phi ptr [ %i.il, %_ZNSt15__new_allocatorIdE8allocateEmPKv.exit.i.i.i.i..noexc262_crit_edge ], [ null, %bb.bf ] ; 13 uses
   %i.io = sub i64 %.pre-phi, %.pre-phi631         ; 6 uses
   %i.ip = icmp sgt i64 %i.io, 8
@@ -260,7 +261,6 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.bh
   %i.is = getelementptr inbounds i8, ptr %i.in, i64 %i.io ; 2 uses
-  %.not577607 = icmp ne ptr %45, %i.im
   %or.cond620.not = and i1 %.not577607, %.080.lcssa734738
   br i1 %or.cond620.not, label %.lr.ph609, label %.loopexit
 
@@ -293,8 +293,7 @@ _ZNK6casadi13GenericMatrixINS_6MatrixIdEEE9is_scalarEb.exit: ; preds = %.loopexi
   br i1 %i.iy, label %bb.bo, label %.preheader
 
 .preheader:                                       ; preds = %_ZNK6casadi13GenericMatrixINS_6MatrixIdEEE9is_scalarEb.exit
-  %.not578610.not = icmp eq ptr %45, %i.im        ; 2 uses
-  br i1 %.not578610.not, label %._crit_edge614.thread, label %.lr.ph613
+  br i1 %.not577607, label %.lr.ph613, label %._crit_edge614.thread
 
 .lr.ph613:                                        ; preds = %.preheader
   %i.iz = load double, ptr %i.in, align 8, !tbaa !26
@@ -481,7 +480,7 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit292.preheader unwind label %bb.bw ; 0 uses
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit292.preheader: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit290
-  br i1 %.not578610.not, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit292._crit_edge, label %.lr.ph619.preheader
+  br i1 %.not577607, label %.lr.ph619.preheader, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit292._crit_edge
 
 .lr.ph619.preheader:                              ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit292.preheader
   %i.lq = ashr exact i64 %i.io, 3

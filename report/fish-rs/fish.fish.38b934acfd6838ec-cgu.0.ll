@@ -204,7 +204,7 @@ bb.ew:                                            ; preds = %bb.ev
 bb.ex:                                            ; preds = %bb.bo, %bb.ce, %bb.cm, %bb.cw, %bb.dw, %bb.ej, %bb.em, %.thread624
   %.sroa.18.0 = phi i64 [ %i.fw, %bb.bo ], [ %.pre832, %bb.ce ], [ %i.gv, %bb.cm ], [ %.sroa.0222.0, %.thread624 ], [ %i.kg, %bb.em ], [ %i.ka, %bb.ej ], [ %i.im, %bb.dw ], [ %i.hd, %bb.cw ] ; 9 uses
   %.sroa.0233.0 = phi ptr [ %i.fv, %bb.bo ], [ %i.gk, %bb.ce ], [ %i.gu, %bb.cm ], [ %i.kc, %.thread624 ], [ %i.kc, %bb.em ], [ %i.kb, %bb.ej ], [ %i.il, %bb.dw ], [ %i.hc, %bb.cw ] ; 5 uses
-  %.sroa.9179.3 = phi i64 [ %.sroa.9179.1, %bb.bo ], [ 0, %bb.ce ], [ 0, %bb.cm ], [ 0, %.thread624 ], [ 0, %bb.em ], [ 0, %bb.ej ], [ %.sroa.9179.6, %bb.dw ], [ %.sroa.9179.4, %bb.cw ] ; 3 uses
+  %.sroa.9179.3 = phi i64 [ %.sroa.9179.1, %bb.bo ], [ 0, %bb.ce ], [ 0, %bb.cm ], [ 0, %.thread624 ], [ 0, %bb.em ], [ 0, %bb.ej ], [ %.sroa.9179.6, %bb.dw ], [ %.sroa.9179.4, %bb.cw ] ; 2 uses
   %.sroa.0177.3 = phi ptr [ %.sroa.0177.1, %bb.bo ], [ inttoptr (i64 1 to ptr), %bb.ce ], [ inttoptr (i64 1 to ptr), %bb.cm ], [ inttoptr (i64 1 to ptr), %.thread624 ], [ inttoptr (i64 1 to ptr), %bb.em ], [ inttoptr (i64 1 to ptr), %bb.ej ], [ %.sroa.0177.6, %bb.dw ], [ %.sroa.0177.4, %bb.cw ] ; 3 uses
   %.sroa.16.2 = phi i64 [ %.sroa.16.0608, %bb.bo ], [ %.sroa.16.3, %bb.ce ], [ %.sroa.16.0608, %bb.cm ], [ %.sroa.0225.0, %.thread624 ], [ %.sroa.16.0608, %bb.em ], [ %.sroa.16.0608, %bb.ej ], [ %..i, %bb.dw ], [ %.sroa.16.0608, %bb.cw ] ; 2 uses
   %.sroa.0142.2 = phi i64 [ %.sroa.0142.0609, %bb.bo ], [ %.sroa.0142.3, %bb.ce ], [ %.sroa.0142.0609, %bb.cm ], [ 1, %.thread624 ], [ 0, %bb.em ], [ %.sroa.0142.0609, %bb.ej ], [ %.sroa.0142.4, %bb.dw ], [ %.sroa.0142.0609, %bb.cw ]
@@ -270,7 +270,7 @@ bb.fg:                                            ; preds = %bb.fk, %bb.ff
   call void @llvm.experimental.noalias.scope.decl(metadata !123)
   call void @llvm.experimental.noalias.scope.decl(metadata !124)
   call void @llvm.experimental.noalias.scope.decl(metadata !125)
-  %.not.i.i.i.i516 = icmp ne i64 %.sroa.9179.3, 0
+  %.not.i.i.i.i516 = icmp ne i64 %.sroa.9179.3, 0 ; 2 uses
   %i.lj = zext i1 %.not.i.i.i.i516 to i64
   invoke void @_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecmE7reserveCs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.lj)
           to label %.noexc528 unwind label %.loopexit.split-lp631.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
@@ -278,8 +278,7 @@ bb.fg:                                            ; preds = %bb.fk, %bb.ff
 .noexc528:                                        ; preds = %bb.fg
   call void @llvm.experimental.noalias.scope.decl(metadata !126)
   call void @llvm.experimental.noalias.scope.decl(metadata !127)
-  %.not.i9.i.i.i.i.i518 = icmp samesign eq i64 %.sroa.9179.3, 0
-  br i1 %.not.i9.i.i.i.i.i518, label %_RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str.exit530, label %.lr.ph.i.i.i.i.i519
+  br i1 %.not.i.i.i.i516, label %.lr.ph.i.i.i.i.i519, label %_RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str.exit530
 
 .lr.ph.i.i.i.i.i519:                              ; preds = %.noexc528, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8for_each4callcNCINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB1q_11Utf32StringINtNtBa_7collect6ExtendcE6extendNtNtNtBe_3str4iter5CharsE0E0Cs4RW8js5ES7g_4fish.exit.i.i.i.i.i524
   %.sroa.0.010.i.i.i.i.i520 = phi ptr [ %.sroa.0.1.ph.i.i.i.i.i522, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8for_each4callcNCINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB1q_11Utf32StringINtNtBa_7collect6ExtendcE6extendNtNtNtBe_3str4iter5CharsE0E0Cs4RW8js5ES7g_4fish.exit.i.i.i.i.i524 ], [ %.sroa.0177.3, %.noexc528 ] ; 5 uses
@@ -682,7 +681,7 @@ bb.fi:                                            ; preds = %bb.fh
 bb.fj:                                            ; preds = %bb.ca, %bb.cq, %bb.cy, %bb.di, %bb.ei, %bb.ev, %bb.ey, %.thread588
   %.sroa.18.0 = phi i64 [ %i.fz, %bb.ca ], [ %.pre, %bb.cq ], [ %i.gy, %bb.cy ], [ %.sroa.0222.0, %.thread588 ], [ %i.kj, %bb.ey ], [ %i.kd, %bb.ev ], [ %i.ip, %bb.ei ], [ %i.hg, %bb.di ] ; 9 uses
   %.sroa.0233.0 = phi ptr [ %i.fy, %bb.ca ], [ %i.gn, %bb.cq ], [ %i.gx, %bb.cy ], [ %i.kf, %.thread588 ], [ %i.kf, %bb.ey ], [ %i.ke, %bb.ev ], [ %i.io, %bb.ei ], [ %i.hf, %bb.di ] ; 5 uses
-  %.sroa.9179.3 = phi i64 [ %.sroa.9179.1, %bb.ca ], [ 0, %bb.cq ], [ 0, %bb.cy ], [ 0, %.thread588 ], [ 0, %bb.ey ], [ 0, %bb.ev ], [ %.sroa.9179.6, %bb.ei ], [ %.sroa.9179.4, %bb.di ] ; 3 uses
+  %.sroa.9179.3 = phi i64 [ %.sroa.9179.1, %bb.ca ], [ 0, %bb.cq ], [ 0, %bb.cy ], [ 0, %.thread588 ], [ 0, %bb.ey ], [ 0, %bb.ev ], [ %.sroa.9179.6, %bb.ei ], [ %.sroa.9179.4, %bb.di ] ; 2 uses
   %.sroa.0177.3 = phi ptr [ %.sroa.0177.1, %bb.ca ], [ inttoptr (i64 1 to ptr), %bb.cq ], [ inttoptr (i64 1 to ptr), %bb.cy ], [ inttoptr (i64 1 to ptr), %.thread588 ], [ inttoptr (i64 1 to ptr), %bb.ey ], [ inttoptr (i64 1 to ptr), %bb.ev ], [ %.sroa.0177.6, %bb.ei ], [ %.sroa.0177.4, %bb.di ] ; 3 uses
   %.sroa.16.2 = phi i64 [ %.sroa.16.0570, %bb.ca ], [ %.sroa.16.3, %bb.cq ], [ %.sroa.16.0570, %bb.cy ], [ %.sroa.0225.0, %.thread588 ], [ %.sroa.16.0570, %bb.ey ], [ %.sroa.16.0570, %bb.ev ], [ %..i, %bb.ei ], [ %.sroa.16.0570, %bb.di ] ; 2 uses
   %.sroa.0142.2 = phi i64 [ %.sroa.0142.0571, %bb.ca ], [ %.sroa.0142.3, %bb.cq ], [ %.sroa.0142.0571, %bb.cy ], [ 1, %.thread588 ], [ 0, %bb.ey ], [ %.sroa.0142.0571, %bb.ev ], [ %.sroa.0142.4, %bb.ei ], [ %.sroa.0142.0571, %bb.di ]
@@ -748,7 +747,7 @@ bb.fs:                                            ; preds = %bb.fw, %bb.fr
   call void @llvm.experimental.noalias.scope.decl(metadata !241)
   call void @llvm.experimental.noalias.scope.decl(metadata !242)
   call void @llvm.experimental.noalias.scope.decl(metadata !243)
-  %.not.i.i.i.i500 = icmp ne i64 %.sroa.9179.3, 0
+  %.not.i.i.i.i500 = icmp ne i64 %.sroa.9179.3, 0 ; 2 uses
   %i.lm = zext i1 %.not.i.i.i.i500 to i64
   invoke void @_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecmE7reserveCs4RW8js5ES7g_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.lm)
           to label %.noexc512 unwind label %.loopexit.split-lp592.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit
@@ -756,8 +755,7 @@ bb.fs:                                            ; preds = %bb.fw, %bb.fr
 .noexc512:                                        ; preds = %bb.fs
   call void @llvm.experimental.noalias.scope.decl(metadata !244)
   call void @llvm.experimental.noalias.scope.decl(metadata !245)
-  %.not.i9.i.i.i.i.i502 = icmp samesign eq i64 %.sroa.9179.3, 0
-  br i1 %.not.i9.i.i.i.i.i502, label %_RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str.exit514, label %.lr.ph.i.i.i.i.i503
+  br i1 %.not.i.i.i.i500, label %.lr.ph.i.i.i.i.i503, label %_RNvXs2X_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringNtNtCs3oUPovFnLWP_4core3fmt5Write9write_str.exit514
 
 .lr.ph.i.i.i.i.i503:                              ; preds = %.noexc512, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8for_each4callcNCINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB1q_11Utf32StringINtNtBa_7collect6ExtendcE6extendNtNtNtBe_3str4iter5CharsE0E0Cs4RW8js5ES7g_4fish.exit.i.i.i.i.i508
   %.sroa.0.010.i.i.i.i.i504 = phi ptr [ %.sroa.0.1.ph.i.i.i.i.i506, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8for_each4callcNCINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB1q_11Utf32StringINtNtBa_7collect6ExtendcE6extendNtNtNtBe_3str4iter5CharsE0E0Cs4RW8js5ES7g_4fish.exit.i.i.i.i.i508 ], [ %.sroa.0177.3, %.noexc512 ] ; 5 uses

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.q = tail call noundef ptr @_ZN5ImGui19FindRenderedTextEndEPKcS1_(ptr noundef %0, ptr noundef null) ; 2 uses
   %i.r = tail call <2 x float> @_ZN5ImGui12CalcTextSizeEPKcS1_bf(ptr noundef %0, ptr noundef %i.q, i1 noundef zeroext false, float noundef -1.000000e+00) ; 2 uses
   %i.s = icmp ne i32 %i.m, 0                      ; 2 uses
-  %i.t = icmp ne ptr %1, null
+  %i.t = icmp ne ptr %1, null                     ; 2 uses
   %or.cond = and i1 %i.t, %i.s
   br i1 %or.cond, label %bb.e, label %bb.f
 
@@ -217,8 +217,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.v = phi float [ %.sroa.021.0.vec.extract, %bb.e ], [ 0.000000e+00, %bb.d ]
   %i.w = and i32 %2, 64
-  %.not90 = icmp ne i32 %i.w, 0                   ; 3 uses
-  br i1 %.not90, label %bb.j, label %bb.g
+  %.not90 = icmp eq i32 %i.w, 0                   ; 3 uses
+  br i1 %.not90, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
   br i1 %i.s, label %bb.h, label %bb.i
@@ -303,7 +303,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bj = fcmp oge float %i.bg, %i.bi
   %i.bk = select i1 %i.bj, float %i.bg, float %i.bi ; 6 uses
   call void @_ZN5ImGui15RenderNavCursorERK6ImRectjif(ptr noundef nonnull align 4 dereferenceable(16) %4, i32 noundef %i.l, i32 noundef 0, float noundef -1.000000e+00)
-  br i1 %.not90, label %bb.q, label %bb.p
+  br i1 %.not90, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   %i.bl = getelementptr inbounds nuw i8, ptr %i.e, i64 712
@@ -382,9 +382,8 @@ bb.t:                                             ; preds = %bb.r, %bb.s, %bb.q
   br label %bb.y
 
 bb.u:                                             ; preds = %bb.t
-  %.not92 = icmp eq ptr %1, null
-  %brmerge = or i1 %.not92, %.not90
-  br i1 %brmerge, label %bb.y, label %bb.v
+  %brmerge.not = and i1 %.not90, %i.t
+  br i1 %brmerge.not, label %bb.v, label %bb.y
 
 bb.v:                                             ; preds = %bb.u
   %i.cv = getelementptr inbounds nuw i8, ptr %i.c, i64 10264
@@ -787,8 +786,8 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not.i, label %.thread187, label %bb.ad
 
 bb.ad:                                            ; preds = %.thread172
-  %i.cv = icmp ne ptr %4, null                    ; 2 uses
-  %i.cw = icmp ne ptr %5, null                    ; 2 uses
+  %i.cv = icmp ne ptr %4, null                    ; 3 uses
+  %i.cw = icmp ne ptr %5, null                    ; 3 uses
   %or.cond.i = or i1 %i.cv, %i.cw
   br i1 %or.cond.i, label %bb.ae, label %.thread187
 
@@ -878,12 +877,10 @@ bb.ap:                                            ; preds = %bb.af
 
 _ZN5ImGui15DataTypeCompareEiPKvS1_.exit.i:        ; preds = %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae
   %i.db = phi i32 [ 0, %bb.ae ], [ %.0.i49.i.i, %bb.ap ], [ %.0.i.i.i, %bb.ag ], [ %.0.i40.i.i, %bb.ah ], [ %.0.i41.i.i, %bb.ai ], [ %.0.i42.i.i, %bb.aj ], [ %.0.i43.i.i, %bb.ak ], [ %.0.i44.i.i, %bb.al ], [ %.0.i45.i.i, %bb.am ], [ %.0.i46.i.i, %bb.an ], [ %.0.i47.i.i, %bb.ao ], [ 0, %bb.af ] ; 2 uses
-  %12 = icmp eq ptr %4, null
-  %13 = icmp eq ptr %5, null
-  %or.cond5.i = or i1 %12, %13
-  %14 = icmp slt i32 %i.db, 0
-  %or.cond7.i = or i1 %or.cond5.i, %14
-  br i1 %or.cond7.i, label %.thread187, label %bb.aq
+  %12 = icmp sgt i32 %i.db, -1
+  %13 = and i1 %i.cw, %12
+  %or.cond7.not.i = and i1 %i.cv, %13
+  br i1 %or.cond7.not.i, label %bb.aq, label %.thread187
 
 bb.aq:                                            ; preds = %_ZN5ImGui15DataTypeCompareEiPKvS1_.exit.i
   %i.dc = icmp eq i32 %i.db, 0
@@ -1286,23 +1283,21 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i32 %i.a, 10                     ; 2 uses
-  %i.f = and i32 %i.c, 67108864                   ; 2 uses
-  %i.g = icmp ne i32 %i.f, 0                      ; 2 uses
-  %i.h = select i1 %i.e, i1 %i.g, i1 false        ; 2 uses
+  %i.f = and i32 %i.c, 67108864
+  %i.g = icmp ne i32 %i.f, 0                      ; 3 uses
+  %i.h = select i1 %i.e, i1 %i.g, i1 false
   %or.cond = and i1 %5, %i.e
-  br i1 %or.cond, label %7, label %bb.d
+  %or.cond.not = xor i1 %or.cond, true
+  %brmerge = select i1 %or.cond.not, i1 true, i1 %i.g
+  br i1 %brmerge, label %bb.d, label %bb.c
 
-7:                                                ; preds = %bb.b
-  %8 = icmp eq i32 %i.f, 0
-  br i1 %8, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %7
+bb.c:                                             ; preds = %bb.b
   store i32 32, ptr %2, align 4, !tbaa !208
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %7, %bb.b
-  %.0130 = phi i32 [ 32, %bb.c ], [ 10, %7 ], [ %i.a, %bb.b ] ; 3 uses
-  %.0127.shrunk = phi i1 [ true, %bb.c ], [ %i.h, %7 ], [ %i.h, %bb.b ]
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.0130 = phi i32 [ 32, %bb.c ], [ %i.a, %bb.b ] ; 3 uses
+  %.0127.shrunk = phi i1 [ true, %bb.c ], [ %i.h, %bb.b ]
   %i.i = icmp eq i32 %.0130, 10
   %i.j = select i1 %i.i, i1 %i.g, i1 false
   %i.k = or i1 %.0127.shrunk, %i.j
@@ -1705,7 +1700,7 @@ bb.f:                                             ; preds = %bb.d
 
 _ZN5ImGuiL15TabBarCalcTabIDEP11ImGuiTabBarPKcP11ImGuiWindow.exit: ; preds = %bb.e, %bb.f
   %.0.i = phi i32 [ %i.q, %bb.e ], [ %i.u, %bb.f ] ; 14 uses
-  %.not247 = icmp eq ptr %2, null                 ; 2 uses
+  %.not247 = icmp eq ptr %2, null                 ; 3 uses
   br i1 %.not247, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZN5ImGuiL15TabBarCalcTabIDEP11ImGuiTabBarPKcP11ImGuiWindow.exit
@@ -1842,8 +1837,8 @@ _ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit: ; preds = %bb.k, %_ZN8ImVecto
   %i.bs = trunc i64 %i.br to i16
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 138
   store i16 %i.bs, ptr %i.bt, align 2, !tbaa !565
-  %16 = icmp ne ptr %2, null
-  %i.bu = and i1 %16, %.not248                    ; 3 uses
+  %.not247.not = xor i1 %.not247, true
+  %i.bu = and i1 %.not248, %.not247.not           ; 3 uses
   %i.bv = trunc i32 %.0235 to i1                  ; 2 uses
   %i.bw = select i1 %i.bu, i1 true, i1 %i.bv
   %i.bx = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 4 uses

@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not55, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  br i1 %.not49, label %.thread97, label %bb.r
+  br i1 %.not49, label %.loopexit.thread141, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %puts72 = call i32 @puts(ptr nonnull dereferenceable(1) @str.8) ; 0 uses
@@ -305,7 +305,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.as, %bb.ao, %bb.ai
   %.0105.lcssa107.wide = phi i32 [ 0, %bb.ai ], [ 1, %bb.ao ], [ 2, %bb.as ]
-  br i1 %.not49, label %.thread97, label %bb.ak
+  br i1 %.not49, label %.loopexit.thread141, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   %i.ar = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.18, i32 noundef %.0105.lcssa107.wide) ; 0 uses
@@ -352,15 +352,10 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not69.2, label %bb.at, label %bb.aj
 
 bb.at:                                            ; preds = %bb.as
-  br i1 %.not49, label %.thread97, label %bb.au
+  br i1 %.not49, label %.loopexit.thread141, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   %puts65 = call i32 @puts(ptr nonnull dereferenceable(1) @str.4) ; 0 uses
-  br label %.thread97
-
-.thread97:                                        ; preds = %bb.at, %bb.au, %bb.aj, %bb.q
-  %.1.ph = phi i32 [ 0, %bb.au ], [ 1, %bb.q ], [ 1, %bb.aj ], [ 0, %bb.at ]
-  %8 = icmp ne i32 %0, 0
   br label %.loopexit.thread141
 
 .loopexit:                                        ; preds = %bb.ah, %bb.ag, %.critedge, %bb.al, %bb.am, %bb.an, %bb.ap, %bb.aq, %bb.ar, %bb.ab, %bb.aa, %bb.v, %bb.u, %bb.l, %bb.k, %bb.j, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
@@ -373,9 +368,9 @@ bb.au:                                            ; preds = %bb.at
   %i.ba = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.19, i32 noundef %.1139) ; 0 uses
   br label %.loopexit.thread141
 
-.loopexit.thread141:                              ; preds = %bb.g, %bb.x, %bb.ad, %.thread97, %.loopexit.thread, %.loopexit
-  %9 = phi i1 [ %8, %.thread97 ], [ true, %.loopexit.thread ], [ false, %.loopexit ], [ false, %bb.ad ], [ false, %bb.x ], [ false, %bb.g ]
-  %.1100 = phi i32 [ %.1.ph, %.thread97 ], [ %.1139, %.loopexit.thread ], [ %.1, %.loopexit ], [ 1, %bb.ad ], [ 1, %bb.x ], [ 1, %bb.g ]
+.loopexit.thread141:                              ; preds = %bb.g, %bb.x, %bb.ad, %bb.q, %bb.aj, %bb.au, %bb.at, %.loopexit.thread, %.loopexit
+  %8 = phi i1 [ false, %.loopexit ], [ true, %.loopexit.thread ], [ false, %bb.at ], [ true, %bb.au ], [ false, %bb.aj ], [ false, %bb.q ], [ false, %bb.ad ], [ false, %bb.x ], [ false, %bb.g ]
+  %.1100 = phi i32 [ %.1, %.loopexit ], [ %.1139, %.loopexit.thread ], [ 0, %bb.at ], [ 0, %bb.au ], [ 1, %bb.aj ], [ 1, %bb.q ], [ 1, %bb.ad ], [ 1, %bb.x ], [ 1, %bb.g ]
   %i.bb = load ptr, ptr %1, align 8, !tbaa !23    ; 2 uses
   %.not.i = icmp eq ptr %i.bb, null
   br i1 %.not.i, label %mbedtls_mpi_free.exit, label %bb.av
@@ -463,7 +458,7 @@ bb.bb:                                            ; preds = %mbedtls_mpi_free.ex
   br label %mbedtls_mpi_free.exit85
 
 mbedtls_mpi_free.exit85:                          ; preds = %mbedtls_mpi_free.exit83, %bb.bb
-  br i1 %9, label %bb.bc, label %bb.bd
+  br i1 %8, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %mbedtls_mpi_free.exit85
   %putchar = call i32 @putchar(i32 10)            ; 0 uses

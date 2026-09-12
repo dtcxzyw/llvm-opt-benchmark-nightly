@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
 .thread:                                          ; preds = %bb.b, %bb.e, %bb.d
   %i.h = phi ptr [ null, %bb.d ], [ %i.e, %bb.e ], [ null, %bb.b ] ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !49   ; 4 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !49   ; 3 uses
   %cond.i = icmp eq i64 %i.j, 0
   br i1 %cond.i, label %_ZNK4i18n12phonenumbers26PhoneNumberOfflineGeocoder20MayFallBackToEnglishERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread76, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
 
@@ -211,7 +211,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %.thread
   %i.k = load ptr, ptr %2, align 8, !tbaa !51     ; 3 uses
   %bcmp.i = tail call i32 @bcmp(ptr %i.k, ptr nonnull @.str.3, i64 %.sroa.speculated.i.i)
   %.not.i.i = icmp eq i32 %bcmp.i, 0
-  %.not.i = icmp eq i64 %i.j, 2                   ; 2 uses
+  %.not.i = icmp eq i64 %i.j, 2                   ; 3 uses
   %or.cond.i = and i1 %.not.i, %.not.i.i
   br i1 %or.cond.i, label %_ZNK4i18n12phonenumbers26PhoneNumberOfflineGeocoder20MayFallBackToEnglishERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i5.i
 
@@ -223,10 +223,9 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i5.i:  ; preds = %_ZNSt11char_traitsI
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i14.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i5.i
   %bcmp27.i = tail call i32 @bcmp(ptr %i.k, ptr nonnull @.str.5, i64 %.sroa.speculated.i.i)
-  %.not.i15.i = icmp ne i32 %bcmp27.i, 0
-  %8 = icmp ne i64 %i.j, 2
-  %or.cond = or i1 %8, %.not.i15.i
-  br i1 %or.cond, label %_ZNK4i18n12phonenumbers26PhoneNumberOfflineGeocoder20MayFallBackToEnglishERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread76, label %_ZNK4i18n12phonenumbers26PhoneNumberOfflineGeocoder20MayFallBackToEnglishERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread
+  %.not.i15.i = icmp eq i32 %bcmp27.i, 0
+  %or.cond.not = and i1 %.not.i15.i, %.not.i
+  br i1 %or.cond.not, label %_ZNK4i18n12phonenumbers26PhoneNumberOfflineGeocoder20MayFallBackToEnglishERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread, label %_ZNK4i18n12phonenumbers26PhoneNumberOfflineGeocoder20MayFallBackToEnglishERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread76
 
 _ZNK4i18n12phonenumbers26PhoneNumberOfflineGeocoder20MayFallBackToEnglishERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread76: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i14.i, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
