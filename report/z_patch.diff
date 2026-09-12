@@ -1,0 +1,13 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 317d587ddedd6..20925cbb21a95 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -2437,6 +2437,8 @@ Instruction *InstCombinerImpl::visitSub(BinaryOperator &I) {
+     } else {
+       if (cast<Constant>(Op1)->isNotMinSignedValue() && I.hasNoSignedWrap())
+         Res->setHasNoSignedWrap(true);
++      else if (I.hasNoUnsignedWrap() && isKnownNonNegative(Op1, SQ) && isKnownNonNegative(Op0, SQ.getWithInstruction(&I)))
++        Res->setHasNoSignedWrap(true);
+     }
+ 
+     return Res;
