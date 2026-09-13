@@ -204,7 +204,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bc
           to label %bb.bt unwind label %bb.bw
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.dl = icmp eq i32 %i.dk, 327680
+  %i.dl = icmp eq i32 %i.dk, 327680               ; 2 uses
   br i1 %i.dl, label %bb.bu, label %bb.ct
 
 bb.bu:                                            ; preds = %bb.bt
@@ -400,7 +400,7 @@ bb.cq:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.cr:                                            ; preds = %bb.cp, %select.unfold
   %.0122320 = phi i32 [ %.0122321, %bb.cp ], [ %.0122, %select.unfold ] ; 2 uses
-  %.0124318 = phi i32 [ %.0124319, %bb.cp ], [ 0, %select.unfold ] ; 4 uses
+  %.0124318 = phi i32 [ %.0124319, %bb.cp ], [ 0, %select.unfold ] ; 2 uses
   %i.ft = load i32, ptr %i.e, align 8, !tbaa !84
   %i.fu = icmp slt i32 %.0124318, %i.ft
   br i1 %i.fu, label %bb.cs, label %bb.ct
@@ -410,13 +410,12 @@ bb.cs:                                            ; preds = %bb.cr
   br label %bb.ct
 
 bb.ct:                                            ; preds = %bb.cr, %bb.cs, %bb.bt
-  %.1125 = phi i32 [ %.0124318, %bb.cs ], [ %.0124318, %bb.cr ], [ -1, %bb.bt ]
   %.1123 = phi i32 [ %.0122320, %bb.cs ], [ %.0122320, %bb.cr ], [ 1, %bb.bt ] ; 2 uses
   %i.fv = invoke noundef i32 @_ZNK2cv11_InputArray4kindEv(ptr noundef nonnull align 8 dereferenceable(24) %2)
           to label %bb.cu unwind label %bb.bw
 
 bb.cu:                                            ; preds = %bb.ct
-  %i.fw = icmp eq i32 %i.fv, 327680
+  %i.fw = icmp eq i32 %i.fv, 327680               ; 2 uses
   br i1 %i.fw, label %bb.cv, label %bb.dt
 
 bb.cv:                                            ; preds = %bb.cu
@@ -607,7 +606,7 @@ bb.dq:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.dr:                                            ; preds = %bb.dp, %select.unfold322
   %.0118329 = phi i32 [ %.0118330, %bb.dp ], [ %.0118, %select.unfold322 ] ; 2 uses
-  %.0120327 = phi i32 [ %.0120328, %bb.dp ], [ 0, %select.unfold322 ] ; 4 uses
+  %.0120327 = phi i32 [ %.0120328, %bb.dp ], [ 0, %select.unfold322 ] ; 2 uses
   %i.id = load i32, ptr %i.e, align 8, !tbaa !84
   %i.ie = icmp slt i32 %.0120327, %i.id
   br i1 %i.ie, label %bb.ds, label %bb.dt
@@ -617,10 +616,8 @@ bb.ds:                                            ; preds = %bb.dr
   br label %bb.dt
 
 bb.dt:                                            ; preds = %bb.dr, %bb.ds, %bb.cu
-  %.1121 = phi i32 [ %.0120327, %bb.ds ], [ %.0120327, %bb.dr ], [ -1, %bb.cu ]
   %.1119 = phi i32 [ %.0118329, %bb.ds ], [ %.0118329, %bb.dr ], [ 1, %bb.cu ]
-  %61 = icmp slt i32 %.1125, 0
-  br i1 %61, label %bb.du, label %bb.dx
+  br i1 %i.dl, label %bb.dx, label %bb.du
 
 bb.du:                                            ; preds = %bb.dt
   call void @llvm.lifetime.start.p0(ptr nonnull %45) #24
@@ -646,8 +643,7 @@ bb.dw:                                            ; preds = %bb.du
   br label %bb.gw
 
 bb.dx:                                            ; preds = %bb.dv, %bb.dt
-  %62 = icmp slt i32 %.1121, 0
-  br i1 %62, label %bb.dy, label %bb.eb
+  br i1 %i.fw, label %bb.eb, label %bb.dy
 
 bb.dy:                                            ; preds = %bb.dx
   call void @llvm.lifetime.start.p0(ptr nonnull %46) #24

@@ -204,7 +204,7 @@ _ZN14saisxx_private10getBucketsIPllEEvT_S2_T0_b.exit338: ; preds = %_ZN14saisxx_
   %i.nj = getelementptr inbounds [8 x i8], ptr %1, i64 %i.ni
   store i64 %i.nc, ptr %i.nj, align 8, !tbaa !107
   %.12.1 = add nsw i64 %.12.in475, -2             ; 2 uses
-  %i.nk = getelementptr inbounds [8 x i8], ptr %1, i64 %.12.1 ; 2 uses
+  %i.nk = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.12.1 ; 2 uses
   %i.nl = load i64, ptr %i.nk, align 8, !tbaa !107 ; 2 uses
   store i64 0, ptr %i.nk, align 8, !tbaa !107
   %i.nm = getelementptr inbounds [4 x i8], ptr %0, i64 %i.nl
@@ -452,7 +452,7 @@ _ZN14saisxx_private10getBucketsIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIl
   %i.rh = getelementptr inbounds [8 x i8], ptr %1, i64 %i.rg
   store i64 %i.ra, ptr %i.rh, align 8, !tbaa !107
   %.14.1 = add nsw i64 %.14.in470, -2             ; 2 uses
-  %i.ri = getelementptr inbounds [8 x i8], ptr %1, i64 %.14.1 ; 2 uses
+  %i.ri = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.14.1 ; 2 uses
   %i.rj = load i64, ptr %i.ri, align 8, !tbaa !107 ; 2 uses
   store i64 0, ptr %i.ri, align 8, !tbaa !107
   %i.rk = getelementptr inbounds [4 x i8], ptr %0, i64 %i.rj
@@ -855,7 +855,7 @@ _ZN14saisxx_private10getBucketsIPllEEvT_S2_T0_b.exit338: ; preds = %_ZN14saisxx_
   %i.mu = getelementptr inbounds [8 x i8], ptr %1, i64 %i.mt
   store i64 %i.mo, ptr %i.mu, align 8, !tbaa !107
   %.12.1 = add nsw i64 %.12.in475, -2             ; 2 uses
-  %i.mv = getelementptr inbounds [8 x i8], ptr %1, i64 %.12.1 ; 2 uses
+  %i.mv = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.12.1 ; 2 uses
   %i.mw = load i64, ptr %i.mv, align 8, !tbaa !107 ; 2 uses
   store i64 0, ptr %i.mv, align 8, !tbaa !107
   %i.mx = getelementptr inbounds [8 x i8], ptr %0, i64 %i.mw
@@ -1095,7 +1095,7 @@ _ZN14saisxx_private10getBucketsIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIl
   %i.qk = getelementptr inbounds [8 x i8], ptr %1, i64 %i.qj
   store i64 %i.qe, ptr %i.qk, align 8, !tbaa !107
   %.14.1 = add nsw i64 %.14.in470, -2             ; 2 uses
-  %i.ql = getelementptr inbounds [8 x i8], ptr %1, i64 %.14.1 ; 2 uses
+  %i.ql = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.14.1 ; 2 uses
   %i.qm = load i64, ptr %i.ql, align 8, !tbaa !107 ; 2 uses
   store i64 0, ptr %i.ql, align 8, !tbaa !107
   %i.qn = getelementptr inbounds [8 x i8], ptr %0, i64 %i.qm
@@ -1498,7 +1498,7 @@ _ZN14saisxx_private10getBucketsIPiiEEvT_S2_T0_b.exit94: ; preds = %_ZN14saisxx_p
   %i.fl = sext i32 %i.fk to i64
   %i.fm = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fl
   %i.fn = ptrtoint ptr %1 to i64
-  %i.fo = zext i32 %i.bj to i64
+  %i.fo = zext nneg i32 %i.bj to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph124, %bb.t
@@ -1901,7 +1901,7 @@ _ZN14saisxx_private10getBucketsIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIi
   %i.fl = sext i32 %i.fk to i64
   %i.fm = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fl
   %i.fn = ptrtoint ptr %1 to i64
-  %i.fo = zext i32 %i.bj to i64
+  %i.fo = zext nneg i32 %i.bj to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph123, %bb.t
@@ -2304,7 +2304,7 @@ _ZN14saisxx_private10getBucketsIPiiEEvT_S2_T0_b.exit107: ; preds = %_ZN14saisxx_
   %i.fm = sext i32 %i.fl to i64
   %i.fn = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fm
   %i.fo = ptrtoint ptr %1 to i64
-  %i.fp = zext i32 %i.bj to i64
+  %i.fp = zext nneg i32 %i.bj to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph142, %bb.v
@@ -2707,7 +2707,7 @@ _ZN14saisxx_private10getBucketsIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIi
   %i.fm = sext i32 %i.fl to i64
   %i.fn = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fm
   %i.fo = ptrtoint ptr %1 to i64
-  %i.fp = zext i32 %i.bj to i64
+  %i.fp = zext nneg i32 %i.bj to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph141, %bb.v
@@ -3110,7 +3110,7 @@ _ZN14saisxx_private10getBucketsIPiiEEvT_S2_T0_b.exit94: ; preds = %_ZN14saisxx_p
   %i.fl = sext i32 %i.fk to i64
   %i.fm = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fl
   %i.fn = ptrtoint ptr %1 to i64
-  %i.fo = zext i32 %i.bj to i64
+  %i.fo = zext nneg i32 %i.bj to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph124, %bb.t
@@ -3513,7 +3513,7 @@ _ZN14saisxx_private10getBucketsIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIi
   %i.fl = sext i32 %i.fk to i64
   %i.fm = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fl
   %i.fn = ptrtoint ptr %1 to i64
-  %i.fo = zext i32 %i.bj to i64
+  %i.fo = zext nneg i32 %i.bj to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph123, %bb.t
@@ -3916,7 +3916,7 @@ _ZN14saisxx_private10getBucketsIPiiEEvT_S2_T0_b.exit107: ; preds = %_ZN14saisxx_
   %i.fm = sext i32 %i.fl to i64
   %i.fn = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fm
   %i.fo = ptrtoint ptr %1 to i64
-  %i.fp = zext i32 %i.bj to i64
+  %i.fp = zext nneg i32 %i.bj to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph142, %bb.v
@@ -4319,7 +4319,7 @@ _ZN14saisxx_private10getBucketsIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIi
   %i.fm = sext i32 %i.fl to i64
   %i.fn = getelementptr inbounds [4 x i8], ptr %1, i64 %i.fm
   %i.fo = ptrtoint ptr %1 to i64
-  %i.fp = zext i32 %i.bj to i64
+  %i.fp = zext nneg i32 %i.bj to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph141, %bb.v

@@ -205,11 +205,10 @@ bb.l:                                             ; preds = %.lr.ph258, %.thread
   br i1 %.not108, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %4 = lshr i32 %.095257, 1
   %i.my = add nsw i32 %.095257, -1                ; 2 uses
-  %5 = ashr i32 %i.my, 1
-  %6 = xor i32 %4, %5
-  %i.mz = xor i32 %6, %.095257
+  %4 = xor i32 %i.my, %.095257
+  %5 = lshr i32 %4, 1
+  %i.mz = xor i32 %.095257, %5
   %i.na = xor i32 %i.mz, %i.my
   %i.nb = call fastcc i32 @Abc_TtSuppFindFirst(i32 noundef %i.na)
   br label %bb.n

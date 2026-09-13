@@ -205,11 +205,10 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.new
 
 bb.o:                                             ; preds = %.unr-lcssa, %.epil.preheader
   %.lcssa = phi i16 [ %i.fi, %.unr-lcssa ], [ %i.ft, %.epil.preheader ]
-  %scevgep.i = getelementptr i8, ptr %.021.i, i64 6
-  %4 = add nsw i32 %i.eg, -1
+  %4 = shl nuw nsw i32 %i.eg, 1
   %i.fu = zext nneg i32 %4 to i64
-  %5 = shl nuw nsw i64 %i.fu, 1
-  %scevgep23.i = getelementptr i8, ptr %scevgep.i, i64 %5 ; 2 uses
+  %5 = getelementptr i8, ptr %.021.i, i64 %i.fu
+  %scevgep23.i = getelementptr i8, ptr %5, i64 4  ; 2 uses
   %i.fv = lshr i16 %i.ej, 1
   %i.fw = zext nneg i16 %i.fv to i64
   %i.fx = getelementptr inbounds nuw [2 x i8], ptr %i.cy, i64 %i.fw

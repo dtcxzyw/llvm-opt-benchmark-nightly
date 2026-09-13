@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.er = add nsw i32 %i.eo, -1
-  %i.es = zext i32 %i.er to i64
+  %i.es = zext nneg i32 %i.er to i64
   %i.et = shl nuw nsw i64 %i.es, 2
   %i.eu = getelementptr i8, ptr %i.ej, i64 %i.et
   %scevgep = getelementptr i8, ptr %i.eu, i64 4
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.26.01093 = phi <2 x float> [ %.sroa.26.8.vec.insert343, %bb.b ], [ %i.v, %bb.a ] ; 4 uses
-  %i.aj = phi float [ %i.ai, %bb.b ], [ %i.x, %bb.a ] ; 23 uses
+  %i.aj = phi float [ %i.ai, %bb.b ], [ %i.x, %bb.a ] ; 22 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %.sroa.01082.0.copyload = load <2 x float>, ptr %i.ak, align 8 ; 5 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -1011,13 +1011,11 @@ nk_utf_decode.exit:                               ; preds = %.lr.ph.preheader.i,
   %.sroa.0190.0.ph1192 = phi <2 x float> [ zeroinitializer, %.lr.ph.lr.ph ], [ %.sroa.0190.0.vec.insert, %nk_utf_decode.exit880 ] ; 3 uses
   %.0702.ph1191 = phi i32 [ 1, %.lr.ph.lr.ph ], [ %i.oj, %nk_utf_decode.exit880 ] ; 3 uses
   %.0.ph1190 = phi i32 [ %.11089, %.lr.ph.lr.ph ], [ %.21090, %nk_utf_decode.exit880 ]
-  %i.ni = add nsw i32 %.0702.ph1191, -1           ; 2 uses
-  %14 = sitofp i32 %i.ni to float
-  %i.nj = fmul float %i.aj, %14                   ; 2 uses
+  %i.ni = add nsw i32 %.0702.ph1191, -1
+  %14 = uitofp nneg i32 %i.ni to float
+  %i.nj = fmul float %i.aj, %14                   ; 3 uses
   %i.nk = sext i32 %.0685.ph1203 to i64
   %i.nl = getelementptr inbounds i8, ptr %.0.i8111110, i64 %i.nk ; 3 uses
-  %15 = uitofp nneg i32 %i.ni to float
-  %16 = fmul float %i.aj, %15
   br label %bb.cr
 
 bb.cr:                                            ; preds = %.lr.ph, %nk_utf_decode.exit901
@@ -1075,7 +1073,7 @@ bb.cw:                                            ; preds = %bb.cv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #50
   %i.nv = sub nsw i32 %.06871171, %.0685.ph1203
   %i.nw = call fastcc <2 x float> @nk_text_calculate_text_bounds(ptr noundef nonnull %9, ptr noundef nonnull %i.nl, i32 noundef %i.nv, float noundef %i.aj, ptr noundef %i.f, ptr noundef nonnull %11, ptr noundef %i.e)
-  %.sroa.0141.0.vec.insert = insertelement <2 x float> %i.nw, float %16, i64 1
+  %.sroa.0141.0.vec.insert = insertelement <2 x float> %i.nw, float %i.nj, i64 1
   %i.nx = sext i32 %.06871171 to i64
   %i.ny = getelementptr inbounds i8, ptr %.0.i8111110, i64 %i.nx
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #50

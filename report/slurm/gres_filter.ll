@@ -202,9 +202,9 @@ bb.ep:                                            ; preds = %bb.eo
   %i.ve = load i16, ptr %i.up, align 8
   %i.vf = zext i16 %i.ve to i32
   %i.vg = mul nuw nsw i32 %i.vb, %i.vf
-  %i.vh = add nsw i32 %i.vg, %.0569846
+  %i.vh = add nuw nsw i32 %i.vg, %.0569846
   %i.vi = load ptr, ptr %1, align 8
-  %2 = sext i32 %i.vh to i64                      ; 3 uses
+  %2 = zext nneg i32 %i.vh to i64                 ; 3 uses
   %i.vj = call i32 @slurm_bit_test(ptr noundef %i.vi, i64 noundef %2) #6
   %.not717 = icmp eq i32 %i.vj, 0
   br i1 %.not717, label %bb.ev, label %bb.eq

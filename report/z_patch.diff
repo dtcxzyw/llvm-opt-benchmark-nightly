@@ -1,0 +1,172 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 1580571a01451..74c078867ee14 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -531,11 +531,25 @@ static void computeKnownBitsAddSub(bool Add, const Value *Op0, const Value *Op1,
+   computeKnownBits(Op0, DemandedElts, Known2, Q, Depth + 1);
+   KnownOut = KnownBits::computeForAddSub(Add, NSW, NUW, Known2, KnownOut);
+ 
+-  if (!Add && NSW && !KnownOut.isNonNegative() &&
+-      (isImpliedByDomCondition(ICmpInst::ICMP_SLE, Op1, Op0, Q.CxtI, Q.DL)
+-           .value_or(false) ||
+-       match(Op1, m_c_SMin(m_Specific(Op0), m_Value()))))
+-    KnownOut.makeNonNegative();
++  if (NSW && !KnownOut.isNonNegative()) {
++    if (!Add) {
++      // X - Y is nonnegative if Y <= X (signed).
++      if (isImpliedByDomCondition(ICmpInst::ICMP_SLE, Op1, Op0, Q.CxtI, Q.DL)
++              .value_or(false) ||
++          match(Op1, m_c_SMin(m_Specific(Op0), m_Value())))
++        KnownOut.makeNonNegative();
++      // X - 1 is nonnegative if X is known positive (X > 0 implies X >= 1).
++      else if (match(Op1, m_One()) && Known2.isNonNegative() &&
++               (Known2.isNonZero() || isKnownNonZero(Op0, Q, Depth + 1)))
++        KnownOut.makeNonNegative();
++    } else {
++      // X + (-1) is nonnegative if X is known positive (X > 0 implies X >= 1).
++      // This handles "add nsw X, -1" which is semantically "X - 1".
++      if (match(Op1, m_AllOnes()) && Known2.isNonNegative() &&
++          (Known2.isNonZero() || isKnownNonZero(Op0, Q, Depth + 1)))
++        KnownOut.makeNonNegative();
++    }
++  }
+ 
+   if (Add)
+     // Try to match lerp pattern and combine results
+diff --git a/llvm/test/Analysis/ValueTracking/known-power-of-two-urem.ll b/llvm/test/Analysis/ValueTracking/known-power-of-two-urem.ll
+index afabf6ce0fdf2..7a0255f18002a 100644
+--- a/llvm/test/Analysis/ValueTracking/known-power-of-two-urem.ll
++++ b/llvm/test/Analysis/ValueTracking/known-power-of-two-urem.ll
+@@ -261,7 +261,7 @@ define i64 @known_power_of_two_urem_loop_ashr(i64 %size, i64 %a) {
+ ; CHECK-NEXT:    [[SUM:%.*]] = phi i64 [ 0, [[ENTRY]] ], [ [[ADD:%.*]], [[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i64 [[PHI]], -1
+ ; CHECK-NEXT:    [[UREM:%.*]] = and i64 [[SIZE:%.*]], [[TMP0]]
+-; CHECK-NEXT:    [[ADD]] = add nsw i64 [[SUM]], [[UREM]]
++; CHECK-NEXT:    [[ADD]] = add nuw nsw i64 [[SUM]], [[UREM]]
+ ; CHECK-NEXT:    [[I]] = lshr i64 [[PHI]], [[A:%.*]]
+ ; CHECK-NEXT:    [[ICMP_NOT:%.*]] = icmp eq i64 [[I]], 0
+ ; CHECK-NEXT:    br i1 [[ICMP_NOT]], label [[FOR_END:%.*]], label [[FOR_BODY]]
+diff --git a/llvm/test/Transforms/InstCombine/bitcast.ll b/llvm/test/Transforms/InstCombine/bitcast.ll
+index a81eb5000f63c..ee61761221a93 100644
+--- a/llvm/test/Transforms/InstCombine/bitcast.ll
++++ b/llvm/test/Transforms/InstCombine/bitcast.ll
+@@ -903,3 +903,106 @@ end:                                        ; preds = %unreachable, %entry
+   %3 = extractelement <2 x i16> %2, i64 0
+   ret i16 %3
+ }
++
++; Issue #221943: X - 1 should be nonnegative when X > 0.
++; The assume that %magx > 0 should allow InstCombine to recognize that
++; %mag = %magx - 1 is nonnegative, enabling the copysign idiom fold.
++define float @copysign_idiom_sub1_positive(float %x, i32 %magx) {
++; CHECK-LABEL: @copysign_idiom_sub1_positive(
++; CHECK-NEXT:    [[MAG:%.*]] = add nsw i32 [[MAGX:%.*]], -1
++; CHECK-NEXT:    [[POSITIVE:%.*]] = icmp sgt i32 [[MAGX]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[POSITIVE]])
++; CHECK-NEXT:    [[TMP1:%.*]] = bitcast i32 [[MAG]] to float
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.copysign.f32(float [[TMP1]], float [[X:%.*]])
++; CHECK-NEXT:    ret float [[Y]]
++;
++  %mag = add i32 %magx, -1
++  %positive = icmp sgt i32 %magx, 0
++  call void @llvm.assume(i1 %positive)
++  %bits = bitcast float %x to i32
++  %sign = and i32 %bits, -2147483648
++  %res = or i32 %mag, %sign
++  %y = bitcast i32 %res to float
++  ret float %y
++}
++
++; Test with sub instruction instead of add with -1.
++define float @copysign_idiom_sub1_positive_sub(float %x, i32 %magx) {
++; CHECK-LABEL: @copysign_idiom_sub1_positive_sub(
++; CHECK-NEXT:    [[MAG:%.*]] = add nsw i32 [[MAGX:%.*]], -1
++; CHECK-NEXT:    [[POSITIVE:%.*]] = icmp sgt i32 [[MAGX]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[POSITIVE]])
++; CHECK-NEXT:    [[TMP1:%.*]] = bitcast i32 [[MAG]] to float
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.copysign.f32(float [[TMP1]], float [[X:%.*]])
++; CHECK-NEXT:    ret float [[Y]]
++;
++  %mag = sub i32 %magx, 1
++  %positive = icmp sgt i32 %magx, 0
++  call void @llvm.assume(i1 %positive)
++  %bits = bitcast float %x to i32
++  %sign = and i32 %bits, -2147483648
++  %res = or i32 %mag, %sign
++  %y = bitcast i32 %res to float
++  ret float %y
++}
++
++; Test with i64 for double precision.
++define double @copysign_idiom_sub1_positive_f64(double %x, i64 %magx) {
++; CHECK-LABEL: @copysign_idiom_sub1_positive_f64(
++; CHECK-NEXT:    [[MAG:%.*]] = add nsw i64 [[MAGX:%.*]], -1
++; CHECK-NEXT:    [[POSITIVE:%.*]] = icmp sgt i64 [[MAGX]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[POSITIVE]])
++; CHECK-NEXT:    [[TMP1:%.*]] = bitcast i64 [[MAG]] to double
++; CHECK-NEXT:    [[Y:%.*]] = call double @llvm.copysign.f64(double [[TMP1]], double [[X:%.*]])
++; CHECK-NEXT:    ret double [[Y]]
++;
++  %mag = add i64 %magx, -1
++  %positive = icmp sgt i64 %magx, 0
++  call void @llvm.assume(i1 %positive)
++  %bits = bitcast double %x to i64
++  %sign = and i64 %bits, -9223372036854775808
++  %res = or i64 %mag, %sign
++  %y = bitcast i64 %res to double
++  ret double %y
++}
++
++; Negative test: %magx >= 0 (nonnegative) is not enough, need %magx > 0 (positive).
++; %magx could be 0, so %mag = %magx - 1 could be -1.
++define float @copysign_idiom_sub1_nonnegative_not_positive(float %x, i32 %magx) {
++; CHECK-LABEL: @copysign_idiom_sub1_nonnegative_not_positive(
++; CHECK-NEXT:    [[MAG:%.*]] = add nsw i32 [[MAGX:%.*]], -1
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sgt i32 [[MAGX]], -1
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[BITS:%.*]] = bitcast float [[X:%.*]] to i32
++; CHECK-NEXT:    [[SIGN:%.*]] = and i32 [[BITS]], -2147483648
++; CHECK-NEXT:    [[RES:%.*]] = or i32 [[MAG]], [[SIGN]]
++; CHECK-NEXT:    [[Y:%.*]] = bitcast i32 [[RES]] to float
++; CHECK-NEXT:    ret float [[Y]]
++;
++  %mag = add i32 %magx, -1
++  %nonneg = icmp sgt i32 %magx, -1
++  call void @llvm.assume(i1 %nonneg)
++  %bits = bitcast float %x to i32
++  %sign = and i32 %bits, -2147483648
++  %res = or i32 %mag, %sign
++  %y = bitcast i32 %res to float
++  ret float %y
++}
++
++; Negative test: no assume, so we don't know if %magx is positive.
++define float @copysign_idiom_sub1_no_assume(float %x, i32 %magx) {
++; CHECK-LABEL: @copysign_idiom_sub1_no_assume(
++; CHECK-NEXT:    [[MAG:%.*]] = add i32 [[MAGX:%.*]], -1
++; CHECK-NEXT:    [[BITS:%.*]] = bitcast float [[X:%.*]] to i32
++; CHECK-NEXT:    [[SIGN:%.*]] = and i32 [[BITS]], -2147483648
++; CHECK-NEXT:    [[RES:%.*]] = or i32 [[MAG]], [[SIGN]]
++; CHECK-NEXT:    [[Y:%.*]] = bitcast i32 [[RES]] to float
++; CHECK-NEXT:    ret float [[Y]]
++;
++  %mag = add i32 %magx, -1
++  %bits = bitcast float %x to i32
++  %sign = and i32 %bits, -2147483648
++  %res = or i32 %mag, %sign
++  %y = bitcast i32 %res to float
++  ret float %y
++}
+diff --git a/llvm/test/Transforms/InstCombine/divceil.ll b/llvm/test/Transforms/InstCombine/divceil.ll
+index c9f3ba750d7ec..e43d6c28fcd27 100644
+--- a/llvm/test/Transforms/InstCombine/divceil.ll
++++ b/llvm/test/Transforms/InstCombine/divceil.ll
+@@ -138,7 +138,7 @@ define i32 @divceil_i16_var_divisor_zext(i16 range(i16 0, 101) %x, i16 range(i16
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add nsw i16 [[Y:%.*]], -1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add nuw nsw i16 [[X:%.*]], [[TMP1]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = udiv i16 [[TMP2]], [[Y]]
+-; CHECK-NEXT:    [[RESULT:%.*]] = zext i16 [[TMP3]] to i32
++; CHECK-NEXT:    [[RESULT:%.*]] = zext nneg i16 [[TMP3]] to i32
+ ; CHECK-NEXT:    ret i32 [[RESULT]]
+ ;
+   %q = udiv i16 %x, %y

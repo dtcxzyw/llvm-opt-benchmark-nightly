@@ -25,7 +25,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call i64 @strlen(ptr noundef nonnull %0) #5 ; 2 uses
+  %i.c = tail call i64 @strlen(ptr noundef nonnull %0) #5 ; 3 uses
   %sext = shl i64 %i.c, 32
   %i.d = ashr exact i64 %sext, 32
   %i.e = getelementptr i8, ptr %0, i64 %i.d
@@ -35,20 +35,24 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %sext26 = shl i64 %i.c, 32
-  %1 = ashr exact i64 %sext26, 32                 ; 2 uses
-  %i.i = icmp sgt i64 %1, 1
-  br i1 %i.i, label %.lr.ph30, label %.loopexit
+  %1 = trunc i64 %i.c to i32
+  %i.i = icmp sgt i32 %1, 1
+  br i1 %i.i, label %.lr.ph29, label %.loopexit
+
+.lr.ph29:                                         ; preds = %.lr.ph.preheader
+  %2 = and i64 %i.c, 2147483647
+  br label %.lr.ph30
 
 .lr.ph:                                           ; preds = %.lr.ph30
-  %i.j = icmp sgt i64 %indvars.iv29, 2
+  %3 = trunc nuw i64 %indvars.iv.next to i32
+  %i.j = icmp sgt i32 %3, 1
   br i1 %i.j, label %.lr.ph30, label %.loopexit, !llvm.loop !7
 
-.lr.ph30:                                         ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.k = phi ptr [ %i.m, %.lr.ph ], [ %i.f, %.lr.ph.preheader ]
-  %indvars.iv29 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %1, %.lr.ph.preheader ] ; 2 uses
+.lr.ph30:                                         ; preds = %.lr.ph29, %.lr.ph
+  %i.k = phi ptr [ %i.f, %.lr.ph29 ], [ %i.m, %.lr.ph ]
+  %indvars.iv29 = phi i64 [ %2, %.lr.ph29 ], [ %indvars.iv.next, %.lr.ph ]
   store i8 0, ptr %i.k, align 1
-  %indvars.iv.next = add nsw i64 %indvars.iv29, -1 ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv29, -1 ; 3 uses
   %i.l = getelementptr i8, ptr %0, i64 %indvars.iv.next
   %i.m = getelementptr i8, ptr %i.l, i64 -1       ; 2 uses
   %i.n = load i8, ptr %i.m, align 1

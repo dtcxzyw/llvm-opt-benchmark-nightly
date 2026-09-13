@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %_ZL14stbi__zreceive
   br i1 %i.db, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter = and i64 %wide.trip.count.i, 1073741820
+  %unroll_iter = and i64 %wide.trip.count.i, 536870908
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %.lr.ph.i.i.new

@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.c
 
 .lr.ph:                                           ; preds = %.preheader
   %i.aq = load i8, ptr %i.k, align 8, !tbaa !114  ; 4 uses
-  %i.ar = lshr i8 %i.aq, 3                        ; 5 uses
+  %i.ar = lshr i8 %i.aq, 3                        ; 4 uses
   %i.as = zext nneg i8 %i.ar to i32               ; 7 uses
   %.not1.i = icmp eq i8 %i.ar, 0                  ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -470,42 +470,37 @@ _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.us: ; preds 
   br i1 %exitcond86.not, label %._crit_edge, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.us53, !llvm.loop !404
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
-  br i1 %.not1.i28, label %.lr.ph.i.preheader.us56.preheader, label %.lr.ph.i.preheader.preheader.a
+  %10 = zext nneg i8 %i.ar to i64                 ; 2 uses
+  br i1 %.not1.i28, label %.lr.ph.i.preheader.preheader.a, label %.lr.ph.i.preheader.us56.preheader
 
 .lr.ph.i.preheader.preheader.a:                   ; preds = %.lr.ph.split.split
-  %10 = add nsw i32 %i.as, -1
-  %11 = zext nneg i32 %10 to i64
-  %12 = zext nneg i8 %i.ar to i64
-  %13 = add nsw i32 %i.ax, -1
-  %14 = zext nneg i32 %13 to i64
-  %15 = add nuw nsw i64 %11, %14
-  %16 = add nuw nsw i64 %15, 2
   %xtraiter.a = and i32 %i.as, 3                  ; 3 uses
   %i.ew = icmp ult i8 %i.aq, 32
   %unroll_iter.a = and i32 %i.as, 28
-  %lcmp.mod.not = icmp eq i32 %xtraiter.a, 0
-  %lcmp.mod125 = icmp ne i32 %xtraiter.a, 0
-  %xtraiter126 = and i32 %i.ax, 3                 ; 3 uses
-  %17 = icmp ult i8 %i.av, 32
-  %unroll_iter133 = and i32 %i.ax, 28
-  %lcmp.mod130.not.a = icmp eq i32 %xtraiter126, 0
-  %lcmp.mod132.a = icmp ne i32 %xtraiter126, 0
-  br label %.lr.ph.i.preheader
+  %lcmp.mod130.not.a = icmp eq i32 %xtraiter.a, 0
+  %lcmp.mod132.a = icmp ne i32 %xtraiter.a, 0
+  br label %.lr.ph.i.preheader.us56
 
 .lr.ph.i.preheader.us56.preheader:                ; preds = %.lr.ph.split.split
-  %i.ex = zext nneg i8 %i.ar to i64
+  %11 = add nuw nsw i32 %i.as, %i.ax
+  %i.ex = zext nneg i32 %11 to i64
   %xtraiter135 = and i32 %i.as, 3                 ; 3 uses
   %i.ey = icmp ult i8 %i.aq, 32
   %unroll_iter142 = and i32 %i.as, 28
-  %lcmp.mod139.not = icmp eq i32 %xtraiter135, 0
-  %lcmp.mod141 = icmp ne i32 %xtraiter135, 0
-  br label %.lr.ph.i.preheader.us56
+  %lcmp.mod.not = icmp eq i32 %xtraiter135, 0
+  %lcmp.mod125 = icmp ne i32 %xtraiter135, 0
+  %xtraiter126 = and i32 %i.ax, 3                 ; 3 uses
+  %12 = icmp ult i8 %i.av, 32
+  %unroll_iter133 = and i32 %i.ax, 28
+  %lcmp.mod139.not = icmp eq i32 %xtraiter126, 0
+  %lcmp.mod141 = icmp ne i32 %xtraiter126, 0
+  br label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader.us56:                          ; preds = %.lr.ph.i.preheader.us56.preheader, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64
-  %.049.us57 = phi i64 [ %i.gi, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64 ], [ %4, %.lr.ph.i.preheader.us56.preheader ] ; 2 uses
-  %.04348.us58 = phi i64 [ %i.gf, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64 ], [ 0, %.lr.ph.i.preheader.us56.preheader ] ; 3 uses
+.lr.ph.i.preheader.us56:                          ; preds = %.lr.ph.i.preheader.preheader.a, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64
+  %.049.us57 = phi i64 [ %i.gi, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64 ], [ %4, %.lr.ph.i.preheader.preheader.a ] ; 2 uses
+  %.04348.us58 = phi i64 [ %i.gf, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64 ], [ 0, %.lr.ph.i.preheader.preheader.a ] ; 3 uses
   %.val24.us59 = load ptr, ptr %8, align 8        ; 5 uses
-  br i1 %i.ey, label %.lr.ph.i.us60.epil.preheader, label %.lr.ph.i.us60
+  br i1 %i.ew, label %.lr.ph.i.us60.epil.preheader, label %.lr.ph.i.us60
 
 .lr.ph.i.us60:                                    ; preds = %.lr.ph.i.preheader.us56, %.lr.ph.i.us60
   %.03.i.us61 = phi i64 [ %i.fx, %.lr.ph.i.us60 ], [ 0, %.lr.ph.i.preheader.us56 ]
@@ -536,16 +531,16 @@ _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.us: ; preds 
   %i.fw = zext i8 %i.fv to i64
   %i.fx = or disjoint i64 %i.fr, %i.fw            ; 3 uses
   %niter143.next.3 = add i32 %niter143, 4         ; 2 uses
-  %niter143.ncmp.3 = icmp eq i32 %niter143.next.3, %unroll_iter142
+  %niter143.ncmp.3 = icmp eq i32 %niter143.next.3, %unroll_iter.a
   br i1 %niter143.ncmp.3, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64.unr-lcssa, label %.lr.ph.i.us60, !llvm.loop !405
 
 _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64.unr-lcssa: ; preds = %.lr.ph.i.us60
-  br i1 %lcmp.mod139.not, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64, label %.lr.ph.i.us60.epil.preheader
+  br i1 %lcmp.mod130.not.a, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64, label %.lr.ph.i.us60.epil.preheader
 
 .lr.ph.i.us60.epil.preheader:                     ; preds = %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64.unr-lcssa, %.lr.ph.i.preheader.us56
   %.03.i.us61.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.us56 ], [ %i.fx, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64.unr-lcssa ]
   %.epil.init138 = phi i64 [ %.04348.us58, %.lr.ph.i.preheader.us56 ], [ %i.fs, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64.unr-lcssa ]
-  call void @llvm.assume(i1 %lcmp.mod141)
+  call void @llvm.assume(i1 %lcmp.mod132.a)
   br label %.lr.ph.i.us60.epil
 
 .lr.ph.i.us60.epil:                               ; preds = %.lr.ph.i.us60.epil, %.lr.ph.i.us60.epil.preheader
@@ -559,12 +554,12 @@ _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64.unr-lcssa
   %i.gd = zext i8 %i.gc to i64
   %i.ge = or disjoint i64 %i.fz, %i.gd            ; 2 uses
   %epil.iter136.next = add i32 %epil.iter136, 1   ; 2 uses
-  %epil.iter136.cmp.not = icmp eq i32 %epil.iter136.next, %xtraiter135
+  %epil.iter136.cmp.not = icmp eq i32 %epil.iter136.next, %xtraiter.a
   br i1 %epil.iter136.cmp.not, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64, label %.lr.ph.i.us60.epil, !llvm.loop !409
 
 _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64: ; preds = %.lr.ph.i.us60.epil, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64.unr-lcssa
   %.lcssa120 = phi i64 [ %i.fx, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.us64.unr-lcssa ], [ %i.ge, %.lr.ph.i.us60.epil ]
-  %i.gf = add i64 %.04348.us58, %i.ex
+  %i.gf = add i64 %.04348.us58, %10
   %i.gg = getelementptr inbounds nuw [16 x i8], ptr %i.au, i64 %.049.us57 ; 2 uses
   store i64 %.lcssa120, ptr %i.gg, align 8, !tbaa !111
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 8
@@ -612,11 +607,11 @@ bb.n:                                             ; preds = %._crit_edge
   invoke void @_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcm(ptr noundef nonnull align 8 dereferenceable(24) %i.gt, ptr noundef %i.gw, i64 noundef %i.gx)
           to label %_ZN5ErrorC2ERKS_.exit unwind label %bb.o
 
-.lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.preheader.a, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit
-  %.049 = phi i64 [ %i.jm, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit ], [ %4, %.lr.ph.i.preheader.preheader.a ] ; 2 uses
-  %.04348 = phi i64 [ %i.jk, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit ], [ 0, %.lr.ph.i.preheader.preheader.a ] ; 4 uses
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.us56.preheader, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit
+  %.049 = phi i64 [ %i.jm, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit ], [ %4, %.lr.ph.i.preheader.us56.preheader ] ; 2 uses
+  %.04348 = phi i64 [ %i.jk, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit ], [ 0, %.lr.ph.i.preheader.us56.preheader ] ; 4 uses
   %.val24 = load ptr, ptr %8, align 8             ; 5 uses
-  br i1 %i.ew, label %.lr.ph.i.epil.preheader, label %.lr.ph.i
+  br i1 %i.ey, label %.lr.ph.i.epil.preheader, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %.03.i = phi i64 [ %i.hw, %.lr.ph.i ], [ 0, %.lr.ph.i.preheader ]
@@ -647,7 +642,7 @@ bb.n:                                             ; preds = %._crit_edge
   %i.hv = zext i8 %i.hu to i64
   %i.hw = or disjoint i64 %i.hq, %i.hv            ; 3 uses
   %niter.next.3 = add i32 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter.a
+  %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter142
   br i1 %niter.ncmp.3, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !405
 
 _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
@@ -670,16 +665,16 @@ _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.unr-lcssa: ; p
   %i.ic = zext i8 %i.ib to i64
   %i.id = or disjoint i64 %i.hy, %i.ic            ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter.a
+  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter135
   br i1 %epil.iter.cmp.not, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit, label %.lr.ph.i.epil, !llvm.loop !410
 
 _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit: ; preds = %.lr.ph.i.epil, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.unr-lcssa
   %.lcssa122 = phi i64 [ %i.hw, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit.unr-lcssa ], [ %i.id, %.lr.ph.i.epil ]
-  %i.ie = add i64 %.04348, %12                    ; 2 uses
+  %i.ie = add i64 %.04348, %10                    ; 2 uses
   %i.if = getelementptr inbounds nuw [16 x i8], ptr %i.au, i64 %.049 ; 2 uses
   store i64 %.lcssa122, ptr %i.if, align 8, !tbaa !111
   %.val = load ptr, ptr %8, align 8               ; 5 uses
-  br i1 %17, label %.lr.ph.i31.epil.preheader, label %.lr.ph.i31
+  br i1 %12, label %.lr.ph.i31.epil.preheader, label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit, %.lr.ph.i31
   %i.ig = phi i64 [ %i.ih, %.lr.ph.i31 ], [ %i.ie, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit ] ; 5 uses
@@ -711,12 +706,12 @@ _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.unr-lcssa: ;
   %i.ja = load i8, ptr %i.iz, align 1, !tbaa !37
   %i.jb = zext i8 %i.ja to i32
   %i.jc = or disjoint i32 %i.ix, %i.jb            ; 2 uses
-  br i1 %lcmp.mod130.not.a, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit, label %.lr.ph.i31.epil.preheader
+  br i1 %lcmp.mod139.not, label %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit, label %.lr.ph.i31.epil.preheader
 
 .lr.ph.i31.epil.preheader:                        ; preds = %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.unr-lcssa, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit
   %.03.i32.epil.init = phi i32 [ 0, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit ], [ %i.jc, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.unr-lcssa ]
   %.epil.init129 = phi i64 [ %i.ie, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit.loopexit ], [ %i.ih, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.unr-lcssa ]
-  call void @llvm.assume(i1 %lcmp.mod132.a)
+  call void @llvm.assume(i1 %lcmp.mod141)
   br label %.lr.ph.i31.epil
 
 .lr.ph.i31.epil:                                  ; preds = %.lr.ph.i31.epil, %.lr.ph.i31.epil.preheader
@@ -735,7 +730,7 @@ _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.unr-lcssa: ;
 
 _ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit: ; preds = %.lr.ph.i31.epil, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.unr-lcssa
   %.lcssa123 = phi i32 [ %i.jc, %_ZL7readvecRKNSt3__16vectorIhNS_9allocatorIhEEEERmi.exit36.loopexit.unr-lcssa ], [ %i.jj, %.lr.ph.i31.epil ]
-  %i.jk = add i64 %16, %.04348
+  %i.jk = add i64 %.04348, %i.ex
   %i.jl = getelementptr inbounds nuw i8, ptr %i.if, i64 8
   store i32 %.lcssa123, ptr %i.jl, align 8, !tbaa !122
   %i.jm = add nuw i64 %.049, 1                    ; 2 uses

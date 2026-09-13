@@ -205,8 +205,8 @@ luaF_newCclosure.exit:                            ; preds = %getcurrenv.exit
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ba, i64 40 ; 3 uses
   %indvars.iv.next = add nsw i64 %i.cf, -1        ; 3 uses
   %i.cj = load ptr, ptr %i.cd, align 8, !tbaa !95
-  %i.ck = getelementptr inbounds [16 x i8], ptr %i.cj, i64 %indvars.iv.next ; 2 uses
-  %i.cl = getelementptr inbounds [16 x i8], ptr %i.ci, i64 %indvars.iv.next ; 2 uses
+  %i.ck = getelementptr inbounds nuw [16 x i8], ptr %i.cj, i64 %indvars.iv.next ; 2 uses
+  %i.cl = getelementptr inbounds nuw [16 x i8], ptr %i.ci, i64 %indvars.iv.next ; 2 uses
   %i.cm = load i64, ptr %i.ck, align 8, !tbaa !81
   store i64 %i.cm, ptr %i.cl, align 8, !tbaa !81
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ck, i64 8

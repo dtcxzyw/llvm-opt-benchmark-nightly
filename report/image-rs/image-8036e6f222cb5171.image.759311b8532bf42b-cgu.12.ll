@@ -205,24 +205,20 @@ bb.i:                                             ; preds = %bb.g
   %i.be = load <2 x i8>, ptr %i.bb, align 1
   %i.bf = uitofp <2 x i8> %i.be to <2 x float>
   %i.bg = fmul nnan <2 x float> %i.aq, %i.bf      ; 3 uses
-  switch i64 %i.p, label %.lr.ph.i.preheader.new [
+  switch i64 %i.p, label %.lr.ph.i [
     i64 0, label %._crit_edge301.i
     i64 1, label %.lr.ph.i.epil.preheader
   ]
 
-.lr.ph.i.preheader.new:                           ; preds = %bb.i
-  %invariant.op = sub nuw i64 %i.bc, 1
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.ae, %.lr.ph.i.preheader.new
-  %.sroa.0155.0292.i = phi i64 [ 1, %.lr.ph.i.preheader.new ], [ %i.fs, %bb.ae ] ; 3 uses
-  %i.bh = phi <2 x float> [ %i.bg, %.lr.ph.i.preheader.new ], [ %i.fw, %bb.ae ]
-  %niter = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.1, %bb.ae ]
+.lr.ph.i:                                         ; preds = %bb.i, %bb.ae
+  %.sroa.0155.0292.i = phi i64 [ %i.fs, %bb.ae ], [ 1, %bb.i ] ; 3 uses
+  %i.bh = phi <2 x float> [ %i.fw, %bb.ae ], [ %i.bg, %bb.i ]
+  %niter = phi i64 [ %niter.next.1, %bb.ae ], [ 0, %bb.i ]
   %..i.i = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %.sroa.0155.0292.i)
   %i.bi = shl nuw nsw i64 %..i.i, 1               ; 3 uses
-  %8 = or disjoint i64 %i.bi, 1
-  %or.cond118.not.i = icmp ult i64 %8, %i.bc
-  br i1 %or.cond118.not.i, label %.lr.ph.i.1, label %.loopexit, !prof !20
+  %8 = add nuw nsw i64 %i.bi, 2                   ; 2 uses
+  %.not111.i = icmp ugt i64 %8, %i.bc
+  br i1 %.not111.i, label %.loopexit, label %.lr.ph.i.1, !prof !18
 
 ._crit_edge301.i:                                 ; preds = %bb.ad, %bb.i
   %i.bj = phi <2 x float> [ %i.bg, %bb.i ], [ %i.fj, %bb.ad ] ; 3 uses
@@ -237,7 +233,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bl = add nuw nsw i64 %.sroa.078.0296.i, 1    ; 2 uses
   %i.bm = add nuw i64 %.sroa.078.0296.i, %i.q
   %..i135.i = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %i.bm)
-  %i.bn = shl nuw nsw i64 %..i135.i, 1            ; 4 uses
+  %i.bn = shl nuw nsw i64 %..i135.i, 1            ; 3 uses
   %i.bo = sub nsw i64 %.sroa.078.0296.i, %i.p
   %..i136.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %i.bo, i64 0)
   %i.bp = shl nuw i64 %..i136.i, 1                ; 3 uses
@@ -343,7 +339,7 @@ _RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_mulhEB6_.e
   %i.df = add i64 %.sroa.083.1309.i, 1            ; 2 uses
   %i.dg = add nuw i64 %.sroa.083.1309.i, %i.q
   %..i141.i = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %i.dg)
-  %i.dh = shl nuw nsw i64 %..i141.i, 1            ; 4 uses
+  %i.dh = shl nuw nsw i64 %..i141.i, 1            ; 3 uses
   %i.di = sub nsw i64 %.sroa.083.1309.i, %i.p     ; 2 uses
   %..i142.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %i.di, i64 0)
   %i.dj = shl nuw i64 %..i142.i, 1                ; 3 uses
@@ -385,17 +381,16 @@ _RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_mulhEB6_.e
   %i.ea = fptoui float %i.dy to i8
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dm, i64 1
   store i8 %i.ea, ptr %i.eb, align 1
-  %9 = or disjoint i64 %i.dh, 1
-  %or.cond113.not.i = icmp ult i64 %9, %i.bc
-  br i1 %or.cond113.not.i, label %bb.t, label %bb.s, !prof !20
+  %9 = add nuw nsw i64 %i.dh, 2                   ; 2 uses
+  %.not106.i = icmp ugt i64 %9, %i.bc
+  br i1 %.not106.i, label %bb.s, label %bb.t, !prof !18
 
 bb.r:                                             ; preds = %.lr.ph312.i
   call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.dk, i64 noundef %i.dl, i64 noundef %i.az, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #20
   unreachable
 
 bb.s:                                             ; preds = %_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_mulhEB6_.exit144.i
-  %10 = add nuw nsw i64 %i.dh, 2
-  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.dh, i64 noundef %10, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #20
+  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.dh, i64 noundef %9, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #20
   unreachable
 
 bb.t:                                             ; preds = %_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_mulhEB6_.exit144.i
@@ -452,9 +447,9 @@ _RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_mulhEB6_.e
   %i.ey = fptoui float %i.ew to i8
   %i.ez = getelementptr inbounds nuw i8, ptr %i.em, i64 1
   store i8 %i.ey, ptr %i.ez, align 1
-  %11 = or disjoint i64 %i.bn, 1
-  %or.cond116.not.i = icmp ult i64 %11, %i.bc
-  br i1 %or.cond116.not.i, label %bb.ab, label %bb.aa, !prof !20
+  %10 = add nuw nsw i64 %i.bn, 2                  ; 2 uses
+  %.not109.i = icmp ugt i64 %10, %i.bc
+  br i1 %.not109.i, label %bb.aa, label %bb.ab, !prof !18
 
 bb.z:                                             ; preds = %.lr.ph300.i
   %i.fa = add nuw i64 %i.bq, 2
@@ -462,8 +457,7 @@ bb.z:                                             ; preds = %.lr.ph300.i
   unreachable
 
 bb.aa:                                            ; preds = %_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_mulhEB6_.exit146.i
-  %12 = add nuw nsw i64 %i.bn, 2
-  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.bn, i64 noundef %12, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #20
+  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.bn, i64 noundef %10, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #20
   unreachable
 
 bb.ab:                                            ; preds = %_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_mulhEB6_.exit146.i
@@ -490,17 +484,18 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %exitcond399.not.i, label %._crit_edge301.i, label %.lr.ph300.i
 
 .loopexit:                                        ; preds = %.lr.ph.i.epil.preheader, %.lr.ph.i, %.lr.ph.i.1
-  %.lcssa.a = phi i64 [ %i.fn, %.lr.ph.i.1 ], [ %i.bi, %.lr.ph.i ], [ %i.fz, %.lr.ph.i.epil.preheader ] ; 2 uses
-  %13 = add nuw nsw i64 %.lcssa.a, 2
-  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %.lcssa.a, i64 noundef %13, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #20
+  %.lcssa.a = phi i64 [ %i.fn, %.lr.ph.i.1 ], [ %i.bi, %.lr.ph.i ], [ %i.fz, %.lr.ph.i.epil.preheader ]
+  %.lcssa = phi i64 [ %11, %.lr.ph.i.1 ], [ %8, %.lr.ph.i ], [ %12, %.lr.ph.i.epil.preheader ]
+  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %.lcssa.a, i64 noundef %.lcssa, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #20
   unreachable
 
 .lr.ph.i.1:                                       ; preds = %.lr.ph.i
   %i.fm = add nuw i64 %.sroa.0155.0292.i, 1
   %..i.i.1 = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %i.fm)
   %i.fn = shl nuw nsw i64 %..i.i.1, 1             ; 3 uses
-  %or.cond118.not.i.1 = icmp ult i64 %i.fn, %invariant.op
-  br i1 %or.cond118.not.i.1, label %bb.ae, label %.loopexit, !prof !20
+  %11 = add nuw nsw i64 %i.fn, 2                  ; 2 uses
+  %.not111.i.1 = icmp ugt i64 %11, %i.bc
+  br i1 %.not111.i.1, label %.loopexit, label %bb.ae, !prof !18
 
 bb.ae:                                            ; preds = %.lr.ph.i.1
   %i.fo = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bi
@@ -527,9 +522,9 @@ bb.ae:                                            ; preds = %.lr.ph.i.1
   call void @llvm.assume(i1 %lcmp.mod447)
   %..i.i.epil = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %.sroa.0155.0292.i.epil.init)
   %i.fz = shl nuw nsw i64 %..i.i.epil, 1          ; 3 uses
-  %14 = or disjoint i64 %i.fz, 1
-  %or.cond118.not.i.epil = icmp ult i64 %14, %i.bc
-  br i1 %or.cond118.not.i.epil, label %.lr.ph300.i.preheader.epilog-lcssa, label %.loopexit, !prof !20
+  %12 = add nuw nsw i64 %i.fz, 2                  ; 2 uses
+  %.not111.i.epil = icmp ugt i64 %12, %i.bc
+  br i1 %.not111.i.epil, label %.loopexit, label %.lr.ph300.i.preheader.epilog-lcssa, !prof !18
 
 .lr.ph300.i.preheader.epilog-lcssa:               ; preds = %.lr.ph.i.epil.preheader
   %i.ga = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.fz
@@ -706,24 +701,20 @@ bb.i:                                             ; preds = %bb.g
   %i.be = load <2 x i16>, ptr %i.bb, align 2
   %i.bf = uitofp <2 x i16> %i.be to <2 x float>
   %i.bg = fmul nnan <2 x float> %i.aq, %i.bf      ; 3 uses
-  switch i64 %i.p, label %.lr.ph.i.preheader.new [
+  switch i64 %i.p, label %.lr.ph.i [
     i64 0, label %._crit_edge301.i
     i64 1, label %.lr.ph.i.epil.preheader
   ]
 
-.lr.ph.i.preheader.new:                           ; preds = %bb.i
-  %invariant.op = sub nuw i64 %i.bc, 1
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.ae, %.lr.ph.i.preheader.new
-  %.sroa.0155.0292.i = phi i64 [ 1, %.lr.ph.i.preheader.new ], [ %i.fs, %bb.ae ] ; 3 uses
-  %i.bh = phi <2 x float> [ %i.bg, %.lr.ph.i.preheader.new ], [ %i.fw, %bb.ae ]
-  %niter = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.1, %bb.ae ]
+.lr.ph.i:                                         ; preds = %bb.i, %bb.ae
+  %.sroa.0155.0292.i = phi i64 [ %i.fs, %bb.ae ], [ 1, %bb.i ] ; 3 uses
+  %i.bh = phi <2 x float> [ %i.fw, %bb.ae ], [ %i.bg, %bb.i ]
+  %niter = phi i64 [ %niter.next.1, %bb.ae ], [ 0, %bb.i ]
   %..i.i = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %.sroa.0155.0292.i)
   %i.bi = shl nuw nsw i64 %..i.i, 1               ; 3 uses
-  %8 = or disjoint i64 %i.bi, 1
-  %or.cond118.not.i = icmp ult i64 %8, %i.bc
-  br i1 %or.cond118.not.i, label %.lr.ph.i.1, label %.loopexit, !prof !20
+  %8 = add nuw nsw i64 %i.bi, 2                   ; 2 uses
+  %.not111.i = icmp ugt i64 %8, %i.bc
+  br i1 %.not111.i, label %.loopexit, label %.lr.ph.i.1, !prof !18
 
 ._crit_edge301.i:                                 ; preds = %bb.ad, %bb.i
   %i.bj = phi <2 x float> [ %i.bg, %bb.i ], [ %i.fj, %bb.ad ] ; 3 uses
@@ -738,7 +729,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bl = add nuw nsw i64 %.sroa.078.0296.i, 1    ; 2 uses
   %i.bm = add nuw i64 %.sroa.078.0296.i, %i.q
   %..i135.i = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %i.bm)
-  %i.bn = shl nuw nsw i64 %..i135.i, 1            ; 4 uses
+  %i.bn = shl nuw nsw i64 %..i135.i, 1            ; 3 uses
   %i.bo = sub nsw i64 %.sroa.078.0296.i, %i.p
   %..i136.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %i.bo, i64 0)
   %i.bp = shl nuw i64 %..i136.i, 1                ; 3 uses
@@ -844,7 +835,7 @@ _RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_multEB6_.e
   %i.df = add i64 %.sroa.083.1309.i, 1            ; 2 uses
   %i.dg = add nuw i64 %.sroa.083.1309.i, %i.q
   %..i141.i = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %i.dg)
-  %i.dh = shl nuw nsw i64 %..i141.i, 1            ; 4 uses
+  %i.dh = shl nuw nsw i64 %..i141.i, 1            ; 3 uses
   %i.di = sub nsw i64 %.sroa.083.1309.i, %i.p     ; 2 uses
   %..i142.i = call noundef range(i64 0, -9223372036854775808) i64 @llvm.smax.i64(i64 %i.di, i64 0)
   %i.dj = shl nuw i64 %..i142.i, 1                ; 3 uses
@@ -886,17 +877,16 @@ _RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_multEB6_.e
   %i.ea = fptoui float %i.dy to i16
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dm, i64 2
   store i16 %i.ea, ptr %i.eb, align 2
-  %9 = or disjoint i64 %i.dh, 1
-  %or.cond113.not.i = icmp ult i64 %9, %i.bc
-  br i1 %or.cond113.not.i, label %bb.t, label %bb.s, !prof !20
+  %9 = add nuw nsw i64 %i.dh, 2                   ; 2 uses
+  %.not106.i = icmp ugt i64 %9, %i.bc
+  br i1 %.not106.i, label %bb.s, label %bb.t, !prof !18
 
 bb.r:                                             ; preds = %.lr.ph312.i
   call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.dk, i64 noundef %i.dl, i64 noundef %i.az, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #20
   unreachable
 
 bb.s:                                             ; preds = %_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_multEB6_.exit144.i
-  %10 = add nuw nsw i64 %i.dh, 2
-  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.dh, i64 noundef %10, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #20
+  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.dh, i64 noundef %9, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #20
   unreachable
 
 bb.t:                                             ; preds = %_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_multEB6_.exit144.i
@@ -953,9 +943,9 @@ _RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_multEB6_.e
   %i.ey = fptoui float %i.ew to i16
   %i.ez = getelementptr inbounds nuw i8, ptr %i.em, i64 2
   store i16 %i.ey, ptr %i.ez, align 2
-  %11 = or disjoint i64 %i.bn, 1
-  %or.cond116.not.i = icmp ult i64 %11, %i.bc
-  br i1 %or.cond116.not.i, label %bb.ab, label %bb.aa, !prof !20
+  %10 = add nuw nsw i64 %i.bn, 2                  ; 2 uses
+  %.not109.i = icmp ugt i64 %10, %i.bc
+  br i1 %.not109.i, label %bb.aa, label %bb.ab, !prof !18
 
 bb.z:                                             ; preds = %.lr.ph300.i
   %i.fa = add nuw i64 %i.bq, 2
@@ -963,8 +953,7 @@ bb.z:                                             ; preds = %.lr.ph300.i
   unreachable
 
 bb.aa:                                            ; preds = %_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_multEB6_.exit146.i
-  %12 = add nuw nsw i64 %i.bn, 2
-  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.bn, i64 noundef %12, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #20
+  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.bn, i64 noundef %10, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #20
   unreachable
 
 bb.ab:                                            ; preds = %_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur23rounding_saturating_multEB6_.exit146.i
@@ -991,17 +980,18 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %exitcond399.not.i, label %._crit_edge301.i, label %.lr.ph300.i
 
 .loopexit:                                        ; preds = %.lr.ph.i.epil.preheader, %.lr.ph.i, %.lr.ph.i.1
-  %.lcssa.a = phi i64 [ %i.fn, %.lr.ph.i.1 ], [ %i.bi, %.lr.ph.i ], [ %i.fz, %.lr.ph.i.epil.preheader ] ; 2 uses
-  %13 = add nuw nsw i64 %.lcssa.a, 2
-  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %.lcssa.a, i64 noundef %13, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #20
+  %.lcssa.a = phi i64 [ %i.fn, %.lr.ph.i.1 ], [ %i.bi, %.lr.ph.i ], [ %i.fz, %.lr.ph.i.epil.preheader ]
+  %.lcssa = phi i64 [ %11, %.lr.ph.i.1 ], [ %8, %.lr.ph.i ], [ %12, %.lr.ph.i.epil.preheader ]
+  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %.lcssa.a, i64 noundef %.lcssa, i64 noundef %i.bc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #20
   unreachable
 
 .lr.ph.i.1:                                       ; preds = %.lr.ph.i
   %i.fm = add nuw i64 %.sroa.0155.0292.i, 1
   %..i.i.1 = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %i.fm)
   %i.fn = shl nuw nsw i64 %..i.i.1, 1             ; 3 uses
-  %or.cond118.not.i.1 = icmp ult i64 %i.fn, %invariant.op
-  br i1 %or.cond118.not.i.1, label %bb.ae, label %.loopexit, !prof !20
+  %11 = add nuw nsw i64 %i.fn, 2                  ; 2 uses
+  %.not111.i.1 = icmp ugt i64 %11, %i.bc
+  br i1 %.not111.i.1, label %.loopexit, label %bb.ae, !prof !18
 
 bb.ae:                                            ; preds = %.lr.ph.i.1
   %i.fo = getelementptr inbounds nuw [2 x i8], ptr %i.bb, i64 %i.bi
@@ -1028,9 +1018,9 @@ bb.ae:                                            ; preds = %.lr.ph.i.1
   call void @llvm.assume(i1 %lcmp.mod447)
   %..i.i.epil = call noundef range(i64 0, -1) i64 @llvm.umin.i64(i64 range(i64 0, -1) %i.t, i64 %.sroa.0155.0292.i.epil.init)
   %i.fz = shl nuw nsw i64 %..i.i.epil, 1          ; 3 uses
-  %14 = or disjoint i64 %i.fz, 1
-  %or.cond118.not.i.epil = icmp ult i64 %14, %i.bc
-  br i1 %or.cond118.not.i.epil, label %.lr.ph300.i.preheader.epilog-lcssa, label %.loopexit, !prof !20
+  %12 = add nuw nsw i64 %i.fz, 2                  ; 2 uses
+  %.not111.i.epil = icmp ugt i64 %12, %i.bc
+  br i1 %.not111.i.epil, label %.loopexit, label %.lr.ph300.i.preheader.epilog-lcssa, !prof !18
 
 .lr.ph300.i.preheader.epilog-lcssa:               ; preds = %.lr.ph.i.epil.preheader
   %i.ga = getelementptr inbounds nuw [2 x i8], ptr %i.bb, i64 %i.fz

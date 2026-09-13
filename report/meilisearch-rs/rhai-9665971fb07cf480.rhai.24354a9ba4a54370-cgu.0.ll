@@ -205,9 +205,9 @@ bb.n:                                             ; preds = %bb.m
 .lr.ph.preheader:                                 ; preds = %"_ZN94_$LT$core..slice..iter..IterMut$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3190358d40a833cfE.exit.i.i.i.preheader"
   %i.am = add nsw i64 %.sroa.7.0.copyload.fr, -1
   %i.an = add nsw i64 %spec.select.i, -1
-  %i.ao = tail call i64 @llvm.umin.i64(i64 %i.am, i64 %i.an)
-  %i.ap = add i64 %i.ao, 1                        ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ap, 9
+  %i.ao = tail call i64 @llvm.umin.i64(i64 %i.am, i64 %i.an) ; 2 uses
+  %i.ap = add nuw i64 %i.ao, 1                    ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.ao, 8
   br i1 %min.iters.check, label %scalar.ph, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader

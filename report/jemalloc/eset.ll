@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/eset?download=true
 inline.NumInlined: 51
 inline.NumDeleted: 28
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -87,7 +89,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = icmp ne i64 %i.c, 0
   tail call void @llvm.assume(i1 %i.e)
   %i.f = add nsw i64 %i.c, -1                     ; 2 uses
-  %i.g = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
+  %i.g = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
   %i.h = trunc nuw nsw i64 %i.g to i32
   %i.i = tail call i32 @llvm.usub.sat.i32(i32 50, i32 %i.h) ; 2 uses
   %i.j = icmp samesign ult i64 %i.c, 16385
@@ -222,7 +224,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = icmp ne i64 %i.c, 0
   tail call void @llvm.assume(i1 %i.e)
   %i.f = add nsw i64 %i.c, -1                     ; 2 uses
-  %i.g = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
+  %i.g = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 false)
   %i.h = trunc nuw nsw i64 %i.g to i32
   %i.i = tail call i32 @llvm.usub.sat.i32(i32 50, i32 %i.h) ; 2 uses
   %i.j = icmp samesign ult i64 %i.c, 16385
@@ -375,7 +377,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = icmp ne i64 %i.f, 0
   tail call void @llvm.assume(i1 %i.h)
   %i.i = add nsw i64 %i.f, -1                     ; 2 uses
-  %i.j = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.i, i1 false)
+  %i.j = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.i, i1 false)
   %i.k = trunc nuw nsw i64 %i.j to i32
   %i.l = tail call i32 @llvm.usub.sat.i32(i32 50, i32 %i.k) ; 2 uses
   %i.m = icmp samesign ult i64 %i.f, 16385
@@ -407,7 +409,7 @@ bb.f:                                             ; preds = %bb.e
   %i.z = icmp ne i64 %i.x, 0
   tail call void @llvm.assume(i1 %i.z)
   %i.aa = add nsw i64 %i.x, -1                    ; 2 uses
-  %i.ab = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.aa, i1 false)
+  %i.ab = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.aa, i1 false)
   %i.ac = trunc nuw nsw i64 %i.ab to i32
   %i.ad = tail call i32 @llvm.usub.sat.i32(i32 50, i32 %i.ac) ; 2 uses
   %i.ae = icmp samesign ult i64 %i.x, 16385
@@ -504,7 +506,7 @@ bb.o:                                             ; preds = %bb.n
   %i.br = icmp ne i64 %i.bp, 0
   tail call void @llvm.assume(i1 %i.br)
   %i.bs = add nsw i64 %i.bp, -1                   ; 2 uses
-  %i.bt = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.bs, i1 false)
+  %i.bt = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.bs, i1 false)
   %i.bu = trunc nuw nsw i64 %i.bt to i32
   %i.bv = tail call i32 @llvm.usub.sat.i32(i32 50, i32 %i.bu) ; 2 uses
   %i.bw = icmp samesign ult i64 %i.bp, 16385
@@ -593,37 +595,53 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %.lr.p
 eset_enumerate_search.exit50.i:                   ; preds = %._crit_edge.i47.i, %bb.p, %sz_psz2ind.exit.i
   %.sroa.0.0.i = phi i64 [ 0, %sz_psz2ind.exit.i ], [ 0, %bb.p ], [ %.sroa.0.7.i, %._crit_edge.i47.i ]
   %.sroa.9.0.i = phi i64 [ 0, %sz_psz2ind.exit.i ], [ 0, %bb.p ], [ %.sroa.9.7.i, %._crit_edge.i47.i ]
-  %.037.i = phi ptr [ null, %sz_psz2ind.exit.i ], [ null, %bb.p ], [ %.0.lcssa.i48.i, %._crit_edge.i47.i ] ; 4 uses
+  %.037.i = phi ptr [ null, %sz_psz2ind.exit.i ], [ null, %bb.p ], [ %.0.lcssa.i48.i, %._crit_edge.i47.i ] ; 6 uses
   %i.dd = zext nneg i32 %.0.i43.i to i64          ; 2 uses
-  %i.de = lshr i64 %i.dd, 6                       ; 3 uses
+  %i.de = lshr i64 %i.dd, 6                       ; 5 uses
   %i.df = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.de
   %i.dg = load i64, ptr %i.df, align 8, !tbaa !25
   %i.dh = and i64 %i.dd, 63
   %notmask.i.i.i = shl nsw i64 -1, %i.dh
   %i.di = and i64 %i.dg, %notmask.i.i.i           ; 2 uses
   %i.dj = icmp eq i64 %i.di, 0
-  br i1 %i.dj, label %.lr.ph.i52.i.preheader.a, label %fb_ffs.exit.i
+  br i1 %i.dj, label %.lr.ph.i52.i.preheader, label %fb_ffs.exit.i
 
-.lr.ph.i52.i.preheader.a:                         ; preds = %eset_enumerate_search.exit50.i
-  %i.dk = add nuw nsw i64 %i.de, 1                ; 2 uses
+.lr.ph.i52.i.preheader:                           ; preds = %eset_enumerate_search.exit50.i
+  %8 = add nuw nsw i64 %i.de, 1                   ; 3 uses
+  %9 = icmp eq i64 %8, 4
+  br i1 %9, label %eset_first_fit.exit, label %.lr.ph
+
+.lr.ph.i52.i.preheader.a:                         ; preds = %.lr.ph
+  %i.dk = add nuw nsw i64 %i.de, 2                ; 3 uses
   %i.dl = icmp eq i64 %i.dk, 4
-  br i1 %i.dl, label %eset_first_fit.exit, label %.lr.ph
+  br i1 %i.dl, label %eset_first_fit.exit, label %.lr.ph.1
 
-.lr.ph.i52.i:                                     ; preds = %.lr.ph
-  %i.dm = add nuw nsw i64 %8, 1                   ; 2 uses
+.lr.ph.1:                                         ; preds = %.lr.ph.i52.i.preheader.a
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.dk
+  %11 = load i64, ptr %10, align 8, !tbaa !25     ; 2 uses
+  %12 = icmp eq i64 %11, 0
+  br i1 %12, label %.lr.ph.i52.i, label %fb_ffs.exit.i, !llvm.loop !31
+
+.lr.ph.i52.i:                                     ; preds = %.lr.ph.1
+  %i.dm = add nuw nsw i64 %i.de, 3                ; 3 uses
   %i.dn = icmp eq i64 %i.dm, 4
-  br i1 %i.dn, label %eset_first_fit.exit, label %.lr.ph, !llvm.loop !31
+  br i1 %i.dn, label %eset_first_fit.exit, label %.lr.ph.2
 
-.lr.ph:                                           ; preds = %.lr.ph.i52.i.preheader.a, %.lr.ph.i52.i
-  %8 = phi i64 [ %i.dm, %.lr.ph.i52.i ], [ %i.dk, %.lr.ph.i52.i.preheader.a ] ; 3 uses
+.lr.ph.2:                                         ; preds = %.lr.ph.i52.i
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.dm
+  %14 = load i64, ptr %13, align 8, !tbaa !25     ; 2 uses
+  %15 = icmp eq i64 %14, 0
+  br i1 %15, label %eset_first_fit.exit, label %fb_ffs.exit.i, !llvm.loop !31
+
+.lr.ph:                                           ; preds = %.lr.ph.i52.i.preheader
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %8
   %i.dp = load i64, ptr %i.do, align 8, !tbaa !25 ; 2 uses
   %i.dq = icmp eq i64 %i.dp, 0
-  br i1 %i.dq, label %.lr.ph.i52.i, label %fb_ffs.exit.i, !llvm.loop !31
+  br i1 %i.dq, label %.lr.ph.i52.i.preheader.a, label %fb_ffs.exit.i, !llvm.loop !31
 
-fb_ffs.exit.i:                                    ; preds = %.lr.ph, %eset_enumerate_search.exit50.i
-  %.039.i.lcssa.i.i = phi i64 [ %i.de, %eset_enumerate_search.exit50.i ], [ %8, %.lr.ph ]
-  %.1.i.lcssa.i.i = phi i64 [ %i.di, %eset_enumerate_search.exit50.i ], [ %i.dp, %.lr.ph ]
+fb_ffs.exit.i:                                    ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %eset_enumerate_search.exit50.i
+  %.039.i.lcssa.i.i = phi i64 [ %i.de, %eset_enumerate_search.exit50.i ], [ %8, %.lr.ph ], [ %i.dk, %.lr.ph.1 ], [ %i.dm, %.lr.ph.2 ]
+  %.1.i.lcssa.i.i = phi i64 [ %i.di, %eset_enumerate_search.exit50.i ], [ %i.dp, %.lr.ph ], [ %11, %.lr.ph.1 ], [ %14, %.lr.ph.2 ]
   %i.dr = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.1.i.lcssa.i.i, i1 true)
   %i.ds = shl nuw nsw i64 %.039.i.lcssa.i.i, 6
   %i.dt = or disjoint i64 %i.dr, %i.ds            ; 2 uses
@@ -723,8 +741,8 @@ fb_ffs.exit61.i:                                  ; preds = %.lr.ph113, %bb.aa
   %i.fn = icmp samesign ult i64 %i.fm, 200
   br i1 %i.fn, label %bb.v, label %eset_first_fit.exit, !llvm.loop !32
 
-eset_first_fit.exit:                              ; preds = %.lr.ph.i52.i, %bb.v, %bb.z, %fb_ffs.exit61.i, %.lr.ph.i59.i.preheader, %.lr.ph.i59.i, %.lr.ph.i52.i.preheader.a, %sz_psz2ind.exit42.i, %._crit_edge.i.i, %bb.l, %bb.m, %fb_ffs.exit.i
-  %.0.i = phi ptr [ null, %sz_psz2ind.exit42.i ], [ null, %bb.l ], [ %i.bo, %bb.m ], [ %.0.lcssa.i.i, %._crit_edge.i.i ], [ %.037.i, %fb_ffs.exit.i ], [ %.2.i, %.lr.ph.i59.i ], [ %.2.i, %.lr.ph.i59.i.preheader ], [ %.037.i, %.lr.ph.i52.i.preheader.a ], [ %.174.i, %bb.v ], [ %.2.i, %bb.z ], [ %.2.i, %fb_ffs.exit61.i ], [ %.037.i, %.lr.ph.i52.i ] ; 2 uses
+eset_first_fit.exit:                              ; preds = %.lr.ph.i52.i.preheader.a, %.lr.ph.i52.i, %.lr.ph.2, %bb.v, %bb.z, %fb_ffs.exit61.i, %.lr.ph.i59.i.preheader, %.lr.ph.i59.i, %.lr.ph.i52.i.preheader, %sz_psz2ind.exit42.i, %._crit_edge.i.i, %bb.l, %bb.m, %fb_ffs.exit.i
+  %.0.i = phi ptr [ null, %sz_psz2ind.exit42.i ], [ null, %bb.l ], [ %i.bo, %bb.m ], [ %.0.lcssa.i.i, %._crit_edge.i.i ], [ %.037.i, %fb_ffs.exit.i ], [ %.2.i, %.lr.ph.i59.i ], [ %.2.i, %.lr.ph.i59.i.preheader ], [ %.037.i, %.lr.ph.i52.i.preheader ], [ %.174.i, %bb.v ], [ %.2.i, %bb.z ], [ %.2.i, %fb_ffs.exit61.i ], [ %.037.i, %.lr.ph.2 ], [ %.037.i, %.lr.ph.i52.i ], [ %.037.i, %.lr.ph.i52.i.preheader.a ] ; 2 uses
   %i.fo = icmp ugt i64 %2, 4096
   %i.fp = icmp eq ptr %.0.i, null
   %or.cond = select i1 %i.fo, i1 %i.fp, i1 false
@@ -739,7 +757,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.fs = icmp ne i64 %i.fq, 0
   call void @llvm.assume(i1 %i.fs)
   %i.ft = add nsw i64 %i.fq, -1                   ; 2 uses
-  %i.fu = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ft, i1 false)
+  %i.fu = call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.ft, i1 false)
   %i.fv = trunc nuw nsw i64 %i.fu to i32
   %i.fw = call i32 @llvm.usub.sat.i32(i32 50, i32 %i.fv) ; 2 uses
   %i.fx = icmp samesign ult i64 %i.fq, 16385
@@ -763,7 +781,7 @@ bb.ad:                                            ; preds = %sz_psz2ind.exit56.i
   %i.gi = icmp ne i64 %i.gg, 0
   call void @llvm.assume(i1 %i.gi)
   %i.gj = add nsw i64 %i.gg, -1                   ; 2 uses
-  %i.gk = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.gj, i1 false)
+  %i.gk = call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.gj, i1 false)
   %i.gl = trunc nuw nsw i64 %i.gk to i32
   %i.gm = call i32 @llvm.usub.sat.i32(i32 50, i32 %i.gl) ; 2 uses
   %i.gn = icmp samesign ult i64 %i.gg, 16385
@@ -787,7 +805,7 @@ bb.ae:                                            ; preds = %sz_psz2ind.exit54.i
   %i.gy = icmp ne i64 %i.gw, 0
   call void @llvm.assume(i1 %i.gy)
   %i.gz = add nsw i64 %i.gw, -1                   ; 2 uses
-  %i.ha = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.gz, i1 false)
+  %i.ha = call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.gz, i1 false)
   %i.hb = trunc nuw nsw i64 %i.ha to i32
   %i.hc = call i32 @llvm.usub.sat.i32(i32 50, i32 %i.hb) ; 2 uses
   %i.hd = icmp samesign ult i64 %i.gw, 16385
@@ -870,42 +888,58 @@ eset_enumerate_alignment_search.exit.i:           ; preds = %bb.ai
 
 eset_enumerate_alignment_search.exit.thread.i:    ; preds = %eset_enumerate_alignment_search.exit.thread69.i, %bb.af, %sz_psz2ind.exit.i20
   %i.il = zext nneg i32 %.0.i55.i to i64          ; 2 uses
-  %i.im = lshr i64 %i.il, 6                       ; 3 uses
+  %i.im = lshr i64 %i.il, 6                       ; 5 uses
   %i.in = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.im
   %i.io = load i64, ptr %i.in, align 8, !tbaa !25
   %i.ip = and i64 %i.il, 63
   %notmask.i.i.i24 = shl nsw i64 -1, %i.ip
   %i.iq = and i64 %i.io, %notmask.i.i.i24         ; 2 uses
   %i.ir = icmp eq i64 %i.iq, 0
-  br i1 %i.ir, label %.lr.ph.i58.i.preheader.a, label %._crit_edge.i.i25
+  br i1 %i.ir, label %.lr.ph.i58.i.preheader, label %._crit_edge.i.i25
 
-.lr.ph.i58.i.preheader.a:                         ; preds = %eset_enumerate_alignment_search.exit.thread.i
-  %i.is = add nuw nsw i64 %i.im, 1                ; 2 uses
+.lr.ph.i58.i.preheader:                           ; preds = %eset_enumerate_alignment_search.exit.thread.i
+  %16 = add nuw nsw i64 %i.im, 1                  ; 3 uses
+  %17 = icmp eq i64 %16, 4
+  br i1 %17, label %fb_ffs.exit.i28, label %.lr.ph115
+
+.lr.ph.i58.i.preheader.a:                         ; preds = %.lr.ph115
+  %i.is = add nuw nsw i64 %i.im, 2                ; 3 uses
   %i.it = icmp eq i64 %i.is, 4
-  br i1 %i.it, label %fb_ffs.exit.i28, label %.lr.ph115
+  br i1 %i.it, label %fb_ffs.exit.i28, label %.lr.ph115.1
 
-.lr.ph.i58.i:                                     ; preds = %.lr.ph115
-  %i.iu = add nuw nsw i64 %9, 1                   ; 2 uses
+.lr.ph115.1:                                      ; preds = %.lr.ph.i58.i.preheader.a
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.is
+  %19 = load i64, ptr %18, align 8, !tbaa !25     ; 2 uses
+  %20 = icmp eq i64 %19, 0
+  br i1 %20, label %.lr.ph.i58.i, label %._crit_edge.i.i25, !llvm.loop !31
+
+.lr.ph.i58.i:                                     ; preds = %.lr.ph115.1
+  %i.iu = add nuw nsw i64 %i.im, 3                ; 3 uses
   %i.iv = icmp eq i64 %i.iu, 4
-  br i1 %i.iv, label %fb_ffs.exit.i28, label %.lr.ph115, !llvm.loop !31
+  br i1 %i.iv, label %fb_ffs.exit.i28, label %.lr.ph115.2
 
-.lr.ph115:                                        ; preds = %.lr.ph.i58.i.preheader.a, %.lr.ph.i58.i
-  %9 = phi i64 [ %i.iu, %.lr.ph.i58.i ], [ %i.is, %.lr.ph.i58.i.preheader.a ] ; 3 uses
-  %i.iw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %9
+.lr.ph115.2:                                      ; preds = %.lr.ph.i58.i
+  %21 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.iu
+  %22 = load i64, ptr %21, align 8, !tbaa !25     ; 2 uses
+  %23 = icmp eq i64 %22, 0
+  br i1 %23, label %fb_ffs.exit.i28, label %._crit_edge.i.i25, !llvm.loop !31
+
+.lr.ph115:                                        ; preds = %.lr.ph.i58.i.preheader
+  %i.iw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %16
   %i.ix = load i64, ptr %i.iw, align 8, !tbaa !25 ; 2 uses
   %i.iy = icmp eq i64 %i.ix, 0
-  br i1 %i.iy, label %.lr.ph.i58.i, label %._crit_edge.i.i25, !llvm.loop !31
+  br i1 %i.iy, label %.lr.ph.i58.i.preheader.a, label %._crit_edge.i.i25, !llvm.loop !31
 
-._crit_edge.i.i25:                                ; preds = %.lr.ph115, %eset_enumerate_alignment_search.exit.thread.i
-  %.039.i.lcssa.i.i26 = phi i64 [ %i.im, %eset_enumerate_alignment_search.exit.thread.i ], [ %9, %.lr.ph115 ]
-  %.1.i.lcssa.i.i27 = phi i64 [ %i.iq, %eset_enumerate_alignment_search.exit.thread.i ], [ %i.ix, %.lr.ph115 ]
+._crit_edge.i.i25:                                ; preds = %.lr.ph115, %.lr.ph115.1, %.lr.ph115.2, %eset_enumerate_alignment_search.exit.thread.i
+  %.039.i.lcssa.i.i26 = phi i64 [ %i.im, %eset_enumerate_alignment_search.exit.thread.i ], [ %16, %.lr.ph115 ], [ %i.is, %.lr.ph115.1 ], [ %i.iu, %.lr.ph115.2 ]
+  %.1.i.lcssa.i.i27 = phi i64 [ %i.iq, %eset_enumerate_alignment_search.exit.thread.i ], [ %i.ix, %.lr.ph115 ], [ %19, %.lr.ph115.1 ], [ %22, %.lr.ph115.2 ]
   %i.iz = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.1.i.lcssa.i.i27, i1 true)
   %i.ja = shl nuw nsw i64 %.039.i.lcssa.i.i26, 6
   %i.jb = or disjoint i64 %i.iz, %i.ja
   br label %fb_ffs.exit.i28
 
-fb_ffs.exit.i28:                                  ; preds = %.lr.ph.i58.i, %.lr.ph.i58.i.preheader.a, %._crit_edge.i.i25
-  %.141.i.i.i = phi i64 [ %i.jb, %._crit_edge.i.i25 ], [ 200, %.lr.ph.i58.i.preheader.a ], [ 200, %.lr.ph.i58.i ] ; 2 uses
+fb_ffs.exit.i28:                                  ; preds = %.lr.ph.i58.i.preheader.a, %.lr.ph.i58.i, %.lr.ph115.2, %.lr.ph.i58.i.preheader, %._crit_edge.i.i25
+  %.141.i.i.i = phi i64 [ %i.jb, %._crit_edge.i.i25 ], [ 200, %.lr.ph.i58.i.preheader ], [ 200, %.lr.ph115.2 ], [ 200, %.lr.ph.i58.i ], [ 200, %.lr.ph.i58.i.preheader.a ] ; 2 uses
   %i.jc = add i64 %i.b, -1
   %.081.i = trunc nuw nsw i64 %.141.i.i.i to i32
   %.not5082.i = icmp ugt i32 %.0.i53.i, %.081.i

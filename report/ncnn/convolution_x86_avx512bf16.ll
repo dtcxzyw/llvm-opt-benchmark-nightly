@@ -205,6 +205,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.do = sext i32 %i.dn to i64
   %i.dp = load i64, ptr %i.bi, align 16, !tbaa !17
   %factor.op.mul130.i = mul i64 %i.dp, %i.do
+  %10 = add nsw i32 %.059.i, -1
   %.not.i = icmp sle i32 %.059.i, %2
   %i.dq = getelementptr inbounds nuw i8, ptr %9, i64 44
   %i.dr = getelementptr inbounds nuw i8, ptr %9, i64 64
@@ -214,10 +215,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %or.cond.i, label %.preheader120.lr.ph.us.preheader.i, label %._crit_edge.split.i
 
 .preheader120.lr.ph.us.preheader.i:               ; preds = %.lr.ph.i
-  %10 = add nsw i32 %.059.i, -1
   %i.du = zext nneg i32 %.059.i to i64            ; 9 uses
-  %11 = zext nneg i32 %10 to i64
-  %12 = zext nneg i32 %2 to i64
   %wide.trip.count147.i = zext nneg i32 %3 to i64
   %wide.trip.count139.i = zext nneg i32 %i.g to i64
   %i.dv = add nsw i64 %i.du, -1                   ; 2 uses
@@ -442,10 +440,11 @@ middle.block:                                     ; preds = %vector.body, %vec.e
 
 ._crit_edge.us.us.i:                              ; preds = %middle.block
   %indvars.iv.next142.i = add nuw nsw i64 %indvars.iv141.i, %i.du ; 2 uses
-  %13 = add nuw nsw i64 %indvars.iv.next142.i, %11
-  %14 = icmp samesign ult i64 %13, %12
+  %11 = trunc i64 %indvars.iv.next142.i to i32
+  %12 = add i32 %10, %11
+  %13 = icmp slt i32 %12, %2
   %indvar.next = add i64 %indvar, 1
-  br i1 %14, label %.preheader120.us.us.i, label %._crit_edge128.split.us.us.i, !llvm.loop !356
+  br i1 %13, label %.preheader120.us.us.i, label %._crit_edge128.split.us.us.i, !llvm.loop !356
 
 ._crit_edge128.split.us.us.i:                     ; preds = %._crit_edge.us.us.i
   %indvars.iv.next145.i = add nuw nsw i64 %indvars.iv144.i, 1 ; 2 uses

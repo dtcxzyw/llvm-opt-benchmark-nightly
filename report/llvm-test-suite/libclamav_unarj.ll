@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph76, %.loopexi
 
 bb.e:                                             ; preds = %bb.d
   %i.p = shl i16 %.pre80, 1                       ; 4 uses
-  %i.q = add nsw i16 %i.n, -1                     ; 4 uses
+  %i.q = add nsw i16 %i.n, -1                     ; 3 uses
   store i16 %i.q, ptr %i.j, align 8, !tbaa !68
   %i.r = icmp sgt i16 %.pre80, -1
   br i1 %i.r, label %decode_len.exit.thread, label %bb.f
@@ -408,13 +408,12 @@ decode_len.exit.thread:                           ; preds = %bb.e
 bb.s:                                             ; preds = %decode_len.exit.thread
   %i.di = load i16, ptr %i.e, align 2, !tbaa !23
   %i.dj = zext i16 %i.di to i32
-  %i.dk = zext nneg i16 %i.q to i32
+  %i.dk = zext nneg i16 %i.q to i32               ; 2 uses
   %i.dl = lshr i32 %i.dj, %i.dk
   %i.dm = trunc nuw i32 %i.dl to i16
   %i.dn = or i16 %i.p, %i.dm
   store i16 %i.dn, ptr %i.i, align 2, !tbaa !67
-  %3 = zext nneg i16 %i.q to i32
-  %i.do = sub nuw nsw i32 16, %3
+  %i.do = sub nuw nsw i32 16, %i.dk
   %i.dp = call fastcc i32 @fill_buf(ptr noundef %2, i32 noundef %i.do) ; 0 uses
   %.pre81 = load i16, ptr %i.i, align 2, !tbaa !67
   br label %decode_len.exit.thread.thread

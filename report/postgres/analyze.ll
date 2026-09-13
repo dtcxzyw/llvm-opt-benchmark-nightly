@@ -205,12 +205,13 @@ bb.an:                                            ; preds = %.unr-lcssa
 bb.ao:                                            ; preds = %bb.aq, %.preheader.i
   %indvars.iv78.i = phi i64 [ %i.fk, %.preheader.i ], [ %indvars.iv.next79.i, %bb.aq ] ; 3 uses
   %.176.i = phi double [ %.057.lcssa.i, %.preheader.i ], [ %i.jo, %bb.aq ] ; 2 uses
-  %indvars.iv.next79.i = add nsw i64 %indvars.iv78.i, -1 ; 4 uses
-  %i.if = trunc nuw nsw i64 %indvars.iv.next79.i to i32
+  %indvars.iv.next79.i = add nsw i64 %indvars.iv78.i, -1 ; 3 uses
+  %i.if = trunc i64 %indvars.iv.next79.i to i32   ; 2 uses
   %i.ig = uitofp nneg i32 %i.if to double
   %i.ih = fsub double %.058.i, %i.ig              ; 2 uses
   %i.ii = fcmp ogt double %i.ih, 1.000000e+00
-  %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.fm, i64 %indvars.iv.next79.i ; 2 uses
+  %6 = and i64 %indvars.iv.next79.i, 4294967295
+  %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.fm, i64 %6 ; 2 uses
   %i.ik = load i32, ptr %i.ij, align 4
   %i.il = sitofp i32 %i.ik to double
   %i.im = fmul double %3, %i.il
@@ -242,7 +243,7 @@ bb.ao:                                            ; preds = %bb.aq, %.preheader.
   br i1 %i.ji, label %.thread.loopexit.split.loop.exit.i, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.jj = icmp eq i64 %indvars.iv.next79.i, 0
+  %i.jj = icmp eq i32 %i.if, 0
   br i1 %i.jj, label %analyze_mcv_list.exit.thread, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
@@ -254,7 +255,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ao
 
 .thread.loopexit.split.loop.exit.i:               ; preds = %bb.ao
-  %i.jp = trunc nuw nsw i64 %indvars.iv78.i to i32
+  %i.jp = trunc nuw i64 %indvars.iv78.i to i32
   br label %analyze_mcv_list.exit
 
 analyze_mcv_list.exit:                            ; preds = %.thread.loopexit.split.loop.exit.i, %bb.ak
@@ -657,12 +658,13 @@ bb.al:                                            ; preds = %.unr-lcssa
 bb.am:                                            ; preds = %bb.ao, %.preheader.i
   %indvars.iv78.i = phi i64 [ %i.gb, %.preheader.i ], [ %indvars.iv.next79.i, %bb.ao ] ; 3 uses
   %.176.i = phi double [ %.057.lcssa.i, %.preheader.i ], [ %i.ln, %bb.ao ] ; 2 uses
-  %indvars.iv.next79.i = add nsw i64 %indvars.iv78.i, -1 ; 4 uses
-  %i.ke = trunc nuw nsw i64 %indvars.iv.next79.i to i32
+  %indvars.iv.next79.i = add nsw i64 %indvars.iv78.i, -1 ; 3 uses
+  %i.ke = trunc i64 %indvars.iv.next79.i to i32   ; 2 uses
   %i.kf = uitofp nneg i32 %i.ke to double
   %i.kg = fsub double %.058.i, %i.kf              ; 2 uses
   %i.kh = fcmp ogt double %i.kg, 1.000000e+00
-  %i.ki = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %indvars.iv.next79.i ; 2 uses
+  %5 = and i64 %indvars.iv.next79.i, 4294967295
+  %i.ki = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %5 ; 2 uses
   %i.kj = load i32, ptr %i.ki, align 4
   %i.kk = sitofp i32 %i.kj to double
   %i.kl = fmul double %3, %i.kk
@@ -694,7 +696,7 @@ bb.am:                                            ; preds = %bb.ao, %.preheader.
   br i1 %i.lh, label %.thread.loopexit.split.loop.exit.i, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.li = icmp eq i64 %indvars.iv.next79.i, 0
+  %i.li = icmp eq i32 %i.ke, 0
   br i1 %i.li, label %analyze_mcv_list.exit.thread, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
@@ -706,7 +708,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %bb.am
 
 .thread.loopexit.split.loop.exit.i:               ; preds = %bb.am
-  %i.lo = trunc nuw nsw i64 %indvars.iv78.i to i32
+  %i.lo = trunc nuw i64 %indvars.iv78.i to i32
   br label %analyze_mcv_list.exit
 
 analyze_mcv_list.exit:                            ; preds = %.thread.loopexit.split.loop.exit.i, %bb.ai

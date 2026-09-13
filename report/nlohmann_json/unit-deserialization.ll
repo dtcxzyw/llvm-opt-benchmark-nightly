@@ -204,7 +204,7 @@ define internal noundef zeroext i1 @_ZN12_GLOBAL__N_114SaxEventLogger6binaryERN8
   br i1 %i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %._crit_edge.i.i
-  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 12 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 11 uses
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 17
   br label %bb.c
@@ -312,7 +312,7 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.h, %bb.g, %bb.e,
   call void @llvm.experimental.noalias.scope.decl(metadata !1463)
   %i.al = icmp ult i8 %i.v, 10                    ; 3 uses
   %i.am = icmp ult i8 %i.v, 100
-  %. = select i1 %i.am, i32 2, i32 3              ; 3 uses
+  %. = select i1 %i.am, i32 2, i32 3              ; 2 uses
   %i.an = zext nneg i32 %. to i64
   %i.ao = select i1 %i.al, i64 1, i64 %i.an       ; 9 uses
   store ptr %i.j, ptr %4, align 8, !tbaa !61, !alias.scope !1463
@@ -325,7 +325,7 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.h, %bb.g, %bb.e,
 bb.j:                                             ; preds = %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.j, i8 45, i64 %i.ao, i1 false)
   store i64 %i.ao, ptr %i.k, align 8, !tbaa !64, !alias.scope !1463
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.ao
+  %i.ap = getelementptr i8, ptr %i.j, i64 %i.ao   ; 2 uses
   store i8 0, ptr %i.ap, align 1, !tbaa !46
   %i.aq = icmp ugt i8 %i.v, 99
   br i1 %i.aq, label %.lr.ph.preheader.i.i, label %._crit_edge.i.i18
@@ -338,9 +338,7 @@ bb.j:                                             ; preds = %_ZNSt8__detail14__t
   %i.av = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.au ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 1
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !46, !noalias !1463
-  %5 = zext nneg i32 %. to i64
-  %6 = getelementptr i8, ptr %i.j, i64 %5
-  %i.ay = getelementptr i8, ptr %6, i64 -1
+  %i.ay = getelementptr i8, ptr %i.ap, i64 -1
   store i8 %i.ax, ptr %i.ay, align 1, !tbaa !46
   %i.az = load i8, ptr %i.av, align 2, !tbaa !46, !noalias !1463
   %i.ba = add nsw i32 %., -2
@@ -361,7 +359,7 @@ bb.k:                                             ; preds = %.lr.ph.preheader.i.
   %.sink89 = phi i64 [ %i.bb, %.lr.ph.preheader.i.i ], [ %i.ao, %.thread ]
   %.sink = phi i8 [ %i.az, %.lr.ph.preheader.i.i ], [ 0, %.thread ]
   %.0.lcssa.i.i.ph = phi i8 [ %i.at, %.lr.ph.preheader.i.i ], [ %i.v, %.thread ]
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink89
+  %i.bi = getelementptr i8, ptr %i.j, i64 %.sink89
   store i8 %.sink, ptr %i.bi, align 1, !tbaa !46
   %i.bj = or disjoint i8 %.0.lcssa.i.i.ph, 48
   br label %_ZNSt7__cxx119to_stringEi.exit

@@ -205,14 +205,19 @@ bb.d:                                             ; preds = %bb.c
   %i.e = trunc nuw nsw i64 %indvars.iv to i32
   %spec.select.i = select i1 %i.d, i32 %1, i32 %i.e
   %.113.i = add nsw i32 %spec.select.i, -1        ; 3 uses
-  %2 = sext i32 %.113.i to i64
-  %i.f = getelementptr inbounds [8 x i8], ptr %0, i64 %2
-  %i.g = load double, ptr %i.f, align 8, !tbaa !14 ; 2 uses
+  %2 = zext i32 %.113.i to i64                    ; 2 uses
+  %i.f = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %2
+  %i.g = load double, ptr %i.f, align 8, !tbaa !14
   %i.h = fcmp oeq double %i.g, +inf
-  %3 = zext i32 %.113.i to i64
-  %i.i = icmp ne i64 %indvars.iv, %3
+  %i.i = icmp ne i64 %indvars.iv, %2
   %i.j = and i1 %i.i, %i.h
-  br i1 %i.j, label %.lr.ph.i, label %_ZL19find_previous_indexiPKdi.exit
+  br i1 %i.j, label %.lr.ph.i, label %._ZL19find_previous_indexiPKdi.exit_crit_edge
+
+._ZL19find_previous_indexiPKdi.exit_crit_edge:    ; preds = %bb.d
+  %.phi.trans.insert = sext i32 %.113.i to i64
+  %.phi.trans.insert73 = getelementptr inbounds [8 x i8], ptr %0, i64 %.phi.trans.insert
+  %.pre = load double, ptr %.phi.trans.insert73, align 8, !tbaa !14
+  br label %_ZL19find_previous_indexiPKdi.exit
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.i
   %.114.i = phi i32 [ %.1.i, %.lr.ph.i ], [ %.113.i, %bb.d ] ; 2 uses
@@ -228,8 +233,8 @@ bb.d:                                             ; preds = %bb.c
   %i.r = and i1 %i.o, %i.q
   br i1 %i.r, label %.lr.ph.i, label %_ZL19find_previous_indexiPKdi.exit, !llvm.loop !2
 
-_ZL19find_previous_indexiPKdi.exit:               ; preds = %.lr.ph.i, %bb.d
-  %i.s = phi double [ %i.g, %bb.d ], [ %i.n, %.lr.ph.i ]
+_ZL19find_previous_indexiPKdi.exit:               ; preds = %.lr.ph.i, %._ZL19find_previous_indexiPKdi.exit_crit_edge
+  %i.s = phi double [ %.pre, %._ZL19find_previous_indexiPKdi.exit_crit_edge ], [ %i.n, %.lr.ph.i ]
   %i.t = fsub double %i.s, %i.b                   ; 3 uses
   %i.u = fcmp oge double %i.t, 2.000000e+02
   %i.v = fcmp une double %i.t, +inf               ; 2 uses
@@ -321,14 +326,19 @@ bb.d:                                             ; preds = %bb.c
   %i.e = trunc nuw nsw i64 %indvars.iv to i32
   %spec.select.i = select i1 %i.d, i32 %1, i32 %i.e
   %.113.i = add nsw i32 %spec.select.i, -1        ; 3 uses
-  %2 = sext i32 %.113.i to i64
-  %i.f = getelementptr inbounds [8 x i8], ptr %0, i64 %2
-  %i.g = load double, ptr %i.f, align 8, !tbaa !14 ; 2 uses
+  %2 = zext i32 %.113.i to i64                    ; 2 uses
+  %i.f = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %2
+  %i.g = load double, ptr %i.f, align 8, !tbaa !14
   %i.h = fcmp oeq double %i.g, +inf
-  %3 = zext i32 %.113.i to i64
-  %i.i = icmp ne i64 %indvars.iv, %3
+  %i.i = icmp ne i64 %indvars.iv, %2
   %i.j = and i1 %i.i, %i.h
-  br i1 %i.j, label %.lr.ph.i, label %_ZL19find_previous_indexiPKdi.exit
+  br i1 %i.j, label %.lr.ph.i, label %._ZL19find_previous_indexiPKdi.exit_crit_edge
+
+._ZL19find_previous_indexiPKdi.exit_crit_edge:    ; preds = %bb.d
+  %.phi.trans.insert = sext i32 %.113.i to i64
+  %.phi.trans.insert85 = getelementptr inbounds [8 x i8], ptr %0, i64 %.phi.trans.insert
+  %.pre = load double, ptr %.phi.trans.insert85, align 8, !tbaa !14
+  br label %_ZL19find_previous_indexiPKdi.exit
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.i
   %.114.i = phi i32 [ %.1.i, %.lr.ph.i ], [ %.113.i, %bb.d ] ; 2 uses
@@ -344,8 +354,8 @@ bb.d:                                             ; preds = %bb.c
   %i.r = and i1 %i.o, %i.q
   br i1 %i.r, label %.lr.ph.i, label %_ZL19find_previous_indexiPKdi.exit, !llvm.loop !2
 
-_ZL19find_previous_indexiPKdi.exit:               ; preds = %.lr.ph.i, %bb.d
-  %i.s = phi double [ %i.g, %bb.d ], [ %i.n, %.lr.ph.i ]
+_ZL19find_previous_indexiPKdi.exit:               ; preds = %.lr.ph.i, %._ZL19find_previous_indexiPKdi.exit_crit_edge
+  %i.s = phi double [ %.pre, %._ZL19find_previous_indexiPKdi.exit_crit_edge ], [ %i.n, %.lr.ph.i ]
   %i.t = fsub double %i.s, %i.b                   ; 3 uses
   %i.u = fcmp oge double %i.t, 2.000000e+02
   %i.v = fcmp une double %i.t, +inf               ; 2 uses
@@ -748,7 +758,7 @@ _ZL10simple_maxPKdi.exit578:                      ; preds = %_ZL10simple_maxPKdi
   %.sroa.45.2901 = phi ptr [ %.sroa.45.11004, %bb.ba ], [ %.sroa.43.11002, %bb.ay ] ; 3 uses
   %.sroa.0807.2896 = phi ptr [ %.sroa.0807.11003, %bb.ba ], [ %.sroa.0845.11001, %bb.ay ] ; 23 uses
   %.sroa.43.2895 = phi ptr [ %.sroa.43.11002, %bb.ba ], [ %.sroa.45.11004, %bb.ay ] ; 3 uses
-  %.sroa.0845.2891 = phi ptr [ %.sroa.0845.11001, %bb.ba ], [ %.sroa.0807.11003, %bb.ay ] ; 9 uses
+  %.sroa.0845.2891 = phi ptr [ %.sroa.0845.11001, %bb.ba ], [ %.sroa.0807.11003, %bb.ay ] ; 11 uses
   br i1 %.1430, label %bb.be, label %bb.bg
 
 bb.be:                                            ; preds = %.thread883
@@ -899,14 +909,19 @@ bb.bj:                                            ; preds = %.preheader978
   %i.acd = trunc nuw nsw i64 %indvars.iv.i599 to i32
   %spec.select.i.i = select i1 %i.acc, i32 %i.aa, i32 %i.acd
   %.113.i.i = add nsw i32 %spec.select.i.i, -1    ; 3 uses
-  %17 = sext i32 %.113.i.i to i64
-  %i.ace = getelementptr inbounds [8 x i8], ptr %.sroa.0845.2891, i64 %17
-  %i.acf = load double, ptr %i.ace, align 8, !tbaa !14 ; 2 uses
+  %17 = zext i32 %.113.i.i to i64                 ; 2 uses
+  %i.ace = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0845.2891, i64 %17
+  %i.acf = load double, ptr %i.ace, align 8, !tbaa !14
   %i.acg = fcmp oeq double %i.acf, +inf
-  %18 = zext i32 %.113.i.i to i64
-  %i.ach = icmp ne i64 %indvars.iv.i599, %18
+  %i.ach = icmp ne i64 %indvars.iv.i599, %17
   %i.aci = and i1 %i.ach, %i.acg
-  br i1 %i.aci, label %.lr.ph.i.i, label %_ZL19find_previous_indexiPKdi.exit.i
+  br i1 %i.aci, label %.lr.ph.i.i, label %._ZL19find_previous_indexiPKdi.exit_crit_edge.i
+
+._ZL19find_previous_indexiPKdi.exit_crit_edge.i:  ; preds = %bb.bj
+  %.phi.trans.insert.i = sext i32 %.113.i.i to i64
+  %.phi.trans.insert73.i = getelementptr inbounds [8 x i8], ptr %.sroa.0845.2891, i64 %.phi.trans.insert.i
+  %.pre.i = load double, ptr %.phi.trans.insert73.i, align 8, !tbaa !14
+  br label %_ZL19find_previous_indexiPKdi.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.bj, %.lr.ph.i.i
   %.114.i.i = phi i32 [ %.1.i.i, %.lr.ph.i.i ], [ %.113.i.i, %bb.bj ] ; 2 uses
@@ -922,8 +937,8 @@ bb.bj:                                            ; preds = %.preheader978
   %i.acq = and i1 %i.acn, %i.acp
   br i1 %i.acq, label %.lr.ph.i.i, label %_ZL19find_previous_indexiPKdi.exit.i, !llvm.loop !2
 
-_ZL19find_previous_indexiPKdi.exit.i:             ; preds = %.lr.ph.i.i, %bb.bj
-  %i.acr = phi double [ %i.acf, %bb.bj ], [ %i.acm, %.lr.ph.i.i ]
+_ZL19find_previous_indexiPKdi.exit.i:             ; preds = %.lr.ph.i.i, %._ZL19find_previous_indexiPKdi.exit_crit_edge.i
+  %i.acr = phi double [ %.pre.i, %._ZL19find_previous_indexiPKdi.exit_crit_edge.i ], [ %i.acm, %.lr.ph.i.i ]
   %i.acs = fsub double %i.acr, %i.aca             ; 3 uses
   %i.act = fcmp oge double %i.acs, 2.000000e+02
   %i.acu = fcmp une double %i.acs, +inf           ; 2 uses
@@ -1012,14 +1027,19 @@ bb.bu:                                            ; preds = %bb.bt
   %i.adi = trunc nuw nsw i64 %indvars.iv.i605 to i32
   %spec.select.i.i606 = select i1 %i.adh, i32 %i.aa, i32 %i.adi
   %.113.i.i607 = add nsw i32 %spec.select.i.i606, -1 ; 3 uses
-  %19 = sext i32 %.113.i.i607 to i64
-  %i.adj = getelementptr inbounds [8 x i8], ptr %.sroa.0845.2891, i64 %19
-  %i.adk = load double, ptr %i.adj, align 8, !tbaa !14 ; 2 uses
+  %18 = zext i32 %.113.i.i607 to i64              ; 2 uses
+  %i.adj = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0845.2891, i64 %18
+  %i.adk = load double, ptr %i.adj, align 8, !tbaa !14
   %i.adl = fcmp oeq double %i.adk, +inf
-  %20 = zext i32 %.113.i.i607 to i64
-  %i.adm = icmp ne i64 %indvars.iv.i605, %20
+  %i.adm = icmp ne i64 %indvars.iv.i605, %18
   %i.adn = and i1 %i.adm, %i.adl
-  br i1 %i.adn, label %.lr.ph.i.i617, label %_ZL19find_previous_indexiPKdi.exit.i608
+  br i1 %i.adn, label %.lr.ph.i.i617, label %._ZL19find_previous_indexiPKdi.exit_crit_edge.i608
+
+._ZL19find_previous_indexiPKdi.exit_crit_edge.i608: ; preds = %bb.bu
+  %.phi.trans.insert.i609 = sext i32 %.113.i.i607 to i64
+  %.phi.trans.insert85.i = getelementptr inbounds [8 x i8], ptr %.sroa.0845.2891, i64 %.phi.trans.insert.i609
+  %.pre.i610 = load double, ptr %.phi.trans.insert85.i, align 8, !tbaa !14
+  br label %_ZL19find_previous_indexiPKdi.exit.i608
 
 .lr.ph.i.i617:                                    ; preds = %bb.bu, %.lr.ph.i.i617
   %.114.i.i618 = phi i32 [ %.1.i.i620, %.lr.ph.i.i617 ], [ %.113.i.i607, %bb.bu ] ; 2 uses
@@ -1035,8 +1055,8 @@ bb.bu:                                            ; preds = %bb.bt
   %i.adv = and i1 %i.ads, %i.adu
   br i1 %i.adv, label %.lr.ph.i.i617, label %_ZL19find_previous_indexiPKdi.exit.i608, !llvm.loop !2
 
-_ZL19find_previous_indexiPKdi.exit.i608:          ; preds = %.lr.ph.i.i617, %bb.bu
-  %i.adw = phi double [ %i.adk, %bb.bu ], [ %i.adr, %.lr.ph.i.i617 ]
+_ZL19find_previous_indexiPKdi.exit.i608:          ; preds = %.lr.ph.i.i617, %._ZL19find_previous_indexiPKdi.exit_crit_edge.i608
+  %i.adw = phi double [ %.pre.i610, %._ZL19find_previous_indexiPKdi.exit_crit_edge.i608 ], [ %i.adr, %.lr.ph.i.i617 ]
   %i.adx = fsub double %i.adw, %i.adf             ; 3 uses
   %i.ady = fcmp oge double %i.adx, 2.000000e+02
   %i.adz = fcmp une double %i.adx, +inf           ; 2 uses

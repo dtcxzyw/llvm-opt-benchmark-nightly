@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   %i.bv = add nsw i32 %i.n, -1
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.bv, i32 %storemerge.lcssa)
-  %8 = sext i32 %.sroa.speculated to i64
+  %8 = zext nneg i32 %.sroa.speculated to i64
   %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %8
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !53
   invoke void @_ZNK5arrow5Array5SliceEll(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.12") align 8 %6, ptr noundef nonnull align 8 dereferenceable(32) %i.bx, i64 noundef 0, i64 noundef 0)

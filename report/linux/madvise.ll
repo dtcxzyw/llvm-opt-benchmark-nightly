@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w, %bb.t, %._crit_edge.i.i
   %i.aw = phi ptr [ %.pre.i.i, %._crit_edge.i.i ], [ %i.ar, %bb.t ], [ %i.ar, %bb.w ]
   %i.ax = getelementptr i8, ptr %i.ak, i64 128    ; 3 uses
-  %i.ay = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ax, i32 -1, ptr elementtype(i32) %i.ax) #11, !srcloc !17 ; 4 uses
+  %i.ay = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ax, i32 -1, ptr elementtype(i32) %i.ax) #11, !srcloc !17 ; 3 uses
   %i.az = icmp eq i32 %i.ay, 1
   br i1 %i.az, label %__vma_refcount_put_return.exit.i.i.i.i, label %bb.y
 
@@ -222,12 +222,9 @@ __vma_refcount_put_return.exit.i.i.i.i:           ; preds = %bb.x
   br label %vma_end_read.exit.i.i
 
 bb.z:                                             ; preds = %bb.y
-  %i.bb = add nuw i32 %i.ay, 2147483647
-  %4 = and i32 %i.bb, 1073741824
-  %5 = icmp ne i32 %4, 0
-  %i.bc = icmp samesign ult i32 %i.ay, 1073741827
-  %6 = and i1 %i.bc, %5
-  br i1 %6, label %bb.aa, label %vma_end_read.exit.i.i
+  %i.bb = add nsw i32 %i.ay, -1073741825
+  %i.bc = icmp ult i32 %i.bb, 2
+  br i1 %i.bc, label %bb.aa, label %vma_end_read.exit.i.i
 
 bb.aa:                                            ; preds = %bb.z
   %i.bd = getelementptr i8, ptr %i.aw, i64 512
@@ -264,7 +261,7 @@ bb.ad:                                            ; preds = %bb.w, %bb.v, %bb.u
   %i.bj = getelementptr i8, ptr %i.bi, i64 16
   %i.bk = load ptr, ptr %i.bj, align 16
   %i.bl = getelementptr i8, ptr %i.bi, i64 128    ; 3 uses
-  %i.bm = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bl, i32 -1, ptr elementtype(i32) %i.bl) #11, !srcloc !17 ; 4 uses
+  %i.bm = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bl, i32 -1, ptr elementtype(i32) %i.bl) #11, !srcloc !17 ; 3 uses
   %i.bn = icmp eq i32 %i.bm, 1
   br i1 %i.bn, label %__vma_refcount_put_return.exit.i.i.i, label %bb.ae
 
@@ -281,12 +278,9 @@ __vma_refcount_put_return.exit.i.i.i:             ; preds = %bb.ad
   br label %madvise_walk_vmas.exit
 
 bb.af:                                            ; preds = %bb.ae
-  %i.bp = add nuw i32 %i.bm, 2147483647
-  %7 = and i32 %i.bp, 1073741824
-  %8 = icmp ne i32 %7, 0
-  %i.bq = icmp samesign ult i32 %i.bm, 1073741827
-  %9 = and i1 %i.bq, %8
-  br i1 %9, label %bb.ag, label %madvise_walk_vmas.exit
+  %i.bp = add nsw i32 %i.bm, -1073741825
+  %i.bq = icmp ult i32 %i.bp, 2
+  br i1 %i.bq, label %bb.ag, label %madvise_walk_vmas.exit
 
 bb.ag:                                            ; preds = %bb.af
   %i.br = getelementptr i8, ptr %i.bk, i64 512

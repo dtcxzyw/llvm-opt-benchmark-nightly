@@ -205,7 +205,7 @@ ec_point_select.exit.loopexit:                    ; preds = %scalar.ph.prol.loop
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i32 @ec_GFp_mont_init_precomp(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2) #5 {
 bb.a:
-  %3 = alloca [31 x %struct.EC_JACOBIAN], align 16 ; 97 uses
+  %3 = alloca [31 x %struct.EC_JACOBIAN], align 16 ; 93 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #36
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 328
@@ -290,25 +290,22 @@ _ZL23ec_GFp_mont_comb_stridePK11ec_group_st.exit: ; preds = %bb.b, %bn_minimal_w
   br i1 %i.au, label %.lr.ph.us.preheader, label %._crit_edge.3
 
 .lr.ph.us.preheader:                              ; preds = %_ZL23ec_GFp_mont_comb_stridePK11ec_group_st.exit
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 432 ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 216 ; 5 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %3, i64 216 ; 3 uses
-  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %5, ptr noundef nonnull %3)
+  %i.av = getelementptr inbounds nuw i8, ptr %3, i64 216 ; 8 uses
+  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.av, ptr noundef nonnull %3)
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.us.preheader, %bb.d
   %.02327.us = phi i32 [ 1, %.lr.ph.us.preheader ], [ %i.aw, %bb.d ]
-  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %5, ptr noundef nonnull %5)
+  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.av, ptr noundef nonnull %i.av)
   %i.aw = add nuw nsw i32 %.02327.us, 1           ; 2 uses
   %exitcond.not = icmp eq i32 %i.aw, %i.at
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !1263
 
 ._crit_edge.us:                                   ; preds = %bb.d
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 432
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.ax, ptr noundef nonnull %5, ptr noundef nonnull %3)
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 864 ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 648 ; 7 uses
-  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.ay, ptr noundef nonnull %5)
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.ax, ptr noundef nonnull %i.av, ptr noundef nonnull %3)
+  %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 648 ; 9 uses
+  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.ay, ptr noundef nonnull %i.av)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %._crit_edge.us
@@ -324,9 +321,9 @@ bb.e:                                             ; preds = %bb.e, %._crit_edge.
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 1080
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bb, ptr noundef nonnull %i.ay, ptr noundef nonnull %i.av)
   %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 1296
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 432
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bc, ptr noundef nonnull %i.ay, ptr noundef nonnull %4)
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 1728
-  %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 1512 ; 11 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 1512 ; 12 uses
   call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.bd, ptr noundef nonnull %i.ay)
   br label %bb.f
 
@@ -342,20 +339,21 @@ bb.f:                                             ; preds = %bb.f, %._crit_edge.
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bf, ptr noundef nonnull %i.bd, ptr noundef nonnull %3)
   %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 1944
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bg, ptr noundef nonnull %i.bd, ptr noundef nonnull %i.av)
-  %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 2160
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bh, ptr noundef nonnull %i.bd, ptr noundef nonnull %4)
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 2160
+  %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 432
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %5, ptr noundef nonnull %i.bd, ptr noundef nonnull %i.bh)
   %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 2376
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 648
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bi, ptr noundef nonnull %i.bd, ptr noundef nonnull %8)
-  %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 2592
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bj, ptr noundef nonnull %i.bd, ptr noundef nonnull %6)
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bi, ptr noundef nonnull %i.bd, ptr noundef nonnull %i.ay)
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 2592
+  %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 864
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %6, ptr noundef nonnull %i.bd, ptr noundef nonnull %i.bj)
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 2808
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 1080
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bk, ptr noundef nonnull %i.bd, ptr noundef nonnull %i.bl)
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 3024
   %i.bn = getelementptr inbounds nuw i8, ptr %3, i64 1296
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bm, ptr noundef nonnull %i.bd, ptr noundef nonnull %i.bn)
-  %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 3240 ; 13 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 3240 ; 12 uses
   call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.bd)
   br label %bb.g
 
@@ -367,32 +365,33 @@ bb.g:                                             ; preds = %bb.g, %._crit_edge.
   br i1 %exitcond.3.not, label %._crit_edge.us.3, label %bb.g, !llvm.loop !1263
 
 ._crit_edge.us.3:                                 ; preds = %bb.g
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 3456
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %9, ptr noundef nonnull %i.bo, ptr noundef nonnull %3)
-  %i.bq = getelementptr inbounds nuw i8, ptr %3, i64 3672
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bq, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.av)
-  %i.br = getelementptr inbounds nuw i8, ptr %3, i64 3888
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.br, ptr noundef nonnull %i.bo, ptr noundef nonnull %4)
-  %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 4104
-  %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 648
+  %i.bq = getelementptr inbounds nuw i8, ptr %3, i64 3456
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bq, ptr noundef nonnull %i.bo, ptr noundef nonnull %3)
+  %i.br = getelementptr inbounds nuw i8, ptr %3, i64 3672
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.br, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.av)
+  %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 3888
+  %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 432
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bs, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.bt)
-  %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 4320
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bu, ptr noundef nonnull %i.bo, ptr noundef nonnull %6)
-  %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 4536
-  %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 1080
+  %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 4104
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bu, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.ay)
+  %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 4320
+  %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 864
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bv, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.bw)
-  %i.bx = getelementptr inbounds nuw i8, ptr %3, i64 4752
-  %i.by = getelementptr inbounds nuw i8, ptr %3, i64 1296
+  %i.bx = getelementptr inbounds nuw i8, ptr %3, i64 4536
+  %i.by = getelementptr inbounds nuw i8, ptr %3, i64 1080
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bx, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.by)
-  %i.bz = getelementptr inbounds nuw i8, ptr %3, i64 4968
-  %i.ca = getelementptr inbounds nuw i8, ptr %3, i64 1512
+  %i.bz = getelementptr inbounds nuw i8, ptr %3, i64 4752
+  %i.ca = getelementptr inbounds nuw i8, ptr %3, i64 1296
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.ca)
-  %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 5184
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cb, ptr noundef nonnull %i.bo, ptr noundef nonnull %7)
+  %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 4968
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cb, ptr noundef nonnull %i.bo, ptr noundef nonnull %i.bd)
   br label %.split.us
 
 .split.us:                                        ; preds = %._crit_edge.3, %._crit_edge.us.3
-  %.sink51 = phi ptr [ %i.dk, %._crit_edge.3 ], [ %i.bo, %._crit_edge.us.3 ] ; 6 uses
+  %.sink51 = phi ptr [ %i.dl, %._crit_edge.3 ], [ %i.bo, %._crit_edge.us.3 ] ; 7 uses
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 5184
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 1728
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %7, ptr noundef nonnull %.sink51, ptr noundef nonnull %8)
   %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 5400
   %i.cd = getelementptr inbounds nuw i8, ptr %3, i64 1944
   call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cc, ptr noundef nonnull %.sink51, ptr noundef nonnull %i.cd)
@@ -431,65 +430,61 @@ ec_jacobian_to_affine_batch.exit:                 ; preds = %bb.h, %bb.i
   ret i32 %.0.i
 
 ._crit_edge.3:                                    ; preds = %_ZL23ec_GFp_mont_comb_stridePK11ec_group_st.exit.thread, %_ZL23ec_GFp_mont_comb_stridePK11ec_group_st.exit
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 432 ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 216 ; 3 uses
-  %i.ct = getelementptr inbounds nuw i8, ptr %3, i64 216 ; 3 uses
-  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %11, ptr noundef nonnull %3)
+  %i.ct = getelementptr inbounds nuw i8, ptr %3, i64 216 ; 6 uses
+  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.ct, ptr noundef nonnull %3)
   %i.cu = getelementptr inbounds nuw i8, ptr %3, i64 432
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cu, ptr noundef nonnull %11, ptr noundef nonnull %3)
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 864 ; 2 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %3, i64 648 ; 5 uses
-  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.cv, ptr noundef nonnull %11)
-  %13 = getelementptr inbounds nuw i8, ptr %3, i64 864
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %13, ptr noundef nonnull %i.cv, ptr noundef nonnull %3)
-  %i.cw = getelementptr inbounds nuw i8, ptr %3, i64 1080
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.cv, ptr noundef nonnull %i.ct)
-  %i.cx = getelementptr inbounds nuw i8, ptr %3, i64 1296
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cx, ptr noundef nonnull %i.cv, ptr noundef nonnull %10)
-  %i.cy = getelementptr inbounds nuw i8, ptr %3, i64 1728
-  %i.cz = getelementptr inbounds nuw i8, ptr %3, i64 1512 ; 9 uses
-  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.cv)
-  %i.da = getelementptr inbounds nuw i8, ptr %3, i64 1728
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.da, ptr noundef nonnull %i.cz, ptr noundef nonnull %3)
-  %i.db = getelementptr inbounds nuw i8, ptr %3, i64 1944
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.db, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.ct)
-  %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 2160
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dc, ptr noundef nonnull %i.cz, ptr noundef nonnull %10)
-  %i.dd = getelementptr inbounds nuw i8, ptr %3, i64 2376
-  %i.de = getelementptr inbounds nuw i8, ptr %3, i64 648
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dd, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.de)
-  %i.df = getelementptr inbounds nuw i8, ptr %3, i64 2592
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.df, ptr noundef nonnull %i.cz, ptr noundef nonnull %12)
-  %i.dg = getelementptr inbounds nuw i8, ptr %3, i64 2808
-  %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 1080
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dg, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.dh)
-  %i.di = getelementptr inbounds nuw i8, ptr %3, i64 3024
-  %i.dj = getelementptr inbounds nuw i8, ptr %3, i64 1296
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.di, ptr noundef nonnull %i.cz, ptr noundef nonnull %i.dj)
-  %i.dk = getelementptr inbounds nuw i8, ptr %3, i64 3240 ; 11 uses
-  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.cz)
-  %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 3456
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.dk, ptr noundef nonnull %3)
-  %i.dm = getelementptr inbounds nuw i8, ptr %3, i64 3672
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dm, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.ct)
-  %i.dn = getelementptr inbounds nuw i8, ptr %3, i64 3888
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dn, ptr noundef nonnull %i.dk, ptr noundef nonnull %10)
-  %i.do = getelementptr inbounds nuw i8, ptr %3, i64 4104
-  %i.dp = getelementptr inbounds nuw i8, ptr %3, i64 648
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.do, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.dp)
-  %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 4320
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dq, ptr noundef nonnull %i.dk, ptr noundef nonnull %12)
-  %i.dr = getelementptr inbounds nuw i8, ptr %3, i64 4536
-  %i.ds = getelementptr inbounds nuw i8, ptr %3, i64 1080
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dr, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.ds)
-  %i.dt = getelementptr inbounds nuw i8, ptr %3, i64 4752
-  %i.du = getelementptr inbounds nuw i8, ptr %3, i64 1296
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dt, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.du)
-  %i.dv = getelementptr inbounds nuw i8, ptr %3, i64 4968
-  %i.dw = getelementptr inbounds nuw i8, ptr %3, i64 1512
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dv, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.dw)
-  %i.dx = getelementptr inbounds nuw i8, ptr %3, i64 5184
-  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dx, ptr noundef nonnull %i.dk, ptr noundef nonnull %i.cy)
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cu, ptr noundef nonnull %i.ct, ptr noundef nonnull %3)
+  %i.cv = getelementptr inbounds nuw i8, ptr %3, i64 648 ; 7 uses
+  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.cv, ptr noundef nonnull %i.ct)
+  %i.cw = getelementptr inbounds nuw i8, ptr %3, i64 864
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.cv, ptr noundef nonnull %3)
+  %i.cx = getelementptr inbounds nuw i8, ptr %3, i64 1080
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cx, ptr noundef nonnull %i.cv, ptr noundef nonnull %i.ct)
+  %i.cy = getelementptr inbounds nuw i8, ptr %3, i64 1296
+  %i.cz = getelementptr inbounds nuw i8, ptr %3, i64 432
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.cy, ptr noundef nonnull %i.cv, ptr noundef nonnull %i.cz)
+  %i.da = getelementptr inbounds nuw i8, ptr %3, i64 1512 ; 10 uses
+  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.da, ptr noundef nonnull %i.cv)
+  %i.db = getelementptr inbounds nuw i8, ptr %3, i64 1728
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.db, ptr noundef nonnull %i.da, ptr noundef nonnull %3)
+  %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 1944
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dc, ptr noundef nonnull %i.da, ptr noundef nonnull %i.ct)
+  %i.dd = getelementptr inbounds nuw i8, ptr %3, i64 2160
+  %i.de = getelementptr inbounds nuw i8, ptr %3, i64 432
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dd, ptr noundef nonnull %i.da, ptr noundef nonnull %i.de)
+  %i.df = getelementptr inbounds nuw i8, ptr %3, i64 2376
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.df, ptr noundef nonnull %i.da, ptr noundef nonnull %i.cv)
+  %i.dg = getelementptr inbounds nuw i8, ptr %3, i64 2592
+  %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 864
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dg, ptr noundef nonnull %i.da, ptr noundef nonnull %i.dh)
+  %i.di = getelementptr inbounds nuw i8, ptr %3, i64 2808
+  %i.dj = getelementptr inbounds nuw i8, ptr %3, i64 1080
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.di, ptr noundef nonnull %i.da, ptr noundef nonnull %i.dj)
+  %9 = getelementptr inbounds nuw i8, ptr %3, i64 3024
+  %i.dk = getelementptr inbounds nuw i8, ptr %3, i64 1296
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %9, ptr noundef nonnull %i.da, ptr noundef nonnull %i.dk)
+  %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 3240 ; 10 uses
+  call void @ec_GFp_mont_dbl(ptr noundef %0, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.da)
+  %i.dm = getelementptr inbounds nuw i8, ptr %3, i64 3456
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dm, ptr noundef nonnull %i.dl, ptr noundef nonnull %3)
+  %i.dn = getelementptr inbounds nuw i8, ptr %3, i64 3672
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dn, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.ct)
+  %i.do = getelementptr inbounds nuw i8, ptr %3, i64 3888
+  %i.dp = getelementptr inbounds nuw i8, ptr %3, i64 432
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.do, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.dp)
+  %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 4104
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dq, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.cv)
+  %i.dr = getelementptr inbounds nuw i8, ptr %3, i64 4320
+  %i.ds = getelementptr inbounds nuw i8, ptr %3, i64 864
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dr, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.ds)
+  %i.dt = getelementptr inbounds nuw i8, ptr %3, i64 4536
+  %i.du = getelementptr inbounds nuw i8, ptr %3, i64 1080
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dt, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.du)
+  %i.dv = getelementptr inbounds nuw i8, ptr %3, i64 4752
+  %i.dw = getelementptr inbounds nuw i8, ptr %3, i64 1296
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dv, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.dw)
+  %i.dx = getelementptr inbounds nuw i8, ptr %3, i64 4968
+  call void @ec_GFp_mont_add(ptr noundef %0, ptr noundef nonnull %i.dx, ptr noundef nonnull %i.dl, ptr noundef nonnull %i.da)
   br label %.split.us
 }
 

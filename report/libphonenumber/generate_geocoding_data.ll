@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   %i.eh = sext i32 %i.eg to i64
   %i.ei = getelementptr inbounds [8 x i8], ptr %i.dm, i64 %i.eh
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !56 ; 3 uses
-  %i.ek = getelementptr inbounds [8 x i8], ptr %i.db, i64 %i.eb
+  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %i.eb
   store ptr %i.ej, ptr %i.ek, align 8, !tbaa !56
   %i.el = trunc i64 %i.eb to i8
   %i.em = getelementptr i8, ptr %i.ej, i64 8
@@ -247,7 +247,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   %i.fd = sext i32 %i.fc to i64
   %i.fe = getelementptr inbounds [8 x i8], ptr %i.dm, i64 %i.fd
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !56 ; 3 uses
-  %i.fg = getelementptr inbounds [8 x i8], ptr %i.db, i64 %i.ex
+  %i.fg = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %i.ex
   store ptr %i.ff, ptr %i.fg, align 8, !tbaa !56
   %i.fh = trunc i64 %i.ex to i8
   %i.fi = getelementptr i8, ptr %i.ff, i64 8
@@ -650,7 +650,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.dj = sext i32 %i.di to i64
   %i.dk = getelementptr inbounds [8 x i8], ptr %i.co, i64 %i.dj
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !83 ; 3 uses
-  %i.dm = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %i.dd
+  %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %i.dd
   store ptr %i.dl, ptr %i.dm, align 8, !tbaa !83
   %i.dn = trunc i64 %i.dd to i8
   %i.do = getelementptr i8, ptr %i.dl, i64 8
@@ -692,7 +692,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.ef = sext i32 %i.ee to i64
   %i.eg = getelementptr inbounds [8 x i8], ptr %i.co, i64 %i.ef
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !83 ; 3 uses
-  %i.ei = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %i.dz
+  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %i.dz
   store ptr %i.eh, ptr %i.ei, align 8, !tbaa !83
   %i.ej = trunc i64 %i.dz to i8
   %i.ek = getelementptr i8, ptr %i.eh, i64 8
@@ -1095,7 +1095,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.new
   %i.gs = sext i32 %i.gr to i64
   %i.gt = getelementptr inbounds [8 x i8], ptr %i.fx, i64 %i.gs
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !90 ; 3 uses
-  %i.gv = getelementptr inbounds [8 x i8], ptr %i.fm, i64 %i.gm
+  %i.gv = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %i.gm
   store ptr %i.gu, ptr %i.gv, align 8, !tbaa !90
   %i.gw = trunc i64 %i.gm to i8
   %i.gx = getelementptr i8, ptr %i.gu, i64 8
@@ -1137,7 +1137,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.new
   %i.ho = sext i32 %i.hn to i64
   %i.hp = getelementptr inbounds [8 x i8], ptr %i.fx, i64 %i.ho
   %i.hq = load ptr, ptr %i.hp, align 8, !tbaa !90 ; 3 uses
-  %i.hr = getelementptr inbounds [8 x i8], ptr %i.fm, i64 %i.hi
+  %i.hr = getelementptr inbounds nuw [8 x i8], ptr %i.fm, i64 %i.hi
   store ptr %i.hq, ptr %i.hr, align 8, !tbaa !90
   %i.hs = trunc i64 %i.hi to i8
   %i.ht = getelementptr i8, ptr %i.hq, i64 8

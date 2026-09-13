@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %0, align 8, !alias.scope !77, !nonnull !4, !noundef !4 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.aa = load i64, ptr %i.z, align 8, !alias.scope !77, !noundef !4 ; 2 uses
-  %i.ab = zext nneg i16 %i.x to i64               ; 5 uses
+  %i.ab = zext nneg i16 %i.x to i64               ; 4 uses
   %i.ac = icmp eq i64 %i.aa, 0
   br i1 %i.ac, label %_RNvMs5_NtCskcAkE2pR8X1_14icu_properties6scriptNtB5_28ScriptWithExtensionsBorrowed16get_script_val32.exit, label %bb.f
 
@@ -217,10 +217,12 @@ _RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComp
   %i.ae = zext i16 %.sroa.0.0.copyload.i.i to i64 ; 2 uses
   %i.af = add nsw i64 %i.aa, -2
   %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 2 ; 2 uses
-  %i.ah = add nsw i64 %i.ae, -1                   ; 3 uses
-  %2 = shl nuw nsw i64 %i.ah, 1                   ; 2 uses
-  %i.ai = sub i64 %i.af, %2
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 %2
+  %2 = shl nuw nsw i64 %i.ae, 1
+  %i.ah = add nuw nsw i64 %2, 4294967294
+  %3 = and i64 %i.ah, 4294967294                  ; 3 uses
+  %i.ai = sub i64 %i.af, %3
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 %3
+  %4 = lshr exact i64 %3, 1
   %.not.i15.i = icmp ugt i16 %.sroa.0.0.copyload.i.i, %i.x
   br i1 %.not.i15.i, label %bb.g, label %_RNvMs5_NtCskcAkE2pR8X1_14icu_properties6scriptNtB5_28ScriptWithExtensionsBorrowed16get_script_val32.exit
 
@@ -229,9 +231,6 @@ bb.g:                                             ; preds = %_RNvMs8_NtNtCsgTMNK
   br i1 %i.ak, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %3 = add nsw i64 %i.ab, -1
-  %4 = icmp samesign ult i64 %3, %i.ah
-  tail call void @llvm.assume(i1 %4)
   %i.al = getelementptr [2 x i8], ptr %i.y, i64 %i.ab
   %.sroa.02.0.copyload.i.i.i = load i16, ptr %i.al, align 1, !noalias !82
   %i.am = zext i16 %.sroa.02.0.copyload.i.i.i to i64
@@ -244,7 +243,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.ao, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E3getB1X_.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ap = icmp samesign ugt i64 %i.ah, %i.ab
+  %i.ap = icmp samesign ugt i64 %4, %i.ab
   tail call void @llvm.assume(i1 %i.ap)
   %i.aq = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.ab
   %.sroa.05.0.copyload.i.i.i = load i16, ptr %i.aq, align 1, !noalias !82
@@ -336,7 +335,7 @@ bb.g:                                             ; preds = %bb.d
   %i.ab = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ad = load i64, ptr %i.ac, align 8, !noundef !4 ; 2 uses
-  %i.ae = zext nneg i16 %i.aa to i64              ; 5 uses
+  %i.ae = zext nneg i16 %i.aa to i64              ; 4 uses
   %i.af = icmp eq i64 %i.ad, 0
   br i1 %i.af, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E3getB1X_.exit.thread, label %bb.h
 
@@ -349,10 +348,12 @@ _RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComp
   %i.ah = zext i16 %.sroa.0.0.copyload.i to i64   ; 2 uses
   %i.ai = add nsw i64 %i.ad, -2
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ab, i64 2 ; 2 uses
-  %i.ak = add nsw i64 %i.ah, -1                   ; 3 uses
-  %2 = shl nuw nsw i64 %i.ak, 1                   ; 2 uses
-  %i.al = sub i64 %i.ai, %2
-  %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %2
+  %2 = shl nuw nsw i64 %i.ah, 1
+  %i.ak = add nuw nsw i64 %2, 4294967294
+  %3 = and i64 %i.ak, 4294967294                  ; 3 uses
+  %i.al = sub i64 %i.ai, %3
+  %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %3
+  %4 = lshr exact i64 %3, 1
   %.not.i15 = icmp ugt i16 %.sroa.0.0.copyload.i, %i.aa
   br i1 %.not.i15, label %bb.i, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E3getB1X_.exit.thread
 
@@ -361,9 +362,6 @@ bb.i:                                             ; preds = %_RNvMs8_NtNtCsgTMNK
   br i1 %i.an, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %3 = add nsw i64 %i.ae, -1
-  %4 = icmp samesign ult i64 %3, %i.ak
-  tail call void @llvm.assume(i1 %4)
   %i.ao = getelementptr [2 x i8], ptr %i.ab, i64 %i.ae
   %.sroa.02.0.copyload.i.i = load i16, ptr %i.ao, align 1, !noalias !96
   %i.ap = zext i16 %.sroa.02.0.copyload.i.i to i64
@@ -376,7 +374,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.ar, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E3getB1X_.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.as = icmp samesign ugt i64 %i.ak, %i.ae
+  %i.as = icmp samesign ugt i64 %4, %i.ae
   tail call void @llvm.assume(i1 %i.as)
   %i.at = getelementptr inbounds nuw [2 x i8], ptr %i.aj, i64 %i.ae
   %.sroa.05.0.copyload.i.i = load i16, ptr %i.at, align 1, !noalias !96
@@ -488,7 +486,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i64, ptr %i.d, align 8, !noundef !4 ; 2 uses
-  %i.f = zext nneg i16 %i.b to i64                ; 5 uses
+  %i.f = zext nneg i16 %i.b to i64                ; 4 uses
   %i.g = icmp eq i64 %i.e, 0
   br i1 %i.g, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E3getB1X_.exit, label %bb.c
 
@@ -501,10 +499,12 @@ _RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComp
   %i.i = zext i16 %.sroa.0.0.copyload.i to i64    ; 2 uses
   %i.j = add nsw i64 %i.e, -2
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
-  %i.l = add nsw i64 %i.i, -1                     ; 3 uses
-  %2 = shl nuw nsw i64 %i.l, 1                    ; 2 uses
-  %i.m = sub i64 %i.j, %2
-  %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 %2
+  %2 = shl nuw nsw i64 %i.i, 1
+  %i.l = add nuw nsw i64 %2, 4294967294
+  %3 = and i64 %i.l, 4294967294                   ; 3 uses
+  %i.m = sub i64 %i.j, %3
+  %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 %3
+  %4 = lshr exact i64 %3, 1
   %.not.i = icmp ugt i16 %.sroa.0.0.copyload.i, %i.b
   br i1 %.not.i, label %bb.d, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E3getB1X_.exit
 
@@ -513,9 +513,6 @@ bb.d:                                             ; preds = %_RNvMs8_NtNtCsgTMNK
   br i1 %i.o, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %3 = add nsw i64 %i.f, -1
-  %4 = icmp samesign ult i64 %3, %i.l
-  tail call void @llvm.assume(i1 %4)
   %i.p = getelementptr [2 x i8], ptr %i.c, i64 %i.f
   %.sroa.02.0.copyload.i.i = load i16, ptr %i.p, align 1, !noalias !123
   %i.q = zext i16 %.sroa.02.0.copyload.i.i to i64
@@ -528,7 +525,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.s, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E16get_things_rangeB1X_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.t = icmp samesign ugt i64 %i.l, %i.f
+  %i.t = icmp samesign ugt i64 %4, %i.f
   tail call void @llvm.assume(i1 %i.t)
   %i.u = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.f
   %.sroa.05.0.copyload.i.i = load i16, ptr %i.u, align 1, !noalias !123
@@ -566,7 +563,7 @@ bb.i:                                             ; preds = %bb.a, %bb.a
   %i.af = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ah = load i64, ptr %i.ag, align 8, !noundef !4 ; 2 uses
-  %i.ai = zext nneg i16 %i.ae to i64              ; 5 uses
+  %i.ai = zext nneg i16 %i.ae to i64              ; 4 uses
   %i.aj = icmp eq i64 %i.ah, 0
   br i1 %i.aj, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E3getB1X_.exit28, label %bb.j
 
@@ -579,10 +576,12 @@ _RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComp
   %i.al = zext i16 %.sroa.0.0.copyload.i13 to i64 ; 2 uses
   %i.am = add nsw i64 %i.ah, -2
   %i.an = getelementptr inbounds nuw i8, ptr %i.af, i64 2 ; 2 uses
-  %i.ao = add nsw i64 %i.al, -1                   ; 3 uses
-  %5 = shl nuw nsw i64 %i.ao, 1                   ; 2 uses
-  %i.ap = sub i64 %i.am, %5
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 %5
+  %5 = shl nuw nsw i64 %i.al, 1
+  %i.ao = add nuw nsw i64 %5, 4294967294
+  %6 = and i64 %i.ao, 4294967294                  ; 3 uses
+  %i.ap = sub i64 %i.am, %6
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 %6
+  %7 = lshr exact i64 %6, 1
   %.not.i20 = icmp ugt i16 %.sroa.0.0.copyload.i13, %i.ae
   br i1 %.not.i20, label %bb.k, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E3getB1X_.exit28
 
@@ -591,9 +590,6 @@ bb.k:                                             ; preds = %_RNvMs8_NtNtCsgTMNK
   br i1 %i.ar, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %6 = add nsw i64 %i.ai, -1
-  %7 = icmp samesign ult i64 %6, %i.ao
-  tail call void @llvm.assume(i1 %7)
   %i.as = getelementptr [2 x i8], ptr %i.af, i64 %i.ai
   %.sroa.02.0.copyload.i.i23 = load i16, ptr %i.as, align 1, !noalias !126
   %i.at = zext i16 %.sroa.02.0.copyload.i.i23 to i64
@@ -606,7 +602,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.av, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentsINtNtNtB9_7zerovec5slice9ZeroSliceNtNtCskcAkE2pR8X1_14icu_properties5props6ScriptENtB5_7Index16E16get_things_rangeB1X_.exit.i26, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.aw = icmp samesign ugt i64 %i.ao, %i.ai
+  %i.aw = icmp samesign ugt i64 %7, %i.ai
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %i.ai
   %.sroa.05.0.copyload.i.i25 = load i16, ptr %i.ax, align 1, !noalias !126
@@ -1009,7 +1005,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 2 uses
-  %i.d = zext i32 %1 to i64                       ; 6 uses
+  %i.d = zext i32 %1 to i64                       ; 5 uses
   %i.e = icmp eq i64 %i.c, 0
   br i1 %i.e, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentseNtB5_7Index16E3getCskcAkE2pR8X1_14icu_properties.exit, label %bb.b
 
@@ -1022,10 +1018,12 @@ _RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComp
   %i.g = zext i16 %.sroa.0.0.copyload.i to i64    ; 3 uses
   %i.h = add nsw i64 %i.c, -2
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
-  %i.j = add nsw i64 %i.g, -1                     ; 3 uses
-  %2 = shl nuw nsw i64 %i.j, 1                    ; 2 uses
-  %i.k = sub i64 %i.h, %2
-  %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %2
+  %2 = shl nuw nsw i64 %i.g, 1
+  %i.j = add nuw nsw i64 %2, 4294967294
+  %3 = and i64 %i.j, 4294967294                   ; 3 uses
+  %i.k = sub i64 %i.h, %3
+  %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %3
+  %4 = lshr exact i64 %3, 1
   %.not.i = icmp samesign ugt i64 %i.g, %i.d
   br i1 %.not.i, label %bb.c, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentseNtB5_7Index16E3getCskcAkE2pR8X1_14icu_properties.exit
 
@@ -1034,9 +1032,6 @@ bb.c:                                             ; preds = %_RNvMs8_NtNtCsgTMNK
   br i1 %i.m, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = add nsw i64 %i.d, -1
-  %4 = icmp samesign ult i64 %3, %i.j
-  tail call void @llvm.assume(i1 %4)
   %i.n = getelementptr [2 x i8], ptr %i.a, i64 %i.d
   %.sroa.02.0.copyload.i.i = load i16, ptr %i.n, align 1, !noalias !175
   %i.o = zext i16 %.sroa.02.0.copyload.i.i to i64
@@ -1049,7 +1044,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.q, label %_RNvMs8_NtNtCsgTMNKkQstJd_7zerovec10varzerovec10componentsINtB5_20VarZeroVecComponentseNtB5_7Index16E16get_things_rangeCskcAkE2pR8X1_14icu_properties.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.r = icmp samesign ugt i64 %i.j, %i.d
+  %i.r = icmp samesign ugt i64 %4, %i.d
   tail call void @llvm.assume(i1 %i.r)
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.i, i64 %i.d
   %.sroa.05.0.copyload.i.i = load i16, ptr %i.s, align 1, !noalias !175

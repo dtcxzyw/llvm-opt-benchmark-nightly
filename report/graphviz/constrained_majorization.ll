@@ -204,9 +204,9 @@ bb.ae:                                            ; preds = %.thread562
 
 bb.af:                                            ; preds = %bb.ae, %.thread562
   %i.ft = add nsw i32 %1, -1                      ; 5 uses
-  %i.fu = mul nsw i32 %i.ft, %1
+  %i.fu = mul i32 %i.ft, %1
   %i.fv = lshr i32 %i.fu, 1                       ; 3 uses
-  %i.fw = add nuw i32 %i.fv, %1                   ; 8 uses
+  %i.fw = add nuw i32 %i.fv, %1                   ; 6 uses
   %i.fx = icmp sgt i32 %4, 0
   %or.cond1108 = and i1 %.not, %i.fx
   br i1 %or.cond1108, label %.preheader603.us.preheader, label %.loopexit602
@@ -357,16 +357,13 @@ scalar.ph1012:                                    ; preds = %scalar.ph1012.prehe
 ._crit_edge652:                                   ; preds = %.loopexit599
   %i.hk = fdiv double %i.hz, %i.hg
   %i.hl = fptrunc double %i.hk to float           ; 2 uses
-  %9 = icmp sgt i32 %i.fw, 0
-  br i1 %9, label %.lr.ph656.preheader, label %.loopexit598
+  %smax801 = call i32 @llvm.smax.i32(i32 %i.fw, i32 1)
+  %wide.trip.count802 = zext nneg i32 %smax801 to i64 ; 3 uses
+  %min.iters.check1026 = icmp slt i32 %i.fw, 8
+  br i1 %min.iters.check1026, label %.lr.ph656.preheader1116, label %vector.ph1028
 
-.lr.ph656.preheader:                              ; preds = %._crit_edge652
-  %wide.trip.count801 = zext nneg i32 %i.fw to i64 ; 3 uses
-  %min.iters.check1027 = icmp ult i32 %i.fw, 8
-  br i1 %min.iters.check1027, label %.lr.ph656.preheader1116, label %vector.ph1028
-
-vector.ph1028:                                    ; preds = %.lr.ph656.preheader
-  %n.vec1029 = and i64 %wide.trip.count801, 2147483640 ; 3 uses
+vector.ph1028:                                    ; preds = %._crit_edge652
+  %n.vec1029 = and i64 %wide.trip.count802, 2147483640 ; 3 uses
   %broadcast.splatinsert1030 = insertelement <4 x float> poison, float %i.hl, i64 0
   %broadcast.splat1031 = shufflevector <4 x float> %broadcast.splatinsert1030, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body1032
@@ -386,11 +383,11 @@ vector.body1032:                                  ; preds = %vector.body1032, %v
   br i1 %i.hq, label %middle.block1037, label %vector.body1032, !llvm.loop !25
 
 middle.block1037:                                 ; preds = %vector.body1032
-  %cmp.n1038 = icmp eq i64 %n.vec1029, %wide.trip.count801
+  %cmp.n1038 = icmp eq i64 %n.vec1029, %wide.trip.count802
   br i1 %cmp.n1038, label %.loopexit598, label %.lr.ph656.preheader1116
 
-.lr.ph656.preheader1116:                          ; preds = %.lr.ph656.preheader, %middle.block1037
-  %indvars.iv798.ph = phi i64 [ 0, %.lr.ph656.preheader ], [ %n.vec1029, %middle.block1037 ]
+.lr.ph656.preheader1116:                          ; preds = %._crit_edge652, %middle.block1037
+  %indvars.iv798.ph = phi i64 [ 0, %._crit_edge652 ], [ %n.vec1029, %middle.block1037 ]
   br label %.lr.ph656
 
 .lr.ph644.preheader:                              ; preds = %.loopexit599, %.lr.ph651.preheader
@@ -427,10 +424,10 @@ middle.block1037:                                 ; preds = %vector.body1032
   %i.id = fmul float %i.ic, %i.hl
   store float %i.id, ptr %i.ib, align 4, !tbaa !76
   %indvars.iv.next799 = add nuw nsw i64 %indvars.iv798, 1 ; 2 uses
-  %exitcond802.not = icmp eq i64 %indvars.iv.next799, %wide.trip.count801
+  %exitcond802.not = icmp eq i64 %indvars.iv.next799, %wide.trip.count802
   br i1 %exitcond802.not, label %.loopexit598, label %.lr.ph656, !llvm.loop !27
 
-.loopexit598:                                     ; preds = %.lr.ph656, %middle.block1037, %._crit_edge652, %.loopexit602
+.loopexit598:                                     ; preds = %.lr.ph656, %middle.block1037, %.loopexit602
   %i.ie = icmp sgt i32 %4, 0                      ; 5 uses
   br i1 %i.ie, label %.lr.ph659.preheader, label %.lr.ph663.preheader
 
@@ -833,7 +830,7 @@ bb.au:                                            ; preds = %._crit_edge689
 gv_calloc.exit540:                                ; preds = %._crit_edge689
   %i.no = call noalias ptr @calloc(i64 noundef range(i64 -2147483648, 2147483648) %wide.trip.count, i64 noundef 4) #15 ; 18 uses
   %i.np = icmp eq ptr %i.no, null
-  br i1 %i.np, label %bb.av, label %10
+  br i1 %i.np, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %gv_calloc.exit540
   %i.nq = load ptr, ptr @stderr, align 8, !tbaa !74
@@ -842,25 +839,15 @@ bb.av:                                            ; preds = %gv_calloc.exit540
   call fastcc void @graphviz_exit() #14
   unreachable
 
-10:                                               ; preds = %gv_calloc.exit540
-  %11 = sext i32 %i.fw to i64                     ; 3 uses
-  %mul.ov.i548 = icmp slt i32 %i.fw, 0
-  br i1 %mul.ov.i548, label %12, label %bb.aw
-
-12:                                               ; preds = %10
-  %13 = load ptr, ptr @stderr, align 8, !tbaa !74
-  %14 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %13, ptr noundef nonnull @.str.8, i64 noundef range(i64 -2147483648, 2147483648) %11, i64 noundef 4) #13 ; 0 uses
-  call fastcc void @graphviz_exit() #14
-  unreachable
-
-bb.aw:                                            ; preds = %10
-  %i.nt = call noalias ptr @calloc(i64 noundef range(i64 -2147483648, 2147483648) %11, i64 noundef 4) #15 ; 10 uses
+bb.aw:                                            ; preds = %gv_calloc.exit540
+  %9 = zext nneg i32 %i.fw to i64                 ; 2 uses
+  %i.nt = call noalias ptr @calloc(i64 noundef range(i64 -2147483648, 2147483648) %9, i64 noundef 4) #15 ; 10 uses
   %i.nu = icmp eq ptr %i.nt, null
   br i1 %i.nu, label %bb.ax, label %gv_calloc.exit550
 
 bb.ax:                                            ; preds = %bb.aw
   %i.nv = load ptr, ptr @stderr, align 8, !tbaa !74
-  %i.nw = shl nuw nsw i64 %11, 2
+  %i.nw = shl nuw nsw i64 %9, 2
   %i.nx = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.nv, ptr noundef nonnull @.str.9, i64 noundef %i.nw) #13 ; 0 uses
   call fastcc void @graphviz_exit() #14
   unreachable

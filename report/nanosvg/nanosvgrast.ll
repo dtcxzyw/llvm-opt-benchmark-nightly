@@ -205,17 +205,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.be = extractelement <4 x float> %i.bd, i64 3
   store float %i.be, ptr %i.k, align 4, !tbaa !31
   store <2 x float> %i.aq, ptr %i.a, align 16, !tbaa !31
-  %3 = icmp samesign ugt i32 %i.q, 4
+  %3 = icmp sgt i32 %i.q, 4
   br i1 %3, label %.lr.ph.peel.next, label %._crit_edge
 
 .lr.ph.peel.next:                                 ; preds = %bb.e, %.lr.ph.peel.next
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.peel.next ], [ 3, %bb.e ] ; 3 uses
   %i.bf = phi <4 x float> [ %i.cl, %.lr.ph.peel.next ], [ %i.bd, %bb.e ] ; 3 uses
-  %i.bg = shl i64 %indvars.iv, 33
-  %sext = add i64 %i.bg, 8589934592
+  %i.bg = shl nuw i64 %indvars.iv, 33
+  %sext = add nuw i64 %i.bg, 8589934592
   %i.bh = ashr exact i64 %sext, 30
   %i.bi = getelementptr inbounds i8, ptr %i.l, i64 %i.bh
-  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
   %i.bj = shl nuw i32 %indvars.iv.tr, 1
   %i.bk = add nuw i32 %i.bj, 4
   %i.bl = sext i32 %i.bk to i64

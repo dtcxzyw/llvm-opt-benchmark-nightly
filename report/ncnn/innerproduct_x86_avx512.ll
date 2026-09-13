@@ -205,7 +205,6 @@ bb.a:
   br i1 %i.v, label %.preheader.lr.ph.us.preheader, label %._crit_edge56
 
 .preheader.lr.ph.us.preheader:                    ; preds = %.lr.ph
-  %3 = zext nneg i32 %i.q to i64
   %wide.trip.count64 = zext nneg i32 %i.e to i64
   %xtraiter = and i64 %i.p, 1
   %unroll_iter = and i64 %i.p, 8
@@ -295,10 +294,10 @@ bb.b:                                             ; preds = %.unr-lcssa, %.epil.
 
 ._crit_edge.us:                                   ; preds = %bb.b
   %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, %i.p ; 2 uses
-  %4 = add nuw nsw i64 %indvars.iv.next67, %3
-  %5 = load i32, ptr %i.c, align 8, !tbaa !46
-  %6 = sext i32 %5 to i64
-  %i.bp = icmp slt i64 %4, %6
+  %3 = load i32, ptr %i.c, align 8, !tbaa !46
+  %4 = trunc i64 %indvars.iv.next67 to i32
+  %5 = add i32 %i.q, %4
+  %i.bp = icmp slt i32 %5, %3
   br i1 %i.bp, label %.preheader.lr.ph.us, label %._crit_edge56, !llvm.loop !172
 
 ._crit_edge56:                                    ; preds = %._crit_edge.us, %.lr.ph, %.preheader50

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = add nsw i32 %i.ad, 1                    ; 2 uses
   store i32 %i.ae, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance10num_moves_E, align 4, !tbaa !802
   %i.af = add nsw i32 %i.q, -1                    ; 2 uses
-  %i.ag = zext i32 %i.af to i64                   ; 2 uses
+  %i.ag = zext nneg i32 %i.af to i64              ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.ag, 3            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx.i.i
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = add nsw i32 %i.ac, 1                    ; 2 uses
   store i32 %i.ad, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance10num_moves_E, align 4, !tbaa !802
   %i.ae = add nsw i32 %i.p, -1                    ; 2 uses
-  %i.af = zext i32 %i.ae to i64                   ; 2 uses
+  %i.af = zext nneg i32 %i.ae to i64              ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.af, 3            ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.idx.i.i
@@ -1011,7 +1011,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = add nsw i32 %i.ad, 1                    ; 2 uses
   store i32 %i.ae, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance10num_moves_E, align 4, !tbaa !802
   %i.af = add nsw i32 %i.q, -1                    ; 2 uses
-  %i.ag = zext i32 %i.af to i64                   ; 2 uses
+  %i.ag = zext nneg i32 %i.af to i64              ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.ag, 3            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx.i.i
@@ -1414,7 +1414,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = add nsw i32 %i.ad, 1                    ; 2 uses
   store i32 %i.ae, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance10num_moves_E, align 4, !tbaa !802
   %i.af = add nsw i32 %i.q, -1                    ; 2 uses
-  %i.ag = zext i32 %i.af to i64                   ; 2 uses
+  %i.ag = zext nneg i32 %i.af to i64              ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.ag, 3            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx.i.i
@@ -1817,7 +1817,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = add nsw i32 %i.ac, 1                    ; 2 uses
   store i32 %i.ad, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance10num_moves_E, align 4, !tbaa !802
   %i.ae = add nsw i32 %i.p, -1                    ; 2 uses
-  %i.af = zext i32 %i.ae to i64                   ; 2 uses
+  %i.af = zext nneg i32 %i.ae to i64              ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.af, 3            ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.idx.i.i
@@ -2220,7 +2220,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = add nsw i32 %i.ad, 1                    ; 2 uses
   store i32 %i.ae, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance10num_moves_E, align 4, !tbaa !802
   %i.af = add nsw i32 %i.q, -1                    ; 2 uses
-  %i.ag = zext i32 %i.af to i64                   ; 2 uses
+  %i.ag = zext nneg i32 %i.af to i64              ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.ag, 3            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx.i.i
@@ -2623,7 +2623,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i64, ptr %i.y, align 1
   store i64 %.val.i.i, ptr %i.w, align 1
   %i.z = add nsw i32 %i.q, -1                     ; 2 uses
-  %i.aa = zext i32 %i.z to i64                    ; 2 uses
+  %i.aa = zext nneg i32 %i.z to i64               ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.aa, 3            ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.idx.i.i
@@ -3026,7 +3026,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i64, ptr %i.y, align 1
   store i64 %.val.i.i, ptr %i.w, align 1
   %i.z = add nsw i32 %i.q, -1                     ; 2 uses
-  %i.aa = zext i32 %i.z to i64                    ; 2 uses
+  %i.aa = zext nneg i32 %i.z to i64               ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.aa, 3            ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.idx.i.i
@@ -3429,7 +3429,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i32, ptr %i.z, align 4
   store i32 %.val.i.i, ptr %i.x, align 1
   %i.aa = add nsw i32 %i.r, -1                    ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 10 uses
   %.idx.i.i = shl nuw nsw i64 %i.ab, 2            ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.idx.i.i
@@ -3832,7 +3832,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i64, ptr %i.y, align 1
   store i64 %.val.i.i, ptr %i.w, align 1
   %i.z = add nsw i32 %i.q, -1                     ; 2 uses
-  %i.aa = zext i32 %i.z to i64                    ; 2 uses
+  %i.aa = zext nneg i32 %i.z to i64               ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.aa, 3            ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.idx.i.i
@@ -4235,7 +4235,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i32, ptr %i.z, align 4
   store i32 %.val.i.i, ptr %i.x, align 1
   %i.aa = add nsw i32 %i.r, -1                    ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 10 uses
   %.idx.i.i = shl nuw nsw i64 %i.ab, 2            ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.idx.i.i
@@ -4638,7 +4638,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i32, ptr %i.z, align 4
   store i32 %.val.i.i, ptr %i.x, align 1
   %i.aa = add nsw i32 %i.r, -1                    ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 10 uses
   %.idx.i.i = shl nuw nsw i64 %i.ab, 2            ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.idx.i.i
@@ -5041,7 +5041,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i32, ptr %i.z, align 4
   store i32 %.val.i.i, ptr %i.x, align 1
   %i.aa = add nsw i32 %i.r, -1                    ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 10 uses
   %.idx.i.i = shl nuw nsw i64 %i.ab, 2            ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.idx.i.i
@@ -5444,7 +5444,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i64, ptr %i.y, align 1
   store i64 %.val.i.i, ptr %i.w, align 1
   %i.z = add nsw i32 %i.q, -1                     ; 2 uses
-  %i.aa = zext i32 %i.z to i64                    ; 2 uses
+  %i.aa = zext nneg i32 %i.z to i64               ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.aa, 3            ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.idx.i.i
@@ -5847,7 +5847,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i64, ptr %i.y, align 4
   store i64 %.val.i.i, ptr %i.w, align 1
   %i.z = add nsw i32 %i.q, -1                     ; 2 uses
-  %i.aa = zext i32 %i.z to i64                    ; 2 uses
+  %i.aa = zext nneg i32 %i.z to i64               ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 6 uses
   %.idx.i.i = shl nuw nsw i64 %i.aa, 3            ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.idx.i.i
@@ -6250,7 +6250,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i32, ptr %i.z, align 4, !tbaa !2497
   store i32 %.val.i.i, ptr %i.x, align 4, !tbaa !2497
   %i.aa = add nsw i32 %i.r, -1                    ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 10 uses
   %.idx.i.i = shl nuw nsw i64 %i.ab, 2            ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.idx.i.i
@@ -6653,7 +6653,7 @@ bb.e:                                             ; preds = %bb.d
   %.val.i.i = load i32, ptr %i.z, align 4, !tbaa !2497
   store i32 %.val.i.i, ptr %i.x, align 4, !tbaa !2497
   %i.aa = add nsw i32 %i.r, -1                    ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 10 uses
   %.idx.i.i = shl nuw nsw i64 %i.ab, 2            ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %.idx.i.i
@@ -7056,7 +7056,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = load <2 x i32>, ptr %i.y, align 4, !tbaa !802
   store <2 x i32> %i.z, ptr %i.w, align 4, !tbaa !802
   %i.aa = add nsw i32 %i.q, -1                    ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = getelementptr i8, ptr %i.b, i64 12      ; 13 uses
   %.idx.i.i = shl nuw nsw i64 %i.ab, 3            ; 4 uses
   %i.ad = getelementptr i8, ptr %i.ac, i64 %.idx.i.i ; 2 uses
@@ -7459,7 +7459,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = load <2 x i32>, ptr %i.y, align 4, !tbaa !802
   store <2 x i32> %i.z, ptr %i.w, align 4, !tbaa !802
   %i.aa = add nsw i32 %i.q, -1                    ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = getelementptr i8, ptr %i.b, i64 12      ; 13 uses
   %.idx.i.i = shl nuw nsw i64 %i.ab, 3            ; 4 uses
   %i.ad = getelementptr i8, ptr %i.ac, i64 %.idx.i.i ; 2 uses

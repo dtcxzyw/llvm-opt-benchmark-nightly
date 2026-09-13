@@ -56,10 +56,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.s, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.g
+  %16 = add nsw i32 %i.l, -1
   %scevgep = getelementptr i8, ptr %i.p, i64 4
-  %16 = tail call i32 @llvm.smax.i32(i32 %i.l, i32 2)
-  %smax = add nsw i32 %16, -1
-  %i.t = zext nneg i32 %smax to i64
+  %i.t = zext nneg i32 %16 to i64
   %i.u = shl nuw nsw i64 %i.t, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %15, ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i64 %i.u, i1 false), !tbaa !8
   br label %._crit_edge

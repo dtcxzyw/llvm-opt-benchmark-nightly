@@ -202,8 +202,8 @@ bb.j:                                             ; preds = %.loopexit185
   br i1 %i.bt, label %bb.k, label %.loopexit184
 
 bb.k:                                             ; preds = %bb.j
-  %i.bu = add nsw i32 %i.d, -1
-  %i.bv = sext i32 %i.bu to i64                   ; 2 uses
+  %i.bu = add nsw i32 %i.d, -1                    ; 2 uses
+  %i.bv = sext i32 %i.bu to i64
   %i.bw = getelementptr inbounds nuw i8, ptr %5, i64 %i.bv ; 2 uses
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !10
   %i.by = add i8 %i.bx, 1                         ; 2 uses
@@ -214,20 +214,25 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph.preheader:                                 ; preds = %bb.k
   %.sroa.054.4.insert.ext59262 = add i64 %.sroa.054.4.insert.shift, 4294967296 ; 2 uses
   %i.ca = icmp sgt i32 %i.d, 1
-  br i1 %i.ca, label %.lr.ph266.a, label %.lr.ph._crit_edge
+  br i1 %i.ca, label %.lr.ph266, label %.lr.ph._crit_edge
+
+.lr.ph266:                                        ; preds = %.lr.ph.preheader
+  %8 = zext nneg i32 %i.bu to i64
+  br label %.lr.ph266.a
 
 .lr.ph:                                           ; preds = %.lr.ph266.a
   %i.cb = and i64 %.sroa.054.4.insert.ext59265, -4294967296
   %.sroa.054.4.insert.ext59 = add i64 %i.cb, 4294967296 ; 2 uses
-  %i.cc = icmp sgt i64 %indvars.iv263, 1
+  %9 = trunc nuw i64 %indvars.iv.next to i32
+  %i.cc = icmp sgt i32 %9, 0
   br i1 %i.cc, label %.lr.ph266.a, label %.lr.ph._crit_edge, !llvm.loop !37
 
-.lr.ph266.a:                                      ; preds = %.lr.ph.preheader, %.lr.ph
-  %.sroa.054.4.insert.ext59265 = phi i64 [ %.sroa.054.4.insert.ext59, %.lr.ph ], [ %.sroa.054.4.insert.ext59262, %.lr.ph.preheader ] ; 2 uses
-  %.0173188264 = phi i32 [ %i.cd, %.lr.ph ], [ %i.d, %.lr.ph.preheader ]
-  %indvars.iv263 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.bv, %.lr.ph.preheader ] ; 2 uses
+.lr.ph266.a:                                      ; preds = %.lr.ph266, %.lr.ph
+  %.sroa.054.4.insert.ext59265 = phi i64 [ %.sroa.054.4.insert.ext59262, %.lr.ph266 ], [ %.sroa.054.4.insert.ext59, %.lr.ph ] ; 2 uses
+  %.0173188264 = phi i32 [ %i.d, %.lr.ph266 ], [ %i.cd, %.lr.ph ]
+  %indvars.iv263 = phi i64 [ %8, %.lr.ph266 ], [ %indvars.iv.next, %.lr.ph ]
   %i.cd = add nsw i32 %.0173188264, -1            ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv263, -1 ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv263, -1 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv.next ; 2 uses
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !10
   %i.cg = add i8 %i.cf, 1                         ; 2 uses
@@ -630,8 +635,8 @@ bb.j:                                             ; preds = %.loopexit180
   br i1 %i.bu, label %bb.k, label %.loopexit179
 
 bb.k:                                             ; preds = %bb.j
-  %i.bv = add nsw i32 %i.d, -1
-  %i.bw = sext i32 %i.bv to i64                   ; 2 uses
+  %i.bv = add nsw i32 %i.d, -1                    ; 2 uses
+  %i.bw = sext i32 %i.bv to i64
   %i.bx = getelementptr inbounds nuw i8, ptr %5, i64 %i.bw ; 2 uses
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !10
   %i.bz = add i8 %i.by, 1                         ; 2 uses
@@ -644,22 +649,27 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.5.8.insert.ext57257 = and i64 %i.cb, 4294967295
   %.sroa.5.8.insert.insert59259 = or disjoint i64 %.sroa.5.8.insert.ext57257, %.sroa.5.8.insert.mask ; 2 uses
   %i.cc = icmp sgt i32 %i.d, 1
-  br i1 %i.cc, label %.lr.ph263.a, label %.lr.ph._crit_edge
+  br i1 %i.cc, label %.lr.ph263, label %.lr.ph._crit_edge
+
+.lr.ph263:                                        ; preds = %.lr.ph.preheader
+  %8 = zext nneg i32 %i.bv to i64
+  br label %.lr.ph263.a
 
 .lr.ph:                                           ; preds = %.lr.ph263.a
   %i.cd = add i64 %.sroa.5.8.insert.insert59262, 1
   %.sroa.5.8.insert.ext57 = and i64 %i.cd, 4294967295
   %.sroa.5.8.insert.mask58 = and i64 %.sroa.5.8.insert.insert59262, -4294967296
   %.sroa.5.8.insert.insert59 = or disjoint i64 %.sroa.5.8.insert.ext57, %.sroa.5.8.insert.mask58 ; 2 uses
-  %i.ce = icmp sgt i64 %indvars.iv260, 1
+  %9 = trunc nuw i64 %indvars.iv.next to i32
+  %i.ce = icmp sgt i32 %9, 0
   br i1 %i.ce, label %.lr.ph263.a, label %.lr.ph._crit_edge, !llvm.loop !48
 
-.lr.ph263.a:                                      ; preds = %.lr.ph.preheader, %.lr.ph
-  %.sroa.5.8.insert.insert59262 = phi i64 [ %.sroa.5.8.insert.insert59, %.lr.ph ], [ %.sroa.5.8.insert.insert59259, %.lr.ph.preheader ] ; 3 uses
-  %.0168183261 = phi i32 [ %i.cf, %.lr.ph ], [ %i.d, %.lr.ph.preheader ]
-  %indvars.iv260 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.bw, %.lr.ph.preheader ] ; 2 uses
+.lr.ph263.a:                                      ; preds = %.lr.ph263, %.lr.ph
+  %.sroa.5.8.insert.insert59262 = phi i64 [ %.sroa.5.8.insert.insert59259, %.lr.ph263 ], [ %.sroa.5.8.insert.insert59, %.lr.ph ] ; 3 uses
+  %.0168183261 = phi i32 [ %i.d, %.lr.ph263 ], [ %i.cf, %.lr.ph ]
+  %indvars.iv260 = phi i64 [ %8, %.lr.ph263 ], [ %indvars.iv.next, %.lr.ph ]
   %i.cf = add nsw i32 %.0168183261, -1            ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv260, -1 ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv260, -1 ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv.next ; 2 uses
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !10
   %i.ci = add i8 %i.ch, 1                         ; 2 uses

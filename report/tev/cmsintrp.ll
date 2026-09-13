@@ -205,13 +205,14 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 140 ; 6 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 140 ; 7 uses
   store i32 %3, ptr %i.ab, align 4, !tbaa !21
   %.not63 = icmp eq i32 %2, 1
   br i1 %.not63, label %._crit_edge54, label %.lr.ph53.preheader
 
 .lr.ph53.preheader:                               ; preds = %._crit_edge
   %i.ac = zext nneg i32 %2 to i64                 ; 5 uses
+  %load_initial = load i32, ptr %i.ab, align 4    ; 2 uses
   %xtraiter65 = and i64 %i.k, 3                   ; 3 uses
   %i.ad = add nsw i32 %2, -2
   %i.ae = icmp ult i32 %i.ad, 3
@@ -222,35 +223,35 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   br label %.lr.ph53
 
 .lr.ph53:                                         ; preds = %.lr.ph53, %.lr.ph53.preheader.new
-  %i.af = phi i32 [ %3, %.lr.ph53.preheader.new ], [ %i.av, %.lr.ph53 ]
+  %i.af = phi i32 [ %load_initial, %.lr.ph53.preheader.new ], [ %i.av, %.lr.ph53 ]
   %indvars.iv57 = phi i64 [ 1, %.lr.ph53.preheader.new ], [ %indvars.iv.next58.3, %.lr.ph53 ] ; 6 uses
   %niter69 = phi i64 [ 0, %.lr.ph53.preheader.new ], [ %niter69.next.3, %.lr.ph53 ]
+  %6 = getelementptr [4 x i8], ptr %i.ab, i64 %indvars.iv57
   %i.ag = sub nuw nsw i64 %i.ac, %indvars.iv57
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ag
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !21
   %i.aj = mul i32 %i.ai, %i.af                    ; 2 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %indvars.iv57
   store i32 %i.aj, ptr %6, align 4, !tbaa !21
   %indvars.iv.next58 = add nuw nsw i64 %indvars.iv57, 1 ; 2 uses
+  %7 = getelementptr [4 x i8], ptr %i.ab, i64 %indvars.iv.next58
   %i.ak = sub nuw nsw i64 %i.ac, %indvars.iv.next58
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ak
   %i.am = load i32, ptr %i.al, align 4, !tbaa !21
   %i.an = mul i32 %i.am, %i.aj                    ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %indvars.iv.next58
   store i32 %i.an, ptr %7, align 4, !tbaa !21
   %indvars.iv.next58.1 = add nuw nsw i64 %indvars.iv57, 2 ; 2 uses
+  %8 = getelementptr [4 x i8], ptr %i.ab, i64 %indvars.iv.next58.1
   %i.ao = sub nuw nsw i64 %i.ac, %indvars.iv.next58.1
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ao
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !21
   %i.ar = mul i32 %i.aq, %i.an                    ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %indvars.iv.next58.1
   store i32 %i.ar, ptr %8, align 4, !tbaa !21
   %indvars.iv.next58.2 = add nuw nsw i64 %indvars.iv57, 3 ; 2 uses
+  %9 = getelementptr [4 x i8], ptr %i.ab, i64 %indvars.iv.next58.2
   %i.as = sub nuw nsw i64 %i.ac, %indvars.iv.next58.2
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.as
   %i.au = load i32, ptr %i.at, align 4, !tbaa !21
   %i.av = mul i32 %i.au, %i.ar                    ; 3 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %indvars.iv.next58.2
   store i32 %i.av, ptr %9, align 4, !tbaa !21
   %indvars.iv.next58.3 = add nuw nsw i64 %indvars.iv57, 4 ; 2 uses
   %niter69.next.3 = add nuw i64 %niter69, 4       ; 2 uses
@@ -262,7 +263,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   br i1 %lcmp.mod66.not, label %._crit_edge54, label %.lr.ph53.epil.preheader
 
 .lr.ph53.epil.preheader:                          ; preds = %._crit_edge54.loopexit.unr-lcssa, %.lr.ph53.preheader
-  %.epil.init = phi i32 [ %3, %.lr.ph53.preheader ], [ %i.av, %._crit_edge54.loopexit.unr-lcssa ]
+  %.epil.init = phi i32 [ %load_initial, %.lr.ph53.preheader ], [ %i.av, %._crit_edge54.loopexit.unr-lcssa ]
   %indvars.iv57.epil.init = phi i64 [ 1, %.lr.ph53.preheader ], [ %indvars.iv.next58.3, %._crit_edge54.loopexit.unr-lcssa ]
   %lcmp.mod67 = icmp ne i64 %xtraiter65, 0
   tail call void @llvm.assume(i1 %lcmp.mod67)
@@ -272,11 +273,11 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %i.aw = phi i32 [ %.epil.init, %.lr.ph53.epil.preheader ], [ %i.ba, %.lr.ph53.epil ]
   %indvars.iv57.epil = phi i64 [ %indvars.iv57.epil.init, %.lr.ph53.epil.preheader ], [ %indvars.iv.next58.epil, %.lr.ph53.epil ] ; 3 uses
   %epil.iter = phi i64 [ 0, %.lr.ph53.epil.preheader ], [ %epil.iter.next, %.lr.ph53.epil ]
+  %10 = getelementptr [4 x i8], ptr %i.ab, i64 %indvars.iv57.epil
   %i.ax = sub nuw nsw i64 %i.ac, %indvars.iv57.epil
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ax
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !21
   %i.ba = mul i32 %i.az, %i.aw                    ; 2 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %indvars.iv57.epil
   store i32 %i.ba, ptr %10, align 4, !tbaa !21
   %indvars.iv.next58.epil = add nuw nsw i64 %indvars.iv57.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses

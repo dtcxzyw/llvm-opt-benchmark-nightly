@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %mul_log2_radix.exit
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.aq, %bb.ac
-  %.1215 = phi i32 [ %i.di, %bb.ac ], [ %i.gq, %bb.aq ] ; 12 uses
+  %.1215 = phi i32 [ %i.di, %bb.ac ], [ %i.gq, %bb.aq ] ; 11 uses
   %.0207 = phi i32 [ 0, %bb.ac ], [ %.0218, %bb.aq ]
   %.0205 = phi i32 [ 0, %bb.ac ], [ %.2216.lcssa, %bb.aq ] ; 2 uses
   %.0204 = phi i64 [ 0, %bb.ac ], [ %.0203.lcssa, %bb.aq ]
@@ -223,7 +223,7 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %or.cond3.i, label %bb.ag, label %bb.aj
 
 bb.ag:                                            ; preds = %bb.af
-  %i.dr = zext nneg i32 %.1215 to i64             ; 2 uses
+  %i.dr = zext nneg i32 %.1215 to i64             ; 3 uses
   %i.ds = getelementptr [4 x i8], ptr @pow5_table, i64 %i.dr
   %i.dt = getelementptr i8, ptr %i.ds, i64 -4
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !18
@@ -242,8 +242,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %.0.i246 = phi i64 [ %i.ec, %bb.ah ], [ %i.dv, %bb.ag ]
-  %narrow.i = select i1 %i.do, i32 %.1215, i32 0
-  %6 = zext nneg i32 %narrow.i to i64
+  %6 = select i1 %i.do, i64 %i.dr, i64 0
   %.1.i = shl nuw nsw i64 %.0.i246, %6
   br label %pow_ui.exit
 
@@ -646,7 +645,7 @@ bb.c:                                             ; preds = %.lr.ph, %mp_mul1.ex
   %.060101 = phi i32 [ 0, %.lr.ph ], [ %.161, %mp_mul1.exit.thread ]
   %.062100 = phi i32 [ 0, %.lr.ph ], [ %.163, %mp_mul1.exit.thread ] ; 2 uses
   %.06599 = phi i32 [ %3, %.lr.ph ], [ %i.bw, %mp_mul1.exit.thread ] ; 2 uses
-  %..i = tail call noundef i32 @llvm.smin.i32(i32 %.06599, i32 %i.g) ; 12 uses
+  %..i = tail call noundef i32 @llvm.smin.i32(i32 %.06599, i32 %i.g) ; 11 uses
   %.not75 = icmp eq i32 %..i, %.062100
   br i1 %.not75, label %bb.k, label %bb.d
 
@@ -666,7 +665,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %or.cond3.i, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
-  %i.o = zext nneg i32 %..i to i64                ; 2 uses
+  %i.o = zext nneg i32 %..i to i64                ; 3 uses
   %i.p = getelementptr [4 x i8], ptr @pow5_table, i64 %i.o
   %i.q = getelementptr i8, ptr %i.p, i64 -4
   %i.r = load i32, ptr %i.q, align 4, !tbaa !18
@@ -685,8 +684,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.0.i = phi i64 [ %i.z, %bb.h ], [ %i.s, %bb.g ]
-  %narrow.i = select i1 %i.k, i32 %..i, i32 0
-  %6 = zext nneg i32 %narrow.i to i64
+  %6 = select i1 %i.k, i64 %i.o, i64 0
   %.1.i = shl nuw nsw i64 %.0.i, %6
   br label %pow_ui.exit
 
@@ -874,7 +872,7 @@ bb.s:                                             ; preds = %bb.r, %mpb_renorm.e
   %.16694 = phi i32 [ %i.a, %bb.r ], [ %i.fe, %mpb_renorm.exit ] ; 2 uses
   %.08693 = phi i32 [ 0, %bb.r ], [ %.187, %mpb_renorm.exit ]
   %.08892 = phi i32 [ 0, %bb.r ], [ %.189, %mpb_renorm.exit ]
-  %..i81 = tail call noundef i32 @llvm.smin.i32(i32 %.16694, i32 %i.g) ; 15 uses
+  %..i81 = tail call noundef i32 @llvm.smin.i32(i32 %.16694, i32 %i.g) ; 14 uses
   %.not73 = icmp eq i32 %..i81, %.295
   br i1 %.not73, label %pow_ui_inv.exit, label %bb.t
 
@@ -909,7 +907,7 @@ bb.x:                                             ; preds = %bb.v
   br i1 %or.cond3.i.i, label %bb.y, label %bb.ab
 
 bb.y:                                             ; preds = %bb.x
-  %i.df = zext nneg i32 %..i81 to i64             ; 2 uses
+  %i.df = zext nneg i32 %..i81 to i64             ; 3 uses
   %i.dg = getelementptr [4 x i8], ptr @pow5_table, i64 %i.df
   %i.dh = getelementptr i8, ptr %i.dg, i64 -4
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !18
@@ -928,8 +926,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %.0.i.i = phi i64 [ %i.dq, %bb.z ], [ %i.dj, %bb.y ]
-  %narrow.i.i = select i1 %i.ct, i32 %..i81, i32 0
-  %7 = zext nneg i32 %narrow.i.i to i64
+  %7 = select i1 %i.ct, i64 %i.df, i64 0
   %.1.i.i = shl nuw nsw i64 %.0.i.i, %7
   br label %pow_ui.exit.i
 
@@ -1238,7 +1235,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %min.iters.check, label %.lr.ph.preheader198, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %i.bo, 134217720               ; 3 uses
+  %n.vec = and i64 %i.bo, 67108856                ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1641,7 +1638,7 @@ bb.ao:                                            ; preds = %bb.br, %bb.an
   %.0198 = phi i32 [ 0, %bb.an ], [ %.3201, %bb.br ] ; 6 uses
   %.0195 = phi i32 [ 0, %bb.an ], [ %.2197, %bb.br ] ; 3 uses
   %.0191 = phi i32 [ 0, %bb.an ], [ %.2193, %bb.br ] ; 7 uses
-  %.0187 = phi i32 [ 0, %bb.an ], [ %.3190, %bb.br ] ; 11 uses
+  %.0187 = phi i32 [ 0, %bb.an ], [ %.3190, %bb.br ] ; 10 uses
   %.3 = phi i32 [ %.2176, %bb.an ], [ %.4, %bb.br ] ; 5 uses
   %.1172 = phi i32 [ %.0171, %bb.an ], [ %i.dx, %bb.br ] ; 3 uses
   %i.cq = icmp eq i8 %i.cp, 46
@@ -1948,7 +1945,7 @@ bb.bu:                                            ; preds = %bb.bs
   br i1 %or.cond3.i290, label %bb.bv, label %bb.by
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.ge = zext nneg i32 %.0187 to i64             ; 2 uses
+  %i.ge = zext nneg i32 %.0187 to i64             ; 3 uses
   %i.gf = getelementptr [4 x i8], ptr @pow5_table, i64 %i.ge
   %i.gg = getelementptr i8, ptr %i.gf, i64 -4
   %i.gh = load i32, ptr %i.gg, align 4, !tbaa !18
@@ -1967,8 +1964,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %bb.bw, %bb.bv
   %.0.i292 = phi i64 [ %i.gp, %bb.bw ], [ %i.gi, %bb.bv ]
-  %narrow.i = select i1 %i.gc, i32 %.0187, i32 0
-  %5 = zext nneg i32 %narrow.i to i64
+  %5 = select i1 %i.gc, i64 %i.ge, i64 0
   %.1.i = shl nuw nsw i64 %.0.i292, %5
   br label %pow_ui.exit
 

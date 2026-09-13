@@ -205,8 +205,8 @@ bb.bv:                                            ; preds = %._crit_edge432.thre
   %.sroa.31.0.lcssa573 = phi ptr [ null, %._crit_edge432.thread ], [ %.sroa.31.1.lcssa, %._crit_edge432 ] ; 2 uses
   %.sroa.18.0.lcssa569 = phi ptr [ null, %._crit_edge432.thread ], [ %.sroa.18.1.lcssa, %._crit_edge432 ] ; 4 uses
   %.sroa.0257.0.lcssa566 = phi ptr [ null, %._crit_edge432.thread ], [ %.sroa.0257.1.lcssa, %._crit_edge432 ] ; 37 uses
-  %i.lj = phi i32 [ %i.z, %._crit_edge432.thread ], [ %.pre486, %._crit_edge432 ] ; 7 uses
-  %i.lk = sext i32 %i.lj to i64                   ; 4 uses
+  %i.lj = phi i32 [ %i.z, %._crit_edge432.thread ], [ %.pre486, %._crit_edge432 ] ; 6 uses
+  %i.lk = sext i32 %i.lj to i64                   ; 5 uses
   %i.ll = getelementptr inbounds [12 x i8], ptr %.sroa.0257.0.lcssa566, i64 %i.lk ; 3 uses
   %i.lm = icmp slt i32 %i.lj, 2
   br i1 %i.lm, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIfS2_IiiEESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_RT0_.exit.i.i, label %bb.bw
@@ -214,9 +214,8 @@ bb.bv:                                            ; preds = %._crit_edge432.thre
 bb.bw:                                            ; preds = %bb.bv
   %i.ln = add nsw i64 %i.lk, -2                   ; 3 uses
   %i.lo = lshr i64 %i.ln, 1
-  %.lhs.trunc = add nsw i32 %i.lj, -1
-  %31 = lshr i32 %.lhs.trunc, 1
-  %.zext = zext nneg i32 %31 to i64               ; 2 uses
+  %31 = add nsw i64 %i.lk, -1
+  %32 = lshr i64 %31, 1                           ; 2 uses
   %i.lp = and i32 %i.lj, 1
   %i.lq = icmp eq i32 %i.lp, 0
   %i.lr = lshr exact i64 %i.ln, 1                 ; 2 uses
@@ -238,7 +237,7 @@ bb.bx:                                            ; preds = %.noexc184, %bb.bw
   %.sroa.05.0.copyload.i.i.i = load i64, ptr %i.lz, align 4 ; 2 uses
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.lz, i64 8
   %.sroa.4.0.copyload.i.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i.i, align 4
-  %i.ma = icmp slt i64 %.012.i.i.i181, %.zext
+  %i.ma = icmp slt i64 %.012.i.i.i181, %32
   br i1 %i.ma, label %.lr.ph.i229, label %._crit_edge.i214
 
 .lr.ph.i229:                                      ; preds = %bb.bx, %.lr.ph.i229
@@ -260,7 +259,7 @@ bb.bx:                                            ; preds = %.noexc184, %bb.bw
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mk, i64 4
   %i.mo = load <2 x i32>, ptr %i.mm, align 4, !tbaa !51
   store <2 x i32> %i.mo, ptr %i.mn, align 4, !tbaa !51
-  %i.mp = icmp slt i64 %spec.select.i231, %.zext
+  %i.mp = icmp slt i64 %spec.select.i231, %32
   br i1 %i.mp, label %.lr.ph.i229, label %._crit_edge.i214, !llvm.loop !9
 
 ._crit_edge.i214:                                 ; preds = %.lr.ph.i229, %bb.bx

@@ -205,7 +205,7 @@ bb.bp:                                            ; preds = %bb.bo
 
 .preheader.us.i47.i.i.preheader:                  ; preds = %bb.bp
   %i.jy = add nsw i32 %4, -1
-  %i.jz = zext i32 %i.jy to i64                   ; 2 uses
+  %i.jz = zext nneg i32 %i.jy to i64              ; 2 uses
   %i.ka = mul nuw nsw i64 %i.jz, 12
   %i.kb = shl nuw nsw i64 %i.jz, 2
   %i.kc = zext nneg i32 %4 to i64                 ; 2 uses
@@ -435,7 +435,7 @@ bb.bq:                                            ; preds = %bb.bo
 
 .preheader.us.i55.i.i.preheader:                  ; preds = %bb.bq
   %i.ov = add nsw i32 %4, -1
-  %i.ow = zext i32 %i.ov to i64                   ; 2 uses
+  %i.ow = zext nneg i32 %i.ov to i64              ; 2 uses
   %i.ox = mul nuw nsw i64 %i.ow, 12
   %i.oy = shl nuw nsw i64 %i.ow, 1
   %i.oz = zext nneg i32 %4 to i64                 ; 2 uses
@@ -838,9 +838,8 @@ bb.aa:                                            ; preds = %._crit_edge74.us.i1
   br i1 %.not.i70, label %.preheader60.preheader.i71, label %tight_encode_mono_rect16.exit
 
 .preheader60.preheader.i71:                       ; preds = %.preheader60.lr.ph.split.i69
-  %8 = add nsw i32 %4, -1
+  %8 = shl nuw nsw i32 %4, 1
   %i.hx = zext nneg i32 %8 to i64
-  %9 = shl nuw nsw i64 %i.hx, 1
   %i.hy = add nsw i32 %4, -1
   %xtraiter = and i32 %4, 3                       ; 3 uses
   %i.hz = icmp ult i32 %i.hy, 3
@@ -915,8 +914,7 @@ bb.ab:                                            ; preds = %bb.ab, %.epil.prehe
 
 .epilog-lcssa:                                    ; preds = %bb.ab, %.unr-lcssa
   %spec.select56.i81.lcssa = phi i8 [ %spec.select56.i81.3, %.unr-lcssa ], [ %spec.select56.i81.epil, %bb.ab ]
-  %10 = getelementptr i8, ptr %.04583.i74, i64 %9
-  %scevgep.i83 = getelementptr i8, ptr %10, i64 2
+  %scevgep.i83 = getelementptr i8, ptr %.04583.i74, i64 %i.hx
   %i.iu = getelementptr inbounds nuw i8, ptr %.04982.i75, i64 1
   store i8 %spec.select56.i81.lcssa, ptr %.04982.i75, align 1
   %i.iv = add nuw nsw i32 %.03884.i73, 1          ; 2 uses

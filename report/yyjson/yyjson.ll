@@ -205,7 +205,7 @@ bigint_mul_pow2.exit1556.sink.split:              ; preds = %._crit_edge5918, %.
   %.sink9036 = phi ptr [ %i.anv, %._crit_edge5935 ], [ %i.bdm, %.lr.ph5930 ], [ %i.anv, %.lr.ph5947.preheader ], [ %i.bdn, %._crit_edge5918 ]
   %.ph9035 = phi i32 [ %i.bas, %._crit_edge5935 ], [ %i.aut, %.lr.ph5930 ], [ %i.axk, %.lr.ph5947.preheader ], [ %i.aut, %._crit_edge5918 ]
   %i.bgw = add nsw i32 %.sink9041, -1
-  %i.bgx = zext i32 %i.bgw to i64
+  %i.bgx = zext nneg i32 %i.bgw to i64
   %i.bgy = shl nuw nsw i64 %i.bgx, 3
   %i.bgz = add nuw nsw i64 %i.bgy, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9036, i8 0, i64 %i.bgz, i1 false), !tbaa !106
@@ -608,7 +608,7 @@ bigint_mul_pow2.exit.sink.split:                  ; preds = %._crit_edge5692, %.
   %.sink9077 = phi ptr [ %i.fmz, %._crit_edge5709 ], [ %i.gcq, %.lr.ph5704 ], [ %i.fmz, %.lr.ph5721.preheader ], [ %i.gcr, %._crit_edge5692 ]
   %.ph9076 = phi i32 [ %i.fzw, %._crit_edge5709 ], [ %i.ftx, %.lr.ph5704 ], [ %i.fwo, %.lr.ph5721.preheader ], [ %i.ftx, %._crit_edge5692 ]
   %i.gga = add nsw i32 %.sink9082, -1
-  %i.ggb = zext i32 %i.gga to i64
+  %i.ggb = zext nneg i32 %i.gga to i64
   %i.ggc = shl nuw nsw i64 %i.ggb, 3
   %i.ggd = add nuw nsw i64 %i.ggc, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9077, i8 0, i64 %i.ggd, i1 false), !tbaa !106
@@ -1011,7 +1011,7 @@ bigint_mul_pow2.exit1592.sink.split:              ; preds = %._crit_edge6396, %.
   %.sink9128 = phi ptr [ %i.ibo, %._crit_edge6413 ], [ %i.irf, %.lr.ph6408 ], [ %i.ibo, %.lr.ph6425.preheader ], [ %i.irg, %._crit_edge6396 ]
   %.ph9127 = phi i32 [ %i.iol, %._crit_edge6413 ], [ %i.iim, %.lr.ph6408 ], [ %i.ild, %.lr.ph6425.preheader ], [ %i.iim, %._crit_edge6396 ]
   %i.iup = add nsw i32 %.sink9133, -1
-  %i.iuq = zext i32 %i.iup to i64
+  %i.iuq = zext nneg i32 %i.iup to i64
   %i.iur = shl nuw nsw i64 %i.iuq, 3
   %i.ius = add nuw nsw i64 %i.iur, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9128, i8 0, i64 %i.ius, i1 false), !tbaa !106
@@ -1414,7 +1414,7 @@ bigint_mul_pow2.exit1574.sink.split:              ; preds = %._crit_edge6198, %.
   %.sink9170 = phi ptr [ %i.myj, %._crit_edge6215 ], [ %i.noa, %.lr.ph6210 ], [ %i.myj, %.lr.ph6227.preheader ], [ %i.nob, %._crit_edge6198 ]
   %.ph9169 = phi i32 [ %i.nlg, %._crit_edge6215 ], [ %i.nfh, %.lr.ph6210 ], [ %i.nhy, %.lr.ph6227.preheader ], [ %i.nfh, %._crit_edge6198 ]
   %i.nrk = add nsw i32 %.sink9175, -1
-  %i.nrl = zext i32 %i.nrk to i64
+  %i.nrl = zext nneg i32 %i.nrk to i64
   %i.nrm = shl nuw nsw i64 %i.nrl, 3
   %i.nrn = add nuw nsw i64 %i.nrm, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9170, i8 0, i64 %i.nrn, i1 false), !tbaa !106
@@ -1817,7 +1817,7 @@ bigint_mul_pow2.exit.sink.split:                  ; preds = %._crit_edge878, %._
   %.sink1360 = phi ptr [ %i.agr, %._crit_edge895 ], [ %i.awi, %.lr.ph890 ], [ %i.agr, %.lr.ph907.preheader ], [ %i.awj, %._crit_edge878 ]
   %.ph1359 = phi i32 [ %i.ato, %._crit_edge895 ], [ %i.anp, %.lr.ph890 ], [ %i.aqg, %.lr.ph907.preheader ], [ %i.anp, %._crit_edge878 ]
   %i.azs = add nsw i32 %.sink1365, -1
-  %i.azt = zext i32 %i.azs to i64
+  %i.azt = zext nneg i32 %i.azs to i64
   %i.azu = shl nuw nsw i64 %i.azt, 3
   %i.azv = add nuw nsw i64 %i.azu, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink1360, i8 0, i64 %i.azv, i1 false), !tbaa !106
@@ -2220,7 +2220,7 @@ bigint_mul_pow2.exit.sink.split:                  ; preds = %._crit_edge312, %._
   %.sink611 = phi ptr [ %i.age, %._crit_edge329 ], [ %i.avv, %.lr.ph324 ], [ %i.age, %.lr.ph341.preheader ], [ %i.avw, %._crit_edge312 ]
   %.ph610 = phi i32 [ %i.atb, %._crit_edge329 ], [ %i.anc, %.lr.ph324 ], [ %i.apt, %.lr.ph341.preheader ], [ %i.anc, %._crit_edge312 ]
   %i.azf = add nsw i32 %.sink616, -1
-  %i.azg = zext i32 %i.azf to i64
+  %i.azg = zext nneg i32 %i.azf to i64
   %i.azh = shl nuw nsw i64 %i.azg, 3
   %i.azi = add nuw nsw i64 %i.azh, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink611, i8 0, i64 %i.azi, i1 false), !tbaa !106
@@ -2623,7 +2623,7 @@ bigint_mul_pow2.exit.sink.split:                  ; preds = %._crit_edge4344, %.
   %.sink5672 = phi ptr [ %i.ajm, %._crit_edge4361 ], [ %i.azd, %.lr.ph4356 ], [ %i.ajm, %.lr.ph4373.preheader ], [ %i.aze, %._crit_edge4344 ]
   %.ph5671 = phi i32 [ %i.awj, %._crit_edge4361 ], [ %i.aqk, %.lr.ph4356 ], [ %i.atb, %.lr.ph4373.preheader ], [ %i.aqk, %._crit_edge4344 ]
   %i.bcn = add nsw i32 %.sink5677, -1
-  %i.bco = zext i32 %i.bcn to i64
+  %i.bco = zext nneg i32 %i.bcn to i64
   %i.bcp = shl nuw nsw i64 %i.bco, 3
   %i.bcq = add nuw nsw i64 %i.bcp, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5672, i8 0, i64 %i.bcq, i1 false), !tbaa !106
@@ -3026,7 +3026,7 @@ bigint_mul_pow2.exit1540.sink.split:              ; preds = %._crit_edge4145, %.
   %.sink5685 = phi ptr [ %i.dhq, %._crit_edge4162 ], [ %i.dxh, %.lr.ph4157 ], [ %i.dhq, %.lr.ph4174.preheader ], [ %i.dxi, %._crit_edge4145 ]
   %.ph5684 = phi i32 [ %i.dun, %._crit_edge4162 ], [ %i.doo, %.lr.ph4157 ], [ %i.drf, %.lr.ph4174.preheader ], [ %i.doo, %._crit_edge4145 ]
   %i.ear = add nsw i32 %.sink5690, -1
-  %i.eas = zext i32 %i.ear to i64
+  %i.eas = zext nneg i32 %i.ear to i64
   %i.eat = shl nuw nsw i64 %i.eas, 3
   %i.eau = add nuw nsw i64 %i.eat, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5685, i8 0, i64 %i.eau, i1 false), !tbaa !106
@@ -3429,7 +3429,7 @@ bigint_mul_pow2.exit1558.sink.split:              ; preds = %._crit_edge3931, %.
   %.sink5736 = phi ptr [ %i.hyw, %._crit_edge3948 ], [ %i.ion, %.lr.ph3943 ], [ %i.hyw, %.lr.ph3960.preheader ], [ %i.ioo, %._crit_edge3931 ]
   %.ph5735 = phi i32 [ %i.ilt, %._crit_edge3948 ], [ %i.ifu, %.lr.ph3943 ], [ %i.iil, %.lr.ph3960.preheader ], [ %i.ifu, %._crit_edge3931 ]
   %i.irx = add nsw i32 %.sink5741, -1
-  %i.iry = zext i32 %i.irx to i64
+  %i.iry = zext nneg i32 %i.irx to i64
   %i.irz = shl nuw nsw i64 %i.iry, 3
   %i.isa = add nuw nsw i64 %i.irz, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5736, i8 0, i64 %i.isa, i1 false), !tbaa !106

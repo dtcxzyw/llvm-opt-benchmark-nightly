@@ -205,7 +205,7 @@ vector.body430:                                   ; preds = %vector.body430, %.l
   br label %interpolate_pchip.exit
 
 ._crit_edge.thread.i:                             ; preds = %._crit_edge.i
-  %i.jm = add nsw i32 %.06.i.i, -1                ; 2 uses
+  %i.jm = add nsw i32 %.06.i.i, -1
   %i.jn = call noalias ptr @av_malloc(i64 noundef %wide.trip.count329.i) #13 ; 6 uses
   %.not.i256.i = icmp eq ptr %i.jn, null
   br i1 %.not.i256.i, label %interpolate_pchip.exit.sink.split, label %.lr.ph.i258.i.preheader
@@ -249,7 +249,7 @@ middle.block466:                                  ; preds = %vector.body462
   br label %.lr.ph.i258.i
 
 .lr.ph81.preheader.i.i:                           ; preds = %.lr.ph.i258.i, %middle.block466
-  %wide.trip.count86.i.i = zext nneg i32 %i.jm to i64
+  %wide.trip.count86.i.i = zext nneg i32 %i.jm to i64 ; 3 uses
   %.pre.i.i = load i8, ptr %i.jn, align 1, !tbaa !25
   br label %.lr.ph81.i.i
 
@@ -319,14 +319,13 @@ pchip_edge_case.exit.i.i:                         ; preds = %bb.ac, %bb.ab, %.th
   %i.ll = phi double [ %i.lk, %bb.ab ], [ %i.ks, %.thread.i.i.i ], [ %i.ks, %bb.ac ]
   %.0.i.i.i = select i1 %.not28.i.i.i, double %i.ll, double 0.000000e+00
   store double %.0.i.i.i, ptr %i.ei, align 8, !tbaa !142
-  %2 = sext i32 %i.jm to i64                      ; 2 uses
-  %i.lm = getelementptr inbounds [8 x i8], ptr %i.ej, i64 %2
+  %i.lm = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %wide.trip.count86.i.i
   %i.ln = load double, ptr %i.lm, align 8, !tbaa !142 ; 3 uses
   %i.lo = add nsw i32 %.06.i.i, -2
   %i.lp = sext i32 %i.lo to i64                   ; 2 uses
   %i.lq = getelementptr inbounds [8 x i8], ptr %i.ej, i64 %i.lp
   %i.lr = load double, ptr %i.lq, align 8, !tbaa !142 ; 2 uses
-  %i.ls = getelementptr inbounds [8 x i8], ptr %i.el, i64 %2
+  %i.ls = getelementptr inbounds nuw [8 x i8], ptr %i.el, i64 %wide.trip.count86.i.i
   %i.lt = load double, ptr %i.ls, align 8, !tbaa !142 ; 5 uses
   %i.lu = getelementptr inbounds [8 x i8], ptr %i.el, i64 %i.lp
   %i.lv = load double, ptr %i.lu, align 8, !tbaa !142 ; 3 uses
@@ -729,7 +728,7 @@ middle.block671:                                  ; preds = %vector.body666
 
 .lr.ph295.preheader.i:                            ; preds = %.lr.ph291.i
   %i.yy = add nsw i32 %.06.i.i102, -1             ; 2 uses
-  %i.yz = zext i32 %i.yy to i64                   ; 5 uses
+  %i.yz = zext nneg i32 %i.yy to i64              ; 5 uses
   %scevgep = getelementptr i8, ptr %i.us, i64 8
   %i.za = shl nuw nsw i64 %i.yz, 3
   %scevgep674 = getelementptr i8, ptr %scevgep, i64 %i.za

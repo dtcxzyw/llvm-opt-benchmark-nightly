@@ -205,9 +205,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %_Z
   call void @llvm.experimental.noalias.scope.decl(metadata !2160)
   %i.kq = icmp ult i8 %i.kp, 10
   %i.kr = icmp ult i8 %i.kp, 100
-  %. = select i1 %i.kr, i32 2, i32 3              ; 3 uses
+  %. = select i1 %i.kr, i32 2, i32 3              ; 2 uses
   %i.ks = zext nneg i32 %. to i64
-  %i.kt = select i1 %i.kq, i64 1, i64 %i.ks
+  %i.kt = select i1 %i.kq, i64 1, i64 %i.ks       ; 2 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 3 uses
   store ptr %i.ku, ptr %16, align 8, !tbaa !268, !alias.scope !2160
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %16, i64 noundef %i.kt, i8 noundef signext 45) #31
@@ -223,8 +223,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %_Z
   %i.lb = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.la ; 2 uses
   %i.lc = getelementptr inbounds nuw i8, ptr %i.lb, i64 1
   %i.ld = load i8, ptr %i.lc, align 1, !tbaa !270, !noalias !2160
-  %62 = zext nneg i32 %. to i64
-  %i.le = getelementptr i8, ptr %i.kv, i64 %62
+  %i.le = getelementptr i8, ptr %i.kv, i64 %i.kt
   %i.lf = getelementptr i8, ptr %i.le, i64 -1
   store i8 %i.ld, ptr %i.lf, align 1, !tbaa !270
   %i.lg = load i8, ptr %i.lb, align 2, !tbaa !270, !noalias !2160
@@ -627,9 +626,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %_Z
   call void @llvm.experimental.noalias.scope.decl(metadata !9822)
   %i.kr = icmp ult i8 %i.kq, 10
   %i.ks = icmp ult i8 %i.kq, 100
-  %. = select i1 %i.ks, i32 2, i32 3              ; 3 uses
+  %. = select i1 %i.ks, i32 2, i32 3              ; 2 uses
   %i.kt = zext nneg i32 %. to i64
-  %i.ku = select i1 %i.kr, i64 1, i64 %i.kt
+  %i.ku = select i1 %i.kr, i64 1, i64 %i.kt       ; 2 uses
   %i.kv = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 3 uses
   store ptr %i.kv, ptr %16, align 8, !tbaa !268, !alias.scope !9822
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %16, i64 noundef %i.ku, i8 noundef signext 45) #31
@@ -645,8 +644,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %_Z
   %i.lc = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.lb ; 2 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %i.lc, i64 1
   %i.le = load i8, ptr %i.ld, align 1, !tbaa !270, !noalias !9822
-  %62 = zext nneg i32 %. to i64
-  %i.lf = getelementptr i8, ptr %i.kw, i64 %62
+  %i.lf = getelementptr i8, ptr %i.kw, i64 %i.ku
   %i.lg = getelementptr i8, ptr %i.lf, i64 -1
   store i8 %i.le, ptr %i.lg, align 1, !tbaa !270
   %i.lh = load i8, ptr %i.lc, align 2, !tbaa !270, !noalias !9822
@@ -1049,9 +1047,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %_Z
   call void @llvm.experimental.noalias.scope.decl(metadata !16609)
   %i.kq = icmp ult i8 %i.kp, 10
   %i.kr = icmp ult i8 %i.kp, 100
-  %. = select i1 %i.kr, i32 2, i32 3              ; 3 uses
+  %. = select i1 %i.kr, i32 2, i32 3              ; 2 uses
   %i.ks = zext nneg i32 %. to i64
-  %i.kt = select i1 %i.kq, i64 1, i64 %i.ks
+  %i.kt = select i1 %i.kq, i64 1, i64 %i.ks       ; 2 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 3 uses
   store ptr %i.ku, ptr %16, align 8, !tbaa !268, !alias.scope !16609
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %16, i64 noundef %i.kt, i8 noundef signext 45) #31
@@ -1067,8 +1065,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %_Z
   %i.lb = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.la ; 2 uses
   %i.lc = getelementptr inbounds nuw i8, ptr %i.lb, i64 1
   %i.ld = load i8, ptr %i.lc, align 1, !tbaa !270, !noalias !16609
-  %62 = zext nneg i32 %. to i64
-  %i.le = getelementptr i8, ptr %i.kv, i64 %62
+  %i.le = getelementptr i8, ptr %i.kv, i64 %i.kt
   %i.lf = getelementptr i8, ptr %i.le, i64 -1
   store i8 %i.ld, ptr %i.lf, align 1, !tbaa !270
   %i.lg = load i8, ptr %i.lb, align 2, !tbaa !270, !noalias !16609
@@ -1471,9 +1468,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %_Z
   call void @llvm.experimental.noalias.scope.decl(metadata !23456)
   %i.kr = icmp ult i8 %i.kq, 10
   %i.ks = icmp ult i8 %i.kq, 100
-  %. = select i1 %i.ks, i32 2, i32 3              ; 3 uses
+  %. = select i1 %i.ks, i32 2, i32 3              ; 2 uses
   %i.kt = zext nneg i32 %. to i64
-  %i.ku = select i1 %i.kr, i64 1, i64 %i.kt
+  %i.ku = select i1 %i.kr, i64 1, i64 %i.kt       ; 2 uses
   %i.kv = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 3 uses
   store ptr %i.kv, ptr %16, align 8, !tbaa !268, !alias.scope !23456
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %16, i64 noundef %i.ku, i8 noundef signext 45) #31
@@ -1489,8 +1486,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115: ; preds = %_Z
   %i.lc = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.lb ; 2 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %i.lc, i64 1
   %i.le = load i8, ptr %i.ld, align 1, !tbaa !270, !noalias !23456
-  %62 = zext nneg i32 %. to i64
-  %i.lf = getelementptr i8, ptr %i.kw, i64 %62
+  %i.lf = getelementptr i8, ptr %i.kw, i64 %i.ku
   %i.lg = getelementptr i8, ptr %i.lf, i64 -1
   store i8 %i.le, ptr %i.lg, align 1, !tbaa !270
   %i.lh = load i8, ptr %i.lc, align 2, !tbaa !270, !noalias !23456

@@ -202,12 +202,17 @@ bb.k:                                             ; preds = %bb.i
 ._crit_edge291:                                   ; preds = %._crit_edge.epil, %._crit_edge291.unr-lcssa
   %i.az = load i32, ptr %1, align 4, !tbaa !34    ; 2 uses
   %.not256310 = icmp slt i32 %i.az, 1
-  br i1 %.not256310, label %.loopexit279, label %.lr.ph313
+  br i1 %.not256310, label %.loopexit279, label %.lr.ph313.preheader
 
-.lr.ph313:                                        ; preds = %._crit_edge291, %.loopexit281
-  %.1223311 = phi i32 [ %9, %.loopexit281 ], [ 1, %._crit_edge291 ] ; 11 uses
+.lr.ph313.preheader:                              ; preds = %._crit_edge291
+  %6 = zext nneg i32 %i.x to i64
+  br label %.lr.ph313
+
+.lr.ph313:                                        ; preds = %.lr.ph313.preheader, %.loopexit281
+  %indvars.iv392 = phi i64 [ 1, %.lr.ph313.preheader ], [ %indvars.iv.next393, %.loopexit281 ] ; 3 uses
   %i.ba = load i32, ptr %1, align 4, !tbaa !34
-  %i.bb = sub nsw i32 %i.ba, %.1223311
+  %7 = trunc nuw i64 %indvars.iv392 to i32        ; 9 uses
+  %i.bb = sub nsw i32 %i.ba, %7
   %i.bc = add nsw i32 %i.bb, 1                    ; 2 uses
   store i32 %i.bc, ptr %i.c, align 4, !tbaa !34
   %i.bd = call i32 @llvm.smin.i32(i32 %i.x, i32 %i.bc)
@@ -216,7 +221,7 @@ bb.k:                                             ; preds = %bb.i
   %i.bf = add nsw i32 %i.be, -1
   store i32 %i.bf, ptr %i.b, align 4, !tbaa !34
   %i.bg = load i32, ptr %2, align 4, !tbaa !34
-  %i.bh = mul nsw i32 %.1223311, %i.i             ; 2 uses
+  %i.bh = mul nsw i32 %i.i, %7                    ; 2 uses
   %i.bi = add i32 %i.bh, 1                        ; 2 uses
   %i.bj = add i32 %i.bi, %i.bg
   %i.bk = sext i32 %i.bj to i64
@@ -227,12 +232,12 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not258, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph313
-  %i.bo = add nsw i32 %i.bn, %.1223311
+  %i.bo = add nsw i32 %i.bn, %7
   br label %bb.ag
 
 bb.m:                                             ; preds = %.lr.ph313
   %i.bp = load i32, ptr %i.g, align 4, !tbaa !34  ; 5 uses
-  %i.bq = add nsw i32 %i.bp, %.1223311            ; 3 uses
+  %i.bq = add nsw i32 %i.bp, %7                   ; 3 uses
   %i.br = load i32, ptr %1, align 4, !tbaa !34    ; 3 uses
   %.not259 = icmp sgt i32 %i.bq, %i.br
   br i1 %.not259, label %.loopexit281, label %bb.n
@@ -246,7 +251,7 @@ bb.n:                                             ; preds = %bb.m
   store i32 %i.bw, ptr %i.e, align 4, !tbaa !34
   store i32 %i.bp, ptr %i.b, align 4, !tbaa !34
   %i.bx = add i32 %i.br, 1
-  %i.by = add i32 %.1223311, %i.bs
+  %i.by = add i32 %i.bs, %7
   %i.bz = sub i32 %i.bx, %i.by                    ; 2 uses
   store i32 %i.bz, ptr %i.c, align 4, !tbaa !34
   %i.ca = call i32 @llvm.smin.i32(i32 %i.bp, i32 %i.bz) ; 2 uses
@@ -277,7 +282,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cq = add nsw i32 %i.cp, 1                    ; 2 uses
   %i.cr = load i32, ptr %i.g, align 4, !tbaa !34  ; 2 uses
   %i.cs = sub i32 %i.cq, %i.cr
-  %i.ct = add nsw i32 %i.cr, %.1223311
+  %i.ct = add nsw i32 %i.cr, %7
   %i.cu = mul nsw i32 %i.ct, %i.i                 ; 2 uses
   %i.cv = add nsw i32 %i.cs, %i.cu
   %i.cw = sext i32 %i.cv to i64
@@ -297,7 +302,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 bb.q:                                             ; preds = %bb.p
   %i.dd = load i32, ptr %i.g, align 4, !tbaa !34  ; 3 uses
   store i32 %i.dd, ptr %i.c, align 4, !tbaa !34
-  %6 = add nsw i32 %.1223311, -1                  ; 2 uses
+  %8 = add nsw i64 %indvars.iv392, -1             ; 2 uses
   %i.de = add i32 %i.dd, 1                        ; 5 uses
   %i.df = sext i32 %i.dd to i64
   %i.dg = add nuw i32 %i.db, 1
@@ -308,18 +313,19 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %._crit_edge296
   %indvar479 = phi i64 [ 0, %bb.q ], [ %indvar.next480, %._crit_edge296 ] ; 3 uses
-  %indvars.iv = phi i64 [ 1, %bb.q ], [ %indvars.iv.next, %._crit_edge296 ] ; 10 uses
+  %indvars.iv = phi i64 [ 1, %bb.q ], [ %indvars.iv.next, %._crit_edge296 ] ; 11 uses
   %i.di = xor i64 %indvar479, -1
   %i.dj = add i64 %i.di, %wide.trip.count377      ; 7 uses
   %i.dk = sub i64 %i.dh, %indvar479               ; 2 uses
   %.not267292 = icmp sgt i64 %indvars.iv, %i.df
-  %i.dl = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
+  %i.dl = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
   br i1 %.not267292, label %._crit_edge296, label %iter.check496
 
 iter.check496:                                    ; preds = %bb.r
   %i.dm = load i32, ptr %2, align 4, !tbaa !34
-  %7 = add i32 %6, %i.dl
-  %i.dn = add i32 %7, %i.dm
+  %9 = add nuw nsw i64 %8, %indvars.iv
+  %10 = trunc nuw i64 %9 to i32
+  %i.dn = add i32 %i.dm, %10
   %i.do = mul nsw i32 %i.dn, %i.i                 ; 2 uses
   %reass.sub = sub i32 %i.do, %i.dl
   %invariant.op = add i32 %reass.sub, 1           ; 11 uses
@@ -543,13 +549,13 @@ bb.t:                                             ; preds = %bb.s
   %i.hb = add nsw i32 %i.ha, 1
   %i.hc = load i32, ptr %i.g, align 4, !tbaa !34  ; 3 uses
   %i.hd = sub i32 %i.hb, %i.hc
-  %i.he = add nsw i32 %i.hc, %.1223311
+  %i.he = add nsw i32 %i.hc, %7
   %i.hf = mul nsw i32 %i.he, %i.i
   %i.hg = add nsw i32 %i.hd, %i.hf
   %i.hh = sext i32 %i.hg to i64
   %i.hi = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.hh
   %i.hj = add nsw i32 %i.hc, 1
-  %i.hk = add nsw i32 %i.ha, %.1223311
+  %i.hk = add nsw i32 %i.ha, %7
   %i.hl = mul nsw i32 %i.hk, %i.i
   %i.hm = add nsw i32 %i.hj, %i.hl
   %i.hn = sext i32 %i.hm to i64
@@ -563,7 +569,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   store i32 %i.hq, ptr %i.b, align 4, !tbaa !34
   %i.hr = load i32, ptr %2, align 4, !tbaa !34    ; 2 uses
   %i.hs = add nsw i32 %i.hr, 1
-  %i.ht = add nsw i32 %i.hr, %.1223311
+  %i.ht = add nsw i32 %i.hr, %7
   %i.hu = mul nsw i32 %i.ht, %i.i
   %i.hv = add nsw i32 %i.hs, %i.hu
   %i.hw = sext i32 %i.hv to i64
@@ -587,18 +593,19 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 bb.v:                                             ; preds = %.lr.ph309, %._crit_edge302
   %indvar466 = phi i64 [ 0, %.lr.ph309 ], [ %indvar.next467, %._crit_edge302 ] ; 3 uses
-  %indvars.iv382 = phi i64 [ 1, %.lr.ph309 ], [ %indvars.iv.next383, %._crit_edge302 ] ; 10 uses
+  %indvars.iv382 = phi i64 [ 1, %.lr.ph309 ], [ %indvars.iv.next383, %._crit_edge302 ] ; 11 uses
   %i.ie = xor i64 %indvar466, -1
   %i.if = add i64 %i.ie, %wide.trip.count387      ; 7 uses
   %i.ig = sub i64 %i.id, %indvar466               ; 2 uses
   %.not265298 = icmp sgt i64 %indvars.iv382, %i.ib
-  %i.ih = trunc nuw nsw i64 %indvars.iv382 to i32 ; 3 uses
+  %i.ih = trunc nuw nsw i64 %indvars.iv382 to i32 ; 2 uses
   br i1 %.not265298, label %._crit_edge302, label %iter.check
 
 iter.check:                                       ; preds = %bb.v
   %i.ii = load i32, ptr %2, align 4, !tbaa !34
-  %8 = add i32 %6, %i.ih
-  %i.ij = add i32 %8, %i.ii
+  %11 = add nuw nsw i64 %8, %indvars.iv382
+  %12 = trunc nuw i64 %11 to i32
+  %i.ij = add i32 %i.ii, %12
   %i.ik = mul nsw i32 %i.ij, %i.i                 ; 2 uses
   %reass.sub355 = sub i32 %i.ik, %i.ih
   %invariant.op304 = add i32 %reass.sub355, 1     ; 11 uses
@@ -804,8 +811,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br label %.loopexit281
 
 .loopexit281:                                     ; preds = %bb.u, %..loopexit281_crit_edge, %bb.m, %bb.p
-  %9 = add nuw nsw i32 %.1223311, %i.x            ; 2 uses
-  %.not256 = icmp sgt i32 %9, %i.az
+  %indvars.iv.next393 = add nuw nsw i64 %indvars.iv392, %6 ; 2 uses
+  %13 = trunc nuw i64 %indvars.iv.next393 to i32
+  %.not256 = icmp slt i32 %i.az, %13
   br i1 %.not256, label %.loopexit279, label %.lr.ph313, !llvm.loop !20
 
 .loopexit280:                                     ; preds = %.lr.ph317, %.lr.ph321

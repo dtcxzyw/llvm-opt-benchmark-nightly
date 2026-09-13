@@ -145,12 +145,12 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond228.not, label %._crit_edge194, label %.lr.ph193, !llvm.loop !18
 
 ._crit_edge194:                                   ; preds = %.lr.ph193, %middle.block
-  %i.bf = add nsw i32 %3, -1                      ; 6 uses
+  %i.bf = add nsw i32 %3, -1                      ; 5 uses
   %.not319 = icmp eq i32 %3, 1
   br i1 %.not319, label %.preheader.split.preheader, label %.lr.ph197.preheader
 
 .lr.ph197.preheader:                              ; preds = %._crit_edge194
-  %i.bg = zext i32 %i.bf to i64                   ; 4 uses
+  %i.bg = zext nneg i32 %i.bf to i64              ; 4 uses
   %i.bh = icmp ne i32 %i.bf, 0
   %.neg = sext i1 %i.bh to i64
   %i.bi = zext nneg i32 %3 to i64
@@ -236,8 +236,7 @@ middle.block350:                                  ; preds = %vector.body340
   br i1 %i.cs, label %bb.c, label %.lr.ph217.us.preheader
 
 bb.c:                                             ; preds = %.preheader189
-  %4 = zext nneg i32 %i.bf to i64                 ; 2 uses
-  %wide.trip.count235 = zext nneg i32 %i.bf to i64
+  %wide.trip.count235 = zext nneg i32 %i.bf to i64 ; 3 uses
   %i.ct = load float, ptr %i.ag, align 4, !tbaa !34
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
   %i.cv = load float, ptr %i.cu, align 4, !tbaa !34
@@ -253,7 +252,7 @@ bb.c:                                             ; preds = %.preheader189
   %.pre = load float, ptr %.phi.trans.insert, align 4, !tbaa !34
   %i.db = fsub float %.pre, %.pre267
   %i.dc = fmul float %i.db, 6.000000e+00
-  %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %4
+  %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %wide.trip.count235
   store float %i.dc, ptr %i.dd, align 4, !tbaa !34
   %exitcond236.peel.not = icmp eq i32 %i.bf, 2
   br i1 %exitcond236.peel.not, label %.preheader188, label %.peel.next
@@ -307,7 +306,7 @@ bb.c:                                             ; preds = %.preheader189
 .peel.next:                                       ; preds = %bb.c, %.peel.next
   %indvars.iv232 = phi i64 [ %indvars.iv.next233, %.peel.next ], [ 2, %bb.c ] ; 7 uses
   %i.ec = add nsw i64 %indvars.iv232, -1          ; 3 uses
-  %i.ed = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %i.ec ; 2 uses
+  %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.ec ; 2 uses
   %i.ee = load float, ptr %i.ed, align 4, !tbaa !34
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv232
   %i.eg = load float, ptr %i.ef, align 4, !tbaa !34
@@ -318,9 +317,9 @@ bb.c:                                             ; preds = %.preheader189
   %i.el = getelementptr inbounds nuw [4 x i8], ptr %i.ek, i64 %indvars.iv232
   store float %i.ei, ptr %i.el, align 4, !tbaa !34
   %i.em = load float, ptr %i.ed, align 4, !tbaa !34 ; 2 uses
-  %i.en = getelementptr inbounds [4 x i8], ptr %i.ek, i64 %i.ec
+  %i.en = getelementptr inbounds nuw [4 x i8], ptr %i.ek, i64 %i.ec
   store float %i.em, ptr %i.en, align 4, !tbaa !34
-  %i.eo = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.ec
+  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.ec
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !32
   %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %indvars.iv232
   store float %i.em, ptr %i.eq, align 4, !tbaa !34
@@ -331,7 +330,7 @@ bb.c:                                             ; preds = %.preheader189
   %i.eu = load float, ptr %i.et, align 4, !tbaa !34
   %i.ev = fsub float %i.es, %i.eu
   %i.ew = fmul float %i.ev, 6.000000e+00
-  %i.ex = getelementptr inbounds nuw [4 x i8], ptr %i.ek, i64 %4
+  %i.ex = getelementptr inbounds nuw [4 x i8], ptr %i.ek, i64 %wide.trip.count235
   store float %i.ew, ptr %i.ex, align 4, !tbaa !34
   %exitcond236.not = icmp eq i64 %indvars.iv.next233, %wide.trip.count235
   br i1 %exitcond236.not, label %.preheader188, label %.peel.next, !llvm.loop !21
@@ -341,7 +340,7 @@ bb.c:                                             ; preds = %.preheader189
   br i1 %exitcond247.not, label %.preheader186.lr.ph, label %.lr.ph203, !llvm.loop !22
 
 .preheader186.lr.ph:                              ; preds = %..loopexit_crit_edge, %.preheader188
-  %5 = sext i32 %i.du to i64
+  %4 = zext nneg i32 %i.du to i64
   %i.ey = zext i32 %i.dv to i64
   %i.ez = sext i32 %i.dv to i64
   br label %.preheader186
@@ -550,7 +549,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %._cri
 
 ._crit_edge211:                                   ; preds = %.lr.ph210, %.preheader186
   %.0169.lcssa = phi float [ 0.000000e+00, %.preheader186 ], [ %i.if, %.lr.ph210 ]
-  %i.ih = getelementptr inbounds [4 x i8], ptr %.pre272, i64 %5
+  %i.ih = getelementptr inbounds nuw [4 x i8], ptr %.pre272, i64 %4
   %i.ii = load float, ptr %i.ih, align 4, !tbaa !34
   %i.ij = fsub float %i.ii, %.0169.lcssa
   %i.ik = getelementptr inbounds nuw [4 x i8], ptr %.pre272, i64 %indvars.iv248

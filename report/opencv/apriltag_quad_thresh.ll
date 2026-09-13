@@ -205,7 +205,7 @@ _ZNSt6vectorIdSaIdEED2Ev.exit248.thread:          ; preds = %bb.i
   br label %bb.al
 
 bb.k:                                             ; preds = %.lr.ph365, %bb.n
-  %indvars.iv553 = phi i64 [ 0, %.lr.ph365 ], [ %indvars.iv.next554, %bb.n ] ; 3 uses
+  %indvars.iv553 = phi i64 [ 0, %.lr.ph365 ], [ %indvars.iv.next554, %bb.n ] ; 4 uses
   %.0157363 = phi i32 [ 0, %.lr.ph365 ], [ %.1158, %bb.n ] ; 4 uses
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0304.0616621, i64 %indvars.iv553
   %i.dd = load double, ptr %i.dc, align 8, !tbaa !20 ; 3 uses
@@ -219,10 +219,10 @@ bb.k:                                             ; preds = %.lr.ph365, %bb.n
   br i1 %i.dj, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %i.dk = trunc nuw nsw i64 %indvars.iv553 to i32 ; 2 uses
+  %i.dk = trunc i64 %indvars.iv553 to i32
   %i.dl = add i32 %i.cy, %i.dk
-  %4 = srem i32 %i.dl, %1
-  %5 = sext i32 %4 to i64
+  %4 = urem i32 %i.dl, %1
+  %5 = zext nneg i32 %4 to i64
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0304.0616621, i64 %5
   %i.dn = load double, ptr %i.dm, align 8, !tbaa !20
   %i.do = fcmp ogt double %i.dd, %i.dn
@@ -231,7 +231,8 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.dp = sext i32 %.0157363 to i64               ; 2 uses
   %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %i.dp
-  store i32 %i.dk, ptr %i.dq, align 4, !tbaa !23
+  %6 = trunc nuw nsw i64 %indvars.iv553 to i32
+  store i32 %6, ptr %i.dq, align 4, !tbaa !23
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %i.dp
   store double %i.dd, ptr %i.dr, align 8, !tbaa !20
   %i.ds = add nsw i32 %.0157363, 1
@@ -634,7 +635,7 @@ bb.h:                                             ; preds = %.lr.ph
   %i.ba = call i32 @llvm.umin.i32(i32 %i.az, i32 65535)
   %i.bb = trunc nuw i32 %i.ba to i16              ; 3 uses
   %i.bc = trunc nsw i64 %i.ar to i32              ; 2 uses
-  %i.bd = add i32 %i.ag, %i.bc
+  %i.bd = add nuw i32 %i.ag, %i.bc
   %i.be = add i32 %i.aj, %i.bc
   br label %bb.i
 
@@ -743,7 +744,7 @@ _ZN2cv5aruco9UnionFind18get_representativeEj.exit356: ; preds = %.lr.ph.i354, %.
   %i.cz = lshr i64 %i.cy, 32
   %i.da = trunc nuw i64 %i.cz to i32
   %i.db = urem i32 %i.da, %i.ac
-  %i.dc = zext i32 %i.db to i64
+  %i.dc = zext nneg i32 %i.db to i64
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.dc ; 2 uses
   %.0273497 = load ptr, ptr %i.dd, align 8, !tbaa !180 ; 3 uses
   %.not322498 = icmp eq ptr %.0273497, null
@@ -887,7 +888,7 @@ _ZN2cv5aruco9UnionFind18get_representativeEj.exit365: ; preds = %.lr.ph.i363, %.
   %i.fm = lshr i64 %i.fl, 32
   %i.fn = trunc nuw i64 %i.fm to i32
   %i.fo = urem i32 %i.fn, %i.ac
-  %i.fp = zext i32 %i.fo to i64
+  %i.fp = zext nneg i32 %i.fo to i64
   %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.fp ; 2 uses
   %.0270501 = load ptr, ptr %i.fq, align 8, !tbaa !180 ; 3 uses
   %.not324502 = icmp eq ptr %.0270501, null
@@ -1031,7 +1032,7 @@ _ZN2cv5aruco9UnionFind18get_representativeEj.exit382: ; preds = %.lr.ph.i380, %.
   %i.hz = lshr i64 %i.hy, 32
   %i.ia = trunc nuw i64 %i.hz to i32
   %i.ib = urem i32 %i.ia, %i.ac
-  %i.ic = zext i32 %i.ib to i64
+  %i.ic = zext nneg i32 %i.ib to i64
   %i.id = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.ic ; 2 uses
   %.0267505 = load ptr, ptr %i.id, align 8, !tbaa !180 ; 3 uses
   %.not326506 = icmp eq ptr %.0267505, null
@@ -1180,7 +1181,7 @@ _ZN2cv5aruco9UnionFind18get_representativeEj.exit399: ; preds = %.lr.ph.i397, %.
   %i.kr = lshr i64 %i.kq, 32
   %i.ks = trunc nuw i64 %i.kr to i32
   %i.kt = urem i32 %i.ks, %i.ac
-  %i.ku = zext i32 %i.kt to i64
+  %i.ku = zext nneg i32 %i.kt to i64
   %i.kv = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.ku ; 2 uses
   %.0265509 = load ptr, ptr %i.kv, align 8, !tbaa !180 ; 3 uses
   %.not328510 = icmp eq ptr %.0265509, null

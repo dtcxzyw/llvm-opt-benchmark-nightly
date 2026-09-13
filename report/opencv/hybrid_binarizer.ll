@@ -205,7 +205,6 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %.lr.ph121
   %i.n = zext nneg i32 %i.c to i64                ; 2 uses
   %wide.trip.count134 = zext nneg i32 %i.e to i64
-  %wide.trip.count = zext nneg i32 %i.c to i64
   br label %.lr.ph
 
 ._crit_edge122.split:                             ; preds = %._crit_edge, %.lr.ph121, %bb.a
@@ -220,8 +219,10 @@ bb.a:
   %spec.select = tail call i32 @llvm.smin.i32(i32 %i.p, i32 %i.r)
   %i.s = mul nuw nsw i64 %indvars.iv131, %i.n
   %i.t = icmp ne i64 %indvars.iv131, 0
-  %1 = add nsw i64 %indvars.iv131, -1
-  %2 = mul nuw nsw i64 %1, %i.n
+  %1 = trunc i64 %indvars.iv131 to i32
+  %2 = add i32 %1, -1
+  %3 = mul i32 %2, %i.c
+  %4 = zext i32 %3 to i64
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN5zxing15HybridBinarizer17getBlockThresholdEiiiiiiii.exit
@@ -332,7 +333,7 @@ bb.d:                                             ; preds = %bb.c
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   %i.cc = load i32, ptr %i.cb, align 8, !tbaa !18 ; 2 uses
   %i.cd = getelementptr [16 x i8], ptr %i.bu, i64 %indvars.iv127
-  %i.ce = getelementptr [16 x i8], ptr %i.cd, i64 %2 ; 2 uses
+  %i.ce = getelementptr [16 x i8], ptr %i.cd, i64 %4 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 12
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !51
   %i.ch = getelementptr i8, ptr %i.bv, i64 -4
@@ -372,7 +373,7 @@ _ZN5zxing15HybridBinarizer17getBlockThresholdEiiiiiiii.exit: ; preds = %.loopexi
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 12
   store i32 %.1.i, ptr %i.cx, align 4, !tbaa !51
   %indvars.iv.next128 = add nuw nsw i64 %indvars.iv127, 1 ; 2 uses
-  %exitcond130.not = icmp eq i64 %indvars.iv.next128, %wide.trip.count
+  %exitcond130.not = icmp eq i64 %indvars.iv.next128, %i.n
   br i1 %exitcond130.not, label %._crit_edge, label %bb.b, !llvm.loop !65
 
 .preheader98:                                     ; preds = %.preheader100

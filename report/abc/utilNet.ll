@@ -205,18 +205,17 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %.lr.ph.preheader, label %.lr.ph.i.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %2 = and i64 %i.a, 2147483647
-  %3 = shl i64 %i.a, 32
-  %sext = add nsw i64 %3, -4294967296
-  %4 = ashr exact i64 %sext, 32
+  %2 = add i64 %i.a, 4294967295
+  %3 = and i64 %i.a, 2147483647
+  %4 = and i64 %2, 4294967295
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
-  %indvars.iv.in = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv, %bb.i ] ; 2 uses
+  %indvars.iv.in = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv, %bb.i ] ; 2 uses
   %.028 = phi i64 [ 0, %.lr.ph.preheader ], [ %.1, %bb.i ]
   %indvars.iv = add nsw i64 %indvars.iv.in, -1    ; 4 uses
   %i.k = sub nuw nsw i64 %4, %indvars.iv
-  %i.l = getelementptr inbounds i8, ptr %0, i64 %i.k
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1, !tbaa !31    ; 4 uses
   %i.n = sext i8 %i.m to i64                      ; 3 uses
   %i.o = add i8 %i.m, -48

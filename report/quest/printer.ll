@@ -205,14 +205,13 @@ bb.f:                                             ; preds = %bb.f, %.preheader
   br i1 %i.gj, label %bb.f, label %bb.g, !llvm.loop !662
 
 bb.g:                                             ; preds = %bb.f
-  %6 = uitofp i64 %1 to double
-  %7 = shl i64 %indvars.iv, 32
-  %sext = add i64 %7, -4294967296
-  %8 = ashr exact i64 %sext, 32                   ; 2 uses
+  %6 = add nuw i64 %indvars.iv, 4294967295
+  %7 = uitofp i64 %1 to double
+  %8 = and i64 %6, 4294967295                     ; 2 uses
   %i.gk = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0127.0214, i64 %8
   %i.gl = load i64, ptr %i.gk, align 8, !tbaa !32
   %i.gm = uitofp i64 %i.gl to double
-  %i.gn = fdiv double %6, %i.gm
+  %i.gn = fdiv double %7, %i.gm
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #29
   invoke void @_Z10floatToStrIdENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_bi(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, double noundef %i.gn, i1 noundef zeroext false, i32 noundef 4)

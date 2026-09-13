@@ -204,15 +204,15 @@ bb.o:                                             ; preds = %bb.af
   br i1 %exitcond145.not, label %.loopexit, label %bb.p, !llvm.loop !59
 
 bb.p:                                             ; preds = %.preheader, %bb.o
-  %i.dx = phi ptr [ %i.bu, %.preheader ], [ %i.hm, %bb.o ] ; 2 uses
-  %indvars.iv141 = phi i64 [ 1, %.preheader ], [ %indvars.iv.next142, %bb.o ] ; 6 uses
+  %i.dx = phi ptr [ %i.bu, %.preheader ], [ %i.hm, %bb.o ]
+  %indvars.iv141 = phi i64 [ 1, %.preheader ], [ %indvars.iv.next142, %bb.o ] ; 5 uses
   %i.dy = load i32, ptr %i.o, align 4, !tbaa !68
   %i.dz = load i8, ptr %i.dw, align 2, !tbaa !42
   %i.ea = zext i8 %i.dz to i32
   %i.eb = load i8, ptr %i.du, align 2, !tbaa !80
   %i.ec = zext i8 %i.eb to i32
   %i.ed = add nuw nsw i32 %i.ec, %i.ea
-  %i.ee = getelementptr [48 x i8], ptr %i.dx, i64 %indvars.iv141 ; 2 uses
+  %i.ee = getelementptr [48 x i8], ptr %i.dx, i64 %indvars.iv141 ; 6 uses
   %i.ef = getelementptr i8, ptr %i.ee, i64 -24
   %i.eg = load i8, ptr %i.ef, align 8, !tbaa !72
   %i.eh = zext i8 %i.eg to i32
@@ -222,9 +222,8 @@ bb.p:                                             ; preds = %.preheader, %bb.o
   %i.ek = load i32, ptr %i.p, align 8, !tbaa !69
   %i.el = add i32 %i.ei, %i.ek
   %i.em = udiv i32 %i.ej, %i.el                   ; 5 uses
-  %4 = getelementptr inbounds nuw [48 x i8], ptr %i.dx, i64 %indvars.iv141 ; 4 uses
-  store i32 %i.em, ptr %4, align 8, !tbaa !70
-  %i.en = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 %i.em, ptr %i.ee, align 8, !tbaa !70
+  %i.en = getelementptr inbounds nuw i8, ptr %i.ee, i64 4
   %i.eo = load i8, ptr %i.m, align 1, !tbaa !64
   %i.ep = load i8, ptr %i.j, align 8, !tbaa !62
   %i.eq = zext i8 %i.eo to i32
@@ -242,7 +241,7 @@ bb.p:                                             ; preds = %.preheader, %bb.o
   %i.fb = mul i64 %i.fa, %i.ey
   %i.fc = zext i32 %i.em to i64                   ; 2 uses
   %i.fd = add i64 %i.fb, %i.fc                    ; 9 uses
-  %i.fe = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.fe = getelementptr inbounds nuw i8, ptr %i.ee, i64 16
   store i64 %i.fd, ptr %i.fe, align 8, !tbaa !71
   %i.ff = lshr i64 %i.fd, 32                      ; 2 uses
   %.not.i.i126 = icmp eq i64 %i.ff, 0
@@ -338,7 +337,7 @@ H5VM_limit_enc_size.exit134:                      ; preds = %bb.s, %bb.t, %bb.v,
   %i.gr = lshr i16 %.0.i.i129, 3
   %i.gs = trunc nuw nsw i16 %i.gr to i8
   %i.gt = add nuw nsw i8 %i.gs, 1
-  %i.gu = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.gu = getelementptr inbounds nuw i8, ptr %i.ee, i64 24
   store i8 %i.gt, ptr %i.gu, align 8, !tbaa !72
   %i.gv = load ptr, ptr %i.t, align 8, !tbaa !31
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 16

@@ -205,12 +205,12 @@ bb.f:                                             ; preds = %.lr.ph
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ar, ptr align 1 %i.aq, i64 %i.as, i1 false), !noalias !280
   %i.at = tail call i64 @llvm.usub.sat.i64(i64 %i.ap, i64 %1) ; 2 uses
   %i.au = add nsw i64 %3, -1
-  %i.av = tail call i64 @llvm.umin.i64(i64 %i.at, i64 %i.au)
-  %4 = add i64 %i.av, 1                           ; 3 uses
-  %min.iters.check = icmp ult i64 %4, 17
+  %i.av = tail call i64 @llvm.umin.i64(i64 %i.at, i64 %i.au) ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.av, 16
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %._crit_edge
+  %4 = add nuw i64 %i.av, 1                       ; 2 uses
   %i.aw = and i64 %4, 15                          ; 2 uses
   %i.ax = icmp eq i64 %i.aw, 0
   %i.ay = select i1 %i.ax, i64 16, i64 %i.aw

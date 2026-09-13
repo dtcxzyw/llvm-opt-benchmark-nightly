@@ -204,19 +204,19 @@ bb.h:                                             ; preds = %bb.f
   %i.p = ashr exact i64 %i.o, 3                   ; 2 uses
   %wide.trip.count = zext nneg i32 %3 to i64      ; 2 uses
   %i.q = add nsw i64 %wide.trip.count, -1
-  %i.r = call i64 @llvm.umin.i64(i64 %i.p, i64 %i.q)
-  %6 = add nsw i64 %i.r, 1                        ; 3 uses
-  %min.iters.check = icmp ult i64 %6, 7
+  %i.r = call i64 @llvm.umin.i64(i64 %i.p, i64 %i.q) ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.r, 6
   %i.s = sub i64 %i.n, %i.a
   %diff.check = icmp ugt i64 %i.s, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
+  %6 = add nuw nsw i64 %i.r, 1                    ; 2 uses
   %i.t = and i64 %6, 3                            ; 2 uses
   %i.u = icmp eq i64 %i.t, 0
   %i.v = select i1 %i.u, i64 4, i64 %i.t
-  %n.vec = sub i64 %6, %i.v                       ; 2 uses
+  %n.vec = sub nsw i64 %6, %i.v                   ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

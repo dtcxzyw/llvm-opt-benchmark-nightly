@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .lr.ph:                                           ; preds = %bb.e
   %i.ab = mul nuw nsw i64 %indvars.iv394, %i.v    ; 5 uses
   %i.ac = add nsw i64 %i.ab, -1
-  %.not251 = icmp eq i64 %indvars.iv394, 0        ; 2 uses
   %i.ad = add nsw i64 %indvars.iv394, -1
-  %i.ae = mul nuw nsw i64 %i.ad, %i.v             ; 4 uses
+  %i.ae = mul nsw i64 %i.ad, %i.v                 ; 4 uses
+  %.not251 = icmp eq i64 %indvars.iv394, 0        ; 2 uses
   %i.af = load ptr, ptr %i.t, align 8, !tbaa !65  ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ab ; 2 uses
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !66
@@ -221,7 +221,7 @@ bb.f:                                             ; preds = %.lr.ph
 
 bb.g:                                             ; preds = %bb.f
   %i.aj = load i8, ptr %i.ag, align 1, !tbaa !66
-  %i.ak = getelementptr inbounds i8, ptr %i.af, i64 %i.ae
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !66
   %.not.i255.peel = icmp eq i8 %i.aj, %i.al
   br i1 %.not.i255.peel, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit257.peel, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit257.thread.peel
@@ -231,7 +231,7 @@ _Z11isConnectedRK16dtTileCacheLayeriii.exit257.peel: ; preds = %bb.g
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ab
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !66
   %i.ap = zext i8 %i.ao to i32
-  %i.aq = getelementptr inbounds i8, ptr %i.am, i64 %i.ae
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ae
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !66
   %i.as = zext i8 %i.ar to i32
   %i.at = sub nsw i32 %i.ap, %i.as
@@ -241,7 +241,7 @@ _Z11isConnectedRK16dtTileCacheLayeriii.exit257.peel: ; preds = %bb.g
 
 bb.h:                                             ; preds = %_Z11isConnectedRK16dtTileCacheLayeriii.exit257.peel
   %i.av = load ptr, ptr %i.j, align 8, !tbaa !64
-  %i.aw = getelementptr inbounds i8, ptr %i.av, i64 %i.ae
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.ae
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !66  ; 4 uses
   %.not252.peel = icmp eq i8 %i.ax, -1
   br i1 %.not252.peel, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit257.thread.peel, label %bb.i
@@ -305,7 +305,7 @@ bb.m:                                             ; preds = %_Z11isConnectedRK16
 
 bb.n:                                             ; preds = %.peel.next
   %i.bn = add nsw i64 %i.ac, %indvars.iv          ; 3 uses
-  %i.bo = getelementptr inbounds i8, ptr %i.bj, i64 %i.bn
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bn
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !66
   %.not.i = icmp eq i8 %i.bl, %i.bp
   br i1 %.not.i, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit, label %.thread
@@ -315,7 +315,7 @@ _Z11isConnectedRK16dtTileCacheLayeriii.exit:      ; preds = %bb.n
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bi
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !66
   %i.bt = zext i8 %i.bs to i32
-  %i.bu = getelementptr inbounds i8, ptr %i.bq, i64 %i.bn
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bn
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !66
   %i.bw = zext i8 %i.bv to i32
   %i.bx = sub nsw i32 %i.bt, %i.bw
@@ -325,7 +325,7 @@ _Z11isConnectedRK16dtTileCacheLayeriii.exit:      ; preds = %bb.n
 
 bb.o:                                             ; preds = %_Z11isConnectedRK16dtTileCacheLayeriii.exit
   %i.bz = load ptr, ptr %i.j, align 8, !tbaa !64
-  %i.ca = getelementptr inbounds i8, ptr %i.bz, i64 %i.bn
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.bn
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !66  ; 2 uses
   %i.cc = icmp eq i8 %i.cb, -1
   br i1 %i.cc, label %.thread, label %bb.p
@@ -342,12 +342,12 @@ bb.o:                                             ; preds = %_Z11isConnectedRK16
 bb.p:                                             ; preds = %.thread, %bb.o
   %.1213 = phi i8 [ %i.cd, %.thread ], [ %.0212326, %bb.o ]
   %.1210 = phi i8 [ %.0212326, %.thread ], [ %i.cb, %bb.o ] ; 2 uses
+  %3 = add nsw i64 %indvars.iv, %i.ae             ; 3 uses
   br i1 %.not251, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit257.thread, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %3 = add nsw i64 %indvars.iv, %i.ae             ; 3 uses
   %i.ch = load i8, ptr %i.bk, align 1, !tbaa !66
-  %i.ci = getelementptr inbounds i8, ptr %i.bj, i64 %3
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.bj, i64 %3
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !66
   %.not.i255 = icmp eq i8 %i.ch, %i.cj
   br i1 %.not.i255, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit257, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit257.thread
@@ -357,7 +357,7 @@ _Z11isConnectedRK16dtTileCacheLayeriii.exit257:   ; preds = %bb.q
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.bi
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !66
   %i.cn = zext i8 %i.cm to i32
-  %i.co = getelementptr inbounds i8, ptr %i.ck, i64 %3
+  %i.co = getelementptr inbounds nuw i8, ptr %i.ck, i64 %3
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !66
   %i.cq = zext i8 %i.cp to i32
   %i.cr = sub nsw i32 %i.cn, %i.cq
@@ -367,7 +367,7 @@ _Z11isConnectedRK16dtTileCacheLayeriii.exit257:   ; preds = %bb.q
 
 bb.r:                                             ; preds = %_Z11isConnectedRK16dtTileCacheLayeriii.exit257
   %i.ct = load ptr, ptr %i.j, align 8, !tbaa !64
-  %i.cu = getelementptr inbounds i8, ptr %i.ct, i64 %3
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 %3
   %i.cv = load i8, ptr %i.cu, align 1, !tbaa !66  ; 4 uses
   %.not252 = icmp eq i8 %i.cv, -1
   br i1 %.not252, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit257.thread, label %bb.s
@@ -626,9 +626,9 @@ bb.ae:                                            ; preds = %.critedge254.thread
 .preheader321:                                    ; preds = %.preheader321.preheader, %._crit_edge
   %indvars.iv413 = phi i64 [ 0, %.preheader321.preheader ], [ %indvars.iv.next414, %._crit_edge ] ; 4 uses
   %i.fz = mul nuw nsw i64 %indvars.iv413, %i.fh
-  %.not245 = icmp eq i64 %indvars.iv413, 0
   %4 = add nsw i64 %indvars.iv413, -1
-  %5 = mul nuw nsw i64 %4, %i.fh
+  %5 = mul nsw i64 %4, %i.fh
+  %.not245 = icmp eq i64 %indvars.iv413, 0
   br i1 %.not245, label %.lr.ph345.split.us, label %.lr.ph345.split
 
 .lr.ph345.split.us:                               ; preds = %.preheader321
@@ -776,8 +776,8 @@ bb.ai:                                            ; preds = %.lr.ph345.split
   %i.hz = load i8, ptr %i.hy, align 1, !tbaa !66  ; 2 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hu, i64 22
   store i8 %i.hz, ptr %i.ia, align 2, !tbaa !121
-  %i.ib = add nsw i64 %indvars.iv403, %5          ; 3 uses
-  %i.ic = getelementptr inbounds i8, ptr %i.hx, i64 %i.ib
+  %i.ib = add nuw nsw i64 %indvars.iv403, %5      ; 3 uses
+  %i.ic = getelementptr inbounds nuw i8, ptr %i.hx, i64 %i.ib
   %i.id = load i8, ptr %i.ic, align 1, !tbaa !66
   %.not.i258 = icmp eq i8 %i.hz, %i.id
   br i1 %.not.i258, label %_Z11isConnectedRK16dtTileCacheLayeriii.exit260, label %_ZL13addUniqueLastPhRhh.exit265
@@ -787,7 +787,7 @@ _Z11isConnectedRK16dtTileCacheLayeriii.exit260:   ; preds = %bb.ai
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 %i.ho
   %i.ig = load i8, ptr %i.if, align 1, !tbaa !66
   %i.ih = zext i8 %i.ig to i32
-  %i.ii = getelementptr inbounds i8, ptr %i.ie, i64 %i.ib
+  %i.ii = getelementptr inbounds nuw i8, ptr %i.ie, i64 %i.ib
   %i.ij = load i8, ptr %i.ii, align 1, !tbaa !66
   %i.ik = zext i8 %i.ij to i32
   %i.il = sub nsw i32 %i.ih, %i.ik
@@ -796,7 +796,7 @@ _Z11isConnectedRK16dtTileCacheLayeriii.exit260:   ; preds = %bb.ai
   br i1 %.not315, label %_ZL13addUniqueLastPhRhh.exit265, label %bb.aj
 
 bb.aj:                                            ; preds = %_Z11isConnectedRK16dtTileCacheLayeriii.exit260
-  %i.in = getelementptr inbounds i8, ptr %i.hp, i64 %i.ib
+  %i.in = getelementptr inbounds nuw i8, ptr %i.hp, i64 %i.ib
   %i.io = load i8, ptr %i.in, align 1, !tbaa !66  ; 5 uses
   %.not246 = icmp eq i8 %i.io, -1
   %.not247 = icmp eq i8 %i.io, %i.hr
@@ -1199,9 +1199,9 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.hc = getelementptr inbounds [2 x i8], ptr %i.cw, i64 %i.hb
   %i.hd = getelementptr inbounds [2 x i8], ptr %i.cw, i64 %i.gz ; 2 uses
   tail call fastcc void @_ZL10mergePolysPtS_ii(ptr noundef nonnull %i.hc, ptr noundef nonnull %i.hd, i32 noundef %.2199, i32 noundef %.2196)
-  %i.he = mul nsw i32 %i.gn, 6
-  %3 = sext i32 %i.he to i64
-  %i.hf = getelementptr inbounds [2 x i8], ptr %i.cw, i64 %3
+  %i.he = mul nuw nsw i32 %i.gn, 6
+  %3 = zext nneg i32 %i.he to i64
+  %i.hf = getelementptr inbounds nuw [2 x i8], ptr %i.cw, i64 %3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(12) %i.hd, ptr noundef nonnull align 2 dereferenceable(12) %i.hf, i64 12, i1 false)
   %i.hg = icmp sgt i32 %.2212558, 2
   br i1 %i.hg, label %.lr.ph396.preheader, label %.preheader346
@@ -1604,8 +1604,8 @@ bb.bp:                                            ; preds = %bb.bo, %bb.bn
   %.7223399.i = phi i32 [ %.9225.ph.i, %bb.bv ], [ %.6222.i, %._crit_edge402.i ] ; 3 uses
   %.0256398.i = phi i32 [ %i.vj, %bb.bv ], [ 0, %._crit_edge402.i ] ; 3 uses
   %.0259397.i = phi i1 [ %.2261.ph.i, %bb.bv ], [ false, %._crit_edge402.i ]
-  %.1396.i = phi i32 [ %.3.ph.i, %bb.bv ], [ %.0322.i, %._crit_edge402.i ] ; 6 uses
-  %.1324395.i = phi i32 [ %.3326.ph.i, %bb.bv ], [ %.0323.i, %._crit_edge402.i ] ; 8 uses
+  %.1396.i = phi i32 [ %.3.ph.i, %bb.bv ], [ %.0322.i, %._crit_edge402.i ] ; 5 uses
+  %.1324395.i = phi i32 [ %.3326.ph.i, %bb.bv ], [ %.0323.i, %._crit_edge402.i ] ; 7 uses
   %i.tk = mul nsw i32 %.0256398.i, 3
   %i.tl = sext i32 %i.tk to i64
   %i.tm = getelementptr inbounds [2 x i8], ptr %i.a, i64 %i.tl ; 4 uses
@@ -1626,15 +1626,14 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %i.tu, label %.lr.ph.preheader.i.i, label %_ZL9pushFronttPtRi.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.br
-  %i.tv = shl nuw nsw i32 %.1324395.i, 1
+  %i.tv = shl nuw nsw i32 %.1324395.i, 1          ; 2 uses
   %i.tw = zext nneg i32 %i.tv to i64              ; 3 uses
-  %i.tx = add nsw i32 %.1324395.i, -1
-  %i.ty = zext nneg i32 %i.tx to i64
-  %4 = shl nuw nsw i64 %i.ty, 1                   ; 2 uses
-  %i.tz = sub nuw nsw i64 %i.tw, %4
+  %i.tx = add nsw i32 %i.tv, -2
+  %i.ty = zext nneg i32 %i.tx to i64              ; 2 uses
+  %i.tz = sub nuw nsw i64 %i.tw, %i.ty
   %scevgep.i.i = getelementptr i8, ptr %i.b, i64 %i.tz
   %i.ua = add nsw i64 %i.tw, -2
-  %i.ub = sub nsw i64 %i.ua, %4
+  %i.ub = sub nsw i64 %i.ua, %i.ty
   %scevgep10.i.i = getelementptr i8, ptr %i.b, i64 %i.ub
   call void @llvm.memmove.p0.p0.i64(ptr align 2 %scevgep.i.i, ptr align 2 %scevgep10.i.i, i64 %i.tw, i1 false), !tbaa !77
   br label %_ZL9pushFronttPtRi.exit.i
@@ -1645,15 +1644,14 @@ _ZL9pushFronttPtRi.exit.i:                        ; preds = %.lr.ph.preheader.i.
   br i1 %i.uc, label %.lr.ph.preheader.i310.i, label %_ZL9pushFronttPtRi.exit313.i
 
 .lr.ph.preheader.i310.i:                          ; preds = %_ZL9pushFronttPtRi.exit.i
-  %i.ud = shl nuw i32 %.1396.i, 1
+  %i.ud = shl nuw i32 %.1396.i, 1                 ; 2 uses
   %i.ue = zext i32 %i.ud to i64                   ; 3 uses
-  %i.uf = add nsw i32 %.1396.i, -1
-  %i.ug = zext nneg i32 %i.uf to i64
-  %5 = shl nuw nsw i64 %i.ug, 1                   ; 2 uses
-  %i.uh = sub nuw nsw i64 %i.ue, %5
+  %i.uf = add i32 %i.ud, -2
+  %i.ug = zext i32 %i.uf to i64                   ; 2 uses
+  %i.uh = sub nuw nsw i64 %i.ue, %i.ug
   %scevgep.i311.i = getelementptr i8, ptr %i.c, i64 %i.uh
   %i.ui = add nsw i64 %i.ue, -2
-  %i.uj = sub nsw i64 %i.ui, %5
+  %i.uj = sub nsw i64 %i.ui, %i.ug
   %scevgep10.i312.i = getelementptr i8, ptr %i.c, i64 %i.uj
   call void @llvm.memmove.p0.p0.i64(ptr align 2 %scevgep.i311.i, ptr align 2 %scevgep10.i312.i, i64 %i.ue, i1 false), !tbaa !77
   br label %_ZL9pushFronttPtRi.exit313.i
@@ -2056,7 +2054,7 @@ bb.i:                                             ; preds = %._crit_edge, %._cri
   %spec.store.select161 = phi i32 [ 0, %._crit_edge.thread ], [ %spec.select, %._crit_edge ] ; 3 uses
   %i.cp = phi i32 [ %i.cf, %._crit_edge.thread ], [ %spec.select163, %._crit_edge ] ; 2 uses
   %i.cq = add nsw i32 %i.cp, -1                   ; 3 uses
-  %4 = icmp sgt i32 %i.cp, 1
+  %4 = icmp samesign ugt i32 %i.cp, 1
   %.v.i123 = select i1 %4, i32 %i.cq, i32 %i.co
   %i.cr = add nsw i32 %.v.i123, -1
   %i.cs = tail call fastcc noundef zeroext i1 @_ZL8diagonaliiiPKhPKt(i32 noundef %i.cr, i32 noundef %spec.store.select161, i32 noundef %i.co, ptr noundef %1, ptr noundef nonnull %2)

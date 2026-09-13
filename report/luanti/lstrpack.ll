@@ -96,7 +96,7 @@ bb.b:                                             ; preds = %.lr.ph145, %packint
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   %i.l = call fastcc i32 @getdetails(ptr noundef %2, i64 noundef %.054142, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c)
   %i.m = load i32, ptr %i.c, align 4, !tbaa !19   ; 3 uses
-  %i.n = load i32, ptr %i.b, align 4, !tbaa !19   ; 42 uses
+  %i.n = load i32, ptr %i.b, align 4, !tbaa !19   ; 41 uses
   %i.o = add nsw i32 %i.n, %i.m
   %i.p = sext i32 %i.o to i64
   %i.q = add i64 %.054142, %i.p                   ; 13 uses
@@ -174,10 +174,10 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %.thread, %bb.h
   %i.an = phi i32 [ %i.aj, %.thread ], [ %i.ak, %bb.h ]
-  %i.ao = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7 ; 12 uses
+  %i.ao = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7 ; 13 uses
   %i.ap = trunc i64 %i.aa to i8
   %.not.i = icmp eq i32 %i.an, 0                  ; 2 uses
-  %i.aq = add i32 %i.n, -1                        ; 2 uses
+  %i.aq = add nsw i32 %i.n, -1                    ; 2 uses
   %i.ar = select i1 %.not.i, i32 %i.aq, i32 0
   %i.as = sext i32 %i.ar to i64
   %i.at = getelementptr inbounds i8, ptr %i.ao, i64 %i.as
@@ -201,8 +201,8 @@ bb.j:                                             ; preds = %.thread, %bb.h
   br label %.lr.ph.split.i
 
 .lr.ph.split.us.preheader.i:                      ; preds = %.lr.ph.i
-  %i.ay = zext nneg i32 %i.aq to i64              ; 6 uses
-  %wide.trip.count42.i = zext nneg i32 %i.n to i64
+  %i.ay = zext nneg i32 %i.aq to i64              ; 5 uses
+  %wide.trip.count42.i = zext nneg i32 %i.n to i64 ; 2 uses
   %i.az = add nsw i64 %wide.trip.count42.i, -1    ; 2 uses
   %xtraiter232 = and i64 %i.az, 3                 ; 3 uses
   %i.ba = add nsw i32 %i.n, -2
@@ -302,7 +302,12 @@ bb.j:                                             ; preds = %.thread, %bb.h
   %i.cj = icmp slt i64 %i.aa, 0
   %i.ck = icmp samesign ugt i32 %i.n, 8
   %or.cond.i = and i1 %i.ck, %i.cj
-  br i1 %or.cond.i, label %.preheader.i, label %.loopexit.i
+  br i1 %or.cond.i, label %.preheader.split.us.i.preheader, label %.loopexit.i
+
+.preheader.split.us.i.preheader:                  ; preds = %._crit_edge.i
+  %3 = add nsw i64 %wide.trip.count42.i, -8
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ao, i8 -1, i64 %3, i1 false), !tbaa !18
+  br label %.loopexit.i
 
 ._crit_edge.thread52.i.unr-lcssa:                 ; preds = %.lr.ph.split.i
   %lcmp.mod228.not = icmp eq i64 %xtraiter226, 0
@@ -334,22 +339,14 @@ bb.j:                                             ; preds = %.thread, %bb.h
   %or.cond53.i = and i1 %i.cp, %i.co
   br i1 %or.cond53.i, label %.loopexit.sink.split.i, label %.loopexit.i
 
-.preheader.i:                                     ; preds = %._crit_edge.i
-  %3 = add nsw i64 %i.ay, -8
-  %4 = add nsw i32 %i.n, -9
-  %5 = zext nneg i32 %4 to i64
-  %6 = sub nsw i64 %3, %5
-  br label %.loopexit.sink.split.i
-
-.loopexit.sink.split.i:                           ; preds = %.preheader.i, %._crit_edge.thread52.i
-  %.sink.i = phi i64 [ %6, %.preheader.i ], [ 8, %._crit_edge.thread52.i ]
-  %scevgep.i = getelementptr i8, ptr %i.ao, i64 %.sink.i
+.loopexit.sink.split.i:                           ; preds = %._crit_edge.thread52.i
+  %scevgep.i = getelementptr i8, ptr %i.ao, i64 8
   %i.cq = add nsw i32 %i.n, -8
   %i.cr = zext nneg i32 %i.cq to i64
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 -1, i64 %i.cr, i1 false), !tbaa !18
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %.loopexit.sink.split.i, %._crit_edge.thread52.i, %._crit_edge.i, %bb.j
+.loopexit.i:                                      ; preds = %.preheader.split.us.i.preheader, %.loopexit.sink.split.i, %._crit_edge.thread52.i, %._crit_edge.i, %bb.j
   %i.cs = load ptr, ptr %1, align 8, !tbaa !34
   %i.ct = sext i32 %i.n to i64
   %i.cu = getelementptr inbounds i8, ptr %i.cs, i64 %i.ct
@@ -390,7 +387,7 @@ bb.p:                                             ; preds = %.thread133, %bb.n
   %i.dg = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7 ; 11 uses
   %i.dh = trunc i64 %i.cv to i8
   %.not.i63 = icmp eq i32 %i.df, 0                ; 2 uses
-  %i.di = add i32 %i.n, -1                        ; 2 uses
+  %i.di = add nsw i32 %i.n, -1                    ; 2 uses
   %i.dj = select i1 %.not.i63, i32 %i.di, i32 0
   %i.dk = sext i32 %i.dj to i64
   %i.dl = getelementptr inbounds i8, ptr %i.dg, i64 %i.dk
@@ -767,7 +764,7 @@ bb.ag:                                            ; preds = %.thread135, %bb.ae
   %i.hj = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7 ; 11 uses
   %i.hk = trunc i64 %i.hi to i8
   %.not.i105 = icmp eq i32 %i.hh, 0               ; 2 uses
-  %i.hl = add i32 %i.n, -1                        ; 2 uses
+  %i.hl = add nsw i32 %i.n, -1                    ; 2 uses
   %i.hm = select i1 %.not.i105, i32 %i.hl, i32 0
   %i.hn = sext i32 %i.hm to i64
   %i.ho = getelementptr inbounds i8, ptr %i.hj, i64 %i.hn

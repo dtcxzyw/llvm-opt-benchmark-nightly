@@ -205,8 +205,8 @@ bb.a:
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %bb.a
-  %.0203.i.i.i = phi i32 [ %.2.i.i.i, %bb.e ], [ 239, %bb.a ] ; 2 uses
-  %.0212.i.i.i = phi i32 [ %.223.i.i.i, %bb.e ], [ 0, %bb.a ] ; 2 uses
+  %.0203.i.i.i = phi i32 [ 239, %bb.a ], [ %.2.i.i.i, %bb.e ] ; 2 uses
+  %.0212.i.i.i = phi i32 [ 0, %bb.a ], [ %.223.i.i.i, %bb.e ] ; 2 uses
   %i.a = add i32 %.0212.i.i.i, %.0203.i.i.i
   %i.b = lshr i32 %i.a, 1                         ; 3 uses
   %i.c = zext nneg i32 %i.b to i64
@@ -263,8 +263,8 @@ bb.a:
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %bb.a
-  %.0203.i.i.i = phi i32 [ %.2.i.i.i, %bb.e ], [ 116, %bb.a ] ; 2 uses
-  %.0212.i.i.i = phi i32 [ %.223.i.i.i, %bb.e ], [ 0, %bb.a ] ; 2 uses
+  %.0203.i.i.i = phi i32 [ 116, %bb.a ], [ %.2.i.i.i, %bb.e ] ; 2 uses
+  %.0212.i.i.i = phi i32 [ 0, %bb.a ], [ %.223.i.i.i, %bb.e ] ; 2 uses
   %i.a = add i32 %.0212.i.i.i, %.0203.i.i.i
   %i.b = lshr i32 %i.a, 1                         ; 3 uses
   %i.c = zext nneg i32 %i.b to i64
@@ -667,12 +667,11 @@ _ZN3AAT22hb_aat_apply_context_t22setup_buffer_glyph_setEv.exit: ; preds = %_ZN11
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 140 ; 3 uses
-  %i.bi = add nuw nsw i64 %i.az, 4294967295
+  %i.bi = add nsw i64 %i.az, -1
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %.phi.trans.insert1.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 6 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 5 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 3 uses
-  %7 = and i64 %i.bi, 4294967295
   %wide.trip.count118 = zext i16 %i.ay to i64
   br label %bb.g
 
@@ -1010,7 +1009,7 @@ _ZN3AAT22hb_aat_apply_context_t14reverse_bufferEv.exit: ; preds = %.lr.ph.i8.i.i
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZN3AAT22hb_aat_apply_context_t14reverse_bufferEv.exit, %.loopexit
-  %i.hb = icmp samesign ult i64 %indvars.iv116, %7
+  %i.hb = icmp samesign ult i64 %indvars.iv116, %i.bi
   %i.hc = select i1 %i.hb, ptr %.058106, ptr null ; 6 uses
   %i.hd = load ptr, ptr %i.bj, align 8, !tbaa !496 ; 3 uses
   %.not.i.i.i70 = icmp eq ptr %i.hd, null
@@ -1413,7 +1412,7 @@ bb.t:                                             ; preds = %_ZN14hb_sparseset_t
   br i1 %.not52, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.cn = zext i32 %i.cm to i64
+  %i.cn = zext nneg i32 %i.cm to i64
   %i.co = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.cn
   %i.cp = load i16, ptr %i.co, align 1, !tbaa !283
   %i.cq = call noundef i16 @llvm.bswap.i16(i16 %i.cp)
@@ -1816,9 +1815,9 @@ bb.s:                                             ; preds = %bb.c
   br i1 %.not8.i.i.i, label %"_ZorI13hb_map_iter_tI10hb_array_tIKN2OT8OffsetToINS2_4RuleINS2_6Layout10SmallTypesEEENS2_7NumTypeILb1EtLj2EEEvLb1EEEE12hb_partial_tILj2EPK4$_51PKNS2_7RuleSetIS6_EEEL24hb_function_sortedness_t0ELPv0EE24hb_filter_iter_factory_tIZNKSI_5applyEPNS2_21hb_ot_apply_context_tERKNS2_25ContextApplyLookupContextEEUlRKS7_E0_RK3$_8ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NS13_6item_tEEE5valueEvE4typeELSN_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardIS13_Efp_EEEOS13_OS18_.exit", label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.s
-  %4 = add nsw i32 %.sroa.6192.sroa.0.0.extract.trunc, -1
-  %5 = zext i32 %4 to i64
-  %6 = shl nuw nsw i64 %5, 1
+  %4 = shl nuw nsw i32 %.sroa.6192.sroa.0.0.extract.trunc, 1
+  %5 = add nsw i32 %4, -2
+  %6 = zext i32 %5 to i64
   %i.eu = getelementptr i8, ptr %0, i64 %6
   %scevgep = getelementptr i8, ptr %i.eu, i64 4
   br label %.lr.ph.i.i.i
@@ -2221,7 +2220,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bc = tail call noundef i16 @llvm.bswap.i16(i16 %i.ba)
   %i.bd = zext i16 %i.bc to i32                   ; 2 uses
   %i.be = add nsw i32 %i.ay, -1
-  %i.bf = add nsw i32 %i.be, %i.bd
+  %i.bf = add nuw nsw i32 %i.be, %i.bd
   %i.bg = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef %i.bd, i32 noundef %i.bf) ; 0 uses
   br label %_ZNK3AAT13LookupFormat6IN2OT7NumTypeILb1EtLj2EEEE14collect_glyphsI12hb_bit_set_tEEvRT_.exit
 
@@ -2244,7 +2243,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bo = tail call noundef i16 @llvm.bswap.i16(i16 %i.bm)
   %i.bp = zext i16 %i.bo to i32                   ; 2 uses
   %i.bq = add nsw i32 %i.bk, -1
-  %i.br = add nsw i32 %i.bq, %i.bp
+  %i.br = add nuw nsw i32 %i.bq, %i.bp
   %i.bs = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef %i.bp, i32 noundef %i.br) ; 0 uses
   br label %_ZNK3AAT13LookupFormat6IN2OT7NumTypeILb1EtLj2EEEE14collect_glyphsI12hb_bit_set_tEEvRT_.exit
 
@@ -2647,7 +2646,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bc = tail call noundef i16 @llvm.bswap.i16(i16 %i.ba)
   %i.bd = zext i16 %i.bc to i32                   ; 2 uses
   %i.be = add nsw i32 %i.ay, -1
-  %i.bf = add nsw i32 %i.be, %i.bd
+  %i.bf = add nuw nsw i32 %i.be, %i.bd
   %i.bg = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef %i.bd, i32 noundef %i.bf) ; 0 uses
   br label %_ZNK3AAT13LookupFormat6IN2OT11HBGlyphID16EE14collect_glyphsI12hb_bit_set_tEEvRT_.exit
 
@@ -2670,7 +2669,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bo = tail call noundef i16 @llvm.bswap.i16(i16 %i.bm)
   %i.bp = zext i16 %i.bo to i32                   ; 2 uses
   %i.bq = add nsw i32 %i.bk, -1
-  %i.br = add nsw i32 %i.bq, %i.bp
+  %i.br = add nuw nsw i32 %i.bq, %i.bp
   %i.bs = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef %i.bp, i32 noundef %i.br) ; 0 uses
   br label %_ZNK3AAT13LookupFormat6IN2OT11HBGlyphID16EE14collect_glyphsI12hb_bit_set_tEEvRT_.exit
 
@@ -3073,7 +3072,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bc = tail call noundef i16 @llvm.bswap.i16(i16 %i.ba)
   %i.bd = zext i16 %i.bc to i32                   ; 2 uses
   %i.be = add nsw i32 %i.ay, -1
-  %i.bf = add nsw i32 %i.be, %i.bd
+  %i.bf = add nuw nsw i32 %i.be, %i.bd
   %i.bg = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef %i.bd, i32 noundef %i.bf) ; 0 uses
   br label %_ZNK3AAT13LookupFormat6IN2OT7NumTypeILb1EjLj4EEEE14collect_glyphsI12hb_bit_set_tEEvRT_.exit
 
@@ -3096,7 +3095,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bo = tail call noundef i16 @llvm.bswap.i16(i16 %i.bm)
   %i.bp = zext i16 %i.bo to i32                   ; 2 uses
   %i.bq = add nsw i32 %i.bk, -1
-  %i.br = add nsw i32 %i.bq, %i.bp
+  %i.br = add nuw nsw i32 %i.bq, %i.bp
   %i.bs = tail call noundef zeroext i1 @_ZN12hb_bit_set_t9add_rangeEjj(ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef %i.bp, i32 noundef %i.br) ; 0 uses
   br label %_ZNK3AAT13LookupFormat6IN2OT7NumTypeILb1EjLj4EEEE14collect_glyphsI12hb_bit_set_tEEvRT_.exit
 

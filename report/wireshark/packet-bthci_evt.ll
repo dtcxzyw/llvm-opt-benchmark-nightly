@@ -202,13 +202,15 @@ bb.a:
   br i1 %.not2, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %.lhs.trunc = add i8 %4, -1
-  %5 = lshr i8 %.lhs.trunc, 2
+  %5 = zext i8 %4 to i16
+  %.lhs.trunc = add nuw nsw i16 %5, 1023
+  %6 = lshr i16 %.lhs.trunc, 2
+  %7 = trunc i16 %6 to i8
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.0295 = phi i32 [ %.029, %.lr.ph ], [ %.0291, %.lr.ph.preheader ] ; 4 uses
-  %.04 = phi i8 [ %i.f, %.lr.ph ], [ %5, %.lr.ph.preheader ]
+  %.04 = phi i8 [ %i.f, %.lr.ph ], [ %7, %.lr.ph.preheader ]
   %.029.in3 = phi i32 [ %i.s, %.lr.ph ], [ %1, %.lr.ph.preheader ] ; 2 uses
   %i.f = add i8 %.04, -1                          ; 2 uses
   %i.g = load i32, ptr @hf_bthci_evt_cs_tone, align 4

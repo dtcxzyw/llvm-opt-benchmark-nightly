@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %tj3YUVPlaneHeight.e
   %i.bw = add nsw i64 %i.bv, -1
   %i.bx = and i64 %i.bw, %i.r
   %i.by = mul nuw nsw i64 %i.br, %i.bx
-  %i.bz = add i64 %i.by, %i.bj
+  %i.bz = add nuw i64 %i.by, %i.bj
   br i1 %i.bl, label %.sink.split.i.1, label %bb.l
 
 .sink.split.i.1:                                  ; preds = %bb.k
@@ -608,12 +608,12 @@ tj3YUVPlaneHeight.exit96:                         ; preds = %bb.n, %.sink.split.
 
 .thread:                                          ; preds = %tj3YUVPlaneHeight.exit96
   %i.fj = trunc nuw nsw i64 %.1.i95 to i32
-  %i.fk = mul nsw i32 %i.dh, %i.dd
+  %i.fk = mul nuw nsw i32 %i.dh, %i.dd
   %i.fl = zext nneg i32 %i.fk to i64
   %i.fm = getelementptr inbounds nuw i8, ptr %3, i64 %i.fl ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.fm, ptr %i.fn, align 8, !tbaa !57
-  %i.fo = mul nsw i32 %i.fa, %i.fj
+  %i.fo = mul nuw nsw i32 %i.fa, %i.fj
   %i.fp = zext nneg i32 %i.fo to i64
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fm, i64 %i.fp
   %i.fr = getelementptr inbounds nuw i8, ptr %i.a, i64 16

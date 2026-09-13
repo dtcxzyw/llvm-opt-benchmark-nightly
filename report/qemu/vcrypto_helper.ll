@@ -205,7 +205,8 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4              ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
+  %2 = getelementptr i8, ptr %1, i64 16
+  %i.e = getelementptr i8, ptr %1, i64 12
   %i.f = load i32, ptr %i.e, align 4              ; 3 uses
   %i.g = load i32, ptr %0, align 4
   %i.h = xor i32 %i.b, %i.g
@@ -249,8 +250,9 @@ bb.a:
   %i.at = xor i32 %i.as, %i.ap
   %i.au = xor i32 %i.at, %i.aq
   %i.av = xor i32 %i.au, %i.al                    ; 4 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store i32 %i.av, ptr %i.aw, align 4
+  store i32 %i.av, ptr %2, align 4
+  %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %3 = getelementptr i8, ptr %1, i64 20
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.ay = load i32, ptr %i.ax, align 4
   %i.az = xor i32 %i.d, %i.ay
@@ -293,8 +295,8 @@ bb.a:
   %i.ck = xor i32 %i.cj, %i.ch
   %i.cl = xor i32 %i.ck, %i.b
   %i.cm = xor i32 %i.cl, %i.cd                    ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 20
-  store i32 %i.cm, ptr %2, align 4
+  store i32 %i.cm, ptr %3, align 4
+  %4 = getelementptr i8, ptr %1, i64 24
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.co = load i32, ptr %i.cn, align 4
   %i.cp = xor i32 %i.f, %i.co
@@ -338,8 +340,8 @@ bb.a:
   %i.eb = xor i32 %i.ea, %i.dx
   %i.ec = xor i32 %i.eb, %i.dy
   %i.ed = xor i32 %i.ec, %i.dt                    ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store i32 %i.ed, ptr %3, align 4
+  store i32 %i.ed, ptr %4, align 4
+  %5 = getelementptr i8, ptr %1, i64 28
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ef = load i32, ptr %i.ee, align 4
   %i.eg = xor i32 %i.av, %i.ef
@@ -373,7 +375,7 @@ bb.a:
   %i.fi = zext i8 %i.fh to i32
   %i.fj = shl nuw i32 %i.fi, 24
   %i.fk = or disjoint i32 %i.fd, %i.fj            ; 9 uses
-  %i.fl = load i32, ptr %i.e, align 4
+  %i.fl = load i32, ptr %i.aw, align 4
   %i.fm = tail call noundef i32 @llvm.fshl.i32(i32 %i.fk, i32 %i.fk, i32 2)
   %i.fn = tail call noundef i32 @llvm.fshl.i32(i32 %i.fk, i32 %i.fk, i32 10)
   %i.fo = tail call noundef i32 @llvm.fshl.i32(i32 %i.fk, i32 %i.fk, i32 18)
@@ -383,8 +385,7 @@ bb.a:
   %i.fs = xor i32 %i.fr, %i.fo
   %i.ft = xor i32 %i.fs, %i.fp
   %i.fu = xor i32 %i.ft, %i.fk
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 28
-  store i32 %i.fu, ptr %4, align 4
+  store i32 %i.fu, ptr %5, align 4
   ret void
 }
 

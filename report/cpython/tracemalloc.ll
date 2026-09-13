@@ -202,8 +202,9 @@ traceback_get_frames.exit.thread:                 ; preds = %_PyFrame_IsIncomple
   %i.db = xor i64 %i.da, %i.cz
   %i.dc = mul i64 %i.db, %.01622.i                ; 2 uses
   %reass.add.i.a = shl nuw nsw i64 %indvars.iv.next.i, 1
+  %reass.add.i = and i64 %reass.add.i.a, 4294967294
   %i.dd = add i64 %.01622.i, 82520
-  %i.de = add i64 %i.dd, %reass.add.i.a
+  %i.de = add i64 %i.dd, %reass.add.i
   %i.df = icmp samesign ugt i64 %indvars.iv.i, 1
   br i1 %i.df, label %.lr.ph.i25, label %traceback_hash.exit, !llvm.loop !243
 

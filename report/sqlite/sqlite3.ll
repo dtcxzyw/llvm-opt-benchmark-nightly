@@ -206,7 +206,7 @@ bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.k
   %i.p = add nsw i32 %i.e, -1                     ; 2 uses
   store i32 %i.p, ptr @sqlite3Autoext.0, align 8, !tbaa !1231
-  %i.q = zext i32 %i.p to i64
+  %i.q = zext nneg i32 %i.p to i64
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.q
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !851
   store ptr %i.s, ptr %i.o, align 8, !tbaa !851
@@ -609,7 +609,7 @@ bb.fu:                                            ; preds = %._crit_edge1055.i, 
 .lr.ph848.i:                                      ; preds = %.thread702.i
   %i.azf = load ptr, ptr %i.ap, align 8, !tbaa !1859 ; 2 uses
   %i.azg = load ptr, ptr %i.aq, align 8, !tbaa !1860
-  %wide.trip.count1020.i = zext i32 %i.auv to i64
+  %wide.trip.count1020.i = zext nneg i32 %i.auv to i64
   br label %bb.fw
 
 bb.fv:                                            ; preds = %bb.gk
@@ -768,10 +768,10 @@ bb.gm:                                            ; preds = %bb.gl
 
 bb.gn:                                            ; preds = %bb.gm
   %i.bbv = add nsw i32 %i.bbq, -1
-  %6 = sext i32 %i.bbv to i64                     ; 2 uses
-  %i.bbw = getelementptr inbounds [4 x i8], ptr %i.f, i64 %6
+  %6 = zext nneg i32 %i.bbv to i64                ; 2 uses
+  %i.bbw = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %6
   %i.bbx = load i32, ptr %i.bbw, align 4, !tbaa !570
-  %i.bby = getelementptr inbounds [4 x i8], ptr %i.e, i64 %6
+  %i.bby = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %6
   %i.bbz = load i32, ptr %i.bby, align 4, !tbaa !570
   %.not591.i = icmp slt i32 %i.bbx, %i.bbz
   br i1 %.not591.i, label %bb.gs, label %.thread707.i
@@ -1174,7 +1174,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.l
   %.04581 = phi i32 [ 0, %.lr.ph ], [ %i.ap, %bb.l ] ; 5 uses
   %.reass = add nuw nsw i32 %.04581, %invariant.op
-  %1 = srem i32 %.reass, %i.e
+  %1 = urem i32 %.reass, %i.e
   %i.l = zext nneg i32 %1 to i64
   %i.m = getelementptr inbounds nuw [104 x i8], ptr %i.k, i64 %i.l ; 8 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -1577,7 +1577,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.cx, label %bb.m, label %.preheader.loopexit.i, !llvm.loop !4932
 
 bb.p:                                             ; preds = %.lr.ph
-  %i.cy = getelementptr inbounds i8, ptr %i.cc, i64 %indvars.iv.next6.i
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.cc, i64 %indvars.iv.next6.i
   store i8 0, ptr %i.cy, align 1, !tbaa !733
   %i.cz = icmp sgt i64 %indvars.iv5.i65, 1
   br i1 %i.cz, label %.lr.ph, label %._crit_edge, !llvm.loop !4933
@@ -1980,7 +1980,7 @@ bb.j:                                             ; preds = %bb.m, %.lr.ph.i
 bb.k:                                             ; preds = %bb.j
   %i.ap = add nsw i64 %indvars.iv.i, -1           ; 2 uses
   %i.aq = load ptr, ptr %i.am, align 8, !tbaa !2762
-  %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %i.ap
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ap
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !733
   %i.at = icmp eq i8 %i.as, 0
   br i1 %i.at, label %bb.l, label %bb.m
@@ -1988,7 +1988,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.au = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
   %i.av = call ptr @sqlite3_column_text(ptr noundef %i.j, i32 noundef %i.au), !inline_history !6188
-  %i.aw = getelementptr inbounds [4 x i8], ptr %3, i64 %i.ap
+  %i.aw = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ap
   %i.ax = call fastcc i32 @fts3PendingTermsAdd(ptr noundef nonnull %0, i32 noundef %.0.i.i, ptr noundef %i.av, i32 noundef -1, ptr noundef nonnull %i.aw), !inline_history !6188
   %i.ay = call i32 @sqlite3_column_bytes(ptr noundef %i.j, i32 noundef %i.au), !inline_history !6188
   %i.az = load i32, ptr %i.al, align 8, !tbaa !2629
@@ -2391,8 +2391,8 @@ bb.au:                                            ; preds = %bb.eb, %bb.at
 
 bb.av:                                            ; preds = %bb.au
   %indvars336.i = trunc i64 %indvars.iv334.i to i32 ; 2 uses
-  %i.ep = add nsw i32 %i.eo, %indvars336.i
-  %6 = sdiv i32 %i.ep, %indvars336.i
+  %i.ep = add nuw nsw i32 %i.eo, %indvars336.i
+  %6 = udiv i32 %i.ep, %indvars336.i
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au

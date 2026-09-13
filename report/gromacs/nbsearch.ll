@@ -205,25 +205,25 @@ bb.a:
   br i1 %.not32, label %.preheader.preheader, label %._crit_edge
 
 .preheader.preheader:                             ; preds = %.preheader27
-  %6 = sext i32 %.02334 to i64
+  %6 = zext i32 %.02334 to i64
   %i.w = load i8, ptr %i.d, align 1, !range !94
   %i.x = trunc nuw i8 %i.w to i1
   br label %.preheader
 
 .loopexit:                                        ; preds = %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl13initCellRangeEPKfPiS4_i.exit
-  %7 = and i64 %indvars.iv48, 4294967295          ; 2 uses
-  %i.y = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %7 ; 2 uses
+  %i.y = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvar.a ; 2 uses
   %i.z = load i32, ptr %i.y, align 4, !tbaa !47   ; 2 uses
   %i.aa = add nsw i32 %i.z, 1
   store i32 %i.aa, ptr %i.y, align 4, !tbaa !47
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %7
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvar.a
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !47
   %.not = icmp slt i32 %i.z, %i.ac
-  br i1 %.not, label %.preheader, label %._crit_edge.loopexit, !llvm.loop !183
+  br i1 %.not, label %.preheader, label %._crit_edge, !llvm.loop !183
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit
-  %.133 = phi i64 [ %indvars.iv48, %.loopexit ], [ %6, %.preheader.preheader ] ; 4 uses
-  %i.ad = icmp sgt i64 %.133, 0
+  %.133 = phi i64 [ %indvar.a, %.loopexit ], [ %6, %.preheader.preheader ] ; 2 uses
+  %7 = trunc nuw i64 %.133 to i32                 ; 3 uses
+  %i.ad = icmp sgt i32 %7, 0
   br i1 %i.ad, label %.lr.ph.preheader, label %.thread
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -247,34 +247,33 @@ bb.a:
   %i.av = load float, ptr %i.m, align 4
   br label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %.loopexit
-  %8 = trunc nsw i64 %indvars.iv48 to i32
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader27
-  %.1.lcssa = phi i32 [ %.02334, %.preheader27 ], [ %8, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %.loopexit, %.preheader27
+  %.1.lcssa = phi i32 [ %.02334, %.preheader27 ], [ %9, %.loopexit ] ; 2 uses
   %i.aw = add nsw i32 %.1.lcssa, 1
   %i.ax = icmp slt i32 %.1.lcssa, 2
   br i1 %i.ax, label %.preheader27, label %.thread, !llvm.loop !184
 
 bb.b:                                             ; preds = %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl13initCellRangeEPKfPiS4_i.exit
-  %i.ay = icmp sgt i64 %indvars.iv48, 1
-  %indvar.next = add i64 %indvar.a, 1
+  %8 = trunc nuw i64 %indvars.iv.next49 to i32    ; 2 uses
+  %i.ay = icmp sgt i32 %8, 0
+  %indvar.next = add i32 %indvar, 1
   br i1 %i.ay, label %.lr.ph, label %.thread, !llvm.loop !183
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
-  %indvar.a = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %bb.b ] ; 3 uses
-  %indvars.iv48 = phi i64 [ %.133, %.lr.ph.preheader ], [ %indvars.iv.next49, %bb.b ] ; 11 uses
-  %reass.sub53 = sub i64 %indvar.a, %.133
-  %indvars.iv.next49 = add nsw i64 %indvars.iv48, -1 ; 10 uses
+  %indvar = phi i32 [ 0, %.lr.ph.preheader ], [ %indvar.next, %bb.b ] ; 2 uses
+  %9 = phi i32 [ %7, %.lr.ph.preheader ], [ %8, %bb.b ]
+  %indvar.a = phi i64 [ %.133, %.lr.ph.preheader ], [ %indvars.iv.next49, %bb.b ] ; 5 uses
+  %10 = xor i32 %indvar, -1
+  %11 = add i32 %10, %7                           ; 2 uses
+  %indvars.iv.next49 = add nsw i64 %indvar.a, -1  ; 5 uses
+  %indvars53 = trunc i64 %indvars.iv.next49 to i32 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #35
   store <2 x float> %i.ae, ptr %5, align 8, !tbaa !81
   store float %i.af, ptr %i.b, align 8, !tbaa !81
-  br i1 %i.x, label %bb.c, label %._crit_edge38
+  br i1 %i.x, label %bb.c, label %12
 
 bb.c:                                             ; preds = %.lr.ph
-  %9 = trunc nsw i64 %indvars.iv.next49 to i32
-  switch i32 %9, label %._crit_edge38 [
+  switch i32 %indvars53, label %12 [
     i32 0, label %bb.d
     i32 1, label %..thread_crit_edge.i
   ]
@@ -341,17 +340,30 @@ bb.j:                                             ; preds = %.thread.i
   store float %i.af, ptr %.sroa.2.0..sroa_idx.i44.i, align 8
   br label %.lr.ph.i.i.preheader
 
+12:                                               ; preds = %bb.c, %.lr.ph
+  %.sroa.06.0.copyload.i = load <2 x float>, ptr %5, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  store <2 x float> %.sroa.06.0.copyload.i, ptr %4, align 8
+  store float %i.af, ptr %.sroa.2.0..sroa_idx.i44.i, align 8
+  %13 = icmp eq i32 %indvars53, 2
+  br i1 %13, label %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl19computeCutoffExtentENS_11BasicVectorIfEEPKii.exit.i, label %.preheader.i.i
+
+.preheader.i.i:                                   ; preds = %12
+  %14 = icmp ult i64 %indvar.a, 3
+  br i1 %14, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
+
 .lr.ph.i.i.preheader:                             ; preds = %.preheader.i.i, %.preheader.i.thread.i
-  %10 = sub i64 %indvar.a, %.133
-  %11 = and i64 %10, 1
-  %lcmp.mod.not.not = icmp eq i64 %11, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.prol, label %.lr.ph.i.i.prol.loopexit
+  %15 = and i64 %indvars.iv.next49, 4294967295    ; 2 uses
+  %16 = and i32 %11, 1
+  %lcmp.mod.not.not = icmp eq i32 %16, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
 
 .lr.ph.i.i.prol:                                  ; preds = %.lr.ph.i.i.preheader
-  %i.bl = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv48
+  %indvars.iv.next.i.i.prol = add nuw nsw i64 %15, 1 ; 5 uses
+  %i.bl = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.next.i.i.prol
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !47
   %i.bn = sitofp i32 %i.bm to float
-  %i.bo = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv48
+  %i.bo = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.next.i.i.prol
   %i.bp = load float, ptr %i.bo, align 4, !tbaa !81
   %i.bq = fsub float %i.bn, %i.bp                 ; 4 uses
   %i.br = fcmp olt float %i.bq, -1.000000e+00
@@ -368,7 +380,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.prol
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.0.i.i.prol = phi float [ %i.bt, %bb.l ], [ %i.bq, %bb.k ] ; 2 uses
   %i.bu = fmul float %.0.i.i.prol, %.0.i.i.prol
-  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv48
+  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv.next.i.i.prol
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !81 ; 2 uses
   %i.bx = fmul float %i.bu, %i.bw
   %i.by = tail call float @llvm.fmuladd.f32(float %i.bx, float %i.bw, float 0.000000e+00) ; 2 uses
@@ -376,22 +388,10 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %bb.k, %bb.m, %.lr.ph.i.i.preheader
   %.1.i.i.lcssa.unr = phi float [ poison, %.lr.ph.i.i.preheader ], [ %i.by, %bb.m ], [ 0.000000e+00, %bb.k ]
-  %indvars.iv.i.i.unr = phi i64 [ %indvars.iv.next49, %.lr.ph.i.i.preheader ], [ %indvars.iv48, %bb.m ], [ %indvars.iv48, %bb.k ]
+  %indvars.iv.i.i.unr = phi i64 [ %15, %.lr.ph.i.i.preheader ], [ %indvars.iv.next.i.i.prol, %bb.m ], [ %indvars.iv.next.i.i.prol, %bb.k ]
   %.01927.i.i.unr = phi float [ 0.000000e+00, %.lr.ph.i.i.preheader ], [ %i.by, %bb.m ], [ 0.000000e+00, %bb.k ]
-  %i.bz = icmp eq i64 %reass.sub53, -2
+  %i.bz = icmp eq i32 %11, 1
   br i1 %i.bz, label %._crit_edge.i.i, label %.lr.ph.i.i
-
-._crit_edge38:                                    ; preds = %.lr.ph, %bb.c
-  %.sroa.06.0.copyload.i = load <2 x float>, ptr %5, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  store <2 x float> %.sroa.06.0.copyload.i, ptr %4, align 8
-  store float %i.af, ptr %.sroa.2.0..sroa_idx.i44.i, align 8
-  %12 = icmp eq i64 %indvars.iv.next49, 2
-  br i1 %12, label %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl19computeCutoffExtentENS_11BasicVectorIfEEPKii.exit.i, label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %._crit_edge38
-  %13 = icmp samesign ult i64 %indvars.iv48, 3
-  br i1 %13, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i.prol.loopexit, %bb.t, %.preheader.i.i
   %.019.lcssa.i.i = phi float [ 0.000000e+00, %.preheader.i.i ], [ %.1.i.i.lcssa.unr, %.lr.ph.i.i.prol.loopexit ], [ %.1.i.i.1, %bb.t ] ; 2 uses
@@ -467,17 +467,18 @@ bb.u:                                             ; preds = %._crit_edge.i.i
   %i.de = tail call noundef float @sqrtf(float noundef %i.dd) #35
   br label %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl19computeCutoffExtentENS_11BasicVectorIfEEPKii.exit.i
 
-_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl19computeCutoffExtentENS_11BasicVectorIfEEPKii.exit.i: ; preds = %._crit_edge38, %bb.u, %._crit_edge.i.i
-  %.121.i.i = phi float [ 0.000000e+00, %._crit_edge.i.i ], [ %i.de, %bb.u ], [ %i.av, %._crit_edge38 ]
+_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl19computeCutoffExtentENS_11BasicVectorIfEEPKii.exit.i: ; preds = %12, %bb.u, %._crit_edge.i.i
+  %.121.i.i = phi float [ 0.000000e+00, %._crit_edge.i.i ], [ %i.de, %bb.u ], [ %i.av, %12 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.df = getelementptr inbounds [4 x i8], ptr %i.n, i64 %indvars.iv.next49
+  %17 = and i64 %indvars.iv.next49, 4294967295    ; 6 uses
+  %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %17
   %i.dg = load float, ptr %i.df, align 4, !tbaa !81
   %i.dh = fmul float %.121.i.i, %i.dg             ; 2 uses
-  %i.di = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv.next49
+  %i.di = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %17
   %i.dj = load float, ptr %i.di, align 4, !tbaa !81 ; 2 uses
   %i.dk = fsub float %i.dj, %i.dh                 ; 3 uses
   %i.dl = fadd float %i.dj, %i.dh                 ; 3 uses
-  %i.dm = getelementptr inbounds i8, ptr %i.o, i64 %indvars.iv.next49
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.o, i64 %17
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !46, !range !94, !noundef !91
   %i.do = trunc nuw i8 %i.dn to i1
   br i1 %i.do, label %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl13initCellRangeEPKfPiS4_i.exit, label %bb.v
@@ -485,7 +486,7 @@ _ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl19computeCutoffExtentENS_11Basi
 bb.v:                                             ; preds = %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl19computeCutoffExtentENS_11BasicVectorIfEEPKii.exit.i
   %i.dp = fcmp olt float %i.dk, 0.000000e+00
   %spec.store.select.i = select i1 %i.dp, float 0.000000e+00, float %i.dk
-  %i.dq = getelementptr inbounds [4 x i8], ptr %i.p, i64 %indvars.iv.next49
+  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %17
   %i.dr = load i32, ptr %i.dq, align 4, !tbaa !47
   %i.ds = add nsw i32 %i.dr, -1
   %i.dt = sitofp i32 %i.ds to float               ; 2 uses
@@ -498,11 +499,11 @@ _ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl13initCellRangeEPKfPiS4_i.exit:
   %.1.i = phi float [ %i.dl, %_ZNK3gmx8internal30AnalysisNeighborhoodSearchImpl19computeCutoffExtentENS_11BasicVectorIfEEPKii.exit.i ], [ %spec.select.i, %bb.v ]
   %i.dv = tail call noundef float @llvm.floor.f32(float %.032.i)
   %i.dw = fptosi float %i.dv to i32
-  %i.dx = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv.next49 ; 2 uses
+  %i.dx = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %17 ; 2 uses
   store i32 %i.dw, ptr %i.dx, align 4, !tbaa !47
   %i.dy = tail call noundef float @llvm.floor.f32(float %.1.i)
   %i.dz = fptosi float %i.dy to i32               ; 2 uses
-  %i.ea = getelementptr inbounds [4 x i8], ptr %3, i64 %indvars.iv.next49
+  %i.ea = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %17
   store i32 %i.dz, ptr %i.ea, align 4, !tbaa !47
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #35
   %i.eb = load i32, ptr %i.dx, align 4, !tbaa !47

@@ -204,8 +204,8 @@ define internal i32 @dissect_lg8979(ptr noundef %0, ptr nofree noundef readonly 
 bb.a:
   %i.a = alloca i8, align 1                       ; 11 uses
   %i.b = alloca i8, align 1                       ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   %i.c = getelementptr i8, ptr %1, i64 8          ; 13 uses
   %i.d = load ptr, ptr %i.c, align 8
   tail call void @col_set_str(ptr noundef %i.d, i32 noundef 35, ptr noundef nonnull @.str.207)
@@ -608,9 +608,11 @@ bb.al:                                            ; preds = %.lr.ph983
   br i1 %i.pw, label %.lr.ph847.preheader, label %.loopexit
 
 .lr.ph847.preheader:                              ; preds = %bb.al
-  %.lhs.trunc801 = add i8 %i.gt, -1
-  %4 = lshr i8 %.lhs.trunc801, 1
-  %.sext802 = zext nneg i8 %4 to i32
+  %4 = zext i8 %i.gt to i32
+  %.lhs.trunc801 = add nuw nsw i32 %4, 65535
+  %5 = lshr i32 %.lhs.trunc801, 1
+  %.sext802 = and i32 %5, 32767
+  %umax912 = call i32 @llvm.umax.i32(i32 %.sext802, i32 1)
   %.pre = load i8, ptr %i.a, align 1
   br label %.lr.ph847
 
@@ -658,7 +660,7 @@ bb.al:                                            ; preds = %.lr.ph983
   store i8 %i.ri, ptr %i.a, align 1
   %i.rj = add i32 %.12778845, 2                   ; 2 uses
   %i.rk = add nuw nsw i32 %.9846, 1               ; 2 uses
-  %exitcond913.not = icmp eq i32 %i.rk, %.sext802
+  %exitcond913.not = icmp eq i32 %i.rk, %umax912
   br i1 %exitcond913.not, label %.loopexit, label %.lr.ph847, !llvm.loop !17
 
 bb.am:                                            ; preds = %.lr.ph983, %.lr.ph983
@@ -669,9 +671,11 @@ bb.am:                                            ; preds = %.lr.ph983, %.lr.ph9
   br i1 %i.ro, label %.lr.ph843.preheader, label %.loopexit
 
 .lr.ph843.preheader:                              ; preds = %bb.am
-  %.lhs.trunc803 = add i8 %i.gt, -1
-  %5 = lshr i8 %.lhs.trunc803, 1
-  %.sext804 = zext nneg i8 %5 to i32
+  %6 = zext i8 %i.gt to i32
+  %.lhs.trunc803 = add nuw nsw i32 %6, 65535
+  %7 = lshr i32 %.lhs.trunc803, 1
+  %.sext804 = and i32 %7, 32767
+  %umax = call i32 @llvm.umax.i32(i32 %.sext804, i32 1)
   br label %.lr.ph843
 
 .lr.ph843:                                        ; preds = %.lr.ph843.preheader, %.lr.ph843
@@ -687,7 +691,7 @@ bb.am:                                            ; preds = %.lr.ph983, %.lr.ph9
   %i.rv = add i8 %i.ru, 1
   store i8 %i.rv, ptr %i.a, align 1
   %i.rw = add nuw nsw i32 %.10842, 1              ; 2 uses
-  %exitcond911.not = icmp eq i32 %i.rw, %.sext804
+  %exitcond911.not = icmp eq i32 %i.rw, %umax
   br i1 %exitcond911.not, label %.loopexit, label %.lr.ph843, !llvm.loop !18
 
 bb.an:                                            ; preds = %.lr.ph983
@@ -969,8 +973,8 @@ bb.ax:                                            ; preds = %.loopexit.loopexit8
 
 classify_lg8979_packet.exit:                      ; preds = %bb.f, %bb.b, %.critedge, %.loopexit814
   %i.yk = call i32 @tvb_reported_length(ptr noundef %0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #3
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %i.yk
 }
 
@@ -1032,10 +1036,14 @@ bb.a:
   ret i32 %i.a
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #3
+
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

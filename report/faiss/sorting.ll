@@ -204,12 +204,12 @@ bb.d:                                             ; preds = %.noexc28
   %i.bc = zext nneg i32 %i.ba to i64
   %i.bd = add nsw i64 %i.bc, -1                   ; 2 uses
   %i.be = lshr i64 %i.bd, 1                       ; 2 uses
-  %i.bf = add nuw i64 %i.be, 1                    ; 2 uses
+  %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %i.bg = icmp eq i64 %i.be, 0
   br i1 %i.bg, label %.lr.ph43.epil.preheader, label %.lr.ph43.preheader.new
 
 .lr.ph43.preheader.new:                           ; preds = %.lr.ph43.preheader
-  %unroll_iter = and i64 %i.bf, -2
+  %unroll_iter = and i64 %i.bf, 9223372036854775806
   br label %.lr.ph43
 
 ._crit_edge44.loopexit.unr-lcssa:                 ; preds = %.lr.ph43

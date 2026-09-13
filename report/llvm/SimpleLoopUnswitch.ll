@@ -205,12 +205,12 @@ _ZN4llvm15SmallVectorImplISt5tupleIJPNS_11ConstantIntEPNS_10BasicBlockESt8option
 bb.as:                                            ; preds = %._crit_edge603.i.i
   %i.mb = zext i32 %i.kw to i64                   ; 3 uses
   %i.mc = add nsw i64 %i.mb, -1                   ; 2 uses
-  %38 = ashr i64 %i.mc, 2                         ; 2 uses
-  %39 = icmp sgt i64 %38, 0
+  %38 = lshr i64 %i.mc, 2                         ; 2 uses
+  %.not575.i.i = icmp eq i64 %38, 0
   %.pre.i80.pre.i = load ptr, ptr %i.ei, align 8, !tbaa !163 ; 9 uses
   %i.md = getelementptr i8, ptr %.pre.i80.pre.i, i64 64
   %.val41.val.val.i.i.i.i.i.i.i = load ptr, ptr %i.md, align 8, !tbaa !93 ; 10 uses
-  br i1 %39, label %.lr.ph.i.i.i.i.i.i85.i, label %._crit_edge.i.i.i.i.i.i.i
+  br i1 %.not575.i.i, label %._crit_edge.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i85.i
 
 .lr.ph.i.i.i.i.i.i85.i:                           ; preds = %bb.as
   %i.me = and i64 %i.mc, -4
@@ -219,32 +219,44 @@ bb.as:                                            ; preds = %._crit_edge603.i.i
 
 bb.at:                                            ; preds = %bb.ax, %.lr.ph.i.i.i.i.i.i85.i
   %.095.i.i.i.i.i.i.i = phi i64 [ %38, %.lr.ph.i.i.i.i.i.i85.i ], [ %i.mu, %bb.ax ] ; 2 uses
-  %.sroa.15.094.i.i.i.i.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i85.i ], [ %i.mn, %bb.ax ] ; 6 uses
+  %.sroa.15.094.i.i.i.i.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i85.i ], [ %i.mn, %bb.ax ] ; 7 uses
+  %39 = and i64 %.sroa.15.094.i.i.i.i.i.i.i, 4294967295
+  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %39, 4294967294
   %i.mg = add nuw nsw i64 %.sroa.15.094.i.i.i.i.i.i.i, 2 ; 2 uses
-  %i.mh = getelementptr inbounds nuw [32 x i8], ptr %.pre.i80.pre.i, i64 %i.mg
+  %40 = and i64 %i.mg, 4294967295                 ; 2 uses
+  %41 = select i1 %.not.i.i.i.i.i.i.i.i.i.i.i, i64 1, i64 %40
+  %i.mh = getelementptr inbounds nuw [32 x i8], ptr %.pre.i80.pre.i, i64 %41
   %i.mi = load ptr, ptr %i.mh, align 8, !tbaa !93
   %.not89.i.i.i.i.i.i.i = icmp eq ptr %i.mi, %.val41.val.val.i.i.i.i.i.i.i
   br i1 %.not89.i.i.i.i.i.i.i, label %bb.au, label %"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.i.i"
 
 bb.au:                                            ; preds = %bb.at
-  %i.mj = add nuw nsw i64 %.sroa.15.094.i.i.i.i.i.i.i, 3 ; 2 uses
+  %42 = add nuw nsw i64 %.sroa.15.094.i.i.i.i.i.i.i, 1 ; 2 uses
+  %43 = and i64 %42, 4294967295
+  %.not.i.i.i.i43.i.i.i.i.i.i.i = icmp eq i64 %43, 4294967294
+  %i.mj = add nuw i64 %.sroa.15.094.i.i.i.i.i.i.i, 3 ; 2 uses
   %i.mk = and i64 %i.mj, 4294967295               ; 2 uses
-  %i.ml = getelementptr inbounds nuw [32 x i8], ptr %.pre.i80.pre.i, i64 %i.mk
+  %44 = select i1 %.not.i.i.i.i43.i.i.i.i.i.i.i, i64 1, i64 %i.mk
+  %i.ml = getelementptr inbounds nuw [32 x i8], ptr %.pre.i80.pre.i, i64 %44
   %i.mm = load ptr, ptr %i.ml, align 8, !tbaa !93
   %.not90.i.i.i.i.i.i.i = icmp eq ptr %i.mm, %.val41.val.val.i.i.i.i.i.i.i
-  br i1 %.not90.i.i.i.i.i.i.i, label %bb.av, label %"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.loopexit.split.loop.exit748.i.i"
+  br i1 %.not90.i.i.i.i.i.i.i, label %bb.av, label %"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.i.i"
 
 bb.av:                                            ; preds = %bb.au
-  %i.mn = add nuw nsw i64 %.sroa.15.094.i.i.i.i.i.i.i, 4 ; 2 uses
-  %i.mo = getelementptr inbounds nuw [32 x i8], ptr %.pre.i80.pre.i, i64 %i.mn
+  %.not.i.i.i.i45.i.i.i.i.i.i.i = icmp eq i64 %40, 4294967294
+  %i.mn = add nuw i64 %.sroa.15.094.i.i.i.i.i.i.i, 4 ; 2 uses
+  %45 = and i64 %i.mn, 4294967295
+  %46 = select i1 %.not.i.i.i.i45.i.i.i.i.i.i.i, i64 1, i64 %45
+  %i.mo = getelementptr inbounds nuw [32 x i8], ptr %.pre.i80.pre.i, i64 %46
   %i.mp = load ptr, ptr %i.mo, align 8, !tbaa !93
   %.not91.i.i.i.i.i.i.i = icmp eq ptr %i.mp, %.val41.val.val.i.i.i.i.i.i.i
   br i1 %.not91.i.i.i.i.i.i.i, label %bb.aw, label %"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.i.i"
 
 bb.aw:                                            ; preds = %bb.av
   %.not.i.i.i.i47.i.i.i.i.i.i.i = icmp eq i64 %i.mk, 4294967294
-  %i.mq = add nuw nsw i64 %.sroa.15.094.i.i.i.i.i.i.i, 5
-  %i.mr = select i1 %.not.i.i.i.i47.i.i.i.i.i.i.i, i64 1, i64 %i.mq
+  %i.mq = add nuw i64 %.sroa.15.094.i.i.i.i.i.i.i, 5
+  %47 = and i64 %i.mq, 4294967295
+  %i.mr = select i1 %.not.i.i.i.i47.i.i.i.i.i.i.i, i64 1, i64 %47
   %i.ms = getelementptr inbounds nuw [32 x i8], ptr %.pre.i80.pre.i, i64 %i.mr
   %i.mt = load ptr, ptr %i.ms, align 8, !tbaa !93
   %.not92.i.i.i.i.i.i.i = icmp eq ptr %i.mt, %.val41.val.val.i.i.i.i.i.i.i
@@ -304,12 +316,8 @@ bb.ba:                                            ; preds = %._crit_edge._crit_e
   %.not88.i.i.i.i.i.i.i = icmp eq ptr %i.no, %.val41.val.val.i.i.i.i.i.i.i
   br i1 %.not88.i.i.i.i.i.i.i, label %.critedge.i.i, label %"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.i.i"
 
-"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.loopexit.split.loop.exit748.i.i": ; preds = %bb.au
-  %40 = add nuw nsw i64 %.sroa.15.094.i.i.i.i.i.i.i, 1
-  br label %"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.i.i"
-
-"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.i.i": ; preds = %bb.aw, %bb.av, %bb.at, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.loopexit.split.loop.exit748.i.i", %._crit_edge._crit_edge101.i.i.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i.i.i, %bb.ay
-  %.sroa.9.0.i.i.i.i.i.i.i = phi i64 [ %.sroa.15.1.i.i.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i.i.i ], [ %.sroa.15.0.lcssa.i.i.i.i.i.i.i, %bb.ay ], [ %.sroa.15.2.i.i.i.i.i.i.i, %._crit_edge._crit_edge101.i.i.i.i.i.i.i ], [ %40, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.loopexit.split.loop.exit748.i.i" ], [ %.sroa.15.094.i.i.i.i.i.i.i, %bb.at ], [ %i.mg, %bb.av ], [ %i.mj, %bb.aw ]
+"_ZN4llvm6all_ofINS_14iterator_rangeINS_10SwitchInst16CaseIteratorImplINS2_10CaseHandleEEEEEZL21unswitchTrivialSwitchRNS_4LoopERS2_RNS_13DominatorTreeERNS_8LoopInfoEPNS_15ScalarEvolutionEPNS_16MemorySSAUpdaterEE3$_0EEbOT_T0_.exit.i.i": ; preds = %bb.aw, %bb.av, %bb.au, %bb.at, %._crit_edge._crit_edge101.i.i.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i.i.i, %bb.ay
+  %.sroa.9.0.i.i.i.i.i.i.i = phi i64 [ %.sroa.15.1.i.i.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i.i.i ], [ %.sroa.15.0.lcssa.i.i.i.i.i.i.i, %bb.ay ], [ %.sroa.15.2.i.i.i.i.i.i.i, %._crit_edge._crit_edge101.i.i.i.i.i.i.i ], [ %.sroa.15.094.i.i.i.i.i.i.i, %bb.at ], [ %42, %bb.au ], [ %i.mg, %bb.av ], [ %i.mj, %bb.aw ]
   %i.np = icmp eq i64 %.sroa.9.0.i.i.i.i.i.i.i, %i.mb
   %spec.select.i = select i1 %i.np, ptr %.val41.val.val.i.i.i.i.i.i.i, ptr null
   br label %.critedge.i.i

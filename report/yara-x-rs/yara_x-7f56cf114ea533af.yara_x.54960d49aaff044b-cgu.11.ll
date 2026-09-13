@@ -205,7 +205,7 @@ switch.lookup:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = load i8, ptr %1, align 1, !range !6811, !noundef !4
   %switch.tableidx = add nsw i8 %i.b, -1
-  %switch.idx.cast = zext i8 %switch.tableidx to i64
+  %switch.idx.cast = zext nneg i8 %switch.tableidx to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6812)
   %i.c = tail call noundef nonnull align 8 ptr @_RINvMs4_NtCs69rhaJXEXoX_9once_cell4syncINtB6_8OnceCellNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorE15get_or_try_initNCINvB2_11get_or_initNCNvXs2l_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos5machoNtB2z_8FileTypeNtNtBW_9enum_full8EnumFull15enum_descriptor0E0NtNvMs4_B6_IBC_pE11get_or_init4VoidEB2F_(ptr noundef nonnull align 8 @_RNvNvXs2l_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos5machoNtB8_8FileTypeNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor10descriptor), !noalias !6812 ; 3 uses
@@ -608,7 +608,7 @@ switch.lookup:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = load i8, ptr %1, align 1, !range !7010, !noundef !4
   %switch.tableidx = add nsw i8 %i.b, -1
-  %switch.idx.cast = zext i8 %switch.tableidx to i64
+  %switch.idx.cast = zext nneg i8 %switch.tableidx to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7011)
   %i.c = tail call noundef nonnull align 8 ptr @_RINvMs4_NtCs69rhaJXEXoX_9once_cell4syncINtB6_8OnceCellNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorE15get_or_try_initNCINvB2_11get_or_initNCNvXs5_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3vbaNtB2y_10ModuleTypeNtNtBW_9enum_full8EnumFull15enum_descriptor0E0NtNvMs4_B6_IBC_pE11get_or_init4VoidEB2E_(ptr noundef nonnull align 8 @_RNvNvXs5_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos3vbaNtB7_10ModuleTypeNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor10descriptor), !noalias !7011 ; 3 uses

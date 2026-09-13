@@ -204,9 +204,9 @@ _ZN8AstCStmt3addEP7AstNode.exit169:               ; preds = %bb.aq, %bb.ap, %_ZN
   call void @llvm.experimental.noalias.scope.decl(metadata !438)
   %i.gx = icmp ult i8 %.sroa.0.0.copyload.i186, 10
   %i.gy = icmp ult i8 %.sroa.0.0.copyload.i186, 100
-  %. = select i1 %i.gy, i32 2, i32 3              ; 3 uses
+  %. = select i1 %i.gy, i32 2, i32 3              ; 2 uses
   %i.gz = zext nneg i32 %. to i64
-  %i.ha = select i1 %i.gx, i64 1, i64 %i.gz
+  %i.ha = select i1 %i.gx, i64 1, i64 %i.gz       ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 5 uses
   store ptr %i.hb, ptr %14, align 8, !tbaa !44, !alias.scope !438
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %14, i64 noundef %i.ha, i8 noundef signext 45)
@@ -225,8 +225,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i189: 
   %i.hi = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.hh ; 2 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 1
   %i.hk = load i8, ptr %i.hj, align 1, !tbaa !43, !noalias !438
-  %15 = zext nneg i32 %. to i64
-  %i.hl = getelementptr i8, ptr %i.hc, i64 %15
+  %i.hl = getelementptr i8, ptr %i.hc, i64 %i.ha
   %i.hm = getelementptr i8, ptr %i.hl, i64 -1
   store i8 %i.hk, ptr %i.hm, align 1, !tbaa !43
   %i.hn = load i8, ptr %i.hi, align 2, !tbaa !43, !noalias !438
@@ -629,9 +628,9 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S9_.exit
   call void @llvm.experimental.noalias.scope.decl(metadata !595)
   %i.bk = icmp ult i8 %2, 10
   %i.bl = icmp ult i8 %2, 100
-  %. = select i1 %i.bl, i32 2, i32 3              ; 3 uses
+  %. = select i1 %i.bl, i32 2, i32 3              ; 2 uses
   %i.bm = zext nneg i32 %. to i64
-  %i.bn = select i1 %i.bk, i64 1, i64 %i.bm
+  %i.bn = select i1 %i.bk, i64 1, i64 %i.bm       ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 7 uses
   store ptr %i.bo, ptr %11, align 8, !tbaa !44, !alias.scope !595
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %11, i64 noundef %i.bn, i8 noundef signext 45)
@@ -650,8 +649,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i: ; p
   %i.bv = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.bu ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 1
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !43, !noalias !595
-  %15 = zext nneg i32 %. to i64
-  %i.by = getelementptr i8, ptr %i.bp, i64 %15
+  %i.by = getelementptr i8, ptr %i.bp, i64 %i.bn
   %i.bz = getelementptr i8, ptr %i.by, i64 -1
   store i8 %i.bx, ptr %i.bz, align 1, !tbaa !43
   %i.ca = load i8, ptr %i.bv, align 2, !tbaa !43, !noalias !595
@@ -947,9 +945,9 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S9_.exit
   call void @llvm.experimental.noalias.scope.decl(metadata !599)
   %i.fy = icmp ult i8 %3, 10
   %i.fz = icmp ult i8 %3, 100
-  %.158 = select i1 %i.fz, i32 2, i32 3           ; 3 uses
+  %.158 = select i1 %i.fz, i32 2, i32 3           ; 2 uses
   %i.ga = zext nneg i32 %.158 to i64
-  %i.gb = select i1 %i.fy, i64 1, i64 %i.ga
+  %i.gb = select i1 %i.fy, i64 1, i64 %i.ga       ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 7 uses
   store ptr %i.gc, ptr %13, align 8, !tbaa !44, !alias.scope !599
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %13, i64 noundef %i.gb, i8 noundef signext 45)
@@ -968,8 +966,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i63: ;
   %i.gj = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.gi ; 2 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gj, i64 1
   %i.gl = load i8, ptr %i.gk, align 1, !tbaa !43, !noalias !599
-  %16 = zext nneg i32 %.158 to i64
-  %i.gm = getelementptr i8, ptr %i.gd, i64 %16
+  %i.gm = getelementptr i8, ptr %i.gd, i64 %i.gb
   %i.gn = getelementptr i8, ptr %i.gm, i64 -1
   store i8 %i.gl, ptr %i.gn, align 1, !tbaa !43
   %i.go = load i8, ptr %i.gj, align 2, !tbaa !43, !noalias !599

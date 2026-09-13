@@ -205,9 +205,9 @@ _RINvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter15SplitByteVectorNtNtB4_9histo
 .lr.ph2177:                                       ; preds = %_RINvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter15SplitByteVectorNtNtB4_9histogram16HistogramLiteralNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllochECskeugdADtBsi_12pingora_core.exit
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.amx) ]
   %i.amz = add nsw i64 %..i50, -1
-  %i.ana = call i64 @llvm.umin.i64(i64 %i.amy, i64 %i.amz)
-  %i.anb = add i64 %i.ana, 1                      ; 3 uses
-  %min.iters.check5907 = icmp ult i64 %i.anb, 25
+  %i.ana = call i64 @llvm.umin.i64(i64 %i.amy, i64 %i.amz) ; 2 uses
+  %i.anb = add nuw i64 %i.ana, 1                  ; 2 uses
+  %min.iters.check5907 = icmp samesign ult i64 %i.ana, 24
   br i1 %min.iters.check5907, label %scalar.ph5906.preheader, label %vector.memcheck5900
 
 scalar.ph5906.preheader:                          ; preds = %vector.body5910, %vector.memcheck5900, %.lr.ph2177
@@ -217,7 +217,7 @@ scalar.ph5906.preheader:                          ; preds = %vector.body5910, %v
 vector.memcheck5900:                              ; preds = %.lr.ph2177
   %i.anc = add nsw i64 %..i50, -1
   %umin = call i64 @llvm.umin.i64(i64 %i.amy, i64 %i.anc) ; 2 uses
-  %i.and = shl i64 %umin, 1
+  %i.and = shl nuw i64 %umin, 1
   %i.ane = getelementptr i8, ptr %i.amx, i64 %i.and
   %scevgep = getelementptr i8, ptr %i.ane, i64 2
   %scevgep5901 = getelementptr i8, ptr %1, i64 12

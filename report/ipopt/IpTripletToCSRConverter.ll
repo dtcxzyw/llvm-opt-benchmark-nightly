@@ -204,8 +204,8 @@ bb.aa:                                            ; preds = %bb.w
 ._crit_edge291:                                   ; preds = %._crit_edge291.loopexit, %.loopexit281
   %.0199.lcssa = phi i32 [ 1, %.loopexit281 ], [ %i.cw, %._crit_edge291.loopexit ] ; 4 uses
   %i.cx = add nsw i32 %.0199.lcssa, -1
-  %5 = sext i32 %i.cx to i64                      ; 2 uses
-  %i.cy = getelementptr inbounds [4 x i8], ptr %.pre, i64 %5
+  %5 = zext nneg i32 %i.cx to i64                 ; 2 uses
+  %i.cy = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %5
   store i32 0, ptr %i.cy, align 4, !tbaa !28
   %i.cz = getelementptr inbounds nuw i8, ptr %i.y, i64 4
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !33 ; 3 uses
@@ -216,7 +216,7 @@ bb.aa:                                            ; preds = %bb.w
   br i1 %i.ch, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %._crit_edge291
-  %i.dd = getelementptr inbounds [4 x i8], ptr %.0206, i64 %5 ; 2 uses
+  %i.dd = getelementptr inbounds nuw [4 x i8], ptr %.0206, i64 %5 ; 2 uses
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !28
   %i.df = add nsw i32 %i.de, 1
   store i32 %i.df, ptr %i.dd, align 4, !tbaa !28

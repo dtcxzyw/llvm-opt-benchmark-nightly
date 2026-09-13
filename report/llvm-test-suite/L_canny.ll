@@ -200,7 +200,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %bb.a
   %i.f = add nsw i32 %4, -2
   %i.g = add nsw i32 %3, -2
-  %i.h = zext nneg i32 %3 to i64                  ; 3 uses
+  %i.h = zext nneg i32 %3 to i64                  ; 2 uses
   %wide.trip.count109 = zext nneg i32 %i.f to i64
   %wide.trip.count = zext i32 %i.g to i64
   br label %.preheader
@@ -210,12 +210,14 @@ bb.a:
   %i.i = mul nuw nsw i64 %indvars.iv106, %i.h
   %indvars.iv.next107 = add nuw nsw i64 %indvars.iv106, 1 ; 3 uses
   %i.j = mul nuw nsw i64 %indvars.iv.next107, %i.h ; 2 uses
-  %5 = add nsw i64 %indvars.iv106, -1
-  %6 = mul nuw nsw i64 %5, %i.h                   ; 2 uses
+  %5 = trunc i64 %indvars.iv106 to i32
+  %6 = add i32 %5, -1
+  %7 = mul i32 %6, %3
+  %8 = zext i32 %7 to i64                         ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %i.j
-  %invariant.gep116 = getelementptr [4 x i8], ptr %0, i64 %6
+  %invariant.gep116 = getelementptr [4 x i8], ptr %0, i64 %8
   %invariant.gep118 = getelementptr [4 x i8], ptr %0, i64 %i.j
-  %invariant.gep120 = getelementptr [4 x i8], ptr %0, i64 %6
+  %invariant.gep120 = getelementptr [4 x i8], ptr %0, i64 %8
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.j

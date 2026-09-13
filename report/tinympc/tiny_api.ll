@@ -205,20 +205,20 @@ _ZN5Eigen8internal18partial_lu_inplaceINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS_
 .lr.ph.i.i.new:                                   ; preds = %.prol.loopexit, %.lr.ph.i.i.new
   %.0.in6.i.i = phi i64 [ %.0.i.i.1, %.lr.ph.i.i.new ], [ %.0.in6.i.i.unr, %.prol.loopexit ] ; 3 uses
   %.0.i.i = add nsw i64 %.0.in6.i.i, -1           ; 2 uses
-  %i.au = getelementptr inbounds [4 x i8], ptr %i.ak, i64 %.0.i.i
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %.0.i.i
   %i.av = load i32, ptr %i.au, align 4, !tbaa !43
   %i.aw = sext i32 %i.av to i64
-  %i.ax = getelementptr inbounds [4 x i8], ptr %i.al, i64 %.0.i.i ; 2 uses
+  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %.0.i.i ; 2 uses
   %i.ay = getelementptr inbounds [4 x i8], ptr %i.al, i64 %i.aw ; 2 uses
   %i.az = load i32, ptr %i.ax, align 4, !tbaa !43
   %i.ba = load i32, ptr %i.ay, align 4, !tbaa !43
   store i32 %i.ba, ptr %i.ax, align 4, !tbaa !43
   store i32 %i.az, ptr %i.ay, align 4, !tbaa !43
   %.0.i.i.1 = add nsw i64 %.0.in6.i.i, -2         ; 3 uses
-  %i.bb = getelementptr inbounds [4 x i8], ptr %i.ak, i64 %.0.i.i.1
+  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %.0.i.i.1
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !43
   %i.bd = sext i32 %i.bc to i64
-  %i.be = getelementptr inbounds [4 x i8], ptr %i.al, i64 %.0.i.i.1 ; 2 uses
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %.0.i.i.1 ; 2 uses
   %i.bf = getelementptr inbounds [4 x i8], ptr %i.al, i64 %i.bd ; 2 uses
   %i.bg = load i32, ptr %i.be, align 4, !tbaa !43
   %i.bh = load i32, ptr %i.bf, align 4, !tbaa !43

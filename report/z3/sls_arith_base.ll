@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 
 _ZN13checked_int64ILb1EEdVERKS0_.exit.i:          ; preds = %bb.f
   %i.u = add nsw i64 %i.p, -1
-  %4 = sdiv i64 %i.u, %i.h
+  %4 = udiv i64 %i.u, %i.h
   br label %_Z3divILb1EE13checked_int64IXT_EERKS1_S3_.exit
 
 bb.i:                                             ; preds = %bb.e

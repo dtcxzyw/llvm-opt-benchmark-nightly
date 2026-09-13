@@ -205,9 +205,9 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   br i1 %exitcond.not, label %._crit_edge227, label %bb.k, !llvm.loop !102
 
 ._crit_edge227:                                   ; preds = %bb.q
-  %i.eg = shl nsw i32 %i.db, 1
-  %i.eh = add nsw i32 %i.eg, 3
-  %i.ei = add i32 %i.eh, %.4259                   ; 6 uses
+  %i.eg = shl nuw nsw i32 %i.db, 1
+  %i.eh = add nuw nsw i32 %i.eg, 3
+  %i.ei = add nuw i32 %i.eh, %.4259               ; 6 uses
   switch i32 %.1156, label %default.unreachable [
     i32 1, label %.split241.us
     i32 2, label %.split241.us246

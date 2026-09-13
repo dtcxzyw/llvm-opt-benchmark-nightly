@@ -204,14 +204,13 @@ bb.y:                                             ; preds = %bb.r
 
 bb.z:                                             ; preds = %bb.ay, %bb.av, %bb.y
   %i.am = phi i1 [ false, %bb.y ], [ true, %bb.av ], [ false, %bb.ay ]
-  %storemerge121.lcssa129.wide = phi i64 [ 1, %bb.y ], [ 2, %bb.av ], [ 3, %bb.ay ] ; 3 uses
+  %storemerge121.lcssa129.wide = phi i64 [ 1, %bb.y ], [ 2, %bb.av ], [ 3, %bb.ay ] ; 2 uses
   %.lcssa124 = phi i32 [ %i.al, %bb.y ], [ %i.by, %bb.av ], [ %i.cg, %bb.ay ]
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr @_ZZN5folly15utf8ToCodePointERPKhS1_bE7bitMask, i64 %storemerge121.lcssa129.wide
+  %i.an = getelementptr [4 x i8], ptr @_ZZN5folly15utf8ToCodePointERPKhS1_bE7bitMask, i64 %storemerge121.lcssa129.wide ; 2 uses
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !22
   %i.ap = and i32 %i.ao, %.lcssa124               ; 5 uses
   store i32 %i.ap, ptr %i.a, align 4, !tbaa !22
-  %7 = getelementptr [4 x i8], ptr @_ZZN5folly15utf8ToCodePointERPKhS1_bE7bitMask, i64 %storemerge121.lcssa129.wide
-  %i.aq = getelementptr i8, ptr %7, i64 -4
+  %i.aq = getelementptr i8, ptr %i.an, i64 -4
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !22
   %i.as = xor i32 %i.ar, -1
   %i.at = and i32 %i.ap, %i.as

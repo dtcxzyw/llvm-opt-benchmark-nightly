@@ -204,11 +204,9 @@ bb.ak:                                            ; preds = %bb.aj
 
 qcow2_amend_helper_cb.exit.i:                     ; preds = %bb.aj
   store i64 2, ptr %.sroa.10.0..sroa_idx, align 8
-  %7 = add nsw i32 %i.cg, -1
-  %i.cn = zext nneg i32 %7 to i64
-  %8 = shl nuw nsw i64 %i.cn, 1
-  %9 = add nuw nsw i64 %8, 2                      ; 3 uses
-  tail call void %2(ptr noundef nonnull %0, i64 noundef 0, i64 noundef %9, ptr noundef %3) #20, !inline_history !18
+  %7 = shl nuw nsw i32 %i.cg, 1
+  %i.cn = zext nneg i32 %7 to i64                 ; 3 uses
+  tail call void %2(ptr noundef nonnull %0, i64 noundef 0, i64 noundef %i.cn, ptr noundef %3) #20, !inline_history !18
   %i.co = getelementptr inbounds nuw i8, ptr %i.ci, i64 284
   %i.cp = load i32, ptr %i.co, align 4            ; 2 uses
   %.not.i266 = icmp eq i32 %i.cp, 0
@@ -244,7 +242,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %qcow2_downgrade.exit
 
 qcow2_amend_helper_cb.exit42.i:                   ; preds = %bb.al, %qcow2_amend_helper_cb.exit.i, %bb.an
-  tail call void %2(ptr noundef nonnull %0, i64 noundef 1, i64 noundef %9, ptr noundef %3) #20, !inline_history !18
+  tail call void %2(ptr noundef nonnull %0, i64 noundef 1, i64 noundef %i.cn, ptr noundef %3) #20, !inline_history !18
   store i32 3, ptr %i.cj, align 4
   %i.db = tail call i32 @qcow2_update_header(ptr noundef nonnull %0) ; 3 uses
   %i.dc = icmp slt i32 %i.db, 0
@@ -258,7 +256,7 @@ bb.ap:                                            ; preds = %qcow2_amend_helper_
 
 qcow2_upgrade.exit:                               ; preds = %qcow2_amend_helper_cb.exit42.i
   store i64 2, ptr %.sroa.10.0..sroa_idx, align 8
-  tail call void %2(ptr noundef nonnull %0, i64 noundef 2, i64 noundef %9, ptr noundef %3) #20, !inline_history !18
+  tail call void %2(ptr noundef nonnull %0, i64 noundef 2, i64 noundef %i.cn, ptr noundef %3) #20, !inline_history !18
   br label %bb.aq
 
 bb.aq:                                            ; preds = %qcow2_upgrade.exit, %.critedge

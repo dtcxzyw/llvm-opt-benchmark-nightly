@@ -202,7 +202,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.bj = getelementptr i8, ptr %i.aq, i64 16
   %i.bk = load ptr, ptr %i.bj, align 16
   %i.bl = getelementptr i8, ptr %i.aq, i64 128    ; 3 uses
-  %i.bm = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bl, i32 -1, ptr elementtype(i32) %i.bl) #17, !srcloc !29 ; 4 uses
+  %i.bm = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bl, i32 -1, ptr elementtype(i32) %i.bl) #17, !srcloc !29 ; 3 uses
   %i.bn = icmp eq i32 %i.bm, 1
   br i1 %i.bn, label %__vma_refcount_put_return.exit.i.i, label %bb.ad
 
@@ -219,12 +219,9 @@ __vma_refcount_put_return.exit.i.i:               ; preds = %bb.ac
   br label %vma_end_read.exit
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.bp = add nuw i32 %i.bm, 2147483647
-  %3 = and i32 %i.bp, 1073741824
-  %4 = icmp ne i32 %3, 0
-  %i.bq = icmp samesign ult i32 %i.bm, 1073741827
-  %5 = and i1 %i.bq, %4
-  br i1 %5, label %bb.af, label %vma_end_read.exit
+  %i.bp = add nsw i32 %i.bm, -1073741825
+  %i.bq = icmp ult i32 %i.bp, 2
+  br i1 %i.bq, label %bb.af, label %vma_end_read.exit
 
 bb.af:                                            ; preds = %bb.ae
   %i.br = getelementptr i8, ptr %i.bk, i64 512
@@ -627,7 +624,7 @@ bb.k:                                             ; preds = %bad_area_access_fro
   %i.w = getelementptr i8, ptr %4, i64 16
   %i.x = load ptr, ptr %i.w, align 16
   %i.y = getelementptr i8, ptr %4, i64 128        ; 3 uses
-  %i.z = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.y, i32 -1, ptr elementtype(i32) %i.y) #17, !srcloc !29 ; 4 uses
+  %i.z = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.y, i32 -1, ptr elementtype(i32) %i.y) #17, !srcloc !29 ; 3 uses
   %i.aa = icmp eq i32 %i.z, 1
   br i1 %i.aa, label %__vma_refcount_put_return.exit.i.i.i, label %bb.l
 
@@ -644,12 +641,9 @@ __vma_refcount_put_return.exit.i.i.i:             ; preds = %bb.k
   br label %__bad_area.exit
 
 bb.m:                                             ; preds = %bb.l
-  %i.ac = add nuw i32 %i.z, 2147483647
-  %5 = and i32 %i.ac, 1073741824
-  %6 = icmp ne i32 %5, 0
-  %i.ad = icmp samesign ult i32 %i.z, 1073741827
-  %7 = and i1 %i.ad, %6
-  br i1 %7, label %bb.n, label %__bad_area.exit
+  %i.ac = add nsw i32 %i.z, -1073741825
+  %i.ad = icmp ult i32 %i.ac, 2
+  br i1 %i.ad, label %bb.n, label %__bad_area.exit
 
 bb.n:                                             ; preds = %bb.m
   %i.ae = getelementptr i8, ptr %i.x, i64 512
@@ -681,7 +675,7 @@ bb.r:                                             ; preds = %bb.o
   %i.ah = getelementptr i8, ptr %4, i64 16
   %i.ai = load ptr, ptr %i.ah, align 16
   %i.aj = getelementptr i8, ptr %4, i64 128       ; 3 uses
-  %i.ak = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.aj, i32 -1, ptr elementtype(i32) %i.aj) #17, !srcloc !29 ; 4 uses
+  %i.ak = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.aj, i32 -1, ptr elementtype(i32) %i.aj) #17, !srcloc !29 ; 3 uses
   %i.al = icmp eq i32 %i.ak, 1
   br i1 %i.al, label %__vma_refcount_put_return.exit.i.i.i17, label %bb.s
 
@@ -698,12 +692,9 @@ __vma_refcount_put_return.exit.i.i.i17:           ; preds = %bb.r
   br label %__bad_area.exit18
 
 bb.t:                                             ; preds = %bb.s
-  %i.an = add nuw i32 %i.ak, 2147483647
-  %8 = and i32 %i.an, 1073741824
-  %9 = icmp ne i32 %8, 0
-  %i.ao = icmp samesign ult i32 %i.ak, 1073741827
-  %10 = and i1 %i.ao, %9
-  br i1 %10, label %bb.u, label %__bad_area.exit18
+  %i.an = add nsw i32 %i.ak, -1073741825
+  %i.ao = icmp ult i32 %i.an, 2
+  br i1 %i.ao, label %bb.u, label %__bad_area.exit18
 
 bb.u:                                             ; preds = %bb.t
   %i.ap = getelementptr i8, ptr %i.ai, i64 512
