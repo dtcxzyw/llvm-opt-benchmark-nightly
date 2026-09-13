@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   store i64 %i.y, ptr %i.q, align 8, !noalias !15176
   %i.z = getelementptr inbounds nuw [48 x i8], ptr %i.l, i64 %.val10.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.z, ptr noundef nonnull readonly align 8 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !15176
-  %i.aa = add i64 %.val10.i.i.i.i.i.i, 1          ; 2 uses
+  %i.aa = add nuw i64 %.val10.i.i.i.i.i.i, 1      ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !15173
   %i.ab = icmp eq i64 %i.aa, %i.f
   br i1 %i.ab, label %_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4cast8CastInfoEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtNtB2H_5slice4iter4IterTReB3O_EENCNvMs_NtCs9gmjTwvRRSu_10typst_html5typedNtB43_11StringsType5input0EE9from_iterB45_.exit, label %bb.e

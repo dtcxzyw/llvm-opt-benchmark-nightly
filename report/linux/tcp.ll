@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.p = add i32 %.051, %i.o                      ; 4 uses
   %sext = shl nuw i64 %i.n, 32
   %i.q = ashr exact i64 %sext, 32
-  %i.r = sub i64 %.03750, %i.q                    ; 4 uses
+  %i.r = sub nuw i64 %.03750, %i.q                ; 4 uses
   %i.s = add i32 %i.k, %i.o
   %i.t = icmp ugt i32 %i.j, %i.s
   br i1 %i.t, label %.critedge, label %bb.d
