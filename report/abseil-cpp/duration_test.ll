@@ -204,7 +204,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.ij, i64 noundef 32) #26
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit963
 
-_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit963: ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i947, %bb.dq
+_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit963: ; preds = %bb.dq, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i947
   call void @llvm.lifetime.end.p0(ptr nonnull %52) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #24
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %55)
@@ -607,7 +607,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.dk = icmp ugt i32 %i.dj, -294967297          ; 2 uses
   %i.dl = add nsw i32 %i.dj, 294967296
   %i.dm = zext i1 %i.dk to i64
-  %.pn17.i.i = add nsw i64 %i.dm, %i.de
+  %.pn17.i.i = add nuw nsw i64 %i.dm, %i.de
   %.pn15.i.i = select i1 %i.dk, i32 %i.dl, i32 %i.dj
   %.fca.0.insert.i.pn.i.i = insertvalue { i64, i32 } poison, i64 %.pn17.i.i, 0
   %.pn.i.i = insertvalue { i64, i32 } %.fca.0.insert.i.pn.i.i, i32 %.pn15.i.i, 1
@@ -630,26 +630,17 @@ bb.as:                                            ; preds = %bb.ar
   %i.dw = icmp ugt i32 %i.dv, -294967297          ; 2 uses
   %i.dx = add nsw i32 %i.dv, 294967296
   %i.dy = zext i1 %i.dw to i64
-  %.pn17.i58.i = add nsw i64 %i.dy, %i.dq         ; 4 uses
+  %.pn17.i58.i = add nuw nsw i64 %i.dy, %i.dq     ; 2 uses
   %.pn15.i59.i = select i1 %i.dw, i32 %i.dx, i32 %i.dv ; 2 uses
   switch i32 %.pn15.i59.i, label %bb.au [
-    i32 0, label %36
-    i32 -1, label %38
+    i32 0, label %bb.at
+    i32 -1, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
   ]
 
-36:                                               ; preds = %bb.as
-  %37 = icmp eq i64 %.pn17.i58.i, -9223372036854775808
-  br i1 %37, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit, label %bb.at
-
-bb.at:                                            ; preds = %36
+bb.at:                                            ; preds = %bb.as
   %i.dz = sub nsw i64 0, %.pn17.i58.i
   %.fca.0.insert.i.i64.i = insertvalue { i64, i32 } poison, i64 %i.dz, 0
   %.fca.1.insert.i.i65.i = insertvalue { i64, i32 } %.fca.0.insert.i.i64.i, i32 0, 1
-  br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
-
-38:                                               ; preds = %bb.as
-  %39 = icmp slt i64 %.pn17.i58.i, 0
-  %spec.select.i.i62.i = select i1 %39, { i64, i32 } { i64 9223372036854775807, i32 -1 }, { i64, i32 } { i64 -9223372036854775808, i32 -1 }
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
 
 bb.au:                                            ; preds = %bb.as
@@ -659,8 +650,8 @@ bb.au:                                            ; preds = %bb.as
   %.fca.1.insert.i.i.i67.i = insertvalue { i64, i32 } %.fca.0.insert.i.i.i66.i, i32 %i.eb, 1
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
 
-_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit: ; preds = %bb.ap, %bb.aq, %bb.ar, %36, %bb.at, %38, %bb.au
-  %.pn.i200 = phi { i64, i32 } [ { i64 9223372036854775807, i32 -1 }, %36 ], [ %.pn.i.i, %bb.aq ], [ { i64 9223372036854775807, i32 -1 }, %bb.ap ], [ { i64 -9223372036854775808, i32 -1 }, %bb.ar ], [ %.fca.1.insert.i.i.i67.i, %bb.au ], [ %.fca.1.insert.i.i65.i, %bb.at ], [ %spec.select.i.i62.i, %38 ] ; 2 uses
+_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit: ; preds = %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au
+  %.pn.i200 = phi { i64, i32 } [ %.fca.1.insert.i.i65.i, %bb.at ], [ %.pn.i.i, %bb.aq ], [ { i64 9223372036854775807, i32 -1 }, %bb.ap ], [ { i64 -9223372036854775808, i32 -1 }, %bb.ar ], [ %.fca.1.insert.i.i.i67.i, %bb.au ], [ { i64 -9223372036854775808, i32 -1 }, %bb.as ] ; 2 uses
   %.fca.0.extract25 = extractvalue { i64, i32 } %.pn.i200, 0 ; 2 uses
   %.fca.1.extract26 = extractvalue { i64, i32 } %.pn.i200, 1 ; 2 uses
   store i64 %.fca.0.extract25, ptr %25, align 8
@@ -897,7 +888,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.gh = icmp ugt i32 %i.gg, -294967297          ; 2 uses
   %i.gi = add nsw i32 %i.gg, 294967296
   %i.gj = zext i1 %i.gh to i64
-  %.pn17.i.i228 = add nsw i64 %i.gj, %i.gb
+  %.pn17.i.i228 = add nuw nsw i64 %i.gj, %i.gb
   %.pn15.i.i229 = select i1 %i.gh, i32 %i.gi, i32 %i.gg
   %.fca.0.insert.i.pn.i.i230 = insertvalue { i64, i32 } poison, i64 %.pn17.i.i228, 0
   %.pn.i.i231 = insertvalue { i64, i32 } %.fca.0.insert.i.pn.i.i230, i32 %.pn15.i.i229, 1
@@ -920,26 +911,17 @@ bb.bp:                                            ; preds = %bb.bo
   %i.gt = icmp ugt i32 %i.gs, -294967297          ; 2 uses
   %i.gu = add nsw i32 %i.gs, 294967296
   %i.gv = zext i1 %i.gt to i64
-  %.pn17.i58.i233 = add nsw i64 %i.gv, %i.gn      ; 4 uses
+  %.pn17.i58.i233 = add nuw nsw i64 %i.gv, %i.gn  ; 2 uses
   %.pn15.i59.i234 = select i1 %i.gt, i32 %i.gu, i32 %i.gs ; 2 uses
   switch i32 %.pn15.i59.i234, label %bb.br [
-    i32 0, label %40
-    i32 -1, label %42
+    i32 0, label %bb.bq
+    i32 -1, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit240
   ]
 
-40:                                               ; preds = %bb.bp
-  %41 = icmp eq i64 %.pn17.i58.i233, -9223372036854775808
-  br i1 %41, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit240, label %bb.bq
-
-bb.bq:                                            ; preds = %40
+bb.bq:                                            ; preds = %bb.bp
   %i.gw = sub nsw i64 0, %.pn17.i58.i233
   %.fca.0.insert.i.i64.i236 = insertvalue { i64, i32 } poison, i64 %i.gw, 0
   %.fca.1.insert.i.i65.i237 = insertvalue { i64, i32 } %.fca.0.insert.i.i64.i236, i32 0, 1
-  br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit240
-
-42:                                               ; preds = %bb.bp
-  %43 = icmp slt i64 %.pn17.i58.i233, 0
-  %spec.select.i.i62.i235 = select i1 %43, { i64, i32 } { i64 9223372036854775807, i32 -1 }, { i64, i32 } { i64 -9223372036854775808, i32 -1 }
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit240
 
 bb.br:                                            ; preds = %bb.bp
@@ -949,8 +931,8 @@ bb.br:                                            ; preds = %bb.bp
   %.fca.1.insert.i.i.i67.i239 = insertvalue { i64, i32 } %.fca.0.insert.i.i.i66.i238, i32 %i.gy, 1
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit240
 
-_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit240: ; preds = %bb.bm, %bb.bn, %bb.bo, %40, %bb.bq, %42, %bb.br
-  %.pn.i227 = phi { i64, i32 } [ { i64 9223372036854775807, i32 -1 }, %40 ], [ %.pn.i.i231, %bb.bn ], [ { i64 9223372036854775807, i32 -1 }, %bb.bm ], [ { i64 -9223372036854775808, i32 -1 }, %bb.bo ], [ %.fca.1.insert.i.i.i67.i239, %bb.br ], [ %.fca.1.insert.i.i65.i237, %bb.bq ], [ %spec.select.i.i62.i235, %42 ] ; 2 uses
+_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit240: ; preds = %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br
+  %.pn.i227 = phi { i64, i32 } [ %.fca.1.insert.i.i65.i237, %bb.bq ], [ %.pn.i.i231, %bb.bn ], [ { i64 9223372036854775807, i32 -1 }, %bb.bm ], [ { i64 -9223372036854775808, i32 -1 }, %bb.bo ], [ %.fca.1.insert.i.i.i67.i239, %bb.br ], [ { i64 -9223372036854775808, i32 -1 }, %bb.bp ] ; 2 uses
   %.fca.0.extract13 = extractvalue { i64, i32 } %.pn.i227, 0 ; 2 uses
   %.fca.1.extract14 = extractvalue { i64, i32 } %.pn.i227, 1 ; 2 uses
   store i64 %.fca.0.extract13, ptr %29, align 8
@@ -1195,7 +1177,7 @@ bb.ck:                                            ; preds = %bb.cj
   %i.jj = icmp ugt i32 %i.ji, -294967297          ; 2 uses
   %i.jk = add nsw i32 %i.ji, 294967296
   %i.jl = zext i1 %i.jj to i64
-  %.pn17.i.i268 = add nsw i64 %i.jl, %i.jd
+  %.pn17.i.i268 = add nuw nsw i64 %i.jl, %i.jd
   %.pn15.i.i269 = select i1 %i.jj, i32 %i.jk, i32 %i.ji
   %.fca.0.insert.i.pn.i.i270 = insertvalue { i64, i32 } poison, i64 %.pn17.i.i268, 0
   %.pn.i.i271 = insertvalue { i64, i32 } %.fca.0.insert.i.pn.i.i270, i32 %.pn15.i.i269, 1
@@ -1218,26 +1200,17 @@ bb.cm:                                            ; preds = %bb.cl
   %i.jv = icmp ugt i32 %i.ju, -294967297          ; 2 uses
   %i.jw = add nsw i32 %i.ju, 294967296
   %i.jx = zext i1 %i.jv to i64
-  %.pn17.i58.i273 = add nsw i64 %i.jx, %i.jp      ; 4 uses
+  %.pn17.i58.i273 = add nuw nsw i64 %i.jx, %i.jp  ; 2 uses
   %.pn15.i59.i274 = select i1 %i.jv, i32 %i.jw, i32 %i.ju ; 2 uses
   switch i32 %.pn15.i59.i274, label %bb.co [
-    i32 0, label %44
-    i32 -1, label %46
+    i32 0, label %bb.cn
+    i32 -1, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit280
   ]
 
-44:                                               ; preds = %bb.cm
-  %45 = icmp eq i64 %.pn17.i58.i273, -9223372036854775808
-  br i1 %45, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit280, label %bb.cn
-
-bb.cn:                                            ; preds = %44
+bb.cn:                                            ; preds = %bb.cm
   %i.jy = sub nsw i64 0, %.pn17.i58.i273
   %.fca.0.insert.i.i64.i276 = insertvalue { i64, i32 } poison, i64 %i.jy, 0
   %.fca.1.insert.i.i65.i277 = insertvalue { i64, i32 } %.fca.0.insert.i.i64.i276, i32 0, 1
-  br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit280
-
-46:                                               ; preds = %bb.cm
-  %47 = icmp slt i64 %.pn17.i58.i273, 0
-  %spec.select.i.i62.i275 = select i1 %47, { i64, i32 } { i64 9223372036854775807, i32 -1 }, { i64, i32 } { i64 -9223372036854775808, i32 -1 }
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit280
 
 bb.co:                                            ; preds = %bb.cm
@@ -1247,10 +1220,10 @@ bb.co:                                            ; preds = %bb.cm
   %.fca.1.insert.i.i.i67.i279 = insertvalue { i64, i32 } %.fca.0.insert.i.i.i66.i278, i32 %i.ka, 1
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit280
 
-_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit280: ; preds = %bb.cj, %bb.ck, %bb.cl, %44, %bb.cn, %46, %bb.co
-  %.pn.i267 = phi { i64, i32 } [ { i64 9223372036854775807, i32 -1 }, %44 ], [ %.pn.i.i271, %bb.ck ], [ { i64 9223372036854775807, i32 -1 }, %bb.cj ], [ { i64 -9223372036854775808, i32 -1 }, %bb.cl ], [ %.fca.1.insert.i.i.i67.i279, %bb.co ], [ %.fca.1.insert.i.i65.i277, %bb.cn ], [ %spec.select.i.i62.i275, %46 ] ; 2 uses
-  %.fca.0.extract = extractvalue { i64, i32 } %.pn.i267, 0 ; 3 uses
-  %.fca.1.extract = extractvalue { i64, i32 } %.pn.i267, 1 ; 3 uses
+_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit280: ; preds = %bb.cj, %bb.ck, %bb.cl, %bb.cm, %bb.cn, %bb.co
+  %.pn.i266 = phi { i64, i32 } [ %.fca.1.insert.i.i65.i277, %bb.cn ], [ %.pn.i.i271, %bb.ck ], [ { i64 9223372036854775807, i32 -1 }, %bb.cj ], [ { i64 -9223372036854775808, i32 -1 }, %bb.cl ], [ %.fca.1.insert.i.i.i67.i279, %bb.co ], [ { i64 -9223372036854775808, i32 -1 }, %bb.cm ] ; 2 uses
+  %.fca.0.extract = extractvalue { i64, i32 } %.pn.i266, 0 ; 3 uses
+  %.fca.1.extract = extractvalue { i64, i32 } %.pn.i266, 1 ; 3 uses
   store i64 %.fca.0.extract, ptr %32, align 8
   store i32 %.fca.1.extract, ptr %.sroa.28.0..sroa_idx, align 8
   %.sroa.03.0.copyload = load i64, ptr %15, align 8
@@ -1541,7 +1514,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = icmp ugt i32 %i.i, -294967297            ; 2 uses
   %i.k = add nsw i32 %i.i, 294967296
   %i.l = zext i1 %i.j to i64
-  %.pn17.i.i = add nsw i64 %i.l, %i.d
+  %.pn17.i.i = add nuw nsw i64 %i.l, %i.d
   %.pn15.i.i = select i1 %i.j, i32 %i.k, i32 %i.i
   %.fca.0.insert.i.pn.i.i = insertvalue { i64, i32 } poison, i64 %.pn17.i.i, 0
   %.pn.i.i = insertvalue { i64, i32 } %.fca.0.insert.i.pn.i.i, i32 %.pn15.i.i, 1
@@ -1564,26 +1537,17 @@ bb.e:                                             ; preds = %bb.d
   %i.v = icmp ugt i32 %i.u, -294967297            ; 2 uses
   %i.w = add nsw i32 %i.u, 294967296
   %i.x = zext i1 %i.v to i64
-  %.pn17.i58.i = add nsw i64 %i.x, %i.p           ; 4 uses
+  %.pn17.i58.i = add nuw nsw i64 %i.x, %i.p       ; 2 uses
   %.pn15.i59.i = select i1 %i.v, i32 %i.w, i32 %i.u ; 2 uses
   switch i32 %.pn15.i59.i, label %bb.g [
-    i32 0, label %12
-    i32 -1, label %14
+    i32 0, label %bb.f
+    i32 -1, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
   ]
 
-12:                                               ; preds = %bb.e
-  %13 = icmp eq i64 %.pn17.i58.i, -9223372036854775808
-  br i1 %13, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit, label %bb.f
-
-bb.f:                                             ; preds = %12
+bb.f:                                             ; preds = %bb.e
   %i.y = sub nsw i64 0, %.pn17.i58.i
   %.fca.0.insert.i.i64.i = insertvalue { i64, i32 } poison, i64 %i.y, 0
   %.fca.1.insert.i.i65.i = insertvalue { i64, i32 } %.fca.0.insert.i.i64.i, i32 0, 1
-  br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
-
-14:                                               ; preds = %bb.e
-  %15 = icmp slt i64 %.pn17.i58.i, 0
-  %spec.select.i.i62.i = select i1 %15, { i64, i32 } { i64 9223372036854775807, i32 -1 }, { i64, i32 } { i64 -9223372036854775808, i32 -1 }
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -1593,8 +1557,8 @@ bb.g:                                             ; preds = %bb.e
   %.fca.1.insert.i.i.i67.i = insertvalue { i64, i32 } %.fca.0.insert.i.i.i66.i, i32 %i.aa, 1
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
 
-_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit: ; preds = %bb.b, %bb.c, %bb.d, %12, %bb.f, %14, %bb.g
-  %.pn.i = phi { i64, i32 } [ { i64 9223372036854775807, i32 -1 }, %12 ], [ %.pn.i.i, %bb.c ], [ { i64 9223372036854775807, i32 -1 }, %bb.b ], [ { i64 -9223372036854775808, i32 -1 }, %bb.d ], [ %.fca.1.insert.i.i.i67.i, %bb.g ], [ %.fca.1.insert.i.i65.i, %bb.f ], [ %spec.select.i.i62.i, %14 ] ; 2 uses
+_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit: ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g
+  %.pn.i = phi { i64, i32 } [ %.fca.1.insert.i.i65.i, %bb.f ], [ %.pn.i.i, %bb.c ], [ { i64 9223372036854775807, i32 -1 }, %bb.b ], [ { i64 -9223372036854775808, i32 -1 }, %bb.d ], [ %.fca.1.insert.i.i.i67.i, %bb.g ], [ { i64 -9223372036854775808, i32 -1 }, %bb.e ] ; 2 uses
   %.fca.0.extract42 = extractvalue { i64, i32 } %.pn.i, 0 ; 3 uses
   %.fca.1.extract43 = extractvalue { i64, i32 } %.pn.i, 1 ; 3 uses
   store i64 %.fca.0.extract42, ptr %4, align 8

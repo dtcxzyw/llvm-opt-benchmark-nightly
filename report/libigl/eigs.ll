@@ -205,13 +205,11 @@ bb.a:
   %i.a = uitofp nneg i32 %1 to double
   %i.b = fmul nnan double %.0.val, %i.a
   %i.c = fptosi double %i.b to i32
-  %.sroa.speculated9 = tail call i32 @llvm.smin.i32(i32 %1, i32 %i.c)
-  %.sroa.speculated13 = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated9, i32 0) ; 2 uses
+  %.sroa.speculated13 = tail call i32 @llvm.smin.i32(i32 %1, i32 %i.c) ; 2 uses
   %i.d = uitofp nneg i32 %0 to double
   %i.e = fmul nnan double %.8.val, %i.d
   %i.f = fptosi double %i.e to i32
-  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %0, i32 %i.f)
-  %.sroa.speculated3 = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated, i32 0)
+  %.sroa.speculated3 = tail call i32 @llvm.smin.i32(i32 %0, i32 %i.f)
   %.not96 = icmp eq i32 %1, 0                     ; 2 uses
   br i1 %.not96, label %.preheader65, label %.lr.ph.preheader
 

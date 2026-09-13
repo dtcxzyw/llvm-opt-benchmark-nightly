@@ -205,20 +205,12 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %i.d, align 8, !tbaa !58
   %i.f = uitofp i64 %i.e to double
   %i.g = call double @llvm.fmuladd.f64(double %i.f, double 1.001000e+00, double 1.300000e+01)
-  %i.h = fptosi double %i.g to i32                ; 6 uses
-  %5 = sext i32 %i.h to i64                       ; 3 uses
-  %6 = icmp slt i32 %i.h, 0
-  br i1 %6, label %.noexc, label %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
-
-.noexc:                                           ; preds = %bb.b
-  call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.565) #39
-  unreachable
-
-_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.b
+  %i.h = fptosi double %i.g to i32                ; 5 uses
   %.not.i.i.i.i = icmp eq i32 %i.h, 0
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit, label %.noexc28
 
-.noexc28:                                         ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
+.noexc28:                                         ; preds = %bb.b
+  %5 = zext nneg i32 %i.h to i64                  ; 3 uses
   %i.i = call noalias noundef nonnull ptr @_Znwm(i64 noundef %5) #41 ; 5 uses
   %i.j = getelementptr i8, ptr %i.i, i64 %5       ; 2 uses
   store i8 0, ptr %i.i, align 1, !tbaa !53
@@ -231,9 +223,9 @@ bb.c:                                             ; preds = %.noexc28
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.m, i8 0, i64 %i.k, i1 false)
   br label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
 
-_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.c, %.noexc28, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
-  %.sroa.1165.0 = phi ptr [ %i.j, %bb.c ], [ %i.j, %.noexc28 ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
-  %.sroa.060.0 = phi ptr [ %i.i, %bb.c ], [ %i.i, %.noexc28 ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 8 uses
+_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.c, %.noexc28, %bb.b
+  %.sroa.1165.0 = phi ptr [ %i.j, %bb.c ], [ %i.j, %.noexc28 ], [ null, %bb.b ] ; 2 uses
+  %.sroa.060.0 = phi ptr [ %i.i, %bb.c ], [ %i.i, %.noexc28 ], [ null, %bb.b ] ; 8 uses
   %i.n = load i64, ptr %i.d, align 8, !tbaa !58
   %i.o = trunc i64 %i.n to i32
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8

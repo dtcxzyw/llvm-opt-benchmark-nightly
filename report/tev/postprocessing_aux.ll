@@ -205,8 +205,7 @@ vector.body:                                      ; preds = %.lr.ph329, %vector.
   %i.de = fmul <4 x float> %i.dd, %i.dd
   %i.df = fmul <4 x float> %i.de, splat (float f0x37800000)
   %i.dg = fptosi <4 x float> %i.df to <4 x i32>
-  %1 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.dg, <4 x i32> zeroinitializer)
-  %i.dh = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %1, <4 x i32> splat (i32 65535))
+  %i.dh = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.dg, <4 x i32> splat (i32 65535))
   %i.di = trunc nuw <4 x i32> %i.dh to <4 x i16>  ; 4 uses
   %i.dj = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep331, i64 %index
   %i.dk = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep331, i64 %index
@@ -609,8 +608,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.va = fmul float %i.uz, %i.uz
   %i.vb = fmul float %i.va, f0x37800000
   %i.vc = fptosi float %i.vb to i32
-  %2 = tail call i32 @llvm.smax.i32(i32 %i.vc, i32 0)
-  %i.vd = tail call i32 @llvm.umin.i32(i32 %2, i32 65535)
+  %i.vd = tail call i32 @llvm.umin.i32(i32 %i.vc, i32 65535)
   %i.ve = trunc nuw i32 %i.vd to i16
   %gep332 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep331, i64 %indvars.iv391
   store i16 %i.ve, ptr %gep332, align 2, !tbaa !77
@@ -878,8 +876,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %bb.t
   %i.abq = fpext float %i.abp to double
   %i.abr = fadd double %i.abq, 5.000000e-01
   %i.abs = fptosi double %i.abr to i32
-  %3 = tail call i32 @llvm.smax.i32(i32 %i.abs, i32 0)
-  %i.abt = tail call i32 @llvm.umin.i32(i32 %3, i32 65535)
+  %i.abt = tail call i32 @llvm.umin.i32(i32 %i.abs, i32 65535)
   %i.abu = trunc nuw i32 %i.abt to i16
   store i16 %i.abu, ptr %gep456, align 2, !tbaa !77
   %indvars.iv.next418 = add nuw nsw i64 %indvars.iv417, 2 ; 2 uses
@@ -1282,22 +1279,19 @@ declare float @ldexpf(float, i32) local_unnamed_addr #8
 declare i32 @llvm.smin.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #2
+declare i32 @llvm.umin.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #2
+declare i32 @llvm.smax.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #2

@@ -205,8 +205,7 @@ bb.v:                                             ; preds = %.preheader170.i.i.i
   %i.anz = fmul nnan float %i.any, 2.550000e+02
   %i.aoa = fmul nnan float %i.anz, 5.000000e-01
   %i.aob = fptosi float %i.aoa to i32
-  %3 = tail call i32 @llvm.smax.i32(i32 %i.aob, i32 0)
-  %i.aoc = tail call i32 @llvm.umin.i32(i32 %3, i32 255)
+  %i.aoc = tail call i32 @llvm.smin.i32(i32 %i.aob, i32 255)
   %i.aod = trunc nuw i32 %i.aoc to i8
   br label %_ZN11OpenImageIO4v3_1L14ComputeNormalZEhh.exit.i.i.i.i
 
@@ -252,8 +251,7 @@ bb.w:                                             ; preds = %.preheader172.i.i.i
   %i.apd = fmul nnan float %i.apc, 2.550000e+02
   %i.ape = fmul nnan float %i.apd, 5.000000e-01
   %i.apf = fptosi float %i.ape to i32
-  %4 = tail call i32 @llvm.smax.i32(i32 %i.apf, i32 0)
-  %i.apg = tail call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %i.apg = tail call i32 @llvm.smin.i32(i32 %i.apf, i32 255)
   %i.aph = trunc nuw i32 %i.apg to i8
   br label %_ZN11OpenImageIO4v3_1L14ComputeNormalZEhh.exit.i77.i.i.i
 
@@ -656,10 +654,7 @@ bb.j:                                             ; preds = %_ZSt27__uninitializ
 declare i32 @llvm.umax.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #23
+declare i32 @llvm.smin.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #23
@@ -674,7 +669,7 @@ declare i64 @llvm.umin.i64(i64, i64) #23
 declare i64 @llvm.usub.sat.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #23
+declare i32 @llvm.smax.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare x86_fp80 @llvm.fabs.f80(x86_fp80) #23
@@ -714,6 +709,9 @@ declare i128 @llvm.ctlz.i128(i128, i1 immarg) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #23

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/libsignal_protocol-78e79be79537878f.libsignal_protocol.3431899de14c0db4-cgu.13?download=true
+inline.NumInlined: 295
+inline.NumDeleted: 178
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -46,36 +48,35 @@ target triple = "x86_64-unknown-linux-gnu"
 @40 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"h\00\00\00\00\00\00\00s\00\00\00\05\00\00\00" }>, align 8
 @41 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"h\00\00\00\00\00\00\00y\00\00\00\05\00\00\00" }>, align 8
 @42 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"h\00\00\00\00\00\00\00\7F\00\00\00\05\00\00\00" }>, align 8
-@43 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"h\00\00\00\00\00\00\00\8D\00\00\00\14\00\00\00" }>, align 8
 @_RNvNtNtNtCsgxBkk5gSRhY_4core7unicode12unicode_data11white_space14WHITESPACE_MAP = external local_unnamed_addr global [256 x i8]
-@44 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtCs6i54tJFfzR_5alloc3vec3VechENtB6_5Debug3fmtCs4tP8yUXWbFU_18libsignal_protocol }>, align 8
-@45 = private unnamed_addr constant [60 x i8] c"internal error: entered unreachable code: invalid Once state", align 1
-@46 = private unnamed_addr constant [87 x i8] c"/rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/std/src/sys/sync/once/futex.rs\00", align 1
-@47 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @46, [16 x i8] c"V\00\00\00\00\00\00\00`\00\00\00\12\00\00\00" }>, align 8
-@48 = private unnamed_addr constant [87 x i8] c"assertion failed: result == Self::PrekeyMessage || message_type as i32 == result as i32", align 1
-@49 = private unnamed_addr constant [35 x i8] c"rust/protocol/src/sealed_sender.rs\00", align 1
-@50 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @49, [16 x i8] c"\22\00\00\00\00\00\00\00\C6\01\00\00\09\00\00\00" }>, align 8
-@51 = private unnamed_addr constant [124 x i8] c"/opt-bench/work/libsignal-rs/libsignal/target/release/build/libsignal-protocol-66ce4c067e80c76f/out/signal.proto.storage.rs\00", align 1
-@52 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @51, [16 x i8] c"{\00\00\00\00\00\00\00\02\00\00\00\1C\00\00\00" }>, align 8
-@53 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @51, [16 x i8] c"{\00\00\00\00\00\00\00%\00\00\00 \00\00\00" }>, align 8
-@54 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRmNtB6_5Debug3fmtCs4tP8yUXWbFU_18libsignal_protocol }>, align 8
-@55 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5ChainENtB6_5Debug3fmtB10_ }>, align 8
-@56 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtCs6i54tJFfzR_5alloc3vec3VecNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5ChainENtB6_5Debug3fmtB1a_ }>, align 8
-@57 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure13PendingPreKeyENtB6_5Debug3fmtB10_ }>, align 8
-@58 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure18PendingKyberPreKeyENtB6_5Debug3fmtB10_ }>, align 8
-@59 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @51, [16 x i8] c"{\00\00\00\00\00\00\00\\\00\00\00\1C\00\00\00" }>, align 8
-@60 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage16SessionStructureENtB6_5Debug3fmtBY_ }>, align 8
-@61 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXNvXs9_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB8_15RecordStructureNtNtCsgxBkk5gSRhY_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1k_3fmt }>, align 8
-@62 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage26sender_key_state_structure14SenderChainKeyENtB6_5Debug3fmtB10_ }>, align 8
-@63 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage26sender_key_state_structure16SenderSigningKeyENtB6_5Debug3fmtB10_ }>, align 8
-@64 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtCs6i54tJFfzR_5alloc3vec3VecNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage26sender_key_state_structure16SenderMessageKeyENtB6_5Debug3fmtB1a_ }>, align 8
-@65 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtCs6i54tJFfzR_5alloc3vec3VecNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage23SenderKeyStateStructureENtB6_5Debug3fmtB18_ }>, align 8
-@66 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @51, [16 x i8] c"{\00\00\00\00\00\00\00d\00\00\00&\00\00\00" }>, align 8
-@67 = private unnamed_addr constant [27 x i8] c"SignedPreKeyRecordStructure", align 1
-@68 = private unnamed_addr constant [9 x i8] c"signature", align 1
-@69 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRyNtB6_5Debug3fmtCs4tP8yUXWbFU_18libsignal_protocol }>, align 8
-@70 = private unnamed_addr constant [9 x i8] c"timestamp", align 1
-@71 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @51, [16 x i8] c"{\00\00\00\00\00\00\00z\00\00\00&\00\00\00" }>, align 8
+@43 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtCs6i54tJFfzR_5alloc3vec3VechENtB6_5Debug3fmtCs4tP8yUXWbFU_18libsignal_protocol }>, align 8
+@44 = private unnamed_addr constant [60 x i8] c"internal error: entered unreachable code: invalid Once state", align 1
+@45 = private unnamed_addr constant [87 x i8] c"/rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/std/src/sys/sync/once/futex.rs\00", align 1
+@46 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @45, [16 x i8] c"V\00\00\00\00\00\00\00`\00\00\00\12\00\00\00" }>, align 8
+@47 = private unnamed_addr constant [87 x i8] c"assertion failed: result == Self::PrekeyMessage || message_type as i32 == result as i32", align 1
+@48 = private unnamed_addr constant [35 x i8] c"rust/protocol/src/sealed_sender.rs\00", align 1
+@49 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @48, [16 x i8] c"\22\00\00\00\00\00\00\00\C6\01\00\00\09\00\00\00" }>, align 8
+@50 = private unnamed_addr constant [124 x i8] c"/opt-bench/work/libsignal-rs/libsignal/target/release/build/libsignal-protocol-66ce4c067e80c76f/out/signal.proto.storage.rs\00", align 1
+@51 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @50, [16 x i8] c"{\00\00\00\00\00\00\00\02\00\00\00\1C\00\00\00" }>, align 8
+@52 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @50, [16 x i8] c"{\00\00\00\00\00\00\00%\00\00\00 \00\00\00" }>, align 8
+@53 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRmNtB6_5Debug3fmtCs4tP8yUXWbFU_18libsignal_protocol }>, align 8
+@54 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5ChainENtB6_5Debug3fmtB10_ }>, align 8
+@55 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtCs6i54tJFfzR_5alloc3vec3VecNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5ChainENtB6_5Debug3fmtB1a_ }>, align 8
+@56 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure13PendingPreKeyENtB6_5Debug3fmtB10_ }>, align 8
+@57 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure18PendingKyberPreKeyENtB6_5Debug3fmtB10_ }>, align 8
+@58 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @50, [16 x i8] c"{\00\00\00\00\00\00\00\\\00\00\00\1C\00\00\00" }>, align 8
+@59 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage16SessionStructureENtB6_5Debug3fmtBY_ }>, align 8
+@60 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXNvXs9_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB8_15RecordStructureNtNtCsgxBkk5gSRhY_4core3fmt5Debug3fmtNtB2_13ScalarWrapperB1k_3fmt }>, align 8
+@61 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage26sender_key_state_structure14SenderChainKeyENtB6_5Debug3fmtB10_ }>, align 8
+@62 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtB8_6option6OptionNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage26sender_key_state_structure16SenderSigningKeyENtB6_5Debug3fmtB10_ }>, align 8
+@63 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtCs6i54tJFfzR_5alloc3vec3VecNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage26sender_key_state_structure16SenderMessageKeyENtB6_5Debug3fmtB1a_ }>, align 8
+@64 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRINtNtCs6i54tJFfzR_5alloc3vec3VecNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage23SenderKeyStateStructureENtB6_5Debug3fmtB18_ }>, align 8
+@65 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @50, [16 x i8] c"{\00\00\00\00\00\00\00d\00\00\00&\00\00\00" }>, align 8
+@66 = private unnamed_addr constant [27 x i8] c"SignedPreKeyRecordStructure", align 1
+@67 = private unnamed_addr constant [9 x i8] c"signature", align 1
+@68 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRyNtB6_5Debug3fmtCs4tP8yUXWbFU_18libsignal_protocol }>, align 8
+@69 = private unnamed_addr constant [9 x i8] c"timestamp", align 1
+@70 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @50, [16 x i8] c"{\00\00\00\00\00\00\00z\00\00\00&\00\00\00" }>, align 8
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(read, inaccessiblemem: write, target_mem: none) uwtable
 define hidden { ptr, i64 } @_RINvMNtCsgxBkk5gSRhY_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -478,7 +479,7 @@ bb.z:                                             ; preds = %bb.y
   %i.bz = add nsw i32 %i.bw, -268435456
   %i.ca = zext nneg i32 %i.bz to i64
   %i.cb = shl nuw nsw i64 %i.ca, 28
-  %i.cc = add nuw nsw i64 %i.cb, %i.as            ; 3 uses
+  %i.cc = add nuw nsw i64 %i.cb, %i.as            ; 2 uses
   %i.cd = icmp samesign ugt i64 %.val1.i, 8
   tail call void @llvm.assume(i1 %i.cd)
   %i.ce = getelementptr inbounds nuw i8, ptr %.val.i, i64 8
@@ -500,18 +501,13 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cl = zext nneg i8 %i.cj to i64
+  %1 = shl nuw i64 %i.cl, 63
   %i.cm = and i8 %i.cf, 127
   %i.cn = zext nneg i8 %i.cm to i64
-  %1 = shl nuw i64 %i.cl, 63
   %i.co = shl nuw nsw i64 %i.cn, 56
   %i.cp = add nuw nsw i64 %i.co, %i.cc
-  %i.cq = or disjoint i64 %1, %i.cp               ; 2 uses
-  %2 = icmp ult i64 %i.cq, %i.cc
-  br i1 %2, label %3, label %_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCs4tP8yUXWbFU_18libsignal_protocol.exit6
-
-3:                                                ; preds = %bb.ac
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @43) #18, !noalias !83
-  unreachable
+  %i.cq = or disjoint i64 %1, %i.cp
+  br label %_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCs4tP8yUXWbFU_18libsignal_protocol.exit6
 
 bb.ad:                                            ; preds = %bb.z
   %i.cr = zext nneg i8 %i.cf to i64
@@ -565,7 +561,7 @@ bb.ak:                                            ; preds = %bb.ab
   %i.dp = ptrtoint ptr %i.do to i64
   br label %bb.al
 
-_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCs4tP8yUXWbFU_18libsignal_protocol.exit6: ; preds = %bb.ac, %bb.af, %bb.ag, %bb.ah, %bb.ad, %bb.ae, %bb.o, %bb.k, %bb.g
+_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCs4tP8yUXWbFU_18libsignal_protocol.exit6: ; preds = %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ad, %bb.ac, %bb.o, %bb.k, %bb.g
   %.sroa.18.0.ph = phi i64 [ 10, %bb.ac ], [ 9, %bb.ad ], [ 8, %bb.ae ], [ 7, %bb.af ], [ 6, %bb.ag ], [ 5, %bb.ah ], [ 4, %bb.o ], [ 3, %bb.k ], [ 2, %bb.g ] ; 2 uses
   %.sroa.5.0.ph = phi i64 [ %i.cq, %bb.ac ], [ %i.ct, %bb.ad ], [ %i.cw, %bb.ae ], [ %i.cz, %bb.af ], [ %i.dc, %bb.ag ], [ %i.df, %bb.ah ], [ %i.aq, %bb.o ], [ %i.ag, %bb.k ], [ %i.w, %bb.g ]
   %i.dq = sub nuw i64 %.val1.i, %.sroa.18.0.ph
@@ -968,7 +964,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.02, i64 24 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %.sroa.0.02, ptr %i.a, align 8, !captures !7
-  %i.k = call noundef nonnull align 8 ptr @_RNvMs5_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_9DebugList5entry(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44) ; 0 uses
+  %i.k = call noundef nonnull align 8 ptr @_RNvMs5_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_9DebugList5entry(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.l = icmp eq ptr %i.j, %i.h
   br i1 %i.l, label %._crit_edge, label %.lr.ph
@@ -991,7 +987,7 @@ bb.a:
   ], !prof !322
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCsgxBkk5gSRhY_4core9panicking9panic_fmt(ptr noundef nonnull @45, ptr noundef nonnull inttoptr (i64 121 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @47) #18
+  tail call void @_RNvNtCsgxBkk5gSRhY_4core9panicking9panic_fmt(ptr noundef nonnull @44, ptr noundef nonnull inttoptr (i64 121 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #18
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -1032,7 +1028,7 @@ bb.f:                                             ; preds = %bb.a, %bb.e
   ret i32 %.sroa.0.1
 
 bb.g:                                             ; preds = %bb.e
-  tail call void @_RNvNtCsgxBkk5gSRhY_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @48, i64 noundef 87, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @50) #18
+  tail call void @_RNvNtCsgxBkk5gSRhY_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @47, i64 noundef 87, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @49) #18
   unreachable
 }
 
@@ -1109,7 +1105,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ao, label %bb.k, label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.j:                                             ; preds = %bb.h
@@ -1138,7 +1134,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bc, label %bb.o, label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.n:                                             ; preds = %bb.l
@@ -1276,7 +1272,7 @@ _RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtNtCs4tP8yUXWbFU_18libsig
   br i1 %i.dw, label %bb.ad, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.u
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #18, !noalias !349
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18, !noalias !349
   unreachable
 
 bb.ab:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5chain8ChainKeyE6map_orjNCNvXs1_BN_NtBN_5ChainNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len0EBT_.exit.i.i.i.i
@@ -1300,11 +1296,11 @@ _RINvNtNtCs43OB2dM8s8d_5prost8encoding7message20encoded_len_repeatedNtNtNtNtNtCs
   br i1 %i.eg, label %bb.ae, label %_RNvXs1_NtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structureNtB5_5ChainNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit.i.i.i
 
 bb.ad:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5chain8ChainKeyE6map_orjNCNvXs1_BN_NtBN_5ChainNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len0EBT_.exit.i.i.i.i
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #18, !noalias !349
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18, !noalias !349
   unreachable
 
 bb.ae:                                            ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding7message20encoded_len_repeatedNtNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5chain10MessageKeyEB1d_.exit.i.i.i.i
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #18, !noalias !349
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18, !noalias !349
   unreachable
 
 _RNvXs1_NtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structureNtB5_5ChainNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit.i.i.i: ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding7message20encoded_len_repeatedNtNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5chain10MessageKeyEB1d_.exit.i.i.i.i
@@ -1330,7 +1326,7 @@ _RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsigna
   br i1 %i.eq, label %bb.aj, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.o
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.ah:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5ChainE6map_orjNCNvXs1_BN_NtBN_16SessionStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len0EBR_.exit
@@ -1354,7 +1350,7 @@ _RINvNtNtCs43OB2dM8s8d_5prost8encoding7message20encoded_len_repeatedNtNtNtNtCs4t
   br i1 %i.fa, label %bb.as, label %bb.ak
 
 bb.aj:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5ChainE6map_orjNCNvXs1_BN_NtBN_16SessionStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len0EBR_.exit
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.ak:                                            ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding7message20encoded_len_repeatedNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5ChainEB1b_.exit
@@ -1459,7 +1455,7 @@ _RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsigna
   br i1 %i.hi, label %bb.au, label %bb.at
 
 bb.as:                                            ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding7message20encoded_len_repeatedNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure5ChainEB1b_.exit
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.at:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure13PendingPreKeyE6map_orjNCNvXs1_BN_NtBN_16SessionStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_lens_0EBR_.exit
@@ -1469,7 +1465,7 @@ bb.at:                                            ; preds = %_RINvMNtCsgxBkk5gSR
   br i1 %i.hl, label %bb.aw, label %bb.av
 
 bb.au:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure13PendingPreKeyE6map_orjNCNvXs1_BN_NtBN_16SessionStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_lens_0EBR_.exit
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.av:                                            ; preds = %bb.at
@@ -1496,7 +1492,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %i.hy, label %bb.ba, label %bb.az
 
 bb.ay:                                            ; preds = %bb.aw
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.az:                                            ; preds = %bb.ax
@@ -1523,7 +1519,7 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %i.il, label %bb.be, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.ba
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.bd:                                            ; preds = %bb.bb
@@ -1608,7 +1604,7 @@ _RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsigna
   br i1 %i.ke, label %bb.bm, label %bb.bl
 
 bb.bk:                                            ; preds = %bb.be
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.bl:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure18PendingKyberPreKeyE6map_orjNCNvXs1_BN_NtBN_16SessionStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_lens0_0EBR_.exit
@@ -1618,7 +1614,7 @@ bb.bl:                                            ; preds = %_RINvMNtCsgxBkk5gSR
   br i1 %i.kh, label %bb.bo, label %bb.bn
 
 bb.bm:                                            ; preds = %_RINvMNtCsgxBkk5gSRhY_4core6optionINtB3_6OptionRNtNtNtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storage17session_structure18PendingKyberPreKeyE6map_orjNCNvXs1_BN_NtBN_16SessionStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_lens0_0EBR_.exit
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 
 bb.bn:                                            ; preds = %bb.bl
@@ -1644,7 +1640,7 @@ bb.bp:                                            ; preds = %bb.bo
   ret i64 %i.kr
 
 bb.bq:                                            ; preds = %bb.bo
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #18
   unreachable
 }
 
@@ -1848,66 +1844,66 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 328
   store ptr %i.o, ptr %i.m, align 8, !captures !7
-  %i.p = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.n, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 15, ptr noundef nonnull %i.m, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
+  %i.p = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.n, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 15, ptr noundef nonnull %i.m, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   store ptr %0, ptr %i.l, align 8, !captures !7
-  %i.q = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.p, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 21, ptr noundef nonnull %i.l, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.q = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.p, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 21, ptr noundef nonnull %i.l, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.r, ptr %i.k, align 8, !captures !7
-  %i.s = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.q, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 22, ptr noundef nonnull %i.k, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.s = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.q, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 22, ptr noundef nonnull %i.k, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.t, ptr %i.j, align 8, !captures !7
-  %i.u = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.s, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @8, i64 noundef 8, ptr noundef nonnull %i.j, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.u = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.s, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @8, i64 noundef 8, ptr noundef nonnull %i.j, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 332
   store ptr %i.v, ptr %i.i, align 8, !captures !7
-  %i.w = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.u, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 16, ptr noundef nonnull %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
+  %i.w = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.u, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 16, ptr noundef nonnull %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 144
   store ptr %i.x, ptr %i.h, align 8
-  %i.y = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.w, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 12, ptr noundef nonnull %i.h, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @55)
+  %i.y = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.w, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 12, ptr noundef nonnull %i.h, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %i.z, ptr %i.g, align 8
-  %i.aa = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.y, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 15, ptr noundef nonnull %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @56)
+  %i.aa = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.y, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 15, ptr noundef nonnull %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @55)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 248
   store ptr %i.ab, ptr %i.f, align 8
-  %i.ac = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.aa, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 15, ptr noundef nonnull %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @57)
+  %i.ac = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.aa, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 15, ptr noundef nonnull %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @56)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 296
   store ptr %i.ad, ptr %i.e, align 8
-  %i.ae = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ac, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 21, ptr noundef nonnull %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58)
+  %i.ae = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ac, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 21, ptr noundef nonnull %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @57)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 336
   store ptr %i.af, ptr %i.d, align 8, !captures !7
-  %i.ag = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ae, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 22, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
+  %i.ag = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ae, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 22, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 340
   store ptr %i.ah, ptr %i.c, align 8, !captures !7
-  %i.ai = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ag, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 21, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
+  %i.ai = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ag, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 21, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 96
   store ptr %i.aj, ptr %i.b, align 8, !captures !7
-  %i.ak = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ai, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 14, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.ak = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ai, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 14, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 120
   store ptr %i.al, ptr %i.a, align 8, !captures !7
-  %i.am = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ak, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 16, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.am = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ak, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 16, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.an = call noundef zeroext i1 @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.am)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
@@ -2310,11 +2306,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.d, ptr %i.b, align 8
-  %i.e = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @20, i64 noundef 15, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @60)
+  %i.e = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @20, i64 noundef 15, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @59)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.f = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @21, i64 noundef 17, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61)
+  %i.f = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @21, i64 noundef 17, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @60)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.g = call noundef zeroext i1 @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -2461,26 +2457,26 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 104
   store ptr %i.g, ptr %i.e, align 8, !captures !7
-  %i.h = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @26, i64 noundef 15, ptr noundef nonnull %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
+  %i.h = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @26, i64 noundef 15, ptr noundef nonnull %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 108
   store ptr %i.i, ptr %i.d, align 8, !captures !7
-  %i.j = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @23, i64 noundef 8, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
+  %i.j = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @23, i64 noundef 8, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.k, ptr %i.c, align 8
-  %i.l = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.j, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @27, i64 noundef 16, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @62)
+  %i.l = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.j, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @27, i64 noundef 16, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @61)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %i.m, ptr %i.b, align 8
-  %i.n = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.l, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 18, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @63)
+  %i.n = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.l, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 18, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @62)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.o = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.n, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 19, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @64)
+  %i.o = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.n, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 19, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @63)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.p = call noundef zeroext i1 @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
@@ -2548,7 +2544,7 @@ bb.a:
   call void @_RNvMsa_NtCsgxBkk5gSRhY_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @28, i64 noundef 24)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.c = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @29, i64 noundef 17, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @65)
+  %i.c = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @29, i64 noundef 17, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @64)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.d = call noundef zeroext i1 @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -2567,16 +2563,16 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.e, ptr %i.c, align 8, !captures !7
-  %i.f = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @33, i64 noundef 2, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
+  %i.f = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @33, i64 noundef 2, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %0, ptr %i.b, align 8, !captures !7
-  %i.g = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @35, i64 noundef 10, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.g = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @35, i64 noundef 10, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.h, ptr %i.a, align 8, !captures !7
-  %i.i = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @34, i64 noundef 11, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.i = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @34, i64 noundef 11, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.j = call noundef zeroext i1 @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
@@ -2593,30 +2589,30 @@ bb.a:
   %i.e = alloca [8 x i8], align 8                 ; 4 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  call void @_RNvMsa_NtCsgxBkk5gSRhY_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @67, i64 noundef 27)
+  call void @_RNvMsa_NtCsgxBkk5gSRhY_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @66, i64 noundef 27)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80
   store ptr %i.g, ptr %i.e, align 8, !captures !7
-  %i.h = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @33, i64 noundef 2, ptr noundef nonnull %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @54)
+  %i.h = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @33, i64 noundef 2, ptr noundef nonnull %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store ptr %0, ptr %i.d, align 8, !captures !7
-  %i.i = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @35, i64 noundef 10, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.i = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @35, i64 noundef 10, ptr noundef nonnull %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.j, ptr %i.c, align 8, !captures !7
-  %i.k = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @34, i64 noundef 11, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.k = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @34, i64 noundef 11, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.l, ptr %i.b, align 8, !captures !7
-  %i.m = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.k, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef 9, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.m = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.k, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @67, i64 noundef 9, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %i.n, ptr %i.a, align 8, !captures !7
-  %i.o = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.m, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @70, i64 noundef 9, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @69)
+  %i.o = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.m, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @69, i64 noundef 9, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @68)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.p = call noundef zeroext i1 @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
@@ -2646,12 +2642,12 @@ bb.a:
   call void @_RNvMsa_NtCsgxBkk5gSRhY_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @36, i64 noundef 24)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %0, ptr %i.b, align 8, !captures !7
-  %i.d = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @35, i64 noundef 10, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.d = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @35, i64 noundef 10, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.e, ptr %i.a, align 8, !captures !7
-  %i.f = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @34, i64 noundef 11, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @44)
+  %i.f = call noundef nonnull align 8 ptr @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @34, i64 noundef 11, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @43)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.g = call noundef zeroext i1 @_RNvMs1_NtNtCsgxBkk5gSRhY_4core3fmt8buildersNtB5_11DebugStruct6finish(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -2741,7 +2737,7 @@ _RINvNtNtCs43OB2dM8s8d_5prost8encoding5bytes20encoded_len_repeatedINtNtCs6i54tJF
   br i1 %i.aj, label %bb.f, label %_RNvXs7_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB5_15RecordStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit
 
 bb.f:                                             ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding5bytes20encoded_len_repeatedINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit.i
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @59) #18, !noalias !403
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @58) #18, !noalias !403
   unreachable
 
 _RNvXs7_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB5_15RecordStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit: ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding5bytes20encoded_len_repeatedINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit.i
@@ -2926,7 +2922,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.an, label %bb.h, label %_RNvXsf_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB5_21PreKeyRecordStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66) #18, !noalias !409
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65) #18, !noalias !409
   unreachable
 
 _RNvXsf_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB5_21PreKeyRecordStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit: ; preds = %bb.g
@@ -3047,7 +3043,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.z, label %bb.f, label %_RNvXsv_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB5_24IdentityKeyPairStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @71) #18
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @70) #18
   unreachable
 
 _RNvXsv_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7storageNtB5_24IdentityKeyPairStructureNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit: ; preds = %bb.e

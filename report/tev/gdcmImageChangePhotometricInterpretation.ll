@@ -204,41 +204,36 @@ bb.e:                                             ; preds = %bb.a
   %i.l = shl nuw nsw i32 1, %i.k
   %i.m = fmul nnan double %i.h, 5.870000e-01      ; 2 uses
   %i.n = fneg double %i.m
-  %i.o = uitofp i16 %i.i to double                ; 2 uses
-  %i.p = uitofp i16 %i.e to double                ; 2 uses
-  %3 = insertelement <2 x double> poison, double %i.o, i64 0
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
-  %5 = insertelement <2 x double> poison, double %i.n, i64 0
-  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
-  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> <double -2.990000e-01, double 7.010000e-01>, <2 x double> %6)
+  %i.o = uitofp nneg i32 %i.l to double
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %i.p = uitofp i16 %i.i to double                ; 2 uses
+  %4 = uitofp i16 %i.e to double                  ; 2 uses
+  %5 = tail call double @llvm.fmuladd.f64(double %i.p, double 2.990000e-01, double %i.m)
+  %6 = tail call double @llvm.fmuladd.f64(double %4, double 1.140000e-01, double %5)
+  %7 = fadd double %6, 5.000000e-01
+  %8 = fptosi double %7 to i32
   %i.q = insertelement <2 x double> poison, double %i.p, i64 0
   %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> zeroinitializer
-  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.r, <2 x double> <double 8.860000e-01, double -1.140000e-01>, <2 x double> %7)
-  %9 = fdiv <2 x double> %8, <double 1.772000e+00, double 1.402000e+00>
-  %10 = uitofp nneg i32 %i.l to double
-  %11 = tail call double @llvm.fmuladd.f64(double %i.o, double 2.990000e-01, double %i.m)
-  %12 = tail call double @llvm.fmuladd.f64(double %i.p, double 1.140000e-01, double %11)
-  %13 = insertelement <2 x double> poison, double %12, i64 0
-  %i.s = insertelement <2 x double> poison, double %10, i64 0
+  %9 = insertelement <2 x double> poison, double %i.n, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.r, <2 x double> <double -2.990000e-01, double 7.010000e-01>, <2 x double> %10)
+  %12 = insertelement <2 x double> poison, double %4, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> <double 8.860000e-01, double -1.140000e-01>, <2 x double> %11)
+  %15 = fdiv <2 x double> %14, <double 1.772000e+00, double 1.402000e+00>
+  %i.s = insertelement <2 x double> poison, double %i.o, i64 0
   %i.t = shufflevector <2 x double> %i.s, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.u = fadd <2 x double> %9, %i.t               ; 2 uses
-  %14 = shufflevector <2 x double> %13, <2 x double> %i.u, <2 x i32> <i32 0, i32 2>
-  %i.v = fadd <2 x double> %14, splat (double 5.000000e-01)
+  %i.u = fadd <2 x double> %15, %i.t
+  %i.v = fadd <2 x double> %i.u, splat (double 5.000000e-01)
   %i.w = fptosi <2 x double> %i.v to <2 x i32>    ; 2 uses
-  %15 = extractelement <2 x double> %i.u, i64 1
-  %16 = fadd double %15, 5.000000e-01
-  %17 = fptosi double %16 to i32                  ; 2 uses
+  %spec.select3.i = tail call i32 @llvm.umin.i32(i32 %8, i32 65535)
+  %spec.select.i = trunc nuw i32 %spec.select3.i to i16
+  store i16 %spec.select.i, ptr %0, align 2, !tbaa !19
   %i.x = icmp slt <2 x i32> %i.w, zeroinitializer
   %i.y = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.w, <2 x i32> splat (i32 65535))
   %i.z = trunc nuw <2 x i32> %i.y to <2 x i16>
   %i.aa = select <2 x i1> %i.x, <2 x i16> zeroinitializer, <2 x i16> %i.z
-  store <2 x i16> %i.aa, ptr %0, align 2, !tbaa !19
-  %18 = icmp slt i32 %17, 0
-  %spec.select3.i25 = tail call i32 @llvm.umin.i32(i32 %17, i32 65535)
-  %spec.select.i26 = trunc nuw i32 %spec.select3.i25 to i16
-  %19 = select i1 %18, i16 0, i16 %spec.select.i26
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i16 %19, ptr %20, align 2, !tbaa !19
+  store <2 x i16> %i.aa, ptr %3, align 2, !tbaa !19
   ret void
 }
 
@@ -276,41 +271,44 @@ bb.e:                                             ; preds = %bb.a
   %i.m = fmul nnan double %i.h, 5.870000e-01      ; 2 uses
   %i.n = fneg double %i.m
   %i.o = uitofp nneg i32 %i.l to double
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.p = uitofp i8 %i.i to double                 ; 2 uses
   %i.q = uitofp i8 %i.e to double                 ; 2 uses
   %i.r = tail call double @llvm.fmuladd.f64(double %i.p, double 2.990000e-01, double %i.m)
   %i.s = tail call double @llvm.fmuladd.f64(double %i.q, double 1.140000e-01, double %i.r)
   %i.t = fadd double %i.s, 5.000000e-01
-  %i.u = fptosi double %i.t to i32                ; 2 uses
+  %i.u = fptosi double %i.t to i32
   %i.v = insertelement <2 x double> poison, double %i.p, i64 0
   %i.w = shufflevector <2 x double> %i.v, <2 x double> poison, <2 x i32> zeroinitializer
   %i.x = insertelement <2 x double> poison, double %i.n, i64 0
   %i.y = shufflevector <2 x double> %i.x, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.z = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.w, <2 x double> <double -2.990000e-01, double 7.010000e-01>, <2 x double> %i.y)
+  %i.z = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.w, <2 x double> <double 7.010000e-01, double -2.990000e-01>, <2 x double> %i.y)
   %i.aa = insertelement <2 x double> poison, double %i.q, i64 0
   %i.ab = shufflevector <2 x double> %i.aa, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ac = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ab, <2 x double> <double 8.860000e-01, double -1.140000e-01>, <2 x double> %i.z)
-  %i.ad = fdiv <2 x double> %i.ac, <double 1.772000e+00, double 1.402000e+00>
-  %3 = icmp slt i32 %i.u, 0
+  %i.ac = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ab, <2 x double> <double -1.140000e-01, double 8.860000e-01>, <2 x double> %i.z)
+  %i.ad = fdiv <2 x double> %i.ac, <double 1.402000e+00, double 1.772000e+00>
+  %4 = insertelement <2 x double> poison, double %i.o, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = fadd <2 x double> %i.ad, %5
+  %7 = fadd <2 x double> %6, splat (double 5.000000e-01)
+  %8 = fptosi <2 x double> %7 to <2 x i32>        ; 3 uses
   %spec.select3.i = tail call i32 @llvm.umin.i32(i32 %i.u, i32 255)
   %spec.select.i = trunc nuw i32 %spec.select3.i to i8
-  %4 = select i1 %3, i8 0, i8 %spec.select.i
-  store i8 %4, ptr %0, align 1, !tbaa !45
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %6 = insertelement <2 x double> poison, double %i.o, i64 0
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
-  %8 = fadd <2 x double> %i.ad, %7
-  %9 = fadd <2 x double> %8, splat (double 5.000000e-01)
-  %10 = fptosi <2 x double> %9 to <2 x i32>       ; 2 uses
-  %i.ae = icmp slt <2 x i32> %10, zeroinitializer
-  %11 = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %10, <2 x i32> splat (i32 255))
-  %12 = trunc nuw <2 x i32> %11 to <2 x i8>
-  %13 = select <2 x i1> %i.ae, <2 x i8> zeroinitializer, <2 x i8> %12 ; 2 uses
-  %14 = extractelement <2 x i8> %13, i64 0
-  store i8 %14, ptr %5, align 1, !tbaa !45
+  store i8 %spec.select.i, ptr %0, align 1, !tbaa !45
+  %9 = extractelement <2 x i32> %8, i64 1
+  %spec.select3.i23 = tail call i32 @llvm.umin.i32(i32 %9, i32 255)
+  %spec.select.i24 = trunc nuw i32 %spec.select3.i23 to i8
+  %i.ae = icmp slt <2 x i32> %8, zeroinitializer  ; 2 uses
+  %10 = extractelement <2 x i1> %i.ae, i64 1
+  %11 = select i1 %10, i8 0, i8 %spec.select.i24
+  store i8 %11, ptr %3, align 1, !tbaa !45
+  %12 = extractelement <2 x i32> %8, i64 0
+  %spec.select3.i25 = tail call i32 @llvm.umin.i32(i32 %12, i32 255)
+  %spec.select.i26 = trunc nuw i32 %spec.select3.i25 to i8
+  %13 = extractelement <2 x i1> %i.ae, i64 0
+  %14 = select i1 %13, i8 0, i8 %spec.select.i26
   %15 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %16 = extractelement <2 x i8> %13, i64 1
-  store i8 %16, ptr %15, align 1, !tbaa !45
+  store i8 %14, ptr %15, align 1, !tbaa !45
   ret void
 }
 

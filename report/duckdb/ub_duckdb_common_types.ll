@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/ub_duckdb_common_types?download=true
-inline.NumInlined: 41205
-inline.NumDeleted: 6297
+inline.NumInlined: 41207
+inline.NumDeleted: 6299
 loop-unroll.NumCompletelyUnrolled: 156
 loop-unroll.NumRuntimeUnrolled: 69
 loop-unroll.NumUnrolled: 229
@@ -204,10 +204,6 @@ $_ZN6duckdb24TemplatedDecimalToStringIiEENSt7__cxx1112basic_stringIcSt11char_tra
 $_ZN6duckdb24TemplatedDecimalToStringIlEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_hh = comdat any
 
 $_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_RKS8_ = comdat any
-
-$_ZN6duckdb23ConvertFloatingToBigintIdEEbT_RNS_9hugeint_tE = comdat any
-
-$_ZN6duckdb23ConvertFloatingToBigintIeEEbT_RNS_9hugeint_tE = comdat any
 
 $_ZN6duckdb19UnifiedVectorFormatD2Ev = comdat any
 
@@ -611,219 +607,110 @@ bb.a:
   ret i1 true
 }
 
-; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZN6duckdb7Hugeint10TryConvertIfEEbT_RNS_9hugeint_tE(float noundef %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #3 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
+define noundef zeroext i1 @_ZN6duckdb7Hugeint10TryConvertIfEEbT_RNS_9hugeint_tE(float noundef %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #19 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = fpext float %0 to double
-  %2 = tail call noundef zeroext i1 @_ZN6duckdb23ConvertFloatingToBigintIdEEbT_RNS_9hugeint_tE(double noundef %i.a, ptr noundef nonnull align 8 dereferenceable(16) %1)
-  ret i1 %2
+  %i.a = fpext float %0 to double                 ; 3 uses
+  %2 = tail call double @llvm.fabs.f64(double %i.a) ; 2 uses
+  %3 = fcmp one double %2, +inf
+  %or.cond.i.i = fcmp ult double %2, f0x47E0000000000000
+  %or.cond15.i.i = and i1 %3, %or.cond.i.i        ; 2 uses
+  br i1 %or.cond15.i.i, label %4, label %_ZN6duckdb7Hugeint10TryConvertIdEEbT_RNS_9hugeint_tE.exit
+
+4:                                                ; preds = %bb.a
+  %5 = fcmp olt float %0, 0.000000e+00            ; 2 uses
+  %6 = fneg double %i.a
+  %.013.i.i = select i1 %5, double %6, double %i.a ; 2 uses
+  %7 = frem double %.013.i.i, f0x43F0000000000000
+  %8 = fptoui double %7 to i64                    ; 3 uses
+  store i64 %8, ptr %1, align 8, !tbaa !293
+  %9 = fmul nnan double %.013.i.i, f0x3BF0000000000000
+  %10 = fptosi double %9 to i64                   ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  store i64 %10, ptr %11, align 8, !tbaa !292
+  br i1 %5, label %_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit.i.i, label %_ZN6duckdb7Hugeint10TryConvertIdEEbT_RNS_9hugeint_tE.exit
+
+_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit.i.i: ; preds = %4
+  %12 = sub i64 0, %8
+  %13 = xor i64 %10, -1
+  %14 = icmp eq i64 %8, 0
+  %15 = zext i1 %14 to i64
+  %16 = add nsw i64 %15, %13
+  store i64 %12, ptr %1, align 8, !tbaa !245
+  store i64 %16, ptr %11, align 8, !tbaa !245
+  br label %_ZN6duckdb7Hugeint10TryConvertIdEEbT_RNS_9hugeint_tE.exit
+
+_ZN6duckdb7Hugeint10TryConvertIdEEbT_RNS_9hugeint_tE.exit: ; preds = %bb.a, %4, %_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit.i.i
+  ret i1 %or.cond15.i.i
 }
 
-; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZN6duckdb7Hugeint10TryConvertIdEEbT_RNS_9hugeint_tE(double noundef %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #3 align 2 {
-bb.a:
-  %2 = tail call noundef zeroext i1 @_ZN6duckdb23ConvertFloatingToBigintIdEEbT_RNS_9hugeint_tE(double noundef %0, ptr noundef nonnull align 8 dereferenceable(16) %1)
-  ret i1 %2
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
+define noundef zeroext i1 @_ZN6duckdb7Hugeint10TryConvertIdEEbT_RNS_9hugeint_tE(double noundef %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #19 align 2 personality ptr @__gxx_personality_v0 {
+  %3 = tail call double @llvm.fabs.f64(double %0) ; 2 uses
+  %4 = fcmp one double %3, +inf
+  %or.cond.i = fcmp ult double %3, f0x47E0000000000000
+  %or.cond15.i = and i1 %4, %or.cond.i            ; 2 uses
+  br i1 %or.cond15.i, label %5, label %_ZN6duckdb23ConvertFloatingToBigintIdEEbT_RNS_9hugeint_tE.exit
+
+5:                                                ; preds = %2
+  %6 = fcmp olt double %0, 0.000000e+00           ; 2 uses
+  %7 = fneg double %0
+  %.013.i = select i1 %6, double %7, double %0    ; 2 uses
+  %8 = frem double %.013.i, f0x43F0000000000000
+  %9 = fptoui double %8 to i64                    ; 3 uses
+  store i64 %9, ptr %1, align 8, !tbaa !293
+  %10 = fmul nnan double %.013.i, f0x3BF0000000000000
+  %11 = fptosi double %10 to i64                  ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  store i64 %11, ptr %12, align 8, !tbaa !292
+  br i1 %6, label %bb.a, label %_ZN6duckdb23ConvertFloatingToBigintIdEEbT_RNS_9hugeint_tE.exit
+
+bb.a:                                             ; preds = %5
+  %13 = sub i64 0, %9
+  %14 = xor i64 %11, -1
+  %15 = icmp eq i64 %9, 0
+  %16 = zext i1 %15 to i64
+  %17 = add nsw i64 %16, %14
+  store i64 %13, ptr %1, align 8, !tbaa !245
+  store i64 %17, ptr %12, align 8, !tbaa !245
+  br label %_ZN6duckdb23ConvertFloatingToBigintIdEEbT_RNS_9hugeint_tE.exit
+
+_ZN6duckdb23ConvertFloatingToBigintIdEEbT_RNS_9hugeint_tE.exit: ; preds = %2, %5, %bb.a
+  ret i1 %or.cond15.i
 }
 
-; Function Attrs: mustprogress uwtable
-define linkonce_odr noundef zeroext i1 @_ZN6duckdb23ConvertFloatingToBigintIdEEbT_RNS_9hugeint_tE(double noundef %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #3 comdat personality ptr @__gxx_personality_v0 {
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %4 = alloca %"class.std::allocator.20", align 1 ; 5 uses
-  %5 = tail call double @llvm.fabs.f64(double %0) ; 2 uses
-  %6 = fcmp one double %5, +inf
-  %or.cond = fcmp ult double %5, f0x47E0000000000000
-  %or.cond15 = and i1 %6, %or.cond                ; 2 uses
-  br i1 %or.cond15, label %7, label %35
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write, errnomem: write) uwtable
+define noundef zeroext i1 @_ZN6duckdb7Hugeint10TryConvertIeEEbT_RNS_9hugeint_tE(x86_fp80 noundef %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #24 align 2 personality ptr @__gxx_personality_v0 {
+  %3 = tail call x86_fp80 @llvm.fabs.f80(x86_fp80 %0)
+  %or.cond.i = fcmp ult x86_fp80 %3, f0x407E8000000000000000 ; 2 uses
+  br i1 %or.cond.i, label %4, label %_ZN6duckdb23ConvertFloatingToBigintIeEEbT_RNS_9hugeint_tE.exit
 
-7:                                                ; preds = %2
-  %8 = fcmp olt double %0, 0.000000e+00           ; 2 uses
-  %9 = fneg double %0
-  %.013 = select i1 %8, double %9, double %0      ; 2 uses
-  %10 = frem double %.013, f0x43F0000000000000
-  %11 = fptoui double %10 to i64                  ; 4 uses
-  store i64 %11, ptr %1, align 8, !tbaa !293
-  %12 = fmul nnan double %.013, f0x3BF0000000000000
-  %13 = fptosi double %12 to i64                  ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  store i64 %13, ptr %14, align 8, !tbaa !292
-  br i1 %8, label %15, label %35
+4:                                                ; preds = %2
+  %5 = fcmp olt x86_fp80 %0, 0.000000e+00         ; 2 uses
+  %6 = fneg x86_fp80 %0
+  %spec.select.i = select i1 %5, x86_fp80 %6, x86_fp80 %0 ; 2 uses
+  %7 = fptrunc x86_fp80 %spec.select.i to double
+  %8 = tail call double @fmod(double noundef %7, double noundef f0x43F0000000000000) #46, !tbaa !165
+  %9 = fptoui double %8 to i64                    ; 3 uses
+  store i64 %9, ptr %1, align 8, !tbaa !293
+  %10 = fdiv x86_fp80 %spec.select.i, f0x403EFFFFFFFFFFFFFFFF
+  %11 = fptosi x86_fp80 %10 to i64                ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  store i64 %11, ptr %12, align 8, !tbaa !292
+  br i1 %5, label %bb.a, label %_ZN6duckdb23ConvertFloatingToBigintIeEEbT_RNS_9hugeint_tE.exit
 
-15:                                               ; preds = %7
-  %16 = icmp ne i64 %13, -9223372036854775808
-  %17 = icmp ne i64 %11, 0
-  %or.cond.not.i.i = select i1 %16, i1 true, i1 %17
-  br i1 %or.cond.not.i.i, label %_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit, label %_ZN6duckdb7Hugeint9TryNegateENS_9hugeint_tERS1_.exit.i
+bb.a:                                             ; preds = %4
+  %13 = sub i64 0, %9
+  %14 = xor i64 %11, -1
+  %15 = icmp eq i64 %9, 0
+  %16 = zext i1 %15 to i64
+  %17 = add nsw i64 %16, %14
+  store i64 %13, ptr %1, align 8, !tbaa !245
+  store i64 %17, ptr %12, align 8, !tbaa !245
+  br label %_ZN6duckdb23ConvertFloatingToBigintIeEEbT_RNS_9hugeint_tE.exit
 
-_ZN6duckdb7Hugeint9TryNegateENS_9hugeint_tERS1_.exit.i: ; preds = %15
-  %18 = tail call ptr @__cxa_allocate_exception(i64 16) #46 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #46
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #46
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @.str.440, ptr noundef nonnull align 1 dereferenceable(1) %4)
-          to label %19 unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i
-
-19:                                               ; preds = %_ZN6duckdb7Hugeint9TryNegateENS_9hugeint_tERS1_.exit.i
-  invoke void @_ZN6duckdb19OutOfRangeExceptionC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %18, ptr noundef nonnull align 8 dereferenceable(32) %3)
-          to label %20 unwind label %22
-
-20:                                               ; preds = %19
-  invoke void @__cxa_throw(ptr nonnull %18, ptr nonnull @_ZTIN6duckdb19OutOfRangeExceptionE, ptr nonnull @_ZNSt13runtime_errorD2Ev) #49
-          to label %29 unwind label %22
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i: ; preds = %_ZN6duckdb7Hugeint9TryNegateENS_9hugeint_tERS1_.exit.i
-  %21 = landingpad { ptr, i32 }
-          cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #46
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
-  br label %27
-
-22:                                               ; preds = %20, %19
-  %.0.i = phi i1 [ false, %20 ], [ true, %19 ]    ; 2 uses
-  %23 = landingpad { ptr, i32 }
-          cleanup                                 ; 4 uses
-  %24 = load ptr, ptr %3, align 8, !tbaa !235     ; 2 uses
-  %25 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %26 = icmp eq ptr %24, %25
-  br i1 %26, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %22
-  call void @_ZdlPv(ptr noundef %24) #47
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #46
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
-  br i1 %.0.i, label %27, label %28
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %22
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #46
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
-  br i1 %.0.i, label %27, label %28
-
-27:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i
-  %.pn10.i = phi { ptr, i32 } [ %21, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i ], [ %23, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %23, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ]
-  call void @__cxa_free_exception(ptr %18) #46
-  br label %28
-
-28:                                               ; preds = %27, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  %.pn9.i = phi { ptr, i32 } [ %23, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %.pn10.i, %27 ], [ %23, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ]
-  resume { ptr, i32 } %.pn9.i
-
-29:                                               ; preds = %20
-  unreachable
-
-_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit: ; preds = %15
-  %30 = sub i64 0, %11
-  %31 = xor i64 %13, -1
-  %32 = icmp eq i64 %11, 0
-  %33 = zext i1 %32 to i64
-  %34 = add nsw i64 %33, %31
-  store i64 %30, ptr %1, align 8, !tbaa !245
-  store i64 %34, ptr %14, align 8, !tbaa !245
-  br label %35
-
-35:                                               ; preds = %7, %_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit, %2
-  ret i1 %or.cond15
-}
-
-; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZN6duckdb7Hugeint10TryConvertIeEEbT_RNS_9hugeint_tE(x86_fp80 noundef %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #3 align 2 {
-bb.a:
-  %2 = tail call noundef zeroext i1 @_ZN6duckdb23ConvertFloatingToBigintIeEEbT_RNS_9hugeint_tE(x86_fp80 noundef %0, ptr noundef nonnull align 8 dereferenceable(16) %1)
-  ret i1 %2
-}
-
-; Function Attrs: mustprogress uwtable
-define linkonce_odr noundef zeroext i1 @_ZN6duckdb23ConvertFloatingToBigintIeEEbT_RNS_9hugeint_tE(x86_fp80 noundef %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #3 comdat personality ptr @__gxx_personality_v0 {
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %4 = alloca %"class.std::allocator.20", align 1 ; 5 uses
-  %5 = tail call x86_fp80 @llvm.fabs.f80(x86_fp80 %0)
-  %or.cond = fcmp ult x86_fp80 %5, f0x407E8000000000000000 ; 2 uses
-  br i1 %or.cond, label %6, label %35
-
-6:                                                ; preds = %2
-  %7 = fcmp olt x86_fp80 %0, 0.000000e+00         ; 2 uses
-  %8 = fneg x86_fp80 %0
-  %spec.select = select i1 %7, x86_fp80 %8, x86_fp80 %0 ; 2 uses
-  %9 = fptrunc x86_fp80 %spec.select to double
-  %10 = tail call double @fmod(double noundef %9, double noundef f0x43F0000000000000) #46, !tbaa !165
-  %11 = fptoui double %10 to i64                  ; 4 uses
-  store i64 %11, ptr %1, align 8, !tbaa !293
-  %12 = fdiv x86_fp80 %spec.select, f0x403EFFFFFFFFFFFFFFFF
-  %13 = fptosi x86_fp80 %12 to i64                ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  store i64 %13, ptr %14, align 8, !tbaa !292
-  br i1 %7, label %15, label %35
-
-15:                                               ; preds = %6
-  %16 = icmp ne i64 %13, -9223372036854775808
-  %17 = icmp ne i64 %11, 0
-  %or.cond.not.i.i = select i1 %16, i1 true, i1 %17
-  br i1 %or.cond.not.i.i, label %_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit, label %_ZN6duckdb7Hugeint9TryNegateENS_9hugeint_tERS1_.exit.i
-
-_ZN6duckdb7Hugeint9TryNegateENS_9hugeint_tERS1_.exit.i: ; preds = %15
-  %18 = tail call ptr @__cxa_allocate_exception(i64 16) #46 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #46
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #46
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @.str.440, ptr noundef nonnull align 1 dereferenceable(1) %4)
-          to label %19 unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i
-
-19:                                               ; preds = %_ZN6duckdb7Hugeint9TryNegateENS_9hugeint_tERS1_.exit.i
-  invoke void @_ZN6duckdb19OutOfRangeExceptionC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %18, ptr noundef nonnull align 8 dereferenceable(32) %3)
-          to label %20 unwind label %22
-
-20:                                               ; preds = %19
-  invoke void @__cxa_throw(ptr nonnull %18, ptr nonnull @_ZTIN6duckdb19OutOfRangeExceptionE, ptr nonnull @_ZNSt13runtime_errorD2Ev) #49
-          to label %29 unwind label %22
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i: ; preds = %_ZN6duckdb7Hugeint9TryNegateENS_9hugeint_tERS1_.exit.i
-  %21 = landingpad { ptr, i32 }
-          cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #46
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
-  br label %27
-
-22:                                               ; preds = %20, %19
-  %.0.i = phi i1 [ false, %20 ], [ true, %19 ]    ; 2 uses
-  %23 = landingpad { ptr, i32 }
-          cleanup                                 ; 4 uses
-  %24 = load ptr, ptr %3, align 8, !tbaa !235     ; 2 uses
-  %25 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %26 = icmp eq ptr %24, %25
-  br i1 %26, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %22
-  call void @_ZdlPv(ptr noundef %24) #47
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #46
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
-  br i1 %.0.i, label %27, label %28
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %22
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #46
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #46
-  br i1 %.0.i, label %27, label %28
-
-27:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i
-  %.pn10.i = phi { ptr, i32 } [ %21, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i ], [ %23, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %23, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ]
-  call void @__cxa_free_exception(ptr %18) #46
-  br label %28
-
-28:                                               ; preds = %27, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  %.pn9.i = phi { ptr, i32 } [ %23, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %.pn10.i, %27 ], [ %23, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ]
-  resume { ptr, i32 } %.pn9.i
-
-29:                                               ; preds = %20
-  unreachable
-
-_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit: ; preds = %15
-  %30 = sub i64 0, %11
-  %31 = xor i64 %13, -1
-  %32 = icmp eq i64 %11, 0
-  %33 = zext i1 %32 to i64
-  %34 = add nsw i64 %33, %31
-  store i64 %30, ptr %1, align 8, !tbaa !245
-  store i64 %34, ptr %14, align 8, !tbaa !245
-  br label %35
-
-35:                                               ; preds = %6, %_ZN6duckdb7Hugeint13NegateInPlaceILb1EEEvRNS_9hugeint_tE.exit, %2
-  ret i1 %or.cond
+_ZN6duckdb23ConvertFloatingToBigintIeEEbT_RNS_9hugeint_tE.exit: ; preds = %2, %4, %bb.a
+  ret i1 %or.cond.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable

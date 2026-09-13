@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %.lr.ph.preheader, %
   %i.au = mul i32 %i.ao, %i.at
   %i.av = sext i32 %i.au to i64
   %i.aw = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %i.av ; 6 uses
-  %i.ax = uitofp nneg i32 %i.at to float
+  %i.ax = uitofp nsz nneg i32 %i.at to float
   %i.ay = fadd reassoc nsz arcp contract afn float %i.ax, %i.am ; 3 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -298,7 +298,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
   %i.bz = trunc nuw nsw i64 %indvars.iv to i32
-  %i.ca = uitofp nneg i32 %i.bz to float
+  %i.ca = uitofp nsz nneg i32 %i.bz to float
   %i.cb = fadd reassoc nsz arcp contract afn float %i.ca, %i.ak
   %.idx = shl nuw nsw i64 %indvars.iv, 3
   %i.cc = getelementptr inbounds nuw i8, ptr %i.aw, i64 %.idx ; 2 uses
@@ -691,13 +691,13 @@ bb.d:                                             ; preds = %bb.c, %dt_get_debug
   %i.bt = fcmp reassoc nsz arcp contract afn ogt float %i.bs, 3.600000e+02
   %i.bu = select reassoc nsz arcp contract afn i1 %i.bt, float 3.600000e+02, float %i.bs
   %i.bv = fptosi float %i.bu to i32               ; 3 uses
-  %14 = srem i32 %i.bv, 8                         ; 2 uses
+  %14 = and i32 %i.bv, 7
   %i.bw = icmp eq i32 %14, 0
-  %i.bx = add nsw i32 %i.bv, 8
-  %15 = sub i32 %i.bx, %14
+  %i.bx = add nuw nsw i32 %i.bv, 8
+  %15 = and i32 %i.bx, 2147483640
   %i.by = select i1 %i.bw, i32 %i.bv, i32 %15     ; 6 uses
-  %16 = sext i32 %i.by to i64                     ; 4 uses
-  %i.bz = shl nsw i64 %16, 3
+  %16 = zext nneg i32 %i.by to i64                ; 5 uses
+  %i.bz = shl nuw nsw i64 %16, 3
   %i.ca = tail call ptr @dt_alloc_aligned(i64 noundef %i.bz) #14 ; 10 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ca, i64 64) ]
   %i.cb = icmp eq ptr %i.ca, null
@@ -709,12 +709,12 @@ bb.d:                                             ; preds = %bb.c, %dt_get_debug
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader447
-  %i.cd = uitofp reassoc nsz arcp contract afn i64 %16 to float ; 2 uses
-  %min.iters.check = icmp ult i32 %i.by, 64
+  %i.cd = uitofp nneg i32 %i.by to float          ; 2 uses
+  %min.iters.check = icmp samesign ult i32 %i.by, 64
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %i.cc, 2305843009213693944     ; 3 uses
+  %n.vec = and i64 %i.cc, 268435448               ; 3 uses
   %broadcast.splatinsert = insertelement <8 x float> poison, float %i.cd, i64 0
   %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert534 = insertelement <8 x float> poison, float %i.ah, i64 0
@@ -808,7 +808,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
   %i.dh = trunc nuw nsw i64 %indvars.iv to i32
-  %i.di = uitofp nneg i32 %i.dh to float
+  %i.di = uitofp nsz nneg i32 %i.dh to float
   %i.dj = fmul reassoc nnan nsz arcp contract afn float %i.di, f0x40C90FDB
   %i.dk = fmul reassoc nsz arcp contract afn float %i.dj, %i.cx
   %sincos = tail call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.dk) ; 2 uses
@@ -869,13 +869,12 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.not482, label %._crit_edge456, label %.lr.ph455.preheader
 
 .lr.ph455.preheader:                              ; preds = %bb.h
-  %wide.trip.count = zext i32 %i.by to i64        ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %xtraiter = and i64 %16, 1
   %i.en = icmp eq i32 %i.by, 1
   br i1 %i.en, label %.lr.ph455.epil.preheader, label %.lr.ph455.preheader.new
 
 .lr.ph455.preheader.new:                          ; preds = %.lr.ph455.preheader
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
+  %unroll_iter = and i64 %16, 2147483646
   br label %.lr.ph455
 
 ._crit_edge456.loopexit.unr-lcssa:                ; preds = %bb.o
@@ -1278,8 +1277,8 @@ bb.y:                                             ; preds = %bb.x, %._crit_edge4
   br i1 %i.ok, label %.lr.ph476.preheader, label %._crit_edge481.split
 
 .lr.ph476.preheader:                              ; preds = %.lr.ph480
-  %i.ol = mul nsw i32 %i.ar, %i.ar
-  %i.om = uitofp nneg i32 %i.ol to float          ; 2 uses
+  %i.ol = mul nuw nsw i32 %i.ar, %i.ar
+  %i.om = uitofp nsz nneg i32 %i.ol to float      ; 2 uses
   %i.on = sext i32 %i.oj to i64                   ; 4 uses
   %i.oo = sext i32 %i.og to i64
   %wide.trip.count516 = sext i32 %i.of to i64

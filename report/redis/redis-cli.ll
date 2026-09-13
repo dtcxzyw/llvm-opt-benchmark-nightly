@@ -205,7 +205,7 @@ bb.a:
   %i.s = alloca [64 x i8], align 16               ; 6 uses
   %i.t = alloca [64 x i8], align 16               ; 6 uses
   %i.u = alloca [64 x i8], align 16               ; 8 uses
-  %i.v = alloca [64 x i8], align 16               ; 8 uses
+  %i.v = alloca [64 x i8], align 16               ; 10 uses
   %i.w = alloca [2 x [256 x i8]], align 16        ; 8 uses
   %i.x = alloca [32 x i8], align 16               ; 6 uses
   %i.y = alloca [32 x i8], align 16               ; 4 uses
@@ -608,7 +608,6 @@ displayKeyStatsLengthDist.exit.i:                 ; preds = %bb.ti, %bb.th
   %i.bot = getelementptr inbounds nuw i8, ptr %i.s, i64 1
   %i.bou = getelementptr inbounds nuw i8, ptr %i.t, i64 1
   %i.bov = getelementptr inbounds nuw i8, ptr %i.u, i64 1
-  %36 = getelementptr inbounds nuw i8, ptr %i.v, i64 1
   br label %bb.tj
 
 bb.tj:                                            ; preds = %bb.vg, %.lr.ph.i186.i
@@ -836,63 +835,52 @@ bb.uv:                                            ; preds = %bb.uu
 
 bytesToHuman.exit206:                             ; preds = %bb.un, %bb.up, %bb.ur, %bb.ut, %bb.uu, %bb.uv
   %i.bsc = call double @llvm.round.f64(double %i.bre)
-  %i.bsd = fptosi double %i.bsc to i64            ; 3 uses
-  %37 = icmp slt i64 %i.bsd, 0
-  br i1 %37, label %38, label %40
+  %i.bsd = fptosi double %i.bsc to i64            ; 10 uses
+  %36 = icmp samesign ult i64 %i.bsd, 1024
+  br i1 %36, label %bb.uw, label %bb.ux
 
-38:                                               ; preds = %bytesToHuman.exit206
-  store i8 45, ptr %i.v, align 16, !tbaa !73
-  %39 = sub nsw i64 0, %i.bsd
-  br label %40
-
-40:                                               ; preds = %38, %bytesToHuman.exit206
-  %.029.i = phi ptr [ %36, %38 ], [ %i.v, %bytesToHuman.exit206 ] ; 5 uses
-  %.0.i203 = phi i64 [ %39, %38 ], [ %i.bsd, %bytesToHuman.exit206 ] ; 10 uses
-  %41 = icmp samesign ult i64 %.0.i203, 1024
-  br i1 %41, label %bb.uw, label %bb.ux
-
-bb.uw:                                            ; preds = %40
-  %i.bse = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %.029.i, i64 noundef 64, ptr noundef nonnull @.str.118, i64 noundef %.0.i203) #32 ; 0 uses
+bb.uw:                                            ; preds = %bytesToHuman.exit206
+  %i.bse = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.v, i64 noundef 64, ptr noundef nonnull @.str.118, i64 noundef %i.bsd) #32 ; 0 uses
   br label %bytesToHuman.exit
 
-bb.ux:                                            ; preds = %40
-  %i.bsf = icmp samesign ult i64 %.0.i203, 1048576
+bb.ux:                                            ; preds = %bytesToHuman.exit206
+  %i.bsf = icmp samesign ult i64 %i.bsd, 1048576
   br i1 %i.bsf, label %bb.uy, label %bb.uz
 
 bb.uy:                                            ; preds = %bb.ux
-  %i.bsg = uitofp nneg i64 %.0.i203 to double
+  %i.bsg = uitofp nneg i64 %i.bsd to double
   %i.bsh = fmul nnan double %i.bsg, f0x3F50000000000000
-  %i.bsi = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %.029.i, i64 noundef 64, ptr noundef nonnull @.str.119, double noundef %i.bsh) #32 ; 0 uses
+  %i.bsi = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.v, i64 noundef 64, ptr noundef nonnull @.str.119, double noundef %i.bsh) #32 ; 0 uses
   br label %bytesToHuman.exit
 
 bb.uz:                                            ; preds = %bb.ux
-  %i.bsj = icmp samesign ult i64 %.0.i203, 1073741824
+  %i.bsj = icmp samesign ult i64 %i.bsd, 1073741824
   br i1 %i.bsj, label %bb.va, label %bb.vb
 
 bb.va:                                            ; preds = %bb.uz
-  %i.bsk = uitofp nneg i64 %.0.i203 to double
+  %i.bsk = uitofp nneg i64 %i.bsd to double
   %i.bsl = fmul nnan double %i.bsk, f0x3EB0000000000000
-  %i.bsm = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %.029.i, i64 noundef 64, ptr noundef nonnull @.str.120, double noundef %i.bsl) #32 ; 0 uses
+  %i.bsm = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.v, i64 noundef 64, ptr noundef nonnull @.str.120, double noundef %i.bsl) #32 ; 0 uses
   br label %bytesToHuman.exit
 
 bb.vb:                                            ; preds = %bb.uz
-  %i.bsn = icmp samesign ult i64 %.0.i203, 1099511627776
+  %i.bsn = icmp samesign ult i64 %i.bsd, 1099511627776
   br i1 %i.bsn, label %bb.vc, label %bb.vd
 
 bb.vc:                                            ; preds = %bb.vb
-  %i.bso = uitofp nneg i64 %.0.i203 to double
+  %i.bso = uitofp nneg i64 %i.bsd to double
   %i.bsp = fmul nnan double %i.bso, f0x3E10000000000000
-  %i.bsq = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %.029.i, i64 noundef 64, ptr noundef nonnull @.str.121, double noundef %i.bsp) #32 ; 0 uses
+  %i.bsq = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.v, i64 noundef 64, ptr noundef nonnull @.str.121, double noundef %i.bsp) #32 ; 0 uses
   br label %bytesToHuman.exit
 
 bb.vd:                                            ; preds = %bb.vb
-  %i.bsr = icmp samesign ult i64 %.0.i203, 1125899906842624
+  %i.bsr = icmp samesign ult i64 %i.bsd, 1125899906842624
   br i1 %i.bsr, label %bb.ve, label %bytesToHuman.exit
 
 bb.ve:                                            ; preds = %bb.vd
-  %i.bss = uitofp nneg i64 %.0.i203 to double
+  %i.bss = uitofp nneg i64 %i.bsd to double
   %i.bst = fmul nnan double %i.bss, f0x3D70000000000000
-  %i.bsu = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %.029.i, i64 noundef 64, ptr noundef nonnull @.str.122, double noundef %i.bst) #32 ; 0 uses
+  %i.bsu = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.v, i64 noundef 64, ptr noundef nonnull @.str.122, double noundef %i.bst) #32 ; 0 uses
   br label %bytesToHuman.exit
 
 bb.vf:                                            ; preds = %bb.uj
@@ -1295,9 +1283,9 @@ bb.xm:                                            ; preds = %bb.xl, %bb.xk
   %i.cce = fmul double %i.ccb, 6.000000e+01
   %i.ccf = call double @llvm.round.f64(double %i.cce)
   %i.ccg = fptosi double %i.ccf to i32            ; 2 uses
-  %42 = sext i32 %i.ccg to i64                    ; 2 uses
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.i, i8 124, i64 %42, i1 false)
-  %i.cch = getelementptr inbounds i8, ptr %i.i, i64 %42
+  %37 = zext nneg i32 %i.ccg to i64               ; 2 uses
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.i, i8 124, i64 %37, i1 false)
+  %i.cch = getelementptr inbounds nuw i8, ptr %i.i, i64 %37
   store i8 0, ptr %i.cch, align 1, !tbaa !73
   %i.cci = sub nsw i32 60, %i.ccg
   %i.ccj = sext i32 %i.cci to i64                 ; 2 uses
@@ -1700,9 +1688,9 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.ed = fmul double %i.ea, 6.000000e+01
   %i.ee = call double @llvm.round.f64(double %i.ed)
   %i.ef = fptosi double %i.ee to i32              ; 2 uses
-  %6 = sext i32 %i.ef to i64                      ; 2 uses
+  %6 = zext nneg i32 %i.ef to i64                 ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.b, i8 124, i64 %6, i1 false)
-  %i.eg = getelementptr inbounds i8, ptr %i.b, i64 %6
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.b, i64 %6
   store i8 0, ptr %i.eg, align 1, !tbaa !73
   %i.eh = sub nsw i32 60, %i.ef
   %i.ei = sext i32 %i.eh to i64                   ; 2 uses
@@ -2105,7 +2093,7 @@ bb.a:
   %i.d = uitofp i64 %i.c to float
   %i.e = fmul nnan float %i.d, 1.500000e-01
   %i.f = fptosi float %i.e to i32
-  %i.g = add nsw i32 %i.f, 20
+  %i.g = add nuw nsw i32 %i.f, 20
   %i.h = tail call fastcc i32 @clusterManagerIsConfigConsistent()
   %.not47 = icmp eq i32 %i.h, 0
   br i1 %.not47, label %.lr.ph50, label %._crit_edge51
@@ -2508,9 +2496,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.m = fmul double %i.j, 6.000000e+01
   %i.n = tail call double @llvm.round.f64(double %i.m)
   %i.o = fptosi double %i.n to i32                ; 2 uses
-  %2 = sext i32 %i.o to i64                       ; 2 uses
+  %2 = zext nneg i32 %i.o to i64                  ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.b, i8 124, i64 %2, i1 false)
-  %i.p = getelementptr inbounds i8, ptr %i.b, i64 %2
+  %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 %2
   store i8 0, ptr %i.p, align 1, !tbaa !73
   %i.q = sub nsw i32 60, %i.o
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 3 uses

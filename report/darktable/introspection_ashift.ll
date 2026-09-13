@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.y
   %i.pt = fcmp reassoc nsz arcp contract afn ogt float %i.ps, 2.000000e+00
   %spec.select254.i.epil = select i1 %i.pt, float %i.ps, float 2.000000e+00
   %spec.select.i.epil = fptosi float %spec.select254.i.epil to i32 ; 3 uses
-  %8 = sext i32 %spec.select.i.epil to i64
+  %8 = zext nneg i32 %spec.select.i.epil to i64
   %i.pu = add i64 %.0212258.i.epil.init, %8
   %i.pv = getelementptr inbounds nuw [48 x i8], ptr %i.pj, i64 %indvars.iv.i501.epil.init ; 2 uses
   %i.pw = getelementptr inbounds nuw i8, ptr %i.pv, i64 8
@@ -255,7 +255,7 @@ bb.ad:                                            ; preds = %.epil.preheader
 
 .lr.ph268.i.preheader:                            ; preds = %._crit_edge.i
   %i.qj = add i64 %.0212258.i.lcssa, -1
-  %9 = sext i32 %spec.select.i.lcssa to i64
+  %9 = zext i32 %spec.select.i.lcssa to i64
   %i.qk = add i64 %i.qj, %9
   br label %.lr.ph268.i
 
@@ -269,7 +269,7 @@ bb.ae:                                            ; preds = %bb.ao, %.lr.ph.i500
   %i.qo = fcmp reassoc nsz arcp contract afn ogt float %i.qn, 2.000000e+00
   %spec.select254.i = select i1 %i.qo, float %i.qn, float 2.000000e+00
   %spec.select.i = fptosi float %spec.select254.i to i32 ; 2 uses
-  %10 = sext i32 %spec.select.i to i64
+  %10 = zext nneg i32 %spec.select.i to i64
   %i.qp = add i64 %.0212258.i, %10                ; 2 uses
   %i.qq = getelementptr inbounds nuw [48 x i8], ptr %i.pj, i64 %indvars.iv.i501 ; 2 uses
   %i.qr = getelementptr inbounds nuw i8, ptr %i.qq, i64 8
@@ -309,7 +309,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.
   %i.rb = fcmp reassoc nsz arcp contract afn ogt float %i.ra, 2.000000e+00
   %spec.select254.i.1 = select i1 %i.rb, float %i.ra, float 2.000000e+00
   %spec.select.i.1 = fptosi float %spec.select254.i.1 to i32 ; 3 uses
-  %11 = sext i32 %spec.select.i.1 to i64
+  %11 = zext nneg i32 %spec.select.i.1 to i64
   %i.rc = add i64 %i.qp, %11                      ; 3 uses
   %i.rd = getelementptr inbounds nuw [48 x i8], ptr %i.pj, i64 %indvars.iv.next.i502 ; 2 uses
   %i.re = getelementptr inbounds nuw i8, ptr %i.rd, i64 8
@@ -712,8 +712,8 @@ new_ntuple_list.exit.i.i.i.i:                     ; preds = %bb.ad
   %i.lu = fptoui double %i.lt to i32
   %i.lv = tail call fastcc ptr @new_image_double(i32 noundef %i.ls, i32 noundef %i.z) ; 6 uses
   %i.lw = tail call fastcc ptr @new_image_double(i32 noundef %i.ls, i32 noundef %i.lu) ; 8 uses
-  %i.lx = shl nuw i32 %i.aa, 1                    ; 28 uses
-  %i.ly = shl nuw i32 %i.z, 1                     ; 28 uses
+  %i.lx = shl nuw i32 %i.aa, 1                    ; 27 uses
+  %i.ly = shl nuw i32 %i.z, 1                     ; 27 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.lv, i64 8
   %i.ma = load i32, ptr %i.lz, align 8, !tbaa !289 ; 10 uses
   %.not.i.i.i.i = icmp eq i32 %i.ma, 0
@@ -746,7 +746,7 @@ new_ntuple_list.exit.i.i.i.i:                     ; preds = %bb.ad
   %i.mj = fadd reassoc nsz arcp contract afn double %i.mi, 5.000000e-01
   %i.mk = tail call reassoc nsz arcp contract afn double @llvm.floor.f64(double %i.mj)
   %i.ml = fptosi double %i.mk to i32              ; 8 uses
-  %4 = sitofp reassoc nsz arcp contract afn i32 %i.ml to double
+  %4 = uitofp nsz nneg i32 %i.ml to double
   %.neg11.i.i.i = fsub reassoc nsz arcp contract afn double -3.000000e+00, %i.mi
   %i.mm = fadd reassoc nsz arcp contract afn double %.neg11.i.i.i, %4 ; 4 uses
   %i.mn = fmul reassoc nsz arcp contract afn double %i.mm, %i.mm
@@ -789,13 +789,13 @@ gaussian_kernel.exit176.i.i.i:                    ; preds = %.lr.ph31.i171.prehe
   br i1 %.not153.i.i.i.i, label %._crit_edge141.i.i.i.i, label %.preheader137.lr.ph.split.us.i.i.i.i
 
 .preheader137.lr.ph.split.us.i.i.i.i:             ; preds = %gaussian_kernel.exit176.i.i.i
-  %i.np = add i32 %i.ml, -3
+  %i.np = add nsw i32 %i.ml, -3
   %i.nq = load ptr, ptr %i.lv, align 8, !tbaa !291
-  %i.nr = add i32 %i.ml, -2
-  %i.ns = add i32 %i.ml, -1
-  %i.nt = add i32 %i.ml, 1
-  %i.nu = add i32 %i.ml, 2
-  %i.nv = add i32 %i.ml, 3
+  %i.nr = add nsw i32 %i.ml, -2
+  %i.ns = add nsw i32 %i.ml, -1
+  %i.nt = add nuw i32 %i.ml, 1
+  %i.nu = add nuw i32 %i.ml, 2
+  %i.nv = add nuw i32 %i.ml, 3
   %i.nw = extractelement <2 x double> %i.no, i64 0
   %i.nx = extractelement <2 x double> %i.no, i64 1
   br label %.preheader137.us.i.i.i.i
@@ -873,16 +873,10 @@ bb.ak:                                            ; preds = %.preheader136.us.i.
   %i.oy = zext i32 %i.ox to i64
   %i.oz = getelementptr inbounds nuw [8 x i8], ptr %i.jb, i64 %i.oy
   %i.pa = load double, ptr %i.oz, align 8, !tbaa !166
-  br label %5
+  br label %.preheader136.us.i.3.i.i.i
 
-5:                                                ; preds = %5, %bb.ak
-  %.0116.us.i.3.i.i.i = phi i32 [ %i.ml, %bb.ak ], [ %7, %5 ] ; 3 uses
-  %6 = icmp slt i32 %.0116.us.i.3.i.i.i, 0
-  %7 = add nsw i32 %.0116.us.i.3.i.i.i, %i.lx
-  br i1 %6, label %5, label %.preheader136.us.i.3.i.i.i
-
-.preheader136.us.i.3.i.i.i:                       ; preds = %5, %.preheader136.us.i.3.i.i.i
-  %.1117.us.i.3.i.i.i = phi i32 [ %i.pb, %.preheader136.us.i.3.i.i.i ], [ %.0116.us.i.3.i.i.i, %5 ] ; 5 uses
+.preheader136.us.i.3.i.i.i:                       ; preds = %.preheader136.us.i.3.i.i.i, %bb.ak
+  %.1117.us.i.3.i.i.i = phi i32 [ %i.pb, %.preheader136.us.i.3.i.i.i ], [ %i.ml, %bb.ak ] ; 5 uses
   %.not130.us.i.3.i.i.i = icmp slt i32 %.1117.us.i.3.i.i.i, %i.lx
   %i.pb = sub nsw i32 %.1117.us.i.3.i.i.i, %i.lx
   br i1 %.not130.us.i.3.i.i.i, label %bb.al, label %.preheader136.us.i.3.i.i.i
@@ -997,9 +991,9 @@ bb.aq:                                            ; preds = %bb.aq, %bb.ap
   %i.qy = fadd reassoc nsz arcp contract afn double %i.qx, 5.000000e-01
   %i.qz = tail call reassoc nsz arcp contract afn double @llvm.floor.f64(double %i.qy)
   %i.ra = fptosi double %i.qz to i32              ; 8 uses
-  %8 = sitofp reassoc nsz arcp contract afn i32 %i.ra to double
+  %5 = uitofp nsz nneg i32 %i.ra to double
   %.neg13.i.i.i = fsub reassoc nsz arcp contract afn double -3.000000e+00, %i.qx
-  %i.rb = fadd reassoc nsz arcp contract afn double %.neg13.i.i.i, %8 ; 4 uses
+  %i.rb = fadd reassoc nsz arcp contract afn double %.neg13.i.i.i, %5 ; 4 uses
   %i.rc = fmul reassoc nsz arcp contract afn double %i.rb, %i.rb
   %i.rd = fmul reassoc nsz arcp contract afn double %i.rc, f0xBFF5C7AE147AE147
   %i.re = tail call reassoc nsz arcp contract afn double @llvm.exp.f64(double %i.rd) ; 3 uses
@@ -1040,15 +1034,15 @@ gaussian_kernel.exit.i.i.i:                       ; preds = %.lr.ph31.i.preheade
   br i1 %.not156.i.i.i.i, label %._crit_edge149.i.i.i.i, label %.preheader134.lr.ph.split.us.i.i.i.i
 
 .preheader134.lr.ph.split.us.i.i.i.i:             ; preds = %gaussian_kernel.exit.i.i.i
-  %i.se = add i32 %i.ra, -3
+  %i.se = add nsw i32 %i.ra, -3
   %i.sf = load ptr, ptr %i.lw, align 8, !tbaa !291
   %i.sg = mul i32 %.1121151.i.i.i.i, %i.mg
   %i.sh = load ptr, ptr %i.lv, align 8, !tbaa !291 ; 7 uses
-  %i.si = add i32 %i.ra, -2
-  %i.sj = add i32 %i.ra, -1
-  %i.sk = add i32 %i.ra, 1
-  %i.sl = add i32 %i.ra, 2
-  %i.sm = add i32 %i.ra, 3
+  %i.si = add nsw i32 %i.ra, -2
+  %i.sj = add nsw i32 %i.ra, -1
+  %i.sk = add nuw i32 %i.ra, 1
+  %i.sl = add nuw i32 %i.ra, 2
+  %i.sm = add nuw i32 %i.ra, 3
   %i.sn = extractelement <2 x double> %i.sd, i64 0
   %i.so = extractelement <2 x double> %i.sd, i64 1
   br label %.preheader134.us.i.i.i.i
@@ -1128,16 +1122,10 @@ bb.aw:                                            ; preds = %.preheader.us.i.2.i
   %i.tr = zext i32 %i.tq to i64
   %i.ts = getelementptr inbounds nuw [8 x i8], ptr %i.sh, i64 %i.tr
   %i.tt = load double, ptr %i.ts, align 8, !tbaa !166
-  br label %9
+  br label %.preheader.us.i.3.i.i.i
 
-9:                                                ; preds = %9, %bb.aw
-  %.3.us.i.3.i.i.i = phi i32 [ %i.ra, %bb.aw ], [ %11, %9 ] ; 3 uses
-  %10 = icmp slt i32 %.3.us.i.3.i.i.i, 0
-  %11 = add nsw i32 %.3.us.i.3.i.i.i, %i.ly
-  br i1 %10, label %9, label %.preheader.us.i.3.i.i.i
-
-.preheader.us.i.3.i.i.i:                          ; preds = %9, %.preheader.us.i.3.i.i.i
-  %.4.us.i.3.i.i.i = phi i32 [ %i.tu, %.preheader.us.i.3.i.i.i ], [ %.3.us.i.3.i.i.i, %9 ] ; 5 uses
+.preheader.us.i.3.i.i.i:                          ; preds = %.preheader.us.i.3.i.i.i, %bb.aw
+  %.4.us.i.3.i.i.i = phi i32 [ %i.tu, %.preheader.us.i.3.i.i.i ], [ %i.ra, %bb.aw ] ; 5 uses
   %.not.us.i.3.i.i.i = icmp slt i32 %.4.us.i.3.i.i.i, %i.ly
   %i.tu = sub nsw i32 %.4.us.i.3.i.i.i, %i.ly
   br i1 %.not.us.i.3.i.i.i, label %bb.ax, label %.preheader.us.i.3.i.i.i
@@ -1540,10 +1528,10 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   store i32 %.096.lcssa, ptr %i.ec, align 4, !tbaa !230
   %i.ed = getelementptr inbounds nuw i8, ptr %i.e, i64 224
   store i32 %.095.lcssa, ptr %i.ed, align 8, !tbaa !232
-  %i.ee = uitofp nneg i32 %.096.lcssa to float
+  %i.ee = uitofp nsz nneg i32 %.096.lcssa to float
   %i.ef = getelementptr inbounds nuw i8, ptr %i.e, i64 232
   store float %i.ee, ptr %i.ef, align 8, !tbaa !231
-  %i.eg = uitofp nneg i32 %.095.lcssa to float
+  %i.eg = uitofp nsz nneg i32 %.095.lcssa to float
   %i.eh = getelementptr inbounds nuw i8, ptr %i.e, i64 236
   store float %i.eg, ptr %i.eh, align 4, !tbaa !233
   %i.ei = getelementptr inbounds nuw i8, ptr %i.o, i64 108

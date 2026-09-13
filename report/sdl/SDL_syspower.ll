@@ -73,7 +73,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader48, %check_proc_acpi_battery.exit
   %i.h = phi ptr [ %i.bt, %check_proc_acpi_battery.exit ], [ %i.g, %.preheader48 ]
-  %.03488 = phi i1 [ %.1, %check_proc_acpi_battery.exit ], [ false, %.preheader48 ] ; 8 uses
+  %.03488 = phi i1 [ %.1, %check_proc_acpi_battery.exit ], [ false, %.preheader48 ] ; 7 uses
   %.03787 = phi i1 [ %.340, %check_proc_acpi_battery.exit ], [ false, %.preheader48 ] ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 19 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
@@ -107,7 +107,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.outer253.a
 
 .outer253.a:                                      ; preds = %bb.n, %bb.e
-  %.138.ph = phi i1 [ %spec.select, %bb.n ], [ %.03787, %bb.e ] ; 6 uses
+  %.138.ph = phi i1 [ %spec.select, %bb.n ], [ %.03787, %bb.e ] ; 5 uses
   %.070.i.ph = phi ptr [ %.272.i, %bb.n ], [ %i.c, %bb.e ]
   %.034.i.ph = phi i1 [ %.034.i.ph256, %bb.n ], [ false, %bb.e ]
   %.028.i.ph = phi i32 [ %.028.i.ph260, %bb.n ], [ -1, %bb.e ]
@@ -323,49 +323,36 @@ bb.aa:                                            ; preds = %make_proc_acpi_key_
   %i.bj = icmp sgt i32 %.029.i.ph, -1
   %i.bk = icmp sgt i32 %.028.i.ph260, -1
   %or.cond.i = select i1 %i.bj, i1 %i.bk, i1 false
-  br i1 %or.cond.i, label %bb.ab, label %.thread165.i
+  %3 = load i32, ptr %1, align 4
+  %4 = icmp slt i32 %3, 0                         ; 2 uses
+  br i1 %or.cond.i, label %5, label %.thread.i
 
-bb.ab:                                            ; preds = %.loopexit.i
+5:                                                ; preds = %.loopexit.i
+  br i1 %4, label %bb.ab, label %check_proc_acpi_battery.exit
+
+bb.ab:                                            ; preds = %5
   %i.bl = uitofp nneg i32 %.028.i.ph260 to float
   %i.bm = uitofp nneg i32 %.029.i.ph to float
   %i.bn = fdiv float %i.bl, %i.bm
   %i.bo = fmul float %i.bn, 1.000000e+02
-  %i.bp = fptosi float %i.bo to i32               ; 2 uses
-  %3 = icmp slt i32 %i.bp, 0
-  %i.bq = load i32, ptr %1, align 4
-  %4 = icmp slt i32 %i.bq, 0                      ; 2 uses
-  br i1 %3, label %.thread.i, label %5
-
-5:                                                ; preds = %bb.ab
-  br i1 %4, label %8, label %check_proc_acpi_battery.exit
-
-.thread165.i:                                     ; preds = %.loopexit.i
-  %6 = load i32, ptr %1, align 4
-  %7 = icmp slt i32 %6, 0
-  br i1 %7, label %bb.ac, label %check_proc_acpi_battery.exit
-
-.thread.i:                                        ; preds = %bb.ab
-  br i1 %4, label %.thread..thread93_crit_edge.i, label %check_proc_acpi_battery.exit
-
-.thread..thread93_crit_edge.i:                    ; preds = %.thread.i
-  %.pre.i = load i32, ptr %2, align 4
+  %i.bp = fptosi float %i.bo to i32
+  %spec.store.select.i = call i32 @llvm.umin.i32(i32 %i.bp, i32 100)
+  %i.bq = load i32, ptr %2, align 4
   br label %.thread93.i
 
-8:                                                ; preds = %5
-  %9 = call i32 @llvm.umin.i32(i32 %i.bp, i32 100)
-  %.pre159.i = load i32, ptr %2, align 4
-  br label %.thread93.i
+.thread.i:                                        ; preds = %.loopexit.i
+  br i1 %4, label %bb.ac, label %check_proc_acpi_battery.exit
 
-bb.ac:                                            ; preds = %.thread165.i
+bb.ac:                                            ; preds = %.thread.i
   %.pre159170.i = load i32, ptr %2, align 4       ; 2 uses
   %i.br = icmp slt i32 %.pre159170.i, 0
   br label %.thread93.i
 
-.thread93.i:                                      ; preds = %bb.ac, %8, %.thread..thread93_crit_edge.i
-  %10 = phi i32 [ %.pre159.i, %8 ], [ %.pre159170.i, %bb.ac ], [ %.pre.i, %.thread..thread93_crit_edge.i ]
-  %.09095.i = phi i32 [ %9, %8 ], [ -1, %bb.ac ], [ 0, %.thread..thread93_crit_edge.i ] ; 2 uses
-  %.032.i = phi i1 [ false, %8 ], [ %i.br, %bb.ac ], [ false, %.thread..thread93_crit_edge.i ]
-  %i.bs = icmp sgt i32 %.09095.i, %10
+.thread93.i:                                      ; preds = %bb.ac, %bb.ab
+  %6 = phi i32 [ %.pre159170.i, %bb.ac ], [ %i.bq, %bb.ab ]
+  %.09095.i = phi i32 [ -1, %bb.ac ], [ %spec.store.select.i, %bb.ab ] ; 2 uses
+  %.032.i = phi i1 [ %i.br, %bb.ac ], [ false, %bb.ab ]
+  %i.bs = icmp sgt i32 %.09095.i, %6
   %spec.select40.i = select i1 %i.bs, i1 true, i1 %.032.i
   br i1 %spec.select40.i, label %bb.ad, label %check_proc_acpi_battery.exit
 
@@ -374,9 +361,9 @@ bb.ad:                                            ; preds = %.thread93.i
   store i32 %.09095.i, ptr %2, align 4
   br label %check_proc_acpi_battery.exit
 
-check_proc_acpi_battery.exit:                     ; preds = %.lr.ph, %bb.b, %bb.c, %bb.d, %5, %.thread165.i, %.thread.i, %.thread93.i, %bb.ad
-  %.340 = phi i1 [ %.03787, %.lr.ph ], [ %.03787, %bb.b ], [ %.03787, %bb.c ], [ %.03787, %bb.d ], [ %.138.ph, %bb.ad ], [ %.138.ph, %.thread93.i ], [ %.138.ph, %.thread.i ], [ %.138.ph, %5 ], [ %.138.ph, %.thread165.i ] ; 2 uses
-  %.1 = phi i1 [ %.03488, %.lr.ph ], [ %.03488, %bb.b ], [ %.03488, %bb.c ], [ %.03488, %bb.d ], [ %.034.i.ph256, %bb.ad ], [ %.03488, %.thread93.i ], [ %.03488, %.thread.i ], [ %.03488, %5 ], [ %.03488, %.thread165.i ] ; 2 uses
+check_proc_acpi_battery.exit:                     ; preds = %.lr.ph, %bb.b, %bb.c, %bb.d, %5, %.thread.i, %.thread93.i, %bb.ad
+  %.340 = phi i1 [ %.03787, %.lr.ph ], [ %.03787, %bb.b ], [ %.03787, %bb.c ], [ %.03787, %bb.d ], [ %.138.ph, %bb.ad ], [ %.138.ph, %.thread93.i ], [ %.138.ph, %5 ], [ %.138.ph, %.thread.i ] ; 2 uses
+  %.1 = phi i1 [ %.03488, %.lr.ph ], [ %.03488, %bb.b ], [ %.03488, %bb.c ], [ %.03488, %bb.d ], [ %.034.i.ph256, %bb.ad ], [ %.03488, %.thread93.i ], [ %.03488, %5 ], [ %.03488, %.thread.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   %i.bt = call ptr @readdir(ptr noundef nonnull %i.f) #6 ; 2 uses
@@ -779,10 +766,10 @@ declare i32 @SDL_snprintf_REAL(ptr noundef, i64 noundef, ptr noundef, ...) local
 declare zeroext i1 @SDL_DBus_QueryPropertyOnConnection(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #5
+declare i32 @llvm.umin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #5
+declare i32 @llvm.smin.i32(i32, i32) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

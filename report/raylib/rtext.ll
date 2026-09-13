@@ -205,7 +205,7 @@ bb.eo:                                            ; preds = %._crit_edge26.i.i.i
   %.sroa.11.029.i.i.i.i.i.i = phi i32 [ 0, %.lr.ph34.i.i.i.i.i.i ], [ %.sroa.11.1.lcssa.i.i.i.i.i.i, %._crit_edge26.i.i.i.i.i.i ] ; 2 uses
   %.sroa.7.028.i.i.i.i.i.i = phi ptr [ null, %.lr.ph34.i.i.i.i.i.i ], [ %.sroa.7.3.lcssa.i.i.i.i.i.i, %._crit_edge26.i.i.i.i.i.i ] ; 2 uses
   %.sroa.0.027.i.i.i.i.i.i = phi ptr [ null, %.lr.ph34.i.i.i.i.i.i ], [ %.sroa.0.1.lcssa.i.i.i.i.i.i, %._crit_edge26.i.i.i.i.i.i ] ; 2 uses
-  %i.aiz = sitofp i32 %.07531.i.i.i.i.i.i to float ; 66 uses
+  %i.aiz = sitofp i32 %.07531.i.i.i.i.i.i to float ; 68 uses
   %i.aja = fadd float %i.aiz, 1.000000e+00        ; 75 uses
   call void @llvm.memset.p0.i64(ptr align 4 %.080.i.i.i.i.i.i, i8 0, i64 %i.ait, i1 false)
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.aij, i8 0, i64 %i.aiw, i1 false)
@@ -375,7 +375,7 @@ bb.fa:                                            ; preds = %._crit_edge.i.i.i.i
   %i.alh = fcmp oeq float %i.aja, %i.aiz          ; 3 uses
   %i.ali = fsub float %i.aja, %i.aiz              ; 4 uses
   %i.alj = insertelement <2 x float> poison, float %i.aiz, i64 0
-  %i.alk = shufflevector <2 x float> %i.alj, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.alk = shufflevector <2 x float> %i.alj, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.fb
 
 bb.fb:                                            ; preds = %stbtt__handle_clipped_edge.exit351.i.i.i.i.i.i.i, %bb.fa
@@ -452,15 +452,15 @@ bb.fm:                                            ; preds = %bb.fl
   %i.amp = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i.i.i.i.i, i64 20
   %i.amq = load float, ptr %i.amp, align 4
   %i.amr = fsub float %.0.i.i.i.i.i.i.i.i, %.054.i.i.i.i.i.i.i.i
-  %10 = sext i32 %i.als to i64
-  %i.ams = getelementptr inbounds [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %10 ; 2 uses
+  %10 = zext nneg i32 %i.als to i64
+  %i.ams = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %10 ; 2 uses
   %i.amt = load float, ptr %i.ams, align 4
   %i.amu = call float @llvm.fmuladd.f32(float %i.amq, float %i.amr, float %i.amt)
   store float %i.amu, ptr %i.ams, align 4
   br label %bb.fp
 
 bb.fn:                                            ; preds = %bb.fl
-  %i.amv = add nsw i32 %i.als, 1
+  %i.amv = add nuw nsw i32 %i.als, 1
   %i.amw = sitofp i32 %i.amv to float             ; 2 uses
   %i.amx = fcmp ult float %.055.i.i.i.i.i.i.i.i, %i.amw
   %i.amy = fcmp ult float %.053.i.i.i.i.i.i.i.i, %i.amw
@@ -477,15 +477,15 @@ bb.fo:                                            ; preds = %bb.fn
   %i.anf = fadd float %i.and, %i.ane
   %i.ang = fmul float %i.anf, 5.000000e-01
   %i.anh = fsub float 1.000000e+00, %i.ang
-  %11 = sext i32 %i.als to i64
-  %i.ani = getelementptr inbounds [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %11 ; 2 uses
+  %11 = zext nneg i32 %i.als to i64
+  %i.ani = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %11 ; 2 uses
   %i.anj = load float, ptr %i.ani, align 4
   %i.ank = call float @llvm.fmuladd.f32(float %i.anc, float %i.anh, float %i.anj)
   store float %i.ank, ptr %i.ani, align 4
   br label %bb.fp
 
 bb.fp:                                            ; preds = %bb.fo, %bb.fn, %bb.fm, %bb.fg, %bb.ff
-  %i.anl = add nsw i32 %i.als, 1                  ; 3 uses
+  %i.anl = add nuw nsw i32 %i.als, 1              ; 3 uses
   %i.anm = load float, ptr %i.alt, align 4        ; 4 uses
   %i.ann = fcmp olt float %i.anm, %i.aiz
   br i1 %i.ann, label %stbtt__handle_clipped_edge.exit351.i.i.i.i.i.i.i, label %bb.fq
@@ -537,15 +537,15 @@ bb.fw:                                            ; preds = %bb.fv
   %i.aoh = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i.i.i.i.i, i64 20
   %i.aoi = load float, ptr %i.aoh, align 4
   %i.aoj = fsub float %.0.i348.i.i.i.i.i.i.i, %.054.i346.i.i.i.i.i.i.i
-  %12 = sext i32 %i.anl to i64
-  %i.aok = getelementptr inbounds [4 x i8], ptr %i.aij, i64 %12 ; 2 uses
+  %12 = zext nneg i32 %i.anl to i64
+  %i.aok = getelementptr inbounds nuw [4 x i8], ptr %i.aij, i64 %12 ; 2 uses
   %i.aol = load float, ptr %i.aok, align 4
   %i.aom = call float @llvm.fmuladd.f32(float %i.aoi, float %i.aoj, float %i.aol)
   store float %i.aom, ptr %i.aok, align 4
   br label %stbtt__handle_clipped_edge.exit351.i.i.i.i.i.i.i
 
 bb.fx:                                            ; preds = %bb.fv
-  %i.aon = add nsw i32 %i.als, 2
+  %i.aon = add nuw nsw i32 %i.als, 2
   %i.aoo = sitofp i32 %i.aon to float             ; 2 uses
   %i.aop = fcmp ult float %.055.i345.i.i.i.i.i.i.i, %i.aoo
   %i.aoq = fcmp ult float %.053.i347.i.i.i.i.i.i.i, %i.aoo
@@ -562,8 +562,8 @@ bb.fy:                                            ; preds = %bb.fx
   %i.aox = fadd float %i.aov, %i.aow
   %i.aoy = fmul float %i.aox, 5.000000e-01
   %i.aoz = fsub float 1.000000e+00, %i.aoy
-  %13 = sext i32 %i.anl to i64
-  %i.apa = getelementptr inbounds [4 x i8], ptr %i.aij, i64 %13 ; 2 uses
+  %13 = zext nneg i32 %i.anl to i64
+  %i.apa = getelementptr inbounds nuw [4 x i8], ptr %i.aij, i64 %13 ; 2 uses
   %i.apb = load float, ptr %i.apa, align 4
   %i.apc = call float @llvm.fmuladd.f32(float %i.aou, float %i.aoz, float %i.apb)
   store float %i.apc, ptr %i.apa, align 4
@@ -698,12 +698,12 @@ bb.gn:                                            ; preds = %bb.gm
   %i.art = fadd float %i.arr, %i.ars
   %i.aru = fmul float %i.art, 5.000000e-01
   %i.arv = fmul float %i.aru, %i.aro
-  %14 = sext i32 %i.ari to i64                    ; 2 uses
-  %i.arw = getelementptr inbounds [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %14 ; 2 uses
+  %14 = zext nneg i32 %i.ari to i64               ; 2 uses
+  %i.arw = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %14 ; 2 uses
   %i.arx = load float, ptr %i.arw, align 4
   %i.ary = fadd float %i.arx, %i.arv
   store float %i.ary, ptr %i.arw, align 4
-  %i.arz = getelementptr inbounds [4 x i8], ptr %i.ais, i64 %14 ; 2 uses
+  %i.arz = getelementptr inbounds nuw [4 x i8], ptr %i.ais, i64 %14 ; 2 uses
   %i.asa = load float, ptr %i.arz, align 4
   %i.asb = fadd float %i.aro, %i.asa
   store float %i.asb, ptr %i.arz, align 4
@@ -724,73 +724,67 @@ bb.gp:                                            ; preds = %bb.go
 bb.gq:                                            ; preds = %bb.gp, %bb.go
   %.pre-phi475.i.i.i.i.i.i.i = phi i32 [ %i.ari, %bb.gp ], [ %i.arj, %bb.go ] ; 7 uses
   %.pre-phi.i.i.i.i.i.i.i = phi i32 [ %i.arj, %bb.gp ], [ %i.ari, %bb.go ] ; 4 uses
-  %.0307.i.i.i.i.i.i.i = phi float [ %i.aqo, %bb.gp ], [ %i.aln, %bb.go ]
+  %.0307.i.i.i.i.i.i.i = phi float [ %i.aqo, %bb.gp ], [ %i.aln, %bb.go ] ; 2 uses
   %.1306.i.i.i.i.i.i.i = phi float [ %.0303.i.i.i.i.i.i.i, %bb.gp ], [ %.0305.i.i.i.i.i.i.i, %bb.go ]
   %.1304.i.i.i.i.i.i.i = phi float [ %.0305.i.i.i.i.i.i.i, %bb.gp ], [ %.0303.i.i.i.i.i.i.i, %bb.go ]
   %.1302.i.i.i.i.i.i.i = phi float [ %i.asg, %bb.gp ], [ %.0301.i.i.i.i.i.i.i, %bb.go ] ; 2 uses
   %.1300.i.i.i.i.i.i.i = phi float [ %i.ase, %bb.gp ], [ %.0299.i.i.i.i.i.i.i, %bb.go ] ; 2 uses
-  %.0298.i.i.i.i.i.i.i = phi float [ %i.ash, %bb.gp ], [ %i.aqq, %bb.go ] ; 2 uses
-  %i.asi = add nsw i32 %.pre-phi.i.i.i.i.i.i.i, 1 ; 3 uses
-  %15 = insertelement <2 x i32> poison, i32 %.pre-phi475.i.i.i.i.i.i.i, i64 0
-  %16 = insertelement <2 x i32> %15, i32 %i.asi, i64 1
-  %17 = sitofp <2 x i32> %16 to <2 x float>       ; 3 uses
-  %18 = insertelement <2 x float> poison, float %.0307.i.i.i.i.i.i.i, i64 0
-  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
-  %20 = fsub <2 x float> %17, %19
-  %21 = insertelement <2 x float> poison, float %.0298.i.i.i.i.i.i.i, i64 0
-  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> zeroinitializer
-  %23 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %22, <2 x float> %20, <2 x float> %i.alk) ; 2 uses
-  %24 = extractelement <2 x float> %23, i64 1     ; 2 uses
-  %i.asj = fcmp ogt float %24, %i.aja
-  %.0296.i.i.i.i.i.i.i = select i1 %i.asj, float %i.aja, float %24 ; 2 uses
+  %.0298.i.i.i.i.i.i.i = phi float [ %i.ash, %bb.gp ], [ %i.aqq, %bb.go ] ; 3 uses
+  %i.asi = add nuw nsw i32 %.pre-phi.i.i.i.i.i.i.i, 1 ; 3 uses
+  %15 = uitofp nneg i32 %i.asi to float           ; 2 uses
+  %16 = fsub float %15, %.0307.i.i.i.i.i.i.i
+  %17 = call float @llvm.fmuladd.f32(float %.0298.i.i.i.i.i.i.i, float %16, float %i.aiz) ; 2 uses
+  %18 = uitofp nneg i32 %.pre-phi475.i.i.i.i.i.i.i to float ; 3 uses
+  %19 = fsub float %18, %.0307.i.i.i.i.i.i.i
+  %20 = call float @llvm.fmuladd.f32(float %.0298.i.i.i.i.i.i.i, float %19, float %i.aiz) ; 2 uses
+  %i.asj = fcmp ogt float %17, %i.aja
+  %.0296.i.i.i.i.i.i.i = select i1 %i.asj, float %i.aja, float %17 ; 2 uses
   %i.ask = getelementptr inbounds nuw i8, ptr %.0293468.i.i.i.i.i.i.i, i64 20
   %i.asl = load float, ptr %i.ask, align 4        ; 4 uses
   %i.asm = fsub float %.0296.i.i.i.i.i.i.i, %.1302.i.i.i.i.i.i.i
   %i.asn = fmul float %i.asl, %i.asm              ; 5 uses
-  %25 = extractelement <2 x float> %17, i64 1
-  %i.aso = fsub nnan float %25, %.1306.i.i.i.i.i.i.i
+  %i.aso = fsub nnan float %15, %.1306.i.i.i.i.i.i.i
   %i.asp = fmul float %i.aso, %i.asn
   %i.asq = fmul float %i.asp, 5.000000e-01
-  %26 = sext i32 %.pre-phi.i.i.i.i.i.i.i to i64   ; 3 uses
-  %i.asr = getelementptr inbounds [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %26 ; 2 uses
+  %21 = zext nneg i32 %.pre-phi.i.i.i.i.i.i.i to i64 ; 3 uses
+  %i.asr = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %21 ; 2 uses
   %i.ass = load float, ptr %i.asr, align 4
   %i.ast = fadd float %i.ass, %i.asq
   store float %i.ast, ptr %i.asr, align 4
-  %27 = extractelement <2 x float> %23, i64 0     ; 2 uses
-  %i.asu = fcmp ogt float %27, %i.aja             ; 2 uses
+  %i.asu = fcmp ogt float %20, %i.aja             ; 2 uses
   %i.asv = fsub float %i.aja, %.0296.i.i.i.i.i.i.i
   %i.asw = sub nsw i32 %.pre-phi475.i.i.i.i.i.i.i, %i.asi
   %i.asx = sitofp i32 %i.asw to float
   %i.asy = fdiv float %i.asv, %i.asx
   %.1.i.i.i.i.i.i.i = select i1 %i.asu, float %i.asy, float %.0298.i.i.i.i.i.i.i
-  %.0295.i.i.i.i.i.i.i = select i1 %i.asu, float %i.aja, float %27
+  %.0295.i.i.i.i.i.i.i = select i1 %i.asu, float %i.aja, float %20
   %i.asz = fmul float %i.asl, %.1.i.i.i.i.i.i.i   ; 4 uses
   %i.ata = icmp slt i32 %i.asi, %.pre-phi475.i.i.i.i.i.i.i
   br i1 %i.ata, label %.lr.ph467.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i
 
 .lr.ph467.i.i.i.i.i.i.i:                          ; preds = %bb.gq
   %i.atb = fmul float %i.asz, 5.000000e-01        ; 3 uses
-  %i.atc = add nsw i64 %26, 1                     ; 2 uses
-  %i.atd = add i32 %.pre-phi475.i.i.i.i.i.i.i, -2
-  %i.ate = sub i32 %.pre-phi.i.i.i.i.i.i.i, %.pre-phi475.i.i.i.i.i.i.i
+  %i.atc = add nuw nsw i64 %21, 1                 ; 2 uses
+  %i.atd = add nsw i32 %.pre-phi475.i.i.i.i.i.i.i, -2
+  %i.ate = sub nsw i32 %.pre-phi.i.i.i.i.i.i.i, %.pre-phi475.i.i.i.i.i.i.i
   %i.atf = and i32 %i.ate, 1
   %lcmp.mod828.not.not = icmp eq i32 %i.atf, 0
   br i1 %lcmp.mod828.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph467.i.i.i.i.i.i.i
   %i.atg = fadd float %i.atb, %i.asn
-  %i.ath = getelementptr inbounds [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %i.atc ; 2 uses
+  %i.ath = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %i.atc ; 2 uses
   %i.ati = load float, ptr %i.ath, align 4
   %i.atj = fadd float %i.atg, %i.ati
   store float %i.atj, ptr %i.ath, align 4
   %i.atk = fadd float %i.asz, %i.asn              ; 2 uses
-  %indvars.iv.next472.i.i.i.i.i.i.i.prol = add nsw i64 %26, 2
+  %indvars.iv.next472.i.i.i.i.i.i.i.prol = add nuw nsw i64 %21, 2
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph467.i.i.i.i.i.i.i
-  %.lcssa746.unr = phi float [ poison, %.lr.ph467.i.i.i.i.i.i.i ], [ %i.atk, %.prol.loopexit.unr-lcssa ]
   %indvars.iv471.i.i.i.i.i.i.i.unr = phi i64 [ %i.atc, %.lr.ph467.i.i.i.i.i.i.i ], [ %indvars.iv.next472.i.i.i.i.i.i.i.prol, %.prol.loopexit.unr-lcssa ]
   %.0294466.i.i.i.i.i.i.i.unr = phi float [ %i.asn, %.lr.ph467.i.i.i.i.i.i.i ], [ %i.atk, %.prol.loopexit.unr-lcssa ]
+  %.lcssa746.unr = phi float [ poison, %.lr.ph467.i.i.i.i.i.i.i ], [ %i.atk, %.prol.loopexit.unr-lcssa ]
   %i.atl = icmp eq i32 %i.atd, %.pre-phi.i.i.i.i.i.i.i
   br i1 %i.atl, label %._crit_edge.i.i.i.i.i.i.i, label %.lr.ph467.i.i.i.i.i.i.i.new
 
@@ -798,41 +792,40 @@ bb.gq:                                            ; preds = %bb.gp, %bb.go
   %indvars.iv471.i.i.i.i.i.i.i = phi i64 [ %indvars.iv.next472.i.i.i.i.i.i.i.1, %.lr.ph467.i.i.i.i.i.i.i.new ], [ %indvars.iv471.i.i.i.i.i.i.i.unr, %.prol.loopexit ] ; 3 uses
   %.0294466.i.i.i.i.i.i.i = phi float [ %i.atw, %.lr.ph467.i.i.i.i.i.i.i.new ], [ %.0294466.i.i.i.i.i.i.i.unr, %.prol.loopexit ] ; 2 uses
   %i.atm = fadd float %i.atb, %.0294466.i.i.i.i.i.i.i
-  %i.atn = getelementptr inbounds [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %indvars.iv471.i.i.i.i.i.i.i ; 2 uses
+  %i.atn = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %indvars.iv471.i.i.i.i.i.i.i ; 2 uses
   %i.ato = load float, ptr %i.atn, align 4
   %i.atp = fadd float %i.atm, %i.ato
   store float %i.atp, ptr %i.atn, align 4
   %i.atq = fadd float %i.asz, %.0294466.i.i.i.i.i.i.i ; 2 uses
   %i.atr = fadd float %i.atb, %i.atq
-  %i.ats = getelementptr [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %indvars.iv471.i.i.i.i.i.i.i
-  %i.att = getelementptr i8, ptr %i.ats, i64 4    ; 2 uses
+  %i.ats = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %indvars.iv471.i.i.i.i.i.i.i
+  %i.att = getelementptr inbounds nuw i8, ptr %i.ats, i64 4 ; 2 uses
   %i.atu = load float, ptr %i.att, align 4
   %i.atv = fadd float %i.atr, %i.atu
   store float %i.atv, ptr %i.att, align 4
   %i.atw = fadd float %i.asz, %i.atq              ; 2 uses
-  %indvars.iv.next472.i.i.i.i.i.i.i.1 = add nsw i64 %indvars.iv471.i.i.i.i.i.i.i, 2 ; 2 uses
-  %lftr.wideiv.i.i.i.i.i.i.i.1 = trunc i64 %indvars.iv.next472.i.i.i.i.i.i.i.1 to i32
-  %exitcond474.not.i.i.i.i.i.i.i.1 = icmp eq i32 %.pre-phi475.i.i.i.i.i.i.i, %lftr.wideiv.i.i.i.i.i.i.i.1
-  br i1 %exitcond474.not.i.i.i.i.i.i.i.1, label %._crit_edge.i.i.i.i.i.i.i, label %.lr.ph467.i.i.i.i.i.i.i.new
+  %indvars.iv.next472.i.i.i.i.i.i.i.1 = add nuw nsw i64 %indvars.iv471.i.i.i.i.i.i.i, 2 ; 2 uses
+  %lftr.wideiv.i.i.i.i.i.i.i.1 = trunc nuw i64 %indvars.iv.next472.i.i.i.i.i.i.i.1 to i32
+  %22 = icmp sgt i32 %.pre-phi475.i.i.i.i.i.i.i, %lftr.wideiv.i.i.i.i.i.i.i.1
+  br i1 %22, label %.lr.ph467.i.i.i.i.i.i.i.new, label %._crit_edge.i.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i.i:                        ; preds = %.prol.loopexit, %.lr.ph467.i.i.i.i.i.i.i.new, %bb.gq
   %.0294.lcssa.i.i.i.i.i.i.i = phi float [ %i.asn, %bb.gq ], [ %.lcssa746.unr, %.prol.loopexit ], [ %i.atw, %.lr.ph467.i.i.i.i.i.i.i.new ]
   %i.atx = fsub float %.1300.i.i.i.i.i.i.i, %.0295.i.i.i.i.i.i.i
-  %28 = extractelement <2 x float> %17, i64 0     ; 2 uses
-  %i.aty = fadd float %28, 1.000000e+00           ; 2 uses
-  %i.atz = fsub nnan float %i.aty, %28
+  %i.aty = fadd float %18, 1.000000e+00           ; 2 uses
+  %i.atz = fsub nnan float %i.aty, %18
   %i.aua = fsub float %i.aty, %.1304.i.i.i.i.i.i.i
   %i.aub = fadd float %i.atz, %i.aua
   %i.auc = fmul float %i.aub, 5.000000e-01
   %i.aud = fmul float %i.auc, %i.atx
   %i.aue = call float @llvm.fmuladd.f32(float %i.asl, float %i.aud, float %.0294.lcssa.i.i.i.i.i.i.i)
-  %29 = sext i32 %.pre-phi475.i.i.i.i.i.i.i to i64 ; 2 uses
-  %i.auf = getelementptr inbounds [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %29 ; 2 uses
+  %23 = zext nneg i32 %.pre-phi475.i.i.i.i.i.i.i to i64 ; 2 uses
+  %i.auf = getelementptr inbounds nuw [4 x i8], ptr %.080.i.i.i.i.i.i, i64 %23 ; 2 uses
   %i.aug = load float, ptr %i.auf, align 4
   %i.auh = fadd float %i.aue, %i.aug
   store float %i.auh, ptr %i.auf, align 4
   %i.aui = fsub float %.1300.i.i.i.i.i.i.i, %.1302.i.i.i.i.i.i.i
-  %i.auj = getelementptr inbounds [4 x i8], ptr %i.ais, i64 %29 ; 2 uses
+  %i.auj = getelementptr inbounds nuw [4 x i8], ptr %i.ais, i64 %23 ; 2 uses
   %i.auk = load float, ptr %i.auj, align 4
   %i.aul = call float @llvm.fmuladd.f32(float %i.asl, float %i.aui, float %i.auk)
   store float %i.aul, ptr %i.auj, align 4
@@ -1235,8 +1228,8 @@ stbtt__fill_active_edges_new.exit.i.i.i.i.i.i:    ; preds = %stbtt__handle_clipp
   %i.bsa = call float @llvm.fabs.f32(float %i.brz)
   %i.bsb = call float @llvm.fmuladd.f32(float %i.bsa, float 2.550000e+02, float 5.000000e-01)
   %i.bsc = fptosi float %i.bsb to i32
-  %spec.store.select.i.i.i.i.i.i = call i32 @llvm.smin.i32(i32 %i.bsc, i32 255)
-  %i.bsd = trunc i32 %spec.store.select.i.i.i.i.i.i to i8
+  %spec.store.select.i.i.i.i.i.i = call i32 @llvm.umin.i32(i32 %i.bsc, i32 255)
+  %i.bsd = trunc nuw i32 %spec.store.select.i.i.i.i.i.i to i8
   %i.bse = trunc nuw nsw i64 %indvars.iv.i.i.i.i.i.i to i32
   %i.bsf = add nsw i32 %i.brt, %i.bse
   %i.bsg = sext i32 %i.bsf to i64
@@ -1637,6 +1630,9 @@ declare float @llvm.floor.f32(float) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.smin.i16(i16, i16) #18

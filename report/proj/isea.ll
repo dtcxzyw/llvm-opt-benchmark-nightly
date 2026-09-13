@@ -204,12 +204,10 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.l
 
 bb.q:                                             ; preds = %bb.p
   %i.bi = fptosi double %.0100.i to i32
-  %3 = tail call i32 @llvm.smax.i32(i32 %i.bi, i32 0)
-  %i.bj = tail call i32 @llvm.umin.i32(i32 %3, i32 4) ; 4 uses
-  %i.bk = fptosi double %.099.i to i32
-  %4 = tail call i32 @llvm.smax.i32(i32 %i.bk, i32 0) ; 2 uses
-  %i.bl = tail call i32 @llvm.umin.i32(i32 %4, i32 5) ; 3 uses
-  %i.bm = icmp eq i32 %4, %i.bj
+  %i.bj = tail call i32 @llvm.smin.i32(i32 %i.bi, i32 4) ; 4 uses
+  %i.bk = fptosi double %.099.i to i32            ; 2 uses
+  %i.bl = tail call i32 @llvm.smin.i32(i32 %i.bk, i32 5) ; 3 uses
+  %i.bm = icmp eq i32 %i.bj, %i.bk
   %i.bn = add nuw nsw i32 %i.bj, 1
   %i.bo = icmp eq i32 %i.bl, %i.bn
   %or.cond108.i = select i1 %i.bm, i1 true, i1 %i.bo
@@ -222,7 +220,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bs = uitofp nneg i32 %i.bl to double
   %i.bt = fsub double %.099.i, %i.bs
   %i.bu = fcmp ogt double %i.br, %i.bt            ; 10 uses
-  switch i32 %i.bp, label %default.unreachable [
+  switch i32 %i.bp, label %_ZN12_GLOBAL__N_120ISEAPlanarProjection14cartesianToGeoERK5PJ_XYPKNS_12pj_isea_dataERNS_8GeoPointE.exit [
     i32 0, label %bb.s
     i32 2, label %bb.t
     i32 4, label %bb.u
@@ -522,12 +520,9 @@ bb.an:                                            ; preds = %bb.am
   %i.io = fadd double %.sink.i.i, f0xC01921FB54442D18
   br label %_ZN12_GLOBAL__N_120ISEAPlanarProjection14cartesianToGeoERK5PJ_XYPKNS_12pj_isea_dataERNS_8GeoPointE.exit
 
-default.unreachable:                              ; preds = %bb.r
-  unreachable
-
-_ZN12_GLOBAL__N_120ISEAPlanarProjection14cartesianToGeoERK5PJ_XYPKNS_12pj_isea_dataERNS_8GeoPointE.exit: ; preds = %bb.a, %bb.an, %bb.am, %bb.al, %bb.q, %bb.p
-  %.sroa.09.1 = phi double [ +inf, %bb.p ], [ %i.im, %bb.al ], [ %.sink.i.i, %bb.am ], [ %i.io, %bb.an ], [ +inf, %bb.q ], [ +inf, %bb.a ]
-  %.sroa.4.1 = phi double [ +inf, %bb.p ], [ %.sink108.i.i, %bb.al ], [ %.sink108.i.i, %bb.am ], [ %.sink108.i.i, %bb.an ], [ +inf, %bb.q ], [ +inf, %bb.a ]
+_ZN12_GLOBAL__N_120ISEAPlanarProjection14cartesianToGeoERK5PJ_XYPKNS_12pj_isea_dataERNS_8GeoPointE.exit: ; preds = %bb.a, %bb.an, %bb.am, %bb.al, %bb.r, %bb.q, %bb.p
+  %.sroa.09.1 = phi double [ +inf, %bb.p ], [ %i.im, %bb.al ], [ %.sink.i.i, %bb.am ], [ %i.io, %bb.an ], [ +inf, %bb.r ], [ +inf, %bb.q ], [ +inf, %bb.a ]
+  %.sroa.4.1 = phi double [ +inf, %bb.p ], [ %.sink108.i.i, %bb.al ], [ %.sink108.i.i, %bb.am ], [ %.sink108.i.i, %bb.an ], [ +inf, %bb.r ], [ +inf, %bb.q ], [ +inf, %bb.a ]
   %.fca.0.insert = insertvalue { double, double } poison, double %.sroa.09.1, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %.sroa.4.1, 1
   ret { double, double } %.fca.1.insert
@@ -930,10 +925,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare double @llvm.sqrt.f64(double) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #8
+declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @ldexp(double, i32) local_unnamed_addr #14

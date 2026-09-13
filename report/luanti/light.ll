@@ -202,8 +202,7 @@ bb.l:                                             ; preds = %bb.k
   %i.dm = call nsz float @llvm.pow.f32(float %i.dg, float %i.bs)
   %i.dn = fmul nsz float %i.dm, 2.550000e+02
   %i.do = fptosi float %i.dn to i32
-  %6 = call i32 @llvm.smax.i32(i32 %i.do, i32 0)
-  %i.dp = call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %i.dp = call i32 @llvm.smin.i32(i32 %i.do, i32 255)
   br label %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit
 
 _ZNK12_GLOBAL__N_110LightCurve3getEf.exit:        ; preds = %bb.i, %bb.k, %bb.l
@@ -303,13 +302,10 @@ declare noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_cr
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #3
+declare i32 @llvm.smin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.uadd.sat.i8(i8, i8) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #3
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

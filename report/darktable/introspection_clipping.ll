@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph156.split
   %i.cy = trunc nuw nsw i64 %indvars.iv160 to i32
-  %i.cz = uitofp nneg i32 %i.cy to float
+  %i.cz = uitofp nsz nneg i32 %i.cy to float
   %i.da = fadd reassoc nsz arcp contract afn float %i.cz, 5.000000e-01
   br label %bb.j
 
@@ -226,7 +226,7 @@ bb.j:                                             ; preds = %.lr.ph, %bb.o
   %i.dg = load float, ptr %i.bq, align 4, !tbaa !73
   %i.dh = load float, ptr %i.br, align 4, !tbaa !72
   %i.di = trunc nuw nsw i64 %indvars.iv to i32
-  %i.dj = uitofp nneg i32 %i.di to float
+  %i.dj = uitofp nsz nneg i32 %i.di to float
   %i.dk = load <2 x i32>, ptr %5, align 4, !tbaa !14
   %i.dl = sitofp <2 x i32> %i.dk to <2 x float>   ; 2 uses
   %i.dm = load float, ptr %i.bs, align 4, !tbaa !75
@@ -535,10 +535,6 @@ bb.g:                                             ; preds = %bb.f
   %i.ed = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.ec, <float -5.000000e-01, float -5.000000e-01, float 5.000000e-01, float 5.000000e-01> ; 16 uses
   br i1 %i.ea, label %bb.h, label %bb.i
 
-.loopexit:                                        ; preds = %bb.ao, %.thread
-  %.pre = load i32, ptr %2, align 4, !tbaa !91
-  br label %bb.au
-
 bb.h:                                             ; preds = %bb.g
   %.sroa.0.8.vec.extract = extractelement <4 x float> %i.ed, i64 2
   %.sroa.0.0.vec.extract464 = extractelement <4 x float> %i.ed, i64 0
@@ -758,7 +754,7 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.an, %bb.am
   %.2.1.3.1 = phi nsz float [ %i.gb, %bb.an ], [ %.2.3.1, %bb.am ] ; 2 uses
   %i.gc = fcmp reassoc nsz arcp contract afn ult float %.2.1.3.1, %.1259
-  br i1 %i.gc, label %.loopexit, label %.thread
+  br i1 %i.gc, label %bb.au, label %.thread
 
 .thread:                                          ; preds = %bb.ao
   store <2 x float> %i.bh, ptr %i.bi, align 4, !tbaa !13
@@ -781,7 +777,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.gs = shufflevector <4 x float> %i.gq, <4 x float> %i.gr, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.gt = fptosi <4 x float> %i.gs to <4 x i32>
   store <4 x i32> %i.gt, ptr %2, align 4, !tbaa !14
-  br label %.loopexit
+  br label %bb.au
 
 bb.ap:                                            ; preds = %bb.f, %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %2, ptr noundef nonnull align 16 dereferenceable(20) %4, i64 20, i1 false), !tbaa.struct !87
@@ -868,8 +864,8 @@ bb.ap:                                            ; preds = %bb.f, %bb.e
   %i.jp = getelementptr inbounds nuw i8, ptr %i.b, i64 164
   %i.jq = getelementptr inbounds nuw i8, ptr %i.b, i64 148
   %i.jr = getelementptr inbounds nuw i8, ptr %i.b, i64 100
-  %i.js = load float, ptr %i.jp, align 4, !tbaa !92
-  %i.jt = load float, ptr %i.jo, align 4, !tbaa !93
+  %i.js = load float, ptr %i.jp, align 4, !tbaa !91
+  %i.jt = load float, ptr %i.jo, align 4, !tbaa !92
   %i.ju = load float, ptr %i.jn, align 4, !tbaa !80
   %i.jv = load float, ptr %i.jm, align 4, !tbaa !81
   %i.jw = shufflevector <4 x float> %i.he, <4 x float> <float 0.000000e+00, float poison, float poison, float poison>, <2 x i32> <i32 4, i32 1>
@@ -1080,7 +1076,7 @@ bb.as:                                            ; preds = %bb.ar
   %.pre347 = fmul reassoc nnan nsz arcp contract afn float %i.ot, 1.250000e-01
   br label %bb.at
 
-bb.at:                                            ; preds = %bb.as, %bb.ar
+bb.at:                                            ; preds = %bb.ar, %bb.as
   %.pre-phi = phi float [ %.pre347, %bb.as ], [ %i.qb, %bb.ar ]
   %.1249 = phi nsz float [ %i.ql, %bb.as ], [ %.0248, %bb.ar ]
   %i.qm = fsub reassoc nsz arcp contract afn float %.1247, %.1251
@@ -1117,19 +1113,19 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.rn = extractelement <2 x float> %i.hg, i64 1
   store float %i.rn, ptr %i.rm, align 4, !tbaa !68
   %i.ro = extractelement <4 x i32> %i.rj, i64 0
-  br label %bb.au
+  br label %bb.aw
 
-bb.au:                                            ; preds = %bb.at, %.loopexit
-  %5 = phi i32 [ %i.ro, %bb.at ], [ %.pre, %.loopexit ] ; 2 uses
-  %i.rp = icmp slt i32 %5, 0
+bb.au:                                            ; preds = %bb.ao, %.thread
+  %.pre = load i32, ptr %2, align 4, !tbaa !93    ; 2 uses
+  %i.rp = icmp slt i32 %.pre, 0
   br i1 %i.rp, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
-  store i32 0, ptr %2, align 4, !tbaa !91
+  store i32 0, ptr %2, align 4, !tbaa !93
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av, %bb.au
-  %6 = phi i32 [ 0, %bb.av ], [ %5, %bb.au ]
+bb.aw:                                            ; preds = %bb.at, %bb.av, %bb.au
+  %5 = phi i32 [ 0, %bb.av ], [ %.pre, %bb.au ], [ %i.ro, %bb.at ]
   %i.rq = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.rr = load i32, ptr %i.rq, align 4, !tbaa !94 ; 2 uses
   %i.rs = icmp slt i32 %i.rr, 0
@@ -1185,13 +1181,13 @@ bb.bd:                                            ; preds = %bb.bc
   %i.so = load ptr, ptr %i.sn, align 8, !tbaa !133
   %i.sp = call ptr %i.so() #25
   call void (ptr, ...) @dt_control_log(ptr noundef %i.sm, ptr noundef %i.sp) #25
-  %.pre345 = load i32, ptr %2, align 4, !tbaa !91
+  %.pre345 = load i32, ptr %2, align 4, !tbaa !93
   %.pre346 = load i32, ptr %i.rq, align 4, !tbaa !94
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bc, %bb.bd, %bb.az
   %i.sq = phi i32 [ %i.sl, %bb.bc ], [ %.pre346, %bb.bd ], [ %i.rt, %bb.az ]
-  %i.sr = phi i32 [ %i.sk, %bb.bc ], [ %.pre345, %bb.bd ], [ %6, %bb.az ]
+  %i.sr = phi i32 [ %i.sk, %bb.bc ], [ %.pre345, %bb.bd ], [ %5, %bb.az ]
   %i.ss = sitofp reassoc nsz arcp contract afn i32 %i.sr to float
   %i.st = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   store float %i.ss, ptr %i.st, align 4, !tbaa !72
@@ -1294,8 +1290,8 @@ bb.a:
   %i.bh = getelementptr inbounds nuw i8, ptr %i.b, i64 152
   %i.bi = getelementptr inbounds nuw i8, ptr %i.b, i64 148
   %i.bj = getelementptr inbounds nuw i8, ptr %i.b, i64 100
-  %i.bk = load float, ptr %i.be, align 4, !tbaa !92 ; 2 uses
-  %i.bl = load float, ptr %i.bd, align 4, !tbaa !93 ; 2 uses
+  %i.bk = load float, ptr %i.be, align 4, !tbaa !91 ; 2 uses
+  %i.bl = load float, ptr %i.bd, align 4, !tbaa !92 ; 2 uses
   %i.bm = insertelement <3 x float> poison, float %i.ac, i64 0
   %i.bn = insertelement <3 x float> %i.bm, float %i.y, i64 1
   %i.bo = shufflevector <3 x float> %i.bn, <3 x float> poison, <3 x i32> <i32 0, i32 1, i32 0>
@@ -1598,7 +1594,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %.spli
   %i.mc = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.lt, <2 x i32> zeroinitializer)
   %i.md = select <2 x i1> %i.mb, <2 x i32> %i.ma, <2 x i32> %i.mc ; 3 uses
   %i.me = extractelement <2 x i32> %i.md, i64 0
-  store i32 %i.me, ptr %3, align 4, !tbaa !91
+  store i32 %i.me, ptr %3, align 4, !tbaa !93
   %i.mf = extractelement <2 x i32> %i.md, i64 1
   store i32 %i.mf, ptr %i.lu, align 4, !tbaa !94
   %i.mg = tail call reassoc nsz arcp contract afn <2 x float> @llvm.ceil.v2f32(<2 x float> %i.ly)
@@ -1784,7 +1780,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 .lr.ph:                                           ; preds = %.lr.ph151.split
   %i.dd = trunc nuw nsw i64 %indvars.iv155 to i32
-  %i.de = uitofp nneg i32 %i.dd to float
+  %i.de = uitofp nsz nneg i32 %i.dd to float
   %i.df = fadd reassoc nsz arcp contract afn float %i.de, 5.000000e-01
   br label %bb.k
 
@@ -1806,7 +1802,7 @@ bb.k:                                             ; preds = %.lr.ph, %bb.m
   %i.dl = load float, ptr %i.bv, align 4, !tbaa !73
   %i.dm = load float, ptr %i.bw, align 4, !tbaa !72
   %i.dn = trunc nuw nsw i64 %indvars.iv to i32
-  %i.do = uitofp nneg i32 %i.dn to float
+  %i.do = uitofp nsz nneg i32 %i.dn to float
   %i.dp = load <2 x i32>, ptr %5, align 4, !tbaa !14
   %i.dq = sitofp <2 x i32> %i.dp to <2 x float>   ; 2 uses
   %i.dr = load float, ptr %i.bx, align 4, !tbaa !75
@@ -2209,9 +2205,9 @@ attributes #26 = { nounwind willreturn memory(read) }
 !88 = !{!63, !9, i64 176}
 !89 = !{!63, !12, i64 40}
 !90 = !{!63, !12, i64 48}
-!91 = !{!24, !9, i64 0}
-!92 = !{!63, !12, i64 164}
-!93 = !{!63, !12, i64 168}
+!91 = !{!63, !12, i64 164}
+!92 = !{!63, !12, i64 168}
+!93 = !{!24, !9, i64 0}
 !94 = !{!24, !9, i64 4}
 !95 = !{!"dt_codepath_t", !9, i64 0}
 !96 = !{!"p1 _ZTS11_JsonParser", !15, i64 0}

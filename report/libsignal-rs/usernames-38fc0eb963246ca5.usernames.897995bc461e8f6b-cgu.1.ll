@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/usernames-38fc0eb963246ca5.usernames.897995bc461e8f6b-cgu.1?download=true
+inline.NumInlined: 182
+inline.NumDeleted: 120
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -15,35 +17,34 @@ target triple = "x86_64-unknown-linux-gnu"
 @8 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"h\00\00\00\00\00\00\00s\00\00\00\05\00\00\00" }>, align 8
 @9 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"h\00\00\00\00\00\00\00y\00\00\00\05\00\00\00" }>, align 8
 @10 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"h\00\00\00\00\00\00\00\7F\00\00\00\05\00\00\00" }>, align 8
-@11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"h\00\00\00\00\00\00\00\8D\00\00\00\14\00\00\00" }>, align 8
 @_RNvNtNtNtNtCsdRrpXuHtjOb_16curve25519_dalek7backend6vector4avx29constants22EXTENDEDPOINT_IDENTITY = external local_unnamed_addr global { { [5 x <4 x i64>] } }
-@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"b\00\00\00\00\00\00\00\EB\04\00\00\19\00\00\00" }>, align 8
-@13 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"b\00\00\00\00\00\00\00\F3\04\00\00\14\00\00\00" }>, align 8
-@14 = private unnamed_addr constant [27 x i8] c"Username must contain a '.'", align 1
-@15 = private unnamed_addr constant [20 x i8] c"Name cannot be empty", align 1
-@16 = private unnamed_addr constant [30 x i8] c"Name cannot start with a digit", align 1
-@17 = private unnamed_addr constant [38 x i8] c"Nickname contains disallowed character", align 1
-@18 = private unnamed_addr constant [21 x i8] c"Nickname is too short", align 1
-@19 = private unnamed_addr constant [20 x i8] c"Nickname is too long", align 1
-@20 = private unnamed_addr constant [29 x i8] c"Discriminator cannot be empty", align 1
-@21 = private unnamed_addr constant [28 x i8] c"Discriminator cannot be zero", align 1
-@22 = private unnamed_addr constant [38 x i8] c"Discriminator cannot be a single digit", align 1
-@23 = private unnamed_addr constant [83 x i8] c"Discriminator cannot have leading zeros unless it would otherwise be a single digit", align 1
-@24 = private unnamed_addr constant [44 x i8] c"Discriminator must only be made up of digits", align 1
-@25 = private unnamed_addr constant [49 x i8] c"Value is too large to be a username discriminator", align 1
-@26 = private unnamed_addr constant [49 x i8] c"The combined length of all input data is too long", align 1
-@27 = private unnamed_addr constant [32 x i8] c"Invalid size of the entropy data", align 1
-@28 = private unnamed_addr constant [75 x i8] c"Username link data size is too short: must contain IV, ciphertext, and HMAC", align 1
-@29 = private unnamed_addr constant [83 x i8] c"HMAC on username link doesn't match the one calculated with the given entropy input", align 1
-@30 = private unnamed_addr constant [50 x i8] c"Ciphertext in the username link can't be decrypted", align 1
-@31 = private unnamed_addr constant [61 x i8] c"Data decrypted from the username link is of invalid structure", align 1
-@32 = private unnamed_addr constant [30 x i8] c"Username could not be verified", align 1
-@33 = private unnamed_addr constant [98 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha2-0.11.0/src/block_api.rs\00", align 1
-@34 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @33, [16 x i8] c"a\00\00\00\00\00\00\00F\00\00\00\13\00\00\00" }>, align 8
-@35 = private unnamed_addr constant [32 x i8] c"g\E6\09j\85\AEg\BBr\F3n<:\F5O\A5\7FR\0EQ\8Ch\05\9B\AB\D9\83\1F\19\CD\E0[", align 8
-@36 = private unnamed_addr constant [98 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bytes-1.12.0/src/buf/take.rs\00", align 1
-@37 = private unnamed_addr constant [35 x i8] c"assertion failed: cnt <= self.limit", align 1
-@38 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @36, [16 x i8] c"a\00\00\00\00\00\00\00\92\00\00\00\09\00\00\00" }>, align 8
+@11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"b\00\00\00\00\00\00\00\EB\04\00\00\19\00\00\00" }>, align 8
+@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"b\00\00\00\00\00\00\00\F3\04\00\00\14\00\00\00" }>, align 8
+@13 = private unnamed_addr constant [27 x i8] c"Username must contain a '.'", align 1
+@14 = private unnamed_addr constant [20 x i8] c"Name cannot be empty", align 1
+@15 = private unnamed_addr constant [30 x i8] c"Name cannot start with a digit", align 1
+@16 = private unnamed_addr constant [38 x i8] c"Nickname contains disallowed character", align 1
+@17 = private unnamed_addr constant [21 x i8] c"Nickname is too short", align 1
+@18 = private unnamed_addr constant [20 x i8] c"Nickname is too long", align 1
+@19 = private unnamed_addr constant [29 x i8] c"Discriminator cannot be empty", align 1
+@20 = private unnamed_addr constant [28 x i8] c"Discriminator cannot be zero", align 1
+@21 = private unnamed_addr constant [38 x i8] c"Discriminator cannot be a single digit", align 1
+@22 = private unnamed_addr constant [83 x i8] c"Discriminator cannot have leading zeros unless it would otherwise be a single digit", align 1
+@23 = private unnamed_addr constant [44 x i8] c"Discriminator must only be made up of digits", align 1
+@24 = private unnamed_addr constant [49 x i8] c"Value is too large to be a username discriminator", align 1
+@25 = private unnamed_addr constant [49 x i8] c"The combined length of all input data is too long", align 1
+@26 = private unnamed_addr constant [32 x i8] c"Invalid size of the entropy data", align 1
+@27 = private unnamed_addr constant [75 x i8] c"Username link data size is too short: must contain IV, ciphertext, and HMAC", align 1
+@28 = private unnamed_addr constant [83 x i8] c"HMAC on username link doesn't match the one calculated with the given entropy input", align 1
+@29 = private unnamed_addr constant [50 x i8] c"Ciphertext in the username link can't be decrypted", align 1
+@30 = private unnamed_addr constant [61 x i8] c"Data decrypted from the username link is of invalid structure", align 1
+@31 = private unnamed_addr constant [30 x i8] c"Username could not be verified", align 1
+@32 = private unnamed_addr constant [98 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha2-0.11.0/src/block_api.rs\00", align 1
+@33 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @32, [16 x i8] c"a\00\00\00\00\00\00\00F\00\00\00\13\00\00\00" }>, align 8
+@34 = private unnamed_addr constant [32 x i8] c"g\E6\09j\85\AEg\BBr\F3n<:\F5O\A5\7FR\0EQ\8Ch\05\9B\AB\D9\83\1F\19\CD\E0[", align 8
+@35 = private unnamed_addr constant [98 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bytes-1.12.0/src/buf/take.rs\00", align 1
+@36 = private unnamed_addr constant [35 x i8] c"assertion failed: cnt <= self.limit", align 1
+@37 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @35, [16 x i8] c"a\00\00\00\00\00\00\00\92\00\00\00\09\00\00\00" }>, align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMNtCs5DMeLc8gTfG_12hybrid_array7from_fnINtB5_5ArrayhINtNtCsgAO26H8IC1Y_7typenum4uint4UIntIBT_IBT_IBT_IBT_IBT_IBT_NtBV_5UTermNtNtBX_3bit2B1ENtB24_2B0EB2h_EB2h_EB2h_EB2h_EB2h_EE11try_from_fnNtNtCsgxBkk5gSRhY_4core7convert10InfallibleNCINvB2_7from_fnNCNvXsg_B5_BF_NtNtB38_7default7Default7default0E0ECsbNM6vbj4kjf_9usernames(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 1 captures(none) dereferenceable(64) initializes((0, 64)) %0, ptr noalias nofree noundef nonnull readnone captures(none) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -141,7 +142,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !118
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 64 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(32) @35, i64 32, i1 false), !noalias !118
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(32) @34, i64 32, i1 false), !noalias !118
   %.sroa.48.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 96
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 63 ; 2 uses
   store i8 0, ptr %.sroa.3.0..sroa_idx.i.i, align 1, !alias.scope !119, !noalias !118
@@ -280,7 +281,7 @@ bb.i:                                             ; preds = %.noexc1.i.i.i
   br i1 %.not.i.i.i.i.i.i, label %_RINvNtCsgxBkk5gSRhY_4core5slice20copy_from_slice_implhECsbNM6vbj4kjf_9usernames.exit.i.i.i.i.i, label %bb.j, !prof !7
 
 bb.j:                                             ; preds = %bb.i
-  invoke void @_RNvNvNtCsgxBkk5gSRhY_4core5slice20copy_from_slice_impl17len_mismatch_fail(i64 noundef range(i64 0, -9223372036854775808) %i.av, i64 noundef 4, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @34) #22
+  invoke void @_RNvNvNtCsgxBkk5gSRhY_4core5slice20copy_from_slice_impl17len_mismatch_fail(i64 noundef range(i64 0, -9223372036854775808) %i.av, i64 noundef 4, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @33) #22
           to label %.noexc2.i.i.i unwind label %.loopexit.split-lp.i.i.i, !noalias !128
 
 .noexc2.i.i.i:                                    ; preds = %bb.j
@@ -683,7 +684,7 @@ bb.z:                                             ; preds = %bb.y
   %i.bz = add nsw i32 %i.bw, -268435456
   %i.ca = zext nneg i32 %i.bz to i64
   %i.cb = shl nuw nsw i64 %i.ca, 28
-  %i.cc = add nuw nsw i64 %i.cb, %i.as            ; 3 uses
+  %i.cc = add nuw nsw i64 %i.cb, %i.as            ; 2 uses
   %i.cd = icmp samesign ugt i64 %.val1.i, 8
   tail call void @llvm.assume(i1 %i.cd)
   %i.ce = getelementptr inbounds nuw i8, ptr %.val.i, i64 8
@@ -705,18 +706,13 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cl = zext nneg i8 %i.cj to i64
+  %1 = shl nuw i64 %i.cl, 63
   %i.cm = and i8 %i.cf, 127
   %i.cn = zext nneg i8 %i.cm to i64
-  %1 = shl nuw i64 %i.cl, 63
   %i.co = shl nuw nsw i64 %i.cn, 56
   %i.cp = add nuw nsw i64 %i.co, %i.cc
-  %i.cq = or disjoint i64 %1, %i.cp               ; 2 uses
-  %2 = icmp ult i64 %i.cq, %i.cc
-  br i1 %2, label %3, label %_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCsbNM6vbj4kjf_9usernames.exit6
-
-3:                                                ; preds = %bb.ac
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #22, !noalias !188
-  unreachable
+  %i.cq = or disjoint i64 %1, %i.cp
+  br label %_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCsbNM6vbj4kjf_9usernames.exit6
 
 bb.ad:                                            ; preds = %bb.z
   %i.cr = zext nneg i8 %i.cf to i64
@@ -770,7 +766,7 @@ bb.ak:                                            ; preds = %bb.ab
   %i.dp = ptrtoint ptr %i.do to i64
   br label %bb.al
 
-_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCsbNM6vbj4kjf_9usernames.exit6: ; preds = %bb.ac, %bb.af, %bb.ag, %bb.ah, %bb.ad, %bb.ae, %bb.o, %bb.k, %bb.g
+_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCsbNM6vbj4kjf_9usernames.exit6: ; preds = %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ad, %bb.ac, %bb.o, %bb.k, %bb.g
   %.sroa.18.0.ph = phi i64 [ 10, %bb.ac ], [ 9, %bb.ad ], [ 8, %bb.ae ], [ 7, %bb.af ], [ 6, %bb.ag ], [ 5, %bb.ah ], [ 4, %bb.o ], [ 3, %bb.k ], [ 2, %bb.g ] ; 2 uses
   %.sroa.5.0.ph = phi i64 [ %i.cq, %bb.ac ], [ %i.ct, %bb.ad ], [ %i.cw, %bb.ae ], [ %i.cz, %bb.af ], [ %i.dc, %bb.ag ], [ %i.df, %bb.ah ], [ %i.aq, %bb.o ], [ %i.ag, %bb.k ], [ %i.w, %bb.g ]
   %i.dq = sub nuw i64 %.val1.i, %.sroa.18.0.ph
@@ -1069,7 +1065,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.experimental.noalias.scope.decl(metadata !227)
   %i.aa = load i64, ptr %i.h, align 8, !alias.scope !228, !noalias !226, !noundef !4 ; 2 uses
   %i.ab = load i64, ptr %i.q, align 8, !alias.scope !228, !noalias !226, !noundef !4 ; 4 uses
-  %i.ac = sub i64 %i.aa, %i.ab                    ; 2 uses
+  %i.ac = sub nuw i64 %i.aa, %i.ab                ; 2 uses
   %i.ad = icmp ult i64 %i.aa, %i.ab
   br i1 %i.ad, label %.invoke, label %bb.g
 
@@ -1094,14 +1090,14 @@ bb.i:                                             ; preds = %bb.g
   unreachable
 
 bb.j:                                             ; preds = %bb.h
-  invoke void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #22
+  invoke void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #22
           to label %.noexc21 unwind label %bb.n
 
 .noexc21:                                         ; preds = %bb.j
   unreachable
 
 .invoke:                                          ; preds = %.noexc18, %.thread.i, %bb.d
-  %i.ai = phi ptr [ @12, %.thread.i ], [ @2, %bb.d ], [ @4, %.noexc18 ]
+  %i.ai = phi ptr [ @11, %.thread.i ], [ @2, %bb.d ], [ @4, %.noexc18 ]
   invoke void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ai) #22
           to label %.cont unwind label %bb.n
 
@@ -1212,7 +1208,7 @@ bb.w:                                             ; preds = %.thread.i30
   br i1 %i.bh, label %bb.z, label %bb.y, !prof !10
 
 bb.x:                                             ; preds = %.thread.i30
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #22, !noalias !237
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #22, !noalias !237
   unreachable
 
 bb.y:                                             ; preds = %bb.w
@@ -1229,7 +1225,7 @@ bb.z:                                             ; preds = %bb.w
   unreachable
 
 bb.aa:                                            ; preds = %bb.y
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #22, !noalias !237
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #22, !noalias !237
   unreachable
 
 bb.ab:                                            ; preds = %bb.v
@@ -1351,7 +1347,7 @@ default.unreachable144:                           ; preds = %bb.a
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 27) #25
+  %i.g = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 27) #25
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.b
@@ -1359,47 +1355,47 @@ bb.c:                                             ; preds = %bb.n, %bb.m, %bb.l,
   ret i1 %.sroa.0.0.in
 
 bb.d:                                             ; preds = %bb.a
-  %i.h = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 20) #25
+  %i.h = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 20) #25
   br label %bb.c
 
 bb.e:                                             ; preds = %bb.a
-  %i.i = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 30) #25
+  %i.i = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 30) #25
   br label %bb.c
 
 bb.f:                                             ; preds = %bb.a
-  %i.j = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 38) #25
+  %i.j = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 38) #25
   br label %bb.c
 
 bb.g:                                             ; preds = %bb.a
-  %i.k = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 21) #25
+  %i.k = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 21) #25
   br label %bb.c
 
 bb.h:                                             ; preds = %bb.a
-  %i.l = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @19, i64 noundef 20) #25
+  %i.l = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 20) #25
   br label %bb.c
 
 bb.i:                                             ; preds = %bb.a
-  %i.m = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @20, i64 noundef 29) #25
+  %i.m = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @19, i64 noundef 29) #25
   br label %bb.c
 
 bb.j:                                             ; preds = %bb.a
-  %i.n = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @21, i64 noundef 28) #25
+  %i.n = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @20, i64 noundef 28) #25
   br label %bb.c
 
 bb.k:                                             ; preds = %bb.a
-  %i.o = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @22, i64 noundef 38) #25
+  %i.o = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @21, i64 noundef 38) #25
   br label %bb.c
 
 bb.l:                                             ; preds = %bb.a
-  %i.p = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @23, i64 noundef 83) #25
+  %i.p = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @22, i64 noundef 83) #25
   br label %bb.c
 
 bb.m:                                             ; preds = %bb.a
-  %i.q = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 44) #25
+  %i.q = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @23, i64 noundef 44) #25
   br label %bb.c
 
 bb.n:                                             ; preds = %bb.a
-  %i.r = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 49) #25
+  %i.r = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 49) #25
   br label %bb.c
 }
 
@@ -1425,7 +1421,7 @@ default.unreachable72:                            ; preds = %bb.a
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @26, i64 noundef 49) #25
+  %i.g = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 49) #25
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.b
@@ -1433,23 +1429,23 @@ bb.c:                                             ; preds = %bb.h, %bb.g, %bb.f,
   ret i1 %.sroa.0.0.in
 
 bb.d:                                             ; preds = %bb.a
-  %i.h = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @27, i64 noundef 32) #25
+  %i.h = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @26, i64 noundef 32) #25
   br label %bb.c
 
 bb.e:                                             ; preds = %bb.a
-  %i.i = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @28, i64 noundef 75) #25
+  %i.i = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @27, i64 noundef 75) #25
   br label %bb.c
 
 bb.f:                                             ; preds = %bb.a
-  %i.j = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @29, i64 noundef 83) #25
+  %i.j = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @28, i64 noundef 83) #25
   br label %bb.c
 
 bb.g:                                             ; preds = %bb.a
-  %i.k = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @30, i64 noundef 50) #25
+  %i.k = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @29, i64 noundef 50) #25
   br label %bb.c
 
 bb.h:                                             ; preds = %bb.a
-  %i.l = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 61) #25
+  %i.l = tail call noundef zeroext i1 %i.f(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @30, i64 noundef 61) #25
   br label %bb.c
 }
 
@@ -1461,7 +1457,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !4, !align !5, !noundef !4
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !invariant.load !4, !nonnull !4
-  %i.f = tail call noundef zeroext i1 %i.e(ptr noundef nonnull %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @32, i64 noundef 30) #25
+  %i.f = tail call noundef zeroext i1 %i.e(ptr noundef nonnull %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 30) #25
   ret i1 %i.f
 }
 
@@ -1505,7 +1501,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c, !prof !10
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCsgxBkk5gSRhY_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @37, i64 noundef 35, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #22
+  tail call void @_RNvNtCsgxBkk5gSRhY_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @36, i64 noundef 35, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @37) #22
   unreachable
 
 bb.c:                                             ; preds = %bb.a
