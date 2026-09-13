@@ -189,27 +189,23 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
   store i32 %0, ptr %i.h, align 8, !tbaa !13
-  %i.j = zext nneg i32 %0 to i64                  ; 5 uses
+  %i.j = zext nneg i32 %0 to i64                  ; 6 uses
   %i.k = tail call noalias ptr @calloc(i64 noundef %i.j, i64 noundef 8) #17 ; 3 uses
   store ptr %i.k, ptr %i.d, align 8, !tbaa !14
   %i.l = icmp eq ptr %i.k, null
-  br i1 %i.l, label %bb.d, label %.lr.ph48.preheader
+  br i1 %i.l, label %bb.d, label %.lr.ph48
 
 bb.d:                                             ; preds = %bb.c
   tail call void @ARKodeButcherTable_Free(ptr noundef nonnull %i.b)
   br label %bb.n
 
-.lr.ph48.preheader:                               ; preds = %bb.c
-  %wide.trip.count = zext nneg i32 %0 to i64
-  br label %.lr.ph48
-
 bb.e:                                             ; preds = %.lr.ph48
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.j
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph48
 
-.lr.ph48:                                         ; preds = %.lr.ph48.preheader, %bb.e
-  %indvars.iv = phi i64 [ 0, %.lr.ph48.preheader ], [ %indvars.iv.next, %bb.e ] ; 2 uses
+.lr.ph48:                                         ; preds = %bb.c, %bb.e
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %bb.c ] ; 2 uses
   %i.m = tail call noalias ptr @calloc(i64 noundef %i.j, i64 noundef 8) #17 ; 2 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv
   store ptr %i.m, ptr %i.n, align 8, !tbaa !15
@@ -612,10 +608,10 @@ declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unname
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
+declare i32 @llvm.umin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #9
+declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15

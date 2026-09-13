@@ -57,11 +57,11 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  store ptr %0, ptr %i.a, align 8, !tbaa !15
+  store ptr %0, ptr %i.a, align 8, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
-  store ptr %1, ptr %i.b, align 8, !tbaa !15
+  store ptr %1, ptr %i.b, align 8, !tbaa !16
   %.not114 = icmp slt i32 %5, 0
-  br i1 %.not114, label %.preheader.._crit_edge_crit_edge, label %.lr.ph
+  br i1 %.not114, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = ptrtoint ptr %0 to i64
@@ -97,11 +97,11 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
   store i32 %i.h, ptr %i.i, align 4, !tbaa !12
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %i.l = load <2 x i32>, ptr %i.k, align 4, !tbaa !16
+  %i.l = load <2 x i32>, ptr %i.k, align 4, !tbaa !17
   store i32 %i.f, ptr %i.g, align 4, !tbaa !12
-  %i.m = load <2 x i32>, ptr %i.j, align 4, !tbaa !16
-  store <2 x i32> %i.l, ptr %i.j, align 4, !tbaa !16
-  store <2 x i32> %i.m, ptr %i.k, align 4, !tbaa !16
+  %i.m = load <2 x i32>, ptr %i.j, align 4, !tbaa !17
+  store <2 x i32> %i.l, ptr %i.j, align 4, !tbaa !17
+  store <2 x i32> %i.m, ptr %i.k, align 4, !tbaa !17
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -118,7 +118,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.f
   %i.o = phi ptr [ %1, %.lr.ph ], [ %i.z, %bb.f ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 2 uses
   %.089116 = phi i32 [ 0, %.lr.ph ], [ %i.ae, %bb.f ] ; 2 uses
-  %i.p = load ptr, ptr %i.a, align 8, !tbaa !15   ; 2 uses
+  %i.p = load ptr, ptr %i.a, align 8, !tbaa !16   ; 2 uses
   %i.q = ptrtoint ptr %i.p to i64
   %.neg108 = sub i64 %i.c, %i.q
   %i.r = trunc i64 %.neg108 to i32
@@ -135,7 +135,7 @@ bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   store i32 %.089116, ptr %i.y, align 4, !tbaa !9
-  %i.z = load ptr, ptr %i.b, align 8, !tbaa !15   ; 2 uses
+  %i.z = load ptr, ptr %i.b, align 8, !tbaa !16   ; 2 uses
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = sub i64 %i.aa, %i.t
   %i.ac = trunc i64 %i.ab to i32                  ; 2 uses
@@ -146,21 +146,20 @@ bb.f:                                             ; preds = %bb.e
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader113, label %bb.e
 
-.preheader.._crit_edge_crit_edge:                 ; preds = %bb.a
-  %.pre139 = add nsw i32 %5, 1
-  br label %._crit_edge
-
 .lr.ph123.preheader:                              ; preds = %..loopexit_crit_edge.us, %.preheader113
-  %i.af = zext nneg i32 %5 to i64                 ; 2 uses
-  %9 = add nuw i32 %5, 1                          ; 2 uses
-  %wide.trip.count133 = zext i32 %9 to i64
-  %10 = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %i.af ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %i.af = zext nneg i32 %5 to i64                 ; 3 uses
+  %9 = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %i.af ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 2 uses
+  %.not146 = icmp eq i32 %5, 0
+  br i1 %.not146, label %.lr.ph123.peel, label %.lr.ph123.preheader.split
+
+.lr.ph123.preheader.split:                        ; preds = %.lr.ph123.preheader
+  %11 = zext nneg i32 %5 to i64
   br label %.lr.ph123
 
-.lr.ph123:                                        ; preds = %.lr.ph123.preheader, %bb.i
-  %indvars.iv130 = phi i64 [ 0, %.lr.ph123.preheader ], [ %indvars.iv.next131, %bb.i ] ; 5 uses
-  %.088122 = phi i32 [ %3, %.lr.ph123.preheader ], [ %.1, %bb.i ] ; 4 uses
+.lr.ph123:                                        ; preds = %.lr.ph123.preheader.split, %bb.i
+  %indvars.iv130 = phi i64 [ 0, %.lr.ph123.preheader.split ], [ %indvars.iv.next131, %bb.i ] ; 5 uses
+  %.088122 = phi i32 [ %3, %.lr.ph123.preheader.split ], [ %.1, %bb.i ] ; 4 uses
   %.not106 = icmp eq i64 %indvars.iv130, %i.af
   br i1 %.not106, label %bb.h, label %bb.g
 
@@ -177,14 +176,14 @@ bb.g:                                             ; preds = %.lr.ph123
   br label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph123
-  store i32 %.088122, ptr %11, align 4, !tbaa !11
-  %.pre135 = load i32, ptr %10, align 4, !tbaa !12
+  store i32 %.088122, ptr %10, align 4, !tbaa !11
+  %.pre135 = load i32, ptr %9, align 4, !tbaa !12
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.an = phi i32 [ %i.ak, %bb.g ], [ %.088122, %bb.h ]
   %i.ao = phi i32 [ %i.aj, %bb.g ], [ %.pre135, %bb.h ]
-  %.1 = phi i32 [ %i.am, %bb.g ], [ %.088122, %bb.h ]
+  %.1 = phi i32 [ %i.am, %bb.g ], [ %.088122, %bb.h ] ; 2 uses
   %i.ap = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %indvars.iv130 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !9
@@ -192,12 +191,45 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.at = load i32, ptr %i.as, align 4, !tbaa !10
   %i.au = trunc nuw nsw i64 %indvars.iv130 to i32
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.1, i32 noundef %i.au, i32 noundef %i.ao, i32 noundef %i.an, i32 noundef %i.ar, i32 noundef %i.at) #3
-  %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
-  %exitcond134.not = icmp eq i64 %indvars.iv.next131, %wide.trip.count133
-  br i1 %exitcond134.not, label %._crit_edge, label %.lr.ph123
+  %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 3 uses
+  %exitcond134.not = icmp eq i64 %indvars.iv.next131, %11
+  br i1 %exitcond134.not, label %.lr.ph123.peel, label %.lr.ph123, !llvm.loop !13
 
-._crit_edge:                                      ; preds = %bb.i, %.preheader.._crit_edge_crit_edge
-  %.pre-phi = phi i32 [ %.pre139, %.preheader.._crit_edge_crit_edge ], [ %9, %bb.i ]
+.lr.ph123.peel:                                   ; preds = %.lr.ph123.preheader, %bb.i
+  %12 = phi i64 [ 0, %.lr.ph123.preheader ], [ %indvars.iv.next131, %bb.i ] ; 4 uses
+  %13 = phi i32 [ %3, %.lr.ph123.preheader ], [ %.1, %bb.i ] ; 2 uses
+  %.not106.peel = icmp eq i64 %12, %i.af
+  br i1 %.not106.peel, label %21, label %14
+
+14:                                               ; preds = %.lr.ph123.peel
+  %15 = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %12 ; 3 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 36
+  %17 = load i32, ptr %16, align 4, !tbaa !12
+  %18 = load i32, ptr %15, align 4, !tbaa !12     ; 2 uses
+  %19 = sub i32 %17, %18                          ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %15, i64 4
+  store i32 %19, ptr %20, align 4, !tbaa !11
+  br label %._crit_edge.loopexit.peel.next
+
+21:                                               ; preds = %.lr.ph123.peel
+  store i32 %13, ptr %10, align 4, !tbaa !11
+  %.pre135.peel = load i32, ptr %9, align 4, !tbaa !12
+  br label %._crit_edge.loopexit.peel.next
+
+._crit_edge.loopexit.peel.next:                   ; preds = %21, %14
+  %22 = phi i32 [ %19, %14 ], [ %13, %21 ]
+  %23 = phi i32 [ %18, %14 ], [ %.pre135.peel, %21 ]
+  %24 = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %12 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 8
+  %26 = load i32, ptr %25, align 4, !tbaa !9
+  %27 = getelementptr inbounds nuw i8, ptr %24, i64 12
+  %28 = load i32, ptr %27, align 4, !tbaa !10
+  %29 = trunc nuw nsw i64 %12 to i32
+  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.1, i32 noundef %29, i32 noundef %23, i32 noundef %22, i32 noundef %26, i32 noundef %28) #3
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.a, %._crit_edge.loopexit.peel.next
+  %.pre-phi = add i32 %5, 1
   %i.av = call i32 @cli_rebuildpe(ptr noundef %1, ptr noundef %4, i32 noundef %.pre-phi, i32 noundef %6, i32 noundef %7, i32 noundef 0, i32 noundef 0, i32 noundef %8) #3
   %.not105 = icmp eq i32 %i.av, 0
   br i1 %.not105, label %bb.j, label %.critedge
@@ -235,8 +267,10 @@ attributes #3 = { nounwind }
 !10 = !{!8, !5, i64 12}
 !11 = !{!8, !5, i64 4}
 !12 = !{!8, !5, i64 0}
-!13 = !{!"any pointer", !4, i64 0}
-!14 = !{!"p1 omnipotent char", !13, i64 0}
-!15 = !{!14, !14, i64 0}
-!16 = !{!5, !5, i64 0}
+!13 = distinct !{!13, !18}
+!14 = !{!"any pointer", !4, i64 0}
+!15 = !{!"p1 omnipotent char", !14, i64 0}
+!16 = !{!15, !15, i64 0}
+!17 = !{!5, !5, i64 0}
+!18 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_0

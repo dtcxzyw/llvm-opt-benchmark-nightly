@@ -205,32 +205,33 @@ bb.ai:                                            ; preds = %bb.ah
 _ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67: ; preds = %_ZN5clang7cxindex6Logger16isLoggingEnabledEv.exit.i59, %bb.ah, %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #38
   call void @_ZN5clang8cxcursor19MakeCXCursorInvalidE12CXCursorKindP21CXTranslationUnitImpl(ptr dead_on_unwind nonnull writable sret(%struct.CXCursor) align 8 %7, i32 noundef 70, ptr noundef null) #38
-  %xtraiter = and i32 %2, 3                       ; 3 uses
+  %10 = zext i32 %2 to i64                        ; 2 uses
+  %xtraiter = and i64 %10, 3                      ; 3 uses
   %i.cl = icmp ult i32 %2, 4
   br i1 %i.cl, label %.epil.preheader, label %_ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67.new
 
 _ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67.new: ; preds = %_ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67
-  %unroll_iter = and i32 %2, -4
+  %unroll_iter = and i64 %10, 4294967292
   br label %bb.ak
 
 _ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit.unr-lcssa: ; preds = %bb.ak
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %_ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %_ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit.unr-lcssa, %_ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67
   %indvars.iv.epil.init = phi i64 [ 0, %_ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67 ], [ %indvars.iv.next.3, %_ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit.unr-lcssa ]
-  %lcmp.mod118 = icmp ne i32 %xtraiter, 0
+  %lcmp.mod118 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod118)
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.aj, %.epil.preheader
   %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %indvars.iv.next.epil, %bb.aj ] ; 2 uses
-  %epil.iter = phi i32 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.aj ]
+  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.aj ]
   %i.cm = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvars.iv.epil
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cm, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !tbaa.struct !117
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
-  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit, label %bb.aj, !llvm.loop !2221
 
 _ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit: ; preds = %bb.aj, %_ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit.unr-lcssa
@@ -241,7 +242,7 @@ _ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit: ; preds = %bb.aj, %_Z
 
 bb.ak:                                            ; preds = %bb.ak, %_ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67.new
   %indvars.iv = phi i64 [ 0, %_ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67.new ], [ %indvars.iv.next.3, %bb.ak ] ; 5 uses
-  %niter = phi i32 [ 0, %_ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67.new ], [ %niter.next.3, %bb.ak ]
+  %niter = phi i64 [ 0, %_ZN4llvm18IntrusiveRefCntPtrIN5clang7cxindex6LoggerEED2Ev.exit67.new ], [ %niter.next.3, %bb.ak ]
   %i.cp = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvars.iv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cp, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !tbaa.struct !117
   %i.cq = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvars.iv
@@ -254,8 +255,8 @@ bb.ak:                                            ; preds = %bb.ak, %_ZN4llvm18I
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cv, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !tbaa.struct !117
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
+  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit.unr-lcssa, label %bb.ak, !llvm.loop !2222
 
 bb.al:                                            ; preds = %_ZN5clang4cxtuL10getASTUnitEP21CXTranslationUnitImpl.exit

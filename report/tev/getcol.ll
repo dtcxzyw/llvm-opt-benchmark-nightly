@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.p
 
 bb.d:                                             ; preds = %bb.b
-  %i.y = zext nneg i32 %1 to i64
+  %i.y = zext nneg i32 %1 to i64                  ; 3 uses
   %i.z = shl nuw nsw i64 %i.y, 3
   %i.aa = tail call noalias ptr @malloc(i64 noundef %i.z) #10 ; 8 uses
   %i.ab = icmp eq ptr %i.aa, null
@@ -287,7 +287,6 @@ bb.j:                                             ; preds = %bb.i
 
 .preheader.split.us:                              ; preds = %._crit_edge
   %.not112 = icmp eq ptr %8, null
-  %wide.trip.count151 = zext nneg i32 %1 to i64   ; 2 uses
   br i1 %.not112, label %.preheader.split.us.split.us, label %.preheader.split.us.split
 
 .preheader.split.us.split.us:                     ; preds = %.preheader.split.us, %..loopexit_crit_edge.split.us.us.us
@@ -328,7 +327,7 @@ bb.k:                                             ; preds = %bb.l, %.lr.ph126.us
 
 bb.l:                                             ; preds = %bb.k
   %indvars.iv.next148 = add nuw nsw i64 %indvars.iv147, 1 ; 2 uses
-  %exitcond152.not = icmp eq i64 %indvars.iv.next148, %wide.trip.count151
+  %exitcond152.not = icmp eq i64 %indvars.iv.next148, %i.y
   br i1 %exitcond152.not, label %..loopexit_crit_edge.split.us.us.us, label %bb.k, !llvm.loop !27
 
 .split.us.us.us:                                  ; preds = %bb.k
@@ -389,7 +388,7 @@ bb.m:                                             ; preds = %bb.n, %.lr.ph126.us
 
 bb.n:                                             ; preds = %bb.m
   %indvars.iv.next143 = add nuw nsw i64 %indvars.iv142, 1 ; 2 uses
-  %exitcond146.not = icmp eq i64 %indvars.iv.next143, %wide.trip.count151
+  %exitcond146.not = icmp eq i64 %indvars.iv.next143, %i.y
   br i1 %exitcond146.not, label %..loopexit_crit_edge.split.us132, label %bb.m, !llvm.loop !27
 
 .split.us130:                                     ; preds = %bb.m

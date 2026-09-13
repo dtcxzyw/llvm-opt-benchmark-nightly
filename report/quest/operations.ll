@@ -204,7 +204,7 @@ bb.a:
   tail call void @_Z20validate_quregFields5QuregPKc(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull @__func__.applyMultiQubitMeasurementAndGetProb)
   tail call void @_Z16validate_targets5QuregPiiPKc(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef %1, i32 noundef %2, ptr noundef nonnull @__func__.applyMultiQubitMeasurementAndGetProb)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  %i.b = zext nneg i32 %2 to i64
+  %i.b = zext i32 %2 to i64                       ; 4 uses
   %i.c = shl nuw i64 1, %i.b                      ; 2 uses
   store i64 %i.c, ptr %i.a, align 8, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
@@ -446,12 +446,11 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc65
 
 .lr.ph.preheader:                                 ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc65
   %.0.i.i.i.i.i.ph = phi ptr [ %i.bo, %.noexc65 ], [ %i.br, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %2, 8
   br i1 %min.iters.check, label %.lr.ph.preheader227, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
+  %n.vec = and i64 %i.b, 2147483640               ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %i.ba, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -476,7 +475,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ca, label %middle.block, label %vector.body, !llvm.loop !62
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %i.b
   br i1 %cmp.n, label %_Z18getBitsFromIntegerPixi.exit.loopexit, label %.lr.ph.preheader227
 
 .lr.ph.preheader227:                              ; preds = %.lr.ph.preheader, %middle.block
@@ -491,7 +490,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %indvars.iv
   store i32 %i.cd, ptr %i.ce, align 4, !tbaa !11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.b
   br i1 %exitcond.not, label %_Z18getBitsFromIntegerPixi.exit.loopexit, label %.lr.ph, !llvm.loop !63
 
 _Z18getBitsFromIntegerPixi.exit.loopexit:         ; preds = %.lr.ph, %middle.block

@@ -205,14 +205,12 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
 .lr.ph273:                                        ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cm, i64 160 ; 4 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.cm, i64 88
-  %wide.trip.count.i = zext nneg i32 %4 to i64    ; 5 uses
+  %wide.trip.count.i = zext nneg i32 %4 to i64    ; 14 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 4 uses
-  %7 = call i32 @llvm.umax.i32(i32 %4, i32 1)
-  %8 = zext nneg i32 %7 to i64                    ; 9 uses
-  %i.dn = shl nuw nsw i64 %8, 2                   ; 3 uses
+  %i.dn = shl nuw nsw i64 %wide.trip.count.i, 2   ; 3 uses
   %umax310 = call i64 @llvm.umax.i64(i64 %i.df, i64 1) ; 2 uses
   %wide.trip.count312 = and i64 %i.df, 2147483647
   %scevgep = getelementptr i8, ptr %.sroa.0208.0, i64 %i.dn
@@ -223,13 +221,13 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.do = add nsw i64 %wide.trip.count.i, -1
   %min.iters.check381 = icmp ult i32 %4, 8
-  %n.vec383 = and i64 %8, 2147483640              ; 3 uses
-  %cmp.n392 = icmp eq i64 %n.vec383, %8
-  %xtraiter419 = and i64 %8, 3                    ; 2 uses
+  %n.vec383 = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
+  %cmp.n392 = icmp eq i64 %n.vec383, %wide.trip.count.i
+  %xtraiter419 = and i64 %wide.trip.count.i, 3    ; 2 uses
   %lcmp.mod420.not = icmp eq i64 %xtraiter419, 0
   %min.iters.check = icmp ult i32 %4, 4
-  %n.vec = and i64 %8, 2147483644                 ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %8
+  %n.vec = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   br label %bb.ae
 
 bb.ac:                                            ; preds = %_ZNK5draco37PredictionSchemeWrapDecodingTransformIiiE20ComputeOriginalValueEPKiS3_Pi.exit
@@ -622,7 +620,7 @@ _ZNK5draco24MeshAttributeCornerTable9SwingLeftENS_9IndexTypeIjNS_21CornerIndex_t
   br i1 %.not.i.i.i.i, label %.lr.ph265, label %.lr.ph257.preheader
 
 .lr.ph257.preheader:                              ; preds = %.preheader238
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0208.0, i8 0, i64 %i.dn, i1 false), !tbaa !102
+  call void @llvm.memset.p0.i64(ptr align 4 %.sroa.0208.0, i8 0, i64 %i.dn, i1 false), !tbaa !102
   br label %.lr.ph265
 
 .lr.ph265:                                        ; preds = %.preheader238, %.lr.ph257.preheader
@@ -730,7 +728,7 @@ scalar.ph380.prol:                                ; preds = %scalar.ph380.prehea
 
 scalar.ph380.prol.loopexit:                       ; preds = %scalar.ph380.prol, %scalar.ph380.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph380.preheader ], [ %indvars.iv.next.prol, %scalar.ph380.prol ]
-  %i.lx = sub nsw i64 %indvars.iv.ph, %8
+  %i.lx = sub nsw i64 %indvars.iv.ph, %wide.trip.count.i
   %i.ly = icmp ugt i64 %i.lx, -4
   br i1 %i.ly, label %.thread, label %scalar.ph380
 
@@ -764,7 +762,7 @@ scalar.ph380:                                     ; preds = %scalar.ph380.prol.l
   %i.ms = add i32 %i.mr, %i.mp
   store i32 %i.ms, ptr %i.mo, align 4, !tbaa !102
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %8
+  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count.i
   br i1 %exitcond.not.3, label %.thread, label %scalar.ph380, !llvm.loop !412
 
 .thread:                                          ; preds = %scalar.ph380.prol.loopexit, %scalar.ph380, %middle.block391, %bb.ay, %bb.ax
@@ -997,7 +995,7 @@ bb.bs:                                            ; preds = %.sink.split.i177, %
   %i.pv = sdiv i32 %i.pu, %.2223
   store i32 %i.pv, ptr %i.pt, align 4, !tbaa !102
   %indvars.iv.next302 = add nuw nsw i64 %indvars.iv301, 1 ; 2 uses
-  %exitcond306.not = icmp eq i64 %indvars.iv.next302, %8
+  %exitcond306.not = icmp eq i64 %indvars.iv.next302, %wide.trip.count.i
   br i1 %exitcond306.not, label %._crit_edge269, label %.lr.ph268, !llvm.loop !415
 
 _ZNK5draco37PredictionSchemeWrapDecodingTransformIiiE20ComputeOriginalValueEPKiS3_Pi.exit169: ; preds = %bb.bs, %bb.bi, %_ZNK5draco33PredictionSchemeWrapTransformBaseIiE19ClampPredictedValueEPKi.exit.i173, %._crit_edge269, %_ZNK5draco33PredictionSchemeWrapTransformBaseIiE19ClampPredictedValueEPKi.exit.i163, %.thread230
@@ -1400,14 +1398,12 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
 
 .lr.ph266:                                        ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cm, i64 24 ; 4 uses
-  %wide.trip.count.i = zext nneg i32 %4 to i64    ; 5 uses
+  %wide.trip.count.i = zext nneg i32 %4 to i64    ; 14 uses
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 4 uses
-  %7 = call i32 @llvm.umax.i32(i32 %4, i32 1)
-  %8 = zext nneg i32 %7 to i64                    ; 9 uses
-  %i.dm = shl nuw nsw i64 %8, 2                   ; 3 uses
+  %i.dm = shl nuw nsw i64 %wide.trip.count.i, 2   ; 3 uses
   %umax303 = call i64 @llvm.umax.i64(i64 %i.df, i64 1) ; 2 uses
   %wide.trip.count305 = and i64 %i.df, 2147483647
   %scevgep = getelementptr i8, ptr %.sroa.0201.0, i64 %i.dm
@@ -1418,13 +1414,13 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.dn = add nsw i64 %wide.trip.count.i, -1
   %min.iters.check375 = icmp ult i32 %4, 8
-  %n.vec377 = and i64 %8, 2147483640              ; 3 uses
-  %cmp.n386 = icmp eq i64 %n.vec377, %8
-  %xtraiter413 = and i64 %8, 3                    ; 2 uses
+  %n.vec377 = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
+  %cmp.n386 = icmp eq i64 %n.vec377, %wide.trip.count.i
+  %xtraiter413 = and i64 %wide.trip.count.i, 3    ; 2 uses
   %lcmp.mod414.not = icmp eq i64 %xtraiter413, 0
   %min.iters.check = icmp ult i32 %4, 4
-  %n.vec = and i64 %8, 2147483644                 ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %8
+  %n.vec = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   br label %bb.ae
 
 bb.ac:                                            ; preds = %_ZNK5draco37PredictionSchemeWrapDecodingTransformIiiE20ComputeOriginalValueEPKiS3_Pi.exit
@@ -1778,7 +1774,7 @@ _ZNK5draco11CornerTable9SwingLeftENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.e
   br i1 %.not.i.i.i.i, label %.lr.ph258, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader231
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0201.0, i8 0, i64 %i.dm, i1 false), !tbaa !102
+  call void @llvm.memset.p0.i64(ptr align 4 %.sroa.0201.0, i8 0, i64 %i.dm, i1 false), !tbaa !102
   br label %.lr.ph258
 
 .lr.ph258:                                        ; preds = %.preheader231, %.lr.ph.preheader
@@ -1886,7 +1882,7 @@ scalar.ph374.prol:                                ; preds = %scalar.ph374.prehea
 
 scalar.ph374.prol.loopexit:                       ; preds = %scalar.ph374.prol, %scalar.ph374.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph374.preheader ], [ %indvars.iv.next.prol, %scalar.ph374.prol ]
-  %i.kj = sub nsw i64 %indvars.iv.ph, %8
+  %i.kj = sub nsw i64 %indvars.iv.ph, %wide.trip.count.i
   %i.kk = icmp ugt i64 %i.kj, -4
   br i1 %i.kk, label %.thread, label %scalar.ph374
 
@@ -1920,7 +1916,7 @@ scalar.ph374:                                     ; preds = %scalar.ph374.prol.l
   %i.le = add i32 %i.ld, %i.lb
   store i32 %i.le, ptr %i.la, align 4, !tbaa !102
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %8
+  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count.i
   br i1 %exitcond.not.3, label %.thread, label %scalar.ph374, !llvm.loop !724
 
 .thread:                                          ; preds = %scalar.ph374.prol.loopexit, %scalar.ph374, %middle.block385, %bb.ay, %bb.ax
@@ -2153,7 +2149,7 @@ bb.bs:                                            ; preds = %.sink.split.i170, %
   %i.oh = sdiv i32 %i.og, %.2216
   store i32 %i.oh, ptr %i.of, align 4, !tbaa !102
   %indvars.iv.next295 = add nuw nsw i64 %indvars.iv294, 1 ; 2 uses
-  %exitcond299.not = icmp eq i64 %indvars.iv.next295, %8
+  %exitcond299.not = icmp eq i64 %indvars.iv.next295, %wide.trip.count.i
   br i1 %exitcond299.not, label %._crit_edge262, label %.lr.ph261, !llvm.loop !727
 
 _ZNK5draco37PredictionSchemeWrapDecodingTransformIiiE20ComputeOriginalValueEPKiS3_Pi.exit162: ; preds = %bb.bs, %bb.bi, %_ZNK5draco33PredictionSchemeWrapTransformBaseIiE19ClampPredictedValueEPKi.exit.i166, %._crit_edge262, %_ZNK5draco33PredictionSchemeWrapTransformBaseIiE19ClampPredictedValueEPKi.exit.i156, %.thread223
@@ -2554,9 +2550,6 @@ declare i64 @llvm.umax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #12

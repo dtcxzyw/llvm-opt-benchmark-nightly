@@ -205,7 +205,7 @@ bb.ck:                                            ; preds = %bb.cj
   %.sroa.0.0.i.i.i.i.i.i.i.i.i = add nsw i64 %.sroa.0.0.i.in.i.i.i.i.i.i.i.i, -1 ; 2 uses
   %i.iz = getelementptr inbounds nuw [96 x i8], ptr %i.iu, i64 %.val10.i.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.iz, ptr noundef nonnull align 8 dereferenceable(96) %i.s, i64 96, i1 false), !noalias !37020
-  %i.ja = add nuw i64 %.val10.i.i.i.i.i.i.i.i.i, 1
+  %i.ja = add nuw nsw i64 %.val10.i.i.i.i.i.i.i.i.i, 1
   %i.jb = icmp eq i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.jb, label %"_ZN112_$LT$core..iter..sources..repeat_with..RepeatWith$LT$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17hfde95640c74bae04E.exit.i.i.i.i.i.i.i.i", label %bb.cj
 
@@ -608,7 +608,7 @@ bb.ck:                                            ; preds = %bb.cj
   %.sroa.0.0.i.i.i.i.i.i.i.i.i = add nsw i64 %.sroa.0.0.i.in.i.i.i.i.i.i.i.i, -1 ; 2 uses
   %i.iz = getelementptr inbounds nuw [96 x i8], ptr %i.iu, i64 %.val10.i.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.iz, ptr noundef nonnull align 8 dereferenceable(96) %i.s, i64 96, i1 false), !noalias !37340
-  %i.ja = add nuw i64 %.val10.i.i.i.i.i.i.i.i.i, 1
+  %i.ja = add nuw nsw i64 %.val10.i.i.i.i.i.i.i.i.i, 1
   %i.jb = icmp eq i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.jb, label %"_ZN112_$LT$core..iter..sources..repeat_with..RepeatWith$LT$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h321de619dfb1926cE.exit.i.i.i.i.i.i.i.i", label %bb.cj
 
@@ -1011,7 +1011,7 @@ bb.am:                                            ; preds = %bb.ak, %_ZN4core5al
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %bb.am, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h35a1da279acbdbc0E.exit.i.i.i.i.i.i.i"
   %i.gn = phi ptr [ %i.hg, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h35a1da279acbdbc0E.exit.i.i.i.i.i.i.i" ], [ %.sroa.10.0.i.i.i.i.i.i, %bb.am ]
-  %i.go = phi i64 [ %i.hi, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h35a1da279acbdbc0E.exit.i.i.i.i.i.i.i" ], [ 1, %bb.am ] ; 5 uses
+  %i.go = phi i64 [ %i.hi, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h35a1da279acbdbc0E.exit.i.i.i.i.i.i.i" ], [ 1, %bb.am ] ; 4 uses
   %.lcssa13.i.i.i.i.i.i.i = phi ptr [ %.lcssa12.i.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h35a1da279acbdbc0E.exit.i.i.i.i.i.i.i" ], [ %.sroa.14.0.i.i.i, %bb.am ] ; 2 uses
   %.lcssa410.i.i.i.i.i.i.i = phi ptr [ %.lcssa49.i.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h35a1da279acbdbc0E.exit.i.i.i.i.i.i.i" ], [ %.sroa.9.0.copyload.i.i.i.i.i, %bb.am ] ; 2 uses
   %i.gp = phi i16 [ %i.gy, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h35a1da279acbdbc0E.exit.i.i.i.i.i.i.i" ], [ %i.gc, %bb.am ] ; 2 uses
@@ -1043,8 +1043,6 @@ bb.am:                                            ; preds = %bb.ak, %_ZN4core5al
   %i.hb = add i64 %.val56.i.i.i.i.i.i.i, -1       ; 2 uses
   %i.hc = getelementptr inbounds i8, ptr %i.ha, i64 -12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5.i.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %i.hc, i64 12, i1 false), !noalias !68285
-  %4 = icmp samesign ult i64 %i.go, 768614336404564651
-  call void @llvm.assume(i1 %4)
   %i.hd = load i64, ptr %i.l, align 8, !range !74, !alias.scope !68286, !noalias !68287, !noundef !44
   %i.he = icmp eq i64 %i.go, %i.hd
   br i1 %i.he, label %bb.aq, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h35a1da279acbdbc0E.exit.i.i.i.i.i.i.i"
@@ -1117,7 +1115,7 @@ _ZN4core4iter6traits8iterator8Iterator7collect17h50a7b477def806a9E.exit.i: ; pre
   br i1 %i.ho, label %.thread.i, label %bb.as, !prof !68296
 
 bb.as:                                            ; preds = %_ZN4core4iter6traits8iterator8Iterator7collect17h50a7b477def806a9E.exit.i
-  %i.hp = icmp samesign ult i64 %.sroa.5287.0.copyload, 21
+  %i.hp = icmp ult i64 %.sroa.5287.0.copyload, 21
   br i1 %i.hp, label %bb.au, label %bb.at, !prof !46
 
 bb.at:                                            ; preds = %bb.as
@@ -1520,7 +1518,7 @@ bb.v:                                             ; preds = %bb.u
   %.sroa.0.0.i.i.i.i.i.i.i.i.i = add nsw i64 %.sroa.0.0.i.in.i.i.i.i.i.i.i.i, -1 ; 2 uses
   %i.cw = getelementptr inbounds nuw [96 x i8], ptr %i.cr, i64 %.val10.i.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.cw, ptr noundef nonnull align 8 dereferenceable(96) %i.d, i64 96, i1 false), !noalias !105632
-  %i.cx = add nuw i64 %.val10.i.i.i.i.i.i.i.i.i, 1
+  %i.cx = add nuw nsw i64 %.val10.i.i.i.i.i.i.i.i.i, 1
   %i.cy = icmp eq i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.cy, label %"_ZN112_$LT$core..iter..sources..repeat_with..RepeatWith$LT$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17hd81bbccde92801deE.exit.i.i.i.i.i.i.i.i", label %bb.u
 
@@ -1923,7 +1921,7 @@ bb.v:                                             ; preds = %bb.u
   %.sroa.0.0.i.i.i.i.i.i.i.i.i = add nsw i64 %.sroa.0.0.i.in.i.i.i.i.i.i.i.i, -1 ; 2 uses
   %i.cw = getelementptr inbounds nuw [96 x i8], ptr %i.cr, i64 %.val10.i.i.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.cw, ptr noundef nonnull align 8 dereferenceable(96) %i.d, i64 96, i1 false), !noalias !105743
-  %i.cx = add nuw i64 %.val10.i.i.i.i.i.i.i.i.i, 1
+  %i.cx = add nuw nsw i64 %.val10.i.i.i.i.i.i.i.i.i, 1
   %i.cy = icmp eq i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.cy, label %"_ZN112_$LT$core..iter..sources..repeat_with..RepeatWith$LT$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h52a031a7ecf5d880E.exit.i.i.i.i.i.i.i.i", label %bb.u
 

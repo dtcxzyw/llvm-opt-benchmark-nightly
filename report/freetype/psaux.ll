@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.v = mul nsw i64 %.04877.i, 10
-  %i.w = add nuw nsw i64 %i.v, %i.p
+  %i.w = add nsw i64 %i.v, %i.p
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
@@ -311,7 +311,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.aw = zext nneg i8 %i.au to i64               ; 2 uses
-  %.not65.i31 = icmp sgt i64 %.5.i, %i.aw
+  %.not65.i31 = icmp ugt i64 %.5.i, %i.aw
   br i1 %.not65.i31, label %bb.w, label %.thread.loopexit.i27
 
 bb.w:                                             ; preds = %bb.v
@@ -327,7 +327,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.bb = mul nsw i64 %.04877.i25, %.5.i
-  %i.bc = add nuw nsw i64 %i.bb, %i.aw
+  %i.bc = add nsw i64 %i.bb, %i.aw
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w

@@ -205,7 +205,7 @@ _ZN5Eigen12SparseMatrixIdLi0EiE14resizeNonZerosEl.exit.preheader: ; preds = %._c
   %i.es = add nuw nsw i64 %.053134, 4             ; 3 uses
   %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.es
   store i32 %i.er, ptr %i.et, align 4, !tbaa !97
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph135, !llvm.loop !1093
 

@@ -204,7 +204,7 @@ bb.a:
   %i.f = getelementptr i8, ptr %.val3.i, i64 4
   %.val3.val.i = load i32, ptr %i.f, align 4, !tbaa !40
   %i.g = sub nsw i32 %.val3.val.i, %.val2.i
-  %i.h = sdiv i32 %.val.i, %i.g                   ; 12 uses
+  %i.h = sdiv i32 %.val.i, %i.g                   ; 10 uses
   %i.i = sext i32 %i.h to i64
   %i.j = shl nsw i64 %i.i, 3                      ; 2 uses
   %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #18 ; 17 uses
@@ -295,7 +295,7 @@ Ssc_GiaGetCareMask.exit:                          ; preds = %Ssc_SimAnd.exit.loo
   br i1 %i.am, label %.lr.ph.preheader.i, label %bb.b
 
 .lr.ph.preheader.i:                               ; preds = %Ssc_GiaGetCareMask.exit
-  %wide.trip.count.i49 = zext nneg i32 %i.h to i64 ; 11 uses
+  %wide.trip.count.i49 = zext nneg i32 %i.h to i64 ; 13 uses
   %min.iters.check97 = icmp ult i32 %i.h, 4
   br i1 %min.iters.check97, label %.lr.ph.i50.preheader, label %vector.ph98
 
@@ -461,8 +461,6 @@ Ssc_GiaResetPiPattern.exit:                       ; preds = %Vec_WrdGrow.exit.i.
   %.val46 = load ptr, ptr %i.cd, align 8, !tbaa !43
   %i.ct = sext i32 %i.cl to i64                   ; 3 uses
   %wide.trip.count82 = zext nneg i32 %.val to i64
-  %wide.trip.count = zext nneg i32 %i.h to i64
-  %wide.trip.count77 = zext nneg i32 %i.h to i64
   %i.cu = sub i64 %.val.i60109, %.val.i.i63110    ; 2 uses
   %i.cv = shl nsw i64 %i.ct, 3
   %i.cw = shl nsw i64 %i.ct, 3
@@ -642,7 +640,7 @@ middle.block122:                                  ; preds = %vector.body115
   %i.fw = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv.next74.2
   store i64 %i.fv, ptr %i.fw, align 8, !tbaa !41
   %indvars.iv.next74.3 = add nuw nsw i64 %indvars.iv73, 4 ; 2 uses
-  %exitcond78.not.3 = icmp eq i64 %indvars.iv.next74.3, %wide.trip.count77
+  %exitcond78.not.3 = icmp eq i64 %indvars.iv.next74.3, %wide.trip.count.i49
   br i1 %exitcond78.not.3, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !62
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.prol.loopexit, %.lr.ph.split
@@ -665,7 +663,7 @@ middle.block122:                                  ; preds = %vector.body115
   %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv.next
   store i64 %i.gj, ptr %i.gk, align 8, !tbaa !41
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
+  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count.i49
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph.split, !llvm.loop !63
 
 ._crit_edge:                                      ; preds = %.lr.ph.split.prol.loopexit, %.lr.ph.split, %.lr.ph.split.us.prol.loopexit, %.lr.ph.split.us, %middle.block138, %middle.block122

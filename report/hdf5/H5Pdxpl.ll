@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hdf5/original/H5Pdxpl?download=true
 inline.NumInlined: 3
 inline.NumDeleted: 2
-loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@H5Pset_hyper_vector_size:bb.a
   %i.i = load i64, ptr @H5E_FUNC_g, align 8, !tbaa !14
   %i.j = load i64, ptr @H5E_CANTINIT_g, align 8, !tbaa !14
@@ -205,7 +205,7 @@ define range(i32 -1, 1) i32 @H5Pset_dataset_io_hyperslab_selection(i64 noundef %
 bb.a:
   %i.a = alloca ptr, align 8                      ; 12 uses
   %7 = alloca %struct.H5CX_node_t, align 8        ; 4 uses
-  %i.b = alloca [32 x i64], align 16              ; 6 uses
+  %i.b = alloca [32 x i64], align 16              ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store ptr null, ptr %i.a, align 8, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
@@ -244,7 +244,7 @@ bb.e:                                             ; preds = %bb.d
   store i8 1, ptr @H5P_init_g, align 1, !tbaa !9
   %i.r = tail call i32 @H5P__init_package() #9
   %i.s = icmp slt i32 %i.r, 0
-  br i1 %i.s, label %bb.f, label %bb.g, !prof !42
+  br i1 %i.s, label %bb.f, label %bb.g, !prof !41
 
 bb.f:                                             ; preds = %bb.e
   store i8 0, ptr @H5P_init_g, align 1, !tbaa !9
@@ -419,20 +419,69 @@ bb.af:                                            ; preds = %bb.z
   br i1 %min.iters.check, label %.lr.ph181.preheader208, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph181.preheader
-  %n.vec = and i64 %wide.trip.count189, 60        ; 3 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %index ; 2 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %n.vec = and i64 %wide.trip.count189, 60        ; 9 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  store <2 x i64> splat (i64 -2), ptr %i.b, align 16, !tbaa !14
   store <2 x i64> splat (i64 -2), ptr %8, align 16, !tbaa !14
-  store <2 x i64> splat (i64 -2), ptr %i.ca, align 16, !tbaa !14
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.cb = icmp eq i64 %index.next, %n.vec
-  br i1 %i.cb, label %middle.block, label %vector.body, !llvm.loop !40
+  %9 = icmp eq i64 %n.vec, 4
+  br i1 %9, label %middle.block, label %vector.body.1
 
-middle.block:                                     ; preds = %vector.body
+vector.body.1:                                    ; preds = %vector.ph
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
+  store <2 x i64> splat (i64 -2), ptr %10, align 16, !tbaa !14
+  store <2 x i64> splat (i64 -2), ptr %11, align 16, !tbaa !14
+  %12 = icmp eq i64 %n.vec, 8
+  br i1 %12, label %middle.block, label %vector.body.2
+
+vector.body.2:                                    ; preds = %vector.body.1
+  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 64
+  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 80
+  store <2 x i64> splat (i64 -2), ptr %13, align 16, !tbaa !14
+  store <2 x i64> splat (i64 -2), ptr %14, align 16, !tbaa !14
+  %15 = icmp eq i64 %n.vec, 12
+  br i1 %15, label %middle.block, label %vector.body.3
+
+vector.body.3:                                    ; preds = %vector.body.2
+  %16 = getelementptr inbounds nuw i8, ptr %i.b, i64 96
+  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 112
+  store <2 x i64> splat (i64 -2), ptr %16, align 16, !tbaa !14
+  store <2 x i64> splat (i64 -2), ptr %17, align 16, !tbaa !14
+  %18 = icmp eq i64 %n.vec, 16
+  br i1 %18, label %middle.block, label %vector.body.4
+
+vector.body.4:                                    ; preds = %vector.body.3
+  %19 = getelementptr inbounds nuw i8, ptr %i.b, i64 128
+  %20 = getelementptr inbounds nuw i8, ptr %i.b, i64 144
+  store <2 x i64> splat (i64 -2), ptr %19, align 16, !tbaa !14
+  store <2 x i64> splat (i64 -2), ptr %20, align 16, !tbaa !14
+  %21 = icmp eq i64 %n.vec, 20
+  br i1 %21, label %middle.block, label %vector.body.5
+
+vector.body.5:                                    ; preds = %vector.body.4
+  %22 = getelementptr inbounds nuw i8, ptr %i.b, i64 160
+  %23 = getelementptr inbounds nuw i8, ptr %i.b, i64 176
+  store <2 x i64> splat (i64 -2), ptr %22, align 16, !tbaa !14
+  store <2 x i64> splat (i64 -2), ptr %23, align 16, !tbaa !14
+  %24 = icmp eq i64 %n.vec, 24
+  br i1 %24, label %middle.block, label %vector.body
+
+vector.body:                                      ; preds = %vector.body.5
+  %25 = getelementptr inbounds nuw i8, ptr %i.b, i64 192
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.b, i64 208
+  store <2 x i64> splat (i64 -2), ptr %25, align 16, !tbaa !14
+  store <2 x i64> splat (i64 -2), ptr %i.ca, align 16, !tbaa !14
+  %i.cb = icmp eq i64 %n.vec, 28
+  br i1 %i.cb, label %middle.block, label %vector.body.7
+
+vector.body.7:                                    ; preds = %vector.body
+  %26 = getelementptr inbounds nuw i8, ptr %i.b, i64 224
+  %27 = getelementptr inbounds nuw i8, ptr %i.b, i64 240
+  store <2 x i64> splat (i64 -2), ptr %26, align 16, !tbaa !14
+  store <2 x i64> splat (i64 -2), ptr %27, align 16, !tbaa !14
+  br label %middle.block
+
+middle.block:                                     ; preds = %vector.body.7, %vector.body, %vector.body.5, %vector.body.4, %vector.body.3, %vector.body.2, %vector.body.1, %vector.ph
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count189
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph181.preheader208
 
@@ -446,7 +495,7 @@ middle.block:                                     ; preds = %vector.body
   store i64 -2, ptr %i.cc, align 8, !tbaa !14
   %indvars.iv.next187 = add nuw nsw i64 %indvars.iv186, 1 ; 2 uses
   %exitcond190.not = icmp eq i64 %indvars.iv.next187, %wide.trip.count189
-  br i1 %exitcond190.not, label %._crit_edge, label %.lr.ph181, !llvm.loop !41
+  br i1 %exitcond190.not, label %._crit_edge, label %.lr.ph181, !llvm.loop !40
 
 ._crit_edge:                                      ; preds = %.lr.ph181, %middle.block, %.thread109
   %i.cd = call ptr @H5S_create_simple(i32 noundef %1, ptr noundef nonnull %i.b, ptr noundef null) #9 ; 3 uses
@@ -500,7 +549,7 @@ bb.aj:                                            ; preds = %.split203, %.split2
   %i.cu = load i64, ptr @H5E_PLIST_g, align 8, !tbaa !14
   %i.cv = load i64, ptr @H5E_CANTSET_g, align 8, !tbaa !14
   %i.cw = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.H5Pset_dataset_io_hyperslab_selection, i32 noundef 2334, i64 noundef %i.cu, i64 noundef %i.cv, ptr noundef nonnull @.str.52) #9 ; 0 uses
-  br i1 %.285.ph201, label %bb.al, label %.thread174, !prof !45
+  br i1 %.285.ph201, label %bb.al, label %.thread174, !prof !44
 
 bb.ak:                                            ; preds = %.split200, %bb.aj, %bb.ai
   %.285.ph202 = phi i1 [ %.184, %.split200 ], [ %.285.ph201, %bb.aj ], [ %.184, %bb.ai ]
@@ -903,7 +952,7 @@ bb.v:                                             ; preds = %bb.v, %H5VM_limit_e
   store i8 %i.cc, ptr %i.ca, align 1, !tbaa !21
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %.unr-lcssa, label %bb.v, !llvm.loop !46
+  br i1 %niter.ncmp.7, label %.unr-lcssa, label %bb.v, !llvm.loop !45
 
 .unr-lcssa:                                       ; preds = %bb.v
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -926,7 +975,7 @@ bb.w:                                             ; preds = %bb.w, %.epil.prehea
   %i.cg = lshr i64 %.03553.epil, 8
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.w, !llvm.loop !47
+  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.w, !llvm.loop !46
 
 .epilog-lcssa:                                    ; preds = %bb.w, %.unr-lcssa
   %i.ch = load ptr, ptr %1, align 8, !tbaa !33
@@ -1117,7 +1166,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ah = or disjoint i64 %i.ad, %i.ag            ; 3 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !48
+  br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !47
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1142,7 +1191,7 @@ bb.b:                                             ; preds = %bb.a
   %i.an = or disjoint i64 %i.aj, %i.am            ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !49
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !48
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil, %._crit_edge.unr-lcssa
   %.lcssa30 = phi ptr [ %i.ae, %._crit_edge.unr-lcssa ], [ %i.ak, %.lr.ph.epil ]
@@ -1326,8 +1375,8 @@ bb.a:
   %not. = xor i1 %i.c, true
   %.not22 = select i1 %not., i1 %i.e, i1 false
   %.not = icmp eq ptr %i.a, null
-  %or.cond = select i1 %.not22, i1 true, i1 %.not, !prof !50
-  br i1 %or.cond, label %.loopexit, label %bb.b, !prof !50
+  %or.cond = select i1 %.not22, i1 true, i1 %.not, !prof !49
+  br i1 %or.cond, label %.loopexit, label %bb.b, !prof !49
 
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call ptr @H5S_copy(ptr noundef nonnull %i.a, i1 noundef zeroext false, i1 noundef zeroext true) #9
@@ -1405,8 +1454,8 @@ bb.a:
   %i.f = xor i1 %i.e, true
   %i.g = select i1 %i.c, i1 true, i1 %i.f
   %i.h = icmp ne ptr %i.a, null
-  %or.cond = select i1 %i.g, i1 %i.h, i1 false, !prof !51
-  br i1 %or.cond, label %bb.b, label %bb.d, !prof !51
+  %or.cond = select i1 %i.g, i1 %i.h, i1 false, !prof !50
+  br i1 %or.cond, label %bb.b, label %bb.d, !prof !50
 
 bb.b:                                             ; preds = %bb.a
   %i.i = tail call i32 @H5S_close(ptr noundef nonnull %i.a) #9
@@ -1613,16 +1662,15 @@ attributes #10 = { nounwind willreturn memory(read) }
 !37 = !{!36, !15, i64 0}
 !38 = !{!36, !15, i64 8}
 !39 = distinct !{!39, !31}
-!40 = distinct !{!40, !31, !43, !44}
-!41 = distinct !{!41, !31, !44, !43}
-!42 = !{!"branch_weights", i32 1090947, i32 2146392701}
+!40 = distinct !{!40, !31, !42, !43}
+!41 = !{!"branch_weights", i32 1090947, i32 2146392701}
+!42 = !{!"llvm.loop.unroll.runtime.disable"}
 !43 = !{!"llvm.loop.isvectorized", i32 1}
-!44 = !{!"llvm.loop.unroll.runtime.disable"}
-!45 = !{!"branch_weights", i32 -2147483648, i32 0}
-!46 = distinct !{!46, !31}
-!47 = distinct !{!47, !34}
-!48 = distinct !{!48, !31}
-!49 = distinct !{!49, !34}
-!50 = !{!"branch_weights", i32 2002, i32 2000}
-!51 = !{!"branch_weights", i32 2000, i32 2002}
+!44 = !{!"branch_weights", i32 -2147483648, i32 0}
+!45 = distinct !{!45, !31}
+!46 = distinct !{!46, !34}
+!47 = distinct !{!47, !31}
+!48 = distinct !{!48, !34}
+!49 = !{!"branch_weights", i32 2002, i32 2000}
+!50 = !{!"branch_weights", i32 2000, i32 2002}
 end_hunk_1
