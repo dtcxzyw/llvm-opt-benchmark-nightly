@@ -204,13 +204,20 @@ bb.g:                                             ; preds = %bb.e
     #dbg_value(ptr %i.au, !11258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10110)
     #dbg_value(i64 %i.av, !11258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10110)
   %i.aw = icmp samesign ult i64 %i.ap, 17, !dbg !11836
+  br i1 %i.aw, label %.preheader146.i, label %.lr.ph.i.a, !dbg !11837
+
+.preheader146.i:                                  ; preds = %bb.g
     #dbg_value(ptr %i.au, !11221, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10106)
     #dbg_value(ptr %i.au, !11215, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10105)
     #dbg_value(i64 %i.av, !11221, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10106)
     #dbg_value(i64 %i.av, !11215, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10105)
-  br i1 %i.aw, label %.preheader146.i, label %.lr.ph.i.a, !dbg !11837
-
-.preheader146.i:                                  ; preds = %bb.g
+    #dbg_value(i64 0, !11295, !DIExpression(), !10141)
+    #dbg_value(i64 0, !11289, !DIExpression(), !10138)
+    #dbg_value(i64 0, !11284, !DIExpression(), !10130)
+    #dbg_value(i64 0, !11279, !DIExpression(), !10127)
+    #dbg_value(i64 0, !11271, !DIExpression(), !10123)
+    #dbg_value(i64 0, !11262, !DIExpression(), !10119)
+    #dbg_value(i64 0, !11225, !DIExpression(), !10114)
   %.not135169.i = icmp eq i64 %i.av, 0, !dbg !11838
   br i1 %.not135169.i, label %_RNvMsr_NtCskKLDkoKarTP_4core3numx27from_ascii_bytes_radix_impl.exit, label %.lr.ph173.i, !dbg !11838
 

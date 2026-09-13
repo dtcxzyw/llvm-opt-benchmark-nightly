@@ -204,29 +204,25 @@ bb.t:                                             ; preds = %_ZStlsISt11char_tra
 
 _ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89: ; preds = %bb.t
   store i32 2, ptr %i.er, align 4, !tbaa !39
-  %9 = add nsw i32 %i.et, -1                      ; 2 uses
-  %10 = zext i32 %9 to i64
-  %.not.i.i.i.i.i90 = icmp eq i32 %9, 0
-  br i1 %.not.i.i.i.i.i90, label %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89.thread, label %bb.u
+  %9 = trunc i32 %i.es to i1
+  br i1 %9, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89
-  %11 = trunc i32 %i.es to i1
-  br i1 %11, label %12, label %bb.v
-
-12:                                               ; preds = %bb.u
-  %13 = invoke noundef i64 @_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf(ptr noundef nonnull align 8 dereferenceable(88) %i.el, i64 noundef %10, ptr noundef %i.ex)
+  %10 = add nsw i32 %i.et, -1
+  %11 = zext i32 %10 to i64
+  %12 = invoke noundef i64 @_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf(ptr noundef nonnull align 8 dereferenceable(88) %i.el, i64 noundef %11, ptr noundef %i.ex)
           to label %.noexc92 unwind label %bb.y   ; 0 uses
 
-.noexc92:                                         ; preds = %12
+.noexc92:                                         ; preds = %bb.u
   %.pre.i.i.i.i.i91 = load ptr, ptr %i.ek, align 8, !tbaa !140
   br label %bb.v
 
-bb.v:                                             ; preds = %.noexc92, %bb.u
-  %i.ey = phi ptr [ %.pre.i.i.i.i.i91, %.noexc92 ], [ %i.el, %bb.u ]
+bb.v:                                             ; preds = %.noexc92, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89
+  %i.ey = phi ptr [ %.pre.i.i.i.i.i91, %.noexc92 ], [ %i.el, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89 ]
   %i.ez = invoke noundef i64 @_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf(ptr noundef nonnull align 8 dereferenceable(88) %i.ey, i64 noundef 0, ptr noundef %i.ex)
           to label %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89.thread unwind label %bb.y ; 0 uses
 
-_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89.thread: ; preds = %bb.t, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89, %bb.v
+_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89.thread: ; preds = %bb.t, %bb.v
   %i.fa = load float, ptr %i.ex, align 4, !tbaa !99
   %i.fb = fpext float %i.fa to double             ; 3 uses
   %i.fc = fsub double %i.fb, %4
@@ -266,7 +262,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit105: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   br label %bb.aj
 
-bb.y:                                             ; preds = %bb.v, %12
+bb.y:                                             ; preds = %bb.v, %bb.u
   %i.fn = landingpad { ptr, i32 }
           cleanup
   br label %bb.aj
@@ -669,29 +665,25 @@ bb.t:                                             ; preds = %_ZStlsISt11char_tra
 
 _ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89: ; preds = %bb.t
   store i32 2, ptr %i.fc, align 4, !tbaa !39
-  %9 = add nsw i32 %i.fe, -1                      ; 2 uses
-  %10 = zext i32 %9 to i64
-  %.not.i.i.i.i.i90 = icmp eq i32 %9, 0
-  br i1 %.not.i.i.i.i.i90, label %_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89.thread, label %bb.u
+  %9 = trunc i32 %i.fd to i1
+  br i1 %9, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89
-  %11 = trunc i32 %i.fd to i1
-  br i1 %11, label %12, label %bb.v
-
-12:                                               ; preds = %bb.u
-  %13 = invoke noundef i64 @_ZN3zfp8internal11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEE6encodeEmPKf(ptr noundef nonnull align 8 dereferenceable(104) %i.ew, i64 noundef %10, ptr noundef %i.fi)
+  %10 = add nsw i32 %i.fe, -1
+  %11 = zext i32 %10 to i64
+  %12 = invoke noundef i64 @_ZN3zfp8internal11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEE6encodeEmPKf(ptr noundef nonnull align 8 dereferenceable(104) %i.ew, i64 noundef %11, ptr noundef %i.fi)
           to label %.noexc93 unwind label %bb.y   ; 0 uses
 
-.noexc93:                                         ; preds = %12
+.noexc93:                                         ; preds = %bb.u
   %.pre.i.i.i.i.i92 = load ptr, ptr %i.ev, align 8, !tbaa !160
   br label %bb.v
 
-bb.v:                                             ; preds = %.noexc93, %bb.u
-  %i.fj = phi ptr [ %.pre.i.i.i.i.i92, %.noexc93 ], [ %i.ew, %bb.u ]
+bb.v:                                             ; preds = %.noexc93, %_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89
+  %i.fj = phi ptr [ %.pre.i.i.i.i.i92, %.noexc93 ], [ %i.ew, %_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89 ]
   %i.fk = invoke noundef i64 @_ZNK3zfp8internal11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEE6decodeEmPf(ptr noundef nonnull align 8 dereferenceable(104) %i.fj, i64 noundef 0, ptr noundef %i.fi)
           to label %_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89.thread unwind label %bb.y ; 0 uses
 
-_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89.thread: ; preds = %bb.t, %_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89, %bb.v
+_ZN3zfp8internal5CacheINS0_11BlockCache3IfNS0_11BlockStore3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i89.thread: ; preds = %bb.t, %bb.v
   %i.fl = load float, ptr %i.fi, align 4, !tbaa !99
   %i.fm = fpext float %i.fl to double             ; 3 uses
   %i.fn = fsub double %i.fm, %4
@@ -731,7 +723,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   br label %bb.aj
 
-bb.y:                                             ; preds = %bb.v, %12
+bb.y:                                             ; preds = %bb.v, %bb.u
   %i.fy = landingpad { ptr, i32 }
           cleanup
   br label %bb.aj
@@ -1134,39 +1126,35 @@ _ZN3zfp8internal4dim29referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicit
 bb.z:                                             ; preds = %.lr.ph144, %_ZN3zfp8internal4dim29referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEaSERKSA_.exit
   %i.ot = phi i64 [ 0, %.lr.ph144 ], [ %i.aaa, %_ZN3zfp8internal4dim29referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEaSERKSA_.exit ] ; 3 uses
   %.0143 = phi i32 [ 0, %.lr.ph144 ], [ %i.zz, %_ZN3zfp8internal4dim29referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEaSERKSA_.exit ]
-  %i.ou = load ptr, ptr %i.hj, align 8, !tbaa !140, !nonnull !141, !align !142 ; 7 uses
+  %i.ou = load ptr, ptr %i.hj, align 8, !tbaa !140, !nonnull !141, !align !142 ; 6 uses
   %i.ov = getelementptr inbounds nuw i8, ptr %i.ou, i64 72
-  %i.ow = load i64, ptr %i.ov, align 8, !tbaa !135 ; 4 uses
+  %i.ow = load i64, ptr %i.ov, align 8, !tbaa !135 ; 3 uses
   %i.ox = load i32, ptr %i.hi, align 8, !tbaa !136
   %i.oy = and i32 %i.ox, 1
-  %i.oz = load ptr, ptr %i.hk, align 8, !tbaa !59 ; 3 uses
+  %i.oz = load ptr, ptr %i.hk, align 8, !tbaa !59 ; 2 uses
   %i.pa = zext nneg i32 %i.oy to i64              ; 2 uses
   %i.pb = getelementptr inbounds nuw [4 x i8], ptr %i.oz, i64 %i.pa ; 2 uses
   %i.pc = load i32, ptr %i.pb, align 4, !tbaa !144 ; 2 uses
   %i.pd = lshr i32 %i.pc, 1                       ; 2 uses
   %i.pe = icmp eq i32 %i.pd, 1
-  %i.pf = load ptr, ptr %i.hl, align 8, !tbaa !61 ; 3 uses
+  %i.pf = load ptr, ptr %i.hl, align 8, !tbaa !61 ; 2 uses
   %i.pg = getelementptr inbounds nuw [64 x i8], ptr %i.pf, i64 %i.pa ; 5 uses
   br i1 %i.pe, label %_ZNK3zfp8internal4dim215const_referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEcvfEv.exit.i, label %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
 
 _ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i: ; preds = %bb.z
   store i32 2, ptr %i.pb, align 4, !tbaa !39
-  %1 = add nsw i32 %i.pd, -1                      ; 2 uses
-  %2 = zext i32 %1 to i64                         ; 3 uses
-  %.not.i.i.i.i.i.i = icmp eq i32 %1, 0
-  br i1 %.not.i.i.i.i.i.i, label %_ZNK3zfp8internal4dim215const_referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEcvfEv.exit.i, label %3
+  %1 = trunc i32 %i.pc to i1
+  br i1 %1, label %bb.aa, label %bb.ac
 
-3:                                                ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
-  %4 = trunc i32 %i.pc to i1
-  br i1 %4, label %bb.aa, label %bb.ac
-
-bb.aa:                                            ; preds = %3
+bb.aa:                                            ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
+  %2 = add nsw i32 %i.pd, -1
+  %3 = zext i32 %2 to i64                         ; 3 uses
   %i.ph = getelementptr inbounds nuw i8, ptr %i.ou, i64 48
   %i.pi = getelementptr inbounds nuw i8, ptr %i.ou, i64 40
   %i.pj = load i64, ptr %i.pi, align 8, !tbaa !178
-  %i.pk = mul i64 %i.pj, %2
-  %i.pl = urem i64 %2, %i.ow
-  %i.pm = udiv i64 %2, %i.ow
+  %i.pk = mul i64 %i.pj, %3
+  %i.pl = urem i64 %3, %i.ow
+  %i.pm = udiv i64 %3, %i.ow
   %i.pn = getelementptr inbounds nuw i8, ptr %i.ou, i64 56
   %i.po = insertelement <2 x i64> poison, i64 %i.pl, i64 0
   %i.pp = insertelement <2 x i64> %i.po, i64 %i.pm, i64 1
@@ -1202,8 +1190,8 @@ _ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPK
   %.pre.i.i.i.i.i.i = load ptr, ptr %i.hj, align 8, !tbaa !140
   br label %bb.ac
 
-bb.ac:                                            ; preds = %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit80, %3
-  %i.qj = phi ptr [ %.pre.i.i.i.i.i.i, %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit80 ], [ %i.ou, %3 ] ; 2 uses
+bb.ac:                                            ; preds = %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit80, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
+  %i.qj = phi ptr [ %.pre.i.i.i.i.i.i, %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit80 ], [ %i.ou, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ] ; 2 uses
   %i.qk = getelementptr inbounds nuw i8, ptr %i.qj, i64 48
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qj, i64 56
   %i.qm = load <2 x i64>, ptr %i.ql, align 8, !tbaa !40 ; 2 uses
@@ -1240,25 +1228,25 @@ _ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmP
   %.pre169 = load ptr, ptr %i.hl, align 8, !tbaa !61
   br label %_ZNK3zfp8internal4dim215const_referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEcvfEv.exit.i
 
-_ZNK3zfp8internal4dim215const_referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEcvfEv.exit.i: ; preds = %bb.z, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
-  %5 = phi ptr [ %.pre169, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78 ], [ %i.pf, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ], [ %i.pf, %bb.z ] ; 2 uses
-  %6 = phi ptr [ %.pre168, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78 ], [ %i.oz, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ], [ %i.oz, %bb.z ] ; 2 uses
-  %7 = phi i64 [ %.pre167, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78 ], [ %i.ow, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ], [ %i.ow, %bb.z ] ; 4 uses
-  %8 = phi ptr [ %.pre165, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78 ], [ %i.ou, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ], [ %i.ou, %bb.z ] ; 5 uses
+_ZNK3zfp8internal4dim215const_referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEcvfEv.exit.i: ; preds = %bb.z, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78
+  %4 = phi ptr [ %.pre169, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78 ], [ %i.pf, %bb.z ] ; 2 uses
+  %5 = phi ptr [ %.pre168, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78 ], [ %i.oz, %bb.z ] ; 2 uses
+  %6 = phi i64 [ %.pre167, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78 ], [ %i.ow, %bb.z ] ; 4 uses
+  %7 = phi ptr [ %.pre165, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit78 ], [ %i.ou, %bb.z ] ; 5 uses
   %i.rd = load float, ptr %i.pg, align 4, !tbaa !99
   %i.re = lshr i64 %i.ot, 2
-  %i.rf = mul i64 %7, %i.ok
+  %i.rf = mul i64 %6, %i.ok
   %i.rg = add i64 %i.rf, %i.re                    ; 5 uses
   %i.rh = trunc i64 %i.rg to i32
   %i.ri = add i32 %i.rh, 1                        ; 3 uses
   %i.rj = load i32, ptr %i.hi, align 8, !tbaa !136
   %i.rk = and i32 %i.ri, %i.rj
   %i.rl = zext i32 %i.rk to i64                   ; 2 uses
-  %i.rm = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.rl ; 2 uses
+  %i.rm = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.rl ; 2 uses
   %i.rn = load i32, ptr %i.rm, align 4, !tbaa !144 ; 2 uses
   %i.ro = lshr i32 %i.rn, 1                       ; 2 uses
   %i.rp = icmp eq i32 %i.ro, %i.ri
-  %i.rq = getelementptr inbounds nuw [64 x i8], ptr %5, i64 %i.rl ; 5 uses
+  %i.rq = getelementptr inbounds nuw [64 x i8], ptr %4, i64 %i.rl ; 5 uses
   br i1 %i.rp, label %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZNK3zfp8internal4dim215const_referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEcvfEv.exit.i
@@ -1277,13 +1265,13 @@ bb.af:                                            ; preds = %_ZN3zfp8internal5Ca
   br i1 %i.ru, label %bb.ag, label %bb.ai
 
 bb.ag:                                            ; preds = %bb.af
-  %i.rv = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %i.rw = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.rv = getelementptr inbounds nuw i8, ptr %7, i64 48
+  %i.rw = getelementptr inbounds nuw i8, ptr %7, i64 40
   %i.rx = load i64, ptr %i.rw, align 8, !tbaa !178
   %i.ry = mul i64 %i.rx, %i.rt
-  %i.rz = urem i64 %i.rt, %7
-  %i.sa = udiv i64 %i.rt, %7
-  %i.sb = getelementptr inbounds nuw i8, ptr %8, i64 56
+  %i.rz = urem i64 %i.rt, %6
+  %i.sa = udiv i64 %i.rt, %6
+  %i.sb = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.sc = insertelement <2 x i64> poison, i64 %i.rz, i64 0
   %i.sd = insertelement <2 x i64> %i.sc, i64 %i.sa, i64 1
   %i.se = shl nuw nsw <2 x i64> %i.sd, splat (i64 2)
@@ -1321,8 +1309,8 @@ _ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPK
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit76, %bb.af
-  %i.sx = phi i64 [ %.pre171, %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit76 ], [ %7, %bb.af ] ; 2 uses
-  %i.sy = phi ptr [ %.pre.i.i.i.i.i7.i, %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit76 ], [ %8, %bb.af ] ; 3 uses
+  %i.sx = phi i64 [ %.pre171, %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit76 ], [ %6, %bb.af ] ; 2 uses
+  %i.sy = phi ptr [ %.pre.i.i.i.i.i7.i, %_ZN3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6encodeEmPKf.exit76 ], [ %7, %bb.af ] ; 3 uses
   %i.sz = getelementptr inbounds nuw i8, ptr %i.sy, i64 48
   %i.ta = getelementptr inbounds nuw i8, ptr %i.sy, i64 40
   %i.tb = load i64, ptr %i.ta, align 8, !tbaa !178
@@ -1367,9 +1355,9 @@ _ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmP
   br label %_ZSt3maxIN3zfp8internal4dim29referenceINS0_6array2IfNS0_5codec4zfp2IfEENS0_5index8implicitEEEEEERKT_SE_SE_.exit
 
 _ZSt3maxIN3zfp8internal4dim29referenceINS0_6array2IfNS0_5codec4zfp2IfEENS0_5index8implicitEEEEEERKT_SE_SE_.exit: ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit74
-  %i.ub = phi ptr [ %5, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre174, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit74 ] ; 2 uses
-  %i.uc = phi ptr [ %6, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre173, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit74 ] ; 2 uses
-  %i.ud = phi ptr [ %8, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre172, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit74 ] ; 6 uses
+  %i.ub = phi ptr [ %4, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre174, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit74 ] ; 2 uses
+  %i.uc = phi ptr [ %5, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre173, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit74 ] ; 2 uses
+  %i.ud = phi ptr [ %7, %_ZN3zfp8internal5CacheINS0_11BlockCache2IfNS0_11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre172, %_ZNK3zfp8internal11BlockStore2IfNS_5codec4zfp2IfEENS_5index8implicitEE6decodeEmPf.exit74 ] ; 6 uses
   %i.ue = and i64 %i.ot, 3
   %i.uf = getelementptr inbounds nuw [4 x i8], ptr %i.rq, i64 %i.om
   %i.ug = getelementptr inbounds nuw [4 x i8], ptr %i.uf, i64 %i.ue
@@ -1518,7 +1506,7 @@ _ZNK3zfp8internal4dim212const_handleINS_6array2IfNS_5codec4zfp2IfEENS_5index8imp
   %i.xv = zext nneg i32 %i.xu to i64              ; 2 uses
   %i.xw = getelementptr inbounds nuw [4 x i8], ptr %i.xk, i64 %i.xv ; 2 uses
   %i.xx = load i32, ptr %i.xw, align 4, !tbaa !144, !noalias !481 ; 2 uses
-  %i.xy = lshr i32 %i.xx, 1                       ; 2 uses
+  %i.xy = lshr i32 %i.xx, 1
   %i.xz = getelementptr inbounds nuw [64 x i8], ptr %i.xj, i64 %i.xv ; 5 uses
   store i32 3, ptr %i.xw, align 4, !tbaa !39, !noalias !481
   %i.ya = add nsw i32 %i.xy, -1                   ; 2 uses
@@ -1527,10 +1515,8 @@ _ZNK3zfp8internal4dim212const_handleINS_6array2IfNS_5codec4zfp2IfEENS_5index8imp
   br i1 %.not.i.i.i.i2.i, label %_ZN3zfp8internal4dim29referenceINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEEaSERKSA_.exit, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZNK3zfp8internal4dim212const_handleINS_6array2IfNS_5codec4zfp2IfEENS_5index8implicitEEEE3getEv.exit.i
-  %9 = icmp eq i32 %i.xy, 1
   %i.yc = trunc i32 %i.xx to i1
-  %10 = or i1 %9, %i.yc
-  br i1 %10, label %bb.ar, label %bb.at
+  br i1 %i.yc, label %bb.ar, label %bb.at
 
 bb.ar:                                            ; preds = %bb.aq
   %i.yd = getelementptr inbounds nuw i8, ptr %i.xm, i64 48
@@ -1933,7 +1919,7 @@ _ZN3zfp8internal4dim39referenceINS_6array3IfNS_5codec4zfp3IfEENS_5index8implicit
   %i.als = zext nneg i32 %i.alq to i64            ; 2 uses
   %i.alt = getelementptr inbounds nuw [4 x i8], ptr %i.alr, i64 %i.als ; 2 uses
   %i.alu = load i32, ptr %i.alt, align 4, !tbaa !162, !noalias !513 ; 2 uses
-  %i.alv = lshr i32 %i.alu, 1                     ; 2 uses
+  %i.alv = lshr i32 %i.alu, 1
   %i.alw = load ptr, ptr %i.vq, align 8, !tbaa !67, !noalias !513
   %i.alx = getelementptr inbounds nuw [256 x i8], ptr %i.alw, i64 %i.als ; 5 uses
   store i32 3, ptr %i.alt, align 4, !tbaa !39, !noalias !513
@@ -1943,10 +1929,8 @@ _ZN3zfp8internal4dim39referenceINS_6array3IfNS_5codec4zfp3IfEENS_5index8implicit
   br i1 %.not.i.i.i.i144, label %_ZN3zfp8internal4dim39referenceINS_6array3IfNS_5codec4zfp3IfEENS_5index8implicitEEEE3setEf.exit, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZN3zfp8internal4dim39referenceINS_6array3IfNS_5codec4zfp3IfEENS_5index8implicitEEEEaSERKSA_.exit
-  %3 = icmp eq i32 %i.alv, 1
   %i.ama = trunc i32 %i.alu to i1
-  %4 = or i1 %3, %i.ama
-  br i1 %4, label %bb.as, label %bb.au
+  br i1 %i.ama, label %bb.as, label %bb.au
 
 bb.as:                                            ; preds = %bb.ar
   %i.amb = getelementptr inbounds nuw i8, ptr %i.alk, i64 48
@@ -2349,47 +2333,43 @@ _ZN3zfp6array4IfNS_5codec4zfp4IfEENS_5index8implicitEE3subEmmmmf.exit177: ; pred
 bb.ax:                                            ; preds = %.lr.ph415, %_ZN3zfp8internal4dim49referenceINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3setEf.exit
   %i.bay = phi i64 [ 0, %.lr.ph415 ], [ %i.bsj, %_ZN3zfp8internal4dim49referenceINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3setEf.exit ] ; 3 uses
   %.0414 = phi i32 [ 0, %.lr.ph415 ], [ %i.bsi, %_ZN3zfp8internal4dim49referenceINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3setEf.exit ]
-  %i.baz = load ptr, ptr %i.and, align 8, !tbaa !223, !nonnull !141, !align !142 ; 10 uses
+  %i.baz = load ptr, ptr %i.and, align 8, !tbaa !223, !nonnull !141, !align !142 ; 9 uses
   %i.bba = getelementptr inbounds nuw i8, ptr %i.baz, i64 88
   %i.bbb = getelementptr inbounds nuw i8, ptr %i.baz, i64 96
-  %i.bbc = load i64, ptr %i.bba, align 8, !tbaa !219 ; 4 uses
-  %i.bbd = load i64, ptr %i.bbb, align 8, !tbaa !218 ; 4 uses
+  %i.bbc = load i64, ptr %i.bba, align 8, !tbaa !219 ; 3 uses
+  %i.bbd = load i64, ptr %i.bbb, align 8, !tbaa !218 ; 3 uses
   %i.bbe = getelementptr inbounds nuw i8, ptr %i.baz, i64 104
-  %i.bbf = load i64, ptr %i.bbe, align 8, !tbaa !217 ; 4 uses
+  %i.bbf = load i64, ptr %i.bbe, align 8, !tbaa !217 ; 3 uses
   %i.bbg = load i32, ptr %i.anc, align 8, !tbaa !163
   %i.bbh = and i32 %i.bbg, 1
-  %i.bbi = load ptr, ptr %i.ane, align 8, !tbaa !71 ; 3 uses
+  %i.bbi = load ptr, ptr %i.ane, align 8, !tbaa !71 ; 2 uses
   %i.bbj = zext nneg i32 %i.bbh to i64            ; 2 uses
   %i.bbk = getelementptr inbounds nuw [4 x i8], ptr %i.bbi, i64 %i.bbj ; 2 uses
   %i.bbl = load i32, ptr %i.bbk, align 4, !tbaa !221 ; 2 uses
   %i.bbm = lshr i32 %i.bbl, 1                     ; 2 uses
   %i.bbn = icmp eq i32 %i.bbm, 1
-  %i.bbo = load ptr, ptr %i.anf, align 8, !tbaa !73 ; 3 uses
+  %i.bbo = load ptr, ptr %i.anf, align 8, !tbaa !73 ; 2 uses
   %i.bbp = getelementptr inbounds nuw [1024 x i8], ptr %i.bbo, i64 %i.bbj ; 5 uses
   br i1 %i.bbn, label %_ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit187, label %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183
 
 _ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183: ; preds = %bb.ax
   store i32 2, ptr %i.bbk, align 4, !tbaa !39
-  %1 = add nsw i32 %i.bbm, -1                     ; 2 uses
-  %2 = zext i32 %1 to i64                         ; 3 uses
-  %.not.i.i.i.i184 = icmp eq i32 %1, 0
-  br i1 %.not.i.i.i.i184, label %_ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit187, label %3
+  %1 = trunc i32 %i.bbl to i1
+  br i1 %1, label %bb.ay, label %bb.ba
 
-3:                                                ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183
-  %4 = trunc i32 %i.bbl to i1
-  br i1 %4, label %bb.ay, label %bb.ba
-
-bb.ay:                                            ; preds = %3
+bb.ay:                                            ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183
+  %2 = add nsw i32 %i.bbm, -1
+  %3 = zext i32 %2 to i64                         ; 3 uses
   %i.bbq = getelementptr inbounds nuw i8, ptr %i.baz, i64 48
   %i.bbr = getelementptr inbounds nuw i8, ptr %i.baz, i64 40
   %i.bbs = load i64, ptr %i.bbr, align 8, !tbaa !178
-  %i.bbt = mul i64 %i.bbs, %2
-  %i.bbu = udiv i64 %2, %i.bbc                    ; 2 uses
+  %i.bbt = mul i64 %i.bbs, %3
+  %i.bbu = udiv i64 %3, %i.bbc                    ; 2 uses
   %i.bbv = udiv i64 %i.bbu, %i.bbd                ; 2 uses
   %i.bbw = urem i64 %i.bbv, %i.bbf
   %i.bbx = udiv i64 %i.bbv, %i.bbf
   %i.bby = getelementptr inbounds nuw i8, ptr %i.baz, i64 56
-  %i.bbz = urem i64 %2, %i.bbc
+  %i.bbz = urem i64 %3, %i.bbc
   %i.bca = urem i64 %i.bbu, %i.bbd
   %i.bcb = insertelement <2 x i64> poison, i64 %i.bbz, i64 0
   %i.bcc = insertelement <2 x i64> %i.bcb, i64 %i.bca, i64 1
@@ -2442,8 +2422,8 @@ _ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPK
   %.pre.i.i.i.i186 = load ptr, ptr %i.and, align 8, !tbaa !223
   br label %bb.ba
 
-bb.ba:                                            ; preds = %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit231, %3
-  %i.bdm = phi ptr [ %.pre.i.i.i.i186, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit231 ], [ %i.baz, %3 ] ; 2 uses
+bb.ba:                                            ; preds = %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit231, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183
+  %i.bdm = phi ptr [ %.pre.i.i.i.i186, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit231 ], [ %i.baz, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ] ; 2 uses
   %i.bdn = getelementptr inbounds nuw i8, ptr %i.bdm, i64 48
   %i.bdo = getelementptr inbounds nuw i8, ptr %i.bdm, i64 56
   %i.bdp = load <4 x i64>, ptr %i.bdo, align 8, !tbaa !40 ; 2 uses
@@ -2489,31 +2469,31 @@ _ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmP
   %.pre532 = load ptr, ptr %i.anf, align 8, !tbaa !73
   br label %_ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit187
 
-_ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit187: ; preds = %bb.ax, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229
-  %5 = phi ptr [ %i.bbo, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre532, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbo, %bb.ax ] ; 2 uses
-  %6 = phi ptr [ %i.bbi, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre531, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbi, %bb.ax ] ; 2 uses
-  %7 = phi i64 [ %i.bbf, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre530, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbf, %bb.ax ] ; 4 uses
-  %8 = phi i64 [ %i.bbd, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre528, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbd, %bb.ax ] ; 4 uses
-  %9 = phi i64 [ %i.bbc, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre526, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbc, %bb.ax ] ; 4 uses
-  %10 = phi ptr [ %i.baz, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre524, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.baz, %bb.ax ] ; 6 uses
+_ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit187: ; preds = %bb.ax, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229
+  %4 = phi ptr [ %.pre532, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbo, %bb.ax ] ; 2 uses
+  %5 = phi ptr [ %.pre531, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbi, %bb.ax ] ; 2 uses
+  %6 = phi i64 [ %.pre530, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbf, %bb.ax ] ; 4 uses
+  %7 = phi i64 [ %.pre528, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbd, %bb.ax ] ; 4 uses
+  %8 = phi i64 [ %.pre526, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.bbc, %bb.ax ] ; 4 uses
+  %9 = phi ptr [ %.pre524, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit229 ], [ %i.baz, %bb.ax ] ; 6 uses
   %i.bel = load float, ptr %i.bbp, align 4, !tbaa !99
   %i.bem = lshr i64 %i.bay, 2
-  %i.ben = mul i64 %7, %i.azo
+  %i.ben = mul i64 %6, %i.azo
   %i.beo = add i64 %i.ben, %i.azv
-  %i.bep = mul i64 %i.beo, %8
+  %i.bep = mul i64 %i.beo, %7
   %i.beq = add i64 %i.bep, %i.bai
-  %i.ber = mul i64 %i.beq, %9
+  %i.ber = mul i64 %i.beq, %8
   %i.bes = add i64 %i.ber, %i.bem                 ; 5 uses
   %i.bet = trunc i64 %i.bes to i32
   %i.beu = add i32 %i.bet, 1                      ; 3 uses
   %i.bev = load i32, ptr %i.anc, align 8, !tbaa !163
   %i.bew = and i32 %i.beu, %i.bev
   %i.bex = zext i32 %i.bew to i64                 ; 2 uses
-  %i.bey = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.bex ; 2 uses
+  %i.bey = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.bex ; 2 uses
   %i.bez = load i32, ptr %i.bey, align 4, !tbaa !221 ; 2 uses
   %i.bfa = lshr i32 %i.bez, 1                     ; 2 uses
   %i.bfb = icmp eq i32 %i.bfa, %i.beu
-  %i.bfc = getelementptr inbounds nuw [1024 x i8], ptr %5, i64 %i.bex ; 5 uses
+  %i.bfc = getelementptr inbounds nuw [1024 x i8], ptr %4, i64 %i.bex ; 5 uses
   br i1 %i.bfb, label %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178, label %bb.bc
 
 bb.bc:                                            ; preds = %_ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit187
@@ -2532,17 +2512,17 @@ bb.bd:                                            ; preds = %_ZN3zfp8internal5Ca
   br i1 %i.bfg, label %bb.be, label %bb.bg
 
 bb.be:                                            ; preds = %bb.bd
-  %i.bfh = getelementptr inbounds nuw i8, ptr %10, i64 48
-  %i.bfi = getelementptr inbounds nuw i8, ptr %10, i64 40
+  %i.bfh = getelementptr inbounds nuw i8, ptr %9, i64 48
+  %i.bfi = getelementptr inbounds nuw i8, ptr %9, i64 40
   %i.bfj = load i64, ptr %i.bfi, align 8, !tbaa !178
   %i.bfk = mul i64 %i.bfj, %i.bff
-  %i.bfl = udiv i64 %i.bff, %9                    ; 2 uses
-  %i.bfm = udiv i64 %i.bfl, %8                    ; 2 uses
-  %i.bfn = urem i64 %i.bfm, %7
-  %i.bfo = udiv i64 %i.bfm, %7
-  %i.bfp = getelementptr inbounds nuw i8, ptr %10, i64 56
-  %i.bfq = urem i64 %i.bff, %9
-  %i.bfr = urem i64 %i.bfl, %8
+  %i.bfl = udiv i64 %i.bff, %8                    ; 2 uses
+  %i.bfm = udiv i64 %i.bfl, %7                    ; 2 uses
+  %i.bfn = urem i64 %i.bfm, %6
+  %i.bfo = udiv i64 %i.bfm, %6
+  %i.bfp = getelementptr inbounds nuw i8, ptr %9, i64 56
+  %i.bfq = urem i64 %i.bff, %8
+  %i.bfr = urem i64 %i.bfl, %7
   %i.bfs = insertelement <2 x i64> poison, i64 %i.bfq, i64 0
   %i.bft = insertelement <2 x i64> %i.bfs, i64 %i.bfr, i64 1
   %i.bfu = shl nuw nsw <2 x i64> %i.bft, splat (i64 2)
@@ -2552,7 +2532,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.bfy = lshr <2 x i64> %i.bfx, splat (i64 62)
   %i.bfz = sub <2 x i64> zeroinitializer, %i.bfv
   %i.bga = and <2 x i64> %i.bfy, %i.bfz           ; 3 uses
-  %i.bgb = getelementptr inbounds nuw i8, ptr %10, i64 72
+  %i.bgb = getelementptr inbounds nuw i8, ptr %9, i64 72
   %i.bgc = insertelement <2 x i64> poison, i64 %i.bfn, i64 0
   %i.bgd = insertelement <2 x i64> %i.bgc, i64 %i.bfo, i64 1
   %i.bge = shl nuw nsw <2 x i64> %i.bgd, splat (i64 2)
@@ -2601,10 +2581,10 @@ _ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPK
   br label %bb.bg
 
 bb.bg:                                            ; preds = %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227, %bb.bd
-  %i.bhd = phi i64 [ %.pre538, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227 ], [ %7, %bb.bd ] ; 2 uses
-  %i.bhe = phi i64 [ %.pre536, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227 ], [ %8, %bb.bd ] ; 2 uses
-  %i.bhf = phi i64 [ %.pre534, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227 ], [ %9, %bb.bd ] ; 2 uses
-  %i.bhg = phi ptr [ %.pre.i.i.i.i181, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227 ], [ %10, %bb.bd ] ; 4 uses
+  %i.bhd = phi i64 [ %.pre538, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227 ], [ %6, %bb.bd ] ; 2 uses
+  %i.bhe = phi i64 [ %.pre536, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227 ], [ %7, %bb.bd ] ; 2 uses
+  %i.bhf = phi i64 [ %.pre534, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227 ], [ %8, %bb.bd ] ; 2 uses
+  %i.bhg = phi ptr [ %.pre.i.i.i.i181, %_ZN3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6encodeEmPKf.exit227 ], [ %9, %bb.bd ] ; 4 uses
   %i.bhh = getelementptr inbounds nuw i8, ptr %i.bhg, i64 48
   %i.bhi = getelementptr inbounds nuw i8, ptr %i.bhg, i64 40
   %i.bhj = load i64, ptr %i.bhi, align 8, !tbaa !178
@@ -2670,9 +2650,9 @@ _ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmP
   br label %_ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit182
 
 _ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit182: ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit225
-  %i.bjd = phi ptr [ %5, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre541, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit225 ] ; 2 uses
-  %i.bje = phi ptr [ %6, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre540, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit225 ] ; 2 uses
-  %i.bjf = phi ptr [ %10, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre539, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit225 ] ; 9 uses
+  %i.bjd = phi ptr [ %4, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre541, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit225 ] ; 2 uses
+  %i.bje = phi ptr [ %5, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre540, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit225 ] ; 2 uses
+  %i.bjf = phi ptr [ %9, %_ZN3zfp8internal5CacheINS0_11BlockCache4IfNS0_11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre539, %_ZNK3zfp8internal11BlockStore4IfNS_5codec4zfp4IfEENS_5index8implicitEE6decodeEmPf.exit225 ] ; 9 uses
   %i.bjg = and i64 %i.bay, 3
   %i.bjh = getelementptr inbounds nuw i8, ptr %i.bfc, i64 %.idx.i.i.i.i180
   %i.bji = getelementptr inbounds nuw [4 x i8], ptr %i.bjh, i64 %i.bak
@@ -2894,7 +2874,7 @@ _ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8imp
   %i.bpf = zext nneg i32 %i.bpe to i64            ; 2 uses
   %i.bpg = getelementptr inbounds nuw [4 x i8], ptr %i.bon, i64 %i.bpf ; 2 uses
   %i.bph = load i32, ptr %i.bpg, align 4, !tbaa !221, !noalias !547 ; 2 uses
-  %i.bpi = lshr i32 %i.bph, 1                     ; 2 uses
+  %i.bpi = lshr i32 %i.bph, 1
   %i.bpj = getelementptr inbounds nuw [1024 x i8], ptr %i.bom, i64 %i.bpf ; 5 uses
   store i32 3, ptr %i.bpg, align 4, !tbaa !39, !noalias !547
   %i.bpk = add nsw i32 %i.bpi, -1                 ; 2 uses
@@ -2903,10 +2883,8 @@ _ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8imp
   br i1 %.not.i.i.i.i188, label %_ZN3zfp8internal4dim49referenceINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3setEf.exit, label %bb.bo
 
 bb.bo:                                            ; preds = %_ZNK3zfp8internal4dim412const_handleINS_6array4IfNS_5codec4zfp4IfEENS_5index8implicitEEEE3getEv.exit195
-  %11 = icmp eq i32 %i.bpi, 1
   %i.bpm = trunc i32 %i.bph to i1
-  %12 = or i1 %11, %i.bpm
-  br i1 %12, label %bb.bp, label %bb.br
+  br i1 %i.bpm, label %bb.bp, label %bb.br
 
 bb.bp:                                            ; preds = %bb.bo
   %i.bpn = getelementptr inbounds nuw i8, ptr %i.bor, i64 48
@@ -3309,29 +3287,25 @@ bb.t:                                             ; preds = %_ZStlsISt11char_tra
 
 _ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90: ; preds = %bb.t
   store i32 2, ptr %i.eq, align 4, !tbaa !39
-  %9 = add nsw i32 %i.es, -1                      ; 2 uses
-  %10 = zext i32 %9 to i64
-  %.not.i.i.i.i.i91 = icmp eq i32 %9, 0
-  br i1 %.not.i.i.i.i.i91, label %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90.thread, label %bb.u
+  %9 = trunc i32 %i.er to i1
+  br i1 %9, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90
-  %11 = trunc i32 %i.er to i1
-  br i1 %11, label %12, label %bb.v
-
-12:                                               ; preds = %bb.u
-  %13 = invoke noundef i64 @_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd(ptr noundef nonnull align 8 dereferenceable(88) %i.ek, i64 noundef %10, ptr noundef %i.ew)
+  %10 = add nsw i32 %i.es, -1
+  %11 = zext i32 %10 to i64
+  %12 = invoke noundef i64 @_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd(ptr noundef nonnull align 8 dereferenceable(88) %i.ek, i64 noundef %11, ptr noundef %i.ew)
           to label %.noexc93 unwind label %bb.y   ; 0 uses
 
-.noexc93:                                         ; preds = %12
+.noexc93:                                         ; preds = %bb.u
   %.pre.i.i.i.i.i92 = load ptr, ptr %i.ej, align 8, !tbaa !247
   br label %bb.v
 
-bb.v:                                             ; preds = %.noexc93, %bb.u
-  %i.ex = phi ptr [ %.pre.i.i.i.i.i92, %.noexc93 ], [ %i.ek, %bb.u ]
+bb.v:                                             ; preds = %.noexc93, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90
+  %i.ex = phi ptr [ %.pre.i.i.i.i.i92, %.noexc93 ], [ %i.ek, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90 ]
   %i.ey = invoke noundef i64 @_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd(ptr noundef nonnull align 8 dereferenceable(88) %i.ex, i64 noundef 0, ptr noundef %i.ew)
           to label %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90.thread unwind label %bb.y ; 0 uses
 
-_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90.thread: ; preds = %bb.t, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90, %bb.v
+_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90.thread: ; preds = %bb.t, %bb.v
   %i.ez = load double, ptr %i.ew, align 8, !tbaa !49 ; 3 uses
   %i.fa = fsub double %i.ez, %4
   %i.fb = call noundef double @llvm.fabs.f64(double %i.fa)
@@ -3370,7 +3344,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   br label %bb.aj
 
-bb.y:                                             ; preds = %bb.v, %12
+bb.y:                                             ; preds = %bb.v, %bb.u
   %i.fl = landingpad { ptr, i32 }
           cleanup
   br label %bb.aj
@@ -3773,29 +3747,25 @@ bb.t:                                             ; preds = %_ZStlsISt11char_tra
 
 _ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90: ; preds = %bb.t
   store i32 2, ptr %i.fb, align 4, !tbaa !39
-  %9 = add nsw i32 %i.fd, -1                      ; 2 uses
-  %10 = zext i32 %9 to i64
-  %.not.i.i.i.i.i91 = icmp eq i32 %9, 0
-  br i1 %.not.i.i.i.i.i91, label %_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90.thread, label %bb.u
+  %9 = trunc i32 %i.fc to i1
+  br i1 %9, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90
-  %11 = trunc i32 %i.fc to i1
-  br i1 %11, label %12, label %bb.v
-
-12:                                               ; preds = %bb.u
-  %13 = invoke noundef i64 @_ZN3zfp8internal11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEE6encodeEmPKd(ptr noundef nonnull align 8 dereferenceable(104) %i.ev, i64 noundef %10, ptr noundef %i.fh)
+  %10 = add nsw i32 %i.fd, -1
+  %11 = zext i32 %10 to i64
+  %12 = invoke noundef i64 @_ZN3zfp8internal11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEE6encodeEmPKd(ptr noundef nonnull align 8 dereferenceable(104) %i.ev, i64 noundef %11, ptr noundef %i.fh)
           to label %.noexc94 unwind label %bb.y   ; 0 uses
 
-.noexc94:                                         ; preds = %12
+.noexc94:                                         ; preds = %bb.u
   %.pre.i.i.i.i.i93 = load ptr, ptr %i.eu, align 8, !tbaa !264
   br label %bb.v
 
-bb.v:                                             ; preds = %.noexc94, %bb.u
-  %i.fi = phi ptr [ %.pre.i.i.i.i.i93, %.noexc94 ], [ %i.ev, %bb.u ]
+bb.v:                                             ; preds = %.noexc94, %_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90
+  %i.fi = phi ptr [ %.pre.i.i.i.i.i93, %.noexc94 ], [ %i.ev, %_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90 ]
   %i.fj = invoke noundef i64 @_ZNK3zfp8internal11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEE6decodeEmPd(ptr noundef nonnull align 8 dereferenceable(104) %i.fi, i64 noundef 0, ptr noundef %i.fh)
           to label %_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90.thread unwind label %bb.y ; 0 uses
 
-_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90.thread: ; preds = %bb.t, %_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90, %bb.v
+_ZN3zfp8internal5CacheINS0_11BlockCache3IdNS0_11BlockStore3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i90.thread: ; preds = %bb.t, %bb.v
   %i.fk = load double, ptr %i.fh, align 8, !tbaa !49 ; 3 uses
   %i.fl = fsub double %i.fk, %4
   %i.fm = call noundef double @llvm.fabs.f64(double %i.fl)
@@ -3834,7 +3804,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   br label %bb.aj
 
-bb.y:                                             ; preds = %bb.v, %12
+bb.y:                                             ; preds = %bb.v, %bb.u
   %i.fw = landingpad { ptr, i32 }
           cleanup
   br label %bb.aj
@@ -4237,39 +4207,35 @@ _ZN3zfp8internal4dim29referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicit
 bb.z:                                             ; preds = %.lr.ph144, %_ZN3zfp8internal4dim29referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEaSERKSA_.exit
   %i.ot = phi i64 [ 0, %.lr.ph144 ], [ %i.aaa, %_ZN3zfp8internal4dim29referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEaSERKSA_.exit ] ; 3 uses
   %.0143 = phi i32 [ 0, %.lr.ph144 ], [ %i.zz, %_ZN3zfp8internal4dim29referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEaSERKSA_.exit ]
-  %i.ou = load ptr, ptr %i.hj, align 8, !tbaa !247, !nonnull !141, !align !142 ; 7 uses
+  %i.ou = load ptr, ptr %i.hj, align 8, !tbaa !247, !nonnull !141, !align !142 ; 6 uses
   %i.ov = getelementptr inbounds nuw i8, ptr %i.ou, i64 72
-  %i.ow = load i64, ptr %i.ov, align 8, !tbaa !243 ; 4 uses
+  %i.ow = load i64, ptr %i.ov, align 8, !tbaa !243 ; 3 uses
   %i.ox = load i32, ptr %i.hi, align 8, !tbaa !244
   %i.oy = and i32 %i.ox, 1
-  %i.oz = load ptr, ptr %i.hk, align 8, !tbaa !83 ; 3 uses
+  %i.oz = load ptr, ptr %i.hk, align 8, !tbaa !83 ; 2 uses
   %i.pa = zext nneg i32 %i.oy to i64              ; 2 uses
   %i.pb = getelementptr inbounds nuw [4 x i8], ptr %i.oz, i64 %i.pa ; 2 uses
   %i.pc = load i32, ptr %i.pb, align 4, !tbaa !249 ; 2 uses
   %i.pd = lshr i32 %i.pc, 1                       ; 2 uses
   %i.pe = icmp eq i32 %i.pd, 1
-  %i.pf = load ptr, ptr %i.hl, align 8, !tbaa !85 ; 3 uses
+  %i.pf = load ptr, ptr %i.hl, align 8, !tbaa !85 ; 2 uses
   %i.pg = getelementptr inbounds nuw [128 x i8], ptr %i.pf, i64 %i.pa ; 5 uses
   br i1 %i.pe, label %_ZNK3zfp8internal4dim215const_referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEcvdEv.exit.i, label %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
 
 _ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i: ; preds = %bb.z
   store i32 2, ptr %i.pb, align 4, !tbaa !39
-  %1 = add nsw i32 %i.pd, -1                      ; 2 uses
-  %2 = zext i32 %1 to i64                         ; 3 uses
-  %.not.i.i.i.i.i.i = icmp eq i32 %1, 0
-  br i1 %.not.i.i.i.i.i.i, label %_ZNK3zfp8internal4dim215const_referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEcvdEv.exit.i, label %3
+  %1 = trunc i32 %i.pc to i1
+  br i1 %1, label %bb.aa, label %bb.ac
 
-3:                                                ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
-  %4 = trunc i32 %i.pc to i1
-  br i1 %4, label %bb.aa, label %bb.ac
-
-bb.aa:                                            ; preds = %3
+bb.aa:                                            ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
+  %2 = add nsw i32 %i.pd, -1
+  %3 = zext i32 %2 to i64                         ; 3 uses
   %i.ph = getelementptr inbounds nuw i8, ptr %i.ou, i64 48
   %i.pi = getelementptr inbounds nuw i8, ptr %i.ou, i64 40
   %i.pj = load i64, ptr %i.pi, align 8, !tbaa !178
-  %i.pk = mul i64 %i.pj, %2
-  %i.pl = urem i64 %2, %i.ow
-  %i.pm = udiv i64 %2, %i.ow
+  %i.pk = mul i64 %i.pj, %3
+  %i.pl = urem i64 %3, %i.ow
+  %i.pm = udiv i64 %3, %i.ow
   %i.pn = getelementptr inbounds nuw i8, ptr %i.ou, i64 56
   %i.po = insertelement <2 x i64> poison, i64 %i.pl, i64 0
   %i.pp = insertelement <2 x i64> %i.po, i64 %i.pm, i64 1
@@ -4305,8 +4271,8 @@ _ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPK
   %.pre.i.i.i.i.i.i = load ptr, ptr %i.hj, align 8, !tbaa !247
   br label %bb.ac
 
-bb.ac:                                            ; preds = %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit80, %3
-  %i.qj = phi ptr [ %.pre.i.i.i.i.i.i, %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit80 ], [ %i.ou, %3 ] ; 2 uses
+bb.ac:                                            ; preds = %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit80, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
+  %i.qj = phi ptr [ %.pre.i.i.i.i.i.i, %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit80 ], [ %i.ou, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ] ; 2 uses
   %i.qk = getelementptr inbounds nuw i8, ptr %i.qj, i64 48
   %i.ql = getelementptr inbounds nuw i8, ptr %i.qj, i64 56
   %i.qm = load <2 x i64>, ptr %i.ql, align 8, !tbaa !40 ; 2 uses
@@ -4343,25 +4309,25 @@ _ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmP
   %.pre169 = load ptr, ptr %i.hl, align 8, !tbaa !85
   br label %_ZNK3zfp8internal4dim215const_referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEcvdEv.exit.i
 
-_ZNK3zfp8internal4dim215const_referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEcvdEv.exit.i: ; preds = %bb.z, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i
-  %5 = phi ptr [ %.pre169, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78 ], [ %i.pf, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ], [ %i.pf, %bb.z ] ; 2 uses
-  %6 = phi ptr [ %.pre168, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78 ], [ %i.oz, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ], [ %i.oz, %bb.z ] ; 2 uses
-  %7 = phi i64 [ %.pre167, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78 ], [ %i.ow, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ], [ %i.ow, %bb.z ] ; 4 uses
-  %8 = phi ptr [ %.pre165, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78 ], [ %i.ou, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i.i ], [ %i.ou, %bb.z ] ; 5 uses
+_ZNK3zfp8internal4dim215const_referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEcvdEv.exit.i: ; preds = %bb.z, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78
+  %4 = phi ptr [ %.pre169, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78 ], [ %i.pf, %bb.z ] ; 2 uses
+  %5 = phi ptr [ %.pre168, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78 ], [ %i.oz, %bb.z ] ; 2 uses
+  %6 = phi i64 [ %.pre167, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78 ], [ %i.ow, %bb.z ] ; 4 uses
+  %7 = phi ptr [ %.pre165, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit78 ], [ %i.ou, %bb.z ] ; 5 uses
   %i.rd = load double, ptr %i.pg, align 8, !tbaa !49
   %i.re = lshr i64 %i.ot, 2
-  %i.rf = mul i64 %7, %i.ok
+  %i.rf = mul i64 %6, %i.ok
   %i.rg = add i64 %i.rf, %i.re                    ; 5 uses
   %i.rh = trunc i64 %i.rg to i32
   %i.ri = add i32 %i.rh, 1                        ; 3 uses
   %i.rj = load i32, ptr %i.hi, align 8, !tbaa !244
   %i.rk = and i32 %i.ri, %i.rj
   %i.rl = zext i32 %i.rk to i64                   ; 2 uses
-  %i.rm = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.rl ; 2 uses
+  %i.rm = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.rl ; 2 uses
   %i.rn = load i32, ptr %i.rm, align 4, !tbaa !249 ; 2 uses
   %i.ro = lshr i32 %i.rn, 1                       ; 2 uses
   %i.rp = icmp eq i32 %i.ro, %i.ri
-  %i.rq = getelementptr inbounds nuw [128 x i8], ptr %5, i64 %i.rl ; 5 uses
+  %i.rq = getelementptr inbounds nuw [128 x i8], ptr %4, i64 %i.rl ; 5 uses
   br i1 %i.rp, label %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZNK3zfp8internal4dim215const_referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEcvdEv.exit.i
@@ -4380,13 +4346,13 @@ bb.af:                                            ; preds = %_ZN3zfp8internal5Ca
   br i1 %i.ru, label %bb.ag, label %bb.ai
 
 bb.ag:                                            ; preds = %bb.af
-  %i.rv = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %i.rw = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.rv = getelementptr inbounds nuw i8, ptr %7, i64 48
+  %i.rw = getelementptr inbounds nuw i8, ptr %7, i64 40
   %i.rx = load i64, ptr %i.rw, align 8, !tbaa !178
   %i.ry = mul i64 %i.rx, %i.rt
-  %i.rz = urem i64 %i.rt, %7
-  %i.sa = udiv i64 %i.rt, %7
-  %i.sb = getelementptr inbounds nuw i8, ptr %8, i64 56
+  %i.rz = urem i64 %i.rt, %6
+  %i.sa = udiv i64 %i.rt, %6
+  %i.sb = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.sc = insertelement <2 x i64> poison, i64 %i.rz, i64 0
   %i.sd = insertelement <2 x i64> %i.sc, i64 %i.sa, i64 1
   %i.se = shl nuw nsw <2 x i64> %i.sd, splat (i64 2)
@@ -4424,8 +4390,8 @@ _ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPK
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit76, %bb.af
-  %i.sx = phi i64 [ %.pre171, %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit76 ], [ %7, %bb.af ] ; 2 uses
-  %i.sy = phi ptr [ %.pre.i.i.i.i.i7.i, %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit76 ], [ %8, %bb.af ] ; 3 uses
+  %i.sx = phi i64 [ %.pre171, %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit76 ], [ %6, %bb.af ] ; 2 uses
+  %i.sy = phi ptr [ %.pre.i.i.i.i.i7.i, %_ZN3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6encodeEmPKd.exit76 ], [ %7, %bb.af ] ; 3 uses
   %i.sz = getelementptr inbounds nuw i8, ptr %i.sy, i64 48
   %i.ta = getelementptr inbounds nuw i8, ptr %i.sy, i64 40
   %i.tb = load i64, ptr %i.ta, align 8, !tbaa !178
@@ -4470,9 +4436,9 @@ _ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmP
   br label %_ZSt3maxIN3zfp8internal4dim29referenceINS0_6array2IdNS0_5codec4zfp2IdEENS0_5index8implicitEEEEEERKT_SE_SE_.exit
 
 _ZSt3maxIN3zfp8internal4dim29referenceINS0_6array2IdNS0_5codec4zfp2IdEENS0_5index8implicitEEEEEERKT_SE_SE_.exit: ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit74
-  %i.ub = phi ptr [ %5, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre174, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit74 ] ; 2 uses
-  %i.uc = phi ptr [ %6, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre173, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit74 ] ; 2 uses
-  %i.ud = phi ptr [ %8, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre172, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit74 ] ; 6 uses
+  %i.ub = phi ptr [ %4, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre174, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit74 ] ; 2 uses
+  %i.uc = phi ptr [ %5, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre173, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit74 ] ; 2 uses
+  %i.ud = phi ptr [ %7, %_ZN3zfp8internal5CacheINS0_11BlockCache2IdNS0_11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i.i5.i ], [ %.pre172, %_ZNK3zfp8internal11BlockStore2IdNS_5codec4zfp2IdEENS_5index8implicitEE6decodeEmPd.exit74 ] ; 6 uses
   %i.ue = and i64 %i.ot, 3
   %i.uf = getelementptr inbounds nuw [8 x i8], ptr %i.rq, i64 %i.om
   %i.ug = getelementptr inbounds nuw [8 x i8], ptr %i.uf, i64 %i.ue
@@ -4621,7 +4587,7 @@ _ZNK3zfp8internal4dim212const_handleINS_6array2IdNS_5codec4zfp2IdEENS_5index8imp
   %i.xv = zext nneg i32 %i.xu to i64              ; 2 uses
   %i.xw = getelementptr inbounds nuw [4 x i8], ptr %i.xk, i64 %i.xv ; 2 uses
   %i.xx = load i32, ptr %i.xw, align 4, !tbaa !249, !noalias !715 ; 2 uses
-  %i.xy = lshr i32 %i.xx, 1                       ; 2 uses
+  %i.xy = lshr i32 %i.xx, 1
   %i.xz = getelementptr inbounds nuw [128 x i8], ptr %i.xj, i64 %i.xv ; 5 uses
   store i32 3, ptr %i.xw, align 4, !tbaa !39, !noalias !715
   %i.ya = add nsw i32 %i.xy, -1                   ; 2 uses
@@ -4630,10 +4596,8 @@ _ZNK3zfp8internal4dim212const_handleINS_6array2IdNS_5codec4zfp2IdEENS_5index8imp
   br i1 %.not.i.i.i.i2.i, label %_ZN3zfp8internal4dim29referenceINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEEaSERKSA_.exit, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZNK3zfp8internal4dim212const_handleINS_6array2IdNS_5codec4zfp2IdEENS_5index8implicitEEEE3getEv.exit.i
-  %9 = icmp eq i32 %i.xy, 1
   %i.yc = trunc i32 %i.xx to i1
-  %10 = or i1 %9, %i.yc
-  br i1 %10, label %bb.ar, label %bb.at
+  br i1 %i.yc, label %bb.ar, label %bb.at
 
 bb.ar:                                            ; preds = %bb.aq
   %i.yd = getelementptr inbounds nuw i8, ptr %i.xm, i64 48
@@ -5036,7 +5000,7 @@ _ZN3zfp8internal4dim39referenceINS_6array3IdNS_5codec4zfp3IdEENS_5index8implicit
   %i.als = zext nneg i32 %i.alq to i64            ; 2 uses
   %i.alt = getelementptr inbounds nuw [4 x i8], ptr %i.alr, i64 %i.als ; 2 uses
   %i.alu = load i32, ptr %i.alt, align 4, !tbaa !266, !noalias !747 ; 2 uses
-  %i.alv = lshr i32 %i.alu, 1                     ; 2 uses
+  %i.alv = lshr i32 %i.alu, 1
   %i.alw = load ptr, ptr %i.vq, align 8, !tbaa !91, !noalias !747
   %i.alx = getelementptr inbounds nuw [512 x i8], ptr %i.alw, i64 %i.als ; 5 uses
   store i32 3, ptr %i.alt, align 4, !tbaa !39, !noalias !747
@@ -5046,10 +5010,8 @@ _ZN3zfp8internal4dim39referenceINS_6array3IdNS_5codec4zfp3IdEENS_5index8implicit
   br i1 %.not.i.i.i.i144, label %_ZN3zfp8internal4dim39referenceINS_6array3IdNS_5codec4zfp3IdEENS_5index8implicitEEEE3setEd.exit, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZN3zfp8internal4dim39referenceINS_6array3IdNS_5codec4zfp3IdEENS_5index8implicitEEEEaSERKSA_.exit
-  %3 = icmp eq i32 %i.alv, 1
   %i.ama = trunc i32 %i.alu to i1
-  %4 = or i1 %3, %i.ama
-  br i1 %4, label %bb.as, label %bb.au
+  br i1 %i.ama, label %bb.as, label %bb.au
 
 bb.as:                                            ; preds = %bb.ar
   %i.amb = getelementptr inbounds nuw i8, ptr %i.alk, i64 48
@@ -5452,47 +5414,43 @@ _ZN3zfp6array4IdNS_5codec4zfp4IdEENS_5index8implicitEE3subEmmmmd.exit177: ; pred
 bb.ax:                                            ; preds = %.lr.ph415, %_ZN3zfp8internal4dim49referenceINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3setEd.exit
   %i.bay = phi i64 [ 0, %.lr.ph415 ], [ %i.bsj, %_ZN3zfp8internal4dim49referenceINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3setEd.exit ] ; 3 uses
   %.0414 = phi i32 [ 0, %.lr.ph415 ], [ %i.bsi, %_ZN3zfp8internal4dim49referenceINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3setEd.exit ]
-  %i.baz = load ptr, ptr %i.and, align 8, !tbaa !308, !nonnull !141, !align !142 ; 10 uses
+  %i.baz = load ptr, ptr %i.and, align 8, !tbaa !308, !nonnull !141, !align !142 ; 9 uses
   %i.bba = getelementptr inbounds nuw i8, ptr %i.baz, i64 88
   %i.bbb = getelementptr inbounds nuw i8, ptr %i.baz, i64 96
-  %i.bbc = load i64, ptr %i.bba, align 8, !tbaa !304 ; 4 uses
-  %i.bbd = load i64, ptr %i.bbb, align 8, !tbaa !303 ; 4 uses
+  %i.bbc = load i64, ptr %i.bba, align 8, !tbaa !304 ; 3 uses
+  %i.bbd = load i64, ptr %i.bbb, align 8, !tbaa !303 ; 3 uses
   %i.bbe = getelementptr inbounds nuw i8, ptr %i.baz, i64 104
-  %i.bbf = load i64, ptr %i.bbe, align 8, !tbaa !302 ; 4 uses
+  %i.bbf = load i64, ptr %i.bbe, align 8, !tbaa !302 ; 3 uses
   %i.bbg = load i32, ptr %i.anc, align 8, !tbaa !267
   %i.bbh = and i32 %i.bbg, 1
-  %i.bbi = load ptr, ptr %i.ane, align 8, !tbaa !95 ; 3 uses
+  %i.bbi = load ptr, ptr %i.ane, align 8, !tbaa !95 ; 2 uses
   %i.bbj = zext nneg i32 %i.bbh to i64            ; 2 uses
   %i.bbk = getelementptr inbounds nuw [4 x i8], ptr %i.bbi, i64 %i.bbj ; 2 uses
   %i.bbl = load i32, ptr %i.bbk, align 4, !tbaa !306 ; 2 uses
   %i.bbm = lshr i32 %i.bbl, 1                     ; 2 uses
   %i.bbn = icmp eq i32 %i.bbm, 1
-  %i.bbo = load ptr, ptr %i.anf, align 8, !tbaa !97 ; 3 uses
+  %i.bbo = load ptr, ptr %i.anf, align 8, !tbaa !97 ; 2 uses
   %i.bbp = getelementptr inbounds nuw [2048 x i8], ptr %i.bbo, i64 %i.bbj ; 5 uses
   br i1 %i.bbn, label %_ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit187, label %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183
 
 _ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183: ; preds = %bb.ax
   store i32 2, ptr %i.bbk, align 4, !tbaa !39
-  %1 = add nsw i32 %i.bbm, -1                     ; 2 uses
-  %2 = zext i32 %1 to i64                         ; 3 uses
-  %.not.i.i.i.i184 = icmp eq i32 %1, 0
-  br i1 %.not.i.i.i.i184, label %_ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit187, label %3
+  %1 = trunc i32 %i.bbl to i1
+  br i1 %1, label %bb.ay, label %bb.ba
 
-3:                                                ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183
-  %4 = trunc i32 %i.bbl to i1
-  br i1 %4, label %bb.ay, label %bb.ba
-
-bb.ay:                                            ; preds = %3
+bb.ay:                                            ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183
+  %2 = add nsw i32 %i.bbm, -1
+  %3 = zext i32 %2 to i64                         ; 3 uses
   %i.bbq = getelementptr inbounds nuw i8, ptr %i.baz, i64 48
   %i.bbr = getelementptr inbounds nuw i8, ptr %i.baz, i64 40
   %i.bbs = load i64, ptr %i.bbr, align 8, !tbaa !178
-  %i.bbt = mul i64 %i.bbs, %2
-  %i.bbu = udiv i64 %2, %i.bbc                    ; 2 uses
+  %i.bbt = mul i64 %i.bbs, %3
+  %i.bbu = udiv i64 %3, %i.bbc                    ; 2 uses
   %i.bbv = udiv i64 %i.bbu, %i.bbd                ; 2 uses
   %i.bbw = urem i64 %i.bbv, %i.bbf
   %i.bbx = udiv i64 %i.bbv, %i.bbf
   %i.bby = getelementptr inbounds nuw i8, ptr %i.baz, i64 56
-  %i.bbz = urem i64 %2, %i.bbc
+  %i.bbz = urem i64 %3, %i.bbc
   %i.bca = urem i64 %i.bbu, %i.bbd
   %i.bcb = insertelement <2 x i64> poison, i64 %i.bbz, i64 0
   %i.bcc = insertelement <2 x i64> %i.bcb, i64 %i.bca, i64 1
@@ -5545,8 +5503,8 @@ _ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPK
   %.pre.i.i.i.i186 = load ptr, ptr %i.and, align 8, !tbaa !308
   br label %bb.ba
 
-bb.ba:                                            ; preds = %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit231, %3
-  %i.bdm = phi ptr [ %.pre.i.i.i.i186, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit231 ], [ %i.baz, %3 ] ; 2 uses
+bb.ba:                                            ; preds = %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit231, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183
+  %i.bdm = phi ptr [ %.pre.i.i.i.i186, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit231 ], [ %i.baz, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ] ; 2 uses
   %i.bdn = getelementptr inbounds nuw i8, ptr %i.bdm, i64 48
   %i.bdo = getelementptr inbounds nuw i8, ptr %i.bdm, i64 56
   %i.bdp = load <4 x i64>, ptr %i.bdo, align 8, !tbaa !40 ; 2 uses
@@ -5592,31 +5550,31 @@ _ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmP
   %.pre532 = load ptr, ptr %i.anf, align 8, !tbaa !97
   br label %_ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit187
 
-_ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit187: ; preds = %bb.ax, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229
-  %5 = phi ptr [ %i.bbo, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre532, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbo, %bb.ax ] ; 2 uses
-  %6 = phi ptr [ %i.bbi, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre531, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbi, %bb.ax ] ; 2 uses
-  %7 = phi i64 [ %i.bbf, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre530, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbf, %bb.ax ] ; 4 uses
-  %8 = phi i64 [ %i.bbd, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre528, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbd, %bb.ax ] ; 4 uses
-  %9 = phi i64 [ %i.bbc, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre526, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbc, %bb.ax ] ; 4 uses
-  %10 = phi ptr [ %i.baz, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i183 ], [ %.pre524, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.baz, %bb.ax ] ; 6 uses
+_ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit187: ; preds = %bb.ax, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229
+  %4 = phi ptr [ %.pre532, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbo, %bb.ax ] ; 2 uses
+  %5 = phi ptr [ %.pre531, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbi, %bb.ax ] ; 2 uses
+  %6 = phi i64 [ %.pre530, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbf, %bb.ax ] ; 4 uses
+  %7 = phi i64 [ %.pre528, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbd, %bb.ax ] ; 4 uses
+  %8 = phi i64 [ %.pre526, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.bbc, %bb.ax ] ; 4 uses
+  %9 = phi ptr [ %.pre524, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit229 ], [ %i.baz, %bb.ax ] ; 6 uses
   %i.bel = load double, ptr %i.bbp, align 8, !tbaa !49
   %i.bem = lshr i64 %i.bay, 2
-  %i.ben = mul i64 %7, %i.azo
+  %i.ben = mul i64 %6, %i.azo
   %i.beo = add i64 %i.ben, %i.azv
-  %i.bep = mul i64 %i.beo, %8
+  %i.bep = mul i64 %i.beo, %7
   %i.beq = add i64 %i.bep, %i.bai
-  %i.ber = mul i64 %i.beq, %9
+  %i.ber = mul i64 %i.beq, %8
   %i.bes = add i64 %i.ber, %i.bem                 ; 5 uses
   %i.bet = trunc i64 %i.bes to i32
   %i.beu = add i32 %i.bet, 1                      ; 3 uses
   %i.bev = load i32, ptr %i.anc, align 8, !tbaa !267
   %i.bew = and i32 %i.beu, %i.bev
   %i.bex = zext i32 %i.bew to i64                 ; 2 uses
-  %i.bey = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.bex ; 2 uses
+  %i.bey = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.bex ; 2 uses
   %i.bez = load i32, ptr %i.bey, align 4, !tbaa !306 ; 2 uses
   %i.bfa = lshr i32 %i.bez, 1                     ; 2 uses
   %i.bfb = icmp eq i32 %i.bfa, %i.beu
-  %i.bfc = getelementptr inbounds nuw [2048 x i8], ptr %5, i64 %i.bex ; 5 uses
+  %i.bfc = getelementptr inbounds nuw [2048 x i8], ptr %4, i64 %i.bex ; 5 uses
   br i1 %i.bfb, label %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178, label %bb.bc
 
 bb.bc:                                            ; preds = %_ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit187
@@ -5635,17 +5593,17 @@ bb.bd:                                            ; preds = %_ZN3zfp8internal5Ca
   br i1 %i.bfg, label %bb.be, label %bb.bg
 
 bb.be:                                            ; preds = %bb.bd
-  %i.bfh = getelementptr inbounds nuw i8, ptr %10, i64 48
-  %i.bfi = getelementptr inbounds nuw i8, ptr %10, i64 40
+  %i.bfh = getelementptr inbounds nuw i8, ptr %9, i64 48
+  %i.bfi = getelementptr inbounds nuw i8, ptr %9, i64 40
   %i.bfj = load i64, ptr %i.bfi, align 8, !tbaa !178
   %i.bfk = mul i64 %i.bfj, %i.bff
-  %i.bfl = udiv i64 %i.bff, %9                    ; 2 uses
-  %i.bfm = udiv i64 %i.bfl, %8                    ; 2 uses
-  %i.bfn = urem i64 %i.bfm, %7
-  %i.bfo = udiv i64 %i.bfm, %7
-  %i.bfp = getelementptr inbounds nuw i8, ptr %10, i64 56
-  %i.bfq = urem i64 %i.bff, %9
-  %i.bfr = urem i64 %i.bfl, %8
+  %i.bfl = udiv i64 %i.bff, %8                    ; 2 uses
+  %i.bfm = udiv i64 %i.bfl, %7                    ; 2 uses
+  %i.bfn = urem i64 %i.bfm, %6
+  %i.bfo = udiv i64 %i.bfm, %6
+  %i.bfp = getelementptr inbounds nuw i8, ptr %9, i64 56
+  %i.bfq = urem i64 %i.bff, %8
+  %i.bfr = urem i64 %i.bfl, %7
   %i.bfs = insertelement <2 x i64> poison, i64 %i.bfq, i64 0
   %i.bft = insertelement <2 x i64> %i.bfs, i64 %i.bfr, i64 1
   %i.bfu = shl nuw nsw <2 x i64> %i.bft, splat (i64 2)
@@ -5655,7 +5613,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.bfy = lshr <2 x i64> %i.bfx, splat (i64 62)
   %i.bfz = sub <2 x i64> zeroinitializer, %i.bfv
   %i.bga = and <2 x i64> %i.bfy, %i.bfz           ; 3 uses
-  %i.bgb = getelementptr inbounds nuw i8, ptr %10, i64 72
+  %i.bgb = getelementptr inbounds nuw i8, ptr %9, i64 72
   %i.bgc = insertelement <2 x i64> poison, i64 %i.bfn, i64 0
   %i.bgd = insertelement <2 x i64> %i.bgc, i64 %i.bfo, i64 1
   %i.bge = shl nuw nsw <2 x i64> %i.bgd, splat (i64 2)
@@ -5704,10 +5662,10 @@ _ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPK
   br label %bb.bg
 
 bb.bg:                                            ; preds = %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227, %bb.bd
-  %i.bhd = phi i64 [ %.pre538, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227 ], [ %7, %bb.bd ] ; 2 uses
-  %i.bhe = phi i64 [ %.pre536, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227 ], [ %8, %bb.bd ] ; 2 uses
-  %i.bhf = phi i64 [ %.pre534, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227 ], [ %9, %bb.bd ] ; 2 uses
-  %i.bhg = phi ptr [ %.pre.i.i.i.i181, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227 ], [ %10, %bb.bd ] ; 4 uses
+  %i.bhd = phi i64 [ %.pre538, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227 ], [ %6, %bb.bd ] ; 2 uses
+  %i.bhe = phi i64 [ %.pre536, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227 ], [ %7, %bb.bd ] ; 2 uses
+  %i.bhf = phi i64 [ %.pre534, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227 ], [ %8, %bb.bd ] ; 2 uses
+  %i.bhg = phi ptr [ %.pre.i.i.i.i181, %_ZN3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6encodeEmPKd.exit227 ], [ %9, %bb.bd ] ; 4 uses
   %i.bhh = getelementptr inbounds nuw i8, ptr %i.bhg, i64 48
   %i.bhi = getelementptr inbounds nuw i8, ptr %i.bhg, i64 40
   %i.bhj = load i64, ptr %i.bhi, align 8, !tbaa !178
@@ -5773,9 +5731,9 @@ _ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmP
   br label %_ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit182
 
 _ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit182: ; preds = %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit225
-  %i.bjd = phi ptr [ %5, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre541, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit225 ] ; 2 uses
-  %i.bje = phi ptr [ %6, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre540, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit225 ] ; 2 uses
-  %i.bjf = phi ptr [ %10, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre539, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit225 ] ; 9 uses
+  %i.bjd = phi ptr [ %4, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre541, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit225 ] ; 2 uses
+  %i.bje = phi ptr [ %5, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre540, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit225 ] ; 2 uses
+  %i.bjf = phi ptr [ %9, %_ZN3zfp8internal5CacheINS0_11BlockCache4IdNS0_11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE9CacheLineEE6accessERPSB_jb.exit.i.i.i.i178 ], [ %.pre539, %_ZNK3zfp8internal11BlockStore4IdNS_5codec4zfp4IdEENS_5index8implicitEE6decodeEmPd.exit225 ] ; 9 uses
   %i.bjg = and i64 %i.bay, 3
   %i.bjh = getelementptr inbounds nuw i8, ptr %i.bfc, i64 %.idx.i.i.i.i180
   %i.bji = getelementptr inbounds nuw [8 x i8], ptr %i.bjh, i64 %i.bak
@@ -5997,7 +5955,7 @@ _ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8imp
   %i.bpf = zext nneg i32 %i.bpe to i64            ; 2 uses
   %i.bpg = getelementptr inbounds nuw [4 x i8], ptr %i.bon, i64 %i.bpf ; 2 uses
   %i.bph = load i32, ptr %i.bpg, align 4, !tbaa !306, !noalias !781 ; 2 uses
-  %i.bpi = lshr i32 %i.bph, 1                     ; 2 uses
+  %i.bpi = lshr i32 %i.bph, 1
   %i.bpj = getelementptr inbounds nuw [2048 x i8], ptr %i.bom, i64 %i.bpf ; 5 uses
   store i32 3, ptr %i.bpg, align 4, !tbaa !39, !noalias !781
   %i.bpk = add nsw i32 %i.bpi, -1                 ; 2 uses
@@ -6006,10 +5964,8 @@ _ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8imp
   br i1 %.not.i.i.i.i188, label %_ZN3zfp8internal4dim49referenceINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3setEd.exit, label %bb.bo
 
 bb.bo:                                            ; preds = %_ZNK3zfp8internal4dim412const_handleINS_6array4IdNS_5codec4zfp4IdEENS_5index8implicitEEEE3getEv.exit195
-  %11 = icmp eq i32 %i.bpi, 1
   %i.bpm = trunc i32 %i.bph to i1
-  %12 = or i1 %11, %i.bpm
-  br i1 %12, label %bb.bp, label %bb.br
+  br i1 %i.bpm, label %bb.bp, label %bb.br
 
 bb.bp:                                            ; preds = %bb.bo
   %i.bpn = getelementptr inbounds nuw i8, ptr %i.bor, i64 48

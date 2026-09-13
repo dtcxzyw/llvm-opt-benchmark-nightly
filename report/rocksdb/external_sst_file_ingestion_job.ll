@@ -205,9 +205,9 @@ _ZN7rocksdb27ExternalSstFileIngestionJob22IngestedFileFitInLevelEPKNS_16Ingested
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 1832
   %.pre29 = load i32, ptr %.phi.trans.insert, align 8, !tbaa !568 ; 2 uses
   %.pre30 = add i32 %.pre29, -1
-  %9 = zext i32 %.pre30 to i64
-  %.not1726 = icmp sgt i32 %.pre29, 1
-  br i1 %.not1726, label %.lr.ph, label %.critedge21
+  %9 = icmp sgt i32 %.pre29, 1
+  %10 = zext i32 %.pre30 to i64
+  br i1 %9, label %.lr.ph, label %.critedge21
 
 .lr.ph:                                           ; preds = %_ZN7rocksdb27ExternalSstFileIngestionJob22IngestedFileFitInLevelEPKNS_16IngestedFileInfoEi.exit.preheader
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 2776
@@ -275,7 +275,7 @@ bb.d:                                             ; preds = %.critedge
 
 .critedge19:                                      ; preds = %bb.d, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %9
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %10
   br i1 %exitcond.not, label %.critedge21, label %bb.c, !llvm.loop !916
 
 bb.e:                                             ; preds = %.critedge

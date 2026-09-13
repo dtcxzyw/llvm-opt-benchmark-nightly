@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.dk, label %bb.p, label %bb.q
 
 ._crit_edge3345:                                  ; preds = %bb.l, %bb.p, %bb.n
-  %.sroa.09.1 = phi i64 [ %i.dm, %bb.p ], [ %.sroa.09.01733, %bb.n ], [ %.sroa.09.01733, %bb.l ] ; 29 uses
+  %.sroa.09.1 = phi i64 [ %i.dm, %bb.p ], [ %.sroa.09.01733, %bb.n ], [ %.sroa.09.01733, %bb.l ] ; 28 uses
   %.not32 = icmp eq i64 %i.cv, 0
   %brmerge = or i1 %.sroa.0.0, %.not32
   %brmerge.not = xor i1 %brmerge, true
@@ -240,10 +240,9 @@ bb.s:                                             ; preds = %_ZN14regex_automata
   %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.dp, i64 %i.dn ; 2 uses
   %i.dr = icmp ult i64 %.sroa.09.1, %i.an         ; 9 uses
   %i.ds = getelementptr i8, ptr %i.bs, i64 %.sroa.09.1 ; 26 uses
-  %i.dt = add i64 %.sroa.09.1, 1                  ; 29 uses
+  %i.dt = add i64 %.sroa.09.1, 1                  ; 28 uses
   %i.du = add i64 %.sroa.09.1, 2                  ; 4 uses
   %.not.i29.i.i = icmp eq i64 %i.du, 0            ; 3 uses
-  %6 = icmp ne i64 %i.dt, -1                      ; 3 uses
   %i.dv = icmp ult i64 %i.dt, %i.an               ; 24 uses
   %i.dw = getelementptr i8, ptr %i.bs, i64 %i.dt  ; 26 uses
   %i.dx = icmp eq i64 %i.dt, %i.an                ; 9 uses
@@ -646,8 +645,8 @@ _ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.e
   %i.kw = trunc nuw i8 %i.ia to i1
   br i1 %i.kw, label %.backedge, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit.i.i
 
-.backedge:                                        ; preds = %.thread3479..split275_crit_edge, %.split3478, %bb.ci, %bb.cm, %bb.ay, %bb.aw, %bb.at, %bb.ar, %bb.ap, %bb.bx, %bb.ca, %bb.av, %bb.ba, %bb.aq, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit97", %bb.cj, %.split, %.split275, %.split276, %.split277, %.split278, %.split279, %.split280, %.split281, %.split282, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit88, %.split283, %.split284, %.split285, %.split286, %.split287, %.split288, %.split289, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit
-  %.sroa.0.0.i.i.i.be = phi i32 [ %i.hr, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit ], [ %i.lu, %bb.cj ], [ %i.ld, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit97" ], [ %i.hr, %bb.ay ], [ %i.hr, %.split ], [ %i.hr, %.split275 ], [ %i.hr, %.split276 ], [ %i.hr, %.split277 ], [ %i.hr, %.split278 ], [ %i.hr, %.split279 ], [ %i.hr, %.split280 ], [ %i.hr, %.split281 ], [ %i.hr, %.split282 ], [ %i.hr, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit88 ], [ %i.hr, %.split283 ], [ %i.hr, %.split284 ], [ %i.hr, %.split285 ], [ %i.hr, %.split286 ], [ %i.hr, %.split287 ], [ %i.hr, %.split288 ], [ %i.hr, %.split289 ], [ %i.hr, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit ], [ %i.hr, %bb.aq ], [ %i.hr, %bb.ba ], [ %i.hr, %bb.av ], [ %i.hr, %bb.ca ], [ %i.hr, %bb.bx ], [ %i.hr, %bb.ap ], [ %i.hr, %bb.ar ], [ %i.hr, %bb.at ], [ %i.hr, %bb.aw ], [ %i.ln, %bb.cm ], [ %i.ln, %bb.ci ], [ %i.hr, %.split3478 ], [ %i.hr, %.thread3479..split275_crit_edge ] ; 3 uses
+.backedge:                                        ; preds = %.thread3479..split275_crit_edge, %.split3478, %bb.ci, %bb.cn, %bb.ay, %bb.aw, %bb.at, %bb.ar, %bb.ap, %bb.bx, %bb.ca, %bb.av, %bb.ba, %bb.aq, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit97", %bb.cj, %.split, %.split275, %.split276, %.split277, %.split278, %.split279, %.split280, %.split281, %.split282, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit88, %.split283, %.split284, %.split285, %.split286, %.split287, %.split288, %.split289, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit
+  %.sroa.0.0.i.i.i.be = phi i32 [ %i.hr, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit ], [ %i.lu, %bb.cj ], [ %i.ld, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit97" ], [ %i.hr, %bb.ay ], [ %i.hr, %.split ], [ %i.hr, %.split275 ], [ %i.hr, %.split276 ], [ %i.hr, %.split277 ], [ %i.hr, %.split278 ], [ %i.hr, %.split279 ], [ %i.hr, %.split280 ], [ %i.hr, %.split281 ], [ %i.hr, %.split282 ], [ %i.hr, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit88 ], [ %i.hr, %.split283 ], [ %i.hr, %.split284 ], [ %i.hr, %.split285 ], [ %i.hr, %.split286 ], [ %i.hr, %.split287 ], [ %i.hr, %.split288 ], [ %i.hr, %.split289 ], [ %i.hr, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit ], [ %i.hr, %bb.aq ], [ %i.hr, %bb.ba ], [ %i.hr, %bb.av ], [ %i.hr, %bb.ca ], [ %i.hr, %bb.bx ], [ %i.hr, %bb.ap ], [ %i.hr, %bb.ar ], [ %i.hr, %bb.at ], [ %i.hr, %bb.aw ], [ %i.ln, %bb.cn ], [ %i.ln, %bb.ci ], [ %i.hr, %.split3478 ], [ %i.hr, %.thread3479..split275_crit_edge ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   store i32 %.sroa.0.0.i.i.i.be, ptr %i.w, align 4, !noalias !386
@@ -726,16 +725,15 @@ bb.cl:                                            ; preds = %bb.ck
   store i64 %i.ly, ptr %.sroa.5248.0..sroa_idx, align 8, !noalias !362
   %i.me = add i64 %i.lz, 1
   store i64 %i.me, ptr %i.z, align 8, !alias.scope !391, !noalias !392
-  br i1 %.not.i29.i.i, label %bb.cn, label %bb.cm, !prof !8
+  br i1 %.not.i29.i.i, label %bb.cm, label %bb.cn, !prof !8
 
 bb.cm:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit98"
-  call void @llvm.assume(i1 %6)
-  store i64 %i.du, ptr %i.lx, align 8, !alias.scope !359, !noalias !390
-  br label %.backedge
-
-bb.cn:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit98"
   call void @_ZN4core6option13unwrap_failed17h02f41afc018838f2E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #22, !noalias !362
   unreachable
+
+bb.cn:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit98"
+  store i64 %i.du, ptr %i.lx, align 8, !alias.scope !359, !noalias !390
+  br label %.backedge
 
 _ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit.i.i: ; preds = %.thread3479..split275_crit_edge, %.thread3479, %bb.bs, %bb.bl, %bb.ay, %bb.at, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit, %bb.cf, %.split, %.split275, %.split276, %.split277, %.split278, %.split279, %.split280, %.split281, %.split282, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit88, %.split283, %.split284, %.split285, %.split286, %.split287, %.split288, %.split289, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit, %.split3478, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17hca03e678e97ceecbE.exit", %_ZN14regex_automata4util10sparse_set9SparseSet6insert17h12d8ae89b588d197E.exit, %bb.co
   %.pr = load i64, ptr %i.z, align 8, !alias.scope !356, !noalias !357 ; 2 uses
@@ -1139,8 +1137,8 @@ _ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.e
   %i.sy = trunc nuw i8 %i.qc to i1
   br i1 %i.sy, label %.backedge383, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit27.i.i
 
-.backedge383:                                     ; preds = %.thread3485..split300_crit_edge, %.split3484, %bb.eo, %bb.es, %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.eh, %bb.ei, %bb.do, %bb.dt, %bb.dl, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit60, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit142", %bb.ep, %.split299, %.split300, %.split301, %.split302, %.split303, %.split304, %.split305, %.split306, %.split307, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit126, %.split308, %.split309, %.split310, %.split311, %.split312, %.split313, %.split314, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit132
-  %.sroa.0.0.i23.i.i.be = phi i32 [ %i.pt, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit60 ], [ %i.tw, %bb.ep ], [ %i.tf, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit142" ], [ %i.pt, %bb.dr ], [ %i.pt, %.split299 ], [ %i.pt, %.split300 ], [ %i.pt, %.split301 ], [ %i.pt, %.split302 ], [ %i.pt, %.split303 ], [ %i.pt, %.split304 ], [ %i.pt, %.split305 ], [ %i.pt, %.split306 ], [ %i.pt, %.split307 ], [ %i.pt, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit126 ], [ %i.pt, %.split308 ], [ %i.pt, %.split309 ], [ %i.pt, %.split310 ], [ %i.pt, %.split311 ], [ %i.pt, %.split312 ], [ %i.pt, %.split313 ], [ %i.pt, %.split314 ], [ %i.pt, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit132 ], [ %i.pt, %bb.dl ], [ %i.pt, %bb.dt ], [ %i.pt, %bb.do ], [ %i.pt, %bb.ei ], [ %i.pt, %bb.eh ], [ %i.pt, %bb.dk ], [ %i.pt, %bb.dm ], [ %i.pt, %bb.dn ], [ %i.pt, %bb.dp ], [ %i.tp, %bb.es ], [ %i.tp, %bb.eo ], [ %i.pt, %.split3484 ], [ %i.pt, %.thread3485..split300_crit_edge ] ; 3 uses
+.backedge383:                                     ; preds = %.thread3485..split300_crit_edge, %.split3484, %bb.eo, %bb.et, %bb.dr, %bb.dp, %bb.dn, %bb.dm, %bb.dk, %bb.eh, %bb.ei, %bb.do, %bb.dt, %bb.dl, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit60, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit142", %bb.ep, %.split299, %.split300, %.split301, %.split302, %.split303, %.split304, %.split305, %.split306, %.split307, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit126, %.split308, %.split309, %.split310, %.split311, %.split312, %.split313, %.split314, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit132
+  %.sroa.0.0.i23.i.i.be = phi i32 [ %i.pt, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit60 ], [ %i.tw, %bb.ep ], [ %i.tf, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit142" ], [ %i.pt, %bb.dr ], [ %i.pt, %.split299 ], [ %i.pt, %.split300 ], [ %i.pt, %.split301 ], [ %i.pt, %.split302 ], [ %i.pt, %.split303 ], [ %i.pt, %.split304 ], [ %i.pt, %.split305 ], [ %i.pt, %.split306 ], [ %i.pt, %.split307 ], [ %i.pt, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit126 ], [ %i.pt, %.split308 ], [ %i.pt, %.split309 ], [ %i.pt, %.split310 ], [ %i.pt, %.split311 ], [ %i.pt, %.split312 ], [ %i.pt, %.split313 ], [ %i.pt, %.split314 ], [ %i.pt, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit132 ], [ %i.pt, %bb.dl ], [ %i.pt, %bb.dt ], [ %i.pt, %bb.do ], [ %i.pt, %bb.ei ], [ %i.pt, %bb.eh ], [ %i.pt, %bb.dk ], [ %i.pt, %bb.dm ], [ %i.pt, %bb.dn ], [ %i.pt, %bb.dp ], [ %i.tp, %bb.et ], [ %i.tp, %bb.eo ], [ %i.pt, %.split3484 ], [ %i.pt, %.thread3485..split300_crit_edge ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   store i32 %.sroa.0.0.i23.i.i.be, ptr %i.r, align 4, !noalias !430
@@ -1219,16 +1217,15 @@ bb.er:                                            ; preds = %bb.eq
   store i64 %i.ua, ptr %.sroa.5254.0..sroa_idx, align 8, !noalias !406
   %i.ug = add i64 %i.ub, 1
   store i64 %i.ug, ptr %i.z, align 8, !alias.scope !435, !noalias !436
-  br i1 %.not.i29.i.i, label %bb.et, label %bb.es, !prof !8
+  br i1 %.not.i29.i.i, label %bb.es, label %bb.et, !prof !8
 
 bb.es:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit143"
-  call void @llvm.assume(i1 %6)
-  store i64 %i.du, ptr %i.tz, align 8, !alias.scope !403, !noalias !434
-  br label %.backedge383
-
-bb.et:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit143"
   call void @_ZN4core6option13unwrap_failed17h02f41afc018838f2E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #22, !noalias !406
   unreachable
+
+bb.et:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit143"
+  store i64 %i.du, ptr %i.tz, align 8, !alias.scope !403, !noalias !434
+  br label %.backedge383
 
 _ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit27.i.i: ; preds = %.thread3485..split300_crit_edge, %.thread3485, %bb.ee, %bb.dr, %bb.dn, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit60, %bb.el, %.split299, %.split300, %.split301, %.split302, %.split303, %.split304, %.split305, %.split306, %.split307, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit126, %.split308, %.split309, %.split310, %.split311, %.split312, %.split313, %.split314, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit132, %.split3484, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17hca03e678e97ceecbE.exit113", %_ZN14regex_automata4util10sparse_set9SparseSet6insert17h12d8ae89b588d197E.exit45, %bb.eu
   %.pr292 = load i64, ptr %i.z, align 8, !alias.scope !401, !noalias !402 ; 2 uses
@@ -1632,8 +1629,8 @@ _ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.e
   %i.aan = trunc nuw i8 %i.yb to i1
   br i1 %i.aan, label %.backedge384, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit32.i.i
 
-.backedge384:                                     ; preds = %.split3490, %bb.gd, %bb.gh, %bb.ft, %bb.fs, %bb.fq, %bb.fz, %bb.fr, %bb.fp, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit63, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit183", %bb.ge, %.split323, %.split324, %.split325, %.split326, %.split327, %.split328, %.split329, %.split330, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit167, %.split331, %.split332, %.split333, %.split334, %.split335, %.split336, %.split337, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit173
-  %.sroa.0.0.i28.i.i.be = phi i32 [ %i.xs, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit63 ], [ %i.abl, %bb.ge ], [ %i.aau, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit183" ], [ %i.xs, %bb.ft ], [ %i.xs, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit173 ], [ %i.xs, %.split323 ], [ %i.xs, %.split324 ], [ %i.xs, %.split325 ], [ %i.xs, %.split326 ], [ %i.xs, %.split327 ], [ %i.xs, %.split328 ], [ %i.xs, %.split329 ], [ %i.xs, %.split330 ], [ %i.xs, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit167 ], [ %i.xs, %.split331 ], [ %i.xs, %.split332 ], [ %i.xs, %.split333 ], [ %i.xs, %.split334 ], [ %i.xs, %.split335 ], [ %i.xs, %.split336 ], [ %i.xs, %.split337 ], [ %i.xs, %bb.fp ], [ %i.xs, %bb.fr ], [ %i.xs, %bb.fz ], [ %i.xs, %bb.fq ], [ %i.xs, %bb.fs ], [ %i.abe, %bb.gh ], [ %i.abe, %bb.gd ], [ %i.xs, %.split3490 ] ; 3 uses
+.backedge384:                                     ; preds = %.split3490, %bb.gd, %bb.gi, %bb.ft, %bb.fs, %bb.fq, %bb.fz, %bb.fr, %bb.fp, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit63, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit183", %bb.ge, %.split323, %.split324, %.split325, %.split326, %.split327, %.split328, %.split329, %.split330, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit167, %.split331, %.split332, %.split333, %.split334, %.split335, %.split336, %.split337, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit173
+  %.sroa.0.0.i28.i.i.be = phi i32 [ %i.xs, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit63 ], [ %i.abl, %bb.ge ], [ %i.aau, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit183" ], [ %i.xs, %bb.ft ], [ %i.xs, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit173 ], [ %i.xs, %.split323 ], [ %i.xs, %.split324 ], [ %i.xs, %.split325 ], [ %i.xs, %.split326 ], [ %i.xs, %.split327 ], [ %i.xs, %.split328 ], [ %i.xs, %.split329 ], [ %i.xs, %.split330 ], [ %i.xs, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit167 ], [ %i.xs, %.split331 ], [ %i.xs, %.split332 ], [ %i.xs, %.split333 ], [ %i.xs, %.split334 ], [ %i.xs, %.split335 ], [ %i.xs, %.split336 ], [ %i.xs, %.split337 ], [ %i.xs, %bb.fp ], [ %i.xs, %bb.fr ], [ %i.xs, %bb.fz ], [ %i.xs, %bb.fq ], [ %i.xs, %bb.fs ], [ %i.abe, %bb.gi ], [ %i.abe, %bb.gd ], [ %i.xs, %.split3490 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store i32 %.sroa.0.0.i28.i.i.be, ptr %i.m, align 4, !noalias !474
@@ -1712,16 +1709,15 @@ bb.gg:                                            ; preds = %bb.gf
   store i64 %i.abp, ptr %.sroa.5260.0..sroa_idx, align 8, !noalias !450
   %i.abv = add i64 %i.abq, 1
   store i64 %i.abv, ptr %i.z, align 8, !alias.scope !479, !noalias !480
-  br i1 %.not.i29.i.i, label %bb.gi, label %bb.gh, !prof !8
+  br i1 %.not.i29.i.i, label %bb.gh, label %bb.gi, !prof !8
 
 bb.gh:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit184"
-  call void @llvm.assume(i1 %6)
-  store i64 %i.du, ptr %i.abo, align 8, !alias.scope !447, !noalias !478
-  br label %.backedge384
-
-bb.gi:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit184"
   call void @_ZN4core6option13unwrap_failed17h02f41afc018838f2E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #22, !noalias !450
   unreachable
+
+bb.gi:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit184"
+  store i64 %i.du, ptr %i.abo, align 8, !alias.scope !447, !noalias !478
+  br label %.backedge384
 
 _ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit32.i.i: ; preds = %bb.fw, %bb.fo, %bb.ft, %bb.fq, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit63, %bb.ga, %.split323, %.split324, %.split325, %.split326, %.split327, %.split328, %.split329, %.split330, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit167, %.split331, %.split332, %.split333, %.split334, %.split335, %.split336, %.split337, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit173, %.split3490, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17hca03e678e97ceecbE.exit154", %_ZN14regex_automata4util10sparse_set9SparseSet6insert17h12d8ae89b588d197E.exit50, %bb.gj
   %.pr315 = load i64, ptr %i.z, align 8, !alias.scope !445, !noalias !446 ; 2 uses
@@ -1806,7 +1802,6 @@ bb.gp:                                            ; preds = %_ZN14regex_automata
 .lr.ph1696:                                       ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit190"
   %i.acp = add i64 %.sroa.09.1, 1                 ; 2 uses
   %.not.i = icmp eq i64 %i.acp, 0
-  %7 = icmp ne i64 %.sroa.09.1, -1
   %i.acq = icmp ult i64 %.sroa.09.1, %i.an        ; 9 uses
   %i.acr = getelementptr i8, ptr %i.bs, i64 %.sroa.09.1 ; 10 uses
   %.not.i223 = icmp eq i64 %.sroa.09.1, 0         ; 9 uses
@@ -2209,8 +2204,8 @@ _ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.e
   %i.aim = trunc nuw i8 %i.afq to i1
   br i1 %i.aim, label %.backedge388, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit
 
-.backedge388:                                     ; preds = %.thread3497..split350_crit_edge, %.split3496, %bb.iy, %bb.jc, %bb.ho, %bb.hm, %bb.hj, %bb.hh, %bb.hf, %bb.in, %bb.iq, %bb.hl, %bb.hq, %bb.hg, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit66, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit226", %bb.iz, %.split349, %.split350, %.split351, %.split352, %.split353, %.split354, %.split355, %.split356, %.split357, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit210, %.split358, %.split359, %.split360, %.split361, %.split362, %.split363, %.split364, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit216
-  %.sroa.0.0.i.be = phi i32 [ %i.afh, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit66 ], [ %i.ajk, %bb.iz ], [ %i.ait, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit226" ], [ %i.afh, %bb.ho ], [ %i.afh, %.split349 ], [ %i.afh, %.split350 ], [ %i.afh, %.split351 ], [ %i.afh, %.split352 ], [ %i.afh, %.split353 ], [ %i.afh, %.split354 ], [ %i.afh, %.split355 ], [ %i.afh, %.split356 ], [ %i.afh, %.split357 ], [ %i.afh, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit210 ], [ %i.afh, %.split358 ], [ %i.afh, %.split359 ], [ %i.afh, %.split360 ], [ %i.afh, %.split361 ], [ %i.afh, %.split362 ], [ %i.afh, %.split363 ], [ %i.afh, %.split364 ], [ %i.afh, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit216 ], [ %i.afh, %bb.hg ], [ %i.afh, %bb.hq ], [ %i.afh, %bb.hl ], [ %i.afh, %bb.iq ], [ %i.afh, %bb.in ], [ %i.afh, %bb.hf ], [ %i.afh, %bb.hh ], [ %i.afh, %bb.hj ], [ %i.afh, %bb.hm ], [ %i.ajd, %bb.jc ], [ %i.ajd, %bb.iy ], [ %i.afh, %.split3496 ], [ %i.afh, %.thread3497..split350_crit_edge ] ; 3 uses
+.backedge388:                                     ; preds = %.thread3497..split350_crit_edge, %.split3496, %bb.iy, %bb.jd, %bb.ho, %bb.hm, %bb.hj, %bb.hh, %bb.hf, %bb.in, %bb.iq, %bb.hl, %bb.hq, %bb.hg, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit66, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit226", %bb.iz, %.split349, %.split350, %.split351, %.split352, %.split353, %.split354, %.split355, %.split356, %.split357, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit210, %.split358, %.split359, %.split360, %.split361, %.split362, %.split363, %.split364, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit216
+  %.sroa.0.0.i.be = phi i32 [ %i.afh, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit66 ], [ %i.ajk, %bb.iz ], [ %i.ait, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit226" ], [ %i.afh, %bb.ho ], [ %i.afh, %.split349 ], [ %i.afh, %.split350 ], [ %i.afh, %.split351 ], [ %i.afh, %.split352 ], [ %i.afh, %.split353 ], [ %i.afh, %.split354 ], [ %i.afh, %.split355 ], [ %i.afh, %.split356 ], [ %i.afh, %.split357 ], [ %i.afh, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit210 ], [ %i.afh, %.split358 ], [ %i.afh, %.split359 ], [ %i.afh, %.split360 ], [ %i.afh, %.split361 ], [ %i.afh, %.split362 ], [ %i.afh, %.split363 ], [ %i.afh, %.split364 ], [ %i.afh, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit216 ], [ %i.afh, %bb.hg ], [ %i.afh, %bb.hq ], [ %i.afh, %bb.hl ], [ %i.afh, %bb.iq ], [ %i.afh, %bb.in ], [ %i.afh, %bb.hf ], [ %i.afh, %bb.hh ], [ %i.afh, %bb.hj ], [ %i.afh, %bb.hm ], [ %i.ajd, %bb.jd ], [ %i.ajd, %bb.iy ], [ %i.afh, %.split3496 ], [ %i.afh, %.thread3497..split350_crit_edge ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store i32 %.sroa.0.0.i.be, ptr %i.h, align 4, !noalias !521
@@ -2289,16 +2284,15 @@ bb.jb:                                            ; preds = %bb.ja
   store i64 %i.ajo, ptr %.sroa.5233.0..sroa_idx, align 8, !noalias !497
   %i.aju = add i64 %i.ajp, 1
   store i64 %i.aju, ptr %i.z, align 8, !alias.scope !526, !noalias !527
-  br i1 %.not.i, label %bb.jd, label %bb.jc, !prof !8
+  br i1 %.not.i, label %bb.jc, label %bb.jd, !prof !8
 
 bb.jc:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit227"
-  call void @llvm.assume(i1 %7)
-  store i64 %i.acp, ptr %i.ajn, align 8, !alias.scope !494, !noalias !525
-  br label %.backedge388
-
-bb.jd:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit227"
   call void @_ZN4core6option13unwrap_failed17h02f41afc018838f2E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #22, !noalias !497
   unreachable
+
+bb.jd:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit227"
+  store i64 %i.acp, ptr %i.ajn, align 8, !alias.scope !494, !noalias !525
+  br label %.backedge388
 
 _ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit: ; preds = %.thread3497..split350_crit_edge, %.thread3497, %bb.ii, %bb.ib, %bb.ho, %bb.hj, %bb.iv, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit66, %.split349, %.split350, %.split351, %.split352, %.split353, %.split354, %.split355, %.split356, %.split357, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit210, %.split358, %.split359, %.split360, %.split361, %.split362, %.split363, %.split364, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit216, %.split3496, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17hca03e678e97ceecbE.exit197", %_ZN14regex_automata4util10sparse_set9SparseSet6insert17h12d8ae89b588d197E.exit55, %bb.je
   %.pr342 = load i64, ptr %i.z, align 8, !alias.scope !489, !noalias !493 ; 2 uses
@@ -2702,10 +2696,9 @@ bb.ca:                                            ; preds = %bb.by
   %i.kb = icmp ult i64 %.sroa.0.02381422, %i.am   ; 10 uses
   %i.kc = icmp eq i64 %.sroa.0.02381422, %i.am
   %i.kd = getelementptr i8, ptr %i.bv, i64 %.sroa.0.02381422 ; 27 uses
-  %i.ke = add i64 %.sroa.0.02381422, 1            ; 27 uses
+  %i.ke = add i64 %.sroa.0.02381422, 1            ; 26 uses
   %i.kf = add i64 %.sroa.0.02381422, 2            ; 4 uses
   %.not.i29.i = icmp eq i64 %i.kf, 0              ; 3 uses
-  %4 = icmp ne i64 %i.ke, -1                      ; 3 uses
   %i.kg = icmp ult i64 %i.ke, %i.am               ; 24 uses
   %i.kh = getelementptr i8, ptr %i.bv, i64 %i.ke  ; 26 uses
   %i.ki = icmp eq i64 %i.ke, %i.am                ; 9 uses
@@ -3108,8 +3101,8 @@ _ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.e
   %i.qz = trunc nuw i8 %i.od to i1
   br i1 %i.qz, label %.backedge, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit.i
 
-.backedge:                                        ; preds = %.thread2861..split280_crit_edge, %.split2860, %bb.eo, %bb.es, %bb.de, %bb.dc, %bb.cz, %bb.cx, %bb.cv, %bb.ed, %bb.eg, %bb.db, %bb.dg, %bb.cw, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit118", %bb.ep, %.split279, %.split280, %.split281, %.split282, %.split283, %.split284, %.split285, %.split286, %.split287, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit102, %.split288, %.split289, %.split290, %.split291, %.split292, %.split293, %.split294, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit108
-  %.sroa.0.0.i.i.be = phi i32 [ %i.nu, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit ], [ %i.rx, %bb.ep ], [ %i.rg, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit118" ], [ %i.nu, %bb.de ], [ %i.nu, %.split279 ], [ %i.nu, %.split280 ], [ %i.nu, %.split281 ], [ %i.nu, %.split282 ], [ %i.nu, %.split283 ], [ %i.nu, %.split284 ], [ %i.nu, %.split285 ], [ %i.nu, %.split286 ], [ %i.nu, %.split287 ], [ %i.nu, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit102 ], [ %i.nu, %.split288 ], [ %i.nu, %.split289 ], [ %i.nu, %.split290 ], [ %i.nu, %.split291 ], [ %i.nu, %.split292 ], [ %i.nu, %.split293 ], [ %i.nu, %.split294 ], [ %i.nu, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit108 ], [ %i.nu, %bb.cw ], [ %i.nu, %bb.dg ], [ %i.nu, %bb.db ], [ %i.nu, %bb.eg ], [ %i.nu, %bb.ed ], [ %i.nu, %bb.cv ], [ %i.nu, %bb.cx ], [ %i.nu, %bb.cz ], [ %i.nu, %bb.dc ], [ %i.rq, %bb.es ], [ %i.rq, %bb.eo ], [ %i.nu, %.split2860 ], [ %i.nu, %.thread2861..split280_crit_edge ] ; 3 uses
+.backedge:                                        ; preds = %.thread2861..split280_crit_edge, %.split2860, %bb.eo, %bb.et, %bb.de, %bb.dc, %bb.cz, %bb.cx, %bb.cv, %bb.ed, %bb.eg, %bb.db, %bb.dg, %bb.cw, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit118", %bb.ep, %.split279, %.split280, %.split281, %.split282, %.split283, %.split284, %.split285, %.split286, %.split287, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit102, %.split288, %.split289, %.split290, %.split291, %.split292, %.split293, %.split294, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit108
+  %.sroa.0.0.i.i.be = phi i32 [ %i.nu, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit ], [ %i.rx, %bb.ep ], [ %i.rg, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit118" ], [ %i.nu, %bb.de ], [ %i.nu, %.split279 ], [ %i.nu, %.split280 ], [ %i.nu, %.split281 ], [ %i.nu, %.split282 ], [ %i.nu, %.split283 ], [ %i.nu, %.split284 ], [ %i.nu, %.split285 ], [ %i.nu, %.split286 ], [ %i.nu, %.split287 ], [ %i.nu, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit102 ], [ %i.nu, %.split288 ], [ %i.nu, %.split289 ], [ %i.nu, %.split290 ], [ %i.nu, %.split291 ], [ %i.nu, %.split292 ], [ %i.nu, %.split293 ], [ %i.nu, %.split294 ], [ %i.nu, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit108 ], [ %i.nu, %bb.cw ], [ %i.nu, %bb.dg ], [ %i.nu, %bb.db ], [ %i.nu, %bb.eg ], [ %i.nu, %bb.ed ], [ %i.nu, %bb.cv ], [ %i.nu, %bb.cx ], [ %i.nu, %bb.cz ], [ %i.nu, %bb.dc ], [ %i.rq, %bb.et ], [ %i.rq, %bb.eo ], [ %i.nu, %.split2860 ], [ %i.nu, %.thread2861..split280_crit_edge ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   store i32 %.sroa.0.0.i.i.be, ptr %i.w, align 4, !noalias !929
@@ -3188,16 +3181,15 @@ bb.er:                                            ; preds = %bb.eq
   store i64 %i.sb, ptr %.sroa.5225.0..sroa_idx, align 8, !noalias !905
   %i.sh = add i64 %i.sc, 1
   store i64 %i.sh, ptr %i.z, align 8, !alias.scope !934, !noalias !935
-  br i1 %.not.i29.i, label %bb.et, label %bb.es, !prof !8
+  br i1 %.not.i29.i, label %bb.es, label %bb.et, !prof !8
 
 bb.es:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit119"
-  call void @llvm.assume(i1 %4)
-  store i64 %i.kf, ptr %i.sa, align 8, !alias.scope !902, !noalias !933
-  br label %.backedge
-
-bb.et:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit119"
   call void @_ZN4core6option13unwrap_failed17h02f41afc018838f2E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #22, !noalias !905
   unreachable
+
+bb.et:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit119"
+  store i64 %i.kf, ptr %i.sa, align 8, !alias.scope !902, !noalias !933
+  br label %.backedge
 
 _ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit.i: ; preds = %.thread2861..split280_crit_edge, %.thread2861, %bb.dy, %bb.dr, %bb.de, %bb.cz, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit, %bb.el, %.split279, %.split280, %.split281, %.split282, %.split283, %.split284, %.split285, %.split286, %.split287, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit102, %.split288, %.split289, %.split290, %.split291, %.split292, %.split293, %.split294, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit108, %.split2860, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17hca03e678e97ceecbE.exit89", %_ZN14regex_automata4util10sparse_set9SparseSet6insert17h12d8ae89b588d197E.exit, %bb.eu
   %.pr272 = load i64, ptr %i.z, align 8, !alias.scope !899, !noalias !900 ; 2 uses
@@ -3601,8 +3593,8 @@ _ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.e
   %i.zb = trunc nuw i8 %i.wf to i1
   br i1 %i.zb, label %.backedge366, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit27.i
 
-.backedge366:                                     ; preds = %.thread2867..split305_crit_edge, %.split2866, %bb.gu, %bb.gy, %bb.fx, %bb.fv, %bb.ft, %bb.fs, %bb.fq, %bb.gn, %bb.go, %bb.fu, %bb.fz, %bb.fr, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit43, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit163", %bb.gv, %.split304, %.split305, %.split306, %.split307, %.split308, %.split309, %.split310, %.split311, %.split312, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit147, %.split313, %.split314, %.split315, %.split316, %.split317, %.split318, %.split319, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit153
-  %.sroa.0.0.i23.i.be = phi i32 [ %i.vw, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit43 ], [ %i.zz, %bb.gv ], [ %i.zi, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit163" ], [ %i.vw, %bb.fx ], [ %i.vw, %.split304 ], [ %i.vw, %.split305 ], [ %i.vw, %.split306 ], [ %i.vw, %.split307 ], [ %i.vw, %.split308 ], [ %i.vw, %.split309 ], [ %i.vw, %.split310 ], [ %i.vw, %.split311 ], [ %i.vw, %.split312 ], [ %i.vw, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit147 ], [ %i.vw, %.split313 ], [ %i.vw, %.split314 ], [ %i.vw, %.split315 ], [ %i.vw, %.split316 ], [ %i.vw, %.split317 ], [ %i.vw, %.split318 ], [ %i.vw, %.split319 ], [ %i.vw, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit153 ], [ %i.vw, %bb.fr ], [ %i.vw, %bb.fz ], [ %i.vw, %bb.fu ], [ %i.vw, %bb.go ], [ %i.vw, %bb.gn ], [ %i.vw, %bb.fq ], [ %i.vw, %bb.fs ], [ %i.vw, %bb.ft ], [ %i.vw, %bb.fv ], [ %i.zs, %bb.gy ], [ %i.zs, %bb.gu ], [ %i.vw, %.split2866 ], [ %i.vw, %.thread2867..split305_crit_edge ] ; 3 uses
+.backedge366:                                     ; preds = %.thread2867..split305_crit_edge, %.split2866, %bb.gu, %bb.gz, %bb.fx, %bb.fv, %bb.ft, %bb.fs, %bb.fq, %bb.gn, %bb.go, %bb.fu, %bb.fz, %bb.fr, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit43, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit163", %bb.gv, %.split304, %.split305, %.split306, %.split307, %.split308, %.split309, %.split310, %.split311, %.split312, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit147, %.split313, %.split314, %.split315, %.split316, %.split317, %.split318, %.split319, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit153
+  %.sroa.0.0.i23.i.be = phi i32 [ %i.vw, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit43 ], [ %i.zz, %bb.gv ], [ %i.zi, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit163" ], [ %i.vw, %bb.fx ], [ %i.vw, %.split304 ], [ %i.vw, %.split305 ], [ %i.vw, %.split306 ], [ %i.vw, %.split307 ], [ %i.vw, %.split308 ], [ %i.vw, %.split309 ], [ %i.vw, %.split310 ], [ %i.vw, %.split311 ], [ %i.vw, %.split312 ], [ %i.vw, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit147 ], [ %i.vw, %.split313 ], [ %i.vw, %.split314 ], [ %i.vw, %.split315 ], [ %i.vw, %.split316 ], [ %i.vw, %.split317 ], [ %i.vw, %.split318 ], [ %i.vw, %.split319 ], [ %i.vw, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit153 ], [ %i.vw, %bb.fr ], [ %i.vw, %bb.fz ], [ %i.vw, %bb.fu ], [ %i.vw, %bb.go ], [ %i.vw, %bb.gn ], [ %i.vw, %bb.fq ], [ %i.vw, %bb.fs ], [ %i.vw, %bb.ft ], [ %i.vw, %bb.fv ], [ %i.zs, %bb.gz ], [ %i.zs, %bb.gu ], [ %i.vw, %.split2866 ], [ %i.vw, %.thread2867..split305_crit_edge ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   store i32 %.sroa.0.0.i23.i.be, ptr %i.r, align 4, !noalias !973
@@ -3681,16 +3673,15 @@ bb.gx:                                            ; preds = %bb.gw
   store i64 %i.aad, ptr %.sroa.5231.0..sroa_idx, align 8, !noalias !949
   %i.aaj = add i64 %i.aae, 1
   store i64 %i.aaj, ptr %i.z, align 8, !alias.scope !978, !noalias !979
-  br i1 %.not.i29.i, label %bb.gz, label %bb.gy, !prof !8
+  br i1 %.not.i29.i, label %bb.gy, label %bb.gz, !prof !8
 
 bb.gy:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit164"
-  call void @llvm.assume(i1 %4)
-  store i64 %i.kf, ptr %i.aac, align 8, !alias.scope !946, !noalias !977
-  br label %.backedge366
-
-bb.gz:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit164"
   call void @_ZN4core6option13unwrap_failed17h02f41afc018838f2E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #22, !noalias !949
   unreachable
+
+bb.gz:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit164"
+  store i64 %i.kf, ptr %i.aac, align 8, !alias.scope !946, !noalias !977
+  br label %.backedge366
 
 _ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit27.i: ; preds = %.thread2867..split305_crit_edge, %.thread2867, %bb.gk, %bb.fx, %bb.ft, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit43, %bb.gr, %.split304, %.split305, %.split306, %.split307, %.split308, %.split309, %.split310, %.split311, %.split312, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit147, %.split313, %.split314, %.split315, %.split316, %.split317, %.split318, %.split319, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit153, %.split2866, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17hca03e678e97ceecbE.exit134", %_ZN14regex_automata4util10sparse_set9SparseSet6insert17h12d8ae89b588d197E.exit28, %bb.ha
   %.pr297 = load i64, ptr %i.z, align 8, !alias.scope !944, !noalias !945 ; 2 uses
@@ -4094,8 +4085,8 @@ _ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.e
   %i.agq = trunc nuw i8 %i.aee to i1
   br i1 %i.agq, label %.backedge367, label %_ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit32.i
 
-.backedge367:                                     ; preds = %.split2872, %bb.ij, %bb.in, %bb.hz, %bb.hy, %bb.hw, %bb.if, %bb.hx, %bb.hv, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit46, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit204", %bb.ik, %.split328, %.split329, %.split330, %.split331, %.split332, %.split333, %.split334, %.split335, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit188, %.split336, %.split337, %.split338, %.split339, %.split340, %.split341, %.split342, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit194
-  %.sroa.0.0.i28.i.be = phi i32 [ %i.adv, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit46 ], [ %i.aho, %bb.ik ], [ %i.agx, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit204" ], [ %i.adv, %bb.hz ], [ %i.adv, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit194 ], [ %i.adv, %.split328 ], [ %i.adv, %.split329 ], [ %i.adv, %.split330 ], [ %i.adv, %.split331 ], [ %i.adv, %.split332 ], [ %i.adv, %.split333 ], [ %i.adv, %.split334 ], [ %i.adv, %.split335 ], [ %i.adv, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit188 ], [ %i.adv, %.split336 ], [ %i.adv, %.split337 ], [ %i.adv, %.split338 ], [ %i.adv, %.split339 ], [ %i.adv, %.split340 ], [ %i.adv, %.split341 ], [ %i.adv, %.split342 ], [ %i.adv, %bb.hv ], [ %i.adv, %bb.hx ], [ %i.adv, %bb.if ], [ %i.adv, %bb.hw ], [ %i.adv, %bb.hy ], [ %i.ahh, %bb.in ], [ %i.ahh, %bb.ij ], [ %i.adv, %.split2872 ] ; 3 uses
+.backedge367:                                     ; preds = %.split2872, %bb.ij, %bb.io, %bb.hz, %bb.hy, %bb.hw, %bb.if, %bb.hx, %bb.hv, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit46, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit204", %bb.ik, %.split328, %.split329, %.split330, %.split331, %.split332, %.split333, %.split334, %.split335, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit188, %.split336, %.split337, %.split338, %.split339, %.split340, %.split341, %.split342, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit194
+  %.sroa.0.0.i28.i.be = phi i32 [ %i.adv, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit46 ], [ %i.aho, %bb.ik ], [ %i.agx, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit204" ], [ %i.adv, %bb.hz ], [ %i.adv, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit194 ], [ %i.adv, %.split328 ], [ %i.adv, %.split329 ], [ %i.adv, %.split330 ], [ %i.adv, %.split331 ], [ %i.adv, %.split332 ], [ %i.adv, %.split333 ], [ %i.adv, %.split334 ], [ %i.adv, %.split335 ], [ %i.adv, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit188 ], [ %i.adv, %.split336 ], [ %i.adv, %.split337 ], [ %i.adv, %.split338 ], [ %i.adv, %.split339 ], [ %i.adv, %.split340 ], [ %i.adv, %.split341 ], [ %i.adv, %.split342 ], [ %i.adv, %bb.hv ], [ %i.adv, %bb.hx ], [ %i.adv, %bb.if ], [ %i.adv, %bb.hw ], [ %i.adv, %bb.hy ], [ %i.ahh, %bb.io ], [ %i.ahh, %bb.ij ], [ %i.adv, %.split2872 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store i32 %.sroa.0.0.i28.i.be, ptr %i.m, align 4, !noalias !1017
@@ -4174,16 +4165,15 @@ bb.im:                                            ; preds = %bb.il
   store i64 %i.ahs, ptr %.sroa.5237.0..sroa_idx, align 8, !noalias !993
   %i.ahy = add i64 %i.aht, 1
   store i64 %i.ahy, ptr %i.z, align 8, !alias.scope !1022, !noalias !1023
-  br i1 %.not.i29.i, label %bb.io, label %bb.in, !prof !8
+  br i1 %.not.i29.i, label %bb.in, label %bb.io, !prof !8
 
 bb.in:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit205"
-  call void @llvm.assume(i1 %4)
-  store i64 %i.kf, ptr %i.ahr, align 8, !alias.scope !990, !noalias !1021
-  br label %.backedge367
-
-bb.io:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit205"
   call void @_ZN4core6option13unwrap_failed17h02f41afc018838f2E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #22, !noalias !993
   unreachable
+
+bb.io:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17ha59b8aa0743de67cE.exit205"
+  store i64 %i.kf, ptr %i.ahr, align 8, !alias.scope !990, !noalias !1021
+  br label %.backedge367
 
 _ZN14regex_automata3nfa8thompson6pikevm6PikeVM23epsilon_closure_explore17h9855dbf54da36f22E.exit32.i: ; preds = %bb.ic, %bb.hu, %bb.hz, %bb.hw, %_ZN14regex_automata4util4look11LookMatcher14matches_inline17h3cf8da5effc7e347E.exit46, %bb.ig, %.split328, %.split329, %.split330, %.split331, %.split332, %.split333, %.split334, %.split335, %_ZN14regex_automata4util4look11LookMatcher13is_word_ascii17hef9e29c2567442d9E.exit188, %.split336, %.split337, %.split338, %.split339, %.split340, %.split341, %.split342, %_ZN14regex_automata4util4look11LookMatcher19is_word_start_ascii17h56099b943c555d75E.exit194, %.split2872, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$15copy_from_slice17hca03e678e97ceecbE.exit175", %_ZN14regex_automata4util10sparse_set9SparseSet6insert17h12d8ae89b588d197E.exit33, %bb.ip
   %.pr320 = load i64, ptr %i.z, align 8, !alias.scope !988, !noalias !989 ; 2 uses

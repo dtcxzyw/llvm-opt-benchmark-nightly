@@ -202,17 +202,15 @@ vec.epilog.middle.block361:                       ; preds = %vec.epilog.vector.b
   br i1 %exitcond228.not, label %._crit_edge194, label %.lr.ph193, !llvm.loop !23
 
 ._crit_edge194:                                   ; preds = %.lr.ph193, %vec.epilog.middle.block361, %middle.block347
-  %i.bz = add nsw i32 %3, -1                      ; 8 uses
+  %i.bz = add nsw i32 %3, -1                      ; 7 uses
   %.not319 = icmp eq i32 %3, 1
   br i1 %.not319, label %.preheader.split.preheader, label %.lr.ph197.preheader
 
 .lr.ph197.preheader:                              ; preds = %._crit_edge194
   %i.ca = zext i32 %i.bz to i64                   ; 6 uses
-  %4 = icmp ne i32 %i.bz, 0
-  %.neg = sext i1 %4 to i64
   %i.cb = zext nneg i32 %3 to i64
-  %i.cc = add nsw i64 %.neg, %i.cb                ; 3 uses
-  %min.iters.check379 = icmp ult i64 %i.cc, 24
+  %i.cc = add nsw i64 %i.cb, -1                   ; 2 uses
+  %min.iters.check379 = icmp ult i32 %3, 25
   br i1 %min.iters.check379, label %.lr.ph197.preheader514, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph197.preheader

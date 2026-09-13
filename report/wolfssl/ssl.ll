@@ -205,9 +205,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.d, label %.preheader
 
 .preheader:                                       ; preds = %bb.c
-  %.not36 = icmp eq i64 %2, 1
+  %.not36 = icmp ne i64 %2, 1
   %i.l = add i64 %2, -1
-  %6 = select i1 %.not36, i64 1, i64 %i.l
   br label %.lr.ph
 
 bb.d:                                             ; preds = %bb.c
@@ -216,8 +215,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph
   %i.n = add nuw i64 %.047, 1                     ; 2 uses
-  %exitcond.not = icmp eq i64 %i.n, %6
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !286
+  %6 = icmp ugt i64 %i.l, %i.n
+  %7 = select i1 %.not36, i1 %6, i1 false
+  br i1 %7, label %.lr.ph, label %.loopexit, !llvm.loop !286
 
 .lr.ph:                                           ; preds = %.preheader, %bb.e
   %.047 = phi i64 [ %i.n, %bb.e ], [ 0, %.preheader ] ; 2 uses

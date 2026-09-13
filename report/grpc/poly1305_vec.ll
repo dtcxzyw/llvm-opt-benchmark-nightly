@@ -131,15 +131,15 @@ bb.i:                                             ; preds = %bb.h, %bb.b
   %.163 = phi ptr [ %1, %bb.b ], [ %.062, %bb.h ] ; 3 uses
   %.1 = phi i64 [ %2, %bb.b ], [ %.0, %bb.h ]     ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 376 ; 5 uses
-  %i.y = load i64, ptr %i.x, align 8, !tbaa !15   ; 4 uses
+  %i.y = load i64, ptr %i.x, align 8, !tbaa !15   ; 5 uses
   %.not69 = icmp eq i64 %i.y, 0
   br i1 %.not69, label %bb.m, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.z = sub i64 64, %i.y
-  %i.aa = tail call noundef i64 @llvm.umin.i64(i64 %i.z, i64 range(i64 1, 0) %.1) ; 5 uses
+  %i.aa = tail call noundef i64 @llvm.umin.i64(i64 %i.z, i64 range(i64 1, 0) %.1) ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.d, i64 384 ; 2 uses
-  %i.ac = icmp eq i64 %i.aa, 0
+  %i.ac = icmp eq i64 %i.y, 64
   br i1 %i.ac, label %_ZL14OPENSSL_memcpyPvPKvm.exit71, label %bb.k
 
 bb.k:                                             ; preds = %bb.j

@@ -204,8 +204,8 @@ bb.w:                                             ; preds = %bb.v
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !12
 
 .loopexit:                                        ; preds = %.lr.ph, %.thread, %bb.u
+  %3 = phi i1 [ true, %.thread ], [ true, %bb.u ], [ false, %.lr.ph ] ; 18 uses
   %.0281460 = phi i64 [ 0, %.thread ], [ %i.ar, %bb.u ], [ %i.ar, %.lr.ph ] ; 25 uses
-  %.1280 = phi i1 [ true, %.thread ], [ true, %bb.u ], [ false, %.lr.ph ] ; 18 uses
   %i.bd = load ptr, ptr @stdout, align 8, !tbaa !11
   %i.be = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bd, ptr noundef nonnull @.str.10, i64 noundef %.0281460) #10 ; 0 uses
   %i.bf = call i32 @H5F_block_read(ptr noundef nonnull %i.ai, i32 noundef 1, i64 noundef %.0281460, i64 noundef 8, ptr noundef nonnull %i.b) #10
@@ -263,7 +263,7 @@ bb.ae:                                            ; preds = %bb.ac
 bb.af:                                            ; preds = %bb.ae
   %i.ca = load i64, ptr %i.a, align 16            ; 2 uses
   %i.cb = icmp eq i64 %i.ca, 0
-  %or.cond = select i1 %.1280, i1 true, i1 %i.cb
+  %or.cond = select i1 %3, i1 true, i1 %i.cb
   br i1 %or.cond, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
@@ -299,7 +299,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj
   %i.cm = load i64, ptr %i.a, align 16            ; 2 uses
   %i.cn = icmp eq i64 %i.cm, 0
-  %or.cond5 = select i1 %.1280, i1 true, i1 %i.cn
+  %or.cond5 = select i1 %3, i1 true, i1 %i.cn
   br i1 %or.cond5, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
@@ -319,7 +319,7 @@ bb.am:                                            ; preds = %bb.ak
 bb.an:                                            ; preds = %bb.aj
   %i.ct = load i64, ptr %i.a, align 16            ; 5 uses
   %i.cu = icmp eq i64 %i.ct, 0
-  %or.cond8 = select i1 %.1280, i1 true, i1 %i.cu
+  %or.cond8 = select i1 %3, i1 true, i1 %i.cu
   br i1 %or.cond8, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
@@ -475,7 +475,7 @@ bb.aw:                                            ; preds = %bb.av
   %or.cond10 = or i1 %i.ew, %i.ex
   %.pre547 = load i64, ptr %i.a, align 16         ; 2 uses
   %i.ey = icmp eq i64 %.pre547, 0
-  %or.cond13 = select i1 %.1280, i1 true, i1 %i.ey
+  %or.cond13 = select i1 %3, i1 true, i1 %i.ey
   %or.cond583 = select i1 %or.cond10, i1 %or.cond13, i1 false
   br i1 %or.cond583, label %bb.ax, label %.thread465
 
@@ -519,7 +519,7 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   %i.fl = icmp eq i64 %.pre541, 0
-  %or.cond18 = select i1 %.1280, i1 true, i1 %i.fl
+  %or.cond18 = select i1 %3, i1 true, i1 %i.fl
   %i.fm = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.fn = load i64, ptr %i.fm, align 8            ; 2 uses
   %i.fo = icmp eq i64 %i.fn, 0
@@ -549,7 +549,7 @@ bb.bc:                                            ; preds = %._crit_edge542, %bb
   %i.fz = phi i64 [ %.pre546, %._crit_edge542 ], [ %i.fq, %bb.ba ] ; 2 uses
   %i.ga = phi i64 [ %.pre544.a, %._crit_edge542 ], [ %i.fn, %bb.ba ] ; 2 uses
   %i.gb = icmp eq i64 %.pre541, 0
-  %or.cond30 = select i1 %.1280, i1 true, i1 %i.gb
+  %or.cond30 = select i1 %3, i1 true, i1 %i.gb
   %i.gc = icmp eq i64 %i.ga, 0
   %or.cond33 = select i1 %or.cond30, i1 true, i1 %i.gc
   %i.gd = icmp eq i64 %i.fz, 0
@@ -600,7 +600,7 @@ bb.bg:                                            ; preds = %bb.bf
 
 bb.bh:                                            ; preds = %bb.bg
   %i.gv = icmp eq i64 %.pre538.a, 0
-  %or.cond41 = select i1 %.1280, i1 true, i1 %i.gv
+  %or.cond41 = select i1 %3, i1 true, i1 %i.gv
   %i.gw = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.gx = load i64, ptr %i.gw, align 8            ; 2 uses
   %i.gy = icmp eq i64 %i.gx, 0
@@ -623,7 +623,7 @@ bb.bi:                                            ; preds = %bb.bh
 bb.bj:                                            ; preds = %._crit_edge539, %bb.bh
   %i.hf = phi i64 [ %.pre540, %._crit_edge539 ], [ %i.gx, %bb.bh ] ; 2 uses
   %i.hg = icmp eq i64 %.pre538.a, 0
-  %or.cond50 = select i1 %.1280, i1 true, i1 %i.hg
+  %or.cond50 = select i1 %3, i1 true, i1 %i.hg
   %i.hh = icmp eq i64 %i.hf, 0
   %or.cond53 = select i1 %or.cond50, i1 true, i1 %i.hh
   br i1 %or.cond53, label %bb.bk, label %bb.bl
@@ -667,7 +667,7 @@ bb.bo:                                            ; preds = %bb.bm
 bb.bp:                                            ; preds = %bb.bo
   %i.hy = load i64, ptr %i.a, align 16            ; 2 uses
   %i.hz = icmp eq i64 %i.hy, 0
-  %or.cond56 = select i1 %.1280, i1 true, i1 %i.hz
+  %or.cond56 = select i1 %3, i1 true, i1 %i.hz
   %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ib = load i64, ptr %i.ia, align 8            ; 2 uses
   %i.ic = icmp eq i64 %i.ib, 0
@@ -698,7 +698,7 @@ bb.bs:                                            ; preds = %bb.bo
 bb.bt:                                            ; preds = %bb.bs
   %i.il = load i64, ptr %i.a, align 16            ; 2 uses
   %i.im = icmp eq i64 %i.il, 0
-  %or.cond62 = select i1 %.1280, i1 true, i1 %i.im
+  %or.cond62 = select i1 %3, i1 true, i1 %i.im
   %i.in = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.io = load i64, ptr %i.in, align 8            ; 2 uses
   %i.ip = icmp eq i64 %i.io, 0
@@ -742,7 +742,7 @@ bb.by:                                            ; preds = %bb.bw
 bb.bz:                                            ; preds = %bb.by
   %i.je = load i64, ptr %i.a, align 16            ; 2 uses
   %i.jf = icmp eq i64 %i.je, 0
-  %or.cond68 = select i1 %.1280, i1 true, i1 %i.jf
+  %or.cond68 = select i1 %3, i1 true, i1 %i.jf
   %i.jg = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.jh = load i64, ptr %i.jg, align 8            ; 2 uses
   %i.ji = icmp eq i64 %i.jh, 0
@@ -785,7 +785,7 @@ bb.ce:                                            ; preds = %bb.cc
 bb.cf:                                            ; preds = %bb.ce
   %i.jw = load i64, ptr %i.a, align 16            ; 2 uses
   %i.jx = icmp eq i64 %i.jw, 0
-  %or.cond74 = select i1 %.1280, i1 true, i1 %i.jx
+  %or.cond74 = select i1 %3, i1 true, i1 %i.jx
   br i1 %or.cond74, label %bb.cg, label %bb.ch
 
 bb.cg:                                            ; preds = %bb.cf
@@ -815,7 +815,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.kh = call fastcc ptr @get_H5EA_class(i8 %.val456)
   %i.ki = load i64, ptr %i.a, align 16            ; 2 uses
   %i.kj = icmp eq i64 %i.ki, 0
-  %or.cond77 = select i1 %.1280, i1 true, i1 %i.kj
+  %or.cond77 = select i1 %3, i1 true, i1 %i.kj
   br i1 %or.cond77, label %bb.ck, label %.thread479
 
 .thread479:                                       ; preds = %bb.cj
@@ -845,7 +845,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.kt = call fastcc ptr @get_H5EA_class(i8 %.val455)
   %i.ku = load i64, ptr %i.a, align 16            ; 2 uses
   %i.kv = icmp eq i64 %i.ku, 0
-  %or.cond80 = select i1 %.1280, i1 true, i1 %i.kv
+  %or.cond80 = select i1 %3, i1 true, i1 %i.kv
   %i.kw = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.kx = load i64, ptr %i.kw, align 8            ; 2 uses
   %i.ky = icmp eq i64 %i.kx, 0
@@ -879,7 +879,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.li = call fastcc ptr @get_H5EA_class(i8 %.val454)
   %i.lj = load i64, ptr %i.a, align 16            ; 2 uses
   %i.lk = icmp eq i64 %i.lj, 0
-  %or.cond86 = select i1 %.1280, i1 true, i1 %i.lk
+  %or.cond86 = select i1 %3, i1 true, i1 %i.lk
   %i.ll = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.lm = load i64, ptr %i.ll, align 8            ; 2 uses
   %i.ln = icmp eq i64 %i.lm, 0
@@ -918,7 +918,7 @@ bb.cs:                                            ; preds = %bb.cr
   %i.mb = call fastcc ptr @get_H5EA_class(i8 %.val453)
   %i.mc = load i64, ptr %i.a, align 16            ; 2 uses
   %i.md = icmp eq i64 %i.mc, 0
-  %or.cond95 = select i1 %.1280, i1 true, i1 %i.md
+  %or.cond95 = select i1 %3, i1 true, i1 %i.md
   %i.me = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.mf = load i64, ptr %i.me, align 8            ; 2 uses
   %i.mg = icmp eq i64 %i.mf, 0
@@ -956,7 +956,7 @@ bb.cv:                                            ; preds = %bb.cu
   %i.mt = call fastcc ptr @get_H5FA_class(i8 %.val458)
   %i.mu = load i64, ptr %i.a, align 16            ; 2 uses
   %i.mv = icmp eq i64 %i.mu, 0
-  %or.cond104 = select i1 %.1280, i1 true, i1 %i.mv
+  %or.cond104 = select i1 %3, i1 true, i1 %i.mv
   br i1 %or.cond104, label %bb.cw, label %.thread495
 
 .thread495:                                       ; preds = %bb.cv
@@ -986,7 +986,7 @@ bb.cy:                                            ; preds = %bb.cx
   %i.nf = call fastcc ptr @get_H5FA_class(i8 %.val457)
   %i.ng = load i64, ptr %i.a, align 16            ; 2 uses
   %i.nh = icmp eq i64 %i.ng, 0
-  %or.cond107 = select i1 %.1280, i1 true, i1 %i.nh
+  %or.cond107 = select i1 %3, i1 true, i1 %i.nh
   %i.ni = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.nj = load i64, ptr %i.ni, align 8            ; 2 uses
   %i.nk = icmp eq i64 %i.nj, 0

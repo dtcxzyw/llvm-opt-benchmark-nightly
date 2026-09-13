@@ -204,6 +204,7 @@ zend_string_alloc.exit:                           ; preds = %bb.f
   %.0.ph107 = phi ptr [ %.0.i64, %zend_string_extend.exit65 ], [ %i.z, %zend_string_alloc.exit ] ; 11 uses
   %.048.ph105 = phi i64 [ %i.au, %zend_string_extend.exit65 ], [ %i.t, %zend_string_alloc.exit ] ; 6 uses
   %i.ae = call i64 @iconv(ptr noundef %i.o, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.d, ptr noundef nonnull %i.c) #16
+  %6 = load i64, ptr %i.c, align 8, !tbaa !20     ; 3 uses
   %i.af = icmp eq i64 %i.ae, -1                   ; 2 uses
   br i1 %.0.i66, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
@@ -211,19 +212,22 @@ zend_string_alloc.exit:                           ; preds = %bb.f
   br i1 %i.af, label %.lr.ph169.preheader, label %.preheader
 
 .lr.ph169.preheader:                              ; preds = %.lr.ph.split.us.preheader
-  %i.ag = call ptr @__errno_location() #18        ; 4 uses
-  br label %.lr.ph169
+  %i.ag = call ptr @__errno_location() #18        ; 6 uses
+  %7 = load i32, ptr %i.ag, align 4, !tbaa !18
+  %8 = icmp eq i32 %7, 84
+  br i1 %8, label %bb.g, label %.split.us
 
-.lr.ph169:                                        ; preds = %.lr.ph169.preheader, %.lr.ph.split.us
+.lr.ph169:                                        ; preds = %.lr.ph.split.us
   %i.ah = load i64, ptr %i.c, align 8, !tbaa !20  ; 2 uses
   %i.ai = load i32, ptr %i.ag, align 4, !tbaa !18
-  %.not.not = icmp ne i32 %i.ai, 84               ; 3 uses
-  br i1 %.not.not, label %.split.us, label %bb.g
+  %9 = icmp eq i32 %i.ai, 84
+  br i1 %9, label %bb.g, label %.split.us
 
-bb.g:                                             ; preds = %.lr.ph169
+bb.g:                                             ; preds = %.lr.ph169.preheader, %.lr.ph169
+  %10 = phi i64 [ %i.ah, %.lr.ph169 ], [ %6, %.lr.ph169.preheader ]
   %i.aj = load i64, ptr %i.b, align 8, !tbaa !20  ; 2 uses
-  %6 = icmp ult i64 %i.aj, 2
-  br i1 %6, label %.split.us, label %.lr.ph.split.us
+  %11 = icmp ugt i64 %i.aj, 1                     ; 3 uses
+  br i1 %11, label %.lr.ph.split.us, label %.split.us
 
 .lr.ph.split.us:                                  ; preds = %bb.g
   store i32 0, ptr %i.ag, align 4, !tbaa !18
@@ -240,15 +244,14 @@ bb.g:                                             ; preds = %.lr.ph169
   br i1 %i.af, label %.lr.ph.split..split.us_crit_edge, label %.preheader
 
 .lr.ph.split..split.us_crit_edge:                 ; preds = %.lr.ph.split
-  %7 = load i64, ptr %i.c, align 8, !tbaa !20
   %.pre = call ptr @__errno_location() #18
   br label %.split.us
 
-.split.us:                                        ; preds = %.lr.ph169, %bb.g, %.lr.ph.split..split.us_crit_edge
-  %.pre-phi = phi ptr [ %.pre, %.lr.ph.split..split.us_crit_edge ], [ %i.ag, %bb.g ], [ %i.ag, %.lr.ph169 ]
-  %.us-phi96 = phi i64 [ %7, %.lr.ph.split..split.us_crit_edge ], [ %i.ah, %bb.g ], [ %i.ah, %.lr.ph169 ]
-  %.us-phi97 = phi i1 [ true, %.lr.ph.split..split.us_crit_edge ], [ %.not.not, %bb.g ], [ %.not.not, %.lr.ph169 ]
-  %i.ap = sub i64 %.048.ph105, %.us-phi96         ; 3 uses
+.split.us:                                        ; preds = %bb.g, %.lr.ph169, %.lr.ph169.preheader, %.lr.ph.split..split.us_crit_edge
+  %.pre-phi = phi ptr [ %.pre, %.lr.ph.split..split.us_crit_edge ], [ %i.ag, %.lr.ph169.preheader ], [ %i.ag, %.lr.ph169 ], [ %i.ag, %bb.g ]
+  %.us-phi95 = phi i64 [ %6, %.lr.ph.split..split.us_crit_edge ], [ %6, %.lr.ph169.preheader ], [ %10, %bb.g ], [ %i.ah, %.lr.ph169 ]
+  %.not59 = phi i1 [ true, %.lr.ph.split..split.us_crit_edge ], [ true, %.lr.ph169.preheader ], [ %11, %.lr.ph169 ], [ %11, %bb.g ]
+  %i.ap = sub i64 %.048.ph105, %.us-phi95         ; 3 uses
   %i.aq = load i32, ptr %.pre-phi, align 4, !tbaa !18
   %i.ar = icmp eq i32 %i.aq, 7
   %i.as = load i64, ptr %i.b, align 8
@@ -330,11 +333,11 @@ zend_string_extend.exit65:                        ; preds = %bb.j, %zend_string_
 .loopexit67:                                      ; preds = %.split.us, %zend_string_extend.exit65
   %.048.ph73 = phi i64 [ %.048.ph105, %.split.us ], [ %i.au, %zend_string_extend.exit65 ]
   %.0.ph71 = phi ptr [ %.0.ph107, %.split.us ], [ %.0.i64, %zend_string_extend.exit65 ] ; 2 uses
-  br i1 %.us-phi97, label %.loopexit, label %.preheader
+  br i1 %.not59, label %.loopexit, label %.preheader
 
-.preheader:                                       ; preds = %.lr.ph.split, %.lr.ph.split.us.preheader, %.lr.ph.split.us, %zend_string_alloc.exit, %.loopexit67
-  %.0.ph71153 = phi ptr [ %.0.ph71, %.loopexit67 ], [ %i.z, %zend_string_alloc.exit ], [ %.0.ph107, %.lr.ph.split.us ], [ %.0.ph107, %.lr.ph.split.us.preheader ], [ %.0.ph107, %.lr.ph.split ] ; 2 uses
-  %.048.ph73152 = phi i64 [ %.048.ph73, %.loopexit67 ], [ %i.t, %zend_string_alloc.exit ], [ %.048.ph105, %.lr.ph.split.us ], [ %.048.ph105, %.lr.ph.split.us.preheader ], [ %.048.ph105, %.lr.ph.split ] ; 2 uses
+.preheader:                                       ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split, %.lr.ph.split.us, %zend_string_alloc.exit, %.loopexit67
+  %.0.ph71153 = phi ptr [ %.0.ph71, %.loopexit67 ], [ %i.z, %zend_string_alloc.exit ], [ %.0.ph107, %.lr.ph.split.us ], [ %.0.ph107, %.lr.ph.split ], [ %.0.ph107, %.lr.ph.split.us.preheader ] ; 2 uses
+  %.048.ph73152 = phi i64 [ %.048.ph73, %.loopexit67 ], [ %i.t, %zend_string_alloc.exit ], [ %.048.ph105, %.lr.ph.split.us ], [ %.048.ph105, %.lr.ph.split ], [ %.048.ph105, %.lr.ph.split.us.preheader ] ; 2 uses
   %i.cd = call i64 @iconv(ptr noundef %i.o, ptr noundef null, ptr noundef null, ptr noundef nonnull %i.d, ptr noundef nonnull %i.c) #16
   %i.ce = load i64, ptr %i.c, align 8, !tbaa !20
   %i.cf = sub i64 %.048.ph73152, %i.ce            ; 2 uses

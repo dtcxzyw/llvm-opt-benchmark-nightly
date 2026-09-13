@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.a, %bb.i
 define noundef zeroext i1 @b2ValidateHull(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !10   ; 17 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !10   ; 16 uses
   %i.c = add i32 %i.b, -9
   %or.cond = icmp ult i32 %i.c, -6
   br i1 %or.cond, label %.critedge, label %.lr.ph115
@@ -214,8 +214,8 @@ bb.a:
   %i.d = add nsw i32 %i.b, -1                     ; 2 uses
   %i.e = zext nneg i32 %i.d to i64
   %wide.trip.count121 = zext nneg i32 %i.b to i64
-  %.not = icmp ne i32 %i.d, 0                     ; 2 uses
-  %.sroa.028.0.copyload.us.peel = load <2 x float>, ptr %0, align 4 ; 8 uses
+  %.not = icmp ne i32 %i.d, 0
+  %.sroa.028.0.copyload.us.peel = load <2 x float>, ptr %0, align 4 ; 7 uses
   %i.f = zext i1 %.not to i64
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.f
   %i.h = load <2 x float>, ptr %i.g, align 4
@@ -235,29 +235,13 @@ bb.b:                                             ; preds = %.lr.ph115
   br label %b2Normalize.exit.us.peel
 
 b2Normalize.exit.us.peel:                         ; preds = %bb.b, %.lr.ph115
-  %.sroa.012.0.i.us.peel = phi <2 x float> [ %i.q, %bb.b ], [ zeroinitializer, %.lr.ph115 ] ; 7 uses
-  %cond = icmp eq i32 %i.b, 1
-  br i1 %cond, label %._crit_edge, label %1
+  %.sroa.012.0.i.us.peel = phi <2 x float> [ %i.q, %bb.b ], [ zeroinitializer, %.lr.ph115 ] ; 6 uses
+  switch i32 %i.b, label %bb.c [
+    i32 1, label %._crit_edge
+    i32 2, label %.lr.ph115.peel.newph
+  ]
 
-1:                                                ; preds = %b2Normalize.exit.us.peel
-  br i1 %.not, label %9, label %2
-
-2:                                                ; preds = %1
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %4 = load <2 x float>, ptr %3, align 4
-  %5 = fsub <2 x float> %4, %.sroa.028.0.copyload.us.peel
-  %6 = fmul <2 x float> %.sroa.012.0.i.us.peel, %5 ; 2 uses
-  %shift.1.peel = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop.1.peel = fsub <2 x float> %6, %shift.1.peel
-  %7 = extractelement <2 x float> %foldExtExtBinop.1.peel, i64 0
-  %8 = fcmp ult float %7, 0.000000e+00
-  br i1 %8, label %9, label %.critedge
-
-9:                                                ; preds = %2, %1
-  %cond142 = icmp eq i32 %i.b, 2
-  br i1 %cond142, label %.lr.ph115.peel.newph, label %bb.c
-
-bb.c:                                             ; preds = %9
+bb.c:                                             ; preds = %b2Normalize.exit.us.peel
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.s = load <2 x float>, ptr %i.r, align 4
   %i.t = fsub <2 x float> %i.s, %.sroa.028.0.copyload.us.peel
@@ -347,7 +331,7 @@ bb.m:                                             ; preds = %bb.l
   %exitcond122.not.peel = icmp eq i32 %i.b, 1
   br i1 %exitcond122.not.peel, label %._crit_edge, label %.lr.ph115.peel.newph
 
-.lr.ph115.peel.newph:                             ; preds = %bb.l, %bb.j, %bb.h, %bb.f, %bb.d, %9, %..loopexit_crit_edge.us.peel
+.lr.ph115.peel.newph:                             ; preds = %bb.l, %bb.j, %bb.h, %bb.f, %bb.d, %b2Normalize.exit.us.peel, %..loopexit_crit_edge.us.peel
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 8
   %exitcond.not.1 = icmp eq i32 %i.b, 2
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -533,7 +517,7 @@ bb.aj:                                            ; preds = %bb.ai
   %exitcond122.not = icmp eq i64 %indvars.iv.next119, %wide.trip.count121
   br i1 %exitcond122.not, label %._crit_edge, label %bb.n, !llvm.loop !21
 
-._crit_edge:                                      ; preds = %b2Normalize.exit.us.peel, %..loopexit_crit_edge.us, %..loopexit_crit_edge.us.peel
+._crit_edge:                                      ; preds = %..loopexit_crit_edge.us, %b2Normalize.exit.us.peel, %..loopexit_crit_edge.us.peel
   %i.dw = tail call float @b2GetLengthUnitsPerMeter() #6
   %i.dx = fmul float %i.dw, 5.000000e-03
   %i.dy = load i32, ptr %i.a, align 4, !tbaa !10  ; 4 uses
@@ -590,8 +574,8 @@ b2Normalize.exit97:                               ; preds = %.lr.ph, %bb.al
 b2Normalize.exit97..critedge.loopexit_crit_edge:  ; preds = %b2Normalize.exit97
   br label %.critedge, !llvm.loop !22
 
-.critedge:                                        ; preds = %2, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.m, %bb.p, %bb.r, %bb.u, %bb.x, %bb.aa, %bb.ad, %bb.ag, %bb.aj, %bb.ak, %._crit_edge, %b2Normalize.exit97..critedge.loopexit_crit_edge, %bb.a
-  %.10 = phi i1 [ true, %bb.ak ], [ false, %bb.a ], [ false, %b2Normalize.exit97..critedge.loopexit_crit_edge ], [ true, %._crit_edge ], [ false, %bb.aj ], [ false, %bb.ag ], [ false, %bb.ad ], [ false, %bb.aa ], [ false, %bb.x ], [ false, %bb.u ], [ false, %bb.r ], [ false, %bb.p ], [ false, %bb.m ], [ false, %bb.k ], [ false, %bb.i ], [ false, %bb.g ], [ false, %bb.e ], [ false, %bb.c ], [ false, %2 ]
+.critedge:                                        ; preds = %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.m, %bb.p, %bb.r, %bb.u, %bb.x, %bb.aa, %bb.ad, %bb.ag, %bb.aj, %bb.ak, %._crit_edge, %b2Normalize.exit97..critedge.loopexit_crit_edge, %bb.a
+  %.10 = phi i1 [ true, %bb.ak ], [ false, %bb.a ], [ false, %b2Normalize.exit97..critedge.loopexit_crit_edge ], [ true, %._crit_edge ], [ false, %bb.aj ], [ false, %bb.ag ], [ false, %bb.ad ], [ false, %bb.aa ], [ false, %bb.x ], [ false, %bb.u ], [ false, %bb.r ], [ false, %bb.p ], [ false, %bb.m ], [ false, %bb.k ], [ false, %bb.i ], [ false, %bb.g ], [ false, %bb.e ], [ false, %bb.c ]
   ret i1 %.10
 }
 

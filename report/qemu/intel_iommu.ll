@@ -204,7 +204,7 @@ bb.a:
   %19 = alloca %struct.VTDContextEntry, align 8   ; 28 uses
   %i.d = alloca i8, align 1                       ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1552
-  %i.f = load ptr, ptr %i.e, align 16             ; 26 uses
+  %i.f = load ptr, ptr %i.e, align 16             ; 27 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #17
   %i.g = tail call i32 @pci_bus_num(ptr noundef %1) #17 ; 4 uses
   %i.h = trunc i32 %i.g to i8
@@ -538,7 +538,7 @@ bb.ah:                                            ; preds = %.split, %vtd_dev_pt
   %i.dp = trunc nuw i8 %i.do to i1
   %.pre350 = load i8, ptr %i.cm, align 8, !range !15
   %i.dq = trunc nuw i8 %.pre350 to i1             ; 2 uses
-  %i.dr = getelementptr inbounds nuw i8, ptr %i.f, i64 6340 ; 3 uses
+  %i.dr = getelementptr inbounds nuw i8, ptr %i.f, i64 6340 ; 2 uses
   %i.ds = load i8, ptr %i.dr, align 4             ; 3 uses
   br i1 %i.dp, label %bb.ai, label %bb.bd
 
@@ -601,7 +601,7 @@ bb.am:                                            ; preds = %vtd_get_iova_pgtbl_
   br label %vtd_get_iova_level.exit.i
 
 vtd_get_iova_level.exit.i:                        ; preds = %bb.am, %bb.al, %bb.ak
-  %.0.i64.i = phi i32 [ %i.ei, %bb.ak ], [ %i.en, %bb.al ], [ %i.er, %bb.am ] ; 3 uses
+  %.0.i64.i = phi i32 [ %i.ei, %bb.ak ], [ %i.en, %bb.al ], [ %i.er, %bb.am ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #17
   %i.es = load i8, ptr %i.dr, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #17
@@ -653,11 +653,10 @@ vtd_iova_level_offset.exit.lr.ph.i:               ; preds = %vtd_iova_fs_check_c
   %notmask.i.i = shl nsw i64 -1, %i.fl
   %i.fm = and i64 %notmask.i.i, 9223372036854771712
   %i.fn = xor i64 %i.fm, 9223372036854771712
-  %.first_iter = icmp samesign ult i32 %.0.i64.i, 5
   br label %vtd_iova_level_offset.exit.i
 
 vtd_iova_level_offset.exit.i:                     ; preds = %bb.bc, %vtd_iova_level_offset.exit.lr.ph.i
-  %.2229 = phi i32 [ %.0.i64.i, %vtd_iova_level_offset.exit.lr.ph.i ], [ %i.hm, %bb.bc ] ; 14 uses
+  %.2229 = phi i32 [ %.0.i64.i, %vtd_iova_level_offset.exit.lr.ph.i ], [ %i.hm, %bb.bc ] ; 15 uses
   %.1220 = phi i8 [ 1, %vtd_iova_level_offset.exit.lr.ph.i ], [ %i.gy, %bb.bc ]
   %.05993.i = phi i64 [ %.0.i.i, %vtd_iova_level_offset.exit.lr.ph.i ], [ %i.hl, %bb.bc ]
   %i.fo = mul nuw nsw i32 %.2229, 9
@@ -745,7 +744,8 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %or.cond94.i, label %vtd_is_recoverable_fault.exit.thread, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  br i1 %.first_iter, label %vtd_fspte_nonzero_rsvd.exit.i, label %bb.az
+  %20 = icmp ult i32 %.2229, 5
+  br i1 %20, label %vtd_fspte_nonzero_rsvd.exit.i, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   call void @__assert_fail(ptr noundef nonnull @.str.256, ptr noundef nonnull @.str.1, i32 noundef 1928, ptr noundef nonnull @__PRETTY_FUNCTION__.vtd_fspte_nonzero_rsvd) #19
@@ -1041,19 +1041,20 @@ bb.cb:                                            ; preds = %bb.ca
   br label %vtd_iova_level_offset.exit.i179
 
 vtd_pt_level_page_mask.exit:                      ; preds = %bb.ca, %vtd_set_flag_in_pte.exit._crit_edge.i
+  %.pre-phi334 = phi i64 [ %i.fq, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ %i.jf, %bb.ca ]
   %.lcssa394.sink = phi i64 [ %i.fw, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ %i.jl, %bb.ca ] ; 5 uses
-  %.pre-phi352 = phi i64 [ %i.fq, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ %i.jf, %bb.ca ]
-  %.0132267 = phi i8 [ 1, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ 2, %bb.ca ]
+  %.0227 = phi i32 [ %.2229, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ %.055.i, %bb.ca ] ; 3 uses
+  %.0132267 = phi i8 [ 1, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ %i.kl, %bb.ca ]
   %.0219266 = phi i8 [ %i.gy, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ %i.kn, %bb.ca ]
-  %.0222265 = phi i8 [ 1, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ %i.kl, %bb.ca ]
-  %.0227264 = phi i32 [ %.2229, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ %.055.i, %bb.ca ] ; 3 uses
-  %.sink413 = load i8, ptr %i.dr, align 4
+  %.0222265 = phi i8 [ 1, %vtd_set_flag_in_pte.exit._crit_edge.i ], [ 2, %bb.ca ]
+  %21 = getelementptr inbounds nuw i8, ptr %i.f, i64 6340
+  %.sink413 = load i8, ptr %21, align 4
   %i.lc = zext nneg i8 %.sink413 to i64
   %notmask.i = shl nsw i64 -1, %i.lc
   %i.ld = and i64 %notmask.i, 9223372036854771712
   %i.le = xor i64 %i.ld, 9223372036854771712
   %i.lf = and i64 %i.le, %.lcssa394.sink          ; 3 uses
-  %notmask.i190 = shl nsw i64 -1, %.pre-phi352    ; 5 uses
+  %notmask.i190 = shl nsw i64 -1, %.pre-phi334    ; 5 uses
   %i.lg = icmp samesign ult i64 %i.lf, 4277141504
   %i.lh = sub nuw i64 %notmask.i190, %i.lf
   %i.li = icmp ult i64 %i.lh, -4276092928
@@ -1063,7 +1064,7 @@ vtd_pt_level_page_mask.exit:                      ; preds = %bb.ca, %vtd_set_fla
 bb.cc:                                            ; preds = %vtd_pt_level_page_mask.exit
   %i.lj = sub nsw i64 0, %notmask.i190
   %i.lk = zext i1 %4 to i32
-  %i.ll = call zeroext i1 (ptr, ptr, ...) @error_report_once_cond(ptr noundef nonnull @vtd_do_iommu_translate.print_once_, ptr noundef nonnull @.str.247, ptr noundef nonnull @__func__.vtd_do_iommu_translate, i64 noundef %3, i32 noundef %.0227264, i64 noundef %.lcssa394.sink, i32 noundef %i.lk, i64 noundef %i.lf, i64 noundef %i.lj, i32 noundef %i.j) #17 ; 0 uses
+  %i.ll = call zeroext i1 (ptr, ptr, ...) @error_report_once_cond(ptr noundef nonnull @vtd_do_iommu_translate.print_once_, ptr noundef nonnull @.str.247, ptr noundef nonnull @__func__.vtd_do_iommu_translate, i64 noundef %3, i32 noundef %.0227, i64 noundef %.lcssa394.sink, i32 noundef %i.lk, i64 noundef %i.lf, i64 noundef %i.lj, i32 noundef %i.j) #17 ; 0 uses
   %i.lm = getelementptr inbounds nuw i8, ptr %i.f, i64 4165
   %i.ln = load i8, ptr %i.lm, align 1, !range !15, !noundef !16
   %i.lo = trunc nuw i8 %i.ln to i1
@@ -1071,7 +1072,7 @@ bb.cc:                                            ; preds = %vtd_pt_level_page_m
   br label %vtd_iova_to_fspte.exit.thread
 
 vtd_iova_to_fspte.exit.thread:                    ; preds = %vtd_set_flag_in_pte.exit.i, %bb.aw, %bb.av, %bb.bw, %bb.bz, %bb.bo, %vtd_get_iova_level.exit64.i, %bb.ba, %bb.ap, %vtd_get_iova_level.exit71.i, %bb.cc
-  %.0227250.ph = phi i32 [ %.0227264, %bb.cc ], [ -1, %bb.bz ], [ -1, %bb.bo ], [ -1, %bb.bw ], [ -1, %vtd_get_iova_level.exit64.i ], [ %.0.i64.i, %bb.ap ], [ %.2229, %bb.ba ], [ %.2229, %vtd_get_iova_level.exit71.i ], [ %.2229, %bb.av ], [ %.2229, %bb.aw ], [ %.2229, %vtd_set_flag_in_pte.exit.i ] ; 3 uses
+  %.0227250.ph = phi i32 [ %.0227, %bb.cc ], [ -1, %bb.bz ], [ -1, %bb.bo ], [ -1, %bb.bw ], [ -1, %vtd_get_iova_level.exit64.i ], [ %.0.i64.i, %bb.ap ], [ %.2229, %bb.ba ], [ %.2229, %vtd_get_iova_level.exit71.i ], [ %.2229, %bb.av ], [ %.2229, %bb.aw ], [ %.2229, %vtd_set_flag_in_pte.exit.i ] ; 3 uses
   %.2.ph.neg = phi i32 [ %.neg, %bb.cc ], [ 12, %bb.bz ], [ 4, %bb.bo ], [ %.neg282, %bb.bw ], [ %..i185.neg, %vtd_get_iova_level.exit64.i ], [ 128, %bb.ap ], [ 114, %bb.ba ], [ %..i.neg, %vtd_get_iova_level.exit71.i ], [ 145, %vtd_set_flag_in_pte.exit.i ], [ 129, %bb.aw ], [ 113, %bb.av ] ; 3 uses
   %i.lp = icmp eq i32 %6, 2
   br i1 %i.lp, label %vtd_is_recoverable_fault.exit, label %vtd_is_recoverable_fault.exit.thread
@@ -1093,7 +1094,7 @@ vtd_is_recoverable_fault.exit.thread:             ; preds = %bb.ax, %vtd_iova_to
 
 vtd_pt_level_page_mask.exit193:                   ; preds = %vtd_pt_level_page_mask.exit
   %i.lx = shl nuw nsw i8 %.0219266, 1
-  %i.ly = add nuw nsw i8 %.0222265, %i.lx         ; 2 uses
+  %i.ly = add nuw nsw i8 %i.lx, %.0132267         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
   %i.lz = load i8, ptr %i.cm, align 8, !range !15, !noundef !16
   %i.ma = trunc nuw i8 %i.lz to i1
@@ -1195,11 +1196,11 @@ vtd_update_iotlb.exit:                            ; preds = %trace_vtd_iotlb_pag
   %i.nd = getelementptr inbounds nuw i8, ptr %i.mh, i64 12
   store i32 %i.j, ptr %i.nd, align 4
   %i.ne = getelementptr inbounds nuw i8, ptr %i.mh, i64 33
-  store i8 %.0132267, ptr %i.ne, align 1
+  store i8 %.0222265, ptr %i.ne, align 1
   store i64 %i.my, ptr %i.mi, align 8
   %i.nf = getelementptr inbounds nuw i8, ptr %i.mi, i64 12
   store i16 %i.n, ptr %i.nf, align 4
-  %i.ng = trunc nuw nsw i32 %.0227264 to i8
+  %i.ng = trunc nuw nsw i32 %.0227 to i8
   %i.nh = getelementptr inbounds nuw i8, ptr %i.mi, i64 14
   store i8 %i.ng, ptr %i.nh, align 2
   %i.ni = getelementptr inbounds nuw i8, ptr %i.mi, i64 8

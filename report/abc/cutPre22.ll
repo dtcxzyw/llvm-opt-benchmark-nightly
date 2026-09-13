@@ -111,7 +111,7 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(152) %i.p, i8 0, i64 152, i1 false)
   %i.q = shl nsw i32 %i.k, 2
   %i.r = add i32 %i.q, -1
-  %i.s = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.r, i1 true)
+  %i.s = call range(i32 0, 31) i32 @llvm.ctlz.i32(i32 %i.r, i1 true)
   %i.t = sub nsw i32 0, %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   %i.v = and i32 %i.t, 15                         ; 2 uses

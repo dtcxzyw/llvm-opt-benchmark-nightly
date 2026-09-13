@@ -205,30 +205,22 @@ bb.bb:                                            ; preds = %bb.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.em = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.en = load i64, ptr %i.em, align 8, !noundef !13 ; 6 uses
+  %i.en = load i64, ptr %i.em, align 8, !noundef !13 ; 5 uses
   %i.eo = icmp sgt i64 %i.en, -1
   call void @llvm.assume(i1 %i.eo)
-  %i.ep = add nsw i64 %i.en, -1                   ; 3 uses
+  %i.ep = add nsw i64 %i.en, -1                   ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.er = load ptr, ptr %i.eq, align 8, !nonnull !13, !noundef !13 ; 4 uses
-  %.not.i51 = icmp eq i64 %i.ep, 0
-  br i1 %.not.i51, label %bb.bg, label %2
+  %or.cond = icmp samesign ugt i64 %i.en, 1
+  br i1 %or.cond, label %bb.bc, label %bb.bg
 
-2:                                                ; preds = %bb.bb
-  %.not5.i = icmp samesign ugt i64 %i.en, 1
-  br i1 %.not5.i, label %bb.bc, label %.split.i
-
-.split.i:                                         ; preds = %2
-  %3 = icmp eq i64 %i.en, 1
-  br i1 %3, label %bb.bd, label %bb.bg
-
-bb.bc:                                            ; preds = %2
+bb.bc:                                            ; preds = %bb.bb
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 1
   %i.et = load i8, ptr %i.es, align 1, !alias.scope !8927, !noundef !13
   %i.eu = icmp sgt i8 %i.et, -65
   br i1 %i.eu, label %bb.bd, label %bb.bg
 
-bb.bd:                                            ; preds = %bb.bc, %.split.i
+bb.bd:                                            ; preds = %bb.bc
   %i.ev = getelementptr inbounds nuw i8, ptr %i.er, i64 %i.ep
   %i.ew = load i8, ptr %i.ev, align 1, !alias.scope !8927, !noundef !13
   %i.ex = icmp sgt i8 %i.ew, -65
@@ -248,7 +240,7 @@ bb.bf:                                            ; preds = %bb.bd
   invoke void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, i64 noundef %i.ez, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
           to label %bb.bh unwind label %bb.be
 
-bb.bg:                                            ; preds = %bb.bd, %bb.bc, %bb.bb, %.split.i
+bb.bg:                                            ; preds = %bb.bd, %bb.bc, %bb.bb
   invoke void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.er, i64 noundef %i.en, i64 noundef 1, i64 noundef %i.ep, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @361) #52
           to label %bb.ai unwind label %bb.be
 
@@ -651,30 +643,22 @@ bb.bc:                                            ; preds = %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.ex = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %i.ey = load i64, ptr %i.ex, align 8, !noundef !13 ; 6 uses
+  %i.ey = load i64, ptr %i.ex, align 8, !noundef !13 ; 5 uses
   %i.ez = icmp sgt i64 %i.ey, -1
   call void @llvm.assume(i1 %i.ez)
-  %i.fa = add nsw i64 %i.ey, -1                   ; 3 uses
+  %i.fa = add nsw i64 %i.ey, -1                   ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.fc = load ptr, ptr %i.fb, align 8, !nonnull !13, !noundef !13 ; 4 uses
-  %.not.i64 = icmp eq i64 %i.fa, 0
-  br i1 %.not.i64, label %bb.bh, label %2
+  %or.cond = icmp samesign ugt i64 %i.ey, 1
+  br i1 %or.cond, label %bb.bd, label %bb.bh
 
-2:                                                ; preds = %bb.bc
-  %.not5.i = icmp samesign ugt i64 %i.ey, 1
-  br i1 %.not5.i, label %bb.bd, label %.split.i
-
-.split.i:                                         ; preds = %2
-  %3 = icmp eq i64 %i.ey, 1
-  br i1 %3, label %bb.be, label %bb.bh
-
-bb.bd:                                            ; preds = %2
+bb.bd:                                            ; preds = %bb.bc
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 1
   %i.fe = load i8, ptr %i.fd, align 1, !alias.scope !8946, !noundef !13
   %i.ff = icmp sgt i8 %i.fe, -65
   br i1 %i.ff, label %bb.be, label %bb.bh
 
-bb.be:                                            ; preds = %bb.bd, %.split.i
+bb.be:                                            ; preds = %bb.bd
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fc, i64 %i.fa
   %i.fh = load i8, ptr %i.fg, align 1, !alias.scope !8946, !noundef !13
   %i.fi = icmp sgt i8 %i.fh, -65
@@ -694,7 +678,7 @@ bb.bg:                                            ; preds = %bb.be
   invoke void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, i64 noundef %i.fk, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
           to label %bb.bi unwind label %bb.bf
 
-bb.bh:                                            ; preds = %bb.be, %bb.bd, %bb.bc, %.split.i
+bb.bh:                                            ; preds = %bb.be, %bb.bd, %bb.bc
   invoke void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.fc, i64 noundef %i.ey, i64 noundef 1, i64 noundef %i.fa, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @366) #52
           to label %bb.ah unwind label %bb.bf
 

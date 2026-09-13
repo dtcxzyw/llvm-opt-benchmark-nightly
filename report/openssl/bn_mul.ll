@@ -83,7 +83,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.b
   %i.aj = getelementptr inbounds [8 x i8], ptr %1, i64 %i.c ; 3 uses
   %.not170 = icmp eq i64 %i.a, 0
-  br i1 %.not170, label %.preheader163, label %.lr.ph.preheader
+  br i1 %.not170, label %.preheader162, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !9  ; 2 uses
@@ -93,6 +93,15 @@ bb.f:                                             ; preds = %bb.b
   %spec.select150216 = select i1 %.not139215, i64 %i.a, i64 0 ; 2 uses
   %i.am = icmp slt i32 %4, 2
   br i1 %i.am, label %.thread157, label %.lr.ph221
+
+.preheader162:                                    ; preds = %bb.i, %bb.f
+  %.1115.lcssa = phi ptr [ %i.d, %bb.f ], [ %i.bh, %bb.i ] ; 2 uses
+  %.0111.lcssa = phi ptr [ %i.aj, %bb.f ], [ %i.bg, %bb.i ] ; 2 uses
+  %.0.lcssa = phi i32 [ %4, %bb.f ], [ %i.bf, %bb.i ] ; 2 uses
+  %5 = load i64, ptr %.0111.lcssa, align 8, !tbaa !9
+  store i64 %5, ptr %.1115.lcssa, align 8, !tbaa !9
+  %6 = icmp samesign ult i32 %.0.lcssa, 2
+  br i1 %6, label %.thread157, label %.lr.ph180
 
 .lr.ph:                                           ; preds = %bb.i
   %i.an = load i64, ptr %i.bg, align 8, !tbaa !9  ; 2 uses
@@ -145,21 +154,12 @@ bb.i:                                             ; preds = %bb.h
   %i.bg = getelementptr inbounds nuw i8, ptr %.0111172218, i64 32 ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.1115171219, i64 32 ; 3 uses
   %.not = icmp eq i64 %spec.select153, 0
-  br i1 %.not, label %.preheader163, label %.lr.ph, !llvm.loop !11
+  br i1 %.not, label %.preheader162, label %.lr.ph, !llvm.loop !11
 
-.preheader163:                                    ; preds = %bb.i, %bb.f
-  %.1115.lcssa = phi ptr [ %i.d, %bb.f ], [ %i.bh, %bb.i ] ; 2 uses
-  %.0111.lcssa = phi ptr [ %i.aj, %bb.f ], [ %i.bg, %bb.i ] ; 2 uses
-  %.0.lcssa = phi i32 [ %4, %bb.f ], [ %i.bf, %bb.i ] ; 2 uses
-  %5 = load i64, ptr %.0111.lcssa, align 8, !tbaa !9
-  store i64 %5, ptr %.1115.lcssa, align 8, !tbaa !9
-  %6 = icmp eq i32 %.0.lcssa, 1
-  br i1 %6, label %.thread157, label %.lr.ph180
-
-.lr.ph180:                                        ; preds = %.preheader163, %bb.l
-  %.7108179 = phi i32 [ %i.bu, %bb.l ], [ %.0.lcssa, %.preheader163 ] ; 5 uses
-  %.2113178 = phi ptr [ %i.bv, %bb.l ], [ %.0111.lcssa, %.preheader163 ] ; 4 uses
-  %.3117177 = phi ptr [ %i.bw, %bb.l ], [ %.1115.lcssa, %.preheader163 ] ; 4 uses
+.lr.ph180:                                        ; preds = %.preheader162, %bb.l
+  %.7108179 = phi i32 [ %i.bu, %bb.l ], [ %.0.lcssa, %.preheader162 ] ; 5 uses
+  %.2113178 = phi ptr [ %i.bv, %bb.l ], [ %.0111.lcssa, %.preheader162 ] ; 4 uses
+  %.3117177 = phi ptr [ %i.bw, %bb.l ], [ %.1115.lcssa, %.preheader162 ] ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.2113178, i64 8
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !9
   %i.bk = getelementptr inbounds nuw i8, ptr %.3117177, i64 8
@@ -192,8 +192,8 @@ bb.l:                                             ; preds = %bb.k
   %i.by = icmp samesign ult i32 %.7108179, 6
   br i1 %i.by, label %.thread157, label %.lr.ph180
 
-.thread157:                                       ; preds = %bb.h, %bb.g, %.lr.ph221, %.lr.ph, %bb.k, %bb.j, %.lr.ph180, %bb.l, %bb.e, %.lr.ph190, %bb.c, %bb.d, %.lr.ph.preheader, %.preheader163, %.preheader, %bb.a
-  %.0109 = phi i64 [ %i.a, %bb.a ], [ 0, %bb.k ], [ %spec.select150216, %.lr.ph.preheader ], [ 0, %.preheader163 ], [ %spec.select185, %.preheader ], [ %spec.select149, %bb.d ], [ %spec.select148, %bb.c ], [ %spec.select147, %.lr.ph190 ], [ %spec.select, %bb.e ], [ 0, %bb.l ], [ 0, %.lr.ph180 ], [ 0, %bb.j ], [ %spec.select150, %.lr.ph ], [ %spec.select151, %.lr.ph221 ], [ %spec.select152, %bb.g ], [ %spec.select153, %bb.h ]
+.thread157:                                       ; preds = %bb.h, %bb.g, %.lr.ph221, %.lr.ph, %bb.k, %bb.j, %.lr.ph180, %bb.l, %bb.e, %.lr.ph190, %bb.c, %bb.d, %.lr.ph.preheader, %.preheader162, %.preheader, %bb.a
+  %.0109 = phi i64 [ %i.a, %bb.a ], [ 0, %.preheader162 ], [ %spec.select150216, %.lr.ph.preheader ], [ %spec.select185, %.preheader ], [ 0, %bb.k ], [ %spec.select149, %bb.d ], [ %spec.select148, %bb.c ], [ %spec.select147, %.lr.ph190 ], [ %spec.select, %bb.e ], [ 0, %bb.l ], [ 0, %.lr.ph180 ], [ 0, %bb.j ], [ %spec.select150, %.lr.ph ], [ %spec.select152, %bb.g ], [ %spec.select153, %bb.h ], [ %spec.select151, %.lr.ph221 ]
   ret i64 %.0109
 }
 

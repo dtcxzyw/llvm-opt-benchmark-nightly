@@ -205,8 +205,8 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.ax, %bb.av, %.noexc188
   %.sroa.018.0.i = phi i64 [ %..i.i, %bb.ax ], [ %spec.store.select.i181, %bb.av ], [ %spec.store.select.i181, %.noexc188 ] ; 2 uses
-  %or.cond.i = icmp ult i64 %.sroa.018.0.i, 2
-  br i1 %or.cond.i, label %.loopexit.i, label %.lr.ph.preheader.i
+  %16 = icmp ugt i64 %.sroa.018.0.i, 1
+  br i1 %16, label %.lr.ph.preheader.i, label %.loopexit.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.aw
   %.sroa.018.175.i = add i64 %.sroa.018.0.i, -1
@@ -225,9 +225,9 @@ bb.ax:                                            ; preds = %bb.av
   br i1 %i.kg, label %bb.aq, label %._crit_edge.i179
 
 .lr.ph.i182:                                      ; preds = %bb.bh, %.lr.ph.preheader.i
-  %.sroa.018.178.i = phi i64 [ %.sroa.018.1.i, %bb.bh ], [ %.sroa.018.175.i, %.lr.ph.preheader.i ]
-  %.sroa.0.277.i = phi i64 [ %i.mb, %bb.bh ], [ %i.jx, %.lr.ph.preheader.i ] ; 2 uses
-  %.sroa.05.276.i = phi i64 [ %i.kh, %bb.bh ], [ %.sroa.05.083.i, %.lr.ph.preheader.i ] ; 2 uses
+  %.sroa.018.178.i = phi i64 [ %.sroa.018.175.i, %.lr.ph.preheader.i ], [ %.sroa.018.1.i, %bb.bh ]
+  %.sroa.0.277.i = phi i64 [ %i.jx, %.lr.ph.preheader.i ], [ %i.mb, %bb.bh ] ; 2 uses
+  %.sroa.05.276.i = phi i64 [ %.sroa.05.083.i, %.lr.ph.preheader.i ], [ %i.kh, %bb.bh ] ; 2 uses
   %i.kh = add nuw nsw i64 %.sroa.05.276.i, 1      ; 17 uses
   %i.ki = add nuw nsw i64 %.sroa.05.276.i, 4
   %.not38.i = icmp ult i64 %i.ki, %2

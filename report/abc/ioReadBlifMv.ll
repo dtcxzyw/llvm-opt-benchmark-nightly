@@ -204,17 +204,13 @@ Io_MvSplitIntoTokens.exit:                        ; preds = %bb.g, %Io_MvFindArr
   br i1 %or.cond, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %Io_MvSplitIntoTokens.exit
-  %i.ah = zext i32 %i.ae to i64                   ; 4 uses
-  %3 = icmp ne i32 %i.ae, 0
-  %.neg = sext i1 %3 to i64
-  %4 = add nuw nsw i64 %i.ah, 1
-  %5 = add nsw i64 %4, %.neg                      ; 3 uses
-  %min.iters.check = icmp ult i64 %5, 4
+  %i.ah = zext i32 %i.ae to i64                   ; 5 uses
+  %min.iters.check = icmp ult i32 %i.ae, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %5, -4                         ; 3 uses
-  %6 = sub nsw i64 %i.ah, %n.vec
+  %n.vec = and i64 %i.ah, 4294967292              ; 2 uses
+  %3 = and i64 %i.ah, 3
   %i.ai = insertelement <2 x i32> <i32 poison, i32 0>, i32 %i.ae, i64 0
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %.09.i109, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -253,11 +249,11 @@ middle.block:                                     ; preds = %vector.body
   %i.ay = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %bin.rdx) ; 2 uses
   %bin.rdx240 = add <2 x i32> %i.as, %i.ar
   %i.az = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %bin.rdx240) ; 2 uses
-  %cmp.n = icmp eq i64 %5, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %i.ah
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ %i.ah, %.lr.ph ], [ %6, %middle.block ]
+  %indvars.iv.ph = phi i64 [ %i.ah, %.lr.ph ], [ %3, %middle.block ]
   %.070139.ph = phi i32 [ 1, %.lr.ph ], [ %i.ay, %middle.block ]
   %.073138.ph = phi i32 [ %i.ae, %.lr.ph ], [ %i.az, %middle.block ]
   br label %scalar.ph

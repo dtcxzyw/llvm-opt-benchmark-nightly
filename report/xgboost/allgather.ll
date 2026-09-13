@@ -204,7 +204,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7xgboost10collective16VectorAllgatherVEPKNS_7ContextERKNS0_9CommGroupERKSt6vectorIS7_IcSaIcEESaIS9_EE(ptr dead_on_unwind noalias writable sret(%"class.std::vector.22") align 8 %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(64) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::vector.27", align 8    ; 13 uses
+  %4 = alloca %"class.std::vector.27", align 8    ; 10 uses
   %5 = alloca %"class.xgboost::HostDeviceVector", align 8 ; 10 uses
   %6 = alloca %"struct.xgboost::collective::Result", align 8 ; 10 uses
   %7 = alloca %"class.xgboost::linalg::TensorView", align 8 ; 8 uses
@@ -277,10 +277,10 @@ _ZNSt6vectorIlSaIlEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPlmlET_
   %i.z = load i32, ptr %i.y, align 8, !tbaa !39   ; 2 uses
   %.not.i.i = icmp eq i32 %i.z, -1
   %i.aa = add nsw i32 %i.z, 1
-  %i.ab = select i1 %.not.i.i, i32 2, i32 %i.aa   ; 3 uses
+  %i.ab = select i1 %.not.i.i, i32 2, i32 %i.aa   ; 2 uses
   %i.ac = sext i32 %i.ab to i64                   ; 2 uses
   %i.ad = icmp slt i32 %i.ab, 0
-  br i1 %i.ad, label %bb.b, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i72
+  br i1 %i.ad, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt6vectorIcSaIcEES2_IS4_SaIS4_EEEENS1_IPlS2_IlSaIlEEEEZN7xgboost10collective16VectorAllgatherVEPKNSE_7ContextERKNSF_9CommGroupERKS8_E3$_0ET0_T_SQ_SP_T1_.exit"
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.21) #30
@@ -289,12 +289,7 @@ bb.b:                                             ; preds = %"_ZSt9transformIN9_
 .noexc75:                                         ; preds = %bb.b
   unreachable
 
-_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i72: ; preds = %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt6vectorIcSaIcEES2_IS4_SaIS4_EEEENS1_IPlS2_IlSaIlEEEEZN7xgboost10collective16VectorAllgatherVEPKNSE_7ContextERKNSF_9CommGroupERKS8_E3$_0ET0_T_SQ_SP_T1_.exit"
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
-  %.not.i.i.i.i73 = icmp eq i32 %i.ab, 0
-  br i1 %.not.i.i.i.i73, label %.loopexit172, label %bb.c
-
-bb.c:                                             ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i72
+bb.c:                                             ; preds = %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt6vectorIcSaIcEES2_IS4_SaIS4_EEEENS1_IPlS2_IlSaIlEEEEZN7xgboost10collective16VectorAllgatherVEPKNSE_7ContextERKNSF_9CommGroupERKS8_E3$_0ET0_T_SQ_SP_T1_.exit"
   %i.ae = shl nuw nsw i64 %i.ac, 3                ; 3 uses
   %i.af = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ae) #28
           to label %.noexc76 unwind label %bb.m   ; 4 uses
@@ -302,21 +297,17 @@ bb.c:                                             ; preds = %_ZNSt6vectorIlSaIlE
 .noexc76:                                         ; preds = %bb.c
   store ptr %i.af, ptr %4, align 8, !tbaa !83
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.ac
-  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !84
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.af, i8 0, i64 %i.ae, i1 false), !tbaa !52
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ae
-  br label %.loopexit172
-
-.loopexit172:                                     ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i72, %.noexc76
-  %.0.i.i.i.i.i.i.i = phi ptr [ %i.ai, %.noexc76 ], [ null, %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i72 ]
   %12 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store ptr %.0.i.i.i.i.i.i.i, ptr %12, align 8, !tbaa !85
+  store ptr %i.ai, ptr %12, align 8, !tbaa !85
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   invoke void @_ZN7xgboost16HostDeviceVectorIaEC1EmaNS_9DeviceOrdE(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef 0, i8 noundef signext 0, i32 -65536)
           to label %bb.d unwind label %bb.n
 
-bb.d:                                             ; preds = %.loopexit172
+bb.d:                                             ; preds = %.noexc76
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
   %i.aj = ptrtoint ptr %.sroa.0162.0 to i64       ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !230)
@@ -465,7 +456,7 @@ bb.m:                                             ; preds = %bb.c, %bb.b
           cleanup
   br label %_ZNSt6vectorIlSaIlEED2Ev.exit134
 
-bb.n:                                             ; preds = %.loopexit172
+bb.n:                                             ; preds = %.noexc76
   %i.cc = landingpad { ptr, i32 }
           cleanup
   br label %bb.av
@@ -868,8 +859,7 @@ _ZN7xgboost10collective6ResultD2Ev.exit123:       ; preds = %_ZNSt6vectorIlSaIlE
   br i1 %.not.i.i.i124, label %_ZNSt6vectorIlSaIlEED2Ev.exit125, label %bb.ap
 
 bb.ap:                                            ; preds = %_ZN7xgboost10collective6ResultD2Ev.exit123
-  %13 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.gt = load ptr, ptr %13, align 8, !tbaa !84
+  %i.gt = load ptr, ptr %i.ah, align 8, !tbaa !84
   %i.gu = ptrtoint ptr %i.gt to i64
   %i.gv = ptrtoint ptr %i.gs to i64
   %i.gw = sub i64 %i.gu, %i.gv
@@ -929,8 +919,7 @@ bb.av:                                            ; preds = %bb.au, %bb.n
   br i1 %.not.i.i.i133, label %_ZNSt6vectorIlSaIlEED2Ev.exit134, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %14 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.hg = load ptr, ptr %14, align 8, !tbaa !84
+  %i.hg = load ptr, ptr %i.ah, align 8, !tbaa !84
   %i.hh = ptrtoint ptr %i.hg to i64
   %i.hi = ptrtoint ptr %i.hf to i64
   %i.hj = sub i64 %i.hh, %i.hi

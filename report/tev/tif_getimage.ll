@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x, %bb.u
   %i.uh = getelementptr inbounds nuw [4 x i8], ptr %.3247267, i64 %i.uf
   %i.ui = getelementptr inbounds nuw [4 x i8], ptr %.3242268, i64 %i.uf
   %i.uj = getelementptr inbounds nuw [4 x i8], ptr %.3237269, i64 %i.uf
-  br label %._crit_edge.a
+  br label %._crit_edge
 
 bb.z:                                             ; preds = %bb.y
   %i.uk = getelementptr inbounds nuw i8, ptr %.3271, i64 16 ; 2 uses
@@ -215,24 +215,27 @@ bb.z:                                             ; preds = %bb.y
   %i.uo = add i32 %.1232270, -4                   ; 2 uses
   %i.up = getelementptr inbounds nuw i8, ptr %.3252266, i64 18
   %.not255 = icmp eq i32 %i.uo, 0
-  br i1 %.not255, label %._crit_edge.a, label %bb.e
+  br i1 %.not255, label %._crit_edge, label %bb.e
 
-._crit_edge.a:                                    ; preds = %bb.z, %.thread
-  %.4321 = phi ptr [ %i.ug, %.thread ], [ %i.uk, %bb.z ]
-  %.4238320 = phi ptr [ %i.uj, %.thread ], [ %i.un, %bb.z ]
-  %.4243319 = phi ptr [ %i.ui, %.thread ], [ %i.um, %bb.z ]
-  %.4248318 = phi ptr [ %i.uh, %.thread ], [ %i.ul, %bb.z ]
+._crit_edge:                                      ; preds = %bb.z, %.thread
+  %.4316 = phi ptr [ %i.ug, %.thread ], [ %i.uk, %bb.z ]
+  %.4238315 = phi ptr [ %i.uj, %.thread ], [ %i.un, %bb.z ]
+  %.4243314 = phi ptr [ %i.ui, %.thread ], [ %i.um, %bb.z ]
+  %.4248313 = phi ptr [ %i.uh, %.thread ], [ %i.ul, %bb.z ]
+  %9 = icmp ult i32 %.1254277, 5
+  br i1 %9, label %.loopexit, label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge
   %i.uq = getelementptr inbounds nuw i8, ptr %.3252266, i64 18
   %i.ur = add i32 %.1254277, -4
-  %i.us = getelementptr inbounds [4 x i8], ptr %.4321, i64 %i.di
-  %i.ut = getelementptr inbounds [4 x i8], ptr %.4248318, i64 %i.di
-  %i.uu = getelementptr inbounds [4 x i8], ptr %.4243319, i64 %i.di
-  %i.uv = getelementptr inbounds [4 x i8], ptr %.4238320, i64 %i.di
+  %i.us = getelementptr inbounds [4 x i8], ptr %.4316, i64 %i.di
+  %i.ut = getelementptr inbounds [4 x i8], ptr %.4248313, i64 %i.di
+  %i.uu = getelementptr inbounds [4 x i8], ptr %.4243314, i64 %i.di
+  %i.uv = getelementptr inbounds [4 x i8], ptr %.4238315, i64 %i.di
   %i.uw = getelementptr inbounds i8, ptr %i.uq, i64 %i.dj
-  %or.cond301 = icmp ult i32 %.1254277, 5
-  br i1 %or.cond301, label %.loopexit, label %.preheader258
+  br label %.preheader258
 
-.loopexit:                                        ; preds = %._crit_edge.a, %bb.d, %.preheader258.lr.ph, %.preheader259, %.preheader
+.loopexit:                                        ; preds = %._crit_edge, %bb.d, %.preheader258.lr.ph, %.preheader259, %.preheader
   ret void
 }
 
@@ -635,17 +638,20 @@ bb.p:                                             ; preds = %bb.o
   %.1133.be187 = add i32 %.1133157, -4
   %.3.be = select i1 %i.ke, ptr %i.kk, ptr %i.kf  ; 2 uses
   %.not146 = icmp ult i32 %.1133157, 5
-  br i1 %.not146, label %._crit_edge.a, label %bb.e
+  br i1 %.not146, label %._crit_edge, label %bb.e
 
-._crit_edge.a:                                    ; preds = %.backedge
+._crit_edge:                                      ; preds = %.backedge
+  %9 = icmp ult i32 %.1145162, 3
+  br i1 %9, label %.loopexit, label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge
   %i.kl = add i32 %.1145162, -2
   %i.km = getelementptr inbounds [4 x i8], ptr %.3.be, i64 %i.bi
   %i.kn = getelementptr inbounds [4 x i8], ptr %.3138.be, i64 %i.bi
   %i.ko = getelementptr inbounds i8, ptr %i.kh, i64 %i.bj
-  %or.cond178 = icmp ult i32 %.1145162, 3
-  br i1 %or.cond178, label %.loopexit, label %.preheader149
+  br label %.preheader149
 
-.loopexit:                                        ; preds = %._crit_edge.a, %bb.d, %.preheader149.lr.ph, %.preheader150, %.preheader
+.loopexit:                                        ; preds = %._crit_edge, %bb.d, %.preheader149.lr.ph, %.preheader150, %.preheader
   ret void
 }
 

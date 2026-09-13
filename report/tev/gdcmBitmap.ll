@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   br label %.thread.i
 
-.thread.i:                                        ; preds = %bb.h, %bb.f, %bb.g
+.thread.i:                                        ; preds = %bb.f, %bb.h, %bb.g
   %.09.i = phi i16 [ %i.c, %bb.h ], [ 7, %bb.g ], [ 11, %bb.f ] ; 2 uses
   %i.e = icmp ult i16 %.09.i, %.0
   br i1 %i.e, label %.sink.split.i, label %_ZN4gdcm11PixelFormat10SetHighBitEt.exit

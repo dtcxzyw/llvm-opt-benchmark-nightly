@@ -204,9 +204,9 @@ _RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtNtNtNtCs8K4cjrcxBsw_6
   %i.at = load i32, ptr %.sroa.04.02.i.i.i, align 8, !noundef !9
   %i.au = call noundef nonnull align 8 ptr @_RNvXs_NtCsbq3eHDLgq0Z_8la_arena3mapINtB4_8ArenaMapINtB6_3IdxNtNtCs8K4cjrcxBsw_6hir_ty3mir5LocalENtNtBY_8borrowck16MutabilityReasonEINtNtNtCshzWfHUSfYae_4core3ops5index5IndexBM_E5indexB10_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.0.01.i, i32 noundef %i.at, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @494)
   %i.av = load i64, ptr %i.as, align 8, !range !43, !noundef !9 ; 2 uses
-  %3 = add i64 %i.av, -9223372036854775807        ; 2 uses
-  %4 = icmp sgt i64 %i.av, -1
-  br i1 %4, label %.loopexit.i.i.i, label %bb.h
+  %3 = icmp sgt i64 %i.av, -1
+  %4 = add i64 %i.av, -9223372036854775807        ; 2 uses
+  br i1 %3, label %.loopexit.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtNtNtNtCs8K4cjrcxBsw_6hir_ty5infer7closure8analysis16expr_use_visitor10ProjectionENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNCNvNvXs0_NvNvMs_NtNtB10_3mir8borrowckNtB10_11InferBodyId8borrowck1__NtB38_29borrowck_query_Configuration_NtNtCsd9Lm8bEdjjY_5salsa8function13Configuration7execute6inner_s_00EB10_.exit.i.i.i
   %i.aw = load i64, ptr %i.au, align 8, !range !43, !noundef !9 ; 2 uses
@@ -214,7 +214,7 @@ bb.h:                                             ; preds = %_RINvXs2J_NtNtCshzW
   br i1 %i.ax, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ay = icmp eq i64 %3, 1
+  %i.ay = icmp eq i64 %4, 1
   br i1 %i.ay, label %.loopexit.i.i.i, label %bb.k
 
 bb.j:                                             ; preds = %bb.h
@@ -230,7 +230,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.az, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ba = icmp eq i64 %3, 2
+  %i.ba = icmp eq i64 %4, 2
   call void @llvm.assume(i1 %i.ba)
   br label %.loopexit.i.i.i
 

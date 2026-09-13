@@ -204,15 +204,15 @@ bb.d:                                             ; preds = %bb.c
   %i.o = icmp ugt i64 %.val3, 29
   br i1 %i.o, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsbakdBCgU4AF_16influxdb3_server.exit.i.i.i, label %1
 
-1:                                                ; preds = %bb.d
-  %2 = icmp eq i64 %.val3, 29
-  br i1 %2, label %.split36, label %.backedge
-
 _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsbakdBCgU4AF_16influxdb3_server.exit.i.i.i: ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2764)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2765)
   %i.p = icmp ult i64 %.val3, 44
   br i1 %i.p, label %.lr.ph.split.us.i.i.i, label %bb.e
+
+1:                                                ; preds = %bb.d
+  %2 = icmp eq i64 %.val3, 29
+  br i1 %2, label %.split36, label %.backedge
 
 bb.e:                                             ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsbakdBCgU4AF_16influxdb3_server.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2766

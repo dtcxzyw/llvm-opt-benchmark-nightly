@@ -204,8 +204,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br label %.lr.ph.i.i.a
 
 .lr.ph.i.i.a:                                     ; preds = %.lr.ph.i.i.a, %.lr.ph.preheader.i.i.a
-  %.013.i.i = phi i32 [ %i.cd, %.lr.ph.i.i.a ], [ 0, %.lr.ph.preheader.i.i.a ]
-  %.0812.i.i = phi i32 [ %i.cc, %.lr.ph.i.i.a ], [ %i.cb, %.lr.ph.preheader.i.i.a ] ; 2 uses
+  %.013.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i.a ], [ %i.cd, %.lr.ph.i.i.a ]
+  %.0812.i.i = phi i32 [ %i.cb, %.lr.ph.preheader.i.i.a ], [ %i.cc, %.lr.ph.i.i.a ] ; 2 uses
   %i.cc = udiv i32 %.0812.i.i, 10
   %i.cd = add nuw nsw i32 %.013.i.i, 1            ; 2 uses
   %.not.i.i = icmp ult i32 %.0812.i.i, 10
@@ -608,8 +608,8 @@ bb.an:                                            ; preds = %.critedge.i
   br label %.lr.ph.i335.i
 
 .lr.ph.i335.i:                                    ; preds = %.lr.ph.i335.i, %.lr.ph.preheader.i334.i
-  %.013.i336.i = phi i32 [ %i.nj, %.lr.ph.i335.i ], [ 0, %.lr.ph.preheader.i334.i ]
-  %.0812.i337.i = phi i32 [ %i.ni, %.lr.ph.i335.i ], [ %i.nh, %.lr.ph.preheader.i334.i ] ; 2 uses
+  %.013.i336.i = phi i32 [ 0, %.lr.ph.preheader.i334.i ], [ %i.nj, %.lr.ph.i335.i ]
+  %.0812.i337.i = phi i32 [ %i.nh, %.lr.ph.preheader.i334.i ], [ %i.ni, %.lr.ph.i335.i ] ; 2 uses
   %i.ni = udiv i32 %.0812.i337.i, 10
   %i.nj = add nuw nsw i32 %.013.i336.i, 1         ; 2 uses
   %.not.i338.i = icmp ult i32 %.0812.i337.i, 10
@@ -1012,8 +1012,8 @@ bb.a:
   br label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i.a
-  %.013.i = phi i32 [ %i.h, %.lr.ph.i.a ], [ 0, %.lr.ph.preheader.i.a ]
-  %.0812.i = phi i32 [ %i.g, %.lr.ph.i.a ], [ %i.f, %.lr.ph.preheader.i.a ] ; 2 uses
+  %.013.i = phi i32 [ 0, %.lr.ph.preheader.i.a ], [ %i.h, %.lr.ph.i.a ]
+  %.0812.i = phi i32 [ %i.f, %.lr.ph.preheader.i.a ], [ %i.g, %.lr.ph.i.a ] ; 2 uses
   %i.g = udiv i32 %.0812.i, 10
   %i.h = add nuw nsw i32 %.013.i, 1               ; 2 uses
   %.not.i = icmp ult i32 %.0812.i, 10
@@ -1416,8 +1416,8 @@ Io_WriteVerilogGetName.exit372:                   ; preds = %bb.y, %._crit_edge.
   br label %.lr.ph.i374
 
 .lr.ph.i374:                                      ; preds = %.lr.ph.i374, %.lr.ph.preheader.i373
-  %.013.i375 = phi i32 [ %i.pv, %.lr.ph.i374 ], [ 0, %.lr.ph.preheader.i373 ]
-  %.0812.i376 = phi i32 [ %i.pu, %.lr.ph.i374 ], [ %i.pt, %.lr.ph.preheader.i373 ] ; 2 uses
+  %.013.i375 = phi i32 [ 0, %.lr.ph.preheader.i373 ], [ %i.pv, %.lr.ph.i374 ]
+  %.0812.i376 = phi i32 [ %i.pt, %.lr.ph.preheader.i373 ], [ %i.pu, %.lr.ph.i374 ] ; 2 uses
   %i.pu = udiv i32 %.0812.i376, 10
   %i.pv = add nuw nsw i32 %.013.i375, 1           ; 2 uses
   %.not.i377 = icmp ult i32 %.0812.i376, 10

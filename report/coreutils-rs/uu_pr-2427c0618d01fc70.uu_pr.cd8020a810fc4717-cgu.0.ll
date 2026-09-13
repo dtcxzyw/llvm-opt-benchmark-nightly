@@ -205,8 +205,8 @@ _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit: ; pred
   br i1 %i.a, label %bb.b, label %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit11
 
 bb.b:                                             ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit
-  %i.b = add i64 %1, -1                           ; 12 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 10 uses
+  %i.b = add i64 %1, -1                           ; 11 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 9 uses
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %bb.f, %bb.b
@@ -267,9 +267,9 @@ bb.g:                                             ; preds = %bb.e
   %i.v = icmp eq i8 %lhsc.i, 58
   br i1 %i.v, label %bb.h, label %bb.f
 
-_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit11: ; preds = %bb.l, %.lr.ph, %.lr.ph62, %bb.n, %.lr.ph64, %bb.k, %bb.m, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit, %bb.a, %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit, %bb.j, %bb.h
-  %.sroa.4.0 = phi i64 [ 0, %bb.j ], [ undef, %.lr.ph62 ], [ undef, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit ], [ %i.b, %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit ], [ %i.b, %bb.m ], [ undef, %bb.h ], [ undef, %bb.a ], [ %i.b, %bb.n ], [ %i.b, %bb.k ], [ %i.b, %.lr.ph64 ], [ %i.b, %.lr.ph ], [ %i.b, %bb.l ]
-  %.sroa.0.0 = phi ptr [ null, %bb.j ], [ null, %.lr.ph62 ], [ null, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit ], [ null, %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit ], [ %i.c, %bb.m ], [ null, %bb.h ], [ null, %bb.a ], [ null, %.lr.ph64 ], [ %i.c, %bb.k ], [ %i.c, %bb.n ], [ null, %.lr.ph ], [ %i.c, %bb.l ]
+_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit11: ; preds = %bb.l, %.lr.ph, %.lr.ph62, %bb.n, %.lr.ph64, %bb.m, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit, %bb.a, %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit, %bb.j, %bb.h
+  %.sroa.4.0 = phi i64 [ 0, %bb.j ], [ undef, %.lr.ph62 ], [ undef, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit ], [ %i.b, %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit ], [ %i.b, %bb.m ], [ undef, %bb.h ], [ undef, %bb.a ], [ %i.b, %bb.n ], [ %i.b, %.lr.ph64 ], [ %i.b, %.lr.ph ], [ %i.b, %bb.l ]
+  %.sroa.0.0 = phi ptr [ null, %bb.j ], [ null, %.lr.ph62 ], [ null, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit ], [ null, %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit ], [ %i.c, %bb.m ], [ null, %bb.h ], [ null, %bb.a ], [ null, %.lr.ph64 ], [ %i.c, %bb.n ], [ %i.c, %bb.l ], [ null, %.lr.ph ]
   %i.w = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %i.x = insertvalue { ptr, i64 } %i.w, i64 %.sroa.4.0, 1
   ret { ptr, i64 } %i.x
@@ -298,8 +298,7 @@ bb.j:                                             ; preds = %bb.f, %_RNvNtNtCs6J
 
 bb.k:                                             ; preds = %bb.j
   %i.af = getelementptr i8, ptr %0, i64 %1
-  %.not.not.not.i.not.i758 = icmp eq i64 %1, 1
-  br i1 %.not.not.not.i.not.i758, label %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit11, label %.lr.ph
+  br label %.lr.ph
 
 bb.l:                                             ; preds = %.lr.ph
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ah, i64 1 ; 2 uses
@@ -307,7 +306,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.not.not.not.i.not.i7, label %_RNCNvCshDScVpnq8df_5uu_pr15as_page_operand0B3_.exit11, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.k, %bb.l
-  %i.ah = phi ptr [ %i.ag, %bb.l ], [ %i.c, %bb.k ] ; 2 uses
+  %i.ah = phi ptr [ %i.c, %bb.k ], [ %i.ag, %bb.l ] ; 2 uses
   %.val.i.i8 = load i8, ptr %i.ah, align 1, !alias.scope !2164, !noalias !2165, !noundef !4
   %i.ai = add i8 %.val.i.i8, -58
   %.sroa.0.0.i.i.i.i.i9 = icmp ult i8 %i.ai, -10
@@ -710,7 +709,7 @@ bb.b:                                             ; preds = %.lr.ph, %_RINvNtCs6
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.0.0116, i64 24 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0116, i64 8 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0116, i64 16
-  %i.f = load i64, ptr %i.e, align 8, !noundef !4 ; 6 uses
+  %i.f = load i64, ptr %i.e, align 8, !noundef !4 ; 5 uses
   %i.g = icmp eq i64 %i.f, 2
   br i1 %i.g, label %bb.c, label %bb.d
 
@@ -753,8 +752,7 @@ _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit.i: ; pr
 
 bb.e:                                             ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit.i
   %i.r = getelementptr i8, ptr %i.m, i64 %i.f
-  %.not.not.not.i.not.i.i.i275 = icmp eq i64 %i.f, 1
-  br i1 %.not.not.not.i.not.i.i.i275, label %._crit_edge, label %.lr.ph276
+  br label %.lr.ph276
 
 bb.f:                                             ; preds = %.lr.ph276
   %i.s = getelementptr inbounds nuw i8, ptr %i.t, i64 1 ; 2 uses
@@ -762,13 +760,13 @@ bb.f:                                             ; preds = %.lr.ph276
   br i1 %.not.not.not.i.not.i.i.i, label %._crit_edge, label %.lr.ph276
 
 .lr.ph276:                                        ; preds = %bb.e, %bb.f
-  %i.t = phi ptr [ %i.s, %bb.f ], [ %i.p, %bb.e ] ; 2 uses
+  %i.t = phi ptr [ %i.p, %bb.e ], [ %i.s, %bb.f ] ; 2 uses
   %.val.i.i.i.i = load i8, ptr %i.t, align 1, !alias.scope !2360, !noalias !2361, !noundef !4
   %i.u = add i8 %.val.i.i.i.i, -58
   %.sroa.0.0.i.i.i.i.i.i.i = icmp ult i8 %i.u, -10
   br i1 %.sroa.0.0.i.i.i.i.i.i.i, label %_RNvCshDScVpnq8df_5uu_pr17as_column_operand.exit.thread, label %bb.f
 
-._crit_edge:                                      ; preds = %bb.f, %bb.e
+._crit_edge:                                      ; preds = %bb.f
   %.not.i = icmp slt i64 %i.o, 0
   br i1 %.not.i, label %bb.h, label %bb.g, !prof !10
 

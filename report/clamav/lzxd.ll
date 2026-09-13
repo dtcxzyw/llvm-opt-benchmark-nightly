@@ -205,10 +205,10 @@ bb.do:                                            ; preds = %bb.dh, %bb.dn
   %.311220.lcssa = phi ptr [ %.271216.lcssa, %._crit_edge3311 ], [ %i.pa, %bb.do ] ; 5 uses
   %.311159.lcssa = phi ptr [ %.271155.lcssa, %._crit_edge3311 ], [ %.331161, %bb.do ] ; 5 uses
   %.171084.lcssa = phi i32 [ %i.np, %._crit_edge3311 ], [ %i.pi, %bb.do ] ; 2 uses
-  %.171062.lcssa = phi i32 [ %i.nq, %._crit_edge3311 ], [ %i.pj, %bb.do ] ; 2 uses
+  %.171062.lcssa = phi i32 [ %i.nq, %._crit_edge3311 ], [ %i.pj, %bb.do ]
   %i.pl = lshr i32 %.171084.lcssa, 24
   %i.pm = shl i32 %.171084.lcssa, 8               ; 2 uses
-  %i.pn = add nsw i32 %.171062.lcssa, -8          ; 2 uses
+  %i.pn = add nsw i32 %.171062.lcssa, -8          ; 3 uses
   %i.po = lshr i32 %.151082.lcssa, 8
   %i.pp = and i32 %i.po, 16776960
   %i.pq = or disjoint i32 %i.pl, %i.pp            ; 2 uses
@@ -433,7 +433,7 @@ bb.em:                                            ; preds = %bb.ek
 
 bb.en:                                            ; preds = %._crit_edge3322
   store i8 1, ptr %i.br, align 4, !tbaa !72
-  %or.cond28 = icmp eq i32 %.171062.lcssa, 8
+  %or.cond28 = icmp eq i32 %i.pn, 0
   br i1 %or.cond28, label %bb.ep, label %bb.ex
 
 bb.eo:                                            ; preds = %bb.ew, %bb.et

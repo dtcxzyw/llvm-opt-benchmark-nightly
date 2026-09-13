@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store i32 0, ptr %i.f, align 8, !tbaa !14
   %.val = load i32, ptr %0, align 8, !tbaa !12    ; 3 uses
-  %switch.offset.i = add nsw i32 %.val, 2         ; 7 uses
   %3 = icmp ugt i32 %.val, 2
+  %switch.offset.i = add nuw nsw i32 %.val, 2     ; 7 uses
   br i1 %3, label %.thread118, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %GC_add_ext_descript
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %bb.j, %bb.w, %bb.x, %bb.i, %.critedge.preheader, %._crit_edge70.loopexit, %bb.aj, %GC_add_ext_descriptor.exit, %._crit_edge
-  %.2 = phi i64 [ %i.t, %._crit_edge ], [ %i.t, %GC_add_ext_descriptor.exit ], [ %i.aq, %._crit_edge70.loopexit ], [ %i.dr, %bb.aj ], [ %i.t, %bb.w ], [ 8, %.critedge.preheader ], [ 0, %bb.i ], [ %i.t, %bb.x ], [ 0, %bb.j ]
+  %.2 = phi i64 [ %i.t, %._crit_edge ], [ %i.t, %GC_add_ext_descriptor.exit ], [ %i.t, %bb.w ], [ %i.dr, %bb.aj ], [ 8, %.critedge.preheader ], [ %i.aq, %._crit_edge70.loopexit ], [ 0, %bb.i ], [ %i.t, %bb.x ], [ 0, %bb.j ]
   ret i64 %.2
 }
 

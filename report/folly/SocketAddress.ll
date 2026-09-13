@@ -204,11 +204,9 @@ _ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddr
 
 bb.e:                                             ; preds = %_ZSt3getIN5folly13SocketAddress16ExternalUnixAddrEJNS1_6IPAddrES2_NS1_9VsockAddrEEERKT_RKSt7variantIJDpT0_EE.exit20
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.x = load i32, ptr %i.w, align 8, !tbaa !73   ; 2 uses
-  %2 = icmp ne i32 %i.x, 2
+  %i.x = load i32, ptr %i.w, align 8, !tbaa !73
   %.not14 = icmp eq i32 %i.t, %i.x
-  %or.cond = and i1 %2, %.not14
-  br i1 %or.cond, label %bb.f, label %bb.o
+  br i1 %.not14, label %bb.f, label %bb.o
 
 bb.f:                                             ; preds = %bb.e
   %i.y = load ptr, ptr %0, align 8, !tbaa !55

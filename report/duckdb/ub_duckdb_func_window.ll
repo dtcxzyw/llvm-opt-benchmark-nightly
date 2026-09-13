@@ -205,11 +205,11 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.d, %_ZNSt6vector
   br i1 %i.y, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.lr.ph, label %_ZNSt6vectorIjSaIjEED2Ev.exit49
 
 _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.lr.ph: ; preds = %_ZNSt6vectorIjSaIjEED2Ev.exit
-  %i.z = add nsw i64 %1, -1                       ; 2 uses
+  %i.z = add nsw i64 %1, -1
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.ac = shl nuw nsw i64 %1, 2
-  %.idx.i.i.i.i.i31.i = shl nuw nsw i64 %i.z, 2
+  %i.ac = shl nuw nsw i64 %1, 2                   ; 2 uses
+  %.idx.i.i.i.i.i31.i = add nsw i64 %i.ac, -4
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   br label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i
@@ -500,11 +500,11 @@ _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %bb.d, %_ZNSt6vector
   br i1 %i.y, label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.lr.ph, label %_ZNSt6vectorImSaImEED2Ev.exit49
 
 _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.lr.ph: ; preds = %_ZNSt6vectorImSaImEED2Ev.exit
-  %i.z = add nsw i64 %1, -1                       ; 2 uses
+  %i.z = add nsw i64 %1, -1
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.ac = shl nuw nsw i64 %1, 3
-  %.idx.i.i.i.i.i31.i = shl nuw nsw i64 %i.z, 3
+  %i.ac = shl nuw nsw i64 %1, 3                   ; 2 uses
+  %.idx.i.i.i.i.i31.i = add nsw i64 %i.ac, -8
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   br label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i
