@@ -144,7 +144,8 @@ bb.b:                                             ; preds = %bb.a
   call preserve_mostcc void @_ZN2v88internal10ZoneVectorINS0_8compiler9RpoNumberEE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %1, i64 noundef range(i64 -2147483648, 2147483648) %i.j)
   %i.ap = load ptr, ptr %i.m, align 8             ; 2 uses
   %.idx43.i.i = shl nuw nsw i64 %i.j, 2           ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ap, i8 -1, i64 %.idx43.i.i, i1 false)
+  %8 = call i64 @llvm.umax.i64(i64 %.idx43.i.i, i64 4)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ap, i8 -1, i64 %8, i1 false)
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.idx43.i.i
   store ptr %i.aq, ptr %i.ao, align 8
   br label %_ZN2v88internal8compiler12_GLOBAL__N_118JumpThreadingState5ClearEm.exit

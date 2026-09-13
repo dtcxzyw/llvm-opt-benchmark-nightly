@@ -205,7 +205,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc102
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.039210.epil
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !26
   %i.cj = add nsw i32 %i.ci, %.040209.epil
-  %i.ck = add nuw nsw i64 %.039210.epil, 1
+  %i.ck = add nuw i64 %.039210.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.preheader196.loopexit, label %.lr.ph211.epil, !llvm.loop !85
@@ -262,7 +262,7 @@ bb.u:                                             ; preds = %bb.s, %bb.r
   %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %i.dd
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !26
   %i.dh = add nsw i32 %i.dg, %i.dc                ; 2 uses
-  %i.di = add nuw nsw i64 %.039210, 4             ; 2 uses
+  %i.di = add nuw i64 %.039210, 4                 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader196.loopexit.unr-lcssa, label %.lr.ph211, !llvm.loop !86
@@ -665,7 +665,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorIN5drac
 
 bb.e:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !27   ; 7 uses
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !27   ; 8 uses
   %i.x = ptrtoint ptr %i.w to i64                 ; 2 uses
   %i.y = sub i64 %i.x, %i.e
   %i.z = ashr exact i64 %i.y, 2                   ; 2 uses
@@ -674,7 +674,7 @@ bb.e:                                             ; preds = %bb.a
 
 bb.f:                                             ; preds = %bb.e
   %.not5.i.i.i.i = icmp eq ptr %i.c, %i.w
-  br i1 %.not5.i.i.i.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a, label %.lr.ph.preheader.i.i.i.i
+  br i1 %.not5.i.i.i.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit, label %.lr.ph.preheader.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %bb.f
   %.pre.i.i.i.i = load i32, ptr %2, align 4, !tbaa !24 ; 2 uses
@@ -706,7 +706,7 @@ vector.body37:                                    ; preds = %vector.body37, %vec
 
 middle.block41:                                   ; preds = %vector.body37
   %cmp.n42 = icmp eq i64 %i.ae, %n.vec34
-  br i1 %cmp.n42, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a, label %.lr.ph.i.i.i.i.preheader
+  br i1 %cmp.n42, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.lr.ph.preheader.i.i.i.i, %middle.block41
   %.06.i.i.i.i.ph = phi ptr [ %i.c, %.lr.ph.preheader.i.i.i.i ], [ %i.ag, %middle.block41 ]
@@ -717,10 +717,14 @@ middle.block41:                                   ; preds = %vector.body37
   store i32 %.pre.i.i.i.i, ptr %.06.i.i.i.i, align 4, !tbaa !24
   %i.ak = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i, i64 4 ; 2 uses
   %.not.i.i.i.i11 = icmp eq ptr %i.ak, %i.w
-  br i1 %.not.i.i.i.i11, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a, label %.lr.ph.i.i.i.i, !llvm.loop !246
+  br i1 %.not.i.i.i.i11, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !246
 
-_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a: ; preds = %.lr.ph.i.i.i.i, %middle.block41, %bb.f
-  %3 = sub i64 %1, %i.z                           ; 5 uses
+_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit: ; preds = %.lr.ph.i.i.i.i, %middle.block41, %bb.f
+  %3 = sub nuw i64 %1, %i.z                       ; 6 uses
+  %.not12.i.i.i.i = icmp eq i64 %3, 0
+  br i1 %.not12.i.i.i.i, label %_ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a
+
+_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a: ; preds = %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit
   %.pre.i.i.i.i13 = load i32, ptr %2, align 4, !tbaa !24 ; 2 uses
   %min.iters.check45 = icmp ult i64 %3, 8
   br i1 %min.iters.check45, label %.lr.ph.i.i.i.i14.preheader, label %vector.ph46
@@ -763,9 +767,9 @@ middle.block54:                                   ; preds = %vector.body50
   %.not.i.i.i.i15 = icmp eq i64 %i.ar, 0
   br i1 %.not.i.i.i.i15, label %_ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i14, !llvm.loop !248
 
-_ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i14, %middle.block54
-  %.lcssa30 = phi ptr [ %i.am, %middle.block54 ], [ %i.as, %.lr.ph.i.i.i.i14 ]
-  store ptr %.lcssa30, ptr %i.v, align 8, !tbaa !27
+_ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i14, %middle.block54, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit
+  %.0.lcssa.i.i.i.i = phi ptr [ %i.w, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21VertexIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit ], [ %i.am, %middle.block54 ], [ %i.as, %.lr.ph.i.i.i.i14 ]
+  store ptr %.0.lcssa.i.i.i.i, ptr %i.v, align 8, !tbaa !27
   br label %_ZNSt6vectorIN5draco9IndexTypeIjNS0_21VertexIndex_tag_type_EEESaIS3_EED2Ev.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -911,7 +915,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorIN5drac
 
 bb.e:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !30   ; 7 uses
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !30   ; 8 uses
   %i.x = ptrtoint ptr %i.w to i64                 ; 2 uses
   %i.y = sub i64 %i.x, %i.e
   %i.z = ashr exact i64 %i.y, 2                   ; 2 uses
@@ -920,7 +924,7 @@ bb.e:                                             ; preds = %bb.a
 
 bb.f:                                             ; preds = %bb.e
   %.not5.i.i.i.i = icmp eq ptr %i.c, %i.w
-  br i1 %.not5.i.i.i.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a, label %.lr.ph.preheader.i.i.i.i
+  br i1 %.not5.i.i.i.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit, label %.lr.ph.preheader.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %bb.f
   %.pre.i.i.i.i = load i32, ptr %2, align 4, !tbaa !54 ; 2 uses
@@ -952,7 +956,7 @@ vector.body37:                                    ; preds = %vector.body37, %vec
 
 middle.block41:                                   ; preds = %vector.body37
   %cmp.n42 = icmp eq i64 %i.ae, %n.vec34
-  br i1 %cmp.n42, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a, label %.lr.ph.i.i.i.i.preheader
+  br i1 %cmp.n42, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.lr.ph.preheader.i.i.i.i, %middle.block41
   %.06.i.i.i.i.ph = phi ptr [ %i.c, %.lr.ph.preheader.i.i.i.i ], [ %i.ag, %middle.block41 ]
@@ -963,10 +967,14 @@ middle.block41:                                   ; preds = %vector.body37
   store i32 %.pre.i.i.i.i, ptr %.06.i.i.i.i, align 4, !tbaa !54
   %i.ak = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i, i64 4 ; 2 uses
   %.not.i.i.i.i11 = icmp eq ptr %i.ak, %i.w
-  br i1 %.not.i.i.i.i11, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a, label %.lr.ph.i.i.i.i, !llvm.loop !254
+  br i1 %.not.i.i.i.i11, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !254
 
-_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a: ; preds = %.lr.ph.i.i.i.i, %middle.block41, %bb.f
-  %3 = sub i64 %1, %i.z                           ; 5 uses
+_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit: ; preds = %.lr.ph.i.i.i.i, %middle.block41, %bb.f
+  %3 = sub nuw i64 %1, %i.z                       ; 6 uses
+  %.not12.i.i.i.i = icmp eq i64 %3, 0
+  br i1 %.not12.i.i.i.i, label %_ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a
+
+_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.a: ; preds = %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit
   %.pre.i.i.i.i13 = load i32, ptr %2, align 4, !tbaa !54 ; 2 uses
   %min.iters.check45 = icmp ult i64 %3, 8
   br i1 %min.iters.check45, label %.lr.ph.i.i.i.i14.preheader, label %vector.ph46
@@ -1009,9 +1017,9 @@ middle.block54:                                   ; preds = %vector.body50
   %.not.i.i.i.i15 = icmp eq i64 %i.ar, 0
   br i1 %.not.i.i.i.i15, label %_ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i14, !llvm.loop !256
 
-_ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i14, %middle.block54
-  %.lcssa30 = phi ptr [ %i.am, %middle.block54 ], [ %i.as, %.lr.ph.i.i.i.i14 ]
-  store ptr %.lcssa30, ptr %i.v, align 8, !tbaa !30
+_ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit: ; preds = %.lr.ph.i.i.i.i14, %middle.block54, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit
+  %.0.lcssa.i.i.i.i = phi ptr [ %i.w, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit ], [ %i.am, %middle.block54 ], [ %i.as, %.lr.ph.i.i.i.i14 ]
+  store ptr %.0.lcssa.i.i.i.i, ptr %i.v, align 8, !tbaa !30
   br label %_ZNSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EED2Ev.exit
 
 bb.g:                                             ; preds = %bb.e

@@ -202,10 +202,10 @@ bb.bb:                                            ; preds = %bb.az
 
 bb.bc:                                            ; preds = %bb.ay
   %i.gh = invoke noalias noundef nonnull dereferenceable(1048576) ptr @_Znwm(i64 noundef 1048576) #31
-          to label %bb.bd unwind label %bb.bk     ; 9 uses
+          to label %bb.bd unwind label %bb.bk     ; 10 uses
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 1048576 ; 7 uses
+  %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 1048576 ; 9 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1048576) %i.gh, i8 0, i64 1048576, i1 false)
   %i.gj = call ptr @getenv(ptr noundef nonnull @.str.76) #29 ; 3 uses
   %.not144 = icmp eq ptr %i.gj, null
@@ -221,9 +221,14 @@ bb.bf:                                            ; preds = %bb.be
   %sext = shl i64 %i.gl, 32                       ; 2 uses
   %i.gm = ashr exact i64 %sext, 32                ; 6 uses
   %i.gn = icmp ugt i64 %i.gm, 1048576
-  br i1 %i.gn, label %bb.bg, label %bb.bj
+  br i1 %i.gn, label %20, label %bb.bj
 
-bb.bg:                                            ; preds = %bb.bf
+20:                                               ; preds = %bb.bf
+  %21 = add nsw i64 %i.gm, -1048576               ; 2 uses
+  %.not.i299 = icmp eq i64 %21, 0
+  br i1 %.not.i299, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit, label %bb.bg
+
+bb.bg:                                            ; preds = %20
   %i.go = icmp slt i64 %i.gm, 1048576
   br i1 %i.go, label %bb.bh, label %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i
 
@@ -235,8 +240,7 @@ bb.bh:                                            ; preds = %bb.bg
   unreachable
 
 _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i:  ; preds = %bb.bg
-  %20 = add nsw i64 %i.gm, -1048576
-  %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %20, i64 1048576)
+  %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %21, i64 1048576)
   %i.gp = add nuw nsw i64 %.sroa.speculated.i.i, 1048576 ; 2 uses
   %i.gq = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gp) #31
           to label %.noexc302 unwind label %.thread350 ; 6 uses
@@ -276,10 +280,10 @@ bb.bk:                                            ; preds = %bb.bc
           cleanup
   br label %bb.fb
 
-_ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %bb.bj, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit34.i, %bb.be, %bb.bd
-  %.sroa.0317.0 = phi ptr [ %i.gh, %bb.bd ], [ %i.gh, %bb.be ], [ %i.gh, %bb.bj ], [ %i.gq, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit34.i ] ; 10 uses
-  %.sroa.21.0 = phi ptr [ %i.gi, %bb.bd ], [ %i.gi, %bb.be ], [ %spec.select, %bb.bj ], [ %i.gv, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit34.i ] ; 2 uses
-  %.sroa.36.0 = phi ptr [ %i.gi, %bb.bd ], [ %i.gi, %bb.be ], [ %i.gi, %bb.bj ], [ %i.gw, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit34.i ] ; 7 uses
+_ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %bb.bj, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit34.i, %20, %bb.be, %bb.bd
+  %.sroa.0317.0 = phi ptr [ %i.gh, %bb.bd ], [ %i.gh, %bb.be ], [ %i.gh, %bb.bj ], [ %i.gh, %20 ], [ %i.gq, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit34.i ] ; 10 uses
+  %.sroa.21.0 = phi ptr [ %i.gi, %bb.bd ], [ %i.gi, %bb.be ], [ %spec.select, %bb.bj ], [ %i.gi, %20 ], [ %i.gv, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit34.i ] ; 2 uses
+  %.sroa.36.0 = phi ptr [ %i.gi, %bb.bd ], [ %i.gi, %bb.be ], [ %i.gi, %bb.bj ], [ %i.gi, %20 ], [ %i.gw, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit34.i ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #29
   store i64 0, ptr %i.e, align 8, !tbaa !82
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #29

@@ -205,12 +205,16 @@ _ZNSt13_Bvector_baseISaIbEED2Ev.exit193.thread:   ; preds = %bb.an
   br label %_ZNSt13_Bvector_baseISaIbEED2Ev.exit195
 
 .lr.ph302:                                        ; preds = %.lr.ph302.preheader, %bb.ar
-  %.048301 = phi i64 [ %i.gn, %bb.ar ], [ 0, %.lr.ph302.preheader ] ; 5 uses
-  %20 = lshr i64 %.048301, 6
-  %i.gg = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %20
+  %.048301 = phi i64 [ %i.gn, %bb.ar ], [ 0, %.lr.ph302.preheader ] ; 6 uses
+  %20 = sdiv i64 %.048301, 64
+  %i.gg = getelementptr inbounds [8 x i8], ptr %i.cz, i64 %20
+  %21 = and i64 %.048301, -9223372036854775745
+  %22 = icmp ugt i64 %21, -9223372036854775808
+  %storemerge.idx.i.i.i.i.i = select i1 %22, i64 -8, i64 0
+  %storemerge.i.i.i.i.i = getelementptr inbounds i8, ptr %i.gg, i64 %storemerge.idx.i.i.i.i.i
   %i.gh = and i64 %.048301, 63
   %i.gi = shl nuw i64 1, %i.gh
-  %i.gj = load i64, ptr %i.gg, align 8, !tbaa !73
+  %i.gj = load i64, ptr %storemerge.i.i.i.i.i, align 8, !tbaa !73
   %i.gk = and i64 %i.gj, %i.gi
   %.not256 = icmp eq i64 %i.gk, 0
   br i1 %.not256, label %bb.ap, label %bb.ar

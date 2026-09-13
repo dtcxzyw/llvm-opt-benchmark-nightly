@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.k, align 8, !tbaa !301
-  %i.l = shl nuw i64 %i.f, 2
+  %i.l = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.l) #23
   br label %bb.f
 
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.m, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = shl nuw i64 %i.f, 2
+  %i.n = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #23
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit
 
@@ -1011,7 +1011,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.o, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = shl nuw i64 %i.h, 2
+  %i.p = shl i64 %i.h, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.p) #23
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit
 
@@ -1141,7 +1141,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.m, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = shl nuw i64 %i.f, 2
+  %i.n = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #23
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit
 
@@ -1544,11 +1544,15 @@ scalar.ph33:                                      ; preds = %scalar.ph33.prehead
   br i1 %.not.i43.i.i.i.i.i, label %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_13new_allocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEE17copy_n_and_updateIPS8_EEvRS9_T_m.exit44.i.i.i.i.i, label %scalar.ph33, !llvm.loop !6987
 
 _ZNK5boost9container3dtl21insert_n_copies_proxyINS0_13new_allocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEE17copy_n_and_updateIPS8_EEvRS9_T_m.exit44.i.i.i.i.i: ; preds = %scalar.ph33, %middle.block41
-  %i.ap = sub i64 %3, %i.q                        ; 5 uses
-  %min.iters.check46 = icmp ult i64 %i.ap, 4
-  br i1 %min.iters.check46, label %.lr.ph.i.i.i.i.i.i.i.preheader.a, label %vector.ph47
+  %i.ap = sub nuw i64 %3, %i.q                    ; 6 uses
+  %.not15.i.i.i.i.i.i.i = icmp eq i64 %i.ap, 0
+  br i1 %.not15.i.i.i.i.i.i.i, label %_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_13new_allocatorIS6_EEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyIS8_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
-vector.ph47:                                      ; preds = %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_13new_allocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEE17copy_n_and_updateIPS8_EEvRS9_T_m.exit44.i.i.i.i.i
+.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_13new_allocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEE17copy_n_and_updateIPS8_EEvRS9_T_m.exit44.i.i.i.i.i
+  %min.iters.check47 = icmp ult i64 %i.ap, 4
+  br i1 %min.iters.check47, label %.lr.ph.i.i.i.i.i.i.i.preheader.a, label %vector.ph47
+
+vector.ph47:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
   %n.vec48 = and i64 %i.ap, -4                    ; 3 uses
   %i.aq = and i64 %i.ap, 3
   %i.ar = shl i64 %n.vec48, 3
@@ -1571,9 +1575,9 @@ middle.block56:                                   ; preds = %vector.body49
   %cmp.n57 = icmp eq i64 %i.ap, %n.vec48
   br i1 %cmp.n57, label %_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_13new_allocatorIS6_EEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyIS8_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader.a
 
-.lr.ph.i.i.i.i.i.i.i.preheader.a:                 ; preds = %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_13new_allocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEE17copy_n_and_updateIPS8_EEvRS9_T_m.exit44.i.i.i.i.i, %middle.block56
-  %.017.i.i.i.i.i.i.i.ph = phi i64 [ %i.ap, %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_13new_allocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEE17copy_n_and_updateIPS8_EEvRS9_T_m.exit44.i.i.i.i.i ], [ %i.aq, %middle.block56 ]
-  %.01416.i.i.i.i.i.i.i.ph = phi ptr [ %i.n, %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_13new_allocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEE17copy_n_and_updateIPS8_EEvRS9_T_m.exit44.i.i.i.i.i ], [ %i.as, %middle.block56 ]
+.lr.ph.i.i.i.i.i.i.i.preheader.a:                 ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %middle.block56
+  %.017.i.i.i.i.i.i.i.ph = phi i64 [ %i.ap, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %i.aq, %middle.block56 ]
+  %.01416.i.i.i.i.i.i.i.ph = phi ptr [ %i.n, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %i.as, %middle.block56 ]
   br label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader.a, %.lr.ph.i.i.i.i.i.i.i
@@ -1586,7 +1590,7 @@ middle.block56:                                   ; preds = %vector.body49
   %.not.i.i45.i.i.i.i.i = icmp eq i64 %i.aw, 0
   br i1 %.not.i.i45.i.i.i.i.i, label %_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_13new_allocatorIS6_EEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyIS8_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !6989
 
-_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_13new_allocatorIS6_EEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyIS8_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i: ; preds = %scalar.ph, %.lr.ph.i.i.i.i.i.i.i, %middle.block, %middle.block56, %.lr.ph.i.i.i.i.i.i.preheader, %bb.f, %bb.e
+_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_13new_allocatorIS6_EEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyIS8_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i: ; preds = %scalar.ph, %.lr.ph.i.i.i.i.i.i.i, %middle.block, %middle.block56, %.lr.ph.i.i.i.i.i.i.preheader, %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_13new_allocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEE17copy_n_and_updateIPS8_EEvRS9_T_m.exit44.i.i.i.i.i, %bb.f, %bb.e
   %i.ay = load i64, ptr %i.k, align 8, !tbaa !376, !noalias !6991
   %i.az = add i64 %i.ay, %3
   store i64 %i.az, ptr %i.k, align 8, !tbaa !376, !noalias !6991

@@ -205,10 +205,14 @@ bb.aw:                                            ; preds = %bb.au, %bb.av
 bb.ax:                                            ; preds = %bb.aw
   %i.kn = add nsw i64 %i.kf, 1                    ; 4 uses
   %i.ko = icmp ugt i64 %i.kn, %i.km
-  br i1 %i.ko, label %bb.ay, label %bb.bc
+  br i1 %i.ko, label %5, label %bb.bc
 
-bb.ay:                                            ; preds = %bb.ax
-  %5 = sub nuw nsw i64 %i.kn, %i.km               ; 10 uses
+5:                                                ; preds = %bb.ax
+  %6 = sub nuw nsw i64 %i.kn, %i.km               ; 11 uses
+  %.not.i187 = icmp eq i64 %6, 0
+  br i1 %.not.i187, label %_ZNSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE6resizeEm.exit169, label %bb.ay
+
+bb.ay:                                            ; preds = %5
   %i.kp = getelementptr inbounds nuw i8, ptr %.0196.ph, i64 16 ; 3 uses
   %i.kq = load ptr, ptr %i.kp, align 8
   %i.kr = ptrtoint ptr %i.kq to i64
@@ -219,23 +223,23 @@ bb.ay:                                            ; preds = %bb.ax
   %i.kv = xor i64 %i.km, 576460752303423487       ; 2 uses
   %i.kw = icmp ule i64 %i.kt, %i.kv
   call void @llvm.assume(i1 %i.kw)
-  %.not28.i = icmp ult i64 %i.kt, %5
+  %.not28.i = icmp ult i64 %i.kt, %6
   br i1 %.not28.i, label %bb.az, label %.lr.ph.i.i.i.i188.preheader
 
 .lr.ph.i.i.i.i188.preheader:                      ; preds = %bb.ay
   %i.kx = sub nsw i64 %i.kf, %i.km
-  %xtraiter = and i64 %5, 7                       ; 2 uses
+  %xtraiter = and i64 %6, 7                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i188.prol.loopexit, label %.lr.ph.i.i.i.i188.prol
 
 .lr.ph.i.i.i.i188.prol:                           ; preds = %.lr.ph.i.i.i.i188.preheader, %.lr.ph.i.i.i.i188.prol
   %.013.i.i.i.i.prol = phi ptr [ %i.la, %.lr.ph.i.i.i.i188.prol ], [ %i.kh, %.lr.ph.i.i.i.i188.preheader ] ; 3 uses
-  %.01012.i.i.i.i.prol = phi i64 [ %i.kz, %.lr.ph.i.i.i.i188.prol ], [ %5, %.lr.ph.i.i.i.i188.preheader ]
+  %.01012.i.i.i.i.prol = phi i64 [ %i.kz, %.lr.ph.i.i.i.i188.prol ], [ %6, %.lr.ph.i.i.i.i188.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i188.prol ], [ 0, %.lr.ph.i.i.i.i188.preheader ]
   store ptr null, ptr %.013.i.i.i.i.prol, align 8
   %i.ky = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.prol, i64 8
   store i32 0, ptr %i.ky, align 8
-  %i.kz = add i64 %.01012.i.i.i.i.prol, -1        ; 2 uses
+  %i.kz = add nsw i64 %.01012.i.i.i.i.prol, -1    ; 2 uses
   %i.la = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -244,7 +248,7 @@ bb.ay:                                            ; preds = %bb.ax
 .lr.ph.i.i.i.i188.prol.loopexit:                  ; preds = %.lr.ph.i.i.i.i188.prol, %.lr.ph.i.i.i.i188.preheader
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.i.i188.preheader ], [ %i.la, %.lr.ph.i.i.i.i188.prol ]
   %.013.i.i.i.i.unr = phi ptr [ %i.kh, %.lr.ph.i.i.i.i188.preheader ], [ %i.la, %.lr.ph.i.i.i.i188.prol ]
-  %.01012.i.i.i.i.unr = phi i64 [ %5, %.lr.ph.i.i.i.i188.preheader ], [ %i.kz, %.lr.ph.i.i.i.i188.prol ]
+  %.01012.i.i.i.i.unr = phi i64 [ %6, %.lr.ph.i.i.i.i188.preheader ], [ %i.kz, %.lr.ph.i.i.i.i188.prol ]
   %i.lb = icmp ult i64 %i.kx, 7
   br i1 %i.lb, label %_ZSt27__uninitialized_default_n_aIPN10glTFCommon3RefIN5glTF28AccessorEEEmS4_ET_S6_T0_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i188
 
@@ -282,7 +286,7 @@ bb.ay:                                            ; preds = %bb.ax
   store ptr null, ptr %i.lp, align 8
   %i.lq = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 120
   store i32 0, ptr %i.lq, align 8
-  %i.lr = add i64 %.01012.i.i.i.i, -8             ; 2 uses
+  %i.lr = add nsw i64 %.01012.i.i.i.i, -8         ; 2 uses
   %i.ls = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i189.7 = icmp eq i64 %i.lr, 0
   br i1 %.not.i.i.i.i189.7, label %_ZSt27__uninitialized_default_n_aIPN10glTFCommon3RefIN5glTF28AccessorEEEmS4_ET_S6_T0_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i188, !llvm.loop !34
@@ -293,7 +297,7 @@ _ZSt27__uninitialized_default_n_aIPN10glTFCommon3RefIN5glTF28AccessorEEEmS4_ET_S
   br label %_ZNSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE6resizeEm.exit169
 
 bb.az:                                            ; preds = %bb.ay
-  %i.lt = icmp ult i64 %i.kv, %5
+  %i.lt = icmp ult i64 %i.kv, %6
   br i1 %i.lt, label %bb.ba, label %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i
 
 bb.ba:                                            ; preds = %bb.az
@@ -301,20 +305,20 @@ bb.ba:                                            ; preds = %bb.az
   unreachable
 
 _ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.az
-  %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.km, i64 %5)
+  %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.km, i64 %6)
   %i.lu = add nuw nsw i64 %.sroa.speculated.i.i, %i.km
   %i.lv = call i64 @llvm.umin.i64(i64 %i.lu, i64 576460752303423487) ; 2 uses
   %i.lw = shl nuw nsw i64 %i.lv, 4
   %i.lx = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.lw) #37 ; 4 uses
   %i.ly = getelementptr inbounds nuw i8, ptr %i.lx, i64 %i.kl ; 3 uses
   %i.lz = sub nsw i64 %i.kf, %i.km
-  %xtraiter338 = and i64 %5, 7                    ; 2 uses
+  %xtraiter338 = and i64 %6, 7                    ; 2 uses
   %lcmp.mod339.not = icmp eq i64 %xtraiter338, 0
   br i1 %lcmp.mod339.not, label %.lr.ph.i.i.i30.i.prol.loopexit, label %.lr.ph.i.i.i30.i.prol
 
 .lr.ph.i.i.i30.i.prol:                            ; preds = %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i, %.lr.ph.i.i.i30.i.prol
   %.013.i.i.i31.i.prol = phi ptr [ %i.mc, %.lr.ph.i.i.i30.i.prol ], [ %i.ly, %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i ] ; 3 uses
-  %.01012.i.i.i32.i.prol = phi i64 [ %i.mb, %.lr.ph.i.i.i30.i.prol ], [ %5, %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i ]
+  %.01012.i.i.i32.i.prol = phi i64 [ %i.mb, %.lr.ph.i.i.i30.i.prol ], [ %6, %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i ]
   %prol.iter340 = phi i64 [ %prol.iter340.next, %.lr.ph.i.i.i30.i.prol ], [ 0, %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i ]
   store ptr null, ptr %.013.i.i.i31.i.prol, align 8
   %i.ma = getelementptr inbounds nuw i8, ptr %.013.i.i.i31.i.prol, i64 8
@@ -327,7 +331,7 @@ _ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.e
 
 .lr.ph.i.i.i30.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i30.i.prol, %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i
   %.013.i.i.i31.i.unr = phi ptr [ %i.ly, %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i ], [ %i.mc, %.lr.ph.i.i.i30.i.prol ]
-  %.01012.i.i.i32.i.unr = phi i64 [ %5, %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i ], [ %i.mb, %.lr.ph.i.i.i30.i.prol ]
+  %.01012.i.i.i32.i.unr = phi i64 [ %6, %_ZNKSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE12_M_check_lenEmPKc.exit.i ], [ %i.mb, %.lr.ph.i.i.i30.i.prol ]
   %i.md = icmp ult i64 %i.lz, 7
   br i1 %i.md, label %_ZSt27__uninitialized_default_n_aIPN10glTFCommon3RefIN5glTF28AccessorEEEmS4_ET_S6_T0_RSaIT1_E.exit35.i, label %.lr.ph.i.i.i30.i
 
@@ -396,7 +400,7 @@ bb.bb:                                            ; preds = %_ZNSt6vectorIN10glT
 
 _ZNSt12_Vector_baseIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE13_M_deallocateEPS4_m.exit41.i: ; preds = %bb.bb, %_ZNSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit.i
   store ptr %i.lx, ptr %.0196.ph, align 8
-  %i.na = getelementptr inbounds nuw [16 x i8], ptr %i.ly, i64 %5
+  %i.na = getelementptr inbounds nuw [16 x i8], ptr %i.ly, i64 %6
   store ptr %i.na, ptr %i.kg, align 8
   %i.nb = getelementptr inbounds nuw [16 x i8], ptr %i.lx, i64 %i.lv
   store ptr %i.nb, ptr %i.kp, align 8
@@ -415,7 +419,7 @@ _ZSt8_DestroyIPN10glTFCommon3RefIN5glTF28AccessorEEES4_EvT_S6_RSaIT0_E.exit.i.i1
   store ptr %i.nd, ptr %i.kg, align 8
   br label %_ZNSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE6resizeEm.exit169
 
-_ZNSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE6resizeEm.exit169: ; preds = %_ZSt8_DestroyIPN10glTFCommon3RefIN5glTF28AccessorEEES4_EvT_S6_RSaIT0_E.exit.i.i168, %bb.bd, %bb.bc, %_ZSt27__uninitialized_default_n_aIPN10glTFCommon3RefIN5glTF28AccessorEEEmS4_ET_S6_T0_RSaIT1_E.exit.i, %_ZNSt12_Vector_baseIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE13_M_deallocateEPS4_m.exit41.i, %bb.aw
+_ZNSt6vectorIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE6resizeEm.exit169: ; preds = %_ZSt8_DestroyIPN10glTFCommon3RefIN5glTF28AccessorEEES4_EvT_S6_RSaIT0_E.exit.i.i168, %bb.bd, %bb.bc, %5, %_ZSt27__uninitialized_default_n_aIPN10glTFCommon3RefIN5glTF28AccessorEEEmS4_ET_S6_T0_RSaIT1_E.exit.i, %_ZNSt12_Vector_baseIN10glTFCommon3RefIN5glTF28AccessorEEESaIS4_EE13_M_deallocateEPS4_m.exit41.i, %bb.aw
   %i.ne = load i32, ptr %i.jb, align 8
   %i.nf = call { ptr, i32 } @_ZN5glTF28LazyDictINS_8AccessorEE8RetrieveEj(ptr noundef nonnull align 8 dereferenceable(232) %i.ct, i32 noundef %i.ne) ; 2 uses
   %.fca.0.extract = extractvalue { ptr, i32 } %i.nf, 0

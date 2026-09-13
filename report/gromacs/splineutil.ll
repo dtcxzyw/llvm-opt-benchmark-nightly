@@ -204,8 +204,8 @@ bb.a:
   %6 = alloca %"class.gmx::ExceptionInfo", align 8 ; 8 uses
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 7 uses
-  %i.d = ashr exact i64 %i.c, 3                   ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 3 uses
+  %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp ult i64 %i.d, 5
   br i1 %i.e, label %bb.b, label %bb.h
 
@@ -270,23 +270,34 @@ bb.g:                                             ; preds = %.sink.split, %bb.f
 
 bb.h:                                             ; preds = %bb.a
   %i.k = icmp ugt i64 %i.d, 1152921504606846975
-  br i1 %i.k, label %.noexc, label %.noexc56.a
+  br i1 %i.k, label %.noexc, label %.noexc56
 
 .noexc:                                           ; preds = %bb.h
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.5) #19
   unreachable
 
-.noexc56.a:                                       ; preds = %bb.h
-  %7 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #22 ; 7 uses
+.noexc56:                                         ; preds = %bb.h
+  %7 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #22 ; 9 uses
   store ptr %7, ptr %0, align 8, !tbaa !69
-  %8 = getelementptr i8, ptr %7, i64 %i.c         ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %i.c
   %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %8, ptr %9, align 8, !tbaa !70
-  %10 = getelementptr i8, ptr %7, i64 8
-  %.idx.i.i.i.i.i.i.i = add i64 %i.c, -8
+  store double 0.000000e+00, ptr %7, align 8, !tbaa !13
+  %10 = getelementptr i8, ptr %7, i64 8           ; 3 uses
+  %11 = add nsw i64 %i.d, -1                      ; 2 uses
+  %12 = icmp eq i64 %11, 0
+  br i1 %12, label %.noexc56.a, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
+
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc56
+  %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %11, 3    ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 8 %10, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !13
+  %13 = getelementptr inbounds nuw i8, ptr %10, i64 %.idx.i.i.i.i.i.i.i
+  br label %.noexc56.a
+
+.noexc56.a:                                       ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc56
+  %.0.i.i.i.i.i = phi ptr [ %13, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %10, %.noexc56 ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %8, ptr %i.l, align 8, !tbaa !71
+  store ptr %.0.i.i.i.i.i, ptr %i.l, align 8, !tbaa !71
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.n = getelementptr i8, ptr %1, i64 16
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -316,7 +327,10 @@ bb.h:                                             ; preds = %bb.a
   %i.am = fdiv <2 x double> %i.aj, %i.al
   %i.an = shufflevector <2 x double> %i.am, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   store <2 x double> %i.an, ptr %7, align 8, !tbaa !13
-  %i.ao = ashr exact i64 %i.c, 3                  ; 2 uses
+  %14 = ptrtoint ptr %.0.i.i.i.i.i to i64
+  %15 = ptrtoint ptr %7 to i64
+  %16 = sub i64 %14, %15                          ; 3 uses
+  %i.ao = ashr exact i64 %16, 3                   ; 2 uses
   %i.ap = add nsw i64 %i.ao, -2                   ; 4 uses
   %i.aq = icmp ugt i64 %i.ap, 2
   br i1 %i.aq, label %.lr.ph.preheader, label %._crit_edge
@@ -396,14 +410,14 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !66
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %.noexc56.a
-  %i.cb = getelementptr i8, ptr %1, i64 %i.c
+  %i.cb = getelementptr i8, ptr %1, i64 %16
   %i.cc = getelementptr i8, ptr %i.cb, i64 -8
   %i.cd = load double, ptr %i.cc, align 8, !tbaa !13 ; 2 uses
   %i.ce = getelementptr inbounds [8 x i8], ptr %1, i64 %i.ap
   %i.cf = load double, ptr %i.ce, align 8, !tbaa !13 ; 2 uses
   %i.cg = fmul double %i.cf, -2.000000e+01
   %i.ch = tail call double @llvm.fmuladd.f64(double %i.cd, double 1.100000e+01, double %i.cg)
-  %i.ci = getelementptr i8, ptr %1, i64 %i.c      ; 3 uses
+  %i.ci = getelementptr i8, ptr %1, i64 %16       ; 3 uses
   %i.cj = getelementptr i8, ptr %i.ci, i64 -24
   %i.ck = load double, ptr %i.cj, align 8, !tbaa !13 ; 2 uses
   %i.cl = tail call double @llvm.fmuladd.f64(double %i.ck, double 6.000000e+00, double %i.ch)

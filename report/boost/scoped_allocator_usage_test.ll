@@ -204,11 +204,15 @@ scalar.ph33:                                      ; preds = %scalar.ph33.prehead
   br i1 %.not.i43.i.i.i.i.i, label %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEEEE17copy_n_and_updateIPS9_EEvRSB_T_m.exit44.i.i.i.i.i, label %scalar.ph33, !llvm.loop !1461
 
 _ZNK5boost9container3dtl21insert_n_copies_proxyINS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEEEE17copy_n_and_updateIPS9_EEvRSB_T_m.exit44.i.i.i.i.i: ; preds = %scalar.ph33, %middle.block41
-  %i.ar = sub i64 %3, %i.s                        ; 5 uses
-  %min.iters.check46 = icmp ult i64 %i.ar, 4
-  br i1 %min.iters.check46, label %.lr.ph.i.i.i.i.i.i.i.preheader.a, label %vector.ph47
+  %i.ar = sub nuw i64 %3, %i.s                    ; 6 uses
+  %.not15.i.i.i.i.i.i.i = icmp eq i64 %i.ar, 0
+  br i1 %.not15.i.i.i.i.i.i.i, label %_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIS6_EEEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyISA_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
-vector.ph47:                                      ; preds = %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEEEE17copy_n_and_updateIPS9_EEvRSB_T_m.exit44.i.i.i.i.i
+.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEEEE17copy_n_and_updateIPS9_EEvRSB_T_m.exit44.i.i.i.i.i
+  %min.iters.check47 = icmp ult i64 %i.ar, 4
+  br i1 %min.iters.check47, label %.lr.ph.i.i.i.i.i.i.i.preheader.a, label %vector.ph47
+
+vector.ph47:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
   %n.vec48 = and i64 %i.ar, -4                    ; 3 uses
   %i.as = and i64 %i.ar, 3
   %i.at = shl i64 %n.vec48, 3
@@ -231,9 +235,9 @@ middle.block56:                                   ; preds = %vector.body49
   %cmp.n57 = icmp eq i64 %i.ar, %n.vec48
   br i1 %cmp.n57, label %_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIS6_EEEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyISA_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader.a
 
-.lr.ph.i.i.i.i.i.i.i.preheader.a:                 ; preds = %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEEEE17copy_n_and_updateIPS9_EEvRSB_T_m.exit44.i.i.i.i.i, %middle.block56
-  %.017.i.i.i.i.i.i.i.ph = phi i64 [ %i.ar, %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEEEE17copy_n_and_updateIPS9_EEvRSB_T_m.exit44.i.i.i.i.i ], [ %i.as, %middle.block56 ]
-  %.01416.i.i.i.i.i.i.i.ph = phi ptr [ %i.p, %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEEEE17copy_n_and_updateIPS9_EEvRSB_T_m.exit44.i.i.i.i.i ], [ %i.au, %middle.block56 ]
+.lr.ph.i.i.i.i.i.i.i.preheader.a:                 ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %middle.block56
+  %.017.i.i.i.i.i.i.i.ph = phi i64 [ %i.ar, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %i.as, %middle.block56 ]
+  %.01416.i.i.i.i.i.i.i.ph = phi ptr [ %i.p, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %i.au, %middle.block56 ]
   br label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader.a, %.lr.ph.i.i.i.i.i.i.i
@@ -246,7 +250,7 @@ middle.block56:                                   ; preds = %vector.body49
   %.not.i.i45.i.i.i.i.i = icmp eq i64 %i.ay, 0
   br i1 %.not.i.i45.i.i.i.i.i, label %_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIS6_EEEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyISA_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !1463
 
-_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIS6_EEEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyISA_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i: ; preds = %scalar.ph, %.lr.ph.i.i.i.i.i.i.i, %middle.block, %middle.block56, %.lr.ph.i.i.i.i.i.i.preheader, %bb.f, %bb.e
+_ZN5boost9container6vectorIPNS0_20stable_vector_detail9node_baseIPvEENS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIS6_EEEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl21insert_n_copies_proxyISA_EEEEvPS6_mT_NS_11move_detail17integral_constantIbLb0EEE.exit.i.i: ; preds = %scalar.ph, %.lr.ph.i.i.i.i.i.i.i, %middle.block, %middle.block56, %.lr.ph.i.i.i.i.i.i.preheader, %_ZNK5boost9container3dtl21insert_n_copies_proxyINS0_24scoped_allocator_adaptorIJ15SimpleAllocatorIPNS0_20stable_vector_detail9node_baseIPvEEEEEEE17copy_n_and_updateIPS9_EEvRSB_T_m.exit44.i.i.i.i.i, %bb.f, %bb.e
   %i.ba = load i64, ptr %i.m, align 8, !tbaa !146, !noalias !1465
   %i.bb = add i64 %i.ba, %3
   store i64 %i.bb, ptr %i.m, align 8, !tbaa !146, !noalias !1465

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.o, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = shl nuw i64 %i.h, 2
+  %i.p = shl i64 %i.h, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.p) #20
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit
 
@@ -580,7 +580,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.m, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = shl nuw i64 %i.f, 2
+  %i.n = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #20
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit
 
@@ -983,7 +983,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vecto
   br i1 %i.ae, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS2_16simple_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.af = shl nuw i64 %i.h, 2
+  %i.af = shl i64 %i.h, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.af) #20
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit
 
@@ -1386,7 +1386,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vecto
   br i1 %i.ac, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS2_16simple_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.ad = shl nuw i64 %i.f, 2
+  %i.ad = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.ad) #20
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit
 
@@ -1789,7 +1789,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.m, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = shl nuw i64 %i.f, 2
+  %i.n = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #20
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit
 
@@ -1914,7 +1914,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.m, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = shl nuw i64 %i.f, 2
+  %i.n = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.n) #20
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPim.exit
 
@@ -2317,7 +2317,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vecto
   br i1 %i.ac, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS2_16simple_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.ad = shl nuw i64 %i.f, 2
+  %i.ad = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.ad) #20
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit
 
@@ -2720,7 +2720,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vecto
   br i1 %i.ac, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS2_16simple_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.ad = shl nuw i64 %i.f, 2
+  %i.ad = shl i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.ad) #20
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit
 
@@ -3123,7 +3123,7 @@ vector.body58:                                    ; preds = %vector.body58, %vec
 
 middle.block65:                                   ; preds = %vector.body58
   %cmp.n66 = icmp eq i64 %i.ae, %n.vec57
-  br i1 %cmp.n66, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a, label %.lr.ph.i.i52.i.i.i.preheader71
+  br i1 %cmp.n66, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i, label %.lr.ph.i.i52.i.i.i.preheader71
 
 .lr.ph.i.i52.i.i.i.preheader71:                   ; preds = %vector.memcheck48, %.lr.ph.i.i52.i.i.i.preheader, %middle.block65
   %.09.i.i53.i.i.i.ph = phi i64 [ %i.ae, %vector.memcheck48 ], [ %i.ae, %.lr.ph.i.i52.i.i.i.preheader ], [ %i.dn, %middle.block65 ] ; 4 uses
@@ -3155,7 +3155,7 @@ middle.block65:                                   ; preds = %vector.body58
   %.048.i.i54.i.i.i.unr = phi ptr [ %.048.i.i54.i.i.i.ph, %.lr.ph.i.i52.i.i.i.preheader71 ], [ %i.dz, %.lr.ph.i.i52.i.i.i.prol ]
   %.sroa.0.07.i.i55.i.i.i.unr = phi ptr [ %.sroa.0.07.i.i55.i.i.i.ph, %.lr.ph.i.i52.i.i.i.preheader71 ], [ %i.dy, %.lr.ph.i.i52.i.i.i.prol ]
   %i.ea = icmp ult i64 %i.dv, 3
-  br i1 %i.ea, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a, label %.lr.ph.i.i52.i.i.i
+  br i1 %i.ea, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i, label %.lr.ph.i.i52.i.i.i
 
 .lr.ph.i.i52.i.i.i:                               ; preds = %.lr.ph.i.i52.i.i.i.prol.loopexit, %.lr.ph.i.i52.i.i.i
   %.09.i.i53.i.i.i = phi i64 [ %i.ek, %.lr.ph.i.i52.i.i.i ], [ %.09.i.i53.i.i.i.unr, %.lr.ph.i.i52.i.i.i.prol.loopexit ]
@@ -3183,11 +3183,15 @@ middle.block65:                                   ; preds = %vector.body58
   %i.em = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i55.i.i.i, i64 16 ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %.048.i.i54.i.i.i, i64 16
   %.not.i.i56.i.i.i.3 = icmp eq i64 %i.ek, 0
-  br i1 %.not.i.i56.i.i.i.3, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a, label %.lr.ph.i.i52.i.i.i, !llvm.loop !582
+  br i1 %.not.i.i56.i.i.i.3, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i, label %.lr.ph.i.i52.i.i.i, !llvm.loop !582
 
-_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a: ; preds = %.lr.ph.i.i52.i.i.i.prol.loopexit, %.lr.ph.i.i52.i.i.i, %middle.block65
+_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i: ; preds = %.lr.ph.i.i52.i.i.i.prol.loopexit, %.lr.ph.i.i52.i.i.i, %middle.block65
   %.lcssa = phi ptr [ %i.dq, %middle.block65 ], [ %.lcssa72.unr, %.lr.ph.i.i52.i.i.i.prol.loopexit ], [ %i.em, %.lr.ph.i.i52.i.i.i ] ; 4 uses
-  %5 = sub i64 %3, %i.ae                          ; 3 uses
+  %5 = sub nuw i64 %3, %i.ae                      ; 4 uses
+  %.not15.i.i.i.i.i = icmp eq i64 %5, 0
+  br i1 %.not15.i.i.i.i.i, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS2_16simple_allocatorIvEEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS7_NS_13move_iteratorIPS3_EEEEEEvSD_mT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a
+
+_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a: ; preds = %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i
   %.neg = add nsw i64 %i.ae, 1
   %xtraiter80 = and i64 %5, 1
   %lcmp.mod81.not = icmp eq i64 %xtraiter80, 0
@@ -3237,7 +3241,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4te
   %.not.i.i61.i.i.i.1 = icmp eq i64 %i.fe, 0
   br i1 %.not.i.i61.i.i.i.1, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS2_16simple_allocatorIvEEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS7_NS_13move_iteratorIPS3_EEEEEEvSD_mT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %.lr.ph.i.i60.i.i.i, !llvm.loop !11
 
-_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS2_16simple_allocatorIvEEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS7_NS_13move_iteratorIPS3_EEEEEEvSD_mT_NS_11move_detail17integral_constantIbLb0EEE.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %.lr.ph.i.i60.i.i.i.prol.loopexit, %.lr.ph.i.i60.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %middle.block43, %bb.c, %bb.d
+_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS2_16simple_allocatorIvEEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS7_NS_13move_iteratorIPS3_EEEEEEvSD_mT_NS_11move_detail17integral_constantIbLb0EEE.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %.lr.ph.i.i60.i.i.i.prol.loopexit, %.lr.ph.i.i60.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %middle.block43, %bb.c, %bb.d, %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS4_16simple_allocatorIvEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i
   %i.ff = add i64 %i.e, %3
   store i64 %i.ff, ptr %i.d, align 8, !tbaa !76
   store ptr %i.a, ptr %0, align 8, !tbaa !100
@@ -3640,7 +3644,7 @@ vector.body58:                                    ; preds = %vector.body58, %vec
 
 middle.block65:                                   ; preds = %vector.body58
   %cmp.n66 = icmp eq i64 %i.ae, %n.vec57
-  br i1 %cmp.n66, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a, label %.lr.ph.i.i52.i.i.i.preheader71
+  br i1 %cmp.n66, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i, label %.lr.ph.i.i52.i.i.i.preheader71
 
 .lr.ph.i.i52.i.i.i.preheader71:                   ; preds = %vector.memcheck48, %.lr.ph.i.i52.i.i.i.preheader, %middle.block65
   %.09.i.i53.i.i.i.ph = phi i64 [ %i.ae, %vector.memcheck48 ], [ %i.ae, %.lr.ph.i.i52.i.i.i.preheader ], [ %i.dn, %middle.block65 ] ; 4 uses
@@ -3672,7 +3676,7 @@ middle.block65:                                   ; preds = %vector.body58
   %.048.i.i54.i.i.i.unr = phi ptr [ %.048.i.i54.i.i.i.ph, %.lr.ph.i.i52.i.i.i.preheader71 ], [ %i.dz, %.lr.ph.i.i52.i.i.i.prol ]
   %.sroa.0.07.i.i55.i.i.i.unr = phi ptr [ %.sroa.0.07.i.i55.i.i.i.ph, %.lr.ph.i.i52.i.i.i.preheader71 ], [ %i.dy, %.lr.ph.i.i52.i.i.i.prol ]
   %i.ea = icmp ult i64 %i.dv, 3
-  br i1 %i.ea, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a, label %.lr.ph.i.i52.i.i.i
+  br i1 %i.ea, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i, label %.lr.ph.i.i52.i.i.i
 
 .lr.ph.i.i52.i.i.i:                               ; preds = %.lr.ph.i.i52.i.i.i.prol.loopexit, %.lr.ph.i.i52.i.i.i
   %.09.i.i53.i.i.i = phi i64 [ %i.ek, %.lr.ph.i.i52.i.i.i ], [ %.09.i.i53.i.i.i.unr, %.lr.ph.i.i52.i.i.i.prol.loopexit ]
@@ -3700,11 +3704,15 @@ middle.block65:                                   ; preds = %vector.body58
   %i.em = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i55.i.i.i, i64 16 ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %.048.i.i54.i.i.i, i64 16
   %.not.i.i56.i.i.i.3 = icmp eq i64 %i.ek, 0
-  br i1 %.not.i.i56.i.i.i.3, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a, label %.lr.ph.i.i52.i.i.i, !llvm.loop !657
+  br i1 %.not.i.i56.i.i.i.3, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i, label %.lr.ph.i.i52.i.i.i, !llvm.loop !657
 
-_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a: ; preds = %.lr.ph.i.i52.i.i.i.prol.loopexit, %.lr.ph.i.i52.i.i.i, %middle.block65
+_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i: ; preds = %.lr.ph.i.i52.i.i.i.prol.loopexit, %.lr.ph.i.i52.i.i.i, %middle.block65
   %.lcssa = phi ptr [ %i.dq, %middle.block65 ], [ %.lcssa72.unr, %.lr.ph.i.i52.i.i.i.prol.loopexit ], [ %i.em, %.lr.ph.i.i52.i.i.i ] ; 4 uses
-  %5 = sub i64 %3, %i.ae                          ; 3 uses
+  %5 = sub nuw i64 %3, %i.ae                      ; 4 uses
+  %.not15.i.i.i.i.i = icmp eq i64 %5, 0
+  br i1 %.not15.i.i.i.i.i, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS0_9allocatorIvLj2ELj0EEEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS7_NS_13move_iteratorIPS3_EEEEEEvSD_mT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a
+
+_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i.a: ; preds = %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i
   %.neg = add nsw i64 %i.ae, 1
   %xtraiter80 = and i64 %5, 1
   %lcmp.mod81.not = icmp eq i64 %xtraiter80, 0
@@ -3754,7 +3762,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4te
   %.not.i.i61.i.i.i.1 = icmp eq i64 %i.fe, 0
   br i1 %.not.i.i61.i.i.i.1, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS0_9allocatorIvLj2ELj0EEEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS7_NS_13move_iteratorIPS3_EEEEEEvSD_mT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %.lr.ph.i.i60.i.i.i, !llvm.loop !14
 
-_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS0_9allocatorIvLj2ELj0EEEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS7_NS_13move_iteratorIPS3_EEEEEEvSD_mT_NS_11move_detail17integral_constantIbLb0EEE.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %.lr.ph.i.i60.i.i.i.prol.loopexit, %.lr.ph.i.i60.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %middle.block43, %bb.c, %bb.d
+_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS0_9allocatorIvLj2ELj0EEEvEEvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyIS7_NS_13move_iteratorIPS3_EEEEEEvSD_mT_NS_11move_detail17integral_constantIbLb0EEE.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %.lr.ph.i.i60.i.i.i.prol.loopexit, %.lr.ph.i.i60.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %middle.block43, %bb.c, %bb.d, %_ZN5boost9container3dtl18insert_range_proxyINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEENS_13move_iteratorIPS5_EEE17copy_n_and_updateISA_EEvRS8_T_m.exit58.i.i.i
   %i.ff = add i64 %i.e, %3
   store i64 %i.ff, ptr %i.d, align 8, !tbaa !88
   store ptr %i.a, ptr %0, align 8, !tbaa !100

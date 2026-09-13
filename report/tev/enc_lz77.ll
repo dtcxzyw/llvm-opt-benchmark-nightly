@@ -204,7 +204,7 @@ bb.br:                                            ; preds = %bb.br, %_ZNSt3__16v
   br i1 %i.tk, label %bb.br, label %bb.bs, !llvm.loop !179
 
 bb.bs:                                            ; preds = %bb.br
-  %i.tm = zext i32 %i.sk to i64                   ; 4 uses
+  %i.tm = zext i32 %i.sk to i64                   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16, !noalias !230
   %i.tn = load ptr, ptr %i.qi, align 8, !tbaa !43, !noalias !230 ; 2 uses
   %i.to = load ptr, ptr %i.qk, align 8, !tbaa !42, !noalias !230
@@ -607,12 +607,16 @@ bb.dk:                                            ; preds = %bb.dj, %bb.dh
 
 .lr.ph304.preheader.i.a:                          ; preds = %"_ZNK3jxl12_GLOBAL__N_19HashChain11FindMatchesIZNS0_17ApplyLZ77_OptimalERKNS_15HistogramParamsEmRKNSt3__16vectorINS7_INS_5TokenENS6_9allocatorIS8_EEEENS9_ISB_EEEERKNS_10LZ77ParamsEE3$_0EEvmiRKT_.exit.i"
   %i.age = getelementptr inbounds i8, ptr %i.afz, i64 -4 ; 2 uses
-  %.0133299.i = add nsw i64 %i.agd, -1
+  %.0133299.i = add nsw i64 %i.agd, -1            ; 2 uses
+  %.not148300.i = icmp ult i64 %.0133299.i, %i.tm
+  br i1 %.not148300.i, label %.lr.ph306.i.loopexit, label %.lr.ph304.preheader.i
+
+.lr.ph304.preheader.i:                            ; preds = %.lr.ph304.preheader.i.a
   %12 = load i32, ptr %i.age, align 4, !tbaa !93, !noalias !230
   %13 = zext i32 %12 to i64
   br label %.lr.ph304.i
 
-.lr.ph306.i.loopexit:                             ; preds = %.lr.ph304.i
+.lr.ph306.i.loopexit:                             ; preds = %.lr.ph304.i, %.lr.ph304.preheader.i.a
   %i.agf = load ptr, ptr %i.qi, align 8, !tbaa !43, !noalias !230 ; 3 uses
   %i.agg = getelementptr inbounds nuw [8 x i8], ptr %i.agf, i64 %.0135310.i ; 2 uses
   %.val169.i = load i64, ptr %6, align 8, !noalias !230 ; 2 uses
@@ -624,9 +628,9 @@ bb.dk:                                            ; preds = %bb.dj, %bb.dh
   %i.agk = getelementptr [4 x i8], ptr %.val170.i, i64 %i.agj
   br label %bb.dl
 
-.lr.ph304.i:                                      ; preds = %.lr.ph304.i, %.lr.ph304.preheader.i.a
-  %.0133302.i = phi i64 [ %.0133.i, %.lr.ph304.i ], [ %.0133299.i, %.lr.ph304.preheader.i.a ] ; 2 uses
-  %.0134301.i = phi i64 [ %spec.select.i, %.lr.ph304.i ], [ %13, %.lr.ph304.preheader.i.a ]
+.lr.ph304.i:                                      ; preds = %.lr.ph304.i, %.lr.ph304.preheader.i
+  %.0133302.i = phi i64 [ %.0133.i, %.lr.ph304.i ], [ %.0133299.i, %.lr.ph304.preheader.i ] ; 2 uses
+  %.0134301.i = phi i64 [ %spec.select.i, %.lr.ph304.i ], [ %13, %.lr.ph304.preheader.i ]
   %i.agl = getelementptr inbounds nuw [4 x i8], ptr %storemerge.i220273.i, i64 %.0133302.i ; 2 uses
   %i.agm = load i32, ptr %i.agl, align 4, !tbaa !93, !noalias !230
   %i.agn = zext i32 %i.agm to i64

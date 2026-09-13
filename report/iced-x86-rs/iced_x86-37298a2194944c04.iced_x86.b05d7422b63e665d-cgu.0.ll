@@ -205,9 +205,9 @@ begin_hunk_0
 @358 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @224, [16 x i8] c"$\00\00\00\00\00\00\006\03\00\00\12\00\00\00" }>, align 8
 @359 = private unnamed_addr constant [20 x i8] c"Invalid slice length", align 1
 @360 = private unnamed_addr constant [35 x i8] c"iced-x86/src/instruction_create.rs\00", align 1
-@361 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @360, [16 x i8] c"\22\00\00\00\00\00\00\00\16\0D\00\00\16\00\00\00" }>, align 8
-@362 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @360, [16 x i8] c"\22\00\00\00\00\00\00\00\C8\0D\00\00\16\00\00\00" }>, align 8
-@363 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @360, [16 x i8] c"\22\00\00\00\00\00\00\00:\0E\00\00\16\00\00\00" }>, align 8
+@361 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @360, [16 x i8] c"\22\00\00\00\00\00\00\00\16\0D\00\00.\00\00\00" }>, align 8
+@362 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @360, [16 x i8] c"\22\00\00\00\00\00\00\00\C8\0D\00\00.\00\00\00" }>, align 8
+@363 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @360, [16 x i8] c"\22\00\00\00\00\00\00\00:\0E\00\00.\00\00\00" }>, align 8
 @364 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @217, [16 x i8] c"\22\00\00\00\00\00\00\00'\04\00\00\12\00\00\00" }>, align 8
 @365 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @217, [16 x i8] c"\22\00\00\00\00\00\00\00\E9\04\00\00\12\00\00\00" }>, align 8
 @366 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @224, [16 x i8] c"$\00\00\00\00\00\00\00\FC\03\00\00\16\00\00\00" }>, align 8
@@ -610,10 +610,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.d, %._crit_edge
   ret void
 
-3:                                                ; preds = %.lr.ph.preheader
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @361) #47
-  unreachable
-
 bb.c:                                             ; preds = %.lr.ph.preheader
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.l = load i8, ptr %i.k, align 1, !noundef !21
@@ -624,6 +620,11 @@ bb.c:                                             ; preds = %.lr.ph.preheader
   %i.q = or disjoint i32 %i.n, %i.p
   %exitcond85.not = icmp eq i64 %2, 2
   br i1 %exitcond85.not, label %._crit_edge, label %.lr.ph.1
+
+3:                                                ; preds = %.lr.ph.preheader
+  %4 = or disjoint i64 %2, 1
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %4, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @361) #47
+  unreachable
 
 .lr.ph.1:                                         ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 2
@@ -772,7 +773,8 @@ bb.b:                                             ; preds = %bb.e, %._crit_edge
   ret void
 
 bb.c:                                             ; preds = %.lr.ph.preheader
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @362) #47
+  %3 = or disjoint i64 %2, 1
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @362) #47
   unreachable
 
 bb.d:                                             ; preds = %.lr.ph.preheader
@@ -853,7 +855,8 @@ bb.b:                                             ; preds = %bb.e, %._crit_edge
   ret void
 
 bb.c:                                             ; preds = %.lr.ph.preheader
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %2, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @363) #47
+  %3 = or disjoint i64 %2, 1
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @363) #47
   unreachable
 
 bb.d:                                             ; preds = %.lr.ph.preheader

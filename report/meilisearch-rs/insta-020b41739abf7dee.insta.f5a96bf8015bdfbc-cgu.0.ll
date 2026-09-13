@@ -205,23 +205,31 @@ bb.k:                                             ; preds = %bb.e
 define internal fastcc void @"_ZN98_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter..SpecFromIter$LT$T$C$I$GT$$GT$9from_iter17h96c76bf58e26adcdE"(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 2 uses
-  %i.b = alloca [24 x i8], align 8                ; 7 uses
+  %i.b = alloca [24 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !23928
   %i.c = ptrtoint ptr %2 to i64
   %i.d = ptrtoint ptr %1 to i64
   %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
-  %i.f = lshr exact i64 %i.e, 6                   ; 5 uses
-  %i.g = mul i64 %i.f, 72                         ; 3 uses
+  %i.f = lshr exact i64 %i.e, 6                   ; 4 uses
+  %i.g = mul nuw nsw i64 %i.f, 72                 ; 2 uses
   %or.cond.i.i.i = icmp ugt i64 %i.e, 8198552921648689600
   br i1 %or.cond.i.i.i, label %bb.b, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i, !prof !15
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i: ; preds = %bb.a
-  %i.h = icmp eq i64 %i.g, 0
-  br i1 %i.h, label %.noexc1, label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i"
+  %i.h = icmp eq ptr %2, %1
+  br i1 %i.h, label %.noexc1.thread, label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i"
+
+.noexc1.thread:                                   ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i
+  store i64 0, ptr %i.b, align 8, !noalias !23928
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store ptr inttoptr (i64 8 to ptr), ptr %3, align 8, !noalias !23928
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  store i64 0, ptr %4, align 8, !noalias !23928
+  br label %"_ZN111_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter_nested..SpecFromIterNested$LT$T$C$I$GT$$GT$9from_iter17h4a5617397ac58bfbE.exit"
 
 "_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i": ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #51, !noalias !23929
-  %i.i = tail call noundef align 8 ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.g, i64 noundef range(i64 1, 17) 8) #51, !noalias !23929 ; 2 uses
+  %i.i = tail call noundef align 8 ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.g, i64 noundef range(i64 1, 17) 8) #51, !noalias !23929 ; 3 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.b, label %.noexc1
 
@@ -231,18 +239,12 @@ bb.b:                                             ; preds = %"_ZN63_$LT$alloc..a
   tail call void @_ZN5alloc7raw_vec12handle_error17h5794e6eba25188a7E(i64 noundef %.sroa.4.0.ph.i, i64 %.sroa.10.0.ph.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @98) #54, !noalias !23928
   unreachable
 
-.noexc1:                                          ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i, %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i"
-  %.sroa.10.0.i = phi ptr [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i ], [ %i.i, %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i" ] ; 2 uses
-  %.sroa.4.0.i = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i ], [ %i.f, %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i" ] ; 2 uses
-  %3 = icmp samesign ule i64 %i.f, %.sroa.4.0.i
-  tail call void @llvm.assume(i1 %3), !noalias !23928
-  store i64 %.sroa.4.0.i, ptr %i.b, align 8, !noalias !23928
+.noexc1:                                          ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i"
+  store i64 %i.f, ptr %i.b, align 8, !noalias !23928
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %.sroa.10.0.i, ptr %i.k, align 8, !noalias !23928
-  %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  store i64 0, ptr %i.l, align 8, !noalias !23928
-  %4 = icmp eq ptr %1, %2
-  br i1 %4, label %"_ZN111_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter_nested..SpecFromIterNested$LT$T$C$I$GT$$GT$9from_iter17h4a5617397ac58bfbE.exit", label %.preheader
+  store ptr %i.i, ptr %i.k, align 8, !noalias !23928
+  %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  br label %.preheader
 
 .preheader:                                       ; preds = %.noexc1, %"_ZN4core4iter8adapters3map8map_fold28_$u7b$$u7b$closure$u7d$$u7d$17h492b47a98e4f6cccE.exit.i.i"
   %.sroa.6.0 = phi i64 [ %i.o, %"_ZN4core4iter8adapters3map8map_fold28_$u7b$$u7b$closure$u7d$$u7d$17h492b47a98e4f6cccE.exit.i.i" ], [ 0, %.noexc1 ] ; 4 uses
@@ -251,7 +253,7 @@ bb.b:                                             ; preds = %"_ZN63_$LT$alloc..a
           to label %"_ZN4core4iter8adapters3map8map_fold28_$u7b$$u7b$closure$u7d$$u7d$17h492b47a98e4f6cccE.exit.i.i" unwind label %.body, !inline_history !23922
 
 "_ZN4core4iter8adapters3map8map_fold28_$u7b$$u7b$closure$u7d$$u7d$17h492b47a98e4f6cccE.exit.i.i": ; preds = %.preheader
-  %i.n = getelementptr inbounds nuw [72 x i8], ptr %.sroa.10.0.i, i64 %.sroa.6.0
+  %i.n = getelementptr inbounds nuw [72 x i8], ptr %i.i, i64 %.sroa.6.0
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.n, ptr noundef nonnull align 8 dereferenceable(72) %i.a, i64 72, i1 false)
   %i.o = add i64 %.sroa.6.0, 1                    ; 2 uses
   %i.p = icmp eq i64 %i.o, %i.f
@@ -277,7 +279,7 @@ bb.d:                                             ; preds = %.body
 bb.e:                                             ; preds = %.body
   resume { ptr, i32 } %i.q
 
-"_ZN111_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter_nested..SpecFromIterNested$LT$T$C$I$GT$$GT$9from_iter17h4a5617397ac58bfbE.exit": ; preds = %.noexc1, %bb.c
+"_ZN111_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter_nested..SpecFromIterNested$LT$T$C$I$GT$$GT$9from_iter17h4a5617397ac58bfbE.exit": ; preds = %.noexc1.thread, %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !23928
   ret void

@@ -205,9 +205,9 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ej = lshr exact i64 %5, 2
   %i.ek = ptrtoint ptr %.0481 to i64
   %i.el = ptrtoint ptr %1 to i64
-  %i.em = sub i64 %i.ek, %i.el                    ; 4 uses
+  %i.em = sub i64 %i.ek, %i.el                    ; 3 uses
   %i.en = ashr exact i64 %i.em, 2                 ; 5 uses
-  %i.eo = mul i64 %i.ej, %4                       ; 20 uses
+  %i.eo = mul i64 %i.ej, %4                       ; 19 uses
   %i.ep = and i32 %7, 1
   %.not315 = icmp eq i32 %i.ep, 0                 ; 2 uses
   %.not317 = icmp ugt i64 %i.en, %i.eo            ; 2 uses
@@ -230,14 +230,17 @@ bb.ak:                                            ; preds = %rbimpl_size_mul_or_
 
 ruby_nonempty_memcpy.exit369:                     ; preds = %rbimpl_size_mul_or_raise.exit, %bb.ak
   %.not318592 = icmp eq i64 %i.eo, %i.en
-  br i1 %.not318592, label %ruby_nonempty_memcpy.exit373, label %.lr.ph595.preheader
+  br i1 %.not318592, label %ruby_nonempty_memcpy.exit373, label %.lr.ph594.split.preheader
 
-.lr.ph595.preheader:                              ; preds = %ruby_nonempty_memcpy.exit369
+.lr.ph594.split.preheader:                        ; preds = %ruby_nonempty_memcpy.exit369
   %8 = getelementptr i8, ptr %3, i64 %i.em
-  %9 = shl i64 %i.eo, 2
-  %10 = sub i64 %9, %i.em
-  tail call void @llvm.memset.p0.i64(ptr align 4 %8, i8 0, i64 %10, i1 false), !tbaa !44
-  br label %ruby_nonempty_memcpy.exit373
+  br label %.lr.ph595.preheader
+
+.lr.ph595.preheader:                              ; preds = %.lr.ph594.split.preheader, %.lr.ph595.preheader
+  %.0271593 = phi ptr [ %9, %.lr.ph595.preheader ], [ %8, %.lr.ph594.split.preheader ] ; 2 uses
+  %9 = getelementptr i8, ptr %.0271593, i64 4
+  store i32 0, ptr %.0271593, align 4, !tbaa !44
+  br label %.lr.ph595.preheader
 
 bb.al:                                            ; preds = %bb.ah
   %i.er = icmp ugt i64 %i.eo, 4611686018427387903
@@ -256,8 +259,8 @@ bb.an:                                            ; preds = %rbimpl_size_mul_or_
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %3, ptr noundef nonnull readonly align 1 %1, i64 noundef range(i64 1, 0) %i.es, i1 noundef false) #23
   br label %ruby_nonempty_memcpy.exit373
 
-ruby_nonempty_memcpy.exit373:                     ; preds = %.lr.ph595.preheader, %ruby_nonempty_memcpy.exit369, %bb.an
-  %.0272 = phi i32 [ 1, %bb.an ], [ 0, %.lr.ph595.preheader ], [ 0, %ruby_nonempty_memcpy.exit369 ] ; 5 uses
+ruby_nonempty_memcpy.exit373:                     ; preds = %ruby_nonempty_memcpy.exit369, %bb.an
+  %.0272 = phi i32 [ 1, %bb.an ], [ 0, %ruby_nonempty_memcpy.exit369 ] ; 5 uses
   %i.et = icmp sgt i32 %spec.select, -1
   %i.eu = and i32 %7, 128
   %.not319 = icmp eq i32 %i.eu, 0
