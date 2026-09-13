@@ -205,13 +205,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit49: ; preds = %_ZNSo
   call void @llvm.experimental.noalias.scope.decl(metadata !1876)
   %i.r = icmp ult i8 %i.q, 10                     ; 2 uses
   %i.s = icmp ult i8 %i.q, 100
-  %. = select i1 %i.s, i32 2, i32 3               ; 3 uses
+  %. = select i1 %i.s, i32 2, i32 3               ; 2 uses
   %i.t = zext nneg i32 %. to i64
   %i.u = select i1 %i.r, i64 1, i64 %i.t          ; 5 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 12 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 11 uses
   store ptr %i.v, ptr %8, align 8, !tbaa !360, !alias.scope !1876
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.u ; 2 uses
+  %i.x = getelementptr i8, ptr %i.v, i64 %i.u     ; 3 uses
   br i1 %i.r, label %.thread, label %bb.g
 
 .thread:                                          ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit49
@@ -235,9 +235,7 @@ bb.g:                                             ; preds = %_ZStlsISt11char_tra
   %i.ad = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.ac ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 1
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !96, !noalias !1876
-  %16 = zext nneg i32 %. to i64
-  %17 = getelementptr i8, ptr %i.v, i64 %16
-  %i.ag = getelementptr i8, ptr %17, i64 -1
+  %i.ag = getelementptr i8, ptr %i.x, i64 -1
   store i8 %i.af, ptr %i.ag, align 1, !tbaa !96
   %i.ah = load i8, ptr %i.ad, align 2, !tbaa !96, !noalias !1876
   %i.ai = zext nneg i32 %. to i64

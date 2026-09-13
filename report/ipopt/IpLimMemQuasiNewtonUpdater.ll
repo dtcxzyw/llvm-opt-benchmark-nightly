@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_ZNK5Ipopt14DenseGe
 _ZN5Ipopt14DenseGenMatrix6ValuesEv.exit52:        ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 80
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !191  ; 4 uses
-  %i.v = add i32 %i.f, -1                         ; 4 uses
+  %i.v = add i32 %i.f, -1                         ; 3 uses
   %i.w = icmp sgt i32 %i.f, 1
   br i1 %i.w, label %.preheader95.preheader, label %.preheader
 
@@ -276,13 +276,12 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 .lr.ph:                                           ; preds = %._crit_edge
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 104
-  %i.ap = zext nneg i32 %i.v to i64               ; 3 uses
+  %i.ap = zext nneg i32 %i.v to i64               ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.at = zext nneg i32 %i.f to i64
-  %wide.trip.count124 = zext nneg i32 %i.v to i64
-  %invariant.gep144.sink = getelementptr [8 x i8], ptr %i.u, i64 %i.ap
+  %invariant.gep144.sink = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.ap
   br label %bb.f
 
 bb.d:                                             ; preds = %_ZNK5Ipopt14DenseGenMatrix21MakeNewDenseGenMatrixEv.exit
@@ -450,7 +449,7 @@ _ZNK5Ipopt6Vector3DotERKS0_.exit:                 ; preds = %._crit_edge.i.i, %.
 bb.k:                                             ; preds = %_ZNK5Ipopt6Vector3DotERKS0_.exit, %_ZNK5Ipopt6Vector3DotERKS0_.exit.thread
   %.sink = phi double [ %i.cr, %_ZNK5Ipopt6Vector3DotERKS0_.exit ], [ %i.cp, %_ZNK5Ipopt6Vector3DotERKS0_.exit.thread ]
   %i.cs = mul nuw nsw i64 %indvars.iv121, %i.at
-  %gep145 = getelementptr [8 x i8], ptr %invariant.gep144.sink, i64 %i.cs
+  %gep145 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep144.sink, i64 %i.cs
   store double %.sink, ptr %gep145, align 8, !tbaa !147
   %i.ct = getelementptr inbounds nuw i8, ptr %.0.i4.i56, i64 8 ; 2 uses
   %i.cu = load i32, ptr %i.ct, align 8, !tbaa !42
@@ -483,7 +482,7 @@ bb.m:                                             ; preds = %_ZN5Ipopt8SmartPtrI
 
 _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit66:      ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit, %bb.m
   %indvars.iv.next122 = add nuw nsw i64 %indvars.iv121, 1 ; 2 uses
-  %exitcond125.not = icmp eq i64 %indvars.iv.next122, %wide.trip.count124
+  %exitcond125.not = icmp eq i64 %indvars.iv.next122, %i.ap
   br i1 %exitcond125.not, label %.preheader, label %bb.f, !llvm.loop !528
 
 .thread:                                          ; preds = %.noexc62, %bb.j, %bb.i
@@ -592,7 +591,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !206
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !207  ; 6 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !207  ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !186, !noalias !542
   %i.i = tail call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #23, !noalias !542 ; 11 uses
@@ -698,9 +697,8 @@ scalar.ph.preheader:                              ; preds = %.preheader87, %midd
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 104
   %i.as = zext nneg i32 %i.v to i64               ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 2 uses
-  %3 = zext nneg i32 %i.f to i64
-  %wide.trip.count111 = zext nneg i32 %i.f to i64
-  %invariant.gep128.sink = getelementptr [8 x i8], ptr %i.u, i64 %i.as
+  %wide.trip.count111 = zext nneg i32 %i.f to i64 ; 2 uses
+  %invariant.gep128.sink = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.as
   br label %bb.h
 
 bb.d:                                             ; preds = %_ZNK5Ipopt14DenseSymMatrix21MakeNewDenseSymMatrixEv.exit
@@ -860,8 +858,8 @@ _ZNK5Ipopt6Vector3DotERKS0_.exit:                 ; preds = %._crit_edge.i.i, %.
 
 bb.m:                                             ; preds = %_ZNK5Ipopt6Vector3DotERKS0_.exit, %_ZNK5Ipopt6Vector3DotERKS0_.exit.thread
   %.sink = phi double [ %i.cs, %_ZNK5Ipopt6Vector3DotERKS0_.exit ], [ %i.cq, %_ZNK5Ipopt6Vector3DotERKS0_.exit.thread ]
-  %i.ct = mul nuw nsw i64 %indvars.iv108, %3
-  %gep129 = getelementptr [8 x i8], ptr %invariant.gep128.sink, i64 %i.ct
+  %i.ct = mul nuw nsw i64 %indvars.iv108, %wide.trip.count111
+  %gep129 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep128.sink, i64 %i.ct
   store double %.sink, ptr %gep129, align 8, !tbaa !147
   %i.cu = getelementptr inbounds nuw i8, ptr %.0.i4.i50, i64 8 ; 2 uses
   %i.cv = load i32, ptr %i.cu, align 8, !tbaa !42
@@ -1264,7 +1262,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !206
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 12
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !207  ; 6 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !207  ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !186, !noalias !571
   %i.i = tail call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #23, !noalias !571 ; 11 uses
@@ -1372,9 +1370,8 @@ scalar.ph.preheader:                              ; preds = %.preheader87, %midd
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.au = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 80
-  %4 = zext nneg i32 %i.f to i64
-  %wide.trip.count111 = zext nneg i32 %i.f to i64
-  %invariant.gep128.sink = getelementptr [8 x i8], ptr %i.u, i64 %i.as
+  %wide.trip.count111 = zext nneg i32 %i.f to i64 ; 2 uses
+  %invariant.gep128.sink = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.as
   br label %bb.h
 
 bb.d:                                             ; preds = %_ZNK5Ipopt14DenseSymMatrix21MakeNewDenseSymMatrixEv.exit
@@ -1535,8 +1532,8 @@ _ZNK5Ipopt6Vector3DotERKS0_.exit:                 ; preds = %._crit_edge.i.i, %.
 
 bb.m:                                             ; preds = %_ZNK5Ipopt6Vector3DotERKS0_.exit, %_ZNK5Ipopt6Vector3DotERKS0_.exit.thread
   %.sink = phi double [ %i.cv, %_ZNK5Ipopt6Vector3DotERKS0_.exit ], [ %i.ct, %_ZNK5Ipopt6Vector3DotERKS0_.exit.thread ]
-  %i.cw = mul nuw nsw i64 %indvars.iv108, %4
-  %gep129 = getelementptr [8 x i8], ptr %invariant.gep128.sink, i64 %i.cw
+  %i.cw = mul nuw nsw i64 %indvars.iv108, %wide.trip.count111
+  %gep129 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep128.sink, i64 %i.cw
   store double %.sink, ptr %gep129, align 8, !tbaa !147
   %i.cx = getelementptr inbounds nuw i8, ptr %.0.i4.i50, i64 8 ; 2 uses
   %i.cy = load i32, ptr %i.cx, align 8, !tbaa !42

@@ -204,12 +204,11 @@ bb.z:                                             ; preds = %.thread, %bb.w, %bb
 .loopexit:                                        ; preds = %bb.m, %bb.r, %bb.i, %._crit_edge.thread125, %._crit_edge
   %i.by = call i64 @rb_thread_current() #16
   call void @rb_thread_execute_interrupts(i64 noundef %i.by) #16
-  %3 = add nsw i32 %0, -1
-  %4 = zext nneg i32 %3 to i64
-  %5 = shl nuw nsw i64 %4, 1
-  %6 = or disjoint i64 %5, 1
+  %3 = shl nuw i32 %0, 1
+  %4 = add i32 %3, -1
+  %5 = zext i32 %4 to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
-  ret i64 %6
+  ret i64 %5
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)

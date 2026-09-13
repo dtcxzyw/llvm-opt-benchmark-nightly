@@ -96,9 +96,9 @@ bb.f:                                             ; preds = %bb.e
   %.in = select i1 %i.p, i16 %.20..20..20., i16 %rev ; 3 uses
   %i.r = zext i16 %.in to i32                     ; 2 uses
   %i.s = call i16 @llvm.umin.i16(i16 %.in, i16 513) ; 2 uses
-  %i.t = zext nneg i16 %i.s to i32                ; 2 uses
+  %i.t = zext nneg i16 %i.s to i32
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !25   ; 3 uses
-  %i.v = zext nneg i16 %i.s to i64                ; 3 uses
+  %i.v = zext nneg i16 %i.s to i64                ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 88
   %i.x = load i64, ptr %i.w, align 8, !tbaa !27   ; 2 uses
   %or.cond105.not = icmp ult i64 %i.m, %i.x
@@ -120,9 +120,8 @@ fmap_readn.exit92:                                ; preds = %bb.g
 
 bb.h:                                             ; preds = %fmap_readn.exit92
   %i.ac = add i64 %i.m, %i.v                      ; 2 uses
-  %2 = add nsw i32 %i.t, -1
-  %3 = zext i32 %2 to i64
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %2 = getelementptr i8, ptr %i.a, i64 %i.v
+  %i.ad = getelementptr i8, ptr %2, i64 -1
   store i8 0, ptr %i.ad, align 1, !tbaa !29
   %i.ae = load i8, ptr %i.a, align 16, !tbaa !29  ; 2 uses
   %.not7.i = icmp eq i8 %i.ae, 0

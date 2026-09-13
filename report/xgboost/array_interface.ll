@@ -202,9 +202,9 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35)
   %i.b = icmp samesign ult i32 %1, 10
   %i.c = icmp samesign ult i32 %1, 100
-  %. = select i1 %i.c, i32 2, i32 3               ; 3 uses
+  %. = select i1 %i.c, i32 2, i32 3               ; 2 uses
   %.022.i.i = select i1 %i.b, i32 1, i32 %.
-  %i.d = zext nneg i32 %.022.i.i to i64
+  %i.d = zext nneg i32 %.022.i.i to i64           ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
   store ptr %i.e, ptr %4, align 8, !tbaa !11, !alias.scope !35
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %4, i64 noundef %i.d, i8 noundef signext 45)
@@ -222,8 +222,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i: ; p
   %i.k = getelementptr i8, ptr %i.j, i64 -200
   %i.l = getelementptr i8, ptr %i.j, i64 -199
   %i.m = load i8, ptr %i.l, align 1, !tbaa !15, !noalias !35
-  %6 = zext nneg i32 %. to i64
-  %i.n = getelementptr i8, ptr %i.f, i64 %6
+  %i.n = getelementptr i8, ptr %i.f, i64 %i.d
   %i.o = getelementptr i8, ptr %i.n, i64 -1
   store i8 %i.m, ptr %i.o, align 1, !tbaa !15
   %i.p = load i8, ptr %i.k, align 2, !tbaa !15, !noalias !35

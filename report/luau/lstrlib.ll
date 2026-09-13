@@ -205,7 +205,7 @@ define internal noundef i32 @_ZL8str_packP9lua_State(ptr noundef %0) #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 14 uses
   %i.b = alloca [16 x i8], align 16               ; 14 uses
-  %i.c = alloca [16 x i8], align 16               ; 15 uses
+  %i.c = alloca [16 x i8], align 16               ; 16 uses
   %1 = alloca %struct.luaL_Strbuf, align 8        ; 28 uses
   %2 = alloca %struct.Header, align 8             ; 6 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
@@ -233,7 +233,8 @@ bb.a:
   br i1 %.not123, label %._crit_edge128, label %.lr.ph127
 
 .lr.ph127:                                        ; preds = %bb.a
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph127, %bb.aj
@@ -243,7 +244,7 @@ bb.b:                                             ; preds = %.lr.ph127, %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #13
   %i.p = call fastcc noundef i32 @_ZL10getdetailsP6HeadermPPKcPiS4_(ptr noundef %2, i64 noundef %.0125, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.q = load i32, ptr %i.f, align 4, !tbaa !35   ; 3 uses
-  %i.r = load i32, ptr %i.e, align 4, !tbaa !35   ; 45 uses
+  %i.r = load i32, ptr %i.e, align 4, !tbaa !35   ; 44 uses
   %i.s = add nsw i32 %i.r, %i.q
   %i.t = sext i32 %i.s to i64
   %i.u = add i64 %.0125, %i.t                     ; 9 uses
@@ -254,7 +255,7 @@ bb.b:                                             ; preds = %.lr.ph127, %bb.aj
   %.in = phi i32 [ %i.w, %bb.d ], [ %i.q, %bb.b ] ; 2 uses
   %i.w = add nsw i32 %.in, -1
   %i.x = load ptr, ptr %1, align 8, !tbaa !20     ; 2 uses
-  %i.y = load ptr, ptr %i.o, align 8, !tbaa !21
+  %i.y = load ptr, ptr %4, align 8, !tbaa !21
   %i.z = icmp ult ptr %i.x, %i.y
   br i1 %i.z, label %bb.d, label %bb.c
 
@@ -311,7 +312,7 @@ bb.h:                                             ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
   %i.ap = trunc i64 %i.ag to i8
   %.not.i = icmp eq i32 %i.ao, 0                  ; 2 uses
-  %i.aq = add i32 %i.r, -1                        ; 2 uses
+  %i.aq = add nsw i32 %i.r, -1                    ; 2 uses
   %i.ar = select i1 %.not.i, i32 %i.aq, i32 0
   %i.as = sext i32 %i.ar to i64
   %i.at = getelementptr inbounds i8, ptr %i.c, i64 %i.as
@@ -335,8 +336,8 @@ bb.h:                                             ; preds = %bb.f, %bb.e
   br label %.lr.ph.split.i
 
 .lr.ph.split.us.preheader.i:                      ; preds = %.lr.ph.i
-  %i.ay = zext nneg i32 %i.aq to i64              ; 6 uses
-  %wide.trip.count34.i = zext nneg i32 %i.r to i64
+  %i.ay = zext nneg i32 %i.aq to i64              ; 5 uses
+  %wide.trip.count34.i = zext nneg i32 %i.r to i64 ; 2 uses
   %i.az = add nsw i64 %wide.trip.count34.i, -1    ; 2 uses
   %xtraiter210 = and i64 %i.az, 3                 ; 3 uses
   %i.ba = add nsw i32 %i.r, -2
@@ -436,7 +437,12 @@ bb.h:                                             ; preds = %bb.f, %bb.e
   %i.cj = icmp slt i64 %i.ag, 0
   %i.ck = icmp samesign ugt i32 %i.r, 8
   %or.cond.i = and i1 %i.ck, %i.cj
-  br i1 %or.cond.i, label %.preheader.i, label %_ZL7packintP11luaL_Strbufyiii.exit
+  br i1 %or.cond.i, label %.preheader.split.us.i.preheader, label %_ZL7packintP11luaL_Strbufyiii.exit
+
+.preheader.split.us.i.preheader:                  ; preds = %._crit_edge.i
+  %5 = add nsw i64 %wide.trip.count34.i, -8
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.c, i8 -1, i64 %5, i1 false), !tbaa !13
+  br label %_ZL7packintP11luaL_Strbufyiii.exit
 
 ._crit_edge.thread44.i.unr-lcssa:                 ; preds = %.lr.ph.split.i
   %lcmp.mod206.not = icmp eq i64 %xtraiter204, 0
@@ -468,22 +474,13 @@ bb.h:                                             ; preds = %bb.f, %bb.e
   %or.cond45.i = and i1 %i.cp, %i.co
   br i1 %or.cond45.i, label %.loopexit.sink.split.i, label %_ZL7packintP11luaL_Strbufyiii.exit
 
-.preheader.i:                                     ; preds = %._crit_edge.i
-  %4 = add nsw i64 %i.ay, -8
-  %5 = add nsw i32 %i.r, -9
-  %6 = zext nneg i32 %5 to i64
-  %7 = sub nsw i64 %4, %6
-  br label %.loopexit.sink.split.i
-
-.loopexit.sink.split.i:                           ; preds = %.preheader.i, %._crit_edge.thread44.i
-  %.sink.i = phi i64 [ %7, %.preheader.i ], [ 8, %._crit_edge.thread44.i ]
-  %scevgep.i = getelementptr i8, ptr %i.c, i64 %.sink.i
+.loopexit.sink.split.i:                           ; preds = %._crit_edge.thread44.i
   %i.cq = add nsw i32 %i.r, -8
   %i.cr = zext nneg i32 %i.cq to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 -1, i64 %i.cr, i1 false), !tbaa !13
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.o, i8 -1, i64 %i.cr, i1 false), !tbaa !13
   br label %_ZL7packintP11luaL_Strbufyiii.exit
 
-_ZL7packintP11luaL_Strbufyiii.exit:               ; preds = %bb.h, %._crit_edge.i, %._crit_edge.thread44.i, %.loopexit.sink.split.i
+_ZL7packintP11luaL_Strbufyiii.exit:               ; preds = %.preheader.split.us.i.preheader, %bb.h, %._crit_edge.i, %._crit_edge.thread44.i, %.loopexit.sink.split.i
   %i.cs = sext i32 %i.r to i64
   call void @_Z15luaL_addlstringP11luaL_StrbufPKcm(ptr noundef nonnull %1, ptr noundef nonnull %i.c, i64 noundef %i.cs)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
@@ -511,7 +508,7 @@ bb.l:                                             ; preds = %bb.j, %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.da = trunc i64 %i.cu to i8
   %.not.i59 = icmp eq i32 %i.cz, 0                ; 2 uses
-  %i.db = add i32 %i.r, -1                        ; 2 uses
+  %i.db = add nsw i32 %i.r, -1                    ; 2 uses
   %i.dc = select i1 %.not.i59, i32 %i.db, i32 0
   %i.dd = sext i32 %i.dc to i64
   %i.de = getelementptr inbounds i8, ptr %i.b, i64 %i.dd
@@ -861,7 +858,7 @@ bb.u:                                             ; preds = %bb.s
 
 .lr.ph121:                                        ; preds = %bb.u, %bb.w
   %i.hm = load ptr, ptr %1, align 8, !tbaa !20    ; 2 uses
-  %i.hn = load ptr, ptr %i.o, align 8, !tbaa !21
+  %i.hn = load ptr, ptr %4, align 8, !tbaa !21
   %i.ho = icmp ult ptr %i.hm, %i.hn
   br i1 %i.ho, label %bb.w, label %bb.v
 
@@ -908,7 +905,7 @@ bb.aa:                                            ; preds = %bb.x, %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.ib = trunc i64 %.pre142 to i8
   %.not.i87 = icmp eq i32 %i.ia, 0                ; 2 uses
-  %i.ic = add i32 %i.r, -1                        ; 2 uses
+  %i.ic = add nsw i32 %i.r, -1                    ; 2 uses
   %i.id = select i1 %.not.i87, i32 %i.ic, i32 0
   %i.ie = sext i32 %i.id to i64
   %i.if = getelementptr inbounds i8, ptr %i.a, i64 %i.ie
@@ -1079,7 +1076,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.ab
   call void @_Z15luaL_addlstringP11luaL_StrbufPKcm(ptr noundef nonnull %1, ptr noundef nonnull %i.kc, i64 noundef %i.kd)
   %i.kg = load ptr, ptr %1, align 8, !tbaa !20    ; 2 uses
-  %i.kh = load ptr, ptr %i.o, align 8, !tbaa !21
+  %i.kh = load ptr, ptr %4, align 8, !tbaa !21
   %i.ki = icmp ult ptr %i.kg, %i.kh
   br i1 %i.ki, label %bb.af, label %bb.ae
 
@@ -1101,7 +1098,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 
 bb.ag:                                            ; preds = %._crit_edge
   %i.kp = load ptr, ptr %1, align 8, !tbaa !20    ; 2 uses
-  %i.kq = load ptr, ptr %i.o, align 8, !tbaa !21
+  %i.kq = load ptr, ptr %4, align 8, !tbaa !21
   %i.kr = icmp ult ptr %i.kp, %i.kq
   br i1 %i.kr, label %bb.ai, label %bb.ah
 
@@ -1504,7 +1501,7 @@ bb.j:                                             ; preds = %bb.e
 .lr.ph.split.us.i90.1:                            ; preds = %.lr.ph.split.us.i90
   %indvars.iv.next53.i93 = add nsw i32 %i.fk, -1
   %i.fr = shl nuw nsw i64 %i.fq, 8
-  %i.fs = sub i32 %i.w, %indvars.iv.next53.i93
+  %i.fs = sub nsw i32 %i.w, %indvars.iv.next53.i93
   %i.ft = sext i32 %i.fs to i64
   %i.fu = getelementptr inbounds i8, ptr %i.fh, i64 %i.ft
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !13
@@ -1907,7 +1904,7 @@ bb.s:                                             ; preds = %bb.e
 .lr.ph.split.us.i122.1:                           ; preds = %.lr.ph.split.us.i122
   %indvars.iv.next53.i125 = add nsw i32 %i.mo, -1
   %i.mv = shl nuw nsw i64 %i.mu, 8
-  %i.mw = sub i32 %i.w, %indvars.iv.next53.i125
+  %i.mw = sub nsw i32 %i.w, %indvars.iv.next53.i125
   %i.mx = sext i32 %i.mw to i64
   %i.my = getelementptr inbounds i8, ptr %i.ml, i64 %i.mx
   %i.mz = load i8, ptr %i.my, align 1, !tbaa !13

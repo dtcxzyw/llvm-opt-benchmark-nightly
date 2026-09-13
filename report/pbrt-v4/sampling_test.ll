@@ -205,21 +205,21 @@ bb.b:                                             ; preds = %bb.d
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.d
-  %indvars.iv298 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next299, %bb.d ] ; 6 uses
+  %indvars.iv298 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next299, %bb.d ] ; 7 uses
   %i.o = trunc nuw nsw i64 %indvars.iv298 to i32
   %i.p = shl nuw nsw i32 1, %i.o                  ; 3 uses
   %i.q = icmp eq i64 %indvars.iv298, 0
   %i.r = uitofp nneg i32 %i.p to float            ; 2 uses
   %i.s = shl nuw nsw i64 %indvars.iv298, 1
-  %14 = add nuw i64 %indvars.iv298, 4294967295
-  %15 = and i64 %14, 4294967295                   ; 2 uses
-  %i.t = getelementptr inbounds nuw [416 x i8], ptr @_ZN4pbrt16VdCSobolMatricesE, i64 %15 ; 5 uses
-  %16 = getelementptr inbounds nuw [416 x i8], ptr @_ZN4pbrt19VdCSobolMatricesInvE, i64 %15
+  %14 = getelementptr [416 x i8], ptr @_ZN4pbrt16VdCSobolMatricesE, i64 %indvars.iv298 ; 5 uses
+  %15 = getelementptr i8, ptr %14, i64 -416
+  %i.t = getelementptr [416 x i8], ptr @_ZN4pbrt19VdCSobolMatricesInvE, i64 %indvars.iv298
+  %16 = getelementptr i8, ptr %i.t, i64 -416
   %wide.trip.count296 = zext nneg i32 %i.p to i64 ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 24
-  %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 32
+  %i.u = getelementptr i8, ptr %14, i64 -408
+  %i.v = getelementptr i8, ptr %14, i64 -400
+  %i.w = getelementptr i8, ptr %14, i64 -392
+  %i.x = getelementptr i8, ptr %14, i64 -384
   br label %.preheader227
 
 .preheader227:                                    ; preds = %bb.c, %bb.e
@@ -280,7 +280,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not33.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.i
-  %i.al = load i64, ptr %i.t, align 8, !tbaa !61
+  %i.al = load i64, ptr %15, align 8, !tbaa !61
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.i
@@ -683,7 +683,7 @@ _ZN4pbrt3RNG7UniformIiEENSt9enable_ifIXsr3stdE13is_integral_vIT_EES3_E4typeES3_.
   br i1 %.not.i39, label %_ZN4pbrt3RNG7UniformIiEENSt9enable_ifIXsr3stdE13is_integral_vIT_EES3_E4typeES3_.exit37, label %_ZN4pbrt3RNG7UniformIiEENSt9enable_ifIXsr3stdE13is_integral_vIT_EES3_E4typeES3_.exit40
 
 _ZN4pbrt3RNG7UniformIiEENSt9enable_ifIXsr3stdE13is_integral_vIT_EES3_E4typeES3_.exit40: ; preds = %_ZN4pbrt3RNG7UniformIiEENSt9enable_ifIXsr3stdE13is_integral_vIT_EES3_E4typeES3_.exit37
-  %i.au = and i32 %i.p, 15                        ; 5 uses
+  %i.au = and i32 %i.p, 15                        ; 4 uses
   %i.av = shl nuw nsw i32 1, %i.au                ; 2 uses
   %i.aw = add nsw i32 %i.av, -1                   ; 2 uses
   %i.ax = and i32 %i.z, %i.aw                     ; 4 uses
@@ -700,7 +700,7 @@ bb.d:                                             ; preds = %_ZN4pbrt3RNG7Unifor
   %i.bd = zext nneg i32 %i.bc to i64
   %i.be = shl nuw nsw i64 %i.ba, %i.bd            ; 2 uses
   %.not34.i = icmp eq i32 %i.az, 0
-  %.pre = zext nneg i32 %i.au to i64              ; 2 uses
+  %.pre = zext nneg i32 %i.au to i64              ; 3 uses
   br i1 %.not34.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
@@ -717,8 +717,7 @@ bb.d:                                             ; preds = %_ZN4pbrt3RNG7Unifor
 
 .lr.ph43.i:                                       ; preds = %._crit_edge.i
   %i.bj = xor i64 %.025.lcssa.i, %i.bi
-  %7 = zext nneg i32 %i.au to i64
-  %i.bk = getelementptr [416 x i8], ptr @_ZN4pbrt19VdCSobolMatricesInvE, i64 %7
+  %i.bk = getelementptr [416 x i8], ptr @_ZN4pbrt19VdCSobolMatricesInvE, i64 %.pre
   %i.bl = getelementptr i8, ptr %i.bk, i64 -416
   br label %bb.h
 

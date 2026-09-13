@@ -205,39 +205,34 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.l,
   resume { ptr, i32 } %i.as
 
 bb.m:                                             ; preds = %._crit_edge
-  %i.ay = add nsw i32 %i.h, -1                    ; 3 uses
+  %i.ay = add nsw i32 %i.h, -1                    ; 2 uses
   %.not = icmp eq i32 %spec.select, %i.ay
-  br i1 %.not, label %._crit_edge60, label %bb.n
-
-._crit_edge60:                                    ; preds = %bb.m
-  %.pre = zext nneg i32 %i.ay to i64
-  br label %bb.o
+  %.pre = zext nneg i32 %i.ay to i64              ; 5 uses
+  br i1 %.not, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %5 = sext i32 %i.ay to i64                      ; 2 uses
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %5
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.pre
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !161
   %i.bb = zext nneg i32 %spec.select to i64
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.bb
   store ptr %i.ba, ptr %i.bc, align 8, !tbaa !161
   br label %bb.o
 
-bb.o:                                             ; preds = %._crit_edge60, %bb.n
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge60 ], [ %5, %bb.n ] ; 4 uses
-  %i.bd = icmp ult i64 %i.g, %.pre-phi
+bb.o:                                             ; preds = %bb.m, %bb.n
+  %i.bd = icmp ult i64 %i.g, %.pre
   br i1 %i.bd, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.be = sub nuw nsw i64 %.pre-phi, %i.g
+  %i.be = sub nuw nsw i64 %.pre, %i.g
   tail call void @_ZNSt6vectorIPN2cv14ChessBoardQuadESaIS2_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.be)
   br label %_ZNSt6vectorIPN2cv14ChessBoardQuadESaIS2_EE6resizeEm.exit
 
 bb.q:                                             ; preds = %bb.o
-  %i.bf = icmp ugt i64 %i.g, %.pre-phi
+  %i.bf = icmp ugt i64 %i.g, %.pre
   br i1 %i.bf, label %bb.r, label %_ZNSt6vectorIPN2cv14ChessBoardQuadESaIS2_EE6resizeEm.exit
 
 bb.r:                                             ; preds = %bb.q
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.pre-phi ; 2 uses
+  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.pre ; 2 uses
   %.not.i.i = icmp eq ptr %i.b, %i.bg
   br i1 %.not.i.i, label %_ZNSt6vectorIPN2cv14ChessBoardQuadESaIS2_EE6resizeEm.exit, label %_ZSt8_DestroyIPPN2cv14ChessBoardQuadES2_EvT_S4_RSaIT0_E.exit.i.i
 

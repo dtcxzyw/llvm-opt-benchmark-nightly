@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %.lr.ph141, %_ZL21_i
   %i.ex = load ptr, ptr %i.db, align 8, !tbaa !28
   %i.ey = load i32, ptr %i.a, align 4, !tbaa !15
   %storemerge.i.i = call i32 @llvm.usub.sat.i32(i32 %i.ey, i32 %.048139)
-  %.sroa.speculated.i.i = call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 %i.ew) ; 23 uses
+  %.sroa.speculated.i.i = call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 %i.ew) ; 24 uses
   %i.ez = zext i32 %.048139 to i64                ; 5 uses
   %i.fa = getelementptr inbounds nuw [12 x i8], ptr %i.ex, i64 %i.ez ; 8 uses
   %.sroa.3.8.insert.ext.i.i = zext i32 %.sroa.speculated.i.i to i64 ; 5 uses
@@ -225,7 +225,7 @@ bb.x:                                             ; preds = %.lr.ph141, %_ZL21_i
   %storemerge.i.i82 = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 %.048139)
   %.sroa.speculated.i.i83 = call i32 @llvm.umin.i32(i32 %storemerge.i.i82, i32 %i.ew) ; 6 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fh, i64 %i.ez ; 14 uses
-  %.sroa.3.8.insert.ext.i.i84 = zext i32 %.sroa.speculated.i.i83 to i64 ; 14 uses
+  %.sroa.3.8.insert.ext.i.i84 = zext i32 %.sroa.speculated.i.i83 to i64 ; 13 uses
   %.not.i87 = icmp eq i32 %.sroa.speculated.i.i83, %.sroa.speculated.i.i
   %.not161.i = icmp eq i32 %.sroa.speculated.i.i67, %.sroa.speculated.i.i
   %or.cond.i = select i1 %.not.i87, i1 %.not161.i, i1 false
@@ -628,16 +628,16 @@ bb.ci:                                            ; preds = %bb.ch
   br label %.lr.ph44.i
 
 .lr.ph44.i:                                       ; preds = %bb.co, %.lr.ph49.i
-  %indvars.iv69.i = phi i64 [ %i.gc, %.lr.ph49.i ], [ %indvars.iv.next70.i, %bb.co ] ; 4 uses
+  %indvars.iv69.i = phi i64 [ %i.gc, %.lr.ph49.i ], [ %indvars.iv.next70.i, %bb.co ] ; 3 uses
   %.013846.i = phi i32 [ %i.pn, %.lr.ph49.i ], [ %.2.i, %bb.co ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #9
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ed, i8 0, i64 64, i1 false), !tbaa !37
-  %16 = sub nsw i64 %indvars.iv69.i, %.sroa.3.8.insert.ext.i.i84 ; 2 uses
-  %17 = trunc nsw i64 %indvars.iv69.i to i32
+  %16 = trunc nuw i64 %indvars.iv69.i to i32      ; 2 uses
+  %17 = sub nsw i32 %16, %.sroa.speculated.i.i    ; 4 uses
   br label %bb.cj
 
 bb.cj:                                            ; preds = %bb.cj, %.lr.ph44.i
-  %.013643.i = phi i32 [ %17, %.lr.ph44.i ], [ %i.qa, %bb.cj ] ; 2 uses
+  %.013643.i = phi i32 [ %16, %.lr.ph44.i ], [ %i.qa, %bb.cj ] ; 2 uses
   %i.pp = urem i32 %.013643.i, %.sroa.speculated.i.i ; 2 uses
   %i.pq = and i32 %i.pp, 63
   %i.pr = zext nneg i32 %i.pq to i64
@@ -650,24 +650,22 @@ bb.cj:                                            ; preds = %bb.cj, %.lr.ph44.i
   store i64 %i.px, ptr %i.pv, align 8, !tbaa !37
   %i.py = sext i32 %.013643.i to i64
   %i.pz = getelementptr inbounds [4 x i8], ptr %i.po, i64 %i.py
-  %i.qa = load i32, ptr %i.pz, align 4, !tbaa !31 ; 5 uses
-  %18 = sext i32 %i.qa to i64
-  %19 = icmp slt i64 %16, %18
-  br i1 %19, label %bb.cj, label %._crit_edge.i, !llvm.loop !92
+  %i.qa = load i32, ptr %i.pz, align 4, !tbaa !31 ; 3 uses
+  %18 = icmp sgt i32 %i.qa, %17
+  br i1 %18, label %bb.cj, label %._crit_edge.i, !llvm.loop !92
 
 ._crit_edge.i:                                    ; preds = %bb.cj
   store i32 -1, ptr %15, align 8
-  %20 = trunc nsw i64 %16 to i32
-  %i.qb = icmp eq i32 %i.qa, %20
+  %i.qb = icmp eq i32 %i.qa, %17
   br i1 %i.qb, label %bb.ck, label %bb.co
 
 bb.ck:                                            ; preds = %._crit_edge.i
-  %i.qc = icmp slt i32 %i.qa, 0
+  %i.qc = icmp slt i32 %17, 0
   %.pre.i91 = load ptr, ptr %i.ef, align 8, !tbaa !30 ; 2 uses
   br i1 %i.qc, label %bb.cm, label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck
-  %i.qd = zext nneg i32 %i.qa to i64
+  %i.qd = zext nneg i32 %17 to i64
   %i.qe = getelementptr inbounds nuw [4 x i8], ptr %.pre.i91, i64 %i.qd
   %i.qf = load i32, ptr %i.qe, align 4, !tbaa !31
   br label %bb.cm
@@ -688,9 +686,9 @@ bb.co:                                            ; preds = %bb.cn, %bb.cm, %._c
   %.2.i = phi i32 [ %.013846.i, %._crit_edge.i ], [ %i.qj, %bb.cn ], [ %.013846.i, %bb.cm ]
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #9
   %indvars.iv.next70.i = add nuw nsw i64 %indvars.iv69.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next70.i to i32
-  %exitcond72.not.i = icmp eq i32 %i.pl, %lftr.wideiv.i
-  br i1 %exitcond72.not.i, label %.preheader.i.preheader, label %.lr.ph44.i, !llvm.loop !93
+  %lftr.wideiv.i = trunc nuw i64 %indvars.iv.next70.i to i32
+  %19 = icmp sgt i32 %i.pl, %lftr.wideiv.i
+  br i1 %19, label %.lr.ph44.i, label %.preheader.i.preheader, !llvm.loop !93
 
 _ZN11hb_vector_tIiLb0EED2Ev.exit207.i.unr-lcssa:  ; preds = %bb.cs
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

@@ -178,7 +178,7 @@ define internal fastcc void @mbedtls_internal_sha256_process(ptr nofree noundef 
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 264 ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.b, ptr noundef nonnull align 4 dereferenceable(32) %i.a, i64 32, i1 false), !tbaa !10
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 32 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 31 uses
   %i.d = load <4 x i32>, ptr %1, align 1
   %i.e = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %i.d)
   store <4 x i32> %i.e, ptr %i.c, align 4, !tbaa !10
@@ -502,7 +502,7 @@ bb.b:                                             ; preds = %.preheader146, %bb.
   %i.jw = phi i32 [ %i.ia, %.preheader146 ], [ %i.xg, %bb.b ] ; 4 uses
   %i.jx = phi i32 [ %i.gx, %.preheader146 ], [ %i.xn, %bb.b ] ; 3 uses
   %i.jy = phi i32 [ %i.jd, %.preheader146 ], [ %i.zc, %bb.b ] ; 11 uses
-  %indvars.iv170 = phi i64 [ 16, %.preheader146 ], [ %indvars.iv.next171, %bb.b ] ; 27 uses
+  %indvars.iv170 = phi i64 [ 16, %.preheader146 ], [ %indvars.iv.next171, %bb.b ] ; 26 uses
   %i.jz = load i32, ptr %i.r, align 4, !tbaa !10
   %i.ka = tail call i32 @llvm.fshl.i32(i32 %i.jy, i32 %i.jy, i32 26)
   %i.kb = tail call i32 @llvm.fshl.i32(i32 %i.jy, i32 %i.jy, i32 21)
@@ -539,7 +539,7 @@ bb.b:                                             ; preds = %.preheader146, %bb.
   %i.lg = load i32, ptr %i.lf, align 4, !tbaa !10
   %i.lh = add i32 %i.kv, %i.lg
   %i.li = add i32 %i.lh, %i.ld                    ; 7 uses
-  %i.lj = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv170 ; 5 uses
+  %i.lj = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv170 ; 6 uses
   store i32 %i.li, ptr %i.lj, align 4, !tbaa !10
   %i.lk = add i32 %i.kf, %i.kk
   %i.ll = add i32 %i.lk, %i.ki
@@ -572,8 +572,7 @@ bb.b:                                             ; preds = %.preheader146, %bb.
   %i.mk = or disjoint i64 %indvars.iv170, 1       ; 2 uses
   %i.ml = getelementptr inbounds nuw [4 x i8], ptr @K, i64 %i.mk
   %i.mm = load i32, ptr %i.ml, align 4, !tbaa !10
-  %3 = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv170
-  %i.mn = getelementptr i8, ptr %3, i64 -4        ; 2 uses
+  %i.mn = getelementptr i8, ptr %i.lj, i64 -4     ; 2 uses
   %i.mo = load i32, ptr %i.mn, align 4, !tbaa !10 ; 5 uses
   %i.mp = tail call i32 @llvm.fshl.i32(i32 %i.mo, i32 %i.mo, i32 15)
   %i.mq = tail call i32 @llvm.fshl.i32(i32 %i.mo, i32 %i.mo, i32 13)

@@ -204,7 +204,6 @@ _ZNSt12_Vector_baseIN2cv4Mat_IdEESaIS2_EEC2EmRKS3_.exit.i: ; preds = %_ZNSt6vect
   %i.du = shl nuw nsw i64 %wide.trip.count390, 4
   %i.dv = shl nuw nsw i64 %wide.trip.count372, 4
   %i.dw = shl nuw nsw i64 %wide.trip.count372, 3  ; 2 uses
-  %34 = sext i32 %i.cg to i64
   %min.iters.check504 = icmp eq i32 %i.w, 2
   %n.vec506 = and i64 %wide.trip.count372, 4294967294 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec506, %wide.trip.count372
@@ -331,17 +330,19 @@ bb.ab:                                            ; preds = %.lr.ph356, %._crit_
 
 bb.ac:                                            ; preds = %.lr.ph334, %._crit_edge331
   %indvars.iv374 = phi i64 [ 0, %.lr.ph334 ], [ %indvars.iv.next375, %._crit_edge331 ] ; 4 uses
-  %35 = add nuw i64 %indvars.iv374, 1
-  %smin = call i64 @llvm.smin.i64(i64 %35, i64 %34)
-  %i.fo = mul i64 %i.ex, %smin
+  %34 = trunc i64 %indvars.iv374 to i32
+  %35 = add i32 %34, 1
+  %smin = call i32 @llvm.smin.i32(i32 %35, i32 %i.cg)
+  %36 = zext i32 %smin to i64
+  %i.fo = mul i64 %i.ex, %36
   %scevgep490 = getelementptr i8, ptr %scevgep489, i64 %i.fo
   %i.fp = mul i64 %i.ex, %indvars.iv374
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ew, i64 %i.fp ; 5 uses
   %indvars.iv.next375 = add nuw nsw i64 %indvars.iv374, 1 ; 3 uses
   %i.fr = trunc i64 %indvars.iv.next375 to i32
   %.sroa.speculated288 = call i32 @llvm.smin.i32(i32 %i.cg, i32 %i.fr)
-  %36 = sext i32 %.sroa.speculated288 to i64
-  %i.fs = mul i64 %i.ex, %36
+  %37 = zext i32 %.sroa.speculated288 to i64
+  %i.fs = mul i64 %i.ex, %37
   %i.ft = getelementptr i8, ptr %i.ew, i64 %i.fs  ; 4 uses
   %i.fu = mul i64 %i.ez, %indvars.iv374
   %i.fv = getelementptr inbounds nuw i8, ptr %i.ey, i64 %i.fu ; 3 uses
@@ -742,9 +743,6 @@ declare double @llvm.sqrt.f64(double) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #6

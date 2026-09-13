@@ -202,8 +202,8 @@ bb.u:                                             ; preds = %.lr.ph.i.i88
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.u, %.lr.ph.i.i88, %bb.t
-  %.022.i.i = phi i32 [ 2, %.lr.ph.i.i88 ], [ 1, %bb.t ], [ %., %bb.u ] ; 3 uses
-  %i.ff = zext nneg i32 %.022.i.i to i64
+  %.022.i.i = phi i32 [ 2, %.lr.ph.i.i88 ], [ 1, %bb.t ], [ %., %bb.u ] ; 2 uses
+  %i.ff = zext nneg i32 %.022.i.i to i64          ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %44, i64 16 ; 3 uses
   store ptr %i.fg, ptr %44, align 8, !tbaa !707, !alias.scope !1260
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %44, i64 noundef %i.ff, i8 noundef signext 45) #20
@@ -222,8 +222,7 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.u, %.lr.ph.i.i88
   %i.fn = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits, i64 %i.fm ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 1
   %i.fp = load i8, ptr %i.fo, align 1, !tbaa !703, !noalias !1260
-  %46 = zext nneg i32 %.022.i.i to i64
-  %i.fq = getelementptr i8, ptr %i.fh, i64 %46
+  %i.fq = getelementptr i8, ptr %i.fh, i64 %i.ff
   %i.fr = getelementptr i8, ptr %i.fq, i64 -1
   store i8 %i.fp, ptr %i.fr, align 1, !tbaa !703
   %i.fs = load i8, ptr %i.fn, align 2, !tbaa !703, !noalias !1260

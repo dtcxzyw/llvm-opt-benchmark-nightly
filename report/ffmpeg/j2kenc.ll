@@ -205,14 +205,13 @@ encode_sigpass.exit.i.i:                          ; preds = %._crit_edge.us.i120
   store i8 %i.bdx, ptr %i.amh, align 8, !tbaa !100
   %i.bdy = getelementptr inbounds nuw i8, ptr %i.amh, i64 1
   store i8 %i.bdx, ptr %i.bdy, align 1, !tbaa !101
-  %sext.i.i = shl i64 %indvars.iv.i.i, 32
-  %5 = ashr exact i64 %sext.i.i, 32               ; 2 uses
-  %i.bdz = getelementptr inbounds [24 x i8], ptr %i.bdh, i64 %5 ; 2 uses
+  %5 = and i64 %indvars.iv.i.i, 4294967295        ; 2 uses
+  %i.bdz = getelementptr inbounds nuw [24 x i8], ptr %i.bdh, i64 %5 ; 2 uses
   %i.bea = getelementptr inbounds nuw i8, ptr %i.bdz, i64 16
   %i.beb = getelementptr inbounds nuw i8, ptr %i.bdz, i64 20
   %i.bec = call i32 @ff_mqc_flush_to(ptr noundef nonnull %i.adk, ptr noundef nonnull %i.bea, ptr noundef nonnull %i.beb) #11
   %i.bed = load ptr, ptr %i.amj, align 8, !tbaa !98
-  %i.bee = getelementptr inbounds [24 x i8], ptr %i.bed, i64 %5 ; 2 uses
+  %i.bee = getelementptr inbounds nuw [24 x i8], ptr %i.bed, i64 %5 ; 2 uses
   %i.bef = getelementptr inbounds nuw i8, ptr %i.bee, i64 20
   %i.beg = load i32, ptr %i.bef, align 4, !tbaa !103
   %i.beh = sub i32 %i.bec, %i.beg

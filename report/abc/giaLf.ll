@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %._crit_edge, %Gia_A
   br i1 %or.cond, label %bb.e, label %bb.p
 
 bb.e:                                             ; preds = %bb.d
-  %i.bv = add nsw i32 %i.b, -1                    ; 2 uses
+  %i.bv = add nsw i32 %i.b, -1
   %.val35 = load ptr, ptr %i.c, align 8, !tbaa !85
-  %i.bw = zext nneg i32 %i.bv to i64
+  %i.bw = zext nneg i32 %i.bv to i64              ; 2 uses
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %.val35, i64 %i.bw
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !86 ; 2 uses
   %.not34 = icmp eq ptr %i.by, null
@@ -289,8 +289,7 @@ Vec_PtrPush.exit:                                 ; preds = %bb.f, %bb.k, %Vec_P
   %i.cz = getelementptr inbounds [8 x i8], ptr %i.cw, i64 %i.cy
   store ptr %i.by, ptr %i.cz, align 8, !tbaa !86
   %.val37 = load ptr, ptr %i.c, align 8, !tbaa !85
-  %6 = zext nneg i32 %i.bv to i64
-  %i.da = getelementptr inbounds nuw [8 x i8], ptr %.val37, i64 %6
+  %i.da = getelementptr inbounds nuw [8 x i8], ptr %.val37, i64 %i.bw
   store ptr null, ptr %i.da, align 8, !tbaa !86
   br label %.thread
 

@@ -204,16 +204,15 @@ bb.n:                                             ; preds = %._crit_edge.i20
   br i1 %.not94.i, label %._crit_edge63.i, label %.lr.ph62.preheader.i
 
 .lr.ph62.preheader.i:                             ; preds = %bb.n
-  %i.cd = add nsw i32 %i.f, -1                    ; 2 uses
+  %i.cd = add nsw i32 %i.f, -1
   %scevgep.i21 = getelementptr i8, ptr %4, i64 4
-  %i.ce = zext nneg i32 %i.cd to i64
+  %i.ce = zext nneg i32 %i.cd to i64              ; 2 uses
   %i.cf = shl nuw nsw i64 %i.ce, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %4, ptr align 4 %scevgep.i21, i64 %i.cf, i1 false), !tbaa !17
-  %6 = zext nneg i32 %i.cd to i64
   br label %._crit_edge63.i
 
 ._crit_edge63.i:                                  ; preds = %.lr.ph62.preheader.i, %bb.n, %.thread.i
-  %i.cg = phi i64 [ -1, %.thread.i ], [ %6, %.lr.ph62.preheader.i ], [ 0, %bb.n ]
+  %i.cg = phi i64 [ -1, %.thread.i ], [ %i.ce, %.lr.ph62.preheader.i ], [ 0, %bb.n ]
   %i.ch = phi i32 [ %i.cb, %.thread.i ], [ %i.cc, %.lr.ph62.preheader.i ], [ %i.cc, %bb.n ]
   %i.ci = getelementptr inbounds [4 x i8], ptr %4, i64 %i.cg
   store i32 %i.ch, ptr %i.ci, align 4, !tbaa !17

@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.f
   %i.x = load ptr, ptr %i.l, align 8, !tbaa !56   ; 5 uses
   %i.y = ptrtoint ptr %i.w to i64
   %i.z = ptrtoint ptr %i.x to i64
-  %i.aa = sub i64 %i.y, %i.z                      ; 2 uses
-  %i.ab = lshr exact i64 %i.aa, 4                 ; 4 uses
+  %i.aa = sub i64 %i.y, %i.z
+  %i.ab = lshr exact i64 %i.aa, 4                 ; 5 uses
   %i.ac = trunc i64 %i.ab to i32                  ; 3 uses
   %i.ad = icmp slt i32 %i.ac, 1
   br i1 %i.ad, label %bb.i, label %bb.j
@@ -379,10 +379,9 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge
   br i1 %exitcond222.not, label %._crit_edge210, label %.lr.ph209, !llvm.loop !218
 
 bb.m:                                             ; preds = %bb.l
-  %3 = shl i64 %i.aa, 28
-  %sext = add i64 %3, -4294967296
-  %4 = ashr i64 %sext, 32
-  %i.ef = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %4 ; 2 uses
+  %sext = add nuw nsw i64 %i.ab, 4294967295
+  %3 = and i64 %sext, 4294967295
+  %i.ef = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %3 ; 2 uses
   %i.eg = load <2 x i32>, ptr %i.ef, align 4      ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
   %i.ei = load <2 x i32>, ptr %i.eh, align 4, !tbaa !60

@@ -205,8 +205,8 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 .loopexit365:                                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.preheader364, %bb.t
   %.0 = phi ptr [ null, %bb.t ], [ %i.bu, %.preheader364 ], [ %i.bu, %middle.block ], [ %i.bu, %scalar.ph ], [ %i.bu, %scalar.ph.prol.loopexit ]
-  %i.gt = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !70 ; 4 uses
-  %i.gu = shl nsw i32 %i.gt, 1                    ; 4 uses
+  %i.gt = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !70 ; 3 uses
+  %i.gu = shl nsw i32 %i.gt, 1                    ; 5 uses
   %i.gv = sitofp i32 %i.gu to float
   %i.gw = add nsw i32 %i.gu, -1                   ; 5 uses
   %i.gx = sext i32 %i.gw to i64                   ; 4 uses
@@ -220,11 +220,11 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit270.preheader: ; preds = %.loopexit365
 .lr.ph374:                                        ; preds = %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit270.preheader
   %i.ha = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !70 ; 5 uses
   %i.hb = fpext float %i.gv to double             ; 5 uses
-  %smax = call i32 @llvm.smax.i32(i32 %i.gw, i32 1)
-  %wide.trip.count440 = zext nneg i32 %smax to i64 ; 2 uses
+  %wide.trip.count440 = zext nneg i32 %i.gw to i64 ; 2 uses
+  %9 = add nsw i32 %i.gu, -2
   %xtraiter894 = and i64 %wide.trip.count440, 3
-  %9 = icmp slt i32 %i.gt, 3
-  br i1 %9, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit270.epil.preheader, label %.lr.ph374.new
+  %10 = icmp ult i32 %9, 3
+  br i1 %10, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit270.epil.preheader, label %.lr.ph374.new
 
 .lr.ph374.new:                                    ; preds = %.lr.ph374
   %unroll_iter899 = and i64 %wide.trip.count440, 2147483644
@@ -324,8 +324,7 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit270.epil:  ; preds = %_ZL13gmx_snew_implI
 .lr.ph377.preheader:                              ; preds = %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit270.epil
   %i.iw = load ptr, ptr @stdout, align 8, !tbaa !109
   %fwrite252687 = call i64 @fwrite(ptr nonnull @.str.36, i64 15, i64 1, ptr %i.iw) ; 0 uses
-  %smax445 = call i32 @llvm.smax.i32(i32 %i.gw, i32 1)
-  %wide.trip.count446 = zext nneg i32 %smax445 to i64
+  %wide.trip.count446 = zext nneg i32 %i.gw to i64
   br label %.lr.ph377
 
 .lr.ph377:                                        ; preds = %.lr.ph377.preheader, %.lr.ph377

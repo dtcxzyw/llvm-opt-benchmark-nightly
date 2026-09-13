@@ -205,9 +205,9 @@ bb.n:                                             ; preds = %bb.j
   br i1 %i.ap, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %.sext.i = zext nneg i16 %i.ao to i64           ; 2 uses
   %3 = getelementptr i8, ptr %i.ak, i64 24
-  %4 = add nuw nsw i64 %.sext.i, 1
+  %narrow.i = add nuw nsw i16 %i.ao, 1
+  %4 = zext nneg i16 %narrow.i to i64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.a, ptr noundef align 8 %3, i64 %4, i1 false)
   %i.aq = shl i8 %i.am, 2
   %i.ar = and i8 %i.aq, 4
@@ -215,16 +215,15 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   store i8 0, ptr %i.a, align 8
-  %.pre = zext nneg i16 %i.ao to i64
   br label %drm_dp_calculate_rad.exit
 
 drm_dp_calculate_rad.exit:                        ; preds = %bb.o, %bb.p
-  %.pre-phi = phi i64 [ %.sext.i, %bb.o ], [ %.pre, %bb.p ]
   %.0.i56 = phi i8 [ %i.ar, %bb.o ], [ 4, %bb.p ]
   %i.as = getelementptr i8, ptr %0, i64 8
   %i.at = load i8, ptr %i.as, align 8
   %i.au = shl i8 %i.at, %.0.i56
-  %i.av = getelementptr i8, ptr %i.a, i64 %.pre-phi ; 2 uses
+  %5 = zext nneg i16 %i.ao to i64
+  %i.av = getelementptr i8, ptr %i.a, i64 %5      ; 2 uses
   %i.aw = load i8, ptr %i.av, align 1
   %i.ax = or i8 %i.au, %i.aw
   store i8 %i.ax, ptr %i.av, align 1

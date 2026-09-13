@@ -205,11 +205,11 @@ bb.e:                                             ; preds = %.lr.ph70, %.loopexi
   %indvars.iv82 = phi i64 [ 0, %.lr.ph70 ], [ %indvars.iv.next83, %.loopexit ] ; 2 uses
   %.05368 = phi i32 [ %i.bk, %.lr.ph70 ], [ %i.ek, %.loopexit ]
   %gep93 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep92, i64 %indvars.iv82
-  %i.bo = load float, ptr %gep93, align 4, !tbaa !41 ; 2 uses
+  %i.bo = load float, ptr %gep93, align 4, !tbaa !41
   %i.bp = and i32 %.05368, %i.bl                  ; 6 uses
-  %9 = icmp slt i32 %i.bp, %4
-  %i.bq = fpext nsz float %i.bo to double         ; 4 uses
-  %i.br = zext i32 %i.bp to i64                   ; 6 uses
+  %9 = icmp samesign ult i32 %i.bp, %4
+  %i.bq = fpext nsz float %i.bo to double         ; 6 uses
+  %i.br = zext nneg i32 %i.bp to i64              ; 6 uses
   br i1 %9, label %.lr.ph.preheader, label %vector.ph124
 
 vector.ph124:                                     ; preds = %bb.e
@@ -250,11 +250,11 @@ middle.block139:                                  ; preds = %vector.body128
 
 .lr.ph.preheader:                                 ; preds = %bb.e
   %i.cf = add nuw nsw i64 %i.br, 1                ; 2 uses
-  %min.iters.check103 = icmp ult i32 %i.bp, 3
+  %min.iters.check103 = icmp samesign ult i32 %i.bp, 3
   br i1 %min.iters.check103, label %.lr.ph.preheader141, label %vector.ph104
 
 vector.ph104:                                     ; preds = %.lr.ph.preheader
-  %n.vec105 = and i64 %i.cf, 8589934588           ; 4 uses
+  %n.vec105 = and i64 %i.cf, 4294967292           ; 4 uses
   %i.cg = sub nsw i64 %i.br, %n.vec105
   %i.ch = shl nuw nsw i64 %n.vec105, 3
   %i.ci = getelementptr i8, ptr %3, i64 %i.ch
@@ -307,22 +307,21 @@ middle.block119:                                  ; preds = %vector.body108
   br i1 %i.cy, label %.lr.ph66, label %.loopexit
 
 .lr.ph66:                                         ; preds = %.preheader
-  %10 = fpext nsz float %i.bo to double           ; 2 uses
   %wide.trip.count80 = zext nneg i32 %i.cx to i64 ; 3 uses
-  %11 = sext i32 %i.bp to i64
-  %invariant.gep = getelementptr [8 x i8], ptr %3, i64 %11 ; 2 uses
+  %10 = zext nneg i32 %i.bp to i64
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %10 ; 2 uses
   %min.iters.check = icmp ult i32 %i.cx, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph66
   %n.vec = and i64 %wide.trip.count80, 2147483644 ; 3 uses
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %10, i64 0
+  %broadcast.splatinsert = insertelement <2 x double> poison, double %i.bq, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.cz = getelementptr [8 x i8], ptr %invariant.gep, i64 %index ; 2 uses
+  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %index ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
   %i.db = getelementptr inbounds nuw i8, ptr %i.cz, i64 24
   %wide.load = load <2 x double>, ptr %i.da, align 8, !tbaa !55
@@ -374,14 +373,14 @@ scalar.ph.preheader:                              ; preds = %.lr.ph66, %middle.b
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv77 = phi i64 [ %indvars.iv.next78, %scalar.ph ], [ %indvars.iv77.ph, %scalar.ph.preheader ] ; 3 uses
-  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv77
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv77
   %i.du = getelementptr inbounds nuw i8, ptr %gep, i64 8
   %i.dv = load double, ptr %i.du, align 8, !tbaa !55
   %i.dw = xor i64 %indvars.iv77, -1
   %i.dx = getelementptr [4 x i8], ptr %i.bn, i64 %i.dw ; 2 uses
   %i.dy = load float, ptr %i.dx, align 4, !tbaa !41
   %i.dz = fpext nsz float %i.dy to double
-  %i.ea = tail call nsz double @llvm.fmuladd.f64(double %10, double %i.dv, double %i.dz)
+  %i.ea = tail call nsz double @llvm.fmuladd.f64(double %i.bq, double %i.dv, double %i.dz)
   %i.eb = fptrunc nsz double %i.ea to float
   store float %i.eb, ptr %i.dx, align 4, !tbaa !41
   %indvars.iv.next78 = add nuw nsw i64 %indvars.iv77, 1 ; 2 uses

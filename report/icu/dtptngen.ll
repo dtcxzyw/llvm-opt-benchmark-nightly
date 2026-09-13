@@ -204,17 +204,17 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.c
   %i.ac = phi ptr [ %.pre, %bb.g ], [ %i.f, %bb.c ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ac, i64 1104
-  %i.ad = getelementptr inbounds nuw [192 x i8], ptr %2, i64 %indvars.iv ; 3 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
+  %i.ad = getelementptr inbounds nuw [192 x i8], ptr %i.ac, i64 %indvars.iv ; 3 uses
+  %i.ae = getelementptr i8, ptr %i.ad, i64 1176
   %i.af = load i16, ptr %i.ae, align 8, !tbaa !32
   %i.ag = icmp ugt i16 %i.af, 31
   br i1 %i.ag, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 64
+  %i.ah = getelementptr i8, ptr %i.ad, i64 1168
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #28
-  call void @_ZN6icu_7813UnicodeStringC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(64) %i.ad)
+  %2 = getelementptr i8, ptr %i.ad, i64 1104
+  call void @_ZN6icu_7813UnicodeStringC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(64) %2)
   %i.ai = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.ah, ptr noundef nonnull align 8 dereferenceable(64) %1) #28 ; 0 uses
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %1) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
@@ -223,17 +223,16 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.aj = phi ptr [ %.pre27, %bb.i ], [ %i.ac, %bb.h ]
-  %3 = getelementptr inbounds nuw i8, ptr %i.aj, i64 1104
-  %i.ak = getelementptr inbounds nuw [192 x i8], ptr %3, i64 %indvars.iv ; 3 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 136
+  %i.ak = getelementptr inbounds nuw [192 x i8], ptr %i.aj, i64 %indvars.iv ; 3 uses
+  %i.al = getelementptr i8, ptr %i.ak, i64 1240
   %i.am = load i16, ptr %i.al, align 8, !tbaa !32
   %i.an = icmp ugt i16 %i.am, 31
   br i1 %i.an, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 128
+  %i.ao = getelementptr i8, ptr %i.ak, i64 1232
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #28
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 64
+  %i.ap = getelementptr i8, ptr %i.ak, i64 1168
   call void @_ZN6icu_7813UnicodeStringC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(64) %i.ap)
   %i.aq = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.ao, ptr noundef nonnull align 8 dereferenceable(64) %1) #28 ; 0 uses
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %1) #28

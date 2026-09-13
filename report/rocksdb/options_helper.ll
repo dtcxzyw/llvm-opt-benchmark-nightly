@@ -204,10 +204,10 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i119: ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !739)
   %i.kz = icmp ult i8 %i.ky, 10                   ; 3 uses
   %i.la = icmp ult i8 %i.ky, 100
-  %. = select i1 %i.la, i32 2, i32 3              ; 3 uses
+  %. = select i1 %i.la, i32 2, i32 3              ; 2 uses
   %i.lb = zext nneg i32 %. to i64
   %i.lc = select i1 %i.kz, i64 1, i64 %i.lb       ; 6 uses
-  %i.ld = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 10 uses
+  %i.ld = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 9 uses
   store ptr %i.ld, ptr %7, align 8, !tbaa !70, !alias.scope !739
   br i1 %i.kz, label %.thread, label %bb.cg
 
@@ -220,7 +220,7 @@ bb.cg:                                            ; preds = %_ZNSt8__detail14__t
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ld, i8 45, i64 %i.lc, i1 false)
   %i.lf = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   store i64 %i.lc, ptr %i.lf, align 8, !tbaa !72, !alias.scope !739
-  %i.lg = getelementptr inbounds nuw i8, ptr %i.ld, i64 %i.lc
+  %i.lg = getelementptr i8, ptr %i.ld, i64 %i.lc  ; 2 uses
   store i8 0, ptr %i.lg, align 1, !tbaa !71
   %i.lh = icmp ugt i8 %i.ky, 99
   br i1 %i.lh, label %.lr.ph.preheader.i.i125, label %._crit_edge.i.i122
@@ -233,9 +233,7 @@ bb.cg:                                            ; preds = %_ZNSt8__detail14__t
   %i.lm = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implImEEvPcjT_.__digits, i64 %i.ll ; 2 uses
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lm, i64 1
   %i.lo = load i8, ptr %i.ln, align 1, !tbaa !71, !noalias !739
-  %16 = zext nneg i32 %. to i64
-  %17 = getelementptr i8, ptr %i.ld, i64 %16
-  %i.lp = getelementptr i8, ptr %17, i64 -1
+  %i.lp = getelementptr i8, ptr %i.lg, i64 -1
   store i8 %i.lo, ptr %i.lp, align 1, !tbaa !71
   %i.lq = load i8, ptr %i.lm, align 2, !tbaa !71, !noalias !739
   %i.lr = add nsw i32 %., -2
@@ -258,7 +256,7 @@ bb.ch:                                            ; preds = %.lr.ph.preheader.i.
   %.sink = phi i8 [ %i.lq, %.lr.ph.preheader.i.i125 ], [ 0, %.thread ]
   %.ph = phi ptr [ %i.lf, %.lr.ph.preheader.i.i125 ], [ %i.le, %.thread ]
   %.0.lcssa.i.i123.ph = phi i8 [ %i.lk, %.lr.ph.preheader.i.i125 ], [ %i.ky, %.thread ]
-  %i.ma = getelementptr inbounds nuw i8, ptr %i.ld, i64 %.sink646
+  %i.ma = getelementptr i8, ptr %i.ld, i64 %.sink646
   store i8 %.sink, ptr %i.ma, align 1, !tbaa !71
   %i.mb = or disjoint i8 %.0.lcssa.i.i123.ph, 48
   br label %_ZNSt7__cxx119to_stringEi.exit130

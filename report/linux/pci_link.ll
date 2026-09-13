@@ -204,16 +204,15 @@ bb.o:                                             ; preds = %bb.n, %.thread141.i
 
 .lr.ph110.i:                                      ; preds = %bb.o
   %i.ai = zext i8 %i.ah to i64
-  %.1106.i = add nuw nsw i64 %i.ai, 4294967295
+  %.1106.i = add nsw i64 %i.ai, -1                ; 2 uses
   %.025.i.i.i = load ptr, ptr @acpi_link_list, align 8
   %.025.i.i.fr.i = freeze ptr %.025.i.i.i         ; 3 uses
   %.not26.i.i.i = icmp eq ptr %.025.i.i.fr.i, @acpi_link_list
   %i.aj = getelementptr i8, ptr %.val, i64 32     ; 2 uses
-  %6 = and i64 %.1106.i, 4294967295               ; 2 uses
   br i1 %.not26.i.i.i, label %.lr.ph110.split.us.split.us.i, label %.lr.ph110.split.i
 
 .lr.ph110.split.us.split.us.i:                    ; preds = %.lr.ph110.i, %acpi_irq_get_penalty.exit72.us.us.i
-  %indvars.iv124.i = phi i64 [ %indvars.iv.next125.i, %acpi_irq_get_penalty.exit72.us.us.i ], [ %6, %.lr.ph110.i ] ; 3 uses
+  %indvars.iv124.i = phi i64 [ %indvars.iv.next125.i, %acpi_irq_get_penalty.exit72.us.us.i ], [ %.1106.i, %.lr.ph110.i ] ; 3 uses
   %.140107.us.us.i = phi i32 [ %spec.select.us.us.i, %acpi_irq_get_penalty.exit72.us.us.i ], [ %.039146.i, %.lr.ph110.i ] ; 4 uses
   %i.ak = icmp ult i32 %.140107.us.us.i, 16
   br i1 %i.ak, label %bb.p, label %acpi_irq_get_penalty.exit.us.us.i
@@ -252,7 +251,7 @@ acpi_irq_get_penalty.exit72.us.us.i:              ; preds = %bb.q, %acpi_irq_get
   br i1 %i.ax, label %.lr.ph110.split.us.split.us.i, label %.loopexit.i, !llvm.loop !14
 
 .lr.ph110.split.i:                                ; preds = %.lr.ph110.i, %acpi_irq_get_penalty.exit72.i
-  %indvars.iv118.i = phi i64 [ %indvars.iv.next119.i, %acpi_irq_get_penalty.exit72.i ], [ %6, %.lr.ph110.i ] ; 3 uses
+  %indvars.iv118.i = phi i64 [ %indvars.iv.next119.i, %acpi_irq_get_penalty.exit72.i ], [ %.1106.i, %.lr.ph110.i ] ; 3 uses
   %.140107.i = phi i32 [ %spec.select.i, %acpi_irq_get_penalty.exit72.i ], [ %.039146.i, %.lr.ph110.i ] ; 8 uses
   %i.ay = icmp ult i32 %.140107.i, 16
   br i1 %i.ay, label %bb.r, label %.lr.ph29.i.i.i

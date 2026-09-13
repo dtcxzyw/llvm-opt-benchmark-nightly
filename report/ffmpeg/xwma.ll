@@ -200,7 +200,7 @@ bb.z:                                             ; preds = %bb.x
 
 .lr.ph230:                                        ; preds = %bb.z, %.loopexit199
   %.0153229 = phi ptr [ %.1154, %.loopexit199 ], [ null, %bb.z ] ; 10 uses
-  %.0155228 = phi i32 [ %.1156, %.loopexit199 ], [ 0, %bb.z ] ; 4 uses
+  %.0155228 = phi i32 [ %.1156, %.loopexit199 ], [ 0, %bb.z ] ; 3 uses
   %i.cj = call i32 @avio_rl32(ptr noundef nonnull %i.c) #6
   %i.ck = call i32 @avio_rl32(ptr noundef nonnull %i.c) #6 ; 4 uses
   %i.cl = zext i32 %i.ck to i64                   ; 7 uses
@@ -301,7 +301,7 @@ bb.am:                                            ; preds = %bb.al
   br label %.loopexit
 
 bb.an:                                            ; preds = %bb.al
-  %i.dj = zext nneg i32 %.0155228 to i64
+  %i.dj = zext nneg i32 %.0155228 to i64          ; 2 uses
   %i.dk = getelementptr [4 x i8], ptr %.0153229, i64 %i.dj
   %i.dl = getelementptr i8, ptr %i.dk, i64 -4
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !67
@@ -310,7 +310,6 @@ bb.an:                                            ; preds = %bb.al
   %i.dp = getelementptr inbounds nuw i8, ptr %i.k, i64 48
   store i64 %i.do, ptr %i.dp, align 8, !tbaa !69
   %i.dq = call i64 @avio_seek(ptr noundef nonnull %i.c, i64 noundef 0, i32 noundef 1) #6
-  %wide.trip.count270 = zext nneg i32 %.0155228 to i64
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.ao
@@ -327,7 +326,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.ao
   %i.ea = udiv i32 %i.dz, %i.di
   %i.eb = zext i32 %i.ea to i64
   %i.ec = call i32 @av_add_index_entry(ptr noundef nonnull %i.k, i64 noundef %i.dx, i64 noundef %i.eb, i32 noundef %i.du, i32 noundef 0, i32 noundef 1) #6 ; 0 uses
-  %exitcond271.not = icmp eq i64 %i.dr, %wide.trip.count270
+  %exitcond271.not = icmp eq i64 %i.dr, %i.dj
   br i1 %exitcond271.not, label %.loopexit, label %bb.ao, !llvm.loop !42
 
 bb.ap:                                            ; preds = %bb.ak

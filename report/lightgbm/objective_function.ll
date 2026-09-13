@@ -204,11 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %i.d, ptr %i.w, align 8, !tbaa !328
   %i.x = icmp sgt i32 %i.p, 1
-  br i1 %i.x, label %.lr.ph.preheader.i, label %._crit_edge.i
-
-.lr.ph.preheader.i:                               ; preds = %bb.c
-  %4 = zext nneg i32 %i.p to i64
-  br label %.lr.ph.i
+  br i1 %i.x, label %.lr.ph.i, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.h, %bb.c
   %i.y = phi ptr [ %.pre12, %bb.c ], [ %i.aq, %bb.h ]
@@ -216,11 +212,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not.i = icmp eq i32 %i.z, 0
   br i1 %.not.i, label %_ZN8LightGBM6CommonL27CheckElementsIntervalClosedIfEEvPKT_S2_S2_iPKc.exit, label %bb.i
 
-.lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
-  %i.aa = phi ptr [ %.pre12, %.lr.ph.preheader.i ], [ %i.aq, %bb.h ] ; 4 uses
-  %indvars.iv.i = phi i64 [ 1, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.h ] ; 5 uses
+.lr.ph.i:                                         ; preds = %bb.c, %bb.h
+  %i.aa = phi ptr [ %i.aq, %bb.h ], [ %.pre12, %bb.c ] ; 4 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.h ], [ 1, %bb.c ] ; 5 uses
   %i.ab = add nsw i64 %indvars.iv.i, -1           ; 3 uses
-  %i.ac = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %i.ab
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.ab
   %i.ad = load float, ptr %i.ac, align 4, !tbaa !170 ; 3 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %indvars.iv.i
   %i.af = load float, ptr %i.ae, align 4, !tbaa !170 ; 3 uses
@@ -257,7 +253,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.sink.split.i, %bb.g, %bb.e
   %i.aq = phi ptr [ %.pre11, %.sink.split.i ], [ %i.aa, %bb.g ], [ %i.aa, %bb.e ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %5 = icmp samesign ult i64 %indvars.iv.next.i, %4
+  %4 = trunc nuw i64 %indvars.iv.next.i to i32
+  %5 = icmp sgt i32 %i.p, %4
   br i1 %5, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !58
 
 bb.i:                                             ; preds = %._crit_edge.i
@@ -660,11 +657,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr %i.d, ptr %i.w, align 8, !tbaa !328
   %i.x = icmp sgt i32 %i.p, 1
-  br i1 %i.x, label %.lr.ph.preheader.i, label %._crit_edge.i
-
-.lr.ph.preheader.i:                               ; preds = %bb.c
-  %4 = zext nneg i32 %i.p to i64
-  br label %.lr.ph.i
+  br i1 %i.x, label %.lr.ph.i, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.h, %bb.c
   %i.y = phi ptr [ %.pre12.a, %bb.c ], [ %i.aq, %bb.h ]
@@ -672,11 +665,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not.i = icmp eq i32 %i.z, 0
   br i1 %.not.i, label %_ZN8LightGBM6CommonL27CheckElementsIntervalClosedIfEEvPKT_S2_S2_iPKc.exit, label %bb.i
 
-.lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
-  %i.aa = phi ptr [ %.pre12.a, %.lr.ph.preheader.i ], [ %i.aq, %bb.h ] ; 4 uses
-  %indvars.iv.i = phi i64 [ 1, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.h ] ; 5 uses
+.lr.ph.i:                                         ; preds = %bb.c, %bb.h
+  %i.aa = phi ptr [ %i.aq, %bb.h ], [ %.pre12.a, %bb.c ] ; 4 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.h ], [ 1, %bb.c ] ; 5 uses
   %i.ab = add nsw i64 %indvars.iv.i, -1           ; 3 uses
-  %i.ac = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %i.ab
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.ab
   %i.ad = load float, ptr %i.ac, align 4, !tbaa !170 ; 3 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %indvars.iv.i
   %i.af = load float, ptr %i.ae, align 4, !tbaa !170 ; 3 uses
@@ -713,7 +706,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.sink.split.i, %bb.g, %bb.e
   %i.aq = phi ptr [ %.pre11, %.sink.split.i ], [ %i.aa, %bb.g ], [ %i.aa, %bb.e ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %5 = icmp samesign ult i64 %indvars.iv.next.i, %4
+  %4 = trunc nuw i64 %indvars.iv.next.i to i32
+  %5 = icmp sgt i32 %i.p, %4
   br i1 %5, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !58
 
 bb.i:                                             ; preds = %._crit_edge.i

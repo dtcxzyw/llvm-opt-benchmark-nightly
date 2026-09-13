@@ -25,7 +25,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = icmp ne i64 %i.c, 0
   tail call void @llvm.assume(i1 %i.e)
   %i.f = add nsw i64 %i.c, -1                     ; 2 uses
-  %i.g = tail call range(i64 0, 53) i64 @llvm.ctlz.i64(i64 %i.f, i1 true)
+  %i.g = tail call range(i64 1, 53) i64 @llvm.ctlz.i64(i64 %i.f, i1 true)
   %i.h = trunc nuw nsw i64 %i.g to i32
   %i.i = tail call i32 @llvm.usub.sat.i32(i32 50, i32 %i.h) ; 2 uses
   %i.j = icmp samesign ult i64 %i.c, 16385
@@ -44,7 +44,7 @@ sz_psz2ind.exit:                                  ; preds = %bb.a, %bb.b
   %.0.i = phi i32 [ %i.s, %bb.b ], [ 200, %bb.a ] ; 3 uses
   %i.t = load i64, ptr %4, align 8, !tbaa !61
   %i.u = zext nneg i32 %.0.i to i64               ; 3 uses
-  %i.v = mul nuw nsw i64 %i.u, 24
+  %i.v = mul nuw nsw i64 %i.u, 24                 ; 2 uses
   %reass.add = add nuw nsw i64 %i.v, 144
   %reass.mul = mul i64 %reass.add, %i.t
   %i.w = tail call ptr @je_base_alloc(ptr noundef %0, ptr noundef %2, i64 noundef %reass.mul, i64 noundef 64) #8 ; 4 uses
@@ -70,7 +70,7 @@ bb.c:                                             ; preds = %sz_psz2ind.exit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.epilog-lcssa
   %.05065 = phi i64 [ %i.am, %.epilog-lcssa ], [ 0, %.lr.ph.preheader ]
-  %.05164 = phi ptr [ %.lcssa, %.epilog-lcssa ], [ %i.aa, %.lr.ph.preheader ] ; 3 uses
+  %.05164 = phi ptr [ %scevgep, %.epilog-lcssa ], [ %i.aa, %.lr.ph.preheader ] ; 2 uses
   %.05263 = phi ptr [ %i.ad, %.epilog-lcssa ], [ %i.w, %.lr.ph.preheader ] ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.05263, i64 144
   %i.ae = tail call zeroext i1 @je_malloc_mutex_init(ptr noundef nonnull %.05263, ptr noundef nonnull @.str, i32 noundef 16, i32 noundef 0) #8
@@ -88,27 +88,24 @@ bb.d:                                             ; preds = %.lr.ph
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %bb.d
   %indvars.iv.epil.init = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.3, %.unr-lcssa ]
-  %.160.epil.init = phi ptr [ %.05164, %bb.d ], [ %6, %.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod70)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.epil.preheader
   %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %indvars.iv.next.epil, %bb.e ] ; 2 uses
-  %.160.epil = phi ptr [ %.160.epil.init, %.epil.preheader ], [ %5, %bb.e ]
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.e ]
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !27
   %i.ai = getelementptr inbounds nuw [24 x i8], ptr %i.ah, i64 %indvars.iv.epil ; 2 uses
   store i8 0, ptr %i.ai, align 8, !tbaa !32
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %.160.epil, i64 24 ; 2 uses
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.e, !llvm.loop !57
 
 .epilog-lcssa:                                    ; preds = %bb.e, %.unr-lcssa
-  %.lcssa = phi ptr [ %6, %.unr-lcssa ], [ %5, %bb.e ]
+  %scevgep = getelementptr i8, ptr %.05164, i64 %i.v
   %i.ak = getelementptr inbounds nuw i8, ptr %.05263, i64 128
   store i64 0, ptr %i.ak, align 8, !tbaa !33
   %i.al = getelementptr inbounds nuw i8, ptr %.05263, i64 136
@@ -120,7 +117,6 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
 
 .new:                                             ; preds = %bb.d, %.new
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %.new ], [ 0, %bb.d ] ; 5 uses
-  %.160 = phi ptr [ %6, %.new ], [ %.05164, %bb.d ]
   %niter = phi i64 [ %niter.next.3, %.new ], [ 0, %bb.d ]
   %i.ao = load ptr, ptr %i.ag, align 8, !tbaa !27
   %i.ap = getelementptr inbounds nuw [24 x i8], ptr %i.ao, i64 %indvars.iv ; 2 uses
@@ -145,7 +141,6 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   store i8 0, ptr %i.bb, align 8, !tbaa !32
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 80
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bc, i8 0, i64 16, i1 false)
-  %6 = getelementptr inbounds nuw i8, ptr %.160, i64 96 ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -223,7 +218,7 @@ bb.f:                                             ; preds = %bb.e
   %i.m = icmp ne i64 %2, 0
   tail call void @llvm.assume(i1 %i.m)
   %i.n = add nsw i64 %2, -1                       ; 2 uses
-  %i.o = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.n, i1 false)
+  %i.o = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.n, i1 false)
   %i.p = trunc nuw nsw i64 %i.o to i32
   %i.q = tail call i32 @llvm.usub.sat.i32(i32 50, i32 %i.p) ; 2 uses
   %i.r = icmp samesign ult i64 %2, 16385
@@ -543,7 +538,7 @@ bb.m:                                             ; preds = %bb.l
   %i.aw = icmp ne i64 %i.au, 0
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = add nsw i64 %i.au, -1                   ; 2 uses
-  %i.ay = tail call range(i64 0, 53) i64 @llvm.ctlz.i64(i64 %i.ax, i1 true)
+  %i.ay = tail call range(i64 1, 53) i64 @llvm.ctlz.i64(i64 %i.ax, i1 true)
   %i.az = trunc nuw nsw i64 %i.ay to i32
   %i.ba = tail call i32 @llvm.usub.sat.i32(i32 50, i32 %i.az) ; 2 uses
   %i.bb = icmp samesign ult i64 %i.au, 16385

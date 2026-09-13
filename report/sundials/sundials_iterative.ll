@@ -202,19 +202,14 @@ bb.f:                                             ; preds = %._crit_edge160, %bb
   br i1 %exitcond175.not, label %.loopexit, label %.preheader
 
 bb.g:                                             ; preds = %bb.a
-  %i.ay = add i32 %0, -1                          ; 4 uses
+  %i.ay = add i32 %0, -1                          ; 3 uses
   %i.az = icmp sgt i32 %0, 1
-  br i1 %i.az, label %.lr.ph, label %.._crit_edge_crit_edge
-
-.._crit_edge_crit_edge:                           ; preds = %bb.g
-  %.pre180 = sext i32 %i.ay to i64
-  br label %._crit_edge
+  br i1 %i.az, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.g
-  %4 = zext nneg i32 %i.ay to i64                 ; 4 uses
-  %wide.trip.count = zext nneg i32 %i.ay to i64
+  %wide.trip.count = zext nneg i32 %i.ay to i64   ; 4 uses
   %.pre = load ptr, ptr %1, align 8, !tbaa !12    ; 2 uses
-  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %4
+  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %wide.trip.count
   %.pre176 = load double, ptr %.phi.trans.insert, align 8, !tbaa !14
   br label %bb.h
 
@@ -222,11 +217,11 @@ bb.h:                                             ; preds = %.lr.ph, %bb.h
   %i.ba = phi double [ %.pre176, %.lr.ph ], [ %i.bs, %bb.h ]
   %i.bb = phi ptr [ %.pre, %.lr.ph ], [ %i.be, %bb.h ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 2 uses
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %4
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %wide.trip.count
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !12 ; 2 uses
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %4 ; 2 uses
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %wide.trip.count ; 2 uses
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !14 ; 2 uses
   %.idx = shl nuw nsw i64 %indvars.iv, 4
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 %.idx
@@ -246,16 +241,16 @@ bb.h:                                             ; preds = %.lr.ph, %bb.h
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.h
 
-._crit_edge:                                      ; preds = %bb.h, %.._crit_edge_crit_edge
-  %.pre-phi = phi i64 [ %.pre180, %.._crit_edge_crit_edge ], [ %4, %bb.h ] ; 3 uses
-  %i.bt = getelementptr inbounds [8 x i8], ptr %1, i64 %.pre-phi
+._crit_edge:                                      ; preds = %bb.h, %bb.g
+  %4 = sext i32 %i.ay to i64                      ; 3 uses
+  %i.bt = getelementptr inbounds [8 x i8], ptr %1, i64 %4
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !12
-  %i.bv = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %.pre-phi ; 2 uses
+  %i.bv = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %4 ; 2 uses
   %i.bw = load double, ptr %i.bv, align 8, !tbaa !14 ; 4 uses
   %i.bx = sext i32 %0 to i64
   %i.by = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bx
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !12
-  %i.ca = getelementptr inbounds [8 x i8], ptr %i.bz, i64 %.pre-phi
+  %i.ca = getelementptr inbounds [8 x i8], ptr %i.bz, i64 %4
   %i.cb = load double, ptr %i.ca, align 8, !tbaa !14 ; 5 uses
   %i.cc = fcmp oeq double %i.cb, 0.000000e+00
   br i1 %i.cc, label %bb.l, label %bb.i
@@ -332,7 +327,7 @@ bb.a:
 
 .lr.ph84:                                         ; preds = %.lr.ph56.preheader
   %i.h = add nsw i32 %0, -1
-  %i.i = zext i32 %i.h to i64                     ; 2 uses
+  %i.i = zext nneg i32 %i.h to i64                ; 2 uses
   %i.j = add nsw i64 %i.i, -1
   br label %bb.b
 

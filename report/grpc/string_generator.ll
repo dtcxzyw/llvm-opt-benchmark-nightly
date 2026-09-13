@@ -202,13 +202,12 @@ bb.n:                                             ; preds = %bb.y
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.y
   %.088 = phi i64 [ %i.bz, %bb.y ], [ 0, %.preheader.preheader ]
-  %.02487 = phi i64 [ %.1, %bb.y ], [ 0, %.preheader.preheader ]
+  %.02487 = phi i64 [ %.pre-phi92, %bb.y ], [ 0, %.preheader.preheader ]
   %i.an = shl i64 %.02487, 1
-  %i.ao = and i64 %i.an, %i.k                     ; 6 uses
-  %i.ap = or disjoint i64 %i.ao, 1                ; 3 uses
-  %i.aq = lshr i64 %i.ao, 6                       ; 2 uses
+  %i.ao = and i64 %i.an, %i.k                     ; 4 uses
+  %i.ap = or disjoint i64 %i.ao, 1                ; 2 uses
+  %i.aq = lshr i64 %i.ao, 6
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.aq
-  %6 = and i64 %i.ap, -9223372036854775745
   %i.as = and i64 %i.ap, 63
   %i.at = shl nuw i64 1, %i.as                    ; 2 uses
   %i.au = load i64, ptr %i.ar, align 8, !tbaa !47
@@ -293,19 +292,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit53: ; preds = %_ZN
   %i.bp = load ptr, ptr %0, align 8, !tbaa !46
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.ax
   store i8 0, ptr %i.bq, align 1, !tbaa !32
-  %.pre103 = lshr i64 %i.ao, 6
-  %.pre91 = and i64 %i.ao, -9223372036854775746
   %.pre93 = and i64 %i.ao, 62
   %.pre95 = shl nuw nsw i64 1, %.pre93
   br label %bb.t
 
 bb.t:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit47, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit53
   %.pre-phi96 = phi i64 [ %i.at, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit47 ], [ %.pre95, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit53 ] ; 2 uses
-  %.pre-phi92 = phi i64 [ %6, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit47 ], [ %.pre91, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit53 ]
-  %.pre-phi = phi i64 [ %i.aq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit47 ], [ %.pre103, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit53 ]
-  %.1 = phi i64 [ %i.ap, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit47 ], [ %i.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit53 ]
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.pre-phi
-  %i.br = icmp ugt i64 %.pre-phi92, -9223372036854775808
+  %.pre-phi92 = phi i64 [ %i.ap, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit47 ], [ %i.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit53 ] ; 3 uses
+  %6 = sdiv i64 %.pre-phi92, 64
+  %7 = getelementptr inbounds [8 x i8], ptr %i.o, i64 %6
+  %8 = and i64 %.pre-phi92, -9223372036854775745
+  %i.br = icmp ugt i64 %8, -9223372036854775808
   %storemerge.idx.i.i.i.i.i54 = select i1 %i.br, i64 -8, i64 0
   %storemerge.i.i.i.i.i55 = getelementptr inbounds i8, ptr %7, i64 %storemerge.idx.i.i.i.i.i54 ; 2 uses
   %i.bs = load i64, ptr %storemerge.i.i.i.i.i55, align 8, !tbaa !47 ; 2 uses

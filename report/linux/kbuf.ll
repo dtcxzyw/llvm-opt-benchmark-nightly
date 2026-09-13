@@ -202,15 +202,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not140.not, label %.critedge, label %bb.d, !prof !11
 
 bb.d:                                             ; preds = %bb.c
-  %i.v = zext i32 %i.u to i64                     ; 3 uses
+  %i.v = zext i32 %i.u to i64                     ; 2 uses
   %i.w = add nsw i64 %i.m, -1
-  %i.x = add nsw i64 %i.w, %i.v                   ; 2 uses
+  %i.x = add nuw nsw i64 %i.w, %i.v
   %i.y = udiv i64 %i.x, %i.v
-  %3 = icmp samesign ult i64 %i.x, %i.v
-  %i.z = tail call i64 @llvm.umin.i64(i64 %i.y, i64 256)
-  %4 = select i1 %3, i64 256, i64 %i.z
-  %5 = zext nneg i16 %i.j to i64
-  %.0120171 = tail call i64 @llvm.umin.i64(i64 %4, i64 %5) ; 2 uses
+  %3 = zext nneg i16 %i.j to i64
+  %i.z = tail call i64 @llvm.umin.i64(i64 %i.y, i64 %3)
+  %.0120171 = tail call i64 @llvm.umin.i64(i64 %i.z, i64 256) ; 2 uses
   %.0120 = trunc nuw nsw i64 %.0120171 to i16     ; 3 uses
   %i.aa = getelementptr i8, ptr %1, i64 26        ; 3 uses
   %i.ab = load i16, ptr %i.aa, align 2

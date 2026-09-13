@@ -205,7 +205,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @MT_decrypt(ptr nofree noundef nonnull captures(none) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #6 {
 bb.a:
-  %3 = alloca %struct.MT, align 8                 ; 25 uses
+  %3 = alloca %struct.MT, align 8                 ; 26 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   store i32 %2, ptr %3, align 8, !tbaa !7
   br label %bb.b
@@ -213,24 +213,24 @@ bb.a:
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.a = phi i32 [ %2, %bb.a ], [ %i.k, %bb.c ]   ; 2 uses
   %indvars.iv = phi i64 [ 1, %bb.a ], [ %indvars.iv.next.1, %bb.c ] ; 4 uses
+  %4 = getelementptr [4 x i8], ptr %3, i64 %indvars.iv
   %i.b = lshr i32 %i.a, 30
   %i.c = xor i32 %i.b, %i.a
   %i.d = mul i32 %i.c, 1812433253
   %i.e = trunc nuw nsw i64 %indvars.iv to i32
   %i.f = add i32 %i.d, %i.e                       ; 3 uses
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
   store i32 %i.f, ptr %4, align 4, !tbaa !7
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 624
   br i1 %exitcond.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %5 = getelementptr [4 x i8], ptr %3, i64 %indvars.iv.next
   %i.g = lshr i32 %i.f, 30
   %i.h = xor i32 %i.g, %i.f
   %i.i = mul i32 %i.h, 1812433253
   %i.j = trunc nuw nsw i64 %indvars.iv.next to i32
   %i.k = add i32 %i.i, %i.j                       ; 2 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.next
   store i32 %i.k, ptr %5, align 4, !tbaa !7
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
   br label %bb.b
@@ -259,7 +259,6 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %MT_getnext.exit
-  %.pre.i = phi i32 [ %2, %.lr.ph ], [ %.pre.i21, %MT_getnext.exit ] ; 2 uses
   %.pre60.i18 = phi ptr [ %.phi.trans.insert59.i.promoted, %.lr.ph ], [ %i.dm, %MT_getnext.exit ] ; 2 uses
   %.01217 = phi ptr [ %0, %.lr.ph ], [ %i.dz, %MT_getnext.exit ] ; 3 uses
   %.01316 = phi i32 [ %1, %.lr.ph ], [ %i.x, %MT_getnext.exit ]
@@ -276,6 +275,7 @@ bb.e:                                             ; preds = %.lr.ph, %MT_getnext
 
 vector.ph24:                                      ; preds = %bb.e
   store i32 624, ptr %i.l, align 8, !tbaa !58
+  %.pre.i = load i32, ptr %3, align 8, !tbaa !7
   %vector.recur.init27 = insertelement <4 x i32> poison, i32 %.pre.i, i64 3
   br label %vector.body25
 
@@ -387,7 +387,7 @@ vector.ph:                                        ; preds = %vector.body25
 
 ._crit_edge.i:                                    ; preds = %vector.body
   %i.cy = load i32, ptr %i.m, align 4, !tbaa !7
-  %i.cz = load i32, ptr %3, align 8, !tbaa !7     ; 4 uses
+  %i.cz = load i32, ptr %3, align 8, !tbaa !7     ; 3 uses
   %i.da = and i32 %i.cz, 2147483646
   %i.db = and i32 %i.cy, -2147483648
   %i.dc = or disjoint i32 %i.da, %i.db
@@ -402,7 +402,6 @@ vector.ph:                                        ; preds = %vector.body25
   br label %MT_getnext.exit
 
 MT_getnext.exit:                                  ; preds = %._crit_edge58.i, %._crit_edge.i
-  %.pre.i21 = phi i32 [ %.pre.i, %._crit_edge58.i ], [ %i.cz, %._crit_edge.i ]
   %i.dk = phi i32 [ %.pre61.i, %._crit_edge58.i ], [ %i.cz, %._crit_edge.i ] ; 2 uses
   %i.dl = phi ptr [ %.pre60.i18, %._crit_edge58.i ], [ %3, %._crit_edge.i ]
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 4

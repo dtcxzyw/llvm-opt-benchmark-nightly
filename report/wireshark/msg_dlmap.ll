@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.n = tail call zeroext i8 @tvb_get_uint8(ptr noundef %2, i32 noundef %.pre-phi) ; 2 uses
   %i.o = and i8 %i.n, 15
   %i.p = lshr i8 %i.n, 4
-  %.in67 = select i1 %.not, i8 %i.p, i8 %i.o      ; 3 uses
-  %i.q = zext nneg i8 %.in67 to i32               ; 4 uses
+  %.in67 = select i1 %.not, i8 %i.p, i8 %i.o      ; 2 uses
+  %i.q = zext nneg i8 %.in67 to i32               ; 5 uses
   %i.r = load i32, ptr @hf_dlmap_dedicated_dl_control_length, align 4
   %i.s = tail call ptr @proto_tree_add_uint(ptr noundef %i.m, i32 noundef %i.r, ptr noundef %2, i32 noundef %.pre-phi, i32 noundef 1, i32 noundef %i.q) ; 0 uses
   %i.t = add nsw i32 %1, 1                        ; 3 uses
@@ -285,12 +285,10 @@ bb.m:                                             ; preds = %bb.g
 bb.n:                                             ; preds = %bb.m
   %i.bf = load i32, ptr @hf_reserved, align 4
   %i.bg = sdiv i32 %i.ad, 2
-  %3 = trunc nuw nsw i32 %i.a to i8
-  %4 = add nsw i8 %3, -1
-  %.lhs.trunc = add nsw i8 %4, %.in67
-  %5 = lshr i8 %.lhs.trunc, 1
-  %.zext = zext nneg i8 %5 to i32
-  %i.bh = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format(ptr noundef %i.m, i32 noundef %i.bf, ptr noundef %2, i32 noundef %i.bg, i32 noundef %.zext, ptr noundef null, ptr noundef nonnull @.str.550) ; 0 uses
+  %3 = add nsw i32 %i.a, -1
+  %4 = add nsw i32 %3, %i.q
+  %5 = lshr i32 %4, 1
+  %i.bh = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format(ptr noundef %i.m, i32 noundef %i.bf, ptr noundef %2, i32 noundef %i.bg, i32 noundef %5, ptr noundef null, ptr noundef nonnull @.str.550) ; 0 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n, %bb.k, %bb.l

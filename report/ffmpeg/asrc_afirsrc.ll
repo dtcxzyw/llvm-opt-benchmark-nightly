@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 scalar.ph587:                                     ; preds = %scalar.ph587.preheader, %scalar.ph587
   %indvars.iv481 = phi i64 [ %indvars.iv.next482, %scalar.ph587 ], [ %indvars.iv481.ph, %scalar.ph587.preheader ] ; 3 uses
-  %i.pz = trunc nuw nsw i64 %indvars.iv481 to i32
+  %i.pz = trunc i64 %indvars.iv481 to i32
   %i.qa = sub i32 %i.pz, %.neg560566
   %i.qb = sitofp nsz i32 %i.qa to double
   %i.qc = fdiv nsz double %i.qb, %i.am            ; 2 uses
@@ -552,16 +552,15 @@ bb.b:                                             ; preds = %.preheader.us, %.cr
   br i1 %exitcond.not, label %..loopexit_crit_edge.us, label %bb.b, !llvm.loop !112
 
 bb.c:                                             ; preds = %bb.b
-  %6 = shl i64 %indvars.iv, 32
-  %sext = add i64 %6, -4294967296
-  %7 = ashr exact i64 %sext, 32                   ; 3 uses
-  %i.j = getelementptr inbounds [4 x i8], ptr %1, i64 %7
+  %sext = add nuw i64 %indvars.iv, 4294967295
+  %6 = and i64 %sext, 4294967295                  ; 3 uses
+  %i.j = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %6
   %i.k = load float, ptr %i.j, align 4, !tbaa !40 ; 2 uses
   %i.l = fsub nsz float %i.f, %i.k
   %i.m = fsub nsz float %i.h, %i.k
   %i.n = fdiv nsz float %i.l, %i.m
-  %i.o = getelementptr inbounds [4 x i8], ptr %2, i64 %7
-  %i.p = getelementptr inbounds [4 x i8], ptr %3, i64 %7
+  %i.o = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
+  %i.p = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %6
   %i.q = load <2 x float>, ptr %i.o, align 4, !tbaa !40 ; 2 uses
   %i.r = load <2 x float>, ptr %i.p, align 4, !tbaa !40 ; 2 uses
   %i.s = shufflevector <2 x float> %i.q, <2 x float> %i.r, <2 x i32> <i32 1, i32 3>
@@ -925,14 +924,13 @@ bb.t:                                             ; preds = %bb.r
   br i1 %.not.i, label %._crit_edge166.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %1 = shl i64 %indvars.iv.i343, 32
-  %sext.i = add i64 %1, -4294967296
-  %2 = ashr exact i64 %sext.i, 32                 ; 2 uses
-  %i.ed = getelementptr inbounds [4 x i8], ptr %i.cg, i64 %2
+  %sext.i = add nuw i64 %indvars.iv.i343, 4294967295
+  %1 = and i64 %sext.i, 4294967295                ; 2 uses
+  %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.cg, i64 %1
   %i.ee = load float, ptr %i.ed, align 4, !tbaa !40
   %i.ef = fsub nsz float %.pre.i, %i.ee
   %i.eg = fmul nsz float %i.ec, %i.ef
-  %i.eh = getelementptr inbounds [4 x i8], ptr %i.cf, i64 %2
+  %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.cf, i64 %1
   %i.ei = load float, ptr %i.eh, align 4, !tbaa !40
   %i.ej = fsub nsz float %i.dy, %i.ei
   %i.ek = fdiv nsz float %i.eg, %i.ej

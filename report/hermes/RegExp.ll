@@ -205,25 +205,23 @@ _ZNK6hermes2vm10StringViewixEj.exit179:           ; preds = %_ZNK6hermes2vm10Str
   %i.ge = mul nuw nsw i32 %i.eu, 10
   %i.gf = zext i16 %.0.i171 to i32
   %i.gg = add nsw i32 %i.ge, -48
-  %i.gh = add nsw i32 %i.gg, %i.gf                ; 3 uses
+  %i.gh = add nsw i32 %i.gg, %i.gf                ; 2 uses
   %i.gi = add i16 %.0.i171, -58
   %or.cond8 = icmp ult i16 %i.gi, -10
   %i.gj = icmp eq i32 %i.gh, 0
   %or.cond10.not524 = select i1 %or.cond8, i1 true, i1 %i.gj
-  %i.gk = zext nneg i32 %i.gh to i64
+  %i.gk = zext nneg i32 %i.gh to i64              ; 2 uses
   %.not137 = icmp samesign ult i64 %i.v, %i.gk
   %or.cond141 = select i1 %or.cond10.not524, i1 true, i1 %.not137
   br i1 %or.cond141, label %bb.cn, label %bb.bi
 
 bb.bi:                                            ; preds = %_ZNK6hermes2vm10StringViewixEj.exit179
-  %14 = add nsw i32 %i.gh, -1
-  %15 = zext i32 %14 to i64
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %4, align 8, !tbaa !16
   %i.gl = and i64 %.sroa.0.0.copyload.i.i.i, 281474976710655
   %i.gm = inttoptr i64 %i.gl to ptr
-  %16 = getelementptr inbounds nuw i8, ptr %i.gm, i64 8
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %16, i64 %15
-  %.sroa.0.0.copyload.i.i180 = load i32, ptr %17, align 4, !tbaa !6 ; 2 uses
+  %14 = getelementptr [4 x i8], ptr %i.gm, i64 %i.gk
+  %15 = getelementptr i8, ptr %14, i64 4
+  %.sroa.0.0.copyload.i.i180 = load i32, ptr %15, align 4, !tbaa !6 ; 2 uses
   %i.gn = icmp eq i32 %.sroa.0.0.copyload.i.i180, 14
   br i1 %i.gn, label %bb.bj, label %bb.bk
 

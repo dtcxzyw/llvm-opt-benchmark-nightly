@@ -204,16 +204,15 @@ bb.sc:                                            ; preds = %bb.sb, %bb.sa, %_ZN
   br i1 %i.ckr, label %.preheader, label %bb.sn
 
 .preheader:                                       ; preds = %bb.sc
-  %123 = shl i64 %i.ckp, 32
-  %sext = add nsw i64 %123, -4294967296
-  %124 = ashr exact i64 %sext, 32                 ; 6 uses
+  %sext = add i64 %i.ckp, 4294967295
+  %123 = and i64 %sext, 4294967295                ; 6 uses
   %i.cks = load ptr, ptr %i.cjw, align 8, !tbaa !124 ; 2 uses
   %i.ckt = load ptr, ptr %i.cfn, align 8, !tbaa !102 ; 3 uses
   %i.cku = ptrtoint ptr %i.cks to i64
   %i.ckv = ptrtoint ptr %i.ckt to i64             ; 2 uses
   %i.ckw = sub i64 %i.cku, %i.ckv                 ; 2 uses
   %i.ckx = ashr exact i64 %i.ckw, 2               ; 2 uses
-  %.not3295281 = icmp ugt i64 %i.ckx, %124
+  %.not3295281 = icmp ugt i64 %i.ckx, %123
   br i1 %.not3295281, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
@@ -223,7 +222,7 @@ bb.sc:                                            ; preds = %bb.sb, %bb.sa, %_ZN
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
   %i.cky = phi ptr [ %i.clq, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.ckt, %.lr.ph.preheader ] ; 4 uses
   %i.ckz = phi ptr [ %i.cls, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %.pre5324, %.lr.ph.preheader ] ; 2 uses
-  %i.cla = phi i64 [ %i.clw, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.ckx, %.lr.ph.preheader ] ; 3 uses
+  %i.cla = phi i64 [ %i.clw, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.ckx, %.lr.ph.preheader ] ; 2 uses
   %i.clb = phi i64 [ %i.clv, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.ckw, %.lr.ph.preheader ] ; 4 uses
   %i.clc = phi i64 [ %i.clu, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.ckv, %.lr.ph.preheader ]
   %i.cld = phi ptr [ %i.clr, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.cks, %.lr.ph.preheader ] ; 3 uses
@@ -249,13 +248,8 @@ bb.sf:                                            ; preds = %bb.se
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.se
   %.sroa.speculated.i.i.i.i1260 = call i64 @llvm.umax.i64(i64 %i.cla, i64 1)
-  %i.clg = add nsw i64 %.sroa.speculated.i.i.i.i1260, %i.cla ; 2 uses
-  %125 = icmp ult i64 %i.clg, %i.cla
-  %126 = call i64 @llvm.umin.i64(i64 %i.clg, i64 2305843009213693951)
-  %127 = select i1 %125, i64 2305843009213693951, i64 %126 ; 3 uses
-  %.not.i.i.i.i1261 = icmp ne i64 %127, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i1261)
-  %i.clh = shl nuw nsw i64 %127, 2
+  %i.clg = add nuw nsw i64 %.sroa.speculated.i.i.i.i1260, %i.cla ; 2 uses
+  %i.clh = shl nuw nsw i64 %i.clg, 2
   %i.cli = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.clh) #27
           to label %.noexc1263 unwind label %.loopexit ; 5 uses
 
@@ -284,7 +278,7 @@ bb.sh:                                            ; preds = %_ZNSt6vectorIiSaIiE
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i: ; preds = %bb.sh, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
   store ptr %i.cli, ptr %i.cfn, align 8, !tbaa !102
   store ptr %i.cll, ptr %i.cjw, align 8, !tbaa !124
-  %i.clp = getelementptr inbounds nuw [4 x i8], ptr %i.cli, i64 %127 ; 2 uses
+  %i.clp = getelementptr inbounds nuw [4 x i8], ptr %i.cli, i64 %i.clg ; 2 uses
   store ptr %i.clp, ptr %i.cjx, align 8, !tbaa !101
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
 
@@ -296,7 +290,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiE
   %i.clu = ptrtoint ptr %i.clq to i64             ; 2 uses
   %i.clv = sub i64 %i.clt, %i.clu                 ; 2 uses
   %i.clw = ashr exact i64 %i.clv, 2               ; 2 uses
-  %.not329 = icmp ugt i64 %i.clw, %124
+  %.not329 = icmp ugt i64 %i.clw, %123
   br i1 %.not329, label %._crit_edge, label %.lr.ph, !llvm.loop !456
 
 bb.si:                                            ; preds = %bb.rz
@@ -328,7 +322,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit, %.preheader
   %.lcssa2310 = phi ptr [ %i.ckt, %.preheader ], [ %i.clq, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
-  %i.cmc = getelementptr inbounds nuw [4 x i8], ptr %.lcssa2310, i64 %124
+  %i.cmc = getelementptr inbounds nuw [4 x i8], ptr %.lcssa2310, i64 %123
   %i.cmd = load i32, ptr %i.cmc, align 4, !tbaa !123 ; 2 uses
   %i.cme = icmp slt i32 %i.cmd, 0
   br i1 %i.cme, label %bb.sk, label %bb.sm
@@ -344,20 +338,20 @@ bb.sl:                                            ; preds = %bb.sk
   br i1 %.not330, label %._crit_edge5328, label %._crit_edge5325
 
 ._crit_edge5328:                                  ; preds = %bb.sl
-  %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %.pre5327, i64 %124
+  %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %.pre5327, i64 %123
   %.pre5329 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !123
   br label %bb.sm
 
 ._crit_edge5325:                                  ; preds = %bb.sl, %bb.sk
   %i.cmh = phi ptr [ %.lcssa2310, %bb.sk ], [ %.pre5327, %bb.sl ] ; 2 uses
-  %i.cmi = getelementptr inbounds nuw [4 x i8], ptr %i.cmh, i64 %124
+  %i.cmi = getelementptr inbounds nuw [4 x i8], ptr %i.cmh, i64 %123
   store i32 0, ptr %i.cmi, align 4, !tbaa !123
   br label %bb.sm
 
 bb.sm:                                            ; preds = %._crit_edge5328, %._crit_edge5325, %._crit_edge
   %i.cmj = phi i32 [ %.pre5329, %._crit_edge5328 ], [ 0, %._crit_edge5325 ], [ %i.cmd, %._crit_edge ]
   %i.cmk = phi ptr [ %.pre5327, %._crit_edge5328 ], [ %i.cmh, %._crit_edge5325 ], [ %.lcssa2310, %._crit_edge ]
-  %i.cml = getelementptr inbounds nuw [4 x i8], ptr %i.cmk, i64 %124
+  %i.cml = getelementptr inbounds nuw [4 x i8], ptr %i.cmk, i64 %123
   %i.cmm = add nsw i32 %i.cmj, %i.ckh
   store i32 %i.cmm, ptr %i.cml, align 4, !tbaa !123
   br label %bb.sn
@@ -760,16 +754,15 @@ bb.ob:                                            ; preds = %bb.oa, %bb.nz, %_ZN
   br i1 %i.bzl, label %.preheader, label %bb.on
 
 .preheader:                                       ; preds = %bb.ob
-  %90 = shl i64 %i.bzj, 32
-  %sext = add nsw i64 %90, -4294967296
-  %91 = ashr exact i64 %sext, 32                  ; 6 uses
+  %sext = add i64 %i.bzj, 4294967295
+  %90 = and i64 %sext, 4294967295                 ; 6 uses
   %i.bzm = load ptr, ptr %i.byg, align 8, !tbaa !124 ; 2 uses
   %i.bzn = load ptr, ptr %i.brv, align 8, !tbaa !102 ; 3 uses
   %i.bzo = ptrtoint ptr %i.bzm to i64
   %i.bzp = ptrtoint ptr %i.bzn to i64             ; 2 uses
   %i.bzq = sub i64 %i.bzo, %i.bzp                 ; 2 uses
   %i.bzr = ashr exact i64 %i.bzq, 2               ; 2 uses
-  %.not2414709 = icmp ugt i64 %i.bzr, %91
+  %.not2414709 = icmp ugt i64 %i.bzr, %90
   br i1 %.not2414709, label %._crit_edge4711, label %.lr.ph4710.preheader
 
 .lr.ph4710.preheader:                             ; preds = %.preheader
@@ -779,7 +772,7 @@ bb.ob:                                            ; preds = %bb.oa, %bb.nz, %_ZN
 .lr.ph4710:                                       ; preds = %.lr.ph4710.preheader, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
   %i.bzs = phi ptr [ %i.cak, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.bzn, %.lr.ph4710.preheader ] ; 4 uses
   %i.bzt = phi ptr [ %i.cam, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %.pre, %.lr.ph4710.preheader ] ; 2 uses
-  %i.bzu = phi i64 [ %i.caq, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.bzr, %.lr.ph4710.preheader ] ; 3 uses
+  %i.bzu = phi i64 [ %i.caq, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.bzr, %.lr.ph4710.preheader ] ; 2 uses
   %i.bzv = phi i64 [ %i.cap, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.bzq, %.lr.ph4710.preheader ] ; 4 uses
   %i.bzw = phi i64 [ %i.cao, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.bzp, %.lr.ph4710.preheader ]
   %i.bzx = phi ptr [ %i.cal, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ], [ %i.bzm, %.lr.ph4710.preheader ] ; 3 uses
@@ -805,13 +798,8 @@ bb.oe:                                            ; preds = %bb.od
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.od
   %.sroa.speculated.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.bzu, i64 1)
-  %i.caa = add nsw i64 %.sroa.speculated.i.i.i.i, %i.bzu ; 2 uses
-  %92 = icmp ult i64 %i.caa, %i.bzu
-  %93 = call i64 @llvm.umin.i64(i64 %i.caa, i64 2305843009213693951)
-  %94 = select i1 %92, i64 2305843009213693951, i64 %93 ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %94, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i)
-  %i.cab = shl nuw nsw i64 %94, 2
+  %i.caa = add nuw nsw i64 %.sroa.speculated.i.i.i.i, %i.bzu ; 2 uses
+  %i.cab = shl nuw nsw i64 %i.caa, 2
   %i.cac = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cab) #27
           to label %.noexc1010 unwind label %.loopexit ; 5 uses
 
@@ -840,7 +828,7 @@ bb.og:                                            ; preds = %_ZNSt6vectorIiSaIiE
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i: ; preds = %bb.og, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
   store ptr %i.cac, ptr %i.brv, align 8, !tbaa !102
   store ptr %i.caf, ptr %i.byg, align 8, !tbaa !124
-  %i.caj = getelementptr inbounds nuw [4 x i8], ptr %i.cac, i64 %94 ; 2 uses
+  %i.caj = getelementptr inbounds nuw [4 x i8], ptr %i.cac, i64 %i.caa ; 2 uses
   store ptr %i.caj, ptr %i.byh, align 8, !tbaa !101
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
 
@@ -852,7 +840,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiE
   %i.cao = ptrtoint ptr %i.cak to i64             ; 2 uses
   %i.cap = sub i64 %i.can, %i.cao                 ; 2 uses
   %i.caq = ashr exact i64 %i.cap, 2               ; 2 uses
-  %.not241 = icmp ugt i64 %i.caq, %91
+  %.not241 = icmp ugt i64 %i.caq, %90
   br i1 %.not241, label %._crit_edge4711, label %.lr.ph4710, !llvm.loop !721
 
 bb.oh:                                            ; preds = %.noexc10.i.i999
@@ -889,7 +877,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10
 
 ._crit_edge4711:                                  ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit, %.preheader
   %.lcssa1681 = phi ptr [ %i.bzn, %.preheader ], [ %i.cak, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit ] ; 3 uses
-  %i.cax = getelementptr inbounds nuw [4 x i8], ptr %.lcssa1681, i64 %91
+  %i.cax = getelementptr inbounds nuw [4 x i8], ptr %.lcssa1681, i64 %90
   %i.cay = load i32, ptr %i.cax, align 4, !tbaa !123 ; 2 uses
   %i.caz = icmp slt i32 %i.cay, 0
   br i1 %i.caz, label %bb.ok, label %bb.om
@@ -905,20 +893,20 @@ bb.ol:                                            ; preds = %bb.ok
   br i1 %.not242, label %._crit_edge4785, label %._crit_edge4782
 
 ._crit_edge4785:                                  ; preds = %bb.ol
-  %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %.pre4784, i64 %91
+  %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %.pre4784, i64 %90
   %.pre4786 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !123
   br label %bb.om
 
 ._crit_edge4782:                                  ; preds = %bb.ol, %bb.ok
   %i.cbc = phi ptr [ %.lcssa1681, %bb.ok ], [ %.pre4784, %bb.ol ] ; 2 uses
-  %i.cbd = getelementptr inbounds nuw [4 x i8], ptr %i.cbc, i64 %91
+  %i.cbd = getelementptr inbounds nuw [4 x i8], ptr %i.cbc, i64 %90
   store i32 0, ptr %i.cbd, align 4, !tbaa !123
   br label %bb.om
 
 bb.om:                                            ; preds = %._crit_edge4785, %._crit_edge4782, %._crit_edge4711
   %i.cbe = phi i32 [ %.pre4786, %._crit_edge4785 ], [ 0, %._crit_edge4782 ], [ %i.cay, %._crit_edge4711 ]
   %i.cbf = phi ptr [ %.pre4784, %._crit_edge4785 ], [ %i.cbc, %._crit_edge4782 ], [ %.lcssa1681, %._crit_edge4711 ]
-  %i.cbg = getelementptr inbounds nuw [4 x i8], ptr %i.cbf, i64 %91
+  %i.cbg = getelementptr inbounds nuw [4 x i8], ptr %i.cbf, i64 %90
   %i.cbh = add nsw i32 %i.cbe, %i.bzb
   store i32 %i.cbh, ptr %i.cbg, align 4, !tbaa !123
   br label %bb.on

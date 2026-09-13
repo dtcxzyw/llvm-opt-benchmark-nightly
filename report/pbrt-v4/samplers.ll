@@ -205,10 +205,9 @@ _ZN4pstd8optionalIiEdeEv.exit:                    ; preds = %_ZNSt7__cxx1112basi
   store i32 %i.be, ptr %i.c, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #29
   store i32 0, ptr %i.d, align 4, !tbaa !16
-  %8 = icmp sgt i32 %.07292, 1
-  br i1 %8, label %.lr.ph93, label %.lr.ph._crit_edge, !llvm.loop !300
+  br label %.lr.ph93, !llvm.loop !300
 
-.lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
+.lr.ph._crit_edge:                                ; preds = %.lr.ph.preheader
   call void @_ZN4pbrt8LogFatalIJRA4_KcRA2_S1_S3_RiS5_S6_EEEvNS_8LogLevelEPS1_iS8_DpOT_(i32 noundef 2, ptr noundef nonnull @.str.18, i32 noundef 306, ptr noundef nonnull @.str.33, ptr noundef nonnull align 1 dereferenceable(4) @.str.34, ptr noundef nonnull align 1 dereferenceable(2) @.str.35, ptr noundef nonnull align 1 dereferenceable(4) @.str.34, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 1 dereferenceable(2) @.str.35, ptr noundef nonnull align 4 dereferenceable(4) %i.d) #27
   unreachable
 
@@ -264,7 +263,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit54: ; preds = %bb.
   br label %bb.q
 
 .lr.ph93:                                         ; preds = %.lr.ph.preheader, %.lr.ph
-  %.07292 = phi i32 [ %i.be, %.lr.ph ], [ %i.am, %.lr.ph.preheader ] ; 2 uses
+  %.07292 = phi i32 [ %i.be, %.lr.ph ], [ %i.am, %.lr.ph.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #29
   %i.be = add nsw i32 %.07292, -1                 ; 4 uses

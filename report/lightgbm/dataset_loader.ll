@@ -205,16 +205,16 @@ bb.cl:                                            ; preds = %_ZSt6fill_nIPimiET_
   %i.py = getelementptr inbounds nuw i8, ptr %20, i64 8
   store ptr %.0.i.i.i.i.i227, ptr %i.py, align 8, !tbaa !214
   %i.pz = load i32, ptr %i.hk, align 4, !tbaa !253
-  %i.qa = add nsw i32 %2, -1                      ; 7 uses
+  %i.qa = add nsw i32 %2, -1                      ; 6 uses
   %i.qb = add i32 %i.qa, %i.pz
   %i.qc = sdiv i32 %i.qb, %2
   %spec.store.select = call i32 @llvm.smax.i32(i32 %i.qc, i32 1) ; 6 uses
   %i.qd = load ptr, ptr %19, align 8, !tbaa !215  ; 14 uses
   store i32 0, ptr %i.qd, align 4, !tbaa !134
+  %wide.trip.count = zext nneg i32 %i.qa to i64   ; 9 uses
   br i1 %i.hl, label %.lver.check, label %._crit_edge536
 
 .lver.check:                                      ; preds = %bb.cl
-  %wide.trip.count = zext nneg i32 %i.qa to i64   ; 5 uses
   %i.qe = shl nuw nsw i64 %wide.trip.count, 2     ; 2 uses
   %scevgep784 = getelementptr i8, ptr %i.px, i64 %i.qe
   %i.qf = getelementptr i8, ptr %i.qd, i64 %i.qe
@@ -328,11 +328,10 @@ bb.cn:                                            ; preds = %bb.ck
 
 ._crit_edge536:                                   ; preds = %.epil.preheader, %._crit_edge536.loopexit798.unr-lcssa, %.ph.lver.orig.epil.preheader, %._crit_edge536.loopexit.unr-lcssa, %bb.cl
   %i.rn = load i32, ptr %i.hk, align 4, !tbaa !253
-  %23 = sext i32 %i.qa to i64                     ; 4 uses
-  %i.ro = getelementptr inbounds nuw [4 x i8], ptr %i.qd, i64 %23
+  %i.ro = getelementptr inbounds nuw [4 x i8], ptr %i.qd, i64 %wide.trip.count
   %i.rp = load i32, ptr %i.ro, align 4, !tbaa !134
   %i.rq = sub nsw i32 %i.rn, %i.rp
-  %i.rr = getelementptr inbounds nuw [4 x i8], ptr %i.px, i64 %23
+  %i.rr = getelementptr inbounds nuw [4 x i8], ptr %i.px, i64 %wide.trip.count
   store i32 %i.rq, ptr %i.rr, align 4, !tbaa !134
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %21, i8 0, i64 48, i1 false)
@@ -731,9 +730,9 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.epil:       ; preds = %_ZNSt6vectorIiSaIiE
   br i1 %epil.iter.cmp.not, label %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit._crit_edge, label %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.epil, !llvm.loop !565
 
 _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit._crit_edge: ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit._crit_edge.loopexit.unr-lcssa, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.epil, %.noexc265
-  %i.xe = getelementptr inbounds nuw [4 x i8], ptr %i.wu, i64 %23
+  %i.xe = getelementptr inbounds nuw [4 x i8], ptr %i.wu, i64 %wide.trip.count
   %i.xf = load i32, ptr %i.xe, align 4, !tbaa !134
-  %i.xg = getelementptr inbounds nuw [4 x i8], ptr %.pre591, i64 %23
+  %i.xg = getelementptr inbounds nuw [4 x i8], ptr %.pre591, i64 %wide.trip.count
   %i.xh = load i32, ptr %i.xg, align 4, !tbaa !134
   %i.xi = add nsw i32 %i.xh, %i.xf                ; 4 uses
   %i.xj = sext i32 %i.xi to i64                   ; 3 uses
@@ -1136,12 +1135,12 @@ bb.ax:                                            ; preds = %_ZSt6fill_nIPimiET_
   %spec.store.select = call i32 @llvm.smax.i32(i32 %i.ha, i32 1) ; 6 uses
   %i.hb = load ptr, ptr %18, align 8, !tbaa !215  ; 14 uses
   store i32 0, ptr %i.hb, align 4, !tbaa !134
-  %i.hc = add nsw i32 %i.ge, -1                   ; 6 uses
+  %i.hc = add nsw i32 %i.ge, -1                   ; 5 uses
   %i.hd = icmp samesign ugt i32 %i.ge, 1          ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.hc to i64   ; 9 uses
   br i1 %i.hd, label %.lver.check, label %._crit_edge
 
 .lver.check:                                      ; preds = %bb.ax
-  %wide.trip.count = zext nneg i32 %i.hc to i64   ; 5 uses
   %i.he = shl nuw nsw i64 %wide.trip.count, 2     ; 2 uses
   %scevgep = getelementptr i8, ptr %i.gw, i64 %i.he
   %i.hf = getelementptr i8, ptr %i.hb, i64 %i.he
@@ -1260,11 +1259,10 @@ bb.bb:                                            ; preds = %bb.aw
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit485.unr-lcssa, %.ph.lver.orig.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.ax
-  %23 = sext i32 %i.hc to i64                     ; 4 uses
-  %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.hb, i64 %23
+  %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.hb, i64 %wide.trip.count
   %i.im = load i32, ptr %i.il, align 4, !tbaa !134
   %i.in = sub nsw i32 %.066, %i.im
-  %i.io = getelementptr inbounds nuw [4 x i8], ptr %i.gw, i64 %23
+  %i.io = getelementptr inbounds nuw [4 x i8], ptr %i.gw, i64 %wide.trip.count
   store i32 %i.in, ptr %i.io, align 4, !tbaa !134
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %20, i8 0, i64 48, i1 false)
@@ -1661,9 +1659,9 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.epil:       ; preds = %_ZNSt6vectorIiSaIiE
   br i1 %epil.iter.cmp.not, label %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit._crit_edge, label %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.epil, !llvm.loop !740
 
 _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit._crit_edge: ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit._crit_edge.loopexit.unr-lcssa, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.epil, %.noexc192
-  %i.nz = getelementptr inbounds nuw [4 x i8], ptr %i.np, i64 %23
+  %i.nz = getelementptr inbounds nuw [4 x i8], ptr %i.np, i64 %wide.trip.count
   %i.oa = load i32, ptr %i.nz, align 4, !tbaa !134
-  %i.ob = getelementptr inbounds nuw [4 x i8], ptr %.pre392, i64 %23
+  %i.ob = getelementptr inbounds nuw [4 x i8], ptr %.pre392, i64 %wide.trip.count
   %i.oc = load i32, ptr %i.ob, align 4, !tbaa !134
   %i.od = add nsw i32 %i.oc, %i.oa                ; 4 uses
   %i.oe = sext i32 %i.od to i64                   ; 3 uses

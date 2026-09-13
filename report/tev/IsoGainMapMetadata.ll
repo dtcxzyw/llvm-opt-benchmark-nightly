@@ -205,15 +205,14 @@ bb.aa:                                            ; preds = %bb.x
   %i.de = sub nsw i128 %i.dd, %i.db
   %i.df = udiv i128 %i.de, 20
   %i.dg = add nsw i64 %wide.trip.count435, -1
-  %i.dh = zext i64 %i.dg to i128
+  %i.dh = zext nneg i64 %i.dg to i128
   %i.di = call i128 @llvm.umin.i128(i128 %i.ch, i128 %i.cn)
   %i.dj = call i128 @llvm.umin.i128(i128 %i.di, i128 %i.ct)
   %i.dk = call i128 @llvm.umin.i128(i128 %i.dj, i128 %i.cz)
   %i.dl = call i128 @llvm.umin.i128(i128 %i.dk, i128 %i.df)
   %i.dm = call i128 @llvm.umin.i128(i128 %i.dl, i128 %i.dh)
-  %i.dn = trunc nuw i128 %i.dm to i64             ; 2 uses
-  %6 = add i64 %i.dn, 1
-  %min.iters.check549 = icmp ult i64 %6, 19
+  %i.dn = trunc nuw nsw i128 %i.dm to i64         ; 2 uses
+  %min.iters.check549 = icmp samesign ult i64 %i.dn, 18
   br i1 %min.iters.check549, label %.lr.ph324.preheader569, label %vector.scevcheck517
 
 .lr.ph324.preheader569:                           ; preds = %vector.body552, %vector.memcheck531, %vector.scevcheck517, %.lr.ph324.preheader
@@ -259,9 +258,9 @@ vector.scevcheck517:                              ; preds = %.lr.ph324.preheader
   %i.eo = udiv i128 %i.en, 20
   %umin526 = call i128 @llvm.umin.i128(i128 %umin524, i128 %i.eo)
   %i.ep = add nsw i64 %wide.trip.count435, -1
-  %i.eq = zext i64 %i.ep to i128
+  %i.eq = zext nneg i64 %i.ep to i128
   %umin527 = call i128 @llvm.umin.i128(i128 %umin526, i128 %i.eq)
-  %i.er = trunc nuw i128 %umin527 to i64
+  %i.er = trunc nuw nsw i128 %umin527 to i64
   %mul528 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.er, i64 20) ; 2 uses
   %mul.result529 = extractvalue { i64, i1 } %mul528, 0 ; 5 uses
   %mul.overflow530 = extractvalue { i64, i1 } %mul528, 1
@@ -320,9 +319,9 @@ vector.memcheck531:                               ; preds = %vector.scevcheck517
   %i.gh = udiv i128 %i.gg, 20
   %umin540 = call i128 @llvm.umin.i128(i128 %umin538, i128 %i.gh)
   %i.gi = add nsw i64 %wide.trip.count435, -1
-  %i.gj = zext i64 %i.gi to i128
+  %i.gj = zext nneg i64 %i.gi to i128
   %umin541 = call i128 @llvm.umin.i128(i128 %umin540, i128 %i.gj)
-  %i.gk = trunc nuw i128 %umin541 to i64          ; 2 uses
+  %i.gk = trunc nuw nsw i128 %umin541 to i64      ; 2 uses
   %i.gl = shl i64 %i.gk, 2
   %i.gm = getelementptr i8, ptr %0, i64 %i.gl
   %scevgep542 = getelementptr i8, ptr %i.gm, i64 76
@@ -337,7 +336,7 @@ vector.memcheck531:                               ; preds = %vector.scevcheck517
   br i1 %found.conflict547, label %.lr.ph324.preheader569, label %vector.ph550
 
 vector.ph550:                                     ; preds = %vector.memcheck531
-  %n.vec551 = and i64 %i.dn, -2                   ; 3 uses
+  %n.vec551 = and i64 %i.dn, 9223372036854775806  ; 3 uses
   %i.gq = mul i64 %n.vec551, 20
   %i.gr = add i64 %i.bp, %i.gq
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.be, i64 0
@@ -740,7 +739,7 @@ bb.bg:                                            ; preds = %bb.bd
   %i.pb = sub nsw i128 %i.pa, %i.oy
   %i.pc = udiv i128 %i.pb, 40
   %i.pd = add nsw i64 %wide.trip.count, -1
-  %i.pe = zext i64 %i.pd to i128
+  %i.pe = zext nneg i64 %i.pd to i128
   %i.pf = call i128 @llvm.umin.i128(i128 %i.na, i128 %i.ng)
   %i.pg = call i128 @llvm.umin.i128(i128 %i.pf, i128 %i.nm)
   %i.ph = call i128 @llvm.umin.i128(i128 %i.pg, i128 %i.ns)
@@ -751,9 +750,8 @@ bb.bg:                                            ; preds = %bb.bd
   %i.pm = call i128 @llvm.umin.i128(i128 %i.pl, i128 %i.ow)
   %i.pn = call i128 @llvm.umin.i128(i128 %i.pm, i128 %i.pc)
   %i.po = call i128 @llvm.umin.i128(i128 %i.pn, i128 %i.pe)
-  %i.pp = trunc nuw i128 %i.po to i64             ; 2 uses
-  %7 = add i64 %i.pp, 1
-  %min.iters.check = icmp ult i64 %7, 49
+  %i.pp = trunc nuw nsw i128 %i.po to i64         ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.pp, 48
   br i1 %min.iters.check, label %.lr.ph.preheader570, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.preheader
@@ -829,9 +827,9 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   %i.rp = udiv i128 %i.ro, 40
   %umin492 = call i128 @llvm.umin.i128(i128 %umin490, i128 %i.rp)
   %i.rq = add nsw i64 %wide.trip.count, -1
-  %i.rr = zext i64 %i.rq to i128
+  %i.rr = zext nneg i64 %i.rq to i128
   %umin493 = call i128 @llvm.umin.i128(i128 %umin492, i128 %i.rr)
-  %i.rs = trunc nuw i128 %umin493 to i64
+  %i.rs = trunc nuw nsw i128 %umin493 to i64
   %mul = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.rs, i64 40) ; 2 uses
   %mul.result = extractvalue { i64, i1 } %mul, 0  ; 10 uses
   %mul.overflow = extractvalue { i64, i1 } %mul, 1
@@ -940,9 +938,9 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.um = udiv i128 %i.ul, 40
   %umin512 = call i128 @llvm.umin.i128(i128 %umin510, i128 %i.um)
   %i.un = add nsw i64 %wide.trip.count, -1
-  %i.uo = zext i64 %i.un to i128
+  %i.uo = zext nneg i64 %i.un to i128
   %umin513 = call i128 @llvm.umin.i128(i128 %umin512, i128 %i.uo)
-  %i.up = trunc nuw i128 %umin513 to i64          ; 2 uses
+  %i.up = trunc nuw nsw i128 %umin513 to i64      ; 2 uses
   %i.uq = shl i64 %i.up, 2
   %i.ur = getelementptr i8, ptr %0, i64 %i.uq
   %scevgep = getelementptr i8, ptr %i.ur, i64 76
@@ -957,7 +955,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %found.conflict, label %.lr.ph.preheader570, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.pp, -2                      ; 3 uses
+  %n.vec = and i64 %i.pp, 9223372036854775806     ; 3 uses
   %i.uv = mul i64 %n.vec, 40
   %i.uw = add i64 %i.mi, %i.uv
   br label %vector.body
@@ -1360,8 +1358,8 @@ _ZN3fmt3v126detail11add_compareERKNS1_6bigintES4_S4_.exit474: ; preds = %_ZNK3fm
 
 bb.ej:                                            ; preds = %_ZN3fmt3v126detail11add_compareERKNS1_6bigintES4_S4_.exit474
   %i.ajh = load ptr, ptr %3, align 8, !tbaa !89
-  %9 = sext i32 %i.acl to i64
-  %i.aji = getelementptr inbounds i8, ptr %i.ajh, i64 %9
+  %9 = zext nneg i32 %i.acl to i64
+  %i.aji = getelementptr inbounds nuw i8, ptr %i.ajh, i64 %9
   store i8 58, ptr %i.aji, align 1, !tbaa !73
   br i1 %.not619, label %.critedge, label %.lr.ph617
 
@@ -1451,8 +1449,8 @@ bb.es:                                            ; preds = %_ZN3fmt3v126detail1
   %i.akn = trunc i32 %.076 to i8
   %i.ako = add i8 %i.akn, 48
   %i.akp = load ptr, ptr %3, align 8, !tbaa !89
-  %10 = sext i32 %i.acl to i64
-  %i.akq = getelementptr inbounds i8, ptr %i.akp, i64 %10
+  %10 = zext nneg i32 %i.acl to i64
+  %i.akq = getelementptr inbounds nuw i8, ptr %i.akp, i64 %10
   store i8 %i.ako, ptr %i.akq, align 1, !tbaa !73
   br label %.loopexit
 
@@ -1855,9 +1853,9 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 
 .lr.ph.i:                                         ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i
   %i.ak = add nsw i32 %i.c, -1                    ; 2 uses
-  %i.al = add i32 %i.y, %i.ak
+  %i.al = add nuw i32 %i.y, %i.ak
   %i.am = sext i32 %i.al to i64                   ; 5 uses
-  %i.an = zext i32 %i.ak to i64                   ; 5 uses
+  %i.an = zext nneg i32 %i.ak to i64              ; 5 uses
   %i.ao = and i64 %i.b, 2147483647                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.ao, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck

@@ -202,7 +202,7 @@ get_file.exit.i:                                  ; preds = %bb.g, %bb.f
 
 bb.h:                                             ; preds = %get_file.exit.i
   %i.ag = getelementptr i8, ptr %i.ad, i64 128    ; 3 uses
-  %i.ah = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ag, i32 -1, ptr elementtype(i32) %i.ag) #21, !srcloc !95 ; 4 uses
+  %i.ah = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ag, i32 -1, ptr elementtype(i32) %i.ag) #21, !srcloc !95 ; 3 uses
   %i.ai = icmp eq i32 %i.ah, 1
   br i1 %i.ai, label %__vma_refcount_put_return.exit.i.i.i.i, label %bb.i
 
@@ -219,12 +219,9 @@ __vma_refcount_put_return.exit.i.i.i.i:           ; preds = %bb.h
   br label %bb.n
 
 bb.j:                                             ; preds = %bb.i
-  %i.ak = add nuw i32 %i.ah, 2147483647
-  %3 = and i32 %i.ak, 1073741824
-  %4 = icmp ne i32 %3, 0
-  %i.al = icmp samesign ult i32 %i.ah, 1073741827
-  %5 = and i1 %i.al, %4
-  br i1 %5, label %bb.k, label %bb.n
+  %i.ak = add nsw i32 %i.ah, -1073741825
+  %i.al = icmp ult i32 %i.ak, 2
+  br i1 %i.al, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
   %i.am = getelementptr i8, ptr %i.af, i64 512

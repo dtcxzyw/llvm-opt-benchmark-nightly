@@ -205,12 +205,12 @@ bb.ea:                                            ; preds = %bb.dz, %complex_ste
 .lr.ph.split.us.preheader.i112.i:                 ; preds = %.lr.ph.i111.i
   %.pre.i113.i = load i16, ptr %i.bkn, align 2, !tbaa !249
   %i.bkt = add nsw i32 %i.bkr, -1                 ; 2 uses
-  %i.bku = zext i32 %i.bkt to i64
+  %i.bku = zext nneg i32 %i.bkt to i64
   %i.bkv = shl nuw nsw i64 %i.bku, 9              ; 3 uses
   %scevgep = getelementptr i8, ptr %.010740.i.i, i64 %i.bkv
   %scevgep481 = getelementptr i8, ptr %.010837.i.i, i64 %i.bkv
   %scevgep483 = getelementptr i8, ptr %.010643.i.i, i64 %i.bkv
-  %i.bkw = zext i32 %i.bkt to i64
+  %i.bkw = zext nneg i32 %i.bkt to i64
   %i.bkx = shl nuw nsw i64 %i.bkw, 9              ; 3 uses
   %scevgep511 = getelementptr i8, ptr %.010740.i.i, i64 %i.bkx
   %scevgep513 = getelementptr i8, ptr %.010837.i.i, i64 %i.bkx
@@ -613,12 +613,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ei = mul nuw nsw i32 %i.eh, %i.ee
-  %6 = trunc nuw nsw i64 %indvars.iv to i32
-  %7 = add nsw i32 %i.ei, %6
-  %8 = sext i32 %7 to i64                         ; 2 uses
-  %i.ej = getelementptr inbounds [4 x i8], ptr %i.du, i64 %8
+  %6 = zext i32 %i.ei to i64
+  %7 = add nuw nsw i64 %indvars.iv, %6            ; 2 uses
+  %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.du, i64 %7
   %i.ek = load float, ptr %i.ej, align 4, !tbaa !41
-  %i.el = getelementptr inbounds [4 x i8], ptr %i.dv, i64 %8
+  %i.el = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %7
   %i.em = load float, ptr %i.el, align 4, !tbaa !41
   br label %bb.p
 
@@ -658,11 +657,11 @@ bb.o:                                             ; preds = %bb.n
   %i.fd = mul nuw nsw i32 %i.eh, %.013715
   %i.fe = trunc i64 %indvars.iv to i32
   %i.ff = add i32 %i.fe, -1
-  %i.fg = add i32 %i.ff, %i.fd
-  %9 = sext i32 %i.fg to i64                      ; 2 uses
-  %i.fh = getelementptr inbounds [4 x i8], ptr %i.du, i64 %9
+  %i.fg = add nuw i32 %i.ff, %i.fd
+  %8 = zext nneg i32 %i.fg to i64                 ; 2 uses
+  %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.du, i64 %8
   %i.fi = load float, ptr %i.fh, align 4, !tbaa !41
-  %i.fj = getelementptr inbounds [4 x i8], ptr %i.dv, i64 %9
+  %i.fj = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %8
   %i.fk = load float, ptr %i.fj, align 4, !tbaa !41
   br label %bb.p
 

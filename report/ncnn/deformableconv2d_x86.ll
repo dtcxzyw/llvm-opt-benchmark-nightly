@@ -205,8 +205,6 @@ bb.an:                                            ; preds = %bb.am
 .preheader158.lr.ph.preheader:                    ; preds = %.lr.ph
   %i.di = add nsw i32 %.055, -1
   %i.dj = zext nneg i32 %.055 to i64              ; 3 uses
-  %16 = zext nneg i32 %i.di to i64
-  %17 = zext nneg i32 %i.bo to i64
   %wide.trip.count183 = zext nneg i32 %i.cy to i64
   %wide.trip.count175 = zext nneg i32 %i.bi to i64
   %xtraiter = and i64 %i.dj, 1
@@ -377,9 +375,10 @@ bb.aw:                                            ; preds = %bb.an
 
 ._crit_edge.us:                                   ; preds = %.epilog-lcssa
   %indvars.iv.next178 = add nuw nsw i64 %indvars.iv177, %i.dj ; 2 uses
-  %18 = add nuw nsw i64 %indvars.iv.next178, %16
-  %19 = icmp samesign ult i64 %18, %17
-  br i1 %19, label %.preheader158.us, label %._crit_edge166, !llvm.loop !79
+  %16 = trunc i64 %indvars.iv.next178 to i32
+  %17 = add i32 %i.di, %16
+  %18 = icmp slt i32 %17, %i.bo
+  br i1 %18, label %.preheader158.us, label %._crit_edge166, !llvm.loop !79
 
 ._crit_edge166:                                   ; preds = %._crit_edge.us, %.preheader158.lr.ph
   %indvars.iv.next181 = add nuw nsw i64 %indvars.iv180, 1 ; 2 uses
