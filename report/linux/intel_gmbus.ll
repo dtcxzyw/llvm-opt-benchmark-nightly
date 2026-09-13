@@ -204,14 +204,14 @@ intel_de_read_fw.exit.split.3.i:                  ; preds = %intel_de_read_fw.ex
 bb.v:                                             ; preds = %intel_de_read_fw.exit.split.3.i
   %i.dt = lshr i32 %i.ci, 24
   %i.du = trunc nuw i32 %i.dt to i8
+  %4 = getelementptr i8, ptr %.04092.i, i64 4
   store i8 %i.du, ptr %i.dr, align 1
   %i.dv = add nsw i32 %.24891.i, -4
-  %4 = getelementptr i8, ptr %.04092.i, i64 4
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.v, %intel_de_read_fw.exit.split.3.i, %intel_de_read_fw.exit.split.2.i, %intel_de_read_fw.exit.split.1.i, %intel_de_read_fw.exit.split.us.3.i, %intel_de_read_fw.exit.split.us.2.i, %intel_de_read_fw.exit.split.us.1.i, %intel_de_read_fw.exit.split.preheader.i, %intel_de_read_fw.exit.split.us.preheader.i
-  %.us-phi.i = phi i32 [ 0, %intel_de_read_fw.exit.split.2.i ], [ 0, %intel_de_read_fw.exit.split.preheader.i ], [ %i.dv, %bb.v ], [ 0, %intel_de_read_fw.exit.split.3.i ], [ 0, %intel_de_read_fw.exit.split.1.i ], [ 0, %intel_de_read_fw.exit.split.us.2.i ], [ 0, %intel_de_read_fw.exit.split.us.preheader.i ], [ 0, %intel_de_read_fw.exit.split.us.1.i ], [ %i.dh, %intel_de_read_fw.exit.split.us.3.i ] ; 3 uses
-  %.us-phi89.i = phi ptr [ %i.dn, %intel_de_read_fw.exit.split.2.i ], [ %.04092.i, %intel_de_read_fw.exit.split.preheader.i ], [ %4, %bb.v ], [ %i.dr, %intel_de_read_fw.exit.split.3.i ], [ %i.dj, %intel_de_read_fw.exit.split.1.i ], [ %i.dd, %intel_de_read_fw.exit.split.us.2.i ], [ %i.cw, %intel_de_read_fw.exit.split.us.preheader.i ], [ %i.da, %intel_de_read_fw.exit.split.us.1.i ], [ %i.dg, %intel_de_read_fw.exit.split.us.3.i ]
+  %.us-phi.i = phi i32 [ 0, %intel_de_read_fw.exit.split.2.i ], [ %i.dv, %bb.v ], [ 0, %intel_de_read_fw.exit.split.preheader.i ], [ 0, %intel_de_read_fw.exit.split.1.i ], [ 0, %intel_de_read_fw.exit.split.3.i ], [ 0, %intel_de_read_fw.exit.split.us.2.i ], [ 0, %intel_de_read_fw.exit.split.us.preheader.i ], [ 0, %intel_de_read_fw.exit.split.us.1.i ], [ %i.dh, %intel_de_read_fw.exit.split.us.3.i ] ; 3 uses
+  %.us-phi89.i = phi ptr [ %i.dn, %intel_de_read_fw.exit.split.2.i ], [ %4, %bb.v ], [ %.04092.i, %intel_de_read_fw.exit.split.preheader.i ], [ %i.dj, %intel_de_read_fw.exit.split.1.i ], [ %i.dr, %intel_de_read_fw.exit.split.3.i ], [ %i.dd, %intel_de_read_fw.exit.split.us.2.i ], [ %i.cw, %intel_de_read_fw.exit.split.us.preheader.i ], [ %i.da, %intel_de_read_fw.exit.split.us.1.i ], [ %i.dg, %intel_de_read_fw.exit.split.us.3.i ]
   %i.dw = icmp eq i32 %.us-phi.i, %i.bw
   %or.cond62.i = select i1 %i.v, i1 %i.dw, i1 false
   br i1 %or.cond62.i, label %bb.w, label %bb.ab

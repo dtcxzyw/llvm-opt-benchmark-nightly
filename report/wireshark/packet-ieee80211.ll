@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %bb.r
   br label %.lr.ph.i289
 
 .lr.ph.i289:                                      ; preds = %.lr.ph.i289, %.lr.ph.preheader.i
-  %.017.i = phi i32 [ %.0.i, %.lr.ph.i289 ], [ %.014.i, %.lr.ph.preheader.i ]
-  %.012.in16.i = phi i32 [ %.012.i, %.lr.ph.i289 ], [ %i.cq, %.lr.ph.preheader.i ]
+  %.017.i = phi i32 [ %.014.i, %.lr.ph.preheader.i ], [ %.0.i, %.lr.ph.i289 ]
+  %.012.in16.i = phi i32 [ %i.cq, %.lr.ph.preheader.i ], [ %.012.i, %.lr.ph.i289 ]
   %.012.i = add i32 %.012.in16.i, 1               ; 2 uses
   %i.du = load i32, ptr @hf_ieee80211_tag_extended_request_extension, align 4
   %i.dv = call ptr @proto_tree_add_item(ptr noundef %i.cm, i32 noundef %i.du, ptr noundef %0, i32 noundef %.012.i, i32 noundef 1, i32 noundef 0) ; 0 uses
@@ -609,8 +609,8 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.017 = phi i32 [ %.0, %.lr.ph ], [ %.014, %.lr.ph.preheader ]
-  %.012.in16 = phi i32 [ %.012, %.lr.ph ], [ %3, %.lr.ph.preheader ]
+  %.017 = phi i32 [ %.014, %.lr.ph.preheader ], [ %.0, %.lr.ph ]
+  %.012.in16 = phi i32 [ %3, %.lr.ph.preheader ], [ %.012, %.lr.ph ]
   %.012 = add i32 %.012.in16, 1                   ; 2 uses
   %i.e = load i32, ptr @hf_ieee80211_tag_extended_request_extension, align 4
   %i.f = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.e, ptr noundef %0, i32 noundef %.012, i32 noundef 1, i32 noundef 0) ; 0 uses
@@ -1013,8 +1013,8 @@ bb.bm:                                            ; preds = %bb.bl
   br label %.lr.ph.i287
 
 .lr.ph.i287:                                      ; preds = %.lr.ph.i287, %.lr.ph.preheader.i
-  %.017.i = phi i32 [ %.0.i288, %.lr.ph.i287 ], [ %.014.i, %.lr.ph.preheader.i ]
-  %.012.in16.i = phi i32 [ %.012.i, %.lr.ph.i287 ], [ %i.jt, %.lr.ph.preheader.i ]
+  %.017.i = phi i32 [ %.014.i, %.lr.ph.preheader.i ], [ %.0.i288, %.lr.ph.i287 ]
+  %.012.in16.i = phi i32 [ %i.jt, %.lr.ph.preheader.i ], [ %.012.i, %.lr.ph.i287 ]
   %.012.i = add i32 %.012.in16.i, 1               ; 2 uses
   %i.jz = load i32, ptr @hf_ieee80211_tag_extended_request_extension, align 4
   %i.ka = tail call ptr @proto_tree_add_item(ptr noundef %i.hb, i32 noundef %i.jz, ptr noundef %.034.i, i32 noundef %.012.i, i32 noundef 1, i32 noundef 0) ; 0 uses

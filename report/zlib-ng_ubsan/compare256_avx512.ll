@@ -202,10 +202,10 @@ zng_memread_8.exit155:                            ; preds = %bb.dn, %bb.do
   %.sroa.7.0.extract.trunc219 = trunc nuw i64 %.sroa.7.0.extract.shift218 to i32 ; 2 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.id ; 2 uses
   %i.ii = add i64 %i.id, %i.t, !nosanitize !13    ; 3 uses
-  %2 = icmp eq i64 %i.ii, 0
-  %3 = xor i1 %i.v, %2
-  %4 = icmp uge i64 %i.ii, %i.t, !nosanitize !13
-  %i.ij = and i1 %4, %3, !nosanitize !13
+  %2 = icmp ne i64 %i.ii, 0
+  %3 = icmp uge i64 %i.ii, %i.t, !nosanitize !13
+  %4 = and i1 %2, %3
+  %i.ij = and i1 %4, %i.v
   br i1 %i.ij, label %.thread158, label %bb.dp, !prof !16, !nosanitize !13
 
 bb.dp:                                            ; preds = %zng_memread_8.exit155

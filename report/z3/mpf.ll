@@ -205,10 +205,10 @@ _ZN11mpz_managerILb0EE3setER3mpzRKS1_.exit:       ; preds = %._ZN11mpz_managerIL
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.n
-  %.028.in69 = phi i1 [ %.028.in, %bb.n ], [ %.028.in64, %.lr.ph.preheader ] ; 5 uses
-  %.02668 = phi i1 [ %i.bu, %bb.n ], [ false, %.lr.ph.preheader ]
-  %.02767 = phi i1 [ %.028.in69, %bb.n ], [ false, %.lr.ph.preheader ]
-  %.02966 = phi i64 [ %i.bv, %bb.n ], [ %i.bh, %.lr.ph.preheader ]
+  %.028.in69 = phi i1 [ %.028.in64, %.lr.ph.preheader ], [ %.028.in, %bb.n ] ; 5 uses
+  %.02668 = phi i1 [ false, %.lr.ph.preheader ], [ %i.bu, %bb.n ]
+  %.02767 = phi i1 [ false, %.lr.ph.preheader ], [ %.028.in69, %bb.n ]
+  %.02966 = phi i64 [ %i.bh, %.lr.ph.preheader ], [ %i.bv, %bb.n ]
   %i.bo = load ptr, ptr %i.g, align 8, !tbaa !48, !nonnull !49, !align !50
   invoke void @_ZN11mpz_managerILb0EE13machine_div2kER3mpzj(ptr noundef nonnull align 8 dereferenceable(600) %i.bo, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i32 noundef 1)
           to label %bb.n unwind label %bb.p

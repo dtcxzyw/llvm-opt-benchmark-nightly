@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph.i.i.a
 
 .lr.ph.i.i.a:                                     ; preds = %.lr.ph.i.i.a, %.lr.ph.preheader.i.i.a
-  %.013.i.i = phi i32 [ %i.i, %.lr.ph.i.i.a ], [ 0, %.lr.ph.preheader.i.i.a ]
-  %.0812.i.i = phi i32 [ %i.h, %.lr.ph.i.i.a ], [ %i.g, %.lr.ph.preheader.i.i.a ] ; 2 uses
+  %.013.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i.a ], [ %i.i, %.lr.ph.i.i.a ]
+  %.0812.i.i = phi i32 [ %i.g, %.lr.ph.preheader.i.i.a ], [ %i.h, %.lr.ph.i.i.a ] ; 2 uses
   %i.h = udiv i32 %.0812.i.i, 10
   %i.i = add nuw nsw i32 %.013.i.i, 1             ; 2 uses
   %.not.i.i = icmp ult i32 %.0812.i.i, 10
@@ -228,8 +228,8 @@ Abc_Base10Log.exit.i:                             ; preds = %.lr.ph.i.i.a, %bb.c
   br label %.lr.ph.i240.i
 
 .lr.ph.i240.i:                                    ; preds = %.lr.ph.i240.i, %.lr.ph.preheader.i239.i
-  %.013.i241.i = phi i32 [ %i.q, %.lr.ph.i240.i ], [ 0, %.lr.ph.preheader.i239.i ]
-  %.0812.i242.i = phi i32 [ %i.p, %.lr.ph.i240.i ], [ %i.o, %.lr.ph.preheader.i239.i ] ; 2 uses
+  %.013.i241.i = phi i32 [ 0, %.lr.ph.preheader.i239.i ], [ %i.q, %.lr.ph.i240.i ]
+  %.0812.i242.i = phi i32 [ %i.o, %.lr.ph.preheader.i239.i ], [ %i.p, %.lr.ph.i240.i ] ; 2 uses
   %i.p = udiv i32 %.0812.i242.i, 10
   %i.q = add nuw nsw i32 %.013.i241.i, 1          ; 2 uses
   %.not.i243.i = icmp ult i32 %.0812.i242.i, 10
@@ -250,8 +250,8 @@ Abc_Base10Log.exit245.i:                          ; preds = %.lr.ph.i240.i, %Abc
   br label %.lr.ph.i247.i
 
 .lr.ph.i247.i:                                    ; preds = %.lr.ph.i247.i, %.lr.ph.preheader.i246.i
-  %.013.i248.i = phi i32 [ %i.x, %.lr.ph.i247.i ], [ 0, %.lr.ph.preheader.i246.i ]
-  %.0812.i249.i = phi i32 [ %i.w, %.lr.ph.i247.i ], [ %i.v, %.lr.ph.preheader.i246.i ] ; 2 uses
+  %.013.i248.i = phi i32 [ 0, %.lr.ph.preheader.i246.i ], [ %i.x, %.lr.ph.i247.i ]
+  %.0812.i249.i = phi i32 [ %i.v, %.lr.ph.preheader.i246.i ], [ %i.w, %.lr.ph.i247.i ] ; 2 uses
   %i.w = udiv i32 %.0812.i249.i, 10
   %i.x = add nuw nsw i32 %.013.i248.i, 1          ; 2 uses
   %.not.i250.i.a = icmp ult i32 %.0812.i249.i, 10
@@ -654,8 +654,8 @@ bb.l:                                             ; preds = %Vec_BitCount.exit30
   br label %.lr.ph.i.i37
 
 .lr.ph.i.i37:                                     ; preds = %.lr.ph.i.i37, %.lr.ph.preheader.i.i36
-  %.013.i.i38 = phi i32 [ %i.fs, %.lr.ph.i.i37 ], [ 0, %.lr.ph.preheader.i.i36 ]
-  %.0812.i.i39 = phi i32 [ %i.fr, %.lr.ph.i.i37 ], [ %i.fq, %.lr.ph.preheader.i.i36 ] ; 2 uses
+  %.013.i.i38 = phi i32 [ 0, %.lr.ph.preheader.i.i36 ], [ %i.fs, %.lr.ph.i.i37 ]
+  %.0812.i.i39 = phi i32 [ %i.fq, %.lr.ph.preheader.i.i36 ], [ %i.fr, %.lr.ph.i.i37 ] ; 2 uses
   %i.fr = udiv i32 %.0812.i.i39, 10
   %i.fs = add nuw nsw i32 %.013.i.i38, 1          ; 2 uses
   %.not.i.i40 = icmp ult i32 %.0812.i.i39, 10
@@ -859,8 +859,8 @@ bb.q:                                             ; preds = %Vec_BitCount.exit32
   br label %.lr.ph.i.i29
 
 .lr.ph.i.i29:                                     ; preds = %.lr.ph.i.i29, %.lr.ph.preheader.i.i28
-  %.013.i.i30 = phi i32 [ %i.ic, %.lr.ph.i.i29 ], [ 0, %.lr.ph.preheader.i.i28 ]
-  %.0812.i.i31 = phi i32 [ %i.ib, %.lr.ph.i.i29 ], [ %i.ia, %.lr.ph.preheader.i.i28 ] ; 2 uses
+  %.013.i.i30 = phi i32 [ 0, %.lr.ph.preheader.i.i28 ], [ %i.ic, %.lr.ph.i.i29 ]
+  %.0812.i.i31 = phi i32 [ %i.ia, %.lr.ph.preheader.i.i28 ], [ %i.ib, %.lr.ph.i.i29 ] ; 2 uses
   %i.ib = udiv i32 %.0812.i.i31, 10
   %i.ic = add nuw nsw i32 %.013.i.i30, 1          ; 2 uses
   %.not.i.i32 = icmp ult i32 %.0812.i.i31, 10
@@ -1164,8 +1164,8 @@ bb.ak:                                            ; preds = %bb.b
   br label %.lr.ph.i.i10
 
 .lr.ph.i.i10:                                     ; preds = %.lr.ph.i.i10, %.lr.ph.preheader.i.i9
-  %.013.i.i11 = phi i32 [ %i.nk, %.lr.ph.i.i10 ], [ 0, %.lr.ph.preheader.i.i9 ]
-  %.0812.i.i12 = phi i32 [ %i.nj, %.lr.ph.i.i10 ], [ %i.ni, %.lr.ph.preheader.i.i9 ] ; 2 uses
+  %.013.i.i11 = phi i32 [ 0, %.lr.ph.preheader.i.i9 ], [ %i.nk, %.lr.ph.i.i10 ]
+  %.0812.i.i12 = phi i32 [ %i.ni, %.lr.ph.preheader.i.i9 ], [ %i.nj, %.lr.ph.i.i10 ] ; 2 uses
   %i.nj = udiv i32 %.0812.i.i12, 10
   %i.nk = add nuw nsw i32 %.013.i.i11, 1          ; 2 uses
   %.not.i.i13 = icmp ult i32 %.0812.i.i12, 10
@@ -1350,8 +1350,8 @@ bb.av:                                            ; preds = %bb.au, %.lr.ph244
   br label %.lr.ph.i.i.i.i.a
 
 .lr.ph.i.i.i.i.a:                                 ; preds = %.lr.ph.i.i.i.i.a, %.lr.ph.preheader.i.i.i.i.a
-  %.013.i.i.i.i = phi i32 [ %i.pk, %.lr.ph.i.i.i.i.a ], [ 0, %.lr.ph.preheader.i.i.i.i.a ]
-  %.0812.i.i.i.i = phi i32 [ %i.pj, %.lr.ph.i.i.i.i.a ], [ %i.pi, %.lr.ph.preheader.i.i.i.i.a ] ; 2 uses
+  %.013.i.i.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i.i.i.a ], [ %i.pk, %.lr.ph.i.i.i.i.a ]
+  %.0812.i.i.i.i = phi i32 [ %i.pi, %.lr.ph.preheader.i.i.i.i.a ], [ %i.pj, %.lr.ph.i.i.i.i.a ] ; 2 uses
   %i.pj = udiv i32 %.0812.i.i.i.i, 10
   %i.pk = add nuw nsw i32 %.013.i.i.i.i, 1        ; 2 uses
   %.not.i.i.i.i = icmp ult i32 %.0812.i.i.i.i, 10
@@ -1754,8 +1754,8 @@ bb.bz:                                            ; preds = %bb.by, %.lr.ph248
   br label %.lr.ph.i.i288.i.i
 
 .lr.ph.i.i288.i.i:                                ; preds = %.lr.ph.i.i288.i.i, %.lr.ph.preheader.i.i287.i.i
-  %.013.i.i289.i.i = phi i32 [ %i.vg, %.lr.ph.i.i288.i.i ], [ 0, %.lr.ph.preheader.i.i287.i.i ]
-  %.0812.i.i290.i.i = phi i32 [ %i.vf, %.lr.ph.i.i288.i.i ], [ %i.ve, %.lr.ph.preheader.i.i287.i.i ] ; 2 uses
+  %.013.i.i289.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i287.i.i ], [ %i.vg, %.lr.ph.i.i288.i.i ]
+  %.0812.i.i290.i.i = phi i32 [ %i.ve, %.lr.ph.preheader.i.i287.i.i ], [ %i.vf, %.lr.ph.i.i288.i.i ] ; 2 uses
   %i.vf = udiv i32 %.0812.i.i290.i.i, 10
   %i.vg = add nuw nsw i32 %.013.i.i289.i.i, 1     ; 2 uses
   %.not.i.i291.i.i = icmp ult i32 %.0812.i.i290.i.i, 10
@@ -2158,8 +2158,8 @@ bb.f:                                             ; preds = %bb.d
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
-  %.013.i.i = phi i32 [ %i.l, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
-  %.0812.i.i = phi i32 [ %i.k, %.lr.ph.i.i ], [ %i.j, %.lr.ph.preheader.i.i ] ; 2 uses
+  %.013.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i ], [ %i.l, %.lr.ph.i.i ]
+  %.0812.i.i = phi i32 [ %i.j, %.lr.ph.preheader.i.i ], [ %i.k, %.lr.ph.i.i ] ; 2 uses
   %i.k = udiv i32 %.0812.i.i, 10
   %i.l = add nuw nsw i32 %.013.i.i, 1             ; 2 uses
   %.not.i.i = icmp ult i32 %.0812.i.i, 10
@@ -2562,8 +2562,8 @@ bb.a:
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
-  %.013.i = phi i32 [ %i.d, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
-  %.0812.i = phi i32 [ %i.c, %.lr.ph.i ], [ %i.b, %.lr.ph.preheader.i ] ; 2 uses
+  %.013.i = phi i32 [ 0, %.lr.ph.preheader.i ], [ %i.d, %.lr.ph.i ]
+  %.0812.i = phi i32 [ %i.b, %.lr.ph.preheader.i ], [ %i.c, %.lr.ph.i ] ; 2 uses
   %i.c = udiv i32 %.0812.i, 10
   %i.d = add nuw nsw i32 %.013.i, 1               ; 2 uses
   %.not.i = icmp ult i32 %.0812.i, 10
@@ -2966,8 +2966,8 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph
   br label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i.a
-  %.013.i = phi i32 [ %i.z, %.lr.ph.i.a ], [ 0, %.lr.ph.preheader.i.a ]
-  %.0812.i = phi i32 [ %i.y, %.lr.ph.i.a ], [ %i.x, %.lr.ph.preheader.i.a ] ; 2 uses
+  %.013.i = phi i32 [ 0, %.lr.ph.preheader.i.a ], [ %i.z, %.lr.ph.i.a ]
+  %.0812.i = phi i32 [ %i.x, %.lr.ph.preheader.i.a ], [ %i.y, %.lr.ph.i.a ] ; 2 uses
   %i.y = udiv i32 %.0812.i, 10
   %i.z = add nuw nsw i32 %.013.i, 1               ; 2 uses
   %.not.i = icmp ult i32 %.0812.i, 10
@@ -3202,8 +3202,8 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph
   br label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i.a
-  %.013.i = phi i32 [ %i.z, %.lr.ph.i.a ], [ 0, %.lr.ph.preheader.i.a ]
-  %.0812.i = phi i32 [ %i.y, %.lr.ph.i.a ], [ %i.x, %.lr.ph.preheader.i.a ] ; 2 uses
+  %.013.i = phi i32 [ 0, %.lr.ph.preheader.i.a ], [ %i.z, %.lr.ph.i.a ]
+  %.0812.i = phi i32 [ %i.x, %.lr.ph.preheader.i.a ], [ %i.y, %.lr.ph.i.a ] ; 2 uses
   %i.y = udiv i32 %.0812.i, 10
   %i.z = add nuw nsw i32 %.013.i, 1               ; 2 uses
   %.not.i = icmp ult i32 %.0812.i, 10
@@ -3425,8 +3425,8 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   br label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i.a
-  %.013.i = phi i32 [ %i.t, %.lr.ph.i.a ], [ 0, %.lr.ph.preheader.i.a ]
-  %.0812.i = phi i32 [ %i.s, %.lr.ph.i.a ], [ %i.r, %.lr.ph.preheader.i.a ] ; 2 uses
+  %.013.i = phi i32 [ 0, %.lr.ph.preheader.i.a ], [ %i.t, %.lr.ph.i.a ]
+  %.0812.i = phi i32 [ %i.r, %.lr.ph.preheader.i.a ], [ %i.s, %.lr.ph.i.a ] ; 2 uses
   %i.s = udiv i32 %.0812.i, 10
   %i.t = add nuw nsw i32 %.013.i, 1               ; 2 uses
   %.not.i = icmp ult i32 %.0812.i, 10
@@ -3829,8 +3829,8 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph
   br label %.lr.ph.i.a
 
 .lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.preheader.i.a
-  %.013.i = phi i32 [ %i.aa, %.lr.ph.i.a ], [ 0, %.lr.ph.preheader.i.a ]
-  %.0812.i = phi i32 [ %i.z, %.lr.ph.i.a ], [ %i.y, %.lr.ph.preheader.i.a ] ; 2 uses
+  %.013.i = phi i32 [ 0, %.lr.ph.preheader.i.a ], [ %i.aa, %.lr.ph.i.a ]
+  %.0812.i = phi i32 [ %i.y, %.lr.ph.preheader.i.a ], [ %i.z, %.lr.ph.i.a ] ; 2 uses
   %i.z = udiv i32 %.0812.i, 10
   %i.aa = add nuw nsw i32 %.013.i, 1              ; 2 uses
   %.not.i = icmp ult i32 %.0812.i, 10

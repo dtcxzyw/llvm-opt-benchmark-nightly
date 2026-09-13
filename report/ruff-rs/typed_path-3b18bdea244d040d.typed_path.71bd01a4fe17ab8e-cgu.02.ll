@@ -202,11 +202,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.an, label %_RNCINvNtNtNtCs9LqqPKWwQFK_10typed_path6common8non_utf86parser14fully_consumedNtNtNtNtNtBa_4unix8non_utf810components9component13UnixComponentNCNCNvNtB1h_6parser10parse_back0s_0E0Ba_.exit.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %2 = add nsw i64 %.sroa.47.0.i.i.i, -2
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i.i, i64 2
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i.i, i64 2
+  %3 = add nsw i64 %.sroa.47.0.i.i.i, -2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !246
   store i8 47, ptr %i.d, align 1, !noalias !246
-  %i.ao = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.d, i64 noundef 1), !noalias !247
+  %i.ao = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs9LqqPKWwQFK_10typed_path(ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef range(i64 0, -9223372036854775808) %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.d, i64 noundef 1), !noalias !247
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !246
   br i1 %i.ao, label %bb.z, label %.fold.split.i.i.i.i
 

@@ -205,13 +205,13 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.p = getelementptr i8, ptr %i.l, i64 8
   %.val34 = load ptr, ptr %i.p, align 8, !tbaa !55 ; 3 uses
   %i.q = add nsw i32 %.val30, -1
-  %i.r = add nsw i32 %.val30, -2
-  %umin = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.r) ; 2 uses
+  %i.r = add nsw i32 %.val30, -2                  ; 2 uses
+  %umin = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.r)
   %i.s = add nuw nsw i32 %umin, 1                 ; 2 uses
   %wide.trip.count = zext nneg i32 %i.s to i64    ; 2 uses
   %.pre44 = load i32, ptr %.val32, align 4, !tbaa !51 ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %i.t = icmp eq i32 %umin, 0
+  %i.t = icmp eq i32 %i.r, 0
   br i1 %i.t, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph

@@ -202,8 +202,8 @@ bb.r:                                             ; preds = %bb.q
   br label %.lr.ph.i32.i
 
 .lr.ph.i32.i:                                     ; preds = %.critedge2.i.i, %.lr.ph.preheader.i.i
-  %.026.i.i = phi i64 [ %.0.i33.i, %.critedge2.i.i ], [ %.023.i.i, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.0.in25.i.i = phi i64 [ %.026.i.i, %.critedge2.i.i ], [ %i.at, %.lr.ph.preheader.i.i ]
+  %.026.i.i = phi i64 [ %.023.i.i, %.lr.ph.preheader.i.i ], [ %.0.i33.i, %.critedge2.i.i ] ; 3 uses
+  %.0.in25.i.i = phi i64 [ %i.at, %.lr.ph.preheader.i.i ], [ %.026.i.i, %.critedge2.i.i ]
   %i.av = getelementptr i8, ptr %i.a, i64 %.026.i.i
   %i.aw = load i8, ptr %i.av, align 1
   switch i8 %i.aw, label %.critedge.i.i [
@@ -217,7 +217,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not19.i.i, label %.critedge.i.i, label %.lr.ph.i32.i, !llvm.loop !9
 
 .critedge.i.i:                                    ; preds = %.critedge2.i.i, %.lr.ph.i32.i
-  %.0.in.lcssa.ph.i.i = phi i64 [ 1, %.critedge2.i.i ], [ %.0.in25.i.i, %.lr.ph.i32.i ]
+  %.0.in.lcssa.ph.i.i = phi i64 [ %.0.in25.i.i, %.lr.ph.i32.i ], [ 1, %.critedge2.i.i ]
   %i.ax = getelementptr i8, ptr %i.a, i64 %.0.in.lcssa.ph.i.i
   store i8 0, ptr %i.ax, align 1
   %i.ay = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.82, ptr noundef nonnull %i.b) #10

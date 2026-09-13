@@ -205,14 +205,14 @@ bb.a:
   %i.c = icmp eq i32 %i.b, -1
   br i1 %i.c, label %1, label %bb.b
 
-1:                                                ; preds = %bb.a
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @350) #38
-  unreachable
-
 bb.b:                                             ; preds = %bb.a
   %i.d = add nuw i32 %i.b, 1
   store i32 %i.d, ptr %i.a, align 8
   ret void
+
+1:                                                ; preds = %bb.a
+  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @350) #38
+  unreachable
 }
 
 ; Function Attrs: nonlazybind uwtable

@@ -205,15 +205,15 @@ bb.dk:                                            ; preds = %bb.dj, %bb.di, %bb.
   br i1 %i.afy, label %.lr.ph.preheader.i, label %bb.ed
 
 .lr.ph.preheader.i:                               ; preds = %bb.dk
-  %.163.i = add i64 %.0.i333, -1
   %.promoted.i = load i64, ptr %i.yh, align 8
+  %.163.i = add i64 %.0.i333, -1
   br label %.lr.ph.i335
 
 .lr.ph.i335:                                      ; preds = %EvaluateNode.exit.i, %.lr.ph.preheader.i
-  %.167.i = phi i64 [ %.1.i339, %EvaluateNode.exit.i ], [ %.163.i, %.lr.ph.preheader.i ]
-  %.15466.i = phi i64 [ %i.aga, %EvaluateNode.exit.i ], [ %.05375.i, %.lr.ph.preheader.i ] ; 2 uses
-  %.15665.i = phi i64 [ %i.als, %EvaluateNode.exit.i ], [ %i.afp, %.lr.ph.preheader.i ] ; 2 uses
-  %i.afz = phi i64 [ %i.alo, %EvaluateNode.exit.i ], [ %.promoted.i, %.lr.ph.preheader.i ] ; 5 uses
+  %.167.i = phi i64 [ %.163.i, %.lr.ph.preheader.i ], [ %.1.i339, %EvaluateNode.exit.i ]
+  %.15466.i = phi i64 [ %.05375.i, %.lr.ph.preheader.i ], [ %i.aga, %EvaluateNode.exit.i ] ; 2 uses
+  %.15665.i = phi i64 [ %i.afp, %.lr.ph.preheader.i ], [ %i.als, %EvaluateNode.exit.i ] ; 2 uses
+  %i.afz = phi i64 [ %.promoted.i, %.lr.ph.preheader.i ], [ %i.alo, %EvaluateNode.exit.i ] ; 5 uses
   %i.aga = add i64 %.15466.i, 1                   ; 10 uses
   %i.agb = add i64 %.15466.i, 4
   %.not60.i = icmp ult i64 %i.agb, %1
@@ -560,8 +560,8 @@ EvaluateNode.exit.i:                              ; preds = %StartPosQueuePush.e
   br i1 %.not.i340, label %.loopexit.i, label %.lr.ph.i335, !llvm.loop !230
 
 .loopexit.i:                                      ; preds = %EvaluateNode.exit.i, %.lr.ph.i335
-  %.lcssa62.ph.i = phi i64 [ %i.alo, %EvaluateNode.exit.i ], [ %i.afz, %.lr.ph.i335 ]
-  %.156.lcssa.ph.i = phi i64 [ %i.als, %EvaluateNode.exit.i ], [ %.15665.i, %.lr.ph.i335 ]
+  %.lcssa62.ph.i = phi i64 [ %i.afz, %.lr.ph.i335 ], [ %i.alo, %EvaluateNode.exit.i ]
+  %.156.lcssa.ph.i = phi i64 [ %.15665.i, %.lr.ph.i335 ], [ %i.als, %EvaluateNode.exit.i ]
   store i64 %.lcssa62.ph.i, ptr %i.yh, align 8
   br label %bb.ed
 

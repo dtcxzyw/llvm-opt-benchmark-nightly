@@ -205,7 +205,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %i.d = phi i64 [ %i.l, %bb.d ], [ %i.c, %.lr.ph.preheader ] ; 4 uses
+  %i.d = phi i64 [ %i.c, %.lr.ph.preheader ], [ %i.l, %bb.d ] ; 4 uses
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !124
   %i.f = tail call i64 %i.e(ptr noundef %1, i64 noundef 0, i64 noundef %i.d) #26 ; 2 uses
   %i.g = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 960), align 8, !tbaa !121
@@ -230,8 +230,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !16
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.d, %bb.a
-  %.018 = phi i1 [ true, %bb.a ], [ %.not22, %bb.d ], [ %.not22, %.lr.ph ]
+.loopexit:                                        ; preds = %bb.d, %.lr.ph, %bb.a
+  %.018 = phi i1 [ true, %bb.a ], [ %.not22, %.lr.ph ], [ %.not22, %bb.d ]
   ret i1 %.018
 }
 
@@ -319,7 +319,7 @@ bb.d:                                             ; preds = %.critedge
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.g, %.lr.ph.preheader.i
-  %i.ag = phi i64 [ %i.ao, %bb.g ], [ %i.af, %.lr.ph.preheader.i ] ; 4 uses
+  %i.ag = phi i64 [ %i.af, %.lr.ph.preheader.i ], [ %i.ao, %bb.g ] ; 4 uses
   %i.ah = load ptr, ptr %i.ae, align 8, !tbaa !124
   %i.ai = call i64 %i.ah(ptr noundef %i.y, i64 noundef 0, i64 noundef %i.ag) #26, !inline_history !309 ; 2 uses
   %i.aj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 960), align 8, !tbaa !121

@@ -204,13 +204,6 @@ _ZN8facebook5velox6fuzzer4randIlEET_RN5folly12xoshiro256ppIjDv4_yEENS1_8DataSpec
   %i.ci = icmp sgt i32 %i.ch, 0
   br i1 %i.ci, label %_ZL16XXH_INLINE_XXH64PKvmm.exit.i, label %6, !prof !107
 
-6:                                                ; preds = %_ZN8facebook5velox6fuzzer4randIlEET_RN5folly12xoshiro256ppIjDv4_yEENS1_8DataSpecE.exit
-  invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorEPKcEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox9functions3sfm9SfmSketch3addIlEEvT_E18veloxCheckFailArgs, ptr noundef nonnull @.str.31) #27
-          to label %.noexc unwind label %.loopexit.split-lp
-
-.noexc:                                           ; preds = %6
-  unreachable
-
 _ZL16XXH_INLINE_XXH64PKvmm.exit.i:                ; preds = %_ZN8facebook5velox6fuzzer4randIlEET_RN5folly12xoshiro256ppIjDv4_yEENS1_8DataSpecE.exit
   %i.cj = mul i64 %i.cg, -4417276706812531889     ; 2 uses
   %i.ck = call i64 @llvm.fshl.i64(i64 %i.cj, i64 %i.cj, i64 31)
@@ -229,6 +222,13 @@ _ZL16XXH_INLINE_XXH64PKvmm.exit.i:                ; preds = %_ZN8facebook5velox6
   %i.cx = xor i64 %i.cw, %i.cv
   invoke void @_ZN8facebook5velox9functions3sfm9SfmSketch7addHashEm(ptr noundef nonnull align 8 dereferenceable(2584) %3, i64 noundef %i.cx)
           to label %_ZN8facebook5velox9functions3sfm9SfmSketch3addIlEEvT_.exit unwind label %.loopexit
+
+6:                                                ; preds = %_ZN8facebook5velox6fuzzer4randIlEET_RN5folly12xoshiro256ppIjDv4_yEENS1_8DataSpecE.exit
+  invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorEPKcEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox9functions3sfm9SfmSketch3addIlEEvT_E18veloxCheckFailArgs, ptr noundef nonnull @.str.31) #27
+          to label %.noexc32 unwind label %.loopexit.split-lp
+
+.noexc32:                                         ; preds = %6
+  unreachable
 
 _ZN8facebook5velox9functions3sfm9SfmSketch3addIlEEvT_.exit: ; preds = %_ZL16XXH_INLINE_XXH64PKvmm.exit.i
   %i.cy = add nuw nsw i32 %.01372, 1
@@ -632,13 +632,6 @@ _ZN8facebook5velox6fuzzer4randIdEET_RN5folly12xoshiro256ppIjDv4_yEENS1_8DataSpec
   %i.il = icmp sgt i32 %i.ik, 0
   br i1 %i.il, label %_ZL16XXH_INLINE_XXH64PKvmm.exit.i, label %6, !prof !107
 
-6:                                                ; preds = %_ZN8facebook5velox6fuzzer4randIdEET_RN5folly12xoshiro256ppIjDv4_yEENS1_8DataSpecE.exit
-  invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorEPKcEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox9functions3sfm9SfmSketch3addIdEEvT_E18veloxCheckFailArgs, ptr noundef nonnull @.str.31) #27
-          to label %.noexc unwind label %.loopexit.split-lp
-
-.noexc:                                           ; preds = %6
-  unreachable
-
 _ZL16XXH_INLINE_XXH64PKvmm.exit.i:                ; preds = %_ZN8facebook5velox6fuzzer4randIdEET_RN5folly12xoshiro256ppIjDv4_yEENS1_8DataSpecE.exit
   %i.im = bitcast double %i.ii to i64
   %i.in = mul i64 %i.im, -4417276706812531889     ; 2 uses
@@ -658,6 +651,13 @@ _ZL16XXH_INLINE_XXH64PKvmm.exit.i:                ; preds = %_ZN8facebook5velox6
   %i.jb = xor i64 %i.ja, %i.iz
   invoke void @_ZN8facebook5velox9functions3sfm9SfmSketch7addHashEm(ptr noundef nonnull align 8 dereferenceable(2584) %3, i64 noundef %i.jb)
           to label %_ZN8facebook5velox9functions3sfm9SfmSketch3addIdEEvT_.exit unwind label %.loopexit
+
+6:                                                ; preds = %_ZN8facebook5velox6fuzzer4randIdEET_RN5folly12xoshiro256ppIjDv4_yEENS1_8DataSpecE.exit
+  invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorEPKcEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox9functions3sfm9SfmSketch3addIdEEvT_E18veloxCheckFailArgs, ptr noundef nonnull @.str.31) #27
+          to label %.noexc32 unwind label %.loopexit.split-lp
+
+.noexc32:                                         ; preds = %6
+  unreachable
 
 _ZN8facebook5velox9functions3sfm9SfmSketch3addIdEEvT_.exit: ; preds = %_ZL16XXH_INLINE_XXH64PKvmm.exit.i
   %i.jc = add nuw nsw i32 %.01373, 1

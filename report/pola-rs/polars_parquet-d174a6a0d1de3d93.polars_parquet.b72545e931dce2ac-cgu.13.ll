@@ -205,9 +205,9 @@ bb.af:                                            ; preds = %bb.ae
   br label %.loopexit, !dbg !4091
 
 .lr.ph86:                                         ; preds = %.lr.ph86.preheader, %.lr.ph86
-  %i.cs = phi i32 [ %i.ct, %.lr.ph86 ], [ %.lcssa8796, %.lr.ph86.preheader ], !dbg !4092
-  %.sroa.0.585 = phi float [ %i.cu, %.lr.ph86 ], [ %.sroa.0.291, %.lr.ph86.preheader ]
-  %.sroa.019.384 = phi i32 [ %i.cv, %.lr.ph86 ], [ %i.cp, %.lr.ph86.preheader ]
+  %i.cs = phi i32 [ %.lcssa8796, %.lr.ph86.preheader ], [ %i.ct, %.lr.ph86 ], !dbg !4092
+  %.sroa.0.585 = phi float [ %.sroa.0.291, %.lr.ph86.preheader ], [ %i.cu, %.lr.ph86 ]
+  %.sroa.019.384 = phi i32 [ %i.cp, %.lr.ph86.preheader ], [ %i.cv, %.lr.ph86 ]
   %i.ct = add i32 %i.cs, 1, !dbg !4092            ; 2 uses
   %i.cu = fadd float %.sroa.0.585, 3.000000e+00, !dbg !4093 ; 2 uses
   %i.cv = lshr i32 %.sroa.019.384, 3, !dbg !4094  ; 2 uses
@@ -502,9 +502,9 @@ bb.af:                                            ; preds = %bb.ae
   br label %.loopexit, !dbg !4272
 
 .lr.ph86:                                         ; preds = %.lr.ph86.preheader, %.lr.ph86
-  %i.cs = phi i32 [ %i.ct, %.lr.ph86 ], [ %.lcssa8796, %.lr.ph86.preheader ], !dbg !4273
-  %.sroa.0.585 = phi float [ %i.cu, %.lr.ph86 ], [ %.sroa.0.291, %.lr.ph86.preheader ]
-  %.sroa.019.384 = phi i32 [ %i.cv, %.lr.ph86 ], [ %i.cp, %.lr.ph86.preheader ]
+  %i.cs = phi i32 [ %.lcssa8796, %.lr.ph86.preheader ], [ %i.ct, %.lr.ph86 ], !dbg !4273
+  %.sroa.0.585 = phi float [ %.sroa.0.291, %.lr.ph86.preheader ], [ %i.cu, %.lr.ph86 ]
+  %.sroa.019.384 = phi i32 [ %i.cp, %.lr.ph86.preheader ], [ %i.cv, %.lr.ph86 ]
   %i.ct = add i32 %i.cs, 1, !dbg !4273            ; 2 uses
   %i.cu = fadd float %.sroa.0.585, 3.000000e+00, !dbg !4274 ; 2 uses
   %i.cv = lshr i32 %.sroa.019.384, 3, !dbg !4275  ; 2 uses
@@ -799,9 +799,9 @@ bb.af:                                            ; preds = %bb.ae
   br label %.loopexit, !dbg !4453
 
 .lr.ph86:                                         ; preds = %.lr.ph86.preheader, %.lr.ph86
-  %i.cs = phi i32 [ %i.ct, %.lr.ph86 ], [ %.lcssa8796, %.lr.ph86.preheader ], !dbg !4454
-  %.sroa.0.585 = phi float [ %i.cu, %.lr.ph86 ], [ %.sroa.0.291, %.lr.ph86.preheader ]
-  %.sroa.019.384 = phi i32 [ %i.cv, %.lr.ph86 ], [ %i.cp, %.lr.ph86.preheader ]
+  %i.cs = phi i32 [ %.lcssa8796, %.lr.ph86.preheader ], [ %i.ct, %.lr.ph86 ], !dbg !4454
+  %.sroa.0.585 = phi float [ %.sroa.0.291, %.lr.ph86.preheader ], [ %i.cu, %.lr.ph86 ]
+  %.sroa.019.384 = phi i32 [ %i.cp, %.lr.ph86.preheader ], [ %i.cv, %.lr.ph86 ]
   %i.ct = add i32 %i.cs, 1, !dbg !4454            ; 2 uses
   %i.cu = fadd float %.sroa.0.585, 3.000000e+00, !dbg !4455 ; 2 uses
   %i.cv = lshr i32 %.sroa.019.384, 3, !dbg !4456  ; 2 uses

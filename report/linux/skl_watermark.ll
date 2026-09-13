@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr i8, ptr %0, i64 32
   br label %bb.d
 
-bb.d:                                             ; preds = %.backedge.a, %.thread
-  %.pn.in = phi ptr [ %i.i, %.thread ], [ %.pn, %.backedge.a ]
+bb.d:                                             ; preds = %.backedge, %.thread
+  %.pn.in = phi ptr [ %i.i, %.thread ], [ %.pn, %.backedge ]
   %.pn = load ptr, ptr %.pn.in, align 8           ; 5 uses
   %.046 = getelementptr i8, ptr %.pn, i64 -1648
   %i.l = load ptr, ptr %i.c, align 8              ; 2 uses
@@ -232,7 +232,7 @@ bb.g:                                             ; preds = %bb.f
   %i.s = getelementptr i8, ptr %i.r, i64 24
   %i.t = load ptr, ptr %i.s, align 8              ; 2 uses
   %.not72 = icmp eq ptr %i.t, null
-  br i1 %.not72, label %.backedge.a, label %bb.h
+  br i1 %.not72, label %.backedge, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.u = load ptr, ptr %.046, align 8             ; 2 uses
@@ -635,7 +635,7 @@ skl_build_pipe_wm.exit.thread133:                 ; preds = %._crit_edge.i.i.i, 
 skl_max_wm_level_for_vblank.exit.i.i:             ; preds = %bb.be
   %i.if = trunc nuw nsw i64 %indvars.iv.next.i.i44.i to i32 ; 3 uses
   %i.ig = icmp slt i64 %indvars.iv.i.i43.i, 1
-  br i1 %i.ig, label %skl_print_wm_changes.exit.loopexit216, label %bb.bg
+  br i1 %i.ig, label %.backedge.a, label %bb.bg
 
 bb.bg:                                            ; preds = %skl_max_wm_level_for_vblank.exit.i.i
   %i.ih = getelementptr i8, ptr %i.gw, i64 5536   ; 3 uses
@@ -913,10 +913,14 @@ bb.cn:                                            ; preds = %bb.cm
 
 skl_build_pipe_wm.exit.thread130:                 ; preds = %bb.ax, %bb.by, %bb.bx, %bb.bw, %._crit_edge.i.i, %bb.cn, %bb.cm
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
-  br label %.backedge.a
+  br label %.backedge
 
-.backedge.a:                                      ; preds = %skl_build_pipe_wm.exit.thread130, %bb.g
+.backedge:                                        ; preds = %skl_build_pipe_wm.exit.thread130, %bb.g
   br label %bb.d, !llvm.loop !120
+
+.backedge.a:                                      ; preds = %skl_max_wm_level_for_vblank.exit.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
+  br label %skl_print_wm_changes.exit
 
 bb.co:                                            ; preds = %bb.f
   %i.kx = load ptr, ptr %i.c, align 8             ; 2 uses
@@ -1320,8 +1324,8 @@ bb.ml:                                            ; preds = %bb.mk, %bb.mj
   %i.bbt = getelementptr i8, ptr %i.bbl, i64 5536
   br label %bb.mm
 
-bb.mm:                                            ; preds = %.loopexit.i115, %bb.ml
-  %.pn.in.i111 = phi ptr [ %i.bbr, %bb.ml ], [ %.pn.i112, %.loopexit.i115 ]
+bb.mm:                                            ; preds = %skl_print_wm_changes.exit.loopexit216, %bb.ml
+  %.pn.in.i111 = phi ptr [ %i.bbr, %bb.ml ], [ %.pn.i112, %skl_print_wm_changes.exit.loopexit216 ]
   %.pn.i112 = load ptr, ptr %.pn.in.i111, align 8 ; 5 uses
   %i.bbu = load ptr, ptr %i.c, align 8            ; 2 uses
   %.not74.i = icmp eq ptr %i.bbu, null
@@ -1348,7 +1352,7 @@ bb.mp:                                            ; preds = %bb.mo
   %i.bcd = getelementptr i8, ptr %i.bca, i64 24
   %i.bce = load ptr, ptr %i.bcd, align 8          ; 4 uses
   %.not76.i = icmp eq ptr %i.bce, null
-  br i1 %.not76.i, label %.loopexit.i115, label %bb.mq
+  br i1 %.not76.i, label %skl_print_wm_changes.exit.loopexit216, label %bb.mq
 
 bb.mq:                                            ; preds = %bb.mp
   %i.bcf = getelementptr i8, ptr %i.bcc, i64 2542
@@ -1376,7 +1380,7 @@ bb.mq:                                            ; preds = %bb.mp
   %.pn79102.i = phi ptr [ %.pn7797.i, %bb.mq ], [ %.pn79102.pre.i, %.preheader.loopexit.i ] ; 2 uses
   %i.bcp = getelementptr i8, ptr %i.bco, i64 648
   %.not95104.i = icmp eq ptr %.pn79102.i, %i.bcp
-  br i1 %.not95104.i, label %.loopexit.i115, label %.lr.ph107.i
+  br i1 %.not95104.i, label %skl_print_wm_changes.exit.loopexit216, label %.lr.ph107.i
 
 .lr.ph107.i:                                      ; preds = %.preheader.i114
   %i.bcq = getelementptr i8, ptr %.pn.i112, i64 16
@@ -1726,17 +1730,13 @@ bb.nt:                                            ; preds = %skl_plane_wm_equals
   %.pn79.i = load ptr, ptr %.pn79105.i, align 8   ; 2 uses
   %i.bke = getelementptr i8, ptr %i.bkd, i64 648
   %.not95.i = icmp eq ptr %.pn79.i, %i.bke
-  br i1 %.not95.i, label %.loopexit.i115, label %bb.nc, !llvm.loop !139
+  br i1 %.not95.i, label %skl_print_wm_changes.exit.loopexit216, label %bb.nc, !llvm.loop !139
 
-.loopexit.i115:                                   ; preds = %bb.nt, %.preheader.i114, %bb.mp
+skl_print_wm_changes.exit.loopexit216:            ; preds = %bb.nt, %.preheader.i114, %bb.mp
   br label %bb.mm, !llvm.loop !140
 
-skl_print_wm_changes.exit.loopexit216:            ; preds = %skl_max_wm_level_for_vblank.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
-  br label %skl_print_wm_changes.exit
-
-skl_print_wm_changes.exit:                        ; preds = %bb.ag, %bb.ae, %bb.ai, %bb.ad, %bb.dh, %bb.ed, %skl_crtc_allocate_ddb.exit.i, %skl_ddb_entry_equal.exit.i.i, %skl_ddb_add_affected_planes.exit.i, %skl_wm_add_affected_planes.exit, %bb.mo, %skl_print_wm_changes.exit.loopexit216, %skl_crtc_allocate_plane_ddb.exit.i, %bb.ds, %bb.de, %skl_ddb_add_affected_planes.exit.thread234.i, %bb.cz, %icl_build_plane_wm.exit.i, %bb.mi, %skl_wm_add_affected_planes.exit.thread145, %skl_build_pipe_wm.exit.thread133, %skl_compute_ddb.exit
-  %.3 = phi i32 [ -22, %skl_wm_add_affected_planes.exit.thread145 ], [ %.073.i.i, %skl_crtc_allocate_ddb.exit.i ], [ %i.bbi, %skl_wm_add_affected_planes.exit ], [ %i.asn, %skl_compute_ddb.exit ], [ %i.mi, %bb.cz ], [ -22, %skl_build_pipe_wm.exit.thread133 ], [ %i.el, %icl_build_plane_wm.exit.i ], [ 0, %bb.mi ], [ %i.ou, %bb.ds ], [ 0, %bb.mo ], [ %i.mx, %bb.de ], [ %i.nn, %bb.dh ], [ -22, %skl_ddb_add_affected_planes.exit.thread234.i ], [ %i.asl, %skl_ddb_add_affected_planes.exit.i ], [ %i.qr, %bb.ed ], [ -22, %skl_crtc_allocate_plane_ddb.exit.i ], [ %i.if, %skl_print_wm_changes.exit.loopexit216 ], [ %i.vt, %skl_ddb_entry_equal.exit.i.i ], [ %i.cx, %bb.ad ], [ %i.di, %bb.ai ], [ %i.cy, %bb.ae ], [ %i.da, %bb.ag ]
+skl_print_wm_changes.exit:                        ; preds = %bb.ag, %bb.ae, %bb.ai, %bb.ad, %bb.dh, %bb.ed, %skl_crtc_allocate_ddb.exit.i, %skl_ddb_entry_equal.exit.i.i, %skl_ddb_add_affected_planes.exit.i, %skl_wm_add_affected_planes.exit, %bb.mo, %.backedge.a, %skl_crtc_allocate_plane_ddb.exit.i, %bb.ds, %bb.de, %skl_ddb_add_affected_planes.exit.thread234.i, %bb.cz, %icl_build_plane_wm.exit.i, %bb.mi, %skl_wm_add_affected_planes.exit.thread145, %skl_build_pipe_wm.exit.thread133, %skl_compute_ddb.exit
+  %.3 = phi i32 [ -22, %skl_wm_add_affected_planes.exit.thread145 ], [ %i.if, %.backedge.a ], [ %.073.i.i, %skl_crtc_allocate_ddb.exit.i ], [ %i.asn, %skl_compute_ddb.exit ], [ %i.mi, %bb.cz ], [ -22, %skl_build_pipe_wm.exit.thread133 ], [ %i.el, %icl_build_plane_wm.exit.i ], [ 0, %bb.mi ], [ %i.ou, %bb.ds ], [ 0, %bb.mo ], [ %i.mx, %bb.de ], [ %i.nn, %bb.dh ], [ -22, %skl_ddb_add_affected_planes.exit.thread234.i ], [ %i.bbi, %skl_wm_add_affected_planes.exit ], [ %i.qr, %bb.ed ], [ -22, %skl_crtc_allocate_plane_ddb.exit.i ], [ %i.asl, %skl_ddb_add_affected_planes.exit.i ], [ %i.vt, %skl_ddb_entry_equal.exit.i.i ], [ %i.cx, %bb.ad ], [ %i.di, %bb.ai ], [ %i.cy, %bb.ae ], [ %i.da, %bb.ag ]
   ret i32 %.3
 }
 

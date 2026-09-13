@@ -204,10 +204,6 @@ checkpe.exit:                                     ; preds = %.critedge.thread, %
   %i.ev = add i64 %i.et, %i.eu                    ; 4 uses
   br i1 %i.es, label %.lr.ph542.split.us.preheader, label %.lr.ph542.split.preheader
 
-.lr.ph542.split.us.preheader:                     ; preds = %.lr.ph542
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 %i.eq
-  br label %.lr.ph542.split.us
-
 .lr.ph542.split.preheader:                        ; preds = %.lr.ph542
   %i.ew = add i64 %i.eu, %i.eq
   %i.ex = add i64 %i.ew, -1
@@ -215,6 +211,10 @@ checkpe.exit:                                     ; preds = %.critedge.thread, %
   %i.ez = sub i64 0, %i.ey
   %scevgep = getelementptr i8, ptr %2, i64 %i.ez
   br label %checkpe.exit428
+
+.lr.ph542.split.us.preheader:                     ; preds = %.lr.ph542
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 %i.eq
+  br label %.lr.ph542.split.us
 
 .lr.ph542.split.us:                               ; preds = %.lr.ph542.split.us.preheader, %bb.af
   %.4540.us = phi ptr [ %i.fr, %bb.af ], [ %9, %.lr.ph542.split.us.preheader ] ; 7 uses
