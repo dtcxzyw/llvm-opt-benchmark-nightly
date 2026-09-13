@@ -205,7 +205,7 @@ _ZNSt10unique_ptrIA_PN4llvm8ConstantESt14default_deleteIS3_EED2Ev.exit438: ; pre
   br label %bb.as
 
 bb.al:                                            ; preds = %.thread648
-  %i.dv = load i32, ptr %i.db, align 8, !tbaa !212 ; 4 uses
+  %i.dv = load i32, ptr %i.db, align 8, !tbaa !212 ; 3 uses
   %.not.i439 = icmp eq i32 %i.dv, 0
   br i1 %.not.i439, label %bb.am, label %bb.an
 
@@ -263,10 +263,14 @@ bb.ap:                                            ; preds = %_ZNK4llvm4Type17isF
 
 _ZNK4llvm4Type17isFloatingPointTyEv.exit443.thread: ; preds = %bb.an, %bb.ao, %bb.ao, %bb.ao, %bb.ao, %bb.ao, %_ZNK4llvm4Type17isFloatingPointTyEv.exit443
   %.not422705 = icmp eq i32 %i.dv, 1
-  br i1 %.not422705, label %._crit_edge708, label %.lr.ph707
+  br i1 %.not422705, label %._crit_edge708, label %.lr.ph707.preheader
 
-.lr.ph707:                                        ; preds = %_ZNK4llvm4Type17isFloatingPointTyEv.exit443.thread, %bb.ar
-  %indvars.iv712 = phi i64 [ %indvars.iv.next713, %bb.ar ], [ 1, %_ZNK4llvm4Type17isFloatingPointTyEv.exit443.thread ] ; 3 uses
+.lr.ph707.preheader:                              ; preds = %_ZNK4llvm4Type17isFloatingPointTyEv.exit443.thread
+  %135 = zext i32 %i.dv to i64                    ; 2 uses
+  br label %.lr.ph707
+
+.lr.ph707:                                        ; preds = %.lr.ph707.preheader, %bb.ar
+  %indvars.iv712 = phi i64 [ 1, %.lr.ph707.preheader ], [ %indvars.iv.next713, %bb.ar ] ; 3 uses
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.dy, i64 %indvars.iv712
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !449
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 8
@@ -326,8 +330,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 bb.ar:                                            ; preds = %.lr.ph707
   %indvars.iv.next713 = add nuw nsw i64 %indvars.iv712, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next713 to i32
-  %exitcond = icmp eq i32 %i.dv, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next713, %135
   br i1 %exitcond, label %._crit_edge708, label %.lr.ph707, !llvm.loop !1226
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i: ; preds = %bb.aq, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -342,8 +345,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br label %bb.as
 
 ._crit_edge708:                                   ; preds = %bb.ar, %_ZNK4llvm4Type17isFloatingPointTyEv.exit443.thread
-  %135 = zext i32 %i.dv to i64
-  %i.fg = call noundef ptr @_ZN4llvm14ConstantVector3getENS_8ArrayRefIPNS_8ConstantEEE(ptr nonnull %i.dy, i64 %135) #25
+  %.pre-phi = phi i64 [ 1, %_ZNK4llvm4Type17isFloatingPointTyEv.exit443.thread ], [ %135, %bb.ar ]
+  %i.fg = call noundef ptr @_ZN4llvm14ConstantVector3getENS_8ArrayRefIPNS_8ConstantEEE(ptr nonnull %i.dy, i64 %.pre-phi) #25
   %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 136
   store ptr %i.fg, ptr %i.fh, align 8, !tbaa !523
   store i32 12, ptr %1, align 8, !tbaa !450

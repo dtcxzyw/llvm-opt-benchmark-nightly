@@ -205,7 +205,7 @@ scalar.ph240:                                     ; preds = %scalar.ph240.prehea
   %i.bj = fmul float %i.bf, %i.bi
   %i.bk = fmul float %i.bi, %i.bj
   %i.bl = fadd float %i.ay, %i.bk                 ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.outer.preheader.unr-lcssa, label %.lr.ph.i
 
@@ -608,7 +608,8 @@ bb.h:                                             ; preds = %bb.ab
   br i1 %i.aa, label %.loopexit, label %.split166.preheader
 
 .split166.preheader:                              ; preds = %bb.h
-  %.not228 = icmp samesign ugt i64 %2, 32
+  %9 = add nsw i64 %2, -33
+  %.not227 = icmp ult i64 %9, -32
   %i.ac = insertelement <2 x float> poison, float %.sroa.027.1.lcssa, i64 0
   %i.ad = insertelement <2 x float> %i.ac, float %.sroa.031.0.lcssa, i64 1
   br label %.split166
@@ -722,7 +723,7 @@ bb.l:                                             ; preds = %bb.j
   br label %.split169
 
 .split169.us.preheader:                           ; preds = %bb.l
-  br i1 %.not228, label %.split171.us, label %.split169.us.preheader267
+  br i1 %.not227, label %.split171.us, label %.split169.us.preheader267
 
 .split169.us.preheader267:                        ; preds = %.split169.us.preheader
   %i.ci = extractelement <2 x float> %i.cf, i64 0

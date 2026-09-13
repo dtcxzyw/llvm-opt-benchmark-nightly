@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/coreutils-rs/original/uu_pr-2427c0618d01fc70.uu_pr.cd8020a810fc4717-cgu.0?download=true
 inline.NumInlined: 1527
 inline.NumDeleted: 885
-loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 15
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@_RNvCshDScVpnq8df_5uu_pr13build_options:bb.a
   %.val1.i.i18.i.i = load ptr, ptr %i.jt, align 8, !alias.scope !1960, !noalias !1950, !nonnull !4, !noundef !4
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i18.i.i, i64 noundef %.val.i.i17.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #30, !noalias !1961
@@ -205,9 +205,9 @@ bb.bi:                                            ; preds = %_RINvNtCs6JMX4GRUq9
 
 bb.bj:                                            ; preds = %_RINvMNtNtCsgNwXemyrBWj_12clap_builder6parser5errorNtB3_12MatchesError6unwrapINtNtCs6JMX4GRUq9U_4core6option6OptionRNtNtCs7tKScEop1B6_5alloc6string6StringEECshDScVpnq8df_5uu_pr.exit624
   %i.lk = getelementptr i8, ptr %i.lh, i64 8
-  %.val592 = load ptr, ptr %i.lk, align 8, !nonnull !4, !noundef !4 ; 16 uses
+  %.val592 = load ptr, ptr %i.lk, align 8, !nonnull !4, !noundef !4 ; 22 uses
   %i.ll = getelementptr i8, ptr %i.lh, i64 16
-  %.val593 = load i64, ptr %i.ll, align 8, !noundef !4 ; 21 uses
+  %.val593 = load i64, ptr %i.ll, align 8, !noundef !4 ; 27 uses
   %.not.i625 = icmp samesign eq i64 %.val593, 0
   br i1 %.not.i625, label %_RNCNvCshDScVpnq8df_5uu_pr13build_optionss1_0B3_.exit.thread, label %bb.bk
 
@@ -299,20 +299,23 @@ bb.bq:                                            ; preds = %thread-pre-split.i.
 
 bb.br:                                            ; preds = %thread-pre-split.i.i.i.i
   %i.mz = getelementptr inbounds nuw i8, ptr %.val592, i64 1 ; 2 uses
-  %5 = add nsw i64 %.val593, -1                   ; 2 uses
   %i.na = icmp samesign ult i64 %.val593, 9
-  br i1 %i.na, label %.lr.ph143.i.i.i.i.a, label %.lr.ph.i.i.i.i
+  br i1 %i.na, label %.lr.ph143.i.i.i.i, label %.lr.ph.i.i.i.i.preheader
 
-.loopexit.i.i.i.i:                                ; preds = %bb.bu, %bb.bv, %bb.bz, %bb.ca
-  %.sroa.086.1.i.i.i.i = phi i32 [ %9, %bb.bv ], [ %i.or, %bb.ca ], [ %i.oj, %bb.bz ], [ %i.no, %bb.bu ]
+.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.br
+  %5 = add nsw i64 %.val593, -1
+  br label %.lr.ph.i.i.i.i
+
+.loopexit.i.i.i.i:                                ; preds = %bb.bu, %9, %17, %25, %33, %41, %45, %53, %bb.bz, %bb.ca
+  %.sroa.086.1.i.i.i.i = phi i32 [ %55, %53 ], [ %i.or, %bb.ca ], [ %i.oj, %bb.bz ], [ %11, %9 ], [ %19, %17 ], [ %27, %25 ], [ %35, %33 ], [ %43, %41 ], [ %47, %45 ], [ %i.no, %bb.bu ]
   %i.nb = zext i32 %.sroa.086.1.i.i.i.i to i64
   %i.nc = shl nuw i64 %i.nb, 32
   br label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.i.i.i
 
-.lr.ph.i.i.i.i:                                   ; preds = %bb.br, %bb.bu
-  %.sroa.0.1138.i.i.i.i = phi ptr [ %i.nd, %bb.bu ], [ %i.mz, %bb.br ] ; 3 uses
-  %.sroa.26.1137.i.i.i.i = phi i64 [ %i.ne, %bb.bu ], [ %5, %bb.br ]
-  %.sroa.086.0136.i.i.i.i = phi i32 [ %i.no, %bb.bu ], [ 0, %bb.br ]
+.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader, %bb.bu
+  %.sroa.0.1138.i.i.i.i = phi ptr [ %i.nd, %bb.bu ], [ %i.mz, %.lr.ph.i.i.i.i.preheader ] ; 3 uses
+  %.sroa.26.1137.i.i.i.i = phi i64 [ %i.ne, %bb.bu ], [ %5, %.lr.ph.i.i.i.i.preheader ]
+  %.sroa.086.0136.i.i.i.i = phi i32 [ %i.no, %bb.bu ], [ 0, %.lr.ph.i.i.i.i.preheader ]
   %i.nd = getelementptr inbounds nuw i8, ptr %.sroa.0.1138.i.i.i.i, i64 1
   %i.ne = add nsw i64 %.sroa.26.1137.i.i.i.i, -1  ; 2 uses
   %i.nf = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %.sroa.086.0136.i.i.i.i, i32 10) ; 2 uses
@@ -346,23 +349,100 @@ bb.bu:                                            ; preds = %bb.bt
   %i.ns = select i1 %i.nr, i64 %.sink190.i.i.i.i, i64 257
   br label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.i.i.i
 
-.lr.ph143.i.i.i.i.a:                              ; preds = %bb.br, %bb.bv
-  %.sroa.0.2142.i.i.i.i = phi ptr [ %8, %bb.bv ], [ %i.mz, %bb.br ] ; 2 uses
-  %.sroa.26.2141.i.i.i.i = phi i64 [ %7, %bb.bv ], [ %5, %bb.br ]
-  %.sroa.086.2140.i.i.i.i = phi i32 [ %9, %bb.bv ], [ 0, %bb.br ]
-  %i.nt = load i8, ptr %.sroa.0.2142.i.i.i.i, align 1, !alias.scope !1979, !noalias !1980, !noundef !4
+.lr.ph143.i.i.i.i:                                ; preds = %bb.br
+  %6 = load i8, ptr %i.mz, align 1, !alias.scope !1979, !noalias !1980, !noundef !4 ; 2 uses
+  %7 = add i8 %6, -48
+  %8 = icmp ult i8 %7, 10
+  br i1 %8, label %9, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i
+
+9:                                                ; preds = %.lr.ph143.i.i.i.i
+  %10 = zext i8 %6 to i32
+  %11 = sub nsw i32 48, %10                       ; 2 uses
+  %.not105.i.i.i.i = icmp eq i64 %.val593, 2
+  br i1 %.not105.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph143.i.i.i.i.1
+
+.lr.ph143.i.i.i.i.1:                              ; preds = %9
+  %12 = getelementptr inbounds nuw i8, ptr %.val592, i64 2
+  %13 = load i8, ptr %12, align 1, !alias.scope !1979, !noalias !1980, !noundef !4
+  %14 = zext i8 %13 to i32
+  %15 = add nsw i32 %14, -48                      ; 2 uses
+  %16 = icmp ult i32 %15, 10
+  br i1 %16, label %17, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i
+
+17:                                               ; preds = %.lr.ph143.i.i.i.i.1
+  %18 = mul nsw i32 %11, 10
+  %19 = sub nsw i32 %18, %15                      ; 2 uses
+  %.not105.i.i.i.i.1 = icmp eq i64 %.val593, 3
+  br i1 %.not105.i.i.i.i.1, label %.loopexit.i.i.i.i, label %.lr.ph143.i.i.i.i.2
+
+.lr.ph143.i.i.i.i.2:                              ; preds = %17
+  %20 = getelementptr inbounds nuw i8, ptr %.val592, i64 3
+  %21 = load i8, ptr %20, align 1, !alias.scope !1979, !noalias !1980, !noundef !4
+  %22 = zext i8 %21 to i32
+  %23 = add nsw i32 %22, -48                      ; 2 uses
+  %24 = icmp ult i32 %23, 10
+  br i1 %24, label %25, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i
+
+25:                                               ; preds = %.lr.ph143.i.i.i.i.2
+  %26 = mul nsw i32 %19, 10
+  %27 = sub nsw i32 %26, %23                      ; 2 uses
+  %.not105.i.i.i.i.2 = icmp eq i64 %.val593, 4
+  br i1 %.not105.i.i.i.i.2, label %.loopexit.i.i.i.i, label %.lr.ph143.i.i.i.i.3
+
+.lr.ph143.i.i.i.i.3:                              ; preds = %25
+  %28 = getelementptr inbounds nuw i8, ptr %.val592, i64 4
+  %29 = load i8, ptr %28, align 1, !alias.scope !1979, !noalias !1980, !noundef !4
+  %30 = zext i8 %29 to i32
+  %31 = add nsw i32 %30, -48                      ; 2 uses
+  %32 = icmp ult i32 %31, 10
+  br i1 %32, label %33, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i
+
+33:                                               ; preds = %.lr.ph143.i.i.i.i.3
+  %34 = mul nsw i32 %27, 10
+  %35 = sub i32 %34, %31                          ; 2 uses
+  %.not105.i.i.i.i.3 = icmp eq i64 %.val593, 5
+  br i1 %.not105.i.i.i.i.3, label %.loopexit.i.i.i.i, label %.lr.ph143.i.i.i.i.4
+
+.lr.ph143.i.i.i.i.4:                              ; preds = %33
+  %36 = getelementptr inbounds nuw i8, ptr %.val592, i64 5
+  %37 = load i8, ptr %36, align 1, !alias.scope !1979, !noalias !1980, !noundef !4
+  %38 = zext i8 %37 to i32
+  %39 = add nsw i32 %38, -48                      ; 2 uses
+  %40 = icmp ult i32 %39, 10
+  br i1 %40, label %41, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i
+
+41:                                               ; preds = %.lr.ph143.i.i.i.i.4
+  %42 = mul i32 %35, 10
+  %43 = sub i32 %42, %39                          ; 2 uses
+  %.not105.i.i.i.i.4 = icmp eq i64 %.val593, 6
+  br i1 %.not105.i.i.i.i.4, label %.loopexit.i.i.i.i, label %.lr.ph143.i.i.i.i.a
+
+.lr.ph143.i.i.i.i.a:                              ; preds = %41
+  %44 = getelementptr inbounds nuw i8, ptr %.val592, i64 6
+  %i.nt = load i8, ptr %44, align 1, !alias.scope !1979, !noalias !1980, !noundef !4
   %i.nu = zext i8 %i.nt to i32
   %i.nv = add nsw i32 %i.nu, -48                  ; 2 uses
   %i.nw = icmp ult i32 %i.nv, 10
-  br i1 %i.nw, label %bb.bv, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i
+  br i1 %i.nw, label %45, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i
 
-bb.bv:                                            ; preds = %.lr.ph143.i.i.i.i.a
-  %6 = mul i32 %.sroa.086.2140.i.i.i.i, 10
-  %7 = add nsw i64 %.sroa.26.2141.i.i.i.i, -1     ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.2142.i.i.i.i, i64 1
-  %9 = sub i32 %6, %i.nv                          ; 2 uses
-  %.not105.i.i.i.i = icmp eq i64 %7, 0
-  br i1 %.not105.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph143.i.i.i.i.a
+45:                                               ; preds = %.lr.ph143.i.i.i.i.a
+  %46 = mul i32 %43, 10
+  %47 = sub i32 %46, %i.nv                        ; 2 uses
+  %.not105.i.i.i.i.5 = icmp eq i64 %.val593, 7
+  br i1 %.not105.i.i.i.i.5, label %.loopexit.i.i.i.i, label %bb.bv
+
+bb.bv:                                            ; preds = %45
+  %48 = getelementptr inbounds nuw i8, ptr %.val592, i64 7
+  %49 = load i8, ptr %48, align 1, !alias.scope !1979, !noalias !1980, !noundef !4
+  %50 = zext i8 %49 to i32
+  %51 = add nsw i32 %50, -48                      ; 2 uses
+  %52 = icmp ult i32 %51, 10
+  br i1 %52, label %53, label %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i
+
+53:                                               ; preds = %bb.bv
+  %54 = mul i32 %47, 10
+  %55 = sub i32 %54, %51
+  br label %.loopexit.i.i.i.i
 
 bb.bw:                                            ; preds = %bb.bq, %thread-pre-split.i.i.i.i
   %.sroa.26.0.i.i.i.i = phi i64 [ %i.my, %bb.bq ], [ %.val593, %thread-pre-split.i.i.i.i ] ; 3 uses
@@ -627,7 +707,7 @@ bb.cu:                                            ; preds = %bb.cs
   call fastcc void @_RNCNCNCNvCshDScVpnq8df_5uu_pr13build_optionss1_000B7_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %i.cp, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ou, i64 noundef %i.ox) #34
   br label %_RNCNvCshDScVpnq8df_5uu_pr13build_optionss1_0B3_.exitthread-pre-split
 
-_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i: ; preds = %bb.bt, %bb.bs, %.lr.ph143.i.i.i.i.a, %bb.by, %bb.bx, %.lr.ph152.i.i.i.i, %bb.bp, %bb.bp, %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.i.i.i
+_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.thread.i.i.i: ; preds = %bb.bt, %bb.bs, %.lr.ph143.i.i.i.i, %.lr.ph143.i.i.i.i.1, %.lr.ph143.i.i.i.i.2, %.lr.ph143.i.i.i.i.3, %.lr.ph143.i.i.i.i.4, %.lr.ph143.i.i.i.i.a, %bb.bv, %bb.by, %bb.bx, %.lr.ph152.i.i.i.i, %bb.bp, %bb.bp, %_RNvMsp_NtCs6JMX4GRUq9U_4core3numl27from_ascii_bytes_radix_impl.exit.i.i.i
   call fastcc void @_RNCNCNCNvCshDScVpnq8df_5uu_pr13build_optionss1_000B7_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.bf, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val592, i64 noundef %.val593) #34, !noalias !1980
   %.sroa.05.0.copyload.i.i.i = load i64, ptr %i.bf, align 8, !noalias !1980 ; 2 uses
   %.sroa.67.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bf, i64 8

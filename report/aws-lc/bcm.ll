@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/aws-lc/original/bcm?download=true
 inline.NumInlined: 6923
 inline.NumDeleted: 1212
-loop-unroll.NumCompletelyUnrolled: 331
+loop-unroll.NumCompletelyUnrolled: 332
 loop-unroll.NumRuntimeUnrolled: 162
-loop-unroll.NumUnrolled: 549
+loop-unroll.NumUnrolled: 550
 begin_hunk_0_@BN_mod_mul_reciprocal:bb.a
   br label %bb.bt
 
@@ -205,7 +205,7 @@ BN_CTX_end.exit:                                  ; preds = %bb.ab, %BN_mul.exit
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @bn_mul_part_recursive(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) unnamed_addr #0 {
 bb.a:
-  %i.a = shl nsw i32 %3, 1                        ; 6 uses
+  %i.a = shl nsw i32 %3, 1                        ; 5 uses
   %i.b = icmp slt i32 %3, 8
   br i1 %i.b, label %bb.b, label %bb.d
 
@@ -326,21 +326,17 @@ bb.k:                                             ; preds = %bb.j
   %i.bk = tail call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.aa) #47 ; 4 uses
   %i.bl = xor i64 %i.aa, -1
   %i.bm = tail call i64 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.bl) #47 ; 4 uses
-  %min.iters.check = icmp ult i32 %i.a, 10
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %.lr.ph.i
   %7 = shl nuw nsw i64 %i.t, 4
   %scevgep = getelementptr i8, ptr %6, i64 %7
   %8 = add nuw nsw i64 %i.bg, %i.t
   %9 = shl nuw nsw i64 %8, 3
   %scevgep207 = getelementptr i8, ptr %6, i64 %9
   %bound0 = icmp ult ptr %i.u, %scevgep207
-  %bound1 = icmp ult ptr %i.bh, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
+  %min.iters.check = icmp ult ptr %i.bh, %scevgep
+  %found.conflict = and i1 %bound0, %min.iters.check
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.i
   %n.vec = and i64 %i.t, 2147483644               ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.bk, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -374,8 +370,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.t
   br i1 %cmp.n, label %bn_add_words.exit190, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
-  %.09.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ]
+scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
+  %.09.i.ph = phi i64 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader
@@ -397,7 +393,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.cl = and i64 %i.cj, %i.bm
   %i.cm = or i64 %i.cl, %i.ck
   store i64 %i.cm, ptr %i.ci, align 8, !tbaa !80
-  %i.cn = add nuw i64 %.09.i, 2                   ; 2 uses
+  %i.cn = add nuw nsw i64 %.09.i, 2               ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.cn, %i.t
   br i1 %exitcond.not.i.1, label %bn_add_words.exit190, label %scalar.ph, !llvm.loop !2521
 
@@ -634,7 +630,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bw = and i64 %i.bu, %i.as
   %i.bx = or i64 %i.bw, %i.bv
   store i64 %i.bx, ptr %i.bt, align 8, !tbaa !80
-  %i.by = add nuw i64 %.09.i, 1                   ; 2 uses
+  %i.by = add nuw nsw i64 %.09.i, 1               ; 2 uses
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.by
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !80
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.by ; 2 uses
@@ -643,7 +639,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.ce = and i64 %i.cc, %i.as
   %i.cf = or i64 %i.ce, %i.cd
   store i64 %i.cf, ptr %i.cb, align 8, !tbaa !80
-  %i.cg = add nuw i64 %.09.i, 2                   ; 2 uses
+  %i.cg = add nuw nsw i64 %.09.i, 2               ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.cg, %i.y
   br i1 %exitcond.not.i.1, label %bn_add_words.exit175, label %scalar.ph, !llvm.loop !2529
 
@@ -1046,7 +1042,7 @@ bb.l:                                             ; preds = %bb.k, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @ec_GFp_mont_jacobian_to_affine_batch(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #0 {
 bb.a:
-  %i.a = alloca [9 x i64], align 16               ; 8 uses
+  %i.a = alloca [9 x i64], align 16               ; 15 uses
   %4 = alloca %struct.EC_FELEM, align 8           ; 7 uses
   %5 = alloca %struct.EC_FELEM, align 8           ; 7 uses
   %6 = alloca %struct.EC_FELEM, align 8           ; 5 uses
@@ -1068,12 +1064,12 @@ bb.b:                                             ; preds = %bb.a
   %i.f = add i64 %3, -1                           ; 2 uses
   %i.g = getelementptr inbounds nuw [144 x i8], ptr %1, i64 %i.f ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 7 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !277  ; 5 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !277  ; 12 uses
   %i.j = icmp sgt i32 %i.i, 0
   br i1 %i.j, label %.lr.ph.preheader.i, label %ec_felem_non_zero_mask.exit.thread
 
 .lr.ph.preheader.i:                               ; preds = %._crit_edge
-  %wide.trip.count.i = zext nneg i32 %i.i to i64  ; 7 uses
+  %wide.trip.count.i = zext nneg i32 %i.i to i64  ; 6 uses
   %min.iters.check = icmp ult i32 %i.i, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
@@ -1161,26 +1157,91 @@ bb.f:                                             ; preds = %OPENSSL_memcpy.exit
   %i.af = or disjoint i64 %.pre.i.i, -2
   store i64 %i.af, ptr %i.a, align 16, !tbaa !80
   %.not22.i.i = icmp eq i32 %i.i, 1
-  br i1 %.not22.i.i, label %.lr.ph52.preheader, label %.lr.ph.i.i.a
+  br i1 %.not22.i.i, label %.lr.ph52.preheader, label %.lr.ph.i.i
 
-.lr.ph.i.i.a:                                     ; preds = %bb.f, %.lr.ph.i.i.a
-  %.017.i.i = phi i64 [ %8, %.lr.ph.i.i.a ], [ 1, %bb.f ] ; 2 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.017.i.i ; 2 uses
-  %i.ag = load i64, ptr %7, align 8, !tbaa !80    ; 2 uses
+.lr.ph.i.i:                                       ; preds = %bb.f
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %8 = load i64, ptr %7, align 8, !tbaa !80       ; 2 uses
+  %9 = add i64 %8, -1
+  store i64 %9, ptr %7, align 8, !tbaa !80
+  %.not.i.i = icmp ne i64 %8, 0
+  %exitcond.not.i.i = icmp eq i32 %i.i, 2
+  %or.cond21.i.i = or i1 %.not.i.i, %exitcond.not.i.i
+  br i1 %or.cond21.i.i, label %.lr.ph52.preheader, label %.lr.ph.i.i.1
+
+.lr.ph.i.i.1:                                     ; preds = %.lr.ph.i.i
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %11 = load i64, ptr %10, align 16, !tbaa !80    ; 2 uses
+  %12 = add i64 %11, -1
+  store i64 %12, ptr %10, align 16, !tbaa !80
+  %.not.i.i.1 = icmp ne i64 %11, 0
+  %exitcond.not.i.i.1 = icmp eq i32 %i.i, 3
+  %or.cond21.i.i.1 = or i1 %.not.i.i.1, %exitcond.not.i.i.1
+  br i1 %or.cond21.i.i.1, label %.lr.ph52.preheader, label %.lr.ph.i.i.2
+
+.lr.ph.i.i.2:                                     ; preds = %.lr.ph.i.i.1
+  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
+  %14 = load i64, ptr %13, align 8, !tbaa !80     ; 2 uses
+  %15 = add i64 %14, -1
+  store i64 %15, ptr %13, align 8, !tbaa !80
+  %.not.i.i.2 = icmp ne i64 %14, 0
+  %exitcond.not.i.i.2 = icmp eq i32 %i.i, 4
+  %or.cond21.i.i.2 = or i1 %.not.i.i.2, %exitcond.not.i.i.2
+  br i1 %or.cond21.i.i.2, label %.lr.ph52.preheader, label %.lr.ph.i.i.3
+
+.lr.ph.i.i.3:                                     ; preds = %.lr.ph.i.i.2
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
+  %17 = load i64, ptr %16, align 16, !tbaa !80    ; 2 uses
+  %18 = add i64 %17, -1
+  store i64 %18, ptr %16, align 16, !tbaa !80
+  %.not.i.i.3 = icmp ne i64 %17, 0
+  %exitcond.not.i.i.3 = icmp eq i32 %i.i, 5
+  %or.cond21.i.i.3 = or i1 %.not.i.i.3, %exitcond.not.i.i.3
+  br i1 %or.cond21.i.i.3, label %.lr.ph52.preheader, label %.lr.ph.i.i.4
+
+.lr.ph.i.i.4:                                     ; preds = %.lr.ph.i.i.3
+  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
+  %20 = load i64, ptr %19, align 8, !tbaa !80     ; 2 uses
+  %21 = add i64 %20, -1
+  store i64 %21, ptr %19, align 8, !tbaa !80
+  %.not.i.i.4 = icmp ne i64 %20, 0
+  %exitcond.not.i.i.4 = icmp eq i32 %i.i, 6
+  %or.cond21.i.i.4 = or i1 %.not.i.i.4, %exitcond.not.i.i.4
+  br i1 %or.cond21.i.i.4, label %.lr.ph52.preheader, label %.lr.ph.i.i.5
+
+.lr.ph.i.i.5:                                     ; preds = %.lr.ph.i.i.4
+  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
+  %23 = load i64, ptr %22, align 16, !tbaa !80    ; 2 uses
+  %24 = add i64 %23, -1
+  store i64 %24, ptr %22, align 16, !tbaa !80
+  %.not.i.i.5 = icmp ne i64 %23, 0
+  %exitcond.not.i.i.5 = icmp eq i32 %i.i, 7
+  %or.cond21.i.i.5 = or i1 %.not.i.i.5, %exitcond.not.i.i.5
+  br i1 %or.cond21.i.i.5, label %.lr.ph52.preheader, label %.lr.ph.i.i.a
+
+.lr.ph.i.i.a:                                     ; preds = %.lr.ph.i.i.5
+  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 2 uses
+  %i.ag = load i64, ptr %25, align 8, !tbaa !80   ; 2 uses
   %i.ah = add i64 %i.ag, -1
-  store i64 %i.ah, ptr %7, align 8, !tbaa !80
+  store i64 %i.ah, ptr %25, align 8, !tbaa !80
   %.not.i.i.a = icmp ne i64 %i.ag, 0
-  %8 = add nuw nsw i64 %.017.i.i, 1               ; 2 uses
-  %exitcond.not.i.i.a = icmp eq i64 %8, %wide.trip.count.i
-  %or.cond21.i.i = select i1 %.not.i.i.a, i1 true, i1 %exitcond.not.i.i.a
-  br i1 %or.cond21.i.i, label %.lr.ph52.preheader, label %.lr.ph.i.i.a, !llvm.loop !23
+  %exitcond.not.i.i.a = icmp eq i32 %i.i, 8
+  %or.cond21.i.i.6 = or i1 %.not.i.i.a, %exitcond.not.i.i.a
+  br i1 %or.cond21.i.i.6, label %.lr.ph52.preheader, label %.lr.ph.i.i.7
+
+.lr.ph.i.i.7:                                     ; preds = %.lr.ph.i.i.a
+  %26 = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 2 uses
+  %27 = load i64, ptr %26, align 16, !tbaa !80
+  %28 = add i64 %27, -1
+  store i64 %28, ptr %26, align 16, !tbaa !80
+  br label %.lr.ph52.preheader
 
 .loopexit.sink.split.i.i:                         ; preds = %OPENSSL_memcpy.exit.i.i
   %i.ai = add i64 %.pre.i.i, -2
   store i64 %i.ai, ptr %i.a, align 16, !tbaa !80
   br label %.lr.ph52.preheader
 
-.lr.ph52.preheader:                               ; preds = %.lr.ph.i.i.a, %.loopexit.sink.split.i.i, %bb.f
+.lr.ph52.preheader:                               ; preds = %.lr.ph.i.i, %.lr.ph.i.i.1, %.lr.ph.i.i.2, %.lr.ph.i.i.3, %.lr.ph.i.i.4, %.lr.ph.i.i.5, %.lr.ph.i.i.a, %.lr.ph.i.i.7, %.loopexit.sink.split.i.i, %bb.f
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 7 uses
   call void @bn_mod_exp_mont_small(ptr noundef nonnull %4, ptr noundef nonnull readonly %i.g, i64 noundef %wide.trip.count.i, ptr noundef nonnull %i.a, i64 noundef %wide.trip.count.i, ptr noundef nonnull %i.aj)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #46
