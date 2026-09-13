@@ -204,13 +204,12 @@ bb.a:
   %i.bq = getelementptr inbounds nuw i8, ptr %29, i64 16
   %i.br = icmp ne i32 %14, -1
   %or.cond = and i1 %2, %i.br                     ; 2 uses
-  %i.bs = icmp ugt i32 %12, 2
+  %i.bs = icmp ugt i32 %12, 2                     ; 2 uses
   %i.bt = add i32 %12, -2                         ; 5 uses
   %i.bu = lshr i32 %i.bt, 1
   %.0112 = select i1 %i.bs, i32 %i.bu, i32 0
   %i.bv = getelementptr inbounds nuw i8, ptr %18, i64 32
   %i.bw = icmp eq i32 %14, -2147483648
-  %brmerge = icmp ult i32 %12, 3
   %i.bx = add i32 %12, -3
   %xtraiter = and i32 %i.bt, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -613,7 +612,7 @@ _ZN4llvm13IRBuilderBase12CreateCondBrEPNS_5ValueEPNS_10BasicBlockES4_PNS_6MDNode
   br i1 %or.cond, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %_ZN4llvm13IRBuilderBase12CreateCondBrEPNS_5ValueEPNS_10BasicBlockES4_PNS_6MDNodeES6_.exit
-  br i1 %brmerge, label %.loopexit, label %.lr.ph
+  br i1 %i.bs, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.ae
   br i1 %i.bw, label %_ZL21probOfNextInRemainderN4llvm17BranchProbabilityEj.exit.us.preheader, label %_ZL21probOfNextInRemainderN4llvm17BranchProbabilityEj.exit

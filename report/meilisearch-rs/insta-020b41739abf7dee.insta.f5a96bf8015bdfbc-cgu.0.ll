@@ -205,15 +205,14 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 3 uses
-  %i.i = add i64 %2, -1                           ; 5 uses
+  %i.i = add i64 %2, -1                           ; 4 uses
   %i.j = icmp ult i64 %2, 17
   br i1 %i.j, label %.preheader103, label %.preheader105
 
 .preheader105:                                    ; preds = %bb.h
   %i.k = zext nneg i32 %3 to i64
   %i.l = icmp samesign ugt i32 %3, 10
-  %.not193 = icmp eq i64 %i.i, 0
-  br i1 %.not193, label %.loopexit, label %.lr.ph197
+  br label %.lr.ph197
 
 .preheader103:                                    ; preds = %bb.h
   %.not89115 = icmp eq i64 %i.i, 0
@@ -253,16 +252,16 @@ bb.k:                                             ; preds = %bb.n
   %.not = icmp eq i64 %i.ab, 0
   br i1 %.not, label %.loopexit, label %.lr.ph197
 
-.loopexit:                                        ; preds = %bb.k, %bb.i, %bb.q, %bb.j, %bb.s, %bb.y, %.preheader105, %.preheader101, %.preheader103, %.preheader
-  %.sroa.031.3 = phi i64 [ %i.w, %bb.i ], [ %i.da, %bb.y ], [ %i.bf, %bb.q ], [ 0, %.preheader ], [ %i.x, %bb.j ], [ 0, %.preheader103 ], [ %i.bu, %bb.s ], [ 0, %.preheader101 ], [ 0, %.preheader105 ], [ %i.y, %bb.k ]
+.loopexit:                                        ; preds = %bb.k, %bb.i, %bb.q, %bb.j, %bb.s, %bb.y, %.preheader101, %.preheader103, %.preheader
+  %.sroa.031.3 = phi i64 [ %i.w, %bb.i ], [ %i.da, %bb.y ], [ %i.bf, %bb.q ], [ 0, %.preheader ], [ %i.x, %bb.j ], [ 0, %.preheader103 ], [ %i.bu, %bb.s ], [ 0, %.preheader101 ], [ %i.y, %bb.k ]
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.031.3, ptr %i.z, align 8
   br label %bb.c
 
 .lr.ph197:                                        ; preds = %.preheader105, %bb.k
-  %.sroa.01.2196 = phi ptr [ %i.aa, %bb.k ], [ %i.h, %.preheader105 ] ; 2 uses
-  %.sroa.27.2195 = phi i64 [ %i.ab, %bb.k ], [ %i.i, %.preheader105 ]
-  %.sroa.031.2194 = phi i64 [ %i.y, %bb.k ], [ 0, %.preheader105 ]
+  %.sroa.01.2196 = phi ptr [ %i.h, %.preheader105 ], [ %i.aa, %bb.k ] ; 2 uses
+  %.sroa.27.2195 = phi i64 [ %i.i, %.preheader105 ], [ %i.ab, %bb.k ]
+  %.sroa.031.2194 = phi i64 [ 0, %.preheader105 ], [ %i.y, %bb.k ]
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.01.2196, i64 1
   %i.ab = add i64 %.sroa.27.2195, -1              ; 2 uses
   %i.ac = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.031.2194, i64 %i.k) ; 2 uses

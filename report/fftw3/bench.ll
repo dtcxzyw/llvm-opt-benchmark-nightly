@@ -204,32 +204,27 @@ bb.ap:                                            ; preds = %mkn.exit77.i.i
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %mkn.exit77.i.i
-  %i.ht = phi i32 [ %.pre.i82.i.i, %bb.ap ], [ %i.hs, %mkn.exit77.i.i ] ; 3 uses
+  %i.ht = phi i32 [ %.pre.i82.i.i, %bb.ap ], [ %i.hs, %mkn.exit77.i.i ] ; 4 uses
   %i.hu = icmp sgt i32 %i.ht, 1
   br i1 %i.hu, label %.lr.ph.i79.i.i, label %mknembed_many.exit.i.i
 
 .lr.ph.i79.i.i:                                   ; preds = %bb.aq
-  %i.hv = add nsw i32 %i.ht, -1                   ; 3 uses
+  %i.hv = add nsw i32 %i.ht, -1
   %i.hw = load ptr, ptr %i.dq, align 8, !tbaa !58 ; 7 uses
   %i.hx = zext i32 %i.hv to i64                   ; 6 uses
-  %2 = icmp ne i32 %i.hv, 0
-  %.neg201 = sext i1 %2 to i64
   %i.hy = zext nneg i32 %i.ht to i64
-  %i.hz = add nsw i64 %.neg201, %i.hy             ; 3 uses
-  %min.iters.check186 = icmp ult i64 %i.hz, 4
+  %i.hz = add nsw i64 %i.hy, -1                   ; 2 uses
+  %min.iters.check186 = icmp ult i32 %i.ht, 5
   br i1 %min.iters.check186, label %scalar.ph185.preheader, label %vector.memcheck166
 
 vector.memcheck166:                               ; preds = %.lr.ph.i79.i.i
-  %.not202 = icmp eq i32 %i.hv, 0                 ; 2 uses
-  %3 = select i1 %.not202, i64 0, i64 4           ; 2 uses
-  %scevgep168 = getelementptr i8, ptr %i.hn, i64 %3 ; 2 uses
+  %scevgep168 = getelementptr i8, ptr %i.hn, i64 4 ; 2 uses
   %i.ia = shl nuw nsw i64 %i.hx, 2
   %i.ib = add nuw nsw i64 %i.ia, 4                ; 2 uses
   %scevgep169 = getelementptr i8, ptr %i.hn, i64 %i.ib ; 2 uses
-  %scevgep170 = getelementptr i8, ptr %i.hr, i64 %3 ; 2 uses
+  %scevgep170 = getelementptr i8, ptr %i.hr, i64 4 ; 2 uses
   %scevgep171 = getelementptr i8, ptr %i.hr, i64 %i.ib ; 2 uses
-  %4 = select i1 %.not202, i64 -8, i64 4
-  %scevgep172 = getelementptr i8, ptr %i.hw, i64 %4 ; 2 uses
+  %scevgep172 = getelementptr i8, ptr %i.hw, i64 4 ; 2 uses
   %i.ic = mul nuw nsw i64 %i.hx, 12
   %i.id = getelementptr i8, ptr %i.hw, i64 %i.ic
   %scevgep173 = getelementptr i8, ptr %i.id, i64 12 ; 2 uses
@@ -632,32 +627,27 @@ bb.dq:                                            ; preds = %mkn.exit129.i.i
   br label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq, %mkn.exit129.i.i
-  %i.aam = phi i32 [ %.pre.i134.i.i, %bb.dq ], [ %i.aal, %mkn.exit129.i.i ] ; 3 uses
+  %i.aam = phi i32 [ %.pre.i134.i.i, %bb.dq ], [ %i.aal, %mkn.exit129.i.i ] ; 4 uses
   %i.aan = icmp sgt i32 %i.aam, 1
   br i1 %i.aan, label %.lr.ph.i131.i.i, label %mknembed_many.exit.i.i23
 
 .lr.ph.i131.i.i:                                  ; preds = %bb.dr
-  %i.aao = add nsw i32 %i.aam, -1                 ; 3 uses
+  %i.aao = add nsw i32 %i.aam, -1
   %i.aap = load ptr, ptr %i.uz, align 8, !tbaa !58 ; 7 uses
   %i.aaq = zext i32 %i.aao to i64                 ; 6 uses
-  %5 = icmp ne i32 %i.aao, 0
-  %.neg198 = sext i1 %5 to i64
   %i.aar = zext nneg i32 %i.aam to i64
-  %i.aas = add nsw i64 %.neg198, %i.aar           ; 3 uses
-  %min.iters.check155 = icmp ult i64 %i.aas, 4
+  %i.aas = add nsw i64 %i.aar, -1                 ; 2 uses
+  %min.iters.check155 = icmp ult i32 %i.aam, 5
   br i1 %min.iters.check155, label %scalar.ph154.preheader, label %vector.memcheck135
 
 vector.memcheck135:                               ; preds = %.lr.ph.i131.i.i
-  %.not199 = icmp eq i32 %i.aao, 0                ; 2 uses
-  %6 = select i1 %.not199, i64 0, i64 4           ; 2 uses
-  %scevgep137 = getelementptr i8, ptr %i.aag, i64 %6 ; 2 uses
+  %scevgep137 = getelementptr i8, ptr %i.aag, i64 4 ; 2 uses
   %i.aat = shl nuw nsw i64 %i.aaq, 2
   %i.aau = add nuw nsw i64 %i.aat, 4              ; 2 uses
   %scevgep138 = getelementptr i8, ptr %i.aag, i64 %i.aau ; 2 uses
-  %scevgep139 = getelementptr i8, ptr %i.aak, i64 %6 ; 2 uses
+  %scevgep139 = getelementptr i8, ptr %i.aak, i64 4 ; 2 uses
   %scevgep140 = getelementptr i8, ptr %i.aak, i64 %i.aau ; 2 uses
-  %7 = select i1 %.not199, i64 -8, i64 4
-  %scevgep141 = getelementptr i8, ptr %i.aap, i64 %7 ; 2 uses
+  %scevgep141 = getelementptr i8, ptr %i.aap, i64 4 ; 2 uses
   %i.aav = mul nuw nsw i64 %i.aaq, 12
   %i.aaw = getelementptr i8, ptr %i.aap, i64 %i.aav
   %scevgep142 = getelementptr i8, ptr %i.aaw, i64 12 ; 2 uses
@@ -1060,32 +1050,27 @@ bb.gp:                                            ; preds = %mkn.exit114.i
   br label %bb.gq
 
 bb.gq:                                            ; preds = %bb.gp, %mkn.exit114.i
-  %i.asg = phi i32 [ %.pre.i119.i, %bb.gp ], [ %i.asf, %mkn.exit114.i ] ; 3 uses
+  %i.asg = phi i32 [ %.pre.i119.i, %bb.gp ], [ %i.asf, %mkn.exit114.i ] ; 4 uses
   %i.ash = icmp sgt i32 %i.asg, 1
   br i1 %i.ash, label %.lr.ph.i116.i, label %mknembed_many.exit.i
 
 .lr.ph.i116.i:                                    ; preds = %bb.gq
-  %i.asi = add nsw i32 %i.asg, -1                 ; 3 uses
+  %i.asi = add nsw i32 %i.asg, -1
   %i.asj = load ptr, ptr %i.aoc, align 8, !tbaa !58 ; 7 uses
   %i.ask = zext i32 %i.asi to i64                 ; 6 uses
-  %8 = icmp ne i32 %i.asi, 0
-  %.neg = sext i1 %8 to i64
   %i.asl = zext nneg i32 %i.asg to i64
-  %i.asm = add nsw i64 %.neg, %i.asl              ; 3 uses
-  %min.iters.check = icmp ult i64 %i.asm, 4
+  %i.asm = add nsw i64 %i.asl, -1                 ; 2 uses
+  %min.iters.check = icmp ult i32 %i.asg, 5
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i116.i
-  %.not = icmp eq i32 %i.asi, 0                   ; 2 uses
-  %9 = select i1 %.not, i64 0, i64 4              ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.asa, i64 %9 ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.asa, i64 4  ; 2 uses
   %i.asn = shl nuw nsw i64 %i.ask, 2
   %i.aso = add nuw nsw i64 %i.asn, 4              ; 2 uses
   %scevgep122 = getelementptr i8, ptr %i.asa, i64 %i.aso ; 2 uses
-  %scevgep123 = getelementptr i8, ptr %i.ase, i64 %9 ; 2 uses
+  %scevgep123 = getelementptr i8, ptr %i.ase, i64 4 ; 2 uses
   %scevgep124 = getelementptr i8, ptr %i.ase, i64 %i.aso ; 2 uses
-  %10 = select i1 %.not, i64 -8, i64 4
-  %scevgep125 = getelementptr i8, ptr %i.asj, i64 %10 ; 2 uses
+  %scevgep125 = getelementptr i8, ptr %i.asj, i64 4 ; 2 uses
   %i.asp = mul nuw nsw i64 %i.ask, 12
   %i.asq = getelementptr i8, ptr %i.asj, i64 %i.asp
   %scevgep126 = getelementptr i8, ptr %i.asq, i64 12 ; 2 uses

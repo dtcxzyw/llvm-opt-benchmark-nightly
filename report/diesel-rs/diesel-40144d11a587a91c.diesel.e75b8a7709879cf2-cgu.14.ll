@@ -202,29 +202,21 @@ bb.z:                                             ; preds = %bb.aj, %bb.ad, %bb.
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsjRvGck33osM_6diesel.exit.i: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECsjRvGck33osM_6diesel.exit.i62.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !369
-  %i.ce = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !369, !noundef !4 ; 6 uses
+  %i.ce = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !369, !noundef !4 ; 5 uses
   %i.cf = icmp sgt i64 %i.ce, -1
   call void @llvm.assume(i1 %i.cf)
-  %i.cg = add nsw i64 %i.ce, -1                   ; 3 uses
-  %i.ch = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !369, !nonnull !4, !noundef !4 ; 4 uses
-  %.not.i.i = icmp eq i64 %i.cg, 0
-  br i1 %.not.i.i, label %bb.ad, label %4
+  %i.cg = add nsw i64 %i.ce, -1                   ; 2 uses
+  %i.ch = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !369, !nonnull !4, !noundef !4 ; 3 uses
+  %or.cond.i = icmp samesign ult i64 %i.ce, 2
+  br i1 %or.cond.i, label %bb.ad, label %bb.aa
 
-4:                                                ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsjRvGck33osM_6diesel.exit.i
-  %5 = icmp samesign ult i64 %i.ce, 2
-  br i1 %5, label %.split.i.i, label %bb.aa
-
-.split.i.i:                                       ; preds = %4
-  %6 = icmp eq i64 %i.ce, 1
-  br i1 %6, label %bb.ab, label %bb.ad
-
-bb.aa:                                            ; preds = %4
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 1
+bb.aa:                                            ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsjRvGck33osM_6diesel.exit.i
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 1 ; 2 uses
   %i.cj = load i8, ptr %i.ci, align 1, !alias.scope !374, !noalias !369, !noundef !4
   %i.ck = icmp sgt i8 %i.cj, -65
   br i1 %i.ck, label %bb.ab, label %bb.ad
 
-bb.ab:                                            ; preds = %bb.aa, %.split.i.i
+bb.ab:                                            ; preds = %bb.aa
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.cg
   %i.cm = load i8, ptr %i.cl, align 1, !alias.scope !374, !noalias !369, !noundef !4
   %i.cn = icmp sgt i8 %i.cm, -65
@@ -232,12 +224,11 @@ bb.ab:                                            ; preds = %bb.aa, %.split.i.i
 
 bb.ac:                                            ; preds = %bb.ab
   %i.co = add nsw i64 %i.ce, -2                   ; 5 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.ch, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !369
   invoke fastcc void @_RNvNtNtNtNtCsjRvGck33osM_6diesel6sqlite5types4json5jsonb18write_jsonb_header(ptr noalias noundef align 8 captures(none) dereferenceable(16) %i.g, ptr noalias noundef nonnull align 8 dereferenceable(24) %3, i8 noundef 8, i64 noundef %i.co)
           to label %bb.af unwind label %bb.z, !noalias !373
 
-bb.ad:                                            ; preds = %bb.ab, %bb.aa, %.split.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsjRvGck33osM_6diesel.exit.i
+bb.ad:                                            ; preds = %bb.ab, %bb.aa, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsjRvGck33osM_6diesel.exit.i
   invoke void @_RNvNtCscI6d9CVNmLh_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ch, i64 noundef %i.ce, i64 noundef 1, i64 noundef %i.cg, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @35) #18
           to label %bb.ae unwind label %bb.z, !noalias !369
 
@@ -296,7 +287,7 @@ bb.ak:                                            ; preds = %.noexc70.i
   %i.cy = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8, !alias.scope !376, !noalias !373, !nonnull !4, !noundef !4
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.cw
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.da, ptr nonnull readonly align 1 %7, i64 %i.co, i1 false), !noalias !373
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.da, ptr nonnull readonly align 1 %i.ci, i64 %i.co, i1 false), !noalias !373
   %.pre.i.i = load i64, ptr %i.cv, align 8, !alias.scope !376, !noalias !373
   br label %bb.al
 

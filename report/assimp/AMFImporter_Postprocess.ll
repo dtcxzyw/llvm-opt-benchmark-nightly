@@ -204,12 +204,11 @@ _ZNSt6vectorIP10AMFTextureSaIS1_EE9push_backEOS1_.exit223: ; preds = %_ZNSt6vect
   br i1 %i.io, label %bb.bq, label %.loopexit
 
 bb.bq:                                            ; preds = %_ZNSt6vectorIP10AMFTextureSaIS1_EE9push_backEOS1_.exit223
-  %i.ip = add nsw i64 %i.in, -1                   ; 2 uses
-  %exitcond.not495 = icmp eq i64 %i.ip, 0
-  br i1 %exitcond.not495, label %.loopexit, label %.lr.ph498
+  %i.ip = add nsw i64 %i.in, -2
+  br label %.lr.ph498
 
 bb.br:                                            ; preds = %bb.bu
-  %exitcond.not = icmp eq i64 %i.iu, %i.ip
+  %exitcond.not = icmp eq i64 %.088496, %i.ip
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph498, !llvm.loop !34
 
 bb.bs:                                            ; preds = %bb.bp, %bb.be, %bb.at, %bb.aj, %bb.ah
@@ -220,12 +219,12 @@ bb.bs:                                            ; preds = %bb.bp, %bb.be, %bb.
   br label %.body
 
 .lr.ph498:                                        ; preds = %bb.bq, %bb.br
-  %.088496 = phi i64 [ %i.iu, %bb.br ], [ 0, %bb.bq ] ; 2 uses
+  %.088496 = phi i64 [ %i.iu, %bb.br ], [ 0, %bb.bq ] ; 3 uses
   %i.iq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0284.4, i64 %.088496
   %i.ir = load ptr, ptr %i.iq, align 8            ; 3 uses
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 80
   %i.it = load i64, ptr %i.is, align 8
-  %i.iu = add i64 %.088496, 1                     ; 3 uses
+  %i.iu = add i64 %.088496, 1                     ; 2 uses
   %i.iv = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0284.4, i64 %i.iu
   %i.iw = load ptr, ptr %i.iv, align 8            ; 3 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 80
@@ -269,7 +268,7 @@ bb.by:                                            ; preds = %bb.bw
           cleanup
   br label %.body
 
-.loopexit:                                        ; preds = %bb.br, %bb.bq, %_ZNSt6vectorIP10AMFTextureSaIS1_EE9push_backEOS1_.exit223
+.loopexit:                                        ; preds = %bb.br, %_ZNSt6vectorIP10AMFTextureSaIS1_EE9push_backEOS1_.exit223
   %i.jk = load ptr, ptr %.sroa.0284.4, align 8
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 80
   %i.jm = load i64, ptr %i.jl, align 8

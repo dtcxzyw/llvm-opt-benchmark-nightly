@@ -205,8 +205,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 bb.b:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread252
   store ptr null, ptr %i.p, align 8, !tbaa !584
-  %11 = add i32 %i.s, -1                          ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -214,6 +213,7 @@ bb.b:                                             ; preds = %_ZSteqIcSt11char_tr
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 10 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 42 ; 2 uses
+  %11 = add i32 %i.s, -1                          ; 2 uses
   %i.ac = zext i32 %11 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   %i.ad = load ptr, ptr %i.u, align 8, !tbaa !631, !nonnull !206, !align !269 ; 2 uses
@@ -507,14 +507,13 @@ bb.q:                                             ; preds = %bb.m, %.critedge123
 
 bb.r:                                             ; preds = %._crit_edge.a
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.2255.peel, i64 32
   %i.eh = load i32, ptr %i.eg, align 4, !tbaa !542 ; 2 uses
   %i.ei = icmp eq i32 %i.eh, 0
   br i1 %i.ei, label %_ZNK5clang9ModuleMap28getContainingModuleMapFileIDEPKNS_6ModuleE.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.ej = load ptr, ptr %12, align 8, !tbaa !631, !nonnull !206, !align !269
+  %i.ej = load ptr, ptr %i.u, align 8, !tbaa !631, !nonnull !206, !align !269
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !301, !nonnull !206, !align !269 ; 4 uses
   %i.el = and i32 %i.eh, 2147483647               ; 3 uses
   %i.em = getelementptr inbounds nuw i8, ptr %i.ek, i64 484
@@ -542,7 +541,7 @@ _ZNK5clang9ModuleMap28getContainingModuleMapFileIDEPKNS_6ModuleE.exit: ; preds =
   br i1 %.not267, label %.critedge, label %bb.v
 
 bb.v:                                             ; preds = %_ZNK5clang9ModuleMap28getContainingModuleMapFileIDEPKNS_6ModuleE.exit
-  %i.eu = load ptr, ptr %12, align 8, !tbaa !631, !nonnull !206, !align !269
+  %i.eu = load ptr, ptr %i.u, align 8, !tbaa !631, !nonnull !206, !align !269
   %i.ev = load ptr, ptr %0, align 8, !tbaa !645, !nonnull !206, !align !269 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #26
   store i8 0, ptr %i.f, align 1, !tbaa !204

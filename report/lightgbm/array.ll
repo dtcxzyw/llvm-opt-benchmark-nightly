@@ -205,37 +205,26 @@ ArrowArrayBuffer.exit88.us.epil:                  ; preds = %.lr.ph109.split.us.
   br label %._crit_edge.loopexit.peel.begin
 
 ._crit_edge.loopexit.peel.begin:                  ; preds = %._crit_edge.loopexit.peel.begin.unr-lcssa, %ArrowArrayBuffer.exit88.us.epil
-  %indvars.iv.next119.lcssa = phi i64 [ %indvars.iv.next119.1, %._crit_edge.loopexit.peel.begin.unr-lcssa ], [ %indvars.iv.next119.epil, %ArrowArrayBuffer.exit88.us.epil ] ; 3 uses
+  %indvars.iv.next119.lcssa = phi i64 [ %indvars.iv.next119.1, %._crit_edge.loopexit.peel.begin.unr-lcssa ], [ %indvars.iv.next119.epil, %ArrowArrayBuffer.exit88.us.epil ] ; 2 uses
   %indvars.iv118.lcssa = phi i64 [ %indvars.iv.next119, %._crit_edge.loopexit.peel.begin.unr-lcssa ], [ %indvars.iv.next119.1, %ArrowArrayBuffer.exit88.us.epil ]
-  %i.ck = load ptr, ptr %i.a, align 8, !tbaa !18  ; 4 uses
-  %1 = trunc nuw nsw i64 %indvars.iv.next119.lcssa to i32
-  switch i32 %1, label %4 [
-    i32 0, label %ArrowArrayBuffer.exit88.us.peel
-    i32 1, label %2
-  ]
+  %i.ck = load ptr, ptr %i.a, align 8, !tbaa !18  ; 2 uses
+  %1 = add nuw nsw i64 %indvars.iv118.lcssa, 2
+  %2 = icmp eq i64 %.fr115, %1
+  br i1 %2, label %bb.t, label %bb.s
 
-2:                                                ; preds = %._crit_edge.loopexit.peel.begin
-  %3 = getelementptr inbounds nuw i8, ptr %i.ck, i64 56
-  br label %ArrowArrayBuffer.exit88.us.peel
-
-4:                                                ; preds = %._crit_edge.loopexit.peel.begin
-  %5 = add nuw i64 %indvars.iv118.lcssa, 2
-  %6 = icmp eq i64 %.fr115, %5
-  br i1 %6, label %bb.t, label %bb.s
-
-bb.s:                                             ; preds = %4
+bb.s:                                             ; preds = %._crit_edge.loopexit.peel.begin
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 232
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !38
   %i.cn = getelementptr [48 x i8], ptr %i.cm, i64 %indvars.iv.next119.lcssa
   %i.co = getelementptr i8, ptr %i.cn, i64 -96
   br label %ArrowArrayBuffer.exit88.us.peel
 
-bb.t:                                             ; preds = %4
+bb.t:                                             ; preds = %._crit_edge.loopexit.peel.begin
   %i.cp = getelementptr inbounds nuw i8, ptr %i.ck, i64 104
   br label %ArrowArrayBuffer.exit88.us.peel
 
-ArrowArrayBuffer.exit88.us.peel:                  ; preds = %bb.t, %bb.s, %2, %._crit_edge.loopexit.peel.begin
-  %.0.i86.us.peel = phi ptr [ %i.cp, %bb.t ], [ %i.co, %bb.s ], [ %i.ck, %._crit_edge.loopexit.peel.begin ], [ %3, %2 ]
+ArrowArrayBuffer.exit88.us.peel:                  ; preds = %bb.t, %bb.s
+  %.0.i86.us.peel = phi ptr [ %i.cp, %bb.t ], [ %i.co, %bb.s ]
   %i.cq = load ptr, ptr %.0.i86.us.peel, align 8, !tbaa !34
   %i.cr = load ptr, ptr %i.bg, align 8, !tbaa !28
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %indvars.iv.next119.lcssa

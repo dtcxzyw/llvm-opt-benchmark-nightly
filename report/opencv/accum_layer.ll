@@ -204,9 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %.preheader, label %bb.c
 
 .preheader:                                       ; preds = %bb.b
-  %i.s = add nsw i64 %i.q, -1                     ; 2 uses
-  %.not160 = icmp eq i64 %i.s, 0
-  br i1 %.not160, label %._crit_edge157, label %.lr.ph156
+  %i.s = add nsw i64 %i.q, -2
+  br label %.lr.ph156
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #22
@@ -246,9 +245,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g,
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #22
   br label %bb.ap
 
-._crit_edge157:                                   ; preds = %_ZNK2cv8MatShapeixEm.exit84, %.preheader
-  %.043.lcssa = phi i32 [ 0, %.preheader ], [ %i.bp, %_ZNK2cv8MatShapeixEm.exit84 ]
-  call void @_ZN2cv8MatShape9push_backEi(ptr noundef nonnull align 4 dereferenceable(52) %17, i32 noundef %.043.lcssa)
+._crit_edge157:                                   ; preds = %_ZNK2cv8MatShapeixEm.exit84
+  call void @_ZN2cv8MatShape9push_backEi(ptr noundef nonnull align 4 dereferenceable(52) %17, i32 noundef %i.bp)
   %i.aa = load ptr, ptr %i.g, align 8, !tbaa !86  ; 3 uses
   %i.ab = getelementptr inbounds i8, ptr %i.aa, i64 -52
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !72 ; 2 uses
@@ -329,8 +327,8 @@ _ZNK2cv8MatShapeixEm.exit70:                      ; preds = %_ZNK2cv8MatShapeixE
   br label %bb.ao
 
 .lr.ph156:                                        ; preds = %.preheader, %_ZNK2cv8MatShapeixEm.exit84
-  %indvars.iv165 = phi i64 [ %indvars.iv.next166, %_ZNK2cv8MatShapeixEm.exit84 ], [ 0, %.preheader ] ; 2 uses
-  %.043154 = phi i32 [ %i.bp, %_ZNK2cv8MatShapeixEm.exit84 ], [ 0, %.preheader ]
+  %indvars.iv165 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next166, %_ZNK2cv8MatShapeixEm.exit84 ] ; 3 uses
+  %.043154 = phi i32 [ 0, %.preheader ], [ %i.bp, %_ZNK2cv8MatShapeixEm.exit84 ]
   %i.au = getelementptr inbounds nuw [52 x i8], ptr %i.i, i64 %indvars.iv165 ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 12
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !62
@@ -413,8 +411,8 @@ _ZNK2cv8MatShapeixEm.exit84:                      ; preds = %bb.s
   %i.bn = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !62
   %i.bp = add nsw i32 %i.bo, %.043154             ; 2 uses
-  %indvars.iv.next166 = add nuw i64 %indvars.iv165, 1 ; 2 uses
-  %exitcond168.not = icmp eq i64 %indvars.iv.next166, %i.s
+  %indvars.iv.next166 = add nuw i64 %indvars.iv165, 1
+  %exitcond168.not = icmp eq i64 %indvars.iv165, %i.s
   br i1 %exitcond168.not, label %._crit_edge157, label %.lr.ph156, !llvm.loop !141
 
 ._crit_edge:                                      ; preds = %bb.ak, %.preheader133

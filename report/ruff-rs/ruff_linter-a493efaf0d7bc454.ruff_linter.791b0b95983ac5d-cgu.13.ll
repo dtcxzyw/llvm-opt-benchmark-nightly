@@ -205,12 +205,12 @@ bb.r:                                             ; preds = %bb.q
   %i.bg = icmp sgt i8 %i.bf, -65
   br i1 %i.bg, label %bb.s, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke
 
-_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke: ; preds = %.split.i.i, %bb.p, %.split7.i.i, %bb.r, %.split.i, %bb.s, %bb.t, %bb.u
-  %3 = phi ptr [ %i.bh, %.split.i ], [ %i.bh, %bb.u ], [ %i.bh, %bb.t ], [ %i.bh, %bb.s ], [ %.val, %bb.r ], [ %.val, %.split7.i.i ], [ %.val, %bb.p ], [ %.val, %.split.i.i ]
-  %4 = phi i64 [ %i.bi, %.split.i ], [ %i.bi, %bb.u ], [ %i.bi, %bb.t ], [ %i.bi, %bb.s ], [ %.val14, %bb.r ], [ %.val14, %.split7.i.i ], [ %.val14, %bb.p ], [ %.val14, %.split.i.i ]
-  %5 = phi i64 [ 1, %.split.i ], [ 1, %bb.u ], [ 1, %bb.t ], [ 1, %bb.s ], [ %i.av, %bb.r ], [ %i.av, %.split7.i.i ], [ %i.av, %bb.p ], [ %i.av, %.split.i.i ]
-  %6 = phi i64 [ -1, %.split.i ], [ %i.bj, %bb.u ], [ %i.bj, %bb.t ], [ 0, %bb.s ], [ %i.aw, %bb.r ], [ %i.aw, %.split7.i.i ], [ %i.aw, %bb.p ], [ %i.aw, %.split.i.i ]
-  %7 = phi ptr [ @231, %.split.i ], [ @231, %bb.u ], [ @231, %bb.t ], [ @231, %bb.s ], [ @1, %bb.r ], [ @1, %.split7.i.i ], [ @1, %bb.p ], [ @1, %.split.i.i ]
+_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke: ; preds = %.split.i.i, %bb.p, %.split7.i.i, %bb.r, %bb.s, %bb.t, %bb.u
+  %3 = phi ptr [ %i.bh, %bb.u ], [ %.val, %.split.i.i ], [ %i.bh, %bb.s ], [ %i.bh, %bb.t ], [ %.val, %bb.r ], [ %.val, %.split7.i.i ], [ %.val, %bb.p ]
+  %4 = phi i64 [ %i.bi, %bb.u ], [ %.val14, %.split.i.i ], [ %i.bi, %bb.s ], [ %i.bi, %bb.t ], [ %.val14, %bb.r ], [ %.val14, %.split7.i.i ], [ %.val14, %bb.p ]
+  %5 = phi i64 [ 1, %bb.u ], [ %i.av, %.split.i.i ], [ 1, %bb.s ], [ 1, %bb.t ], [ %i.av, %bb.r ], [ %i.av, %.split7.i.i ], [ %i.av, %bb.p ]
+  %6 = phi i64 [ %i.bj, %bb.u ], [ %i.aw, %.split.i.i ], [ %i.bj, %bb.s ], [ %i.bj, %bb.t ], [ %i.aw, %bb.r ], [ %i.aw, %.split7.i.i ], [ %i.aw, %bb.p ]
+  %7 = phi ptr [ @231, %bb.u ], [ @1, %.split.i.i ], [ @231, %bb.s ], [ @231, %bb.t ], [ @1, %bb.r ], [ @1, %.split7.i.i ], [ @1, %bb.p ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4, i64 noundef %5, i64 noundef %6, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %7) #37
           to label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.cont unwind label %.body.loopexit.split-lp
 
@@ -233,29 +233,21 @@ _RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_
           to label %bb.ag unwind label %bb.af
 
 bb.s:                                             ; preds = %bb.r, %.split7.i.i, %bb.o
-  %i.bh = getelementptr inbounds nuw i8, ptr %.val, i64 %i.av ; 7 uses
-  %i.bi = sub nuw nsw i64 %i.aw, %i.av            ; 8 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.val, i64 %i.av ; 6 uses
+  %i.bi = sub nuw nsw i64 %i.aw, %i.av            ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.bj = add nsw i64 %i.bi, -1                   ; 4 uses
-  %.not.i = icmp eq i64 %i.bj, 0
-  br i1 %.not.i, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke, label %8
+  %or.cond163 = icmp samesign ugt i64 %i.bi, 1
+  br i1 %or.cond163, label %bb.t, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke
 
-8:                                                ; preds = %bb.s
-  %.not5.i = icmp samesign ugt i64 %i.bi, 1
-  br i1 %.not5.i, label %bb.t, label %.split.i
-
-.split.i:                                         ; preds = %8
-  %9 = icmp eq i64 %i.bi, 1
-  br i1 %9, label %bb.u, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke
-
-bb.t:                                             ; preds = %8
+bb.t:                                             ; preds = %bb.s
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 1
   %i.bl = load i8, ptr %i.bk, align 1, !alias.scope !7322, !noundef !4
   %i.bm = icmp sgt i8 %i.bl, -65
   br i1 %i.bm, label %bb.u, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i.invoke
 
-bb.u:                                             ; preds = %bb.t, %.split.i
+bb.u:                                             ; preds = %bb.t
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bj
   %i.bo = load i8, ptr %i.bn, align 1, !alias.scope !7322, !noundef !4
   %i.bp = icmp sgt i8 %i.bo, -65

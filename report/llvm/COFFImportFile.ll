@@ -204,12 +204,12 @@ _ZN4llvm6objectL6appendINS0_33coff_import_directory_table_entryEEEvRSt6vectorIhS
   %.sroa.36113.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ap, i64 96
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %.sroa.32109.0..sroa_idx.i, i8 0, i64 12, i1 false), !noalias !145
   store i32 -1071644608, ptr %.sroa.36113.0..sroa_idx.i, align 1, !noalias !145
-  %i.ar = call noalias noundef nonnull dereferenceable(200) ptr @_Znwm(i64 noundef 200) #19, !noalias !145 ; 22 uses
+  %i.ar = call noalias noundef nonnull dereferenceable(200) ptr @_Znwm(i64 noundef 200) #19, !noalias !145 ; 21 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 100
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.as, i8 0, i64 20, i1 false), !noalias !145
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(100) %i.ar, ptr noundef nonnull align 1 dereferenceable(100) %i.ap, i64 100, i1 false), !noalias !145
   call void @_ZdlPvm(ptr noundef nonnull %i.ap, i64 noundef 100) #18, !noalias !145
-  %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 200 ; 4 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 200 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 100
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.au, i8 0, i64 20, i1 false), !noalias !145
   %i.av = load i32, ptr %16, align 8, !tbaa !141, !noalias !145
@@ -237,7 +237,7 @@ bb.e:                                             ; preds = %_ZN4llvm6objectL6ap
 
 _ZN4llvm6objectL6appendIA3_NS0_15coff_relocationEEEvRSt6vectorIhSaIhEERKT_.exit.i: ; preds = %_ZN4llvm6objectL6appendINS0_33coff_import_directory_table_entryEEEvRSt6vectorIhSaIhEERKT_.exit.i, %_ZN4llvm6objectL19getImgRelRelocationENS_4COFF12MachineTypesE.exit24.thread135.i, %_ZN4llvm6objectL19getImgRelRelocationENS_4COFF12MachineTypesE.exit24.thread142.i, %bb.e
   %.0.i23132.i = phi i16 [ 3, %_ZN4llvm6objectL6appendINS0_33coff_import_directory_table_entryEEEvRSt6vectorIhSaIhEERKT_.exit.i ], [ 2, %bb.e ], [ 7, %_ZN4llvm6objectL19getImgRelRelocationENS_4COFF12MachineTypesE.exit24.thread135.i ], [ 34, %_ZN4llvm6objectL19getImgRelRelocationENS_4COFF12MachineTypesE.exit24.thread142.i ] ; 3 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.ar, i64 150 ; 4 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.ar, i64 150 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ar, i64 120
   store i32 12, ptr %i.ax, align 1, !noalias !145
   %.sroa.471.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 124
@@ -257,15 +257,11 @@ _ZN4llvm6objectL6appendIA3_NS0_15coff_relocationEEEvRSt6vectorIhSaIhEERKT_.exit.
   %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 148
   store i16 %.0.i23132.i, ptr %.sroa.11.0..sroa_idx.i, align 1, !noalias !145
   %i.ay = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !tbaa !19, !noalias !145 ; 9 uses
-  %i.az = add i64 %i.ay, 1                        ; 6 uses
+  %i.az = add i64 %i.ay, 1                        ; 5 uses
   %i.ba = icmp ult i64 %i.ay, -151
-  br i1 %i.ba, label %23, label %bb.l
+  br i1 %i.ba, label %bb.f, label %bb.l
 
-23:                                               ; preds = %_ZN4llvm6objectL6appendIA3_NS0_15coff_relocationEEEvRSt6vectorIhSaIhEERKT_.exit.i
-  %.not.i166 = icmp eq i64 %i.az, 0
-  br i1 %.not.i166, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i, label %bb.f
-
-bb.f:                                             ; preds = %23
+bb.f:                                             ; preds = %_ZN4llvm6objectL6appendIA3_NS0_15coff_relocationEEEvRSt6vectorIhSaIhEERKT_.exit.i
   %.not23.i167 = icmp ugt i64 %i.az, 50
   br i1 %.not23.i167, label %bb.i, label %bb.g
 
@@ -318,15 +314,15 @@ bb.l:                                             ; preds = %_ZN4llvm6objectL6ap
   %spec.select = select i1 %i.bo, ptr %i.bp, ptr %i.aw
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit.i
 
-_ZNSt6vectorIhSaIhEE6resizeEm.exit.i:             ; preds = %bb.l, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172, %23, %bb.h, %bb.g
-  %.sroa.83.4 = phi ptr [ %i.bm, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.at, %bb.l ], [ %i.at, %bb.g ], [ %i.at, %bb.h ], [ %i.at, %23 ] ; 3 uses
-  %.sroa.41.4 = phi ptr [ %i.bl, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %spec.select, %bb.l ], [ %i.bb, %bb.g ], [ %i.bd, %bb.h ], [ %i.aw, %23 ] ; 6 uses
-  %.sroa.0307.4 = phi ptr [ %i.bh, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.ar, %bb.l ], [ %i.ar, %bb.g ], [ %i.ar, %bb.h ], [ %i.ar, %23 ] ; 8 uses
-  %24 = phi i64 [ %.pre158.i.pre, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.ay, %bb.l ], [ 0, %bb.g ], [ %i.ay, %bb.h ], [ -1, %23 ]
+_ZNSt6vectorIhSaIhEE6resizeEm.exit.i:             ; preds = %bb.l, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172, %bb.h, %bb.g
+  %.sroa.83.4 = phi ptr [ %i.bm, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.at, %bb.l ], [ %i.at, %bb.g ], [ %i.at, %bb.h ] ; 3 uses
+  %.sroa.41.4 = phi ptr [ %i.bl, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %spec.select, %bb.l ], [ %i.bb, %bb.g ], [ %i.bd, %bb.h ] ; 6 uses
+  %.sroa.0307.4 = phi ptr [ %i.bh, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.ar, %bb.l ], [ %i.ar, %bb.g ], [ %i.ar, %bb.h ] ; 8 uses
+  %23 = phi i64 [ %.pre158.i.pre, %_ZSt27__uninitialized_default_n_aIPhmhET_S1_T0_RSaIT1_E.exit26.i172 ], [ %i.ay, %bb.l ], [ 0, %bb.g ], [ %i.ay, %bb.h ]
   %.pre-phi387 = ptrtoint ptr %.sroa.0307.4 to i64 ; 4 uses
   %i.bq = getelementptr i8, ptr %.sroa.0307.4, i64 150 ; 2 uses
   %i.br = load ptr, ptr %i.m, align 8, !tbaa !15, !noalias !145
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bq, ptr align 1 %i.br, i64 %24, i1 false), !noalias !145
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bq, ptr align 1 %i.br, i64 %23, i1 false), !noalias !145
   %i.bs = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !tbaa !19, !noalias !145
   %i.bt = getelementptr i8, ptr %i.bq, i64 %i.bs
   store i8 0, ptr %i.bt, align 1, !tbaa !17, !noalias !145

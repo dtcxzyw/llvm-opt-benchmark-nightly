@@ -204,12 +204,13 @@ bb.af:                                            ; preds = %bb.ae
   %.0240.i = select i1 %.not276.i, i32 %i.dj, i32 %i.da ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cx, i64 4 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.cx, i64 8 ; 3 uses
-  %i.dm = sext i32 %.0240.i to i64
+  %6 = sext i32 %.0240.i to i64
+  %i.dm = sext i32 %.0239.i to i64
   %i.dn = getelementptr [12 x i8], ptr %.0249.i, i64 %indvars.iv.next549
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.lr.ph441, %bb.aj
-  %indvars.iv545 = phi i64 [ %i.dm, %.lr.ph441 ], [ %indvars.iv.next546, %bb.aj ] ; 3 uses
+  %indvars.iv545 = phi i64 [ %6, %.lr.ph441 ], [ %indvars.iv.next546, %bb.aj ] ; 3 uses
   %.1.i439 = phi i32 [ %.0240.i, %.lr.ph441 ], [ %.2.i, %bb.aj ] ; 3 uses
   %.5.i438 = phi i32 [ %.4.i447, %.lr.ph441 ], [ %.6.i, %bb.aj ] ; 3 uses
   %i.do = getelementptr inbounds [4 x i8], ptr %i.r, i64 %indvars.iv545
@@ -230,11 +231,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.dy = getelementptr inbounds i8, ptr %i.u, i64 %i.dx
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !53
   %.not280.i = icmp eq i8 %i.dw, %i.dz
-  br i1 %.not280.i, label %._crit_edge556, label %bb.ai
-
-._crit_edge556:                                   ; preds = %bb.ah
-  %.pre565 = trunc nsw i64 %indvars.iv.next546 to i32
-  br label %bb.aj
+  br i1 %.not280.i, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.ea = sext i32 %.1.i439 to i64
@@ -270,14 +267,13 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.ex = and i32 %i.ew, %i.ev
   store i32 %i.ex, ptr %i.dl, align 4, !tbaa !137
   %i.ey = add nsw i32 %.5.i438, -1
-  %i.ez = trunc nsw i64 %indvars.iv.next546 to i32 ; 2 uses
+  %i.ez = trunc nsw i64 %indvars.iv.next546 to i32
   br label %bb.aj
 
-bb.aj:                                            ; preds = %._crit_edge556, %bb.ai
-  %.pre-phi566 = phi i32 [ %.pre565, %._crit_edge556 ], [ %i.ez, %bb.ai ]
-  %.6.i = phi i32 [ %.5.i438, %._crit_edge556 ], [ %i.ey, %bb.ai ] ; 4 uses
-  %.2.i = phi i32 [ %.1.i439, %._crit_edge556 ], [ %i.ez, %bb.ai ] ; 2 uses
-  %.not277.i = icmp eq i32 %.pre-phi566, %.0239.i
+bb.aj:                                            ; preds = %bb.ai, %bb.ah
+  %.6.i = phi i32 [ %i.ey, %bb.ai ], [ %.5.i438, %bb.ah ] ; 4 uses
+  %.2.i = phi i32 [ %i.ez, %bb.ai ], [ %.1.i439, %bb.ah ] ; 2 uses
+  %.not277.i = icmp eq i64 %indvars.iv.next546, %i.dm
   br i1 %.not277.i, label %._crit_edge442, label %bb.ag, !llvm.loop !114
 
 ._crit_edge442:                                   ; preds = %bb.aj

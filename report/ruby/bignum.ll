@@ -205,13 +205,12 @@ bb.i:                                             ; preds = %BIGNUM_DIGITS.exit
   br i1 %i.al, label %bb.n, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %1 = icmp sgt i64 %i.ak, 54                     ; 2 uses
+  %1 = icmp slt i64 %i.ak, 55                     ; 2 uses
   %i.am = add nsw i64 %i.ak, -54                  ; 2 uses
   %i.an = lshr i64 %i.am, 5
-  %.051 = select i1 %1, i64 %i.an, i64 0          ; 5 uses
-  %.050 = select i1 %1, i64 %i.am, i64 0          ; 2 uses
+  %.050 = select i1 %1, i64 0, i64 %i.an          ; 5 uses
   %i.ao = add i64 %.0.i6671, -1                   ; 3 uses
-  %i.ap = icmp sgt i64 %i.ao, %.051
+  %i.ap = icmp sgt i64 %i.ao, %.050
   br i1 %i.ap, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.j, %.lr.ph
@@ -222,19 +221,18 @@ bb.j:                                             ; preds = %bb.i
   %i.at = uitofp i32 %i.as to double
   %i.au = tail call double @llvm.fmuladd.f64(double %.05478, double f0x41F0000000000000, double %i.at) ; 2 uses
   %i.av = add nsw i64 %i.aq, -1                   ; 2 uses
-  %i.aw = icmp samesign ugt i64 %i.av, %.051
+  %i.aw = icmp samesign ugt i64 %i.av, %.050
   br i1 %i.aw, label %.lr.ph, label %._crit_edge, !llvm.loop !277
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.j
   %.054.lcssa = phi double [ 0.000000e+00, %bb.j ], [ %i.au, %.lr.ph ] ; 6 uses
-  %.lcssa = phi i64 [ %i.ao, %bb.j ], [ %.051, %.lr.ph ] ; 3 uses
+  %.lcssa = phi i64 [ %i.ao, %bb.j ], [ %.050, %.lr.ph ] ; 3 uses
   %i.ax = getelementptr [4 x i8], ptr %.0.i68, i64 %.lcssa
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !44 ; 7 uses
-  %.not60 = icmp eq i64 %.050, 0
-  br i1 %.not60, label %.loopexit, label %bb.k
+  br i1 %1, label %.loopexit, label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge
-  %i.az = trunc i64 %.050 to i32
+  %i.az = trunc nuw nsw i64 %i.am to i32
   %i.ba = and i32 %i.az, 31                       ; 2 uses
   %i.bb = shl nuw i32 1, %i.ba                    ; 2 uses
   %i.bc = and i32 %i.ay, %i.bb
@@ -277,11 +275,11 @@ bb.l:                                             ; preds = %bb.k
   %.149 = phi i32 [ %i.ay, %._crit_edge ], [ %i.ay, %bb.k ], [ %i.bm, %.loopexit77 ], [ %i.ay, %.preheader.preheader ], [ %i.ay, %.preheader ]
   %i.bo = uitofp i32 %.149 to double
   %i.bp = tail call double @llvm.fmuladd.f64(double %.3, double f0x41F0000000000000, double %i.bo) ; 2 uses
-  %.not64 = icmp eq i64 %.051, 0
+  %.not64 = icmp eq i64 %.050, 0
   br i1 %.not64, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.loopexit
-  %.051.tr = trunc nuw nsw i64 %.051 to i32
+  %.051.tr = trunc nuw nsw i64 %.050 to i32
   %i.bq = shl nuw nsw i32 %.051.tr, 5
   %i.br = tail call double @ldexp(double noundef %i.bp, i32 noundef %i.bq) #23, !tbaa !44
   br label %bb.n

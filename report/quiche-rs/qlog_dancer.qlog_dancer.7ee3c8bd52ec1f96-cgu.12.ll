@@ -205,31 +205,20 @@ bb.e:                                             ; preds = %bb.c
     #dbg_value(ptr %i.e, !25008, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !25011)
     #dbg_value(i64 %i.f, !25008, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25011)
   %i.g = icmp samesign ult i64 %1, 9, !dbg !25108
-    #dbg_value(ptr %i.e, !24968, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !25004)
-    #dbg_value(ptr %i.e, !24968, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !25004)
-    #dbg_value(ptr %i.e, !24964, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !25003)
-    #dbg_value(ptr %i.e, !24964, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !25003)
-    #dbg_value(i64 %i.f, !24968, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25004)
-    #dbg_value(i64 %i.f, !24968, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25004)
-    #dbg_value(i64 %i.f, !24964, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25003)
-    #dbg_value(i64 %i.f, !24964, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25003)
-    #dbg_value(i32 0, !25062, !DIExpression(), !25066)
-    #dbg_value(i32 0, !25062, !DIExpression(), !25066)
-    #dbg_value(i32 0, !25054, !DIExpression(), !25061)
-    #dbg_value(i32 0, !25054, !DIExpression(), !25061)
-    #dbg_value(i32 0, !25043, !DIExpression(), !25047)
-    #dbg_value(i32 0, !25043, !DIExpression(), !25047)
-    #dbg_value(i32 0, !25036, !DIExpression(), !25042)
-    #dbg_value(i32 0, !25036, !DIExpression(), !25042)
-    #dbg_value(i32 0, !25026, !DIExpression(), !25035)
-    #dbg_value(i32 0, !25026, !DIExpression(), !25035)
-    #dbg_value(i32 0, !25014, !DIExpression(), !25025)
-    #dbg_value(i32 0, !25014, !DIExpression(), !25025)
-    #dbg_value(i32 0, !24972, !DIExpression(), !25012)
-    #dbg_value(i32 0, !24972, !DIExpression(), !25012)
   br i1 %i.g, label %.preheader150, label %.lr.ph.a, !dbg !25010
 
 .preheader150:                                    ; preds = %bb.e
+    #dbg_value(ptr %i.e, !24968, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !25004)
+    #dbg_value(ptr %i.e, !24964, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !25003)
+    #dbg_value(i64 %i.f, !24968, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25004)
+    #dbg_value(i64 %i.f, !24964, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !25003)
+    #dbg_value(i32 0, !25062, !DIExpression(), !25066)
+    #dbg_value(i32 0, !25054, !DIExpression(), !25061)
+    #dbg_value(i32 0, !25043, !DIExpression(), !25047)
+    #dbg_value(i32 0, !25036, !DIExpression(), !25042)
+    #dbg_value(i32 0, !25026, !DIExpression(), !25035)
+    #dbg_value(i32 0, !25014, !DIExpression(), !25025)
+    #dbg_value(i32 0, !24972, !DIExpression(), !25012)
   %.not137171 = icmp eq i64 %i.f, 0, !dbg !25109
   br i1 %.not137171, label %.loopexit, label %.lr.ph175, !dbg !25109
 

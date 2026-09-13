@@ -204,12 +204,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
 define i64 @_RNvMs2_Csdds0ghYs8SI_3logNtB5_5Level18increment_severity(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #8 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 3 uses
-  %1 = add i64 %i.a, 1
+  %i.a = load i64, ptr %0, align 8                ; 2 uses
   %i.b = icmp ult i64 %i.a, 5
-  %spec.select.i = select i1 %i.b, i64 %1, i64 0  ; 2 uses
-  %.not.i = icmp eq i64 %spec.select.i, 0
-  %..i = select i1 %.not.i, i64 %i.a, i64 %spec.select.i
+  %1 = zext i1 %i.b to i64
+  %..i = add i64 %i.a, %1
   ret i64 %..i
 }
 

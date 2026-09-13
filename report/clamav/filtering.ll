@@ -204,7 +204,7 @@ filter_set_atpos.exit.us1003.1:                   ; preds = %bb.ee, %filter_set_
 bb.ef:                                            ; preds = %._crit_edge1031
   %i.vu = getelementptr inbounds nuw i8, ptr %i.ro, i64 8
   %i.vv = load i8, ptr %i.vu, align 8, !tbaa !32  ; 2 uses
-  %i.vw = getelementptr inbounds nuw i8, ptr %i.ro, i64 9 ; 2 uses
+  %i.vw = getelementptr inbounds nuw i8, ptr %i.ro, i64 9
   %i.vx = load i8, ptr %i.vw, align 1, !tbaa !31  ; 2 uses
   %.not4611058 = icmp ugt i8 %i.vv, %i.vx
   br i1 %.not4611058, label %.loopexit, label %.lr.ph1061
@@ -213,26 +213,25 @@ bb.ef:                                            ; preds = %._crit_edge1031
   %i.vy = add i32 %.1401.lcssa, -2
   %i.vz = zext i8 %i.vv to i32
   %i.wa = getelementptr inbounds nuw i8, ptr %i.rr, i64 8
-  %i.wb = getelementptr inbounds nuw i8, ptr %i.rr, i64 9 ; 2 uses
-  %i.wc = getelementptr inbounds nuw i8, ptr %i.ro, i64 11 ; 3 uses
-  %i.wd = getelementptr inbounds nuw i8, ptr %i.rr, i64 11 ; 3 uses
+  %i.wb = getelementptr inbounds nuw i8, ptr %i.rr, i64 9
+  %i.wc = getelementptr inbounds nuw i8, ptr %i.ro, i64 11
+  %i.wd = getelementptr inbounds nuw i8, ptr %i.rr, i64 11
   %i.we = getelementptr inbounds nuw i8, ptr %0, i64 65536 ; 2 uses
   %i.wf = shl nuw i32 1, %i.vy                    ; 3 uses
   %i.wg = trunc i32 %i.wf to i8
   %i.wh = xor i8 %i.wg, -1                        ; 2 uses
   %i.wi = getelementptr inbounds nuw i8, ptr %i.rr, i64 10
   %i.wj = getelementptr inbounds nuw i8, ptr %i.ro, i64 10
-  %.pre1276 = load i8, ptr %i.wb, align 1, !tbaa !31 ; 2 uses
-  %i.wk = load i8, ptr %i.wa, align 8, !tbaa !32  ; 2 uses
-  %i.wl = zext i8 %i.wk to i32
+  %.pre1276 = load i8, ptr %i.wa, align 8, !tbaa !32 ; 2 uses
+  %i.wk = load i8, ptr %i.wb, align 1, !tbaa !31  ; 2 uses
+  %.not4621053 = icmp ugt i8 %.pre1276, %i.wk
+  %4 = zext i8 %.pre1276 to i32
+  %5 = zext i8 %i.wk to i32
+  %i.wl = zext i8 %i.vx to i32
   br label %bb.eg
 
 bb.eg:                                            ; preds = %.lr.ph1061, %._crit_edge1057
-  %4 = phi i8 [ %i.vx, %.lr.ph1061 ], [ %18, %._crit_edge1057 ]
-  %5 = phi i8 [ %.pre1276, %.lr.ph1061 ], [ %19, %._crit_edge1057 ] ; 2 uses
-  %6 = phi i8 [ %.pre1276, %.lr.ph1061 ], [ %20, %._crit_edge1057 ] ; 2 uses
   %.24191059 = phi i32 [ %i.vz, %.lr.ph1061 ], [ %i.yq, %._crit_edge1057 ] ; 4 uses
-  %.not4621053 = icmp ugt i8 %i.wk, %6
   br i1 %.not4621053, label %._crit_edge1057, label %.lr.ph1056
 
 .lr.ph1056:                                       ; preds = %bb.eg
@@ -244,8 +243,7 @@ bb.eg:                                            ; preds = %.lr.ph1061, %._crit
   br label %bb.eh
 
 bb.eh:                                            ; preds = %.lr.ph1056, %._crit_edge1052
-  %7 = phi i8 [ %5, %.lr.ph1056 ], [ %16, %._crit_edge1052 ]
-  %.24161054 = phi i32 [ %i.wl, %.lr.ph1056 ], [ %i.yn, %._crit_edge1052 ] ; 4 uses
+  %.24161054 = phi i32 [ %4, %.lr.ph1056 ], [ %i.yn, %._crit_edge1052 ] ; 4 uses
   br i1 %.not.i531, label %spec_ith_char.exit533, label %bb.ei
 
 bb.ei:                                            ; preds = %bb.eh
@@ -311,19 +309,22 @@ bb.er:                                            ; preds = %bb.ep
 
 spec_ith_char.exit536:                            ; preds = %spec_ith_char.exit533, %bb.er
   %.0.i535 = phi i32 [ %i.xj, %bb.er ], [ %.24161054, %spec_ith_char.exit533 ] ; 4 uses
-  %i.xk = load i8, ptr %i.wc, align 1, !tbaa !30
-  %.not463 = icmp eq i8 %i.xk, 0                  ; 2 uses
-  %i.xl = select i1 %.not463, i32 %.0.i532, i32 255 ; 2 uses
-  %i.xm = load i8, ptr %i.wd, align 1, !tbaa !30
+  %i.xk = load i8, ptr %i.wc, align 1, !tbaa !30  ; 2 uses
+  %.not463 = icmp ne i8 %i.xk, 0                  ; 3 uses
+  %i.xl = select i1 %.not463, i32 255, i32 %.0.i532 ; 2 uses
+  %i.xm = load i8, ptr %i.wd, align 1, !tbaa !30  ; 3 uses
   %.not464 = icmp eq i8 %i.xm, 0                  ; 2 uses
   %i.xn = select i1 %.not464, i32 %.0.i535, i32 255 ; 4 uses
-  %i.xo = select i1 %.not463, i32 %.0.i532, i32 0 ; 2 uses
+  %i.xo = select i1 %.not463, i32 0, i32 %.0.i532 ; 2 uses
   %.not4651048 = icmp ugt i32 %i.xo, %i.xl
   br i1 %.not4651048, label %._crit_edge1052, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %spec_ith_char.exit536
   %i.xp = select i1 %.not464, i32 %.0.i535, i32 0
   %i.xq = add nuw nsw i32 %i.xn, 1                ; 3 uses
+  %.not468.us = icmp ne i8 %i.xm, 0
+  %.not1077 = icmp eq i8 %i.xk, 0
+  %.not468 = icmp ne i8 %i.xm, 0
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge1040
@@ -335,15 +336,10 @@ spec_ith_char.exit536:                            ; preds = %spec_ith_char.exit5
 .lr.ph1039:                                       ; preds = %.preheader
   %i.xr = icmp eq i32 %.03611049, %.0.i532
   %.fr = freeze i1 %i.xr
-  br i1 %.fr, label %.lr.ph1039.split, label %.lr.ph1039.split.us.preheader
+  br i1 %.fr, label %.lr.ph1039.split.split.a, label %.lr.ph1039.split.us
 
-.lr.ph1039.split.us.preheader:                    ; preds = %.lr.ph1039
-  %8 = load i8, ptr %i.wd, align 1, !tbaa !30
-  %.not468.us = icmp ne i8 %8, 0
-  br label %.lr.ph1039.split.us
-
-.lr.ph1039.split.us:                              ; preds = %.lr.ph1039.split.us.preheader, %filter_set_end.exit.us
-  %.11038.us = phi i32 [ %i.yc, %filter_set_end.exit.us ], [ %.01051, %.lr.ph1039.split.us.preheader ] ; 4 uses
+.lr.ph1039.split.us:                              ; preds = %.lr.ph1039, %filter_set_end.exit.us
+  %.11038.us = phi i32 [ %i.yc, %filter_set_end.exit.us ], [ %.01051, %.lr.ph1039 ] ; 4 uses
   %i.xs = icmp eq i32 %.11038.us, %.0.i535
   %or.cond505.us = select i1 %.not468.us, i1 %i.xs, i1 false
   br i1 %or.cond505.us, label %filter_set_end.exit.us, label %bb.es
@@ -370,33 +366,20 @@ filter_set_end.exit.us:                           ; preds = %bb.et, %bb.es, %.lr
   %exitcond1274.not = icmp eq i32 %.11038.us, %i.xn
   br i1 %exitcond1274.not, label %._crit_edge1040, label %.lr.ph1039.split.us
 
-.lr.ph1039.split:                                 ; preds = %.lr.ph1039
-  %9 = load i8, ptr %i.wc, align 1, !tbaa !30
-  %.not1079 = icmp eq i8 %9, 0
-  br i1 %.not1079, label %.lr.ph1039.split.split.a, label %._crit_edge1040
+.lr.ph1039.split.split.a:                         ; preds = %.lr.ph1039
+  br i1 %.not1077, label %bb.eu, label %._crit_edge1040
 
-.lr.ph1039.split.splitthread-pre-split:           ; preds = %filter_set_end.exit
-  %10 = add i32 %.11038, 1
-  %.pr = load i8, ptr %i.wc, align 1, !tbaa !30
-  br label %.lr.ph1039.split.split.a
-
-.lr.ph1039.split.split.a:                         ; preds = %.lr.ph1039.split, %.lr.ph1039.split.splitthread-pre-split
-  %11 = phi i8 [ %.pr, %.lr.ph1039.split.splitthread-pre-split ], [ 0, %.lr.ph1039.split ]
-  %.11038 = phi i32 [ %10, %.lr.ph1039.split.splitthread-pre-split ], [ %.01051, %.lr.ph1039.split ] ; 4 uses
-  %12 = shl nuw nsw i32 %.11038, 8
-  %13 = or i32 %12, %.03611049
-  %.not467.not = icmp eq i8 %11, 0
-  br i1 %.not467.not, label %bb.eu, label %filter_set_end.exit
-
-bb.eu:                                            ; preds = %.lr.ph1039.split.split.a
-  %14 = load i8, ptr %i.wd, align 1, !tbaa !30
-  %.not468 = icmp ne i8 %14, 0
-  %15 = icmp eq i32 %.11038, %.0.i535
-  %or.cond505.a = select i1 %.not468, i1 %15, i1 false
+bb.eu:                                            ; preds = %.lr.ph1039.split.split.a, %filter_set_end.exit
+  %.11038 = phi i32 [ %9, %filter_set_end.exit ], [ %.01051, %.lr.ph1039.split.split.a ] ; 4 uses
+  %6 = icmp eq i32 %.11038, %.0.i535
+  %or.cond505 = select i1 %.not468, i1 %6, i1 false
+  %or.cond505.a = select i1 %.not463, i1 true, i1 %or.cond505
   br i1 %or.cond505.a, label %filter_set_end.exit, label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu
-  %i.yd = and i32 %13, 65535
+  %7 = shl nuw nsw i32 %.11038, 8
+  %8 = or i32 %7, %.03611049
+  %i.yd = and i32 %8, 65535
   %i.ye = zext nneg i32 %i.yd to i64
   %i.yf = getelementptr inbounds nuw i8, ptr %i.we, i64 %i.ye ; 2 uses
   %i.yg = load i8, ptr %i.yf, align 1, !tbaa !8   ; 2 uses
@@ -410,42 +393,29 @@ bb.ew:                                            ; preds = %bb.ev
   store i8 %i.yj, ptr %i.yf, align 1, !tbaa !8
   br label %filter_set_end.exit
 
-filter_set_end.exit:                              ; preds = %bb.ew, %bb.ev, %bb.eu, %.lr.ph1039.split.split.a
+filter_set_end.exit:                              ; preds = %bb.ew, %bb.ev, %bb.eu
+  %9 = add i32 %.11038, 1
   %exitcond1275.not = icmp eq i32 %.11038, %i.xn
-  br i1 %exitcond1275.not, label %._crit_edge1040, label %.lr.ph1039.split.splitthread-pre-split, !llvm.loop !12
+  br i1 %exitcond1275.not, label %._crit_edge1040, label %bb.eu, !llvm.loop !12
 
-._crit_edge1040:                                  ; preds = %filter_set_end.exit.us, %filter_set_end.exit, %.lr.ph1039.split, %.preheader
-  %.1.lcssa = phi i32 [ %.01051, %.preheader ], [ %i.xq, %filter_set_end.exit ], [ %i.xq, %.lr.ph1039.split ], [ %i.xq, %filter_set_end.exit.us ]
+._crit_edge1040:                                  ; preds = %filter_set_end.exit.us, %filter_set_end.exit, %.lr.ph1039.split.split.a, %.preheader
+  %.1.lcssa = phi i32 [ %.01051, %.preheader ], [ %i.xq, %filter_set_end.exit ], [ %i.xq, %.lr.ph1039.split.split.a ], [ %i.xq, %filter_set_end.exit.us ]
   %i.yk = add nuw nsw i32 %.03611049, 1
   %.not465.not = icmp ult i32 %.03611049, %i.xl
-  br i1 %.not465.not, label %.preheader, label %._crit_edge1052.loopexit
+  br i1 %.not465.not, label %.preheader, label %._crit_edge1052
 
-._crit_edge1052.loopexit:                         ; preds = %._crit_edge1040
-  %.pre1277 = load i8, ptr %i.wb, align 1, !tbaa !31
-  br label %._crit_edge1052
-
-._crit_edge1052:                                  ; preds = %._crit_edge1052.loopexit, %spec_ith_char.exit536
-  %16 = phi i8 [ %.pre1277, %._crit_edge1052.loopexit ], [ %7, %spec_ith_char.exit536 ] ; 4 uses
+._crit_edge1052:                                  ; preds = %._crit_edge1040, %spec_ith_char.exit536
   %i.yl = load i8, ptr %i.wi, align 2, !tbaa !33
   %i.ym = zext i8 %i.yl to i32
   %i.yn = add nuw nsw i32 %.24161054, %i.ym       ; 2 uses
-  %17 = zext i8 %16 to i32
-  %.not462 = icmp samesign ugt i32 %i.yn, %17
-  br i1 %.not462, label %._crit_edge1057.loopexit, label %bb.eh
+  %.not462 = icmp samesign ugt i32 %i.yn, %5
+  br i1 %.not462, label %._crit_edge1057, label %bb.eh
 
-._crit_edge1057.loopexit:                         ; preds = %._crit_edge1052
-  %.pre1278 = load i8, ptr %i.vw, align 1, !tbaa !31
-  br label %._crit_edge1057
-
-._crit_edge1057:                                  ; preds = %._crit_edge1057.loopexit, %bb.eg
-  %18 = phi i8 [ %.pre1278, %._crit_edge1057.loopexit ], [ %4, %bb.eg ] ; 2 uses
-  %19 = phi i8 [ %16, %._crit_edge1057.loopexit ], [ %5, %bb.eg ]
-  %20 = phi i8 [ %16, %._crit_edge1057.loopexit ], [ %6, %bb.eg ]
+._crit_edge1057:                                  ; preds = %._crit_edge1052, %bb.eg
   %i.yo = load i8, ptr %i.wj, align 2, !tbaa !33
   %i.yp = zext i8 %i.yo to i32
   %i.yq = add nuw nsw i32 %.24191059, %i.yp       ; 2 uses
-  %21 = zext i8 %18 to i32
-  %.not461 = icmp samesign ugt i32 %i.yq, %21
+  %.not461 = icmp samesign ugt i32 %i.yq, %i.wl
   br i1 %.not461, label %.loopexit, label %bb.eg
 
 .loopexit:                                        ; preds = %._crit_edge1057, %bb.ef, %bb.ae, %.thread1355, %.critedge492, %._crit_edge993.thread, %._crit_edge.thread

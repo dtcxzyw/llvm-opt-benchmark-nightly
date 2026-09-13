@@ -166,8 +166,6 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b, !prof !4
 
 bb.b:                                             ; preds = %bb.a
-  %1 = icmp ne i16 %0, 1
-  tail call void @llvm.assume(i1 %1)
   %i.b = tail call range(i16 0, 17) i16 @llvm.ctlz.i16(i16 %i.a, i1 true) ; 2 uses
   %i.c = sub nsw i16 14, %i.b                     ; 2 uses
   %i.d = and i16 %i.c, 15

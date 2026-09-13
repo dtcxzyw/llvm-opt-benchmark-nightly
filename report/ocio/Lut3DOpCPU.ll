@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.preheader361.i
   br i1 %i.ix, label %bb.t, label %._crit_edge429.i
 
 .lr.ph389.preheader.i:                            ; preds = %.preheader361._crit_edge.i, %.loopexit357.i
-  %.0270420.i = phi i64 [ 1, %.loopexit357.i ], [ %i.hl, %.preheader361._crit_edge.i ] ; 28 uses
+  %.0270420.i = phi i64 [ 1, %.loopexit357.i ], [ %i.hl, %.preheader361._crit_edge.i ] ; 27 uses
   %.2290419.i = phi i64 [ %.4292.i, %.loopexit357.i ], [ %.1289.i, %.preheader361._crit_edge.i ]
   %i.ja = add nuw nsw i64 %.0270420.i, 1          ; 11 uses
   %i.jb = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0270420.i ; 3 uses
@@ -323,7 +323,6 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge3
   %i.ku = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0270420.i
   %i.kv = add nuw nsw i64 %.0270420.i, 1          ; 2 uses
   %i.kw = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.kv
-  %exitcond448.not.i.1 = icmp eq i64 %.0270420.i, 1
   %i.kx = or disjoint i64 %.0270420.i, 2          ; 2 uses
   %i.ky = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.kx
   %exitcond448.not.i.2 = icmp eq i64 %.0270420.i, 0
@@ -343,32 +342,29 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge3
   %i.lh = load double, ptr %gep402.us.i.1, align 8, !tbaa !142
   %i.li = tail call double @llvm.fabs.f64(double %i.lh) ; 2 uses
   %i.lj = fcmp ogt double %i.li, %.4.us.i         ; 3 uses
-  %.4269.us.i.1 = select i1 %i.lj, i64 %i.kv, i64 %.4269.us.i ; 2 uses
+  %.4269.us.i.1 = select i1 %i.lj, i64 %i.kv, i64 %.4269.us.i
   %i.lk = or i1 %i.lj, %i.lf
-  %.2264.us.i.1.a = select i1 %i.lk, i64 2, i64 %.2264.us.i.lcssa.peel ; 2 uses
-  %.4.us.i.1.a = select i1 %i.lj, double %i.li, double %.4.us.i ; 3 uses
-  br i1 %exitcond448.not.i.1, label %._crit_edge397.us.i, label %4
-
-4:                                                ; preds = %.preheader355.us.i.preheader.peel.newph
-  %5 = load i64, ptr %i.ky, align 8, !tbaa !64
-  %gep402.us.i.2 = getelementptr [32 x i8], ptr %invariant.gep401.us.i, i64 %5
-  %6 = load double, ptr %gep402.us.i.2, align 8, !tbaa !142
-  %7 = tail call double @llvm.fabs.f64(double %6) ; 2 uses
-  %8 = fcmp ogt double %7, %.4.us.i.1.a           ; 3 uses
-  %.4269.us.i.2 = select i1 %8, i64 %i.kx, i64 %.4269.us.i.1 ; 2 uses
-  %.2264.us.i.2 = select i1 %8, i64 2, i64 %.2264.us.i.1.a ; 2 uses
-  %.4.us.i.2 = select i1 %8, double %7, double %.4.us.i.1.a ; 3 uses
+  %.2264.us.i.1 = select i1 %i.lk, i64 2, i64 %.2264.us.i.lcssa.peel
+  %.4.us.i.1 = select i1 %i.lj, double %i.li, double %.4.us.i ; 2 uses
+  %4 = load i64, ptr %i.ky, align 8, !tbaa !64
+  %gep402.us.i.2 = getelementptr [32 x i8], ptr %invariant.gep401.us.i, i64 %4
+  %5 = load double, ptr %gep402.us.i.2, align 8, !tbaa !142
+  %6 = tail call double @llvm.fabs.f64(double %5) ; 2 uses
+  %7 = fcmp ogt double %6, %.4.us.i.1             ; 3 uses
+  %.4269.us.i.2 = select i1 %7, i64 %i.kx, i64 %.4269.us.i.1 ; 2 uses
+  %.2264.us.i.1.a = select i1 %7, i64 2, i64 %.2264.us.i.1 ; 2 uses
+  %.4.us.i.1.a = select i1 %7, double %6, double %.4.us.i.1 ; 3 uses
   br i1 %exitcond448.not.i.2, label %._crit_edge397.us.i, label %bb.o
 
-bb.o:                                             ; preds = %4
+bb.o:                                             ; preds = %.preheader355.us.i.preheader.peel.newph
   %i.ll = load i64, ptr %i.la, align 8, !tbaa !64
   %gep402.us.i.3 = getelementptr [32 x i8], ptr %invariant.gep401.us.i, i64 %i.ll
   %i.lm = load double, ptr %gep402.us.i.3, align 8, !tbaa !142
   %i.ln = tail call double @llvm.fabs.f64(double %i.lm) ; 2 uses
-  %i.lo = fcmp ogt double %i.ln, %.4.us.i.2       ; 3 uses
+  %i.lo = fcmp ogt double %i.ln, %.4.us.i.1.a     ; 3 uses
   %.4269.us.i.3 = select i1 %i.lo, i64 %i.kz, i64 %.4269.us.i.2
-  %.2264.us.i.3 = select i1 %i.lo, i64 2, i64 %.2264.us.i.2
-  %.4.us.i.3 = select i1 %i.lo, double %i.ln, double %.4.us.i.2
+  %.2264.us.i.3 = select i1 %i.lo, i64 2, i64 %.2264.us.i.1.a
+  %.4.us.i.3 = select i1 %i.lo, double %i.ln, double %.4.us.i.1.a
   br label %._crit_edge397.us.i
 
 bb.p:                                             ; preds = %._crit_edge397.us.i
@@ -379,10 +375,10 @@ bb.p:                                             ; preds = %._crit_edge397.us.i
   store i64 %i.lp, ptr %i.lq, align 8, !tbaa !64
   br label %.loopexit359.i
 
-._crit_edge397.us.i:                              ; preds = %bb.o, %4, %.preheader355.us.i.preheader.peel.newph
-  %.4269.us.i.lcssa = phi i64 [ %.4269.us.i.3, %bb.o ], [ %.4269.us.i.1, %.preheader355.us.i.preheader.peel.newph ], [ %.4269.us.i.2, %4 ] ; 2 uses
-  %.2264.us.i.lcssa = phi i64 [ %.2264.us.i.3, %bb.o ], [ %.2264.us.i.1.a, %.preheader355.us.i.preheader.peel.newph ], [ %.2264.us.i.2, %4 ]
-  %.4.us.i.lcssa = phi double [ %.4.us.i.3, %bb.o ], [ %.4.us.i.1.a, %.preheader355.us.i.preheader.peel.newph ], [ %.4.us.i.2, %4 ]
+._crit_edge397.us.i:                              ; preds = %bb.o, %.preheader355.us.i.preheader.peel.newph
+  %.4269.us.i.lcssa = phi i64 [ %.4269.us.i.3, %bb.o ], [ %.4269.us.i.2, %.preheader355.us.i.preheader.peel.newph ] ; 2 uses
+  %.2264.us.i.lcssa = phi i64 [ %.2264.us.i.3, %bb.o ], [ %.2264.us.i.1.a, %.preheader355.us.i.preheader.peel.newph ]
+  %.4.us.i.lcssa = phi double [ %.4.us.i.3, %bb.o ], [ %.4.us.i.1.a, %.preheader355.us.i.preheader.peel.newph ]
   %i.ls = fcmp ogt double %.4.us.i.lcssa, 1.000000e-09
   br i1 %i.ls, label %bb.p, label %.loopexit359.i
 

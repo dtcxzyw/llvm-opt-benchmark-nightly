@@ -163,17 +163,16 @@ bb.a:
   br i1 %i.a, label %spline_cubic_set_internal.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.a
-  %i.b = add nsw i32 %0, -1                       ; 3 uses
-  %wide.trip.count.i = zext nneg i32 %i.b to i64  ; 5 uses
-  %exitcond.not.i2 = icmp eq i32 %i.b, 0
-  br i1 %exitcond.not.i2, label %._crit_edge, label %.lr.ph
+  %i.b = add nsw i32 %0, -1                       ; 2 uses
+  %wide.trip.count.i = zext i32 %i.b to i64       ; 5 uses
+  br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader.i, %bb.b
-  %indvars.iv.i3 = phi i64 [ %indvars.iv.next.i, %bb.b ], [ 0, %.preheader.i ] ; 2 uses
+  %indvars.iv.i3 = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i3, 1 ; 3 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next.i
   %i.d = load float, ptr %i.c, align 4, !tbaa !12
@@ -182,7 +181,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.g = fcmp reassoc nsz arcp contract afn ugt float %i.d, %i.f
   br i1 %i.g, label %bb.b, label %spline_cubic_set_internal.exit
 
-._crit_edge:                                      ; preds = %bb.b, %.preheader.i
+._crit_edge:                                      ; preds = %bb.b
   %i.h = mul nuw nsw i32 %0, 3
   %i.i = zext nneg i32 %i.h to i64                ; 2 uses
   %i.j = tail call noalias ptr @calloc(i64 noundef %i.i, i64 noundef 4) #13 ; 12 uses
@@ -362,17 +361,16 @@ bb.a:
   br i1 %i.a, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.b = add nsw i32 %0, -1                       ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.b to i64    ; 6 uses
-  %exitcond.not53 = icmp eq i32 %i.b, 0
-  br i1 %exitcond.not53, label %._crit_edge56, label %.lr.ph55
+  %i.b = add nsw i32 %0, -1
+  %wide.trip.count = zext i32 %i.b to i64         ; 6 uses
+  br label %.lr.ph55
 
 bb.b:                                             ; preds = %.lr.ph55
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge56, label %.lr.ph55
 
 .lr.ph55:                                         ; preds = %.preheader, %bb.b
-  %indvars.iv54 = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %.preheader ] ; 2 uses
+  %indvars.iv54 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv54, 1 ; 3 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next
   %i.d = load float, ptr %i.c, align 4, !tbaa !12
@@ -381,7 +379,7 @@ bb.b:                                             ; preds = %.lr.ph55
   %i.g = fcmp reassoc nsz arcp contract afn ugt float %i.d, %i.f
   br i1 %i.g, label %bb.b, label %.loopexit
 
-._crit_edge56:                                    ; preds = %bb.b, %.preheader
+._crit_edge56:                                    ; preds = %bb.b
   %i.h = zext nneg i32 %0 to i64
   %i.i = tail call noalias ptr @calloc(i64 noundef %i.h, i64 noundef 4) #13 ; 6 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 4
@@ -539,17 +537,16 @@ bb.a:
   br i1 %i.a, label %.loopexit, label %.preheader88
 
 .preheader88:                                     ; preds = %bb.a
-  %i.b = add nsw i32 %0, -1                       ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.b to i64    ; 6 uses
-  %exitcond.not118 = icmp eq i32 %i.b, 0
-  br i1 %exitcond.not118, label %.lr.ph.preheader, label %.lr.ph120
+  %i.b = add nsw i32 %0, -1                       ; 2 uses
+  %wide.trip.count = zext i32 %i.b to i64         ; 6 uses
+  br label %.lr.ph120
 
 bb.b:                                             ; preds = %.lr.ph120
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.lr.ph.preheader, label %.lr.ph120
 
 .lr.ph120:                                        ; preds = %.preheader88, %bb.b
-  %indvars.iv119 = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %.preheader88 ] ; 2 uses
+  %indvars.iv119 = phi i64 [ 0, %.preheader88 ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv119, 1 ; 3 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next
   %i.d = load float, ptr %i.c, align 4, !tbaa !12
@@ -558,7 +555,7 @@ bb.b:                                             ; preds = %.lr.ph120
   %i.g = fcmp reassoc nsz arcp contract afn ugt float %i.d, %i.f
   br i1 %i.g, label %bb.b, label %.loopexit
 
-.lr.ph.preheader:                                 ; preds = %bb.b, %.preheader88
+.lr.ph.preheader:                                 ; preds = %bb.b
   %i.h = zext nneg i32 %0 to i64                  ; 2 uses
   %i.i = tail call noalias ptr @calloc(i64 noundef %i.h, i64 noundef 4) #13 ; 10 uses
   %i.j = add nuw nsw i32 %0, 1
@@ -570,7 +567,7 @@ bb.b:                                             ; preds = %.lr.ph120
   br i1 %min.iters.check, label %.lr.ph.preheader163, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483616   ; 3 uses
+  %n.vec = and i64 %wide.trip.count, 4294967264   ; 3 uses
   %vector.recur.init = insertelement <8 x float> poison, float %.pre114, i64 7
   %vector.recur.init121 = insertelement <8 x float> poison, float %.pre, i64 7
   br label %vector.body

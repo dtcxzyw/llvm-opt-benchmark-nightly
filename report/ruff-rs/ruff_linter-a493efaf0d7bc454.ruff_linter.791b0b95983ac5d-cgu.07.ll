@@ -204,17 +204,16 @@ _RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruf
   br i1 %i.ab, label %.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit11.thread.i
-  %i.ac = add i64 %.lcssa10, -1                   ; 4 uses
+  %i.ac = add i64 %.lcssa10, -1                   ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 104 ; 2 uses
-  %1 = icmp eq i64 %i.ac, 0
-  br i1 %1, label %.loopexit, label %.lr.ph34
+  br label %.lr.ph34
 
 bb.i:                                             ; preds = %.lr.ph34
   %i.ae = icmp eq i64 %i.ag, %i.ac
   br i1 %i.ae, label %.loopexit, label %.lr.ph34
 
 .lr.ph34:                                         ; preds = %bb.h, %bb.i
-  %.sroa.0.0.i.i.i.i.i.i.i.i33 = phi i64 [ %i.ag, %bb.i ], [ 0, %bb.h ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i.i.i33 = phi i64 [ 0, %bb.h ], [ %i.ag, %bb.i ] ; 2 uses
   %i.af = getelementptr inbounds nuw [88 x i8], ptr %i.ad, i64 %.sroa.0.0.i.i.i.i.i.i.i.i33
   %i.ag = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i.i.i.i33, 1 ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(88) %i.af)
@@ -271,7 +270,7 @@ bb.o:                                             ; preds = %.body
   invoke void @_RINvCsaSrGj5dYoxL_8thin_vec18drop_non_singletonNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtEBN_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.e)
           to label %.noexc unwind label %bb.p
 
-.loopexit:                                        ; preds = %bb.m, %bb.i, %bb.h, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit11.thread.i, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i
+.loopexit:                                        ; preds = %bb.m, %bb.i, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit11.thread.i, %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4StmtKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2304
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !2304
   %.sroa.0.0.copyload = load i64, ptr %i.e, align 8
@@ -674,12 +673,12 @@ bb.v:                                             ; preds = %bb.u
   %i.bz = icmp sgt i8 %i.by, -65
   br i1 %i.bz, label %bb.z, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i32.invoke
 
-_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i32.invoke: ; preds = %.noexc35, %.split.i.i31, %bb.t, %.split7.i.i34, %bb.v, %.noexc, %.split.i.i, %bb.m, %.split7.i.i, %bb.o, %.split.i, %bb.z, %bb.aa, %bb.ab
-  %2 = phi ptr [ %.val26, %.noexc ], [ %i.cj, %.split.i ], [ %i.cj, %bb.ab ], [ %i.cj, %bb.aa ], [ %i.cj, %bb.z ], [ %.val26, %bb.o ], [ %.val26, %.split7.i.i ], [ %.val26, %bb.m ], [ %.val26, %.split.i.i ], [ %.val24, %bb.v ], [ %.val24, %.split7.i.i34 ], [ %.val24, %bb.t ], [ %.val24, %.split.i.i31 ], [ %.val24, %.noexc35 ]
-  %3 = phi i64 [ %.val27, %.noexc ], [ %i.ck, %.split.i ], [ %i.ck, %bb.ab ], [ %i.ck, %bb.aa ], [ %i.ck, %bb.z ], [ %.val27, %bb.o ], [ %.val27, %.split7.i.i ], [ %.val27, %bb.m ], [ %.val27, %.split.i.i ], [ %.val25, %bb.v ], [ %.val25, %.split7.i.i34 ], [ %.val25, %bb.t ], [ %.val25, %.split.i.i31 ], [ %.val25, %.noexc35 ]
-  %4 = phi i64 [ %i.aw, %.noexc ], [ 1, %.split.i ], [ 1, %bb.ab ], [ 1, %bb.aa ], [ 1, %bb.z ], [ %i.aw, %bb.o ], [ %i.aw, %.split7.i.i ], [ %i.aw, %bb.m ], [ %i.aw, %.split.i.i ], [ %i.bo, %bb.v ], [ %i.bo, %.split7.i.i34 ], [ %i.bo, %bb.t ], [ %i.bo, %.split.i.i31 ], [ %i.bo, %.noexc35 ]
-  %5 = phi i64 [ %i.ax, %.noexc ], [ %i.cl, %.split.i ], [ %i.cl, %bb.ab ], [ %i.cl, %bb.aa ], [ %i.cl, %bb.z ], [ %i.ax, %bb.o ], [ %i.ax, %.split7.i.i ], [ %i.ax, %bb.m ], [ %i.ax, %.split.i.i ], [ %i.bp, %bb.v ], [ %i.bp, %.split7.i.i34 ], [ %i.bp, %bb.t ], [ %i.bp, %.split.i.i31 ], [ %i.bp, %.noexc35 ]
-  %6 = phi ptr [ @1, %.noexc ], [ @241, %.split.i ], [ @241, %bb.ab ], [ @241, %bb.aa ], [ @241, %bb.z ], [ @1, %bb.o ], [ @1, %.split7.i.i ], [ @1, %bb.m ], [ @1, %.split.i.i ], [ @1, %bb.v ], [ @1, %.split7.i.i34 ], [ @1, %bb.t ], [ @1, %.split.i.i31 ], [ @1, %.noexc35 ]
+_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i32.invoke: ; preds = %.noexc35, %.split.i.i31, %bb.t, %.split7.i.i34, %bb.v, %.noexc, %.split.i.i, %bb.m, %.split7.i.i, %bb.o, %bb.z, %bb.aa, %bb.ab
+  %2 = phi ptr [ %.val26, %.noexc ], [ %i.cj, %bb.z ], [ %.val24, %.noexc35 ], [ %i.cj, %bb.ab ], [ %i.cj, %bb.aa ], [ %.val26, %bb.o ], [ %.val26, %.split7.i.i ], [ %.val26, %bb.m ], [ %.val26, %.split.i.i ], [ %.val24, %bb.v ], [ %.val24, %.split7.i.i34 ], [ %.val24, %bb.t ], [ %.val24, %.split.i.i31 ]
+  %3 = phi i64 [ %.val27, %.noexc ], [ %i.ck, %bb.z ], [ %.val25, %.noexc35 ], [ %i.ck, %bb.ab ], [ %i.ck, %bb.aa ], [ %.val27, %bb.o ], [ %.val27, %.split7.i.i ], [ %.val27, %bb.m ], [ %.val27, %.split.i.i ], [ %.val25, %bb.v ], [ %.val25, %.split7.i.i34 ], [ %.val25, %bb.t ], [ %.val25, %.split.i.i31 ]
+  %4 = phi i64 [ %i.aw, %.noexc ], [ 1, %bb.z ], [ %i.bo, %.noexc35 ], [ 1, %bb.ab ], [ 1, %bb.aa ], [ %i.aw, %bb.o ], [ %i.aw, %.split7.i.i ], [ %i.aw, %bb.m ], [ %i.aw, %.split.i.i ], [ %i.bo, %bb.v ], [ %i.bo, %.split7.i.i34 ], [ %i.bo, %bb.t ], [ %i.bo, %.split.i.i31 ]
+  %5 = phi i64 [ %i.ax, %.noexc ], [ %i.cl, %bb.z ], [ %i.bp, %.noexc35 ], [ %i.cl, %bb.ab ], [ %i.cl, %bb.aa ], [ %i.ax, %bb.o ], [ %i.ax, %.split7.i.i ], [ %i.ax, %bb.m ], [ %i.ax, %.split.i.i ], [ %i.bp, %bb.v ], [ %i.bp, %.split7.i.i34 ], [ %i.bp, %bb.t ], [ %i.bp, %.split.i.i31 ]
+  %6 = phi ptr [ @1, %.noexc ], [ @241, %bb.z ], [ @1, %.noexc35 ], [ @241, %bb.ab ], [ @241, %bb.aa ], [ @1, %bb.o ], [ @1, %.split7.i.i ], [ @1, %bb.m ], [ @1, %.split.i.i ], [ @1, %bb.v ], [ @1, %.split7.i.i34 ], [ @1, %bb.t ], [ @1, %.split.i.i31 ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %6) #36
           to label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i32.cont unwind label %bb.x
 
@@ -737,29 +736,21 @@ switch.lookup:                                    ; preds = %_RINvMNtCs4NRVxsYgn
           to label %bb.ae unwind label %bb.ad
 
 bb.z:                                             ; preds = %bb.v, %.split7.i.i34, %bb.s
-  %i.cj = getelementptr inbounds nuw i8, ptr %.val24, i64 %i.bo ; 7 uses
-  %i.ck = sub nuw nsw i64 %i.bp, %i.bo            ; 8 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %.val24, i64 %i.bo ; 6 uses
+  %i.ck = sub nuw nsw i64 %i.bp, %i.bo            ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  %i.cl = add nsw i64 %i.ck, -1                   ; 6 uses
-  %.not.i = icmp eq i64 %i.cl, 0
-  br i1 %.not.i, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i32.invoke, label %7
+  %i.cl = add nsw i64 %i.ck, -1                   ; 4 uses
+  %or.cond = icmp samesign ugt i64 %i.ck, 1
+  br i1 %or.cond, label %bb.aa, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i32.invoke
 
-7:                                                ; preds = %bb.z
-  %.not5.i = icmp samesign ugt i64 %i.ck, 1
-  br i1 %.not5.i, label %bb.aa, label %.split.i
-
-.split.i:                                         ; preds = %7
-  %8 = icmp eq i64 %i.ck, 1
-  br i1 %8, label %bb.ab, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i32.invoke
-
-bb.aa:                                            ; preds = %7
+bb.aa:                                            ; preds = %bb.z
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cj, i64 1
   %i.cn = load i8, ptr %i.cm, align 1, !alias.scope !6444, !noundef !5
   %i.co = icmp sgt i8 %i.cn, -65
   br i1 %i.co, label %bb.ab, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i32.invoke
 
-bb.ab:                                            ; preds = %bb.aa, %.split.i
+bb.ab:                                            ; preds = %bb.aa
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.cl
   %i.cq = load i8, ptr %i.cp, align 1, !alias.scope !6444, !noundef !5
   %i.cr = icmp sgt i8 %i.cq, -65

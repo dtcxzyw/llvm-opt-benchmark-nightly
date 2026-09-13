@@ -202,7 +202,7 @@ bb.ej:                                            ; preds = %bb.ei
   call void @llvm.lifetime.end.p0(ptr nonnull %63) #13
   br label %bb.ek
 
-bb.ek:                                            ; preds = %.thread.peel, %.thread
+bb.ek:                                            ; preds = %.thread, %.thread.peel
   %.0632 = phi i32 [ 1, %.thread.peel ], [ %i.xd, %.thread ] ; 3 uses
   %i.ub = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.24, i64 noundef 4)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit424 unwind label %.loopexit616.loopexit.loopexit ; 0 uses
@@ -583,11 +583,10 @@ _ZNSt6vectorIiSaIiEED2Ev.exit451:                 ; preds = %bb.ff, %bb.fg
   br label %.loopexit616
 
 .thread:                                          ; preds = %bb.ew
-  %i.xd = add nuw nsw i32 %.0632, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %i.xd, 11
-  br i1 %exitcond.not, label %.loopexit, label %bb.ek, !llvm.loop !34
+  %i.xd = add nuw nsw i32 %.0632, 1
+  br label %bb.ek, !llvm.loop !34
 
-.loopexit:                                        ; preds = %.thread, %.thread.thread, %_ZNSolsEPFRSoS_E.exit379
+.loopexit:                                        ; preds = %.thread.thread, %_ZNSolsEPFRSoS_E.exit379
   %i.xe = invoke noundef i32 @_ZN2cv7waitKeyEi(i32 noundef 0)
           to label %bb.fh unwind label %bb.bb     ; 0 uses
 

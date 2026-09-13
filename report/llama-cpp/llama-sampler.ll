@@ -205,69 +205,56 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !93   ; 9 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !93   ; 8 uses
   %i.g = icmp ult i64 %i.f, 2
   br i1 %i.g, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %1, align 8, !tbaa !92     ; 7 uses
+  %xtraiter = and i64 %i.f, 1
   %2 = getelementptr inbounds nuw i8, ptr %i.h, i64 4
-  %3 = load float, ptr %2, align 4, !tbaa !290    ; 2 uses
-  %4 = add i64 %i.f, -1                           ; 2 uses
-  %xtraiter.a = and i64 %i.f, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %.epil.preheader, label %.new
-
-.new:                                             ; preds = %bb.c
-  %unroll_iter = and i64 %i.f, -2
+  %3 = load float, ptr %2, align 4, !tbaa !290
+  %xtraiter.a = and i64 %i.f, -2
   br label %bb.e
 
 .unr-lcssa:                                       ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter.a, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.epilog-lcssa, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %.unr-lcssa, %bb.c
-  %.04052.epil.init = phi i64 [ 0, %bb.c ], [ %i.ag, %.unr-lcssa ]
-  %.04151.epil.init = phi i64 [ 0, %bb.c ], [ %.142.1, %.unr-lcssa ] ; 2 uses
-  %.04350.epil.init = phi float [ 0.000000e+00, %bb.c ], [ %.144.1, %.unr-lcssa ] ; 2 uses
-  %.04749.epil.init = phi float [ %3, %bb.c ], [ %.148.1, %.unr-lcssa ] ; 3 uses
+.epil.preheader:                                  ; preds = %.unr-lcssa
   %lcmp.mod83 = trunc i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod83)
-  %i.i = getelementptr inbounds nuw [12 x i8], ptr %i.h, i64 %.04052.epil.init
+  %i.i = getelementptr inbounds nuw [12 x i8], ptr %i.h, i64 %i.ag
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.k = load float, ptr %i.j, align 4, !tbaa !290 ; 4 uses
   %i.l = fcmp une float %i.k, -inf
   br i1 %i.l, label %bb.d, label %.epilog-lcssa
 
 bb.d:                                             ; preds = %.epil.preheader
-  %i.m = fcmp olt float %.04749.epil.init, %i.k
-  %.sroa.speculated.epil = select i1 %i.m, float %i.k, float %.04749.epil.init
-  %i.n = fadd float %.04350.epil.init, %i.k
-  %i.o = add i64 %.04151.epil.init, 1
+  %i.m = fcmp olt float %.148.1, %i.k
+  %.sroa.speculated.epil = select i1 %i.m, float %i.k, float %.148.1
+  %i.n = fadd float %.144.1, %i.k
+  %i.o = add i64 %.142.1, 1
   br label %.epilog-lcssa
 
 .epilog-lcssa:                                    ; preds = %.epil.preheader, %bb.d, %.unr-lcssa
-  %.148.lcssa = phi float [ %.148.1, %.unr-lcssa ], [ %.sroa.speculated.epil, %bb.d ], [ %.04749.epil.init, %.epil.preheader ]
-  %.144.lcssa = phi float [ %.144.1, %.unr-lcssa ], [ %i.n, %bb.d ], [ %.04350.epil.init, %.epil.preheader ]
-  %.142.lcssa = phi i64 [ %.142.1, %.unr-lcssa ], [ %i.o, %bb.d ], [ %.04151.epil.init, %.epil.preheader ] ; 2 uses
+  %.148.lcssa = phi float [ %.148.1, %.unr-lcssa ], [ %.sroa.speculated.epil, %bb.d ], [ %.148.1, %.epil.preheader ]
+  %.144.lcssa = phi float [ %.144.1, %.unr-lcssa ], [ %i.n, %bb.d ], [ %.144.1, %.epil.preheader ]
+  %.142.lcssa = phi i64 [ %.142.1, %.unr-lcssa ], [ %i.o, %bb.d ], [ %.142.1, %.epil.preheader ] ; 2 uses
   %.not = icmp eq i64 %.142.lcssa, 0              ; 2 uses
   %i.p = uitofp i64 %.142.lcssa to float          ; 2 uses
   %i.q = fdiv float %.144.lcssa, %i.p
   %i.r = select i1 %.not, float 0.000000e+00, float %i.q ; 3 uses
   %xtraiter87 = and i64 %i.f, 1
-  %6 = icmp eq i64 %4, 0
-  br i1 %6, label %.epil.preheader86, label %.new84
-
-.new84:                                           ; preds = %.epilog-lcssa
   %unroll_iter92 = and i64 %i.f, -2
   br label %bb.k
 
-bb.e:                                             ; preds = %bb.i, %.new
-  %.04052 = phi i64 [ 0, %.new ], [ %i.ag, %bb.i ] ; 3 uses
-  %.04151 = phi i64 [ 0, %.new ], [ %.142.1, %bb.i ] ; 2 uses
-  %.04350 = phi float [ 0.000000e+00, %.new ], [ %.144.1, %bb.i ] ; 2 uses
-  %.04749 = phi float [ %3, %.new ], [ %.148.1, %bb.i ] ; 3 uses
-  %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %bb.i ]
+bb.e:                                             ; preds = %bb.i, %bb.c
+  %.04052 = phi i64 [ 0, %bb.c ], [ %i.ag, %bb.i ] ; 3 uses
+  %.04151 = phi i64 [ 0, %bb.c ], [ %.142.1, %bb.i ] ; 2 uses
+  %.04350 = phi float [ 0.000000e+00, %bb.c ], [ %.144.1, %bb.i ] ; 2 uses
+  %.04749 = phi float [ %3, %bb.c ], [ %.148.1, %bb.i ] ; 3 uses
+  %niter = phi i64 [ 0, %bb.c ], [ %niter.next.1, %bb.i ]
   %i.s = getelementptr inbounds nuw [12 x i8], ptr %i.h, i64 %.04052
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4
   %i.u = load float, ptr %i.t, align 4, !tbaa !290 ; 4 uses
@@ -299,24 +286,22 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.148.1 = phi float [ %.sroa.speculated.1, %bb.h ], [ %.148, %bb.g ] ; 3 uses
-  %.144.1 = phi float [ %i.ae, %bb.h ], [ %.144, %bb.g ] ; 3 uses
-  %.142.1 = phi i64 [ %i.af, %bb.h ], [ %.142, %bb.g ] ; 3 uses
+  %.148.1 = phi float [ %.sroa.speculated.1, %bb.h ], [ %.148, %bb.g ] ; 5 uses
+  %.144.1 = phi float [ %i.ae, %bb.h ], [ %.144, %bb.g ] ; 4 uses
+  %.142.1 = phi i64 [ %i.af, %bb.h ], [ %.142, %bb.g ] ; 4 uses
   %i.ag = add nuw i64 %.04052, 2                  ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %xtraiter.a
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.e, !llvm.loop !1288
 
 .unr-lcssa85:                                     ; preds = %bb.o
   %lcmp.mod88.not = icmp eq i64 %xtraiter87, 0
   br i1 %lcmp.mod88.not, label %.epilog-lcssa89, label %.epil.preheader86
 
-.epil.preheader86:                                ; preds = %.unr-lcssa85, %.epilog-lcssa
-  %.03854.epil.init = phi i64 [ 0, %.epilog-lcssa ], [ %i.bl, %.unr-lcssa85 ]
-  %.03953.epil.init = phi float [ 0.000000e+00, %.epilog-lcssa ], [ %.1.1, %.unr-lcssa85 ] ; 2 uses
+.epil.preheader86:                                ; preds = %.unr-lcssa85
   %lcmp.mod91 = trunc i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod91)
-  %i.ah = getelementptr inbounds nuw [12 x i8], ptr %i.h, i64 %.03854.epil.init
+  %i.ah = getelementptr inbounds nuw [12 x i8], ptr %i.h, i64 %i.bl
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
   %i.aj = load float, ptr %i.ai, align 4, !tbaa !290 ; 2 uses
   %i.ak = fcmp une float %i.aj, -inf
@@ -326,19 +311,19 @@ bb.j:                                             ; preds = %.epil.preheader86
   %i.al = fsub float %i.aj, %i.r
   %i.am = fpext float %i.al to double
   %i.an = tail call double @pow(double noundef %i.am, double noundef 2.000000e+00) #40
-  %i.ao = fpext float %.03953.epil.init to double
+  %i.ao = fpext float %.1.1 to double
   %i.ap = fadd double %i.an, %i.ao
   %i.aq = fptrunc double %i.ap to float
   br label %.epilog-lcssa89
 
 .epilog-lcssa89:                                  ; preds = %.epil.preheader86, %bb.j, %.unr-lcssa85
-  %.1.lcssa = phi float [ %.1.1, %.unr-lcssa85 ], [ %i.aq, %bb.j ], [ %.03953.epil.init, %.epil.preheader86 ]
+  %.1.lcssa = phi float [ %.1.1, %.unr-lcssa85 ], [ %i.aq, %bb.j ], [ %.1.1, %.epil.preheader86 ]
   br i1 %.not, label %.lr.ph, label %bb.p
 
-bb.k:                                             ; preds = %bb.o, %.new84
-  %.03854 = phi i64 [ 0, %.new84 ], [ %i.bl, %bb.o ] ; 3 uses
-  %.03953 = phi float [ 0.000000e+00, %.new84 ], [ %.1.1, %bb.o ] ; 2 uses
-  %niter93 = phi i64 [ 0, %.new84 ], [ %niter93.next.1, %bb.o ]
+bb.k:                                             ; preds = %bb.o, %.epilog-lcssa
+  %.03854 = phi i64 [ 0, %.epilog-lcssa ], [ %i.bl, %bb.o ] ; 3 uses
+  %.03953 = phi float [ 0.000000e+00, %.epilog-lcssa ], [ %.1.1, %bb.o ] ; 2 uses
+  %niter93 = phi i64 [ 0, %.epilog-lcssa ], [ %niter93.next.1, %bb.o ]
   %i.ar = getelementptr inbounds nuw [12 x i8], ptr %i.h, i64 %.03854
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 4
   %i.at = load float, ptr %i.as, align 4, !tbaa !290 ; 2 uses
@@ -372,7 +357,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %.1.1 = phi float [ %i.bk, %bb.n ], [ %.1, %bb.m ] ; 3 uses
+  %.1.1 = phi float [ %i.bk, %bb.n ], [ %.1, %bb.m ] ; 4 uses
   %i.bl = add nuw i64 %.03854, 2                  ; 2 uses
   %niter93.next.1 = add i64 %niter93, 2           ; 2 uses
   %niter93.ncmp.1 = icmp eq i64 %niter93.next.1, %unroll_iter92

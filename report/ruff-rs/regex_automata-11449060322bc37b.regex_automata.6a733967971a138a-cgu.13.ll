@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.cy, label %bb.p, label %bb.q
 
 ._crit_edge3159:                                  ; preds = %bb.l, %bb.p, %bb.n
-  %.sroa.014.1 = phi i64 [ %i.da, %bb.p ], [ %.sroa.014.01640, %bb.n ], [ %.sroa.014.01640, %bb.l ] ; 29 uses
+  %.sroa.014.1 = phi i64 [ %i.da, %bb.p ], [ %.sroa.014.01640, %bb.n ], [ %.sroa.014.01640, %bb.l ] ; 28 uses
   %.not39 = icmp eq i64 %i.cj, 0
   %brmerge = or i1 %.sroa.0.0, %.not39
   %brmerge.not = xor i1 %brmerge, true
@@ -239,10 +239,9 @@ _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata4util10sparse_setNtB4_9SparseSet4iter.e
   %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.dd, i64 %i.db ; 2 uses
   %i.df = icmp ult i64 %.sroa.014.1, %i.aj        ; 9 uses
   %i.dg = getelementptr i8, ptr %i.ah, i64 %.sroa.014.1 ; 26 uses
-  %i.dh = add i64 %.sroa.014.1, 1                 ; 29 uses
+  %i.dh = add i64 %.sroa.014.1, 1                 ; 28 uses
   %i.di = add i64 %.sroa.014.1, 2                 ; 4 uses
   %.not.i32.i.i = icmp eq i64 %i.di, 0            ; 3 uses
-  %6 = icmp ne i64 %i.dh, -1                      ; 3 uses
   %i.dj = icmp ult i64 %i.dh, %i.aj               ; 24 uses
   %i.dk = getelementptr i8, ptr %i.ah, i64 %i.dh  ; 26 uses
   %i.dl = icmp eq i64 %i.dh, %i.aj                ; 9 uses
@@ -645,7 +644,6 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automat
   br i1 %.not.i32.i.i, label %bb.cl, label %bb.ck, !prof !7
 
 bb.ck:                                            ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson6pikevm13FollowEpsilonE8push_mutBM_.exit93
-  call void @llvm.assume(i1 %6)
   store i64 %i.di, ptr %i.lg, align 8, !alias.scope !970, !noalias !998
   br label %.backedge
 
@@ -1048,7 +1046,6 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automat
   br i1 %.not.i32.i.i, label %bb.eq, label %bb.ep, !prof !7
 
 bb.ep:                                            ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson6pikevm13FollowEpsilonE8push_mutBM_.exit136
-  call void @llvm.assume(i1 %6)
   store i64 %i.di, ptr %i.td, align 8, !alias.scope !1011, !noalias !1039
   br label %.backedge367
 
@@ -1451,7 +1448,6 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automat
   br i1 %.not.i32.i.i, label %bb.ge, label %bb.gd, !prof !7
 
 bb.gd:                                            ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson6pikevm13FollowEpsilonE8push_mutBM_.exit175
-  call void @llvm.assume(i1 %6)
   store i64 %i.di, ptr %i.aan, align 8, !alias.scope !1052, !noalias !1079
   br label %.backedge368
 
@@ -1532,7 +1528,6 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automat
 .lr.ph1603:                                       ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson6pikevm13FollowEpsilonE8push_mutBM_.exit179
   %i.abo = add i64 %.sroa.014.1, 1                ; 2 uses
   %.not.i = icmp eq i64 %i.abo, 0
-  %7 = icmp ne i64 %.sroa.014.1, -1
   %i.abp = icmp ult i64 %.sroa.014.1, %i.aj       ; 9 uses
   %i.abq = getelementptr i8, ptr %i.ah, i64 %.sroa.014.1 ; 10 uses
   %.not.i210 = icmp eq i64 %.sroa.014.1, 0        ; 9 uses
@@ -1935,7 +1930,6 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automat
   br i1 %.not.i, label %bb.ix, label %bb.iw, !prof !7
 
 bb.iw:                                            ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson6pikevm13FollowEpsilonE8push_mutBM_.exit214
-  call void @llvm.assume(i1 %7)
   store i64 %i.abo, ptr %i.aih, align 8, !alias.scope !1090, !noalias !1118
   br label %.backedge372
 
@@ -2338,10 +2332,9 @@ _RNvMs_NtNtCs98D8VPWzHuM_14regex_automata4util10sparse_setNtB4_9SparseSet4iter.e
   %i.jn = icmp ult i64 %.sroa.0.02281358, %i.ag   ; 10 uses
   %i.jo = icmp eq i64 %.sroa.0.02281358, %i.ag
   %i.jp = getelementptr i8, ptr %i.bl, i64 %.sroa.0.02281358 ; 27 uses
-  %i.jq = add i64 %.sroa.0.02281358, 1            ; 27 uses
+  %i.jq = add i64 %.sroa.0.02281358, 1            ; 26 uses
   %i.jr = add i64 %.sroa.0.02281358, 2            ; 4 uses
   %.not.i32.i = icmp eq i64 %i.jr, 0              ; 3 uses
-  %4 = icmp ne i64 %i.jq, -1                      ; 3 uses
   %i.js = icmp ult i64 %i.jq, %i.ag               ; 24 uses
   %i.jt = getelementptr i8, ptr %i.bl, i64 %i.jq  ; 26 uses
   %i.ju = icmp eq i64 %i.jq, %i.ag                ; 9 uses
@@ -2744,7 +2737,6 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automat
   br i1 %.not.i32.i, label %bb.es, label %bb.er, !prof !7
 
 bb.er:                                            ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson6pikevm13FollowEpsilonE8push_mutBM_.exit108
-  tail call void @llvm.assume(i1 %4)
   store i64 %i.jr, ptr %i.rh, align 8, !alias.scope !1384, !noalias !1412
   br label %.backedge
 
@@ -3147,7 +3139,6 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automat
   br i1 %.not.i32.i, label %bb.gx, label %bb.gw, !prof !7
 
 bb.gw:                                            ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson6pikevm13FollowEpsilonE8push_mutBM_.exit151
-  tail call void @llvm.assume(i1 %4)
   store i64 %i.jr, ptr %i.ze, align 8, !alias.scope !1425, !noalias !1453
   br label %.backedge355
 
@@ -3550,7 +3541,6 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automat
   br i1 %.not.i32.i, label %bb.il, label %bb.ik, !prof !7
 
 bb.ik:                                            ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs98D8VPWzHuM_14regex_automata3nfa8thompson6pikevm13FollowEpsilonE8push_mutBM_.exit190
-  tail call void @llvm.assume(i1 %4)
   store i64 %i.jr, ptr %i.ago, align 8, !alias.scope !1466, !noalias !1493
   br label %.backedge356
 

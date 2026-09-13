@@ -202,23 +202,19 @@ bb.bi:                                            ; preds = %_ZNSt6vectorISt4pai
   %i.ro = sub i64 %i.rm, %i.rn
   %i.rp = ashr exact i64 %i.ro, 5                 ; 2 uses
   %i.rq = icmp ugt i64 %i.rp, 1
-  br i1 %i.rq, label %.preheader791, label %.loopexit792
+  br i1 %i.rq, label %.preheader.us.preheader, label %.loopexit792
 
-.preheader791:                                    ; preds = %bb.bi
-  %19 = add nsw i64 %i.rp, -1                     ; 2 uses
-  %.not982 = icmp eq i64 %19, 0
-  br i1 %.not982, label %.loopexit792, label %.preheader.us.preheader
-
-.preheader.us.preheader:                          ; preds = %.preheader791
+.preheader.us.preheader:                          ; preds = %bb.bi
+  %19 = add nsw i64 %i.rp, -2
+  %20 = shufflevector <3 x double> %i.qc, <3 x double> poison, <2 x i32> zeroinitializer
   %i.rr = shufflevector <3 x double> %i.qc, <3 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.rs = shufflevector <3 x double> %i.qc, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %20 = shufflevector <3 x double> %i.qc, <3 x double> poison, <2 x i32> zeroinitializer
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %.preheader.us.preheader, %bb.bk
-  %.0185916.us = phi i64 [ %.mux, %bb.bk ], [ 0, %.preheader.us.preheader ] ; 2 uses
+.preheader.us:                                    ; preds = %bb.bk, %.preheader.us.preheader
+  %.0185916.us = phi i64 [ %.mux, %bb.bk ], [ 0, %.preheader.us.preheader ] ; 3 uses
   %.1187915.us = phi i1 [ %.2188.us.mux, %bb.bk ], [ false, %.preheader.us.preheader ]
-  %i.rt = add nuw i64 %.0185916.us, 1             ; 3 uses
+  %i.rt = add nuw i64 %.0185916.us, 1             ; 2 uses
   %i.ru = getelementptr inbounds nuw [32 x i8], ptr %i.rl, i64 %i.rt ; 4 uses
   %i.rv = getelementptr inbounds nuw i8, ptr %i.ru, i64 8 ; 3 uses
   %i.rw = getelementptr inbounds nuw i8, ptr %i.ru, i64 24
@@ -256,7 +252,7 @@ bb.bj:                                            ; preds = %.preheader.us
 
 bb.bk:                                            ; preds = %bb.bj, %.preheader.us
   %.2188.us = phi i1 [ true, %bb.bj ], [ %.1187915.us, %.preheader.us ] ; 2 uses
-  %exitcond1065.not.a = icmp ne i64 %i.rt, %19    ; 3 uses
+  %exitcond1065.not.a = icmp ne i64 %.0185916.us, %19 ; 3 uses
   %brmerge = select i1 %exitcond1065.not.a, i1 true, i1 %.2188.us
   %.mux = select i1 %exitcond1065.not.a, i64 %i.rt, i64 0
   %.2188.us.mux = select i1 %exitcond1065.not.a, i1 %.2188.us, i1 false
@@ -267,7 +263,7 @@ bb.bl:                                            ; preds = %_ZNSt6vectorISt4pai
           cleanup
   br label %bb.bq
 
-.loopexit792:                                     ; preds = %bb.bk, %.preheader791, %bb.bi
+.loopexit792:                                     ; preds = %bb.bk, %bb.bi
   %.not983 = icmp eq ptr %i.rk, %i.rl
   br i1 %.not983, label %._crit_edge, label %.lr.ph
 

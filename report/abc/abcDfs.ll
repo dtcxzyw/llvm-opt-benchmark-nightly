@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %.val.i = load ptr, ptr %i.g, align 8, !tbaa !33
   %i.h = getelementptr i8, ptr %.val.i, i64 4
   %.val.val.i = load i32, ptr %i.h, align 4, !tbaa !40 ; 3 uses
-  %i.i = add nsw i32 %.val.val.i, 500             ; 8 uses
+  %i.i = add nsw i32 %.val.val.i, 500             ; 7 uses
   %i.j = load i32, ptr %i.f, align 8, !tbaa !43
   %.not.i.i.i = icmp slt i32 %i.j, %i.i
   br i1 %.not.i.i.i, label %Vec_IntGrow.exit.i.i, label %Vec_IntGrow.exit.i.i.thread
@@ -234,15 +234,15 @@ Abc_NtkIncrementTravId.exit:                      ; preds = %Vec_IntGrow.exit.i.
   %.pr42 = phi ptr [ null, %Vec_IntGrow.exit.i.i.thread ], [ %i.m, %Vec_IntGrow.exit.i.i ] ; 2 uses
   %i.t = zext nneg i32 %i.i to i64
   %i.u = shl nuw nsw i64 %i.t, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %.pr42, i8 0, i64 %i.u, i1 false), !tbaa !37
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 228 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %.pr42, i8 0, i64 %i.u, i1 false), !tbaa !37
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 228
   store i32 %i.i, ptr %i.v, align 4, !tbaa !42
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 4 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 3 uses
   %i.x = load i32, ptr %i.w, align 8, !tbaa !45
-  %i.y = add nsw i32 %i.x, 1                      ; 3 uses
+  %i.y = add nsw i32 %i.x, 1                      ; 2 uses
   store i32 %i.y, ptr %i.w, align 8, !tbaa !45
-  %.not.i20 = icmp eq ptr %.pr42, null
-  br i1 %.not.i20, label %.lr.ph.i.i26, label %Abc_NtkIncrementTravId.exit27
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.pr42) ]
+  br label %Abc_NtkIncrementTravId.exit27
 
 Abc_NtkIncrementTravId.exit.thread39:             ; preds = %Vec_IntGrow.exit.i.i
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 228 ; 2 uses
@@ -254,21 +254,16 @@ Abc_NtkIncrementTravId.exit.thread39:             ; preds = %Vec_IntGrow.exit.i.
   %.not.i2040 = icmp eq ptr %i.m, null
   br i1 %.not.i2040, label %Vec_IntFill.exit.i25, label %Abc_NtkIncrementTravId.exit27
 
-.lr.ph.i.i26:                                     ; preds = %Abc_NtkIncrementTravId.exit
-  %1 = icmp eq i32 %i.i, 0
-  tail call void @llvm.assume(i1 %1)
-  br label %Vec_IntFill.exit.i25
-
-Vec_IntFill.exit.i25:                             ; preds = %Abc_NtkIncrementTravId.exit.thread39, %Abc_NtkIncrementTravId.exit.thread39.thread, %.lr.ph.i.i26
-  %2 = phi ptr [ %i.z, %Abc_NtkIncrementTravId.exit.thread39 ], [ %i.v, %.lr.ph.i.i26 ], [ %i.p, %Abc_NtkIncrementTravId.exit.thread39.thread ]
-  %3 = phi ptr [ %i.aa, %Abc_NtkIncrementTravId.exit.thread39 ], [ %i.w, %.lr.ph.i.i26 ], [ %i.q, %Abc_NtkIncrementTravId.exit.thread39.thread ]
-  %4 = phi i32 [ %i.ac, %Abc_NtkIncrementTravId.exit.thread39 ], [ %i.y, %.lr.ph.i.i26 ], [ %i.s, %Abc_NtkIncrementTravId.exit.thread39.thread ]
-  store i32 %i.i, ptr %2, align 4, !tbaa !42
+Vec_IntFill.exit.i25:                             ; preds = %Abc_NtkIncrementTravId.exit.thread39, %Abc_NtkIncrementTravId.exit.thread39.thread
+  %1 = phi ptr [ %i.z, %Abc_NtkIncrementTravId.exit.thread39 ], [ %i.p, %Abc_NtkIncrementTravId.exit.thread39.thread ]
+  %2 = phi ptr [ %i.aa, %Abc_NtkIncrementTravId.exit.thread39 ], [ %i.q, %Abc_NtkIncrementTravId.exit.thread39.thread ]
+  %3 = phi i32 [ %i.ac, %Abc_NtkIncrementTravId.exit.thread39 ], [ %i.s, %Abc_NtkIncrementTravId.exit.thread39.thread ]
+  store i32 %i.i, ptr %1, align 4, !tbaa !42
   br label %Abc_NtkIncrementTravId.exit27
 
-Abc_NtkIncrementTravId.exit27:                    ; preds = %Abc_NtkIncrementTravId.exit.thread39, %Abc_NtkIncrementTravId.exit.thread, %Abc_NtkIncrementTravId.exit, %Vec_IntFill.exit.i25
-  %i.ad = phi i32 [ %i.e, %Abc_NtkIncrementTravId.exit.thread ], [ %i.y, %Abc_NtkIncrementTravId.exit ], [ %4, %Vec_IntFill.exit.i25 ], [ %i.ac, %Abc_NtkIncrementTravId.exit.thread39 ]
-  %i.ae = phi ptr [ %i.c, %Abc_NtkIncrementTravId.exit.thread ], [ %i.w, %Abc_NtkIncrementTravId.exit ], [ %3, %Vec_IntFill.exit.i25 ], [ %i.aa, %Abc_NtkIncrementTravId.exit.thread39 ]
+Abc_NtkIncrementTravId.exit27:                    ; preds = %Abc_NtkIncrementTravId.exit, %Abc_NtkIncrementTravId.exit.thread39, %Abc_NtkIncrementTravId.exit.thread, %Vec_IntFill.exit.i25
+  %i.ad = phi i32 [ %i.e, %Abc_NtkIncrementTravId.exit.thread ], [ %i.y, %Abc_NtkIncrementTravId.exit ], [ %3, %Vec_IntFill.exit.i25 ], [ %i.ac, %Abc_NtkIncrementTravId.exit.thread39 ]
+  %i.ae = phi ptr [ %i.c, %Abc_NtkIncrementTravId.exit.thread ], [ %i.w, %Abc_NtkIncrementTravId.exit ], [ %2, %Vec_IntFill.exit.i25 ], [ %i.aa, %Abc_NtkIncrementTravId.exit.thread39 ]
   %i.af = add nsw i32 %i.ad, 1
   store i32 %i.af, ptr %i.ae, align 8, !tbaa !45
   %i.ag = getelementptr i8, ptr %0, i64 64        ; 2 uses

@@ -205,13 +205,10 @@ bb.f:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 1 ; 2 uses
   %i.u = add i64 %i.n, -1                         ; 3 uses
   %i.v = icmp ult i64 %i.n, 17
-  %.not92112.i.i.i = icmp eq i64 %i.u, 0          ; 2 uses
-  br i1 %i.v, label %.preheader100.i.i.i, label %.preheader102.i.i.i.preheader
-
-.preheader102.i.i.i.preheader:                    ; preds = %bb.f
-  br i1 %.not92112.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph104
+  br i1 %i.v, label %.preheader100.i.i.i, label %.lr.ph104
 
 .preheader100.i.i.i:                              ; preds = %bb.f
+  %.not92112.i.i.i = icmp eq i64 %i.u, 0
   br i1 %.not92112.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph.i.i.i
 
 bb.g:                                             ; preds = %bb.m
@@ -224,10 +221,10 @@ bb.g:                                             ; preds = %bb.m
   %.not91.i.i.i = icmp eq i64 %i.z, 0
   br i1 %.not91.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph104
 
-.lr.ph104:                                        ; preds = %.preheader102.i.i.i.preheader, %.preheader102.i.i.i
-  %.sroa.0.2.i.i.i103 = phi ptr [ %i.y, %.preheader102.i.i.i ], [ %i.t, %.preheader102.i.i.i.preheader ] ; 2 uses
-  %.sroa.27.2.i.i.i102 = phi i64 [ %i.z, %.preheader102.i.i.i ], [ %i.u, %.preheader102.i.i.i.preheader ]
-  %.sroa.070.2.i.i.i101 = phi i64 [ %i.x, %.preheader102.i.i.i ], [ 0, %.preheader102.i.i.i.preheader ]
+.lr.ph104:                                        ; preds = %bb.f, %.preheader102.i.i.i
+  %.sroa.0.2.i.i.i103 = phi ptr [ %i.y, %.preheader102.i.i.i ], [ %i.t, %bb.f ] ; 2 uses
+  %.sroa.27.2.i.i.i102 = phi i64 [ %i.z, %.preheader102.i.i.i ], [ %i.u, %bb.f ]
+  %.sroa.070.2.i.i.i101 = phi i64 [ %i.x, %.preheader102.i.i.i ], [ 0, %bb.f ]
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.2.i.i.i103, i64 1
   %i.z = add i64 %.sroa.27.2.i.i.i102, -1         ; 2 uses
   %i.aa = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.070.2.i.i.i101, i64 10) ; 2 uses
@@ -340,8 +337,8 @@ bb.o:                                             ; preds = %.loopexit.i.i
   %i.bq = invoke noundef nonnull align 8 ptr @"_ZN66_$LT$serde_json..error..Error$u20$as$u20$serde_core..de..Error$GT$6custom17h24dce92bc84f4965E"(i8 noundef %.sroa.5.0.ph.i.i)
           to label %bb.p unwind label %bb.o, !noalias !834
 
-"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i": ; preds = %.preheader102.i.i.i, %bb.j, %bb.g, %bb.n, %.preheader102.i.i.i.preheader, %.preheader98.i.i.i, %.preheader.i.i.i, %.preheader100.i.i.i
-  %.sroa.161.0.i.i = phi i64 [ %i.bo, %bb.n ], [ %i.w, %bb.g ], [ %i.as, %bb.j ], [ 0, %.preheader.i.i.i ], [ 0, %.preheader100.i.i.i ], [ 0, %.preheader98.i.i.i ], [ 0, %.preheader102.i.i.i.preheader ], [ %i.x, %.preheader102.i.i.i ]
+"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i": ; preds = %.preheader102.i.i.i, %bb.j, %bb.g, %bb.n, %.preheader98.i.i.i, %.preheader.i.i.i, %.preheader100.i.i.i
+  %.sroa.161.0.i.i = phi i64 [ %i.bo, %bb.n ], [ %i.w, %bb.g ], [ %i.as, %bb.j ], [ 0, %.preheader.i.i.i ], [ 0, %.preheader100.i.i.i ], [ 0, %.preheader98.i.i.i ], [ %i.x, %.preheader102.i.i.i ]
   %i.br = inttoptr i64 %.sroa.161.0.i.i to ptr
   br label %bb.p
 
@@ -744,13 +741,10 @@ bb.f:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 1 ; 2 uses
   %i.u = add i64 %i.n, -1                         ; 3 uses
   %i.v = icmp ult i64 %i.n, 17
-  %.not92112.i.i.i = icmp eq i64 %i.u, 0          ; 2 uses
-  br i1 %i.v, label %.preheader100.i.i.i, label %.preheader102.i.i.i.preheader
-
-.preheader102.i.i.i.preheader:                    ; preds = %bb.f
-  br i1 %.not92112.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph104
+  br i1 %i.v, label %.preheader100.i.i.i, label %.lr.ph104
 
 .preheader100.i.i.i:                              ; preds = %bb.f
+  %.not92112.i.i.i = icmp eq i64 %i.u, 0
   br i1 %.not92112.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph.i.i.i
 
 bb.g:                                             ; preds = %bb.m
@@ -763,10 +757,10 @@ bb.g:                                             ; preds = %bb.m
   %.not91.i.i.i = icmp eq i64 %i.z, 0
   br i1 %.not91.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph104
 
-.lr.ph104:                                        ; preds = %.preheader102.i.i.i.preheader, %.preheader102.i.i.i
-  %.sroa.0.2.i.i.i103 = phi ptr [ %i.y, %.preheader102.i.i.i ], [ %i.t, %.preheader102.i.i.i.preheader ] ; 2 uses
-  %.sroa.27.2.i.i.i102 = phi i64 [ %i.z, %.preheader102.i.i.i ], [ %i.u, %.preheader102.i.i.i.preheader ]
-  %.sroa.070.2.i.i.i101 = phi i64 [ %i.x, %.preheader102.i.i.i ], [ 0, %.preheader102.i.i.i.preheader ]
+.lr.ph104:                                        ; preds = %bb.f, %.preheader102.i.i.i
+  %.sroa.0.2.i.i.i103 = phi ptr [ %i.y, %.preheader102.i.i.i ], [ %i.t, %bb.f ] ; 2 uses
+  %.sroa.27.2.i.i.i102 = phi i64 [ %i.z, %.preheader102.i.i.i ], [ %i.u, %bb.f ]
+  %.sroa.070.2.i.i.i101 = phi i64 [ %i.x, %.preheader102.i.i.i ], [ 0, %bb.f ]
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.2.i.i.i103, i64 1
   %i.z = add i64 %.sroa.27.2.i.i.i102, -1         ; 2 uses
   %i.aa = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.070.2.i.i.i101, i64 10) ; 2 uses
@@ -879,8 +873,8 @@ bb.o:                                             ; preds = %.loopexit.i.i
   %i.bq = invoke noundef nonnull align 8 ptr @"_ZN66_$LT$serde_json..error..Error$u20$as$u20$serde_core..de..Error$GT$6custom17h24dce92bc84f4965E"(i8 noundef %.sroa.5.0.ph.i.i)
           to label %bb.p unwind label %bb.o, !noalias !1183
 
-"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i": ; preds = %.preheader102.i.i.i, %bb.j, %bb.g, %bb.n, %.preheader102.i.i.i.preheader, %.preheader98.i.i.i, %.preheader.i.i.i, %.preheader100.i.i.i
-  %.sroa.161.0.i.i = phi i64 [ %i.bo, %bb.n ], [ %i.w, %bb.g ], [ %i.as, %bb.j ], [ 0, %.preheader.i.i.i ], [ 0, %.preheader100.i.i.i ], [ 0, %.preheader98.i.i.i ], [ 0, %.preheader102.i.i.i.preheader ], [ %i.x, %.preheader102.i.i.i ]
+"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i": ; preds = %.preheader102.i.i.i, %bb.j, %bb.g, %bb.n, %.preheader98.i.i.i, %.preheader.i.i.i, %.preheader100.i.i.i
+  %.sroa.161.0.i.i = phi i64 [ %i.bo, %bb.n ], [ %i.w, %bb.g ], [ %i.as, %bb.j ], [ 0, %.preheader.i.i.i ], [ 0, %.preheader100.i.i.i ], [ 0, %.preheader98.i.i.i ], [ %i.x, %.preheader102.i.i.i ]
   %i.br = inttoptr i64 %.sroa.161.0.i.i to ptr
   br label %bb.p
 
@@ -1230,13 +1224,10 @@ bb.f:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 1 ; 2 uses
   %i.u = add i64 %i.n, -1                         ; 3 uses
   %i.v = icmp ult i64 %i.n, 17
-  %.not92112.i.i.i = icmp eq i64 %i.u, 0          ; 2 uses
-  br i1 %i.v, label %.preheader100.i.i.i, label %.preheader102.i.i.i.preheader
-
-.preheader102.i.i.i.preheader:                    ; preds = %bb.f
-  br i1 %.not92112.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph104
+  br i1 %i.v, label %.preheader100.i.i.i, label %.lr.ph104
 
 .preheader100.i.i.i:                              ; preds = %bb.f
+  %.not92112.i.i.i = icmp eq i64 %i.u, 0
   br i1 %.not92112.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph.i.i.i
 
 bb.g:                                             ; preds = %bb.m
@@ -1249,10 +1240,10 @@ bb.g:                                             ; preds = %bb.m
   %.not91.i.i.i = icmp eq i64 %i.z, 0
   br i1 %.not91.i.i.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i", label %.lr.ph104
 
-.lr.ph104:                                        ; preds = %.preheader102.i.i.i.preheader, %.preheader102.i.i.i
-  %.sroa.0.2.i.i.i103 = phi ptr [ %i.y, %.preheader102.i.i.i ], [ %i.t, %.preheader102.i.i.i.preheader ] ; 2 uses
-  %.sroa.27.2.i.i.i102 = phi i64 [ %i.z, %.preheader102.i.i.i ], [ %i.u, %.preheader102.i.i.i.preheader ]
-  %.sroa.070.2.i.i.i101 = phi i64 [ %i.x, %.preheader102.i.i.i ], [ 0, %.preheader102.i.i.i.preheader ]
+.lr.ph104:                                        ; preds = %bb.f, %.preheader102.i.i.i
+  %.sroa.0.2.i.i.i103 = phi ptr [ %i.y, %.preheader102.i.i.i ], [ %i.t, %bb.f ] ; 2 uses
+  %.sroa.27.2.i.i.i102 = phi i64 [ %i.z, %.preheader102.i.i.i ], [ %i.u, %bb.f ]
+  %.sroa.070.2.i.i.i101 = phi i64 [ %i.x, %.preheader102.i.i.i ], [ 0, %bb.f ]
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.2.i.i.i103, i64 1
   %i.z = add i64 %.sroa.27.2.i.i.i102, -1         ; 2 uses
   %i.aa = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.070.2.i.i.i101, i64 10) ; 2 uses
@@ -1365,8 +1356,8 @@ bb.o:                                             ; preds = %.loopexit.i.i
   %i.bq = invoke noundef nonnull align 8 ptr @"_ZN66_$LT$serde_json..error..Error$u20$as$u20$serde_core..de..Error$GT$6custom17h24dce92bc84f4965E"(i8 noundef %.sroa.5.0.ph.i.i)
           to label %bb.p unwind label %bb.o, !noalias !1216
 
-"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i": ; preds = %.preheader102.i.i.i, %bb.j, %bb.g, %bb.n, %.preheader102.i.i.i.preheader, %.preheader98.i.i.i, %.preheader.i.i.i, %.preheader100.i.i.i
-  %.sroa.161.0.i.i = phi i64 [ %i.bo, %bb.n ], [ %i.w, %bb.g ], [ %i.as, %bb.j ], [ 0, %.preheader.i.i.i ], [ 0, %.preheader100.i.i.i ], [ 0, %.preheader98.i.i.i ], [ 0, %.preheader102.i.i.i.preheader ], [ %i.x, %.preheader102.i.i.i ]
+"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit.i.i": ; preds = %.preheader102.i.i.i, %bb.j, %bb.g, %bb.n, %.preheader98.i.i.i, %.preheader.i.i.i, %.preheader100.i.i.i
+  %.sroa.161.0.i.i = phi i64 [ %i.bo, %bb.n ], [ %i.w, %bb.g ], [ %i.as, %bb.j ], [ 0, %.preheader.i.i.i ], [ 0, %.preheader100.i.i.i ], [ 0, %.preheader98.i.i.i ], [ %i.x, %.preheader102.i.i.i ]
   %i.br = inttoptr i64 %.sroa.161.0.i.i to ptr
   br label %bb.p
 
@@ -1769,13 +1760,10 @@ bb.e:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.h = add i64 %2, -1                           ; 3 uses
   %i.i = icmp ult i64 %2, 17
-  %.not92112.i = icmp eq i64 %i.h, 0              ; 2 uses
-  br i1 %i.i, label %.preheader100.i, label %.preheader102.i.preheader
-
-.preheader102.i.preheader:                        ; preds = %bb.e
-  br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
+  br i1 %i.i, label %.preheader100.i, label %.lr.ph.a
 
 .preheader100.i:                                  ; preds = %bb.e
+  %.not92112.i = icmp eq i64 %i.h, 0
   br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.l
@@ -1788,10 +1776,10 @@ bb.f:                                             ; preds = %bb.l
   %.not91.i = icmp eq i64 %i.m, 0
   br i1 %.not91.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader102.i.preheader, %.preheader102.i
-  %.sroa.0.2.i56 = phi ptr [ %i.l, %.preheader102.i ], [ %i.g, %.preheader102.i.preheader ] ; 2 uses
-  %.sroa.27.2.i55 = phi i64 [ %i.m, %.preheader102.i ], [ %i.h, %.preheader102.i.preheader ]
-  %.sroa.070.2.i54 = phi i64 [ %i.k, %.preheader102.i ], [ 0, %.preheader102.i.preheader ]
+.lr.ph.a:                                         ; preds = %bb.e, %.preheader102.i
+  %.sroa.0.2.i56 = phi ptr [ %i.l, %.preheader102.i ], [ %i.g, %bb.e ] ; 2 uses
+  %.sroa.27.2.i55 = phi i64 [ %i.m, %.preheader102.i ], [ %i.h, %bb.e ]
+  %.sroa.070.2.i54 = phi i64 [ %i.k, %.preheader102.i ], [ 0, %bb.e ]
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.2.i56, i64 1
   %i.m = add i64 %.sroa.27.2.i55, -1              ; 2 uses
   %i.n = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.070.2.i54, i64 10) ; 2 uses
@@ -1921,8 +1909,8 @@ bb.n:                                             ; preds = %.loopexit
   store i64 %2, ptr %.sroa.56.0..sroa_idx, align 8
   br label %bb.o
 
-"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader102.i.preheader, %.preheader98.i, %.preheader.i, %.preheader100.i
-  %.sroa.141.0 = phi i64 [ %i.bb, %bb.m ], [ %i.j, %bb.f ], [ %i.af, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ 0, %.preheader102.i.preheader ], [ %i.k, %.preheader102.i ]
+"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader98.i, %.preheader.i, %.preheader100.i
+  %.sroa.141.0 = phi i64 [ %i.bb, %bb.m ], [ %i.j, %bb.f ], [ %i.af, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ %i.k, %.preheader102.i ]
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.141.0, ptr %i.bk, align 8
   store i64 -9223372036854775808, ptr %0, align 8
@@ -2325,13 +2313,10 @@ bb.e:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.g = add i64 %2, -1                           ; 3 uses
   %i.h = icmp ult i64 %2, 17
-  %.not92112.i = icmp eq i64 %i.g, 0              ; 2 uses
-  br i1 %i.h, label %.preheader100.i, label %.preheader102.i.preheader
-
-.preheader102.i.preheader:                        ; preds = %bb.e
-  br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
+  br i1 %i.h, label %.preheader100.i, label %.lr.ph.a
 
 .preheader100.i:                                  ; preds = %bb.e
+  %.not92112.i = icmp eq i64 %i.g, 0
   br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.l
@@ -2344,10 +2329,10 @@ bb.f:                                             ; preds = %bb.l
   %.not91.i = icmp eq i64 %i.l, 0
   br i1 %.not91.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader102.i.preheader, %.preheader102.i
-  %.sroa.0.2.i57 = phi ptr [ %i.k, %.preheader102.i ], [ %i.f, %.preheader102.i.preheader ] ; 2 uses
-  %.sroa.27.2.i56 = phi i64 [ %i.l, %.preheader102.i ], [ %i.g, %.preheader102.i.preheader ]
-  %.sroa.070.2.i55 = phi i64 [ %i.j, %.preheader102.i ], [ 0, %.preheader102.i.preheader ]
+.lr.ph.a:                                         ; preds = %bb.e, %.preheader102.i
+  %.sroa.0.2.i57 = phi ptr [ %i.k, %.preheader102.i ], [ %i.f, %bb.e ] ; 2 uses
+  %.sroa.27.2.i56 = phi i64 [ %i.l, %.preheader102.i ], [ %i.g, %bb.e ]
+  %.sroa.070.2.i55 = phi i64 [ %i.j, %.preheader102.i ], [ 0, %bb.e ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.2.i57, i64 1
   %i.l = add i64 %.sroa.27.2.i56, -1              ; 2 uses
   %i.m = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.070.2.i55, i64 10) ; 2 uses
@@ -2455,8 +2440,8 @@ bb.m:                                             ; preds = %.lr.ph120.i
   store i8 %.sroa.4.0.ph, ptr %i.bb, align 1
   br label %bb.n
 
-"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader102.i.preheader, %.preheader98.i, %.preheader.i, %.preheader100.i
-  %.sroa.151.0 = phi i64 [ %i.ba, %bb.m ], [ %i.i, %bb.f ], [ %i.ae, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ 0, %.preheader102.i.preheader ], [ %i.j, %.preheader102.i ]
+"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader98.i, %.preheader.i, %.preheader100.i
+  %.sroa.151.0 = phi i64 [ %i.ba, %bb.m ], [ %i.i, %bb.f ], [ %i.ae, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ %i.j, %.preheader102.i ]
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.151.0, ptr %i.bc, align 8
   br label %bb.n
@@ -2859,13 +2844,10 @@ bb.e:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.g = add i64 %2, -1                           ; 3 uses
   %i.h = icmp ult i64 %2, 17
-  %.not92112.i = icmp eq i64 %i.g, 0              ; 2 uses
-  br i1 %i.h, label %.preheader100.i, label %.preheader102.i.preheader
-
-.preheader102.i.preheader:                        ; preds = %bb.e
-  br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
+  br i1 %i.h, label %.preheader100.i, label %.lr.ph.a
 
 .preheader100.i:                                  ; preds = %bb.e
+  %.not92112.i = icmp eq i64 %i.g, 0
   br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.l
@@ -2878,10 +2860,10 @@ bb.f:                                             ; preds = %bb.l
   %.not91.i = icmp eq i64 %i.l, 0
   br i1 %.not91.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader102.i.preheader, %.preheader102.i
-  %.sroa.0.2.i57 = phi ptr [ %i.k, %.preheader102.i ], [ %i.f, %.preheader102.i.preheader ] ; 2 uses
-  %.sroa.27.2.i56 = phi i64 [ %i.l, %.preheader102.i ], [ %i.g, %.preheader102.i.preheader ]
-  %.sroa.070.2.i55 = phi i64 [ %i.j, %.preheader102.i ], [ 0, %.preheader102.i.preheader ]
+.lr.ph.a:                                         ; preds = %bb.e, %.preheader102.i
+  %.sroa.0.2.i57 = phi ptr [ %i.k, %.preheader102.i ], [ %i.f, %bb.e ] ; 2 uses
+  %.sroa.27.2.i56 = phi i64 [ %i.l, %.preheader102.i ], [ %i.g, %bb.e ]
+  %.sroa.070.2.i55 = phi i64 [ %i.j, %.preheader102.i ], [ 0, %bb.e ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.2.i57, i64 1
   %i.l = add i64 %.sroa.27.2.i56, -1              ; 2 uses
   %i.m = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.070.2.i55, i64 10) ; 2 uses
@@ -2989,8 +2971,8 @@ bb.m:                                             ; preds = %.lr.ph120.i
   store i8 %.sroa.4.0.ph, ptr %i.bb, align 1
   br label %bb.n
 
-"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader102.i.preheader, %.preheader98.i, %.preheader.i, %.preheader100.i
-  %.sroa.151.0 = phi i64 [ %i.ba, %bb.m ], [ %i.i, %bb.f ], [ %i.ae, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ 0, %.preheader102.i.preheader ], [ %i.j, %.preheader102.i ]
+"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader98.i, %.preheader.i, %.preheader100.i
+  %.sroa.151.0 = phi i64 [ %i.ba, %bb.m ], [ %i.i, %bb.f ], [ %i.ae, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ %i.j, %.preheader102.i ]
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.151.0, ptr %i.bc, align 8
   br label %bb.n
@@ -3037,13 +3019,10 @@ bb.e:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.g = add i64 %2, -1                           ; 3 uses
   %i.h = icmp ult i64 %2, 17
-  %.not92112.i = icmp eq i64 %i.g, 0              ; 2 uses
-  br i1 %i.h, label %.preheader100.i, label %.preheader102.i.preheader
-
-.preheader102.i.preheader:                        ; preds = %bb.e
-  br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
+  br i1 %i.h, label %.preheader100.i, label %.lr.ph.a
 
 .preheader100.i:                                  ; preds = %bb.e
+  %.not92112.i = icmp eq i64 %i.g, 0
   br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.l
@@ -3056,10 +3035,10 @@ bb.f:                                             ; preds = %bb.l
   %.not91.i = icmp eq i64 %i.l, 0
   br i1 %.not91.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader102.i.preheader, %.preheader102.i
-  %.sroa.0.2.i57 = phi ptr [ %i.k, %.preheader102.i ], [ %i.f, %.preheader102.i.preheader ] ; 2 uses
-  %.sroa.27.2.i56 = phi i64 [ %i.l, %.preheader102.i ], [ %i.g, %.preheader102.i.preheader ]
-  %.sroa.070.2.i55 = phi i64 [ %i.j, %.preheader102.i ], [ 0, %.preheader102.i.preheader ]
+.lr.ph.a:                                         ; preds = %bb.e, %.preheader102.i
+  %.sroa.0.2.i57 = phi ptr [ %i.k, %.preheader102.i ], [ %i.f, %bb.e ] ; 2 uses
+  %.sroa.27.2.i56 = phi i64 [ %i.l, %.preheader102.i ], [ %i.g, %bb.e ]
+  %.sroa.070.2.i55 = phi i64 [ %i.j, %.preheader102.i ], [ 0, %bb.e ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.2.i57, i64 1
   %i.l = add i64 %.sroa.27.2.i56, -1              ; 2 uses
   %i.m = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.070.2.i55, i64 10) ; 2 uses
@@ -3167,8 +3146,8 @@ bb.m:                                             ; preds = %.lr.ph120.i
   store i8 %.sroa.4.0.ph, ptr %i.bb, align 1
   br label %bb.n
 
-"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader102.i.preheader, %.preheader98.i, %.preheader.i, %.preheader100.i
-  %.sroa.151.0 = phi i64 [ %i.ba, %bb.m ], [ %i.i, %bb.f ], [ %i.ae, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ 0, %.preheader102.i.preheader ], [ %i.j, %.preheader102.i ]
+"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader98.i, %.preheader.i, %.preheader100.i
+  %.sroa.151.0 = phi i64 [ %i.ba, %bb.m ], [ %i.i, %bb.f ], [ %i.ae, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ %i.j, %.preheader102.i ]
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.151.0, ptr %i.bc, align 8
   br label %bb.n
@@ -3571,13 +3550,10 @@ bb.e:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.g = add i64 %2, -1                           ; 3 uses
   %i.h = icmp ult i64 %2, 17
-  %.not92112.i = icmp eq i64 %i.g, 0              ; 2 uses
-  br i1 %i.h, label %.preheader100.i, label %.preheader102.i.preheader
-
-.preheader102.i.preheader:                        ; preds = %bb.e
-  br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
+  br i1 %i.h, label %.preheader100.i, label %.lr.ph.a
 
 .preheader100.i:                                  ; preds = %bb.e
+  %.not92112.i = icmp eq i64 %i.g, 0
   br i1 %.not92112.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.l
@@ -3590,10 +3566,10 @@ bb.f:                                             ; preds = %bb.l
   %.not91.i = icmp eq i64 %i.l, 0
   br i1 %.not91.i, label %"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit", label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader102.i.preheader, %.preheader102.i
-  %.sroa.0.2.i57 = phi ptr [ %i.k, %.preheader102.i ], [ %i.f, %.preheader102.i.preheader ] ; 2 uses
-  %.sroa.27.2.i56 = phi i64 [ %i.l, %.preheader102.i ], [ %i.g, %.preheader102.i.preheader ]
-  %.sroa.070.2.i55 = phi i64 [ %i.j, %.preheader102.i ], [ 0, %.preheader102.i.preheader ]
+.lr.ph.a:                                         ; preds = %bb.e, %.preheader102.i
+  %.sroa.0.2.i57 = phi ptr [ %i.k, %.preheader102.i ], [ %i.f, %bb.e ] ; 2 uses
+  %.sroa.27.2.i56 = phi i64 [ %i.l, %.preheader102.i ], [ %i.g, %bb.e ]
+  %.sroa.070.2.i55 = phi i64 [ %i.j, %.preheader102.i ], [ 0, %bb.e ]
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.2.i57, i64 1
   %i.l = add i64 %.sroa.27.2.i56, -1              ; 2 uses
   %i.m = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.070.2.i55, i64 10) ; 2 uses
@@ -3701,8 +3677,8 @@ bb.m:                                             ; preds = %.lr.ph120.i
   store i8 %.sroa.4.0.ph, ptr %i.bb, align 1
   br label %bb.n
 
-"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader102.i.preheader, %.preheader98.i, %.preheader.i, %.preheader100.i
-  %.sroa.151.0 = phi i64 [ %i.ba, %bb.m ], [ %i.i, %bb.f ], [ %i.ae, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ 0, %.preheader102.i.preheader ], [ %i.j, %.preheader102.i ]
+"_ZN4core3num21_$LT$impl$u20$i64$GT$16from_ascii_radix17hb49d06118606b52dE.exit": ; preds = %.preheader102.i, %bb.i, %bb.f, %bb.m, %.preheader98.i, %.preheader.i, %.preheader100.i
+  %.sroa.151.0 = phi i64 [ %i.ba, %bb.m ], [ %i.i, %bb.f ], [ %i.ae, %bb.i ], [ 0, %.preheader.i ], [ 0, %.preheader100.i ], [ 0, %.preheader98.i ], [ %i.j, %.preheader102.i ]
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.151.0, ptr %i.bc, align 8
   br label %bb.n

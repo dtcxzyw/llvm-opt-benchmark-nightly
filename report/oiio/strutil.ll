@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph.thread148:                                 ; preds = %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit55.thread, %bb.h, %.lr.ph
   %.in = phi i32 [ %i.ab, %bb.h ], [ %i.ab, %.lr.ph ], [ %narrow, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit55.thread ]
   %i.ai = phi ptr [ %i.z, %bb.h ], [ %i.z, %.lr.ph ], [ %i.m, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit55.thread ]
-  %i.aj = phi i64 [ %i.aa, %bb.h ], [ %i.aa, %.lr.ph ], [ %i.n, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit55.thread ] ; 3 uses
+  %i.aj = phi i64 [ %i.aa, %bb.h ], [ %i.aa, %.lr.ph ], [ %i.n, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit55.thread ] ; 2 uses
   %i.ak = phi i32 [ %i.ab, %bb.h ], [ %i.ab, %.lr.ph ], [ %spec.select157, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit55.thread ] ; 2 uses
   %i.al = phi i64 [ %i.ac, %bb.h ], [ %i.ac, %.lr.ph ], [ %i.w, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit55.thread ]
   %.3.peel = phi i8 [ %i.ah, %bb.h ], [ %i.ae, %.lr.ph ], [ 0, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit55.thread ] ; 2 uses
@@ -216,12 +216,10 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.lr.ph.thread148
   %i.ao = zext i8 %.3.peel to i64                 ; 3 uses
-  %3 = icmp ne i64 %i.aj, 0
-  %spec.select.i.i56.peel = zext i1 %3 to i64     ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 %spec.select.i.i56.peel ; 5 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 1 ; 5 uses
   store ptr %i.ap, ptr %0, align 8, !tbaa !78
-  %4 = sub nuw i64 %i.aj, %spec.select.i.i56.peel ; 2 uses
-  store i64 %4, ptr %i.b, align 8, !tbaa !79
+  %3 = add i64 %i.aj, -1                          ; 2 uses
+  store i64 %3, ptr %i.b, align 8, !tbaa !79
   %.not.not.i57.peel = icmp ugt i64 %i.aj, 1
   br i1 %.not.not.i57.peel, label %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58.peel, label %._crit_edge.thread138, !prof !81
 
@@ -232,7 +230,7 @@ _ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit
 
 .peel.next:                                       ; preds = %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58.peel, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58
   %i.ar = phi ptr [ %i.bf, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58 ], [ %i.ap, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58.peel ] ; 3 uses
-  %i.as = phi i64 [ %i.bg, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58 ], [ %4, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58.peel ] ; 3 uses
+  %i.as = phi i64 [ %i.bg, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58 ], [ %3, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58.peel ] ; 3 uses
   %.03791 = phi i8 [ %.1, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58 ], [ 0, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58.peel ] ; 4 uses
   %.03890 = phi i64 [ %.139, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58 ], [ %i.ao, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58.peel ] ; 4 uses
   %.24289 = phi i8 [ %i.bh, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58 ], [ %i.aq, %_ZN11OpenImageIO4v3_15cnextERNS0_17basic_string_viewIcSt11char_traitsIcEEEi.exit58.peel ] ; 3 uses
