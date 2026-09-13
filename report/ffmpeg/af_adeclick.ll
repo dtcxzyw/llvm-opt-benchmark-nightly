@@ -204,10 +204,10 @@ bb.a:
   %i.s = fdiv nsz double %i.r, 1.000000e+03       ; 2 uses
   %.inv = fcmp nsz ole double %i.s, 1.000000e+02
   %spec.select196 = select i1 %.inv, double 1.000000e+02, double %i.s
-  %spec.select = fptosi double %spec.select196 to i32 ; 3 uses
+  %spec.select = fptosi double %spec.select196 to i32 ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.k, i64 68 ; 16 uses
   store i32 %spec.select, ptr %i.t, align 4, !tbaa !38
-  %1 = sitofp nsz i32 %spec.select to double      ; 3 uses
+  %1 = uitofp nsz nneg i32 %spec.select to double
   %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.v = load double, ptr %i.u, align 8, !tbaa !123
   %i.w = fmul nsz double %i.v, %1
@@ -215,9 +215,10 @@ bb.a:
   %i.y = fcmp nsz ogt double %i.x, 1.000000e+00
   %i.z = select i1 %i.y, double %i.x, double 1.000000e+00
   %i.aa = getelementptr inbounds nuw i8, ptr %i.k, i64 60 ; 5 uses
+  %2 = sitofp nsz i32 %spec.select to double      ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 40
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !124
-  %i.ad = fmul nsz double %i.ac, %1
+  %i.ad = fmul nsz double %i.ac, %2
   %i.ae = insertelement <2 x double> poison, double %i.z, i64 0
   %i.af = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.ag = load double, ptr %i.af, align 8, !tbaa !125
@@ -229,7 +230,7 @@ bb.a:
   store <2 x i32> %i.al, ptr %i.aa, align 4, !tbaa !67
   %i.am = extractelement <2 x double> %i.aj, i64 1
   %i.an = fsub nsz double 1.000000e+00, %i.am
-  %i.ao = fmul nsz double %i.an, %1               ; 2 uses
+  %i.ao = fmul nsz double %i.an, %2               ; 2 uses
   %.inv197 = fcmp nsz ole double %i.ao, 1.000000e+00
   %i.ap = select i1 %.inv197, double 1.000000e+00, double %i.ao
   %i.aq = fptosi double %i.ap to i32

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_test_macros-8ee6405a26b8ec54.lance_test_macros.45dbbaa69f934603-cgu.0?download=true
+inline.NumInlined: 1500
+inline.NumDeleted: 499
 begin_hunk_0_@_RNvCs5ZQXtie4Wk1_17lance_test_macros14expand_wrapper:bb.a
 
 bb.mc:                                            ; preds = %bb.ma
@@ -200,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: cold nounwind nonlazybind uwtable
 define internal fastcc void @_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs5ZQXtie4Wk1_17lance_test_macros(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef range(i64 0, -1) %1) unnamed_addr #3 {
 bb.a:
-  %i.a = mul i64 %1, 40                           ; 6 uses
+  %i.a = mul nuw nsw i64 %1, 40                   ; 4 uses
   %or.cond.not = icmp ugt i64 %1, 230584300921369395
   br i1 %or.cond.not, label %bb.f, label %bb.b, !prof !3674
 
@@ -209,15 +211,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator4grow.exit
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.c = mul nuw i64 %.0.val, 40                  ; 2 uses
+  %i.c = mul nuw i64 %.0.val, 40
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.d = icmp uge i64 %i.a, %i.c
+  %i.d = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.d)
   %i.e = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.c, i64 noundef 8, i64 noundef range(i64 0, 9223372036854775801) %i.a) #24
   br label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = icmp eq i64 %i.a, 0
+  %i.f = icmp eq i64 %1, 0
   br i1 %i.f, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator8allocate.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c

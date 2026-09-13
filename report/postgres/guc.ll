@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   %i.j = fptosi double %i.h to i64
-  %4 = srem i64 %0, %i.j
+  %4 = urem i64 %0, %i.j
   %i.k = icmp eq i64 %4, 0
   br i1 %i.k, label %bb.d, label %bb.e
 

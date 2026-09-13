@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tgrep-rs/original/tgrep.tgrep.897916b5d56b90bc-cgu.13?download=true
+inline.NumInlined: 920
+inline.NumDeleted: 448
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift4sortNtNtCs6MoqnCnVQOT_10serde_json5value5ValueNCINvMNtCsgCecv3eZDcN_5alloc5sliceSBW_11sort_by_keyjNCNvNtCsbNLsQi0JuJ4_5tgrep6search17search_via_servers9_0E0EB2y_:bb.a
   %.sroa.018.0 = phi i64 [ %.sroa.0.0.i32, %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift10create_runNtNtCs6MoqnCnVQOT_10serde_json5value5ValueNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB13_11sort_by_keyjNCNvNtCsbNLsQi0JuJ4_5tgrep6search17search_via_servers9_0E0EB2G_.exit ], [ 1, %bb.f ] ; 2 uses
   %i.m = icmp ugt i64 %.sroa.02.0, 1
@@ -200,7 +204,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeNtNtCs6Mo
   br i1 %i.ce, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cf = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cf = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cg = lshr i64 %.sroa.018.0, 1
   %i.ch = add nuw nsw i64 %i.cg, %.sroa.09.0
   br label %bb.f
@@ -511,7 +515,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeRNtNtCs5X
   br i1 %i.cn, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.co = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.co = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cp = lshr i64 %.sroa.018.0, 1
   %i.cq = add nuw nsw i64 %i.cp, %.sroa.09.0
   br label %bb.f
@@ -794,7 +798,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRNtNtCsb
   br i1 %i.cj, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.ck = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ck = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cl = lshr i64 %.sroa.018.0, 1
   %i.cm = add nuw nsw i64 %i.cl, %.sroa.09.0
   br label %bb.f

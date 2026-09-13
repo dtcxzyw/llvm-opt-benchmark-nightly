@@ -204,7 +204,7 @@ bb.a:
   %.val204.val = load ptr, ptr %i.d, align 8, !tbaa !35
   %i.e = sext i32 %1 to i64
   %i.f = getelementptr inbounds [8 x i8], ptr %.val204.val, i64 %i.e
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !36   ; 32 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !36   ; 30 uses
   %i.h = tail call i32 @Abc_BufCountNonCritical(ptr noundef %0, ptr noundef %i.g) ; 2 uses
   %i.i = getelementptr i8, ptr %i.g, i64 44       ; 5 uses
   %.val225 = load i32, ptr %i.i, align 4, !tbaa !53
@@ -283,11 +283,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph268
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !91
   %i.ap = add nsw i32 %i.ao, 1
   store i32 %i.ap, ptr %i.an, align 8, !tbaa !91
-  br i1 %.not, label %.loopexit, label %4
-
-4:                                                ; preds = %.critedge
-  %puts194 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.6) ; 0 uses
-  br label %.loopexit
+  br i1 %.not, label %.loopexit, label %bb.ac
 
 bb.g:                                             ; preds = %bb.c
   %i.aq = icmp eq i32 %2, 0
@@ -420,11 +416,7 @@ bb.l:                                             ; preds = %.lr.ph264, %bb.l
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !92
   %i.ct = add nsw i32 %i.cs, 1
   store i32 %i.ct, ptr %i.cr, align 4, !tbaa !92
-  br i1 %.not, label %.loopexit, label %5
-
-5:                                                ; preds = %.critedge9
-  %puts193 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.5) ; 0 uses
-  br label %.loopexit
+  br i1 %.not, label %.loopexit, label %bb.ac
 
 bb.m:                                             ; preds = %bb.g
   %.val221.pre = load i32, ptr %i.i, align 4, !tbaa !53 ; 2 uses
@@ -448,12 +440,12 @@ bb.o:                                             ; preds = %bb.n, %.thread
   %i.cz = getelementptr i8, ptr %i.cy, i64 32
   %.val215 = load ptr, ptr %i.cz, align 8, !tbaa !31
   %i.da = getelementptr i8, ptr %.val215, i64 4
-  %.val215.val = load i32, ptr %i.da, align 4, !tbaa !34 ; 5 uses
+  %.val215.val = load i32, ptr %i.da, align 4, !tbaa !34 ; 2 uses
   %i.db = sitofp i32 %.val220 to double
   %sqrt = tail call double @sqrt(double %i.db) #19
   %abs = tail call double @llvm.fabs.f64(double %sqrt)
-  %i.dc = fptosi double %abs to i32               ; 4 uses
-  %i.dd = tail call noundef range(i32 -2147483648, 11) i32 @llvm.smin.i32(i32 %i.dc, i32 10) ; 9 uses
+  %i.dc = fptosi double %abs to i32
+  %i.dd = tail call noundef range(i32 -2147483648, 11) i32 @llvm.smin.i32(i32 %i.dc, i32 10) ; 6 uses
   %.val219 = load i32, ptr %i.i, align 4, !tbaa !53 ; 2 uses
   %i.de = sdiv i32 %.val219, %i.dd                ; 2 uses
   %i.df = add nsw i32 %i.de, 1                    ; 2 uses
@@ -505,18 +497,17 @@ bb.q:                                             ; preds = %bb.p
   %i.eh = sext i32 %i.eg to i64
   %i.ei = getelementptr inbounds [4 x i8], ptr %.val231.val, i64 %i.eh
   store i32 1000, ptr %i.ei, align 4, !tbaa !42
-  %6 = icmp sgt i32 %i.dc, 0
-  br i1 %6, label %.lr.ph.a, label %._crit_edge
+  br label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %bb.q, %.lr.ph.a
-  %.4235 = phi i32 [ %i.el, %.lr.ph.a ], [ 0, %bb.q ]
+  %.4235 = phi i32 [ 0, %bb.q ], [ %i.el, %.lr.ph.a ]
   %i.ej = load ptr, ptr %i.a, align 8, !tbaa !64
   %i.ek = tail call ptr @Abc_NtkCreateNodeInv(ptr noundef %i.ej, ptr noundef nonnull %i.g) #19 ; 0 uses
   %i.el = add nuw nsw i32 %.4235, 1               ; 2 uses
   %exitcond.not = icmp eq i32 %i.el, %i.dd
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.a, !llvm.loop !154
 
-._crit_edge:                                      ; preds = %.lr.ph.a, %bb.q
+._crit_edge:                                      ; preds = %.lr.ph.a
   br i1 %.not, label %bb.s, label %.sink.split
 
 bb.r:                                             ; preds = %bb.p, %bb.o
@@ -524,18 +515,17 @@ bb.r:                                             ; preds = %bb.p, %bb.o
   %i.en = load i32, ptr %i.em, align 4, !tbaa !94
   %i.eo = add nsw i32 %i.en, 1
   store i32 %i.eo, ptr %i.em, align 4, !tbaa !94
-  %7 = icmp sgt i32 %i.dc, 0
-  br i1 %7, label %.lr.ph238, label %._crit_edge239
+  br label %.lr.ph238
 
 .lr.ph238:                                        ; preds = %bb.r, %.lr.ph238
-  %.5236 = phi i32 [ %i.er, %.lr.ph238 ], [ 0, %bb.r ]
+  %.5236 = phi i32 [ 0, %bb.r ], [ %i.er, %.lr.ph238 ]
   %i.ep = load ptr, ptr %i.a, align 8, !tbaa !64
   %i.eq = tail call ptr @Abc_NtkCreateNodeBuf(ptr noundef %i.ep, ptr noundef nonnull %i.g) #19 ; 0 uses
   %i.er = add nuw nsw i32 %.5236, 1               ; 2 uses
   %exitcond270.not = icmp eq i32 %i.er, %i.dd
   br i1 %exitcond270.not, label %._crit_edge239, label %.lr.ph238, !llvm.loop !155
 
-._crit_edge239:                                   ; preds = %.lr.ph238, %bb.r
+._crit_edge239:                                   ; preds = %.lr.ph238
   br i1 %.not, label %bb.s, label %.sink.split
 
 .sink.split:                                      ; preds = %._crit_edge239, %._crit_edge
@@ -548,19 +538,15 @@ bb.s:                                             ; preds = %.sink.split, %._cri
   %i.eu = getelementptr i8, ptr %i.et, i64 4
   %.val240 = load i32, ptr %i.eu, align 4, !tbaa !34
   %i.ev = icmp sgt i32 %.val240, 0
-  br i1 %i.ev, label %.lr.ph243.preheader, label %.critedge11.preheader
+  br i1 %i.ev, label %.lr.ph243.preheader, label %.critedge11.preheader269
 
 .lr.ph243.preheader:                              ; preds = %bb.s
   %i.ew = sext i32 %i.dh to i64
   br label %.lr.ph243
 
-.critedge11.preheader:                            ; preds = %bb.v, %bb.s
-  %8 = icmp sgt i32 %i.dc, 0
-  br i1 %8, label %.critedge11.preheader269, label %._crit_edge249.thread
-
-.critedge11.preheader269:                         ; preds = %.critedge11.preheader
-  %i.ex = sext i32 %.val215.val to i64
-  %wide.trip.count = zext nneg i32 %i.dd to i64
+.critedge11.preheader269:                         ; preds = %bb.v, %bb.s
+  %i.ex = sext i32 %.val215.val to i64            ; 4 uses
+  %wide.trip.count = zext nneg i32 %i.dd to i64   ; 4 uses
   br label %.critedge11
 
 .lr.ph243:                                        ; preds = %.lr.ph243.preheader, %bb.v
@@ -602,7 +588,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %.val = load i32, ptr %i.fr, align 4, !tbaa !34
   %i.fs = sext i32 %.val to i64
   %i.ft = icmp slt i64 %indvars.iv.next, %i.fs
-  br i1 %i.ft, label %.lr.ph243, label %.critedge11.preheader, !llvm.loop !156
+  br i1 %i.ft, label %.lr.ph243, label %.critedge11.preheader269, !llvm.loop !156
 
 .critedge11:                                      ; preds = %.critedge11.preheader269, %.critedge11
   %indvars.iv272 = phi i64 [ 0, %.critedge11.preheader269 ], [ %indvars.iv.next273, %.critedge11 ] ; 2 uses
@@ -619,18 +605,11 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %exitcond275.not = icmp eq i64 %indvars.iv.next273, %wide.trip.count
   br i1 %exitcond275.not, label %.lr.ph248, label %.critedge11, !llvm.loop !157
 
-._crit_edge249.thread:                            ; preds = %.critedge11.preheader
-  tail call void @Abc_BufUpdateArr(ptr noundef nonnull %0, ptr noundef nonnull %i.g)
-  tail call void @Abc_BufUpdateDep(ptr noundef nonnull %0, ptr noundef nonnull %i.g)
-  br label %.loopexit
-
 .lr.ph248:                                        ; preds = %.critedge11
   tail call void @Abc_BufUpdateArr(ptr noundef nonnull %0, ptr noundef nonnull %i.g)
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.gb = getelementptr i8, ptr %0, i64 48        ; 2 uses
   %i.gc = getelementptr i8, ptr %0, i64 32
-  %9 = sext i32 %.val215.val to i64
-  %wide.trip.count279 = zext nneg i32 %i.dd to i64
   br label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph248, %Abc_BufComputeDep.exit
@@ -641,7 +620,7 @@ bb.w:                                             ; preds = %.lr.ph248, %Abc_Buf
   %i.gf = getelementptr i8, ptr %.val200, i64 8
   %.val200.val = load ptr, ptr %i.gf, align 8, !tbaa !35
   %i.gg = getelementptr [8 x i8], ptr %.val200.val, i64 %indvars.iv276
-  %i.gh = getelementptr [8 x i8], ptr %i.gg, i64 %9
+  %i.gh = getelementptr [8 x i8], ptr %i.gg, i64 %i.ex
   %i.gi = load ptr, ptr %i.gh, align 8, !tbaa !36 ; 5 uses
   %i.gj = getelementptr i8, ptr %i.gi, i64 44     ; 2 uses
   %.val2232.i = load i32, ptr %i.gj, align 4, !tbaa !53
@@ -731,19 +710,12 @@ Abc_BufComputeDep.exit:                           ; preds = %Abc_BufComputeDep.e
   %i.hx = getelementptr inbounds [4 x i8], ptr %.val30.val.i, i64 %i.hw
   store i32 %.0.lcssa.i, ptr %i.hx, align 4, !tbaa !42
   %indvars.iv.next277 = add nuw nsw i64 %indvars.iv276, 1 ; 2 uses
-  %exitcond280.not = icmp eq i64 %indvars.iv.next277, %wide.trip.count279
+  %exitcond280.not = icmp eq i64 %indvars.iv.next277, %wide.trip.count
   br i1 %exitcond280.not, label %._crit_edge249, label %bb.w, !llvm.loop !158
 
 ._crit_edge249:                                   ; preds = %Abc_BufComputeDep.exit
   tail call void @Abc_BufUpdateDep(ptr noundef nonnull %0, ptr noundef nonnull %i.g)
-  %10 = sext i32 %.val215.val to i64
-  %wide.trip.count284 = zext nneg i32 %i.dd to i64
   br label %.lr.ph252
-
-.lr.ph254.preheader:                              ; preds = %.lr.ph252
-  %11 = sext i32 %.val215.val to i64
-  %wide.trip.count289 = zext nneg i32 %i.dd to i64
-  br label %.lr.ph254
 
 .lr.ph252:                                        ; preds = %._crit_edge249, %.lr.ph252
   %indvars.iv281 = phi i64 [ 0, %._crit_edge249 ], [ %indvars.iv.next282, %.lr.ph252 ] ; 2 uses
@@ -753,36 +725,37 @@ Abc_BufComputeDep.exit:                           ; preds = %Abc_BufComputeDep.e
   %i.ia = getelementptr i8, ptr %.val199, i64 8
   %.val199.val = load ptr, ptr %i.ia, align 8, !tbaa !35
   %i.ib = getelementptr [8 x i8], ptr %.val199.val, i64 %indvars.iv281
-  %i.ic = getelementptr [8 x i8], ptr %i.ib, i64 %10
+  %i.ic = getelementptr [8 x i8], ptr %i.ib, i64 %i.ex
   %i.id = load ptr, ptr %i.ic, align 8, !tbaa !36
   tail call void @Abc_BufAddToQue(ptr noundef nonnull %0, ptr noundef %i.id)
   %indvars.iv.next282 = add nuw nsw i64 %indvars.iv281, 1 ; 2 uses
-  %exitcond285.not = icmp eq i64 %indvars.iv.next282, %wide.trip.count284
-  br i1 %exitcond285.not, label %.lr.ph254.preheader, label %.lr.ph252, !llvm.loop !159
+  %exitcond285.not = icmp eq i64 %indvars.iv.next282, %wide.trip.count
+  br i1 %exitcond285.not, label %.lr.ph254, label %.lr.ph252, !llvm.loop !159
 
-.lr.ph254:                                        ; preds = %.lr.ph254.preheader, %.lr.ph254
-  %indvars.iv286 = phi i64 [ 0, %.lr.ph254.preheader ], [ %indvars.iv.next287, %.lr.ph254 ] ; 2 uses
+.lr.ph254:                                        ; preds = %.lr.ph252, %.lr.ph254
+  %indvars.iv286 = phi i64 [ %indvars.iv.next287, %.lr.ph254 ], [ 0, %.lr.ph252 ] ; 2 uses
   %i.ie = load ptr, ptr %i.a, align 8, !tbaa !64
   %i.if = getelementptr i8, ptr %i.ie, i64 32
   %.val198 = load ptr, ptr %i.if, align 8, !tbaa !31
   %i.ig = getelementptr i8, ptr %.val198, i64 8
   %.val198.val = load ptr, ptr %i.ig, align 8, !tbaa !35
   %i.ih = getelementptr [8 x i8], ptr %.val198.val, i64 %indvars.iv286
-  %i.ii = getelementptr [8 x i8], ptr %i.ih, i64 %11
+  %i.ii = getelementptr [8 x i8], ptr %i.ih, i64 %i.ex
   %i.ij = load ptr, ptr %i.ii, align 8, !tbaa !36
   tail call void @Abc_SclTimeIncUpdateLevel(ptr noundef %i.ij) #19
   %indvars.iv.next287 = add nuw nsw i64 %indvars.iv286, 1 ; 2 uses
-  %exitcond290.not = icmp eq i64 %indvars.iv.next287, %wide.trip.count289
+  %exitcond290.not = icmp eq i64 %indvars.iv.next287, %wide.trip.count
   br i1 %exitcond290.not, label %.loopexit, label %.lr.ph254, !llvm.loop !160
 
 bb.ab:                                            ; preds = %bb.n
   br i1 %.not, label %.loopexit, label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab
-  %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.4) ; 0 uses
+bb.ac:                                            ; preds = %bb.ab, %.critedge9, %.critedge
+  %str.5.sink = phi ptr [ @str.6, %.critedge ], [ @str.5, %.critedge9 ], [ @str.4, %bb.ab ]
+  %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) %str.5.sink) ; 0 uses
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph254, %._crit_edge249.thread, %.critedge9, %5, %.critedge, %4, %bb.ab, %bb.ac
+.loopexit:                                        ; preds = %.lr.ph254, %bb.ac, %.critedge9, %.critedge, %bb.ab
   ret void
 }
 

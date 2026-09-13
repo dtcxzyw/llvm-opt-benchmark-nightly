@@ -205,9 +205,9 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.l = fptosi double %0 to i32
-  %1 = add i32 %i.l, -1
-  %2 = sext i32 %1 to i64
-  %3 = getelementptr [8 x i8], ptr @gamma_integral, i64 %2
+  %1 = zext nneg i32 %i.l to i64
+  %2 = getelementptr [8 x i8], ptr @gamma_integral, i64 %1
+  %3 = getelementptr i8, ptr %2, i64 -8
   %i.m = load double, ptr %3, align 8, !tbaa !31
   br label %bb.aa
 

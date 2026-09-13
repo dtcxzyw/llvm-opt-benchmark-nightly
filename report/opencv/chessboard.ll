@@ -205,16 +205,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ak = fcmp ogt double %i.aj, 2.000000e+00
   %.sroa.speculated = select i1 %i.ak, double %i.aj, double 2.000000e+00
   %i.al = fptosi double %.sroa.speculated to i32
-  %7 = insertelement <2 x i32> poison, i32 %i.ai, i64 0
-  %8 = insertelement <2 x i32> %7, i32 %i.al, i64 1
-  %9 = sitofp <2 x i32> %8 to <2 x float>
+  %7 = uitofp nneg i32 %i.ai to float
+  %8 = sitofp i32 %i.al to float
+  %.sroa.0.0.vec.insert.i49 = insertelement <2 x float> poison, float %7, i64 0
+  %.sroa.0.4.vec.insert.i50 = insertelement <2 x float> %.sroa.0.0.vec.insert.i49, float %8, i64 1
   %i.am = load i64, ptr %6, align 8
   %i.an = fneg float %.023                        ; 2 uses
   %i.ao = tail call noundef float @cosf(float noundef %i.an) #33
   %i.ap = tail call noundef float @sinf(float noundef %i.an) #33
   store i64 %i.am, ptr %4, align 4
   %.sroa.453.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store <2 x float> %9, ptr %.sroa.453.0..sroa_idx, align 4
+  store <2 x float> %.sroa.0.4.vec.insert.i50, ptr %.sroa.453.0..sroa_idx, align 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   store float %.023, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !40
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 20
@@ -302,9 +303,8 @@ bb.d:                                             ; preds = %bb.c
   %i.au = fcmp ogt double %i.at, 2.000000e+00
   %.sroa.speculated.i = select i1 %i.au, double %i.at, double 2.000000e+00
   %i.av = fptosi double %.sroa.speculated.i to i32
-  %3 = insertelement <2 x i32> poison, i32 %i.as, i64 0
-  %4 = insertelement <2 x i32> %3, i32 %i.av, i64 1
-  %5 = sitofp <2 x i32> %4 to <2 x float>         ; 2 uses
+  %3 = sitofp i32 %i.av to float
+  %4 = uitofp nneg i32 %i.as to float
   %i.aw = fneg float %.023.i                      ; 2 uses
   %i.ax = tail call noundef float @cosf(float noundef %i.aw) #33 ; 2 uses
   %i.ay = tail call noundef float @sinf(float noundef %i.aw) #33 ; 2 uses
@@ -321,7 +321,9 @@ bb.d:                                             ; preds = %bb.c
   %i.bi = shufflevector <2 x float> %i.ba, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bj = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bh, <2 x float> %i.bi, <2 x float> %i.bf) ; 2 uses
   %i.bk = fmul <2 x float> %i.bj, %i.bj
-  %i.bl = fmul nnan <2 x float> %5, %5
+  %5 = insertelement <2 x float> poison, float %4, i64 0
+  %6 = insertelement <2 x float> %5, float %3, i64 1 ; 2 uses
+  %i.bl = fmul nnan <2 x float> %6, %6
   %i.bm = fdiv <2 x float> %i.bk, %i.bl
   %i.bn = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.bm)
   %i.bo = fcmp ugt float %i.bn, 1.000000e+00
@@ -396,9 +398,8 @@ bb.g:                                             ; preds = %.lr.ph
   %i.dc = fcmp ogt double %i.db, 2.000000e+00
   %.sroa.speculated.i16 = select i1 %i.dc, double %i.db, double 2.000000e+00
   %i.dd = fptosi double %.sroa.speculated.i16 to i32
-  %6 = insertelement <2 x i32> poison, i32 %i.da, i64 0
-  %7 = insertelement <2 x i32> %6, i32 %i.dd, i64 1
-  %8 = sitofp <2 x i32> %7 to <2 x float>         ; 2 uses
+  %7 = sitofp i32 %i.dd to float
+  %8 = uitofp nneg i32 %i.da to float
   %i.de = fneg float %.023.i11                    ; 2 uses
   %i.df = tail call noundef float @cosf(float noundef %i.de) #33 ; 2 uses
   %i.dg = tail call noundef float @sinf(float noundef %i.de) #33 ; 2 uses
@@ -415,7 +416,9 @@ bb.g:                                             ; preds = %.lr.ph
   %i.dq = shufflevector <2 x float> %i.di, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dr = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dp, <2 x float> %i.dq, <2 x float> %i.dn) ; 2 uses
   %i.ds = fmul <2 x float> %i.dr, %i.dr
-  %i.dt = fmul nnan <2 x float> %8, %8
+  %9 = insertelement <2 x float> poison, float %8, i64 0
+  %10 = insertelement <2 x float> %9, float %7, i64 1 ; 2 uses
+  %i.dt = fmul nnan <2 x float> %10, %10
   %i.du = fdiv <2 x float> %i.ds, %i.dt
   %i.dv = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.du)
   %i.dw = fcmp ole float %i.dv, 1.000000e+00      ; 3 uses
@@ -818,16 +821,17 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = fcmp ogt double %i.ai, 2.000000e+00
   %.sroa.speculated.i = select i1 %i.aj, double %i.ai, double 2.000000e+00
   %i.ak = fptosi double %.sroa.speculated.i to i32
-  %11 = insertelement <2 x i32> poison, i32 %i.ah, i64 0
-  %12 = insertelement <2 x i32> %11, i32 %i.ak, i64 1
-  %13 = sitofp <2 x i32> %12 to <2 x float>
+  %11 = uitofp nneg i32 %i.ah to float
+  %12 = sitofp i32 %i.ak to float
+  %.sroa.0.0.vec.insert.i49.i = insertelement <2 x float> poison, float %11, i64 0
+  %.sroa.0.4.vec.insert.i50.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i49.i, float %12, i64 1
   %i.al = load i64, ptr %9, align 8
   %i.am = fneg float %.023.i                      ; 2 uses
   %i.an = tail call noundef float @cosf(float noundef %i.am) #33
   %i.ao = tail call noundef float @sinf(float noundef %i.am) #33
   store i64 %i.al, ptr %10, align 8
   %.sroa.453.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store <2 x float> %13, ptr %.sroa.453.0..sroa_idx.i, align 8
+  store <2 x float> %.sroa.0.4.vec.insert.i50.i, ptr %.sroa.453.0..sroa_idx.i, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %10, i64 16
   store float %.023.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !40
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %10, i64 20
@@ -1230,7 +1234,7 @@ bb.an:                                            ; preds = %bb.aj
   %i.gd = call double @llvm.fmuladd.f64(double %i.fz, double %i.fz, double %i.gc)
   %sqrt.i = call noundef double @llvm.sqrt.f64(double %i.gd)
   %i.ge = fptosi double %sqrt.i to i32            ; 3 uses
-  %30 = icmp slt i32 %i.ge, 10
+  %30 = icmp samesign ult i32 %i.ge, 10
   br i1 %30, label %bb.db, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an

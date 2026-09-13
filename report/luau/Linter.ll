@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.p, %bb.o
   br i1 %or.cond79, label %bb.aj, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.cp = fptosi double %i.ce to i32              ; 7 uses
+  %i.cp = fptosi double %i.ce to i32              ; 6 uses
   %i.cq = sitofp i32 %i.cp to double
   %i.cr = fcmp oeq double %i.ce, %i.cq
   br i1 %i.cr, label %bb.u, label %bb.aj
@@ -218,14 +218,12 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.cu = icmp eq i64 %.sroa.17.0136, 0
-  %3 = icmp eq i32 %i.cp, -1
-  %or.cond115 = or i1 %i.cu, %3
-  br i1 %or.cond115, label %.loopexit.i.i, label %bb.w
+  br i1 %i.cu, label %.loopexit.i.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.cv = add i64 %.sroa.11.0133, -1              ; 3 uses
-  %4 = sext i32 %i.cp to i64
-  %i.cw = and i64 %i.cv, %4
+  %3 = zext nneg i32 %i.cp to i64
+  %i.cw = and i64 %i.cv, %3
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.z, %bb.w
@@ -373,8 +371,8 @@ _ZN4Luau6detail14DenseHashTableIiSt4pairIiiES2_IKiiENS0_16ItemInterfaceMapIiiEES
   %.sroa.11.2 = phi i64 [ %.sroa.11.0133, %bb.u ], [ 16, %._crit_edge27.i ], [ %spec.select.i, %._crit_edge27.thread.i ], [ %.sroa.11.0133, %bb.x ] ; 3 uses
   %.sroa.0.3 = phi ptr [ %.sroa.0.0135, %bb.u ], [ %.sroa.0.0.i, %._crit_edge27.i ], [ %.sroa.0.0.i, %._crit_edge27.thread.i ], [ %.sroa.0.0135, %bb.x ] ; 7 uses
   %i.en = add i64 %.sroa.11.2, -1                 ; 3 uses
-  %5 = sext i32 %i.cp to i64
-  %i.eo = and i64 %i.en, %5                       ; 3 uses
+  %4 = zext nneg i32 %i.cp to i64
+  %i.eo = and i64 %i.en, %4                       ; 3 uses
   %i.ep = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.3, i64 %i.eo
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !30 ; 2 uses
   %i.er = icmp eq i32 %i.eq, -1

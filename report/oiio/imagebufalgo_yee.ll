@@ -204,8 +204,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bw = sitofp i64 %i.bv to double
   %i.bx = call double @llvm.sqrt.f64(double %i.bw)
   %i.by = fptosi double %i.bx to i32
-  %5 = sdiv i32 %i.by, 4
-  %i.bz = call i32 @llvm.smax.i32(i32 %5, i32 1)
+  %5 = lshr i32 %i.by, 2
+  %i.bz = call i32 @llvm.umax.i32(i32 %5, i32 1)
   %i.ca = zext nneg i32 %i.bz to i64              ; 2 uses
   br label %_ZNK11OpenImageIO4v3_13ROI7npixelsEv.exit12
 
@@ -213,8 +213,8 @@ bb.l:                                             ; preds = %bb.g
   %i.cb = sitofp i32 %.sroa.speculated32 to double
   %i.cc = call noundef double @llvm.sqrt.f64(double %i.cb)
   %i.cd = fptosi double %i.cc to i64
-  %6 = sdiv i64 %i.cd, 2
-  %.sroa.speculated = call i64 @llvm.smax.i64(i64 %6, i64 1) ; 2 uses
+  %6 = lshr i64 %i.cd, 1
+  %.sroa.speculated = call i64 @llvm.umax.i64(i64 %6, i64 1) ; 2 uses
   br label %_ZNK11OpenImageIO4v3_13ROI7npixelsEv.exit12
 
 _ZNK11OpenImageIO4v3_13ROI7npixelsEv.exit12:      ; preds = %bb.k, %bb.j, %bb.i, %bb.l, %bb.h
@@ -617,7 +617,10 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #6
+declare i32 @llvm.umax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.exp.v4f32(<4 x float>) #6

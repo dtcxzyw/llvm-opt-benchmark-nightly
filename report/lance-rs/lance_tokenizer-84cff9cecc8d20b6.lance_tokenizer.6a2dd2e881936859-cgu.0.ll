@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_tokenizer-84cff9cecc8d20b6.lance_tokenizer.6a2dd2e881936859-cgu.0?download=true
+inline.NumInlined: 783
+inline.NumDeleted: 427
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift4sortThcENCINvMNtCs40k4W9msRzi_5alloc5sliceSBW_11sort_by_keyhNCNvMs_NtCs6g2bDYgB13P_21unicode_normalization9decomposeINtB1X_14DecompositionsINtNtBa_6option8IntoItercEE12sort_pending0E0ECs97bFUy425Ar_15lance_tokenizer:bb.a
 
 _RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.preheader.i.i.new: ; preds = %_RNvMNtCscI6d9CVNmLh_4core5sliceSThcE12split_at_mutCs97bFUy425Ar_15lance_tokenizer.exit11.preheader.i.i
@@ -200,7 +205,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift13logical_mergeThcENCINv
   br i1 %i.ef, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.eg = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eg = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.eh = lshr i64 %.sroa.018.0, 1
   %i.ei = add nuw i64 %i.eh, %.sroa.09.0
   br label %bb.f
@@ -603,7 +608,7 @@ _RNvXs3_NtNtCscI6d9CVNmLh_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6trait
 
 ._crit_edge:                                      ; preds = %_RNvXs3_NtNtCscI6d9CVNmLh_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit186, %bb.c
   %i.ss = add i64 %i.c, -1                        ; 6 uses
-  %i.st = shl nuw i64 %i.ss, 3                    ; 2 uses
+  %i.st = shl nuw nsw i64 %i.ss, 3                ; 2 uses
   %.not.i.i.i.i = icmp samesign ugt i64 %i.ss, 1152921504606846975
   br i1 %.not.i.i.i.i, label %bb.bq, label %bb.bp, !prof !5
 

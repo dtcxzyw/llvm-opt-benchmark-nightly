@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_wasm_example_whisper-601b0015d81a4374.candle_wasm_example_whisper.b1eff805deae52af-cgu.04?download=true
+inline.NumInlined: 586
+inline.NumDeleted: 245
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_RINvNtCsfh9HxMbthk9_27candle_wasm_example_whisper5audio20log_mel_spectrogram_fEB4_:bb.a
   call void @llvm.experimental.noalias.scope.decl(metadata !336)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !337
@@ -200,7 +205,7 @@ bb.v:                                             ; preds = %_RINvNtCsf3Ta7LF998
   %.sroa.032.0142.i = phi i64 [ %i.cr, %bb.aj ], [ 0, %._crit_edge141.i ] ; 4 uses
   %i.cr = add nuw i64 %.sroa.032.0142.i, 1
   %i.cs = shl nuw i64 %.sroa.032.0142.i, 1        ; 4 uses
-  %i.ct = load ptr, ptr %i.bw, align 8, !noalias !335, !nonnull !4, !noundef !4 ; 3 uses
+  %i.ct = load ptr, ptr %i.bw, align 8, !noalias !335, !nonnull !4, !noundef !4 ; 2 uses
   %i.cu = load i64, ptr %i.bv, align 8, !noalias !335, !noundef !4 ; 4 uses
   %i.cv = icmp ult i64 %i.cs, %i.cu
   br i1 %i.cv, label %bb.ai, label %.invoke281.i
@@ -297,17 +302,15 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond204.not.i, label %bb.ae, label %bb.z
 
 bb.ai:                                            ; preds = %.preheader.i
-  %i.du = or disjoint i64 %i.cs, 1                ; 3 uses
+  %i.du = or disjoint i64 %i.cs, 1                ; 2 uses
   %i.dv = icmp ult i64 %i.du, %i.cu
   br i1 %i.dv, label %bb.aj, label %.invoke281.i
 
 bb.aj:                                            ; preds = %bb.ai
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %i.cs
-  %9 = load float, ptr %i.dw, align 4, !noalias !335, !noundef !4
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %i.du
-  %11 = load float, ptr %10, align 4, !noalias !335, !noundef !4
-  %12 = fadd float %9, %11
-  %i.dx = fmul float %12, 5.000000e-01
+  %9 = load <2 x float>, ptr %i.dw, align 4, !noalias !335
+  %10 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %9)
+  %i.dx = fmul float %10, 5.000000e-01
   %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.sroa.032.0142.i
   store float %i.dx, ptr %i.dy, align 4, !noalias !335
   %exitcond202.not.i = icmp eq i64 %.sroa.032.0142.i, %.sroa.0.0.in.i
@@ -340,12 +343,10 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.an
   %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %i.cj
   %i.ek = load <2 x float>, ptr %i.ej, align 4, !noalias !335 ; 2 uses
-  %i.el = fmul <2 x float> %i.ek, %i.ek           ; 2 uses
-  %shift = shufflevector <2 x float> %i.el, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %i.el, %shift
-  %13 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.el = fmul <2 x float> %i.ek, %i.ek
+  %11 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.el)
   %i.em = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %.sroa.028.0137.i
-  store float %13, ptr %i.em, align 4, !noalias !335
+  store float %11, ptr %i.em, align 4, !noalias !335
   %exitcond200.not.i = icmp eq i64 %i.ci, %5
   br i1 %exitcond200.not.i, label %.preheader94.i, label %.lr.ph138.i
 
@@ -748,7 +749,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRTReB19_
   br i1 %i.fq, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.fr = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fr = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fs = lshr i64 %.sroa.018.0, 1
   %i.ft = add nuw nsw i64 %i.fs, %.sroa.09.0
   br label %bb.f
@@ -1150,6 +1151,9 @@ declare { float, float } @llvm.sincos.f32(float) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.maximumnum.v4f32(<4 x float>, <4 x float>) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #17
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

@@ -204,7 +204,7 @@ evdns_strtotimeval.exit.thread:                   ; preds = %bb.i
 
 evdns_strtotimeval.exit:                          ; preds = %bb.i
   %i.ai = fptosi double %i.ae to i32              ; 3 uses
-  %5 = sext i32 %i.ai to i64
+  %5 = zext nneg i32 %i.ai to i64
   %i.aj = sitofp i32 %i.ai to double
   %i.ak = fsub double %i.ae, %i.aj
   %i.al = fmul double %i.ak, 1.000000e+06
@@ -260,7 +260,7 @@ evdns_strtotimeval.exit150.thread:                ; preds = %bb.m
 
 evdns_strtotimeval.exit150:                       ; preds = %bb.m
   %i.az = fptosi double %i.av to i32              ; 3 uses
-  %6 = sext i32 %i.az to i64
+  %6 = zext nneg i32 %i.az to i64
   %i.ba = sitofp i32 %i.az to double
   %i.bb = fsub double %i.av, %i.ba
   %i.bc = fmul double %i.bb, 1.000000e+06
@@ -663,7 +663,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = fptosi double %i.b to i32                ; 3 uses
-  %2 = sext i32 %i.f to i64
+  %2 = zext nneg i32 %i.f to i64
   store i64 %2, ptr %1, align 8
   %i.g = sitofp i32 %i.f to double
   %i.h = fsub double %i.b, %i.g

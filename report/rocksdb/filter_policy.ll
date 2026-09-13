@@ -205,8 +205,8 @@ _ZN7rocksdb9BloomMath16CacheLocalFpRateEdii.exit: ; preds = %bb.r, %_ZN7rocksdb1
   %i.ax = fdiv double 1.000000e+00, %.0.i8
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 40
   store double %i.ax, ptr %i.ay, align 8, !tbaa !60
-  %i.az = add nsw i32 %i.h, 500
-  %2 = sdiv i32 %i.az, 1000
+  %i.az = add nuw nsw i32 %i.h, 500
+  %2 = udiv i32 %i.az, 1000
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i32 %2, ptr %i.ba, align 4, !tbaa !61
   ret void

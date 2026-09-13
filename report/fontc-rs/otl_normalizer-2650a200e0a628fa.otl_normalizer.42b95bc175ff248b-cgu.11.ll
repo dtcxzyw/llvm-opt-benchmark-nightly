@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fontc-rs/original/otl_normalizer-2650a200e0a628fa.otl_normalizer.42b95bc175ff248b-cgu.11?download=true
+inline.NumInlined: 200
+inline.NumDeleted: 148
 begin_hunk_0_@_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift4sortINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCsbZq13ASDQ8l_10font_types5fixed7F2Dot14ENvYBW_NtNtBa_3cmp10PartialOrd2ltECs5JazJsyow1H_14otl_normalizer:bb.a
   %i.v = icmp sgt i8 %i.u, -1
   %.sroa.0.0.i.i.not66.i = or i1 %.not.i.i.i, %i.v ; 2 uses
@@ -200,7 +202,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeINtNtCsgC
   br i1 %i.cq, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cr = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cr = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cs = lshr i64 %.sroa.018.0, 1
   %i.ct = add nuw nsw i64 %i.cs, %.sroa.09.0
   br label %bb.f
@@ -499,7 +501,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeNtNtCsbZq
   br i1 %i.ci, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cj = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cj = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ck = lshr i64 %.sroa.018.0, 1
   %i.cl = add nuw nsw i64 %i.ck, %.sroa.09.0
   br label %bb.f
@@ -771,7 +773,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTNtNtCsbZ
   br i1 %i.cc, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cd = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cd = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ce = lshr i64 %.sroa.018.0, 1
   %i.cf = add nuw nsw i64 %i.ce, %.sroa.09.0
   br label %bb.f

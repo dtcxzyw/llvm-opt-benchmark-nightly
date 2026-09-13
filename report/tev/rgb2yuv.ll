@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/rgb2yuv?download=true
 inline.NumInlined: 784
 inline.NumDeleted: 362
-loop-unroll.NumRuntimeUnrolled: 10
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 11
+loop-unroll.NumUnrolled: 11
 begin_hunk_0_@_ZNK15Op_RGB_to_YCbCrIhE18convert_colorspaceERKNSt3__110shared_ptrIK14HeifPixelImageEERK10ColorStateSA_RK29heif_color_conversion_optionsRK33heif_color_conversion_options_extPK20heif_security_limits:bb.a
           to label %.noexc368 unwind label %bb.bl ; 3 uses
 
@@ -204,7 +204,7 @@ bb.bo:                                            ; preds = %bb.bn
 
 .preheader475.preheader:                          ; preds = %.preheader475.lr.ph
   %wide.trip.count529 = zext i32 %i.e to i64      ; 5 uses
-  %wide.trip.count = zext i32 %i.c to i64         ; 34 uses
+  %wide.trip.count = zext i32 %i.c to i64         ; 36 uses
   %wide.trip.count514 = zext i32 %i.c to i64
   %wide.trip.count519 = zext i32 %i.c to i64
   %wide.trip.count524 = zext i32 %i.c to i64
@@ -302,10 +302,13 @@ bb.bo:                                            ; preds = %bb.bn
   %min.iters.check641 = icmp ult i32 %i.c, 16
   %i.lp = and i64 %wide.trip.count, 12
   %n.vec643 = and i64 %wide.trip.count, 4294967280 ; 4 uses
-  %cmp.n649 = icmp eq i64 %n.vec643, %wide.trip.count
-  %min.epilog.iters.check654 = icmp eq i64 %i.lp, 0
-  %n.vec656 = and i64 %wide.trip.count, 4294967292 ; 3 uses
-  %cmp.n662 = icmp eq i64 %n.vec656, %wide.trip.count
+  %cmp.n648 = icmp eq i64 %n.vec643, %wide.trip.count
+  %cmp.n649 = icmp eq i64 %i.lp, 0
+  %n.vec655 = and i64 %wide.trip.count, 4294967292 ; 3 uses
+  %min.epilog.iters.check654 = icmp eq i64 %n.vec655, %wide.trip.count
+  %n.vec656 = and i64 %wide.trip.count, 1
+  %cmp.n662 = icmp eq i64 %n.vec656, 0
+  %17 = add nsw i64 %wide.trip.count, -1
   %bound0607 = icmp ult ptr %.0.i.i, %scevgep606
   %bound1608 = icmp ult ptr %.0.i.i.i371, %scevgep605.a
   %found.conflict609 = and i1 %bound0607, %bound1608
@@ -339,13 +342,13 @@ bb.bo:                                            ; preds = %bb.bn
 .preheader475:                                    ; preds = %.preheader475.preheader, %._crit_edge
   %indvars.iv526 = phi i64 [ 0, %.preheader475.preheader ], [ %indvars.iv.next527, %._crit_edge ] ; 5 uses
   %i.md = mul nsw i64 %.0452, %indvars.iv526
-  %i.me = getelementptr i8, ptr %.0.i.i.i371, i64 %i.md ; 17 uses
+  %i.me = getelementptr i8, ptr %.0.i.i.i371, i64 %i.md ; 19 uses
   %i.mf = mul nsw i64 %.0451, %indvars.iv526
   %i.mg = getelementptr i8, ptr %.0.i.i.i, i64 %i.mf ; 7 uses
   %i.mh = mul nsw i64 %.0460, %indvars.iv526
   %i.mi = getelementptr i8, ptr %.0.i.i.i376, i64 %i.mh ; 7 uses
   %i.mj = mul nsw i64 %.0457, %indvars.iv526
-  %i.mk = getelementptr i8, ptr %.0.i.i, i64 %i.mj ; 17 uses
+  %i.mk = getelementptr i8, ptr %.0.i.i, i64 %i.mj ; 19 uses
   switch i16 %i.ji, label %_Z10clip_f_u16fi.exit401.preheader [
     i16 0, label %.lr.ph.split.us
     i16 8, label %iter.check704
@@ -511,7 +514,7 @@ _Z10clip_f_u16fi.exit401.preheader725:            ; preds = %_Z10clip_f_u16fi.ex
 
 iter.check651:                                    ; preds = %.lr.ph.split.us
   %brmerge743 = select i1 %min.iters.check613.a, i1 true, i1 %i.lo
-  br i1 %brmerge743, label %_Z10clip_f_u16fi.exit.us.preheader, label %vector.main.loop.iter.check640
+  br i1 %brmerge743, label %vec.epilog.middle.block661, label %vector.main.loop.iter.check640
 
 vector.main.loop.iter.check640:                   ; preds = %iter.check651
   br i1 %min.iters.check641, label %vec.epilog.ph655, label %vector.body644
@@ -525,22 +528,20 @@ vector.body644:                                   ; preds = %vector.main.loop.it
   %i.pk = fmul nnan <16 x float> %i.pj, splat (float 3.906250e-03)
   %i.pl = fadd <16 x float> %i.pk, splat (float 1.600000e+01)
   %i.pm = fadd <16 x float> %i.pl, splat (float 5.000000e-01)
-  %i.pn = fptosi <16 x float> %i.pm to <16 x i32> ; 2 uses
-  %17 = icmp slt <16 x i32> %i.pn, zeroinitializer
+  %i.pn = fptosi <16 x float> %i.pm to <16 x i32>
   %i.po = call <16 x i32> @llvm.umin.v16i32(<16 x i32> %i.pn, <16 x i32> splat (i32 255))
   %i.pp = trunc nuw <16 x i32> %i.po to <16 x i8>
-  %18 = select <16 x i1> %17, <16 x i8> zeroinitializer, <16 x i8> %i.pp
   %i.pq = getelementptr i8, ptr %i.mk, i64 %index645
-  store <16 x i8> %18, ptr %i.pq, align 1, !tbaa !133, !alias.scope !252, !noalias !251
+  store <16 x i8> %i.pp, ptr %i.pq, align 1, !tbaa !133, !alias.scope !252, !noalias !251
   %index.next647 = add nuw i64 %index645, 16      ; 2 uses
   %i.pr = icmp eq i64 %index.next647, %n.vec643
   br i1 %i.pr, label %middle.block648, label %vector.body644, !llvm.loop !217
 
 middle.block648:                                  ; preds = %vector.body644
-  br i1 %cmp.n649, label %._crit_edge, label %vec.epilog.iter.check653
+  br i1 %cmp.n648, label %._crit_edge, label %vec.epilog.iter.check653
 
 vec.epilog.iter.check653:                         ; preds = %middle.block648
-  br i1 %min.epilog.iters.check654, label %_Z10clip_f_u16fi.exit.us.preheader, label %vec.epilog.ph655, !prof !167
+  br i1 %cmp.n649, label %vec.epilog.middle.block661, label %vec.epilog.ph655, !prof !167
 
 vec.epilog.ph655:                                 ; preds = %vector.main.loop.iter.check640, %vec.epilog.iter.check653
   %vec.epilog.resume.val650 = phi i64 [ %n.vec643, %vec.epilog.iter.check653 ], [ 0, %vector.main.loop.iter.check640 ]
@@ -555,23 +556,42 @@ vec.epilog.vector.body657:                        ; preds = %vec.epilog.vector.b
   %i.pv = fmul nnan <4 x float> %i.pu, splat (float 3.906250e-03)
   %i.pw = fadd <4 x float> %i.pv, splat (float 1.600000e+01)
   %i.px = fadd <4 x float> %i.pw, splat (float 5.000000e-01)
-  %i.py = fptosi <4 x float> %i.px to <4 x i32>   ; 2 uses
-  %19 = icmp slt <4 x i32> %i.py, zeroinitializer
+  %i.py = fptosi <4 x float> %i.px to <4 x i32>
   %i.pz = call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.py, <4 x i32> splat (i32 255))
   %i.qa = trunc nuw <4 x i32> %i.pz to <4 x i8>
-  %20 = select <4 x i1> %19, <4 x i8> zeroinitializer, <4 x i8> %i.qa
   %i.qb = getelementptr i8, ptr %i.mk, i64 %index658
-  store <4 x i8> %20, ptr %i.qb, align 1, !tbaa !133, !alias.scope !252, !noalias !251
+  store <4 x i8> %i.qa, ptr %i.qb, align 1, !tbaa !133, !alias.scope !252, !noalias !251
   %index.next660 = add nuw i64 %index658, 4       ; 2 uses
-  %i.qc = icmp eq i64 %index.next660, %n.vec656
-  br i1 %i.qc, label %vec.epilog.middle.block661, label %vec.epilog.vector.body657, !llvm.loop !218
+  %i.qc = icmp eq i64 %index.next660, %n.vec655
+  br i1 %i.qc, label %vec.epilog.middle.block660, label %vec.epilog.vector.body657, !llvm.loop !218
 
-vec.epilog.middle.block661:                       ; preds = %vec.epilog.vector.body657
-  br i1 %cmp.n662, label %._crit_edge, label %_Z10clip_f_u16fi.exit.us.preheader
+vec.epilog.middle.block660:                       ; preds = %vec.epilog.vector.body657
+  br i1 %min.epilog.iters.check654, label %._crit_edge, label %vec.epilog.middle.block661
 
-_Z10clip_f_u16fi.exit.us.preheader:               ; preds = %iter.check651, %vec.epilog.iter.check653, %vec.epilog.middle.block661
-  %indvars.iv511.ph = phi i64 [ 0, %iter.check651 ], [ %n.vec656, %vec.epilog.middle.block661 ], [ %n.vec643, %vec.epilog.iter.check653 ]
-  br label %_Z10clip_f_u16fi.exit.us
+vec.epilog.middle.block661:                       ; preds = %iter.check651, %vec.epilog.iter.check653, %vec.epilog.middle.block660
+  %indvars.iv510.ph = phi i64 [ 0, %iter.check651 ], [ %n.vec655, %vec.epilog.middle.block660 ], [ %n.vec643, %vec.epilog.iter.check653 ] ; 5 uses
+  br i1 %cmp.n662, label %_Z10clip_f_u16fi.exit.us.prol.loopexit, label %_Z10clip_f_u16fi.exit.us.preheader
+
+_Z10clip_f_u16fi.exit.us.preheader:               ; preds = %vec.epilog.middle.block661
+  %18 = getelementptr i8, ptr %i.me, i64 %indvars.iv510.ph
+  %19 = load i8, ptr %18, align 1, !tbaa !133
+  %20 = uitofp i8 %19 to float
+  %21 = fmul nnan float %20, 2.190000e+02
+  %22 = fmul nnan float %21, 3.906250e-03
+  %23 = fadd float %22, 1.600000e+01
+  %24 = fadd float %23, 5.000000e-01
+  %25 = fptosi float %24 to i32
+  %spec.select471.us.prol = call i32 @llvm.umin.i32(i32 %25, i32 255)
+  %26 = trunc nuw i32 %spec.select471.us.prol to i8
+  %27 = getelementptr i8, ptr %i.mk, i64 %indvars.iv510.ph
+  store i8 %26, ptr %27, align 1, !tbaa !133
+  %indvars.iv.next511.prol = or disjoint i64 %indvars.iv510.ph, 1
+  br label %_Z10clip_f_u16fi.exit.us.prol.loopexit
+
+_Z10clip_f_u16fi.exit.us.prol.loopexit:           ; preds = %_Z10clip_f_u16fi.exit.us.preheader, %vec.epilog.middle.block661
+  %indvars.iv510.unr = phi i64 [ %indvars.iv510.ph, %vec.epilog.middle.block661 ], [ %indvars.iv.next511.prol, %_Z10clip_f_u16fi.exit.us.preheader ]
+  %28 = icmp eq i64 %indvars.iv510.ph, %17
+  br i1 %28, label %._crit_edge, label %_Z10clip_f_u16fi.exit.us
 
 iter.check:                                       ; preds = %.lr.ph.split.us
   %brmerge744 = select i1 %min.iters.check613.a, i1 true, i1 %i.ls
@@ -664,8 +684,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond520.not.3 = icmp eq i64 %indvars.iv.next517.3, %wide.trip.count519
   br i1 %exitcond520.not.3, label %._crit_edge, label %.lr.ph.split.us.split.us, !llvm.loop !225
 
-_Z10clip_f_u16fi.exit.us:                         ; preds = %_Z10clip_f_u16fi.exit.us.preheader, %_Z10clip_f_u16fi.exit.us
-  %indvars.iv511 = phi i64 [ %indvars.iv.next512, %_Z10clip_f_u16fi.exit.us ], [ %indvars.iv511.ph, %_Z10clip_f_u16fi.exit.us.preheader ] ; 3 uses
+_Z10clip_f_u16fi.exit.us:                         ; preds = %_Z10clip_f_u16fi.exit.us.prol.loopexit, %_Z10clip_f_u16fi.exit.us
+  %indvars.iv511 = phi i64 [ %indvars.iv.next512, %_Z10clip_f_u16fi.exit.us ], [ %indvars.iv510.unr, %_Z10clip_f_u16fi.exit.us.prol.loopexit ] ; 4 uses
   %i.rc = getelementptr i8, ptr %i.me, i64 %indvars.iv511
   %i.rd = load i8, ptr %i.rc, align 1, !tbaa !133
   %i.re = uitofp i8 %i.rd to float
@@ -673,14 +693,25 @@ _Z10clip_f_u16fi.exit.us:                         ; preds = %_Z10clip_f_u16fi.ex
   %i.rg = fmul nnan float %i.rf, 3.906250e-03
   %i.rh = fadd float %i.rg, 1.600000e+01
   %i.ri = fadd float %i.rh, 5.000000e-01
-  %i.rj = fptosi float %i.ri to i32               ; 2 uses
-  %21 = icmp slt i32 %i.rj, 0
-  %spec.select472.us = call i32 @llvm.umin.i32(i32 %i.rj, i32 255)
-  %22 = trunc nuw i32 %spec.select472.us to i8
-  %23 = select i1 %21, i8 0, i8 %22
-  %i.rk = getelementptr i8, ptr %i.mk, i64 %indvars.iv511
-  store i8 %23, ptr %i.rk, align 1, !tbaa !133
-  %indvars.iv.next512 = add nuw nsw i64 %indvars.iv511, 1 ; 2 uses
+  %i.rj = fptosi float %i.ri to i32
+  %spec.select471.us = call i32 @llvm.umin.i32(i32 %i.rj, i32 255)
+  %29 = trunc nuw i32 %spec.select471.us to i8
+  %30 = getelementptr i8, ptr %i.mk, i64 %indvars.iv511
+  store i8 %29, ptr %30, align 1, !tbaa !133
+  %indvars.iv.next511 = add nuw nsw i64 %indvars.iv511, 1 ; 2 uses
+  %31 = getelementptr i8, ptr %i.me, i64 %indvars.iv.next511
+  %32 = load i8, ptr %31, align 1, !tbaa !133
+  %33 = uitofp i8 %32 to float
+  %34 = fmul nnan float %33, 2.190000e+02
+  %35 = fmul nnan float %34, 3.906250e-03
+  %36 = fadd float %35, 1.600000e+01
+  %37 = fadd float %36, 5.000000e-01
+  %38 = fptosi float %37 to i32
+  %spec.select471.us.1 = call i32 @llvm.umin.i32(i32 %38, i32 255)
+  %39 = trunc nuw i32 %spec.select471.us.1 to i8
+  %i.rk = getelementptr i8, ptr %i.mk, i64 %indvars.iv.next511
+  store i8 %39, ptr %i.rk, align 1, !tbaa !133
+  %indvars.iv.next512 = add nuw nsw i64 %indvars.iv511, 2 ; 2 uses
   %exitcond515.not = icmp eq i64 %indvars.iv.next512, %wide.trip.count514
   br i1 %exitcond515.not, label %._crit_edge, label %_Z10clip_f_u16fi.exit.us, !llvm.loop !226
 
@@ -817,15 +848,13 @@ _Z10clip_f_u16fi.exit403.us.us:                   ; preds = %.lr.ph.split482.us.
   %i.va = fmul nnan float %i.uz, 3.906250e-03
   %i.vb = fadd float %i.va, 1.600000e+01
   %i.vc = fadd float %i.vb, 5.000000e-01
-  %i.vd = fptosi float %i.vc to i32               ; 2 uses
-  %24 = icmp slt i32 %i.vd, 0
+  %i.vd = fptosi float %i.vc to i32
   %spec.select462468.us.us = call i32 @llvm.umin.i32(i32 %i.vd, i32 255)
   %i.ve = trunc nuw i32 %spec.select462468.us.us to i8
-  %25 = select i1 %24, i8 0, i8 %i.ve
   %i.vf = udiv i32 %.1302480.us.us490, %i.i
   %i.vg = zext i32 %i.vf to i64                   ; 2 uses
   %i.vh = getelementptr i8, ptr %i.tp, i64 %i.vg
-  store i8 %25, ptr %i.vh, align 1, !tbaa !133
+  store i8 %i.ve, ptr %i.vh, align 1, !tbaa !133
   %i.vi = getelementptr i8, ptr %i.tb, i64 %i.uv
   %i.vj = load i8, ptr %i.vi, align 1, !tbaa !133
   %i.vk = uitofp i8 %i.vj to float
@@ -833,13 +862,11 @@ _Z10clip_f_u16fi.exit403.us.us:                   ; preds = %.lr.ph.split482.us.
   %i.vm = fmul nnan float %i.vl, 3.906250e-03
   %i.vn = fadd float %i.vm, 1.600000e+01
   %i.vo = fadd float %i.vn, 5.000000e-01
-  %i.vp = fptosi float %i.vo to i32               ; 2 uses
-  %26 = icmp slt i32 %i.vp, 0
+  %i.vp = fptosi float %i.vo to i32
   %spec.select463469.us.us = call i32 @llvm.umin.i32(i32 %i.vp, i32 255)
   %i.vq = trunc nuw i32 %spec.select463469.us.us to i8
-  %27 = select i1 %26, i8 0, i8 %i.vq
   %i.vr = getelementptr i8, ptr %i.uu, i64 %i.vg
-  store i8 %27, ptr %i.vr, align 1, !tbaa !133
+  store i8 %i.vq, ptr %i.vr, align 1, !tbaa !133
   %i.vs = add i32 %.1302480.us.us490, %i.i        ; 2 uses
   %i.vt = icmp ult i32 %i.vs, %i.c
   br i1 %i.vt, label %_Z10clip_f_u16fi.exit403.us.us, label %._crit_edge481.us, !llvm.loop !228
@@ -1020,7 +1047,7 @@ bb.bt:                                            ; preds = %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #17
   br label %bb.by
 
-._crit_edge:                                      ; preds = %.lr.ph.split.us477.prol.loopexit, %.lr.ph.split.us477, %_Z10clip_f_u16fi.exit.us, %.lr.ph.split.us.split.us.prol.loopexit, %.lr.ph.split.us.split.us, %_Z10clip_f_u16fi.exit401, %middle.block701, %vec.epilog.middle.block716, %middle.block648, %vec.epilog.middle.block661, %middle.block622, %vec.epilog.middle.block, %middle.block
+._crit_edge:                                      ; preds = %.lr.ph.split.us477.prol.loopexit, %.lr.ph.split.us477, %_Z10clip_f_u16fi.exit.us.prol.loopexit, %_Z10clip_f_u16fi.exit.us, %.lr.ph.split.us.split.us.prol.loopexit, %.lr.ph.split.us.split.us, %_Z10clip_f_u16fi.exit401, %middle.block701, %vec.epilog.middle.block716, %middle.block648, %vec.epilog.middle.block660, %middle.block622, %vec.epilog.middle.block, %middle.block
   %indvars.iv.next527 = add nuw nsw i64 %indvars.iv526, 1 ; 2 uses
   %exitcond530.not = icmp eq i64 %indvars.iv.next527, %wide.trip.count529
   br i1 %exitcond530.not, label %.preheader.lr.ph, label %.preheader475, !llvm.loop !231

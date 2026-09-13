@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opendal-rs/original/opendal_core-ba0671c8f10fcf8e.opendal_core.455f99aaf940afe2-cgu.01?download=true
+inline.NumInlined: 443
+inline.NumDeleted: 173
+loop-unroll.NumCompletelyUnrolled: 14
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@_RNCINvXsk_NtCs4CtJ3uPHEZZ_4jiff5errorINtNtCsgxBkk5gSRhY_4core6result6ResultNtNtNtBa_5civil4date4DateNtB8_5ErrorEINtB8_12ErrorContextB1b_B1A_E7contextNtNtNtB8_3fmt7rfc28225ErrorE0Cs5XgW7KoffLW_12opendal_core:bb.a
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs4CtJ3uPHEZZ_4jiff5error5ErrorECs5XgW7KoffLW_12opendal_core.exit: ; preds = %bb.d, %bb.c, %bb.e
   resume { ptr, i32 } %i.d
@@ -200,7 +205,7 @@ _RNvMs1_NtNtCs5RLZBEkhFyl_9jiff_core5civil4dateNtB5_12UnixEpochDay7weekday.exit:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal fastcc range(i48 16777216, -4026597374) i48 @_RNvMNtNtCs5RLZBEkhFyl_9jiff_core5civil4dateNtB2_4Date3new(i16 noundef %0, i8 noundef %1, i8 noundef %2) unnamed_addr #5 {
+define internal fastcc range(i48 16777216, -4093640702) i48 @_RNvMNtNtCs5RLZBEkhFyl_9jiff_core5civil4dateNtB2_4Date3new(i16 noundef %0, i8 noundef %1, i8 noundef %2) unnamed_addr #5 {
 bb.a:
   %i.a = add i16 %0, 9999
   %or.cond = icmp ult i16 %i.a, 19999

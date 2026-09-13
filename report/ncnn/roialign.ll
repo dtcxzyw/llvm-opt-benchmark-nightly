@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %.noexc, %._crit_edge
   %.058156 = phi i32 [ 0, %.noexc ], [ %i.au, %._crit_edge ] ; 2 uses
   %.059155 = phi ptr [ %i.as, %.noexc ], [ %i.ay, %._crit_edge ] ; 2 uses
-  %i.at = uitofp nneg i32 %.058156 to float
+  %i.at = uitofp ninf nsz nneg i32 %.058156 to float
   %i.au = add nuw nsw i32 %.058156, 1             ; 3 uses
-  %i.av = uitofp nneg i32 %i.au to float
+  %i.av = uitofp ninf nsz nneg i32 %i.au to float
   %i.aw = insertelement <2 x float> poison, float %i.at, i64 1
   %i.ax = insertelement <2 x float> poison, float %i.av, i64 1
   br label %bb.c
@@ -228,11 +228,11 @@ bb.c:                                             ; preds = %.preheader, %._crit
   %i.ba = load float, ptr %7, align 4, !tbaa !40  ; 2 uses
   %i.bb = load float, ptr %8, align 4, !tbaa !40
   %i.bc = trunc nuw nsw i64 %indvars.iv to i32
-  %i.bd = uitofp nneg i32 %i.bc to float
+  %i.bd = uitofp ninf nsz nneg i32 %i.bc to float
   %i.be = load float, ptr %9, align 4, !tbaa !40  ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.bf = trunc nuw nsw i64 %indvars.iv.next to i32
-  %i.bg = uitofp nneg i32 %i.bf to float
+  %i.bg = uitofp ninf nsz nneg i32 %i.bf to float
   %i.bh = insertelement <2 x float> poison, float %i.be, i64 0
   %i.bi = insertelement <2 x float> %i.bh, float %i.ba, i64 1 ; 2 uses
   %i.bj = insertelement <2 x float> %i.aw, float %i.bd, i64 0
@@ -284,7 +284,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 .lr.ph.us:                                        ; preds = %._crit_edge.us, %.lr.ph149.split.us
   %.055147.us = phi i32 [ 0, %.lr.ph149.split.us ], [ %i.eq, %._crit_edge.us ] ; 2 uses
   %.056146.us = phi float [ 0.000000e+00, %.lr.ph149.split.us ], [ %i.eo, %._crit_edge.us ]
-  %i.cr = uitofp nneg i32 %.055147.us to float
+  %i.cr = uitofp ninf nsz nneg i32 %.055147.us to float
   %i.cs = fadd fast float %i.cr, 5.000000e-01
   %i.ct = fmul fast float %i.ba, %i.cs
   %i.cu = fmul fast float %i.ct, %i.co
@@ -306,7 +306,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 bb.f:                                             ; preds = %.lr.ph.us, %bb.f
   %.054145.us = phi i32 [ 0, %.lr.ph.us ], [ %i.ep, %bb.f ] ; 2 uses
   %.1144.us = phi float [ %.056146.us, %.lr.ph.us ], [ %i.eo, %bb.f ]
-  %i.de = uitofp nneg i32 %.054145.us to float
+  %i.de = uitofp ninf nsz nneg i32 %.054145.us to float
   %i.df = fadd fast float %i.de, 5.000000e-01
   %i.dg = fmul fast float %i.be, %i.df
   %i.dh = fmul fast float %i.dg, %i.cq
@@ -541,7 +541,7 @@ bb.b:                                             ; preds = %bb.a
 .preheader98.us.us.us.us:                         ; preds = %._crit_edge.split.us.split.us.us.us.us.us, %.noexc.us.us
   %.060118.us.us.us.us = phi i32 [ 0, %.noexc.us.us ], [ %i.eb, %._crit_edge.split.us.split.us.us.us.us.us ] ; 2 uses
   %.061115.us.us.us.us = phi ptr [ %i.bj, %.noexc.us.us ], [ %i.ea, %._crit_edge.split.us.split.us.us.us.us.us ] ; 2 uses
-  %i.bk = uitofp nneg i32 %.060118.us.us.us.us to float
+  %i.bk = uitofp ninf nsz nneg i32 %.060118.us.us.us.us to float
   br label %.preheader.us.us.us.us.us.us
 
 .preheader.us.us.us.us.us.us:                     ; preds = %._crit_edge105.split.us.us.us.us.us.us.us, %.preheader98.us.us.us.us
@@ -551,7 +551,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bn = fmul fast float %i.bm, %i.bk
   %i.bo = fadd fast float %i.bl, %i.bn
   %i.bp = trunc nuw nsw i64 %indvars.iv153 to i32
-  %i.bq = uitofp nneg i32 %i.bp to float
+  %i.bq = uitofp ninf nsz nneg i32 %i.bp to float
   %i.br = load float, ptr %10, align 4, !tbaa !40
   %i.bs = load float, ptr %11, align 4, !tbaa !40 ; 2 uses
   %i.bt = fmul fast float %i.bs, %i.bq
@@ -561,7 +561,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.us.us.us.us.us.us.us:                      ; preds = %._crit_edge.us.us.us.us.us.us.us, %.preheader.us.us.us.us.us.us
   %.056103.us.us.us.us.us.us.us = phi i32 [ 0, %.preheader.us.us.us.us.us.us ], [ %i.dw, %._crit_edge.us.us.us.us.us.us.us ] ; 2 uses
   %.057102.us.us.us.us.us.us.us = phi float [ 0.000000e+00, %.preheader.us.us.us.us.us.us ], [ %.2.us.us.us.us.us.us.us, %._crit_edge.us.us.us.us.us.us.us ]
-  %i.bv = uitofp nneg i32 %.056103.us.us.us.us.us.us.us to float
+  %i.bv = uitofp ninf nsz nneg i32 %.056103.us.us.us.us.us.us.us to float
   %i.bw = fadd fast float %i.bv, 5.000000e-01
   %i.bx = fmul fast float %i.bm, %i.bw
   %i.by = fmul fast float %i.bx, %i.bg
@@ -572,7 +572,7 @@ bb.c:                                             ; preds = %bb.g, %.lr.ph.us.us
   %.054101.us.us.us.us.us.us.us = phi i32 [ 0, %.lr.ph.us.us.us.us.us.us.us ], [ %i.dv, %bb.g ] ; 2 uses
   %.055100.us.us.us.us.us.us.us = phi float [ %i.bz, %.lr.ph.us.us.us.us.us.us.us ], [ %.1.us.us.us.us.us.us.us, %bb.g ] ; 6 uses
   %.15899.us.us.us.us.us.us.us = phi float [ %.057102.us.us.us.us.us.us.us, %.lr.ph.us.us.us.us.us.us.us ], [ %.2.us.us.us.us.us.us.us, %bb.g ] ; 4 uses
-  %i.ca = uitofp nneg i32 %.054101.us.us.us.us.us.us.us to float
+  %i.ca = uitofp ninf nsz nneg i32 %.054101.us.us.us.us.us.us.us to float
   %i.cb = fadd fast float %i.ca, 5.000000e-01
   %i.cc = fmul fast float %i.bs, %i.cb
   %i.cd = fmul fast float %i.cc, %i.bh
@@ -595,37 +595,32 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.cm, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %15 = insertelement <2 x float> poison, float %i.ce, i64 0
-  %16 = insertelement <2 x float> %15, float %.055100.us.us.us.us.us.us.us, i64 1
-  %17 = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %16, <2 x float> zeroinitializer) ; 5 uses
-  %18 = fptosi <2 x float> %17 to <2 x i32>       ; 3 uses
-  %19 = extractelement <2 x i32> %18, i64 0       ; 3 uses
-  %i.cn = add nsw i32 %19, 1                      ; 3 uses
-  %20 = extractelement <2 x i32> %18, i64 1       ; 2 uses
-  %i.co = add nsw i32 %20, 1                      ; 3 uses
-  %21 = sitofp fast i32 %i.cn to float
-  %22 = extractelement <2 x float> %17, i64 0
-  %i.cp = fsub fast float %21, %22
-  %23 = sitofp <2 x i32> %18 to <2 x float>       ; 2 uses
-  %foldExtExtBinop = fsub fast <2 x float> %17, %23
-  %24 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %25 = sitofp fast i32 %i.co to float
-  %26 = extractelement <2 x float> %17, i64 1     ; 2 uses
-  %i.cq = fsub fast float %25, %26
-  %foldExtExtBinop178 = fsub fast <2 x float> %17, %23
-  %27 = extractelement <2 x float> %foldExtExtBinop178, i64 1
+  %spec.store.select.us.us.us.us.us.us.us = call nnan ninf nsz float @llvm.maxnum.f32(float %.055100.us.us.us.us.us.us.us, float 0.000000e+00) ; 4 uses
+  %spec.store.select1.us.us.us.us.us.us.us = call nnan ninf nsz float @llvm.maxnum.f32(float %i.ce, float 0.000000e+00) ; 3 uses
+  %15 = fptosi float %spec.store.select1.us.us.us.us.us.us.us to i32 ; 4 uses
+  %i.cn = add nuw nsw i32 %15, 1                  ; 3 uses
+  %16 = fptosi float %spec.store.select.us.us.us.us.us.us.us to i32 ; 3 uses
+  %i.co = add nuw nsw i32 %16, 1                  ; 3 uses
+  %17 = uitofp ninf nsz nneg i32 %i.cn to float
+  %i.cp = fsub fast float %17, %spec.store.select1.us.us.us.us.us.us.us
+  %18 = uitofp ninf nsz nneg i32 %15 to float
+  %19 = fsub fast float %spec.store.select1.us.us.us.us.us.us.us, %18
+  %20 = uitofp ninf nsz nneg i32 %i.co to float
+  %i.cq = fsub fast float %20, %spec.store.select.us.us.us.us.us.us.us
+  %21 = uitofp ninf nsz nneg i32 %16 to float
+  %22 = fsub fast float %spec.store.select.us.us.us.us.us.us.us, %21
   %.not.i76.us.us.us.us.us.us.us = icmp slt i32 %i.cn, %i.ck ; 2 uses
   %i.cr = add nsw i32 %i.ck, -1
   %.045.i.us.us.us.us.us.us.us = select nsz i1 %.not.i76.us.us.us.us.us.us.us, float %i.cp, float 1.000000e+00 ; 2 uses
-  %.044.i.us.us.us.us.us.us.us = select nsz i1 %.not.i76.us.us.us.us.us.us.us, float %24, float 0.000000e+00 ; 2 uses
+  %.044.i.us.us.us.us.us.us.us = select nsz i1 %.not.i76.us.us.us.us.us.us.us, float %19, float 0.000000e+00 ; 2 uses
   %.0.i.us.us.us.us.us.us.us = call i32 @llvm.smin.i32(i32 %i.cn, i32 %i.cr) ; 2 uses
   %.not51.i.us.us.us.us.us.us.us = icmp slt i32 %i.co, %i.cg ; 2 uses
   %i.cs = add nsw i32 %i.cg, -1
   %.046.i.us.us.us.us.us.us.us = call i32 @llvm.smin.i32(i32 %i.co, i32 %i.cs)
   %.043.i.us.us.us.us.us.us.us = select nsz i1 %.not51.i.us.us.us.us.us.us.us, float %i.cq, float 1.000000e+00
-  %.042.i.us.us.us.us.us.us.us = select nsz i1 %.not51.i.us.us.us.us.us.us.us, float %27, float 0.000000e+00
-  %i.ct = mul nsw i32 %i.ck, %20                  ; 2 uses
-  %i.cu = add nsw i32 %i.ct, %19
+  %.042.i.us.us.us.us.us.us.us = select nsz i1 %.not51.i.us.us.us.us.us.us.us, float %22, float 0.000000e+00
+  %i.ct = mul nsw i32 %i.ck, %16                  ; 2 uses
+  %i.cu = add nsw i32 %i.ct, %15
   %i.cv = sext i32 %i.cu to i64
   %i.cw = getelementptr inbounds [4 x i8], ptr %i.bi, i64 %i.cv
   %i.cx = load float, ptr %i.cw, align 4, !tbaa !40
@@ -637,7 +632,7 @@ bb.f:                                             ; preds = %bb.e
   %i.dd = fmul fast float %i.dc, %.044.i.us.us.us.us.us.us.us
   %i.de = fadd fast float %i.dd, %i.cy
   %i.df = mul nsw i32 %i.ck, %.046.i.us.us.us.us.us.us.us ; 2 uses
-  %i.dg = add nsw i32 %i.df, %19
+  %i.dg = add nsw i32 %i.df, %15
   %i.dh = sext i32 %i.dg to i64
   %i.di = getelementptr inbounds [4 x i8], ptr %i.bi, i64 %i.dh
   %i.dj = load float, ptr %i.di, align 4, !tbaa !40
@@ -656,7 +651,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c
   %.2.us.us.us.us.us.us.us = phi nsz float [ %i.du, %bb.f ], [ %.15899.us.us.us.us.us.us.us, %bb.e ], [ %.15899.us.us.us.us.us.us.us, %bb.d ], [ %.15899.us.us.us.us.us.us.us, %bb.c ] ; 3 uses
-  %.1.us.us.us.us.us.us.us = phi nsz float [ %26, %bb.f ], [ %.055100.us.us.us.us.us.us.us, %bb.e ], [ %.055100.us.us.us.us.us.us.us, %bb.d ], [ %.055100.us.us.us.us.us.us.us, %bb.c ]
+  %.1.us.us.us.us.us.us.us = phi nsz float [ %spec.store.select.us.us.us.us.us.us.us, %bb.f ], [ %.055100.us.us.us.us.us.us.us, %bb.e ], [ %.055100.us.us.us.us.us.us.us, %bb.d ], [ %.055100.us.us.us.us.us.us.us, %bb.c ]
   %i.dv = add nuw nsw i32 %.054101.us.us.us.us.us.us.us, 1 ; 2 uses
   %exitcond151.not = icmp eq i32 %i.dv, %i.aq
   br i1 %exitcond151.not, label %._crit_edge.us.us.us.us.us.us.us, label %bb.c, !llvm.loop !71
@@ -780,6 +775,9 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.maxnum.f32(float, float) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9

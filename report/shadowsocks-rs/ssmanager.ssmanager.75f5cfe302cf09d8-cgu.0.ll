@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/shadowsocks-rs/original/ssmanager.ssmanager.75f5cfe302cf09d8-cgu.0?download=true
+inline.NumInlined: 18859
+inline.NumDeleted: 9054
+loop-unroll.NumCompletelyUnrolled: 62
+loop-unroll.NumRuntimeUnrolled: 53
+loop-unroll.NumUnrolled: 118
 begin_hunk_0_@_RNvMs0_NtNtNtCsczhfDQ1qNkX_5tokio7runtime4task7harnessINtB5_7HarnessNCNvMs_NtCs8AjStw0eGtC_16hickory_resolver11name_serverINtB1b_12ProbeRequestNtNtNtCslxdWNweD0x2_11shadowsocks12dns_resolver20hickory_dns_resolver24ShadowDnsRuntimeProviderE3run0INtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtNtB9_9scheduler14current_thread6HandleEE8completeCsa7TLgTh0CeG_9ssmanager:bb.a
   %.not1.i.i.i.i = icmp eq i64 %i.w, 0
   br i1 %.not1.i.i.i.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECsa7TLgTh0CeG_9ssmanager.exit, label %bb.j
@@ -200,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_sliceTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantEECsa7TLgTh0CeG_9ssmanager.exit: ; preds = %bb.e
   %i.y = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.u
   %i.z = shl nuw nsw i64 %i.v, 5                  ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !36117
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !36117
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 352 ; 2 uses
   %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.aa, i64 %i.u
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull readonly align 8 %i.ab, i64 %i.z, i1 false), !alias.scope !36118
@@ -396,7 +401,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr nonnull readonly align 8 %i.s, i64 %i.ad, i1 false), !alias.scope !36143
   %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %1
   %i.ag = shl nuw nsw i64 %i.n, 5                 ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !36144
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !36144
   %i.ah = getelementptr inbounds nuw [32 x i8], ptr %i.s, i64 %1
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.ah, i64 %i.ag, i1 false), !alias.scope !36145
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)

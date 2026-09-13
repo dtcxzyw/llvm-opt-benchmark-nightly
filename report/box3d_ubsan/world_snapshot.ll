@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %bb.au, %bb.av
   call fastcc void @b3SnapR_Bytes(ptr noundef %0, ptr noundef %i.fd, i32 noundef %narrow127)
   br label %.thread115
 
-.thread115:                                       ; preds = %bb.an, %bb.ao, %bb.aw, %bb.as
+.thread115:                                       ; preds = %bb.as, %bb.aw, %bb.ao, %bb.an
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.n, !llvm.loop !298

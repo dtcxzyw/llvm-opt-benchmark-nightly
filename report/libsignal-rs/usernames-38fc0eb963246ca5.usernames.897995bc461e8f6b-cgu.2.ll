@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/usernames-38fc0eb963246ca5.usernames.897995bc461e8f6b-cgu.2?download=true
+inline.NumInlined: 161
+inline.NumDeleted: 95
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -17,8 +21,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"h\00\00\00\00\00\00\00s\00\00\00\05\00\00\00" }>, align 8
 @12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"h\00\00\00\00\00\00\00y\00\00\00\05\00\00\00" }>, align 8
 @13 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"h\00\00\00\00\00\00\00\7F\00\00\00\05\00\00\00" }>, align 8
-@14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"h\00\00\00\00\00\00\00\8D\00\00\00\14\00\00\00" }>, align 8
-@15 = private unnamed_addr constant [2 x i8] c"()", align 1
+@14 = private unnamed_addr constant [2 x i8] c"()", align 1
 
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef align 8 ptr @_RINvNtCs43OB2dM8s8d_5prost8encoding10skip_fieldQRShECsbNM6vbj4kjf_9usernames(i8 noundef range(i8 0, 6) %0, i32 noundef %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %2, i32 noundef %3) unnamed_addr #0 {
@@ -421,7 +424,7 @@ bb.z:                                             ; preds = %bb.y
   %i.bz = add nsw i32 %i.bw, -268435456
   %i.ca = zext nneg i32 %i.bz to i64
   %i.cb = shl nuw nsw i64 %i.ca, 28
-  %i.cc = add nuw nsw i64 %i.cb, %i.as            ; 3 uses
+  %i.cc = add nuw nsw i64 %i.cb, %i.as            ; 2 uses
   %i.cd = icmp samesign ugt i64 %.val1.i, 8
   tail call void @llvm.assume(i1 %i.cd)
   %i.ce = getelementptr inbounds nuw i8, ptr %.val.i, i64 8
@@ -443,18 +446,13 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cl = zext nneg i8 %i.cj to i64
+  %1 = shl nuw i64 %i.cl, 63
   %i.cm = and i8 %i.cf, 127
   %i.cn = zext nneg i8 %i.cm to i64
-  %1 = shl nuw i64 %i.cl, 63
   %i.co = shl nuw nsw i64 %i.cn, 56
   %i.cp = add nuw nsw i64 %i.co, %i.cc
-  %i.cq = or disjoint i64 %1, %i.cp               ; 2 uses
-  %2 = icmp ult i64 %i.cq, %i.cc
-  br i1 %2, label %3, label %_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCsbNM6vbj4kjf_9usernames.exit6
-
-3:                                                ; preds = %bb.ac
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #25, !noalias !64
-  unreachable
+  %i.cq = or disjoint i64 %1, %i.cp
+  br label %_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCsbNM6vbj4kjf_9usernames.exit6
 
 bb.ad:                                            ; preds = %bb.z
   %i.cr = zext nneg i8 %i.cf to i64
@@ -508,7 +506,7 @@ bb.ak:                                            ; preds = %bb.ab
   %i.dp = ptrtoint ptr %i.do to i64
   br label %bb.al
 
-_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCsbNM6vbj4kjf_9usernames.exit6: ; preds = %bb.ac, %bb.af, %bb.ag, %bb.ah, %bb.ad, %bb.ae, %bb.o, %bb.k, %bb.g
+_RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCsbNM6vbj4kjf_9usernames.exit6: ; preds = %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ad, %bb.ac, %bb.o, %bb.k, %bb.g
   %.sroa.18.0.ph = phi i64 [ 10, %bb.ac ], [ 9, %bb.ad ], [ 8, %bb.ae ], [ 7, %bb.af ], [ 6, %bb.ag ], [ 5, %bb.ah ], [ 4, %bb.o ], [ 3, %bb.k ], [ 2, %bb.g ] ; 2 uses
   %.sroa.5.0.ph = phi i64 [ %i.cq, %bb.ac ], [ %i.ct, %bb.ad ], [ %i.cw, %bb.ae ], [ %i.cz, %bb.af ], [ %i.dc, %bb.ag ], [ %i.df, %bb.ah ], [ %i.aq, %bb.o ], [ %i.ag, %bb.k ], [ %i.w, %bb.g ]
   %i.dq = sub nuw i64 %.val1.i, %.sroa.18.0.ph
@@ -911,7 +909,7 @@ _RNvXsU_NtNtCsgxBkk5gSRhY_4core3fmt3numhNtB7_5Debug3fmt.exit: ; preds = %bb.c, %
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef zeroext i1 @_RNvXs1g_NtCsgxBkk5gSRhY_4core3fmtRuNtB6_5Debug3fmtCsbNM6vbj4kjf_9usernames(ptr noalias nofree readonly align 8 captures(none) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCsgxBkk5gSRhY_4core3fmtNtB5_9Formatter3pad(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @15, i64 noundef 2)
+  %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCsgxBkk5gSRhY_4core3fmtNtB5_9Formatter3pad(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 2)
   ret i1 %i.a
 }
 
@@ -1313,9 +1311,6 @@ declare noalias noundef ptr @_RNvCs1njKG4L9aB3_7___rustc19___rust_alloc_zeroed(i
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef i64 @_RINvYNtNtNtCs9k3SxhrAWiO_3std4hash6random11RandomStateNtNtCsgxBkk5gSRhY_4core4hash11BuildHasher8hash_oneRINtNtCs6i54tJFfzR_5alloc6borrow3CoweEECsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #0
-
-; Function Attrs: cold noinline noreturn nonlazybind uwtable
-declare void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #12
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef i8 @_RNvYRShNtNtNtCs17cqnTMcAHA_5bytes3buf8buf_impl3Buf6get_u8CsbNM6vbj4kjf_9usernames(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #0

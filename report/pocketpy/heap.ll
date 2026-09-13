@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %.lr.ph.split.us
   %i.aj = uitofp nneg i32 %i.ag to float
   %i.ak = fmul float %i.ai, %i.aj
   %i.al = fptosi float %i.ak to i32
-  %i.am = add nsw i32 %i.ag, %i.al
-  %2 = sext i32 %i.am to i64
+  %i.am = add nuw nsw i32 %i.ag, %i.al
+  %2 = zext nneg i32 %i.am to i64
   %i.an = load i64, ptr %i.o, align 8, !tbaa !16
   %i.ao = sub i64 %i.an, %2
   store i64 %i.ao, ptr %i.o, align 8, !tbaa !16
@@ -272,8 +272,8 @@ bb.g:                                             ; preds = %.lr.ph.split
   %i.bv = uitofp nneg i32 %i.bs to float
   %i.bw = fmul float %i.bu, %i.bv
   %i.bx = fptosi float %i.bw to i32
-  %i.by = add nsw i32 %i.bs, %i.bx
-  %3 = sext i32 %i.by to i64
+  %i.by = add nuw nsw i32 %i.bs, %i.bx
+  %3 = zext nneg i32 %i.by to i64
   %i.bz = load i64, ptr %i.n, align 8, !tbaa !16
   %i.ca = sub i64 %i.bz, %3
   store i64 %i.ca, ptr %i.n, align 8, !tbaa !16

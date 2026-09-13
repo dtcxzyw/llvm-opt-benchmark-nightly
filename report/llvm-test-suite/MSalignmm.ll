@@ -205,7 +205,7 @@ scalar.ph99:                                      ; preds = %scalar.ph99.prol.lo
   %i.xd = uitofp nneg i32 %i.t to double
   %i.xe = fmul nnan double %i.xd, 5.000000e-01
   %i.xf = fptosi double %i.xe to i32              ; 10 uses
-  %.not47 = icmp slt i32 %i.xf, 1
+  %.not47 = icmp eq i32 %i.xf, 0
   br i1 %.not47, label %.lr.ph58, label %.lr.ph52
 
 .lr.ph52:                                         ; preds = %._crit_edge33
@@ -608,7 +608,7 @@ scalar.ph152:                                     ; preds = %scalar.ph152.prol.l
   %i.aeo = add nsw i32 %i.xf, -1                  ; 2 uses
   %i.aep = getelementptr inbounds nuw i8, ptr %i.qx, i64 4
   %smax197 = tail call i32 @llvm.smax.i32(i32 %i.sy, i32 1) ; 3 uses
-  %i.aeq = zext i32 %i.xf to i64                  ; 2 uses
+  %i.aeq = zext nneg i32 %i.xf to i64             ; 2 uses
   %wide.trip.count198 = zext nneg i32 %smax197 to i64 ; 2 uses
   %i.aer = icmp sgt i32 %i.s, 0
   br i1 %i.aer, label %.lr.ph72.lr.ph, label %.loopexit

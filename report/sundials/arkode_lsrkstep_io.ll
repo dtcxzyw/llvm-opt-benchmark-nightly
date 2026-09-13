@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.m
   %i.r = uitofp nneg i32 %1 to double
   %sqrt = call double @llvm.sqrt.f64(double %i.r)
   %i.s = fptosi double %sqrt to i32               ; 2 uses
-  %i.t = mul nsw i32 %i.s, %i.s
+  %i.t = mul nuw nsw i32 %i.s, %i.s
   %.not16 = icmp eq i32 %i.t, %1
   br i1 %.not16, label %.sink.split, label %bb.o
 

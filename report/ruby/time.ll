@@ -204,17 +204,17 @@ bb.k:                                             ; preds = %rb_float_value_inli
   %i.ai = fneg double %i.z
   %i.aj = tail call double @llvm.fmuladd.f64(double %i.ai, double 1.000000e+09, double 5.000000e-01)
   %i.ak = fptosi double %i.aj to i32              ; 2 uses
-  %2 = sext i32 %i.ak to i64                      ; 2 uses
-  %3 = icmp sgt i32 %i.ak, 0
-  br i1 %3, label %bb.l, label %bb.m
+  %.not = icmp eq i32 %i.ak, 0
+  br i1 %.not, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
+  %2 = zext nneg i32 %i.ak to i64
   %i.al = sub nsw i64 1000000000, %2
   %i.am = fadd double %i.aa, -1.000000e+00
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l, %bb.i, %bb.j
-  %.sroa.9.0 = phi i64 [ %i.ag, %bb.j ], [ %i.ae, %bb.i ], [ %i.al, %bb.l ], [ %2, %bb.k ]
+  %.sroa.9.0 = phi i64 [ %i.ag, %bb.j ], [ %i.ae, %bb.i ], [ %i.al, %bb.l ], [ 0, %bb.k ]
   %.0 = phi double [ %i.ah, %bb.j ], [ %i.aa, %bb.i ], [ %i.am, %bb.l ], [ %i.aa, %bb.k ] ; 2 uses
   %i.an = fptosi double %.0 to i64                ; 2 uses
   %i.ao = sitofp i64 %i.an to double

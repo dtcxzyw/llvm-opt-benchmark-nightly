@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_file-e8d9b95001b8e5c0.lance_file.7ecd3f6fdfc526a6-cgu.0?download=true
+inline.NumInlined: 17611
+inline.NumDeleted: 7469
+loop-unroll.NumCompletelyUnrolled: 22
+loop-unroll.NumRuntimeUnrolled: 132
+loop-unroll.NumUnrolled: 155
 begin_hunk_0_@_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift4sortTjmINtNtNtBa_3ops5range5RangeyEENCINvMNtCs40k4W9msRzi_5alloc5sliceSBW_11sort_by_keyyNCNCINvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB2t_20FileMetadataProvider25load_indexed_column_infosFG_mRL0_NtNtNtB2v_6format6pbfile14ColumnMetadataEINtNtBa_6result6ResultINtNtB1A_4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoENtNtCs63DIHKhvmTb_10lance_core5error5ErrorEE00E0EB2v_:bb.a
   br label %_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift10create_runTjmINtNtNtBa_3ops5range5RangeyEENCINvMNtCs40k4W9msRzi_5alloc5sliceSB13_11sort_by_keyyNCNCINvMs8_NtCsaSXGKSfiU2E_10lance_file6readerNtB2B_20FileMetadataProvider25load_indexed_column_infosFG_mRL0_NtNtNtB2D_6format6pbfile14ColumnMetadataEINtNtBa_6result6ResultINtNtB1H_4sync3ArcNtNtCsjjpCCFGI3ul_14lance_encoding7decoder10ColumnInfoENtNtCs63DIHKhvmTb_10lance_core5error5ErrorEE00E0EB2D_.exit
 
@@ -200,7 +205,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift13logical_mergeTjmINtNtN
   br i1 %i.dt, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.du = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.du = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dv = lshr i64 %.sroa.018.0, 1
   %i.dw = add nuw i64 %i.dv, %.sroa.09.0
   br label %bb.f
@@ -586,7 +591,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift13logical_mergeTlTNtNtNt
   br i1 %i.dp, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dq = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dq = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dr = lshr i64 %.sroa.018.0, 1
   %i.ds = add nuw i64 %i.dr, %.sroa.09.0
   br label %bb.f
@@ -976,7 +981,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift13logical_mergeTmmENCINv
   br i1 %i.dw, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dx = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dx = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dy = lshr i64 %.sroa.018.0, 1
   %i.dz = add nuw i64 %i.dy, %.sroa.09.0
   br label %bb.f
@@ -1366,7 +1371,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift13logical_mergeTmmENCINv
   br i1 %i.dw, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dx = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dx = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dy = lshr i64 %.sroa.018.0, 1
   %i.dz = add nuw i64 %i.dy, %.sroa.09.0
   br label %bb.f
@@ -1756,7 +1761,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift13logical_mergeTmmENCINv
   br i1 %i.dw, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dx = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dx = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dy = lshr i64 %.sroa.018.0, 1
   %i.dz = add nuw i64 %i.dy, %.sroa.09.0
   br label %bb.f
@@ -2159,7 +2164,7 @@ bb.ds:                                            ; preds = %bb.dq
   %i.mm = icmp ult i64 %.val84, 576460752303423488
   call void @llvm.assume(i1 %i.mm)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !29336
-  %i.mn = mul nuw i64 %.val84, 24                 ; 2 uses
+  %i.mn = mul nuw nsw i64 %.val84, 24             ; 2 uses
   %.not.i.i.i.i102 = icmp samesign ugt i64 %.val84, 384307168202282325
   br i1 %.not.i.i.i.i102, label %bb.dv, label %bb.dt, !prof !86
 
@@ -2425,7 +2430,7 @@ bb.ek:                                            ; preds = %bb.ei, %bb.ej
   %i.od = icmp ult i64 %.val83, 576460752303423488
   call void @llvm.assume(i1 %i.od)
   call void @llvm.experimental.noalias.scope.decl(metadata !29349)
-  %i.oe = shl nuw i64 %.val83, 5                  ; 2 uses
+  %i.oe = shl nuw nsw i64 %.val83, 5              ; 2 uses
   %.not.i.i.i115 = icmp samesign ugt i64 %.val83, 288230376151711743
   br i1 %.not.i.i.i115, label %bb.en, label %bb.el, !prof !86
 
@@ -2828,7 +2833,7 @@ _RINvNtNtNtCs40k4W9msRzi_5alloc11collections5btree4node13move_to_sliceTNtNtNtCs6
   %i.ef = getelementptr inbounds nuw i8, ptr %i.di, i64 3880 ; 2 uses
   %i.eg = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %i.ed
   %i.eh = shl nuw nsw i64 %i.ee, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dy, ptr nonnull readonly align 4 %i.eg, i64 %i.eh, i1 false), !alias.scope !31365, !noalias !31362
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.dy, ptr nonnull readonly align 4 %i.eg, i64 %i.eh, i1 false), !alias.scope !31365, !noalias !31362
   %i.ei = getelementptr inbounds nuw [352 x i8], ptr %i.di, i64 %i.ed
   %i.ej = mul nuw nsw i64 %i.ee, 352
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dm, ptr nonnull readonly align 8 %i.ei, i64 %i.ej, i1 false), !alias.scope !31366, !noalias !31362
@@ -3231,7 +3236,7 @@ bb.l:                                             ; preds = %bb.j, %bb.au
   %i.bn = load i64, ptr %i.bm, align 8, !noundef !62 ; 6 uses
   %i.bo = icmp ult i64 %i.bn, 1152921504606846976
   call void @llvm.assume(i1 %i.bo)
-  %i.bp = shl nuw i64 %i.bn, 4                    ; 2 uses
+  %i.bp = shl nuw nsw i64 %i.bn, 4                ; 2 uses
   %.not.i133 = icmp samesign ugt i64 %i.bn, 576460752303423487
   br i1 %.not.i133, label %bb.av, label %bb.m, !prof !86
 
@@ -3634,7 +3639,7 @@ bb.a:
   %i.ad = load i64, ptr %i.ac, align 8, !noundef !62 ; 11 uses
   %i.ae = icmp ult i64 %i.ad, 52405522936674863
   tail call void @llvm.assume(i1 %i.ae)
-  %i.af = mul nuw i64 %i.ad, 216                  ; 2 uses
+  %i.af = mul nuw nsw i64 %i.ad, 216              ; 2 uses
   %.not.i = icmp samesign ugt i64 %i.ad, 42700796466920258
   br i1 %.not.i, label %bb.d, label %bb.b, !prof !86
 
@@ -4037,8 +4042,8 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtCscI6d9CVNmLh_4core6option6Optio
   br i1 %niter.ncmp.3, label %_RINvMs_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtCscI6d9CVNmLh_4core6option6OptionNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldEE11resize_withNCNvXs1_NtCsaSXGKSfiU2E_10lance_file9datatypesNtNtB1l_6schema6SchemaINtNtBK_7convert7TryFromRNtB2w_6FieldsE8try_froms0_0EB2y_.exit.loopexit.unr-lcssa, label %.preheader.i.i
 
 .body233:                                         ; preds = %.body.i, %.body.i.i, %bb.co, %bb.cr, %bb.bi, %bb.bj, %bb.dq, %bb.dr, %bb.ct, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecjEECsaSXGKSfiU2E_10lance_file.exit274
-  %.sroa.088.5 = phi i8 [ 1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecjEECsaSXGKSfiU2E_10lance_file.exit274 ], [ 0, %bb.ct ], [ 0, %.body.i ], [ 1, %bb.dr ], [ 1, %bb.bi ], [ 1, %bb.dq ], [ 1, %bb.bj ], [ 0, %bb.cr ], [ 0, %bb.co ], [ 0, %.body.i.i ]
-  %.pn161.pn.pn = phi { ptr, i32 } [ %.pn161.pn, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecjEECsaSXGKSfiU2E_10lance_file.exit274 ], [ %i.pp, %bb.ct ], [ %.pn.i244, %.body.i ], [ %i.rg, %bb.dr ], [ %i.nm, %bb.bi ], [ %i.rg, %bb.dq ], [ %i.nm, %bb.bj ], [ %.pn.i244, %bb.cr ], [ %i.pf, %bb.co ], [ %i.pf, %.body.i.i ]
+  %.sroa.088.5 = phi i8 [ 1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecjEECsaSXGKSfiU2E_10lance_file.exit274 ], [ 0, %bb.ct ], [ 1, %bb.dr ], [ 1, %bb.bi ], [ 1, %bb.dq ], [ 1, %bb.bj ], [ 0, %bb.cr ], [ 0, %bb.co ], [ 0, %.body.i.i ], [ 0, %.body.i ]
+  %.pn161.pn.pn = phi { ptr, i32 } [ %.pn161.pn, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecjEECsaSXGKSfiU2E_10lance_file.exit274 ], [ %i.pp, %bb.ct ], [ %i.rg, %bb.dr ], [ %i.nm, %bb.bi ], [ %i.rg, %bb.dq ], [ %i.nm, %bb.bj ], [ %.pn.i244, %bb.cr ], [ %i.pf, %bb.co ], [ %i.pf, %.body.i.i ], [ %.pn.i244, %.body.i ]
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtB4_6option6OptionNtNtNtCs63DIHKhvmTb_10lance_core9datatypes5field5FieldEEECsaSXGKSfiU2E_10lance_file(ptr noalias noundef align 8 dereferenceable(24) %i.u) #50
           to label %bb.h unwind label %bb.cw
 

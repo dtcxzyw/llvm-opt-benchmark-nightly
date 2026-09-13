@@ -202,7 +202,7 @@ Gia_ManCrossCutSimple.exit.loopexit:              ; preds = %bb.d
   %i.ab = uitofp nneg i32 %.1.i to float
   %i.ac = fmul nnan float %i.ab, 1.100000e+00
   %i.ad = fptosi float %i.ac to i32
-  %i.ae = add nsw i32 %i.ad, 1
+  %i.ae = add nuw nsw i32 %i.ad, 1
   br label %Gia_ManCrossCutSimple.exit
 
 Gia_ManCrossCutSimple.exit:                       ; preds = %Gia_ManCrossCutSimple.exit.loopexit, %bb.a, %.lr.ph.i
@@ -242,7 +242,7 @@ Gia_ManFrontFindNext.exit:                        ; preds = %bb.f, %Abc_UtilStrs
   store ptr %i.as, ptr %i.at, align 8, !tbaa !44
   %i.au = getelementptr inbounds nuw i8, ptr %i.af, i64 180 ; 3 uses
   store i32 %.0.lcssa.i, ptr %i.au, align 4, !tbaa !30
-  %1 = sext i32 %.0.lcssa.i to i64
+  %1 = zext nneg i32 %.0.lcssa.i to i64
   %i.av = tail call noalias ptr @calloc(i64 noundef %1, i64 noundef 1) #19 ; 12 uses
   store i8 1, ptr %i.av, align 1, !tbaa !45
   %i.aw = getelementptr i8, ptr %i.af, i64 32     ; 8 uses

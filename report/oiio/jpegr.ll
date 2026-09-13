@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %._crit_edge204, %bb
   %i.bo = fdiv contract float %.pre-phi, %.pre-phi210 ; 2 uses
   %i.bp = call contract float @llvm.round.f32(float %i.bo)
   %i.bq = fptosi float %i.bp to i32
-  %.sroa.speculated173 = call i32 @llvm.smax.i32(i32 %i.bq, i32 1) ; 4 uses
+  %.sroa.speculated173 = call i32 @llvm.umax.i32(i32 %i.bq, i32 1) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #28
   store i32 %.sroa.speculated173, ptr %12, align 8, !tbaa !420
   %i.br = shl i32 %.sroa.speculated173, 2

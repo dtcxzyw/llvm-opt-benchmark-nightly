@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/tensor_tools.tensor_tools.f3cbf8f2a35afc65-cgu.05?download=true
+inline.NumInlined: 247
+inline.NumDeleted: 147
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift4sortNtNtCsltEA4u8Pgfu_11candle_core6pickle10TensorInfoNCINvMNtCsgCecv3eZDcN_5alloc5sliceSBW_7sort_byNCNvCskVIURZGHVHJ_12tensor_tools6run_lss_0E0EB2y_:bb.a
   %.not38.i = icmp eq i64 %i.n, 2                 ; 2 uses
   br i1 %i.y, label %.preheader27.i, label %.preheader.i
@@ -200,7 +205,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeNtNtCsltE
   br i1 %i.cv, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cw = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cw = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cx = lshr i64 %.sroa.018.0, 1
   %i.cy = add nuw nsw i64 %i.cx, %.sroa.09.0
   br label %bb.f
@@ -547,7 +552,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeRNtNtCsgC
   br i1 %i.dh, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.di = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.di = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dj = lshr i64 %.sroa.018.0, 1
   %i.dk = add nuw nsw i64 %i.dj, %.sroa.09.0
   br label %bb.f
@@ -851,7 +856,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTNtNtCsgC
   br i1 %i.cv, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cw = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cw = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cx = lshr i64 %.sroa.018.0, 1
   %i.cy = add nuw nsw i64 %i.cx, %.sroa.09.0
   br label %bb.f
@@ -1155,7 +1160,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTNtNtCsgC
   br i1 %i.cv, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cw = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cw = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cx = lshr i64 %.sroa.018.0, 1
   %i.cy = add nuw nsw i64 %i.cx, %.sroa.09.0
   br label %bb.f
@@ -1459,7 +1464,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTNtNtCsgC
   br i1 %i.cv, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cw = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cw = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cx = lshr i64 %.sroa.018.0, 1
   %i.cy = add nuw nsw i64 %i.cx, %.sroa.09.0
   br label %bb.f
@@ -1763,7 +1768,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTNtNtCsgC
   br i1 %i.cv, label %.lr.ph, label %._crit_edge
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cw = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.cw = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.cx = lshr i64 %.sroa.018.0, 1
   %i.cy = add nuw nsw i64 %i.cx, %.sroa.09.0
   br label %bb.f
@@ -2157,7 +2162,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRNtNtCsg
   br i1 %i.er, label %.lr.ph, label %._crit_edge
 
 bb.x:                                             ; preds = %._crit_edge
-  %i.es = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.es = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.et = lshr i64 %.sroa.018.0, 1
   %i.eu = add nuw nsw i64 %i.et, %.sroa.09.0
   br label %bb.f

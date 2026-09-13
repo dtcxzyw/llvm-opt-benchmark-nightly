@@ -205,7 +205,7 @@ _ZN5Eigen8internal20minmax_coeff_visitorINS_12CwiseUnaryOpINS0_21scalar_score_co
   %i.ac = fptosi double %i.ab to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 16
   store double %i.s, ptr %i.ad, align 8, !tbaa !229
-  %i.ae = sub i64 2, %i.ac
+  %i.ae = sub nsw i64 2, %i.ac
   store i64 %i.ae, ptr %1, align 8, !tbaa !233
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 0, ptr %i.af, align 8, !tbaa !1057
@@ -281,7 +281,7 @@ bb.h:                                             ; preds = %bb.g, %.thread.i
   %i.bj = tail call double @llvm.maxnum.f64(double %i.bh, double %i.bi)
   %i.bk = fptosi double %i.bj to i64
   store double %i.ax, ptr %i.ai, align 8, !tbaa !229
-  %i.bl = sub i64 %i.ao, %i.bk
+  %i.bl = sub nsw i64 %i.ao, %i.bk
   store i64 %i.bl, ptr %1, align 8, !tbaa !233
   store i64 0, ptr %i.aj, align 8, !tbaa !1057
   br label %_ZN5Eigen8internal20minmax_coeff_visitorINS_12CwiseUnaryOpINS0_21scalar_score_coeff_opIdEEKNS_5BlockINS5_INS_3RefINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0ENS_11OuterStrideILin1EEEEELin1ELi1ELb1EEELin1ELi1ELb0EEEEELb0ELi0ELb0EE6packetERKDv2_dll.exit

@@ -205,8 +205,7 @@ bb.cb:                                            ; preds = %_ZNKSt6vectorIN4cor
   %i.rn = fadd nsz float %i.rm, 5.000000e-01
   %i.ro = call nsz noundef float @llvm.floor.f32(float %i.rn)
   %i.rp = fptosi float %i.ro to i32
-  %11 = call i32 @llvm.smax.i32(i32 %i.rp, i32 0)
-  %i.rq = call i32 @llvm.umin.i32(i32 %11, i32 255)
+  %i.rq = call noundef i32 @llvm.smin.i32(i32 %i.rp, i32 255)
   %i.rr = shl nuw i32 %i.rq, 24
   %i.rs = load ptr, ptr %i.d, align 8, !tbaa !169 ; 2 uses
   %i.rt = load ptr, ptr %i.mx, align 8, !tbaa !59
@@ -609,7 +608,7 @@ declare i64 @llvm.umin.i64(i64, i64) #18
 declare i32 @llvm.usub.sat.i32(i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #18
+declare i32 @llvm.smin.i32(i32, i32) #18
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

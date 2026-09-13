@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tgrep-rs/original/tgrep_core-0863951115c2be39.tgrep_core.86d9a6e95f5280b1-cgu.14?download=true
+inline.NumInlined: 448
+inline.NumDeleted: 223
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 39
+loop-unroll.NumUnrolled: 41
 begin_hunk_0_@_RINvMs10_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB7_16BalancingContextNtNtBd_6string6StringINtNtBd_3vec3VecB1j_EE25merge_tracking_child_edgeNtNtBd_5alloc6GlobalECsbzNSmZPCnTx_10tgrep_core:bb.a
   store i16 %i.bs, ptr %i.bt, align 8, !noalias !164
   %i.bu = add nuw nsw i64 %.sroa.0.06.i.i, 2      ; 2 uses
@@ -200,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
   store i8 %i.as, ptr %i.av, align 1, !noalias !193
   %i.aw = getelementptr inbounds nuw i8, ptr %i.s, i64 276
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.w
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull readonly align 4 %i.aw, i64 range(i64 0, 65536) %i.v, i1 false), !alias.scope !198, !noalias !193
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull readonly align 2 %i.aw, i64 range(i64 0, 65536) %i.v, i1 false), !alias.scope !198, !noalias !193
   %i.ay = getelementptr inbounds nuw i8, ptr %i.m, i64 288 ; 6 uses
   %i.az = add i64 %i.ad, 1                        ; 4 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.az ; 2 uses
@@ -424,7 +429,7 @@ bb.c:                                             ; preds = %bb.a
   store i8 %i.ak, ptr %i.an, align 1
   %i.ao = getelementptr inbounds nuw i8, ptr %i.k, i64 276
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.o
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ap, ptr nonnull readonly align 4 %i.ao, i64 range(i64 0, 65536) %i.n, i1 false), !alias.scope !223
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ap, ptr nonnull readonly align 2 %i.ao, i64 range(i64 0, 65536) %i.n, i1 false), !alias.scope !223
   %i.aq = getelementptr inbounds nuw i8, ptr %i.b, i64 288 ; 6 uses
   %i.ar = add i64 %i.v, 1                         ; 4 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.ar ; 2 uses
@@ -827,7 +832,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.r, ptr nonnull align 8 %i.q, i64 %i.s, i1 false), !alias.scope !1199
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 276 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %1
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.u, ptr nonnull align 4 %i.t, i64 %i.k, i1 false), !alias.scope !1200
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.u, ptr nonnull align 2 %i.t, i64 %i.k, i1 false), !alias.scope !1200
   %i.v = add nuw nsw i64 %i.n, 1                  ; 4 uses
   %i.w = sub nuw nsw i64 %i.f, %i.v               ; 5 uses
   %i.x = add nsw i64 %1, -1
@@ -847,7 +852,7 @@ _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_slicebECsbzNSmZ
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.q, ptr nonnull readonly align 8 %i.aa, i64 %i.ab, i1 false), !alias.scope !1203
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 276 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.v
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.t, ptr nonnull readonly align 1 %i.ad, i64 range(i64 0, 65536) %i.w, i1 false), !alias.scope !1204
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.t, ptr nonnull readonly align 1 %i.ad, i64 range(i64 0, 65536) %i.w, i1 false), !alias.scope !1204
   %i.ae = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %i.n
   %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.n
   %i.ag = load i8, ptr %i.af, align 1, !range !9, !noundef !4
@@ -1035,12 +1040,12 @@ bb.e:                                             ; preds = %bb.c
   %i.ai = mul nuw nsw i64 %i.q, 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ah, ptr nonnull readonly align 8 %i.r, i64 %i.ai, i1 false), !alias.scope !1228
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ag
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aj, ptr nonnull readonly align 4 %i.t, i64 range(i64 0, 65536) %i.q, i1 false), !alias.scope !1229
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aj, ptr nonnull readonly align 2 %i.t, i64 range(i64 0, 65536) %i.q, i1 false), !alias.scope !1229
   %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.r, i64 %1
   %i.al = mul nuw nsw i64 %i.n, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.r, ptr nonnull align 8 %i.ak, i64 %i.al, i1 false), !alias.scope !1230
   %i.am = getelementptr inbounds nuw i8, ptr %i.t, i64 %1
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.t, ptr nonnull align 1 %i.am, i64 %i.n, i1 false), !alias.scope !1231
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %i.t, ptr nonnull align 1 %i.am, i64 %i.n, i1 false), !alias.scope !1231
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ao = load i64, ptr %i.an, align 8, !noundef !4
   %i.ap = icmp eq i64 %i.ao, 0

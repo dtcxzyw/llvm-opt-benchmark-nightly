@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = zext nneg i32 %i.i to i64
   %i.k = mul nuw nsw i64 %i.j, 1000000
   %i.l = fptosi double %i.d to i64
-  %i.m = add i64 %i.k, %i.l
+  %i.m = add nuw i64 %i.k, %i.l
   %i.n = icmp sgt i64 %i.m, 86400000000
   br label %bb.d
 
@@ -440,7 +440,7 @@ float_time_overflows.exit:                        ; preds = %bb.b
   %i.r = and i64 %i.q, 4294967292
   %i.s = mul nuw nsw i64 %i.r, 1000000
   %i.t = fptosi double %i.l to i64
-  %i.u = add i64 %i.s, %i.t                       ; 2 uses
+  %i.u = add nuw i64 %i.s, %i.t                   ; 2 uses
   %i.v = icmp sgt i64 %i.u, 86400000000
   br i1 %i.v, label %float_time_overflows.exit.thread, label %bb.c
 

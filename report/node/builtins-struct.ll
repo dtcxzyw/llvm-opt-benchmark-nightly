@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %_ZN2v88internal6Obj
   br label %.critedge92.i
 
 bb.h:                                             ; preds = %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit.i
-  %i.au = fptosi double %i.ao to i32              ; 3 uses
+  %i.au = fptosi double %i.ao to i32              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.av = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 6 uses
   store i32 0, ptr %i.av, align 8
@@ -229,10 +229,6 @@ bb.i:                                             ; preds = %bb.h
   store float 1.000000e+00, ptr %i.bd, align 8
   %i.be = getelementptr inbounds nuw i8, ptr %6, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.be, i8 0, i64 16, i1 false)
-  %.not128.i.i = icmp sgt i32 %i.au, 0
-  br i1 %.not128.i.i, label %.lr.ph.i.i, label %_ZNSt10_HashtableIN2v88internal6HandleINS1_4NameEEES4_SaIS4_ENSt8__detail9_IdentityENS1_12_GLOBAL__N_121UniqueNameHandleEqualENS8_16NameHandleHasherENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i.i.i
-
-.lr.ph.i.i:                                       ; preds = %bb.i
   %10 = getelementptr inbounds nuw i8, ptr %5, i64 4
   %11 = getelementptr inbounds nuw i8, ptr %5, i64 24
   %12 = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN2v88internal18g_current_isolate_E)
@@ -243,11 +239,11 @@ bb.i:                                             ; preds = %bb.h
   %wide.trip.count.i.i = zext nneg i32 %i.au to i64
   br label %bb.j
 
-bb.j:                                             ; preds = %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i, %.lr.ph.i.i
-  %.sroa.0152.3.i = phi ptr [ null, %.lr.ph.i.i ], [ %.sroa.0152.4.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ] ; 10 uses
-  %.sroa.10.2.i = phi ptr [ null, %.lr.ph.i.i ], [ %.sroa.10.3.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ] ; 10 uses
-  %.sroa.16.3.i = phi ptr [ null, %.lr.ph.i.i ], [ %.sroa.16.4.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ] ; 6 uses
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ] ; 2 uses
+bb.j:                                             ; preds = %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i, %bb.i
+  %.sroa.0152.3.i = phi ptr [ null, %bb.i ], [ %.sroa.0152.4.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ] ; 10 uses
+  %.sroa.10.2.i = phi ptr [ null, %bb.i ], [ %.sroa.10.3.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ] ; 10 uses
+  %.sroa.16.3.i = phi ptr [ null, %bb.i ], [ %.sroa.16.4.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ] ; 6 uses
+  %indvars.iv.i.i = phi i64 [ 0, %bb.i ], [ %indvars.iv.next.i.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %5, ptr noundef nonnull %2, ptr %i.m, ptr null, i64 noundef %indvars.iv.i.i, ptr %i.m, i32 noundef 3)
   %i.bf = load i32, ptr %10, align 4
@@ -650,9 +646,9 @@ _ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS
 
 _ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i.i: ; preds = %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i, %_ZN2v88internal6Object6ToNameINS0_6HandleEEENT_INS0_4NameEE9MaybeTypeEPNS0_7IsolateES4_IS1_EQsr3stdE16is_convertible_vISA_NS0_12DirectHandleIS1_EEE.exit.i.i, %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit.i.i, %.critedge.i.i
   %.sroa.0152.5.i = phi ptr [ %.sroa.0152.3.i, %.critedge.i.i ], [ %.sroa.0152.4.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ], [ %.sroa.0152.3.i, %_ZN2v88internal6Object6ToNameINS0_6HandleEEENT_INS0_4NameEE9MaybeTypeEPNS0_7IsolateES4_IS1_EQsr3stdE16is_convertible_vISA_NS0_12DirectHandleIS1_EEE.exit.i.i ], [ %.sroa.0152.3.i, %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit.i.i ] ; 2 uses
-  %.sroa.10.4.i = phi ptr [ %.sroa.10.2.i, %.critedge.i.i ], [ %.sroa.10.3.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ], [ %.sroa.10.2.i, %_ZN2v88internal6Object6ToNameINS0_6HandleEEENT_INS0_4NameEE9MaybeTypeEPNS0_7IsolateES4_IS1_EQsr3stdE16is_convertible_vISA_NS0_12DirectHandleIS1_EEE.exit.i.i ], [ %.sroa.10.2.i, %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit.i.i ] ; 2 uses
+  %.sroa.10.4.i = phi ptr [ %.sroa.10.2.i, %.critedge.i.i ], [ %.sroa.10.3.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ], [ %.sroa.10.2.i, %_ZN2v88internal6Object6ToNameINS0_6HandleEEENT_INS0_4NameEE9MaybeTypeEPNS0_7IsolateES4_IS1_EQsr3stdE16is_convertible_vISA_NS0_12DirectHandleIS1_EEE.exit.i.i ], [ %.sroa.10.2.i, %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit.i.i ]
   %.sroa.16.5.i = phi ptr [ %.sroa.16.3.i, %.critedge.i.i ], [ %.sroa.16.4.i, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ], [ %.sroa.16.3.i, %_ZN2v88internal6Object6ToNameINS0_6HandleEEENT_INS0_4NameEE9MaybeTypeEPNS0_7IsolateES4_IS1_EQsr3stdE16is_convertible_vISA_NS0_12DirectHandleIS1_EEE.exit.i.i ], [ %.sroa.16.3.i, %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit.i.i ] ; 2 uses
-  %.sroa.070.2.ph.i.i = phi i1 [ false, %.critedge.i.i ], [ true, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ], [ false, %_ZN2v88internal6Object6ToNameINS0_6HandleEEENT_INS0_4NameEE9MaybeTypeEPNS0_7IsolateES4_IS1_EQsr3stdE16is_convertible_vISA_NS0_12DirectHandleIS1_EEE.exit.i.i ], [ false, %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit.i.i ] ; 2 uses
+  %.sroa.070.2.ph.i.i = phi i1 [ false, %.critedge.i.i ], [ true, %_ZN2v88internal18DirectHandleVectorINS0_4NameEE9push_backERKNS0_12DirectHandleIS2_EE.exit.thread.i.i ], [ false, %_ZN2v88internal6Object6ToNameINS0_6HandleEEENT_INS0_4NameEE9MaybeTypeEPNS0_7IsolateES4_IS1_EQsr3stdE16is_convertible_vISA_NS0_12DirectHandleIS1_EEE.exit.i.i ], [ false, %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit.i.i ]
   %.val.i.i.i.pr.i.i = load ptr, ptr %i.bc, align 8 ; 2 uses
   %.not5.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i.pr.i.i, null
   br i1 %.not5.i.i.i.i.i.i, label %_ZNSt10_HashtableIN2v88internal6HandleINS1_4NameEEES4_SaIS4_ENSt8__detail9_IdentityENS1_12_GLOBAL__N_121UniqueNameHandleEqualENS8_16NameHandleHasherENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
@@ -664,11 +660,7 @@ _ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exi
   %.not.i.i.i.i52.i.i = icmp eq ptr %i.ix, null
   br i1 %.not.i.i.i.i52.i.i, label %_ZNSt10_HashtableIN2v88internal6HandleINS1_4NameEEES4_SaIS4_ENSt8__detail9_IdentityENS1_12_GLOBAL__N_121UniqueNameHandleEqualENS8_16NameHandleHasherENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !19
 
-_ZNSt10_HashtableIN2v88internal6HandleINS1_4NameEEES4_SaIS4_ENSt8__detail9_IdentityENS1_12_GLOBAL__N_121UniqueNameHandleEqualENS8_16NameHandleHasherENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i.i, %bb.i
-  %.sroa.070.2.i260.i = phi i1 [ %.sroa.070.2.ph.i.i, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i.i ], [ true, %bb.i ], [ %.sroa.070.2.ph.i.i, %.lr.ph.i.i.i.i.i.i ]
-  %.sroa.16.2259.i = phi ptr [ %.sroa.16.5.i, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i.i ], [ null, %bb.i ], [ %.sroa.16.5.i, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.10.1258.i = phi ptr [ %.sroa.10.4.i, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i.i ], [ null, %bb.i ], [ %.sroa.10.4.i, %.lr.ph.i.i.i.i.i.i ]
-  %.sroa.0152.2257.i = phi ptr [ %.sroa.0152.5.i, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i.i ], [ null, %bb.i ], [ %.sroa.0152.5.i, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
+_ZNSt10_HashtableIN2v88internal6HandleINS1_4NameEEES4_SaIS4_ENSt8__detail9_IdentityENS1_12_GLOBAL__N_121UniqueNameHandleEqualENS8_16NameHandleHasherENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_6HandleIT_EE.exit.i.i
   %i.iy = load ptr, ptr %6, align 8
   %i.iz = load i64, ptr %i.bb, align 8
   %i.ja = shl i64 %i.iz, 3
@@ -686,7 +678,7 @@ bb.bc:                                            ; preds = %_ZNSt10_HashtableIN
 
 _ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i: ; preds = %bb.bc, %_ZNSt10_HashtableIN2v88internal6HandleINS1_4NameEEES4_SaIS4_ENSt8__detail9_IdentityENS1_12_GLOBAL__N_121UniqueNameHandleEqualENS8_16NameHandleHasherENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  br i1 %.sroa.070.2.i260.i, label %bb.be, label %bb.bd
+  br i1 %.sroa.070.2.ph.i.i, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i
   %i.jf = getelementptr inbounds nuw i8, ptr %2, i64 912
@@ -694,9 +686,9 @@ bb.bd:                                            ; preds = %_ZN2v88internal12_G
   br label %.critedge93.i
 
 bb.be:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i, %bb.h
-  %.sroa.0152.0.i = phi ptr [ null, %bb.h ], [ %.sroa.0152.2257.i, %_ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i ] ; 9 uses
-  %.sroa.10.0.i = phi ptr [ null, %bb.h ], [ %.sroa.10.1258.i, %_ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i ] ; 2 uses
-  %.sroa.16.0.i = phi ptr [ null, %bb.h ], [ %.sroa.16.2259.i, %_ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i ] ; 3 uses
+  %.sroa.0152.0.i = phi ptr [ null, %bb.h ], [ %.sroa.0152.5.i, %_ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i ] ; 9 uses
+  %.sroa.10.0.i = phi ptr [ null, %bb.h ], [ %.sroa.10.4.i, %_ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i ] ; 2 uses
+  %.sroa.16.0.i = phi ptr [ null, %bb.h ], [ %.sroa.16.5.i, %_ZN2v88internal12_GLOBAL__N_124CollectFieldsAndElementsEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEiRNS0_18DirectHandleVectorINS0_4NameEEERSt3setIjSt4lessIjESaIjEE.exit.i ] ; 3 uses
   %.not.i97.i = icmp sgt i32 %0, 6
   br i1 %.not.i97.i, label %_ZNK2v88internal16BuiltinArguments13atOrUndefinedEPNS0_7IsolateEi.exit101.i, label %_ZNK2v88internal16BuiltinArguments13atOrUndefinedEPNS0_7IsolateEi.exit101.thread.i
 
@@ -946,8 +938,8 @@ _ZN2v88internal6HandleINS0_10JSFunctionEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   br label %.critedge92.i
 
 .critedge93.i:                                    ; preds = %_ZNK2v88internal11MaybeHandleINS0_3MapEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.i, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit108.i, %bb.bd
-  %.sroa.0152.1.i = phi ptr [ %.sroa.0152.0.i, %_ZNK2v88internal11MaybeHandleINS0_3MapEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.i ], [ %.sroa.0152.0.i, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit108.i ], [ %.sroa.0152.2257.i, %bb.bd ] ; 3 uses
-  %.sroa.16.1.i = phi ptr [ %.sroa.16.0.i, %_ZNK2v88internal11MaybeHandleINS0_3MapEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.i ], [ %.sroa.16.0.i, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit108.i ], [ %.sroa.16.2259.i, %bb.bd ]
+  %.sroa.0152.1.i = phi ptr [ %.sroa.0152.0.i, %_ZNK2v88internal11MaybeHandleINS0_3MapEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.i ], [ %.sroa.0152.0.i, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit108.i ], [ %.sroa.0152.5.i, %bb.bd ] ; 3 uses
+  %.sroa.16.1.i = phi ptr [ %.sroa.16.0.i, %_ZNK2v88internal11MaybeHandleINS0_3MapEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.i ], [ %.sroa.16.0.i, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit108.i ], [ %.sroa.16.5.i, %bb.bd ]
   %.sroa.0187.1.i = phi i64 [ %i.kt, %_ZNK2v88internal11MaybeHandleINS0_3MapEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.i ], [ %i.kd, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit108.i ], [ %i.jg, %bb.bd ] ; 2 uses
   %i.ns = load ptr, ptr %i.aw, align 8
   call void @_ZNSt8_Rb_treeIjjSt9_IdentityIjESt4lessIjESaIjEE8_M_eraseEPSt13_Rb_tree_nodeIjE(ptr noundef nonnull align 8 dereferenceable(48) %8, ptr noundef %i.ns)

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_transformers-745d844d1c694a70.candle_transformers.e469297c722ac0f-cgu.09?download=true
+inline.NumInlined: 3626
+inline.NumDeleted: 526
+loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 12
 begin_hunk_0_@_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift4sortINtNtCs1dZk1kIfPhr_19candle_transformers16object_detection4BboxNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENCINvMNtCsgCecv3eZDcN_5alloc5sliceSBW_7sort_byNCINvBZ_23non_maximum_suppressionB1X_E0E0EB11_:bb.a
 _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift10create_runINtNtCs1dZk1kIfPhr_19candle_transformers16object_detection4BboxNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENCINvMNtCsgCecv3eZDcN_5alloc5sliceSB13_7sort_byNCINvB16_23non_maximum_suppressionB24_E0E0EB18_.exit: ; preds = %bb.r, %bb.s, %_RNvMNtCsf3Ta7LF998c_4core5sliceSINtNtCs1dZk1kIfPhr_19candle_transformers16object_detection4BboxNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorE7reverseBz_.exit
   %.sroa.0.0.i32 = phi i64 [ %i.ah, %_RNvMNtCsf3Ta7LF998c_4core5sliceSINtNtCs1dZk1kIfPhr_19candle_transformers16object_detection4BboxNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorE7reverseBz_.exit ], [ %i.af, %bb.s ], [ %i.ac, %bb.r ] ; 2 uses
@@ -200,7 +205,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeINtNtCs1d
   br i1 %i.dn, label %bb.u, label %._crit_edge
 
 bb.ag:                                            ; preds = %._crit_edge
-  %i.do = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.do = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dp = lshr i64 %.sroa.018.0, 1
   %i.dq = add nuw nsw i64 %i.dp, %.sroa.09.0
   br label %bb.f
@@ -603,7 +608,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergejNCINvMNt
   br i1 %i.gn, label %bb.aa, label %._crit_edge
 
 bb.am:                                            ; preds = %._crit_edge
-  %i.go = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.go = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gp = lshr i64 %.sroa.018.0, 1
   %i.gq = add nuw nsw i64 %i.gp, %.sroa.09.0
   br label %bb.f
@@ -1006,7 +1011,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergemNCINvMNt
   br i1 %i.gx, label %bb.aa, label %._crit_edge
 
 bb.am:                                            ; preds = %._crit_edge
-  %i.gy = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gy = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gz = lshr i64 %.sroa.018.0, 1
   %i.ha = add nuw nsw i64 %i.gz, %.sroa.09.0
   br label %bb.f
@@ -1409,7 +1414,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergemNCINvMNt
   br i1 %i.gx, label %bb.aa, label %._crit_edge
 
 bb.am:                                            ; preds = %._crit_edge
-  %i.gy = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gy = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gz = lshr i64 %.sroa.018.0, 1
   %i.ha = add nuw nsw i64 %i.gz, %.sroa.09.0
   br label %bb.f

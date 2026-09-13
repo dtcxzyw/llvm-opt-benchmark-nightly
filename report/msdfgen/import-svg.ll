@@ -202,13 +202,13 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.
   %i.pz = fmul double %i.py, f0x3FE45F306DC9C883
   %i.qa = call double @llvm.ceil.f64(double %i.pz)
   %i.qb = fptosi double %i.qa to i32              ; 4 uses
-  %13 = sitofp i32 %i.qb to double
+  %13 = uitofp nneg i32 %i.qb to double
   %i.qc = fdiv double %.0185.i, %13               ; 2 uses
   %i.qd = fmul double %i.qc, 5.000000e-01         ; 2 uses
   %i.qe = call double @sin(double noundef %i.qd) #12
   %i.qf = call double @cos(double noundef %i.qd) #12
-  %14 = icmp sgt i32 %i.qb, 0
-  br i1 %14, label %.preheader.lr.ph.i, label %_ZN7msdfgenL17addArcApproximateERNS_7ContourENS_7Vector2ES2_S2_dbb.exit
+  %.not.i = icmp eq i32 %i.qb, 0
+  br i1 %.not.i, label %_ZN7msdfgenL17addArcApproximateERNS_7ContourENS_7Vector2ES2_S2_dbb.exit, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %bb.ax
   %i.qg = fmul double %i.qe, f0x3FF5555555555555

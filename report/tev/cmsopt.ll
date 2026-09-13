@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
   %i.ci = fdiv <4 x double> %i.ch, splat (double 6.553500e+04) ; 2 uses
   %i.cj = call <4 x double> @llvm.floor.v4f64(<4 x double> %i.ci)
   %i.ck = fptosi <4 x double> %i.cj to <4 x i32>  ; 2 uses
-  %3 = sitofp <4 x i32> %i.ck to <4 x double>
+  %3 = uitofp nneg <4 x i32> %i.ck to <4 x double>
   %i.cl = fcmp une <4 x double> %i.ci, %3
   %i.cm = freeze <4 x i1> %i.cl
   %i.cn = bitcast <4 x i1> %i.cm to i4
@@ -240,9 +240,9 @@ bb.t:                                             ; preds = %bb.q
   %i.dj = fdiv <2 x double> %i.di, splat (double 6.553500e+04) ; 2 uses
   %i.dk = call <2 x double> @llvm.floor.v2f64(<2 x double> %i.dj)
   %i.dl = fptosi <2 x double> %i.dk to <2 x i32>  ; 2 uses
-  %4 = sitofp i32 %i.dd to double
+  %4 = uitofp nneg i32 %i.dd to double
   %i.dm = fcmp une double %i.cz, %4
-  %5 = sitofp <2 x i32> %i.dl to <2 x double>
+  %5 = uitofp nneg <2 x i32> %i.dl to <2 x double>
   %i.dn = fcmp une <2 x double> %i.dj, %5         ; 2 uses
   %i.do = extractelement <2 x i1> %i.dn, i64 0
   %or.cond82.i = select i1 %i.dm, i1 true, i1 %i.do
@@ -274,7 +274,7 @@ bb.v:                                             ; preds = %bb.q
   %i.eh = fdiv double %i.eg, 6.553500e+04         ; 2 uses
   %i.ei = call double @llvm.floor.f64(double %i.eh)
   %i.ej = fptosi double %i.ei to i32              ; 2 uses
-  %6 = sitofp i32 %i.ej to double
+  %6 = uitofp nneg i32 %i.ej to double
   %i.ek = fcmp une double %i.eh, %6
   br i1 %i.ek, label %PatchLUT.exit, label %bb.w
 
@@ -677,7 +677,7 @@ bb.s:                                             ; preds = %bb.o, %_cmsQuickSat
   %i.dh = uitofp i32 %i.dg to double
   %i.di = call double @llvm.fmuladd.f64(double %i.dh, double 2.000000e-02, double 5.000000e-01)
   %i.dj = call double @llvm.floor.f64(double %i.di)
-  %i.dk = fptosi double %i.dj to i32              ; 7 uses
+  %i.dk = fptosi double %i.dj to i32              ; 6 uses
   %i.dl = xor i32 %i.dk, -1
   %i.dm = add i32 %i.dg, %i.dl                    ; 4 uses
   %i.dn = call i32 @cmsIsToneCurveDescending(ptr noundef %i.de) #9
@@ -686,25 +686,24 @@ bb.s:                                             ; preds = %bb.o, %_cmsQuickSat
   %.38.i = select i1 %.not.i198, double 6.553500e+04, double 0.000000e+00
   %i.do = getelementptr inbounds nuw i8, ptr %i.de, i64 48
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !65 ; 6 uses
-  %5 = sext i32 %i.dk to i64
-  %i.dq = getelementptr inbounds [2 x i8], ptr %i.dp, i64 %5
+  %5 = zext nneg i32 %i.dk to i64                 ; 4 uses
+  %i.dq = getelementptr inbounds nuw [2 x i8], ptr %i.dp, i64 %5
   %i.dr = load i16, ptr %i.dq, align 2, !tbaa !45
   %i.ds = uitofp i16 %i.dr to double              ; 2 uses
   %i.dt = fsub double %i.ds, %..i199
-  %6 = sitofp i32 %i.dk to double                 ; 3 uses
+  %6 = uitofp nneg i32 %i.dk to double            ; 3 uses
   %i.du = fdiv double %i.dt, %6                   ; 3 uses
   %i.dv = fneg double %i.du
   %i.dw = call double @llvm.fmuladd.f64(double %i.dv, double %6, double %i.ds) ; 2 uses
-  %7 = icmp sgt i32 %i.dk, 0
-  br i1 %7, label %.lr.ph.preheader.i, label %._crit_edge.i200
+  %.not46.i = icmp eq i32 %i.dk, 0
+  br i1 %.not46.i, label %._crit_edge.i200, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph259
-  %wide.trip.count.i201 = zext nneg i32 %i.dk to i64 ; 3 uses
-  %min.iters.check392 = icmp ult i32 %i.dk, 8
+  %min.iters.check392 = icmp samesign ult i32 %i.dk, 8
   br i1 %min.iters.check392, label %.lr.ph.i202.preheader, label %vector.ph393
 
 vector.ph393:                                     ; preds = %.lr.ph.preheader.i
-  %n.vec394 = and i64 %wide.trip.count.i201, 2147483640 ; 3 uses
+  %n.vec394 = and i64 %5, 2147483640              ; 3 uses
   %broadcast.splatinsert395.a = insertelement <8 x double> poison, double %i.du, i64 0
   %broadcast.splat396.a = shufflevector <8 x double> %broadcast.splatinsert395.a, <8 x double> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert397 = insertelement <8 x double> poison, double %i.dw, i64 0
@@ -735,7 +734,7 @@ vector.body399:                                   ; preds = %vector.body399, %ve
   br i1 %i.ej, label %middle.block406, label %vector.body399, !llvm.loop !136
 
 middle.block406:                                  ; preds = %vector.body399
-  %cmp.n407 = icmp eq i64 %n.vec394, %wide.trip.count.i201
+  %cmp.n407 = icmp eq i64 %n.vec394, %5
   br i1 %cmp.n407, label %._crit_edge.i200, label %.lr.ph.i202.preheader
 
 .lr.ph.i202.preheader:                            ; preds = %.lr.ph.preheader.i, %middle.block406
@@ -769,7 +768,7 @@ _cmsQuickSaturateWord.exit.i:                     ; preds = %bb.u, %bb.t, %.lr.p
   %i.ew = getelementptr inbounds nuw [2 x i8], ptr %i.dp, i64 %indvars.iv.i203
   store i16 %.0.i.i, ptr %i.ew, align 2, !tbaa !45
   %indvars.iv.next.i204 = add nuw nsw i64 %indvars.iv.i203, 1 ; 2 uses
-  %exitcond.not.i205 = icmp eq i64 %indvars.iv.next.i204, %wide.trip.count.i201
+  %exitcond.not.i205 = icmp eq i64 %indvars.iv.next.i204, %5
   br i1 %exitcond.not.i205, label %._crit_edge.i200, label %.lr.ph.i202, !llvm.loop !137
 
 ._crit_edge.i200:                                 ; preds = %_cmsQuickSaturateWord.exit.i, %middle.block406, %.lr.ph259

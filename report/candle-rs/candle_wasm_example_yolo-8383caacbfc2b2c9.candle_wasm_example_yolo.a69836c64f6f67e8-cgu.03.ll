@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_wasm_example_yolo-8383caacbfc2b2c9.candle_wasm_example_yolo.a69836c64f6f67e8-cgu.03?download=true
+inline.NumInlined: 486
+inline.NumDeleted: 64
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_RNvNtCseiMiKruFR5A_24candle_wasm_example_yolo5model13report_detect:bb.a
           cleanup
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxEBF_(ptr noalias nofree noundef align 8 dereferenceable(48) %i.k) #15
@@ -200,20 +205,18 @@ bb.l:                                             ; preds = %bb.j
   %i.ar = shufflevector <2 x float> %i.aj, <2 x float> %i.al, <2 x i32> <i32 1, i32 3>
   %i.as = fsub <2 x float> %i.aq, %i.ar
   %i.at = fadd <2 x float> %i.as, splat (float 1.000000e+00)
-  %i.au = fmul <2 x float> %i.ap, %i.at           ; 2 uses
+  %i.au = fmul <2 x float> %i.ap, %i.at
   %i.av = call nsz <2 x float> @llvm.maximumnum.v2f32(<2 x float> %i.aj, <2 x float> %i.al)
   %i.aw = call nsz <2 x float> @llvm.minimumnum.v2f32(<2 x float> %i.ai, <2 x float> %i.ak)
   %i.ax = fsub <2 x float> %i.aw, %i.av
   %i.ay = fadd <2 x float> %i.ax, splat (float 1.000000e+00)
   %i.az = call nsz <2 x float> @llvm.maximumnum.v2f32(<2 x float> %i.ay, <2 x float> zeroinitializer) ; 2 uses
   %shift = shufflevector <2 x float> %i.az, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fmul <2 x float> %i.az, %shift ; 2 uses
-  %i.ba = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %shift93 = shufflevector <2 x float> %i.au, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop94 = fadd <2 x float> %i.au, %shift93
-  %foldExtExtBinop96 = fsub <2 x float> %foldExtExtBinop94, %foldExtExtBinop
-  %3 = extractelement <2 x float> %foldExtExtBinop96, i64 0
-  %i.bb = fdiv float %i.ba, %3
+  %foldExtExtBinop = fmul <2 x float> %i.az, %shift
+  %i.ba = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
+  %3 = call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.au)
+  %4 = fsub float %3, %i.ba
+  %i.bb = fdiv float %i.ba, %4
   %i.bc = fcmp ogt float %i.bb, %2
   br i1 %i.bc, label %.loopexit, label %bb.e
 
@@ -615,6 +618,9 @@ declare <2 x float> @llvm.minimumnum.v2f32(<2 x float>, <2 x float>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.maximumnum.v2f32(<2 x float>, <2 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #10
 
 attributes #0 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

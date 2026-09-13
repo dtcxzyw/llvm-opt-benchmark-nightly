@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/libsignal_account_keys-463b89d8d0676160.libsignal_account_keys.c3ff0564e19c39f2-cgu.1?download=true
+inline.NumInlined: 296
+inline.NumDeleted: 160
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_RNvMNtCsgPhy1OgDtny_22libsignal_account_keys6backupINtB2_9BackupKeyKh1_E32derive_local_backup_metadata_key:bb.a
   %i.n = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
@@ -200,7 +204,7 @@ _RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6tr
 bb.b:                                             ; preds = %bb.r
   unreachable
 
-bb.c:                                             ; preds = %_RNvXs6_Csfkg6qDyjgHi_4hmacINtB5_4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtCs2KKWnYNkHVH_6digest11FixedOutput13finalize_intoCsgPhy1OgDtny_22libsignal_account_keys.exit.i, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgPhy1OgDtny_22libsignal_account_keys.exit.i.lr.ph
+bb.c:                                             ; preds = %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgPhy1OgDtny_22libsignal_account_keys.exit.i.lr.ph, %_RNvXs6_Csfkg6qDyjgHi_4hmacINtB5_4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtCs2KKWnYNkHVH_6digest11FixedOutput13finalize_intoCsgPhy1OgDtny_22libsignal_account_keys.exit.i
   %i.aa = phi i1 [ false, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgPhy1OgDtny_22libsignal_account_keys.exit.i.lr.ph ], [ true, %_RNvXs6_Csfkg6qDyjgHi_4hmacINtB5_4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtCs2KKWnYNkHVH_6digest11FixedOutput13finalize_intoCsgPhy1OgDtny_22libsignal_account_keys.exit.i ]
   %.sroa.0.0105 = phi ptr [ %3, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgPhy1OgDtny_22libsignal_account_keys.exit.i.lr.ph ], [ %i.ab, %_RNvXs6_Csfkg6qDyjgHi_4hmacINtB5_4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtCs2KKWnYNkHVH_6digest11FixedOutput13finalize_intoCsgPhy1OgDtny_22libsignal_account_keys.exit.i ] ; 2 uses
   %.sroa.5.0104 = phi i64 [ %4, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgPhy1OgDtny_22libsignal_account_keys.exit.i.lr.ph ], [ %i.ac, %_RNvXs6_Csfkg6qDyjgHi_4hmacINtB5_4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtCs2KKWnYNkHVH_6digest11FixedOutput13finalize_intoCsgPhy1OgDtny_22libsignal_account_keys.exit.i ] ; 2 uses

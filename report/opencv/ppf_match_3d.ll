@@ -205,7 +205,7 @@ _ZNSt6vectorIN2cv3PtrINS0_12ppf_match_3d6Pose3DEEESaIS4_EE7reserveEm.exit: ; pre
   %i.hx = getelementptr inbounds nuw i8, ptr %66, i64 112
   %i.hy = getelementptr inbounds nuw i8, ptr %67, i64 8 ; 4 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %44, i64 8 ; 3 uses
-  %68 = sext i32 %i.bf to i64
+  %68 = zext nneg i32 %i.bf to i64
   %wide.trip.count = zext i32 %i.bi to i64        ; 2 uses
   %brmerge = select i1 %.not391, i1 true, i1 %i.dz
   %xtraiter = and i64 %wide.trip.count, 1
@@ -291,7 +291,6 @@ bb.aj:                                            ; preds = %bb.ai
 .lr.ph371:                                        ; preds = %bb.aj
   %i.iz = load double, ptr %i.cz, align 8
   %i.ja = load double, ptr %i.da, align 8
-  %69 = and i64 %indvars.iv402, 4294967295
   %i.jb = insertelement <2 x double> poison, double %i.iw, i64 0
   %i.jc = extractelement <2 x double> %i.iv, i64 0
   %i.jd = extractelement <2 x double> %i.iv, i64 1
@@ -379,7 +378,7 @@ bb.ak:                                            ; preds = %bb.ai
 
 bb.al:                                            ; preds = %.lr.ph371, %.loopexit
   %indvars.iv = phi i64 [ 0, %.lr.ph371 ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
-  %.not = icmp eq i64 %69, %indvars.iv
+  %.not = icmp eq i64 %indvars.iv402, %indvars.iv
   br i1 %.not, label %.loopexit, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
@@ -782,11 +781,11 @@ _ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev
   call void @llvm.lifetime.end.p0(ptr nonnull %53) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %52) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #26
-  %indvars.iv.next403 = add nsw i64 %indvars.iv402, %68 ; 2 uses
+  %indvars.iv.next403 = add nuw nsw i64 %indvars.iv402, %68 ; 2 uses
   %i.aae = load i32, ptr %i.bp, align 8, !tbaa !54 ; 2 uses
-  %70 = sext i32 %i.aae to i64
-  %71 = icmp slt i64 %indvars.iv.next403, %70
-  br i1 %71, label %bb.ai, label %._crit_edge, !llvm.loop !204
+  %69 = trunc nuw i64 %indvars.iv.next403 to i32
+  %70 = icmp sgt i32 %i.aae, %69
+  br i1 %70, label %bb.ai, label %._crit_edge, !llvm.loop !204
 
 bb.bs:                                            ; preds = %.noexc198, %._crit_edge383
   %i.aaf = landingpad { ptr, i32 }

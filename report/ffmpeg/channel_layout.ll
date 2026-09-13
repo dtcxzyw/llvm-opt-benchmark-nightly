@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %.loopexit
   %i.ah = tail call nsz double @llvm.sqrt.f64(double %i.ag)
   %i.ai = tail call nsz double @llvm.floor.f64(double %i.ah)
   %i.aj = fptosi double %i.ai to i32              ; 2 uses
-  %i.ak = add nsw i32 %i.aj, 1                    ; 2 uses
-  %i.al = mul nsw i32 %i.ak, %i.ak
+  %i.ak = add nuw nsw i32 %i.aj, 1                ; 2 uses
+  %i.al = mul nuw nsw i32 %i.ak, %i.ak
   %i.am = add nuw nsw i32 %.4, 1
   %.not54 = icmp eq i32 %i.al, %i.am
   %. = select i1 %.not54, i32 %i.aj, i32 -22
@@ -609,7 +609,7 @@ has_channel_names.exit:                           ; preds = %masked_description.
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -2147483648, 1) i32 @try_describe_ambisonic(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #0 {
+define internal fastcc range(i32 -22, 1) i32 @try_describe_ambisonic(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.AVChannelLayout, align 8    ; 13 uses
   %i.a = load i32, ptr %1, align 8, !tbaa !29     ; 2 uses
@@ -694,18 +694,14 @@ bb.h:                                             ; preds = %.loopexit.i
   %i.ag = uitofp nneg i32 %.4.i to double
   %i.ah = tail call nsz double @llvm.sqrt.f64(double %i.ag)
   %i.ai = tail call nsz double @llvm.floor.f64(double %i.ah)
-  %i.aj = fptosi double %i.ai to i32              ; 4 uses
-  %i.ak = add nsw i32 %i.aj, 1                    ; 2 uses
-  %i.al = mul nsw i32 %i.ak, %i.ak                ; 5 uses
+  %i.aj = fptosi double %i.ai to i32              ; 2 uses
+  %i.ak = add nuw nsw i32 %i.aj, 1                ; 2 uses
+  %i.al = mul nuw nsw i32 %i.ak, %i.ak            ; 5 uses
   %i.am = add nuw nsw i32 %.4.i, 1
   %.not54.i = icmp eq i32 %i.al, %i.am
-  br i1 %.not54.i, label %av_channel_layout_ambisonic_order.exit, label %av_channel_layout_ambisonic_order.exit.thread
+  br i1 %.not54.i, label %bb.i, label %av_channel_layout_ambisonic_order.exit.thread
 
-av_channel_layout_ambisonic_order.exit:           ; preds = %bb.h
-  %3 = icmp slt i32 %i.aj, 0
-  br i1 %3, label %av_channel_layout_ambisonic_order.exit.thread, label %bb.i
-
-bb.i:                                             ; preds = %av_channel_layout_ambisonic_order.exit
+bb.i:                                             ; preds = %bb.h
   tail call void (ptr, ptr, ...) @av_bprintf(ptr noundef %0, ptr noundef nonnull @.str.141, i32 noundef %i.aj) #15
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !30 ; 4 uses
@@ -824,8 +820,8 @@ bb.q:                                             ; preds = %masked_description.
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   br label %av_channel_layout_ambisonic_order.exit.thread
 
-av_channel_layout_ambisonic_order.exit.thread:    ; preds = %bb.g, %bb.d, %bb.e, %bb.h, %bb.a, %.loopexit.i, %bb.i, %bb.q, %av_channel_layout_ambisonic_order.exit
-  %.0 = phi i32 [ %i.aj, %av_channel_layout_ambisonic_order.exit ], [ 0, %bb.q ], [ 0, %bb.i ], [ -22, %.loopexit.i ], [ -22, %bb.a ], [ -22, %bb.h ], [ -22, %bb.e ], [ -22, %bb.d ], [ -22, %bb.g ]
+av_channel_layout_ambisonic_order.exit.thread:    ; preds = %bb.g, %bb.d, %bb.e, %bb.h, %bb.a, %.loopexit.i, %bb.i, %bb.q
+  %.0 = phi i32 [ -22, %bb.d ], [ 0, %bb.q ], [ 0, %bb.i ], [ -22, %.loopexit.i ], [ -22, %bb.a ], [ -22, %bb.h ], [ -22, %bb.e ], [ -22, %bb.g ]
   ret i32 %.0
 }
 
@@ -1228,14 +1224,12 @@ bb.m:                                             ; preds = %.loopexit.i.i
   %i.bd = uitofp nneg i32 %.4.i.i to double
   %i.be = tail call nsz double @llvm.sqrt.f64(double %i.bd)
   %i.bf = tail call nsz double @llvm.floor.f64(double %i.be)
-  %i.bg = fptosi double %i.bf to i32              ; 2 uses
-  %i.bh = add nsw i32 %i.bg, 1                    ; 2 uses
-  %i.bi = mul nsw i32 %i.bh, %i.bh                ; 3 uses
+  %i.bg = fptosi double %i.bf to i32
+  %i.bh = add nuw nsw i32 %i.bg, 1                ; 2 uses
+  %i.bi = mul nuw nsw i32 %i.bh, %i.bh            ; 3 uses
   %i.bj = add nuw nsw i32 %.4.i.i, 1
   %.not54.i.i = icmp eq i32 %i.bi, %i.bj
-  %3 = icmp sgt i32 %i.bg, -1
-  %or.cond52.i = and i1 %3, %.not54.i.i
-  br i1 %or.cond52.i, label %bb.n, label %canonical_order.exit
+  br i1 %.not54.i.i, label %bb.n, label %canonical_order.exit
 
 bb.n:                                             ; preds = %bb.m
   %.not29.i36.i = icmp slt i32 %i.bi, %i.c
@@ -1622,14 +1616,12 @@ bb.aq:                                            ; preds = %.loopexit.i
   %i.fe = uitofp nneg i32 %.4.i to double
   %i.ff = tail call nsz double @llvm.sqrt.f64(double %i.fe)
   %i.fg = tail call nsz double @llvm.floor.f64(double %i.ff)
-  %i.fh = fptosi double %i.fg to i32              ; 2 uses
-  %i.fi = add nsw i32 %i.fh, 1                    ; 2 uses
-  %i.fj = mul nsw i32 %i.fi, %i.fi                ; 3 uses
+  %i.fh = fptosi double %i.fg to i32
+  %i.fi = add nuw nsw i32 %i.fh, 1                ; 2 uses
+  %i.fj = mul nuw nsw i32 %i.fi, %i.fi            ; 3 uses
   %i.fk = add nuw nsw i32 %.4.i, 1
-  %.not54.i = icmp ne i32 %i.fj, %i.fk
-  %4 = icmp slt i32 %i.fh, 0
-  %or.cond203 = or i1 %4, %.not54.i
-  br i1 %or.cond203, label %av_channel_layout_check.exit.thread, label %bb.ar
+  %.not54.i.not = icmp eq i32 %i.fj, %i.fk
+  br i1 %.not54.i.not, label %bb.ar, label %av_channel_layout_check.exit.thread
 
 bb.ar:                                            ; preds = %bb.aq
   %.not29.i138 = icmp slt i32 %i.fj, %i.c

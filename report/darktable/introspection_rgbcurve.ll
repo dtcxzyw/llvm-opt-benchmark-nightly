@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.ak
 bb.ah:                                            ; preds = %bb.af, %bb.ak
   %indvars.iv550 = phi i64 [ 1, %bb.af ], [ %indvars.iv.next551, %bb.ak ] ; 3 uses
   %i.acx = trunc nuw nsw i64 %indvars.iv550 to i32
-  %i.acy = uitofp nneg i32 %i.acx to float
+  %i.acy = uitofp nsz nneg i32 %i.acx to float
   %i.acz = fmul reassoc nnan nsz arcp contract afn float %i.acy, f0x3B808081 ; 3 uses
   %i.ada = fcmp reassoc nsz arcp contract afn ogt float %i.acz, %i.gy
   br i1 %i.ada, label %bb.ai, label %bb.aj
@@ -608,8 +608,7 @@ bb.bo:                                            ; preds = %dt_rgb_norm.exit
 bb.bp:                                            ; preds = %bb.bo
   %i.aec = fmul reassoc nnan nsz arcp contract afn float %.0.i, 6.553600e+04
   %i.aed = fptosi float %i.aec to i32
-  %7 = tail call i32 @llvm.smax.i32(i32 %i.aed, i32 0)
-  %i.aee = tail call i32 @llvm.umin.i32(i32 %7, i32 65535)
+  %i.aee = tail call i32 @llvm.smin.i32(i32 %i.aed, i32 65535)
   %i.aef = zext nneg i32 %i.aee to i64
   %i.aeg = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.aef
   %i.aeh = load float, ptr %i.aeg, align 4, !tbaa !16
@@ -1012,7 +1011,7 @@ bb.a:
   %i.j = fcmp reassoc nsz arcp contract afn olt float %i.i, 0.000000e+00
   %i.k = select reassoc nsz arcp contract afn i1 %i.j, float 0.000000e+00, float %i.i
   %i.l = trunc nuw nsw i64 %indvars.iv30 to i32
-  %i.m = uitofp nneg i32 %i.l to float
+  %i.m = uitofp nsz nneg i32 %i.l to float
   %i.n = fsub reassoc nsz arcp contract afn float %i.m, %4
   %i.o = fmul reassoc nsz arcp contract afn float %i.n, %3
   %i.p = fpext reassoc nsz arcp contract afn float %i.o to double
@@ -1045,7 +1044,7 @@ bb.a:
   %i.ab = fcmp reassoc nsz arcp contract afn olt float %i.aa, 0.000000e+00
   %i.ac = select reassoc nsz arcp contract afn i1 %i.ab, float 0.000000e+00, float %i.aa
   %i.ad = trunc nuw nsw i64 %indvars.iv to i32
-  %i.ae = uitofp nneg i32 %i.ad to float
+  %i.ae = uitofp nsz nneg i32 %i.ad to float
   %i.af = fsub reassoc nsz arcp contract afn float %i.ae, %4
   %i.ag = fmul reassoc nsz arcp contract afn float %i.af, %3
   %i.ah = fpext reassoc nsz arcp contract afn float %i.ag to double
@@ -1446,6 +1445,9 @@ declare i32 @llvm.smax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #6

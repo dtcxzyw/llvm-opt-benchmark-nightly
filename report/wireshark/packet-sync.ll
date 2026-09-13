@@ -154,15 +154,15 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.t = phi double [ %i.p, %bb.e ], [ %i.s, %bb.f ]
   %i.u = fptosi double %i.t to i16
-  %4 = sext i16 %i.u to i32
-  %5 = add nsw i32 %4, 19
+  %narrow = add nuw i16 %i.u, 19
+  %4 = zext i16 %narrow to i32
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.a, %bb.h, %bb.g, %bb.c, %bb.b
-  %.sink = phi i32 [ -1, %bb.h ], [ %5, %bb.g ], [ %i.k, %bb.c ], [ 11, %bb.b ], [ 17, %bb.a ]
+  %.sink = phi i32 [ -1, %bb.h ], [ %4, %bb.g ], [ %i.k, %bb.c ], [ 11, %bb.b ], [ 17, %bb.a ]
   %i.v = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.i, ptr noundef %0, i32 noundef 0, i32 noundef %.sink, i32 noundef 0) ; 2 uses
   %i.w = load i32, ptr @ett_sync, align 4
   %i.x = tail call ptr @proto_item_add_subtree(ptr noundef %i.v, i32 noundef %i.w) ; 20 uses

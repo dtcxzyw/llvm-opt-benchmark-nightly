@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_wasm_example_whisper-601b0015d81a4374.candle_wasm_example_whisper.b1eff805deae52af-cgu.12?download=true
+inline.NumInlined: 730
+inline.NumDeleted: 376
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_RINvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB6_3MapIBO_IBO_INtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterReEENCNvXNtCsfh9HxMbthk9_27candle_wasm_example_whisper3appNtB26_3AppNtNtNtCs9OLX912zl7o_3yew4html9component9Component4view0ENCINvXs8_NtNtB39_11virtual_dom5vnodeNtB46_5VNodeINtNtNtBa_6traits7collect12FromIteratorB4x_E9from_iterB11_E0ENCINvXs2_NtB48_5vlistNtB5R_5VListIB4K_B4x_E9from_iterBX_E0ENtNtB4O_8iterator8Iterator4folduNCINvNvB6F_8for_each4callB4x_NCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB7N_3VecB4x_E14extend_trustedBN_E0E0EB28_:bb.a
 bb.di:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs9OLX912zl7o_3yew11virtual_dom3key3KeyEECsfh9HxMbthk9_27candle_wasm_example_whisper.exit212.i.i.i.i.i.i.i
   invoke void @_RNvMs6_NtCsgCecv3eZDcN_5alloc2rcINtB5_2RcINtNtCsf3Ta7LF998c_4core4cell7RefCellNtNtCs9OLX912zl7o_3yew4html12NodeRefInnerEE9drop_slowB1i_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ab) #32
@@ -200,7 +204,7 @@ bb.c:                                             ; preds = %bb.az
 bb.d:                                             ; preds = %bb.bk, %bb.b
   %.val10.i.i.i = phi i64 [ %.sroa.6.0.copyload.i.i, %bb.b ], [ %i.ez, %bb.bk ] ; 3 uses
   %.sroa.01.0.i.i.i = phi i64 [ 0, %bb.b ], [ %i.fa, %bb.bk ] ; 2 uses
-  %i.bz = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.01.0.i.i.i ; 6 uses
+  %i.bz = getelementptr inbounds nuw [96 x i8], ptr %0, i64 %.sroa.01.0.i.i.i ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !787)
   call void @llvm.experimental.noalias.scope.decl(metadata !788)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !789
@@ -256,11 +260,9 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i.i.i)
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 80 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !790
-  %3 = load double, ptr %i.cd, align 8, !alias.scope !792, !noalias !791, !noundef !5
-  %4 = getelementptr inbounds nuw i8, ptr %i.bz, i64 88
-  %5 = load double, ptr %4, align 8, !alias.scope !792, !noalias !791, !noundef !5
-  %6 = fadd double %3, %5
-  store double %6, ptr %i.aa, align 8, !noalias !790
+  %3 = load <2 x double>, ptr %i.cd, align 8, !alias.scope !792, !noalias !791
+  %4 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %3)
+  store double %4, ptr %i.aa, align 8, !noalias !790
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bz, i64 48
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bz, i64 56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !790
@@ -661,6 +663,9 @@ declare i8 @llvm.umin.i8(i8, i8) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.cos.v4f32(<4 x float>) #22

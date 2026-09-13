@@ -205,87 +205,51 @@ png_muldiv.exit160:                               ; preds = %png_fp_sub.exit153.
 bb.as:                                            ; preds = %png_muldiv.exit160
   %i.ec = uitofp nneg i32 %i.x to double
   %i.ed = uitofp nneg i32 %.0262 to double        ; 4 uses
-  %i.ee = insertelement <2 x double> poison, double %i.ed, i64 0
-  %i.ef = insertelement <2 x double> %i.ee, double %i.ec, i64 1
+  %i.ee = insertelement <2 x double> poison, double %i.ec, i64 0
+  %i.ef = insertelement <2 x double> %i.ee, double %i.ed, i64 1
   %i.eg = fdiv <2 x double> splat (double 1.000000e+10), %i.ef
   %i.eh = fadd <2 x double> %i.eg, splat (double 5.000000e-01)
   %i.ei = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %i.eh) ; 3 uses
-  %2 = extractelement <2 x double> %i.ei, i64 1   ; 2 uses
-  %3 = fcmp oge double %2, f0xC1E0000000000000
-  %4 = fcmp ole <2 x double> %i.ei, splat (double f0x41DFFFFFFFC00000) ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 1
-  %or.cond.i161 = and i1 %5, %3
-  %6 = fptosi double %2 to i32
-  %.0.i162 = select i1 %or.cond.i161, i32 %6, i32 0 ; 5 uses
-  %7 = extractelement <2 x double> %i.ei, i64 0   ; 2 uses
-  %8 = fcmp oge double %7, f0xC1E0000000000000
-  %9 = extractelement <2 x i1> %4, i64 0
-  %or.cond.i163 = and i1 %9, %8
-  %i.ej = fptosi double %7 to i32
-  %.0.i164 = select i1 %or.cond.i163, i32 %i.ej, i32 0 ; 6 uses
-  %10 = icmp sgt i32 %.0.i164, 0
-  br i1 %10, label %11, label %14
+  %2 = fcmp ole <2 x double> %i.ei, splat (double f0x41DFFFFFFFC00000)
+  %3 = fcmp oge <2 x double> %i.ei, splat (double f0xC1E0000000000000)
+  %4 = and <2 x i1> %2, %3
+  %5 = fptosi <2 x double> %i.ei to <2 x i32>
+  %6 = select <2 x i1> %4, <2 x i32> %5, <2 x i32> zeroinitializer ; 2 uses
+  %7 = extractelement <2 x i32> %6, i64 1         ; 3 uses
+  %.not = icmp eq i32 %7, 0                       ; 2 uses
+  %8 = add nsw i32 %7, -2147483647
+  %9 = extractelement <2 x i32> %6, i64 0         ; 3 uses
+  %.not15.i167 = icmp sle i32 %8, %9              ; 2 uses
+  %10 = sub nsw i32 %9, %7
+  %spec.select359 = select i1 %.not15.i167, i32 %10, i32 50000
+  %.3 = select i1 %.not, i1 true, i1 %.not15.i167
+  %.0.i162 = select i1 %.not, i32 %9, i32 %spec.select359 ; 3 uses
+  %11 = uitofp nneg i32 %.0261 to double          ; 4 uses
+  %12 = fdiv double 1.000000e+10, %11
+  %13 = fadd double %12, 5.000000e-01
+  %14 = tail call double @llvm.floor.f64(double %13) ; 3 uses
+  %15 = fcmp ugt double %14, f0x41DFFFFFFFC00000
+  %16 = fcmp ult double %14, f0xC1E0000000000000
+  %or.cond.i169.not = or i1 %15, %16
+  %i.ej = fptosi double %14 to i32                ; 3 uses
+  %.not362363 = icmp eq i32 %i.ej, 0
+  %.not362 = select i1 %or.cond.i169.not, i1 true, i1 %.not362363
+  br i1 %.not362, label %png_fp_sub.exit174, label %bb.at
 
-11:                                               ; preds = %bb.as
-  %12 = add nsw i32 %.0.i164, -2147483647
-  %.not15.i167 = icmp sgt i32 %12, %.0.i162       ; 2 uses
-  %13 = sub nsw i32 %.0.i162, %.0.i164
-  %spec.select359 = select i1 %.not15.i167, i32 50000, i32 %13
-  br label %png_fp_sub.exit168
+bb.at:                                            ; preds = %bb.as
+  %i.ek = add nsw i32 %i.ej, -2147483647
+  %.not15.i173 = icmp sgt i32 %i.ek, %.0.i162
+  br i1 %.not15.i173, label %.critedge, label %bb.au
 
-14:                                               ; preds = %bb.as
-  %15 = icmp slt i32 %.0.i164, 0
-  br i1 %15, label %16, label %png_fp_sub.exit168
-
-16:                                               ; preds = %14
-  %17 = add nsw i32 %.0.i164, 2147483647
-  %.not.i166 = icmp slt i32 %17, %.0.i162         ; 2 uses
-  %18 = sub nsw i32 %.0.i162, %.0.i164
-  %spec.select361 = select i1 %.not.i166, i32 50000, i32 %18
-  br label %png_fp_sub.exit168
-
-png_fp_sub.exit168:                               ; preds = %16, %11, %14
-  %.3.shrunk = phi i1 [ false, %14 ], [ %.not.i166, %16 ], [ %.not15.i167, %11 ]
-  %.0.i165 = phi i32 [ %.0.i162, %14 ], [ %spec.select361, %16 ], [ %spec.select359, %11 ] ; 5 uses
-  %19 = uitofp nneg i32 %.0261 to double          ; 4 uses
-  %20 = fdiv double 1.000000e+10, %19
-  %21 = fadd double %20, 5.000000e-01
-  %22 = tail call double @llvm.floor.f64(double %21) ; 3 uses
-  %23 = fcmp ole double %22, f0x41DFFFFFFFC00000
-  %24 = fcmp oge double %22, f0xC1E0000000000000
-  %or.cond.i169 = and i1 %23, %24
-  %25 = fptosi double %22 to i32
-  %.0.i170 = select i1 %or.cond.i169, i32 %25, i32 0 ; 6 uses
-  %26 = icmp sgt i32 %.0.i170, 0
-  br i1 %26, label %bb.at, label %29
-
-bb.at:                                            ; preds = %png_fp_sub.exit168
-  %i.ek = add nsw i32 %.0.i170, -2147483647
-  %.not15.i173 = icmp sgt i32 %i.ek, %.0.i165
-  br i1 %.not15.i173, label %.critedge, label %27
-
-27:                                               ; preds = %bb.at
-  %28 = sub nsw i32 %.0.i165, %.0.i170
+bb.au:                                            ; preds = %bb.at
+  %i.el = sub nsw i32 %.0.i162, %i.ej
   br label %png_fp_sub.exit174
 
-29:                                               ; preds = %png_fp_sub.exit168
-  %30 = icmp slt i32 %.0.i170, 0
-  br i1 %30, label %31, label %png_fp_sub.exit174
-
-31:                                               ; preds = %29
-  %32 = add nsw i32 %.0.i170, 2147483647
-  %.not.i172 = icmp slt i32 %32, %.0.i165
-  br i1 %.not.i172, label %.critedge, label %bb.au
-
-bb.au:                                            ; preds = %31
-  %i.el = sub nsw i32 %.0.i165, %.0.i170
-  br label %png_fp_sub.exit174
-
-png_fp_sub.exit174:                               ; preds = %27, %29, %bb.au
-  %.0.i171 = phi i32 [ %28, %27 ], [ %.0.i165, %29 ], [ %i.el, %bb.au ] ; 4 uses
-  %33 = icmp slt i32 %.0.i171, 1
-  %or.cond5.not = select i1 %.3.shrunk, i1 true, i1 %33
-  br i1 %or.cond5.not, label %.critedge, label %bb.av
+png_fp_sub.exit174:                               ; preds = %bb.as, %bb.au
+  %.0.i171 = phi i32 [ %i.el, %bb.au ], [ %.0.i162, %bb.as ] ; 4 uses
+  %17 = icmp sgt i32 %.0.i171, 0
+  %or.cond5.not = select i1 %.3, i1 %17, i1 false
+  br i1 %or.cond5.not, label %bb.av, label %.critedge
 
 bb.av:                                            ; preds = %png_fp_sub.exit174
   %i.em = icmp eq i32 %i.a, 0
@@ -366,7 +330,7 @@ bb.be:                                            ; preds = %bb.bb, %bb.bd
 bb.bf:                                            ; preds = %bb.be
   %i.fx = sitofp i32 %i.fv to double
   %i.fy = fmul nnan double %i.fx, 1.000000e+05
-  %i.fz = fdiv double %i.fy, %19
+  %i.fz = fdiv double %i.fy, %11
   %i.ga = fadd double %i.fz, 5.000000e-01
   %i.gb = tail call double @llvm.floor.f64(double %i.ga) ; 3 uses
   %i.gc = fcmp ole double %i.gb, f0x41DFFFFFFFC00000
@@ -389,7 +353,7 @@ bb.bh:                                            ; preds = %bb.be, %bb.bg
 bb.bi:                                            ; preds = %bb.bh
   %i.gi = sitofp i32 %i.gg to double
   %i.gj = fmul nnan double %i.gi, 1.000000e+05
-  %i.gk = fdiv double %i.gj, %19
+  %i.gk = fdiv double %i.gj, %11
   %i.gl = fadd double %i.gk, 5.000000e-01
   %i.gm = tail call double @llvm.floor.f64(double %i.gl) ; 3 uses
   %i.gn = fcmp ole double %i.gm, f0x41DFFFFFFFC00000
@@ -415,7 +379,7 @@ bb.bl:                                            ; preds = %bb.bk
   %i.gv = sub i32 100000, %i.gt
   %i.gw = sitofp i32 %i.gv to double
   %i.gx = fmul nnan double %i.gw, 1.000000e+05
-  %i.gy = fdiv double %i.gx, %19
+  %i.gy = fdiv double %i.gx, %11
   %i.gz = fadd double %i.gy, 5.000000e-01
   %i.ha = tail call double @llvm.floor.f64(double %i.gz) ; 3 uses
   %i.hb = fcmp ole double %i.ha, f0x41DFFFFFFFC00000
@@ -507,8 +471,8 @@ png_muldiv.exit234:                               ; preds = %bb.bt, %bb.bv
   store i32 %.sink.i233, ptr %i.ic, align 4, !tbaa !34
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.br, %bb.bo, %bb.bl, %bb.bi, %bb.bf, %bb.bc, %bb.az, %bb.aw, %bb.at, %31, %bb.aq, %png_fp_sub.exit153, %bb.ad, %png_fp_sub.exit130, %png_muldiv.exit160, %png_muldiv.exit137, %bb.j, %bb.m, %bb.o, %bb.r, %bb.t, %bb.w, %bb.ag, %bb.aj, %png_muldiv.exit234, %bb.bu, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %png_fp_sub.exit174
-  %.1 = phi i32 [ 1, %png_fp_sub.exit174 ], [ 1, %bb.a ], [ 1, %bb.b ], [ 1, %bb.c ], [ 1, %bb.d ], [ 1, %bb.e ], [ 1, %bb.f ], [ 1, %bb.g ], [ 1, %bb.bu ], [ 1, %bb.at ], [ 1, %bb.aw ], [ 1, %bb.az ], [ 1, %bb.bc ], [ 1, %bb.bf ], [ 1, %bb.bi ], [ 1, %bb.bl ], [ 1, %bb.aq ], [ 1, %bb.bo ], [ 1, %bb.h ], [ 0, %png_muldiv.exit234 ], [ 1, %bb.ad ], [ 1, %bb.aj ], [ 1, %bb.ag ], [ 1, %png_muldiv.exit160 ], [ 1, %bb.w ], [ 1, %bb.t ], [ 1, %bb.r ], [ 1, %bb.o ], [ 1, %bb.m ], [ 1, %bb.j ], [ 1, %31 ], [ 1, %bb.br ], [ 1, %png_muldiv.exit137 ], [ 1, %png_fp_sub.exit130 ], [ 1, %png_fp_sub.exit153 ]
+.critedge:                                        ; preds = %bb.br, %bb.bo, %bb.bl, %bb.bi, %bb.bf, %bb.bc, %bb.az, %bb.aw, %bb.at, %bb.aq, %png_fp_sub.exit153, %bb.ad, %png_fp_sub.exit130, %png_muldiv.exit160, %png_muldiv.exit137, %bb.j, %bb.m, %bb.o, %bb.r, %bb.t, %bb.w, %bb.ag, %bb.aj, %png_muldiv.exit234, %bb.bu, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %png_fp_sub.exit174
+  %.1 = phi i32 [ 1, %png_fp_sub.exit174 ], [ 1, %bb.a ], [ 1, %bb.b ], [ 1, %bb.c ], [ 1, %bb.d ], [ 1, %bb.e ], [ 1, %bb.f ], [ 1, %bb.g ], [ 1, %bb.bu ], [ 1, %bb.at ], [ 1, %bb.aw ], [ 1, %bb.az ], [ 1, %bb.bc ], [ 1, %bb.bf ], [ 1, %bb.bi ], [ 1, %bb.bl ], [ 1, %bb.aq ], [ 1, %bb.bo ], [ 1, %bb.h ], [ 0, %png_muldiv.exit234 ], [ 1, %bb.ad ], [ 1, %bb.aj ], [ 1, %bb.ag ], [ 1, %png_muldiv.exit160 ], [ 1, %bb.w ], [ 1, %bb.t ], [ 1, %bb.r ], [ 1, %bb.o ], [ 1, %bb.m ], [ 1, %bb.j ], [ 1, %png_fp_sub.exit153 ], [ 1, %bb.br ], [ 1, %png_muldiv.exit137 ], [ 1, %png_fp_sub.exit130 ]
   ret i32 %.1
 }
 
@@ -911,7 +875,7 @@ bb.k:                                             ; preds = %bb.j
   %i.az = fcmp oge double %i.ax, f0xC1E0000000000000
   %or.cond3.i57 = and i1 %i.ay, %i.az
   %i.ba = fptosi double %i.ax to i32              ; 2 uses
-  %i.bb = icmp ult i32 %i.ba, 32769
+  %i.bb = icmp samesign ult i32 %i.ba, 32769
   %or.cond115 = select i1 %or.cond3.i57, i1 %i.bb, i1 false
   br i1 %or.cond115, label %png_muldiv.exit61.thread, label %png_muldiv.exit.thread
 

@@ -205,7 +205,7 @@ bb.a:
   %i.r = fdiv float %i.q, f0x3FC90FDB
   %i.s = tail call float @llvm.ceil.f32(float %i.r)
   %i.t = fptosi float %i.s to i32
-  %spec.store.select.i = tail call i32 @llvm.smax.i32(i32 %i.t, i32 1) ; 2 uses
+  %spec.store.select.i = tail call i32 @llvm.umax.i32(i32 %i.t, i32 1) ; 2 uses
   %i.u = uitofp nneg i32 %spec.store.select.i to float
   %i.v = lshr i32 %1, 8
   %i.w = lshr i32 %1, 16
@@ -606,9 +606,6 @@ declare void @hb_paint_funcs_destroy(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #7

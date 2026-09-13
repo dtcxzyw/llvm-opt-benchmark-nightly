@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_ZN6duckdb21Unscent
   %spec.select.i = fptosi double %spec.select4.i to i32
   %.0.i9 = select i1 %i.au, i32 100, i32 %spec.select.i ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
-  %3 = sext i32 %.0.i9 to i64
+  %3 = zext nneg i32 %.0.i9 to i64
   call void @_ZN6duckdb12optional_idxC2Em(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef %3)
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.aw = fptoui double %.0 to i64

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fontc-rs/original/fontbe-61f120808e41ae7e.fontbe.cc431683d7bf4cd5-cgu.12?download=true
+inline.NumInlined: 1985
+inline.NumDeleted: 971
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_RINvXs2_NtNtNtCs8n5UXKvQVD9_10read_fonts11collections7int_set6bitsetNtB6_6U32SetINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendmE6extendINtNtNtB1n_8adapters3map3MapINtNtB2n_10filter_map9FilterMapINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3set4IterNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameENCNCNvXNtNtCshxhuDJfZv4T_6fontbe8features4kernNtB52_19GatherIrKerningWorkINtNtB4e_13orchestration4WorkNtNtB56_13orchestration7ContextNtB6B_9AnyWorkIdNtNtB56_5error5ErrorE4execs_00ENCINvXs4_B8_INtB8_6IntSetNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EIB1h_B8e_E6extendB2K_E0EEB56_:bb.a
   %.not9.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not9.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i
@@ -200,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i48 @_RNvMNtNtNtCs6WnK4nVnpEz_11write_fonts6tables10variations14common_builderINtB2_17VarStoreRemappingNtNtB6_6layout14VariationIndexE3getCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %0, i32 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i48 0, -65534) i48 @_RNvMNtNtNtCs6WnK4nVnpEz_11write_fonts6tables10variations14common_builderINtB2_17VarStoreRemappingNtNtB6_6layout14VariationIndexE3getCshxhuDJfZv4T_6fontbe(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %0, i32 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 3 uses
   store i32 %1, ptr %i.a, align 4

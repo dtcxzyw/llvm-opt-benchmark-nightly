@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rocm-device-libs/original/remainderF?download=true
+inline.NumInlined: 2
+inline.NumDeleted: 1
 begin_hunk_0
 target datalayout = "e-m:e-p:64:64-p1:64:64-p2:32:32-p3:32:32-p4:64:64-p5:32:32-p6:32:32-p7:160:256:256:32-p8:128:128:128:48-p9:192:256:256:32-i64:64-v16:16-v24:32-v32:32-v48:64-v96:128-v192:256-v256:256-v512:512-v1024:1024-v2048:2048-n32:64-S32-A5-G1-ni:7:8:9-p10:32:32-p11:32:32-p12:32:32-p13:32:32-p14:32:32-p15:32:32"
 target triple = "amdgpu-amd-amdhsa"
@@ -82,7 +84,7 @@ fnma.exit:                                        ; preds = %bb.d, %bb.e
   %i.ao = select i1 %i.am, float %i.an, float %.0.i
   %i.ap = add nsw i32 %.08292, -12                ; 2 uses
   %.0 = fmul float %i.ao, 4.096000e+03            ; 2 uses
-  %2 = icmp samesign ugt i32 %.08292, 24
+  %2 = icmp sgt i32 %.08292, 24
   br i1 %2, label %bb.c, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %fnma.exit, %bb.b

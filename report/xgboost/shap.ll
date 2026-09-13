@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %_ZNK7xgboost6common
 
 bb.l:                                             ; preds = %bb.k
   %i.ah = fptosi float %2 to i32                  ; 2 uses
-  %4 = sext i32 %i.ah to i64
-  %5 = lshr i64 %4, 5
+  %4 = lshr i32 %i.ah, 5
+  %5 = zext nneg i32 %4 to i64
   %i.ai = and i32 %i.ah, 31
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %5
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !18
@@ -609,8 +609,8 @@ bb.k:                                             ; preds = %_ZNK7xgboost6common
 
 bb.l:                                             ; preds = %bb.k
   %i.ah = fptosi float %2 to i32                  ; 2 uses
-  %4 = sext i32 %i.ah to i64
-  %5 = lshr i64 %4, 5
+  %4 = lshr i32 %i.ah, 5
+  %5 = zext nneg i32 %4 to i64
   %i.ai = and i32 %i.ah, 31
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %5
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !18

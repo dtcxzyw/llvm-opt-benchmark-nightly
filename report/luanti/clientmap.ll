@@ -205,7 +205,7 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.e
   %i.bgc = fmul nnan nsz float %i.bgb, 1.000000e+02
   %i.bgd = fdiv nsz float %i.bgc, %i.bfd
   %i.bge = fptosi float %i.bgd to i32
-  %24 = sitofp nsz i32 %i.bge to float
+  %24 = uitofp nsz nneg i32 %i.bge to float
   invoke void @_ZN8Profiler3avgERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEf(ptr noundef nonnull align 8 dereferenceable(144) %i.bfk, ptr noundef nonnull align 8 dereferenceable(32) %23, float noundef %24)
           to label %bb.gd unwind label %bb.gh
 
@@ -608,11 +608,10 @@ bb.d:                                             ; preds = %_ZNK14NodeDefManage
   %i.aw = fadd nsz float %i.av, 5.000000e-01
   %i.ax = tail call nsz noundef float @llvm.floor.f32(float %i.aw)
   %i.ay = fptosi float %i.ax to i32
-  %3 = and i32 %i.aj, -16777216
-  %i.az = and i32 %i.aq, 255
-  %i.ba = and i32 %i.an, 255
-  %i.bb = lshr i32 %i.ap, 8
-  %i.bc = lshr i32 %i.ap, 16
+  %i.az = and i32 %i.an, 255
+  %i.ba = and i32 %i.aq, 255
+  %i.bb = lshr i32 %i.ap, 16
+  %i.bc = lshr i32 %i.ap, 8
   %i.bd = and i32 %i.bb, 255
   %i.be = and i32 %i.bc, 255
   %i.bf = mul nuw nsw i32 %i.bd, %i.az
@@ -624,15 +623,15 @@ bb.d:                                             ; preds = %_ZNK14NodeDefManage
   %i.bl = fdiv nsz <2 x float> %i.bk, splat (float 2.550000e+02)
   %i.bm = fadd nsz <2 x float> %i.bl, splat (float 5.000000e-01)
   %i.bn = tail call nsz <2 x float> @llvm.floor.v2f32(<2 x float> %i.bm)
-  %i.bo = insertelement <4 x i32> poison, i32 %i.ay, i64 2
-  %i.bp = insertelement <4 x i32> %i.bo, i32 %3, i64 3
+  %i.bo = insertelement <4 x i32> poison, i32 %i.ay, i64 0
+  %i.bp = insertelement <4 x i32> %i.bo, i32 %i.aj, i64 1
   %i.bq = shufflevector <2 x float> %i.bn, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.br = fptosi <4 x float> %i.bq to <4 x i32>
-  %4 = shufflevector <4 x i32> %i.br, <4 x i32> %i.bp, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.bs = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %4, <4 x i32> <i32 0, i32 0, i32 0, i32 -2147483648>)
-  %5 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.bs, <4 x i32> <i32 255, i32 255, i32 255, i32 -1>)
-  %6 = shl nuw nsw <4 x i32> %5, <i32 16, i32 8, i32 0, i32 0>
-  %i.bt = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %6)
+  %3 = shufflevector <4 x i32> %i.bp, <4 x i32> %i.br, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.bs = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %3, <4 x i32> <i32 255, i32 2147483647, i32 255, i32 255>)
+  %4 = shl nuw nsw <4 x i32> %i.bs, <i32 0, i32 0, i32 8, i32 16>
+  %5 = and <4 x i32> %4, <i32 255, i32 -16777216, i32 65280, i32 16711680>
+  %i.bt = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %5)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZNK14NodeDefManager3getERK7MapNode.exit
@@ -1035,10 +1034,7 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 declare <2 x float> @llvm.floor.v2f32(<2 x float>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #19
+declare <4 x i32> @llvm.smin.v4i32(<4 x i32>, <4 x i32>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #19

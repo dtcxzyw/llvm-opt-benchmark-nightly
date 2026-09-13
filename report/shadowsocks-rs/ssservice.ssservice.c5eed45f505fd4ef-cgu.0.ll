@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/shadowsocks-rs/original/ssservice.ssservice.c5eed45f505fd4ef-cgu.0?download=true
+inline.NumInlined: 40157
+inline.NumDeleted: 17541
+loop-unroll.NumCompletelyUnrolled: 94
+loop-unroll.NumRuntimeUnrolled: 164
+loop-unroll.NumUnrolled: 272
 begin_hunk_0_@_RINvNtNtCs7ewmRfXve8r_4http6header3map15hash_elem_usingNtNtB4_4name7HdrNameECsgZAIVb0XKpv_9ssservice:bb.a
   %i.fn = zext i8 %i.fm to i64
   %i.fo = getelementptr inbounds nuw i8, ptr @341, i64 %i.fn
@@ -200,13 +205,13 @@ bb.a:
   %.sroa.5.sroa.0.sroa.4 = alloca [7 x i8], align 1 ; 2 uses
   %.sroa.0.0.copyload.i = load i64, ptr %1, align 8, !alias.scope !31681, !noalias !31682 ; 4 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !31681, !noalias !31682, !nonnull !178, !noundef !178 ; 6 uses
+  %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !31681, !noalias !31682, !nonnull !178, !noundef !178 ; 5 uses
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !31681, !noalias !31682 ; 7 uses
+  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !31681, !noalias !31682 ; 6 uses
   %i.b = icmp ult i64 %.sroa.5.0.copyload.i, 139174493554666
   tail call void @llvm.assume(i1 %i.b)
-  %.idx43 = mul nuw i64 %.sroa.5.0.copyload.i, 66272 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload.i, i64 %.idx43
+  %.idx43 = mul nuw nsw i64 %.sroa.5.0.copyload.i, 66272
+  %i.c = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload.i, i64 %.idx43 ; 2 uses
   %i.d = icmp samesign ult i64 %.sroa.5.0.copyload.i, 31
   br i1 %i.d, label %bb.o, label %bb.b
 
@@ -437,66 +442,30 @@ bb.o:                                             ; preds = %bb.a
 
 bb.p:                                             ; preds = %bb.o
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #53, !noalias !31696
-  %i.aw = tail call noundef align 16 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef %i.au, i64 noundef range(i64 1, 17) 16) #53, !noalias !31696 ; 6 uses
+  %i.aw = tail call noundef align 16 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef %i.au, i64 noundef range(i64 1, 17) 16) #53, !noalias !31696 ; 3 uses
   %i.ax = icmp eq ptr %i.aw, null
-  br i1 %i.ax, label %bb.q, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
-
-.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %bb.p
-  %2 = add nsw i64 %.idx43, -66272                ; 2 uses
-  %3 = udiv i64 %2, 66272                         ; 2 uses
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
-  %5 = icmp ult i64 %2, 66272
-  br i1 %5, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.new
-
-.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.new:         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
-  %unroll_iter = and i64 %4, 562949953421310
-  br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
+  br i1 %i.ax, label %bb.q, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 bb.q:                                             ; preds = %bb.p
   tail call void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 16, i64 %i.au) #62, !noalias !31697
   unreachable
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.new
-  %i.ay = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.new ], [ %9, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
-  %i.az = phi ptr [ %.sroa.4.0.copyload.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.new ], [ %i.ba, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.new ], [ %niter.next.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i ]
-  %6 = getelementptr inbounds nuw i8, ptr %i.az, i64 66272
-  %7 = getelementptr inbounds nuw [66288 x i8], ptr %i.aw, i64 %i.ay ; 2 uses
-  store i128 0, ptr %7, align 16, !noalias !31698
-  %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(66272) %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(66272) %i.az, i64 66272, i1 false)
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 132544 ; 2 uses
+.lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.p, %.lr.ph.i.i.i.i.i.i.i.i.i.i
+  %i.ay = phi i64 [ %niter.next.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.p ] ; 2 uses
+  %i.az = phi ptr [ %i.ba, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.4.0.copyload.i, %bb.p ] ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 66272 ; 2 uses
   %i.bb = getelementptr inbounds nuw [66288 x i8], ptr %i.aw, i64 %i.ay ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.bb, i64 66288
-  store i128 0, ptr %8, align 16, !noalias !31698
-  %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.bb, i64 66304
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(66272) %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.1, ptr noundef nonnull align 16 dereferenceable(66272) %6, i64 66272, i1 false)
-  %9 = add nuw nsw i64 %i.ay, 2                   ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
+  store i128 0, ptr %i.bb, align 16, !noalias !31698
+  %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(66272) %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.1, ptr noundef nonnull align 16 dereferenceable(66272) %i.az, i64 66272, i1 false)
+  %niter.next.1 = add nuw nsw i64 %i.ay, 1        ; 2 uses
+  %niter.ncmp.1 = icmp eq ptr %i.ba, %i.c
+  br i1 %niter.ncmp.1, label %._crit_edge.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
-  %10 = and i64 %3, 1
-  %lcmp.mod.not.not = icmp eq i64 %10, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil.preheader, label %._crit_edge.i.i.i.i.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i.i.i.i.i.epil.preheader:        ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
-  %.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %9, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ] ; 2 uses
-  %.epil.init57 = phi ptr [ %.sroa.4.0.copyload.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.ba, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ]
-  %lcmp.mod59 = trunc i64 %4 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod59)
-  %11 = getelementptr inbounds nuw [66288 x i8], ptr %i.aw, i64 %.epil.init ; 2 uses
-  store i128 0, ptr %11, align 16, !noalias !31698
-  %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.epil = getelementptr inbounds nuw i8, ptr %11, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(66272) %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.epil, ptr noundef nonnull align 16 dereferenceable(66272) %.epil.init57, i64 66272, i1 false)
-  %12 = add nuw nsw i64 %.epil.init, 1
-  br label %._crit_edge.i.i.i.i.i.i.i.i.i.i
-
-._crit_edge.i.i.i.i.i.i.i.i.i.i:                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil.preheader, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, %bb.o
-  %.sroa.4.0.i.i.i.i.i.i55 = phi i64 [ 0, %bb.o ], [ %.sroa.5.0.copyload.i, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %.sroa.5.0.copyload.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil.preheader ] ; 2 uses
-  %.sroa.10.0.i.i.i.i.i.i54 = phi ptr [ inttoptr (i64 16 to ptr), %bb.o ], [ %i.aw, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %i.aw, %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil.preheader ] ; 3 uses
-  %.sroa.42.0.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.o ], [ %9, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %12, %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil.preheader ] ; 5 uses
+._crit_edge.i.i.i.i.i.i.i.i.i.i:                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i, %bb.o
+  %.sroa.4.0.i.i.i.i.i.i55 = phi i64 [ 0, %bb.o ], [ %.sroa.5.0.copyload.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.10.0.i.i.i.i.i.i54 = phi ptr [ inttoptr (i64 16 to ptr), %bb.o ], [ %i.aw, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %.sroa.42.0.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.o ], [ %niter.next.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 5 uses
   %i.bc = icmp eq i64 %.sroa.0.0.copyload.i, 0
   br i1 %i.bc, label %_RINvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtB1N_11PingChecker18check_update_score0ENcNtINtNtNtCscVsx2cUGvkQ_12futures_util6future10maybe_done9MaybeDoneB1F_E6Future0ENtNtNtBa_6traits8iterator8Iterator7collectINtBW_3VecB3L_EECsgZAIVb0XKpv_9ssservice.exit.i, label %bb.r
 
@@ -899,13 +868,13 @@ bb.l:                                             ; preds = %_RINvNtCsf3Ta7LF998
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtCslxdWNweD0x2_11shadowsocks6plugin6PluginEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtCslxdWNweD0x2_11shadowsocks6plugin6PluginECsgZAIVb0XKpv_9ssservice.exit.i.i, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
   %.sroa.040.0.copyload = load i64, ptr %i.ae, align 8 ; 4 uses
-  %.sroa.441.0.copyload = load ptr, ptr %i.ak, align 8, !nonnull !178, !noundef !178 ; 6 uses
+  %.sroa.441.0.copyload = load ptr, ptr %i.ak, align 8, !nonnull !178, !noundef !178 ; 5 uses
   %.sroa.542.0.copyload = load i64, ptr %i.al, align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.sroa.0.sroa.4.i)
   %i.bq = icmp ult i64 %.sroa.542.0.copyload, 13725256007224369
   tail call void @llvm.assume(i1 %i.bq)
-  %.idx43.i = mul nuw i64 %.sroa.542.0.copyload, 672 ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %.sroa.441.0.copyload, i64 %.idx43.i
+  %.idx43.i = mul nuw nsw i64 %.sroa.542.0.copyload, 672
+  %i.br = getelementptr inbounds nuw i8, ptr %.sroa.441.0.copyload, i64 %.idx43.i ; 2 uses
   %i.bs = icmp samesign ult i64 %.sroa.542.0.copyload, 31
   br i1 %i.bs, label %bb.z, label %bb.m
 
@@ -1136,65 +1105,29 @@ bb.z:                                             ; preds = %_RINvNtCsf3Ta7LF998
 
 bb.aa:                                            ; preds = %bb.z
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #53, !noalias !47908
-  %i.dl = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef %i.dj, i64 noundef range(i64 1, 17) 8) #53, !noalias !47908 ; 6 uses
+  %i.dl = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef %i.dj, i64 noundef range(i64 1, 17) 8) #53, !noalias !47908 ; 3 uses
   %i.dm = icmp eq ptr %i.dl, null
-  br i1 %i.dm, label %bb.ab, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
-
-.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader:           ; preds = %bb.aa
-  %2 = add nsw i64 %.idx43.i, -672                ; 2 uses
-  %3 = udiv i64 %2, 672                           ; 2 uses
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
-  %5 = icmp ult i64 %2, 672
-  br i1 %5, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader.new
-
-.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader.new:       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
-  %unroll_iter = and i64 %4, 72057594037927934
-  br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
+  br i1 %i.dm, label %bb.ab, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
 
 bb.ab:                                            ; preds = %bb.aa
   tail call void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.dj) #62, !noalias !47909
   unreachable
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader.new
-  %i.dn = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader.new ], [ %9, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
-  %i.do = phi ptr [ %.sroa.441.0.copyload, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader.new ], [ %i.dp, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader.new ], [ %niter.next.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ]
-  %6 = getelementptr inbounds nuw i8, ptr %i.do, i64 672
-  %7 = getelementptr inbounds nuw [680 x i8], ptr %i.dl, i64 %i.dn ; 2 uses
-  store i64 0, ptr %7, align 8, !noalias !47910
-  %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(672) %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(672) %i.do, i64 672, i1 false), !noalias !47907
-  %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 1344 ; 2 uses
+.lr.ph.i.i.i.i.i.i.i.i.i.i.i:                     ; preds = %bb.aa, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
+  %i.dn = phi i64 [ %niter.next.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.aa ] ; 2 uses
+  %i.do = phi ptr [ %i.dp, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.441.0.copyload, %bb.aa ] ; 2 uses
+  %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 672 ; 2 uses
   %i.dq = getelementptr inbounds nuw [680 x i8], ptr %i.dl, i64 %i.dn ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.dq, i64 680
-  store i64 0, ptr %8, align 8, !noalias !47910
-  %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.dq, i64 688
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(672) %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.1, ptr noundef nonnull align 8 dereferenceable(672) %6, i64 672, i1 false), !noalias !47907
-  %9 = add nuw nsw i64 %i.dn, 2                   ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
+  store i64 0, ptr %i.dq, align 8, !noalias !47910
+  %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(672) %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.1, ptr noundef nonnull align 8 dereferenceable(672) %i.do, i64 672, i1 false), !noalias !47907
+  %niter.next.1 = add nuw nsw i64 %i.dn, 1        ; 2 uses
+  %niter.ncmp.1 = icmp eq ptr %i.dp, %i.br
+  br i1 %niter.ncmp.1, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
-  %10 = and i64 %3, 1
-  %lcmp.mod.not.not = icmp eq i64 %10, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.epil.preheader, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i.i.i.i.i.i.epil.preheader:      ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
-  %.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %9, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ] ; 2 uses
-  %.epil.init66 = phi ptr [ %.sroa.441.0.copyload, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.dp, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ]
-  %lcmp.mod68 = trunc i64 %4 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod68)
-  %11 = getelementptr inbounds nuw [680 x i8], ptr %i.dl, i64 %.epil.init ; 2 uses
-  store i64 0, ptr %11, align 8, !noalias !47910
-  %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.epil = getelementptr inbounds nuw i8, ptr %11, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(672) %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.epil, ptr noundef nonnull align 8 dereferenceable(672) %.epil.init66, i64 672, i1 false), !noalias !47907
-  %12 = add nuw nsw i64 %.epil.init, 1
-  br label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i
-
-._crit_edge.i.i.i.i.i.i.i.i.i.i.i:                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.epil.preheader, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, %bb.z
-  %.sroa.10.0.i.i.i.i.i.i54.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.z ], [ %i.dl, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %i.dl, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.epil.preheader ] ; 3 uses
-  %.sroa.42.0.i.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.z ], [ %9, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %12, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.epil.preheader ] ; 5 uses
+._crit_edge.i.i.i.i.i.i.i.i.i.i.i:                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %bb.z
+  %.sroa.10.0.i.i.i.i.i.i54.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.z ], [ %i.dl, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
+  %.sroa.42.0.i.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.z ], [ %niter.next.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ] ; 5 uses
   %i.dr = icmp eq i64 %.sroa.040.0.copyload, 0
   br i1 %i.dr, label %_RINvYINtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNCNCNCNvMs2_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtB1R_19PingBalancerContext3new000ENcNtINtNtNtCscVsx2cUGvkQ_12futures_util6future10maybe_done9MaybeDoneB1F_E6Future0ENtNtNtBa_6traits8iterator8Iterator7collectINtBW_3VecB3J_EECsgZAIVb0XKpv_9ssservice.exit.i.i, label %bb.ac
 
@@ -1597,7 +1530,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_sliceTINtNtB8_4sync3ArcNtNtNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local5redir8udprelay3sys4unix5linux14UdpRedirSocketENtNtCs5Xr050g3D4S_3std4time7InstantEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %bb.e
   %i.z = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.v
   %i.aa = shl nuw nsw i64 %i.w, 5
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull readonly align 4 %i.z, i64 %i.aa, i1 false), !alias.scope !89352
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull readonly align 4 %i.z, i64 %i.aa, i1 false), !alias.scope !89352
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 360 ; 2 uses
   %i.ac = getelementptr inbounds nuw [24 x i8], ptr %i.ab, i64 %i.v
   %i.ad = mul nuw nsw i64 %i.w, 24
@@ -1795,7 +1728,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr nonnull readonly align 8 %i.s, i64 %i.af, i1 false), !alias.scope !89378
   %i.ag = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %1
   %i.ah = shl nuw nsw i64 %i.n, 5
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 4 %i.ag, i64 %i.ah, i1 false), !alias.scope !89379
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull align 4 %i.ag, i64 %i.ah, i1 false), !alias.scope !89379
   %i.ai = getelementptr inbounds nuw [24 x i8], ptr %i.s, i64 %1
   %i.aj = mul nuw nsw i64 %i.n, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.ai, i64 %i.aj, i1 false), !alias.scope !89380
@@ -2037,7 +1970,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_sliceTINtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association14UdpAssociationNtNtNtB1f_3tun3udp19UdpTunInboundWriterENtNtCs5Xr050g3D4S_3std4time7InstantEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %bb.e
   %i.y = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.u
   %i.z = shl nuw nsw i64 %i.v, 5                  ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89406
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89406
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 352 ; 2 uses
   %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.aa, i64 %i.u
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull readonly align 8 %i.ab, i64 %i.z, i1 false), !alias.scope !89407
@@ -2233,7 +2166,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr nonnull readonly align 8 %i.s, i64 %i.ad, i1 false), !alias.scope !89432
   %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %1
   %i.ag = shl nuw nsw i64 %i.n, 5                 ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89433
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89433
   %i.ah = getelementptr inbounds nuw [32 x i8], ptr %i.s, i64 %1
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.ah, i64 %i.ag, i1 false), !alias.scope !89434
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -2474,7 +2407,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_sliceTINtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association14UdpAssociationNtNtNtB1f_5redir8udprelay21UdpRedirInboundWriterENtNtCs5Xr050g3D4S_3std4time7InstantEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %bb.e
   %i.y = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.u
   %i.z = shl nuw nsw i64 %i.v, 5                  ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89460
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89460
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 352 ; 2 uses
   %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.aa, i64 %i.u
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull readonly align 8 %i.ab, i64 %i.z, i1 false), !alias.scope !89461
@@ -2670,7 +2603,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr nonnull readonly align 8 %i.s, i64 %i.ad, i1 false), !alias.scope !89486
   %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %1
   %i.ag = shl nuw nsw i64 %i.n, 5                 ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89487
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89487
   %i.ah = getelementptr inbounds nuw [32 x i8], ptr %i.s, i64 %1
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.ah, i64 %i.ag, i1 false), !alias.scope !89488
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -2911,7 +2844,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_sliceTINtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association14UdpAssociationNtNtNtB1f_6tunnel8udprelay22TunnelUdpInboundWriterENtNtCs5Xr050g3D4S_3std4time7InstantEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %bb.e
   %i.y = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.u
   %i.z = shl nuw nsw i64 %i.v, 5                  ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89514
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89514
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 352 ; 2 uses
   %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.aa, i64 %i.u
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull readonly align 8 %i.ab, i64 %i.z, i1 false), !alias.scope !89515
@@ -3107,7 +3040,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr nonnull readonly align 8 %i.s, i64 %i.ad, i1 false), !alias.scope !89540
   %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %1
   %i.ag = shl nuw nsw i64 %i.n, 5                 ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89541
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89541
   %i.ah = getelementptr inbounds nuw [32 x i8], ptr %i.s, i64 %1
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.ah, i64 %i.ag, i1 false), !alias.scope !89542
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -3348,7 +3281,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_sliceTINtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3udp11association14UdpAssociationNtNtNtNtNtB1f_5socks6server6socks58udprelay22Socks5UdpInboundWriterENtNtCs5Xr050g3D4S_3std4time7InstantEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %bb.e
   %i.y = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.u
   %i.z = shl nuw nsw i64 %i.v, 5                  ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89568
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89568
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 352 ; 2 uses
   %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.aa, i64 %i.u
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull readonly align 8 %i.ab, i64 %i.z, i1 false), !alias.scope !89569
@@ -3544,7 +3477,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr nonnull readonly align 8 %i.s, i64 %i.ad, i1 false), !alias.scope !89594
   %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %1
   %i.ag = shl nuw nsw i64 %i.n, 5                 ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89595
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89595
   %i.ah = getelementptr inbounds nuw [32 x i8], ptr %i.s, i64 %1
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.ah, i64 %i.ag, i1 false), !alias.scope !89596
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -3785,7 +3718,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_sliceTNtNtNtCs8UFHSMUhzWe_19shadowsocks_service6server8udprelay14UdpAssociationNtNtCs5Xr050g3D4S_3std4time7InstantEECsgZAIVb0XKpv_9ssservice.exit: ; preds = %bb.e
   %i.y = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.u
   %i.z = shl nuw nsw i64 %i.v, 5                  ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89622
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull readonly align 4 %i.y, i64 %i.z, i1 false), !alias.scope !89622
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 352 ; 2 uses
   %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.aa, i64 %i.u
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull readonly align 8 %i.ab, i64 %i.z, i1 false), !alias.scope !89623
@@ -3981,7 +3914,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr nonnull readonly align 8 %i.s, i64 %i.ad, i1 false), !alias.scope !89648
   %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %1
   %i.ag = shl nuw nsw i64 %i.n, 5                 ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89649
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull align 4 %i.af, i64 %i.ag, i1 false), !alias.scope !89649
   %i.ah = getelementptr inbounds nuw [32 x i8], ptr %i.s, i64 %1
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.ah, i64 %i.ag, i1 false), !alias.scope !89650
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -4225,7 +4158,7 @@ _RINvNtNtNtCsgCecv3eZDcN_5alloc11collections5btree4node13move_to_sliceTbNtNtCs5X
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 276 ; 2 uses
   %i.ab = getelementptr inbounds nuw [17 x i8], ptr %i.aa, i64 %i.w
   %i.ac = mul nuw nsw i64 %i.x, 17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.q, ptr nonnull readonly align 1 %i.ab, i64 %i.ac, i1 false), !alias.scope !89676
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.q, ptr nonnull readonly align 1 %i.ab, i64 %i.ac, i1 false), !alias.scope !89676
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.ae = getelementptr inbounds nuw [24 x i8], ptr %i.ad, i64 %i.w
   %i.af = mul nuw nsw i64 %i.x, 24
@@ -4422,7 +4355,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ah, ptr nonnull readonly align 8 %i.t, i64 %i.ai, i1 false), !alias.scope !89702
   %i.aj = getelementptr inbounds nuw [17 x i8], ptr %i.r, i64 %1
   %i.ak = mul nuw nsw i64 %i.n, 17
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.r, ptr nonnull align 1 %i.aj, i64 %i.ak, i1 false), !alias.scope !89703
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %i.r, ptr nonnull align 1 %i.aj, i64 %i.ak, i1 false), !alias.scope !89703
   %i.al = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %1
   %i.am = mul nuw nsw i64 %i.n, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.t, ptr nonnull align 8 %i.al, i64 %i.am, i1 false), !alias.scope !89704

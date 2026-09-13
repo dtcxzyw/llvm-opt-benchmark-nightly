@@ -205,8 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %i.an = tail call double @llvm.fabs.f64(double %.0425)
   %i.ao = fptosi double %i.an to i32
   %.fr568 = freeze i32 %i.ao
-  %17 = tail call i32 @llvm.smax.i32(i32 %.fr568, i32 0)
-  %i.ap = tail call i32 @llvm.umin.i32(i32 %17, i32 64)
+  %i.ap = tail call i32 @llvm.smin.i32(i32 %.fr568, i32 64)
   br label %JS_ToFloat64Free.exit.thread
 
 JS_ToFloat64Free.exit.thread:                     ; preds = %bb.g, %bb.k, %JS_ToFloat64Free.exit, %bb.l
@@ -437,10 +436,10 @@ js_new_callsite_data2.exit.thread:                ; preds = %bb.r, %bb.w, %js_ne
   br i1 %.not, label %.loopexit531, label %.preheader530
 
 .preheader530:                                    ; preds = %js_new_callsite_data2.exit.thread
-  %i.dw = icmp samesign ult i32 %.0263462, %.0265
+  %i.dw = icmp ult i32 %.0263462, %.0265
   %i.dx = icmp ne ptr %i.dv, null
-  %18 = select i1 %i.dx, i1 %i.dw, i1 false
-  br i1 %18, label %.lr.ph.split, label %.loopexit531
+  %17 = and i1 %i.dx, %i.dw
+  br i1 %17, label %.lr.ph.split, label %.loopexit531
 
 .lr.ph.split:                                     ; preds = %.preheader530, %bb.ac
   %.0253546 = phi ptr [ %i.ed, %bb.ac ], [ %i.dv, %.preheader530 ] ; 4 uses
@@ -459,9 +458,9 @@ bb.ac:                                            ; preds = %.lr.ph.split
 .loopexit531:                                     ; preds = %bb.ac, %.lr.ph.split, %.preheader530, %js_new_callsite_data2.exit.thread
   %.0255 = phi ptr [ %i.dv, %js_new_callsite_data2.exit.thread ], [ %i.dv, %.preheader530 ], [ %i.dv, %bb.ac ], [ %.0253546, %.lr.ph.split ] ; 2 uses
   %i.ee = icmp ne ptr %.0255, null
-  %i.ef = icmp samesign ult i32 %.0263462, %.0265
-  %19 = select i1 %i.ee, i1 %i.ef, i1 false
-  br i1 %19, label %.lr.ph555, label %.loopexit
+  %i.ef = icmp ult i32 %.0263462, %.0265
+  %18 = and i1 %i.ee, %i.ef
+  br i1 %18, label %.lr.ph555, label %.loopexit
 
 .lr.ph555:                                        ; preds = %.loopexit531
   %i.eg = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 2 uses
@@ -864,7 +863,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.al
 
 bb.ak:                                            ; preds = %bb.ai
-  %6 = sitofp i64 %.052 to double
+  %6 = uitofp nneg i64 %.052 to double
   %i.dz = fmul nnan double %6, 1.000000e+06
   %i.ea = fptoui double %i.dz to i64
   %i.eb = call fastcc i32 @js_cond_timedwait(ptr noundef %i.dt, i64 noundef %i.ea)

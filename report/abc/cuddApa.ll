@@ -203,7 +203,7 @@ define range(i32 0, 2) i32 @Cudd_ApaPrintDecimal(ptr nofree noundef captures(non
 bb.a:
   %i.a = sitofp i32 %1 to double
   %i.b = fmul nnan double %i.a, f0x40234413509F79FF
-  %i.c = fptosi double %i.b to i32                ; 5 uses
+  %i.c = fptosi double %i.b to i32                ; 4 uses
   %i.d = sext i32 %1 to i64
   %i.e = shl nsw i64 %i.d, 2
   %i.f = tail call noalias noundef ptr @malloc(i64 noundef %i.e) #17 ; 6 uses
@@ -225,8 +225,9 @@ Cudd_ApaCopy.exit:                                ; preds = %bb.c
   %wide.trip.count.i = zext nneg i32 %1 to i64
   %i.m = shl nuw nsw i64 %wide.trip.count.i, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.f, ptr align 4 %2, i64 %i.m, i1 false), !tbaa !14
-  %3 = icmp sgt i32 %i.c, -1
-  br i1 %3, label %.lr.ph.i44.us.preheader, label %._crit_edge.thread
+  %wide.trip.count.i45 = zext nneg i32 %1 to i64
+  %3 = zext nneg i32 %i.c to i64
+  br label %.lr.ph.i44.us
 
 Cudd_ApaCopy.exit.thread:                         ; preds = %bb.c
   %i.n = icmp sgt i32 %i.c, -1
@@ -237,13 +238,8 @@ Cudd_ApaCopy.exit.thread:                         ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.j, i8 0, i64 %i.o, i1 false), !tbaa !18
   br label %.lr.ph58.preheader
 
-.lr.ph.i44.us.preheader:                          ; preds = %Cudd_ApaCopy.exit
-  %wide.trip.count.i45 = zext nneg i32 %1 to i64
-  %4 = zext nneg i32 %i.c to i64
-  br label %.lr.ph.i44.us
-
-.lr.ph.i44.us:                                    ; preds = %.lr.ph.i44.us.preheader, %._crit_edge.loopexit.i.us
-  %indvars.iv = phi i64 [ %4, %.lr.ph.i44.us.preheader ], [ %indvars.iv.next, %._crit_edge.loopexit.i.us ] ; 3 uses
+.lr.ph.i44.us:                                    ; preds = %Cudd_ApaCopy.exit, %._crit_edge.loopexit.i.us
+  %indvars.iv = phi i64 [ %3, %Cudd_ApaCopy.exit ], [ %indvars.iv.next, %._crit_edge.loopexit.i.us ] ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.lr.ph.i44.us
@@ -270,7 +266,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i44.u
   %i.z = icmp sgt i64 %indvars.iv, 0
   br i1 %i.z, label %.lr.ph.i44.us, label %.lr.ph58.preheader, !llvm.loop !40
 
-._crit_edge.thread:                               ; preds = %Cudd_ApaCopy.exit.thread, %Cudd_ApaCopy.exit
+._crit_edge.thread:                               ; preds = %Cudd_ApaCopy.exit.thread
   tail call void @free(ptr noundef nonnull %i.f) #18
   br label %.sink.split
 
@@ -322,7 +318,7 @@ define range(i32 0, 2) i32 @Cudd_ApaPrintExponential(ptr nofree noundef captures
 bb.a:
   %i.a = sitofp i32 %1 to double
   %i.b = fmul nnan double %i.a, f0x40234413509F79FF
-  %i.c = fptosi double %i.b to i32                ; 9 uses
+  %i.c = fptosi double %i.b to i32                ; 7 uses
   %i.d = add i32 %i.c, 1                          ; 3 uses
   %i.e = sext i32 %1 to i64
   %i.f = shl nsw i64 %i.e, 2
@@ -348,8 +344,9 @@ Cudd_ApaCopy.exit:                                ; preds = %bb.d
   %wide.trip.count.i = zext nneg i32 %1 to i64
   %i.m = shl nuw nsw i64 %wide.trip.count.i, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.g, ptr align 4 %2, i64 %i.m, i1 false), !tbaa !14
-  %4 = icmp sgt i32 %i.c, -1
-  br i1 %4, label %.lr.ph.i54.us.preheader, label %._crit_edge
+  %wide.trip.count.i55 = zext nneg i32 %1 to i64
+  %4 = zext nneg i32 %i.c to i64
+  br label %.lr.ph.i54.us
 
 Cudd_ApaCopy.exit.thread:                         ; preds = %bb.d
   %i.n = icmp sgt i32 %i.c, -1
@@ -360,14 +357,9 @@ Cudd_ApaShortDivision.exit.thread.preheader:      ; preds = %Cudd_ApaCopy.exit.t
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.j, i8 0, i64 %i.o, i1 false), !tbaa !18
   br label %._crit_edge
 
-.lr.ph.i54.us.preheader:                          ; preds = %Cudd_ApaCopy.exit
-  %wide.trip.count.i55 = zext nneg i32 %1 to i64
-  %5 = zext nneg i32 %i.c to i64
-  br label %.lr.ph.i54.us
-
-.lr.ph.i54.us:                                    ; preds = %.lr.ph.i54.us.preheader, %Cudd_ApaShortDivision.exit.us
-  %indvars.iv = phi i64 [ %5, %.lr.ph.i54.us.preheader ], [ %indvars.iv.next, %Cudd_ApaShortDivision.exit.us ] ; 4 uses
-  %.065.us = phi i32 [ %i.c, %.lr.ph.i54.us.preheader ], [ %spec.select, %Cudd_ApaShortDivision.exit.us ]
+.lr.ph.i54.us:                                    ; preds = %Cudd_ApaCopy.exit, %Cudd_ApaShortDivision.exit.us
+  %indvars.iv = phi i64 [ %4, %Cudd_ApaCopy.exit ], [ %indvars.iv.next, %Cudd_ApaShortDivision.exit.us ] ; 4 uses
+  %.065.us = phi i32 [ %i.c, %Cudd_ApaCopy.exit ], [ %spec.select, %Cudd_ApaShortDivision.exit.us ]
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.lr.ph.i54.us
@@ -398,8 +390,8 @@ Cudd_ApaShortDivision.exit.us:                    ; preds = %bb.e
   %i.aa = icmp sgt i64 %indvars.iv, 0
   br i1 %i.aa, label %.lr.ph.i54.us, label %._crit_edge, !llvm.loop !42
 
-._crit_edge:                                      ; preds = %Cudd_ApaShortDivision.exit.us, %Cudd_ApaCopy.exit.thread, %Cudd_ApaShortDivision.exit.thread.preheader, %Cudd_ApaCopy.exit
-  %.0.lcssa = phi i32 [ %i.c, %Cudd_ApaCopy.exit ], [ %i.c, %Cudd_ApaCopy.exit.thread ], [ %i.c, %Cudd_ApaShortDivision.exit.thread.preheader ], [ %spec.select, %Cudd_ApaShortDivision.exit.us ] ; 5 uses
+._crit_edge:                                      ; preds = %Cudd_ApaShortDivision.exit.us, %Cudd_ApaCopy.exit.thread, %Cudd_ApaShortDivision.exit.thread.preheader
+  %.0.lcssa = phi i32 [ %i.c, %Cudd_ApaShortDivision.exit.thread.preheader ], [ %i.c, %Cudd_ApaCopy.exit.thread ], [ %spec.select, %Cudd_ApaShortDivision.exit.us ] ; 5 uses
   tail call void @free(ptr noundef nonnull %i.g) #18
   %i.ab = add nsw i32 %.0.lcssa, %3
   %i.ac = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %i.ab) ; 2 uses

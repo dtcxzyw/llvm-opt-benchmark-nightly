@@ -205,11 +205,8 @@ bb.d:                                             ; preds = %bb.b
   %i.l = tail call noundef double @fmod(double noundef %i.k, double noundef 1.200000e+01) #28 ; 2 uses
   %i.m = fcmp ole double %i.l, 0.000000e+00
   %i.n = select i1 %i.m, double 1.200000e+01, double %i.l ; 2 uses
-  %4 = fptosi double %i.n to i32                  ; 2 uses
-  %5 = icmp slt i32 %4, 0
   %i.o = fcmp ogt double %i.n, 1.200000e+01
-  %or.cond.i = or i1 %i.o, %5
-  br i1 %or.cond.i, label %bb.e, label %_ZN3fmt3v126detail18to_nonnegative_intIdiTnNSt9enable_ifIXntsr3std11is_integralIT_EE5valueEiE4typeELi0EEET0_S4_S7_.exit
+  br i1 %i.o, label %bb.e, label %_ZN3fmt3v126detail18to_nonnegative_intIdiTnNSt9enable_ifIXntsr3std11is_integralIT_EE5valueEiE4typeELi0EEET0_S4_S7_.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.p = tail call ptr @__cxa_allocate_exception(i64 16) #28 ; 3 uses
@@ -227,6 +224,7 @@ bb.g:                                             ; preds = %bb.e
   resume { ptr, i32 } %i.q
 
 _ZN3fmt3v126detail18to_nonnegative_intIdiTnNSt9enable_ifIXntsr3std11is_integralIT_EE5valueEiE4typeELi0EEET0_S4_S7_.exit: ; preds = %bb.d
+  %4 = fptosi double %i.n to i32
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %4, ptr %i.r, align 8, !tbaa !266
   call void @_ZN3fmt3v126detail18duration_formatterIcdSt5ratioILl1ELl1000EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlS3_ILl1ELl1EEEEEEFvNS1_14numeric_systemENS1_8pad_typeEEJSF_SG_EEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %0, ptr noundef nonnull align 8 dereferenceable(56) %3, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE10on_12_hourENS1_14numeric_systemENS1_8pad_typeE to i64), i64 0, i32 noundef %1, i32 noundef %2)

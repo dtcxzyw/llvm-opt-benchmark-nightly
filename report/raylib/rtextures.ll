@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.v = uitofp nneg i32 %i.u to float
   %i.w = fadd float %i.r, %i.p
   %i.x = fptosi float %i.v to i32
-  %6 = sext i32 %i.x to i64
+  %6 = zext nneg i32 %i.x to i64
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.i
@@ -230,7 +230,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ae = uitofp nneg i32 %i.ad to float
   %i.af = fadd float %i.s, %i.q
   %i.ag = fptosi float %i.ae to i32
-  %7 = sext i32 %i.ag to i64
+  %7 = zext nneg i32 %i.ag to i64
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.m
@@ -423,7 +423,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph101.ne
   %lcmp.mod143 = trunc i32 %i.bv to i1
   tail call void @llvm.assume(i1 %lcmp.mod143)
   %i.cv = getelementptr inbounds i8, ptr %i.av, i64 %indvars.iv115.epil.init
-  %i.cw = add nsw i64 %indvars.iv113.epil.init, %.sroa.527.0
+  %i.cw = add nuw nsw i64 %indvars.iv113.epil.init, %.sroa.527.0
   %i.cx = mul nsw i64 %i.cw, %i.ch
   %i.cy = add nsw i64 %i.cx, %.sroa.026.0
   %i.cz = mul nsw i64 %i.cy, %i.ci
@@ -443,7 +443,7 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph105.ne
   %indvars.iv113 = phi i64 [ 0, %.lr.ph105.new ], [ %indvars.iv.next114.1, %bb.u ] ; 3 uses
   %niter145 = phi i64 [ 0, %.lr.ph105.new ], [ %niter145.next.1, %bb.u ]
   %i.db = getelementptr inbounds i8, ptr %i.av, i64 %indvars.iv115
-  %i.dc = add nsw i64 %indvars.iv113, %.sroa.527.0
+  %i.dc = add nuw nsw i64 %indvars.iv113, %.sroa.527.0
   %i.dd = mul nsw i64 %i.dc, %i.ch
   %i.de = add nsw i64 %i.dd, %.sroa.026.0
   %i.df = mul nsw i64 %i.de, %i.ci
@@ -452,7 +452,7 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph105.ne
   %indvars.iv.next116 = add nsw i64 %indvars.iv115, %i.ck ; 2 uses
   %indvars.iv.next114 = or disjoint i64 %indvars.iv113, 1
   %i.dh = getelementptr inbounds i8, ptr %i.av, i64 %indvars.iv.next116
-  %i.di = add nsw i64 %indvars.iv.next114, %.sroa.527.0
+  %i.di = add nuw nsw i64 %indvars.iv.next114, %.sroa.527.0
   %i.dj = mul nsw i64 %i.di, %i.ch
   %i.dk = add nsw i64 %i.dj, %.sroa.026.0
   %i.dl = mul nsw i64 %i.dk, %i.ci
@@ -855,22 +855,22 @@ bb.q:                                             ; preds = %bb.k, %bb.j, %bb.i,
 
 GetPixelDataSize.exit:                            ; preds = %bb.q, %.thread
   %.016.i = phi i32 [ %spec.select.i, %.thread ], [ 8, %bb.q ] ; 9 uses
-  %i.an = mul nsw i32 %i.ac, %i.ai
-  %2 = sext i32 %i.an to i64
+  %i.an = mul nuw nsw i32 %i.ac, %i.ai
+  %2 = zext nneg i32 %i.an to i64
   %i.ao = zext nneg i32 %.016.i to i64            ; 2 uses
   %i.ap = tail call noalias ptr @calloc(i64 noundef %2, i64 noundef %i.ao) #56 ; 3 uses
   %i.aq = ptrtoaddr ptr %i.ap to i64
-  %3 = icmp sgt i32 %i.ai, 0
-  br i1 %3, label %.preheader.lr.ph, label %._crit_edge132.split
+  %.not = icmp eq i32 %i.ai, 0
+  br i1 %.not, label %._crit_edge132.split, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %GetPixelDataSize.exit
-  %4 = icmp sgt i32 %i.ac, 0
-  %5 = sitofp i32 %i.ac to float
-  %i.ar = fmul nnan float %5, 5.000000e-01
+  %.not133 = icmp eq i32 %i.ac, 0
+  %3 = uitofp nneg i32 %i.ac to float
+  %i.ar = fmul nnan float %3, 5.000000e-01
   %i.as = uitofp nneg i32 %i.ai to float
   %i.at = fmul nnan float %i.as, 5.000000e-01
   %.not.a = icmp eq i32 %.016.i, 0
-  br i1 %4, label %.preheader.lr.ph.split, label %._crit_edge132.split
+  br i1 %.not133, label %._crit_edge132.split, label %.preheader.lr.ph.split
 
 .preheader.lr.ph.split:                           ; preds = %.preheader.lr.ph
   %i.au = load <2 x i32>, ptr %i.c, align 8       ; 3 uses

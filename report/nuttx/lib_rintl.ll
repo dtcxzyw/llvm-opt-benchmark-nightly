@@ -32,14 +32,14 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = add nsw i64 %i.a, 1
-  %i.l = and i64 %i.k, -2
+  %i.k = add nuw nsw i64 %i.a, 1
+  %i.l = and i64 %i.k, 9223372036854775806
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
   %i.m = fcmp ogt x86_fp80 %i.c, 5.000000e-01
   %i.n = zext i1 %i.m to i64
-  %spec.select14 = add nsw i64 %i.n, %i.a
+  %spec.select14 = add nuw nsw i64 %i.n, %i.a
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.d, %bb.f, %bb.c

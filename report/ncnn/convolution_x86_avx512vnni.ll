@@ -205,9 +205,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = fmul fast float %i.f, f0x3EAAAAAB
   %i.h = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %i.g)
   %i.i = fptosi float %i.h to i32
-  %7 = sdiv i32 %i.i, 16
-  %8 = shl nsw i32 %7, 4
-  %.sroa.speculated86 = tail call i32 @llvm.smax.i32(i32 %8, i32 16)
+  %7 = and i32 %i.i, 2147483632
+  %.sroa.speculated86 = tail call i32 @llvm.umax.i32(i32 %7, i32 16)
   store i32 %.sroa.speculated86, ptr %3, align 4, !tbaa !10
   %i.j = tail call noundef i32 @_ZN4ncnn22get_physical_cpu_countEv()
   %.sroa.speculated82 = tail call i32 @llvm.smin.i32(i32 %i.j, i32 %.0)
@@ -608,6 +607,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #19

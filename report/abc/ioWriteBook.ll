@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   %i.ba = uitofp i32 %.3 to double                ; 2 uses
   %i.bb = fdiv double %i.ba, 9.000000e-01         ; 3 uses
   %sqrt.i = tail call double @llvm.sqrt.f64(double %i.bb)
-  %i.bc = fptosi double %sqrt.i to i32            ; 5 uses
+  %i.bc = fptosi double %sqrt.i to i32            ; 6 uses
   %i.bd = add nsw i32 %.val40.i, %.val39.i
   %i.be = getelementptr i8, ptr %0, i64 40        ; 3 uses
   %.val.i = load ptr, ptr %i.be, align 8, !tbaa !34
@@ -215,10 +215,10 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   %i.bh = getelementptr i8, ptr %.val38.i, i64 4
   %.val38.val.i = load i32, ptr %i.bh, align 4, !tbaa !30
   %i.bi = add nsw i32 %.val38.val.i, %.val.val.i  ; 7 uses
-  %i.bj = uitofp i32 %i.bc to double              ; 8 uses
+  %i.bj = uitofp nneg i32 %i.bc to double         ; 7 uses
   %i.bk = fdiv double %i.bb, %i.bj
-  %i.bl = fptosi double %i.bk to i32              ; 2 uses
-  %2 = sitofp i32 %i.bl to double                 ; 7 uses
+  %i.bl = fptosi double %i.bk to i32              ; 4 uses
+  %2 = uitofp nneg i32 %i.bl to double            ; 5 uses
   %i.bm = fmul nnan double %i.bj, %2              ; 3 uses
   %i.bn = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.47, i32 noundef 1) ; 0 uses
   %i.bo = udiv i32 %.3, %i.bd
@@ -258,7 +258,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   %i.cn = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.at, ptr noundef nonnull @.str.67, i32 noundef 89) #16 ; 0 uses
   %i.co = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.at, ptr noundef nonnull @.str.68, i32 noundef 0, i32 noundef %i.bl) #16 ; 0 uses
   %fwrite23.i.i = tail call i64 @fwrite(ptr nonnull @.str.69, i64 4, i64 1, ptr %i.at) ; 0 uses
-  %i.cp = add nuw i32 %.025.i.i, 1                ; 2 uses
+  %i.cp = add nuw nsw i32 %.025.i.i, 1            ; 2 uses
   %exitcond.not.i.i = icmp eq i32 %i.cp, %i.bc
   br i1 %exitcond.not.i.i, label %Io_NtkWriteScl.exit.i, label %.lr.ph.i.i, !llvm.loop !52
 
@@ -283,8 +283,9 @@ Vec_PtrAlloc.exit.i.i:                            ; preds = %bb.h, %Io_NtkWriteS
   %.promoted256.i.i = phi ptr [ %i.cv, %bb.h ], [ null, %Io_NtkWriteScl.exit.i ] ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 8 ; 5 uses
   store ptr %.promoted256.i.i, ptr %i.cw, align 8, !tbaa !31
-  %3 = fmul nnan double %2, 2.000000e+00
-  %i.cx = tail call double @llvm.fmuladd.f64(double %i.bj, double 2.000000e+00, double %3)
+  %3 = shl nuw i32 %i.bl, 1
+  %4 = uitofp i32 %3 to double
+  %i.cx = tail call nnan double @llvm.fmuladd.f64(double %i.bj, double 2.000000e+00, double %4)
   %i.cy = uitofp i32 %i.bi to double
   %i.cz = fdiv double %i.bj, %i.cx
   %i.da = fmul double %i.cz, %i.cy
@@ -687,10 +688,8 @@ Io_NtkOrderingPads.exit.i.i:                      ; preds = %Extra_ProgressBarUp
   br i1 %.not297.i.i, label %._crit_edge.i.i, label %.lr.ph275.i.i
 
 .lr.ph275.i.i:                                    ; preds = %Io_NtkOrderingPads.exit.i.i
-  %4 = fadd double %2, 2.000000e+00
-  %5 = tail call double @llvm.ceil.f64(double %4)
+  %5 = add nuw i32 %i.bl, 2                       ; 2 uses
   %.val184.i.i = load ptr, ptr %i.fk, align 8, !tbaa !31 ; 4 uses
-  %6 = fptosi double %5 to i32                    ; 2 uses
   %i.wd = load ptr, ptr %.val184.i.i, align 8, !tbaa !32 ; 3 uses
   %i.we = getelementptr i8, ptr %i.wd, i64 20
   %.val211.peel.i.i = load i32, ptr %i.we, align 4
@@ -711,7 +710,7 @@ Io_NtkOrderingPads.exit.i.i:                      ; preds = %Extra_ProgressBarUp
   %i.wl = load ptr, ptr %i.wk, align 8, !tbaa !32
   %i.wm = tail call ptr @Abc_ObjName(ptr noundef %i.wl) #16
   %i.wn = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull %.str.77..str.78.i.i, ptr noundef %i.wm) #16 ; 0 uses
-  %i.wo = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.79, i32 noundef 0, i32 noundef %6, ptr noundef nonnull @.str.58) #16 ; 0 uses
+  %i.wo = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.79, i32 noundef 0, i32 noundef %5, ptr noundef nonnull @.str.58) #16 ; 0 uses
   %exitcond327.peel.not.i.i = icmp eq i32 %i.db, 1
   br i1 %exitcond327.peel.not.i.i, label %.lr.ph278.i.i, label %.peel.next.i.i
 
@@ -782,7 +781,7 @@ Io_NtkOrderingPads.exit.i.i:                      ; preds = %Extra_ProgressBarUp
   %i.xz = fadd double %.0163273.i.i, 1.000000e+00
   %.1164.i.i = select i1 %i.xy, double %i.xz, double %.0163273.i.i ; 2 uses
   %i.ya = fptosi double %.1164.i.i to i32
-  %i.yb = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.79, i32 noundef %i.ya, i32 noundef %6, ptr noundef nonnull @.str.58) #16 ; 0 uses
+  %i.yb = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.79, i32 noundef %i.ya, i32 noundef %5, ptr noundef nonnull @.str.58) #16 ; 0 uses
   %i.yc = fadd double %i.wc, %.1164.i.i
   %i.yd = add nuw i32 %.0155274.i.i, 1            ; 2 uses
   %exitcond327.not.i.i = icmp eq i32 %i.yd, %i.db
@@ -890,10 +889,8 @@ bb.er:                                            ; preds = %bb.er, %.lr.ph283.i
   br i1 %i.aai, label %.lr.ph289.i.i, label %._crit_edge290.i.i
 
 .lr.ph289.i.i:                                    ; preds = %._crit_edge284.i.i
-  %7 = fadd double %i.bj, 2.000000e+00
-  %8 = tail call double @llvm.ceil.f64(double %7)
+  %6 = add nuw i32 %i.bc, 2
   %.val181.i.i = load ptr, ptr %i.fk, align 8, !tbaa !31
-  %9 = fptosi double %8 to i32
   br label %bb.es
 
 bb.es:                                            ; preds = %bb.es, %.lr.ph289.i.i
@@ -931,7 +928,7 @@ bb.es:                                            ; preds = %bb.es, %.lr.ph289.i
   %i.abd = fadd double %.2161286.i.i, 1.000000e+00
   %.3162.i.i = select i1 %i.abc, double %i.abd, double %.2161286.i.i ; 2 uses
   %i.abe = fptosi double %.3162.i.i to i32
-  %i.abf = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.79, i32 noundef %9, i32 noundef %i.abe, ptr noundef nonnull @.str.81) #16 ; 0 uses
+  %i.abf = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.79, i32 noundef %6, i32 noundef %i.abe, ptr noundef nonnull @.str.81) #16 ; 0 uses
   %i.abg = fadd double %i.aah, %.3162.i.i
   %i.abh = add i32 %.3158287.i.i, 1               ; 2 uses
   %exitcond333.not.i.i = icmp eq i32 %i.abh, %i.bi

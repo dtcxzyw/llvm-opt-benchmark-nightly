@@ -205,13 +205,13 @@ bb.q:                                             ; preds = %._crit_edge.i
   br label %bb.r
 
 bb.r:                                             ; preds = %nsvg__pathArcTo.exit.i, %.lr.ph.i
-  %.082240.i = phi i8 [ 0, %.lr.ph.i ], [ %.284.i, %nsvg__pathArcTo.exit.i ] ; 16 uses
-  %.085239.i = phi i32 [ 0, %.lr.ph.i ], [ %.287.i, %nsvg__pathArcTo.exit.i ] ; 15 uses
+  %.082240.i = phi i8 [ 0, %.lr.ph.i ], [ %.284.i, %nsvg__pathArcTo.exit.i ] ; 15 uses
+  %.085239.i = phi i32 [ 0, %.lr.ph.i ], [ %.287.i, %nsvg__pathArcTo.exit.i ] ; 14 uses
   %.088238.i = phi i32 [ 0, %.lr.ph.i ], [ %.4.i, %nsvg__pathArcTo.exit.i ] ; 6 uses
-  %.092237.i = phi i8 [ 0, %.lr.ph.i ], [ %.395.i, %nsvg__pathArcTo.exit.i ] ; 25 uses
+  %.092237.i = phi i8 [ 0, %.lr.ph.i ], [ %.395.i, %nsvg__pathArcTo.exit.i ] ; 24 uses
   %.298236.i = phi ptr [ %.197.i, %.lr.ph.i ], [ %.4100206.i, %nsvg__pathArcTo.exit.i ] ; 5 uses
-  %i.bl = phi <2 x float> [ zeroinitializer, %.lr.ph.i ], [ %10, %nsvg__pathArcTo.exit.i ] ; 27 uses
-  %i.bm = phi <2 x float> [ zeroinitializer, %.lr.ph.i ], [ %9, %nsvg__pathArcTo.exit.i ] ; 6 uses
+  %i.bl = phi <2 x float> [ zeroinitializer, %.lr.ph.i ], [ %9, %nsvg__pathArcTo.exit.i ] ; 27 uses
+  %i.bm = phi <2 x float> [ zeroinitializer, %.lr.ph.i ], [ %8, %nsvg__pathArcTo.exit.i ] ; 6 uses
   %.not212.i = icmp eq i8 %.092237.i, 97
   switch i8 %.092237.i, label %nsvg__getNextPathItemWhenArcFlag.exit.thread.i [
     i8 97, label %bb.s
@@ -606,7 +606,7 @@ bb.ap:                                            ; preds = %bb.aa, %bb.aa
   %i.hy = fadd <2 x float> %i.bl, %i.hx
   %i.hz = insertelement <2 x i1> poison, i1 %.not212.i, i64 0
   %i.ia = shufflevector <2 x i1> %i.hz, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.ib = select <2 x i1> %i.ia, <2 x float> %i.hy, <2 x float> %i.hx ; 12 uses
+  %i.ib = select <2 x i1> %i.ia, <2 x float> %i.hy, <2 x float> %i.hx ; 10 uses
   %i.ic = fsub <2 x float> %i.bl, %i.ib           ; 5 uses
   %foldExtExtBinop = fmul <2 x float> %i.ic, %i.ic
   %i.id = extractelement <2 x float> %foldExtExtBinop, i64 1
@@ -775,8 +775,8 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.
   %i.mw = call float @llvm.fabs.f32(float %.0173.i.i)
   %i.mx = fdiv float %i.mw, f0x3FC90FDB
   %i.my = fadd float %i.mx, 1.000000e+00
-  %i.mz = fptosi float %i.my to i32               ; 4 uses
-  %3 = sitofp i32 %i.mz to float                  ; 3 uses
+  %i.mz = fptosi float %i.my to i32               ; 3 uses
+  %3 = uitofp nneg i32 %i.mz to float             ; 3 uses
   %i.na = fdiv float %.0173.i.i, %3
   %i.nb = fmul float %i.na, 5.000000e-01          ; 4 uses
   %i.nc = call float @llvm.fabs.f32(float %i.nb)
@@ -785,26 +785,17 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.
 
 bb.ay:                                            ; preds = %bb.ax
   %i.nd = fmul nnan float %i.nb, 5.000000e-01
-  br label %4
+  br label %bb.ba
 
 bb.az:                                            ; preds = %bb.ax
   %i.ne = call float @cosf(float noundef %i.nb) #30
   %i.nf = fsub float 1.000000e+00, %i.ne
   %i.ng = call float @sinf(float noundef %i.nb) #30
   %i.nh = fdiv float %i.nf, %i.ng
-  br label %4
+  br label %bb.ba
 
-4:                                                ; preds = %bb.az, %bb.ay
+bb.ba:                                            ; preds = %bb.az, %bb.ay
   %.0167.i.i = phi float [ %i.nd, %bb.ay ], [ %i.nh, %bb.az ]
-  %5 = fmul float %.0167.i.i, f0x3FAAAAAB
-  %6 = call float @llvm.fabs.f32(float %5)        ; 2 uses
-  %7 = fcmp olt float %.0173.i.i, 0.000000e+00
-  %8 = fneg float %6
-  %.0.i146.i = select i1 %7, float %8, float %6
-  %.not187204.i.i = icmp slt i32 %i.mz, 0
-  br i1 %.not187204.i.i, label %nsvg__pathArcTo.exit.i, label %bb.ba
-
-bb.ba:                                            ; preds = %4
   %i.ni = fdiv float 0.000000e+00, %3
   %i.nj = call float @llvm.fmuladd.f32(float %.0173.i.i, float %i.ni, float %i.mj) ; 2 uses
   %i.nk = call float @cosf(float noundef %i.nj) #30 ; 2 uses
@@ -813,6 +804,11 @@ bb.ba:                                            ; preds = %4
   br i1 %exitcond.peel.not.i.i, label %nsvg__pathArcTo.exit.i, label %.lr.ph.peel.next.i.preheader.i
 
 .lr.ph.peel.next.i.preheader.i:                   ; preds = %bb.ba
+  %4 = fcmp olt float %.0173.i.i, 0.000000e+00
+  %5 = fmul float %.0167.i.i, f0x3FAAAAAB
+  %6 = call float @llvm.fabs.f32(float %5)        ; 2 uses
+  %7 = fneg float %6
+  %.0.i146.i = select i1 %4, float %7, float %6
   %i.nm = fneg float %i.nl
   %i.nn = insertelement <2 x float> poison, float %i.nm, i64 0
   %i.no = insertelement <2 x float> %i.nn, float %i.nk, i64 1
@@ -985,13 +981,13 @@ nsvg__moveTo.exit.i:                              ; preds = %bb.bn, %bb.bm, %bb.
   %spec.select113.i = select i1 %i.rb, i32 0, i32 %i.ra
   br label %nsvg__pathArcTo.exit.i
 
-nsvg__pathArcTo.exit.i:                           ; preds = %.lr.ph.peel.next.i.i, %nsvg__moveTo.exit.i, %bb.bc, %bb.bb, %bb.ba, %4, %bb.aq, %bb.ao, %nsvg__pathQuadBezTo.exit.i, %nsvg__pathCubicBezShortTo.exit.i, %nsvg__pathCubicBezTo.exit.i, %nsvg__pathVLineTo.exit.i, %nsvg__pathHLineTo.exit.i, %nsvg__pathLineTo.exit.i, %nsvg__pathMoveTo.exit.i, %bb.z
-  %.395.i = phi i8 [ %spec.select112.i, %nsvg__moveTo.exit.i ], [ %.092237.i, %bb.z ], [ %.092237.i, %bb.bc ], [ %.092237.i, %bb.bb ], [ %i.dy, %nsvg__pathMoveTo.exit.i ], [ %.092237.i, %nsvg__pathLineTo.exit.i ], [ %.092237.i, %nsvg__pathHLineTo.exit.i ], [ %.092237.i, %nsvg__pathVLineTo.exit.i ], [ %.092237.i, %nsvg__pathCubicBezTo.exit.i ], [ %.092237.i, %nsvg__pathCubicBezShortTo.exit.i ], [ %.092237.i, %nsvg__pathQuadBezTo.exit.i ], [ %.092237.i, %bb.ao ], [ %.092237.i, %bb.aq ], [ %.092237.i, %4 ], [ %.092237.i, %bb.ba ], [ %.092237.i, %.lr.ph.peel.next.i.i ]
-  %.4.i = phi i32 [ %.391.i, %nsvg__moveTo.exit.i ], [ %.189.i, %bb.z ], [ 0, %bb.bc ], [ 0, %bb.bb ], [ 0, %nsvg__pathMoveTo.exit.i ], [ 0, %nsvg__pathLineTo.exit.i ], [ 0, %nsvg__pathHLineTo.exit.i ], [ 0, %nsvg__pathVLineTo.exit.i ], [ 0, %nsvg__pathCubicBezTo.exit.i ], [ 0, %nsvg__pathCubicBezShortTo.exit.i ], [ 0, %nsvg__pathQuadBezTo.exit.i ], [ 0, %bb.ao ], [ 0, %bb.aq ], [ 0, %4 ], [ 0, %bb.ba ], [ 0, %.lr.ph.peel.next.i.i ]
-  %.287.i = phi i32 [ %spec.select113.i, %nsvg__moveTo.exit.i ], [ %.085239.i, %bb.z ], [ %.085239.i, %bb.bc ], [ %.085239.i, %bb.bb ], [ %i.dz, %nsvg__pathMoveTo.exit.i ], [ %.085239.i, %nsvg__pathLineTo.exit.i ], [ %.085239.i, %nsvg__pathHLineTo.exit.i ], [ %.085239.i, %nsvg__pathVLineTo.exit.i ], [ %.085239.i, %nsvg__pathCubicBezTo.exit.i ], [ %.085239.i, %nsvg__pathCubicBezShortTo.exit.i ], [ %.085239.i, %nsvg__pathQuadBezTo.exit.i ], [ %.085239.i, %bb.ao ], [ %.085239.i, %bb.aq ], [ %.085239.i, %4 ], [ %.085239.i, %bb.ba ], [ %.085239.i, %.lr.ph.peel.next.i.i ]
-  %.284.i = phi i8 [ %.082240.i, %nsvg__moveTo.exit.i ], [ %.082240.i, %bb.z ], [ %.082240.i, %bb.bc ], [ %.082240.i, %bb.bb ], [ 1, %nsvg__pathMoveTo.exit.i ], [ %.082240.i, %nsvg__pathLineTo.exit.i ], [ %.082240.i, %nsvg__pathHLineTo.exit.i ], [ %.082240.i, %nsvg__pathVLineTo.exit.i ], [ %.082240.i, %nsvg__pathCubicBezTo.exit.i ], [ %.082240.i, %nsvg__pathCubicBezShortTo.exit.i ], [ %.082240.i, %nsvg__pathQuadBezTo.exit.i ], [ %.082240.i, %bb.ao ], [ %.082240.i, %bb.aq ], [ %.082240.i, %4 ], [ %.082240.i, %bb.ba ], [ %.082240.i, %.lr.ph.peel.next.i.i ]
-  %9 = phi <2 x float> [ %i.qy, %nsvg__moveTo.exit.i ], [ %i.bm, %bb.z ], [ %i.pz, %bb.bc ], [ %i.bm, %bb.bb ], [ %i.cy, %nsvg__pathMoveTo.exit.i ], [ %i.ee, %nsvg__pathLineTo.exit.i ], [ %i.ek, %nsvg__pathHLineTo.exit.i ], [ %i.eo, %nsvg__pathVLineTo.exit.i ], [ %i.ez, %nsvg__pathCubicBezTo.exit.i ], [ %i.ft, %nsvg__pathCubicBezShortTo.exit.i ], [ %i.go, %nsvg__pathQuadBezTo.exit.i ], [ %i.hf, %bb.ao ], [ %i.ib, %bb.aq ], [ %i.ib, %4 ], [ %i.ib, %bb.ba ], [ %i.ib, %.lr.ph.peel.next.i.i ]
-  %10 = phi <2 x float> [ %i.qz, %nsvg__moveTo.exit.i ], [ %i.bl, %bb.z ], [ %i.pz, %bb.bc ], [ %i.bl, %bb.bb ], [ %i.cy, %nsvg__pathMoveTo.exit.i ], [ %i.ee, %nsvg__pathLineTo.exit.i ], [ %i.ek, %nsvg__pathHLineTo.exit.i ], [ %i.eo, %nsvg__pathVLineTo.exit.i ], [ %i.ey, %nsvg__pathCubicBezTo.exit.i ], [ %i.fs, %nsvg__pathCubicBezShortTo.exit.i ], [ %i.gn, %nsvg__pathQuadBezTo.exit.i ], [ %i.he, %bb.ao ], [ %i.ib, %bb.aq ], [ %i.ib, %4 ], [ %i.ib, %bb.ba ], [ %i.ib, %.lr.ph.peel.next.i.i ]
+nsvg__pathArcTo.exit.i:                           ; preds = %.lr.ph.peel.next.i.i, %nsvg__moveTo.exit.i, %bb.bc, %bb.bb, %bb.ba, %bb.aq, %bb.ao, %nsvg__pathQuadBezTo.exit.i, %nsvg__pathCubicBezShortTo.exit.i, %nsvg__pathCubicBezTo.exit.i, %nsvg__pathVLineTo.exit.i, %nsvg__pathHLineTo.exit.i, %nsvg__pathLineTo.exit.i, %nsvg__pathMoveTo.exit.i, %bb.z
+  %.395.i = phi i8 [ %spec.select112.i, %nsvg__moveTo.exit.i ], [ %.092237.i, %bb.z ], [ %.092237.i, %bb.bc ], [ %.092237.i, %bb.bb ], [ %i.dy, %nsvg__pathMoveTo.exit.i ], [ %.092237.i, %nsvg__pathLineTo.exit.i ], [ %.092237.i, %nsvg__pathHLineTo.exit.i ], [ %.092237.i, %nsvg__pathVLineTo.exit.i ], [ %.092237.i, %nsvg__pathCubicBezTo.exit.i ], [ %.092237.i, %nsvg__pathCubicBezShortTo.exit.i ], [ %.092237.i, %nsvg__pathQuadBezTo.exit.i ], [ %.092237.i, %bb.ao ], [ %.092237.i, %bb.aq ], [ %.092237.i, %bb.ba ], [ %.092237.i, %.lr.ph.peel.next.i.i ]
+  %.4.i = phi i32 [ %.391.i, %nsvg__moveTo.exit.i ], [ %.189.i, %bb.z ], [ 0, %bb.bc ], [ 0, %bb.bb ], [ 0, %nsvg__pathMoveTo.exit.i ], [ 0, %nsvg__pathLineTo.exit.i ], [ 0, %nsvg__pathHLineTo.exit.i ], [ 0, %nsvg__pathVLineTo.exit.i ], [ 0, %nsvg__pathCubicBezTo.exit.i ], [ 0, %nsvg__pathCubicBezShortTo.exit.i ], [ 0, %nsvg__pathQuadBezTo.exit.i ], [ 0, %bb.ao ], [ 0, %bb.aq ], [ 0, %bb.ba ], [ 0, %.lr.ph.peel.next.i.i ]
+  %.287.i = phi i32 [ %spec.select113.i, %nsvg__moveTo.exit.i ], [ %.085239.i, %bb.z ], [ %.085239.i, %bb.bc ], [ %.085239.i, %bb.bb ], [ %i.dz, %nsvg__pathMoveTo.exit.i ], [ %.085239.i, %nsvg__pathLineTo.exit.i ], [ %.085239.i, %nsvg__pathHLineTo.exit.i ], [ %.085239.i, %nsvg__pathVLineTo.exit.i ], [ %.085239.i, %nsvg__pathCubicBezTo.exit.i ], [ %.085239.i, %nsvg__pathCubicBezShortTo.exit.i ], [ %.085239.i, %nsvg__pathQuadBezTo.exit.i ], [ %.085239.i, %bb.ao ], [ %.085239.i, %bb.aq ], [ %.085239.i, %bb.ba ], [ %.085239.i, %.lr.ph.peel.next.i.i ]
+  %.284.i = phi i8 [ %.082240.i, %nsvg__moveTo.exit.i ], [ %.082240.i, %bb.z ], [ %.082240.i, %bb.bc ], [ %.082240.i, %bb.bb ], [ 1, %nsvg__pathMoveTo.exit.i ], [ %.082240.i, %nsvg__pathLineTo.exit.i ], [ %.082240.i, %nsvg__pathHLineTo.exit.i ], [ %.082240.i, %nsvg__pathVLineTo.exit.i ], [ %.082240.i, %nsvg__pathCubicBezTo.exit.i ], [ %.082240.i, %nsvg__pathCubicBezShortTo.exit.i ], [ %.082240.i, %nsvg__pathQuadBezTo.exit.i ], [ %.082240.i, %bb.ao ], [ %.082240.i, %bb.aq ], [ %.082240.i, %bb.ba ], [ %.082240.i, %.lr.ph.peel.next.i.i ]
+  %8 = phi <2 x float> [ %i.qy, %nsvg__moveTo.exit.i ], [ %i.bm, %bb.z ], [ %i.pz, %bb.bc ], [ %i.bm, %bb.bb ], [ %i.cy, %nsvg__pathMoveTo.exit.i ], [ %i.ee, %nsvg__pathLineTo.exit.i ], [ %i.ek, %nsvg__pathHLineTo.exit.i ], [ %i.eo, %nsvg__pathVLineTo.exit.i ], [ %i.ez, %nsvg__pathCubicBezTo.exit.i ], [ %i.ft, %nsvg__pathCubicBezShortTo.exit.i ], [ %i.go, %nsvg__pathQuadBezTo.exit.i ], [ %i.hf, %bb.ao ], [ %i.ib, %bb.aq ], [ %i.ib, %bb.ba ], [ %i.ib, %.lr.ph.peel.next.i.i ]
+  %9 = phi <2 x float> [ %i.qz, %nsvg__moveTo.exit.i ], [ %i.bl, %bb.z ], [ %i.pz, %bb.bc ], [ %i.bl, %bb.bb ], [ %i.cy, %nsvg__pathMoveTo.exit.i ], [ %i.ee, %nsvg__pathLineTo.exit.i ], [ %i.ek, %nsvg__pathHLineTo.exit.i ], [ %i.eo, %nsvg__pathVLineTo.exit.i ], [ %i.ey, %nsvg__pathCubicBezTo.exit.i ], [ %i.fs, %nsvg__pathCubicBezShortTo.exit.i ], [ %i.gn, %nsvg__pathQuadBezTo.exit.i ], [ %i.he, %bb.ao ], [ %i.ib, %bb.aq ], [ %i.ib, %bb.ba ], [ %i.ib, %.lr.ph.peel.next.i.i ]
   %i.rc = load i8, ptr %.4100206.i, align 1, !tbaa !17
   %.not105.i = icmp eq i8 %i.rc, 0
   br i1 %.not105.i, label %nsvg__getNextPathItem.exit.thread207.i, label %bb.r, !llvm.loop !179

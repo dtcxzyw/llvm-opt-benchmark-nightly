@@ -205,9 +205,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = fmul fast float %i.e, f0x3DAAAAAB
   %i.g = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %i.f)
   %i.h = fptosi float %i.g to i32
-  %10 = sdiv i32 %i.h, 16
-  %11 = shl nsw i32 %10, 4
-  %.sroa.speculated115 = tail call i32 @llvm.smax.i32(i32 %11, i32 16) ; 6 uses
+  %10 = and i32 %i.h, 2147483632
+  %.sroa.speculated115 = tail call i32 @llvm.umax.i32(i32 %10, i32 16) ; 6 uses
   store i32 %.sroa.speculated115, ptr %6, align 4, !tbaa !51
   store i32 %.sroa.speculated115, ptr %7, align 4, !tbaa !51
   store i32 %.sroa.speculated115, ptr %8, align 4, !tbaa !51
@@ -232,9 +231,8 @@ bb.e:                                             ; preds = %bb.d
   %i.s = uitofp nneg i32 %.sroa.speculated99 to float
   %i.t = fdiv fast float %i.r, %i.s
   %i.u = fptosi float %i.t to i32
-  %12 = sdiv i32 %i.u, 16
-  %13 = shl nsw i32 %12, 4
-  %.sroa.speculated93 = tail call i32 @llvm.smax.i32(i32 %13, i32 16) ; 2 uses
+  %11 = and i32 %i.u, 2147483632
+  %.sroa.speculated93 = tail call i32 @llvm.umax.i32(i32 %11, i32 16) ; 2 uses
   store i32 %.sroa.speculated93, ptr %6, align 4, !tbaa !51
   store i32 %.sroa.speculated93, ptr %7, align 4, !tbaa !51
   br label %bb.f
@@ -637,9 +635,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = fmul fast float %i.e, f0x3E2AAAAB
   %i.g = tail call fast float @llvm.sqrt.f32(float %i.f)
   %i.h = fptosi float %i.g to i32
-  %10 = sdiv i32 %i.h, 16
-  %11 = shl nsw i32 %10, 4
-  %.sroa.speculated115 = tail call i32 @llvm.smax.i32(i32 %11, i32 16) ; 6 uses
+  %10 = and i32 %i.h, 2147483632
+  %.sroa.speculated115 = tail call i32 @llvm.umax.i32(i32 %10, i32 16) ; 6 uses
   store i32 %.sroa.speculated115, ptr %6, align 4, !tbaa !51
   store i32 %.sroa.speculated115, ptr %7, align 4, !tbaa !51
   store i32 %.sroa.speculated115, ptr %8, align 4, !tbaa !51
@@ -664,9 +661,8 @@ bb.e:                                             ; preds = %bb.d
   %i.s = uitofp nneg i32 %.sroa.speculated99 to float
   %i.t = fdiv fast float %i.r, %i.s
   %i.u = fptosi float %i.t to i32
-  %12 = sdiv i32 %i.u, 16
-  %13 = shl nsw i32 %12, 4
-  %.sroa.speculated93 = tail call i32 @llvm.smax.i32(i32 %13, i32 16) ; 2 uses
+  %11 = and i32 %i.u, 2147483632
+  %.sroa.speculated93 = tail call i32 @llvm.umax.i32(i32 %11, i32 16) ; 2 uses
   store i32 %.sroa.speculated93, ptr %6, align 4, !tbaa !51
   store i32 %.sroa.speculated93, ptr %7, align 4, !tbaa !51
   br label %bb.f
@@ -1069,9 +1065,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = fmul fast float %i.e, 1.250000e-01
   %i.g = tail call fast noundef nofpclass(nan inf) float @llvm.sqrt.f32(float nofpclass(nan inf) %i.f)
   %i.h = fptosi float %i.g to i32
-  %10 = sdiv i32 %i.h, 16
-  %11 = shl nsw i32 %10, 4
-  %.sroa.speculated115 = tail call i32 @llvm.smax.i32(i32 %11, i32 16) ; 6 uses
+  %10 = and i32 %i.h, 2147483632
+  %.sroa.speculated115 = tail call i32 @llvm.umax.i32(i32 %10, i32 16) ; 6 uses
   store i32 %.sroa.speculated115, ptr %6, align 4, !tbaa !51
   store i32 %.sroa.speculated115, ptr %7, align 4, !tbaa !51
   store i32 %.sroa.speculated115, ptr %8, align 4, !tbaa !51
@@ -1096,9 +1091,8 @@ bb.e:                                             ; preds = %bb.d
   %i.s = uitofp nneg i32 %.sroa.speculated99 to float
   %i.t = fdiv fast float %i.r, %i.s
   %i.u = fptosi float %i.t to i32
-  %12 = sdiv i32 %i.u, 16
-  %13 = shl nsw i32 %12, 4
-  %.sroa.speculated93 = tail call i32 @llvm.smax.i32(i32 %13, i32 16) ; 2 uses
+  %11 = and i32 %i.u, 2147483632
+  %.sroa.speculated93 = tail call i32 @llvm.umax.i32(i32 %11, i32 16) ; 2 uses
   store i32 %.sroa.speculated93, ptr %6, align 4, !tbaa !51
   store i32 %.sroa.speculated93, ptr %7, align 4, !tbaa !51
   br label %bb.f
@@ -1501,10 +1495,13 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #25
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #11
+declare i32 @llvm.umax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.maxnum.f32(float, float) #11

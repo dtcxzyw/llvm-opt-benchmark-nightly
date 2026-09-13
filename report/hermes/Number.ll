@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not45, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.y
-  %i.ek = add nsw i32 %i.x, 1                     ; 3 uses
+  %i.ek = add nuw nsw i32 %i.x, 1                 ; 3 uses
   %i.el = sub nsw i32 %i.ek, %i.ej                ; 2 uses
   %i.em = icmp sgt i32 %i.el, 0
   br i1 %i.em, label %.lr.ph74, label %.loopexit
@@ -605,7 +605,7 @@ _ZN6hermes2vm11TwineChar16C2EPKc.exit77:          ; preds = %bb.o
   br label %bb.at
 
 bb.p:                                             ; preds = %bb.o
-  %i.bx = fptosi double %i.ba to i32              ; 7 uses
+  %i.bx = fptosi double %i.ba to i32              ; 8 uses
   %i.by = fcmp olt double %.1, 0.000000e+00       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.bz = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -666,10 +666,8 @@ bb.r:                                             ; preds = %bb.p
   %i.cu = load ptr, ptr %i.cq, align 8, !tbaa !56
   call void @dtoa_alloc_done(ptr noundef %i.cu) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
-  %10 = sext i32 %i.bx to i64                     ; 2 uses
   %i.cv = load i32, ptr %i.cb, align 8, !tbaa !52 ; 3 uses
-  %11 = zext i32 %i.cv to i64
-  %i.cw = icmp ult i64 %11, %10
+  %i.cw = icmp ult i32 %i.cv, %i.bx
   br i1 %i.cw, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.r, %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit80
@@ -692,8 +690,7 @@ _ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit80: ; preds = %.lr.ph
   %i.dd = load i32, ptr %i.cb, align 8, !tbaa !52
   %i.de = add i32 %i.dd, 1                        ; 4 uses
   store i32 %i.de, ptr %i.cb, align 8, !tbaa !52
-  %12 = zext i32 %i.de to i64
-  %i.df = icmp ult i64 %12, %10
+  %i.df = icmp ult i32 %i.de, %i.bx
   br i1 %i.df, label %.lr.ph, label %._crit_edge, !llvm.loop !110
 
 ._crit_edge:                                      ; preds = %_ZN4llvh23SmallVectorTemplateBaseIcLb1EE9push_backERKc.exit80, %bb.r

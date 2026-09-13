@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %.lr.ph
   %i.z = fadd nsz float %i.y, 5.000000e-01
   %i.aa = call nsz noundef float @llvm.floor.f32(float %i.z)
   %i.ab = fptosi float %i.aa to i32
-  %i.ac = call i32 @llvm.smax.i32(i32 %i.ab, i32 0)
-  %3 = call i32 @llvm.umin.i32(i32 %i.ac, i32 255)
-  %4 = shl nuw nsw i32 %3, 8
+  %i.ac = call noundef i32 @llvm.smin.i32(i32 %i.ab, i32 255)
+  %3 = shl nuw nsw i32 %i.ac, 8
+  %4 = and i32 %3, 65280
   %i.ad = load i32, ptr %2, align 4, !tbaa !212
   %i.ae = and i32 %i.ad, -65281
   %i.af = or disjoint i32 %i.ae, %4
@@ -610,9 +610,9 @@ bb.g:                                             ; preds = %.lr.ph.i
   %i.bb = fadd nsz float %i.ba, 5.000000e-01
   %i.bc = call nsz noundef float @llvm.floor.f32(float %i.bb)
   %i.bd = fptosi float %i.bc to i32
-  %i.be = call i32 @llvm.smax.i32(i32 %i.bd, i32 0)
-  %9 = call i32 @llvm.umin.i32(i32 %i.be, i32 255)
-  %10 = shl nuw nsw i32 %9, 8
+  %i.be = call noundef i32 @llvm.smin.i32(i32 %i.bd, i32 255)
+  %9 = shl nuw nsw i32 %i.be, 8
+  %10 = and i32 %9, 65280
   %i.bf = load i32, ptr %1, align 4, !tbaa !212
   %i.bg = and i32 %i.bf, -65281
   %i.bh = or disjoint i32 %i.bg, %10
@@ -1015,9 +1015,9 @@ bb.e:                                             ; preds = %bb.d
   %i.cb = shufflevector <2 x float> %i.ca, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cc = fdiv nsz <2 x float> %i.by, %i.cb
   %i.cd = fmul nsz <2 x float> %i.cc, splat (float 5.120000e+02)
-  %i.ce = fptosi <2 x float> %i.cd to <2 x i16>   ; 3 uses
+  %i.ce = fptosi <2 x float> %i.cd to <2 x i16>   ; 4 uses
   %i.cf = extractelement <2 x i16> %i.ce, i64 0
-  %1 = sext i16 %i.cf to i32
+  %1 = zext nneg i16 %i.cf to i32
   %i.cg = extractelement <2 x i16> %i.ce, i64 1
   %i.ch = sext i16 %i.cg to i32
   %i.ci = load ptr, ptr %i.a, align 8, !tbaa !20
@@ -1028,8 +1028,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not, label %_ZNSt6vectorIN4core8vector2dIfEESaIS2_EE12emplace_backIJffEEERS2_DpOT_.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.cm = sitofp <2 x i16> %i.ce to <2 x float>
-  %i.cn = fmul nnan nsz <2 x float> %i.cm, <float 1.000000e+00, float f0x3B000000> ; 2 uses
+  %2 = uitofp nsz nneg <2 x i16> %i.ce to <2 x float>
+  %i.cm = sitofp nsz <2 x i16> %i.ce to <2 x float>
+  %3 = shufflevector <2 x float> %2, <2 x float> %i.cm, <2 x i32> <i32 0, i32 3>
+  %i.cn = fmul nnan nsz <2 x float> %3, <float 1.000000e+00, float f0x3B000000> ; 2 uses
   %i.co = fmul nnan nsz <2 x float> %i.cn, <float f0x3B000000, float poison>
   %i.cp = fsub nsz <2 x float> <float poison, float 1.000000e+00>, %i.cn
   %i.cq = shufflevector <2 x float> %i.co, <2 x float> %i.cp, <2 x i32> <i32 0, i32 3>
@@ -1432,10 +1434,7 @@ declare i64 @llvm.umax.i64(i64, i64) #20
 declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #20
+declare i32 @llvm.smin.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { float, float } @llvm.sincos.f32(float) #27

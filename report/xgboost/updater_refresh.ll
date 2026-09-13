@@ -205,8 +205,8 @@ bb.o:                                             ; preds = %_ZNK7xgboost6common
 
 bb.p:                                             ; preds = %bb.o
   %i.gf = fptosi float %i.fe to i32               ; 2 uses
-  %3 = sext i32 %i.gf to i64
-  %4 = lshr i64 %3, 5
+  %3 = lshr i32 %i.gf, 5
+  %4 = zext nneg i32 %3 to i64
   %i.gg = and i32 %i.gf, 31
   %i.gh = getelementptr inbounds nuw [4 x i8], ptr %i.fz, i64 %4
   %i.gi = load i32, ptr %i.gh, align 4, !tbaa !55

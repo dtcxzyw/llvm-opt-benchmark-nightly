@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.s = fcmp reassoc nsz arcp contract afn ogt float %i.r, 2.000000e+00
   %spec.select238 = select i1 %i.s, float %i.r, float 2.000000e+00
   %spec.select = fptosi float %spec.select238 to i32
-  %spec.select.fr = freeze i32 %spec.select       ; 12 uses
+  %spec.select.fr = freeze i32 %spec.select       ; 19 uses
   %i.t = load i32, ptr %i.d, align 4, !tbaa !46
   %i.u = icmp eq i32 %i.t, 2
   br i1 %i.u, label %bb.c, label %bb.g
@@ -362,11 +362,11 @@ bb.g:                                             ; preds = %bb.b
   %i.bt = load <2 x i32>, ptr %5, align 4, !tbaa !49
   %i.bu = load <2 x i32>, ptr %4, align 4, !tbaa !49
   %i.bv = sub nsw <2 x i32> %i.bt, %i.bu          ; 2 uses
-  %i.bw = shl nsw i32 %spec.select.fr, 1          ; 5 uses
-  %i.bx = or disjoint i32 %i.bw, 1
-  %6 = sext i32 %i.bx to i64                      ; 17 uses
-  %i.by = mul nsw i64 %6, %6                      ; 14 uses
-  %i.bz = shl i64 %i.by, 2                        ; 4 uses
+  %i.bw = shl nuw nsw i32 %spec.select.fr, 1      ; 3 uses
+  %i.bx = or disjoint i32 %i.bw, 1                ; 2 uses
+  %6 = zext nneg i32 %i.bx to i64                 ; 17 uses
+  %i.by = mul nuw nsw i64 %6, %6                  ; 10 uses
+  %i.bz = shl nuw i64 %i.by, 2                    ; 4 uses
   %i.ca = tail call ptr @dt_alloc_aligned(i64 noundef %i.bz) #22 ; 14 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ca, i64 64) ]
   %i.cb = shl i64 %i.by, 3
@@ -414,7 +414,7 @@ bb.l:                                             ; preds = %bb.k
   %i.co = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   %i.cp = load float, ptr %i.co, align 4, !tbaa !52
   %i.cq = fadd reassoc nsz arcp contract afn float %i.cp, f0x40490FDB
-  %i.cr = uitofp reassoc nsz arcp contract afn i64 %6 to float
+  %i.cr = uitofp nneg i32 %i.bx to float
   %i.cs = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.cr
   %i.ct = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   %i.cu = load float, ptr %i.ct, align 4, !tbaa !53
@@ -425,8 +425,7 @@ bb.l:                                             ; preds = %bb.k
   %i.cz = fmul reassoc nnan nsz arcp contract afn float %i.cl, 2.000000e+00
   %i.da = fdiv reassoc nsz arcp contract afn float %i.cy, %i.cz
   %i.db = tail call reassoc nsz arcp contract afn float @llvm.cos.f32(float %i.da)
-  %7 = add nsw i64 %6, -1
-  %i.dc = uitofp reassoc nsz arcp contract afn i64 %7 to float
+  %i.dc = uitofp nneg i32 %i.bw to float
   %i.dd = fmul reassoc nnan nsz arcp contract afn float %i.dc, 5.000000e-01
   %i.de = fadd reassoc nsz arcp contract afn float %i.dd, -1.000000e+00 ; 2 uses
   %i.df = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.de
@@ -436,22 +435,22 @@ bb.l:                                             ; preds = %bb.k
 
 .preheader.i.i:                                   ; preds = %._crit_edge.i.i, %bb.l
   %.033.i.i = phi i64 [ %i.do, %._crit_edge.i.i ], [ 0, %bb.l ] ; 3 uses
-  %i.di = add i64 %.033.i.i, -1
+  %i.di = add nsw i64 %.033.i.i, -1
   %i.dj = uitofp reassoc nsz arcp contract afn i64 %i.di to float
   %i.dk = fmul reassoc nsz arcp contract afn float %i.dj, %i.df
   %i.dl = fadd reassoc nsz arcp contract afn float %i.dk, -1.000000e+00 ; 2 uses
-  %i.dm = mul i64 %.033.i.i, %6
+  %i.dm = mul nuw i64 %.033.i.i, %6
   %i.dn = getelementptr [4 x i8], ptr %i.ch, i64 %i.dm
   br label %bb.m
 
 ._crit_edge.i.i:                                  ; preds = %bb.m
-  %i.do = add nuw i64 %.033.i.i, 1                ; 2 uses
+  %i.do = add nuw nsw i64 %.033.i.i, 1            ; 2 uses
   %exitcond36.not.i.i = icmp eq i64 %i.do, %6
   br i1 %exitcond36.not.i.i, label %_create_gauss_kernel.exit.sink.split.i, label %.preheader.i.i
 
 bb.m:                                             ; preds = %bb.m, %.preheader.i.i
   %.03032.i.i = phi i64 [ 0, %.preheader.i.i ], [ %i.ek, %bb.m ] ; 3 uses
-  %i.dp = add i64 %.03032.i.i, -1
+  %i.dp = add nsw i64 %.03032.i.i, -1
   %i.dq = uitofp reassoc nsz arcp contract afn i64 %i.dp to float
   %i.dr = fmul reassoc nsz arcp contract afn float %i.dq, %i.dg
   %i.ds = fadd reassoc nsz arcp contract afn float %i.dr, -1.000000e+00 ; 2 uses
@@ -473,7 +472,7 @@ bb.m:                                             ; preds = %bb.m, %.preheader.i
   %i.ei = uitofp i1 %i.eh to float
   %i.ej = getelementptr [4 x i8], ptr %i.dn, i64 %.03032.i.i
   store float %i.ei, ptr %i.ej, align 4, !tbaa !45, !alias.scope !112
-  %i.ek = add nuw i64 %.03032.i.i, 1              ; 2 uses
+  %i.ek = add nuw nsw i64 %.03032.i.i, 1          ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.ek, %6
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.m
 
@@ -490,13 +489,12 @@ bb.n:                                             ; preds = %bb.k
   br label %_create_gauss_kernel.exit.sink.split.i
 
 bb.o:                                             ; preds = %bb.k
-  %8 = add nsw i64 %6, -1
-  %i.es = uitofp reassoc nsz arcp contract afn i64 %8 to float
+  %i.es = uitofp nneg i32 %i.bw to float
   %i.et = fmul reassoc nnan nsz arcp contract afn float %i.es, 5.000000e-01
   %i.eu = fadd reassoc nsz arcp contract afn float %i.et, -1.000000e+00 ; 3 uses
   %i.ev = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.eu
-  %min.iters.check = icmp ult i32 %i.bw, 8
-  %n.vec = and i64 %6, -8                         ; 2 uses
+  %min.iters.check = icmp ult i32 %spec.select.fr, 4
+  %n.vec = and i64 %6, 2147483640                 ; 2 uses
   %broadcast.splatinsert394 = insertelement <8 x float> poison, float %i.eu, i64 0
   %broadcast.splat395 = shufflevector <8 x float> %broadcast.splatinsert394, <8 x float> poison, <8 x i32> zeroinitializer
   %i.ew = fdiv reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %broadcast.splat395
@@ -505,12 +503,12 @@ bb.o:                                             ; preds = %bb.k
 
 .preheader.i46.i:                                 ; preds = %._crit_edge.i48.i, %bb.o
   %.022.i.i = phi i64 [ %i.fp, %._crit_edge.i48.i ], [ 0, %bb.o ] ; 3 uses
-  %i.ey = add i64 %.022.i.i, -1
+  %i.ey = add nsw i64 %.022.i.i, -1
   %i.ez = uitofp reassoc nsz arcp contract afn i64 %i.ey to float
   %i.fa = fmul reassoc nsz arcp contract afn float %i.ez, %i.ev
   %i.fb = fadd reassoc nsz arcp contract afn float %i.fa, -1.000000e+00 ; 2 uses
   %i.fc = fmul reassoc nsz arcp contract afn float %i.fb, %i.fb ; 2 uses
-  %i.fd = mul i64 %.022.i.i, %6
+  %i.fd = mul nuw i64 %.022.i.i, %6
   %i.fe = getelementptr [4 x i8], ptr %i.ca, i64 %i.fd ; 2 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -526,7 +524,7 @@ vector.ph:                                        ; preds = %.preheader.i46.i
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %i.ff = add <8 x i64> %vec.ind, splat (i64 -1)
+  %i.ff = add nsw <8 x i64> %vec.ind, splat (i64 -1)
   %i.fg = uitofp <8 x i64> %i.ff to <8 x float>
   %i.fh = fmul reassoc nsz arcp contract afn <8 x float> %i.fg, %i.ew
   %i.fi = fadd reassoc nsz arcp contract afn <8 x float> %i.fh, splat (float -1.000000e+00) ; 2 uses
@@ -537,18 +535,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.fn = getelementptr [4 x i8], ptr %i.fe, i64 %index
   store <8 x float> %i.fm, ptr %i.fn, align 4, !tbaa !45, !alias.scope !114
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <8 x i64> %vec.ind, splat (i64 8)
+  %vec.ind.next = add nuw nsw <8 x i64> %vec.ind, splat (i64 8)
   %i.fo = icmp eq i64 %index.next, %n.vec
   br i1 %i.fo, label %scalar.ph.preheader, label %vector.body, !llvm.loop !89
 
 ._crit_edge.i48.i:                                ; preds = %scalar.ph
-  %i.fp = add nuw i64 %.022.i.i, 1                ; 2 uses
+  %i.fp = add nuw nsw i64 %.022.i.i, 1            ; 2 uses
   %exitcond25.not.i.i = icmp eq i64 %i.fp, %6
   br i1 %exitcond25.not.i.i, label %iter.check, label %.preheader.i46.i
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.01921.i.i = phi i64 [ %i.fz, %scalar.ph ], [ %.01921.i.i.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.fq = add i64 %.01921.i.i, -1
+  %i.fq = add nsw i64 %.01921.i.i, -1
   %i.fr = uitofp reassoc nsz arcp contract afn i64 %i.fq to float
   %i.fs = fmul reassoc nsz arcp contract afn float %i.fr, %i.ex
   %i.ft = fadd reassoc nsz arcp contract afn float %i.fs, -1.000000e+00 ; 2 uses
@@ -558,7 +556,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.fx = tail call reassoc nsz arcp contract afn float @llvm.exp.f32(float %i.fw)
   %i.fy = getelementptr [4 x i8], ptr %i.fe, i64 %.01921.i.i
   store float %i.fx, ptr %i.fy, align 4, !tbaa !45, !alias.scope !114
-  %i.fz = add nuw i64 %.01921.i.i, 1              ; 2 uses
+  %i.fz = add nuw nsw i64 %.01921.i.i, 1          ; 2 uses
   %exitcond.not.i47.i = icmp eq i64 %i.fz, %6
   br i1 %exitcond.not.i47.i, label %._crit_edge.i48.i, label %scalar.ph, !llvm.loop !90
 
@@ -567,16 +565,16 @@ _create_gauss_kernel.exit.sink.split.i:           ; preds = %._crit_edge.i.i, %b
   br label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge.i48.i, %_create_gauss_kernel.exit.sink.split.i, %bb.k
-  %min.iters.check397 = icmp samesign ult i64 %i.by, 4
+  %min.iters.check397 = icmp eq i32 %spec.select.fr, 0
   br i1 %min.iters.check397, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check398 = icmp samesign ult i64 %i.by, 32
+  %min.iters.check398 = icmp ult i32 %spec.select.fr, 3
   br i1 %min.iters.check398, label %vec.epilog.ph, label %vector.ph399
 
 vector.ph399:                                     ; preds = %vector.main.loop.iter.check
   %i.ga = and i64 %i.by, 24
-  %n.vec400 = and i64 %i.by, 9223372036854775776  ; 3 uses
+  %n.vec400 = and i64 %i.by, 4611686018427387872  ; 3 uses
   br label %vector.body401
 
 vector.body401:                                   ; preds = %vector.body401, %vector.ph399
@@ -646,16 +644,16 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not.i50.i, label %iter.check440, label %.lr.ph.i.i, !llvm.loop !93
 
 iter.check440:                                    ; preds = %.lr.ph.i.i
-  %min.iters.check423 = icmp samesign ult i64 %i.by, 4
+  %min.iters.check423 = icmp eq i32 %spec.select.fr, 0
   br i1 %min.iters.check423, label %.lr.ph.i54.i.preheader, label %vector.main.loop.iter.check424
 
 vector.main.loop.iter.check424:                   ; preds = %iter.check440
-  %min.iters.check425 = icmp samesign ult i64 %i.by, 32
+  %min.iters.check425 = icmp ult i32 %spec.select.fr, 3
   br i1 %min.iters.check425, label %vec.epilog.ph444, label %vector.ph426
 
 vector.ph426:                                     ; preds = %vector.main.loop.iter.check424
   %i.gu = and i64 %i.by, 24
-  %n.vec427 = and i64 %i.by, 9223372036854775776  ; 3 uses
+  %n.vec427 = and i64 %i.by, 4611686018427387872  ; 3 uses
   %broadcast.splatinsert428 = insertelement <8 x float> poison, float %i.gs, i64 0
   %broadcast.splat429 = shufflevector <8 x float> %broadcast.splatinsert428, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
   %i.gv = fdiv reassoc nsz arcp contract afn <8 x float> splat (float 1.000000e+00), %broadcast.splat429
@@ -805,13 +803,11 @@ bb.p:                                             ; preds = %.preheader245
   %wide.trip.count344 = zext nneg i32 %i.im to i64
   %i.jc = sext i32 %i.iu to i64
   %wide.trip.count338 = zext nneg i32 %.0204.lcssa to i64
-  %9 = or disjoint i32 %i.bw, 1
-  %10 = zext i32 %9 to i64                        ; 3 uses
   %i.jd = extractelement <2 x i32> %i.bv, i64 1
-  %min.iters.check651 = icmp ult i32 %i.bw, 8
-  %min.iters.check653 = icmp ult i32 %i.bw, 16
-  %i.je = and i64 %10, 8
-  %n.vec655 = and i64 %10, 2147483632             ; 3 uses
+  %min.iters.check651 = icmp ult i32 %spec.select.fr, 4
+  %min.iters.check653 = icmp ult i32 %spec.select.fr, 8
+  %i.je = and i64 %6, 8
+  %n.vec655 = and i64 %6, 2147483632              ; 3 uses
   %i.jf = add nsw i64 %n.vec655, %i.iv            ; 2 uses
   %broadcast.splatinsert660 = insertelement <8 x i64> poison, i64 %i.is, i64 0
   %broadcast.splat661 = shufflevector <8 x i64> %broadcast.splatinsert660, <8 x i64> poison, <8 x i32> zeroinitializer ; 2 uses
@@ -821,7 +817,7 @@ bb.p:                                             ; preds = %.preheader245
   %broadcast.splat665 = shufflevector <8 x i64> %broadcast.splatinsert664, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction = add nsw <8 x i64> %broadcast.splat665, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
   %min.epilog.iters.check709.not.not = icmp eq i64 %i.je, 0
-  %n.vec711 = and i64 %10, 2147483640             ; 2 uses
+  %n.vec711 = and i64 %6, 2147483640              ; 2 uses
   %i.jg = add nsw i64 %n.vec711, %i.iv
   %broadcast.splatinsert716 = insertelement <8 x i64> poison, i64 %i.is, i64 0
   %broadcast.splat717 = shufflevector <8 x i64> %broadcast.splatinsert716, <8 x i64> poison, <8 x i32> zeroinitializer

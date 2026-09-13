@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_core-29a639a172b36b04.candle_core.fa2bc8e788f5f12a-cgu.03?download=true
+inline.NumInlined: 5426
+inline.NumDeleted: 3862
+loop-unroll.NumRuntimeUnrolled: 177
+loop-unroll.NumUnrolled: 177
 begin_hunk_0_@_RINvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterNtCshigRrDowciq_6float86F8E4M3ENCINvNtNtCsltEA4u8Pgfu_11candle_core11cpu_backend5utils9unary_mapB1n_mNCNvXss_B1Z_NtB1Z_10CpuStorageNtNtB21_7backend14BackendStorage8to_dtypesO_0E0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4g_8for_each4callmNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB5t_3VecmE14extend_trustedBN_E0E0EB21_:bb.a
 _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterNtCshigRrDowciq_6float86F8E4M3ENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1r_8adapters3map8map_foldRBQ_muNCINvNtNtCsltEA4u8Pgfu_11candle_core11cpu_backend5utils9unary_mapBQ_mNCNvXss_B2S_NtB2S_10CpuStorageNtNtB2U_7backend14BackendStorage8to_dtypesO_0E0NCINvNvB1l_8for_each4callmNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB5G_3VecmE14extend_trustedINtB2b_3MapBF_B2L_EE0E0E0EB2U_.exit: ; preds = %bb.d, %bb.a
   %storemerge = phi i64 [ %.sroa.6.0.copyload, %bb.a ], [ %i.m, %bb.d ]
@@ -200,10 +204,8 @@ _RNvXss_NtCsdsILkMb8ZHY_4half6bfloatNtB5_4bf16NtNtNtCsf3Ta7LF998c_4core3ops5arit
   %i.ar = select <2 x i1> %i.ap, <2 x i16> %i.aq, <2 x i16> %i.an
   %i.as = zext <2 x i16> %i.ar to <2 x i32>
   %i.at = shl nuw <2 x i32> %i.as, splat (i32 16)
-  %i.au = bitcast <2 x i32> %i.at to <2 x float>  ; 2 uses
-  %shift = shufflevector <2 x float> %i.au, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %shift, %i.au
-  %2 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
+  %i.au = bitcast <2 x i32> %i.at to <2 x float>
+  %2 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %i.au) ; 2 uses
   %i.av = bitcast float %2 to i32                 ; 4 uses
   %i.aw = tail call float @llvm.fabs.f32(float %2)
   %i.ax = bitcast float %i.aw to i32
@@ -604,6 +606,9 @@ declare i16 @llvm.abs.i16(i16, i1 immarg) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i8> @llvm.fptoui.sat.v8i8.v8f32(<8 x float>) #15

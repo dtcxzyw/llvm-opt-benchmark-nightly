@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_select-0ff45bf5da4bce36.lance_select.83dc7e5d3aa2c1eb-cgu.0?download=true
+inline.NumInlined: 2541
+inline.NumDeleted: 1173
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 60
+loop-unroll.NumUnrolled: 66
 begin_hunk_0_@_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift4sortTmNtNtCsbjTsVCnQnhv_12lance_select4mask16RowAddrSelectionENCINvMNtCs40k4W9msRzi_5alloc5sliceSBW_7sort_byNCINvXs1o_NtNtNtB20_11collections5btree3mapINtB2M_8BTreeMapmBY_EINtNtNtNtBa_4iter6traits7collect12FromIteratorBW_E9from_iterINtNtNtB3L_8adapters3map3MapINtB2M_8IntoIterRmINtNtB20_3vec3VecRBY_EENCNvXs5_B10_NtB10_14RowAddrTreeMapNtB10_9RowSetOps9union_alls_0EE0E0EB12_:bb.a
 _RNvMNtCscI6d9CVNmLh_4core5sliceSTmNtNtCsbjTsVCnQnhv_12lance_select4mask16RowAddrSelectionE7reverseBA_.exit: ; preds = %_RNvMNtCscI6d9CVNmLh_4core5sliceSTmNtNtCsbjTsVCnQnhv_12lance_select4mask16RowAddrSelectionE12split_at_mutBA_.exit11.i.i, %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTmNtNtCsbjTsVCnQnhv_12lance_select4mask16RowAddrSelectionENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB26_11collections5btree3mapINtB2T_8BTreeMapmB14_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3T_8adapters3map3MapINtB2T_8IntoIterRmINtNtB26_3vec3VecRB14_EENCNvXs5_B16_NtB16_14RowAddrTreeMapNtB16_9RowSetOps9union_alls_0EE0E0EB18_.exit.i.thread, %bb.j, %bb.q, %bb.n
   %.sroa.0.0.i.i4346 = phi i64 [ %i.n, %bb.j ], [ %.sroa.0.0.i.i, %bb.n ], [ %.sroa.0.0.i.i, %bb.q ], [ 2, %_RINvNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared17find_existing_runTmNtNtCsbjTsVCnQnhv_12lance_select4mask16RowAddrSelectionENCINvMNtCs40k4W9msRzi_5alloc5sliceSB12_7sort_byNCINvXs1o_NtNtNtB26_11collections5btree3mapINtB2T_8BTreeMapmB14_EINtNtNtNtB8_4iter6traits7collect12FromIteratorB12_E9from_iterINtNtNtB3T_8adapters3map3MapINtB2T_8IntoIterRmINtNtB26_3vec3VecRB14_EENCNvXs5_B16_NtB16_14RowAddrTreeMapNtB16_9RowSetOps9union_alls_0EE0E0EB18_.exit.i.thread ], [ %.sroa.0.0.i.i9299103, %_RNvMNtCscI6d9CVNmLh_4core5sliceSTmNtNtCsbjTsVCnQnhv_12lance_select4mask16RowAddrSelectionE12split_at_mutBA_.exit11.i.i ]
@@ -200,7 +205,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift13logical_mergeTmNtNtCsb
   br i1 %i.dm, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dn = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dn = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.do = lshr i64 %.sroa.018.0, 1
   %i.dp = add nuw i64 %i.do, %.sroa.09.0
   br label %bb.f
@@ -603,7 +608,7 @@ _RINvNtNtNtCs40k4W9msRzi_5alloc11collections5btree4node13move_to_sliceNtNtCsbjTs
   %i.ab = getelementptr inbounds nuw i8, ptr %i.d, i64 272 ; 2 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.x
   %i.ad = shl nuw nsw i64 %i.y, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.r, ptr nonnull readonly align 4 %i.ac, i64 %i.ad, i1 false), !alias.scope !3034
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.r, ptr nonnull readonly align 4 %i.ac, i64 %i.ad, i1 false), !alias.scope !3034
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %i.x
   %i.ag = mul nuw nsw i64 %i.y, 24
@@ -814,7 +819,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ak, ptr nonnull readonly align 8 %i.v, i64 %i.al, i1 false), !alias.scope !3064
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %1
   %i.an = shl nuw nsw i64 %i.o, 2
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 4 %i.am, i64 %i.an, i1 false), !alias.scope !3065
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.s, ptr nonnull align 4 %i.am, i64 %i.an, i1 false), !alias.scope !3065
   %i.ao = getelementptr inbounds nuw [24 x i8], ptr %i.v, i64 %1
   %i.ap = mul nuw nsw i64 %i.o, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.v, ptr nonnull align 8 %i.ao, i64 %i.ap, i1 false), !alias.scope !3066

@@ -205,7 +205,7 @@ _ZN6casadi10casadi_dotIxEET_xPKS1_S3_.exit.loopexit.i.i: ; preds = %.lr.ph.i.i.i
   %i.ae = uitofp nneg i64 %.lcssa to double
   %i.af = tail call double @llvm.sqrt.f64(double %i.ae)
   %i.ag = fptosi double %i.af to i64
-  %11 = sitofp i64 %i.ag to double
+  %11 = uitofp nneg i64 %i.ag to double
   br label %_ZN6casadi6MatrixIxE8norm_froERKS1_.exit
 
 _ZN6casadi6MatrixIxE8norm_froERKS1_.exit:         ; preds = %bb.b, %_ZN6casadi10casadi_dotIxEET_xPKS1_S3_.exit.loopexit.i.i
@@ -493,7 +493,7 @@ _ZN6casadi10casadi_dotIxEET_xPKS1_S3_.exit.loopexit.i: ; preds = %.lr.ph.i.i.epi
   %i.ad = uitofp nneg i64 %.lcssa to double
   %i.ae = tail call double @llvm.sqrt.f64(double %i.ad)
   %i.af = fptosi double %i.ae to i64
-  %2 = sitofp i64 %i.af to double
+  %2 = uitofp nneg i64 %i.af to double
   br label %_ZN6casadi13casadi_norm_2IxEET_xPKS1_.exit
 
 _ZN6casadi13casadi_norm_2IxEET_xPKS1_.exit:       ; preds = %bb.a, %_ZN6casadi10casadi_dotIxEET_xPKS1_S3_.exit.loopexit.i
@@ -896,7 +896,7 @@ bb.f:                                             ; preds = %.lr.ph187
   %i.cc = tail call noundef double @llvm.fabs.f64(double %i.cb)
   %i.cd = fptosi double %i.cc to i64
   %i.ce = sitofp nsz i64 %.1127185 to double
-  %6 = sitofp nsz i64 %i.cd to double
+  %6 = uitofp nsz nneg i64 %i.cd to double
   %i.cf = tail call nsz noundef double @llvm.maxnum.f64(double %i.ce, double %6)
   %i.cg = fptosi double %i.cf to i64
   %i.ch = add nsw i64 %.2131184, 1

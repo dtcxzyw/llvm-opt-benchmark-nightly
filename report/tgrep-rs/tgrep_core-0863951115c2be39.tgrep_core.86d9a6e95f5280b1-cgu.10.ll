@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tgrep-rs/original/tgrep_core-0863951115c2be39.tgrep_core.86d9a6e95f5280b1-cgu.10?download=true
+inline.NumInlined: 666
+inline.NumDeleted: 340
 begin_hunk_0_@_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMapRemNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE6insertCsbzNSmZPCnTx_10tgrep_core:bb.a
   %.sroa.04.122.i.i = phi i64 [ 1, %.thread.i.i ], [ 0, %bb.d ]
   %.sroa.4.120.i.i = phi i64 [ %.sroa.4.121.i.i, %.thread.i.i ], [ undef, %bb.d ]
@@ -200,7 +202,7 @@ _RINvMs6_NtCsbDKHzkXHCUM_9hashbrown3rawINtB6_8RawTableTReuEE25find_or_find_inser
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i24 @_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMapTmmENtNtCsbzNSmZPCnTx_10tgrep_core7trigram12TrigramMasksNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE6insertBV_(ptr noalias nofree noundef align 8 dereferenceable(48) %0, i32 noundef %1, i32 noundef %2, i8 noundef %3, i8 noundef %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i24 0, -254) i24 @_RNvMs1_NtCsbDKHzkXHCUM_9hashbrown3mapINtB5_7HashMapTmmENtNtCsbzNSmZPCnTx_10tgrep_core7trigram12TrigramMasksNtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE6insertBV_(ptr noalias nofree noundef align 8 dereferenceable(48) %0, i32 noundef %1, i32 noundef %2, i8 noundef %3, i8 noundef %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [8 x i8], align 4                 ; 4 uses
   store i32 %1, ptr %i.a, align 4

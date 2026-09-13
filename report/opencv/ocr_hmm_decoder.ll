@@ -205,8 +205,8 @@ bb.la:                                            ; preds = %bb.kz
   %i.atk = load float, ptr %i.atj, align 4, !tbaa !63
   %i.atl = fpext float %i.atk to double           ; 7 uses
   %i.atm = fptosi float %i.ath to i32
-  %79 = sext i32 %i.atm to i64                    ; 2 uses
-  %i.atn = getelementptr inbounds [8 x i8], ptr %i.arw, i64 %79 ; 2 uses
+  %79 = zext nneg i32 %i.atm to i64               ; 2 uses
+  %i.atn = getelementptr inbounds nuw [8 x i8], ptr %i.arw, i64 %79 ; 2 uses
   %i.ato = load double, ptr %i.atn, align 8, !tbaa !122
   %i.atp = fadd double %i.ato, %i.atl
   store double %i.atp, ptr %i.atn, align 8, !tbaa !122
@@ -609,7 +609,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit359: ; preds = %bb
   br label %bb.er
 
 bb.dm:                                            ; preds = %.loopexit450
-  %i.nq = fptosi double %i.nf to i32              ; 4 uses
+  %i.nq = fptosi double %i.nf to i32              ; 3 uses
   %i.nr = load ptr, ptr %i.w, align 8, !tbaa !77  ; 4 uses
   %i.ns = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   %i.nt = load ptr, ptr %i.ns, align 8, !tbaa !139
@@ -680,7 +680,7 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
 
 _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i, %bb.dn
-  %44 = sext i32 %i.nq to i64
+  %44 = zext nneg i32 %i.nq to i64                ; 2 uses
   %i.oo = getelementptr inbounds nuw [8 x i8], ptr %i.nd, i64 %44 ; 2 uses
   %i.op = load ptr, ptr %i.z, align 8, !tbaa !81  ; 4 uses
   %i.oq = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 6 uses
@@ -758,11 +758,7 @@ _ZNSt6vectorIdSaIdEE9push_backERKd.exit:          ; preds = %_ZNSt6vectorIdSaIdE
   %i.pp = phi ptr [ %i.pj, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i ], [ %i.ot, %bb.ds ]
   %i.pq = load i32, ptr %i.lu, align 8, !tbaa !152
   %i.pr = icmp sgt i32 %i.pq, 0
-  br i1 %i.pr, label %.lr.ph506.preheader, label %._crit_edge507.thread
-
-.lr.ph506.preheader:                              ; preds = %_ZNSt6vectorIdSaIdEE9push_backERKd.exit
-  %45 = zext i32 %i.nq to i64
-  br label %.lr.ph506
+  br i1 %i.pr, label %.lr.ph506, label %._crit_edge507.thread
 
 ._crit_edge507:                                   ; preds = %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385
   %.not.i.i.i367 = icmp eq ptr %i.nd, null
@@ -926,11 +922,11 @@ bb.eg:                                            ; preds = %_ZNKSt6vectorIiSaIi
           cleanup
   br label %bb.er
 
-.lr.ph506:                                        ; preds = %.lr.ph506.preheader, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385
-  %i.rx = phi ptr [ %i.po, %.lr.ph506.preheader ], [ %i.ty, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385 ] ; 3 uses
-  %i.ry = phi ptr [ %i.pp, %.lr.ph506.preheader ], [ %i.tz, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385 ] ; 3 uses
-  %indvars.iv521 = phi i64 [ 0, %.lr.ph506.preheader ], [ %indvars.iv.next522, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385 ] ; 5 uses
-  %.not278 = icmp eq i64 %indvars.iv521, %45
+.lr.ph506:                                        ; preds = %_ZNSt6vectorIdSaIdEE9push_backERKd.exit, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385
+  %i.rx = phi ptr [ %i.ty, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385 ], [ %i.po, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
+  %i.ry = phi ptr [ %i.tz, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385 ], [ %i.pp, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
+  %indvars.iv521 = phi i64 [ %indvars.iv.next522, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385 ], [ 0, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 5 uses
+  %.not278 = icmp eq i64 %indvars.iv521, %44
   br i1 %.not278, label %_ZNSt6vectorIdSaIdEE9push_backERKd.exit385, label %bb.eh
 
 bb.eh:                                            ; preds = %.lr.ph506

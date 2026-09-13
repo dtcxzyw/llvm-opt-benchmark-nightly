@@ -205,24 +205,24 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.
   %i.hl = insertelement <2 x float> %i.hk, float %i.hj, i64 1
   %i.hm = fdiv nsz <2 x float> %i.hl, splat (float 6.000000e+00)
   %i.hn = fadd nsz <2 x float> %i.hm, splat (float 5.000000e-01)
-  %i.ho = fptosi <2 x float> %i.hn to <2 x i32>   ; 9 uses
+  %i.ho = fptosi <2 x float> %i.hn to <2 x i32>   ; 7 uses
   %i.hp = extractelement <2 x i32> %i.hh, i64 0   ; 3 uses
   %i.hq = extractelement <2 x i32> %i.hh, i64 1   ; 3 uses
-  %4 = icmp sgt i32 %i.hp, %i.hq
-  %i.hr = tail call i32 @llvm.smin.i32(i32 %i.hp, i32 %i.hq)
-  %i.hs = tail call i32 @llvm.smax.i32(i32 %i.hr, i32 1)
+  %4 = icmp samesign ugt i32 %i.hp, %i.hq
+  %i.hr = tail call i32 @llvm.umin.i32(i32 %i.hp, i32 %i.hq)
+  %i.hs = tail call i32 @llvm.umax.i32(i32 %i.hr, i32 1)
   %i.ht = uitofp nneg i32 %i.hs to float
-  %i.hu = extractelement <2 x i32> %i.ho, i64 1   ; 8 uses
-  %i.hv = extractelement <2 x i32> %i.ho, i64 0   ; 8 uses
-  %i.hw = tail call i32 @llvm.smax.i32(i32 %i.hp, i32 %i.hq) ; 2 uses
-  %5 = sitofp nsz i32 %i.hw to float
+  %i.hu = extractelement <2 x i32> %i.ho, i64 1   ; 10 uses
+  %i.hv = extractelement <2 x i32> %i.ho, i64 0   ; 10 uses
+  %i.hw = tail call i32 @llvm.umax.i32(i32 %i.hp, i32 %i.hq) ; 2 uses
+  %5 = uitofp nneg i32 %i.hw to float
   %i.hx = fdiv nsz float %5, %i.ht
-  %6 = icmp sgt i32 %i.hv, %i.hu                  ; 7 uses
-  %i.hy = tail call i32 @llvm.smax.i32(i32 %i.hv, i32 %i.hu) ; 2 uses
-  %7 = sitofp nsz i32 %i.hy to float
-  %i.hz = tail call i32 @llvm.smin.i32(i32 %i.hv, i32 %i.hu)
-  %i.ia = tail call i32 @llvm.smax.i32(i32 %i.hw, i32 1)
-  %i.ib = tail call i32 @llvm.smax.i32(i32 %i.hz, i32 1)
+  %6 = icmp samesign ugt i32 %i.hv, %i.hu         ; 7 uses
+  %i.hy = tail call i32 @llvm.umax.i32(i32 %i.hv, i32 %i.hu) ; 2 uses
+  %7 = uitofp nsz nneg i32 %i.hy to float
+  %i.hz = tail call i32 @llvm.umin.i32(i32 %i.hv, i32 %i.hu)
+  %i.ia = tail call i32 @llvm.umax.i32(i32 %i.hw, i32 1)
+  %i.ib = tail call i32 @llvm.umax.i32(i32 %i.hz, i32 1)
   %i.ic = uitofp nneg i32 %i.ia to float
   %i.id = uitofp nneg i32 %i.ib to float
   %i.ie = insertelement <2 x float> poison, float %7, i64 0
@@ -230,62 +230,61 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.
   %i.ig = insertelement <2 x float> poison, float %i.id, i64 0
   %i.ih = insertelement <2 x float> %i.ig, float %i.ic, i64 1
   %i.ii = fdiv nsz <2 x float> %i.if, %i.ih       ; 2 uses
-  %8 = icmp sgt i32 %i.hv, 499
-  %9 = icmp sgt i32 %i.hu, 499
+  %8 = icmp samesign ugt i32 %i.hv, 499
+  %9 = icmp samesign ugt i32 %i.hu, 499
   %or.cond9 = select i1 %8, i1 true, i1 %9
   br i1 %or.cond9, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
-  %10 = shl nsw <2 x i32> %i.ho, splat (i32 1)
-  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
-  %12 = icmp slt <2 x i32> %11, %i.ho             ; 2 uses
-  %13 = extractelement <2 x i1> %12, i64 0
-  %14 = extractelement <2 x i1> %12, i64 1
-  %or.cond375 = select i1 %14, i1 true, i1 %13
+  %10 = shl nuw nsw i32 %i.hv, 1
+  %11 = icmp samesign ult i32 %10, %i.hu
+  %12 = shl nuw nsw i32 %i.hu, 1
+  %13 = icmp samesign ult i32 %12, %i.hv
+  %or.cond375 = select i1 %11, i1 true, i1 %13
   br i1 %or.cond375, label %bb.au, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %15 = icmp sgt <2 x i32> %i.ho, splat (i32 999) ; 2 uses
-  %i.ij = extractelement <2 x i1> %15, i64 0
-  %i.ik = extractelement <2 x i1> %15, i64 1
+  %14 = icmp samesign ugt <2 x i32> %i.ho, splat (i32 999) ; 2 uses
+  %i.ij = extractelement <2 x i1> %14, i64 0
+  %i.ik = extractelement <2 x i1> %14, i64 1
   %or.cond11 = select i1 %i.ij, i1 true, i1 %i.ik
   br i1 %or.cond11, label %bb.al, label %bb.an
 
 bb.al:                                            ; preds = %bb.ak
-  %i.il = mul nsw i32 %i.hv, 3
-  %i.im = shl nsw i32 %i.hu, 1
-  %16 = icmp slt i32 %i.il, %i.im
-  br i1 %16, label %bb.au, label %bb.am
+  %i.il = mul nuw nsw i32 %i.hv, 3
+  %i.im = shl nuw nsw i32 %i.hu, 1
+  %15 = icmp samesign ult i32 %i.il, %i.im
+  br i1 %15, label %bb.au, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.in = mul nsw i32 %i.hu, 3
-  %i.io = shl nsw i32 %i.hv, 1
-  %17 = icmp slt i32 %i.in, %i.io
-  br i1 %17, label %bb.au, label %bb.an
+  %i.in = mul nuw nsw i32 %i.hu, 3
+  %i.io = shl nuw nsw i32 %i.hv, 1
+  %16 = icmp samesign ult i32 %i.in, %i.io
+  br i1 %16, label %bb.au, label %bb.an
 
 bb.an:                                            ; preds = %bb.ak, %bb.am
-  %18 = icmp sgt <2 x i32> %i.ho, splat (i32 1999) ; 2 uses
-  %i.ip = extractelement <2 x i1> %18, i64 0
-  %i.iq = extractelement <2 x i1> %18, i64 1
+  %17 = icmp samesign ugt <2 x i32> %i.ho, splat (i32 1999) ; 2 uses
+  %i.ip = extractelement <2 x i1> %17, i64 0
+  %i.iq = extractelement <2 x i1> %17, i64 1
   %or.cond13 = select i1 %i.ip, i1 true, i1 %i.iq
   br i1 %or.cond13, label %bb.ao, label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
-  %i.ir = mul nsw i32 %i.hv, 5
+  %i.ir = mul nuw nsw i32 %i.hv, 5
   %i.is = shl nsw i32 %i.hu, 2
-  %19 = icmp slt i32 %i.ir, %i.is
-  br i1 %19, label %bb.au, label %bb.ap
+  %18 = icmp samesign ult i32 %i.ir, %i.is
+  br i1 %18, label %bb.au, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.it = mul nsw i32 %i.hu, 5
+  %i.it = mul nuw nsw i32 %i.hu, 5
   %i.iu = shl nsw i32 %i.hv, 2
-  %20 = icmp slt i32 %i.it, %i.iu
-  br i1 %20, label %bb.au, label %bb.aq
+  %19 = icmp samesign ult i32 %i.it, %i.iu
+  br i1 %19, label %bb.au, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.an, %bb.ap
-  %21 = icmp sgt <2 x i32> %i.ho, splat (i32 3999) ; 2 uses
-  %i.iv = extractelement <2 x i1> %21, i64 0
-  %i.iw = extractelement <2 x i1> %21, i64 1
+  %20 = icmp samesign ugt <2 x i32> %i.ho, splat (i32 3999) ; 2 uses
+  %i.iv = extractelement <2 x i1> %20, i64 0
+  %i.iw = extractelement <2 x i1> %20, i64 1
   %or.cond15 = select i1 %i.iv, i1 true, i1 %i.iw
   %i.ix = extractelement <2 x float> %i.ii, i64 0
   %i.iy = fcmp nsz ogt float %i.ix, %i.hx
@@ -296,16 +295,16 @@ bb.ar:                                            ; preds = %bb.aq
   %i.iz = extractelement <2 x float> %i.ii, i64 1
   %i.ja = fpext nsz float %i.iz to double
   %i.jb = fcmp nsz ogt double %i.ja, 5.000000e-03
-  %22 = icmp sgt i32 %i.hy, 150
-  %or.cond377 = select i1 %i.jb, i1 %22, i1 false
+  %21 = icmp samesign ugt i32 %i.hy, 150
+  %or.cond377 = select i1 %i.jb, i1 %21, i1 false
   br i1 %or.cond377, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %bb.ar
-  %i.jc = shl nsw <2 x i32> %i.ho, splat (i32 1)
+  %i.jc = shl nuw nsw <2 x i32> %i.ho, splat (i32 1)
   %i.jd = shufflevector <2 x i32> %i.ho, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
-  %23 = icmp slt <2 x i32> %i.jc, %i.jd           ; 2 uses
-  %i.je = extractelement <2 x i1> %23, i64 0
-  %i.jf = extractelement <2 x i1> %23, i64 1
+  %22 = icmp samesign ult <2 x i32> %i.jc, %i.jd  ; 2 uses
+  %i.je = extractelement <2 x i1> %22, i64 0
+  %i.jf = extractelement <2 x i1> %22, i64 1
   %or.cond379 = select i1 %i.je, i1 true, i1 %i.jf
   br i1 %or.cond379, label %bb.au, label %bb.at
 
@@ -706,6 +705,12 @@ declare i64 @llvm.umax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8

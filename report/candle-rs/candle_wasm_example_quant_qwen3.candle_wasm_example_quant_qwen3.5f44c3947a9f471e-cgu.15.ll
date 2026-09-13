@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_wasm_example_quant_qwen3.candle_wasm_example_quant_qwen3.5f44c3947a9f471e-cgu.15?download=true
+inline.NumInlined: 318
+inline.NumDeleted: 161
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift4sortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSBW_7sort_byNCNvMBY_NtBY_8Profiler11get_entriess_0E0EB10_:bb.a
 _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift10create_runNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB13_7sort_byNCNvMB15_NtB15_8Profiler11get_entriess_0E0EB17_.exit: ; preds = %bb.r, %bb.s, %_RNvMNtCsf3Ta7LF998c_4core5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7reverseBy_.exit
   %.sroa.0.0.i32 = phi i64 [ %i.ah, %_RNvMNtCsf3Ta7LF998c_4core5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7reverseBy_.exit ], [ %i.af, %bb.s ], [ %i.ac, %bb.r ] ; 2 uses
@@ -200,7 +205,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeNtNtCs8b6
   br i1 %i.dn, label %bb.u, label %._crit_edge
 
 bb.ag:                                            ; preds = %._crit_edge
-  %i.do = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.do = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dp = lshr i64 %.sroa.018.0, 1
   %i.dq = add nuw nsw i64 %i.dp, %.sroa.09.0
   br label %bb.f

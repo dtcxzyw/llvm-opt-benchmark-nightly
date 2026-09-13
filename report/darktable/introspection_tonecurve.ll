@@ -205,8 +205,7 @@ bb.bu:                                            ; preds = %dt_rgb_norm.exit
 bb.bv:                                            ; preds = %bb.bu
   %i.tb = fmul reassoc nnan nsz arcp contract afn float %.0.i, 6.553600e+04
   %i.tc = fptosi float %i.tb to i32
-  %6 = tail call i32 @llvm.smax.i32(i32 %i.tc, i32 0)
-  %i.td = tail call i32 @llvm.umin.i32(i32 %6, i32 65535)
+  %i.td = tail call i32 @llvm.smin.i32(i32 %i.tc, i32 65535)
   %i.te = zext nneg i32 %i.td to i64
   %i.tf = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.te
   %i.tg = load float, ptr %i.tf, align 4, !tbaa !13
@@ -609,7 +608,7 @@ middle.block533:                                  ; preds = %vector.body527
 .preheader:                                       ; preds = %middle.block533, %dt_XYZ_to_Lab.exit
   %indvars.iv349 = phi i64 [ %indvars.iv.next350, %dt_XYZ_to_Lab.exit ], [ 0, %middle.block533 ] ; 3 uses
   %i.km = trunc nuw nsw i64 %indvars.iv349 to i32
-  %i.kn = uitofp nneg i32 %i.km to float          ; 2 uses
+  %i.kn = uitofp nsz nneg i32 %i.km to float      ; 2 uses
   %i.ko = fmul reassoc nnan nsz arcp contract afn float %i.kn, f0x37800000 ; 2 uses
   %i.kp = fcmp reassoc nsz arcp contract afn ogt float %i.ko, f0x3C111AA7
   br i1 %i.kp, label %bb.i, label %bb.h
@@ -650,7 +649,7 @@ dt_XYZ_to_Lab.exit:                               ; preds = %bb.h, %bb.i
 .preheader315:                                    ; preds = %middle.block533, %dt_prophotorgb_to_Lab.exit
   %indvars.iv345 = phi i64 [ %indvars.iv.next346, %dt_prophotorgb_to_Lab.exit ], [ 0, %middle.block533 ] ; 3 uses
   %i.ll = trunc nuw nsw i64 %indvars.iv345 to i32
-  %i.lm = uitofp nneg i32 %i.ll to float          ; 6 uses
+  %i.lm = uitofp nsz nneg i32 %i.ll to float      ; 6 uses
   %i.ln = fmul reassoc nnan nsz arcp contract afn float %i.lm, f0x37800000 ; 2 uses
   %i.lo = fmul reassoc nnan nsz arcp contract afn float %i.lm, f0x378000AD ; 2 uses
   %i.lp = fcmp reassoc nsz arcp contract afn ogt float %i.lo, f0x3C111AA7
@@ -1053,7 +1052,7 @@ bb.u:                                             ; preds = %bb.t
 .preheader628:                                    ; preds = %.split, %.preheader628
   %indvars.iv.i.i445 = phi i64 [ %indvars.iv.next.i.i446, %.preheader628 ], [ 0, %.split ] ; 3 uses
   %i.rw = trunc nuw nsw i64 %indvars.iv.i.i445 to i32
-  %i.rx = uitofp nneg i32 %i.rw to double
+  %i.rx = uitofp nsz nneg i32 %i.rw to double
   %.idx.i.i = shl nuw nsw i64 %indvars.iv.i.i445, 4
   %gep.i.i = getelementptr i8, ptr %invariant.gep.i8.i, i64 %.idx.i.i
   %i.ry = load i32, ptr %gep.i.i, align 4, !tbaa !14
@@ -1066,7 +1065,7 @@ bb.u:                                             ; preds = %bb.t
 .preheader627:                                    ; preds = %.split, %.preheader627
   %indvars.iv.i9.i = phi i64 [ %indvars.iv.next.i12.i, %.preheader627 ], [ 0, %.split ] ; 3 uses
   %i.sa = trunc nuw nsw i64 %indvars.iv.i9.i to i32
-  %i.sb = uitofp nneg i32 %i.sa to double
+  %i.sb = uitofp nsz nneg i32 %i.sa to double
   %.idx.i10.i = shl nuw nsw i64 %indvars.iv.i9.i, 4
   %gep.i11.i = getelementptr i8, ptr %invariant.gep.i8.i, i64 %.idx.i10.i
   %i.sc = load i32, ptr %gep.i11.i, align 4, !tbaa !14
@@ -1092,7 +1091,7 @@ bb.v:                                             ; preds = %bb.u
 .preheader625:                                    ; preds = %.split409, %.preheader625
   %indvars.iv.i.i450 = phi i64 [ %indvars.iv.next.i.i453, %.preheader625 ], [ 0, %.split409 ] ; 3 uses
   %i.sk = trunc nuw nsw i64 %indvars.iv.i.i450 to i32
-  %i.sl = uitofp nneg i32 %i.sk to double
+  %i.sl = uitofp nsz nneg i32 %i.sk to double
   %.idx.i.i451 = shl nuw nsw i64 %indvars.iv.i.i450, 4
   %gep.i.i452 = getelementptr i8, ptr %i.ra, i64 %.idx.i.i451
   %i.sm = load i32, ptr %gep.i.i452, align 4, !tbaa !14
@@ -1105,7 +1104,7 @@ bb.v:                                             ; preds = %bb.u
 .preheader624:                                    ; preds = %.split409, %.preheader624
   %indvars.iv.i9.i455 = phi i64 [ %indvars.iv.next.i12.i458, %.preheader624 ], [ 0, %.split409 ] ; 3 uses
   %i.so = trunc nuw nsw i64 %indvars.iv.i9.i455 to i32
-  %i.sp = uitofp nneg i32 %i.so to double
+  %i.sp = uitofp nsz nneg i32 %i.so to double
   %.idx.i10.i456 = shl nuw nsw i64 %indvars.iv.i9.i455, 4
   %gep.i11.i457 = getelementptr i8, ptr %i.ra, i64 %.idx.i10.i456
   %i.sq = load i32, ptr %gep.i11.i457, align 4, !tbaa !14
@@ -1131,7 +1130,7 @@ bb.w:                                             ; preds = %bb.v
 .preheader622:                                    ; preds = %bb.w, %.preheader622
   %indvars.iv.i.i462 = phi i64 [ %indvars.iv.next.i.i464, %.preheader622 ], [ 0, %bb.w ] ; 3 uses
   %i.tb = trunc nuw nsw i64 %indvars.iv.i.i462 to i32
-  %i.tc = uitofp nneg i32 %i.tb to float
+  %i.tc = uitofp nsz nneg i32 %i.tb to float
   %i.td = fmul reassoc nsz arcp contract afn float %i.sy, %i.tc
   %i.te = fadd reassoc nsz arcp contract afn float %i.td, 1.000000e+00
   %i.tf = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.te)
@@ -1150,7 +1149,7 @@ bb.w:                                             ; preds = %bb.v
 .preheader:                                       ; preds = %bb.w, %.preheader
   %indvars.iv.i10.i = phi i64 [ %indvars.iv.next.i12.i466, %.preheader ], [ 0, %bb.w ] ; 3 uses
   %i.tm = trunc nuw nsw i64 %indvars.iv.i10.i to i32
-  %i.tn = uitofp nneg i32 %i.tm to float
+  %i.tn = uitofp nsz nneg i32 %i.tm to float
   %i.to = fmul reassoc nsz arcp contract afn float %i.sy, %i.tn
   %i.tp = fadd reassoc nsz arcp contract afn float %i.to, 1.000000e+00
   %i.tq = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.tp)
@@ -1553,7 +1552,7 @@ bb.ai:                                            ; preds = %to_log.exit506
 bb.aj:                                            ; preds = %bb.ah, %to_log.exit506
   %indvars.iv655 = phi i64 [ 0, %bb.ah ], [ %indvars.iv.next656, %to_log.exit506 ] ; 3 uses
   %i.adk = trunc nuw nsw i64 %indvars.iv655 to i32
-  %i.adl = uitofp nneg i32 %i.adk to float
+  %i.adl = uitofp nsz nneg i32 %i.adk to float
   %i.adm = fmul reassoc nnan nsz arcp contract afn float %i.adl, f0x3B808081 ; 5 uses
   %i.adn = fcmp reassoc nsz arcp contract afn ogt float %i.adm, %i.ie
   br i1 %i.adn, label %bb.ak, label %bb.al
@@ -1954,6 +1953,9 @@ declare float @interpolate_val(i32 noundef, ptr noundef, float noundef, ptr noun
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8

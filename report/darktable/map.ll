@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 
 .peel.next.i.i:                                   ; preds = %.peel.next.i.i.preheader, %.peel.next.i.i
   %.021.i.i = phi i32 [ %i.bw, %.peel.next.i.i ], [ 2, %.peel.next.i.i.preheader ] ; 3 uses
-  %i.bg = uitofp nneg i32 %.021.i.i to double
+  %i.bg = uitofp nsz nneg i32 %.021.i.i to double
   %i.bh = fmul reassoc nsz arcp contract afn double %i.bg, %i.bf
   %i.bi = load float, ptr %i.g, align 4, !tbaa !107
   %i.bj = fpext reassoc nsz arcp contract afn float %i.bi to double
@@ -608,19 +608,19 @@ bb.b:                                             ; preds = %bb.a
   %i.ar = select reassoc nsz arcp contract afn i1 %i.aq, float 1.600000e+01, float %i.ah
   %i.as = fptosi float %i.ar to i32
   %i.at = select i1 %i.ap, i32 1024, i32 %i.as    ; 4 uses
-  %6 = icmp sgt i32 %i.ao, %i.at
+  %6 = icmp samesign ugt i32 %i.ao, %i.at
   br i1 %6, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %7 = sitofp reassoc nsz arcp contract afn i32 %i.at to float
-  %8 = sitofp reassoc nsz arcp contract afn i32 %i.ao to float
+  %7 = uitofp nsz nneg i32 %i.at to float
+  %8 = uitofp nsz nneg i32 %i.ao to float
   %i.au = fdiv reassoc nsz arcp contract afn float %7, %8
   %i.av = fpext reassoc nsz arcp contract afn float %i.au to double
   br label %_draw_ellipse.exit
 
 bb.d:                                             ; preds = %bb.b
-  %9 = sitofp reassoc nsz arcp contract afn i32 %i.ao to float
-  %10 = sitofp reassoc nsz arcp contract afn i32 %i.at to float
+  %9 = uitofp nsz nneg i32 %i.ao to float
+  %10 = uitofp nsz nneg i32 %i.at to float
   %i.aw = fdiv reassoc nsz arcp contract afn float %9, %10
   %i.ax = fpext reassoc nsz arcp contract afn float %i.aw to double
   br label %_draw_ellipse.exit
@@ -628,13 +628,13 @@ bb.d:                                             ; preds = %bb.b
 _draw_ellipse.exit:                               ; preds = %bb.c, %bb.d
   %i.ay = phi double [ %i.av, %bb.c ], [ 1.000000e+00, %bb.d ] ; 2 uses
   %i.az = phi double [ 1.000000e+00, %bb.c ], [ %i.ax, %bb.d ] ; 2 uses
-  %i.ba = call i32 @llvm.smax.i32(i32 %i.ao, i32 %i.at)
-  %11 = sitofp reassoc nsz arcp contract afn i32 %i.ba to double
-  %12 = fmul reassoc nnan nsz arcp contract afn double %11, 2.000000e+00
+  %i.ba = call i32 @llvm.umax.i32(i32 %i.ao, i32 %i.at)
+  %11 = shl nuw i32 %i.ba, 1
+  %12 = uitofp i32 %11 to double
   %i.bb = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !96
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 1432
   %i.bd = load double, ptr %i.bc, align 8, !tbaa !102 ; 3 uses
-  %i.be = fmul reassoc nsz arcp contract afn double %12, %i.bd
+  %i.be = fmul reassoc nsz arcp contract afn double %i.bd, %12
   %i.bf = fptosi double %i.be to i32              ; 5 uses
   %.not.i = icmp ne i32 %4, 0                     ; 2 uses
   %i.bg = select i1 %.not.i, i32 2, i32 1
@@ -709,15 +709,16 @@ bb.e:                                             ; preds = %bb.a
   %i.cl = select reassoc nsz arcp contract afn i1 %i.ck, float 1.600000e+01, float %i.ah
   %i.cm = fptosi float %i.cl to i32
   %i.cn = select i1 %i.cj, i32 1024, i32 %i.cm    ; 3 uses
-  %13 = sitofp reassoc nsz arcp contract afn i32 %i.ci to double
+  %13 = shl nuw i32 %i.ci, 1
+  %14 = uitofp i32 %13 to double
   %i.co = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !96
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 1432
-  %i.cq = load double, ptr %i.cp, align 8, !tbaa !102 ; 3 uses
-  %i.cr = fmul reassoc nsz arcp contract afn double %i.cq, 2.000000e+00 ; 2 uses
-  %14 = fmul reassoc nsz arcp contract afn double %i.cr, %13
-  %15 = fptosi double %14 to i32                  ; 4 uses
-  %16 = sitofp reassoc nsz arcp contract afn i32 %i.cn to double
-  %i.cs = fmul reassoc nsz arcp contract afn double %i.cr, %16
+  %i.cq = load double, ptr %i.cp, align 8, !tbaa !102 ; 4 uses
+  %i.cr = fmul reassoc nsz arcp contract afn double %i.cq, %14
+  %15 = fptosi double %i.cr to i32                ; 4 uses
+  %16 = shl nuw i32 %i.cn, 1
+  %17 = uitofp i32 %16 to double
+  %i.cs = fmul reassoc nsz arcp contract afn double %i.cq, %17
   %i.ct = fptosi double %i.cs to i32              ; 4 uses
   %.not.i34 = icmp ne i32 %4, 0                   ; 2 uses
   %i.cu = select i1 %.not.i34, i32 2, i32 1
@@ -1120,7 +1121,7 @@ declare i32 @llvm.umin.i32(i32, i32) #14
 declare float @llvm.fabs.f32(float) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #14
+declare i32 @llvm.umax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #20

@@ -204,7 +204,7 @@ bb.a:
   %i.n = tail call float @llvm.round.f32(float %i.m)
   %i.o = fptosi float %i.n to i32
   %i.p = tail call i32 @llvm.smin.i32(i32 %i.o, i32 4095)
-  %i.q = add nsw i32 %i.p, 63488
+  %i.q = add nuw nsw i32 %i.p, 63488
   %i.r = or i32 %i.q, %.044.lcssa
   %i.s = trunc i32 %i.r to i16
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
@@ -248,7 +248,7 @@ bb.a:
   %i.ag = tail call float @llvm.round.f32(float %i.af)
   %i.ah = fptosi float %i.ag to i32
   %i.ai = tail call i32 @llvm.smin.i32(i32 %i.ah, i32 4095)
-  %i.aj = add nsw i32 %i.ai, 63488
+  %i.aj = add nuw nsw i32 %i.ai, 63488
   %i.ak = or i32 %i.aj, %.0.lcssa
   %i.al = trunc i32 %i.ak to i16                  ; 2 uses
   %i.am = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %indvars.iv78 ; 3 uses
@@ -280,7 +280,7 @@ bb.a:
   %i.ax = tail call float @llvm.round.f32(float %i.aw)
   %i.ay = fptosi float %i.ax to i32
   %i.az = tail call i32 @llvm.smin.i32(i32 %i.ay, i32 4095)
-  %i.ba = add nsw i32 %i.az, 63488
+  %i.ba = add nuw nsw i32 %i.az, 63488
   %i.bb = or i32 %i.ba, %.1.lcssa
   %i.bc = trunc i32 %i.bb to i16
   %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 3

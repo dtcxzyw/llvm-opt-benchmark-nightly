@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %_ZN7testing15Assert
   %i.gy = fptosi float %i.bx to i32
   %i.gz = zext i32 %i.gx to i64
   %i.ha = icmp eq i64 %indvars.iv289, %i.gz
-  %i.hb = zext i32 %i.gy to i64
+  %i.hb = zext nneg i32 %i.gy to i64
   %i.hc = icmp eq i64 %indvars.iv293, %i.hb       ; 2 uses
   %i.hd = fcmp oeq float %i.bx, %i.ae
   %i.he = select i1 %i.hc, i1 true, i1 %i.hd
@@ -608,11 +608,12 @@ _ZN4pbrt11SobolSampleINS_12NoRandomizerEEEfliT_.exit62: ; preds = %_ZN4pbrt20Sob
   %i.cp = fptosi float %i.co to i32               ; 2 uses
   %i.cq = sitofp i32 %i.cp to float               ; 2 uses
   %i.cr = fmul nnan float %.sroa.speculated.i61, %i.cn
-  %i.cs = fptosi float %i.cr to i32               ; 2 uses
-  %7 = sitofp i32 %i.cs to float                  ; 2 uses
+  %i.cs = fptosi float %i.cr to i32
+  %7 = uitofp nneg i32 %i.cs to float             ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
+  %8 = fptosi float %7 to i32
   %i.ct = icmp eq i32 %i.ax, %i.cp                ; 2 uses
-  %i.cu = icmp eq i32 %i.ay, %i.cs                ; 2 uses
+  %i.cu = icmp eq i32 %i.ay, %8                   ; 2 uses
   %i.cv = select i1 %i.ct, i1 %i.cu, i1 false
   br i1 %i.cv, label %_ZN7testing15AssertionResultD2Ev.exit, label %bb.o
 
