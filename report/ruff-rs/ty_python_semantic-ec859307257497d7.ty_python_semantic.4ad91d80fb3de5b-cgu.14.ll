@@ -204,13 +204,14 @@ bb.a:
 define hidden noundef ptr @_RNvXs_NtCsoTR8nlGN3X_18ty_python_semantic9subscriptRShNtB4_7PyIndex8py_indexB6_(ptr noalias noundef nonnull readonly captures(ret: address, read_provenance) %0, i64 noundef range(i64 0, -9223372036854775808) %1, ptr nofree noundef nonnull readnone captures(none) %2, ptr noalias noundef readonly align 8 captures(none) dereferenceable(272) %3, ptr nofree noundef nonnull readnone align 4 captures(none) %4, i32 noundef %5) unnamed_addr #9 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = icmp slt i32 %5, 0
+  %6 = sub i32 0, %5
+  %7 = zext i32 %6 to i64                         ; 2 uses
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %6 = sub i32 0, %5
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %8 = icmp samesign ult i64 %1, %7
-  br i1 %8, label %bb.d, label %bb.e
+  %8 = add nsw i64 %7, -1
+  %.not11 = icmp samesign ugt i64 %1, %8
+  br i1 %.not11, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.b = zext nneg i32 %5 to i64                  ; 2 uses
@@ -224,8 +225,9 @@ bb.d:                                             ; preds = %bb.e, %bb.b, %bb.c
   ret ptr %.sroa.0.1
 
 bb.e:                                             ; preds = %bb.b
-  %i.e = sub nuw nsw i64 %1, %7
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %i.e
+  %i.e = sub nsw i64 0, %7
+  %9 = getelementptr i8, ptr %0, i64 %1
+  %i.f = getelementptr i8, ptr %9, i64 %i.e
   br label %bb.d
 }
 

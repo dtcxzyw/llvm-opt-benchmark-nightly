@@ -205,9 +205,9 @@ iter.check:                                       ; preds = %.preheader140
   %i.q = sext i32 %i.e to i64                     ; 8 uses
   %i.r = add i32 %i.e, -1
   %i.s = add nsw i32 %2, -1
-  %umin = tail call i32 @llvm.umin.i32(i32 %i.r, i32 %i.s) ; 3 uses
-  %i.t = add i32 %umin, 1                         ; 2 uses
-  %wide.trip.count = zext i32 %i.t to i64         ; 10 uses
+  %umin = tail call i32 @llvm.umin.i32(i32 %i.r, i32 %i.s) ; 4 uses
+  %i.t = add nuw i32 %umin, 1                     ; 2 uses
+  %wide.trip.count = zext i32 %i.t to i64         ; 9 uses
   %min.iters.check = icmp ult i32 %umin, 3
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
@@ -282,6 +282,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv179.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec239, %vec.epilog.middle.block ] ; 3 uses
   %indvars.iv.ph = phi i64 [ %i.q, %iter.check ], [ %i.q, %vector.memcheck ], [ %i.y, %vec.epilog.iter.check ], [ %i.ad, %vec.epilog.middle.block ] ; 2 uses
+  %3 = zext nneg i32 %umin to i64
+  %4 = sub nsw i64 %3, %indvars.iv179.ph
   %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -304,9 +306,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %indvars.iv.next.lcssa306.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
   %indvars.iv179.unr = phi i64 [ %indvars.iv179.ph, %.lr.ph.preheader ], [ %indvars.iv.next180.prol, %.lr.ph.prol ]
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
-  %3 = sub nsw i64 %indvars.iv179.ph, %wide.trip.count
-  %4 = icmp ugt i64 %3, -4
-  br i1 %4, label %.loopexit141.loopexit, label %.lr.ph
+  %5 = icmp ult i64 %4, 3
+  br i1 %5, label %.loopexit141.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %indvars.iv179 = phi i64 [ %indvars.iv.next180.3, %.lr.ph ], [ %indvars.iv179.unr, %.lr.ph.prol.loopexit ] ; 5 uses

@@ -205,7 +205,7 @@ bb.ax:                                            ; preds = %.critedge8
   br i1 %i.ip, label %.critedge8, label %.preheader, !llvm.loop !305
 
 .critedge8:                                       ; preds = %.critedge8.lr.ph, %bb.ax
-  %indvar = phi i64 [ 0, %.critedge8.lr.ph ], [ %indvar.next, %bb.ax ] ; 3 uses
+  %indvar = phi i64 [ 0, %.critedge8.lr.ph ], [ %indvar.next, %bb.ax ] ; 4 uses
   %indvars.iv307 = phi i64 [ 0, %.critedge8.lr.ph ], [ %indvars.iv.next308, %bb.ax ] ; 4 uses
   %i.iq = or disjoint i64 %indvars.iv307, 1       ; 2 uses
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %.val170, i64 %indvars.iv307
@@ -236,11 +236,14 @@ bb.ay:                                            ; preds = %.critedge8
   %scevgep = getelementptr nuw i8, ptr %i.ji, i64 4
   %i.jj = getelementptr i8, ptr %.val170, i64 %i.jh
   %scevgep311 = getelementptr i8, ptr %i.jj, i64 8
-  %i.jk = shl nuw nsw i64 %i.jg, 2
-  %i.jl = add nsw i64 %i.jk, -4
-  %i.jm = shl i64 %indvar, 3
-  %2 = sub i64 %i.jl, %i.jm
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %scevgep, ptr align 4 %scevgep311, i64 %2, i1 false), !tbaa !63
+  %i.jk = shl i64 %indvar, 1
+  %i.jl = add i64 %i.jk, 2
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.jl, i64 %i.jg)
+  %i.jm = shl i64 %indvar, 1
+  %2 = xor i64 %i.jm, -1
+  %3 = add i64 %umax, %2
+  %4 = shl nuw i64 %3, 2
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %scevgep, ptr align 4 %scevgep311, i64 %4, i1 false), !tbaa !63
   br label %Vec_IntDrop.exit
 
 Vec_IntDrop.exit:                                 ; preds = %.lr.ph.i236.preheader, %bb.ay
@@ -642,6 +645,9 @@ declare i32 @llvm.smin.i32(i32, i32) #32
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #34
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #32
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1

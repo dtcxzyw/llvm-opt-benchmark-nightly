@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !56   ; 10 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !56   ; 11 uses
   %i.e = icmp slt i32 %i.d, 0
   br i1 %i.e, label %_ZNK6icu_785Norms12combinesBackEi.exit.thread, label %bb.c
 
@@ -224,10 +224,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not114, label %bb.e, label %_ZNK6icu_785Norms12combinesBackEi.exit.thread
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.m = zext nneg i32 %i.d to i64
+  %i.m = zext nneg i32 %i.d to i64                ; 2 uses
   %i.n = getelementptr [4 x i8], ptr %1, i64 %i.m ; 2 uses
   %i.o = load i32, ptr %i.n, align 4, !tbaa !57
-  %i.p = ashr i32 %i.o, 8                         ; 7 uses
+  %i.p = ashr i32 %i.o, 8                         ; 8 uses
   %i.q = icmp eq i32 %i.d, 0                      ; 2 uses
   br i1 %i.q, label %bb.f, label %bb.g
 
@@ -274,21 +274,30 @@ bb.k:                                             ; preds = %bb.h
   br i1 %i.q, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.i, %bb.k
-  %3 = zext nneg i32 %i.d to i64
-  br label %.lr.ph
+  %indvars.iv.next154 = add nsw i64 %i.m, -1      ; 2 uses
+  %3 = and i64 %indvars.iv.next154, 4294967295
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %3
+  %5 = load i32, ptr %4, align 4, !tbaa !57       ; 2 uses
+  %6 = and i32 %5, 255
+  %7 = icmp eq i32 %6, 0
+  br i1 %7, label %bb.l, label %.critedge
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN6icu_786Hangul6isJamoEi.exit.thread
-  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN6icu_786Hangul6isJamoEi.exit.thread ] ; 4 uses
-  %.078122 = phi i32 [ %i.p, %.lr.ph.preheader ], [ %i.an, %_ZN6icu_786Hangul6isJamoEi.exit.thread ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.aj = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv.next
+.lr.ph:                                           ; preds = %_ZN6icu_786Hangul6isJamoEi.exit.thread
+  %indvars.iv.next = add nsw i64 %indvars.iv.next156, -1 ; 2 uses
+  %8 = and i64 %indvars.iv.next, 4294967295
+  %i.aj = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %8
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !57 ; 2 uses
   %i.al = and i32 %i.ak, 255
   %i.am = icmp eq i32 %i.al, 0
-  br i1 %i.am, label %bb.l, label %.critedge.loopexit.split.loop.exit154
+  %9 = trunc nuw i64 %indvars.iv.next156 to i32   ; 2 uses
+  br i1 %i.am, label %bb.l, label %.critedge, !llvm.loop !83
 
-bb.l:                                             ; preds = %.lr.ph
-  %i.an = ashr exact i32 %i.ak, 8                 ; 6 uses
+bb.l:                                             ; preds = %.lr.ph.preheader, %.lr.ph
+  %10 = phi i32 [ %9, %.lr.ph ], [ %i.d, %.lr.ph.preheader ] ; 2 uses
+  %11 = phi i32 [ %i.ak, %.lr.ph ], [ %5, %.lr.ph.preheader ]
+  %indvars.iv.next156 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.next154, %.lr.ph.preheader ] ; 2 uses
+  %.078122155 = phi i32 [ %i.an, %.lr.ph ], [ %i.p, %.lr.ph.preheader ]
+  %i.an = ashr exact i32 %11, 8                   ; 7 uses
   %i.ao = add nsw i32 %i.an, -4352
   %or.cond.i103 = icmp ult i32 %i.ao, 195
   br i1 %or.cond.i103, label %bb.m, label %_ZN6icu_786Hangul6isJamoEi.exit.thread
@@ -300,23 +309,18 @@ bb.m:                                             ; preds = %bb.l
   %or.cond9.i.not139 = select i1 %i.ap, i1 %or.cond3.i, i1 false
   %i.ar = icmp samesign ult i32 %i.an, 4520
   %or.cond119 = select i1 %or.cond9.i.not139, i1 %i.ar, i1 false
-  br i1 %or.cond119, label %_ZN6icu_786Hangul6isJamoEi.exit.thread, label %.critedge.loopexit.split.loop.exit
+  br i1 %or.cond119, label %_ZN6icu_786Hangul6isJamoEi.exit.thread, label %.critedge
 
 _ZN6icu_786Hangul6isJamoEi.exit.thread:           ; preds = %bb.m, %bb.l
-  %4 = icmp samesign ugt i64 %indvars.iv, 1
-  br i1 %4, label %.lr.ph, label %.critedge, !llvm.loop !83
+  %12 = icmp sgt i32 %10, 1
+  br i1 %12, label %.lr.ph, label %.critedge.loopexit.split.loop.exit154, !llvm.loop !83
 
-.critedge.loopexit.split.loop.exit:               ; preds = %bb.m
-  %5 = trunc nsw i64 %indvars.iv to i32
-  br label %.critedge
+.critedge.loopexit.split.loop.exit154:            ; preds = %_ZN6icu_786Hangul6isJamoEi.exit.thread
+  br label %.critedge, !llvm.loop !83
 
-.critedge.loopexit.split.loop.exit154:            ; preds = %.lr.ph
-  %6 = trunc nsw i64 %indvars.iv to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %_ZN6icu_786Hangul6isJamoEi.exit.thread, %.critedge.loopexit.split.loop.exit, %.critedge.loopexit.split.loop.exit154, %bb.k
-  %.078.lcssa = phi i32 [ %i.p, %bb.k ], [ %.078122, %.critedge.loopexit.split.loop.exit154 ], [ %.078122, %.critedge.loopexit.split.loop.exit ], [ %i.an, %_ZN6icu_786Hangul6isJamoEi.exit.thread ]
-  %.076.lcssa = phi i32 [ 0, %bb.k ], [ %6, %.critedge.loopexit.split.loop.exit154 ], [ %5, %.critedge.loopexit.split.loop.exit ], [ 0, %_ZN6icu_786Hangul6isJamoEi.exit.thread ] ; 3 uses
+.critedge:                                        ; preds = %bb.m, %.lr.ph, %.lr.ph.preheader, %.critedge.loopexit.split.loop.exit154, %bb.k
+  %.078.lcssa = phi i32 [ %i.p, %bb.k ], [ %i.an, %.critedge.loopexit.split.loop.exit154 ], [ %i.p, %.lr.ph.preheader ], [ %i.an, %.lr.ph ], [ %.078122155, %bb.m ]
+  %.076.lcssa = phi i32 [ 0, %bb.k ], [ 0, %.critedge.loopexit.split.loop.exit154 ], [ %i.d, %.lr.ph.preheader ], [ %9, %.lr.ph ], [ %10, %bb.m ] ; 3 uses
   %i.as = tail call noundef ptr @_ZNK6icu_785Norms7getNormEi(ptr noundef nonnull align 8 dereferenceable(424) %0, i32 noundef %.078.lcssa) ; 3 uses
   %i.at = icmp eq i32 %.076.lcssa, %i.d
   br i1 %i.at, label %bb.n, label %bb.p

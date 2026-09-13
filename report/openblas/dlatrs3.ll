@@ -202,10 +202,10 @@ bb.t:                                             ; preds = %.lr.ph665, %.loopex
   %i.cr = add nsw i64 %indvars.iv753, -1          ; 3 uses
   %indvars.iv.next754 = add nuw nsw i64 %indvars.iv753, 1 ; 2 uses
   %i.cs = trunc nuw nsw i64 %i.cr to i32
-  %.0550 = select i1 %.not, i32 %i.ai, i32 %i.cs  ; 2 uses
+  %.0550 = select i1 %.not, i32 %i.ai, i32 %i.cs  ; 3 uses
   %i.ct = trunc nsw i64 %indvars.iv.next754 to i32
   %.0541 = select i1 %.not, i32 %i.ct, i32 1      ; 2 uses
-  %.not624654 = icmp sgt i32 %.0541, %.0550
+  %.not624654 = icmp samesign ugt i32 %.0541, %.0550
   br i1 %.not624654, label %.loopexit651, label %.lr.ph658
 
 .lr.ph658:                                        ; preds = %bb.t
@@ -216,19 +216,16 @@ bb.t:                                             ; preds = %.lr.ph665, %.loopex
   %i.cx = mul nuw nsw i64 %i.cr, %i.co            ; 2 uses
   %i.cy = trunc nsw i64 %i.cx to i32
   %i.cz = sub nsw i32 %.631, %i.cy                ; 2 uses
-  %15 = trunc i64 %i.cr to i32
-  %16 = add i32 %i.ao, %15
-  %17 = mul i32 %16, %i.ai
   %i.da = trunc i64 %i.cx to i32
   %i.db = add i32 %i.da, 1
   %i.dc = mul i32 %i.o, %i.db
   %invariant.op659 = add i32 %i.dc, 1             ; 2 uses
   %i.dd = zext nneg i32 %.0541 to i64             ; 2 uses
-  %18 = add i32 %.0550, 1
-  %wide.trip.count751 = zext i32 %18 to i64       ; 2 uses
-  br i1 %.not591, label %.lr.ph658.split.us, label %.lr.ph658.split.a
+  br i1 %.not591, label %.lr.ph658.split.us, label %.lr.ph658.split
 
 .lr.ph658.split.us:                               ; preds = %.lr.ph658
+  %15 = add nuw i32 %.0550, 1
+  %wide.trip.count751 = zext i32 %15 to i64
   %gep.a = getelementptr [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv753
   br label %bb.u
 
@@ -259,9 +256,19 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph658.sp
   %exitcond752.not = icmp eq i64 %indvars.iv.next749, %wide.trip.count751
   br i1 %exitcond752.not, label %.loopexit651, label %bb.u, !llvm.loop !13
 
-.lr.ph658.split.a:                                ; preds = %.lr.ph658, %.lr.ph658.split.a
-  %indvars.iv743 = phi i64 [ %indvars.iv.next744, %.lr.ph658.split.a ], [ %i.dd, %.lr.ph658 ] ; 4 uses
-  %.1563655 = phi double [ %i.ee, %.lr.ph658.split.a ], [ %.0562662, %.lr.ph658 ] ; 2 uses
+.lr.ph658.split:                                  ; preds = %.lr.ph658
+  %16 = trunc i64 %i.cr to i32
+  %17 = add i32 %i.ao, %16
+  %18 = mul i32 %17, %i.ai
+  %19 = sext i32 %18 to i64
+  %20 = add nuw i32 %.0550, 1
+  %wide.trip.count746 = zext i32 %20 to i64
+  %invariant.gep = getelementptr [8 x i8], ptr %i.v, i64 %19
+  br label %.lr.ph658.split.a
+
+.lr.ph658.split.a:                                ; preds = %.lr.ph658.split, %.lr.ph658.split.a
+  %indvars.iv743 = phi i64 [ %i.dd, %.lr.ph658.split ], [ %indvars.iv.next744, %.lr.ph658.split.a ] ; 4 uses
+  %.1563655 = phi double [ %.0562662, %.lr.ph658.split ], [ %i.ee, %.lr.ph658.split.a ] ; 2 uses
   %i.ds = trunc i64 %indvars.iv743 to i32
   %i.dt = mul i32 %i.ad, %i.ds
   %i.du = load i32, ptr %4, align 4, !tbaa !35
@@ -277,15 +284,12 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph658.sp
   %i.ea = getelementptr inbounds [8 x i8], ptr %i.q, i64 %i.dz
   %i.eb = call double @dlange_(ptr noundef nonnull @.str.11, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef %i.ea, ptr noundef nonnull %7, ptr noundef nonnull %i.l) #6 ; 4 uses
   store double %i.eb, ptr %i.i, align 8, !tbaa !37
-  %19 = trunc nuw nsw i64 %indvars.iv743 to i32
-  %20 = add i32 %17, %19
-  %21 = sext i32 %20 to i64
-  %i.ec = getelementptr inbounds [8 x i8], ptr %i.v, i64 %21
+  %i.ec = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv743
   store double %i.eb, ptr %i.ec, align 8, !tbaa !37
   %i.ed = fcmp oge double %.1563655, %i.eb
   %i.ee = select i1 %i.ed, double %.1563655, double %i.eb ; 2 uses
   %indvars.iv.next744 = add nuw nsw i64 %indvars.iv743, 1 ; 2 uses
-  %exitcond747.not = icmp eq i64 %indvars.iv.next744, %wide.trip.count751
+  %exitcond747.not = icmp eq i64 %indvars.iv.next744, %wide.trip.count746
   br i1 %exitcond747.not, label %.loopexit651, label %.lr.ph658.split.a, !llvm.loop !13
 
 ._crit_edge666:                                   ; preds = %.loopexit651

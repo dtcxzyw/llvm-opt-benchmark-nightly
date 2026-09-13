@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ck = load i32, ptr %i.g, align 8
   %i.cl = add i32 %i.ck, 65535                    ; 2 uses
   %i.cm = and i32 %i.cl, 65535                    ; 11 uses
-  %i.cn = add nsw i32 %i.cm, -1                   ; 3 uses
+  %i.cn = add nsw i32 %i.cm, -1                   ; 2 uses
   %i.co = zext nneg i32 %i.cm to i64              ; 12 uses
   %i.cp = tail call ptr @palloc_mul(i64 noundef 32, i64 noundef %i.co) #8 ; 8 uses
   %i.cq = tail call ptr @palloc_mul(i64 noundef 32, i64 noundef %i.co) #8 ; 7 uses
@@ -367,18 +367,17 @@ range_gist_consider_split.exit.i:                 ; preds = %bb.o, %bb.n, %.crit
   %.sroa.27.0.lcssa.i = phi float [ %.sroa.27.0269.i, %bb.g ], [ %.sroa.27.2.i, %range_gist_consider_split.exit.i ]
   %.sroa.31.0.lcssa.i = phi float [ %.sroa.31.0270.i, %bb.g ], [ %.sroa.31.2.i, %range_gist_consider_split.exit.i ]
   %.sroa.35.0.lcssa.i = phi i32 [ %.sroa.35.0271.i, %bb.g ], [ %.sroa.35.2.i, %range_gist_consider_split.exit.i ]
-  %3 = sext i32 %i.cn to i64                      ; 2 uses
-  %i.er = getelementptr inbounds [32 x i8], ptr %i.cq, i64 %3
+  %3 = zext nneg i32 %i.cn to i64                 ; 3 uses
+  %i.er = getelementptr inbounds nuw [32 x i8], ptr %i.cq, i64 %3
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 16
-  %i.et = getelementptr inbounds [32 x i8], ptr %i.cp, i64 %3
+  %i.et = getelementptr inbounds nuw [32 x i8], ptr %i.cp, i64 %3
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 16
-  %4 = zext i32 %i.cn to i64
   br label %.lr.ph285.i
 
 .lr.ph285.i:                                      ; preds = %range_gist_consider_split.exit211.i, %.critedge.i
   %.3310.i = phi ptr [ %i.es, %.critedge.i ], [ %i.ew, %range_gist_consider_split.exit211.i ]
   %.1174309.i = phi ptr [ %i.eu, %.critedge.i ], [ %.2175283.i, %range_gist_consider_split.exit211.i ]
-  %.2179308.i = phi i64 [ %4, %.critedge.i ], [ %indvars.iv353.i, %range_gist_consider_split.exit211.i ]
+  %.2179308.i = phi i64 [ %3, %.critedge.i ], [ %indvars.iv353.i, %range_gist_consider_split.exit211.i ]
   %.2183307.i = phi i32 [ %i.cn, %.critedge.i ], [ %.3184.lcssa.i, %range_gist_consider_split.exit211.i ] ; 3 uses
   %.sroa.35.1306.i = phi i32 [ %.sroa.35.0.lcssa.i, %.critedge.i ], [ %.sroa.35.3.i, %range_gist_consider_split.exit211.i ] ; 3 uses
   %.sroa.31.1305.i = phi float [ %.sroa.31.0.lcssa.i, %.critedge.i ], [ %.sroa.31.3.i, %range_gist_consider_split.exit211.i ] ; 4 uses
@@ -781,9 +780,11 @@ bb.a:
   br i1 %.not35, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.f = add nsw i32 %i.c, -1
+  %i.f = add nuw nsw i32 %i.c, 131071
   %i.g = lshr i32 %i.f, 1
+  %3 = add nuw nsw i32 %i.g, 1
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %4 = and i32 %3, 65535
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.j = trunc i32 %i.b to i16
   br label %bb.b
@@ -798,8 +799,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.i
   %i.n = load i64, ptr %i.m, align 8
   %i.o = inttoptr i64 %i.n to ptr
   %i.p = tail call ptr @pg_detoast_datum(ptr noundef %i.o) #8 ; 4 uses
-  %.not44 = icmp samesign ult i32 %i.g, %i.k
-  br i1 %.not44, label %bb.f, label %bb.c
+  %5 = icmp samesign ugt i32 %4, %i.k
+  br i1 %5, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %i.q = load i32, ptr %i.d, align 8              ; 2 uses

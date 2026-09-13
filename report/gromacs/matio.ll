@@ -205,19 +205,19 @@ bb.a:
   br i1 %i.bl, label %.lr.ph61, label %._crit_edge62
 
 .lr.ph61:                                         ; preds = %._crit_edge
+  %.03557 = add nsw i32 %i.bk, -1
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 256 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
-  %i.bo = zext nneg i32 %i.bk to i64              ; 2 uses
+  %i.bo = zext nneg i32 %.03557 to i64            ; 2 uses
   br i1 %i.e, label %.lr.ph61.split.us, label %.lr.ph61.split
 
 .lr.ph61.split.us:                                ; preds = %.lr.ph61, %bb.e
-  %indvars.iv74.in = phi i64 [ %indvars.iv74, %bb.e ], [ %i.bo, %.lr.ph61 ] ; 2 uses
+  %indvars.iv74.in = phi i64 [ %indvars.iv.next75, %bb.e ], [ %i.bo, %.lr.ph61 ] ; 4 uses
   %.035.in58.us = phi i32 [ %i.bs, %bb.e ], [ %i.bk, %.lr.ph61 ]
-  %indvars.iv74 = add nsw i64 %indvars.iv74.in, -1 ; 3 uses
   %i.bp = load i32, ptr %i.o, align 8, !tbaa !99  ; 3 uses
   %i.bq = sdiv i32 %i.bp, 100
   %i.br = add nsw i32 %i.bq, 1
-  %i.bs = trunc nuw nsw i64 %indvars.iv74 to i32  ; 3 uses
+  %i.bs = trunc nuw nsw i64 %indvars.iv74.in to i32 ; 3 uses
   %i.bt = srem i32 %i.bs, %i.br
   %i.bu = icmp eq i32 %i.bt, 0
   br i1 %i.bu, label %bb.b, label %.preheader.us
@@ -242,7 +242,7 @@ bb.b:                                             ; preds = %.lr.ph61.split.us
   %i.cd = load i64, ptr %i.bn, align 8
   %i.ce = mul nsw i64 %i.cd, %indvars.iv71
   %i.cf = getelementptr [2 x i8], ptr %i.cc, i64 %i.ce
-  %i.cg = getelementptr [2 x i8], ptr %i.cf, i64 %indvars.iv74
+  %i.cg = getelementptr [2 x i8], ptr %i.cf, i64 %indvars.iv74.in
   %i.ch = load i16, ptr %i.cg, align 2, !tbaa !109
   %i.ci = sext i16 %i.ch to i64
   %i.cj = load ptr, ptr %i.a, align 8, !tbaa !55
@@ -269,7 +269,8 @@ bb.d:                                             ; preds = %.loopexit.us
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %2 = icmp samesign ugt i64 %indvars.iv74.in, 1
+  %indvars.iv.next75 = add nsw i64 %indvars.iv74.in, -1
+  %2 = icmp sgt i64 %indvars.iv74.in, 0
   br i1 %2, label %.lr.ph61.split.us, label %._crit_edge62, !llvm.loop !926
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.split
@@ -303,13 +304,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   ret void
 
 .lr.ph61.split:                                   ; preds = %.lr.ph61, %bb.i
-  %indvars.iv68.in = phi i64 [ %indvars.iv68, %bb.i ], [ %i.bo, %.lr.ph61 ] ; 2 uses
+  %indvars.iv68.in = phi i64 [ %indvars.iv.next69, %bb.i ], [ %i.bo, %.lr.ph61 ] ; 4 uses
   %.035.in58 = phi i32 [ %i.dp, %bb.i ], [ %i.bk, %.lr.ph61 ]
-  %indvars.iv68 = add nsw i64 %indvars.iv68.in, -1 ; 3 uses
   %i.dm = load i32, ptr %i.o, align 8, !tbaa !99  ; 3 uses
   %i.dn = sdiv i32 %i.dm, 100
   %i.do = add nsw i32 %i.dn, 1
-  %i.dp = trunc nuw nsw i64 %indvars.iv68 to i32  ; 3 uses
+  %i.dp = trunc nuw nsw i64 %indvars.iv68.in to i32 ; 3 uses
   %i.dq = srem i32 %i.dp, %i.do
   %i.dr = icmp eq i32 %i.dq, 0
   br i1 %i.dr, label %bb.f, label %.preheader49
@@ -334,7 +334,7 @@ bb.f:                                             ; preds = %.lr.ph61.split
   %i.ea = load i64, ptr %i.bn, align 8
   %i.eb = mul nsw i64 %i.ea, %indvars.iv
   %i.ec = getelementptr [2 x i8], ptr %i.dz, i64 %i.eb
-  %i.ed = getelementptr [2 x i8], ptr %i.ec, i64 %indvars.iv68
+  %i.ed = getelementptr [2 x i8], ptr %i.ec, i64 %indvars.iv68.in
   %i.ee = load i16, ptr %i.ed, align 2, !tbaa !109
   %i.ef = sext i16 %i.ee to i64
   %i.eg = load ptr, ptr %i.a, align 8, !tbaa !55
@@ -367,7 +367,8 @@ bb.h:                                             ; preds = %.loopexit50
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %3 = icmp samesign ugt i64 %indvars.iv68.in, 1
+  %indvars.iv.next69 = add nsw i64 %indvars.iv68.in, -1
+  %3 = icmp sgt i64 %indvars.iv68.in, 0
   br i1 %3, label %.lr.ph61.split, label %._crit_edge62, !llvm.loop !926
 }
 
@@ -770,14 +771,14 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
   %.0.us74.i = phi i32 [ %i.ha, %bb.ae ], [ %i.hf, %bb.ag ], [ 0, %bb.af ]
   %spec.store.select.us75.i = tail call i32 @llvm.smax.i32(i32 %.0.us74.i, i32 0)
   %spec.select.us76.i = tail call i32 @llvm.smin.i32(i32 %spec.store.select.us75.i, i32 %i.er) ; 2 uses
-  %20 = srem i32 %spec.select.us76.i, 89
-  %.sext.us.i = sext i32 %20 to i64
-  %i.hg = getelementptr inbounds i8, ptr @_ZL6mapper, i64 %.sext.us.i
+  %20 = urem i32 %spec.select.us76.i, 89
+  %.sext.us.i = zext nneg i32 %20 to i64
+  %i.hg = getelementptr inbounds nuw i8, ptr @_ZL6mapper, i64 %.sext.us.i
   %i.hh = load i8, ptr %i.hg, align 1, !tbaa !51
   %i.hi = sext i8 %i.hh to i32
-  %21 = sdiv i32 %spec.select.us76.i, 89
-  %.sext64.us.i = sext i32 %21 to i64
-  %i.hj = getelementptr inbounds i8, ptr @_ZL6mapper, i64 %.sext64.us.i
+  %21 = udiv i32 %spec.select.us76.i, 89
+  %.sext64.us.i = zext nneg i32 %21 to i64
+  %i.hj = getelementptr inbounds nuw i8, ptr @_ZL6mapper, i64 %.sext64.us.i
   %i.hk = load i8, ptr %i.hj, align 1, !tbaa !51
   %i.hl = sext i8 %i.hk to i32
   %i.hm = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.229, i32 noundef %i.hi, i32 noundef %i.hl) #29 ; 0 uses
@@ -1180,7 +1181,7 @@ bb.af:                                            ; preds = %._crit_edge.us.i
 .lr.ph95.split.i:                                 ; preds = %.lr.ph95.i, %bb.am
   %.067.in92.i = phi i32 [ %.06793.i, %bb.am ], [ %7, %.lr.ph95.i ] ; 2 uses
   %.06793.i = add nsw i32 %.067.in92.i, -1        ; 3 uses
-  %30 = srem i32 %.06793.i, %i.by
+  %30 = urem i32 %.06793.i, %i.by
   %i.dj = icmp eq i32 %30, 0
   br i1 %i.dj, label %bb.ag, label %bb.ah
 
@@ -1583,14 +1584,14 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph.us.i
   %i.eg = fptosi float %i.ef to i32
   %spec.store.select.us48.i = tail call i32 @llvm.smax.i32(i32 %i.eg, i32 0)
   %spec.select.us49.i = tail call i32 @llvm.smin.i32(i32 %spec.store.select.us48.i, i32 %i.cm) ; 2 uses
-  %17 = srem i32 %spec.select.us49.i, 89
-  %.sext.us.i = sext i32 %17 to i64
-  %i.eh = getelementptr inbounds i8, ptr @_ZL6mapper, i64 %.sext.us.i
+  %17 = urem i32 %spec.select.us49.i, 89
+  %.sext.us.i = zext nneg i32 %17 to i64
+  %i.eh = getelementptr inbounds nuw i8, ptr @_ZL6mapper, i64 %.sext.us.i
   %i.ei = load i8, ptr %i.eh, align 1, !tbaa !51
   %i.ej = sext i8 %i.ei to i32
-  %18 = sdiv i32 %spec.select.us49.i, 89
-  %.sext38.us.i = sext i32 %18 to i64
-  %i.ek = getelementptr inbounds i8, ptr @_ZL6mapper, i64 %.sext38.us.i
+  %18 = udiv i32 %spec.select.us49.i, 89
+  %.sext38.us.i = zext nneg i32 %18 to i64
+  %i.ek = getelementptr inbounds nuw i8, ptr @_ZL6mapper, i64 %.sext38.us.i
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !51
   %i.em = sext i8 %i.el to i32
   %i.en = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.229, i32 noundef %i.ej, i32 noundef %i.em) #29 ; 0 uses

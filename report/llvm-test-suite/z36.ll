@@ -204,8 +204,8 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   br i1 %i.ao, label %bb.o, label %.preheader342, !llvm.loop !36
 
 .preheader342:                                    ; preds = %bb.o, %.preheader342
-  %indvars.iv437 = phi i32 [ %indvars.iv.next438, %.preheader342 ], [ 0, %bb.o ] ; 5 uses
-  %indvar = phi i64 [ %indvar.next, %.preheader342 ], [ 0, %bb.o ] ; 2 uses
+  %indvars.iv437 = phi i32 [ %indvars.iv.next438, %.preheader342 ], [ 0, %bb.o ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %.preheader342 ], [ 0, %bb.o ] ; 3 uses
   %indvars.iv431 = phi i64 [ %indvars.iv.next432, %.preheader342 ], [ %indvars.iv, %bb.o ] ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv431
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !12  ; 3 uses
@@ -557,9 +557,9 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br label %.thread
 
 bb.am:                                            ; preds = %bb.p
-  %i.ha = trunc nuw nsw i64 %indvars.iv431 to i32
-  %i.hb = trunc nuw nsw i64 %indvars.iv to i32
-  %i.hc = sub nuw nsw i32 %i.ha, %i.hb
+  %i.ha = trunc nuw nsw i64 %indvars.iv to i32
+  %i.hb = trunc nuw nsw i64 %indvars.iv431 to i32
+  %i.hc = sub nuw nsw i32 %i.hb, %i.ha
   %i.hd = icmp samesign ult i32 %i.hc, 5
   br i1 %i.hd, label %.thread, label %bb.an
 
@@ -947,26 +947,27 @@ bb.bf:                                            ; preds = %.critedge
 .lr.ph406.preheader:                              ; preds = %.loopexit337, %bb.bb
   %i.mu = getelementptr inbounds nuw i8, ptr %.0279412, i64 8 ; 3 uses
   %i.mv = load ptr, ptr %i.mu, align 8, !tbaa !12
-  %1 = sext i32 %indvars.iv437 to i64
-  %invariant.gep536 = getelementptr i8, ptr %i.n, i64 %indvars.iv
   br label %.lr.ph406.outer
 
 .lr.ph406.outer:                                  ; preds = %.thread509, %.lr.ph406.preheader
-  %indvars.iv450.ph = phi i64 [ %indvars.iv.next451, %.thread509 ], [ %1, %.lr.ph406.preheader ]
+  %indvars.iv450.ph = phi i64 [ %indvars.iv.next451, %.thread509 ], [ %indvar, %.lr.ph406.preheader ]
   %.not325 = phi i1 [ false, %.thread509 ], [ true, %.lr.ph406.preheader ]
   br label %.lr.ph406
 
 .lr.ph406:                                        ; preds = %.lr.ph406.outer, %bb.ca
   %indvars.iv450 = phi i64 [ %indvars.iv.next451, %bb.ca ], [ %indvars.iv450.ph, %.lr.ph406.outer ] ; 3 uses
   %indvars.iv.next451 = add nsw i64 %indvars.iv450, -1 ; 4 uses
-  %i.mw = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.next451
+  %1 = and i64 %indvars.iv.next451, 4294967295
+  %i.mw = getelementptr inbounds nuw i8, ptr %i.b, i64 %1
   %i.mx = load i8, ptr %i.mw, align 1, !tbaa !12
   %i.my = and i8 %i.mx, 1
   %.not326 = icmp eq i8 %i.my, 0
   br i1 %.not326, label %bb.ca, label %bb.bg
 
 bb.bg:                                            ; preds = %.lr.ph406
-  %gep537 = getelementptr i8, ptr %invariant.gep536, i64 %indvars.iv.next451
+  %2 = add i64 %indvars.iv.next451, %indvars.iv
+  %3 = and i64 %2, 4294967295
+  %gep537 = getelementptr i8, ptr %i.n, i64 %3
   %i.mz = getelementptr i8, ptr %gep537, i64 -1   ; 2 uses
   %i.na = call ptr @MakeWord(i32 noundef 11, ptr noundef %i.mz, ptr noundef nonnull %i.m) #11 ; 6 uses
   %i.nb = load i32, ptr %i.q, align 8
@@ -1288,12 +1289,14 @@ bb.bz:                                            ; preds = %bb.by
   br label %.thread509
 
 bb.ca:                                            ; preds = %.lr.ph406
-  %i.sy = icmp sgt i64 %indvars.iv450, 4
+  %4 = trunc nuw i64 %indvars.iv450 to i32
+  %i.sy = icmp sgt i32 %4, 4
   br i1 %i.sy, label %.lr.ph406, label %._crit_edge407, !llvm.loop !49
 
 .thread509:                                       ; preds = %bb.by, %bb.bz
   store i8 0, ptr %i.mz, align 1, !tbaa !12
-  %i.sz = icmp sgt i64 %indvars.iv450, 4
+  %5 = trunc nuw i64 %indvars.iv450 to i32
+  %i.sz = icmp sgt i32 %5, 4
   br i1 %i.sz, label %.lr.ph406.outer, label %._crit_edge407.thread, !llvm.loop !49
 
 ._crit_edge407:                                   ; preds = %bb.ca

@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local void @Huffman_Generate(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef captures(none) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 {
 .preheader165:
   %i.a = alloca [64 x i32], align 16              ; 12 uses
-  %i.b = alloca [17 x i32], align 16              ; 24 uses
+  %i.b = alloca [17 x i32], align 16              ; 25 uses
   %i.c = alloca [17 x i32], align 16              ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false), !tbaa !7
@@ -270,7 +270,7 @@ bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(68) %i.b, i8 0, i64 68, i1 false), !tbaa !7
   store i32 %i.de, ptr %i.dg, align 4, !tbaa !7
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store i32 2, ptr %i.dh, align 4, !tbaa !7
   %.not156175 = icmp eq i64 %indvars.iv212, 0
   br i1 %.not156175, label %.preheader160, label %.lr.ph178
@@ -422,7 +422,8 @@ bb.q:                                             ; preds = %bb.p
   %i.fy = shl i32 %i.fx, 1                        ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 %i.fy, ptr %i.fz, align 4, !tbaa !7
-  %i.ga = load i32, ptr %i.dh, align 4, !tbaa !7
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %i.ga = load i32, ptr %5, align 4, !tbaa !7
   %i.gb = add i32 %i.ga, %i.fy
   %i.gc = shl i32 %i.gb, 1                        ; 2 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %i.c, i64 8

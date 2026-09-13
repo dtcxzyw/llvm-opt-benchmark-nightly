@@ -204,14 +204,14 @@ bb.a:
   %i.c = getelementptr i8, ptr %2, i64 8          ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.f = zext nneg i32 %.val32 to i64
+  %3 = add nsw i32 %.val32, -1
+  %i.f = zext nneg i32 %3 to i64
   %i.g = zext nneg i32 %.val32 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph45, %bb.n
   %indvars.iv53 = phi i64 [ %i.g, %.lr.ph45 ], [ %indvars.iv.next54, %bb.n ] ; 3 uses
-  %indvars.iv48.in = phi i64 [ %i.f, %.lr.ph45 ], [ %indvars.iv48, %bb.n ]
-  %indvars.iv48 = add nsw i64 %indvars.iv48.in, -1 ; 2 uses
+  %indvars.iv48.in = phi i64 [ %i.f, %.lr.ph45 ], [ %indvars.iv.next49, %bb.n ] ; 2 uses
   %indvars.iv.next54 = add nsw i64 %indvars.iv53, -1 ; 2 uses
   store i32 0, ptr %i.d, align 4, !tbaa !30
   %.val3137 = load i32, ptr %i.a, align 4, !tbaa !30 ; 2 uses
@@ -319,17 +319,17 @@ bb.l:                                             ; preds = %.lr.ph, %Vec_IntPus
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph41, %bb.m
-  %indvars.iv50 = phi i64 [ %indvars.iv48, %.lr.ph41 ], [ %indvars.iv.next51, %bb.m ] ; 2 uses
+  %indvars.iv50 = phi i64 [ %indvars.iv48.in, %.lr.ph41 ], [ %indvars.iv.next51, %bb.m ] ; 2 uses
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 3 uses
-  %i.aj = getelementptr inbounds [4 x i8], ptr %.val33, i64 %indvars.iv.next51
+  %i.aj = getelementptr inbounds nuw [4 x i8], ptr %.val33, i64 %indvars.iv.next51
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !34
-  %i.al = getelementptr inbounds [4 x i8], ptr %.val33, i64 %indvars.iv50
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %.val33, i64 %indvars.iv50
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !34
   %.val30 = load i32, ptr %i.a, align 4, !tbaa !30
   %i.am = add nsw i32 %.val30, -1                 ; 2 uses
-  %3 = sext i32 %i.am to i64
-  %4 = icmp slt i64 %indvars.iv.next51, %3
-  br i1 %4, label %bb.m, label %._crit_edge, !llvm.loop !105
+  %4 = trunc nuw i64 %indvars.iv.next51 to i32
+  %5 = icmp sgt i32 %i.am, %4
+  br i1 %5, label %bb.m, label %._crit_edge, !llvm.loop !105
 
 ._crit_edge:                                      ; preds = %bb.m, %.preheader
   %.lcssa = phi i32 [ %i.ag, %.preheader ], [ %i.am, %bb.m ]
@@ -338,6 +338,7 @@ bb.m:                                             ; preds = %.lr.ph41, %bb.m
 
 bb.n:                                             ; preds = %.critedge2, %._crit_edge
   %i.an = icmp sgt i64 %indvars.iv53, 1
+  %indvars.iv.next49 = add nsw i64 %indvars.iv48.in, -1
   br i1 %i.an, label %bb.b, label %.critedge, !llvm.loop !106
 
 .critedge:                                        ; preds = %bb.n, %bb.a

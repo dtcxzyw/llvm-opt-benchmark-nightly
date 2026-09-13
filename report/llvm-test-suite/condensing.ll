@@ -41,7 +41,8 @@ bb.a:
   br i1 %.not87, label %._crit_edge62, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.j = zext nneg i32 %i.q to i64
+  %.02759 = add nsw i32 %i.q, -1
+  %i.j = zext nneg i32 %.02759 to i64
   br label %.preheader
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
@@ -66,19 +67,19 @@ bb.a:
 .loopexit:                                        ; preds = %cont_BackTrack.exit45, %.preheader
   %i.t = phi i32 [ %i.v, %.preheader ], [ %i.do, %cont_BackTrack.exit45 ]
   %.1.lcssa = phi ptr [ %.060, %.preheader ], [ %.3, %cont_BackTrack.exit45 ] ; 2 uses
-  %i.u = icmp sgt i64 %indvars.iv68.in, 1
+  %indvars.iv.next69 = add nsw i64 %indvars.iv68.in, -1
+  %i.u = icmp sgt i64 %indvars.iv68.in, 0
   br i1 %i.u, label %.preheader, label %._crit_edge62, !llvm.loop !5
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit
   %i.v = phi i32 [ %i.m, %.preheader.preheader ], [ %i.t, %.loopexit ] ; 2 uses
-  %indvars.iv68.in = phi i64 [ %i.j, %.preheader.preheader ], [ %indvars.iv68, %.loopexit ] ; 2 uses
+  %indvars.iv68.in = phi i64 [ %i.j, %.preheader.preheader ], [ %indvars.iv.next69, %.loopexit ] ; 6 uses
   %.060 = phi ptr [ null, %.preheader.preheader ], [ %.1.lcssa, %.loopexit ] ; 2 uses
-  %indvars.iv68 = add nsw i64 %indvars.iv68.in, -1 ; 5 uses
   %i.w = icmp slt i32 %i.a, %i.v
   br i1 %i.w, label %.lr.ph57, label %.loopexit
 
 .lr.ph57:                                         ; preds = %.preheader
-  %i.x = inttoptr i64 %indvars.iv68 to ptr
+  %i.x = inttoptr i64 %indvars.iv68.in to ptr
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph57, %cont_BackTrack.exit45
@@ -89,7 +90,7 @@ bb.b:                                             ; preds = %.lr.ph57, %cont_Bac
   %i.aa = load ptr, ptr %i.z, align 8
   %i.ab = ptrtoint ptr %i.aa to i64               ; 2 uses
   %i.ac = and i64 %i.ab, 4294967295
-  %.not = icmp eq i64 %indvars.iv68, %i.ac
+  %.not = icmp eq i64 %indvars.iv68.in, %i.ac
   br i1 %.not, label %cont_BackTrack.exit45, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -103,7 +104,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr @cont_BINDINGS, align 4
   %i.ai = load ptr, ptr @cont_LEFTCONTEXT, align 8
   %.val35 = load ptr, ptr %i.i, align 8           ; 2 uses
-  %i.aj = getelementptr inbounds [8 x i8], ptr %.val35, i64 %indvars.iv68
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %.val35, i64 %indvars.iv68.in
   %i.ak = load ptr, ptr %i.aj, align 8
   %i.al = getelementptr i8, ptr %i.ak, i64 24
   %.val1.i = load ptr, ptr %i.al, align 8
@@ -203,7 +204,7 @@ cont_BackTrack.exit:                              ; preds = %._crit_edge.i, %bb.
   %i.bx = load ptr, ptr %i.bw, align 8
   %i.by = ptrtoint ptr %i.bx to i64
   %i.bz = and i64 %i.by, 4294967295
-  %i.ca = icmp eq i64 %indvars.iv68, %i.bz
+  %i.ca = icmp eq i64 %indvars.iv68.in, %i.bz
   br i1 %i.ca, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph53

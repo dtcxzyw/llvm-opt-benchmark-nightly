@@ -149,10 +149,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.ac, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ad = and i8 %i.ab, 127                       ; 3 uses
+  %i.ad = and i8 %i.ab, 127                       ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.152, i64 1 ; 3 uses
   %.not.i = icmp sgt i8 %i.ab, -1
-  %i.af = zext nneg i8 %i.ad to i64               ; 3 uses
+  %i.af = zext nneg i8 %i.ad to i64               ; 2 uses
   br i1 %.not.i, label %.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -165,8 +165,9 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader33.i
   %i.ag = zext nneg i8 %i.ad to i32
-  %5 = getelementptr i8, ptr %.152, i64 %i.af
-  %scevgep.i = getelementptr i8, ptr %5, i64 1
+  %narrow.i = add nuw i8 %i.ad, 1
+  %5 = zext i8 %narrow.i to i64
+  %scevgep.i = getelementptr i8, ptr %.152, i64 %5
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.preheader.i

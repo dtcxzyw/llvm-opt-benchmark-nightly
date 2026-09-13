@@ -73,12 +73,12 @@ bb.a:
   br i1 %i.i, label %bb.b, label %.thread169, !prof !15
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = tail call noalias ptr @H5FL_reg_calloc(ptr noundef nonnull @H5_H5O_fsinfo_t_reg_free_list) #6 ; 46 uses
+  %i.j = tail call noalias ptr @H5FL_reg_calloc(ptr noundef nonnull @H5_H5O_fsinfo_t_reg_free_list) #6 ; 47 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %bb.c, label %.preheader182
 
 .preheader182:                                    ; preds = %bb.b
-  %i.l = getelementptr i8, ptr %i.j, i64 48       ; 2 uses
+  %i.l = getelementptr i8, ptr %i.j, i64 48
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.l, i8 -1, i64 96, i1 false), !tbaa !17
   %i.m = icmp slt i64 %4, 1
   br i1 %i.m, label %bb.d, label %bb.e
@@ -438,7 +438,7 @@ bb.ao:                                            ; preds = %bb.am
   store ptr %i.gk, ptr %i.a, align 8, !tbaa !10
   %i.gl = load i8, ptr %i.gg, align 1, !tbaa !18
   %i.gm = icmp ne i8 %i.gl, 0
-  %i.gn = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
+  %i.gn = getelementptr i8, ptr %i.j, i64 8       ; 2 uses
   %i.go = zext i1 %i.gm to i8
   store i8 %i.go, ptr %i.gn, align 8, !tbaa !20
   %i.gp = tail call zeroext i8 @H5F_sizeof_size(ptr noundef %0) #6
@@ -677,7 +677,7 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bg
   %i.mc = load i8, ptr %i.lp, align 1, !tbaa !18
   %i.md = zext i8 %i.mc to i64                    ; 2 uses
-  %i.me = getelementptr inbounds nuw i8, ptr %i.j, i64 32 ; 2 uses
+  %i.me = getelementptr i8, ptr %i.j, i64 32      ; 2 uses
   store i64 %i.md, ptr %i.me, align 8, !tbaa !23
   %i.mf = getelementptr inbounds nuw i8, ptr %i.lp, i64 1 ; 2 uses
   store ptr %i.mf, ptr %i.a, align 8, !tbaa !10
@@ -713,7 +713,7 @@ bb.bl:                                            ; preds = %bb.bj, %bb.bk
   br label %.thread
 
 bb.bm:                                            ; preds = %bb.bk, %bb.bi
-  %i.mx = getelementptr inbounds nuw i8, ptr %i.j, i64 40
+  %i.mx = getelementptr i8, ptr %i.j, i64 40
   call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.mx) #6
   %i.my = load i8, ptr %i.gn, align 8, !tbaa !20, !range !13, !noundef !14
   %i.mz = trunc nuw i8 %i.my to i1
@@ -747,7 +747,8 @@ bb.bp:                                            ; preds = %bb.cw, %bb.cv, %bb.
   br label %.thread
 
 bb.bq:                                            ; preds = %bb.bo, %.preheader180
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.l) #6
+  %6 = getelementptr i8, ptr %i.j, i64 48
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %6) #6
   %i.no = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.1 = icmp eq i8 %i.no, 0
   br i1 %.not163.1, label %bb.bt, label %bb.br
@@ -770,7 +771,7 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %bb.bs, %bb.bq
   %i.nz = getelementptr i8, ptr %i.j, i64 56
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.nz) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.nz) #6
   %i.oa = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.2 = icmp eq i8 %i.oa, 0
   br i1 %.not163.2, label %bb.bw, label %bb.bu
@@ -793,7 +794,7 @@ bb.bv:                                            ; preds = %bb.bu
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bt
   %i.ol = getelementptr i8, ptr %i.j, i64 64
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.ol) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.ol) #6
   %i.om = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.3 = icmp eq i8 %i.om, 0
   br i1 %.not163.3, label %bb.bz, label %bb.bx
@@ -816,7 +817,7 @@ bb.by:                                            ; preds = %bb.bx
 
 bb.bz:                                            ; preds = %bb.by, %bb.bw
   %i.ox = getelementptr i8, ptr %i.j, i64 72
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.ox) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.ox) #6
   %i.oy = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.4 = icmp eq i8 %i.oy, 0
   br i1 %.not163.4, label %bb.cc, label %bb.ca
@@ -839,7 +840,7 @@ bb.cb:                                            ; preds = %bb.ca
 
 bb.cc:                                            ; preds = %bb.cb, %bb.bz
   %i.pj = getelementptr i8, ptr %i.j, i64 80
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.pj) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.pj) #6
   %i.pk = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.5 = icmp eq i8 %i.pk, 0
   br i1 %.not163.5, label %bb.cf, label %bb.cd
@@ -862,7 +863,7 @@ bb.ce:                                            ; preds = %bb.cd
 
 bb.cf:                                            ; preds = %bb.ce, %bb.cc
   %i.pv = getelementptr i8, ptr %i.j, i64 88
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.pv) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.pv) #6
   %i.pw = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.6 = icmp eq i8 %i.pw, 0
   br i1 %.not163.6, label %bb.ci, label %bb.cg
@@ -885,7 +886,7 @@ bb.ch:                                            ; preds = %bb.cg
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cf
   %i.qh = getelementptr i8, ptr %i.j, i64 96
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.qh) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.qh) #6
   %i.qi = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.7 = icmp eq i8 %i.qi, 0
   br i1 %.not163.7, label %bb.cl, label %bb.cj
@@ -908,7 +909,7 @@ bb.ck:                                            ; preds = %bb.cj
 
 bb.cl:                                            ; preds = %bb.ck, %bb.ci
   %i.qt = getelementptr i8, ptr %i.j, i64 104
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.qt) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.qt) #6
   %i.qu = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.8 = icmp eq i8 %i.qu, 0
   br i1 %.not163.8, label %bb.co, label %bb.cm
@@ -931,7 +932,7 @@ bb.cn:                                            ; preds = %bb.cm
 
 bb.co:                                            ; preds = %bb.cn, %bb.cl
   %i.rf = getelementptr i8, ptr %i.j, i64 112
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.rf) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.rf) #6
   %i.rg = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.9 = icmp eq i8 %i.rg, 0
   br i1 %.not163.9, label %bb.cr, label %bb.cp
@@ -954,7 +955,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 bb.cr:                                            ; preds = %bb.cq, %bb.co
   %i.rr = getelementptr i8, ptr %i.j, i64 120
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.rr) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.rr) #6
   %i.rs = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.10 = icmp eq i8 %i.rs, 0
   br i1 %.not163.10, label %bb.cu, label %bb.cs
@@ -977,7 +978,7 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.ct, %bb.cr
   %i.sd = getelementptr i8, ptr %i.j, i64 128
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.sd) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.sd) #6
   %i.se = call zeroext i8 @H5F_sizeof_addr(ptr noundef %0) #6
   %.not163.11 = icmp eq i8 %i.se, 0
   br i1 %.not163.11, label %.loopexit181.loopexit, label %bb.cv
@@ -1000,7 +1001,7 @@ bb.cw:                                            ; preds = %bb.cv
 
 .loopexit181.loopexit:                            ; preds = %bb.cw, %bb.cu
   %i.sp = getelementptr i8, ptr %i.j, i64 136
-  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.sp) #6
+  call void @H5F_addr_decode(ptr noundef %0, ptr noundef nonnull %i.a, ptr noundef %i.sp) #6
   br label %.loopexit181
 
 .loopexit181:                                     ; preds = %.loopexit181.loopexit, %bb.bm
@@ -1039,7 +1040,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = trunc i32 %i.l to i8
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 2
   store i8 %i.m, ptr %i.j, align 1, !tbaa !18
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.o = getelementptr i8, ptr %4, i64 8          ; 2 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !20, !range !13, !noundef !14
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 3 ; 5 uses
   store ptr %i.q, ptr %i.a, align 8, !tbaa !10
@@ -1212,7 +1213,7 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %.sink.split63, %bb.f
   %i.dk = phi ptr [ %i.bn, %bb.f ], [ %i.dj, %.sink.split63 ]
-  %i.dl = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
+  %i.dl = getelementptr i8, ptr %4, i64 32        ; 2 uses
   %i.dm = load i64, ptr %i.dl, align 8, !tbaa !23
   %i.dn = trunc i64 %i.dm to i8
   store i8 %i.dn, ptr %i.dk, align 1, !tbaa !18
@@ -1224,7 +1225,7 @@ bb.j:                                             ; preds = %.sink.split63, %bb.
   store i8 %i.ds, ptr %i.dp, align 1, !tbaa !18
   %i.dt = getelementptr inbounds nuw i8, ptr %i.do, i64 2
   store ptr %i.dt, ptr %i.a, align 8, !tbaa !10
-  %i.du = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %i.du = getelementptr i8, ptr %4, i64 40
   %i.dv = load i64, ptr %i.du, align 8, !tbaa !24
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.dv) #6
   %i.dw = load i8, ptr %i.o, align 8, !tbaa !20, !range !13, !noundef !14
@@ -1232,40 +1233,40 @@ bb.j:                                             ; preds = %.sink.split63, %bb.
   br i1 %i.dx, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %bb.j
-  %i.dy = getelementptr inbounds nuw i8, ptr %4, i64 48
+  %i.dy = getelementptr i8, ptr %4, i64 48
   %i.dz = load i64, ptr %i.dy, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.dz) #6
-  %i.ea = getelementptr inbounds nuw i8, ptr %4, i64 56
+  %i.ea = getelementptr i8, ptr %4, i64 56
   %i.eb = load i64, ptr %i.ea, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.eb) #6
-  %i.ec = getelementptr inbounds nuw i8, ptr %4, i64 64
+  %i.ec = getelementptr i8, ptr %4, i64 64
   %i.ed = load i64, ptr %i.ec, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.ed) #6
-  %i.ee = getelementptr inbounds nuw i8, ptr %4, i64 72
+  %i.ee = getelementptr i8, ptr %4, i64 72
   %i.ef = load i64, ptr %i.ee, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.ef) #6
-  %i.eg = getelementptr inbounds nuw i8, ptr %4, i64 80
+  %i.eg = getelementptr i8, ptr %4, i64 80
   %i.eh = load i64, ptr %i.eg, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.eh) #6
-  %i.ei = getelementptr inbounds nuw i8, ptr %4, i64 88
+  %i.ei = getelementptr i8, ptr %4, i64 88
   %i.ej = load i64, ptr %i.ei, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.ej) #6
-  %i.ek = getelementptr inbounds nuw i8, ptr %4, i64 96
+  %i.ek = getelementptr i8, ptr %4, i64 96
   %i.el = load i64, ptr %i.ek, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.el) #6
-  %i.em = getelementptr inbounds nuw i8, ptr %4, i64 104
+  %i.em = getelementptr i8, ptr %4, i64 104
   %i.en = load i64, ptr %i.em, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.en) #6
-  %i.eo = getelementptr inbounds nuw i8, ptr %4, i64 112
+  %i.eo = getelementptr i8, ptr %4, i64 112
   %i.ep = load i64, ptr %i.eo, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.ep) #6
-  %i.eq = getelementptr inbounds nuw i8, ptr %4, i64 120
+  %i.eq = getelementptr i8, ptr %4, i64 120
   %i.er = load i64, ptr %i.eq, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.er) #6
-  %i.es = getelementptr inbounds nuw i8, ptr %4, i64 128
+  %i.es = getelementptr i8, ptr %4, i64 128
   %i.et = load i64, ptr %i.es, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.et) #6
-  %i.eu = getelementptr inbounds nuw i8, ptr %4, i64 136
+  %i.eu = getelementptr i8, ptr %4, i64 136
   %i.ev = load i64, ptr %i.eu, align 8, !tbaa !17
   call void @H5F_addr_encode(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef %i.ev) #6
   br label %.loopexit
@@ -1394,21 +1395,21 @@ switch.lookup:                                    ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b, %switch.lookup
   %.str.20.sink = phi ptr [ %switch.load, %switch.lookup ], [ @.str.20, %bb.b ]
   %i.l = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.15, ptr noundef nonnull %.str.20.sink) #6 ; 0 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.m = getelementptr i8, ptr %1, i64 8          ; 2 uses
   %i.n = load i8, ptr %i.m, align 8, !tbaa !20, !range !13, !noundef !14
   %i.o = trunc nuw i8 %i.n to i1
   %i.p = select i1 %i.o, ptr @.str.23, ptr @.str.24
   %i.q = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.21, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.22, ptr noundef nonnull %i.p) #6 ; 0 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.r = getelementptr i8, ptr %1, i64 16
   %i.s = load i64, ptr %i.r, align 8, !tbaa !21
   %i.t = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.26, i64 noundef %i.s) #6 ; 0 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.u = getelementptr i8, ptr %1, i64 24
   %i.v = load i64, ptr %i.u, align 8, !tbaa !22
   %i.w = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.27, i64 noundef %i.v) #6 ; 0 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %i.x = getelementptr i8, ptr %1, i64 32
   %i.y = load i64, ptr %i.x, align 8, !tbaa !23
   %i.z = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.28, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.29, i64 noundef %i.y) #6 ; 0 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.aa = getelementptr i8, ptr %1, i64 40
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !24
   %i.ac = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.30, i64 noundef %i.ab) #6 ; 0 uses
   %i.ad = load i8, ptr %i.m, align 8, !tbaa !20, !range !13, !noundef !14
@@ -1416,40 +1417,40 @@ bb.c:                                             ; preds = %bb.b, %switch.looku
   br i1 %i.ae, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %bb.c
-  %i.af = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.af = getelementptr i8, ptr %1, i64 48
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !17
   %i.ah = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.ag) #6 ; 0 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %i.ai = getelementptr i8, ptr %1, i64 56
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !17
   %i.ak = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.aj) #6 ; 0 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %i.al = getelementptr i8, ptr %1, i64 64
   %i.am = load i64, ptr %i.al, align 8, !tbaa !17
   %i.an = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.am) #6 ; 0 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %i.ao = getelementptr i8, ptr %1, i64 72
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !17
   %i.aq = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.ap) #6 ; 0 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 80
+  %i.ar = getelementptr i8, ptr %1, i64 80
   %i.as = load i64, ptr %i.ar, align 8, !tbaa !17
   %i.at = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.as) #6 ; 0 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %i.au = getelementptr i8, ptr %1, i64 88
   %i.av = load i64, ptr %i.au, align 8, !tbaa !17
   %i.aw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.av) #6 ; 0 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 96
+  %i.ax = getelementptr i8, ptr %1, i64 96
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !17
   %i.az = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.ay) #6 ; 0 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 104
+  %i.ba = getelementptr i8, ptr %1, i64 104
   %i.bb = load i64, ptr %i.ba, align 8, !tbaa !17
   %i.bc = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.bb) #6 ; 0 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 112
+  %i.bd = getelementptr i8, ptr %1, i64 112
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !17
   %i.bf = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.be) #6 ; 0 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 120
+  %i.bg = getelementptr i8, ptr %1, i64 120
   %i.bh = load i64, ptr %i.bg, align 8, !tbaa !17
   %i.bi = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.bh) #6 ; 0 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 128
+  %i.bj = getelementptr i8, ptr %1, i64 128
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !17
   %i.bl = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.bk) #6 ; 0 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 136
+  %i.bm = getelementptr i8, ptr %1, i64 136
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !17
   %i.bo = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %2, ptr noundef nonnull @.str.25, i32 noundef %3, ptr noundef nonnull @.str.13, i32 noundef %4, ptr noundef nonnull @.str.31, i64 noundef %i.bn) #6 ; 0 uses
   br label %.loopexit

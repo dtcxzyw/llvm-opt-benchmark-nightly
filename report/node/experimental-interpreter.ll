@@ -202,12 +202,14 @@ _ZSt4fillIPN2v88internal12_GLOBAL__N_114NfaInterpreterIhE14LastInputIndexES5_EvT
   br label %bb.au
 
 bb.at:                                            ; preds = %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterIhE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.i.i
-  %i.jm = icmp slt i64 %indvars.iv.next.i.i793.in, 2
+  %26 = trunc nuw i64 %indvars.iv.next.i.i793 to i32
+  %i.jm = icmp slt i32 %26, 1
   br i1 %i.jm, label %.thread.i.i, label %bb.au, !llvm.loop !35
 
 bb.au:                                            ; preds = %.lr.ph794, %bb.at
-  %indvars.iv.next.i.i793.in = phi i64 [ %i.jl, %.lr.ph794 ], [ %indvars.iv.next.i.i793, %bb.at ] ; 2 uses
-  %indvars.iv.next.i.i793 = add nsw i64 %indvars.iv.next.i.i793.in, -1 ; 3 uses
+  %indvars.iv.next.i.i793.in = phi i64 [ %i.jl, %.lr.ph794 ], [ %indvars.iv.next.i.i793, %bb.at ]
+  %indvars.iv.next.i.i793 = add nsw i64 %indvars.iv.next.i.i793.in, -1 ; 4 uses
+  %indvars.i.i798 = trunc i64 %indvars.iv.next.i.i793 to i32
   %.val36.i.i = load ptr, ptr %i.ja, align 8      ; 2 uses
   %.val40.i.i = load i32, ptr %i.jb, align 4      ; 2 uses
   %i.jn = sext i32 %.val40.i.i to i64
@@ -390,10 +392,10 @@ _ZN2v88internal12_GLOBAL__N_114NfaInterpreterIhE13DestroyThreadENS3_17Interprete
 
 ._crit_edge108.i.i:                               ; preds = %_ZN2v88internal12_GLOBAL__N_114NfaInterpreterIhE13DestroyThreadENS3_17InterpreterThreadE.exit65.i.i, %._crit_edge.i.i
   store i32 0, ptr %i.ji, align 4
-  %26 = trunc nsw i64 %indvars.iv.next.i.i793 to i32
-  store i32 %26, ptr %i.dm, align 4
+  store i32 %indvars.i.i798, ptr %i.dm, align 4
   %.val42.i.i = load ptr, ptr %i.df, align 8
-  %i.lo = getelementptr inbounds [12 x i8], ptr %.val42.i.i, i64 %indvars.iv.next.i.i793 ; 2 uses
+  %27 = and i64 %indvars.iv.next.i.i793, 4294967295
+  %i.lo = getelementptr inbounds nuw [12 x i8], ptr %.val42.i.i, i64 %27 ; 2 uses
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 8
   %i.lq = load i32, ptr %i.lp, align 4
   %i.lr = icmp eq i32 %i.lq, 0                    ; 2 uses
@@ -796,12 +798,14 @@ _ZSt4fillIPN2v88internal12_GLOBAL__N_114NfaInterpreterItE14LastInputIndexES5_EvT
   br label %bb.ip
 
 bb.io:                                            ; preds = %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.i.i
-  %i.anr = icmp slt i64 %indvars.iv.next.i.i105791.in, 2
+  %28 = trunc nuw i64 %indvars.iv.next.i.i105791 to i32
+  %i.anr = icmp slt i32 %28, 1
   br i1 %i.anr, label %.thread.i.i183, label %bb.ip, !llvm.loop !41
 
 bb.ip:                                            ; preds = %.lr.ph, %bb.io
-  %indvars.iv.next.i.i105791.in = phi i64 [ %i.anq, %.lr.ph ], [ %indvars.iv.next.i.i105791, %bb.io ] ; 2 uses
-  %indvars.iv.next.i.i105791 = add nsw i64 %indvars.iv.next.i.i105791.in, -1 ; 3 uses
+  %indvars.iv.next.i.i105791.in = phi i64 [ %i.anq, %.lr.ph ], [ %indvars.iv.next.i.i105791, %bb.io ]
+  %indvars.iv.next.i.i105791 = add nsw i64 %indvars.iv.next.i.i105791.in, -1 ; 4 uses
+  %indvars.i.i106794 = trunc i64 %indvars.iv.next.i.i105791 to i32
   %.val36.i.i106 = load ptr, ptr %i.anf, align 8  ; 2 uses
   %.val40.i.i107 = load i32, ptr %i.ang, align 4  ; 2 uses
   %i.ans = sext i32 %.val40.i.i107 to i64
@@ -984,10 +988,10 @@ _ZN2v88internal12_GLOBAL__N_114NfaInterpreterItE13DestroyThreadENS3_17Interprete
 
 ._crit_edge108.i.i145:                            ; preds = %_ZN2v88internal12_GLOBAL__N_114NfaInterpreterItE13DestroyThreadENS3_17InterpreterThreadE.exit65.i.i, %._crit_edge.i.i125
   store i32 0, ptr %i.ann, align 4
-  %27 = trunc nsw i64 %indvars.iv.next.i.i105791 to i32
-  store i32 %27, ptr %i.ahr, align 4
+  store i32 %indvars.i.i106794, ptr %i.ahr, align 4
   %.val42.i.i146 = load ptr, ptr %i.ahk, align 8
-  %i.apt = getelementptr inbounds [12 x i8], ptr %.val42.i.i146, i64 %indvars.iv.next.i.i105791 ; 2 uses
+  %29 = and i64 %indvars.iv.next.i.i105791, 4294967295
+  %i.apt = getelementptr inbounds nuw [12 x i8], ptr %.val42.i.i146, i64 %29 ; 2 uses
   %i.apu = getelementptr inbounds nuw i8, ptr %i.apt, i64 8
   %i.apv = load i32, ptr %i.apu, align 4
   %i.apw = icmp eq i32 %i.apv, 0                  ; 2 uses

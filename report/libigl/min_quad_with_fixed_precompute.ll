@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split.i.i100, %bb.h
-  %.pre = phi ptr [ %.sink.i.i101, %.sink.split.i.i100 ], [ %.pre216.pre, %bb.h ] ; 11 uses
+  %.pre = phi ptr [ %.sink.i.i101, %.sink.split.i.i100 ], [ %.pre216.pre, %bb.h ] ; 12 uses
   store i64 %i.y, ptr %i.z, align 8, !tbaa !81
   %i.ag = icmp slt i64 %i.y, 1
   br i1 %i.ag, label %.loopexit190, label %bb.l
@@ -311,17 +311,17 @@ _ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EE
 .lr.ph193:                                        ; preds = %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEEE12setLinSpacedElRKiS7_.exit
   %.not83 = icmp eq ptr %3, null                  ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !111 ; 4 uses
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !111 ; 5 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !99 ; 2 uses
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !99 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !109 ; 2 uses
+  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !109 ; 3 uses
   %i.bl = icmp eq ptr %i.bk, null
-  %wide.trip.count209 = and i64 %i.b, 2147483647  ; 2 uses
-  br i1 %i.bl, label %.lr.ph193.split.us, label %.lr.ph193.split
+  %wide.trip.count209 = and i64 %i.b, 2147483647  ; 3 uses
+  br i1 %i.bl, label %.lr.ph193.split.us, label %.lr.ph192.split
 
-.lr.ph193.split.us:                               ; preds = %.lr.ph193, %._crit_edge.us.a
-  %indvars.iv206 = phi i64 [ %indvars.iv.next207, %._crit_edge.us.a ], [ 0, %.lr.ph193 ] ; 4 uses
+.lr.ph193.split.us:                               ; preds = %.lr.ph193, %._crit_edge.us
+  %indvars.iv206 = phi i64 [ %indvars.iv.next219, %._crit_edge.us ], [ 0, %.lr.ph193 ] ; 4 uses
   %i.bm = trunc nuw nsw i64 %indvars.iv206 to i32 ; 3 uses
   br i1 %.not83, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us, label %bb.m
 
@@ -339,7 +339,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !83 ; 2 uses
   %i.bu = sext i32 %i.bt to i64                   ; 3 uses
   %i.bv = icmp slt i32 %i.br, %i.bt
-  br i1 %i.bv, label %.lr.ph.us.preheader, label %._crit_edge.us.a
+  br i1 %i.bv, label %.lr.ph.us.preheader, label %._crit_edge.us
 
 .lr.ph.us.preheader:                              ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us
   %i.bw = sext i32 %i.br to i64                   ; 5 uses
@@ -363,7 +363,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %.sroa.7115.0191.us.unr = phi i64 [ %i.bw, %.lr.ph.us.preheader ], [ %i.cd, %.lr.ph.us.prol ]
   %i.ce = add nsw i64 %i.bu, -1
   %i.cf = icmp eq i64 %i.ce, %i.bw
-  br i1 %i.cf, label %._crit_edge.us.a, label %.lr.ph.us
+  br i1 %i.cf, label %._crit_edge.us, label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us
   %.sroa.7115.0191.us = phi i64 [ %i.cr, %.lr.ph.us ], [ %.sroa.7115.0191.us.unr, %.lr.ph.us.prol.loopexit ] ; 3 uses
@@ -384,14 +384,51 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   store i32 %.sroa.speculated.us.1, ptr %i.cp, align 4, !tbaa !83
   %i.cr = add nsw i64 %.sroa.7115.0191.us, 2      ; 2 uses
   %exitcond205.not.1 = icmp eq i64 %i.cr, %i.bu
-  br i1 %exitcond205.not.1, label %._crit_edge.us.a, label %.lr.ph.us, !llvm.loop !525
+  br i1 %exitcond205.not.1, label %._crit_edge.us, label %.lr.ph.us, !llvm.loop !525
 
-._crit_edge.us.a:                                 ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us
-  %indvars.iv.next207 = add nuw nsw i64 %indvars.iv206, 1 ; 2 uses
+._crit_edge.us:                                   ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us
+  %indvars.iv.next219 = add nuw nsw i64 %indvars.iv206, 1 ; 2 uses
+  %exitcond222.not = icmp eq i64 %indvars.iv.next219, %wide.trip.count209
+  br i1 %exitcond222.not, label %.lr.ph201, label %.lr.ph193.split.us, !llvm.loop !526
+
+.lr.ph192.split:                                  ; preds = %.lr.ph193
+  br i1 %.not83, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us194, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
+
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us194: ; preds = %.lr.ph192.split, %._crit_edge.us.a
+  %indvars.iv212 = phi i64 [ %indvars.iv.next207, %._crit_edge.us.a ], [ 0, %.lr.ph192.split ] ; 4 uses
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %indvars.iv212
+  %5 = load i32, ptr %4, align 4, !tbaa !83
+  %6 = sext i32 %5 to i64                         ; 2 uses
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %indvars.iv212
+  %8 = load i32, ptr %7, align 4, !tbaa !83       ; 2 uses
+  %9 = zext nneg i32 %8 to i64
+  %10 = add nsw i64 %9, %6
+  %11 = icmp sgt i32 %8, 0
+  br i1 %11, label %.lr.ph.us196.preheader, label %._crit_edge.us.a
+
+.lr.ph.us196.preheader:                           ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us194
+  %12 = trunc nuw nsw i64 %indvars.iv212 to i32
+  br label %.lr.ph.us196
+
+.lr.ph.us196:                                     ; preds = %.lr.ph.us196.preheader, %.lr.ph.us196
+  %.sroa.7115.0190.us197 = phi i64 [ %18, %.lr.ph.us196 ], [ %6, %.lr.ph.us196.preheader ] ; 2 uses
+  %13 = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %.sroa.7115.0190.us197
+  %14 = load i32, ptr %13, align 4, !tbaa !83
+  %15 = sext i32 %14 to i64
+  %16 = getelementptr inbounds [4 x i8], ptr %.pre, i64 %15 ; 2 uses
+  %17 = load i32, ptr %16, align 4, !tbaa !83
+  %.sroa.speculated.us198 = tail call i32 @llvm.smin.i32(i32 %12, i32 %17)
+  store i32 %.sroa.speculated.us198, ptr %16, align 4, !tbaa !83
+  %18 = add nsw i64 %.sroa.7115.0190.us197, 1     ; 2 uses
+  %19 = icmp slt i64 %18, %10
+  br i1 %19, label %.lr.ph.us196, label %._crit_edge.us.a, !llvm.loop !525
+
+._crit_edge.us.a:                                 ; preds = %.lr.ph.us196, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us194
+  %indvars.iv.next207 = add nuw nsw i64 %indvars.iv212, 1 ; 2 uses
   %exitcond210.not = icmp eq i64 %indvars.iv.next207, %wide.trip.count209
-  br i1 %exitcond210.not, label %.lr.ph201, label %.lr.ph193.split.us, !llvm.loop !526
+  br i1 %exitcond210.not, label %.lr.ph201, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.us194, !llvm.loop !526
 
-.lr.ph201:                                        ; preds = %._crit_edge, %._crit_edge.us.a
+.lr.ph201:                                        ; preds = %._crit_edge, %._crit_edge.us.a, %._crit_edge.us
   %i.cs = load ptr, ptr %1, align 8, !tbaa !82    ; 2 uses
   %.not = icmp eq ptr %3, null
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -412,42 +449,38 @@ bb.n:                                             ; preds = %.invoke
   tail call void @free(ptr noundef %.sroa.0129.0179) #33
   br label %.body
 
-.lr.ph193.split:                                  ; preds = %.lr.ph193, %._crit_edge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph193 ] ; 4 uses
-  %4 = trunc nuw nsw i64 %indvars.iv to i32
-  br i1 %.not83, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit, label %5
-
-5:                                                ; preds = %.lr.ph193.split
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
-  %7 = load i32, ptr %6, align 4, !tbaa !83
-  %8 = sext i32 %7 to i64
-  br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
-
-_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit: ; preds = %5, %.lr.ph193.split
-  %.058 = phi i64 [ %8, %5 ], [ %indvars.iv, %.lr.ph193.split ] ; 2 uses
-  %i.dc = getelementptr inbounds [4 x i8], ptr %i.bi, i64 %.058
+_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit: ; preds = %.lr.ph192.split, %._crit_edge
+  %.058 = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph192.split ] ; 3 uses
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.058
+  %21 = load i32, ptr %20, align 4, !tbaa !83
+  %22 = sext i32 %21 to i64                       ; 2 uses
+  %i.dc = getelementptr inbounds [4 x i8], ptr %i.bi, i64 %22
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !83
   %i.de = sext i32 %i.dd to i64                   ; 2 uses
-  %i.df = getelementptr inbounds [4 x i8], ptr %i.bk, i64 %.058
+  %i.df = getelementptr inbounds [4 x i8], ptr %i.bk, i64 %22
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !83 ; 2 uses
   %i.dh = zext nneg i32 %i.dg to i64
   %i.di = add nsw i64 %i.dh, %i.de
   %i.dj = icmp sgt i32 %i.dg, 0
-  br i1 %i.dj, label %.lr.ph, label %._crit_edge
+  br i1 %i.dj, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
+  %23 = trunc nuw nsw i64 %.058 to i32
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.058, 1     ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count209
-  br i1 %exitcond.not, label %.lr.ph201, label %.lr.ph193.split, !llvm.loop !526
+  br i1 %exitcond.not, label %.lr.ph201, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit, !llvm.loop !526
 
-.lr.ph:                                           ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit, %.lr.ph
-  %.sroa.7115.0191 = phi i64 [ %i.dp, %.lr.ph ], [ %i.de, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.sroa.7115.0191 = phi i64 [ %i.dp, %.lr.ph ], [ %i.de, %.lr.ph.preheader ] ; 2 uses
   %i.dk = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %.sroa.7115.0191
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !83
   %i.dm = sext i32 %i.dl to i64
   %i.dn = getelementptr inbounds [4 x i8], ptr %.pre, i64 %i.dm ; 2 uses
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !83
-  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %4, i32 %i.do)
+  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %23, i32 %i.do)
   store i32 %.sroa.speculated, ptr %i.dn, align 4, !tbaa !83
   %i.dp = add nsw i64 %.sroa.7115.0191, 1         ; 2 uses
   %i.dq = icmp slt i64 %i.dp, %i.di
@@ -850,7 +883,7 @@ bb.e:                                             ; preds = %.lr.ph117, %._crit_
 
 .lr.ph111:                                        ; preds = %bb.e
   %i.bf = add nsw i32 %i.bd, -1                   ; 2 uses
-  %i.bg = zext i32 %i.bf to i64                   ; 4 uses
+  %i.bg = zext nneg i32 %i.bf to i64              ; 4 uses
   %i.bh = load ptr, ptr %i.z, align 8, !tbaa !111 ; 3 uses
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.074115 ; 4 uses
   %i.bj = load ptr, ptr %i.s, align 8, !tbaa !110 ; 3 uses
@@ -1093,7 +1126,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph97:                                         ; preds = %bb.j
   %i.gj = add nsw i32 %i.gh, -1                   ; 2 uses
-  %i.gk = zext i32 %i.gj to i64                   ; 4 uses
+  %i.gk = zext nneg i32 %i.gj to i64              ; 4 uses
   %i.gl = load ptr, ptr %i.ez, align 8, !tbaa !111 ; 3 uses
   %i.gm = load ptr, ptr %i.et, align 8, !tbaa !110 ; 3 uses
   %i.gn = sext i32 %i.gb to i64                   ; 6 uses
@@ -1496,7 +1529,7 @@ bb.e:                                             ; preds = %.lr.ph119, %._crit_
 
 .lr.ph113:                                        ; preds = %bb.e
   %i.aw = add nsw i32 %i.au, -1                   ; 2 uses
-  %i.ax = zext i32 %i.aw to i64                   ; 4 uses
+  %i.ax = zext nneg i32 %i.aw to i64              ; 4 uses
   %i.ay = load ptr, ptr %i.y, align 8, !tbaa !111 ; 3 uses
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.074117 ; 4 uses
   %i.ba = load ptr, ptr %i.r, align 8, !tbaa !110 ; 3 uses
@@ -1733,7 +1766,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph99:                                         ; preds = %bb.j
   %i.fu = add nsw i32 %i.fs, -1                   ; 2 uses
-  %i.fv = zext i32 %i.fu to i64                   ; 4 uses
+  %i.fv = zext nneg i32 %i.fu to i64              ; 4 uses
   %i.fw = load ptr, ptr %i.eo, align 8, !tbaa !111 ; 3 uses
   %i.fx = load ptr, ptr %i.ei, align 8, !tbaa !110 ; 3 uses
   %i.fy = sext i32 %i.fm to i64                   ; 6 uses
@@ -2028,7 +2061,7 @@ bb.e:                                             ; preds = %.lr.ph119, %._crit_
 
 .lr.ph113:                                        ; preds = %bb.e
   %i.bi = add nsw i32 %i.bg, -1                   ; 2 uses
-  %i.bj = zext i32 %i.bi to i64                   ; 4 uses
+  %i.bj = zext nneg i32 %i.bi to i64              ; 4 uses
   %i.bk = load ptr, ptr %i.ac, align 8, !tbaa !111 ; 3 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.074117 ; 4 uses
   %i.bm = load ptr, ptr %i.v, align 8, !tbaa !110 ; 3 uses
@@ -2277,7 +2310,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph99:                                         ; preds = %bb.j
   %i.gs = add nsw i32 %i.gq, -1                   ; 2 uses
-  %i.gt = zext i32 %i.gs to i64                   ; 4 uses
+  %i.gt = zext nneg i32 %i.gs to i64              ; 4 uses
   %i.gu = load ptr, ptr %i.fi, align 8, !tbaa !111 ; 3 uses
   %i.gv = load ptr, ptr %i.fc, align 8, !tbaa !110 ; 3 uses
   %i.gw = sext i32 %i.gk to i64                   ; 6 uses
@@ -2680,7 +2713,7 @@ _ZNK5Eigen16SparseMatrixBaseINS_5BlockIKNS_12SparseMatrixIdLi0EiEELin1ELi1ELb1EE
 bb.aj:                                            ; preds = %_ZNK5Eigen16SparseMatrixBaseINS_5BlockIKNS_12SparseMatrixIdLi0EiEELin1ELi1ELb1EEEE3dotINS1_IS3_Lin1ELi1ELb1EEEEEdRKNS0_IT_EE.exit63
   %i.hi = getelementptr inbounds nuw i8, ptr %i.ek, i64 256
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !159
-  %i.hk = getelementptr inbounds [8 x i8], ptr %i.hj, i64 %.0117
+  %i.hk = getelementptr inbounds nuw [8 x i8], ptr %i.hj, i64 %.0117
   %i.hl = load double, ptr %i.hk, align 8, !tbaa !106
   %i.hm = fmul double %.1.i53, %i.hl
   %i.hn = getelementptr inbounds nuw i8, ptr %i.ek, i64 200
@@ -3083,7 +3116,7 @@ bb.e:                                             ; preds = %.lr.ph117, %._crit_
 
 .lr.ph111:                                        ; preds = %bb.e
   %i.bf = add nsw i32 %i.bd, -1                   ; 2 uses
-  %i.bg = zext i32 %i.bf to i64                   ; 4 uses
+  %i.bg = zext nneg i32 %i.bf to i64              ; 4 uses
   %i.bh = load ptr, ptr %i.z, align 8, !tbaa !111 ; 3 uses
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.074115 ; 4 uses
   %i.bj = load ptr, ptr %i.s, align 8, !tbaa !110 ; 3 uses
@@ -3326,7 +3359,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph97:                                         ; preds = %bb.j
   %i.gj = add nsw i32 %i.gh, -1                   ; 2 uses
-  %i.gk = zext i32 %i.gj to i64                   ; 4 uses
+  %i.gk = zext nneg i32 %i.gj to i64              ; 4 uses
   %i.gl = load ptr, ptr %i.ez, align 8, !tbaa !111 ; 3 uses
   %i.gm = load ptr, ptr %i.et, align 8, !tbaa !110 ; 3 uses
   %i.gn = sext i32 %i.gb to i64                   ; 6 uses
@@ -3729,7 +3762,7 @@ bb.e:                                             ; preds = %.lr.ph119, %._crit_
 
 .lr.ph113:                                        ; preds = %bb.e
   %i.aw = add nsw i32 %i.au, -1                   ; 2 uses
-  %i.ax = zext i32 %i.aw to i64                   ; 4 uses
+  %i.ax = zext nneg i32 %i.aw to i64              ; 4 uses
   %i.ay = load ptr, ptr %i.y, align 8, !tbaa !111 ; 3 uses
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.074117 ; 4 uses
   %i.ba = load ptr, ptr %i.r, align 8, !tbaa !110 ; 3 uses
@@ -3966,7 +3999,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph99:                                         ; preds = %bb.j
   %i.fu = add nsw i32 %i.fs, -1                   ; 2 uses
-  %i.fv = zext i32 %i.fu to i64                   ; 4 uses
+  %i.fv = zext nneg i32 %i.fu to i64              ; 4 uses
   %i.fw = load ptr, ptr %i.eo, align 8, !tbaa !111 ; 3 uses
   %i.fx = load ptr, ptr %i.ei, align 8, !tbaa !110 ; 3 uses
   %i.fy = sext i32 %i.fm to i64                   ; 6 uses
@@ -4261,7 +4294,7 @@ bb.e:                                             ; preds = %.lr.ph119, %._crit_
 
 .lr.ph113:                                        ; preds = %bb.e
   %i.bi = add nsw i32 %i.bg, -1                   ; 2 uses
-  %i.bj = zext i32 %i.bi to i64                   ; 4 uses
+  %i.bj = zext nneg i32 %i.bi to i64              ; 4 uses
   %i.bk = load ptr, ptr %i.ac, align 8, !tbaa !111 ; 3 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.074117 ; 4 uses
   %i.bm = load ptr, ptr %i.v, align 8, !tbaa !110 ; 3 uses
@@ -4510,7 +4543,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph99:                                         ; preds = %bb.j
   %i.gs = add nsw i32 %i.gq, -1                   ; 2 uses
-  %i.gt = zext i32 %i.gs to i64                   ; 4 uses
+  %i.gt = zext nneg i32 %i.gs to i64              ; 4 uses
   %i.gu = load ptr, ptr %i.fi, align 8, !tbaa !111 ; 3 uses
   %i.gv = load ptr, ptr %i.fc, align 8, !tbaa !110 ; 3 uses
   %i.gw = sext i32 %i.gk to i64                   ; 6 uses

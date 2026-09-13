@@ -204,12 +204,13 @@ begin_hunk_0_@dmvch_:bb.a
   %indvars.iv196 = phi i64 [ 1, %.loopexit202 ], [ %indvars.iv.next197, %bb.b ] ; 5 uses
   %i.fb = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv196
   %i.fc = load double, ptr %i.fb, align 8, !tbaa !14
-  %20 = add nsw i64 %indvars.iv196, -1
   %i.fd = load i32, ptr %10, align 4, !tbaa !10
   %i.fe = tail call i32 @llvm.abs.i32(i32 %i.fd, i1 true)
-  %21 = zext nneg i32 %i.fe to i64
-  %22 = mul nuw nsw i64 %20, %21
-  %i.ff = getelementptr [8 x i8], ptr %i.h, i64 %22
+  %20 = trunc i64 %indvars.iv196 to i32
+  %21 = add i32 %20, -1
+  %22 = mul nuw nsw i32 %i.fe, %21
+  %23 = zext nneg i32 %22 to i64
+  %i.ff = getelementptr [8 x i8], ptr %i.h, i64 %23
   %i.fg = getelementptr i8, ptr %i.ff, i64 8
   %i.fh = load double, ptr %i.fg, align 8, !tbaa !14
   %i.fi = fsub double %i.fc, %i.fh                ; 3 uses
@@ -612,7 +613,7 @@ iter.check:                                       ; preds = %.lr.ph310
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.dd = add nsw i32 %i.cz, -1
-  %i.de = zext i32 %i.dd to i64
+  %i.de = zext nneg i32 %i.dd to i64
   %i.df = shl nuw nsw i64 %i.de, 3
   %scevgep428 = getelementptr i8, ptr %scevgep, i64 %i.df
   %bound0 = icmp ugt ptr %scevgep428, @dchk1_.alpha
@@ -1015,7 +1016,7 @@ iter.check:                                       ; preds = %.lr.ph339
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.cv = add nsw i32 %i.cr, -1
-  %i.cw = zext i32 %i.cv to i64
+  %i.cw = zext nneg i32 %i.cv to i64
   %i.cx = shl nuw nsw i64 %i.cw, 3
   %scevgep458 = getelementptr i8, ptr %scevgep, i64 %i.cx
   %bound0 = icmp ugt ptr %scevgep458, @dchk2_.alpha

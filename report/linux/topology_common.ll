@@ -204,17 +204,18 @@ bb.a:
   call fastcc void @parse_topology(ptr noundef nonnull %1, i1 noundef zeroext true) #10, !srcloc !22
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) @x86_topo_system, ptr noundef nonnull align 8 dereferenceable(28) %i.b, i64 28, i1 false)
-  %i.c = load i32, ptr @x86_topo_system, align 4  ; 2 uses
+  %i.c = load i32, ptr @x86_topo_system, align 4
   %i.d = shl nuw i32 1, %i.c
   store i32 %i.d, ptr getelementptr inbounds nuw (i8, ptr @x86_topo_system, i64 28), align 4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.b
-  %2 = phi i32 [ %i.c, %bb.a ], [ %i.e, %bb.b ]
   %indvars.iv = phi i64 [ 1, %bb.a ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %3 = getelementptr [4 x i8], ptr @x86_topo_system, i64 %indvars.iv
-  %i.e = load i32, ptr %3, align 4                ; 2 uses
-  %i.f = sub i32 %i.e, %2
+  %2 = getelementptr [4 x i8], ptr @x86_topo_system, i64 %indvars.iv ; 2 uses
+  %3 = load i32, ptr %2, align 4
+  %4 = getelementptr i8, ptr %2, i64 -4
+  %i.e = load i32, ptr %4, align 4
+  %i.f = sub i32 %3, %i.e
   %i.g = shl nuw i32 1, %i.f
   %i.h = getelementptr [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @x86_topo_system, i64 28), i64 %indvars.iv
   store i32 %i.g, ptr %i.h, align 4

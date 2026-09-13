@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiE
   %i.qg = sub i64 %i.qe, %i.qf
   %i.qh = lshr exact i64 %i.qg, 2
   %i.qi = trunc i64 %i.qh to i32                  ; 5 uses
-  %i.qj = add nsw i32 %i.qi, -1                   ; 21 uses
+  %i.qj = add nsw i32 %i.qi, -1                   ; 23 uses
   %.not = icmp eq i32 %i.qj, 0
   br i1 %.not, label %bb.fx, label %bb.do
 
@@ -234,7 +234,7 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc338
   br label %_ZNSt6vectorIdSaIdEEC2EmRKS0_.exit
 
 _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc338
-  %i.qs = sext i32 %i.qj to i64                   ; 15 uses
+  %i.qs = sext i32 %i.qj to i64                   ; 5 uses
   %i.qt = icmp slt i32 %i.qi, 1
   br i1 %i.qt, label %bb.dp, label %_ZNSt6vectorIPdSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i
 
@@ -263,14 +263,16 @@ _ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc343
   br label %.lr.ph1369.preheader
 
 .lr.ph1369.preheader:                             ; preds = %.noexc343, %_ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i
-  %wide.trip.count.a = zext nneg i32 %i.qj to i64 ; 7 uses
-  %5 = add nsw i64 %wide.trip.count.a, -1         ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.a, 3       ; 3 uses
+  %wide.trip.count.a = zext nneg i32 %i.qj to i64 ; 5 uses
+  %5 = call i32 @llvm.umax.i32(i32 %i.qj, i32 1)
+  %wide.trip.count = zext nneg i32 %5 to i64      ; 2 uses
+  %6 = zext nneg i32 %i.qj to i64                 ; 5 uses
+  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.qz = icmp ult i32 %i.qi, 5
   br i1 %i.qz, label %.lr.ph1369.epil.preheader, label %.lr.ph1369.preheader.new
 
 .lr.ph1369.preheader.new:                         ; preds = %.lr.ph1369.preheader
-  %unroll_iter = and i64 %wide.trip.count.a, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 2147483644
   br label %.lr.ph1369
 
 .lr.ph1374.preheader.unr-lcssa:                   ; preds = %.lr.ph1369
@@ -286,7 +288,7 @@ _ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc343
 .lr.ph1369.epil:                                  ; preds = %.lr.ph1369.epil, %.lr.ph1369.epil.preheader
   %indvars.iv1784.epil = phi i64 [ %indvars.iv1784.epil.init, %.lr.ph1369.epil.preheader ], [ %indvars.iv.next1785.epil, %.lr.ph1369.epil ] ; 3 uses
   %epil.iter = phi i64 [ 0, %.lr.ph1369.epil.preheader ], [ %epil.iter.next, %.lr.ph1369.epil ]
-  %i.ra = mul nuw nsw i64 %indvars.iv1784.epil, %i.qs
+  %i.ra = mul nuw nsw i64 %indvars.iv1784.epil, %wide.trip.count.a
   %i.rb = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.ra
   %i.rc = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv1784.epil
   store ptr %i.rb, ptr %i.rc, align 8, !tbaa !34
@@ -296,8 +298,9 @@ _ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc343
   br i1 %epil.iter.cmp.not, label %.lr.ph1374.preheader, label %.lr.ph1369.epil, !llvm.loop !84
 
 .lr.ph1374.preheader:                             ; preds = %.lr.ph1369.epil, %.lr.ph1374.preheader.unr-lcssa
-  %wide.trip.count1799 = zext nneg i32 %i.qj to i64
-  %wide.trip.count1793 = zext i32 %i.qj to i64
+  %7 = call i32 @llvm.umax.i32(i32 %i.qj, i32 1)
+  %wide.trip.count1799 = zext nneg i32 %7 to i64
+  %wide.trip.count1793 = zext nneg i32 %i.qj to i64
   br label %.lr.ph1374
 
 bb.dq:                                            ; preds = %bb.do
@@ -313,22 +316,22 @@ bb.dr:                                            ; preds = %_ZNSt6vectorIPdSaIS
 .lr.ph1369:                                       ; preds = %.lr.ph1369, %.lr.ph1369.preheader.new
   %indvars.iv1784 = phi i64 [ 0, %.lr.ph1369.preheader.new ], [ %indvars.iv.next1785.3, %.lr.ph1369 ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph1369.preheader.new ], [ %niter.next.3, %.lr.ph1369 ]
-  %i.rf = mul nuw nsw i64 %indvars.iv1784, %i.qs
+  %i.rf = mul nuw nsw i64 %indvars.iv1784, %wide.trip.count.a
   %i.rg = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.rf
   %i.rh = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv1784
   store ptr %i.rg, ptr %i.rh, align 8, !tbaa !34
   %indvars.iv.next1785 = or disjoint i64 %indvars.iv1784, 1 ; 2 uses
-  %i.ri = mul nuw nsw i64 %indvars.iv.next1785, %i.qs
+  %i.ri = mul nuw nsw i64 %indvars.iv.next1785, %wide.trip.count.a
   %i.rj = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.ri
   %i.rk = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv.next1785
   store ptr %i.rj, ptr %i.rk, align 8, !tbaa !34
   %indvars.iv.next1785.1 = or disjoint i64 %indvars.iv1784, 2 ; 2 uses
-  %i.rl = mul nuw nsw i64 %indvars.iv.next1785.1, %i.qs
+  %i.rl = mul nuw nsw i64 %indvars.iv.next1785.1, %wide.trip.count.a
   %i.rm = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.rl
   %i.rn = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv.next1785.1
   store ptr %i.rm, ptr %i.rn, align 8, !tbaa !34
   %indvars.iv.next1785.2 = or disjoint i64 %indvars.iv1784, 3 ; 2 uses
-  %i.ro = mul nuw nsw i64 %indvars.iv.next1785.2, %i.qs
+  %i.ro = mul nuw nsw i64 %indvars.iv.next1785.2, %wide.trip.count.a
   %i.rp = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.ro
   %i.rq = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv.next1785.2
   store ptr %i.rp, ptr %i.rq, align 8, !tbaa !34
@@ -375,7 +378,7 @@ _ZNSt12_Vector_baseIPKdSaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %_ZNSt12_
   %.sroa.27.3 = phi ptr [ %i.rz, %_ZNSt12_Vector_baseIPKdSaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ null, %bb.dt ]
   %smax1811 = call i32 @llvm.smax.i32(i32 %i.qj, i32 1)
   %wide.trip.count1812 = zext nneg i32 %smax1811 to i64 ; 3 uses
-  %wide.trip.count1806 = zext i32 %i.qj to i64
+  %wide.trip.count1806 = zext nneg i32 %i.qj to i64
   br label %.lr.ph1389
 
 .lr.ph1374:                                       ; preds = %.lr.ph1374.preheader, %.loopexit726
@@ -778,6 +781,7 @@ _ZSt6fill_nIPPimS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc374
   br label %.lr.ph1395.preheader
 
 .lr.ph1395.preheader:                             ; preds = %.noexc374, %_ZSt6fill_nIPPimS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i
+  %8 = zext nneg i32 %i.qj to i64                 ; 5 uses
   %xtraiter3335 = and i64 %wide.trip.count1812, 3 ; 3 uses
   %i.ys = icmp slt i32 %i.qi, 5
   br i1 %i.ys, label %.lr.ph1395.epil.preheader, label %.lr.ph1395.preheader.new
@@ -799,7 +803,7 @@ _ZSt6fill_nIPPimS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc374
 .lr.ph1395.epil:                                  ; preds = %.lr.ph1395.epil, %.lr.ph1395.epil.preheader
   %indvars.iv1814.epil = phi i64 [ %indvars.iv1814.epil.init, %.lr.ph1395.epil.preheader ], [ %indvars.iv.next1815.epil, %.lr.ph1395.epil ] ; 3 uses
   %epil.iter3336 = phi i64 [ 0, %.lr.ph1395.epil.preheader ], [ %epil.iter3336.next, %.lr.ph1395.epil ]
-  %i.yt = mul nuw nsw i64 %indvars.iv1814.epil, %i.qs
+  %i.yt = mul nuw nsw i64 %indvars.iv1814.epil, %8
   %i.yu = getelementptr inbounds nuw [4 x i8], ptr %i.yo, i64 %i.yt
   %i.yv = getelementptr inbounds nuw [8 x i8], ptr %i.yq, i64 %indvars.iv1814.epil
   store ptr %i.yu, ptr %i.yv, align 8, !tbaa !36
@@ -830,22 +834,22 @@ bb.ek:                                            ; preds = %_ZNSt6vectorIPiSaIS
 .lr.ph1395:                                       ; preds = %.lr.ph1395, %.lr.ph1395.preheader.new
   %indvars.iv1814 = phi i64 [ 0, %.lr.ph1395.preheader.new ], [ %indvars.iv.next1815.3, %.lr.ph1395 ] ; 6 uses
   %niter3340 = phi i64 [ 0, %.lr.ph1395.preheader.new ], [ %niter3340.next.3, %.lr.ph1395 ]
-  %i.za = mul nuw nsw i64 %indvars.iv1814, %i.qs
+  %i.za = mul nuw nsw i64 %indvars.iv1814, %8
   %i.zb = getelementptr inbounds nuw [4 x i8], ptr %i.yo, i64 %i.za
   %i.zc = getelementptr inbounds nuw [8 x i8], ptr %i.yq, i64 %indvars.iv1814
   store ptr %i.zb, ptr %i.zc, align 8, !tbaa !36
   %indvars.iv.next1815 = or disjoint i64 %indvars.iv1814, 1 ; 2 uses
-  %i.zd = mul nuw nsw i64 %indvars.iv.next1815, %i.qs
+  %i.zd = mul nuw nsw i64 %indvars.iv.next1815, %8
   %i.ze = getelementptr inbounds nuw [4 x i8], ptr %i.yo, i64 %i.zd
   %i.zf = getelementptr inbounds nuw [8 x i8], ptr %i.yq, i64 %indvars.iv.next1815
   store ptr %i.ze, ptr %i.zf, align 8, !tbaa !36
   %indvars.iv.next1815.1 = or disjoint i64 %indvars.iv1814, 2 ; 2 uses
-  %i.zg = mul nuw nsw i64 %indvars.iv.next1815.1, %i.qs
+  %i.zg = mul nuw nsw i64 %indvars.iv.next1815.1, %8
   %i.zh = getelementptr inbounds nuw [4 x i8], ptr %i.yo, i64 %i.zg
   %i.zi = getelementptr inbounds nuw [8 x i8], ptr %i.yq, i64 %indvars.iv.next1815.1
   store ptr %i.zh, ptr %i.zi, align 8, !tbaa !36
   %indvars.iv.next1815.2 = or disjoint i64 %indvars.iv1814, 3 ; 2 uses
-  %i.zj = mul nuw nsw i64 %indvars.iv.next1815.2, %i.qs
+  %i.zj = mul nuw nsw i64 %indvars.iv.next1815.2, %8
   %i.zk = getelementptr inbounds nuw [4 x i8], ptr %i.yo, i64 %i.zj
   %i.zl = getelementptr inbounds nuw [8 x i8], ptr %i.yq, i64 %indvars.iv.next1815.2
   store ptr %i.zk, ptr %i.zl, align 8, !tbaa !36
@@ -900,7 +904,7 @@ bb.em:                                            ; preds = %bb.el
   %i.aaj = getelementptr i8, ptr %i.aai, i64 4
   %.idx.i.i.i.i.i.i.i377 = add nsw i64 %i.aah, -4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.aaj, i8 0, i64 %.idx.i.i.i.i.i.i.i377, i1 false), !tbaa !19
-  %wide.trip.count34.i = zext nneg i32 %i.qj to i64
+  %wide.trip.count34.i = zext nneg i32 %i.qj to i64 ; 2 uses
   br label %.preheader.i384
 
 .preheader.i384:                                  ; preds = %bb.ey, %.preheader.preheader.i383
@@ -1045,8 +1049,7 @@ _ZN7msdfgenL22colorSecondDegreeGraphEPiPKPKiiy.exit: ; preds = %bb.ey
 .lr.ph1402:                                       ; preds = %_ZN7msdfgenL22colorSecondDegreeGraphEPiPKPKiiy.exit
   %i.acc = ptrtoint ptr %i.qo to i64
   %i.acd = getelementptr inbounds nuw [4 x i8], ptr %i.aai, i64 %i.qs ; 11 uses
-  %wide.trip.count.i.i = zext nneg i32 %i.qj to i64
-  %i.ace = shl nuw nsw i64 %wide.trip.count.i.i, 2 ; 2 uses
+  %i.ace = shl nuw nsw i64 %wide.trip.count34.i, 2 ; 2 uses
   %i.acf = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
   %i.acg = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.ach = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
@@ -1055,14 +1058,15 @@ _ZN7msdfgenL22colorSecondDegreeGraphEPiPKPKiiy.exit: ; preds = %bb.ey
   %i.ack = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.acl = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.acm = zext i32 %.0127.lcssa to i64
-  %xtraiter3348 = and i64 %wide.trip.count.a, 1
-  %i.acn = icmp eq i64 %5, 0
-  %unroll_iter3353 = and i64 %wide.trip.count.a, 2147483646
+  %9 = add nsw i64 %6, -1                         ; 2 uses
+  %xtraiter3348 = and i64 %6, 1
+  %i.acn = icmp eq i64 %9, 0
+  %unroll_iter3353 = and i64 %6, 2147483646
   %lcmp.mod3350.not = icmp eq i64 %xtraiter3348, 0
   %lcmp.mod3352 = trunc i32 %i.qj to i1
-  %xtraiter3355 = and i64 %wide.trip.count.a, 1
-  %i.aco = icmp eq i64 %5, 0
-  %unroll_iter3360 = and i64 %wide.trip.count.a, 2147483646
+  %xtraiter3355 = and i64 %6, 1
+  %i.aco = icmp eq i64 %9, 0
+  %unroll_iter3360 = and i64 %6, 2147483646
   %lcmp.mod3357.not = icmp eq i64 %xtraiter3355, 0
   %lcmp.mod3359 = trunc i32 %i.qj to i1
   br label %bb.ez
@@ -1463,6 +1467,9 @@ declare void @llvm.assume(i1 noundef) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #8

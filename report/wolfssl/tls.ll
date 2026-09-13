@@ -204,16 +204,17 @@ bb.s:                                             ; preds = %.lr.ph175, %._crit_
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.y
-  %indvars.iv = phi i64 [ 0, %bb.s ], [ %indvars.iv.next, %bb.y ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %bb.s ], [ %indvars.iv.next, %bb.y ] ; 6 uses
   %.1126170 = phi i32 [ %.0125173, %bb.s ], [ %i.dg, %bb.y ] ; 5 uses
-  %i.ct = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
-  %i.cu = add i32 %i.ct, %i.cc                    ; 2 uses
+  %i.ct = trunc nuw nsw i64 %indvars.iv to i32
   %8 = xor i32 %i.ct, -1
-  %9 = add i32 %i.ad, %8
-  %.neg7.i151 = and i32 %9, %.neg7.i
-  %i.cv = and i32 %.neg7.i151, %i.cu
+  %i.cu = add nsw i32 %i.ad, %8
+  %.neg7.i151 = and i32 %i.cu, %.neg7.i
+  %9 = trunc i64 %indvars.iv to i32
+  %10 = add i32 %9, %i.cc                         ; 2 uses
+  %i.cv = and i32 %.neg7.i151, %10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.cw = lshr i32 %i.cu, 31
+  %i.cw = lshr i32 %10, 31
   %i.cx = trunc nuw nsw i32 %i.cw to i8
   %i.cy = add nsw i8 %i.cx, -1
   store volatile i8 %i.cy, ptr %i.c, align 1, !tbaa !63

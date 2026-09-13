@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %bb.ba
   %.079166 = phi i32 [ 0, %bb.a ], [ %i.ic, %bb.ba ]
-  %i.r = tail call noalias ptr @malloc(i64 noundef %i.e) #38 ; 16 uses
+  %i.r = tail call noalias ptr @malloc(i64 noundef %i.e) #38 ; 17 uses
   br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.b
@@ -565,10 +565,10 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br i1 %i.k, label %.lr.ph70.i, label %.thread.i
 
 .lr.ph.split.i:                                   ; preds = %.critedge, %._crit_edge.i116
-  %indvars.iv.i111 = phi i64 [ %indvars.iv.next.i114, %._crit_edge.i116 ], [ 0, %.critedge ] ; 6 uses
+  %indvars.iv.i111 = phi i64 [ %indvars.iv.next.i114, %._crit_edge.i116 ], [ 0, %.critedge ] ; 7 uses
   %indvars78.i = trunc i64 %indvars.iv.i111 to i32
   %.idx101.i = shl nuw nsw i64 %indvars.iv.i111, 3
-  %i.ds = getelementptr inbounds nuw i8, ptr %i.r, i64 %.idx101.i ; 7 uses
+  %i.ds = getelementptr inbounds nuw i8, ptr %i.r, i64 %.idx101.i ; 4 uses
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !56 ; 10 uses
   %i.du = icmp slt i32 %i.dt, 0
   br i1 %i.du, label %bb.as, label %bb.aq
@@ -602,20 +602,23 @@ bb.at:                                            ; preds = %.thread102.i, %bb.a
   %.not50.old106.i = phi i1 [ false, %.thread102.i ], [ true, %bb.as ]
   %.reass.i = add i32 %invariant.op.i, %indvars78.i ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
-  %3 = getelementptr i8, ptr %i.ds, i64 -8
-  %i.ec = load i32, ptr %3, align 4, !tbaa !56    ; 3 uses
+  %3 = shl nuw nsw i64 %indvars.iv.i111, 1
+  %4 = add nuw nsw i64 %3, 4294967294
+  %5 = and i64 %4, 4294967294
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %5 ; 3 uses
+  %i.ec = load i32, ptr %6, align 4, !tbaa !56    ; 3 uses
   %.not.i.i = icmp eq i32 %i.ec, %.reass.i
   br i1 %.not.i.i, label %bb.au, label %.thread.i.i
 
 bb.au:                                            ; preds = %bb.at
-  %i.ed = getelementptr i8, ptr %i.ds, i64 -4
+  %i.ed = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !56 ; 2 uses
   %i.ef = icmp eq i32 %i.ee, %.reass.i
   br i1 %i.ef, label %.preheader28.1.thread.i.i, label %._crit_edge.1.thread.i.i
 
 .thread.i.i:                                      ; preds = %bb.at
   store i32 %i.ec, ptr %i.a, align 16, !tbaa !56
-  %i.eg = getelementptr i8, ptr %i.ds, i64 -4
+  %i.eg = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.eh = load i32, ptr %i.eg, align 4, !tbaa !56 ; 3 uses
   %i.ei = icmp ne i32 %i.eh, %.reass.i
   %i.ej = icmp ne i32 %i.ec, %i.eh

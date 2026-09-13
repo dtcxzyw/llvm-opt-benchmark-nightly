@@ -204,7 +204,7 @@ declare void @Kit_TruthChangePhase_64bit(ptr noundef, i32 noundef, i32 noundef) 
 ; Function Attrs: nounwind uwtable
 define void @simpleMinimalGroups(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, ptr nofree noundef readonly captures(none) %5, i32 noundef %6, i32 noundef %7, i32 noundef %8) local_unnamed_addr #7 {
 bb.a:
-  %i.a = sext i32 %4 to i64                       ; 2 uses
+  %i.a = sext i32 %4 to i64
   %i.b = shl nsw i64 %i.a, 2
   %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #12 ; 9 uses
   %i.d = icmp sgt i32 %4, 0
@@ -448,6 +448,7 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.cx = getelementptr inbounds [4 x i8], ptr %i.af, i64 %i.cw ; 3 uses
   %i.cy = getelementptr inbounds [4 x i8], ptr %i.ah, i64 %i.cw
   %i.cz = add nuw i32 %4, 1                       ; 2 uses
+  %9 = zext i32 %4 to i64
   %wide.trip.count233 = zext i32 %i.cz to i64
   %wide.trip.count238 = zext i32 %i.cz to i64
   br label %bb.d
@@ -474,7 +475,7 @@ bb.f:                                             ; preds = %bb.e
 
 ._crit_edge243:                                   ; preds = %bb.e, %bb.f
   %i.dg = add nsw i64 %indvars.iv230, -1          ; 2 uses
-  %i.dh = getelementptr inbounds [4 x i8], ptr %3, i64 %i.dg
+  %i.dh = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.dg
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !17
   %i.dj = sext i32 %i.di to i64
   %i.dk = getelementptr inbounds [8 x i8], ptr %5, i64 %i.dj
@@ -493,7 +494,7 @@ bb.g:                                             ; preds = %._crit_edge243
 
 bb.h:                                             ; preds = %._crit_edge243, %bb.g
   %i.dt = phi i64 [ %i.ds, %bb.g ], [ 0, %._crit_edge243 ] ; 2 uses
-  %i.du = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.dg
+  %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.dg
   %i.dv = load i32, ptr %i.du, align 4, !tbaa !17 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dl, i64 24 ; 2 uses
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !26
@@ -544,7 +545,7 @@ minWord3.exit:                                    ; preds = %minWord3.exit.sink.
 
 .lr.ph201:                                        ; preds = %minWord3.exit, %minWord3.exit175
   %indvars.iv235 = phi i64 [ %indvars.iv.next236, %minWord3.exit175 ], [ 1, %minWord3.exit ] ; 3 uses
-  %i.en = add nuw nsw i64 %indvars.iv235, %i.a    ; 2 uses
+  %i.en = add nuw nsw i64 %indvars.iv235, %9      ; 2 uses
   %i.eo = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.en
   %i.ep = load i32, ptr %i.eo, align 4, !tbaa !17
   %.not172 = icmp eq i32 %i.ep, 0
@@ -552,7 +553,7 @@ minWord3.exit:                                    ; preds = %minWord3.exit.sink.
 
 bb.n:                                             ; preds = %.lr.ph201
   %i.eq = add nsw i64 %indvars.iv235, -1          ; 2 uses
-  %i.er = getelementptr inbounds [4 x i8], ptr %3, i64 %i.eq
+  %i.er = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.eq
   %i.es = load i32, ptr %i.er, align 4, !tbaa !17 ; 2 uses
   %i.et = icmp eq i32 %i.es, 1
   br i1 %i.et, label %minWord3.exit175, label %bb.o
@@ -580,7 +581,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o, %bb.p
   %.1 = phi i32 [ %i.fi, %bb.p ], [ 0, %bb.o ]
-  %i.fj = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.eq
+  %i.fj = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.eq
   %i.fk = load i32, ptr %i.fj, align 4, !tbaa !17
   %i.fl = add nsw i32 %i.fk, %.1                  ; 2 uses
   tail call void @Kit_TruthSwapAdjacentVars_64bit(ptr noundef %0, i32 noundef %6, i32 noundef %i.fl) #13

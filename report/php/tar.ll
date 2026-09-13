@@ -204,12 +204,13 @@ vector.early.exit:                                ; preds = %vector.body.interim
 
 .thread:                                          ; preds = %.preheader680.3, %.loopexit
   %.0402687 = phi i32 [ %i.ti, %.loopexit ], [ 100, %.preheader680.3 ] ; 2 uses
-  %12 = add nsw i32 %.0402687, -1                 ; 2 uses
-  %13 = zext i32 %12 to i64
-  %i.tj = getelementptr inbounds nuw i8, ptr %i.b, i64 %13
+  %12 = zext nneg i32 %.0402687 to i64
+  %13 = getelementptr i8, ptr %i.b, i64 %12
+  %i.tj = getelementptr i8, ptr %13, i64 -1
   %i.tk = load i8, ptr %i.tj, align 1, !tbaa !12
   %i.tl = icmp eq i8 %i.tk, 47
-  %spec.select491 = select i1 %i.tl, i32 %12, i32 %.0402687
+  %14 = sext i1 %i.tl to i32
+  %spec.select491 = add nsw i32 %.0402687, %14
   %i.tm = zext i32 %spec.select491 to i64
   br label %bb.dk
 
