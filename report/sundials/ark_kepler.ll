@@ -204,29 +204,29 @@ bb.aa:                                            ; preds = %.preheader
   %i.ei = load double, ptr %i.dx, align 8, !tbaa !26
   %i.ej = call double @llvm.fabs.f64(double %i.ei) ; 2 uses
   store double %i.ej, ptr %i.e, align 16, !tbaa !17
-  %i.ek = call double @llvm.log.f64(double %i.dk) ; 2 uses
+  %i.ek = call double @llvm.log.f64(double %i.dk) ; 3 uses
   %i.el = call double @log(double noundef %i.eh) #14 ; 2 uses
+  %4 = fadd double %i.el, 0.000000e+00
   %i.em = call double @llvm.log.f64(double %i.dk)
   %i.en = insertelement <2 x double> poison, double %i.ek, i64 0
   %i.eo = insertelement <2 x double> %i.en, double %i.el, i64 1 ; 2 uses
   %i.ep = insertelement <2 x double> %i.eo, double %i.em, i64 1
   %i.eq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eo, <2 x double> %i.ep, <2 x double> zeroinitializer)
   %i.er = call double @log(double noundef %i.ej) #14 ; 2 uses
-  %4 = insertelement <4 x double> poison, double %i.er, i64 0
-  %5 = insertelement <4 x double> %4, double %i.el, i64 1
-  %6 = insertelement <4 x double> %5, double %i.ek, i64 2
-  %7 = fadd <4 x double> %6, <double 0.000000e+00, double 0.000000e+00, double 0.000000e+00, double poison>
-  %8 = shufflevector <4 x double> %7, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
+  %5 = fadd double %i.er, 0.000000e+00
   %i.es = call double @llvm.log.f64(double %i.dk)
   %i.et = call double @llvm.fmuladd.f64(double %i.er, double %i.es, double 0.000000e+00)
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.peel.next, %bb.ad
   %indvars.iv = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.ad ] ; 5 uses
-  %.0183.a = phi double [ %i.et, %.peel.next ], [ %i.fu, %bb.ad ]
-  %.085176.a = phi double [ 1.000000e+00, %.peel.next ], [ %i.fk, %bb.ad ]
-  %9 = phi <2 x double> [ %i.eq, %.peel.next ], [ %i.fr, %bb.ad ]
-  %10 = phi <4 x double> [ %8, %.peel.next ], [ %15, %bb.ad ]
+  %.0183 = phi double [ %i.et, %.peel.next ], [ %i.fu, %bb.ad ]
+  %.079182 = phi double [ %5, %.peel.next ], [ %10, %bb.ad ]
+  %.081180 = phi double [ %4, %.peel.next ], [ %9, %bb.ad ]
+  %.0183.a = phi double [ %i.ek, %.peel.next ], [ %8, %bb.ad ]
+  %.085176.a = phi double [ %i.ek, %.peel.next ], [ %7, %bb.ad ]
+  %.085176 = phi double [ 1.000000e+00, %.peel.next ], [ %i.fk, %bb.ad ]
+  %6 = phi <2 x double> [ %i.eq, %.peel.next ], [ %i.fr, %bb.ad ]
   %i.eu = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv
   %i.ev = load double, ptr %i.eu, align 8, !tbaa !17 ; 5 uses
   store double %i.ev, ptr %i.t, align 16, !tbaa !23
@@ -255,22 +255,21 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac
   %i.fi = call double @llvm.fabs.f64(double %i.fh) ; 3 uses
   %i.fj = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv
   store double %i.fi, ptr %i.fj, align 8, !tbaa !17
-  %i.fk = fadd double %.085176.a, 1.000000e+00    ; 3 uses
-  %i.fl = call double @log(double noundef %i.ev) #14 ; 2 uses
+  %i.fk = fadd double %.085176, 1.000000e+00      ; 3 uses
+  %i.fl = call double @log(double noundef %i.ev) #14 ; 3 uses
+  %7 = fadd double %.085176.a, %i.fl              ; 3 uses
+  %8 = fadd double %.0183.a, %i.fl                ; 3 uses
   %i.fm = call double @log(double noundef %i.ff) #14 ; 2 uses
+  %9 = fadd double %.081180, %i.fm                ; 2 uses
   %i.fn = call double @log(double noundef %i.ev) #14
   %i.fo = insertelement <2 x double> poison, double %i.fl, i64 0
   %i.fp = insertelement <2 x double> %i.fo, double %i.fm, i64 1 ; 2 uses
   %i.fq = insertelement <2 x double> %i.fp, double %i.fn, i64 1
-  %i.fr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fp, <2 x double> %i.fq, <2 x double> %9) ; 3 uses
+  %i.fr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fp, <2 x double> %i.fq, <2 x double> %6) ; 3 uses
   %i.fs = call double @log(double noundef %i.fi) #14 ; 2 uses
-  %11 = insertelement <4 x double> poison, double %i.fs, i64 0
-  %12 = insertelement <4 x double> %11, double %i.fm, i64 1
-  %13 = insertelement <4 x double> %12, double %i.fl, i64 2
-  %14 = shufflevector <4 x double> %13, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
-  %15 = fadd <4 x double> %10, %14                ; 5 uses
+  %10 = fadd double %.079182, %i.fs               ; 2 uses
   %i.ft = call double @log(double noundef %i.ev) #14
-  %i.fu = call double @llvm.fmuladd.f64(double %i.fs, double %i.ft, double %.0183.a) ; 2 uses
+  %i.fu = call double @llvm.fmuladd.f64(double %i.fs, double %i.ft, double %.0183) ; 2 uses
   %i.fv = add nsw i64 %indvars.iv, -1             ; 5 uses
   %i.fw = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.fv
   %i.fx = load double, ptr %i.fw, align 8, !tbaa !17
@@ -299,10 +298,7 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac
   %i.gn = sitofp i32 %i.df to double
   %i.go = extractelement <2 x double> %i.fr, i64 0 ; 2 uses
   %i.gp = extractelement <2 x double> %i.fr, i64 1
-  %16 = extractelement <4 x double> %15, i64 1
-  %17 = extractelement <4 x double> %15, i64 2    ; 2 uses
-  %18 = extractelement <4 x double> %15, i64 3    ; 2 uses
-  call fastcc void @ComputeConvergence(ptr noundef %i.b, double noundef %i.fk, double noundef %18, double noundef %17, double noundef %i.go, double noundef %16, double noundef %i.gp, ptr noundef %i.h, ptr noundef %i.f, ptr noundef %i.i)
+  call fastcc void @ComputeConvergence(ptr noundef %i.b, double noundef %i.fk, double noundef %7, double noundef %8, double noundef %i.go, double noundef %9, double noundef %i.gp, ptr noundef %i.h, ptr noundef %i.f, ptr noundef %i.i)
   %i.gq = load double, ptr %i.f, align 8, !tbaa !17 ; 2 uses
   %i.gr = fpext double %i.gq to x86_fp80
   %i.gs = load double, ptr %i.h, align 8, !tbaa !17
@@ -310,8 +306,7 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac
   %i.gu = load double, ptr %i.i, align 8, !tbaa !17
   %i.gv = fpext double %i.gu to x86_fp80
   %i.gw = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.4, i32 noundef %i.df, x86_fp80 noundef %i.gr, x86_fp80 noundef %i.gt, x86_fp80 noundef %i.gv) ; 0 uses
-  %19 = extractelement <4 x double> %15, i64 0
-  call fastcc void @ComputeConvergence(ptr noundef %i.c, double noundef %i.fk, double noundef %18, double noundef %17, double noundef %i.go, double noundef %19, double noundef %i.fu, ptr noundef %i.h, ptr noundef %i.g, ptr noundef %i.i)
+  call fastcc void @ComputeConvergence(ptr noundef %i.c, double noundef %i.fk, double noundef %7, double noundef %8, double noundef %i.go, double noundef %10, double noundef %i.fu, ptr noundef %i.h, ptr noundef %i.g, ptr noundef %i.i)
   %i.gx = load double, ptr %i.g, align 8, !tbaa !17 ; 2 uses
   %i.gy = fpext double %i.gx to x86_fp80
   %i.gz = load double, ptr %i.h, align 8, !tbaa !17
