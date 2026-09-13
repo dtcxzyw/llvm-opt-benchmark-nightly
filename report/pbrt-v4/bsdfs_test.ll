@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph43, !llvm.loop !432
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i26.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ce, %bb.b ] ; 3 uses
+  %.fr.i.i26.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ce, %bb.b ] ; 2 uses
   %storemerge24.lcssa = phi ptr [ %.fr28, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i.i26.lcssa, 4             ; 2 uses
   %i.j = add nsw i64 %i.i, -2                     ; 2 uses
@@ -283,14 +283,10 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   store i64 %.sroa.5.0.copyload.i.i.i, ptr %.sroa.34.0..sroa.0.0..val13.sroa_idx.i.i.i.i.i, align 8, !tbaa !79
   %.not.i.i.i = icmp eq i64 %.011.i.i.i, 0
   %i.ak = add nsw i64 %.011.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_RT0_.exit.i.i", label %bb.c, !llvm.loop !435
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !435
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_T0_SF_T1_T2_.exit.i.i.i"
-  %10 = icmp sgt i64 %.fr.i.i26.lcssa, 16
-  br i1 %10, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_T0_.exit"
-
-.lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_RT0_.exit.i.i"
-  %.sroa.0.02.i.i = phi ptr [ %i.al, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_RT0_.exit.i.i" ], [ %storemerge24.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_RT0_.exit.i.i" ] ; 2 uses
+.lr.ph.i9.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_T0_SF_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_RT0_.exit.i.i"
+  %.sroa.0.02.i.i = phi ptr [ %i.al, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_RT0_.exit.i.i" ], [ %storemerge24.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_T0_SF_T1_T2_.exit.i.i.i" ] ; 2 uses
   %i.al = getelementptr inbounds i8, ptr %.sroa.0.02.i.i, i64 -16 ; 4 uses
   %.sroa.04.0.copyload.i.i10.i = load float, ptr %i.al, align 8, !tbaa !28 ; 2 uses
   %.sroa.5.0..sroa_idx.i.i11.i = getelementptr inbounds i8, ptr %.sroa.0.02.i.i, i64 -8
@@ -494,7 +490,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cg = icmp sgt i64 %i.cf, 16
   br i1 %i.cg, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_T0_.exit", !llvm.loop !432
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEET_SE_SE_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_RT0_.exit.i.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEET_SE_SE_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZ8Chi2TestB5cxx11PKfS3_iiiffiE4CellSt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZ8Chi2TestB5cxx11S3_S3_iiiffiE3$_0EEEvT_SE_SE_RT0_.exit.i.i", %bb.a
   ret void
 }
 

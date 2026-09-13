@@ -205,7 +205,7 @@ bb.a:
   %14 = alloca %"class.bzla::Node", align 8       ; 6 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_T0_.exit"
@@ -227,11 +227,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.o, label %._crit_edge, label %.lr.ph573, !llvm.loop !428
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa550 = phi i64 [ %i.d, %.lr.ph ], [ %i.mf, %bb.b ] ; 2 uses
-  %.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.me, %bb.b ]
+  %.lcssa = phi i64 [ %i.d, %.lr.ph ], [ %i.mf, %bb.b ] ; 2 uses
   %storemerge171.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.0118.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
-  %i.p = add nsw i64 %.lcssa550, -2
+  %i.p = add nsw i64 %.lcssa, -2
   %i.q = lshr i64 %i.p, 1
   br label %bb.c
 
@@ -244,7 +243,7 @@ bb.c:                                             ; preds = %bb.e, %._crit_edge
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_T0_SI_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa550, ptr noundef align 8 %14, ptr %3)
+  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_T0_SI_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa, ptr noundef align 8 %14, ptr %3)
           to label %bb.e unwind label %bb.g
 
 bb.e:                                             ; preds = %bb.d
@@ -278,8 +277,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 "_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_RT0_.exit.i.i": ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %14)
-  %15 = icmp sgt i64 %.lcssa, 8
-  br i1 %15, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_T0_.exit"
+  br label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_RT0_.exit.i11.i"
   %.sroa.0.03.i.i = phi ptr [ %i.v, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_RT0_.exit.i11.i" ], [ %storemerge171.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_RT0_.exit.i.i" ]
@@ -682,12 +680,12 @@ _ZSt9iter_swapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EE
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEET_SH_SH_T0_.exit": ; preds = %bb.dr
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_T0_T1_"(ptr nonnull %.sroa.0118.1.i.i, ptr %storemerge171572, i64 noundef %i.ae, ptr %3)
   %i.md = ptrtoint ptr %.sroa.0118.1.i.i to i64
-  %i.me = sub i64 %i.md, %i.a                     ; 2 uses
+  %i.me = sub i64 %i.md, %i.a
   %i.mf = ashr exact i64 %i.me, 3                 ; 3 uses
   %i.mg = icmp sgt i64 %i.mf, 16
   br i1 %i.mg, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_T0_.exit", !llvm.loop !428
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEET_SH_SH_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_RT0_.exit.i11.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEET_SH_SH_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5quant11QuantSolver10mbqi_checkERKS7_E3$_0EEEvT_SH_SH_RT0_.exit.i11.i", %bb.a
   ret void
 }
 

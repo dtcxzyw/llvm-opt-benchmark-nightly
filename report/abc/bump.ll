@@ -205,39 +205,9 @@ bb.d:                                             ; preds = %.critedge.i
   br i1 %i.ah, label %sort_bump.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ai = add nsw i64 %i.ag, -1                   ; 4 uses
+  %i.ai = add nsw i64 %i.ag, -1                   ; 5 uses
   %i.aj = icmp ult i64 %i.ag, 12
-  br i1 %i.aj, label %.lr.ph360.i.i.preheader, label %.preheader323.i.i
-
-.lr.ph360.i.i.preheader:                          ; preds = %bb.x, %bb.e
-  %xtraiter99 = and i64 %i.ai, 1
-  %lcmp.mod100.not = icmp eq i64 %xtraiter99, 0
-  br i1 %lcmp.mod100.not, label %.lr.ph360.i.i.prol.loopexit, label %.lr.ph360.i.i.prol
-
-.lr.ph360.i.i.prol:                               ; preds = %.lr.ph360.i.i.preheader
-  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.ai ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %3 = load i32, ptr %2, align 4, !tbaa !102
-  %4 = getelementptr i8, ptr %1, i64 -4
-  %5 = load i32, ptr %4, align 4, !tbaa !102
-  %6 = icmp ult i32 %3, %5
-  br i1 %6, label %7, label %.lr.ph360.i.i.prol.loopexit.unr-lcssa
-
-7:                                                ; preds = %.lr.ph360.i.i.prol
-  %8 = getelementptr i8, ptr %1, i64 -8           ; 2 uses
-  %9 = load <2 x i64>, ptr %8, align 4
-  %10 = shufflevector <2 x i64> %9, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x i64> %10, ptr %8, align 4
-  br label %.lr.ph360.i.i.prol.loopexit.unr-lcssa
-
-.lr.ph360.i.i.prol.loopexit.unr-lcssa:            ; preds = %7, %.lr.ph360.i.i.prol
-  %11 = add nsw i64 %i.ag, -2
-  br label %.lr.ph360.i.i.prol.loopexit
-
-.lr.ph360.i.i.prol.loopexit:                      ; preds = %.lr.ph360.i.i.prol.loopexit.unr-lcssa, %.lr.ph360.i.i.preheader
-  %.0285359.i.i.unr = phi i64 [ %i.ai, %.lr.ph360.i.i.preheader ], [ %11, %.lr.ph360.i.i.prol.loopexit.unr-lcssa ]
-  %cond = icmp eq i64 %i.af, 16
-  br i1 %cond, label %sort_bump.exit.i, label %.lr.ph360.i.i
+  br i1 %i.aj, label %.thread.i.i, label %.preheader323.i.i
 
 .preheader323.i.i:                                ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 904 ; 3 uses
@@ -408,7 +378,7 @@ bb.x:                                             ; preds = %bb.w
   %i.cz = load ptr, ptr %i.ak, align 8, !tbaa !106
   %i.da = load ptr, ptr %i.al, align 8, !tbaa !103 ; 3 uses
   %i.db = icmp eq ptr %i.cz, %i.da
-  br i1 %i.db, label %.lr.ph360.i.i.preheader, label %bb.y
+  br i1 %i.db, label %.thread.i.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.dc = getelementptr inbounds i8, ptr %i.da, i64 -8
@@ -423,7 +393,41 @@ bb.y:                                             ; preds = %bb.x
   %.0292.i.i.be = phi i64 [ %.0292..1291.i.i, %bb.w ], [ %.1291..0292.i.i, %bb.v ], [ %i.dd, %bb.y ]
   br label %bb.f
 
-.preheader.i.i:                                   ; preds = %bb.ab
+.thread.i.i:                                      ; preds = %bb.x, %bb.e
+  %.not314358.i.i = icmp eq i64 %i.ai, 0
+  br i1 %.not314358.i.i, label %.preheader.i.i, label %.lr.ph360.i.i.preheader
+
+.lr.ph360.i.i.preheader:                          ; preds = %.thread.i.i
+  %xtraiter100 = and i64 %i.ai, 1
+  %lcmp.mod101.not = icmp eq i64 %xtraiter100, 0
+  br i1 %lcmp.mod101.not, label %.lr.ph360.i.i.prol.loopexit, label %.lr.ph360.i.i.prol
+
+.lr.ph360.i.i.prol:                               ; preds = %.lr.ph360.i.i.preheader
+  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.ai ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %3 = load i32, ptr %2, align 4, !tbaa !102
+  %4 = getelementptr i8, ptr %1, i64 -4
+  %5 = load i32, ptr %4, align 4, !tbaa !102
+  %6 = icmp ult i32 %3, %5
+  br i1 %6, label %7, label %.lr.ph360.i.i.prol.loopexit.unr-lcssa
+
+7:                                                ; preds = %.lr.ph360.i.i.prol
+  %8 = getelementptr i8, ptr %1, i64 -8           ; 2 uses
+  %9 = load <2 x i64>, ptr %8, align 4
+  %10 = shufflevector <2 x i64> %9, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i64> %10, ptr %8, align 4
+  br label %.lr.ph360.i.i.prol.loopexit.unr-lcssa
+
+.lr.ph360.i.i.prol.loopexit.unr-lcssa:            ; preds = %7, %.lr.ph360.i.i.prol
+  %11 = add nsw i64 %i.ag, -2
+  br label %.lr.ph360.i.i.prol.loopexit
+
+.lr.ph360.i.i.prol.loopexit:                      ; preds = %.lr.ph360.i.i.prol.loopexit.unr-lcssa, %.lr.ph360.i.i.preheader
+  %.0285359.i.i.unr = phi i64 [ %i.ai, %.lr.ph360.i.i.preheader ], [ %11, %.lr.ph360.i.i.prol.loopexit.unr-lcssa ]
+  %cond = icmp eq i64 %i.af, 16
+  br i1 %cond, label %sort_bump.exit.i, label %.lr.ph360.i.i
+
+.preheader.i.i:                                   ; preds = %bb.ab, %.thread.i.i
   %.not315366.i.i = icmp eq i64 %i.af, 16
   br i1 %.not315366.i.i, label %sort_bump.exit.i, label %.lr.ph368.preheader.i.i
 

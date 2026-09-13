@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond.i12, label %bb.e, label %tls1_save_u16.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = lshr exact i64 %.val.i10, 1              ; 3 uses
+  %i.p = lshr exact i64 %.val.i10, 1              ; 2 uses
   %i.q = tail call noalias ptr @CRYPTO_malloc(i64 noundef %.val.i10, ptr noundef nonnull @.str.2, i32 noundef 3543) #14 ; 4 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %tls1_save_u16.exit, label %.preheader.i
@@ -216,9 +216,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.g, %.preheader.i
   %.val.i.i30.i = phi i64 [ %.promoted.i, %.preheader.i ], [ %i.ac, %bb.g ] ; 2 uses
-  %.029.i = phi i64 [ 0, %.preheader.i ], [ %i.ae, %bb.g ] ; 3 uses
+  %.029.i = phi i64 [ 0, %.preheader.i ], [ %i.ae, %bb.g ] ; 2 uses
   %i.s = icmp ult i64 %.val.i.i30.i, 2
-  br i1 %i.s, label %.critedge.i, label %bb.g
+  br i1 %i.s, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.t = load ptr, ptr %1, align 8, !tbaa !214    ; 3 uses
@@ -239,15 +239,11 @@ bb.g:                                             ; preds = %bb.f
   %exitcond.not.i = icmp eq i64 %i.ae, %i.p
   br i1 %exitcond.not.i, label %.critedge.thread.i, label %bb.f, !llvm.loop !4
 
-.critedge.i:                                      ; preds = %bb.f
-  %.not24.i = icmp eq i64 %.029.i, %i.p
-  br i1 %.not24.i, label %.critedge.thread.i, label %bb.h
-
-bb.h:                                             ; preds = %.critedge.i
+bb.h:                                             ; preds = %bb.f
   tail call void @CRYPTO_free(ptr noundef nonnull %i.q, ptr noundef nonnull @.str.2, i32 noundef 3549) #14
   br label %tls1_save_u16.exit
 
-.critedge.thread.i:                               ; preds = %bb.g, %.critedge.i
+.critedge.thread.i:                               ; preds = %bb.g
   %i.af = load ptr, ptr %i.n, align 8, !tbaa !124
   tail call void @CRYPTO_free(ptr noundef %i.af, ptr noundef nonnull @.str.2, i32 noundef 3553) #14
   store ptr %i.q, ptr %i.n, align 8, !tbaa !124
@@ -260,7 +256,7 @@ bb.i:                                             ; preds = %bb.c
   br i1 %or.cond.i12, label %bb.j, label %tls1_save_u16.exit
 
 bb.j:                                             ; preds = %bb.i
-  %i.ai = lshr exact i64 %.val.i10, 1             ; 3 uses
+  %i.ai = lshr exact i64 %.val.i10, 1             ; 2 uses
   %i.aj = tail call noalias ptr @CRYPTO_malloc(i64 noundef %.val.i10, ptr noundef nonnull @.str.2, i32 noundef 3543) #14 ; 4 uses
   %i.ak = icmp eq ptr %i.aj, null
   br i1 %i.ak, label %tls1_save_u16.exit, label %.preheader.i14
@@ -271,9 +267,9 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.l, %.preheader.i14
   %.val.i.i30.i16 = phi i64 [ %.promoted.i15, %.preheader.i14 ], [ %i.av, %bb.l ] ; 2 uses
-  %.029.i17 = phi i64 [ 0, %.preheader.i14 ], [ %i.ax, %bb.l ] ; 3 uses
+  %.029.i17 = phi i64 [ 0, %.preheader.i14 ], [ %i.ax, %bb.l ] ; 2 uses
   %i.al = icmp ult i64 %.val.i.i30.i16, 2
-  br i1 %i.al, label %.critedge.i20, label %bb.l
+  br i1 %i.al, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.am = load ptr, ptr %1, align 8, !tbaa !214   ; 3 uses
@@ -294,15 +290,11 @@ bb.l:                                             ; preds = %bb.k
   %exitcond.not.i18 = icmp eq i64 %i.ax, %i.ai
   br i1 %exitcond.not.i18, label %.critedge.thread.i19, label %bb.k, !llvm.loop !4
 
-.critedge.i20:                                    ; preds = %bb.k
-  %.not24.i21 = icmp eq i64 %.029.i17, %i.ai
-  br i1 %.not24.i21, label %.critedge.thread.i19, label %bb.m
-
-bb.m:                                             ; preds = %.critedge.i20
+bb.m:                                             ; preds = %bb.k
   tail call void @CRYPTO_free(ptr noundef nonnull %i.aj, ptr noundef nonnull @.str.2, i32 noundef 3549) #14
   br label %tls1_save_u16.exit
 
-.critedge.thread.i19:                             ; preds = %bb.l, %.critedge.i20
+.critedge.thread.i19:                             ; preds = %bb.l
   %i.ay = load ptr, ptr %i.ag, align 8, !tbaa !124
   tail call void @CRYPTO_free(ptr noundef %i.ay, ptr noundef nonnull @.str.2, i32 noundef 3553) #14
   store ptr %i.aj, ptr %i.ag, align 8, !tbaa !124

@@ -202,9 +202,9 @@ bb.o:                                             ; preds = %._crit_edge.i46
   br i1 %i.cq, label %schedule_transitive.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.cr = add nsw i64 %i.cp, -1                   ; 2 uses
+  %i.cr = add nsw i64 %i.cp, -1                   ; 3 uses
   %i.cs = icmp ult i64 %i.cp, 12
-  br i1 %i.cs, label %.lr.ph.i.i.i, label %.preheader24.i.i.i
+  br i1 %i.cs, label %.thread.i.i.i, label %.preheader24.i.i.i
 
 .preheader24.i.i.i:                               ; preds = %bb.p
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 904 ; 3 uses
@@ -607,7 +607,7 @@ bb.av:                                            ; preds = %bb.au
   %i.jj = load ptr, ptr %i.ct, align 8, !tbaa !116
   %i.jk = load ptr, ptr %i.cw, align 8, !tbaa !114 ; 3 uses
   %i.jl = icmp eq ptr %i.jj, %i.jk
-  br i1 %i.jl, label %.lr.ph.i.i.i, label %bb.aw
+  br i1 %i.jl, label %.thread.i.i.i, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.jm = getelementptr inbounds i8, ptr %i.jk, i64 -8
@@ -622,16 +622,22 @@ bb.aw:                                            ; preds = %bb.av
   %.0193.i.i.i.be = phi i64 [ %.0193..1191.i.i.i, %bb.au ], [ %.1191..0193.i.i.i, %bb.at ], [ %i.jn, %bb.aw ]
   br label %bb.q
 
-.lr.ph.i.i.i:                                     ; preds = %bb.av, %bb.p
-  %i.jq = getelementptr inbounds nuw i8, ptr %0, i64 316 ; 2 uses
-  %i.jr = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 4 uses
+.thread.i.i.i:                                    ; preds = %bb.av, %bb.p
+  %.not20636.i.i.i = icmp eq i64 %i.cr, 0
+  br i1 %.not20636.i.i.i, label %.preheader.i.i.i, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.thread.i.i.i
+  %i.jq = getelementptr inbounds nuw i8, ptr %0, i64 316
+  %i.jr = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   br label %bb.ax
 
-.preheader.i.i.i:                                 ; preds = %less_stable_transitive.exit249.thread17.i.i.i
+.preheader.i.i.i:                                 ; preds = %less_stable_transitive.exit249.thread17.i.i.i, %.thread.i.i.i
   %.not20738.i.i.i = icmp eq i64 %i.co, 8
   br i1 %.not20738.i.i.i, label %schedule_transitive.exit, label %.lr.ph40.i.i.i
 
 .lr.ph40.i.i.i:                                   ; preds = %.preheader.i.i.i
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 316
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   %umax.i.i.i = call i64 @llvm.umax.i64(i64 %i.cp, i64 3)
   br label %bb.bc
 
@@ -734,12 +740,12 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %or.cond4.i252.i.i.i, label %bb.bf, label %less_stable_transitive.exit257.thread20.i.i.i
 
 bb.bf:                                            ; preds = %bb.be
-  %i.lm = load i32, ptr %i.jq, align 4, !tbaa !111 ; 2 uses
+  %i.lm = load i32, ptr %3, align 4, !tbaa !111   ; 2 uses
   %i.ln = icmp ult i32 %i.ky, %i.lm
   br i1 %i.ln, label %bb.bg, label %kissat_get_heap_score.exit.i254.i.i.i
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.lo = load ptr, ptr %i.jr, align 8, !tbaa !112
+  %i.lo = load ptr, ptr %4, align 8, !tbaa !112
   %i.lp = getelementptr inbounds nuw [8 x i8], ptr %i.lo, i64 %i.kz
   %i.lq = load double, ptr %i.lp, align 8, !tbaa !113
   br label %kissat_get_heap_score.exit.i254.i.i.i
@@ -750,7 +756,7 @@ kissat_get_heap_score.exit.i254.i.i.i:            ; preds = %bb.bg, %bb.bf
   br i1 %i.ls, label %bb.bh, label %kissat_get_heap_score.exit27.i255.i.i.i
 
 bb.bh:                                            ; preds = %kissat_get_heap_score.exit.i254.i.i.i
-  %i.lt = load ptr, ptr %i.jr, align 8, !tbaa !112
+  %i.lt = load ptr, ptr %4, align 8, !tbaa !112
   %i.lu = getelementptr inbounds nuw [8 x i8], ptr %i.lt, i64 %i.lh
   %i.lv = load double, ptr %i.lu, align 8, !tbaa !113
   br label %kissat_get_heap_score.exit27.i255.i.i.i
@@ -787,12 +793,9 @@ bb.bi:                                            ; preds = %._crit_edge.i46
   br i1 %i.mh, label %schedule_transitive.exit, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.mi = add nsw i64 %i.mg, -1                   ; 2 uses
+  %i.mi = add nsw i64 %i.mg, -1                   ; 3 uses
   %i.mj = icmp ult i64 %i.mg, 12
-  br i1 %i.mj, label %.lr.ph.i23.i.i.preheader, label %.preheader37.i.i.i
-
-.lr.ph.i23.i.i.preheader:                         ; preds = %bb.bz, %bb.bj
-  br label %.lr.ph.i23.i.i
+  br i1 %i.mj, label %.thread.i22.i.i, label %.preheader37.i.i.i
 
 .preheader37.i.i.i:                               ; preds = %bb.bj
   %i.mk = getelementptr inbounds nuw i8, ptr %0, i64 904 ; 3 uses
@@ -1137,7 +1140,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.sf = load ptr, ptr %i.mk, align 8, !tbaa !116
   %i.sg = load ptr, ptr %i.ml, align 8, !tbaa !114 ; 3 uses
   %i.sh = icmp eq ptr %i.sf, %i.sg
-  br i1 %i.sh, label %.lr.ph.i23.i.i.preheader, label %bb.ca
+  br i1 %i.sh, label %.thread.i22.i.i, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
   %i.si = getelementptr inbounds i8, ptr %i.sg, i64 -8
@@ -1152,7 +1155,11 @@ bb.ca:                                            ; preds = %bb.bz
   %.0193.i9.i.i.be = phi i64 [ %.0193..1191.i19.i.i, %bb.by ], [ %.1191..0193.i17.i.i, %bb.bx ], [ %i.sj, %bb.ca ]
   br label %bb.bk
 
-.preheader.i24.i.i:                               ; preds = %less_focused_transitive.exit240.thread.i.i.i
+.thread.i22.i.i:                                  ; preds = %bb.bz, %bb.bj
+  %.not21166.i.i.i = icmp eq i64 %i.mi, 0
+  br i1 %.not21166.i.i.i, label %.preheader.i24.i.i, label %.lr.ph.i23.i.i
+
+.preheader.i24.i.i:                               ; preds = %less_focused_transitive.exit240.thread.i.i.i, %.thread.i22.i.i
   %.not21268.i.i.i = icmp eq i64 %i.mf, 8
   br i1 %.not21268.i.i.i, label %schedule_transitive.exit, label %.lr.ph70.preheader.i.i.i
 
@@ -1160,8 +1167,8 @@ bb.ca:                                            ; preds = %bb.bz
   %umax.i25.i.i = call i64 @llvm.umax.i64(i64 %i.mg, i64 3)
   br label %.lr.ph70.i.i.i
 
-.lr.ph.i23.i.i:                                   ; preds = %.lr.ph.i23.i.i.preheader, %less_focused_transitive.exit240.thread.i.i.i
-  %.018667.i.i.i = phi i64 [ %i.th, %less_focused_transitive.exit240.thread.i.i.i ], [ %i.mi, %.lr.ph.i23.i.i.preheader ] ; 2 uses
+.lr.ph.i23.i.i:                                   ; preds = %.thread.i22.i.i, %less_focused_transitive.exit240.thread.i.i.i
+  %.018667.i.i.i = phi i64 [ %i.th, %less_focused_transitive.exit240.thread.i.i.i ], [ %i.mi, %.thread.i22.i.i ] ; 2 uses
   %i.sm = getelementptr inbounds nuw [4 x i8], ptr %.val.i.i, i64 %.018667.i.i.i ; 3 uses
   %i.sn = load i32, ptr %i.sm, align 4, !tbaa !110 ; 2 uses
   %i.so = getelementptr i8, ptr %i.sm, i64 -4     ; 2 uses

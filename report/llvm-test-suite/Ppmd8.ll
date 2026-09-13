@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %AllocUnits.exit._cr
   store i32 %i.hx, ptr %i.hy, align 4, !tbaa !8
   %i.hz = getelementptr inbounds nuw i8, ptr %.0185, i64 24
   %i.ia = getelementptr inbounds nuw i8, ptr %.0186, i64 24
-  %i.ib = add i32 %.0184, -2                      ; 2 uses
+  %i.ib = add nsw i32 %.0184, -2                  ; 2 uses
   %.not223.1 = icmp eq i32 %i.ib, 0
   br i1 %.not223.1, label %.unr-lcssa, label %.new, !llvm.loop !84
 

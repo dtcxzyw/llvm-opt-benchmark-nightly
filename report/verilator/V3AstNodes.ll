@@ -204,8 +204,8 @@ bb.a:
 _ZN7AstNode2isI14AstMemberDType12AstNodeDTypeEEbPKT0_.exit: ; preds = %bb.r, %bb.a
   %i.j = phi ptr [ %0, %bb.a ], [ %i.aj, %bb.r ]  ; 2 uses
   %.033248 = phi i32 [ 0, %bb.a ], [ %i.ba, %bb.r ]
-  %.sroa.0157.0247 = phi ptr [ null, %bb.a ], [ %.sroa.0157.1, %bb.r ] ; 11 uses
-  %.sroa.10.0246 = phi ptr [ null, %bb.a ], [ %.sroa.10.1, %bb.r ] ; 8 uses
+  %.sroa.0157.0247 = phi ptr [ null, %bb.a ], [ %.sroa.0157.1, %bb.r ] ; 10 uses
+  %.sroa.10.0246 = phi ptr [ null, %bb.a ], [ %.sroa.10.1, %bb.r ] ; 7 uses
   %.sroa.15.0245 = phi ptr [ null, %bb.a ], [ %.sroa.15.1, %bb.r ] ; 6 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 64
   %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.k, align 8, !tbaa !62 ; 3 uses
@@ -233,12 +233,7 @@ _ZNSt13unordered_setIPK12AstNodeDTypeSt4hashIS2_ESt8equal_toIS2_ESaIS2_EE7emplac
   %i.o = trunc i8 %.fca.1.extract to i1           ; 2 uses
   br i1 %i.o, label %bb.d, label %bb.s
 
-.loopexit:                                        ; preds = %_ZNKSt6vectorIPK12AstNodeDTypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i
-  %lpad.loopexit = landingpad { ptr, i32 }
-          cleanup
-  br label %.body146
-
-.loopexit.split-lp:                               ; preds = %13
+.loopexit.split-lp:                               ; preds = %_ZNKSt6vectorIPK12AstNodeDTypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body146
@@ -251,14 +246,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_ZNSt13unordered_setIPK12AstNodeDTypeSt4hashIS2_ESt8equal_toIS2_ESaIS2_EE7emplaceIJRS2_EEESt4pairINSt8__detail14_Node_iteratorIS2_Lb1ELb0EEEbEDpOT_.exit
   %i.q = ptrtoint ptr %.sroa.10.0246 to i64
   %i.r = ptrtoint ptr %.sroa.0157.0247 to i64
-  %i.s = sub i64 %i.q, %i.r                       ; 6 uses
+  %i.s = sub i64 %i.q, %i.r                       ; 5 uses
   %i.t = ashr exact i64 %i.s, 3                   ; 3 uses
   %i.u = icmp ult i64 %i.t, 10
   br i1 %i.u, label %bb.e, label %_ZNSt6vectorIPK12AstNodeDTypeSaIS2_EE9push_backERKS2_.exit
 
 bb.e:                                             ; preds = %bb.d
   %.not.i79 = icmp eq ptr %.sroa.10.0246, %.sroa.15.0245
-  br i1 %.not.i79, label %11, label %bb.f
+  br i1 %.not.i79, label %_ZNKSt6vectorIPK12AstNodeDTypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.v = load ptr, ptr %i.d, align 8, !tbaa !555
@@ -266,23 +261,12 @@ bb.f:                                             ; preds = %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.10.0246, i64 8
   br label %_ZNSt6vectorIPK12AstNodeDTypeSaIS2_EE9push_backERKS2_.exit
 
-11:                                               ; preds = %bb.e
-  %12 = icmp eq i64 %i.s, 9223372036854775800
-  br i1 %12, label %13, label %_ZNKSt6vectorIPK12AstNodeDTypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i
-
-13:                                               ; preds = %11
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2964) #35
-          to label %.noexc unwind label %.loopexit.split-lp
-
-.noexc:                                           ; preds = %13
-  unreachable
-
-_ZNKSt6vectorIPK12AstNodeDTypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %11
+_ZNKSt6vectorIPK12AstNodeDTypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.e
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.t, i64 1)
   %i.x = add nuw nsw i64 %.sroa.speculated.i.i.i, %i.t ; 2 uses
   %i.y = shl nuw nsw i64 %i.x, 3
   %i.z = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #37
-          to label %.noexc80 unwind label %.loopexit ; 4 uses
+          to label %.noexc80 unwind label %.loopexit.split-lp ; 4 uses
 
 .noexc80:                                         ; preds = %_ZNKSt6vectorIPK12AstNodeDTypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 %i.s ; 2 uses
@@ -685,10 +669,10 @@ _ZNSt13unordered_setIPK12AstNodeDTypeSt4hashIS2_ESt8equal_toIS2_ESaIS2_EED2Ev.ex
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #33
   ret ptr %.3
 
-.body146:                                         ; preds = %.loopexit189, %.loopexit.split-lp190, %.loopexit, %.loopexit.split-lp, %bb.ae, %bb.ar, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126, %bb.aa, %bb.x, %bb.z, %bb.bm, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144, %bb.bf, %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.sroa.15.3 = phi ptr [ %.sroa.15.0.lcssa, %bb.ae ], [ %.sroa.15.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.10.0246, %.loopexit.split-lp ], [ %.sroa.15.0.lcssa, %bb.x ], [ %.sroa.15.0245, %bb.c ], [ %.sroa.15.0.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144 ], [ %.sroa.15.0.lcssa, %bb.bf ], [ %.sroa.15.0.lcssa, %bb.bm ], [ %.sroa.15.0.lcssa, %bb.z ], [ %.sroa.15.0.lcssa, %bb.aa ], [ %.sroa.15.0.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126 ], [ %.sroa.15.0.lcssa, %bb.ar ], [ %.sroa.10.0246, %.loopexit ], [ %.sroa.15.1, %.loopexit189 ], [ %.sroa.15.1, %.loopexit.split-lp190 ]
-  %.sroa.0157.3 = phi ptr [ %.sroa.0157.0.lcssa, %bb.ae ], [ %.sroa.0157.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.0157.0247, %.loopexit.split-lp ], [ %.sroa.0157.0.lcssa, %bb.x ], [ %.sroa.0157.0247, %bb.c ], [ %.sroa.0157.0.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144 ], [ %.sroa.0157.0.lcssa, %bb.bf ], [ %.sroa.0157.0.lcssa, %bb.bm ], [ %.sroa.0157.0.lcssa, %bb.z ], [ %.sroa.0157.0.lcssa, %bb.aa ], [ %.sroa.0157.0.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126 ], [ %.sroa.0157.0.lcssa, %bb.ar ], [ %.sroa.0157.0247, %.loopexit ], [ %.sroa.0157.1, %.loopexit189 ], [ %.sroa.0157.1, %.loopexit.split-lp190 ] ; 3 uses
-  %.pn59.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.cm, %bb.ae ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %i.bg, %bb.x ], [ %i.p, %bb.c ], [ %.pn57, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144 ], [ %i.fu, %bb.bf ], [ %i.gg, %bb.bm ], [ %i.bi, %bb.z ], [ %i.bj, %bb.aa ], [ %.pn59.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126 ], [ %i.ed, %bb.ar ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit191, %.loopexit189 ], [ %lpad.loopexit.split-lp192, %.loopexit.split-lp190 ]
+.body146:                                         ; preds = %.loopexit189, %.loopexit.split-lp190, %bb.ae, %bb.ar, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126, %bb.aa, %bb.x, %bb.z, %bb.bm, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144, %bb.bf, %.loopexit.split-lp, %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %.sroa.15.3 = phi ptr [ %.sroa.10.0246, %.loopexit.split-lp ], [ %.sroa.15.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.15.0.lcssa, %bb.ae ], [ %.sroa.15.0.lcssa, %bb.x ], [ %.sroa.15.0245, %bb.c ], [ %.sroa.15.0.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144 ], [ %.sroa.15.0.lcssa, %bb.bf ], [ %.sroa.15.0.lcssa, %bb.bm ], [ %.sroa.15.0.lcssa, %bb.z ], [ %.sroa.15.0.lcssa, %bb.aa ], [ %.sroa.15.0.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126 ], [ %.sroa.15.0.lcssa, %bb.ar ], [ %.sroa.15.1, %.loopexit189 ], [ %.sroa.15.1, %.loopexit.split-lp190 ]
+  %.sroa.0157.3 = phi ptr [ %.sroa.0157.0247, %.loopexit.split-lp ], [ %.sroa.0157.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.0157.0.lcssa, %bb.ae ], [ %.sroa.0157.0.lcssa, %bb.x ], [ %.sroa.0157.0247, %bb.c ], [ %.sroa.0157.0.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144 ], [ %.sroa.0157.0.lcssa, %bb.bf ], [ %.sroa.0157.0.lcssa, %bb.bm ], [ %.sroa.0157.0.lcssa, %bb.z ], [ %.sroa.0157.0.lcssa, %bb.aa ], [ %.sroa.0157.0.lcssa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126 ], [ %.sroa.0157.0.lcssa, %bb.ar ], [ %.sroa.0157.1, %.loopexit189 ], [ %.sroa.0157.1, %.loopexit.split-lp190 ] ; 3 uses
+  %.pn59.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.cm, %bb.ae ], [ %i.bg, %bb.x ], [ %i.p, %bb.c ], [ %.pn57, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144 ], [ %i.fu, %bb.bf ], [ %i.gg, %bb.bm ], [ %i.bi, %bb.z ], [ %i.bj, %bb.aa ], [ %.pn59.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit126 ], [ %i.ed, %bb.ar ], [ %lpad.loopexit191, %.loopexit189 ], [ %lpad.loopexit.split-lp192, %.loopexit.split-lp190 ]
   %.not.i.i.i150 = icmp eq ptr %.sroa.0157.3, null
   br i1 %.not.i.i.i150, label %_ZNSt6vectorIPK12AstNodeDTypeSaIS2_EED2Ev.exit151, label %bb.bq
 

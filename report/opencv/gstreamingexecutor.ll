@@ -205,14 +205,11 @@ bb.h:                                             ; preds = %bb.b
   unreachable
 
 _ZNSt6vectorIPN2cv5gimpl6stream1QESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i: ; preds = %bb.h
-  %i.r = ashr exact i64 %i.g, 1                   ; 4 uses
-  %i.s = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #31 ; 7 uses
+  %i.r = ashr exact i64 %i.g, 1                   ; 2 uses
+  %i.s = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #31 ; 6 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.h
   store ptr null, ptr %i.s, align 8, !tbaa !197
-  %10 = getelementptr i8, ptr %i.s, i64 8
-  %.idx.i.i.i.i.i.i.i = add nsw i64 %i.r, -8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %10, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !197
-  %i.u = getelementptr i8, ptr %i.s, i64 %i.r
+  %i.u = getelementptr i8, ptr %i.s, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   %i.v = load ptr, ptr %i.b, align 8, !tbaa !190  ; 3 uses
   %i.w = load ptr, ptr %i.a, align 8, !tbaa !191  ; 3 uses

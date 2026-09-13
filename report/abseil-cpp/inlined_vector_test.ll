@@ -205,7 +205,7 @@ bb.lj:                                            ; preds = %bb.li
   br label %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit55.i
 
 _ZSt22__uninitialized_copy_aIPKiPiiET0_T_S4_S3_RSaIT1_E.exit.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i
-  %gepdiff = sub nsw i64 12, %i.azp
+  %gepdiff = sub nuw nsw i64 12, %i.azp
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %.sroa.141177.11296, ptr nonnull align 4 %i.bae, i64 %gepdiff, i1 false)
   %i.bai = sub nuw nsw i64 3, %i.azq
   %i.baj = getelementptr inbounds nuw [4 x i8], ptr %.sroa.141177.11296, i64 %i.bai ; 4 uses
@@ -608,7 +608,7 @@ bb.pf:                                            ; preds = %bb.pe
   br label %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EESt16initializer_listIiE.exit772
 
 bb.pg:                                            ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i1064
-  %gepdiff1329 = sub nsw i64 8, %i.bpq
+  %gepdiff1329 = sub nuw nsw i64 8, %i.bpq
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %.sroa.14.11304, ptr nonnull align 4 %i.bqg, i64 %gepdiff1329, i1 false)
   %i.bqm = sub nuw nsw i64 2, %i.bpr
   %i.bqn = getelementptr inbounds nuw [4 x i8], ptr %.sroa.14.11304, i64 %i.bqm

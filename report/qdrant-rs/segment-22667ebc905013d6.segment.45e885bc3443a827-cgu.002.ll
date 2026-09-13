@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.g
   br i1 %i.at, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.au = sub nsw i32 126, %i.ad
+  %i.au = sub nuw nsw i32 126, %i.ad
   %i.av = or disjoint i32 %i.t, 8388608           ; 3 uses
   %i.aw = lshr i32 %i.av, %i.au                   ; 2 uses
   %i.ax = sub nsw i32 29, %i.ad
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %bb.g
   br i1 %i.ap, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.aq = sub nsw i32 126, %i.z
+  %i.aq = sub nuw nsw i32 126, %i.z
   %i.ar = or disjoint i32 %i.p, 8388608           ; 3 uses
   %i.as = lshr i32 %i.ar, %i.aq                   ; 2 uses
   %i.at = sub nsw i32 29, %i.z
@@ -763,7 +763,7 @@ bb.j:                                             ; preds = %bb.g
   br i1 %i.ap, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.aq = sub nsw i32 126, %i.z
+  %i.aq = sub nuw nsw i32 126, %i.z
   %i.ar = or disjoint i32 %i.p, 8388608           ; 3 uses
   %i.as = lshr i32 %i.ar, %i.aq                   ; 2 uses
   %i.at = sub nsw i32 29, %i.z

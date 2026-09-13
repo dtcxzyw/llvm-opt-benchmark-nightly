@@ -205,14 +205,12 @@ _RNvMs_NtCs9gmjTwvRRSu_10typst_html5typedNtB4_11StringsType7strings.exit: ; pred
   %.idx1 = shl nuw nsw i64 %.0.val, 5
   %i.e = getelementptr inbounds nuw i8, ptr @1381, i64 %.idx1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !15168
-  %i.f = sub nuw nsw i64 %.8.val, %.0.val         ; 5 uses
+  %i.f = sub nuw nsw i64 %.8.val, %.0.val         ; 4 uses
   %i.g = mul nuw nsw i64 %i.f, 48                 ; 2 uses
   %i.h = icmp eq i64 %.8.val, %.0.val
   br i1 %i.h, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4cast8CastInfoE7reserveCs9gmjTwvRRSu_10typst_html.exit.i.i.i.thread, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i
 
 _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4cast8CastInfoE7reserveCs9gmjTwvRRSu_10typst_html.exit.i.i.i.thread: ; preds = %_RNvMs_NtCs9gmjTwvRRSu_10typst_html5typedNtB4_11StringsType7strings.exit
-  %1 = icmp eq i64 %i.f, 0
-  tail call void @llvm.assume(i1 %1)
   store i64 0, ptr %i.b, align 8, !noalias !15168
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr inttoptr (i64 8 to ptr), ptr %i.i, align 8, !noalias !15168
@@ -260,7 +258,7 @@ bb.f:                                             ; preds = %bb.e
   store i64 %i.x, ptr %i.p, align 8, !noalias !15176
   %i.y = getelementptr inbounds nuw [48 x i8], ptr %i.k, i64 %.val10.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.y, ptr noundef nonnull readonly align 8 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !15176
-  %i.z = add i64 %.val10.i.i.i.i.i.i, 1           ; 2 uses
+  %i.z = add nuw i64 %.val10.i.i.i.i.i.i, 1       ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !15173
   %i.aa = icmp eq i64 %i.z, %i.f
   br i1 %i.aa, label %_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4cast8CastInfoEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtNtB2H_5slice4iter4IterTReB3O_EENCNvMs_NtCs9gmjTwvRRSu_10typst_html5typedNtB43_11StringsType5input0EE9from_iterB45_.exit, label %bb.e
@@ -663,12 +661,12 @@ _RINvMs_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRSNtNtNtNtCsdaEETE4DqmE_13typst_libr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !24537
   %gepdiff.i.i.i = sub nuw nsw i64 %.idx.i.i.i, %.idx5.i.i.i ; 2 uses
   %i.cv = lshr exact i64 %gepdiff.i.i.i, 4        ; 3 uses
-  %i.cw = mul nuw i64 %i.cv, 24                   ; 2 uses
+  %i.cw = mul nuw nsw i64 %i.cv, 24               ; 2 uses
   %or.cond.i.i.i.i.i.i.i.i.i.i = icmp samesign ugt i64 %gepdiff.i.i.i, 6148914691236517200
   br i1 %or.cond.i.i.i.i.i.i.i.i.i.i, label %.noexc.i.i.i.i.i.i.i.i, label %bb.o, !prof !75
 
 bb.o:                                             ; preds = %_RINvMs_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRSNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve5EntryE5drainINtNtNtCs3oUPovFnLWP_4core3ops5range9RangeFromjEECs9gmjTwvRRSu_10typst_html.exit.i.i.i
-  %i.cx = icmp eq i64 %.idx.i.i.i, %.idx5.i.i.i   ; 2 uses
+  %i.cx = icmp samesign eq i64 %.idx.i.i.i, %.idx5.i.i.i ; 2 uses
   br i1 %i.cx, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i.i.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i.i.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.o
@@ -1005,9 +1003,9 @@ bb.af:                                            ; preds = %_RNvXs1_NtCs1xwejQu
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i46.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i46.i.i:               ; preds = %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve5EntryuNCINvNtBb_3map8map_foldTjB21_ENtNtNtB2b_11foundations7content7ContentuNCNvNtCs9gmjTwvRRSu_10typst_html5rules13show_cellgrids4_0NCINvNvB1e_8for_each4callB3z_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB5K_3VecB3z_E14extend_trustedINtB3a_3MapIBX_INtNtB5K_9into_iter8IntoIterB21_EEB4d_EE0E0E0E0B4j_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i46.preheader.i.i
-  %.sroa.0.0172.i.i = phi i64 [ %.sroa.0.1.i.i, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve5EntryuNCINvNtBb_3map8map_foldTjB21_ENtNtNtB2b_11foundations7content7ContentuNCNvNtCs9gmjTwvRRSu_10typst_html5rules13show_cellgrids4_0NCINvNvB1e_8for_each4callB3z_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB5K_3VecB3z_E14extend_trustedINtB3a_3MapIBX_INtNtB5K_9into_iter8IntoIterB21_EEB4d_EE0E0E0E0B4j_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.0.1.i.i188.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i46.preheader.i.i ] ; 5 uses
-  %.val9.i.i.i.i.i.i.i.i.i.i.i47.i.i = phi i64 [ %i.gt, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve5EntryuNCINvNtBb_3map8map_foldTjB21_ENtNtNtB2b_11foundations7content7ContentuNCNvNtCs9gmjTwvRRSu_10typst_html5rules13show_cellgrids4_0NCINvNvB1e_8for_each4callB3z_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB5K_3VecB3z_E14extend_trustedINtB3a_3MapIBX_INtNtB5K_9into_iter8IntoIterB21_EEB4d_EE0E0E0E0B4j_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i46.preheader.i.i ] ; 4 uses
-  %i.ga = phi ptr [ %i.ge, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve5EntryuNCINvNtBb_3map8map_foldTjB21_ENtNtNtB2b_11foundations7content7ContentuNCNvNtCs9gmjTwvRRSu_10typst_html5rules13show_cellgrids4_0NCINvNvB1e_8for_each4callB3z_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB5K_3VecB3z_E14extend_trustedINtB3a_3MapIBX_INtNtB5K_9into_iter8IntoIterB21_EEB4d_EE0E0E0E0B4j_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.fm, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i46.preheader.i.i ] ; 3 uses
+  %.sroa.0.0172.i.i = phi i64 [ %.sroa.0.1.i.i188.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i46.preheader.i.i ], [ %.sroa.0.1.i.i, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve5EntryuNCINvNtBb_3map8map_foldTjB21_ENtNtNtB2b_11foundations7content7ContentuNCNvNtCs9gmjTwvRRSu_10typst_html5rules13show_cellgrids4_0NCINvNvB1e_8for_each4callB3z_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB5K_3VecB3z_E14extend_trustedINtB3a_3MapIBX_INtNtB5K_9into_iter8IntoIterB21_EEB4d_EE0E0E0E0B4j_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 5 uses
+  %.val9.i.i.i.i.i.i.i.i.i.i.i47.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i46.preheader.i.i ], [ %i.gt, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve5EntryuNCINvNtBb_3map8map_foldTjB21_ENtNtNtB2b_11foundations7content7ContentuNCNvNtCs9gmjTwvRRSu_10typst_html5rules13show_cellgrids4_0NCINvNvB1e_8for_each4callB3z_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB5K_3VecB3z_E14extend_trustedINtB3a_3MapIBX_INtNtB5K_9into_iter8IntoIterB21_EEB4d_EE0E0E0E0B4j_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
+  %i.ga = phi ptr [ %i.fm, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i46.preheader.i.i ], [ %i.ge, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSNtNtNtNtCsdaEETE4DqmE_13typst_library6layout4grid7resolve5EntryuNCINvNtBb_3map8map_foldTjB21_ENtNtNtB2b_11foundations7content7ContentuNCNvNtCs9gmjTwvRRSu_10typst_html5rules13show_cellgrids4_0NCINvNvB1e_8for_each4callB3z_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB5K_3VecB3z_E14extend_trustedINtB3a_3MapIBX_INtNtB5K_9into_iter8IntoIterB21_EEB4d_EE0E0E0E0B4j_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   %i.gb = load ptr, ptr %i.ga, align 8, !noalias !24577, !nonnull !57, !align !63, !noundef !57
   %i.gc = getelementptr inbounds nuw i8, ptr %i.ga, i64 8
   %i.gd = load i64, ptr %i.gc, align 8, !noalias !24577, !noundef !57
@@ -1236,7 +1234,7 @@ bb.bc:                                            ; preds = %bb.az
   call void @llvm.experimental.noalias.scope.decl(metadata !24594)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !24517
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !24595
-  %i.if = mul nuw i64 %.sroa.4.0.i.i, 24          ; 2 uses
+  %i.if = mul nuw nsw i64 %.sroa.4.0.i.i, 24      ; 2 uses
   %or.cond.i.i.i.i.i.i.i64.i.i = icmp samesign ugt i64 %.sroa.4.0.i.i, 384307168202282325
   br i1 %or.cond.i.i.i.i.i.i.i64.i.i, label %bb.be, label %bb.bd, !prof !75
 
@@ -1259,8 +1257,9 @@ _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Al
   br i1 %i.ik, label %bb.be, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i66.i.i
 
 bb.be:                                            ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i.i65.i.i, %bb.bc
+  %.sroa.10.0.ph.i.i.i.i.i.i79.i.i = phi i64 [ %i.if, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i.i65.i.i ], [ undef, %bb.bc ]
   %.sroa.4.0.ph.i.i.i.i.i.i83.i.i = phi i64 [ 8, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i.i65.i.i ], [ 0, %bb.bc ]
-  invoke void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i.i.i.i83.i.i, i64 %i.if) #54
+  invoke void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i.i.i.i83.i.i, i64 %.sroa.10.0.ph.i.i.i.i.i.i79.i.i) #54
           to label %.noexc.i.i.i.i.i84.i.i unwind label %bb.bj, !noalias !24598
 
 .noexc.i.i.i.i.i84.i.i:                           ; preds = %bb.be

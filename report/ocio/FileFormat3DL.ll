@@ -204,9 +204,9 @@ bb.a:
   %.sroa.0489.0.ph742 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.0489.2, %.outer ] ; 13 uses
   %.sroa.17.0.ph741 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.17.2, %.outer ] ; 5 uses
   %.0512.ph740 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %.1513, %.outer ] ; 4 uses
-  %.sroa.32.0.ph739 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.32.2, %.outer ] ; 17 uses
+  %.sroa.32.0.ph739 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.32.2, %.outer ] ; 16 uses
   %.sroa.18.0.ph738 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.18.1, %.outer ] ; 7 uses
-  %.sroa.0464.0.ph737 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.0464.2, %.outer ] ; 19 uses
+  %.sroa.0464.0.ph737 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.0464.2, %.outer ] ; 18 uses
   %.sroa.27.0.ph736 = phi ptr [ null, %.lr.ph.lr.ph ], [ %.sroa.27.2, %.outer ] ; 12 uses
   br label %bb.b
 
@@ -427,9 +427,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit197: ; preds = %_Z
           cleanup
   br label %.loopexit548
 
-.loopexit.split-lp549:                            ; preds = %bb.c, %26, %bb.bm, %bb.br
-  %.sroa.0464.1.ph550 = phi ptr [ %.sroa.0464.6, %bb.br ], [ %.sroa.0464.5, %bb.bm ], [ %.sroa.0464.0.ph737, %26 ], [ %.sroa.0464.0.ph737, %bb.c ]
-  %.sroa.32.1.ph551 = phi ptr [ %.sroa.18.3, %bb.br ], [ %.sroa.32.5, %bb.bm ], [ %.sroa.32.0.ph739, %26 ], [ %.sroa.32.0.ph739, %bb.c ]
+.loopexit.split-lp549:                            ; preds = %bb.c, %bb.bm, %bb.br
+  %.sroa.0464.1.ph550 = phi ptr [ %.sroa.0464.6, %bb.br ], [ %.sroa.0464.5, %bb.bm ], [ %.sroa.0464.0.ph737, %bb.c ]
+  %.sroa.32.1.ph551 = phi ptr [ %.sroa.18.3, %bb.br ], [ %.sroa.32.5, %bb.bm ], [ %.sroa.32.0.ph739, %bb.c ]
   %lpad.loopexit.split-lp553 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit548
@@ -825,7 +825,7 @@ bb.au:                                            ; preds = %bb.ac
 bb.av:                                            ; preds = %bb.au
   %i.fv = ptrtoint ptr %.sroa.18.0.ph738 to i64
   %i.fw = ptrtoint ptr %.sroa.0464.0.ph737 to i64 ; 2 uses
-  %i.fx = sub i64 %i.fv, %i.fw                    ; 5 uses
+  %i.fx = sub i64 %i.fv, %i.fw                    ; 4 uses
   %i.fy = ashr exact i64 %i.fx, 2                 ; 3 uses
   %i.fz = icmp ugt i64 %i.fy, 6440067
   br i1 %i.fz, label %bb.aw, label %bb.bg
@@ -911,25 +911,14 @@ bb.bf:                                            ; preds = %bb.be, %bb.ba
 
 bb.bg:                                            ; preds = %bb.av
   %.not.i245 = icmp eq ptr %.sroa.18.0.ph738, %.sroa.32.0.ph739
-  br i1 %.not.i245, label %24, label %bb.bh
+  br i1 %.not.i245, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i246, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.gn = load i32, ptr %i.ds, align 4, !tbaa !44
   store i32 %i.gn, ptr %.sroa.18.0.ph738, align 4, !tbaa !44
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit254
 
-24:                                               ; preds = %bb.bg
-  %25 = icmp eq i64 %i.fx, 9223372036854775804
-  br i1 %25, label %26, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i246
-
-26:                                               ; preds = %24
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.3) #25
-          to label %.noexc252 unwind label %.loopexit.split-lp549
-
-.noexc252:                                        ; preds = %26
-  unreachable
-
-_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i246: ; preds = %24
+_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i246: ; preds = %bb.bg
   %.sroa.speculated.i.i.i247 = call i64 @llvm.umax.i64(i64 %i.fy, i64 1)
   %i.go = add nuw nsw i64 %.sroa.speculated.i.i.i247, %i.fy ; 2 uses
   %i.gp = shl nuw nsw i64 %i.go, 2

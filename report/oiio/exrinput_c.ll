@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #35 ; 9 uses
+  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.h) #35 ; 8 uses
   store ptr %i.j, ptr %12, align 8, !tbaa !141
   %i.k = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.h
@@ -215,7 +215,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = load ptr, ptr %i.c, align 8, !tbaa !143  ; 2 uses
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = ptrtoint ptr %i.n to i64
-  %i.r = sub i64 %i.p, %i.q                       ; 6 uses
+  %i.r = sub i64 %i.p, %i.q                       ; 5 uses
   %i.s = icmp sgt i64 %i.r, 4
   br i1 %i.s, label %bb.d, label %bb.e, !prof !254
 
@@ -252,27 +252,23 @@ bb.g:                                             ; preds = %_ZNSt6vectorIfSaIfE
 
 bb.h:                                             ; preds = %_ZNSt6vectorIfSaIfEEC2ERKS1_.exit
   %i.ab = icmp ugt i64 %i.x, %i.w
-  br i1 %i.ab, label %14, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
+  br i1 %i.ab, label %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
 
-14:                                               ; preds = %bb.h
-  %.idx = shl nuw nsw i64 %i.w, 2                 ; 2 uses
-  %.not.i.i = icmp eq i64 %i.r, %.idx
-  br i1 %.not.i.i, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit, label %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i
-
-_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %14
+_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.h
+  %.idx = shl nuw nsw i64 %i.w, 2
   %i.ac = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx
   store ptr %i.ac, ptr %i.k, align 8, !tbaa !144
   br label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
 
-_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit_crit_edge, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, %14, %bb.h
-  %15 = phi ptr [ %.pre, %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit_crit_edge ], [ %i.j, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i ], [ %i.j, %14 ], [ %i.j, %bb.h ] ; 4 uses
-  %i.ad = load float, ptr %15, align 4, !tbaa !145 ; 2 uses
+_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit_crit_edge, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, %bb.h
+  %14 = phi ptr [ %.pre, %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit_crit_edge ], [ %i.j, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i ], [ %i.j, %bb.h ] ; 4 uses
+  %i.ad = load float, ptr %14, align 4, !tbaa !145 ; 2 uses
   %i.ae = fcmp uge float %i.ad, 0.000000e+00      ; 2 uses
   br i1 %i.ae, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
   %i.af = call float @llvm.fabs.f32(float %i.ad)
-  store float %i.af, ptr %15, align 4, !tbaa !145
+  store float %i.af, ptr %14, align 4, !tbaa !145
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.g
@@ -326,7 +322,7 @@ bb.l:                                             ; preds = %bb.i, %_ZNSt6vector
   br i1 %.not.i.i.i39, label %_ZNSt6vectorIfSaIfEED2Ev.exit40, label %._crit_edge63.split.thread
 
 ._crit_edge63.split.thread:                       ; preds = %bb.l, %.preheader.lr.ph, %._crit_edge63.split
-  %i.ay = phi ptr [ %.pre80, %._crit_edge63.split ], [ %15, %.preheader.lr.ph ], [ %15, %bb.l ] ; 2 uses
+  %i.ay = phi ptr [ %.pre80, %._crit_edge63.split ], [ %14, %.preheader.lr.ph ], [ %14, %bb.l ] ; 2 uses
   %i.az = load ptr, ptr %i.m, align 8, !tbaa !142
   %i.ba = ptrtoint ptr %i.az to i64
   %i.bb = ptrtoint ptr %i.ay to i64

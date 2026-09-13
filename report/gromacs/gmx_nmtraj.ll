@@ -205,7 +205,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   %sext = shl i64 %i.ce, 30                       ; 3 uses
-  %i.ch = ashr exact i64 %sext, 32                ; 8 uses
+  %i.ch = ashr exact i64 %sext, 32                ; 7 uses
   %i.ci = icmp ugt i64 %i.ch, 2305843009213693951
   br i1 %i.ci, label %bb.r, label %bb.s
 
@@ -608,20 +608,16 @@ bb.bf:                                            ; preds = %bb.be
   %i.gy = ptrtoint ptr %i.gw to i64
   %i.gz = ptrtoint ptr %i.gx to i64
   %i.ha = sub i64 %i.gy, %i.gz
-  %i.hb = ashr exact i64 %i.ha, 2                 ; 3 uses
+  %i.hb = ashr exact i64 %i.ha, 2                 ; 2 uses
   %i.hc = icmp ugt i64 %i.ch, %i.hb
-  br i1 %i.hc, label %bb.bg, label %15
+  br i1 %i.hc, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
   %i.hd = sub nuw nsw i64 %i.ch, %i.hb
   invoke void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(ptr noundef nonnull align 8 dereferenceable(24) %8, ptr %i.gw, i64 noundef %i.hd, ptr noundef nonnull align 4 dereferenceable(4) %i.t)
           to label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit unwind label %bb.bi
 
-15:                                               ; preds = %bb.bf
-  %16 = icmp ult i64 %i.ch, %i.hb
-  br i1 %16, label %bb.bh, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
-
-bb.bh:                                            ; preds = %15
+bb.bh:                                            ; preds = %bb.bf
   %i.he = getelementptr inbounds nuw [4 x i8], ptr %i.gx, i64 %i.ch ; 2 uses
   %.not.i.i = icmp eq ptr %i.gw, %i.he
   br i1 %.not.i.i, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit, label %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i
@@ -630,7 +626,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.bh
   store ptr %i.he, ptr %i.fc, align 8, !tbaa !32
   br label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
 
-_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, %bb.bh, %15, %bb.bg
+_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, %bb.bh, %bb.bg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #16
   br label %bb.bj
 

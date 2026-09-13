@@ -202,18 +202,18 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
-  %i.m = load ptr, ptr %i.a, align 8, !tbaa !13   ; 2 uses
-  %i.n = load ptr, ptr %0, align 8, !tbaa !14     ; 4 uses
+  %i.m = load ptr, ptr %i.a, align 8, !tbaa !13   ; 3 uses
+  %i.n = load ptr, ptr %0, align 8, !tbaa !14     ; 3 uses
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = ptrtoint ptr %i.n to i64
-  %i.q = sub i64 %i.o, %i.p                       ; 2 uses
+  %i.q = sub i64 %i.o, %i.p
   %i.r = ashr exact i64 %i.q, 3                   ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !13   ; 2 uses
   %i.u = load ptr, ptr %i.l, align 8, !tbaa !14   ; 3 uses
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = ptrtoint ptr %i.u to i64
-  %i.x = sub i64 %i.v, %i.w                       ; 3 uses
+  %i.x = sub i64 %i.v, %i.w
   %i.y = ashr exact i64 %i.x, 3                   ; 2 uses
   %i.z = icmp ult i64 %i.r, %i.y
   br i1 %i.z, label %_ZN5boost10stacktraceleISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_IT0_EE.exit, label %bb.e
@@ -223,10 +223,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aa, label %bb.f, label %_ZN5boost10stacktraceleISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_IT0_EE.exit
 
 bb.f:                                             ; preds = %bb.e
-  %1 = icmp slt i64 %i.x, %i.q
-  %2 = getelementptr inbounds i8, ptr %i.n, i64 %i.x
-  %3 = select i1 %1, ptr %2, ptr %i.m             ; 2 uses
-  %.not22.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.n, %3
+  %.not22.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.n, %i.m
   br i1 %.not22.i.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %bb.f, %bb.g
@@ -240,7 +237,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
   %i.ad = getelementptr inbounds nuw i8, ptr %.02023.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.01924.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.ad, %3
+  %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.ad, %i.m
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !52
 
 .critedge.i.i.i.i.i.i.i.i.i:                      ; preds = %bb.g, %bb.f
@@ -258,17 +255,17 @@ _ZN5boost10stacktraceleISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_
           to label %bb.h unwind label %bb.w       ; 0 uses
 
 bb.h:                                             ; preds = %_ZN5boost10stacktraceleISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_IT0_EE.exit
-  %i.ai = load ptr, ptr %i.s, align 8, !tbaa !13  ; 2 uses
-  %i.aj = load ptr, ptr %i.l, align 8, !tbaa !14  ; 4 uses
+  %i.ai = load ptr, ptr %i.s, align 8, !tbaa !13  ; 3 uses
+  %i.aj = load ptr, ptr %i.l, align 8, !tbaa !14  ; 3 uses
   %i.ak = ptrtoint ptr %i.ai to i64
   %i.al = ptrtoint ptr %i.aj to i64
-  %i.am = sub i64 %i.ak, %i.al                    ; 2 uses
+  %i.am = sub i64 %i.ak, %i.al
   %i.an = ashr exact i64 %i.am, 3                 ; 2 uses
   %i.ao = load ptr, ptr %i.a, align 8, !tbaa !13  ; 2 uses
   %i.ap = load ptr, ptr %0, align 8, !tbaa !14    ; 3 uses
   %i.aq = ptrtoint ptr %i.ao to i64
   %i.ar = ptrtoint ptr %i.ap to i64
-  %i.as = sub i64 %i.aq, %i.ar                    ; 3 uses
+  %i.as = sub i64 %i.aq, %i.ar
   %i.at = ashr exact i64 %i.as, 3                 ; 2 uses
   %i.au = icmp ult i64 %i.an, %i.at
   br i1 %i.au, label %_ZN5boost10stacktracegeISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_IT0_EE.exit, label %bb.i
@@ -278,10 +275,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.av, label %bb.j, label %_ZN5boost10stacktracegeISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_IT0_EE.exit
 
 bb.j:                                             ; preds = %bb.i
-  %4 = icmp slt i64 %i.as, %i.am
-  %5 = getelementptr inbounds i8, ptr %i.aj, i64 %i.as
-  %6 = select i1 %4, ptr %5, ptr %i.ai            ; 2 uses
-  %.not22.i.i.i.i.i.i.i.i = icmp eq ptr %i.aj, %6
+  %.not22.i.i.i.i.i.i.i.i = icmp eq ptr %i.aj, %i.ai
   br i1 %.not22.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.j, %bb.k
@@ -295,7 +289,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i
   %i.ay = getelementptr inbounds nuw i8, ptr %.02023.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.01924.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.ay, %6
+  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.ay, %i.ai
   br i1 %.not.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !52
 
 .critedge.i.i.i.i.i.i.i.i:                        ; preds = %bb.k, %bb.j
@@ -383,17 +377,17 @@ _ZN5boost10stacktraceeqISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_
           to label %bb.p unwind label %bb.w       ; 0 uses
 
 bb.p:                                             ; preds = %_ZN5boost10stacktraceeqISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_IT0_EE.exit8
-  %i.cn = load ptr, ptr %i.a, align 8, !tbaa !13  ; 2 uses
-  %i.co = load ptr, ptr %0, align 8, !tbaa !14    ; 4 uses
+  %i.cn = load ptr, ptr %i.a, align 8, !tbaa !13  ; 3 uses
+  %i.co = load ptr, ptr %0, align 8, !tbaa !14    ; 3 uses
   %i.cp = ptrtoint ptr %i.cn to i64
   %i.cq = ptrtoint ptr %i.co to i64
-  %i.cr = sub i64 %i.cp, %i.cq                    ; 2 uses
+  %i.cr = sub i64 %i.cp, %i.cq
   %i.cs = ashr exact i64 %i.cr, 3                 ; 2 uses
   %i.ct = load ptr, ptr %i.s, align 8, !tbaa !13  ; 2 uses
   %i.cu = load ptr, ptr %i.l, align 8, !tbaa !14  ; 3 uses
   %i.cv = ptrtoint ptr %i.ct to i64
   %i.cw = ptrtoint ptr %i.cu to i64
-  %i.cx = sub i64 %i.cv, %i.cw                    ; 3 uses
+  %i.cx = sub i64 %i.cv, %i.cw
   %i.cy = ashr exact i64 %i.cx, 3                 ; 2 uses
   %i.cz = icmp ult i64 %i.cs, %i.cy
   br i1 %i.cz, label %_ZN5boost10stacktracegtISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_IT0_EE.exit, label %bb.q
@@ -403,10 +397,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.da, label %bb.r, label %_ZN5boost10stacktracegtISaINS0_5frameEES3_EEbRKNS0_16basic_stacktraceIT_EERKNS4_IT0_EE.exit
 
 bb.r:                                             ; preds = %bb.q
-  %7 = icmp slt i64 %i.cx, %i.cr
-  %8 = getelementptr inbounds i8, ptr %i.co, i64 %i.cx
-  %9 = select i1 %7, ptr %8, ptr %i.cn            ; 2 uses
-  %.not22.i.i.i.i.i.i.i.i9 = icmp eq ptr %i.co, %9
+  %.not22.i.i.i.i.i.i.i.i9 = icmp eq ptr %i.co, %i.cn
   br i1 %.not22.i.i.i.i.i.i.i.i9, label %.critedge.i.i.i.i.i.i.i.i14, label %.lr.ph.i.i.i.i.i.i.i.i10
 
 .lr.ph.i.i.i.i.i.i.i.i10:                         ; preds = %bb.r, %bb.s
@@ -420,7 +411,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i10
   %i.dd = getelementptr inbounds nuw i8, ptr %.02023.i.i.i.i.i.i.i.i12, i64 8 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.01924.i.i.i.i.i.i.i.i11, i64 8 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i13 = icmp eq ptr %i.dd, %9
+  %.not.i.i.i.i.i.i.i.i13 = icmp eq ptr %i.dd, %i.cn
   br i1 %.not.i.i.i.i.i.i.i.i13, label %.critedge.i.i.i.i.i.i.i.i14, label %.lr.ph.i.i.i.i.i.i.i.i10, !llvm.loop !52
 
 .critedge.i.i.i.i.i.i.i.i14:                      ; preds = %bb.s, %bb.r

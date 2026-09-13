@@ -202,7 +202,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc152_crit_edge: ; pred
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.cd
   %i.ck = getelementptr inbounds nuw i8, ptr %27, i64 16 ; 3 uses
   store ptr %i.cj, ptr %i.ck, align 8, !tbaa !63
-  %i.cl = sub i64 %.pre-phi, %.pre-phi233         ; 6 uses
+  %i.cl = sub i64 %.pre-phi, %.pre-phi233         ; 5 uses
   %i.cm = icmp sgt i64 %i.cl, 4
   br i1 %i.cm, label %bb.an, label %bb.ao, !prof !177
 
@@ -242,19 +242,15 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.ar
   %i.cw = icmp ugt i64 %i.ct, %i.cs
-  br i1 %i.cw, label %34, label %_ZNSt6vectorIiSaIiEE6resizeEmRKi.exit
+  br i1 %i.cw, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i, label %_ZNSt6vectorIiSaIiEE6resizeEmRKi.exit
 
-34:                                               ; preds = %bb.at
-  %.idx = shl nuw nsw i64 %i.cs, 2                ; 2 uses
-  %.not.i.i = icmp eq i64 %i.cl, %.idx
-  br i1 %.not.i.i, label %_ZNSt6vectorIiSaIiEE6resizeEmRKi.exit, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
-
-_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %34
+_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.at
+  %.idx = shl nuw nsw i64 %i.cs, 2
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ch, i64 %.idx
   store ptr %i.cx, ptr %i.ci, align 8, !tbaa !175
   br label %_ZNSt6vectorIiSaIiEE6resizeEmRKi.exit
 
-_ZNSt6vectorIiSaIiEE6resizeEmRKi.exit:            ; preds = %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i, %34, %bb.at, %bb.as
+_ZNSt6vectorIiSaIiEE6resizeEmRKi.exit:            ; preds = %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i, %bb.at, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %i.cy = icmp sgt i32 %i.bw, 3
   br i1 %i.cy, label %.lr.ph221, label %.loopexit

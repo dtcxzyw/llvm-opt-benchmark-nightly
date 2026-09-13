@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit45:        ; preds = %bb.s, %._crit_edge
   %i.bz = load ptr, ptr %i.bw, align 8, !tbaa !163 ; 6 uses
   %i.ca = ptrtoint ptr %i.by to i64
   %i.cb = ptrtoint ptr %i.bz to i64
-  %i.cc = sub i64 %i.ca, %i.cb                    ; 2 uses
+  %i.cc = sub i64 %i.ca, %i.cb
   %i.cd = ashr exact i64 %i.cc, 2                 ; 2 uses
   %i.ce = icmp ugt i64 %i.cd, 3
   br i1 %i.ce, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit45.thread49, label %bb.t
@@ -213,19 +213,13 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit45:        ; preds = %bb.s, %._crit_edge
 bb.t:                                             ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit45
   switch i64 %i.cd, label %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit.thread52 [
     i64 2, label %bb.u
-    i64 3, label %._crit_edge62
+    i64 3, label %bb.aa
   ]
 
-._crit_edge62:                                    ; preds = %bb.t
-  %.pre = load i32, ptr %i.bz, align 4, !tbaa !161
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
-  %.pre63 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !161
-  br label %bb.aa
-
 bb.u:                                             ; preds = %bb.t
-  %i.cf = load i32, ptr %i.bz, align 4, !tbaa !161 ; 6 uses
+  %i.cf = load i32, ptr %i.bz, align 4, !tbaa !161 ; 5 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
-  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !161 ; 6 uses
+  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !161 ; 5 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 832
   %i.cj = tail call noundef i32 @llvm.abs.i32(i32 %i.cf, i1 true)
   %i.ck = tail call noundef i32 @llvm.fshl.i32(i32 %i.cj, i32 %i.cf, i32 1)
@@ -304,21 +298,18 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y, %bb.x, %.lr.ph.i
   %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.028.034.i, i64 8 ; 2 uses
   %.not32.i = icmp eq ptr %i.ei, %i.dn
-  br i1 %.not32.i, label %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit, label %.lr.ph.i
+  br i1 %.not32.i, label %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit.thread52, label %.lr.ph.i
 
-_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit: ; preds = %bb.z
-  %4 = icmp eq i64 %i.cc, 12
-  br i1 %4, label %bb.aa, label %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit.thread52
-
-bb.aa:                                            ; preds = %._crit_edge62, %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit
-  %5 = phi i32 [ %.pre63, %._crit_edge62 ], [ %i.ch, %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit ]
-  %6 = phi i32 [ %.pre, %._crit_edge62 ], [ %i.cf, %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit ]
+bb.aa:                                            ; preds = %bb.t
+  %4 = load i32, ptr %i.bz, align 4, !tbaa !161
+  %5 = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
+  %6 = load i32, ptr %5, align 4, !tbaa !161
   %i.ej = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !161
-  %i.el = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal27ternary_find_ternary_clauseEiii(ptr noundef nonnull align 8 dereferenceable(7288) %0, i32 noundef %6, i32 noundef %5, i32 noundef %i.ek)
+  %i.el = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal27ternary_find_ternary_clauseEiii(ptr noundef nonnull align 8 dereferenceable(7288) %0, i32 noundef %4, i32 noundef %6, i32 noundef %i.ek)
   br i1 %i.el, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit45.thread49, label %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit.thread52
 
-_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit.thread52: ; preds = %.preheader.i, %bb.t, %bb.aa, %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit
+_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit.thread52: ; preds = %bb.z, %.preheader.i, %bb.t, %bb.aa
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit45.thread49
 
 _ZNSt6vectorIiSaIiEE9push_backERKi.exit45.thread49: ; preds = %bb.k, %bb.m, %bb.y, %bb.w, %bb.u, %_ZN7CaDiCaL8Internal26ternary_find_binary_clauseEii.exit.thread52, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit45, %bb.aa

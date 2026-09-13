@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !97
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.027.prol
   store i32 %i.ax, ptr %i.ay, align 4, !tbaa !97
-  %i.az = add nuw nsw i64 %.027.prol, 1           ; 2 uses
+  %i.az = add nuw i64 %.027.prol, 1               ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !571
@@ -226,22 +226,22 @@ bb.m:                                             ; preds = %bb.l
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !97
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.027
   store i32 %i.be, ptr %i.bf, align 4, !tbaa !97
-  %i.bg = add nuw nsw i64 %.027, 1                ; 2 uses
+  %i.bg = add nuw i64 %.027, 1                    ; 2 uses
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.bg
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !97
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bg
   store i32 %i.bi, ptr %i.bj, align 4, !tbaa !97
-  %i.bk = add nuw nsw i64 %.027, 2                ; 2 uses
+  %i.bk = add nuw i64 %.027, 2                    ; 2 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.bk
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !97
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bk
   store i32 %i.bm, ptr %i.bn, align 4, !tbaa !97
-  %i.bo = add nuw nsw i64 %.027, 3                ; 2 uses
+  %i.bo = add nuw i64 %.027, 3                    ; 2 uses
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.bo
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !97
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bo
   store i32 %i.bq, ptr %i.br, align 4, !tbaa !97
-  %i.bs = add nuw nsw i64 %.027, 4                ; 2 uses
+  %i.bs = add nuw i64 %.027, 4                    ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.bs, %i.aa
   br i1 %exitcond.not.3, label %.loopexit.thread, label %.lr.ph, !llvm.loop !572
 
@@ -644,7 +644,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.i, label %._crit_edge, label %.lr.ph54, !llvm.loop !634
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i25.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.fg, %bb.b ] ; 3 uses
+  %.fr.i.i25.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.fg, %bb.b ] ; 2 uses
   %storemerge23.lcssa = phi ptr [ %.fr27, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.j = lshr i64 %.fr.i.i25.lcssa, 2             ; 2 uses
   %i.k = add nsw i64 %i.j, -2                     ; 2 uses
@@ -744,14 +744,10 @@ bb.h:                                             ; preds = %bb.g
   store i32 %i.u, ptr %i.bg, align 4, !tbaa !97
   %.not.i.i.i = icmp eq i64 %.09.i.i.i, 0
   %i.bh = add nsw i64 %.09.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_RT0_.exit.i.i", label %bb.c, !llvm.loop !637
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !637
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_T0_SJ_T1_T2_.exit.i.i.i"
-  %4 = icmp sgt i64 %.fr.i.i25.lcssa, 4
-  br i1 %4, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_T0_.exit"
-
-.lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_RT0_.exit.i.i"
-  %.sroa.0.03.i.i = phi ptr [ %i.bi, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_RT0_.exit.i.i" ], [ %storemerge23.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_RT0_.exit.i.i" ]
+.lr.ph.i9.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_T0_SJ_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_RT0_.exit.i.i"
+  %.sroa.0.03.i.i = phi ptr [ %i.bi, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_RT0_.exit.i.i" ], [ %storemerge23.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_T0_SJ_T1_T2_.exit.i.i.i" ]
   %i.bi = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -4 ; 4 uses
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !97 ; 2 uses
   %i.bk = load i32, ptr %.fr26, align 4, !tbaa !97
@@ -983,7 +979,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fi = icmp sgt i64 %i.fh, 16
   br i1 %i.fi, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_T0_.exit", !llvm.loop !634
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEET_SI_SI_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_RT0_.exit.i.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEET_SI_SI_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZN11llama_vocab4impl4loadER18llama_model_loaderRK6LLM_KVE3$_0EEEvT_SI_SI_RT0_.exit.i.i", %bb.a
   ret void
 }
 

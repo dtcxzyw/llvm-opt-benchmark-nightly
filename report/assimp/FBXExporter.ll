@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i: ; preds = %bb.cb
   %i.ti = load ptr, ptr %i.ep, align 8
   %i.tj = ptrtoint ptr %i.ti to i64
   %i.tk = sub i64 %i.tj, %i.te
-  %i.tl = mul nuw nsw i64 %i.sy, 24
+  %i.tl = mul i64 %i.sy, 24
   %i.tm = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.tl) #34
           to label %.noexc462 unwind label %.loopexit1495 ; 5 uses
 

@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph55, !llvm.loop !72
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i.i29.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ep, %bb.b ] ; 3 uses
+  %.fr.i.i.i29.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ep, %bb.b ] ; 2 uses
   %storemerge27.lcssa = phi ptr [ %.fr31, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i.i.i29.lcssa, 3           ; 2 uses
   %i.j = add nsw i64 %i.i, -2                     ; 2 uses
@@ -353,8 +353,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_RT0_.exit.i.i", label %.split.i.i.i, !llvm.loop !75
 
 "_ZSt11__make_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN5QListIPK6MarkerE8iteratorExS3_N9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_T0_SD_T1_T2_.exit.us.i.i.i", %"_ZSt13__adjust_heapIN5QListIPK6MarkerE8iteratorExS3_N9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_T0_SD_T1_T2_.exit.i.i.i"
-  %3 = icmp sgt i64 %.fr.i.i.i29.lcssa, 8
-  br i1 %3, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_SC_T0_.exit"
+  br label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_RT0_.exit.i.i", %"_ZSt10__pop_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_SC_RT0_.exit.i.i"
   %.sroa.0.02.i.i = phi ptr [ %i.bv, %"_ZSt10__pop_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_SC_RT0_.exit.i.i" ], [ %storemerge27.lcssa, %"_ZSt11__make_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_RT0_.exit.i.i" ]
@@ -563,7 +562,7 @@ bb.y:                                             ; preds = %bb.x
   %i.er = icmp sgt i64 %i.eq, 16
   br i1 %i.er, label %bb.b, label %"_ZSt14__partial_sortIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_SC_T0_.exit", !llvm.loop !72
 
-"_ZSt14__partial_sortIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_SC_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEET_SC_SC_T0_.exit", %"_ZSt10__pop_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_SC_RT0_.exit.i.i", %bb.a, %"_ZSt11__make_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_SC_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEET_SC_SC_T0_.exit", %"_ZSt10__pop_heapIN5QListIPK6MarkerE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK10CustomPlot14orderedMarkersES4_E3$_0EEEvT_SC_SC_RT0_.exit.i.i", %bb.a
   ret void
 }
 

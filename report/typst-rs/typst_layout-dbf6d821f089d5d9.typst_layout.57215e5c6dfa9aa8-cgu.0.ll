@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.t, %bb.s
 define internal fastcc { ptr, i64 } @_RNvMs_NtNtCs7tN9tvpkfrg_12typst_layout4grid8layouterNtB4_12GridLayouter19layout_row_internal(ptr noalias nofree noundef nonnull align 8 dereferenceable(488) %0, i64 noundef %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(200) %2, i64 noundef range(i64 0, 192153584101141163) %3) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
-  %i.b = alloca [24 x i8], align 8                ; 9 uses
+  %i.b = alloca [24 x i8], align 8                ; 12 uses
   %i.c = alloca [32 x i8], align 16               ; 5 uses
   %i.d = alloca [48 x i8], align 8                ; 9 uses
   %i.e = alloca [64 x i8], align 8                ; 11 uses
@@ -608,7 +608,7 @@ bb.aq:                                            ; preds = %bb.ap
   unreachable
 
 bb.ar:                                            ; preds = %bb.ap, %bb.am
-  %.sroa.16.0 = phi i64 [ %i.fm, %bb.am ], [ %i.fv, %bb.ap ] ; 11 uses
+  %.sroa.16.0 = phi i64 [ %i.fm, %bb.am ], [ %i.fv, %bb.ap ] ; 10 uses
   %.sroa.8.0 = phi ptr [ %i.fk, %bb.am ], [ %i.ft, %bb.ap ] ; 13 uses
   %.sroa.083.0 = phi i64 [ %i.fi, %bb.am ], [ %i.fr, %bb.ap ] ; 6 uses
   %i.fw = icmp ult i64 %.sroa.16.0, 1152921504606846976
@@ -868,56 +868,49 @@ bb.bm:                                            ; preds = %bb.bk
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !29982
   %i.ia = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !29983
-  %i.ib = mul i64 %.sroa.16.0, 48                 ; 3 uses
+  %i.ib = mul nuw nsw i64 %.sroa.16.0, 48         ; 2 uses
   %or.cond.i.i.i.i = icmp samesign ugt i64 %.sroa.16.0, 192153584101141162
   br i1 %or.cond.i.i.i.i, label %bb.bo, label %bb.bn, !prof !61
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.ic = icmp eq i64 %i.ib, 0
-  br i1 %i.ic, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library6layout5frame5FrameE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i
+  %i.ic = icmp eq i64 %.sroa.16.0, 0
+  br i1 %i.ic, label %bb.br, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i: ; preds = %bb.bn
   call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #56, !noalias !29984
-  %i.id = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.ib, i64 noundef range(i64 1, 17) 8) #56, !noalias !29984 ; 2 uses
+  %i.id = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.ib, i64 noundef range(i64 1, 17) 8) #56, !noalias !29984 ; 3 uses
   %i.ie = icmp eq ptr %i.id, null
   br i1 %i.ie, label %bb.bo, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library6layout5frame5FrameE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
 
 bb.bo:                                            ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i, %bb.bm
+  %.sroa.10.0.ph.i.i.i = phi i64 [ %i.ib, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i ], [ undef, %bb.bm ]
   %.sroa.4.0.ph.i.i.i = phi i64 [ 8, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i ], [ 0, %bb.bm ]
-  invoke void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i, i64 %i.ib) #57
+  invoke void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i, i64 %.sroa.10.0.ph.i.i.i) #57
           to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.bo
   unreachable
 
-_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library6layout5frame5FrameE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i, %bb.bn
-  %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.bn ], [ %i.id, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i ] ; 2 uses
-  %.sroa.4.0.i.i.i = phi i64 [ 0, %bb.bn ], [ %.sroa.16.0, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i ] ; 2 uses
-  %4 = icmp samesign ule i64 %.sroa.16.0, %.sroa.4.0.i.i.i
-  call void @llvm.assume(i1 %4)
-  store i64 %.sroa.4.0.i.i.i, ptr %i.b, align 8, !noalias !29983
+_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library6layout5frame5FrameE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i
+  store i64 %.sroa.16.0, ptr %i.b, align 8, !noalias !29983
   %i.if = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %.sroa.10.0.i.i.i, ptr %i.if, align 8, !noalias !29983
-  %i.ig = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
+  store ptr %i.id, ptr %i.if, align 8, !noalias !29983
+  %i.ig = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !29985)
   call void @llvm.experimental.noalias.scope.decl(metadata !29986)
-  %5 = icmp eq i64 %.sroa.16.0, 0
-  br i1 %5, label %bb.br, label %.preheader.i.i.i.preheader.i
-
-.preheader.i.i.i.preheader.i:                     ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library6layout5frame5FrameE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
-  %6 = load double, ptr %i.ia, align 8, !alias.scope !29980, !noalias !29987, !noundef !41
+  %4 = load double, ptr %i.ia, align 8, !alias.scope !29980, !noalias !29987, !noundef !41
   br label %.preheader.i.i.i.i
 
-.preheader.i.i.i.i:                               ; preds = %bb.bp, %.preheader.i.i.i.preheader.i
-  %.val10.i.i.i.i.i.i.i = phi i64 [ %i.ij, %bb.bp ], [ 0, %.preheader.i.i.i.preheader.i ] ; 4 uses
+.preheader.i.i.i.i:                               ; preds = %bb.bp, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library6layout5frame5FrameE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
+  %.val10.i.i.i.i.i.i.i = phi i64 [ %i.ij, %bb.bp ], [ 0, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library6layout5frame5FrameE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i ] ; 4 uses
   %i.ih = getelementptr inbounds nuw [8 x i8], ptr %.sroa.8.0, i64 %.val10.i.i.i.i.i.i.i
   %.val15.i.i.i.i.i.i.i = load double, ptr %i.ih, align 8, !alias.scope !29981, !noalias !29988, !noundef !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !29989
-  invoke void @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout5frameNtB2_5Frame4soft(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a, double noundef %6, double noundef %.val15.i.i.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @239)
+  invoke void @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout5frameNtB2_5Frame4soft(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.a, double noundef %4, double noundef %.val15.i.i.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @239)
           to label %bb.bp unwind label %.body.i.i, !noalias !29990
 
 bb.bp:                                            ; preds = %.preheader.i.i.i.i
-  %i.ii = getelementptr inbounds nuw [48 x i8], ptr %.sroa.10.0.i.i.i, i64 %.val10.i.i.i.i.i.i.i
+  %i.ii = getelementptr inbounds nuw [48 x i8], ptr %i.id, i64 %.val10.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ii, ptr noundef nonnull readonly align 8 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !29991
   %i.ij = add nuw nsw i64 %.val10.i.i.i.i.i.i.i, 1 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !29989
@@ -937,8 +930,12 @@ bb.bq:                                            ; preds = %.body.i.i
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #55, !noalias !29994
   unreachable
 
-bb.br:                                            ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library6layout5frame5FrameE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
-  store i64 0, ptr %i.ig, align 8, !alias.scope !29992, !noalias !29993
+bb.br:                                            ; preds = %bb.bn
+  store i64 0, ptr %i.b, align 8, !noalias !29983
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store ptr inttoptr (i64 8 to ptr), ptr %5, align 8, !noalias !29983
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  store i64 0, ptr %6, align 8, !alias.scope !29992, !noalias !29993
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !29995
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !29983
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef 0, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @424) #57

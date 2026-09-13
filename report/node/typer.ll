@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %_ZN2v88internal8compiler10turboshaft8WordTypeILm32EE3SetILm16EEES4_RKNS_4base11SmallVectorIjXT_ESaIjEEEPNS0_4ZoneE.exit
 
 bb.j:                                             ; preds = %bb.f
-  %i.az = add nuw i64 %i.aj, 4
+  %i.az = add nuw nsw i64 %i.aj, 4
   %i.ba = and i64 %i.az, -8                       ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.bc = load i64, ptr %i.bb, align 8, !noalias !69
@@ -323,20 +323,24 @@ _ZN2v88internal8compiler10turboshaft8WordTypeILm32EE3SetILm16EEES4_RKNS_4base11S
   br label %bb.m
 
 bb.l:                                             ; preds = %_ZSt6uniqueIPjET_S1_S1_.exit
-  %i.cs = add nsw i64 %i.ak, -1                   ; 2 uses
+  %i.cs = add nsw i64 %i.ak, -1                   ; 3 uses
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.cs
-  %i.cu = load i32, ptr %i.ct, align 4            ; 3 uses
-  %i.cv = load i32, ptr %i.z, align 4             ; 3 uses
+  %i.cu = load i32, ptr %i.ct, align 4            ; 4 uses
+  %i.cv = load i32, ptr %i.z, align 4             ; 4 uses
   %i.cw = sub i32 %i.cu, %i.cv
   %i.cx = icmp sgt i32 %i.cw, -1
-  br i1 %i.cx, label %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeENS_4base6VectorIKjEE.exit, label %.lr.ph.i
+  br i1 %i.cx, label %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeENS_4base6VectorIKjEE.exit, label %.preheader.i
 
-.lr.ph.i:                                         ; preds = %bb.l, %.lr.ph.i
-  %i.cy = phi i32 [ %i.dm, %.lr.ph.i ], [ %i.cu, %bb.l ] ; 2 uses
-  %i.cz = phi i32 [ %i.dl, %.lr.ph.i ], [ %i.cv, %bb.l ] ; 2 uses
-  %i.da = phi i64 [ %i.dj, %.lr.ph.i ], [ 1, %bb.l ] ; 2 uses
-  %.026.i = phi i64 [ %.1.i, %.lr.ph.i ], [ 0, %bb.l ]
-  %.01025.i = phi i64 [ %.111.i, %.lr.ph.i ], [ %i.cs, %bb.l ] ; 2 uses
+.preheader.i:                                     ; preds = %bb.l
+  %3 = icmp ugt i64 %i.cs, 1
+  br i1 %3, label %.lr.ph.i, label %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeENS_4base6VectorIKjEE.exit
+
+.lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
+  %i.cy = phi i32 [ %i.dm, %.lr.ph.i ], [ %i.cu, %.preheader.i ] ; 2 uses
+  %i.cz = phi i32 [ %i.dl, %.lr.ph.i ], [ %i.cv, %.preheader.i ] ; 2 uses
+  %i.da = phi i64 [ %i.dj, %.lr.ph.i ], [ 1, %.preheader.i ] ; 2 uses
+  %.026.i = phi i64 [ %.1.i, %.lr.ph.i ], [ 0, %.preheader.i ]
+  %.01025.i = phi i64 [ %.111.i, %.lr.ph.i ], [ %i.cs, %.preheader.i ] ; 2 uses
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.da
   %i.dc = load i32, ptr %i.db, align 4            ; 2 uses
   %i.dd = sub i32 %i.dc, %i.cz
@@ -360,9 +364,9 @@ bb.l:                                             ; preds = %_ZSt6uniqueIPjET_S1
   %.pre29.i = load i32, ptr %.phi.trans.insert28.i, align 4
   br label %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeENS_4base6VectorIKjEE.exit
 
-_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeENS_4base6VectorIKjEE.exit: ; preds = %bb.l, %._crit_edge.loopexit.i
-  %.sroa.024.0.i = phi i32 [ %i.cv, %bb.l ], [ %.pre.i, %._crit_edge.loopexit.i ]
-  %.sroa.3.0.i = phi i32 [ %i.cu, %bb.l ], [ %.pre29.i, %._crit_edge.loopexit.i ]
+_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeENS_4base6VectorIKjEE.exit: ; preds = %bb.l, %.preheader.i, %._crit_edge.loopexit.i
+  %.sroa.024.0.i = phi i32 [ %i.cv, %bb.l ], [ %i.cu, %.preheader.i ], [ %.pre.i, %._crit_edge.loopexit.i ]
+  %.sroa.3.0.i = phi i32 [ %i.cu, %bb.l ], [ %i.cv, %.preheader.i ], [ %.pre29.i, %._crit_edge.loopexit.i ]
   tail call void @_ZN2v88internal8compiler10turboshaft8WordTypeILm32EE5RangeEjjPNS0_4ZoneE(ptr dead_on_unwind writable sret(%"class.v8::internal::compiler::turboshaft::WordType") align 8 %0, i32 noundef %.sroa.024.0.i, i32 noundef %.sroa.3.0.i, ptr noundef %2)
   br label %bb.m
 

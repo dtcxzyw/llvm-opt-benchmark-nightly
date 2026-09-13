@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %"class.grpc_core::RefCountedPtr", align 8 ; 6 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit
@@ -219,11 +219,10 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.h, label %._crit_edge, label %.lr.ph60, !llvm.loop !1087
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa56 = phi i64 [ %i.d, %.lr.ph ], [ %i.cf, %bb.b ] ; 2 uses
-  %.lcssa54 = phi i64 [ %i.c, %.lr.ph ], [ %i.ce, %bb.b ]
+  %.lcssa54 = phi i64 [ %i.d, %.lr.ph ], [ %i.cf, %bb.b ] ; 2 uses
   %storemerge21.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  %i.i = add nsw i64 %.lcssa56, -2
+  %i.i = add nsw i64 %.lcssa54, -2
   %i.j = lshr i64 %i.i, 1
   br label %bb.c
 
@@ -233,7 +232,7 @@ bb.c:                                             ; preds = %_ZN9grpc_core13RefC
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !79
   store ptr null, ptr %i.k, align 8, !tbaa !79
   store ptr %i.l, ptr %3, align 8, !tbaa !79
-  invoke void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_less_iterEEvT_T0_SE_T1_T2_(ptr nonnull %0, i64 noundef %.08.i.i, i64 noundef %.lcssa56, ptr noundef nonnull align 8 %3)
+  invoke void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_less_iterEEvT_T0_SE_T1_T2_(ptr nonnull %0, i64 noundef %.08.i.i, i64 noundef %.lcssa54, ptr noundef nonnull align 8 %3)
           to label %bb.d unwind label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -287,8 +286,7 @@ common.resume:                                    ; preds = %common.resume.sink.
 
 _ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit: ; preds = %_ZN9grpc_core13RefCountedPtrINS_15CollectionScopeEED2Ev.exit10.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %5 = icmp sgt i64 %.lcssa54, 8
-  br i1 %5, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit
+  br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i.i
   %.sroa.0.05.i.i = phi ptr [ %i.ac, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i.i ], [ %storemerge21.lcssa, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit ]
@@ -442,12 +440,12 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13R
   %i.cc = add nsw i64 %.02258, -1                 ; 3 uses
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_less_iterEEvT_SD_T0_T1_(ptr nonnull %.sroa.010.1.i.i, ptr %storemerge2159, i64 noundef %i.cc)
   %i.cd = ptrtoint ptr %.sroa.010.1.i.i to i64
-  %i.ce = sub i64 %i.cd, %i.a                     ; 2 uses
+  %i.ce = sub i64 %i.cd, %i.a
   %i.cf = ashr exact i64 %i.ce, 3                 ; 3 uses
   %i.cg = icmp sgt i64 %i.cf, 16
   br i1 %i.cg, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit, !llvm.loop !1087
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEET_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i.i, %bb.a, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEET_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN9grpc_core13RefCountedPtrINS2_15CollectionScopeEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i.i, %bb.a
   ret void
 }
 

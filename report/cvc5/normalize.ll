@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %.lcssa552 = phi i64 [ %i.d, %.lr.ph ], [ %i.rb, %bb.b ] ; 2 uses
-  %.lcssa550 = phi i64 [ %i.c, %.lr.ph ], [ %i.ra, %bb.b ] ; 2 uses
+  %.lcssa550 = phi i64 [ %i.c, %.lr.ph ], [ %i.ra, %bb.b ]
   %storemerge134.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.039.175.i.i, %bb.b ]
   %.sroa.012.sroa.0.0.copyload = load ptr, ptr %3, align 8, !tbaa !618 ; 8 uses
   %.sroa.012.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -558,14 +558,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   store ptr %i.s, ptr %i.ew, align 8, !tbaa !128
   %.not.i.i.i = icmp eq i64 %.08.i.i.i, 0
   %i.ex = add nsw i64 %.08.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_RT0_.exit.i.i", label %bb.c, !llvm.loop !613
+  br i1 %.not.i.i.i, label %.lr.ph.i8.i, label %bb.c, !llvm.loop !613
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_T0_SL_T1_T2_.exit.i.i.i"
-  %4 = icmp sgt i64 %.lcssa550, 8
-  br i1 %4, label %.lr.ph.i8.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_T0_.exit"
-
-.lr.ph.i8.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_RT0_.exit.i32.i"
-  %.sroa.0.087.i.i = phi ptr [ %i.ey, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_RT0_.exit.i32.i" ], [ %storemerge134.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_RT0_.exit.i.i" ]
+.lr.ph.i8.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_T0_SL_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_RT0_.exit.i32.i"
+  %.sroa.0.087.i.i = phi ptr [ %i.ey, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_RT0_.exit.i32.i" ], [ %storemerge134.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_T0_SL_T1_T2_.exit.i.i.i" ]
   %i.ey = getelementptr inbounds i8, ptr %.sroa.0.087.i.i, i64 -8 ; 4 uses
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !128 ; 3 uses
   %i.fa = load ptr, ptr %0, align 8, !tbaa !128
@@ -968,7 +964,7 @@ bb.bo:                                            ; preds = %"_ZZN4cvc58internal
   %i.rc = icmp sgt i64 %i.rb, 16
   br i1 %i.rc, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_T0_.exit", !llvm.loop !610
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEET_SK_SK_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_RT0_.exit.i32.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEET_SK_SK_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_1EEEvT_SK_SK_RT0_.exit.i32.i", %bb.a
   ret void
 }
 

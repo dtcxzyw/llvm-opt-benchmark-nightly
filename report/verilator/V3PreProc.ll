@@ -205,25 +205,26 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit579: ; preds = %
   %i.zu = getelementptr inbounds nuw i8, ptr %.2138, i64 1 ; 2 uses
   %i.zv = load i8, ptr %i.zu, align 1, !tbaa !45  ; 2 uses
   %.not245 = icmp eq i8 %i.zv, 0
-  br i1 %.not245, label %._crit_edge1132, label %bb.bx, !llvm.loop !1217
+  br i1 %.not245, label %._crit_edge1132.loopexit, label %bb.bx, !llvm.loop !1217
 
-._crit_edge1132:                                  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit579, %bb.bv
-  %.0148.lcssa = phi i32 [ 0, %bb.bv ], [ %.3, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit579 ] ; 2 uses
+._crit_edge1132.loopexit:                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit579
+  %57 = zext i32 %.3 to i64
+  br label %._crit_edge1132
+
+._crit_edge1132:                                  ; preds = %._crit_edge1132.loopexit, %bb.bv
+  %.0148.lcssa = phi i64 [ 0, %bb.bv ], [ %57, %._crit_edge1132.loopexit ]
   %i.zw = load ptr, ptr %i.cz, align 8, !tbaa !309
   %i.zx = load ptr, ptr %i.cy, align 8, !tbaa !310 ; 2 uses
   %i.zy = ptrtoint ptr %i.zw to i64
   %i.zz = ptrtoint ptr %i.zx to i64
   %i.aaa = sub i64 %i.zy, %i.zz                   ; 2 uses
   %i.aab = ashr exact i64 %i.aaa, 5
-  %57 = zext i32 %.0148.lcssa to i64
-  %i.aac = icmp ugt i64 %i.aab, %57
+  %i.aac = icmp ugt i64 %i.aab, %.0148.lcssa
   br i1 %i.aac, label %bb.ff, label %.thread
 
 bb.ff:                                            ; preds = %._crit_edge1132
   %i.aad = icmp eq i64 %i.aaa, 32
-  %58 = icmp eq i32 %.0148.lcssa, 0
-  %or.cond4 = and i1 %i.aad, %58
-  br i1 %or.cond4, label %bb.fg, label %.thread.thread
+  br i1 %i.aad, label %bb.fg, label %.thread.thread
 
 bb.fg:                                            ; preds = %bb.ff
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #44

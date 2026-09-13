@@ -204,7 +204,7 @@ bb.a:
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !228  ; 4 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
-  %i.h = sub i64 %i.f, %i.g                       ; 5 uses
+  %i.h = sub i64 %i.f, %i.g                       ; 4 uses
   %i.i = ashr exact i64 %i.h, 3                   ; 3 uses
   %i.j = icmp ugt i64 %i.i, 199
   br i1 %i.j, label %bb.b, label %bb.c
@@ -219,7 +219,7 @@ bb.c:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1600 ; 3 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !227
   %.not.i = icmp eq ptr %i.d, %i.n
-  br i1 %.not.i, label %4, label %bb.d
+  br i1 %.not.i, label %_ZNKSt6vectorIPN4Luau8AstLocalESaIS2_EE12_M_check_lenEmPKc.exit.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   store ptr %1, ptr %i.d, align 8, !tbaa !272
@@ -227,15 +227,7 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.o, ptr %i.c, align 8, !tbaa !229
   br label %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE9push_backERKS2_.exit
 
-4:                                                ; preds = %bb.c
-  %5 = icmp eq i64 %i.h, 9223372036854775800
-  br i1 %5, label %6, label %_ZNKSt6vectorIPN4Luau8AstLocalESaIS2_EE12_M_check_lenEmPKc.exit.i.i
-
-6:                                                ; preds = %4
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.125) #28
-  unreachable
-
-_ZNKSt6vectorIPN4Luau8AstLocalESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %4
+_ZNKSt6vectorIPN4Luau8AstLocalESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.c
   %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   %i.p = add nuw nsw i64 %.sroa.speculated.i.i.i, %i.i ; 2 uses
   %i.q = shl nuw nsw i64 %i.p, 3

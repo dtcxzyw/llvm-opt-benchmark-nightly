@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %.03057 = phi i64 [ %i.v, %.lr.ph ], [ %.03057.ph, %.lr.ph.preheader111 ] ; 3 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %.03057
   store i64 %.03057, ptr %i.u, align 8, !tbaa !56
-  %i.v = add nuw nsw i64 %.03057, 1               ; 2 uses
+  %i.v = add nuw i64 %.03057, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %i.h
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !127
 
@@ -386,7 +386,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph59.new
   %i.cn = load i64, ptr %i.cm, align 8, !tbaa !56
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %i.cg
   store i64 %i.cn, ptr %i.co, align 8, !tbaa !56
-  %i.cp = add nuw nsw i64 %.058, 2                ; 2 uses
+  %i.cp = add nuw i64 %.058, 2                    ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge60.thread.loopexit.unr-lcssa, label %bb.l, !llvm.loop !128

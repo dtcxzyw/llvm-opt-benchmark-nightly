@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %i.d = alloca [24 x i8], align 8                ; 7 uses
+  %i.d = alloca [24 x i8], align 8                ; 10 uses
   %.sroa.6157 = alloca [160 x i8], align 8        ; 2 uses
   %i.e = alloca [32 x i8], align 8                ; 2 uses
   %i.f = alloca [8 x i8], align 8                 ; 5 uses
@@ -221,7 +221,7 @@ bb.a:
   %i.p = alloca [232 x i8], align 8               ; 25 uses
   %i.q = alloca [232 x i8], align 8               ; 5 uses
   %i.r = alloca [40 x i8], align 8                ; 9 uses
-  %i.s = alloca [24 x i8], align 8                ; 10 uses
+  %i.s = alloca [24 x i8], align 8                ; 11 uses
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !noalias !3434
   %i.t = tail call noundef align 128 dereferenceable_or_null(512) ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef 512, i64 noundef range(i64 1, -9223372036854775807) 128) #34, !noalias !3434 ; 20 uses
   %i.u = icmp eq ptr %i.t, null
@@ -264,24 +264,29 @@ _RINvNtNtCs2vKOLqTMYjT_3std4sync4mpmc7channelTjNtNtCsgcf5BHVXlUt_7uu_sort6chunks
   %i.x = ptrtoint ptr %.val70 to i64
   %i.y = ptrtoint ptr %.val69 to i64
   %i.z = sub nuw i64 %i.x, %i.y                   ; 3 uses
-  %i.aa = lshr exact i64 %i.z, 5                  ; 5 uses
-  %i.ab = mul i64 %i.aa, 72                       ; 3 uses
+  %i.aa = lshr exact i64 %i.z, 5                  ; 4 uses
+  %i.ab = mul nuw nsw i64 %i.aa, 72               ; 2 uses
   %or.cond.i = icmp ugt i64 %i.z, 4099276460824344800
   br i1 %or.cond.i, label %bb.e, label %bb.c, !prof !12
 
 bb.c:                                             ; preds = %_RINvNtNtCs2vKOLqTMYjT_3std4sync4mpmc7channelTjNtNtCsgcf5BHVXlUt_7uu_sort6chunks13RecycledChunkEEBM_.exit
-  %i.ac = icmp eq i64 %i.ab, 0
-  br i1 %i.ac, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit, label %bb.d
+  %i.ac = icmp eq ptr %.val70, %.val69
+  br i1 %i.ac, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit.thread, label %bb.d
+
+_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit.thread: ; preds = %bb.c
+  store i64 0, ptr %i.d, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  store ptr inttoptr (i64 8 to ptr), ptr %3, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
+  store i64 0, ptr %4, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
+  br label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit75
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !noalias !3436
   %i.ad = tail call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef %i.ab, i64 noundef range(i64 1, -9223372036854775807) 8) #34, !noalias !3436 ; 2 uses
   %i.ae = icmp eq ptr %i.ad, null
-  br i1 %i.ae, label %bb.e, label %3
-
-3:                                                ; preds = %bb.d
-  %4 = ptrtoint ptr %i.ad to i64
-  br label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit
+  br i1 %i.ae, label %bb.e, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit
 
 bb.e:                                             ; preds = %_RINvNtNtCs2vKOLqTMYjT_3std4sync4mpmc7channelTjNtNtCsgcf5BHVXlUt_7uu_sort6chunks13RecycledChunkEEBM_.exit, %bb.d
   %.sroa.10183.0.ph = phi i64 [ %i.ab, %bb.d ], [ undef, %_RINvNtNtCs2vKOLqTMYjT_3std4sync4mpmc7channelTjNtNtCsgcf5BHVXlUt_7uu_sort6chunks13RecycledChunkEEBM_.exit ]
@@ -289,45 +294,33 @@ bb.e:                                             ; preds = %_RINvNtNtCs2vKOLqTM
   tail call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4181.0.ph, i64 %.sroa.10183.0.ph) #37
   unreachable
 
-_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit: ; preds = %3, %bb.c
-  %.sroa.10183.0 = phi i64 [ %4, %3 ], [ 8, %bb.c ]
-  %.sroa.4181.0 = phi i64 [ %i.aa, %3 ], [ 0, %bb.c ] ; 2 uses
-  %5 = inttoptr i64 %.sroa.10183.0 to ptr
-  %6 = icmp samesign ule i64 %i.aa, %.sroa.4181.0
-  tail call void @llvm.assume(i1 %6)
-  store i64 %.sroa.4181.0, ptr %i.d, align 8
+_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit: ; preds = %bb.d
+  store i64 %i.aa, ptr %i.d, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  store ptr %5, ptr %i.af, align 8
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
+  store ptr %i.ad, ptr %i.af, align 8
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   store i64 0, ptr %i.ag, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   %i.ah = lshr exact i64 %i.z, 1                  ; 2 uses
-  %i.ai = icmp eq ptr %.val70, %.val69
-  br i1 %i.ai, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit75, label %7
-
-7:                                                ; preds = %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !noalias !3437
-  %8 = tail call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef %i.ah, i64 noundef range(i64 1, -9223372036854775807) 8) #34, !noalias !3437 ; 2 uses
-  %9 = icmp eq ptr %8, null
-  br i1 %9, label %bb.f, label %10
+  %5 = tail call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef %i.ah, i64 noundef range(i64 1, -9223372036854775807) 8) #34, !noalias !3437 ; 2 uses
+  %i.ai = icmp eq ptr %5, null
+  br i1 %i.ai, label %bb.f, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit75
 
-10:                                               ; preds = %7
-  %11 = ptrtoint ptr %8 to i64
-  br label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit75
-
-bb.f:                                             ; preds = %7
+bb.f:                                             ; preds = %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit
   tail call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.ah) #37
   unreachable
 
-_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit75: ; preds = %10, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit
-  %.sroa.10187.0 = phi i64 [ %11, %10 ], [ 8, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit ]
-  %.sroa.4185.0 = phi i64 [ %i.aa, %10 ], [ 0, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit ] ; 2 uses
-  %12 = inttoptr i64 %.sroa.10187.0 to ptr        ; 2 uses
+_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit75: ; preds = %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit.thread
+  %6 = phi ptr [ %4, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit.thread ], [ %i.ag, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit ] ; 2 uses
+  %7 = phi ptr [ %3, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit.thread ], [ %i.af, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit ]
+  %.sroa.10187.0 = phi ptr [ inttoptr (i64 8 to ptr), %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit.thread ], [ %5, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit ] ; 2 uses
+  %.sroa.4185.0 = phi i64 [ 0, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit.thread ], [ %i.aa, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit ] ; 2 uses
   %i.aj = icmp samesign ule i64 %i.aa, %.sroa.4185.0
   tail call void @llvm.assume(i1 %i.aj)
   store i64 %.sroa.4185.0, ptr %i.s, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 3 uses
-  store ptr %12, ptr %i.ak, align 8
+  store ptr %.sroa.10187.0, ptr %i.ak, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %i.s, i64 16 ; 2 uses
   store i64 0, ptr %i.al, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
@@ -383,7 +376,7 @@ _RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_
   %i.ay = phi i64 [ %i.bc, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i ], [ 0, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i.lr.ph ] ; 2 uses
   %i.az = phi ptr [ %i.ax, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i ], [ %.promoted, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i.lr.ph ] ; 3 uses
   %i.ba = phi i64 [ %i.bm, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i ], [ 0, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i.lr.ph ] ; 4 uses
-  %i.bb = phi ptr [ %i.bj, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i ], [ %12, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i.lr.ph ]
+  %i.bb = phi ptr [ %i.bj, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i ], [ %.sroa.10187.0, %_RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCsgcf5BHVXlUt_7uu_sort5merge18PlainTmpMergeInputINtNtB9_5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit.i.lr.ph ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3442)
   %.sroa.7.0..sroa_idx2.i = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %.sroa.9.16.copyload = load ptr, ptr %.sroa.7.0..sroa_idx2.i, align 8, !noalias !3442 ; 3 uses
@@ -786,7 +779,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecINtNtNt
   br label %bb.ah
 
 bb.ap:                                            ; preds = %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtNtCs2vKOLqTMYjT_3std4sync4mpsc8ReceiverNtNtCsgcf5BHVXlUt_7uu_sort6chunks5ChunkEE8push_mutB1r_.exit
-  %i.gb = load i64, ptr %i.ag, align 8, !noundef !11 ; 3 uses
+  %i.gb = load i64, ptr %6, align 8, !noundef !11 ; 3 uses
   %i.gc = load i64, ptr %i.d, align 8, !range !22, !noundef !11
   %i.gd = icmp eq i64 %i.gb, %i.gc
   br i1 %i.gd, label %bb.aq, label %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionINtNtCsgcf5BHVXlUt_7uu_sort5merge10ReaderFileNtB1k_18PlainTmpMergeInputEEE8push_mutB1m_.exit
@@ -796,7 +789,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionINtNtCsgcf5BHVXlUt_7uu_sort5merge10ReaderFileNtB1k_18PlainTmpMergeInputEEE8push_mutB1m_.exit
 
 _RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6OptionINtNtCsgcf5BHVXlUt_7uu_sort5merge10ReaderFileNtB1k_18PlainTmpMergeInputEEE8push_mutB1m_.exit: ; preds = %bb.ap, %bb.aq
-  %i.ge = load ptr, ptr %i.af, align 8, !nonnull !11, !noundef !11
+  %i.ge = load ptr, ptr %7, align 8, !nonnull !11, !noundef !11
   %i.gf = getelementptr inbounds nuw [72 x i8], ptr %i.ge, i64 %i.gb ; 9 uses
   store i64 %i.bd, ptr %i.gf, align 8, !noalias !3474
   %.sroa.5117.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gf, i64 8
@@ -816,7 +809,7 @@ _RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs6JMX4GRUq9U_4core6option6Opti
   %.sroa.12122.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gf, i64 64
   store i64 0, ptr %.sroa.12122.0..sroa_idx, align 8, !noalias !3474
   %i.gg = add i64 %i.gb, 1                        ; 3 uses
-  store i64 %i.gg, ptr %i.ag, align 8
+  store i64 %i.gg, ptr %6, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !noalias !3475

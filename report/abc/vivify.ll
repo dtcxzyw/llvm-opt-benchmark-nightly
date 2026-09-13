@@ -204,7 +204,7 @@ sort_scheduled_candidate_literals.exit.i:         ; preds = %sort_scheduled_cand
   %i.ae = phi ptr [ %.pre164.i, %sort_scheduled_candidate_literals.exit.loopexit.i ], [ %i.s, %bb.f ] ; 11 uses
   %i.af = phi ptr [ %.pre163.i, %sort_scheduled_candidate_literals.exit.loopexit.i ], [ %i.s, %bb.f ]
   %i.ag = phi ptr [ %.pre162.i, %sort_scheduled_candidate_literals.exit.loopexit.i ], [ %i.q, %bb.f ] ; 14 uses
-  %i.ah = phi ptr [ %.pre.i, %sort_scheduled_candidate_literals.exit.loopexit.i ], [ %i.o, %bb.f ] ; 7 uses
+  %i.ah = phi ptr [ %.pre.i, %sort_scheduled_candidate_literals.exit.loopexit.i ], [ %i.o, %bb.f ] ; 8 uses
   %i.ai = ptrtoint ptr %i.af to i64
   %i.aj = ptrtoint ptr %i.ae to i64
   %i.ak = sub i64 %i.ai, %i.aj                    ; 2 uses
@@ -213,14 +213,9 @@ sort_scheduled_candidate_literals.exit.i:         ; preds = %sort_scheduled_cand
   br i1 %i.am, label %sort_vivification_candidates.exit, label %bb.h
 
 bb.h:                                             ; preds = %sort_scheduled_candidate_literals.exit.i
-  %i.an = add nsw i64 %i.al, -1                   ; 2 uses
+  %i.an = add nsw i64 %i.al, -1                   ; 3 uses
   %i.ao = icmp ult i64 %i.al, 12
-  br i1 %i.ao, label %..lr.ph.i7_crit_edge.i, label %.preheader388.i.i
-
-..lr.ph.i7_crit_edge.i:                           ; preds = %bb.h
-  %.phi.trans.insert.i = getelementptr i8, ptr %i.ah, i64 816
-  %.val204.i.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !82
-  br label %.lr.ph.i7.i
+  br i1 %i.ao, label %.thread.i.i, label %.preheader388.i.i
 
 .preheader388.i.i:                                ; preds = %bb.h
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ah, i64 904 ; 3 uses
@@ -243,7 +238,7 @@ bb.i:                                             ; preds = %.backedge, %.prehea
   store i32 %i.ba, ptr %i.aw, align 4, !tbaa !68
   store i32 %i.ax, ptr %i.az, align 4, !tbaa !68
   %i.bb = load i32, ptr %i.av, align 4, !tbaa !68 ; 8 uses
-  %.val209.i.i = load ptr, ptr %i.aq, align 8, !tbaa !82 ; 11 uses
+  %.val209.i.i = load ptr, ptr %i.aq, align 8, !tbaa !82 ; 10 uses
   %i.bc = zext i32 %i.ax to i64
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %.val209.i.i, i64 %i.bc ; 3 uses
   %i.be = zext i32 %i.bb to i64                   ; 5 uses
@@ -646,7 +641,7 @@ bb.at:                                            ; preds = %bb.as
   %i.jx = load ptr, ptr %i.ap, align 8, !tbaa !87
   %i.jy = load ptr, ptr %i.ar, align 8, !tbaa !85 ; 3 uses
   %i.jz = icmp eq ptr %i.jx, %i.jy
-  br i1 %i.jz, label %.lr.ph.i7.i, label %bb.au
+  br i1 %i.jz, label %.thread.i.i, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   %i.ka = getelementptr inbounds i8, ptr %i.jy, i64 -8
@@ -661,15 +656,22 @@ bb.au:                                            ; preds = %bb.at
   %.0187.i.i.be = phi i64 [ %.0187..1185.i.i, %bb.as ], [ %.1185..0187.i.i, %bb.ar ], [ %i.kb, %bb.au ]
   br label %bb.i
 
-.lr.ph.i7.i:                                      ; preds = %bb.at, %..lr.ph.i7_crit_edge.i
-  %.val.i8.i = phi ptr [ %.val204.i.pre.i, %..lr.ph.i7_crit_edge.i ], [ %.val209.i.i, %bb.at ] ; 4 uses
+.thread.i.i:                                      ; preds = %bb.at, %bb.h
+  %.not200472.i.i = icmp eq i64 %i.an, 0
+  br i1 %.not200472.i.i, label %.preheader.i.i, label %.lr.ph.i7.i
+
+.lr.ph.i7.i:                                      ; preds = %.thread.i.i
+  %2 = getelementptr i8, ptr %i.ah, i64 816
+  %.val204.i.i = load ptr, ptr %2, align 8, !tbaa !82 ; 2 uses
   br label %bb.av
 
-.preheader.i.i:                                   ; preds = %worse_candidate.exit329.thread377.i.i
+.preheader.i.i:                                   ; preds = %worse_candidate.exit329.thread377.i.i, %.thread.i.i
   %.not201474.i.i = icmp eq i64 %i.ak, 8
   br i1 %.not201474.i.i, label %sort_vivification_candidates.exit, label %.lr.ph476.i.i
 
 .lr.ph476.i.i:                                    ; preds = %.preheader.i.i
+  %3 = getelementptr i8, ptr %i.ah, i64 816
+  %.val.i8.i = load ptr, ptr %3, align 8, !tbaa !82 ; 2 uses
   %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.al, i64 3)
   br label %bb.bb
 
@@ -680,9 +682,9 @@ bb.av:                                            ; preds = %worse_candidate.exi
   %i.kg = getelementptr i8, ptr %i.ke, i64 -4     ; 2 uses
   %i.kh = load i32, ptr %i.kg, align 4, !tbaa !68 ; 3 uses
   %i.ki = zext i32 %i.kf to i64
-  %i.kj = getelementptr inbounds nuw [8 x i8], ptr %.val.i8.i, i64 %i.ki ; 3 uses
+  %i.kj = getelementptr inbounds nuw [8 x i8], ptr %.val204.i.i, i64 %i.ki ; 3 uses
   %i.kk = zext i32 %i.kh to i64
-  %i.kl = getelementptr inbounds nuw [8 x i8], ptr %.val.i8.i, i64 %i.kk ; 3 uses
+  %i.kl = getelementptr inbounds nuw [8 x i8], ptr %.val204.i.i, i64 %i.kk ; 3 uses
   %i.km = load i32, ptr %i.kj, align 4
   %i.kn = and i32 %i.km, 67108864
   %.not.i306.i.i = icmp eq i32 %i.kn, 0

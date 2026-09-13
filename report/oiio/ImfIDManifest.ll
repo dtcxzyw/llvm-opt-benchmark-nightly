@@ -205,10 +205,14 @@ bb.eb:                                            ; preds = %_ZNSt8_Rb_treeImSt4
   %i.sr = sub i64 %i.sp, %i.sq                    ; 2 uses
   %i.ss = ashr exact i64 %i.sr, 5                 ; 9 uses
   %i.st = icmp ugt i64 %i.sl, %i.ss
-  br i1 %i.st, label %bb.ec, label %bb.eh
+  br i1 %i.st, label %11, label %bb.eh
 
-bb.ec:                                            ; preds = %bb.eb
-  %11 = sub nuw nsw i64 %i.sl, %i.ss              ; 10 uses
+11:                                               ; preds = %bb.eb
+  %12 = sub nuw nsw i64 %i.sl, %i.ss              ; 11 uses
+  %.not.i325 = icmp eq i64 %12, 0
+  br i1 %.not.i325, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit, label %bb.ec
+
+bb.ec:                                            ; preds = %11
   %i.su = getelementptr inbounds nuw i8, ptr %.sroa.0.08.i, i64 56 ; 3 uses
   %i.sv = load ptr, ptr %i.su, align 8, !tbaa !43
   %i.sw = ptrtoint ptr %i.sv to i64
@@ -219,17 +223,17 @@ bb.ec:                                            ; preds = %bb.eb
   %i.ta = xor i64 %i.ss, 288230376151711743       ; 2 uses
   %i.tb = icmp ule i64 %i.sy, %i.ta
   call void @llvm.assume(i1 %i.tb)
-  %.not28.i = icmp ult i64 %i.sy, %11
+  %.not28.i = icmp ult i64 %i.sy, %12
   br i1 %.not28.i, label %bb.ed, label %.lr.ph.i.i.i.i326.preheader
 
 .lr.ph.i.i.i.i326.preheader:                      ; preds = %bb.ec
-  %xtraiter = and i64 %11, 3                      ; 2 uses
+  %xtraiter = and i64 %12, 3                      ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i326.prol.loopexit, label %.lr.ph.i.i.i.i326.prol
 
 .lr.ph.i.i.i.i326.prol:                           ; preds = %.lr.ph.i.i.i.i326.preheader, %.lr.ph.i.i.i.i326.prol
   %.08.i.i.i.i.prol = phi ptr [ %i.tf, %.lr.ph.i.i.i.i326.prol ], [ %i.sn, %.lr.ph.i.i.i.i326.preheader ] ; 4 uses
-  %.057.i.i.i.i.prol = phi i64 [ %i.te, %.lr.ph.i.i.i.i326.prol ], [ %11, %.lr.ph.i.i.i.i326.preheader ]
+  %.057.i.i.i.i.prol = phi i64 [ %i.te, %.lr.ph.i.i.i.i326.prol ], [ %12, %.lr.ph.i.i.i.i326.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i326.prol ], [ 0, %.lr.ph.i.i.i.i326.preheader ]
   %i.tc = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.prol, i64 16 ; 2 uses
   store ptr %i.tc, ptr %.08.i.i.i.i.prol, align 8, !tbaa !35
@@ -245,7 +249,7 @@ bb.ec:                                            ; preds = %bb.eb
 .lr.ph.i.i.i.i326.prol.loopexit:                  ; preds = %.lr.ph.i.i.i.i326.prol, %.lr.ph.i.i.i.i326.preheader
   %.lcssa853.unr = phi ptr [ poison, %.lr.ph.i.i.i.i326.preheader ], [ %i.tf, %.lr.ph.i.i.i.i326.prol ]
   %.08.i.i.i.i.unr = phi ptr [ %i.sn, %.lr.ph.i.i.i.i326.preheader ], [ %i.tf, %.lr.ph.i.i.i.i326.prol ]
-  %.057.i.i.i.i.unr = phi i64 [ %11, %.lr.ph.i.i.i.i326.preheader ], [ %i.te, %.lr.ph.i.i.i.i326.prol ]
+  %.057.i.i.i.i.unr = phi i64 [ %12, %.lr.ph.i.i.i.i326.preheader ], [ %i.te, %.lr.ph.i.i.i.i326.prol ]
   %i.tg = sub nsw i64 %i.ss, %i.sl
   %i.th = icmp ugt i64 %i.tg, -4
   br i1 %i.th, label %_ZSt27__uninitialized_default_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_ET_S7_T0_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i326
@@ -287,7 +291,7 @@ _ZSt27__uninitialized_default_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcE
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
 
 bb.ed:                                            ; preds = %bb.ec
-  %i.tv = icmp ult i64 %i.ta, %11
+  %i.tv = icmp ult i64 %i.ta, %12
   br i1 %i.tv, label %bb.ee, label %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit.i
 
 bb.ee:                                            ; preds = %bb.ed
@@ -298,7 +302,7 @@ bb.ee:                                            ; preds = %bb.ed
   unreachable
 
 _ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.ed
-  %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.ss, i64 %11)
+  %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.ss, i64 %12)
   %i.tw = add nuw nsw i64 %.sroa.speculated.i.i, %i.ss
   %i.tx = call i64 @llvm.umin.i64(i64 %i.tw, i64 288230376151711743) ; 2 uses
   %i.ty = shl nuw nsw i64 %i.tx, 5
@@ -307,13 +311,13 @@ _ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_c
 
 .noexc332:                                        ; preds = %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit.i
   %i.ua = getelementptr inbounds nuw i8, ptr %i.tz, i64 %i.sr ; 3 uses
-  %xtraiter890 = and i64 %11, 3                   ; 2 uses
+  %xtraiter890 = and i64 %12, 3                   ; 2 uses
   %lcmp.mod891.not = icmp eq i64 %xtraiter890, 0
   br i1 %lcmp.mod891.not, label %.lr.ph.i.i.i30.i.prol.loopexit, label %.lr.ph.i.i.i30.i.prol
 
 .lr.ph.i.i.i30.i.prol:                            ; preds = %.noexc332, %.lr.ph.i.i.i30.i.prol
   %.08.i.i.i31.i.prol = phi ptr [ %i.ue, %.lr.ph.i.i.i30.i.prol ], [ %i.ua, %.noexc332 ] ; 4 uses
-  %.057.i.i.i32.i.prol = phi i64 [ %i.ud, %.lr.ph.i.i.i30.i.prol ], [ %11, %.noexc332 ]
+  %.057.i.i.i32.i.prol = phi i64 [ %i.ud, %.lr.ph.i.i.i30.i.prol ], [ %12, %.noexc332 ]
   %prol.iter892 = phi i64 [ %prol.iter892.next, %.lr.ph.i.i.i30.i.prol ], [ 0, %.noexc332 ]
   %i.ub = getelementptr inbounds nuw i8, ptr %.08.i.i.i31.i.prol, i64 16 ; 2 uses
   store ptr %i.ub, ptr %.08.i.i.i31.i.prol, align 8, !tbaa !35
@@ -328,7 +332,7 @@ _ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_c
 
 .lr.ph.i.i.i30.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i30.i.prol, %.noexc332
   %.08.i.i.i31.i.unr = phi ptr [ %i.ua, %.noexc332 ], [ %i.ue, %.lr.ph.i.i.i30.i.prol ]
-  %.057.i.i.i32.i.unr = phi i64 [ %11, %.noexc332 ], [ %i.ud, %.lr.ph.i.i.i30.i.prol ]
+  %.057.i.i.i32.i.unr = phi i64 [ %12, %.noexc332 ], [ %i.ud, %.lr.ph.i.i.i30.i.prol ]
   %i.uf = sub nsw i64 %i.ss, %i.sl
   %i.ug = icmp ugt i64 %i.uf, -4
   br i1 %i.ug, label %_ZSt27__uninitialized_default_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_ET_S7_T0_RSaIT1_E.exit35.i, label %.lr.ph.i.i.i30.i
@@ -423,7 +427,7 @@ bb.eg:                                            ; preds = %_ZNSt6vectorINSt7__
 
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit41.i: ; preds = %bb.eg, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i
   store ptr %i.tz, ptr %i.sf, align 8, !tbaa !28
-  %i.vl = getelementptr inbounds nuw [32 x i8], ptr %i.ua, i64 %11
+  %i.vl = getelementptr inbounds nuw [32 x i8], ptr %i.ua, i64 %12
   store ptr %i.vl, ptr %i.sm, align 8, !tbaa !27
   %i.vm = getelementptr inbounds nuw [32 x i8], ptr %i.tz, i64 %i.tx
   store ptr %i.vm, ptr %i.su, align 8, !tbaa !43
@@ -460,7 +464,7 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
   store ptr %i.vo, ptr %i.sm, align 8, !tbaa !27
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
 
-_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit: ; preds = %_ZSt27__uninitialized_default_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_ET_S7_T0_RSaIT1_E.exit.i, %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit41.i, %bb.eh, %bb.ei, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i284
+_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit: ; preds = %11, %_ZSt27__uninitialized_default_n_aIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmS5_ET_S7_T0_RSaIT1_E.exit.i, %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit41.i, %bb.eh, %bb.ei, %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i284
   %i.vv = load ptr, ptr %i.po, align 8, !tbaa !27
   %i.vw = load ptr, ptr %i.oo, align 8, !tbaa !28
   %.not539 = icmp eq ptr %i.vv, %i.vw

@@ -204,7 +204,7 @@ bb.a:
   %13 = alloca %"class.bzla::Node", align 8       ; 6 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_T0_.exit"
@@ -219,11 +219,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph145, !llvm.loop !298
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa134 = phi i64 [ %i.d, %.lr.ph ], [ %i.bv, %bb.b ] ; 2 uses
-  %.lcssa125 = phi i64 [ %i.c, %.lr.ph ], [ %i.bu, %bb.b ]
+  %.lcssa125 = phi i64 [ %i.d, %.lr.ph ], [ %i.bv, %bb.b ] ; 2 uses
   %storemerge56.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
-  %i.i = add nsw i64 %.lcssa134, -2
+  %i.i = add nsw i64 %.lcssa125, -2
   %i.j = lshr i64 %i.i, 1
   br label %bb.c
 
@@ -236,7 +235,7 @@ bb.c:                                             ; preds = %bb.e, %._crit_edge
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_T0_SK_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa134, ptr noundef align 8 %13)
+  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_T0_SK_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa125, ptr noundef align 8 %13)
           to label %bb.e unwind label %bb.g
 
 bb.e:                                             ; preds = %bb.d
@@ -270,8 +269,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 "_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_RT0_.exit.i.i": ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %13)
-  %14 = icmp sgt i64 %.lcssa125, 8
-  br i1 %14, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_T0_.exit"
+  br label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_RT0_.exit.i11.i"
   %.sroa.0.03.i.i = phi ptr [ %i.o, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_RT0_.exit.i11.i" ], [ %storemerge56.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_RT0_.exit.i.i" ]
@@ -540,12 +538,12 @@ _ZSt9iter_swapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EE
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEET_SJ_SJ_T0_.exit": ; preds = %bb.ak
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_T0_T1_"(ptr nonnull %.sroa.010.1.i.i, ptr %storemerge56144, i64 noundef %i.x)
   %i.bt = ptrtoint ptr %.sroa.010.1.i.i to i64
-  %i.bu = sub i64 %i.bt, %i.a                     ; 2 uses
+  %i.bu = sub i64 %i.bt, %i.a
   %i.bv = ashr exact i64 %i.bu, 3                 ; 3 uses
   %i.bw = icmp sgt i64 %i.bv, 16
   br i1 %i.bw, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_T0_.exit", !llvm.loop !298
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEET_SJ_SJ_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_RT0_.exit.i11.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEET_SJ_SJ_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Smt2Printer13print_formulaERSoRKNS2_9backtrack13AssertionViewEE3$_0EEEvT_SJ_SJ_RT0_.exit.i11.i", %bb.a
   ret void
 }
 

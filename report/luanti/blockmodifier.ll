@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.thread329
   %i.aj = xor i8 %i.ai, 1
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %.thread329
+bb.h:                                             ; preds = %.thread329, %bb.g
   %i.ak = phi i8 [ 0, %.thread329 ], [ %i.aj, %bb.g ]
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 3 uses
@@ -260,7 +260,7 @@ bb.i:                                             ; preds = %_ZN8MapBlock14getNo
   %i.bf = load ptr, ptr %i.i, align 8, !tbaa !152 ; 6 uses
   %i.bg = ptrtoint ptr %i.bf to i64               ; 2 uses
   %i.bh = ptrtoint ptr %i.be to i64               ; 3 uses
-  %i.bi = sub i64 %i.bg, %i.bh                    ; 8 uses
+  %i.bi = sub i64 %i.bg, %i.bh                    ; 7 uses
   %i.bj = ashr i64 %i.bi, 3                       ; 2 uses
   %i.bk = icmp sgt i64 %i.bj, 0
   br i1 %i.bk, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
@@ -380,7 +380,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEtET_S7_S7_RKT0_.exit.thread
   %i.cr = load ptr, ptr %i.an, align 8, !tbaa !157
   %.not.i = icmp eq ptr %i.bf, %i.cr
-  br i1 %.not.i, label %5, label %bb.u
+  br i1 %.not.i, label %_ZNKSt6vectorItSaItEE12_M_check_lenEmPKc.exit.i.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   store i16 %.sroa.0283.0.extract.trunc, ptr %i.bf, align 2, !tbaa !153
@@ -388,15 +388,7 @@ bb.u:                                             ; preds = %bb.t
   store ptr %i.cs, ptr %i.i, align 8, !tbaa !155
   br label %_ZNSt6vectorItSaItEED2Ev.exit
 
-5:                                                ; preds = %bb.t
-  %6 = icmp eq i64 %i.bi, 9223372036854775806
-  br i1 %6, label %7, label %_ZNKSt6vectorItSaItEE12_M_check_lenEmPKc.exit.i.i
-
-7:                                                ; preds = %5
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.32) #28
-  unreachable
-
-_ZNKSt6vectorItSaItEE12_M_check_lenEmPKc.exit.i.i: ; preds = %5
+_ZNKSt6vectorItSaItEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.t
   %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.cm, i64 1)
   %i.ct = add nuw nsw i64 %.sroa.speculated.i.i.i, %i.cm ; 2 uses
   %i.cu = shl nuw nsw i64 %i.ct, 1

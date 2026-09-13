@@ -205,7 +205,7 @@ bb.aw:                                            ; preds = %_RNvXs_NvNtNtNtCs3o
   %i.gf = load ptr, ptr %i.ge, align 8, !noalias !25352, !nonnull !28, !noundef !28 ; 6 uses
   %i.gg = load i64, ptr %i.ad, align 8, !range !37, !noalias !25352, !noundef !28 ; 3 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %i.gi = load i64, ptr %i.gh, align 8, !noalias !25352, !noundef !28 ; 7 uses
+  %i.gi = load i64, ptr %i.gh, align 8, !noalias !25352, !noundef !28 ; 6 uses
   %i.gj = icmp ult i64 %i.gi, 576460752303423488
   call void @llvm.assume(i1 %i.gj)
   %.idx.i.i.i = shl nuw nsw i64 %i.gi, 4          ; 2 uses
@@ -217,37 +217,21 @@ bb.aw:                                            ; preds = %_RNvXs_NvNtNtNtCs3o
   store i64 %i.gg, ptr %.sroa.54.0..sroa_idx.i.i.i, align 8, !noalias !25352
   %.sroa.65.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   store ptr %i.gk, ptr %.sroa.65.0..sroa_idx.i.i.i, align 8, !noalias !25352
-  %i.gl = mul i64 %i.gi, 48                       ; 3 uses
+  %i.gl = mul nuw nsw i64 %i.gi, 48               ; 2 uses
   %or.cond.i.i.i.i.i.i = icmp samesign ugt i64 %i.gi, 192153584101141162
   br i1 %or.cond.i.i.i.i.i.i, label %2, label %bb.ax, !prof !61
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.gm = icmp eq i64 %i.gl, 0
-  br i1 %i.gm, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8registry10ThreadInfoE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
+  %i.gm = icmp eq i64 %i.gi, 0
+  br i1 %i.gm, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i: ; preds = %bb.ax
   call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #56, !noalias !25402
-  %i.gn = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.gl, i64 noundef range(i64 1, 17) 8) #56, !noalias !25402 ; 2 uses
+  %i.gn = call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.gl, i64 noundef range(i64 1, 17) 8) #56, !noalias !25402 ; 6 uses
   %i.go = icmp eq ptr %i.gn, null
-  br i1 %i.go, label %2, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8registry10ThreadInfoE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i
+  br i1 %i.go, label %2, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
 
-2:                                                ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i, %bb.aw
-  %.sroa.4.0.ph.i.i.i.i.i = phi i64 [ 8, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i ], [ 0, %bb.aw ]
-  invoke void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i.i.i, i64 %i.gl) #61
-          to label %.noexc.i.i.i.i unwind label %bb.ba, !noalias !25403
-
-.noexc.i.i.i.i:                                   ; preds = %2
-  unreachable
-
-_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8registry10ThreadInfoE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i, %bb.ax
-  %3 = phi ptr [ inttoptr (i64 8 to ptr), %bb.ax ], [ %i.gn, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i ] ; 4 uses
-  %.sroa.4.0.i.i.i.i.i = phi i64 [ 0, %bb.ax ], [ %i.gi, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i ] ; 2 uses
-  %4 = icmp samesign ule i64 %i.gi, %.sroa.4.0.i.i.i.i.i
-  call void @llvm.assume(i1 %4)
-  %.not.not10.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.gi, 0
-  br i1 %.not.not10.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
-
-.lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8registry10ThreadInfoE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i
+.lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
   %i.gp = add nsw i64 %.idx.i.i.i, -16            ; 3 uses
   %i.gq = lshr exact i64 %i.gp, 4
   %i.gr = add nuw nsw i64 %i.gq, 1                ; 2 uses
@@ -258,6 +242,15 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8regist
   %unroll_iter = and i64 %i.gr, 2305843009213693950
   br label %.lr.ph.i.i.i.i.i.i.i.i.i
 
+2:                                                ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i, %bb.aw
+  %.sroa.10.0.ph.i.i.i.i.i = phi i64 [ %i.gl, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i ], [ undef, %bb.aw ]
+  %.sroa.4.0.ph.i.i.i.i.i = phi i64 [ 8, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i ], [ 0, %bb.aw ]
+  invoke void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i.i.i, i64 %.sroa.10.0.ph.i.i.i.i.i) #61
+          to label %.noexc.i.i.i.i unwind label %bb.ba, !noalias !25403
+
+.noexc.i.i.i.i:                                   ; preds = %2
+  unreachable
+
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader.new
   %i.gt = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader.new ], [ %i.hk, %.lr.ph.i.i.i.i.i.i.i.i.i ] ; 3 uses
   %i.gu = phi ptr [ %i.gf, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader.new ], [ %i.hf, %.lr.ph.i.i.i.i.i.i.i.i.i ] ; 5 uses
@@ -266,7 +259,7 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8regist
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gu, i64 8
   %i.gx = load i8, ptr %i.gw, align 8, !range !53, !noalias !25404, !noundef !28
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gu, i64 16
-  %i.gz = getelementptr inbounds nuw [48 x i8], ptr %3, i64 %i.gt ; 5 uses
+  %i.gz = getelementptr inbounds nuw [48 x i8], ptr %i.gn, i64 %i.gt ; 5 uses
   store ptr %i.gv, ptr %i.gz, align 8, !noalias !25405
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.gz, i64 8
   store i8 %i.gx, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i, align 8, !noalias !25405
@@ -280,7 +273,7 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8regist
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gu, i64 24
   %i.he = load i8, ptr %i.hd, align 8, !range !53, !noalias !25404, !noundef !28
   %i.hf = getelementptr inbounds nuw i8, ptr %i.gu, i64 32 ; 2 uses
-  %i.hg = getelementptr inbounds nuw [48 x i8], ptr %3, i64 %i.gt ; 5 uses
+  %i.hg = getelementptr inbounds nuw [48 x i8], ptr %i.gn, i64 %i.gt ; 5 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 48
   store ptr %i.hc, ptr %i.hh, align 8, !noalias !25405
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.hg, i64 56
@@ -309,7 +302,7 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8regist
   %i.hm = load ptr, ptr %.epil.init375, align 8, !noalias !25404, !nonnull !28, !noundef !28
   %i.hn = getelementptr inbounds nuw i8, ptr %.epil.init375, i64 8
   %i.ho = load i8, ptr %i.hn, align 8, !range !53, !noalias !25404, !noundef !28
-  %i.hp = getelementptr inbounds nuw [48 x i8], ptr %3, i64 %.epil.init ; 5 uses
+  %i.hp = getelementptr inbounds nuw [48 x i8], ptr %i.gn, i64 %.epil.init ; 5 uses
   store ptr %i.hm, ptr %i.hp, align 8, !noalias !25405
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.epil = getelementptr inbounds nuw i8, ptr %i.hp, i64 8
   store i8 %i.ho, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.epil, align 8, !noalias !25405
@@ -322,8 +315,9 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8regist
   %i.hs = add nuw nsw i64 %.epil.init, 1
   br label %._crit_edge.i.i.i.i.i.i.i.i.i
 
-._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.epil.preheader, %._crit_edge.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8registry10ThreadInfoE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i
-  %.sroa.42.0.i.i.i.i.i.i.i.i = phi i64 [ 0, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsf1gSX8u3EQ2_10rayon_core8registry10ThreadInfoE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i.i ], [ %i.hk, %._crit_edge.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %i.hs, %.lr.ph.i.i.i.i.i.i.i.i.i.epil.preheader ]
+._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.epil.preheader, %._crit_edge.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, %bb.ax
+  %.sroa.5123.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.ax ], [ %i.gn, %._crit_edge.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %i.gn, %.lr.ph.i.i.i.i.i.i.i.i.i.epil.preheader ]
+  %.sroa.42.0.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.ax ], [ %i.hk, %._crit_edge.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %i.hs, %.lr.ph.i.i.i.i.i.i.i.i.i.epil.preheader ]
   %i.ht = icmp eq i64 %i.gg, 0
   br i1 %i.ht, label %bb.bc, label %bb.ay
 
@@ -350,9 +344,9 @@ bb.bb:                                            ; preds = %bb.da
   br label %.body67.i.i.i
 
 bb.bc:                                            ; preds = %bb.ay, %._crit_edge.i.i.i.i.i.i.i.i.i
-  store i64 %.sroa.4.0.i.i.i.i.i, ptr %i.y, align 8, !noalias !25408
+  store i64 %i.gi, ptr %i.y, align 8, !noalias !25408
   %.sroa.4123.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  store ptr %3, ptr %.sroa.4123.0..sroa_idx.i.i.i, align 8, !noalias !25408
+  store ptr %.sroa.5123.0.i.i.i, ptr %.sroa.4123.0..sroa_idx.i.i.i, align 8, !noalias !25408
   %.sroa.5124.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   store i64 %.sroa.42.0.i.i.i.i.i.i.i.i, ptr %.sroa.5124.0..sroa_idx.i.i.i, align 8, !noalias !25408
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !25352

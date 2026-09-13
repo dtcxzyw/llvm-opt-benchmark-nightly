@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %_ZNSt12_Vector_base
   br label %bb.bs
 
 bb.i:                                             ; preds = %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE7reserveEm.exit, %_ZNSt10unique_ptrIN6duckdb23BoundConstantExpressionESt14default_deleteIS1_EED2Ev.exit
-  %.045164 = phi i64 [ 0, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE7reserveEm.exit ], [ %i.cn, %_ZNSt10unique_ptrIN6duckdb23BoundConstantExpressionESt14default_deleteIS1_EED2Ev.exit ] ; 2 uses
+  %.045164 = phi i64 [ 0, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE7reserveEm.exit ], [ %i.cn, %_ZNSt10unique_ptrIN6duckdb23BoundConstantExpressionESt14default_deleteIS1_EED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
   invoke void @_ZN6duckdb11LogicalTypeC1ENS_13LogicalTypeIdE(ptr noundef nonnull align 8 dereferenceable(24) %10, i8 noundef zeroext 28)
           to label %bb.j unwind label %bb.r
@@ -370,9 +370,9 @@ _ZNSt10unique_ptrIN6duckdb23BoundConstantExpressionESt14default_deleteIS1_EED2Ev
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %9) #33
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %10) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #33
-  %i.cn = add nuw i64 %.045164, 1
-  %exitcond.not = icmp eq i64 %.045164, %i.o
-  br i1 %exitcond.not, label %bb.f, label %bb.i, !llvm.loop !1811
+  %i.cn = add i64 %.045164, 1                     ; 2 uses
+  %.not = icmp ugt i64 %i.cn, %i.o
+  br i1 %.not, label %bb.f, label %bb.i, !llvm.loop !1811
 
 bb.r:                                             ; preds = %bb.i
   %i.co = landingpad { ptr, i32 }
@@ -775,7 +775,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.j, label %._crit_edge, label %.lr.ph40, !llvm.loop !5312
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i25.lcssa = phi i64 [ %.fr.i.i22, %.lr.ph ], [ %.fr.i.i, %bb.b ] ; 3 uses
+  %.fr.i.i25.lcssa = phi i64 [ %.fr.i.i22, %.lr.ph ], [ %.fr.i.i, %bb.b ] ; 2 uses
   %storemerge23.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i.i25.lcssa, 4             ; 2 uses
   %i.l = add nsw i64 %i.k, -2                     ; 2 uses
@@ -856,14 +856,10 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   store i64 %.sroa.4.0.copyload.i.i.i, ptr %.sroa.2.0..sroa.0.0..sroa_idx.i.i.i.i.i, align 8
   %.not.i.i.i = icmp eq i64 %.010.i.i.i, 0
   %i.ap = add nsw i64 %.010.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_RT0_.exit.i.i", label %bb.c, !llvm.loop !5315
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !5315
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_T0_SK_T1_T2_.exit.i.i.i"
-  %10 = icmp sgt i64 %.fr.i.i25.lcssa, 16
-  br i1 %10, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_T0_.exit"
-
-.lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_RT0_.exit.i.i"
-  %.sroa.0.03.i.i = phi ptr [ %i.aq, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_RT0_.exit.i.i" ], [ %storemerge23.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_RT0_.exit.i.i" ] ; 2 uses
+.lr.ph.i9.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_T0_SK_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_RT0_.exit.i.i"
+  %.sroa.0.03.i.i = phi ptr [ %i.aq, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_RT0_.exit.i.i" ], [ %storemerge23.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_T0_SK_T1_T2_.exit.i.i.i" ] ; 2 uses
   %i.aq = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -16 ; 4 uses
   %.sroa.03.0.copyload.i.i10.i = load ptr, ptr %i.aq, align 8
   %.sroa.4.0..sroa_idx.i.i11.i = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -8
@@ -1075,7 +1071,7 @@ bb.v:                                             ; preds = %bb.u
   %i.cs = icmp sgt i64 %i.cr, 16
   br i1 %i.cs, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_T0_.exit", !llvm.loop !5312
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEET_SJ_SJ_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_RT0_.exit.i.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEET_SJ_SJ_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN6duckdb16JoinWithDelimGetESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11Deliminator8OptimizeENS2_10unique_ptrINS2_15LogicalOperatorESt14default_deleteISD_ELb1EEEE3$_0EEEvT_SJ_SJ_RT0_.exit.i.i", %bb.a
   ret void
 }
 
@@ -1421,7 +1417,7 @@ bb.a:
   %4 = alloca %struct.ExpressionCosts, align 16   ; 5 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 4                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_T0_.exit
@@ -1438,11 +1434,10 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.j, label %._crit_edge, label %.lr.ph60, !llvm.loop !5334
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa56 = phi i64 [ %i.d, %.lr.ph ], [ %i.ds, %bb.b ] ; 2 uses
-  %.lcssa54 = phi i64 [ %i.c, %.lr.ph ], [ %i.dr, %bb.b ]
+  %.lcssa54 = phi i64 [ %i.d, %.lr.ph ], [ %i.ds, %bb.b ] ; 2 uses
   %storemerge23.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.k = add nsw i64 %.lcssa56, -2
+  %i.k = add nsw i64 %.lcssa54, -2
   %i.l = lshr i64 %i.k, 1
   br label %bb.c
 
@@ -1452,7 +1447,7 @@ bb.c:                                             ; preds = %_ZZN6duckdb20Expres
   %i.n = load <2 x i64>, ptr %i.m, align 8, !tbaa !377
   store ptr null, ptr %i.m, align 8, !tbaa !336
   store <2 x i64> %i.n, ptr %4, align 16, !tbaa !377
-  call fastcc void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEElSD_NS0_5__ops15_Iter_less_iterEEvT_T0_SM_T1_T2_(ptr nonnull %0, i64 noundef %.08.i.i.i, i64 noundef %.lcssa56, ptr noundef %4)
+  call fastcc void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEElSD_NS0_5__ops15_Iter_less_iterEEvT_T0_SM_T1_T2_(ptr nonnull %0, i64 noundef %.08.i.i.i, i64 noundef %.lcssa54, ptr noundef %4)
   %.val11.i.i.i = load ptr, ptr %4, align 16, !tbaa !336 ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %.val11.i.i.i, null
   br i1 %.not.i.i.i.i.i, label %_ZZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS_6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS3_ELb1EEELb1ESaIS6_EEEEN15ExpressionCostsD2Ev.exit20.i.i.i, label %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i.i.i.i.i
@@ -1471,11 +1466,10 @@ _ZZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS_6vectorINS_10unique_pt
 
 _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_RT0_.exit.i.i: ; preds = %_ZZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS_6vectorINS_10unique_ptrINS_10ExpressionESt14default_deleteIS3_ELb1EEELb1ESaIS6_EEEEN15ExpressionCostsD2Ev.exit20.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %5 = icmp sgt i64 %.lcssa54, 16
-  br i1 %5, label %.lr.ph.i8.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_T0_.exit
+  br label %.lr.ph.i8.i
 
-.lr.ph.i8.i:                                      ; preds = %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_RT0_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_RT0_.exit.i15.i
-  %.sroa.0.02.i.i = phi ptr [ %i.s, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_RT0_.exit.i15.i ], [ %storemerge23.lcssa, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_RT0_.exit.i.i ] ; 2 uses
+.lr.ph.i8.i:                                      ; preds = %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_RT0_.exit.i15.i, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_RT0_.exit.i.i
+  %.sroa.0.02.i.i = phi ptr [ %storemerge23.lcssa, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_RT0_.exit.i.i ], [ %i.s, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_RT0_.exit.i15.i ] ; 2 uses
   %i.s = getelementptr inbounds i8, ptr %.sroa.0.02.i.i, i64 -16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.t = getelementptr inbounds i8, ptr %.sroa.0.02.i.i, i64 -8
@@ -1797,12 +1791,12 @@ _ZSt9iter_swapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEET_SL_SL_T0_.exit: ; preds = %bb.m
   tail call fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEElNS0_5__ops15_Iter_less_iterEEvT_SL_T0_T1_(ptr nonnull %.sroa.012.1.i.i, ptr %storemerge2359, i64 noundef %i.aj)
   %i.dq = ptrtoint ptr %.sroa.012.1.i.i to i64
-  %i.dr = sub i64 %i.dq, %i.a                     ; 2 uses
+  %i.dr = sub i64 %i.dq, %i.a
   %i.ds = ashr exact i64 %i.dr, 4                 ; 3 uses
   %i.dt = icmp sgt i64 %i.ds, 16
   br i1 %i.dt, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_T0_.exit, !llvm.loop !5334
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEET_SL_SL_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_RT0_.exit.i15.i, %bb.a, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_RT0_.exit.i.i
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEET_SL_SL_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics18ReorderExpressionsERNS2_6vectorINS2_10unique_ptrINS2_10ExpressionESt14default_deleteIS6_ELb1EEELb1ESaIS9_EEEE15ExpressionCostsSt6vectorISD_SaISD_EEEENS0_5__ops15_Iter_less_iterEEvT_SL_SL_RT0_.exit.i15.i, %bb.a
   ret void
 }
 
@@ -2205,7 +2199,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.j, label %._crit_edge, label %.lr.ph35, !llvm.loop !5362
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i20.lcssa = phi i64 [ %.fr.i.i17, %.lr.ph ], [ %.fr.i.i, %bb.b ] ; 3 uses
+  %.fr.i.i20.lcssa = phi i64 [ %.fr.i.i17, %.lr.ph ], [ %.fr.i.i, %bb.b ] ; 2 uses
   %storemerge18.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i.i20.lcssa, 4             ; 2 uses
   %i.l = add nsw i64 %i.k, -2                     ; 2 uses
@@ -2284,14 +2278,10 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeurist
   store <2 x i64> %i.v, ptr %i.ap, align 8, !tbaa !270
   %.not.i.i.i = icmp eq i64 %.09.i.i.i, 0
   %i.aq = add nsw i64 %.09.i.i.i, -1
-  br i1 %.not.i.i.i, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_RT0_.exit.i.i, label %bb.c, !llvm.loop !5365
+  br i1 %.not.i.i.i, label %.lr.ph.i8.i, label %bb.c, !llvm.loop !5365
 
-_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_RT0_.exit.i.i: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_less_iterEEvT_T0_SG_T1_T2_.exit.i.i.i
-  %3 = icmp sgt i64 %.fr.i.i20.lcssa, 16
-  br i1 %3, label %.lr.ph.i8.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_T0_.exit
-
-.lr.ph.i8.i:                                      ; preds = %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_RT0_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_RT0_.exit.i.i
-  %.sroa.0.02.i.i = phi ptr [ %i.ar, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_RT0_.exit.i.i ], [ %storemerge18.lcssa, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_RT0_.exit.i.i ] ; 2 uses
+.lr.ph.i8.i:                                      ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_less_iterEEvT_T0_SG_T1_T2_.exit.i.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_RT0_.exit.i.i
+  %.sroa.0.02.i.i = phi ptr [ %i.ar, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_RT0_.exit.i.i ], [ %storemerge18.lcssa, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_less_iterEEvT_T0_SG_T1_T2_.exit.i.i.i ] ; 2 uses
   %i.ar = getelementptr inbounds i8, ptr %.sroa.0.02.i.i, i64 -16 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i10.i = getelementptr inbounds i8, ptr %.sroa.0.02.i.i, i64 -8
   %.sroa.4.0.copyload.i.i11.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i10.i, align 8, !tbaa !270
@@ -2487,7 +2477,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20Exp
   %i.cu = icmp sgt i64 %i.ct, 16
   br i1 %i.cu, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_T0_.exit, !llvm.loop !5362
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEET_SF_SF_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_RT0_.exit.i.i, %bb.a, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_RT0_.exit.i.i
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEET_SF_SF_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_RT0_.exit.i.i, %bb.a
   ret void
 }
 
@@ -2890,7 +2880,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.j, label %._crit_edge, label %.lr.ph46, !llvm.loop !5780
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i28.lcssa = phi i64 [ %.fr.i.i25, %.lr.ph ], [ %.fr.i.i, %bb.b ] ; 3 uses
+  %.fr.i.i28.lcssa = phi i64 [ %.fr.i.i25, %.lr.ph ], [ %.fr.i.i, %bb.b ] ; 2 uses
   %storemerge26.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i.i28.lcssa, 4             ; 2 uses
   %i.l = add nsw i64 %i.k, -2                     ; 2 uses
@@ -2974,14 +2964,10 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   store <2 x i64> %i.v, ptr %i.at, align 8, !tbaa !270
   %.not.i.i.i = icmp eq i64 %.010.i.i.i, 0
   %i.au = add nsw i64 %.010.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_RT0_.exit.i.i", label %bb.c, !llvm.loop !5783
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !5783
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_T0_SI_T1_T2_.exit.i.i.i"
-  %3 = icmp sgt i64 %.fr.i.i28.lcssa, 16
-  br i1 %3, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_T0_.exit"
-
-.lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_RT0_.exit.i.i"
-  %.sroa.0.03.i.i = phi ptr [ %i.av, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_RT0_.exit.i.i" ], [ %storemerge26.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_RT0_.exit.i.i" ] ; 2 uses
+.lr.ph.i9.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_T0_SI_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_RT0_.exit.i.i"
+  %.sroa.0.03.i.i = phi ptr [ %i.av, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_RT0_.exit.i.i" ], [ %storemerge26.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_T0_SI_T1_T2_.exit.i.i.i" ] ; 2 uses
   %i.av = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -16 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i11.i = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -8 ; 2 uses
   %.sroa.4.0.copyload.i.i12.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i11.i, align 8
@@ -3215,7 +3201,7 @@ bb.v:                                             ; preds = %bb.u
   %i.ea = icmp sgt i64 %i.dz, 16
   br i1 %i.ea, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_T0_.exit", !llvm.loop !5780
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEET_SH_SH_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_RT0_.exit.i.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEET_SH_SH_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN6duckdb21RemoveDuplicateGroups14VisitAggregateERNSB_16LogicalAggregateEE3$_0EEEvT_SH_SH_RT0_.exit.i.i", %bb.a
   ret void
 }
 

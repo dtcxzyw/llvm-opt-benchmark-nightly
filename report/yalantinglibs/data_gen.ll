@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.y, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = add i64 %i.v, 2
+  %i.z = add nuw nsw i64 %i.v, 2
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
 bb.j:                                             ; preds = %bb.h
@@ -213,7 +213,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.aa, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ab = add i64 %i.v, 4
+  %i.ab = add nuw nsw i64 %i.v, 4
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -616,7 +616,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.y, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = add i64 %i.v, 2
+  %i.z = add nuw nsw i64 %i.v, 2
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
 bb.j:                                             ; preds = %bb.h
@@ -624,7 +624,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.aa, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ab = add i64 %i.v, 4
+  %i.ab = add nuw nsw i64 %i.v, 4
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -1027,7 +1027,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = add i64 %i.f, 2
+  %i.j = add nuw nsw i64 %i.f, 2
   br label %_ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJSt6vectorIiSaIiEEEEENS_21serialize_buffer_sizeEDpRKT0_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -1035,7 +1035,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = add i64 %i.f, 4
+  %i.l = add nuw nsw i64 %i.f, 4
   br label %_ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJSt6vectorIiSaIiEEEEENS_21serialize_buffer_sizeEDpRKT0_.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -1438,7 +1438,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = add i64 %i.f, 2
+  %i.j = add nuw nsw i64 %i.f, 2
   br label %_ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJSt6vectorI4rectSaIS3_EEEEENS_21serialize_buffer_sizeEDpRKT0_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -1446,7 +1446,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = add i64 %i.f, 4
+  %i.l = add nuw nsw i64 %i.f, 4
   br label %_ZN11struct_pack6detail26get_serialize_runtime_infoILm0EJSt6vectorI4rectSaIS3_EEEEENS_21serialize_buffer_sizeEDpRKT0_.exit
 
 bb.f:                                             ; preds = %bb.d

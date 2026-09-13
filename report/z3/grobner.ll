@@ -205,7 +205,7 @@ _ZN6vectorIP4exprLb0EjE3endEv.exit.i:             ; preds = %bb.e
 bb.f:                                             ; preds = %_ZN6vectorIP4exprLb0EjE3endEv.exit.i
   %i.as = ptrtoint ptr %i.aq to i64
   %i.at = add nuw nsw i64 %i.ao, 1
-  %i.au = lshr i64 %i.at, 1                       ; 16 uses
+  %i.au = lshr i64 %i.at, 1                       ; 15 uses
   br label %.lr.ph.i.i.i40
 
 .lr.ph.i.i.i40:                                   ; preds = %bb.f, %select.unfold.i.i.i
@@ -598,10 +598,9 @@ _ZSt4moveIPP4exprS2_ET0_T_S4_S3_.exit19.i:        ; preds = %bb.ae, %.thread150
   br i1 %i.ev, label %bb.af, label %bb.ai
 
 _ZSt4moveIPP4exprS2_ET0_T_S4_S3_.exit19.i.thread: ; preds = %bb.ae
-  %i.ew = load ptr, ptr %i.bc, align 8, !tbaa !102 ; 2 uses
+  %i.ew = load ptr, ptr %i.bc, align 8, !tbaa !102
   store ptr %i.ew, ptr %i.aw, align 8, !tbaa !102
-  %4 = icmp eq i64 %i.au, 0
-  br i1 %4, label %.thread152, label %bb.ai
+  br label %bb.ai
 
 bb.af:                                            ; preds = %_ZSt4moveIPP4exprS2_ET0_T_S4_S3_.exit19.i
   %i.ex = icmp sgt i64 %i.bl, 1
@@ -615,16 +614,12 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.af
   %i.fa = icmp eq i64 %gepdiff, 8
-  br i1 %i.fa, label %..thread152_crit_edge, label %_ZSt22__stable_sort_adaptiveIPP4exprS2_N9__gnu_cxx5__ops15_Iter_comp_iterIN7grobner6var_ltEEEEvT_S9_S9_T0_T1_.exit.i
+  br i1 %i.fa, label %.thread152, label %_ZSt22__stable_sort_adaptiveIPP4exprS2_N9__gnu_cxx5__ops15_Iter_comp_iterIN7grobner6var_ltEEEEvT_S9_S9_T0_T1_.exit.i
 
-..thread152_crit_edge:                            ; preds = %bb.ah
-  %.pre = load ptr, ptr %i.aw, align 8, !tbaa !102
-  br label %.thread152
-
-.thread152:                                       ; preds = %..thread152_crit_edge, %_ZSt4moveIPP4exprS2_ET0_T_S4_S3_.exit19.i.thread
-  %5 = phi ptr [ %.pre, %..thread152_crit_edge ], [ %i.ew, %_ZSt4moveIPP4exprS2_ET0_T_S4_S3_.exit19.i.thread ]
-  %6 = getelementptr inbounds i8, ptr %i.aq, i64 -8
-  store ptr %5, ptr %6, align 8, !tbaa !102
+.thread152:                                       ; preds = %bb.ah
+  %4 = getelementptr inbounds i8, ptr %i.aq, i64 -8
+  %5 = load ptr, ptr %i.aw, align 8, !tbaa !102
+  store ptr %5, ptr %4, align 8, !tbaa !102
   br label %_ZSt22__stable_sort_adaptiveIPP4exprS2_N9__gnu_cxx5__ops15_Iter_comp_iterIN7grobner6var_ltEEEEvT_S9_S9_T0_T1_.exit.i
 
 bb.ai:                                            ; preds = %_ZSt4moveIPP4exprS2_ET0_T_S4_S3_.exit19.i.thread, %_ZSt4moveIPP4exprS2_ET0_T_S4_S3_.exit19.i

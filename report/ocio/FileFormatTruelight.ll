@@ -204,9 +204,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit207: ; preds = %_Z
           cleanup
   br label %.loopexit489
 
-.loopexit.split-lp:                               ; preds = %.invoke1027, %.invoke1025, %.invoke, %bb.cu, %bb.cz
-  %.sroa.0405.1.ph490 = phi ptr [ %.sroa.0405.8, %bb.cz ], [ %.sroa.0405.7, %bb.cu ], [ %.sroa.0405.2471, %.invoke1027 ], [ %.sroa.0405.0.ph, %.invoke ], [ %.sroa.0405.2471, %.invoke1025 ]
-  %.sroa.34.1.ph491 = phi ptr [ %.sroa.19.5, %bb.cz ], [ %.sroa.34.7, %bb.cu ], [ %.sroa.34.2473, %.invoke1027 ], [ %.sroa.34.0.ph, %.invoke ], [ %.sroa.34.2473, %.invoke1025 ]
+.loopexit.split-lp:                               ; preds = %.invoke997, %.invoke1025, %.invoke, %bb.cu, %bb.cz
+  %.sroa.0405.1.ph490 = phi ptr [ %.sroa.0405.2471, %.invoke997 ], [ %.sroa.0405.2471, %.invoke1025 ], [ %.sroa.0405.8, %bb.cz ], [ %.sroa.0405.0.ph, %.invoke ], [ %.sroa.0405.7, %bb.cu ]
+  %.sroa.34.1.ph491 = phi ptr [ %.sroa.34.2473, %.invoke997 ], [ %.sroa.34.2473, %.invoke1025 ], [ %.sroa.19.5, %bb.cz ], [ %.sroa.34.0.ph, %.invoke ], [ %.sroa.34.7, %bb.cu ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit489
@@ -609,7 +609,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.ck
   %i.oa = ptrtoint ptr %.sroa.19.1472 to i64
   %i.ob = ptrtoint ptr %.sroa.0405.2471 to i64    ; 2 uses
-  %i.oc = sub i64 %i.oa, %i.ob                    ; 5 uses
+  %i.oc = sub i64 %i.oa, %i.ob                    ; 4 uses
   %i.od = ashr exact i64 %i.oc, 2                 ; 3 uses
   %i.oe = icmp ugt i64 %i.od, 900000
   br i1 %i.oe, label %bb.cm, label %bb.co
@@ -635,25 +635,14 @@ bb.cn:                                            ; preds = %bb.cm
 
 bb.co:                                            ; preds = %bb.cl
   %.not.i266 = icmp eq ptr %.sroa.19.1472, %.sroa.34.2473
-  br i1 %.not.i266, label %28, label %bb.cp
+  br i1 %.not.i266, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i, label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co
   %i.oi = load float, ptr %i.nv, align 4, !tbaa !45
   store float %i.oi, ptr %.sroa.19.1472, align 4, !tbaa !45
   br label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit
 
-28:                                               ; preds = %bb.co
-  %29 = icmp eq i64 %i.oc, 9223372036854775804
-  br i1 %29, label %.invoke1027, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i
-
-.invoke1027:                                      ; preds = %bb.dp, %bb.dl, %30, %28
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #25
-          to label %.cont1028 unwind label %.loopexit.split-lp
-
-.cont1028:                                        ; preds = %.invoke1027
-  unreachable
-
-_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i: ; preds = %28
+_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.co
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.od, i64 1)
   %i.oj = add nuw nsw i64 %.sroa.speculated.i.i.i, %i.od ; 2 uses
   %i.ok = shl nuw nsw i64 %i.oj, 2
@@ -828,7 +817,7 @@ bb.dd:                                            ; preds = %bb.dc
   %i.qh = load ptr, ptr %9, align 8, !tbaa !109   ; 5 uses
   %i.qi = ptrtoint ptr %i.qg to i64
   %i.qj = ptrtoint ptr %i.qh to i64
-  %i.qk = sub i64 %i.qi, %i.qj                    ; 6 uses
+  %i.qk = sub i64 %i.qi, %i.qj                    ; 5 uses
   %i.ql = ashr exact i64 %i.qk, 2                 ; 3 uses
   %i.qm = icmp ugt i64 %i.ql, 6440067
   br i1 %i.qm, label %bb.de, label %bb.dg
@@ -847,7 +836,7 @@ bb.df:                                            ; preds = %bb.de
 bb.dg:                                            ; preds = %bb.dd
   %i.qp = load ptr, ptr %i.dj, align 8, !tbaa !108 ; 2 uses
   %.not.i290 = icmp eq ptr %i.qg, %i.qp
-  br i1 %.not.i290, label %30, label %bb.dh
+  br i1 %.not.i290, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i291, label %bb.dh
 
 bb.dh:                                            ; preds = %bb.dg
   %i.qq = load float, ptr %i.nv, align 4, !tbaa !45
@@ -856,11 +845,7 @@ bb.dh:                                            ; preds = %bb.dg
   store ptr %i.qr, ptr %i.dk, align 8, !tbaa !110
   br label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit299
 
-30:                                               ; preds = %bb.dg
-  %31 = icmp eq i64 %i.qk, 9223372036854775804
-  br i1 %31, label %.invoke1027, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i291
-
-_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i291: ; preds = %30
+_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i291: ; preds = %bb.dg
   %.sroa.speculated.i.i.i292 = call i64 @llvm.umax.i64(i64 %i.ql, i64 1)
   %i.qs = add nuw nsw i64 %.sroa.speculated.i.i.i292, %i.ql ; 2 uses
   %i.qt = shl nuw nsw i64 %i.qs, 2
@@ -916,7 +901,14 @@ bb.dl:                                            ; preds = %_ZNSt6vectorIfSaIfE
   %i.ri = ptrtoint ptr %i.ra to i64
   %i.rj = sub i64 %i.rh, %i.ri                    ; 6 uses
   %i.rk = icmp eq i64 %i.rj, 9223372036854775804
-  br i1 %i.rk, label %.invoke1027, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i301
+  br i1 %i.rk, label %.invoke997, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i301
+
+.invoke997:                                       ; preds = %bb.dp, %bb.dl
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #25
+          to label %.cont998 unwind label %.loopexit.split-lp
+
+.cont998:                                         ; preds = %.invoke997
+  unreachable
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i301: ; preds = %bb.dl
   %i.rl = ashr exact i64 %i.rj, 2                 ; 3 uses
@@ -980,7 +972,7 @@ bb.dp:                                            ; preds = %_ZNSt6vectorIfSaIfE
   %i.sf = ptrtoint ptr %i.rx to i64
   %i.sg = sub i64 %i.se, %i.sf                    ; 6 uses
   %i.sh = icmp eq i64 %i.sg, 9223372036854775804
-  br i1 %i.sh, label %.invoke1027, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i311
+  br i1 %i.sh, label %.invoke997, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i311
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i311: ; preds = %bb.dp
   %i.si = ashr exact i64 %i.sg, 2                 ; 3 uses

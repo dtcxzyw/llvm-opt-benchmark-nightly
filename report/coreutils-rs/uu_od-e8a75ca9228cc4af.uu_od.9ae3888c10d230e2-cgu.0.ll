@@ -205,38 +205,36 @@ bb.dm:                                            ; preds = %_RNvNtCsdit6BuOJVAc
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecReEECsdit6BuOJVAc_5uu_od.exit.sink.split.i
 
 thread-pre-split.i198:                            ; preds = %.thread.i, %_RNvXNtCsdit6BuOJVAc_5uu_od12parse_inputsNtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches10ArgMatchesNtB2_15CommandLineOpts12opts_present.exit.i
-  %i.og = phi i64 [ %i.gt, %_RNvXNtCsdit6BuOJVAc_5uu_od12parse_inputsNtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches10ArgMatchesNtB2_15CommandLineOpts12opts_present.exit.i ], [ %.pr.pre.i, %.thread.i ] ; 5 uses
+  %i.og = phi i64 [ %i.gt, %_RNvXNtCsdit6BuOJVAc_5uu_od12parse_inputsNtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches10ArgMatchesNtB2_15CommandLineOpts12opts_present.exit.i ], [ %.pr.pre.i, %.thread.i ] ; 4 uses
   %i.oh = icmp ult i64 %i.og, 576460752303423488
   call void @llvm.assume(i1 %i.oh)
   %i.oi = icmp eq i64 %i.og, 0
   br i1 %i.oi, label %bb.dt, label %bb.dn
 
 .thread96.i:                                      ; preds = %bb.cg, %bb.ch, %bb.ci, %bb.cj, %bb.ck, %bb.cl, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecReE8push_mutCsdit6BuOJVAc_5uu_od.exit.i
-  %.ph.i = phi i64 [ 1, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecReE8push_mutCsdit6BuOJVAc_5uu_od.exit.i ], [ %i.gt, %bb.cl ], [ %i.gt, %bb.ck ], [ %i.gt, %bb.cj ], [ %i.gt, %bb.ci ], [ %i.gt, %bb.ch ], [ %i.gt, %bb.cg ] ; 2 uses
+  %.ph.i = phi i64 [ 1, %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecReE8push_mutCsdit6BuOJVAc_5uu_od.exit.i ], [ %i.gt, %bb.cl ], [ %i.gt, %bb.ck ], [ %i.gt, %bb.cj ], [ %i.gt, %bb.ci ], [ %i.gt, %bb.ch ], [ %i.gt, %bb.cg ]
   %i.oj = getelementptr inbounds nuw i8, ptr %i.aq, i64 8 ; 2 uses
   %i.ok = load ptr, ptr %i.oj, align 8, !noalias !1585, !nonnull !5, !noundef !5
-  %4 = mul nuw nsw i64 %.ph.i, 24
   br label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i
 
 bb.dn:                                            ; preds = %thread-pre-split.i198
   %i.ol = getelementptr inbounds nuw i8, ptr %i.aq, i64 8 ; 2 uses
   %i.om = load ptr, ptr %i.ol, align 8, !noalias !1585, !nonnull !5, !noundef !5
-  %5 = mul nuw i64 %i.og, 24                      ; 2 uses
   %or.cond.i.i.i.i = icmp samesign ugt i64 %i.og, 384307168202282325
   br i1 %or.cond.i.i.i.i, label %bb.do, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i, !prof !1628
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i: ; preds = %bb.dn, %.thread96.i
-  %6 = phi i64 [ %4, %.thread96.i ], [ %5, %bb.dn ] ; 2 uses
   %i.on = phi ptr [ %i.ok, %.thread96.i ], [ %i.om, %bb.dn ]
   %i.oo = phi ptr [ %i.oj, %.thread96.i ], [ %i.ol, %bb.dn ]
-  %i.op = phi i64 [ %.ph.i, %.thread96.i ], [ %i.og, %bb.dn ] ; 3 uses
+  %i.op = phi i64 [ %.ph.i, %.thread96.i ], [ %i.og, %bb.dn ] ; 4 uses
+  %4 = mul nuw nsw i64 %i.op, 24                  ; 2 uses
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !noalias !1629
-  %i.oq = call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %6, i64 noundef range(i64 1, 9) 8) #29, !noalias !1629 ; 3 uses
+  %i.oq = call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %4, i64 noundef range(i64 1, 9) 8) #29, !noalias !1629 ; 3 uses
   %i.or = icmp eq ptr %i.oq, null
   br i1 %i.or, label %bb.do, label %.preheader.i.i.i.i
 
 bb.do:                                            ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i, %bb.dn
-  %i.os = phi i64 [ %6, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i ], [ %5, %bb.dn ]
+  %i.os = phi i64 [ %4, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i ], [ undef, %bb.dn ]
   %.sroa.4.0.ph.i.i.i = phi i64 [ 8, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i ], [ 0, %bb.dn ]
   call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i, i64 %i.os) #32, !noalias !1630
   unreachable
@@ -639,7 +637,7 @@ bb.h:                                             ; preds = %bb.e
   br i1 %i.as, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.at = sub nsw i32 1018, %i.ac                 ; 2 uses
+  %i.at = sub nuw nsw i32 1018, %i.ac             ; 2 uses
   %i.au = or disjoint i32 %i.q, 1048576           ; 3 uses
   %i.av = sub nsw i32 27, %i.ac
   %i.aw = and i32 %i.av, 31

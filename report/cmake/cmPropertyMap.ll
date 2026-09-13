@@ -202,7 +202,7 @@ bb.a:
   %6 = alloca %"struct.std::pair.13", align 8     ; 11 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 6                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_SK_T0_.exit"
@@ -220,11 +220,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.j, label %._crit_edge, label %.lr.ph93, !llvm.loop !113
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa89 = phi i64 [ %i.d, %.lr.ph ], [ %i.ga, %bb.b ] ; 2 uses
-  %.lcssa87 = phi i64 [ %i.c, %.lr.ph ], [ %i.fz, %bb.b ]
+  %.lcssa87 = phi i64 [ %i.d, %.lr.ph ], [ %i.ga, %bb.b ] ; 2 uses
   %storemerge25.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.023.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  %i.k = add nsw i64 %.lcssa89, -2
+  %i.k = add nsw i64 %.lcssa87, -2
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 10 uses
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
@@ -238,8 +237,8 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 40
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit20.i.i.i, %._crit_edge
-  %.010.i.i.i = phi i64 [ %i.l, %._crit_edge ], [ %i.bk, %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit20.i.i.i ] ; 4 uses
+bb.c:                                             ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a", %._crit_edge
+  %.010.i.i.i = phi i64 [ %i.l, %._crit_edge ], [ %i.bk, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a" ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   %i.w = getelementptr inbounds [64 x i8], ptr %0, i64 %.010.i.i.i ; 11 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !26   ; 3 uses
@@ -348,7 +347,7 @@ _ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EC2EOS6_.exit1
   store ptr %i.p, ptr %i.o, align 8, !tbaa !26
   store i64 0, ptr %i.q, align 8, !tbaa !31
   store i8 0, ptr %i.p, align 8, !tbaa !27
-  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_T0_SL_T1_T2_"(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa89, ptr noundef align 8 %6)
+  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_T0_SL_T1_T2_"(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa87, ptr noundef align 8 %6)
   %i.bc = load ptr, ptr %i.t, align 8, !tbaa !26  ; 2 uses
   %i.bd = icmp eq ptr %i.bc, %i.u
   br i1 %i.bd, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -386,24 +385,20 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16.i.i.i: ; preds = %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i15.i.i.i
   %i.bp = load ptr, ptr %5, align 8, !tbaa !26    ; 2 uses
   %i.bq = icmp eq ptr %i.bp, %i.m
-  br i1 %i.bq, label %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit20.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i
+  br i1 %i.bq, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a", label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16.i.i.i
   %i.br = load i64, ptr %i.m, align 8, !tbaa !27
   %i.bs = add i64 %i.br, 1
   call void @_ZdlPvm(ptr noundef %i.bp, i64 noundef %i.bs) #18
-  br label %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit20.i.i.i
+  br label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a"
 
-_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit20.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i
+"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a": ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a", label %bb.c, !llvm.loop !114
-
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a": ; preds = %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev.exit20.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %7 = icmp sgt i64 %.lcssa87, 64
-  br i1 %7, label %.lr.ph.i9.i.preheader, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_SK_T0_.exit"
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i.preheader, label %bb.c, !llvm.loop !114
 
 .lr.ph.i9.i.preheader:                            ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a"
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 10 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 5 uses
@@ -806,12 +801,12 @@ bb.s:                                             ; preds = %bb.r
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEET_SK_SK_T0_.exit": ; preds = %bb.r
   tail call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEElNS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_T0_T1_"(ptr %.sroa.023.1.i.i, ptr %storemerge2592, i64 noundef %i.ej)
   %i.fy = ptrtoint ptr %.sroa.023.1.i.i to i64
-  %i.fz = sub i64 %i.fy, %i.a                     ; 2 uses
+  %i.fz = sub i64 %i.fy, %i.a
   %i.ga = ashr exact i64 %i.fz, 6                 ; 3 uses
   %i.gb = icmp sgt i64 %i.ga, 16
   br i1 %i.gb, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_SK_T0_.exit", !llvm.loop !113
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_SK_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEET_SK_SK_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_SK_RT0_.exit", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_RT0_.exit.i.i.a"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_SK_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEET_SK_SK_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNK13cmPropertyMap7GetListEvE3$_0EEEvT_SK_SK_RT0_.exit", %bb.a
   ret void
 }
 

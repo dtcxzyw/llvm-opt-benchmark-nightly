@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %bb.aa
   br i1 %i.dj, label %bb.af, label %bb.ae, !dbg !199082
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.dk = sub nsw i32 126, %i.ct, !dbg !199082
+  %i.dk = sub nuw nsw i32 126, %i.ct, !dbg !199082
   %i.dl = or disjoint i32 %i.cj, 8388608, !dbg !199083 ; 3 uses
   %i.dm = lshr i32 %i.dl, %i.dk, !dbg !199084     ; 2 uses
   %i.dn = sub nsw i32 29, %i.ct, !dbg !199085

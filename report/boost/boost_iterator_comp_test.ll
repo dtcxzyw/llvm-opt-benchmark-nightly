@@ -205,16 +205,20 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i: ; preds = %.lr.ph.i.i39.i.i.i, %.lr.ph.i.i39.i.i.i.prol.loopexit
   %.lcssa = phi ptr [ %.lcssa.unr, %.lr.ph.i.i39.i.i.i.prol.loopexit ], [ %i.dd, %.lr.ph.i.i39.i.i.i ] ; 2 uses
-  %i.df = sub i64 %3, %i.ap                       ; 3 uses
-  %xtraiter25 = and i64 %i.df, 3                  ; 2 uses
-  %lcmp.mod26.not = icmp eq i64 %xtraiter25, 0
-  br i1 %lcmp.mod26.not, label %.lr.ph.i.i44.i.i.i.prol.loopexit, label %.lr.ph.i.i44.i.i.i.prol
+  %i.df = sub nuw i64 %3, %i.ap                   ; 4 uses
+  %lcmp.mod26.not = icmp eq i64 %i.df, 0
+  br i1 %lcmp.mod26.not, label %_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_10slist_hookIPvEELb0EEENSC_17slist_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %.lr.ph.i.i44.i.i.i.preheader
 
-.lr.ph.i.i44.i.i.i.prol:                          ; preds = %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i, %.lr.ph.i.i44.i.i.i.prol
-  %i.dg = phi ptr [ %i.dk, %.lr.ph.i.i44.i.i.i.prol ], [ %.lcssa, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ] ; 2 uses
-  %.016.i.i.i.i.i.prol = phi i64 [ %i.dm, %.lr.ph.i.i44.i.i.i.prol ], [ %i.df, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ]
-  %.01315.i.i.i.i.i.prol = phi ptr [ %i.dl, %.lr.ph.i.i44.i.i.i.prol ], [ %i.i, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ] ; 3 uses
-  %prol.iter27 = phi i64 [ %prol.iter27.next, %.lr.ph.i.i44.i.i.i.prol ], [ 0, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ]
+.lr.ph.i.i44.i.i.i.preheader:                     ; preds = %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i
+  %xtraiter26 = and i64 %i.df, 3                  ; 2 uses
+  %lcmp.mod27.not = icmp eq i64 %xtraiter26, 0
+  br i1 %lcmp.mod27.not, label %.lr.ph.i.i44.i.i.i.prol.loopexit, label %.lr.ph.i.i44.i.i.i.prol
+
+.lr.ph.i.i44.i.i.i.prol:                          ; preds = %.lr.ph.i.i44.i.i.i.preheader, %.lr.ph.i.i44.i.i.i.prol
+  %i.dg = phi ptr [ %i.dk, %.lr.ph.i.i44.i.i.i.prol ], [ %.lcssa, %.lr.ph.i.i44.i.i.i.preheader ] ; 2 uses
+  %.016.i.i.i.i.i.prol = phi i64 [ %i.dm, %.lr.ph.i.i44.i.i.i.prol ], [ %i.df, %.lr.ph.i.i44.i.i.i.preheader ]
+  %.01315.i.i.i.i.i.prol = phi ptr [ %i.dl, %.lr.ph.i.i44.i.i.i.prol ], [ %i.i, %.lr.ph.i.i44.i.i.i.preheader ] ; 3 uses
+  %prol.iter27 = phi i64 [ %prol.iter27.next, %.lr.ph.i.i44.i.i.i.prol ], [ 0, %.lr.ph.i.i44.i.i.i.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 8
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !22, !noalias !257
   %i.dj = shl nsw i32 %i.di, 1
@@ -224,13 +228,13 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators
   %i.dl = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i.i.prol, i64 4 ; 2 uses
   %i.dm = add i64 %.016.i.i.i.i.i.prol, -1        ; 2 uses
   %prol.iter27.next = add i64 %prol.iter27, 1     ; 2 uses
-  %prol.iter27.cmp.not = icmp eq i64 %prol.iter27.next, %xtraiter25
+  %prol.iter27.cmp.not = icmp eq i64 %prol.iter27.next, %xtraiter26
   br i1 %prol.iter27.cmp.not, label %.lr.ph.i.i44.i.i.i.prol.loopexit, label %.lr.ph.i.i44.i.i.i.prol, !llvm.loop !253
 
-.lr.ph.i.i44.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i44.i.i.i.prol, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i
-  %.unr28 = phi ptr [ %.lcssa, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ], [ %i.dk, %.lr.ph.i.i44.i.i.i.prol ]
-  %.016.i.i.i.i.i.unr = phi i64 [ %i.df, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ], [ %i.dm, %.lr.ph.i.i44.i.i.i.prol ]
-  %.01315.i.i.i.i.i.unr = phi ptr [ %i.i, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ], [ %i.dl, %.lr.ph.i.i44.i.i.i.prol ]
+.lr.ph.i.i44.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i44.i.i.i.prol, %.lr.ph.i.i44.i.i.i.preheader
+  %.unr28 = phi ptr [ %.lcssa, %.lr.ph.i.i44.i.i.i.preheader ], [ %i.dk, %.lr.ph.i.i44.i.i.i.prol ]
+  %.016.i.i.i.i.i.unr = phi i64 [ %i.df, %.lr.ph.i.i44.i.i.i.preheader ], [ %i.dm, %.lr.ph.i.i44.i.i.i.prol ]
+  %.01315.i.i.i.i.i.unr = phi ptr [ %i.i, %.lr.ph.i.i44.i.i.i.preheader ], [ %i.dl, %.lr.ph.i.i44.i.i.i.prol ]
   %i.dn = sub i64 %i.ap, %3
   %i.do = icmp ugt i64 %i.dn, -4
   br i1 %i.do, label %_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_10slist_hookIPvEELb0EEENSC_17slist_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %.lr.ph.i.i44.i.i.i
@@ -268,7 +272,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators
   %.not.i.i45.i.i.i.3 = icmp eq i64 %i.ek, 0
   br i1 %.not.i.i45.i.i.i.3, label %_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_10slist_hookIPvEELb0EEENSC_17slist_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %.lr.ph.i.i44.i.i.i, !llvm.loop !3
 
-_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_10slist_hookIPvEELb0EEENSC_17slist_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %.lr.ph.i.i44.i.i.i.prol.loopexit, %.lr.ph.i.i44.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.c, %bb.d
+_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_10slist_hookIPvEELb0EEENSC_17slist_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %.lr.ph.i.i44.i.i.i.prol.loopexit, %.lr.ph.i.i44.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.c, %bb.d, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_10slist_hookIPvEELb0EEENS9_17slist_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj2EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   %i.el = load i64, ptr %i.d, align 8, !tbaa !38
   %i.em = add i64 %i.el, %3
@@ -671,16 +675,20 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i: ; preds = %.lr.ph.i.i39.i.i.i, %.lr.ph.i.i39.i.i.i.prol.loopexit
   %.lcssa = phi ptr [ %.lcssa.unr, %.lr.ph.i.i39.i.i.i.prol.loopexit ], [ %i.dd, %.lr.ph.i.i39.i.i.i ] ; 2 uses
-  %i.df = sub i64 %3, %i.ap                       ; 3 uses
-  %xtraiter25 = and i64 %i.df, 3                  ; 2 uses
-  %lcmp.mod26.not = icmp eq i64 %xtraiter25, 0
-  br i1 %lcmp.mod26.not, label %.lr.ph.i.i44.i.i.i.prol.loopexit, label %.lr.ph.i.i44.i.i.i.prol
+  %i.df = sub nuw i64 %3, %i.ap                   ; 4 uses
+  %lcmp.mod26.not = icmp eq i64 %i.df, 0
+  br i1 %lcmp.mod26.not, label %_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive13list_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_9list_hookIPvEELb0EEENSC_16list_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %.lr.ph.i.i44.i.i.i.preheader
 
-.lr.ph.i.i44.i.i.i.prol:                          ; preds = %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i, %.lr.ph.i.i44.i.i.i.prol
-  %i.dg = phi ptr [ %i.dk, %.lr.ph.i.i44.i.i.i.prol ], [ %.lcssa, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ] ; 2 uses
-  %.016.i.i.i.i.i.prol = phi i64 [ %i.dm, %.lr.ph.i.i44.i.i.i.prol ], [ %i.df, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ]
-  %.01315.i.i.i.i.i.prol = phi ptr [ %i.dl, %.lr.ph.i.i44.i.i.i.prol ], [ %i.i, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ] ; 3 uses
-  %prol.iter27 = phi i64 [ %prol.iter27.next, %.lr.ph.i.i44.i.i.i.prol ], [ 0, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ]
+.lr.ph.i.i44.i.i.i.preheader:                     ; preds = %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i
+  %xtraiter26 = and i64 %i.df, 3                  ; 2 uses
+  %lcmp.mod27.not = icmp eq i64 %xtraiter26, 0
+  br i1 %lcmp.mod27.not, label %.lr.ph.i.i44.i.i.i.prol.loopexit, label %.lr.ph.i.i44.i.i.i.prol
+
+.lr.ph.i.i44.i.i.i.prol:                          ; preds = %.lr.ph.i.i44.i.i.i.preheader, %.lr.ph.i.i44.i.i.i.prol
+  %i.dg = phi ptr [ %i.dk, %.lr.ph.i.i44.i.i.i.prol ], [ %.lcssa, %.lr.ph.i.i44.i.i.i.preheader ] ; 2 uses
+  %.016.i.i.i.i.i.prol = phi i64 [ %i.dm, %.lr.ph.i.i44.i.i.i.prol ], [ %i.df, %.lr.ph.i.i44.i.i.i.preheader ]
+  %.01315.i.i.i.i.i.prol = phi ptr [ %i.dl, %.lr.ph.i.i44.i.i.i.prol ], [ %i.i, %.lr.ph.i.i44.i.i.i.preheader ] ; 3 uses
+  %prol.iter27 = phi i64 [ %prol.iter27.next, %.lr.ph.i.i44.i.i.i.prol ], [ 0, %.lr.ph.i.i44.i.i.i.preheader ]
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !22, !noalias !278
   %i.dj = shl nsw i32 %i.di, 1
@@ -690,13 +698,13 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators
   %i.dl = getelementptr inbounds nuw i8, ptr %.01315.i.i.i.i.i.prol, i64 4 ; 2 uses
   %i.dm = add i64 %.016.i.i.i.i.i.prol, -1        ; 2 uses
   %prol.iter27.next = add i64 %prol.iter27, 1     ; 2 uses
-  %prol.iter27.cmp.not = icmp eq i64 %prol.iter27.next, %xtraiter25
+  %prol.iter27.cmp.not = icmp eq i64 %prol.iter27.next, %xtraiter26
   br i1 %prol.iter27.cmp.not, label %.lr.ph.i.i44.i.i.i.prol.loopexit, label %.lr.ph.i.i44.i.i.i.prol, !llvm.loop !274
 
-.lr.ph.i.i44.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i44.i.i.i.prol, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i
-  %.unr28 = phi ptr [ %.lcssa, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ], [ %i.dk, %.lr.ph.i.i44.i.i.i.prol ]
-  %.016.i.i.i.i.i.unr = phi i64 [ %i.df, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ], [ %i.dm, %.lr.ph.i.i44.i.i.i.prol ]
-  %.01315.i.i.i.i.i.unr = phi ptr [ %i.i, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i ], [ %i.dl, %.lr.ph.i.i44.i.i.i.prol ]
+.lr.ph.i.i44.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i44.i.i.i.prol, %.lr.ph.i.i44.i.i.i.preheader
+  %.unr28 = phi ptr [ %.lcssa, %.lr.ph.i.i44.i.i.i.preheader ], [ %i.dk, %.lr.ph.i.i44.i.i.i.prol ]
+  %.016.i.i.i.i.i.unr = phi i64 [ %i.df, %.lr.ph.i.i44.i.i.i.preheader ], [ %i.dm, %.lr.ph.i.i44.i.i.i.prol ]
+  %.01315.i.i.i.i.i.unr = phi ptr [ %i.i, %.lr.ph.i.i44.i.i.i.preheader ], [ %i.dl, %.lr.ph.i.i44.i.i.i.prol ]
   %i.dn = sub i64 %i.ap, %3
   %i.do = icmp ugt i64 %i.dn, -4
   br i1 %i.do, label %_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive13list_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_9list_hookIPvEELb0EEENSC_16list_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %.lr.ph.i.i44.i.i.i
@@ -734,7 +742,7 @@ _ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators
   %.not.i.i45.i.i.i.3 = icmp eq i64 %i.ek, 0
   br i1 %.not.i.i45.i.i.i.3, label %_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive13list_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_9list_hookIPvEELb0EEENSC_16list_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit, label %.lr.ph.i.i44.i.i.i, !llvm.loop !4
 
-_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive13list_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_9list_hookIPvEELb0EEENSC_16list_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %.lr.ph.i.i44.i.i.i.prol.loopexit, %.lr.ph.i.i44.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.c, %bb.d
+_ZN5boost9container6vectorIivvE40priv_insert_forward_range_expand_forwardINS0_3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS4_23iterator_from_iiteratorINS_9intrusive13list_iteratorINSC_8bhtraitsINS0_9base_nodeIiNS4_9list_hookIPvEELb0EEENSC_16list_node_traitsISH_EELNSC_14link_mode_typeE0ENSC_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESR_EEEEEEvPimT_NS_11move_detail17integral_constantIbLb0EEE.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %.lr.ph.i.i44.i.i.i.prol.loopexit, %.lr.ph.i.i44.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.c, %bb.d, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorIiEENS_9iterators18transform_iteratorI4funcNS1_23iterator_from_iiteratorINS_9intrusive13list_iteratorINS9_8bhtraitsINS0_9base_nodeIiNS1_9list_hookIPvEELb0EEENS9_16list_node_traitsISE_EELNS9_14link_mode_typeE0ENS9_7dft_tagELj1EEELb0EEELb0EEENS_11use_defaultESO_EEE17copy_n_and_updateIPiEEvRS4_T_m.exit43.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   %i.el = load i64, ptr %i.d, align 8, !tbaa !38
   %i.em = add i64 %i.el, %3

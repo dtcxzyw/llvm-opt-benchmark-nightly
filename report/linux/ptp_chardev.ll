@@ -202,8 +202,8 @@ bb.j:                                             ; preds = %.critedge.thread98
   br i1 %.not91, label %copy_to_user.exit, label %.lr.ph
 
 copy_to_user.exit:                                ; preds = %.lr.ph, %bb.j
-  call void @_raw_spin_unlock_irq(ptr noundef %i.ak) #9
   %5 = shl nuw nsw i64 %i.at, 5                   ; 2 uses
+  call void @_raw_spin_unlock_irq(ptr noundef %i.ak) #9
   %i.au = call i64 @_copy_to_user(ptr noundef %2, ptr noundef nonnull %i.aj, i64 noundef %5) #9
   %i.av = icmp eq i64 %i.au, 0
   %i.aw = select i1 %i.av, i64 %5, i64 -14
