@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle.candle.9114c17947f07d3c-cgu.13?download=true
+inline.NumInlined: 212
+inline.NumDeleted: 107
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift4sortTRNtNtCsgCecv3eZDcN_5alloc6string6StringRNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorENCINvMNtB12_5sliceSBW_7sort_byNCINvNtCsOwuIBbUsgI_11safetensors6tensor7prepareBX_B1A_RINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapBY_B1B_EE0E0ECscsgjCEAuSgO_6candle:bb.a
 bb.r:                                             ; preds = %bb.q
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.dn
@@ -200,7 +204,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRNtNtCsg
   br i1 %i.hq, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.hr = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.hr = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.hs = lshr i64 %.sroa.018.0, 1
   %i.ht = add nuw nsw i64 %i.hs, %.sroa.09.0
   br label %bb.f

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tera-rs/original/serde-3a54d9bcd9e2e9ba.serde.83f6b63f6cf340ee-cgu.0?download=true
+inline.NumInlined: 106
+inline.NumDeleted: 70
 begin_hunk_0_@_RNvNtNtNtCsbkrgv1XEKBK_5serde7private2de7content13content_clone:bb.a
     #dbg_value(i64 1, !2250, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !1720)
     #dbg_value(i64 %.val27, !2250, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !1720)
@@ -200,7 +202,7 @@ bb.ab:                                            ; preds = %bb.a
     #dbg_value(i64 32, !2546, !DIExpression(), !1831)
     #dbg_value(i64 8, !2511, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !1814)
     #dbg_value(ptr poison, !2530, !DIExpression(), !1833)
-  %i.cf = shl nuw i64 %i.ce, 5, !dbg !3050        ; 2 uses
+  %i.cf = shl nuw nsw i64 %i.ce, 5, !dbg !3050    ; 2 uses
     #dbg_value(i1 false, !2538, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !1834)
     #dbg_value(i1 false, !2549, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !1837)
     #dbg_value(i64 %i.cf, !2531, !DIExpression(), !1838)
@@ -438,7 +440,7 @@ bb.ag:                                            ; preds = %bb.a
     #dbg_value(i64 64, !2546, !DIExpression(), !2007)
     #dbg_value(i64 8, !2511, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !2001)
     #dbg_value(ptr poison, !2530, !DIExpression(), !2009)
-  %i.cy = shl nuw i64 %i.cx, 6, !dbg !3078        ; 2 uses
+  %i.cy = shl nuw nsw i64 %i.cx, 6, !dbg !3078    ; 2 uses
     #dbg_value(i1 false, !2538, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !2010)
     #dbg_value(i1 false, !2549, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !2012)
     #dbg_value(i64 %i.cy, !2531, !DIExpression(), !2013)

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_arrow.lance_arrow.8c51e37f9723585d-cgu.0?download=true
+inline.NumInlined: 3904
+inline.NumDeleted: 1641
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_RNvNtCsc2V0exE7CWf_11lance_arrow4json24arrow_json_to_lance_json:bb.a
   %.pn.i = phi { ptr, i32 } [ %i.av, %bb.k ], [ %i.an, %bb.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !7845)
@@ -200,7 +205,7 @@ bb.y:                                             ; preds = %_RNvNtCsc2V0exE7CWf
   %i.cm = load i64, ptr %i.cl, align 8, !noundef !10 ; 6 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ck, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !7850
-  %i.co = shl nuw i64 %i.cm, 3                    ; 2 uses
+  %i.co = shl nuw nsw i64 %i.cm, 3                ; 2 uses
   %.not.i.i = icmp ugt i64 %i.cm, 1152921504606846975
   br i1 %.not.i.i, label %bb.ab, label %bb.z, !prof !27
 
@@ -603,7 +608,7 @@ bb.x:                                             ; preds = %_RNvNtCsc2V0exE7CWf
   %i.cl = load i64, ptr %i.ck, align 8, !noundef !10 ; 6 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !7909
-  %i.cn = shl nuw i64 %i.cl, 3                    ; 2 uses
+  %i.cn = shl nuw nsw i64 %i.cl, 3                ; 2 uses
   %.not.i.i = icmp ugt i64 %i.cl, 1152921504606846975
   br i1 %.not.i.i, label %bb.aa, label %bb.y, !prof !27
 
@@ -1006,7 +1011,7 @@ bb.j:                                             ; preds = %bb.f
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.bd = load i64, ptr %i.bc, align 8, !noundef !10 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !8613
-  %i.be = mul nuw i64 %i.bd, 136                  ; 2 uses
+  %i.be = mul nuw nsw i64 %i.bd, 136              ; 2 uses
   %.not.i.i = icmp ugt i64 %i.bd, 67818912035696880
   br i1 %.not.i.i, label %bb.m, label %bb.k, !prof !27
 

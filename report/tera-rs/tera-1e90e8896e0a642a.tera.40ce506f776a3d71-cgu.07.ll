@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tera-rs/original/tera-1e90e8896e0a642a.tera.40ce506f776a3d71-cgu.07?download=true
+inline.NumInlined: 524
+inline.NumDeleted: 165
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 18
+loop-unroll.NumUnrolled: 30
 begin_hunk_0_@_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift4sortNtNtCs5yXxDE1DkoT_4tera5value5ValueNCINvMNtCsgCecv3eZDcN_5alloc5sliceSBW_7sort_byNCNvNtB10_7filters4sorts1_0E0EB10_:bb.a
     #dbg_value(i64 3, !2060, !DIExpression(), !7221)
   invoke void @_RINvNvNtCsf3Ta7LF998c_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs5yXxDE1DkoT_4tera(ptr noundef nonnull %i.ar, ptr noundef nonnull %i.as, i64 noundef 3)
@@ -200,7 +205,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeNtNtCs5yX
   br i1 %i.cj, label %.lr.ph102, label %._crit_edge, !dbg !7634
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.ck = add nsw i64 %.sroa.02.1.lcssa, 1, !dbg !7725
+  %i.ck = add nuw nsw i64 %.sroa.02.1.lcssa, 1, !dbg !7725
     #dbg_value(i64 %i.ck, !7319, !DIExpression(), !7381)
     #dbg_value(i64 %.sroa.018.0, !7515, !DIExpression(), !7615)
   %i.cl = lshr i64 %.sroa.018.0, 1, !dbg !7726
@@ -603,7 +608,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeNtNtCsgCe
   br i1 %i.cv, label %.lr.ph106, label %._crit_edge, !dbg !8374
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cw = add nsw i64 %.sroa.02.1.lcssa, 1, !dbg !8473
+  %i.cw = add nuw nsw i64 %.sroa.02.1.lcssa, 1, !dbg !8473
     #dbg_value(i64 %i.cw, !8054, !DIExpression(), !8116)
     #dbg_value(i64 %.sroa.018.0, !8255, !DIExpression(), !8355)
   %i.cx = lshr i64 %.sroa.018.0, 1, !dbg !8474
@@ -1006,7 +1011,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeRNtNtCsgC
   br i1 %i.dh, label %.lr.ph114, label %._crit_edge, !dbg !9101
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.di = add nsw i64 %.sroa.02.1.lcssa, 1, !dbg !9205
+  %i.di = add nuw nsw i64 %.sroa.02.1.lcssa, 1, !dbg !9205
     #dbg_value(i64 %i.di, !8794, !DIExpression(), !8856)
     #dbg_value(i64 %.sroa.018.0, !8982, !DIExpression(), !9082)
   %i.dj = lshr i64 %.sroa.018.0, 1, !dbg !9206
@@ -1409,7 +1414,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRNtNtCs5
   br i1 %i.cp, label %.lr.ph102, label %._crit_edge, !dbg !9782
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cq = add nsw i64 %.sroa.02.1.lcssa, 1, !dbg !9874
+  %i.cq = add nuw nsw i64 %.sroa.02.1.lcssa, 1, !dbg !9874
     #dbg_value(i64 %i.cq, !9479, !DIExpression(), !9541)
     #dbg_value(i64 %.sroa.018.0, !9663, !DIExpression(), !9763)
   %i.cr = lshr i64 %.sroa.018.0, 1, !dbg !9875
@@ -1812,7 +1817,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRNtNtNtC
   br i1 %i.cp, label %.lr.ph106, label %._crit_edge, !dbg !10376
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cq = add nsw i64 %.sroa.02.1.lcssa, 1, !dbg !10471
+  %i.cq = add nuw nsw i64 %.sroa.02.1.lcssa, 1, !dbg !10471
     #dbg_value(i64 %i.cq, !10126, !DIExpression(), !10185)
     #dbg_value(i64 %.sroa.018.0, !10266, !DIExpression(), !10357)
   %i.cr = lshr i64 %.sroa.018.0, 1, !dbg !10472
@@ -2215,7 +2220,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRNtNtNtC
   br i1 %i.cp, label %.lr.ph106, label %._crit_edge, !dbg !10973
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cq = add nsw i64 %.sroa.02.1.lcssa, 1, !dbg !11068
+  %i.cq = add nuw nsw i64 %.sroa.02.1.lcssa, 1, !dbg !11068
     #dbg_value(i64 %i.cq, !10723, !DIExpression(), !10782)
     #dbg_value(i64 %.sroa.018.0, !10863, !DIExpression(), !10954)
   %i.cr = lshr i64 %.sroa.018.0, 1, !dbg !11069
@@ -2618,7 +2623,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRNtNtNtC
   br i1 %i.cp, label %.lr.ph106, label %._crit_edge, !dbg !11570
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.cq = add nsw i64 %.sroa.02.1.lcssa, 1, !dbg !11665
+  %i.cq = add nuw nsw i64 %.sroa.02.1.lcssa, 1, !dbg !11665
     #dbg_value(i64 %i.cq, !11320, !DIExpression(), !11379)
     #dbg_value(i64 %.sroa.018.0, !11460, !DIExpression(), !11551)
   %i.cr = lshr i64 %.sroa.018.0, 1, !dbg !11666
@@ -3021,7 +3026,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTRejNtNtC
   br i1 %i.dx, label %.lr.ph106, label %._crit_edge, !dbg !12342
 
 bb.y:                                             ; preds = %._crit_edge
-  %i.dy = add nsw i64 %.sroa.02.1.lcssa, 1, !dbg !12459
+  %i.dy = add nuw nsw i64 %.sroa.02.1.lcssa, 1, !dbg !12459
     #dbg_value(i64 %i.dy, !12005, !DIExpression(), !12067)
     #dbg_value(i64 %.sroa.018.0, !12223, !DIExpression(), !12323)
   %i.dz = lshr i64 %.sroa.018.0, 1, !dbg !12460

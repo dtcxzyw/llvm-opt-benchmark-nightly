@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fontc-rs/original/fea_rs-7e8d4fc46e030f62.fea_rs.95f468ebf2e10b87-cgu.08?download=true
+inline.NumInlined: 1325
+inline.NumDeleted: 760
 begin_hunk_0_@_RNvNvMNtNtNtCscScJTt9VrQp_6fea_rs7compile6tables4baseNtB4_15BaseAxisBuilder5build28get_dflt_and_lang_sys_minmax:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %.split.us.preheader.i.backedge
@@ -200,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden i48 @_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvXs0_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsNtNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gsub8builders18MultipleSubBuilderNtBW_13IterAaltPairs15iter_aalt_pairs0INtB7_5FnMutTTRNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16RINtNtCsgCecv3eZDcN_5alloc3vec3VecB3G_EEEE8call_mutB10_(ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef readonly align 2 captures(none) dereferenceable(2) %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %2) unnamed_addr #5 {
+define hidden range(i48 0, -65534) i48 @_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvXs0_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsNtNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gsub8builders18MultipleSubBuilderNtBW_13IterAaltPairs15iter_aalt_pairs0INtB7_5FnMutTTRNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16RINtNtCsgCecv3eZDcN_5alloc3vec3VecB3G_EEEE8call_mutB10_(ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef readonly align 2 captures(none) dereferenceable(2) %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %2) unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.val4 = load i64, ptr %i.a, align 8, !noundef !5
@@ -229,7 +231,7 @@ _RNCNvXs0_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsNtNtNtNtCs6WnK4nVnpEz_11write
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read, inaccessiblemem: write) uwtable
-define hidden i48 @_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvXs_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsNtNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gsub8builders18LigatureSubBuilderNtBV_13IterAaltPairs15iter_aalt_pairss_0INtB7_5FnMutTTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16RTINtNtCsgCecv3eZDcN_5alloc3vec3VecB3G_EB3G_EEEE8call_mutBZ_(ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %0, i16 noundef %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %2) unnamed_addr #6 {
+define hidden range(i48 0, -65534) i48 @_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvXs_NtNtCscScJTt9VrQp_6fea_rs7compile7lookupsNtNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gsub8builders18LigatureSubBuilderNtBV_13IterAaltPairs15iter_aalt_pairss_0INtB7_5FnMutTTNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16RTINtNtCsgCecv3eZDcN_5alloc3vec3VecB3G_EB3G_EEEE8call_mutBZ_(ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %0, i16 noundef %1, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %2) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.val = load i64, ptr %i.a, align 8, !noundef !5 ; 2 uses
@@ -632,7 +634,7 @@ bb.m:                                             ; preds = %bb.h
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
-define hidden i48 @_RNvXs_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree17dedup_sorted_iterINtB4_15DedupSortedIterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tINtNtNtBa_3vec9into_iter8IntoIterTB1t_tEEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #9 personality ptr @rust_eh_personality {
+define hidden range(i48 0, -65534) i48 @_RNvXs_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree17dedup_sorted_iterINtB4_15DedupSortedIterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16tINtNtNtBa_3vec9into_iter8IntoIterTB1t_tEEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCscScJTt9VrQp_6fea_rs(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #9 personality ptr @rust_eh_personality {
 .peel.begin:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34

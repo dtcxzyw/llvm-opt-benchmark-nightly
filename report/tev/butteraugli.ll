@@ -95,7 +95,7 @@ define hidden void @_ZN3jxl13ComputeKernelEf(ptr dead_on_unwind noalias nofree w
   %i.e = tail call noundef float @llvm.fabs.f32(float %1)
   %i.f = fmul float %i.e, 2.250000e+00
   %i.g = fptosi float %i.f to i32
-  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1) ; 4 uses
+  %.sroa.speculated = tail call i32 @llvm.umax.i32(i32 %i.g, i32 1) ; 4 uses
   %i.h = shl nuw nsw i32 %.sroa.speculated, 1
   %i.i = or disjoint i32 %i.h, 1
   %i.j = zext nneg i32 %i.i to i64                ; 2 uses
@@ -498,7 +498,7 @@ bb.a:
   %i.f = tail call noundef float @llvm.fabs.f32(float %1)
   %i.g = fmul float %i.f, 2.250000e+00
   %i.h = fptosi float %i.g to i32                 ; 2 uses
-  %.sroa.speculated.i = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1) ; 4 uses
+  %.sroa.speculated.i = tail call i32 @llvm.umax.i32(i32 %i.h, i32 1) ; 4 uses
   %i.i = shl nuw nsw i32 %.sroa.speculated.i, 1
   %i.j = or disjoint i32 %i.i, 1
   %i.k = zext nneg i32 %i.j to i64                ; 2 uses
@@ -901,7 +901,7 @@ declare i32 @llvm.smin.i32(i32, i32) #4
 declare void @llvm.experimental.noalias.scope.decl(metadata) #43
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
+declare i32 @llvm.umax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #4
@@ -917,6 +917,9 @@ declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4

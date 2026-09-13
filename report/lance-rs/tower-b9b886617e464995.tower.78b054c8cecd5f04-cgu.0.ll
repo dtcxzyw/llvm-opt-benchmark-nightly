@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/tower-b9b886617e464995.tower.78b054c8cecd5f04-cgu.0?download=true
+inline.NumInlined: 152
+inline.NumDeleted: 87
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvMNtNtCsamqgnMfIDNU_5tower6buffer5errorNtB2_12ServiceError3new:bb.a
 
 bb.c:                                             ; preds = %bb.b
@@ -200,11 +205,7 @@ bb.u:                                             ; preds = %bb.v
   %i.ad = udiv i32 %2, 10
   %i.ae = udiv i64 %i.ac, 10
   %i.af = trunc nuw nsw i64 %i.ae to i32
-  %i.ag = add nuw nsw i32 %i.ad, %i.af            ; 2 uses
-  %5 = icmp samesign ugt i32 %i.ag, 999999999     ; 2 uses
-  %.sroa.3.0.i.i = select i1 %5, i32 0, i32 %i.ag
-  %6 = zext i1 %5 to i64
-  %.sroa.0.0.i.i = add nuw nsw i64 %i.x, %6
+  %i.ag = add nuw nsw i32 %i.ad, %i.af
   %i.ah = extractvalue { i64, i32 } %i.ar, 1
   %i.ai = extractvalue { i64, i32 } %i.ar, 0
   store i32 0, ptr %0, align 8
@@ -223,9 +224,9 @@ bb.u:                                             ; preds = %bb.v
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 10, ptr %i.al, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store i64 %.sroa.0.0.i.i, ptr %i.am, align 8
+  store i64 %i.x, ptr %i.am, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i32 %.sroa.3.0.i.i, ptr %i.an, align 8
+  store i32 %i.ag, ptr %i.an, align 8
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 0, ptr %i.ao, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 64

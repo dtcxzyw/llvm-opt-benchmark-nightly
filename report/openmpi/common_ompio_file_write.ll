@@ -46,7 +46,7 @@ bb.a:
   %i.n = alloca ptr, align 8                      ; 9 uses
   %i.o = alloca ptr, align 8                      ; 6 uses
   %5 = alloca %struct.opal_convertor_t, align 8   ; 16 uses
-  %6 = alloca %struct.ompi_status_public_t, align 8 ; 4 uses
+  %6 = alloca %struct.ompi_status_public_t, align 8 ; 5 uses
   %i.p = alloca i32, align 4                      ; 4 uses
   %i.q = alloca i32, align 4                      ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -116,7 +116,7 @@ bb.f:                                             ; preds = %bb.c
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !40
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !42
-  %.not.i = icmp eq ptr %i.am, null               ; 8 uses
+  %.not.i = icmp eq ptr %i.am, null               ; 7 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 448
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !84
   %i.ap = call i32 %i.ao(ptr noundef nonnull @.str.4, i32 noundef 21) #8, !inline_history !79 ; 2 uses
@@ -194,7 +194,7 @@ opal_convertor_get_packed_size.exit.i:            ; preds = %bb.k, %opal_obj_run
   %.0101.i = phi i64 [ %i.bm, %opal_obj_run_constructors.exit.i ], [ %i.bv, %bb.k ] ; 3 uses
   %i.bw = icmp eq i32 %i.ap, 0
   %i.bx = select i1 %i.bw, i64 %.0101.i, i64 %i.aq
-  %i.by = call ptr @mca_common_ompio_alloc_buf(ptr noundef nonnull %0, i64 noundef %i.bx) #8 ; 9 uses
+  %i.by = call ptr @mca_common_ompio_alloc_buf(ptr noundef nonnull %0, i64 noundef %i.bx) #8 ; 11 uses
   %i.bz = icmp eq ptr %i.by, null
   br i1 %i.bz, label %bb.l, label %bb.m
 
@@ -220,50 +220,47 @@ bb.o:                                             ; preds = %bb.m
   %i.ce = uitofp i64 %i.aq to double
   %i.cf = fdiv double %i.cd, %i.ce
   %i.cg = call double @llvm.ceil.f64(double %i.cf)
-  %i.ch = fptosi double %i.cg to i32              ; 6 uses
-  br i1 %.not.i, label %.thread.i, label %bb.p
-
-.thread.i:                                        ; preds = %bb.o
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 232
-  %8 = load i32, ptr %7, align 8, !tbaa !67
-  store i32 %8, ptr %i.l, align 4, !tbaa !35
-  br label %9
+  %i.ch = fptosi double %i.cg to i32              ; 7 uses
+  br i1 %.not.i, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ci = call ptr @mca_common_ompio_alloc_buf(ptr noundef nonnull %0, i64 noundef %i.aq) #8 ; 3 uses
+  %i.ci = call ptr @mca_common_ompio_alloc_buf(ptr noundef nonnull %0, i64 noundef %i.aq) #8 ; 5 uses
   %i.cj = icmp eq ptr %i.ci, null
-  br i1 %i.cj, label %bb.q, label %bb.r
+  br i1 %i.cj, label %bb.q, label %.lr.ph.i.a
 
 bb.q:                                             ; preds = %bb.p
   call void (i32, ptr, ...) @opal_output(i32 noundef 1, ptr noundef nonnull @.str) #8
   call void @free(ptr noundef nonnull %i.ca) #8
   br label %mca_common_ompio_file_write_pipelined.exit
 
-bb.r:                                             ; preds = %bb.p
+bb.r:                                             ; preds = %bb.o
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.cl = load i32, ptr %i.ck, align 8, !tbaa !67
   store i32 %i.cl, ptr %i.l, align 4, !tbaa !35
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %.not150.i = icmp eq i32 %i.ch, 0
+  br i1 %.not150.i, label %.thread104.peel.i, label %bb.s
+
+.lr.ph.i.a:                                       ; preds = %bb.p
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 232
+  %11 = load i32, ptr %10, align 8, !tbaa !67
+  store i32 %11, ptr %i.l, align 4, !tbaa !35
   call void @mca_common_ompio_register_progress() #8
-  br label %9
+  %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %.not153.i = icmp eq i32 %i.ch, 0
+  br i1 %.not153.i, label %._crit_edge139.i, label %bb.s
 
-9:                                                ; preds = %bb.r, %.thread.i
-  %spec.select98.peel.i = phi ptr [ null, %.thread.i ], [ %i.by, %bb.r ]
-  %spec.select.peel.i = phi ptr [ %i.by, %.thread.i ], [ %i.ci, %bb.r ]
-  %.073103.i = phi ptr [ null, %.thread.i ], [ %i.ci, %bb.r ] ; 2 uses
-  %.not94127.i = icmp slt i32 %i.ch, 0
-  br i1 %.not94127.i, label %._crit_edge.i.a, label %.lr.ph.i.a
-
-.lr.ph.i.a:                                       ; preds = %9
-  %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 6 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 6 uses
-  %i.co = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %.not153.i = icmp eq i32 %i.ch, 0               ; 2 uses
-  br i1 %.not153.i, label %10, label %bb.s
-
-10:                                               ; preds = %.lr.ph.i.a
-  br i1 %.not.i, label %.thread104.peel.i, label %._crit_edge139.i
-
-bb.s:                                             ; preds = %.lr.ph.i.a
+bb.s:                                             ; preds = %.lr.ph.i.a, %bb.r
+  %12 = phi ptr [ %i.co, %.lr.ph.i.a ], [ %9, %bb.r ] ; 2 uses
+  %13 = phi ptr [ %i.cn, %.lr.ph.i.a ], [ %8, %bb.r ] ; 4 uses
+  %14 = phi ptr [ %i.cm, %.lr.ph.i.a ], [ %7, %bb.r ] ; 3 uses
+  %.073103167.i = phi ptr [ %i.ci, %.lr.ph.i.a ], [ null, %bb.r ] ; 3 uses
+  %spec.select.peel161.i = phi ptr [ %i.ci, %.lr.ph.i.a ], [ %i.by, %bb.r ] ; 2 uses
+  %spec.select98.peel157.i = phi ptr [ %i.by, %.lr.ph.i.a ], [ null, %bb.r ] ; 2 uses
   store ptr %i.by, ptr %i.ca, align 8, !tbaa !65
   store i64 %i.aq, ptr %i.cc, align 8, !tbaa !66
   store i32 1, ptr %i.h, align 4, !tbaa !35
@@ -272,8 +269,8 @@ bb.s:                                             ; preds = %.lr.ph.i.a
   store i64 0, ptr %i.i, align 8, !tbaa !37
   store i32 0, ptr %i.k, align 4, !tbaa !35
   %i.cq = load i64, ptr %i.m, align 8, !tbaa !37
-  %i.cr = call i32 @mca_common_ompio_build_io_array(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %i.ch, i64 noundef %i.aq, i64 noundef %i.cq, i32 poison, ptr noundef nonnull %i.ca, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.cm, ptr noundef nonnull %i.cn) ; 0 uses
-  %i.cs = load i32, ptr %i.cn, align 8, !tbaa !68
+  %i.cr = call i32 @mca_common_ompio_build_io_array(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %i.ch, i64 noundef %i.aq, i64 noundef %i.cq, i32 poison, ptr noundef nonnull %i.ca, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %14, ptr noundef nonnull %13) ; 0 uses
+  %i.cs = load i32, ptr %13, align 8, !tbaa !68
   %i.ct = icmp eq i32 %i.cs, 0
   br i1 %i.ct, label %._crit_edge.i.a, label %bb.t
 
@@ -287,12 +284,17 @@ bb.t:                                             ; preds = %bb.s
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !42
   %i.cx = load ptr, ptr %i.n, align 8, !tbaa !39
   %i.cy = call i64 %i.cw(ptr noundef nonnull %0, ptr noundef %i.cx) #8, !inline_history !79 ; 0 uses
-  %.pre.i.pre = load ptr, ptr %i.n, align 8, !tbaa !39
   br label %._crit_edge139.i
 
-._crit_edge139.i:                                 ; preds = %.thread107.peel.i, %10
-  %.pre.i.a = phi ptr [ %.pre.i.pre, %.thread107.peel.i ], [ null, %10 ]
-  store ptr %.pre.i.a, ptr %i.o, align 8, !tbaa !39
+._crit_edge139.i:                                 ; preds = %.thread107.peel.i, %.lr.ph.i.a
+  %15 = phi ptr [ %12, %.thread107.peel.i ], [ %i.co, %.lr.ph.i.a ]
+  %16 = phi ptr [ %13, %.thread107.peel.i ], [ %i.cn, %.lr.ph.i.a ]
+  %17 = phi ptr [ %14, %.thread107.peel.i ], [ %i.cm, %.lr.ph.i.a ]
+  %.073103165.i = phi ptr [ %.073103167.i, %.thread107.peel.i ], [ %i.ci, %.lr.ph.i.a ]
+  %spec.select.peel160.i = phi ptr [ %spec.select.peel161.i, %.thread107.peel.i ], [ %i.ci, %.lr.ph.i.a ]
+  %.pre.i.a = phi ptr [ %spec.select98.peel157.i, %.thread107.peel.i ], [ %i.by, %.lr.ph.i.a ]
+  %.pre.i = load ptr, ptr %i.n, align 8, !tbaa !39
+  store ptr %.pre.i, ptr %i.o, align 8, !tbaa !39
   br label %.thread104.peel.i
 
 bb.u:                                             ; preds = %bb.t
@@ -303,21 +305,28 @@ bb.u:                                             ; preds = %bb.t
   %i.dd = icmp sgt i64 %i.dc, -1
   br i1 %i.dd, label %.thread104.peel.i, label %.sink.split.i
 
-.thread104.peel.i:                                ; preds = %bb.u, %._crit_edge139.i, %10
-  %.484.peel.i = phi i64 [ 0, %._crit_edge139.i ], [ 0, %10 ], [ %i.dc, %bb.u ] ; 2 uses
-  store i32 0, ptr %i.cn, align 8, !tbaa !68
-  %i.de = load ptr, ptr %i.cm, align 8, !tbaa !69
+.thread104.peel.i:                                ; preds = %bb.u, %._crit_edge139.i, %bb.r
+  %18 = phi ptr [ %15, %._crit_edge139.i ], [ %12, %bb.u ], [ %9, %bb.r ]
+  %19 = phi ptr [ %16, %._crit_edge139.i ], [ %13, %bb.u ], [ %8, %bb.r ] ; 4 uses
+  %20 = phi ptr [ %17, %._crit_edge139.i ], [ %14, %bb.u ], [ %7, %bb.r ] ; 5 uses
+  %.073103164.i = phi ptr [ %.073103165.i, %._crit_edge139.i ], [ %.073103167.i, %bb.u ], [ null, %bb.r ] ; 4 uses
+  %spec.select.peel159.i = phi ptr [ %spec.select.peel160.i, %._crit_edge139.i ], [ %spec.select.peel161.i, %bb.u ], [ %i.by, %bb.r ]
+  %spec.select98.peel155.i = phi ptr [ %.pre.i.a, %._crit_edge139.i ], [ %spec.select98.peel157.i, %bb.u ], [ null, %bb.r ]
+  %.484.peel.i = phi i64 [ 0, %._crit_edge139.i ], [ %i.dc, %bb.u ], [ 0, %bb.r ] ; 2 uses
+  store i32 0, ptr %19, align 8, !tbaa !68
+  %i.de = load ptr, ptr %20, align 8, !tbaa !69
   call void @free(ptr noundef %i.de) #8
-  store ptr null, ptr %i.cm, align 8, !tbaa !69
-  br i1 %.not153.i, label %._crit_edge.i.a, label %.peel.next.i
+  store ptr null, ptr %20, align 8, !tbaa !69
+  %exitcond.peel.not.i = icmp eq i32 %i.ch, 0
+  br i1 %exitcond.peel.not.i, label %._crit_edge.i.a, label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %.thread104.peel.i, %bb.ab
-  %.1131.i = phi ptr [ %spec.select98.i, %bb.ab ], [ %spec.select98.peel.i, %.thread104.peel.i ] ; 2 uses
-  %.074130.i = phi ptr [ %spec.select.i, %bb.ab ], [ %spec.select.peel.i, %.thread104.peel.i ] ; 3 uses
+  %.1131.i = phi ptr [ %spec.select98.i, %bb.ab ], [ %spec.select98.peel155.i, %.thread104.peel.i ] ; 2 uses
+  %.074130.i = phi ptr [ %spec.select.i, %bb.ab ], [ %spec.select.peel159.i, %.thread104.peel.i ] ; 3 uses
   %.080129.i = phi i64 [ %.484.i, %bb.ab ], [ %.484.peel.i, %.thread104.peel.i ] ; 6 uses
   %.085128.i = phi i32 [ %i.ec, %bb.ab ], [ 1, %.thread104.peel.i ] ; 4 uses
-  %11 = icmp slt i32 %.085128.i, %i.ch
-  br i1 %11, label %bb.v, label %bb.y
+  %21 = icmp samesign ult i32 %.085128.i, %i.ch
+  br i1 %21, label %bb.v, label %bb.y
 
 bb.v:                                             ; preds = %.peel.next.i
   store ptr %.074130.i, ptr %i.ca, align 8, !tbaa !65
@@ -328,8 +337,8 @@ bb.v:                                             ; preds = %.peel.next.i
   store i64 0, ptr %i.i, align 8, !tbaa !37
   store i32 0, ptr %i.k, align 4, !tbaa !35
   %i.dg = load i64, ptr %i.m, align 8, !tbaa !37
-  %i.dh = call i32 @mca_common_ompio_build_io_array(ptr noundef nonnull %0, i32 noundef %.085128.i, i32 noundef %i.ch, i64 noundef %i.aq, i64 noundef %i.dg, i32 poison, ptr noundef nonnull %i.ca, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.cm, ptr noundef nonnull %i.cn) ; 0 uses
-  %i.di = load i32, ptr %i.cn, align 8, !tbaa !68
+  %i.dh = call i32 @mca_common_ompio_build_io_array(ptr noundef nonnull %0, i32 noundef %.085128.i, i32 noundef %i.ch, i64 noundef %i.aq, i64 noundef %i.dg, i32 poison, ptr noundef nonnull %i.ca, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %20, ptr noundef nonnull %19) ; 0 uses
+  %i.di = load i32, ptr %19, align 8, !tbaa !68
   %i.dj = icmp eq i32 %i.di, 0
   br i1 %i.dj, label %._crit_edge.i.a, label %bb.w
 
@@ -365,7 +374,7 @@ bb.z:                                             ; preds = %bb.y, %.thread107.i
   %i.dv = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_request_functions, i64 32), align 8, !tbaa !87
   %i.dw = call i32 %i.dv(ptr noundef nonnull %i.o, ptr noundef nonnull %6) #8, !inline_history !79 ; 2 uses
   %.not96.i = icmp eq i32 %i.dw, 0
-  %i.dx = load i64, ptr %i.co, align 8
+  %i.dx = load i64, ptr %18, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
   br i1 %.not96.i, label %bb.aa, label %.thread117.i
 
@@ -382,23 +391,24 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa, %bb.y, %.thread104.i
   %.484.i = phi i64 [ %i.dz, %bb.aa ], [ %.080129.i, %bb.y ], [ %i.du, %.thread104.i ] ; 2 uses
-  store i32 0, ptr %i.cn, align 8, !tbaa !68
-  %i.eb = load ptr, ptr %i.cm, align 8, !tbaa !69
+  store i32 0, ptr %19, align 8, !tbaa !68
+  %i.eb = load ptr, ptr %20, align 8, !tbaa !69
   call void @free(ptr noundef %i.eb) #8
-  store ptr null, ptr %i.cm, align 8, !tbaa !69
+  store ptr null, ptr %20, align 8, !tbaa !69
   %spec.select.i = select i1 %.not.i, ptr %.074130.i, ptr %.1131.i
   %spec.select98.i = select i1 %.not.i, ptr %.1131.i, ptr %.074130.i
   %i.ec = add nuw i32 %.085128.i, 1
   %exitcond.not.i = icmp eq i32 %.085128.i, %i.ch
   br i1 %exitcond.not.i, label %._crit_edge.i.a, label %.peel.next.i, !llvm.loop !81
 
-._crit_edge.i.a:                                  ; preds = %bb.ab, %bb.v, %.thread104.peel.i, %bb.s, %9
-  %.080.lcssa.i = phi i64 [ 0, %9 ], [ 0, %bb.s ], [ %.484.peel.i, %.thread104.peel.i ], [ %.080129.i, %bb.v ], [ %.484.i, %bb.ab ] ; 2 uses
+._crit_edge.i.a:                                  ; preds = %bb.ab, %bb.v, %.thread104.peel.i, %bb.s
+  %.073103166.i = phi ptr [ %.073103167.i, %bb.s ], [ %.073103164.i, %.thread104.peel.i ], [ %.073103164.i, %bb.v ], [ %.073103164.i, %bb.ab ]
+  %.080.lcssa.i = phi i64 [ 0, %bb.s ], [ %.484.peel.i, %.thread104.peel.i ], [ %.484.i, %bb.ab ], [ %.080129.i, %bb.v ] ; 2 uses
   call void @mca_common_ompio_release_buf(ptr noundef nonnull %0, ptr noundef nonnull %i.by) #8
   br i1 %.not.i, label %bb.ac, label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.x, %._crit_edge.i.a, %.thread117.i, %bb.u
-  %.sink.i = phi ptr [ %i.by, %bb.u ], [ %.073103.i, %._crit_edge.i.a ], [ %.073103.i, %.thread117.i ], [ %i.by, %bb.x ]
+  %.sink.i = phi ptr [ %i.by, %bb.u ], [ %.073103166.i, %._crit_edge.i.a ], [ %.073103164.i, %.thread117.i ], [ %i.by, %bb.x ]
   %.080124.ph.i = phi i64 [ 0, %bb.u ], [ %.080.lcssa.i, %._crit_edge.i.a ], [ %.080129.i, %.thread117.i ], [ %.080129.i, %bb.x ]
   %.4116.ph.i = phi i64 [ %i.dc, %bb.u ], [ 0, %._crit_edge.i.a ], [ %i.dy, %.thread117.i ], [ %i.ds, %bb.x ]
   call void @mca_common_ompio_release_buf(ptr noundef nonnull %0, ptr noundef %.sink.i) #8
@@ -473,8 +483,8 @@ bb.af:                                            ; preds = %bb.f
   %i.ey = load i32, ptr %i.ex, align 8, !tbaa !67
   store i32 %i.ey, ptr %i.g, align 4, !tbaa !35
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 352
-  %12 = icmp sgt i32 %i.ew, 0
-  br i1 %12, label %.lr.ph.i37, label %._crit_edge.i35
+  %.not43.i = icmp eq i32 %i.ew, 0
+  br i1 %.not43.i, label %._crit_edge.i35, label %.lr.ph.i37
 
 .lr.ph.i37:                                       ; preds = %bb.af
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 3 uses

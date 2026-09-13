@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nickel-rs/original/lsp_harness-e10ca737dc62e248.lsp_harness.17c7a790e090b353-cgu.0?download=true
+inline.NumInlined: 14236
+inline.NumDeleted: 7074
+loop-unroll.NumCompletelyUnrolled: 20
+loop-unroll.NumRuntimeUnrolled: 24
+loop-unroll.NumUnrolled: 46
 begin_hunk_0_@_ZN11lsp_harness11TestHarness11request_dyn17hd03fa646217f1f01E:bb.a
   %i.bcp = phi i64 [ %i.bcm, %.noexc11.i.i.i.i.i230 ], [ %.pre.i.i.i.i.i.i.i5.i.i.i.i.i.i.i.i.i379, %.noexc12.i.i.i.i.i378 ] ; 3 uses
   %i.bcq = icmp sgt i64 %i.bcp, -1
@@ -200,9 +205,9 @@ bb.qu:                                            ; preds = %.noexc18.i.i.i.i.i3
   %i.bey = icmp sgt <16 x i8> %.val3.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, splat (i8 -1)
   %i.bez = bitcast <16 x i1> %i.bey to i16
   %i.bfa = getelementptr inbounds nuw i8, ptr %i.bex, i64 16
-  %2 = load ptr, ptr %i.ex, align 8, !alias.scope !13842, !noalias !13843, !nonnull !28, !align !35, !noundef !28 ; 4 uses
   %.promoted.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.ber, align 8, !alias.scope !13842, !noalias !13843
   %i.bfb = icmp eq i8 %.promoted.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1
+  %2 = load ptr, ptr %i.ex, align 8, !alias.scope !13842, !noalias !13843, !nonnull !28, !align !35, !noundef !28 ; 4 uses
   br label %bb.qv
 
 bb.qv:                                            ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5758dfdec1c116c4E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -283,7 +288,6 @@ bb.qx:                                            ; preds = %bb.qw
 
 "_ZN88_$LT$serde_json..ser..Compound$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..SerializeMap$GT$13serialize_key17haec57e87a3692354E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %._crit_edge20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.val10.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %.val.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %._crit_edge20.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.val10.pre.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %"_ZN3std2io5impls58_$LT$impl$u20$std..io..Write$u20$for$u20$$RF$mut$u20$W$GT$9write_all17h4ab301283a333dfdE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i" ]
-  store i8 2, ptr %i.ber, align 8, !alias.scope !13842, !noalias !13843
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i) ]
   invoke fastcc void @"_ZN100_$LT$$RF$mut$u20$serde_json..ser..Serializer$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_str17hf58c26c162f17e29E"(ptr nonnull %.val10.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val9.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 noundef %.val10.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i)
           to label %.noexc22.i.i.i.i.i276 unwind label %.loopexit.i.i.i.i.i
@@ -543,9 +547,13 @@ bb.rl:                                            ; preds = %_ZN10serde_json3ser
 
 "_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5758dfdec1c116c4E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %bb.rl, %"_ZN100_$LT$$RF$mut$u20$serde_json..ser..Serializer$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_i3217h726c845337975a7aE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %"_ZN100_$LT$$RF$mut$u20$serde_json..ser..Serializer$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..Serializer$GT$14serialize_bool17h774529df6e53759aE.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
   %i.bjx = icmp eq i64 %i.bfq, 0
-  br i1 %i.bjx, label %_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.qv
+  br i1 %i.bjx, label %_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.qv
 
-_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5758dfdec1c116c4E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i", %.noexc20.i.i.i.i.i275
+_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %"_ZN4core4iter6traits8iterator8Iterator12try_for_each4call28_$u7b$$u7b$closure$u7d$$u7d$17h5758dfdec1c116c4E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
+  store i8 2, ptr %i.ber, align 8, !noalias !13820
+  br label %_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+
+_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN10serde_core3ser10Serializer11collect_map17h17a3b781edd5c732E.exit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.noexc20.i.i.i.i.i275
   %i.bjy = getelementptr inbounds nuw i8, ptr %i.fl, i64 164
   %i.bjz = load i8, ptr %i.bjy, align 4, !range !42, !alias.scope !13833, !noalias !13834, !noundef !28 ; 2 uses
   %.not23.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i8 %i.bjz, 2
@@ -948,7 +956,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h1b5d419680d866d1E.exit: ; pred
   br i1 %i.fh, label %bb.q, label %._crit_edge
 
 bb.aj:                                            ; preds = %._crit_edge
-  %i.fi = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fi = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fj = lshr i64 %.sroa.023.0, 1
   %i.fk = add i64 %i.fj, %.sroa.09.0
   br label %bb.f
@@ -1351,7 +1359,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hbc81b237dc450025E.exit: ; pred
   br i1 %i.en, label %bb.r, label %._crit_edge
 
 bb.ak:                                            ; preds = %._crit_edge
-  %i.eo = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eo = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ep = lshr i64 %.sroa.023.0, 1
   %i.eq = add i64 %i.ep, %.sroa.09.0
   br label %bb.f
@@ -1754,7 +1762,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hda4797fb765c0207E.exit: ; pred
   br i1 %i.en, label %bb.r, label %._crit_edge
 
 bb.ak:                                            ; preds = %._crit_edge
-  %i.eo = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.eo = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ep = lshr i64 %.sroa.023.0, 1
   %i.eq = add i64 %i.ep, %.sroa.09.0
   br label %bb.f

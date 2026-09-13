@@ -44,7 +44,7 @@ bb.a:
   %i.m = alloca ptr, align 8                      ; 9 uses
   %i.n = alloca ptr, align 8                      ; 6 uses
   %5 = alloca %struct.opal_convertor_t, align 8   ; 19 uses
-  %6 = alloca %struct.ompi_status_public_t, align 8 ; 4 uses
+  %6 = alloca %struct.ompi_status_public_t, align 8 ; 5 uses
   %i.o = alloca i64, align 8                      ; 8 uses
   %i.p = alloca i32, align 4                      ; 4 uses
   %i.q = alloca i32, align 4                      ; 4 uses
@@ -113,7 +113,7 @@ bb.f:                                             ; preds = %bb.c
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !41
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !43
-  %.not144.i = icmp eq ptr %i.am, null            ; 9 uses
+  %.not144.i = icmp eq ptr %i.am, null            ; 8 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 448
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !95
   %i.ap = call i32 %i.ao(ptr noundef nonnull @.str.3, i32 noundef 21) #7, !inline_history !90 ; 2 uses
@@ -190,7 +190,7 @@ opal_convertor_get_packed_size.exit.i:            ; preds = %bb.k, %opal_obj_run
   %.0125.i = phi i64 [ %i.bl, %opal_obj_run_constructors.exit.i ], [ %i.bu, %bb.k ] ; 5 uses
   %i.bv = icmp eq i32 %i.ap, 0
   %i.bw = select i1 %i.bv, i64 %.0125.i, i64 %i.aq
-  %i.bx = call ptr @mca_common_ompio_alloc_buf(ptr noundef nonnull %0, i64 noundef %i.bw) #7 ; 6 uses
+  %i.bx = call ptr @mca_common_ompio_alloc_buf(ptr noundef nonnull %0, i64 noundef %i.bw) #7 ; 7 uses
   %i.by = icmp eq ptr %i.bx, null
   br i1 %i.by, label %bb.l, label %bb.m
 
@@ -216,60 +216,60 @@ bb.o:                                             ; preds = %bb.m
   %i.cd = uitofp i64 %i.aq to double
   %i.ce = fdiv double %i.cc, %i.cd
   %i.cf = call double @llvm.ceil.f64(double %i.ce)
-  %i.cg = fptosi double %i.cf to i32              ; 7 uses
-  br i1 %.not144.i, label %7, label %bb.p
+  %i.cg = fptosi double %i.cf to i32              ; 8 uses
+  br i1 %.not144.i, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ch = call ptr @mca_common_ompio_alloc_buf(ptr noundef nonnull %0, i64 noundef %i.aq) #7 ; 3 uses
+  %i.ch = call ptr @mca_common_ompio_alloc_buf(ptr noundef nonnull %0, i64 noundef %i.aq) #7 ; 5 uses
   %i.ci = icmp eq ptr %i.ch, null
-  br i1 %i.ci, label %bb.q, label %bb.r
+  br i1 %i.ci, label %bb.q, label %.lr.ph.i.a
 
 bb.q:                                             ; preds = %bb.p
   call void (i32, ptr, ...) @opal_output(i32 noundef 1, ptr noundef nonnull @.str) #7
   call void @free(ptr noundef nonnull %i.bz) #7
   br label %mca_common_ompio_file_read_pipelined.exit
 
-7:                                                ; preds = %bb.o
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 232
-  %9 = load i32, ptr %8, align 8, !tbaa !68
-  store i32 %9, ptr %i.l, align 4, !tbaa !36
-  br label %10
-
-bb.r:                                             ; preds = %bb.p
+bb.r:                                             ; preds = %bb.o
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.ck = load i32, ptr %i.cj, align 8, !tbaa !68
   store i32 %i.ck, ptr %i.l, align 4, !tbaa !36
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %.not221.i = icmp eq i32 %i.cg, 0
+  br i1 %.not221.i, label %.thread140.peel.thread.i, label %bb.s
+
+.lr.ph.i.a:                                       ; preds = %bb.p
+  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 232
+  %10 = load i32, ptr %i.cl, align 8, !tbaa !68
+  store i32 %10, ptr %i.l, align 4, !tbaa !36
   call void @mca_common_ompio_register_progress() #7
-  br label %10
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %.not191.i = icmp eq i32 %i.cg, 0
+  br i1 %.not191.i, label %._crit_edge164.i, label %bb.s
 
-10:                                               ; preds = %bb.r, %7
-  %.093130.i = phi ptr [ %i.ch, %bb.r ], [ %i.bx, %7 ] ; 2 uses
-  %.095128.i = phi ptr [ %i.ch, %bb.r ], [ null, %7 ]
-  %.not115154.i = icmp slt i32 %i.cg, 0
-  br i1 %.not115154.i, label %.split.loop.exit145.i, label %.lr.ph.i.a
-
-.lr.ph.i.a:                                       ; preds = %10
-  %11 = add nsw i32 %i.cg, -1                     ; 2 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 6 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 6 uses
-  %13 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %14 = zext i32 %11 to i64
-  %15 = zext nneg i32 %i.cg to i64
-  %16 = add nuw i32 %i.cg, 1
-  %wide.trip.count.i = zext i32 %16 to i64
-  %.not191.i = icmp eq i32 %i.cg, 0               ; 2 uses
-  br i1 %.not191.i, label %17, label %bb.s
-
-bb.s:                                             ; preds = %.lr.ph.i.a
+bb.s:                                             ; preds = %.lr.ph.i.a, %bb.r
+  %14 = phi ptr [ %13, %.lr.ph.i.a ], [ %9, %bb.r ] ; 2 uses
+  %15 = phi ptr [ %12, %.lr.ph.i.a ], [ %8, %bb.r ] ; 4 uses
+  %16 = phi ptr [ %11, %.lr.ph.i.a ], [ %7, %bb.r ] ; 3 uses
+  %.095128186.i = phi ptr [ %i.ch, %.lr.ph.i.a ], [ null, %bb.r ] ; 4 uses
+  %.093130180.i = phi ptr [ %i.ch, %.lr.ph.i.a ], [ %i.bx, %bb.r ] ; 3 uses
+  %17 = add nsw i32 %i.cg, -1                     ; 2 uses
+  %18 = zext i32 %17 to i64                       ; 2 uses
+  %19 = zext nneg i32 %i.cg to i64                ; 2 uses
+  %wide.trip.count190.in.i = add nuw i32 %i.cg, 1
+  %wide.trip.count190.i = zext i32 %wide.trip.count190.in.i to i64 ; 2 uses
   store ptr %i.bx, ptr %i.bz, align 8, !tbaa !66
   store i64 %i.aq, ptr %i.cb, align 8, !tbaa !67
-  %i.cm = icmp eq i32 %11, 0
+  %i.cm = icmp eq i32 %17, 0
   %i.cn = select i1 %i.cm, i64 %.0125.i, i64 %i.aq ; 4 uses
   store i32 0, ptr %i.k, align 4, !tbaa !36
   store i64 0, ptr %i.j, align 8, !tbaa !38
   store i64 0, ptr %i.h, align 8, !tbaa !38
-  %i.co = call i32 @mca_common_ompio_build_io_array(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %i.cg, i64 noundef %i.aq, i64 noundef %i.cn, i32 noundef 1, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.h, ptr noundef nonnull %i.j, ptr noundef nonnull %i.cl, ptr noundef nonnull %12) #7 ; 0 uses
-  %i.cp = load i32, ptr %12, align 8, !tbaa !69
+  %i.co = call i32 @mca_common_ompio_build_io_array(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %i.cg, i64 noundef %i.aq, i64 noundef %i.cn, i32 noundef 1, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.h, ptr noundef nonnull %i.j, ptr noundef nonnull %16, ptr noundef nonnull %15) #7 ; 0 uses
+  %i.cp = load i32, ptr %15, align 8, !tbaa !69
   %i.cq = icmp eq i32 %i.cp, 0
   br i1 %i.cq, label %.split.loop.exit145.loopexit.i, label %bb.t
 
@@ -283,7 +283,6 @@ bb.t:                                             ; preds = %bb.s
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !43
   %i.cu = load ptr, ptr %i.m, align 8, !tbaa !40
   %i.cv = call i64 %i.ct(ptr noundef nonnull %0, ptr noundef %i.cu) #7, !inline_history !90 ; 0 uses
-  %.pre.i.pre = load ptr, ptr %i.m, align 8, !tbaa !40
   br label %._crit_edge164.i
 
 bb.u:                                             ; preds = %bb.t
@@ -294,46 +293,60 @@ bb.u:                                             ; preds = %bb.t
   %i.da = icmp sgt i64 %i.cz, -1
   br i1 %i.da, label %.thread140.peel.i, label %.split.loop.exit145.loopexit.i
 
-17:                                               ; preds = %.lr.ph.i.a
-  br i1 %.not144.i, label %.thread140.peel.thread.i, label %._crit_edge164.i
-
-._crit_edge164.i:                                 ; preds = %17, %.thread132.peel.i
-  %.pre.i.a = phi ptr [ %.pre.i.pre, %.thread132.peel.i ], [ null, %17 ]
-  %.1107137.peel.i = phi i64 [ %i.cn, %.thread132.peel.i ], [ 0, %17 ]
-  store ptr %.pre.i.a, ptr %i.n, align 8, !tbaa !40
+._crit_edge164.i:                                 ; preds = %.thread132.peel.i, %.lr.ph.i.a
+  %wide.trip.count187.i = phi i64 [ %wide.trip.count190.i, %.thread132.peel.i ], [ 1, %.lr.ph.i.a ]
+  %20 = phi i64 [ %19, %.thread132.peel.i ], [ 0, %.lr.ph.i.a ]
+  %21 = phi i64 [ %18, %.thread132.peel.i ], [ 4294967295, %.lr.ph.i.a ]
+  %22 = phi ptr [ %14, %.thread132.peel.i ], [ %13, %.lr.ph.i.a ]
+  %23 = phi ptr [ %15, %.thread132.peel.i ], [ %12, %.lr.ph.i.a ]
+  %24 = phi ptr [ %16, %.thread132.peel.i ], [ %11, %.lr.ph.i.a ]
+  %.095128181.i = phi ptr [ %.095128186.i, %.thread132.peel.i ], [ %i.ch, %.lr.ph.i.a ]
+  %.pre.i.a = phi ptr [ %.093130180.i, %.thread132.peel.i ], [ %i.ch, %.lr.ph.i.a ]
+  %.1107137.peel.i = phi i64 [ %i.cn, %.thread132.peel.i ], [ 0, %.lr.ph.i.a ]
+  %.pre.i = load ptr, ptr %i.m, align 8, !tbaa !40
+  store ptr %.pre.i, ptr %i.n, align 8, !tbaa !40
   br label %.thread140.peel.thread.i
 
 .thread140.peel.i:                                ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #7
   store i64 0, ptr %i.o, align 8, !tbaa !38
-  store ptr %.093130.i, ptr %i.bz, align 8, !tbaa !66
+  store ptr %.093130180.i, ptr %i.bz, align 8, !tbaa !66
   store i64 %i.cn, ptr %i.cb, align 8, !tbaa !67
   %i.db = call i32 @opal_convertor_unpack(ptr noundef nonnull %5, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.i, ptr noundef nonnull %i.o) #7 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #7
   br label %.thread140.peel.thread.i
 
-.thread140.peel.thread.i:                         ; preds = %.thread140.peel.i, %._crit_edge164.i, %17
-  %.4103.peel181.i = phi i64 [ 0, %._crit_edge164.i ], [ %i.cz, %.thread140.peel.i ], [ 0, %17 ] ; 2 uses
-  %.1107136.peel180.i = phi i64 [ %.1107137.peel.i, %._crit_edge164.i ], [ %i.cn, %.thread140.peel.i ], [ 0, %17 ]
-  store i32 0, ptr %12, align 8, !tbaa !69
-  %i.dc = load ptr, ptr %i.cl, align 8, !tbaa !70
+.thread140.peel.thread.i:                         ; preds = %.thread140.peel.i, %._crit_edge164.i, %bb.r
+  %.4103.peel181.i = phi i64 [ 0, %bb.r ], [ %i.cz, %.thread140.peel.i ], [ 0, %._crit_edge164.i ] ; 2 uses
+  %.1107136.peel208.i = phi i64 [ 0, %bb.r ], [ %i.cn, %.thread140.peel.i ], [ %.1107137.peel.i, %._crit_edge164.i ]
+  %.093130178207.i = phi ptr [ %i.bx, %bb.r ], [ %.093130180.i, %.thread140.peel.i ], [ %.pre.i.a, %._crit_edge164.i ]
+  %.095128184206.i = phi ptr [ null, %bb.r ], [ %.095128186.i, %.thread140.peel.i ], [ %.095128181.i, %._crit_edge164.i ] ; 5 uses
+  %25 = phi ptr [ %7, %bb.r ], [ %16, %.thread140.peel.i ], [ %24, %._crit_edge164.i ] ; 5 uses
+  %26 = phi ptr [ %8, %bb.r ], [ %15, %.thread140.peel.i ], [ %23, %._crit_edge164.i ] ; 4 uses
+  %27 = phi ptr [ %9, %bb.r ], [ %14, %.thread140.peel.i ], [ %22, %._crit_edge164.i ]
+  %28 = phi i64 [ 4294967295, %bb.r ], [ %18, %.thread140.peel.i ], [ %21, %._crit_edge164.i ]
+  %29 = phi i64 [ 0, %bb.r ], [ %19, %.thread140.peel.i ], [ %20, %._crit_edge164.i ]
+  %.1107136.peel180.i = phi i64 [ 1, %bb.r ], [ %wide.trip.count190.i, %.thread140.peel.i ], [ %wide.trip.count187.i, %._crit_edge164.i ]
+  store i32 0, ptr %26, align 8, !tbaa !69
+  %i.dc = load ptr, ptr %25, align 8, !tbaa !70
   call void @free(ptr noundef %i.dc) #7
-  store ptr null, ptr %i.cl, align 8, !tbaa !70
-  br i1 %.not191.i, label %.split.loop.exit145.loopexit.i, label %.peel.next.i
+  store ptr null, ptr %25, align 8, !tbaa !70
+  %exitcond.peel.not.i = icmp eq i32 %i.cg, 0
+  br i1 %exitcond.peel.not.i, label %.split.loop.exit145.loopexit.i, label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %.thread140.peel.thread.i, %bb.ab
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.ab ], [ 1, %.thread140.peel.thread.i ] ; 5 uses
-  %.092159.i = phi ptr [ %spec.select120.i, %bb.ab ], [ %.093130.i, %.thread140.peel.thread.i ] ; 3 uses
+  %.092159.i = phi ptr [ %spec.select120.i, %bb.ab ], [ %.093130178207.i, %.thread140.peel.thread.i ] ; 3 uses
   %.194158.i = phi ptr [ %spec.select.i, %bb.ab ], [ %i.bx, %.thread140.peel.thread.i ] ; 3 uses
   %.099157.i = phi i64 [ %.4103188.i, %bb.ab ], [ %.4103.peel181.i, %.thread140.peel.thread.i ] ; 5 uses
-  %.0105155.i = phi i64 [ %.1107136186.i, %bb.ab ], [ %.1107136.peel180.i, %.thread140.peel.thread.i ] ; 3 uses
-  %.not192.i = icmp samesign ult i64 %indvars.iv.i, %15
+  %.0105155.i = phi i64 [ %.1107136186.i, %bb.ab ], [ %.1107136.peel208.i, %.thread140.peel.thread.i ] ; 3 uses
+  %.not192.i = icmp samesign ult i64 %indvars.iv.i, %29
   br i1 %.not192.i, label %bb.v, label %bb.y
 
 bb.v:                                             ; preds = %.peel.next.i
   store ptr %.092159.i, ptr %i.bz, align 8, !tbaa !66
   store i64 %i.aq, ptr %i.cb, align 8, !tbaa !67
-  %i.dd = icmp eq i64 %indvars.iv.i, %14
+  %i.dd = icmp eq i64 %indvars.iv.i, %28
   %i.de = mul nsw i64 %indvars.iv.i, %i.aq
   %i.df = sub i64 %.0125.i, %i.de
   %i.dg = select i1 %i.dd, i64 %i.df, i64 %i.aq   ; 3 uses
@@ -342,8 +355,8 @@ bb.v:                                             ; preds = %.peel.next.i
   store i64 0, ptr %i.h, align 8, !tbaa !38
   %i.dh = load i32, ptr %i.i, align 4, !tbaa !36
   %i.di = trunc nuw nsw i64 %indvars.iv.i to i32
-  %i.dj = call i32 @mca_common_ompio_build_io_array(ptr noundef nonnull %0, i32 noundef %i.di, i32 noundef %i.cg, i64 noundef %i.aq, i64 noundef %i.dg, i32 noundef %i.dh, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.h, ptr noundef nonnull %i.j, ptr noundef nonnull %i.cl, ptr noundef nonnull %12) #7 ; 0 uses
-  %i.dk = load i32, ptr %12, align 8, !tbaa !69
+  %i.dj = call i32 @mca_common_ompio_build_io_array(ptr noundef nonnull %0, i32 noundef %i.di, i32 noundef %i.cg, i64 noundef %i.aq, i64 noundef %i.dg, i32 noundef %i.dh, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.h, ptr noundef nonnull %i.j, ptr noundef nonnull %25, ptr noundef nonnull %26) #7 ; 0 uses
+  %i.dk = load i32, ptr %26, align 8, !tbaa !69
   %i.dl = icmp eq i32 %i.dk, 0
   br i1 %i.dl, label %.split.loop.exit145.loopexit.i, label %bb.w
 
@@ -376,7 +389,7 @@ bb.z:                                             ; preds = %bb.y, %.thread132.i
   %i.dw = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_request_functions, i64 32), align 8, !tbaa !98
   %i.dx = call i32 %i.dw(ptr noundef nonnull %i.n, ptr noundef nonnull %6) #7, !inline_history !90 ; 2 uses
   %.not117.i = icmp eq i32 %i.dx, 0
-  %i.dy = load i64, ptr %13, align 8
+  %i.dy = load i64, ptr %27, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
   br i1 %.not117.i, label %bb.aa, label %.split.loop.exit145.i
 
@@ -396,31 +409,33 @@ bb.aa:                                            ; preds = %bb.z
   store i64 %i.ea, ptr %i.cb, align 8, !tbaa !67
   %i.eb = call i32 @opal_convertor_unpack(ptr noundef nonnull %5, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.i, ptr noundef nonnull %i.o) #7 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #7
-  %.pre = load ptr, ptr %i.cl, align 8, !tbaa !70
+  %.pre = load ptr, ptr %25, align 8, !tbaa !70
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.y, %.thread.i
   %i.ec = phi ptr [ %.pre, %.thread.i ], [ null, %bb.y ]
   %.4103188.i = phi i64 [ %.4103187.i, %.thread.i ], [ %.099157.i, %bb.y ] ; 2 uses
   %.1107136186.i = phi i64 [ %.1107136185.i, %.thread.i ], [ %.0105155.i, %bb.y ]
-  store i32 0, ptr %12, align 8, !tbaa !69
+  store i32 0, ptr %26, align 8, !tbaa !69
   call void @free(ptr noundef %i.ec) #7
-  store ptr null, ptr %i.cl, align 8, !tbaa !70
+  store ptr null, ptr %25, align 8, !tbaa !70
   %spec.select.i = select i1 %.not144.i, ptr %.194158.i, ptr %.092159.i
   %spec.select120.i = select i1 %.not144.i, ptr %.092159.i, ptr %.194158.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %.1107136.peel180.i
   br i1 %exitcond.not.i, label %.split.loop.exit145.loopexit.i, label %.peel.next.i, !llvm.loop !92
 
 .split.loop.exit145.loopexit.i:                   ; preds = %bb.ab, %bb.x, %bb.v, %.thread140.peel.thread.i, %bb.u, %bb.s
-  %.099.lcssa.ph.i = phi i64 [ 0, %bb.s ], [ 0, %bb.u ], [ %.4103.peel181.i, %.thread140.peel.thread.i ], [ %.099157.i, %bb.v ], [ %.4103188.i, %bb.ab ], [ %.099157.i, %bb.x ]
-  %.4.ph.i = phi i64 [ 0, %bb.s ], [ %i.cz, %bb.u ], [ 0, %.thread140.peel.thread.i ], [ 0, %bb.v ], [ 0, %bb.ab ], [ %i.du, %bb.x ]
+  %.095128183.i = phi ptr [ %.095128186.i, %bb.s ], [ %.095128186.i, %bb.u ], [ %.095128184206.i, %.thread140.peel.thread.i ], [ %.095128184206.i, %bb.v ], [ %.095128184206.i, %bb.x ], [ %.095128184206.i, %bb.ab ]
+  %.099.lcssa.ph.i = phi i64 [ 0, %bb.s ], [ 0, %bb.u ], [ %.4103.peel181.i, %.thread140.peel.thread.i ], [ %.4103188.i, %bb.ab ], [ %.099157.i, %bb.x ], [ %.099157.i, %bb.v ]
+  %.4.ph.i = phi i64 [ 0, %bb.s ], [ %i.cz, %bb.u ], [ 0, %.thread140.peel.thread.i ], [ 0, %bb.ab ], [ %i.du, %bb.x ], [ 0, %bb.v ]
   %i.ed = trunc i64 %.4.ph.i to i32
   br label %.split.loop.exit145.i
 
-.split.loop.exit145.i:                            ; preds = %bb.z, %.split.loop.exit145.loopexit.i, %10
-  %.099.lcssa.i = phi i64 [ 0, %10 ], [ %.099.lcssa.ph.i, %.split.loop.exit145.loopexit.i ], [ %.099157.i, %bb.z ]
-  %.4.i = phi i32 [ 0, %10 ], [ %i.ed, %.split.loop.exit145.loopexit.i ], [ %i.dx, %bb.z ] ; 2 uses
+.split.loop.exit145.i:                            ; preds = %bb.z, %.split.loop.exit145.loopexit.i
+  %.095128182.i = phi ptr [ %.095128183.i, %.split.loop.exit145.loopexit.i ], [ %.095128184206.i, %bb.z ]
+  %.099.lcssa.i = phi i64 [ %.099.lcssa.ph.i, %.split.loop.exit145.loopexit.i ], [ %.099157.i, %bb.z ]
+  %.4.i = phi i32 [ %i.ed, %.split.loop.exit145.loopexit.i ], [ %i.dx, %bb.z ] ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %5, i64 64 ; 2 uses
   %i.ef = load i32, ptr %i.ee, align 8, !tbaa !71
   %i.eg = icmp ugt i32 %i.ef, 5
@@ -445,7 +460,7 @@ opal_convertor_cleanup.exit.i:                    ; preds = %bb.ac, %.split.loop
   br i1 %.not144.i, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %opal_convertor_cleanup.exit.i
-  call void @mca_common_ompio_release_buf(ptr noundef nonnull %0, ptr noundef %.095128.i) #7
+  call void @mca_common_ompio_release_buf(ptr noundef nonnull %0, ptr noundef %.095128182.i) #7
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %opal_convertor_cleanup.exit.i
@@ -501,8 +516,8 @@ bb.ag:                                            ; preds = %bb.f
   %i.fb = load i32, ptr %i.fa, align 8, !tbaa !68
   store i32 %i.fb, ptr %i.g, align 4, !tbaa !36
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 352
-  %18 = icmp sgt i32 %i.ez, 0
-  br i1 %18, label %.lr.ph.i33, label %._crit_edge.i
+  %.not43.i = icmp eq i32 %i.ez, 0
+  br i1 %.not43.i, label %._crit_edge.i, label %.lr.ph.i33
 
 .lr.ph.i33:                                       ; preds = %bb.ag
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 3 uses

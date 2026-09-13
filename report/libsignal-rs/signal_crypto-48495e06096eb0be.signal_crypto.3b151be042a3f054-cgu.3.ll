@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/signal_crypto-48495e06096eb0be.signal_crypto.3b151be042a3f054-cgu.3?download=true
+inline.NumInlined: 175
+inline.NumDeleted: 98
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 24
 begin_hunk_0_@_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs8i5epPvXSLv_3cbc7encrypt9EncryptorNtNtCs8pp35hPiiF8_3aes10autodetect6Aes256EECs54uEYnqmHDA_13signal_crypto:bb.a
   store ptr %i.w, ptr %i.a, align 8, !noalias !58
   br label %bb.g
@@ -200,7 +204,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13
 bb.b:                                             ; preds = %bb.r
   unreachable
 
-bb.c:                                             ; preds = %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs54uEYnqmHDA_13signal_crypto.exit, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit.i.lr.ph
+bb.c:                                             ; preds = %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit.i.lr.ph, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs54uEYnqmHDA_13signal_crypto.exit
   %i.q = phi i1 [ false, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit.i.lr.ph ], [ true, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs54uEYnqmHDA_13signal_crypto.exit ]
   %.sroa.0.094 = phi ptr [ %3, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit.i.lr.ph ], [ %i.r, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs54uEYnqmHDA_13signal_crypto.exit ] ; 2 uses
   %.sroa.5.093 = phi i64 [ %4, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit.i.lr.ph ], [ %i.s, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs54uEYnqmHDA_13signal_crypto.exit ] ; 2 uses

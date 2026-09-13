@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/libsignal_protocol-78e79be79537878f.libsignal_protocol.3431899de14c0db4-cgu.00?download=true
+inline.NumInlined: 366
+inline.NumDeleted: 171
+loop-unroll.NumCompletelyUnrolled: 24
+loop-unroll.NumUnrolled: 31
 begin_hunk_0_@_RNvMs1_NtCs4tP8yUXWbFU_18libsignal_protocol11fingerprintNtB5_11Fingerprint3new:bb.a
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !900
   invoke void @_RNvNtCs6i54tJFfzR_5alloc7raw_vec12handle_error(i64 noundef %i.ap, i64 %i.ar) #19
@@ -200,7 +204,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13
 bb.b:                                             ; preds = %bb.r
   unreachable
 
-bb.c:                                             ; preds = %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs4tP8yUXWbFU_18libsignal_protocol.exit, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4tP8yUXWbFU_18libsignal_protocol.exit.i.lr.ph
+bb.c:                                             ; preds = %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4tP8yUXWbFU_18libsignal_protocol.exit.i.lr.ph, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs4tP8yUXWbFU_18libsignal_protocol.exit
   %i.q = phi i1 [ false, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4tP8yUXWbFU_18libsignal_protocol.exit.i.lr.ph ], [ true, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs4tP8yUXWbFU_18libsignal_protocol.exit ]
   %.sroa.0.094 = phi ptr [ %3, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4tP8yUXWbFU_18libsignal_protocol.exit.i.lr.ph ], [ %i.r, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs4tP8yUXWbFU_18libsignal_protocol.exit ] ; 2 uses
   %.sroa.5.093 = phi i64 [ %4, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4tP8yUXWbFU_18libsignal_protocol.exit.i.lr.ph ], [ %i.s, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCs4tP8yUXWbFU_18libsignal_protocol.exit ] ; 2 uses

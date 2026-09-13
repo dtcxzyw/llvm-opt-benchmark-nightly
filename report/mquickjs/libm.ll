@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mquickjs/original/libm?download=true
+inline.NumInlined: 96
+inline.NumDeleted: 22
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@js_trunc
 define dso_local double @js_trunc(double noundef %0) local_unnamed_addr #0 {
 bb.a:
@@ -200,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.k = icmp samesign ult i32 %i.f, 1073928572   ; 2 uses
   %i.l = tail call double @llvm.fmuladd.f64(double %i.j, double f0x3FE45F306DC9C883, double 5.000000e-01)
   %i.m = fptosi double %i.l to i32                ; 2 uses
-  %2 = sitofp i32 %i.m to double
+  %2 = uitofp nneg i32 %i.m to double
   %.046 = select i1 %i.k, double 1.000000e+00, double %2 ; 3 uses
   %.045 = select i1 %i.k, i32 1, i32 %i.m         ; 2 uses
   %i.n = fneg double %.046                        ; 2 uses

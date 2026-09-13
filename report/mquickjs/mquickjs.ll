@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mquickjs/original/mquickjs?download=true
+inline.NumInlined: 1970
+inline.NumDeleted: 206
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@js_parse_regexp:bb.a
 bb.p:                                             ; preds = %bb.i, %bb.i
   %i.cl = icmp sgt i32 %.04559.i, 1
@@ -200,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind optsize uwtable
-define internal range(i32 255, -65024) i32 @js_parse_expr_comma(ptr noundef %0, i32 noundef %1, i32 noundef %2) #4 {
+define internal range(i32 255, -65279) i32 @js_parse_expr_comma(ptr noundef %0, i32 noundef %1, i32 noundef %2) #4 {
 bb.a:
   switch i32 %1, label %bb.b [
     i32 254, label %bb.c
@@ -344,7 +348,7 @@ bb.o:                                             ; preds = %bb.l, %bb.m, %bb.n,
 }
 
 ; Function Attrs: nounwind optsize uwtable
-define internal range(i32 255, -64512) i32 @js_parse_assign_expr(ptr noundef %0, i32 noundef %1, i32 noundef %2) #4 {
+define internal range(i32 255, -65022) i32 @js_parse_assign_expr(ptr noundef %0, i32 noundef %1, i32 noundef %2) #4 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses

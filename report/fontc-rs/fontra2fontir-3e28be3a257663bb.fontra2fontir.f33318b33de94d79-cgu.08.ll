@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fontc-rs/original/fontra2fontir-3e28be3a257663bb.fontra2fontir.f33318b33de94d79-cgu.08?download=true
+inline.NumInlined: 122
+inline.NumDeleted: 103
 begin_hunk_0_@_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift4sortTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtCskSxPPlr6ODt_13fontra2fontir6fontra13VariableGlyphENCINvMNtCsgCecv3eZDcN_5alloc5sliceSBW_7sort_byNCINvXs1o_NtNtNtB2J_11collections5btree3mapINtB3v_8BTreeMapBX_B1H_EINtNtNtNtBa_4iter6traits7collect12FromIteratorBW_E9from_iterINtNtB4x_8adapters12GenericShuntINtNtB5r_3map3MapINtB3v_4KeysBX_INtNtB2J_3vec3VecmEENCNvMs0_B1J_NtB1J_4Font4load0EINtNtBa_6result6ResultzNtNtCs3v5ql5U6hxj_6fontir5error9BadSourceEEE0E0EB1L_:bb.a
   %i.de = getelementptr inbounds nuw i8, ptr %i.co, i64 16
   %i.df = load i64, ptr %i.de, align 8, !alias.scope !110, !noalias !111, !noundef !4
@@ -200,7 +202,7 @@ _RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable5drift13logical_mergeTNtNtCsgd
   br i1 %i.gg, label %.lr.ph, label %._crit_edge
 
 bb.aw:                                            ; preds = %._crit_edge
-  %i.gh = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.gh = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gi = lshr i64 %.sroa.018.0, 1
   %i.gj = add nuw nsw i64 %i.gi, %.sroa.09.0
   br label %bb.f

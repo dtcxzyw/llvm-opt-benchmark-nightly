@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_transformers-745d844d1c694a70.candle_transformers.e469297c722ac0f-cgu.14?download=true
+inline.NumInlined: 4409
+inline.NumDeleted: 292
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvMNtNtNtCs1dZk1kIfPhr_19candle_transformers6models7pixtral5llavaNtB2_19MultiModalProjector3new:bb.a
 bb.m:                                             ; preds = %bb.l
   %i.ac = atomicrmw sub ptr %i.aa, i64 1 release, align 8, !noalias !3706
@@ -200,10 +204,8 @@ bb.h:                                             ; preds = %_RNvNtNtNtNtCs1dZk1
 bb.i:                                             ; preds = %bb.g
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.x
   %i.ah = load <2 x double>, ptr %i.ag, align 8
-  %i.ai = fmul <2 x double> %i.ah, splat (double 5.000000e-01) ; 2 uses
-  %shift = shufflevector <2 x double> %i.ai, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %i.ai, %shift
-  %1 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.ai = fmul <2 x double> %i.ah, splat (double 5.000000e-01)
+  %1 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ai)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.f
 }
@@ -605,6 +607,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #12
 
 attributes #0 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

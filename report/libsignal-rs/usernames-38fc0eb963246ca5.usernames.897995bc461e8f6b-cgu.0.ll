@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsignal-rs/original/usernames-38fc0eb963246ca5.usernames.897995bc461e8f6b-cgu.0?download=true
+inline.NumInlined: 336
+inline.NumDeleted: 216
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_RINvXs3_NtCs43OB2dM8s8d_5prost8encodingINtNtCs6i54tJFfzR_5alloc3vec3VechENtNtB6_6sealed12BytesAdapter12replace_withNtNtCs17cqnTMcAHA_5bytes5bytes5BytesECsbNM6vbj4kjf_9usernames:bb.a
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 32
   %i.bb = load ptr, ptr %i.ba, align 8, !noalias !181, !nonnull !4, !noundef !4
@@ -200,7 +204,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13
 bb.b:                                             ; preds = %bb.r
   unreachable
 
-bb.c:                                             ; preds = %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCsbNM6vbj4kjf_9usernames.exit, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbNM6vbj4kjf_9usernames.exit.i.lr.ph
+bb.c:                                             ; preds = %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbNM6vbj4kjf_9usernames.exit.i.lr.ph, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCsbNM6vbj4kjf_9usernames.exit
   %i.q = phi i1 [ false, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbNM6vbj4kjf_9usernames.exit.i.lr.ph ], [ true, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCsbNM6vbj4kjf_9usernames.exit ]
   %.sroa.0.094 = phi ptr [ %3, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbNM6vbj4kjf_9usernames.exit.i.lr.ph ], [ %i.r, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCsbNM6vbj4kjf_9usernames.exit ] ; 2 uses
   %.sroa.5.093 = phi i64 [ %4, %_RNvXs1f_NtNtCsgxBkk5gSRhY_4core5slice4iterINtB6_9ChunksMuthENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbNM6vbj4kjf_9usernames.exit.i.lr.ph ], [ %i.s, %_RNvXNtCs7QbGsRJVG1P_4hkdf9hmac_implINtCsfkg6qDyjgHi_4hmac4HmacNtCsj2Wav7G13rI_4sha26Sha256ENtB2_8HmacImpl6updateCsbNM6vbj4kjf_9usernames.exit ] ; 2 uses

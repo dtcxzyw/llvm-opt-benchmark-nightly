@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.aj = fcmp olt double %i.ah, %i.ai
   %i.ak = select i1 %i.aj, double %i.ah, double %i.ai
   %i.al = fptosi double %i.ak to i32
-  %i.am = tail call i32 @llvm.smax.i32(i32 %i.al, i32 1024) ; 3 uses
+  %i.am = tail call i32 @llvm.umax.i32(i32 %i.al, i32 1024) ; 3 uses
   %i.an = tail call range(i32 1, 32) i32 @llvm.ctpop.i32(i32 %i.am)
   %i.ao = icmp samesign ult i32 %i.an, 2
   %i.ap = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.am, i1 true)
@@ -257,7 +257,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.br = fcmp olt double %i.ah, %i.bq
   %i.bs = select i1 %i.br, double %i.ah, double %i.bq
   %i.bt = fptosi double %i.bs to i32
-  %i.bu = tail call i32 @llvm.smax.i32(i32 %i.bt, i32 1024) ; 3 uses
+  %i.bu = tail call i32 @llvm.umax.i32(i32 %i.bt, i32 1024) ; 3 uses
   %i.bv = tail call range(i32 1, 32) i32 @llvm.ctpop.i32(i32 %i.bu)
   %i.bw = icmp samesign ult i32 %i.bv, 2
   %i.bx = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.bu, i1 true)
@@ -658,6 +658,9 @@ declare void @llvm.assume(i1 noundef) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #6

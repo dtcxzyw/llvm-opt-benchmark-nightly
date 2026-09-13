@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_linalg-a41068480ef1e611.lance_linalg.7155760e2fbf712c-cgu.0?download=true
+inline.NumInlined: 5334
+inline.NumDeleted: 2333
+loop-unroll.NumCompletelyUnrolled: 56
+loop-unroll.NumRuntimeUnrolled: 92
+loop-unroll.NumUnrolled: 148
 begin_hunk_0_@_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift4sortNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSBW_11sort_by_keyyNCINvBY_13cluster_edgesINtNtNtNtBa_4iter8adapters3map3MapINtNtB3b_3zip3ZipINtNtB8_4iter4IteryEB3V_ENCNvBY_23cluster_pairwise_result0EEs_0E0EB12_:bb.a
   br label %_RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift10create_runNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance7hamming7ClusterNCINvMNtCs40k4W9msRzi_5alloc5sliceSB13_11sort_by_keyyNCINvB15_13cluster_edgesINtNtNtNtBa_4iter8adapters3map3MapINtNtB3k_3zip3ZipINtNtB8_4iter4IteryEB44_ENCNvB15_23cluster_pairwise_result0EEs_0E0EB19_.exit
 
@@ -200,7 +205,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6stable5drift13logical_mergeNtNtNtCs9
   br i1 %i.dt, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.du = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.du = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dv = lshr i64 %.sroa.018.0, 1
   %i.dw = add nuw i64 %i.dv, %.sroa.09.0
   br label %bb.f
@@ -603,18 +608,16 @@ bb.b:                                             ; preds = %bb.a
   %i.s = fmul <4 x float> %.val7, %.val7
   %i.t = fmul <4 x float> %.val8, %.val8
   %i.u = fadd <4 x float> %i.s, %i.t              ; 2 uses
-  %1 = shufflevector <4 x float> %i.r, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %2 = fadd <4 x float> %i.r, %1                  ; 2 uses
-  %shift = shufflevector <4 x float> %2, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = fadd <4 x float> %2, %shift
-  %3 = extractelement <4 x float> %foldExtExtBinop, i64 0
-  %i.v = fdiv float %3, %i.n
-  %4 = shufflevector <4 x float> %i.u, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %5 = fadd <4 x float> %i.u, %4                  ; 2 uses
-  %shift12 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop13 = fadd <4 x float> %5, %shift12
-  %6 = extractelement <4 x float> %foldExtExtBinop13, i64 0
-  %i.w = tail call float @llvm.sqrt.f32(float %6)
+  %1 = shufflevector <4 x float> %i.r, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %2 = shufflevector <4 x float> %i.r, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %3 = fadd <2 x float> %1, %2
+  %4 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %3)
+  %i.v = fdiv float %4, %i.n
+  %5 = shufflevector <4 x float> %i.u, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %6 = shufflevector <4 x float> %i.u, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %7 = fadd <2 x float> %5, %6
+  %8 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %7)
+  %i.w = tail call float @llvm.sqrt.f32(float %8)
   %i.x = fdiv float %i.v, %i.w
   %i.y = fsub float 1.000000e+00, %i.x
   br label %bb.c
@@ -1017,18 +1020,16 @@ bb.d:                                             ; preds = %.loopexit
   %i.bs = fmul <4 x float> %.val7.i, %.val7.i
   %i.bt = fmul <4 x float> %.val8.i, %.val8.i
   %i.bu = fadd <4 x float> %i.bs, %i.bt           ; 2 uses
-  %2 = shufflevector <4 x float> %i.br, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %3 = fadd <4 x float> %i.br, %2                 ; 2 uses
-  %shift = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = fadd <4 x float> %3, %shift
-  %4 = extractelement <4 x float> %foldExtExtBinop, i64 0
-  %i.bv = fdiv float %4, %i.bn
-  %5 = shufflevector <4 x float> %i.bu, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %6 = fadd <4 x float> %i.bu, %5                 ; 2 uses
-  %shift19 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop20 = fadd <4 x float> %6, %shift19
-  %7 = extractelement <4 x float> %foldExtExtBinop20, i64 0
-  %i.bw = tail call float @llvm.sqrt.f32(float %7)
+  %2 = shufflevector <4 x float> %i.br, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %3 = shufflevector <4 x float> %i.br, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %4 = fadd <2 x float> %2, %3
+  %5 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %4)
+  %i.bv = fdiv float %5, %i.bn
+  %6 = shufflevector <4 x float> %i.bu, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %7 = shufflevector <4 x float> %i.bu, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %8 = fadd <2 x float> %6, %7
+  %9 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %8)
+  %i.bw = tail call float @llvm.sqrt.f32(float %9)
   %i.bx = fdiv float %i.bv, %i.bw
   %i.by = fsub float 1.000000e+00, %i.bx
   br label %_RNvYNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance6cosine16CosineBatch8IterNtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator10advance_byB8_.exit
@@ -1429,6 +1430,9 @@ declare <16 x i16> @llvm.abs.v16i16(<16 x i16>, i1 immarg) #60
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v16i1(<16 x i1>, i1 immarg) #60
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #62
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i128 @llvm.umax.i128(i128, i128) #62
