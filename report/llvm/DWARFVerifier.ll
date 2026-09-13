@@ -205,7 +205,7 @@ define linkonce_odr i64 @_ZN4llvm11IntervalMapImmLj8ENS_15IntervalMapInfoImEEE9s
 .preheader25:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 196 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !413
-  %.fr = freeze i32 %i.b                          ; 8 uses
+  %.fr = freeze i32 %i.b                          ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %.not13.i = icmp eq i32 %.fr, 0
@@ -306,15 +306,13 @@ _ZN4llvm11IntervalMapImmLj8ENS_15IntervalMapInfoImEEE7newNodeINS_15IntervalMapIm
   %i.au = phi ptr [ %i.h, %bb.e ], [ %i.as, %bb.g ], [ %i.at, %bb.h ] ; 11 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %i.au, i8 0, i64 192, i1 false)
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 96 ; 4 uses
-  %i.aw = zext i32 %.fr to i64                    ; 2 uses
+  %i.aw = zext i32 %.fr to i64                    ; 6 uses
   %min.iters.check = icmp ult i32 %.fr, 10
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZN4llvm11IntervalMapImmLj8ENS_15IntervalMapInfoImEEE7newNodeINS_15IntervalMapImpl10BranchNodeImmLj12ES2_EEEEPT_v.exit
-  %2 = add i32 %.fr, -1
-  %3 = zext i32 %2 to i64
-  %i.ax = shl nuw nsw i64 %3, 3
-  %i.ay = add nuw nsw i64 %i.ax, 104              ; 2 uses
+  %i.ax = shl nuw nsw i64 %i.aw, 3
+  %i.ay = add nuw nsw i64 %i.ax, 96               ; 2 uses
   %scevgep = getelementptr i8, ptr %i.au, i64 %i.ay
   %scevgep37 = getelementptr i8, ptr %0, i64 %i.ay
   %bound0 = icmp ult ptr %i.au, %scevgep37
@@ -346,10 +344,8 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %_ZN4llvm11IntervalMapImmLj8ENS_15IntervalMapInfoImEEE7newNodeINS_15IntervalMapImpl10BranchNodeImmLj12ES2_EEEEPT_v.exit, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %_ZN4llvm11IntervalMapImmLj8ENS_15IntervalMapInfoImEEE7newNodeINS_15IntervalMapImpl10BranchNodeImmLj12ES2_EEEEPT_v.exit ], [ %n.vec, %middle.block ] ; 7 uses
-  %4 = trunc nuw i64 %indvars.iv.ph to i32
-  %.neg = or disjoint i32 %4, 1
-  %xtraiter = and i32 %.fr, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %xtraiter = and i64 %i.aw, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
@@ -366,7 +362,8 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
-  %i.bk = icmp eq i32 %.fr, %.neg
+  %2 = add nsw i64 %i.aw, -1
+  %i.bk = icmp eq i64 %indvars.iv.ph, %2
   br i1 %i.bk, label %.preheader, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
@@ -389,8 +386,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.next
   store i64 %i.bv, ptr %i.bw, align 8, !tbaa !47
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %lftr.wideiv.1 = trunc i64 %indvars.iv.next.1 to i32
-  %exitcond.1 = icmp eq i32 %.fr, %lftr.wideiv.1
+  %exitcond.1 = icmp eq i64 %indvars.iv.next.1, %i.aw
   br i1 %exitcond.1, label %.preheader, label %scalar.ph, !llvm.loop !1888
 }
 

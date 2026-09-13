@@ -32,7 +32,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !39   ; 13 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !39   ; 11 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.f = load i32, ptr %i.e, align 8, !tbaa !40   ; 2 uses
   %i.g = sext i32 %i.f to i64                     ; 2 uses
@@ -226,7 +226,6 @@ bb.af:                                            ; preds = %bb.ad
 bb.ag:                                            ; preds = %bb.af
   %.lhs.trunc = trunc nuw nsw i32 %i.ab to i16    ; 2 uses
   %i.bn = udiv i16 %.lhs.trunc, 3                 ; 2 uses
-  %.zext = zext nneg i16 %i.bn to i32             ; 2 uses
   %i.bo = urem i16 %.lhs.trunc, 3
   %.not238 = icmp eq i16 %i.bo, 0
   br i1 %.not238, label %bb.ah, label %.thread
@@ -242,42 +241,35 @@ bb.ah:                                            ; preds = %bb.ag
 .lr.ph:                                           ; preds = %bb.ah
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !41 ; 8 uses
-  %4 = shl nuw nsw i32 %.zext, 1
-  %i.br = zext nneg i16 %i.bn to i64              ; 2 uses
-  %5 = zext nneg i32 %4 to i64                    ; 2 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %.zext, i32 1)
-  %wide.trip.count = zext nneg i32 %umax to i64   ; 9 uses
-  %invariant.gep = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.br ; 5 uses
-  %invariant.gep327 = getelementptr inbounds nuw i8, ptr %i.ac, i64 %5 ; 5 uses
+  %4 = shl nuw nsw i16 %i.bn, 1
+  %i.br = zext nneg i16 %i.bn to i64              ; 8 uses
+  %wide.trip.count = zext nneg i16 %4 to i64
+  %invariant.gep = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.br ; 6 uses
+  %invariant.gep327 = getelementptr inbounds nuw i8, ptr %i.ac, i64 %wide.trip.count ; 6 uses
   %min.iters.check = icmp ult i32 %i.ab, 48
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.bs = shl nuw nsw i64 %wide.trip.count, 2
-  %scevgep = getelementptr i8, ptr %i.bq, i64 %i.bs ; 3 uses
-  %6 = getelementptr i8, ptr %i.d, i64 %wide.trip.count
-  %7 = getelementptr i8, ptr %6, i64 %5
-  %scevgep332 = getelementptr i8, ptr %7, i64 32
-  %8 = getelementptr i8, ptr %i.d, i64 %wide.trip.count
-  %i.bt = getelementptr i8, ptr %8, i64 %i.br
-  %scevgep333 = getelementptr i8, ptr %i.bt, i64 32
-  %i.bu = getelementptr i8, ptr %i.d, i64 %wide.trip.count
+  %i.bs = shl nuw nsw i64 %i.br, 2
+  %i.bt = getelementptr i8, ptr %i.bq, i64 %i.bs  ; 3 uses
+  %5 = mul nuw nsw i64 %i.br, 3
+  %i.bu = getelementptr i8, ptr %i.d, i64 %5
   %scevgep334 = getelementptr i8, ptr %i.bu, i64 32
-  %bound0 = icmp ult ptr %i.bq, %scevgep332
-  %bound1 = icmp ult ptr %invariant.gep327, %scevgep
+  %bound0 = icmp ult ptr %i.bq, %scevgep334
+  %bound1 = icmp ult ptr %invariant.gep327, %i.bt
   %found.conflict = and i1 %bound0, %bound1
-  %bound0335.a = icmp ult ptr %i.bq, %scevgep333
-  %bound1336.a = icmp ult ptr %invariant.gep, %scevgep
+  %bound0335.a = icmp ult ptr %i.bq, %invariant.gep327
+  %bound1336.a = icmp ult ptr %invariant.gep, %i.bt
   %found.conflict337.a = and i1 %bound0335.a, %bound1336.a
   %conflict.rdx = or i1 %found.conflict, %found.conflict337.a
-  %bound0338 = icmp ult ptr %i.bq, %scevgep334
-  %bound1339 = icmp ult ptr %i.ac, %scevgep
+  %bound0338 = icmp ult ptr %i.bq, %invariant.gep
+  %bound1339 = icmp ult ptr %i.ac, %i.bt
   %found.conflict340 = and i1 %bound0338, %bound1339
   %conflict.rdx341 = or i1 %conflict.rdx, %found.conflict340
   br i1 %conflict.rdx341, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %wide.trip.count, 32760        ; 4 uses
+  %n.vec = and i64 %i.br, 504                     ; 4 uses
   %i.bv = shl nuw nsw i64 %n.vec, 2
   %i.bw = getelementptr i8, ptr %i.bq, i64 %i.bv
   br label %vector.body
@@ -322,13 +314,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cv, label %middle.block, label %vector.body, !llvm.loop !14
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %i.br
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 6 uses
   %.0194254.ph = phi ptr [ %i.bq, %vector.memcheck ], [ %i.bq, %.lr.ph ], [ %i.bw, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %xtraiter = and i64 %i.br, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -355,7 +347,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
   %.0194254.unr = phi ptr [ %.0194254.ph, %scalar.ph.preheader ], [ %i.di, %scalar.ph.prol ]
-  %i.dj = add nsw i64 %wide.trip.count, -1
+  %i.dj = add nsw i64 %i.br, -1
   %i.dk = icmp eq i64 %indvars.iv.ph, %i.dj
   br i1 %i.dk, label %._crit_edge, label %scalar.ph
 
@@ -396,7 +388,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %i.ej, ptr %i.dx, align 4, !tbaa !65
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.0194254, i64 8
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
+  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %i.br
   br i1 %exitcond.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !15
 
 .thread246:                                       ; preds = %bb.af, %bb.ae

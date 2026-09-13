@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.g, %_RINvNtNtCsk
   %i.fb = lshr i64 %i.fa, 6
   %i.fc = add i64 %i.fb, %i.et                    ; 3 uses
   %i.fd = add nuw nsw i64 %.sroa.04.0.i.i.i1.i, 2 ; 2 uses
-  %niter769.next.1 = add i64 %niter769, 2         ; 2 uses
+  %niter769.next.1 = add nuw i64 %niter769, 2     ; 2 uses
   %niter769.ncmp.1 = icmp eq i64 %niter769.next.1, %unroll_iter768
   br i1 %niter769.ncmp.1, label %.lr.ph.preheader.i.i.i.unr-lcssa, label %bb.g
 
@@ -608,7 +608,7 @@ bb.ab:                                            ; preds = %bb.ab, %_RINvNtNtCs
   %i.uz = lshr i64 %i.uy, 6
   %i.va = add i64 %i.uz, %i.ur                    ; 3 uses
   %i.vb = add nuw nsw i64 %.sroa.04.0.i.i.i.i137, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph.preheader.i.i.i140.unr-lcssa, label %bb.ab
 
@@ -750,7 +750,7 @@ bb.ad:                                            ; preds = %bb.ad, %_RINvNtNtCs
   %i.xh = zext nneg i32 %i.xg to i64
   %i.xi = add i64 %i.wy, %i.xh                    ; 3 uses
   %i.xj = add nuw nsw i64 %.sroa.04.0.i.i12.i.i, 2 ; 2 uses
-  %niter710.next.1 = add i64 %niter710, 2         ; 2 uses
+  %niter710.next.1 = add nuw i64 %niter710, 2     ; 2 uses
   %niter710.ncmp.1 = icmp eq i64 %niter710.next.1, %unroll_iter709
   br i1 %niter710.ncmp.1, label %.lr.ph.preheader.i15.i.i.unr-lcssa, label %bb.ad
 
@@ -877,7 +877,7 @@ bb.af:                                            ; preds = %bb.af, %_RINvNtNtCs
   %i.zj = zext nneg i32 %i.zi to i64
   %i.zk = add i64 %i.za, %i.zj                    ; 3 uses
   %i.zl = add nuw nsw i64 %.sroa.04.0.i.i19.i.i, 2 ; 2 uses
-  %niter717.next.1 = add i64 %niter717, 2         ; 2 uses
+  %niter717.next.1 = add nuw i64 %niter717, 2     ; 2 uses
   %niter717.ncmp.1 = icmp eq i64 %niter717.next.1, %unroll_iter716
   br i1 %niter717.ncmp.1, label %.lr.ph.preheader.i22.i.i.unr-lcssa, label %bb.af
 
@@ -1060,7 +1060,7 @@ bb.ak:                                            ; preds = %bb.ak, %_RINvNtNtCs
   %i.abw = lshr i64 %i.abv, 6
   %i.abx = add i64 %i.abw, %i.abn                 ; 3 uses
   %i.aby = add nuw nsw i64 %.sroa.04.0.i.i.i.i.i.i, 2 ; 2 uses
-  %niter724.next.1 = add i64 %niter724, 2         ; 2 uses
+  %niter724.next.1 = add nuw i64 %niter724, 2     ; 2 uses
   %niter724.ncmp.1 = icmp eq i64 %niter724.next.1, %unroll_iter723
   br i1 %niter724.ncmp.1, label %.lr.ph.preheader.i.i.i.i.i.unr-lcssa, label %bb.ak
 
@@ -1463,7 +1463,7 @@ bb.bb:                                            ; preds = %bb.bb, %_RINvNtNtCs
   %i.aiu = lshr i64 %i.ait, 6
   %i.aiv = add i64 %i.aiu, %i.aim                 ; 3 uses
   %i.aiw = add nuw nsw i64 %.sroa.04.0.i.i.i4.i.i.i.i.i.i, 2 ; 2 uses
-  %niter737.next.1 = add i64 %niter737, 2         ; 2 uses
+  %niter737.next.1 = add nuw i64 %niter737, 2     ; 2 uses
   %niter737.ncmp.1 = icmp eq i64 %niter737.next.1, %unroll_iter736
   br i1 %niter737.ncmp.1, label %.lr.ph.preheader.i.i.i.i.i.i.i.i.unr-lcssa, label %bb.bb
 
@@ -1866,7 +1866,7 @@ bb.e:                                             ; preds = %bb.e, %_RINvNtNtCsk
   %i.an = lshr i64 %i.am, 6
   %i.ao = add i64 %i.an, %i.ae                    ; 3 uses
   %i.ap = add nuw nsw i64 %.sroa.04.0.i.i.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph.preheader.i.i.unr-lcssa, label %bb.e
 
@@ -2269,7 +2269,7 @@ bb.t:                                             ; preds = %bb.t, %_RINvNtNtCsk
   %i.gi = lshr i64 %i.gh, 6
   %i.gj = add i64 %i.gi, %i.fz                    ; 3 uses
   %i.gk = add nuw nsw i64 %.sroa.04.0.i.i15.i, 2  ; 2 uses
-  %niter19.next.1 = add i64 %niter19, 2           ; 2 uses
+  %niter19.next.1 = add nuw i64 %niter19, 2       ; 2 uses
   %niter19.ncmp.1 = icmp eq i64 %niter19.next.1, %unroll_iter18
   br i1 %niter19.ncmp.1, label %.lr.ph.preheader.i18.i.unr-lcssa, label %bb.t
 
@@ -2672,7 +2672,7 @@ bb.e:                                             ; preds = %bb.e, %_RINvNtNtCsk
   %i.bf = lshr i64 %i.be, 6
   %i.bg = add i64 %i.bf, %i.aw                    ; 3 uses
   %i.bh = add nuw nsw i64 %.sroa.04.0.i.i.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph.preheader.i.i.unr-lcssa, label %bb.e
 
@@ -2784,7 +2784,7 @@ bb.g:                                             ; preds = %bb.g, %_RINvNtNtCsk
   %i.db = lshr i64 %i.da, 6
   %i.dc = add i64 %i.db, %i.cs                    ; 3 uses
   %i.dd = add nuw nsw i64 %.sroa.04.0.i.i6.i, 2   ; 2 uses
-  %niter19.next.1 = add i64 %niter19, 2           ; 2 uses
+  %niter19.next.1 = add nuw i64 %niter19, 2       ; 2 uses
   %niter19.ncmp.1 = icmp eq i64 %niter19.next.1, %unroll_iter18
   br i1 %niter19.ncmp.1, label %.lr.ph.preheader.i9.i.unr-lcssa, label %bb.g
 
@@ -3187,7 +3187,7 @@ bb.l:                                             ; preds = %bb.j, %bb.i
 
 bb.m:                                             ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtB6_6string6StringBF_EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i
   %i.aj = phi ptr [ %.sroa.10.0.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.be, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtB6_6string6StringBF_EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ]
-  %i.ak = phi i64 [ 1, %.lr.ph.i.i.i.i.i ], [ %i.bg, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtB6_6string6StringBF_EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ] ; 5 uses
+  %i.ak = phi i64 [ 1, %.lr.ph.i.i.i.i.i ], [ %i.bg, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtB6_6string6StringBF_EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ] ; 4 uses
   %.lcssa21.i.i.i.i.i = phi ptr [ %.sroa.5.0.i, %.lr.ph.i.i.i.i.i ], [ %.lcssa20.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtB6_6string6StringBF_EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ] ; 2 uses
   %i.al = phi i16 [ %i.p, %.lr.ph.i.i.i.i.i ], [ %i.au, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtB6_6string6StringBF_EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ] ; 2 uses
   %.val1217.i.i.i.i.i = phi i64 [ %i.s, %.lr.ph.i.i.i.i.i ], [ %i.ax, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtB6_6string6StringBF_EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ] ; 2 uses
@@ -3258,8 +3258,6 @@ bb.p:                                             ; preds = %_RNvXs0_NtNtNtCscI6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !126493
   store i64 %.sroa.07.0.copyload.i.i.i.i.i, ptr %i.c, align 8, !noalias !126493
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.i.i.i.i.i, i64 40, i1 false), !noalias !126493
-  %2 = icmp samesign ult i64 %i.ak, 192153584101141163
-  tail call void @llvm.assume(i1 %2)
   %i.bc = load i64, ptr %i.f, align 8, !range !419, !alias.scope !126494, !noalias !126495, !noundef !416
   %i.bd = icmp eq i64 %i.ak, %i.bc
   br i1 %i.bd, label %bb.r, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtB6_6string6StringBF_EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i
@@ -3662,7 +3660,7 @@ bb.l:                                             ; preds = %bb.j, %bb.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.l, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i
   %i.av = phi ptr [ %i.cg, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ], [ %.sroa.10.0.i.i.i.i, %bb.l ]
-  %i.aw = phi i64 [ %i.ci, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ], [ 1, %bb.l ] ; 5 uses
+  %i.aw = phi i64 [ %i.ci, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ], [ 1, %bb.l ] ; 4 uses
   %.lcssa1528.i.i.i.i.i = phi ptr [ %.promoted10.i.i.i.i.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ], [ %.sroa.13.0.i, %bb.l ] ; 2 uses
   %.lcssa1625.i.i.i.i.i = phi ptr [ %.promoted6.i.i.i.i.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ], [ %.sroa.10.0.i, %bb.l ] ; 2 uses
   %i.ax = phi i16 [ %i.bg, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i ], [ %i.n, %bb.l ] ; 2 uses
@@ -3715,8 +3713,6 @@ bb.m:                                             ; preds = %_RNvXsE_NtCsfKiFC1z
   %.sroa.6.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %.sroa.6.0..sroa_idx2.i.i.i.i.i.i, align 8, !noalias !127029 ; 3 uses
   %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx2.i.sroa_idx.i.i.i.i.i = getelementptr inbounds i8, ptr %i.bi, i64 -8
   %.sroa.6.sroa.5.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx2.i.sroa_idx.i.i.i.i.i, align 8, !noalias !127029
-  %2 = icmp samesign ult i64 %i.aw, 384307168202282326
-  tail call void @llvm.assume(i1 %2)
   %i.bl = load i64, ptr %i.b, align 8, !range !419, !alias.scope !127030, !noalias !127031, !noundef !416
   %i.bm = icmp eq i64 %i.aw, %i.bl
   br i1 %i.bm, label %bb.r, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i
@@ -4119,7 +4115,7 @@ bb.aa:                                            ; preds = %bb.aa, %_RINvNtNtCs
   %i.dw = lshr i64 %i.dv, 6
   %i.dx = add i64 %i.dw, %i.dn                    ; 3 uses
   %i.dy = add nuw nsw i64 %.sroa.04.0.i.i.i.i, 2  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph.preheader.i.i.i.unr-lcssa, label %bb.aa
 
@@ -4451,7 +4447,7 @@ bb.af:                                            ; preds = %bb.af, %_RINvNtNtCs
   %i.ja = lshr i64 %i.iz, 6
   %i.jb = add i64 %i.ja, %i.ir                    ; 3 uses
   %i.jc = add nuw nsw i64 %.sroa.04.0.i.i.i1.i.i.i, 2 ; 2 uses
-  %niter192.next.1 = add i64 %niter192, 2         ; 2 uses
+  %niter192.next.1 = add nuw i64 %niter192, 2     ; 2 uses
   %niter192.ncmp.1 = icmp eq i64 %niter192.next.1, %unroll_iter191
   br i1 %niter192.ncmp.1, label %.lr.ph.preheader.i.i.i.i.i.unr-lcssa, label %bb.af
 
@@ -4854,7 +4850,7 @@ bb.gq:                                            ; preds = %bb.go, %bb.gn
 
 bb.gr:                                            ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i
   %i.acd = phi ptr [ %.sroa.10.0.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.adm, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i ] ; 3 uses
-  %i.ace = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.ado, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i ] ; 7 uses
+  %i.ace = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.ado, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i ] ; 6 uses
   %.lcssa821.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.19.0.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.lcssa820.i.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i ] ; 2 uses
   %.lcssa918.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.10.0.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.lcssa917.i.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.acf = phi i16 [ %i.abb, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.aco, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i ] ; 2 uses
@@ -4907,8 +4903,6 @@ bb.gt:                                            ; preds = %_RNvXsE_NtCsfKiFC1z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bf), !noalias !158533
   store i64 %.sroa.4.0.copyload3.i.i.i.i.i.i.i.i.i, ptr %i.bf, align 8, !noalias !158533
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(232) %.sroa.6.0..sroa_idx.i.i.i.i.i.i.i196.i, ptr noundef nonnull align 8 dereferenceable(232) %.sroa.6.i.i.i.i.i.i.i.i, i64 232, i1 false), !noalias !158533
-  %3 = icmp samesign ult i64 %i.ace, 38430716820228233
-  call void @llvm.assume(i1 %3)
   %i.acs = load i64, ptr %i.bi, align 8, !range !419, !alias.scope !158534, !noalias !158535, !noundef !416
   %i.act = icmp eq i64 %i.ace, %i.acs
   br i1 %i.act, label %bb.gx, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table6format8fragment8FragmentE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i
@@ -5311,7 +5305,7 @@ _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtB6_3map3Map
   %i.bcd = getelementptr inbounds nuw i8, ptr %i.bcc, i64 8
   store i64 %i.bcb, ptr %i.bcd, align 8, !noalias !158739
   %i.bce = add nuw nsw i64 %i.bbo, 2              ; 2 uses
-  %niter415.next.1 = add nuw i64 %niter415, 2     ; 2 uses
+  %niter415.next.1 = add nuw nsw i64 %niter415, 2 ; 2 uses
   %niter415.ncmp.1 = icmp eq i64 %niter415.next.1, %unroll_iter414
   br i1 %niter415.ncmp.1, label %_RINvXs0_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterRNtNtCs40k4W9msRzi_5alloc6string6StringENCNCNvMs5_NtNtNtCshkPeWWG1flk_5lance7dataset5write12merge_insertNtB2b_14MergeInsertJob31create_full_table_joined_stream0s1_0ENtNtNtBa_6traits8iterator8Iterator4folduQNCINvNvB42_8for_each4callReNCINvMsj_NtB1s_3vecINtB5h_3VecB56_E14extend_trustedINtNtB8_5chain5ChainBN_INtNtNtBc_5array4iter8IntoIterB56_Kj2_EEE0E0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, label %.preheader.i
 
@@ -5714,7 +5708,7 @@ bb.bj:                                            ; preds = %bb.bh
 
 bb.bk:                                            ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_done9MaybeDoneNCNCNCNvNtNtNtCshkPeWWG1flk_5lance5index6vector7details28infer_missing_vector_details0s0_00EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i14.i.i
   %i.nt = phi ptr [ %i.nq, %.lr.ph.i.i.i.i.i.i.i14.i.i ], [ %i.oo, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_done9MaybeDoneNCNCNCNvNtNtNtCshkPeWWG1flk_5lance5index6vector7details28infer_missing_vector_details0s0_00EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i ]
-  %i.nu = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i.i14.i.i ], [ %i.oq, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_done9MaybeDoneNCNCNCNvNtNtNtCshkPeWWG1flk_5lance5index6vector7details28infer_missing_vector_details0s0_00EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i ] ; 5 uses
+  %i.nu = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i.i14.i.i ], [ %i.oq, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_done9MaybeDoneNCNCNCNvNtNtNtCshkPeWWG1flk_5lance5index6vector7details28infer_missing_vector_details0s0_00EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i ] ; 4 uses
   %.lcssa21.i.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.14.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i14.i.i ], [ %.lcssa20.i.i.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_done9MaybeDoneNCNCNCNvNtNtNtCshkPeWWG1flk_5lance5index6vector7details28infer_missing_vector_details0s0_00EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.lcssa1218.i.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.916.0.copyload.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i14.i.i ], [ %.lcssa1217.i.i.i.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_done9MaybeDoneNCNCNCNvNtNtNtCshkPeWWG1flk_5lance5index6vector7details28infer_missing_vector_details0s0_00EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.nv = phi i16 [ %i.nh, %.lr.ph.i.i.i.i.i.i.i14.i.i ], [ %i.oe, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_done9MaybeDoneNCNCNCNvNtNtNtCshkPeWWG1flk_5lance5index6vector7details28infer_missing_vector_details0s0_00EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i ] ; 2 uses
@@ -5772,8 +5766,6 @@ bb.bn:                                            ; preds = %_RNvXsF_NtNtNtCsgcz
   store ptr %.sroa.0.0.copyload1.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.9.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !noalias !179583
   store i64 %.sroa.6.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.10.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !noalias !179583
   store i8 0, ptr %.sroa.114.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !noalias !179583
-  %3 = icmp samesign ult i64 %i.nu, 4503599627370496
-  call void @llvm.assume(i1 %3)
   %i.ol = load i64, ptr %i.aq, align 8, !range !419, !noalias !179583, !noundef !416
   %i.om = icmp eq i64 %i.nu, %i.ol
   br i1 %i.om, label %bb.bq, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtNtCs9p5Dg9WVwvP_12futures_util6future10maybe_done9MaybeDoneNCNCNCNvNtNtNtCshkPeWWG1flk_5lance5index6vector7details28infer_missing_vector_details0s0_00EE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i.i.i.i
@@ -6176,7 +6168,7 @@ bb.at:                                            ; preds = %bb.ar, %bb.aq
 
 bb.au:                                            ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table11transaction10update_map14UpdateMapEntryE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
   %i.dr = phi ptr [ %.sroa.10.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ %i.el, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table11transaction10update_map14UpdateMapEntryE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i ] ; 2 uses
-  %i.ds = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i ], [ %i.en, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table11transaction10update_map14UpdateMapEntryE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i ] ; 6 uses
+  %i.ds = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i ], [ %i.en, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table11transaction10update_map14UpdateMapEntryE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i ] ; 5 uses
   %.lcssa15.i.i.i.i.i.i = phi ptr [ %.sroa.57.0.i.i, %.lr.ph.i.i.i.i.i.i ], [ %.lcssa14.i.i.i.i.i.i, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table11transaction10update_map14UpdateMapEntryE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i ] ; 2 uses
   %i.dt = phi i16 [ %i.cv, %.lr.ph.i.i.i.i.i.i ], [ %i.ec, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table11transaction10update_map14UpdateMapEntryE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i ] ; 2 uses
   %.val611.i.i.i.i.i.i = phi i64 [ %i.cy, %.lr.ph.i.i.i.i.i.i ], [ %i.ef, %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table11transaction10update_map14UpdateMapEntryE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i ] ; 2 uses
@@ -6230,8 +6222,6 @@ _RNvXs0_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3mapINtB5_3MapIBN_INtNtNtNtCsgczF
   br i1 %.not.i.i5.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.av
 
 bb.av:                                            ; preds = %.noexc6.i.i.i.i
-  %3 = icmp samesign ult i64 %i.ds, 192153584101141163
-  call void @llvm.assume(i1 %3)
   %i.ek = icmp eq i64 %i.ds, %.sroa.0.0.copyload1.pre.pre25.i.i
   br i1 %i.ek, label %bb.ax, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtNtCs9KQ7US1M400_11lance_table11transaction10update_map14UpdateMapEntryE7reserveCsfR8GmIBoxTX_21lance_namespace_impls.exit.i.i.i.i.i.i
 

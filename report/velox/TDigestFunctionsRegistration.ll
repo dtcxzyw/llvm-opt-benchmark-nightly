@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %.0.copyload.i.i50 = load double, ptr %i.ad, align 1 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.0130, i64 16
   %.0.copyload.i.i51 = load i32, ptr %i.ai, align 1
-  %.0.copyload.i.i51.fr = freeze i32 %.0.copyload.i.i51 ; 5 uses
+  %.0.copyload.i.i51.fr = freeze i32 %.0.copyload.i.i51 ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.0130, i64 20 ; 2 uses
   %i.ak = icmp sgt i32 %.0.copyload.i.i51.fr, 0
   br i1 %i.ak, label %bb.r, label %bb.al
@@ -255,7 +255,7 @@ bb.v:                                             ; preds = %bb.r
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = sub i64 %i.ax, %i.ay                    ; 3 uses
   %i.ba = ashr exact i64 %i.az, 3                 ; 3 uses
-  %i.bb = zext nneg i32 %.0.copyload.i.i51.fr to i64 ; 3 uses
+  %i.bb = zext nneg i32 %.0.copyload.i.i51.fr to i64 ; 7 uses
   %i.bc = add nsw i64 %i.ba, %i.bb                ; 7 uses
   %i.bd = icmp ugt i64 %i.bc, %i.ba
   br i1 %i.bd, label %bb.w, label %bb.x
@@ -284,13 +284,12 @@ _ZSt8_DestroyIPddEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.y
   %i.bi = shl nuw nsw i64 %i.bb, 3                ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bh, ptr nonnull align 1 %i.aj, i64 %i.bi, i1 false)
   %i.bj = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.bi
-  %wide.trip.count = zext nneg i32 %.0.copyload.i.i51.fr to i64 ; 4 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %xtraiter = and i64 %i.bb, 3                    ; 3 uses
   %i.bk = icmp ult i32 %.0.copyload.i.i51.fr, 4
   br i1 %i.bk, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
+  %unroll_iter = and i64 %i.bb, 2147483644
   br label %.lr.ph
 
 .lr.ph.1:                                         ; preds = %.lr.ph
@@ -379,12 +378,12 @@ _ZSt8_DestroyIPddEvT_S1_RSaIT0_E.exit.i.i56:      ; preds = %bb.ad
   %i.cm = phi ptr [ %.pre148, %bb.ab ], [ %i.cd, %bb.ac ], [ %i.cd, %bb.ad ], [ %i.cd, %_ZSt8_DestroyIPddEvT_S1_RSaIT0_E.exit.i.i56 ]
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.az ; 6 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.cn, ptr nonnull align 1 %i.bj, i64 %i.bi, i1 false)
-  %xtraiter184 = and i64 %wide.trip.count, 3      ; 3 uses
+  %xtraiter184 = and i64 %i.bb, 3                 ; 3 uses
   %i.co = icmp ult i32 %.0.copyload.i.i51.fr, 4
   br i1 %i.co, label %.lr.ph137.epil.preheader, label %.lr.ph137.preheader.new
 
 .lr.ph137.preheader.new:                          ; preds = %.lr.ph137.preheader
-  %unroll_iter188 = and i64 %wide.trip.count, 2147483644
+  %unroll_iter188 = and i64 %i.bb, 2147483644
   br label %.lr.ph137
 
 .lr.ph:                                           ; preds = %bb.z, %.lr.ph.preheader.new

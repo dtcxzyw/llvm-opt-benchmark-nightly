@@ -205,7 +205,7 @@ snd_pcm_get_state.exit:                           ; preds = %bb.f, %bb.g
 bb.h:                                             ; preds = %snd_pcm_get_state.exit
   %i.u = load ptr, ptr %i.a, align 8
   %i.v = getelementptr i8, ptr %i.u, i64 112
-  %i.w = load i32, ptr %i.v, align 8              ; 5 uses
+  %i.w = load i32, ptr %i.v, align 8              ; 4 uses
   %i.x = icmp sgt i32 %i.w, 128
   br i1 %i.x, label %__free_kfree.exit, label %bb.i
 
@@ -243,7 +243,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ap, label %__free_kfree.exit, label %_kmalloc_array_noprof.exit, !prof !26
 
 _kmalloc_array_noprof.exit:                       ; preds = %bb.k
-  %i.aq = zext nneg i32 %i.w to i64
+  %i.aq = zext nneg i32 %i.w to i64               ; 2 uses
   %i.ar = shl nuw nsw i64 %i.aq, 3
   %i.as = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef %i.ar, i32 noundef range(i32 3264, 3521) 3264) #18 ; 5 uses
   %i.at = icmp eq ptr %i.as, null
@@ -251,15 +251,11 @@ _kmalloc_array_noprof.exit:                       ; preds = %bb.k
 
 .preheader:                                       ; preds = %_kmalloc_array_noprof.exit
   %.not83 = icmp eq i32 %i.w, 0
-  br i1 %.not83, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not83, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %i.w to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.l ] ; 2 uses
-  %.05382 = phi ptr [ %i.ao, %.lr.ph.preheader ], [ %i.bd, %bb.l ] ; 2 uses
+.lr.ph:                                           ; preds = %.preheader, %bb.l
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.l ], [ 0, %.preheader ] ; 2 uses
+  %.05382 = phi ptr [ %i.bd, %bb.l ], [ %i.ao, %.preheader ] ; 2 uses
   %i.au = tail call i64 @llvm.read_register.i64(metadata !4)
   %i.av = tail call { ptr, i32, i64 } asm sideeffect "call __get_user_${4:c}", "={ax},={rdx},={rsp},0,i,{rsp},~{dirflag},~{fpsr},~{flags}"(ptr %.05382, i64 4, i64 %i.au) #17, !srcloc !237 ; 3 uses
   %i.aw = extractvalue { ptr, i32, i64 } %i.av, 0
@@ -278,7 +274,7 @@ bb.l:                                             ; preds = %.lr.ph
   store ptr %i.bb, ptr %i.bc, align 8
   %i.bd = getelementptr i8, ptr %.05382, i64 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.aq
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !234
 
 ._crit_edge:                                      ; preds = %bb.l, %.preheader

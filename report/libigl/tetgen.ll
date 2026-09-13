@@ -205,7 +205,7 @@ bb.a:
   %i.ak = add nsw i32 %2, -2
   %i.al = zext i32 %i.ak to i64                   ; 10 uses
   %i.am = zext nneg i32 %i.ac to i64              ; 2 uses
-  %i.an = zext nneg i32 %2 to i64                 ; 2 uses
+  %i.an = zext nneg i32 %2 to i64                 ; 3 uses
   %i.ao = add nuw nsw i64 %i.al, 1
   %i.ap = add nsw i64 %i.ad, -1
   br label %bb.b
@@ -608,8 +608,6 @@ bb.ac:                                            ; preds = %bb.aa
   %i.mq = getelementptr inbounds nuw i8, ptr %0, i64 2864
   %i.mr = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.ms = add nsw i32 %3, 1
-  %smax = call i32 @llvm.smax.i32(i32 %2, i32 1)
-  %wide.trip.count862 = zext nneg i32 %smax to i64
   %i.mt = add nuw nsw i64 %i.al, 1
   %i.mu = add nsw i64 %i.ad, -1
   br label %bb.ad
@@ -1012,7 +1010,7 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be
 
 .thread662:                                       ; preds = %._crit_edge761, %._crit_edge751, %bb.aw, %bb.av, %bb.au, %.critedge593, %bb.al, %bb.an, %bb.ag, %bb.af, %bb.ad, %bb.ae
   %indvars.iv.next849 = add nuw nsw i64 %indvars.iv848, 1 ; 2 uses
-  %exitcond863.not = icmp eq i64 %indvars.iv.next849, %wide.trip.count862
+  %exitcond863.not = icmp eq i64 %indvars.iv.next849, %i.an
   br i1 %exitcond863.not, label %.critedge602, label %bb.ad, !llvm.loop !614
 
 bb.bh:                                            ; preds = %bb.a

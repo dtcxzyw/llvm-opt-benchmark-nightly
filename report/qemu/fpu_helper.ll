@@ -205,7 +205,7 @@ bb.a:
 
 iter.check:                                       ; preds = %.split
   %i.i = sext i32 %spec.store.select to i64       ; 5 uses
-  %i.j = sub nsw i64 16, %i.i                     ; 13 uses
+  %i.j = sub nsw i64 16, %i.i                     ; 12 uses
   %i.k = sub nsw i64 15, %i.i                     ; 2 uses
   %i.l = sub i32 15, %spec.store.select           ; 2 uses
   %i.m = trunc i64 %i.k to i32
@@ -256,7 +256,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.j, %n.vec
-  br i1 %cmp.n, label %iter.check76, label %vec.epilog.iter.check
+  br i1 %cmp.n, label %vector.scevcheck60, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.w, 0
@@ -286,7 +286,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n58 = icmp eq i64 %i.j, %n.vec54
-  br i1 %cmp.n58, label %iter.check76, label %vec.epilog.scalar.ph.preheader
+  br i1 %cmp.n58, label %vector.scevcheck60, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 15, %iter.check ], [ 15, %vector.memcheck ], [ %i.x, %vec.epilog.iter.check ], [ %i.aj, %vec.epilog.middle.block ]
@@ -452,13 +452,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i8 %i.dj, ptr %i.dk, align 1
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %.not.not = icmp sgt i64 %indvars.iv, %i.i
-  br i1 %.not.not, label %vec.epilog.scalar.ph, label %iter.check76, !llvm.loop !82
+  br i1 %.not.not, label %vec.epilog.scalar.ph, label %vector.scevcheck60, !llvm.loop !82
 
-iter.check76:                                     ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %min.iters.check63 = icmp ult i64 %i.j, 8
-  br i1 %min.iters.check63, label %..preheader_crit_edge.preheader, label %vector.scevcheck60
-
-vector.scevcheck60:                               ; preds = %iter.check76
+vector.scevcheck60:                               ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block
   %i.dl = sub nsw i64 15, %i.i                    ; 2 uses
   %i.dm = sub i32 31, %spec.store.select          ; 2 uses
   %i.dn = trunc i64 %i.dl to i32
@@ -541,8 +537,8 @@ vec.epilog.middle.block86:                        ; preds = %vec.epilog.vector.b
   %cmp.n87 = icmp eq i64 %i.j, %n.vec81
   br i1 %cmp.n87, label %.split27.us.split, label %..preheader_crit_edge.preheader
 
-..preheader_crit_edge.preheader:                  ; preds = %vector.memcheck61, %vector.scevcheck60, %iter.check76, %vec.epilog.iter.check78, %vec.epilog.middle.block86
-  %indvars.iv.1.ph = phi i64 [ 15, %iter.check76 ], [ 15, %vector.scevcheck60 ], [ 15, %vector.memcheck61 ], [ %i.dy, %vec.epilog.iter.check78 ], [ %i.ek, %vec.epilog.middle.block86 ]
+..preheader_crit_edge.preheader:                  ; preds = %vector.memcheck61, %vector.scevcheck60, %vec.epilog.iter.check78, %vec.epilog.middle.block86
+  %indvars.iv.1.ph = phi i64 [ 15, %vector.scevcheck60 ], [ 15, %vector.memcheck61 ], [ %i.dy, %vec.epilog.iter.check78 ], [ %i.ek, %vec.epilog.middle.block86 ]
   br label %..preheader_crit_edge
 
 .split27.us.split:                                ; preds = %..preheader_crit_edge, %middle.block73, %vec.epilog.middle.block86, %..preheader_crit_edge.us.preheader.1, %.preheader20.us.preheader

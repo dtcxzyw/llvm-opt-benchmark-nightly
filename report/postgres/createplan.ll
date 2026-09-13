@@ -205,27 +205,22 @@ bb.a:
 
 list_length.exit:                                 ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 4              ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4              ; 2 uses
   %i.c = icmp slt i32 %i.b, 2
   br i1 %i.c, label %list_length.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %list_length.exit
-  %i.d = zext nneg i32 %i.b to i64
+  %i.d = zext nneg i32 %i.b to i64                ; 3 uses
   %i.e = mul nuw nsw i64 %i.d, 24
   %i.f = tail call ptr @palloc(i64 noundef %i.e) #10 ; 5 uses
   %i.g = load i32, ptr %i.a, align 4
   %i.h = icmp sgt i32 %i.g, 0
-  br i1 %i.h, label %.lr.ph, label %.lr.ph79.preheader
+  br i1 %i.h, label %.lr.ph, label %.lr.ph82.preheader
 
 .lr.ph:                                           ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
   br label %bb.c
-
-.lr.ph79.preheader:                               ; preds = %bb.g, %bb.b
-  %smax = call i32 @llvm.smax.i32(i32 %i.b, i32 2)
-  %wide.trip.count = zext nneg i32 %smax to i64
-  br label %.lr.ph79
 
 bb.c:                                             ; preds = %.lr.ph, %bb.g
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 3 uses
@@ -269,14 +264,13 @@ bb.g:                                             ; preds = %bb.c, %bb.e, %bb.f
   %i.ab = load i32, ptr %i.a, align 4
   %i.ac = sext i32 %i.ab to i64
   %i.ad = icmp slt i64 %indvars.iv.next, %i.ac
-  br i1 %i.ad, label %bb.c, label %.lr.ph79.preheader, !llvm.loop !43
+  br i1 %i.ad, label %bb.c, label %.lr.ph82.preheader, !llvm.loop !43
 
-.lr.ph82.preheader:                               ; preds = %.thread
-  %wide.trip.count93 = zext nneg i32 %i.b to i64
-  br label %.lr.ph82
+.lr.ph82.preheader:                               ; preds = %bb.g, %bb.b
+  br label %.lr.ph79
 
-.lr.ph79:                                         ; preds = %.lr.ph79.preheader, %.thread
-  %indvars.iv86 = phi i64 [ 1, %.lr.ph79.preheader ], [ %indvars.iv.next87, %.thread ] ; 3 uses
+.lr.ph79:                                         ; preds = %.lr.ph82.preheader, %.thread
+  %indvars.iv86 = phi i64 [ %indvars.iv.next87, %.thread ], [ 1, %.lr.ph82.preheader ] ; 3 uses
   %i.ae = getelementptr inbounds nuw [24 x i8], ptr %i.f, i64 %indvars.iv86 ; 3 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.ae, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
@@ -323,17 +317,17 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.sroa.5.0..sroa_idx11 = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store <2 x i32> %i.af, ptr %.sroa.5.0..sroa_idx11, align 8
   %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next87, %wide.trip.count
-  br i1 %exitcond.not, label %.lr.ph82.preheader, label %.lr.ph79, !llvm.loop !45
+  %exitcond.not = icmp eq i64 %indvars.iv.next87, %i.d
+  br i1 %exitcond.not, label %.lr.ph82, label %.lr.ph79, !llvm.loop !45
 
-.lr.ph82:                                         ; preds = %.lr.ph82.preheader, %.lr.ph82
-  %indvars.iv89 = phi i64 [ 0, %.lr.ph82.preheader ], [ %indvars.iv.next90, %.lr.ph82 ] ; 2 uses
-  %.06681 = phi ptr [ null, %.lr.ph82.preheader ], [ %i.ax, %.lr.ph82 ]
+.lr.ph82:                                         ; preds = %.thread, %.lr.ph82
+  %indvars.iv89 = phi i64 [ %indvars.iv.next90, %.lr.ph82 ], [ 0, %.thread ] ; 2 uses
+  %.06681 = phi ptr [ %i.ax, %.lr.ph82 ], [ null, %.thread ]
   %i.av = getelementptr inbounds nuw [24 x i8], ptr %i.f, i64 %indvars.iv89
   %i.aw = load ptr, ptr %i.av, align 8
   %i.ax = call ptr @lappend(ptr noundef %.06681, ptr noundef %i.aw) #10 ; 2 uses
   %indvars.iv.next90 = add nuw nsw i64 %indvars.iv89, 1 ; 2 uses
-  %exitcond94.not = icmp eq i64 %indvars.iv.next90, %wide.trip.count93
+  %exitcond94.not = icmp eq i64 %indvars.iv.next90, %i.d
   br i1 %exitcond94.not, label %list_length.exit.thread, label %.lr.ph82, !llvm.loop !46
 
 list_length.exit.thread:                          ; preds = %.lr.ph82, %bb.a, %list_length.exit
@@ -736,11 +730,11 @@ declare void @llvm.assume(i1 noundef) #7
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #6
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #6

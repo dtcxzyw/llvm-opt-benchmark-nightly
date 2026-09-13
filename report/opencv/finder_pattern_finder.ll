@@ -204,7 +204,6 @@ bb.cv:                                            ; preds = %bb.cu
   %i.nc = fmul double %i.nb, 5.000000e-01
   %i.nd = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.ne = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %umax522 = tail call i64 @llvm.umax.i64(i64 %i.i, i64 3)
   br label %bb.cx
 
 .preheader430:                                    ; preds = %_ZNSt6vectorIN5zxing3RefINS0_6qrcode13FinderPatternEEESaIS4_EE9push_backERKS4_.exit
@@ -272,7 +271,7 @@ bb.dd:                                            ; preds = %bb.dc, %bb.cx
 
 _ZNSt6vectorIN5zxing3RefINS0_6qrcode13FinderPatternEEESaIS4_EE9push_backERKS4_.exit: ; preds = %_ZN5zxing3RefINS_6qrcode13FinderPatternEEC2ERKS3_.exit.i, %bb.dc, %bb.cy
   %i.ob = add nuw i64 %.0117486, 1                ; 2 uses
-  %exitcond523.not = icmp eq i64 %i.ob, %umax522
+  %exitcond523.not = icmp eq i64 %i.ob, %i.i
   br i1 %exitcond523.not, label %.preheader430, label %bb.cx, !llvm.loop !181
 
 ._crit_edge493:                                   ; preds = %bb.ei, %.preheader430

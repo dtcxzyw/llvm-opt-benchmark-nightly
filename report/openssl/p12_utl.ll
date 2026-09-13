@@ -14,7 +14,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #5
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #4
   %i.c = trunc i64 %i.b to i32
   br label %bb.c
 
@@ -27,7 +27,7 @@ bb.d:                                             ; preds = %bb.c
   %i.e = shl nuw nsw i32 %.026, 1                 ; 2 uses
   %i.f = add nuw nsw i32 %i.e, 2                  ; 2 uses
   %i.g = zext nneg i32 %i.f to i64
-  %i.h = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.g, ptr noundef nonnull @.str, i32 noundef 29) #6 ; 9 uses
+  %i.h = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.g, ptr noundef nonnull @.str, i32 noundef 29) #5 ; 9 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.h, label %.preheader
 
@@ -183,7 +183,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.019 = phi i32 [ %i.g, %bb.d ], [ %i.b, %bb.c ] ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 25 uses
   %i.i = zext nneg i32 %.019 to i64
-  %i.j = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.i, ptr noundef nonnull @.str, i32 noundef 60) #6 ; 6 uses
+  %i.j = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.i, ptr noundef nonnull @.str, i32 noundef 60) #5 ; 6 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %bb.f, label %.preheader
 
@@ -367,13 +367,13 @@ bb.f:                                             ; preds = %bb.e, %bb.a, %._cri
 define ptr @OPENSSL_utf82uni(ptr noundef %0, i32 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   store i64 0, ptr %i.a, align 8, !tbaa !32
   %i.b = icmp eq i32 %1, -1
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #5
+  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #4
   %i.d = trunc i64 %i.c to i32
   br label %bb.c
 
@@ -388,7 +388,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = zext nneg i32 %.04965 to i64
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %i.f
   %i.h = sub nsw i32 %.047, %.04965
-  %i.i = call i32 @UTF8_getc(ptr noundef %i.g, i32 noundef %i.h, ptr noundef nonnull %i.a) #6 ; 2 uses
+  %i.i = call i32 @UTF8_getc(ptr noundef %i.g, i32 noundef %i.h, ptr noundef nonnull %i.a) #5 ; 2 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %bb.d, label %bb.g
 
@@ -396,7 +396,7 @@ bb.d:                                             ; preds = %.lr.ph
   %i.k = shl nuw nsw i32 %.047, 1                 ; 2 uses
   %i.l = add nuw nsw i32 %i.k, 2                  ; 2 uses
   %i.m = zext nneg i32 %i.l to i64
-  %i.n = call noalias ptr @CRYPTO_malloc(i64 noundef %i.m, ptr noundef nonnull @.str, i32 noundef 29) #6 ; 8 uses
+  %i.n = call noalias ptr @CRYPTO_malloc(i64 noundef %i.m, ptr noundef nonnull @.str, i32 noundef 29) #5 ; 8 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %OPENSSL_asc2uni.exit, label %iter.check
 
@@ -515,12 +515,12 @@ bb.h:                                             ; preds = %bb.g
 ._crit_edge:                                      ; preds = %bb.h
   %i.au = add nuw nsw i32 %.152, 2                ; 2 uses
   %i.av = zext nneg i32 %i.au to i64
-  %i.aw = call noalias ptr @CRYPTO_malloc(i64 noundef %i.av, ptr noundef nonnull @.str, i32 noundef 120) #6 ; 3 uses
+  %i.aw = call noalias ptr @CRYPTO_malloc(i64 noundef %i.av, ptr noundef nonnull @.str, i32 noundef 120) #5 ; 3 uses
   %i.ax = icmp eq ptr %i.aw, null
   br i1 %i.ax, label %OPENSSL_asc2uni.exit, label %.lr.ph68
 
 ._crit_edge.thread:                               ; preds = %bb.c
-  %i.ay = tail call noalias ptr @CRYPTO_malloc(i64 noundef 2, ptr noundef nonnull @.str, i32 noundef 120) #6 ; 3 uses
+  %i.ay = tail call noalias ptr @CRYPTO_malloc(i64 noundef 2, ptr noundef nonnull @.str, i32 noundef 120) #5 ; 3 uses
   %i.az = icmp eq ptr %i.ay, null
   br i1 %i.az, label %OPENSSL_asc2uni.exit, label %._crit_edge69
 
@@ -530,7 +530,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ba = sext i32 %.15066 to i64
   %i.bb = getelementptr inbounds i8, ptr %0, i64 %i.ba
   %i.bc = sub nsw i32 %.047, %.15066
-  %i.bd = call i32 @UTF8_getc(ptr noundef %i.bb, i32 noundef %i.bc, ptr noundef nonnull %i.a) #6
+  %i.bd = call i32 @UTF8_getc(ptr noundef %i.bb, i32 noundef %i.bc, ptr noundef nonnull %i.a) #5
   %i.be = load i64, ptr %i.a, align 8, !tbaa !32  ; 5 uses
   %i.bf = icmp ugt i64 %i.be, 65535
   br i1 %i.bf, label %bb.i, label %bb.j
@@ -599,7 +599,7 @@ OPENSSL_asc2uni.exit.sink.split:                  ; preds = %bb.m, %bb.f
 
 OPENSSL_asc2uni.exit:                             ; preds = %bb.g, %OPENSSL_asc2uni.exit.sink.split, %._crit_edge.thread, %bb.f, %bb.d, %bb.m, %._crit_edge
   %.0 = phi ptr [ %i.cb, %bb.m ], [ null, %._crit_edge ], [ %i.n, %bb.f ], [ %.sink89, %OPENSSL_asc2uni.exit.sink.split ], [ null, %bb.d ], [ null, %._crit_edge.thread ], [ null, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret ptr %.0
 }
 
@@ -663,7 +663,7 @@ bb.e:                                             ; preds = %bb.d
 
 bmp_to_utf8.exit:                                 ; preds = %bb.b, %bb.e
   %.1.i = phi i64 [ %i.aa, %bb.e ], [ %i.m, %bb.b ]
-  %i.ab = tail call i32 @UTF8_putc(ptr noundef null, i32 noundef 4, i64 noundef %.1.i) #6
+  %i.ab = tail call i32 @UTF8_putc(ptr noundef null, i32 noundef 4, i64 noundef %.1.i) #5
   %.fr86 = freeze i32 %i.ab                       ; 3 uses
   %i.ac = icmp slt i32 %.fr86, 0
   br i1 %i.ac, label %bb.f, label %bb.g
@@ -680,13 +680,13 @@ bb.f:                                             ; preds = %bb.c, %bb.d, %.lr.p
 .thread83:                                        ; preds = %bb.f
   %i.ai = add nuw nsw i32 %i.ad, 1
   %i.aj = zext nneg i32 %i.ai to i64              ; 2 uses
-  %i.ak = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.aj, ptr noundef nonnull @.str, i32 noundef 60) #6 ; 2 uses
+  %i.ak = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.aj, ptr noundef nonnull @.str, i32 noundef 60) #5 ; 2 uses
   %i.al = icmp eq ptr %i.ak, null
   br i1 %i.al, label %OPENSSL_uni2asc.exit, label %iter.check
 
 .thread:                                          ; preds = %bb.f
   %i.am = zext nneg i32 %i.ad to i64              ; 2 uses
-  %i.an = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.am, ptr noundef nonnull @.str, i32 noundef 60) #6 ; 2 uses
+  %i.an = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.am, ptr noundef nonnull @.str, i32 noundef 60) #5 ; 2 uses
   %i.ao = icmp eq ptr %i.an, null
   br i1 %i.ao, label %OPENSSL_uni2asc.exit, label %iter.check
 
@@ -694,22 +694,22 @@ iter.check:                                       ; preds = %.thread83, %.thread
   %i.ap = phi i64 [ %i.am, %.thread ], [ %i.aj, %.thread83 ]
   %i.aq = phi ptr [ %i.an, %.thread ], [ %i.ak, %.thread83 ] ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 25 uses
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.ae, i64 2) ; 3 uses
+  %2 = add nsw i64 %i.ae, -2                      ; 3 uses
   %i.as = lshr exact i64 %2, 1
-  %i.at = add nuw nsw i64 %i.as, 1                ; 4 uses
-  %min.iters.check = icmp samesign ult i64 %2, 16
+  %i.at = add nuw i64 %i.as, 1                    ; 4 uses
+  %min.iters.check = icmp ult i64 %2, 16
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check105 = icmp samesign ult i64 %2, 32
+  %min.iters.check105 = icmp ult i64 %2, 32
   br i1 %min.iters.check105, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.au = and i64 %i.at, 15                       ; 2 uses
   %i.av = icmp eq i64 %i.au, 0
   %i.aw = select i1 %i.av, i64 16, i64 %i.au      ; 2 uses
-  %n.vec = sub nsw i64 %i.at, %i.aw               ; 3 uses
-  %i.ax = shl nsw i64 %n.vec, 1
+  %n.vec = sub i64 %i.at, %i.aw                   ; 3 uses
+  %i.ax = shl i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -793,8 +793,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %i.dm = and i64 %i.at, 7                        ; 2 uses
   %i.dn = icmp eq i64 %i.dm, 0
   %i.do = select i1 %i.dn, i64 8, i64 %i.dm
-  %n.vec106 = sub nsw i64 %i.at, %i.do            ; 2 uses
-  %i.dp = shl nsw i64 %n.vec106, 1
+  %n.vec106 = sub i64 %i.at, %i.do                ; 2 uses
+  %i.dp = shl i64 %n.vec106, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -892,7 +892,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %._cri
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.146 = phi i32 [ %i.fo, %bb.j ], [ %.045.lcssa, %bb.i ]
   %i.fp = zext nneg i32 %.146 to i64
-  %i.fq = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.fp, ptr noundef nonnull @.str, i32 noundef 210) #6 ; 6 uses
+  %i.fq = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.fp, ptr noundef nonnull @.str, i32 noundef 210) #5 ; 6 uses
   %i.fr = icmp eq ptr %i.fq, null
   br i1 %i.fr, label %OPENSSL_uni2asc.exit, label %.preheader
 
@@ -948,13 +948,13 @@ bb.o:                                             ; preds = %bb.n
 
 bmp_to_utf8.exit64:                               ; preds = %bb.l, %bb.o
   %.1.i60 = phi i64 [ %i.gs, %bb.o ], [ %i.ge, %bb.l ]
-  %i.gt = tail call i32 @UTF8_putc(ptr noundef nonnull %i.ft, i32 noundef 4, i64 noundef %.1.i60) #6
+  %i.gt = tail call i32 @UTF8_putc(ptr noundef nonnull %i.ft, i32 noundef 4, i64 noundef %.1.i60) #5
   %.fr = freeze i32 %i.gt                         ; 3 uses
   %i.gu = icmp slt i32 %.fr, 0
   br i1 %i.gu, label %bmp_to_utf8.exit64.thread, label %bb.p
 
 bmp_to_utf8.exit64.thread:                        ; preds = %bb.m, %bb.n, %.lr.ph94, %bmp_to_utf8.exit64
-  tail call void @CRYPTO_free(ptr noundef nonnull %i.fq, ptr noundef nonnull @.str, i32 noundef 218) #6
+  tail call void @CRYPTO_free(ptr noundef nonnull %i.fq, ptr noundef nonnull @.str, i32 noundef 218) #5
   br label %OPENSSL_uni2asc.exit
 
 bb.p:                                             ; preds = %bmp_to_utf8.exit64
@@ -1002,8 +1002,8 @@ declare void @CRYPTO_free(ptr noundef, ptr noundef, i32 noundef) local_unnamed_a
 ; Function Attrs: nounwind uwtable
 define i32 @i2d_PKCS12_bio(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @PKCS12_it() #6
-  %i.b = tail call i32 @ASN1_item_i2d_bio(ptr noundef %i.a, ptr noundef %0, ptr noundef %1) #6
+  %i.a = tail call ptr @PKCS12_it() #5
+  %i.b = tail call i32 @ASN1_item_i2d_bio(ptr noundef %i.a, ptr noundef %0, ptr noundef %1) #5
   ret i32 %i.b
 }
 
@@ -1014,8 +1014,8 @@ declare ptr @PKCS12_it() local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define i32 @i2d_PKCS12_fp(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @PKCS12_it() #6
-  %i.b = tail call i32 @ASN1_item_i2d_fp(ptr noundef %i.a, ptr noundef %0, ptr noundef %1) #6
+  %i.a = tail call ptr @PKCS12_it() #5
+  %i.b = tail call i32 @ASN1_item_i2d_fp(ptr noundef %i.a, ptr noundef %0, ptr noundef %1) #5
   ret i32 %i.b
 }
 
@@ -1029,20 +1029,20 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load ptr, ptr %1, align 8, !tbaa !19
-  %i.b = tail call ptr @ossl_pkcs12_get0_pkcs7ctx(ptr noundef %i.a) #6 ; 3 uses
+  %i.b = tail call ptr @ossl_pkcs12_get0_pkcs7ctx(ptr noundef %i.a) #5 ; 3 uses
   %.not12 = icmp eq ptr %i.b, null
   br i1 %.not12, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call ptr @ossl_pkcs7_ctx_get0_libctx(ptr noundef nonnull %i.b) #6
-  %i.d = tail call ptr @ossl_pkcs7_ctx_get0_propq(ptr noundef nonnull %i.b) #6
+  %i.c = tail call ptr @ossl_pkcs7_ctx_get0_libctx(ptr noundef nonnull %i.b) #5
+  %i.d = tail call ptr @ossl_pkcs7_ctx_get0_propq(ptr noundef nonnull %i.b) #5
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %.09 = phi ptr [ %i.c, %bb.c ], [ null, %bb.b ], [ null, %bb.a ]
   %.0 = phi ptr [ %i.d, %bb.c ], [ null, %bb.b ], [ null, %bb.a ]
-  %i.e = tail call ptr @PKCS12_it() #6
-  %i.f = tail call ptr @ASN1_item_d2i_bio_ex(ptr noundef %i.e, ptr noundef %0, ptr noundef %1, ptr noundef %.09, ptr noundef %.0) #6
+  %i.e = tail call ptr @PKCS12_it() #5
+  %i.f = tail call ptr @ASN1_item_d2i_bio_ex(ptr noundef %i.e, ptr noundef %0, ptr noundef %1, ptr noundef %.09, ptr noundef %.0) #5
   ret ptr %i.f
 }
 
@@ -1062,20 +1062,20 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load ptr, ptr %1, align 8, !tbaa !19
-  %i.b = tail call ptr @ossl_pkcs12_get0_pkcs7ctx(ptr noundef %i.a) #6 ; 3 uses
+  %i.b = tail call ptr @ossl_pkcs12_get0_pkcs7ctx(ptr noundef %i.a) #5 ; 3 uses
   %.not12 = icmp eq ptr %i.b, null
   br i1 %.not12, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call ptr @ossl_pkcs7_ctx_get0_libctx(ptr noundef nonnull %i.b) #6
-  %i.d = tail call ptr @ossl_pkcs7_ctx_get0_propq(ptr noundef nonnull %i.b) #6
+  %i.c = tail call ptr @ossl_pkcs7_ctx_get0_libctx(ptr noundef nonnull %i.b) #5
+  %i.d = tail call ptr @ossl_pkcs7_ctx_get0_propq(ptr noundef nonnull %i.b) #5
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %.09 = phi ptr [ %i.c, %bb.c ], [ null, %bb.b ], [ null, %bb.a ]
   %.0 = phi ptr [ %i.d, %bb.c ], [ null, %bb.b ], [ null, %bb.a ]
-  %i.e = tail call ptr @PKCS12_it() #6
-  %i.f = tail call ptr @ASN1_item_d2i_fp_ex(ptr noundef %i.e, ptr noundef %0, ptr noundef %1, ptr noundef %.09, ptr noundef %.0) #6
+  %i.e = tail call ptr @PKCS12_it() #5
+  %i.f = tail call ptr @ASN1_item_d2i_fp_ex(ptr noundef %i.e, ptr noundef %0, ptr noundef %1, ptr noundef %.09, ptr noundef %.0) #5
   ret ptr %i.f
 }
 
@@ -1083,16 +1083,12 @@ declare ptr @ASN1_item_d2i_fp_ex(ptr noundef, ptr noundef, ptr noundef, ptr noun
 
 declare i32 @UTF8_putc(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #3
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #4
-
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind willreturn memory(read) }
-attributes #6 = { nounwind }
+attributes #4 = { nounwind willreturn memory(read) }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

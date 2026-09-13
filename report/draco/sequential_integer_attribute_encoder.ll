@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
 .lr.ph438:                                        ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182
   %i.dw = getelementptr inbounds nuw i8, ptr %i.aw, i64 160 ; 4 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.aw, i64 88
-  %wide.trip.count.i189 = zext nneg i32 %4 to i64 ; 11 uses
+  %wide.trip.count.i189 = zext nneg i32 %4 to i64 ; 26 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %9, i64 12 ; 4 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 3 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
@@ -235,9 +235,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %11 = call i32 @llvm.umax.i32(i32 %4, i32 1)
-  %12 = zext nneg i32 %11 to i64                  ; 15 uses
-  %i.fb = shl nuw nsw i64 %12, 2
+  %i.fb = shl nuw nsw i64 %wide.trip.count.i189, 2
   %i.fc = and i64 %i.dt, 2147483647               ; 4 uses
   %i.fd = add nsw i64 %i.fc, -1
   %i.fe = mul nsw i64 %i.fd, %i.g                 ; 2 uses
@@ -247,7 +245,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %i.fi = shl nuw nsw i64 %i.g, 2
   %i.fj = mul i64 %i.fe, -4
   %i.fk = sub i64 %i.fj, %i.a
-  %i.fl = shl nuw nsw i64 %12, 2                  ; 2 uses
+  %i.fl = shl nuw nsw i64 %wide.trip.count.i189, 2 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.0351.0, i64 %i.fl
   %i.fm = add nsw i64 %i.fc, -1                   ; 2 uses
   %i.fn = mul nsw i64 %i.fm, %i.g
@@ -278,13 +276,13 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %n.vec709 = and i64 %wide.trip.count.i189, 2147483640 ; 3 uses
   %cmp.n721 = icmp eq i64 %n.vec709, %wide.trip.count.i189
   %min.iters.check683 = icmp ult i32 %4, 8
-  %n.vec685 = and i64 %12, 2147483640             ; 3 uses
-  %cmp.n694 = icmp eq i64 %n.vec685, %12
-  %xtraiter785 = and i64 %12, 3                   ; 2 uses
+  %n.vec685 = and i64 %wide.trip.count.i189, 2147483640 ; 3 uses
+  %cmp.n694 = icmp eq i64 %n.vec685, %wide.trip.count.i189
+  %xtraiter785 = and i64 %wide.trip.count.i189, 3 ; 2 uses
   %lcmp.mod786.not = icmp eq i64 %xtraiter785, 0
   %min.iters.check670 = icmp ult i32 %4, 4
-  %n.vec672 = and i64 %12, 2147483644             ; 3 uses
-  %cmp.n678 = icmp eq i64 %n.vec672, %12
+  %n.vec672 = and i64 %wide.trip.count.i189, 2147483644 ; 3 uses
+  %cmp.n678 = icmp eq i64 %n.vec672, %wide.trip.count.i189
   %min.iters.check655 = icmp ult i32 %4, 8
   %i.ge = sub i64 %i.ef, %i.eo
   %diff.check646.a = icmp ugt i64 %i.ge, -32
@@ -293,11 +291,11 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %n.vec657 = and i64 %wide.trip.count.i189, 2147483640 ; 3 uses
   %cmp.n667 = icmp eq i64 %n.vec657, %wide.trip.count.i189
   %min.iters.check = icmp ult i32 %4, 8
-  %n.vec = and i64 %12, 2147483640                ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %12
-  %xtraiter787 = and i64 %12, 1
+  %n.vec = and i64 %wide.trip.count.i189, 2147483640 ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i189
+  %xtraiter787 = and i64 %wide.trip.count.i189, 1
   %lcmp.mod788.not = icmp eq i64 %xtraiter787, 0
-  %i.gf = add nsw i64 %12, -1
+  %i.gf = add nsw i64 %wide.trip.count.i189, -1
   br label %bb.ab
 
 .preheader:                                       ; preds = %_ZZN5draco56MeshPredictionSchemeConstrainedMultiParallelogramEncoderIiNS_37PredictionSchemeWrapEncodingTransformIiiEENS_24MeshPredictionSchemeDataINS_24MeshAttributeCornerTableEEEE23ComputeCorrectionValuesEPKiPiiiPKNS_9IndexTypeIjNS_20PointIndex_tag_type_EEEEN23PredictionConfigurationD2Ev.exit, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182
@@ -700,7 +698,7 @@ bb.az:                                            ; preds = %_ZNSt6vectorIiSaIiE
   br label %.lr.ph419
 
 .lr.ph413.preheader:                              ; preds = %.preheader375
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0351.0, i8 0, i64 %i.fb, i1 false), !tbaa !96
+  call void @llvm.memset.p0.i64(ptr align 4 %.sroa.0351.0, i8 0, i64 %i.fb, i1 false), !tbaa !96
   br label %.lr.ph419.preheader
 
 .preheader373:                                    ; preds = %bb.ba
@@ -794,7 +792,7 @@ scalar.ph682.prol:                                ; preds = %scalar.ph682.prehea
 
 scalar.ph682.prol.loopexit:                       ; preds = %scalar.ph682.prol, %scalar.ph682.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph682.preheader ], [ %indvars.iv.next.prol, %scalar.ph682.prol ]
-  %i.rs = sub nsw i64 %indvars.iv.ph, %12
+  %i.rs = sub nsw i64 %indvars.iv.ph, %wide.trip.count.i189
   %i.rt = icmp ugt i64 %i.rs, -4
   br i1 %i.rt, label %._crit_edge416, label %scalar.ph682
 
@@ -835,7 +833,7 @@ scalar.ph682:                                     ; preds = %scalar.ph682.prol.l
   %i.sr = add nsw i32 %i.sq, %i.so
   store i32 %i.sr, ptr %i.sp, align 4, !tbaa !96
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %12
+  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count.i189
   br i1 %exitcond.not.3, label %._crit_edge416, label %scalar.ph682, !llvm.loop !424
 
 bb.ba:                                            ; preds = %.lr.ph419, %._crit_edge416
@@ -959,7 +957,7 @@ middle.block666:                                  ; preds = %vector.body658
   %i.ur = sdiv i32 %i.uq, %.0131425
   store i32 %i.ur, ptr %i.up, align 4, !tbaa !96
   %indvars.iv.next484 = add nuw nsw i64 %indvars.iv483, 1 ; 2 uses
-  %exitcond488.not.a = icmp eq i64 %indvars.iv.next484, %12
+  %exitcond488.not.a = icmp eq i64 %indvars.iv.next484, %wide.trip.count.i189
   br i1 %exitcond488.not.a, label %.lr.ph.i228.preheader, label %.lr.ph422, !llvm.loop !428
 
 bb.bb:                                            ; preds = %.noexc237
@@ -1362,7 +1360,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.zx = getelementptr inbounds nuw [4 x i8], ptr %.pre509, i64 %indvars.iv.next492
   store i32 %.0.i249.1, ptr %i.zx, align 4, !tbaa !96
   %indvars.iv.next492.1 = add nuw nsw i64 %indvars.iv491, 2 ; 2 uses
-  %exitcond496.not.1 = icmp eq i64 %indvars.iv.next492.1, %12
+  %exitcond496.not.1 = icmp eq i64 %indvars.iv.next492.1, %wide.trip.count.i189
   br i1 %exitcond496.not.1, label %._crit_edge430, label %scalar.ph, !llvm.loop !432
 
 bb.cp:                                            ; preds = %._crit_edge430
@@ -1765,7 +1763,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
 
 .lr.ph432:                                        ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182
   %i.dw = getelementptr inbounds nuw i8, ptr %i.aw, i64 24 ; 4 uses
-  %wide.trip.count.i187 = zext nneg i32 %4 to i64 ; 11 uses
+  %wide.trip.count.i187 = zext nneg i32 %4 to i64 ; 26 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %9, i64 12 ; 4 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 3 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
@@ -1795,9 +1793,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %11 = call i32 @llvm.umax.i32(i32 %4, i32 1)
-  %12 = zext nneg i32 %11 to i64                  ; 15 uses
-  %i.fa = shl nuw nsw i64 %12, 2
+  %i.fa = shl nuw nsw i64 %wide.trip.count.i187, 2
   %i.fb = and i64 %i.dt, 2147483647               ; 4 uses
   %i.fc = add nsw i64 %i.fb, -1
   %i.fd = mul nsw i64 %i.fc, %i.g                 ; 2 uses
@@ -1807,7 +1803,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %i.fh = shl nuw nsw i64 %i.g, 2
   %i.fi = mul i64 %i.fd, -4
   %i.fj = sub i64 %i.fi, %i.a
-  %i.fk = shl nuw nsw i64 %12, 2                  ; 2 uses
+  %i.fk = shl nuw nsw i64 %wide.trip.count.i187, 2 ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.0344.0, i64 %i.fk
   %i.fl = add nsw i64 %i.fb, -1                   ; 2 uses
   %i.fm = mul nsw i64 %i.fl, %i.g
@@ -1838,13 +1834,13 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %n.vec704 = and i64 %wide.trip.count.i187, 2147483640 ; 3 uses
   %cmp.n716 = icmp eq i64 %n.vec704, %wide.trip.count.i187
   %min.iters.check678 = icmp ult i32 %4, 8
-  %n.vec680 = and i64 %12, 2147483640             ; 3 uses
-  %cmp.n689 = icmp eq i64 %n.vec680, %12
-  %xtraiter780 = and i64 %12, 3                   ; 2 uses
+  %n.vec680 = and i64 %wide.trip.count.i187, 2147483640 ; 3 uses
+  %cmp.n689 = icmp eq i64 %n.vec680, %wide.trip.count.i187
+  %xtraiter780 = and i64 %wide.trip.count.i187, 3 ; 2 uses
   %lcmp.mod781.not = icmp eq i64 %xtraiter780, 0
   %min.iters.check665 = icmp ult i32 %4, 4
-  %n.vec667 = and i64 %12, 2147483644             ; 3 uses
-  %cmp.n673 = icmp eq i64 %n.vec667, %12
+  %n.vec667 = and i64 %wide.trip.count.i187, 2147483644 ; 3 uses
+  %cmp.n673 = icmp eq i64 %n.vec667, %wide.trip.count.i187
   %min.iters.check650 = icmp ult i32 %4, 8
   %i.gd = sub i64 %i.ee, %i.en
   %diff.check641.a = icmp ugt i64 %i.gd, -32
@@ -1853,11 +1849,11 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182:            ; preds = %_ZSt6fill_nIPimiET_
   %n.vec652 = and i64 %wide.trip.count.i187, 2147483640 ; 3 uses
   %cmp.n662 = icmp eq i64 %n.vec652, %wide.trip.count.i187
   %min.iters.check = icmp ult i32 %4, 8
-  %n.vec = and i64 %12, 2147483640                ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %12
-  %xtraiter782 = and i64 %12, 1
+  %n.vec = and i64 %wide.trip.count.i187, 2147483640 ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i187
+  %xtraiter782 = and i64 %wide.trip.count.i187, 1
   %lcmp.mod783.not = icmp eq i64 %xtraiter782, 0
-  %i.ge = add nsw i64 %12, -1
+  %i.ge = add nsw i64 %wide.trip.count.i187, -1
   br label %bb.ab
 
 .preheader:                                       ; preds = %_ZZN5draco56MeshPredictionSchemeConstrainedMultiParallelogramEncoderIiNS_37PredictionSchemeWrapEncodingTransformIiiEENS_24MeshPredictionSchemeDataINS_11CornerTableEEEE23ComputeCorrectionValuesEPKiPiiiPKNS_9IndexTypeIjNS_20PointIndex_tag_type_EEEEN23PredictionConfigurationD2Ev.exit, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit182
@@ -2260,7 +2256,7 @@ bb.az:                                            ; preds = %_ZNSt6vectorIiSaIiE
   br label %.lr.ph413
 
 .lr.ph.preheader:                                 ; preds = %.preheader368
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0344.0, i8 0, i64 %i.fa, i1 false), !tbaa !96
+  call void @llvm.memset.p0.i64(ptr align 4 %.sroa.0344.0, i8 0, i64 %i.fa, i1 false), !tbaa !96
   br label %.lr.ph413.preheader
 
 .preheader366:                                    ; preds = %bb.ba
@@ -2354,7 +2350,7 @@ scalar.ph677.prol:                                ; preds = %scalar.ph677.prehea
 
 scalar.ph677.prol.loopexit:                       ; preds = %scalar.ph677.prol, %scalar.ph677.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph677.preheader ], [ %indvars.iv.next.prol, %scalar.ph677.prol ]
-  %i.qe = sub nsw i64 %indvars.iv.ph, %12
+  %i.qe = sub nsw i64 %indvars.iv.ph, %wide.trip.count.i187
   %i.qf = icmp ugt i64 %i.qe, -4
   br i1 %i.qf, label %._crit_edge410, label %scalar.ph677
 
@@ -2395,7 +2391,7 @@ scalar.ph677:                                     ; preds = %scalar.ph677.prol.l
   %i.rd = add nsw i32 %i.rc, %i.ra
   store i32 %i.rd, ptr %i.rb, align 4, !tbaa !96
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %12
+  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count.i187
   br i1 %exitcond.not.3, label %._crit_edge410, label %scalar.ph677, !llvm.loop !655
 
 bb.ba:                                            ; preds = %.lr.ph413, %._crit_edge410
@@ -2519,7 +2515,7 @@ middle.block661:                                  ; preds = %vector.body653
   %i.td = sdiv i32 %i.tc, %.0131419
   store i32 %i.td, ptr %i.tb, align 4, !tbaa !96
   %indvars.iv.next478 = add nuw nsw i64 %indvars.iv477, 1 ; 2 uses
-  %exitcond482.not.a = icmp eq i64 %indvars.iv.next478, %12
+  %exitcond482.not.a = icmp eq i64 %indvars.iv.next478, %wide.trip.count.i187
   br i1 %exitcond482.not.a, label %.lr.ph.i221.preheader, label %.lr.ph416, !llvm.loop !659
 
 bb.bb:                                            ; preds = %.noexc230
@@ -2922,7 +2918,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.yj = getelementptr inbounds nuw [4 x i8], ptr %.pre503, i64 %indvars.iv.next486
   store i32 %.0.i242.1, ptr %i.yj, align 4, !tbaa !96
   %indvars.iv.next486.1 = add nuw nsw i64 %indvars.iv485, 2 ; 2 uses
-  %exitcond490.not.1 = icmp eq i64 %indvars.iv.next486.1, %12
+  %exitcond490.not.1 = icmp eq i64 %indvars.iv.next486.1, %wide.trip.count.i187
   br i1 %exitcond490.not.1, label %._crit_edge424, label %scalar.ph, !llvm.loop !663
 
 bb.cp:                                            ; preds = %._crit_edge424
@@ -3323,9 +3319,6 @@ declare i32 @llvm.smax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #14

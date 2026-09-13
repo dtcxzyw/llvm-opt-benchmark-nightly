@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %bb.i
   %i.fz = icmp slt <2 x i32> %i.fw, splat (i32 -2)
   %i.ga = select <2 x i1> %i.fz, <2 x i32> zeroinitializer, <2 x i32> %i.fx
   %i.gb = select <2 x i1> %i.fy, <2 x i32> %i.ba, <2 x i32> %i.ga ; 5 uses
-  %i.gc = sub <2 x i32> %i.gb, %i.fs              ; 5 uses
-  %i.gd = add nuw nsw <2 x i32> %i.gc, splat (i32 1) ; 3 uses
+  %i.gc = sub <2 x i32> %i.gb, %i.fs              ; 4 uses
+  %i.gd = add nuw <2 x i32> %i.gc, splat (i32 1)  ; 3 uses
   %i.ge = zext <2 x i32> %i.gd to <2 x i64>
   tail call void @free(ptr noundef nonnull %i.cd) #14
   %i.gf = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !123
@@ -299,7 +299,7 @@ bb.q:                                             ; preds = %bb.p, %._crit_edge4
   br i1 %or.cond, label %bb.ac, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.ia = extractelement <2 x i32> %i.gd, i64 0   ; 11 uses
+  %i.ia = extractelement <2 x i32> %i.gd, i64 0   ; 12 uses
   %i.ib = zext i32 %i.ia to i64
   %i.ic = extractelement <2 x i32> %i.gd, i64 1
   %i.id = zext i32 %i.ic to i64
@@ -311,8 +311,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ih, label %bb.ac, label %.preheader445
 
 .preheader445:                                    ; preds = %bb.r
-  %i.ii = extractelement <2 x i32> %i.gb, i64 1   ; 2 uses
-  %i.ij = extractelement <2 x i32> %i.fs, i64 1   ; 4 uses
+  %i.ii = extractelement <2 x i32> %i.gb, i64 1   ; 3 uses
+  %i.ij = extractelement <2 x i32> %i.fs, i64 1   ; 5 uses
   %.not393463 = icmp sgt i32 %i.ij, %i.ii
   br i1 %.not393463, label %._crit_edge465.split, label %.preheader444.lr.ph
 
@@ -334,7 +334,7 @@ bb.r:                                             ; preds = %bb.q
   %min.iters.check557 = icmp ult i32 %i.ip, 31
   %i.it = zext i32 %i.ia to i64                   ; 2 uses
   %i.iu = and i64 %i.it, 28
-  %n.vec559 = and i64 %i.it, 2147483616           ; 4 uses
+  %n.vec559 = and i64 %i.it, 4294967264           ; 4 uses
   %i.iv = add nsw i64 %n.vec559, %i.im            ; 2 uses
   %broadcast.splatinsert562 = insertelement <8 x i32> poison, i32 %i.ar, i64 0
   %broadcast.splat563 = shufflevector <8 x i32> %broadcast.splatinsert562, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
@@ -346,8 +346,8 @@ bb.r:                                             ; preds = %bb.q
   %i.iw = zext i32 %i.ia to i64
   %cmp.n579 = icmp eq i64 %n.vec559, %i.iw
   %min.epilog.iters.check = icmp eq i64 %i.iu, 0
-  %i.ix = and i32 %i.ia, 2147483644               ; 2 uses
-  %n.vec581 = zext nneg i32 %i.ix to i64          ; 2 uses
+  %i.ix = and i32 %i.ia, -4                       ; 2 uses
+  %n.vec581 = zext i32 %i.ix to i64               ; 2 uses
   %i.iy = add nsw i64 %n.vec581, %i.im
   %broadcast.splatinsert584 = insertelement <4 x i32> poison, i32 %i.ar, i64 0
   %broadcast.splat585 = shufflevector <4 x i32> %broadcast.splatinsert584, <4 x i32> poison, <4 x i32> zeroinitializer
@@ -551,16 +551,14 @@ bb.w:                                             ; preds = %bb.v
 
 .preheader.preheader:                             ; preds = %bb.w, %bb.v
   %.4 = phi nsz double [ %.3, %bb.v ], [ %i.ma, %bb.w ] ; 2 uses
-  %14 = add nuw <2 x i32> %i.gc, splat (i32 1)    ; 2 uses
-  %15 = extractelement <2 x i32> %14, i64 1
-  %wide.trip.count505 = zext i32 %15 to i64
-  %16 = extractelement <2 x i32> %14, i64 0
-  %wide.trip.count499 = zext i32 %16 to i64
+  %14 = add i32 %i.ii, 1
+  %15 = sub i32 %14, %i.ij
+  %wide.trip.count499 = zext i32 %15 to i64
   %i.mc = extractelement <2 x i32> %i.gc, i64 0
   %i.md = zext i32 %i.ia to i64
   %min.iters.check601 = icmp ult i32 %i.mc, 7
-  %i.me = and i32 %i.ia, 2147483640               ; 2 uses
-  %n.vec603 = zext nneg i32 %i.me to i64          ; 2 uses
+  %i.me = and i32 %i.ia, -8                       ; 2 uses
+  %n.vec603 = zext i32 %i.me to i64               ; 2 uses
   %broadcast.splat607 = shufflevector <2 x float> %i.v, <2 x float> poison, <8 x i32> zeroinitializer
   %broadcast.splat609 = shufflevector <2 x float> %i.v, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %broadcast.splatinsert610 = insertelement <8 x float> poison, float %i.ai, i64 0
@@ -572,6 +570,7 @@ bb.w:                                             ; preds = %bb.v
   %i.mg = extractelement <2 x float> %i.v, i64 0
   %i.mh = extractelement <2 x float> %i.v, i64 1
   %i.mi = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.aj
+  %16 = zext i32 %i.ia to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge469
@@ -627,7 +626,7 @@ scalar.ph600.preheader:                           ; preds = %.preheader, %middle
 
 ._crit_edge469:                                   ; preds = %scalar.ph600, %middle.block621
   %indvars.iv.next502 = add nuw nsw i64 %indvars.iv501, 1 ; 2 uses
-  %exitcond506.not = icmp eq i64 %indvars.iv.next502, %wide.trip.count505
+  %exitcond506.not = icmp eq i64 %indvars.iv.next502, %wide.trip.count499
   br i1 %exitcond506.not, label %._crit_edge472.split, label %.preheader
 
 scalar.ph600:                                     ; preds = %scalar.ph600.preheader, %scalar.ph600
@@ -652,7 +651,7 @@ scalar.ph600:                                     ; preds = %scalar.ph600.prehea
   %i.np = fmul reassoc nsz arcp contract afn float %i.no, %i.no
   store float %i.np, ptr %i.nd, align 8, !tbaa !22
   %indvars.iv.next497 = add nuw nsw i64 %indvars.iv496, 1 ; 2 uses
-  %exitcond500.not = icmp eq i64 %indvars.iv.next497, %wide.trip.count499
+  %exitcond500.not = icmp eq i64 %indvars.iv.next497, %16
   br i1 %exitcond500.not, label %._crit_edge469, label %scalar.ph600, !llvm.loop !201
 
 bb.x:                                             ; preds = %._crit_edge472.split

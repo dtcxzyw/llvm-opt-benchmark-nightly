@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.not122 = icmp ne i32 %i.e, 0
   %i.v = add nsw i32 %1, -1
-  %wide.trip.count178 = zext nneg i32 %2 to i64
+  %wide.trip.count178 = zext nneg i32 %2 to i64   ; 2 uses
   %wide.trip.count183 = zext nneg i32 %2 to i64
   br label %bb.g
 
@@ -352,10 +352,6 @@ bb.j:                                             ; preds = %.lr.ph143, %bb.l
   %wide.trip.count197 = zext nneg i32 %indvars.iv194 to i64
   br label %bb.k
 
-.lr.ph155.preheader:                              ; preds = %bb.k, %.preheader127
-  %wide.trip.count202 = zext nneg i32 %2 to i64
-  br label %.lr.ph155
-
 bb.k:                                             ; preds = %.lr.ph153, %bb.k
   %indvars.iv191 = phi i64 [ 0, %.lr.ph153 ], [ %indvars.iv.next192, %bb.k ] ; 2 uses
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv191
@@ -365,13 +361,16 @@ bb.k:                                             ; preds = %.lr.ph153, %bb.k
   %exitcond198.not = icmp eq i64 %indvars.iv.next192, %wide.trip.count197
   br i1 %exitcond198.not, label %.lr.ph155.preheader, label %bb.k, !llvm.loop !36
 
+.lr.ph155.preheader:                              ; preds = %bb.k, %.preheader127
+  br label %.lr.ph155
+
 .lr.ph155:                                        ; preds = %.lr.ph155.preheader, %.lr.ph155
-  %indvars.iv199 = phi i64 [ 0, %.lr.ph155.preheader ], [ %indvars.iv.next200, %.lr.ph155 ] ; 2 uses
+  %indvars.iv199 = phi i64 [ %indvars.iv.next200, %.lr.ph155 ], [ 0, %.lr.ph155.preheader ] ; 2 uses
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %indvars.iv199
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !28
   tail call void @Cudd_RecursiveDeref(ptr noundef %0, ptr noundef %i.cf) #6
   %indvars.iv.next200 = add nuw nsw i64 %indvars.iv199, 1 ; 2 uses
-  %exitcond203.not = icmp eq i64 %indvars.iv.next200, %wide.trip.count202
+  %exitcond203.not = icmp eq i64 %indvars.iv.next200, %wide.trip.count178
   br i1 %exitcond203.not, label %._crit_edge156, label %.lr.ph155, !llvm.loop !37
 
 ._crit_edge156:                                   ; preds = %.lr.ph155

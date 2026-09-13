@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i: ; preds = %bb.a
-  %i.b = zext nneg i32 %2 to i64                  ; 2 uses
+  %i.b = zext nneg i32 %2 to i64                  ; 3 uses
   %.not.i.i.i.i = icmp ne i32 %2, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.c = mul nuw nsw i64 %i.b, 12                 ; 2 uses
@@ -234,8 +234,7 @@ _ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit: ; preds = %.l
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.l = add nsw i32 %2, -1
-  %3 = zext nneg i32 %i.l to i64
-  %wide.trip.count = zext nneg i32 %2 to i64
+  %wide.trip.count = zext nneg i32 %i.l to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12
@@ -334,7 +333,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11
 
 _ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11: ; preds = %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit, %bb.i, %bb.l
-  %.not = icmp eq i64 %indvars.iv, %3
+  %.not = icmp eq i64 %indvars.iv, %wide.trip.count
   br i1 %.not, label %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12, label %bb.m
 
 bb.m:                                             ; preds = %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11
@@ -380,7 +379,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 _ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12: ; preds = %bb.q, %bb.n, %bb.m, %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.b
   br i1 %exitcond.not, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit, label %bb.d, !llvm.loop !137
 
 _ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit: ; preds = %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12, %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit

@@ -206,7 +206,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   br label %.loopexit236
 
-.loopexit236:                                     ; preds = %.preheader, %.preheader.preheader459, %bb.q, %bb.s, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs8K4cjrcxBsw_6hir_ty.exit197, %bb.g, %.thread215, %.thread215
+.loopexit236:                                     ; preds = %.lr.ph.a, %.preheader.preheader459, %bb.q, %bb.s, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs8K4cjrcxBsw_6hir_ty.exit197, %bb.g, %.thread215, %.thread215
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
   call void @_RNvMNtNtCsileJQcQObtj_7hir_def10expr_store4pathNtB2_4Path8segments(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.t, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %0)
@@ -446,7 +446,7 @@ bb.p:                                             ; preds = %.thread215
 
 .preheader.preheader459:                          ; preds = %.preheader.preheader
   %exitcond.not494 = icmp eq i8 %i.dp, 1
-  br i1 %exitcond.not494, label %.loopexit236, label %.lr.ph.a
+  br i1 %exitcond.not494, label %.loopexit236, label %bb.u
 
 bb.q:                                             ; preds = %.thread215
   %i.ds = tail call noundef i8 @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty7displayNtB5_12HirFormatter9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(192) %1, ptr noundef nonnull @1685, ptr noundef nonnull inttoptr (i64 11 to ptr)) ; 2 uses
@@ -474,22 +474,18 @@ bb.s:                                             ; preds = %bb.p
   %.not158 = icmp eq i8 %i.ee, -2
   br i1 %.not158, label %.loopexit236, label %.loopexit237
 
-.preheader:                                       ; preds = %bb.t
-  %exitcond.not = icmp eq i8 %i.ef, %i.dp
-  br i1 %exitcond.not, label %.loopexit236, label %.lr.ph.a, !llvm.loop !10397
+.lr.ph.a:                                         ; preds = %bb.t
+  %i.ef = add i8 %.sroa.0120.0496, 1              ; 2 uses
+  %.not155 = icmp eq i8 %i.ef, %i.dp
+  br i1 %.not155, label %.loopexit236, label %bb.u, !llvm.loop !10397
 
-.lr.ph.a:                                         ; preds = %.preheader.preheader459, %.preheader
-  %.sroa.0120.0495 = phi i8 [ %i.ef, %.preheader ], [ 1, %.preheader.preheader459 ] ; 2 uses
-  %i.ef = add i8 %.sroa.0120.0495, 1              ; 2 uses
-  %.not155 = icmp eq i8 %.sroa.0120.0495, 0
-  br i1 %.not155, label %bb.t, label %bb.u
-
-bb.t:                                             ; preds = %bb.u, %.lr.ph.a
+bb.t:                                             ; preds = %bb.u
   %i.eg = tail call noundef i8 @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty7displayNtB5_12HirFormatter9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(192) %1, ptr noundef nonnull @1684, ptr noundef nonnull inttoptr (i64 11 to ptr)) ; 2 uses
   %.not157 = icmp eq i8 %i.eg, -2
-  br i1 %.not157, label %.preheader, label %.loopexit237, !llvm.loop !10397
+  br i1 %.not157, label %.lr.ph.a, label %.loopexit237, !llvm.loop !10397
 
-bb.u:                                             ; preds = %.lr.ph.a
+bb.u:                                             ; preds = %.preheader.preheader459, %.lr.ph.a
+  %.sroa.0120.0496 = phi i8 [ %i.ef, %.lr.ph.a ], [ 1, %.preheader.preheader459 ]
   %i.eh = tail call noundef i8 @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty7displayNtB5_12HirFormatter9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(192) %1, ptr noundef nonnull @1683, ptr noundef nonnull inttoptr (i64 5 to ptr)) ; 2 uses
   %.not156 = icmp eq i8 %i.eh, -2
   br i1 %.not156, label %bb.t, label %.loopexit237

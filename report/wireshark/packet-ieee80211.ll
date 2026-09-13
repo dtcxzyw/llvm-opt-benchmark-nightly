@@ -205,7 +205,7 @@ bb.a:
 define internal fastcc void @dissect_ista_availability_window(ptr noundef %0, ptr noundef %1, i32 noundef range(i32 0, 2147483647) %2) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [513 x i8], align 16              ; 12 uses
-  %i.b = alloca [8 x i8], align 8                 ; 13 uses
+  %i.b = alloca [8 x i8], align 8                 ; 12 uses
   %i.c = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef 1)
   %i.d = and i16 %i.c, 511                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
@@ -251,7 +251,7 @@ bb.a:
   %i.w = zext nneg i32 %i.v to i64
   %i.x = getelementptr i8, ptr %i.a, i64 %i.w
   store i8 0, ptr %i.x, align 8
-  %i.y = and i32 %i.i, 7                          ; 9 uses
+  %i.y = and i32 %i.i, 7                          ; 8 uses
   %.not55 = icmp eq i32 %i.y, 0
   br i1 %.not55, label %bb.j, label %bb.b
 
@@ -331,7 +331,7 @@ bb.b:                                             ; preds = %._crit_edge
 
 ._crit_edge12:                                    ; preds = %.lr.ph11.prol.loopexit, %.lr.ph11, %bb.b
   %.150.lcssa = phi i32 [ %i.aa, %bb.b ], [ %i.i, %.lr.ph11 ], [ %i.i, %.lr.ph11.prol.loopexit ]
-  %.1.lcssa = phi i32 [ %i.ab, %bb.b ], [ %.lcssa.unr, %.lr.ph11.prol.loopexit ], [ %i.bj, %.lr.ph11 ] ; 8 uses
+  %.1.lcssa = phi i32 [ %i.ab, %bb.b ], [ %.lcssa.unr, %.lr.ph11.prol.loopexit ], [ %i.bj, %.lr.ph11 ] ; 7 uses
   %i.bk = zext nneg i32 %.150.lcssa to i64
   %i.bl = getelementptr i8, ptr %i.a, i64 %i.bk
   store i8 0, ptr %i.bl, align 1
@@ -401,18 +401,9 @@ bb.h:                                             ; preds = %bb.g
   %i.cs = or disjoint i8 %i.cr, 48
   %i.ct = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   store i8 %i.cs, ptr %i.ct, align 2
-  %exitcond32.not.6 = icmp eq i32 %i.y, 1
-  br i1 %exitcond32.not.6, label %bb.i, label %3
-
-3:                                                ; preds = %bb.h
-  %4 = trunc i32 %.1.lcssa to i8
-  %5 = lshr i8 %4, 7
-  %6 = or disjoint i8 %5, 48
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 7
-  store i8 %6, ptr %7, align 1
   br label %bb.i
 
-bb.i:                                             ; preds = %3, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %._crit_edge12
+bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %._crit_edge12
   %i.cu = getelementptr i8, ptr %i.b, i64 %wide.trip.count31
   store i8 0, ptr %i.cu, align 1
   br label %bb.j

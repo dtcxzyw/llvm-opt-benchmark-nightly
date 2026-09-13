@@ -14,7 +14,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree nosync nounwind memory(argmem: readwrite) uwtable
 define void @Ptngc_bwt_merge_sort_inner(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = sub nsw i32 %4, %3                       ; 4 uses
+  %i.a = sub nsw i32 %4, %3                       ; 3 uses
   %i.b = icmp sgt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %compare_index.exit.thread
 
@@ -131,7 +131,7 @@ compare_index.exit:                               ; preds = %.lr.ph.i
   br i1 %i.bh, label %.lr.ph.preheader, label %compare_index.exit.thread
 
 .lr.ph.preheader:                                 ; preds = %bb.e, %compare_index.exit
-  %wide.trip.count = zext nneg i32 %i.a to i64
+  %wide.trip.count = zext nneg i32 %i.a to i64    ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
@@ -288,8 +288,7 @@ bb.o:                                             ; preds = %bb.g, %compare_inde
 ._crit_edge:                                      ; preds = %bb.o
   %i.ea = sext i32 %3 to i64
   %i.eb = getelementptr inbounds [4 x i8], ptr %0, i64 %i.ea
-  %7 = zext nneg i32 %i.a to i64
-  %i.ec = shl nuw nsw i64 %7, 2
+  %i.ec = shl nuw nsw i64 %wide.trip.count, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.eb, ptr nonnull align 4 %6, i64 %i.ec, i1 false)
   br label %compare_index.exit.thread
 

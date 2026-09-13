@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.al, label %bb.p, label %.preheader330.preheader
 
 .preheader330.preheader:                          ; preds = %bb.o
-  %wide.trip.count = zext nneg i32 %2 to i64      ; 4 uses
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 6 uses
   %min.iters.check = icmp ult i32 %2, 4
   br i1 %min.iters.check, label %.preheader330.preheader470, label %vector.ph
 
@@ -409,9 +409,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.lr.ph340.preheader
 
 .lr.ph340.preheader:                              ; preds = %bb.ad, %bb.ae
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 2)
-  %wide.trip.count384 = zext nneg i32 %smax to i64
-  %i.cn = add nsw i64 %wide.trip.count384, -1     ; 3 uses
+  %i.cn = add nsw i64 %wide.trip.count, -1        ; 3 uses
   %xtraiter = and i64 %i.cn, 1
   %i.co = icmp eq i32 %2, 2
   br i1 %i.co, label %.lr.ph340.epil.preheader, label %.lr.ph340.preheader.new
@@ -502,13 +500,12 @@ bb.al:                                            ; preds = %.lr.ph340.epil.preh
   br label %.lr.ph348.preheader
 
 .lr.ph348.preheader:                              ; preds = %.lr.ph348.preheader.loopexit469.unr-lcssa, %.sink.split.epil, %bb.ak, %.lr.ph343, %middle.block464, %.lr.ph348.preheader.sink.split, %bb.r
-  %wide.trip.count396 = zext nneg i32 %2 to i64
   br label %.lr.ph348
 
 .lr.ph348:                                        ; preds = %.lr.ph348.preheader, %bb.ap
-  %indvars.iv392 = phi i64 [ 0, %.lr.ph348.preheader ], [ %indvars.iv.next393, %bb.ap ] ; 3 uses
-  %.0346 = phi i32 [ -1, %.lr.ph348.preheader ], [ %.1, %bb.ap ] ; 3 uses
-  %.0273345 = phi i32 [ -1, %.lr.ph348.preheader ], [ %.1274, %bb.ap ] ; 3 uses
+  %indvars.iv392 = phi i64 [ %indvars.iv.next393, %bb.ap ], [ 0, %.lr.ph348.preheader ] ; 3 uses
+  %.0346 = phi i32 [ %.1, %bb.ap ], [ -1, %.lr.ph348.preheader ] ; 3 uses
+  %.0273345 = phi i32 [ %.1274, %bb.ap ], [ -1, %.lr.ph348.preheader ] ; 3 uses
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv392
   %i.di = load i64, ptr %i.dh, align 8, !tbaa !37
   %i.dj = icmp sgt i64 %i.di, 1
@@ -532,7 +529,7 @@ bb.ap:                                            ; preds = %bb.an, %bb.am, %.lr
   %.1274 = phi i32 [ %.0273345, %.lr.ph348 ], [ %i.dl, %bb.am ], [ %.0273345, %bb.an ] ; 3 uses
   %.1 = phi i32 [ %.0346, %.lr.ph348 ], [ %.0346, %bb.am ], [ %i.dl, %bb.an ] ; 3 uses
   %indvars.iv.next393 = add nuw nsw i64 %indvars.iv392, 1 ; 2 uses
-  %exitcond397.not = icmp eq i64 %indvars.iv.next393, %wide.trip.count396
+  %exitcond397.not = icmp eq i64 %indvars.iv.next393, %wide.trip.count
   br i1 %exitcond397.not, label %._crit_edge349, label %.lr.ph348, !llvm.loop !99
 
 ._crit_edge349:                                   ; preds = %bb.ap

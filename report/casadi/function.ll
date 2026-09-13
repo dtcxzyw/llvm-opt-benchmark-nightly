@@ -204,7 +204,6 @@ _ZNSt12_Vector_baseISt6vectorIN6casadi2MXESaIS2_EESaIS4_EEC2EmRKS5_.exit.thread.
   %i.eu = getelementptr inbounds nuw i8, ptr %36, i64 8
   %i.ev = getelementptr inbounds nuw i8, ptr %35, i64 8 ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %35, i64 16
-  %smax = call i64 @llvm.smax.i64(i64 %i.g, i64 1)
   br label %bb.as
 
 bb.an:                                            ; preds = %.lr.ph.preheader.i.i.i.i.i, %bb.al
@@ -607,7 +606,7 @@ bb.bp:                                            ; preds = %.lr.ph418
 
 _ZNSt6vectorIN6casadi2MXESaIS1_EE9push_backERKS1_.exit229: ; preds = %.noexc227, %bb.bp
   %i.ku = add nuw nsw i64 %.099417, 1             ; 2 uses
-  %exitcond453.not = icmp eq i64 %i.ku, %smax
+  %exitcond453.not = icmp eq i64 %i.ku, %i.g
   br i1 %exitcond453.not, label %._crit_edge419, label %.lr.ph418, !llvm.loop !530
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bo
