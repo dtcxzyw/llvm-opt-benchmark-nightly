@@ -205,7 +205,7 @@ bb.cy:                                            ; preds = %_ZNSt6vectorIN6duck
   %.sroa.10.2.i.i.i = phi ptr [ null, %.noexc56.i.i.i ], [ %.sroa.10.3.i.i.i, %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE9push_backEOS3_.exit102.i.i.i.i ] ; 5 uses
   %.sroa.15.3.i.i.i = phi ptr [ null, %.noexc56.i.i.i ], [ %.sroa.15.4.i.i.i, %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE9push_backEOS3_.exit102.i.i.i.i ] ; 2 uses
   %i.mb = phi ptr [ null, %.noexc56.i.i.i ], [ %i.mp, %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE9push_backEOS3_.exit102.i.i.i.i ] ; 2 uses
-  %i.mc = phi ptr [ null, %.noexc56.i.i.i ], [ %i.mq, %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE9push_backEOS3_.exit102.i.i.i.i ] ; 7 uses
+  %i.mc = phi ptr [ null, %.noexc56.i.i.i ], [ %i.mq, %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE9push_backEOS3_.exit102.i.i.i.i ] ; 6 uses
   %.sroa.09.0.i.i.i.i = phi i64 [ %i.lv, %.noexc56.i.i.i ], [ %i.mr, %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE9push_backEOS3_.exit102.i.i.i.i ] ; 4 uses
   %.not.i.i88.i.i = icmp slt i64 %.sroa.09.0.i.i.i.i, %i.dd
   br i1 %.not.i.i88.i.i, label %.critedge.i.i.i.i, label %bb.cz
@@ -213,37 +213,26 @@ bb.cy:                                            ; preds = %_ZNSt6vectorIN6duck
 bb.cz:                                            ; preds = %bb.cy
   %i.md = ptrtoint ptr %.sroa.10.2.i.i.i to i64
   %i.me = ptrtoint ptr %i.mc to i64
-  %i.mf = sub i64 %i.md, %i.me                    ; 5 uses
+  %i.mf = sub i64 %i.md, %i.me                    ; 4 uses
   %i.mg = ashr exact i64 %i.mf, 3                 ; 3 uses
   %i.mh = icmp ult i64 %i.mg, %i.dv
   br i1 %i.mh, label %bb.da, label %.critedge.i.i.i.i
 
 bb.da:                                            ; preds = %bb.cz
   %.not.i.i93.i.i.i.i = icmp eq ptr %.sroa.10.2.i.i.i, %i.mb
-  br i1 %.not.i.i93.i.i.i.i, label %25, label %bb.db
+  br i1 %.not.i.i93.i.i.i.i, label %_ZNKSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i94.i.i.i.i, label %bb.db
 
 bb.db:                                            ; preds = %bb.da
   store i64 %.sroa.09.0.i.i.i.i, ptr %.sroa.10.2.i.i.i, align 8, !tbaa !101, !noalias !314
   br label %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE9push_backEOS3_.exit102.i.i.i.i
 
-25:                                               ; preds = %bb.da
-  %26 = icmp eq i64 %i.mf, 9223372036854775800
-  br i1 %26, label %27, label %_ZNKSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i94.i.i.i.i
-
-27:                                               ; preds = %25
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #25
-          to label %.noexc100.i.i.i.i unwind label %.loopexit.split-lp.i.i.i.i, !noalias !314
-
-.noexc100.i.i.i.i:                                ; preds = %27
-  unreachable
-
-_ZNKSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i94.i.i.i.i: ; preds = %25
+_ZNKSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i94.i.i.i.i: ; preds = %bb.da
   %.sroa.speculated.i.i.i.i95.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.mg, i64 1)
   %i.mi = add nuw nsw i64 %.sroa.speculated.i.i.i.i95.i.i.i.i, %i.mg
   %i.mj = call i64 @llvm.umin.i64(i64 %i.mi, i64 1152921504606846975) ; 2 uses
   %i.mk = shl nuw nsw i64 %i.mj, 3
   %i.ml = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.mk) #24
-          to label %.noexc101.i.i.i.i unwind label %.loopexit.i.i.i.i, !noalias !314 ; 5 uses
+          to label %.noexc101.i.i.i.i unwind label %.loopexit.split-lp.i.i.i.i, !noalias !314 ; 5 uses
 
 .noexc101.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i94.i.i.i.i
   %i.mm = getelementptr inbounds i8, ptr %i.ml, i64 %i.mf ; 2 uses
@@ -277,12 +266,7 @@ _ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE9push_backEOS3_
   %i.mr = invoke i64 @_ZN6duckdb16SubtractOperator9OperationINS_11timestamp_tENS_10interval_tES2_EET1_T_T0_(i64 %.sroa.09.0.i.i.i.i, i64 %.sroa.015.sroa.0.0.insert.insert.i.i.i.i, i64 %.sroa.13.0.i.i.i.i)
           to label %bb.cy unwind label %bb.de, !noalias !314, !llvm.loop !307
 
-.loopexit.i.i.i.i:                                ; preds = %_ZNKSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i94.i.i.i.i
-  %lpad.loopexit.i.i.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.df
-
-.loopexit.split-lp.i.i.i.i:                       ; preds = %27
+.loopexit.split-lp.i.i.i.i:                       ; preds = %_ZNKSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i94.i.i.i.i
   %lpad.loopexit.split-lp.i.i.i.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.df
@@ -309,14 +293,14 @@ bb.de:                                            ; preds = %_ZNSt6vectorIN6duck
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23, !noalias !314
   br label %_ZN6duckdb12_GLOBAL__N_122EquiWidthBinsTimestamp9OperationERKNS_10ExpressionENS_11timestamp_tES5_mb.exit.i.i.i
 
-bb.df:                                            ; preds = %bb.de, %.loopexit.split-lp.i.i.i.i, %.loopexit.i.i.i.i
-  %28 = phi ptr [ %i.mq, %bb.de ], [ %i.mc, %.loopexit.i.i.i.i ], [ %i.mc, %.loopexit.split-lp.i.i.i.i ] ; 2 uses
-  %.pn82.i.i.i.i = phi { ptr, i32 } [ %i.ms, %bb.de ], [ %lpad.loopexit.i.i.i.i, %.loopexit.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i.i, %.loopexit.split-lp.i.i.i.i ]
-  %.not.i.i.i103.i.i.i.i = icmp eq ptr %28, null
+bb.df:                                            ; preds = %bb.de, %.loopexit.split-lp.i.i.i.i
+  %25 = phi ptr [ %i.mq, %bb.de ], [ %i.mc, %.loopexit.split-lp.i.i.i.i ] ; 2 uses
+  %.pn82.i.i.i.i = phi { ptr, i32 } [ %i.ms, %bb.de ], [ %lpad.loopexit.split-lp.i.i.i.i, %.loopexit.split-lp.i.i.i.i ]
+  %.not.i.i.i103.i.i.i.i = icmp eq ptr %25, null
   br i1 %.not.i.i.i103.i.i.i.i, label %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EED2Ev.exit104.i.i.i.i, label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df
-  call void @_ZdlPv(ptr noundef nonnull %28) #27, !noalias !314
+  call void @_ZdlPv(ptr noundef nonnull %25) #27, !noalias !314
   br label %_ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EED2Ev.exit104.i.i.i.i
 
 _ZNSt6vectorIN6duckdb13PrimitiveTypeINS0_11timestamp_tEEESaIS3_EED2Ev.exit104.i.i.i.i: ; preds = %bb.dg, %bb.df

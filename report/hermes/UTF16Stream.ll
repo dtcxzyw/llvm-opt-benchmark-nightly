@@ -82,56 +82,34 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !22   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 9 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 5 uses
   %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = ashr exact i64 %i.g, 1
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !19   ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !19
   %i.k = ptrtoint ptr %i.j to i64
-  %i.l = sub i64 %i.k, %i.f                       ; 5 uses
-  %i.m = ashr exact i64 %i.l, 1                   ; 4 uses
+  %i.l = sub i64 %i.k, %i.f                       ; 2 uses
+  %i.m = ashr exact i64 %i.l, 1                   ; 2 uses
   %i.n = lshr i64 %i.m, 1
   %i.o = icmp ult i64 %i.h, %i.n
-  br i1 %i.o, label %1, label %bb.b
+  br i1 %i.o, label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit, label %bb.b
 
-1:                                                ; preds = %bb.a
-  %2 = load ptr, ptr %0, align 8, !tbaa !21
-  %3 = ptrtoint ptr %2 to i64
-  %4 = sub i64 %3, %i.f
-  %5 = icmp ugt i64 %i.l, %i.m
-  br i1 %5, label %6, label %8
-
-6:                                                ; preds = %1
-  %7 = sub nuw i64 %i.l, %i.m
-  tail call void @_ZNSt6vectorIDsSaIDsEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %7)
-  %.pre5 = load ptr, ptr %i.i, align 8, !tbaa !23
-  %.pre6 = load ptr, ptr %i.c, align 8, !tbaa !23
-  br label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit
-
-8:                                                ; preds = %1
-  %9 = icmp ult i64 %i.l, %i.m
-  br i1 %9, label %10, label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit
-
-10:                                               ; preds = %8
-  %11 = getelementptr inbounds nuw [2 x i8], ptr %i.d, i64 %i.l ; 3 uses
-  %.not.i.i = icmp eq ptr %i.j, %11
-  br i1 %.not.i.i, label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit, label %12
-
-12:                                               ; preds = %10
-  store ptr %11, ptr %i.i, align 8, !tbaa !19
-  br label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit
-
-_ZNSt6vectorIDsSaIDsEE6resizeEm.exit:             ; preds = %6, %8, %10, %12
-  %13 = phi ptr [ %.pre6, %6 ], [ %i.d, %8 ], [ %i.d, %10 ], [ %i.d, %12 ] ; 2 uses
-  %14 = phi ptr [ %.pre5, %6 ], [ %i.j, %8 ], [ %i.j, %10 ], [ %11, %12 ]
-  %i.p = getelementptr inbounds i8, ptr %14, i64 -2
+_ZNSt6vectorIDsSaIDsEE6resizeEm.exit:             ; preds = %bb.a
+  %1 = load ptr, ptr %0, align 8, !tbaa !21
+  %2 = ptrtoint ptr %1 to i64
+  %3 = sub i64 %2, %i.f
+  %4 = sub nuw i64 %i.l, %i.m
+  tail call void @_ZNSt6vectorIDsSaIDsEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %4)
+  %5 = load ptr, ptr %i.i, align 8, !tbaa !23
+  %i.p = getelementptr inbounds i8, ptr %5, i64 -2
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.p, ptr %i.q, align 8, !tbaa !20
-  %i.r = getelementptr inbounds nuw i8, ptr %13, i64 %i.g
+  %6 = load ptr, ptr %i.c, align 8, !tbaa !23     ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %6, i64 %i.g
   store ptr %i.r, ptr %i.a, align 8, !tbaa !22
-  %i.s = getelementptr inbounds nuw i8, ptr %13, i64 %4
+  %i.s = getelementptr inbounds nuw i8, ptr %6, i64 %3
   br label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -187,53 +165,31 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !23   ; 9 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !23   ; 5 uses
   %i.k = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.l = ptrtoint ptr %i.j to i64                 ; 3 uses
   %i.m = sub i64 %i.k, %i.l                       ; 2 uses
   %i.n = ashr exact i64 %i.m, 1
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !19   ; 6 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !19   ; 3 uses
   %i.q = ptrtoint ptr %i.p to i64
-  %i.r = sub i64 %i.q, %i.l                       ; 5 uses
-  %i.s = ashr exact i64 %i.r, 1                   ; 4 uses
+  %i.r = sub i64 %i.q, %i.l                       ; 2 uses
+  %i.s = ashr exact i64 %i.r, 1                   ; 2 uses
   %i.t = lshr i64 %i.s, 1
   %i.u = icmp ult i64 %i.n, %i.t
-  br i1 %i.u, label %1, label %bb.d
+  br i1 %i.u, label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i, label %bb.d
 
-1:                                                ; preds = %bb.c
-  %2 = load ptr, ptr %0, align 8, !tbaa !21
-  %3 = ptrtoint ptr %2 to i64
-  %4 = sub i64 %3, %i.l
-  %5 = icmp ugt i64 %i.r, %i.s
-  br i1 %5, label %6, label %8
-
-6:                                                ; preds = %1
-  %7 = sub nuw i64 %i.r, %i.s
-  tail call void @_ZNSt6vectorIDsSaIDsEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %7)
-  %.pre5.i = load ptr, ptr %i.o, align 8, !tbaa !23
-  %.pre6.i = load ptr, ptr %i.i, align 8, !tbaa !23
-  br label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i
-
-8:                                                ; preds = %1
-  %9 = icmp ult i64 %i.r, %i.s
-  br i1 %9, label %10, label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i
-
-10:                                               ; preds = %8
-  %11 = getelementptr inbounds nuw [2 x i8], ptr %i.j, i64 %i.r ; 3 uses
-  %.not.i.i.i = icmp eq ptr %i.p, %11
-  br i1 %.not.i.i.i, label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i, label %12
-
-12:                                               ; preds = %10
-  store ptr %11, ptr %i.o, align 8, !tbaa !19
-  br label %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i
-
-_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i:           ; preds = %12, %10, %8, %6
-  %13 = phi ptr [ %.pre6.i, %6 ], [ %i.j, %8 ], [ %i.j, %10 ], [ %i.j, %12 ] ; 2 uses
-  %14 = phi ptr [ %.pre5.i, %6 ], [ %i.p, %8 ], [ %i.p, %10 ], [ %11, %12 ]
-  %i.v = getelementptr inbounds nuw i8, ptr %13, i64 %i.m
+_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i:           ; preds = %bb.c
+  %1 = load ptr, ptr %0, align 8, !tbaa !21
+  %2 = ptrtoint ptr %1 to i64
+  %3 = sub i64 %2, %i.l
+  %4 = sub nuw i64 %i.r, %i.s
+  tail call void @_ZNSt6vectorIDsSaIDsEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef %4)
+  %5 = load ptr, ptr %i.o, align 8, !tbaa !23
+  %6 = load ptr, ptr %i.i, align 8, !tbaa !23     ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %6, i64 %i.m
   store ptr %i.v, ptr %i.g, align 8, !tbaa !22
-  %i.w = getelementptr inbounds nuw i8, ptr %13, i64 %4
+  %i.w = getelementptr inbounds nuw i8, ptr %6, i64 %3
   br label %_ZN6hermes11UTF16Stream18makeRoomForCaptureEv.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -286,7 +242,7 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZN6hermes11UTF16Stream18makeRoomForCaptureEv.exit
 
 _ZN6hermes11UTF16Stream18makeRoomForCaptureEv.exit: ; preds = %bb.h, %bb.i, %bb.j, %_ZSt4copyIPKDsN9__gnu_cxx17__normal_iteratorIPDsSt6vectorIDsSaIDsEEEEET0_T_SA_S9_.exit.i, %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i
-  %i.ao = phi ptr [ %14, %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i ], [ %.pre, %_ZSt4copyIPKDsN9__gnu_cxx17__normal_iteratorIPDsSt6vectorIDsSaIDsEEEEET0_T_SA_S9_.exit.i ], [ %i.an, %bb.j ], [ %i.ah, %bb.i ], [ %i.ah, %bb.h ]
+  %i.ao = phi ptr [ %5, %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i ], [ %.pre, %_ZSt4copyIPKDsN9__gnu_cxx17__normal_iteratorIPDsSt6vectorIDsSaIDsEEEEET0_T_SA_S9_.exit.i ], [ %i.an, %bb.j ], [ %i.ah, %bb.i ], [ %i.ah, %bb.h ]
   %storemerge = phi ptr [ %i.w, %_ZNSt6vectorIDsSaIDsEE6resizeEm.exit.i ], [ %i.af, %_ZSt4copyIPKDsN9__gnu_cxx17__normal_iteratorIPDsSt6vectorIDsSaIDsEEEEET0_T_SA_S9_.exit.i ], [ %i.ai, %bb.j ], [ %i.ai, %bb.i ], [ %i.ai, %bb.h ] ; 4 uses
   store ptr %storemerge, ptr %0, align 8, !tbaa !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12

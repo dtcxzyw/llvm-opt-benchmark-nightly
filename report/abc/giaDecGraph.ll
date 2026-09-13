@@ -205,7 +205,7 @@ bb.bu:                                            ; preds = %bb.bt, %_ZN8DecGrap
   %.096 = phi i32 [ %i.uu, %bb.bt ], [ %i.rm, %_ZN8DecGraph3minIfEEfRSt6vectorIT_SaIS2_EE.exit ]
   %i.uv = ptrtoint ptr %.sroa.15.0.lcssa to i64   ; 3 uses
   %i.uw = ptrtoint ptr %.sroa.0495.0.lcssa to i64 ; 4 uses
-  %i.ux = sub i64 %i.uv, %i.uw                    ; 8 uses
+  %i.ux = sub i64 %i.uv, %i.uw                    ; 7 uses
   %i.uy = ashr exact i64 %i.ux, 2                 ; 7 uses
   %i.uz = icmp ugt i64 %i.uy, 1
   br i1 %i.uz, label %bb.bv, label %._crit_edge831
@@ -252,9 +252,7 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.bv
 
 ._crit_edge778:                                   ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit344, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.vo = icmp eq ptr %.sroa.15.0.lcssa, %.sroa.0495.0.lcssa
-  %.not9.i.i243 = icmp samesign eq i64 %i.ux, 4
-  %or.cond.i.i244 = select i1 %i.vo, i1 true, i1 %.not9.i.i243
-  br i1 %or.cond.i.i244, label %_ZNSt6vectorIfSaIfEED2Ev.exit254, label %.lr.ph.preheader.i.i245
+  br i1 %i.vo, label %_ZNSt6vectorIfSaIfEED2Ev.exit254, label %.lr.ph.preheader.i.i245
 
 .lr.ph.preheader.i.i245:                          ; preds = %._crit_edge778
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vb, i64 4
@@ -657,7 +655,7 @@ bb.o:                                             ; preds = %_ZN8DecGraph3minIfE
 bb.p:                                             ; preds = %bb.o, %_ZN8DecGraph3minIfEEfRSt6vectorIT_SaIS2_EE.exit
   %i.gh = ptrtoint ptr %.sroa.15.0.lcssa to i64   ; 3 uses
   %i.gi = ptrtoint ptr %.sroa.0358.0.lcssa to i64 ; 4 uses
-  %i.gj = sub i64 %i.gh, %i.gi                    ; 8 uses
+  %i.gj = sub i64 %i.gh, %i.gi                    ; 7 uses
   %i.gk = ashr exact i64 %i.gj, 2                 ; 7 uses
   %i.gl = icmp ugt i64 %i.gk, 1
   br i1 %i.gl, label %bb.q, label %bb.bg
@@ -699,9 +697,7 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.q
 
 ._crit_edge520:                                   ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit204, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
   %i.ha = icmp eq ptr %.sroa.15.0.lcssa, %.sroa.0358.0.lcssa
-  %.not9.i.i112 = icmp samesign eq i64 %i.gj, 4
-  %or.cond.i.i113 = select i1 %i.ha, i1 true, i1 %.not9.i.i112
-  br i1 %or.cond.i.i113, label %_ZNSt6vectorIfSaIfEED2Ev.exit123, label %.lr.ph.preheader.i.i114
+  br i1 %i.ha, label %_ZNSt6vectorIfSaIfEED2Ev.exit123, label %.lr.ph.preheader.i.i114
 
 .lr.ph.preheader.i.i114:                          ; preds = %._crit_edge520
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gn, i64 4

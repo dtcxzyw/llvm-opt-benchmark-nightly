@@ -204,22 +204,19 @@ bb.h:                                             ; preds = %bb.g
   %i.ap = load ptr, ptr %i.am, align 8, !tbaa !56 ; 3 uses
   %i.aq = ptrtoint ptr %i.ao to i64
   %i.ar = ptrtoint ptr %i.ap to i64
-  %i.as = sub i64 %i.aq, %i.ar                    ; 3 uses
+  %i.as = sub i64 %i.aq, %i.ar
   %i.at = ashr exact i64 %i.as, 2                 ; 2 uses
-  %i.au = load ptr, ptr %i.ag, align 8, !tbaa !57 ; 2 uses
-  %i.av = load ptr, ptr %i.af, align 8, !tbaa !56 ; 4 uses
+  %i.au = load ptr, ptr %i.ag, align 8, !tbaa !57 ; 3 uses
+  %i.av = load ptr, ptr %i.af, align 8, !tbaa !56 ; 3 uses
   %i.aw = ptrtoint ptr %i.au to i64
   %i.ax = ptrtoint ptr %i.av to i64
-  %i.ay = sub i64 %i.aw, %i.ax                    ; 2 uses
+  %i.ay = sub i64 %i.aw, %i.ax
   %i.az = ashr exact i64 %i.ay, 2                 ; 2 uses
   %.not13.i.i.i.i = icmp eq i64 %i.at, %i.az
   br i1 %.not13.i.i.i.i, label %bb.i, label %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN13sentencepiece3bpe7Trainer20QueueEntryComparatorEEclINS_17__normal_iteratorIPNS4_10QueueEntryESt6vectorIS9_SaIS9_EEEES9_EEbT_RT0_.exit.i.i
 
 bb.i:                                             ; preds = %bb.h
-  %2 = icmp slt i64 %i.as, %i.ay
-  %3 = getelementptr inbounds i8, ptr %i.av, i64 %i.as
-  %4 = select i1 %2, ptr %3, ptr %i.au            ; 2 uses
-  %.not22.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.av, %4
+  %.not22.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.av, %i.au
   br i1 %.not22.i.i.i.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i:                     ; preds = %bb.i, %bb.k
@@ -237,7 +234,7 @@ bb.j:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 bb.k:                                             ; preds = %bb.j
   %i.be = getelementptr inbounds nuw i8, ptr %.02023.i.i.i.i.i.i.i.i.i.i.i, i64 4 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.01924.i.i.i.i.i.i.i.i.i.i.i, i64 4 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.be, %4
+  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.be, %i.au
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !8
 
 .critedge.i.i.i.i.i.i.i.i.i.i.i:                  ; preds = %bb.k, %bb.i
@@ -640,26 +637,23 @@ bb.b:                                             ; preds = %.lr.ph
   %i.q = load ptr, ptr %i.n, align 8, !tbaa !56   ; 3 uses
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = ptrtoint ptr %i.q to i64
-  %i.t = sub i64 %i.r, %i.s                       ; 3 uses
+  %i.t = sub i64 %i.r, %i.s
   %i.u = ashr exact i64 %i.t, 2                   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !147  ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 24
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !57   ; 2 uses
-  %i.aa = load ptr, ptr %i.x, align 8, !tbaa !56  ; 4 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !57   ; 3 uses
+  %i.aa = load ptr, ptr %i.x, align 8, !tbaa !56  ; 3 uses
   %i.ab = ptrtoint ptr %i.z to i64
   %i.ac = ptrtoint ptr %i.aa to i64
-  %i.ad = sub i64 %i.ab, %i.ac                    ; 2 uses
+  %i.ad = sub i64 %i.ab, %i.ac
   %i.ae = ashr exact i64 %i.ad, 2                 ; 2 uses
   %.not13.i.i = icmp eq i64 %i.u, %i.ae
   br i1 %.not13.i.i, label %bb.c, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN13sentencepiece3bpe7Trainer20QueueEntryComparatorEEclINS_17__normal_iteratorIPNS4_10QueueEntryESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %5 = icmp slt i64 %i.t, %i.ad
-  %6 = getelementptr inbounds i8, ptr %i.aa, i64 %i.t
-  %7 = select i1 %5, ptr %6, ptr %i.z             ; 2 uses
-  %.not22.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.aa, %7
+  %.not22.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.aa, %i.z
   br i1 %.not22.i.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %bb.c, %bb.e
@@ -677,7 +671,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %.02023.i.i.i.i.i.i.i.i.i, i64 4 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.01924.i.i.i.i.i.i.i.i.i, i64 4 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.aj, %7
+  %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.aj, %i.z
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !8
 
 .critedge.i.i.i.i.i.i.i.i.i:                      ; preds = %bb.e, %bb.c
@@ -754,22 +748,19 @@ bb.j:                                             ; preds = %bb.i
   %i.bl = load ptr, ptr %i.bi, align 8, !tbaa !56 ; 3 uses
   %i.bm = ptrtoint ptr %i.bk to i64
   %i.bn = ptrtoint ptr %i.bl to i64
-  %i.bo = sub i64 %i.bm, %i.bn                    ; 3 uses
+  %i.bo = sub i64 %i.bm, %i.bn
   %i.bp = ashr exact i64 %i.bo, 2                 ; 2 uses
-  %i.bq = load ptr, ptr %i.bc, align 8, !tbaa !57 ; 2 uses
-  %i.br = load ptr, ptr %i.bb, align 8, !tbaa !56 ; 4 uses
+  %i.bq = load ptr, ptr %i.bc, align 8, !tbaa !57 ; 3 uses
+  %i.br = load ptr, ptr %i.bb, align 8, !tbaa !56 ; 3 uses
   %i.bs = ptrtoint ptr %i.bq to i64
   %i.bt = ptrtoint ptr %i.br to i64
-  %i.bu = sub i64 %i.bs, %i.bt                    ; 2 uses
+  %i.bu = sub i64 %i.bs, %i.bt
   %i.bv = ashr exact i64 %i.bu, 2                 ; 2 uses
   %.not13.i.i.i = icmp eq i64 %i.bp, %i.bv
   br i1 %.not13.i.i.i, label %bb.k, label %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN13sentencepiece3bpe7Trainer20QueueEntryComparatorEEclINS_17__normal_iteratorIPNS4_10QueueEntryESt6vectorIS9_SaIS9_EEEES9_EEbT_RT0_.exit.i
 
 bb.k:                                             ; preds = %bb.j
-  %8 = icmp slt i64 %i.bo, %i.bu
-  %9 = getelementptr inbounds i8, ptr %i.br, i64 %i.bo
-  %10 = select i1 %8, ptr %9, ptr %i.bq           ; 2 uses
-  %.not22.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.br, %10
+  %.not22.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.br, %i.bq
   br i1 %.not22.i.i.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.k, %bb.m
@@ -787,7 +778,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 bb.m:                                             ; preds = %bb.l
   %i.ca = getelementptr inbounds nuw i8, ptr %.02023.i.i.i.i.i.i.i.i.i.i, i64 4 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.01924.i.i.i.i.i.i.i.i.i.i, i64 4 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.ca, %10
+  %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.ca, %i.bq
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, !llvm.loop !8
 
 .critedge.i.i.i.i.i.i.i.i.i.i:                    ; preds = %bb.m, %bb.k

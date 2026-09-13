@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %.lcssa46 = phi i64 [ %i.d, %.lr.ph ], [ %i.cd, %bb.b ] ; 2 uses
-  %.lcssa44 = phi i64 [ %i.c, %.lr.ph ], [ %i.cc, %bb.b ] ; 2 uses
+  %.lcssa44 = phi i64 [ %i.c, %.lr.ph ], [ %i.cc, %bb.b ]
   %storemerge26.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.014.1.i.i, %bb.b ]
   %i.i = add nsw i64 %.lcssa46, -2                ; 2 uses
   %i.j = lshr i64 %i.i, 1                         ; 3 uses
@@ -279,14 +279,10 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocation
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %.not.i.i15 = icmp eq i64 %.08.i.i, 0
   %i.aj = add nsw i64 %.08.i.i, -1
-  br i1 %.not.i.i15, label %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit, label %bb.c, !llvm.loop !162
+  br i1 %.not.i.i15, label %.lr.ph.i.i, label %bb.c, !llvm.loop !162
 
-_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_T0_SI_T1_T2_.exit.i.i
-  %15 = icmp sgt i64 %.lcssa44, 32
-  br i1 %15, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit
-
-.lr.ph.i.i:                                       ; preds = %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_RT0_.exit.i.i
-  %.sroa.0.05.i.i = phi ptr [ %i.ak, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_RT0_.exit.i.i ], [ %storemerge26.lcssa, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit ]
+.lr.ph.i.i:                                       ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_T0_SI_T1_T2_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_RT0_.exit.i.i
+  %.sroa.0.05.i.i = phi ptr [ %i.ak, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_RT0_.exit.i.i ], [ %storemerge26.lcssa, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_T0_SI_T1_T2_.exit.i.i ]
   %i.ak = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -32 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %14, ptr noundef nonnull align 8 dereferenceable(32) %i.ak, i64 32, i1 false)
@@ -484,7 +480,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN2v88internal1
   %i.ce = icmp sgt i64 %i.cd, 16
   br i1 %i.ce, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit, !llvm.loop !157
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEET_SH_SH_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_RT0_.exit.i.i, %bb.a, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEET_SH_SH_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal13BreakLocationESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS4_SD_EEEEvT_SH_SH_RT0_.exit.i.i, %bb.a
   ret void
 }
 

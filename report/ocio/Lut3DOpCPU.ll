@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.j, label %._crit_edge, label %.lr.ph35, !llvm.loop !235
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i20.lcssa = phi i64 [ %.fr.i17, %.lr.ph ], [ %.fr.i, %bb.b ] ; 3 uses
+  %.fr.i20.lcssa = phi i64 [ %.fr.i17, %.lr.ph ], [ %.fr.i, %bb.b ] ; 2 uses
   %storemerge18.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i20.lcssa, 5               ; 2 uses
   %i.l = add nsw i64 %i.k, -2                     ; 2 uses
@@ -288,14 +288,10 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i.i)
   %.not.i.i.i = icmp eq i64 %.07.i.i.i, 0
   %i.ap = add nsw i64 %.07.i.i.i, -1
-  br i1 %.not.i.i.i, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_RT0_.exit.i.i, label %bb.c, !llvm.loop !238
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !238
 
-_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_RT0_.exit.i.i: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_less_iterEEvT_T0_SE_T1_T2_.exit.i.i.i
-  %10 = icmp sgt i64 %.fr.i20.lcssa, 32
-  br i1 %10, label %.lr.ph.i9.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit
-
-.lr.ph.i9.i:                                      ; preds = %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_RT0_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i21.i
-  %.sroa.0.02.i.i = phi ptr [ %i.aq, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i21.i ], [ %storemerge18.lcssa, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_RT0_.exit.i.i ] ; 2 uses
+.lr.ph.i9.i:                                      ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_less_iterEEvT_T0_SE_T1_T2_.exit.i.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i21.i
+  %.sroa.0.02.i.i = phi ptr [ %i.aq, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i21.i ], [ %storemerge18.lcssa, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_less_iterEEvT_T0_SE_T1_T2_.exit.i.i.i ] ; 2 uses
   %i.aq = getelementptr inbounds i8, ptr %.sroa.0.02.i.i, i64 -32 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i8.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.i.i8.i, ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i64 24, i1 false)
@@ -509,7 +505,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO
   %i.cs = icmp sgt i64 %i.cr, 16
   br i1 %i.cs, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit, !llvm.loop !235
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEET_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i21.i, %bb.a, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_RT0_.exit.i.i
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEET_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i21.i, %bb.a
   ret void
 }
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.j, label %._crit_edge, label %.lr.ph38, !llvm.loop !2076
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i20.lcssa = phi i64 [ %i.e, %.lr.ph ], [ %i.dw, %bb.b ] ; 3 uses
+  %.fr.i.i20.lcssa = phi i64 [ %i.e, %.lr.ph ], [ %i.dw, %bb.b ] ; 2 uses
   %storemerge18.lcssa = phi ptr [ %.fr22, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
@@ -342,8 +342,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_RT0_.exit.i.i", label %.split, !llvm.loop !2079
 
 "_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEltNS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_T0_SF_T1_T2_.exit.i.i.i.us", %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEltNS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_T0_SF_T1_T2_.exit.i.i.i"
-  %6 = icmp sgt i64 %.fr.i.i20.lcssa, 2
-  br i1 %6, label %.lr.ph.i8.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_SE_T0_.exit"
+  br label %.lr.ph.i8.i
 
 .lr.ph.i8.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_SE_RT0_.exit.i.i"
   %.sroa.0.05.i.i = phi ptr [ %i.bm, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_SE_RT0_.exit.i.i" ], [ %storemerge18.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_RT0_.exit.i.i" ]
@@ -431,7 +430,7 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i.i12.i
   %i.cu = icmp sgt i64 %i.bq, 2
   br i1 %i.cu, label %.lr.ph.i8.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_SE_T0_.exit", !llvm.loop !2080
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_SE_T0_.exit": ; preds = %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_SE_RT0_.exit.i.i", %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_SE_T0_.exit": ; preds = %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEENS0_5__ops15_Iter_comp_iterIZN4llvm4bolt14ShrinkWrapping15computeDomOrderEvE3$_0EEEvT_SE_SE_RT0_.exit.i.i"
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   br label %.loopexit
 

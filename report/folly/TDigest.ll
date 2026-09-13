@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [700 x double], align 16          ; 8 uses
   %i.b = ptrtoint ptr %3 to i64
   %i.c = ptrtoint ptr %2 to i64
-  %i.d = sub i64 %i.b, %i.c                       ; 10 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 9 uses
   %i.e = ashr exact i64 %i.d, 3                   ; 3 uses
   %i.f = icmp ugt i64 %i.e, 700
   br i1 %i.f, label %bb.b, label %bb.j
@@ -225,24 +225,15 @@ _ZN5folly12_GLOBAL__N_16BufferC2Em.exit:          ; preds = %bb.b
   store ptr %i.i, ptr %4, align 8, !tbaa !37
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %i.h, ptr %i.j, align 8, !tbaa !38
-  %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 18432 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 18432 ; 4 uses
   %i.l = icmp sgt i64 %i.d, 8
-  br i1 %i.l, label %bb.d, label %5, !prof !39
+  br i1 %i.l, label %bb.d, label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit, !prof !39
 
 bb.d:                                             ; preds = %_ZN5folly12_GLOBAL__N_16BufferC2Em.exit
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.k, ptr align 8 %2, i64 %i.d, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
-5:                                                ; preds = %_ZN5folly12_GLOBAL__N_16BufferC2Em.exit
-  %6 = icmp eq i64 %i.d, 8
-  br i1 %6, label %7, label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
-
-7:                                                ; preds = %5
-  %8 = load double, ptr %2, align 8, !tbaa !33
-  store double %8, ptr %i.k, align 8, !tbaa !33
-  br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
-
-_ZSt4copyIPKdPdET0_T_S4_S3_.exit:                 ; preds = %7, %5, %bb.d
+_ZSt4copyIPKdPdET0_T_S4_S3_.exit:                 ; preds = %_ZN5folly12_GLOBAL__N_16BufferC2Em.exit, %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.d ; 2 uses
   invoke void @_ZN5folly6detail17double_radix_sortEmPmPdS2_(i64 noundef %i.e, ptr noundef nonnull %i.i, ptr noundef nonnull %i.k, ptr noundef nonnull %i.m)
           to label %bb.e unwind label %bb.i

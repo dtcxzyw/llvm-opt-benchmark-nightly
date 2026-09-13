@@ -205,13 +205,9 @@ bb.fk:                                            ; preds = %bb.fi, %_ZN4pbrt13I
   %i.ahy = getelementptr inbounds nuw i8, ptr %45, i64 40 ; 5 uses
   %.not.i.i.i638 = icmp ugt i64 %i.aht, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ahx, i8 0, i64 16, i1 false)
-  %65 = icmp eq i64 %sext, 0                      ; 2 uses
-  br i1 %.not.i.i.i638, label %66, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i
+  br i1 %.not.i.i.i638, label %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i
 
-66:                                               ; preds = %bb.fk
-  br i1 %65, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i, label %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i
-
-_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i: ; preds = %66
+_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i: ; preds = %bb.fk
   %i.ahz = ashr exact i64 %sext, 30
   %i.aia = load ptr, ptr %i.ahu, align 8, !tbaa !122
   %i.aib = getelementptr inbounds nuw i8, ptr %i.aia, i64 16
@@ -334,10 +330,9 @@ bb.fl:                                            ; preds = %._crit_edge.i.i.i
   invoke void %i.ajh(ptr noundef nonnull align 8 dereferenceable(8) %i.aje, ptr noundef nonnull %.pre.pre.i.i.i, i64 noundef %i.ajd, i64 noundef 4)
           to label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i unwind label %bb.fw, !inline_history !18
 
-_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i: ; preds = %bb.fl, %._crit_edge.i.i.i, %66
-  %.0.i.i.i.i1418.i.i = phi ptr [ %i.aid, %._crit_edge.i.i.i ], [ null, %66 ], [ %i.aid, %bb.fl ] ; 2 uses
+_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i: ; preds = %bb.fl, %._crit_edge.i.i.i
   store i64 %i.aht, ptr %i.ahx, align 8, !tbaa !194
-  store ptr %.0.i.i.i.i1418.i.i, ptr %i.ahw, align 8, !tbaa !192
+  store ptr %i.aid, ptr %i.ahw, align 8, !tbaa !192
   br label %.lr.ph.i.i639
 
 vec.epilog.scalar.ph1709:                         ; preds = %vec.epilog.scalar.ph1709.prol.loopexit, %vec.epilog.scalar.ph1709
@@ -386,10 +381,11 @@ vec.epilog.scalar.ph1709:                         ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not.i.i.i.7, label %._crit_edge.i.i.i, label %vec.epilog.scalar.ph1709, !llvm.loop !715
 
 _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i: ; preds = %bb.fk
-  br i1 %65, label %.loopexit1212, label %.lr.ph.i.i639
+  %.not.i.i = icmp eq i64 %sext, 0
+  br i1 %.not.i.i, label %.loopexit1212, label %.lr.ph.i.i639
 
 .lr.ph.i.i639:                                    ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i
-  %i.akg = phi ptr [ %.0.i.i.i.i1418.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i ], [ null, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i ] ; 2 uses
+  %i.akg = phi ptr [ %i.aid, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i ], [ null, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i ] ; 2 uses
   %.not.i9.i.i = icmp eq ptr %i.akg, null
   %i.akh = getelementptr inbounds nuw i8, ptr %45, i64 16
   %i.aki = select i1 %.not.i9.i.i, ptr %i.akh, ptr %i.akg
@@ -792,13 +788,9 @@ bb.rl:                                            ; preds = %bb.jl, %_ZN4pbrt13I
   store ptr null, ptr %i.axa, align 8, !tbaa !192
   %.not.i.i.i1278 = icmp ugt i64 %i.hyq, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.axb, i8 0, i64 16, i1 false)
-  %98 = icmp eq i64 %sext, 0                      ; 2 uses
-  br i1 %.not.i.i.i1278, label %99, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i
+  br i1 %.not.i.i.i1278, label %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i
 
-99:                                               ; preds = %bb.rl
-  br i1 %98, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i, label %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i
-
-_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i: ; preds = %99
+_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i: ; preds = %bb.rl
   %i.hyt = ashr exact i64 %sext, 30
   %i.hyu = load ptr, ptr %i.hyr, align 8, !tbaa !122
   %i.hyv = getelementptr inbounds nuw i8, ptr %i.hyu, i64 16
@@ -920,10 +912,9 @@ bb.rm:                                            ; preds = %._crit_edge.i.i.i
   invoke void %i.iaa(ptr noundef nonnull align 8 dereferenceable(8) %i.hzx, ptr noundef nonnull %.pre.pre.i.i.i, i64 noundef %i.hzw, i64 noundef 4)
           to label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i unwind label %bb.ru, !inline_history !18
 
-_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i: ; preds = %bb.rm, %._crit_edge.i.i.i, %99
-  %.0.i.i.i.i1418.i.i = phi ptr [ %i.hyx, %._crit_edge.i.i.i ], [ null, %99 ], [ %i.hyx, %bb.rm ] ; 2 uses
+_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i: ; preds = %bb.rm, %._crit_edge.i.i.i
   store i64 %i.hyq, ptr %i.axb, align 8, !tbaa !194
-  store ptr %.0.i.i.i.i1418.i.i, ptr %i.axa, align 8, !tbaa !192
+  store ptr %i.hyx, ptr %i.axa, align 8, !tbaa !192
   br label %.lr.ph.i.i
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
@@ -972,10 +963,11 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not.i.i.i.7, label %._crit_edge.i.i.i, label %vec.epilog.scalar.ph, !llvm.loop !1123
 
 _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i: ; preds = %bb.rl
-  br i1 %98, label %.loopexit3244, label %.lr.ph.i.i
+  %.not.i.i = icmp eq i64 %sext, 0
+  br i1 %.not.i.i, label %.loopexit3244, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i
-  %i.iaz = phi ptr [ %.0.i.i.i.i1418.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i ], [ null, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i ] ; 2 uses
+  %i.iaz = phi ptr [ %i.hyx, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i ], [ null, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i ] ; 2 uses
   %.not.i9.i.i = icmp eq ptr %i.iaz, null
   %i.iba = select i1 %.not.i9.i.i, ptr %i.axd, ptr %i.iaz
   %i.ibb = ashr exact i64 %sext, 30
@@ -1378,14 +1370,10 @@ bb.k:                                             ; preds = %bb.f
   %i.bn = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 5 uses
   %.not.i.i.i.i.i.i = icmp ugt i64 %i.bi, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, i8 0, i64 16, i1 false)
-  %13 = icmp eq i64 %sext.i.i.i, 0                ; 2 uses
-  br i1 %.not.i.i.i.i.i.i, label %14, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i, label %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i.i.i.i, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i
 
-14:                                               ; preds = %bb.k
-  br i1 %13, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i, label %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i.i.i.i
-
-_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i.i.i.i: ; preds = %14
-  %i.bo = ashr exact i64 %sext.i.i.i, 30
+_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i.i.i.i: ; preds = %bb.k
+  %i.bo = ashr exact i64 %sext.i.i.i, 30          ; 2 uses
   %i.bp = load ptr, ptr %i.bj, align 8, !tbaa !122
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   %i.br = load ptr, ptr %i.bq, align 8
@@ -1507,10 +1495,9 @@ bb.l:                                             ; preds = %._crit_edge.i.i.i.i
   invoke void %i.cw(ptr noundef nonnull align 8 dereferenceable(8) %i.ct, ptr noundef nonnull %.pre.pre.i.i.i.i.i.i, i64 noundef %i.cs, i64 noundef 4)
           to label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i unwind label %bb.u, !inline_history !18
 
-_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i: ; preds = %bb.l, %._crit_edge.i.i.i.i.i.i, %14
-  %.0.i.i.i.i1418.i.i.i.i.i = phi ptr [ %i.bs, %._crit_edge.i.i.i.i.i.i ], [ null, %14 ], [ %i.bs, %bb.l ] ; 2 uses
+_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i: ; preds = %bb.l, %._crit_edge.i.i.i.i.i.i
   store i64 %i.bi, ptr %i.bm, align 8, !tbaa !194
-  store ptr %.0.i.i.i.i1418.i.i.i.i.i, ptr %i.bl, align 8, !tbaa !192
+  store ptr %i.bs, ptr %i.bl, align 8, !tbaa !192
   br label %.lr.ph.i.i.i.i.i
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
@@ -1559,15 +1546,20 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not.i.i.i.i.i.i.7, label %._crit_edge.i.i.i.i.i.i, label %vec.epilog.scalar.ph, !llvm.loop !2590
 
 _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i: ; preds = %bb.k
-  br i1 %13, label %.loopexit321.i.i.i, label %.lr.ph.i.i.i.i.i
+  %.not.i.i.i.i.i = icmp eq i64 %sext.i.i.i, 0
+  br i1 %.not.i.i.i.i.i, label %.loopexit321.i.i.i, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i
-  %i.dv = phi ptr [ %.0.i.i.i.i1418.i.i.i.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i ], [ null, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i ] ; 2 uses
+_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i: ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i
+  %.pre.i.i = ashr exact i64 %sext.i.i.i, 30
+  br label %.lr.ph.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i
+  %.pre-phi.i.i = phi i64 [ %.pre.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i ], [ %i.bo, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i ]
+  %i.dv = phi ptr [ null, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i ], [ %i.bs, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i ] ; 2 uses
   %.not.i9.i.i.i.i.i = icmp eq ptr %i.dv, null
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.dx = select i1 %.not.i9.i.i.i.i.i, ptr %i.dw, ptr %i.dv
-  %15 = ashr exact i64 %sext.i.i.i, 30
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.dx, i8 0, i64 %15, i1 false), !tbaa !66
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.dx, i8 0, i64 %.pre-phi.i.i, i1 false), !tbaa !66
   br label %.loopexit321.i.i.i
 
 .loopexit321.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i
@@ -1970,14 +1962,10 @@ bb.b:                                             ; preds = %_ZN4pbrt13InlinedVe
   store ptr null, ptr %i.f, align 8, !tbaa !192
   %.not.i.i.i.i.i.i = icmp ugt i64 %i.ap, 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
-  %5 = icmp eq i64 %sext.i.i.i, 0                 ; 2 uses
-  br i1 %.not.i.i.i.i.i.i, label %6, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i, label %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i.i.i.i, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i
 
-6:                                                ; preds = %bb.b
-  br i1 %5, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i, label %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i.i.i.i
-
-_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i.i.i.i: ; preds = %6
-  %i.as = ashr exact i64 %sext.i.i.i, 30
+_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i.i.i.i: ; preds = %bb.b
+  %i.as = ashr exact i64 %sext.i.i.i, 30          ; 2 uses
   %i.at = load ptr, ptr %i.aq, align 8, !tbaa !122
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   %i.av = load ptr, ptr %i.au, align 8
@@ -2095,10 +2083,9 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   call void %i.bz(ptr noundef nonnull align 8 dereferenceable(8) %i.bw, ptr noundef nonnull %.pre.pre.i.i.i.i.i.i, i64 noundef %i.bv, i64 noundef 4), !inline_history !2859
   br label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i
 
-_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i: ; preds = %bb.c, %._crit_edge.i.i.i.i.i.i, %6
-  %.0.i.i.i.i1418.i.i.i.i.i = phi ptr [ %i.aw, %._crit_edge.i.i.i.i.i.i ], [ %i.aw, %bb.c ], [ null, %6 ] ; 2 uses
+_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i: ; preds = %bb.c, %._crit_edge.i.i.i.i.i.i
   store i64 %i.ap, ptr %i.g, align 8, !tbaa !194
-  store ptr %.0.i.i.i.i1418.i.i.i.i.i, ptr %i.f, align 8, !tbaa !192
+  store ptr %i.aw, ptr %i.f, align 8, !tbaa !192
   br label %.lr.ph.i.i.i.i.i
 
 vec.epilog.scalar.ph123:                          ; preds = %vec.epilog.scalar.ph123.prol.loopexit, %vec.epilog.scalar.ph123
@@ -2147,14 +2134,19 @@ vec.epilog.scalar.ph123:                          ; preds = %vec.epilog.scalar.p
   br i1 %exitcond.not.i.i.i.i.i.i.7, label %._crit_edge.i.i.i.i.i.i, label %vec.epilog.scalar.ph123, !llvm.loop !2860
 
 _ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i: ; preds = %bb.b
-  br i1 %5, label %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i, label %.lr.ph.i.i.i.i.i
+  %.not.i.i.i.i.i = icmp eq i64 %sext.i.i.i, 0
+  br i1 %.not.i.i.i.i.i, label %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i
-  %i.cy = phi ptr [ %.0.i.i.i.i1418.i.i.i.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i ], [ null, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i ] ; 2 uses
+_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i: ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i
+  %.pre.i.i = ashr exact i64 %sext.i.i.i, 30
+  br label %.lr.ph.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i
+  %.pre-phi.i.i = phi i64 [ %.pre.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i ], [ %i.as, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i ]
+  %i.cy = phi ptr [ null, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i..lr.ph.i.i.i_crit_edge.i.i ], [ %i.aw, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.thread.i.i.i.i.i ] ; 2 uses
   %.not.i9.i.i.i.i.i = icmp eq ptr %i.cy, null
   %i.cz = select i1 %.not.i9.i.i.i.i.i, ptr %i.i, ptr %i.cy
-  %7 = ashr exact i64 %sext.i.i.i, 30
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cz, i8 0, i64 %7, i1 false), !tbaa !66
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cz, i8 0, i64 %.pre-phi.i.i, i1 false), !tbaa !66
   br label %_ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i
 
 _ZN4pbrt18ImageChannelValuesC2Emf.exit.i.i.i:     ; preds = %.lr.ph.i.i.i.i.i, %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEE7reserveEm.exit.i.i.i.i.i

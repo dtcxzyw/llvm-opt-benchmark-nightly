@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.i, label %._crit_edge, label %.lr.ph56, !llvm.loop !365
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.fl, %bb.b ] ; 3 uses
+  %.fr.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.fl, %bb.b ] ; 2 uses
   %storemerge25.lcssa = phi ptr [ %.fr29, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.j = lshr i64 %.fr.i27.lcssa, 2               ; 2 uses
   %i.k = add nsw i64 %i.j, -2                     ; 2 uses
@@ -305,14 +305,10 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5_
   store i32 %i.u, ptr %i.bi, align 4, !tbaa !200
   %.not.i.i = icmp eq i64 %.09.i.i, 0
   %i.bj = add nsw i64 %.09.i.i, -1
-  br i1 %.not.i.i, label %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit, label %bb.c, !llvm.loop !368
+  br i1 %.not.i.i, label %.lr.ph.i.i, label %bb.c, !llvm.loop !368
 
-_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_T0_SD_T1_T2_.exit.i.i
-  %4 = icmp sgt i64 %.fr.i27.lcssa, 4
-  br i1 %4, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit
-
-.lr.ph.i.i:                                       ; preds = %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_RT0_.exit.i.i
-  %.sroa.0.05.i.i = phi ptr [ %i.bk, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_RT0_.exit.i.i ], [ %storemerge25.lcssa, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit ]
+.lr.ph.i.i:                                       ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_T0_SD_T1_T2_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_RT0_.exit.i.i
+  %.sroa.0.05.i.i = phi ptr [ %i.bk, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_RT0_.exit.i.i ], [ %storemerge25.lcssa, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_T0_SD_T1_T2_.exit.i.i ]
   %i.bk = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -4 ; 4 uses
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !200 ; 2 uses
   %i.bm = load i32, ptr %.fr28, align 4, !tbaa !200
@@ -544,7 +540,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSa
   %i.fn = icmp sgt i64 %i.fm, 16
   br i1 %i.fn, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit, !llvm.loop !365
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEET_SC_SC_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_RT0_.exit.i.i, %bb.a, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEET_SC_SC_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIN7CaDiCaL22analyze_bumped_smallerEEEEvT_SC_SC_RT0_.exit.i.i, %bb.a
   ret void
 }
 

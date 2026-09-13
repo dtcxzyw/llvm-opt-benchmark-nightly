@@ -205,7 +205,7 @@ bb.a:
   %13 = alloca %"struct.std::pair.365", align 8   ; 10 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 6                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_S11_T0_.exit"
@@ -232,11 +232,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.t, label %._crit_edge, label %.lr.ph126, !llvm.loop !6742
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa122 = phi i64 [ %i.d, %.lr.ph ], [ %i.ni, %bb.b ] ; 2 uses
-  %.lcssa120 = phi i64 [ %i.c, %.lr.ph ], [ %i.nh, %bb.b ]
+  %.lcssa120 = phi i64 [ %i.d, %.lr.ph ], [ %i.ni, %bb.b ] ; 2 uses
   %storemerge25.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.014.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
-  %i.u = add nsw i64 %.lcssa122, -2
+  %i.u = add nsw i64 %.lcssa120, -2
   %i.v = lshr i64 %i.u, 1
   %i.w = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 4 uses
@@ -253,8 +252,8 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %i.ai = getelementptr inbounds nuw i8, ptr %12, i64 48
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZNSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS6_ESt8equal_toIS6_ESaIS_IKS6_S8_EEEED2Ev.exit22.i.i.i, %._crit_edge
-  %.010.i.i.i = phi i64 [ %i.v, %._crit_edge ], [ %i.ca, %_ZNSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS6_ESt8equal_toIS6_ESaIS_IKS6_S8_EEEED2Ev.exit22.i.i.i ] ; 4 uses
+bb.c:                                             ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a", %._crit_edge
+  %.010.i.i.i = phi i64 [ %i.v, %._crit_edge ], [ %i.ca, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a" ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #42
   %i.aj = getelementptr inbounds [64 x i8], ptr %0, i64 %.010.i.i.i ; 8 uses
   %i.ak = load double, ptr %i.aj, align 8, !tbaa !1784 ; 2 uses
@@ -340,7 +339,7 @@ _ZNSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
   store ptr null, ptr %i.ab, align 8, !tbaa !185
   store ptr %i.ab, ptr %i.w, align 8, !tbaa !137
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
-  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEElSK_NS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_T0_S12_T1_T2_"(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa122, ptr noundef align 8 %13)
+  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEElSK_NS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_T0_S12_T1_T2_"(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa120, ptr noundef align 8 %13)
   %i.bl = load ptr, ptr %i.ae, align 8, !tbaa !182 ; 2 uses
   %.not5.i.i.i.i.i.i.i.i = icmp eq ptr %i.bl, null
   br i1 %.not5.i.i.i.i.i.i.i.i, label %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N5folly10UserMetricEESaISA_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb1ELb0ELb1EEEE5clearEv.exit.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
@@ -416,24 +415,20 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
   %i.cm = load ptr, ptr %i.w, align 8, !tbaa !137 ; 2 uses
   %i.cn = icmp eq ptr %i.cm, %i.ab
-  br i1 %i.cn, label %_ZNSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS6_ESt8equal_toIS6_ESaIS_IKS6_S8_EEEED2Ev.exit22.i.i.i, label %bb.k
+  br i1 %i.cn, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a", label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N5folly10UserMetricEESaISA_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb1ELb0ELb1EEEE5clearEv.exit.i.i.i20.i.i.i
   %i.co = load i64, ptr %i.x, align 8, !tbaa !138
   %i.cp = shl i64 %i.co, 3
   call void @_ZdlPvm(ptr noundef %i.cm, i64 noundef %i.cp) #43
-  br label %_ZNSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS6_ESt8equal_toIS6_ESaIS_IKS6_S8_EEEED2Ev.exit22.i.i.i
+  br label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a"
 
-_ZNSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS6_ESt8equal_toIS6_ESaIS_IKS6_S8_EEEED2Ev.exit22.i.i.i: ; preds = %bb.k, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N5folly10UserMetricEESaISA_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb1ELb0ELb1EEEE5clearEv.exit.i.i.i20.i.i.i
+"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a": ; preds = %bb.k, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N5folly10UserMetricEESaISA_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb1ELb0ELb1EEEE5clearEv.exit.i.i.i20.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #42
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a", label %bb.c, !llvm.loop !6743
-
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a": ; preds = %_ZNSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS6_ESt8equal_toIS6_ESaIS_IKS6_S8_EEEED2Ev.exit22.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %13)
-  %14 = icmp sgt i64 %.lcssa120, 64
-  br i1 %14, label %.lr.ph.i9.i.preheader, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_S11_T0_.exit"
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i.preheader, label %bb.c, !llvm.loop !6743
 
 .lr.ph.i9.i.preheader:                            ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a"
+  call void @llvm.lifetime.end.p0(ptr nonnull %13)
   %i.cq = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 6 uses
@@ -836,12 +831,12 @@ bb.ce:                                            ; preds = %_ZNSt10_HashtableIN
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEET_S11_S11_T0_.exit": ; preds = %bb.bv
   tail call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEElNS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_T0_T1_"(ptr nonnull %.sroa.014.1.i.i, ptr %storemerge25125, i64 noundef %i.fv)
   %i.ng = ptrtoint ptr %.sroa.014.1.i.i to i64
-  %i.nh = sub i64 %i.ng, %i.a                     ; 2 uses
+  %i.nh = sub i64 %i.ng, %i.a
   %i.ni = ashr exact i64 %i.nh, 6                 ; 3 uses
   %i.nj = icmp sgt i64 %i.ni, 16
   br i1 %i.nj, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_S11_T0_.exit", !llvm.loop !6742
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_S11_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEET_S11_S11_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_S11_RT0_.exit", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_RT0_.exit.i.i.a"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_S11_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEET_S11_S11_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEENS0_5__ops15_Iter_comp_iterIZNSA_L37runBenchmarkGetNSPerIterationEstimateERKSt8functionIFNSA_6detail12TimeIterDataEjEEdE3$_0EEEvT_S11_S11_RT0_.exit", %bb.a
   ret void
 }
 

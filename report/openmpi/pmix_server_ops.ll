@@ -204,12 +204,10 @@ pmix_obj_update.exit:                             ; preds = %bb.bh
   %sext = shl nuw i64 %.sroa.0.0, 32
   %i.id = ashr exact i64 %sext, 32                ; 2 uses
   store i64 %i.id, ptr %3, align 8, !tbaa !143
-  %i.ie = sub nsw i64 %.sroa.0.0, %i.id
-  %4 = sitofp i64 %i.ie to double
-  %5 = fmul nnan double %4, 1.000000e+06
-  %6 = fptosi double %5 to i64
+  %i.ie = sub nuw nsw i64 %.sroa.0.0, %i.id
+  %4 = mul nuw nsw i64 %i.ie, 1000000
   %i.if = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %6, ptr %i.if, align 8, !tbaa !144
+  store i64 %4, ptr %i.if, align 8, !tbaa !144
   fence release
   %i.ig = call i32 @event_add(ptr noundef nonnull %i.ia, ptr noundef nonnull %3) #18 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18

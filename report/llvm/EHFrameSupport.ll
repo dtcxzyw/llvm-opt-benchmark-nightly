@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph54, !llvm.loop !865
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i.i28.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.dx, %bb.b ] ; 3 uses
+  %.fr.i.i.i28.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.dx, %bb.b ] ; 2 uses
   %storemerge26.lcssa = phi ptr [ %.fr30, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i.i.i28.lcssa, 3           ; 2 uses
   %i.j = add nsw i64 %i.i, -2                     ; 2 uses
@@ -347,8 +347,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_RT0_.exit.i.i", label %.split.i.i.i, !llvm.loop !868
 
 "_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_T0_SJ_T1_T2_.exit.us.i.i.i", %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_T0_SJ_T1_T2_.exit.i.i.i"
-  %3 = icmp sgt i64 %.fr.i.i.i28.lcssa, 8
-  br i1 %3, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_SI_T0_.exit"
+  br label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_SI_RT0_.exit.i.i"
   %.sroa.0.03.i.i = phi ptr [ %i.bn, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_SI_RT0_.exit.i.i" ], [ %storemerge26.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_RT0_.exit.i.i" ]
@@ -547,7 +546,7 @@ bb.y:                                             ; preds = %bb.x
   %i.dz = icmp sgt i64 %i.dy, 16
   br i1 %i.dz, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_SI_T0_.exit", !llvm.loop !865
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_SI_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEET_SI_SI_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_SI_RT0_.exit.i.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_SI_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEET_SI_SI_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4llvm7jitlink5BlockESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_16EHFrameEdgeFixerclERNS3_9LinkGraphEE3$_0EEEvT_SI_SI_RT0_.exit.i.i", %bb.a
   ret void
 }
 

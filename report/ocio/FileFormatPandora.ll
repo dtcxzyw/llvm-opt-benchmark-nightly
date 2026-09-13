@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.a
   br label %.outer
 
 .outer:                                           ; preds = %.outer.backedge, %bb.e
-  %.sroa.36.0.ph = phi ptr [ null, %bb.e ], [ %.sroa.36.0.ph.be, %.outer.backedge ] ; 36 uses
+  %.sroa.36.0.ph = phi ptr [ null, %bb.e ], [ %.sroa.36.0.ph.be, %.outer.backedge ] ; 35 uses
   %.sroa.20.0.ph = phi ptr [ null, %bb.e ], [ %.sroa.20.0.ph.be, %.outer.backedge ] ; 13 uses
-  %.sroa.0703.0.ph = phi ptr [ null, %bb.e ], [ %.sroa.0703.0.ph.be, %.outer.backedge ] ; 46 uses
+  %.sroa.0703.0.ph = phi ptr [ null, %bb.e ], [ %.sroa.0703.0.ph.be, %.outer.backedge ] ; 45 uses
   %.0735.ph = phi i32 [ 0, %bb.e ], [ %.0735.ph.be, %.outer.backedge ] ; 11 uses
   %.081.ph = phi i1 [ false, %bb.e ], [ %.081.ph.be, %.outer.backedge ] ; 5 uses
   %.080.ph = phi i32 [ 0, %bb.e ], [ %i.bm, %.outer.backedge ]
@@ -529,9 +529,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit219: ; preds = %_Z
           cleanup
   br label %.loopexit
 
-.loopexit.split-lp:                               ; preds = %47, %bb.dm, %bb.dr
-  %.sroa.36.1.ph777 = phi ptr [ %.sroa.36.8, %bb.dm ], [ %.sroa.36.0.ph, %47 ], [ %.sroa.36.9, %bb.dr ]
-  %.sroa.0703.1.ph778 = phi ptr [ %.sroa.0703.8, %bb.dm ], [ %.sroa.0703.0.ph, %47 ], [ %.sroa.0703.9, %bb.dr ]
+.loopexit.split-lp:                               ; preds = %bb.dm, %bb.dr
+  %.sroa.36.1.ph777 = phi ptr [ %.sroa.36.8, %bb.dm ], [ %.sroa.36.9, %bb.dr ]
+  %.sroa.0703.1.ph778 = phi ptr [ %.sroa.0703.8, %bb.dm ], [ %.sroa.0703.9, %bb.dr ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit
@@ -934,7 +934,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit532: ; preds = %bb
 bb.dd:                                            ; preds = %bb.da
   %i.aes = ptrtoint ptr %.sroa.20.0.ph to i64
   %i.aet = ptrtoint ptr %.sroa.0703.0.ph to i64   ; 2 uses
-  %i.aeu = sub i64 %i.aes, %i.aet                 ; 5 uses
+  %i.aeu = sub i64 %i.aes, %i.aet                 ; 4 uses
   %i.aev = ashr exact i64 %i.aeu, 2               ; 3 uses
   %i.aew = icmp ugt i64 %i.aev, 6440067
   br i1 %i.aew, label %.noexc.i534, label %bb.dg
@@ -991,25 +991,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit542: ; preds = %bb
 bb.dg:                                            ; preds = %bb.dd
   %i.afj = getelementptr inbounds nuw i8, ptr %i.aec, i64 4 ; 2 uses
   %.not.i543 = icmp eq ptr %.sroa.20.0.ph, %.sroa.36.0.ph
-  br i1 %.not.i543, label %45, label %bb.dh
+  br i1 %.not.i543, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i, label %bb.dh
 
 bb.dh:                                            ; preds = %bb.dg
   %i.afk = load i32, ptr %i.afj, align 4, !tbaa !35
   store i32 %i.afk, ptr %.sroa.20.0.ph, align 4, !tbaa !35
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
-45:                                               ; preds = %bb.dg
-  %46 = icmp eq i64 %i.aeu, 9223372036854775804
-  br i1 %46, label %47, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
-
-47:                                               ; preds = %45
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #25
-          to label %.noexc545 unwind label %.loopexit.split-lp
-
-.noexc545:                                        ; preds = %47
-  unreachable
-
-_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %45
+_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.dg
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.aev, i64 1)
   %i.afl = add nuw nsw i64 %.sroa.speculated.i.i.i, %i.aev ; 2 uses
   %i.afm = shl nuw nsw i64 %i.afl, 2

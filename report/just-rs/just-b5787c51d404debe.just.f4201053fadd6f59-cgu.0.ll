@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %_RNvYNvYeNtN
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5365)
   br label %.lr.ph.i.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldReNtNtCs4wP2HXfJTCR_5alloc6string6StringuNvYeNtNtB10_6borrow7ToOwned8to_ownedNCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsk_NtB10_3vecINtB3e_3VecBW_E14extend_trustedINtB4_3MapINtNtB3e_9into_iter8IntoIterBU_EB1z_EE0E0E0CskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i
+.lr.ph.i.i.i.i.i.i.i:                             ; preds = %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldReNtNtCs4wP2HXfJTCR_5alloc6string6StringuNvYeNtNtB10_6borrow7ToOwned8to_ownedNCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsk_NtB10_3vecINtB3e_3VecBW_E14extend_trustedINtB4_3MapINtNtB3e_9into_iter8IntoIterBU_EB1z_EE0E0E0CskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.preheader
   %.val11.i.i.i.i.i.i.i = phi i64 [ %i.ah, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldReNtNtCs4wP2HXfJTCR_5alloc6string6StringuNvYeNtNtB10_6borrow7ToOwned8to_ownedNCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsk_NtB10_3vecINtB3e_3VecBW_E14extend_trustedINtB4_3MapINtNtB3e_9into_iter8IntoIterBU_EB1z_EE0E0E0CskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 3 uses
   %i.y = phi ptr [ %i.ac, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldReNtNtCs4wP2HXfJTCR_5alloc6string6StringuNvYeNtNtB10_6borrow7ToOwned8to_ownedNCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBW_NCINvMsk_NtB10_3vecINtB3e_3VecBW_E14extend_trustedINtB4_3MapINtNtB3e_9into_iter8IntoIterBU_EB1z_EE0E0E0CskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i ], [ %i.k, %.lr.ph.i.i.i.i.i.i.i.preheader ] ; 3 uses
   %i.z = load ptr, ptr %i.y, align 8, !noalias !5366, !nonnull !28, !noundef !28
@@ -608,7 +608,7 @@ bb.a:
   br i1 %i.f, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = mul nuw nsw i64 %2, 24                   ; 2 uses
+  %i.g = mul nuw nsw i64 %2, 24                   ; 3 uses
   %or.cond.i.i.i = icmp samesign ugt i64 %2, 384307168202282325
   br i1 %or.cond.i.i.i, label %bb.e, label %bb.c, !prof !42
 
@@ -699,14 +699,12 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringEC
   br i1 %i.z, label %_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtB7_6string6StringENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCskXtk6F4WjxZ_4just.exit.i40, label %.lr.ph.i.i.i35
 
 _RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtB7_6string6StringENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCskXtk6F4WjxZ_4just.exit.i40: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECskXtk6F4WjxZ_4just.exit.i.i.i39, %.body.i
-  %3 = mul nuw nsw i64 %2, 24
-  tail call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %i.i, i64 noundef %3, i64 noundef range(i64 1, -9223372036854775807) 8) #70, !noalias !83099
+  tail call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %i.i, i64 noundef %i.g, i64 noundef range(i64 1, -9223372036854775807) 8) #70, !noalias !83099
   resume { ptr, i32 } %i.t
 
 _RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtB8_6string6StringEINtB4_18SpecFromIterNestedB13_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB22_5slice4iter4IterReENCNvXs2_NtCskXtk6F4WjxZ_4just10modulepathNtB3j_10ModulepathINtNtB22_7convert7TryFromRSB38_E8try_from0EE9from_iterB3l_.exit: ; preds = %bb.j, %bb.c
-  %.sroa.4.0.i.i85 = phi i64 [ 0, %bb.c ], [ %2, %bb.j ]
   %.sroa.10.0.i.i84 = phi ptr [ inttoptr (i64 8 to ptr), %bb.c ], [ %i.i, %bb.j ] ; 2 uses
-  store i64 %.sroa.4.0.i.i85, ptr %i.d, align 8
+  store i64 %2, ptr %i.d, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %.sroa.10.0.i.i84, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16

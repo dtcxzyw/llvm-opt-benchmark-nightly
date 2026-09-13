@@ -206,7 +206,7 @@ bb.a:
   %4 = alloca %"class.std::unique_ptr.1127", align 8 ; 5 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_T0_.exit"
@@ -221,11 +221,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph58, !llvm.loop !268
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa54 = phi i64 [ %i.d, %.lr.ph ], [ %i.bl, %bb.b ] ; 2 uses
-  %.lcssa52 = phi i64 [ %i.c, %.lr.ph ], [ %i.bk, %bb.b ]
+  %.lcssa52 = phi i64 [ %i.d, %.lr.ph ], [ %i.bl, %bb.b ] ; 2 uses
   %storemerge26.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.016.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.i = add nsw i64 %.lcssa54, -2
+  %i.i = add nsw i64 %.lcssa52, -2
   %i.j = lshr i64 %i.i, 1
   br label %bb.c
 
@@ -235,7 +234,7 @@ bb.c:                                             ; preds = %_ZNSt10unique_ptrIN
   %i.l = load i64, ptr %i.k, align 8
   store ptr null, ptr %i.k, align 8
   store i64 %i.l, ptr %4, align 8
-  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_T0_SL_T1_T2_"(ptr %0, i64 noundef %.08.i.i.i, i64 noundef %.lcssa54, ptr noundef %4)
+  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_T0_SL_T1_T2_"(ptr %0, i64 noundef %.08.i.i.i, i64 noundef %.lcssa52, ptr noundef %4)
   %i.m = load ptr, ptr %4, align 8                ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %i.m, null
   br i1 %.not.i.i.i.i, label %_ZNSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS3_EED2Ev.exit14.i.i.i, label %bb.d
@@ -271,8 +270,7 @@ _ZNSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS3_EED2Ev.exit1
 
 "_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_RT0_.exit.i.i": ; preds = %_ZNSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS3_EED2Ev.exit14.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %5 = icmp sgt i64 %.lcssa52, 8
-  br i1 %5, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_T0_.exit"
+  br label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_RT0_.exit"
   %.sroa.0.03.i.i = phi ptr [ %i.t, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_RT0_.exit" ], [ %storemerge26.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_RT0_.exit.i.i" ]
@@ -461,12 +459,12 @@ bb.v:                                             ; preds = %bb.u
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEET_SK_SK_T0_.exit": ; preds = %bb.u
   tail call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEElNS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_T0_T1_"(ptr nonnull %.sroa.016.1.i.i, ptr %storemerge2657, i64 noundef %i.an)
   %i.bj = ptrtoint ptr %.sroa.016.1.i.i to i64
-  %i.bk = sub i64 %i.bj, %i.a                     ; 2 uses
+  %i.bk = sub i64 %i.bj, %i.a
   %i.bl = ashr exact i64 %i.bk, 3                 ; 3 uses
   %i.bm = icmp sgt i64 %i.bl, 16
   br i1 %i.bm, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_T0_.exit", !llvm.loop !268
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEET_SK_SK_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_RT0_.exit", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEET_SK_SK_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal4wasm8WasmCodeESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZNKS5_12NativeModule26TransferNewOwnedCodeLockedEvE3$_0EEEvT_SK_SK_RT0_.exit", %bb.a
   ret void
 }
 

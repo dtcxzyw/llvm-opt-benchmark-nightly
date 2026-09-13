@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.std::unique_ptr", align 8   ; 5 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_T0_.exit"
@@ -220,11 +220,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph58, !llvm.loop !409
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa54 = phi i64 [ %i.d, %.lr.ph ], [ %i.dw, %bb.b ] ; 2 uses
-  %.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.dv, %bb.b ]
+  %.lcssa = phi i64 [ %i.d, %.lr.ph ], [ %i.dw, %bb.b ] ; 2 uses
   %storemerge24.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.013.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.i = add nsw i64 %.lcssa54, -2
+  %i.i = add nsw i64 %.lcssa, -2
   %i.j = lshr i64 %i.i, 1
   br label %bb.c
 
@@ -234,7 +233,7 @@ bb.c:                                             ; preds = %_ZNSt10unique_ptrIN
   %i.l = load i64, ptr %i.k, align 8, !tbaa !49
   store ptr null, ptr %i.k, align 8, !tbaa !49
   store i64 %i.l, ptr %4, align 8, !tbaa !49
-  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_T0_SJ_T1_T2_"(ptr %0, i64 noundef %.08.i.i.i, i64 noundef %.lcssa54, ptr noundef align 8 %4)
+  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_T0_SJ_T1_T2_"(ptr %0, i64 noundef %.08.i.i.i, i64 noundef %.lcssa, ptr noundef align 8 %4)
   %i.m = load ptr, ptr %4, align 8, !tbaa !49     ; 6 uses
   %.not.i.i.i.i = icmp eq ptr %i.m, null
   br i1 %.not.i.i.i.i, label %_ZNSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS1_EED2Ev.exit12.i.i.i, label %bb.d
@@ -269,8 +268,7 @@ _ZNSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS1_EED2Ev.exit12.i.i.i
 
 "_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_RT0_.exit.i.i": ; preds = %_ZNSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS1_EED2Ev.exit12.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %5 = icmp sgt i64 %.lcssa, 8
-  br i1 %5, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_T0_.exit"
+  br label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_RT0_.exit"
   %.sroa.0.03.i.i = phi ptr [ %i.y, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_RT0_.exit" ], [ %storemerge24.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_RT0_.exit.i.i" ]
@@ -530,12 +528,12 @@ bb.s:                                             ; preds = %"_ZN9__gnu_cxx5__op
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEET_SI_SI_T0_.exit": ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN5eSLIM11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EclINS_17__normal_iteratorIPSt10unique_ptrINS2_11eSLIMCirObjESt14default_deleteIS9_EESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit10.thread17.i.i"
   tail call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEElNS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_T0_T1_"(ptr nonnull %.sroa.013.1.i.i, ptr %storemerge2457, i64 noundef %i.bc)
   %i.du = ptrtoint ptr %.sroa.013.1.i.i to i64
-  %i.dv = sub i64 %i.du, %i.a                     ; 2 uses
+  %i.dv = sub i64 %i.du, %i.a
   %i.dw = ashr exact i64 %i.dv, 3                 ; 3 uses
   %i.dx = icmp sgt i64 %i.dw, 16
   br i1 %i.dx, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_T0_.exit", !llvm.loop !409
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEET_SI_SI_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_RT0_.exit", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEET_SI_SI_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5eSLIM11eSLIMCirObjESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS3_11eSLIMCirMan23applyLevelBasedOrderingEvE3$_0EEEvT_SI_SI_RT0_.exit", %bb.a
   ret void
 }
 

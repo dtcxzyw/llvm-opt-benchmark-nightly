@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.h, label %._crit_edge, label %.lr.ph41, !llvm.loop !99
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i24.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cf, %bb.b ] ; 3 uses
+  %.fr.i24.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cf, %bb.b ] ; 2 uses
   %storemerge22.lcssa = phi ptr [ %.fr26, %.lr.ph ], [ %.sroa.015.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i24.lcssa, 4               ; 2 uses
   %i.j = add nsw i64 %i.i, -2                     ; 2 uses
@@ -282,13 +282,9 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_11
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   %.not.i.i.i = icmp eq i64 %.010.i.i.i, 0
   %i.al = add nsw i64 %.010.i.i.i, -1
-  br i1 %.not.i.i.i, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_RT0_.exit.i.i, label %bb.c, !llvm.loop !104
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !104
 
-_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_RT0_.exit.i.i: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_T0_SJ_T1_T2_.exit.i.i.i
-  %13 = icmp sgt i64 %.fr.i24.lcssa, 16
-  br i1 %13, label %.lr.ph.i9.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_SI_T0_.exit
-
-.lr.ph.i9.i:                                      ; preds = %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_RT0_.exit.i.i
+.lr.ph.i9.i:                                      ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_T0_SJ_T1_T2_.exit.i.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   br label %bb.g
 
@@ -493,7 +489,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN2v88internal1
   %i.ch = icmp sgt i64 %i.cg, 16
   br i1 %i.ch, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_SI_T0_.exit, !llvm.loop !99
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_SI_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEET_SI_SI_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_SI_RT0_.exit.i22.i, %bb.a, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_RT0_.exit.i.i
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_SI_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEET_SI_SI_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN2v88internal12_GLOBAL__N_119SourcePositionEventESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIPFbRKS5_SE_EEEEvT_SI_SI_RT0_.exit.i22.i, %bb.a
   ret void
 }
 

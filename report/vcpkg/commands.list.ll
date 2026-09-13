@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %.lcssa120 = phi i64 [ %i.d, %.lr.ph ], [ %i.jb, %bb.b ] ; 2 uses
-  %.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ja, %bb.b ] ; 2 uses
+  %.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ja, %bb.b ]
   %storemerge43.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.029.1.i.i, %bb.b ]
   %i.q = add nsw i64 %.lcssa120, -2               ; 2 uses
   %i.r = lshr i64 %i.q, 1                         ; 3 uses
@@ -443,13 +443,9 @@ bb.j:                                             ; preds = %"_ZZN5vcpkg21comman
   store ptr %i.ai, ptr %i.cr, align 8, !tbaa !46
   %.not.i.i.i = icmp eq i64 %.09.i.i.i, 0
   %i.cs = add nsw i64 %.09.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_RT0_.exit.i.i", label %bb.c, !llvm.loop !293
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !293
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_T0_SM_T1_T2_.exit.i.i.i"
-  %15 = icmp sgt i64 %.lcssa, 8
-  br i1 %15, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_SL_T0_.exit"
-
-.lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_RT0_.exit.i.i"
+.lr.ph.i9.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_T0_SM_T1_T2_.exit.i.i.i"
   %i.ct = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.cu = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.cv = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
@@ -852,7 +848,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.jc = icmp sgt i64 %i.jb, 16
   br i1 %i.jc, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_SL_T0_.exit", !llvm.loop !290
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_SL_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEET_SL_SL_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_SL_RT0_.exit.i34.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_SL_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEET_SL_SL_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPKN5vcpkg15StatusParagraphESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_21command_list_and_exitERKNS2_17VcpkgCmdArgumentsERKNS2_10VcpkgPathsEE3$_2EEEvT_SL_SL_RT0_.exit.i34.i", %bb.a
   ret void
 }
 

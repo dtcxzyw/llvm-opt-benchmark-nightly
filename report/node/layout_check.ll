@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph42, !llvm.loop !717
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i25.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.hc, %bb.b ] ; 3 uses
+  %.fr.i25.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.hc, %bb.b ] ; 2 uses
   %storemerge23.lcssa = phi ptr [ %.fr27, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i25.lcssa, 3               ; 2 uses
   %i.j = add nsw i64 %i.i, -2                     ; 2 uses
@@ -298,14 +298,10 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   store ptr %i.t, ptr %i.bg, align 8
   %.not.i.i.i = icmp eq i64 %.09.i.i.i, 0
   %i.bh = add nsw i64 %.09.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_RT0_.exit.i.i", label %bb.c, !llvm.loop !722
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !722
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_T0_SI_T1_T2_.exit.i.i.i"
-  %3 = icmp sgt i64 %.fr.i25.lcssa, 8
-  br i1 %3, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_T0_.exit"
-
-.lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_RT0_.exit.i19.i"
-  %.sroa.0.03.i.i = phi ptr [ %i.bi, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_RT0_.exit.i19.i" ], [ %storemerge23.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_RT0_.exit.i.i" ]
+.lr.ph.i9.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_T0_SI_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_RT0_.exit.i19.i"
+  %.sroa.0.03.i.i = phi ptr [ %i.bi, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_RT0_.exit.i19.i" ], [ %storemerge23.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_T0_SI_T1_T2_.exit.i.i.i" ]
   %i.bi = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -8 ; 4 uses
   %i.bj = load ptr, ptr %i.bi, align 8            ; 3 uses
   %i.bk = load ptr, ptr %.fr26, align 8
@@ -578,7 +574,7 @@ bb.v:                                             ; preds = %bb.u
   %i.he = icmp sgt i64 %i.hd, 16
   br i1 %i.he, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_T0_.exit", !llvm.loop !717
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEET_SH_SH_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_RT0_.exit.i19.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEET_SH_SH_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPKN4LIEF5MachO7SectionESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_13LayoutChecker24check_section_contiguityEvE3$_0EEEvT_SH_SH_RT0_.exit.i19.i", %bb.a
   ret void
 }
 

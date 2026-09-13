@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.h, label %._crit_edge, label %.lr.ph50, !llvm.loop !5357
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cu, %bb.b ] ; 3 uses
+  %.fr.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.cu, %bb.b ] ; 2 uses
   %storemerge25.lcssa = phi ptr [ %.fr29, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i27.lcssa, 4               ; 2 uses
   %i.j = add nsw i64 %i.i, -2                     ; 2 uses
@@ -283,14 +283,10 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidES
   store <2 x double> %i.t, ptr %i.ao, align 8, !tbaa !440
   %.not.i.i = icmp eq i64 %.010.i.i, 0
   %i.ap = add nsw i64 %.010.i.i, -1
-  br i1 %.not.i.i, label %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit, label %bb.c, !llvm.loop !5360
+  br i1 %.not.i.i, label %.lr.ph.i.i, label %bb.c, !llvm.loop !5360
 
-_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_T0_SE_T1_T2_.exit.i.i
-  %3 = icmp sgt i64 %.fr.i27.lcssa, 16
-  br i1 %3, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit
-
-.lr.ph.i.i:                                       ; preds = %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_RT0_.exit.i.i
-  %.sroa.0.05.i.i = phi ptr [ %i.aq, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_RT0_.exit.i.i ], [ %storemerge25.lcssa, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit ]
+.lr.ph.i.i:                                       ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_T0_SE_T1_T2_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_RT0_.exit.i.i
+  %.sroa.0.05.i.i = phi ptr [ %i.aq, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_RT0_.exit.i.i ], [ %storemerge25.lcssa, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_T0_SE_T1_T2_.exit.i.i ]
   %i.aq = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -16 ; 4 uses
   %i.ar = load <2 x double>, ptr %i.aq, align 8, !tbaa !440 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aq, ptr noundef nonnull align 8 dereferenceable(16) %.fr28, i64 16, i1 false), !tbaa.struct !1283
@@ -477,7 +473,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdig
   %i.cw = icmp sgt i64 %i.cv, 16
   br i1 %i.cw, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit, !llvm.loop !5357
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEET_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_RT0_.exit.i.i, %bb.a, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEET_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN14duckdb_tdigest8CentroidESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_18CentroidComparatorEEEEvT_SD_SD_RT0_.exit.i.i, %bb.a
   ret void
 }
 

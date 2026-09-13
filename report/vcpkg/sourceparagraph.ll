@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.std::unique_ptr.94", align 8 ; 5 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_T0_.exit
@@ -220,11 +220,10 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.h, label %._crit_edge, label %.lr.ph58, !llvm.loop !797
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa54 = phi i64 [ %i.d, %.lr.ph ], [ %i.bs, %bb.b ] ; 2 uses
-  %.lcssa52 = phi i64 [ %i.c, %.lr.ph ], [ %i.br, %bb.b ]
+  %.lcssa52 = phi i64 [ %i.d, %.lr.ph ], [ %i.bs, %bb.b ] ; 2 uses
   %storemerge25.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.025.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.i = add nsw i64 %.lcssa54, -2
+  %i.i = add nsw i64 %.lcssa52, -2
   %i.j = lshr i64 %i.i, 1
   br label %bb.c
 
@@ -234,7 +233,7 @@ bb.c:                                             ; preds = %_ZNSt10unique_ptrIN
   %i.l = load i64, ptr %i.k, align 8, !tbaa !150
   store ptr null, ptr %i.k, align 8, !tbaa !150
   store i64 %i.l, ptr %4, align 8, !tbaa !150
-  call fastcc void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_T0_SK_T1_T2_(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa54, ptr noundef align 8 %4)
+  call fastcc void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEElS7_NS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_T0_SK_T1_T2_(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa52, ptr noundef align 8 %4)
   %i.m = load ptr, ptr %4, align 8, !tbaa !150    ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.m, null
   br i1 %.not.i.i.i.i, label %_ZNSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS1_EED2Ev.exit13.i.i.i, label %_ZNKSt14default_deleteIN5vcpkg16FeatureParagraphEEclEPS1_.exit.i.i.i.i
@@ -251,8 +250,7 @@ _ZNSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS1_EED2Ev.exit13.
 
 _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_RT0_.exit.i.i: ; preds = %_ZNSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS1_EED2Ev.exit13.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %5 = icmp sgt i64 %.lcssa52, 8
-  br i1 %5, label %.lr.ph.i9.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_T0_.exit
+  br label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_RT0_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_RT0_.exit.i15.i
   %.sroa.0.03.i.i = phi ptr [ %i.o, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_RT0_.exit.i15.i ], [ %storemerge25.lcssa, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_RT0_.exit.i.i ]
@@ -543,12 +541,12 @@ bb.p:                                             ; preds = %bb.o
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEET_SJ_SJ_T0_.exit: ; preds = %bb.o
   tail call fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEElNS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_T0_T1_(ptr nonnull %.sroa.025.1.i.i, ptr %storemerge2557, i64 noundef %i.y)
   %i.bq = ptrtoint ptr %.sroa.025.1.i.i to i64
-  %i.br = sub i64 %i.bq, %i.a                     ; 2 uses
+  %i.br = sub i64 %i.bq, %i.a
   %i.bs = ashr exact i64 %i.br, 3                 ; 3 uses
   %i.bt = icmp sgt i64 %i.bs, 16
   br i1 %i.bt, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_T0_.exit, !llvm.loop !797
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEET_SJ_SJ_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_RT0_.exit.i15.i, %bb.a, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_RT0_.exit.i.i
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEET_SJ_SJ_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS4_EESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterINS3_12_GLOBAL__N_112Canonicalize11FeatureLessEEEEvT_SJ_SJ_RT0_.exit.i15.i, %bb.a
   ret void
 }
 

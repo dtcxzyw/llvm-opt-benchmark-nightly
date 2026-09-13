@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.b
 bb.w:                                             ; preds = %bb.b
   %i.ba = ptrtoint ptr %.sroa.10.0.ph82183 to i64
   %i.bb = ptrtoint ptr %.sroa.037.0.ph83184 to i64
-  %i.bc = sub i64 %i.ba, %i.bb                    ; 5 uses
+  %i.bc = sub i64 %i.ba, %i.bb                    ; 4 uses
   %i.bd = ashr exact i64 %i.bc, 4                 ; 3 uses
   %i.be = icmp ugt i64 %i.bd, 1024
   br i1 %i.be, label %.thread, label %bb.x
@@ -214,7 +214,7 @@ bb.x:                                             ; preds = %bb.w
   %i.bf = getelementptr inbounds nuw i8, ptr %.065176, i64 16
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !381, !noalias !1170 ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.10.0.ph82183, %.sroa.19.0.ph81182
-  br i1 %.not.i.i, label %2, label %bb.y
+  br i1 %.not.i.i, label %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.bh = ptrtoint ptr %i.bg to i64
@@ -223,23 +223,12 @@ bb.y:                                             ; preds = %bb.x
   store i32 %.0.ph191, ptr %i.bi, align 8, !tbaa !86
   br label %_ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE9push_backEOS5_.exit
 
-2:                                                ; preds = %bb.x
-  %3 = icmp eq i64 %i.bc, 9223372036854775792
-  br i1 %3, label %4, label %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i
-
-4:                                                ; preds = %2
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.99) #29
-          to label %.noexc32 unwind label %.loopexit.split-lp
-
-.noexc32:                                         ; preds = %4
-  unreachable
-
-_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %2
+_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.x
   %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %i.bd, i64 1)
   %i.bj = add nuw nsw i64 %.sroa.speculated.i.i, %i.bd ; 2 uses
   %i.bk = shl nuw nsw i64 %i.bj, 4
   %i.bl = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bk) #30
-          to label %.noexc33 unwind label %.loopexit ; 5 uses
+          to label %.noexc33 unwind label %bb.aa  ; 5 uses
 
 .noexc33:                                         ; preds = %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bc ; 2 uses
@@ -289,18 +278,9 @@ _ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE9push_
   %.not175 = icmp eq ptr %i.bx, null
   br i1 %.not175, label %.thread, label %.lr.ph, !llvm.loop !1164
 
-.loopexit:                                        ; preds = %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i
+bb.aa:                                            ; preds = %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  br label %bb.aa
-
-.loopexit.split-lp:                               ; preds = %4
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.aa
-
-bb.aa:                                            ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %.sroa.037.0.ph83184, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EED2Ev.exit, label %bb.ab
 
@@ -309,7 +289,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EED2Ev.exit
 
 _ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EED2Ev.exit: ; preds = %bb.aa, %bb.ab
-  resume { ptr, i32 } %lpad.phi
+  resume { ptr, i32 } %lpad.loopexit
 
 .outer.backedge:                                  ; preds = %bb.b, %bb.c, %bb.j, %bb.k, %bb.u, %bb.f, %bb.s
   %.sink = phi i64 [ 16, %bb.s ], [ 8, %bb.k ], [ 8, %bb.j ], [ 8, %bb.f ], [ 8, %bb.u ], [ 8, %bb.c ], [ 8, %bb.b ]
@@ -712,7 +692,7 @@ bb.v:                                             ; preds = %bb.b
 bb.w:                                             ; preds = %bb.b
   %i.ba = ptrtoint ptr %.sroa.10.0.ph82183 to i64
   %i.bb = ptrtoint ptr %.sroa.037.0.ph83184 to i64
-  %i.bc = sub i64 %i.ba, %i.bb                    ; 5 uses
+  %i.bc = sub i64 %i.ba, %i.bb                    ; 4 uses
   %i.bd = ashr exact i64 %i.bc, 4                 ; 3 uses
   %i.be = icmp ugt i64 %i.bd, 1024
   br i1 %i.be, label %.thread, label %bb.x
@@ -721,7 +701,7 @@ bb.x:                                             ; preds = %bb.w
   %i.bf = getelementptr inbounds nuw i8, ptr %.065176, i64 16
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !381, !noalias !1637 ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.10.0.ph82183, %.sroa.19.0.ph81182
-  br i1 %.not.i.i, label %2, label %bb.y
+  br i1 %.not.i.i, label %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.bh = ptrtoint ptr %i.bg to i64
@@ -730,23 +710,12 @@ bb.y:                                             ; preds = %bb.x
   store i32 %.0.ph191, ptr %i.bi, align 8, !tbaa !86
   br label %_ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE9push_backEOS5_.exit
 
-2:                                                ; preds = %bb.x
-  %3 = icmp eq i64 %i.bc, 9223372036854775792
-  br i1 %3, label %4, label %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i
-
-4:                                                ; preds = %2
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.99) #29
-          to label %.noexc32 unwind label %.loopexit.split-lp
-
-.noexc32:                                         ; preds = %4
-  unreachable
-
-_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %2
+_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.x
   %.sroa.speculated.i.i = tail call i64 @llvm.umax.i64(i64 %i.bd, i64 1)
   %i.bj = add nuw nsw i64 %.sroa.speculated.i.i, %i.bd ; 2 uses
   %i.bk = shl nuw nsw i64 %i.bj, 4
   %i.bl = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bk) #30
-          to label %.noexc33 unwind label %.loopexit ; 5 uses
+          to label %.noexc33 unwind label %bb.aa  ; 5 uses
 
 .noexc33:                                         ; preds = %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bc ; 2 uses
@@ -796,18 +765,9 @@ _ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE9push_
   %.not175 = icmp eq ptr %i.bx, null
   br i1 %.not175, label %.thread, label %.lr.ph, !llvm.loop !1631
 
-.loopexit:                                        ; preds = %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i
+bb.aa:                                            ; preds = %_ZNKSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EE12_M_check_lenEmPKc.exit.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  br label %bb.aa
-
-.loopexit.split-lp:                               ; preds = %4
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.aa
-
-bb.aa:                                            ; preds = %.loopexit.split-lp, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %.sroa.037.0.ph83184, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EED2Ev.exit, label %bb.ab
 
@@ -816,7 +776,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EED2Ev.exit
 
 _ZNSt6vectorISt5tupleIJiPN5boost13re_detail_60014re_syntax_baseEEESaIS5_EED2Ev.exit: ; preds = %bb.aa, %bb.ab
-  resume { ptr, i32 } %lpad.phi
+  resume { ptr, i32 } %lpad.loopexit
 
 .outer.backedge:                                  ; preds = %bb.b, %bb.c, %bb.j, %bb.k, %bb.u, %bb.f, %bb.s
   %.sink = phi i64 [ 16, %bb.s ], [ 8, %bb.k ], [ 8, %bb.j ], [ 8, %bb.f ], [ 8, %bb.u ], [ 8, %bb.c ], [ 8, %bb.b ]

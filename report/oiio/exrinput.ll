@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %.pre-phi = phi i64 [ %.pre81, %_ZNSt15__new_allocatorIfE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ]
   %i.j = phi ptr [ %.pre78, %_ZNSt15__new_allocatorIfE8allocateEmPKv.exit.i.i.i.i ], [ %i.c, %bb.a ]
   %i.k = phi ptr [ %.pre, %_ZNSt15__new_allocatorIfE8allocateEmPKv.exit.i.i.i.i ], [ %i.d, %bb.a ] ; 2 uses
-  %i.l = phi ptr [ %i.i, %_ZNSt15__new_allocatorIfE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 9 uses
+  %i.l = phi ptr [ %i.i, %_ZNSt15__new_allocatorIfE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 8 uses
   store ptr %i.l, ptr %12, align 8, !tbaa !153
   %i.m = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.g
   %i.o = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
   store ptr %i.n, ptr %i.o, align 8, !tbaa !154
-  %i.p = sub i64 %.pre-phi, %.pre-phi83           ; 6 uses
+  %i.p = sub i64 %.pre-phi, %.pre-phi83           ; 5 uses
   %i.q = icmp sgt i64 %i.p, 4
   br i1 %i.q, label %bb.d, label %bb.e, !prof !209
 
@@ -248,27 +248,23 @@ bb.g:                                             ; preds = %_ZNSt6vectorIfSaIfE
 
 bb.h:                                             ; preds = %_ZNSt6vectorIfSaIfEEC2ERKS1_.exit
   %i.z = icmp ugt i64 %i.v, %i.u
-  br i1 %i.z, label %14, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
+  br i1 %i.z, label %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
 
-14:                                               ; preds = %bb.h
-  %.idx = shl nuw nsw i64 %i.u, 2                 ; 2 uses
-  %.not.i.i = icmp eq i64 %i.p, %.idx
-  br i1 %.not.i.i, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit, label %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i
-
-_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %14
+_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.h
+  %.idx = shl nuw nsw i64 %i.u, 2
   %i.aa = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx
   store ptr %i.aa, ptr %i.m, align 8, !tbaa !156
   br label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
 
-_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit_crit_edge, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, %14, %bb.h
-  %15 = phi ptr [ %.pre79, %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit_crit_edge ], [ %i.l, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i ], [ %i.l, %14 ], [ %i.l, %bb.h ] ; 4 uses
-  %i.ab = load float, ptr %15, align 4, !tbaa !158 ; 2 uses
+_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit:            ; preds = %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit_crit_edge, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i, %bb.h
+  %14 = phi ptr [ %.pre79, %._ZNSt6vectorIfSaIfEE6resizeEmRKf.exit_crit_edge ], [ %i.l, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i ], [ %i.l, %bb.h ] ; 4 uses
+  %i.ab = load float, ptr %14, align 4, !tbaa !158 ; 2 uses
   %i.ac = fcmp uge float %i.ab, 0.000000e+00      ; 2 uses
   br i1 %i.ac, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
   %i.ad = call float @llvm.fabs.f32(float %i.ab)
-  store float %i.ad, ptr %15, align 4, !tbaa !158
+  store float %i.ad, ptr %14, align 4, !tbaa !158
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.g
@@ -322,7 +318,7 @@ bb.l:                                             ; preds = %bb.i, %_ZNSt6vector
   br i1 %.not.i.i.i37, label %_ZNSt6vectorIfSaIfEED2Ev.exit38, label %._crit_edge61.split.thread
 
 ._crit_edge61.split.thread:                       ; preds = %bb.l, %.preheader.lr.ph, %._crit_edge61.split
-  %i.aw = phi ptr [ %.pre80, %._crit_edge61.split ], [ %15, %.preheader.lr.ph ], [ %15, %bb.l ] ; 2 uses
+  %i.aw = phi ptr [ %.pre80, %._crit_edge61.split ], [ %14, %.preheader.lr.ph ], [ %14, %bb.l ] ; 2 uses
   %i.ax = load ptr, ptr %i.o, align 8, !tbaa !154
   %i.ay = ptrtoint ptr %i.ax to i64
   %i.az = ptrtoint ptr %i.aw to i64

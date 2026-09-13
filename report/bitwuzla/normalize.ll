@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %.lr.ph104, %._crit_
           to label %bb.v unwind label %bb.x
 
 bb.v:                                             ; preds = %bb.u
-  %i.bj = shl nuw nsw i64 %.047102, 1
+  %i.bj = shl nuw i64 %.047102, 1
   %i.bk = sub i64 %i.h, %i.bj                     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   %i.bl = load ptr, ptr %0, align 8, !tbaa !77
@@ -607,7 +607,7 @@ bb.a:
   %13 = alloca %"struct.std::pair.396", align 8   ; 7 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 4                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_SN_T0_.exit"
@@ -624,11 +624,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.j, label %._crit_edge, label %.lr.ph149, !llvm.loop !942
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa138 = phi i64 [ %i.d, %.lr.ph ], [ %i.co, %bb.b ] ; 2 uses
-  %.lcssa129 = phi i64 [ %i.c, %.lr.ph ], [ %i.cn, %bb.b ]
+  %.lcssa129 = phi i64 [ %i.d, %.lr.ph ], [ %i.co, %bb.b ] ; 2 uses
   %storemerge57.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
-  %i.k = add nsw i64 %.lcssa138, -2
+  %i.k = add nsw i64 %.lcssa129, -2
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %13, i64 8
@@ -648,7 +647,7 @@ bb.c:                                             ; preds = %bb.e, %._crit_edge
 bb.d:                                             ; preds = %bb.c
   %i.r = load i64, ptr %i.m, align 8, !tbaa !179
   store i64 %i.r, ptr %i.n, align 8, !tbaa !179
-  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_T0_SO_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa138, ptr noundef align 8 %13)
+  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_T0_SO_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa129, ptr noundef align 8 %13)
           to label %bb.e unwind label %bb.g
 
 bb.e:                                             ; preds = %bb.d
@@ -657,7 +656,7 @@ bb.e:                                             ; preds = %bb.d
   %i.s = add nsw i64 %.012.i.i.i, -1
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %12) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_RT0_.exit.i.i", label %bb.c, !llvm.loop !943
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i.preheader, label %bb.c, !llvm.loop !943
 
 bb.f:                                             ; preds = %bb.c
   %i.t = landingpad { ptr, i32 }
@@ -680,12 +679,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
   br label %common.resume
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_RT0_.exit.i.i": ; preds = %bb.e
+.lr.ph.i9.i.preheader:                            ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %13)
-  %14 = icmp sgt i64 %.lcssa129, 16
-  br i1 %14, label %.lr.ph.i9.i.preheader, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_SN_T0_.exit"
-
-.lr.ph.i9.i.preheader:                            ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_RT0_.exit.i.i"
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 8
   br label %.lr.ph.i9.i
@@ -993,12 +988,12 @@ _ZSt9iter_swapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEET_SN_SN_T0_.exit": ; preds = %bb.ak
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_T0_T1_"(ptr nonnull %.sroa.012.1.i.i, ptr %storemerge57148, i64 noundef %i.ak)
   %i.cm = ptrtoint ptr %.sroa.012.1.i.i to i64
-  %i.cn = sub i64 %i.cm, %i.a                     ; 2 uses
+  %i.cn = sub i64 %i.cm, %i.a
   %i.co = ashr exact i64 %i.cn, 4                 ; 3 uses
   %i.cp = icmp sgt i64 %i.co, 16
   br i1 %i.cp, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_SN_T0_.exit", !llvm.loop !942
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_SN_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEET_SN_SN_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_SN_RT0_.exit", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_SN_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEET_SN_SN_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeEmESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS7_IS4_SaIS4_EERSH_E3$_0EEEvT_SN_SN_RT0_.exit", %bb.a
   ret void
 }
 
@@ -1401,7 +1396,7 @@ bb.a:
   %14 = alloca %"struct.std::pair.415", align 8   ; 8 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 5                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_SP_T0_.exit"
@@ -1418,11 +1413,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.j, label %._crit_edge, label %.lr.ph149, !llvm.loop !969
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa138 = phi i64 [ %i.d, %.lr.ph ], [ %i.ds, %bb.b ] ; 2 uses
-  %.lcssa129 = phi i64 [ %i.c, %.lr.ph ], [ %i.dr, %bb.b ]
+  %.lcssa129 = phi i64 [ %i.d, %.lr.ph ], [ %i.ds, %bb.b ] ; 2 uses
   %storemerge55.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
-  %i.k = add nsw i64 %.lcssa138, -2
+  %i.k = add nsw i64 %.lcssa129, -2
   %i.l = lshr i64 %i.k, 1
   %i.m = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 3 uses
@@ -1451,7 +1445,7 @@ bb.d:                                             ; preds = %bb.c
   %i.w = load ptr, ptr %i.n, align 8, !tbaa !165
   store ptr %i.w, ptr %i.p, align 8, !tbaa !165
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, i8 0, i64 24, i1 false)
-  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEElS8_NS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_T0_SQ_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa138, ptr noundef align 8 %14, ptr %3)
+  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEElS8_NS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_T0_SQ_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa129, ptr noundef align 8 %14, ptr %3)
           to label %bb.e unwind label %bb.i
 
 bb.e:                                             ; preds = %bb.d
@@ -1486,7 +1480,7 @@ bb.g:                                             ; preds = %_ZNSt4pairIN4bzla4N
 _ZNSt4pairIN4bzla4NodeESt6vectorImSaImEEED2Ev.exit15.i.i.i: ; preds = %bb.g, %_ZNSt4pairIN4bzla4NodeESt6vectorImSaImEEED2Ev.exit.i.i.i
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(32) %13) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_RT0_.exit.i.i", label %bb.c, !llvm.loop !970
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i.preheader, label %bb.c, !llvm.loop !970
 
 bb.h:                                             ; preds = %bb.c
   %i.ai = landingpad { ptr, i32 }
@@ -1509,12 +1503,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25
   br label %common.resume
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_RT0_.exit.i.i": ; preds = %_ZNSt4pairIN4bzla4NodeESt6vectorImSaImEEED2Ev.exit15.i.i.i
+.lr.ph.i9.i.preheader:                            ; preds = %_ZNSt4pairIN4bzla4NodeESt6vectorImSaImEEED2Ev.exit15.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %14)
-  %15 = icmp sgt i64 %.lcssa129, 32
-  br i1 %15, label %.lr.ph.i9.i.preheader, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_SP_T0_.exit"
-
-.lr.ph.i9.i.preheader:                            ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_RT0_.exit.i.i"
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
@@ -1853,12 +1843,12 @@ _ZSt9iter_swapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSa
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEET_SP_SP_T0_.exit": ; preds = %bb.aq
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEElNS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_T0_T1_"(ptr nonnull %.sroa.012.1.i.i, ptr %storemerge55148, i64 noundef %i.bu, ptr %3)
   %i.dq = ptrtoint ptr %.sroa.012.1.i.i to i64
-  %i.dr = sub i64 %i.dq, %i.a                     ; 2 uses
+  %i.dr = sub i64 %i.dq, %i.a
   %i.ds = ashr exact i64 %i.dr, 5                 ; 3 uses
   %i.dt = icmp sgt i64 %i.ds, 16
   br i1 %i.dt, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_SP_T0_.exit", !llvm.loop !969
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_SP_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEET_SP_SP_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_SP_RT0_.exit", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_SP_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEET_SP_SP_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4bzla4NodeESt6vectorImSaImEEES5_IS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10preprocess4pass13PassNormalize16normalize_addersERKS5_IS4_SaIS4_EERSJ_E3$_1EEEvT_SP_SP_RT0_.exit", %bb.a
   ret void
 }
 

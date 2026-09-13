@@ -205,7 +205,7 @@ bb.a:
   %7 = alloca %"struct.rocksdb::JobContext::CandidateFileInfo", align 8 ; 11 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 6                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_SG_T0_.exit"
@@ -231,11 +231,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.s, label %._crit_edge, label %.lr.ph200, !llvm.loop !1245
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa191 = phi i64 [ %i.d, %.lr.ph ], [ %i.oj, %bb.b ] ; 2 uses
-  %.lcssa189 = phi i64 [ %i.c, %.lr.ph ], [ %i.oi, %bb.b ]
+  %.lcssa189 = phi i64 [ %i.d, %.lr.ph ], [ %i.oj, %bb.b ] ; 2 uses
   %storemerge59.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.032.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  %i.t = add nsw i64 %.lcssa191, -2
+  %i.t = add nsw i64 %.lcssa189, -2
   %i.u = lshr i64 %i.t, 1
   %i.v = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 10 uses
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
@@ -249,8 +248,8 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 40
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZN7rocksdb10JobContext17CandidateFileInfoD2Ev.exit20.i.i.i, %._crit_edge
-  %.010.i.i.i = phi i64 [ %i.u, %._crit_edge ], [ %i.bt, %_ZN7rocksdb10JobContext17CandidateFileInfoD2Ev.exit20.i.i.i ] ; 4 uses
+bb.c:                                             ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a", %._crit_edge
+  %.010.i.i.i = phi i64 [ %i.u, %._crit_edge ], [ %i.bt, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a" ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #31
   %i.af = getelementptr inbounds [64 x i8], ptr %0, i64 %.010.i.i.i ; 11 uses
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !39 ; 3 uses
@@ -359,7 +358,7 @@ _ZN7rocksdb10JobContext17CandidateFileInfoC2EOS1_.exit14.i.i.i: ; preds = %_ZNKS
   store ptr %i.y, ptr %i.x, align 8, !tbaa !39
   store i64 0, ptr %i.z, align 8, !tbaa !698
   store i8 0, ptr %i.y, align 8, !tbaa !40
-  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_T0_SH_T1_T2_"(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa191, ptr noundef align 8 %7)
+  call fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_T0_SH_T1_T2_"(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa189, ptr noundef align 8 %7)
   %i.bl = load ptr, ptr %i.ac, align 8, !tbaa !39 ; 2 uses
   %i.bm = icmp eq ptr %i.bl, %i.ad
   br i1 %i.bm, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -397,24 +396,20 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16.i.i.i: ; preds = %_ZN7rocksdb10JobContext17CandidateFileInfoD2Ev.exit.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i15.i.i.i
   %i.by = load ptr, ptr %6, align 8, !tbaa !39    ; 2 uses
   %i.bz = icmp eq ptr %i.by, %i.v
-  br i1 %i.bz, label %_ZN7rocksdb10JobContext17CandidateFileInfoD2Ev.exit20.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i
+  br i1 %i.bz, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a", label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16.i.i.i
   %i.ca = load i64, ptr %i.v, align 8, !tbaa !40
   %i.cb = add i64 %i.ca, 1
   call void @_ZdlPvm(ptr noundef %i.by, i64 noundef %i.cb) #29
-  br label %_ZN7rocksdb10JobContext17CandidateFileInfoD2Ev.exit20.i.i.i
+  br label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a"
 
-_ZN7rocksdb10JobContext17CandidateFileInfoD2Ev.exit20.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i
+"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a": ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i17.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a", label %bb.c, !llvm.loop !1246
-
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a": ; preds = %_ZN7rocksdb10JobContext17CandidateFileInfoD2Ev.exit20.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  %8 = icmp sgt i64 %.lcssa189, 64
-  br i1 %8, label %.lr.ph.i9.i.preheader, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_SG_T0_.exit"
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i.preheader, label %bb.c, !llvm.loop !1246
 
 .lr.ph.i9.i.preheader:                            ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a"
+  call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 10 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 5 uses
@@ -817,12 +812,12 @@ _ZSt4swapIN7rocksdb10JobContext17CandidateFileInfoEENSt9enable_ifIXsr6__and_ISt6
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEET_SG_SG_T0_.exit": ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN7rocksdb6DBImpl18PurgeObsoleteFilesERNS2_10JobContextEbE3$_0EclINS_17__normal_iteratorIPNS4_17CandidateFileInfoESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit29.thread39.i.i"
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_T0_T1_"(ptr %.sroa.032.1.i.i, ptr %storemerge59194, i64 noundef %i.es)
   %i.oh = ptrtoint ptr %.sroa.032.1.i.i to i64
-  %i.oi = sub i64 %i.oh, %i.a                     ; 2 uses
+  %i.oi = sub i64 %i.oh, %i.a
   %i.oj = ashr exact i64 %i.oi, 6                 ; 3 uses
   %i.ok = icmp sgt i64 %i.oj, 16
   br i1 %i.ok, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_SG_T0_.exit", !llvm.loop !1245
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_SG_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEET_SG_SG_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_SG_RT0_.exit", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_RT0_.exit.i.i.a"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_SG_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEET_SG_SG_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb10JobContext17CandidateFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_6DBImpl18PurgeObsoleteFilesERS3_bE3$_0EEEvT_SG_SG_RT0_.exit", %bb.a
   ret void
 }
 

@@ -204,7 +204,7 @@ bb.a:
   %22 = alloca %"struct.rocksdb::ImportColumnFamilyJob::ColumnFamilyIngestFileInfo", align 8 ; 12 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 6                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_SG_T0_.exit"
@@ -241,11 +241,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.ad, label %._crit_edge, label %.lr.ph167, !llvm.loop !803
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa163 = phi i64 [ %i.d, %.lr.ph ], [ %i.lq, %bb.b ] ; 2 uses
-  %.lcssa161 = phi i64 [ %i.c, %.lr.ph ], [ %i.lp, %bb.b ]
+  %.lcssa161 = phi i64 [ %i.d, %.lr.ph ], [ %i.lq, %bb.b ] ; 2 uses
   %storemerge59.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.018.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %22)
-  %i.ae = add nsw i64 %.lcssa163, -2
+  %i.ae = add nsw i64 %.lcssa161, -2
   %i.af = lshr i64 %i.ae, 1
   %i.ag = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 10 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
@@ -369,7 +368,7 @@ _ZN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoC2EOS1_.exit14.i.i
   store ptr %i.aj, ptr %i.ai, align 8, !tbaa !31
   store i64 0, ptr %i.ak, align 8, !tbaa !37
   store i8 0, ptr %i.aj, align 8, !tbaa !32
-  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_T0_SH_T1_T2_"(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa163, ptr noundef align 8 %22, ptr %3)
+  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_T0_SH_T1_T2_"(ptr nonnull %0, i64 noundef %.010.i.i.i, i64 noundef %.lcssa161, ptr noundef align 8 %22, ptr %3)
           to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %_ZN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoC2EOS1_.exit14.i.i.i
@@ -420,7 +419,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoD2Ev.exit20.i.i.i: ; preds = %_ZN7rocksdb11InternalKeyD2Ev.exit.i16.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1.i17.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #26
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_RT0_.exit.i.i", label %bb.c, !llvm.loop !804
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i.preheader, label %bb.c, !llvm.loop !804
 
 common.resume:                                    ; preds = %bb.o, %bb.i
   %common.resume.op = phi { ptr, i32 } [ %i.cn, %bb.i ], [ %i.fc, %bb.o ]
@@ -434,12 +433,8 @@ bb.i:                                             ; preds = %_ZN7rocksdb21Import
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #26
   br label %common.resume
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_RT0_.exit.i.i": ; preds = %_ZN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoD2Ev.exit20.i.i.i
+.lr.ph.i9.i.preheader:                            ; preds = %_ZN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoD2Ev.exit20.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %22)
-  %23 = icmp sgt i64 %.lcssa161, 64
-  br i1 %23, label %.lr.ph.i9.i.preheader, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_SG_T0_.exit"
-
-.lr.ph.i9.i.preheader:                            ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_RT0_.exit.i.i"
   %i.co = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 10 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 5 uses
@@ -842,12 +837,12 @@ _ZSt4swapIN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoEENSt9enab
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEET_SG_SG_T0_.exit": ; preds = %bb.v
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_T0_T1_"(ptr nonnull %.sroa.018.1.i.i, ptr %storemerge59166, i64 noundef %i.ff, ptr nonnull %3)
   %i.lo = ptrtoint ptr %.sroa.018.1.i.i to i64
-  %i.lp = sub i64 %i.lo, %i.a                     ; 2 uses
+  %i.lp = sub i64 %i.lo, %i.a
   %i.lq = ashr exact i64 %i.lp, 6                 ; 3 uses
   %i.lr = icmp sgt i64 %i.lq, 16
   br i1 %i.lr, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_SG_T0_.exit", !llvm.loop !803
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_SG_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEET_SG_SG_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_SG_RT0_.exit", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_SG_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEET_SG_SG_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN7rocksdb21ImportColumnFamilyJob26ColumnFamilyIngestFileInfoESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_7PrepareEmPNS2_12SuperVersionEE3$_0EEEvT_SG_SG_RT0_.exit", %bb.a
   ret void
 }
 

@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.g
 bb.l:                                             ; preds = %bb.k
   %i.n = ptrtoint ptr %i.g to i64
   %i.o = ptrtoint ptr %i.e to i64
-  %i.p = sub i64 %i.n, %i.o                       ; 7 uses
+  %i.p = sub i64 %i.n, %i.o                       ; 6 uses
   %i.q = ashr exact i64 %i.p, 3
   %i.r = zext nneg i32 %2 to i64                  ; 2 uses
   %.not = icmp eq i64 %i.q, %i.r
@@ -290,22 +290,18 @@ bb.s:                                             ; preds = %._crit_edge
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !105
   %i.an = icmp samesign ugt i64 %i.p, 8
-  br i1 %i.an, label %bb.t, label %5, !prof !106
+  br i1 %i.an, label %bb.t, label %bb.u, !prof !106
 
 bb.t:                                             ; preds = %bb.s
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aj, ptr nonnull align 8 %i.e, i64 %i.p, i1 false)
   br label %_ZNSt6vectorIdSaIdEEC2ERKS1_.exit
 
-5:                                                ; preds = %bb.s
-  %6 = icmp eq i64 %i.p, 8
-  br i1 %6, label %bb.u, label %_ZNSt6vectorIdSaIdEEC2ERKS1_.exit
-
-bb.u:                                             ; preds = %5
+bb.u:                                             ; preds = %bb.s
   %i.ao = load double, ptr %i.e, align 8, !tbaa !101
   store double %i.ao, ptr %i.aj, align 8, !tbaa !101
   br label %_ZNSt6vectorIdSaIdEEC2ERKS1_.exit
 
-_ZNSt6vectorIdSaIdEEC2ERKS1_.exit:                ; preds = %bb.t, %5, %bb.u
+_ZNSt6vectorIdSaIdEEC2ERKS1_.exit:                ; preds = %bb.t, %bb.u
   store ptr %i.al, ptr %i.ak, align 8, !tbaa !102
   br label %bb.ar
 

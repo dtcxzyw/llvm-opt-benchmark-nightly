@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.j, label %._crit_edge, label %.lr.ph48, !llvm.loop !560
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i27.lcssa = phi i64 [ %.fr.i24, %.lr.ph ], [ %.fr.i, %bb.b ] ; 3 uses
+  %.fr.i27.lcssa = phi i64 [ %.fr.i24, %.lr.ph ], [ %.fr.i, %bb.b ] ; 2 uses
   %storemerge25.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i27.lcssa, 4               ; 2 uses
   %i.l = add nsw i64 %i.k, -2                     ; 2 uses
@@ -287,14 +287,10 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceD
   store i64 %.sroa.4.0.copyload.i.i, ptr %.sroa.2.0..sroa.0.0..sroa_idx.i.i.i.i, align 8
   %.not.i.i = icmp eq i64 %.010.i.i, 0
   %i.as = add nsw i64 %.010.i.i, -1
-  br i1 %.not.i.i, label %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit, label %bb.c, !llvm.loop !563
+  br i1 %.not.i.i, label %.lr.ph.i.i, label %bb.c, !llvm.loop !563
 
-_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_SJ_T1_T2_.exit.i.i
-  %10 = icmp sgt i64 %.fr.i27.lcssa, 16
-  br i1 %10, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit
-
-.lr.ph.i.i:                                       ; preds = %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_RT0_.exit.i.i
-  %.sroa.0.05.i.i = phi ptr [ %i.at, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_RT0_.exit.i.i ], [ %storemerge25.lcssa, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit ] ; 2 uses
+.lr.ph.i.i:                                       ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_SJ_T1_T2_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_RT0_.exit.i.i
+  %.sroa.0.05.i.i = phi ptr [ %i.at, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_RT0_.exit.i.i ], [ %storemerge25.lcssa, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_SJ_T1_T2_.exit.i.i ] ; 2 uses
   %i.at = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -16 ; 4 uses
   %.sroa.03.0.copyload.i.i.i = load ptr, ptr %i.at, align 8, !tbaa !147
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -8
@@ -507,7 +503,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreak
   %i.de = icmp sgt i64 %i.dd, 16
   br i1 %i.de, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit, !llvm.loop !560
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEET_SI_SI_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_RT0_.exit.i.i, %bb.a, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEET_SI_SI_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_SI_SI_RT0_.exit.i.i, %bb.a
   ret void
 }
 

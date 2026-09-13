@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.j, label %._crit_edge, label %.lr.ph42, !llvm.loop !88
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i25.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.dp, %bb.b ] ; 3 uses
+  %.fr.i.i25.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.dp, %bb.b ] ; 2 uses
   %storemerge23.lcssa = phi ptr [ %.fr27, %.lr.ph ], [ %.sroa.014.1.i.i, %bb.b ]
   %i.k = lshr i64 %.fr.i.i25.lcssa, 4             ; 2 uses
   %i.l = add nsw i64 %i.k, -2                     ; 2 uses
@@ -286,14 +286,10 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   store <2 x ptr> %i.v, ptr %i.ar, align 8
   %.not.i.i.i = icmp eq i64 %.010.i.i.i, 0
   %i.as = add nsw i64 %.010.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_RT0_.exit.i.i", label %bb.c, !llvm.loop !91
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !91
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_T0_SJ_T1_T2_.exit.i.i.i"
-  %3 = icmp sgt i64 %.fr.i.i25.lcssa, 16
-  br i1 %3, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_T0_.exit"
-
-.lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_RT0_.exit.i.i"
-  %.sroa.0.03.i.i = phi ptr [ %i.at, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_RT0_.exit.i.i" ], [ %storemerge23.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_RT0_.exit.i.i" ] ; 2 uses
+.lr.ph.i9.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_T0_SJ_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_RT0_.exit.i.i"
+  %.sroa.0.03.i.i = phi ptr [ %i.at, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_RT0_.exit.i.i" ], [ %storemerge23.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_T0_SJ_T1_T2_.exit.i.i.i" ] ; 2 uses
   %i.at = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -16 ; 5 uses
   %.sroa.4.0..sroa_idx.i.i11.i = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -8
   %i.au = load <2 x ptr>, ptr %i.at, align 8
@@ -517,7 +513,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dr = icmp sgt i64 %i.dq, 16
   br i1 %i.dr, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_T0_.exit", !llvm.loop !88
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEET_SI_SI_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_RT0_.exit.i.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEET_SI_SI_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKvS4_ESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNK2v88internal13TracedHandles13GetNodeBoundsEvE3$_0EEEvT_SI_SI_RT0_.exit.i.i", %bb.a
   ret void
 }
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph54, !llvm.loop !753
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i.i25.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ec, %bb.b ] ; 3 uses
+  %.fr.i.i25.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ec, %bb.b ] ; 2 uses
   %storemerge23.lcssa = phi ptr [ %.fr27, %.lr.ph ], [ %.sroa.014.1.i.i, %bb.b ]
   %i.i = lshr i64 %.fr.i.i25.lcssa, 3             ; 2 uses
   %i.j = add nsw i64 %i.i, -2                     ; 2 uses
@@ -298,14 +298,10 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.t, ptr %i.ax, align 8, !tbaa !62
   %.not.i.i.i = icmp eq i64 %.09.i.i.i, 0
   %i.ay = add nsw i64 %.09.i.i.i, -1
-  br i1 %.not.i.i.i, label %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_RT0_.exit.i.i", label %bb.c, !llvm.loop !756
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !756
 
-"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_RT0_.exit.i.i": ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEElmNS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_SN_T1_T2_.exit.i.i.i"
-  %4 = icmp sgt i64 %.fr.i.i25.lcssa, 8
-  br i1 %4, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_T0_.exit"
-
-.lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_RT0_.exit.i.i"
-  %.sroa.0.03.i.i = phi ptr [ %i.az, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_RT0_.exit.i.i" ], [ %storemerge23.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_RT0_.exit.i.i" ]
+.lr.ph.i9.i:                                      ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEElmNS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_SN_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_RT0_.exit.i.i"
+  %.sroa.0.03.i.i = phi ptr [ %i.az, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_RT0_.exit.i.i" ], [ %storemerge23.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEElmNS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_T0_SN_T1_T2_.exit.i.i.i" ]
   %i.az = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -8 ; 4 uses
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !62 ; 2 uses
   %i.bb = load i64, ptr %.fr26, align 8, !tbaa !62
@@ -520,7 +516,7 @@ bb.z:                                             ; preds = %bb.y
   %i.ee = icmp sgt i64 %i.ed, 16
   br i1 %i.ee, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_T0_.exit", !llvm.loop !753
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEET_SM_SM_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_RT0_.exit.i.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEET_SM_SM_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops15_Iter_comp_iterIZN7rocksdb16IODispatcherImpl4Impl9SubmitJobERKSt10shared_ptrINS9_5IOJobEEPSC_INS9_7ReadSetEEE3$_0EEEvT_SM_SM_RT0_.exit.i.i", %bb.a
   ret void
 }
 

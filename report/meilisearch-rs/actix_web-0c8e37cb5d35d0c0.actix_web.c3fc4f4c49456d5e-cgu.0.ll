@@ -205,7 +205,7 @@ bb.a:
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !11626, !noalias !11627, !nonnull !25, !noundef !25 ; 4 uses
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !11626, !noalias !11627 ; 7 uses
+  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !11626, !noalias !11627 ; 6 uses
   %i.a = icmp ult i64 %.sroa.5.0.copyload.i, 576460752303423488
   tail call void @llvm.assume(i1 %i.a)
   %i.b = mul nuw nsw i64 %.sroa.5.0.copyload.i, 24 ; 2 uses
@@ -306,7 +306,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %epil.iter.cmp.not, label %._crit_edge.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil, !llvm.loop !11621
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.i:                  ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i
-  %.sroa.4.0.i.i.i.i.i.i16 = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i ], [ %.sroa.5.0.copyload.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil ], [ %.sroa.5.0.copyload.i, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ]
   %.sroa.10.0.i.i.i.i.i.i15 = phi ptr [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i ], [ %i.d, %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil ], [ %i.d, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ]
   %.val6.i.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i ], [ %i.aa, %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa ], [ %i.ag, %.lr.ph.i.i.i.i.i.i.i.i.i.i.epil ]
   %i.ah = icmp eq i64 %.sroa.0.0.copyload.i, 0
@@ -333,7 +332,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN4core4iter6traits8iterator8Iterator7collect17h501d7a6b759730b6E.exit: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i, %bb.d
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.4.0.i.i.i.i.i.i16, ptr %i.am, align 8
+  store i64 %.sroa.5.0.copyload.i, ptr %i.am, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %.sroa.10.0.i.i.i.i.i.i15, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24

@@ -205,7 +205,7 @@ bb.a:
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %13 = alloca %"class.std::vector.674", align 8  ; 14 uses
-  %14 = alloca %"class.std::vector.674", align 8  ; 10 uses
+  %14 = alloca %"class.std::vector.674", align 8  ; 9 uses
   %15 = alloca %"class.core::vector3d.210", align 8 ; 5 uses
   %16 = alloca %"class.core::vector3d.210", align 8 ; 5 uses
   %17 = alloca %"class.std::vector.393", align 8  ; 9 uses
@@ -608,13 +608,13 @@ bb.fj:                                            ; preds = %.lr.ph703, %_ZNSt6v
 
 .lr.ph699:                                        ; preds = %bb.fj, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
   %i.abz = phi ptr [ %i.acu, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ %i.abx, %bb.fj ]
-  %i.aca = phi ptr [ %i.acw, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ null, %bb.fj ] ; 5 uses
+  %i.aca = phi ptr [ %i.acw, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ null, %bb.fj ] ; 4 uses
   %i.acb = phi ptr [ %i.acx, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ null, %bb.fj ] ; 4 uses
   %i.acc = phi ptr [ %i.acz, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ %i.abw, %bb.fj ] ; 2 uses
-  %i.acd = phi ptr [ %i.acy, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ null, %bb.fj ] ; 10 uses
+  %i.acd = phi ptr [ %i.acy, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ null, %bb.fj ] ; 8 uses
   %i.ace = ptrtoint ptr %i.acb to i64
   %i.acf = ptrtoint ptr %i.acd to i64
-  %i.acg = sub i64 %i.ace, %i.acf                 ; 6 uses
+  %i.acg = sub i64 %i.ace, %i.acf                 ; 5 uses
   %i.ach = ashr exact i64 %i.acg, 2               ; 3 uses
   %i.aci = icmp ult i64 %i.ach, 255
   br i1 %i.aci, label %bb.fk, label %.critedge4
@@ -622,7 +622,7 @@ bb.fj:                                            ; preds = %.lr.ph703, %_ZNSt6v
 bb.fk:                                            ; preds = %.lr.ph699
   %i.acj = getelementptr inbounds i8, ptr %i.acc, i64 -4 ; 2 uses
   %.not.i364 = icmp eq ptr %i.acb, %i.aca
-  br i1 %.not.i364, label %19, label %bb.fl
+  br i1 %.not.i364, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i, label %bb.fl
 
 bb.fl:                                            ; preds = %bb.fk
   %i.ack = load i32, ptr %i.acj, align 4, !tbaa !414
@@ -631,19 +631,7 @@ bb.fl:                                            ; preds = %bb.fk
   store ptr %i.acl, ptr %i.aaq, align 8, !tbaa !478
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
 
-19:                                               ; preds = %bb.fk
-  %20 = icmp eq i64 %i.acg, 9223372036854775804
-  br i1 %20, label %21, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i
-
-21:                                               ; preds = %19
-  store ptr %i.acd, ptr %14, align 8
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.169) #40
-          to label %.noexc367 unwind label %.loopexit.split-lp577.loopexit.split-lp
-
-.noexc367:                                        ; preds = %21
-  unreachable
-
-_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %19
+_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.fk
   %.sroa.speculated.i.i.i365 = call i64 @llvm.umax.i64(i64 %i.ach, i64 1)
   %i.acm = add nuw nsw i64 %.sroa.speculated.i.i.i365, %i.ach ; 2 uses
   %i.acn = shl nuw nsw i64 %i.acm, 2
@@ -695,28 +683,23 @@ _ZNSt6vectorIjSaIjEE9push_backERKj.exit:          ; preds = %_ZNSt6vectorIjSaIjE
   store ptr %i.acd, ptr %14, align 8
   br label %.loopexit.split-lp577
 
-.loopexit.split-lp577.loopexit:                   ; preds = %.critedge4
-  %lpad.loopexit581 = landingpad { ptr, i32 }
-          cleanup
-  br label %.loopexit.split-lp577
-
-.loopexit.split-lp577.loopexit.split-lp:          ; preds = %21
+.loopexit.split-lp577.loopexit.split-lp:          ; preds = %.critedge4
   %lpad.loopexit.split-lp582 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp577
 
-.loopexit.split-lp577:                            ; preds = %.loopexit.split-lp577.loopexit, %.loopexit.split-lp577.loopexit.split-lp, %.loopexit576
-  %22 = phi ptr [ %i.aca, %.loopexit576 ], [ %i.ade, %.loopexit.split-lp577.loopexit ], [ %i.aca, %.loopexit.split-lp577.loopexit.split-lp ]
-  %23 = phi ptr [ %i.acd, %.loopexit576 ], [ %i.adf, %.loopexit.split-lp577.loopexit ], [ %i.acd, %.loopexit.split-lp577.loopexit.split-lp ] ; 3 uses
-  %lpad.phi580 = phi { ptr, i32 } [ %lpad.loopexit578, %.loopexit576 ], [ %lpad.loopexit581, %.loopexit.split-lp577.loopexit ], [ %lpad.loopexit.split-lp582, %.loopexit.split-lp577.loopexit.split-lp ]
-  %.not.i.i.i369 = icmp eq ptr %23, null
+.loopexit.split-lp577:                            ; preds = %.loopexit.split-lp577.loopexit.split-lp, %.loopexit576
+  %19 = phi ptr [ %i.aca, %.loopexit576 ], [ %i.ade, %.loopexit.split-lp577.loopexit.split-lp ]
+  %20 = phi ptr [ %i.acd, %.loopexit576 ], [ %i.adf, %.loopexit.split-lp577.loopexit.split-lp ] ; 3 uses
+  %lpad.phi580 = phi { ptr, i32 } [ %lpad.loopexit578, %.loopexit576 ], [ %lpad.loopexit.split-lp582, %.loopexit.split-lp577.loopexit.split-lp ]
+  %.not.i.i.i369 = icmp eq ptr %20, null
   br i1 %.not.i.i.i369, label %_ZNSt6vectorIjSaIjEED2Ev.exit, label %bb.fo
 
 bb.fo:                                            ; preds = %.loopexit.split-lp577
-  %i.adb = ptrtoint ptr %22 to i64
-  %i.adc = ptrtoint ptr %23 to i64
+  %i.adb = ptrtoint ptr %19 to i64
+  %i.adc = ptrtoint ptr %20 to i64
   %i.add = sub i64 %i.adb, %i.adc
-  call void @_ZdlPvm(ptr noundef nonnull %23, i64 noundef %i.add) #42
+  call void @_ZdlPvm(ptr noundef nonnull %20, i64 noundef %i.add) #42
   br label %_ZNSt6vectorIjSaIjEED2Ev.exit
 
 _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %.loopexit.split-lp577, %bb.fo
@@ -728,7 +711,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %.loopexit.split-lp5
   %i.adf = phi ptr [ null, %bb.fj ], [ %i.acy, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ %i.acd, %.lr.ph699 ] ; 5 uses
   store ptr %i.adf, ptr %14, align 8
   invoke void @_ZN6Client13sendHaveMediaERKSt6vectorIjSaIjEE(ptr noundef nonnull align 8 dereferenceable(1674) %0, ptr noundef nonnull align 8 dereferenceable(24) %14)
-          to label %bb.fp unwind label %.loopexit.split-lp577.loopexit
+          to label %bb.fp unwind label %.loopexit.split-lp577.loopexit.split-lp
 
 bb.fp:                                            ; preds = %.critedge4
   %.not.i.i.i370 = icmp eq ptr %i.adf, null

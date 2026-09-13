@@ -204,7 +204,7 @@ bb.a:
   %15 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter", align 8 ; 2 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %.loopexit31
@@ -224,8 +224,7 @@ bb.b:                                             ; preds = %bb.bc
   br i1 %i.m, label %._crit_edge, label %.lr.ph184, !llvm.loop !358
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa174 = phi i64 [ %i.d, %.lr.ph ], [ %i.ez, %bb.b ] ; 2 uses
-  %.lcssa166 = phi i64 [ %i.c, %.lr.ph ], [ %i.ey, %bb.b ]
+  %.lcssa166 = phi i64 [ %i.d, %.lr.ph ], [ %i.ez, %bb.b ] ; 2 uses
   %storemerge88.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.010.1.i.i, %bb.b ]
   %i.n = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 8 uses
   call void @_ZN4cvc58internal6theory5arith2nl7NlModelC2ERKS4_(ptr noundef nonnull align 8 dereferenceable(376) %i.n, ptr noundef nonnull align 8 dereferenceable(376) %i.g)
@@ -237,7 +236,7 @@ bb.b:                                             ; preds = %bb.bc
 bb.c:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
-  %i.p = add nsw i64 %.lcssa174, -2
+  %i.p = add nsw i64 %.lcssa166, -2
   %i.q = lshr i64 %i.p, 1
   %i.r = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   br label %bb.d
@@ -311,7 +310,7 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit16.i.i.i: ; preds = %bb.j, %bb
           to label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterISt5_BindIFZN4cvc58internal6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESA_ILi2EENS7_7NlModelEEEEC2ERKSG_.exit.i.i.i" unwind label %bb.s
 
 "_ZN9__gnu_cxx5__ops15_Iter_comp_iterISt5_BindIFZN4cvc58internal6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESA_ILi2EENS7_7NlModelEEEEC2ERKSG_.exit.i.i.i": ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit16.i.i.i
-  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterISt5_BindIFZNS3_6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESJ_ILi2EENSG_7NlModelEEEEEEvT_T0_SR_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa174, ptr noundef align 8 %10, ptr noundef align 8 %11)
+  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterISt5_BindIFZNS3_6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESJ_ILi2EENSG_7NlModelEEEEEEvT_T0_SR_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa166, ptr noundef align 8 %10, ptr noundef align 8 %11)
           to label %bb.k unwind label %bb.t
 
 bb.k:                                             ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterISt5_BindIFZN4cvc58internal6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESA_ILi2EENS7_7NlModelEEEEC2ERKSG_.exit.i.i.i"
@@ -408,15 +407,11 @@ bb.v:                                             ; preds = %bb.u, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %11)
   call void @_ZN4cvc58internal6theory5arith2nl7NlModelD1Ev(ptr noundef nonnull align 8 dead_on_return(369) dereferenceable(376) %i.o) #22
-  %16 = icmp sgt i64 %.lcssa166, 8
-  br i1 %16, label %.lr.ph.i10.i.preheader, label %.loopexit30
-
-.lr.ph.i10.i.preheader:                           ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterISt5_BindIFZNS3_6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESJ_ILi2EENSG_7NlModelEEEEEEvT_SQ_RT0_.exit.i.i"
-  %17 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
+  %16 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   br label %.lr.ph.i10.i
 
-.lr.ph.i10.i:                                     ; preds = %.lr.ph.i10.i.preheader, %.noexc17
-  %.sroa.0.05.i.i = phi ptr [ %i.bo, %.noexc17 ], [ %storemerge88.lcssa, %.lr.ph.i10.i.preheader ]
+.lr.ph.i10.i:                                     ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterISt5_BindIFZNS3_6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESJ_ILi2EENSG_7NlModelEEEEEEvT_SQ_RT0_.exit.i.i", %.noexc17
+  %.sroa.0.05.i.i = phi ptr [ %i.bo, %.noexc17 ], [ %storemerge88.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterISt5_BindIFZNS3_6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESJ_ILi2EENSG_7NlModelEEEEEEvT_SQ_RT0_.exit.i.i" ]
   %i.bo = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
@@ -535,7 +530,7 @@ bb.ah:                                            ; preds = %bb.ag
           to label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit8.i unwind label %bb.ap
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit8.i: ; preds = %bb.ah, %bb.ag, %bb.af
-  invoke void @_ZN4cvc58internal6theory5arith2nl7NlModelC2ERKS4_(ptr noundef nonnull align 8 dereferenceable(376) %17, ptr noundef nonnull align 8 dereferenceable(376) %i.n)
+  invoke void @_ZN4cvc58internal6theory5arith2nl7NlModelC2ERKS4_(ptr noundef nonnull align 8 dereferenceable(376) %16, ptr noundef nonnull align 8 dereferenceable(376) %i.n)
           to label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterISt5_BindIFZN4cvc58internal6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESA_ILi2EENS7_7NlModelEEEEC2ERKSG_.exit.i" unwind label %bb.aq
 
 "_ZN9__gnu_cxx5__ops15_Iter_comp_iterISt5_BindIFZN4cvc58internal6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESA_ILi2EENS7_7NlModelEEEEC2ERKSG_.exit.i": ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit8.i
@@ -543,7 +538,7 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit8.i: ; preds = %bb.ah, %bb.ag,
           to label %bb.ai unwind label %bb.ar
 
 bb.ai:                                            ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterISt5_BindIFZN4cvc58internal6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESA_ILi2EENS7_7NlModelEEEEC2ERKSG_.exit.i"
-  call void @_ZN4cvc58internal6theory5arith2nl7NlModelD1Ev(ptr noundef nonnull align 8 dead_on_return(369) dereferenceable(376) %17) #22
+  call void @_ZN4cvc58internal6theory5arith2nl7NlModelD1Ev(ptr noundef nonnull align 8 dead_on_return(369) dereferenceable(376) %16) #22
   %i.dn = load i64, ptr %i.bp, align 8            ; 4 uses
   %i.do = and i64 %i.dn, 1152920405095219200
   %.not.i.i10.i = icmp eq i64 %i.do, 1152920405095219200
@@ -612,7 +607,7 @@ bb.aq:                                            ; preds = %_ZN4cvc58internal12
 bb.ar:                                            ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterISt5_BindIFZN4cvc58internal6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESA_ILi2EENS7_7NlModelEEEEC2ERKSG_.exit.i"
   %i.eh = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal6theory5arith2nl7NlModelD1Ev(ptr noundef nonnull align 8 dead_on_return(369) dereferenceable(376) %17) #22
+  call void @_ZN4cvc58internal6theory5arith2nl7NlModelD1Ev(ptr noundef nonnull align 8 dead_on_return(369) dereferenceable(376) %16) #22
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
@@ -643,7 +638,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ap
   call void @_ZN4cvc58internal6theory5arith2nl7NlModelD1Ev(ptr noundef nonnull align 8 dead_on_return(369) dereferenceable(376) %i.o) #22
   br label %.body
 
-.loopexit30:                                      ; preds = %.noexc17, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterISt5_BindIFZNS3_6theory5arith2nl10Pow2Solver21sortPow2sBasedOnModelEvE3$_0St12_PlaceholderILi1EESJ_ILi2EENSG_7NlModelEEEEEEvT_SQ_RT0_.exit.i.i"
+.loopexit30:                                      ; preds = %.noexc17
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   call void @_ZN4cvc58internal6theory5arith2nl7NlModelD1Ev(ptr noundef nonnull align 8 dead_on_return(369) dereferenceable(376) %i.n) #22
   br label %.loopexit31
@@ -781,7 +776,7 @@ bb.bb:                                            ; preds = %bb.ay
 bb.bc:                                            ; preds = %bb.bb
   call void @_ZN4cvc58internal6theory5arith2nl7NlModelD1Ev(ptr noundef nonnull align 8 dead_on_return(369) dereferenceable(376) %i.k) #22
   %i.ex = ptrtoint ptr %.sroa.010.1.i.i to i64
-  %i.ey = sub i64 %i.ex, %i.a                     ; 2 uses
+  %i.ey = sub i64 %i.ex, %i.a
   %i.ez = ashr exact i64 %i.ey, 3                 ; 3 uses
   %i.fa = icmp sgt i64 %i.ez, 16
   br i1 %i.fa, label %bb.b, label %.loopexit31, !llvm.loop !358

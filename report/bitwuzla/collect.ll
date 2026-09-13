@@ -205,18 +205,16 @@ _ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE6resizeEm.exit: ; preds = %bb.ai, %bb.aj,
   %i.kj = phi ptr [ %.pre214, %bb.ai ], [ %i.jx, %bb.aj ], [ %i.jx, %_ZSt8_DestroyIPPN7CaDiCaL6ClauseES2_EvT_S4_RSaIT0_E.exit.i.i ] ; 2 uses
   %i.kk = phi ptr [ %.pre213, %bb.ai ], [ %i.jw, %bb.aj ], [ %i.ki, %_ZSt8_DestroyIPPN7CaDiCaL6ClauseES2_EvT_S4_RSaIT0_E.exit.i.i ] ; 2 uses
   %i.kl = ptrtoint ptr %i.kk to i64
-  %i.km = sub i64 %i.kl, %.pre-phi                ; 5 uses
+  %i.km = sub i64 %i.kl, %.pre-phi                ; 4 uses
   %i.kn = ashr exact i64 %i.km, 3
   %i.ko = getelementptr inbounds nuw i8, ptr %0, i64 2224 ; 3 uses
   %i.kp = load ptr, ptr %i.ko, align 8, !tbaa !172
   %i.kq = ptrtoint ptr %i.kp to i64
-  %i.kr = sub i64 %i.kq, %.pre-phi                ; 2 uses
+  %i.kr = sub i64 %i.kq, %.pre-phi
   %i.ks = ashr exact i64 %i.kr, 3
   %i.kt = lshr i64 %i.ks, 1
   %i.ku = icmp ult i64 %i.kn, %i.kt
-  %1 = icmp ugt i64 %i.kr, %i.km
-  %or.cond137 = and i1 %1, %i.ku
-  br i1 %or.cond137, label %bb.ak, label %_ZN7CaDiCaL13shrink_vectorIPNS_6ClauseEEEvRSt6vectorIT_SaIS4_EE.exit
+  br i1 %i.ku, label %bb.ak, label %_ZN7CaDiCaL13shrink_vectorIPNS_6ClauseEEEvRSt6vectorIT_SaIS4_EE.exit
 
 bb.ak:                                            ; preds = %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE6resizeEm.exit
   %.not.i.i.i.i.i = icmp eq ptr %i.kk, %i.kj

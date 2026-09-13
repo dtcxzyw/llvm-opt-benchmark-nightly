@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   br i1 %i.i, label %._crit_edge, label %.lr.ph56, !llvm.loop !185
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.fr.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ga, %bb.b ] ; 3 uses
+  %.fr.i27.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.ga, %bb.b ] ; 2 uses
   %storemerge25.lcssa = phi ptr [ %.fr29, %.lr.ph ], [ %.sroa.012.1.i.i, %bb.b ]
   %i.j = lshr i64 %.fr.i27.lcssa, 2               ; 2 uses
   %i.k = add nsw i64 %i.j, -2                     ; 2 uses
@@ -306,14 +306,10 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5_
   store i32 %i.u, ptr %i.bm, align 4
   %.not.i.i = icmp eq i64 %.09.i.i, 0
   %i.bn = add nsw i64 %.09.i.i, -1
-  br i1 %.not.i.i, label %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit, label %bb.c, !llvm.loop !188
+  br i1 %.not.i.i, label %.lr.ph.i.i, label %bb.c, !llvm.loop !188
 
-_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_T0_SE_T1_T2_.exit.i.i
-  %4 = icmp sgt i64 %.fr.i27.lcssa, 4
-  br i1 %4, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit
-
-.lr.ph.i.i:                                       ; preds = %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_RT0_.exit.i.i
-  %.sroa.0.05.i.i = phi ptr [ %i.bo, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_RT0_.exit.i.i ], [ %storemerge25.lcssa, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit ]
+.lr.ph.i.i:                                       ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_T0_SE_T1_T2_.exit.i.i, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_RT0_.exit.i.i
+  %.sroa.0.05.i.i = phi ptr [ %i.bo, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_RT0_.exit.i.i ], [ %storemerge25.lcssa, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_T0_SE_T1_T2_.exit.i.i ]
   %i.bo = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -4 ; 4 uses
   %i.bp = load i32, ptr %i.bo, align 4            ; 2 uses
   %i.bq = load i32, ptr %.fr28, align 4
@@ -553,7 +549,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSa
   %i.gc = icmp sgt i64 %i.gb, 16
   br i1 %i.gc, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit, !llvm.loop !185
 
-_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEET_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_RT0_.exit.i.i, %bb.a, %_ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit
+_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEET_SD_SD_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEENS0_5__ops15_Iter_comp_iterIN6Assimp11XGLImporter20SortMeshByMaterialIdEEEEvT_SD_SD_RT0_.exit.i.i, %bb.a
   ret void
 }
 

@@ -204,7 +204,7 @@ bb.a:
   %13 = alloca %"class.bzla::Node", align 8       ; 6 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
+  %i.c = sub i64 %i.b, %i.a
   %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
   %i.e = icmp sgt i64 %i.d, 16
   br i1 %i.e, label %.lr.ph, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_T0_.exit"
@@ -219,11 +219,10 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
   br i1 %i.h, label %._crit_edge, label %.lr.ph141, !llvm.loop !780
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.lcssa130 = phi i64 [ %i.d, %.lr.ph ], [ %i.dm, %bb.b ] ; 2 uses
-  %.lcssa = phi i64 [ %i.c, %.lr.ph ], [ %i.dl, %bb.b ]
+  %.lcssa = phi i64 [ %i.d, %.lr.ph ], [ %i.dm, %bb.b ] ; 2 uses
   %storemerge55.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.017.1.i.i, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
-  %i.i = add nsw i64 %.lcssa130, -2
+  %i.i = add nsw i64 %.lcssa, -2
   %i.j = lshr i64 %i.i, 1
   br label %bb.c
 
@@ -236,7 +235,7 @@ bb.c:                                             ; preds = %bb.e, %._crit_edge
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_T0_S16_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa130, ptr noundef align 8 %13)
+  invoke fastcc void @"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_T0_S16_T1_T2_"(ptr nonnull %0, i64 noundef %.012.i.i.i, i64 noundef %.lcssa, ptr noundef align 8 %13)
           to label %bb.e unwind label %bb.g
 
 bb.e:                                             ; preds = %bb.d
@@ -270,8 +269,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 "_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_RT0_.exit.i.i": ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %13)
-  %14 = icmp sgt i64 %.lcssa, 8
-  br i1 %14, label %.lr.ph.i9.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_T0_.exit"
+  br label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_RT0_.exit.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_RT0_.exit.i11.i"
   %.sroa.0.03.i.i = phi ptr [ %i.o, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_RT0_.exit.i11.i" ], [ %storemerge55.lcssa, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_RT0_.exit.i.i" ]
@@ -674,12 +672,12 @@ _ZSt9iter_swapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EE
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEET_S15_S15_T0_.exit": ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4bzla10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapINS2_4NodeESt6vectorISt4pairIS7_S7_ESaISA_EESt4hashIS7_ESt8equal_toIS7_ESaIS9_IKS7_SC_EEERNS3_15AssertionVectorERS6_IS7_S7_SE_SG_SaIS9_ISH_S7_EEERS6_IS7_mSE_SG_SaIS9_ISH_mEEEE3$_0EclINS_17__normal_iteratorIPS7_S8_IS7_SaIS7_EEEES14_EEbT_T0_.exit14.thread21.i.i"
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_T0_T1_"(ptr nonnull %.sroa.017.1.i.i, ptr %storemerge55140, i64 noundef %i.x)
   %i.dk = ptrtoint ptr %.sroa.017.1.i.i to i64
-  %i.dl = sub i64 %i.dk, %i.a                     ; 2 uses
+  %i.dl = sub i64 %i.dk, %i.a
   %i.dm = ashr exact i64 %i.dl, 3                 ; 3 uses
   %i.dn = icmp sgt i64 %i.dm, 16
   br i1 %i.dn, label %bb.b, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_T0_.exit", !llvm.loop !780
 
-"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEET_S15_S15_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_RT0_.exit.i11.i", %bb.a, %"_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_RT0_.exit.i.i"
+"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_T0_.exit": ; preds = %"_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEET_S15_S15_T0_.exit", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN4bzla4NodeESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_10preprocess4pass24PassVariableSubstitution16process_extractsERKSt13unordered_mapIS3_S5_ISt4pairIS3_S3_ESaISG_EESt4hashIS3_ESt8equal_toIS3_ESaISF_IKS3_SI_EEERNSB_15AssertionVectorERSE_IS3_S3_SK_SM_SaISF_ISN_S3_EEERSE_IS3_mSK_SM_SaISF_ISN_mEEEE3$_0EEEvT_S15_S15_RT0_.exit.i11.i", %bb.a
   ret void
 }
 

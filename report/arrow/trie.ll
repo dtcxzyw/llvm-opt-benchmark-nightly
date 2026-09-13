@@ -81,7 +81,6 @@ $_ZN5arrow6Status8FromArgsIJRA24_KcEEES0_NS_10StatusCodeEDpOT_ = comdat any
 @.str.17 = private unnamed_addr constant [24 x i8] c"Duplicate entry in trie\00", align 1
 @.str.18 = private unnamed_addr constant [24 x i8] c"basic_string::_M_create\00", align 1
 @.str.19 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
-@.str.21 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @.str.22 = private unnamed_addr constant [26 x i8] c"basic_string_view::substr\00", align 1
 @.str.23 = private unnamed_addr constant [49 x i8] c"%s: __pos (which is %zu) > __size (which is %zu)\00", align 1
 @.str.24 = private unnamed_addr constant [23 x i8] c"vector::_M_fill_insert\00", align 1
@@ -484,7 +483,7 @@ bb.c:                                             ; preds = %_ZN5arrow6StatusD2E
   %i.t = load ptr, ptr %1, align 8, !tbaa !12     ; 5 uses
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = ptrtoint ptr %i.t to i64                 ; 2 uses
-  %i.w = sub i64 %i.u, %i.v                       ; 3 uses
+  %i.w = sub i64 %i.u, %i.v                       ; 2 uses
   %i.x = ashr exact i64 %i.w, 4                   ; 3 uses
   %i.y = icmp ugt i64 %i.x, 32766
   br i1 %i.y, label %bb.d, label %bb.g
@@ -541,7 +540,7 @@ bb.g:                                             ; preds = %bb.c
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !44
   %.not.i.i = icmp eq ptr %i.s, %i.aq
-  br i1 %.not.i.i, label %7, label %bb.h
+  br i1 %.not.i.i, label %_ZNKSt6vectorIN5arrow8internal4Trie4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(16) %i.s, ptr noundef nonnull align 2 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !95
@@ -551,15 +550,7 @@ bb.h:                                             ; preds = %bb.g
   %.pre = load ptr, ptr %1, align 8, !tbaa !12
   br label %_ZNSt6vectorIN5arrow8internal4Trie4NodeESaIS3_EE9push_backEOS3_.exit
 
-7:                                                ; preds = %bb.g
-  %8 = icmp eq i64 %i.w, 9223372036854775792
-  br i1 %8, label %9, label %_ZNKSt6vectorIN5arrow8internal4Trie4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-
-9:                                                ; preds = %7
-  call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.21) #18
-  unreachable
-
-_ZNKSt6vectorIN5arrow8internal4Trie4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %7
+_ZNKSt6vectorIN5arrow8internal4Trie4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
   %.sroa.speculated.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.x, i64 1)
   %i.at = add nuw nsw i64 %.sroa.speculated.i.i.i.i, %i.x ; 2 uses
   %i.au = shl nuw nsw i64 %i.at, 4

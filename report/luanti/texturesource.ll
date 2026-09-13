@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %.split175.us
   call void %i.hi(ptr noundef nonnull align 8 dereferenceable(12) %i.hc) #13, !inline_history !3
   br label %_ZNK17IReferenceCounted4dropEv.exit
 
-_ZNK17IReferenceCounted4dropEv.exit:              ; preds = %.split175.us, %bb.bc
+_ZNK17IReferenceCounted4dropEv.exit:              ; preds = %bb.bc, %.split175.us
   %i.hj = ptrtoint ptr %i.gu to i64
   %i.hk = ptrtoint ptr %i.gs to i64               ; 2 uses
   %i.hl = sub i64 %i.hj, %i.hk                    ; 2 uses
@@ -229,12 +229,12 @@ _ZNK17IReferenceCounted4dropEv.exit:              ; preds = %.split175.us, %bb.b
   %i.ho = phi ptr [ %i.iv, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.gs, %_ZNK17IReferenceCounted4dropEv.exit ] ; 8 uses
   %i.hp = phi ptr [ %i.ix, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.gt, %_ZNK17IReferenceCounted4dropEv.exit ] ; 6 uses
   %i.hq = phi i64 [ %i.jb, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.hm, %_ZNK17IReferenceCounted4dropEv.exit ] ; 2 uses
-  %i.hr = phi i64 [ %i.ja, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.hl, %_ZNK17IReferenceCounted4dropEv.exit ] ; 2 uses
+  %i.hr = phi i64 [ %i.ja, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.hl, %_ZNK17IReferenceCounted4dropEv.exit ]
   %i.hs = phi i64 [ %i.iz, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.hk, %_ZNK17IReferenceCounted4dropEv.exit ]
   %i.ht = phi ptr [ %i.iw, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.gu, %_ZNK17IReferenceCounted4dropEv.exit ] ; 3 uses
   %i.hu = ptrtoaddr ptr %i.ho to i64              ; 2 uses
   %.not.i112 = icmp eq ptr %i.ht, %i.hp
-  br i1 %.not.i112, label %4, label %bb.bd
+  br i1 %.not.i112, label %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i113, label %bb.bd
 
 bb.bd:                                            ; preds = %.lr.ph
   store i32 -1, ptr %i.ht, align 4, !tbaa !341
@@ -242,23 +242,12 @@ bb.bd:                                            ; preds = %.lr.ph
   store ptr %i.hv, ptr %i.ez, align 8, !tbaa !228
   br label %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit
 
-4:                                                ; preds = %.lr.ph
-  %5 = icmp eq i64 %i.hr, 9223372036854775804
-  br i1 %5, label %6, label %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i113
-
-6:                                                ; preds = %4
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.48) #30
-          to label %.noexc122 unwind label %.loopexit.split-lp
-
-.noexc122:                                        ; preds = %6
-  unreachable
-
-_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i113: ; preds = %4
+_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i113: ; preds = %.lr.ph
   %.sroa.speculated.i.i.i114 = call i64 @llvm.umax.i64(i64 %i.hq, i64 1)
   %i.hw = add nuw nsw i64 %.sroa.speculated.i.i.i114, %i.hq ; 2 uses
   %i.hx = shl nuw nsw i64 %i.hw, 2
   %i.hy = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hx) #26
-          to label %.noexc123 unwind label %.loopexit.a ; 9 uses
+          to label %.noexc123 unwind label %.loopexit.split-lp ; 9 uses
 
 .noexc123:                                        ; preds = %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i113
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hy, i64 %i.hr
@@ -354,28 +343,23 @@ _ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit: ; preds 
   %i.jc = icmp ult i64 %i.jb, 256
   br i1 %i.jc, label %.lr.ph, label %._crit_edge, !llvm.loop !338
 
-7:                                                ; preds = %._crit_edge, %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIN5video6SColorESaIS8_EESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_SA_EEEixERSG_.exit
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bj
-
-.loopexit.a:                                      ; preds = %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i113
+.loopexit.a:                                      ; preds = %._crit_edge, %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIN5video6SColorESaIS8_EESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_SA_EEEixERSG_.exit
   %lpad.loopexit.a = landingpad { ptr, i32 }
           cleanup
   br label %bb.bj
 
-.loopexit.split-lp:                               ; preds = %6
+.loopexit.split-lp:                               ; preds = %_ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i113
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.bj
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit, %_ZNK17IReferenceCounted4dropEv.exit
   %i.jd = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt8__detail9_Map_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_St6vectorIN5video6SColorESaISB_EEESaISE_ENS_10_Select1stESt8equal_toIS6_ESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb1ELb0ELb1EEELb1EEixERS8_(ptr noundef nonnull align 8 dereferenceable(56) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %1)
-          to label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIN5video6SColorESaIS8_EESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_SA_EEEixERSG_.exit unwind label %7
+          to label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIN5video6SColorESaIS8_EESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_SA_EEEixERSG_.exit unwind label %.loopexit.a
 
 _ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIN5video6SColorESaIS8_EESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_SA_EEEixERSG_.exit: ; preds = %._crit_edge
   %i.je = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIN5video6SColorESaIS1_EEaSERKS3_(ptr noundef nonnull align 8 dereferenceable(24) %i.jd, ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.bf unwind label %7         ; 0 uses
+          to label %bb.bf unwind label %.loopexit.a ; 0 uses
 
 bb.bf:                                            ; preds = %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIN5video6SColorESaIS8_EESt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_SA_EEEixERSG_.exit
   %i.jf = invoke ptr @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_St6vectorIN5video6SColorESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb1ELb0ELb1EEEE4findERS7_(ptr noundef nonnull align 8 dereferenceable(56) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %1)
@@ -412,8 +396,8 @@ bb.bi:                                            ; preds = %bb.bf
           cleanup
   br label %bb.bj
 
-bb.bj:                                            ; preds = %.loopexit.a, %.loopexit.split-lp, %.loopexit163.split.us, %.loopexit.split-lp164, %.split.us, %7, %bb.bi, %bb.al
-  %.pn.pn.pn = phi { ptr, i32 } [ %i.dq, %bb.al ], [ %8, %7 ], [ %lpad.loopexit.split-lp166, %.loopexit.split-lp164 ], [ %i.jo, %bb.bi ], [ %i.gy, %.split.us ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit165.us, %.loopexit163.split.us ], [ %lpad.loopexit.a, %.loopexit.a ]
+bb.bj:                                            ; preds = %.loopexit163.split.us, %.loopexit.split-lp164, %.split.us, %.loopexit.a, %.loopexit.split-lp, %bb.bi, %bb.al
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.dq, %bb.al ], [ %lpad.loopexit.a, %.loopexit.a ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %i.jo, %bb.bi ], [ %i.gy, %.split.us ], [ %lpad.loopexit.split-lp166, %.loopexit.split-lp164 ], [ %lpad.loopexit165.us, %.loopexit163.split.us ]
   %i.jp = load ptr, ptr %3, align 8, !tbaa !231   ; 3 uses
   %.not.i.i.i127 = icmp eq ptr %i.jp, null
   br i1 %.not.i.i.i127, label %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit128, label %bb.bk

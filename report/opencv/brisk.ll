@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   %i.k = phi ptr [ %.pre, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i ], [ %i.e, %bb.a ] ; 2 uses
   %i.l = phi ptr [ %i.j, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i ], [ null, %bb.a ] ; 17 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.h ; 9 uses
-  %i.n = sub i64 %.pre-phi, %.pre-phi245          ; 10 uses
+  %i.n = sub i64 %.pre-phi, %.pre-phi245          ; 9 uses
   %i.o = icmp sgt i64 %i.n, 4
   br i1 %i.o, label %bb.d, label %bb.e, !prof !42
 
@@ -222,7 +222,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit
 
 _ZNSt6vectorIiSaIiEEC2ERKS1_.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.r = getelementptr inbounds i8, ptr %i.l, i64 %i.n ; 4 uses
+  %i.r = getelementptr inbounds i8, ptr %i.l, i64 %i.n ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   store float %3, ptr %i.s, align 4, !tbaa !164
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -625,15 +625,13 @@ bb.ap:                                            ; preds = %bb.ak
   br i1 %i.ix, label %bb.aq, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
 
 bb.aq:                                            ; preds = %bb.ap
-  %.idx = shl nuw nsw i64 %i.id, 2                ; 2 uses
+  %.idx = shl nuw nsw i64 %i.id, 2
   %i.iy = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx
-  %.not.i.i = icmp eq i64 %i.n, %.idx
-  %spec.select = select i1 %.not.i.i, ptr %i.r, ptr %i.iy
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %bb.aq, %bb.ap, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i, %bb.am
   %.sroa.0.3 = phi ptr [ %i.l, %bb.ap ], [ %i.l, %bb.aq ], [ %i.l, %bb.am ], [ %i.l, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.ip, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i ] ; 6 uses
-  %.sroa.14.0 = phi ptr [ %i.r, %bb.ap ], [ %spec.select, %bb.aq ], [ %i.ij, %bb.am ], [ %i.im, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.iv, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i ]
+  %.sroa.14.0 = phi ptr [ %i.r, %bb.ap ], [ %i.iy, %bb.aq ], [ %i.ij, %bb.am ], [ %i.im, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.iv, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i ]
   %.sroa.23.3 = phi ptr [ %i.m, %bb.ap ], [ %i.m, %bb.aq ], [ %i.m, %bb.am ], [ %i.m, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.iw, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i ] ; 3 uses
   %i.iz = ptrtoint ptr %.sroa.14.0 to i64
   %i.ja = ptrtoint ptr %.sroa.0.3 to i64
