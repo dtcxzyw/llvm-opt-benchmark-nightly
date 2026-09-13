@@ -204,43 +204,23 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = shl i64 %i.aw, %i.az
   %i.bb = ashr exact i64 %i.ba, %i.az
   %.0.i.i.i.i = select i1 %i.ax, i64 0, i64 %i.bb
-  br label %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit
+  br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
   %i.bc = load ptr, ptr %i.as, align 8, !tbaa !368
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !369
-  br label %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit
+  br label %bb.i
 
-_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit:   ; preds = %bb.g, %bb.h
-  %.0.i.i.i = phi i64 [ %.0.i.i.i.i, %bb.g ], [ %i.bd, %bb.h ] ; 9 uses
+bb.i:                                             ; preds = %bb.g, %bb.h
+  %.0.i.i.i = phi i64 [ %.0.i.i.i.i, %bb.g ], [ %i.bd, %bb.h ] ; 6 uses
   %214 = add i64 %.0.i.i.i, 128
-  %215 = icmp ult i64 %214, 256
-  br i1 %215, label %.thread, label %216
+  %215 = icmp uge i64 %214, 256
+  %216 = and i64 %.0.i.i.i, -32768
+  %or.cond4136 = icmp eq i64 %216, 32768
+  %or.cond4319 = and i1 %215, %or.cond4136
+  br i1 %or.cond4319, label %bb.j, label %bb.l
 
-216:                                              ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit
-  %217 = icmp ult i64 %.0.i.i.i, 256
-  br i1 %217, label %bb.i, label %224
-
-bb.i:                                             ; preds = %216
-  %218 = shl nuw i64 %.0.i.i.i, 56
-  %219 = ashr exact i64 %218, 56                  ; 2 uses
-  %220 = add nsw i64 %219, 32
-  %221 = icmp ult i64 %220, 64
-  br i1 %221, label %222, label %.thread
-
-222:                                              ; preds = %bb.i
-  %223 = tail call noundef zeroext i1 @_ZNK4llvm17RISCVDAGToDAGISel15hasAllNBitUsersEPNS_6SDNodeEjj(ptr noundef nonnull align 8 dereferenceable(960) %0, ptr noundef nonnull %1, i32 noundef 8, i32 noundef 0)
-  br i1 %223, label %bb.l, label %.thread
-
-.thread:                                          ; preds = %222, %bb.i, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit
-  br label %bb.l
-
-224:                                              ; preds = %216
-  %225 = and i64 %.0.i.i.i, -32768
-  %or.cond4136 = icmp eq i64 %225, 32768
-  br i1 %or.cond4136, label %bb.j, label %bb.l
-
-bb.j:                                             ; preds = %224
+bb.j:                                             ; preds = %bb.i
   %i.be = shl nuw i64 %.0.i.i.i, 48
   %i.bf = ashr exact i64 %i.be, 48                ; 2 uses
   %i.bg = add nsw i64 %i.bf, 2048
@@ -252,8 +232,8 @@ bb.k:                                             ; preds = %bb.j
   %spec.select4137 = select i1 %i.bi, i64 %i.bf, i64 %.0.i.i.i
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %.thread, %222, %224, %bb.j
-  %.02135 = phi i64 [ %.0.i.i.i, %224 ], [ %219, %222 ], [ %spec.select4137, %bb.k ], [ %.0.i.i.i, %bb.j ], [ %.0.i.i.i, %.thread ] ; 9 uses
+bb.l:                                             ; preds = %bb.i, %bb.k, %bb.j
+  %.02135 = phi i64 [ %.0.i.i.i, %bb.i ], [ %.0.i.i.i, %bb.j ], [ %spec.select4137, %bb.k ] ; 9 uses
   %i.bj = load ptr, ptr %i.o, align 8, !tbaa !82
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 408
   %i.bl = load i8, ptr %i.bk, align 8, !tbaa !226, !range !18, !noundef !19

@@ -204,7 +204,7 @@ bb.a:
     i32 6, label %bb.h
     i32 7, label %bb.i
     i32 8, label %bb.j
-    i32 9, label %3
+    i32 9, label %bb.k
     i32 10, label %bb.l
     i32 11, label %bb.m
   ]
@@ -261,15 +261,8 @@ bb.j:                                             ; preds = %bb.a
   %i.t = icmp ult i64 %2, 4294967296
   br label %_ZN4llvm13isPowerOf2_64Em.exit19
 
-3:                                                ; preds = %bb.a
-  %4 = icmp ult i64 %2, 4294967296
-  br i1 %4, label %bb.k, label %_ZN4llvm13isPowerOf2_64Em.exit19
-
-bb.k:                                             ; preds = %3
-  %sext = shl nuw i64 %2, 32
-  %5 = ashr exact i64 %sext, 32
-  %6 = add nsw i64 %5, 128
-  %i.u = icmp ult i64 %6, 256
+bb.k:                                             ; preds = %bb.a
+  %i.u = icmp ult i64 %2, 128
   br label %_ZN4llvm13isPowerOf2_64Em.exit19
 
 bb.l:                                             ; preds = %bb.a
@@ -285,8 +278,8 @@ bb.m:                                             ; preds = %bb.a
 bb.n:                                             ; preds = %bb.a
   unreachable
 
-_ZN4llvm13isPowerOf2_64Em.exit19:                 ; preds = %bb.b, %bb.e, %3, %bb.k, %bb.d, %bb.c, %_ZN4llvm13isPowerOf2_64Em.exit, %bb.m, %bb.l, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
-  %.0 = phi i1 [ %i.y, %bb.m ], [ false, %3 ], [ %i.h, %_ZN4llvm13isPowerOf2_64Em.exit ], [ %i.m, %bb.f ], [ %i.o, %bb.g ], [ %i.q, %bb.h ], [ %i.s, %bb.i ], [ %i.t, %bb.j ], [ %i.u, %bb.k ], [ %i.w, %bb.l ], [ %spec.select, %bb.b ], [ false, %bb.c ], [ %i.k, %bb.e ], [ false, %bb.d ]
+_ZN4llvm13isPowerOf2_64Em.exit19:                 ; preds = %bb.k, %bb.b, %bb.e, %bb.d, %bb.c, %_ZN4llvm13isPowerOf2_64Em.exit, %bb.m, %bb.l, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
+  %.0 = phi i1 [ %i.y, %bb.m ], [ %i.u, %bb.k ], [ %i.h, %_ZN4llvm13isPowerOf2_64Em.exit ], [ %i.m, %bb.f ], [ %i.o, %bb.g ], [ %i.q, %bb.h ], [ %i.s, %bb.i ], [ %i.t, %bb.j ], [ false, %bb.d ], [ %i.w, %bb.l ], [ %spec.select, %bb.b ], [ false, %bb.c ], [ %i.k, %bb.e ]
   ret i1 %.0
 }
 

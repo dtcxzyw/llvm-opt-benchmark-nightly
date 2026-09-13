@@ -206,7 +206,7 @@ bb.aj:                                            ; preds = %._crit_edge20.i.i.i
   br i1 %i.iw, label %_ZN7roaring6bitmap8multiops25collect_starting_elements17h52dade20e71e37aaE.exit.i.i, label %bb.ag
 
 _ZN7roaring6bitmap8multiops25collect_starting_elements17h52dade20e71e37aaE.exit.i.i: ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hf546ff7165a3a1ffE.exit.i.i.i", %bb.ag
-  %.sroa.5154.0.copyload252.i.i = phi i64 [ %spec.store.select.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hf546ff7165a3a1ffE.exit.i.i.i" ], [ %i.go, %bb.ag ] ; 8 uses
+  %.sroa.5154.0.copyload252.i.i = phi i64 [ %spec.store.select.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hf546ff7165a3a1ffE.exit.i.i.i" ], [ %i.go, %bb.ag ] ; 6 uses
   %.sroa.1285.1.ph.i.i = phi i64 [ %i.hy, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hf546ff7165a3a1ffE.exit.i.i.i" ], [ 0, %bb.ag ]
   %.sroa.1081.1.ph.i.i = phi i16 [ %i.im, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hf546ff7165a3a1ffE.exit.i.i.i" ], [ %.sroa.1081.0.i.i, %bb.ag ]
   %.sroa.8.2.ph.i.i = phi ptr [ %.sroa.8.1.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hf546ff7165a3a1ffE.exit.i.i.i" ], [ %.sroa.8.0.i.i, %bb.ag ]
@@ -241,9 +241,9 @@ bb.an:                                            ; preds = %bb.ap
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i: ; preds = %_ZN7roaring6bitmap8multiops25collect_starting_elements17h52dade20e71e37aaE.exit.i.i, %bb.al, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !62560
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ao), !noalias !62562
-  %.idx304.i.i = shl nuw nsw i64 %.sroa.5154.0.copyload252.i.i, 3 ; 3 uses
-  %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.4153.0.copyload.pre.i.i, i64 %.idx304.i.i
-  %i.jd = getelementptr inbounds nuw i8, ptr %.sroa.4153.0.copyload.pre.i.i, i64 8 ; 2 uses
+  %.idx304.i.i = shl nuw nsw i64 %.sroa.5154.0.copyload252.i.i, 3
+  %i.jc = getelementptr i8, ptr %.sroa.4153.0.copyload.pre.i.i, i64 %.idx304.i.i ; 2 uses
+  %i.jd = getelementptr inbounds nuw i8, ptr %.sroa.4153.0.copyload.pre.i.i, i64 8
   %i.je = load ptr, ptr %.sroa.4153.0.copyload.pre.i.i, align 8, !noalias !62563, !nonnull !57, !align !61, !noundef !57 ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.je, i64 8
   %i.jg = load ptr, ptr %i.jf, align 8, !noalias !62562, !nonnull !57, !noundef !57 ; 5 uses
@@ -251,7 +251,7 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i: ; 
   %i.ji = load i64, ptr %i.jh, align 8, !noalias !62562, !noundef !57 ; 8 uses
   %.idx194.i.i = shl nuw nsw i64 %i.ji, 5         ; 2 uses
   %i.jj = icmp eq i64 %i.ji, 0
-  br i1 %i.jj, label %3, label %bb.ao
+  br i1 %i.jj, label %bb.aq, label %bb.ao
 
 bb.ao:                                            ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i
   call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #79, !noalias !62564
@@ -334,25 +334,9 @@ bb.ap:                                            ; preds = %bb.ao
   call void @llvm.assume(i1 %i.ke)
   br label %bb.aq
 
-3:                                                ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i
-  %gepdiff.i.i = add nsw i64 %.idx304.i.i, -8
-  %4 = lshr exact i64 %gepdiff.i.i, 3             ; 2 uses
-  %.sroa.0.0.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 range(i64 0, 1152921504606846976) %.sroa.5154.0.copyload252.i.i, i64 %4)
-  %.idx196.i.i = shl nuw nsw i64 %.sroa.0.0.i.i.i.i, 3 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.jd, i64 %.idx196.i.i ; 2 uses
-  %.not16.not.i.i = icmp samesign ugt i64 %.sroa.5154.0.copyload252.i.i, %4
-  br i1 %.not16.not.i.i, label %bb.aq, label %6
-
-6:                                                ; preds = %3
-  %7 = add nuw nsw i64 %.idx196.i.i, 8
-  %8 = icmp samesign eq i64 %7, %.idx304.i.i
-  %spec.select.idx.i.i = select i1 %8, i64 0, i64 8
-  %spec.select.i.i827 = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select.idx.i.i
-  br label %bb.aq
-
-bb.aq:                                            ; preds = %6, %3, %.epilog-lcssa
-  %.sroa.5.0.i.i = phi ptr [ inttoptr (i64 8 to ptr), %3 ], [ inttoptr (i64 8 to ptr), %6 ], [ %i.jk, %.epilog-lcssa ]
-  %.sroa.7.0.i.i = phi ptr [ %5, %3 ], [ %spec.select.i.i827, %6 ], [ %i.jd, %.epilog-lcssa ]
+bb.aq:                                            ; preds = %.epilog-lcssa, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i
+  %.sroa.5.0.i.i = phi ptr [ %i.jk, %.epilog-lcssa ], [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i ]
+  %.sroa.7.0.i.i = phi ptr [ %i.jd, %.epilog-lcssa ], [ %i.jc, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i ]
   store i64 %i.ji, ptr %i.ao, align 8, !noalias !62562
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ao, i64 8 ; 5 uses
   store ptr %.sroa.5.0.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !noalias !62562

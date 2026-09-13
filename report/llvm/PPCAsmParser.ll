@@ -204,7 +204,7 @@ _ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.i.i: ; preds = %bb.k
 bb.l:                                             ; preds = %bb.i
   %i.dz = load ptr, ptr %3, align 8, !tbaa !75
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %i.de
-  %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !78 ; 127 uses
+  %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !78 ; 126 uses
   %i.ec = load ptr, ptr %i.cr, align 8, !tbaa !233 ; 2 uses
   %i.ed = icmp eq i8 %i.dc, 0
   br i1 %i.ed, label %_ZL20validateOperandClassRN4llvm18MCParsedAsmOperandEN12_GLOBAL__N_114MatchClassKindERKNS_15MCSubtargetInfoE.exit.i.i, label %bb.m
@@ -424,30 +424,13 @@ bb.z:                                             ; preds = %bb.s
 
 bb.aa:                                            ; preds = %bb.z
   %i.gx = getelementptr inbounds nuw i8, ptr %i.eb, i64 88
-  %.val6.i.i.i = load i64, ptr %i.gx, align 8, !tbaa !34 ; 4 uses
+  %.val6.i.i.i = load i64, ptr %i.gx, align 8, !tbaa !34 ; 2 uses
   %i.gy = and i64 %.val6.i.i.i, 3
   %.not3.i.i.i = icmp eq i64 %i.gy, 0
-  br i1 %.not3.i.i.i, label %58, label %_ZNK12_GLOBAL__N_110PPCOperand11isCRBitMaskEv.exit.thread.i.i.i
-
-58:                                               ; preds = %bb.aa
-  %59 = add i64 %.val6.i.i.i, 33554432
-  %60 = icmp ult i64 %59, 67108864
-  br i1 %60, label %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.thread.i.i.i, label %61
-
-61:                                               ; preds = %58
-  %62 = getelementptr inbounds nuw i8, ptr %i.eb, i64 72
-  %63 = load i8, ptr %62, align 8, !tbaa !69, !range !41, !noundef !42
-  %64 = trunc nuw i8 %63 to i1
-  %65 = icmp ugt i64 %.val6.i.i.i, 4294967295
-  %or.cond.not.i.i.i = or i1 %65, %64
-  br i1 %or.cond.not.i.i.i, label %_ZNK12_GLOBAL__N_110PPCOperand11isCRBitMaskEv.exit.thread.i.i.i, label %66
-
-66:                                               ; preds = %61
-  %sext.i.i.i = shl nuw i64 %.val6.i.i.i, 32
-  %67 = ashr exact i64 %sext.i.i.i, 32
-  %68 = add nsw i64 %67, 33554432
-  %69 = icmp ult i64 %68, 67108864
-  br i1 %69, label %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.thread.i.i.i, label %_ZNK12_GLOBAL__N_110PPCOperand11isCRBitMaskEv.exit.thread.i.i.i
+  %58 = add i64 %.val6.i.i.i, 33554432
+  %59 = icmp ult i64 %58, 67108864
+  %or.cond597.i.i.i = and i1 %.not3.i.i.i, %59
+  br i1 %or.cond597.i.i.i, label %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.thread.i.i.i, label %_ZNK12_GLOBAL__N_110PPCOperand11isCRBitMaskEv.exit.thread.i.i.i
 
 bb.ab:                                            ; preds = %bb.s
   %i.gz = getelementptr inbounds nuw i8, ptr %i.eb, i64 48
@@ -850,7 +833,7 @@ bb.ce:                                            ; preds = %bb.s
   %spec.select.i476.i.i.i = select i1 %i.qo, i1 %i.qp, i1 false
   br i1 %spec.select.i476.i.i.i, label %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.thread.i.i.i, label %_ZNK12_GLOBAL__N_110PPCOperand11isCRBitMaskEv.exit.thread.i.i.i
 
-_ZNK12_GLOBAL__N_110PPCOperand11isCRBitMaskEv.exit.thread.i.i.i: ; preds = %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %_ZNK12_GLOBAL__N_110PPCOperand8isU16ImmEv.exit.i.i.i, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %_ZNK12_GLOBAL__N_110PPCOperand8isS17ImmEv.exit.i.i.i, %bb.bp, %_ZNK12_GLOBAL__N_110PPCOperand8isS16ImmEv.exit445.i.i.i, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %_ZNK12_GLOBAL__N_110PPCOperand13isCCRegNumberEv.exit.i.i.i, %bb.ao, %_ZNK12_GLOBAL__N_110PPCOperand13isCRBitNumberEv.exit.i.i.i, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %_ZNK12_GLOBAL__N_110PPCOperand8isS16ImmEv.exit.i.i.i, %bb.ad, %bb.ac, %bb.ab, %66, %61, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s
+_ZNK12_GLOBAL__N_110PPCOperand11isCRBitMaskEv.exit.thread.i.i.i: ; preds = %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %_ZNK12_GLOBAL__N_110PPCOperand8isU16ImmEv.exit.i.i.i, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %_ZNK12_GLOBAL__N_110PPCOperand8isS17ImmEv.exit.i.i.i, %bb.bp, %_ZNK12_GLOBAL__N_110PPCOperand8isS16ImmEv.exit445.i.i.i, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %_ZNK12_GLOBAL__N_110PPCOperand13isCCRegNumberEv.exit.i.i.i, %bb.ao, %_ZNK12_GLOBAL__N_110PPCOperand13isCRBitNumberEv.exit.i.i.i, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %_ZNK12_GLOBAL__N_110PPCOperand8isS16ImmEv.exit.i.i.i, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s
   %i.qq = load ptr, ptr %i.eb, align 8, !tbaa !13
   %i.qr = getelementptr inbounds nuw i8, ptr %i.qq, i64 48
   %i.qs = load ptr, ptr %i.qr, align 8
@@ -928,7 +911,7 @@ _ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit480.i.i.i: ; preds = %bb.
   %i.so = trunc i32 %i.sn to i1
   br i1 %i.so, label %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.thread.i.i.i, label %_ZL20validateOperandClassRN4llvm18MCParsedAsmOperandEN12_GLOBAL__N_114MatchClassKindERKNS_15MCSubtargetInfoE.exit.i.i
 
-_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.thread.i.i.i: ; preds = %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit480.i.i.i, %bb.cj, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %_ZNK12_GLOBAL__N_110PPCOperand8isU16ImmEv.exit.i.i.i, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %_ZNK12_GLOBAL__N_110PPCOperand8isS17ImmEv.exit.i.i.i, %bb.bp, %_ZNK12_GLOBAL__N_110PPCOperand8isS16ImmEv.exit445.i.i.i, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %_ZNK12_GLOBAL__N_110PPCOperand13isCCRegNumberEv.exit.i.i.i, %_ZNK12_GLOBAL__N_110PPCOperand13isCRBitNumberEv.exit.i.i.i, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %_ZNK12_GLOBAL__N_110PPCOperand8isS16ImmEv.exit.i.i.i, %bb.ad, %bb.ac, %bb.ab, %66, %58, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.i.i.i, %_ZL16matchTokenStringN4llvm9StringRefE.exit.i.i.i
+_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.thread.i.i.i: ; preds = %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit480.i.i.i, %bb.cj, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %_ZNK12_GLOBAL__N_110PPCOperand8isU16ImmEv.exit.i.i.i, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %_ZNK12_GLOBAL__N_110PPCOperand8isS17ImmEv.exit.i.i.i, %bb.bp, %_ZNK12_GLOBAL__N_110PPCOperand8isS16ImmEv.exit445.i.i.i, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %_ZNK12_GLOBAL__N_110PPCOperand13isCCRegNumberEv.exit.i.i.i, %_ZNK12_GLOBAL__N_110PPCOperand13isCRBitNumberEv.exit.i.i.i, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %_ZNK12_GLOBAL__N_110PPCOperand8isS16ImmEv.exit.i.i.i, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %_ZL10isSubclassN12_GLOBAL__N_114MatchClassKindES0_.exit.i.i.i, %_ZL16matchTokenStringN4llvm9StringRefE.exit.i.i.i
   %i.sp = add nuw i32 %.0112281.i.i, 1
   br label %.thread.i.i
 
