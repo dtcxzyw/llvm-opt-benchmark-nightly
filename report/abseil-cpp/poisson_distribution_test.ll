@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = fdiv double %1, 1.000000e+01
   %i.g = fptosi double %i.f to i32
-  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.g, 1                  ; 2 uses
   store i32 %i.h, ptr %i.a, align 8, !tbaa !112
   %i.i = fneg double %1
   %i.j = sitofp i32 %i.h to double
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = fdiv double %1, 1.000000e+01
   %i.g = fptosi double %i.f to i32
-  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.g, 1                  ; 2 uses
   store i32 %i.h, ptr %i.a, align 8, !tbaa !242
   %i.i = fneg double %1
   %i.j = sitofp i32 %i.h to double
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = fdiv double %1, 1.000000e+01
   %i.g = fptosi double %i.f to i32
-  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.g, 1                  ; 2 uses
   store i32 %i.h, ptr %i.a, align 8, !tbaa !246
   %i.i = fneg double %1
   %i.j = sitofp i32 %i.h to double
@@ -1414,7 +1414,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = fdiv double %1, 1.000000e+01
   %i.g = fptosi double %i.f to i32
-  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.g, 1                  ; 2 uses
   store i32 %i.h, ptr %i.a, align 8, !tbaa !252
   %i.i = fneg double %1
   %i.j = sitofp i32 %i.h to double
@@ -1817,7 +1817,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = fdiv double %1, 1.000000e+01
   %i.g = fptosi double %i.f to i32
-  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.g, 1                  ; 2 uses
   store i32 %i.h, ptr %i.a, align 8, !tbaa !256
   %i.i = fneg double %1
   %i.j = sitofp i32 %i.h to double
@@ -2220,7 +2220,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = fdiv double %1, 1.000000e+01
   %i.g = fptosi double %i.f to i32
-  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.g, 1                  ; 2 uses
   store i32 %i.h, ptr %i.a, align 8, !tbaa !260
   %i.i = fneg double %1
   %i.j = sitofp i32 %i.h to double
@@ -2623,7 +2623,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = fdiv double %1, 1.000000e+01
   %i.g = fptosi double %i.f to i32
-  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.g, 1                  ; 2 uses
   store i32 %i.h, ptr %i.a, align 8, !tbaa !264
   %i.i = fneg double %1
   %i.j = sitofp i32 %i.h to double
@@ -3026,7 +3026,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.f = fdiv double %1, 1.000000e+01
   %i.g = fptosi double %i.f to i32
-  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
+  %i.h = add nuw nsw i32 %i.g, 1                  ; 2 uses
   store i32 %i.h, ptr %i.a, align 8, !tbaa !268
   %i.i = fneg double %1
   %i.j = sitofp i32 %i.h to double

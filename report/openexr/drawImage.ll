@@ -205,16 +205,18 @@ bb.a:
   br i1 %.not8016, label %._crit_edge20.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %9 = sext i32 %i.d to i64
+  %9 = zext nneg i32 %i.d to i64
   %i.v = add i32 %i.j, 1
-  %10 = sext i32 %i.n to i64
+  %10 = zext nneg i32 %i.n to i64
   %i.w = add i32 %i.t, 1
+  %wide.trip.count25 = zext i32 %i.w to i64
+  %wide.trip.count = zext i32 %i.v to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %indvars.iv22 = phi i64 [ %10, %.preheader.preheader ], [ %indvars.iv.next23, %._crit_edge ] ; 3 uses
-  %i.x = trunc nsw i64 %indvars.iv22 to i32
-  %11 = sitofp i32 %i.x to float
+  %i.x = trunc nuw nsw i64 %indvars.iv22 to i32
+  %11 = uitofp nneg i32 %i.x to float
   %i.y = fsub float %11, %3
   %i.z = fdiv float %i.y, %4                      ; 3 uses
   %i.aa = fmul float %i.z, %i.z
@@ -229,15 +231,14 @@ bb.a:
   ret void
 
 ._crit_edge:                                      ; preds = %bb.ar
-  %indvars.iv.next23 = add nsw i64 %indvars.iv22, 1 ; 2 uses
-  %lftr.wideiv25 = trunc i64 %indvars.iv.next23 to i32
-  %exitcond26.not = icmp eq i32 %i.w, %lftr.wideiv25
+  %indvars.iv.next23 = add nuw nsw i64 %indvars.iv22, 1 ; 2 uses
+  %exitcond26.not = icmp eq i64 %indvars.iv.next23, %wide.trip.count25
   br i1 %exitcond26.not, label %._crit_edge20.split, label %.preheader, !llvm.loop !21
 
 bb.b:                                             ; preds = %.preheader, %bb.ar
   %indvars.iv = phi i64 [ %9, %.preheader ], [ %indvars.iv.next, %bb.ar ] ; 3 uses
-  %i.ag = trunc nsw i64 %indvars.iv to i32
-  %12 = sitofp i32 %i.ag to float
+  %i.ag = trunc nuw nsw i64 %indvars.iv to i32
+  %12 = uitofp nneg i32 %i.ag to float
   %i.ah = fsub float %12, %2
   %i.ai = fdiv float %i.ah, %4                    ; 3 uses
   %i.aj = tail call float @llvm.fmuladd.f32(float %i.ai, float %i.ai, float %i.aa)
@@ -275,7 +276,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bj = fmul float %5, %i.bi
   %i.bk = fmul float %6, %i.bi
   %i.bl = fmul float %7, %i.bi
-  %i.bm = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %indvars.iv ; 5 uses
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvars.iv ; 5 uses
   %i.bn = load i16, ptr %i.bm, align 2, !tbaa !13
   %i.bo = zext i16 %i.bn to i64
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.bo
@@ -627,9 +628,8 @@ _ZN9Imath_3_24halfaSEf.exit95:                    ; preds = %bb.ai, %bb.aj, %bb.
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.b, %_ZN9Imath_3_24halfaSEf.exit95
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %i.v, %lftr.wideiv
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !22
 }
 
@@ -798,19 +798,21 @@ bb.c:                                             ; preds = %.preheader, %_ZN12_
 
 .preheader.preheader.i:                           ; preds = %.preheader.lr.ph.i
   %i.cr = add <2 x i32> %i.cl, splat (i32 1)      ; 2 uses
-  %4 = sext i32 %i.cm to i64
-  %5 = extractelement <2 x float> %i.bz, i64 1
-  %i.cs = extractelement <2 x i32> %i.cr, i64 1
-  %6 = sext i32 %i.co to i64
-  %i.ct = extractelement <2 x float> %i.bz, i64 0
-  %7 = extractelement <2 x i32> %i.cr, i64 0
+  %4 = extractelement <2 x i32> %i.cr, i64 1
+  %wide.trip.count31.i = zext i32 %4 to i64
+  %i.cs = extractelement <2 x i32> %i.cr, i64 0
+  %wide.trip.count.i = zext i32 %i.cs to i64
+  %5 = zext i32 %i.cm to i64
+  %i.ct = extractelement <2 x float> %i.bz, i64 1
+  %6 = zext i32 %i.co to i64
+  %7 = extractelement <2 x float> %i.bz, i64 0
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader.preheader.i
-  %indvars.iv28.i = phi i64 [ %4, %.preheader.preheader.i ], [ %indvars.iv.next29.i, %._crit_edge.i ] ; 4 uses
-  %i.cu = trunc nsw i64 %indvars.iv28.i to i32
-  %8 = sitofp i32 %i.cu to float
-  %i.cv = fsub float %8, %5
+  %indvars.iv28.i = phi i64 [ %5, %.preheader.preheader.i ], [ %indvars.iv.next29.i, %._crit_edge.i ] ; 4 uses
+  %i.cu = trunc nuw nsw i64 %indvars.iv28.i to i32
+  %8 = uitofp nneg i32 %i.cu to float
+  %i.cv = fsub float %8, %i.ct
   %i.cw = fdiv float %i.cv, %i.bm                 ; 3 uses
   %invariant.gep.i = getelementptr [4 x i8], ptr %.val45, i64 %indvars.iv28.i
   %i.cx = fpext float %i.cw to double
@@ -818,16 +820,15 @@ bb.c:                                             ; preds = %.preheader, %_ZN12_
   br label %bb.d
 
 ._crit_edge.i:                                    ; preds = %bb.q
-  %indvars.iv.next29.i = add nsw i64 %indvars.iv28.i, 1 ; 2 uses
-  %lftr.wideiv31.i = trunc i64 %indvars.iv.next29.i to i32
-  %exitcond32.not.i = icmp eq i32 %i.cs, %lftr.wideiv31.i
+  %indvars.iv.next29.i = add nuw nsw i64 %indvars.iv28.i, 1 ; 2 uses
+  %exitcond32.not.i = icmp eq i64 %indvars.iv.next29.i, %wide.trip.count31.i
   br i1 %exitcond32.not.i, label %_ZN12_GLOBAL__N_13zspERN7Imf_3_47Array2DIN9Imath_3_24halfEEERNS1_IfEEiifffff.exit, label %.preheader.i, !llvm.loop !26
 
 bb.d:                                             ; preds = %bb.q, %.preheader.i
   %indvars.iv.i = phi i64 [ %6, %.preheader.i ], [ %indvars.iv.next.i, %bb.q ] ; 4 uses
-  %i.cy = trunc nsw i64 %indvars.iv.i to i32
-  %9 = sitofp i32 %i.cy to float
-  %i.cz = fsub float %9, %i.ct
+  %i.cy = trunc nuw nsw i64 %indvars.iv.i to i32
+  %9 = uitofp nneg i32 %i.cy to float
+  %i.cz = fsub float %9, %7
   %i.da = fdiv float %i.cz, %i.bm                 ; 3 uses
   %i.db = fmul float %i.da, %i.da
   %i.dc = tail call float @llvm.fmuladd.f32(float %i.cw, float %i.cw, float %i.db)
@@ -953,9 +954,8 @@ _ZN9Imath_3_24halfaSEf.exit.i:                    ; preds = %bb.p, %bb.o, %bb.m,
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN9Imath_3_24halfaSEf.exit.i, %bb.e, %bb.d
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %7, %lftr.wideiv.i
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.d, !llvm.loop !27
 
 _ZN12_GLOBAL__N_13zspERN7Imf_3_47Array2DIN9Imath_3_24halfEEERNS1_IfEEiifffff.exit: ; preds = %._crit_edge.i, %bb.c, %.preheader.lr.ph.i
@@ -1358,7 +1358,7 @@ _ZN9Imath_3_24halfaSEf.exit.i:                    ; preds = %bb.aw, %bb.bb, %bb.
   store i16 %.033.i.i.i.i75, ptr %i.ao, align 2, !tbaa !10
   %i.kd = fmul nnan float %i.ix, 4.000000e+00     ; 4 uses
   %i.ke = fptosi float %i.kd to i32
-  %14 = sitofp i32 %i.ke to float
+  %14 = uitofp nneg i32 %i.ke to float
   %i.kf = fsub nnan float %i.kd, %14
   %i.kg = fmul nnan float %i.kf, 2.000000e+00     ; 3 uses
   %i.kh = fcmp olt float %i.kg, 1.000000e+00
@@ -1450,7 +1450,7 @@ _ZN9Imath_3_24halfpLEf.exit.i:                    ; preds = %bb.bl, %bb.bk, %bb.
   store i16 %.033.i.i.i11.i, ptr %i.aj, align 2, !tbaa !10
   %i.mf = fadd float %i.kd, 3.333300e-01          ; 2 uses
   %i.mg = fptosi float %i.mf to i32
-  %15 = sitofp i32 %i.mg to float
+  %15 = uitofp nneg i32 %i.mg to float
   %i.mh = fsub nnan float %i.mf, %15
   %i.mi = fmul nnan float %i.mh, 2.000000e+00     ; 3 uses
   %i.mj = fcmp olt float %i.mi, 1.000000e+00
@@ -1542,7 +1542,7 @@ _ZN9Imath_3_24halfpLEf.exit15.i:                  ; preds = %bb.bv, %bb.bu, %bb.
   store i16 %.033.i.i.i14.i78, ptr %i.ak, align 2, !tbaa !10
   %i.oh = fadd float %i.kd, 6.666700e-01          ; 2 uses
   %i.oi = fptosi float %i.oh to i32
-  %16 = sitofp i32 %i.oi to float
+  %16 = uitofp nneg i32 %i.oi to float
   %i.oj = fsub nnan float %i.oh, %16
   %i.ok = fmul nnan float %i.oj, 2.000000e+00     ; 3 uses
   %i.ol = fcmp olt float %i.ok, 1.000000e+00
@@ -1852,7 +1852,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ct = fmul nnan float %i.cs, 3.906250e-03
   %i.cu = fmul nnan float %i.ct, 5.000000e+00     ; 3 uses
   %i.cv = fptosi float %i.cu to i32
-  %3 = sitofp i32 %i.cv to float
+  %3 = uitofp nneg i32 %i.cv to float
   %i.cw = fsub nnan float %i.cu, %3
   %i.cx = fmul nnan float %i.cw, 2.000000e+00     ; 3 uses
   %i.cy = fcmp olt float %i.cx, 1.000000e+00
@@ -1969,7 +1969,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.fm = fmul nnan float %i.fl, 3.906250e-03
   %i.fn = fmul nnan float %i.fm, 5.000000e+00     ; 3 uses
   %i.fo = fptosi float %i.fn to i32
-  %4 = sitofp i32 %i.fo to float
+  %4 = uitofp nneg i32 %i.fo to float
   %i.fp = fsub nnan float %i.fn, %4
   %i.fq = fmul nnan float %i.fp, 2.000000e+00     ; 3 uses
   %i.fr = fcmp olt float %i.fq, 1.000000e+00
@@ -2086,7 +2086,7 @@ bb.am:                                            ; preds = %bb.al
   %i.if = fmul nnan float %i.ie, 3.906250e-03
   %i.ig = fmul nnan float %i.if, 5.000000e+00     ; 4 uses
   %i.ih = fptosi float %i.ig to i32
-  %5 = sitofp i32 %i.ih to float
+  %5 = uitofp nneg i32 %i.ih to float
   %i.ii = fsub nnan float %i.ig, %5
   %i.ij = fmul nnan float %i.ii, 2.000000e+00     ; 3 uses
   %i.ik = fcmp olt float %i.ij, 1.000000e+00

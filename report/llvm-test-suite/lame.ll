@@ -150,7 +150,7 @@ bb.k:                                             ; preds = %bb.j
   %i.aj = uitofp nneg i32 %i.ai to double
   %i.ak = fdiv double %i.ah, %i.aj
   %i.al = fptosi double %i.ak to i32              ; 5 uses
-  %1 = icmp slt i32 %i.al, 16001
+  %1 = icmp samesign ult i32 %i.al, 16001
   br i1 %1, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k

@@ -205,8 +205,8 @@ _ZN2v88internal11IsSmiDoubleEd.exit.i.i:          ; preds = %bb.j
   br i1 %i.az, label %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i, label %bb.l
 
 _ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i:   ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
-  %2 = sext i32 %i.ax to i64
-  %i.ba = shl nsw i64 %2, 32
+  %2 = zext nneg i32 %i.ax to i64
+  %i.ba = shl nuw nsw i64 %2, 32
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
   %i.bc = load ptr, ptr %i.bb, align 8            ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 568

@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %_ZNK4llvm3MVT20getV
 
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit: ; preds = %bb.d, %bb.e
   %i.z = phi i32 [ %.pre, %bb.d ], [ %i.y, %bb.e ] ; 2 uses
-  %i.aa = mul nsw i32 %i.r, 3
-  %2 = srem i32 %i.aa, %i.l                       ; 2 uses
+  %i.aa = mul nuw nsw i32 %i.r, 3
+  %2 = urem i32 %i.aa, %i.l                       ; 2 uses
   %i.ab = sub nsw i32 %i.l, %2
   %i.ac = sitofp i32 %i.ab to double
   %i.ad = fdiv double %i.ac, 3.000000e+00

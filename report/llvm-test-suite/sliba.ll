@@ -205,11 +205,11 @@ bb.i:                                             ; preds = %bb.h
   store i16 13, ptr %i.bd, align 2, !tbaa !22
   %i.be = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store i64 %i.i, ptr %i.be, align 8, !tbaa !23
-  %i.bf = add nsw i64 %i.i, 1
+  %i.bf = add nuw nsw i64 %i.i, 1
   %i.bg = tail call ptr @must_malloc(i64 noundef %i.bf) #24 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 6 uses
   store ptr %i.bg, ptr %i.bh, align 8, !tbaa !23
-  %i.bi = getelementptr inbounds i8, ptr %i.bg, i64 %i.i
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.i
   store i8 0, ptr %i.bi, align 1, !tbaa !23
   %i.bj = icmp sgt i64 %i.i, 0
   br i1 %i.bj, label %.lr.ph79.preheader, label %.loopexit

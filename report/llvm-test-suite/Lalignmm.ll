@@ -205,7 +205,7 @@ scalar.ph400:                                     ; preds = %scalar.ph400.prol.l
   %.056835.i = getelementptr inbounds nuw i8, ptr %i.hj, i64 4 ; 2 uses
   %i.ox = getelementptr inbounds nuw [4 x i8], ptr %i.hj, i64 %i.oq
   %i.oy = and i64 %i.k, 2147483647                ; 9 uses
-  %i.oz = zext i32 %i.ov to i64                   ; 3 uses
+  %i.oz = zext nneg i32 %i.ov to i64              ; 3 uses
   %i.pa = getelementptr inbounds nuw [8 x i8], ptr %i.hq, i64 %i.oz
   %i.pb = getelementptr inbounds nuw [8 x i8], ptr %i.hr, i64 %i.oz
   br label %bb.o
@@ -608,7 +608,7 @@ scalar.ph404:                                     ; preds = %scalar.ph404.prol.l
   %.056835.i = getelementptr inbounds nuw i8, ptr %i.hj, i64 4 ; 2 uses
   %i.ox = getelementptr inbounds nuw [4 x i8], ptr %i.hj, i64 %i.oq
   %i.oy = and i64 %i.k, 2147483647                ; 9 uses
-  %i.oz = zext i32 %i.ov to i64                   ; 3 uses
+  %i.oz = zext nneg i32 %i.ov to i64              ; 3 uses
   %i.pa = getelementptr inbounds nuw [8 x i8], ptr %i.hq, i64 %i.oz
   %i.pb = getelementptr inbounds nuw [8 x i8], ptr %i.hr, i64 %i.oz
   br label %bb.o

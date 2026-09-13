@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.c
   %i.q = fdiv double %i.o, %i.p
   %i.r = call double @llvm.ceil.f64(double %i.q)
   %i.s = fptosi double %i.r to i32
-  %.sroa.speculated = call i32 @llvm.smax.i32(i32 %i.s, i32 1)
+  %.sroa.speculated = call i32 @llvm.umax.i32(i32 %i.s, i32 1)
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.c, %bb.i, %bb.h
@@ -607,7 +607,7 @@ declare void @llvm.assume(i1 noundef) #16
 declare void @llvm.experimental.noalias.scope.decl(metadata) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #15
+declare i32 @llvm.umax.i32(i32, i32) #15
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

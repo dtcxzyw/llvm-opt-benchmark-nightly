@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %bb.u
   %.030.lcssa.i = phi i32 [ %.141, %bb.v ], [ %i.ca, %.preheader34.loopexit.i ] ; 3 uses
   %.0.lcssa.i = phi i32 [ 0, %bb.v ], [ %i.bx, %.preheader34.loopexit.i ] ; 2 uses
   %i.by = icmp samesign ugt i32 %.030.lcssa.i, 1
-  %3 = icmp sgt i32 %i.bn, 2
+  %3 = icmp samesign ugt i32 %i.bn, 2
   %i.bz = select i1 %i.by, i1 %3, i1 false
   br i1 %i.bz, label %.preheader.i, label %._crit_edge46.i
 
@@ -251,7 +251,7 @@ bb.v:                                             ; preds = %bb.u
   %.2.lcssa.i = phi i32 [ %.145.i, %.preheader.i ], [ %i.cl, %._crit_edge.loopexit.i ] ; 2 uses
   %i.cm = add nuw nsw i32 %.02844.i, 2            ; 2 uses
   %i.cn = icmp sgt i32 %.232.lcssa.i, 1
-  %4 = icmp sle i32 %i.cm, %i.bn
+  %4 = icmp samesign ule i32 %i.cm, %i.bn
   %i.co = select i1 %i.cn, i1 %4, i1 false
   br i1 %i.co, label %.preheader.i, label %._crit_edge46.i, !llvm.loop !13
 

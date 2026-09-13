@@ -150,12 +150,12 @@ bb.g:                                             ; preds = %bb.e
   %.inv = fcmp ole float %i.bi, 1.000000e+00
   %i.bj = select i1 %.inv, float 1.000000e+00, float %i.bi
   %i.bk = fptosi float %i.bj to i32
-  %4 = sext i32 %i.bk to i64
+  %4 = zext nneg i32 %i.bk to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.h ] ; 2 uses
-  %i.bl = mul nsw i64 %indvars.iv, %4             ; 2 uses
+  %i.bl = mul nuw nsw i64 %indvars.iv, %4         ; 2 uses
   %i.bm = load ptr, ptr @the_repository, align 8, !tbaa !29
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 432
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !53 ; 3 uses
@@ -167,7 +167,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %.lr.ph
   %i.bt = load ptr, ptr %i.bo, align 8, !tbaa !68
-  %i.bu = getelementptr inbounds [8 x i8], ptr %i.bt, i64 %i.bl
+  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %i.bl
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !70
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 108
   call void @cache_tree_invalidate_path(ptr noundef nonnull %i.bo, ptr noundef nonnull %i.bw) #8

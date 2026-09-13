@@ -81,8 +81,8 @@ tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
   %i.s = uitofp nneg i32 %.tr4047 to double
   %i.t = fmul nnan double %i.s, f0x3FD898F6823131ED
   %i.u = fptosi double %i.t to i32
-  %2 = sext i32 %i.u to i64
-  %i.v = getelementptr inbounds [8 x i8], ptr %.tr46, i64 %2
+  %2 = zext nneg i32 %i.u to i64
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %.tr46, i64 %2
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !12   ; 2 uses
   %i.x = zext nneg i32 %.tr4047 to i64
   br label %bb.b

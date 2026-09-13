@@ -204,15 +204,15 @@ bb.a:
   %i.b = fcmp ogt float %spec.store.select, 1.000000e+02
   %spec.store.select2 = select i1 %i.b, float 1.000000e+02, float %spec.store.select ; 2 uses
   %i.c = fptosi float %spec.store.select2 to i32  ; 2 uses
-  %spec.store.select1 = tail call i32 @llvm.smin.i32(i32 %i.c, i32 99) ; 2 uses
-  %3 = sext i32 %spec.store.select1 to i64
-  %i.d = getelementptr inbounds i8, ptr %0, i64 %3 ; 2 uses
+  %spec.store.select1 = tail call i32 @llvm.umin.i32(i32 %i.c, i32 99) ; 2 uses
+  %3 = zext nneg i32 %spec.store.select1 to i64
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %3 ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !11
-  %4 = icmp slt i32 %i.c, 99
+  %4 = icmp samesign ult i32 %i.c, 99
   br i1 %4, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr i8, ptr %i.d, i64 1
+  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   %i.g = load i8, ptr %i.f, align 1, !tbaa !11
   %i.h = uitofp i8 %i.g to float
   br label %bb.c
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.0 = phi float [ %i.h, %bb.b ], [ 2.560000e+02, %bb.a ]
   %i.i = uitofp i8 %i.e to float                  ; 2 uses
   %i.j = fsub nnan float %.0, %i.i
-  %5 = sitofp i32 %spec.store.select1 to float
+  %5 = uitofp nneg i32 %spec.store.select1 to float
   %i.k = fsub float %spec.store.select2, %5
   %i.l = tail call float @llvm.fmuladd.f32(float %i.j, float %i.k, float %i.i)
   %i.m = fmul float %i.l, 3.906250e-03
@@ -235,7 +235,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 declare float @llvm.fmuladd.f32(float, float, float) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #12
+declare i32 @llvm.umin.i32(i32, i32) #12
 
 attributes #0 = { mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

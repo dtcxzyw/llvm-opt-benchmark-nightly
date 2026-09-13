@@ -205,15 +205,15 @@ bb.l:                                             ; preds = %bb.k
   %i.ai = tail call double @llvm.fabs.f64(double %0) ; 2 uses
   %i.aj = tail call double @llvm.fmuladd.f64(double %i.ai, double f0x3FE45F306DC9C883, double 5.000000e-01)
   %i.ak = fptosi double %i.aj to i32              ; 5 uses
-  %2 = sitofp i32 %i.ak to double                 ; 6 uses
+  %2 = uitofp nneg i32 %i.ak to double            ; 6 uses
   %i.al = fneg double %2
   %i.am = tail call double @llvm.fmuladd.f64(double %i.al, double f0x3FF921FB54400000, double %i.ai) ; 6 uses
   %i.an = fmul nnan double %2, f0x3DD0B4611A626331 ; 4 uses
-  %3 = icmp slt i32 %i.ak, 32
+  %3 = icmp samesign ult i32 %i.ak, 32
   br i1 %3, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %4 = sext i32 %i.ak to i64
+  %4 = zext nneg i32 %i.ak to i64
   %i.ao = getelementptr [4 x i8], ptr @_ZZN2v84base7ieee75412_GLOBAL__N_118__ieee754_rem_pio2EdPdE8npio2_hw, i64 %4
   %i.ap = getelementptr i8, ptr %i.ao, i64 -4
   %i.aq = load i32, ptr %i.ap, align 4
@@ -311,7 +311,7 @@ bb.v:                                             ; preds = %bb.t
   %i.cj = or disjoint i64 %i.ci, %i.cc
   %i.ck = bitcast i64 %i.cj to double             ; 2 uses
   %i.cl = fptosi double %i.ck to i32
-  %5 = sitofp i32 %i.cl to double                 ; 2 uses
+  %5 = uitofp nneg i32 %i.cl to double            ; 2 uses
   store double %5, ptr %i.e, align 16
   %i.cm = fsub double %i.ck, %5
   %i.cn = fmul double %i.cm, f0x4170000000000000  ; 2 uses

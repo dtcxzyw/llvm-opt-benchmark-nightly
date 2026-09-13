@@ -49,8 +49,8 @@ bb.d:                                             ; preds = %bb.c
   %i.s = tail call nnan double @llvm.floor.f64(double %i.r)
   %i.t = fmul nnan double %i.s, 3.000000e+00
   %i.u = fptosi double %i.t to i32
-  %2 = sext i32 %i.u to i64
-  %i.v = getelementptr inbounds i8, ptr %.077117, i64 %2
+  %2 = zext nneg i32 %i.u to i64
+  %i.v = getelementptr inbounds nuw i8, ptr %.077117, i64 %2
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
@@ -372,8 +372,8 @@ bb.d:                                             ; preds = %bb.c
   %i.x = fmul nnan double %i.w, 1.330000e+00
   %i.y = tail call double @llvm.floor.f64(double %i.x)
   %i.z = fptosi double %i.y to i32                ; 2 uses
-  %2 = sext i32 %i.z to i64
-  %i.aa = getelementptr inbounds i8, ptr %i.n, i64 %2 ; 2 uses
+  %2 = zext nneg i32 %i.z to i64
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.n, i64 %2 ; 2 uses
   %i.ab = icmp ugt ptr %i.aa, %i.m
   br i1 %i.ab, label %.loopexit, label %.preheader
 
@@ -383,8 +383,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.ad, label %.loopexit, label %.lr.ph.preheader
 
 .preheader:                                       ; preds = %bb.d
-  %3 = icmp sgt i32 %i.z, 0
-  br i1 %3, label %.lr.ph.preheader, label %._crit_edge
+  %.not86 = icmp eq i32 %i.z, 0
+  br i1 %.not86, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.thread, %.preheader
   %i.ae = phi ptr [ %i.aa, %.preheader ], [ %i.ac, %.thread ]

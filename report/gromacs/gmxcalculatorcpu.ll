@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %_ZSt5countIPmmENSt1
   %sqrt.i = tail call noundef double @llvm.sqrt.f64(double %i.ak)
   %i.al = tail call double @llvm.round.f64(double %sqrt.i)
   %i.am = fptosi double %i.al to i32              ; 3 uses
-  %i.an = shl nsw i32 %i.am, 1
-  %i.ao = mul nsw i32 %i.an, %i.am
+  %i.an = shl nuw nsw i32 %i.am, 1
+  %i.ao = mul nuw nsw i32 %i.an, %i.am
   %i.ap = trunc i64 %i.ai to i32
   %.not23 = icmp eq i32 %i.ao, %i.ap
   br i1 %.not23, label %bb.n, label %bb.i
@@ -262,7 +262,7 @@ bb.m:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.n:                                             ; preds = %bb.h
   store i64 %i.j, ptr %0, align 8, !tbaa !240
-  %11 = sext i32 %i.am to i64
+  %11 = zext nneg i32 %i.am to i64
   store i64 %11, ptr %i.a, align 8, !tbaa !241
   %i.ay = icmp ugt i64 %i.i, 9223372036854775804
   br i1 %i.ay, label %bb.o, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i

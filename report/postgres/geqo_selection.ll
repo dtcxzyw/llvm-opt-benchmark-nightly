@@ -111,14 +111,14 @@ linear_rand.exit24:                               ; preds = %bb.j
 .loopexit:                                        ; preds = %linear_rand.exit24, %linear_rand.exit22
   %.1 = phi i32 [ %i.ai, %linear_rand.exit22 ], [ %i.bb, %linear_rand.exit24 ]
   %i.bd = load ptr, ptr %3, align 8
-  %5 = sext i32 %i.ah to i64
-  %i.be = getelementptr inbounds [16 x i8], ptr %i.bd, i64 %5
+  %5 = zext nneg i32 %i.ah to i64
+  %i.be = getelementptr inbounds nuw [16 x i8], ptr %i.bd, i64 %5
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.bg = load i32, ptr %i.bf, align 4
   tail call void @geqo_copy(ptr noundef %0, ptr noundef %1, ptr noundef %i.be, i32 noundef %i.bg) #4
   %i.bh = load ptr, ptr %3, align 8
-  %6 = sext i32 %.1 to i64
-  %i.bi = getelementptr inbounds [16 x i8], ptr %i.bh, i64 %6
+  %6 = zext nneg i32 %.1 to i64
+  %i.bi = getelementptr inbounds nuw [16 x i8], ptr %i.bh, i64 %6
   %i.bj = load i32, ptr %i.bf, align 4
   tail call void @geqo_copy(ptr noundef %0, ptr noundef %2, ptr noundef %i.bi, i32 noundef %i.bj) #4
   ret void

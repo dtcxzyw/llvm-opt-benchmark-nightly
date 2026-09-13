@@ -205,12 +205,12 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax, %bb.
   store float %i.nm, ptr %i.tw, align 4, !tbaa !51
   %i.nn = fmul float %i.nk, 2.001000e+03
   %i.no = fptosi float %i.nn to i32               ; 2 uses
-  %49 = icmp slt i32 %i.no, 2001
+  %49 = icmp samesign ult i32 %i.no, 2001
   br i1 %49, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %.noexc90
-  %50 = sext i32 %i.no to i64
-  %i.np = getelementptr inbounds [4 x i8], ptr %i.jy, i64 %50 ; 2 uses
+  %50 = zext nneg i32 %i.no to i64
+  %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.jy, i64 %50 ; 2 uses
   %i.nq = load i32, ptr %i.np, align 4, !tbaa !11
   %i.nr = add nsw i32 %i.nq, 1
   store i32 %i.nr, ptr %i.np, align 4, !tbaa !11
@@ -273,12 +273,12 @@ bb.bb:                                            ; preds = %bb.ba, %.noexc90
   store float %i.pk, ptr %i.tw, align 4, !tbaa !51
   %i.pl = fmul float %i.pi, 2.001000e+03
   %i.pm = fptosi float %i.pl to i32               ; 2 uses
-  %51 = icmp slt i32 %i.pm, 2001
+  %51 = icmp samesign ult i32 %i.pm, 2001
   br i1 %51, label %bb.bc, label %.lr.ph219.2.i.i
 
 bb.bc:                                            ; preds = %.noexc92
-  %52 = sext i32 %i.pm to i64
-  %i.pn = getelementptr inbounds [4 x i8], ptr %i.jy, i64 %52 ; 2 uses
+  %52 = zext nneg i32 %i.pm to i64
+  %i.pn = getelementptr inbounds nuw [4 x i8], ptr %i.jy, i64 %52 ; 2 uses
   %i.po = load i32, ptr %i.pn, align 4, !tbaa !11
   %i.pp = add nsw i32 %i.po, 1
   store i32 %i.pp, ptr %i.pn, align 4, !tbaa !11
@@ -340,12 +340,12 @@ bb.bc:                                            ; preds = %.noexc92
   %i.ri = fadd float %i.rh, %i.rg
   %i.rj = fmul float %i.rg, 2.001000e+03
   %i.rk = fptosi float %i.rj to i32               ; 2 uses
-  %53 = icmp slt i32 %i.rk, 2001
+  %53 = icmp samesign ult i32 %i.rk, 2001
   br i1 %53, label %bb.bd, label %.loopexit.2.i.i
 
 bb.bd:                                            ; preds = %.noexc94
-  %54 = sext i32 %i.rk to i64
-  %i.rl = getelementptr inbounds [4 x i8], ptr %i.jy, i64 %54 ; 2 uses
+  %54 = zext nneg i32 %i.rk to i64
+  %i.rl = getelementptr inbounds nuw [4 x i8], ptr %i.jy, i64 %54 ; 2 uses
   %i.rm = load i32, ptr %i.rl, align 4, !tbaa !11
   %i.rn = add nsw i32 %i.rm, 1
   store i32 %i.rn, ptr %i.rl, align 4, !tbaa !11
@@ -491,12 +491,12 @@ bb.bd:                                            ; preds = %.noexc94
   store float %i.vq, ptr %i.tw, align 4, !tbaa !51
   %i.vr = fmul float %i.vo, 2.001000e+03
   %i.vs = fptosi float %i.vr to i32               ; 2 uses
-  %55 = icmp slt i32 %i.vs, 2001
+  %55 = icmp samesign ult i32 %i.vs, 2001
   br i1 %55, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %.noexc96
-  %56 = sext i32 %i.vs to i64
-  %i.vt = getelementptr inbounds [4 x i8], ptr %i.jy, i64 %56 ; 2 uses
+  %56 = zext nneg i32 %i.vs to i64
+  %i.vt = getelementptr inbounds nuw [4 x i8], ptr %i.jy, i64 %56 ; 2 uses
   %i.vu = load i32, ptr %i.vt, align 4, !tbaa !11
   %i.vv = add nsw i32 %i.vu, 1
   store i32 %i.vv, ptr %i.vt, align 4, !tbaa !11
@@ -559,12 +559,12 @@ bb.bf:                                            ; preds = %bb.be, %.noexc96
   store float %i.xo, ptr %i.tw, align 4, !tbaa !51
   %i.xp = fmul float %i.xm, 2.001000e+03
   %i.xq = fptosi float %i.xp to i32               ; 2 uses
-  %57 = icmp slt i32 %i.xq, 2001
+  %57 = icmp samesign ult i32 %i.xq, 2001
   br i1 %57, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %.noexc98
-  %58 = sext i32 %i.xq to i64
-  %i.xr = getelementptr inbounds [4 x i8], ptr %i.jy, i64 %58 ; 2 uses
+  %58 = zext nneg i32 %i.xq to i64
+  %i.xr = getelementptr inbounds nuw [4 x i8], ptr %i.jy, i64 %58 ; 2 uses
   %i.xs = load i32, ptr %i.xr, align 4, !tbaa !11
   %i.xt = add nsw i32 %i.xs, 1
   store i32 %i.xt, ptr %i.xr, align 4, !tbaa !11
@@ -627,12 +627,12 @@ bb.bh:                                            ; preds = %bb.bg, %.noexc98
   store float %i.zm, ptr %i.tw, align 4, !tbaa !51
   %i.zn = fmul float %i.zk, 2.001000e+03
   %i.zo = fptosi float %i.zn to i32               ; 2 uses
-  %59 = icmp slt i32 %i.zo, 2001
+  %59 = icmp samesign ult i32 %i.zo, 2001
   br i1 %59, label %bb.bi, label %.lr.ph219.1.i.i
 
 bb.bi:                                            ; preds = %.noexc100
-  %60 = sext i32 %i.zo to i64
-  %i.zp = getelementptr inbounds [4 x i8], ptr %i.jy, i64 %60 ; 2 uses
+  %60 = zext nneg i32 %i.zo to i64
+  %i.zp = getelementptr inbounds nuw [4 x i8], ptr %i.jy, i64 %60 ; 2 uses
   %i.zq = load i32, ptr %i.zp, align 4, !tbaa !11
   %i.zr = add nsw i32 %i.zq, 1
   store i32 %i.zr, ptr %i.zp, align 4, !tbaa !11

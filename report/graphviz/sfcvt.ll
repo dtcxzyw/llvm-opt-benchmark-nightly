@@ -170,7 +170,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.lr.ph150
   %i.bh = fmul double %.7149, 1.000000e+01        ; 3 uses
   %i.bi = fptosi double %i.bh to i32              ; 3 uses
-  %5 = icmp slt i32 %i.bi, 10
+  %5 = icmp ult i32 %i.bi, 10
   br i1 %5, label %bb.l, label %.preheader139.preheader
 
 .preheader139.preheader:                          ; preds = %bb.k
@@ -182,11 +182,11 @@ bb.k:                                             ; preds = %.lr.ph150
   br label %.loopexit140
 
 bb.l:                                             ; preds = %bb.k
-  %i.bl = trunc i32 %i.bi to i8
-  %6 = add i8 %i.bl, 48
+  %i.bl = trunc nuw nsw i32 %i.bi to i8
+  %6 = or disjoint i8 %i.bl, 48
   %i.bm = getelementptr inbounds nuw i8, ptr %.199148, i64 1
   store i8 %6, ptr %.199148, align 1, !tbaa !18
-  %7 = sitofp i32 %i.bi to double
+  %7 = uitofp nneg i32 %i.bi to double
   %i.bn = fsub double %i.bh, %7
   br label %.loopexit140
 

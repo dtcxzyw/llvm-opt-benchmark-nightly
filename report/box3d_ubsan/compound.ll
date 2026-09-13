@@ -204,7 +204,7 @@ bb.bm:                                            ; preds = %b3MeshMap_bucket_co
   %i.io = call fastcc zeroext i1 @b3MeshMap_rehash(ptr noundef nonnull %9, i64 noundef %.0.i.i437) ; 0 uses
   br label %.lr.ph2209
 
-.lr.ph2209:                                       ; preds = %bb.bm, %b3MeshMap_bucket_count.exit.i
+.lr.ph2209:                                       ; preds = %b3MeshMap_bucket_count.exit.i, %bb.bm
   %i.ip = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 3 uses
@@ -430,7 +430,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.mv = extractvalue { i32, i1 } %i.mt, 0, !nosanitize !9
   br label %bb.cc
 
-bb.cc:                                            ; preds = %bb.bv, %bb.cb
+bb.cc:                                            ; preds = %bb.cb, %bb.bv
   %.7.us.us.us = phi i32 [ %i.mv, %bb.cb ], [ %.61908.us.us.us, %bb.bv ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   %indvars.iv.next3760 = add nuw nsw i64 %indvars.iv3759, 1 ; 2 uses
