@@ -202,8 +202,8 @@ bb.g:                                             ; preds = %bb.b
 
 .thread1637:                                      ; preds = %bb.f, %bb.d, %.thread
   %.11452 = phi ptr [ %i.be, %.thread ], [ %i.aa, %bb.d ], [ %i.ag, %bb.f ] ; 12 uses
-  %i.bs = icmp eq i8 %4, 33                       ; 7 uses
-  %i.bt = icmp eq i8 %4, 37                       ; 7 uses
+  %i.bs = icmp eq i8 %4, 33                       ; 3 uses
+  %i.bt = icmp eq i8 %4, 37                       ; 3 uses
   switch i8 %4, label %bb.i [
     i8 37, label %bb.h
     i8 33, label %bb.h
@@ -216,7 +216,7 @@ bb.h:                                             ; preds = %.thread1637, %.thre
 
 bb.i:                                             ; preds = %.thread1637, %bb.h
   %.01432 = phi i8 [ %i.bv, %bb.h ], [ 0, %.thread1637 ] ; 7 uses
-  %i.bw = icmp eq i8 %4, 5                        ; 7 uses
+  %i.bw = icmp eq i8 %4, 5                        ; 3 uses
   switch i8 %4, label %.thread1652 [
     i8 49, label %bb.j
     i8 37, label %bb.j
@@ -326,11 +326,11 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not1505, label %.thread1652, label %.thread1667
 
 .thread1652:                                      ; preds = %bb.i, %bb.p, %bb.o, %bb.l, %bb.k, %bb.j, %bb.t
-  %i.dn = phi i1 [ %i.cl, %bb.t ], [ %i.bt, %bb.j ], [ %i.bt, %bb.k ], [ %i.bt, %bb.l ], [ %i.bt, %bb.o ], [ %i.bt, %bb.p ], [ %i.bt, %bb.i ] ; 10 uses
-  %i.do = phi i1 [ %i.ck, %bb.t ], [ %i.bs, %bb.j ], [ %i.bs, %bb.k ], [ %i.bs, %bb.l ], [ %i.bs, %bb.o ], [ %i.bs, %bb.p ], [ %i.bs, %bb.i ] ; 3 uses
+  %i.dn = phi i1 [ %i.cl, %bb.t ], [ %i.bt, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ true, %bb.o ], [ false, %bb.p ], [ %i.bt, %bb.i ] ; 10 uses
+  %i.do = phi i1 [ %i.ck, %bb.t ], [ %i.bs, %bb.j ], [ true, %bb.k ], [ false, %bb.l ], [ false, %bb.o ], [ false, %bb.p ], [ %i.bs, %bb.i ] ; 3 uses
   %.11452164216461660 = phi ptr [ %.1145216421647, %bb.t ], [ %.11452, %bb.j ], [ %.11452, %bb.k ], [ %.11452, %bb.l ], [ %.11452, %bb.o ], [ %.11452, %bb.p ], [ %.11452, %bb.i ] ; 10 uses
   %.0143216491658 = phi i8 [ %.014321648, %bb.t ], [ %.01432, %bb.j ], [ %.01432, %bb.k ], [ %.01432, %bb.l ], [ %.01432, %bb.o ], [ %.01432, %bb.p ], [ %.01432, %bb.i ] ; 10 uses
-  %i.dp = phi i1 [ %i.cj, %bb.t ], [ %i.bw, %bb.j ], [ %i.bw, %bb.k ], [ %i.bw, %bb.l ], [ %i.bw, %bb.o ], [ %i.bw, %bb.p ], [ %i.bw, %bb.i ] ; 9 uses
+  %i.dp = phi i1 [ %i.cj, %bb.t ], [ %i.bw, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.o ], [ true, %bb.p ], [ %i.bw, %bb.i ] ; 9 uses
   %i.dq = getelementptr i8, ptr %6, i64 16
   %i.dr = load ptr, ptr %i.dq, align 8
   %i.ds = getelementptr i8, ptr %.11452164216461660, i64 24

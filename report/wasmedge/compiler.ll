@@ -205,7 +205,7 @@ scalar.ph2291.prol:                               ; preds = %scalar.ph2291.prehe
   %i.be = inttoptr i64 %i.bd to ptr
   %i.bf = getelementptr [8 x i8], ptr %i.am, i64 %i.bb
   store ptr %i.be, ptr %i.bf, align 8, !tbaa !100
-  %i.bg = add nuw nsw i64 %.07461800.prol, 1      ; 2 uses
+  %i.bg = add nuw i64 %.07461800.prol, 1          ; 2 uses
   %prol.iter2434.next = add i64 %prol.iter2434, 1 ; 2 uses
   %prol.iter2434.cmp.not = icmp eq i64 %prol.iter2434.next, %xtraiter2432
   br i1 %prol.iter2434.cmp.not, label %scalar.ph2291.prol.loopexit, label %scalar.ph2291.prol, !llvm.loop !1586
@@ -264,7 +264,7 @@ scalar.ph2291:                                    ; preds = %scalar.ph2291.prol.
   %i.ck = inttoptr i64 %i.cj to ptr
   %i.cl = getelementptr [8 x i8], ptr %i.am, i64 %i.ch
   store ptr %i.ck, ptr %i.cl, align 8, !tbaa !100
-  %i.cm = add nuw nsw i64 %.07461800, 4           ; 2 uses
+  %i.cm = add nuw i64 %.07461800, 4               ; 2 uses
   %exitcond1847.not.3 = icmp eq i64 %i.cm, %i.ab
   br i1 %exitcond1847.not.3, label %..loopexit1777_crit_edge, label %scalar.ph2291, !llvm.loop !1590
 
@@ -667,7 +667,7 @@ scalar.ph2271.prol:                               ; preds = %scalar.ph2271.prehe
   %i.lw = inttoptr i64 %i.lv to ptr
   %i.lx = getelementptr [8 x i8], ptr %i.le, i64 %i.lt
   store ptr %i.lw, ptr %i.lx, align 8, !tbaa !100
-  %i.ly = add nuw nsw i64 %.07511792.prol, 1      ; 2 uses
+  %i.ly = add nuw i64 %.07511792.prol, 1          ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %scalar.ph2271.prol.loopexit, label %scalar.ph2271.prol, !llvm.loop !1638
@@ -726,7 +726,7 @@ scalar.ph2271:                                    ; preds = %scalar.ph2271.prol.
   %i.nc = inttoptr i64 %i.nb to ptr
   %i.nd = getelementptr [8 x i8], ptr %i.le, i64 %i.mz
   store ptr %i.nc, ptr %i.nd, align 8, !tbaa !100
-  %i.ne = add nuw nsw i64 %.07511792, 4           ; 2 uses
+  %i.ne = add nuw i64 %.07511792, 4               ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.ne, %i.kw
   br i1 %exitcond.not.3, label %..loopexit1785_crit_edge, label %scalar.ph2271, !llvm.loop !1642
 

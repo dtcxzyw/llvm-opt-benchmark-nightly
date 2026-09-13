@@ -190,7 +190,7 @@ _ZNSt6vectorIP9tmpi_req_SaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %bb
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIP9tmpi_req_SaIS1_EEC2EmRKS2_.exit.thread.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIP9tmpi_req_SaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
-  %i.ae = mul nuw nsw i64 %i.ab, 48               ; 3 uses
+  %i.ae = mul i64 %i.ab, 48                       ; 3 uses
   %i.af = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ae) #20
           to label %.noexc13 unwind label %bb.l   ; 5 uses
 
@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIP9tmpi
   store ptr %i.ag, ptr %i.ah, align 8, !tbaa !76
   store ptr null, ptr %i.af, align 8, !tbaa !125
   %i.ai = getelementptr i8, ptr %i.af, i64 8
-  %.idx.i.i.i.i.i.i.i = add nsw i64 %i.ae, -8
+  %.idx.i.i.i.i.i.i.i = add i64 %i.ae, -8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !125
   %i.aj = getelementptr i8, ptr %i.af, i64 %i.ae
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !73  ; 2 uses
@@ -237,7 +237,7 @@ _ZNSt6vectorI12tmpi_status_SaIS0_EE17_S_check_init_lenEmRKS1_.exit.i: ; preds = 
   br i1 %.not.i.i.i.i14, label %.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorI12tmpi_status_SaIS0_EE17_S_check_init_lenEmRKS1_.exit.i
-  %i.ar = mul nuw nsw i64 %i.ao, 192              ; 3 uses
+  %i.ar = mul i64 %i.ao, 192                      ; 3 uses
   %i.as = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ar) #20
           to label %.noexc18 unwind label %bb.m   ; 14 uses
 
@@ -248,7 +248,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorI12tmpi
   store ptr %i.at, ptr %i.au, align 8, !tbaa !78
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.as, i8 0, i64 32, i1 false)
   %i.av = getelementptr i8, ptr %i.as, i64 %i.ar  ; 3 uses
-  %i.aw = add nsw i64 %i.ar, -64                  ; 2 uses
+  %i.aw = add i64 %i.ar, -64                      ; 2 uses
   %i.ax = lshr exact i64 %i.aw, 5
   %i.ay = and i64 %i.ax, 6
   %i.az = getelementptr inbounds nuw i8, ptr %i.as, i64 32

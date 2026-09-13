@@ -204,7 +204,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.kk = call fast float @llvm.vector.reduce.fmul.v2f32(float 1.000000e+00, <2 x float> %i.kj)
   %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.hl, i64 %.03760.i
   store float %i.kk, ptr %i.kl, align 4, !tbaa !43
-  %i.km = add nuw nsw i64 %.03760.i, 1            ; 2 uses
+  %i.km = add nuw i64 %.03760.i, 1                ; 2 uses
   %i.kn = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %i.km ; 2 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 8
   %i.kp = load <2 x float>, ptr %i.ko, align 4, !tbaa !43
@@ -213,7 +213,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.ks = call fast float @llvm.vector.reduce.fmul.v2f32(float 1.000000e+00, <2 x float> %i.kr)
   %i.kt = getelementptr inbounds nuw [4 x i8], ptr %i.hl, i64 %i.km
   store float %i.ks, ptr %i.kt, align 4, !tbaa !43
-  %i.ku = add nuw nsw i64 %.03760.i, 2            ; 2 uses
+  %i.ku = add nuw i64 %.03760.i, 2                ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.ku, %i.hi
   br i1 %exitcond.not.i.1, label %.lr.ph70.i.preheader, label %scalar.ph, !llvm.loop !79
 
@@ -382,7 +382,7 @@ _ZNSt6vectorImSaImEE9push_backERKm.exit.i:        ; preds = %_ZNSt6vectorImSaImE
   %.sroa.21.2 = phi ptr [ %i.nd, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %.sroa.21.1, %bb.aj ], [ %.sroa.21.1, %._crit_edge.i ] ; 2 uses
   %i.ne = phi ptr [ %i.mx, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %i.kw, %bb.aj ], [ %i.kw, %._crit_edge.i ]
   %i.nf = phi ptr [ %i.na, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %i.mq, %bb.aj ], [ %i.kx, %._crit_edge.i ]
-  %i.ng = add nuw nsw i64 %storemerge69.i, 1      ; 2 uses
+  %i.ng = add nuw i64 %storemerge69.i, 1          ; 2 uses
   %exitcond78.not.i = icmp eq i64 %i.ng, %i.hi
   br i1 %exitcond78.not.i, label %._crit_edge71.i, label %.lr.ph70.i, !llvm.loop !81
 

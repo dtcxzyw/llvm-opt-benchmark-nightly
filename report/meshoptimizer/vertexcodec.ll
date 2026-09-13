@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.o
   br i1 %.not.i25.i.i, label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i, label %.lr.ph.preheader.i20.i.i
 
 .lr.ph.preheader.i20.i.i:                         ; preds = %bb.q
-  %i.lz = and i64 %i.lf, -2                       ; 2 uses
+  %i.lz = and i64 %i.lf, 9223372036854775806      ; 2 uses
   %i.ma = getelementptr inbounds nuw i8, ptr %i.kq, i64 %i.lz ; 2 uses
   %i.mb = or i64 %i.lf, 1
   %i.mc = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.mb
@@ -256,7 +256,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %.not.i25.i.i, label %_ZN7meshoptL12encodeDeltasEPhPKhmmS2_mi.exit.thread.i, label %.lr.ph.preheader.i26.i.i
 
 .lr.ph.preheader.i26.i.i:                         ; preds = %bb.r
-  %i.ne = and i64 %i.lf, -4                       ; 2 uses
+  %i.ne = and i64 %i.lf, 9223372036854775804      ; 2 uses
   %i.nf = getelementptr inbounds nuw i8, ptr %i.kq, i64 %i.ne ; 2 uses
   %i.ng = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ne
   %i.nh = load i32, ptr %i.ng, align 4            ; 2 uses
@@ -659,7 +659,7 @@ _ZN7meshoptL15estimateChannelEPKhmmmmmii.exit:    ; preds = %.preheader.i.1, %.p
   %i.zf = lshr exact i64 %.091171, 2
   %i.zg = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.zf
   store i8 %i.ze, ptr %i.zg, align 1, !tbaa !9
-  %i.zh = add i64 %.091171, 4                     ; 2 uses
+  %i.zh = add nuw nsw i64 %.091171, 4             ; 2 uses
   %i.zi = icmp ult i64 %i.zh, %4
   br i1 %i.zi, label %bb.e, label %.loopexit145, !llvm.loop !25
 

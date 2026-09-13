@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph1508, %bb.bi
   %.02171504 = phi ptr [ %i.x, %.lr.ph1508 ], [ %.1218, %bb.bi ] ; 7 uses
   %.02191503 = phi ptr [ %i.v, %.lr.ph1508 ], [ %spec.select, %bb.bi ] ; 7 uses
   %.02301500 = phi ptr [ %i.n, %.lr.ph1508 ], [ %.1231, %bb.bi ] ; 10 uses
-  %storemerge1499 = phi i64 [ 0, %.lr.ph1508 ], [ %i.aco, %bb.bi ] ; 6 uses
+  %storemerge1499 = phi i64 [ 0, %.lr.ph1508 ], [ %i.aco, %bb.bi ] ; 5 uses
   %.023015002148 = ptrtoaddr ptr %.02301500 to i64
   %.021915032129 = ptrtoaddr ptr %.02191503 to i64
   %.021715042110 = ptrtoaddr ptr %.02171504 to i64
@@ -355,12 +355,13 @@ _ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit: ; preds = %.lr.ph
 
 .preheader.i:                                     ; preds = %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit
   %.not.not26.i = icmp sgt i64 %.fr.i, 0
+  %43 = add nsw i64 %storemerge1499, 1            ; 4 uses
   br i1 %.not.not26.i, label %.preheader.split.us.preheader.i, label %.preheader.split.i
 
 .preheader.split.us.preheader.i:                  ; preds = %.preheader.i
-  %43 = add nsw i64 %i.hx, -1                     ; 2 uses
-  %i.jy = add nsw i64 %storemerge1499, 1          ; 2 uses
-  %i.jz = icmp slt i64 %i.jy, %i.hx
+  %smax.i = call i64 @llvm.smax.i64(i64 %i.hx, i64 %43)
+  %i.jy = add nsw i64 %smax.i, -1                 ; 2 uses
+  %i.jz = icmp slt i64 %43, %i.hx
   br i1 %i.jz, label %.lr.ph.us.i.preheader, label %_ZNK6casadi10Integrator9next_stopExPKd.exit
 
 .lr.ph.us.i.preheader:                            ; preds = %.preheader.split.us.preheader.i
@@ -375,7 +376,7 @@ _ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit: ; preds = %.lr.ph
 
 .lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader, %.preheader.split.us.i.loopexit
   %i.kb = phi double [ %i.ke, %.preheader.split.us.i.loopexit ], [ %.pre, %.lr.ph.us.i.preheader ]
-  %i.kc = phi i64 [ %i.ka, %.preheader.split.us.i.loopexit ], [ %i.jy, %.lr.ph.us.i.preheader ] ; 2 uses
+  %i.kc = phi i64 [ %i.ka, %.preheader.split.us.i.loopexit ], [ %43, %.lr.ph.us.i.preheader ] ; 2 uses
   %.018.us.i1497 = phi ptr [ %i.kd, %.preheader.split.us.i.loopexit ], [ %.02301500, %.lr.ph.us.i.preheader ] ; 2 uses
   %.020.us.i1496 = phi i64 [ %i.kc, %.preheader.split.us.i.loopexit ], [ %storemerge1499, %.lr.ph.us.i.preheader ] ; 2 uses
   %i.kd = getelementptr inbounds nuw [8 x i8], ptr %.018.us.i1497, i64 %.fr.i ; 3 uses
@@ -401,8 +402,7 @@ _ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit: ; preds = %.lr.ph
   br i1 %i.km, label %_ZNK6casadi10Integrator9next_stopExPKd.exit, label %.lr.ph36.i, !llvm.loop !5
 
 .preheader.split.i:                               ; preds = %.preheader.i
-  %44 = add nsw i64 %storemerge1499, 1
-  %i.kn = icmp slt i64 %44, %i.hx
+  %i.kn = icmp slt i64 %43, %i.hx
   %i.ko = add nsw i64 %i.hx, -1
   %spec.select.i = select i1 %i.kn, i64 %i.ko, i64 %storemerge1499
   br label %_ZNK6casadi10Integrator9next_stopExPKd.exit
@@ -412,7 +412,7 @@ _ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread: ; preds = 
   br label %_ZNK6casadi10Integrator9next_stopExPKd.exit
 
 _ZNK6casadi10Integrator9next_stopExPKd.exit:      ; preds = %.lr.ph.us.i, %.preheader.split.us.i.loopexit, %.lr.ph2047, %.preheader.split.us.preheader.i, %.preheader.split.i, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread
-  %.2.i = phi i64 [ %i.kp, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread ], [ %spec.select.i, %.preheader.split.i ], [ %.020.us.i1496, %.lr.ph2047 ], [ %43, %.preheader.split.us.preheader.i ], [ %.020.us.i1496, %.lr.ph.us.i ], [ %43, %.preheader.split.us.i.loopexit ] ; 2 uses
+  %.2.i = phi i64 [ %i.kp, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread ], [ %spec.select.i, %.preheader.split.i ], [ %.020.us.i1496, %.lr.ph2047 ], [ %i.jy, %.preheader.split.us.preheader.i ], [ %.020.us.i1496, %.lr.ph.us.i ], [ %i.jy, %.preheader.split.us.i.loopexit ] ; 2 uses
   %i.kq = getelementptr inbounds nuw [8 x i8], ptr %i.hy, i64 %.2.i
   %i.kr = load double, ptr %i.kq, align 8, !tbaa !58 ; 2 uses
   store double %i.kr, ptr %i.gs, align 8, !tbaa !205

@@ -205,7 +205,7 @@ _ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i148.i: ; preds = %bb.p
   br i1 %.not.i.i.i.i149.i, label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit163.i, label %bb.r
 
 bb.r:                                             ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i148.i
-  %i.br = mul nuw nsw i64 %i.bo, 1600             ; 2 uses
+  %i.br = mul nsw i64 %i.bo, 1600                 ; 2 uses
   %i.bs = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.br) #21
           to label %bb.s unwind label %bb.af      ; 5 uses
 
@@ -215,7 +215,7 @@ bb.s:                                             ; preds = %bb.r
   %i.bu = getelementptr i8, ptr %i.bs, i64 8
   %.idx.i.i.i.i.i.i.i150.i = add nsw i64 %i.br, -8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bu, i8 0, i64 %.idx.i.i.i.i.i.i.i150.i, i1 false), !tbaa !56
-  %i.bv = mul nuw nsw i64 %i.bo, 800              ; 2 uses
+  %i.bv = mul nsw i64 %i.bo, 800                  ; 2 uses
   %i.bw = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bv) #21
           to label %.noexc162.i unwind label %_ZNSt6vectorIiSaIiEED2Ev.exit261.thread.i ; 4 uses
 
@@ -618,7 +618,7 @@ _ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %_ZNSt10uniqu
   br i1 %.not.i.i.i.i.i, label %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %i.ad = mul nuw nsw i64 %i.aa, 1600             ; 3 uses
+  %i.ad = mul nsw i64 %i.aa, 1600                 ; 3 uses
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #21
           to label %bb.r unwind label %bb.aa      ; 5 uses
 
@@ -641,7 +641,7 @@ bb.r:                                             ; preds = %bb.q
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !98
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
-  %i.ak = mul nuw nsw i64 %i.aa, 800              ; 3 uses
+  %i.ak = mul nsw i64 %i.aa, 800                  ; 3 uses
   %i.al = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #21
           to label %.noexc100.i unwind label %bb.ab ; 6 uses
 
@@ -1044,7 +1044,7 @@ _ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_ZNSt10unique_
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIfSaIfEEC2EmRKS0_.exit, label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.n = mul nuw nsw i64 %i.k, 1600               ; 2 uses
+  %i.n = mul nsw i64 %i.k, 1600                   ; 2 uses
   %i.o = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #21
           to label %bb.e unwind label %bb.i       ; 5 uses
 
@@ -1054,7 +1054,7 @@ bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr i8, ptr %i.o, i64 8
   %.idx.i.i.i.i.i.i.i = add nsw i64 %i.n, -8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.q, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !56
-  %i.r = mul nuw nsw i64 %i.k, 800                ; 2 uses
+  %i.r = mul nsw i64 %i.k, 800                    ; 2 uses
   %i.s = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #21
           to label %.noexc127 unwind label %_ZNSt6vectorIfSaIfEED2Ev.exit217.thread ; 4 uses
 
