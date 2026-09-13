@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ag = load ptr, ptr %i.a, align 8, !tbaa !106, !noalias !2293
   %.sroa.0.0.copyload.i.i19 = load i64, ptr %0, align 8, !tbaa !65, !noalias !2293
   call void @_ZNK4llvm6object10ObjectFile14getSymbolValueENS0_11DataRefImplE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected.157") align 8 %8, ptr noundef nonnull align 8 dereferenceable(48) %i.ag, i64 %.sroa.0.0.copyload.i.i19) #27
-  %i.ah = load i64, ptr %8, align 8
+  %i.ah = load i64, ptr %8, align 8, !tbaa !72
   br label %_ZN4llvm8ExpectedImED2Ev.exit
 
 _ZN4llvm8ExpectedImED2Ev.exit:                    ; preds = %bb.d, %bb.c

@@ -205,7 +205,7 @@ _ZN4llvm8ExpectedImED2Ev.exit104:                 ; preds = %_ZN4llvm8ExpectedIN
   %i.iy = load ptr, ptr %i.ix, align 8, !tbaa !132, !noalias !737
   %.sroa.0.0.copyload.i.i101 = load i64, ptr %i.iw, align 8, !tbaa !81, !noalias !737
   call void @_ZNK4llvm6object10ObjectFile14getSymbolValueENS0_11DataRefImplE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected.449") align 8 %14, ptr noundef nonnull align 8 dereferenceable(48) %i.iy, i64 %.sroa.0.0.copyload.i.i101) #25
-  %i.iz = load i64, ptr %14, align 8
+  %i.iz = load i64, ptr %14, align 8, !tbaa !76
   %i.ja = icmp eq i64 %i.iz, %i.fo
   br i1 %i.ja, label %.backedge, label %_ZN4llvm8ExpectedINS_6object16content_iteratorINS1_10SectionRefEEEED2Ev.exit114
 
@@ -217,11 +217,11 @@ _ZN4llvm8ExpectedImED2Ev.exit104:                 ; preds = %_ZN4llvm8ExpectedIN
 _ZN4llvm8ExpectedINS_6object16content_iteratorINS1_10SectionRefEEEED2Ev.exit114: ; preds = %_ZN4llvm8ExpectedImED2Ev.exit104
   %i.jb = getelementptr inbounds nuw i8, ptr %i.iw, i64 8 ; 2 uses
   %.pre256.a = load ptr, ptr %i.jb, align 8, !tbaa !132, !noalias !738 ; 2 uses
+  %.sroa.0.0.copyload.i.i105 = load i64, ptr %i.iw, align 8, !tbaa !81, !noalias !738
   %.pre261 = load ptr, ptr %.pre256.a, align 8, !tbaa !35, !noalias !738
   %.phi.trans.insert262 = getelementptr inbounds nuw i8, ptr %.pre261, i64 128
   %.pre263 = load ptr, ptr %.phi.trans.insert262, align 8, !noalias !738
-  %.sroa.0.0.copyload.i.i105.pre = load i64, ptr %i.iw, align 8, !tbaa !81, !noalias !738
-  call void %.pre263(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected.456") align 8 %15, ptr noundef nonnull align 8 dereferenceable(48) %.pre256.a, i64 %.sroa.0.0.copyload.i.i105.pre) #25, !inline_history !711
+  call void %.pre263(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected.456") align 8 %15, ptr noundef nonnull align 8 dereferenceable(48) %.pre256.a, i64 %.sroa.0.0.copyload.i.i105) #25, !inline_history !711
   %.sroa.2.0.copyload.i108 = load ptr, ptr %.sroa.2.0..sroa_idx.i107, align 8, !tbaa !123
   %i.jc = icmp eq ptr %.sroa.2.0.copyload.i94, %.sroa.2.0.copyload.i108
   %.sroa.0.0.copyload.i106 = load i64, ptr %15, align 8
