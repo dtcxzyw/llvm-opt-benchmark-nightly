@@ -1,0 +1,712 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index c3cf32dd1be03..6d90b1b9ba768 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -227,6 +227,18 @@ static cl::opt<unsigned> MaxLoopGuardCollectionDepth(
+     "scalar-evolution-max-loop-guard-collection-depth", cl::Hidden,
+     cl::desc("Maximum depth for recursive loop guard collection"), cl::init(1));
+ 
++static cl::opt<unsigned> MaxGuardDomTreeSteps(
++    "scalar-evolution-max-guard-dom-tree-steps", cl::Hidden,
++    cl::desc("Maximum number of dominator tree steps taken to find guarding "
++             "conditions, once the unique-predecessor climb ran out"),
++    cl::init(8));
++
++static cl::opt<unsigned> MaxGuardProofs(
++    "scalar-evolution-max-guard-proofs", cl::Hidden,
++    cl::desc("Maximum number of dominating branch conditions used for "
++             "implication proofs after the unique-predecessor climb"),
++    cl::init(1));
++
+ static cl::opt<bool>
+ ClassifyExpressions("scalar-evolution-classify-expressions",
+     cl::Hidden, cl::init(true),
+@@ -2498,7 +2510,7 @@ static SCEV::NoWrapFlags StrengthenNoWrapFlags(ScalarEvolution *SE,
+ 
+     // (A <opcode> C) --> (A <opcode> C)<nsw> if the op doesn't sign overflow.
+     if (!(SignOrUnsignWrap & SCEV::FlagNSW)) {
+-      auto NSWRegion = ConstantRange::makeGuaranteedNoWrapRegion(
++      auto NSWRegion = ConstantRange::makeExactNoWrapRegion(
+           Opcode, C, OBO::NoSignedWrap);
+       if (NSWRegion.contains(SE->getSignedRange(Ops[1])))
+         Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNSW);
+@@ -2506,7 +2518,7 @@ static SCEV::NoWrapFlags StrengthenNoWrapFlags(ScalarEvolution *SE,
+ 
+     // (A <opcode> C) --> (A <opcode> C)<nuw> if the op doesn't unsign overflow.
+     if (!(SignOrUnsignWrap & SCEV::FlagNUW)) {
+-      auto NUWRegion = ConstantRange::makeGuaranteedNoWrapRegion(
++      auto NUWRegion = ConstantRange::makeExactNoWrapRegion(
+           Opcode, C, OBO::NoUnsignedWrap);
+       if (NUWRegion.contains(SE->getUnsignedRange(Ops[1])))
+         Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNUW);
+@@ -10928,6 +10940,44 @@ ScalarEvolution::getPredecessorWithUniqueSuccessorForBB(const BasicBlock *BB)
+   return {nullptr, BB};
+ }
+ 
++/// Continue the search for conditions guarding \p BB after the cheap
++/// unique-predecessor climb ran out, by walking up the dominator tree from
++/// \p BB. A branch condition only holds at \p BB if the *taken edge* dominates
++/// \p BB, not merely the branching block. Only the previous node on \p BB's
++/// dominator chain can be the target of such an edge, so a single pointer
++/// comparison filters out all steps that cannot contribute (e.g. the head of a
++/// diamond) and at most one edge-dominance query is needed per step.
++///
++/// \p ProcessCond is invoked for each condition found, together with a flag
++/// indicating whether it is known to be true. The walk stops early and returns
++/// true if \p ProcessCond returns true. At most \p MaxConditions conditions
++/// are processed, independently of the number of dominator-tree steps.
++static bool
++collectFromDominatingBranches(const DominatorTree &DT, const BasicBlock *BB,
++                              unsigned MaxConditions,
++                              function_ref<bool(Value *, bool)> ProcessCond) {
++  const DomTreeNode *Node = DT.getNode(BB);
++  for (unsigned I = 0; Node && I != MaxGuardDomTreeSteps && MaxConditions; ++I) {
++    const BasicBlock *ChildBB = Node->getBlock();
++    Node = Node->getIDom();
++    if (!Node)
++      break;
++    auto *Br = dyn_cast<CondBrInst>(Node->getBlock()->getTerminator());
++    if (!Br)
++      continue;
++    // If ChildBB is neither or both of the successors, no fact is implied.
++    bool EnterIfTrue = Br->getSuccessor(0) == ChildBB;
++    if (EnterIfTrue == (Br->getSuccessor(1) == ChildBB))
++      continue;
++    if (DT.dominates(BasicBlockEdge(Node->getBlock(), ChildBB), BB)) {
++      --MaxConditions;
++      if (ProcessCond(Br->getCondition(), EnterIfTrue))
++        return true;
++    }
++  }
++  return false;
++}
++
+ /// SCEV structural equivalence is usually sufficient for testing whether two
+ /// expressions are equal, however for the purposes of looking for a condition
+ /// guarding a loop, it can be useful to be a little more general, since a
+@@ -16206,6 +16256,17 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+     if (Depth > 0 && NumCollectedConditions == 2)
+       break;
+   }
++
++  // If the climb above ran out of unique predecessors, keep looking for facts
++  // that dominate the block we stopped at (and hence Block) via the dominator
++  // tree.
++  if (!Pair.first)
++    collectFromDominatingBranches(SE.DT, Pair.second, MaxGuardDomTreeSteps,
++                                  [&](Value *Cond, bool EnterIfTrue) {
++                                    Terms.emplace_back(Cond, EnterIfTrue);
++                                    return false;
++                                  });
++
+   // Finally, if we stopped climbing the predecessor chain because
+   // there wasn't a unique one to continue, try to collect conditions
+   // for PHINodes by recursively following all of their incoming
+diff --git a/llvm/lib/IR/ConstantRange.cpp b/llvm/lib/IR/ConstantRange.cpp
+index bf6be068591c6..7eca24112cdc4 100644
+--- a/llvm/lib/IR/ConstantRange.cpp
++++ b/llvm/lib/IR/ConstantRange.cpp
+@@ -409,9 +409,42 @@ ConstantRange::makeGuaranteedNoWrapRegion(Instruction::BinaryOps BinOp,
+ ConstantRange ConstantRange::makeExactNoWrapRegion(Instruction::BinaryOps BinOp,
+                                                    const APInt &Other,
+                                                    unsigned NoWrapKind) {
+-  // makeGuaranteedNoWrapRegion() is exact for single-element ranges, as
+-  // "for all" and "for any" coincide in this case.
+-  return makeGuaranteedNoWrapRegion(BinOp, ConstantRange(Other), NoWrapKind);
++  using OBO = OverflowingBinaryOperator;
++  assert(Instruction::isBinaryOp(BinOp) && "Binary operators only!");
++  assert((NoWrapKind == OBO::NoSignedWrap ||
++          NoWrapKind == OBO::NoUnsignedWrap) &&
++         "NoWrapKind invalid!");
++  bool Unsigned = NoWrapKind == OBO::NoUnsignedWrap;
++  unsigned BitWidth = Other.getBitWidth();
++
++  switch (BinOp) {
++  default:
++    llvm_unreachable("Unsupported binary op");
++  case Instruction::Add: {
++    if (Unsigned)
++      return getNonEmpty(APInt::getZero(BitWidth), -Other);
++    APInt Min = APInt::getSignedMinValue(BitWidth);
++    return Other.isNegative() ? getNonEmpty(Min - Other, Min)
++                              : getNonEmpty(Min, Min - Other);
++  }
++  case Instruction::Sub: {
++    if (Unsigned)
++      return getNonEmpty(Other, APInt::getZero(BitWidth));
++    APInt Min = APInt::getSignedMinValue(BitWidth);
++    return Other.isNegative() ? getNonEmpty(Min, Min + Other)
++                              : getNonEmpty(Min + Other, Min);
++  }
++  case Instruction::Mul:
++    return Unsigned ? makeExactMulNUWRegion(Other) : makeExactMulNSWRegion(Other);
++  case Instruction::Shl:
++    if (Other.uge(BitWidth))
++      return getFull(BitWidth);
++    if (Unsigned)
++      return getNonEmpty(APInt::getZero(BitWidth),
++                         APInt::getMaxValue(BitWidth).lshr(Other) + 1);
++    return getNonEmpty(APInt::getSignedMinValue(BitWidth).ashr(Other),
++                       APInt::getSignedMaxValue(BitWidth).ashr(Other) + 1);
++  }
+ }
+ 
+ ConstantRange ConstantRange::makeMaskNotEqualRange(const APInt &Mask,
+diff --git a/llvm/test/Analysis/ScalarEvolution/dominating-guard-collection.ll b/llvm/test/Analysis/ScalarEvolution/dominating-guard-collection.ll
+new file mode 100644
+index 0000000000000..237c0464ac71e
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/dominating-guard-collection.ll
+@@ -0,0 +1,55 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -disable-output "-passes=print<scalar-evolution>" < %s 2>&1 | FileCheck %s
++;
++; The useful guard is beyond an unrelated branch and a merge. Collecting loop
++; guards must still find it when implication proofs use only the nearest
++; dominating branch condition. The backedge-taken count should not contain umax.
++;
++define void @farther_loop_guard(ptr %p, i1 %c, i1 %flag) {
++; CHECK-LABEL: 'farther_loop_guard'
++; CHECK-NEXT:  Classifying expressions for: @farther_loop_guard
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n, -1
++; CHECK-NEXT:    --> (-1 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-2 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (-1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @farther_loop_guard
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p
++  %big = icmp ugt i32 %n, 1
++  br i1 %big, label %near, label %exit
++
++near:
++  br i1 %flag, label %split, label %exit
++
++split:
++  br i1 %c, label %a, label %b
++
++a:
++  br label %ph
++
++b:
++  br label %ph
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll b/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll
+new file mode 100644
+index 0000000000000..6dac0f8054ce1
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/guards-in-dominating-blocks.ll
+@@ -0,0 +1,224 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -disable-output "-passes=print<scalar-evolution>" < %s 2>&1 | FileCheck %s
++
++; Tests for conditions that guard the loop but are only reachable by walking up
++; the dominator tree, because the chain from the preheader to the guarding
++; branch passes through a block with multiple predecessors.
++
++; The loop preheader has a unique predecessor chain up to the guarding branch,
++; so '%n >u 1' is found and the backedge-taken count is exact.
++define void @single_predecessor_chain(ptr %p) {
++; CHECK-LABEL: 'single_predecessor_chain'
++; CHECK-NEXT:  Classifying expressions for: @single_predecessor_chain
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n, -1
++; CHECK-NEXT:    --> (-1 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-2 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (-1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @single_predecessor_chain
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  %big = icmp ugt i32 %n, 1
++  br i1 %big, label %ph, label %exit
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p, align 4
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Same, but %ph is reached from two blocks and has no PHI, so the
++; unique-predecessor climb stops there. '%n >u 1' still dominates %ph.
++define void @merge_block_without_phi(ptr %p, i1 %c) {
++; CHECK-LABEL: 'merge_block_without_phi'
++; CHECK-NEXT:  Classifying expressions for: @merge_block_without_phi
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n, -1
++; CHECK-NEXT:    --> (-1 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-2 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (-1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @merge_block_without_phi
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  %big = icmp ugt i32 %n, 1
++  br i1 %big, label %split, label %exit
++
++split:
++  br i1 %c, label %a, label %b
++
++a:
++  br label %ph
++
++b:
++  br label %ph
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p, align 4
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; The condition does not dominate the loop: only one of the two paths to %ph
++; goes through it, so nothing may be inferred.
++define void @merge_block_condition_does_not_dominate(ptr %p, i1 %c) {
++; CHECK-LABEL: 'merge_block_condition_does_not_dominate'
++; CHECK-NEXT:  Classifying expressions for: @merge_block_condition_does_not_dominate
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n, -1
++; CHECK-NEXT:    --> (-1 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-1 + (1 umax (-1 + %n))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 umax (-1 + %n)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @merge_block_condition_does_not_dominate
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (1 umax (-1 + %n)))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (1 umax (-1 + %n)))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  br i1 %c, label %check, label %ph
++
++check:
++  %big = icmp ugt i32 %n, 1
++  br i1 %big, label %ph, label %exit
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p, align 4
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; The branch block dominates %ph, but neither outgoing edge does: the false
++; edge also reaches %ph through %other. Do not infer the condition on entry.
++define void @dominating_branch_with_reconverging_edge(ptr %p) {
++; CHECK-LABEL: 'dominating_branch_with_reconverging_edge'
++; CHECK-NEXT:  Classifying expressions for: @dominating_branch_with_reconverging_edge
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n, -1
++; CHECK-NEXT:    --> (-1 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-1 + (1 umax (-1 + %n))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 umax (-1 + %n)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @dominating_branch_with_reconverging_edge
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (1 umax (-1 + %n)))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (1 umax (-1 + %n)))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  %big = icmp ugt i32 %n, 1
++  br i1 %big, label %ph, label %other
++
++other:
++  br label %ph
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p, align 4
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Reaching the loop through the false edge proves %n >u 1.
++define void @merge_block_false_edge(ptr %p, i1 %c) {
++; CHECK-LABEL: 'merge_block_false_edge'
++; CHECK-NEXT:  Classifying expressions for: @merge_block_false_edge
++; CHECK-NEXT:    %n = load i32, ptr %p, align 4
++; CHECK-NEXT:    --> %n U: full-set S: full-set
++; CHECK-NEXT:    %m = add i32 %n, -1
++; CHECK-NEXT:    --> (-1 + %n) U: full-set S: full-set
++; CHECK-NEXT:    %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-2 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %inc = add nuw i32 %i, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (-1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @merge_block_false_edge
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %n = load i32, ptr %p, align 4
++  %small = icmp ule i32 %n, 1
++  br i1 %small, label %exit, label %split
++
++split:
++  br i1 %c, label %a, label %b
++
++a:
++  br label %ph
++
++b:
++  br label %ph
++
++ph:
++  %m = add i32 %n, -1
++  br label %loop
++
++loop:
++  %i = phi i32 [ 0, %ph ], [ %inc, %loop ]
++  store volatile i32 %i, ptr %p, align 4
++  %inc = add nuw i32 %i, 1
++  %cmp = icmp ult i32 %inc, %m
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/dominating-guard-signed-exit.ll b/llvm/test/Transforms/IndVarSimplify/dominating-guard-signed-exit.ll
+new file mode 100644
+index 0000000000000..67547424e826c
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/dominating-guard-signed-exit.ll
+@@ -0,0 +1,65 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='loop(indvars)' -S < %s | FileCheck %s
++;
++; Reduced from CTMark 7zip/UpdatePair.cpp. Probing the unrelated dominating
++; guard fails to prove %inc < 0, but strengthens the post-increment addrec
++; from <nw> to <nsw>. Preserve the resulting widening of the exit comparison.
++; The merge makes the outer guard require the dominator-tree walk.
++;
++target datalayout = "e-m:e-p:64:64-i64:64-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++define void @signed_exit(i64 %a, i64 %b, i32 %start, i1 %choose, ptr %out) {
++; CHECK-LABEL: define void @signed_exit(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]], i32 [[START:%.*]], i1 [[CHOOSE:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GUARD:%.*]] = icmp slt i64 [[A]], [[B]]
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[EXIT:.*]], label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    br i1 [[CHOOSE]], label %[[MERGE:.*]], label %[[CHECK:.*]]
++; CHECK:       [[MERGE]]:
++; CHECK-NEXT:    br label %[[CHECK]]
++; CHECK:       [[CHECK]]:
++; CHECK-NEXT:    [[ENTER:%.*]] = icmp slt i32 [[START]], 0
++; CHECK-NEXT:    br i1 [[ENTER]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = sext i32 [[START]] to i64
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[TMP0]], %[[LOOP_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[ADDR:%.*]] = getelementptr i8, ptr [[OUT]], i64 [[INDVARS_IV]]
++; CHECK-NEXT:    store volatile i8 0, ptr [[ADDR]], align 1
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nsw i64 [[INDVARS_IV]], 1
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[INDVARS_IV_NEXT]], 0
++; CHECK-NEXT:    br i1 [[EXITCOND]], label %[[LOOP]], label %[[EXIT_LOOPEXIT:.*]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %guard = icmp slt i64 %a, %b
++  br i1 %guard, label %exit, label %dispatch
++
++dispatch:
++  br i1 %choose, label %merge, label %check
++
++merge:
++  br label %check
++
++check:
++  %enter = icmp slt i32 %start, 0
++  br i1 %enter, label %loop, label %exit
++
++loop:
++  %iv = phi i32 [ %inc, %loop ], [ %start, %check ]
++  %wide = sext i32 %iv to i64
++  %addr = getelementptr i8, ptr %out, i64 %wide
++  store volatile i8 0, ptr %addr
++  %inc = add nsw i32 %iv, 1
++  %continue = icmp slt i32 %inc, 0
++  br i1 %continue, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/dominating-guard-unsigned-exit.ll b/llvm/test/Transforms/IndVarSimplify/dominating-guard-unsigned-exit.ll
+new file mode 100644
+index 0000000000000..03e91515347d8
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/dominating-guard-unsigned-exit.ll
+@@ -0,0 +1,72 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='loop(indvars)' -S < %s | FileCheck %s
++;
++; Reduced from CTMark ClamAV/zlib_inflate.c. Probing the unrelated pointer
++; guard fails to prove %inc < %limit, but strengthens the post-increment
++; addrec from <nw> to <nuw>. Preserve the resulting widening of the exit
++; comparison. The merge requires the dominator-tree walk; the early exit
++; makes this a loop with multiple exits.
++;
++target datalayout = "e-m:e-p:64:64-i64:64-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++define void @unsigned_exit(ptr %guard.ptr, i1 %choose, i32 %start, i32 %limit, ptr %out, i1 %stop) {
++; CHECK-LABEL: define void @unsigned_exit(
++; CHECK-SAME: ptr [[GUARD_PTR:%.*]], i1 [[CHOOSE:%.*]], i32 [[START:%.*]], i32 [[LIMIT:%.*]], ptr [[OUT:%.*]], i1 [[STOP:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GUARD:%.*]] = icmp eq ptr [[GUARD_PTR]], null
++; CHECK-NEXT:    br i1 [[GUARD]], label %[[EXIT:.*]], label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    br i1 [[CHOOSE]], label %[[MERGE:.*]], label %[[CHECK:.*]]
++; CHECK:       [[MERGE]]:
++; CHECK-NEXT:    br label %[[CHECK]]
++; CHECK:       [[CHECK]]:
++; CHECK-NEXT:    [[ENTER:%.*]] = icmp ult i32 [[START]], [[LIMIT]]
++; CHECK-NEXT:    br i1 [[ENTER]], label %[[LOOP_PREHEADER:.*]], label %[[EXIT]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[START]] to i64
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = zext i32 [[LIMIT]] to i64
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[TMP0]], %[[LOOP_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    br i1 [[STOP]], label %[[EXIT_LOOPEXIT:.*]], label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i64 [[INDVARS_IV]], 1
++; CHECK-NEXT:    [[ADDR:%.*]] = getelementptr i8, ptr [[OUT]], i64 [[INDVARS_IV]]
++; CHECK-NEXT:    store i8 0, ptr [[ADDR]], align 1
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[INDVARS_IV_NEXT]], [[WIDE_TRIP_COUNT]]
++; CHECK-NEXT:    br i1 [[EXITCOND]], label %[[LOOP]], label %[[EXIT_LOOPEXIT]]
++; CHECK:       [[EXIT_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %guard = icmp eq ptr %guard.ptr, null
++  br i1 %guard, label %exit, label %dispatch
++
++dispatch:
++  br i1 %choose, label %merge, label %check
++
++merge:
++  br label %check
++
++check:
++  %enter = icmp ult i32 %start, %limit
++  br i1 %enter, label %loop, label %exit
++
++loop:
++  %iv = phi i32 [ %start, %check ], [ %inc, %latch ]
++  br i1 %stop, label %exit, label %latch
++
++latch:
++  %inc = add nuw i32 %iv, 1
++  %wide = zext i32 %iv to i64
++  %addr = getelementptr i8, ptr %out, i64 %wide
++  store i8 0, ptr %addr
++  %continue = icmp ult i32 %inc, %limit
++  br i1 %continue, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/range-iter-threshold.ll b/llvm/test/Transforms/IndVarSimplify/range-iter-threshold.ll
+index 9c442710e2191..1dd1356063d06 100644
+--- a/llvm/test/Transforms/IndVarSimplify/range-iter-threshold.ll
++++ b/llvm/test/Transforms/IndVarSimplify/range-iter-threshold.ll
+@@ -28,7 +28,7 @@ define i32 @test(i1 %c.0, i32 %m) {
+ ; COMMON-NEXT:    br i1 [[C_2]], label [[OUTER_LATCH]], label [[INNER_2_HEADER]]
+ ; COMMON:       outer.latch:
+ ; COMMON-NEXT:    [[MAX_1]] = phi i32 [ [[M]], [[INNER_2_LATCH]] ], [ 0, [[INNER_2_HEADER]] ]
+-; COMMON-NEXT:    [[IV_1_NEXT]] = add i32 [[IV_1]], 1
++; COMMON-NEXT:    [[IV_1_NEXT]] = add nsw i32 [[IV_1]], 1
+ ; COMMON-NEXT:    [[C_3:%.*]] = icmp ugt i32 [[IV_1]], [[MAX_0]]
+ ; COMMON-NEXT:    br i1 [[C_3]], label [[EXIT:%.*]], label [[OUTER_HEADER]], !llvm.loop [[LOOP0:![0-9]+]]
+ ; COMMON:       exit:
+diff --git a/llvm/unittests/Analysis/ScalarEvolutionTest.cpp b/llvm/unittests/Analysis/ScalarEvolutionTest.cpp
+index a50566cb64093..8944ed9f72f78 100644
+--- a/llvm/unittests/Analysis/ScalarEvolutionTest.cpp
++++ b/llvm/unittests/Analysis/ScalarEvolutionTest.cpp
+@@ -1511,6 +1511,61 @@ TEST_F(ScalarEvolutionsTest, UnsignedIsImpliedViaOperations) {
+   });
+ }
+ 
++TEST_F(ScalarEvolutionsTest, EntryGuardsAcrossMerges) {
++  SMDiagnostic Err;
++  auto M = parseAssemblyString(R"IR(
++    define void @test(i32 %n, i1 %c) {
++    entry:
++      %big = icmp ugt i32 %n, 1
++      br i1 %big, label %true.split, label %false.split
++    true.split:
++      br i1 %c, label %true.left, label %true.right
++    true.left:
++      br label %true.guard
++    true.right:
++      br label %true.guard
++    true.guard:
++      br label %merged
++    false.split:
++      br i1 %c, label %false.left, label %false.right
++    false.left:
++      br label %false.guard
++    false.right:
++      br label %false.guard
++    false.guard:
++      br label %merged
++    merged:
++      br i1 %big, label %duplicate, label %duplicate
++    duplicate:
++      ret void
++    }
++  )IR", Err, Context);
++  ASSERT_TRUE(M);
++  ASSERT_FALSE(verifyModule(*M));
++
++  runWithSE(*M, "test", [](Function &F, LoopInfo &, ScalarEvolution &SE) {
++    const SCEV *N = SE.getSCEV(F.getArg(0));
++    const SCEV *One = SE.getOne(N->getType());
++    auto Prove = [&](StringRef Name, ICmpInst::Predicate Pred) {
++      auto BB = llvm::find_if(F, [&](BasicBlock &BB) {
++        return BB.getName() == Name;
++      });
++      assert(BB != F.end());
++      return SE.isBasicBlockEntryGuardedByCond(&*BB, Pred, N, One);
++    };
++
++    // Both polarities remain available beyond a diamond.
++    EXPECT_TRUE(Prove("true.guard", ICmpInst::ICMP_UGT));
++    EXPECT_TRUE(Prove("false.guard", ICmpInst::ICMP_ULE));
++    // Neither fact holds after the paths reconverge, or after a branch with
++    // duplicate successors.
++    EXPECT_FALSE(Prove("merged", ICmpInst::ICMP_UGT));
++    EXPECT_FALSE(Prove("merged", ICmpInst::ICMP_ULE));
++    EXPECT_FALSE(Prove("duplicate", ICmpInst::ICMP_UGT));
++    EXPECT_FALSE(Prove("duplicate", ICmpInst::ICMP_ULE));
++  });
++}
++
+ TEST_F(ScalarEvolutionsTest, ProveImplicationViaNarrowing) {
+   LLVMContext C;
+   SMDiagnostic Err;
+diff --git a/llvm/unittests/IR/ConstantRangeTest.cpp b/llvm/unittests/IR/ConstantRangeTest.cpp
+index 57d3e52b3f206..ceba6ce51d828 100644
+--- a/llvm/unittests/IR/ConstantRangeTest.cpp
++++ b/llvm/unittests/IR/ConstantRangeTest.cpp
+@@ -2101,6 +2101,9 @@ void TestNoWrapRegionExhaustive(Instruction::BinaryOps BinOp,
+ 
+       ConstantRange NoWrap =
+           ConstantRange::makeGuaranteedNoWrapRegion(BinOp, CR, NoWrapKind);
++      if (const APInt *C = CR.getSingleElement())
++        EXPECT_EQ(NoWrap, ConstantRange::makeExactNoWrapRegion(BinOp, *C,
++                                                              NoWrapKind));
+       EnumerateAPInts(Bits, [&](const APInt &N1) {
+         bool NoOverflow = true;
+         bool Overflow = true;
+@@ -2121,6 +2124,24 @@ void TestNoWrapRegionExhaustive(Instruction::BinaryOps BinOp,
+   }
+ }
+ 
++TEST(ConstantRange, ExactNoWrapRegionWide) {
++  using OBO = OverflowingBinaryOperator;
++  for (unsigned Width : {8, 32, 64, 65, 128}) {
++    SCOPED_TRACE(Width);
++    for (const APInt &C : {APInt::getZero(Width), APInt(Width, 1),
++                          APInt::getAllOnes(Width),
++                          APInt::getSignedMinValue(Width),
++                          APInt::getSignedMaxValue(Width),
++                          APInt(Width, Width - 1), APInt(Width, Width)})
++      for (auto Op : {Instruction::Add, Instruction::Sub, Instruction::Mul,
++                      Instruction::Shl})
++        for (auto Flag : {OBO::NoSignedWrap, OBO::NoUnsignedWrap})
++          EXPECT_EQ(ConstantRange::makeExactNoWrapRegion(Op, C, Flag),
++                    ConstantRange::makeGuaranteedNoWrapRegion(
++                        Op, ConstantRange(C), Flag));
++  }
++}
++
+ // Show that makeGuaranteedNoWrapRegion() is maximal, and for single-element
+ // ranges also exact.
+ TEST(ConstantRange, NoWrapRegionExhaustive) {
