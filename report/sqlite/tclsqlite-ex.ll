@@ -206,7 +206,7 @@ bb.ei:                                            ; preds = %bb.eg
 iter.check:                                       ; preds = %bb.ei
   %i.uh = and i64 %strlen.i1226, 1073741823       ; 5 uses
   %i.ui = add nsw i32 %i.tr, -1
-  %i.uj = zext i32 %i.ui to i64                   ; 5 uses
+  %i.uj = zext nneg i32 %i.ui to i64              ; 5 uses
   %min.iters.check = icmp ult i32 %i.tr, 5
   br i1 %min.iters.check, label %.lr.ph1427.preheader, label %vector.main.loop.iter.check
 
@@ -216,10 +216,10 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.uk = and i64 %i.uj, 12
-  %n.vec = and i64 %i.uj, 4294967280              ; 5 uses
+  %n.vec = and i64 %i.uj, 2147483632              ; 5 uses
   %i.ul = shl nuw nsw i64 %n.vec, 1
   %i.um = add nuw nsw i64 %i.uh, %i.ul            ; 2 uses
-  %i.un = trunc nuw i64 %n.vec to i32
+  %i.un = trunc nuw nsw i64 %n.vec to i32
   %i.uo = or disjoint i32 %i.un, 1
   br label %vector.body
 
@@ -246,10 +246,10 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec1661 = and i64 %i.uj, 4294967292          ; 4 uses
+  %n.vec1661 = and i64 %i.uj, 2147483644          ; 4 uses
   %i.uv = shl nuw nsw i64 %n.vec1661, 1
   %i.uw = add nuw nsw i64 %i.uh, %i.uv            ; 2 uses
-  %i.ux = trunc nuw i64 %n.vec1661 to i32
+  %i.ux = trunc nuw nsw i64 %n.vec1661 to i32
   %i.uy = or disjoint i32 %i.ux, 1
   %i.uz = getelementptr inbounds nuw i8, ptr %i.tz, i64 %i.uh
   br label %vec.epilog.vector.body

@@ -203,7 +203,7 @@ bb.v:                                             ; preds = %bb.u
   %.not167 = icmp sgt i32 %.1142.lcssa, %i.ej
   %i.ek = select i1 %.not167, i64 217, i64 189
   %i.el = getelementptr inbounds nuw i8, ptr %i.eh, i64 %i.ek ; 3 uses
-  %2 = ashr i32 %i.eg, 2                          ; 2 uses
+  %2 = lshr i32 %i.eg, 2                          ; 2 uses
   %.not168189 = icmp eq i32 %2, 0
   br i1 %.not168189, label %.loopexit.thread235, label %.lr.ph193
 
@@ -219,7 +219,7 @@ bb.v:                                             ; preds = %bb.u
   tail call fastcc void @arith_encode(ptr noundef nonnull %0, ptr noundef nonnull %.4148190, i32 noundef 1)
   %i.eo = shl i32 %.3191, 1                       ; 3 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.4148190, i64 1 ; 2 uses
-  %3 = ashr i32 %i.en, 1                          ; 2 uses
+  %3 = lshr i32 %i.en, 1                          ; 2 uses
   %.not168 = icmp eq i32 %3, 0
   br i1 %.not168, label %.loopexit, label %.lr.ph193, !llvm.loop !96
 

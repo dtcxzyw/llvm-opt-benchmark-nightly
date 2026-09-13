@@ -204,7 +204,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 vector.memcheck:                                  ; preds = %bb.a
   %i.j = add nsw i32 %i.b, -1
-  %i.k = zext i32 %i.j to i64
+  %i.k = zext nneg i32 %i.j to i64
   %i.l = shl nuw nsw i64 %i.k, 2
   %i.m = getelementptr i8, ptr %0, i64 %i.l
   %scevgep = getelementptr i8, ptr %i.m, i64 4
@@ -314,7 +314,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 vector.memcheck:                                  ; preds = %bb.a
   %i.k = add nsw i32 %i.b, -1
-  %i.l = zext i32 %i.k to i64
+  %i.l = zext nneg i32 %i.k to i64
   %i.m = shl nuw nsw i64 %i.l, 2
   %i.n = getelementptr i8, ptr %0, i64 %i.m
   %scevgep = getelementptr i8, ptr %i.n, i64 4
@@ -529,7 +529,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 vector.memcheck:                                  ; preds = %bb.a
   %i.l = add nsw i32 %i.b, -1
-  %i.m = zext i32 %i.l to i64
+  %i.m = zext nneg i32 %i.l to i64
   %i.n = zext nneg i32 %i.b to i64
   %scevgep = getelementptr i8, ptr %0, i64 %i.n
   %i.o = shl nuw nsw i64 %i.m, 2
@@ -630,7 +630,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 vector.memcheck:                                  ; preds = %bb.a
   %i.m = add nsw i32 %i.b, -1
-  %i.n = zext i32 %i.m to i64
+  %i.n = zext nneg i32 %i.m to i64
   %i.o = zext nneg i32 %i.b to i64
   %scevgep = getelementptr i8, ptr %0, i64 %i.o
   %i.p = shl nuw nsw i64 %i.n, 2

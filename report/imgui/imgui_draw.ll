@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %.not448 = select i1 %or.cond3.not450, i1 true, i1 %i.ab ; 8 uses
   %.v = select i1 %i.k, i32 18, i32 12
   %.v530 = select i1 %.not448, i32 %.v, i32 6
-  %i.ac = mul nsw i32 %.v530, %i.h
+  %i.ac = mul nuw nsw i32 %.v530, %i.h
   br i1 %.not448, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -608,7 +608,7 @@ bb.y:                                             ; preds = %.lr.ph555, %bb.y
   br label %.loopexit
 
 .lr.ph558:                                        ; preds = %bb.d
-  %i.na = mul nsw i32 %i.h, 6
+  %i.na = mul nuw nsw i32 %i.h, 6
   %i.nb = shl nsw i32 %i.h, 2
   tail call void @_ZN10ImDrawList11PrimReserveEii(ptr noundef nonnull align 8 dereferenceable(224) %0, i32 noundef %i.na, i32 noundef %i.nb)
   %i.nc = fmul float %4, 5.000000e-01
@@ -1011,10 +1011,10 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.aa = add nsw i32 %7, -1
-  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = mul nsw i64 %i.z, %i.ab
   %i.ad = add nsw i32 %6, -1
-  %i.ae = zext i32 %i.ad to i64                   ; 2 uses
+  %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
   %i.af = shl nuw nsw i64 %i.ae, 2
   %i.ag = getelementptr i8, ptr %3, i64 %i.ac
   %i.ah = getelementptr i8, ptr %i.ag, i64 %i.af
@@ -1118,10 +1118,10 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader65.preheader:                           ; preds = %.preheader65.lr.ph
   %i.bw = add nsw i32 %7, -1
-  %i.bx = zext i32 %i.bw to i64                   ; 2 uses
+  %i.bx = zext nneg i32 %i.bw to i64              ; 2 uses
   %i.by = mul nsw i64 %i.bv, %i.bx
   %i.bz = add nsw i32 %6, -1
-  %i.ca = zext i32 %i.bz to i64                   ; 2 uses
+  %i.ca = zext nneg i32 %i.bz to i64              ; 2 uses
   %i.cb = getelementptr i8, ptr %3, i64 %i.by
   %i.cc = getelementptr i8, ptr %i.cb, i64 %i.ca
   %scevgep = getelementptr i8, ptr %i.cc, i64 1
@@ -1524,7 +1524,7 @@ bb.c:                                             ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %3 to i64      ; 7 uses
   %i.cf = shl nuw nsw i64 %wide.trip.count, 2
   %i.cg = add nsw i32 %4, -1
-  %i.ch = zext i32 %i.cg to i64
+  %i.ch = zext nneg i32 %i.cg to i64
   %i.ci = mul nuw nsw i64 %i.bu, %i.ch
   %i.cj = getelementptr i8, ptr %5, i64 %i.ci
   %scevgep71 = getelementptr i8, ptr %i.cj, i64 %wide.trip.count
@@ -1927,10 +1927,10 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader.i.preheader:                           ; preds = %.preheader.lr.ph.i
   %i.ay = add nsw i32 %i.aa, -1
-  %i.az = zext i32 %i.ay to i64                   ; 2 uses
+  %i.az = zext nneg i32 %i.ay to i64              ; 2 uses
   %i.ba = mul nsw i64 %i.ax, %i.az
   %i.bb = add nsw i32 %i.x, -1
-  %i.bc = zext i32 %i.bb to i64                   ; 2 uses
+  %i.bc = zext nneg i32 %i.bb to i64              ; 2 uses
   %i.bd = shl nuw nsw i64 %i.bc, 2
   %i.be = getelementptr i8, ptr %i.i, i64 %i.ba
   %i.bf = getelementptr i8, ptr %i.be, i64 %i.bd
@@ -2035,10 +2035,10 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader65.i.preheader:                         ; preds = %.preheader65.lr.ph.i
   %i.cu = add nsw i32 %i.aa, -1
-  %i.cv = zext i32 %i.cu to i64                   ; 2 uses
+  %i.cv = zext nneg i32 %i.cu to i64              ; 2 uses
   %i.cw = mul nsw i64 %i.ct, %i.cv
   %i.cx = add nsw i32 %i.x, -1
-  %i.cy = zext i32 %i.cx to i64                   ; 2 uses
+  %i.cy = zext nneg i32 %i.cx to i64              ; 2 uses
   %i.cz = getelementptr i8, ptr %i.i, i64 %i.cw
   %i.da = getelementptr i8, ptr %i.cz, i64 %i.q
   %i.db = getelementptr i8, ptr %i.da, i64 %i.cy

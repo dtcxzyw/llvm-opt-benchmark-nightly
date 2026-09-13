@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.f = add nsw i64 %1, -1, !dbg !7249
-  %i.g = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 true), !dbg !7250
+  %i.g = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.f, i1 true), !dbg !7250
   %i.h = lshr i64 -1, %i.g, !dbg !7251
   %i.i = add nuw i64 %i.h, 1, !dbg !7252
   br label %bb.g, !dbg !7253

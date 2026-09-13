@@ -205,7 +205,7 @@ define internal fastcc void @_RINvNtNtCsks7Y7MMeG6s_5rayon5slice4sort14break_pat
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 12 uses
   %i.b = add nsw i64 %1, -1
-  %i.c = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.b, i1 true)
+  %i.c = tail call range(i64 1, 65) i64 @llvm.ctlz.i64(i64 %i.b, i1 true)
   %i.d = lshr i64 -1, %i.c                        ; 3 uses
   %i.e = lshr i64 %1, 1                           ; 2 uses
   %i.f = and i64 %i.e, 288230376151711742         ; 4 uses
@@ -608,7 +608,7 @@ _RINvNtNtCsks7Y7MMeG6s_5rayon5slice4sort19partition_in_blocksNtCsgcf5BHVXlUt_7uu
   %.sroa.0.0.i.i = udiv i64 %i.hn, 24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !7620
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !7620
-  %i.ho = add i64 %.sroa.0.0.i.i, %.sroa.0.0.lcssa.ph.i ; 10 uses
+  %i.ho = add nuw i64 %.sroa.0.0.i.i, %.sroa.0.0.lcssa.ph.i ; 10 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.0141.lcssa166, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !7616
   %i.hp = icmp ult i64 %i.ho, %.sroa.20.0140.lcssa157

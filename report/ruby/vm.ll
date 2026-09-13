@@ -205,14 +205,14 @@ rb_array_len.exit.i:                              ; preds = %bb.h, %bb.g
   %i.ak = getelementptr i8, ptr %i.s, i64 32      ; 3 uses
   %i.al = add nsw i64 %.0.i.i, -1
   %i.am = add nsw i32 %i.ad, -1
-  %i.an = zext i32 %i.am to i64
+  %i.an = zext nneg i32 %i.am to i64
   %umin.i = tail call i64 @llvm.umin.i64(i64 %i.al, i64 %i.an) ; 4 uses
   %i.ao = add nuw nsw i64 %umin.i, 1              ; 2 uses
   %i.ap = icmp eq i64 %umin.i, 0
   br i1 %i.ap, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %i.ao, 8589934590
+  %unroll_iter = and i64 %i.ao, 4294967294
   br label %bb.j
 
 bb.i:                                             ; preds = %rb_array_len.exit.i

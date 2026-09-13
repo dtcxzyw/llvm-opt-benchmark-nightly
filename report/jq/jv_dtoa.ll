@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.af, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %.preheader8
-  %.067.add13 = add nsw i64 %.idx, 20
+  %.067.add13 = add nuw nsw i64 %.idx, 20
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e

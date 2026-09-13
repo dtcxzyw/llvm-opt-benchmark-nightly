@@ -205,7 +205,7 @@ vector.body123:                                   ; preds = %.critedge2.i
   %trip.count.minus.1 = add nsw i64 %wide.trip.count.i, -1
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
-  %i.el = icmp uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3> ; 5 uses
+  %i.el = icmp samesign uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3> ; 5 uses
   %i.em = mul nsw <4 x i32> %broadcast.splat120, <i32 1, i32 3, i32 5, i32 7>
   %i.en = call <4 x i32> @llvm.masked.sdiv.v4i32(<4 x i32> %i.em, <4 x i32> %broadcast.splat118, <4 x i1> %i.el)
   %i.eo = add nsw <4 x i32> %i.en, %broadcast.splat122 ; 4 uses
@@ -608,7 +608,7 @@ bb.v:                                             ; preds = %.loopexit.i.i, %.pr
   %i.pk = load i32, ptr %i.pj, align 4, !tbaa !35
   %i.pl = add nsw i32 %i.pk, 1
   store i32 %i.pl, ptr %i.pj, align 4, !tbaa !35
-  %i.pm = getelementptr inbounds [4 x i8], ptr %i.nu, i64 %i.nl
+  %i.pm = getelementptr inbounds nuw [4 x i8], ptr %i.nu, i64 %i.nl
   %i.pn = load i8, ptr %i.pm, align 4
   %i.po = lshr i8 %i.pn, 5
   %i.pp = and i8 %i.po, 3

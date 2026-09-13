@@ -204,7 +204,7 @@ agxbfree.exit:                                    ; preds = %agxbuse.exit, %bb.g
 
 bb.h:                                             ; preds = %.lr.ph68, %bb.h
   %.067 = phi i32 [ 0, %.lr.ph68 ], [ %i.bs, %bb.h ] ; 2 uses
-  %6 = srem i32 %.067, %i.am
+  %6 = urem i32 %.067, %i.am
   %.not59 = icmp ne i32 %6, 0
   %i.br = zext i1 %.not59 to i32
   call void (ptr, ptr, ...) @gvprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.35, i32 noundef %i.br) #16

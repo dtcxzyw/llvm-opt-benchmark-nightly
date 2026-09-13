@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 switch.lookup:                                    ; preds = %.peel.next139
   %switch.tableidx = add nsw i32 %.03651.us.us.us.us76, -1
-  %switch.cast = zext i32 %switch.tableidx to i56
+  %switch.cast = zext nneg i32 %switch.tableidx to i56
   %switch.shiftamt = shl nuw nsw i56 %switch.cast, 3
   %switch.downshift = lshr i56 3389824514196483, %switch.shiftamt
   %switch.masked = trunc i56 %switch.downshift to i8

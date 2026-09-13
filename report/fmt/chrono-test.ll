@@ -205,8 +205,8 @@ _ZN3fmt3v126detail11add_compareERKNS1_6bigintES4_S4_.exit474: ; preds = %_ZNK3fm
 
 bb.eo:                                            ; preds = %_ZN3fmt3v126detail11add_compareERKNS1_6bigintES4_S4_.exit474
   %i.aki = load ptr, ptr %3, align 8, !tbaa !338
-  %9 = sext i32 %i.adm to i64
-  %i.akj = getelementptr inbounds i8, ptr %i.aki, i64 %9
+  %9 = zext nneg i32 %i.adm to i64
+  %i.akj = getelementptr inbounds nuw i8, ptr %i.aki, i64 %9
   store i8 58, ptr %i.akj, align 1, !tbaa !232
   br i1 %.not619, label %.critedge, label %.lr.ph617
 
@@ -296,8 +296,8 @@ bb.ex:                                            ; preds = %_ZN3fmt3v126detail1
   %i.alo = trunc i32 %.076 to i8
   %i.alp = add i8 %i.alo, 48
   %i.alq = load ptr, ptr %3, align 8, !tbaa !338
-  %10 = sext i32 %i.adm to i64
-  %i.alr = getelementptr inbounds i8, ptr %i.alq, i64 %10
+  %10 = zext nneg i32 %i.adm to i64
+  %i.alr = getelementptr inbounds nuw i8, ptr %i.alq, i64 %10
   store i8 %i.alp, ptr %i.alr, align 1, !tbaa !232
   br label %.loopexit
 
@@ -700,9 +700,9 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 
 .lr.ph.i:                                         ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i
   %i.ak = add nsw i32 %i.c, -1                    ; 2 uses
-  %i.al = add i32 %i.y, %i.ak
+  %i.al = add nuw i32 %i.y, %i.ak
   %i.am = sext i32 %i.al to i64                   ; 5 uses
-  %i.an = zext i32 %i.ak to i64                   ; 5 uses
+  %i.an = zext nneg i32 %i.ak to i64              ; 5 uses
   %i.ao = and i64 %i.b, 2147483647                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.ao, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck

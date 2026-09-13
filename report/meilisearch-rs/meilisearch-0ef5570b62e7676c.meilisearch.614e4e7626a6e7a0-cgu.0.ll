@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %i.tx = add nuw nsw i64 %reass.sub.i, 1
   %i.ty = add nsw i64 %umax226.i.i, -1
   %i.tz = call i64 @llvm.umin.i64(i64 %reass.sub.i, i64 %i.ty) ; 2 uses
-  %min.iters.check1051 = icmp ult i64 %i.tz, 8
+  %min.iters.check1051 = icmp samesign ult i64 %i.tz, 8
   br i1 %min.iters.check1051, label %scalar.ph1050.preheader, label %vector.ph1052
 
 scalar.ph1050.preheader:                          ; preds = %vector.body1054, %.lr.ph156.i.i
@@ -218,7 +218,7 @@ vector.ph1052:                                    ; preds = %.lr.ph156.i.i
   %i.ub = and i64 %i.ua, 7                        ; 2 uses
   %i.uc = icmp eq i64 %i.ub, 0
   %i.ud = select i1 %i.uc, i64 8, i64 %i.ub
-  %n.vec1053 = sub i64 %i.ua, %i.ud               ; 3 uses
+  %n.vec1053 = sub nsw i64 %i.ua, %i.ud           ; 3 uses
   %i.ue = add i64 %n.vec1053, 1
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %.sroa.08.0157.i.i, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -621,7 +621,7 @@ middle.block1106:                                 ; preds = %vector.body1103
   %i.agn = add nuw nsw i64 %reass.sub462.i, 1
   %i.ago = add nsw i64 %umax226.i232.i, -1
   %i.agp = call i64 @llvm.umin.i64(i64 %reass.sub462.i, i64 %i.ago) ; 2 uses
-  %min.iters.check1111 = icmp ult i64 %i.agp, 8
+  %min.iters.check1111 = icmp samesign ult i64 %i.agp, 8
   br i1 %min.iters.check1111, label %scalar.ph1110.preheader, label %vector.ph1112
 
 scalar.ph1110.preheader:                          ; preds = %vector.body1116, %.lr.ph156.i228.i
@@ -634,7 +634,7 @@ vector.ph1112:                                    ; preds = %.lr.ph156.i228.i
   %i.agr = and i64 %i.agq, 7                      ; 2 uses
   %i.ags = icmp eq i64 %i.agr, 0
   %i.agt = select i1 %i.ags, i64 8, i64 %i.agr
-  %n.vec1113 = sub i64 %i.agq, %i.agt             ; 3 uses
+  %n.vec1113 = sub nsw i64 %i.agq, %i.agt         ; 3 uses
   %i.agu = add i64 %n.vec1113, 1
   %broadcast.splatinsert1114 = insertelement <4 x i64> poison, i64 %.sroa.08.0157.i231.i, i64 0
   %broadcast.splat1115 = shufflevector <4 x i64> %broadcast.splatinsert1114, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses

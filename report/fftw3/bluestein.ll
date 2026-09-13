@@ -117,7 +117,7 @@ bb.g:                                             ; preds = %choose_transform_si
   %i.az = fadd <2 x double> %i.ay, %i.ax
   store <2 x double> %i.az, ptr %i.ap, align 8, !tbaa !22
   %i.ba = add nuw nsw i64 %.0.i, %i.n
-  %i.bb = mul nsw i64 %i.ba, 6
+  %i.bb = mul nuw nsw i64 %i.ba, 6
   %i.bc = uitofp nneg i64 %i.bb to double
   %i.bd = getelementptr inbounds nuw i8, ptr %i.af, i64 32 ; 2 uses
   %i.be = load double, ptr %i.bd, align 8, !tbaa !36

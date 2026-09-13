@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.h, %.split
   %i.ji = add nuw nsw i64 %i.jh, 1                ; 2 uses
   %xtraiter393 = and i64 %i.ji, 7                 ; 3 uses
   %i.jj = icmp ult i32 %i.fi, 113
-  %unroll_iter397 = and i64 %i.ji, 2305843009213693944
+  %unroll_iter397 = and i64 %i.ji, 1152921504606846968
   %lcmp.mod395.not = icmp eq i64 %xtraiter393, 0
   %lcmp.mod396 = icmp ne i64 %xtraiter393, 0
   br label %.lr.ph203
@@ -608,7 +608,7 @@ middle.block268:                                  ; preds = %vector.body261
   br i1 %i.kk, label %.lr.ph.i.us.i.epil.preheader, label %.lr.ph.preheader.i.us.i.new
 
 .lr.ph.preheader.i.us.i.new:                      ; preds = %.lr.ph.preheader.i.us.i
-  %unroll_iter384 = and i64 %i.kj, 4611686018427387896
+  %unroll_iter384 = and i64 %i.kj, 2305843009213693944
   br label %.lr.ph.i.us.i
 
 .lr.ph.i.us.i:                                    ; preds = %.lr.ph.i.us.i, %.lr.ph.preheader.i.us.i.new
@@ -705,7 +705,7 @@ bb.i:                                             ; preds = %.lr.ph.split.i
   br i1 %i.lt, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.preheader.i.i.new
 
 .lr.ph.preheader.i.i.new:                         ; preds = %.lr.ph.preheader.i.i
-  %unroll_iter353 = and i64 %i.ls, 4611686018427387896
+  %unroll_iter353 = and i64 %i.ls, 2305843009213693944
   br label %.lr.ph.i.i
 
 bb.j:                                             ; preds = %bb.i

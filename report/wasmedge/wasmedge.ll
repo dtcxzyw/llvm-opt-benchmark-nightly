@@ -205,16 +205,16 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.preheader:                                 ; preds = %bb.b
   %wide.trip.count = zext i32 %2 to i64           ; 2 uses
   %i.j = add nsw i64 %wide.trip.count, -1
-  %i.k = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %i.j)
-  %3 = add nsw i64 %i.k, 1                        ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 5
+  %i.k = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %i.j) ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.k, 4
   br i1 %min.iters.check, label %.lr.ph.preheader25, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
+  %3 = add nuw nsw i64 %i.k, 1                    ; 2 uses
   %i.l = and i64 %3, 3                            ; 2 uses
   %i.m = icmp eq i64 %i.l, 0
   %i.n = select i1 %i.m, i64 4, i64 %i.l
-  %n.vec = sub i64 %3, %i.n                       ; 2 uses
+  %n.vec = sub nsw i64 %3, %i.n                   ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -304,16 +304,16 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.preheader:                                 ; preds = %bb.b
   %wide.trip.count = zext i32 %2 to i64           ; 2 uses
   %i.j = add nsw i64 %wide.trip.count, -1
-  %i.k = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %i.j)
-  %3 = add nsw i64 %i.k, 1                        ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 5
+  %i.k = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %i.j) ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %i.k, 4
   br i1 %min.iters.check, label %.lr.ph.preheader25, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
+  %3 = add nuw nsw i64 %i.k, 1                    ; 2 uses
   %i.l = and i64 %3, 3                            ; 2 uses
   %i.m = icmp eq i64 %i.l, 0
   %i.n = select i1 %i.m, i64 4, i64 %i.l
-  %n.vec = sub i64 %3, %i.n                       ; 2 uses
+  %n.vec = sub nsw i64 %3, %i.n                   ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

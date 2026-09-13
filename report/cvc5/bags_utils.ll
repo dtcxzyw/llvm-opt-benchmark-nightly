@@ -204,12 +204,12 @@ bb.n:                                             ; preds = %_ZNSt6vectorIjSaIjE
   %i.bd = load ptr, ptr %i.ae, align 8, !tbaa !57 ; 8 uses
   %i.be = add nsw i64 %i.am, -1                   ; 2 uses
   %i.bf = lshr i64 %i.be, 1                       ; 5 uses
-  %i.bg = add nuw i64 %i.bf, 1                    ; 2 uses
+  %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.al, 94
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.bh = shl i64 %i.bf, 2
+  %i.bh = shl nuw i64 %i.bf, 2
   %i.bi = add i64 %i.bh, 4                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.ap, i64 %i.bi ; 2 uses
   %scevgep68 = getelementptr i8, ptr %i.ax, i64 %i.bi ; 2 uses
@@ -230,8 +230,8 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %conflict.rdx76, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.bg, -8                      ; 4 uses
-  %i.bl = shl i64 %n.vec, 1
+  %n.vec = and i64 %i.bg, 9223372036854775800     ; 4 uses
+  %i.bl = shl nuw i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

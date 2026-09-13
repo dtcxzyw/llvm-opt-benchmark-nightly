@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %.lr.ph104, %._crit_
 
 bb.v:                                             ; preds = %bb.u
   %i.bj = shl nuw nsw i64 %.047102, 1
-  %i.bk = sub i64 %i.h, %i.bj                     ; 4 uses
+  %i.bk = sub nsw i64 %i.h, %i.bj                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %i.bl = load ptr, ptr %0, align 8, !tbaa !265
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %i.bk

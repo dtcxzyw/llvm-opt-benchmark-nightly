@@ -204,7 +204,7 @@ bb.a:
   %smax = call i32 @llvm.smax.i32(i32 %3, i32 1)
   %i.g = zext nneg i32 %smax to i64
   %i.h = add nsw i32 %4, -1
-  %i.i = zext i32 %i.h to i64
+  %i.i = zext nneg i32 %i.h to i64
   br label %.preheader63.us
 
 .preheader63.us:                                  ; preds = %.preheader63.us.preheader, %.loopexit.us
@@ -233,9 +233,9 @@ vector.memcheck:                                  ; preds = %.preheader63.us
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.s, 8589934588               ; 5 uses
+  %n.vec = and i64 %i.s, 4294967292               ; 5 uses
   %i.x = add nsw i64 %n.vec, %i.l                 ; 3 uses
-  %i.y = trunc i64 %n.vec to i32
+  %i.y = trunc nuw i64 %n.vec to i32
   %i.z = add i64 %.05573.us, %n.vec               ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.05573.us, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
