@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/b3BoundSearchCL?download=true
 inline.NumInlined: 101
 inline.NumDeleted: 40
-loop-unroll.NumRuntimeUnrolled: 10
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE:bb.a
 
 .lr.ph150.split:                                  ; preds = %.lr.ph150
@@ -204,7 +204,7 @@ _ZN20b3AlignedObjectArrayIjE8allocateEi.exit.i.i: ; preds = %bb.m
   br label %.preheader138
 
 .preheader138:                                    ; preds = %.loopexit139, %.lr.ph
-  %i.bf = phi ptr [ %i.ax, %.lr.ph ], [ null, %.loopexit139 ] ; 12 uses
+  %i.bf = phi ptr [ %i.ax, %.lr.ph ], [ null, %.loopexit139 ] ; 11 uses
   %i.bg = phi ptr [ %i.ar, %.lr.ph ], [ null, %.loopexit139 ] ; 13 uses
   %i.bh = ptrtoaddr ptr %i.bf to i64
   %i.bi = ptrtoaddr ptr %i.bg to i64
@@ -317,28 +317,20 @@ bb.v:                                             ; preds = %.peel.next.epil.pre
 
 .lr.ph145:                                        ; preds = %.lr.ph145.loopexit.unr-lcssa, %bb.v, %.peel.next.epil.preheader, %bb.p
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !92 ; 3 uses
-  %8 = zext nneg i32 %2 to i64                    ; 3 uses
+  %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !92 ; 2 uses
   %i.cm = zext nneg i32 %2 to i64                 ; 2 uses
-  %xtraiter219 = and i64 %i.cm, 1
   %i.cn = icmp eq i32 %2, 1
   br i1 %i.cn, label %.epil.preheader, label %.lr.ph145.new
 
 .lr.ph145.new:                                    ; preds = %.lr.ph145
-  %unroll_iter222 = and i64 %i.cm, 2147483646
+  %8 = zext nneg i32 %2 to i64
   br label %bb.z
 
-_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader.loopexit.unr-lcssa: ; preds = %bb.ad
-  %lcmp.mod220.not = icmp eq i64 %xtraiter219, 0
-  br i1 %lcmp.mod220.not, label %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader.loopexit.unr-lcssa, %.lr.ph145
-  %indvars.iv157.epil.init = phi i64 [ 1, %.lr.ph145 ], [ %indvars.iv.next158.1, %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod221 = trunc i32 %2 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod221)
+.epil.preheader:                                  ; preds = %.lr.ph145, %bb.ad
+  %indvars.iv157.epil.init = phi i64 [ 1, %.lr.ph145 ], [ %niter223.next.1, %bb.ad ] ; 3 uses
   %i.co = getelementptr [8 x i8], ptr %i.cl, i64 %indvars.iv157.epil.init ; 2 uses
   %i.cp = getelementptr i8, ptr %i.co, i64 -8
-  %i.cq = icmp eq i64 %indvars.iv157.epil.init, %8
+  %i.cq = icmp eq i64 %indvars.iv157.epil.init, %i.cm
   br i1 %i.cq, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %.epil.preheader
@@ -358,7 +350,7 @@ bb.y:                                             ; preds = %bb.x
   store i32 %i.cu, ptr %i.ct, align 4, !tbaa !32
   br label %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader
 
-_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader: ; preds = %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader.loopexit.unr-lcssa, %bb.y, %bb.x, %.preheader138
+_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader: ; preds = %bb.y, %bb.x, %.preheader138
   br i1 %i.ao, label %.lr.ph147, label %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108._crit_edge
 
 .lr.ph147:                                        ; preds = %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader
@@ -432,60 +424,34 @@ _ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEi
   %i.dq = icmp ugt i64 %i.dp, -4
   br i1 %i.dq, label %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108._crit_edge.thread, label %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108
 
-bb.z:                                             ; preds = %bb.ad, %.lr.ph145.new
-  %indvars.iv157 = phi i64 [ 1, %.lr.ph145.new ], [ %indvars.iv.next158.1, %bb.ad ] ; 5 uses
-  %niter223 = phi i64 [ 0, %.lr.ph145.new ], [ %niter223.next.1, %bb.ad ]
-  %i.dr = getelementptr [8 x i8], ptr %i.cl, i64 %indvars.iv157 ; 2 uses
+bb.z:                                             ; preds = %.lr.ph145.new, %bb.ad
+  %niter223 = phi i64 [ 1, %.lr.ph145.new ], [ %niter223.next.1, %bb.ad ] ; 4 uses
+  %i.dr = getelementptr [8 x i8], ptr %i.cl, i64 %niter223 ; 2 uses
   %i.ds = getelementptr i8, ptr %i.dr, i64 -8
-  %i.dt = icmp eq i64 %indvars.iv157, %8
-  br i1 %i.dt, label %10, label %9
+  %i.dt = icmp eq i64 %niter223, %i.cm
+  br i1 %i.dt, label %bb.ab, label %bb.aa
 
-9:                                                ; preds = %bb.z
-  %.sroa.speculate.load.129 = load i32, ptr %i.dr, align 4, !tbaa !35
-  br label %10
-
-10:                                               ; preds = %9, %bb.z
-  %.sroa.speculated128 = phi i32 [ %.sroa.speculate.load.129, %9 ], [ %4, %bb.z ]
-  %11 = load i32, ptr %i.ds, align 4, !tbaa !35   ; 2 uses
-  %.not77.i = icmp eq i32 %11, %.sroa.speculated128
-  br i1 %.not77.i, label %16, label %12
-
-12:                                               ; preds = %10
-  %13 = sext i32 %11 to i64
-  %14 = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %13
-  %15 = trunc nuw nsw i64 %indvars.iv157 to i32
-  store i32 %15, ptr %14, align 4, !tbaa !32
-  br label %16
-
-16:                                               ; preds = %12, %10
-  %indvars.iv.next158 = add nuw nsw i64 %indvars.iv157, 1 ; 3 uses
-  %17 = getelementptr [8 x i8], ptr %i.cl, i64 %indvars.iv.next158 ; 2 uses
-  %18 = getelementptr i8, ptr %17, i64 -8
-  %19 = icmp eq i64 %indvars.iv.next158, %8
-  br i1 %19, label %bb.ab, label %bb.aa
-
-bb.aa:                                            ; preds = %16
-  %.sroa.speculate.load.129.1 = load i32, ptr %17, align 4, !tbaa !35
+bb.aa:                                            ; preds = %bb.z
+  %.sroa.speculate.load.129.1 = load i32, ptr %i.dr, align 4, !tbaa !35
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.aa, %16
-  %.sroa.speculated128.1 = phi i32 [ %.sroa.speculate.load.129.1, %bb.aa ], [ %4, %16 ]
-  %i.du = load i32, ptr %18, align 4, !tbaa !35   ; 2 uses
+bb.ab:                                            ; preds = %bb.aa, %bb.z
+  %.sroa.speculated128.1 = phi i32 [ %.sroa.speculate.load.129.1, %bb.aa ], [ %4, %bb.z ]
+  %i.du = load i32, ptr %i.ds, align 4, !tbaa !35 ; 2 uses
   %.not77.i.1 = icmp eq i32 %i.du, %.sroa.speculated128.1
   br i1 %.not77.i.1, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.dv = sext i32 %i.du to i64
   %i.dw = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %i.dv
-  %i.dx = trunc nuw nsw i64 %indvars.iv.next158 to i32
+  %i.dx = trunc nuw nsw i64 %niter223 to i32
   store i32 %i.dx, ptr %i.dw, align 4, !tbaa !32
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %indvars.iv.next158.1 = add nuw nsw i64 %indvars.iv157, 2 ; 2 uses
-  %niter223.next.1 = add i64 %niter223, 2         ; 2 uses
-  %niter223.ncmp.1 = icmp eq i64 %niter223.next.1, %unroll_iter222
-  br i1 %niter223.ncmp.1, label %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader.loopexit.unr-lcssa, label %bb.z, !llvm.loop !87
+  %niter223.next.1 = add nuw nsw i64 %niter223, 1 ; 3 uses
+  %niter223.ncmp.1 = icmp eq i64 %niter223.next.1, %8
+  br i1 %niter223.ncmp.1, label %.epil.preheader, label %bb.z, !llvm.loop !87
 
 _ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108._crit_edge: ; preds = %_ZN15b3BoundSearchCL11executeHostER20b3AlignedObjectArrayI10b3SortDataEiRS0_IjEiNS_6OptionE.exit108.preheader
   %.not.i.i.i109.not = icmp eq ptr %i.bf, null
@@ -837,7 +803,7 @@ attributes #16 = { noreturn nounwind }
 !84 = distinct !{!84, !36, !93}
 !85 = distinct !{!85, !36, !97, !98}
 !86 = distinct !{!86, !99}
-!87 = distinct !{!87, !36}
+!87 = distinct !{!87, !36, !93}
 !88 = distinct !{!88, !36, !97}
 !89 = !{!"_ZTS18b3AlignedAllocatorI10b3SortDataLj16EE"}
 !90 = !{!"p1 _ZTS10b3SortData", !11, i64 0}

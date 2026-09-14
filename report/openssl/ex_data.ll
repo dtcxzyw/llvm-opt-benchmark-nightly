@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.h = zext nneg i32 %0 to i64
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !13
-  %i.k = tail call i32 @OPENSSL_sk_num(ptr noundef %i.j) #9 ; 6 uses
+  %i.k = tail call i32 @OPENSSL_sk_num(ptr noundef %i.j) #9 ; 4 uses
   %i.l = icmp sgt i32 %i.k, 0
   br i1 %i.l, label %bb.g, label %.thread61
 
@@ -220,7 +220,7 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.preheader:                                 ; preds = %bb.g, %bb.h
   %.086 = phi ptr [ %i.o, %bb.h ], [ %3, %bb.g ]  ; 5 uses
-  %wide.trip.count = zext nneg i32 %i.k to i64
+  %wide.trip.count = zext nneg i32 %i.k to i64    ; 3 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -244,10 +244,8 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph68:                                         ; preds = %.lr.ph
   %i.w = load ptr, ptr %i.b, align 8, !tbaa !10
   %i.x = tail call i32 @CRYPTO_THREAD_unlock(ptr noundef %i.w) #9 ; 0 uses
-  %4 = zext nneg i32 %i.k to i64
-  call void @qsort(ptr noundef nonnull %.086, i64 noundef %4, i64 noundef 16, ptr noundef nonnull @ex_callback_compare) #9
+  call void @qsort(ptr noundef nonnull %.086, i64 noundef %wide.trip.count, i64 noundef 16, ptr noundef nonnull @ex_callback_compare) #9
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %wide.trip.count75 = zext nneg i32 %i.k to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph68, %bb.n
@@ -292,7 +290,7 @@ CRYPTO_get_ex_data.exit:                          ; preds = %bb.k, %bb.l, %bb.m
 
 bb.n:                                             ; preds = %bb.i, %bb.j, %CRYPTO_get_ex_data.exit
   %indvars.iv.next72 = add nuw nsw i64 %indvars.iv71, 1 ; 2 uses
-  %exitcond76.not = icmp eq i64 %indvars.iv.next72, %wide.trip.count75
+  %exitcond76.not = icmp eq i64 %indvars.iv.next72, %wide.trip.count
   br i1 %exitcond76.not, label %._crit_edge69, label %bb.i, !llvm.loop !39
 
 ._crit_edge69:                                    ; preds = %bb.n

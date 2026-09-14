@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.std::allocator", align 1    ; 3 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %4 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %i.a = load i32, ptr %0, align 8, !tbaa !40     ; 17 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !40     ; 16 uses
   %i.b = mul nuw nsw i32 %i.a, 1000
   %i.c = icmp sgt i32 %i.a, 0
   br i1 %i.c, label %bb.g, label %bb.b
@@ -251,7 +251,7 @@ bb.g:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = load ptr, ptr %i.k, align 8              ; 56 uses
   %i.m = zext nneg i32 %i.a to i64                ; 4 uses
-  %wide.trip.count = zext nneg i32 %i.a to i64    ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.a to i64    ; 10 uses
   %i.n = add nsw i64 %wide.trip.count, -1         ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.o = icmp eq i64 %i.n, 0
@@ -654,7 +654,6 @@ bb.ba:                                            ; preds = %._crit_edge1072, %b
   %i.vi = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.vj = load ptr, ptr %i.vi, align 8, !tbaa !87 ; 6 uses
   %i.vk = zext nneg i32 %i.z to i64
-  %wide.trip.count1051 = zext nneg i32 %i.a to i64
   br label %.preheader795
 
 bb.bb:                                            ; preds = %.lr.ph918, %.loopexit801
@@ -1057,7 +1056,7 @@ bb.ch:                                            ; preds = %bb.ch, %.epil.prehe
   %i.aky = getelementptr inbounds nuw [8 x i8], ptr %i.akq, i64 %indvars.iv1061
   store double %.lcssa, ptr %i.aky, align 8, !tbaa !48
   %indvars.iv.next1048 = add nuw nsw i64 %indvars.iv1047, 1 ; 2 uses
-  %exitcond1052.not = icmp eq i64 %indvars.iv.next1048, %wide.trip.count1051
+  %exitcond1052.not = icmp eq i64 %indvars.iv.next1048, %wide.trip.count
   br i1 %exitcond1052.not, label %._crit_edge927, label %.preheader, !llvm.loop !365
 
 .preheader.new:                                   ; preds = %.preheader, %.preheader.new
@@ -1111,8 +1110,8 @@ bb.ch:                                            ; preds = %bb.ch, %.epil.prehe
   br label %.preheader.us.epil
 
 .preheader.us.epil:                               ; preds = %.preheader.us.epil, %.preheader.us.epil.preheader
-  %indvars.iv1053.epil = phi i64 [ %indvars.iv1053.epil.init, %.preheader.us.epil.preheader ], [ %indvars.iv.next1054.epil, %.preheader.us.epil ] ; 2 uses
-  %epil.iter1215 = phi i64 [ 0, %.preheader.us.epil.preheader ], [ %epil.iter1215.next, %.preheader.us.epil ]
+  %indvars.iv1053.epil = phi i64 [ %indvars.iv.next1054.epil, %.preheader.us.epil ], [ %indvars.iv1053.epil.init, %.preheader.us.epil.preheader ] ; 2 uses
+  %epil.iter1215 = phi i64 [ %epil.iter1215.next, %.preheader.us.epil ], [ 0, %.preheader.us.epil.preheader ]
   %i.amb = getelementptr inbounds nuw [8 x i8], ptr %i.vj, i64 %indvars.iv1053.epil
   %i.amc = load ptr, ptr %i.amb, align 8, !tbaa !65
   %i.amd = getelementptr inbounds nuw [8 x i8], ptr %i.amc, i64 %indvars.iv1061

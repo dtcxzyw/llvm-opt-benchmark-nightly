@@ -206,7 +206,7 @@ bb.am:                                            ; preds = %bb.ak
 
 bb.an:                                            ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hd8dc5bcbecb32494E.exit.i.i.i.i.i.i.i.i.i.i.i.i", %.lr.ph.i.i.i.i.i.i.i.i.i.i
   %i.de = phi ptr [ %i.cz, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %i.ek, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hd8dc5bcbecb32494E.exit.i.i.i.i.i.i.i.i.i.i.i.i" ]
-  %i.df = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %i.em, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hd8dc5bcbecb32494E.exit.i.i.i.i.i.i.i.i.i.i.i.i" ] ; 7 uses
+  %i.df = phi i64 [ 1, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %i.em, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hd8dc5bcbecb32494E.exit.i.i.i.i.i.i.i.i.i.i.i.i" ] ; 6 uses
   %.sroa.11.019.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.bw, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %i.dk, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hd8dc5bcbecb32494E.exit.i.i.i.i.i.i.i.i.i.i.i.i" ]
   call void @llvm.experimental.noalias.scope.decl(metadata !46607), !noalias !46608
   %i.dg = invoke { i32, i32 } %i.br(ptr noundef nonnull align 1 %.sroa.08.0.i)
@@ -220,7 +220,7 @@ bb.an:                                            ; preds = %"_ZN5alloc3vec16Vec
 bb.ao:                                            ; preds = %.noexc9.i.i.i.i.i.i.i.i.i.i
   %i.dj = extractvalue { i32, i32 } %i.dg, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i)
-  %i.dk = add i64 %.sroa.11.019.i.i.i.i.i.i.i.i.i.i, -1 ; 3 uses
+  %i.dk = add nsw i64 %.sroa.11.019.i.i.i.i.i.i.i.i.i.i, -1 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !46609
   invoke fastcc void @_ZN15index_scheduler5queue5tasks9TaskQueue8get_task17h27ec9948e8e7a7e8E(ptr noalias noundef align 8 captures(address) dereferenceable(784) %i.g, i64 %.val.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i32 %.val4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.w, i32 noundef %i.dj)
           to label %.noexc10.i.i.i.i.i.i.i.i.i.i unwind label %bb.au, !noalias !46610
@@ -292,8 +292,6 @@ bb.av:                                            ; preds = %bb.at
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !46621
   store i64 %i.dl, ptr %i.i, align 8, !noalias !46621
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(776) %.sroa.8.0..sroa_idx.i.i.i.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(776) %.sroa.8.i.i.i.i.i.i.i.i.i.i, i64 776, i1 false), !noalias !46621
-  %4 = icmp samesign ult i64 %i.df, 11764505149049459
-  call void @llvm.assume(i1 %4)
   %i.dr = load i64, ptr %i.l, align 8, !range !56, !alias.scope !46608, !noalias !46622, !noundef !57
   %i.ds = icmp eq i64 %i.df, %i.dr
   br i1 %i.ds, label %bb.az, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hd8dc5bcbecb32494E.exit.i.i.i.i.i.i.i.i.i.i.i.i"
@@ -696,7 +694,7 @@ bb.hb:                                            ; preds = %"_ZN4core3ptr45drop
 .lr.ph.i.i.i369.i.i.i:                            ; preds = %"_ZN4core3ptr162drop_in_place$LT$$LP$$RF$meilisearch_types..index_uid_pattern..IndexUidPattern$C$alloc..string..String$C$$RF$meilisearch_types..tasks..ExportIndexSettings$RP$$GT$17hc803a309732bd695E.exit.i.i.i373.i.i.i", %bb.hb
   %.sroa.0.011.i.i.i370.i.i.i = phi i64 [ %i.qv, %"_ZN4core3ptr162drop_in_place$LT$$LP$$RF$meilisearch_types..index_uid_pattern..IndexUidPattern$C$alloc..string..String$C$$RF$meilisearch_types..tasks..ExportIndexSettings$RP$$GT$17hc803a309732bd695E.exit.i.i.i373.i.i.i" ], [ 0, %bb.hb ] ; 2 uses
   %i.qu = getelementptr inbounds nuw [40 x i8], ptr %.sroa.8.0.i.i, i64 %.sroa.0.011.i.i.i370.i.i.i ; 2 uses
-  %i.qv = add nuw i64 %.sroa.0.011.i.i.i370.i.i.i, 1 ; 2 uses
+  %i.qv = add nuw nsw i64 %.sroa.0.011.i.i.i370.i.i.i, 1 ; 2 uses
   %.val8.i.i.i371.i.i.i = load i64, ptr %i.qu, align 8, !range !56, !alias.scope !96371, !noalias !96372, !noundef !57 ; 2 uses
   %i.qw = icmp eq i64 %.val8.i.i.i371.i.i.i, 0
   br i1 %i.qw, label %"_ZN4core3ptr162drop_in_place$LT$$LP$$RF$meilisearch_types..index_uid_pattern..IndexUidPattern$C$alloc..string..String$C$$RF$meilisearch_types..tasks..ExportIndexSettings$RP$$GT$17hc803a309732bd695E.exit.i.i.i373.i.i.i", label %bb.hc

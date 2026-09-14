@@ -205,12 +205,12 @@ _ZL18utrie_getDataBlockP8UNewTriei.exit:          ; preds = %bb.g, %bb.e
   %.not98 = icmp samesign ugt i32 %i.ae, %2
   %i.af = load ptr, ptr %i.i, align 8, !tbaa !12  ; 7 uses
   %i.ag = zext nneg i32 %.0.i to i64              ; 3 uses
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.ag ; 40 uses
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.ag ; 31 uses
   br i1 %.not98, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %_ZL18utrie_getDataBlockP8UNewTriei.exit
   %i.ai = shl nuw nsw i32 %i.l, 2
-  %.idx = zext nneg i32 %i.ai to i64              ; 20 uses
+  %.idx = zext nneg i32 %i.ai to i64              ; 18 uses
   %.not.i = icmp eq i8 %4, 0
   %i.aj = lshr exact i64 %.idx, 2
   %i.ak = sub nuw nsw i64 32, %i.aj               ; 4 uses
@@ -221,45 +221,36 @@ bb.h:                                             ; preds = %_ZL18utrie_getDataB
   br i1 %min.iters.check197, label %.lr.ph.i.preheader334, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %i.ak, 56                      ; 5 uses
+  %n.vec = and i64 %i.ak, 56                      ; 4 uses
   %i.al = shl nuw nsw i64 %n.vec, 2
   %i.am = add nuw nsw i64 %i.al, %.idx
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %3, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 8 uses
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 6 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.an, align 4, !tbaa !14
   store <4 x i32> %broadcast.splat, ptr %i.ao, align 4, !tbaa !14
   %i.ap = icmp eq i64 %n.vec, 8
-  br i1 %i.ap, label %middle.block, label %vector.body.1
+  br i1 %i.ap, label %middle.block, label %vector.body.2.a
 
-vector.body.1:                                    ; preds = %vector.ph
-  %5 = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %.idx ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store <4 x i32> %broadcast.splat, ptr %6, align 4, !tbaa !14
-  store <4 x i32> %broadcast.splat, ptr %7, align 4, !tbaa !14
-  %8 = icmp eq i64 %n.vec, 16
-  br i1 %8, label %middle.block, label %vector.body.2.a
-
-vector.body.2.a:                                  ; preds = %vector.body.1
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ah, i64 64
+vector.body.2.a:                                  ; preds = %vector.ph
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %.idx ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.ar, align 4, !tbaa !14
   store <4 x i32> %broadcast.splat, ptr %i.as, align 4, !tbaa !14
-  %i.at = icmp eq i64 %n.vec, 24
+  %i.at = icmp eq i64 %n.vec, 16
   br i1 %i.at, label %middle.block, label %vector.body.3
 
 vector.body.3:                                    ; preds = %vector.body.2.a
-  %i.au = getelementptr inbounds nuw i8, ptr %i.ah, i64 96
+  %i.au = getelementptr inbounds nuw i8, ptr %i.ah, i64 64
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %.idx ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.av, align 4, !tbaa !14
   store <4 x i32> %broadcast.splat, ptr %i.aw, align 4, !tbaa !14
   br label %middle.block
 
-middle.block:                                     ; preds = %vector.body.3, %vector.body.2.a, %vector.body.1, %vector.ph
+middle.block:                                     ; preds = %vector.body.3, %vector.body.2.a, %vector.ph
   %cmp.n = icmp eq i64 %i.ak, %n.vec
   br i1 %cmp.n, label %_ZL15utrie_fillBlockPjiijja.exit, label %.lr.ph.i.preheader334
 
@@ -271,11 +262,11 @@ middle.block:                                     ; preds = %vector.body.3, %vec
   br i1 %min.iters.check197, label %.lr.ph19.i.preheader333, label %vector.ph198
 
 vector.ph198:                                     ; preds = %.lr.ph19.i.preheader
-  %n.vec199 = and i64 %i.ak, 56                   ; 5 uses
+  %n.vec199 = and i64 %i.ak, 56                   ; 4 uses
   %i.ax = shl nuw nsw i64 %n.vec199, 2
   %i.ay = add nuw nsw i64 %i.ax, %.idx
   %broadcast.splatinsert200 = insertelement <4 x i32> poison, i32 %i.k, i64 0
-  %broadcast.splat201 = shufflevector <4 x i32> %broadcast.splatinsert200, <4 x i32> poison, <4 x i32> zeroinitializer ; 8 uses
+  %broadcast.splat201 = shufflevector <4 x i32> %broadcast.splatinsert200, <4 x i32> poison, <4 x i32> zeroinitializer ; 6 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   %wide.load = load <4 x i32>, ptr %i.az, align 4, !tbaa !14
@@ -283,177 +274,88 @@ vector.ph198:                                     ; preds = %.lr.ph19.i.preheade
   %i.bb = icmp eq <4 x i32> %wide.load, %broadcast.splat201 ; 4 uses
   %i.bc = icmp eq <4 x i32> %wide.load204, %broadcast.splat201 ; 4 uses
   %i.bd = extractelement <4 x i1> %i.bb, i64 0
-  br i1 %i.bd, label %pred.store.if, label %pred.store.continue
+  br i1 %i.bd, label %pred.store.if.1.a, label %pred.store.continue.1.a
 
-pred.store.if:                                    ; preds = %vector.ph198
+pred.store.if.1.a:                                ; preds = %vector.ph198
   store i32 %3, ptr %i.az, align 4, !tbaa !14
-  br label %pred.store.continue
-
-pred.store.continue:                              ; preds = %pred.store.if, %vector.ph198
-  %9 = extractelement <4 x i1> %i.bb, i64 1
-  br i1 %9, label %pred.store.if205, label %pred.store.continue206
-
-pred.store.if205:                                 ; preds = %pred.store.continue
-  %10 = getelementptr i8, ptr %i.ah, i64 %.idx
-  %11 = getelementptr i8, ptr %10, i64 4
-  store i32 %3, ptr %11, align 4, !tbaa !14
-  br label %pred.store.continue206
-
-pred.store.continue206:                           ; preds = %pred.store.if205, %pred.store.continue
-  %12 = extractelement <4 x i1> %i.bb, i64 2
-  br i1 %12, label %pred.store.if207, label %pred.store.continue208
-
-pred.store.if207:                                 ; preds = %pred.store.continue206
-  %13 = getelementptr i8, ptr %i.ah, i64 %.idx
-  %14 = getelementptr i8, ptr %13, i64 8
-  store i32 %3, ptr %14, align 4, !tbaa !14
-  br label %pred.store.continue208
-
-pred.store.continue208:                           ; preds = %pred.store.if207, %pred.store.continue206
-  %15 = extractelement <4 x i1> %i.bb, i64 3
-  br i1 %15, label %pred.store.if209, label %pred.store.continue210
-
-pred.store.if209:                                 ; preds = %pred.store.continue208
-  %16 = getelementptr i8, ptr %i.ah, i64 %.idx
-  %17 = getelementptr i8, ptr %16, i64 12
-  store i32 %3, ptr %17, align 4, !tbaa !14
-  br label %pred.store.continue210
-
-pred.store.continue210:                           ; preds = %pred.store.if209, %pred.store.continue208
-  %18 = extractelement <4 x i1> %i.bc, i64 0
-  br i1 %18, label %pred.store.if211, label %pred.store.continue212
-
-pred.store.if211:                                 ; preds = %pred.store.continue210
-  %19 = getelementptr i8, ptr %i.ah, i64 %.idx
-  %20 = getelementptr i8, ptr %19, i64 16
-  store i32 %3, ptr %20, align 4, !tbaa !14
-  br label %pred.store.continue212
-
-pred.store.continue212:                           ; preds = %pred.store.if211, %pred.store.continue210
-  %21 = extractelement <4 x i1> %i.bc, i64 1
-  br i1 %21, label %pred.store.if213, label %pred.store.continue214
-
-pred.store.if213:                                 ; preds = %pred.store.continue212
-  %22 = getelementptr i8, ptr %i.ah, i64 %.idx
-  %23 = getelementptr i8, ptr %22, i64 20
-  store i32 %3, ptr %23, align 4, !tbaa !14
-  br label %pred.store.continue214
-
-pred.store.continue214:                           ; preds = %pred.store.if213, %pred.store.continue212
-  %24 = extractelement <4 x i1> %i.bc, i64 2
-  br i1 %24, label %pred.store.if215, label %pred.store.continue216
-
-pred.store.if215:                                 ; preds = %pred.store.continue214
-  %25 = getelementptr i8, ptr %i.ah, i64 %.idx
-  %26 = getelementptr i8, ptr %25, i64 24
-  store i32 %3, ptr %26, align 4, !tbaa !14
-  br label %pred.store.continue216
-
-pred.store.continue216:                           ; preds = %pred.store.if215, %pred.store.continue214
-  %27 = extractelement <4 x i1> %i.bc, i64 3
-  br i1 %27, label %pred.store.if217, label %pred.store.continue218
-
-pred.store.if217:                                 ; preds = %pred.store.continue216
-  %28 = getelementptr i8, ptr %i.ah, i64 %.idx
-  %29 = getelementptr i8, ptr %28, i64 28
-  store i32 %3, ptr %29, align 4, !tbaa !14
-  br label %pred.store.continue218
-
-pred.store.continue218:                           ; preds = %pred.store.if217, %pred.store.continue216
-  %30 = icmp eq i64 %n.vec199, 8
-  br i1 %30, label %middle.block220, label %vector.body202.1
-
-vector.body202.1:                                 ; preds = %pred.store.continue218
-  %31 = add nuw nsw i64 %.idx, 32                 ; 8 uses
-  %32 = getelementptr inbounds nuw i8, ptr %i.ah, i64 %31 ; 3 uses
-  %33 = getelementptr inbounds nuw i8, ptr %32, i64 16
-  %wide.load.1 = load <4 x i32>, ptr %32, align 4, !tbaa !14
-  %wide.load204.1 = load <4 x i32>, ptr %33, align 4, !tbaa !14
-  %34 = icmp eq <4 x i32> %wide.load.1, %broadcast.splat201 ; 4 uses
-  %35 = icmp eq <4 x i32> %wide.load204.1, %broadcast.splat201 ; 4 uses
-  %36 = extractelement <4 x i1> %34, i64 0
-  br i1 %36, label %pred.store.if.1.a, label %pred.store.continue.1.a
-
-pred.store.if.1.a:                                ; preds = %vector.body202.1
-  store i32 %3, ptr %32, align 4, !tbaa !14
   br label %pred.store.continue.1.a
 
-pred.store.continue.1.a:                          ; preds = %pred.store.if.1.a, %vector.body202.1
-  %i.be = extractelement <4 x i1> %34, i64 1
+pred.store.continue.1.a:                          ; preds = %pred.store.if.1.a, %vector.ph198
+  %i.be = extractelement <4 x i1> %i.bb, i64 1
   br i1 %i.be, label %pred.store.if205.1.a, label %pred.store.continue206.1.a
 
 pred.store.if205.1.a:                             ; preds = %pred.store.continue.1.a
-  %i.bf = getelementptr i8, ptr %i.ah, i64 %31
+  %i.bf = getelementptr i8, ptr %i.ah, i64 %.idx
   %i.bg = getelementptr i8, ptr %i.bf, i64 4
   store i32 %3, ptr %i.bg, align 4, !tbaa !14
   br label %pred.store.continue206.1.a
 
 pred.store.continue206.1.a:                       ; preds = %pred.store.if205.1.a, %pred.store.continue.1.a
-  %i.bh = extractelement <4 x i1> %34, i64 2
+  %i.bh = extractelement <4 x i1> %i.bb, i64 2
   br i1 %i.bh, label %pred.store.if207.1.a, label %pred.store.continue208.1.a
 
 pred.store.if207.1.a:                             ; preds = %pred.store.continue206.1.a
-  %i.bi = getelementptr i8, ptr %i.ah, i64 %31
+  %i.bi = getelementptr i8, ptr %i.ah, i64 %.idx
   %i.bj = getelementptr i8, ptr %i.bi, i64 8
   store i32 %3, ptr %i.bj, align 4, !tbaa !14
   br label %pred.store.continue208.1.a
 
 pred.store.continue208.1.a:                       ; preds = %pred.store.if207.1.a, %pred.store.continue206.1.a
-  %i.bk = extractelement <4 x i1> %34, i64 3
+  %i.bk = extractelement <4 x i1> %i.bb, i64 3
   br i1 %i.bk, label %pred.store.if209.1.a, label %pred.store.continue210.1.a
 
 pred.store.if209.1.a:                             ; preds = %pred.store.continue208.1.a
-  %i.bl = getelementptr i8, ptr %i.ah, i64 %31
+  %i.bl = getelementptr i8, ptr %i.ah, i64 %.idx
   %i.bm = getelementptr i8, ptr %i.bl, i64 12
   store i32 %3, ptr %i.bm, align 4, !tbaa !14
   br label %pred.store.continue210.1.a
 
 pred.store.continue210.1.a:                       ; preds = %pred.store.if209.1.a, %pred.store.continue208.1.a
-  %i.bn = extractelement <4 x i1> %35, i64 0
+  %i.bn = extractelement <4 x i1> %i.bc, i64 0
   br i1 %i.bn, label %pred.store.if211.1.a, label %pred.store.continue212.1.a
 
 pred.store.if211.1.a:                             ; preds = %pred.store.continue210.1.a
-  %i.bo = getelementptr i8, ptr %i.ah, i64 %31
+  %i.bo = getelementptr i8, ptr %i.ah, i64 %.idx
   %i.bp = getelementptr i8, ptr %i.bo, i64 16
   store i32 %3, ptr %i.bp, align 4, !tbaa !14
   br label %pred.store.continue212.1.a
 
 pred.store.continue212.1.a:                       ; preds = %pred.store.if211.1.a, %pred.store.continue210.1.a
-  %i.bq = extractelement <4 x i1> %35, i64 1
+  %i.bq = extractelement <4 x i1> %i.bc, i64 1
   br i1 %i.bq, label %pred.store.if213.1.a, label %pred.store.continue214.1.a
 
 pred.store.if213.1.a:                             ; preds = %pred.store.continue212.1.a
-  %i.br = getelementptr i8, ptr %i.ah, i64 %31
+  %i.br = getelementptr i8, ptr %i.ah, i64 %.idx
   %i.bs = getelementptr i8, ptr %i.br, i64 20
   store i32 %3, ptr %i.bs, align 4, !tbaa !14
   br label %pred.store.continue214.1.a
 
 pred.store.continue214.1.a:                       ; preds = %pred.store.if213.1.a, %pred.store.continue212.1.a
-  %i.bt = extractelement <4 x i1> %35, i64 2
+  %i.bt = extractelement <4 x i1> %i.bc, i64 2
   br i1 %i.bt, label %pred.store.if215.1.a, label %pred.store.continue216.1.a
 
 pred.store.if215.1.a:                             ; preds = %pred.store.continue214.1.a
-  %i.bu = getelementptr i8, ptr %i.ah, i64 %31
+  %i.bu = getelementptr i8, ptr %i.ah, i64 %.idx
   %i.bv = getelementptr i8, ptr %i.bu, i64 24
   store i32 %3, ptr %i.bv, align 4, !tbaa !14
   br label %pred.store.continue216.1.a
 
 pred.store.continue216.1.a:                       ; preds = %pred.store.if215.1.a, %pred.store.continue214.1.a
-  %i.bw = extractelement <4 x i1> %35, i64 3
+  %i.bw = extractelement <4 x i1> %i.bc, i64 3
   br i1 %i.bw, label %pred.store.if217.1.a, label %pred.store.continue218.1.a
 
 pred.store.if217.1.a:                             ; preds = %pred.store.continue216.1.a
-  %i.bx = getelementptr i8, ptr %i.ah, i64 %31
+  %i.bx = getelementptr i8, ptr %i.ah, i64 %.idx
   %i.by = getelementptr i8, ptr %i.bx, i64 28
   store i32 %3, ptr %i.by, align 4, !tbaa !14
   br label %pred.store.continue218.1.a
 
 pred.store.continue218.1.a:                       ; preds = %pred.store.if217.1.a, %pred.store.continue216.1.a
-  %i.bz = icmp eq i64 %n.vec199, 16
+  %i.bz = icmp eq i64 %n.vec199, 8
   br i1 %i.bz, label %middle.block220, label %vector.body202.2.a
 
 vector.body202.2.a:                               ; preds = %pred.store.continue218.1.a
-  %i.ca = add nuw nsw i64 %.idx, 64               ; 8 uses
+  %i.ca = add nuw nsw i64 %.idx, 32               ; 8 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ca ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
   %wide.load.2.a = load <4 x i32>, ptr %i.cb, align 4, !tbaa !14
@@ -538,11 +440,11 @@ pred.store.if217.2.a:                             ; preds = %pred.store.continue
   br label %pred.store.continue218.2
 
 pred.store.continue218.2:                         ; preds = %pred.store.if217.2.a, %pred.store.continue216.2.a
-  %i.db = icmp eq i64 %n.vec199, 24
+  %i.db = icmp eq i64 %n.vec199, 16
   br i1 %i.db, label %middle.block220, label %vector.body202.3
 
 vector.body202.3:                                 ; preds = %pred.store.continue218.2
-  %i.dc = add nuw nsw i64 %.idx, 96               ; 8 uses
+  %i.dc = add nuw nsw i64 %.idx, 64               ; 8 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.dc ; 3 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 16
   %wide.load.3 = load <4 x i32>, ptr %i.dd, align 4, !tbaa !14
@@ -626,7 +528,7 @@ pred.store.if217.3:                               ; preds = %pred.store.continue
   store i32 %3, ptr %i.ec, align 4, !tbaa !14
   br label %middle.block220
 
-middle.block220:                                  ; preds = %pred.store.continue216.3, %pred.store.if217.3, %pred.store.continue218.2, %pred.store.continue218.1.a, %pred.store.continue218
+middle.block220:                                  ; preds = %pred.store.continue216.3, %pred.store.if217.3, %pred.store.continue218.2, %pred.store.continue218.1.a
   %cmp.n221 = icmp eq i64 %i.ak, %n.vec199
   br i1 %cmp.n221, label %_ZL15utrie_fillBlockPjiijja.exit, label %.lr.ph19.i.preheader333
 

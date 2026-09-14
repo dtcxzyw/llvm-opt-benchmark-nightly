@@ -170,7 +170,7 @@ bb.u:                                             ; preds = %bb.a
   br label %ddWindow2.exit
 
 bb.v:                                             ; preds = %bb.a
-  %i.bd = sub nsw i32 %2, %1                      ; 24 uses
+  %i.bd = sub nsw i32 %2, %1                      ; 23 uses
   %i.be = icmp slt i32 %i.bd, 3
   br i1 %i.be, label %bb.w, label %bb.x
 
@@ -179,7 +179,7 @@ bb.w:                                             ; preds = %bb.v
   br label %ddWindow2.exit
 
 bb.x:                                             ; preds = %bb.v
-  %i.bg = add nsw i32 %i.bd, -2                   ; 4 uses
+  %i.bg = add nsw i32 %i.bd, -2                   ; 5 uses
   %i.bh = zext nneg i32 %i.bg to i64              ; 5 uses
   %i.bi = shl nuw nsw i64 %i.bh, 2
   %i.bj = tail call noalias ptr @malloc(i64 noundef %i.bi) #5 ; 44 uses
@@ -230,7 +230,7 @@ bb.y:                                             ; preds = %bb.x
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bj, i64 4 ; 6 uses
   %i.by = icmp samesign ugt i32 %i.bd, 5          ; 4 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bj, i64 12 ; 4 uses
-  %exitcond147.peel.not.i = icmp eq i32 %i.bd, 3
+  %exitcond147.peel.not.i = icmp eq i32 %i.bg, 1
   %i.ca = add i32 %1, 1
   %i.cb = icmp sgt i32 %i.bd, 5
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bj, i64 12
@@ -633,7 +633,7 @@ bb.u:                                             ; preds = %bb.t, %.loopexit86,
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @ddWindowConv3(ptr noundef %0, i32 noundef %1, i32 noundef %2) unnamed_addr #0 {
 bb.a:
-  %i.a = sub nsw i32 %2, %1                       ; 10 uses
+  %i.a = sub nsw i32 %2, %1                       ; 9 uses
   %i.b = icmp slt i32 %i.a, 2
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -643,7 +643,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = add nsw i32 %i.a, -1                     ; 3 uses
-  %i.e = zext nneg i32 %i.d to i64                ; 4 uses
+  %i.e = zext nneg i32 %i.d to i64                ; 5 uses
   %i.f = shl nuw nsw i64 %i.e, 2
   %i.g = tail call noalias ptr @malloc(i64 noundef %i.f) #5 ; 19 uses
   %i.h = icmp eq ptr %i.g, null
@@ -684,8 +684,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = add nsw i32 %i.a, -2                     ; 5 uses
   %i.n = add nsw i32 %i.a, -3
   %i.o = sext i32 %i.n to i64                     ; 2 uses
-  %3 = zext nneg i32 %i.m to i64                  ; 2 uses
-  %wide.trip.count82 = zext nneg i32 %i.d to i64
+  %wide.trip.count82 = zext nneg i32 %i.m to i64  ; 2 uses
   %i.p = icmp sgt i32 %i.a, 3
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.r = icmp sgt i32 %i.a, 3
@@ -694,7 +693,7 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   %.not101 = icmp eq i32 %i.m, 0
   %i.u = getelementptr inbounds nuw i8, ptr %i.g, i64 4
-  %exitcond83.peel.not = icmp eq i32 %i.a, 2
+  %exitcond83.peel.not = icmp eq i32 %i.d, 1
   %i.v = getelementptr inbounds nuw i8, ptr %i.g, i64 4 ; 2 uses
   %i.w = add i32 %1, 1
   %i.x = icmp sgt i32 %i.a, 4
@@ -857,7 +856,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
-  %i.ar = icmp samesign ult i64 %indvars.iv79, %3
+  %i.ar = icmp samesign ult i64 %indvars.iv79, %wide.trip.count82
   br i1 %i.ar, label %bb.ad, label %.thread.us.sink.split.sink.split
 
 bb.ad:                                            ; preds = %bb.ac
@@ -866,7 +865,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.thread.us.sink.split.sink.split
 
 bb.ae:                                            ; preds = %bb.y
-  %i.at = icmp samesign ult i64 %indvars.iv79, %3
+  %i.at = icmp samesign ult i64 %indvars.iv79, %wide.trip.count82
   br i1 %i.at, label %.thread.us.sink.split.sink.split, label %.thread.us.sink.split
 
 .thread.us.sink.split.sink.split:                 ; preds = %bb.ae, %bb.ac, %bb.ad, %bb.z
@@ -890,7 +889,7 @@ bb.ae:                                            ; preds = %bb.y
 bb.af:                                            ; preds = %.thread.us, %.peel.next84
   %.2.us = phi i32 [ %.1.us, %.thread.us ], [ %.074.us, %.peel.next84 ] ; 2 uses
   %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
-  %exitcond83.not = icmp eq i64 %indvars.iv.next80, %wide.trip.count82
+  %exitcond83.not = icmp eq i64 %indvars.iv.next80, %i.e
   br i1 %exitcond83.not, label %._crit_edge.us, label %.peel.next84, !llvm.loop !47
 
 ._crit_edge.us:                                   ; preds = %bb.af, %bb.x, %bb.m

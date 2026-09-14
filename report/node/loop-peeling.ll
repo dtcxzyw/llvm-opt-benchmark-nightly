@@ -202,8 +202,7 @@ bb.j:                                             ; preds = %_ZNK2v88internal8co
 .lr.ph190:                                        ; preds = %bb.j
   %i.du = sext i32 %i.dq to i64
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.dp, i64 %i.du
-  %smax = call i32 @llvm.smax.i32(i32 %i.cb, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext i32 %i.cb to i64
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK2v88internal8compiler4Node10InputCountEv.exit103
@@ -605,9 +604,6 @@ declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #6
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

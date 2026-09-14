@@ -203,8 +203,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !45
   %i.r = load ptr, ptr %i.o, align 8, !tbaa !41   ; 3 uses
   %i.s = load ptr, ptr %i.n, align 8, !tbaa !44   ; 3 uses
-  %2 = zext nneg i32 %1 to i64
-  %wide.trip.count159 = zext nneg i32 %1 to i64   ; 2 uses
+  %wide.trip.count159 = zext nneg i32 %1 to i64   ; 3 uses
   %xtraiter = and i64 %wide.trip.count159, 1
   %i.t = icmp eq i32 %1, 1
   %unroll_iter = and i64 %wide.trip.count159, 2147483646
@@ -215,7 +214,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .preheader125:                                    ; preds = %.preheader125.lr.ph.split, %._crit_edge137
   %indvars.iv161 = phi i64 [ 0, %.preheader125.lr.ph.split ], [ %indvars.iv.next162, %._crit_edge137 ] ; 3 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv161 ; 3 uses
-  %i.v = mul nuw nsw i64 %indvars.iv161, %2       ; 3 uses
+  %i.v = mul nuw nsw i64 %indvars.iv161, %wide.trip.count159 ; 3 uses
   br i1 %i.t, label %.epil.preheader, label %.preheader125.new
 
 .preheader124:                                    ; preds = %._crit_edge137, %.preheader126
@@ -341,12 +340,11 @@ bb.f:                                             ; preds = %bb.d
 .preheader127.lr.ph.split:                        ; preds = %.preheader128
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !47
-  %i.cg = zext nneg i32 %1 to i64
+  %i.cg = zext nneg i32 %1 to i64                 ; 4 uses
   %wide.trip.count148 = zext nneg i32 %i.cc to i64
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %1, 8
-  %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %n.vec = and i64 %i.cg, 2147483640              ; 3 uses
+  %cmp.n = icmp eq i64 %n.vec, %i.cg
   br label %.preheader127
 
 bb.g:                                             ; preds = %bb.f
@@ -397,7 +395,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv
   store i32 %i.cq, ptr %gep, align 4, !tbaa !42
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.cg
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !129
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block

@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %bb.aa
   br i1 %.not74, label %.invoke334, label %bb.ad, !prof !34
 
 .loopexit283:                                     ; preds = %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRcNCNvMs6_NtCs8frGy5WneL6_4fish15parse_constantsNtB1q_10ParseError20describe_with_prefix0E0B1s_.exit.i, %bb.af, %bb.aa
-  %.sroa.053.0 = phi i64 [ 0, %bb.aa ], [ %i.bt, %bb.af ], [ 0, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRcNCNvMs6_NtCs8frGy5WneL6_4fish15parse_constantsNtB1q_10ParseError20describe_with_prefix0E0B1s_.exit.i ] ; 10 uses
+  %.sroa.053.0 = phi i64 [ 0, %bb.aa ], [ %i.bt, %bb.af ], [ 0, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRcNCNvMs6_NtCs8frGy5WneL6_4fish15parse_constantsNtB1q_10ParseError20describe_with_prefix0E0B1s_.exit.i ] ; 9 uses
   %i.bh = icmp eq i64 %.sroa.020.1, 0
   br i1 %i.bh, label %bb.ah, label %bb.ag
 
@@ -436,7 +436,6 @@ bb.az:                                            ; preds = %.noexc97, %bb.ay
 .lr.ph:                                           ; preds = %.preheader
   %i.ds = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.dt = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.053.0, i64 %3) ; 2 uses
   br label %bb.bb
 
 .body139:                                         ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit, %bb.cl, %bb.bt, %bb.ck, %bb.bs
@@ -508,7 +507,7 @@ _RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8for_each4call
 bb.bb:                                            ; preds = %.lr.ph, %_RINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32StringINtNtNtNtCs3oUPovFnLWP_4core4iter6traits7collect6ExtendcE6extendNtNtNtB1a_3str4iter5CharsECs8frGy5WneL6_4fish.exit165
   %.sroa.053.2296 = phi i64 [ %.sroa.053.0, %.lr.ph ], [ %i.eb, %_RINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32StringINtNtNtNtCs3oUPovFnLWP_4core4iter6traits7collect6ExtendcE6extendNtNtNtB1a_3str4iter5CharsECs8frGy5WneL6_4fish.exit165 ] ; 3 uses
   %i.eb = add i64 %.sroa.053.2296, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %.sroa.053.2296, %umax
+  %exitcond.not = icmp eq i64 %.sroa.053.2296, %3
   br i1 %exitcond.not, label %bb.by, label %bb.bx
 
 .noexc111:                                        ; preds = %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8for_each4callcNCINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB1q_11Utf32StringINtNtBa_7collect6ExtendcE6extendNtNtNtBe_3str4iter5CharsE0E0Cs8frGy5WneL6_4fish.exit.i.i.i102
@@ -779,7 +778,7 @@ bb.bx:                                            ; preds = %bb.bb
   ]
 
 bb.by:                                            ; preds = %bb.bb
-  invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %umax, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @193) #34
+  invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @193) #34
           to label %bb.x unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.bz:                                            ; preds = %bb.bx

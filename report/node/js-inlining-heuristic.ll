@@ -204,13 +204,13 @@ bb.k:                                             ; preds = %_ZNK2v88internal8co
 
 bb.l:                                             ; preds = %_ZNK2v88internal8compiler4Node10InputCountEv.exit.thread, %_ZNK2v88internal8compiler4Node10InputCountEv.exit
   %.in105 = phi ptr [ %i.ag, %_ZNK2v88internal8compiler4Node10InputCountEv.exit.thread ], [ %i.am, %_ZNK2v88internal8compiler4Node10InputCountEv.exit ]
-  %i.aq = phi i32 [ %i.ai, %_ZNK2v88internal8compiler4Node10InputCountEv.exit.thread ], [ %i.ao, %_ZNK2v88internal8compiler4Node10InputCountEv.exit ] ; 6 uses
+  %i.aq = phi i32 [ %i.ai, %_ZNK2v88internal8compiler4Node10InputCountEv.exit.thread ], [ %i.ao, %_ZNK2v88internal8compiler4Node10InputCountEv.exit ] ; 5 uses
   %i.ar = load ptr, ptr %.in105, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 9 uses
   %.in.in = load ptr, ptr %i.as, align 8
   %.in = load ptr, ptr %.in.in, align 8
   %i.at = load ptr, ptr %.in, align 8             ; 3 uses
-  %i.au = zext nneg i32 %i.aq to i64
+  %i.au = zext nneg i32 %i.aq to i64              ; 3 uses
   %i.av = shl nuw nsw i64 %i.au, 3                ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 24
   %i.ax = load i64, ptr %i.aw, align 8
@@ -234,13 +234,12 @@ _ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler4NodeEA_S5_EEPT_m.exit: ; pred
   br i1 %.not75, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal4Zone13AllocateArrayIPNS0_8compiler4NodeEA_S5_EEPT_m.exit
-  %wide.trip.count = zext nneg i32 %i.aq to i64   ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %xtraiter = and i64 %i.au, 1
   %i.bf = icmp eq i32 %i.aq, 1
   br i1 %i.bf, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %unroll_iter = and i64 %i.au, 2147483646
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %_ZNK2v88internal8compiler4Node7InputAtEi.exit.1
