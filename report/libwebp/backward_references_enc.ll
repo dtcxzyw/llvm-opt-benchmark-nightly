@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %._crit_edge, %bb.r
-  %.0214 = phi i32 [ %i.ab, %bb.r ], [ %.lcssa, %._crit_edge ] ; 9 uses
+  %.0214 = phi i32 [ %i.ab, %bb.r ], [ %.lcssa, %._crit_edge ] ; 8 uses
   %.not242 = icmp eq i32 %.0214, 0
   br i1 %.not242, label %bb.ae, label %bb.t
 
@@ -385,41 +385,40 @@ bb.ab:                                            ; preds = %.lr.ph310.split.us.
   br i1 %i.gf, label %._crit_edge, label %.lr.ph310.split.us.split
 
 .lr.ph310.split.split:                            ; preds = %.lr.ph310, %bb.ad
-  %9 = phi i32 [ %i.gu, %bb.ad ], [ %i.fo, %.lr.ph310 ] ; 7 uses
-  %.0309.a = phi i32 [ %spec.select262, %bb.ad ], [ %.0214, %.lr.ph310 ] ; 2 uses
-  %.8308.a = phi i32 [ %spec.select261, %bb.ad ], [ %.7204, %.lr.ph310 ] ; 3 uses
-  %.1215307 = phi i32 [ %9, %bb.ad ], [ %.0214, %.lr.ph310 ]
-  %i.gg = sub nuw nsw i32 %9, %.7.fr
+  %.0309.a = phi i32 [ %i.gu, %bb.ad ], [ %i.fo, %.lr.ph310 ] ; 7 uses
+  %.8308.a = phi i32 [ %spec.select262, %bb.ad ], [ %.0214, %.lr.ph310 ] ; 2 uses
+  %.1215307 = phi i32 [ %spec.select261, %bb.ad ], [ %.7204, %.lr.ph310 ] ; 3 uses
+  %i.gg = sub nuw nsw i32 %.0309.a, %.7.fr
   %i.gh = zext i32 %i.gg to i64
   %i.gi = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.gh
   %i.gj = load i32, ptr %i.gi, align 4, !tbaa !34
-  %i.gk = zext nneg i32 %9 to i64                 ; 2 uses
+  %i.gk = zext nneg i32 %.0309.a to i64           ; 2 uses
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.gk
   %i.gm = load i32, ptr %i.gl, align 4, !tbaa !34
   %.not249 = icmp eq i32 %i.gj, %i.gm
   br i1 %.not249, label %bb.ac, label %._crit_edge
 
 bb.ac:                                            ; preds = %.lr.ph310.split.split
-  %i.gn = icmp eq i32 %.8308.a, 4095
-  %i.go = add i32 %.1215307, 4094
-  %i.gp = icmp ult i32 %i.go, %.0309.a
+  %i.gn = icmp eq i32 %.1215307, 4095
+  %i.go = add i32 %.0309.a, 4095
+  %i.gp = icmp ult i32 %i.go, %.8308.a
   %or.cond260 = select i1 %i.gn, i1 %i.gp, i1 false
   br i1 %or.cond260, label %._crit_edge, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.gq = icmp slt i32 %.8308.a, 4095             ; 2 uses
+  %i.gq = icmp slt i32 %.1215307, 4095            ; 2 uses
   %i.gr = zext i1 %i.gq to i32
-  %spec.select261 = add nuw nsw i32 %.8308.a, %i.gr ; 2 uses
-  %spec.select262 = select i1 %i.gq, i32 %9, i32 %.0309.a
+  %spec.select261 = add nuw nsw i32 %.1215307, %i.gr ; 2 uses
+  %spec.select262 = select i1 %i.gq, i32 %.0309.a, i32 %.8308.a
   %i.gs = or i32 %spec.select261, %i.fj
   %i.gt = getelementptr inbounds nuw [4 x i8], ptr %i.fk, i64 %i.gk
   store i32 %i.gs, ptr %i.gt, align 4, !tbaa !34
-  %i.gu = add nsw i32 %9, -1                      ; 3 uses
+  %i.gu = add nsw i32 %.0309.a, -1                ; 3 uses
   %i.gv = icmp ult i32 %i.gu, %.7.fr
   br i1 %i.gv, label %._crit_edge, label %.lr.ph310.split.split
 
 ._crit_edge:                                      ; preds = %bb.ad, %.lr.ph310.split.split, %bb.ac, %bb.ab, %.lr.ph310.split.us.split, %.critedge4
-  %.lcssa = phi i32 [ %i.fo, %.critedge4 ], [ %i.fs, %.lr.ph310.split.us.split ], [ 0, %bb.ab ], [ %i.gu, %bb.ad ], [ %9, %bb.ac ], [ %9, %.lr.ph310.split.split ] ; 2 uses
+  %.lcssa = phi i32 [ %i.fo, %.critedge4 ], [ %i.fs, %.lr.ph310.split.us.split ], [ 0, %bb.ab ], [ %i.gu, %bb.ad ], [ %.0309.a, %bb.ac ], [ %.0309.a, %.lr.ph310.split.split ] ; 2 uses
   %i.gw = sub nsw i32 %i.ab, %.lcssa
   %i.gx = mul i32 %i.gw, %i.v
   %i.gy = udiv i32 %i.gx, %i.ab

@@ -203,13 +203,13 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ao, 4611686018427387900     ; 3 uses
-  %i.aq = shl i64 %n.vec, 3                       ; 3 uses
+  %i.aq = shl i64 %n.vec, 3                       ; 2 uses
   %i.ar = or disjoint i64 %i.aq, 8
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.as = shl i64 %index, 3                       ; 2 uses
+  %i.as = shl nuw i64 %index, 3                   ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.as ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.at, align 1, !alias.scope !42, !noalias !43
@@ -232,7 +232,6 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader186:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.ph187 = phi i64 [ 8, %vector.memcheck ], [ 8, %.lr.ph.preheader ], [ %i.ar, %middle.block ]
-  %.0.i4465.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %i.aq, %middle.block ]
   br label %.lr.ph
 
 .preheader63:                                     ; preds = %.lr.ph, %middle.block, %bb.n
@@ -344,10 +343,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader186, %.lr.ph
   %i.cb = phi i64 [ %i.cf, %.lr.ph ], [ %.ph187, %.lr.ph.preheader186 ] ; 3 uses
-  %.0.i4465 = phi i64 [ %i.cb, %.lr.ph ], [ %.0.i4465.ph, %.lr.ph.preheader186 ] ; 2 uses
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.0.i4465 ; 2 uses
+  %.0.i446576 = add nsw i64 %i.cb, -8             ; 2 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.0.i446576 ; 2 uses
   %.0.copyload.i48 = load i64, ptr %i.cc, align 1
-  %i.cd = getelementptr inbounds nuw i8, ptr %.032, i64 %.0.i4465
+  %i.cd = getelementptr inbounds nuw i8, ptr %.032, i64 %.0.i446576
   %.0.copyload.i = load i64, ptr %i.cd, align 1
   %i.ce = xor i64 %.0.copyload.i, %.0.copyload.i48
   store i64 %i.ce, ptr %i.cc, align 1
@@ -362,7 +361,7 @@ _ZL11mbedtls_xorPhPKhS1_m.exit47.preheader88:     ; preds = %_ZL11mbedtls_xorPhP
   %i.cg = add i64 %.031, -8                       ; 2 uses
   %i.ch = lshr i64 %i.cg, 3
   %i.ci = add nuw nsw i64 %i.ch, 1                ; 2 uses
-  %min.iters.check132 = icmp ult i64 %i.cg, 104
+  %min.iters.check132 = icmp ult i64 %i.cg, 88
   br i1 %min.iters.check132, label %_ZL11mbedtls_xorPhPKhS1_m.exit47.preheader185, label %vector.memcheck125
 
 vector.memcheck125:                               ; preds = %_ZL11mbedtls_xorPhPKhS1_m.exit47.preheader88
@@ -377,13 +376,13 @@ vector.memcheck125:                               ; preds = %_ZL11mbedtls_xorPhP
 
 vector.ph133:                                     ; preds = %vector.memcheck125
   %n.vec134 = and i64 %i.ci, 4611686018427387900  ; 3 uses
-  %i.cl = shl i64 %n.vec134, 3                    ; 3 uses
+  %i.cl = shl i64 %n.vec134, 3                    ; 2 uses
   %i.cm = or disjoint i64 %i.cl, 8
   br label %vector.body135
 
 vector.body135:                                   ; preds = %vector.body135, %vector.ph133
   %index136 = phi i64 [ 0, %vector.ph133 ], [ %index.next141, %vector.body135 ] ; 2 uses
-  %i.cn = shl i64 %index136, 3                    ; 2 uses
+  %i.cn = shl nuw i64 %index136, 3                ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.cn ; 3 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 16 ; 2 uses
   %wide.load137 = load <2 x i64>, ptr %i.co, align 1, !alias.scope !52, !noalias !53
@@ -406,7 +405,6 @@ middle.block142:                                  ; preds = %vector.body135
 
 _ZL11mbedtls_xorPhPKhS1_m.exit47.preheader185:    ; preds = %vector.memcheck125, %_ZL11mbedtls_xorPhPKhS1_m.exit47.preheader88, %middle.block142
   %.ph = phi i64 [ 8, %vector.memcheck125 ], [ 8, %_ZL11mbedtls_xorPhPKhS1_m.exit47.preheader88 ], [ %i.cm, %middle.block142 ]
-  %.0.i69.ph = phi i64 [ 0, %vector.memcheck125 ], [ 0, %_ZL11mbedtls_xorPhPKhS1_m.exit47.preheader88 ], [ %i.cl, %middle.block142 ]
   br label %_ZL11mbedtls_xorPhPKhS1_m.exit47
 
 .lr.ph67:                                         ; preds = %.lr.ph67.prol.loopexit, %.lr.ph67
@@ -553,10 +551,10 @@ vec.epilog.middle.block182:                       ; preds = %vec.epilog.vector.b
 
 _ZL11mbedtls_xorPhPKhS1_m.exit47:                 ; preds = %_ZL11mbedtls_xorPhPKhS1_m.exit47.preheader185, %_ZL11mbedtls_xorPhPKhS1_m.exit47
   %i.ew = phi i64 [ %i.fa, %_ZL11mbedtls_xorPhPKhS1_m.exit47 ], [ %.ph, %_ZL11mbedtls_xorPhPKhS1_m.exit47.preheader185 ] ; 3 uses
-  %.0.i69 = phi i64 [ %i.ew, %_ZL11mbedtls_xorPhPKhS1_m.exit47 ], [ %.0.i69.ph, %_ZL11mbedtls_xorPhPKhS1_m.exit47.preheader185 ] ; 2 uses
-  %i.ex = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.0.i69 ; 2 uses
+  %.0.i6977 = add nsw i64 %i.ew, -8               ; 2 uses
+  %i.ex = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.0.i6977 ; 2 uses
   %.0.copyload.i50 = load i64, ptr %i.ex, align 1
-  %i.ey = getelementptr inbounds nuw i8, ptr %.032, i64 %.0.i69
+  %i.ey = getelementptr inbounds nuw i8, ptr %.032, i64 %.0.i6977
   %.0.copyload.i49 = load i64, ptr %i.ey, align 1
   %i.ez = xor i64 %.0.copyload.i49, %.0.copyload.i50
   store i64 %i.ez, ptr %i.ex, align 1

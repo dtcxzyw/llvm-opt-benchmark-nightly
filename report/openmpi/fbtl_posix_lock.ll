@@ -95,16 +95,15 @@ bb.k:                                             ; preds = %bb.g, %thread-pre-s
   br i1 %.not6063, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.k, %.critedge2.backedge
-  %7 = phi i32 [ %i.al, %.critedge2.backedge ], [ 1, %bb.k ] ; 2 uses
-  %i.ad = phi i32 [ %i.ak, %.critedge2.backedge ], [ %i.ac, %bb.k ]
-  %.064 = phi i32 [ %7, %.critedge2.backedge ], [ 0, %bb.k ]
+  %i.ad = phi i32 [ %i.al, %.critedge2.backedge ], [ 1, %bb.k ] ; 2 uses
+  %.064 = phi i32 [ %i.ak, %.critedge2.backedge ], [ %i.ac, %bb.k ]
   %i.ae = load i32, ptr %i.aa, align 4, !tbaa !8  ; 2 uses
   %i.af = icmp eq i32 %i.ae, 4
   br i1 %i.af, label %.critedge2.backedge, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
   %i.ag = icmp eq i32 %i.ae, 115
-  %i.ah = icmp samesign ult i32 %.064, 99
+  %i.ah = icmp samesign ult i32 %i.ad, 100
   %i.ai = select i1 %i.ag, i1 %i.ah, i1 false
   br i1 %i.ai, label %.critedge2.backedge, label %.critedge
 
@@ -113,11 +112,11 @@ bb.l:                                             ; preds = %.lr.ph
   %i.aj = load i32, ptr %1, align 8, !tbaa !35
   %i.ak = tail call i32 (i32, i32, ...) @fcntl(i32 noundef %i.aj, i32 noundef 7, ptr noundef nonnull %0) #5 ; 2 uses
   %.not60 = icmp eq i32 %i.ak, 0
-  %i.al = add nuw nsw i32 %7, 1
+  %i.al = add nuw nsw i32 %i.ad, 1
   br i1 %.not60, label %.critedge, label %.lr.ph, !llvm.loop !36
 
 .critedge:                                        ; preds = %.critedge2.backedge, %bb.l, %thread-pre-split, %bb.i, %bb.k, %bb.e, %bb.b, %bb.a
-  %.051 = phi i32 [ 0, %bb.e ], [ 0, %bb.a ], [ 0, %thread-pre-split ], [ 0, %bb.b ], [ 0, %bb.k ], [ 0, %bb.i ], [ %i.ad, %bb.l ], [ 0, %.critedge2.backedge ]
+  %.051 = phi i32 [ 0, %bb.e ], [ 0, %bb.a ], [ 0, %thread-pre-split ], [ 0, %bb.b ], [ 0, %bb.k ], [ 0, %bb.i ], [ %.064, %bb.l ], [ 0, %.critedge2.backedge ]
   ret i32 %.051
 }
 

@@ -205,8 +205,8 @@ _ZN7xgboost6linalg6TensorIfLi1EE8HostViewEv.exit: ; preds = %_ZNSt10unique_ptrIN
   %i.ad = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !160, !noalias !1219
   %i.af = icmp eq ptr %i.ae, %i.y
-  %.sink.i.i.i.i = select i1 %i.af, i64 0, i64 %i.ac ; 2 uses
-  %storemerge26 = add i64 %.sink.i.i.i.i, -1      ; 2 uses
+  %4 = add i64 %i.ac, -1
+  %storemerge26 = select i1 %i.af, i64 -1, i64 %4 ; 2 uses
   %.not27 = icmp eq i64 %storemerge26, 0
   br i1 %.not27, label %._crit_edge, label %.lr.ph
 
@@ -214,12 +214,11 @@ _ZN7xgboost6linalg6TensorIfLi1EE8HostViewEv.exit: ; preds = %_ZNSt10unique_ptrIN
   ret void
 
 .lr.ph:                                           ; preds = %_ZN7xgboost6linalg6TensorIfLi1EE8HostViewEv.exit, %.lr.ph
-  %storemerge29 = phi i64 [ %storemerge, %.lr.ph ], [ %storemerge26, %_ZN7xgboost6linalg6TensorIfLi1EE8HostViewEv.exit ] ; 3 uses
-  %storemerge.in28 = phi i64 [ %storemerge29, %.lr.ph ], [ %.sink.i.i.i.i, %_ZN7xgboost6linalg6TensorIfLi1EE8HostViewEv.exit ]
-  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %storemerge29 ; 2 uses
+  %storemerge.in28 = phi i64 [ %storemerge, %.lr.ph ], [ %storemerge26, %_ZN7xgboost6linalg6TensorIfLi1EE8HostViewEv.exit ] ; 3 uses
+  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %storemerge.in28 ; 2 uses
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !81
   %i.ai = getelementptr [4 x i8], ptr %i.y, i64 %storemerge.in28
-  %i.aj = getelementptr i8, ptr %i.ai, i64 -8
+  %i.aj = getelementptr i8, ptr %i.ai, i64 -4
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !81
   %i.al = fsub float %i.ah, %i.ak
   %i.am = fadd float %i.al, f0xB58637BD           ; 2 uses
@@ -231,7 +230,7 @@ _ZN7xgboost6linalg6TensorIfLi1EE8HostViewEv.exit: ; preds = %_ZNSt10unique_ptrIN
   %i.ar = call noundef float @logf(float noundef %i.aq) #21
   %i.as = fadd float %i.ar, %.sroa.speculated.i
   store float %i.as, ptr %i.ag, align 4, !tbaa !81
-  %storemerge = add i64 %storemerge29, -1         ; 2 uses
+  %storemerge = add i64 %storemerge.in28, -1      ; 2 uses
   %.not = icmp eq i64 %storemerge, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1218
 

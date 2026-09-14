@@ -205,8 +205,8 @@ bb.a:
 .lr.ph70:                                         ; preds = %.preheader59, %.critedge
   %i.c = phi i64 [ %i.ax, %.critedge ], [ %i.b, %.preheader59 ] ; 5 uses
   %i.d = phi i64 [ %.pre-phi78, %.critedge ], [ 0, %.preheader59 ] ; 2 uses
-  %.04769 = phi i32 [ %.pre-phi, %.critedge ], [ 0, %.preheader59 ] ; 9 uses
-  %i.e = load ptr, ptr %.074, align 8, !tbaa !54  ; 6 uses
+  %.04769 = phi i32 [ %.pre-phi, %.critedge ], [ 0, %.preheader59 ] ; 6 uses
+  %i.e = load ptr, ptr %.074, align 8, !tbaa !54  ; 5 uses
   %i.f = getelementptr inbounds nuw [432 x i8], ptr %i.e, i64 %i.d ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 2
   %i.h = load i8, ptr %i.g, align 2, !tbaa !62
@@ -219,13 +219,7 @@ bb.a:
   %i.k = add i32 %.04769, 1                       ; 3 uses
   %i.l = zext i32 %i.k to i64                     ; 3 uses
   %i.m = icmp ugt i64 %i.c, %i.l
-  br i1 %i.m, label %.lr.ph.preheader, label %.critedge2
-
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %2 = getelementptr inbounds nuw [432 x i8], ptr %i.e, i64 %i.l ; 2 uses
-  %3 = load i16, ptr %2, align 8, !tbaa !48
-  %.not53108 = icmp eq i16 %3, 0
-  br i1 %.not53108, label %.lr.ph..critedge2.loopexit_crit_edge, label %.lr.ph111
+  br i1 %i.m, label %.lr.ph, label %.critedge2
 
 .preheader58:                                     ; preds = %.lr.ph70, %bb.b
   %.148 = phi i32 [ %i.n, %bb.b ], [ %.04769, %.lr.ph70 ]
@@ -240,26 +234,22 @@ bb.b:                                             ; preds = %.preheader58
   %.not56 = icmp eq i16 %i.r, 0
   br i1 %.not56, label %.critedge, label %.preheader58, !llvm.loop !114
 
-.lr.ph:                                           ; preds = %bb.f
-  %i.s = getelementptr inbounds nuw [432 x i8], ptr %i.e, i64 %i.aj ; 2 uses
+.lr.ph:                                           ; preds = %.preheader, %bb.f
+  %2 = phi i64 [ %i.aj, %bb.f ], [ %i.l, %.preheader ]
+  %3 = phi i32 [ %i.ai, %bb.f ], [ %i.k, %.preheader ] ; 5 uses
+  %.04462 = phi i32 [ %.1, %bb.f ], [ %.04769, %.preheader ] ; 4 uses
+  %.04561 = phi i32 [ %.146, %bb.f ], [ %.04769, %.preheader ] ; 4 uses
+  %i.s = getelementptr inbounds nuw [432 x i8], ptr %i.e, i64 %2 ; 3 uses
   %i.t = load i16, ptr %i.s, align 8, !tbaa !48
   %.not53 = icmp eq i16 %i.t, 0
-  br i1 %.not53, label %.lr.ph..critedge2.loopexit_crit_edge, label %.lr.ph111, !llvm.loop !115
+  br i1 %.not53, label %.lr.ph..critedge2.loopexit_crit_edge, label %.lr.ph111
 
-.lr.ph..critedge2.loopexit_crit_edge:             ; preds = %.lr.ph, %.lr.ph.preheader
-  %.04462.lcssa = phi i32 [ %.04769, %.lr.ph.preheader ], [ %.1, %.lr.ph ]
-  %.04561.lcssa = phi i32 [ %.04769, %.lr.ph.preheader ], [ %.146, %.lr.ph ]
-  %.260.lcssa = phi i32 [ %.04769, %.lr.ph.preheader ], [ %5, %.lr.ph ]
-  %.pre81 = add i32 %.260.lcssa, 1                ; 2 uses
-  %.pre82 = zext i32 %.pre81 to i64
+.lr.ph..critedge2.loopexit_crit_edge:             ; preds = %.lr.ph
+  %.pre82 = zext i32 %3 to i64
   br label %.critedge2
 
-.lr.ph111:                                        ; preds = %.lr.ph.preheader, %.lr.ph
-  %4 = phi ptr [ %i.s, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 2 uses
-  %.04561110 = phi i32 [ %.146, %.lr.ph ], [ %.04769, %.lr.ph.preheader ] ; 3 uses
-  %.04462109 = phi i32 [ %.1, %.lr.ph ], [ %.04769, %.lr.ph.preheader ] ; 3 uses
-  %5 = phi i32 [ %i.ai, %.lr.ph ], [ %i.k, %.lr.ph.preheader ] ; 4 uses
-  %i.u = zext i32 %.04561110 to i64
+.lr.ph111:                                        ; preds = %.lr.ph
+  %i.u = zext i32 %.04561 to i64
   %i.v = getelementptr inbounds nuw [432 x i8], ptr %i.e, i64 %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 160
   %i.x = load i8, ptr %i.w, align 8, !tbaa !43
@@ -267,15 +257,15 @@ bb.b:                                             ; preds = %.preheader58
   br i1 %i.y, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph111
-  %i.z = getelementptr inbounds nuw i8, ptr %4, i64 160
+  %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 160
   %i.aa = load i8, ptr %i.z, align 8, !tbaa !43
   %.not54 = icmp eq i8 %i.aa, 0
-  %spec.select = select i1 %.not54, i32 %.04561110, i32 %5
+  %spec.select = select i1 %.not54, i32 %.04561, i32 %3
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph111
-  %.146 = phi i32 [ %.04561110, %.lr.ph111 ], [ %spec.select, %bb.c ] ; 3 uses
-  %i.ab = zext i32 %.04462109 to i64
+  %.146 = phi i32 [ %.04561, %.lr.ph111 ], [ %spec.select, %bb.c ] ; 2 uses
+  %i.ab = zext i32 %.04462 to i64
   %i.ac = getelementptr inbounds nuw [432 x i8], ptr %i.e, i64 %i.ab
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 224
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !43
@@ -283,24 +273,24 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph111
   br i1 %i.af, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 224
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.s, i64 224
   %i.ah = load i8, ptr %i.ag, align 8, !tbaa !43
   %.not55 = icmp eq i8 %i.ah, 0
-  %spec.select57 = select i1 %.not55, i32 %.04462109, i32 %5
+  %spec.select57 = select i1 %.not55, i32 %.04462, i32 %3
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1 = phi i32 [ %.04462109, %bb.d ], [ %spec.select57, %bb.e ] ; 3 uses
-  %i.ai = add i32 %5, 1                           ; 3 uses
+  %.1 = phi i32 [ %.04462, %bb.d ], [ %spec.select57, %bb.e ] ; 2 uses
+  %i.ai = add i32 %3, 1                           ; 3 uses
   %i.aj = zext i32 %i.ai to i64                   ; 3 uses
   %i.ak = icmp ugt i64 %i.c, %i.aj
   br i1 %i.ak, label %.lr.ph, label %.critedge2, !llvm.loop !115
 
 .critedge2:                                       ; preds = %bb.f, %.lr.ph..critedge2.loopexit_crit_edge, %.preheader
   %.pre77.pre-phi.a = phi i64 [ %i.l, %.preheader ], [ %.pre82, %.lr.ph..critedge2.loopexit_crit_edge ], [ %i.aj, %bb.f ]
-  %.pre76.pre-phi = phi i32 [ %i.k, %.preheader ], [ %.pre81, %.lr.ph..critedge2.loopexit_crit_edge ], [ %i.ai, %bb.f ]
-  %.045.lcssa = phi i32 [ %.04769, %.preheader ], [ %.04561.lcssa, %.lr.ph..critedge2.loopexit_crit_edge ], [ %.146, %bb.f ]
-  %.044.lcssa = phi i32 [ %.04769, %.preheader ], [ %.04462.lcssa, %.lr.ph..critedge2.loopexit_crit_edge ], [ %.1, %bb.f ]
+  %.pre76.pre-phi = phi i32 [ %i.k, %.preheader ], [ %3, %.lr.ph..critedge2.loopexit_crit_edge ], [ %i.ai, %bb.f ]
+  %.045.lcssa = phi i32 [ %.04769, %.preheader ], [ %.04561, %.lr.ph..critedge2.loopexit_crit_edge ], [ %.146, %bb.f ]
+  %.044.lcssa = phi i32 [ %.04769, %.preheader ], [ %.04462, %.lr.ph..critedge2.loopexit_crit_edge ], [ %.1, %bb.f ]
   %i.al = tail call i64 @file_magic_strength(ptr noundef nonnull %i.f, i64 poison)
   %i.am = load ptr, ptr %.074, align 8, !tbaa !54 ; 3 uses
   %i.an = getelementptr inbounds nuw [432 x i8], ptr %i.am, i64 %i.d

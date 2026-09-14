@@ -205,7 +205,7 @@ mbedtls_xor.exit41:                               ; preds = %bb.f
   %i.u = add nsw i64 %5, -8                       ; 2 uses
   %i.v = lshr i64 %i.u, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.u, 88
+  %min.iters.check = icmp ult i64 %i.u, 72
   br i1 %min.iters.check, label %.lr.ph50.preheader89, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph50.preheader
@@ -220,13 +220,13 @@ vector.memcheck:                                  ; preds = %.lr.ph50.preheader
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.w, 4611686018427387900      ; 3 uses
-  %i.z = shl i64 %n.vec, 3                        ; 3 uses
+  %i.z = shl i64 %n.vec, 3                        ; 2 uses
   %i.aa = or disjoint i64 %i.z, 8
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ab = shl i64 %index, 3                       ; 2 uses
+  %i.ab = shl nuw i64 %index, 3                   ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 %i.ab ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %i.ac, align 1, !alias.scope !88, !noalias !89
@@ -249,7 +249,6 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph50.preheader89:                             ; preds = %vector.memcheck, %.lr.ph50.preheader, %middle.block
   %.ph = phi i64 [ 8, %vector.memcheck ], [ 8, %.lr.ph50.preheader ], [ %i.aa, %middle.block ]
-  %.0.i49.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph50.preheader ], [ %i.z, %middle.block ]
   br label %.lr.ph50
 
 .preheader:                                       ; preds = %.lr.ph50, %middle.block, %mbedtls_xor.exit41
@@ -362,10 +361,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph50:                                         ; preds = %.lr.ph50.preheader89, %.lr.ph50
   %i.br = phi i64 [ %i.bv, %.lr.ph50 ], [ %.ph, %.lr.ph50.preheader89 ] ; 3 uses
-  %.0.i49 = phi i64 [ %i.br, %.lr.ph50 ], [ %.0.i49.ph, %.lr.ph50.preheader89 ] ; 2 uses
-  %i.bs = getelementptr inbounds nuw i8, ptr %4, i64 %.0.i49 ; 2 uses
+  %.0.i4953 = add nsw i64 %i.br, -8               ; 2 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %4, i64 %.0.i4953 ; 2 uses
   %.0.copyload.i44 = load i64, ptr %i.bs, align 1
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.q, i64 %.0.i49
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.q, i64 %.0.i4953
   %.0.copyload.i43 = load i64, ptr %i.bt, align 1
   %i.bu = xor i64 %.0.copyload.i43, %.0.copyload.i44
   store i64 %i.bu, ptr %i.bs, align 1

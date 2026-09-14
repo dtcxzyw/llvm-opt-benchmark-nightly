@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   store ptr %4, ptr %i.at, align 8, !tbaa !159
   %i.au = getelementptr inbounds nuw i8, ptr %5, i64 24
   store ptr %.060, ptr %i.au, align 8, !tbaa !160
-  %i.av = sext i32 %.0.lcssa to i64               ; 5 uses
+  %i.av = sext i32 %.0.lcssa to i64               ; 4 uses
   %i.aw = icmp ugt i32 %.0.lcssa, 1
   br i1 %i.aw, label %bb.j, label %rqsort_idx.exit
 
@@ -285,9 +285,8 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not.i71, label %.preheader.i, label %.lr.ph74.i, !llvm.loop !17
 
 .lr.ph77.i:                                       ; preds = %.lr.ph84.i.preheader, %._crit_edge78.i
-  %.163.in82.i90 = phi i64 [ %.16383.i89, %._crit_edge78.i ], [ %i.av, %.lr.ph84.i.preheader ]
-  %.16383.i89 = phi i64 [ %.163.i, %._crit_edge78.i ], [ %.pre.i, %.lr.ph84.i.preheader ] ; 3 uses
-  %i.ce = add i64 %.163.in82.i90, -2
+  %.16383.i89 = phi i64 [ %i.ce, %._crit_edge78.i ], [ %.pre.i, %.lr.ph84.i.preheader ] ; 2 uses
+  %i.ce = add i64 %.16383.i89, -1                 ; 4 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.q, %.lr.ph77.i
@@ -298,7 +297,7 @@ bb.n:                                             ; preds = %bb.q, %.lr.ph77.i
   br i1 %i.ch, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.ci = add i64 %i.cg, 2                        ; 2 uses
+  %i.ci = add nuw i64 %i.cg, 2                    ; 2 uses
   %i.cj = call fastcc i32 @js_array_sort_cmp(i64 noundef %i.cf, i64 noundef %i.ci, ptr noundef nonnull %5) #31, !callees !333, !inline_history !334
   %i.ck = icmp slt i32 %i.cj, 1
   %spec.select68.i = select i1 %i.ck, i64 %i.ci, i64 %i.cf
@@ -330,18 +329,17 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.cx, label %bb.n, label %._crit_edge78.i, !llvm.loop !18
 
 ._crit_edge78.i:                                  ; preds = %bb.q, %bb.p
-  %.163.i = add i64 %.16383.i89, -1               ; 3 uses
   %i.cy = load i64, ptr %.pre, align 8, !tbaa !46
   %i.cz = add i64 %i.cy, -1
   %i.da = inttoptr i64 %i.cz to ptr
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 8 ; 3 uses
-  %.idx20.i77 = shl i64 %.163.i, 4
+  %.idx20.i77 = shl i64 %i.ce, 4
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 %.idx20.i77 ; 2 uses
   %i.dd = load <2 x i64>, ptr %i.db, align 8, !tbaa !46
   %i.de = load <2 x i64>, ptr %i.dc, align 8, !tbaa !46
   store <2 x i64> %i.de, ptr %i.db, align 8, !tbaa !46
   store <2 x i64> %i.dd, ptr %i.dc, align 8, !tbaa !46
-  %i.df = icmp ugt i64 %.163.i, 1
+  %i.df = icmp ugt i64 %i.ce, 1
   br i1 %i.df, label %.lr.ph77.i, label %rqsort_idx.exit
 
 rqsort_idx.exit:                                  ; preds = %._crit_edge78.i, %.lr.ph84.i.preheader, %._crit_edge, %.preheader.i
@@ -744,7 +742,7 @@ bb.a:
   %i.f = load i64, ptr %i.e, align 8, !tbaa !121
   %i.g = add i64 %i.f, -1
   %i.h = inttoptr i64 %i.g to ptr                 ; 2 uses
-  %i.i = zext nneg i32 %i.d to i64                ; 5 uses
+  %i.i = zext nneg i32 %i.d to i64                ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.k = sext i32 %1 to i64                       ; 6 uses
   %i.l = getelementptr inbounds i8, ptr %i.j, i64 %i.k ; 15 uses
@@ -825,9 +823,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i, label %.preheader.i, label %.lr.ph74.i, !llvm.loop !17
 
 .lr.ph77.i:                                       ; preds = %.lr.ph84.i.preheader, %._crit_edge78.i
-  %.163.in82.i80 = phi i64 [ %.16383.i79, %._crit_edge78.i ], [ %i.i, %.lr.ph84.i.preheader ]
-  %.16383.i79 = phi i64 [ %.163.i, %._crit_edge78.i ], [ %.pre.i, %.lr.ph84.i.preheader ] ; 3 uses
-  %i.an = add i64 %.163.in82.i80, -2
+  %.16383.i79 = phi i64 [ %i.an, %._crit_edge78.i ], [ %.pre.i, %.lr.ph84.i.preheader ] ; 2 uses
+  %i.an = add i64 %.16383.i79, -1                 ; 4 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %.lr.ph77.i
@@ -838,7 +835,7 @@ bb.f:                                             ; preds = %bb.i, %.lr.ph77.i
   br i1 %i.aq, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.ar = add i64 %i.ap, 2                        ; 2 uses
+  %i.ar = add nuw i64 %i.ap, 2                    ; 2 uses
   %i.as = shl i64 %i.ao, 3
   %i.at = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.as
   %.val4.i66 = load i32, ptr %i.at, align 1, !tbaa !91
@@ -873,14 +870,13 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bg, label %bb.f, label %._crit_edge78.i, !llvm.loop !18
 
 ._crit_edge78.i:                                  ; preds = %bb.i, %bb.h
-  %.163.i = add i64 %.16383.i79, -1               ; 3 uses
   %.val9.i68 = load i64, ptr %i.l, align 1, !tbaa !414
-  %i.bh = shl i64 %.163.i, 3
+  %i.bh = shl i64 %i.an, 3
   %i.bi = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.bh ; 2 uses
   %.val.i69 = load i64, ptr %i.bi, align 1, !tbaa !414
   store i64 %.val.i69, ptr %i.l, align 1, !tbaa !414
   store i64 %.val9.i68, ptr %i.bi, align 1, !tbaa !414
-  %i.bj = icmp ugt i64 %.163.i, 1
+  %i.bj = icmp ugt i64 %i.an, 1
   br i1 %i.bj, label %.lr.ph77.i, label %rqsort_idx.exit
 
 rqsort_idx.exit:                                  ; preds = %._crit_edge78.i, %.lr.ph84.i.preheader, %bb.a, %.preheader.i

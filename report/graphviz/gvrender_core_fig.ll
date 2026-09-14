@@ -204,19 +204,17 @@ agxbfree.exit:                                    ; preds = %agxbuse.exit, %bb.g
   br label %bb.h
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %6 = phi i64 [ %i.bm, %.lr.ph ], [ 3, %.lr.ph.preheader ] ; 2 uses
-  %.05266 = phi i64 [ %6, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.05266 = phi i64 [ %i.bm, %.lr.ph ], [ 3, %.lr.ph.preheader ] ; 2 uses
   %.05365 = phi i32 [ %i.bl, %.lr.ph ], [ 1, %.lr.ph.preheader ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %i.l, i64 16, i1 false), !tbaa.struct !72
   %i.an = getelementptr [16 x i8], ptr %1, i64 %.05266 ; 3 uses
-  %i.ao = getelementptr i8, ptr %i.an, i64 16
+  %i.ao = getelementptr i8, ptr %i.an, i64 -32
   %i.ap = load <2 x double>, ptr %i.ao, align 8, !tbaa !71
   store <2 x double> %i.ap, ptr %i.q, align 16, !tbaa !71
-  %i.aq = getelementptr i8, ptr %i.an, i64 32
+  %i.aq = getelementptr i8, ptr %i.an, i64 -16
   %i.ar = load <2 x double>, ptr %i.aq, align 8, !tbaa !71
   store <2 x double> %i.ar, ptr %i.r, align 16, !tbaa !71
-  %7 = getelementptr i8, ptr %i.an, i64 48
-  %i.as = load <2 x double>, ptr %7, align 8, !tbaa !71
+  %i.as = load <2 x double>, ptr %i.an, align 8, !tbaa !71
   store <2 x double> %i.as, ptr %i.l, align 16, !tbaa !71
   %i.at = call { double, double } @Bezier(ptr noundef nonnull %4, double noundef f0x3FC5555555555555, ptr noundef null, ptr noundef null) #16 ; 2 uses
   %i.au = extractvalue { double, double } %i.at, 0
@@ -243,7 +241,7 @@ agxbfree.exit:                                    ; preds = %agxbuse.exit, %bb.g
   %i.bk = extractvalue { double, double } %i.bi, 1
   call void (ptr, ptr, ...) @agxbprint(ptr noundef %5, ptr nonnull poison, double noundef %i.bj, double noundef %i.bk)
   %i.bl = add i32 %.05365, 6                      ; 2 uses
-  %i.bm = add i64 %6, 3                           ; 2 uses
+  %i.bm = add i64 %.05266, 3                      ; 2 uses
   %i.bn = icmp ult i64 %i.bm, %2
   br i1 %i.bn, label %.lr.ph, label %._crit_edge, !llvm.loop !69
 

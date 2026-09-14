@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p,
   br i1 %i.hn, label %.lr.ph.preheader, label %.lr.ph30.i.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph.preheader.i
-  %i.ho = trunc nuw nsw i64 %indvars.iv.next.i120143 to i32 ; 3 uses
+  %i.ho = trunc nuw nsw i64 %indvars.iv.next.i120143 to i32 ; 2 uses
   store i32 %i.ho, ptr %4, align 4, !tbaa !11
   %.not = icmp eq i32 %.pr.i, 1
   br i1 %.not, label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit, label %.lr.ph.i118.lr.ph, !llvm.loop !14
@@ -214,26 +214,22 @@ bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p,
 
 .lr.ph.i118:                                      ; preds = %.lr.ph.i118.lr.ph, %.lr.ph
   %i.hp = phi i32 [ %i.ho, %.lr.ph.i118.lr.ph ], [ %i.ht, %.lr.ph ]
-  %indvars.iv.next.i120145172 = phi i64 [ %indvars.iv.next.i120143, %.lr.ph.i118.lr.ph ], [ %indvars.iv.next.i120, %.lr.ph ] ; 4 uses
+  %indvars.iv.next.i120145172 = phi i64 [ %indvars.iv.next.i120143, %.lr.ph.i118.lr.ph ], [ %indvars.iv.next.i120, %.lr.ph ] ; 3 uses
   %indvars.iv.next.i120 = add nsw i64 %indvars.iv.next.i120145172, -1 ; 3 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv.next.i120
   %i.hr = load i8, ptr %i.hq, align 1, !tbaa !12
   %i.hs = icmp eq i8 %i.hr, 48
-  br i1 %i.hs, label %.lr.ph, label %.critedge.i, !llvm.loop !14
+  br i1 %i.hs, label %.lr.ph, label %.lr.ph30.i.preheader, !llvm.loop !14
 
 .lr.ph:                                           ; preds = %.lr.ph.i118
-  %i.ht = trunc nuw nsw i64 %indvars.iv.next.i120 to i32 ; 3 uses
+  %i.ht = trunc nuw nsw i64 %indvars.iv.next.i120 to i32 ; 2 uses
   store i32 %i.ht, ptr %4, align 4, !tbaa !11
-  %6 = icmp samesign ugt i64 %indvars.iv.next.i120145172, 1
+  %6 = icmp sgt i64 %indvars.iv.next.i120145172, 1
   br i1 %6, label %.lr.ph.i118, label %.lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge, !llvm.loop !14
 
-.critedge.i:                                      ; preds = %.lr.ph.i118
-  %7 = icmp sgt i64 %indvars.iv.next.i120145172, 0
-  br i1 %7, label %.lr.ph30.i.preheader, label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit
-
-.lr.ph30.i.preheader:                             ; preds = %.lr.ph.preheader.i, %.critedge.i
-  %indvars.iv.i119.lcssa161 = phi i64 [ %indvars.iv.next.i120145172, %.critedge.i ], [ %i.hk, %.lr.ph.preheader.i ] ; 2 uses
-  %.lcssa139160 = phi i32 [ %i.hp, %.critedge.i ], [ %.pr.i, %.lr.ph.preheader.i ] ; 3 uses
+.lr.ph30.i.preheader:                             ; preds = %.lr.ph.i118, %.lr.ph.preheader.i
+  %.lcssa139 = phi i32 [ %.pr.i, %.lr.ph.preheader.i ], [ %i.hp, %.lr.ph.i118 ] ; 3 uses
+  %indvars.iv.i119.lcssa = phi i64 [ %i.hk, %.lr.ph.preheader.i ], [ %indvars.iv.next.i120145172, %.lr.ph.i118 ] ; 2 uses
   br label %.lr.ph30.i
 
 .lr.ph30.i:                                       ; preds = %.lr.ph30.i.preheader, %bb.r
@@ -245,17 +241,17 @@ bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p,
 
 bb.r:                                             ; preds = %.lr.ph30.i
   %indvars.iv.next40.i = add nuw nsw i64 %indvars.iv39.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next40.i, %indvars.iv.i119.lcssa161
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next40.i, %indvars.iv.i119.lcssa
   br i1 %exitcond.not.i, label %.critedge2.i, label %.lr.ph30.i, !llvm.loop !15
 
 .critedge2.i:                                     ; preds = %.lr.ph30.i, %bb.r
-  %.020.lcssa.in.i = phi i64 [ %indvars.iv.i119.lcssa161, %bb.r ], [ %indvars.iv39.i, %.lr.ph30.i ] ; 2 uses
+  %.020.lcssa.in.i = phi i64 [ %indvars.iv.i119.lcssa, %bb.r ], [ %indvars.iv39.i, %.lr.ph30.i ] ; 2 uses
   %.020.lcssa.i = trunc i64 %.020.lcssa.in.i to i32 ; 4 uses
   %.not.i121 = icmp eq i32 %.020.lcssa.i, 0
   br i1 %.not.i121, label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.critedge2.i
-  %i.hx = icmp sgt i32 %.lcssa139160, %.020.lcssa.i
+  %i.hx = icmp sgt i32 %.lcssa139, %.020.lcssa.i
   br i1 %i.hx, label %.lr.ph35.preheader.i, label %._crit_edge.i122
 
 .lr.ph35.preheader.i:                             ; preds = %.preheader.i
@@ -264,7 +260,7 @@ bb.r:                                             ; preds = %.lr.ph30.i
   br label %.lr.ph35.i
 
 ._crit_edge.i122:                                 ; preds = %.lr.ph35.i, %.preheader.i
-  %.lcssa.i = phi i32 [ %.lcssa139160, %.preheader.i ], [ %i.ig, %.lr.ph35.i ]
+  %.lcssa.i = phi i32 [ %.lcssa139, %.preheader.i ], [ %i.ig, %.lr.ph35.i ]
   %i.hz = sub nsw i32 %.lcssa.i, %.020.lcssa.i
   store i32 %i.hz, ptr %4, align 4, !tbaa !11
   %i.ia = load i32, ptr %5, align 4, !tbaa !11
@@ -289,9 +285,9 @@ bb.r:                                             ; preds = %.lr.ph30.i
 .lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge: ; preds = %.lr.ph
   br label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit, !llvm.loop !14
 
-_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit: ; preds = %.lr.ph.preheader, %.lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge, %bb.q, %.critedge.i, %.critedge2.i, %._crit_edge.i122
-  %8 = phi i32 [ %.pre154, %._crit_edge.i122 ], [ %.pr.i, %bb.q ], [ 0, %.critedge.i ], [ %.lcssa139160, %.critedge2.i ], [ %i.ht, %.lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge ], [ %i.ho, %.lr.ph.preheader ]
-  %i.ij = sext i32 %8 to i64
+_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit: ; preds = %.lr.ph.preheader, %.lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge, %bb.q, %.critedge2.i, %._crit_edge.i122
+  %7 = phi i32 [ %.lcssa139, %.critedge2.i ], [ %.pr.i, %bb.q ], [ %.pre154, %._crit_edge.i122 ], [ 0, %.lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge ], [ 0, %.lr.ph.preheader ]
+  %i.ij = sext i32 %7 to i64
   %i.ik = getelementptr inbounds i8, ptr %2, i64 %i.ij
   store i8 0, ptr %i.ik, align 1, !tbaa !12
   %i.il = load i32, ptr %4, align 4, !tbaa !11

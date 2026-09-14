@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %.loopexit.i, %bb.i
   %indvars.iv206.i = phi i64 [ %indvars.iv.next207.i, %.loopexit.i ], [ %i.m, %bb.i ] ; 3 uses
-  %.098.i = phi i32 [ %.4102.i, %.loopexit.i ], [ %1, %bb.i ] ; 9 uses
+  %.098.i = phi i32 [ %.4102.i, %.loopexit.i ], [ %1, %bb.i ] ; 8 uses
   %.092.i = phi i32 [ %.6.i, %.loopexit.i ], [ undef, %bb.i ] ; 4 uses
   %.086.i = phi i32 [ %.591.i, %.loopexit.i ], [ undef, %bb.i ] ; 7 uses
   %.084.i = phi i1 [ true, %.loopexit.i ], [ false, %bb.i ] ; 2 uses
@@ -383,14 +383,13 @@ bb.ad:                                            ; preds = %.lr.ph, %.lr.ph183.
 
 .lr.ph.split.i:                                   ; preds = %bb.ag, %.lr.ph.split.preheader.i
   %indvars.iv.i = phi i64 [ %i.af, %.lr.ph.split.preheader.i ], [ %indvars.iv.next.i, %bb.ag ]
-  %5 = phi i32 [ %i.at, %.lr.ph.split.preheader.i ], [ %i.bn, %bb.ag ] ; 2 uses
-  %.496176.i.a = phi i32 [ %.395223228.i, %.lr.ph.split.preheader.i ], [ %i.bj, %bb.ag ]
-  %.2100175.i = phi i32 [ %.098.i, %.lr.ph.split.preheader.i ], [ %5, %bb.ag ]
+  %.496176.i.a = phi i32 [ %i.at, %.lr.ph.split.preheader.i ], [ %i.bn, %bb.ag ] ; 2 uses
+  %.2100175.i = phi i32 [ %.395223228.i, %.lr.ph.split.preheader.i ], [ %i.bj, %bb.ag ]
   %i.bh = load ptr, ptr %i.k, align 8, !tbaa !32
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.bi = getelementptr inbounds [4 x i8], ptr %i.bh, i64 %indvars.iv.next.i
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !34 ; 5 uses
-  %.not128.i = icmp eq i32 %i.bj, %.496176.i.a
+  %.not128.i = icmp eq i32 %i.bj, %.2100175.i
   br i1 %.not128.i, label %bb.ag, label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph.split.i
@@ -405,10 +404,10 @@ bb.af:                                            ; preds = %bb.ae
 _ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit147.i: ; preds = %bb.af, %bb.ae
   %.0.i146.i = phi i32 [ %.0103.i, %bb.ae ], [ %i.bm, %bb.af ]
   %.not129.i = icmp eq i32 %.0.i146.i, %.389224227.i
-  br i1 %.not129.i, label %bb.ag, label %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie8getRangeEiPFjPKvjES3_Pj.exit
+  br i1 %.not129.i, label %bb.ag, label %.thread157.loopexit230.i
 
 bb.ag:                                            ; preds = %_ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit147.i, %.lr.ph.split.i
-  %i.bn = add nsw i32 %5, 1                       ; 3 uses
+  %i.bn = add nsw i32 %.496176.i.a, 1             ; 3 uses
   %i.bo = and i32 %i.bn, 15
   %.not127.i = icmp eq i32 %i.bo, 0
   br i1 %.not127.i, label %.loopexit.i, label %.lr.ph.split.i, !llvm.loop !55
@@ -445,8 +444,12 @@ _ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit150.i: ; preds = %
   %spec.select.i = select i1 %.not133.i, i32 1114111, i32 %i.bw
   br label %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie8getRangeEiPFjPKvjES3_Pj.exit
 
-_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie8getRangeEiPFjPKvjES3_Pj.exit: ; preds = %.lr.ph.split.us.i, %_ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit147.i, %bb.ad, %bb.a, %bb.c, %bb.f, %bb.s, %bb.y, %_ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit150.i
-  %.5110.i = phi i32 [ 1114111, %bb.c ], [ -1, %bb.a ], [ 1114111, %bb.f ], [ %spec.select.i, %_ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit150.i ], [ %i.ab, %bb.s ], [ %i.al, %bb.y ], [ %.2100175.i, %_ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit147.i ], [ %i.bc, %bb.ad ], [ %.098.i, %.lr.ph.split.us.i ]
+.thread157.loopexit230.i:                         ; preds = %_ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit147.i
+  %.2100175203.le.i = add nsw i32 %.496176.i.a, -1
+  br label %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie8getRangeEiPFjPKvjES3_Pj.exit
+
+_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie8getRangeEiPFjPKvjES3_Pj.exit: ; preds = %.lr.ph.split.us.i, %bb.ad, %bb.a, %bb.c, %bb.f, %bb.s, %bb.y, %_ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit150.i, %.thread157.loopexit230.i
+  %.5110.i = phi i32 [ 1114111, %bb.c ], [ -1, %bb.a ], [ 1114111, %bb.f ], [ %spec.select.i, %_ZN6icu_7812_GLOBAL__N_116maybeFilterValueEjjjPFjPKvjES2_.exit150.i ], [ %i.ab, %bb.s ], [ %i.al, %bb.y ], [ %i.bc, %bb.ad ], [ %.2100175203.le.i, %.thread157.loopexit230.i ], [ %.098.i, %.lr.ph.split.us.i ]
   ret i32 %.5110.i
 }
 

@@ -87,51 +87,43 @@ bb.c:                                             ; preds = %hwloc_utils_check_a
 bb.d:                                             ; preds = %bb.c, %hwloc_utils_check_api_version.exit
   %.05590 = add nsw i32 %0, -1                    ; 2 uses
   %.not6091 = icmp eq i32 %.05590, 0
-  br i1 %.not6091, label %.critedge.thread, label %.lr.ph.preheader
+  br i1 %.not6091, label %.critedge.thread, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.d
-  %.05495143 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %2 = load ptr, ptr %.05495143, align 8, !tbaa !17 ; 3 uses
-  %3 = load i8, ptr %2, align 1, !tbaa !20
-  %4 = icmp eq i8 %3, 45
-  br i1 %4, label %sub_1, label %.critedge
-
-.lr.ph:                                           ; preds = %bb.e
-  %5 = xor i64 %.05394145, 1                      ; 2 uses
-  %.05495 = getelementptr inbounds nuw i8, ptr %.05495146, i64 8 ; 2 uses
-  %i.l = load ptr, ptr %.05495, align 8, !tbaa !17 ; 3 uses
+.lr.ph:                                           ; preds = %bb.d, %bb.e
+  %.05596 = phi i32 [ %.055, %bb.e ], [ %.05590, %bb.d ] ; 3 uses
+  %.05394 = phi i64 [ %2, %bb.e ], [ 0, %bb.d ]   ; 3 uses
+  %.pn93 = phi ptr [ %.05495, %bb.e ], [ %1, %bb.d ] ; 3 uses
+  %.05495 = getelementptr inbounds nuw i8, ptr %.pn93, i64 8 ; 2 uses
+  %i.l = load ptr, ptr %.05495, align 8, !tbaa !17 ; 13 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !20
   %i.n = icmp eq i8 %i.m, 45
-  br i1 %i.n, label %sub_1, label %.critedge, !llvm.loop !12
+  br i1 %i.n, label %sub_1, label %.critedge
 
-sub_1:                                            ; preds = %.lr.ph.preheader, %.lr.ph
-  %6 = phi ptr [ %i.l, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 8 uses
-  %.05495146 = phi ptr [ %.05495, %.lr.ph ], [ %.05495143, %.lr.ph.preheader ] ; 2 uses
-  %.05394145 = phi i64 [ %5, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %.05596144 = phi i32 [ %.055, %.lr.ph ], [ %.05590, %.lr.ph.preheader ] ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 1
+sub_1:                                            ; preds = %.lr.ph
+  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 1
   %i.p = load i8, ptr %i.o, align 1
   %.not98 = icmp eq i8 %i.p, 82
   br i1 %.not98, label %.tail, label %.tail.thread
 
 .tail:                                            ; preds = %sub_1
-  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 2
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 2
   %i.r = load i8, ptr %i.q, align 1
   %i.s = icmp eq i8 %i.r, 0
   br i1 %i.s, label %bb.e, label %.tail.thread
 
 .tail.thread:                                     ; preds = %sub_1, %.tail
-  %i.t = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %6, ptr noundef nonnull dereferenceable(10) @.str.8) #14
+  %i.t = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.l, ptr noundef nonnull dereferenceable(10) @.str.8) #14
   %.not67 = icmp eq i32 %i.t, 0
   br i1 %.not67, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.tail.thread, %.tail
-  %.055 = add nsw i32 %.05596144, -1              ; 2 uses
+  %2 = xor i64 %.05394, 1
+  %.055 = add nsw i32 %.05596, -1                 ; 2 uses
   %.not60 = icmp eq i32 %.055, 0
   br i1 %.not60, label %.critedge.thread, label %.lr.ph, !llvm.loop !12
 
 bb.f:                                             ; preds = %.tail.thread
-  %i.u = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %6, ptr noundef nonnull dereferenceable(10) @.str.9) #14
+  %i.u = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.l, ptr noundef nonnull dereferenceable(10) @.str.9) #14
   %.not68 = icmp eq i32 %i.u, 0
   br i1 %.not68, label %bb.g, label %sub_174
 
@@ -141,19 +133,19 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 sub_174:                                          ; preds = %bb.f
-  %i.w = getelementptr inbounds nuw i8, ptr %6, i64 1
+  %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 1
   %i.x = load i8, ptr %i.w, align 1
   %.not100 = icmp eq i8 %i.x, 104
   br i1 %.not100, label %.tail72, label %.tail72.thread
 
 .tail72:                                          ; preds = %sub_174
-  %i.y = getelementptr inbounds nuw i8, ptr %6, i64 2
+  %i.y = getelementptr inbounds nuw i8, ptr %i.l, i64 2
   %i.z = load i8, ptr %i.y, align 1
   %i.aa = icmp eq i8 %i.z, 0
   br i1 %i.aa, label %bb.h, label %.tail72.thread
 
 .tail72.thread:                                   ; preds = %sub_174, %.tail72
-  %i.ab = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %6, ptr noundef nonnull dereferenceable(7) @.str.13) #14
+  %i.ab = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.l, ptr noundef nonnull dereferenceable(7) @.str.13) #14
   %.not70 = icmp eq i32 %i.ab, 0
   br i1 %.not70, label %bb.h, label %bb.i
 
@@ -165,18 +157,14 @@ bb.h:                                             ; preds = %.tail72.thread, %.t
 
 bb.i:                                             ; preds = %.tail72.thread
   %i.ad = load ptr, ptr @stderr, align 8, !tbaa !19
-  %i.ae = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ad, ptr noundef nonnull @.str.14, ptr noundef nonnull %6) #15 ; 0 uses
+  %i.ae = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ad, ptr noundef nonnull @.str.14, ptr noundef nonnull %i.l) #15 ; 0 uses
   %i.af = load ptr, ptr @stderr, align 8, !tbaa !19
   tail call void @usage(ptr nonnull poison, ptr noundef %i.af)
   tail call void @exit(i32 noundef 1) #16
   unreachable
 
-.critedge:                                        ; preds = %.lr.ph, %.lr.ph.preheader
-  %.05394.lcssa = phi i64 [ 0, %.lr.ph.preheader ], [ %5, %.lr.ph ] ; 2 uses
-  %.pn93.lcssa = phi ptr [ %1, %.lr.ph.preheader ], [ %.05495146, %.lr.ph ] ; 2 uses
-  %.055.in92.lcssa = phi i32 [ %0, %.lr.ph.preheader ], [ %.05596144, %.lr.ph ] ; 2 uses
-  %.lcssa = phi ptr [ %2, %.lr.ph.preheader ], [ %i.l, %.lr.ph ] ; 4 uses
-  %i.ag = icmp slt i32 %.055.in92.lcssa, 3
+.critedge:                                        ; preds = %.lr.ph
+  %i.ag = icmp slt i32 %.05596, 2
   br i1 %i.ag, label %.critedge.thread, label %bb.j
 
 .critedge.thread:                                 ; preds = %bb.e, %bb.d, %.critedge
@@ -186,13 +174,13 @@ bb.i:                                             ; preds = %.tail72.thread
   unreachable
 
 bb.j:                                             ; preds = %.critedge
-  %i.ai = getelementptr inbounds nuw i8, ptr %.pn93.lcssa, i64 16
+  %i.ai = getelementptr inbounds nuw i8, ptr %.pn93, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !17 ; 7 uses
-  %.not61 = icmp eq i32 %.055.in92.lcssa, 3
+  %.not61 = icmp eq i32 %.05596, 2
   br i1 %.not61, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ak = getelementptr inbounds nuw i8, ptr %.pn93.lcssa, i64 24
+  %i.ak = getelementptr inbounds nuw i8, ptr %.pn93, i64 24
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !17
   br label %bb.l
 
@@ -277,7 +265,7 @@ bb.p:                                             ; preds = %hwloc_diff_read.exi
   %i.bo = call i32 @hwloc_topology_set_all_types_filter(ptr noundef %i.bn, i32 noundef 0) #13 ; 0 uses
   %i.bp = load ptr, ptr %i.a, align 8, !tbaa !23
   %i.bq = call i32 @hwloc_topology_set_flags(ptr noundef %i.bp, i64 noundef 9) #13 ; 0 uses
-  %i.br = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.lcssa, ptr noundef nonnull dereferenceable(8) @.str.16) #14
+  %i.br = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.l, ptr noundef nonnull dereferenceable(8) @.str.16) #14
   %.not62 = icmp eq i32 %i.br, 0
   br i1 %.not62, label %bb.q, label %bb.u
 
@@ -305,13 +293,13 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.p
   %i.cb = load ptr, ptr %i.a, align 8, !tbaa !23
-  %i.cc = call i32 @hwloc_topology_set_xml(ptr noundef %i.cb, ptr noundef nonnull %.lcssa) #13
+  %i.cc = call i32 @hwloc_topology_set_xml(ptr noundef %i.cb, ptr noundef nonnull %i.l) #13
   %i.cd = icmp slt i32 %i.cc, 0
   br i1 %i.cd, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.ce = load ptr, ptr @stderr, align 8, !tbaa !19
-  %i.cf = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ce, ptr noundef nonnull @.str.19, ptr noundef nonnull %.lcssa) #15 ; 0 uses
+  %i.cf = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ce, ptr noundef nonnull @.str.19, ptr noundef nonnull %i.l) #15 ; 0 uses
   br label %bb.ad
 
 bb.w:                                             ; preds = %bb.u, %bb.s
@@ -328,13 +316,13 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.w
   %i.ck = load ptr, ptr %i.a, align 8, !tbaa !23
   %i.cl = load ptr, ptr %i.b, align 8, !tbaa !15
-  %i.cm = call i32 @hwloc_topology_diff_apply(ptr noundef %i.ck, ptr noundef %i.cl, i64 noundef %.05394.lcssa) #13 ; 2 uses
+  %i.cm = call i32 @hwloc_topology_diff_apply(ptr noundef %i.ck, ptr noundef %i.cl, i64 noundef %.05394) #13 ; 2 uses
   %i.cn = icmp slt i32 %i.cm, 0
   br i1 %i.cn, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
   %i.co = load ptr, ptr @stderr, align 8, !tbaa !19
-  %.not65 = icmp eq i64 %.05394.lcssa, 0
+  %.not65 = icmp eq i64 %.05394, 0
   %i.cp = select i1 %.not65, ptr @.str.23, ptr @.str.22
   %i.cq = sub nsw i32 0, %i.cm
   %i.cr = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.co, ptr noundef nonnull @.str.21, ptr noundef nonnull %i.cp, ptr noundef nonnull %i.aj, i32 noundef %i.cq) #15 ; 0 uses
@@ -343,7 +331,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.y
   %i.cs = load ptr, ptr %i.a, align 8, !tbaa !23
   %.not64 = icmp eq ptr %.0, null
-  %i.ct = select i1 %.not64, ptr %.lcssa, ptr %.0
+  %i.ct = select i1 %.not64, ptr %i.l, ptr %.0
   %i.cu = call i32 @hwloc_topology_export_xml(ptr noundef %i.cs, ptr noundef nonnull %i.ct, i64 noundef 0) #13
   %i.cv = icmp slt i32 %i.cu, 0
   br i1 %i.cv, label %bb.ab, label %bb.ac

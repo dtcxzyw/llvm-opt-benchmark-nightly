@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_RINvMNtCskKLDkoKar
 define hidden void @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB2_8NodeText16insert_str_split(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([1000 x i8]) align 8 captures(none) dereferenceable(1000) %0, ptr noalias nofree noundef align 8 dereferenceable(1000) %1, i64 noundef %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4) unnamed_addr #1 personality ptr @rust_eh_personality {
 _RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref.exit:
   %i.a = alloca [1000 x i8], align 8              ; 25 uses
-  %i.b = alloca [8 x i8], align 8                 ; 9 uses
+  %i.b = alloca [8 x i8], align 8                 ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 992 ; 14 uses
   %i.d = load i64, ptr %i.c, align 8, !alias.scope !268, !noalias !269, !noundef !5 ; 8 uses
   %i.e = icmp ugt i64 %i.d, 984                   ; 6 uses
@@ -216,7 +216,7 @@ _RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP
   %i.j = add i64 %4, %2                           ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 0, ptr %i.b, align 8
-  %..i = tail call noundef i64 @llvm.umin.i64(i64 %i.i, i64 4) ; 13 uses
+  %..i = tail call noundef i64 @llvm.umin.i64(i64 %i.i, i64 4) ; 12 uses
   %i.k = sub nuw nsw i64 %i.i, %..i               ; 8 uses
   %i.l = add nuw i64 %i.i, 4
   %..i54 = tail call noundef i64 @llvm.umin.i64(i64 %i.h, i64 %i.l) ; 5 uses
@@ -382,19 +382,18 @@ _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit19.thread.i: ; preds = %_RNvNtCs2wC
 
 _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.thread.i: ; preds = %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i, %.split27.i, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit19.thread.i, %bb.n
   %.sroa.07.3.i = phi i64 [ %.sroa.07.2.i, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit19.thread.i ], [ %.sroa.07.0.i, %bb.n ], [ %.sroa.07.0.i, %.split27.i ], [ %.sroa.07.0.i, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i ] ; 3 uses
-  %.sroa.0.0.i56 = phi i64 [ %..i, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit19.thread.i ], [ %i.af, %bb.n ], [ %i.af, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i ], [ %.sroa.0.137.i, %.split27.i ] ; 4 uses
+  %.sroa.0.0.i56 = phi i64 [ %..i, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit19.thread.i ], [ %i.af, %bb.n ], [ %i.af, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i ], [ %.sroa.0.1.in36.i, %.split27.i ] ; 4 uses
   %i.bj = icmp eq i64 %.sroa.07.3.i, 0
   br i1 %i.bj, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf22nearest_internal_break.exit, label %bb.s
 
 .lr.ph38.i:                                       ; preds = %bb.n, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i
-  %.sroa.0.137.i = phi i64 [ %.sroa.0.1.i, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i ], [ %.sroa.0.134.i, %bb.n ] ; 5 uses
-  %.sroa.0.1.in36.i = phi i64 [ %.sroa.0.137.i, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i ], [ %..i, %bb.n ]
+  %.sroa.0.1.in36.i = phi i64 [ %.sroa.0.1.i, %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i ], [ %.sroa.0.134.i, %bb.n ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !275)
-  %i.bk = icmp ult i64 %.sroa.0.137.i, %i.af
+  %i.bk = icmp ult i64 %.sroa.0.1.in36.i, %i.af
   br i1 %i.bk, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.lr.ph38.i
-  %i.bl = getelementptr i8, ptr %i.b, i64 %.sroa.0.137.i
+  %i.bl = getelementptr i8, ptr %i.b, i64 %.sroa.0.1.in36.i ; 2 uses
   %i.bm = load i8, ptr %i.bl, align 1, !alias.scope !276, !noundef !5 ; 2 uses
   %i.bn = icmp slt i8 %i.bm, -64
   br i1 %i.bn, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i, label %.split27.i
@@ -405,7 +404,7 @@ bb.r:                                             ; preds = %.lr.ph38.i
   unreachable
 
 .split27.i:                                       ; preds = %bb.q
-  %i.bo = getelementptr i8, ptr %i.b, i64 %.sroa.0.1.in36.i
+  %i.bo = getelementptr i8, ptr %i.bl, i64 -1
   %i.bp = load i8, ptr %i.bo, align 1, !alias.scope !276, !noundef !5
   %i.bq = icmp ne i8 %i.bp, 13
   %i.br = icmp ne i8 %i.bm, 10
@@ -413,7 +412,7 @@ bb.r:                                             ; preds = %.lr.ph38.i
   br i1 %i.bs, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.thread.i, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i
 
 _RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.backedge.i: ; preds = %.split27.i, %bb.q
-  %.sroa.0.1.i = add nuw nsw i64 %.sroa.0.137.i, 1 ; 2 uses
+  %.sroa.0.1.i = add nuw nsw i64 %.sroa.0.1.in36.i, 1 ; 2 uses
   %i.bt = icmp eq i64 %.sroa.0.1.i, %i.af
   br i1 %i.bt, label %_RNvNtCs2wCc12Mnjqg_5ropey4crlf8is_break.exit22.thread.i, label %.lr.ph38.i
 

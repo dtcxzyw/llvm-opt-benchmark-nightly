@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i32 [ 8, %bb.b ], [ 0, %bb.a ]        ; 6 uses
+  %.0 = phi i32 [ 8, %bb.b ], [ 0, %bb.a ]        ; 5 uses
   switch i32 %0, label %bb.d [
     i32 5, label %.preheader
     i32 4, label %.loopexit41
@@ -218,31 +218,37 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .preheader:                                       ; preds = %bb.c
   %i.e = or disjoint i32 %.0, 32                  ; 2 uses
   %.not3945 = icmp ugt i32 %i.e, %3
-  br i1 %.not3945, label %.loopexit41, label %.lr.ph47
+  br i1 %.not3945, label %.loopexit41, label %.lr.ph47.preheader
 
-.lr.ph47:                                         ; preds = %.preheader, %.lr.ph47
-  %6 = phi i32 [ %i.h, %.lr.ph47 ], [ %i.e, %.preheader ] ; 3 uses
-  %.146 = phi i32 [ %6, %.lr.ph47 ], [ %.0, %.preheader ]
-  %i.f = add i32 %.146, %2
+.lr.ph47.preheader:                               ; preds = %.preheader
+  %invariant.op = add i32 %2, -32
+  br label %.lr.ph47
+
+.lr.ph47:                                         ; preds = %.lr.ph47.preheader, %.lr.ph47
+  %.146 = phi i32 [ %i.h, %.lr.ph47 ], [ %i.e, %.lr.ph47.preheader ] ; 3 uses
+  %i.f = add i32 %.146, %invariant.op
   %i.g = zext i32 %i.f to i64
   tail call void @tcg_gen_stl_vec(ptr noundef %5, ptr noundef %1, i64 noundef %i.g, i32 noundef 5) #9
-  %i.h = add i32 %6, 32                           ; 2 uses
+  %i.h = add i32 %.146, 32                        ; 2 uses
   %.not39 = icmp ugt i32 %i.h, %3
   br i1 %.not39, label %.loopexit41, label %.lr.ph47, !llvm.loop !52
 
 .loopexit41:                                      ; preds = %.lr.ph47, %.preheader, %bb.c
-  %.2 = phi i32 [ %.0, %bb.c ], [ %.0, %.preheader ], [ %6, %.lr.ph47 ] ; 2 uses
+  %.2 = phi i32 [ %.0, %bb.c ], [ %.0, %.preheader ], [ %.146, %.lr.ph47 ]
   %i.i = add nuw i32 %.2, 16                      ; 2 uses
   %.not4048 = icmp ugt i32 %i.i, %3
-  br i1 %.not4048, label %.loopexit, label %.lr.ph50
+  br i1 %.not4048, label %.loopexit, label %.lr.ph50.preheader
 
-.lr.ph50:                                         ; preds = %.loopexit41, %.lr.ph50
-  %7 = phi i32 [ %i.l, %.lr.ph50 ], [ %i.i, %.loopexit41 ] ; 2 uses
-  %.349 = phi i32 [ %7, %.lr.ph50 ], [ %.2, %.loopexit41 ]
-  %i.j = add i32 %.349, %2
+.lr.ph50.preheader:                               ; preds = %.loopexit41
+  %invariant.op60 = add i32 %2, -16
+  br label %.lr.ph50
+
+.lr.ph50:                                         ; preds = %.lr.ph50.preheader, %.lr.ph50
+  %.349 = phi i32 [ %i.l, %.lr.ph50 ], [ %i.i, %.lr.ph50.preheader ] ; 2 uses
+  %i.j = add i32 %.349, %invariant.op60
   %i.k = zext i32 %i.j to i64
   tail call void @tcg_gen_stl_vec(ptr noundef %5, ptr noundef %1, i64 noundef %i.k, i32 noundef 4) #9
-  %i.l = add i32 %7, 16                           ; 2 uses
+  %i.l = add i32 %.349, 16                        ; 2 uses
   %.not40 = icmp ugt i32 %i.l, %3
   br i1 %.not40, label %.loopexit, label %.lr.ph50, !llvm.loop !53
 

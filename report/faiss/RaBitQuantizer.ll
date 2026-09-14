@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.us.i:                                      ; preds = %.lr.ph48.i, %..loopexit_crit_edge.us.i
   %i.o = phi i64 [ %i.aa, %..loopexit_crit_edge.us.i ], [ 8, %.lr.ph48.i ] ; 2 uses
   %.047.us.i = phi i64 [ %i.z, %..loopexit_crit_edge.us.i ], [ 0, %.lr.ph48.i ]
-  %.03546.us.i = phi i64 [ %i.o, %..loopexit_crit_edge.us.i ], [ 0, %.lr.ph48.i ] ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %.03546.us.i
+  %.03546.us72.i = add nsw i64 %i.o, -8           ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %.03546.us72.i
   %i.q = load i64, ptr %i.p, align 8, !tbaa !33
-  %invariant.gep.us.i = getelementptr i8, ptr %i.m, i64 %.03546.us.i
+  %invariant.gep.us.i = getelementptr i8, ptr %i.m, i64 %.03546.us72.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.us.i
@@ -306,7 +306,7 @@ bb.e:                                             ; preds = %bb.a
 
 vector.ph:                                        ; preds = %.loopexit.i27.preheader
   %n.vec = and i64 %i.bc, 4611686018427387900     ; 3 uses
-  %i.bd = shl i64 %n.vec, 3                       ; 2 uses
+  %i.bd = shl i64 %n.vec, 3
   %i.be = or disjoint i64 %i.bd, 8
   br label %vector.body
 
@@ -314,9 +314,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.phi = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.bk, %vector.body ]
   %vec.phi75 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %i.bl, %vector.body ]
-  %i.bf = shl i64 %index, 3
-  %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 %i.bf ; 2 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
+  %i.bf = shl nuw i64 %index, 3
+  %i.bg = getelementptr i8, ptr %1, i64 %i.bf     ; 2 uses
+  %i.bh = getelementptr i8, ptr %i.bg, i64 16
   %wide.load = load <2 x i64>, ptr %i.bg, align 8, !tbaa !33
   %wide.load76 = load <2 x i64>, ptr %i.bh, align 8, !tbaa !33
   %i.bi = tail call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %wide.load)
@@ -336,17 +336,16 @@ middle.block:                                     ; preds = %vector.body
 .loopexit.i27.preheader101:                       ; preds = %.loopexit.i27.preheader, %middle.block
   %.ph = phi i64 [ 8, %.loopexit.i27.preheader ], [ %i.be, %middle.block ]
   %.04054.i.ph = phi i64 [ 0, %.loopexit.i27.preheader ], [ %i.bn, %middle.block ]
-  %.04353.i.ph = phi i64 [ 0, %.loopexit.i27.preheader ], [ %i.bd, %middle.block ]
   br label %.loopexit.i27
 
 .lr.ph.us.i15:                                    ; preds = %.lr.ph56.i, %..loopexit_crit_edge.us.i21
   %i.bo = phi i64 [ %i.cc, %..loopexit_crit_edge.us.i21 ], [ 8, %.lr.ph56.i ] ; 2 uses
   %.055.us.i = phi i64 [ %i.bz, %..loopexit_crit_edge.us.i21 ], [ 0, %.lr.ph56.i ]
   %.04054.us.i = phi i64 [ %i.cb, %..loopexit_crit_edge.us.i21 ], [ 0, %.lr.ph56.i ]
-  %.04353.us.i = phi i64 [ %i.bo, %..loopexit_crit_edge.us.i21 ], [ 0, %.lr.ph56.i ] ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 %.04353.us.i
+  %.04353.us89.i = add nsw i64 %i.bo, -8          ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 %.04353.us89.i
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !33 ; 2 uses
-  %invariant.gep.us.i16 = getelementptr i8, ptr %i.aw, i64 %.04353.us.i
+  %invariant.gep.us.i16 = getelementptr i8, ptr %i.aw, i64 %.04353.us89.i
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.us.i15
@@ -475,8 +474,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.us73.
 .loopexit.i27:                                    ; preds = %.loopexit.i27.preheader101, %.loopexit.i27
   %i.dj = phi i64 [ %i.do, %.loopexit.i27 ], [ %.ph, %.loopexit.i27.preheader101 ] ; 2 uses
   %.04054.i = phi i64 [ %i.dn, %.loopexit.i27 ], [ %.04054.i.ph, %.loopexit.i27.preheader101 ]
-  %.04353.i = phi i64 [ %i.dj, %.loopexit.i27 ], [ %.04353.i.ph, %.loopexit.i27.preheader101 ]
-  %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 %.04353.i
+  %4 = getelementptr i8, ptr %1, i64 %i.dj
+  %i.dk = getelementptr i8, ptr %4, i64 -8
   %i.dl = load i64, ptr %i.dk, align 8, !tbaa !33
   %i.dm = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.dl)
   %i.dn = add i64 %i.dm, %.04054.i                ; 2 uses

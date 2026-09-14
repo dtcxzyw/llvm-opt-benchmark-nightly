@@ -205,7 +205,7 @@ _ZN3CFFL15cummax_backwardERK12hb_hashmap_tIjjLb0EEjjR11hb_vector_tIjLb0EE.exit.i
   store ptr %9, ptr %i.kz, align 8, !tbaa !753
   %i.la = getelementptr inbounds nuw i8, ptr %10, i64 32
   store ptr %7, ptr %i.la, align 8, !tbaa !754
-  %i.lb = load i32, ptr %i.f, align 4, !tbaa !101 ; 34 uses
+  %i.lb = load i32, ptr %i.f, align 4, !tbaa !101 ; 33 uses
   %i.lc = call fastcc noundef i32 @"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_0clEj"(ptr noundef nonnull align 8 dereferenceable(40) %10, i32 noundef %i.lb)
   %i.ld = load i32, ptr %i.g, align 4, !tbaa !101 ; 21 uses
   %i.le = icmp sgt i32 %i.lb, %i.ld               ; 2 uses
@@ -406,18 +406,17 @@ _ZNK12hb_hashmap_tIjjLb0EE3getERKj.exit.i:        ; preds = %.lr.ph.i.i.i, %._cr
   br i1 %or.cond.i, label %._crit_edge145.i, label %bb.bo
 
 .lr.ph137.i:                                      ; preds = %"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_1clEj.exit185.i", %.lr.ph137.preheader.i
-  %.057136.i = phi i32 [ %.057.i, %"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_1clEj.exit185.i" ], [ %.057131.i, %.lr.ph137.preheader.i ] ; 8 uses
-  %.057.in135.i = phi i32 [ %.057136.i, %"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_1clEj.exit185.i" ], [ %i.lb, %.lr.ph137.preheader.i ] ; 4 uses
+  %.057.in135.i = phi i32 [ %.057.i, %"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_1clEj.exit185.i" ], [ %.057131.i, %.lr.ph137.preheader.i ] ; 11 uses
   %.058134.i = phi i32 [ %spec.select67.i, %"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_1clEj.exit185.i" ], [ %i.mj, %.lr.ph137.preheader.i ] ; 2 uses
   %.060133.i = phi i32 [ %spec.select.i, %"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_1clEj.exit185.i" ], [ %i.lb, %.lr.ph137.preheader.i ]
-  %i.nz = call fastcc noundef i32 @"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_0clEj"(ptr noundef nonnull align 8 dereferenceable(40) %10, i32 noundef %.057136.i)
-  %i.oa = icmp slt i32 %.057136.i, %i.lb
-  %i.ob = icmp sgt i32 %.057136.i, %i.ld
+  %i.nz = call fastcc noundef i32 @"_ZZN3CFFL15optimize_widthsERK11hb_vector_tIjLb0EERjS4_ENK3$_0clEj"(ptr noundef nonnull align 8 dereferenceable(40) %10, i32 noundef %.057.in135.i)
+  %i.oa = icmp slt i32 %.057.in135.i, %i.lb
+  %i.ob = icmp sgt i32 %.057.in135.i, %i.ld
   %or.cond.i.i154.i = or i1 %i.oa, %i.ob          ; 2 uses
   br i1 %or.cond.i.i154.i, label %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit.i157.i, label %bb.bc
 
 bb.bc:                                            ; preds = %.lr.ph137.i
-  %i.oc = sub i32 %.057136.i, %i.lb               ; 2 uses
+  %i.oc = sub i32 %.057.in135.i, %i.lb            ; 2 uses
   %.not.i.i.i155.i = icmp ult i32 %i.oc, %.sroa.744.0.i
   %i.od = zext i32 %i.oc to i64
   %i.oe = getelementptr inbounds nuw [4 x i8], ptr %.sroa.1548.2.i, i64 %i.od
@@ -427,7 +426,7 @@ bb.bc:                                            ; preds = %.lr.ph137.i
 
 _ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit.i157.i: ; preds = %bb.bc, %.lr.ph137.i
   %.0.i.i158.i = phi i32 [ %i.of, %bb.bc ], [ 0, %.lr.ph137.i ] ; 2 uses
-  %i.og = add i32 %.057.in135.i, -107             ; 3 uses
+  %i.og = add i32 %.057.in135.i, -108             ; 3 uses
   %i.oh = icmp slt i32 %i.og, %i.lb
   %i.oi = icmp sgt i32 %i.og, %i.ld
   %or.cond.i17.i159.i = or i1 %i.oh, %i.oi
@@ -446,7 +445,7 @@ bb.bd:                                            ; preds = %_ZN3CFFL8safe_getER
 
 _ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit21.i162.i: ; preds = %bb.bd, %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit.i157.i
   %.0.i20.i163.i = phi i32 [ %i.oo, %bb.bd ], [ %.0.i.i158.i, %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit.i157.i ] ; 2 uses
-  %i.op = add i32 %.057.in135.i, -1131            ; 3 uses
+  %i.op = add i32 %.057.in135.i, -1132            ; 3 uses
   %i.oq = icmp slt i32 %i.op, %i.lb
   %i.or = icmp sgt i32 %i.op, %i.ld
   %or.cond.i22.i164.i = or i1 %i.oq, %i.or
@@ -468,7 +467,7 @@ _ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit26.i167.i: ; preds = %bb.be, %_Z
   br i1 %or.cond.i.i154.i, label %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit32.i173.i, label %bb.bf
 
 bb.bf:                                            ; preds = %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit26.i167.i
-  %i.oy = sub i32 %.057136.i, %i.lb               ; 2 uses
+  %i.oy = sub i32 %.057.in135.i, %i.lb            ; 2 uses
   %.not.i.i29.i171.i = icmp ult i32 %i.oy, %.sroa.7.0.i
   %i.oz = zext i32 %i.oy to i64
   %i.pa = getelementptr inbounds nuw [4 x i8], ptr %.sroa.15.2.i, i64 %i.oz
@@ -478,7 +477,7 @@ bb.bf:                                            ; preds = %_ZN3CFFL8safe_getER
 
 _ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit32.i173.i: ; preds = %bb.bf, %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit26.i167.i
   %.0.i31.i174.i = phi i32 [ %i.pb, %bb.bf ], [ 0, %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit26.i167.i ] ; 2 uses
-  %i.pc = add i32 %.057.in135.i, 109              ; 3 uses
+  %i.pc = add i32 %.057.in135.i, 108              ; 3 uses
   %i.pd = icmp slt i32 %i.pc, %i.lb
   %i.pe = icmp sgt i32 %i.pc, %i.ld
   %or.cond.i33.i175.i = or i1 %i.pd, %i.pe
@@ -497,7 +496,7 @@ bb.bg:                                            ; preds = %_ZN3CFFL8safe_getER
 
 _ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit37.i178.i: ; preds = %bb.bg, %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit32.i173.i
   %.0.i36.i179.i = phi i32 [ %i.pk, %bb.bg ], [ %.0.i31.i174.i, %_ZN3CFFL8safe_getERK11hb_vector_tIjLb0EEijj.exit32.i173.i ] ; 2 uses
-  %i.pl = add i32 %.057.in135.i, 1133             ; 3 uses
+  %i.pl = add i32 %.057.in135.i, 1132             ; 3 uses
   %i.pm = icmp slt i32 %i.pl, %i.lb
   %i.pn = icmp sgt i32 %i.pl, %i.ld
   %or.cond.i39.i180.i = or i1 %i.pm, %i.pn
@@ -519,9 +518,9 @@ bb.bh:                                            ; preds = %_ZN3CFFL8safe_getER
   %.sroa.speculated54.i184.i = call noundef i32 @llvm.umax.i32(i32 %.0.i25.i168.i, i32 %.0.i42.i183.i)
   %i.pu = sub i32 %i.nz, %.sroa.speculated54.i184.i ; 2 uses
   %i.pv = icmp ult i32 %i.pu, %.058134.i
-  %spec.select.i = select i1 %i.pv, i32 %.057136.i, i32 %.060133.i ; 6 uses
+  %spec.select.i = select i1 %i.pv, i32 %.057.in135.i, i32 %.060133.i ; 6 uses
   %spec.select67.i = call i32 @llvm.umin.i32(i32 %i.pu, i32 %.058134.i)
-  %.057.i = add i32 %.057136.i, 1                 ; 2 uses
+  %.057.i = add i32 %.057.in135.i, 1              ; 2 uses
   %.not65.i = icmp ugt i32 %.057.i, %i.ld
   br i1 %.not65.i, label %._crit_edge138.loopexit.i, label %.lr.ph137.i, !llvm.loop !644
 

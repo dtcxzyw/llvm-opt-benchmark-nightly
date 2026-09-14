@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.lr.ph104
 
 .lr.ph104:                                        ; preds = %.lr.ph104.preheader, %._crit_edge99
-  %.1102 = phi i32 [ %.2.lcssa, %._crit_edge99 ], [ %i.n, %.lr.ph104.preheader ] ; 6 uses
+  %.1102 = phi i32 [ %.2.lcssa, %._crit_edge99 ], [ %i.n, %.lr.ph104.preheader ] ; 5 uses
   %.171101 = phi i16 [ %i.bq, %._crit_edge99 ], [ 0, %.lr.ph104.preheader ]
   %i.r = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.1102)
   %i.s = add i32 %.1102, 2                        ; 2 uses
@@ -226,9 +226,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph98:                                         ; preds = %.lr.ph104, %bb.i
   %.296 = phi i32 [ %.2, %bb.i ], [ %.293, %.lr.ph104 ] ; 4 uses
   %.095 = phi i16 [ %i.bp, %bb.i ], [ 0, %.lr.ph104 ]
-  %.2.in94 = phi i32 [ %.296, %bb.i ], [ %.1102, %.lr.ph104 ]
   %i.ae = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.296) ; 3 uses
-  %i.af = add i32 %.2.in94, 6
+  %i.af = add i32 %.296, 2
   %i.ag = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.af) ; 2 uses
   %.0713.i = load ptr, ptr @families, align 8     ; 3 uses
   %.not14.i = icmp eq ptr %.0713.i, null

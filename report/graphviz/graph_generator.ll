@@ -202,19 +202,19 @@ makeBinaryTree.exit:                              ; preds = %.lr.ph.i, %.lr.ph.i
   br i1 %i.p, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.h
-  %3 = phi i32 [ %i.u, %bb.h ], [ 2, %.lr.ph ]    ; 2 uses
-  %.056.us = phi i32 [ %3, %bb.h ], [ 1, %.lr.ph ]
+  %.056.us = phi i32 [ %i.u, %bb.h ], [ 2, %.lr.ph ] ; 2 uses
   %i.s = tail call i32 @rand() #15
   %i.t = urem i32 %i.s, %i.m
   %or.cond = icmp ugt i32 %i.t, %invariant.umax
   br i1 %or.cond, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.split.us
-  tail call void %2(i32 noundef %.056.us, i32 noundef %.03658) #15
+  %.056.us64 = add i32 %.056.us, -1
+  tail call void %2(i32 noundef %.056.us64, i32 noundef %.03658) #15
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.split.us, %bb.g
-  %i.u = add nuw i32 %3, 1                        ; 2 uses
+  %i.u = add nuw i32 %.056.us, 1                  ; 2 uses
   %exitcond63.not = icmp eq i32 %i.u, %.03658
   br i1 %exitcond63.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !77
 
@@ -227,15 +227,15 @@ bb.h:                                             ; preds = %.lr.ph.split.us, %b
   br i1 %.not43, label %._crit_edge60, label %.preheader, !llvm.loop !78
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.l
-  %i.w = phi i32 [ %i.ab, %bb.l ], [ 2, %.lr.ph ] ; 2 uses
-  %.056 = phi i32 [ %i.w, %bb.l ], [ 1, %.lr.ph ] ; 2 uses
+  %i.w = phi i32 [ %i.ab, %bb.l ], [ 2, %.lr.ph ] ; 3 uses
+  %.05663 = add i32 %i.w, -1
   %i.x = tail call i32 @rand() #15
   %i.y = urem i32 %i.x, %i.m                      ; 3 uses
   %.not44 = icmp ugt i32 %i.y, %i.n
   br i1 %.not44, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.split
-  %i.z = add i32 %.056, 4
+  %i.z = add i32 %i.w, 3
   %i.aa = icmp ule i32 %i.z, %0
   %or.cond.not52 = or i1 %i.r, %i.aa
   %.not45 = icmp ugt i32 %i.y, %1
@@ -247,7 +247,7 @@ bb.j:                                             ; preds = %.lr.ph.split
   br i1 %.not45.old, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j
-  tail call void %2(i32 noundef %.056, i32 noundef %.03658) #15
+  tail call void %2(i32 noundef %.05663, i32 noundef %.03658) #15
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.i, %bb.k, %bb.j
@@ -312,8 +312,8 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader66:                                     ; preds = %.preheader67, %..loopexit_crit_edge
   %i.n = phi i32 [ %i.m, %..loopexit_crit_edge ], [ 1, %.preheader67 ] ; 3 uses
-  %.05669 = phi i32 [ %i.n, %..loopexit_crit_edge ], [ 0, %.preheader67 ]
-  %i.o = mul i32 %.05669, %1                      ; 2 uses
+  %.0566975 = add i32 %i.n, -1
+  %i.o = mul i32 %.0566975, %1                    ; 2 uses
   %i.p = mul i32 %i.n, %1
   br label %bb.e
 
@@ -595,8 +595,7 @@ umul.exit.i:                                      ; preds = %.lr.ph94.i
 
 .loopexit.i:                                      ; preds = %umul.exit51.i, %umul.exit49.i
   %.145.lcssa.i = phi i64 [ %.04491.i, %umul.exit49.i ], [ %i.aw, %umul.exit51.i ]
-  %2 = add i32 %3, 1                              ; 2 uses
-  %i.aa = zext i32 %2 to i64                      ; 3 uses
+  %i.aa = zext i32 %i.aj to i64                   ; 3 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.aa
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !35 ; 2 uses
   %i.ad = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.aa, i64 %i.ac) ; 2 uses
@@ -611,11 +610,10 @@ bb.d:                                             ; preds = %.loopexit.i
 
 umul.exit49.i:                                    ; preds = %.loopexit.i, %umul.exit.i
   %i.ah = phi { i64, i1 } [ %i.z, %umul.exit.i ], [ %i.ad, %.loopexit.i ]
-  %3 = phi i32 [ 1, %umul.exit.i ], [ %2, %.loopexit.i ] ; 4 uses
-  %.04392.i = phi i32 [ 0, %umul.exit.i ], [ %3, %.loopexit.i ]
+  %.04392.i = phi i32 [ 1, %umul.exit.i ], [ %i.aj, %.loopexit.i ] ; 3 uses
   %.04491.i = phi i64 [ %i.x, %umul.exit.i ], [ %.145.lcssa.i, %.loopexit.i ] ; 2 uses
   %i.ai = extractvalue { i64, i1 } %i.ah, 0       ; 2 uses
-  %i.aj = add i32 %.04392.i, 2                    ; 2 uses
+  %i.aj = add i32 %.04392.i, 1                    ; 4 uses
   %i.ak = icmp ult i32 %.14793.i, %i.aj
   br i1 %i.ak, label %.loopexit.i, label %.lr.ph.i
 
@@ -623,7 +621,7 @@ umul.exit49.i:                                    ; preds = %.loopexit.i, %umul.
   %i.al = phi i32 [ %i.ax, %umul.exit51.i ], [ 1, %umul.exit49.i ] ; 2 uses
   %.090.i = phi i32 [ %i.am, %umul.exit51.i ], [ %.14793.i, %umul.exit49.i ]
   %.14589.i = phi i64 [ %i.aw, %umul.exit51.i ], [ %.04491.i, %umul.exit49.i ] ; 2 uses
-  %i.am = sub i32 %.090.i, %3                     ; 6 uses
+  %i.am = sub i32 %.090.i, %.04392.i              ; 6 uses
   %i.an = zext i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.an
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !35 ; 2 uses
@@ -655,7 +653,7 @@ umul.exit51.i:                                    ; preds = %umul.exit50.i
   %i.bb = load ptr, ptr %i.a, align 8, !tbaa !26
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.az
   store i32 %i.ba, ptr %i.bc, align 4, !tbaa !27
-  store i32 %3, ptr %i.k, align 8, !tbaa !41
+  store i32 %.04392.i, ptr %i.k, align 8, !tbaa !41
   %i.bd = tail call i64 @gv_list_append_slot_(ptr noundef nonnull %i.a, i64 noundef 4) #15
   %i.be = load i32, ptr %i.k, align 8, !tbaa !41
   %i.bf = load ptr, ptr %i.a, align 8, !tbaa !26

@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !64   ; 5 uses
-  %.promoted = load i32, ptr %i.a, align 8, !tbaa !65 ; 2 uses
+  %.promoted = load i32, ptr %i.a, align 8, !tbaa !65
   %i.d = add i32 %.promoted, 1                    ; 4 uses
   store i32 %i.d, ptr %i.a, align 8, !tbaa !65
   %i.e = zext i32 %i.d to i64                     ; 2 uses
@@ -215,8 +215,7 @@ bb.a:
 
 _ZNK4Luau5Lexer6peekchEv.exit13:                  ; preds = %bb.a, %.backedge
   %i.g = phi i64 [ %i.o, %.backedge ], [ %i.e, %bb.a ]
-  %4 = phi i32 [ %i.n, %.backedge ], [ %i.d, %bb.a ] ; 3 uses
-  %i.h = phi i32 [ %4, %.backedge ], [ %.promoted, %bb.a ] ; 2 uses
+  %i.h = phi i32 [ %i.n, %.backedge ], [ %i.d, %bb.a ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.pre.pre.pre, i64 %i.g
   %i.j = load i8, ptr %i.i, align 1, !tbaa !22
   %.fr = freeze i8 %i.j                           ; 2 uses
@@ -234,14 +233,14 @@ switch.early.test:                                ; preds = %_ZNK4Luau5Lexer6pee
   ]
 
 .backedge:                                        ; preds = %switch.early.test, %switch.early.test, %_ZNK4Luau5Lexer6peekchEv.exit13
-  %i.n = add i32 %4, 1                            ; 4 uses
+  %i.n = add i32 %i.h, 1                          ; 4 uses
   store i32 %i.n, ptr %i.a, align 8, !tbaa !65
   %i.o = zext i32 %i.n to i64                     ; 2 uses
   %i.p = icmp ugt i64 %i.c, %i.o
   br i1 %i.p, label %_ZNK4Luau5Lexer6peekchEv.exit13, label %_ZNK4Luau5Lexer6peekchEv.exit9.thread, !llvm.loop !99
 
 bb.b:                                             ; preds = %switch.early.test, %switch.early.test
-  %i.q = add i32 %i.h, 2                          ; 4 uses
+  %i.q = add i32 %i.h, 1                          ; 4 uses
   store i32 %i.q, ptr %i.a, align 8, !tbaa !65
   %i.r = zext i32 %i.q to i64                     ; 2 uses
   %i.s = icmp ugt i64 %i.c, %i.r
@@ -256,12 +255,12 @@ _ZNK4Luau5Lexer6peekchEv.exit8:                   ; preds = %bb.b
   ]
 
 bb.c:                                             ; preds = %_ZNK4Luau5Lexer6peekchEv.exit8, %_ZNK4Luau5Lexer6peekchEv.exit8
-  %i.v = add i32 %i.h, 3                          ; 2 uses
+  %i.v = add i32 %i.h, 2                          ; 2 uses
   store i32 %i.v, ptr %i.a, align 8, !tbaa !65
   br label %_ZNK4Luau5Lexer6peekchEv.exit9.thread
 
 _ZNK4Luau5Lexer6peekchEv.exit9.thread:            ; preds = %switch.early.test, %.backedge, %_ZNK4Luau5Lexer6peekchEv.exit8, %bb.a, %bb.b, %bb.c
-  %.promoted31 = phi i32 [ %i.d, %bb.a ], [ %i.q, %bb.b ], [ %i.q, %_ZNK4Luau5Lexer6peekchEv.exit8 ], [ %i.v, %bb.c ], [ %4, %switch.early.test ], [ %i.n, %.backedge ] ; 3 uses
+  %.promoted31 = phi i32 [ %i.d, %bb.a ], [ %i.q, %bb.b ], [ %i.q, %_ZNK4Luau5Lexer6peekchEv.exit8 ], [ %i.v, %bb.c ], [ %i.h, %switch.early.test ], [ %i.n, %.backedge ] ; 3 uses
   %i.w = zext i32 %.promoted31 to i64             ; 2 uses
   %i.x = icmp ugt i64 %i.c, %i.w
   br i1 %i.x, label %_ZNK4Luau5Lexer6peekchEv.exit6, label %_ZNK4Luau5Lexer6peekchEv.exit.thread

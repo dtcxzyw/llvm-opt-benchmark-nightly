@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %dst_mtu.exit83.i.i
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %dst_mtu.exit83.i.i
-  %.2.i.i = phi i32 [ %i.av, %bb.ah ], [ %.152.i.i, %dst_mtu.exit83.i.i ] ; 4 uses
+  %.2.i.i = phi i32 [ %i.av, %bb.ah ], [ %.152.i.i, %dst_mtu.exit83.i.i ] ; 3 uses
   %i.cs = load ptr, ptr %i.af, align 8
   %.not.i84.i.i = icmp eq ptr %i.cs, null
   br i1 %.not.i84.i.i, label %bb.aj, label %bb.ak
@@ -250,24 +250,22 @@ bb.am:                                            ; preds = %bb.al
   br i1 %.not7590.i.i, label %.sink.split, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.am, %.lr.ph.i.i
-  %.192.i.i = phi i32 [ %.1.i.i, %.lr.ph.i.i ], [ %.189.i.i, %bb.am ] ; 2 uses
-  %i.dl = phi i32 [ %2, %.lr.ph.i.i ], [ %i.da, %bb.am ] ; 2 uses
-  %.491.i.i = phi i32 [ %i.dl, %.lr.ph.i.i ], [ %.2.i.i, %bb.am ]
-  %i.dm = add i32 %.491.i.i, -2
+  %i.dl = phi i32 [ %.1.i.i, %.lr.ph.i.i ], [ %.189.i.i, %bb.am ] ; 2 uses
+  %.491.i.i = phi i32 [ %i.dm, %.lr.ph.i.i ], [ %i.da, %bb.am ]
+  %i.dm = add i32 %.491.i.i, -1                   ; 3 uses
   %i.dn = sext i32 %i.dm to i64
   %i.do = getelementptr [8 x i8], ptr %i.a, i64 %i.dn
   %i.dp = load ptr, ptr %i.do, align 8            ; 4 uses
   %i.dq = getelementptr i8, ptr %i.dp, i64 284
-  store i32 %.192.i.i, ptr %i.dq, align 4
-  %2 = add i32 %i.dl, -1                          ; 2 uses
+  store i32 %i.dl, ptr %i.dq, align 4
   %i.dr = getelementptr i8, ptr %i.dp, i64 32
   %i.ds = load ptr, ptr %i.dr, align 8
-  %i.dt = tail call i32 @xfrm_state_mtu(ptr noundef %i.ds, i32 noundef %.192.i.i) #20
+  %i.dt = tail call i32 @xfrm_state_mtu(ptr noundef %i.ds, i32 noundef %i.dl) #20
   %i.du = getelementptr i8, ptr %i.dp, i64 280
   %i.dv = load i32, ptr %i.du, align 8
   %.1.i.i = tail call i32 @llvm.umin.i32(i32 %i.dt, i32 %i.dv) ; 2 uses
   tail call fastcc void @dst_metric_set(ptr noundef %i.dp, i32 noundef %.1.i.i) #23
-  %.not75.i.i = icmp eq i32 %2, 0
+  %.not75.i.i = icmp eq i32 %i.dm, 0
   br i1 %.not75.i.i, label %.sink.split, label %.lr.ph.i.i, !llvm.loop !171
 
 .sink.split:                                      ; preds = %.preheader.i.i, %bb.l, %bb.n, %dst_check.exit82.i.i, %.lr.ph.i.i, %bb.am, %bb.al, %bb.k, %netif_running.exit.i.i, %dst_check.exit.i.i

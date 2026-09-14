@@ -205,8 +205,8 @@ bb.ao:                                            ; preds = %_ZNSt3__16vectorIPK
   %.pre1291 = phi i32 [ %.pre12911319, %.loopexit872 ], [ %.pre1318.a, %.preheader873.preheader ] ; 2 uses
   %i.mm = phi i32 [ %i.mi, %.loopexit872 ], [ %.pre1318.a, %.preheader873.preheader ] ; 5 uses
   %i.mn = phi i64 [ %i.mj, %.loopexit872 ], [ %i.mg, %.preheader873.preheader ]
-  %i.mo = phi i64 [ %i.mk, %.loopexit872 ], [ 2, %.preheader873.preheader ] ; 2 uses
-  %.0555988 = phi i64 [ %i.mo, %.loopexit872 ], [ 1, %.preheader873.preheader ] ; 7 uses
+  %i.mo = phi i64 [ %i.mk, %.loopexit872 ], [ 2, %.preheader873.preheader ] ; 4 uses
+  %.05559881192 = add i64 %i.mo, -1               ; 5 uses
   %.not1110 = icmp eq i32 %i.mm, 0
   br i1 %.not1110, label %.preheader871, label %.lr.ph976
 
@@ -259,7 +259,7 @@ bb.ao:                                            ; preds = %_ZNSt3__16vectorIPK
   %i.nh = load ptr, ptr %i.ng, align 8, !tbaa !245
   %i.ni = getelementptr inbounds nuw i8, ptr %i.nf, i64 16
   %i.nj = load i64, ptr %i.ni, align 8, !tbaa !246
-  %i.nk = mul i64 %i.nj, %.0555988
+  %i.nk = mul i64 %i.nj, %.05559881192
   %i.nl = getelementptr inbounds nuw i8, ptr %i.nh, i64 %i.nk ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.nl, i64 64) ]
   %i.nm = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0755.0, i64 %indvars.iv1175.epil.init
@@ -273,8 +273,7 @@ bb.ao:                                            ; preds = %_ZNSt3__16vectorIPK
 
 .preheader870.preheader:                          ; preds = %.preheader871
   %.pre1293.pre1324 = load ptr, ptr %37, align 8
-  %56 = add i64 %.0555988, 1
-  %i.np = add i64 %.0555988, -1
+  %i.np = add i64 %i.mo, -2
   br label %.preheader870
 
 bb.ap:                                            ; preds = %bb.ap, %.lr.ph976.new
@@ -288,7 +287,7 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph976.n
   %i.nv = load ptr, ptr %i.nu, align 8, !tbaa !245
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nt, i64 16
   %i.nx = load i64, ptr %i.nw, align 8, !tbaa !246
-  %i.ny = mul i64 %i.nx, %.0555988
+  %i.ny = mul i64 %i.nx, %.05559881192
   %i.nz = getelementptr inbounds nuw i8, ptr %i.nv, i64 %i.ny ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.nz, i64 64) ]
   %i.oa = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0755.0, i64 %indvars.iv1175
@@ -302,7 +301,7 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph976.n
   %i.og = load ptr, ptr %i.of, align 8, !tbaa !245
   %i.oh = getelementptr inbounds nuw i8, ptr %i.oe, i64 16
   %i.oi = load i64, ptr %i.oh, align 8, !tbaa !246
-  %i.oj = mul i64 %i.oi, %.0555988
+  %i.oj = mul i64 %i.oi, %.05559881192
   %i.ok = getelementptr inbounds nuw i8, ptr %i.og, i64 %i.oj ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ok, i64 64) ]
   %i.ol = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0755.0, i64 %indvars.iv.next1176
@@ -317,7 +316,7 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph976.n
   %i.om = phi i64 [ %i.rr, %.critedge1814 ], [ %i.nn, %.preheader870.preheader ] ; 4 uses
   %i.on = phi i32 [ %.pre12911320, %.critedge1814 ], [ %.pre1291, %.preheader870.preheader ]
   %i.oo = phi i64 [ %i.rs, %.critedge1814 ], [ 2, %.preheader870.preheader ] ; 2 uses
-  %.0553987 = phi i64 [ %i.oo, %.critedge1814 ], [ 1, %.preheader870.preheader ] ; 5 uses
+  %.05539871191 = add i64 %i.oo, -1               ; 5 uses
   %.not1111 = icmp eq i32 %i.on, 0
   br i1 %.not1111, label %.critedge1104, label %.lr.ph978
 
@@ -341,10 +340,10 @@ bb.aq:                                            ; preds = %.preheader869.split
   %i.ow = load ptr, ptr %i.ov, align 8, !tbaa !245
   %i.ox = getelementptr inbounds nuw i8, ptr %i.ou, i64 16
   %i.oy = load i64, ptr %i.ox, align 8, !tbaa !246
-  %i.oz = mul i64 %i.oy, %.0555988
+  %i.oz = mul i64 %i.oy, %.05559881192
   %i.pa = getelementptr inbounds nuw i8, ptr %i.ow, i64 %i.oz ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.pa, i64 64) ]
-  %i.pb = getelementptr [4 x i8], ptr %i.pa, i64 %.0553987
+  %i.pb = getelementptr [4 x i8], ptr %i.pa, i64 %.05539871191
   %i.pc = getelementptr i8, ptr %i.pb, i64 4
   %i.pd = load i32, ptr %i.pc, align 4, !tbaa !35
   %i.pe = getelementptr inbounds nuw [4 x i8], ptr %.pre1292.a, i64 %indvars.iv1185
@@ -368,10 +367,10 @@ bb.aq:                                            ; preds = %.preheader869.split
   %i.pn = load ptr, ptr %i.pm, align 8, !tbaa !245
   %i.po = getelementptr inbounds nuw i8, ptr %i.pl, i64 16
   %i.pp = load i64, ptr %i.po, align 8, !tbaa !246
-  %i.pq = mul i64 %i.pp, %.0555988
+  %i.pq = mul i64 %i.pp, %.05559881192
   %i.pr = getelementptr inbounds nuw i8, ptr %i.pn, i64 %i.pq ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.pr, i64 64) ]
-  %i.ps = getelementptr [4 x i8], ptr %i.pr, i64 %.0553987
+  %i.ps = getelementptr [4 x i8], ptr %i.pr, i64 %.05539871191
   %i.pt = getelementptr i8, ptr %i.ps, i64 -4
   %i.pu = load i32, ptr %i.pt, align 4, !tbaa !35
   %i.pv = getelementptr inbounds nuw [4 x i8], ptr %.pre1292.a, i64 %indvars.iv1185.1
@@ -395,10 +394,10 @@ bb.aq:                                            ; preds = %.preheader869.split
   %i.qe = load ptr, ptr %i.qd, align 8, !tbaa !245
   %i.qf = getelementptr inbounds nuw i8, ptr %i.qc, i64 16
   %i.qg = load i64, ptr %i.qf, align 8, !tbaa !246
-  %i.qh = mul i64 %i.qg, %56
+  %i.qh = mul i64 %i.qg, %i.mo
   %i.qi = getelementptr inbounds nuw i8, ptr %i.qe, i64 %i.qh ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.qi, i64 64) ]
-  %i.qj = getelementptr [4 x i8], ptr %i.qi, i64 %.0553987
+  %i.qj = getelementptr [4 x i8], ptr %i.qi, i64 %.05539871191
   %i.qk = load i32, ptr %i.qj, align 4, !tbaa !35
   %i.ql = getelementptr inbounds nuw [4 x i8], ptr %.pre1292.a, i64 %indvars.iv1185.2
   %i.qm = load i32, ptr %i.ql, align 4, !tbaa !35
@@ -424,7 +423,7 @@ bb.aq:                                            ; preds = %.preheader869.split
   %i.qx = mul i64 %i.qw, %i.np
   %i.qy = getelementptr inbounds nuw i8, ptr %i.qu, i64 %i.qx ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.qy, i64 64) ]
-  %i.qz = getelementptr [4 x i8], ptr %i.qy, i64 %.0553987
+  %i.qz = getelementptr [4 x i8], ptr %i.qy, i64 %.05539871191
   %i.ra = load i32, ptr %i.qz, align 4, !tbaa !35
   %i.rb = getelementptr inbounds nuw [4 x i8], ptr %.pre1292.a, i64 %indvars.iv1185.3
   %i.rc = load i32, ptr %i.rb, align 4, !tbaa !35
@@ -438,7 +437,7 @@ bb.aq:                                            ; preds = %.preheader869.split
   %indvars.iv1181 = phi i64 [ %indvars.iv.next1182, %.lr.ph978 ], [ 0, %.preheader870 ] ; 3 uses
   %i.rf = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0755.0, i64 %indvars.iv1181
   %i.rg = load ptr, ptr %i.rf, align 8, !tbaa !68
-  %i.rh = getelementptr inbounds nuw [4 x i8], ptr %i.rg, i64 %.0553987
+  %i.rh = getelementptr inbounds nuw [4 x i8], ptr %i.rg, i64 %.05539871191
   %i.ri = load i32, ptr %i.rh, align 4, !tbaa !35
   %i.rj = getelementptr inbounds nuw [4 x i8], ptr %.pre1293, i64 %indvars.iv1181
   store i32 %i.ri, ptr %i.rj, align 4, !tbaa !35

@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.lh = load i64, ptr %i.lg, align 8, !tbaa !16
   %i.li = and i64 %i.lh, 4294967295
   store i64 %i.li, ptr %i.lg, align 8, !tbaa !16
-  %i.lj = add nuw nsw i64 %i.le, 1                ; 2 uses
+  %i.lj = add nuw nsw i64 %i.le, 1
   %i.lk = lshr i64 %i.lj, 1
   %i.ll = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.lk ; 2 uses
   %i.lm = load i64, ptr %i.ll, align 8, !tbaa !16
@@ -217,14 +217,13 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %niter.ncmp.1, label %.lr.ph.epil, label %.lr.ph, !llvm.loop !28
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.preheader, %.lr.ph
-  %.epil.init = phi i64 [ 9, %.lr.ph.preheader ], [ %i.lo, %.lr.ph ]
-  %.0460.epil.init = phi i64 [ 8, %.lr.ph.preheader ], [ %i.lj, %.lr.ph ]
-  %i.lp = and i64 %.0460.epil.init, 1
+  %.epil.init = phi i64 [ 9, %.lr.ph.preheader ], [ %i.lo, %.lr.ph ] ; 2 uses
+  %i.lp = and i64 %.epil.init, 1
   %.not233.not.epil = icmp eq i64 %i.lp, 0
   %i.lq = lshr i64 %.epil.init, 1
   %i.lr = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.lq ; 2 uses
   %i.ls = load i64, ptr %i.lr, align 8, !tbaa !16
-  %..epil = select i1 %.not233.not.epil, i64 4294967295, i64 -4294967296
+  %..epil = select i1 %.not233.not.epil, i64 -4294967296, i64 4294967295
   %i.lt = and i64 %i.ls, %..epil
   store i64 %i.lt, ptr %i.lr, align 8, !tbaa !16
   br label %._crit_edge
@@ -627,7 +626,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.pi = load i64, ptr %i.ph, align 8, !tbaa !16
   %i.pj = and i64 %i.pi, 4294967295
   store i64 %i.pj, ptr %i.ph, align 8, !tbaa !16
-  %i.pk = add nuw nsw i64 %i.pf, 1                ; 2 uses
+  %i.pk = add nuw nsw i64 %i.pf, 1
   %i.pl = lshr i64 %i.pk, 1
   %i.pm = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.pl ; 2 uses
   %i.pn = load i64, ptr %i.pm, align 8, !tbaa !16
@@ -639,14 +638,13 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   br i1 %niter.ncmp.1, label %.lr.ph.epil, label %.lr.ph, !llvm.loop !29
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.preheader, %.lr.ph
-  %.epil.init = phi i64 [ 13, %.lr.ph.preheader ], [ %i.pp, %.lr.ph ]
-  %.0597.epil.init = phi i64 [ 12, %.lr.ph.preheader ], [ %i.pk, %.lr.ph ]
-  %i.pq = and i64 %.0597.epil.init, 1
+  %.epil.init = phi i64 [ 13, %.lr.ph.preheader ], [ %i.pp, %.lr.ph ] ; 2 uses
+  %i.pq = and i64 %.epil.init, 1
   %.not324.not.epil = icmp eq i64 %i.pq, 0
   %i.pr = lshr i64 %.epil.init, 1
   %i.ps = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.pr ; 2 uses
   %i.pt = load i64, ptr %i.ps, align 8, !tbaa !16
-  %..epil = select i1 %.not324.not.epil, i64 4294967295, i64 -4294967296
+  %..epil = select i1 %.not324.not.epil, i64 -4294967296, i64 4294967295
   %i.pu = and i64 %i.pt, %..epil
   store i64 %i.pu, ptr %i.ps, align 8, !tbaa !16
   br label %._crit_edge

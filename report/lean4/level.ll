@@ -202,8 +202,7 @@ _ZN4lean11is_explicitERKNS_5levelE.exit:          ; preds = %_ZN4lean4kindERKNS_
 
 .lr.ph434:                                        ; preds = %_ZN4lean11is_explicitERKNS_5levelE.exit, %_ZN4lean11is_explicitERKNS_5levelE.exit142
   %i.ei = phi i64 [ %i.ez, %_ZN4lean11is_explicitERKNS_5levelE.exit142 ], [ 1, %_ZN4lean11is_explicitERKNS_5levelE.exit ]
-  %17 = phi i32 [ %i.ey, %_ZN4lean11is_explicitERKNS_5levelE.exit142 ], [ 1, %_ZN4lean11is_explicitERKNS_5levelE.exit ] ; 7 uses
-  %.050433 = phi i32 [ %17, %_ZN4lean11is_explicitERKNS_5levelE.exit142 ], [ 0, %_ZN4lean11is_explicitERKNS_5levelE.exit ] ; 4 uses
+  %.050433 = phi i32 [ %i.ey, %_ZN4lean11is_explicitERKNS_5levelE.exit142 ], [ 1, %_ZN4lean11is_explicitERKNS_5levelE.exit ] ; 4 uses
   %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.dv, i64 %i.ei
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !16 ; 2 uses
   %i.el = ptrtoint ptr %i.ek to i64
@@ -219,10 +218,10 @@ _ZN4lean4kindERKNS_5levelE.exit.i135:             ; preds = %.lr.ph434, %tailrec
   %trunc.i137 = trunc nuw i32 %i.ep to i8
   switch i8 %trunc.i137, label %.invoke626 [
     i8 0, label %_ZN4lean11is_explicitERKNS_5levelE.exit142
-    i8 4, label %.critedge
-    i8 5, label %.critedge
-    i8 2, label %.critedge
-    i8 3, label %.critedge
+    i8 4, label %.critedge.loopexit
+    i8 5, label %.critedge.loopexit
+    i8 2, label %.critedge.loopexit
+    i8 3, label %.critedge.loopexit
     i8 1, label %tailrecurse.i138
   ]
 
@@ -250,7 +249,7 @@ tailrecurse.i138:                                 ; preds = %_ZN4lean4kindERKNS_
   unreachable
 
 _ZN4lean11is_explicitERKNS_5levelE.exit142:       ; preds = %_ZN4lean4kindERKNS_5levelE.exit.i135, %tailrecurse.i138, %.lr.ph434
-  %i.ey = add i32 %17, 1                          ; 3 uses
+  %i.ey = add i32 %.050433, 1                     ; 3 uses
   %i.ez = zext i32 %i.ey to i64                   ; 2 uses
   %i.fa = icmp ugt i64 %i.eg, %i.ez
   br i1 %i.fa, label %.lr.ph434, label %.critedge, !llvm.loop !152
@@ -260,9 +259,13 @@ bb.cb:                                            ; preds = %.invoke626, %bb.ef
           cleanup
   br label %bb.jq
 
-.critedge:                                        ; preds = %_ZN4lean11is_explicitERKNS_5levelE.exit142, %_ZN4lean4kindERKNS_5levelE.exit.i135, %_ZN4lean4kindERKNS_5levelE.exit.i135, %_ZN4lean4kindERKNS_5levelE.exit.i135, %_ZN4lean4kindERKNS_5levelE.exit.i135, %_ZN4lean11is_explicitERKNS_5levelE.exit
-  %.050422 = phi i32 [ 0, %_ZN4lean11is_explicitERKNS_5levelE.exit ], [ %.050433, %_ZN4lean4kindERKNS_5levelE.exit.i135 ], [ %.050433, %_ZN4lean4kindERKNS_5levelE.exit.i135 ], [ %.050433, %_ZN4lean4kindERKNS_5levelE.exit.i135 ], [ %.050433, %_ZN4lean4kindERKNS_5levelE.exit.i135 ], [ %17, %_ZN4lean11is_explicitERKNS_5levelE.exit142 ] ; 3 uses
-  %18 = phi i32 [ 1, %_ZN4lean11is_explicitERKNS_5levelE.exit ], [ %17, %_ZN4lean4kindERKNS_5levelE.exit.i135 ], [ %17, %_ZN4lean4kindERKNS_5levelE.exit.i135 ], [ %17, %_ZN4lean4kindERKNS_5levelE.exit.i135 ], [ %17, %_ZN4lean4kindERKNS_5levelE.exit.i135 ], [ %i.ey, %_ZN4lean11is_explicitERKNS_5levelE.exit142 ] ; 3 uses
+.critedge.loopexit:                               ; preds = %_ZN4lean4kindERKNS_5levelE.exit.i135, %_ZN4lean4kindERKNS_5levelE.exit.i135, %_ZN4lean4kindERKNS_5levelE.exit.i135, %_ZN4lean4kindERKNS_5levelE.exit.i135
+  %.050433500.le = add i32 %.050433, -1
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZN4lean11is_explicitERKNS_5levelE.exit142, %.critedge.loopexit, %_ZN4lean11is_explicitERKNS_5levelE.exit
+  %.050422 = phi i32 [ 0, %_ZN4lean11is_explicitERKNS_5levelE.exit ], [ %.050433500.le, %.critedge.loopexit ], [ %.050433, %_ZN4lean11is_explicitERKNS_5levelE.exit142 ] ; 3 uses
+  %17 = phi i32 [ 1, %_ZN4lean11is_explicitERKNS_5levelE.exit ], [ %.050433, %.critedge.loopexit ], [ %i.ey, %_ZN4lean11is_explicitERKNS_5levelE.exit142 ] ; 3 uses
   %i.fc = zext i32 %.050422 to i64
   %i.fd = getelementptr inbounds nuw [8 x i8], ptr %i.dv, i64 %i.fc
   %i.fe = load ptr, ptr %i.fd, align 8, !tbaa !16 ; 7 uses
@@ -440,7 +443,7 @@ bb.db:                                            ; preds = %bb.da
   unreachable
 
 _ZN4lean10object_refD2Ev.exit174:                 ; preds = %_ZNSt4pairIN4lean5levelEjED2Ev.exit, %bb.cy, %bb.cz, %bb.da
-  %i.gs = zext i32 %18 to i64                     ; 2 uses
+  %i.gs = zext i32 %17 to i64                     ; 2 uses
   %i.gt = load i64, ptr %i.ck, align 8, !tbaa !58
   %i.gu = icmp ugt i64 %i.gt, %i.gs
   br i1 %i.gu, label %.lr.ph437, label %_ZN4lean10object_refD2Ev.exit208._crit_edge
@@ -453,7 +456,7 @@ bb.dc:                                            ; preds = %_ZN4lean10object_re
 
 .lr.ph437:                                        ; preds = %_ZN4lean10object_refD2Ev.exit174, %bb.dc
   %i.gy = phi i64 [ %i.gw, %bb.dc ], [ %i.gs, %_ZN4lean10object_refD2Ev.exit174 ] ; 2 uses
-  %.049436 = phi i32 [ %i.gv, %bb.dc ], [ %18, %_ZN4lean10object_refD2Ev.exit174 ]
+  %.049436 = phi i32 [ %i.gv, %bb.dc ], [ %17, %_ZN4lean10object_refD2Ev.exit174 ]
   %i.gz = load ptr, ptr %8, align 8, !tbaa !60
   %i.ha = getelementptr inbounds nuw [8 x i8], ptr %i.gz, i64 %i.gy
   %i.hb = load ptr, ptr %i.ha, align 8, !tbaa !16 ; 7 uses
@@ -650,7 +653,7 @@ bb.ee:                                            ; preds = %bb.do
 _ZN4lean10object_refD2Ev.exit208._crit_edge.loopexit: ; preds = %_ZN4lean10object_refD2Ev.exit208, %bb.dc
   %.lcssa405.ph = phi i64 [ %i.gw, %bb.dc ], [ %i.gy, %_ZN4lean10object_refD2Ev.exit208 ]
   %i.ir = icmp ugt i64 %.pre.pre, %.lcssa405.ph
-  %i.is = select i1 %i.ir, i32 %18, i32 %.050422
+  %i.is = select i1 %i.ir, i32 %17, i32 %.050422
   br label %_ZN4lean10object_refD2Ev.exit208._crit_edge
 
 _ZN4lean10object_refD2Ev.exit208._crit_edge:      ; preds = %_ZN4lean10object_refD2Ev.exit208._crit_edge.loopexit, %_ZN4lean10object_refD2Ev.exit174

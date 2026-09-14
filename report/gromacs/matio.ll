@@ -205,15 +205,14 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br i1 %i.hp, label %.lr.ph70.split.us.split.i, label %_ZL15write_xpm_data3P8_IO_FILEiiPPffffi.exit, !llvm.loop !933
 
 .lr.ph70.split.i:                                 ; preds = %.lr.ph70.i, %bb.ao
-  %.05468.i = phi i32 [ %.054.i, %bb.ao ], [ %.05466.i, %.lr.ph70.i ] ; 5 uses
-  %.054.in67.i = phi i32 [ %.05468.i, %bb.ao ], [ %7, %.lr.ph70.i ]
-  %i.hq = srem i32 %.05468.i, %i.fd
+  %.054.in67.i = phi i32 [ %.054.i, %bb.ao ], [ %.05466.i, %.lr.ph70.i ] ; 4 uses
+  %i.hq = srem i32 %.054.in67.i, %i.fd
   %i.hr = icmp eq i32 %i.hq, 0
   br i1 %i.hr, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %.lr.ph70.split.i
   %i.hs = load ptr, ptr @stderr, align 8, !tbaa !45
-  %i.ht = sub nsw i32 %7, %.05468.i
+  %i.ht = sub nsw i32 %7, %.054.in67.i
   %i.hu = mul nuw nsw i32 %i.ht, 100
   %i.hv = udiv i32 %i.hu, %7
   %i.hw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.hs, ptr noundef nonnull @.str.47, i32 noundef %i.hv) #35 ; 0 uses
@@ -221,23 +220,19 @@ bb.al:                                            ; preds = %.lr.ph70.split.i
 
 bb.am:                                            ; preds = %bb.al, %.lr.ph70.split.i
   %fputc.i = tail call i32 @fputc(i32 34, ptr %0) ; 0 uses
-  %.not.i = icmp eq i32 %.054.in67.i, 1
-  br i1 %.not.i, label %bb.an, label %20
-
-20:                                               ; preds = %bb.am
-  %fwrite60.i = tail call i64 @fwrite(ptr nonnull @.str.230, i64 3, i64 1, ptr %0) ; 0 uses
-  br label %bb.ao
+  %.not.i = icmp eq i32 %.054.in67.i, 0
+  br i1 %.not.i, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
   %fwrite.i40 = tail call i64 @fwrite(ptr nonnull @.str.231, i64 2, i64 1, ptr %0) ; 0 uses
-  br label %bb.ao
+  br label %_ZL15write_xpm_data3P8_IO_FILEiiPPffffi.exit
 
-bb.ao:                                            ; preds = %bb.an, %20
-  %.054.i = add nsw i32 %.05468.i, -1
-  %.not101.i = icmp eq i32 %.05468.i, 0
-  br i1 %.not101.i, label %_ZL15write_xpm_data3P8_IO_FILEiiPPffffi.exit, label %.lr.ph70.split.i, !llvm.loop !933
+bb.ao:                                            ; preds = %bb.am
+  %fwrite60.i = tail call i64 @fwrite(ptr nonnull @.str.230, i64 3, i64 1, ptr %0) ; 0 uses
+  %.054.i = add nsw i32 %.054.in67.i, -1
+  br label %.lr.ph70.split.i
 
-_ZL15write_xpm_data3P8_IO_FILEiiPPffffi.exit:     ; preds = %bb.ao, %bb.ak, %bb.ab, %_ZL14write_xpm_map3P8_IO_FILEiiPifff5t_rgbS2_S2_.exit
+_ZL15write_xpm_data3P8_IO_FILEiiPPffffi.exit:     ; preds = %bb.ak, %bb.ab, %_ZL14write_xpm_map3P8_IO_FILEiiPifff5t_rgbS2_S2_.exit, %bb.an
   ret void
 }
 
@@ -640,15 +635,14 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   br i1 %i.eq, label %.lr.ph44.split.us.split.i, label %_ZL14write_xpm_dataP8_IO_FILEiiPKPKfffi.exit, !llvm.loop !954
 
 .lr.ph44.split.i:                                 ; preds = %.lr.ph44.i, %bb.z
-  %.03242.i = phi i32 [ %.032.i, %bb.z ], [ %.03240.i, %.lr.ph44.i ] ; 5 uses
-  %.032.in41.i = phi i32 [ %.03242.i, %bb.z ], [ %7, %.lr.ph44.i ]
-  %i.er = srem i32 %.03242.i, %i.cs
+  %.032.in41.i = phi i32 [ %.032.i, %bb.z ], [ %.03240.i, %.lr.ph44.i ] ; 4 uses
+  %i.er = srem i32 %.032.in41.i, %i.cs
   %i.es = icmp eq i32 %i.er, 0
   br i1 %i.es, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %.lr.ph44.split.i
   %i.et = load ptr, ptr @stderr, align 8, !tbaa !45
-  %i.eu = sub nsw i32 %7, %.03242.i
+  %i.eu = sub nsw i32 %7, %.032.in41.i
   %i.ev = mul nuw nsw i32 %i.eu, 100
   %i.ew = udiv i32 %i.ev, %7
   %i.ex = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.et, ptr noundef nonnull @.str.47, i32 noundef %i.ew) #35 ; 0 uses
@@ -656,23 +650,19 @@ bb.w:                                             ; preds = %.lr.ph44.split.i
 
 bb.x:                                             ; preds = %bb.w, %.lr.ph44.split.i
   %fputc.i = tail call i32 @fputc(i32 34, ptr %0) ; 0 uses
-  %.not.i = icmp eq i32 %.032.in41.i, 1
-  br i1 %.not.i, label %bb.y, label %17
-
-17:                                               ; preds = %bb.x
-  %fwrite34.i = tail call i64 @fwrite(ptr nonnull @.str.230, i64 3, i64 1, ptr %0) ; 0 uses
-  br label %bb.z
+  %.not.i = icmp eq i32 %.032.in41.i, 0
+  br i1 %.not.i, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   %fwrite.i36 = tail call i64 @fwrite(ptr nonnull @.str.231, i64 2, i64 1, ptr %0) ; 0 uses
-  br label %bb.z
+  br label %_ZL14write_xpm_dataP8_IO_FILEiiPKPKfffi.exit
 
-bb.z:                                             ; preds = %bb.y, %17
-  %.032.i = add nsw i32 %.03242.i, -1
-  %.not68.i = icmp eq i32 %.03242.i, 0
-  br i1 %.not68.i, label %_ZL14write_xpm_dataP8_IO_FILEiiPKPKfffi.exit, label %.lr.ph44.split.i, !llvm.loop !954
+bb.z:                                             ; preds = %bb.x
+  %fwrite34.i = tail call i64 @fwrite(ptr nonnull @.str.230, i64 3, i64 1, ptr %0) ; 0 uses
+  %.032.i = add nsw i32 %.032.in41.i, -1
+  br label %.lr.ph44.split.i
 
-_ZL14write_xpm_dataP8_IO_FILEiiPKPKfffi.exit:     ; preds = %bb.z, %bb.v, %bb.q, %_ZL13write_xpm_mapP8_IO_FILEiiPiff5t_rgbS2_.exit
+_ZL14write_xpm_dataP8_IO_FILEiiPKPKfffi.exit:     ; preds = %bb.v, %bb.q, %_ZL13write_xpm_mapP8_IO_FILEiiPiff5t_rgbS2_.exit, %bb.y
   ret void
 }
 

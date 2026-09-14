@@ -204,7 +204,7 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %exitcond652, label %.lr.ph.1, label %.lr.ph, !llvm.loop !204
 
 .lr.ph571.preheader:                              ; preds = %._crit_edge543
-  %spec.select.le = trunc nsw i32 %spec.select510 to i16 ; 2 uses
+  %spec.select.le = trunc nsw i32 %spec.select510 to i16
   %.sroa.14.0.extract.shift = lshr i48 %1, 32
   %.sroa.14.0.extract.trunc = trunc nuw i48 %.sroa.14.0.extract.shift to i16
   %i.ms = add nuw nsw i32 %spec.select510, 2
@@ -301,8 +301,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
   br label %.preheader
 
 .lr.ph571:                                        ; preds = %.lr.ph571.preheader, %._crit_edge561
-  %.0184569 = phi i16 [ %.0184, %._crit_edge561 ], [ %.0184564, %.lr.ph571.preheader ] ; 3 uses
-  %.0184.in568 = phi i16 [ %.0184569, %._crit_edge561 ], [ %spec.select.le, %.lr.ph571.preheader ]
+  %.0184.in568 = phi i16 [ %.0184, %._crit_edge561 ], [ %.0184564, %.lr.ph571.preheader ] ; 3 uses
   %.1187567 = phi i16 [ %i.or, %._crit_edge561 ], [ 2, %.lr.ph571.preheader ] ; 3 uses
   %.sroa.0488.4566 = phi i32 [ %.sroa.0488.5.lcssa, %._crit_edge561 ], [ %i.na, %.lr.ph571.preheader ] ; 2 uses
   %i.oh = zext i16 %.1187567 to i32               ; 4 uses
@@ -312,10 +311,10 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
   br i1 %.not219556, label %._crit_edge561, label %.lr.ph553.preheader
 
 .lr.ph553.preheader:                              ; preds = %.lr.ph571
-  %i.ok = sext i16 %.0184569 to i32
+  %i.ok = sext i16 %.0184.in568 to i32
   %i.ol = add nsw i32 %i.ok, 30
   %i.om = add nsw i32 %i.oj, 45                   ; 2 uses
-  %i.on = add i16 %.0184.in568, 2
+  %i.on = add i16 %.0184.in568, 1
   %i.oo = sext i16 %i.on to i32
   %i.op = add nsw i32 %i.oo, 30
   %i.oq = sub nsw i32 19, %i.oh
@@ -324,7 +323,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
 ._crit_edge561:                                   ; preds = %._crit_edge554, %.lr.ph571
   %.sroa.0488.5.lcssa = phi i32 [ %.sroa.0488.4566, %.lr.ph571 ], [ %i.pe, %._crit_edge554 ]
   %i.or = add i16 %.1187567, -1
-  %.0184 = add i16 %.0184569, 1                   ; 2 uses
+  %.0184 = add i16 %.0184.in568, 1                ; 2 uses
   %i.os = sext i16 %.0184 to i32
   %.not = icmp slt i32 %i.ms, %i.os
   br i1 %.not, label %.preheader516, label %.lr.ph571, !llvm.loop !207

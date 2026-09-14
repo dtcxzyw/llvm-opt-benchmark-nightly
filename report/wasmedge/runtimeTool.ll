@@ -205,7 +205,7 @@ bb.dg:                                            ; preds = %.sink.split.i221
   %.sroa.0421.0.lcssa = phi ptr [ null, %.preheader612 ], [ %.sroa.0421.1, %.critedge75..critedge76.loopexit_crit_edge ], [ null, %.lr.ph ], [ %.sroa.0421.1, %bb.c ] ; 2 uses
   %.sroa.15.0.lcssa = phi ptr [ null, %.preheader612 ], [ %.sroa.15.1, %.critedge75..critedge76.loopexit_crit_edge ], [ null, %.lr.ph ], [ %.sroa.15.1, %bb.c ] ; 2 uses
   %.sroa.36.0.lcssa = phi ptr [ null, %.preheader612 ], [ %.sroa.36.1, %.critedge75..critedge76.loopexit_crit_edge ], [ null, %.lr.ph ], [ %.sroa.36.1, %bb.c ] ; 2 uses
-  %.lcssa741 = phi i64 [ 0, %.preheader612 ], [ %i.kn, %.critedge75..critedge76.loopexit_crit_edge ], [ %i.x, %.lr.ph ], [ %i.kn, %bb.c ] ; 2 uses
+  %.lcssa741 = phi i64 [ 0, %.preheader612 ], [ %i.kn, %.critedge75..critedge76.loopexit_crit_edge ], [ %i.x, %.lr.ph ], [ %i.kn, %bb.c ]
   %i.kq = add nsw i64 %.lcssa741, 1               ; 2 uses
   %i.kr = icmp ult i64 %i.kq, %.pre-phi1278
   br i1 %i.kr, label %.lr.ph1003, label %.critedge78
@@ -217,15 +217,14 @@ bb.dg:                                            ; preds = %.sink.split.i221
 
 bb.dh:                                            ; preds = %.lr.ph1003, %bb.eh
   %i.ku = phi ptr [ %i.kp, %.lr.ph1003 ], [ %i.ne, %bb.eh ]
-  %.0681002 = phi i64 [ %i.kq, %.lr.ph1003 ], [ %.068, %bb.eh ] ; 3 uses
-  %.068.in1001 = phi i64 [ %.lcssa741, %.lr.ph1003 ], [ %.0681002, %bb.eh ] ; 2 uses
+  %.068.in1001 = phi i64 [ %i.kq, %.lr.ph1003 ], [ %.068, %bb.eh ] ; 4 uses
   %.sroa.36.21000 = phi ptr [ %.sroa.36.0.lcssa, %.lr.ph1003 ], [ %.sroa.36.9, %bb.eh ] ; 4 uses
   %.sroa.15.2999 = phi ptr [ %.sroa.15.0.lcssa, %.lr.ph1003 ], [ %.sroa.15.8, %bb.eh ] ; 6 uses
   %.sroa.0421.2998 = phi ptr [ %.sroa.0421.0.lcssa, %.lr.ph1003 ], [ %.sroa.0421.9, %bb.eh ] ; 6 uses
   %.sroa.36461.2997 = phi ptr [ %.sroa.36461.0.lcssa, %.lr.ph1003 ], [ %.sroa.36461.21, %bb.eh ] ; 8 uses
   %.sroa.15450.2996 = phi ptr [ %.sroa.15450.0.lcssa, %.lr.ph1003 ], [ %.sroa.15450.20, %bb.eh ] ; 3 uses
   %.sroa.0443.2995 = phi ptr [ %.sroa.0443.0.lcssa, %.lr.ph1003 ], [ %.sroa.0443.21, %bb.eh ] ; 9 uses
-  %i.kv = getelementptr inbounds nuw [32 x i8], ptr %i.ku, i64 %.0681002 ; 3 uses
+  %i.kv = getelementptr inbounds nuw [32 x i8], ptr %i.ku, i64 %.068.in1001 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store i64 3, ptr %6, align 8
   store ptr @.str.21, ptr %i.ks, align 8
@@ -450,7 +449,7 @@ _ZNSt6vectorIN8WasmEdge7ValTypeESaIS1_EE17_M_realloc_insertIJRNS0_8TypeCodeEEEEv
 bb.dz:                                            ; preds = %.body.i242
   %i.mt = call ptr @__cxa_begin_catch(ptr %i.mp) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
-  %i.mu = add i64 %.068.in1001, 2
+  %i.mu = add i64 %.068.in1001, 1
   store i64 %i.mu, ptr %i.c, align 8, !tbaa !63
   invoke void @_ZN6spdlog5errorIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmRSt17basic_string_viewIcS4_EEEEvN3fmt3v1119basic_format_stringIcJDpNSD_13type_identityIT_E4typeEEEEDpOSG_(ptr nonnull @.str.32, i64 51, ptr noundef nonnull align 8 dereferenceable(32) %i.kv, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(16) %6)
           to label %bb.ea unwind label %bb.ef
@@ -467,7 +466,7 @@ bb.eb:                                            ; preds = %.body.i242
 bb.ec:                                            ; preds = %bb.eb
   %i.mx = call ptr @__cxa_begin_catch(ptr %i.mp) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
-  %i.my = add i64 %.068.in1001, 2
+  %i.my = add i64 %.068.in1001, 1
   store i64 %i.my, ptr %i.b, align 8, !tbaa !63
   invoke void @_ZN6spdlog5errorIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmRSt17basic_string_viewIcS4_EEEEvN3fmt3v1119basic_format_stringIcJDpNSD_13type_identityIT_E4typeEEEEDpOSG_(ptr nonnull @.str.31, i64 47, ptr noundef nonnull align 8 dereferenceable(32) %i.kv, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %6)
           to label %bb.ed unwind label %bb.ee
@@ -507,7 +506,7 @@ bb.eh:                                            ; preds = %bb.du, %_ZNSt6vecto
   %.sroa.36.9 = phi ptr [ %.sroa.36.21000, %bb.du ], [ %i.mo, %_ZNSt6vectorIN8WasmEdge7ValTypeESaIS1_EE17_M_realloc_insertIJRNS0_8TypeCodeEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i356 ] ; 2 uses
   %.sroa.15.8 = getelementptr inbounds nuw i8, ptr %.sroa.15.2.pn, i64 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %.068 = add nuw i64 %.0681002, 1                ; 2 uses
+  %.068 = add nuw i64 %.068.in1001, 1             ; 2 uses
   %i.nd = load ptr, ptr %i.z, align 8, !tbaa !86
   %i.ne = load ptr, ptr %i.y, align 8, !tbaa !92  ; 2 uses
   %i.nf = ptrtoint ptr %i.nd to i64
@@ -910,7 +909,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   %.sroa.0381.0.lcssa = phi ptr [ null, %.preheader509 ], [ %.sroa.0381.1, %.critedge73..critedge.loopexit_crit_edge ], [ null, %.lr.ph ], [ %.sroa.0381.1, %bb.c ] ; 2 uses
   %.sroa.21.0.lcssa = phi ptr [ null, %.preheader509 ], [ %.sroa.21.1, %.critedge73..critedge.loopexit_crit_edge ], [ null, %.lr.ph ], [ %.sroa.21.1, %bb.c ] ; 2 uses
   %.sroa.54.0.lcssa = phi ptr [ null, %.preheader509 ], [ %.sroa.54.1, %.critedge73..critedge.loopexit_crit_edge ], [ null, %.lr.ph ], [ %.sroa.54.1, %bb.c ] ; 2 uses
-  %.lcssa620 = phi i64 [ 0, %.preheader509 ], [ %i.og, %.critedge73..critedge.loopexit_crit_edge ], [ %i.af, %.lr.ph ], [ %i.og, %bb.c ] ; 2 uses
+  %.lcssa620 = phi i64 [ 0, %.preheader509 ], [ %i.og, %.critedge73..critedge.loopexit_crit_edge ], [ %i.af, %.lr.ph ], [ %i.og, %bb.c ]
   %i.oj = add nsw i64 %.lcssa620, 1               ; 2 uses
   %i.ok = icmp ult i64 %i.oj, %.pre-phi1063
   br i1 %i.ok, label %.lr.ph840, label %.critedge77
@@ -924,12 +923,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 
 bb.fk:                                            ; preds = %.lr.ph840, %bb.gi
   %i.op = phi ptr [ %i.oi, %.lr.ph840 ], [ %i.ql, %bb.gi ]
-  %.070839 = phi i64 [ %i.oj, %.lr.ph840 ], [ %.070, %bb.gi ] ; 3 uses
-  %.070.in838 = phi i64 [ %.lcssa620, %.lr.ph840 ], [ %.070839, %bb.gi ] ; 2 uses
+  %.070.in838 = phi i64 [ %i.oj, %.lr.ph840 ], [ %.070, %bb.gi ] ; 4 uses
   %.sroa.54.3837 = phi ptr [ %.sroa.54.0.lcssa, %.lr.ph840 ], [ %.sroa.54.19, %bb.gi ] ; 4 uses
   %.sroa.21.2836 = phi ptr [ %.sroa.21.0.lcssa, %.lr.ph840 ], [ %.sroa.21.17, %bb.gi ] ; 4 uses
   %.sroa.0381.3835 = phi ptr [ %.sroa.0381.0.lcssa, %.lr.ph840 ], [ %.sroa.0381.19, %bb.gi ] ; 6 uses
-  %i.oq = getelementptr inbounds nuw [32 x i8], ptr %i.op, i64 %.070839 ; 3 uses
+  %i.oq = getelementptr inbounds nuw [32 x i8], ptr %i.op, i64 %.070.in838 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   store i64 3, ptr %8, align 8
   store ptr @.str.62, ptr %i.ol, align 8
@@ -1096,7 +1094,7 @@ _ZNSt6vectorIN8WasmEdge16ComponentValTypeESaIS1_EE17_M_realloc_insertIJRNS0_17Co
 bb.ga:                                            ; preds = %.body.i276
   %i.qa = call ptr @__cxa_begin_catch(ptr %i.pw) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
-  %i.qb = add i64 %.070.in838, 2
+  %i.qb = add i64 %.070.in838, 1
   store i64 %i.qb, ptr %i.c, align 8, !tbaa !63
   invoke void @_ZN6spdlog5errorIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmRSt17basic_string_viewIcS4_EEEEvN3fmt3v1119basic_format_stringIcJDpNSD_13type_identityIT_E4typeEEEEDpOSG_(ptr nonnull @.str.32, i64 51, ptr noundef nonnull align 8 dereferenceable(32) %i.oq, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(16) %8)
           to label %bb.gb unwind label %bb.gg
@@ -1117,7 +1115,7 @@ bb.gc:                                            ; preds = %.body.i276
 bb.gd:                                            ; preds = %bb.gc
   %i.qe = call ptr @__cxa_begin_catch(ptr %i.pw) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
-  %i.qf = add i64 %.070.in838, 2
+  %i.qf = add i64 %.070.in838, 1
   store i64 %i.qf, ptr %i.b, align 8, !tbaa !63
   invoke void @_ZN6spdlog5errorIJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmRSt17basic_string_viewIcS4_EEEEvN3fmt3v1119basic_format_stringIcJDpNSD_13type_identityIT_E4typeEEEEDpOSG_(ptr nonnull @.str.31, i64 47, ptr noundef nonnull align 8 dereferenceable(32) %i.oq, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %8)
           to label %bb.ge unwind label %bb.gf
@@ -1154,7 +1152,7 @@ bb.gi:                                            ; preds = %bb.fv, %_ZNSt6vecto
   %.sroa.21.17 = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
-  %.070 = add nuw i64 %.070839, 1                 ; 2 uses
+  %.070 = add nuw i64 %.070.in838, 1              ; 2 uses
   %i.qk = load ptr, ptr %i.ah, align 8, !tbaa !86
   %i.ql = load ptr, ptr %i.ag, align 8, !tbaa !92 ; 2 uses
   %i.qm = ptrtoint ptr %i.qk to i64

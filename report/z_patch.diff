@@ -1,0 +1,461 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+index c98c0cb52fa9c4..64eb16aed220c5 100644
+--- a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
++++ b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+@@ -300,8 +300,9 @@ class SCEVExpander : public SCEVUseVisitor<SCEVExpander, Value *> {
+                                                       Instruction *OrigInc,
+                                                       Instruction *WideInc);
+ 
+-  /// replace congruent phis with their most canonical representative. Return
+-  /// the number of phis eliminated.
++  /// replace congruent phis with their most canonical representative, and
++  /// phis that are another phi delayed by one iteration with a constant
++  /// offset from that phi. Return the number of phis eliminated.
+   LLVM_ABI unsigned
+   replaceCongruentIVs(Loop *L, const DominatorTree *DT,
+                       SmallVectorImpl<WeakTrackingVH> &DeadInsts,
+@@ -580,6 +581,12 @@ class SCEVExpander : public SCEVUseVisitor<SCEVExpander, Value *> {
+   void replaceCongruentIVInc(PHINode *&Phi, PHINode *&OrigPhi, Loop *L,
+                              const DominatorTree *DT,
+                              SmallVectorImpl<WeakTrackingVH> &DeadInsts);
++
++  /// If \p Phi holds another phi of the same header from the previous
++  /// iteration, and the two differ by a constant, replace it with that
++  /// constant offset from the other phi. Return true if \p Phi was replaced.
++  bool replaceDelayedIV(PHINode *Phi, Loop *L,
++                        SmallVectorImpl<WeakTrackingVH> &DeadInsts);
+ };
+ 
+ /// Helper to remove instructions inserted during SCEV expansion, unless they
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index f01a6746093250..434db7fbe6c929 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -1897,6 +1897,59 @@ void SCEVExpander::replaceCongruentIVInc(
+   DeadInsts.emplace_back(IsomorphicInc);
+ }
+ 
++/// A header phi whose backedge value is another phi of the same header holds
++/// that phi's value from the previous iteration:
++///
++///   %delayed = phi i64 [ 0, %ph ],  [ %iv, %latch ]
++///   %iv      = phi i64 [ 32, %ph ], [ %iv.next, %latch ]
++///   %iv.next = add i64 %iv, 32
++///
++/// SCEV recognizes this shape (see the shifted-phi case in
++/// createAddRecFromPHI) and gives %delayed {0,+,32} against %iv's {32,+,32},
++/// so the two differ by the constant -32 and %delayed can be rewritten as
++/// `%iv + -32`. That removes a phi, and leaves the value expressed in terms of
++/// the induction variable the loop's exit condition constrains.
++bool SCEVExpander::replaceDelayedIV(
++    PHINode *Phi, Loop *L, SmallVectorImpl<WeakTrackingVH> &DeadInsts) {
++  BasicBlock *Header = L->getHeader();
++  BasicBlock *Latch = L->getLoopLatch();
++  if (!Latch || !Phi->getType()->isIntegerTy())
++    return false;
++
++  auto *Base = dyn_cast<PHINode>(Phi->getIncomingValueForBlock(Latch));
++  if (!Base || Base == Phi || Base->getParent() != Header)
++    return false;
++
++  // SCEV proves the relation; it is only usable if the difference is a
++  // constant, which requires both phis to be recognized as recurrences of L
++  // with the same step. A zero difference means the two are congruent, which
++  // the caller has already handled without paying for an add.
++  const SCEV *BaseSCEV = SE.getSCEV(Base);
++  auto *Off =
++      dyn_cast<SCEVConstant>(SE.getMinusSCEV(SE.getSCEV(Phi), BaseSCEV));
++  if (!Off || Off->getAPInt().isZero())
++    return false;
++
++  IRBuilder<> Builder(Header, Header->getFirstInsertionPt());
++  Builder.SetCurrentDebugLocation(Phi->getDebugLoc());
++  auto *Shifted = cast<Instruction>(
++      Builder.CreateAdd(Base, Off->getValue(), Phi->getName()));
++  // The add is evaluated in the header, so ask for the no-wrap facts there.
++  if (SE.willNotOverflow(Instruction::Add, /*Signed=*/false, BaseSCEV, Off,
++                         Shifted))
++    Shifted->setHasNoUnsignedWrap();
++  if (SE.willNotOverflow(Instruction::Add, /*Signed=*/true, BaseSCEV, Off,
++                         Shifted))
++    Shifted->setHasNoSignedWrap();
++
++  SCEV_DEBUG_WITH_TYPE(
++      DebugType, dbgs() << "INDVARS: Eliminated delayed iv: " << *Phi << '\n');
++  SE.forgetValue(Phi);
++  Phi->replaceAllUsesWith(Shifted);
++  DeadInsts.emplace_back(Phi);
++  return true;
++}
++
+ /// replaceCongruentIVs - Check for congruent phis in this loop header and
+ /// replace them with their most canonical representative. Return the number of
+ /// phis eliminated.
+@@ -1998,6 +2051,18 @@ SCEVExpander::replaceCongruentIVs(Loop *L, const DominatorTree *DT,
+     Phi->replaceAllUsesWith(NewIV);
+     DeadInsts.emplace_back(Phi);
+   }
++
++  // Rewriting a delayed phi costs an add, so only consider the phis that
++  // survived congruence elimination: a delayed phi may be the representative
++  // another phi was folded into above, and removing it first would keep that
++  // other phi alive instead.
++  for (PHINode &Phi : L->getHeader()->phis()) {
++    if (Phi.use_empty())
++      continue;
++    if (replaceDelayedIV(&Phi, L, DeadInsts))
++      ++NumElim;
++  }
++
+   return NumElim;
+ }
+ 
+diff --git a/llvm/test/CodeGen/AMDGPU/machine-sink-temporal-divergence-swdev407790.ll b/llvm/test/CodeGen/AMDGPU/machine-sink-temporal-divergence-swdev407790.ll
+index 08f1373a85ba63..181203ca51b0c1 100644
+--- a/llvm/test/CodeGen/AMDGPU/machine-sink-temporal-divergence-swdev407790.ll
++++ b/llvm/test/CodeGen/AMDGPU/machine-sink-temporal-divergence-swdev407790.ll
+@@ -150,36 +150,36 @@ define protected amdgpu_kernel void @kernel_round1(ptr addrspace(1) nocapture no
+ ; CHECK-NEXT:    s_lshl_b32 s5, s53, 5
+ ; CHECK-NEXT:    v_add_nc_u32_e32 v0, s4, v45
+ ; CHECK-NEXT:    s_add_i32 s53, s53, 1
+-; CHECK-NEXT:    s_add_i32 s4, s4, 5
++; CHECK-NEXT:    s_add_i32 s68, s4, 5
+ ; CHECK-NEXT:    v_or3_b32 v57, s5, v43, s53
+ ; CHECK-NEXT:    v_mov_b32_e32 v58, s53
+ ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
+ ; CHECK-NEXT:    ds_read_u8 v56, v0
+ ; CHECK-NEXT:    s_mov_b32 s55, exec_lo
+-; CHECK-NEXT:    v_cmpx_lt_u32_e32 s4, v42
++; CHECK-NEXT:    v_cmpx_lt_u32_e32 s68, v42
+ ; CHECK-NEXT:    s_cbranch_execz .LBB0_17
+ ; CHECK-NEXT:  ; %bb.6: ; %.preheader2
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_5 Depth=1
+-; CHECK-NEXT:    s_mov_b32 s68, 0
+-; CHECK-NEXT:    s_mov_b32 s69, s53
++; CHECK-NEXT:    s_mov_b32 s69, 0
+ ; CHECK-NEXT:    s_branch .LBB0_8
+ ; CHECK-NEXT:  .LBB0_7: ; in Loop: Header=BB0_8 Depth=2
+ ; CHECK-NEXT:    s_or_b32 exec_lo, exec_lo, s80
+-; CHECK-NEXT:    s_add_i32 s4, s69, 4
++; CHECK-NEXT:    s_add_i32 s4, s68, 4
+ ; CHECK-NEXT:    v_add_nc_u32_e32 v57, 4, v57
+ ; CHECK-NEXT:    v_cmp_ge_u32_e32 vcc_lo, s4, v42
+-; CHECK-NEXT:    v_mov_b32_e32 v58, s69
+-; CHECK-NEXT:    s_or_b32 s68, vcc_lo, s68
+-; CHECK-NEXT:    s_andn2_b32 exec_lo, exec_lo, s68
++; CHECK-NEXT:    v_mov_b32_e32 v58, s68
++; CHECK-NEXT:    s_mov_b32 s68, s4
++; CHECK-NEXT:    s_or_b32 s69, vcc_lo, s69
++; CHECK-NEXT:    s_andn2_b32 exec_lo, exec_lo, s69
+ ; CHECK-NEXT:    s_cbranch_execz .LBB0_16
+ ; CHECK-NEXT:  .LBB0_8: ; Parent Loop BB0_5 Depth=1
+ ; CHECK-NEXT:    ; => This Inner Loop Header: Depth=2
+-; CHECK-NEXT:    v_add_nc_u32_e32 v58, s69, v45
+-; CHECK-NEXT:    s_mov_b32 s69, s4
++; CHECK-NEXT:    s_add_i32 s4, s68, -4
++; CHECK-NEXT:    v_add_nc_u32_e32 v58, s4, v45
+ ; CHECK-NEXT:    ds_read_u8 v0, v58
+ ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
+-; CHECK-NEXT:    v_cmp_eq_u16_sdwa s5, v56, v0 src0_sel:BYTE_0 src1_sel:DWORD
+-; CHECK-NEXT:    s_and_saveexec_b32 s80, s5
++; CHECK-NEXT:    v_cmp_eq_u16_sdwa s4, v56, v0 src0_sel:BYTE_0 src1_sel:DWORD
++; CHECK-NEXT:    s_and_saveexec_b32 s80, s4
+ ; CHECK-NEXT:    s_cbranch_execz .LBB0_10
+ ; CHECK-NEXT:  ; %bb.9: ; in Loop: Header=BB0_8 Depth=2
+ ; CHECK-NEXT:    v_mov_b32_e32 v31, v40
+@@ -284,7 +284,7 @@ define protected amdgpu_kernel void @kernel_round1(ptr addrspace(1) nocapture no
+ ; CHECK-NEXT:    s_branch .LBB0_7
+ ; CHECK-NEXT:  .LBB0_16: ; %Flow32
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_5 Depth=1
+-; CHECK-NEXT:    s_or_b32 exec_lo, exec_lo, s68
++; CHECK-NEXT:    s_or_b32 exec_lo, exec_lo, s69
+ ; CHECK-NEXT:  .LBB0_17: ; %Flow33
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_5 Depth=1
+ ; CHECK-NEXT:    s_or_b32 exec_lo, exec_lo, s55
+diff --git a/llvm/test/Transforms/IndVarSimplify/delayed-iv.ll b/llvm/test/Transforms/IndVarSimplify/delayed-iv.ll
+new file mode 100644
+index 00000000000000..91e970444c1cbb
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/delayed-iv.ll
+@@ -0,0 +1,268 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=indvars -S %s | FileCheck %s
++
++declare void @use(i64)
++
++define void @delayed_iv_add(i64 %n) {
++; CHECK-LABEL: define void @delayed_iv_add(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[DELAYED1:%.*]] = add i64 [[IV]], -32
++; CHECK-NEXT:    call void @use(i64 [[DELAYED1]])
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 32
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %loop ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %delayed)
++  %iv.next = add i64 %iv, 32
++  %ec = icmp slt i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @delayed_iv_sadd_with_overflow(i64 %n) {
++; CHECK-LABEL: define void @delayed_iv_sadd_with_overflow(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[DELAYED1:%.*]] = add nsw i64 [[IV]], -32
++; CHECK-NEXT:    call void @use(i64 [[DELAYED1]])
++; CHECK-NEXT:    [[STEP:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[IV]], i64 32)
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[STEP]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[TRAP:.*]], label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[STEP]], 0
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %latch ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %latch ]
++  call void @use(i64 %delayed)
++  %step = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %iv, i64 32)
++  %ov = extractvalue { i64, i1 } %step, 1
++  br i1 %ov, label %trap, label %latch
++
++latch:
++  %iv.next = extractvalue { i64, i1 } %step, 0
++  %ec = icmp slt i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++trap:
++  call void @llvm.trap()
++  unreachable
++
++exit:
++  ret void
++}
++
++define void @delayed_iv_uadd_with_overflow(i64 %n) {
++; CHECK-LABEL: define void @delayed_iv_uadd_with_overflow(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 7, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[DELAYED1:%.*]] = add i64 [[IV]], -7
++; CHECK-NEXT:    call void @use(i64 [[DELAYED1]])
++; CHECK-NEXT:    [[STEP:%.*]] = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 [[IV]], i64 7)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[STEP]], 0
++; CHECK-NEXT:    [[EC:%.*]] = icmp ult i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %loop ]
++  %iv = phi i64 [ 7, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %delayed)
++  %step = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %iv, i64 7)
++  %iv.next = extractvalue { i64, i1 } %step, 0
++  %ec = icmp ult i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @delayed_iv_negative_step(i64 %n) {
++; CHECK-LABEL: define void @delayed_iv_negative_step(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 92, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[DELAYED1:%.*]] = add i64 [[IV]], 8
++; CHECK-NEXT:    call void @use(i64 [[DELAYED1]])
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], -8
++; CHECK-NEXT:    [[EC:%.*]] = icmp sgt i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i64 [ 100, %entry ], [ %iv, %loop ]
++  %iv = phi i64 [ 92, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %delayed)
++  %iv.next = add i64 %iv, -8
++  %ec = icmp sgt i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @delayed_iv_wrapping_start(i8 %n) {
++; CHECK-LABEL: define void @delayed_iv_wrapping_start(
++; CHECK-SAME: i8 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[DELAYED1:%.*]] = add i8 [[IV]], -32
++; CHECK-NEXT:    [[EXT:%.*]] = zext i8 [[DELAYED1]] to i64
++; CHECK-NEXT:    call void @use(i64 [[EXT]])
++; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 32
++; CHECK-NEXT:    [[EC:%.*]] = icmp ult i8 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i8 [ -32, %entry ], [ %iv, %loop ]
++  %iv = phi i8 [ 0, %entry ], [ %iv.next, %loop ]
++  %ext = zext i8 %delayed to i64
++  call void @use(i64 %ext)
++  %iv.next = add i8 %iv, 32
++  %ec = icmp ult i8 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @negative_start_mismatch(i64 %n) {
++; CHECK-LABEL: define void @negative_start_mismatch(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 1, %[[ENTRY]] ], [ [[IV:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ 32, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i64 [[DELAYED]])
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 32
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i64 [ 1, %entry ], [ %iv, %loop ]
++  %iv = phi i64 [ 32, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %delayed)
++  %iv.next = add i64 %iv, 32
++  %ec = icmp slt i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @negative_variable_step(i64 %n, i64 %s) {
++; CHECK-LABEL: define void @negative_variable_step(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[S:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV]] = phi i64 [ [[S]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i64 [[DELAYED]])
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], [[S]]
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %iv, %loop ]
++  %iv = phi i64 [ %s, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %delayed)
++  %iv.next = add i64 %iv, %s
++  %ec = icmp slt i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @negative_step_not_recognised(i64 %n, ptr %p) {
++; CHECK-LABEL: define void @negative_step_not_recognised(
++; CHECK-SAME: i64 [[N:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[DELAYED:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[OTHER:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[OTHER]] = phi i64 [ 32, %[[ENTRY]] ], [ [[OTHER_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i64 [[DELAYED]])
++; CHECK-NEXT:    [[OTHER_NEXT]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %delayed = phi i64 [ 0, %entry ], [ %other, %loop ]
++  %other = phi i64 [ 32, %entry ], [ %other.next, %loop ]
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  call void @use(i64 %delayed)
++  %other.next = load i64, ptr %p
++  %iv.next = add i64 %iv, 1
++  %ec = icmp slt i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/2012-01-13-phielim.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/2012-01-13-phielim.ll
+index f780bee7874cfb..8cb68577c9a0b3 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/2012-01-13-phielim.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/2012-01-13-phielim.ll
+@@ -14,7 +14,7 @@ define i32 @test(ptr %base) nounwind uwtable ssp {
+ ; CHECK-NEXT:    br label [[WHILE_BODY_I:%.*]]
+ ; CHECK:       while.body.i:
+ ; CHECK-NEXT:    [[INDVARS_IV7_I:%.*]] = phi i64 [ 16, [[WHILE_BODY_LR_PH_I]] ], [ [[INDVARS_IV_NEXT8_I:%.*]], [[COND_TRUE29_I:%.*]] ]
+-; CHECK-NEXT:    [[I_05_I:%.*]] = phi i64 [ 0, [[WHILE_BODY_LR_PH_I]] ], [ [[INDVARS_IV7_I]], [[COND_TRUE29_I]] ]
++; CHECK-NEXT:    [[I_05_I:%.*]] = add i64 [[INDVARS_IV7_I]], -16
+ ; CHECK-NEXT:    [[LSR4:%.*]] = trunc i64 [[I_05_I]] to i32
+ ; CHECK-NEXT:    [[TMP0:%.*]] = sext i32 [[LSR4]] to i64
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP0]]

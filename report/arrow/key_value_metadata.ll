@@ -204,20 +204,23 @@ bb.n:                                             ; preds = %.lr.ph47, %.loopexi
   %.01846 = phi i64 [ 0, %.lr.ph47 ], [ %i.cp, %.loopexit ] ; 3 uses
   %i.cp = add nuw nsw i64 %.01846, 1              ; 4 uses
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %.01846
-  %i.cr = load i64, ptr %i.cq, align 8, !tbaa !64 ; 2 uses
+  %i.cr = load i64, ptr %i.cq, align 8, !tbaa !64
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %i.cp
   %i.ct = load i64, ptr %i.cs, align 8, !tbaa !64 ; 2 uses
   %.042 = add nsw i64 %i.cr, 1                    ; 2 uses
   %i.cu = icmp slt i64 %.042, %i.ct
-  br i1 %i.cu, label %.lr.ph, label %.loopexit
+  br i1 %i.cu, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.n, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit38
-  %.044 = phi i64 [ %.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit38 ], [ %.042, %bb.n ] ; 4 uses
-  %.0.in43 = phi i64 [ %.044, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit38 ], [ %i.cr, %bb.n ]
+.lr.ph.preheader:                                 ; preds = %bb.n
+  %3 = xor i64 %.01846, -1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit38
+  %.0.in43 = phi i64 [ %.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit38 ], [ %.042, %.lr.ph.preheader ] ; 4 uses
   %i.cv = load ptr, ptr %1, align 8, !tbaa !38    ; 2 uses
-  %i.cw = getelementptr inbounds nuw [32 x i8], ptr %i.cv, i64 %.044 ; 9 uses
-  %3 = sub nsw i64 %.0.in43, %.01846              ; 2 uses
-  %i.cx = getelementptr inbounds nuw [32 x i8], ptr %i.cv, i64 %3 ; 8 uses
+  %i.cw = getelementptr inbounds nuw [32 x i8], ptr %i.cv, i64 %.0.in43 ; 9 uses
+  %4 = add i64 %.0.in43, %3                       ; 2 uses
+  %i.cx = getelementptr inbounds nuw [32 x i8], ptr %i.cv, i64 %4 ; 8 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !34 ; 6 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cx, i64 16 ; 2 uses
   %i.da = icmp eq ptr %i.cy, %i.cz
@@ -294,8 +297,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %_Z
   store i64 0, ptr %i.du, align 8, !tbaa !35
   store i8 0, ptr %i.dt, align 1, !tbaa !37
   %i.dv = load ptr, ptr %i.av, align 8, !tbaa !38 ; 2 uses
-  %i.dw = getelementptr inbounds nuw [32 x i8], ptr %i.dv, i64 %.044 ; 9 uses
-  %i.dx = getelementptr inbounds nuw [32 x i8], ptr %i.dv, i64 %3 ; 8 uses
+  %i.dw = getelementptr inbounds nuw [32 x i8], ptr %i.dv, i64 %.0.in43 ; 9 uses
+  %i.dx = getelementptr inbounds nuw [32 x i8], ptr %i.dv, i64 %4 ; 8 uses
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !34 ; 6 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dx, i64 16 ; 2 uses
   %i.ea = icmp eq ptr %i.dy, %i.dz
@@ -371,7 +374,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit38: ; preds = %
   %i.eu = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
   store i64 0, ptr %i.eu, align 8, !tbaa !35
   store i8 0, ptr %i.et, align 1, !tbaa !37
-  %.0 = add nsw i64 %.044, 1                      ; 2 uses
+  %.0 = add nsw i64 %.0.in43, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %.0, %i.ct
   br i1 %exitcond.not, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !118
 }

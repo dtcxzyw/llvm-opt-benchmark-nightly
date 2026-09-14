@@ -205,10 +205,9 @@ bb.c:                                             ; preds = %Abc_TtNot.exit, %bb
   br i1 %i.z, label %.lr.ph.preheader.i24.us, label %.lr.ph44
 
 .lr.ph.preheader.i24.us:                          ; preds = %.lr.ph, %Abc_TtCanonicizePhaseVar6.exit.thread.us
-  %.039.us = phi i32 [ %.0.us, %Abc_TtCanonicizePhaseVar6.exit.thread.us ], [ %.036, %.lr.ph ] ; 4 uses
-  %.0.in38.us = phi i32 [ %.039.us, %Abc_TtCanonicizePhaseVar6.exit.thread.us ], [ %1, %.lr.ph ]
+  %.0.in38.us = phi i32 [ %.0.us, %Abc_TtCanonicizePhaseVar6.exit.thread.us ], [ %.036, %.lr.ph ] ; 4 uses
   %.12337.us = phi i32 [ %i.be, %Abc_TtCanonicizePhaseVar6.exit.thread.us ], [ %.022, %.lr.ph ] ; 3 uses
-  %i.aa = add nsw i32 %.0.in38.us, -7
+  %i.aa = add nsw i32 %.0.in38.us, -6
   %i.ab = shl nuw i32 1, %i.aa                    ; 7 uses
   %i.ac = sub nsw i32 %i.d, %i.ab
   br label %.lr.ph.i25.us
@@ -262,14 +261,14 @@ bb.e:                                             ; preds = %.lr.ph.i25.us
   br i1 %i.bb, label %.lr.ph58.i.us, label %bb.f, !llvm.loop !270
 
 bb.f:                                             ; preds = %.lr.ph58.i.us
-  %i.bc = shl nuw i32 1, %.039.us
+  %i.bc = shl nuw i32 1, %.0.in38.us
   %i.bd = xor i32 %i.bc, %.12337.us
   br label %Abc_TtCanonicizePhaseVar6.exit.thread.us
 
 Abc_TtCanonicizePhaseVar6.exit.thread.us:         ; preds = %bb.d, %bb.f, %bb.e
   %i.be = phi i32 [ %i.bd, %bb.f ], [ %.12337.us, %bb.e ], [ %.12337.us, %bb.d ] ; 2 uses
-  %.0.us = add nsw i32 %.039.us, -1
-  %i.bf = icmp sgt i32 %.039.us, 6
+  %.0.us = add nsw i32 %.0.in38.us, -1
+  %i.bf = icmp sgt i32 %.0.in38.us, 6
   br i1 %i.bf, label %.lr.ph.preheader.i24.us, label %.lr.ph44, !llvm.loop !271
 
 .preheader:                                       ; preds = %bb.c

@@ -205,11 +205,10 @@ _ZNK5clang4Decl13getASTContextEv.exit:            ; preds = %bb.b, %._crit_edge.
   br i1 %i.ao, label %bb.n, label %bb.m
 
 bb.h:                                             ; preds = %.lr.ph, %_ZN5clang10ASTContext20AllocateDeclListNodeEPNS_9NamedDeclE.exit
-  %.037 = phi i64 [ %.033, %.lr.ph ], [ %.0, %_ZN5clang10ASTContext20AllocateDeclListNodeEPNS_9NamedDeclE.exit ] ; 2 uses
-  %.0.in36 = phi i64 [ %2, %.lr.ph ], [ %.037, %_ZN5clang10ASTContext20AllocateDeclListNodeEPNS_9NamedDeclE.exit ]
+  %.0.in36 = phi i64 [ %.033, %.lr.ph ], [ %.0, %_ZN5clang10ASTContext20AllocateDeclListNodeEPNS_9NamedDeclE.exit ] ; 2 uses
   %.sroa.025.035 = phi i64 [ %i.ak, %.lr.ph ], [ %i.bh, %_ZN5clang10ASTContext20AllocateDeclListNodeEPNS_9NamedDeclE.exit ]
   %i.ap = getelementptr [8 x i8], ptr %1, i64 %.0.in36
-  %i.aq = getelementptr i8, ptr %i.ap, i64 -16
+  %i.aq = getelementptr i8, ptr %i.ap, i64 -8
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !732 ; 2 uses
   %i.as = load ptr, ptr %i.al, align 8, !tbaa !731 ; 4 uses
   %.not.not.i = icmp eq ptr %i.as, null
@@ -258,7 +257,7 @@ _ZN5clang10ASTContext20AllocateDeclListNodeEPNS_9NamedDeclE.exit: ; preds = %bb.
   store i64 %.sroa.025.035, ptr %i.bf, align 8
   %i.bg = ptrtoint ptr %.1.i to i64
   %i.bh = or i64 %i.bg, 4                         ; 2 uses
-  %.0 = add i64 %.037, -1                         ; 2 uses
+  %.0 = add i64 %.0.in36, -1                      ; 2 uses
   %.not = icmp eq i64 %.0, 0
   br i1 %.not, label %._crit_edge.loopexit, label %bb.h, !llvm.loop !862
 

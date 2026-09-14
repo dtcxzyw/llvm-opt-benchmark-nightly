@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.lr.ph1508, %bb.bi
   %.02171504 = phi ptr [ %i.x, %.lr.ph1508 ], [ %.1218, %bb.bi ] ; 7 uses
   %.02191503 = phi ptr [ %i.v, %.lr.ph1508 ], [ %spec.select, %bb.bi ] ; 7 uses
   %.02301500 = phi ptr [ %i.n, %.lr.ph1508 ], [ %.1231, %bb.bi ] ; 10 uses
-  %storemerge1499 = phi i64 [ 0, %.lr.ph1508 ], [ %i.acq, %bb.bi ] ; 6 uses
+  %storemerge1499 = phi i64 [ 0, %.lr.ph1508 ], [ %i.acq, %bb.bi ] ; 5 uses
   %.023015002148 = ptrtoaddr ptr %.02301500 to i64
   %.021915032129 = ptrtoaddr ptr %.02191503 to i64
   %.021715042110 = ptrtoaddr ptr %.02171504 to i64
@@ -300,12 +300,12 @@ middle.block2161:                                 ; preds = %vector.body2154
   br i1 %i.iv, label %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit, label %.lr.ph.i.i331
 
 .preheader.i.i336:                                ; preds = %bb.g
-  br i1 %i.ig, label %.lr.ph23.preheader.i.i337, label %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a
+  br i1 %i.ig, label %.lr.ph23.preheader.i.i337, label %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread
 
 .lr.ph23.preheader.i.i337:                        ; preds = %.preheader.i.i336
   %i.iw = shl nuw i64 %.fr.i, 3
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ie, i8 0, i64 %i.iw, i1 false), !tbaa !58
-  br label %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a
+  br label %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread
 
 .lr.ph.i.i331:                                    ; preds = %.lr.ph.i.i331.prol.loopexit, %.lr.ph.i.i331
   %.020.i.i332 = phi i64 [ %i.jv, %.lr.ph.i.i331 ], [ %.020.i.i332.unr, %.lr.ph.i.i331.prol.loopexit ]
@@ -351,7 +351,7 @@ _ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit: ; preds = %.lr.ph
   %i.jw = icmp eq i64 %.fr.i, 0
   %i.jx = icmp eq ptr %.02301500, null
   %or.cond.i = or i1 %i.jx, %i.jw
-  br i1 %or.cond.i, label %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a, label %.preheader.i
+  br i1 %or.cond.i, label %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread, label %.preheader.i
 
 .preheader.i:                                     ; preds = %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit
   %.not.not26.i = icmp sgt i64 %.fr.i, 0
@@ -375,13 +375,12 @@ _ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit: ; preds = %.lr.ph
 
 .lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader, %.preheader.split.us.i.loopexit
   %i.kc = phi double [ %i.kf, %.preheader.split.us.i.loopexit ], [ %.pre, %.lr.ph.us.i.preheader ]
-  %i.kd = phi i64 [ %i.kb, %.preheader.split.us.i.loopexit ], [ %i.jz, %.lr.ph.us.i.preheader ] ; 2 uses
+  %i.kd = phi i64 [ %i.kb, %.preheader.split.us.i.loopexit ], [ %i.jz, %.lr.ph.us.i.preheader ] ; 3 uses
   %.018.us.i1497 = phi ptr [ %i.ke, %.preheader.split.us.i.loopexit ], [ %.02301500, %.lr.ph.us.i.preheader ] ; 2 uses
-  %.020.us.i1496 = phi i64 [ %i.kd, %.preheader.split.us.i.loopexit ], [ %storemerge1499, %.lr.ph.us.i.preheader ] ; 2 uses
   %i.ke = getelementptr inbounds nuw [8 x i8], ptr %.018.us.i1497, i64 %.fr.i ; 3 uses
   %i.kf = load double, ptr %i.ke, align 8, !tbaa !58 ; 2 uses
   %i.kg = fcmp une double %i.kc, %i.kf
-  br i1 %i.kg, label %_ZNK6casadi10Integrator9next_stopExPKd.exit, label %.lr.ph36.i.preheader
+  br i1 %i.kg, label %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a, label %.lr.ph36.i.preheader
 
 .lr.ph36.i.preheader:                             ; preds = %.lr.ph.us.i
   br i1 %exitcond.not.not.i2046, label %.preheader.split.us.i.loopexit, label %.lr.ph2047
@@ -398,7 +397,7 @@ _ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit: ; preds = %.lr.ph
   %i.kl = getelementptr inbounds nuw [8 x i8], ptr %i.ke, i64 %i.ki
   %i.km = load double, ptr %i.kl, align 8, !tbaa !58
   %i.kn = fcmp une double %i.kk, %i.km
-  br i1 %i.kn, label %_ZNK6casadi10Integrator9next_stopExPKd.exit, label %.lr.ph36.i, !llvm.loop !5
+  br i1 %i.kn, label %_ZNK6casadi10Integrator9next_stopExPKd.exit.loopexit, label %.lr.ph36.i, !llvm.loop !5
 
 .preheader.split.i:                               ; preds = %.preheader.i
   %i.ko = add nsw i64 %storemerge1499, 1
@@ -407,12 +406,20 @@ _ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit: ; preds = %.lr.ph
   %spec.select.i = select i1 %i.kp, i64 %i.kq, i64 %storemerge1499
   br label %_ZNK6casadi10Integrator9next_stopExPKd.exit
 
-_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a: ; preds = %.lr.ph23.preheader.i.i337, %.preheader.i.i336, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit
-  %i.kr = add nsw i64 %i.hx, -1
+_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread: ; preds = %.lr.ph23.preheader.i.i337, %.preheader.i.i336, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit
+  %43 = add nsw i64 %i.hx, -1
   br label %_ZNK6casadi10Integrator9next_stopExPKd.exit
 
-_ZNK6casadi10Integrator9next_stopExPKd.exit:      ; preds = %.lr.ph.us.i, %.preheader.split.us.i.loopexit, %.lr.ph2047, %.preheader.split.us.preheader.i, %.preheader.split.i, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a
-  %.2.i = phi i64 [ %i.kr, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a ], [ %spec.select.i, %.preheader.split.i ], [ %.020.us.i1496, %.lr.ph2047 ], [ %i.jy, %.preheader.split.us.preheader.i ], [ %.020.us.i1496, %.lr.ph.us.i ], [ %i.jy, %.preheader.split.us.i.loopexit ] ; 2 uses
+_ZNK6casadi10Integrator9next_stopExPKd.exit.loopexit: ; preds = %.lr.ph2047
+  %.020.us.i14961599.le1984 = add i64 %i.kd, -1
+  br label %_ZNK6casadi10Integrator9next_stopExPKd.exit
+
+_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a: ; preds = %.lr.ph.us.i
+  %i.kr = add i64 %i.kd, -1
+  br label %_ZNK6casadi10Integrator9next_stopExPKd.exit
+
+_ZNK6casadi10Integrator9next_stopExPKd.exit:      ; preds = %.preheader.split.us.i.loopexit, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a, %_ZNK6casadi10Integrator9next_stopExPKd.exit.loopexit, %.preheader.split.us.preheader.i, %.preheader.split.i, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread
+  %.2.i = phi i64 [ %43, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread ], [ %spec.select.i, %.preheader.split.i ], [ %.020.us.i14961599.le1984, %_ZNK6casadi10Integrator9next_stopExPKd.exit.loopexit ], [ %i.jy, %.preheader.split.us.preheader.i ], [ %i.kr, %_ZNK6casadi10Integrator5set_uEPNS_16IntegratorMemoryEPKd.exit.thread.a ], [ %i.jy, %.preheader.split.us.i.loopexit ] ; 2 uses
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.hy, i64 %.2.i
   %i.kt = load double, ptr %i.ks, align 8, !tbaa !58 ; 2 uses
   store double %i.kt, ptr %i.gs, align 8, !tbaa !205

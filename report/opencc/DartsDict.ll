@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !116  ; 5 uses
-  %i.d = trunc i64 %i.c to i32                    ; 7 uses
+  %i.d = trunc i64 %i.c to i32                    ; 6 uses
   %i.e = lshr i64 %i.c, 8
   %i.f = trunc i64 %i.e to i32
   %i.g = add i32 %i.d, 256                        ; 5 uses
@@ -448,7 +448,7 @@ _ZN5Darts7Details8AutoPoolINS0_22DoubleArrayBuilderUnitEE6resizeEm.exit35: ; pre
   %.041 = add i32 %i.d, 1                         ; 2 uses
   %i.dd = icmp ult i32 %.041, %i.g
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.df = load ptr, ptr %i.de, align 8, !tbaa !124 ; 10 uses
+  %i.df = load ptr, ptr %i.de, align 8, !tbaa !124 ; 8 uses
   br i1 %i.dd, label %.lr.ph44, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph44, %_ZN5Darts7Details8AutoPoolINS0_22DoubleArrayBuilderUnitEE6resizeEm.exit35
@@ -476,41 +476,34 @@ _ZN5Darts7Details8AutoPoolINS0_22DoubleArrayBuilderUnitEE6resizeEm.exit35: ; pre
   store i32 %i.di, ptr %i.dr, align 4, !tbaa !141
   ret void
 
-.lr.ph44:                                         ; preds = %_ZN5Darts7Details8AutoPoolINS0_22DoubleArrayBuilderUnitEE6resizeEm.exit35, %.lr.ph44
-  %.043 = phi i32 [ %.0.2, %.lr.ph44 ], [ %.041, %_ZN5Darts7Details8AutoPoolINS0_22DoubleArrayBuilderUnitEE6resizeEm.exit35 ] ; 7 uses
-  %.0.in42 = phi i32 [ %.0.1.a, %.lr.ph44 ], [ %i.d, %_ZN5Darts7Details8AutoPoolINS0_22DoubleArrayBuilderUnitEE6resizeEm.exit35 ] ; 2 uses
+.lr.ph44:                                         ; preds = %_ZN5Darts7Details8AutoPoolINS0_22DoubleArrayBuilderUnitEE6resizeEm.exit35, %.lr.ph44.1
+  %.0.in42 = phi i32 [ %.0.1, %.lr.ph44.1 ], [ %.041, %_ZN5Darts7Details8AutoPoolINS0_22DoubleArrayBuilderUnitEE6resizeEm.exit35 ] ; 7 uses
+  %.0.1.a = add i32 %.0.in42, -1                  ; 2 uses
+  %i.dx = and i32 %.0.1.a, 4095
+  %i.dy = zext nneg i32 %i.dx to i64
+  %i.dz = getelementptr inbounds nuw [12 x i8], ptr %i.df, i64 %i.dy
+  %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
+  store i32 %.0.in42, ptr %i.ea, align 4, !tbaa !140
+  %i.eb = and i32 %.0.in42, 4095
+  %i.ec = zext nneg i32 %i.eb to i64
+  %i.ed = getelementptr inbounds nuw [12 x i8], ptr %i.df, i64 %i.ec
+  store i32 %.0.1.a, ptr %i.ed, align 4, !tbaa !141
+  %.0.2 = add nuw i32 %.0.in42, 1                 ; 3 uses
+  %exitcond.not.2 = icmp eq i32 %.0.2, %i.g
+  br i1 %exitcond.not.2, label %._crit_edge, label %.lr.ph44.1
+
+.lr.ph44.1:                                       ; preds = %.lr.ph44
   %1 = and i32 %.0.in42, 4095
   %2 = zext nneg i32 %1 to i64
   %3 = getelementptr inbounds nuw [12 x i8], ptr %i.df, i64 %2
   %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.043, ptr %4, align 4, !tbaa !140
-  %5 = and i32 %.043, 4095
+  store i32 %.0.2, ptr %4, align 4, !tbaa !140
+  %5 = and i32 %.0.2, 4095
   %6 = zext nneg i32 %5 to i64
   %7 = getelementptr inbounds nuw [12 x i8], ptr %i.df, i64 %6
   store i32 %.0.in42, ptr %7, align 4, !tbaa !141
-  %.0 = add nuw i32 %.043, 1                      ; 4 uses
-  %8 = and i32 %.043, 4095
-  %9 = zext nneg i32 %8 to i64
-  %10 = getelementptr inbounds nuw [12 x i8], ptr %i.df, i64 %9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  store i32 %.0, ptr %11, align 4, !tbaa !140
-  %12 = and i32 %.0, 4095
-  %13 = zext nneg i32 %12 to i64
-  %14 = getelementptr inbounds nuw [12 x i8], ptr %i.df, i64 %13
-  store i32 %.043, ptr %14, align 4, !tbaa !141
-  %.0.1.a = add nuw i32 %.043, 2                  ; 3 uses
-  %i.dx = and i32 %.0, 4095
-  %i.dy = zext nneg i32 %i.dx to i64
-  %i.dz = getelementptr inbounds nuw [12 x i8], ptr %i.df, i64 %i.dy
-  %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
-  store i32 %.0.1.a, ptr %i.ea, align 4, !tbaa !140
-  %i.eb = and i32 %.0.1.a, 4095
-  %i.ec = zext nneg i32 %i.eb to i64
-  %i.ed = getelementptr inbounds nuw [12 x i8], ptr %i.df, i64 %i.ec
-  store i32 %.0, ptr %i.ed, align 4, !tbaa !141
-  %.0.2 = add nuw i32 %.043, 3                    ; 2 uses
-  %exitcond.not.2 = icmp eq i32 %.0.2, %i.g
-  br i1 %exitcond.not.2, label %._crit_edge, label %.lr.ph44, !llvm.loop !263
+  %.0.1 = add nuw i32 %.0.in42, 2
+  br label %.lr.ph44
 }
 
 ; Function Attrs: inlinehint mustprogress uwtable
@@ -851,7 +844,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.fm = add nuw i64 %.044, 1                    ; 2 uses
   %i.fn = load i64, ptr %i.b, align 8, !tbaa !125
   %i.fo = icmp ult i64 %i.fm, %i.fn
-  br i1 %i.fo, label %bb.h, label %._crit_edge, !llvm.loop !264
+  br i1 %i.fo, label %bb.h, label %._crit_edge, !llvm.loop !263
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -890,7 +883,7 @@ _ZNK5Darts7Details6KeysetIiE4keysEmm.exit.us:     ; preds = %_ZNK5Darts7Details6
 _ZNK5Darts7Details6KeysetIiE4keysEmm.exit.thread.us: ; preds = %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit.us
   %i.k = add i64 %.04267.us, 1                    ; 2 uses
   %exitcond78.not = icmp eq i64 %i.k, %3
-  br i1 %exitcond78.not, label %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit._crit_edge.thread, label %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit.us, !llvm.loop !265
+  br i1 %exitcond78.not, label %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit._crit_edge.thread, label %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit.us, !llvm.loop !264
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit.thread
   %.04267 = phi i64 [ %i.s, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit.thread ], [ %.tr63, %.lr.ph ] ; 4 uses
@@ -911,7 +904,7 @@ _ZNK5Darts7Details6KeysetIiE4keysEmm.exit:        ; preds = %.lr.ph.split
 _ZNK5Darts7Details6KeysetIiE4keysEmm.exit.thread: ; preds = %.lr.ph.split, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit
   %i.s = add i64 %.04267, 1                       ; 2 uses
   %exitcond.not = icmp eq i64 %i.s, %3
-  br i1 %exitcond.not, label %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit._crit_edge.thread, label %.lr.ph.split, !llvm.loop !265
+  br i1 %exitcond.not, label %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit._crit_edge.thread, label %.lr.ph.split, !llvm.loop !264
 
 _ZNK5Darts7Details6KeysetIiE4keysEmm.exit._crit_edge: ; preds = %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit.us, %tailrecurse
   %.042.lcssa = phi i64 [ %.tr63, %tailrecurse ], [ %.04267.us, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit.us ], [ %.04267, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit ] ; 6 uses
@@ -999,7 +992,7 @@ _ZNK5Darts7Details6KeysetIiE4keysEmm.exit59:      ; preds = %bb.i, %bb.h, %_ZNK5
   %.1 = phi i8 [ %.071, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit55 ], [ 0, %bb.h ], [ %i.ax, %bb.i ] ; 2 uses
   %i.az = add nuw i64 %i.ag, 1                    ; 2 uses
   %exitcond79.not = icmp eq i64 %i.az, %3
-  br i1 %exitcond79.not, label %._crit_edge73, label %.lr.ph72, !llvm.loop !266
+  br i1 %exitcond79.not, label %._crit_edge73, label %.lr.ph72, !llvm.loop !265
 
 ._crit_edge73:                                    ; preds = %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit59, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit51
   %.040.lcssa = phi i64 [ %.042.lcssa, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit51 ], [ %.141, %_ZNK5Darts7Details6KeysetIiE4keysEmm.exit59 ]
@@ -1356,7 +1349,7 @@ _ZN5Darts7Details8AutoPoolIhE6appendERKh.exit47:  ; preds = %bb.w, %bb.x
 bb.y:                                             ; preds = %bb.t, %_ZN5Darts7Details8AutoPoolIhE6appendERKh.exit47, %_ZN5Darts7Details8AutoPoolIhE6appendERKh.exit
   %i.ef = add i64 %.03574, 1                      ; 2 uses
   %exitcond.not = icmp eq i64 %i.ef, %3
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.f, !llvm.loop !267
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.f, !llvm.loop !266
 
 ._crit_edge77:                                    ; preds = %bb.ag, %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.._crit_edge77_crit_edge
   %i.eg = phi ptr [ %.pre91, %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit.._crit_edge77_crit_edge ], [ %i.fg, %bb.ag ]
@@ -1463,7 +1456,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.ge = add nuw i64 %.075, 1                    ; 2 uses
   %i.gf = load i64, ptr %i.b, align 8, !tbaa !125
   %i.gg = icmp ult i64 %i.ge, %i.gf
-  br i1 %i.gg, label %bb.z, label %._crit_edge77, !llvm.loop !268
+  br i1 %i.gg, label %bb.z, label %._crit_edge77, !llvm.loop !267
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1866,5 +1859,4 @@ begin_hunk_1_@llvm.umax.i64
 !265 = distinct !{!265, !70}
 !266 = distinct !{!266, !70}
 !267 = distinct !{!267, !70}
-!268 = distinct !{!268, !70}
 end_hunk_1

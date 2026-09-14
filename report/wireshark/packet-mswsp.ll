@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %.lr.ph.i137.i
   br label %parse_padding.exit.i140.i
 
 parse_padding.exit.i140.i:                        ; preds = %bb.ah, %.lr.ph.i137.i
-  %.0.i.i141.i = phi i32 [ %i.py, %bb.ah ], [ %.0231.i.i, %.lr.ph.i137.i ] ; 5 uses
+  %.0.i.i141.i = phi i32 [ %i.py, %bb.ah ], [ %.0231.i.i, %.lr.ph.i137.i ] ; 4 uses
   %i.pz = load ptr, ptr %i.cm, align 8
   %i.qa = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.pz, ptr noundef nonnull @.str.1353, i32 noundef %.02.i138.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab) #9
@@ -238,16 +238,15 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br i1 %.not.i24.i.i, label %parse_CColumnGroup.exit.i.i, label %.lr.ph.i.i142.i
 
 .lr.ph.i.i142.i:                                  ; preds = %bb.ak, %.lr.ph.i.i142.i
-  %.04.i.i.i = phi i32 [ %.0.i25.i.i, %.lr.ph.i.i142.i ], [ %.01.i.i.i, %bb.ak ] ; 4 uses
-  %.0.in3.i.i.i = phi i32 [ %.04.i.i.i, %.lr.ph.i.i142.i ], [ %.0.i.i141.i, %bb.ak ]
+  %.0.in3.i.i.i = phi i32 [ %.0.i25.i.i, %.lr.ph.i.i142.i ], [ %.01.i.i.i, %bb.ak ] ; 4 uses
   %.0302.i.i.i = phi i32 [ %i.qs, %.lr.ph.i.i142.i ], [ 0, %bb.ak ] ; 2 uses
-  %i.qn = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %.04.i.i.i) ; 2 uses
-  %i.qo = add i32 %.0.in3.i.i.i, 12
+  %i.qn = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %.0.in3.i.i.i) ; 2 uses
+  %i.qo = add i32 %.0.in3.i.i.i, 4
   %i.qp = call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef %i.qo)
   %i.qq = load i32, ptr @hf_mswsp_ccolumngroup_pid, align 4
-  %i.qr = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %i.qc, i32 noundef %i.qq, ptr noundef %0, i32 noundef %.04.i.i.i, i32 noundef 8, i32 noundef %i.qn, ptr noundef nonnull @.str.1356, i32 noundef %.0302.i.i.i, i32 noundef %i.qn, i32 noundef %i.qp) ; 0 uses
+  %i.qr = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %i.qc, i32 noundef %i.qq, ptr noundef %0, i32 noundef %.0.in3.i.i.i, i32 noundef 8, i32 noundef %i.qn, ptr noundef nonnull @.str.1356, i32 noundef %.0302.i.i.i, i32 noundef %i.qn, i32 noundef %i.qp) ; 0 uses
   %i.qs = add nuw i32 %.0302.i.i.i, 1             ; 2 uses
-  %.0.i25.i.i = add i32 %.04.i.i.i, 8             ; 2 uses
+  %.0.i25.i.i = add i32 %.0.in3.i.i.i, 8          ; 2 uses
   %i.qt = load i32, ptr %i.ac, align 4
   %i.qu = icmp ult i32 %i.qs, %i.qt
   br i1 %i.qu, label %.lr.ph.i.i142.i, label %parse_CColumnGroup.exit.i.i, !llvm.loop !19

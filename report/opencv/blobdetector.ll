@@ -204,7 +204,7 @@ _ZNSt6vectorIN2cv22SimpleBlobDetectorImpl6CenterESaIS2_EE9push_backERKS2_.exit: 
   %i.hf = ptrtoint ptr %i.hb to i64
   %i.hg = ptrtoint ptr %i.he to i64
   %i.hh = sub i64 %i.hf, %i.hg
-  %i.hi = ashr exact i64 %i.hh, 5                 ; 2 uses
+  %i.hi = ashr exact i64 %i.hh, 5
   %.0130689 = add nsw i64 %i.hi, -1               ; 2 uses
   %.not159690 = icmp eq i64 %.0130689, 0
   br i1 %.not159690, label %.critedge, label %.lr.ph693
@@ -215,21 +215,20 @@ _ZNSt6vectorIN2cv22SimpleBlobDetectorImpl6CenterESaIS2_EE9push_backERKS2_.exit: 
   br label %bb.bn
 
 bb.bn:                                            ; preds = %.lr.ph693, %bb.bo
-  %.0130692 = phi i64 [ %.0130689, %.lr.ph693 ], [ %.0130, %bb.bo ] ; 4 uses
-  %.0130.in691 = phi i64 [ %i.hi, %.lr.ph693 ], [ %.0130692, %bb.bo ]
+  %.0130.in691 = phi i64 [ %.0130689, %.lr.ph693 ], [ %.0130, %bb.bo ] ; 4 uses
   %i.hl = load double, ptr %i.hk, align 8, !tbaa !227
   %i.hm = load ptr, ptr %i.hd, align 8, !tbaa !63 ; 2 uses
   %i.hn = getelementptr [32 x i8], ptr %i.hm, i64 %.0130.in691 ; 2 uses
-  %i.ho = getelementptr i8, ptr %i.hn, i64 -48
+  %i.ho = getelementptr i8, ptr %i.hn, i64 -16
   %i.hp = load double, ptr %i.ho, align 8, !tbaa !227
   %i.hq = fcmp olt double %i.hl, %i.hp
   br i1 %i.hq, label %bb.bo, label %.critedge
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.hr = getelementptr i8, ptr %i.hn, i64 -64
-  %i.hs = getelementptr inbounds nuw [32 x i8], ptr %i.hm, i64 %.0130692
+  %i.hr = getelementptr i8, ptr %i.hn, i64 -32
+  %i.hs = getelementptr inbounds nuw [32 x i8], ptr %i.hm, i64 %.0130.in691
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hs, ptr noundef nonnull align 8 dereferenceable(32) %i.hr, i64 32, i1 false), !tbaa.struct !104
-  %.0130 = add i64 %.0130692, -1                  ; 2 uses
+  %.0130 = add i64 %.0130.in691, -1               ; 2 uses
   %.not159 = icmp eq i64 %.0130, 0
   br i1 %.not159, label %.critedge, label %bb.bn, !llvm.loop !170
 
@@ -244,7 +243,7 @@ bb.bo:                                            ; preds = %bb.bn
   br label %.loopexit.split-lp446
 
 .critedge:                                        ; preds = %bb.bn, %bb.bo, %_ZNSt6vectorIN2cv22SimpleBlobDetectorImpl6CenterESaIS2_EE9push_backERKS2_.exit
-  %.0130.lcssa = phi i64 [ 0, %_ZNSt6vectorIN2cv22SimpleBlobDetectorImpl6CenterESaIS2_EE9push_backERKS2_.exit ], [ 0, %bb.bo ], [ %.0130692, %bb.bn ] ; 2 uses
+  %.0130.lcssa = phi i64 [ 0, %_ZNSt6vectorIN2cv22SimpleBlobDetectorImpl6CenterESaIS2_EE9push_backERKS2_.exit ], [ 0, %bb.bo ], [ %.0130.in691, %bb.bn ] ; 2 uses
   %i.ht = load i8, ptr %i.eg, align 4, !tbaa !105, !range !51, !noundef !52
   %i.hu = trunc nuw i8 %i.ht to i1
   br i1 %i.hu, label %bb.bp, label %bb.cg

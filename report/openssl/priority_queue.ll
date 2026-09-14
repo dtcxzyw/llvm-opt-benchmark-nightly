@@ -103,7 +103,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !26   ; 12 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !26   ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load i64, ptr %i.d, align 8, !tbaa !13
   %i.f = add i64 %i.e, %1
@@ -159,7 +159,7 @@ bb.f:                                             ; preds = %bb.e
   %i.w = load i64, ptr %i.v, align 8, !tbaa !14
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.c
   store i64 %i.w, ptr %i.x, align 8, !tbaa !17
-  %.013.i = add i64 %i.c, 1                       ; 4 uses
+  %.013.i = add i64 %i.c, 1                       ; 5 uses
   %i.y = icmp ult i64 %.013.i, %.07.i32
   br i1 %i.y, label %.lr.ph.i28.preheader, label %pqueue_add_freelist.exit
 
@@ -170,25 +170,25 @@ bb.f:                                             ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i28.preheader39, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i28.preheader
-  %n.vec = and i64 %i.aa, -4                      ; 4 uses
-  %2 = add i64 %.013.i, %n.vec
-  %i.ab = add i64 %i.c, %n.vec
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.c, i64 0
+  %n.vec = and i64 %i.aa, -4                      ; 3 uses
+  %i.ab = add i64 %.013.i, %n.vec
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.013.i, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
-  %induction = add <2 x i64> %broadcast.splat, <i64 0, i64 1>
+  %induction = add nuw <2 x i64> %broadcast.splat, <i64 0, i64 1>
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %.013.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <2 x i64> %vec.ind, splat (i64 2)
+  %2 = add <2 x i64> %vec.ind, splat (i64 -1)
+  %step.add = add <2 x i64> %vec.ind, splat (i64 1)
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %index ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  store <2 x i64> %vec.ind, ptr %i.ad, align 8, !tbaa !17
+  store <2 x i64> %2, ptr %i.ad, align 8, !tbaa !17
   store <2 x i64> %step.add, ptr %i.ae, align 8, !tbaa !17
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.af = icmp eq i64 %index.next, %n.vec
   br i1 %i.af, label %middle.block, label %vector.body, !llvm.loop !30
 
@@ -197,15 +197,14 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %pqueue_add_freelist.exit, label %.lr.ph.i28.preheader39
 
 .lr.ph.i28.preheader39:                           ; preds = %.lr.ph.i28.preheader, %middle.block
-  %.015.i.ph = phi i64 [ %.013.i, %.lr.ph.i28.preheader ], [ %2, %middle.block ]
-  %.0.in14.i.ph = phi i64 [ %i.c, %.lr.ph.i28.preheader ], [ %i.ab, %middle.block ]
+  %.0.in14.i.ph = phi i64 [ %.013.i, %.lr.ph.i28.preheader ], [ %i.ab, %middle.block ]
   br label %.lr.ph.i28
 
 .lr.ph.i28:                                       ; preds = %.lr.ph.i28.preheader39, %.lr.ph.i28
-  %.015.i = phi i64 [ %.0.i, %.lr.ph.i28 ], [ %.015.i.ph, %.lr.ph.i28.preheader39 ] ; 3 uses
-  %.0.in14.i = phi i64 [ %.015.i, %.lr.ph.i28 ], [ %.0.in14.i.ph, %.lr.ph.i28.preheader39 ]
+  %.015.i = phi i64 [ %.0.i, %.lr.ph.i28 ], [ %.0.in14.i.ph, %.lr.ph.i28.preheader39 ] ; 3 uses
+  %.0.in1416.i = add i64 %.015.i, -1
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %.015.i
-  store i64 %.0.in14.i, ptr %i.ag, align 8, !tbaa !17
+  store i64 %.0.in1416.i, ptr %i.ag, align 8, !tbaa !17
   %.0.i = add nuw i64 %.015.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %.0.i, %.07.i32
   br i1 %exitcond.not.i, label %pqueue_add_freelist.exit, label %.lr.ph.i28, !llvm.loop !31

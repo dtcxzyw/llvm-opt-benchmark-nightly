@@ -204,34 +204,33 @@ bb.eh:                                            ; preds = %.split
   br label %.lr.ph1322
 
 .lr.ph1322:                                       ; preds = %.lr.ph1322, %.lr.ph1322.preheader.new
-  %8 = phi i64 [ 2, %.lr.ph1322.preheader.new ], [ %i.tp, %.lr.ph1322 ] ; 5 uses
-  %.027.i631321 = phi i64 [ 0, %.lr.ph1322.preheader.new ], [ %9, %.lr.ph1322 ]
+  %.027.i631321 = phi i64 [ 2, %.lr.ph1322.preheader.new ], [ %i.tp, %.lr.ph1322 ] ; 5 uses
   %i.ss = phi <2 x double> [ zeroinitializer, %.lr.ph1322.preheader.new ], [ %i.to, %.lr.ph1322 ]
   %niter1851 = phi i64 [ 0, %.lr.ph1322.preheader.new ], [ %niter1851.next.3, %.lr.ph1322 ]
   %i.st = shl i64 %.027.i631321, 1
-  %i.su = getelementptr inbounds nuw i8, ptr %1, i64 %i.st
+  %8 = getelementptr i8, ptr %1, i64 %i.st
+  %i.su = getelementptr i8, ptr %8, i64 -4
   %i.sv = load <2 x i16>, ptr %i.su, align 1
   %i.sw = uitofp <2 x i16> %i.sv to <2 x double>
   %i.sx = fadd <2 x double> %i.ss, %i.sw
-  %i.sy = shl i64 %8, 1
-  %i.sz = getelementptr inbounds nuw i8, ptr %1, i64 %i.sy
+  %i.sy = shl i64 %.027.i631321, 1
+  %i.sz = getelementptr i8, ptr %1, i64 %i.sy
   %i.ta = load <2 x i16>, ptr %i.sz, align 1
   %i.tb = uitofp <2 x i16> %i.ta to <2 x double>
   %i.tc = fadd <2 x double> %i.sx, %i.tb
-  %i.td = shl i64 %8, 1
+  %i.td = shl i64 %.027.i631321, 1
   %i.te = getelementptr i8, ptr %1, i64 %i.td
   %i.tf = getelementptr i8, ptr %i.te, i64 4
   %i.tg = load <2 x i16>, ptr %i.tf, align 1
   %i.th = uitofp <2 x i16> %i.tg to <2 x double>
   %i.ti = fadd <2 x double> %i.tc, %i.th
-  %9 = add nuw i64 %8, 6                          ; 2 uses
-  %i.tj = shl i64 %8, 1
+  %i.tj = shl i64 %.027.i631321, 1
   %i.tk = getelementptr i8, ptr %1, i64 %i.tj
   %i.tl = getelementptr i8, ptr %i.tk, i64 8
   %i.tm = load <2 x i16>, ptr %i.tl, align 1
   %i.tn = uitofp <2 x i16> %i.tm to <2 x double>
   %i.to = fadd <2 x double> %i.ti, %i.tn          ; 3 uses
-  %i.tp = add nuw i64 %8, 8                       ; 2 uses
+  %i.tp = add nuw i64 %.027.i631321, 8            ; 2 uses
   %niter1851.next.3 = add i64 %niter1851, 4       ; 2 uses
   %niter1851.ncmp.3.not = icmp eq i64 %niter1851.next.3, %unroll_iter1850
   br i1 %niter1851.ncmp.3.not, label %._crit_edge1323.loopexit.unr-lcssa, label %.lr.ph1322, !llvm.loop !24
@@ -242,23 +241,22 @@ bb.eh:                                            ; preds = %.split
 
 .lr.ph1322.epil.preheader:                        ; preds = %._crit_edge1323.loopexit.unr-lcssa, %.lr.ph1322.preheader
   %.epil.init1844 = phi i64 [ 2, %.lr.ph1322.preheader ], [ %i.tp, %._crit_edge1323.loopexit.unr-lcssa ]
-  %.027.i631321.epil.init = phi i64 [ 0, %.lr.ph1322.preheader ], [ %9, %._crit_edge1323.loopexit.unr-lcssa ]
   %.epil.init1846 = phi <2 x double> [ zeroinitializer, %.lr.ph1322.preheader ], [ %i.to, %._crit_edge1323.loopexit.unr-lcssa ]
   %lcmp.mod1849 = icmp ne i64 %xtraiter1841, 0
   call void @llvm.assume(i1 %lcmp.mod1849)
   br label %.lr.ph1322.epil
 
 .lr.ph1322.epil:                                  ; preds = %.lr.ph1322.epil, %.lr.ph1322.epil.preheader
-  %10 = phi i64 [ %i.tw, %.lr.ph1322.epil ], [ %.epil.init1844, %.lr.ph1322.epil.preheader ] ; 2 uses
-  %.027.i631321.epil = phi i64 [ %10, %.lr.ph1322.epil ], [ %.027.i631321.epil.init, %.lr.ph1322.epil.preheader ]
+  %.027.i631321.epil = phi i64 [ %i.tw, %.lr.ph1322.epil ], [ %.epil.init1844, %.lr.ph1322.epil.preheader ] ; 2 uses
   %i.tq = phi <2 x double> [ %i.tv, %.lr.ph1322.epil ], [ %.epil.init1846, %.lr.ph1322.epil.preheader ]
   %epil.iter1842 = phi i64 [ %epil.iter1842.next, %.lr.ph1322.epil ], [ 0, %.lr.ph1322.epil.preheader ]
   %i.tr = shl i64 %.027.i631321.epil, 1
-  %i.ts = getelementptr inbounds nuw i8, ptr %1, i64 %i.tr
+  %9 = getelementptr i8, ptr %1, i64 %i.tr
+  %i.ts = getelementptr i8, ptr %9, i64 -4
   %i.tt = load <2 x i16>, ptr %i.ts, align 1
   %i.tu = uitofp <2 x i16> %i.tt to <2 x double>
   %i.tv = fadd <2 x double> %i.tq, %i.tu          ; 2 uses
-  %i.tw = add nuw i64 %10, 2
+  %i.tw = add nuw i64 %.027.i631321.epil, 2
   %epil.iter1842.next = add i64 %epil.iter1842, 1 ; 2 uses
   %epil.iter1842.cmp.not = icmp eq i64 %epil.iter1842.next, %xtraiter1841
   br i1 %epil.iter1842.cmp.not, label %._crit_edge1323.loopexit, label %.lr.ph1322.epil, !llvm.loop !25
@@ -661,34 +659,33 @@ bb.jl:                                            ; preds = %.split
   br label %.lr.ph1300
 
 .lr.ph1300:                                       ; preds = %.lr.ph1300, %.lr.ph1300.preheader.new
-  %11 = phi i64 [ 2, %.lr.ph1300.preheader.new ], [ %i.aos, %.lr.ph1300 ] ; 5 uses
-  %.027.i561299 = phi i64 [ 0, %.lr.ph1300.preheader.new ], [ %12, %.lr.ph1300 ]
+  %.027.i561299 = phi i64 [ 2, %.lr.ph1300.preheader.new ], [ %i.aos, %.lr.ph1300 ] ; 5 uses
   %i.anv = phi <2 x double> [ zeroinitializer, %.lr.ph1300.preheader.new ], [ %i.aor, %.lr.ph1300 ]
   %niter1827 = phi i64 [ 0, %.lr.ph1300.preheader.new ], [ %niter1827.next.3, %.lr.ph1300 ]
   %i.anw = shl i64 %.027.i561299, 2
-  %i.anx = getelementptr inbounds nuw i8, ptr %1, i64 %i.anw
+  %10 = getelementptr i8, ptr %1, i64 %i.anw
+  %i.anx = getelementptr i8, ptr %10, i64 -8
   %i.any = load <2 x i32>, ptr %i.anx, align 1
   %i.anz = uitofp <2 x i32> %i.any to <2 x double>
   %i.aoa = fadd <2 x double> %i.anv, %i.anz
-  %i.aob = shl i64 %11, 2
-  %i.aoc = getelementptr inbounds nuw i8, ptr %1, i64 %i.aob
+  %i.aob = shl i64 %.027.i561299, 2
+  %i.aoc = getelementptr i8, ptr %1, i64 %i.aob
   %i.aod = load <2 x i32>, ptr %i.aoc, align 1
   %i.aoe = uitofp <2 x i32> %i.aod to <2 x double>
   %i.aof = fadd <2 x double> %i.aoa, %i.aoe
-  %i.aog = shl i64 %11, 2
+  %i.aog = shl i64 %.027.i561299, 2
   %i.aoh = getelementptr i8, ptr %1, i64 %i.aog
   %i.aoi = getelementptr i8, ptr %i.aoh, i64 8
   %i.aoj = load <2 x i32>, ptr %i.aoi, align 1
   %i.aok = uitofp <2 x i32> %i.aoj to <2 x double>
   %i.aol = fadd <2 x double> %i.aof, %i.aok
-  %12 = add nuw i64 %11, 6                        ; 2 uses
-  %i.aom = shl i64 %11, 2
+  %i.aom = shl i64 %.027.i561299, 2
   %i.aon = getelementptr i8, ptr %1, i64 %i.aom
   %i.aoo = getelementptr i8, ptr %i.aon, i64 16
   %i.aop = load <2 x i32>, ptr %i.aoo, align 1
   %i.aoq = uitofp <2 x i32> %i.aop to <2 x double>
   %i.aor = fadd <2 x double> %i.aol, %i.aoq       ; 3 uses
-  %i.aos = add nuw i64 %11, 8                     ; 2 uses
+  %i.aos = add nuw i64 %.027.i561299, 8           ; 2 uses
   %niter1827.next.3 = add i64 %niter1827, 4       ; 2 uses
   %niter1827.ncmp.3.not = icmp eq i64 %niter1827.next.3, %unroll_iter1826
   br i1 %niter1827.ncmp.3.not, label %._crit_edge1301.loopexit.unr-lcssa, label %.lr.ph1300, !llvm.loop !24
@@ -699,23 +696,22 @@ bb.jl:                                            ; preds = %.split
 
 .lr.ph1300.epil.preheader:                        ; preds = %._crit_edge1301.loopexit.unr-lcssa, %.lr.ph1300.preheader
   %.epil.init1820 = phi i64 [ 2, %.lr.ph1300.preheader ], [ %i.aos, %._crit_edge1301.loopexit.unr-lcssa ]
-  %.027.i561299.epil.init = phi i64 [ 0, %.lr.ph1300.preheader ], [ %12, %._crit_edge1301.loopexit.unr-lcssa ]
   %.epil.init1822 = phi <2 x double> [ zeroinitializer, %.lr.ph1300.preheader ], [ %i.aor, %._crit_edge1301.loopexit.unr-lcssa ]
   %lcmp.mod1825 = icmp ne i64 %xtraiter1817, 0
   call void @llvm.assume(i1 %lcmp.mod1825)
   br label %.lr.ph1300.epil
 
 .lr.ph1300.epil:                                  ; preds = %.lr.ph1300.epil, %.lr.ph1300.epil.preheader
-  %13 = phi i64 [ %i.aoz, %.lr.ph1300.epil ], [ %.epil.init1820, %.lr.ph1300.epil.preheader ] ; 2 uses
-  %.027.i561299.epil = phi i64 [ %13, %.lr.ph1300.epil ], [ %.027.i561299.epil.init, %.lr.ph1300.epil.preheader ]
+  %.027.i561299.epil = phi i64 [ %i.aoz, %.lr.ph1300.epil ], [ %.epil.init1820, %.lr.ph1300.epil.preheader ] ; 2 uses
   %i.aot = phi <2 x double> [ %i.aoy, %.lr.ph1300.epil ], [ %.epil.init1822, %.lr.ph1300.epil.preheader ]
   %epil.iter1818 = phi i64 [ %epil.iter1818.next, %.lr.ph1300.epil ], [ 0, %.lr.ph1300.epil.preheader ]
   %i.aou = shl i64 %.027.i561299.epil, 2
-  %i.aov = getelementptr inbounds nuw i8, ptr %1, i64 %i.aou
+  %11 = getelementptr i8, ptr %1, i64 %i.aou
+  %i.aov = getelementptr i8, ptr %11, i64 -8
   %i.aow = load <2 x i32>, ptr %i.aov, align 1
   %i.aox = uitofp <2 x i32> %i.aow to <2 x double>
   %i.aoy = fadd <2 x double> %i.aot, %i.aox       ; 2 uses
-  %i.aoz = add nuw i64 %13, 2
+  %i.aoz = add nuw i64 %.027.i561299.epil, 2
   %epil.iter1818.next = add i64 %epil.iter1818, 1 ; 2 uses
   %epil.iter1818.cmp.not = icmp eq i64 %epil.iter1818.next, %xtraiter1817
   br i1 %epil.iter1818.cmp.not, label %._crit_edge1301.loopexit, label %.lr.ph1300.epil, !llvm.loop !31
@@ -1118,34 +1114,33 @@ bb.oo:                                            ; preds = %.split
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %14 = phi i64 [ 2, %.lr.ph.preheader.new ], [ %i.bjv, %.lr.ph ] ; 5 uses
-  %.027.i1280 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %15, %.lr.ph ]
+  %.027.i1280 = phi i64 [ 2, %.lr.ph.preheader.new ], [ %i.bjv, %.lr.ph ] ; 5 uses
   %i.biy = phi <2 x double> [ zeroinitializer, %.lr.ph.preheader.new ], [ %i.bju, %.lr.ph ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
   %i.biz = shl i64 %.027.i1280, 3
-  %i.bja = getelementptr inbounds nuw i8, ptr %1, i64 %i.biz
+  %12 = getelementptr i8, ptr %1, i64 %i.biz
+  %i.bja = getelementptr i8, ptr %12, i64 -16
   %i.bjb = load <2 x i64>, ptr %i.bja, align 1
   %i.bjc = uitofp <2 x i64> %i.bjb to <2 x double>
   %i.bjd = fadd <2 x double> %i.biy, %i.bjc
-  %i.bje = shl i64 %14, 3
-  %i.bjf = getelementptr inbounds nuw i8, ptr %1, i64 %i.bje
+  %i.bje = shl i64 %.027.i1280, 3
+  %i.bjf = getelementptr i8, ptr %1, i64 %i.bje
   %i.bjg = load <2 x i64>, ptr %i.bjf, align 1
   %i.bjh = uitofp <2 x i64> %i.bjg to <2 x double>
   %i.bji = fadd <2 x double> %i.bjd, %i.bjh
-  %i.bjj = shl i64 %14, 3
+  %i.bjj = shl i64 %.027.i1280, 3
   %i.bjk = getelementptr i8, ptr %1, i64 %i.bjj
   %i.bjl = getelementptr i8, ptr %i.bjk, i64 16
   %i.bjm = load <2 x i64>, ptr %i.bjl, align 1
   %i.bjn = uitofp <2 x i64> %i.bjm to <2 x double>
   %i.bjo = fadd <2 x double> %i.bji, %i.bjn
-  %15 = add nuw i64 %14, 6                        ; 2 uses
-  %i.bjp = shl i64 %14, 3
+  %i.bjp = shl i64 %.027.i1280, 3
   %i.bjq = getelementptr i8, ptr %1, i64 %i.bjp
   %i.bjr = getelementptr i8, ptr %i.bjq, i64 32
   %i.bjs = load <2 x i64>, ptr %i.bjr, align 1
   %i.bjt = uitofp <2 x i64> %i.bjs to <2 x double>
   %i.bju = fadd <2 x double> %i.bjo, %i.bjt       ; 3 uses
-  %i.bjv = add nuw i64 %14, 8                     ; 2 uses
+  %i.bjv = add nuw i64 %.027.i1280, 8             ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !24
@@ -1156,23 +1151,22 @@ bb.oo:                                            ; preds = %.split
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.epil.init = phi i64 [ 2, %.lr.ph.preheader ], [ %i.bjv, %._crit_edge.loopexit.unr-lcssa ]
-  %.027.i1280.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %15, %._crit_edge.loopexit.unr-lcssa ]
   %.epil.init1802 = phi <2 x double> [ zeroinitializer, %.lr.ph.preheader ], [ %i.bju, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod1804 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod1804)
   br label %.lr.ph.epil
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %16 = phi i64 [ %i.bkc, %.lr.ph.epil ], [ %.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
-  %.027.i1280.epil = phi i64 [ %16, %.lr.ph.epil ], [ %.027.i1280.epil.init, %.lr.ph.epil.preheader ]
+  %.027.i1280.epil = phi i64 [ %i.bkc, %.lr.ph.epil ], [ %.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
   %i.bjw = phi <2 x double> [ %i.bkb, %.lr.ph.epil ], [ %.epil.init1802, %.lr.ph.epil.preheader ]
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
   %i.bjx = shl i64 %.027.i1280.epil, 3
-  %i.bjy = getelementptr inbounds nuw i8, ptr %1, i64 %i.bjx
+  %13 = getelementptr i8, ptr %1, i64 %i.bjx
+  %i.bjy = getelementptr i8, ptr %13, i64 -16
   %i.bjz = load <2 x i64>, ptr %i.bjy, align 1
   %i.bka = uitofp <2 x i64> %i.bjz to <2 x double>
   %i.bkb = fadd <2 x double> %i.bjw, %i.bka       ; 2 uses
-  %i.bkc = add nuw i64 %16, 2
+  %i.bkc = add nuw i64 %.027.i1280.epil, 2
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge.loopexit, label %.lr.ph.epil, !llvm.loop !35

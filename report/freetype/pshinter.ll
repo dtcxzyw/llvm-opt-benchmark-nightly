@@ -205,14 +205,13 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %i.mr = getelementptr inbounds nuw [8 x i8], ptr %i.mp, i64 %indvars.iv20.i.i
   %i.ms = load ptr, ptr %i.mr, align 8, !tbaa !77 ; 2 uses
   %i.mt = load i32, ptr %i.ms, align 8, !tbaa !78
-  %i.mu = trunc i64 %indvars.iv20.i.i to i32      ; 3 uses
+  %i.mu = trunc i64 %indvars.iv20.i.i to i32      ; 2 uses
   %i.mv = add i32 %i.mu, -1
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.at, %.lr.ph10.i.i
-  %.08.i.i = phi i32 [ %i.mv, %.lr.ph10.i.i ], [ %.0.i.i105, %bb.at ] ; 3 uses
-  %.0.in7.i.i = phi i32 [ %i.mu, %.lr.ph10.i.i ], [ %.08.i.i, %bb.at ]
-  %i.mw = zext i32 %.08.i.i to i64
+  %.0.in7.i.i = phi i32 [ %i.mv, %.lr.ph10.i.i ], [ %.0.i.i105, %bb.at ] ; 3 uses
+  %i.mw = zext i32 %.0.in7.i.i to i64
   %i.mx = getelementptr inbounds nuw [8 x i8], ptr %i.mp, i64 %i.mw ; 2 uses
   %i.my = load ptr, ptr %i.mx, align 8, !tbaa !77 ; 2 uses
   %i.mz = load i32, ptr %i.my, align 8, !tbaa !78
@@ -220,11 +219,12 @@ bb.as:                                            ; preds = %bb.at, %.lr.ph10.i.
   br i1 %i.na, label %._crit_edge11.i.i, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %i.nb = zext i32 %.0.in7.i.i to i64
+  %.0.in720.i.i = add nuw i32 %.0.in7.i.i, 1
+  %i.nb = zext i32 %.0.in720.i.i to i64
   %i.nc = getelementptr inbounds nuw [8 x i8], ptr %i.mp, i64 %i.nb
   store ptr %i.my, ptr %i.nc, align 8, !tbaa !77
   store ptr %i.ms, ptr %i.mx, align 8, !tbaa !77
-  %.0.i.i105 = add i32 %.08.i.i, -1               ; 2 uses
+  %.0.i.i105 = add i32 %.0.in7.i.i, -1            ; 2 uses
   %i.nd = icmp ult i32 %.0.i.i105, %i.mu
   br i1 %i.nd, label %bb.as, label %._crit_edge11.i.i, !llvm.loop !145
 
@@ -412,14 +412,13 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.
   %i.pj = getelementptr inbounds nuw [8 x i8], ptr %i.ph, i64 %indvars.iv20.i105.i
   %i.pk = load ptr, ptr %i.pj, align 8, !tbaa !77 ; 2 uses
   %i.pl = load i32, ptr %i.pk, align 8, !tbaa !78
-  %i.pm = trunc i64 %indvars.iv20.i105.i to i32   ; 3 uses
+  %i.pm = trunc i64 %indvars.iv20.i105.i to i32   ; 2 uses
   %i.pn = add i32 %i.pm, -1
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.be, %.lr.ph10.i104.i
-  %.08.i106.i = phi i32 [ %i.pn, %.lr.ph10.i104.i ], [ %.0.i108.i, %bb.be ] ; 3 uses
-  %.0.in7.i107.i = phi i32 [ %i.pm, %.lr.ph10.i104.i ], [ %.08.i106.i, %bb.be ]
-  %i.po = zext i32 %.08.i106.i to i64
+  %.0.in7.i107.i = phi i32 [ %i.pn, %.lr.ph10.i104.i ], [ %.0.i108.i, %bb.be ] ; 3 uses
+  %i.po = zext i32 %.0.in7.i107.i to i64
   %i.pp = getelementptr inbounds nuw [8 x i8], ptr %i.ph, i64 %i.po ; 2 uses
   %i.pq = load ptr, ptr %i.pp, align 8, !tbaa !77 ; 2 uses
   %i.pr = load i32, ptr %i.pq, align 8, !tbaa !78
@@ -427,11 +426,12 @@ bb.bd:                                            ; preds = %bb.be, %.lr.ph10.i1
   br i1 %i.ps, label %._crit_edge11.i109.i, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.pt = zext i32 %.0.in7.i107.i to i64
+  %.0.in720.i107.i = add nuw i32 %.0.in7.i107.i, 1
+  %i.pt = zext i32 %.0.in720.i107.i to i64
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.ph, i64 %i.pt
   store ptr %i.pq, ptr %i.pu, align 8, !tbaa !77
   store ptr %i.pk, ptr %i.pp, align 8, !tbaa !77
-  %.0.i108.i = add i32 %.08.i106.i, -1            ; 2 uses
+  %.0.i108.i = add i32 %.0.in7.i107.i, -1         ; 2 uses
   %i.pv = icmp ult i32 %.0.i108.i, %i.pm
   br i1 %i.pv, label %bb.bd, label %._crit_edge11.i109.i, !llvm.loop !145
 
@@ -834,26 +834,26 @@ bb.b:                                             ; preds = %bb.a
 
 ps_dimension_end_mask.exit:                       ; preds = %bb.a, %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !68   ; 4 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !68   ; 3 uses
   %.not.i3 = icmp eq i32 %i.j, 0
   br i1 %.not.i3, label %ps_mask_table_merge_all.exit, label %.lr.ph43.i
 
 .lr.ph43.i:                                       ; preds = %ps_dimension_end_mask.exit
-  %.01740.i = add i32 %i.j, -1
+  %.01740.i = add i32 %i.j, -1                    ; 2 uses
   %i.k = getelementptr i8, ptr %0, i64 40
-  br label %bb.c
+  %.not61.i69 = icmp eq i32 %.01740.i, 0
+  br i1 %.not61.i69, label %ps_mask_table_merge_all.exit, label %.lr.ph.i
 
-bb.c:                                             ; preds = %ps_mask_table_merge.exit.thread.i, %.lr.ph43.i
-  %4 = phi i32 [ %i.j, %.lr.ph43.i ], [ %7, %ps_mask_table_merge.exit.thread.i ] ; 2 uses
-  %.01742.i = phi i32 [ %.01740.i, %.lr.ph43.i ], [ %.017.i, %ps_mask_table_merge.exit.thread.i ] ; 6 uses
-  %.017.in41.i = phi i32 [ %i.j, %.lr.ph43.i ], [ %.01742.i, %ps_mask_table_merge.exit.thread.i ]
-  %5 = add i32 %.017.in41.i, -2                   ; 2 uses
-  %6 = icmp ult i32 %5, %.01742.i
-  br i1 %6, label %.lr.ph.i, label %ps_mask_table_merge.exit.thread.i
+bb.c:                                             ; preds = %ps_mask_table_merge.exit.thread.i
+  %.not61.i = icmp eq i32 %5, 0
+  br i1 %.not61.i, label %ps_mask_table_merge_all.exit, label %.lr.ph.i, !llvm.loop !261
 
-.lr.ph.i:                                         ; preds = %bb.c
+.lr.ph.i:                                         ; preds = %.lr.ph43.i, %bb.c
+  %.01742.i70 = phi i32 [ %5, %bb.c ], [ %.01740.i, %.lr.ph43.i ] ; 4 uses
+  %4 = phi i32 [ %6, %bb.c ], [ %i.j, %.lr.ph43.i ]
+  %5 = add i32 %.01742.i70, -1                    ; 4 uses
   %.val.i = load ptr, ptr %i.k, align 8, !tbaa !67 ; 2 uses
-  %i.l = zext i32 %.01742.i to i64
+  %i.l = zext i32 %.01742.i70 to i64
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %.val.i, i64 %i.l ; 8 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !72   ; 3 uses
@@ -895,7 +895,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i
   %i.ae = getelementptr inbounds nuw i8, ptr %.0225.i.i, i64 1
   %i.af = add i32 %.06.i.i, -8                    ; 3 uses
   %i.ag = icmp ugt i32 %i.af, 7
-  br i1 %i.ag, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !261
+  br i1 %i.ag, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !262
 
 ._crit_edge.i.i:                                  ; preds = %bb.e, %bb.d
   %.023.lcssa.i.i = phi ptr [ %i.o, %bb.d ], [ %scevgep.i.i, %bb.e ]
@@ -1013,7 +1013,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x i8> %i.bq, ptr %i.bn, align 1, !tbaa !38, !alias.scope !271, !noalias !272
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.br = icmp eq i64 %index.next, %n.vec
-  br i1 %i.br, label %middle.block, label %vector.body, !llvm.loop !265
+  br i1 %i.br, label %middle.block, label %vector.body, !llvm.loop !266
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.bf
@@ -1042,7 +1042,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <4 x i8> %i.bw, ptr %next.gep81, align 1, !tbaa !38, !alias.scope !271, !noalias !272
   %index.next85 = add nuw i64 %index80, 4         ; 2 uses
   %i.bx = icmp eq i64 %index.next85, %n.vec79
-  br i1 %i.bx, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !266
+  br i1 %i.bx, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !267
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n86 = icmp eq i64 %n.vec79, %i.bf
@@ -1071,7 +1071,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ce = add nsw i32 %.05173.i.i.prol, -1        ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i24.i.prol.loopexit, label %.lr.ph.i24.i.prol, !llvm.loop !267
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i24.i.prol.loopexit, label %.lr.ph.i24.i.prol, !llvm.loop !268
 
 .lr.ph.i24.i.prol.loopexit:                       ; preds = %.lr.ph.i24.i.prol, %.lr.ph.i24.i.preheader
   %.04975.i.i.unr = phi ptr [ %.04975.i.i.ph, %.lr.ph.i24.i.preheader ], [ %i.cc, %.lr.ph.i24.i.prol ]
@@ -1110,14 +1110,14 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.cz = getelementptr inbounds nuw i8, ptr %.05074.i.i, i64 4
   %i.da = add nsw i32 %.05173.i.i, -4             ; 2 uses
   %.not66.i.i.3 = icmp eq i32 %i.da, 0
-  br i1 %.not66.i.i.3, label %.thread.i.i, label %.lr.ph.i24.i, !llvm.loop !268
+  br i1 %.not66.i.i.3, label %.thread.i.i, label %.lr.ph.i24.i, !llvm.loop !269
 
 .thread.i.i:                                      ; preds = %.lr.ph.i24.i.prol.loopexit, %.lr.ph.i24.i, %middle.block, %vec.epilog.middle.block, %bb.k, %ps_mask_table_test_intersect.exit.thread27.i
   store i32 0, ptr %i.m, align 8, !tbaa !71
   %i.db = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   store i32 0, ptr %i.db, align 8, !tbaa !70
   %i.dc = load i32, ptr %i.i, align 8, !tbaa !68  ; 2 uses
-  %i.dd = xor i32 %.01742.i, -1
+  %i.dd = xor i32 %.01742.i70, -1
   %i.de = add i32 %i.dc, %i.dd                    ; 2 uses
   %.not67.i.i = icmp eq i32 %i.de, 0
   br i1 %.not67.i.i, label %bb.m, label %bb.l
@@ -1147,17 +1147,19 @@ ps_mask_table_merge.exit.i:                       ; preds = %bb.h
 
 ps_mask_table_test_intersect.exit.thread.i:       ; preds = %ps_mask_table_test_intersect.exit.i, %._crit_edge.i.i
   %i.dl = add i32 %.01639.i, -1                   ; 2 uses
-  %i.dm = icmp ult i32 %i.dl, %.01742.i
-  br i1 %i.dm, label %bb.d, label %ps_mask_table_merge.exit.thread.i, !llvm.loop !269
+  %i.dm = icmp ult i32 %i.dl, %.01742.i70
+  br i1 %i.dm, label %bb.d, label %ps_mask_table_merge.exit.thread.i, !llvm.loop !270
 
-ps_mask_table_merge.exit.thread.i:                ; preds = %ps_mask_table_test_intersect.exit.thread.i, %bb.m, %bb.c
-  %7 = phi i32 [ %i.dk, %bb.m ], [ %4, %bb.c ], [ %4, %ps_mask_table_test_intersect.exit.thread.i ] ; 2 uses
-  %.017.i = add i32 %.01742.i, -1                 ; 2 uses
-  %i.dn = icmp ult i32 %.017.i, %7
-  br i1 %i.dn, label %bb.c, label %ps_mask_table_merge_all.exit, !llvm.loop !270
+ps_mask_table_merge.exit.thread.i:                ; preds = %ps_mask_table_test_intersect.exit.thread.i, %bb.m
+  %6 = phi i32 [ %i.dk, %bb.m ], [ %4, %ps_mask_table_test_intersect.exit.thread.i ] ; 2 uses
+  %i.dn = icmp ult i32 %5, %6
+  br i1 %i.dn, label %bb.c, label %ps_mask_table_merge.exit.thread.i.ps_mask_table_merge_all.exit.loopexit_crit_edge, !llvm.loop !261
 
-ps_mask_table_merge_all.exit:                     ; preds = %ps_mask_table_merge.exit.thread.i, %ps_dimension_end_mask.exit, %ps_mask_table_merge.exit.i
-  %.2.i = phi i32 [ %i.ba, %ps_mask_table_merge.exit.i ], [ 0, %ps_dimension_end_mask.exit ], [ 0, %ps_mask_table_merge.exit.thread.i ]
+ps_mask_table_merge.exit.thread.i.ps_mask_table_merge_all.exit.loopexit_crit_edge: ; preds = %ps_mask_table_merge.exit.thread.i
+  br label %ps_mask_table_merge_all.exit, !llvm.loop !261
+
+ps_mask_table_merge_all.exit:                     ; preds = %bb.c, %.lr.ph43.i, %ps_mask_table_merge.exit.thread.i.ps_mask_table_merge_all.exit.loopexit_crit_edge, %ps_dimension_end_mask.exit, %ps_mask_table_merge.exit.i
+  %.2.i = phi i32 [ %i.ba, %ps_mask_table_merge.exit.i ], [ 0, %ps_dimension_end_mask.exit ], [ 0, %.lr.ph43.i ], [ 0, %ps_mask_table_merge.exit.thread.i.ps_mask_table_merge_all.exit.loopexit_crit_edge ], [ 0, %bb.c ]
   ret i32 %.2.i
 }
 
@@ -1560,17 +1562,17 @@ begin_hunk_2_@llvm.vector.reduce.smax.v4i16
 !259 = distinct !{!259, !36}
 !260 = !{!125, !65, i64 40}
 !261 = distinct !{!261, !36}
-!262 = distinct !{!262, !"LVerDomain"}
-!263 = distinct !{!263, !262}
-!264 = distinct !{!264, !262}
-!265 = distinct !{!265, !36, !100, !101}
+!262 = distinct !{!262, !36}
+!263 = distinct !{!263, !"LVerDomain"}
+!264 = distinct !{!264, !263}
+!265 = distinct !{!265, !263}
 !266 = distinct !{!266, !36, !100, !101}
-!267 = distinct !{!267, !35}
-!268 = distinct !{!268, !36, !100}
-!269 = distinct !{!269, !36}
+!267 = distinct !{!267, !36, !100, !101}
+!268 = distinct !{!268, !35}
+!269 = distinct !{!269, !36, !100}
 !270 = distinct !{!270, !36}
-!271 = !{!263}
-!272 = !{!264}
+!271 = !{!264}
+!272 = !{!265}
 !273 = !{!"branch_weights", i32 4, i32 28}
 !274 = !{!10, !10, i64 0}
 !275 = !{i64 0, i64 4, !24, i64 4, i64 4, !24, i64 8, i64 8, !274, i64 16, i64 4, !24}

@@ -204,7 +204,7 @@ bb.ds:                                            ; preds = %bb.dr
   %i.yd = ptrtoint ptr %.sroa.6.1.i.i to i64
   %i.ye = ptrtoint ptr %.sroa.0.1.i.i to i64
   %i.yf = sub i64 %i.yd, %i.ye
-  %i.yg = ashr exact i64 %i.yf, 3                 ; 2 uses
+  %i.yg = ashr exact i64 %i.yf, 3
   %.08488.i.i.i = add nsw i64 %i.yg, -1           ; 2 uses
   %.not9089.i.i.i = icmp eq i64 %.08488.i.i.i, 0
   br i1 %.not9089.i.i.i, label %.preheader.i38.i.i, label %.lr.ph92.i.i.i
@@ -223,9 +223,8 @@ bb.ds:                                            ; preds = %bb.dr
 
 .lr.ph92.i.i.i:                                   ; preds = %.critedge.i.i.i, %.loopexit53.i.i.i
   %.08491.i.i.i = phi i64 [ %.084.i.i.i, %.loopexit53.i.i.i ], [ %.08488.i.i.i, %.critedge.i.i.i ] ; 2 uses
-  %.084.in90.i.i.i = phi i64 [ %.08491.i.i.i, %.loopexit53.i.i.i ], [ %i.yg, %.critedge.i.i.i ]
-  %i.yh = getelementptr [8 x i8], ptr %.sroa.0.1.i.i, i64 %.084.in90.i.i.i
-  %i.yi = getelementptr i8, ptr %i.yh, i64 -16
+  %i.yh = getelementptr [8 x i8], ptr %.sroa.0.1.i.i, i64 %.08491.i.i.i
+  %i.yi = getelementptr i8, ptr %i.yh, i64 -8
   %i.yj = load i64, ptr %i.yi, align 8, !tbaa !35 ; 2 uses
   %i.yk = getelementptr inbounds nuw [24 x i8], ptr %.val66.i.i.i, i64 %i.yj ; 2 uses
   %.val125.i.i.i = load ptr, ptr %i.yk, align 8, !tbaa !217 ; 2 uses

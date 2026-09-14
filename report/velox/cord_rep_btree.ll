@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20240
   br i1 %.not91, label %.loopexit.i.i, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.g
-  %i.dc = zext i8 %i.c to i64                     ; 6 uses
+  %i.dc = zext i8 %i.c to i64                     ; 5 uses
   %i.dd = add nsw i32 %i.d, -1
   %i.de = zext nneg i32 %i.dd to i64              ; 3 uses
   %i.df = getelementptr [8 x i8], ptr %4, i64 %i.dc ; 3 uses
@@ -262,7 +262,6 @@ bb.j:                                             ; preds = %.loopexit93
   %i.ea = phi i64 [ %i.dm, %.split.i.i ], [ %i.dr, %bb.i ]
   %i.eb = phi ptr [ %i.dk, %.split.i.i ], [ %i.dp, %bb.i ]
   %indvars.iv6275105.i.i = phi i64 [ %indvars.iv.next63.jt1.i.i, %.split.i.i ], [ %i.de, %bb.i ]
-  %indvars.iv81103.i.i = phi i64 [ %indvars.iv.next8899.i.i, %.split.i.i ], [ %i.dc, %bb.i ]
   %.sroa.024.086101.i.i = phi ptr [ %i.eg, %.split.i.i ], [ %.sroa.0.0.i, %bb.i ]
   %indvars.iv.next8899.i.i = phi i64 [ %indvars.iv.next.jt1.i.i, %.split.i.i ], [ %indvars.iv.next.i.i, %bb.i ] ; 5 uses
   %i.ec = phi ptr [ %i.di, %.split.i.i ], [ %i.df, %bb.i ]
@@ -313,7 +312,7 @@ _ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE0EEEN
   %i.ex = add i64 %i.eu, %i.cz
   store i64 %i.ex, ptr %i.eg, align 8, !tbaa !22
   store ptr %i.eg, ptr %i.ec, align 8, !tbaa !25
-  %i.ey = icmp sgt i64 %indvars.iv81103.i.i, 1
+  %i.ey = icmp sgt i64 %indvars.iv.next8899.i.i, 0
   br i1 %i.ey, label %.split.i.i, label %.loopexit.thread115.i.i, !llvm.loop !80
 
 _ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE0EEENS2_8OpResultEbPNS1_7CordRepEm.exit.jt0.i.i: ; preds = %bb.j, %.loopexit93
@@ -322,7 +321,7 @@ _ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE0EEEN
   %i.fa = add i64 %i.ez, %i.cz
   store i64 %i.fa, ptr %i.du, align 8, !tbaa !22
   store ptr %i.du, ptr %i.dt, align 8, !tbaa !25
-  %5 = icmp sgt i64 %indvars.iv81102.i.i, 1
+  %5 = icmp samesign ugt i64 %indvars.iv81102.i.i, 1
   br i1 %5, label %bb.h, label %.loopexit, !llvm.loop !80
 
 .loopexit126.i.i:                                 ; preds = %.preheader.i.i, %bb.h
@@ -332,7 +331,7 @@ _ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE0EEEN
   %i.fc = load i64, ptr %i.fb, align 8, !tbaa !22
   %i.fd = add i64 %i.fc, %i.cz
   store i64 %i.fd, ptr %i.fb, align 8, !tbaa !22
-  %6 = icmp sgt i64 %indvars.iv80.i.i, 1
+  %6 = icmp samesign ugt i64 %indvars.iv80.i.i, 1
   br i1 %6, label %.lr.ph.i.i68, label %.loopexit
 
 .lr.ph.i.i68:                                     ; preds = %.loopexit126.i.i, %.lr.ph.i.i68
@@ -735,7 +734,7 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20240
   br i1 %.not107, label %.loopexit.i.i, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.g
-  %i.db = zext i8 %i.c to i64                     ; 6 uses
+  %i.db = zext i8 %i.c to i64                     ; 5 uses
   %i.dc = add nsw i32 %i.d, -1
   %i.dd = zext nneg i32 %i.dc to i64              ; 3 uses
   %i.de = getelementptr [8 x i8], ptr %4, i64 %i.db ; 3 uses
@@ -794,7 +793,6 @@ bb.j:                                             ; preds = %.loopexit109
   %i.eb = phi i64 [ %i.dm, %.split.i.i ], [ %i.ds, %bb.i ]
   %i.ec = phi ptr [ %i.dj, %.split.i.i ], [ %i.dp, %bb.i ]
   %indvars.iv5871100.i.i = phi i64 [ %indvars.iv.next59.jt1.i.i, %.split.i.i ], [ %i.dd, %bb.i ]
-  %indvars.iv7798.i.i = phi i64 [ %indvars.iv.next8494.i.i, %.split.i.i ], [ %i.db, %bb.i ]
   %.sroa.024.08296.i.i = phi ptr [ %i.eh, %.split.i.i ], [ %.sroa.0.0.i, %bb.i ]
   %indvars.iv.next8494.i.i = phi i64 [ %indvars.iv.next.jt1.i.i, %.split.i.i ], [ %indvars.iv.next.i.i, %bb.i ] ; 5 uses
   %i.ed = phi ptr [ %i.dh, %.split.i.i ], [ %i.de, %bb.i ]
@@ -845,7 +843,7 @@ _ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE1EEEN
   %i.fa = add i64 %i.ex, %i.cy
   store i64 %i.fa, ptr %i.eh, align 8, !tbaa !22
   store ptr %i.eh, ptr %i.ed, align 8, !tbaa !25
-  %i.fb = icmp sgt i64 %indvars.iv7798.i.i, 1
+  %i.fb = icmp sgt i64 %indvars.iv.next8494.i.i, 0
   br i1 %i.fb, label %.split.i.i, label %.loopexit.thread110.i.i, !llvm.loop !87
 
 _ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE1EEENS2_8OpResultEbPNS1_7CordRepEm.exit.jt0.i.i: ; preds = %bb.j, %.loopexit109
@@ -854,7 +852,7 @@ _ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE1EEEN
   %i.fd = add i64 %i.fc, %i.cy
   store i64 %i.fd, ptr %i.dv, align 8, !tbaa !22
   store ptr %i.dv, ptr %i.du, align 8, !tbaa !25
-  %5 = icmp sgt i64 %indvars.iv7797.i.i, 1
+  %5 = icmp samesign ugt i64 %indvars.iv7797.i.i, 1
   br i1 %5, label %bb.h, label %.loopexit, !llvm.loop !87
 
 .loopexit121.i.i:                                 ; preds = %.preheader.i.i, %bb.h
@@ -864,7 +862,7 @@ _ZN4absl12lts_2024011613cord_internal12CordRepBtree7SetEdgeILNS2_8EdgeTypeE1EEEN
   %i.ff = load i64, ptr %i.fe, align 8, !tbaa !22
   %i.fg = add i64 %i.ff, %i.cy
   store i64 %i.fg, ptr %i.fe, align 8, !tbaa !22
-  %6 = icmp sgt i64 %indvars.iv76.i.i, 1
+  %6 = icmp samesign ugt i64 %indvars.iv76.i.i, 1
   br i1 %6, label %.lr.ph.i.i68, label %.loopexit
 
 .lr.ph.i.i68:                                     ; preds = %.loopexit121.i.i, %.lr.ph.i.i68

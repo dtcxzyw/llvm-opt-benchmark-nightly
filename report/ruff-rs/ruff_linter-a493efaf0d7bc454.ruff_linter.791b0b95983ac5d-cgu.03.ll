@@ -205,15 +205,18 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.b
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4.preheader, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit.thread
   %i.dl = phi i64 [ %i.dq, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit.thread ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4.preheader ] ; 2 uses
-  %2 = phi i64 [ %i.dl, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit.thread ], [ 0, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4.preheader ] ; 2 uses
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle5rules21ends_with_punctuation21ends_with_punctuation, i64 %2
+  %2 = trunc i64 %i.dl to i8
+  %switch.tableidx = add nsw i8 %2, -1            ; 2 uses
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle5rules21ends_with_punctuation21ends_with_punctuation, i64 %3
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64       ; 4 uses
   %.not.i94 = icmp samesign ult i64 %i.be, %switch.ext
   br i1 %.not.i94, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit.thread, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4
-  %switch.gep290 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle5rules21ends_with_punctuation21ends_with_punctuation.758, i64 %2
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep290 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle5rules21ends_with_punctuation21ends_with_punctuation.758, i64 %4
   %switch.load291 = load ptr, ptr %switch.gep290, align 8
   %i.dm = sub nuw i64 %i.be, %switch.ext          ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.dm
@@ -616,15 +619,18 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.b
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4.preheader, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit.thread
   %i.dk = phi i64 [ %i.dp, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit.thread ], [ 1, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4.preheader ] ; 2 uses
-  %2 = phi i64 [ %i.dk, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit.thread ], [ 0, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4.preheader ] ; 2 uses
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle5rules21ends_with_punctuation21ends_with_punctuation, i64 %2
+  %2 = trunc i64 %i.dk to i8
+  %switch.tableidx = add nsw i8 %2, -1            ; 2 uses
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle5rules21ends_with_punctuation21ends_with_punctuation, i64 %3
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64       ; 4 uses
   %.not.i100 = icmp samesign ult i64 %i.bd, %switch.ext
   br i1 %.not.i100, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit.thread, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCsEhZmuQNqkz_11ruff_linter.exit: ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCsEhZmuQNqkz_11ruff_linter.exit.backedge.4
-  %switch.gep187 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle5rules21ends_with_punctuation21ends_with_punctuation.758, i64 %2
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep187 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle5rules21ends_with_punctuation21ends_with_punctuation.758, i64 %4
   %switch.load188 = load ptr, ptr %switch.gep187, align 8
   %i.dl = sub nuw i64 %i.bd, %switch.ext          ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.dl

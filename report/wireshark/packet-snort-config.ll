@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
   %i.e = tail call i64 @strlen(ptr noundef %i.d) #18
-  %i.f = trunc i64 %i.e to i32                    ; 4 uses
+  %i.f = trunc i64 %i.e to i32                    ; 3 uses
   %i.g = add i32 %i.f, -512
   %or.cond = icmp ult i32 %i.g, -509
   br i1 %or.cond, label %.thread, label %bb.c
@@ -225,9 +225,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.i
-  %.02838 = phi i32 [ %.02836, %.lr.ph ], [ %.028, %bb.i ] ; 3 uses
-  %.028.in37 = phi i32 [ %i.f, %.lr.ph ], [ %.02838, %bb.i ]
-  %i.n = zext nneg i32 %.02838 to i64             ; 3 uses
+  %.028.in37 = phi i32 [ %.02836, %.lr.ph ], [ %.028, %bb.i ] ; 3 uses
+  %i.n = zext nneg i32 %.028.in37 to i64          ; 3 uses
   %i.o = getelementptr i8, ptr %i.d, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1
   switch i8 %i.p, label %bb.i [
@@ -255,7 +254,7 @@ bb.h:                                             ; preds = %bb.d
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.d, %bb.h, %bb.g, %bb.f, %bb.e
-  %.028 = add nsw i32 %.02838, -1                 ; 2 uses
+  %.028 = add nsw i32 %.028.in37, -1              ; 2 uses
   %i.q = icmp ugt i32 %.028, 2
   br i1 %i.q, label %bb.d, label %.thread, !llvm.loop !66
 
@@ -264,7 +263,7 @@ bb.j:                                             ; preds = %bb.d
   store ptr %i.r, ptr %i.a, align 8
   %i.s = load ptr, ptr %i.c, align 8
   %i.t = getelementptr i8, ptr %i.s, i64 1
-  %i.u = add nsw i32 %.028.in37, -2               ; 2 uses
+  %i.u = add i32 %.028.in37, -1                   ; 2 uses
   %i.v = zext nneg i32 %i.u to i64                ; 2 uses
   %i.w = tail call ptr @__memcpy_chk(ptr noundef %i.r, ptr noundef %i.t, i64 noundef %i.v, i64 noundef %i.n) #17, !alias.scope !70 ; 0 uses
   %i.x = getelementptr i8, ptr %i.r, i64 %i.v

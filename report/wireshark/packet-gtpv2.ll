@@ -203,12 +203,11 @@ bb.a:
   br i1 %.not255, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %8 = phi i32 [ %i.dd, %.lr.ph ], [ 33, %bb.a ]  ; 2 uses
-  %.0256 = phi i32 [ %8, %.lr.ph ], [ 29, %bb.a ]
-  %i.da = add nuw nsw i32 %.0256, 1
+  %.0256 = phi i32 [ %i.dd, %.lr.ph ], [ 33, %bb.a ] ; 2 uses
+  %i.da = add nsw i32 %.0256, -3
   %i.db = load i32, ptr @hf_gtpv2_ipv4_addr, align 4
   %i.dc = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.db, ptr noundef %0, i32 noundef %i.da, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %i.dd = add nuw nsw i32 %8, 4                   ; 2 uses
+  %i.dd = add nuw nsw i32 %.0256, 4               ; 2 uses
   %.not = icmp samesign ugt i32 %i.dd, %i.cz
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !26
 

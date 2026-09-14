@@ -204,7 +204,7 @@ bb.a:
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
   %.01730.lcssa = phi i32 [ %1, %.lr.ph.preheader ], [ %i.bc, %.lr.ph ] ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %0, i64 -4 ; 7 uses
-  %wide.trip.count.i = zext i32 %.01730.lcssa to i64 ; 3 uses
+  %wide.trip.count.i = zext i32 %.01730.lcssa to i64 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %sift_up.exit.i, %.lr.ph._crit_edge
@@ -247,15 +247,14 @@ sift_up.exit.i:                                   ; preds = %bb.d, %bb.c
   br i1 %.not19.i.i33, label %heap_sort.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.preheader.i.preheader, %sift_down.exit.i
-  %indvars.iv.next19.i35 = phi i64 [ %indvars.iv.next19.i, %sift_down.exit.i ], [ %indvars.iv.next19.i32, %.preheader.i.preheader ] ; 4 uses
-  %indvars.iv18.i34 = phi i64 [ %indvars.iv.next19.i35, %sift_down.exit.i ], [ %wide.trip.count.i, %.preheader.i.preheader ]
+  %indvars.iv18.i34 = phi i64 [ %indvars.iv.next19.i, %sift_down.exit.i ], [ %indvars.iv.next19.i32, %.preheader.i.preheader ] ; 4 uses
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %bb.g
   %.021.i.i = phi i32 [ %i.af, %bb.g ], [ 2, %.lr.ph.i.i.preheader ] ; 5 uses
   %.01720.i.i = phi i32 [ %.1.i.i, %bb.g ], [ 1, %.lr.ph.i.i.preheader ]
   %i.p = sext i32 %.021.i.i to i64                ; 2 uses
-  %i.q = icmp sgt i64 %indvars.iv.next19.i35, %i.p
+  %i.q = icmp sgt i64 %indvars.iv18.i34, %i.p
   br i1 %i.q, label %bb.e, label %.lr.ph._crit_edge.i.i
 
 .lr.ph._crit_edge.i.i:                            ; preds = %.lr.ph.i.i
@@ -293,17 +292,17 @@ bb.g:                                             ; preds = %bb.f
   store i32 %i.ac, ptr %i.ae, align 4, !tbaa !61
   %i.af = shl nsw i32 %.1.i.i, 1                  ; 2 uses
   %i.ag = sext i32 %i.af to i64
-  %.not.i12.not.i = icmp sgt i64 %indvars.iv18.i34, %i.ag
-  br i1 %.not.i12.not.i, label %.lr.ph.i.i, label %sift_down.exit.i, !llvm.loop !311
+  %.not.i12.not.i.not = icmp slt i64 %indvars.iv18.i34, %i.ag
+  br i1 %.not.i12.not.i.not, label %sift_down.exit.i, label %.lr.ph.i.i, !llvm.loop !311
 
 sift_down.exit.i:                                 ; preds = %bb.g, %bb.f
-  %indvars.iv.next19.i = add nsw i64 %indvars.iv.next19.i35, -1 ; 2 uses
+  %indvars.iv.next19.i = add nsw i64 %indvars.iv18.i34, -1 ; 2 uses
   %i.ah = load i32, ptr %0, align 4, !tbaa !61
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next19.i ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !61
   store i32 %i.aj, ptr %0, align 4, !tbaa !61
   store i32 %i.ah, ptr %i.ai, align 4, !tbaa !61
-  %.not19.i.i = icmp eq i64 %indvars.iv.next19.i35, 2
+  %.not19.i.i = icmp eq i64 %indvars.iv18.i34, 2
   br i1 %.not19.i.i, label %heap_sort.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph63:                                         ; preds = %.lr.ph.preheader, %.lr.ph

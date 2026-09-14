@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %.pre56 = load i32, ptr %0, align 8             ; 4 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8
-  %i.ay = sext i32 %.pre56 to i64                 ; 8 uses
+  %i.ay = sext i32 %.pre56 to i64                 ; 6 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.pre, i64 496
   %i.ba = load float, ptr %i.az, align 8
   %i.bb = fsub float %i.ba, %3
@@ -217,46 +217,26 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %5 = add nsw i64 %i.ay, -1
-  %i.bh = load ptr, ptr %i.bd, align 8            ; 4 uses
+  %i.bh = load ptr, ptr %i.bd, align 8            ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %seed_curve.exit.i, %.lr.ph53.i
-  %.03952.i = phi i64 [ 0, %.lr.ph53.i ], [ %.lcssa.i, %seed_curve.exit.i ] ; 6 uses
+  %.03952.i = phi i64 [ 0, %.lr.ph53.i ], [ %.lcssa.i, %seed_curve.exit.i ] ; 4 uses
   %i.bi = getelementptr inbounds [4 x i8], ptr %1, i64 %.03952.i
-  %i.bj = load float, ptr %i.bi, align 4          ; 4 uses
+  %i.bj = load float, ptr %i.bi, align 4          ; 2 uses
   %i.bk = getelementptr inbounds [8 x i8], ptr %i.bh, i64 %.03952.i
-  %i.bl = load i64, ptr %i.bk, align 8            ; 3 uses
-  %i.bm = add nsw i64 %.03952.i, 1                ; 6 uses
+  %i.bl = load i64, ptr %i.bk, align 8            ; 2 uses
+  %i.bm = add nsw i64 %.03952.i, 1                ; 3 uses
   %i.bn = icmp slt i64 %i.bm, %i.ay
-  br i1 %i.bn, label %.lr.ph.i.preheader, label %.critedge.i
+  br i1 %i.bn, label %.lr.ph.i, label %.critedge.i
 
-.lr.ph.i.preheader:                               ; preds = %bb.d
-  %6 = getelementptr inbounds [8 x i8], ptr %i.bh, i64 %i.bm
-  %7 = load i64, ptr %6, align 8
-  %8 = icmp eq i64 %7, %i.bl
-  br i1 %8, label %.lr.ph39.preheader, label %.critedge.i
-
-.lr.ph39.preheader:                               ; preds = %.lr.ph.i.preheader
-  %9 = getelementptr inbounds [4 x i8], ptr %1, i64 %i.bm
-  %10 = load float, ptr %9, align 4               ; 2 uses
-  %11 = fcmp ogt float %10, %i.bj
-  %.1.i90 = select i1 %11, float %10, float %i.bj ; 2 uses
-  %12 = add i64 %.03952.i, 2                      ; 2 uses
-  %exitcond.not.i91 = icmp eq i64 %12, %i.ay
-  br i1 %exitcond.not.i91, label %..critedge.i.loopexit_crit_edge, label %.lr.ph.i.lr.ph, !llvm.loop !588
-
-.lr.ph.i.lr.ph:                                   ; preds = %.lr.ph39.preheader
-  br label %.lr.ph.i, !llvm.loop !588
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %.lr.ph39
-  %i.bo = phi i64 [ %12, %.lr.ph.i.lr.ph ], [ %i.bv, %.lr.ph39 ] ; 5 uses
-  %.1.i92 = phi float [ %.1.i90, %.lr.ph.i.lr.ph ], [ %.1.i, %.lr.ph39 ] ; 3 uses
-  %13 = phi i64 [ %i.bm, %.lr.ph.i.lr.ph ], [ %i.bo, %.lr.ph39 ]
+.lr.ph.i:                                         ; preds = %bb.d, %.lr.ph39
+  %i.bo = phi i64 [ %i.bv, %.lr.ph39 ], [ %i.bm, %bb.d ] ; 4 uses
+  %.1.i92 = phi float [ %.1.i, %.lr.ph39 ], [ %i.bj, %bb.d ] ; 3 uses
   %i.bp = getelementptr inbounds [8 x i8], ptr %i.bh, i64 %i.bo
   %i.bq = load i64, ptr %i.bp, align 8
   %i.br = icmp eq i64 %i.bq, %i.bl
-  br i1 %i.br, label %.lr.ph39, label %.critedge.i, !llvm.loop !588
+  br i1 %i.br, label %.lr.ph39, label %..critedge.i.loopexit_crit_edge
 
 .lr.ph39:                                         ; preds = %.lr.ph.i
   %i.bs = getelementptr inbounds [4 x i8], ptr %1, i64 %i.bo
@@ -265,19 +245,18 @@ bb.d:                                             ; preds = %seed_curve.exit.i, 
   %.1.i = select i1 %i.bu, float %i.bt, float %.1.i92 ; 2 uses
   %i.bv = add i64 %i.bo, 1                        ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bv, %i.ay
-  br i1 %exitcond.not.i, label %.lr.ph39...critedge.i.loopexit_crit_edge_crit_edge, label %.lr.ph.i, !llvm.loop !588
+  br i1 %exitcond.not.i, label %..critedge.i.loopexit_crit_edge, label %.lr.ph.i, !llvm.loop !588
 
-.lr.ph39...critedge.i.loopexit_crit_edge_crit_edge: ; preds = %.lr.ph39
-  br label %..critedge.i.loopexit_crit_edge, !llvm.loop !588
+..critedge.i.loopexit_crit_edge:                  ; preds = %.lr.ph39, %.lr.ph.i
+  %.1.i.lcssa = phi float [ %.1.i92, %.lr.ph.i ], [ %.1.i, %.lr.ph39 ]
+  %.lcssa.ph.i = phi i64 [ %i.bo, %.lr.ph.i ], [ %i.ay, %.lr.ph39 ] ; 2 uses
+  %.140.lcssa.ph.i = add nsw i64 %.lcssa.ph.i, -1
+  br label %.critedge.i
 
-..critedge.i.loopexit_crit_edge:                  ; preds = %.lr.ph39...critedge.i.loopexit_crit_edge_crit_edge, %.lr.ph39.preheader
-  %.1.i.lcssa = phi float [ %.1.i, %.lr.ph39...critedge.i.loopexit_crit_edge_crit_edge ], [ %.1.i90, %.lr.ph39.preheader ]
-  br label %.critedge.i, !llvm.loop !588
-
-.critedge.i:                                      ; preds = %.lr.ph.i, %.lr.ph.i.preheader, %..critedge.i.loopexit_crit_edge, %bb.d
-  %.140.lcssa.i = phi i64 [ %.03952.i, %bb.d ], [ %.03952.i, %.lr.ph.i.preheader ], [ %5, %..critedge.i.loopexit_crit_edge ], [ %13, %.lr.ph.i ] ; 2 uses
-  %.0.lcssa.i = phi float [ %i.bj, %bb.d ], [ %i.bj, %.lr.ph.i.preheader ], [ %.1.i.lcssa, %..critedge.i.loopexit_crit_edge ], [ %.1.i92, %.lr.ph.i ] ; 3 uses
-  %.lcssa.i = phi i64 [ %i.bm, %bb.d ], [ %i.bm, %.lr.ph.i.preheader ], [ %i.ay, %..critedge.i.loopexit_crit_edge ], [ %i.bo, %.lr.ph.i ] ; 2 uses
+.critedge.i:                                      ; preds = %..critedge.i.loopexit_crit_edge, %bb.d
+  %.140.lcssa.i = phi i64 [ %.03952.i, %bb.d ], [ %.140.lcssa.ph.i, %..critedge.i.loopexit_crit_edge ] ; 2 uses
+  %.0.lcssa.i = phi float [ %i.bj, %bb.d ], [ %.1.i.lcssa, %..critedge.i.loopexit_crit_edge ] ; 3 uses
+  %.lcssa.i = phi i64 [ %i.bm, %bb.d ], [ %.lcssa.ph.i, %..critedge.i.loopexit_crit_edge ] ; 2 uses
   %i.bw = fadd float %.0.lcssa.i, 6.000000e+00
   %i.bx = getelementptr inbounds [4 x i8], ptr %2, i64 %.140.lcssa.i
   %i.by = load float, ptr %i.bx, align 4

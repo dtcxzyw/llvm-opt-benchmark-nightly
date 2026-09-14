@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.b to i64
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
-  %i.i = ashr exact i64 %i.h, 3                   ; 4 uses
-  %.089 = add nsw i64 %i.i, -1                    ; 5 uses
+  %i.i = ashr exact i64 %i.h, 3                   ; 3 uses
+  %.089 = add nsw i64 %i.i, -1                    ; 4 uses
   %.not10 = icmp eq i64 %.089, 0
   br i1 %.not10, label %.loopexit, label %.lr.ph.preheader
 
@@ -231,16 +231,15 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %.0813.unr = phi i64 [ %.089, %.lr.ph.preheader ], [ %.08.prol, %.lr.ph.prol ]
   %.012.unr = phi i32 [ %1, %.lr.ph.preheader ], [ %i.p, %.lr.ph.prol ]
-  %.08.in11.unr = phi i64 [ %i.i, %.lr.ph.preheader ], [ %.089, %.lr.ph.prol ]
   %i.q = icmp eq i64 %i.h, 16
   br i1 %i.q, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.0813 = phi i64 [ %.08.1, %.lr.ph ], [ %.0813.unr, %.lr.ph.prol.loopexit ] ; 4 uses
+  %.0813 = phi i64 [ %.08.1, %.lr.ph ], [ %.0813.unr, %.lr.ph.prol.loopexit ] ; 5 uses
   %.012 = phi i32 [ %i.ae, %.lr.ph ], [ %.012.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.08.in11 = phi i64 [ %.08, %.lr.ph ], [ %.08.in11.unr, %.lr.ph.prol.loopexit ]
+  %.08.in1114 = add i64 %.0813, 1
   %i.r = zext i32 %.012 to i64
-  %i.s = urem i64 %i.r, %.08.in11
+  %i.s = urem i64 %i.r, %.08.in1114
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0813 ; 2 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.s ; 2 uses
   %.sroa.0.0.copyload.i = load ptr, ptr %i.t, align 8, !tbaa !190
@@ -249,14 +248,14 @@ bb.b:                                             ; preds = %bb.a
   store ptr %.sroa.0.0.copyload.i, ptr %i.u, align 8, !tbaa !190
   %i.w = mul i32 %.012, 1664525
   %i.x = add i32 %i.w, 1013904223                 ; 2 uses
-  %.08 = add i64 %.0813, -1                       ; 2 uses
   %i.y = zext i32 %i.x to i64
   %i.z = urem i64 %i.y, %.0813
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.08 ; 2 uses
+  %i.aa = getelementptr [8 x i8], ptr %i.b, i64 %.0813
+  %2 = getelementptr i8, ptr %i.aa, i64 -8        ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.z ; 2 uses
-  %.sroa.0.0.copyload.i.1 = load ptr, ptr %i.aa, align 8, !tbaa !190
+  %.sroa.0.0.copyload.i.1 = load ptr, ptr %2, align 8, !tbaa !190
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !190
-  store i64 %i.ac, ptr %i.aa, align 8, !tbaa !190
+  store i64 %i.ac, ptr %2, align 8, !tbaa !190
   store ptr %.sroa.0.0.copyload.i.1, ptr %i.ab, align 8, !tbaa !190
   %i.ad = mul i32 %i.x, 1664525
   %i.ae = add i32 %i.ad, 1013904223

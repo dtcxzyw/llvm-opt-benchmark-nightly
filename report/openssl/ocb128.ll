@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   %i.a = lshr i64 %2, 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !29   ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !29   ; 2 uses
   %i.d = add i64 %i.c, %i.a                       ; 3 uses
   %.04858 = add i64 %i.c, 1                       ; 2 uses
   %.not59 = icmp ugt i64 %.04858, %i.d
@@ -220,16 +220,15 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %.04862 = phi i64 [ %.04858, %.lr.ph ], [ %.048, %bb.c ] ; 3 uses
-  %.048.in61 = phi i64 [ %i.c, %.lr.ph ], [ %.04862, %bb.c ]
+  %.048.in61 = phi i64 [ %.04858, %.lr.ph ], [ %.048, %bb.c ] ; 3 uses
   %.05060 = phi ptr [ %1, %.lr.ph ], [ %i.w, %bb.c ] ; 2 uses
   %i.j = and i64 %.048.in61, 1
   %.not5.i.not = icmp eq i64 %i.j, 0
-  br i1 %.not5.i.not, label %ocb_ntz.exit, label %.lr.ph.i
+  br i1 %.not5.i.not, label %.lr.ph.i, label %ocb_ntz.exit
 
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.i
   %.07.i = phi i32 [ %i.l, %.lr.ph.i ], [ 0, %bb.b ]
-  %.046.i = phi i64 [ %i.k, %.lr.ph.i ], [ %.04862, %bb.b ] ; 2 uses
+  %.046.i = phi i64 [ %i.k, %.lr.ph.i ], [ %.048.in61, %bb.b ] ; 2 uses
   %i.k = lshr exact i64 %.046.i, 1
   %i.l = add i32 %.07.i, 1                        ; 2 uses
   %i.m = and i64 %.046.i, 2
@@ -271,7 +270,7 @@ bb.c:                                             ; preds = %ocb_ntz.exit
   %i.ae = load <2 x i64>, ptr %i.i, align 8, !tbaa !23
   %i.af = xor <2 x i64> %i.ae, %i.ad
   store <2 x i64> %i.af, ptr %i.i, align 8, !tbaa !23
-  %.048 = add i64 %.04862, 1                      ; 2 uses
+  %.048 = add i64 %.048.in61, 1                   ; 2 uses
   %.not = icmp ugt i64 %.048, %i.d
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !28
 
@@ -432,7 +431,7 @@ bb.a:
   %5 = alloca %union.OCB_BLOCK, align 16          ; 12 uses
   %i.a = lshr i64 %3, 4                           ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !26   ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !26   ; 2 uses
   %i.d = add i64 %i.c, %i.a                       ; 4 uses
   %.not = icmp eq i64 %i.a, 0
   br i1 %.not, label %bb.d, label %bb.b
@@ -480,18 +479,17 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.f
-  %.081111 = phi i64 [ %.081106, %.lr.ph ], [ %.081, %bb.f ] ; 3 uses
-  %.081.in110 = phi i64 [ %i.c, %.lr.ph ], [ %.081111, %bb.f ]
+  %.081.in110 = phi i64 [ %.081106, %.lr.ph ], [ %.081, %bb.f ] ; 3 uses
   %.185109 = phi ptr [ %2, %.lr.ph ], [ %i.az, %bb.f ] ; 2 uses
   %.189108 = phi ptr [ %1, %.lr.ph ], [ %i.ak, %bb.f ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   %i.aa = and i64 %.081.in110, 1
   %.not5.i.not = icmp eq i64 %i.aa, 0
-  br i1 %.not5.i.not, label %ocb_ntz.exit, label %.lr.ph.i
+  br i1 %.not5.i.not, label %.lr.ph.i, label %ocb_ntz.exit
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.i
   %.07.i = phi i32 [ %i.ac, %.lr.ph.i ], [ 0, %bb.e ]
-  %.046.i = phi i64 [ %i.ab, %.lr.ph.i ], [ %.081111, %bb.e ] ; 2 uses
+  %.046.i = phi i64 [ %i.ab, %.lr.ph.i ], [ %.081.in110, %bb.e ] ; 2 uses
   %i.ab = lshr exact i64 %.046.i, 1
   %i.ac = add i32 %.07.i, 1                       ; 2 uses
   %i.ad = and i64 %.046.i, 2
@@ -538,7 +536,7 @@ bb.f:                                             ; preds = %ocb_ntz.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.185109, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false)
   %i.az = getelementptr inbounds nuw i8, ptr %.185109, i64 16 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
-  %.081 = add i64 %.081111, 1                     ; 2 uses
+  %.081 = add i64 %.081.in110, 1                  ; 2 uses
   %.not97 = icmp ugt i64 %.081, %i.d
   br i1 %.not97, label %.loopexit, label %bb.e, !llvm.loop !31
 
@@ -668,7 +666,7 @@ bb.a:
   %5 = alloca %union.OCB_BLOCK, align 16          ; 12 uses
   %i.a = lshr i64 %3, 4                           ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !26   ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !26   ; 2 uses
   %i.d = add i64 %i.c, %i.a                       ; 4 uses
   %.not = icmp eq i64 %i.a, 0
   br i1 %.not, label %bb.d, label %bb.b
@@ -725,17 +723,16 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   br label %bb.h
 
 bb.e:                                             ; preds = %.lr.ph, %bb.f
-  %.083117 = phi i64 [ %.083112, %.lr.ph ], [ %.083, %bb.f ] ; 3 uses
-  %.083.in116 = phi i64 [ %i.c, %.lr.ph ], [ %.083117, %bb.f ]
+  %.083.in116 = phi i64 [ %.083112, %.lr.ph ], [ %.083, %bb.f ] ; 3 uses
   %.188115 = phi ptr [ %2, %.lr.ph ], [ %i.bb, %bb.f ] ; 2 uses
   %.193114 = phi ptr [ %1, %.lr.ph ], [ %i.ap, %bb.f ] ; 2 uses
   %i.ac = and i64 %.083.in116, 1
   %.not5.i.not = icmp eq i64 %i.ac, 0
-  br i1 %.not5.i.not, label %ocb_ntz.exit, label %.lr.ph.i
+  br i1 %.not5.i.not, label %.lr.ph.i, label %ocb_ntz.exit
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.i
   %.07.i = phi i32 [ %i.ae, %.lr.ph.i ], [ 0, %bb.e ]
-  %.046.i = phi i64 [ %i.ad, %.lr.ph.i ], [ %.083117, %bb.e ] ; 2 uses
+  %.046.i = phi i64 [ %i.ad, %.lr.ph.i ], [ %.083.in116, %bb.e ] ; 2 uses
   %i.ad = lshr exact i64 %.046.i, 1
   %i.ae = add i32 %.07.i, 1                       ; 2 uses
   %i.af = and i64 %.046.i, 2
@@ -782,7 +779,7 @@ bb.f:                                             ; preds = %ocb_ntz.exit
   store <2 x i64> %i.ba, ptr %i.ab, align 8, !tbaa !23
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.188115, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false)
   %i.bb = getelementptr inbounds nuw i8, ptr %.188115, i64 16 ; 2 uses
-  %.083 = add i64 %.083117, 1                     ; 2 uses
+  %.083 = add i64 %.083.in116, 1                  ; 2 uses
   %.not102 = icmp ugt i64 %.083, %i.d
   br i1 %.not102, label %.thread109, label %bb.e, !llvm.loop !33
 

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
 _ZNSt5stackIN6duckdb10ARTBuilder9NodeEntryESt5dequeIS2_SaIS2_EEE3popEv.exit: ; preds = %bb.c, %bb.d
   %.sroa.18.0.copyload164 = phi i64 [ %.sroa.18.0.copyload, %bb.c ], [ %.sroa.18.0.copyload157, %bb.d ] ; 6 uses
   %.sroa.14.0.copyload162 = phi i64 [ %.sroa.14.0.copyload, %bb.c ], [ %.sroa.14.0.copyload155, %bb.d ] ; 9 uses
-  %.sroa.6.0.copyload160 = phi i64 [ %.sroa.6.0.copyload, %bb.c ], [ %.sroa.6.0.copyload153, %bb.d ] ; 8 uses
+  %.sroa.6.0.copyload160 = phi i64 [ %.sroa.6.0.copyload, %bb.c ], [ %.sroa.6.0.copyload153, %bb.d ] ; 7 uses
   %.sroa.0127.0.copyload158 = phi ptr [ %.sroa.0127.0.copyload, %bb.c ], [ %.sroa.0127.0.copyload151, %bb.d ] ; 4 uses
   %storemerge.i.i = phi ptr [ %i.ab, %bb.c ], [ %i.ak, %bb.d ]
   store ptr %storemerge.i.i, ptr %i.g, align 8, !tbaa !64
@@ -579,16 +579,15 @@ bb.w:                                             ; preds = %_ZN6duckdb6Prefix3N
   %i.fk = phi ptr [ %i.gp, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %i.ex, %.noexc69 ] ; 5 uses
   %i.fl = phi ptr [ %i.gq, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %i.ey, %.noexc69 ] ; 4 uses
   %i.fm = phi ptr [ %i.gr, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %i.ey, %.noexc69 ] ; 4 uses
-  %storemerge186 = phi i64 [ %storemerge, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %storemerge183, %.noexc69 ] ; 5 uses
-  %storemerge.in185 = phi i64 [ %storemerge186, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %.sroa.6.0.copyload160, %.noexc69 ]
+  %storemerge.in185 = phi i64 [ %storemerge, %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79 ], [ %storemerge183, %.noexc69 ] ; 5 uses
   %i.fn = load ptr, ptr %i.o, align 8, !tbaa !739, !nonnull !68, !align !69
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !72 ; 2 uses
-  %i.fp = getelementptr inbounds nuw [16 x i8], ptr %i.fo, i64 %storemerge.in185
-  %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
+  %i.fp = getelementptr [16 x i8], ptr %i.fo, i64 %storemerge.in185
+  %i.fq = getelementptr i8, ptr %i.fp, i64 -8
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !76
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fr, i64 %.sroa.18.0182
   %i.ft = load i8, ptr %i.fs, align 1, !tbaa !77
-  %i.fu = getelementptr inbounds nuw [16 x i8], ptr %i.fo, i64 %storemerge186
+  %i.fu = getelementptr inbounds nuw [16 x i8], ptr %i.fo, i64 %storemerge.in185
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 8
   %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !76
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 %.sroa.18.0182
@@ -601,7 +600,7 @@ bb.x:                                             ; preds = %.lr.ph187
   br i1 %.not.i70, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  store i64 %storemerge186, ptr %i.fm, align 8, !tbaa !58
+  store i64 %storemerge.in185, ptr %i.fm, align 8, !tbaa !58
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fm, i64 8 ; 2 uses
   store ptr %i.fz, ptr %i.r, align 8, !tbaa !162
   br label %_ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79
@@ -635,7 +634,7 @@ _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i71: ; preds = %bb.z
 
 .noexc78:                                         ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i71
   %i.gl = getelementptr inbounds i8, ptr %i.gk, i64 %i.gc ; 2 uses
-  store i64 %storemerge186, ptr %i.gl, align 8, !tbaa !58
+  store i64 %storemerge.in185, ptr %i.gl, align 8, !tbaa !58
   %i.gm = icmp sgt i64 %i.gc, 0
   br i1 %i.gm, label %bb.ab, label %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i76
 
@@ -666,7 +665,7 @@ _ZNSt6vectorImSaImEE12emplace_backIJRmEEEvDpOT_.exit79: ; preds = %_ZNSt6vectorI
   %i.gp = phi ptr [ %i.gk, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i76 ], [ %i.fk, %bb.y ], [ %i.fk, %.lr.ph187 ] ; 2 uses
   %i.gq = phi ptr [ %i.go, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i76 ], [ %i.fl, %bb.y ], [ %i.fl, %.lr.ph187 ]
   %i.gr = phi ptr [ %i.gn, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i76 ], [ %i.fz, %bb.y ], [ %i.fm, %.lr.ph187 ] ; 2 uses
-  %storemerge = add i64 %storemerge186, 1         ; 2 uses
+  %storemerge = add i64 %storemerge.in185, 1      ; 2 uses
   %.not48 = icmp ugt i64 %storemerge, %.sroa.14.0.copyload162
   br i1 %.not48, label %._crit_edge188, label %.lr.ph187, !llvm.loop !731
 

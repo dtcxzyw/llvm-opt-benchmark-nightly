@@ -202,7 +202,7 @@ _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjR
 .lr.ph532:                                        ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts_0E0B1t_.exit.i.preheader, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts_0E0B1t_.exit.i
   %i.au = phi i64 [ %i.aw, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts_0E0B1t_.exit.i ], [ %i.ap, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts_0E0B1t_.exit.i.preheader ] ; 6 uses
   %i.av = phi ptr [ %i.ax, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts_0E0B1t_.exit.i ], [ %i.aq, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts_0E0B1t_.exit.i.preheader ] ; 2 uses
-  %i.aw = add i64 %i.au, 1                        ; 3 uses
+  %i.aw = add i64 %i.au, 1                        ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 1 ; 5 uses
   %i.ay = load i8, ptr %i.av, align 1, !noundef !4
   switch i8 %i.ay, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts_0E0B1t_.exit.i [
@@ -282,33 +282,36 @@ bb.v:                                             ; preds = %.lr.ph532, %.lr.ph5
   br label %.lr.ph.i215
 
 .lr.ph.i215:                                      ; preds = %.lr.ph.i215.preheader, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i
-  %4 = phi i64 [ %i.bs, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i ], [ %i.bn, %.lr.ph.i215.preheader ] ; 3 uses
-  %i.bo = phi i64 [ %4, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i ], [ %i.aw, %.lr.ph.i215.preheader ] ; 3 uses
+  %i.bo = phi i64 [ %i.bs, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i ], [ %i.bn, %.lr.ph.i215.preheader ] ; 3 uses
   %i.bp = phi ptr [ %i.bq, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i ], [ %i.ax, %.lr.ph.i215.preheader ] ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 1 ; 3 uses
-  %i.br = load i8, ptr %i.bp, align 1, !alias.scope !165, !noalias !166, !noundef !4
-  switch i8 %i.br, label %bb.ab [
+  %i.br = load i8, ptr %i.bp, align 1, !alias.scope !165, !noalias !166, !noundef !4 ; 2 uses
+  switch i8 %i.br, label %4 [
     i8 32, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i
     i8 13, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i
     i8 10, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i
     i8 9, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i
-    i8 61, label %.loopexit293
   ]
 
 _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i: ; preds = %.lr.ph.i215, %.lr.ph.i215, %.lr.ph.i215, %.lr.ph.i215
-  %i.bs = add i64 %4, 1
+  %i.bs = add i64 %i.bo, 1
   %i.bt = icmp eq ptr %i.bq, %i.ak
   br i1 %i.bt, label %.loopexit292, label %.lr.ph.i215
 
-.loopexit293:                                     ; preds = %.lr.ph532, %.lr.ph.i215
-  %.sroa.23.0 = phi i64 [ %4, %.lr.ph.i215 ], [ %i.aw, %.lr.ph532 ]
-  %.sroa.0.0 = phi ptr [ %i.bq, %.lr.ph.i215 ], [ %i.ax, %.lr.ph532 ] ; 2 uses
-  %.sroa.09.0 = phi i64 [ %i.bo, %.lr.ph.i215 ], [ %i.au, %.lr.ph532 ]
+.loopexit293:                                     ; preds = %.lr.ph532, %4
+  %.sroa.23.0 = phi i64 [ %i.bo, %4 ], [ %i.aw, %.lr.ph532 ]
+  %.sroa.0.0 = phi ptr [ %i.bq, %4 ], [ %i.ax, %.lr.ph532 ] ; 2 uses
+  %.sroa.09.0 = phi i64 [ %5, %4 ], [ %i.au, %.lr.ph532 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call fastcc void @_RNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB5_9IterState20check_for_duplicates(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.d, ptr noalias noundef align 8 dereferenceable(80) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, i64 noundef %i.an, i64 noundef %i.au)
   %i.bu = load i8, ptr %i.d, align 8, !range !164, !noundef !4
   %.not201 = icmp eq i8 %i.bu, -1
   br i1 %.not201, label %bb.ad, label %bb.ac
+
+4:                                                ; preds = %.lr.ph.i215
+  %5 = add i64 %i.bo, -1                          ; 3 uses
+  %6 = icmp eq i8 %i.br, 61
+  br i1 %6, label %.loopexit293, label %bb.ab
 
 .loopexit292:                                     ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4find5checkTjRhENCNvMsf_NtNtCs2isvxI5XMib_9quick_xml6events10attributesNtB1p_9IterState4nexts0_0E0B1t_.exit.i, %bb.v
   store i64 0, ptr %1, align 8
@@ -365,13 +368,13 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.x
 
-bb.ab:                                            ; preds = %.lr.ph.i215
+bb.ab:                                            ; preds = %4
   store i64 1, ptr %1, align 8
-  store i64 %i.bo, ptr %i.e, align 8
+  store i64 %5, ptr %i.e, align 8
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.cj = load i8, ptr %i.ci, align 8, !range !10, !noundef !4
   %i.ck = trunc nuw i8 %i.cj to i1
-  %i.cl = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %i.bo, i64 0
+  %i.cl = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %5, i64 0
   br i1 %i.ck, label %bb.am, label %bb.an
 
 bb.ac:                                            ; preds = %.loopexit293

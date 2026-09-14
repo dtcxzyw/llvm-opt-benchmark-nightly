@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bk = add nsw i64 %.134.lcssa81, -8           ; 2 uses
   %i.bl = lshr i64 %i.bk, 3
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bk, 120
+  %min.iters.check = icmp ult i64 %i.bk, 104
   br i1 %min.iters.check, label %.lr.ph63.preheader122, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph63.preheader
@@ -220,13 +220,13 @@ vector.memcheck:                                  ; preds = %.lr.ph63.preheader
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.bm, 4611686018427387900     ; 3 uses
-  %i.br = shl i64 %n.vec, 3                       ; 3 uses
+  %i.br = shl i64 %n.vec, 3                       ; 2 uses
   %i.bs = or disjoint i64 %i.br, 8
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bt = shl i64 %index, 3                       ; 3 uses
+  %i.bt = shl nuw i64 %index, 3                   ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bt ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   %wide.load = load <2 x i64>, ptr %i.bu, align 1
@@ -251,7 +251,6 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph63.preheader122:                            ; preds = %vector.memcheck, %.lr.ph63.preheader, %middle.block
   %.ph = phi i64 [ 8, %vector.memcheck ], [ 8, %.lr.ph63.preheader ], [ %i.bs, %middle.block ]
-  %.0.i61.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph63.preheader ], [ %i.br, %middle.block ]
   br label %.lr.ph63
 
 .preheader:                                       ; preds = %.lr.ph63, %middle.block, %._crit_edge.thread77
@@ -367,13 +366,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph63:                                         ; preds = %.lr.ph63.preheader122, %.lr.ph63
   %i.dm = phi i64 [ %i.dr, %.lr.ph63 ], [ %.ph, %.lr.ph63.preheader122 ] ; 3 uses
-  %.0.i61 = phi i64 [ %i.dm, %.lr.ph63 ], [ %.0.i61.ph, %.lr.ph63.preheader122 ] ; 3 uses
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.0.i61
+  %.0.i6169 = add nsw i64 %i.dm, -8               ; 3 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.0.i6169
   %.0.copyload.i43 = load i64, ptr %i.dn, align 1
-  %i.do = getelementptr inbounds nuw i8, ptr %i.be, i64 %.0.i61
+  %i.do = getelementptr inbounds nuw i8, ptr %i.be, i64 %.0.i6169
   %.0.copyload.i42 = load i64, ptr %i.do, align 1
   %i.dp = xor i64 %.0.copyload.i42, %.0.copyload.i43
-  %i.dq = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.0.i61
+  %i.dq = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.0.i6169
   store i64 %i.dp, ptr %i.dq, align 1
   %i.dr = add nuw nsw i64 %i.dm, 8                ; 2 uses
   %.not.i = icmp ugt i64 %i.dr, %.134.lcssa81

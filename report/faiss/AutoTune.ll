@@ -205,26 +205,25 @@ bb.ab:                                            ; preds = %_ZN5faiss14Operatin
   %i.br = ptrtoint ptr %i.bp to i64
   %i.bs = ptrtoint ptr %i.bq to i64
   %i.bt = sub i64 %i.br, %i.bs
-  %i.bu = sdiv exact i64 %i.bt, 56                ; 2 uses
+  %i.bu = sdiv exact i64 %i.bt, 56
   %.05079 = add nsw i64 %i.bu, -1                 ; 2 uses
   %.not80 = icmp eq i64 %.05079, 0
   br i1 %.not80, label %.critedge, label %.lr.ph84
 
 .lr.ph84:                                         ; preds = %bb.ab, %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit
-  %.05082 = phi i64 [ %.050, %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit ], [ %.05079, %bb.ab ] ; 3 uses
-  %.050.in81 = phi i64 [ %.05082, %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit ], [ %i.bu, %bb.ab ]
+  %.050.in81 = phi i64 [ %.050, %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit ], [ %.05079, %bb.ab ] ; 3 uses
   %i.bv = load ptr, ptr %i.s, align 8, !tbaa !150 ; 2 uses
-  %i.bw = getelementptr inbounds nuw [56 x i8], ptr %i.bv, i64 %.05082
+  %i.bw = getelementptr inbounds nuw [56 x i8], ptr %i.bv, i64 %.050.in81
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   %i.by = load double, ptr %i.bx, align 8, !tbaa !156
   %i.bz = getelementptr [56 x i8], ptr %i.bv, i64 %.050.in81 ; 2 uses
-  %i.ca = getelementptr i8, ptr %i.bz, i64 -104
+  %i.ca = getelementptr i8, ptr %i.bz, i64 -48
   %i.cb = load double, ptr %i.ca, align 8, !tbaa !156
   %i.cc = fcmp ugt double %i.by, %i.cb
   br i1 %i.cc, label %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph84
-  %i.cd = getelementptr i8, ptr %i.bz, i64 -112
+  %i.cd = getelementptr i8, ptr %i.bz, i64 -56
   %i.ce = invoke ptr @_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr nonnull %i.cd)
           to label %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit unwind label %bb.ad ; 0 uses
 
@@ -234,7 +233,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 _ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit: ; preds = %bb.ac, %.lr.ph84
-  %.050 = add i64 %.05082, -1                     ; 2 uses
+  %.050 = add i64 %.050.in81, -1                  ; 2 uses
   %.not = icmp eq i64 %.050, 0
   br i1 %.not, label %.critedge, label %.lr.ph84, !llvm.loop !267
 

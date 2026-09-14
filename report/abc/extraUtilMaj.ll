@@ -205,7 +205,7 @@ Abc_Clock.exit82:                                 ; preds = %._crit_edge, %bb.j
   %i.bn = phi ptr [ %i.ch, %.loopexit ], [ %i.bh, %.lr.ph95.preheader ] ; 2 uses
   %i.bo = phi ptr [ %i.ch, %.loopexit ], [ %i.bi, %.lr.ph95.preheader ]
   %i.bp = phi i32 [ %i.cj, %.loopexit ], [ %i.bk, %.lr.ph95.preheader ] ; 3 uses
-  %.193 = phi i32 [ %.pre120, %.loopexit ], [ 0, %.lr.ph95.preheader ] ; 4 uses
+  %.193 = phi i32 [ %.pre120, %.loopexit ], [ 0, %.lr.ph95.preheader ] ; 3 uses
   %i.bq = lshr i32 %i.bp, 16
   %i.br = shl nuw nsw i32 1, %.193
   %i.bs = and i32 %i.bq, %i.br
@@ -219,24 +219,23 @@ Abc_Clock.exit82:                                 ; preds = %._crit_edge, %bb.j
 .lr.ph92:                                         ; preds = %.lr.ph95, %bb.l
   %i.bv = phi ptr [ %i.cb, %bb.l ], [ %i.bn, %.lr.ph95 ]
   %i.bw = phi ptr [ %i.cc, %bb.l ], [ %i.bo, %.lr.ph95 ]
-  %7 = phi i32 [ %i.ce, %bb.l ], [ %i.bp, %.lr.ph95 ]
-  %.06591.a = phi i32 [ %.065, %bb.l ], [ %.pre120, %.lr.ph95 ] ; 3 uses
-  %.065.in90 = phi i32 [ %.06591.a, %bb.l ], [ %.193, %.lr.ph95 ]
-  %i.bx = lshr i32 %7, 16
-  %i.by = shl nuw nsw i32 2, %.065.in90
+  %.06591.a = phi i32 [ %i.ce, %bb.l ], [ %i.bp, %.lr.ph95 ]
+  %.065.in90 = phi i32 [ %.065, %bb.l ], [ %.pre120, %.lr.ph95 ] ; 3 uses
+  %i.bx = lshr i32 %.06591.a, 16
+  %i.by = shl nuw nsw i32 1, %.065.in90
   %i.bz = and i32 %i.bx, %i.by
   %.not76 = icmp eq i32 %i.bz, 0
   br i1 %.not76, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph92
-  %i.ca = call i32 @Gem_FuncReduce(ptr noundef nonnull %i.j, i32 noundef %i.bm, i32 noundef %.193, i32 noundef %.06591.a) ; 0 uses
+  %i.ca = call i32 @Gem_FuncReduce(ptr noundef nonnull %i.j, i32 noundef %i.bm, i32 noundef %.193, i32 noundef %.065.in90) ; 0 uses
   %.pre117 = load ptr, ptr %i.l, align 8, !tbaa !23 ; 2 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.lr.ph92
   %i.cb = phi ptr [ %.pre117, %bb.k ], [ %i.bv, %.lr.ph92 ] ; 2 uses
   %i.cc = phi ptr [ %.pre117, %bb.k ], [ %i.bw, %.lr.ph92 ] ; 2 uses
-  %.065 = add nuw nsw i32 %.06591.a, 1            ; 2 uses
+  %.065 = add nuw nsw i32 %.065.in90, 1           ; 2 uses
   %i.cd = getelementptr inbounds [8 x i8], ptr %i.cc, i64 %indvars.iv111
   %i.ce = load i32, ptr %i.cd, align 4            ; 2 uses
   %i.cf = and i32 %i.ce, 15

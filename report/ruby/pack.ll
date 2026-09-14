@@ -205,8 +205,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   br i1 %i.gw, label %.lr.ph695, label %._crit_edge696
 
 .lr.ph695:                                        ; preds = %bb.bc, %bb.bf
-  %8 = phi i64 [ %i.hi, %bb.bf ], [ 1, %bb.bc ]   ; 3 uses
-  %.0294693 = phi i64 [ %8, %bb.bf ], [ 0, %bb.bc ]
+  %.0294693 = phi i64 [ %i.hi, %bb.bf ], [ 1, %bb.bc ] ; 3 uses
   %.0295692 = phi i32 [ %.2297, %bb.bf ], [ 0, %bb.bc ]
   %.3691 = phi ptr [ %i.hh, %bb.bf ], [ %.0313, %bb.bc ] ; 2 uses
   %i.gx = load i8, ptr %.3691, align 1, !tbaa !15
@@ -221,7 +220,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %.1296 = or i32 %.pn376, %.0295692              ; 2 uses
   %i.hd = and i64 %.0294693, 1
   %.not377.not = icmp eq i64 %i.hd, 0
-  br i1 %.not377.not, label %bb.bd, label %bb.be
+  br i1 %.not377.not, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %.lr.ph695
   %i.he = lshr i32 %.1296, 4
@@ -238,8 +237,8 @@ bb.be:                                            ; preds = %.lr.ph695
 bb.bf:                                            ; preds = %bb.bd, %bb.be
   %.2297 = phi i32 [ %i.he, %bb.bd ], [ 0, %bb.be ] ; 2 uses
   %i.hh = getelementptr i8, ptr %.3691, i64 1
-  %i.hi = add nuw i64 %8, 1
-  %exitcond801.not.a = icmp eq i64 %8, %.4328
+  %i.hi = add nuw i64 %.0294693, 1
+  %exitcond801.not.a = icmp eq i64 %.0294693, %.4328
   br i1 %exitcond801.not.a, label %._crit_edge696.loopexit, label %.lr.ph695, !llvm.loop !26
 
 ._crit_edge696.loopexit:                          ; preds = %bb.bf
@@ -278,8 +277,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
   br i1 %i.hr, label %.lr.ph688, label %._crit_edge689
 
 .lr.ph688:                                        ; preds = %bb.bj, %bb.bm
-  %9 = phi i64 [ %i.ic, %bb.bm ], [ 1, %bb.bj ]   ; 3 uses
-  %.0291686 = phi i64 [ %9, %bb.bm ], [ 0, %bb.bj ]
+  %.0291686 = phi i64 [ %i.ic, %bb.bm ], [ 1, %bb.bj ] ; 3 uses
   %.0292685 = phi i32 [ %.2, %bb.bm ], [ 0, %bb.bj ]
   %.4684 = phi ptr [ %i.ib, %bb.bm ], [ %.0313, %bb.bj ] ; 2 uses
   %i.hs = load i8, ptr %.4684, align 1, !tbaa !15
@@ -293,7 +291,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
   %.1 = or i32 %.pn, %.0292685                    ; 2 uses
   %i.hx = and i64 %.0291686, 1
   %.not372.not = icmp eq i64 %i.hx, 0
-  br i1 %.not372.not, label %bb.bk, label %bb.bl
+  br i1 %.not372.not, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %.lr.ph688
   %i.hy = shl i32 %.1, 4
@@ -310,8 +308,8 @@ bb.bl:                                            ; preds = %.lr.ph688
 bb.bm:                                            ; preds = %bb.bk, %bb.bl
   %.2 = phi i32 [ %i.hy, %bb.bk ], [ 0, %bb.bl ]  ; 2 uses
   %i.ib = getelementptr i8, ptr %.4684, i64 1
-  %i.ic = add nuw i64 %9, 1
-  %exitcond800.not = icmp eq i64 %9, %.5329
+  %i.ic = add nuw i64 %.0291686, 1
+  %exitcond800.not = icmp eq i64 %.0291686, %.5329
   br i1 %exitcond800.not, label %._crit_edge689.loopexit, label %.lr.ph688, !llvm.loop !27
 
 ._crit_edge689.loopexit:                          ; preds = %bb.bm

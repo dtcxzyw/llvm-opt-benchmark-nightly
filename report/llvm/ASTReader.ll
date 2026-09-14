@@ -205,7 +205,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph28, %._crit_edge
-  %.026 = phi i32 [ 0, %.lr.ph28 ], [ %.1.lcssa, %._crit_edge ] ; 4 uses
+  %.026 = phi i32 [ 0, %.lr.ph28 ], [ %.1.lcssa, %._crit_edge ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
   %i.k = add i32 %.026, 1
   %i.l = zext i32 %.026 to i64
@@ -229,11 +229,10 @@ bb.b:                                             ; preds = %.lr.ph28, %._crit_e
   br i1 %.not, label %._crit_edge29, label %bb.b, !llvm.loop !5615
 
 .lr.ph:                                           ; preds = %bb.b, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang14SourceLocationEbELb1EE9push_backES4_.exit
-  %.124 = phi i32 [ %.1, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang14SourceLocationEbELb1EE9push_backES4_.exit ], [ %.121, %bb.b ] ; 3 uses
-  %.1.in23 = phi i32 [ %.124, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang14SourceLocationEbELb1EE9push_backES4_.exit ], [ %.026, %bb.b ]
+  %.1.in23 = phi i32 [ %.1, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang14SourceLocationEbELb1EE9push_backES4_.exit ], [ %.121, %bb.b ] ; 3 uses
   %.01022 = phi i64 [ %i.eu, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang14SourceLocationEbELb1EE9push_backES4_.exit ], [ 0, %bb.b ]
-  %i.u = add i32 %.1.in23, 3
-  %i.v = zext i32 %.124 to i64
+  %i.u = add i32 %.1.in23, 1
+  %i.v = zext i32 %.1.in23 to i64
   %i.w = load ptr, ptr %i.b, align 8, !tbaa !872  ; 2 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.v
   %i.y = load i64, ptr %i.x, align 8, !tbaa !167
@@ -447,7 +446,7 @@ bb.k:                                             ; preds = %_ZN4llvm9MapVectorI
 
 _ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang14SourceLocationEbELb1EE9push_backES4_.exit: ; preds = %bb.j, %bb.k
   %i.eu = add nuw i64 %.01022, 1                  ; 2 uses
-  %.1 = add i32 %.124, 2                          ; 2 uses
+  %.1 = add i32 %.1.in23, 2                       ; 2 uses
   %exitcond.not = icmp eq i64 %i.eu, %i.t
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !5631
 }

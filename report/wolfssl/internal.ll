@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.lr.ph
 
 bb.w:                                             ; preds = %.lr.ph267, %.loopexit
   %.0100266 = phi ptr [ %0, %.lr.ph267 ], [ %.5105, %.loopexit ] ; 4 uses
-  %.1107265 = phi i32 [ %.0106, %.lr.ph267 ], [ %.6112, %.loopexit ] ; 9 uses
+  %.1107265 = phi i32 [ %.0106, %.lr.ph267 ], [ %.6112, %.loopexit ] ; 8 uses
   %.0113264 = phi ptr [ %2, %.lr.ph267 ], [ %.5118, %.loopexit ] ; 8 uses
   %.1120263 = phi i32 [ %spec.select, %.lr.ph267 ], [ %.6125, %.loopexit ] ; 11 uses
   %.0128262 = phi i8 [ 1, %.lr.ph267 ], [ %.4132, %.loopexit ] ; 2 uses
@@ -254,21 +254,20 @@ bb.ab:                                            ; preds = %bb.y
 .lr.ph241.split.us:                               ; preds = %.lr.ph241.split.us.preheader, %bb.ac
   %.2108240.us = phi i32 [ %.2108.us, %bb.ac ], [ %.2108237, %.lr.ph241.split.us.preheader ] ; 4 uses
   %.1101239.us = phi ptr [ %i.em, %bb.ac ], [ %i.ea, %.lr.ph241.split.us.preheader ] ; 2 uses
-  %.2108.in238.us = phi i32 [ %.2108240.us, %bb.ac ], [ %.1107265, %.lr.ph241.split.us.preheader ]
   %i.ei = load i8, ptr %.1101239.us, align 1, !tbaa !52
   %i.ej = zext i8 %i.ei to i64
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %i.ej
   %i.el = load i32, ptr %i.ek, align 4, !tbaa !56 ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %.1101239.us, i64 1 ; 2 uses
   %trunc.us = trunc i32 %i.el to i8
-  switch i8 %trunc.us, label %.split.preheader [
+  switch i8 %trunc.us, label %.split.preheader.loopexit [
     i8 0, label %PatternHasWildcardInALabel.exit.thread
     i8 42, label %bb.ac
   ]
 
 bb.ac:                                            ; preds = %.lr.ph241.split.us
   %.2108.us = add nsw i32 %.2108240.us, -1
-  %5 = icmp samesign ugt i32 %.2108240.us, 1
+  %5 = icmp sgt i32 %.2108240.us, 1
   br i1 %5, label %.lr.ph241.split.us, label %.split.us.preheader, !llvm.loop !348
 
 .lr.ph241.split:                                  ; preds = %.thread330
@@ -296,12 +295,16 @@ bb.ac:                                            ; preds = %.lr.ph241.split.us
   %.not157.us421 = icmp eq i32 %.1120263, 0
   br i1 %.not157.us421, label %.loopexit, label %.lr.ph424
 
-.split.preheader:                                 ; preds = %.lr.ph241.split.us, %.lr.ph241.split
-  %.1129329 = phi i8 [ 0, %.lr.ph241.split ], [ 1, %.lr.ph241.split.us ] ; 3 uses
-  %.2108.in.lcssa = phi i32 [ %.1107265, %.lr.ph241.split ], [ %.2108.in238.us, %.lr.ph241.split.us ]
-  %.2108.lcssa = phi i32 [ %.2108237332, %.lr.ph241.split ], [ %.2108240.us, %.lr.ph241.split.us ] ; 2 uses
-  %.1134 = phi i32 [ %i.eq, %.lr.ph241.split ], [ %i.el, %.lr.ph241.split.us ]
-  %.2102 = phi ptr [ %i.er, %.lr.ph241.split ], [ %i.em, %.lr.ph241.split.us ] ; 3 uses
+.split.preheader.loopexit:                        ; preds = %.lr.ph241.split.us
+  %.2108.in238.us305.le = add nuw nsw i32 %.2108240.us, 1
+  br label %.split.preheader
+
+.split.preheader:                                 ; preds = %.split.preheader.loopexit, %.lr.ph241.split
+  %.1129329 = phi i8 [ 0, %.lr.ph241.split ], [ 1, %.split.preheader.loopexit ] ; 3 uses
+  %.2108.in.lcssa = phi i32 [ %.1107265, %.lr.ph241.split ], [ %.2108.in238.us305.le, %.split.preheader.loopexit ]
+  %.2108.lcssa = phi i32 [ %.2108237332, %.lr.ph241.split ], [ %.2108240.us, %.split.preheader.loopexit ] ; 2 uses
+  %.1134 = phi i32 [ %i.eq, %.lr.ph241.split ], [ %i.el, %.split.preheader.loopexit ]
+  %.2102 = phi ptr [ %i.er, %.lr.ph241.split ], [ %i.em, %.split.preheader.loopexit ] ; 3 uses
   %sext159 = shl i32 %.1134, 24
   %i.ev = zext i32 %.1120263 to i64
   %scevgep308 = getelementptr i8, ptr %.0113264, i64 %i.ev

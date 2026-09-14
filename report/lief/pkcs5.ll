@@ -204,7 +204,7 @@ bb.a:
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check134 = icmp ult i64 %i.m, 24
   %n.vec136 = and i64 %i.o, 4611686018427387900   ; 8 uses
-  %i.p = shl i64 %n.vec136, 3                     ; 3 uses
+  %i.p = shl i64 %n.vec136, 3                     ; 2 uses
   %i.q = or disjoint i64 %i.p, 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -285,10 +285,10 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader147, %.lr.ph.us
   %i.be = phi i64 [ %i.bi, %.lr.ph.us ], [ %.ph, %.lr.ph.us.preheader147 ] ; 3 uses
-  %.0.i68.us = phi i64 [ %i.be, %.lr.ph.us ], [ %.0.i68.us.ph, %.lr.ph.us.preheader147 ] ; 2 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.i68.us ; 2 uses
+  %.0.i68.us96 = add nsw i64 %i.be, -8            ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.i68.us96 ; 2 uses
   %.0.copyload.i62.us = load i64, ptr %i.bf, align 1
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.i68.us
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.i68.us96
   %.0.copyload.i.us = load i64, ptr %i.bg, align 1
   %i.bh = xor i64 %.0.copyload.i.us, %.0.copyload.i62.us
   store i64 %i.bh, ptr %i.bf, align 1
@@ -499,7 +499,6 @@ middle.block144:                                  ; preds = %vector.body137.6, %
 
 .lr.ph.us.preheader147:                           ; preds = %.lr.ph.us.preheader, %middle.block144
   %.ph = phi i64 [ 8, %.lr.ph.us.preheader ], [ %i.q, %middle.block144 ]
-  %.0.i68.us.ph = phi i64 [ 0, %.lr.ph.us.preheader ], [ %i.p, %middle.block144 ]
   br label %.lr.ph.us
 
 ._crit_edge.us:                                   ; preds = %mbedtls_xor.exit.us

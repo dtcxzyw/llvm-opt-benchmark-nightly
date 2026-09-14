@@ -205,7 +205,7 @@ bb.bs:                                            ; preds = %bb.dv, %.lr.ph498.i
 bb.bt:                                            ; preds = %bb.bs
   %i.mn = load i64, ptr %i.af, align 8, !range !73, !noalias !37272, !noundef !28 ; 2 uses
   %.not.i.i127.i = icmp eq i64 %i.mn, -1
-  %i.mo = load i64, ptr %i.dk, align 8, !noalias !37272 ; 8 uses
+  %i.mo = load i64, ptr %i.dk, align 8, !noalias !37272 ; 7 uses
   br i1 %.not.i.i127.i, label %bb.bv, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
@@ -608,12 +608,11 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dp
           to label %bb.ds unwind label %.thread103.loopexit.split-lp.loopexit.i.i.i, !noalias !37274 ; 4 uses
 
 .lr.ph492.i.i.i:                                  ; preds = %bb.dr, %bb.eb
-  %.sroa.0300.0490.i.i.i = phi i64 [ %.sroa.0300.0.i.i.i, %bb.eb ], [ %i.mp, %bb.dr ] ; 6 uses
-  %.sroa.0.1489.i.i.i.a = phi i64 [ %.sroa.0156.0.lcssa.i.i.i, %bb.eb ], [ %.sroa.077.0.lcssa.i.i.i, %bb.dr ] ; 2 uses
-  %.sroa.0300.0.in488.i.i.i = phi i64 [ %.sroa.0300.0490.i.i.i, %bb.eb ], [ %i.mo, %bb.dr ]
+  %.sroa.0.1489.i.i.i.a = phi i64 [ %i.rp, %bb.eb ], [ %i.mp, %bb.dr ] ; 5 uses
+  %.sroa.0300.0.in488.i.i.i = phi i64 [ %.sroa.0156.0.lcssa.i.i.i, %bb.eb ], [ %.sroa.077.0.lcssa.i.i.i, %bb.dr ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !37272
   %i.qu = load i16, ptr %i.mj, align 8, !range !30, !noalias !37274, !noundef !28
-  invoke void @_RNvXs_NtCsc4241EHy6Do_9typst_kit11diagnosticsNtB4_10WorldFilesNtNtCscf0te1RqI9v_18codespan_reporting5files5Files10line_range(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.z, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.bg, i16 noundef %i.qu, i64 noundef %.sroa.0300.0490.i.i.i)
+  invoke void @_RNvXs_NtCsc4241EHy6Do_9typst_kit11diagnosticsNtB4_10WorldFilesNtNtCscf0te1RqI9v_18codespan_reporting5files5Files10line_range(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.z, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.bg, i16 noundef %i.qu, i64 noundef %.sroa.0.1489.i.i.i.a)
           to label %bb.dw unwind label %.thread103.loopexit.i.i.i, !noalias !37274
 
 bb.ds:                                            ; preds = %._crit_edge493.i.i.i
@@ -677,7 +676,7 @@ bb.dx:                                            ; preds = %bb.dw
   br label %.critedge.i.i.i
 
 bb.dy:                                            ; preds = %bb.dw
-  %i.rp = add i64 %.sroa.0300.0.in488.i.i.i, 2    ; 3 uses
+  %i.rp = add i64 %.sroa.0.1489.i.i.i.a, 1        ; 5 uses
   %i.rq = icmp eq i64 %i.rp, 0
   br i1 %i.rq, label %._crit_edge485.i.i.i, label %.lr.ph484.i.i.i
 
@@ -690,12 +689,12 @@ bb.dy:                                            ; preds = %bb.dw
   br i1 %i.rt, label %._crit_edge485.loopexit.i.i.i, label %.lr.ph484.i.i.i
 
 ._crit_edge485.loopexit.i.i.i:                    ; preds = %.lr.ph484.i.i.i
-  %i.ru = call i64 @llvm.umax.i64(i64 %i.rr, i64 %.sroa.0.1489.i.i.i.a)
+  %i.ru = call i64 @llvm.umax.i64(i64 %i.rr, i64 %.sroa.0300.0.in488.i.i.i)
   br label %._crit_edge485.i.i.i
 
 ._crit_edge485.i.i.i:                             ; preds = %._crit_edge485.loopexit.i.i.i, %bb.dy
-  %.sroa.0156.0.lcssa.i.i.i = phi i64 [ %.sroa.0.1489.i.i.i.a, %bb.dy ], [ %i.ru, %._crit_edge485.loopexit.i.i.i ] ; 2 uses
-  %i.rv = invoke fastcc noundef nonnull align 8 ptr @_RNvMNvMNtNtCscf0te1RqI9v_18codespan_reporting4term5viewsINtB5_14RichDiagnosticpE6renderINtB2_11LabeledFileNtNtCs5PEMdK7bMAG_12typst_syntax4path6FileIdE18get_or_insert_lineCs9fPPV5zPXBl_5typst(ptr noalias nofree noundef align 8 dereferenceable(88) %.sroa.094.0.i.i.i, i64 noundef %.sroa.0300.0490.i.i.i, i64 noundef %i.rn, i64 noundef %i.ro, i64 noundef %i.rp)
+  %.sroa.0156.0.lcssa.i.i.i = phi i64 [ %.sroa.0300.0.in488.i.i.i, %bb.dy ], [ %i.ru, %._crit_edge485.loopexit.i.i.i ] ; 2 uses
+  %i.rv = invoke fastcc noundef nonnull align 8 ptr @_RNvMNvMNtNtCscf0te1RqI9v_18codespan_reporting4term5viewsINtB5_14RichDiagnosticpE6renderINtB2_11LabeledFileNtNtCs5PEMdK7bMAG_12typst_syntax4path6FileIdE18get_or_insert_lineCs9fPPV5zPXBl_5typst(ptr noalias nofree noundef align 8 dereferenceable(88) %.sroa.094.0.i.i.i, i64 noundef %.sroa.0.1489.i.i.i.a, i64 noundef %i.rn, i64 noundef %i.ro, i64 noundef %i.rp)
           to label %bb.dz unwind label %.thread103.loopexit.i.i.i, !noalias !37274 ; 4 uses
 
 bb.dz:                                            ; preds = %._crit_edge485.i.i.i
@@ -723,9 +722,9 @@ bb.eb:                                            ; preds = %bb.ea, %bb.dz
   store i64 1, ptr %.sroa.560.0..sroa_idx.i.i.i, align 8, !noalias !37300
   %i.sf = add i64 %i.rz, 1
   store i64 %i.sf, ptr %i.ry, align 8, !alias.scope !37298, !noalias !37299
-  %i.sg = sub i64 %.sroa.0300.0490.i.i.i, %i.mo
+  %i.sg = sub i64 %.sroa.0.1489.i.i.i.a, %i.mo
   %.not418.i.i.i = icmp ule i64 %i.sg, %i.mg
-  %i.sh = sub nuw i64 %i.my, %.sroa.0300.0490.i.i.i
+  %i.sh = sub nuw i64 %i.my, %.sroa.0.1489.i.i.i.a
   %i.si = icmp ule i64 %i.sh, %i.mh
   %narrow.i.i = select i1 %.not418.i.i.i, i1 true, i1 %i.si
   %.sroa.0162.0.i.i.i = zext i1 %narrow.i.i to i8
@@ -733,8 +732,7 @@ bb.eb:                                            ; preds = %bb.ea, %bb.dz
   %i.sk = load i8, ptr %i.sj, align 8, !range !53, !noalias !37274, !noundef !28
   %i.sl = or i8 %i.sk, %.sroa.0162.0.i.i.i
   store i8 %i.sl, ptr %i.sj, align 8, !noalias !37274
-  %.sroa.0300.0.i.i.i = add nuw i64 %.sroa.0300.0490.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %.sroa.0300.0.i.i.i, %i.my
+  %exitcond.not.i.i.i = icmp eq i64 %i.rp, %i.my
   br i1 %exitcond.not.i.i.i, label %._crit_edge493.i.i.i, label %.lr.ph492.i.i.i
 
 bb.ec:                                            ; preds = %bb.dd

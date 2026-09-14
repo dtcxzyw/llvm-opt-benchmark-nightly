@@ -205,14 +205,10 @@ bb.n:                                             ; preds = %.lr.ph65, %bb.m, %b
 define linkonce_odr dso_local noundef ptr @_ZN4Luau16LintFormatString15checkStringPackEPKcmb(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #14 comdat align 2 {
 bb.a:
   %.not7894.not = icmp eq i64 %2, 0
-  br i1 %.not7894.not, label %.thread83, label %.lr.ph97.preheader
+  br i1 %.not7894.not, label %.thread83, label %.lr.ph97
 
-.lr.ph97.preheader:                               ; preds = %bb.a
-  %4 = add i64 %2, -1
-  br label %.lr.ph97
-
-.lr.ph97:                                         ; preds = %.lr.ph97.preheader, %bb.k
-  %.06396 = phi i64 [ %i.aj, %bb.k ], [ 0, %.lr.ph97.preheader ] ; 8 uses
+.lr.ph97:                                         ; preds = %bb.a, %bb.k
+  %.06396 = phi i64 [ %i.aj, %bb.k ], [ 0, %bb.a ] ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 %.06396
   %i.b = load i8, ptr %i.a, align 1, !tbaa !59    ; 5 uses
   %i.c = sext i8 %i.b to i32
@@ -273,7 +269,7 @@ bb.h:                                             ; preds = %bb.g, %.thread
   ]
 
 bb.i:                                             ; preds = %bb.h, %bb.h, %bb.h, %bb.h, %bb.h
-  %i.r = add nuw i64 %.06396, 1                   ; 4 uses
+  %i.r = add nuw i64 %.06396, 1                   ; 3 uses
   %i.s = icmp ult i64 %i.r, %2
   br i1 %i.s, label %bb.j, label %bb.k
 
@@ -287,49 +283,41 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.preheader:                                 ; preds = %bb.j
   %i.y = icmp eq i8 %i.b, 99
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 %i.r
-  %6 = load i8, ptr %5, align 1, !tbaa !59
-  %7 = sext i8 %6 to i32
-  %8 = add nsw i32 %7, -48                        ; 2 uses
-  %9 = icmp ult i32 %8, 10
-  br i1 %9, label %.lr.ph137, label %.critedge
+  br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph137
-  %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %i.ah
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph137
+  %4 = phi i64 [ %i.ah, %.lr.ph137 ], [ %i.r, %.lr.ph.preheader ] ; 3 uses
+  %.092 = phi i32 [ %i.ag, %.lr.ph137 ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %4
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !59
   %i.ab = sext i8 %i.aa to i32
   %i.ac = add nsw i32 %i.ab, -48                  ; 2 uses
   %i.ad = icmp ult i32 %i.ac, 10                  ; 2 uses
-  %i.ae = icmp samesign ult i32 %i.ag, 214748364
+  %i.ae = icmp samesign ult i32 %.092, 214748364
   %or.cond4 = select i1 %i.ad, i1 %i.ae, i1 false
-  br i1 %or.cond4, label %.lr.ph137, label %.critedge, !llvm.loop !661
+  br i1 %or.cond4, label %.lr.ph137, label %.critedge
 
-.lr.ph137:                                        ; preds = %.lr.ph.preheader, %.lr.ph
-  %10 = phi i32 [ %i.ac, %.lr.ph ], [ %8, %.lr.ph.preheader ]
-  %.092136 = phi i32 [ %i.ag, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %11 = phi i64 [ %i.ah, %.lr.ph ], [ %i.r, %.lr.ph.preheader ] ; 2 uses
-  %i.af = mul nuw nsw i32 %.092136, 10
-  %i.ag = add nuw nsw i32 %10, %i.af              ; 4 uses
-  %i.ah = add i64 %11, 1                          ; 3 uses
+.lr.ph137:                                        ; preds = %.lr.ph
+  %i.af = mul nuw nsw i32 %.092, 10
+  %i.ag = add nuw nsw i32 %i.ac, %i.af            ; 2 uses
+  %i.ah = add i64 %4, 1                           ; 2 uses
   %exitcond.not = icmp eq i64 %i.ah, %2
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !661
 
-.critedge:                                        ; preds = %.lr.ph, %.lr.ph.preheader
-  %.092.lcssa = phi i32 [ 0, %.lr.ph.preheader ], [ %i.ag, %.lr.ph ]
-  %.16491.lcssa = phi i64 [ %.06396, %.lr.ph.preheader ], [ %11, %.lr.ph ]
-  %.lcssa = phi i1 [ false, %.lr.ph.preheader ], [ %i.ad, %.lr.ph ]
-  br i1 %.lcssa, label %.thread83, label %.loopexit
+.critedge:                                        ; preds = %.lr.ph
+  br i1 %i.ad, label %.thread83, label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph137, %.critedge
-  %.16490.a = phi i64 [ %.16491.lcssa, %.critedge ], [ %4, %.lr.ph137 ]
-  %.088 = phi i32 [ %.092.lcssa, %.critedge ], [ %i.ag, %.lr.ph137 ]
+  %.16490.a = phi i64 [ %4, %.critedge ], [ %2, %.lr.ph137 ]
+  %.088 = phi i32 [ %.092, %.critedge ], [ %i.ag, %.lr.ph137 ]
+  %.16490 = add i64 %.16490.a, -1
   %i.ai = add nsw i32 %.088, -1
   %or.cond = icmp ult i32 %i.ai, 16
   %or.cond80.not = select i1 %i.y, i1 true, i1 %or.cond
   br i1 %or.cond80.not, label %bb.k, label %.thread83
 
 bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j, %.loopexit
-  %.2 = phi i64 [ %.16490.a, %.loopexit ], [ %.06396, %bb.j ], [ %.06396, %bb.i ], [ %.06396, %bb.h ]
+  %.2 = phi i64 [ %.16490, %.loopexit ], [ %.06396, %bb.j ], [ %.06396, %bb.i ], [ %.06396, %bb.h ]
   %i.aj = add nuw i64 %.2, 1                      ; 2 uses
   %.not78 = icmp ult i64 %i.aj, %2
   br i1 %.not78, label %.lr.ph97, label %.thread83, !llvm.loop !662

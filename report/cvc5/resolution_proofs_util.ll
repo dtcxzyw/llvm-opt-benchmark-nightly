@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ap = ptrtoint ptr %i.an to i64
   %i.aq = ptrtoint ptr %i.ao to i64
   %i.ar = sub i64 %i.ap, %i.aq
-  %i.as = ashr exact i64 %i.ar, 3                 ; 12 uses
+  %i.as = ashr exact i64 %i.ar, 3                 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %48) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %48, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #21
@@ -499,15 +499,15 @@ bb.ah:                                            ; preds = %_ZN4cvc58internal12
   br i1 %.not4012378, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.ah
-  %.pre2641 = load ptr, ptr %44, align 8, !tbaa !26 ; 3 uses
+  %.pre2641 = load ptr, ptr %44, align 8, !tbaa !26 ; 4 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.thread1866
-  %storemerge4002380 = phi i64 [ %storemerge400, %.thread1866 ], [ %storemerge4002377, %.lr.ph.preheader ] ; 4 uses
-  %storemerge400.in2379 = phi i64 [ %storemerge4002380, %.thread1866 ], [ %i.as, %.lr.ph.preheader ] ; 3 uses
-  %i.eu = getelementptr [8 x i8], ptr %.pre2641, i64 %storemerge400.in2379
+  %storemerge4002380 = phi i64 [ %storemerge400, %.thread1866 ], [ %storemerge4002377, %.lr.ph.preheader ] ; 5 uses
+  %storemerge400.in23792627 = add i64 %storemerge4002380, 1 ; 2 uses
+  %i.eu = getelementptr [8 x i8], ptr %.pre2641, i64 %storemerge400.in23792627
   %i.ev = getelementptr i8, ptr %i.eu, i64 -16
-  %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !49 ; 2 uses
+  %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !49
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
   %i.ey = load i64, ptr %i.ex, align 8
   %i.ez = and i64 %i.ey, 1023
@@ -530,9 +530,11 @@ bb.ak:                                            ; preds = %.lr.ph
   %.idx1906 = shl i64 %storemerge4002380, 4
   %i.fd = getelementptr i8, ptr %i.fc, i64 %.idx1906
   %i.fe = getelementptr i8, ptr %i.fd, i64 -16    ; 2 uses
-  %i.ff = add i64 %storemerge400.in2379, -2       ; 2 uses
-  %i.fg = load ptr, ptr %i.fe, align 8, !tbaa !49
-  %i.fh = icmp eq ptr %i.fg, %i.ew
+  %i.ff = add i64 %storemerge4002380, -1          ; 3 uses
+  %87 = getelementptr inbounds nuw [8 x i8], ptr %.pre2641, i64 %i.ff
+  %88 = load ptr, ptr %i.fe, align 8, !tbaa !49
+  %i.fg = load ptr, ptr %87, align 8, !tbaa !49
+  %i.fh = icmp eq ptr %88, %i.fg
   br i1 %i.fh, label %.thread1866, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
@@ -665,7 +667,7 @@ bb.ax:                                            ; preds = %bb.av, %bb.au
   br i1 %.not401, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !87
 
 ._crit_edge.loopexit:                             ; preds = %bb.aw, %.thread1866
-  %storemerge400.in.lcssa.ph = phi i64 [ 1, %.thread1866 ], [ %storemerge400.in2379, %bb.aw ]
+  %storemerge400.in.lcssa.ph = phi i64 [ 1, %.thread1866 ], [ %storemerge400.in23792627, %bb.aw ]
   %storemerge400.lcssa.ph = phi i64 [ 0, %.thread1866 ], [ %storemerge4002380, %bb.aw ]
   %i.hc = add i64 %storemerge400.in.lcssa.ph, -2
   br label %._crit_edge

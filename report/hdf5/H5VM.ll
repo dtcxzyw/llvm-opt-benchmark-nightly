@@ -204,22 +204,21 @@ bb.au:                                            ; preds = %bb.at
 .lr.ph206:                                        ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %i.ip = phi i64 [ %i.iw, %.lr.ph.i ], [ 1, %.lr.ph.i.preheader ] ; 3 uses
   %i.iq = phi i64 [ %i.jg, %.lr.ph.i ], [ %i.h, %.lr.ph.i.preheader ] ; 2 uses
-  %8 = phi i32 [ %i.jf, %.lr.ph.i ], [ %i.g, %.lr.ph.i.preheader ] ; 4 uses
-  %.0163204 = phi i32 [ %8, %.lr.ph.i ], [ %0, %.lr.ph.i.preheader ] ; 2 uses
+  %.0163204 = phi i32 [ %i.jf, %.lr.ph.i ], [ %i.g, %.lr.ph.i.preheader ] ; 5 uses
   %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.iq
   %i.is = load i64, ptr %i.ir, align 8, !tbaa !17
   %i.it = icmp eq i64 %i.is, %i.ip
-  br i1 %i.it, label %bb.av, label %.loopexit
+  br i1 %i.it, label %bb.av, label %.loopexit.loopexit.split.loop.exit
 
 bb.av:                                            ; preds = %.lr.ph206
   %i.iu = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.iq
   %i.iv = load i64, ptr %i.iu, align 8, !tbaa !17
   %i.iw = mul i64 %i.iv, %i.ip                    ; 6 uses
-  %.not142.i = icmp eq i32 %8, 0
+  %.not142.i = icmp eq i32 %.0163204, 0
   br i1 %.not142.i, label %.loopexit192, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.av
-  %i.ix = add i32 %.0163204, -2
+  %i.ix = add i32 %.0163204, -1
   %i.iy = zext i32 %i.ix to i64                   ; 2 uses
   %i.iz = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.iy ; 2 uses
   %i.ja = load i64, ptr %i.iz, align 8, !tbaa !17
@@ -229,7 +228,7 @@ bb.av:                                            ; preds = %.lr.ph206
   %i.jd = load i64, ptr %i.jc, align 8, !tbaa !17
   %i.je = add i64 %i.jd, %i.iw
   store i64 %i.je, ptr %i.jc, align 8, !tbaa !17
-  %i.jf = add i32 %8, -1                          ; 2 uses
+  %i.jf = add i32 %.0163204, -1                   ; 2 uses
   %i.jg = zext i32 %i.jf to i64                   ; 2 uses
   %i.jh = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.jg
   %i.ji = load i64, ptr %i.jh, align 8, !tbaa !17
@@ -244,11 +243,15 @@ bb.av:                                            ; preds = %.lr.ph206
   %i.jl = mul i64 %i.jk, %.sink163.i
   br label %.loopexit192
 
-.loopexit:                                        ; preds = %.lr.ph.i, %.lr.ph206, %.lr.ph.i.preheader, %bb.al, %bb.an, %bb.am, %bb.aq, %bb.ap, %bb.ao, %bb.au, %bb.at, %bb.as, %bb.ar
-  %.1170.ph = phi i64 [ %.1182, %bb.ar ], [ %.0126.lcssa, %bb.al ], [ %.1182, %bb.as ], [ %.1182, %bb.at ], [ %.1182, %bb.au ], [ %.1177, %bb.ao ], [ %.0126.lcssa, %.lr.ph.i.preheader ], [ %.1177, %bb.ap ], [ %.1177, %bb.aq ], [ %.1172, %bb.am ], [ %.1172, %bb.an ], [ %.0126.lcssa, %.lr.ph206 ], [ %.0126.lcssa, %.lr.ph.i ]
-  %.1128167.ph = phi i64 [ %.1128181, %bb.ar ], [ %.0127.lcssa, %bb.al ], [ %.1128181, %bb.as ], [ %.1128181, %bb.at ], [ %.1128181, %bb.au ], [ %.1128176, %bb.ao ], [ %.0127.lcssa, %.lr.ph.i.preheader ], [ %.1128176, %bb.ap ], [ %.1128176, %bb.aq ], [ %.1128169, %bb.am ], [ %.1128169, %bb.an ], [ %.0127.lcssa, %.lr.ph206 ], [ %.0127.lcssa, %.lr.ph.i ]
-  %.1164.ph = phi i32 [ 4, %bb.ar ], [ 1, %bb.al ], [ 3, %bb.as ], [ 2, %bb.at ], [ 1, %bb.au ], [ 3, %bb.ao ], [ %0, %.lr.ph.i.preheader ], [ 2, %bb.ap ], [ 1, %bb.aq ], [ 2, %bb.am ], [ 1, %bb.an ], [ %8, %.lr.ph.i ], [ %.0163204, %.lr.ph206 ] ; 5 uses
-  %.1162.ph = phi i64 [ 1, %bb.ar ], [ 1, %bb.al ], [ %i.hk, %bb.as ], [ %i.hv, %bb.at ], [ %i.ih, %bb.au ], [ 1, %bb.ao ], [ 1, %.lr.ph.i.preheader ], [ %i.gk, %bb.ap ], [ %i.gv, %bb.aq ], [ 1, %bb.am ], [ %i.fw, %bb.an ], [ %i.iw, %.lr.ph.i ], [ %i.ip, %.lr.ph206 ] ; 6 uses
+.loopexit.loopexit.split.loop.exit:               ; preds = %.lr.ph206
+  %.0163204218.le = add i32 %.0163204, 1
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.lr.ph.i, %.loopexit.loopexit.split.loop.exit, %.lr.ph.i.preheader, %bb.al, %bb.an, %bb.am, %bb.aq, %bb.ap, %bb.ao, %bb.au, %bb.at, %bb.as, %bb.ar
+  %.1170.ph = phi i64 [ %.1182, %bb.ar ], [ %.0126.lcssa, %bb.al ], [ %.1182, %bb.as ], [ %.1182, %bb.at ], [ %.1182, %bb.au ], [ %.1177, %bb.ao ], [ %.0126.lcssa, %.lr.ph.i.preheader ], [ %.1177, %bb.ap ], [ %.1177, %bb.aq ], [ %.1172, %bb.am ], [ %.1172, %bb.an ], [ %.0126.lcssa, %.loopexit.loopexit.split.loop.exit ], [ %.0126.lcssa, %.lr.ph.i ]
+  %.1128167.ph = phi i64 [ %.1128181, %bb.ar ], [ %.0127.lcssa, %bb.al ], [ %.1128181, %bb.as ], [ %.1128181, %bb.at ], [ %.1128181, %bb.au ], [ %.1128176, %bb.ao ], [ %.0127.lcssa, %.lr.ph.i.preheader ], [ %.1128176, %bb.ap ], [ %.1128176, %bb.aq ], [ %.1128169, %bb.am ], [ %.1128169, %bb.an ], [ %.0127.lcssa, %.loopexit.loopexit.split.loop.exit ], [ %.0127.lcssa, %.lr.ph.i ]
+  %.1164.ph = phi i32 [ 4, %bb.ar ], [ 1, %bb.al ], [ 3, %bb.as ], [ 2, %bb.at ], [ 1, %bb.au ], [ 3, %bb.ao ], [ %0, %.lr.ph.i.preheader ], [ 2, %bb.ap ], [ 1, %bb.aq ], [ 2, %bb.am ], [ 1, %bb.an ], [ %.0163204218.le, %.loopexit.loopexit.split.loop.exit ], [ %.0163204, %.lr.ph.i ] ; 5 uses
+  %.1162.ph = phi i64 [ 1, %bb.ar ], [ 1, %bb.al ], [ %i.hk, %bb.as ], [ %i.hv, %bb.at ], [ %i.ih, %bb.au ], [ 1, %bb.ao ], [ 1, %.lr.ph.i.preheader ], [ %i.gk, %bb.ap ], [ %i.gv, %bb.aq ], [ 1, %bb.am ], [ %i.fw, %bb.an ], [ %i.ip, %.loopexit.loopexit.split.loop.exit ], [ %i.iw, %.lr.ph.i ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.jm = zext i32 %.1164.ph to i64
   %i.jn = shl nuw nsw i64 %i.jm, 3

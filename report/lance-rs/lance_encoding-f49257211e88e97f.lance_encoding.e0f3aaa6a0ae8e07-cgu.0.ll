@@ -205,7 +205,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCsjjpCCFGI3ul_14lance_encod
   br i1 %i.hz, label %_RNvMs6_NtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4listNtB5_18ListOffsetsEncoder22extend_offsets_vec_u64.exit.i.i, label %select.unfold.i.i.i.i.i.i.i
 
 select.unfold.i.i.i.i.i.i.i:                      ; preds = %.peel.next62.i.i.i, %bb.au
-  %storemerge8496.i.i.i = phi i64 [ %storemerge84.i.i.i, %bb.au ], [ %storemerge8493.i.i.i, %.peel.next62.i.i.i ] ; 5 uses
+  %storemerge8496.i.i.i = phi i64 [ %storemerge84.i.i.i, %bb.au ], [ %storemerge8493.i.i.i, %.peel.next62.i.i.i ] ; 6 uses
   %.val.i.i.i.i9.i95.i.i.i = phi ptr [ %.sink.i.ph.i.i.i.i.i.i.i, %bb.au ], [ %.sink.i.ph.i.i.i.i.peel.i.i.i, %.peel.next62.i.i.i ] ; 3 uses
   %i.ia = phi i64 [ %i.ii, %bb.au ], [ %i.hk, %.peel.next62.i.i.i ] ; 4 uses
   %i.ib = phi ptr [ %i.iw, %bb.au ], [ %i.hx, %.peel.next62.i.i.i ]
@@ -228,6 +228,8 @@ bb.at:                                            ; preds = %select.unfold.i.i.i
   %i.im = add i64 %i.gn, %i.il
   %i.in = select i1 %i.ik, i64 0, i64 %i.dr
   %i.io = add i64 %i.im, %i.in
+  %2 = icmp samesign ult i64 %storemerge8496.i.i.i, 1152921504606846976
+  call void @llvm.assume(i1 %2)
   %i.ip = load i64, ptr %i.q, align 8, !range !76, !alias.scope !23619, !noalias !23620, !noundef !75
   %i.iq = icmp eq i64 %storemerge8496.i.i.i, %i.ip
   br i1 %i.iq, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i.i, label %bb.au
@@ -458,7 +460,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCsjjpCCFGI3ul_14lance_encod
   br i1 %i.md, label %_RNvMs6_NtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4listNtB5_18ListOffsetsEncoder22extend_offsets_vec_u64.exit.i.i, label %select.unfold.i.i.i.i31.i.i.i
 
 select.unfold.i.i.i.i31.i.i.i:                    ; preds = %.peel.next.i.i.i, %bb.bc
-  %storemerge92.i.i.i = phi i64 [ %storemerge.i.i.i, %bb.bc ], [ %storemerge89.i.i.i, %.peel.next.i.i.i ] ; 5 uses
+  %storemerge92.i.i.i = phi i64 [ %storemerge.i.i.i, %bb.bc ], [ %storemerge89.i.i.i, %.peel.next.i.i.i ] ; 6 uses
   %.val.i.i.i.i9.i2891.i.i.i = phi ptr [ %.sink.i.ph.i.i.i.i33.i.i.i, %bb.bc ], [ %.sink.i.ph.i.i.i.i33.peel.i.i.i, %.peel.next.i.i.i ] ; 3 uses
   %i.me = phi i64 [ %i.mm, %bb.bc ], [ %i.lp, %.peel.next.i.i.i ] ; 4 uses
   %i.mf = phi ptr [ %i.mz, %bb.bc ], [ %i.mb, %.peel.next.i.i.i ]
@@ -480,6 +482,8 @@ bb.bb:                                            ; preds = %select.unfold.i.i.i
   %i.mp = add i64 %.val5.i.i34.i.i.i, %i.ha
   %i.mq = select i1 %i.mo, i64 0, i64 %i.dr
   %i.mr = add i64 %i.mp, %i.mq
+  %3 = icmp samesign ult i64 %storemerge92.i.i.i, 1152921504606846976
+  call void @llvm.assume(i1 %3)
   %i.ms = load i64, ptr %i.q, align 8, !range !76, !alias.scope !23636, !noalias !23637, !noundef !75
   %i.mt = icmp eq i64 %storemerge92.i.i.i, %i.ms
   br i1 %i.mt, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i35.i.i.i, label %bb.bc

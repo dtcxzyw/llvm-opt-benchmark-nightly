@@ -205,11 +205,10 @@ bb.k:                                             ; preds = %bb.f
   unreachable
 
 .lr.ph.i.i:                                       ; preds = %bb.e, %bb.cm
-  %1 = phi i64 [ %i.jt, %bb.cm ], [ 1, %bb.e ]    ; 3 uses
-  %.sroa.028.0210.i.i = phi i64 [ %1, %bb.cm ], [ 0, %bb.e ]
+  %.sroa.028.0210.i.i = phi i64 [ %i.jt, %bb.cm ], [ 1, %bb.e ] ; 3 uses
   %i.bc = load ptr, ptr %i.ab, align 8, !noalias !3725, !nonnull !12
-  %i.bd = getelementptr inbounds nuw [12 x i8], ptr %i.bc, i64 %.sroa.028.0210.i.i
-  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
+  %i.bd = getelementptr [12 x i8], ptr %i.bc, i64 %.sroa.028.0210.i.i
+  %i.be = getelementptr i8, ptr %i.bd, i64 -8
   %i.bf = load i64, ptr %i.be, align 1, !noundef !12 ; 2 uses
   %i.bg = icmp eq i64 %i.bf, -1
   br i1 %i.bg, label %bb.w, label %bb.ck
@@ -612,8 +611,8 @@ bb.cl:                                            ; preds = %"_ZN4core3ptr152dro
 
 bb.cm:                                            ; preds = %bb.cl, %bb.ck, %.thread74.i.i
   %i.js = load i64, ptr %i.aa, align 8, !noalias !3725, !noundef !12
-  %.not81.i.i = icmp ult i64 %1, %i.js
-  %i.jt = add nuw i64 %1, 1
+  %.not81.i.i = icmp ult i64 %.sroa.028.0210.i.i, %i.js
+  %i.jt = add nuw i64 %.sroa.028.0210.i.i, 1
   br i1 %.not81.i.i, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .loopexit98.i.i:                                  ; preds = %bb.cl, %.thread.i.i

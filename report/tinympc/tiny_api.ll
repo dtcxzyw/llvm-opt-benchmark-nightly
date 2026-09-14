@@ -205,18 +205,17 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.fz, label %bb.ax, label %bb.ay
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.aw, %.lr.ph.i.i.i.i
-  %.05480.i.i.i.i = phi i64 [ %.054.i.i.i.i, %.lr.ph.i.i.i.i ], [ 4, %bb.aw ] ; 4 uses
-  %.054.in79.i.i.i.i = phi i64 [ %.05480.i.i.i.i, %.lr.ph.i.i.i.i ], [ 0, %bb.aw ]
+  %.054.in79.i.i.i.i = phi i64 [ %.054.i.i.i.i, %.lr.ph.i.i.i.i ], [ 4, %bb.aw ] ; 4 uses
   %.07278.i.i.i.i = phi <2 x double> [ %i.gg, %.lr.ph.i.i.i.i ], [ %i.fp, %bb.aw ]
   %.07577.i.i.i.i = phi <2 x double> [ %i.gn, %.lr.ph.i.i.i.i ], [ %i.fw, %bb.aw ]
-  %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.fc, i64 %.05480.i.i.i.i
+  %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.fc, i64 %.054.in79.i.i.i.i
   %i.gb = load <2 x double>, ptr %i.ga, align 16, !tbaa !24
-  %i.gc = getelementptr inbounds nuw [8 x i8], ptr %i.fe, i64 %.05480.i.i.i.i
+  %i.gc = getelementptr inbounds nuw [8 x i8], ptr %i.fe, i64 %.054.in79.i.i.i.i
   %i.gd = load <2 x double>, ptr %i.gc, align 16, !tbaa !24
   %i.ge = fsub <2 x double> %i.gb, %i.gd
   %i.gf = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ge)
   %i.gg = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.gf, <2 x double> %.07278.i.i.i.i) ; 2 uses
-  %50 = add nuw nsw i64 %.054.in79.i.i.i.i, 6     ; 2 uses
+  %50 = or disjoint i64 %.054.in79.i.i.i.i, 2     ; 2 uses
   %i.gh = getelementptr inbounds nuw [8 x i8], ptr %i.fc, i64 %50
   %i.gi = load <2 x double>, ptr %i.gh, align 16, !tbaa !24
   %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.fe, i64 %50
@@ -224,7 +223,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.gl = fsub <2 x double> %i.gi, %i.gk
   %i.gm = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %i.gl)
   %i.gn = call noundef <2 x double> @llvm.x86.sse2.max.pd(<2 x double> %i.gm, <2 x double> %.07577.i.i.i.i) ; 2 uses
-  %.054.i.i.i.i = add nuw nsw i64 %.05480.i.i.i.i, 4 ; 2 uses
+  %.054.i.i.i.i = add nuw nsw i64 %.054.in79.i.i.i.i, 4 ; 2 uses
   %i.go = icmp slt i64 %.054.i.i.i.i, %i.fj
   br i1 %i.go, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !330
 
@@ -627,24 +626,23 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.aq, label %bb.j, label %bb.k
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.i, %.lr.ph.i.i.i.i.i.i
-  %.05480.i.i.i.i.i.i = phi i64 [ %.054.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ 4, %bb.i ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i = phi i64 [ %.05480.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ 0, %bb.i ]
+  %.054.in79.i.i.i.i.i.i = phi i64 [ %.054.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ 4, %bb.i ] ; 4 uses
   %.07278.i.i.i.i.i.i = phi <2 x double> [ %i.aw, %.lr.ph.i.i.i.i.i.i ], [ %i.ah, %bb.i ]
   %.07577.i.i.i.i.i.i = phi <2 x double> [ %i.bc, %.lr.ph.i.i.i.i.i.i ], [ %i.an, %bb.i ]
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.05480.i.i.i.i.i.i
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.054.in79.i.i.i.i.i.i
   %i.as = load <2 x double>, ptr %i.ar, align 1, !tbaa !24
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.05480.i.i.i.i.i.i
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.054.in79.i.i.i.i.i.i
   %i.au = load <2 x double>, ptr %i.at, align 1, !tbaa !24
   %i.av = fmul <2 x double> %i.as, %i.au
   %i.aw = fadd <2 x double> %.07278.i.i.i.i.i.i, %i.av ; 2 uses
-  %11 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i, 6 ; 2 uses
+  %11 = or disjoint i64 %.054.in79.i.i.i.i.i.i, 2 ; 2 uses
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %11
   %i.ay = load <2 x double>, ptr %i.ax, align 1, !tbaa !24
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %11
   %i.ba = load <2 x double>, ptr %i.az, align 1, !tbaa !24
   %i.bb = fmul <2 x double> %i.ay, %i.ba
   %i.bc = fadd <2 x double> %.07577.i.i.i.i.i.i, %i.bb ; 2 uses
-  %.054.i.i.i.i.i.i = add nuw nsw i64 %.05480.i.i.i.i.i.i, 4 ; 2 uses
+  %.054.i.i.i.i.i.i = add nuw nsw i64 %.054.in79.i.i.i.i.i.i, 4 ; 2 uses
   %i.bd = icmp slt i64 %.054.i.i.i.i.i.i, %i.ac
   br i1 %i.bd, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !691
 
@@ -815,24 +813,23 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.ee, label %bb.t, label %bb.u
 
 .lr.ph.i.i.i.i.i.i39:                             ; preds = %bb.s, %.lr.ph.i.i.i.i.i.i39
-  %.05480.i.i.i.i.i.i40 = phi i64 [ %.054.i.i.i.i.i.i44, %.lr.ph.i.i.i.i.i.i39 ], [ 4, %bb.s ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i41 = phi i64 [ %.05480.i.i.i.i.i.i40, %.lr.ph.i.i.i.i.i.i39 ], [ 0, %bb.s ]
+  %.054.in79.i.i.i.i.i.i41 = phi i64 [ %.054.i.i.i.i.i.i44, %.lr.ph.i.i.i.i.i.i39 ], [ 4, %bb.s ] ; 4 uses
   %.07278.i.i.i.i.i.i42 = phi <2 x double> [ %i.ek, %.lr.ph.i.i.i.i.i.i39 ], [ %i.dv, %bb.s ]
   %.07577.i.i.i.i.i.i43 = phi <2 x double> [ %i.eq, %.lr.ph.i.i.i.i.i.i39 ], [ %i.eb, %bb.s ]
-  %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %.05480.i.i.i.i.i.i40
+  %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %.054.in79.i.i.i.i.i.i41
   %i.eg = load <2 x double>, ptr %i.ef, align 1, !tbaa !24
-  %i.eh = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %.05480.i.i.i.i.i.i40
+  %i.eh = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %.054.in79.i.i.i.i.i.i41
   %i.ei = load <2 x double>, ptr %i.eh, align 1, !tbaa !24
   %i.ej = fmul <2 x double> %i.eg, %i.ei
   %i.ek = fadd <2 x double> %.07278.i.i.i.i.i.i42, %i.ej ; 2 uses
-  %12 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i41, 6 ; 2 uses
+  %12 = or disjoint i64 %.054.in79.i.i.i.i.i.i41, 2 ; 2 uses
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %12
   %i.em = load <2 x double>, ptr %i.el, align 1, !tbaa !24
   %i.en = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %12
   %i.eo = load <2 x double>, ptr %i.en, align 1, !tbaa !24
   %i.ep = fmul <2 x double> %i.em, %i.eo
   %i.eq = fadd <2 x double> %.07577.i.i.i.i.i.i43, %i.ep ; 2 uses
-  %.054.i.i.i.i.i.i44 = add nuw nsw i64 %.05480.i.i.i.i.i.i40, 4 ; 2 uses
+  %.054.i.i.i.i.i.i44 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i41, 4 ; 2 uses
   %i.er = icmp slt i64 %.054.i.i.i.i.i.i44, %i.dq
   br i1 %i.er, label %.lr.ph.i.i.i.i.i.i39, label %._crit_edge.i.i.i.i.i.i36, !llvm.loop !700
 
@@ -1179,24 +1176,23 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   br label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
 
 .lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us:     ; preds = %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us
-  %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi i64 [ %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ]
+  %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ] ; 4 uses
   %.07278.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi <2 x double> [ %i.bv, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ %i.bl, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ]
   %.07577.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = phi <2 x double> [ %i.cb, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us ], [ %i.bp, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us.us.us ]
-  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
   %i.br = load <2 x double>, ptr %i.bq, align 1, !tbaa !24
-  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
+  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us
   %i.bt = load <2 x double>, ptr %i.bs, align 1, !tbaa !24
   %i.bu = fmul <2 x double> %i.br, %i.bt
   %i.bv = fadd <2 x double> %.07278.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %i.bu ; 2 uses
-  %3 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, 6 ; 2 uses
+  %3 = or disjoint i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, 2 ; 2 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %3
   %i.bx = load <2 x double>, ptr %i.bw, align 1, !tbaa !24
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %3
   %i.bz = load <2 x double>, ptr %i.by, align 1, !tbaa !24
   %i.ca = fmul <2 x double> %i.bx, %i.bz
   %i.cb = fadd <2 x double> %.07577.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %i.ca ; 2 uses
-  %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = add nuw nsw i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, 4 ; 2 uses
+  %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, 4 ; 2 uses
   %i.cc = icmp slt i64 %.054.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, %i.ac
   br i1 %i.cc, label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us.us.us, label %._crit_edge.i.i.i.i.i.i.i.loopexit.us.us.us.us.us.us.us.us, !llvm.loop !713
 
@@ -1301,24 +1297,23 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   br label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us
 
 .lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us:           ; preds = %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us
-  %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us = phi i64 [ %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ]
+  %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ] ; 4 uses
   %.07278.i.i.i.i.i.i.i.us.us.us.us.us.us = phi <2 x double> [ %i.en, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ %i.ed, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ]
   %.07577.i.i.i.i.i.i.i.us.us.us.us.us.us = phi <2 x double> [ %i.et, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us ], [ %i.eh, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us.us.us ]
-  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us
+  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us
   %i.ej = load <2 x double>, ptr %i.ei, align 1, !tbaa !24
-  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us
+  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us
   %i.el = load <2 x double>, ptr %i.ek, align 1, !tbaa !24
   %i.em = fmul <2 x double> %i.ej, %i.el
   %i.en = fadd <2 x double> %.07278.i.i.i.i.i.i.i.us.us.us.us.us.us, %i.em ; 2 uses
-  %4 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us, 6 ; 2 uses
+  %4 = or disjoint i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us, 2 ; 2 uses
   %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %4
   %i.ep = load <2 x double>, ptr %i.eo, align 1, !tbaa !24
   %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %4
   %i.er = load <2 x double>, ptr %i.eq, align 1, !tbaa !24
   %i.es = fmul <2 x double> %i.ep, %i.er
   %i.et = fadd <2 x double> %.07577.i.i.i.i.i.i.i.us.us.us.us.us.us, %i.es ; 2 uses
-  %.054.i.i.i.i.i.i.i.us.us.us.us.us.us = add nuw nsw i64 %.05480.i.i.i.i.i.i.i.us.us.us.us.us.us, 4 ; 2 uses
+  %.054.i.i.i.i.i.i.i.us.us.us.us.us.us = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us.us.us, 4 ; 2 uses
   %i.eu = icmp slt i64 %.054.i.i.i.i.i.i.i.us.us.us.us.us.us, %i.ac
   br i1 %i.eu, label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us.us.us, label %._crit_edge.i.i.i.i.i.i.i.loopexit.us.us.us.us.us.us, !llvm.loop !713
 
@@ -1419,24 +1414,23 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   br label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us
 
 .lr.ph.i.i.i.i.i.i.i.us.us.us.us:                 ; preds = %.lr.ph.i.i.i.i.i.i.i.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us
-  %.05480.i.i.i.i.i.i.i.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ] ; 4 uses
-  %.054.in79.i.i.i.i.i.i.i.us.us.us.us = phi i64 [ %.05480.i.i.i.i.i.i.i.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ 0, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ]
+  %.054.in79.i.i.i.i.i.i.i.us.us.us.us = phi i64 [ %.054.i.i.i.i.i.i.i.us.us.us.us, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ 4, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ] ; 4 uses
   %.07278.i.i.i.i.i.i.i.us.us.us.us = phi <2 x double> [ %i.hb, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ %i.gr, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ]
   %.07577.i.i.i.i.i.i.i.us.us.us.us = phi <2 x double> [ %i.hh, %.lr.ph.i.i.i.i.i.i.i.us.us.us.us ], [ %i.gv, %.lr.ph.i.i.i.i.i.i.i.preheader.us.us.us.us ]
-  %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us
+  %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us
   %i.gx = load <2 x double>, ptr %i.gw, align 1, !tbaa !24
-  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %.05480.i.i.i.i.i.i.i.us.us.us.us
+  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us
   %i.gz = load <2 x double>, ptr %i.gy, align 1, !tbaa !24
   %i.ha = fmul <2 x double> %i.gx, %i.gz
   %i.hb = fadd <2 x double> %.07278.i.i.i.i.i.i.i.us.us.us.us, %i.ha ; 2 uses
-  %5 = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us, 6 ; 2 uses
+  %5 = or disjoint i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us, 2 ; 2 uses
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %5
   %i.hd = load <2 x double>, ptr %i.hc, align 1, !tbaa !24
   %i.he = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %5
   %i.hf = load <2 x double>, ptr %i.he, align 1, !tbaa !24
   %i.hg = fmul <2 x double> %i.hd, %i.hf
   %i.hh = fadd <2 x double> %.07577.i.i.i.i.i.i.i.us.us.us.us, %i.hg ; 2 uses
-  %.054.i.i.i.i.i.i.i.us.us.us.us = add nuw nsw i64 %.05480.i.i.i.i.i.i.i.us.us.us.us, 4 ; 2 uses
+  %.054.i.i.i.i.i.i.i.us.us.us.us = add nuw nsw i64 %.054.in79.i.i.i.i.i.i.i.us.us.us.us, 4 ; 2 uses
   %i.hi = icmp slt i64 %.054.i.i.i.i.i.i.i.us.us.us.us, %i.ac
   br i1 %i.hi, label %.lr.ph.i.i.i.i.i.i.i.us.us.us.us, label %._crit_edge.i.i.i.i.i.i.i.loopexit.us.us.us.us, !llvm.loop !713
 
@@ -1839,7 +1833,7 @@ bb.a:
   br i1 %i.c, label %_ZNK5Eigen8internal9evaluatorINS_16PartialReduxExprIKNS_12CwiseUnaryOpINS0_13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEENS0_10member_sumIddEELi0EEEE5coeffEl.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !40 ; 11 uses
+  %i.d = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !40 ; 10 uses
   %i.e = sdiv i64 %i.b, 4
   %i.f = shl nsw i64 %i.e, 2                      ; 3 uses
   %i.g = sdiv i64 %i.b, 2
@@ -1871,22 +1865,20 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.s, label %bb.e, label %bb.f
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.d, %.lr.ph.i.i.i.i.i
-  %.05480.i.i.i.i.i = phi i64 [ %.054.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ 4, %bb.d ] ; 3 uses
-  %.054.in79.i.i.i.i.i = phi i64 [ %.05480.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ 0, %bb.d ]
+  %.054.in79.i.i.i.i.i = phi i64 [ %.054.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ 4, %bb.d ] ; 2 uses
   %.07278.i.i.i.i.i = phi <2 x double> [ %i.x, %.lr.ph.i.i.i.i.i ], [ %i.k, %bb.d ]
   %.07577.i.i.i.i.i = phi <2 x double> [ %i.ac, %.lr.ph.i.i.i.i.i ], [ %i.p, %bb.d ]
-  %i.t = getelementptr [8 x i8], ptr %i.d, i64 %.05480.i.i.i.i.i
+  %i.t = getelementptr [8 x i8], ptr %i.d, i64 %.054.in79.i.i.i.i.i ; 2 uses
   %i.u = load <2 x i64>, ptr %i.t, align 1, !tbaa !24
   %i.v = and <2 x i64> %i.u, splat (i64 9223372036854775807)
   %i.w = bitcast <2 x i64> %i.v to <2 x double>
   %i.x = fadd <2 x double> %.07278.i.i.i.i.i, %i.w ; 2 uses
-  %3 = getelementptr [8 x i8], ptr %i.d, i64 %.054.in79.i.i.i.i.i
-  %i.y = getelementptr i8, ptr %3, i64 48
+  %i.y = getelementptr i8, ptr %i.t, i64 16
   %i.z = load <2 x i64>, ptr %i.y, align 1, !tbaa !24
   %i.aa = and <2 x i64> %i.z, splat (i64 9223372036854775807)
   %i.ab = bitcast <2 x i64> %i.aa to <2 x double>
   %i.ac = fadd <2 x double> %.07577.i.i.i.i.i, %i.ab ; 2 uses
-  %.054.i.i.i.i.i = add nuw nsw i64 %.05480.i.i.i.i.i, 4 ; 2 uses
+  %.054.i.i.i.i.i = add nuw nsw i64 %.054.in79.i.i.i.i.i, 4 ; 2 uses
   %i.ad = icmp slt i64 %.054.i.i.i.i.i, %i.f
   br i1 %i.ad, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, !llvm.loop !959
 
@@ -2055,7 +2047,7 @@ _ZNK5Eigen8internal9evaluatorINS_16PartialReduxExprIKNS_12CwiseUnaryOpINS0_13sca
   %.034.us41 = phi i64 [ %i.fd, %_ZNK5Eigen8internal9evaluatorINS_16PartialReduxExprIKNS_12CwiseUnaryOpINS0_13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEENS0_10member_sumIddEELi0EEEE5coeffEl.exit24.us43 ], [ 1, %.lr.ph.split.split.split.us.preheader ] ; 2 uses
   %.02733.us42 = phi double [ %i.fc, %_ZNK5Eigen8internal9evaluatorINS_16PartialReduxExprIKNS_12CwiseUnaryOpINS0_13scalar_abs_opIdEEKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEENS0_10member_sumIddEELi0EEEE5coeffEl.exit24.us43 ], [ %.0.i.i.i, %.lr.ph.split.split.split.us.preheader ] ; 2 uses
   %i.db = mul nuw nsw i64 %.034.us41, %i.b
-  %i.dc = getelementptr [8 x i8], ptr %i.ch, i64 %i.db ; 10 uses
+  %i.dc = getelementptr [8 x i8], ptr %i.ch, i64 %i.db ; 9 uses
   %i.dd = load <2 x i64>, ptr %i.dc, align 1, !tbaa !24
   %i.de = and <2 x i64> %i.dd, splat (i64 9223372036854775807)
   %i.df = bitcast <2 x i64> %i.de to <2 x double> ; 2 uses
@@ -2066,22 +2058,20 @@ _ZNK5Eigen8internal9evaluatorINS_16PartialReduxExprIKNS_12CwiseUnaryOpINS0_13sca
   br i1 %i.bz, label %.lr.ph.i.i.i.i.i18.us, label %._crit_edge.i.i.i.i.i15.us
 
 .lr.ph.i.i.i.i.i18.us:                            ; preds = %.lr.ph.split.split.split.us, %.lr.ph.i.i.i.i.i18.us
-  %.05480.i.i.i.i.i19.us = phi i64 [ %.054.i.i.i.i.i23.us, %.lr.ph.i.i.i.i.i18.us ], [ 4, %.lr.ph.split.split.split.us ] ; 3 uses
-  %.054.in79.i.i.i.i.i20.us = phi i64 [ %.05480.i.i.i.i.i19.us, %.lr.ph.i.i.i.i.i18.us ], [ 0, %.lr.ph.split.split.split.us ]
+  %.054.in79.i.i.i.i.i20.us = phi i64 [ %.054.i.i.i.i.i23.us, %.lr.ph.i.i.i.i.i18.us ], [ 4, %.lr.ph.split.split.split.us ] ; 2 uses
   %.07278.i.i.i.i.i21.us = phi <2 x double> [ %i.do, %.lr.ph.i.i.i.i.i18.us ], [ %i.df, %.lr.ph.split.split.split.us ]
   %.07577.i.i.i.i.i22.us = phi <2 x double> [ %i.dt, %.lr.ph.i.i.i.i.i18.us ], [ %i.dj, %.lr.ph.split.split.split.us ]
-  %i.dk = getelementptr [8 x i8], ptr %i.dc, i64 %.05480.i.i.i.i.i19.us
+  %i.dk = getelementptr [8 x i8], ptr %i.dc, i64 %.054.in79.i.i.i.i.i20.us ; 2 uses
   %i.dl = load <2 x i64>, ptr %i.dk, align 1, !tbaa !24
   %i.dm = and <2 x i64> %i.dl, splat (i64 9223372036854775807)
   %i.dn = bitcast <2 x i64> %i.dm to <2 x double>
   %i.do = fadd <2 x double> %.07278.i.i.i.i.i21.us, %i.dn ; 2 uses
-  %4 = getelementptr [8 x i8], ptr %i.dc, i64 %.054.in79.i.i.i.i.i20.us
-  %i.dp = getelementptr i8, ptr %4, i64 48
+  %i.dp = getelementptr i8, ptr %i.dk, i64 16
   %i.dq = load <2 x i64>, ptr %i.dp, align 1, !tbaa !24
   %i.dr = and <2 x i64> %i.dq, splat (i64 9223372036854775807)
   %i.ds = bitcast <2 x i64> %i.dr to <2 x double>
   %i.dt = fadd <2 x double> %.07577.i.i.i.i.i22.us, %i.ds ; 2 uses
-  %.054.i.i.i.i.i23.us = add nuw nsw i64 %.05480.i.i.i.i.i19.us, 4 ; 2 uses
+  %.054.i.i.i.i.i23.us = add nuw nsw i64 %.054.in79.i.i.i.i.i20.us, 4 ; 2 uses
   %i.du = icmp slt i64 %.054.i.i.i.i.i23.us, %i.bv
   br i1 %i.du, label %.lr.ph.i.i.i.i.i18.us, label %._crit_edge.i.i.i.i.i15.us, !llvm.loop !959
 

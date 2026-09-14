@@ -205,7 +205,7 @@ _ZN2c43yml6detail13_SubstrWriter6appendENS_15basic_substringIKcEE.exit: ; preds 
   %.061201 = phi i64 [ %.162, %_ZN2c43yml12_GLOBAL__N_110_is_idcharEc.exit.thread177 ], [ 0, %_ZN2c43yml6detail13_SubstrWriter6appendEc.exit ] ; 10 uses
   %.063200 = phi i64 [ %i.cj, %_ZN2c43yml12_GLOBAL__N_110_is_idcharEc.exit.thread177 ], [ 0, %_ZN2c43yml6detail13_SubstrWriter6appendEc.exit ] ; 11 uses
   %.sroa.16.0199 = phi i64 [ %.sroa.16.1, %_ZN2c43yml12_GLOBAL__N_110_is_idcharEc.exit.thread177 ], [ 1, %_ZN2c43yml6detail13_SubstrWriter6appendEc.exit ] ; 9 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0148.0, i64 %.063200 ; 6 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0148.0, i64 %.063200 ; 5 uses
   %i.q = load i8, ptr %i.p, align 1, !tbaa !87    ; 12 uses
   %i.r = add nuw i64 %.063200, 1                  ; 2 uses
   %i.s = icmp ult i64 %i.r, %.sroa.13.0
@@ -229,7 +229,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %bb.h
-  %.0811.i.i.i = phi i64 [ %i.ab, %bb.h ], [ 0, %.lr.ph.i.i.i.preheader ] ; 7 uses
+  %.0811.i.i.i = phi i64 [ %i.ab, %bb.h ], [ 0, %.lr.ph.i.i.i.preheader ] ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.p, i64 %.0811.i.i.i
   %i.z = load i8, ptr %i.y, align 1, !tbaa !87
   %i.aa = icmp eq i8 %i.z, %i.q
@@ -249,28 +249,27 @@ _ZNK2c415basic_substringIKcE4findEcm.exit.i:      ; preds = %.lr.ph.i.i.i
   br i1 %or.cond.i94, label %.lr.ph.i, label %_ZN2c415basic_substringIKcE14pair_range_escEcc.exit
 
 .lr.ph.i:                                         ; preds = %_ZNK2c415basic_substringIKcE4findEcm.exit.i, %bb.j
-  %.029.i = phi i64 [ %.0.i, %bb.j ], [ %.026.i, %_ZNK2c415basic_substringIKcE4findEcm.exit.i ] ; 3 uses
-  %.0.in28.i = phi i64 [ %.029.i, %bb.j ], [ %.0811.i.i.i, %_ZNK2c415basic_substringIKcE4findEcm.exit.i ] ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.p, i64 %.029.i
+  %.0.in28.i = phi i64 [ %.0.i, %bb.j ], [ %.026.i, %_ZNK2c415basic_substringIKcE4findEcm.exit.i ] ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.p, i64 %.0.in28.i ; 2 uses
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !87
   %i.ag = icmp eq i8 %i.af, %i.q
   br i1 %i.ag, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.lr.ph.i
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.p, i64 %.0.in28.i
+  %i.ah = getelementptr i8, ptr %i.ae, i64 -1
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !87
   %.not.i95 = icmp eq i8 %i.ai, 92
   br i1 %.not.i95, label %bb.j, label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.i
-  %i.aj = add nuw i64 %.0.in28.i, 2               ; 2 uses
+  %i.aj = add i64 %.0.in28.i, 1                   ; 2 uses
   %.not.i.i = icmp eq i64 %i.aj, -1
   %i.ak = select i1 %.not.i.i, i64 %i.x, i64 %i.aj
   %i.al = sub i64 %i.ak, %.0811.i.i.i
   br label %_ZN2c415basic_substringIKcE14pair_range_escEcc.exit
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.i
-  %.0.i = add i64 %.029.i, 1                      ; 2 uses
+  %.0.i = add i64 %.0.in28.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i64 %.0.i, %i.x
   br i1 %exitcond.not.i, label %_ZN2c415basic_substringIKcE14pair_range_escEcc.exit, label %.lr.ph.i, !llvm.loop !1029
 
@@ -673,7 +672,7 @@ switch.early.test:                                ; preds = %.peel.next
 .preheader212:                                    ; preds = %switch.early.test, %switch.early.test.peel
   %.068229.lcssa252 = phi i1 [ false, %switch.early.test.peel ], [ true, %switch.early.test ] ; 2 uses
   %.070228.lcssa250 = phi i64 [ %1, %switch.early.test.peel ], [ %.070228, %switch.early.test ] ; 3 uses
-  %.272231 = add nuw i64 %.070228.lcssa250, 1     ; 4 uses
+  %.272231 = add nuw i64 %.070228.lcssa250, 1     ; 3 uses
   %i.k = icmp ult i64 %.272231, %i.b
   br i1 %i.k, label %.lr.ph235.preheader, label %._crit_edge236
 
@@ -742,9 +741,8 @@ bb.f:                                             ; preds = %switch.early.test, 
   br i1 %exitcond.not, label %.thread, label %.peel.next, !llvm.loop !1068
 
 .lr.ph235:                                        ; preds = %bb.c, %bb.j
-  %.272234 = phi i64 [ %.272, %bb.j ], [ %.272.peel, %bb.c ] ; 4 uses
-  %.272.in232 = phi i64 [ %.272234, %bb.j ], [ %.272231, %bb.c ]
-  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.pre, i64 %.272234
+  %.272.in232 = phi i64 [ %.272, %bb.j ], [ %.272.peel, %bb.c ] ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.pre, i64 %.272.in232
   %i.s = load i8, ptr %i.r, align 1, !tbaa !87
   %.fr207 = freeze i8 %i.s                        ; 3 uses
   %i.t = add i8 %.fr207, -48
@@ -752,7 +750,7 @@ bb.f:                                             ; preds = %switch.early.test, 
   br i1 %or.cond.i, label %bb.j, label %switch.early.test205
 
 switch.early.test205:                             ; preds = %.lr.ph235
-  switch i8 %.fr207, label %.loopexit257 [
+  switch i8 %.fr207, label %.loopexit258.loopexit [
     i8 102, label %bb.j
     i8 101, label %bb.j
     i8 100, label %bb.j
@@ -767,11 +765,15 @@ switch.early.test205:                             ; preds = %.lr.ph235
     i8 65, label %bb.j
   ]
 
-.loopexit257:                                     ; preds = %switch.early.test205, %switch.early.test205.peel
-  %.272234.lcssa = phi i64 [ %.272231, %switch.early.test205.peel ], [ %.272234, %switch.early.test205 ]
-  %.065233.lcssa = phi i1 [ %.068229.lcssa252, %switch.early.test205.peel ], [ true, %switch.early.test205 ] ; 2 uses
-  %.272.in232.lcssa = phi i64 [ %.070228.lcssa250, %switch.early.test205.peel ], [ %.272.in232, %switch.early.test205 ]
-  %.fr207.lcssa = phi i8 [ %.fr207.peel, %switch.early.test205.peel ], [ %.fr207, %switch.early.test205 ] ; 2 uses
+.loopexit258.loopexit:                            ; preds = %switch.early.test205
+  %.272.in232255.le = add i64 %.272.in232, -1
+  br label %.loopexit257
+
+.loopexit257:                                     ; preds = %.loopexit258.loopexit, %switch.early.test205.peel
+  %.272234.lcssa = phi i64 [ %.272231, %switch.early.test205.peel ], [ %.272.in232, %.loopexit258.loopexit ]
+  %.065233.lcssa = phi i1 [ %.068229.lcssa252, %switch.early.test205.peel ], [ true, %.loopexit258.loopexit ] ; 2 uses
+  %.272.in232.lcssa = phi i64 [ %.070228.lcssa250, %switch.early.test205.peel ], [ %.272.in232255.le, %.loopexit258.loopexit ]
+  %.fr207.lcssa = phi i8 [ %.fr207.peel, %switch.early.test205.peel ], [ %.fr207, %.loopexit258.loopexit ] ; 2 uses
   %i.u = and i8 %.fr207.lcssa, -33
   %or.cond5 = icmp eq i8 %i.u, 80
   br i1 %or.cond5, label %bb.i, label %bb.g
@@ -799,7 +801,7 @@ bb.i:                                             ; preds = %.loopexit257
   br label %bb.k
 
 bb.j:                                             ; preds = %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %switch.early.test205, %.lr.ph235
-  %.272 = add i64 %.272234, 1                     ; 2 uses
+  %.272 = add i64 %.272.in232, 1                  ; 2 uses
   %exitcond255.not = icmp eq i64 %.272, %i.b
   br i1 %exitcond255.not, label %._crit_edge236.thread, label %.lr.ph235, !llvm.loop !1069
 

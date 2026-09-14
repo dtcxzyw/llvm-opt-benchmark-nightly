@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.an, %_ZNSt3__16v
   %.0179 = phi i1 [ false, %_ZNSt3__16vectorIhNS_9allocatorIhEEE6resizeEm.exit ], [ %.1180, %bb.an ] ; 19 uses
   %.098 = phi i1 [ false, %_ZNSt3__16vectorIhNS_9allocatorIhEEE6resizeEm.exit ], [ %.199, %bb.an ] ; 19 uses
   %.096 = phi i8 [ 0, %_ZNSt3__16vectorIhNS_9allocatorIhEEE6resizeEm.exit ], [ %.197, %bb.an ] ; 18 uses
-  %i.aw = load i64, ptr %i.a, align 8, !tbaa !13  ; 7 uses
+  %i.aw = load i64, ptr %i.a, align 8, !tbaa !13  ; 6 uses
   %i.ax = add i64 %i.aw, 1                        ; 2 uses
   %i.ay = icmp ult i64 %i.ax, %1
   br i1 %i.ay, label %.lr.ph.preheader.i, label %_ZN3jxl4jpeg12_GLOBAL__N_114FindNextMarkerEPKhmm.exit.thread
@@ -216,16 +216,15 @@ bb.f:                                             ; preds = %bb.an, %_ZNSt3__16v
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.critedge2.i, %.lr.ph.preheader.i
-  %i.bb = phi i64 [ %i.bl, %.critedge2.i ], [ %i.ax, %.lr.ph.preheader.i ] ; 3 uses
+  %i.bb = phi i64 [ %i.bl, %.critedge2.i ], [ %i.ax, %.lr.ph.preheader.i ] ; 2 uses
   %.017.i = phi i64 [ %i.bk, %.critedge2.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %.01216.i = phi i64 [ %i.bb, %.critedge2.i ], [ %i.aw, %.lr.ph.preheader.i ]
-  %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 %.01216.i
+  %8 = getelementptr i8, ptr %0, i64 %i.bb        ; 2 uses
+  %i.bc = getelementptr i8, ptr %8, i64 -1
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !11
   %.not.i = icmp eq i8 %i.bd, -1
   br i1 %.not.i, label %bb.g, label %.critedge2.i
 
 bb.g:                                             ; preds = %.lr.ph.i
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 %i.bb
   %i.be = load i8, ptr %8, align 1, !tbaa !11     ; 2 uses
   %i.bf = icmp ult i8 %i.be, -64
   br i1 %i.bf, label %.critedge2.i, label %bb.h

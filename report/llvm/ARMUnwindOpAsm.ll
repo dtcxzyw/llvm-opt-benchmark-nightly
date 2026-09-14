@@ -205,7 +205,7 @@ _ZN4llvm15SmallVectorImplIhE6resizeEm.exit30:     ; preds = %.sink.split.i.i28, 
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.bv = load i32, ptr %i.bu, align 8, !tbaa !17
-  %i.bw = zext i32 %i.bv to i64                   ; 2 uses
+  %i.bw = zext i32 %i.bv to i64
   %.02457 = add nsw i64 %i.bw, -1                 ; 2 uses
   %.not58 = icmp eq i64 %.02457, 0
   br i1 %.not58, label %._crit_edge, label %.lr.ph62
@@ -262,11 +262,10 @@ _ZN4llvm21UnwindOpcodeAssembler5ResetEv.exit:     ; preds = %bb.p, %bb.q
 
 .lr.ph62:                                         ; preds = %_ZN4llvm15SmallVectorImplIhE6resizeEm.exit30, %.loopexit
   %.02461 = phi i64 [ %.024, %.loopexit ], [ %.02457, %_ZN4llvm15SmallVectorImplIhE6resizeEm.exit30 ] ; 3 uses
-  %.024.in60 = phi i64 [ %.02461, %.loopexit ], [ %i.bw, %_ZN4llvm15SmallVectorImplIhE6resizeEm.exit30 ]
   %.sroa.10.159 = phi i64 [ %.sroa.10.2.lcssa, %.loopexit ], [ %.sroa.10.0, %_ZN4llvm15SmallVectorImplIhE6resizeEm.exit30 ] ; 4 uses
   %i.cn = load ptr, ptr %i.bt, align 8, !tbaa !16 ; 2 uses
-  %i.co = getelementptr [4 x i8], ptr %i.cn, i64 %.024.in60
-  %i.cp = getelementptr i8, ptr %i.co, i64 -8
+  %i.co = getelementptr [4 x i8], ptr %i.cn, i64 %.02461
+  %i.cp = getelementptr i8, ptr %i.co, i64 -4
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !18 ; 2 uses
   %i.cr = getelementptr inbounds nuw [4 x i8], ptr %i.cn, i64 %.02461
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !18 ; 2 uses

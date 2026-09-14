@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %proto_mpeg_descript
   %i.as = call ptr @proto_tree_add_item(ptr noundef %i.v, i32 noundef %i.al, ptr noundef %0, i32 noundef %i.am, i32 noundef %i.ap, i32 noundef %i.ar) ; 0 uses
   %i.at = load i8, ptr %i.a, align 1
   %i.au = zext i8 %i.at to i32                    ; 2 uses
-  %i.av = add i32 %i.ac, %i.au                    ; 4 uses
+  %i.av = add i32 %i.ac, %i.au                    ; 3 uses
   %i.aw = sub i32 %i.ad, %i.au                    ; 3 uses
   %i.ax = icmp ult i32 %i.aw, 3
   br i1 %i.ax, label %.critedge99, label %bb.f
@@ -228,7 +228,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not97107, label %._crit_edge, label %.lr.ph
 
 thread-pre-split:                                 ; preds = %bb.h
-  %i.bj = add i32 %.185.in108, 6                  ; 3 uses
+  %i.bj = add i32 %.185110, 2                     ; 3 uses
   %i.bk = load i32, ptr @hf_mpeg_descr_nordig_lcd_v2_visible_service_flag, align 4
   %i.bl = call ptr @proto_tree_add_item(ptr noundef %i.bx, i32 noundef %i.bk, ptr noundef %0, i32 noundef %i.bj, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.bm = load i32, ptr @hf_mpeg_descr_nordig_lcd_v2_reserved, align 4
@@ -246,7 +246,6 @@ thread-pre-split:                                 ; preds = %bb.h
 .lr.ph:                                           ; preds = %bb.g, %thread-pre-split
   %.185110 = phi i32 [ %.185, %thread-pre-split ], [ %.185106, %bb.g ] ; 5 uses
   %.182109 = phi i32 [ %i.bq, %thread-pre-split ], [ %i.be, %bb.g ] ; 3 uses
-  %.185.in108 = phi i32 [ %.185110, %thread-pre-split ], [ %i.av, %bb.g ]
   %i.bt = icmp ult i32 %.182109, 2
   br i1 %i.bt, label %.critedge99, label %bb.h
 
