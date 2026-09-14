@@ -1,0 +1,419 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 1580571a01451..82f7a5beb5db7 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -243,6 +243,35 @@ haveNoCommonBitsSetSpecialCases(const Value *LHS, const Value *RHS,
+   return NoCommonBitsSetResult::Unknown;
+ }
+ 
++static bool haveNoCommonBitsSetFromAssume(const Value *LHS, const Value *RHS,
++                                           const SimplifyQuery &SQ) {
++  if (!SQ.AC || !SQ.CxtI)
++    return false;
++
++  for (AssumptionCache::ResultElem &Elem : SQ.AC->assumptionsFor(LHS)) {
++    if (!Elem.Assume || Elem.Index != AssumptionCache::ExprResultIdx)
++      continue;
++
++    AssumeInst *I = cast<AssumeInst>(Elem.Assume);
++    assert(I->getFunction() == SQ.CxtI->getFunction() &&
++           "Got assumption for the wrong function!");
++
++    CmpPredicate Pred;
++    Value *AndOp;
++    if (!match(I->getArgOperand(0), m_c_ICmp(Pred, m_Value(AndOp), m_Zero())) ||
++        Pred != ICmpInst::ICMP_EQ)
++      continue;
++
++    if (!match(AndOp, m_c_And(m_Specific(LHS), m_Specific(RHS))))
++      continue;
++
++    if (isValidAssumeForContext(I, SQ))
++      return true;
++  }
++
++  return false;
++}
++
+ NoCommonBitsSetResult
+ llvm::getNoCommonBitsSetResult(const WithCache<const Value *> &LHSCache,
+                                const WithCache<const Value *> &RHSCache,
+@@ -268,6 +297,9 @@ llvm::getNoCommonBitsSetResult(const WithCache<const Value *> &LHSCache,
+                                      RHSCache.getKnownBits(SQ)))
+     return NoCommonBitsSetResult::Known;
+ 
++  if (haveNoCommonBitsSetFromAssume(LHS, RHS, SQ))
++    return NoCommonBitsSetResult::Known;
++
+   if (Result == NoCommonBitsSetResult::OnlyIfUndefIgnored ||
+       CommuteResult == NoCommonBitsSetResult::OnlyIfUndefIgnored)
+     return NoCommonBitsSetResult::OnlyIfUndefIgnored;
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+index 7fd49370fab28..d43e0553aabf1 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+@@ -5490,6 +5490,17 @@ Instruction *InstCombinerImpl::visitXor(BinaryOperator &I) {
+   if (Instruction *Xor = visitMaskedMerge(I, Builder))
+     return Xor;
+ 
++  WithCache<const Value *> Op0Cache(Op0), Op1Cache(Op1);
++  switch (getNoCommonBitsSetResult(Op0Cache, Op1Cache,
++                                    SQ.getWithInstruction(&I))) {
++  case NoCommonBitsSetResult::Known:
++    return BinaryOperator::CreateDisjointOr(Op0, Op1);
++  case NoCommonBitsSetResult::OnlyIfUndefIgnored:
++    return BinaryOperator::CreateOr(Op0, Op1);
++  case NoCommonBitsSetResult::Unknown:
++    break;
++  }
++
+   Constant *C1;
+   if (match(Op1, m_Constant(C1))) {
+     Constant *C2;
+diff --git a/llvm/test/Transforms/InstCombine/add.ll b/llvm/test/Transforms/InstCombine/add.ll
+index 22472b0114fd7..e5e537042ae01 100644
+--- a/llvm/test/Transforms/InstCombine/add.ll
++++ b/llvm/test/Transforms/InstCombine/add.ll
+@@ -5334,3 +5334,65 @@ define i32 @zext_add_no_fold_symmetric(i8 %x) {
+   %r = add i32 %z, -4
+   ret i32 %r
+ }
++
++; An assume that (x & y) == 0 proves x and y share no common bits, even
++; though neither is a constant, so add should fold to or disjoint.
++define i32 @add_disjoint_via_assume(i32 %x, i32 %y) {
++; CHECK-LABEL: @add_disjoint_via_assume(
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[ADD:%.*]] = or disjoint i32 [[Y]], [[X]]
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  %add = add i32 %y, %x
++  ret i32 %add
++}
++
++; Negative test: the assume proves nothing about %z, so no fold.
++define i32 @add_no_fold_wrong_operand_assume(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: @add_no_fold_wrong_operand_assume(
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[Z:%.*]], [[X]]
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  %add = add i32 %z, %x
++  ret i32 %add
++}
++
++; Negative test: the assume does not dominate the add (it's in a
++; not-always-executed sibling block), so no fold.
++define i32 @add_no_fold_non_dominating_assume(i32 %x, i32 %y, i1 %cond) {
++; CHECK-LABEL: @add_no_fold_non_dominating_assume(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[COND:%.*]], label [[ASSUME_BB:%.*]], label [[ADD_BB:%.*]]
++; CHECK:       assume_bb:
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    br label [[ADD_BB]]
++; CHECK:       add_bb:
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[Y]], [[X]]
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++entry:
++  br i1 %cond, label %assume_bb, label %add_bb
++
++assume_bb:
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  br label %add_bb
++
++add_bb:
++  %add = add i32 %y, %x
++  ret i32 %add
++}
+diff --git a/llvm/test/Transforms/InstCombine/or.ll b/llvm/test/Transforms/InstCombine/or.ll
+index 4126d653d2ad1..50c88781f7264 100644
+--- a/llvm/test/Transforms/InstCombine/or.ll
++++ b/llvm/test/Transforms/InstCombine/or.ll
+@@ -2386,3 +2386,68 @@ define i32 @signum_i32_or_wrong_ext(i32 %x) {
+   %r = or i32 %signbit, %sgt0ext
+   ret i32 %r
+ }
++
++; An assume that (x & y) == 0 proves x and y share no common bits, even
++; though neither is a constant, so the existing or should get the disjoint
++; flag.
++define i32 @or_disjoint_via_assume(i32 %x, i32 %y) {
++; CHECK-LABEL: @or_disjoint_via_assume(
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[OR:%.*]] = or disjoint i32 [[Y]], [[X]]
++; CHECK-NEXT:    ret i32 [[OR]]
++;
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  %or = or i32 %y, %x
++  ret i32 %or
++}
++
++; Negative test: the assume proves nothing about %z, so no disjoint flag.
++define i32 @or_no_fold_wrong_operand_assume(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: @or_no_fold_wrong_operand_assume(
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[OR:%.*]] = or i32 [[Z:%.*]], [[X]]
++; CHECK-NEXT:    ret i32 [[OR]]
++;
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  %or = or i32 %z, %x
++  ret i32 %or
++}
++
++; Negative test: the assume does not dominate the or (it's in a
++; not-always-executed sibling block), so no disjoint flag.
++define i32 @or_no_fold_non_dominating_assume(i32 %x, i32 %y, i1 %cond) {
++; CHECK-LABEL: @or_no_fold_non_dominating_assume(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[COND:%.*]], label [[ASSUME_BB:%.*]], label [[OR_BB:%.*]]
++; CHECK:       assume_bb:
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    br label [[OR_BB]]
++; CHECK:       or_bb:
++; CHECK-NEXT:    [[OR:%.*]] = or i32 [[Y]], [[X]]
++; CHECK-NEXT:    ret i32 [[OR]]
++;
++entry:
++  br i1 %cond, label %assume_bb, label %or_bb
++
++assume_bb:
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  br label %or_bb
++
++or_bb:
++  %or = or i32 %y, %x
++  ret i32 %or
++}
++
++declare void @llvm.assume(i1)
+diff --git a/llvm/test/Transforms/InstCombine/xor.ll b/llvm/test/Transforms/InstCombine/xor.ll
+index 3abaf74285cc0..9f20e3a352cfe 100644
+--- a/llvm/test/Transforms/InstCombine/xor.ll
++++ b/llvm/test/Transforms/InstCombine/xor.ll
+@@ -1175,7 +1175,7 @@ define <2 x i32> @xor_andn_commute1(<2 x i32> %a, <2 x i32> %b) {
+ define i33 @xor_andn_commute2(i33 %a, i33 %pb) {
+ ; CHECK-LABEL: @xor_andn_commute2(
+ ; CHECK-NEXT:    [[B:%.*]] = udiv i33 42, [[PB:%.*]]
+-; CHECK-NEXT:    [[Z:%.*]] = or i33 [[A:%.*]], [[B]]
++; CHECK-NEXT:    [[Z:%.*]] = or i33 [[B]], [[A:%.*]]
+ ; CHECK-NEXT:    ret i33 [[Z]]
+ ;
+   %b = udiv i33 42, %pb ; thwart complexity-based canonicalization
+@@ -1664,3 +1664,67 @@ entry:
+   %or = or <2 x i32> %add, %c
+   ret <2 x i32> %or
+ }
++
++; An assume that (x & y) == 0 proves x and y share no common bits, even
++; though neither is a constant, so xor -> or disjoint should fire.
++define i32 @xor_disjoint_via_assume(i32 %x, i32 %y) {
++; CHECK-LABEL: @xor_disjoint_via_assume(
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[XOR:%.*]] = or disjoint i32 [[Y]], [[X]]
++; CHECK-NEXT:    ret i32 [[XOR]]
++;
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  %xor = xor i32 %y, %x
++  ret i32 %xor
++}
++
++; Negative test: the assume proves nothing about %z, so the fold must not fire.
++define i32 @xor_no_fold_wrong_operand_assume(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: @xor_no_fold_wrong_operand_assume(
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[XOR:%.*]] = xor i32 [[Z:%.*]], [[X]]
++; CHECK-NEXT:    ret i32 [[XOR]]
++;
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  %xor = xor i32 %z, %x
++  ret i32 %xor
++}
++
++; Negative test: the assume does not dominate the xor (it's in a
++; not-always-executed sibling block), so it must not justify the fold.
++define i32 @xor_no_fold_non_dominating_assume(i32 %x, i32 %y, i1 %cond) {
++; CHECK-LABEL: @xor_no_fold_non_dominating_assume(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[COND:%.*]], label [[ASSUME_BB:%.*]], label [[XOR_BB:%.*]]
++; CHECK:       assume_bb:
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[Y:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[AND]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    br label [[XOR_BB]]
++; CHECK:       xor_bb:
++; CHECK-NEXT:    [[XOR:%.*]] = xor i32 [[Y]], [[X]]
++; CHECK-NEXT:    ret i32 [[XOR]]
++;
++entry:
++  br i1 %cond, label %assume_bb, label %xor_bb
++
++assume_bb:
++  %and = and i32 %y, %x
++  %cmp = icmp eq i32 %and, 0
++  call void @llvm.assume(i1 %cmp)
++  br label %xor_bb
++
++xor_bb:
++  %xor = xor i32 %y, %x
++  ret i32 %xor
++}
++
++declare void @llvm.assume(i1)
+diff --git a/llvm/unittests/Analysis/ValueTrackingTest.cpp b/llvm/unittests/Analysis/ValueTrackingTest.cpp
+index 0634f43f3e79c..b92dea346ab75 100644
+--- a/llvm/unittests/Analysis/ValueTrackingTest.cpp
++++ b/llvm/unittests/Analysis/ValueTrackingTest.cpp
+@@ -3304,6 +3304,118 @@ TEST_F(ValueTrackingTest, HaveNoCommonBitsSet) {
+     EXPECT_EQ(NoCommonBitsSetResult::Known,
+               getNoCommonBitsSetResult(RHS2, LHS2, DL));
+   }
++  {
++    // An assume proving (X & Y) == 0 is a relational fact between two
++    // non-constant values, so it cannot be derived from computeKnownBits on
++    // X and Y in isolation. Check that it is still recognized directly.
++    auto M = parseModule(R"(
++  declare void @llvm.assume(i1)
++  define i32 @test(i32 %X, i32 %Y) {
++    %and = and i32 %Y, %X
++    %cmp = icmp eq i32 %and, 0
++    call void @llvm.assume(i1 %cmp)
++    %CxtI = add i32 %X, %Y
++    ret i32 %CxtI
++  })");
++
++    auto *F = M->getFunction("test");
++    const DataLayout &DL = M->getDataLayout();
++    AssumptionCache AC(*F);
++
++    Value *LHS = F->getArg(0);
++    Value *RHS = F->getArg(1);
++    auto *CxtI = findInstructionByNameOrNull(F, "CxtI");
++
++    SimplifyQuery SQ(DL, /*DT=*/nullptr, &AC, CxtI);
++    EXPECT_TRUE(haveNoCommonBitsSet(LHS, RHS, SQ));
++    EXPECT_EQ(NoCommonBitsSetResult::Known,
++              getNoCommonBitsSetResult(LHS, RHS, SQ));
++    EXPECT_TRUE(haveNoCommonBitsSet(RHS, LHS, SQ));
++    EXPECT_EQ(NoCommonBitsSetResult::Known,
++              getNoCommonBitsSetResult(RHS, LHS, SQ));
++  }
++  {
++    // Without a context instruction the assume cannot be used at all.
++    auto M = parseModule(R"(
++  declare void @llvm.assume(i1)
++  define i32 @test(i32 %X, i32 %Y) {
++    %and = and i32 %Y, %X
++    %cmp = icmp eq i32 %and, 0
++    call void @llvm.assume(i1 %cmp)
++    %CxtI = add i32 %X, %Y
++    ret i32 %CxtI
++  })");
++
++    auto *F = M->getFunction("test");
++    const DataLayout &DL = M->getDataLayout();
++    AssumptionCache AC(*F);
++
++    Value *LHS = F->getArg(0);
++    Value *RHS = F->getArg(1);
++
++    SimplifyQuery SQ(DL, /*DT=*/nullptr, &AC, /*CxtI=*/nullptr);
++    EXPECT_FALSE(haveNoCommonBitsSet(LHS, RHS, SQ));
++    EXPECT_EQ(NoCommonBitsSetResult::Unknown,
++              getNoCommonBitsSetResult(LHS, RHS, SQ));
++  }
++  {
++    // The assume proves nothing about %Z, so it must not be used to justify
++    // that %X and %Z share no bits.
++    auto M = parseModule(R"(
++  declare void @llvm.assume(i1)
++  define i32 @test(i32 %X, i32 %Y, i32 %Z) {
++    %and = and i32 %Y, %X
++    %cmp = icmp eq i32 %and, 0
++    call void @llvm.assume(i1 %cmp)
++    %CxtI = add i32 %X, %Z
++    ret i32 %CxtI
++  })");
++
++    auto *F = M->getFunction("test");
++    const DataLayout &DL = M->getDataLayout();
++    AssumptionCache AC(*F);
++
++    Value *LHS = F->getArg(0);
++    Value *RHS = F->getArg(2);
++    auto *CxtI = findInstructionByNameOrNull(F, "CxtI");
++
++    SimplifyQuery SQ(DL, /*DT=*/nullptr, &AC, CxtI);
++    EXPECT_FALSE(haveNoCommonBitsSet(LHS, RHS, SQ));
++    EXPECT_EQ(NoCommonBitsSetResult::Unknown,
++              getNoCommonBitsSetResult(LHS, RHS, SQ));
++  }
++  {
++    // The assume does not dominate the context instruction (it's guarded by
++    // a branch that might not be taken), so it must not be used.
++    auto M = parseModule(R"(
++  declare void @llvm.assume(i1)
++  define i32 @test(i32 %X, i32 %Y, i1 %cond) {
++  entry:
++    br i1 %cond, label %assume_bb, label %add_bb
++  assume_bb:
++    %and = and i32 %Y, %X
++    %cmp = icmp eq i32 %and, 0
++    call void @llvm.assume(i1 %cmp)
++    br label %add_bb
++  add_bb:
++    %CxtI = add i32 %X, %Y
++    ret i32 %CxtI
++  })");
++
++    auto *F = M->getFunction("test");
++    const DataLayout &DL = M->getDataLayout();
++    AssumptionCache AC(*F);
++    DominatorTree DT(*F);
++
++    Value *LHS = F->getArg(0);
++    Value *RHS = F->getArg(1);
++    auto *CxtI = findInstructionByNameOrNull(F, "CxtI");
++
++    SimplifyQuery SQ(DL, &DT, &AC, CxtI);
++    EXPECT_FALSE(haveNoCommonBitsSet(LHS, RHS, SQ));
++    EXPECT_EQ(NoCommonBitsSetResult::Unknown,
++              getNoCommonBitsSetResult(LHS, RHS, SQ));
++  }
+   {
+     // Check for (A & B) and ~(A | B) in vector version
+     auto M = parseModule(R"(
