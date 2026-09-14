@@ -205,7 +205,7 @@ _ZN7testing15AssertionResultD2Ev.exit85:          ; preds = %bb.aq, %_ZNKSt14def
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #28
   %i.cs = load ptr, ptr %3, align 8, !noalias !54 ; 8 uses
-  %i.ct = load i64, ptr %i.j, align 8, !noalias !54 ; 12 uses
+  %i.ct = load i64, ptr %i.j, align 8, !noalias !54 ; 11 uses
   %.not.i.i86 = icmp eq ptr %i.cs, null           ; 5 uses
   %i.cu = icmp ne i64 %i.ct, 0
   %or.cond9.i.i = xor i1 %.not.i.i86, %i.cu
@@ -312,24 +312,16 @@ _ZN3gsl7details18dyn_array_iteratorIcEppEv.exit10.i.i.i.i: ; preds = %"_ZN9__gnu
   br i1 %i.dr, label %.lr.ph.split.i.i.i.i, label %_ZNK3gsl7details18dyn_array_iteratorIcEmiERKS2_.exit.i.i.i, !llvm.loop !51
 
 _ZNK3gsl7details18dyn_array_iteratorIcEmiERKS2_.exit.i.i.i: ; preds = %_ZN3gsl7details18dyn_array_iteratorIcEppEv.exit10.i.i.i.i, %_ZNK3gsl7details18dyn_array_iteratorIcEmiERKS2_.exit3.i.i.i
-  %.sroa.8.0.i = phi i64 [ 0, %_ZNK3gsl7details18dyn_array_iteratorIcEmiERKS2_.exit3.i.i.i ], [ %i.cy, %_ZN3gsl7details18dyn_array_iteratorIcEppEv.exit10.i.i.i.i ] ; 6 uses
+  %.sroa.8.0.i = phi i64 [ 0, %_ZNK3gsl7details18dyn_array_iteratorIcEmiERKS2_.exit3.i.i.i ], [ %i.cy, %_ZN3gsl7details18dyn_array_iteratorIcEppEv.exit10.i.i.i.i ] ; 5 uses
   %i.ds = sub nsw i64 %i.ct, %.sroa.8.0.i
   switch i64 %i.ds, label %_ZN7testing15AssertionResultD2Ev.exit109 [
-    i64 3, label %19
+    i64 3, label %bb.bc
     i64 2, label %bb.be
     i64 1, label %bb.bi
   ]
 
-19:                                               ; preds = %_ZNK3gsl7details18dyn_array_iteratorIcEmiERKS2_.exit.i.i.i
-  br i1 %.not.i.i86, label %20, label %bb.bc, !prof !9
-
-20:                                               ; preds = %19
-  call void @_ZN3gsl7details9terminateEv() #31, !noalias !56
-  unreachable
-
-bb.bc:                                            ; preds = %19
-  %21 = icmp ult i64 %.sroa.8.0.i, %i.ct
-  br i1 %21, label %"_ZN9__gnu_cxx5__ops12_Iter_negateIZN30dyn_array_tests_copy_ctor_Test8TestBodyEvE3$_0EclIN3gsl7details18dyn_array_iteratorIcEEEEbT_.exit12.i.i.i.i", label %bb.bd, !prof !10
+bb.bc:                                            ; preds = %_ZNK3gsl7details18dyn_array_iteratorIcEmiERKS2_.exit.i.i.i
+  br i1 %.not.i.i86, label %bb.bd, label %"_ZN9__gnu_cxx5__ops12_Iter_negateIZN30dyn_array_tests_copy_ctor_Test8TestBodyEvE3$_0EclIN3gsl7details18dyn_array_iteratorIcEEEEbT_.exit12.i.i.i.i", !prof !9
 
 bb.bd:                                            ; preds = %bb.bc
   call void @_ZN3gsl7details9terminateEv() #31, !noalias !56

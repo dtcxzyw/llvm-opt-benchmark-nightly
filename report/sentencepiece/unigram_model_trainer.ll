@@ -204,7 +204,7 @@ bb.hy:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %.loopexit599
 
 .loopexit599:                                     ; preds = %.loopexit599.loopexit, %bb.fk, %bb.fl
-  %i.ail = phi i64 [ %.pre962, %.loopexit599.loopexit ], [ %i.wc, %bb.fl ], [ %i.wc, %bb.fk ] ; 2 uses
+  %i.ail = phi i64 [ %i.wc, %bb.fl ], [ %.pre962, %.loopexit599.loopexit ], [ %i.wc, %bb.fk ] ; 2 uses
   %i.aim = add nuw nsw i64 %.0137843, 1           ; 2 uses
   %i.ain = icmp slt i64 %i.aim, %i.ail
   br i1 %i.ain, label %bb.fk, label %._crit_edge846, !llvm.loop !367
@@ -607,7 +607,7 @@ bb.fj:                                            ; preds = %bb.fi, %bb.fh
   br label %bb.iv
 
 bb.fk:                                            ; preds = %.lr.ph845, %.loopexit599
-  %i.we = phi i32 [ %i.vk, %.lr.ph845 ], [ %46, %.loopexit599 ] ; 4 uses
+  %i.we = phi i32 [ %i.vk, %.lr.ph845 ], [ %45, %.loopexit599 ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph845 ], [ %indvars.iv.next, %.loopexit599 ] ; 4 uses
   %i.wf = load ptr, ptr %25, align 8, !tbaa !199
   %i.wg = getelementptr inbounds nuw [4 x i8], ptr %i.wf, i64 %indvars.iv
@@ -615,7 +615,7 @@ bb.fk:                                            ; preds = %.lr.ph845, %.loopex
   %i.wi = sext i32 %i.wh to i64
   %i.wj = load ptr, ptr %23, align 8, !tbaa !199
   %i.wk = getelementptr inbounds nuw [4 x i8], ptr %i.wj, i64 %i.wi
-  %i.wl = load i32, ptr %i.wk, align 4, !tbaa !116 ; 3 uses
+  %i.wl = load i32, ptr %i.wk, align 4, !tbaa !116 ; 2 uses
   %i.wm = load ptr, ptr %29, align 8, !tbaa !199
   %i.wn = getelementptr inbounds nuw [4 x i8], ptr %i.wm, i64 %indvars.iv
   %i.wo = load i32, ptr %i.wn, align 4, !tbaa !116 ; 2 uses
@@ -628,7 +628,7 @@ bb.fl:                                            ; preds = %bb.fk
   br i1 %.not177, label %bb.fm, label %.loopexit599
 
 bb.fm:                                            ; preds = %bb.fl
-  %i.wr = add nsw i32 %i.wo, %i.wl                ; 2 uses
+  %i.wr = add nuw nsw i32 %i.wo, %i.wl
   %i.ws = sext i32 %i.wr to i64                   ; 2 uses
   %.not178 = icmp ugt i64 %i.ug, %i.ws
   br i1 %.not178, label %bb.fn, label %.loopexit599
@@ -640,18 +640,14 @@ bb.fn:                                            ; preds = %bb.fm
   %i.ww = load i32, ptr %i.wv, align 4, !tbaa !116
   %i.wx = sub nsw i32 %i.ww, %i.wh
   %i.wy = sext i32 %i.wx to i64
-  %43 = icmp ult i32 %i.wl, %i.wr
-  br i1 %43, label %.lr.ph842, label %.loopexit599
-
-.lr.ph842:                                        ; preds = %bb.fn
-  %44 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0546.0.lcssa, i64 %i.wq
-  %45 = ptrtoint ptr %i.wt to i64                 ; 2 uses
+  %43 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0546.0.lcssa, i64 %i.wq
+  %44 = ptrtoint ptr %i.wt to i64                 ; 2 uses
   br label %bb.fo
 
-bb.fo:                                            ; preds = %.lr.ph842, %_ZNSt6vectorIDiSaIDiEED2Ev.exit369
-  %.0136840 = phi ptr [ %44, %.lr.ph842 ], [ %i.yt, %_ZNSt6vectorIDiSaIDiEED2Ev.exit369 ] ; 7 uses
+bb.fo:                                            ; preds = %bb.fn, %_ZNSt6vectorIDiSaIDiEED2Ev.exit369
+  %.0136840 = phi ptr [ %43, %bb.fn ], [ %i.yt, %_ZNSt6vectorIDiSaIDiEED2Ev.exit369 ] ; 7 uses
   %i.wz = ptrtoint ptr %.0136840 to i64           ; 2 uses
-  %i.xa = sub i64 %45, %i.wz                      ; 3 uses
+  %i.xa = sub i64 %44, %i.wz                      ; 3 uses
   %i.xb = ashr i64 %i.xa, 4                       ; 2 uses
   %i.xc = icmp sgt i64 %i.xb, 0
   br i1 %i.xc, label %.lr.ph.i.i.i332, label %._crit_edge.i.i.i
@@ -694,7 +690,7 @@ bb.ft:                                            ; preds = %bb.fs
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %bb.ft
   %.pre54.i.i.i = ptrtoint ptr %scevgep.i.i.i to i64
-  %.pre55.i.i.i = sub i64 %45, %.pre54.i.i.i
+  %.pre55.i.i.i = sub i64 %44, %.pre54.i.i.i
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %bb.fo
@@ -1097,10 +1093,10 @@ bb.ia:                                            ; preds = %_ZNSt7__cxx1112basi
   %.pre964 = load i32, ptr %i.m, align 4, !tbaa !116
   br label %.loopexit599
 
-.loopexit599:                                     ; preds = %.loopexit599.loopexit, %bb.fn, %bb.fk, %bb.fl, %bb.fm
-  %46 = phi i32 [ %.pre964, %.loopexit599.loopexit ], [ %i.we, %bb.fn ], [ %i.we, %bb.fk ], [ %i.we, %bb.fl ], [ %i.we, %bb.fm ] ; 2 uses
+.loopexit599:                                     ; preds = %.loopexit599.loopexit, %bb.fk, %bb.fl, %bb.fm
+  %45 = phi i32 [ %i.we, %bb.fm ], [ %.pre964, %.loopexit599.loopexit ], [ %i.we, %bb.fk ], [ %i.we, %bb.fl ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.aip = sext i32 %46 to i64
+  %i.aip = sext i32 %45 to i64
   %i.aiq = icmp slt i64 %indvars.iv.next, %i.aip
   br i1 %i.aiq, label %bb.fk, label %._crit_edge846, !llvm.loop !409
 

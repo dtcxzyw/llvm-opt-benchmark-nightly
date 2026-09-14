@@ -204,7 +204,7 @@ _ZN2v88internal24FeedbackMetadataIterator4NextEv.exit: ; preds = %.cont, %.cont,
   %switch.ext = zext i8 %switch.load to i64       ; 2 uses
   %i.bx = load ptr, ptr %i.ad, align 8            ; 4 uses
   %i.by = load i64, ptr %7, align 8
-  %i.bz = shl nsw i32 %.sroa.11.0113, 3
+  %i.bz = shl nuw nsw i32 %.sroa.11.0113, 3
   %narrow = add nuw i32 %i.bz, 47
   %i.ca = zext i32 %narrow to i64
   %i.cb = add i64 %i.by, %i.ca
@@ -289,6 +289,7 @@ _ZN2v88internalL19GetFeedbackSlotTypeENS0_6TaggedINS0_9MaybeWeakINS0_6ObjectEEEE
   %i.dm = add i64 %i.dl, 1
   store i64 %i.dm, ptr %i.dk, align 8
   %i.dn = add i64 %.0114, %switch.ext             ; 2 uses
+  %9 = zext nneg i32 %.sroa.11.0113 to i64
   %switch.tableidx148 = add i8 %i.bt, -16         ; 2 uses
   %i.do = icmp ult i8 %switch.tableidx148, 10
   %i.dp = zext nneg i8 %switch.tableidx148 to i64
@@ -311,11 +312,9 @@ _ZNK2v88internal24FeedbackMetadataIterator10entry_sizeEv.exit30: ; preds = %bb.q
 
 bb.r:                                             ; preds = %_ZNK2v88internal24FeedbackMetadataIterator10entry_sizeEv.exit30
   %i.dr = load i64, ptr %7, align 8               ; 5 uses
-  %9 = trunc nuw nsw i64 %indvars.iv to i32
-  %10 = add i32 %.sroa.11.0113, %9
-  %11 = shl nsw i32 %10, 3
-  %narrow99 = add nuw i32 %11, 47
-  %12 = zext i32 %narrow99 to i64
+  %10 = add nuw nsw i64 %indvars.iv, %9
+  %11 = shl nuw nsw i64 %10, 3
+  %12 = add nuw nsw i64 %11, 47
   %i.ds = add i64 %i.dr, %12
   %i.dt = inttoptr i64 %i.ds to ptr
   %i.du = load atomic volatile i64, ptr %i.dt monotonic, align 8 ; 6 uses

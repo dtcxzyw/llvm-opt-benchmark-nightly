@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 163 ; 4 uses
   store i8 0, ptr %i.aa, align 1
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %i.ac = load ptr, ptr %i.ab, align 8, !nonnull !146, !align !154, !noundef !146 ; 4 uses
+  %i.ac = load ptr, ptr %i.ab, align 8, !nonnull !146, !align !154, !noundef !146 ; 3 uses
   store ptr %i.ac, ptr %0, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 166
@@ -214,7 +214,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store ptr %i.ac, ptr %i.ag, align 8
   %i.ah = getelementptr i8, ptr %i.ac, i64 16
-  %.val64 = load i64, ptr %i.ah, align 8, !noundef !146 ; 6 uses
+  %.val64 = load i64, ptr %i.ah, align 8, !noundef !146 ; 5 uses
   %i.ai = icmp ult i64 %.val64, 1152921504606846976
   tail call void @llvm.assume(i1 %i.ai)
   %i.aj = icmp eq i64 %.val64, 0
@@ -227,42 +227,30 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.c
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !56126)
-  %i.al = mul i64 %.val64, 66272                  ; 3 uses
+  %i.al = mul i64 %.val64, 66272                  ; 2 uses
   %or.cond.i.i.i = icmp samesign ugt i64 %.val64, 139174493554665
-  br i1 %or.cond.i.i.i, label %bb.g, label %2, !prof !262
+  br i1 %or.cond.i.i.i, label %bb.g, label %bb.f, !prof !262
 
-2:                                                ; preds = %bb.e
-  %3 = icmp eq i64 %i.al, 0
-  br i1 %3, label %_RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit, label %bb.f
-
-bb.f:                                             ; preds = %2
+bb.f:                                             ; preds = %bb.e
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #53, !noalias !56127
   %i.am = tail call noundef align 16 ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef %i.al, i64 noundef range(i64 1, 17) 16) #53, !noalias !56127 ; 2 uses
   %i.an = icmp eq ptr %i.am, null
-  br i1 %i.an, label %bb.g, label %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit_crit_edge
-
-._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit_crit_edge: ; preds = %bb.f
-  %.pre = load ptr, ptr %i.ag, align 8
-  br label %_RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit
+  br i1 %i.an, label %bb.g, label %_RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.sroa.4.0.ph.i.i = phi i64 [ 16, %bb.f ], [ 0, %bb.e ]
   tail call void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %i.al) #62, !noalias !56126
   unreachable
 
-_RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit: ; preds = %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit_crit_edge, %2
-  %4 = phi ptr [ %i.ac, %2 ], [ %.pre, %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit_crit_edge ] ; 2 uses
-  %.sroa.10.0.i.i = phi ptr [ inttoptr (i64 16 to ptr), %2 ], [ %i.am, %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit_crit_edge ]
-  %.sroa.4.0.i.i = phi i64 [ 0, %2 ], [ %.val64, %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit_crit_edge ] ; 2 uses
-  %5 = icmp samesign ule i64 %.val64, %.sroa.4.0.i.i
-  tail call void @llvm.assume(i1 %5)
-  store i64 %.sroa.4.0.i.i, ptr %i.ak, align 8, !alias.scope !56126
+_RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit: ; preds = %bb.f
+  store i64 %.val64, ptr %i.ak, align 8, !alias.scope !56126
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
-  store ptr %.sroa.10.0.i.i, ptr %i.ao, align 8, !alias.scope !56126
+  store ptr %i.am, ptr %i.ao, align 8, !alias.scope !56126
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 8 uses
   store i64 0, ptr %i.ap, align 8, !alias.scope !56126
   store i8 1, ptr %i.z, align 4
-  %i.aq = getelementptr i8, ptr %4, i64 16
+  %2 = load ptr, ptr %i.ag, align 8, !nonnull !146, !align !154, !noundef !146 ; 2 uses
+  %i.aq = getelementptr i8, ptr %2, i64 16
   %.val56 = load i64, ptr %i.aq, align 8, !noundef !146 ; 5 uses
   %i.ar = icmp ult i64 %.val56, 1152921504606846976
   tail call void @llvm.assume(i1 %i.ar)
@@ -292,7 +280,7 @@ bb.j:                                             ; preds = %bb.i, %_RNvMNtCsgCe
   unreachable
 
 _RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit106: ; preds = %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit106_crit_edge, %bb.h
-  %i.ax = phi ptr [ %4, %bb.h ], [ %.pre271.a, %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit106_crit_edge ] ; 2 uses
+  %i.ax = phi ptr [ %2, %bb.h ], [ %.pre271.a, %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit106_crit_edge ] ; 2 uses
   %.sroa.10.0.i.i103 = phi ptr [ inttoptr (i64 16 to ptr), %bb.h ], [ %i.av, %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit106_crit_edge ]
   %.sroa.4.0.i.i104 = phi i64 [ 0, %bb.h ], [ %.val56, %._RNvMNtCsgCecv3eZDcN_5alloc3vecINtB2_3VecNCNvMs6_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local13loadbalancing13ping_balancerNtBK_11PingChecker18check_update_score0E13with_capacityCs7XnEB7DeNXr_7sslocal.exit106_crit_edge ] ; 2 uses
   %i.ay = icmp samesign ule i64 %.val56, %.sroa.4.0.i.i104

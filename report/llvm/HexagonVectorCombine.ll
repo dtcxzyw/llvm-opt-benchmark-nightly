@@ -205,7 +205,7 @@ _ZNK12_GLOBAL__N_112AlignVectors8ByteSpan6extentEv.exit.i: ; preds = %._crit_edg
   %.07.i.i = phi i32 [ %i.pr, %._crit_edge.i.i175 ], [ 0, %_ZNK12_GLOBAL__N_120HexagonVectorCombine9getByteTyEi.exit.i ]
   %i.qe = add nsw i32 %i.oq, -1
   %i.qf = add i32 %i.qe, %.07.i.i
-  %i.qg = sdiv i32 %i.qf, %i.oq                   ; 8 uses
+  %i.qg = sdiv i32 %i.qf, %i.oq                   ; 7 uses
   %i.qh = load i8, ptr %.081, align 8, !tbaa !295
   %i.qi = icmp ult i8 %i.qh, 23
   br i1 %i.qi, label %bb.ah, label %_ZNK12_GLOBAL__N_120HexagonVectorCombine9getBoolTyEi.exit.i
@@ -386,7 +386,7 @@ _ZNSt6vectorIN12_GLOBAL__N_112AlignVectors8ByteSpan5BlockESaIS3_EE12emplace_back
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %42, i8 0, i64 24, i1 false)
   %.not372424.i = icmp eq ptr %.sroa.0317.0.lcssa, %.sroa.13.0.lcssa ; 2 uses
-  br i1 %.not372424.i, label %.preheader382.i, label %.lr.ph427.i
+  br i1 %.not372424.i, label %.lr.ph430.i, label %.lr.ph427.i
 
 .lr.ph427.i:                                      ; preds = %._crit_edge.i
   %i.sd = getelementptr inbounds nuw i8, ptr %43, i64 8
@@ -416,11 +416,7 @@ _ZNSt6vectorIN12_GLOBAL__N_112AlignVectors8ByteSpan5BlockESaIS3_EE12emplace_back
   %niter1081.ncmp.3 = icmp eq i64 %niter1081.next.3, %unroll_iter1080
   br i1 %niter1081.ncmp.3, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph418.i, !llvm.loop !822
 
-.preheader382.i:                                  ; preds = %_ZN12_GLOBAL__N_112AlignVectors8ByteSpanD2Ev.exit.i, %._crit_edge.i
-  %.not131428.i = icmp eq i32 %i.qg, -1
-  br i1 %.not131428.i, label %.lr.ph434.preheader.i, label %.lr.ph430.i
-
-.lr.ph430.i:                                      ; preds = %.preheader382.i
+.lr.ph430.i:                                      ; preds = %_ZN12_GLOBAL__N_112AlignVectors8ByteSpanD2Ev.exit.i, %._crit_edge.i
   %i.sq = shl nuw i32 %i.oq, %i.qt
   %i.sr = getelementptr inbounds nuw i8, ptr %40, i64 8
   %i.ss = getelementptr inbounds nuw i8, ptr %39, i64 16 ; 5 uses
@@ -498,7 +494,7 @@ _ZN12_GLOBAL__N_112AlignVectors8ByteSpanD2Ev.exit.i: ; preds = %bb.an, %._crit_e
   call void @llvm.lifetime.end.p0(ptr nonnull %43) #20
   %i.ue = getelementptr inbounds nuw i8, ptr %.sroa.0325.0425.i, i64 24 ; 2 uses
   %.not372.i = icmp eq ptr %i.ue, %.sroa.13.0.lcssa
-  br i1 %.not372.i, label %.preheader382.i, label %bb.am
+  br i1 %.not372.i, label %.lr.ph430.i, label %bb.am
 
 .lr.ph422.i:                                      ; preds = %bb.am, %"_ZSt3minIPN4llvm11InstructionEZNK12_GLOBAL__N_112AlignVectors16realignLoadGroupERNS0_13IRBuilderBaseERKNS4_8ByteSpanEiPNS0_5ValueESB_E3$_0ERKT_SF_SF_T0_.exit.i"
   %.sroa.0323.0420.i = phi ptr [ %i.yp, %"_ZSt3minIPN4llvm11InstructionEZNK12_GLOBAL__N_112AlignVectors16realignLoadGroupERNS0_13IRBuilderBaseERKNS4_8ByteSpanEiPNS0_5ValueESB_E3$_0ERKT_SF_SF_T0_.exit.i" ], [ %.val161.i, %bb.am ] ; 2 uses
@@ -714,11 +710,7 @@ bb.av:                                            ; preds = %"_ZZNK12_GLOBAL__N_
   br i1 %.not377.i, label %._crit_edge423.loopexit.i, label %.lr.ph422.i
 
 .preheader.i:                                     ; preds = %"_ZSt3minIPN4llvm11InstructionEZNK12_GLOBAL__N_112AlignVectors16realignLoadGroupERNS0_13IRBuilderBaseERKNS4_8ByteSpanEiPNS0_5ValueESB_E3$_0ERKT_SF_SF_T0_.exit212.thread368.i"
-  br i1 %.not409.i, label %._crit_edge435.i, label %.lr.ph434.preheader.i
-
-.lr.ph434.preheader.i:                            ; preds = %.preheader382.i, %.preheader.i
-  %.pre-phi = phi i64 [ %i.tw, %.preheader.i ], [ 4294967295, %.preheader382.i ]
-  br label %.lr.ph434.i
+  br i1 %.not409.i, label %._crit_edge435.i, label %.lr.ph434.i
 
 bb.aw:                                            ; preds = %"_ZSt3minIPN4llvm11InstructionEZNK12_GLOBAL__N_112AlignVectors16realignLoadGroupERNS0_13IRBuilderBaseERKNS4_8ByteSpanEiPNS0_5ValueESB_E3$_0ERKT_SF_SF_T0_.exit212.thread368.i", %.lr.ph430.i
   %indvars.iv481.i = phi i64 [ 0, %.lr.ph430.i ], [ %indvars.iv.next482.i, %"_ZSt3minIPN4llvm11InstructionEZNK12_GLOBAL__N_112AlignVectors16realignLoadGroupERNS0_13IRBuilderBaseERKNS4_8ByteSpanEiPNS0_5ValueESB_E3$_0ERKT_SF_SF_T0_.exit212.thread368.i" ] ; 11 uses
@@ -1121,8 +1113,8 @@ _ZN4llvm16DenseMapIteratorIPNS_11InstructionES2_NS_12DenseMapInfoIS2_vEENS_6deta
   %i.akt = getelementptr inbounds nuw i8, ptr %47, i64 33
   br label %bb.cc
 
-.lr.ph434.i:                                      ; preds = %bb.bz, %.lr.ph434.preheader.i
-  %indvars.iv484.i = phi i64 [ 0, %.lr.ph434.preheader.i ], [ %indvars.iv.next485.i, %bb.bz ] ; 3 uses
+.lr.ph434.i:                                      ; preds = %.preheader.i, %bb.bz
+  %indvars.iv484.i = phi i64 [ %indvars.iv.next485.i, %bb.bz ], [ 0, %.preheader.i ] ; 3 uses
   %i.aku = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0329.0.lcssa551.i, i64 %indvars.iv484.i ; 3 uses
   store ptr null, ptr %i.aku, align 8, !tbaa !415
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #20
@@ -1164,7 +1156,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
 
 bb.bz:                                            ; preds = %bb.by, %.lr.ph434.i
   %indvars.iv.next485.i = add nuw nsw i64 %indvars.iv484.i, 1 ; 2 uses
-  %.not132.i = icmp eq i64 %indvars.iv.next485.i, %.pre-phi
+  %.not132.i = icmp eq i64 %indvars.iv.next485.i, %i.tw
   br i1 %.not132.i, label %._crit_edge435.i, label %.lr.ph434.i, !llvm.loop !870
 
 ._crit_edge456.i:                                 ; preds = %_ZN12_GLOBAL__N_112AlignVectors8ByteSpanD2Ev.exit263.i, %._crit_edge435.i

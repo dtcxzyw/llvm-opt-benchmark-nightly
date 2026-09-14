@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %.lr.ph200
   br label %_RNvXs8_CslmKYcnV0hjo_10num_traitstNtB5_3Num14from_str_radix.exit.i.i.i, !dbg !139128
 
 bb.u:                                             ; preds = %bb.t
-  %i.dq = trunc nsw i32 %spec.select79.i.i.i.i.i to i16, !dbg !139129
+  %i.dq = trunc nuw nsw i32 %spec.select79.i.i.i.i.i to i16, !dbg !139129
   %i.dr = add i16 %i.cy, %i.dq, !dbg !139130      ; 3 uses
   %i.ds = icmp ult i16 %i.dr, %i.cy, !dbg !139130
   br i1 %i.ds, label %_RNvXs8_CslmKYcnV0hjo_10num_traitstNtB5_3Num14from_str_radix.exit.i.i.i, label %.preheader62.split.i.i.i.i.i, !dbg !139131, !prof !3210
@@ -608,7 +608,7 @@ define hidden void @_RNvMs3_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2m
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !167757
-  %i.b = add i64 %1, 1, !dbg !167758              ; 5 uses
+  %i.b = add i64 %1, 1, !dbg !167758              ; 4 uses
   %i.c = mul i64 %i.b, 48, !dbg !167759           ; 3 uses
   %or.cond.i = icmp ugt i64 %i.b, 192153584101141162, !dbg !167760
   br i1 %or.cond.i, label %bb.d, label %bb.b, !dbg !167760, !prof !3433
@@ -625,51 +625,44 @@ _RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G7
   store ptr inttoptr (i64 8 to ptr), ptr %i.f, align 8, !dbg !167764
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !167764 ; 2 uses
   store i64 0, ptr %i.g, align 8, !dbg !167764
-  br label %3, !dbg !167765
+  invoke void @_RNvMs3_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE8grow_oneCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
+          to label %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge unwind label %bb.e, !dbg !167765
+
+_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge: ; preds = %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13
+  %.pre = load ptr, ptr %i.f, align 8, !dbg !167766, !alias.scope !167754, !noalias !167755
+  br label %bb.f, !dbg !167765
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #43, !dbg !167766, !noalias !167754
-  %i.h = tail call noundef align 8 ptr @_RNvCs9MrPpZx4smZ_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #43, !dbg !167767, !noalias !167754 ; 3 uses
-  %i.i = icmp eq ptr %i.h, null, !dbg !167768
-  br i1 %i.i, label %bb.d, label %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit, !dbg !167769
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #43, !dbg !167767, !noalias !167756
+  %i.h = tail call noundef align 8 ptr @_RNvCs9MrPpZx4smZ_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #43, !dbg !167768, !noalias !167756 ; 3 uses
+  %i.i = icmp eq ptr %i.h, null, !dbg !167769
+  br i1 %i.i, label %bb.d, label %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit, !dbg !167770
 
 bb.d:                                             ; preds = %bb.a, %bb.c
   %.sroa.46.0.ph = phi i64 [ 8, %bb.c ], [ 0, %bb.a ]
-  tail call void @_RNvNtCsgZ49sUHp3tW_5alloc7raw_vec12handle_error(i64 noundef %.sroa.46.0.ph, i64 %i.c) #44, !dbg !167770
-  unreachable, !dbg !167770
+  tail call void @_RNvNtCsgZ49sUHp3tW_5alloc7raw_vec12handle_error(i64 noundef %.sroa.46.0.ph, i64 %i.c) #44, !dbg !167771
+  unreachable, !dbg !167771
 
 _RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit: ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8, !dbg !167764
-  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !167764 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !167764
   store ptr %i.h, ptr %i.j, align 8, !dbg !167764
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !167764 ; 3 uses
-  store i64 0, ptr %i.k, align 8, !dbg !167764
-  %2 = icmp eq i64 %i.b, 0, !dbg !167765
-  br i1 %2, label %3, label %bb.f, !dbg !167765
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !167764
+  br label %bb.f, !dbg !167772
 
-3:                                                ; preds = %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit
-  %4 = phi ptr [ %i.g, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13 ], [ %i.k, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ]
-  %5 = phi ptr [ %i.f, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13 ], [ %i.j, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ]
-  invoke void @_RNvMs3_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE8grow_oneCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
-          to label %._crit_edge unwind label %bb.e, !dbg !167771
-
-._crit_edge:                                      ; preds = %3
-  %.pre = load ptr, ptr %5, align 8, !dbg !167772, !alias.scope !167755, !noalias !167756
-  br label %bb.f, !dbg !167771
-
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13
   %i.l = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtB4_6option6OptionlEEEEECskY9G75ZWc4U_11polars_expr(ptr noalias noundef align 8 dereferenceable(24) %i.a) #45
           to label %bb.h unwind label %bb.g, !dbg !167773
 
-bb.f:                                             ; preds = %._crit_edge, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit
-  %i.m = phi ptr [ %i.h, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ], [ %.pre, %._crit_edge ], !dbg !167772 ; 2 uses
-  %i.n = phi ptr [ %i.k, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ], [ %4, %._crit_edge ]
+bb.f:                                             ; preds = %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit
+  %i.m = phi ptr [ %i.h, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ], [ %.pre, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge ], !dbg !167766 ; 2 uses
+  %i.n = phi ptr [ %i.k, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ], [ %i.g, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge ]
   store i32 0, ptr %i.m, align 8, !dbg !167774
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 40, !dbg !167774
   store i32 0, ptr %.sroa.44.0..sroa_idx, align 8, !dbg !167774
-  store i64 1, ptr %i.n, align 8, !dbg !167775, !alias.scope !167755, !noalias !167756
+  store i64 1, ptr %i.n, align 8, !dbg !167775, !alias.scope !167754, !noalias !167755
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !dbg !167776
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !167777
   store i32 1, ptr %i.o, align 8, !dbg !167777
@@ -759,7 +752,7 @@ define hidden void @_RNvMs3_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2m
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !167889
-  %i.b = add i64 %1, 1, !dbg !167890              ; 5 uses
+  %i.b = add i64 %1, 1, !dbg !167890              ; 4 uses
   %i.c = mul i64 %i.b, 56, !dbg !167891           ; 3 uses
   %or.cond.i = icmp ugt i64 %i.b, 164703072086692425, !dbg !167892
   br i1 %or.cond.i, label %bb.d, label %bb.b, !dbg !167892, !prof !3433
@@ -776,51 +769,44 @@ _RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G7
   store ptr inttoptr (i64 8 to ptr), ptr %i.f, align 8, !dbg !167896
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !167896 ; 2 uses
   store i64 0, ptr %i.g, align 8, !dbg !167896
-  br label %3, !dbg !167897
+  invoke void @_RNvMs3_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE8grow_oneCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
+          to label %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge unwind label %bb.e, !dbg !167897
+
+_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge: ; preds = %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13
+  %.pre = load ptr, ptr %i.f, align 8, !dbg !167898, !alias.scope !167886, !noalias !167887
+  br label %bb.f, !dbg !167897
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #43, !dbg !167898, !noalias !167886
-  %i.h = tail call noundef align 8 ptr @_RNvCs9MrPpZx4smZ_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #43, !dbg !167899, !noalias !167886 ; 3 uses
-  %i.i = icmp eq ptr %i.h, null, !dbg !167900
-  br i1 %i.i, label %bb.d, label %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit, !dbg !167901
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #43, !dbg !167899, !noalias !167888
+  %i.h = tail call noundef align 8 ptr @_RNvCs9MrPpZx4smZ_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #43, !dbg !167900, !noalias !167888 ; 3 uses
+  %i.i = icmp eq ptr %i.h, null, !dbg !167901
+  br i1 %i.i, label %bb.d, label %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit, !dbg !167902
 
 bb.d:                                             ; preds = %bb.a, %bb.c
   %.sroa.46.0.ph = phi i64 [ 8, %bb.c ], [ 0, %bb.a ]
-  tail call void @_RNvNtCsgZ49sUHp3tW_5alloc7raw_vec12handle_error(i64 noundef %.sroa.46.0.ph, i64 %i.c) #44, !dbg !167902
-  unreachable, !dbg !167902
+  tail call void @_RNvNtCsgZ49sUHp3tW_5alloc7raw_vec12handle_error(i64 noundef %.sroa.46.0.ph, i64 %i.c) #44, !dbg !167903
+  unreachable, !dbg !167903
 
 _RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit: ; preds = %bb.c
   store i64 %i.b, ptr %i.a, align 8, !dbg !167896
-  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !167896 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !167896
   store ptr %i.h, ptr %i.j, align 8, !dbg !167896
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !167896 ; 3 uses
-  store i64 0, ptr %i.k, align 8, !dbg !167896
-  %2 = icmp eq i64 %i.b, 0, !dbg !167897
-  br i1 %2, label %3, label %bb.f, !dbg !167897
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !167896
+  br label %bb.f, !dbg !167904
 
-3:                                                ; preds = %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit
-  %4 = phi ptr [ %i.g, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13 ], [ %i.k, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ]
-  %5 = phi ptr [ %i.f, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13 ], [ %i.j, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ]
-  invoke void @_RNvMs3_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB5_6RawVecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE8grow_oneCslpwjCj2YNBy_9polars_io(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a)
-          to label %._crit_edge unwind label %bb.e, !dbg !167903
-
-._crit_edge:                                      ; preds = %3
-  %.pre = load ptr, ptr %5, align 8, !dbg !167904, !alias.scope !167887, !noalias !167888
-  br label %bb.f, !dbg !167903
-
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13
   %i.l = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtB4_6option6OptionxEEEEECskY9G75ZWc4U_11polars_expr(ptr noalias noundef align 8 dereferenceable(24) %i.a) #45
           to label %bb.h unwind label %bb.g, !dbg !167905
 
-bb.f:                                             ; preds = %._crit_edge, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit
-  %i.m = phi ptr [ %i.h, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ], [ %.pre, %._crit_edge ], !dbg !167904 ; 2 uses
-  %i.n = phi ptr [ %i.k, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ], [ %4, %._crit_edge ]
+bb.f:                                             ; preds = %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit
+  %i.m = phi ptr [ %i.h, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ], [ %.pre, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge ], !dbg !167898 ; 2 uses
+  %i.n = phi ptr [ %i.k, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit ], [ %i.g, %_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr.exit.thread13._crit_edge ]
   store i32 0, ptr %i.m, align 8, !dbg !167906
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 48, !dbg !167906
   store i32 0, ptr %.sroa.44.0..sroa_idx, align 8, !dbg !167906
-  store i64 1, ptr %i.n, align 8, !dbg !167907, !alias.scope !167887, !noalias !167888
+  store i64 1, ptr %i.n, align 8, !dbg !167907, !alias.scope !167886, !noalias !167887
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !dbg !167908
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !167909
   store i32 1, ptr %i.o, align 8, !dbg !167909
@@ -1223,20 +1209,20 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !167729 = distinct !DISubprogram(name: "push<slotmap::basic::Slot<polars_utils::cache::LruEntry<&str, core::option::Option<i32>>>, alloc::alloc::Global>", linkageName: "_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE4pushCskY9G75ZWc4U_11polars_expr", scope: !3195, file: !3185, line: 1003, type: !3148, scopeLine: 1003, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !3147)
 !167730 = distinct !DILexicalBlock(scope: !167715, file: !3224, line: 204, column: 9)
 !167731 = distinct !DILocation(line: 1004, column: 22, scope: !167729, inlinedAt: !167753)
-!167732 = distinct !{!167732, !"_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr"}
-!167733 = distinct !{!167733, !167732, !"_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr: argument 0"}
-!167734 = distinct !DILocation(line: 465, column: 47, scope: !36, inlinedAt: !167720)
-!167735 = distinct !DILocation(line: 449, column: 14, scope: !41, inlinedAt: !167734)
-!167736 = distinct !DILocation(line: 332, column: 9, scope: !40, inlinedAt: !167735)
-!167737 = distinct !DILocation(line: 210, column: 73, scope: !39, inlinedAt: !167736)
-!167738 = distinct !DILexicalBlock(scope: !167716, file: !3191, line: 442, column: 13)
-!167739 = distinct !{!167739, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE8push_mutCskY9G75ZWc4U_11polars_expr"}
-!167740 = distinct !{!167740, !167739, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE8push_mutCskY9G75ZWc4U_11polars_expr: argument 0"}
-!167741 = distinct !{!167741, !167739, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE8push_mutCskY9G75ZWc4U_11polars_expr: argument 1"}
-!167742 = distinct !DILocation(line: 1044, column: 28, scope: !236, inlinedAt: !167731)
-!167743 = distinct !DILocation(line: 2026, column: 18, scope: !240, inlinedAt: !167742)
-!167744 = distinct !DILocation(line: 296, column: 20, scope: !239, inlinedAt: !167743)
-!167745 = distinct !DILocation(line: 609, column: 14, scope: !238, inlinedAt: !167744)
+!167732 = distinct !{!167732, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE8push_mutCskY9G75ZWc4U_11polars_expr"}
+!167733 = distinct !{!167733, !167732, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE8push_mutCskY9G75ZWc4U_11polars_expr: argument 0"}
+!167734 = distinct !{!167734, !167732, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEE8push_mutCskY9G75ZWc4U_11polars_expr: argument 1"}
+!167735 = distinct !DILocation(line: 1044, column: 28, scope: !236, inlinedAt: !167731)
+!167736 = distinct !DILocation(line: 2026, column: 18, scope: !240, inlinedAt: !167735)
+!167737 = distinct !DILocation(line: 296, column: 20, scope: !239, inlinedAt: !167736)
+!167738 = distinct !DILocation(line: 609, column: 14, scope: !238, inlinedAt: !167737)
+!167739 = distinct !{!167739, !"_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr"}
+!167740 = distinct !{!167740, !167739, !"_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr: argument 0"}
+!167741 = distinct !DILocation(line: 465, column: 47, scope: !36, inlinedAt: !167720)
+!167742 = distinct !DILocation(line: 449, column: 14, scope: !41, inlinedAt: !167741)
+!167743 = distinct !DILocation(line: 332, column: 9, scope: !40, inlinedAt: !167742)
+!167744 = distinct !DILocation(line: 210, column: 73, scope: !39, inlinedAt: !167743)
+!167745 = distinct !DILexicalBlock(scope: !167716, file: !3191, line: 442, column: 13)
 !167746 = distinct !DILocation(line: 1045, column: 13, scope: !242, inlinedAt: !167731)
 !167747 = !DILocation(line: 204, column: 25, scope: !167715)
 !167748 = !DILocation(line: 524, column: 9, scope: !167717, inlinedAt: !167747)
@@ -1246,8 +1232,8 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !167752 = !DILocation(line: 438, column: 21, scope: !167727, inlinedAt: !167750)
 !167753 = !DILocation(line: 205, column: 15, scope: !167730)
 !167754 = !{!167733}
-!167755 = !{!167740}
-!167756 = !{!167741}
+!167755 = !{!167734}
+!167756 = !{!167740}
 !167757 = !DILocation(line: 204, column: 13, scope: !167715)
 !167758 = !DILocation(line: 204, column: 44, scope: !167715)
 !167759 = !DILocation(line: 3105, column: 26, scope: !29, inlinedAt: !167724)
@@ -1256,14 +1242,14 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !167762 = !DILocation(line: 767, column: 9, scope: !167726, inlinedAt: !167751)
 !167763 = !DILocation(line: 210, column: 9, scope: !167728, inlinedAt: !167752)
 !167764 = !DILocation(line: 977, column: 9, scope: !167718, inlinedAt: !167748)
-!167765 = !DILocation(line: 1040, column: 12, scope: !236, inlinedAt: !167731)
-!167766 = !DILocation(line: 0, scope: !36, inlinedAt: !167720)
-!167767 = !DILocation(line: 101, column: 9, scope: !37, inlinedAt: !167737)
-!167768 = !DILocation(line: 469, column: 25, scope: !42, inlinedAt: !167720)
-!167769 = !DILocation(line: 469, column: 19, scope: !42, inlinedAt: !167720)
-!167770 = !DILocation(line: 442, column: 25, scope: !167738, inlinedAt: !167750)
-!167771 = !DILocation(line: 1041, column: 22, scope: !236, inlinedAt: !167731)
-!167772 = !DILocation(line: 614, column: 9, scope: !237, inlinedAt: !167745)
+!167765 = !DILocation(line: 1041, column: 22, scope: !236, inlinedAt: !167731)
+!167766 = !DILocation(line: 614, column: 9, scope: !237, inlinedAt: !167738)
+!167767 = !DILocation(line: 0, scope: !36, inlinedAt: !167720)
+!167768 = !DILocation(line: 101, column: 9, scope: !37, inlinedAt: !167744)
+!167769 = !DILocation(line: 469, column: 25, scope: !42, inlinedAt: !167720)
+!167770 = !DILocation(line: 469, column: 19, scope: !42, inlinedAt: !167720)
+!167771 = !DILocation(line: 442, column: 25, scope: !167745, inlinedAt: !167750)
+!167772 = !DILocation(line: 1040, column: 12, scope: !236, inlinedAt: !167731)
 !167773 = !DILocation(line: 216, column: 5, scope: !167715)
 !167774 = !DILocation(line: 1921, column: 41, scope: !241, inlinedAt: !167746)
 !167775 = !DILocation(line: 1046, column: 13, scope: !242, inlinedAt: !167731)
@@ -1355,20 +1341,20 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !167861 = distinct !DISubprogram(name: "push<slotmap::basic::Slot<polars_utils::cache::LruEntry<&str, core::option::Option<i64>>>, alloc::alloc::Global>", linkageName: "_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE4pushCskY9G75ZWc4U_11polars_expr", scope: !3195, file: !3185, line: 1003, type: !3148, scopeLine: 1003, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !3147)
 !167862 = distinct !DILexicalBlock(scope: !167847, file: !3224, line: 204, column: 9)
 !167863 = distinct !DILocation(line: 1004, column: 22, scope: !167861, inlinedAt: !167885)
-!167864 = distinct !{!167864, !"_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr"}
-!167865 = distinct !{!167865, !167864, !"_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr: argument 0"}
-!167866 = distinct !DILocation(line: 465, column: 47, scope: !36, inlinedAt: !167852)
-!167867 = distinct !DILocation(line: 449, column: 14, scope: !41, inlinedAt: !167866)
-!167868 = distinct !DILocation(line: 332, column: 9, scope: !40, inlinedAt: !167867)
-!167869 = distinct !DILocation(line: 210, column: 73, scope: !39, inlinedAt: !167868)
-!167870 = distinct !DILexicalBlock(scope: !167848, file: !3191, line: 442, column: 13)
-!167871 = distinct !{!167871, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE8push_mutCskY9G75ZWc4U_11polars_expr"}
-!167872 = distinct !{!167872, !167871, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE8push_mutCskY9G75ZWc4U_11polars_expr: argument 0"}
-!167873 = distinct !{!167873, !167871, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE8push_mutCskY9G75ZWc4U_11polars_expr: argument 1"}
-!167874 = distinct !DILocation(line: 1044, column: 28, scope: !244, inlinedAt: !167863)
-!167875 = distinct !DILocation(line: 2026, column: 18, scope: !248, inlinedAt: !167874)
-!167876 = distinct !DILocation(line: 296, column: 20, scope: !247, inlinedAt: !167875)
-!167877 = distinct !DILocation(line: 609, column: 14, scope: !246, inlinedAt: !167876)
+!167864 = distinct !{!167864, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE8push_mutCskY9G75ZWc4U_11polars_expr"}
+!167865 = distinct !{!167865, !167864, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE8push_mutCskY9G75ZWc4U_11polars_expr: argument 0"}
+!167866 = distinct !{!167866, !167864, !"_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCs5ERpa6sqwDS_7slotmap5basic4SlotINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionxEEEE8push_mutCskY9G75ZWc4U_11polars_expr: argument 1"}
+!167867 = distinct !DILocation(line: 1044, column: 28, scope: !244, inlinedAt: !167863)
+!167868 = distinct !DILocation(line: 2026, column: 18, scope: !248, inlinedAt: !167867)
+!167869 = distinct !DILocation(line: 296, column: 20, scope: !247, inlinedAt: !167868)
+!167870 = distinct !DILocation(line: 609, column: 14, scope: !246, inlinedAt: !167869)
+!167871 = distinct !{!167871, !"_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr"}
+!167872 = distinct !{!167872, !167871, !"_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr: argument 0"}
+!167873 = distinct !DILocation(line: 465, column: 47, scope: !36, inlinedAt: !167852)
+!167874 = distinct !DILocation(line: 449, column: 14, scope: !41, inlinedAt: !167873)
+!167875 = distinct !DILocation(line: 332, column: 9, scope: !40, inlinedAt: !167874)
+!167876 = distinct !DILocation(line: 210, column: 73, scope: !39, inlinedAt: !167875)
+!167877 = distinct !DILexicalBlock(scope: !167848, file: !3191, line: 442, column: 13)
 !167878 = distinct !DILocation(line: 1045, column: 13, scope: !250, inlinedAt: !167863)
 !167879 = !DILocation(line: 204, column: 25, scope: !167847)
 !167880 = !DILocation(line: 524, column: 9, scope: !167849, inlinedAt: !167879)
@@ -1378,8 +1364,8 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !167884 = !DILocation(line: 438, column: 21, scope: !167859, inlinedAt: !167882)
 !167885 = !DILocation(line: 205, column: 15, scope: !167862)
 !167886 = !{!167865}
-!167887 = !{!167872}
-!167888 = !{!167873}
+!167887 = !{!167866}
+!167888 = !{!167872}
 !167889 = !DILocation(line: 204, column: 13, scope: !167847)
 !167890 = !DILocation(line: 204, column: 44, scope: !167847)
 !167891 = !DILocation(line: 3105, column: 26, scope: !29, inlinedAt: !167856)
@@ -1388,14 +1374,14 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !167894 = !DILocation(line: 767, column: 9, scope: !167858, inlinedAt: !167883)
 !167895 = !DILocation(line: 210, column: 9, scope: !167860, inlinedAt: !167884)
 !167896 = !DILocation(line: 977, column: 9, scope: !167850, inlinedAt: !167880)
-!167897 = !DILocation(line: 1040, column: 12, scope: !244, inlinedAt: !167863)
-!167898 = !DILocation(line: 0, scope: !36, inlinedAt: !167852)
-!167899 = !DILocation(line: 101, column: 9, scope: !37, inlinedAt: !167869)
-!167900 = !DILocation(line: 469, column: 25, scope: !42, inlinedAt: !167852)
-!167901 = !DILocation(line: 469, column: 19, scope: !42, inlinedAt: !167852)
-!167902 = !DILocation(line: 442, column: 25, scope: !167870, inlinedAt: !167882)
-!167903 = !DILocation(line: 1041, column: 22, scope: !244, inlinedAt: !167863)
-!167904 = !DILocation(line: 614, column: 9, scope: !245, inlinedAt: !167877)
+!167897 = !DILocation(line: 1041, column: 22, scope: !244, inlinedAt: !167863)
+!167898 = !DILocation(line: 614, column: 9, scope: !245, inlinedAt: !167870)
+!167899 = !DILocation(line: 0, scope: !36, inlinedAt: !167852)
+!167900 = !DILocation(line: 101, column: 9, scope: !37, inlinedAt: !167876)
+!167901 = !DILocation(line: 469, column: 25, scope: !42, inlinedAt: !167852)
+!167902 = !DILocation(line: 469, column: 19, scope: !42, inlinedAt: !167852)
+!167903 = !DILocation(line: 442, column: 25, scope: !167877, inlinedAt: !167882)
+!167904 = !DILocation(line: 1040, column: 12, scope: !244, inlinedAt: !167863)
 !167905 = !DILocation(line: 216, column: 5, scope: !167847)
 !167906 = !DILocation(line: 1921, column: 41, scope: !249, inlinedAt: !167878)
 !167907 = !DILocation(line: 1046, column: 13, scope: !250, inlinedAt: !167863)

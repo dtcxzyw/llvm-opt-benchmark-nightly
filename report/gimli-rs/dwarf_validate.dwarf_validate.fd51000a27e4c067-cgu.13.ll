@@ -204,51 +204,29 @@ bb.a:
   %i.e = lshr i64 -1, %i.d
   %.sroa.05.0 = select i1 %i.b, i64 0, i64 %i.e   ; 2 uses
   %i.f = icmp eq i64 %.sroa.05.0, -1
-  br i1 %i.f, label %6, label %bb.b, !prof !12
+  br i1 %i.f, label %2, label %bb.b, !prof !12
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load i64, ptr %0, align 8, !range !9, !noundef !5
   %i.h = shl nuw i64 %i.g, 1
   %i.i = add nuw i64 %.sroa.05.0, 1
-  %..i = tail call noundef i64 @llvm.umax.i64(i64 %i.i, i64 range(i64 0, -1) %i.h) ; 4 uses
+  %..i = tail call noundef i64 @llvm.umax.i64(i64 %i.i, i64 range(i64 0, -1) %i.h) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.j = mul i64 %..i, 24                         ; 3 uses
+  %i.j = mul i64 %..i, 24                         ; 2 uses
   %or.cond.i = icmp ugt i64 %..i, 384307168202282325
-  br i1 %or.cond.i, label %7, label %2, !prof !13
+  br i1 %or.cond.i, label %3, label %bb.c, !prof !13
 
-2:                                                ; preds = %bb.b
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit, label %bb.c
-
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.b
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23, !noalias !122
   %i.k = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.j, i64 noundef range(i64 1, -9223372036854775807) 8) #23, !noalias !122 ; 2 uses
   %i.l = icmp eq ptr %i.k, null
-  br i1 %i.l, label %7, label %4
+  br i1 %i.l, label %3, label %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit
 
-4:                                                ; preds = %bb.c
-  %5 = ptrtoint ptr %i.k to i64
-  br label %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit
-
-6:                                                ; preds = %bb.a
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 17, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #27
-  unreachable
-
-7:                                                ; preds = %bb.b, %bb.c
-  %.sroa.4.0.ph = phi i64 [ 8, %bb.c ], [ 0, %bb.b ]
-  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %i.j) #24
-  unreachable
-
-_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit: ; preds = %4, %2
-  %.sroa.10.0 = phi i64 [ %5, %4 ], [ 8, %2 ]
-  %.sroa.4.0 = phi i64 [ %..i, %4 ], [ 0, %2 ]    ; 2 uses
-  %8 = inttoptr i64 %.sroa.10.0 to ptr
-  %9 = icmp samesign ule i64 %..i, %.sroa.4.0
-  tail call void @llvm.assume(i1 %9)
+_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit: ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false)
-  store i64 %.sroa.4.0, ptr %0, align 8
+  store i64 %..i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %8, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr %i.k, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -258,6 +236,15 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDb
   %i.p = load i64, ptr %i.m, align 8, !range !9, !alias.scope !123, !noalias !124, !noundef !5
   %i.q = icmp eq i64 %i.o, %i.p
   br i1 %i.q, label %bb.d, label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecIBw_INtNtB7_6borrow3CowShEEE8push_mutCslKoDbeUmNq5_14dwarf_validate.exit
+
+2:                                                ; preds = %bb.a
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 17, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #27
+  unreachable
+
+3:                                                ; preds = %bb.b, %bb.c
+  %.sroa.4.0.ph = phi i64 [ 8, %bb.c ], [ 0, %bb.b ]
+  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %i.j) #24
+  unreachable
 
 bb.d:                                             ; preds = %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit
   invoke fastcc void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtB7_3vec3VecINtNtB7_6borrow3CowShEEE8grow_oneCslKoDbeUmNq5_14dwarf_validate(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)

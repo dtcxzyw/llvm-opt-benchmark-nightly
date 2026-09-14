@@ -205,18 +205,14 @@ bb.az:                                            ; preds = %.lr.ph814, %bb.bl
   %i.gi = getelementptr [8 x i8], ptr %i.ge, i64 %indvars.iv839
   %i.gj = load ptr, ptr %i.gi, align 8            ; 4 uses
   %.not609 = icmp eq ptr %i.gj, null
-  br i1 %.not609, label %._crit_edge879, label %bb.ba
-
-._crit_edge879:                                   ; preds = %bb.az
-  %.pre880 = trunc nuw nsw i64 %indvars.iv839 to i32
-  br label %bb.bl
+  br i1 %.not609, label %bb.bl, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
   %.val.i673 = load i32, ptr %i.fp, align 4
   %.val4.i674 = load ptr, ptr %i.fq, align 8
   %i.gk = zext i32 %.val.i673 to i64
   %i.gl = getelementptr i8, ptr %.val4.i674, i64 %i.gk ; 3 uses
-  %i.gm = trunc nuw nsw i64 %indvars.iv839 to i32 ; 3 uses
+  %i.gm = trunc nuw nsw i64 %indvars.iv839 to i32 ; 2 uses
   %i.gn = call i32 @nla_put(ptr noundef %2, i32 noundef %i.gm, i32 noundef 0, ptr noundef null) #27
   %i.go = icmp slt i32 %i.gn, 0
   %.not610772 = icmp eq ptr %i.gl, null
@@ -358,14 +354,13 @@ bb.bk:                                            ; preds = %bb.bj
   %spec.select = add nsw i32 %i.gm, %i.iv
   br label %.loopexit
 
-bb.bl:                                            ; preds = %._crit_edge879, %bb.bj
-  %.pre-phi881 = phi i32 [ %.pre880, %._crit_edge879 ], [ %i.gm, %bb.bj ]
-  %i.iw = phi i8 [ %i.gh, %._crit_edge879 ], [ 0, %bb.bj ] ; 2 uses
+bb.bl:                                            ; preds = %bb.bj, %bb.az
+  %i.iw = phi i8 [ 0, %bb.bj ], [ %i.gh, %bb.az ] ; 2 uses
   %indvars.iv.next840 = add nuw nsw i64 %indvars.iv839, 1 ; 3 uses
   %i.ix = trunc nuw i8 %i.iw to i1                ; 2 uses
   %i.iy = select i1 %i.ix, i64 6, i64 3
   %i.iz = icmp samesign ult i64 %indvars.iv.next840, %i.iy
-  %8 = icmp slt i32 %.pre-phi881, 1
+  %8 = icmp eq i64 %indvars.iv839, 0
   %brmerge = or i1 %8, %i.ix
   %or.cond = and i1 %i.iz, %brmerge
   br i1 %or.cond, label %bb.az, label %.loopexit.loopexit, !llvm.loop !126

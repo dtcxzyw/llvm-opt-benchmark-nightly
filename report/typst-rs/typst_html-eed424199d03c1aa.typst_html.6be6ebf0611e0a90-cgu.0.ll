@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsiSzwKAiqS6b_8smallvec10infallibleuECs9gmjTwvRRSu_10typst_html.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.p = mul nuw i64 %i.m, 24                     ; 3 uses
+  %i.p = mul nuw nsw i64 %i.m, 24                 ; 3 uses
   %or.cond.not.i = icmp ugt i64 %i.k, 384307168202282324
   br i1 %or.cond.not.i, label %bb.p, label %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtNtCsdaEETE4DqmE_13typst_library13introspection12introspector11BuilderItemNtNtB1f_8position12HtmlPositionEEECs9gmjTwvRRSu_10typst_html.exit.i, !prof !75
 
@@ -608,23 +608,15 @@ _RNvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB5_8RawTablejE16with_capacity_inCs9gmjT
   %.sroa.9.0.i.i.i.i.i.i = phi i64 [ %.sroa.12.012.i.i.i.i.i.i.i, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9gmjTwvRRSu_10typst_html.exit.thread.i.i.i.i.i.i.i ], [ %.sroa.09.0.i.i.i.i.i.i.i.i, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i ] ; 2 uses
   %.sroa.6.0.i.i.i.i.i.i = phi i64 [ %.sroa.7.013.i.i.i.i.i.i.i, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9gmjTwvRRSu_10typst_html.exit.thread.i.i.i.i.i.i.i ], [ %i.bb, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i ] ; 3 uses
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ null, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9gmjTwvRRSu_10typst_html.exit.thread.i.i.i.i.i.i.i ], [ %i.be, %_RINvMsa_NtCs2qDE43xvXom_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtNtB6_5alloc5inner6GlobalECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i ] ; 3 uses
-  %i.bf = mul i64 %2, 56                          ; 4 uses
+  %i.bf = mul i64 %2, 56                          ; 3 uses
   %or.cond.i.i.i.i.i.i = icmp samesign ugt i64 %2, 164703072086692425
-  br i1 %or.cond.i.i.i.i.i.i, label %bb.k, label %3, !prof !20359
+  br i1 %or.cond.i.i.i.i.i.i, label %bb.k, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i, !prof !20359
 
-3:                                                ; preds = %_RNvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB5_8RawTablejE16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i
-  %4 = icmp eq i64 %i.bf, 0
-  br i1 %4, label %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
-
-_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i: ; preds = %3
+_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i: ; preds = %_RNvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB5_8RawTablejE16with_capacity_inCs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #53, !noalias !20360
-  %i.bg = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.bf, i64 noundef range(i64 1, -9223372036854775807) 8) #53, !noalias !20360 ; 2 uses
+  %i.bg = tail call noundef align 8 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef %i.bf, i64 noundef range(i64 1, -9223372036854775807) 8) #53, !noalias !20360 ; 3 uses
   %i.bh = icmp eq ptr %i.bg, null
-  br i1 %i.bh, label %bb.k, label %5
-
-5:                                                ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
-  %6 = ptrtoint ptr %i.bg to i64
-  br label %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i
+  br i1 %i.bh, label %bb.k, label %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i
 
 bb.j:                                             ; preds = %bb.k
   %i.bi = landingpad { ptr, i32 }
@@ -661,15 +653,10 @@ bb.k:                                             ; preds = %_RNvXs1_NtCs1xwejQu
 bb.l:                                             ; preds = %bb.k
   unreachable
 
-_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i: ; preds = %3, %5
-  %.sroa.10.0.i.i.i.i.i = phi i64 [ %6, %5 ], [ 8, %3 ]
-  %.sroa.413.0.i.i.i.i.i = phi i64 [ %2, %5 ], [ 0, %3 ] ; 3 uses
-  %7 = inttoptr i64 %.sroa.10.0.i.i.i.i.i to ptr  ; 2 uses
-  %8 = icmp samesign ule i64 %2, %.sroa.413.0.i.i.i.i.i
-  tail call void @llvm.assume(i1 %8)
-  store i64 %.sroa.413.0.i.i.i.i.i, ptr %i.p, align 8, !alias.scope !20354, !noalias !20351
+_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
+  store i64 %2, ptr %i.p, align 8, !alias.scope !20354, !noalias !20351
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  store ptr %7, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !alias.scope !20354, !noalias !20351
+  store ptr %i.bg, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !alias.scope !20354, !noalias !20351
   %.sroa.5.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx.i.i.i.i, align 8, !alias.scope !20354, !noalias !20351
   %.sroa.6.0..sroa_idx6.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 24
@@ -701,7 +688,7 @@ _RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_
 
 bb.m:                                             ; preds = %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i
   %i.bz = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  %i.ca = invoke { i64, i64 } @_RINvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB6_8RawTablejE14reserve_rehashNCINvNtNtCsjFU9swAW47b_8indexmap3map4core8get_hashNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtB1Z_5value5ValueE0EB21_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bz, i64 noundef %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %7, i64 noundef 0, i1 noundef zeroext true) #55
+  %i.ca = invoke { i64, i64 } @_RINvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB6_8RawTablejE14reserve_rehashNCINvNtNtCsjFU9swAW47b_8indexmap3map4core8get_hashNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtB1Z_5value5ValueE0EB21_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bz, i64 noundef %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.bg, i64 noundef 0, i1 noundef zeroext true) #55
           to label %.noexc.i.i.i.i unwind label %bb.bl, !noalias !20367 ; 0 uses
 
 .noexc.i.i.i.i:                                   ; preds = %bb.m
@@ -715,7 +702,7 @@ _RINvMs6_NtCs2qDE43xvXom_9hashbrown3rawINtB6_8RawTablejE7reserveNCINvNtNtCsjFU9s
   %i.cd = phi ptr [ %i.bw, %.noexc.i.i.i.i ], [ %i.bw, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i ], [ %i.z, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i.thread ] ; 9 uses
   %i.ce = phi ptr [ %i.bv, %.noexc.i.i.i.i ], [ %i.bv, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i ], [ %i.y, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i.thread ] ; 4 uses
   %i.cf = phi i64 [ %.pre91.i.i.i, %.noexc.i.i.i.i ], [ 0, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i ], [ 0, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i.thread ] ; 5 uses
-  %i.cg = phi i64 [ %.pre.i.i.i, %.noexc.i.i.i.i ], [ %.sroa.413.0.i.i.i.i.i, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i ], [ 0, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i.thread ] ; 3 uses
+  %i.cg = phi i64 [ %.pre.i.i.i, %.noexc.i.i.i.i ], [ %2, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i ], [ 0, %_RNvMs1_NtCsjFU9swAW47b_8indexmap3mapINtB5_8IndexMapNtNtNtCsdaEETE4DqmE_13typst_library11foundations3str3StrNtNtBR_5value5ValueNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE24with_capacity_and_hasherCs9gmjTwvRRSu_10typst_html.exit.i.i.i.thread ] ; 3 uses
   %i.ch = icmp ult i64 %i.cf, 164703072086692426
   call void @llvm.assume(i1 %i.ch)
   %i.ci = sub nsw i64 %i.cg, %i.cf

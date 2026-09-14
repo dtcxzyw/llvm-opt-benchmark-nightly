@@ -202,7 +202,7 @@ bb.ch:                                            ; preds = %bb.s
 
 bb.ci:                                            ; preds = %bb.ch
   %i.hj = mul nsw i32 %spec.store.select, 3
-  %i.hk = sext i32 %i.hj to i64                   ; 3 uses
+  %i.hk = sext i32 %i.hj to i64                   ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.hm = icmp slt i32 %spec.store.select, 0
   br i1 %i.hm, label %bb.cj, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i222
@@ -215,23 +215,15 @@ bb.cj:                                            ; preds = %bb.ci
   unreachable
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i222: ; preds = %bb.ci
-  %i.hn = shl nuw nsw i64 %i.hk, 2
+  %i.hn = shl nuw nsw i64 %i.hk, 2                ; 2 uses
   %i.ho = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hn) #27
-          to label %.noexc231 unwind label %bb.cm ; 5 uses
+          to label %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229 unwind label %bb.cm ; 5 uses
 
-.noexc231:                                        ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i222
+_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229: ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i222
   store float 0.000000e+00, ptr %i.ho, align 4, !tbaa !96
-  %24 = add nsw i64 %i.hk, -1                     ; 2 uses
-  %25 = icmp eq i64 %24, 0
-  br i1 %25, label %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229, label %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i224
-
-_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i224: ; preds = %.noexc231
-  %26 = getelementptr i8, ptr %i.ho, i64 4
-  %.idx.i.i.i.i.i31.i225 = shl nuw nsw i64 %24, 2
-  call void @llvm.memset.p0.i64(ptr align 4 %26, i8 0, i64 %.idx.i.i.i.i.i31.i225, i1 false), !tbaa !96
-  br label %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229
-
-_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit36.i229: ; preds = %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i224, %.noexc231
+  %24 = getelementptr i8, ptr %i.ho, i64 4
+  %.idx.i.i.i.i.i31.i225 = add nsw i64 %i.hn, -4
+  call void @llvm.memset.p0.i64(ptr align 4 %24, i8 0, i64 %.idx.i.i.i.i.i31.i225, i1 false), !tbaa !96
   store ptr %i.ho, ptr %16, align 8, !tbaa !102
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.ho, i64 %i.hk ; 2 uses
   store ptr %i.hp, ptr %i.hi, align 8, !tbaa !103
