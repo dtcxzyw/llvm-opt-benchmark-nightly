@@ -204,7 +204,7 @@ bb.a:
   %12 = alloca %class.Error, align 8              ; 12 uses
   %13 = alloca %class.Error, align 8              ; 12 uses
   %14 = alloca %class.Error, align 8              ; 13 uses
-  %15 = alloca %struct.YCbCr_to_RGB_coefficients, align 4 ; 9 uses
+  %15 = alloca %struct.YCbCr_to_RGB_coefficients, align 16 ; 9 uses
   %16 = alloca %struct.YCbCr_to_RGB_coefficients, align 4 ; 5 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !45     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 380
@@ -607,7 +607,7 @@ bb.bu:                                            ; preds = %bb.bt
 bb.bv:                                            ; preds = %bb.bu
   %i.kc = and i64 %.sroa.0.0.copyload.i, 281474976710656
   %i.kd = icmp ne i64 %i.kc, 0
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %15, ptr noundef nonnull align 4 dereferenceable(20) %16, i64 20, i1 false), !tbaa.struct !157
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %15, ptr noundef nonnull align 4 dereferenceable(20) %16, i64 20, i1 false), !tbaa.struct !157
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #17
   br label %bb.by
 
@@ -624,7 +624,7 @@ bb.bx:                                            ; preds = %bb.bu
 
 bb.by:                                            ; preds = %bb.bv, %bb.bt
   %.0249 = phi i16 [ %.sroa.0357.4.extract.trunc, %bb.bv ], [ 2, %bb.bt ]
-  %.0248 = phi i1 [ %i.kd, %bb.bv ], [ true, %bb.bt ] ; 3 uses
+  %.0248 = phi i1 [ %i.kd, %bb.bv ], [ true, %bb.bt ] ; 4 uses
   %.not430 = icmp eq i32 %i.ak, 0
   br i1 %.not430, label %_ZNSt3__110shared_ptrI14HeifPixelImageED2B8ne180100Ev.exit, label %.preheader.lr.ph
 
@@ -634,8 +634,7 @@ bb.by:                                            ; preds = %bb.bv, %bb.bt
   %i.kh = trunc i32 %i.kg to i16                  ; 2 uses
   %i.ki = and i32 %i.jm, 65535                    ; 3 uses
   %i.kj = and i32 %i.jk, 65535                    ; 4 uses
-  %17 = getelementptr inbounds nuw i8, ptr %15, i64 4
-  %i.kk = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %i.kk = getelementptr inbounds nuw i8, ptr %15, i64 4
   %i.kl = getelementptr inbounds nuw i8, ptr %15, i64 12
   %i.km = getelementptr inbounds nuw i8, ptr %15, i64 16
   %i.kn = icmp samesign ugt i32 %.0230, 8
@@ -655,8 +654,6 @@ bb.by:                                            ; preds = %bb.bv, %bb.bt
   %unroll_iter = and i64 %wide.trip.count, 4294967294
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod508 = trunc i32 %i.ai to i1
-  %18 = insertelement <2 x i1> poison, i1 %.0248, i64 0
-  %19 = shufflevector <2 x i1> %18, <2 x i1> poison, <2 x i32> zeroinitializer
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %bb.ca
@@ -676,10 +673,11 @@ bb.by:                                            ; preds = %bb.bv, %bb.bt
   %i.le = getelementptr [2 x i8], ptr %.0.i.i310, i64 %i.ld ; 7 uses
   %i.lf = mul i64 %.0402, %indvars.iv458
   %i.lg = getelementptr [2 x i8], ptr %.0.i.i315, i64 %i.lf ; 7 uses
-  %i.lh = load <1 x float>, ptr %17, align 4
-  %20 = load float, ptr %i.kk, align 4
+  %i.lh = load <1 x float>, ptr %i.kk, align 4
+  %17 = load <4 x float>, ptr %15, align 16
+  %18 = shufflevector <4 x float> %17, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.li = load float, ptr %i.kl, align 4
-  %i.lj = load float, ptr %i.km, align 4
+  %i.lj = load float, ptr %i.km, align 16
   switch i16 %.0249, label %.lr.ph.split.us420.preheader [
     i16 0, label %.lr.ph.split.us.us
     i16 8, label %.lr.ph.split.us412.us
@@ -688,7 +686,8 @@ bb.by:                                            ; preds = %bb.bv, %bb.bt
 
 .lr.ph.split.us420.preheader:                     ; preds = %.preheader.us
   %i.lk = shufflevector <1 x float> %i.lh, <1 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %i.ll = insertelement <2 x float> %i.lk, float %i.li, i64 0
+  %19 = insertelement <2 x float> %i.lk, float %i.li, i64 0
+  %i.ll = insertelement <2 x float> %18, float %i.lj, i64 1
   br label %.lr.ph.split.us420
 
 .lr.ph.split.us414.us:                            ; preds = %.preheader.us, %.lr.ph.split.us414.us
@@ -890,21 +889,25 @@ bb.by:                                            ; preds = %bb.bv, %bb.bt
   %i.qe = load i16, ptr %i.qd, align 2, !tbaa !40
   %i.qf = zext i16 %i.qe to i32
   %i.qg = sub nsw i32 %i.qf, %i.kj
-  %i.qh = sitofp i32 %i.qg to float
+  %i.qh = sitofp i32 %i.qg to float               ; 2 uses
   %i.qi = fsub nnan float %i.pw, %i.jp
-  %i.qj = fmul nnan float %i.qc, 1.142900e+00
-  %.0228.us.a = select i1 %.0248, float %i.qc, float %i.qj ; 2 uses
-  %i.qk = getelementptr [2 x i8], ptr %i.lc, i64 %indvars.iv453
-  %21 = insertelement <2 x float> poison, float %i.qh, i64 0
-  %22 = insertelement <2 x float> %21, float %i.qi, i64 1 ; 2 uses
-  %23 = fmul nnan <2 x float> %22, <float 1.142900e+00, float 1.168900e+00>
-  %i.ql = insertelement <2 x float> %22, float %i.pw, i64 1
-  %24 = select <2 x i1> %19, <2 x float> %i.ql, <2 x float> %23 ; 3 uses
-  %25 = extractelement <2 x float> %24, i64 1     ; 2 uses
-  %26 = call float @llvm.fmuladd.f32(float %20, float %.0228.us.a, float %25)
-  %27 = shufflevector <2 x float> %24, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.qm = insertelement <2 x float> %24, float %26, i64 0
-  %i.qn = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ll, <2 x float> %27, <2 x float> %i.qm)
+  %20 = getelementptr [2 x i8], ptr %i.lc, i64 %indvars.iv453
+  %i.qj = fmul nnan float %i.qh, 1.142900e+00
+  %.0228.us.a = select i1 %.0248, float %i.qh, float %i.qj
+  %21 = insertelement <2 x float> poison, float %.0228.us.a, i64 0
+  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.qk = getelementptr [2 x i8], ptr %i.le, i64 %indvars.iv453
+  %23 = fmul nnan float %i.qi, 1.168900e+00
+  %24 = fmul nnan float %i.qc, 1.142900e+00
+  %.0229.us = select i1 %.0248, float %i.pw, float %23 ; 2 uses
+  %.0228.us = select i1 %.0248, float %i.qc, float %24
+  %i.ql = insertelement <2 x float> poison, float %.0228.us, i64 0
+  %25 = shufflevector <2 x float> %i.ql, <2 x float> poison, <2 x i32> zeroinitializer
+  %26 = insertelement <2 x float> poison, float %.0229.us, i64 0
+  %27 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> zeroinitializer
+  %28 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ll, <2 x float> %25, <2 x float> %27) ; 2 uses
+  %i.qm = insertelement <2 x float> %28, float %.0229.us, i64 1
+  %i.qn = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> %22, <2 x float> %i.qm)
   %i.qo = fadd <2 x float> %i.qn, splat (float 5.000000e-01)
   %i.qp = fptosi <2 x float> %i.qo to <2 x i32>   ; 3 uses
   %i.qq = extractelement <2 x i32> %i.qp, i64 1
@@ -913,15 +916,14 @@ bb.by:                                            ; preds = %bb.bv, %bb.bt
   %i.qr = icmp slt <2 x i32> %i.qp, zeroinitializer ; 2 uses
   %i.qs = extractelement <2 x i1> %i.qr, i64 1
   %.0.i347.us = select i1 %i.qs, i16 0, i16 %spec.select427
-  store i16 %.0.i347.us, ptr %i.qk, align 2, !tbaa !40
+  store i16 %.0.i347.us, ptr %20, align 2, !tbaa !40
   %i.qt = extractelement <2 x i32> %i.qp, i64 0
   %spec.select428.v = call i32 @llvm.smin.i32(i32 %i.jm, i32 %i.qt)
   %spec.select428 = trunc i32 %spec.select428.v to i16
   %i.qu = extractelement <2 x i1> %i.qr, i64 0
   %.0.i349.us = select i1 %i.qu, i16 0, i16 %spec.select428
-  %28 = getelementptr [2 x i8], ptr %i.le, i64 %indvars.iv453
-  store i16 %.0.i349.us, ptr %28, align 2, !tbaa !40
-  %29 = call float @llvm.fmuladd.f32(float %i.lj, float %.0228.us.a, float %25)
+  store i16 %.0.i349.us, ptr %i.qk, align 2, !tbaa !40
+  %29 = extractelement <2 x float> %28, i64 1
   %i.qv = fadd float %29, 5.000000e-01
   %i.qw = fptosi float %i.qv to i32               ; 2 uses
   %i.qx = icmp slt i32 %i.qw, 0
@@ -1324,7 +1326,7 @@ bb.a:
   %12 = alloca %class.Error, align 8              ; 9 uses
   %13 = alloca %"class.std::__1::basic_string", align 8 ; 11 uses
   %14 = alloca %class.Error, align 8              ; 13 uses
-  %15 = alloca %struct.YCbCr_to_RGB_coefficients, align 4 ; 9 uses
+  %15 = alloca %struct.YCbCr_to_RGB_coefficients, align 16 ; 9 uses
   %16 = alloca %struct.YCbCr_to_RGB_coefficients, align 4 ; 5 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !45     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 368
@@ -1727,7 +1729,7 @@ bb.bn:                                            ; preds = %bb.bm
 bb.bo:                                            ; preds = %bb.bn
   %i.hx = and i64 %.sroa.0.0.copyload.i, 281474976710656
   %i.hy = icmp ne i64 %i.hx, 0
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %15, ptr noundef nonnull align 4 dereferenceable(20) %16, i64 20, i1 false), !tbaa.struct !157
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %15, ptr noundef nonnull align 4 dereferenceable(20) %16, i64 20, i1 false), !tbaa.struct !157
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #17
   br label %bb.br
 
@@ -1743,7 +1745,7 @@ bb.bq:                                            ; preds = %bb.bn
   br label %bb.bu
 
 bb.br:                                            ; preds = %bb.bo, %bb.bm
-  %.0125 = phi i1 [ %i.hy, %bb.bo ], [ true, %bb.bm ] ; 2 uses
+  %.0125 = phi i1 [ %i.hy, %bb.bo ], [ true, %bb.bm ] ; 3 uses
   %i.ib = add nsw i32 %i.g, -8
   %i.ic = shl i32 16, %i.ib
   %i.id = sitofp i32 %i.ic to float
@@ -1762,24 +1764,23 @@ bb.br:                                            ; preds = %bb.bo, %bb.bm
   %i.ii = select i1 %narrow, i64 2, i64 3
   %not.narrow = xor i1 %narrow, true
   %i.ij = zext i1 %not.narrow to i64
-  %17 = getelementptr inbounds nuw i8, ptr %15, i64 16
-  %i.ik = getelementptr inbounds nuw i8, ptr %15, i64 12
-  %i.il = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %i.ik = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %i.il = getelementptr inbounds nuw i8, ptr %15, i64 12
   %i.im = getelementptr inbounds nuw i8, ptr %15, i64 4
   %wide.trip.count246 = zext i32 %i.e to i64
   %i.in = load <1 x float>, ptr %i.im, align 4, !tbaa !156
-  %.pre256.pre = load float, ptr %i.il, align 4, !tbaa !160
-  %.pre257.pre = load float, ptr %i.ik, align 4, !tbaa !161
-  %.pre258.pre = load float, ptr %17, align 4, !tbaa !162
+  %17 = load <4 x float>, ptr %15, align 16
+  %18 = shufflevector <4 x float> %17, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %.pre257.pre = load float, ptr %i.il, align 4, !tbaa !161
+  %.pre258.pre = load float, ptr %i.ik, align 16, !tbaa !162
   %wide.trip.count = zext i32 %i.c to i64
   %invariant.gep = getelementptr i8, ptr %.0.i.i, i64 %i.ij
   %i.io = getelementptr i8, ptr %.0.i.i, i64 %i.ii
   %i.ip = getelementptr i8, ptr %.0.i.i, i64 %i.ih
   %i.iq = getelementptr i8, ptr %.0.i.i, i64 %i.ig
-  %18 = insertelement <2 x i1> poison, i1 %.0125, i64 0
-  %19 = shufflevector <2 x i1> %18, <2 x i1> poison, <2 x i32> zeroinitializer
-  %20 = shufflevector <1 x float> %i.in, <1 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %i.ir = insertelement <2 x float> %20, float %.pre257.pre, i64 0
+  %19 = shufflevector <1 x float> %i.in, <1 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %20 = insertelement <2 x float> %19, float %.pre257.pre, i64 0
+  %i.ir = insertelement <2 x float> %18, float %.pre258.pre, i64 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
@@ -1835,20 +1836,23 @@ _Z10clip_f_u16fi.exit:                            ; preds = %.preheader, %bb.bt
   %i.jx = load i16, ptr %i.jw, align 2, !tbaa !40
   %i.jy = zext i16 %i.jx to i32
   %i.jz = sub nsw i32 %i.jy, %i.if
-  %i.ka = sitofp i32 %i.jz to float
+  %i.ka = sitofp i32 %i.jz to float               ; 2 uses
   %i.kb = fsub nnan float %i.jo, %i.id
-  %i.kc = fmul nnan float %i.jv, 1.142900e+00
-  %.0121.a = select i1 %.0125, float %i.jv, float %i.kc ; 2 uses
-  %i.kd = insertelement <2 x float> poison, float %i.ka, i64 0
-  %21 = insertelement <2 x float> %i.kd, float %i.kb, i64 1 ; 2 uses
-  %22 = fmul nnan <2 x float> %21, <float 1.142900e+00, float 1.168900e+00>
-  %i.ke = insertelement <2 x float> %21, float %i.jo, i64 1
-  %23 = select <2 x i1> %19, <2 x float> %i.ke, <2 x float> %22 ; 3 uses
-  %24 = extractelement <2 x float> %23, i64 1     ; 2 uses
-  %25 = call float @llvm.fmuladd.f32(float %.pre256.pre, float %.0121.a, float %24)
-  %26 = shufflevector <2 x float> %23, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.kf = insertelement <2 x float> %23, float %25, i64 0
-  %i.kg = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ir, <2 x float> %26, <2 x float> %i.kf)
+  %i.kc = fmul nnan float %i.ka, 1.142900e+00
+  %.0121.a = select i1 %.0125, float %i.ka, float %i.kc
+  %i.kd = insertelement <2 x float> poison, float %.0121.a, i64 0
+  %21 = shufflevector <2 x float> %i.kd, <2 x float> poison, <2 x i32> zeroinitializer
+  %22 = fmul nnan float %i.kb, 1.168900e+00
+  %23 = fmul nnan float %i.jv, 1.142900e+00
+  %.0122 = select i1 %.0125, float %i.jo, float %22 ; 2 uses
+  %.0121 = select i1 %.0125, float %i.jv, float %23
+  %i.ke = insertelement <2 x float> poison, float %.0121, i64 0
+  %24 = shufflevector <2 x float> %i.ke, <2 x float> poison, <2 x i32> zeroinitializer
+  %25 = insertelement <2 x float> poison, float %.0122, i64 0
+  %26 = shufflevector <2 x float> %25, <2 x float> poison, <2 x i32> zeroinitializer
+  %27 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ir, <2 x float> %24, <2 x float> %26) ; 2 uses
+  %i.kf = insertelement <2 x float> %27, float %.0122, i64 1
+  %i.kg = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %20, <2 x float> %21, <2 x float> %i.kf)
   %i.kh = fadd <2 x float> %i.kg, splat (float 5.000000e-01)
   %i.ki = fptosi <2 x float> %i.kh to <2 x i32>   ; 3 uses
   %i.kj = extractelement <2 x i32> %i.ki, i64 1
@@ -1862,8 +1866,8 @@ _Z10clip_f_u16fi.exit:                            ; preds = %.preheader, %bb.bt
   %spec.select237 = trunc i32 %spec.select237.v to i16
   %i.kn = extractelement <2 x i1> %i.kk, i64 0
   %.0.i206 = select i1 %i.kn, i16 0, i16 %spec.select237 ; 2 uses
-  %27 = call float @llvm.fmuladd.f32(float %.pre258.pre, float %.0121.a, float %24)
-  %i.ko = fadd float %27, 5.000000e-01
+  %28 = extractelement <2 x float> %27, i64 1
+  %i.ko = fadd float %28, 5.000000e-01
   %i.kp = fptosi float %i.ko to i32               ; 2 uses
   %i.kq = icmp slt i32 %i.kp, 0
   %spec.select238.v = call i32 @llvm.smin.i32(i32 %i.hs, i32 %i.kp)

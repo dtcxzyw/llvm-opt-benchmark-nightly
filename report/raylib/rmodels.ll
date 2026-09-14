@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 bb.i:                                             ; preds = %._crit_edge, %.tail261.thread
   %.0280 = phi i32 [ 0, %._crit_edge ], [ %.2, %.tail261.thread ] ; 22 uses
   %i.bj = zext nneg i32 %.0280 to i64
-  %i.bk = getelementptr inbounds nuw [48 x i8], ptr %i.ba, i64 %i.bj ; 14 uses
+  %i.bk = getelementptr inbounds nuw [48 x i8], ptr %i.ba, i64 %i.bj ; 15 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 40
   %i.bm = load ptr, ptr %i.bl, align 8            ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 32
@@ -254,8 +254,10 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.cm, label %.lr.ph.i, label %par_shapes__apply_turtle.exit
 
 .lr.ph.i:                                         ; preds = %bb.l
+  %3 = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
   %i.cn = getelementptr inbounds nuw i8, ptr %i.bk, i64 12
-  %3 = load <3 x float>, ptr %i.bq, align 8
+  %4 = load <2 x float>, ptr %i.bq, align 8
+  %5 = load float, ptr %3, align 8
   %i.co = load <2 x float>, ptr %i.bp, align 4
   %i.cp = load float, ptr %i.cn, align 4
   br label %bb.m
@@ -264,43 +266,43 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.m ] ; 2 uses
   %i.cq = load ptr, ptr %i.cj, align 8
   %.idx.i = mul nuw nsw i64 %indvars.iv.i, 12
-  %4 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %.idx.i ; 5 uses
-  %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %5 = load <3 x float>, ptr %4, align 4
-  %6 = fmul <3 x float> %3, %5                    ; 6 uses
-  %7 = extractelement <3 x float> %6, i64 0       ; 2 uses
-  store float %7, ptr %4, align 4
-  %8 = extractelement <3 x float> %6, i64 1       ; 2 uses
-  store float %8, ptr %i.cr, align 4
-  %9 = extractelement <3 x float> %6, i64 2       ; 2 uses
-  store float %9, ptr %i.cs, align 4
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 %.idx.i ; 4 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 8 ; 3 uses
+  %6 = load float, ptr %i.cs, align 4
+  %7 = fmul float %5, %6                          ; 3 uses
+  %8 = load <2 x float>, ptr %i.cr, align 4
+  %9 = fmul <2 x float> %4, %8                    ; 5 uses
+  store <2 x float> %9, ptr %i.cr, align 4
+  store float %7, ptr %i.cs, align 4
   %i.ct = load ptr, ptr %i.bo, align 8            ; 5 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 24
   %i.cv = load <4 x float>, ptr %i.ct, align 4    ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
   %i.cx = load <2 x float>, ptr %i.cw, align 4    ; 2 uses
-  %i.cy = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.cy = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.cz = shufflevector <4 x float> %i.cv, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.da = shufflevector <2 x float> %i.cx, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.db = shufflevector <4 x float> %i.cv, <4 x float> %i.da, <2 x i32> <i32 1, i32 4>
   %i.dc = fmul <2 x float> %i.cy, %i.db
   %i.dd = shufflevector <4 x float> %i.cv, <4 x float> poison, <2 x i32> <i32 0, i32 3>
-  %i.de = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> zeroinitializer
+  %i.de = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
   %i.df = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dd, <2 x float> %i.de, <2 x float> %i.dc)
   %i.dg = shufflevector <2 x float> %i.cz, <2 x float> %i.cx, <2 x i32> <i32 0, i32 3>
-  %10 = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.dh = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dg, <2 x float> %10, <2 x float> %i.df)
+  %10 = insertelement <2 x float> poison, float %7, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dh = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dg, <2 x float> %11, <2 x float> %i.df)
   %i.di = load float, ptr %i.cu, align 4
   %i.dj = getelementptr inbounds nuw i8, ptr %i.ct, i64 28
   %i.dk = load float, ptr %i.dj, align 4
-  %i.dl = fmul float %8, %i.dk
-  %i.dm = tail call float @llvm.fmuladd.f32(float %i.di, float %7, float %i.dl)
+  %12 = extractelement <2 x float> %9, i64 1
+  %i.dl = fmul float %12, %i.dk
+  %13 = extractelement <2 x float> %9, i64 0
+  %i.dm = tail call float @llvm.fmuladd.f32(float %i.di, float %13, float %i.dl)
   %i.dn = getelementptr inbounds nuw i8, ptr %i.ct, i64 32
   %i.do = load float, ptr %i.dn, align 4
-  %i.dp = tail call float @llvm.fmuladd.f32(float %i.do, float %9, float %i.dm)
+  %i.dp = tail call float @llvm.fmuladd.f32(float %i.do, float %7, float %i.dm)
   %i.dq = fadd <2 x float> %i.dh, %i.co
-  store <2 x float> %i.dq, ptr %4, align 4
+  store <2 x float> %i.dq, ptr %i.cr, align 4
   %i.dr = fadd float %i.dp, %i.cp
   store float %i.dr, ptr %i.cs, align 4
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses

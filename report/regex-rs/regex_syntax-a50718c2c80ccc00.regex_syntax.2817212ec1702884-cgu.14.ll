@@ -204,7 +204,7 @@ bb.a:
   br label %.lr.ph, !dbg !5418
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer
-  %.sroa.0.0.ph147 = phi ptr [ %0, %.lr.ph.lr.ph ], [ %i.gu, %.outer ] ; 24 uses
+  %.sroa.0.0.ph147 = phi ptr [ %0, %.lr.ph.lr.ph ], [ %i.gu, %.outer ] ; 23 uses
   %.sroa.16.0.ph146 = phi i64 [ %1, %.lr.ph.lr.ph ], [ %i.gf, %.outer ] ; 2 uses
   %.sroa.025.0.ph145 = phi i32 [ %4, %.lr.ph.lr.ph ], [ %i.i, %.outer ] ; 2 uses
   %.sroa.028.0.ph144 = phi ptr [ %5, %.lr.ph.lr.ph ], [ null, %.outer ] ; 3 uses
@@ -354,7 +354,7 @@ bb.f:                                             ; preds = %.lr.ph._crit_edge, 
 bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.sroa.0.0.i.sink.i = phi ptr [ %i.n, %bb.c ], [ %.sroa.0.0.ph147, %bb.d ], [ %..i.i, %bb.e ]
   %i.ae = ptrtoint ptr %.sroa.0.0.i.sink.i to i64, !dbg !5442
-  %i.af = sub nuw i64 %i.ae, %i.e, !dbg !5442     ; 3 uses
+  %i.af = sub nuw i64 %i.ae, %i.e, !dbg !5442     ; 2 uses
   %.sroa.0.0.i = lshr exact i64 %i.af, 3, !dbg !5442 ; 3 uses
     #dbg_value(i64 %.sroa.0.0.i, !5156, !DIExpression(), !4543)
   %i.ag = icmp samesign ult i64 %.sroa.0.0.i, %.sroa.16.0140295, !dbg !5443
@@ -362,13 +362,13 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c
   call void @llvm.assume(i1 %i.ag), !dbg !5444
     #dbg_value(i64 %.sroa.0.0.i, !5111, !DIExpression(), !5177)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !5445
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph147, i64 %i.af, !dbg !5446
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph147, i64 %i.af, !dbg !5446 ; 5 uses
     #dbg_value(ptr %i.ah, !5179, !DIExpression(), !5186)
-  %7 = load <2 x i32>, ptr %i.ah, align 4, !dbg !5447 ; 4 uses
-  %8 = extractelement <2 x i32> %7, i64 0, !dbg !5447 ; 5 uses
-  store i32 %8, ptr %i.a, align 4, !dbg !5447
-  %9 = extractelement <2 x i32> %7, i64 1, !dbg !5447 ; 3 uses
-  store i32 %9, ptr %i.c, align 4, !dbg !5447
+  %7 = getelementptr inbounds nuw i8, ptr %i.ah, i64 4, !dbg !5447
+  %8 = load i32, ptr %7, align 4, !dbg !5447      ; 4 uses
+  %9 = load i32, ptr %i.ah, align 4, !dbg !5447   ; 6 uses
+  store i32 %9, ptr %i.a, align 4, !dbg !5447
+  store i32 %8, ptr %i.c, align 4, !dbg !5447
     #dbg_value(ptr %i.a, !5113, !DIExpression(), !5187)
     #dbg_value(i8 0, !5114, !DIExpression(), !5188)
   br i1 %.not, label %bb.i, label %bb.h, !dbg !5448
@@ -387,10 +387,10 @@ bb.h:                                             ; preds = %bb.g
     #dbg_value(ptr poison, !995, !DIExpression(), !4596)
     #dbg_value(ptr poison, !997, !DIExpression(), !4598)
     #dbg_value(ptr poison, !1001, !DIExpression(), !4598)
-  %i.ai = icmp eq i32 %.sroa.028.0.val, %8, !dbg !5450
+  %i.ai = icmp eq i32 %.sroa.028.0.val, %9, !dbg !5450
     #dbg_value(i8 poison, !988, !DIExpression(), !4599)
-  %i.aj = icmp ult i32 %.sroa.028.0.val52, %9, !dbg !5451
-  %i.ak = icmp ult i32 %.sroa.028.0.val, %8, !dbg !5451
+  %i.aj = icmp ult i32 %.sroa.028.0.val52, %8, !dbg !5451
+  %i.ak = icmp ult i32 %.sroa.028.0.val, %9, !dbg !5451
   %i.al = select i1 %i.ai, i1 %i.aj, i1 %i.ak, !dbg !5450
     #dbg_value(i1 %i.al, !5114, !DIExpression(DW_OP_constu, 18446744073709551615, DW_OP_xor, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !5188)
     #dbg_value(i64 0, !5116, !DIExpression(), !5190)
@@ -445,8 +445,10 @@ bb.j:                                             ; preds = %bb.i
     #dbg_value(ptr %i.am, !5214, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !4677)
     #dbg_value(ptr null, !5215, !DIExpression(), !4678)
     #dbg_value(ptr null, !5247, !DIExpression(), !4653)
-  %i.an = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %10 = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %10 = insertelement <4 x i32> poison, i32 %9, i64 0
+  %i.an = shufflevector <4 x i32> %10, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %11 = insertelement <4 x i32> poison, i32 %8, i64 0
+  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %bb.l, !dbg !5456
 
 bb.k:                                             ; preds = %bb.i
@@ -604,7 +606,7 @@ bb.l:                                             ; preds = %bb.m, %bb.j
   %i.bd = shufflevector <8 x i32> %i.bc, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>, !dbg !5474 ; 2 uses
   %i.be = icmp eq <4 x i32> %i.bd, %i.an, !dbg !5474
   %i.bf = shufflevector <8 x i32> %i.bc, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>, !dbg !5475
-  %i.bg = icmp ult <4 x i32> %i.bf, %10, !dbg !5475
+  %i.bg = icmp ult <4 x i32> %i.bf, %12, !dbg !5475
   %i.bh = icmp samesign ult <4 x i32> %i.bd, %i.an, !dbg !5475
   %i.bi = select <4 x i1> %i.be, <4 x i1> %i.bg, <4 x i1> %i.bh, !dbg !5474 ; 4 uses
   %i.bj = extractelement <4 x i1> %i.bi, i64 0, !dbg !5476 ; 2 uses
@@ -680,10 +682,10 @@ bb.l:                                             ; preds = %bb.m, %bb.j
     #dbg_value(ptr poison, !995, !DIExpression(), !4784)
     #dbg_value(ptr poison, !997, !DIExpression(), !4786)
     #dbg_value(ptr poison, !1001, !DIExpression(), !4786)
-  %i.cf = icmp eq i32 %.val.i, %8, !dbg !5493
+  %i.cf = icmp eq i32 %.val.i, %9, !dbg !5493
     #dbg_value(i8 poison, !988, !DIExpression(), !4787)
-  %i.cg = icmp ult i32 %.val43.i, %9, !dbg !5494
-  %i.ch = icmp samesign ult i32 %.val.i, %8, !dbg !5494
+  %i.cg = icmp ult i32 %.val43.i, %8, !dbg !5494
+  %i.ch = icmp samesign ult i32 %.val.i, %9, !dbg !5494
   %i.ci = select i1 %i.cf, i1 %i.cg, i1 %i.ch, !dbg !5493 ; 2 uses
     #dbg_value(ptr undef, !5229, !DIExpression(), !4634)
     #dbg_value(i1 %i.ci, !5233, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4634)
@@ -877,8 +879,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnic
   br i1 %i.dl, label %.outer._crit_edge, label %bb.b, !dbg !5418
 
 .thread:                                          ; preds = %bb.h, %.loopexit
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph147, i64 %i.af ; 3 uses
-  %i.dm = getelementptr inbounds nuw i8, ptr %11, i64 4 ; 2 uses
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.ah, i64 4 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !5326), !dbg !5522
   call void @llvm.experimental.noalias.scope.decl(metadata !5327), !dbg !5522
     #dbg_value(ptr poison, !5328, !DIExpression(), !4873)
@@ -918,8 +919,8 @@ bb.q:                                             ; preds = %.thread
     #dbg_value(ptr %2, !5349, !DIExpression(), !4916)
     #dbg_value(ptr %2, !5381, !DIExpression(), !4910)
     #dbg_value(ptr %2, !5383, !DIExpression(), !4919)
-    #dbg_value(ptr %11, !5350, !DIExpression(), !4920)
-    #dbg_value(ptr %11, !5369, !DIExpression(), !4898)
+    #dbg_value(ptr %i.ah, !5350, !DIExpression(), !4920)
+    #dbg_value(ptr %i.ah, !5369, !DIExpression(), !4898)
   %i.dn = getelementptr [8 x i8], ptr %2, i64 %.sroa.16.0140295, !dbg !5524 ; 3 uses
     #dbg_value(ptr %2, !5351, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4922)
     #dbg_value(ptr %.sroa.0.0.ph147, !5351, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4922)
@@ -958,7 +959,7 @@ bb.s:                                             ; preds = %bb.u, %bb.q
   br i1 %i.dq, label %.lr.ph.i83, label %._crit_edge.i62, !dbg !5530
 
 .lr.ph.i83:                                       ; preds = %bb.s
-  %.val60.i84 = load i32, ptr %11, align 4, !range !968, !alias.scope !5326, !noalias !5327, !noundef !634 ; 8 uses
+  %.val60.i84 = load i32, ptr %i.ah, align 4, !range !968, !alias.scope !5326, !noalias !5327, !noundef !634 ; 8 uses
   %.val61.i90 = load i32, ptr %i.dm, align 4, !alias.scope !5326, !noalias !5327 ; 4 uses
   br label %bb.t, !dbg !5530
 
@@ -1164,7 +1165,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i83
   br i1 %i.fl, label %.lr.ph38.i74.preheader, label %._crit_edge39.i66, !dbg !5572
 
 .lr.ph38.i74.preheader:                           ; preds = %._crit_edge.i62
-  %.val44.i80 = load i32, ptr %11, align 4, !range !968, !alias.scope !5326, !noalias !5327, !noundef !634 ; 2 uses
+  %.val44.i80 = load i32, ptr %i.ah, align 4, !range !968, !alias.scope !5326, !noalias !5327, !noundef !634 ; 2 uses
   %.val45.i81 = load i32, ptr %i.dm, align 4, !alias.scope !5326, !noalias !5327
   br label %.lr.ph38.i74, !dbg !5572
 
