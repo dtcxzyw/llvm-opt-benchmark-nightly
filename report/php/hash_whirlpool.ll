@@ -202,7 +202,7 @@ bb.a:
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !16
   %i.ag = zext i8 %i.af to i64
   %i.ah = shl nuw nsw i64 %i.ag, 8
-  %1 = xor i64 %i.ad, %i.ah
+  %1 = or disjoint i64 %i.ad, %i.ah
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 111
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !16
   %i.ak = zext i8 %i.aj to i64
@@ -240,7 +240,7 @@ bb.a:
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !16
   %i.br = zext i8 %i.bq to i64
   %i.bs = shl nuw nsw i64 %i.br, 8
-  %2 = xor i64 %i.bo, %i.bs
+  %2 = or disjoint i64 %i.bo, %i.bs
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 119
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !16
   %i.bv = zext i8 %i.bu to i64
@@ -278,7 +278,7 @@ bb.a:
   %i.db = load i8, ptr %i.da, align 1, !tbaa !16
   %i.dc = zext i8 %i.db to i64
   %i.dd = shl nuw nsw i64 %i.dc, 8
-  %3 = xor i64 %i.cz, %i.dd
+  %3 = or disjoint i64 %i.cz, %i.dd
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 127
   %i.df = load i8, ptr %i.de, align 1, !tbaa !16
   %i.dg = zext i8 %i.df to i64
@@ -316,7 +316,7 @@ bb.a:
   %i.em = load i8, ptr %i.el, align 1, !tbaa !16
   %i.en = zext i8 %i.em to i64
   %i.eo = shl nuw nsw i64 %i.en, 8
-  %4 = xor i64 %i.ek, %i.eo
+  %4 = or disjoint i64 %i.ek, %i.eo
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 135
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !16
   %i.er = zext i8 %i.eq to i64
@@ -354,7 +354,7 @@ bb.a:
   %i.fx = load i8, ptr %i.fw, align 1, !tbaa !16
   %i.fy = zext i8 %i.fx to i64
   %i.fz = shl nuw nsw i64 %i.fy, 8
-  %5 = xor i64 %i.fv, %i.fz
+  %5 = or disjoint i64 %i.fv, %i.fz
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 143
   %i.gb = load i8, ptr %i.ga, align 1, !tbaa !16
   %i.gc = zext i8 %i.gb to i64
@@ -392,7 +392,7 @@ bb.a:
   %i.hi = load i8, ptr %i.hh, align 1, !tbaa !16
   %i.hj = zext i8 %i.hi to i64
   %i.hk = shl nuw nsw i64 %i.hj, 8
-  %6 = xor i64 %i.hg, %i.hk
+  %6 = or disjoint i64 %i.hg, %i.hk
   %i.hl = getelementptr inbounds nuw i8, ptr %0, i64 151
   %i.hm = load i8, ptr %i.hl, align 1, !tbaa !16
   %i.hn = zext i8 %i.hm to i64
@@ -430,7 +430,7 @@ bb.a:
   %i.it = load i8, ptr %i.is, align 1, !tbaa !16
   %i.iu = zext i8 %i.it to i64
   %i.iv = shl nuw nsw i64 %i.iu, 8
-  %7 = xor i64 %i.ir, %i.iv
+  %7 = or disjoint i64 %i.ir, %i.iv
   %i.iw = getelementptr inbounds nuw i8, ptr %0, i64 159
   %i.ix = load i8, ptr %i.iw, align 1, !tbaa !16
   %i.iy = zext i8 %i.ix to i64
@@ -468,7 +468,7 @@ bb.a:
   %i.ke = load i8, ptr %i.kd, align 1, !tbaa !16
   %i.kf = zext i8 %i.ke to i64
   %i.kg = shl nuw nsw i64 %i.kf, 8
-  %8 = xor i64 %i.kc, %i.kg
+  %8 = or disjoint i64 %i.kc, %i.kg
   %i.kh = getelementptr inbounds nuw i8, ptr %0, i64 167
   %i.ki = load i8, ptr %i.kh, align 1, !tbaa !16
   %i.kj = zext i8 %i.ki to i64

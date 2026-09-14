@@ -202,7 +202,7 @@ bb.a:
   %i.m = or disjoint i32 %i.k, %i.l
   %i.n = shl nuw nsw i32 %i.e, 10
   %i.o = and i32 %i.n, 196608
-  %3 = xor i32 %i.m, %i.o                         ; 2 uses
+  %3 = or disjoint i32 %i.m, %i.o                 ; 2 uses
   %i.p = trunc i64 %2 to i32
   %i.q = tail call noundef i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 %i.p)
   %i.r = trunc i64 %0 to i32

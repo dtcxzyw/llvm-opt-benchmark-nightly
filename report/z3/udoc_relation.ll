@@ -205,7 +205,7 @@ _ZNK6vectorIjLb0EjE4sizeEv.exit:                  ; preds = %.lr.ph, %_ZNK6vecto
   %i.an = load i32, ptr %i.am, align 4, !tbaa !24
   %i.ao = and i32 %i.aj, 31
   %i.ap = shl nuw i32 1, %i.ao
-  %i.aq = or i32 %i.an, %i.ap
+  %i.aq = or i32 %i.ap, %i.an
   store i32 %i.aq, ptr %i.am, align 4, !tbaa !24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ar = load i32, ptr %i.ac, align 4, !tbaa !24
@@ -608,7 +608,7 @@ _ZNK6vectorIjLb0EjE4sizeEv.exit.thread:           ; preds = %.lr.ph, %_ZNK6vecto
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !24
   %i.be = and i32 %i.az, 31
   %i.bf = shl nuw i32 1, %i.be
-  %i.bg = or i32 %i.bd, %i.bf
+  %i.bg = or i32 %i.bf, %i.bd
   store i32 %i.bg, ptr %i.bc, align 4, !tbaa !24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bh = load i32, ptr %i.ap, align 4, !tbaa !24
@@ -1011,7 +1011,7 @@ _ZNK6vectorIjLb0EjE4sizeEv.exit:                  ; preds = %.lr.ph48, %_ZNK6vec
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !24
   %i.cb = and i32 %i.bw, 31
   %i.cc = shl nuw i32 1, %i.cb
-  %i.cd = or i32 %i.ca, %i.cc
+  %i.cd = or i32 %i.cc, %i.ca
   store i32 %i.cd, ptr %i.bz, align 4, !tbaa !24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ce = load i32, ptr %i.bi, align 4, !tbaa !24

@@ -205,6 +205,7 @@ bb.k:                                             ; preds = %bb.j
   %i.cq = load i32, ptr %i.cn, align 8, !tbaa !46 ; 3 uses
   %i.cr = sub nsw i32 32, %i.cq
   %notmask.i.i.i = shl nsw i32 -1, %i.cq
+  %invariant.op115 = sub nuw i32 -1, %notmask.i.i.i
   br label %bb.o
 
 bb.l:                                             ; preds = %get_vlc2.exit.i.i.i, %.preheader37.i.i.i
@@ -300,8 +301,7 @@ bb.o:                                             ; preds = %bb.p, %.preheader.i
   %i.fh = add i32 %i.ey, %i.cq
   %i.fi = tail call i32 @llvm.umin.i32(i32 %i.bq, i32 %i.fh) ; 2 uses
   store i32 %i.fi, ptr %i.af, align 16, !tbaa !62
-  %4 = xor i32 %i.fg, %notmask.i.i.i
-  %.not35.i.i.i = icmp eq i32 %4, -1
+  %.not35.i.i.i = icmp eq i32 %i.fg, %invariant.op115
   br i1 %.not35.i.i.i, label %decouple_info.exit.i.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
