@@ -204,7 +204,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !259  ; 3 uses
   %i.c = load i32, ptr @_ZN4Luau7AstRttiINS_12AstStatBlockEE5valueE, align 4, !tbaa !50
   %i.d = icmp ne i32 %i.b, %i.c
-  %.not.not31 = icmp eq ptr %1, null
+  %.not.not31 = icmp eq ptr %1, null              ; 2 uses
   %.not.not = or i1 %.not.not31, %i.d
   br i1 %.not.not, label %.thread, label %.preheader
 
@@ -236,8 +236,9 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
 
 bb.c:                                             ; preds = %.thread
   %i.o = load i32, ptr @_ZN4Luau7AstRttiINS_9AstStatIfEE5valueE, align 4, !tbaa !50
-  %2 = icmp eq i32 %i.b, %i.o
-  br i1 %2, label %bb.d, label %.loopexit
+  %2 = icmp ne i32 %i.b, %i.o
+  %.not25.not.not.not = or i1 %2, %.not.not31
+  br i1 %.not25.not.not.not, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 40
