@@ -202,11 +202,11 @@ _ZNK4llvm6MDNode14getNumOperandsEv.exit:          ; preds = %bb.c, %bb.d
 
 .lr.ph:                                           ; preds = %_ZNK4llvm6MDNode14getNumOperandsEv.exit
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = zext i32 %.0.i.i to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %.critedge
-  %.029 = phi i32 [ 0, %.lr.ph ], [ %7, %.critedge ] ; 3 uses
-  %3 = or disjoint i32 %.029, 1
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 3 uses
   %i.q = load ptr, ptr %i.e, align 8, !tbaa !153  ; 2 uses
   %i.r = getelementptr inbounds i8, ptr %i.q, i64 -16 ; 2 uses
   %i.s = load i64, ptr %i.r, align 8              ; 2 uses
@@ -228,14 +228,13 @@ bb.g:                                             ; preds = %bb.e
 
 _ZNK4llvm6MDNode10getOperandEj.exit21:            ; preds = %bb.f, %bb.g
   %.sink = phi ptr [ %i.v, %bb.f ], [ %i.z, %bb.g ] ; 2 uses
-  %4 = zext i32 %.029 to i64
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.sink, i64 %4
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.sink, i64 %indvars.iv
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !26 ; 3 uses
   %i.ac = load i8, ptr %i.ab, align 4, !tbaa !53
   %.not36 = icmp eq i8 %i.ac, 0
-  %5 = zext i32 %3 to i64
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %.sink, i64 %5
-  %i.ad = load ptr, ptr %6, align 8, !tbaa !26    ; 2 uses
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %.sink, i64 %indvars.iv
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.ad = load ptr, ptr %5, align 8, !tbaa !26    ; 2 uses
   %i.ae = load i8, ptr %i.ad, align 4, !tbaa !53
   %.not.i = icmp eq i8 %i.ae, 1
   br i1 %.not.i, label %bb.h, label %_ZN4llvm7mdconst11dyn_extractINS_11ConstantIntERKNS_9MDOperandEEENSt9enable_ifIXsr6detail14IsValidPointerIT_T0_EE5valueEPS7_E4typeEOS8_.exit
@@ -309,9 +308,9 @@ _ZN4llvm15SmallVectorImplISt4pairINS_9StringRefEmEE12emplace_backIJS2_mEEERS3_Dp
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZN4llvm7mdconst11dyn_extractINS_11ConstantIntERKNS_9MDOperandEEENSt9enable_ifIXsr6detail14IsValidPointerIT_T0_EE5valueEPS7_E4typeEOS8_.exit, %_ZN4llvm15SmallVectorImplISt4pairINS_9StringRefEmEE12emplace_backIJS2_mEEERS3_DpOT_.exit, %bb.i
-  %7 = add i32 %.029, 2                           ; 2 uses
-  %8 = or disjoint i32 %7, 1
-  %i.be = icmp ult i32 %8, %.0.i.i
+  %indvars.iv.next = add nuw i64 %indvars.iv, 2   ; 2 uses
+  %6 = or disjoint i64 %indvars.iv.next, 1
+  %i.be = icmp ult i64 %6, %3
   br i1 %i.be, label %bb.e, label %.loopexit, !llvm.loop !486
 
 .loopexit:                                        ; preds = %.critedge, %_ZNK4llvm6MDNode14getNumOperandsEv.exit, %bb.a

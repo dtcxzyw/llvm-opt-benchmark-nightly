@@ -205,9 +205,7 @@ bb.j:                                             ; preds = %bb.i
           to label %.thread unwind label %.loopexit.split-lp
 
 .thread:                                          ; preds = %bb.j
-  %i.aa = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !2957, !noundef !5 ; 3 uses
-  %2 = icmp sgt i64 %i.aa, -1
-  call void @llvm.assume(i1 %2)
+  %i.aa = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !2957, !noundef !5 ; 2 uses
   %i.ab = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !2957, !nonnull !5, !noundef !5
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.aa
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %i.ac, ptr noundef nonnull align 1 dereferenceable(39) @199, i64 39, i1 false)

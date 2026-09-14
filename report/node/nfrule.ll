@@ -204,16 +204,15 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit35:       ; preds = %bb.g
   %i.az = load i16, ptr %i.ay, align 2
   %.fr = freeze i16 %i.az
   %i.ba = icmp eq i16 %.fr, 60
-  %spec.select = select i1 %i.ba, i32 %i.aq, i32 %i.af
-  br label %_ZNK6icu_7813UnicodeString6charAtEi.exit35.thread
+  br i1 %i.ba, label %_ZNK6icu_7813UnicodeString6charAtEi.exit35.thread, label %.thread
 
 _ZNK6icu_7813UnicodeString6charAtEi.exit35.thread: ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit35, %bb.g, %_ZNK6icu_7813UnicodeString6charAtEi.exit, %bb.c
-  %.1 = phi i32 [ %i.m, %bb.c ], [ %i.af, %_ZNK6icu_7813UnicodeString6charAtEi.exit ], [ %spec.select, %_ZNK6icu_7813UnicodeString6charAtEi.exit35 ], [ %i.af, %bb.g ] ; 2 uses
+  %.1 = phi i32 [ %i.m, %bb.c ], [ %i.af, %_ZNK6icu_7813UnicodeString6charAtEi.exit ], [ %i.af, %bb.g ], [ %i.aq, %_ZNK6icu_7813UnicodeString6charAtEi.exit35 ] ; 2 uses
   %i.bb = icmp eq i32 %.1, -1
   br i1 %i.bb, label %bb.h, label %.thread
 
-.thread:                                          ; preds = %bb.f, %_ZNK6icu_7813UnicodeString6charAtEi.exit35.thread
-  %.139 = phi i32 [ %.1, %_ZNK6icu_7813UnicodeString6charAtEi.exit35.thread ], [ %i.af, %bb.f ]
+.thread:                                          ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit35, %bb.f, %_ZNK6icu_7813UnicodeString6charAtEi.exit35.thread
+  %.139 = phi i32 [ %.1, %_ZNK6icu_7813UnicodeString6charAtEi.exit35.thread ], [ %i.af, %bb.f ], [ %i.af, %_ZNK6icu_7813UnicodeString6charAtEi.exit35 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %4, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses

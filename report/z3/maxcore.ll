@@ -205,16 +205,14 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.
           to label %bb.as unwind label %bb.bk
 
 .lr.ph:                                           ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.lr.ph, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
-  %.094146 = phi i32 [ %13, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.lr.ph ] ; 3 uses
-  %8 = phi ptr [ %i.fe, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ %i.ah, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.lr.ph ] ; 2 uses
-  %i.au = phi ptr [ %i.cq, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ null, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.lr.ph ] ; 3 uses
-  %9 = or disjoint i32 %.094146, 1
-  %10 = zext i32 %.094146 to i64
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %10
+  %i.au = phi ptr [ %i.fe, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ %i.ah, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.lr.ph ] ; 2 uses
+  %indvars.iv147 = phi i64 [ %indvars.iv.next, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.lr.ph ] ; 3 uses
+  %8 = phi ptr [ %i.cq, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ null, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.lr.ph ] ; 3 uses
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv147
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !156 ; 2 uses
-  %11 = zext i32 %9 to i64
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %11
-  %i.ax = load ptr, ptr %12, align 8, !tbaa !156  ; 2 uses
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv147
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.ax = load ptr, ptr %10, align 8, !tbaa !156  ; 2 uses
   %i.ay = invoke noundef ptr @_ZN3opt18maxsmt_solver_base13mk_fresh_boolEPKc(ptr noundef nonnull align 8 dereferenceable(160) %0, ptr noundef nonnull @.str.30)
           to label %bb.f unwind label %bb.aq      ; 5 uses
 
@@ -239,11 +237,11 @@ _ZN11ast_manager7inc_refEP3ast.exit.i:            ; preds = %_ZN11ast_manager5mk
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i, %_ZN11ast_manager5mk_orEP4exprS1_.exit
-  %.not.i4.i = icmp eq ptr %i.au, null
+  %.not.i4.i = icmp eq ptr %8, null
   br i1 %.not.i4.i, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.au, i64 8 ; 2 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !159
   %i.bh = add i32 %i.bg, -1                       ; 2 uses
   store i32 %i.bh, ptr %i.bf, align 4, !tbaa !159
@@ -251,7 +249,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bi, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %i.ai, ptr noundef nonnull %i.au)
+  invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %i.ai, ptr noundef nonnull %8)
           to label %bb.k unwind label %bb.ar
 
 bb.k:                                             ; preds = %bb.i, %bb.h, %bb.j
@@ -560,9 +558,10 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit:
   store ptr %i.az, ptr %i.fh, align 8, !tbaa !156
   %i.fi = add i32 %i.fd, 1                        ; 2 uses
   store i32 %i.fi, ptr %i.ff, align 4, !tbaa !155
-  %13 = add i32 %.094146, 2                       ; 2 uses
-  %14 = or disjoint i32 %13, 1
-  %i.fj = icmp ult i32 %14, %i.fi
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv147, 2 ; 2 uses
+  %11 = or disjoint i64 %indvars.iv.next, 1
+  %12 = zext i32 %i.fi to i64
+  %i.fj = icmp samesign ult i64 %11, %12
   br i1 %i.fj, label %.lr.ph, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.thread, !llvm.loop !347
 
 bb.aq:                                            ; preds = %.lr.ph

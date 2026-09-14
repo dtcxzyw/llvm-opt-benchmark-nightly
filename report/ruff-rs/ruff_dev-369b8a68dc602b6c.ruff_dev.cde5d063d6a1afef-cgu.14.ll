@@ -204,9 +204,7 @@ bb.cb:                                            ; preds = %_RNvMNtCscdodAO9FK5
           to label %bb.ce unwind label %.loopexit371
 
 bb.cc:                                            ; preds = %bb.ca
-  %i.jz = load i64, ptr %.sroa.518.0..sroa_idx, align 8, !alias.scope !1744, !noundef !5 ; 5 uses
-  %1 = icmp sgt i64 %i.jz, -1
-  call void @llvm.assume(i1 %1)
+  %i.jz = load i64, ptr %.sroa.518.0..sroa_idx, align 8, !alias.scope !1744, !noundef !5 ; 4 uses
   %i.ka = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1744, !nonnull !5, !noundef !5
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 %i.jz
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(77) %i.kb, ptr noundef nonnull align 1 dereferenceable(77) @117, i64 77, i1 false)
@@ -245,9 +243,7 @@ bb.cg:                                            ; preds = %_RNvMNtCscdodAO9FK5
           to label %bb.cj unwind label %.loopexit371 ; 2 uses
 
 bb.ch:                                            ; preds = %bb.cf
-  %i.kk = load i64, ptr %.sroa.518.0..sroa_idx, align 8, !alias.scope !1747, !noundef !5 ; 5 uses
-  %2 = icmp sgt i64 %i.kk, -1
-  call void @llvm.assume(i1 %2)
+  %i.kk = load i64, ptr %.sroa.518.0..sroa_idx, align 8, !alias.scope !1747, !noundef !5 ; 4 uses
   %i.kl = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1747, !nonnull !5, !noundef !5
   %i.km = getelementptr inbounds nuw i8, ptr %i.kl, i64 %i.kk
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(103) %i.km, ptr noundef nonnull align 1 dereferenceable(103) @118, i64 103, i1 false)
@@ -417,9 +413,7 @@ bb.cz:                                            ; preds = %_RNvMNtCscdodAO9FK5
           to label %bb.dc unwind label %.loopexit371 ; 2 uses
 
 bb.da:                                            ; preds = %bb.cy
-  %i.ls = load i64, ptr %.sroa.518.0..sroa_idx, align 8, !alias.scope !1756, !noundef !5 ; 5 uses
-  %3 = icmp sgt i64 %i.ls, -1
-  call void @llvm.assume(i1 %3)
+  %i.ls = load i64, ptr %.sroa.518.0..sroa_idx, align 8, !alias.scope !1756, !noundef !5 ; 4 uses
   %i.lt = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1756, !nonnull !5, !noundef !5
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lt, i64 %i.ls
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(96) %i.lu, ptr noundef nonnull align 1 dereferenceable(96) @119, i64 96, i1 false)
