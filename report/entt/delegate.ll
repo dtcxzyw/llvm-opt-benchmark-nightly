@@ -202,12 +202,12 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 bb.at:                                            ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i760, %.critedge560
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #28
-  %i.ek = load ptr, ptr %i.n, align 8, !tbaa !54  ; 2 uses
-  %i.el = load ptr, ptr %i.ar, align 8, !tbaa !54 ; 2 uses
-  %i.em = icmp ne ptr %i.ek, %i.el
-  %i.en = load ptr, ptr %1, align 16              ; 2 uses
-  %i.eo = load ptr, ptr %2, align 16              ; 2 uses
-  %i.ep = icmp ne ptr %i.en, %i.eo
+  %i.ek = load ptr, ptr %i.n, align 8, !tbaa !54
+  %i.el = load ptr, ptr %i.ar, align 8, !tbaa !54
+  %i.em = icmp ne ptr %i.ek, %i.el                ; 2 uses
+  %i.en = load ptr, ptr %1, align 16
+  %i.eo = load ptr, ptr %2, align 16
+  %i.ep = icmp ne ptr %i.en, %i.eo                ; 2 uses
   %.not1428 = select i1 %i.em, i1 true, i1 %i.ep  ; 2 uses
   %i.eq = zext i1 %.not1428 to i8
   store i8 %i.eq, ptr %18, align 8, !tbaa !42
@@ -347,10 +347,8 @@ _ZN7testing7MessageD2Ev.exit779:                  ; preds = %_ZNKSt14default_del
 bb.bf:                                            ; preds = %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #28
-  %217 = icmp eq ptr %i.ek, %i.el
-  %218 = icmp eq ptr %i.en, %i.eo
-  %i.fv = select i1 %217, i1 %218, i1 false
-  br i1 %i.fv, label %bb.bh, label %bb.bg
+  %i.fv = select i1 %i.em, i1 true, i1 %i.ep
+  br i1 %i.fv, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
   call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %22)

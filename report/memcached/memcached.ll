@@ -204,7 +204,7 @@ declare void @write_bin_error(ptr noundef, i32 noundef, ptr noundef, i32 noundef
 define dso_local void @append_stats(ptr noundef %0, i16 noundef zeroext %1, ptr noundef %2, i32 noundef %3, ptr nofree noundef captures(none) %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq i16 %1, 0                        ; 3 uses
-  %i.b = icmp ne i32 %3, 0
+  %i.b = icmp ne i32 %3, 0                        ; 4 uses
   %or.cond = and i1 %i.a, %i.b
   br i1 %or.cond, label %.critedge, label %bb.b
 
@@ -310,8 +310,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 24 ; 2 uses
   %i.aj = zext i16 %1 to i64                      ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ai, ptr readonly align 1 %0, i64 %i.aj, i1 false)
-  %.not21.i = icmp eq i32 %3, 0
-  br i1 %.not21.i, label %append_bin_stats.exit, label %bb.i
+  br i1 %i.b, label %bb.i, label %append_bin_stats.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aj
@@ -380,8 +379,8 @@ bb.o:                                             ; preds = %._crit_edge.i30, %b
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.ba ; 3 uses
   %i.bd = xor i64 %i.ba, -1
   %i.be = add i64 %i.az, %i.bd
-  %5 = icmp eq i32 %3, 0                          ; 2 uses
-  %or.cond.i = and i1 %i.a, %5
+  %.not = xor i1 %i.b, true
+  %or.cond.i = and i1 %i.a, %.not
   %sext.i = shl i64 %i.be, 32
   %i.bf = ashr exact i64 %sext.i, 32              ; 3 uses
   br i1 %or.cond.i, label %bb.p, label %bb.q
@@ -391,7 +390,7 @@ bb.p:                                             ; preds = %bb.o
   br label %append_ascii_stats.exit
 
 bb.q:                                             ; preds = %bb.o
-  br i1 %5, label %bb.r, label %bb.s
+  br i1 %i.b, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.bh = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.bc, i64 noundef %i.bf, ptr noundef nonnull @.str.385, ptr noundef %0) #33

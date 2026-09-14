@@ -204,7 +204,7 @@ tailrecurse:                                      ; preds = %bb.e, %bb.a
   %.tr = phi ptr [ %0, %bb.a ], [ %i.t, %bb.e ]   ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.tr, i64 8
   %i.b = load i32, ptr %i.a, align 8, !tbaa !110
-  switch i32 %i.b, label %.thread33 [
+  switch i32 %i.b, label %common.ret [
     i32 1, label %bb.b
     i32 2, label %bb.c
   ]
@@ -212,7 +212,7 @@ tailrecurse:                                      ; preds = %bb.e, %bb.a
 bb.b:                                             ; preds = %tailrecurse
   %i.c = getelementptr inbounds nuw i8, ptr %.tr, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !100, !nonnull !101, !align !102
-  br label %.thread33
+  br label %common.ret
 
 bb.c:                                             ; preds = %tailrecurse
   %i.e = tail call ptr @__dynamic_cast(ptr nonnull %.tr, ptr nonnull @_ZTI10Expression, ptr nonnull @_ZTI17ExpressionFuncall, i64 0) #21 ; 2 uses
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %tailrecurse
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load i32, ptr %i.j, align 8, !tbaa !114
   %switch = icmp ult i32 %i.k, 2
-  br i1 %switch, label %bb.d, label %.thread33
+  br i1 %switch, label %bb.d, label %common.ret
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -240,6 +240,10 @@ bb.e:                                             ; preds = %bb.d
   %i.t = load ptr, ptr %i.o, align 8, !tbaa !77
   br label %tailrecurse
 
+common.ret:                                       ; preds = %bb.b, %bb.c, %tailrecurse, %bb.f
+  %common.ret.op = phi ptr [ %spec.select49, %bb.f ], [ %i.d, %bb.b ], [ null, %bb.c ], [ null, %tailrecurse ]
+  ret ptr %common.ret.op
+
 bb.f:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.v = load ptr, ptr %i.o, align 8, !tbaa !77
@@ -247,20 +251,12 @@ bb.f:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.u, align 8, !tbaa !78
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !77
-  %i.aa = tail call fastcc noundef ptr @_ZL17find_expr_key_varPK10Expression(ptr noundef %i.z) ; 3 uses
-  %i.ab = icmp eq ptr %i.w, null
-  %1 = icmp ne ptr %i.aa, null
-  %or.cond = and i1 %i.ab, %1
-  br i1 %or.cond, label %.thread33, label %2
-
-2:                                                ; preds = %bb.f
-  %.not = icmp eq ptr %i.aa, null
-  %spec.select = select i1 %.not, ptr %i.w, ptr null
-  br label %.thread33
-
-.thread33:                                        ; preds = %tailrecurse, %bb.c, %2, %bb.f, %bb.b
-  %.3 = phi ptr [ %i.d, %bb.b ], [ %spec.select, %2 ], [ %i.aa, %bb.f ], [ null, %bb.c ], [ null, %tailrecurse ]
-  ret ptr %.3
+  %i.aa = tail call fastcc noundef ptr @_ZL17find_expr_key_varPK10Expression(ptr noundef %i.z) ; 2 uses
+  %1 = icmp eq ptr %i.w, null
+  %i.ab = icmp eq ptr %i.aa, null
+  %spec.select = select i1 %1, ptr %i.aa, ptr null
+  %spec.select49 = select i1 %i.ab, ptr %i.w, ptr %spec.select
+  br label %common.ret
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable

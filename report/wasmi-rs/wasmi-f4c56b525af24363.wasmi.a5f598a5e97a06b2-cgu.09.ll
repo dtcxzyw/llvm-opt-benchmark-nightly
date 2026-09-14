@@ -205,8 +205,8 @@ _RINvYINtNtNtNtCskKLDkoKarTP_4core4iter7sources8repeat_n7RepeatNNtNtCs5zeGauAcNN
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecNtNtNtCs9FmeSmcCnTG_10wasmparser9validator9operators9MaybeTypeE14extend_trustedINtNtCskKLDkoKarTP_4core6option8IntoIterBG_EECsefoF4u9kbII_5wasmi(ptr noalias nofree noundef align 8 dereferenceable(24) %0, i32 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = and i32 %1, 255                          ; 2 uses
-  %i.b = icmp ne i32 %i.a, 255
+  %i.a = and i32 %1, 255
+  %i.b = icmp ne i32 %i.a, 255                    ; 2 uses
   %i.c = zext i1 %i.b to i64                      ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !alias.scope !103, !noundef !5 ; 3 uses
@@ -222,8 +222,7 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtCs9FmeSmcCnTG_10wasmparser9validator9operators9MaybeTypeE7reserveCsefoF4u9kbII_5wasmi.exit: ; preds = %bb.a, %bb.b
   %i.i = phi i64 [ %i.e, %bb.a ], [ %.pre, %bb.b ] ; 3 uses
-  %.not17.i.i = icmp eq i32 %i.a, 255
-  br i1 %.not17.i.i, label %_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterNtNtNtCs9FmeSmcCnTG_10wasmparser9validator9operators9MaybeTypeENtNtNtNtB8_4iter6traits8iterator8Iterator8for_eachNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2F_3VecBH_E14extend_trustedB3_E0ECsefoF4u9kbII_5wasmi.exit, label %.lr.ph.split.us.i.i
+  br i1 %i.b, label %.lr.ph.split.us.i.i, label %_RINvYINtNtCskKLDkoKarTP_4core6option8IntoIterNtNtNtCs9FmeSmcCnTG_10wasmparser9validator9operators9MaybeTypeENtNtNtNtB8_4iter6traits8iterator8Iterator8for_eachNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB2F_3VecBH_E14extend_trustedB3_E0ECsefoF4u9kbII_5wasmi.exit
 
 .lr.ph.split.us.i.i:                              ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtNtCs9FmeSmcCnTG_10wasmparser9validator9operators9MaybeTypeE7reserveCsefoF4u9kbII_5wasmi.exit
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -204,8 +204,7 @@ bb.a:
   br i1 %.not182, label %._crit_edge140, label %.noexc.preheader.lr.ph
 
 .noexc.preheader.lr.ph:                           ; preds = %bb.a
-  %i.f = icmp ne i32 %3, 0
-  %.not83 = icmp eq i32 %3, 0                     ; 2 uses
+  %i.f = icmp ne i32 %3, 0                        ; 3 uses
   %i.g = and i64 %2, 4294967295                   ; 5 uses
   %i.h = add i32 %i.e, -1
   br label %.noexc.preheader
@@ -380,7 +379,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bt, label %.noexc7, label %bb.n, !prof !108
 
 bb.m:                                             ; preds = %bb.k
-  br i1 %.not83, label %.noexc7, label %.noexc3
+  br i1 %i.f, label %.noexc3, label %.noexc7
 
 bb.n:                                             ; preds = %bb.l
   %i.bu = icmp samesign ult i8 %i.bh, -62         ; 2 uses
@@ -415,7 +414,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ci, label %.noexc7, label %bb.s, !prof !108
 
 .critedge2.i:                                     ; preds = %bb.p
-  br i1 %.not83, label %.critedge2.i..critedge2.i.thread_crit_edge, label %.noexc3
+  br i1 %i.f, label %.noexc3, label %.critedge2.i..critedge2.i.thread_crit_edge
 
 .critedge2.i..critedge2.i.thread_crit_edge:       ; preds = %.critedge2.i
   %.pre = add nuw i32 %i.be, 1
@@ -818,7 +817,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.d = load i32, ptr %i.c, align 8, !tbaa !224
   %i.e = load i64, ptr %5, align 8, !tbaa !223
-  %i.f = sub i64 %i.a, %i.e                       ; 6 uses
+  %i.f = sub i64 %i.a, %i.e                       ; 5 uses
   %i.g = sub nsw i32 0, %i.d
   %i.h = zext nneg i32 %i.g to i64                ; 5 uses
   %i.i = shl nuw i64 1, %i.h                      ; 4 uses
@@ -875,7 +874,7 @@ bb.j:                                             ; preds = %_ZN8simdjson8intern
 _ZN8simdjson8internal9dtoa_impl18find_largest_pow10EjRj.exit: ; preds = %_ZN8simdjson8internal9dtoa_impl18find_largest_pow10EjRj.exit.preheader, %bb.j
   %.054110 = phi i32 [ %i.af, %bb.j ], [ %.054110.ph, %_ZN8simdjson8internal9dtoa_impl18find_largest_pow10EjRj.exit.preheader ] ; 2 uses
   %.056109 = phi i32 [ %i.y, %bb.j ], [ %i.k, %_ZN8simdjson8internal9dtoa_impl18find_largest_pow10EjRj.exit.preheader ] ; 2 uses
-  %.077108 = phi i32 [ %.1, %bb.j ], [ %.077108.ph, %_ZN8simdjson8internal9dtoa_impl18find_largest_pow10EjRj.exit.preheader ] ; 6 uses
+  %.077108 = phi i32 [ %.1, %bb.j ], [ %.077108.ph, %_ZN8simdjson8internal9dtoa_impl18find_largest_pow10EjRj.exit.preheader ] ; 7 uses
   %i.x = udiv i32 %.056109, %.077108
   %i.y = urem i32 %.056109, %.077108              ; 2 uses
   %i.z = trunc i32 %i.x to i8
@@ -909,12 +908,12 @@ bb.k:                                             ; preds = %_ZN8simdjson8intern
   %i.ap = load i32, ptr %1, align 4, !tbaa !37
   %i.aq = sext i32 %i.ap to i64
   %i.ar = getelementptr i8, ptr %0, i64 %i.aq
-  %i.as = getelementptr i8, ptr %i.ar, i64 -1     ; 2 uses
+  %i.as = getelementptr i8, ptr %i.ar, i64 -1     ; 4 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %.critedge2.i, %.lr.ph.i
   %.023.i = phi i64 [ %i.ai, %.lr.ph.i ], [ %i.at, %.critedge2.i ] ; 2 uses
-  %i.at = add i64 %.023.i, %i.am                  ; 5 uses
+  %i.at = add i64 %.023.i, %i.am                  ; 4 uses
   %i.au = icmp ult i64 %i.at, %i.f
   br i1 %i.au, label %.critedge2.i, label %bb.m
 
@@ -922,24 +921,28 @@ bb.m:                                             ; preds = %bb.l
   %i.av = sub nuw i64 %i.f, %.023.i
   %i.aw = sub nuw i64 %i.at, %i.f
   %i.ax = icmp ugt i64 %i.av, %i.aw
-  br i1 %i.ax, label %.critedge2.i, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit
+  br i1 %i.ax, label %.critedge2.thread.i, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit
 
-.critedge2.i:                                     ; preds = %bb.m, %bb.l
+.critedge2.thread.i:                              ; preds = %bb.m
+  %7 = load i8, ptr %i.as, align 1, !tbaa !36
+  %8 = add i8 %7, -1
+  store i8 %8, ptr %i.as, align 1, !tbaa !36
+  br label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit
+
+.critedge2.i:                                     ; preds = %bb.l
   %i.ay = load i8, ptr %i.as, align 1, !tbaa !36
   %i.az = add i8 %i.ay, -1
   store i8 %i.az, ptr %i.as, align 1, !tbaa !36
-  %7 = icmp uge i64 %i.at, %i.f
   %i.ba = sub i64 %i.b, %i.at
   %.not.i = icmp ult i64 %i.ba, %i.am
-  %or.cond.i = or i1 %7, %.not.i
-  br i1 %or.cond.i, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit, label %bb.l, !llvm.loop !221
+  br i1 %.not.i, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit, label %bb.l, !llvm.loop !221
 
 bb.n:                                             ; preds = %_ZN8simdjson8internal9dtoa_impl18find_largest_pow10EjRj.exit
   %i.bb = udiv i32 %.077108, 10
   br label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit
 
-_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit: ; preds = %.critedge2.i, %bb.m, %bb.n
-  %.1 = phi i32 [ %i.bb, %bb.n ], [ %.077108, %bb.m ], [ %.077108, %.critedge2.i ]
+_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit: ; preds = %.critedge2.i, %.critedge2.thread.i, %bb.m, %bb.n
+  %.1 = phi i32 [ %i.bb, %bb.n ], [ %.077108, %.critedge2.thread.i ], [ %.077108, %bb.m ], [ %.077108, %.critedge2.i ]
   br i1 %.not58, label %bb.j, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit68, !llvm.loop !220
 
 .preheader:                                       ; preds = %bb.j, %.preheader
@@ -960,7 +963,7 @@ _ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit: ; preds = %.critedge
   store i8 %i.bg, ptr %i.bk, align 1, !tbaa !36
   %i.bl = add nuw nsw i32 %.051, 1                ; 2 uses
   %i.bm = mul i64 %.0, 10                         ; 4 uses
-  %i.bn = mul i64 %.053, 10                       ; 6 uses
+  %i.bn = mul i64 %.053, 10                       ; 5 uses
   %.not = icmp ugt i64 %i.be, %i.bm
   br i1 %.not, label %.preheader, label %bb.o
 
@@ -978,12 +981,12 @@ bb.o:                                             ; preds = %.preheader
   %i.bs = load i32, ptr %1, align 4, !tbaa !37
   %i.bt = sext i32 %i.bs to i64
   %i.bu = getelementptr i8, ptr %0, i64 %i.bt
-  %i.bv = getelementptr i8, ptr %i.bu, i64 -1     ; 2 uses
+  %i.bv = getelementptr i8, ptr %i.bu, i64 -1     ; 4 uses
   br label %bb.p
 
 bb.p:                                             ; preds = %.critedge2.i65, %.lr.ph.i63
   %.023.i64 = phi i64 [ %i.be, %.lr.ph.i63 ], [ %i.bw, %.critedge2.i65 ] ; 2 uses
-  %i.bw = add i64 %.023.i64, %i.i                 ; 5 uses
+  %i.bw = add i64 %.023.i64, %i.i                 ; 4 uses
   %i.bx = icmp ult i64 %i.bw, %i.bn
   br i1 %i.bx, label %.critedge2.i65, label %bb.q
 
@@ -991,19 +994,23 @@ bb.q:                                             ; preds = %bb.p
   %i.by = sub nuw i64 %i.bn, %.023.i64
   %i.bz = sub nuw i64 %i.bw, %i.bn
   %i.ca = icmp ugt i64 %i.by, %i.bz
-  br i1 %i.ca, label %.critedge2.i65, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit68
+  br i1 %i.ca, label %.critedge2.thread.i66, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit68
 
-.critedge2.i65:                                   ; preds = %bb.q, %bb.p
+.critedge2.thread.i66:                            ; preds = %bb.q
+  %9 = load i8, ptr %i.bv, align 1, !tbaa !36
+  %10 = add i8 %9, -1
+  store i8 %10, ptr %i.bv, align 1, !tbaa !36
+  br label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit68
+
+.critedge2.i65:                                   ; preds = %bb.p
   %i.cb = load i8, ptr %i.bv, align 1, !tbaa !36
   %i.cc = add i8 %i.cb, -1
   store i8 %i.cc, ptr %i.bv, align 1, !tbaa !36
-  %8 = icmp uge i64 %i.bw, %i.bn
   %i.cd = sub i64 %i.bm, %i.bw
   %.not.i66 = icmp ult i64 %i.cd, %i.i
-  %or.cond.i67 = or i1 %8, %.not.i66
-  br i1 %or.cond.i67, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit68, label %bb.p, !llvm.loop !221
+  br i1 %.not.i66, label %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit68, label %bb.p, !llvm.loop !221
 
-_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit68: ; preds = %bb.k, %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit, %.critedge2.i65, %bb.q, %bb.o
+_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit68: ; preds = %bb.k, %_ZN8simdjson8internal9dtoa_impl12grisu2_roundEPcimmmm.exit, %.critedge2.i65, %.critedge2.thread.i66, %bb.q, %bb.o
   ret void
 }
 

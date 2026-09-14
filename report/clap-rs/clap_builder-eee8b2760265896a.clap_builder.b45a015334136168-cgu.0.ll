@@ -205,7 +205,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr19replac
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 41
   %i.bk = load i8, ptr %i.bj, align 1, !range !34, !noundef !11 ; 2 uses
   %i.bl = trunc nuw i8 %i.bk to i1
-  %i.bm = icmp ne ptr %1, null
+  %i.bm = icmp ne ptr %1, null                    ; 2 uses
   %.sroa.015.0 = and i1 %i.bm, %i.bl              ; 3 uses
   %i.bn = icmp eq i64 %4, 0                       ; 3 uses
   %or.cond = or i1 %i.bn, %.sroa.015.0
@@ -252,8 +252,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr11push_s
   %i.cc = phi i64 [ %i.by, %bb.i ], [ %i.br, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCsfu0rQaTkGUu_12clap_builder.exit.i.i154 ]
   %i.cd = add i64 %i.cc, %.val146
   store i64 %i.cd, ptr %i.bq, align 8, !alias.scope !4082
-  %.not136 = icmp eq ptr %1, null
-  br i1 %.not136, label %bb.n, label %bb.m
+  br i1 %i.bm, label %bb.m, label %bb.ao
 
 bb.j:                                             ; preds = %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr19replace_newline_var.exit
   %.pre = load i64, ptr %i.bc, align 8, !noalias !11 ; 5 uses
@@ -324,7 +323,7 @@ bb.m:                                             ; preds = %_RNvMNtNtCsfu0rQaTk
   %.not137 = icmp eq i32 %i.cz, 0
   br i1 %.not137, label %bb.o, label %bb.n
 
-bb.n:                                             ; preds = %bb.o, %bb.m, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr11push_styled.exit
+bb.n:                                             ; preds = %bb.o, %bb.m, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit
   %.not7 = xor i1 %i.bn, true
   %or.cond9 = and i1 %.sroa.015.0, %.not7
   br i1 %or.cond9, label %bb.bf, label %bb.ao
@@ -696,7 +695,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
   %or.cond3 = and i1 %.sroa.015.0, %.not
   br i1 %or.cond3, label %bb.ar, label %bb.ao
 
-bb.ao:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_str9StyledStrEBH_.exit218, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit200, %bb.n
+bb.ao:                                            ; preds = %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr11push_styled.exit, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_str9StyledStrEBH_.exit218, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder14possible_value13PossibleValueEEB1e_.exit200, %bb.n
   call void @llvm.experimental.noalias.scope.decl(metadata !4123)
   call void @llvm.experimental.noalias.scope.decl(metadata !4124)
   %.val.i.i201 = load i64, ptr %i.k, align 8, !range !12, !alias.scope !4125, !noundef !11 ; 2 uses
@@ -1099,14 +1098,16 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
+  %4 = icmp ne ptr %i.u, null
+  %5 = icmp ne i32 %i.w, -1
+  %6 = select i1 %4, i1 true, i1 %5
   br label %.thread
 
 bb.i:                                             ; preds = %bb.g
   br label %bb.h
 
 .thread:                                          ; preds = %bb.h, %bb.b, %bb.ad
-  %4 = phi i32 [ -1, %bb.ad ], [ -1, %bb.b ], [ %i.w, %bb.h ] ; 2 uses
-  %5 = phi ptr [ null, %bb.ad ], [ null, %bb.b ], [ %i.u, %bb.h ] ; 2 uses
+  %.not40.i = phi i1 [ false, %bb.ad ], [ false, %bb.b ], [ %6, %bb.h ] ; 3 uses
   %.sroa.03.0110 = phi i1 [ false, %bb.ad ], [ false, %bb.b ], [ %.sroa.03.1, %bb.h ]
   %.not98 = icmp eq i8 %3, 2
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 592
@@ -1310,9 +1311,6 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.8.1.i = phi ptr [ %i.bl, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrEEB1e_.exit.i ], [ %i.ao, %_RNvXsb_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneBL_.exit.i ] ; 4 uses
   %.sroa.0.1.i = phi i64 [ %..i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrEEB1e_.exit.i ], [ %i.aj, %_RNvXsb_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneBL_.exit.i ] ; 3 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.8.1.i, i64 %.idx.i.pre-phi
-  %.not40.i = icmp ne ptr %5, null
-  %.not41.i = icmp ne i32 %4, -1
-  %or.cond44.not122.i = select i1 %.not40.i, i1 true, i1 %.not41.i ; 2 uses
   %i.cl = add i64 %.sroa.026.0.i, -1
   %.sroa.416.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %.sroa.770.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
@@ -1325,7 +1323,7 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   store ptr %.sroa.8.1.i, ptr %i.e, align 8, !noalias !5411, !captures !22
   %.not39.peel.i = icmp ne i64 %.sroa.026.0.i, 0
   %brmerge95.not.peel.i = select i1 %i.ah, i1 %.not39.peel.i, i1 false
-  %or.cond120.i = select i1 %or.cond44.not122.i, i1 true, i1 %brmerge95.not.peel.i
+  %or.cond120.i = select i1 %.not40.i, i1 true, i1 %brmerge95.not.peel.i
   br i1 %or.cond120.i, label %.split33.peel.i, label %.split.peel.i
 
 .split.peel.i:                                    ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit.lr.ph.i
@@ -1399,27 +1397,24 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.cy = add nuw nsw i64 %.sroa.7.098.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !5411
   store ptr %.sroa.067.0100.i, ptr %i.e, align 8, !noalias !5411, !captures !22
-  br i1 %or.cond44.not122.i, label %bb.v, label %bb.w
+  br i1 %.not40.i, label %bb.v, label %bb.w
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit.thread.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsfu0rQaTkGUu_12clap_builder.exit.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsfu0rQaTkGUu_12clap_builder.exit.peel.i
   %i.cz = phi i64 [ %i.cs, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsfu0rQaTkGUu_12clap_builder.exit.peel.i ], [ %i.eb, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsfu0rQaTkGUu_12clap_builder.exit.i ] ; 3 uses
   %i.da = icmp ult i64 %.sroa.0.1.i, 576460752303423488
   call void @llvm.assume(i1 %i.da)
   %i.db = icmp ugt i64 %.sroa.511.0.copyload, %.sroa.0.1.i
-  %6 = select i1 %i.s, i1 %i.db, i1 false         ; 2 uses
-  %.not36.i = icmp eq ptr %5, null
-  %.not37.i = icmp eq i32 %4, -1
-  %or.cond.i = select i1 %.not36.i, i1 %.not37.i, i1 false
-  br i1 %or.cond.i, label %bb.t, label %bb.s
+  %or.cond.i = select i1 %i.s, i1 %i.db, i1 false ; 2 uses
+  br i1 %.not40.i, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit.thread.i
-  br i1 %6, label %bb.u, label %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder3argNtB5_3Arg14render_arg_val.exit
+  br i1 %or.cond.i, label %bb.u, label %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder3argNtB5_3Arg14render_arg_val.exit
 
 bb.t:                                             ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit.thread.i
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 596
   %i.dd = load i8, ptr %i.dc, align 4, !range !53, !alias.scope !5410, !noalias !5412, !noundef !11
   %i.de = icmp eq i8 %i.dd, 1
-  %brmerge.i = select i1 %i.de, i1 true, i1 %6
+  %brmerge.i = select i1 %i.de, i1 true, i1 %or.cond.i
   br i1 %brmerge.i, label %bb.u, label %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder3argNtB5_3Arg14render_arg_val.exit
 
 bb.u:                                             ; preds = %bb.t, %bb.s

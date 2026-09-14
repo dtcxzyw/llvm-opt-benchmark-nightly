@@ -204,7 +204,7 @@ bb.fn:                                            ; preds = %.noexc43.i, %bb.fz,
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCsczYENlYh6wI_8smallvec8IntoIterANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_EECshnt8FRa5Rut_11native_ping.exit.i: ; preds = %_RNvXsG_CsczYENlYh6wI_8smallvecINtB5_8IntoIterANtNtCs6b9j1MKPRPC_12libp2p_swarm10connection12ConnectionIdja_ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCshnt8FRa5Rut_11native_ping.exit.i.i, %.noexc27.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.hk), !noalias !5661
   %.sroa.08.0.copyload.i = load i64, ptr %i.hl, align 8, !noalias !5661
-  %.sroa.0.0.copyload.i = load i64, ptr %i.hm, align 8, !noalias !5661 ; 8 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %i.hm, align 8, !noalias !5661 ; 7 uses
   %.sroa.554.0.copyload.i = load i64, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !5661 ; 4 uses
   %.sroa.6.0.copyload.i = load ptr, ptr %i.kx, align 8, !noalias !5661 ; 4 uses
   %.sroa.761.0.copyload.i = load i64, ptr %i.ku, align 8, !noalias !5661 ; 6 uses
@@ -250,8 +250,6 @@ _RNvXsq_CsczYENlYh6wI_8smallvecINtB5_8SmallVecANtNtCs6b9j1MKPRPC_12libp2p_swarm1
   br label %.thread312
 
 bb.fr:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCscu2bAJ62uie_6either6EitherzNtNtCsfY02lUNHLPc_15libp2p_identify7handler7InEventEECshnt8FRa5Rut_11native_ping.exit4.i.i
-  %3 = icmp ne i64 %.sroa.0.0.copyload.i, 0
-  call void @llvm.assume(i1 %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.he), !noalias !5678
   store i64 %.sroa.761.0.copyload.i, ptr %i.he, align 8, !noalias !5678
   store ptr %.sroa.6.0.copyload.i, ptr %i.lc, align 8, !noalias !5678

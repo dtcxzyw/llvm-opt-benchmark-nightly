@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.o
   store i32 %i.bv, ptr %i.az, align 4, !tbaa !350
   %i.bc = icmp uge i64 %i.l, %i.k
   %i.bd = freeze i1 %i.bc
-  %cond.i = icmp ne i8 %i.ca, 0
-  %or.cond.not.i = and i1 %i.bd, %cond.i
+  %or.cond.not.i = and i1 %i.bd, %1
   br i1 %or.cond.not.i, label %bb.p, label %..lr.ph.i40.i_crit_edge, !prof !339
 
 ..lr.ph.i40.i_crit_edge:                          ; preds = %bb.f
@@ -249,7 +248,7 @@ _ZN4toml2v34impl12utf8_decoderclEh.exit.i:        ; preds = %bb.i, %bb.h
   %i.bx = add i32 %i.bw, %.pre-phi.i.i
   %i.by = zext i32 %i.bx to i64
   %i.bz = getelementptr inbounds nuw i8, ptr @_ZN4toml2v34impl12utf8_decoder11state_tableE, i64 %i.by
-  %i.ca = load i8, ptr %i.bz, align 1, !tbaa !69  ; 4 uses
+  %i.ca = load i8, ptr %i.bz, align 1, !tbaa !69  ; 3 uses
   %i.cb = zext i8 %i.ca to i32                    ; 4 uses
   %i.cc = icmp eq i8 %i.ca, 12
   br i1 %i.cc, label %bb.j, label %bb.k, !prof !155
@@ -276,8 +275,8 @@ bb.k:                                             ; preds = %_ZN4toml2v34impl12u
   store i64 %i.cl, ptr %i.bb, align 8, !tbaa !312
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.ck
   store i8 %i.bh, ptr %i.cm, align 1, !tbaa !69
-  %1 = icmp eq i8 %i.ca, 0
-  br i1 %1, label %bb.l, label %bb.m
+  %1 = icmp ne i8 %i.ca, 0                        ; 2 uses
+  br i1 %1, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.cn = load i64, ptr %i.e, align 8, !tbaa !348 ; 2 uses

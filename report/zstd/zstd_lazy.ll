@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.lr.ph282, %ZSTD_in
   %i.bn = zext i32 %.1214280 to i64
   %.v.i = select i1 %.not.i234, ptr %i.bb, ptr %i.v
   %i.bo = getelementptr inbounds nuw i8, ptr %.v.i, i64 %i.bn ; 3 uses
-  %i.bp = zext i32 %i.bm to i64                   ; 5 uses
+  %i.bp = zext i32 %i.bm to i64                   ; 4 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bp ; 2 uses
   %i.br = select i1 %.not.i234, ptr %i.bq, ptr %2 ; 6 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.bp
@@ -250,14 +250,13 @@ bb.h:                                             ; preds = %bb.ab, %.lr.ph.i
   br i1 %.not123.i, label %bb.i, label %.critedge.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.cs = add i64 %i.cq, %i.cr                    ; 2 uses
-  %.not124.i = icmp uge i64 %i.cs, %i.bp
+  %i.cs = add i64 %i.cq, %i.cr
+  %.not124.i = icmp uge i64 %i.cs, %i.bp          ; 2 uses
   %or.cond.i = or i1 %.not.i234, %.not124.i
   br i1 %or.cond.i, label %bb.j, label %bb.v
 
 bb.j:                                             ; preds = %bb.i
-  %.not126.i = icmp ult i64 %i.cs, %i.bp
-  %spec.select131.i = select i1 %.not126.i, ptr %i.bb, ptr %i.v
+  %spec.select131.i = select i1 %.not124.i, ptr %i.v, ptr %i.bb
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.j, %bb.h

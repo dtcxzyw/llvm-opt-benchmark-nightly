@@ -202,10 +202,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor5ident(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noundef %0, ptr noundef %1)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !12, !noundef !6 ; 3 uses
+  %i.c = load i8, ptr %i.b, align 8, !range !12, !noundef !6 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !997)
-  %2 = icmp eq i8 %i.c, -1
-  br i1 %2, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtCs6et67aoV1xO_11proc_macro25IdentNtNtCsgbWeKYPjk8w_3syn6buffer6CursorEEEB1B_.exit, label %bb.b
+  %2 = icmp ne i8 %i.c, -1                        ; 2 uses
+  br i1 %2, label %bb.b, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtCs6et67aoV1xO_11proc_macro25IdentNtNtCsgbWeKYPjk8w_3syn6buffer6CursorEEEB1B_.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !998)
@@ -226,9 +226,8 @@ bb.d:                                             ; preds = %bb.c
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtCs6et67aoV1xO_11proc_macro25IdentNtNtCsgbWeKYPjk8w_3syn6buffer6CursorEEEB1B_.exit
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtCs6et67aoV1xO_11proc_macro25IdentNtNtCsgbWeKYPjk8w_3syn6buffer6CursorEEEB1B_.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d
-  %3 = icmp ne i8 %i.c, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  ret i1 %3
+  ret i1 %2
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -245,10 +244,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor5ident(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noundef %0, ptr noundef %1)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.c = load i8, ptr %i.b, align 8, !range !12, !noundef !6 ; 3 uses
+  %i.c = load i8, ptr %i.b, align 8, !range !12, !noundef !6 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1010)
-  %2 = icmp eq i8 %i.c, -1
-  br i1 %2, label %_RNvXs0_NtCsgbWeKYPjk8w_3syn3extNtNtB5_7private8IdentAnyNtNtNtB7_5token7private11CustomToken4peek.exit, label %bb.b
+  %2 = icmp ne i8 %i.c, -1                        ; 2 uses
+  br i1 %2, label %bb.b, label %_RNvXs0_NtCsgbWeKYPjk8w_3syn3extNtNtB5_7private8IdentAnyNtNtNtB7_5token7private11CustomToken4peek.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1011)
@@ -269,9 +268,8 @@ bb.d:                                             ; preds = %bb.c
   br label %_RNvXs0_NtCsgbWeKYPjk8w_3syn3extNtNtB5_7private8IdentAnyNtNtNtB7_5token7private11CustomToken4peek.exit
 
 _RNvXs0_NtCsgbWeKYPjk8w_3syn3extNtNtB5_7private8IdentAnyNtNtNtB7_5token7private11CustomToken4peek.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d
-  %3 = icmp ne i8 %i.c, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  ret i1 %3
+  ret i1 %2
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -674,18 +672,17 @@ bb.a:
   %i.a = alloca [48 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor10token_tree(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef %0, ptr noundef %1)
-  %i.b = load i32, ptr %i.a, align 8, !range !26, !noundef !6 ; 2 uses
-  %2 = icmp eq i32 %i.b, -1
-  br i1 %2, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtCs6et67aoV1xO_11proc_macro29TokenTreeNtNtCsgbWeKYPjk8w_3syn6buffer6CursorEEEB1F_.exit, label %bb.b
+  %i.b = load i32, ptr %i.a, align 8, !range !26, !noundef !6
+  %2 = icmp ne i32 %i.b, -1                       ; 2 uses
+  br i1 %2, label %bb.b, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtCs6et67aoV1xO_11proc_macro29TokenTreeNtNtCsgbWeKYPjk8w_3syn6buffer6CursorEEEB1F_.exit
 
 bb.b:                                             ; preds = %bb.a
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro29TokenTreeECsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.a)
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtCs6et67aoV1xO_11proc_macro29TokenTreeNtNtCsgbWeKYPjk8w_3syn6buffer6CursorEEEB1F_.exit
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtCs6et67aoV1xO_11proc_macro29TokenTreeNtNtCsgbWeKYPjk8w_3syn6buffer6CursorEEEB1F_.exit: ; preds = %bb.a, %bb.b
-  %3 = icmp ne i32 %i.b, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  ret i1 %3
+  ret i1 %2
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: read) uwtable

@@ -205,8 +205,8 @@ bb.at:                                            ; preds = %bb.q
 
 bb.au:                                            ; preds = %bb.at, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178
   %.sroa.26.2 = phi ptr [ %.sroa.26.5, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178 ], [ %.sroa.26.1, %bb.at ] ; 5 uses
-  %.sroa.15.2 = phi ptr [ %.sroa.15.4, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178 ], [ %.sroa.15.1, %bb.at ] ; 6 uses
-  %.sroa.0334.2 = phi ptr [ %.sroa.0334.5, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178 ], [ %.sroa.0334.1, %bb.at ] ; 16 uses
+  %.sroa.15.2 = phi ptr [ %.sroa.15.4, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178 ], [ %.sroa.15.1, %bb.at ] ; 5 uses
+  %.sroa.0334.2 = phi ptr [ %.sroa.0334.5, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178 ], [ %.sroa.0334.1, %bb.at ] ; 15 uses
   %.sroa.28.3 = phi ptr [ %.sroa.28.6, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178 ], [ %.sroa.28.1, %bb.at ] ; 5 uses
   %.sroa.16.2 = phi ptr [ %.sroa.16.4, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178 ], [ %.sroa.16.1, %bb.at ] ; 2 uses
   %.sroa.0354.3 = phi ptr [ %.sroa.0354.6, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit178 ], [ %.sroa.0354.1, %bb.at ] ; 10 uses
@@ -609,8 +609,8 @@ bb.cv:                                            ; preds = %bb.cu, %bb.cg, %bb.
   %i.ln = uitofp i64 %i.gu to double              ; 3 uses
   %i.lo = fdiv double %.0101.lcssa, %i.ln
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
-  %.not385456 = icmp eq ptr %.sroa.0334.2, %.sroa.15.2 ; 2 uses
-  br i1 %.not385456, label %._crit_edge460, label %.lr.ph459.preheader
+  %.not385456 = icmp ne ptr %.sroa.0334.2, %.sroa.15.2 ; 3 uses
+  br i1 %.not385456, label %.lr.ph459.preheader, label %._crit_edge460
 
 .lr.ph459.preheader:                              ; preds = %._crit_edge
   %i.lp = ptrtoaddr ptr %.sroa.15.2 to i64
@@ -674,8 +674,7 @@ middle.block:                                     ; preds = %vector.body
 
 bb.cw:                                            ; preds = %._crit_edge460
   %i.mm = icmp ne ptr %.sroa.0316.0, %.sroa.13.0
-  %19 = icmp ne ptr %.sroa.0334.2, %.sroa.15.2
-  %or.cond16.i = select i1 %i.mm, i1 %19, i1 false
+  %or.cond16.i = and i1 %i.mm, %.not385456
   br i1 %or.cond16.i, label %.lr.ph.i239, label %_ZN4absl12lts_2026052615random_internal9ChiSquareIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEENS4_IPdS6_IdSaIdEEEEEEdT_SE_T0_SF_.exit
 
 .lr.ph.i239:                                      ; preds = %bb.cw, %.lr.ph.i239
@@ -723,7 +722,7 @@ _ZN4absl12lts_2026052612log_internal10LogMessagelsILi7EEERS2_RAT__Kc.exit: ; pre
 _ZNKO4absl12lts_2026052612log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit: ; preds = %_ZN4absl12lts_2026052612log_internal10LogMessagelsILi7EEERS2_RAT__Kc.exit
   call void @_ZN4absl12lts_2026052612log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %11) #38
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #34
-  br i1 %.not385456, label %._crit_edge463, label %.lr.ph462
+  br i1 %.not385456, label %.lr.ph462, label %._crit_edge463
 
 ._crit_edge463:                                   ; preds = %_ZNKO4absl12lts_2026052612log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit248, %_ZNKO4absl12lts_2026052612log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #34

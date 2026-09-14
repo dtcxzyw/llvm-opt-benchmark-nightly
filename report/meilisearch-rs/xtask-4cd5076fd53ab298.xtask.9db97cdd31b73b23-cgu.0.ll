@@ -205,16 +205,15 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.923.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 48 ; 2 uses
   %.sroa.1024.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.923.0..sroa_idx, i8 0, i64 24, i1 false)
-  %i.l = load ptr, ptr %1, align 8, !noalias !20687, !noundef !24 ; 2 uses
-  %i.m = icmp ne ptr %i.l, null
+  %i.l = load ptr, ptr %1, align 8, !noalias !20687, !noundef !24
+  %i.m = icmp ne ptr %i.l, null                   ; 2 uses
   %i.n = zext i1 %i.m to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !20688
   store i64 %i.n, ptr %i.b, align 8, !noalias !20688
   call fastcc void @"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E"(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.c, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.b, i64 noundef 8)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !20688
-  %.not.i.i = icmp eq ptr %i.l, null
   %i.o = getelementptr i8, ptr %1, i64 8          ; 2 uses
-  br i1 %.not.i.i, label %bb.d, label %bb.c
+  br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %.val.i.i = load ptr, ptr %i.o, align 8, !noalias !20687, !noundef !24
@@ -303,14 +302,13 @@ bb.d:                                             ; preds = %bb.b
   br label %"_ZN67_$LT$http..header..name..HeaderName$u20$as$u20$core..hash..Hash$GT$4hash17h2b065edd76cbc5baE.exit"
 
 bb.e:                                             ; preds = %bb.a
-  %i.cc = load ptr, ptr %1, align 8, !noalias !20691, !noundef !24 ; 2 uses
-  %i.cd = icmp ne ptr %i.cc, null
+  %i.cc = load ptr, ptr %1, align 8, !noalias !20691, !noundef !24
+  %i.cd = icmp ne ptr %i.cc, null                 ; 2 uses
   %i.ce = zext i1 %i.cd to i64
   %i.cf = xor i64 %i.ce, -3750763034362895579
   %i.cg = mul i64 %i.cf, 2232315406967589409      ; 4 uses
-  %.not.i.i30 = icmp eq ptr %i.cc, null
   %i.ch = getelementptr i8, ptr %1, i64 8         ; 2 uses
-  br i1 %.not.i.i30, label %bb.g, label %bb.f
+  br i1 %i.cd, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %.val.i.i31 = load ptr, ptr %i.ch, align 8, !noalias !20691, !noundef !24 ; 3 uses

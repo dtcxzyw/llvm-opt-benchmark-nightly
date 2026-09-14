@@ -205,9 +205,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.lr.ph, %bb.l
   %.038 = phi i64 [ %4, %.lr.ph ], [ %i.g, %bb.l ] ; 2 uses
-  %i.g = add i64 %.038, %5                        ; 5 uses
-  %6 = icmp ult i64 %i.g, %2
-  br i1 %6, label %.critedge2, label %bb.j
+  %i.g = add i64 %.038, %5                        ; 4 uses
+  %6 = icmp uge i64 %i.g, %2                      ; 2 uses
+  br i1 %6, label %bb.j, label %.critedge2
 
 bb.j:                                             ; preds = %bb.i
   %i.h = sub nuw i64 %2, %.038
@@ -227,10 +227,9 @@ bb.k:                                             ; preds = %.critedge2
 bb.l:                                             ; preds = %.critedge2
   %i.l = add i8 %i.k, -1
   store i8 %i.l, ptr %i.f, align 1, !tbaa !43
-  %7 = icmp uge i64 %i.g, %2
   %i.m = sub i64 %3, %i.g
   %.not34 = icmp ult i64 %i.m, %5
-  %or.cond = or i1 %7, %.not34
+  %or.cond = or i1 %6, %.not34
   br i1 %or.cond, label %.critedge, label %bb.i, !llvm.loop !987
 
 .critedge:                                        ; preds = %bb.j, %bb.l, %.preheader

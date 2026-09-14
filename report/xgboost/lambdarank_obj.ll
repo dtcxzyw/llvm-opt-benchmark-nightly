@@ -205,10 +205,10 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %._cri
   store i64 -1, ptr %i.h, align 8, !tbaa !31
   %i.bm = load ptr, ptr %4, align 8, !tbaa !78
   %i.bn = invoke ptr @__cxa_demangle(ptr noundef %i.bm, ptr noundef null, ptr noundef nonnull %i.h, ptr noundef nonnull %i.g)
-          to label %bb.q unwind label %bb.ac      ; 8 uses
+          to label %bb.q unwind label %bb.ac      ; 7 uses
 
 bb.q:                                             ; preds = %bb.p
-  %i.bo = icmp ne ptr %i.bn, null
+  %i.bo = icmp ne ptr %i.bn, null                 ; 2 uses
   %i.bp = load i32, ptr %i.g, align 4
   %i.bq = icmp eq i32 %i.bp, 0
   %or.cond = select i1 %i.bo, i1 %i.bq, i1 false
@@ -516,8 +516,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit83: ; preds = %_ZN
   br label %bb.ao
 
 .critedge:                                        ; preds = %bb.q
-  %.not.i84 = icmp eq ptr %i.bn, null
-  br i1 %.not.i84, label %_ZNSt10unique_ptrIcPFvPvEED2Ev.exit85, label %bb.ah
+  br i1 %i.bo, label %bb.ah, label %_ZNSt10unique_ptrIcPFvPvEED2Ev.exit85
 
 bb.ah:                                            ; preds = %.critedge
   call void @free(ptr noundef nonnull %i.bn)

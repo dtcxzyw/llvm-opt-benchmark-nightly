@@ -205,9 +205,9 @@ _ZNSt3_V26rotateIPN6marisa8grimoire4trie13WeightedRangeEEET_S6_S6_S6_.exit: ; pr
 define linkonce_odr void @_ZN6marisa8grimoire6vector10FlatVector6build_ERKNS1_6VectorIjEE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(41) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !72   ; 7 uses
-  %.not58 = icmp eq i64 %i.b, 0
-  br i1 %.not58, label %._crit_edge.thread, label %.lr.ph
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !72   ; 6 uses
+  %.not58 = icmp ne i64 %i.b, 0                   ; 4 uses
+  br i1 %.not58, label %.lr.ph, label %._crit_edge.thread
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -260,8 +260,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not, label %.preheader, label %scalar.ph, !llvm.loop !330
 
 ._crit_edge.thread:                               ; preds = %.preheader, %bb.a
-  %2 = icmp ne i64 %i.b, 0                        ; 3 uses
-  %i.n = zext i1 %2 to i64                        ; 4 uses
+  %i.n = zext i1 %.not58 to i64                   ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !tbaa !87
   %.not.i.i33 = icmp ult i64 %i.p, %i.n
@@ -333,7 +332,7 @@ _ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit: ; preds = %_ZN6marisa8gri
   br label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge.thread
-  %i.au = select i1 %2, i64 8, i64 0
+  %i.au = select i1 %.not58, i64 8, i64 0
   %i.av = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.au) #22 ; 4 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !88
@@ -366,7 +365,7 @@ _ZN6marisa8grimoire6vector6VectorImE7reserveEm.exit.i34: ; preds = %_ZN6marisa8g
 _ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43.loopexit: ; preds = %_ZN6marisa8grimoire6vector6VectorImE7reserveEm.exit.i34
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !88
-  %.idx.i.i.i35 = select i1 %2, i64 8, i64 0
+  %.idx.i.i.i35 = select i1 %.not58, i64 8, i64 0
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bh, i8 0, i64 %.idx.i.i.i35, i1 false), !tbaa !54
   br label %_ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit43
 

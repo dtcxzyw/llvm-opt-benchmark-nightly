@@ -205,8 +205,8 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %i.gv, label %._crit_edge5820, label %.lr.ph5819, !prof !120
 
 .lr.ph5819:                                       ; preds = %bb.bh
-  %i.gw = and i32 %2, 512                         ; 2 uses
-  %.not6506 = icmp ne i32 %i.gw, 0                ; 2 uses
+  %i.gw = and i32 %2, 512
+  %.not6506 = icmp ne i32 %i.gw, 0                ; 3 uses
   br i1 %.not6506, label %.lr.ph5819.split.us, label %.lr.ph5819.split, !prof !45
 
 .lr.ph5819.split.us:                              ; preds = %.lr.ph5819, %bb.bj
@@ -432,8 +432,7 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.kp, label %.lr.ph5834, label %._crit_edge5835.thread, !prof !123
 
 bb.ca:                                            ; preds = %bb.bz
-  %.not4885 = icmp eq i32 %i.gw, 0
-  br i1 %.not4885, label %bb.cc, label %bb.cb, !prof !62
+  br i1 %.not6506, label %bb.cb, label %bb.cc, !prof !45
 
 bb.cb:                                            ; preds = %bb.ca
   %i.kq = and i8 %.pre7521, -33
@@ -836,8 +835,8 @@ bb.yl:                                            ; preds = %bb.yk
   br i1 %i.efr, label %._crit_edge5595, label %.lr.ph5594, !prof !120
 
 .lr.ph5594:                                       ; preds = %bb.yl
-  %i.efs = and i32 %2, 512                        ; 2 uses
-  %.not6499 = icmp ne i32 %i.efs, 0               ; 3 uses
+  %i.efs = and i32 %2, 512
+  %.not6499 = icmp ne i32 %i.efs, 0               ; 4 uses
   br i1 %.not6499, label %.lr.ph5594.split.us, label %.lr.ph5594.split, !prof !45
 
 .lr.ph5594.split.us:                              ; preds = %.lr.ph5594, %bb.yn
@@ -1078,8 +1077,7 @@ bb.zf:                                            ; preds = %bb.ze
   br i1 %i.ejt, label %.lr.ph5608, label %._crit_edge5609.thread, !prof !123
 
 bb.zg:                                            ; preds = %bb.zf
-  %.not4817 = icmp eq i32 %i.efs, 0
-  br i1 %.not4817, label %bb.zi, label %bb.zh, !prof !62
+  br i1 %.not6499, label %bb.zh, label %bb.zi, !prof !45
 
 bb.zh:                                            ; preds = %bb.zg
   %i.eju = and i8 %.pre7496, -33
@@ -1482,8 +1480,8 @@ bb.ajw:                                           ; preds = %bb.ajv
   br i1 %i.guo, label %._crit_edge6298, label %.lr.ph6297, !prof !120
 
 .lr.ph6297:                                       ; preds = %bb.ajw
-  %i.gup = and i32 %2, 512                        ; 2 uses
-  %.not6522 = icmp ne i32 %i.gup, 0               ; 2 uses
+  %i.gup = and i32 %2, 512
+  %.not6522 = icmp ne i32 %i.gup, 0               ; 3 uses
   br i1 %.not6522, label %.lr.ph6297.split.us, label %.lr.ph6297.split, !prof !45
 
 .lr.ph6297.split.us:                              ; preds = %.lr.ph6297, %bb.ajy
@@ -1709,8 +1707,7 @@ bb.ako:                                           ; preds = %bb.akn
   br i1 %i.gyi, label %.lr.ph6312, label %._crit_edge6313.thread, !prof !123
 
 bb.akp:                                           ; preds = %bb.ako
-  %.not4734 = icmp eq i32 %i.gup, 0
-  br i1 %.not4734, label %bb.akr, label %bb.akq, !prof !62
+  br i1 %.not6522, label %bb.akq, label %bb.akr, !prof !45
 
 bb.akq:                                           ; preds = %bb.akp
   %i.gyj = and i8 %.pre7584, -33
@@ -2113,8 +2110,8 @@ bb.bgf:                                           ; preds = %bb.bge
   br i1 %i.lrb, label %._crit_edge6100, label %.lr.ph6099, !prof !120
 
 .lr.ph6099:                                       ; preds = %bb.bgf
-  %i.lrc = and i32 %2, 512                        ; 2 uses
-  %.not6514 = icmp ne i32 %i.lrc, 0               ; 3 uses
+  %i.lrc = and i32 %2, 512
+  %.not6514 = icmp ne i32 %i.lrc, 0               ; 4 uses
   br i1 %.not6514, label %.lr.ph6099.split.us, label %.lr.ph6099.split, !prof !45
 
 .lr.ph6099.split.us:                              ; preds = %.lr.ph6099, %bb.bgh
@@ -2355,8 +2352,7 @@ bb.bgz:                                           ; preds = %bb.bgy
   br i1 %i.lvd, label %.lr.ph6114, label %._crit_edge6115.thread, !prof !123
 
 bb.bha:                                           ; preds = %bb.bgz
-  %.not4670 = icmp eq i32 %i.lrc, 0
-  br i1 %.not4670, label %bb.bhc, label %bb.bhb, !prof !62
+  br i1 %.not6514, label %bb.bhb, label %bb.bhc, !prof !45
 
 bb.bhb:                                           ; preds = %bb.bha
   %i.lve = and i8 %.pre7558, -33
@@ -2759,8 +2755,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.w, label %._crit_edge, label %.lr.ph, !prof !120
 
 .lr.ph:                                           ; preds = %bb.d
-  %i.x = and i32 %4, 512                          ; 2 uses
-  %.not974 = icmp ne i32 %i.x, 0                  ; 2 uses
+  %i.x = and i32 %4, 512
+  %.not974 = icmp ne i32 %i.x, 0                  ; 3 uses
   br i1 %.not974, label %.lr.ph.split.us.preheader, label %.lr.ph.split, !prof !45
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
@@ -2988,8 +2984,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.do, label %.lr.ph796, label %._crit_edge797.thread, !prof !123
 
 bb.x:                                             ; preds = %bb.w
-  %.not674 = icmp eq i32 %i.x, 0
-  br i1 %.not674, label %bb.aa, label %bb.y, !prof !62
+  br i1 %.not974, label %bb.y, label %bb.aa, !prof !45
 
 bb.y:                                             ; preds = %bb.x
   %i.dp = and i8 %.pre1118, -33
@@ -3392,8 +3387,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.o, label %._crit_edge, label %.lr.ph, !prof !120
 
 .lr.ph:                                           ; preds = %bb.f
-  %i.p = and i32 %2, 512                          ; 2 uses
-  %.not342 = icmp ne i32 %i.p, 0                  ; 2 uses
+  %i.p = and i32 %2, 512
+  %.not342 = icmp ne i32 %i.p, 0                  ; 3 uses
   br i1 %.not342, label %.lr.ph.split.us.preheader, label %.lr.ph.split, !prof !45
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
@@ -3621,8 +3616,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.dh, label %.lr.ph230, label %._crit_edge231.thread, !prof !123
 
 bb.z:                                             ; preds = %bb.y
-  %.not154 = icmp eq i32 %i.p, 0
-  br i1 %.not154, label %bb.ac, label %bb.aa, !prof !62
+  br i1 %.not342, label %bb.aa, label %bb.ac, !prof !45
 
 bb.aa:                                            ; preds = %bb.z
   %i.di = and i8 %.pre434, -33
@@ -4025,8 +4019,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.cg, label %._crit_edge4245, label %.lr.ph4244, !prof !120
 
 .lr.ph4244:                                       ; preds = %bb.u
-  %i.ch = and i32 %.fr, 512                       ; 2 uses
-  %.not4460 = icmp ne i32 %i.ch, 0                ; 3 uses
+  %i.ch = and i32 %.fr, 512
+  %.not4460 = icmp ne i32 %i.ch, 0                ; 4 uses
   br i1 %.not4460, label %.lr.ph4244.split.us, label %.lr.ph4244.split, !prof !45
 
 .lr.ph4244.split.us:                              ; preds = %.lr.ph4244, %bb.w
@@ -4266,8 +4260,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.gj, label %.lr.ph4260, label %._crit_edge4261.thread, !prof !123
 
 bb.aq:                                            ; preds = %bb.ap
-  %.not3468 = icmp eq i32 %i.ch, 0
-  br i1 %.not3468, label %bb.at, label %bb.ar, !prof !62
+  br i1 %.not4460, label %bb.ar, label %bb.at, !prof !45
 
 bb.ar:                                            ; preds = %bb.aq
   %i.gk = and i8 %.pre4947, -33
@@ -4670,8 +4663,8 @@ bb.np:                                            ; preds = %bb.no
   br i1 %i.cam, label %._crit_edge4046, label %.lr.ph4045, !prof !120
 
 .lr.ph4045:                                       ; preds = %bb.np
-  %i.can = and i32 %.fr, 512                      ; 2 uses
-  %.not4452 = icmp ne i32 %i.can, 0               ; 2 uses
+  %i.can = and i32 %.fr, 512
+  %.not4452 = icmp ne i32 %i.can, 0               ; 3 uses
   br i1 %.not4452, label %.lr.ph4045.split.us, label %.lr.ph4045.split, !prof !45
 
 .lr.ph4045.split.us:                              ; preds = %.lr.ph4045, %bb.nr
@@ -4896,8 +4889,7 @@ bb.oi:                                            ; preds = %bb.oh
   br i1 %i.ceh, label %.lr.ph4061, label %._crit_edge4062.thread, !prof !123
 
 bb.oj:                                            ; preds = %bb.oi
-  %.not3417 = icmp eq i32 %i.can, 0
-  br i1 %.not3417, label %bb.om, label %bb.ok, !prof !62
+  br i1 %.not4452, label %bb.ok, label %bb.om, !prof !45
 
 bb.ok:                                            ; preds = %bb.oj
   %i.cei = and i8 %.pre4931, -33
@@ -5300,8 +5292,8 @@ bb.aiy:                                           ; preds = %bb.aix
   br i1 %i.grk, label %._crit_edge3834, label %.lr.ph3833, !prof !120
 
 .lr.ph3833:                                       ; preds = %bb.aiy
-  %i.grl = and i32 %.fr, 512                      ; 2 uses
-  %.not4445 = icmp ne i32 %i.grl, 0               ; 3 uses
+  %i.grl = and i32 %.fr, 512
+  %.not4445 = icmp ne i32 %i.grl, 0               ; 4 uses
   br i1 %.not4445, label %.lr.ph3833.split.us, label %.lr.ph3833.split, !prof !45
 
 .lr.ph3833.split.us:                              ; preds = %.lr.ph3833, %bb.aja
@@ -5541,8 +5533,7 @@ bb.ajt:                                           ; preds = %bb.ajs
   br i1 %i.gvn, label %.lr.ph3847, label %._crit_edge3848.thread, !prof !123
 
 bb.aju:                                           ; preds = %bb.ajt
-  %.not3366 = icmp eq i32 %i.grl, 0
-  br i1 %.not3366, label %bb.ajx, label %bb.ajv, !prof !62
+  br i1 %.not4445, label %bb.ajv, label %bb.ajx, !prof !45
 
 bb.ajv:                                           ; preds = %bb.aju
   %i.gvo = and i8 %.pre4907, -33
@@ -5945,7 +5936,7 @@ bb.aa:                                            ; preds = %f32_bin_to_dec.exit
   %i.if = lshr i64 %i.ie, 24
   %i.ig = trunc nuw nsw i64 %i.if to i32          ; 3 uses
   %i.ih = mul nuw nsw i32 %i.ig, 41
-  %i.ii = lshr i32 %i.ih, 12                      ; 4 uses
+  %i.ii = lshr i32 %i.ih, 12                      ; 3 uses
   %.neg48.i128 = mul nsw i32 %i.ii, -100
   %i.ij = add nsw i32 %.neg48.i128, %i.ig         ; 3 uses
   %.neg49.i129 = mul nsw i32 %i.ig, -100
@@ -5953,12 +5944,12 @@ bb.aa:                                            ; preds = %f32_bin_to_dec.exit
   %i.il = trunc nuw nsw i32 %i.ii to i8
   %i.im = add nuw nsw i8 %i.il, 48
   store i8 %i.im, ptr %i.ia, align 1, !tbaa !100
-  %i.in = icmp ne i32 %i.ii, 0
+  %i.in = icmp ne i32 %i.ii, 0                    ; 2 uses
   %i.io = zext i1 %i.in to i64
   %i.ip = getelementptr inbounds nuw i8, ptr %i.ia, i64 %i.io ; 2 uses
   %i.iq = icmp ult i32 %i.ij, 10
-  %3 = icmp eq i32 %i.ii, 0
-  %i.ir = and i1 %3, %i.iq                        ; 2 uses
+  %.not198 = xor i1 %i.in, true
+  %i.ir = and i1 %i.iq, %.not198                  ; 2 uses
   %i.is = shl nsw i32 %i.ij, 1
   %i.it = zext i32 %i.is to i64
   %i.iu = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.it

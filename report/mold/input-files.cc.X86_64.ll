@@ -205,12 +205,11 @@ bb.e:                                             ; preds = %_ZNK4mold6SymbolINS
 _ZZZN4mold10SharedFileINS_6X86_64EE14get_symbols_atEPNS_6SymbolIS1_EEENKUlvE_clEvENKUlS5_S5_E_clES5_S5_.exit.us: ; preds = %bb.e, %_ZNK4mold6SymbolINS_6X86_64EE4esymEv.exit.i.us
   %.0.i7.i.us = phi ptr [ %i.aq, %bb.e ], [ @_ZZNK4mold6SymbolINS_6X86_64EE4esymEvE5empty, %_ZNK4mold6SymbolINS_6X86_64EE4esymEv.exit.i.us ] ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.0.i7.i.us, i64 8
-  %i.as = load i64, ptr %i.ar, align 1, !tbaa !77 ; 2 uses
-  %3 = icmp eq i64 %i.as, 0
+  %i.as = load i64, ptr %i.ar, align 1, !tbaa !77
+  %3 = icmp ne i64 %i.as, 0
   %.not.i.us = icmp ugt ptr %.0.i7.i.us, @_ZZNK4mold6SymbolINS_6X86_64EE4esymEvE5empty
-  %4 = icmp ne i64 %i.as, 0
-  %5 = select i1 %3, i1 %.not.i.us, i1 %4
-  br i1 %5, label %_ZNK4mold6SymbolINS_6X86_64EE4esymEv.exit.i.us, label %.preheader, !llvm.loop !1371
+  %4 = or i1 %3, %.not.i.us
+  br i1 %4, label %_ZNK4mold6SymbolINS_6X86_64EE4esymEv.exit.i.us, label %.preheader, !llvm.loop !1371
 
 .split:                                           ; preds = %bb.d
   %i.at = getelementptr inbounds nuw i8, ptr %i.x, i64 20

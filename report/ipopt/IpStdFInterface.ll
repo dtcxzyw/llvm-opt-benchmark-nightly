@@ -164,20 +164,17 @@ bb.a:
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #7
   store i32 0, ptr %i.f, align 4, !tbaa !9
-  %i.k = icmp ne ptr %5, null
-  %i.l = icmp ne ptr %6, null
+  %i.k = icmp ne ptr %5, null                     ; 2 uses
+  %i.l = icmp ne ptr %6, null                     ; 2 uses
   %or.cond = and i1 %i.k, %i.l
-  %i.m = icmp eq ptr %7, null
+  %i.m = icmp eq ptr %7, null                     ; 2 uses
   %or.cond3 = and i1 %or.cond, %i.m
   br i1 %or.cond3, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %9 = icmp eq ptr %5, null
-  %10 = icmp eq ptr %6, null
-  %or.cond5 = and i1 %9, %10
-  %11 = icmp ne ptr %7, null
-  %or.cond7 = and i1 %or.cond5, %11
-  br i1 %or.cond7, label %bb.d, label %bb.c
+  %or.cond5.demorgan = or i1 %i.k, %i.l
+  %or.cond7.demorgan = or i1 %or.cond5.demorgan, %i.m
+  br i1 %or.cond7.demorgan, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
@@ -234,20 +231,17 @@ bb.a:
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #7
   store i32 0, ptr %i.h, align 4, !tbaa !9
-  %i.n = icmp ne ptr %8, null
-  %i.o = icmp ne ptr %9, null
+  %i.n = icmp ne ptr %8, null                     ; 2 uses
+  %i.o = icmp ne ptr %9, null                     ; 2 uses
   %or.cond = and i1 %i.n, %i.o
-  %i.p = icmp eq ptr %10, null
+  %i.p = icmp eq ptr %10, null                    ; 2 uses
   %or.cond3 = and i1 %or.cond, %i.p
   br i1 %or.cond3, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %12 = icmp eq ptr %8, null
-  %13 = icmp eq ptr %9, null
-  %or.cond5 = and i1 %12, %13
-  %14 = icmp ne ptr %10, null
-  %or.cond7 = and i1 %or.cond5, %14
-  br i1 %or.cond7, label %bb.d, label %bb.c
+  %or.cond5.demorgan = or i1 %i.n, %i.o
+  %or.cond7.demorgan = or i1 %or.cond5.demorgan, %i.p
+  br i1 %or.cond7.demorgan, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses

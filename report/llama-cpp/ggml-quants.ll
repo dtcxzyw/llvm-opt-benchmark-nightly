@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 iq3_data_index.exit:                              ; preds = %bb.a, %bb.a
-  %i.k = icmp ne i32 %0, 256
+  %i.k = icmp ne i32 %0, 256                      ; 3 uses
   %i.l = zext i1 %i.k to i64
   %i.m = getelementptr inbounds nuw [24 x i8], ptr @iq3_data, i64 %i.l ; 4 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !83
@@ -216,10 +216,9 @@ iq3_data_index.exit:                              ; preds = %bb.a, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   store i32 4096, ptr %i.b, align 4, !tbaa !47
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
-  %1 = icmp eq i32 %0, 256                        ; 2 uses
-  %i.o = select i1 %1, i32 2, i32 3
+  %i.o = select i1 %i.k, i32 3, i32 2
   store i32 %i.o, ptr %i.c, align 4, !tbaa !47
-  %i.p = select i1 %1, ptr @iq3xs_init_impl.kgrid_256, ptr @iq3xs_init_impl.kgrid_512 ; 2 uses
+  %i.p = select i1 %i.k, ptr @iq3xs_init_impl.kgrid_512, ptr @iq3xs_init_impl.kgrid_256 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #14

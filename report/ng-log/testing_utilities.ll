@@ -204,15 +204,15 @@ bb.d:                                             ; preds = %_ZStneIcSt11char_tr
 
 bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !55   ; 3 uses
-  %i.m = load ptr, ptr %5, align 8, !tbaa !54     ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !55   ; 2 uses
+  %i.m = load ptr, ptr %5, align 8, !tbaa !54     ; 2 uses
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = sub i64 %i.n, %i.o
   %i.q = ashr exact i64 %i.p, 5                   ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !55   ; 3 uses
-  %i.t = load ptr, ptr %6, align 8, !tbaa !54     ; 3 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !55   ; 2 uses
+  %i.t = load ptr, ptr %6, align 8, !tbaa !54     ; 2 uses
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = sub i64 %i.u, %i.v
@@ -308,12 +308,12 @@ bb.i:                                             ; preds = %_ZNSt6vectorIS_IiSa
 _ZNSt6vectorIiSaIiEED2Ev.exit.i:                  ; preds = %bb.i, %_ZNSt6vectorIS_IiSaIiEESaIS1_EEC2EmRKS1_RKS2_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %.not94.i = icmp eq ptr %i.l, %i.m
-  br i1 %.not94.i, label %.preheader89.i, label %.preheader90.lr.ph.i
+  br i1 %.not94.i, label %.preheader88.i, label %.preheader90.lr.ph.i
 
 .preheader90.lr.ph.i:                             ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit.i
   %i.at = add nsw i64 %i.x, -1                    ; 2 uses
   %.not6292.i = icmp eq ptr %i.s, %i.t
-  br i1 %.not6292.i, label %.preheader89.i, label %.preheader90.lr.ph.split.i
+  br i1 %.not6292.i, label %.preheader88.i, label %.preheader90.lr.ph.split.i
 
 .preheader90.lr.ph.split.i:                       ; preds = %.preheader90.lr.ph.i
   %i.au = load ptr, ptr %5, align 8, !tbaa !54
@@ -322,7 +322,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit.i:                  ; preds = %bb.i, %_ZNSt6vector
 
 ..loopexit_crit_edge.i:                           ; preds = %bb.m, %bb.j
   %.not.i = icmp eq i64 %i.aw, 0
-  br i1 %.not.i, label %.preheader89.i, label %.preheader90.i, !llvm.loop !110
+  br i1 %.not.i, label %.lr.ph.i, label %.preheader90.i, !llvm.loop !110
 
 .preheader90.i:                                   ; preds = %..loopexit_crit_edge.i, %.preheader90.lr.ph.split.i
   %.05795.i = phi i64 [ %i.q, %.preheader90.lr.ph.split.i ], [ %i.aw, %..loopexit_crit_edge.i ] ; 2 uses
@@ -371,12 +371,6 @@ bb.j:                                             ; preds = %_ZSteqIcSt11char_tr
   %i.bu = add i64 %i.bf, -1
   %.not62.us.i = icmp eq i64 %i.bf, 0
   br i1 %.not62.us.i, label %..loopexit_crit_edge.i, label %.lr.ph.split.us.i, !llvm.loop !111
-
-.preheader89.i:                                   ; preds = %..loopexit_crit_edge.i, %.preheader90.lr.ph.i, %_ZNSt6vectorIiSaIiEED2Ev.exit.i
-  %8 = icmp ne ptr %i.l, %i.m
-  %9 = icmp ne ptr %i.s, %i.t
-  %10 = and i1 %8, %9
-  br i1 %10, label %.lr.ph.i, label %.preheader88.i
 
 bb.k:                                             ; preds = %_ZNSt15__new_allocatorISt6vectorIiSaIiEEE8allocateEmPKv.exit.i.i.i.i.i, %bb.f
   %i.bv = landingpad { ptr, i32 }
@@ -446,15 +440,15 @@ bb.m:                                             ; preds = %_ZSteqIcSt11char_tr
   %.not62.i = icmp eq i64 %i.cc, 0
   br i1 %.not62.i, label %..loopexit_crit_edge.i, label %.lr.ph.split.i, !llvm.loop !111
 
-.preheader88.i:                                   ; preds = %bb.q, %.preheader89.i
-  %.053.lcssa.i = phi i64 [ 0, %.preheader89.i ], [ %.154.i, %bb.q ] ; 2 uses
-  %.0.lcssa.i = phi i64 [ 0, %.preheader89.i ], [ %.1.i, %bb.q ] ; 2 uses
+.preheader88.i:                                   ; preds = %bb.q, %.preheader90.lr.ph.i, %_ZNSt6vectorIiSaIiEED2Ev.exit.i
+  %.053.lcssa.i = phi i64 [ 0, %.preheader90.lr.ph.i ], [ 0, %_ZNSt6vectorIiSaIiEED2Ev.exit.i ], [ %.154.i, %bb.q ] ; 2 uses
+  %.0.lcssa.i = phi i64 [ 0, %.preheader90.lr.ph.i ], [ 0, %_ZNSt6vectorIiSaIiEED2Ev.exit.i ], [ %.1.i, %bb.q ] ; 2 uses
   %i.cw = icmp ult i64 %.053.lcssa.i, %i.q
   br i1 %i.cw, label %.lr.ph100.i, label %.preheader.i
 
-.lr.ph.i:                                         ; preds = %.preheader89.i, %bb.q
-  %.097.i = phi i64 [ %.1.i, %bb.q ], [ 0, %.preheader89.i ] ; 5 uses
-  %.05396.i = phi i64 [ %.154.i, %bb.q ], [ 0, %.preheader89.i ] ; 5 uses
+.lr.ph.i:                                         ; preds = %..loopexit_crit_edge.i, %bb.q
+  %.097.i = phi i64 [ %.1.i, %bb.q ], [ 0, %..loopexit_crit_edge.i ] ; 5 uses
+  %.05396.i = phi i64 [ %.154.i, %bb.q ], [ 0, %..loopexit_crit_edge.i ] ; 5 uses
   %i.cx = load ptr, ptr %5, align 8, !tbaa !54
   %i.cy = getelementptr inbounds nuw [32 x i8], ptr %i.cx, i64 %.05396.i ; 3 uses
   %i.cz = load ptr, ptr %6, align 8, !tbaa !54

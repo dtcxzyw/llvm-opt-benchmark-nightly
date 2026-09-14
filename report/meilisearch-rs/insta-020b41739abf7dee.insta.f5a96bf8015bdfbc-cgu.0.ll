@@ -205,7 +205,7 @@ define internal fastcc { i64, i64 } @_ZN4pest8position8Position8line_col17h60e72
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load i64, ptr %i.b, align 8, !noundef !17 ; 8 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !17 ; 7 uses
   %i.d = load ptr, ptr %0, align 8, !nonnull !17, !align !31, !noundef !17 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load i64, ptr %i.e, align 8, !noundef !17 ; 3 uses
@@ -213,7 +213,7 @@ bb.a:
   br i1 %i.g, label %bb.d, label %bb.b, !prof !22
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = icmp ne i64 %i.c, 0
+  %i.h = icmp ne i64 %i.c, 0                      ; 2 uses
   %.not.i = icmp ult i64 %i.c, %i.f
   %or.cond = and i1 %i.h, %.not.i
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.c ; 2 uses
@@ -243,8 +243,7 @@ bb.d:                                             ; preds = %bb.a
   unreachable
 
 .split.i:                                         ; preds = %bb.b
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %i.h, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.split.i.thread, %.split.i
   %i.q = phi ptr [ %i.l, %.split.i.thread ], [ %i.i, %.split.i ] ; 9 uses
@@ -647,7 +646,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %.thread, %bb.h, %bb.i
   %.val5.i = phi i64 [ %i.x, %bb.i ], [ 0, %bb.h ], [ 0, %.thread ] ; 8 uses
-  %.sroa.06.052 = phi i8 [ %.sroa.017.0.copyload, %bb.i ], [ %.sroa.017.0.copyload, %bb.h ], [ 8, %.thread ] ; 3 uses
+  %.sroa.06.052 = phi i8 [ %.sroa.017.0.copyload, %bb.i ], [ %.sroa.017.0.copyload, %bb.h ], [ 8, %.thread ] ; 2 uses
   %.sroa.010.0 = phi i8 [ %.sroa.018.0.copyload, %bb.i ], [ 8, %bb.h ], [ 8, %.thread ] ; 4 uses
   store i8 %.sroa.06.052, ptr %i.d, align 8
   %.sroa.58.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
@@ -658,7 +657,7 @@ bb.j:                                             ; preds = %.thread, %bb.h, %bb
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(71) %.sroa.512.0..sroa_idx13, ptr noundef nonnull align 1 dereferenceable(71) %.sroa.512, i64 71, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.512)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.58)
-  %.not22 = icmp ne i8 %.sroa.06.052, 8           ; 2 uses
+  %.not22 = icmp ne i8 %.sroa.06.052, 8           ; 3 uses
   %.not23 = icmp eq i8 %.sroa.010.0, 8
   %or.cond = select i1 %.not22, i1 %.not23, i1 false ; 2 uses
   br i1 %or.cond, label %bb.l, label %bb.k
@@ -826,8 +825,7 @@ bb.ac:                                            ; preds = %"_ZN70_$LT$alloc..v
 
 "_ZN4core3ptr86drop_in_place$LT$alloc..vec..Vec$LT$insta..content..yaml..vendored..yaml..Yaml$GT$$GT$17h43e739234e4e0f0bE.exit42": ; preds = %bb.ac, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h6601c78f4953d730E.exit.i38"
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  %.not25 = icmp eq i8 %.sroa.06.052, 8
-  br i1 %.not25, label %bb.u, label %bb.ad
+  br i1 %.not22, label %bb.ad, label %bb.u
 
 bb.ad:                                            ; preds = %"_ZN4core3ptr86drop_in_place$LT$alloc..vec..Vec$LT$insta..content..yaml..vendored..yaml..Yaml$GT$$GT$17h43e739234e4e0f0bE.exit42"
   invoke fastcc void @"_ZN4core3ptr63drop_in_place$LT$insta..content..yaml..vendored..yaml..Yaml$GT$17hb8081eeb1d574197E"(ptr noalias noundef align 8 dereferenceable(72) %i.d)
